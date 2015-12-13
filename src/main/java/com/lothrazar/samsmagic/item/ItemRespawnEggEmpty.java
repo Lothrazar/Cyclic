@@ -1,7 +1,7 @@
 package com.lothrazar.samsmagic.item;
 
-import com.lothrazar.samsmagic.ModSpells;
-
+import com.lothrazar.samsmagic.Const;
+import com.lothrazar.samsmagic.ModMain;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable; 
 import net.minecraft.entity.passive.EntityBat;
@@ -49,11 +49,11 @@ public class ItemRespawnEggEmpty extends Item
  
 		if(target instanceof EntitySquid) 
 		{  
-			entity_id = Reference.entity_squid;
+			entity_id = Const.entity_squid;
 		} 
 		else if(target instanceof EntityBat) 
 		{  
-			entity_id = Reference.entity_bat;
+			entity_id = Const.entity_bat;
 		} 
 		else if(target instanceof EntityAgeable )  
 		{ 
@@ -63,27 +63,27 @@ public class ItemRespawnEggEmpty extends Item
 			{
 				if(target instanceof EntityCow )
 				{ 
-					entity_id = Reference.entity_cow; 
+					entity_id = Const.entity_cow; 
 				}
 				if(target instanceof EntityPig )
 				{ 
-					entity_id = Reference.entity_pig; 
+					entity_id = Const.entity_pig; 
 				}
 				if(target instanceof EntitySheep )
 				{ 
-					entity_id = Reference.entity_sheep; 
+					entity_id = Const.entity_sheep; 
 				} 
 				if(target instanceof EntityChicken )
 				{ 
-					entity_id = Reference.entity_chicken; 
+					entity_id = Const.entity_chicken; 
 				} 
 				if(target instanceof EntityMooshroom )
 				{ 
-					entity_id = Reference.entity_mooshroom; 
+					entity_id = Const.entity_mooshroom; 
 				}
 				if(target instanceof EntityRabbit )
 				{ 
-					entity_id = Reference.entity_rabbit; 
+					entity_id = Const.entity_rabbit; 
 				} 
 			} 
 		}
@@ -94,7 +94,7 @@ public class ItemRespawnEggEmpty extends Item
 			entityPlayer.worldObj.removeEntity(target); 
 			
 			if(entityPlayer.worldObj.isRemote) 
-				ModSpells.spawnParticle(entityPlayer.worldObj, EnumParticleTypes.VILLAGER_HAPPY, target.getPosition());
+				ModMain.spawnParticle(entityPlayer.worldObj, EnumParticleTypes.VILLAGER_HAPPY, target.getPosition());
 			else
 			{
 				//TODO: 
@@ -107,7 +107,7 @@ public class ItemRespawnEggEmpty extends Item
 				entityPlayer.dropPlayerItemWithRandomChoice(stack,true);
 */
 			}
-			ModSpells.playSoundAt(entityPlayer, "mob.zombie.remedy");
+			ModMain.playSoundAt(entityPlayer, "mob.zombie.remedy");
 			 
 			//ModSpells.decrHeldStackSize(entityPlayer);
 			

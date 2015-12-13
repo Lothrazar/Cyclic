@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.logging.log4j.Level;
 
-import com.lothrazar.samsmagic.ModSpells; 
+import com.lothrazar.samsmagic.ModMain; 
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -29,7 +29,7 @@ public class ItemChestSack extends Item
 	}
    
 	@Override
-	public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean par4) 
+	public void addInformation(ItemStack itemStack, EntityPlayer player, List<String> list, boolean par4) 
 	{
 		if(itemStack.getTagCompound() == null) {itemStack.setTagCompound(new NBTTagCompound());}
 		String count = itemStack.getTagCompound().getString("count"); 
@@ -53,7 +53,7 @@ public class ItemChestSack extends Item
 		
 		if(itemids == null){return;}
  
-  		int totalItemsMoved = 0; 
+  		//int totalItemsMoved = 0; 
   		int totalSlotsFreed = 0;
   		
   		//boolean debug = false;
@@ -109,7 +109,7 @@ public class ItemChestSack extends Item
 
   					invItem.stackSize -= toDeposit;
 
-  					totalItemsMoved += toDeposit;
+  					//totalItemsMoved += toDeposit;
   					 
   					if(invItem.stackSize <= 0)//because of calculations above, should not be below zero
   					{
@@ -152,7 +152,7 @@ public class ItemChestSack extends Item
 		
 		if(itemids==null)
 		{
-			ModSpells.logger.log(Level.WARN, "null nbt problem in itemchestsack");
+			ModMain.logger.log(Level.WARN, "null nbt problem in itemchestsack");
 			return;
 		}
  
@@ -180,6 +180,6 @@ public class ItemChestSack extends Item
 		 
 		entityPlayer.destroyCurrentEquippedItem();
 
-		ModSpells.playSoundAt(entityPlayer, "random.chestopen");
+		ModMain.playSoundAt(entityPlayer, "random.chestopen");
   	} 
 }

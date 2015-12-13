@@ -5,13 +5,12 @@ import org.lwjgl.input.Keyboard;
 import  net.minecraft.item.Item;
 
 import com.lothrazar.samsmagic.ItemRegistry;
-import com.lothrazar.samsmagic.ModSpells; 
+import com.lothrazar.samsmagic.ModMain; 
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemModelMesher;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.entity.EntityList;
 
 public class ClientProxy extends CommonProxy 
 {   
@@ -35,8 +34,6 @@ public class ClientProxy extends CommonProxy
          
     }
     
- 
-
 	private void registerModels() 
 	{
 		//More info on proxy rendering
@@ -49,7 +46,7 @@ public class ClientProxy extends CommonProxy
  
         for(Item i : ItemRegistry.items)
         {  
-        	name = ModSpells.TEXTURE_LOCATION + i.getUnlocalizedName().replaceAll("item.", "");
+        	name = ModMain.TEXTURE_LOCATION + i.getUnlocalizedName().replaceAll("item.", "");
 
    			mesher.register(i, 0, new ModelResourceLocation( name , "inventory"));	 
         }

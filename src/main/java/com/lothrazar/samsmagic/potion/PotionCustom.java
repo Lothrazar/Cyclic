@@ -1,17 +1,7 @@
 package com.lothrazar.samsmagic.potion;
 
-import com.lothrazar.samsmagic.ItemRegistry;
-import com.lothrazar.samsmagic.ModSpells;
+import com.lothrazar.samsmagic.ModMain;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
-import net.minecraft.client.renderer.texture.ITextureObject;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.client.resources.model.IBakedModel;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -21,9 +11,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PotionCustom extends Potion
 { 
-	protected PotionCustom(int potionID, ResourceLocation location,	boolean badEffect, int potionColor,ItemStack is) 
+	public PotionCustom(int potionID, ResourceLocation location,	boolean badEffect, int potionColor,ItemStack is) 
 	{
-		super(potionID, location, badEffect, potionColor); 
+		super( location, badEffect, potionColor); 
+		//TODO: WTF no id?
+		System.out.println("potion id deprec "+potionID);
 		this.setIconIndex(0, 0);
 		icon = is;
 	}
@@ -47,7 +39,7 @@ public class PotionCustom extends Potion
     public void renderInventoryEffect(int x, int y, PotionEffect effect, net.minecraft.client.Minecraft mc) 
 	{
 		int border = 6;
-		ModSpells.renderItemAt(icon, x + border, y + border, 16);
+		ModMain.renderItemAt(icon, x + border, y + border, 16);
 		/*
 		@SuppressWarnings("deprecation")
 		IBakedModel iBakedModel = Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getItemModel(icon);

@@ -1,22 +1,13 @@
-package com.lothrazar.samsmagic.potion;
+package com.lothrazar.samsmagic;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier; 
-
-import com.lothrazar.samsmagic.ItemRegistry;
-import com.lothrazar.samsmagic.ModSpells; 
-import com.lothrazar.samsmagic.SpellRegistry;
-import com.lothrazar.samsmagic.spell.SpellGhost; 
-
+import com.lothrazar.samsmagic.potion.PotionCustom;
 import net.minecraft.block.Block;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
@@ -48,9 +39,9 @@ public class PotionRegistry
 		//???http://www.minecraftforge.net/forum/index.php?topic=12358.0
 		
 		//progress: they are not blank anymore, are instead using a default vanilla one from a beacon.
-		PotionRegistry.waterwalk = (new PotionCustom(ModSpells.cfg.potionIdWaterwalk, new ResourceLocation("waterwalk") , false, 0, new ItemStack(ItemRegistry.spell_waterwalk_dummy))).setPotionName("potion.waterwalk");
+		PotionRegistry.waterwalk = (new PotionCustom(ModMain.cfg.potionIdWaterwalk, new ResourceLocation("waterwalk") , false, 0, new ItemStack(ItemRegistry.spell_waterwalk_dummy))).setPotionName("potion.waterwalk");
 		
-		PotionRegistry.slowfall = (new PotionCustom(ModSpells.cfg.potionIdSlowfall,   new ResourceLocation("slowfall"), false, 0, new ItemStack(ItemRegistry.spell_dummy_slowfall))).setPotionName("potion.slowfall");
+		PotionRegistry.slowfall = (new PotionCustom(ModMain.cfg.potionIdSlowfall,   new ResourceLocation("slowfall"), false, 0, new ItemStack(ItemRegistry.spell_dummy_slowfall))).setPotionName("potion.slowfall");
 	 
 		//TODO: test out brewing api for these?
 		//PotionRegistry.frost = (new PotionCustom(ModSpells.cfg.potionIdFrozen, new ResourceLocation("frost"), false, 0, new ItemStack(ItemRegistry.spell_frostbolt_dummy))).setPotionName("potion.frozen");	  
@@ -87,7 +78,7 @@ public class PotionRegistry
 	    }
 	}
 
-	
+	/*
 	private static void doPotionParticle(World world, EntityLivingBase living, EnumParticleTypes particle)
 	{
 		if(world.getTotalWorldTime() % 2/2 == 0) // every half second
@@ -95,7 +86,7 @@ public class PotionRegistry
     		ModSpells.spawnParticlePacketByID(living.getPosition(), particle.getParticleID());
     	}
 	}
-/*
+
 	public static void tickFrost(LivingUpdateEvent event) 
 	{ 
 		if(event.entityLiving.isPotionActive(PotionRegistry.frost)) 
@@ -173,7 +164,7 @@ public class PotionRegistry
 	    	 //a normal fall seems to go up to 0, -1.2, -1.4, -1.6, then flattens out at -0.078 
 	    	 if(event.entityLiving.motionY < 0)
 	    	 { 
-				event.entityLiving.motionY *= ModSpells.cfg.slowfallSpeed;
+				event.entityLiving.motionY *= ModMain.cfg.slowfallSpeed;
 				  
 				event.entityLiving.fallDistance = 0f; //for no fall damage
 	    	 } 

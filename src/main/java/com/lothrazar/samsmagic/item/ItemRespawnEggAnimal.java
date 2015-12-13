@@ -2,13 +2,13 @@ package com.lothrazar.samsmagic.item;
 
 import java.util.Iterator;
 import java.util.List;
- 
 import net.minecraft.block.BlockFence;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityList.EntityEggInfo;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
@@ -201,14 +201,16 @@ public class ItemRespawnEggAnimal extends Item  //mimic/mirror of ItemMonsterPla
      * @param subItems The List of sub-items. This is a List of ItemStacks.
      */
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item itemIn, CreativeTabs tab, List subItems)
+    public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems)
     {
-        Iterator iterator = EntityList.entityEggs.values().iterator();
+        Iterator<EntityEggInfo> iterator = EntityList.entityEggs.values().iterator();
 
         while (iterator.hasNext())
         {
+        	//TODO: how to fix id??
             EntityList.EntityEggInfo entityegginfo = (EntityList.EntityEggInfo)iterator.next();
             subItems.add(new ItemStack(itemIn, 1, entityegginfo.spawnedID));
         }
+        
     } 
 }

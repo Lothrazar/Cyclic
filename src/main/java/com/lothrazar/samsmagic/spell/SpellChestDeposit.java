@@ -1,7 +1,7 @@
 package com.lothrazar.samsmagic.spell;
 
 import com.lothrazar.samsmagic.ItemRegistry;
-import com.lothrazar.samsmagic.ModSpells;
+import com.lothrazar.samsmagic.ModMain;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -60,13 +60,13 @@ public class SpellChestDeposit extends BaseSpellExp
 	@Override
 	public int getExpCost() 
 	{
-		return ModSpells.cfg.deposit;
+		return ModMain.cfg.deposit;
 	}
 
 	@Override
 	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos)
 	{
-		ModSpells.playSoundAt(player, "random.chestopen");
+		ModMain.playSoundAt(player, "random.chestopen");
 
 		super.onCastSuccess(world, player, pos);
 	}
@@ -83,7 +83,7 @@ public class SpellChestDeposit extends BaseSpellExp
   
   	public void sortFromPlayerToChestEntity(World world, TileEntityChest chest, EntityPlayer entityPlayer)
   	{ 
-  		int totalItemsMoved = 0; 
+  		//int totalItemsMoved = 0; 
   		int totalSlotsFreed = 0;
   		 
 		ItemStack chestItem;
@@ -134,7 +134,7 @@ public class SpellChestDeposit extends BaseSpellExp
 
   					invItem.stackSize -= toDeposit;
 
-  					totalItemsMoved += toDeposit;
+  					//totalItemsMoved += toDeposit;
   					//totalTypesMoved++;
   					
   					if(invItem.stackSize <= 0)//because of calculations above, should not be below zero

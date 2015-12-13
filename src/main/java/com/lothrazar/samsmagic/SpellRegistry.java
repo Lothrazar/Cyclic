@@ -98,7 +98,7 @@ public class SpellRegistry
 		if(current.left() != null)
 		{
 			setPlayerCurrentSpell(player,current.left().getSpellID());
-			ModSpells.playSoundAt(player, "random.orb");
+			ModMain.playSoundAt(player, "random.orb");
 		}
 	}
 
@@ -109,7 +109,7 @@ public class SpellRegistry
 		if(current.right() != null)
 		{
 			setPlayerCurrentSpell(player,current.right().getSpellID()); 
-			ModSpells.playSoundAt(player, "random.orb");
+			ModMain.playSoundAt(player, "random.orb");
 		}
 	}
 	

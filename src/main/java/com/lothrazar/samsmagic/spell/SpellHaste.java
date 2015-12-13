@@ -6,11 +6,9 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
-
 import com.lothrazar.samsmagic.ItemRegistry;
-import com.lothrazar.samsmagic.SpellRegistry;
-import com.lothrazar.samsmagic.potion.PotionRegistry;
-import com.lothrazar.samsmagic.ModSpells; 
+import com.lothrazar.samsmagic.PotionRegistry; 
+import com.lothrazar.samsmagic.ModMain; 
 
 public class SpellHaste extends BaseSpellExp implements ISpell
 {
@@ -30,14 +28,14 @@ public class SpellHaste extends BaseSpellExp implements ISpell
 	@Override
 	public void cast(World world, EntityPlayer player, BlockPos pos)
 	{ 
-		ModSpells.addOrMergePotionEffect(player,new PotionEffect(Potion.digSpeed.id,seconds,PotionRegistry.II));
+		ModMain.addOrMergePotionEffect(player,new PotionEffect(Potion.digSpeed.id,seconds,PotionRegistry.II));
 		 
 	}
 
 	@Override
 	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos)
 	{
-		ModSpells.playSoundAt(player, "random.drink");
+		ModMain.playSoundAt(player, "random.drink");
 
 		super.onCastSuccess(world, player, pos);
 	}
@@ -45,7 +43,7 @@ public class SpellHaste extends BaseSpellExp implements ISpell
 	@Override
 	public int getExpCost()
 	{
-		return ModSpells.cfg.haste;
+		return ModMain.cfg.haste;
 	}
 	
 	@Override

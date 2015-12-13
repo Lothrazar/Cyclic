@@ -2,7 +2,7 @@ package com.lothrazar.samsmagic;
 
 import net.minecraftforge.common.config.Configuration;
 
-public class ConfigSpells
+public class ModConfig
 { 
 	private Configuration instance;
 	private String category = "";
@@ -24,12 +24,12 @@ public class ConfigSpells
 		return instance;
 	}
 	
-	public ConfigSpells(Configuration c)
+	public ModConfig(Configuration c)
 	{
 		instance = c; 
 		instance.load();
  
-		category = ModSpells.MODID;
+		category = ModMain.MODID;
 		instance.addCustomCategoryComment(category, 
 				"The number is the EXP cost of the spell.  Set to -1 to disable the spell.   ");
 		

@@ -10,8 +10,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 import com.lothrazar.samsmagic.ItemRegistry;
-import com.lothrazar.samsmagic.ModSpells;
-import com.lothrazar.samsmagic.SpellRegistry; 
+import com.lothrazar.samsmagic.ModMain;
 
 public class SpellChestTransport extends BaseSpellExp implements ISpell
 { 
@@ -126,7 +125,7 @@ public class SpellChestTransport extends BaseSpellExp implements ISpell
 	@Override
 	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos)
 	{
-		ModSpells.playSoundAt(player, "random.chestclosed");
+		ModMain.playSoundAt(player, "random.chestclosed");
 
 		super.onCastSuccess(world, player, pos);
 	}
@@ -134,6 +133,6 @@ public class SpellChestTransport extends BaseSpellExp implements ISpell
 	@Override
 	public int getExpCost()
 	{
-		return ModSpells.cfg.chesttransp;
+		return ModMain.cfg.chesttransp;
 	}
 }

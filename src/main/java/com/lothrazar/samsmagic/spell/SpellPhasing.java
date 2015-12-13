@@ -1,18 +1,14 @@
 package com.lothrazar.samsmagic.spell;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 
 import com.lothrazar.samsmagic.ItemRegistry;
-import com.lothrazar.samsmagic.ModSpells;
-import com.lothrazar.samsmagic.SpellRegistry; 
+import com.lothrazar.samsmagic.ModMain; 
 
 public class SpellPhasing extends BaseSpellExp implements ISpell
 { 
@@ -80,7 +76,7 @@ public class SpellPhasing extends BaseSpellExp implements ISpell
 	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos)
 	{
 		world.playSoundAtEntity(player, "mob.endermen.portal", 1.0F, 1.0F);  
-		ModSpells.spawnParticle(world, EnumParticleTypes.PORTAL, pos);
+		ModMain.spawnParticle(world, EnumParticleTypes.PORTAL, pos);
 
 		super.onCastSuccess(world, player, pos);
 	}
@@ -88,7 +84,7 @@ public class SpellPhasing extends BaseSpellExp implements ISpell
 	@Override
 	public int getExpCost()
 	{
-		return ModSpells.cfg.phase;
+		return ModMain.cfg.phase;
 	}
 	
 	@Override

@@ -1,16 +1,12 @@
 package com.lothrazar.samsmagic;
 
 import org.apache.logging.log4j.Logger;    
-
 import com.lothrazar.samsmagic.item.ItemChestSack;
 import com.lothrazar.samsmagic.potion.*; 
 import com.lothrazar.samsmagic.proxy.*; 
 import com.lothrazar.samsmagic.spell.*; 
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.resources.model.IBakedModel;
@@ -34,7 +30,7 @@ import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -53,18 +49,18 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  * https://github.com/PrinceOfAmber/SamsPowerups
  * @author Sam Bassett (Lothrazar)
  */
-@Mod(modid = ModSpells.MODID,  useMetadata = true )  
-public class ModSpells
+@Mod(modid = ModMain.MODID,  useMetadata = true )  
+public class ModMain
 {
 	//TODO: DO NOT RESET TIMER IF CASTING FAILS
 	public static final String MODID = "samsmagic";
 	public static final String TEXTURE_LOCATION = MODID + ":"; 
-	@Instance(value = ModSpells.MODID)
-	public static ModSpells instance;
+	@Instance(value = ModMain.MODID)
+	public static ModMain instance;
 	@SidedProxy(clientSide="com.lothrazar.samsmagic.proxy.ClientProxy", serverSide="com.lothrazar.samsmagic.proxy.CommonProxy")
 	public static CommonProxy proxy;   
 	public static Logger logger; 
-	public static ConfigSpells cfg;
+	public static ModConfig cfg;
 	public static SimpleNetworkWrapper network; 
 
 	@EventHandler
@@ -72,7 +68,7 @@ public class ModSpells
 	{ 
 		logger = event.getModLog();  
 		
-		cfg = new ConfigSpells(new Configuration(event.getSuggestedConfigurationFile()));
+		cfg = new ModConfig(new Configuration(event.getSuggestedConfigurationFile()));
 	  
     	network = NetworkRegistry.INSTANCE.newSimpleChannel( MODID );     	
     	
@@ -86,7 +82,7 @@ public class ModSpells
 		
 		PotionRegistry.registerPotionEffects();
 
-		FMLCommonHandler.instance().bus().register(instance); 
+		//FMLCommonHandler.instance().bus().register(instance); 
 		MinecraftForge.EVENT_BUS.register(instance); 
 		
 		SpellRegistry.setup();
@@ -136,15 +132,15 @@ public class ModSpells
     {   
         if(ClientProxy.keySpellToggle.isPressed())
         {
-       		ModSpells.network.sendToServer( new MessageKeyToggle());
+       		ModMain.network.sendToServer( new MessageKeyToggle());
         }
         else if(ClientProxy.keySpellUp.isPressed())
         {
-       		ModSpells.network.sendToServer( new MessageKeyRight());
+       		ModMain.network.sendToServer( new MessageKeyRight());
         }
         else if(ClientProxy.keySpellDown.isPressed())
         {
-       		ModSpells.network.sendToServer( new MessageKeyLeft());
+       		ModMain.network.sendToServer( new MessageKeyLeft());
         }
         else if(ClientProxy.keySpellCast.isPressed())
         {
@@ -159,7 +155,7 @@ public class ModSpells
     			posMouse = Minecraft.getMinecraft().thePlayer.getPosition();
     		}
     		
-       		ModSpells.network.sendToServer( new MessageKeyCast(posMouse));
+       		ModMain.network.sendToServer( new MessageKeyCast(posMouse));
         }
     } 
 	 
@@ -199,7 +195,7 @@ public class ModSpells
 		ItemStack held = event.entityPlayer.getCurrentEquippedItem();
 	
 		if(held != null && held.getItem() == ItemRegistry.itemChestSack  && 
-				event.action.RIGHT_CLICK_BLOCK == event.action)
+				Action.RIGHT_CLICK_BLOCK == event.action)
 		{ 
 			ItemChestSack.createAndFillChest(event.entityPlayer, held, event.pos.offset(event.face));
 		}
@@ -395,7 +391,7 @@ public class ModSpells
 	public static void spawnParticlePacketByID(BlockPos position, int particleID)
 	{
 		//this. fires only on server side. so send packet for client to spawn particles and so on
-		ModSpells.network.sendToAll(new MessagePotion(position, particleID));	
+		ModMain.network.sendToAll(new MessagePotion(position, particleID));	
 	}
 	
 	public static String lang(String name)

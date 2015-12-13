@@ -1,9 +1,7 @@
 package com.lothrazar.samsmagic.proxy;
   
-import com.lothrazar.samsmagic.ModSpells;
+import com.lothrazar.samsmagic.ModMain;
 import com.lothrazar.samsmagic.SpellRegistry;  
-import com.lothrazar.samsmagic.PlayerPowerups;
-
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -11,7 +9,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf; 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
-import net.minecraft.world.World;
 
 public class MessageKeyCast implements IMessage, IMessageHandler<MessageKeyCast, IMessage>
 {
@@ -25,7 +22,7 @@ public class MessageKeyCast implements IMessage, IMessageHandler<MessageKeyCast,
 	public MessageKeyCast(BlockPos pm)
 	{ 
 		pos = pm;
-		csv = ModSpells.posToCSV(pos);
+		csv = ModMain.posToCSV(pos);
 	}
 	@Override
 	public void fromBytes(ByteBuf buf)
@@ -34,7 +31,7 @@ public class MessageKeyCast implements IMessage, IMessageHandler<MessageKeyCast,
 
 		csv = ByteBufUtils.readUTF8String(buf); 
         
-		pos = ModSpells.stringCSVToBlockPos(csv);
+		pos = ModMain.stringCSVToBlockPos(csv);
 	}
 
 	@Override
