@@ -1,0 +1,15 @@
+{
+  "homepage": "http://www.curse.com/mc-mods/minecraft/233168-overpowered-inventory-375-inventory-slots-and-more",
+  "promos": {
+    "1.7.10-latest": "1.0.10",
+    "1.7.10-recommended": "1.0.10",
+    "1.8-latest": "1.0.13",
+    "1.8-recommended": "1.0.13",
+    "1.8.8-latest": "2.0.0",
+    "1.8.8-recommended": "2.0.0"
+  },
+  "1.8.8":{
+  	"1.0.14":"Removed custom version checker in favor of built in forge setup",
+  	"2.0.0":"Complete rewrite with better compatibility with other mods"
+  }
+}
