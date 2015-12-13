@@ -1,9 +1,8 @@
 package com.lothrazar.samsmagic.proxy;
 
 import org.lwjgl.input.Keyboard;   
-
 import  net.minecraft.item.Item;
-
+import com.lothrazar.samsmagic.Const;
 import com.lothrazar.samsmagic.ItemRegistry;
 import com.lothrazar.samsmagic.ModMain; 
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -46,7 +45,7 @@ public class ClientProxy extends CommonProxy
  
         for(Item i : ItemRegistry.items)
         {  
-        	name = ModMain.TEXTURE_LOCATION + i.getUnlocalizedName().replaceAll("item.", "");
+        	name = Const.TEXTURE_LOCATION + i.getUnlocalizedName().replaceAll("item.", "");
 
    			mesher.register(i, 0, new ModelResourceLocation( name , "inventory"));	 
         }

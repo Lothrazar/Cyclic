@@ -3,12 +3,13 @@ package com.lothrazar.samsmagic.spell;
 import com.lothrazar.samsmagic.ItemRegistry;
 import com.lothrazar.samsmagic.ModMain;
 import com.lothrazar.samsmagic.SpellRegistry;
-
+import com.lothrazar.samsmagic.util.UtilParticle;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
+import com.lothrazar.samsmagic.util.UtilExperience;
 
 public abstract class BaseSpellExp implements ISpell
 { 
@@ -40,14 +41,14 @@ public abstract class BaseSpellExp implements ISpell
 	{
 		player.swingItem();
 		
-		ModMain.spawnParticle(world, EnumParticleTypes.CRIT, pos);
+		UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT, pos);
 
-		ModMain.drainExp(player, getExpCost());
+		UtilExperience.drainExp(player, getExpCost());
 	}
 
 	public void onCastFailure(World world, EntityPlayer player, BlockPos pos)
 	{
-		ModMain.playSoundAt(player, "random.fizz");//"random.wood_click");
+		player.worldObj.playSoundAtEntity(player, "random.fizz",1,1);//"random.wood_click");
 
 		//ModSpells.addChatMessage(player, ModSpells.lang("spell.exp.missing")+this.getExpCost());
 	}
@@ -57,7 +58,7 @@ public abstract class BaseSpellExp implements ISpell
 	{
 		if(player.capabilities.isCreativeMode){return true;}
 		
-		return (getExpCost() <= ModMain.getExpTotal(player)); 
+		return (getExpCost() <= UtilExperience.getExpTotal(player)); 
 	}
 	
 	@Override

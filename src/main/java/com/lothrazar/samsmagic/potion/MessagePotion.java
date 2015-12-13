@@ -3,7 +3,7 @@ package com.lothrazar.samsmagic.potion;
 //import com.lothrazar.util.Util;
 
 import com.lothrazar.samsmagic.ModMain;
-
+import com.lothrazar.samsmagic.util.UtilParticle;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.BlockPos;
@@ -71,7 +71,7 @@ public class MessagePotion implements IMessage, IMessageHandler<MessagePotion, I
 			//at com.lothrazar.samscontent.potion.MessagePotion.onMessage(MessagePotion.java:69) ~[MessagePotion.class:?]
 			World world = Minecraft.getMinecraft().thePlayer.worldObj;//Minecraft.getMinecraft().getIntegratedServer().getEntityWorld();
   
-			ModMain.spawnParticle(world, EnumParticleTypes.getParticleFromId(message.particle), new BlockPos(message.x,message.y,message.z));
+			UtilParticle.spawnParticle(world, EnumParticleTypes.getParticleFromId(message.particle), new BlockPos(message.x,message.y,message.z));
 		}
 		 
 		return null;

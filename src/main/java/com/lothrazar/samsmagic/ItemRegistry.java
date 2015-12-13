@@ -9,10 +9,14 @@ public class ItemRegistry
 { 
 	public static ArrayList<Item> items = new ArrayList<Item>();
     
+	
+	public static ItemRespawnEggAnimal respawn_egg; 
+	
+	
 	//public static ItemRespawnEggAnimal respawn_egg; //TODO: make standalone mod for respawn_eggs
+	
 	public static Item exp_cost_dummy;
 	public static Item exp_cost_empty_dummy;
-
 	public static Item spell_dummy_deposit;
 	public static ItemChestSack itemChestSack;  
 	public static Item spell_ghost_dummy;
@@ -22,13 +26,13 @@ public class ItemRegistry
 	public static Item spell_dummy_slowfall;
 	public static Item spell_waterwalk_dummy;
 	
-	public static void registerItems()
+	public static void register()
 	{   
 		ItemRegistry.itemChestSack = new ItemChestSack();   
 		ItemRegistry.registerItem(ItemRegistry.itemChestSack, "chest_sack");
 	
-		//respawn_egg = new ItemRespawnEggAnimal();
-		//ItemRegistry.registerItem(respawn_egg, "respawn_egg");
+		respawn_egg = new ItemRespawnEggAnimal();
+		ItemRegistry.registerItem(respawn_egg, "respawn_egg");
 		
 		spell_dummy_deposit = new Item();
 		ItemRegistry.registerItem(spell_dummy_deposit, "spell_dummy_deposit");

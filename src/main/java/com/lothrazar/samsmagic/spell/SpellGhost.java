@@ -7,9 +7,9 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSettings.GameType;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-
 import com.lothrazar.samsmagic.ItemRegistry;
 import com.lothrazar.samsmagic.ModMain; 
+import com.lothrazar.samsmagic.util.UtilSound;
 
 public class SpellGhost extends BaseSpellExp  implements ISpell
 { 
@@ -49,7 +49,7 @@ public class SpellGhost extends BaseSpellExp  implements ISpell
 	@Override
 	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos)
 	{
-		ModMain.playSoundAt(player, "random.drink");
+		UtilSound.playSoundAt(player, "random.drink");
 
 		super.onCastSuccess(world, player, pos);
 	}

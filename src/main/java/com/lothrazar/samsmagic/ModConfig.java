@@ -29,7 +29,7 @@ public class ModConfig
 		instance = c; 
 		instance.load();
  
-		category = ModMain.MODID;
+		category = Const.MODID;
 		instance.addCustomCategoryComment(category, 
 				"The number is the EXP cost of the spell.  Set to -1 to disable the spell.   ");
 		

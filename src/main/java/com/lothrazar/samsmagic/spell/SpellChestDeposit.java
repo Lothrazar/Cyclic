@@ -2,6 +2,7 @@ package com.lothrazar.samsmagic.spell;
 
 import com.lothrazar.samsmagic.ItemRegistry;
 import com.lothrazar.samsmagic.ModMain;
+import com.lothrazar.samsmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -66,7 +67,7 @@ public class SpellChestDeposit extends BaseSpellExp
 	@Override
 	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos)
 	{
-		ModMain.playSoundAt(player, "random.chestopen");
+		UtilSound.playSoundAt(player, "random.chestopen");
 
 		super.onCastSuccess(world, player, pos);
 	}

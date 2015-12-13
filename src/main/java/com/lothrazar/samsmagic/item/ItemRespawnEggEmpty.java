@@ -1,7 +1,9 @@
 package com.lothrazar.samsmagic.item;
 
 import com.lothrazar.samsmagic.Const;
+import com.lothrazar.samsmagic.ItemRegistry;
 import com.lothrazar.samsmagic.ModMain;
+import com.lothrazar.samsmagic.util.UtilParticle;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable; 
 import net.minecraft.entity.passive.EntityBat;
@@ -16,6 +18,7 @@ import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.passive.EntitySquid;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
 
 public class ItemRespawnEggEmpty extends Item
@@ -94,20 +97,20 @@ public class ItemRespawnEggEmpty extends Item
 			entityPlayer.worldObj.removeEntity(target); 
 			
 			if(entityPlayer.worldObj.isRemote) 
-				ModMain.spawnParticle(entityPlayer.worldObj, EnumParticleTypes.VILLAGER_HAPPY, target.getPosition());
+				UtilParticle.spawnParticle(entityPlayer.worldObj, EnumParticleTypes.VILLAGER_HAPPY, target.getPosition());
 			else
 			{
 				//TODO: 
-				/*
+				
 				ItemStack stack = new ItemStack(ItemRegistry.respawn_egg,1,entity_id);
 				
 				if(target.hasCustomName())
 					stack.setStackDisplayName(target.getCustomNameTag());
 					
 				entityPlayer.dropPlayerItemWithRandomChoice(stack,true);
-*/
+
 			}
-			ModMain.playSoundAt(entityPlayer, "mob.zombie.remedy");
+			entityPlayer.worldObj.playSoundAtEntity(entityPlayer, "mob.zombie.remedy",1,1);
 			 
 			//ModSpells.decrHeldStackSize(entityPlayer);
 			

@@ -9,7 +9,7 @@ import net.minecraftforge.common.IExtendedEntityProperties;
 
 public class PlayerPowerups implements IExtendedEntityProperties
 {
-	private final static String EXT_PROP_NAME = "PlayerPowerups"+ModMain.MODID;
+	private final static String EXT_PROP_NAME = "PlayerPowerups"+Const.MODID;
 	private final EntityPlayer player;//we get one of these powerup classes for each player
   
 	private static final int SPELLMAIN_WATCHER = 22;

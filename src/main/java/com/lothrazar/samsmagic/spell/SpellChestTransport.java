@@ -8,9 +8,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
-
 import com.lothrazar.samsmagic.ItemRegistry;
 import com.lothrazar.samsmagic.ModMain;
+import com.lothrazar.samsmagic.util.UtilSound;
 
 public class SpellChestTransport extends BaseSpellExp implements ISpell
 { 
@@ -125,7 +125,7 @@ public class SpellChestTransport extends BaseSpellExp implements ISpell
 	@Override
 	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos)
 	{
-		ModMain.playSoundAt(player, "random.chestclosed");
+		UtilSound.playSoundAt(player, "random.chestclosed");
 
 		super.onCastSuccess(world, player, pos);
 	}

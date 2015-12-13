@@ -2,7 +2,7 @@ package com.lothrazar.samsmagic.proxy;
   
 import com.lothrazar.samsmagic.ModMain;
 import com.lothrazar.samsmagic.PlayerPowerups;
-
+import com.lothrazar.samsmagic.util.UtilSound;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -37,7 +37,7 @@ public class MessageKeyToggle implements IMessage, IMessageHandler<MessageKeyTog
 		int next = props.getSpellToggleNext();
 		props.setSpellToggle(next);
 		
-		ModMain.playSoundAt(player, "random.click");
+		UtilSound.playSoundAt(player, "random.click");
  
 		return null;
 	}

@@ -6,9 +6,10 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
-
 import com.lothrazar.samsmagic.ItemRegistry;
 import com.lothrazar.samsmagic.ModMain; 
+import com.lothrazar.samsmagic.util.UtilParticle;
+import com.lothrazar.samsmagic.util.UtilSound;
 
 public class SpellPhasing extends BaseSpellExp implements ISpell
 { 
@@ -75,8 +76,8 @@ public class SpellPhasing extends BaseSpellExp implements ISpell
 	@Override
 	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos)
 	{
-		world.playSoundAtEntity(player, "mob.endermen.portal", 1.0F, 1.0F);  
-		ModMain.spawnParticle(world, EnumParticleTypes.PORTAL, pos);
+		UtilSound.playSoundAt(player, "mob.endermen.portal");  
+		UtilParticle.spawnParticle(world, EnumParticleTypes.PORTAL, pos);
 
 		super.onCastSuccess(world, player, pos);
 	}

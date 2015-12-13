@@ -6,9 +6,9 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
-
 import com.lothrazar.samsmagic.ItemRegistry;
 import com.lothrazar.samsmagic.ModMain; 
+import com.lothrazar.samsmagic.util.UtilSound;
 
 public class SpellJump extends BaseSpellExp implements ISpell
 { 
@@ -40,7 +40,7 @@ public class SpellJump extends BaseSpellExp implements ISpell
 	@Override
 	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos)
 	{
-		ModMain.playSoundAt(player, "random.drink");
+		UtilSound.playSoundAt(player, "random.drink");
 
 		super.onCastSuccess(world, player, pos);
 	}

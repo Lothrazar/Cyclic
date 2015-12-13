@@ -1,10 +1,9 @@
 package com.lothrazar.samsmagic;
 
 import java.util.ArrayList; 
-
 import com.lothrazar.samsmagic.PlayerPowerups; 
 import com.lothrazar.samsmagic.spell.*;  
-
+import com.lothrazar.samsmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer; 
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
@@ -98,7 +97,7 @@ public class SpellRegistry
 		if(current.left() != null)
 		{
 			setPlayerCurrentSpell(player,current.left().getSpellID());
-			ModMain.playSoundAt(player, "random.orb");
+			UtilSound.playSoundAt(player, "random.orb");
 		}
 	}
 
@@ -109,7 +108,7 @@ public class SpellRegistry
 		if(current.right() != null)
 		{
 			setPlayerCurrentSpell(player,current.right().getSpellID()); 
-			ModMain.playSoundAt(player, "random.orb");
+			UtilSound.playSoundAt(player, "random.orb");
 		}
 	}
 	
