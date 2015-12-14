@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
@@ -39,10 +40,20 @@ public class EventRegistry {
         else if(ClientProxy.keySpellCast.isPressed())
         {
         	BlockPos posMouse = null;
-        	//TODO: pass these along to cast spell
-        	//Minecraft.getMinecraft().objectMouseOver.sideHit
-        	//Minecraft.getMinecraft().objectMouseOver.entityHit.getEntityId()
-    		if(Minecraft.getMinecraft().objectMouseOver != null && Minecraft.getMinecraft().objectMouseOver.getBlockPos() != null)
+        	//TODO: we could make diff packets for cast on entiyt vs block
+        	/*
+        	 // What type of ray trace hit was this? 0 = block, 1 = entity 
+    public MovingObjectPosition.MovingObjectType typeOfHit;*/
+        	
+        	int entity = (Minecraft.getMinecraft().objectMouseOver.entityHit == null) ? -1 :
+        		Minecraft.getMinecraft().objectMouseOver.entityHit.getEntityId();
+        	
+        	if(Minecraft.getMinecraft().objectMouseOver == null){
+        		System.out.println("objectMouseOver null" );
+        		return;
+        	}
+        	
+    		if(Minecraft.getMinecraft().objectMouseOver.getBlockPos() != null)
     		{
     			posMouse = Minecraft.getMinecraft().objectMouseOver.getBlockPos();
     		}
@@ -51,7 +62,9 @@ public class EventRegistry {
     			posMouse = Minecraft.getMinecraft().thePlayer.getPosition();
     		}
     		
-       		ModMain.network.sendToServer( new MessageKeyCast(posMouse));
+       		ModMain.network.sendToServer( new MessageKeyCast(posMouse
+       				,Minecraft.getMinecraft().objectMouseOver.sideHit
+       				,entity));
         }
     } 
 	 
