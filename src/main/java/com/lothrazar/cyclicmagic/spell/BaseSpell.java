@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.spell;
 
 import net.minecraft.util.ResourceLocation;
-import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.SpellRegistry;
 
 /**

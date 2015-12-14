@@ -1,13 +1,9 @@
 package com.lothrazar.cyclicmagic;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier; 
 import com.lothrazar.cyclicmagic.potion.PotionCustom;
 import net.minecraft.block.Block;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
