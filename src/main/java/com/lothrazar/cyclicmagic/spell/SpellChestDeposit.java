@@ -15,11 +15,6 @@ import net.minecraft.world.World;
 public class SpellChestDeposit extends BaseSpellExp
 {   	 
 	@Override
-	public String getSpellName() 
-	{
-		return "deposit";
-	} 
-	@Override
 	public boolean canPlayerCast(World world, EntityPlayer player, BlockPos pos)
 	{
 		if(super.canPlayerCast(world, player, pos) == false) {return false;}

@@ -18,13 +18,7 @@ public class SpellGhost extends BaseSpellExp  implements ISpell
 	private static final String KEY_EATLOC = "ghost_location";
 	private static final String KEY_EATDIM = "ghost_dim";
 	private static final int GHOST_SECONDS = 10;//so 30 seconds
-	
-	@Override
-	public String getSpellName()
-	{
-		return "ghost";
-	}
-
+ 
 	@Override
 	public boolean canPlayerCast(World world, EntityPlayer player, BlockPos pos)
 	{

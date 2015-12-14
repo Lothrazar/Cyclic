@@ -14,13 +14,7 @@ import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 
 public class SpellPhasing extends BaseSpellExp implements ISpell
-{ 
-	@Override
-	public String getSpellName()
-	{
-		return "phase";
-	}
-	
+{  
 	@Override
 	public boolean canPlayerCast(World world, EntityPlayer player, BlockPos pos)
 	{

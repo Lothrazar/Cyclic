@@ -15,13 +15,7 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 public class SpellJump extends BaseSpellExp implements ISpell
 { 
 	private static int seconds = 20 * 5;//TODO : config? reference? cost?
-
-	@Override
-	public String getSpellName()
-	{
-		return "jump";
-	}
-
+  
 	@Override
 	public void cast(World world, EntityPlayer player, BlockPos pos)
 	{

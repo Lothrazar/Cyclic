@@ -19,8 +19,8 @@ public abstract class BaseSpell implements ISpell{
 		return ID;
 	}
 	
-	@Deprecated
-	public abstract String getSpellName();
+//	@Deprecated
+//	public abstract String getSpellName();
 	
 	@Override
 	public ISpell left() 

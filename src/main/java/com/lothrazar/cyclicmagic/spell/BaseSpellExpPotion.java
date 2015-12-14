@@ -36,33 +36,5 @@ public abstract class BaseSpellExpPotion extends  BaseSpellExp implements ISpell
 
 		super.onCastSuccess(world, player, pos);
 	}
-	/*
-	 //needed for IF not abstract
-	public BaseSpellExpPotion(int id, int effectDuration, int effectAmplifier){
-		this.setPotion(id, effectDuration, effectAmplifier);
-	}
-	
-	
-	
-	
-	@Override
-	public String getSpellName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public int getSpellID() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	@Override
-	public ResourceLocation getIconDisplay() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public int getExpCost() {
-		// TODO Auto-generated method stub
-		return 0;
-	}*/
+
 }

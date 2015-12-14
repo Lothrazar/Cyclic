@@ -15,13 +15,7 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 public class SpellWaterwalk extends BaseSpellExp implements ISpell
 { 
 	private int seconds = 20 * 10; 
-	
-	@Override
-	public String getSpellName()
-	{
-		return "waterwalk";
-	}
-
+	 
 	@Override
 	public void cast(World world, EntityPlayer player, BlockPos pos)
 	{
