@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.spell;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -11,9 +10,6 @@ public interface ISpell
 	public ISpell left();
 	public ISpell right();
 
-	@Deprecated
-	public String getSpellName();
-	
 	public int getSpellID();
  
 	public void cast(World world, EntityPlayer player, BlockPos pos);

@@ -5,48 +5,27 @@ import com.lothrazar.cyclicmagic.ItemRegistry;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import com.lothrazar.cyclicmagic.util.UtilExperience;
 
-public abstract class BaseSpellExp implements ISpell
+public abstract class BaseSpellExp extends BaseSpell implements ISpell
 { 
-
 	private int expCost = 20;//default cost
+	
 	public int getExpCost()
 	{
-		return expCost;//ModMain.cfg.waterwalk;
+		return expCost; 
 	}
 	public void setExpCost(int cost) {
 		expCost = cost;
-	}
-	
-	@Override
-	public ISpell left() 
-	{
-		int idx = SpellRegistry.spellbook.indexOf(this);//-1 for not found
-		if(idx == -1){return null;}
-		
-		if(idx == 0) idx = SpellRegistry.spellbook.size() - 1;
-		else idx = idx-1;
-		
-		return SpellRegistry.spellbook.get(idx);
-	}
-
-	@Override
-	public ISpell right() 
-	{
-		int idx = SpellRegistry.spellbook.indexOf(this);
-		if(idx == -1){return null;}
-		
-		if(idx == SpellRegistry.spellbook.size() - 1) idx = 0;
-		else idx = idx+1;
-		
-		return SpellRegistry.spellbook.get(idx);
 	}
 	
 	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos)
@@ -60,9 +39,9 @@ public abstract class BaseSpellExp implements ISpell
 
 	public void onCastFailure(World world, EntityPlayer player, BlockPos pos)
 	{
-		player.worldObj.playSoundAtEntity(player, "random.fizz",1,1);//"random.wood_click");
+		UtilSound.playSoundAt(player, UtilSound.fizz);
 
-		//ModSpells.addChatMessage(player, ModSpells.lang("spell.exp.missing")+this.getExpCost());
+		player.addChatMessage(new ChatComponentTranslation(StatCollector.translateToLocal("spell.exp.missing") + this.getExpCost()));
 	}
 	
 	@Override
