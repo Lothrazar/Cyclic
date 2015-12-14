@@ -29,11 +29,4 @@ public class SpellSlowfall extends BaseSpellExp implements ISpell
 
 		super.onCastSuccess(world, player, pos);
 	}
-	private final ResourceLocation icon = new ResourceLocation(Const.MODID,"textures/spells/spell_dummy_slowfall.png");
-	
-	@Override
-	public ResourceLocation getIconDisplay()
-	{
-		return icon;
-	}
 }

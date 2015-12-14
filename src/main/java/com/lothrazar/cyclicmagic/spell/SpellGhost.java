@@ -95,11 +95,4 @@ public class SpellGhost extends BaseSpellExp  implements ISpell
 			}  
 		}
 	}  
-	private final ResourceLocation icon = new ResourceLocation(Const.MODID,"textures/spells/spell_ghost_dummy.png");
-	
-	@Override
-	public ResourceLocation getIconDisplay()
-	{
-		return icon;
-	}
 }

@@ -9,6 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -20,33 +21,36 @@ public class SpellRegistry {
 		int spellId = 0;
 		//then use ++spellId -> first thing is 1
 		spellbook = new ArrayList<ISpell>();
-		deposit = new SpellChestDeposit();
-		deposit.setExpCost(ModMain.cfg.deposit).setSpellID(++spellId);
+		//deposit = new SpellChestDeposit();
+		//deposit.setExpCost(ModMain.cfg.deposit).setSpellID(++spellId);
 		
 		ghost = new SpellGhost();
-		ghost.setExpCost(ModMain.cfg.ghost).setSpellID(++spellId);
-		jump = new SpellJump();
-		jump.setExpCost(ModMain.cfg.jump).setSpellID(++spellId);
-		phase = new SpellPhasing();
-		phase.setExpCost(ModMain.cfg.phase).setSpellID(++spellId);
-		slowfall = new SpellSlowfall();
-		slowfall.setExpCost(ModMain.cfg.slowfall).setSpellID(++spellId);
-		waterwalk = new SpellWaterwalk();
-		waterwalk.setExpCost(ModMain.cfg.waterwalk).setSpellID(++spellId);
-		haste = new SpellHaste();
-		haste.setExpCost(ModMain.cfg.haste).setSpellID(++spellId);
-
-		spellbook.add(deposit);
-		spellbook.add(haste);
-		spellbook.add(waterwalk);
-		spellbook.add(slowfall);
-		spellbook.add(jump);
-		spellbook.add(phase);
+		ghost.setExpCost(ModMain.cfg.ghost).setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/spell_ghost_dummy.png")).setSpellID(++spellId);
 		spellbook.add(ghost);
+		
+		jump = new SpellJump();
+		jump.setExpCost(ModMain.cfg.jump).setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/spell_jump_dummy.png")).setSpellID(++spellId);
+		spellbook.add(jump);
+		
+		phase = new SpellPhasing();
+		phase.setExpCost(ModMain.cfg.phase).setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/spell_dummy_phasing.png")).setSpellID(++spellId);
+		spellbook.add(phase);
+		
+		slowfall = new SpellSlowfall();
+		slowfall.setExpCost(ModMain.cfg.slowfall).setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/spell_dummy_slowfall.png")).setSpellID(++spellId);
+		spellbook.add(slowfall);
+		
+		waterwalk = new SpellWaterwalk();
+		waterwalk.setExpCost(ModMain.cfg.waterwalk).setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/spell_waterwalk_dummy.png")).setSpellID(++spellId);
+		spellbook.add(waterwalk);
+		
+		haste = new SpellHaste();
+		haste.setExpCost(ModMain.cfg.haste).setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/spell_haste_dummy.png")).setSpellID(++spellId);
+		spellbook.add(haste);
 	}
 
 	public static ArrayList<ISpell> spellbook;
-	public static BaseSpellExp deposit;
+	//public static BaseSpellExp deposit;
 	// public static ISpell chesttransp;
 	public static BaseSpellExp ghost;
 	public static BaseSpellExp jump;

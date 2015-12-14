@@ -20,11 +20,11 @@ public abstract class BaseSpellExp extends BaseSpell implements ISpell
 	{
 		return expCost; 
 	}
-	public ISpell setExpCost(int cost) {
+	public BaseSpell setExpCost(int cost) {
 		expCost = cost;
 		return this;
 	}
-	
+	//
 	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos)
 	{
 		player.swingItem();
