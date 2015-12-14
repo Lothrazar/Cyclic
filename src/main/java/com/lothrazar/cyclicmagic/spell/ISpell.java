@@ -11,12 +11,11 @@ public interface ISpell
 	public ISpell left();
 	public ISpell right();
 
+	@Deprecated
 	public String getSpellName();
 	
 	public int getSpellID();
  
-	public int getExpCost();
-
 	public void cast(World world, EntityPlayer player, BlockPos pos);
 	
 	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos);
@@ -25,7 +24,9 @@ public interface ISpell
 	
 	public ResourceLocation getIconDisplay();
 	
-	public ResourceLocation getIconDisplayHeader();
+	public ResourceLocation getIconDisplayHeaderEnabled();
+	
+	public ResourceLocation getIconDisplayHeaderDisabled();
 	
 	public boolean canPlayerCast(World world, EntityPlayer player, BlockPos pos);
 }

@@ -29,14 +29,14 @@ public class SpellRegistry
 		waterwalk = new SpellWaterwalk();
 		haste = new SpellHaste();
 
-		if(deposit.getExpCost() >= 0) spellbook.add(deposit); 
-		//if(chesttransp.getExpCost() >= 0)spellbook.add(chesttransp); 
-		if(haste.getExpCost() >= 0)spellbook.add(haste);
-		if(waterwalk.getExpCost() >= 0)spellbook.add(waterwalk );
-		if(slowfall.getExpCost() >= 0)spellbook.add(slowfall );
-		if(jump.getExpCost() >= 0)spellbook.add(jump );
-		if(phase.getExpCost() >= 0)spellbook.add(phase );
-		if(ghost.getExpCost() >= 0)spellbook.add(ghost);
+		spellbook.add(deposit); 
+		//spellbook.add(chesttransp); 
+		spellbook.add(haste);
+		spellbook.add(waterwalk );
+		spellbook.add(slowfall );
+		spellbook.add(jump );
+		spellbook.add(phase );
+		spellbook.add(ghost);
 	}
 
 	public static ArrayList<ISpell> spellbook;
@@ -203,95 +203,88 @@ public class SpellRegistry
 
 		ISpell spell = SpellRegistry.getPlayerCurrentISpell(player);
 
-		if(Minecraft.getMinecraft().gameSettings.showDebugInfo)
-		{
-			event.left.add(StatCollector.translateToLocal("key.spell."+spell.getSpellName()));
-		}
-		else
-		{
-			int ymain = 12;
-			int dim = 12;
-				
-			int x = 12, y = 2;
+		int ymain = 12;
+		int dim = 12;
 			
-			//Item ptr = SpellRegistry.canPlayerCastAnything(player) ? ItemRegistry.exp_cost_dummy : ItemRegistry.exp_cost_empty_dummy;
-			//spell.getIconDisplayHeader()
-			//UtilTextureRender.renderItemAt(new ItemStack(ptr),x,y,dim);
-			
-			//TODO: use the empty spell one also
-			UtilTextureRender.drawTextureSquare(spell.getIconDisplayHeader(),x,y,dim);
-			//int ysmall = ymain - 3;
-			int xmain = 10;
-			ymain = 14;
-			if(spell.getIconDisplay() != null)
-			{
-				x = xmain; 
-				y = ymain;
-				dim = 16;
-				UtilTextureRender.drawTextureSquare(spell.getIconDisplay(),x,y,dim);
-			}
-			
-			
-			ISpell spellNext = spell.left();//SpellRegistry.getSpellFromType(spell.getSpellID().next());
-			ISpell spellPrev = spell.right();//SpellRegistry.getSpellFromType(spell.getSpellID().prev());
-			
-			
-			if(spellNext != null)// && spellNext.getIconDisplay() != null
-			{
-				x = xmain-3; 
-				y = ymain + 16;
-				dim = 16/2;
-				UtilTextureRender.drawTextureSquare(spellNext.getIconDisplay(),x,y,dim);
-				
-				ISpell sLeftLeft = spellNext.left();//SpellRegistry.getSpellFromType(spellNext.getSpellID().next());
-
-				if(sLeftLeft != null && sLeftLeft.getIconDisplay() != null)
-				{
-					x = xmain-3 - 1; 
-					y = ymain + 16+14;
-					dim = 16/2 - 2;
-					UtilTextureRender.drawTextureSquare(sLeftLeft.getIconDisplay(),x,y,dim);
-					
-					ISpell another = sLeftLeft.left();
-					if(another != null)
-					{
-						x = xmain-3 - 3; 
-						y = ymain + 16+14+10;
-						dim = 16/2 - 4;
-						UtilTextureRender.drawTextureSquare(another.getIconDisplay(),x,y,dim);
-					}
-				}
-			}
-			if(spellPrev != null)// && spellPrev.getIconDisplay() != null
-			{
-				x = xmain+6; 
-				y = ymain + 16;
-				dim = 16/2;
-				UtilTextureRender.drawTextureSquare(spellPrev.getIconDisplay(),x,y,dim);
-
-				ISpell sRightRight = spellPrev.right();//SpellRegistry.getSpellFromType(spellPrev.getSpellID().prev());
-
-				if(sRightRight != null && sRightRight.getIconDisplay() != null)
-				{
-					x = xmain+6 + 4; 
-					y = ymain + 16+14;
-					dim = 16/2 - 2;
-					UtilTextureRender.drawTextureSquare(sRightRight.getIconDisplay(),x,y,dim);
-					
-					ISpell another = sRightRight.right();
-					if(another != null)
-					{
-						x = xmain+6 +7; 
-						y = ymain + 16+14+10;
-						dim = 16/2 - 4;
-						UtilTextureRender.drawTextureSquare(another.getIconDisplay(),x,y,dim);
-					}
-				}
-			}
-			
+		int x = 12, y = 2;
 		
-			
+		//draw header
+		if(SpellRegistry.canPlayerCastAnything(player)){
+			UtilTextureRender.drawTextureSquare(spell.getIconDisplayHeaderEnabled() ,x,y,dim);
 		}
+		else{
+			UtilTextureRender.drawTextureSquare(spell.getIconDisplayHeaderDisabled(),x,y,dim);
+		}
+		
+		//int ysmall = ymain - 3;
+		int xmain = 10;
+		ymain = 14;
+		if(spell.getIconDisplay() != null)
+		{
+			x = xmain; 
+			y = ymain;
+			dim = 16;
+			UtilTextureRender.drawTextureSquare(spell.getIconDisplay(),x,y,dim);
+		}
+		
+		
+		ISpell spellNext = spell.left();//SpellRegistry.getSpellFromType(spell.getSpellID().next());
+		ISpell spellPrev = spell.right();//SpellRegistry.getSpellFromType(spell.getSpellID().prev());
+		
+		
+		if(spellNext != null)// && spellNext.getIconDisplay() != null
+		{
+			x = xmain-3; 
+			y = ymain + 16;
+			dim = 16/2;
+			UtilTextureRender.drawTextureSquare(spellNext.getIconDisplay(),x,y,dim);
+			
+			ISpell sLeftLeft = spellNext.left();//SpellRegistry.getSpellFromType(spellNext.getSpellID().next());
+
+			if(sLeftLeft != null && sLeftLeft.getIconDisplay() != null)
+			{
+				x = xmain-3 - 1; 
+				y = ymain + 16+14;
+				dim = 16/2 - 2;
+				UtilTextureRender.drawTextureSquare(sLeftLeft.getIconDisplay(),x,y,dim);
+				
+				ISpell another = sLeftLeft.left();
+				if(another != null)
+				{
+					x = xmain-3 - 3; 
+					y = ymain + 16+14+10;
+					dim = 16/2 - 4;
+					UtilTextureRender.drawTextureSquare(another.getIconDisplay(),x,y,dim);
+				}
+			}
+		}
+		if(spellPrev != null)// && spellPrev.getIconDisplay() != null
+		{
+			x = xmain+6; 
+			y = ymain + 16;
+			dim = 16/2;
+			UtilTextureRender.drawTextureSquare(spellPrev.getIconDisplay(),x,y,dim);
+
+			ISpell sRightRight = spellPrev.right();//SpellRegistry.getSpellFromType(spellPrev.getSpellID().prev());
+
+			if(sRightRight != null && sRightRight.getIconDisplay() != null)
+			{
+				x = xmain+6 + 4; 
+				y = ymain + 16+14;
+				dim = 16/2 - 2;
+				UtilTextureRender.drawTextureSquare(sRightRight.getIconDisplay(),x,y,dim);
+				
+				ISpell another = sRightRight.right();
+				if(another != null)
+				{
+					x = xmain+6 +7; 
+					y = ymain + 16+14+10;
+					dim = 16/2 - 4;
+					UtilTextureRender.drawTextureSquare(another.getIconDisplay(),x,y,dim);
+				}
+			}
+		}
+		
 	}
 	
 }

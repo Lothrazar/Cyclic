@@ -15,6 +15,9 @@ import com.lothrazar.cyclicmagic.util.UtilExperience;
 
 public abstract class BaseSpellExp implements ISpell
 { 
+	public abstract int getExpCost();
+	//TODO: do a setExpCost, instead of hard reffing config inside the spells
+	
 	@Override
 	public ISpell left() 
 	{
@@ -64,10 +67,16 @@ public abstract class BaseSpellExp implements ISpell
 	}
 	
 	private final ResourceLocation header = new ResourceLocation(Const.MODID,"textures/spells/exp_cost_dummy.png");
+	private final ResourceLocation header_empty = new ResourceLocation(Const.MODID,"textures/spells/exp_cost_empty_dummy.png");
 	
 	@Override
-	public ResourceLocation getIconDisplayHeader()
+	public ResourceLocation getIconDisplayHeaderEnabled()
 	{
 		return header;
+	}
+	@Override
+	public ResourceLocation getIconDisplayHeaderDisabled()
+	{
+		return header_empty;
 	}
 }
