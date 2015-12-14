@@ -62,12 +62,6 @@ public class SpellChestDeposit extends BaseSpellExp
 		return icon;
 	}
 	@Override
-	public int getExpCost() 
-	{
-		return ModMain.cfg.deposit;
-	}
-
-	@Override
 	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos)
 	{
 		UtilSound.playSoundAt(player, "random.chestopen");

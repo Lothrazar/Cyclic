@@ -34,12 +34,6 @@ public class SpellJump extends BaseSpellExp implements ISpell
 	}
 
 	@Override
-	public int getExpCost()
-	{
-		return ModMain.cfg.jump;
-	}
-
-	@Override
 	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos)
 	{
 		UtilSound.playSoundAt(player, "random.drink");

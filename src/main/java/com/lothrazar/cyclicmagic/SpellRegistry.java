@@ -23,12 +23,18 @@ public class SpellRegistry
 		deposit = new SpellChestDeposit(); 
 		//chesttransp = new SpellChestTransport(); 
 		ghost = new SpellGhost();
+		ghost.setExpCost(ModMain.cfg.ghost);
 		jump = new SpellJump();
+		jump.setExpCost(ModMain.cfg.jump);
 		phase = new SpellPhasing();
+		phase.setExpCost(ModMain.cfg.phase);
 		slowfall = new SpellSlowfall();
+		slowfall.setExpCost(ModMain.cfg.slowfall);
 		waterwalk = new SpellWaterwalk();
+		waterwalk.setExpCost(ModMain.cfg.waterwalk);
 		haste = new SpellHaste();
-
+		haste.setExpCost(ModMain.cfg.haste);
+		
 		spellbook.add(deposit); 
 		//spellbook.add(chesttransp); 
 		spellbook.add(haste);
@@ -40,14 +46,14 @@ public class SpellRegistry
 	}
 
 	public static ArrayList<ISpell> spellbook;
-	public static ISpell deposit;
+	public static BaseSpellExp deposit;
 	//public static ISpell chesttransp;
-	public static ISpell ghost;
-	public static ISpell jump;
-	public static ISpell phase;
-	public static ISpell slowfall;
-	public static ISpell waterwalk;
-	public static ISpell haste;
+	public static BaseSpellExp ghost;
+	public static BaseSpellExp jump;
+	public static BaseSpellExp phase;
+	public static BaseSpellExp slowfall;
+	public static BaseSpellExp waterwalk;
+	public static BaseSpellExp haste;
 	 
 	public static ISpell getDefaultSpell()
 	{

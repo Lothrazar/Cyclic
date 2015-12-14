@@ -14,7 +14,7 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 
 public class SpellWaterwalk extends BaseSpellExp implements ISpell
 { 
-	private static int seconds = 20 * 10; 
+	private int seconds = 20 * 10; 
 	
 	@Override
 	public String getSpellName()
@@ -30,8 +30,7 @@ public class SpellWaterwalk extends BaseSpellExp implements ISpell
 	@Override
 	public void cast(World world, EntityPlayer player, BlockPos pos)
 	{
-		ModMain.addOrMergePotionEffect(player,new PotionEffect(PotionRegistry.waterwalk.id,seconds,0));
-
+		ModMain.addOrMergePotionEffect(player,new PotionEffect(PotionRegistry.waterwalk.id,seconds,0)); 
 	}
 	
 	@Override
@@ -40,11 +39,6 @@ public class SpellWaterwalk extends BaseSpellExp implements ISpell
 		UtilSound.playSoundAt(player, "random.drink");
 
 		super.onCastSuccess(world, player, pos);
-	}
-	@Override
-	public int getExpCost()
-	{
-		return ModMain.cfg.waterwalk;
 	}
 	private final ResourceLocation icon = new ResourceLocation(Const.MODID,"textures/spells/spell_waterwalk_dummy.png");
 	

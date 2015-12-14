@@ -84,11 +84,6 @@ public class SpellPhasing extends BaseSpellExp implements ISpell
 		super.onCastSuccess(world, player, pos);
 	}
 
-	@Override
-	public int getExpCost()
-	{
-		return ModMain.cfg.phase;
-	}
 	private final ResourceLocation icon = new ResourceLocation(Const.MODID,"textures/spells/spell_dummy_phasing.png");
 	
 	@Override

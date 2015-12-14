@@ -40,12 +40,6 @@ public class SpellSlowfall extends BaseSpellExp implements ISpell
 
 		super.onCastSuccess(world, player, pos);
 	}
-	
-	@Override
-	public int getExpCost()
-	{
-		return ModMain.cfg.slowfall;
-	}
 	private final ResourceLocation icon = new ResourceLocation(Const.MODID,"textures/spells/spell_dummy_slowfall.png");
 	
 	@Override

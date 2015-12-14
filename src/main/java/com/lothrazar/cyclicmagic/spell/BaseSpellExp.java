@@ -15,8 +15,15 @@ import com.lothrazar.cyclicmagic.util.UtilExperience;
 
 public abstract class BaseSpellExp implements ISpell
 { 
-	public abstract int getExpCost();
-	//TODO: do a setExpCost, instead of hard reffing config inside the spells
+
+	private int expCost = 20;//default cost
+	public int getExpCost()
+	{
+		return expCost;//ModMain.cfg.waterwalk;
+	}
+	public void setExpCost(int cost) {
+		expCost = cost;
+	}
 	
 	@Override
 	public ISpell left() 
