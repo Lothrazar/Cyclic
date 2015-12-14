@@ -17,6 +17,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class SpellRegistry {
+	
 	public static void register() {
 		int duration = Const.TICKS_PER_SEC * 20;
 		
@@ -79,6 +80,7 @@ public class SpellRegistry {
 	public static final int SPELL_TIMER_MAX = 20;
 
 	public static boolean canPlayerCastAnything(EntityPlayer player) {
+		//TODO: allow each spell has its own cooldown timer
 		PlayerPowerups props = PlayerPowerups.get(player);
 		return props.getSpellTimer() == 0;
 	}

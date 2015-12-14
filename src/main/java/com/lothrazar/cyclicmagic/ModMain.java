@@ -71,8 +71,6 @@ public class ModMain
 
 		//FMLCommonHandler.instance().bus().register(instance); 
 		MinecraftForge.EVENT_BUS.register(new EventRegistry()); 
-		
-
 	}
 
 	@EventHandler
