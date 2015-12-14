@@ -21,6 +21,7 @@ public class MessageKeyCast implements IMessage, IMessageHandler<MessageKeyCast,
 	
 	public MessageKeyCast(BlockPos pm)
 	{ 
+		//TODO: convert to using NBT
 		pos = pm;
 		csv = ModMain.posToCSV(pos);
 	}

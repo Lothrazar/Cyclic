@@ -39,7 +39,9 @@ public class EventRegistry {
         else if(ClientProxy.keySpellCast.isPressed())
         {
         	BlockPos posMouse = null;
-        	
+        	//TODO: pass these along to cast spell
+        	//Minecraft.getMinecraft().objectMouseOver.sideHit
+        	//Minecraft.getMinecraft().objectMouseOver.entityHit.getEntityId()
     		if(Minecraft.getMinecraft().objectMouseOver != null && Minecraft.getMinecraft().objectMouseOver.getBlockPos() != null)
     		{
     			posMouse = Minecraft.getMinecraft().objectMouseOver.getBlockPos();

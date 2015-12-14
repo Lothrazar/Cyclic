@@ -55,9 +55,16 @@ public class SpellRegistry {
 		spellbook.add(haste);
 		
 		collect = new SpellCollect();
-		//.setExpCost(ModMain.cfg.haste)
 		collect.setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/collect.png")).setSpellID(++spellId);
 		spellbook.add(collect);
+		
+		rotate = new SpellRotate();
+		rotate.setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/collect.png")).setSpellID(++spellId);
+		spellbook.add(rotate);
+
+		piston = new SpellPiston();
+		piston.setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/piston.png")).setSpellID(++spellId);
+		spellbook.add(piston);
 	}
 
 	public static ArrayList<ISpell> spellbook;
@@ -70,6 +77,8 @@ public class SpellRegistry {
 	public static SpellExpPotion waterwalk;
 	public static SpellExpPotion haste;
 	public static SpellCollect collect;
+	public static BaseSpellExp rotate;
+	public static BaseSpellExp piston;
 
 	public static ISpell getDefaultSpell() {
 		return spellbook.get(0);
