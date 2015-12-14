@@ -5,7 +5,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.ItemRegistry;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -44,9 +46,11 @@ public class SpellJump extends BaseSpellExp implements ISpell
 
 		super.onCastSuccess(world, player, pos);
 	}
+	private final ResourceLocation icon = new ResourceLocation(Const.MODID,"textures/spells/spell_jump_dummy.png");
+	
 	@Override
-	public ItemStack getIconDisplay()
+	public ResourceLocation getIconDisplay()
 	{
-		return new ItemStack(ItemRegistry.spell_jump_dummy);
+		return icon;
 	}
 }

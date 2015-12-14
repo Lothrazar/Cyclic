@@ -4,7 +4,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.ItemRegistry;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.PotionRegistry;
@@ -44,10 +46,11 @@ public class SpellSlowfall extends BaseSpellExp implements ISpell
 	{
 		return ModMain.cfg.slowfall;
 	}
+	private final ResourceLocation icon = new ResourceLocation(Const.MODID,"textures/spells/spell_dummy_slowfall.png");
 	
 	@Override
-	public ItemStack getIconDisplay()
-	{ 
-		return new ItemStack(ItemRegistry.spell_dummy_slowfall);
+	public ResourceLocation getIconDisplay()
+	{
+		return icon;
 	}
 }

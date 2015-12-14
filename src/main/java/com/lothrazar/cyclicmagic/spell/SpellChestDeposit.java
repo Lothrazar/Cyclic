@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.spell;
 
+import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.ItemRegistry;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -8,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public class SpellChestDeposit extends BaseSpellExp
@@ -51,13 +53,14 @@ public class SpellChestDeposit extends BaseSpellExp
 			}
 		}
 	}
-
+ 
+	private final ResourceLocation icon = new ResourceLocation(Const.MODID,"textures/spells/spell_dummy_deposit.png");
+	
 	@Override
-	public ItemStack getIconDisplay() 
+	public ResourceLocation getIconDisplay()
 	{
-		return new ItemStack(ItemRegistry.spell_dummy_deposit);
+		return icon;
 	}
-
 	@Override
 	public int getExpCost() 
 	{

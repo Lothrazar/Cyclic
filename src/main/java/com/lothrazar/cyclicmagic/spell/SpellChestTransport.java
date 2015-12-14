@@ -7,7 +7,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.ItemRegistry;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -115,11 +117,12 @@ public class SpellChestTransport extends BaseSpellExp implements ISpell
 		world.setBlockToAir(pos); 
  
 	}
-
+	private final ResourceLocation icon = new ResourceLocation(Const.MODID,"textures/spells/chest_sack.png");
+	
 	@Override
-	public ItemStack getIconDisplay()
+	public ResourceLocation getIconDisplay()
 	{
-		return new ItemStack(ItemRegistry.itemChestSack);
+		return icon;
 	}
 
 	@Override

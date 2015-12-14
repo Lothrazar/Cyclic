@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.spell;
 
+import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.ItemRegistry;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.SpellRegistry;
@@ -8,6 +9,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import com.lothrazar.cyclicmagic.util.UtilExperience;
 
@@ -61,9 +63,11 @@ public abstract class BaseSpellExp implements ISpell
 		return (getExpCost() <= UtilExperience.getExpTotal(player)); 
 	}
 	
+	private final ResourceLocation header = new ResourceLocation(Const.MODID,"textures/spells/exp_cost_dummy.png");
+	
 	@Override
-	public ItemStack getIconDisplayHeader()
+	public ResourceLocation getIconDisplayHeader()
 	{
-		return new ItemStack(ItemRegistry.exp_cost_dummy);
+		return header;
 	}
 }

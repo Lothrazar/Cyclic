@@ -1,7 +1,7 @@
 {
     "parent": "builtin/generated",
     "textures": {
-        "layer0": "samsmagic:items/chest_sack"
+        "layer0": "cyclicmagic/chest_sack"
     },
     "display": {
         "thirdperson": {

@@ -3,6 +3,7 @@ package com.lothrazar.cyclicmagic.spell;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public interface ISpell
@@ -22,9 +23,9 @@ public interface ISpell
 	
 	public void onCastFailure(World world, EntityPlayer player, BlockPos pos);
 	
-	public ItemStack getIconDisplay();
+	public ResourceLocation getIconDisplay();
 	
-	public ItemStack getIconDisplayHeader();
+	public ResourceLocation getIconDisplayHeader();
 	
 	public boolean canPlayerCast(World world, EntityPlayer player, BlockPos pos);
 }

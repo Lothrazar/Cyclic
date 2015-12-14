@@ -4,9 +4,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSettings.GameType;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.ItemRegistry;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -105,11 +107,12 @@ public class SpellGhost extends BaseSpellExp  implements ISpell
 			}  
 		}
 	}  
-
+	private final ResourceLocation icon = new ResourceLocation(Const.MODID,"textures/spells/spell_ghost_dummy.png");
+	
 	@Override
-	public ItemStack getIconDisplay()
+	public ResourceLocation getIconDisplay()
 	{
-		return new ItemStack(ItemRegistry.spell_ghost_dummy);
+		return icon;
 	}
 
 	@Override

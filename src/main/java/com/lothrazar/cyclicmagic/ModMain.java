@@ -10,6 +10,7 @@ import com.lothrazar.cyclicmagic.proxy.MessageKeyRight;
 import com.lothrazar.cyclicmagic.proxy.MessageKeyToggle;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.spell.SpellGhost;
+import com.lothrazar.cyclicmagic.util.UtilTextureRender;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -25,6 +26,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -232,17 +234,7 @@ public class ModMain
 		//PotionRegistry.tickFrost(event); 
 	}
 
-	@SideOnly(Side.CLIENT)
-	public static void renderItemAt(ItemStack stack, int x, int y, int dim) {
-		// first get texture from item stack
-		IBakedModel iBakedModel = Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getItemModel(stack);
-		TextureAtlasSprite textureAtlasSprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(iBakedModel.getTexture().getIconName());
-
-		Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
-		//Minecraft.getMinecraft().
-		if (Minecraft.getMinecraft().ingameGUI != null)
-			Minecraft.getMinecraft().ingameGUI.drawTexturedModalRect(x, y, textureAtlasSprite, dim, dim);
-	}
+	
 	
 	@SideOnly(Side.CLIENT)
 	private void drawSpell(RenderGameOverlayEvent.Text event)
@@ -262,10 +254,12 @@ public class ModMain
 				
 			int x = 12, y = 2;
 			
-			Item ptr = SpellRegistry.canPlayerCastAnything(player) ? ItemRegistry.exp_cost_dummy : ItemRegistry.exp_cost_empty_dummy;
+			//Item ptr = SpellRegistry.canPlayerCastAnything(player) ? ItemRegistry.exp_cost_dummy : ItemRegistry.exp_cost_empty_dummy;
 			//spell.getIconDisplayHeader()
-			renderItemAt(new ItemStack(ptr),x,y,dim);
-				
+			//UtilTextureRender.renderItemAt(new ItemStack(ptr),x,y,dim);
+			
+			//TODO: use the empty spell one also
+			UtilTextureRender.renderResourceAt(spell.getIconDisplayHeader(),x,y,dim);
 			//int ysmall = ymain - 3;
 			int xmain = 10;
 			ymain = 14;
@@ -274,7 +268,7 @@ public class ModMain
 				x = xmain; 
 				y = ymain;
 				dim = 16;
-				renderItemAt(spell.getIconDisplay(),x,y,dim);
+				UtilTextureRender.renderResourceAt(spell.getIconDisplay(),x,y,dim);
 			}
 			
 			
@@ -287,7 +281,7 @@ public class ModMain
 				x = xmain-3; 
 				y = ymain + 16;
 				dim = 16/2;
-				renderItemAt(spellNext.getIconDisplay(),x,y,dim);
+				UtilTextureRender.renderResourceAt(spellNext.getIconDisplay(),x,y,dim);
 				
 				ISpell sLeftLeft = spellNext.left();//SpellRegistry.getSpellFromType(spellNext.getSpellID().next());
 
@@ -296,7 +290,7 @@ public class ModMain
 					x = xmain-3 - 1; 
 					y = ymain + 16+14;
 					dim = 16/2 - 2;
-					renderItemAt(sLeftLeft.getIconDisplay(),x,y,dim);
+					UtilTextureRender.renderResourceAt(sLeftLeft.getIconDisplay(),x,y,dim);
 					
 					ISpell another = sLeftLeft.left();
 					if(another != null)
@@ -304,7 +298,7 @@ public class ModMain
 						x = xmain-3 - 3; 
 						y = ymain + 16+14+10;
 						dim = 16/2 - 4;
-						renderItemAt(another.getIconDisplay(),x,y,dim);
+						UtilTextureRender.renderResourceAt(another.getIconDisplay(),x,y,dim);
 					}
 				}
 			}
@@ -313,7 +307,7 @@ public class ModMain
 				x = xmain+6; 
 				y = ymain + 16;
 				dim = 16/2;
-				renderItemAt(spellPrev.getIconDisplay(),x,y,dim);
+				UtilTextureRender.renderResourceAt(spellPrev.getIconDisplay(),x,y,dim);
 
 				ISpell sRightRight = spellPrev.right();//SpellRegistry.getSpellFromType(spellPrev.getSpellID().prev());
 
@@ -322,7 +316,7 @@ public class ModMain
 					x = xmain+6 + 4; 
 					y = ymain + 16+14;
 					dim = 16/2 - 2;
-					renderItemAt(sRightRight.getIconDisplay(),x,y,dim);
+					UtilTextureRender.renderResourceAt(sRightRight.getIconDisplay(),x,y,dim);
 					
 					ISpell another = sRightRight.right();
 					if(another != null)
@@ -330,7 +324,7 @@ public class ModMain
 						x = xmain+6 +7; 
 						y = ymain + 16+14+10;
 						dim = 16/2 - 4;
-						renderItemAt(another.getIconDisplay(),x,y,dim);
+						UtilTextureRender.renderResourceAt(another.getIconDisplay(),x,y,dim);
 					}
 				}
 			}

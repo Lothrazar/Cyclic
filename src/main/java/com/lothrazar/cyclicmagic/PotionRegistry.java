@@ -39,9 +39,9 @@ public class PotionRegistry
 		//???http://www.minecraftforge.net/forum/index.php?topic=12358.0
 		
 		//progress: they are not blank anymore, are instead using a default vanilla one from a beacon.
-		PotionRegistry.waterwalk = (new PotionCustom(ModMain.cfg.potionIdWaterwalk, new ResourceLocation("waterwalk") , false, 0, new ItemStack(ItemRegistry.spell_waterwalk_dummy))).setPotionName("potion.waterwalk");
+		PotionRegistry.waterwalk = (new PotionCustom(ModMain.cfg.potionIdWaterwalk, new ResourceLocation(Const.MODID,"textures/spells/waterwalk.png"), false, 0)).setPotionName("potion.waterwalk");
 		
-		PotionRegistry.slowfall = (new PotionCustom(ModMain.cfg.potionIdSlowfall,   new ResourceLocation("slowfall"), false, 0, new ItemStack(ItemRegistry.spell_dummy_slowfall))).setPotionName("potion.slowfall");
+		PotionRegistry.slowfall = (new PotionCustom(ModMain.cfg.potionIdSlowfall,    new ResourceLocation(Const.MODID,"textures/spells/slowfall.png") , false, 0)).setPotionName("potion.slowfall");
 	 
 		//TODO: test out brewing api for these?
 		//PotionRegistry.frost = (new PotionCustom(ModSpells.cfg.potionIdFrozen, new ResourceLocation("frost"), false, 0, new ItemStack(ItemRegistry.spell_frostbolt_dummy))).setPotionName("potion.frozen");	  
