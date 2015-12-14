@@ -20,11 +20,6 @@ public class SpellHaste extends BaseSpellExp implements ISpell
 	{
 		return "haste";
 	}
-	@Override
-	public int getSpellID() 
-	{
-		return 4;
-	}
 
 	@Override
 	public void cast(World world, EntityPlayer player, BlockPos pos)

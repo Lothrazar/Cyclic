@@ -21,11 +21,6 @@ public class SpellWaterwalk extends BaseSpellExp implements ISpell
 	{
 		return "waterwalk";
 	}
-	@Override
-	public int getSpellID() 
-	{
-		return 8;
-	}
 
 	@Override
 	public void cast(World world, EntityPlayer player, BlockPos pos)

@@ -1,13 +1,9 @@
 package com.lothrazar.cyclicmagic.spell;
 
 import com.lothrazar.cyclicmagic.Const;
-import com.lothrazar.cyclicmagic.ItemRegistry;
-import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumParticleTypes;
@@ -24,8 +20,9 @@ public abstract class BaseSpellExp extends BaseSpell implements ISpell
 	{
 		return expCost; 
 	}
-	public void setExpCost(int cost) {
+	public ISpell setExpCost(int cost) {
 		expCost = cost;
+		return this;
 	}
 	
 	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos)

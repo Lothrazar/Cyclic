@@ -11,6 +11,7 @@ public interface ISpell
 	public ISpell right();
 
 	public int getSpellID();
+	public ISpell setSpellID(int id);
  
 	public void cast(World world, EntityPlayer player, BlockPos pos);
 	

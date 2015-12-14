@@ -20,12 +20,6 @@ public class SpellChestDeposit extends BaseSpellExp
 		return "deposit";
 	} 
 	@Override
-	public int getSpellID() 
-	{
-		return 1;
-	}
- 
-	@Override
 	public boolean canPlayerCast(World world, EntityPlayer player, BlockPos pos)
 	{
 		if(super.canPlayerCast(world, player, pos) == false) {return false;}

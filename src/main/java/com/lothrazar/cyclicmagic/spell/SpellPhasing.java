@@ -20,11 +20,6 @@ public class SpellPhasing extends BaseSpellExp implements ISpell
 	{
 		return "phase";
 	}
-	@Override
-	public int getSpellID() 
-	{
-		return 6;
-	}
 	
 	@Override
 	public boolean canPlayerCast(World world, EntityPlayer player, BlockPos pos)

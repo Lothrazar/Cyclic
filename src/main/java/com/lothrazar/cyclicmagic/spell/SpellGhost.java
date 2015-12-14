@@ -24,11 +24,7 @@ public class SpellGhost extends BaseSpellExp  implements ISpell
 	{
 		return "ghost";
 	}
-	@Override
-	public int getSpellID() 
-	{
-		return 3;
-	}
+
 	@Override
 	public boolean canPlayerCast(World world, EntityPlayer player, BlockPos pos)
 	{

@@ -21,11 +21,6 @@ public class SpellJump extends BaseSpellExp implements ISpell
 	{
 		return "jump";
 	}
-	@Override
-	public int getSpellID() 
-	{
-		return 5;
-	}
 
 	@Override
 	public void cast(World world, EntityPlayer player, BlockPos pos)

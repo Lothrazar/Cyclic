@@ -21,11 +21,6 @@ public class SpellSlowfall extends BaseSpellExp implements ISpell
 	{
 		return "slowfall";
 	}
-	@Override
-	public int getSpellID() 
-	{
-		return 7;
-	}
 
 	@Override
 	public void cast(World world, EntityPlayer player, BlockPos pos)
