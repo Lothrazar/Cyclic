@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier; 
 import com.lothrazar.cyclicmagic.potion.PotionCustom;
 import net.minecraft.block.Block;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -26,10 +27,13 @@ public class PotionRegistry
 	public final static int IV = 3;
 	public final static int V = 4;
 	
-	public static void registerPotionEffects()
+	public static void register()
 	{ 
-		initPotionTypesReflection();
-	     
+		//initPotionTypesReflection();
+
+		//NEW : the array is now [256]
+		//old v's of the game only had 32 so NO room to add modded potions
+		
 	    registerNewPotionEffects(); 
 	}
  
@@ -38,15 +42,16 @@ public class PotionRegistry
 		//http://www.minecraftforge.net/forum/index.php?topic=11024.0
 		//???http://www.minecraftforge.net/forum/index.php?topic=12358.0
 		
-		//progress: they are not blank anymore, are instead using a default vanilla one from a beacon.
-		PotionRegistry.waterwalk = (new PotionCustom(ModMain.cfg.potionIdWaterwalk, new ResourceLocation(Const.MODID,"textures/spells/waterwalk.png"), false, 0)).setPotionName("potion.waterwalk");
+		PotionRegistry.waterwalk = new PotionCustom(ModMain.cfg.potionIdWaterwalk, new ResourceLocation(Const.MODID,"textures/potions/waterwalk.png"), false, 0,"potion.waterwalk");
 		
-		PotionRegistry.slowfall = (new PotionCustom(ModMain.cfg.potionIdSlowfall,    new ResourceLocation(Const.MODID,"textures/spells/slowfall.png") , false, 0)).setPotionName("potion.slowfall");
+		PotionRegistry.slowfall = new PotionCustom(ModMain.cfg.potionIdSlowfall,    new ResourceLocation(Const.MODID,"textures/potions/slowfall.png") , false, 0,"potion.slowfall");
 	 
 		//TODO: test out brewing api for these?
+		
+		//TODO: bring back frost pot
 		//PotionRegistry.frost = (new PotionCustom(ModSpells.cfg.potionIdFrozen, new ResourceLocation("frost"), false, 0, new ItemStack(ItemRegistry.spell_frostbolt_dummy))).setPotionName("potion.frozen");	  
 	}
-
+/*
 	private static void initPotionTypesReflection() 
 	{
 		//because it is final, and because forge does not natively do this, we must change it this way
@@ -77,7 +82,12 @@ public class PotionRegistry
 	        }
 	    }
 	}
-
+*/
+	
+	
+	
+	
+	
 	/*
 	private static void doPotionParticle(World world, EntityLivingBase living, EnumParticleTypes particle)
 	{
@@ -117,7 +127,10 @@ public class PotionRegistry
 			tickLiquidWalk(event,Blocks.lava);
 	    }
 	}*/
-
+	
+	
+	//TODO: refactor this to @override Potion. public void performEffect(EntityLivingBase entityLivingBaseIn, int p_76394_2_)
+//TODO: do potion particles 
 	public static void tickWaterwalk(LivingUpdateEvent event) 
 	{
 		if(event.entityLiving.isPotionActive(PotionRegistry.waterwalk)) 
