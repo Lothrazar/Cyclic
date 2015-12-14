@@ -3,13 +3,13 @@ package com.lothrazar.cyclicmagic.proxy;
 import org.lwjgl.input.Keyboard;   
 import  net.minecraft.item.Item;
 import com.lothrazar.cyclicmagic.ItemRegistry;
-import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.Const;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemModelMesher;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.EntityList;
 
 public class ClientProxy extends CommonProxy 
 {   
@@ -25,7 +25,7 @@ public class ClientProxy extends CommonProxy
 	public static final String keySpellToggleName = "key.spell.toggle";
 	
     @Override
-    public void registerRenderers() 
+    public void register() 
     {  
     	registerKeyBindings(); 
 
@@ -50,14 +50,14 @@ public class ClientProxy extends CommonProxy
    			mesher.register(i, 0, new ModelResourceLocation( name , "inventory"));	 
         }
         /*
-        if(ModMain.cfg.respawn_egg)
-        {
-        	for(Object key : EntityList.entityEggs.keySet())
-            {
-            	mesher.register(ItemRegistry.respawn_egg, (Integer)key, new ModelResourceLocation(ModSpells.TEXTURE_LOCATION + "respawn_egg" , "inventory"));	 
-            }
-        }
-       */ 
+	    if(ModMain.cfg.respawn_egg)
+	    {
+	    	for(Object key : EntityList.entityEggs.keySet())
+	        {
+	        	mesher.register(ItemRegistry.respawn_egg, (Integer)key, new ModelResourceLocation(Const.TEXTURE_LOCATION + "respawn_egg" , "inventory"));	 
+	        }
+	    }
+     */
 	}
 
 	public static final String keyCategorySpell = "key.categories.spell";

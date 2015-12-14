@@ -72,7 +72,7 @@ public class ModMain
 		//FMLCommonHandler.instance().bus().register(instance); 
 		MinecraftForge.EVENT_BUS.register(new EventRegistry()); 
 		
-		SpellRegistry.setup();
+
 	}
 
 	@EventHandler
@@ -81,8 +81,10 @@ public class ModMain
 		ItemRegistry.register();
 		BlockRegistry.register();
 		ProjectileRegistry.register();
-		PotionRegistry.register();
-		proxy.registerRenderers();
+		PotionRegistry.register();		
+		SpellRegistry.register();
+		
+		proxy.register();
 	}
  
 	public static EntityItem dropItemStackInWorld(World worldObj, BlockPos pos, ItemStack stack)

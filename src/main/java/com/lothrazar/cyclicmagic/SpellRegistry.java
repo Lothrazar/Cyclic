@@ -17,7 +17,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class SpellRegistry {
-	public static void setup() {
+	public static void register() {
 		int duration = Const.TICKS_PER_SEC * 20;
 		
 		int spellId = 0;
@@ -27,28 +27,36 @@ public class SpellRegistry {
 		//deposit.setExpCost(ModMain.cfg.deposit).setSpellID(++spellId);
 		
 		ghost = new SpellGhost();
-		ghost.setExpCost(ModMain.cfg.ghost).setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/spell_ghost_dummy.png")).setSpellID(++spellId);
+		ghost.setExpCost(ModMain.cfg.ghost).setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/ghost.png")).setSpellID(++spellId);
 		spellbook.add(ghost);
 		
 		jump = new SpellExpPotion();
-		jump.setPotion(Potion.jump.id,duration,PotionRegistry.V).setExpCost(ModMain.cfg.jump).setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/spell_jump_dummy.png")).setSpellID(++spellId);
+		jump.setPotion(Potion.jump.id,duration,PotionRegistry.V).setExpCost(ModMain.cfg.jump).setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/jump.png")).setSpellID(++spellId);
 		spellbook.add(jump);
 		
 		phase = new SpellPhasing();
-		phase.setExpCost(ModMain.cfg.phase).setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/spell_dummy_phasing.png")).setSpellID(++spellId);
+		phase.setExpCost(ModMain.cfg.phase).setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/phasing.png")).setSpellID(++spellId);
 		spellbook.add(phase);
 		
 		slowfall = new SpellExpPotion();
-		slowfall.setPotion(PotionRegistry.slowfall.id,duration,PotionRegistry.I).setExpCost(ModMain.cfg.slowfall).setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/spell_dummy_slowfall.png")).setSpellID(++spellId);
+		slowfall.setPotion(PotionRegistry.slowfall.id,duration,PotionRegistry.I);
+		slowfall.setExpCost(ModMain.cfg.slowfall);
+		slowfall.setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/slowfall.png"));
+		slowfall.setSpellID(++spellId);
 		spellbook.add(slowfall);
 		
 		waterwalk = new SpellExpPotion();
-		waterwalk.setPotion(PotionRegistry.waterwalk.id,duration,PotionRegistry.I).setExpCost(ModMain.cfg.waterwalk).setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/spell_waterwalk_dummy.png")).setSpellID(++spellId);
+		waterwalk.setPotion(PotionRegistry.waterwalk.id,duration,PotionRegistry.I).setExpCost(ModMain.cfg.waterwalk).setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/waterwalk.png")).setSpellID(++spellId);
 		spellbook.add(waterwalk);
 		
 		haste = new SpellExpPotion();
-		haste.setPotion(Potion.digSpeed.id,duration,PotionRegistry.II).setExpCost(ModMain.cfg.haste).setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/spell_haste_dummy.png")).setSpellID(++spellId);
+		haste.setPotion(Potion.digSpeed.id,duration,PotionRegistry.II).setExpCost(ModMain.cfg.haste).setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/haste.png")).setSpellID(++spellId);
 		spellbook.add(haste);
+		
+		collect = new SpellCollect();
+		//.setExpCost(ModMain.cfg.haste)
+		collect.setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/collect.png")).setSpellID(++spellId);
+		spellbook.add(collect);
 	}
 
 	public static ArrayList<ISpell> spellbook;
@@ -60,6 +68,7 @@ public class SpellRegistry {
 	public static SpellExpPotion slowfall;
 	public static SpellExpPotion waterwalk;
 	public static SpellExpPotion haste;
+	public static SpellCollect collect;
 
 	public static ISpell getDefaultSpell() {
 		return spellbook.get(0);
