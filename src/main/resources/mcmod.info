@@ -1,11 +1,11 @@
 {
   "modListVersion": 2,
   "modList": [{
-    "modid": "samsmagic",
-    "name": "Spell Wheel",
+    "modid": "cyclicmagic",
+    "name": "Cyclic Spell Wheel",
     "description": "A magic system drains experience points.  Four keybindings were added, one to show and hide the spell interface, two will rotate the spell wheel left and right, and one to cast the current spell.  Spells are: deposit, chest transport, ghost, jump, haste, wall phasing, slowfall, waterwalk.  The exp cost is set in the config file, and each spell can be disabled.",
-    "version": "1.8-1.0.0",
-    "mcversion": "1.8",
+    "version": "1.0.0",
+    "mcversion": "1.8.8",
     "url": "",
     "updateUrl": "",
     "authorList": [ "Lothrazar" ],
