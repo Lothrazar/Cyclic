@@ -1,7 +1,7 @@
 {
     "parent": "builtin/generated",
     "textures": {
-        "layer0": "cyclicmagic/torchbolt_projectile"
+        "layer0": "cyclicmagic:projectile/torchbolt"
     },
     "display": {
         "thirdperson": {

@@ -9,6 +9,7 @@ public class ItemRegistry {
 	public static ArrayList<Item> items = new ArrayList<Item>();
 
 	public static ItemRespawnEggAnimal respawn_egg;
+	public static ItemChestSack chest_sack;
 
 	// public static ItemRespawnEggAnimal respawn_egg; //TODO: make standalone
 	// mod for respawn_eggs
@@ -16,8 +17,8 @@ public class ItemRegistry {
 	//public static ItemChestSack chest_sack;
 
 	public static void register() {
-		//ItemRegistry.chest_sack = new ItemChestSack();
-		//ItemRegistry.registerItem(ItemRegistry.chest_sack, "chest_sack");
+		ItemRegistry.chest_sack = new ItemChestSack();
+		ItemRegistry.registerItem(ItemRegistry.chest_sack, "chest_sack");
 
 		respawn_egg = new ItemRespawnEggAnimal();
 		ItemRegistry.registerItem(respawn_egg, "respawn_egg");

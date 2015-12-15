@@ -8,7 +8,7 @@ public class ProjectileRegistry {
 
 	private static Item registerProjItem(String projectileName){
 		Item item = new Item();
-		ItemRegistry.registerItem(item, projectileName + "_projectile");
+		ItemRegistry.registerItem(item, projectileName);
 		return item;
 	}
 	
