@@ -22,6 +22,9 @@ public abstract class BaseSpell implements ISpell{
 		return ID;
 	}
 
+	public int getCastCooldown(){
+		return 20;//TODO: customize per spell
+	}
 	//private final ResourceLocation icon = new ResourceLocation(Const.MODID,"textures/spells/spell_waterwalk_dummy.png");
 	
 	@Override

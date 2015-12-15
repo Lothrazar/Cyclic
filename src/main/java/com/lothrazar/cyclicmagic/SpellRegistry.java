@@ -97,7 +97,6 @@ public class SpellRegistry {
 
 	public static final int SPELL_TOGGLE_HIDE = 0;
 	public static final int SPELL_TOGGLE_SHOW = 1;
-	public static final int SPELL_TIMER_MAX = 20;
 
 	public static boolean canPlayerCastAnything(EntityPlayer player) {
 		//TODO: allow each spell has its own cooldown timer
@@ -129,7 +128,7 @@ public class SpellRegistry {
 			System.out.println("cast " + spell.getSpellID());
 			spell.cast(world, player, pos,side,target);
 			spell.onCastSuccess(world, player, pos);
-			startSpellTimer(player);
+			startSpellTimer(player,spell.getCastCooldown());
 		} else {
 			System.out.println("onCastFailure " + spell.getSpellID());
 			spell.onCastFailure(world, player, pos);
@@ -177,9 +176,9 @@ public class SpellRegistry {
 		return props.getSpellTimer();
 	}
 
-	public static void startSpellTimer(EntityPlayer player) {
+	public static void startSpellTimer(EntityPlayer player,int cooldown) {
 		PlayerPowerups props = PlayerPowerups.get(player);
-		props.setSpellTimer(SPELL_TIMER_MAX);
+		props.setSpellTimer(cooldown);
 	}
 
 	public static void tickSpellTimer(EntityPlayer player) {

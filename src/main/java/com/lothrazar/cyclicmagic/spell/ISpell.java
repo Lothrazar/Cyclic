@@ -17,6 +17,7 @@ public interface ISpell
  
 	public void cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target);
 
+	public int getCastCooldown();
 	
 	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos);
 	
