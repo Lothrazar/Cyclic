@@ -49,7 +49,7 @@ public class EventRegistry {
         		Minecraft.getMinecraft().objectMouseOver.entityHit.getEntityId();
         	
         	if(Minecraft.getMinecraft().objectMouseOver == null){
-        		System.out.println("objectMouseOver null" );
+        		System.out.println("CANNOT CAST: objectMouseOver null" );
         		return;
         	}
         	

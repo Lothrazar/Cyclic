@@ -1,91 +1,110 @@
 package com.lothrazar.cyclicmagic.proxy;
-  
+
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.SpellRegistry;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import io.netty.buffer.ByteBuf; 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 
-public class MessageKeyCast implements IMessage, IMessageHandler<MessageKeyCast, IMessage>
-{
+public class MessageKeyCast implements IMessage, IMessageHandler<MessageKeyCast, IMessage> {
 	private BlockPos pos;
 	private EnumFacing side;
 	private int entity;
-	//private String csv;
+	// private String csv;
 	public static final int ID = 0;
-	private NBTTagCompound tags = new NBTTagCompound();
-	public MessageKeyCast()
-	{ 
-	}
-	
-	public MessageKeyCast(BlockPos pm,EnumFacing side,int entity)
-	{ 
-		tags.setString("pos", ModMain.posToCSV(pm));
-		if(side == null){
-			tags.setInteger("side", -1);//DUNSWE
-		}
-		else{
-			tags.setInteger("side", side.getIndex());//DUNSWE
-		}
-		tags.setInteger("entity", entity);
-		//TODO: convert to using NBT
-		//pos = pm;
-		//csv = ;
-	}
-	@Override
-	public void fromBytes(ByteBuf buf)
-	{
-		tags = ByteBufUtils.readTag(buf);
-		
-		//http://www.minecraftforge.net/forum/index.php?topic=20135.0
+	private NBTTagCompound tags = null;
+	private static final String NBT_POS = "pos";
+	private static final String NBT_ENTITY = "entity";
+	private static final String NBT_SIDE = "side";
 
-		//csv = ByteBufUtils.readUTF8String(buf); 
-       // 
-		pos = ModMain.stringCSVToBlockPos(tags.getString("csv"));
+	public MessageKeyCast() {
+	}
+
+	public MessageKeyCast(BlockPos pm, EnumFacing pside, int pentity) {
+		System.out.println("message constructor at x = "+pm.getX());
+		pos = pm;
+		side = pside;
+		entity = pentity;
+
+		this.toNBT();
+	}
+
+	private void toNBT() {
+		tags = new NBTTagCompound();
+		tags.setString(NBT_POS, ModMain.posToCSV(pos));
 		
-		int iside = tags.getInteger("side");
-		if(iside < 0){
-			side = null;
+		System.out.println("to NBT ::: "+  ModMain.posToCSV(pos));
+		
+		if (side == null) {
+			tags.setInteger(NBT_SIDE, -1);// DUNSWE
+		} else {
+			tags.setInteger(NBT_SIDE, side.getIndex());// DUNSWE
 		}
-		else{
+		tags.setInteger(NBT_ENTITY, entity);
+	}
+
+	private void fromNBT() {
+		// http://www.minecraftforge.net/forum/index.php?topic=20135.0
+		String csv = tags.getString(NBT_POS);
+		System.out.println("fromNBT : " + csv);
+		if (csv == "") {
+			pos = null;
+		} else {
+			pos = ModMain.stringCSVToBlockPos(csv);
+		}
+
+		int iside = tags.getInteger(NBT_SIDE);
+		if (iside < 0) {
+			side = null;
+		} else {
 			side = EnumFacing.getFront(iside);
 		}
+
+		entity = tags.getInteger(NBT_ENTITY);
+	}
+
+	@Override
+	public void fromBytes(ByteBuf buf) {
+		tags = ByteBufUtils.readTag(buf);
+		this.fromNBT();
+	}
+
+	@Override
+	public void toBytes(ByteBuf buf) {
+		this.toNBT();
+		ByteBufUtils.writeTag(buf, tags);
+	}
+
+	@Override
+	public IMessage onMessage(MessageKeyCast message, MessageContext ctx) {
 		
-		entity = tags.getInteger("entity");
-	}
+		message.fromNBT();
+		if(message.pos == null){
+			System.out.println("ERROR: IS NULL POS");
+			return null;
+		}
+		System.out.println("CAST " + message.pos.toString());
+		System.out.println("side " + message.side);
+		System.out.println("entity " + message.entity);
 
-	@Override
-	public void toBytes(ByteBuf buf)
-	{
-       // ByteBufUtils.writeUTF8String(buf, csv);
-		ByteBufUtils.writeTag(buf, this.tags);
-	}
-	
-	@Override
-	public IMessage onMessage(MessageKeyCast message, MessageContext ctx)
-	{  
-		System.out.println("CAST "+message.pos.toString());
-	
-		//System.out.println("pos  "+message.pos.getX()+"::"+message.pos.getZ());
- 
-		EntityPlayer player = ctx.getServerHandler().playerEntity; 
-		//PlayerPowerups props = PlayerPowerups.get(player);
+		// System.out.println("pos  "+message.pos.getX()+"::"+message.pos.getZ());
 
+		EntityPlayer player = ctx.getServerHandler().playerEntity;
+		// PlayerPowerups props = PlayerPowerups.get(player);
 
-		//www.minecraftforge.net/forum/index.php/topic,20135.0.html
-	  
-	//	if(props.getSpellToggle() != SpellRegistry.SPELL_TOGGLE_HIDE)
-		//{
-			SpellRegistry.cast(SpellRegistry.getPlayerCurrentISpell(player), player.worldObj, player, message.pos);
-		//}
+		// www.minecraftforge.net/forum/index.php/topic,20135.0.html
+
+		// if(props.getSpellToggle() != SpellRegistry.SPELL_TOGGLE_HIDE)
+		// {
+		SpellRegistry.cast(SpellRegistry.getPlayerCurrentISpell(player), player.worldObj, player, message.pos);
+		// }
 
 		return null;
 	}
 }
- 

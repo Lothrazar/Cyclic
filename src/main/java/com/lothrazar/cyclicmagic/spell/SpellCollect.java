@@ -2,11 +2,13 @@ package com.lothrazar.cyclicmagic.spell;
 
 import java.util.List;
 import com.lothrazar.cyclicmagic.util.Vector3;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 public class SpellCollect extends BaseSpellExp {
@@ -16,7 +18,7 @@ public class SpellCollect extends BaseSpellExp {
 	private final float speed = 1.2F;
 	//TODO: potion effect like this? but with much less speed? and going to players pos not mouseover
 	@Override
-	public void cast(World world, EntityPlayer player, BlockPos pos) {
+	public void cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target) {
 	
 		int x = pos.getX(), y = pos.getY(), z = pos.getZ();
 		

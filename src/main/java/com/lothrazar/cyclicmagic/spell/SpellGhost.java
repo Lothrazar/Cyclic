@@ -1,8 +1,10 @@
 package com.lothrazar.cyclicmagic.spell;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSettings.GameType;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
@@ -29,7 +31,7 @@ public class SpellGhost extends BaseSpellExp  implements ISpell
 	}
 	
 	@Override
-	public void cast(World world, EntityPlayer player, BlockPos pos)
+	public void cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target)
 	{
 		setPlayerGhostMode(player,player.worldObj);
 	}

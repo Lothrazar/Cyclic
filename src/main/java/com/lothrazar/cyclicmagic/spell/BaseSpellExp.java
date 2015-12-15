@@ -5,10 +5,8 @@ import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import com.lothrazar.cyclicmagic.util.UtilExperience;
 
@@ -38,7 +36,9 @@ public abstract class BaseSpellExp extends BaseSpell implements ISpell
 	{
 		UtilSound.playSoundAt(player, UtilSound.fizz);
 
-		player.addChatMessage(new ChatComponentTranslation(StatCollector.translateToLocal("spell.exp.missing") + this.getExpCost()));
+		//nope, casting might fail for a reason unrelated to exp
+		//but kepe this in case we have an alternate fail?
+		//player.addChatMessage(new ChatComponentTranslation(StatCollector.translateToLocal("spell.exp.missing") + this.getExpCost()));
 	}
 	
 	@Override

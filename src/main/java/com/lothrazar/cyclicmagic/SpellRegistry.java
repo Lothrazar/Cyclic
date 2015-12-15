@@ -7,9 +7,11 @@ import com.lothrazar.cyclicmagic.util.UtilTextureRender;
 import com.lothrazar.cyclicmagic.spell.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -95,7 +97,16 @@ public class SpellRegistry {
 	}
 
 	public static void cast(ISpell spell, World world, EntityPlayer player, BlockPos pos) {
+		cast(spell,world,player,pos,null,-1);
+	}
+	public static void cast(ISpell spell, World world, EntityPlayer player, BlockPos pos, EnumFacing side, int pentity) {
 		System.out.println("SpellRegistry.cast");
+		
+		Entity target = null;
+		if(pentity > 0){
+			target = world.getEntityByID(pentity);
+		}
+		
 		if (spell == null) {
 			System.out.println("ERROR: cast null spell");
 			return;
@@ -107,7 +118,7 @@ public class SpellRegistry {
 
 		if (spell.canPlayerCast(world, player, pos)) {
 			System.out.println("cast " + spell.getSpellID());
-			spell.cast(world, player, pos);
+			spell.cast(world, player, pos,side,target);
 			spell.onCastSuccess(world, player, pos);
 			startSpellTimer(player);
 		} else {

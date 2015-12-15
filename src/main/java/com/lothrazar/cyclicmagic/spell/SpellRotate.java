@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.spell;
 
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
@@ -11,14 +12,11 @@ public class SpellRotate extends BaseSpellExp {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public void cast(World world, EntityPlayer player, BlockPos pos) {
+	public void cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target) {
 
 		IBlockState clicked = world.getBlockState(pos);
 		if(pos == null || clicked == null || clicked.getBlock() == null){return;}
 	
-		//TODO: get side from source and pass it up through cast
-		EnumFacing side = EnumFacing.UP;
-		
 		if(clicked.getBlock().rotateBlock(world, pos, side)){
 			//for example, BlockMushroom.rotateBlock uses this, and hay bales use it to swap the 'axis'
 			System.out.println("rotateBlock success");

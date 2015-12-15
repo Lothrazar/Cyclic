@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.spell;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
@@ -26,7 +27,7 @@ public class SpellPhasing extends BaseSpellExp implements ISpell
 	}
 	
 	@Override
-	public void cast(World world, EntityPlayer player, BlockPos pos)
+	public void cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target)
 	{
 		if(pos == null){return;}//covered also by canPlayerCast
 		
