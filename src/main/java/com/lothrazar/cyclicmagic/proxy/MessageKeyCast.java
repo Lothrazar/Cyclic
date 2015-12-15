@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.proxy;
 
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.SpellRegistry;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -37,9 +38,9 @@ public class MessageKeyCast implements IMessage, IMessageHandler<MessageKeyCast,
 
 	private void toNBT() {
 		tags = new NBTTagCompound();
-		tags.setString(NBT_POS, ModMain.posToCSV(pos));
+		tags.setString(NBT_POS, UtilNBT.posToStringCSV(pos));
 		
-		System.out.println("to NBT ::: "+  ModMain.posToCSV(pos));
+		System.out.println("to NBT ::: "+  UtilNBT.posToStringCSV(pos));
 		
 		if (side == null) {
 			tags.setInteger(NBT_SIDE, -1);// DUNSWE
@@ -56,7 +57,7 @@ public class MessageKeyCast implements IMessage, IMessageHandler<MessageKeyCast,
 		if (csv == "") {
 			pos = null;
 		} else {
-			pos = ModMain.stringCSVToBlockPos(csv);
+			pos = UtilNBT.stringCSVToBlockPos(csv);
 		}
 
 		int iside = tags.getInteger(NBT_SIDE);

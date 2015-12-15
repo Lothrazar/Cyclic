@@ -29,7 +29,6 @@ public class EntityFishingBolt extends EntityThrowable
         super(worldIn, x, y, z);
     }
     public static final String name = "fishingbolt";
-    public static final String name_item = name+"_item";
     public static Item item = null;
 	static final double plainChance = 60;
 	static final double salmonChance = 25 + plainChance;//so it is between 60 and 85

@@ -25,7 +25,6 @@ public class EntityLightningballBolt extends EntityThrowable//EntitySnowball
     }
 
     public static final String name = "lightningbolt";
-    public static final String name_item = name+"_item";
     public static Item item = null;
     @Override
     protected void onImpact(MovingObjectPosition mop)

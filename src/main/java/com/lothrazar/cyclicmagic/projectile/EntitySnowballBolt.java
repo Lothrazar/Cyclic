@@ -40,7 +40,6 @@ public class EntitySnowballBolt extends EntityThrowable
     }
 
     public static final String name = "frostbolt";
-    public static final String name_item = name+"_item";
     public static Item item = null;
     @Override
     protected void onImpact(MovingObjectPosition mop)

@@ -6,10 +6,10 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.PotionRegistry;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 
-public class SpellExpPotion extends  BaseSpellExp implements ISpell{
+public class SpellExpPotion extends BaseSpellExp implements ISpell{
 
 	private int potionId;
 	private int potionDuration;
@@ -25,7 +25,7 @@ public class SpellExpPotion extends  BaseSpellExp implements ISpell{
 	@Override
 	public void cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target)
 	{
-		ModMain.addOrMergePotionEffect(player,new PotionEffect(potionId,potionDuration,potionAmp));
+		PotionRegistry.addOrMergePotionEffect(player,new PotionEffect(potionId,potionDuration,potionAmp));
 	}
 	
 	@Override

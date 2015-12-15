@@ -11,7 +11,7 @@ public class PlayerPowerups implements IExtendedEntityProperties
 {
 	private final static String EXT_PROP_NAME = "PlayerPowerups"+Const.MODID;
 	private final EntityPlayer player;//we get one of these powerup classes for each player
-  
+	// TODO: DO NOT RESET TIMER IF CASTING FAILS
 	private static final int SPELLMAIN_WATCHER = 22;
 	private static final String NBT_SPELLMAIN = "samSpell"; 
 	

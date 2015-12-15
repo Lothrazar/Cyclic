@@ -24,6 +24,19 @@ public class SpellRegistry {
 		int duration = Const.TICKS_PER_SEC * 20;
 		
 		int spellId = 0;
+
+		//used to be public statics
+		BaseSpellExp ghost;
+		SpellExpPotion jump;
+		BaseSpellExp phase;
+		SpellExpPotion slowfall;
+		SpellExpPotion waterwalk;
+		SpellExpPotion haste;
+		SpellCollect collect;
+		BaseSpellExp rotate;
+		BaseSpellExp piston;
+		SpellExpProjectile torch;
+		
 		//then use ++spellId -> first thing is 1
 		spellbook = new ArrayList<ISpell>();
 		//deposit = new SpellChestDeposit();
@@ -67,20 +80,16 @@ public class SpellRegistry {
 		piston = new SpellPiston();
 		piston.setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/piston.png")).setSpellID(++spellId);
 		spellbook.add(piston);
+
+		torch = new SpellExpProjectile();
+		torch.setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/torch.png")).setSpellID(++spellId);
+		spellbook.add(torch);
+		
 	}
 
 	public static ArrayList<ISpell> spellbook;
 	//public static BaseSpellExp deposit;
 	// public static ISpell chesttransp;
-	public static BaseSpellExp ghost;
-	public static SpellExpPotion jump;
-	public static BaseSpellExp phase;
-	public static SpellExpPotion slowfall;
-	public static SpellExpPotion waterwalk;
-	public static SpellExpPotion haste;
-	public static SpellCollect collect;
-	public static BaseSpellExp rotate;
-	public static BaseSpellExp piston;
 
 	public static ISpell getDefaultSpell() {
 		return spellbook.get(0);

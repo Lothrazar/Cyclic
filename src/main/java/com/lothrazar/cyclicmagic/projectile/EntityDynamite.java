@@ -31,7 +31,6 @@ public class EntityDynamite extends EntityThrowable
     }
 
     public static final String name = "tntbolt";
-    public static final String name_item = name+"_item";
     public static Item item = null;
     @Override
     protected void onImpact(MovingObjectPosition mop)

@@ -4,12 +4,16 @@ import org.lwjgl.input.Keyboard;
 import  net.minecraft.item.Item;
 import com.lothrazar.cyclicmagic.ItemRegistry;
 import com.lothrazar.cyclicmagic.Const;
+import com.lothrazar.cyclicmagic.projectile.*;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemModelMesher;
+import net.minecraft.client.renderer.entity.RenderItem;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.entity.EntityList;
 
 public class ClientProxy extends CommonProxy 
 {   
@@ -31,6 +35,17 @@ public class ClientProxy extends CommonProxy
 
         registerModels(); 
          
+        registerEntities();
+    }
+    
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	private void registerEntities(){
+    	RenderManager rm = Minecraft.getMinecraft().getRenderManager();
+    	RenderItem ri = Minecraft.getMinecraft().getRenderItem();
+
+    	//RenderingRegistry.registerEntityRenderingHandler(EntityFishingBolt.class, new RenderSnowball(rm, EntityFishingBolt.item, ri));
+    //	RenderingRegistry.registerEntityRenderingHandler(EntityBlazeBolt.class, new RenderSnowball(rm, EntityBlazeBolt.item, ri));
+    	RenderingRegistry.registerEntityRenderingHandler(EntityTorchBolt.class, new RenderSnowball(rm, EntityTorchBolt.item, ri));
     }
     
 	private void registerModels() 

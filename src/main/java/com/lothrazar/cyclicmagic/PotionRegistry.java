@@ -5,6 +5,7 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
@@ -179,4 +180,21 @@ public class PotionRegistry
 	    	 } 
 	     }
 	}	
+	
+	
+
+	public static void addOrMergePotionEffect(EntityPlayer player, PotionEffect newp) {
+		if (player.isPotionActive(newp.getPotionID())) {
+			// do not use built in 'combine' function, just add up duration
+			// myself
+			PotionEffect p = player.getActivePotionEffect(Potion.potionTypes[newp.getPotionID()]);
+
+			int ampMax = Math.max(p.getAmplifier(), newp.getAmplifier());
+
+			player.addPotionEffect(new PotionEffect(newp.getPotionID(), newp.getDuration() + p.getDuration(), ampMax));
+		} else {
+			player.addPotionEffect(newp);
+		}
+	}
+
 }
