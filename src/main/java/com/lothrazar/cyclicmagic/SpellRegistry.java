@@ -34,7 +34,7 @@ public class SpellRegistry {
 		SpellExpPotion haste;
 		SpellCollect collect;
 		BaseSpellExp rotate;
-		BaseSpellExp piston;
+		BaseSpellExp push;
 		SpellThrowTorch torch;
 		SpellThrowFishing fishing;
 		
@@ -78,9 +78,14 @@ public class SpellRegistry {
 		rotate.setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/collect.png")).setSpellID(++spellId);
 		spellbook.add(rotate);
 
-		piston = new SpellPiston();
-		piston.setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/piston.png")).setSpellID(++spellId);
-		spellbook.add(piston);
+		push = new SpellPush();
+		push.setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/push.png")).setSpellID(++spellId);
+		spellbook.add(push);
+
+		SpellPull pull = new SpellPull();
+		pull.setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/pull.png")).setSpellID(++spellId);
+		spellbook.add(pull);
+
 
 		//TODO: do we need a projectile base class?
 		torch = new SpellThrowTorch();

@@ -80,16 +80,31 @@ public class UtilMoveBlock
 	 * @param pos
 	 * @param face
 	 */
-	public static BlockPos moveBlock(World worldIn, EntityPlayer player, BlockPos pos, EnumFacing face) {
+	public static BlockPos pullBlock(World worldIn, EntityPlayer player, BlockPos pos, EnumFacing face) {
 		
 		BlockPos posTowardsPlayer = pos.offset(face);
 		
+		//BlockPos posAwayPlayer = pos.offset(face.getOpposite());
+		 
+		//BlockPos posMoveToHere = player.isSneaking() ? posTowardsPlayer : posAwayPlayer;
+		
+		if(moveBlockTo(worldIn,player,pos,posTowardsPlayer)){
+			return posTowardsPlayer;
+		}
+		else{
+			return null;
+		}
+	}
+	public static BlockPos pushBlock(World worldIn, EntityPlayer player, BlockPos pos, EnumFacing face) {
+		
+		//BlockPos posTowardsPlayer = pos.offset(face);
+		
 		BlockPos posAwayPlayer = pos.offset(face.getOpposite());
 		 
-		BlockPos posMoveToHere = player.isSneaking() ? posTowardsPlayer : posAwayPlayer;
+		//BlockPos posMoveToHere = player.isSneaking() ? posTowardsPlayer : posAwayPlayer;
 		
-		if(moveBlockTo(worldIn,player,pos,posMoveToHere)){
-			return posMoveToHere;
+		if(moveBlockTo(worldIn,player,pos,posAwayPlayer)){
+			return posAwayPlayer;
 		}
 		else{
 			return null;

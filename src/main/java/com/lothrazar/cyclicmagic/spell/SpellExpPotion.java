@@ -14,7 +14,6 @@ public class SpellExpPotion extends BaseSpellExp implements ISpell {
 	private int potionId;
 	private int potionDuration;
 	private int potionAmp;
-	private final int cooldown = 5;// same cooldown for all potion spells
 
 	public SpellExpPotion setPotion(int id, int effectDuration, int effectAmplifier) {
 		potionId = id;
@@ -23,6 +22,7 @@ public class SpellExpPotion extends BaseSpellExp implements ISpell {
 		return this;
 	}
 
+	private final int cooldown = 5;// same cooldown for all potion spells
 	@Override
 	public int getCastCooldown() {
 		return cooldown;
