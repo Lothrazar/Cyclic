@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.potion;
+package com.lothrazar.cyclicmagic.net;
 
 //import com.lothrazar.util.Util;
 
@@ -13,26 +13,24 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class MessagePotion implements IMessage, IMessageHandler<MessagePotion, IMessage>
+public class MessageParticle implements IMessage, IMessageHandler<MessageParticle, IMessage>
 {
 	private int x;
 	private int y;
 	private int z;
 	private int particle;
 	
-	public static final int ID = 4;
-	
-	public MessagePotion()
+	public MessageParticle()
 	{ 
 	}
-	public MessagePotion(BlockPos p, int part)
+	public MessageParticle(BlockPos p, int part)
 	{ 
 		x = p.getX();
 		y = p.getY();
 		z = p.getZ(); 
 		particle = part;
 	}
-	public MessagePotion(int _x,int _y,int _z, int part)
+	public MessageParticle(int _x,int _y,int _z, int part)
 	{ 
 		x = _x;
 		y = _y;
@@ -59,7 +57,7 @@ public class MessagePotion implements IMessage, IMessageHandler<MessagePotion, I
 	}
 
 	@Override
-	public IMessage onMessage(MessagePotion message, MessageContext ctx)
+	public IMessage onMessage(MessageParticle message, MessageContext ctx)
 	{ 
 		if(ctx.side.isClient()) 
 		{ 

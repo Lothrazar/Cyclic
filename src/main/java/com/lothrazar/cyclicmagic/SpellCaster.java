@@ -14,9 +14,9 @@ public class SpellCaster {
 		return SpellRegistry.spellbook.get(0);
 	}
 
-	public static boolean canPlayerCastAnything(EntityPlayer player) {
+	public static boolean isBlockedBySpellTImer(EntityPlayer player) {
 		PlayerPowerups props = PlayerPowerups.get(player);
-		return props.getSpellTimer() == 0;
+		return !(props.getSpellTimer() == 0);
 	}
 
 	public static void cast(ISpell spell, World world, EntityPlayer player, BlockPos pos) {
@@ -30,12 +30,7 @@ public class SpellCaster {
 			target = world.getEntityByID(pentity);
 		}
 
-		if (spell == null) {
-			System.out.println("ERROR: cast null spell");
-			return;
-		}
-		if (canPlayerCastAnything(player) == false) {
-			System.out.println("canPlayerCastAnything == false");
+		if (isBlockedBySpellTImer(player)) {
 			return;
 		}
 
@@ -43,7 +38,9 @@ public class SpellCaster {
 
 			spell.cast(world, player, pos, side, target);
 			spell.onCastSuccess(world, player, pos);
-			startSpellTimer(player, spell.getCastCooldown());
+			
+			PlayerPowerups props = PlayerPowerups.get(player);
+			props.setSpellTimer(spell.getCastCooldown());//startSpellTimer(player, spell.getCastCooldown());
 		} else {
 			System.out.println("onCastFailure " + spell.getSpellID());
 			spell.onCastFailure(world, player, pos);
@@ -51,8 +48,8 @@ public class SpellCaster {
 	}
 
 	public static void cast(int spell_id, World world, EntityPlayer player, BlockPos pos) {
-		// ISpell sp = SpellRegistry.getSpellFromType(spell_id);
-		ISpell sp = getSpellFromID(spell_id);
+
+		ISpell sp = SpellRegistry.getSpellFromID(spell_id);
 		cast(sp, world, player, pos);
 	}
 
@@ -60,7 +57,9 @@ public class SpellCaster {
 		ISpell current = getPlayerCurrentISpell(player);
 
 		if (current.left() != null) {
-			setPlayerCurrentSpell(player, current.left().getSpellID());
+			PlayerPowerups props = PlayerPowerups.get(player);
+
+			props.setSpellCurrent(current.left().getSpellID());
 			UtilSound.playSoundAt(player, "random.orb");
 		}
 	}
@@ -69,65 +68,33 @@ public class SpellCaster {
 		ISpell current = getPlayerCurrentISpell(player);
 
 		if (current.right() != null) {
-			setPlayerCurrentSpell(player, current.right().getSpellID());
+			PlayerPowerups props = PlayerPowerups.get(player);
+
+			props.setSpellCurrent(current.right().getSpellID());
 			UtilSound.playSoundAt(player, "random.orb");
 		}
 	}
 
-	private static void setPlayerCurrentSpell(EntityPlayer player, int current_id) {
-		PlayerPowerups props = PlayerPowerups.get(player);
-
-		props.setSpellCurrent(current_id);
-	}
-
-	public static int getPlayerCurrentSpell(EntityPlayer player) {
-		PlayerPowerups props = PlayerPowerups.get(player);
-
-		return props.getSpellCurrent();
-	}
-
-	public static int getSpellTimer(EntityPlayer player) {
-		PlayerPowerups props = PlayerPowerups.get(player);
-		return props.getSpellTimer();
-	}
-
-	public static void startSpellTimer(EntityPlayer player, int cooldown) {
-		PlayerPowerups props = PlayerPowerups.get(player);
-		props.setSpellTimer(cooldown);
-	}
-
 	public static void tickSpellTimer(EntityPlayer player) {
 		PlayerPowerups props = PlayerPowerups.get(player);
-		if (props.getSpellTimer() < 0)
+		if (props.getSpellTimer() < 0){
 			props.setSpellTimer(0);
-		else if (props.getSpellTimer() > 0)
+		}
+		else if (props.getSpellTimer() > 0){
 			props.setSpellTimer(props.getSpellTimer() - 1);
+		}
 	}
-
+	
 	public static ISpell getPlayerCurrentISpell(EntityPlayer player) {
-		int spell_id = getPlayerCurrentSpell(player);
-
-		for (ISpell sp : SpellRegistry.spellbook) {
-			// if(sp.getSpellName().equalsIgnoreCase(s))
-			if (sp.getSpellID() == spell_id) {
-				return sp;
-			}
+		
+		PlayerPowerups props = PlayerPowerups.get(player);
+ 
+		ISpell current = SpellRegistry.getSpellFromID(props.getSpellCurrent());
+		
+		if(current == null){
+			current = getDefaultSpell();
 		}
-		// if current spell is null,default to the first one
-
-		return getDefaultSpell();
-	}
-
-	public static ISpell getSpellFromID(int id) {
-		if (id == 0) {
-			return null;
-		}
-		for (ISpell sp : SpellRegistry.spellbook) {
-			if (sp.getSpellID() == id) {
-				return sp;
-			}
-		}
-
-		return null;
+		
+		return current;
 	}
 }

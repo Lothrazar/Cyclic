@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.util;
 
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.potion.MessagePotion;
+import com.lothrazar.cyclicmagic.net.MessageParticle;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
@@ -29,7 +29,7 @@ public class UtilParticle {
 	public static void spawnParticlePacket(BlockPos position, int particleID)
 	{
 		//this. fires only on server side. so send packet for client to spawn particles and so on
-		ModMain.network.sendToAll(new MessagePotion(position, particleID));
+		ModMain.network.sendToAll(new MessageParticle(position, particleID));
     	
 		
 	}

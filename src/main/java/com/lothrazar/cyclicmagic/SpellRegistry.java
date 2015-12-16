@@ -107,7 +107,16 @@ public class SpellRegistry {
 		spellbook.add(water);
 	}
 
-	
-	// TODO: split above into [spell registry] [spell caster] [spell renderer]
+	public static ISpell getSpellFromID(int id) {
+		if (id == 0) {
+			return null;
+		}
+		for (ISpell sp : SpellRegistry.spellbook) {
+			if (sp.getSpellID() == id) {
+				return sp;
+			}
+		}
 
+		return null;
+	}
 }

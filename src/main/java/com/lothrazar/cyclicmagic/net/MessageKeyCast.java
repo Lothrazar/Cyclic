@@ -1,8 +1,6 @@
-package com.lothrazar.cyclicmagic.proxy;
+package com.lothrazar.cyclicmagic.net;
 
-import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.SpellCaster;
-import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -19,7 +17,6 @@ public class MessageKeyCast implements IMessage, IMessageHandler<MessageKeyCast,
 	private EnumFacing side;
 	private int entity;
 	// private String csv;
-	public static final int ID = 0;
 	private NBTTagCompound tags = null;
 	private static final String NBT_POS = "pos";
 	private static final String NBT_ENTITY = "entity";
@@ -29,7 +26,6 @@ public class MessageKeyCast implements IMessage, IMessageHandler<MessageKeyCast,
 	}
 
 	public MessageKeyCast(BlockPos pm, EnumFacing pside, int pentity) {
-		System.out.println("message constructor at x = "+pm.getX());
 		pos = pm;
 		side = pside;
 		entity = pentity;
@@ -40,8 +36,6 @@ public class MessageKeyCast implements IMessage, IMessageHandler<MessageKeyCast,
 	private void toNBT() {
 		tags = new NBTTagCompound();
 		tags.setString(NBT_POS, UtilNBT.posToStringCSV(pos));
-		
-		System.out.println("to NBT ::: "+  UtilNBT.posToStringCSV(pos));
 		
 		if (side == null) {
 			tags.setInteger(NBT_SIDE, -1);// DUNSWE
@@ -54,7 +48,7 @@ public class MessageKeyCast implements IMessage, IMessageHandler<MessageKeyCast,
 	private void fromNBT() {
 		// http://www.minecraftforge.net/forum/index.php?topic=20135.0
 		String csv = tags.getString(NBT_POS);
-		System.out.println("fromNBT : " + csv);
+	
 		if (csv == "") {
 			pos = null;
 		} else {
@@ -87,15 +81,6 @@ public class MessageKeyCast implements IMessage, IMessageHandler<MessageKeyCast,
 	public IMessage onMessage(MessageKeyCast message, MessageContext ctx) {
 		
 		message.fromNBT();
-		if(message.pos == null){
-			System.out.println("ERROR: IS NULL POS");
-			return null;
-		}
-		System.out.println("CAST " + message.pos.toString());
-		System.out.println("side " + message.side);
-		System.out.println("entity " + message.entity);
-
-		// System.out.println("pos  "+message.pos.getX()+"::"+message.pos.getZ());
 
 		EntityPlayer player = ctx.getServerHandler().playerEntity;
 		// PlayerPowerups props = PlayerPowerups.get(player);

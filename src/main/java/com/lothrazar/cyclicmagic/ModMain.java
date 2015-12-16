@@ -1,11 +1,11 @@
 package com.lothrazar.cyclicmagic;
 
 import org.apache.logging.log4j.Logger;
+import com.lothrazar.cyclicmagic.net.MessageKeyLeft;
+import com.lothrazar.cyclicmagic.net.MessageKeyRight;
+import com.lothrazar.cyclicmagic.net.MessageKeyToggle;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
-import com.lothrazar.cyclicmagic.proxy.MessageKeyCast;
-import com.lothrazar.cyclicmagic.proxy.MessageKeyLeft;
-import com.lothrazar.cyclicmagic.proxy.MessageKeyRight;
-import com.lothrazar.cyclicmagic.proxy.MessageKeyToggle;
+import com.lothrazar.cyclicmagic.net.*;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -52,10 +52,13 @@ public class ModMain {
 
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(Const.MODID);
 
-		network.registerMessage(MessageKeyCast.class, MessageKeyCast.class, MessageKeyCast.ID, Side.SERVER);
-		network.registerMessage(MessageKeyLeft.class, MessageKeyLeft.class, MessageKeyLeft.ID, Side.SERVER);
-		network.registerMessage(MessageKeyRight.class, MessageKeyRight.class, MessageKeyRight.ID, Side.SERVER);
-		network.registerMessage(MessageKeyToggle.class, MessageKeyToggle.class, MessageKeyToggle.ID, Side.SERVER);
+		int packetID = 11;
+		network.registerMessage(MessageKeyCast.class, MessageKeyCast.class, packetID++, Side.SERVER);
+		network.registerMessage(MessageKeyLeft.class, MessageKeyLeft.class, packetID++, Side.SERVER);
+		network.registerMessage(MessageKeyRight.class, MessageKeyRight.class, packetID++, Side.SERVER);
+		network.registerMessage(MessageKeyToggle.class, MessageKeyToggle.class, packetID++, Side.SERVER);
+		//TODO: message is never used - it tells client when/where to spawn particles
+		network.registerMessage(MessageParticle.class, MessageParticle.class, packetID++, Side.CLIENT);
 
 		MinecraftForge.EVENT_BUS.register(new EventRegistry());
 	}

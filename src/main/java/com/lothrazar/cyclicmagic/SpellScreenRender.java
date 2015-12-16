@@ -19,7 +19,7 @@ public class SpellScreenRender {
 		int x = 12, y = 2;
 
 		// draw header
-		if (SpellCaster.canPlayerCastAnything(player)) {
+		if (SpellCaster.isBlockedBySpellTImer(player)  == false ) {
 			UtilTextureRender.drawTextureSquare(spellCurrent.getIconDisplayHeaderEnabled(), x, y, dim);
 		} else {
 			UtilTextureRender.drawTextureSquare(spellCurrent.getIconDisplayHeaderDisabled(), x, y, dim);

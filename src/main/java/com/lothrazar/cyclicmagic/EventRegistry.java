@@ -13,10 +13,7 @@ import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
-import com.lothrazar.cyclicmagic.proxy.MessageKeyCast;
-import com.lothrazar.cyclicmagic.proxy.MessageKeyLeft;
-import com.lothrazar.cyclicmagic.proxy.MessageKeyRight;
-import com.lothrazar.cyclicmagic.proxy.MessageKeyToggle;
+import com.lothrazar.cyclicmagic.net.*;
 import com.lothrazar.cyclicmagic.spell.SpellGhost;
 
 public class EventRegistry {

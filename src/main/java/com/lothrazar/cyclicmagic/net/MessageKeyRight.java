@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.proxy;
+package com.lothrazar.cyclicmagic.net;
   
 import com.lothrazar.cyclicmagic.PlayerPowerups;
 import com.lothrazar.cyclicmagic.SpellCaster;
@@ -12,7 +12,6 @@ import net.minecraft.util.BlockPos;
 
 public class MessageKeyRight implements IMessage, IMessageHandler<MessageKeyRight, IMessage>
 {
-	public static final int ID = 2;
 	public MessageKeyRight()
 	{ 
 	}

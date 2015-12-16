@@ -1,18 +1,16 @@
-package com.lothrazar.cyclicmagic.proxy;
+package com.lothrazar.cyclicmagic.net;
   
 import com.lothrazar.cyclicmagic.PlayerPowerups;
-import com.lothrazar.cyclicmagic.SpellCaster;
-import com.lothrazar.cyclicmagic.SpellRegistry;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import io.netty.buffer.ByteBuf; 
-import net.minecraft.entity.player.EntityPlayer; 
+import io.netty.buffer.ByteBuf;
+import net.minecraft.entity.player.EntityPlayer;
 
-public class MessageKeyLeft implements IMessage, IMessageHandler<MessageKeyLeft, IMessage>
+public class MessageKeyToggle implements IMessage, IMessageHandler<MessageKeyToggle, IMessage>
 {
-	public static final int ID = 1;
-	public MessageKeyLeft()
+	public MessageKeyToggle()
 	{ 
 	}
 	
@@ -27,17 +25,17 @@ public class MessageKeyLeft implements IMessage, IMessageHandler<MessageKeyLeft,
 	}
 	
 	@Override
-	public IMessage onMessage(MessageKeyLeft message, MessageContext ctx)
+	public IMessage onMessage(MessageKeyToggle message, MessageContext ctx)
 	{  
 		EntityPlayer player = ctx.getServerHandler().playerEntity; 
 		PlayerPowerups props = PlayerPowerups.get(player);
-	 
+	
 		//www.minecraftforge.net/forum/index.php/topic,20135.0.html
- 
-		if(props.getSpellToggle() != SpellRegistry.SPELL_TOGGLE_HIDE)
-		{
-			SpellCaster.shiftLeft(player);
-		}
+		 
+		int next = props.getSpellToggleNext();
+		props.setSpellToggle(next);
+		
+		UtilSound.playSoundAt(player, "random.click");
  
 		return null;
 	}

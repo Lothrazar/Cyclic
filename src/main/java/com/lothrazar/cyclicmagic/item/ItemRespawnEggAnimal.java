@@ -200,7 +200,8 @@ public class ItemRespawnEggAnimal extends Item  //mimic/mirror of ItemMonsterPla
      *  
      * @param subItems The List of sub-items. This is a List of ItemStacks.
      */
-    @SideOnly(Side.CLIENT)
+    @SuppressWarnings("deprecation")
+	@SideOnly(Side.CLIENT)
     public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems)
     {
         Iterator<EntityEggInfo> iterator = EntityList.entityEggs.values().iterator();
