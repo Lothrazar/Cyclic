@@ -19,13 +19,19 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class SpellRegistry {
-	
+
+	public static ArrayList<ISpell> spellbook;
+	public static final int SPELL_TOGGLE_HIDE = 0;
+	public static final int SPELL_TOGGLE_SHOW = 1;
+
 	public static void register() {
-		int duration = Const.TICKS_PER_SEC * 20;
-		
+		spellbook = new ArrayList<ISpell>();
+
+		int potionDuration = Const.TICKS_PER_SEC * 20;
+
 		int spellId = 0;
 
-		//used to be public statics
+		// used to be public statics
 		BaseSpellExp ghost;
 		SpellExpPotion jump;
 		BaseSpellExp phase;
@@ -37,132 +43,117 @@ public class SpellRegistry {
 		BaseSpellExp push;
 		SpellThrowTorch torch;
 		SpellThrowFishing fishing;
-		
-		//then use ++spellId -> first thing is 1
-		spellbook = new ArrayList<ISpell>();
-		//deposit = new SpellChestDeposit();
-		//deposit.setExpCost(ModMain.cfg.deposit).setSpellID(++spellId);
-		
+
 		ghost = new SpellGhost();
-		ghost.setExpCost(ModMain.cfg.ghost).setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/ghost.png")).setSpellID(++spellId);
+		ghost.setExpCost(ModMain.cfg.ghost).setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/ghost.png")).setSpellID(++spellId);
 		spellbook.add(ghost);
-		
+
 		jump = new SpellExpPotion();
-		jump.setPotion(Potion.jump.id,duration,PotionRegistry.V).setExpCost(ModMain.cfg.jump).setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/jump.png")).setSpellID(++spellId);
+		jump.setPotion(Potion.jump.id, potionDuration, PotionRegistry.V).setExpCost(ModMain.cfg.jump).setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/jump.png")).setSpellID(++spellId);
 		spellbook.add(jump);
-		
+
 		phase = new SpellPhasing();
-		phase.setExpCost(ModMain.cfg.phase).setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/phasing.png")).setSpellID(++spellId);
+		phase.setExpCost(ModMain.cfg.phase).setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/phasing.png")).setSpellID(++spellId);
 		spellbook.add(phase);
-		
+
 		slowfall = new SpellExpPotion();
-		slowfall.setPotion(PotionRegistry.slowfall.id,duration,PotionRegistry.I);
+		slowfall.setPotion(PotionRegistry.slowfall.id, potionDuration, PotionRegistry.I);
 		slowfall.setExpCost(ModMain.cfg.slowfall);
-		slowfall.setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/slowfall.png"));
+		slowfall.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/slowfall.png"));
 		slowfall.setSpellID(++spellId);
 		spellbook.add(slowfall);
-		
+
 		waterwalk = new SpellExpPotion();
-		waterwalk.setPotion(PotionRegistry.waterwalk.id,duration,PotionRegistry.I).setExpCost(ModMain.cfg.waterwalk).setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/waterwalk.png")).setSpellID(++spellId);
+		waterwalk.setPotion(PotionRegistry.waterwalk.id, potionDuration, PotionRegistry.I).setExpCost(ModMain.cfg.waterwalk).setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/waterwalk.png")).setSpellID(++spellId);
 		spellbook.add(waterwalk);
-		
+
 		haste = new SpellExpPotion();
-		haste.setPotion(Potion.digSpeed.id,duration,PotionRegistry.II).setExpCost(ModMain.cfg.haste).setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/haste.png")).setSpellID(++spellId);
+		haste.setPotion(Potion.digSpeed.id, potionDuration, PotionRegistry.II).setExpCost(ModMain.cfg.haste).setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/haste.png")).setSpellID(++spellId);
 		spellbook.add(haste);
-		
+
 		collect = new SpellCollect();
-		collect.setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/collect.png")).setSpellID(++spellId);
+		collect.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/collect.png")).setSpellID(++spellId);
 		spellbook.add(collect);
-		
+
 		rotate = new SpellRotate();
-		rotate.setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/collect.png")).setSpellID(++spellId);
+		rotate.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/collect.png")).setSpellID(++spellId);
 		spellbook.add(rotate);
 
 		push = new SpellPush();
-		push.setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/push.png")).setSpellID(++spellId);
+		push.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/push.png")).setSpellID(++spellId);
 		spellbook.add(push);
 
 		SpellPull pull = new SpellPull();
-		pull.setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/pull.png")).setSpellID(++spellId);
+		pull.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/pull.png")).setSpellID(++spellId);
 		spellbook.add(pull);
 
-
-		//TODO: do we need a projectile base class?
 		torch = new SpellThrowTorch();
-		torch.setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/torch.png")).setSpellID(++spellId);
+		torch.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/torch.png")).setSpellID(++spellId);
 		spellbook.add(torch);
 
 		fishing = new SpellThrowFishing();
-		fishing.setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/fishing.png")).setSpellID(++spellId);
+		fishing.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/fishing.png")).setSpellID(++spellId);
 		spellbook.add(fishing);
-		
+
 		SpellThrowExplosion explode = new SpellThrowExplosion();
-		explode.setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/explode.png")).setSpellID(++spellId);
+		explode.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/explode.png")).setSpellID(++spellId);
 		spellbook.add(explode);
 
 		SpellThrowFire fire = new SpellThrowFire();
-		fire.setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/fire.png")).setSpellID(++spellId);
+		fire.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/fire.png")).setSpellID(++spellId);
 		spellbook.add(fire);
-		
+
 		SpellThrowIce ice = new SpellThrowIce();
-		ice.setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/ice.png")).setSpellID(++spellId);
+		ice.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/ice.png")).setSpellID(++spellId);
 		spellbook.add(ice);
-		
+
 		SpellThrowLightning lightning = new SpellThrowLightning();
-		lightning.setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/lightning.png")).setSpellID(++spellId);
+		lightning.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/lightning.png")).setSpellID(++spellId);
 		spellbook.add(lightning);
-		
+
 		SpellThrowShear shear = new SpellThrowShear();
-		shear.setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/shear.png")).setSpellID(++spellId);
+		shear.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/shear.png")).setSpellID(++spellId);
 		spellbook.add(shear);
 
 		SpellThrowWater water = new SpellThrowWater();
-		water.setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/water.png")).setSpellID(++spellId);
+		water.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/water.png")).setSpellID(++spellId);
 		spellbook.add(water);
 	}
-
-	public static ArrayList<ISpell> spellbook;
-	//public static BaseSpellExp deposit;
-	// public static ISpell chesttransp;
 
 	public static ISpell getDefaultSpell() {
 		return spellbook.get(0);
 	}
 
-	public static final int SPELL_TOGGLE_HIDE = 0;
-	public static final int SPELL_TOGGLE_SHOW = 1;
-
 	public static boolean canPlayerCastAnything(EntityPlayer player) {
-		//TODO: allow each spell has its own cooldown timer
 		PlayerPowerups props = PlayerPowerups.get(player);
 		return props.getSpellTimer() == 0;
 	}
 
 	public static void cast(ISpell spell, World world, EntityPlayer player, BlockPos pos) {
-		cast(spell,world,player,pos,null,-1);
+		cast(spell, world, player, pos, null, -1);
 	}
+
 	public static void cast(ISpell spell, World world, EntityPlayer player, BlockPos pos, EnumFacing side, int pentity) {
-		System.out.println("SpellRegistry.cast");
-		
+
 		Entity target = null;
-		if(pentity > 0){
+		if (pentity > 0) {
 			target = world.getEntityByID(pentity);
 		}
-		
+
 		if (spell == null) {
 			System.out.println("ERROR: cast null spell");
 			return;
 		}
 		if (canPlayerCastAnything(player) == false) {
-			System.out.println("ERROR: canPlayerCastAnything == false");
+			System.out.println("canPlayerCastAnything == false");
 			return;
 		}
 
 		if (spell.canPlayerCast(world, player, pos)) {
-			System.out.println("cast " + spell.getSpellID());
-			spell.cast(world, player, pos,side,target);
+
+			spell.cast(world, player, pos, side, target);
 			spell.onCastSuccess(world, player, pos);
-			startSpellTimer(player,spell.getCastCooldown());
+			startSpellTimer(player, spell.getCastCooldown());
 		} else {
 			System.out.println("onCastFailure " + spell.getSpellID());
 			spell.onCastFailure(world, player, pos);
@@ -210,7 +201,7 @@ public class SpellRegistry {
 		return props.getSpellTimer();
 	}
 
-	public static void startSpellTimer(EntityPlayer player,int cooldown) {
+	public static void startSpellTimer(EntityPlayer player, int cooldown) {
 		PlayerPowerups props = PlayerPowerups.get(player);
 		props.setSpellTimer(cooldown);
 	}
@@ -250,85 +241,102 @@ public class SpellRegistry {
 		return null;
 	}
 
-	@SideOnly(Side.CLIENT)
-	static void drawSpell(RenderGameOverlayEvent.Text event) {
-		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
-
-		ISpell spell = SpellRegistry.getPlayerCurrentISpell(player);
-
-		int ymain = 12;
+	//TODO: split above into [spell registry] [spell caster] [spell renderer] 
+	
+	private static void drawSpellHeader(EntityPlayerSP player, ISpell spellCurrent) {
 		int dim = 12;
 
 		int x = 12, y = 2;
 
 		// draw header
 		if (SpellRegistry.canPlayerCastAnything(player)) {
-			UtilTextureRender.drawTextureSquare(spell.getIconDisplayHeaderEnabled(), x, y, dim);
+			UtilTextureRender.drawTextureSquare(spellCurrent.getIconDisplayHeaderEnabled(), x, y, dim);
 		} else {
-			UtilTextureRender.drawTextureSquare(spell.getIconDisplayHeaderDisabled(), x, y, dim);
+			UtilTextureRender.drawTextureSquare(spellCurrent.getIconDisplayHeaderDisabled(), x, y, dim);
 		}
+	}
 
-		// int ysmall = ymain - 3;
-		int xmain = 10;
-		ymain = 14;
-		if (spell.getIconDisplay() != null) {
-			x = xmain;
-			y = ymain;
-			dim = 16;
-			UtilTextureRender.drawTextureSquare(spell.getIconDisplay(), x, y, dim);
+	private static final int ymain = 14;
+	private static final int xmain = 10;
+	private static final int spellSize = 16;
+
+	private static void drawCurrentSpell(EntityPlayerSP player, ISpell spellCurrent) {
+
+		if (spellCurrent.getIconDisplay() != null) {
+			
+			UtilTextureRender.drawTextureSquare(spellCurrent.getIconDisplay(), xmain, ymain, spellSize);
 		}
+	}
+	private static void drawPrevSpells(EntityPlayerSP player, ISpell spellCurrent) {
 
-		ISpell spellNext = spell.left();// SpellRegistry.getSpellFromType(spell.getSpellID().next());
-		ISpell spellPrev = spell.right();// SpellRegistry.getSpellFromType(spell.getSpellID().prev());
-
-		if (spellNext != null)// && spellNext.getIconDisplay() != null
-		{
-			x = xmain - 3;
-			y = ymain + 16;
-			dim = 16 / 2;
-			UtilTextureRender.drawTextureSquare(spellNext.getIconDisplay(), x, y, dim);
-
-			ISpell sLeftLeft = spellNext.left();// SpellRegistry.getSpellFromType(spellNext.getSpellID().next());
-
-			if (sLeftLeft != null && sLeftLeft.getIconDisplay() != null) {
-				x = xmain - 3 - 1;
-				y = ymain + 16 + 14;
-				dim = 16 / 2 - 2;
-				UtilTextureRender.drawTextureSquare(sLeftLeft.getIconDisplay(), x, y, dim);
-
-				ISpell another = sLeftLeft.left();
-				if (another != null) {
-					x = xmain - 3 - 3;
-					y = ymain + 16 + 14 + 10;
-					dim = 16 / 2 - 4;
-					UtilTextureRender.drawTextureSquare(another.getIconDisplay(), x, y, dim);
-				}
-			}
-		}
+		ISpell spellPrev = spellCurrent.right();
 		if (spellPrev != null)// && spellPrev.getIconDisplay() != null
 		{
-			x = xmain + 6;
-			y = ymain + 16;
-			dim = 16 / 2;
+			int x = xmain + 6;
+			int y = ymain + spellSize;
+			int dim = spellSize / 2;
 			UtilTextureRender.drawTextureSquare(spellPrev.getIconDisplay(), x, y, dim);
 
 			ISpell sRightRight = spellPrev.right();// SpellRegistry.getSpellFromType(spellPrev.getSpellID().prev());
 
 			if (sRightRight != null && sRightRight.getIconDisplay() != null) {
 				x = xmain + 6 + 4;
-				y = ymain + 16 + 14;
-				dim = 16 / 2 - 2;
+				y = ymain + spellSize + 14;
+				dim = spellSize / 2 - 2;
 				UtilTextureRender.drawTextureSquare(sRightRight.getIconDisplay(), x, y, dim);
 
 				ISpell another = sRightRight.right();
 				if (another != null) {
 					x = xmain + 6 + 7;
-					y = ymain + 16 + 14 + 10;
-					dim = 16 / 2 - 4;
+					y = ymain + spellSize + 14 + 10;
+					dim = spellSize / 2 - 4;
+					UtilTextureRender.drawTextureSquare(another.getIconDisplay(), x, y, dim);
+				}
+			}
+		}
+	
+	}
+	private static void drawNextSpells(EntityPlayerSP player, ISpell spellCurrent) {
+		ISpell spellNext = spellCurrent.left();
+		
+		if (spellNext != null)
+		{
+			int x = xmain - 3;
+			int y = ymain + spellSize;
+			int dim = spellSize / 2;
+			UtilTextureRender.drawTextureSquare(spellNext.getIconDisplay(), x, y, dim);
+
+			ISpell sLeftLeft = spellNext.left();
+
+			if (sLeftLeft != null && sLeftLeft.getIconDisplay() != null) {
+				x = xmain - 3 - 1;
+				y = ymain + spellSize + 14;
+				dim = 16 / 2 - 2;
+				UtilTextureRender.drawTextureSquare(sLeftLeft.getIconDisplay(), x, y, dim);
+
+				ISpell another = sLeftLeft.left();
+				if (another != null) {
+					x = xmain - 3 - 3;
+					y = ymain + spellSize + 14 + 10;
+					dim = spellSize / 2 - 4;
 					UtilTextureRender.drawTextureSquare(another.getIconDisplay(), x, y, dim);
 				}
 			}
 		}
 	}
 
+	@SideOnly(Side.CLIENT)
+	static void drawSpellWheel(RenderGameOverlayEvent.Text event) {
+		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+
+		ISpell spellCurrent = SpellRegistry.getPlayerCurrentISpell(player);
+
+		drawSpellHeader(player, spellCurrent);
+
+		drawCurrentSpell(player, spellCurrent);
+
+		drawNextSpells(player,spellCurrent);
+		
+		drawPrevSpells(player,spellCurrent);
+	}
 }

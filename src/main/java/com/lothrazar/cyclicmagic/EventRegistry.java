@@ -91,7 +91,7 @@ public class EventRegistry {
 		
 		if(props.getSpellToggle() != SpellRegistry.SPELL_TOGGLE_HIDE)
 		{
-			SpellRegistry.drawSpell(event);
+			SpellRegistry.drawSpellWheel(event);
 		}
 	}
 	 /*
