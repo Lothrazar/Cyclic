@@ -105,6 +105,10 @@ public class SpellRegistry {
 		SpellThrowWater water = new SpellThrowWater();
 		water.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/water.png")).setSpellID(++spellId);
 		spellbook.add(water);
+
+		SpellScaffolding scaffold = new SpellScaffolding();
+		scaffold.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/scaffold.png")).setSpellID(++spellId);
+		spellbook.add(scaffold);
 	}
 
 	public static ISpell getSpellFromID(int id) {
