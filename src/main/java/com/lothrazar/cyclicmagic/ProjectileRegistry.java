@@ -39,7 +39,6 @@ public class ProjectileRegistry {
 		EntityTorchBolt.item = registerProjItem(EntityTorchBolt.name);
 		EntityRegistry.registerModEntity(EntityTorchBolt.class, EntityTorchBolt.name,entityID++, 			ModMain.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
 	 
-		
     	EntityFishingBolt.item = registerProjItem(EntityFishingBolt.name);
 		EntityRegistry.registerModEntity(EntityFishingBolt.class,EntityFishingBolt.name,entityID++, 		ModMain.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
 
@@ -55,7 +54,6 @@ public class ProjectileRegistry {
 		EntityDynamite.item = registerProjItem(EntityDynamite.name);
 		EntityRegistry.registerModEntity(EntityDynamite.class, EntityDynamite.name,entityID++, 			ModMain.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
 
-		
 		EntityWaterBolt.item = registerProjItem(EntityWaterBolt.name);
 		EntityRegistry.registerModEntity(EntityWaterBolt.class, EntityWaterBolt.name,entityID++, 			ModMain.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
 	        

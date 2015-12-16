@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.spell;
 
-import com.lothrazar.cyclicmagic.projectile.EntityBlazeBolt;
+import com.lothrazar.cyclicmagic.projectile.EntitySnowballBolt;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
@@ -19,6 +19,6 @@ public class SpellThrowIce extends BaseSpellExp implements ISpell {
 	@Override
 	public void cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target) {
 
-		world.spawnEntityInWorld(new EntityBlazeBolt(world, player));
+		world.spawnEntityInWorld(new EntitySnowballBolt(world, player));
 	}
 }

@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.spell;
 
-import com.lothrazar.cyclicmagic.projectile.EntitySnowballBolt;
+import com.lothrazar.cyclicmagic.projectile.EntityShearingBolt;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
@@ -19,6 +19,6 @@ public class SpellThrowShear extends BaseSpellExp implements ISpell {
 	@Override
 	public void cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target) {
 
-		world.spawnEntityInWorld(new EntitySnowballBolt(world, player));
+		world.spawnEntityInWorld(new EntityShearingBolt(world, player));
 	}
 }
