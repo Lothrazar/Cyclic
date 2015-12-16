@@ -18,6 +18,8 @@ public interface ISpell {
 
 	public void cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target);
 
+	//TODO: set a base cooldown, and set others as relative?
+	//currently all are hardcoded like 20, 8, 25 etc
 	public int getCastCooldown();
 
 	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos);

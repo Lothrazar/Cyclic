@@ -8,7 +8,11 @@ import net.minecraft.world.World;
 
 public class EntityDynamite extends EntityThrowable
 { 
-	private float explosionLevel=1.0F;//creeper is 1=regular, 2=charged. 4=tnt, 6=endercrystal
+	public static final float LEVEL_CREEPER = 1F;
+	public static final float LEVEL_CHARGED = 2F;
+	public static final float LEVEL_TNT = 4F;
+	public static final float LEVEL_ENDERCRYSTAL = 6F;
+	private float explosionLevel=1.0F;
     public EntityDynamite(World worldIn)
     {
         super(worldIn); 
@@ -19,7 +23,7 @@ public class EntityDynamite extends EntityThrowable
         this.explosionLevel = explos;
     }
 
-    public EntityDynamite(World worldIn, EntityLivingBase ent, int explos)
+    public EntityDynamite(World worldIn, EntityLivingBase ent, float explos)
     {
         super(worldIn, ent);
         this.explosionLevel = explos;

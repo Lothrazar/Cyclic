@@ -35,7 +35,8 @@ public class SpellRegistry {
 		SpellCollect collect;
 		BaseSpellExp rotate;
 		BaseSpellExp piston;
-		SpellTorchProjectile torch;
+		SpellThrowTorch torch;
+		SpellThrowFishing fishing;
 		
 		//then use ++spellId -> first thing is 1
 		spellbook = new ArrayList<ISpell>();
@@ -82,15 +83,37 @@ public class SpellRegistry {
 		spellbook.add(piston);
 
 		//TODO: do we need a projectile base class?
-		torch = new SpellTorchProjectile();
+		torch = new SpellThrowTorch();
 		torch.setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/torch.png")).setSpellID(++spellId);
 		spellbook.add(torch);
 
-		SpellFishProjectile fishing = new SpellFishProjectile();
+		fishing = new SpellThrowFishing();
 		fishing.setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/fishing.png")).setSpellID(++spellId);
 		spellbook.add(fishing);
 		
+		SpellThrowExplosion explode = new SpellThrowExplosion();
+		explode.setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/explode.png")).setSpellID(++spellId);
+		spellbook.add(explode);
+
+		SpellThrowFire fire = new SpellThrowFire();
+		fire.setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/fire.png")).setSpellID(++spellId);
+		spellbook.add(fire);
 		
+		SpellThrowIce ice = new SpellThrowIce();
+		ice.setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/ice.png")).setSpellID(++spellId);
+		spellbook.add(ice);
+		
+		SpellThrowLightning lightning = new SpellThrowLightning();
+		lightning.setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/lightning.png")).setSpellID(++spellId);
+		spellbook.add(lightning);
+		
+		SpellThrowShear shear = new SpellThrowShear();
+		shear.setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/shear.png")).setSpellID(++spellId);
+		spellbook.add(shear);
+
+		SpellThrowWater water = new SpellThrowWater();
+		water.setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/water.png")).setSpellID(++spellId);
+		spellbook.add(water);
 	}
 
 	public static ArrayList<ISpell> spellbook;

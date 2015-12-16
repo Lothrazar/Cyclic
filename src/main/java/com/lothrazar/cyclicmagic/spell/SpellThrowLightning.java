@@ -1,15 +1,13 @@
 package com.lothrazar.cyclicmagic.spell;
 
-import com.lothrazar.cyclicmagic.ProjectileRegistry;
-import com.lothrazar.cyclicmagic.projectile.EntityFishingBolt;
-import com.lothrazar.cyclicmagic.projectile.EntityTorchBolt;
+import com.lothrazar.cyclicmagic.projectile.EntityLightningballBolt;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
-public class SpellFishProjectile extends BaseSpellExp implements ISpell{
+public class SpellThrowLightning extends BaseSpellExp implements ISpell {
 
 	private final int cooldown = 25;
 
@@ -21,6 +19,6 @@ public class SpellFishProjectile extends BaseSpellExp implements ISpell{
 	@Override
 	public void cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target) {
 
-		world.spawnEntityInWorld(new EntityFishingBolt(world,player));
+		world.spawnEntityInWorld(new EntityLightningballBolt(world, player));
 	}
 }
