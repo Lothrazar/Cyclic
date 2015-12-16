@@ -109,6 +109,10 @@ public class SpellRegistry {
 		SpellScaffolding scaffold = new SpellScaffolding();
 		scaffold.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/scaffold.png")).setSpellID(++spellId);
 		spellbook.add(scaffold);
+		
+		SpellChestSack chestsack = new SpellChestSack();
+		chestsack.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/chestsack.png")).setSpellID(++spellId);
+		spellbook.add(chestsack);
 	}
 
 	public static ISpell getSpellFromID(int id) {
