@@ -22,131 +22,74 @@ import com.lothrazar.cyclicmagic.spell.SpellGhost;
 public class EventRegistry {
 
 	@SubscribeEvent
-    public void onKeyInput(InputEvent.KeyInputEvent event) 
-    {   
-        if(ClientProxy.keySpellToggle.isPressed())
-        {
-       		ModMain.network.sendToServer( new MessageKeyToggle());
-        }
-        else if(ClientProxy.keySpellUp.isPressed())
-        {
-       		ModMain.network.sendToServer( new MessageKeyRight());
-        }
-        else if(ClientProxy.keySpellDown.isPressed())
-        {
-       		ModMain.network.sendToServer( new MessageKeyLeft());
-        }
-        else if(ClientProxy.keySpellCast.isPressed())
-        {
-        	BlockPos posMouse = null;
-        	//TODO: we could make diff packets for cast on entiyt vs block
-        	/*
-        	 // What type of ray trace hit was this? 0 = block, 1 = entity 
-    public MovingObjectPosition.MovingObjectType typeOfHit;*/
-        	
-        	int entity = (Minecraft.getMinecraft().objectMouseOver.entityHit == null) ? -1 :
-        		Minecraft.getMinecraft().objectMouseOver.entityHit.getEntityId();
-        	
-        	if(Minecraft.getMinecraft().objectMouseOver == null){
-        		System.out.println("CANNOT CAST: objectMouseOver null" );
-        		return;
-        	}
-        	
-    		if(Minecraft.getMinecraft().objectMouseOver.getBlockPos() != null)
-    		{
-    			posMouse = Minecraft.getMinecraft().objectMouseOver.getBlockPos();
-    		}
-    		else
-    		{
-    			posMouse = Minecraft.getMinecraft().thePlayer.getPosition();
-    		}
-    		
-       		ModMain.network.sendToServer( new MessageKeyCast(posMouse
-       				,Minecraft.getMinecraft().objectMouseOver.sideHit
-       				,entity));
-        }
-    } 
-	 
+	public void onKeyInput(InputEvent.KeyInputEvent event) {
+		if (ClientProxy.keySpellToggle.isPressed()) {
+			ModMain.network.sendToServer(new MessageKeyToggle());
+		} else if (ClientProxy.keySpellUp.isPressed()) {
+			ModMain.network.sendToServer(new MessageKeyRight());
+		} else if (ClientProxy.keySpellDown.isPressed()) {
+			ModMain.network.sendToServer(new MessageKeyLeft());
+		} else if (ClientProxy.keySpellCast.isPressed()) {
+			BlockPos posMouse = null;
+
+			int entity = (Minecraft.getMinecraft().objectMouseOver.entityHit == null) ? -1 : Minecraft.getMinecraft().objectMouseOver.entityHit.getEntityId();
+
+			if (Minecraft.getMinecraft().objectMouseOver == null) {
+				System.out.println("CANNOT CAST: objectMouseOver null");
+				return;
+			}
+
+			if (Minecraft.getMinecraft().objectMouseOver.getBlockPos() != null) {
+				posMouse = Minecraft.getMinecraft().objectMouseOver.getBlockPos();
+			} else {
+				posMouse = Minecraft.getMinecraft().thePlayer.getPosition();
+			}
+
+			ModMain.network.sendToServer(new MessageKeyCast(posMouse, Minecraft.getMinecraft().objectMouseOver.sideHit, entity));
+		}
+	}
+
 	@SubscribeEvent
-	public void onClonePlayer(PlayerEvent.Clone event) 
-	{ 
+	public void onClonePlayer(PlayerEvent.Clone event) {
 		PlayerPowerups.get(event.entityPlayer).copy(PlayerPowerups.get(event.original));
 	}
-	
+
 	@SubscribeEvent
- 	public void onEntityConstructing(EntityConstructing event)
- 	{ 
- 		if (event.entity instanceof EntityPlayer && PlayerPowerups.get((EntityPlayer) event.entity) == null)
- 		{ 
- 			PlayerPowerups.register((EntityPlayer) event.entity);
- 		} 
- 	}
-	
+	public void onEntityConstructing(EntityConstructing event) {
+		if (event.entity instanceof EntityPlayer && PlayerPowerups.get((EntityPlayer) event.entity) == null) {
+			PlayerPowerups.register((EntityPlayer) event.entity);
+		}
+	}
+
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
-	public void onRenderTextOverlay(RenderGameOverlayEvent.Text event)
-	{  
-		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer; 
+	public void onRenderTextOverlay(RenderGameOverlayEvent.Text event) {
+		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
 		PlayerPowerups props = PlayerPowerups.get(player);
-		
-		if(props.getSpellToggle() != SpellRegistry.SPELL_TOGGLE_HIDE)
-		{
-			SpellRegistry.drawSpellWheel(event);
+
+		if (props.getSpellToggle() != SpellRegistry.SPELL_TOGGLE_HIDE) {
+			SpellScreenRender.drawSpellWheel();
 		}
 	}
-	 /*
+
 	@SubscribeEvent
-	public void onPlayerInteract(PlayerInteractEvent event)
-	{        
-		if(event.pos == null || event.face == null ){return;}
-	
-		ItemStack held = event.entityPlayer.getCurrentEquippedItem();
-	
-		if(held != null && held.getItem() == ItemRegistry.chest_sack  && 
-				Action.RIGHT_CLICK_BLOCK == event.action)
-		{ 
-			ItemChestSack.createAndFillChest(event.entityPlayer, held, event.pos.offset(event.face));
+	public void onEntityUpdate(LivingUpdateEvent event) {
+		if (event.entityLiving == null) {
+			return;
 		}
-	}
-	*/
-	@SubscribeEvent
-	public void onEntityUpdate(LivingUpdateEvent event) 
-	{  
-		if(event.entityLiving == null){return;}
-		
-		if(event.entityLiving instanceof EntityPlayer)
-		{
-			SpellGhost.onPlayerUpdate(event); 
-			
-			SpellRegistry.tickSpellTimer((EntityPlayer)event.entityLiving);
+
+		if (event.entityLiving instanceof EntityPlayer) {
+			SpellGhost.onPlayerUpdate(event);
+
+			SpellCaster.tickSpellTimer((EntityPlayer) event.entityLiving);
 		}
 
 		PotionRegistry.tickSlowfall(event);
-	     
+
 		PotionRegistry.tickWaterwalk(event);
-	     
-		//PotionRegistry.tickLavawalk(event);
- 
-		//PotionRegistry.tickFrost(event); 
-	}
 
-	
-	
-	/*
-	public static void playSoundAt(Entity player, String sound)
-	{ 
-		player.worldObj.playSoundAtEntity(player, sound, 1.0F, 1.0F);
-	}
-	
-	public static void addChatMessage(EntityPlayer player,String string) 
-	{ 
-		player.addChatMessage(new ChatComponentTranslation(string));
-	}
+		// PotionRegistry.tickLavawalk(event);
 
-	
-	public static String lang(String name)
-	{
-		return StatCollector.translateToLocal(name);
-	}*/
-
+		// PotionRegistry.tickFrost(event);
+	}
 }
