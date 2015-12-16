@@ -11,6 +11,8 @@ public class SpellExpProjectile extends BaseSpellExp implements ISpell{
 
 	@Override
 	public void cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target) {
+		//TODO: how to treat projectiles like potions
+		//that is , spawn them by ID from proj registry?
 		world.spawnEntityInWorld(new EntityTorchBolt(world,player));
 	}
 }

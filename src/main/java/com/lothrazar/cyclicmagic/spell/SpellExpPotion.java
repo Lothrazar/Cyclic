@@ -9,13 +9,14 @@ import net.minecraft.world.World;
 import com.lothrazar.cyclicmagic.PotionRegistry;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 
-public class SpellExpPotion extends BaseSpellExp implements ISpell{
+public class SpellExpPotion extends BaseSpellExp implements ISpell {
 
 	private int potionId;
 	private int potionDuration;
 	private int potionAmp;
+	private final int cooldown = 5;// same cooldown for all potion spells
 
-	public SpellExpPotion setPotion(int id, int effectDuration, int effectAmplifier){
+	public SpellExpPotion setPotion(int id, int effectDuration, int effectAmplifier) {
 		potionId = id;
 		potionDuration = effectDuration;
 		potionAmp = effectAmplifier;
@@ -23,14 +24,17 @@ public class SpellExpPotion extends BaseSpellExp implements ISpell{
 	}
 
 	@Override
-	public void cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target)
-	{
-		PotionRegistry.addOrMergePotionEffect(player,new PotionEffect(potionId,potionDuration,potionAmp));
+	public int getCastCooldown() {
+		return cooldown;
 	}
-	
+
 	@Override
-	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos)
-	{
+	public void cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target) {
+		PotionRegistry.addOrMergePotionEffect(player, new PotionEffect(potionId, potionDuration, potionAmp));
+	}
+
+	@Override
+	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos) {
 		UtilSound.playSoundAt(player, "random.drink");
 
 		super.onCastSuccess(world, player, pos);

@@ -14,11 +14,8 @@ public class SpellPiston extends BaseSpellExp {
 
 		BlockPos resultPosition = UtilMoveBlock.moveBlock(world, player, pos, side);
 
-		if(resultPosition != null){
-			//then it was a success
-			//spawnParticle(worldIn, EnumParticleTypes.CRIT_MAGIC, resultPosition); 
+		if (resultPosition != null) {
 			this.onCastSuccess(world, player, resultPosition);
 		}
 	}
-
 }
