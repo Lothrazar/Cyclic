@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import com.lothrazar.cyclicmagic.projectile.*;
 
@@ -12,6 +14,20 @@ public class ProjectileRegistry {
 		return item;
 	}
 	
+	public static void spawnNew(int id,World world, EntityPlayer player){
+
+		//TODO: find better way?
+		//i dont see how since we cannot have static fns (factory constructors)
+		// in interfaces. even if we had a base class
+		//doesnt help, since we register the class, and spawn instances as needed
+		if(id == EntityTorchBolt.ID){
+			world.spawnEntityInWorld(new EntityTorchBolt(world,player));
+		}
+		//else if, else if, ...
+		
+		
+	}
+	
 	public static void register(){
 
 		int entityID = 777;
@@ -21,8 +37,11 @@ public class ProjectileRegistry {
 		final boolean sendsVelocityUpdates = true;
 		
 		EntityTorchBolt.item = registerProjItem(EntityTorchBolt.name);
-		EntityRegistry.registerModEntity(EntityTorchBolt.class, EntityTorchBolt.name,entityID++, 			ModMain.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
-
+		EntityTorchBolt.ID = entityID;
+		EntityRegistry.registerModEntity(EntityTorchBolt.class, EntityTorchBolt.name,EntityTorchBolt.ID, 			ModMain.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
+		entityID++;
+		
+		
     	  /*
     	EntityFishingBolt.item = registerProjItem(EntityFishingBolt.name);
 		EntityRegistry.registerModEntity(EntityFishingBolt.class,EntityFishingBolt.name,entityID++, 		ModMain.instance, trackingRange, updateFrequency, sendsVelocityUpdates);

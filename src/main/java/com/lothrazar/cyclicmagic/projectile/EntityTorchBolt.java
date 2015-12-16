@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 
 public class EntityTorchBolt extends EntityThrowable {
 	private static boolean damageEntityOnHit = true;
-
+	public static int ID;
 	public EntityTorchBolt(World worldIn) {
 		super(worldIn);
 	}
