@@ -35,7 +35,7 @@ public class SpellRegistry {
 		SpellCollect collect;
 		BaseSpellExp rotate;
 		BaseSpellExp piston;
-		SpellExpProjectile torch;
+		SpellTorchProjectile torch;
 		
 		//then use ++spellId -> first thing is 1
 		spellbook = new ArrayList<ISpell>();
@@ -81,9 +81,15 @@ public class SpellRegistry {
 		piston.setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/piston.png")).setSpellID(++spellId);
 		spellbook.add(piston);
 
-		torch = new SpellExpProjectile();
+		//TODO: do we need a projectile base class?
+		torch = new SpellTorchProjectile();
 		torch.setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/torch.png")).setSpellID(++spellId);
 		spellbook.add(torch);
+
+		SpellFishProjectile fishing = new SpellFishProjectile();
+		fishing.setIconDisplay(new ResourceLocation(Const.MODID,"textures/spells/fishing.png")).setSpellID(++spellId);
+		spellbook.add(fishing);
+		
 		
 	}
 

@@ -13,7 +13,7 @@ public class ProjectileRegistry {
 		ItemRegistry.registerItem(item, projectileName);
 		return item;
 	}
-	
+	/*
 	public static void spawnNew(int id,World world, EntityPlayer player){
 
 		//TODO: find better way?
@@ -27,7 +27,7 @@ public class ProjectileRegistry {
 		
 		
 	}
-	
+	*/
 	public static void register(){
 
 		int entityID = 777;
@@ -37,12 +37,9 @@ public class ProjectileRegistry {
 		final boolean sendsVelocityUpdates = true;
 		
 		EntityTorchBolt.item = registerProjItem(EntityTorchBolt.name);
-		EntityTorchBolt.ID = entityID;
-		EntityRegistry.registerModEntity(EntityTorchBolt.class, EntityTorchBolt.name,EntityTorchBolt.ID, 			ModMain.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
-		entityID++;
+		EntityRegistry.registerModEntity(EntityTorchBolt.class, EntityTorchBolt.name,entityID++, 			ModMain.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
+	 
 		
-		
-    	  /*
     	EntityFishingBolt.item = registerProjItem(EntityFishingBolt.name);
 		EntityRegistry.registerModEntity(EntityFishingBolt.class,EntityFishingBolt.name,entityID++, 		ModMain.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
 
@@ -64,6 +61,6 @@ public class ProjectileRegistry {
 	        
 		EntityShearingBolt.item = registerProjItem(EntityShearingBolt.name);
 		EntityRegistry.registerModEntity(EntityShearingBolt.class, EntityShearingBolt.name,entityID++, 			ModMain.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
-	       */
+	   
  	}
 }
