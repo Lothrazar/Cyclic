@@ -63,7 +63,7 @@ public class SpellRegistry {
 		spellbook.add(collect);
 
 		rotate = new SpellRotate();
-		rotate.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/collect.png")).setSpellID(++spellId);
+		rotate.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/rotate.png")).setSpellID(++spellId);
 		spellbook.add(rotate);
 
 		push = new SpellPush();
