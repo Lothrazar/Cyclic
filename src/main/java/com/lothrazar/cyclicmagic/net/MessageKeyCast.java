@@ -89,7 +89,7 @@ public class MessageKeyCast implements IMessage, IMessageHandler<MessageKeyCast,
 
 		// if(props.getSpellToggle() != SpellRegistry.SPELL_TOGGLE_HIDE)
 		// {
-		SpellCaster.cast(SpellCaster.getPlayerCurrentISpell(player), player.worldObj, player, message.pos,message.side,message.entity);
+		SpellCaster.tryCast(SpellCaster.getPlayerCurrentISpell(player), player.worldObj, player, message.pos,message.side,message.entity);
 		// }
 
 		return null;

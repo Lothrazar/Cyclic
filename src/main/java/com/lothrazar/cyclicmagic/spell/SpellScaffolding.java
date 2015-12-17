@@ -14,10 +14,16 @@ public class SpellScaffolding extends BaseSpellExp {
 		return cooldown;
 	}
 	@Override
-	public void cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target) {
+	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target) {
 
 		BlockPos offset = pos.offset(side);
 		
-		world.setBlockState(offset, BlockRegistry.block_fragile.getDefaultState());
+		if(world.isAirBlock(offset)){
+			world.setBlockState(offset, BlockRegistry.block_fragile.getDefaultState());
+			
+			return true;
+		}
+		
+		return false;
 	}
 }

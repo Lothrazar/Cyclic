@@ -14,12 +14,11 @@ public class SpellPull extends BaseSpellExp {
 		return cooldown;
 	}
 	@Override
-	public void cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target) {
+	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target) {
 
 		BlockPos resultPosition = UtilMoveBlock.pullBlock(world, player, pos, side);
 
-		if (resultPosition != null) {
-			this.onCastSuccess(world, player, resultPosition);
-		}
+		//it returns a position if it was moved -> the pos it was moved to
+		return (resultPosition != null);
 	}
 }

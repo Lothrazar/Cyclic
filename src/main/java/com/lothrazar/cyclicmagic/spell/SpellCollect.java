@@ -19,7 +19,7 @@ public class SpellCollect extends BaseSpellExp {
 
 	// TODO: potion effect like this? but with much less speed? 
 	@Override
-	public void cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target) {
+	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target) {
 
 		int x = pos.getX(), y = pos.getY(), z = pos.getZ();
 
@@ -38,8 +38,7 @@ public class SpellCollect extends BaseSpellExp {
 			moved++;
 		}
 
-		if (moved > 0) {
-			this.onCastSuccess(world, player, pos);
-		}
+		//this.onCastSuccess(world, player, pos);
+		return (moved > 0);
 	}
 }

@@ -17,8 +17,10 @@ public class SpellThrowExplosion extends BaseSpellExp implements ISpell {
 	}
 
 	@Override
-	public void cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target) {
+	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target) {
 
-		world.spawnEntityInWorld(new EntityDynamite(world, player,EntityDynamite.LEVEL_CREEPER));
+		//in theory, only false if chunk is unloaded
+		//or if we hit a spawn limit and forceSpawn is false
+		return world.spawnEntityInWorld(new EntityDynamite(world, player,EntityDynamite.LEVEL_CREEPER));
 	}
 }

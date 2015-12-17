@@ -12,35 +12,37 @@ public class SpellRotate extends BaseSpellExp {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public void cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target) {
+	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target) {
 
 		IBlockState clicked = world.getBlockState(pos);
 		if (pos == null || clicked == null || clicked.getBlock() == null) {
-			return;
+			return false;
 		}
 
 		if (clicked.getBlock().rotateBlock(world, pos, side)) {
 			// for example, BlockMushroom.rotateBlock uses this, and hay bales
 			// use it to swap the 'axis'
-			System.out.println("rotateBlock success");
-			this.onCastSuccess(world, player, pos);
+			//System.out.println("rotateBlock success");
+			//this.onCastSuccess(world, player, pos);
+			return true;
 		} else {
-			System.out.println("rotateBlock FAILS -> look into properties");
+			//System.out.println("rotateBlock FAILS -> look into properties");
 			// any property that is not variant?
 			for (IProperty prop : (java.util.Set<IProperty>) clicked.getProperties().keySet()) {
 				// since slabs do not use rotateBlock, swap the up or down half
 				// being used
 				if (prop.getName().equals("half")) {
 					world.setBlockState(pos, clicked.cycleProperty(prop));
-					this.onCastSuccess(world, player, pos);
-					return;
+					//this.onCastSuccess(world, player, pos);
+					return true;
 				}
 				// do not do variant, color, wet, check_decay, decayable, stage,
 				// type
 				// TODO: add a whitelist where "variant" is allowed, such as
 				// sandstone ?
 			}
-			this.onCastFailure(world, player, pos);
+			
+			return false;
 		}
 	}
 }

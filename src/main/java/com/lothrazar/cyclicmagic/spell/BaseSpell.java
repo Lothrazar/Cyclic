@@ -1,6 +1,9 @@
 package com.lothrazar.cyclicmagic.spell;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import com.lothrazar.cyclicmagic.SpellRegistry;
 
 /**
@@ -31,9 +34,11 @@ public abstract class BaseSpell implements ISpell {
 		return 20;
 	}
 
-	// private final ResourceLocation icon = new
-	// ResourceLocation(Const.MODID,"textures/spells/spell_waterwalk_dummy.png");
-
+	@Override
+	public boolean canPlayerCast(World world, EntityPlayer player, BlockPos pos){
+		return true;//default to allow of course
+	}
+	
 	@Override
 	public ResourceLocation getIconDisplay() {
 		return icon;
@@ -43,9 +48,6 @@ public abstract class BaseSpell implements ISpell {
 		icon = img;
 		return this;
 	}
-
-	// @Deprecated
-	// public abstract String getSpellName();
 
 	@Override
 	public ISpell left() {

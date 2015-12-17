@@ -13,6 +13,7 @@ public class EntityDynamite extends EntityThrowable
 	public static final float LEVEL_TNT = 4F;
 	public static final float LEVEL_ENDERCRYSTAL = 6F;
 	private float explosionLevel=1.0F;
+	
     public EntityDynamite(World worldIn)
     {
         super(worldIn); 

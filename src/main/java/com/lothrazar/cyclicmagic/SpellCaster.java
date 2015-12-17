@@ -18,12 +18,18 @@ public class SpellCaster {
 		PlayerPowerups props = PlayerPowerups.get(player);
 		return !(props.getSpellTimer() == 0);
 	}
+/*
+	public static void tryCast(int spell_id, World world, EntityPlayer player, BlockPos pos) {
 
-	public static void cast(ISpell spell, World world, EntityPlayer player, BlockPos pos) {
-		cast(spell, world, player, pos, null, -1);
+		ISpell sp = SpellRegistry.getSpellFromID(spell_id);
+		tryCast(sp, world, player, pos);
 	}
+	
+	public static void tryCast(ISpell spell, World world, EntityPlayer player, BlockPos pos) {
+		tryCast(spell, world, player, pos, null, -1);
+	}*/
 
-	public static void cast(ISpell spell, World world, EntityPlayer player, BlockPos pos, EnumFacing side, int pentity) {
+	public static void tryCast(ISpell spell, World world, EntityPlayer player, BlockPos pos, EnumFacing side, int pentity) {
 
 		Entity target = null;
 		if (pentity > 0) {
@@ -35,23 +41,24 @@ public class SpellCaster {
 		}
 
 		if (spell.canPlayerCast(world, player, pos)) {
-
-			spell.cast(world, player, pos, side, target);
-			spell.onCastSuccess(world, player, pos);
 			
-			PlayerPowerups props = PlayerPowerups.get(player);
-			props.setSpellTimer(spell.getCastCooldown());//startSpellTimer(player, spell.getCastCooldown());
+			if(spell.cast(world, player, pos, side, target)){
+
+				//succes should do things like: drain resources, play sounds and particles 
+				spell.onCastSuccess(world, player, pos);
+				
+				PlayerPowerups props = PlayerPowerups.get(player);
+				props.setSpellTimer(spell.getCastCooldown());//startSpellTimer(player, spell.getCastCooldown());
+			}
+			//failure does not trigger here. it was cast just didnt work
+			//so maybe just was no valid target, or position was blocked/in use
+			
 		} else {
-			System.out.println("onCastFailure " + spell.getSpellID());
+			//not enough XP (resources)
 			spell.onCastFailure(world, player, pos);
 		}
 	}
 
-	public static void cast(int spell_id, World world, EntityPlayer player, BlockPos pos) {
-
-		ISpell sp = SpellRegistry.getSpellFromID(spell_id);
-		cast(sp, world, player, pos);
-	}
 
 	public static void shiftLeft(EntityPlayer player) {
 		ISpell current = getPlayerCurrentISpell(player);

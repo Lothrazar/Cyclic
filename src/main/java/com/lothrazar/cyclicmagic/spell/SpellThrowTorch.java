@@ -17,8 +17,8 @@ public class SpellThrowTorch extends BaseSpellExp implements ISpell{
 	}
 	
 	@Override
-	public void cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target) {
+	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target) {
 
-		world.spawnEntityInWorld(new EntityTorchBolt(world,player));
+		return world.spawnEntityInWorld(new EntityTorchBolt(world,player));
 	}
 }

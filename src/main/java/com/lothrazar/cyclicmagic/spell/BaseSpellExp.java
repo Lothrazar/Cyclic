@@ -32,11 +32,10 @@ public abstract class BaseSpellExp extends BaseSpell implements ISpell {
 	}
 
 	public void onCastFailure(World world, EntityPlayer player, BlockPos pos) {
+		
 		UtilSound.playSoundAt(player, UtilSound.fizz);
 
-		// nope, casting might fail for a reason unrelated to exp
-		// but kepe this in case we have an alternate fail?
-		// player.addChatMessage(new
+//TODO: do we want this back?
 		// ChatComponentTranslation(StatCollector.translateToLocal("spell.exp.missing")
 		// + this.getExpCost()));
 	}
@@ -50,8 +49,8 @@ public abstract class BaseSpellExp extends BaseSpell implements ISpell {
 		return (getExpCost() <= UtilExperience.getExpTotal(player));
 	}
 
-	private final ResourceLocation header = new ResourceLocation(Const.MODID, "textures/spells/exp_cost_dummy.png");
-	private final ResourceLocation header_empty = new ResourceLocation(Const.MODID, "textures/spells/exp_cost_empty_dummy.png");
+	private final static ResourceLocation header = new ResourceLocation(Const.MODID, "textures/spells/exp_cost_dummy.png");
+	private final static ResourceLocation header_empty = new ResourceLocation(Const.MODID, "textures/spells/exp_cost_empty_dummy.png");
 
 	@Override
 	public ResourceLocation getIconDisplayHeaderEnabled() {

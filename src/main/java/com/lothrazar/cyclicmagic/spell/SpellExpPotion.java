@@ -29,8 +29,10 @@ public class SpellExpPotion extends BaseSpellExp implements ISpell {
 	}
 
 	@Override
-	public void cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target) {
+	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target) {
 		PotionRegistry.addOrMergePotionEffect(player, new PotionEffect(potionId, potionDuration, potionAmp));
+		
+		return true;
 	}
 
 	@Override

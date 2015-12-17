@@ -14,8 +14,9 @@ public class SpellChestSack extends BaseSpellExp {
 	public int getCastCooldown() {
 		return cooldown;
 	}
+	
 	@Override
-	public void cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target) {
+	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target) {
 
 		//BlockPos posChest = pos.offset(side);
 		//imported from my old mod https://github.com/PrinceOfAmber/SamsPowerups/blob/b02f6b4243993eb301f4aa2b39984838adf482c1/src/main/java/com/lothrazar/samscontent/item/ItemChestSackEmpty.java
@@ -29,13 +30,15 @@ public class SpellChestSack extends BaseSpellExp {
 			if(world.isRemote == false  ){
 				player.entityDropItem(drop, 1); 
 			}
+
+			return true;
 		}
-		else System.out.println("ahh drop null");
+		//else System.out.println("ahh drop null");
 
 		//playerIn.swingItem();
 		//Util.spawnParticle(entityPlayer.worldObj, EnumParticleTypes.CRIT, pos);
 		//Util.playSoundAt(entityPlayer, "random.wood_click");
 		
-		super.onCastSuccess(world, player, pos);
+		return false;
 	}
 }

@@ -26,9 +26,9 @@ public class SpellPhasing extends BaseSpellExp implements ISpell {
 	}
 
 	@Override
-	public void cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target) {
+	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target) {
 		if (pos == null) {
-			return;
+			return false;
 		}// covered also by canPlayerCast
 
 		BlockPos offs = getPosOffset(player, pos);// was .getOpposite()
@@ -36,7 +36,11 @@ public class SpellPhasing extends BaseSpellExp implements ISpell {
 		// not 2, depends on block pos?
 		if (world.isAirBlock(offs) && world.isAirBlock(offs.up())) {
 			player.setPositionAndUpdate(offs.getX(), offs.getY(), offs.getZ());
+			
+			return true;
 		}
+		
+		return false;
 	}
 
 	private BlockPos getPosOffset(EntityPlayer player, BlockPos pos) {

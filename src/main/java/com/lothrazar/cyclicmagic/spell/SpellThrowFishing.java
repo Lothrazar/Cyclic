@@ -17,8 +17,8 @@ public class SpellThrowFishing extends BaseSpellExp implements ISpell {
 	}
 
 	@Override
-	public void cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target) {
+	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target) {
 
-		world.spawnEntityInWorld(new EntityFishingBolt(world, player));
+		return world.spawnEntityInWorld(new EntityFishingBolt(world, player));
 	}
 }
