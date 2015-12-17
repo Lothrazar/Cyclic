@@ -48,7 +48,7 @@ public class ItemChestSack extends Item {
 				return false;
 			}
 
-			createAndFillChest(playerIn, stack, pos);
+			createAndFillChest(playerIn, stack, offset);
 		}
 
 		return false;
@@ -246,6 +246,7 @@ public class ItemChestSack extends Item {
 	public static ItemStack createStackFromInventory(World world, EntityPlayer player, BlockPos posChest) {
 
 		if (world.getTileEntity(posChest) == null || world.getTileEntity(posChest) instanceof IInventory == false) {
+			System.out.println("bad tile invo:"+posChest.toString());
 			return null;
 		}
 
@@ -253,22 +254,15 @@ public class ItemChestSack extends Item {
 		IInventory invo = (IInventory) tile;
 
 		ItemStack chestItem;
-		int ROWS = 3;
-		int COLS = 9;
-		int START_CHEST = 0;
-		int END_CHEST = START_CHEST + ROWS * COLS;
-
+	
 		ItemStack drop = new ItemStack(ItemRegistry.chest_sack, 1, 0);
-
-		if (drop.getTagCompound() == null)
-			drop.setTagCompound(new NBTTagCompound());
 
 		int stacks = 0;
 		int count = 0;
 
-		int[] itemids = new int[END_CHEST - START_CHEST];
-		int[] itemqty = new int[END_CHEST - START_CHEST];
-		int[] itemdmg = new int[END_CHEST - START_CHEST];
+		int[] itemids = new int[invo.getSizeInventory()];
+		int[] itemqty = new int[invo.getSizeInventory()];
+		int[] itemdmg = new int[invo.getSizeInventory()];
 
 		// inventory and chest has 9 rows by 3 columns, never changes. same as
 		// 64 max stack size
@@ -298,9 +292,9 @@ public class ItemChestSack extends Item {
 			invo.setInventorySlotContents(islotChest, null);
 		}
 
-		if (drop.getTagCompound() == null)
+		if (drop.getTagCompound() == null){
 			drop.setTagCompound(new NBTTagCompound());
-
+		}
 		drop.getTagCompound().setIntArray(KEY_ITEMIDS, itemids);
 		drop.getTagCompound().setIntArray(KEY_ITEMDMG, itemdmg);
 		drop.getTagCompound().setIntArray(KEY_ITEMQTY, itemqty);
