@@ -26,6 +26,7 @@ public class ItemChestSack extends Item {
 	private static final String KEY_COUNT = "count";
 	private static final String KEY_STACKS = "stacks";
 	private static final String KEY_BLOCK = "block";
+	private static final String KEY_BLOCKDISPLAY = "blockdisplay";
 
 	public ItemChestSack() {
 		super();
@@ -65,6 +66,7 @@ public class ItemChestSack extends Item {
 			return;//no info added
 		}
 
+		list.add(itemStack.getTagCompound().getString(KEY_BLOCKDISPLAY));
 		String count = itemStack.getTagCompound().getInteger(KEY_COUNT)+"";
 		String stacks = itemStack.getTagCompound().getInteger(KEY_STACKS)+"";
 		if (count == "") {
@@ -302,8 +304,9 @@ public class ItemChestSack extends Item {
 		drop.getTagCompound().setInteger(KEY_COUNT, count);
 		drop.getTagCompound().setInteger(KEY_STACKS, stacks);
 
-		System.out.println("CHEST IS " + Block.getIdFromBlock(world.getBlockState(posChest).getBlock()));
-		drop.getTagCompound().setInteger(KEY_BLOCK, Block.getIdFromBlock(world.getBlockState(posChest).getBlock()));
+		Block b = world.getBlockState(posChest).getBlock();
+		drop.getTagCompound().setInteger(KEY_BLOCK, Block.getIdFromBlock(b));
+		drop.getTagCompound().setString(KEY_BLOCKDISPLAY, b.getLocalizedName());
 
 		return drop;
 	}
