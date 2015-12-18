@@ -67,8 +67,6 @@ public class PlayerPowerups implements IExtendedEntityProperties
 		this.player.getDataWatcher().updateObject(SPELLTIMER_WATCHER,properties.getInteger(NBT_SPELLTIMER));   
  	}
 
-
-
 	public final int getSpellCurrent()
 	{
 		int spell_id = 0;
