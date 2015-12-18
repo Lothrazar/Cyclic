@@ -89,8 +89,6 @@ public class EventRegistry {
 
 		PotionRegistry.tickWaterwalk(event);
 
-		// PotionRegistry.tickLavawalk(event);
-
-		// PotionRegistry.tickFrost(event);
+		PotionRegistry.tickFrost(event);
 	}
 }

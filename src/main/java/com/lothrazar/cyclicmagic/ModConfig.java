@@ -28,15 +28,12 @@ public class ModConfig {
 		potionIdWaterwalk = instance.get(category, "waterwalk_id", 40).getInt();
 
 		potionIdSlowfall = instance.get(category, "slowfall_id", 41).getInt();
+		
 		potionIdFrost = instance.get(category, "frost_id", 42).getInt();
 
 		category = "effect_tweaks";
 
 		slowfallSpeed = instance.getFloat("slowfall_speed", category, 0.41F, 0.1F, 1F, "This factor affects how much the slowfall effect slows down the entity.");
-
-		// EntitySnowballBolt.secondsFrozenOnHit =
-		// instance.getInt("frost_duration_on_hit",category, 25,1,600,
-		// "When something hit by one of these snowballs, it gets the snow effect for this many seconds.");
 
 		if (instance.hasChanged()) {
 			instance.save();

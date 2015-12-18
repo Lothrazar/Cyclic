@@ -3,6 +3,7 @@ package com.lothrazar.cyclicmagic;
 import com.lothrazar.cyclicmagic.potion.PotionCustom;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import net.minecraft.block.Block;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.potion.Potion;
@@ -14,11 +15,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 
 public class PotionRegistry {
-	// public static Potion
 	// tired;//http://www.minecraftforge.net/wiki/Potion_Tutorial
 	public static Potion waterwalk;
 	public static Potion slowfall;
-	// public static Potion lavawalk;
 	public static Potion frost;
 
 	public final static int I = 0;
@@ -112,11 +111,10 @@ public class PotionRegistry {
 		}
 	}
 
-	public static void addOrMergePotionEffect(EntityPlayer player, PotionEffect newp) {
+	public static void addOrMergePotionEffect(EntityLivingBase player, PotionEffect newp) {
 		//this could be in a utilPotion class i guess...
 		if (player.isPotionActive(newp.getPotionID())) {
 			// do not use built in 'combine' function, just add up duration
-			// myself
 			PotionEffect p = player.getActivePotionEffect(Potion.potionTypes[newp.getPotionID()]);
 
 			int ampMax = Math.max(p.getAmplifier(), newp.getAmplifier());
