@@ -9,6 +9,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -59,7 +60,8 @@ public class PotionRegistry {
 
 			if (world.rand.nextDouble() < 0.3 
 					&& world.getBlockState(pos.down()).getBlock() != Blocks.snow_layer 
-					&& world.isAirBlock(pos.down()) == false) {
+					&& world.isAirBlock(pos.down()) == false
+					&& world.isSideSolid(pos, EnumFacing.UP)) {
 				world.setBlockState(pos, Blocks.snow_layer.getDefaultState());
 			}
 		}

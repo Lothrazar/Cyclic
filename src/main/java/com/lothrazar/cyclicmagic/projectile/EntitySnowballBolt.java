@@ -97,21 +97,15 @@ System.out.println("hit block");
 				BlockPos hitUp = hit.up();
 
 				IBlockState hitState = this.worldObj.getBlockState(hit);
-				if (hitState.getBlock() == Blocks.snow_layer) {
+				if (hitState.getBlock() == Blocks.snow_layer || this.worldObj.getBlockState(hitDown).getBlock() == Blocks.snow_layer) {
 					setMoreSnow(this.worldObj, hit);
-
-				}
-				else if (this.worldObj.getBlockState(hitDown).getBlock() == Blocks.snow_layer) {
-					setMoreSnow(this.worldObj, hitDown);
 				}
 				else if (this.worldObj.getBlockState(hitUp).getBlock() == Blocks.snow_layer) {
 					setMoreSnow(this.worldObj, hitUp);
 				}
-				else if (this.worldObj.isAirBlock(hit) == false && this.worldObj.isAirBlock(hitUp) == true) {
-					//this.worldObj.isSideSolid(pos, EnumFacing.UP)
-					setNewSnow(this.worldObj, hitUp);
-				}
-				else if (this.worldObj.isAirBlock(hit) == false && this.worldObj.isAirBlock(hitUp) == true) {
+				else if (this.worldObj.isAirBlock(hit) == false && this.worldObj.isAirBlock(hitUp) == true
+						&& this.worldObj.isSideSolid(hit, EnumFacing.UP)) {
+					//checking solid side so snow wont go on top of tallgrass/flowers/etc
 					setNewSnow(this.worldObj, hitUp);
 				}
 			}
