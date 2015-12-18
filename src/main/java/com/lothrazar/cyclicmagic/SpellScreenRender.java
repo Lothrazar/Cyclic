@@ -12,16 +12,17 @@ public class SpellScreenRender {
 	private static final int ymain = 14;
 	private static final int xmain = 10;
 	private static final int spellSize = 16;
-	
+
 	private static void drawSpellHeader(EntityPlayerSP player, ISpell spellCurrent) {
 		int dim = 12;
 
 		int x = 12, y = 2;
 
 		// draw header
-		if (SpellCaster.isBlockedBySpellTImer(player)  == false ) {
+		if (SpellCaster.isBlockedBySpellTImer(player) == false) {
 			UtilTextureRender.drawTextureSquare(spellCurrent.getIconDisplayHeaderEnabled(), x, y, dim);
-		} else {
+		}
+		else {
 			UtilTextureRender.drawTextureSquare(spellCurrent.getIconDisplayHeaderDisabled(), x, y, dim);
 		}
 	}
@@ -37,8 +38,7 @@ public class SpellScreenRender {
 	private static void drawPrevSpells(EntityPlayerSP player, ISpell spellCurrent) {
 
 		ISpell spellPrev = spellCurrent.right();
-		if (spellPrev != null)// && spellPrev.getIconDisplay() != null
-		{
+		if (spellPrev != null) {
 			int x = xmain + 6;
 			int y = ymain + spellSize;
 			int dim = spellSize / 2;
@@ -94,7 +94,7 @@ public class SpellScreenRender {
 
 	@SideOnly(Side.CLIENT)
 	public static void drawSpellWheel() {
-		
+
 		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
 
 		ISpell spellCurrent = SpellCaster.getPlayerCurrentISpell(player);

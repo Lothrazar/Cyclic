@@ -22,11 +22,14 @@ public class EventRegistry {
 	public void onKeyInput(InputEvent.KeyInputEvent event) {
 		if (ClientProxy.keySpellToggle.isPressed()) {
 			ModMain.network.sendToServer(new MessageKeyToggle());
-		} else if (ClientProxy.keySpellUp.isPressed()) {
+		}
+		else if (ClientProxy.keySpellUp.isPressed()) {
 			ModMain.network.sendToServer(new MessageKeyRight());
-		} else if (ClientProxy.keySpellDown.isPressed()) {
+		}
+		else if (ClientProxy.keySpellDown.isPressed()) {
 			ModMain.network.sendToServer(new MessageKeyLeft());
-		} else if (ClientProxy.keySpellCast.isPressed()) {
+		}
+		else if (ClientProxy.keySpellCast.isPressed()) {
 			BlockPos posMouse = null;
 
 			int entity = (Minecraft.getMinecraft().objectMouseOver.entityHit == null) ? -1 : Minecraft.getMinecraft().objectMouseOver.entityHit.getEntityId();
@@ -38,7 +41,8 @@ public class EventRegistry {
 
 			if (Minecraft.getMinecraft().objectMouseOver.getBlockPos() != null) {
 				posMouse = Minecraft.getMinecraft().objectMouseOver.getBlockPos();
-			} else {
+			}
+			else {
 				posMouse = Minecraft.getMinecraft().thePlayer.getPosition();
 			}
 

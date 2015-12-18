@@ -32,30 +32,32 @@ public class SpellRegistry {
 		SpellThrowFishing fishing;
 
 		ghost = new SpellGhost();
-		ghost.setExpCost(ModMain.cfg.ghost).setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/ghost.png")).setSpellID(++spellId);
+		//ghost.setExpCost(ModMain.cfg.ghost)
+		ghost.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/ghost.png")).setSpellID(++spellId);
 		spellbook.add(ghost);
 
 		jump = new SpellExpPotion();
-		jump.setPotion(Potion.jump.id, potionDuration, PotionRegistry.V).setExpCost(ModMain.cfg.jump).setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/jump.png")).setSpellID(++spellId);
+		jump.setPotion(Potion.jump.id, potionDuration, PotionRegistry.V).setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/jump.png")).setSpellID(++spellId);
 		spellbook.add(jump);
 
 		phase = new SpellPhasing();
-		phase.setExpCost(ModMain.cfg.phase).setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/phasing.png")).setSpellID(++spellId);
+		//phase.setExpCost(ModMain.cfg.phase)
+		phase.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/phasing.png")).setSpellID(++spellId);
 		spellbook.add(phase);
 
 		slowfall = new SpellExpPotion();
 		slowfall.setPotion(PotionRegistry.slowfall.id, potionDuration, PotionRegistry.I);
-		slowfall.setExpCost(ModMain.cfg.slowfall);
+		//slowfall.setExpCost(ModMain.cfg.slowfall);
 		slowfall.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/slowfall.png"));
 		slowfall.setSpellID(++spellId);
 		spellbook.add(slowfall);
 
 		waterwalk = new SpellExpPotion();
-		waterwalk.setPotion(PotionRegistry.waterwalk.id, potionDuration, PotionRegistry.I).setExpCost(ModMain.cfg.waterwalk).setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/waterwalk.png")).setSpellID(++spellId);
+		waterwalk.setPotion(PotionRegistry.waterwalk.id, potionDuration, PotionRegistry.I).setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/waterwalk.png")).setSpellID(++spellId);
 		spellbook.add(waterwalk);
 
 		haste = new SpellExpPotion();
-		haste.setPotion(Potion.digSpeed.id, potionDuration, PotionRegistry.II).setExpCost(ModMain.cfg.haste).setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/haste.png")).setSpellID(++spellId);
+		haste.setPotion(Potion.digSpeed.id, potionDuration, PotionRegistry.II).setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/haste.png")).setSpellID(++spellId);
 		spellbook.add(haste);
 
 		collect = new SpellCollect();

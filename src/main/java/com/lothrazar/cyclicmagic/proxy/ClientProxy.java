@@ -22,12 +22,7 @@ public class ClientProxy extends CommonProxy {
 	public static KeyBinding keySpellDown;
 	public static KeyBinding keySpellToggle;
 
-	// public static final String keyTransformName = "key.spell.transform";
-	public static final String keySpellCastName = "key.spell.cast";
-	public static final String keySpellUpName = "key.spell.up";
-	public static final String keySpellDownName = "key.spell.down";
-	public static final String keySpellToggleName = "key.spell.toggle";
-	public static final String keyCategorySpell = "key.categories.spell";
+	private static final String keyCategorySpell = "key.categories.spell";
 
 	@Override
 	public void register() {
@@ -83,18 +78,17 @@ public class ClientProxy extends CommonProxy {
 		}
 	}
 
-
 	private void registerKeyBindings() {
-		keySpellCast = new KeyBinding(keySpellCastName, Keyboard.KEY_X, keyCategorySpell);
+		keySpellCast = new KeyBinding("key.spell.cast", Keyboard.KEY_X, keyCategorySpell);
 		ClientRegistry.registerKeyBinding(ClientProxy.keySpellCast);
 
-		keySpellUp = new KeyBinding(keySpellUpName, Keyboard.KEY_Z, keyCategorySpell);
+		keySpellUp = new KeyBinding("key.spell.up", Keyboard.KEY_Z, keyCategorySpell);
 		ClientRegistry.registerKeyBinding(ClientProxy.keySpellUp);
 
-		keySpellDown = new KeyBinding(keySpellDownName, Keyboard.KEY_C, keyCategorySpell);
+		keySpellDown = new KeyBinding("key.spell.down", Keyboard.KEY_C, keyCategorySpell);
 		ClientRegistry.registerKeyBinding(ClientProxy.keySpellDown);
 
-		keySpellToggle = new KeyBinding(keySpellToggleName, Keyboard.KEY_SEMICOLON, keyCategorySpell);
+		keySpellToggle = new KeyBinding("key.spell.toggle", Keyboard.KEY_SEMICOLON, keyCategorySpell);
 		ClientRegistry.registerKeyBinding(ClientProxy.keySpellToggle);
 	}
 }

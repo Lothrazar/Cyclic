@@ -18,16 +18,6 @@ public class SpellCaster {
 		PlayerPowerups props = PlayerPowerups.get(player);
 		return !(props.getSpellTimer() == 0);
 	}
-/*
-	public static void tryCast(int spell_id, World world, EntityPlayer player, BlockPos pos) {
-
-		ISpell sp = SpellRegistry.getSpellFromID(spell_id);
-		tryCast(sp, world, player, pos);
-	}
-	
-	public static void tryCast(ISpell spell, World world, EntityPlayer player, BlockPos pos) {
-		tryCast(spell, world, player, pos, null, -1);
-	}*/
 
 	public static void tryCast(ISpell spell, World world, EntityPlayer player, BlockPos pos, EnumFacing side, int pentity) {
 
@@ -41,24 +31,26 @@ public class SpellCaster {
 		}
 
 		if (spell.canPlayerCast(world, player, pos)) {
-			
-			if(spell.cast(world, player, pos, side, target)){
 
-				//succes should do things like: drain resources, play sounds and particles 
+			if (spell.cast(world, player, pos, side, target)) {
+
+				// succes should do things like: drain resources, play sounds
+				// and particles
 				spell.onCastSuccess(world, player, pos);
-				
+
 				PlayerPowerups props = PlayerPowerups.get(player);
-				props.setSpellTimer(spell.getCastCooldown());//startSpellTimer(player, spell.getCastCooldown());
+				props.setSpellTimer(spell.getCastCooldown());// startSpellTimer(player,
+																// spell.getCastCooldown());
 			}
-			//failure does not trigger here. it was cast just didnt work
-			//so maybe just was no valid target, or position was blocked/in use
-			
-		} else {
-			//not enough XP (resources)
+			// failure does not trigger here. it was cast just didnt work
+			// so maybe just was no valid target, or position was blocked/in use
+
+		}
+		else {
+			// not enough XP (resources)
 			spell.onCastFailure(world, player, pos);
 		}
 	}
-
 
 	public static void shiftLeft(EntityPlayer player) {
 		ISpell current = getPlayerCurrentISpell(player);
@@ -67,7 +59,7 @@ public class SpellCaster {
 			PlayerPowerups props = PlayerPowerups.get(player);
 
 			props.setSpellCurrent(current.left().getSpellID());
-			UtilSound.playSoundAt(player, "random.orb");
+			UtilSound.playSoundAt(player, UtilSound.orb );
 		}
 	}
 
@@ -78,30 +70,30 @@ public class SpellCaster {
 			PlayerPowerups props = PlayerPowerups.get(player);
 
 			props.setSpellCurrent(current.right().getSpellID());
-			UtilSound.playSoundAt(player, "random.orb");
+			UtilSound.playSoundAt(player, UtilSound.orb );
 		}
 	}
 
 	public static void tickSpellTimer(EntityPlayer player) {
 		PlayerPowerups props = PlayerPowerups.get(player);
-		if (props.getSpellTimer() < 0){
+		if (props.getSpellTimer() < 0) {
 			props.setSpellTimer(0);
 		}
-		else if (props.getSpellTimer() > 0){
+		else if (props.getSpellTimer() > 0) {
 			props.setSpellTimer(props.getSpellTimer() - 1);
 		}
 	}
-	
+
 	public static ISpell getPlayerCurrentISpell(EntityPlayer player) {
-		
+
 		PlayerPowerups props = PlayerPowerups.get(player);
- 
+
 		ISpell current = SpellRegistry.getSpellFromID(props.getSpellCurrent());
-		
-		if(current == null){
+
+		if (current == null) {
 			current = getDefaultSpell();
 		}
-		
+
 		return current;
 	}
 }

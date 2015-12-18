@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.util;
+
 /**
  * This class was created by <ChickenBones>. It's distributed as
  * part of the Botania Mod. Get the Source Code in github:
@@ -20,21 +21,17 @@ package com.lothrazar.cyclicmagic.util;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Vec3;
-
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
-
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class Vector3
-{
+public class Vector3 {
 	public static Vector3 zero = new Vector3();
 	public static Vector3 one = new Vector3(1, 1, 1);
 	public static Vector3 center = new Vector3(0.5, 0.5, 0.5);
@@ -71,12 +68,13 @@ public class Vector3
 	public static Vector3 fromEntity(Entity e) {
 		return new Vector3(e.posX, e.posY, e.posZ);
 	}
-/*
-	//removed  method here only because it is unused by me
-	public static Vector3 fromEntityCenter(Entity e) {
 
-		return new Vector3(e.posX, e.posY - e.yOffset + e.height / 2, e.posZ);
-	}*/
+	/*
+	 * //removed method here only because it is unused by me public static
+	 * Vector3 fromEntityCenter(Entity e) {
+	 * 
+	 * return new Vector3(e.posX, e.posY - e.yOffset + e.height / 2, e.posZ); }
+	 */
 
 	public static Vector3 fromTileEntity(TileEntity e) {
 		return new Vector3(e.getPos().getX(), e.getPos().getY(), e.getPos().getZ());
@@ -103,9 +101,9 @@ public class Vector3
 	public double dotProduct(Vector3 vec) {
 		double d = vec.x * x + vec.y * y + vec.z * z;
 
-		if(d > 1 && d < 1.00001)
+		if (d > 1 && d < 1.00001)
 			d = 1;
-		else if(d < -1 && d > -1.00001)
+		else if (d < -1 && d > -1.00001)
 			d = -1;
 		return d;
 	}
@@ -191,7 +189,7 @@ public class Vector3
 
 	public Vector3 normalize() {
 		double d = mag();
-		if(d != 0)
+		if (d != 0)
 			multiply(1 / d);
 
 		return this;
@@ -200,11 +198,11 @@ public class Vector3
 	@Override
 	public String toString() {
 		MathContext cont = new MathContext(4, RoundingMode.HALF_UP);
-		return "Vector3(" + new BigDecimal(x, cont) + ", " +new BigDecimal(y, cont) + ", " + new BigDecimal(z, cont) + ")";
+		return "Vector3(" + new BigDecimal(x, cont) + ", " + new BigDecimal(y, cont) + ", " + new BigDecimal(z, cont) + ")";
 	}
 
 	public Vector3 perpendicular() {
-		if(z == 0)
+		if (z == 0)
 			return zCrossProduct();
 		return xCrossProduct();
 	}
@@ -236,12 +234,11 @@ public class Vector3
 		z = d1;
 		return this;
 	}
-/*
-	//removed method here only because it is unused by me
-	public Vec3 toVec3D() {
-		return Vec3.createVectorHelper(x, y, z);
-	}
-*/
+
+	/*
+	 * //removed method here only because it is unused by me public Vec3
+	 * toVec3D() { return Vec3.createVectorHelper(x, y, z); }
+	 */
 	public double angle(Vector3 vec) {
 		return Math.acos(copy().normalize().dotProduct(vec.copy().normalize()));
 	}
@@ -260,12 +257,12 @@ public class Vector3
 
 	@SideOnly(Side.CLIENT)
 	public Vector3f vector3f() {
-		return new Vector3f((float)x, (float)y, (float)z);
+		return new Vector3f((float) x, (float) y, (float) z);
 	}
 
 	@SideOnly(Side.CLIENT)
 	public Vector4f vector4f() {
-		return new Vector4f((float)x, (float)y, (float)z, 1);
+		return new Vector4f((float) x, (float) y, (float) z, 1);
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -282,41 +279,42 @@ public class Vector3
 
 	public double scalarProject(Vector3 b) {
 		double l = b.mag();
-		return l == 0 ? 0 : dotProduct(b)/l;
+		return l == 0 ? 0 : dotProduct(b) / l;
 	}
 
 	public Vector3 project(Vector3 b) {
 		double l = b.magSquared();
-		if(l == 0) {
+		if (l == 0) {
 			set(0, 0, 0);
 			return this;
 		}
 
-		double m = dotProduct(b)/l;
+		double m = dotProduct(b) / l;
 		set(b).multiply(m);
 		return this;
 	}
 
 	/*
-	//removed Vaskii's method here only because it is unused by me
-	public Vector3 rotate(double angle, Vector3 axis) {
-		Quat.aroundAxis(axis.copy().normalize(), angle).rotate(this);
-		return this;
-	}
-*/
+	 * //removed Vaskii's method here only because it is unused by me public
+	 * Vector3 rotate(double angle, Vector3 axis) {
+	 * Quat.aroundAxis(axis.copy().normalize(), angle).rotate(this); return
+	 * this; }
+	 */
 	@Override
 	public boolean equals(Object o) {
-		if(!(o instanceof Vector3))
+		if (!(o instanceof Vector3))
 			return false;
 
-		Vector3 v = (Vector3)o;
+		Vector3 v = (Vector3) o;
 		return x == v.x && y == v.y && z == v.z;
 	}
+
 	/**
-	 * Same license as top of file!!!
-	 * Thanks Vaskii you rule
-	 * reference
-	 * https://github.com/Vazkii/Botania/blob/9cf015ee972bb8568f65128fa7b84c12c4a7cfff/src/main/java/vazkii/botania/common/core/helper/MathHelper.java
+	 * Same license as top of file!!! Thanks Vaskii you rule reference
+	 * https://github
+	 * .com/Vazkii/Botania/blob/9cf015ee972bb8568f65128fa7b84c12c4a7cfff
+	 * /src/main/java/vazkii/botania/common/core/helper/MathHelper.java
+	 * 
 	 * @param entity
 	 * @param x
 	 * @param y
@@ -324,11 +322,11 @@ public class Vector3
 	 * @param modifier
 	 */
 	public static void setEntityMotionFromVector(Entity entity, int x, int y, int z, float modifier) {
-		Vector3 originalPosVector = new Vector3(x,y,z);
+		Vector3 originalPosVector = new Vector3(x, y, z);
 		Vector3 entityVector = Vector3.fromEntity(entity);
 		Vector3 finalVector = originalPosVector.copy().subtract(entityVector);
 
-		if(finalVector.mag() > 1)
+		if (finalVector.mag() > 1)
 			finalVector.normalize();
 
 		entity.motionX = finalVector.x * modifier;
