@@ -12,9 +12,7 @@ public class BlockRegistry {
 	
 	private static void registerBlock(Block s, String name) {
 		s.setUnlocalizedName(name);
-
 		GameRegistry.registerBlock(s, name);
-
 		blocks.add(s);
 	}
 	

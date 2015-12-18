@@ -4,7 +4,6 @@ import org.lwjgl.input.Keyboard;
 import net.minecraft.item.Item;
 import com.lothrazar.cyclicmagic.ItemRegistry;
 import com.lothrazar.cyclicmagic.Const;
-import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.projectile.*;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -28,6 +27,7 @@ public class ClientProxy extends CommonProxy {
 	public static final String keySpellUpName = "key.spell.up";
 	public static final String keySpellDownName = "key.spell.down";
 	public static final String keySpellToggleName = "key.spell.toggle";
+	public static final String keyCategorySpell = "key.categories.spell";
 
 	@Override
 	public void register() {
@@ -83,7 +83,6 @@ public class ClientProxy extends CommonProxy {
 		}
 	}
 
-	public static final String keyCategorySpell = "key.categories.spell";
 
 	private void registerKeyBindings() {
 		keySpellCast = new KeyBinding(keySpellCastName, Keyboard.KEY_X, keyCategorySpell);
