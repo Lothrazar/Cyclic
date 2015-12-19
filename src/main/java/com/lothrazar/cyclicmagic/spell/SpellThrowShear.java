@@ -6,7 +6,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
-public class SpellThrowShear extends BaseSpellExp implements ISpell {
+public class SpellThrowShear extends BaseSpell implements ISpell {
 
 	private final int cooldown = 15;
 

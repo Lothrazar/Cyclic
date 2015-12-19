@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 import com.lothrazar.cyclicmagic.PotionRegistry;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 
-public class SpellExpPotion extends BaseSpellExp implements ISpell {
+public class SpellExpPotion extends BaseSpell implements ISpell {
 
 	private int potionId;
 	private int potionDuration;

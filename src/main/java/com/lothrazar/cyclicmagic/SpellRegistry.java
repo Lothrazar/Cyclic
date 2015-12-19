@@ -24,20 +24,20 @@ public class SpellRegistry {
 		int spellId = 0;
 
 		// used to be public statics
-		BaseSpellExp ghost;
+		BaseSpell ghost;
 		SpellExpPotion jump;
-		BaseSpellExp phase;
+		BaseSpell phase;
 		SpellExpPotion slowfall;
 		SpellExpPotion waterwalk;
 		SpellExpPotion haste;
 		SpellCollect collect;
-		BaseSpellExp rotate;
-		BaseSpellExp push;
+		BaseSpell rotate;
+		BaseSpell push;
 		SpellThrowTorch torch;
 		SpellThrowFishing fishing;
 
 		ghost = new SpellGhost();
-		//ghost.setExpCost(ModMain.cfg.ghost)
+		//ghost.setExpCost()
 		ghost.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/ghost.png")).setSpellID(++spellId);
 		spellbook.add(ghost);
 

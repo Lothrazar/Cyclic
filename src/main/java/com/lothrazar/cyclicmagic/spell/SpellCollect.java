@@ -10,7 +10,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
-public class SpellCollect extends BaseSpellExp {
+public class SpellCollect extends  BaseSpell implements ISpell {
 	private final int cooldown = 10;
 
 	@Override

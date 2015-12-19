@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 
-public class SpellPhasing extends BaseSpellExp implements ISpell {
+public class SpellPhasing extends BaseSpell implements ISpell {
 	private final int cooldown = 10;
 
 	@Override

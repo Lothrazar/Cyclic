@@ -10,7 +10,7 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 
-public class SpellGhost extends BaseSpellExp implements ISpell {
+public class SpellGhost extends  BaseSpell implements ISpell {
 	private static final String KEY_BOOLEAN = "ghost_on";
 	private static final String KEY_TIMER = "ghost_timer";
 	private static final String KEY_EATLOC = "ghost_location";

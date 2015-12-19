@@ -6,7 +6,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
-public class SpellScaffolding extends BaseSpellExp {
+public class SpellScaffolding extends BaseSpell {
 	private final int cooldown = 5;// same cooldown for all potion spells
 	@Override
 	public int getCastCooldown() {

@@ -6,7 +6,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
-public class SpellThrowSpawnEgg extends BaseSpellExp implements ISpell {
+public class SpellThrowSpawnEgg extends BaseSpell implements ISpell {
 	
 	private final int cooldown = 50;
 

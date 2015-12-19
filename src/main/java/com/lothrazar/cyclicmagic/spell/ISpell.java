@@ -17,16 +17,14 @@ public interface ISpell {
 
 	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side);
 
-	//TODO: set a base cooldown, and set others as relative?
-	//currently all are hardcoded like 20, 8, 25 etc
+	public int getCostExp();
+
+	public int getCostDurability();
+	
 	public int getCastCooldown();
-
+	
 	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos);
-
-	//TODO: differentiate between canCast returning false,
-	//vs canCast was true, but then it failed after that?
-	//that is, if you have enough resources(exp) to cast, but then it fails later on
-	//vs it doesnt fail, but you just couldnt afford it to start with
+ 
 	public void onCastFailure(World world, EntityPlayer player, BlockPos pos);
 
 	public ResourceLocation getIconDisplay();
