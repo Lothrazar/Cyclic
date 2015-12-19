@@ -35,6 +35,7 @@ public class SpellRegistry {
 		BaseSpell push;
 		SpellThrowTorch torch;
 		SpellThrowFishing fishing;
+		BaseSpell carbon;
 
 		ghost = new SpellGhost();
 		ghost.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/ghost.png")).setSpellID(++spellId);
@@ -121,6 +122,10 @@ public class SpellRegistry {
 		SpellThrowSpawnEgg spawnegg = new SpellThrowSpawnEgg();
 		spawnegg.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/spawnegg.png")).setSpellID(++spellId);
 		spellbook.add(spawnegg);
+		
+		carbon = new SpellCarbonPaper();
+		carbon.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/carbon.png")).setSpellID(++spellId);
+		spellbook.add(carbon);
 	}
 
 	public static ISpell getSpellFromID(int id) {
