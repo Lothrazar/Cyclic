@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -31,11 +32,8 @@ public class ItemWandLaunch extends Item {
 		if(playerIn.isSneaking() ){
 			if(worldIn.isRemote == false){
 				this.toggleMode(stack);
+				playerIn.addChatComponentMessage(new ChatComponentText( this.getModeName(this.getMode(stack))));
 			}
-		//	this.onSuccess(playerIn, stack);
-			
-			//ready for lang file support
-			playerIn.addChatComponentMessage(new ChatComponentText( this.getModeName(this.getMode(stack))));
 		}
 		else{
 			
@@ -56,10 +54,10 @@ public class ItemWandLaunch extends Item {
 				if(velY < 0){
 					velY *= -1;//first invert direction
 				}
-				if(velY < 0.3){
+				if(velY < 0.4){
 					//if you are looking straight ahead, this is zero
 					
-					velY = 0.3 + playerIn.jumpMovementFactor;//do a bit of a jump
+					velY = 0.4 + playerIn.jumpMovementFactor;//do a bit of a jump
 				}
 				break;
 			case MODE_LOOK:
@@ -72,22 +70,21 @@ public class ItemWandLaunch extends Item {
 					velY *= -1;//make it always up never down
 				}
 				velY *= (power()/2);
-				break;
+			break;
 			case MODE_HOVER:
-				////mode hover does nothing on cast
+				velY = 0;//hover means do not go up or down
 			break;
 			}
 			
+			stack.damageItem(1, playerIn);
 			playerIn.addVelocity(velX,velY,velZ); 
-
-			//this.onSuccess(playerIn, stack);
 		}
 		
     	return super.onItemRightClick(stack, worldIn, playerIn);
     }
 	
 	private String getModeName(int mode){
-		return "wand.launch.mode"+mode;
+		return StatCollector.translateToLocal("wand.launch.mode"+mode);
 	}
 	
 	@Override
@@ -126,11 +123,9 @@ public class ItemWandLaunch extends Item {
 
 		if(next > MODE_HOVER){next = MODE_LAUNCH;}//modulo increment
 
-		System.out.println(next+ "_toggle");
-		
 		this.setMode(stack,next);
 	}
 	private float power(){
-		return 1.5F;
+		return 1.5F;//TODO: maybe tweak this one day from charging it or by upgrades. maybe it goes down with durability
 	}
 }
