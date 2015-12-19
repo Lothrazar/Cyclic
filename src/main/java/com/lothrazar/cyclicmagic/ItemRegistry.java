@@ -13,6 +13,7 @@ public class ItemRegistry {
 	public static ItemRespawnEggAnimal respawn_egg;
 	public static ItemChestSack chest_sack;
 	public static MasterWand master_wand;
+	public static ItemWandLaunch launch_wand;
 
 	public static void register() {
 		chest_sack = new ItemChestSack();
@@ -23,6 +24,9 @@ public class ItemRegistry {
 		
 		master_wand = new MasterWand();
 		ItemRegistry.registerItem(master_wand, "master_wand");
+
+		launch_wand = new ItemWandLaunch();
+		ItemRegistry.registerItem(launch_wand, "launch_wand");
 		
 		GameRegistry.addRecipe(new ItemStack(master_wand), //placeholder rec
 				"xxx",

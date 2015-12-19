@@ -7,7 +7,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
-public class SpellChestSack extends BaseSpell {
+public class SpellChestSack extends BaseSpell implements ISpell {
 
 	public SpellChestSack(){
 		super();
