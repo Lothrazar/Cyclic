@@ -8,12 +8,12 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 public class SpellChestSack extends BaseSpell {
-	private final int cooldown = 10;// same cooldown for all potion spells
-	@Override
-	public int getCastCooldown() {
-		return cooldown;
+
+	public SpellChestSack(){
+		super();
+		this.cooldown = 10;
 	}
-	
+
 	@Override
 	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side ) {
  

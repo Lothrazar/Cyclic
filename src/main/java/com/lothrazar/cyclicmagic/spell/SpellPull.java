@@ -7,11 +7,11 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 public class SpellPull extends BaseSpell {
-	private final int cooldown = 5;// same cooldown for all potion spells
-	@Override
-	public int getCastCooldown() {
-		return cooldown;
+	public SpellPull(){
+		super();
+		cooldown = 5;
 	}
+
 	@Override
 	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side ) {
 

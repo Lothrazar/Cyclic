@@ -8,12 +8,11 @@ import net.minecraft.world.World;
 
 public class SpellThrowSpawnEgg extends BaseSpell implements ISpell {
 	
-	private final int cooldown = 50;
-
-	@Override
-	public int getCastCooldown() {
-		return cooldown;
+	public SpellThrowSpawnEgg(){
+		super();
+		cooldown = 50;
 	}
+
 	@Override
 	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side) {
 

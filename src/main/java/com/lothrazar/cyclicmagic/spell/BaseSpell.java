@@ -25,18 +25,25 @@ public class BaseSpell implements ISpell {
 
 	private ResourceLocation icon;
 	private int ID;
-	private int durability;
-	private int experience;
+	protected int durability;
+	protected int experience;
+	protected int cooldown;
 
 	public BaseSpell() {
 		// default non-zero costs
 		durability = 100;
-		experience = 10;
+		experience = 1;
+		cooldown = 20;
 	}
 
-	public BaseSpell(int d, int exp) {
-		durability = d;
+	public BaseSpell(int dur, int exp, int cool) {
+		durability = dur;
 		experience = exp;
+	}
+
+	@Override
+	public int getCastCooldown() {
+		return cooldown;
 	}
 
 	@Override
@@ -95,11 +102,6 @@ public class BaseSpell implements ISpell {
 	@Override
 	public int getSpellID() {
 		return ID;
-	}
-
-	@Override
-	public int getCastCooldown() {
-		return 20;
 	}
 
 	@Override

@@ -11,12 +11,12 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 public class SpellCollect extends  BaseSpell implements ISpell {
-	private final int cooldown = 10;
-
-	@Override
-	public int getCastCooldown() {
-		return cooldown;
+ 
+	public SpellCollect(){
+		super();
+		this.cooldown = 10;
 	}
+
 	private final int h_radius = 20;
 	private final int v_radius = 4;
 	private final float speed = 1.2F;

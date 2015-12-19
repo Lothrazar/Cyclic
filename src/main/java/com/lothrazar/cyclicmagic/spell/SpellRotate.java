@@ -8,13 +8,11 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 public class SpellRotate extends BaseSpell {
-	
-	private final int cooldown = 5;
-
-	@Override
-	public int getCastCooldown() {
-		return cooldown;
+	public SpellRotate(){
+		super();
+		cooldown = 5;
 	}
+
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side ) {

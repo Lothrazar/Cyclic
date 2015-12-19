@@ -8,11 +8,10 @@ import net.minecraft.world.World;
 
 public class SpellThrowFire extends BaseSpell implements ISpell {
 
-	private final int cooldown = 25;
-
-	@Override
-	public int getCastCooldown() {
-		return cooldown;
+	public SpellThrowFire(){
+		super();
+		this.cooldown = 30;
+		this.experience = 50;
 	}
 
 	@Override

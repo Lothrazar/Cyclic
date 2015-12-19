@@ -16,12 +16,12 @@ public class SpellGhost extends  BaseSpell implements ISpell {
 	private static final String KEY_EATLOC = "ghost_location";
 	private static final String KEY_EATDIM = "ghost_dim";
 	private static final int GHOST_SECONDS = 10;// so 30 seconds
-	private final int cooldown = 80;
 
-	@Override
-	public int getCastCooldown() {
-		return cooldown;
+	public SpellGhost(){
+		super();
+		cooldown = 80;
 	}
+
 	@Override
 	public boolean canPlayerCast(World world, EntityPlayer player, BlockPos pos) {
 		if (super.canPlayerCast(world, player, pos) == false) {

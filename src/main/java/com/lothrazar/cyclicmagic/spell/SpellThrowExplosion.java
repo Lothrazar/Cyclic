@@ -7,12 +7,10 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 public class SpellThrowExplosion extends BaseSpell implements ISpell {
-
-	private final int cooldown = 8;
-
-	@Override
-	public int getCastCooldown() {
-		return cooldown;
+	public SpellThrowExplosion(){
+		super();
+		this.cooldown = 60;
+		this.experience = 200;
 	}
 
 	@Override

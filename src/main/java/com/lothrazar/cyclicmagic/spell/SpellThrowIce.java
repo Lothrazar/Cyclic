@@ -8,13 +8,10 @@ import net.minecraft.world.World;
 
 public class SpellThrowIce extends BaseSpell implements ISpell {
 
-	private final int cooldown = 10;
-
-	@Override
-	public int getCastCooldown() {
-		return cooldown;
+	public SpellThrowIce(){
+		super();
+		cooldown = 10;
 	}
-
 	@Override
 	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side ) {
 

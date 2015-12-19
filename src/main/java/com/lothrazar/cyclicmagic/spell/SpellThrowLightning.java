@@ -8,13 +8,13 @@ import net.minecraft.world.World;
 
 public class SpellThrowLightning extends BaseSpell implements ISpell {
 
-	private final int cooldown = 25;
-
-	@Override
-	public int getCastCooldown() {
-		return cooldown;
+	public SpellThrowLightning(){
+		super();
+		this.cooldown = 200;
+		this.experience = 200;
+		this.durability = 500;
 	}
-
+ 
 	@Override
 	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side) {
 

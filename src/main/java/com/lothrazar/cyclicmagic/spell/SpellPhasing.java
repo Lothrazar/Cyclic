@@ -9,7 +9,12 @@ import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 
 public class SpellPhasing extends BaseSpell implements ISpell {
-	private final int cooldown = 10;
+
+	public SpellPhasing(){
+		super();
+		cooldown = 10;
+		experience = 50;
+	}
 
 	@Override
 	public int getCastCooldown() {
