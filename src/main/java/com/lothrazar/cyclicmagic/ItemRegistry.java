@@ -10,6 +10,7 @@ public class ItemRegistry {
 
 	public static ItemRespawnEggAnimal respawn_egg;
 	public static ItemChestSack chest_sack;
+	public static Item master_wand;
 
 	public static void register() {
 		chest_sack = new ItemChestSack();
@@ -17,6 +18,9 @@ public class ItemRegistry {
 
 		respawn_egg = new ItemRespawnEggAnimal();
 		ItemRegistry.registerItem(respawn_egg, "respawn_egg");
+		
+		master_wand = new Item();
+		ItemRegistry.registerItem(master_wand, "master_wand");
 	}
 
 	public static void registerItem(Item item, String name) {

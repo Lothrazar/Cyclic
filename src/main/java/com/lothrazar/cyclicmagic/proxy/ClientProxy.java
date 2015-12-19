@@ -20,7 +20,7 @@ public class ClientProxy extends CommonProxy {
 	public static KeyBinding keySpellCast;
 	public static KeyBinding keySpellUp;
 	public static KeyBinding keySpellDown;
-	public static KeyBinding keySpellToggle;
+	//public static KeyBinding keySpellToggle;
 
 	private static final String keyCategorySpell = "key.categories.spell";
 
@@ -87,8 +87,5 @@ public class ClientProxy extends CommonProxy {
 
 		keySpellDown = new KeyBinding("key.spell.down", Keyboard.KEY_C, keyCategorySpell);
 		ClientRegistry.registerKeyBinding(ClientProxy.keySpellDown);
-
-		keySpellToggle = new KeyBinding("key.spell.toggle", Keyboard.KEY_SEMICOLON, keyCategorySpell);
-		ClientRegistry.registerKeyBinding(ClientProxy.keySpellToggle);
 	}
 }

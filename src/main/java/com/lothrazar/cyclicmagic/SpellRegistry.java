@@ -2,14 +2,19 @@ package com.lothrazar.cyclicmagic;
 
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.spell.*;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
 
 public class SpellRegistry {
 
 	public static ArrayList<ISpell> spellbook;
-	public static final int SPELL_TOGGLE_HIDE = 0;
-	public static final int SPELL_TOGGLE_SHOW = 1;
+
+	public static boolean spellsEnabled(EntityPlayer player){
+		ItemStack held = player.getHeldItem();
+		return held != null && held.getItem() == ItemRegistry.master_wand;
+	}
 
 	public static void register() {
 		spellbook = new ArrayList<ISpell>();

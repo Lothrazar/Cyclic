@@ -15,16 +15,12 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 	private static final int SPELLMAIN_WATCHER = 22;
 	private static final String NBT_SPELLMAIN = "samSpell";
 
-	private static final int SPELLTOG_WATCHER = 24;
-	private static final String NBT_SPELLTOG = "samSpellToggle";
-
 	private static final int SPELLTIMER_WATCHER = 25;
 	private static final String NBT_SPELLTIMER = "samSpellTimer";
 
 	public PlayerPowerups(EntityPlayer player) {
 		this.player = player;
 		this.player.getDataWatcher().addObject(SPELLMAIN_WATCHER, 0);
-		this.player.getDataWatcher().addObject(SPELLTOG_WATCHER, 0);
 		this.player.getDataWatcher().addObject(SPELLTIMER_WATCHER, 0);
 	}
 
@@ -45,7 +41,6 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 		NBTTagCompound properties = new NBTTagCompound();
 
 		properties.setInteger(NBT_SPELLMAIN, this.player.getDataWatcher().getWatchableObjectInt(SPELLMAIN_WATCHER));
-		properties.setInteger(NBT_SPELLTOG, this.player.getDataWatcher().getWatchableObjectInt(SPELLTOG_WATCHER));
 		properties.setInteger(NBT_SPELLTIMER, this.player.getDataWatcher().getWatchableObjectInt(SPELLTIMER_WATCHER));
 
 		compound.setTag(EXT_PROP_NAME, properties);
@@ -59,7 +54,6 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 		}
 
 		this.player.getDataWatcher().updateObject(SPELLMAIN_WATCHER, properties.getInteger(NBT_SPELLMAIN));
-		this.player.getDataWatcher().updateObject(SPELLTOG_WATCHER, properties.getInteger(NBT_SPELLTOG));
 		this.player.getDataWatcher().updateObject(SPELLTIMER_WATCHER, properties.getInteger(NBT_SPELLTIMER));
 	}
 
@@ -78,26 +72,6 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 		}
 
 		return spell_id;
-	}
-
-	public final void setSpellToggle(int current) {
-		this.player.getDataWatcher().updateObject(SPELLTOG_WATCHER, current);
-	}
-
-	public final int getSpellToggle() {
-		return this.player.getDataWatcher().getWatchableObjectInt(SPELLTOG_WATCHER);
-	}
-
-	public final int getSpellToggleNext() {
-		int current = getSpellToggle();
-
-		switch (current) {
-		case SpellRegistry.SPELL_TOGGLE_SHOW:
-			return SpellRegistry.SPELL_TOGGLE_HIDE;
-		case SpellRegistry.SPELL_TOGGLE_HIDE:
-		default:
-			return SpellRegistry.SPELL_TOGGLE_SHOW;
-		}
 	}
 
 	public final void setSpellTimer(int current) {
@@ -120,11 +94,9 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 
 		// set in the player
 		player.getDataWatcher().updateObject(SPELLMAIN_WATCHER, props.getSpellCurrent());
-		player.getDataWatcher().updateObject(SPELLTOG_WATCHER, props.getSpellToggle());
 		player.getDataWatcher().updateObject(SPELLTIMER_WATCHER, props.getSpellTimer());
 		// set here
 		this.setSpellCurrent(props.getSpellCurrent());
-		this.setSpellToggle(props.getSpellToggle());
 		this.setSpellTimer(props.getSpellTimer());
 	}
 

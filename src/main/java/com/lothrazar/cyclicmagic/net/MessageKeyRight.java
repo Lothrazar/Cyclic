@@ -37,7 +37,7 @@ public class MessageKeyRight implements IMessage, IMessageHandler<MessageKeyRigh
 	
 		//www.minecraftforge.net/forum/index.php/topic,20135.0.html
 
-		if(props.getSpellToggle() != SpellRegistry.SPELL_TOGGLE_HIDE)
+		if(SpellRegistry.spellsEnabled(player))
 		{
 			SpellCaster.shiftRight(player);
 		}

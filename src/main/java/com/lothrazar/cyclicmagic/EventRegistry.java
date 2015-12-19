@@ -18,12 +18,16 @@ import com.lothrazar.cyclicmagic.spell.SpellGhost;
 
 public class EventRegistry {
 
+	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void onKeyInput(InputEvent.KeyInputEvent event) {
-		if (ClientProxy.keySpellToggle.isPressed()) {
-			ModMain.network.sendToServer(new MessageKeyToggle());
+		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+		
+		if(SpellRegistry.spellsEnabled(player) == false){
+			return;
 		}
-		else if (ClientProxy.keySpellUp.isPressed()) {
+		
+		if (ClientProxy.keySpellUp.isPressed()) {
 			ModMain.network.sendToServer(new MessageKeyRight());
 		}
 		else if (ClientProxy.keySpellDown.isPressed()) {
@@ -32,13 +36,11 @@ public class EventRegistry {
 		else if (ClientProxy.keySpellCast.isPressed()) {
 			BlockPos posMouse = null;
 
-			int entity = (Minecraft.getMinecraft().objectMouseOver.entityHit == null) ? -1 : Minecraft.getMinecraft().objectMouseOver.entityHit.getEntityId();
-
-			if (Minecraft.getMinecraft().objectMouseOver == null) {
-				System.out.println("CANNOT CAST: objectMouseOver null");
-				return;
+			int entity = -1;
+			if(Minecraft.getMinecraft().objectMouseOver.entityHit != null){
+				entity = Minecraft.getMinecraft().objectMouseOver.entityHit.getEntityId(); 
 			}
-
+			
 			if (Minecraft.getMinecraft().objectMouseOver.getBlockPos() != null) {
 				posMouse = Minecraft.getMinecraft().objectMouseOver.getBlockPos();
 			}
@@ -66,9 +68,9 @@ public class EventRegistry {
 	@SubscribeEvent
 	public void onRenderTextOverlay(RenderGameOverlayEvent.Text event) {
 		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
-		PlayerPowerups props = PlayerPowerups.get(player);
+		//PlayerPowerups props = PlayerPowerups.get(player);
 
-		if (props.getSpellToggle() != SpellRegistry.SPELL_TOGGLE_HIDE) {
+		if (SpellRegistry.spellsEnabled(player)) {
 			SpellScreenRender.drawSpellWheel();
 		}
 	}

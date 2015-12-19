@@ -29,11 +29,11 @@ public class MessageKeyLeft implements IMessage, IMessageHandler<MessageKeyLeft,
 	public IMessage onMessage(MessageKeyLeft message, MessageContext ctx)
 	{  
 		EntityPlayer player = ctx.getServerHandler().playerEntity; 
-		PlayerPowerups props = PlayerPowerups.get(player);
+		//PlayerPowerups props = PlayerPowerups.get(player);
 	 
 		//www.minecraftforge.net/forum/index.php/topic,20135.0.html
  
-		if(props.getSpellToggle() != SpellRegistry.SPELL_TOGGLE_HIDE)
+		if(SpellRegistry.spellsEnabled(player))
 		{
 			SpellCaster.shiftLeft(player);
 		}

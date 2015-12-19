@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.net;
 
 import com.lothrazar.cyclicmagic.SpellCaster;
+import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -36,10 +37,11 @@ public class MessageKeyCast implements IMessage, IMessageHandler<MessageKeyCast,
 	private void toNBT() {
 		tags = new NBTTagCompound();
 		tags.setString(NBT_POS, UtilNBT.posToStringCSV(pos));
-		
+
 		if (side == null) {
 			tags.setInteger(NBT_SIDE, -1);// DUNSWE
-		} else {
+		}
+		else {
 			tags.setInteger(NBT_SIDE, side.getIndex());// DUNSWE
 		}
 		tags.setInteger(NBT_ENTITY, entity);
@@ -48,17 +50,19 @@ public class MessageKeyCast implements IMessage, IMessageHandler<MessageKeyCast,
 	private void fromNBT() {
 		// http://www.minecraftforge.net/forum/index.php?topic=20135.0
 		String csv = tags.getString(NBT_POS);
-	
+
 		if (csv == "") {
 			pos = null;
-		} else {
+		}
+		else {
 			pos = UtilNBT.stringCSVToBlockPos(csv);
 		}
 
 		int iside = tags.getInteger(NBT_SIDE);
 		if (iside < 0) {
 			side = null;
-		} else {
+		}
+		else {
 			side = EnumFacing.getFront(iside);
 		}
 
@@ -79,7 +83,7 @@ public class MessageKeyCast implements IMessage, IMessageHandler<MessageKeyCast,
 
 	@Override
 	public IMessage onMessage(MessageKeyCast message, MessageContext ctx) {
-		
+
 		message.fromNBT();
 
 		EntityPlayer player = ctx.getServerHandler().playerEntity;
@@ -87,10 +91,9 @@ public class MessageKeyCast implements IMessage, IMessageHandler<MessageKeyCast,
 
 		// www.minecraftforge.net/forum/index.php/topic,20135.0.html
 
-		// if(props.getSpellToggle() != SpellRegistry.SPELL_TOGGLE_HIDE)
-		// {
-		SpellCaster.tryCast(SpellCaster.getPlayerCurrentISpell(player), player.worldObj, player, message.pos,message.side,message.entity);
-		// }
+		if (SpellRegistry.spellsEnabled(player)) {
+			SpellCaster.tryCast(SpellCaster.getPlayerCurrentISpell(player), player.worldObj, player, message.pos, message.side, message.entity);
+		}
 
 		return null;
 	}
