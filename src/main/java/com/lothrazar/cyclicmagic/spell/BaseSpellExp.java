@@ -13,6 +13,9 @@ import com.lothrazar.cyclicmagic.util.UtilExperience;
 public abstract class BaseSpellExp extends BaseSpell implements ISpell {
 	private int expCost = 20;// default cost
 
+	private final static ResourceLocation header = new ResourceLocation(Const.MODID, "textures/spells/exp_cost_dummy.png");
+	private final static ResourceLocation header_empty = new ResourceLocation(Const.MODID, "textures/spells/exp_cost_empty_dummy.png");
+
 	public int getExpCost() {
 		return expCost;
 	}
@@ -22,15 +25,17 @@ public abstract class BaseSpellExp extends BaseSpell implements ISpell {
 		return this;
 	}
 
-	//
+	@Override
 	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos) {
-		player.swingItem();
 
 		UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT, pos);
 
 		UtilExperience.drainExp(player, getExpCost());
+		
+		super.onCastSuccess(world, player, pos);
 	}
 
+	@Override
 	public void onCastFailure(World world, EntityPlayer player, BlockPos pos) {
 		
 		UtilSound.playSoundAt(player, UtilSound.fizz);
@@ -48,9 +53,6 @@ public abstract class BaseSpellExp extends BaseSpell implements ISpell {
 
 		return (getExpCost() <= UtilExperience.getExpTotal(player));
 	}
-
-	private final static ResourceLocation header = new ResourceLocation(Const.MODID, "textures/spells/exp_cost_dummy.png");
-	private final static ResourceLocation header_empty = new ResourceLocation(Const.MODID, "textures/spells/exp_cost_empty_dummy.png");
 
 	@Override
 	public ResourceLocation getIconDisplayHeaderEnabled() {

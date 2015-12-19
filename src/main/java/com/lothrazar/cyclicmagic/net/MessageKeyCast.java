@@ -88,11 +88,11 @@ public class MessageKeyCast implements IMessage, IMessageHandler<MessageKeyCast,
 
 		EntityPlayer player = ctx.getServerHandler().playerEntity;
 		// PlayerPowerups props = PlayerPowerups.get(player);
-
+	 
 		// www.minecraftforge.net/forum/index.php/topic,20135.0.html
 
 		if (SpellRegistry.spellsEnabled(player)) {
-			SpellCaster.tryCast(SpellCaster.getPlayerCurrentISpell(player), player.worldObj, player, message.pos, message.side, message.entity);
+			SpellCaster.tryCastCurrent( player.worldObj, player, message.pos, message.side, message.entity);
 		}
 
 		return null;

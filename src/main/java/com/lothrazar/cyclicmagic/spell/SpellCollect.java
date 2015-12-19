@@ -38,7 +38,6 @@ public class SpellCollect extends BaseSpellExp {
 			moved++;
 		}
 
-		//this.onCastSuccess(world, player, pos);
 		return (moved > 0);
 	}
 }

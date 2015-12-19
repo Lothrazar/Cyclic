@@ -61,7 +61,7 @@ public class SpellPhasing extends BaseSpellExp implements ISpell {
 
 	@Override
 	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos) {
-		UtilSound.playSoundAt(player, "mob.endermen.portal");
+		UtilSound.playSoundAt(player, UtilSound.portal);
 		UtilParticle.spawnParticle(world, EnumParticleTypes.PORTAL, pos);
 
 		super.onCastSuccess(world, player, pos);

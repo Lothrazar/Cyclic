@@ -23,6 +23,11 @@ public abstract class BaseSpell implements ISpell {
 		ID = id;
 		return this;
 	}
+	
+	@Override
+	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos){
+		player.swingItem();
+	}
 
 	@Override
 	public int getSpellID() {

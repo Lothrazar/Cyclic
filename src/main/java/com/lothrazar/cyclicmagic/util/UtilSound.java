@@ -8,8 +8,9 @@ public class UtilSound {
 	public static final String fizz = "random.fizz";
 	public static final String orb = "random.orb";
 	public static final String snow = "dig.snow";
-	public static float volume = 1.0F;
-	public static float pitch = 1.0F;
+	public static final float volume = 1.0F;
+	public static final float pitch = 1.0F;
+	public static final String portal =  "mob.endermen.portal";
 
 	public static void playSoundAt(Entity player, String sound) {
 		player.worldObj.playSoundAtEntity(player, sound, volume,pitch);

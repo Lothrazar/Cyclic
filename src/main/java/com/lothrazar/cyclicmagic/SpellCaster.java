@@ -18,7 +18,12 @@ public class SpellCaster {
 		PlayerPowerups props = PlayerPowerups.get(player);
 		return !(props.getSpellTimer() == 0);
 	}
-
+	public static void tryCastCurrent(World world, EntityPlayer player, BlockPos pos, EnumFacing side) {
+		tryCast(SpellCaster.getPlayerCurrentISpell(player),world,player,pos,side,-1);
+	}
+	public static void tryCastCurrent(World world, EntityPlayer player, BlockPos pos, EnumFacing side, int pentity) {
+		tryCast(SpellCaster.getPlayerCurrentISpell(player),world,player,pos,side,pentity);
+	}
 	public static void tryCast(ISpell spell, World world, EntityPlayer player, BlockPos pos, EnumFacing side, int pentity) {
 
 		Entity target = null;
@@ -39,12 +44,11 @@ public class SpellCaster {
 				spell.onCastSuccess(world, player, pos);
 
 				PlayerPowerups props = PlayerPowerups.get(player);
-				props.setSpellTimer(spell.getCastCooldown());// startSpellTimer(player,
-																// spell.getCastCooldown());
+				props.setSpellTimer(spell.getCastCooldown());
 			}
+			//else the spell was cast, but it had no result			
 			// failure does not trigger here. it was cast just didnt work
 			// so maybe just was no valid target, or position was blocked/in use
-
 		}
 		else {
 			// not enough XP (resources)

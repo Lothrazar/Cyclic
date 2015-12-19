@@ -18,10 +18,8 @@ public class SpellEntityEgg extends BaseSpellExp implements ISpell {
 
 		if(entity_id > 0) 
 		{ 
+			System.out.println("make this an egg projectile");
 			world.removeEntity(target); 
-			
-		//		ModSpells.spawnParticle(world, EnumParticleTypes.VILLAGER_HAPPY, target.getPosition());
-
 			if(world.isRemote == false){
 				ItemStack stack = new ItemStack(ItemRegistry.respawn_egg,1,entity_id);
 				
@@ -31,6 +29,9 @@ public class SpellEntityEgg extends BaseSpellExp implements ISpell {
 				
 				player.dropPlayerItemWithRandomChoice(stack,true);
 			}
+
+			
+			//		ModSpells.spawnParticle(world, EnumParticleTypes.VILLAGER_HAPPY, target.getPosition());
 
 			//ModSpells.playSoundAt(entityPlayer, "mob.zombie.remedy");
 			 

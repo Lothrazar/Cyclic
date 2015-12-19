@@ -10,7 +10,7 @@ public class ItemRegistry {
 
 	public static ItemRespawnEggAnimal respawn_egg;
 	public static ItemChestSack chest_sack;
-	public static Item master_wand;
+	public static MasterWand master_wand;
 
 	public static void register() {
 		chest_sack = new ItemChestSack();
@@ -19,7 +19,7 @@ public class ItemRegistry {
 		respawn_egg = new ItemRespawnEggAnimal();
 		ItemRegistry.registerItem(respawn_egg, "respawn_egg");
 		
-		master_wand = new Item();
+		master_wand = new MasterWand();
 		ItemRegistry.registerItem(master_wand, "master_wand");
 	}
 
