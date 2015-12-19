@@ -25,7 +25,8 @@ public class MasterWand extends Item {
 
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
-		tooltip.add(stack.getItemDamage() + "/" + MAXCHARGE);
+		int charge = stack.getMaxDamage() - stack.getItemDamage();//invese of damge
+		tooltip.add(charge + "/" + MAXCHARGE);
 		super.addInformation(stack, playerIn, tooltip, advanced);
 	}
 
