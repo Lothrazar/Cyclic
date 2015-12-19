@@ -16,7 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class MasterWand extends Item {
 
-	private final int MAXCHARGE = 1000;
+	private final int MAXCHARGE = 10000;//10k
 
 	public MasterWand() {
 		this.setMaxStackSize(1);
@@ -84,7 +84,7 @@ public class MasterWand extends Item {
 			return;
 		}
 		EntityPlayer p = (EntityPlayer) entityIn;
-		if (p.inventory.currentItem != itemSlot && worldIn.rand.nextDouble() > 0.1) {
+		if (p.inventory.currentItem != itemSlot && worldIn.rand.nextDouble() > 0.95) {
 		
 			int curr = stack.getItemDamage();
 			if(curr > 0){
