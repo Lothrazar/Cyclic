@@ -20,11 +20,11 @@ public interface ISpell {
 	public int getCostExp();
 
 	public int getCostDurability();
-	
+
 	public int getCastCooldown();
-	
+
 	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos);
- 
+
 	public void onCastFailure(World world, EntityPlayer player, BlockPos pos);
 
 	public ResourceLocation getIconDisplay();

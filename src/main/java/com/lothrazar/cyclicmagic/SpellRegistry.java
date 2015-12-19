@@ -11,7 +11,7 @@ public class SpellRegistry {
 
 	public static ArrayList<ISpell> spellbook;
 
-	public static boolean spellsEnabled(EntityPlayer player){
+	public static boolean spellsEnabled(EntityPlayer player) {
 		ItemStack held = player.getHeldItem();
 		return held != null && held.getItem() == ItemRegistry.master_wand;
 	}
@@ -37,7 +37,6 @@ public class SpellRegistry {
 		SpellThrowFishing fishing;
 
 		ghost = new SpellGhost();
-		//ghost.setExpCost()
 		ghost.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/ghost.png")).setSpellID(++spellId);
 		spellbook.add(ghost);
 
@@ -46,13 +45,11 @@ public class SpellRegistry {
 		spellbook.add(jump);
 
 		phase = new SpellPhasing();
-		//phase.setExpCost(ModMain.cfg.phase)
 		phase.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/phasing.png")).setSpellID(++spellId);
 		spellbook.add(phase);
 
 		slowfall = new SpellExpPotion();
 		slowfall.setPotion(PotionRegistry.slowfall.id, potionDuration, PotionRegistry.I);
-		//slowfall.setExpCost(ModMain.cfg.slowfall);
 		slowfall.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/slowfall.png"));
 		slowfall.setSpellID(++spellId);
 		spellbook.add(slowfall);
@@ -116,11 +113,11 @@ public class SpellRegistry {
 		SpellScaffolding scaffold = new SpellScaffolding();
 		scaffold.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/scaffold.png")).setSpellID(++spellId);
 		spellbook.add(scaffold);
-		
+
 		SpellChestSack chestsack = new SpellChestSack();
 		chestsack.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/chestsack.png")).setSpellID(++spellId);
 		spellbook.add(chestsack);
-		
+
 		SpellThrowSpawnEgg spawnegg = new SpellThrowSpawnEgg();
 		spawnegg.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/spawnegg.png")).setSpellID(++spellId);
 		spellbook.add(spawnegg);

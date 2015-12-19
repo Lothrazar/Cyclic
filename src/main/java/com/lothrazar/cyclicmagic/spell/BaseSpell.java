@@ -27,22 +27,24 @@ public class BaseSpell implements ISpell {
 	private int ID;
 	private int durability;
 	private int experience;
-	public BaseSpell(){
-		//default non-zero costs
+
+	public BaseSpell() {
+		// default non-zero costs
 		durability = 100;
 		experience = 10;
 	}
-	
-	public BaseSpell(int d, int exp){
+
+	public BaseSpell(int d, int exp) {
 		durability = d;
 		experience = exp;
 	}
 
 	@Override
 	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side) {
-		//never cast a base spell, always override this
+		// never cast a base spell, always override this
 		return false;
 	}
+
 	@Override
 	public int getCostExp() {
 		return experience;
@@ -52,17 +54,18 @@ public class BaseSpell implements ISpell {
 	public int getCostDurability() {
 		return durability;
 	}
-	
+
 	public ISpell setSpellID(int id) {
 		ID = id;
 		return this;
 	}
+
 	private final static ResourceLocation header = new ResourceLocation(Const.MODID, "textures/spells/exp_cost_dummy.png");
 	private final static ResourceLocation header_empty = new ResourceLocation(Const.MODID, "textures/spells/exp_cost_empty_dummy.png");
 
 	@Override
 	public void onCastFailure(World world, EntityPlayer player, BlockPos pos) {
-		
+
 		UtilSound.playSoundAt(player, UtilSound.fizz);
 	}
 
@@ -75,18 +78,20 @@ public class BaseSpell implements ISpell {
 	public ResourceLocation getIconDisplayHeaderDisabled() {
 		return header_empty;
 	}
+
 	@Override
 	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos) {
 		player.swingItem();
 		UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT, pos);
 
-		if(this.getCostExp() > 0){
+		if (this.getCostExp() > 0) {
 			UtilExperience.drainExp(player, this.getCostExp());
 		}
-		if(this.getCostDurability() > 0 && player.getHeldItem() != null){
+		if (this.getCostDurability() > 0 && player.getHeldItem() != null) {
 			player.getHeldItem().damageItem(this.getCostDurability(), player);
 		}
 	}
+
 	@Override
 	public int getSpellID() {
 		return ID;
@@ -103,13 +108,11 @@ public class BaseSpell implements ISpell {
 			return true;
 		}
 
-		boolean canCast = (getCostExp() <= UtilExperience.getExpTotal(player))
-				&& (player.getHeldItem() != null) && player.getHeldItem().getItem() == ItemRegistry.master_wand
-				&& player.getHeldItem().getItemDamage() <= this.getCostDurability();
-		
+		boolean canCast = (getCostExp() <= UtilExperience.getExpTotal(player)) && (player.getHeldItem() != null) && player.getHeldItem().getItem() == ItemRegistry.master_wand && player.getHeldItem().getItemDamage() >= this.getCostDurability();
+
 		return canCast;
 	}
-	
+
 	@Override
 	public ResourceLocation getIconDisplay() {
 		return icon;
