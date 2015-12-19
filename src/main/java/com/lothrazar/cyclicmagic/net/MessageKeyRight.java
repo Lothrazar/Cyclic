@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.net;
   
-import com.lothrazar.cyclicmagic.PlayerPowerups;
 import com.lothrazar.cyclicmagic.SpellCaster;
 import com.lothrazar.cyclicmagic.SpellRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -33,7 +32,7 @@ public class MessageKeyRight implements IMessage, IMessageHandler<MessageKeyRigh
 	public IMessage onMessage(MessageKeyRight message, MessageContext ctx)
 	{  
 		EntityPlayer player = ctx.getServerHandler().playerEntity; 
-		PlayerPowerups props = PlayerPowerups.get(player);
+		//PlayerPowerups props = PlayerPowerups.get(player);
 	
 		//www.minecraftforge.net/forum/index.php/topic,20135.0.html
 

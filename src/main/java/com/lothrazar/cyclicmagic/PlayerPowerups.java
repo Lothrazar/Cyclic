@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic;
 
-import com.lothrazar.cyclicmagic.SpellRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
