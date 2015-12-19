@@ -43,6 +43,9 @@ public class ProjectileRegistry {
 
 		EntityShearingBolt.item = registerProjItem(EntityShearingBolt.name);
 		EntityRegistry.registerModEntity(EntityShearingBolt.class, EntityShearingBolt.name, entityID++, ModMain.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
+		
+		EntityRespawnEgg.item = registerProjItem(EntityRespawnEgg.name);
+		EntityRegistry.registerModEntity(EntityRespawnEgg.class, EntityRespawnEgg.name, entityID++, ModMain.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
 
 	}
 }

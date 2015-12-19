@@ -24,22 +24,20 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemRespawnEggAnimal extends Item // mimic/mirror of
-												// ItemMonsterPlacer
-{
+public class ItemRespawnEggAnimal extends Item {
 	public ItemRespawnEggAnimal() {
 		this.setHasSubtypes(true);
 	}
 
 	public String getItemStackDisplayName(ItemStack stack) {
-		String s = (StatCollector.translateToLocal(this.getUnlocalizedName() + ".name")).trim();
-		String s1 = EntityList.getStringFromID(stack.getMetadata());
+		String itemName = (StatCollector.translateToLocal(this.getUnlocalizedName() + ".name")).trim();
+		String entityName = EntityList.getStringFromID(stack.getMetadata());
 
-		if (s1 != null) {
-			s = s + " " + StatCollector.translateToLocal("entity." + s1 + ".name");
+		if (entityName != null) {
+			itemName = StatCollector.translateToLocal("entity." + entityName + ".name") + " " + itemName;
 		}
 
-		return s;
+		return itemName;
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -54,9 +52,11 @@ public class ItemRespawnEggAnimal extends Item // mimic/mirror of
 	public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
 		if (worldIn.isRemote) {
 			return true;
-		} else if (!playerIn.canPlayerEdit(pos.offset(side), side, stack)) {
+		}
+		else if (!playerIn.canPlayerEdit(pos.offset(side), side, stack)) {
 			return false;
-		} else {
+		}
+		else {
 			IBlockState iblockstate = worldIn.getBlockState(pos);
 			// this is where we disabled the interaction with monster spawners
 			pos = pos.offset(side);
@@ -89,12 +89,14 @@ public class ItemRespawnEggAnimal extends Item // mimic/mirror of
 	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn) {
 		if (worldIn.isRemote) {
 			return itemStackIn;
-		} else {
+		}
+		else {
 			MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(worldIn, playerIn, true);
 
 			if (movingobjectposition == null) {
 				return itemStackIn;
-			} else {
+			}
+			else {
 				if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
 					BlockPos blockpos = movingobjectposition.getBlockPos();
 
@@ -135,7 +137,8 @@ public class ItemRespawnEggAnimal extends Item // mimic/mirror of
 	public static Entity spawnCreature(World worldIn, int entityID, double x, double y, double z) {
 		if (!EntityList.entityEggs.containsKey(Integer.valueOf(entityID))) {
 			return null;
-		} else {
+		}
+		else {
 			Entity entity = null;
 
 			for (int j = 0; j < 1; ++j) {

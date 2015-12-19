@@ -121,7 +121,7 @@ public class SpellRegistry {
 		chestsack.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/chestsack.png")).setSpellID(++spellId);
 		spellbook.add(chestsack);
 		
-		SpellEntityEgg spawnegg = new SpellEntityEgg();
+		SpellThrowSpawnEgg spawnegg = new SpellThrowSpawnEgg();
 		spawnegg.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/spawnegg.png")).setSpellID(++spellId);
 		spellbook.add(spawnegg);
 	}
