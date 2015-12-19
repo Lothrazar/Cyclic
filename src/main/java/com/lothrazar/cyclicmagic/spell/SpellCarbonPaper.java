@@ -1,7 +1,10 @@
 package com.lothrazar.cyclicmagic.spell;
 
+import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityNote;
 import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.util.BlockPos;
@@ -16,36 +19,30 @@ public class SpellCarbonPaper extends BaseSpell implements ISpell {
 	@Override
 	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side ) {
 
-		//TODO: only copy is done here
+		// only copy is done here
 		//then drops new item stack
 		//then paste is only from item
 		
-		/*if ((blockClicked == Blocks.wall_sign || blockClicked == Blocks.standing_sign) && container instanceof TileEntitySign) {
-			TileEntitySign sign = (TileEntitySign) container;
-
-			if (isEmpty) {
-				ItemPaperCarbon.copySign(world, playerIn, sign, held);
-				wasCopy = true;
-			} else {
-				ItemPaperCarbon.pasteSign(world, playerIn, sign, held);
-				wasCopy = false;
-			}
-
-			isValid = true;
+		Block blockClicked = world.getBlockState(pos) == null ? null : world.getBlockState(pos).getBlock();
+		TileEntity container = world.getTileEntity(pos);
+		
+		if(blockClicked == null || container == null){
+			return false;
 		}
-		if (blockClicked == Blocks.noteblock && container instanceof TileEntityNote) {
-			TileEntityNote noteblock = (TileEntityNote) container;
+		
+		if ((blockClicked == Blocks.wall_sign || blockClicked == Blocks.standing_sign) && container instanceof TileEntitySign) {
+		 
+			ItemPaperCarbon.copySignAndSpawnItem(world,  (TileEntitySign) container, pos);
+			
+			return true;
+		}
+		else if (blockClicked == Blocks.noteblock && container instanceof TileEntityNote) {
+		 
+			ItemPaperCarbon.copyNoteAndSpawnItem(world, (TileEntityNote) container, pos);
 
-			if (isEmpty) {
-				ItemPaperCarbon.copyNote(world, playerIn, noteblock, held);
-				wasCopy = true;
-			} else {
-				ItemPaperCarbon.pasteNote(world, playerIn, noteblock, held);
-				wasCopy = false;
-			}
-
-			isValid = true;
-		}*/
-		return true;
+			return true;
+		}
+		
+		return false;
 	}
 }

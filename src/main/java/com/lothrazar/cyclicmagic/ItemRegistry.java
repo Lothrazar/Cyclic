@@ -14,6 +14,7 @@ public class ItemRegistry {
 	public static ItemChestSack chest_sack;
 	public static MasterWand master_wand;
 	public static ItemWandLaunch launch_wand;
+	public static ItemPaperCarbon carbon_paper;
 
 	public static void register() {
 		chest_sack = new ItemChestSack();
@@ -27,6 +28,9 @@ public class ItemRegistry {
 
 		launch_wand = new ItemWandLaunch();
 		ItemRegistry.registerItem(launch_wand, "launch_wand");
+
+		carbon_paper = new ItemPaperCarbon();
+		ItemRegistry.registerItem(carbon_paper, "carbon_paper");
 		
 		GameRegistry.addRecipe(new ItemStack(master_wand), //placeholder rec
 				"xxx",
