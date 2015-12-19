@@ -2,7 +2,9 @@ package com.lothrazar.cyclicmagic;
 
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.item.*;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemRegistry {
@@ -21,6 +23,12 @@ public class ItemRegistry {
 		
 		master_wand = new MasterWand();
 		ItemRegistry.registerItem(master_wand, "master_wand");
+		
+		GameRegistry.addRecipe(new ItemStack(master_wand), //placeholder rec
+				"xxx",
+				"xxx",
+				"xxx",
+				'x',Items.leather);
 	}
 
 	public static void registerItem(Item item, String name) {

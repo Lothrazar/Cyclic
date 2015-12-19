@@ -3,9 +3,6 @@ package com.lothrazar.cyclicmagic;
 import org.apache.logging.log4j.Logger;
 import com.lothrazar.cyclicmagic.net.*;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
@@ -34,12 +31,6 @@ public class ModMain {
 	public static Logger logger;
 	public static ModConfig cfg;
 	public static SimpleNetworkWrapper network;
-	public static CreativeTabs tabSamsContent = new CreativeTabs("tabScepter") {
-		@Override
-		public Item getTabIconItem() {
-			return Items.stick;// TODO placeholder
-		}
-	};
 
 	@EventHandler
 	public void onPreInit(FMLPreInitializationEvent event) {

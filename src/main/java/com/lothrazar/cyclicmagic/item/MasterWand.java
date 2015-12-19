@@ -1,9 +1,7 @@
 package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
-import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.SpellCaster;
-import com.lothrazar.cyclicmagic.SpellRegistry;
+import com.lothrazar.cyclicmagic.SpellCaster; 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -18,15 +16,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class MasterWand extends Item{
   
+	private final int MAXCHARGE = 1000;
 	public MasterWand(){
-		this.setCreativeTab(ModMain.tabSamsContent);
 		this.setMaxStackSize(1);
-		//this.setMaxDamage(uses);
+		this.setMaxDamage(MAXCHARGE);
 	}
 	@SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
     {
-		tooltip.add("yep");
+		tooltip.add(stack.getItemDamage()+"/"+MAXCHARGE);
 		super.addInformation(stack, playerIn, tooltip, advanced);
     }
 
@@ -75,6 +73,14 @@ public class MasterWand extends Item{
      */
     public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected)
     {
+    	//if held by something not a player? such as custom npc/zombie/etc 
+    	if(entityIn instanceof EntityPlayer == false){
+    		return;
+    	}
+    	EntityPlayer p = (EntityPlayer) entityIn;
+    	if(p.inventory.currentItem != itemSlot &&  worldIn.rand.nextDouble() > 0.6){
+        	stack.setItemDamage(stack.getItemDamage() + 1);
+    	}
     }
 
     /**
@@ -82,5 +88,6 @@ public class MasterWand extends Item{
      */
     public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn)
     {
+    	stack.setItemDamage(MAXCHARGE - 1);
     }
 }

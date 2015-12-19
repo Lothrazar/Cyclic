@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
@@ -23,8 +22,6 @@ public class SpellCaster {
 	}
 
 	public static void tryCast(ISpell spell, World world, EntityPlayer player, BlockPos pos, EnumFacing side) {
-
-		Entity target = null;
 
 		if (isBlockedBySpellTImer(player)) {
 			return;
