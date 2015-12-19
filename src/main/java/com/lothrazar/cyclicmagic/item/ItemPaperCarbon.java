@@ -152,81 +152,82 @@ public class ItemPaperCarbon extends Item {
 	public static String noteToString(byte note) {
 		String s = null;
 
+		//TODO: a final string array / hashmap/dictionary lookup might be more condensed...
 		switch (note) {
 		case 0:
-			s = EnumChatFormatting.YELLOW + "F#";
+			s = "F#";
 			break;// yellow
 		case 1:
-			s = EnumChatFormatting.YELLOW + "G";
+			s = "G";
 			break;
 		case 2:
-			s = EnumChatFormatting.YELLOW + "G#";
+			s =  "G#";
 			break;
 		case 3:
-			s = EnumChatFormatting.YELLOW + "A";
+			s = "A";
 			break;// or
 		case 4:
-			s = EnumChatFormatting.YELLOW + "A#";
+			s =  "A#";
 			break;// or
 		case 5:
-			s = EnumChatFormatting.RED + "B";
+			s = "B";
 			break;// red
 		case 6:
-			s = EnumChatFormatting.RED + "C";
+			s = "C";
 			break;// red
 		case 7:
-			s = EnumChatFormatting.DARK_RED + "C#";
+			s = "C#";
 			break;
 		case 8:
-			s = EnumChatFormatting.DARK_RED + "D";
+			s =  "D";
 			break;
 		case 9:
-			s = EnumChatFormatting.LIGHT_PURPLE + "D#";
+			s =  "D#";
 			break;// pink
 		case 10:
-			s = EnumChatFormatting.LIGHT_PURPLE + "E";
+			s =  "E";
 			break;
 		case 11:
-			s = EnumChatFormatting.DARK_PURPLE + "F";
+			s = "F";
 			break;// purp
 		case 12:
-			s = EnumChatFormatting.DARK_PURPLE + "F#";
+			s ="F#";
 			break;
 		case 13:
-			s = EnumChatFormatting.DARK_PURPLE + "G";
+			s =  "G";
 			break;
 		case 14:
-			s = EnumChatFormatting.DARK_BLUE + "G#";
+			s =  "G#";
 			break;
 		case 15:
-			s = EnumChatFormatting.DARK_BLUE + "A";
+			s =  "A";
 			break;// blue
 		case 16:
-			s = EnumChatFormatting.BLUE + "A#";
+			s =  "A#";
 			break;
 		case 17:
-			s = EnumChatFormatting.BLUE + "B";
+			s =  "B";
 			break;
 		case 18:
-			s = EnumChatFormatting.DARK_AQUA + "C";
+			s = "C";
 			break;// lt blue?
 		case 19:
-			s = EnumChatFormatting.AQUA + "C#";
+			s ="C#";
 			break;
 		case 20:
-			s = EnumChatFormatting.AQUA + "D";
+			s =  "D";
 			break;// EnumChatFormatting.GREEN
 		case 21:
-			s = EnumChatFormatting.GREEN + "D#";
+			s =  "D#";
 			break;// there is no light green or dark green...
 		case 22:
-			s = EnumChatFormatting.GREEN + "E";
+			s =  "E";
 			break;
 		case 23:
-			s = EnumChatFormatting.AQUA + "F";
+			s =  "F";
 			break;
 		case 24:
-			s = EnumChatFormatting.AQUA + "F#";
+			s = "F#";
 			break;// EnumChatFormatting.GREEN
 		}
 
