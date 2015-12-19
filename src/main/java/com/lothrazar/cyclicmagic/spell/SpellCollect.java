@@ -19,7 +19,7 @@ public class SpellCollect extends BaseSpellExp {
 
 	// TODO: potion effect like this? but with much less speed? 
 	@Override
-	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target) {
+	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side ) {
 
 		int x = pos.getX(), y = pos.getY(), z = pos.getZ();
 

@@ -34,7 +34,7 @@ public class SpellGhost extends BaseSpellExp implements ISpell {
 	}
 
 	@Override
-	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target) {
+	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side ) {
 		setPlayerGhostMode(player, player.worldObj);
 		
 		return true;

@@ -26,7 +26,7 @@ public class SpellPhasing extends BaseSpellExp implements ISpell {
 	}
 
 	@Override
-	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target) {
+	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side ) {
 		if (pos == null) {
 			return false;
 		}// covered also by canPlayerCast

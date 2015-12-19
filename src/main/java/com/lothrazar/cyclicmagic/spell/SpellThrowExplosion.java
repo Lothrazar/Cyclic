@@ -17,7 +17,7 @@ public class SpellThrowExplosion extends BaseSpellExp implements ISpell {
 	}
 
 	@Override
-	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target) {
+	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side ) {
 
 		//in theory, only false if chunk is unloaded
 		//or if we hit a spawn limit and forceSpawn is false

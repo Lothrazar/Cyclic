@@ -49,6 +49,7 @@ public class MasterWand extends Item{
     public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn)
     {
     	System.out.println("onItemRightClick");
+    	SpellCaster.tryCastCurrent( worldIn, playerIn, playerIn.getPosition(), null);
         return super.onItemRightClick(itemStackIn, worldIn, playerIn);
     }
     @Override

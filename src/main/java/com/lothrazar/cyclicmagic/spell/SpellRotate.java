@@ -12,21 +12,21 @@ public class SpellRotate extends BaseSpellExp {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target) {
+	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side ) {
 
+		if (pos == null || world.getBlockState(pos) == null || side == null) {
+			return false;
+		}
 		IBlockState clicked = world.getBlockState(pos);
-		if (pos == null || clicked == null || clicked.getBlock() == null) {
+		if(clicked.getBlock()==null){
 			return false;
 		}
 
 		if (clicked.getBlock().rotateBlock(world, pos, side)) {
 			// for example, BlockMushroom.rotateBlock uses this, and hay bales
 			// use it to swap the 'axis'
-			//System.out.println("rotateBlock success");
-			//this.onCastSuccess(world, player, pos);
 			return true;
 		} else {
-			//System.out.println("rotateBlock FAILS -> look into properties");
 			// any property that is not variant?
 			for (IProperty prop : (java.util.Set<IProperty>) clicked.getProperties().keySet()) {
 				// since slabs do not use rotateBlock, swap the up or down half

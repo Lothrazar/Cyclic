@@ -14,7 +14,7 @@ public class SpellScaffolding extends BaseSpellExp {
 		return cooldown;
 	}
 	@Override
-	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target) {
+	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side ) {
 
 		BlockPos offset = pos.offset(side);
 		

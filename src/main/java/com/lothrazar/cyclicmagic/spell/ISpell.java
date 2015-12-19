@@ -16,7 +16,7 @@ public interface ISpell {
 
 	public ISpell setSpellID(int id);
 
-	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target);
+	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side);
 
 	//TODO: set a base cooldown, and set others as relative?
 	//currently all are hardcoded like 20, 8, 25 etc

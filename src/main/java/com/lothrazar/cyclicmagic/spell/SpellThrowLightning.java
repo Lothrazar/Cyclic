@@ -17,7 +17,7 @@ public class SpellThrowLightning extends BaseSpellExp implements ISpell {
 	}
 
 	@Override
-	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side, Entity target) {
+	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side) {
 
 		return world.spawnEntityInWorld(new EntityLightningballBolt(world, player));
 	}

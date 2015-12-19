@@ -19,17 +19,12 @@ public class SpellCaster {
 		return !(props.getSpellTimer() == 0);
 	}
 	public static void tryCastCurrent(World world, EntityPlayer player, BlockPos pos, EnumFacing side) {
-		tryCast(SpellCaster.getPlayerCurrentISpell(player),world,player,pos,side,-1);
+		tryCast(SpellCaster.getPlayerCurrentISpell(player),world,player,pos,side);
 	}
-	public static void tryCastCurrent(World world, EntityPlayer player, BlockPos pos, EnumFacing side, int pentity) {
-		tryCast(SpellCaster.getPlayerCurrentISpell(player),world,player,pos,side,pentity);
-	}
-	public static void tryCast(ISpell spell, World world, EntityPlayer player, BlockPos pos, EnumFacing side, int pentity) {
+
+	public static void tryCast(ISpell spell, World world, EntityPlayer player, BlockPos pos, EnumFacing side) {
 
 		Entity target = null;
-		if (pentity > 0) {
-			target = world.getEntityByID(pentity);
-		}
 
 		if (isBlockedBySpellTImer(player)) {
 			return;
@@ -37,7 +32,7 @@ public class SpellCaster {
 
 		if (spell.canPlayerCast(world, player, pos)) {
 
-			if (spell.cast(world, player, pos, side, target)) {
+			if (spell.cast(world, player, pos, side)) {
 
 				// succes should do things like: drain resources, play sounds
 				// and particles

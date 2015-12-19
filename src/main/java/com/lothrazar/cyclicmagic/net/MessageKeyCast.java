@@ -16,11 +16,9 @@ import net.minecraft.util.EnumFacing;
 public class MessageKeyCast implements IMessage, IMessageHandler<MessageKeyCast, IMessage> {
 	private BlockPos pos;
 	private EnumFacing side;
-	private int entity;
 	// private String csv;
 	private NBTTagCompound tags = null;
 	private static final String NBT_POS = "pos";
-	private static final String NBT_ENTITY = "entity";
 	private static final String NBT_SIDE = "side";
 
 	public MessageKeyCast() {
@@ -29,7 +27,6 @@ public class MessageKeyCast implements IMessage, IMessageHandler<MessageKeyCast,
 	public MessageKeyCast(BlockPos pm, EnumFacing pside, int pentity) {
 		pos = pm;
 		side = pside;
-		entity = pentity;
 
 		this.toNBT();
 	}
@@ -44,7 +41,6 @@ public class MessageKeyCast implements IMessage, IMessageHandler<MessageKeyCast,
 		else {
 			tags.setInteger(NBT_SIDE, side.getIndex());// DUNSWE
 		}
-		tags.setInteger(NBT_ENTITY, entity);
 	}
 
 	private void fromNBT() {
@@ -65,8 +61,6 @@ public class MessageKeyCast implements IMessage, IMessageHandler<MessageKeyCast,
 		else {
 			side = EnumFacing.getFront(iside);
 		}
-
-		entity = tags.getInteger(NBT_ENTITY);
 	}
 
 	@Override
@@ -92,7 +86,7 @@ public class MessageKeyCast implements IMessage, IMessageHandler<MessageKeyCast,
 		// www.minecraftforge.net/forum/index.php/topic,20135.0.html
 
 		if (SpellRegistry.spellsEnabled(player)) {
-			SpellCaster.tryCastCurrent( player.worldObj, player, message.pos, message.side, message.entity);
+			SpellCaster.tryCastCurrent( player.worldObj, player, message.pos, message.side);
 		}
 
 		return null;
