@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.spell;
 
 import java.util.List;
 import com.lothrazar.cyclicmagic.util.Vector3;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,7 +11,12 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 public class SpellCollect extends BaseSpellExp {
+	private final int cooldown = 10;
 
+	@Override
+	public int getCastCooldown() {
+		return cooldown;
+	}
 	private final int h_radius = 20;
 	private final int v_radius = 4;
 	private final float speed = 1.2F;

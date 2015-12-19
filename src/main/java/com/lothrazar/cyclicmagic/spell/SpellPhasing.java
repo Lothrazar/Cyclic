@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.spell;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
@@ -10,6 +9,12 @@ import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 
 public class SpellPhasing extends BaseSpellExp implements ISpell {
+	private final int cooldown = 10;
+
+	@Override
+	public int getCastCooldown() {
+		return cooldown;
+	}
 	@Override
 	public boolean canPlayerCast(World world, EntityPlayer player, BlockPos pos) {
 		if (super.canPlayerCast(world, player, pos) == false) {

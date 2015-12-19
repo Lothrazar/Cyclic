@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.spell;
 
-import com.lothrazar.cyclicmagic.projectile.EntityLightningballBolt;
-import net.minecraft.entity.Entity;
+import com.lothrazar.cyclicmagic.projectile.EntityLightningballBolt; 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;

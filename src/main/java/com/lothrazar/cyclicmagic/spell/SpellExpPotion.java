@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.spell;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.BlockPos;

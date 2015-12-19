@@ -2,14 +2,19 @@ package com.lothrazar.cyclicmagic.spell;
 
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 public class SpellRotate extends BaseSpellExp {
+	
+	private final int cooldown = 5;
 
+	@Override
+	public int getCastCooldown() {
+		return cooldown;
+	}
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side ) {

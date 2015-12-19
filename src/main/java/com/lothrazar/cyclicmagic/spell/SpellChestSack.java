@@ -8,7 +8,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 public class SpellChestSack extends BaseSpellExp {
-	private final int cooldown = 5;// same cooldown for all potion spells
+	private final int cooldown = 10;// same cooldown for all potion spells
 	@Override
 	public int getCastCooldown() {
 		return cooldown;

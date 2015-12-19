@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.spell;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
@@ -8,7 +7,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSettings.GameType;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 
@@ -18,7 +16,12 @@ public class SpellGhost extends BaseSpellExp implements ISpell {
 	private static final String KEY_EATLOC = "ghost_location";
 	private static final String KEY_EATDIM = "ghost_dim";
 	private static final int GHOST_SECONDS = 10;// so 30 seconds
+	private final int cooldown = 80;
 
+	@Override
+	public int getCastCooldown() {
+		return cooldown;
+	}
 	@Override
 	public boolean canPlayerCast(World world, EntityPlayer player, BlockPos pos) {
 		if (super.canPlayerCast(world, player, pos) == false) {
