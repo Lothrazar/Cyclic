@@ -8,6 +8,7 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -56,7 +57,18 @@ public class EventRegistry {
 	public void onClonePlayer(PlayerEvent.Clone event) {
 		PlayerPowerups.get(event.entityPlayer).copy(PlayerPowerups.get(event.original));
 	}
-
+	
+	@SubscribeEvent
+	public void onPlayerInteract(PlayerInteractEvent event)
+  	{    
+		if(event.pos == null || event.entityPlayer == null || event.entityPlayer.getHeldItem() == null){return;}
+		//IBlockState bstate = event.entityPlayer.worldObj.getBlockState(event.pos);
+		
+		if(event.entityPlayer.getHeldItem().getItem() == ItemRegistry.master_wand){
+			SpellCaster.tryCastCurrent(event.world, event.entityPlayer, event.pos, event.face);
+		}
+  	}
+	
 	@SubscribeEvent
 	public void onEntityConstructing(EntityConstructing event) {
 		if (event.entity instanceof EntityPlayer && PlayerPowerups.get((EntityPlayer) event.entity) == null) {

@@ -34,7 +34,7 @@ public class ItemPaperCarbon extends Item {
 	
 	public ItemPaperCarbon(){
 		super();
-		this.setMaxDamage(100);
+		this.setMaxDamage(5);
 		this.setMaxStackSize(1);
 	}
 
