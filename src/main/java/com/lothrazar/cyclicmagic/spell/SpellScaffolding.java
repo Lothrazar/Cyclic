@@ -15,7 +15,8 @@ public class SpellScaffolding extends BaseSpell {
 	@Override
 	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side ) {
 
-		BlockPos offset = pos.offset(side);
+		
+		BlockPos offset = (side == null)? pos : pos.offset(side);
 		
 		if(world.isAirBlock(offset)){
 			world.setBlockState(offset, BlockRegistry.block_fragile.getDefaultState());

@@ -15,6 +15,7 @@ import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
+import com.lothrazar.cyclicmagic.gui.GuiSpellbook;
 import com.lothrazar.cyclicmagic.net.*;
 import com.lothrazar.cyclicmagic.spell.SpellGhost;
 
@@ -65,11 +66,12 @@ public class EventRegistry {
 		if(event.pos == null || event.entityPlayer == null || event.entityPlayer.getHeldItem() == null){return;}
 		//IBlockState bstate = event.entityPlayer.worldObj.getBlockState(event.pos);
 		
-		if(event.action == Action.LEFT_CLICK_BLOCK){
-			
+		if(event.action == Action.LEFT_CLICK_BLOCK){//maybe only if you click enchanting table
+			Minecraft.getMinecraft().displayGuiScreen(new GuiSpellbook( event.entityPlayer));
 		}
 		else{
 			if(event.entityPlayer.getHeldItem().getItem() == ItemRegistry.master_wand){
+				//TODO: put this back in the item but override ..doesSneakBypassUse
 				SpellCaster.tryCastCurrent(event.world, event.entityPlayer, event.pos, event.face);
 			}
 		}
