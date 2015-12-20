@@ -108,12 +108,27 @@ public class BaseSpell implements ISpell {
 	@Override
 	public boolean canPlayerCast(World world, EntityPlayer player, BlockPos pos) {
 		if (player.capabilities.isCreativeMode) {
-			return true;
+			return true;//skips everything
 		}
-
-		boolean canCast = (getCostExp() <= UtilExperience.getExpTotal(player)) && (player.getHeldItem() != null) && player.getHeldItem().getItem() == ItemRegistry.master_wand && player.getHeldItem().getItemDamage() >= this.getCostDurability();
-
-		return canCast;
+		
+		if( player.getHeldItem() == null ||  player.getHeldItem().getItem() != ItemRegistry.master_wand){
+			System.out.println("cannot cast - no wand");
+			return false;
+		}
+		
+		int currentCharge = player.getHeldItem().getMaxDamage() - player.getHeldItem().getItemDamage();
+		
+		if(getCostDurability() > 0 && currentCharge < this.getCostDurability()){
+			System.out.println("cannot cast - need charge "+getCostDurability());
+			return false;//not enough durability
+		}
+		
+		if(getCostExp() > 0 && getCostExp() <= UtilExperience.getExpTotal(player)){
+			System.out.println("cannot cast - need EXP "+getCostExp());
+			return false;//not enough exp
+		}
+			
+		return true;
 	}
 
 	@Override

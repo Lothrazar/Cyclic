@@ -28,7 +28,8 @@ public class GuiSpellbook extends GuiScreen {
 	@Override
 	public void initGui() {
 
-		//TODO: buttons to add/remove each spell from player rotation
+		// TODO: buttons to add/remove each spell from player rotation
+		super.initGui();
 	}
 
 	@Override
@@ -36,7 +37,7 @@ public class GuiSpellbook extends GuiScreen {
 		drawDefaultBackground();
 
 		super.drawScreen(x, y, par3);
-		
+
 		ItemStack wand = entityPlayer.getHeldItem();
 		if (wand.hasTagCompound() == false) {
 			wand.setTagCompound(new NBTTagCompound());
@@ -59,4 +60,10 @@ public class GuiSpellbook extends GuiScreen {
 			ys += spellSize + 5;
 		}
 	}
+
+	@Override
+	public boolean doesGuiPauseGame() {
+		return false;
+	}
+
 }
