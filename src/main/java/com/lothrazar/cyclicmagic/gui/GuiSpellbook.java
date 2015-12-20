@@ -33,31 +33,50 @@ public class GuiSpellbook extends GuiScreen {
 	}
 
 	@Override
-	public void drawScreen(int x, int y, float par3) {
-		drawDefaultBackground();
+	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+		super.drawDefaultBackground();
 
-		super.drawScreen(x, y, par3);
+		super.drawScreen(mouseX, mouseY, partialTicks);
 
+		/*
 		ItemStack wand = entityPlayer.getHeldItem();
 		if (wand.hasTagCompound() == false) {
 			wand.setTagCompound(new NBTTagCompound());
-		}
+		}*/
 
+		
+		int xCenter = this.width/2;
+		int yCenter = this.height/2;
+		int FONT = 16777215;
+		
+		drawCenteredString(fontRendererObj, "test", xCenter,yCenter, FONT);
+		
+		int radius = xCenter/3;
+		
+		
+		double arc = (2*Math.PI)/SpellRegistry.spellbook.size();
+		
+		double ang = 0;
+		double cx,cy;
+	
 		PlayerPowerups props = PlayerPowerups.get(entityPlayer);
-
-		int xs = 50;
-		int ys = 14;
+ 
+		ang = 0;
+		
 		int spellSize = 16;
 		for (ISpell s : SpellRegistry.spellbook) {
-
-			UtilTextureRender.drawTextureSquare(s.getIconDisplay(), xs, ys, spellSize);
-
+			
+			cx = xCenter + radius * Math.cos(ang);
+			cy = yCenter + radius * Math.sin(ang);
+			
+			UtilTextureRender.drawTextureSquare(s.getIconDisplay(), (int)cx, (int)cy, spellSize);
+	
 			if (s.getID() == props.getSpellCurrent()) {
-				drawCenteredString(fontRendererObj, StatCollector.translateToLocal("spell.current"), xs + 20, ys, 16777215);
-
+				//TODO: mark current spell with a highlight or some circle texture or something
+				drawCenteredString(fontRendererObj, "current", (int)cx, (int)cy, FONT);
 			}
-
-			ys += spellSize + 5;
+			
+			ang += arc;
 		}
 	}
 
