@@ -5,6 +5,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.ItemRegistry;
@@ -25,25 +26,24 @@ public class BaseSpell implements ISpell {
 
 	private ResourceLocation icon;
 	private int ID;
+	private String name;
 	protected int durability;
 	protected int experience;
 	protected int cooldown;
 
-	public BaseSpell(int id) {
+	public BaseSpell(int id, String n) {
 		ID = id;
+		name = n;
 		// default non-zero costs
 		durability = 100;
 		experience = 1;
 		cooldown = 20;
+		
+		icon = new ResourceLocation(Const.MODID, "textures/spells/"+name+".png");
 	}
 	
 	public String getName(){
-		return "spell.name"+ID;
-	}
-
-	public BaseSpell(int dur, int exp, int cool) {
-		durability = dur;
-		experience = exp;
+		return StatCollector.translateToLocal("spell."+name+".name");
 	}
 
 	@Override
@@ -91,6 +91,7 @@ public class BaseSpell implements ISpell {
 		player.swingItem();
 		UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT, pos);
 
+		System.out.println("cast success, draining cost exp "+this.getCostExp());
 		if (this.getCostExp() > 0) {
 			UtilExperience.drainExp(player, this.getCostExp());
 		}
@@ -118,11 +119,6 @@ public class BaseSpell implements ISpell {
 	@Override
 	public ResourceLocation getIconDisplay() {
 		return icon;
-	}
-
-	public ISpell setIconDisplay(ResourceLocation img) {
-		icon = img;
-		return this;
 	}
 
 	@Override

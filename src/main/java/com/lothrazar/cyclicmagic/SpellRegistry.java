@@ -5,7 +5,6 @@ import com.lothrazar.cyclicmagic.spell.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
-import net.minecraft.util.ResourceLocation;
 
 public class SpellRegistry {
 
@@ -37,97 +36,77 @@ public class SpellRegistry {
 		SpellThrowFishing fishing;
 		BaseSpell carbon;
 
-		ghost = new SpellGhost(++spellId);
-		ghost.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/ghost.png"));
+		ghost = new SpellGhost(++spellId,"ghost");
 		spellbook.add(ghost);
 
-		jump = new SpellExpPotion(++spellId);
-		jump.setPotion(Potion.jump.id, potionDuration, PotionRegistry.V).setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/jump.png"));
+		jump = new SpellExpPotion(++spellId,"jump");
+		jump.setPotion(Potion.jump.id, potionDuration, PotionRegistry.V);
 		spellbook.add(jump);
 
-		phase = new SpellPhasing(++spellId);
-		phase.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/phasing.png"));
+		phase = new SpellPhasing(++spellId,"phasing");
 		spellbook.add(phase);
 
-		slowfall = new SpellExpPotion(++spellId);
+		slowfall = new SpellExpPotion(++spellId,"slowfall");
 		slowfall.setPotion(PotionRegistry.slowfall.id, potionDuration, PotionRegistry.I);
-		slowfall.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/slowfall.png"));
 		spellbook.add(slowfall);
 
-		waterwalk = new SpellExpPotion(++spellId);
-		waterwalk.setPotion(PotionRegistry.waterwalk.id, potionDuration, PotionRegistry.I).setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/waterwalk.png"));
+		waterwalk = new SpellExpPotion(++spellId,"waterwalk");
+		waterwalk.setPotion(PotionRegistry.waterwalk.id, potionDuration, PotionRegistry.I);
 		spellbook.add(waterwalk);
 
-		haste = new SpellExpPotion(++spellId);
-		haste.setPotion(Potion.digSpeed.id, potionDuration, PotionRegistry.II).setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/haste.png"));
+		haste = new SpellExpPotion(++spellId,"haste");
+		haste.setPotion(Potion.digSpeed.id, potionDuration, PotionRegistry.II);
 		spellbook.add(haste);
 
-		collect = new SpellCollect(++spellId);
-		collect.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/collect.png"));
+		collect = new SpellCollect(++spellId,"collect");
 		spellbook.add(collect);
 
-		rotate = new SpellRotate(++spellId);
-		rotate.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/rotate.png"));
+		rotate = new SpellRotate(++spellId,"rotate"); 
 		spellbook.add(rotate);
 
-		push = new SpellPush(++spellId);
-		push.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/push.png"));
+		push = new SpellPush(++spellId,"push");
 		spellbook.add(push);
 
-		SpellPull pull = new SpellPull(++spellId);
-		pull.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/pull.png"));
+		SpellPull pull = new SpellPull(++spellId,"pull");
 		spellbook.add(pull);
 
-		torch = new SpellThrowTorch(++spellId);
-		torch.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/torch.png"));
+		torch = new SpellThrowTorch(++spellId,"torch");
 		spellbook.add(torch);
 
-		fishing = new SpellThrowFishing(++spellId);
-		fishing.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/fishing.png"));
+		fishing = new SpellThrowFishing(++spellId,"fishing");
 		spellbook.add(fishing);
 
-		SpellThrowExplosion explode = new SpellThrowExplosion(++spellId);
-		explode.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/explode.png"));
+		SpellThrowExplosion explode = new SpellThrowExplosion(++spellId,"explode");
 		spellbook.add(explode);
 
-		SpellThrowFire fire = new SpellThrowFire(++spellId);
-		fire.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/fire.png"));
+		SpellThrowFire fire = new SpellThrowFire(++spellId,"fire");
 		spellbook.add(fire);
 
-		SpellThrowIce ice = new SpellThrowIce(++spellId);
-		ice.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/ice.png"));
+		SpellThrowIce ice = new SpellThrowIce(++spellId,"ice");
 		spellbook.add(ice);
 
-		SpellThrowLightning lightning = new SpellThrowLightning(++spellId);
-		lightning.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/lightning.png"));
+		SpellThrowLightning lightning = new SpellThrowLightning(++spellId,"lightning");
 		spellbook.add(lightning);
 
-		SpellThrowShear shear = new SpellThrowShear(++spellId);
-		shear.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/shear.png"));
+		SpellThrowShear shear = new SpellThrowShear(++spellId,"shear");
 		spellbook.add(shear);
 
-		SpellThrowWater water = new SpellThrowWater(++spellId);
-		water.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/water.png"));
+		SpellThrowWater water = new SpellThrowWater(++spellId,"water");
 		spellbook.add(water);
 
-		SpellScaffolding scaffold = new SpellScaffolding(++spellId);
-		scaffold.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/scaffold.png"));
+		SpellScaffolding scaffold = new SpellScaffolding(++spellId,"scaffold");
 		spellbook.add(scaffold);
 
-		SpellChestSack chestsack = new SpellChestSack(++spellId);
-		chestsack.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/chestsack.png"));
+		SpellChestSack chestsack = new SpellChestSack(++spellId,"chestsack");
 		spellbook.add(chestsack);
 
-		SpellThrowSpawnEgg spawnegg = new SpellThrowSpawnEgg(++spellId);
-		spawnegg.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/spawnegg.png"));
+		SpellThrowSpawnEgg spawnegg = new SpellThrowSpawnEgg(++spellId,"spawnegg");
 		spellbook.add(spawnegg);
 		
-		carbon = new SpellCarbonPaper(++spellId);
-		carbon.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/carbon.png"));
+		carbon = new SpellCarbonPaper(++spellId,"carbon");
 		spellbook.add(carbon);
 		
-		SpellGiveLauncher launch = new SpellGiveLauncher(++spellId);
-		launch.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/launch.png"));
+		SpellGiveLauncher launch = new SpellGiveLauncher(++spellId,"launch");
 		spellbook.add(launch);
 	}
 

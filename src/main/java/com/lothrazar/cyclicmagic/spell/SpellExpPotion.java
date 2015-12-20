@@ -13,8 +13,8 @@ public class SpellExpPotion extends BaseSpell implements ISpell {
 	private int potionId;
 	private int potionDuration;
 	private int potionAmp;
-	public SpellExpPotion(int id){
-		super(id);
+	public SpellExpPotion(int id,String name){
+		super(id,name);
 		cooldown = 5;
 	}
 

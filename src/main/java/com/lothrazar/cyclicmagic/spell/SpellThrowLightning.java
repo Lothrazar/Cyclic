@@ -8,8 +8,8 @@ import net.minecraft.world.World;
 
 public class SpellThrowLightning extends BaseSpell implements ISpell {
 
-	public SpellThrowLightning(int id){
-		super(id);
+	public SpellThrowLightning(int id,String name){
+		super(id,name);
 		this.cooldown = 200;
 		this.experience = 200;
 		this.durability = 500;

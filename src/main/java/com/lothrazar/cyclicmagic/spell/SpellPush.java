@@ -7,8 +7,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 public class SpellPush extends BaseSpell {
-	public SpellPush(int id){
-		super(id);
+	public SpellPush(int id,String name){
+		super(id,name);
 		cooldown = 5;
 	}
 

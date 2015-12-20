@@ -7,8 +7,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 public class SpellThrowExplosion extends BaseSpell implements ISpell {
-	public SpellThrowExplosion(int id){
-		super(id);
+	public SpellThrowExplosion(int id,String name){
+		super(id,name);
 		this.cooldown = 60;
 		this.experience = 200;
 	}

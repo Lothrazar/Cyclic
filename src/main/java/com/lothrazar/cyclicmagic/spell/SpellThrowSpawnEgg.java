@@ -8,8 +8,8 @@ import net.minecraft.world.World;
 
 public class SpellThrowSpawnEgg extends BaseSpell implements ISpell {
 	
-	public SpellThrowSpawnEgg(int id){
-		super(id);
+	public SpellThrowSpawnEgg(int id,String name){
+		super(id,name);
 		cooldown = 50;
 	}
 

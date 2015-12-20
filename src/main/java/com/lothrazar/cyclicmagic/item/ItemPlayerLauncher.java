@@ -20,6 +20,7 @@ public class ItemPlayerLauncher extends Item {
 	public ItemPlayerLauncher() {
 		super();
 		this.setMaxDamage(DURABILITY);
+		this.setMaxStackSize(1);
 	}
 
 	private final static String NBT_MODE = "mode";

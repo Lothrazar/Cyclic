@@ -9,8 +9,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 public class SpellGiveLauncher extends BaseSpell implements ISpell {
-	public SpellGiveLauncher(int id){
-		super(id);
+	public SpellGiveLauncher(int id,String name){
+		super(id,name);
 		this.cooldown = 60;
 		this.durability = 1000;
 		this.experience = 1000;
@@ -23,6 +23,6 @@ public class SpellGiveLauncher extends BaseSpell implements ISpell {
 		if(world.isRemote == false){
 			world.spawnEntityInWorld(new EntityItem(world,pos.getX(),pos.getY(),pos.getZ(),drop));
 		}
-		return false;
+		return true;
 	}
 }

@@ -9,8 +9,8 @@ import net.minecraft.world.World;
 
 public class SpellChestSack extends BaseSpell implements ISpell {
 
-	public SpellChestSack(int id){
-		super(id);
+	public SpellChestSack(int id,String name){
+		super(id,name);
 		this.cooldown = 10;
 	}
 

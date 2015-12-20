@@ -7,8 +7,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 public class SpellScaffolding extends BaseSpell {
-	public SpellScaffolding(int id){
-		super(id);
+	public SpellScaffolding(int id,String name){
+		super(id,name);
 		cooldown = 5;
 	}
  

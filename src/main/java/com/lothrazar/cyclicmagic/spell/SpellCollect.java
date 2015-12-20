@@ -12,8 +12,8 @@ import net.minecraft.world.World;
 
 public class SpellCollect extends BaseSpell implements ISpell {
  
-	public SpellCollect(int id){
-		super(id);
+	public SpellCollect(int id,String name){
+		super(id,name);
 		this.cooldown = 10;
 	}
 
