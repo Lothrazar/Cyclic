@@ -95,7 +95,16 @@ public class SpellCaster {
 
 	public static void toggleUnlock(EntityPlayer player, int spell_id) {
 
-		// PlayerPowerups props = PlayerPowerups.get(player);
-		System.out.println(spell_id+"spell unlock TODO");
+		System.out.println(spell_id+"  spell unlock TODO");
+
+		PlayerPowerups props = PlayerPowerups.get(player);
+		
+
+		System.out.println(props.isSpellUnlocked(spell_id) + "  is current state");
+
+		props.toggleOneSpell(spell_id);
+		
+		System.out.println(props.isSpellUnlocked(spell_id) + "  is NEW state");
+		
 	}
 }

@@ -108,8 +108,12 @@ public class SpellRegistry {
 		
 		SpellGiveLauncher launch = new SpellGiveLauncher(++spellId,"launch");
 		spellbook.add(launch);
+		
+		largestSpellId = spellId;
 	}
 
+	public static int largestSpellId;//workaround to stop powerups crashing
+	
 	public static ISpell getSpellFromID(int id) {
 		if (id == 0) {
 			return null;

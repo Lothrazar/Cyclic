@@ -56,7 +56,7 @@ public class MessageToggle implements IMessage, IMessageHandler<MessageToggle, I
 		EntityPlayer player = ctx.getServerHandler().playerEntity;
 	 
  
-		SpellCaster.toggleUnlock(player,spell_id);
+		SpellCaster.toggleUnlock(player,message.spell_id);
 	 
 		return null;
 	}

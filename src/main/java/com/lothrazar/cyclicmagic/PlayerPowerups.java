@@ -9,13 +9,17 @@ import net.minecraftforge.common.IExtendedEntityProperties;
 public class PlayerPowerups implements IExtendedEntityProperties {
 	private final static String EXT_PROP_NAME = "PlayerPowerups" + Const.MODID;
 	private final EntityPlayer player;// we get one of these powerup classes for
-										// each player
-	// TODO: DO NOT RESET TIMER IF CASTING FAILS
+	private byte[] spells = null;
+
+	private static final String NBT_UNLOCKS = "unlocks";
+	
 	private static final int SPELLMAIN_WATCHER = 22;
 	private static final String NBT_SPELLMAIN = "samSpell";
 
 	private static final int SPELLTIMER_WATCHER = 25;
 	private static final String NBT_SPELLTIMER = "samSpellTimer";
+	
+	
 
 	public PlayerPowerups(EntityPlayer player) {
 		this.player = player;
@@ -42,6 +46,8 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 		properties.setInteger(NBT_SPELLMAIN, this.player.getDataWatcher().getWatchableObjectInt(SPELLMAIN_WATCHER));
 		properties.setInteger(NBT_SPELLTIMER, this.player.getDataWatcher().getWatchableObjectInt(SPELLTIMER_WATCHER));
 
+		properties.setByteArray(NBT_UNLOCKS,getUnlockedSpells());
+		
 		compound.setTag(EXT_PROP_NAME, properties);
 	}
 
@@ -54,6 +60,30 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 
 		this.player.getDataWatcher().updateObject(SPELLMAIN_WATCHER, properties.getInteger(NBT_SPELLMAIN));
 		this.player.getDataWatcher().updateObject(SPELLTIMER_WATCHER, properties.getInteger(NBT_SPELLTIMER));
+		
+		spells = properties.getByteArray(NBT_UNLOCKS);
+	}
+	
+	public byte[] getUnlockedSpells(){
+
+		if(spells == null || spells.length < SpellRegistry.largestSpellId) {
+			spells = new byte[SpellRegistry.largestSpellId];
+			for(int i = 0; i < spells.length; i++) spells[i] = 1;
+		}
+		return spells;
+	}
+	
+	public void toggleOneSpell(int spell_id){
+		if(spells == null) getUnlockedSpells();//just make sure its not null
+		
+		//if it was zero, it beomes 1. if it was 1, it becomes zero
+		spells[spell_id] = (byte) (1 - spells[spell_id]);
+	}
+	
+	public boolean isSpellUnlocked(int spell_id){
+		getUnlockedSpells();//does nothing unless its a all null 
+		System.out.println("SIZE="+spells.length);
+		return (spells[spell_id] == 1);
 	}
 
 	public final int getSpellCurrent() {
@@ -98,5 +128,4 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 		this.setSpellCurrent(props.getSpellCurrent());
 		this.setSpellTimer(props.getSpellTimer());
 	}
-
 }
