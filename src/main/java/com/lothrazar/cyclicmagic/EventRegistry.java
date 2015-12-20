@@ -9,6 +9,7 @@ import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -64,8 +65,13 @@ public class EventRegistry {
 		if(event.pos == null || event.entityPlayer == null || event.entityPlayer.getHeldItem() == null){return;}
 		//IBlockState bstate = event.entityPlayer.worldObj.getBlockState(event.pos);
 		
-		if(event.entityPlayer.getHeldItem().getItem() == ItemRegistry.master_wand){
-			SpellCaster.tryCastCurrent(event.world, event.entityPlayer, event.pos, event.face);
+		if(event.action == Action.LEFT_CLICK_BLOCK){
+			
+		}
+		else{
+			if(event.entityPlayer.getHeldItem().getItem() == ItemRegistry.master_wand){
+				SpellCaster.tryCastCurrent(event.world, event.entityPlayer, event.pos, event.face);
+			}
 		}
   	}
 	
