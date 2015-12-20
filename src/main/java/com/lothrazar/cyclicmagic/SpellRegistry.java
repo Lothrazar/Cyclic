@@ -126,6 +126,10 @@ public class SpellRegistry {
 		carbon = new SpellCarbonPaper();
 		carbon.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/carbon.png")).setSpellID(++spellId);
 		spellbook.add(carbon);
+		
+		SpellGiveLauncher launch = new SpellGiveLauncher();
+		launch.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/launch.png")).setSpellID(++spellId);
+		spellbook.add(launch);
 	}
 
 	public static ISpell getSpellFromID(int id) {

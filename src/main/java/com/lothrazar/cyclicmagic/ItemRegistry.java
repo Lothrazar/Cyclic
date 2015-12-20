@@ -13,7 +13,7 @@ public class ItemRegistry {
 	public static ItemRespawnEggAnimal respawn_egg;
 	public static ItemChestSack chest_sack;
 	public static MasterWand master_wand;
-	public static ItemWandLaunch launch_wand;
+	public static ItemPlayerLauncher launch_wand;
 	public static ItemPaperCarbon carbon_paper;
 
 	public static void register() {
@@ -26,7 +26,7 @@ public class ItemRegistry {
 		master_wand = new MasterWand();
 		ItemRegistry.registerItem(master_wand, "master_wand");
 
-		launch_wand = new ItemWandLaunch();
+		launch_wand = new ItemPlayerLauncher();
 		ItemRegistry.registerItem(launch_wand, "launch_wand");
 
 		carbon_paper = new ItemPaperCarbon();
