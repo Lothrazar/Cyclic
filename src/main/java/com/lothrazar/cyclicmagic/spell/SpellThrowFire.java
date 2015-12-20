@@ -8,8 +8,8 @@ import net.minecraft.world.World;
 
 public class SpellThrowFire extends BaseSpell implements ISpell {
 
-	public SpellThrowFire(){
-		super();
+	public SpellThrowFire(int id){
+		super(id);
 		this.cooldown = 30;
 		this.experience = 50;
 	}

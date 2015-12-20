@@ -8,8 +8,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 public class SpellRotate extends BaseSpell {
-	public SpellRotate(){
-		super();
+	public SpellRotate(int id){
+		super(id);
 		cooldown = 5;
 	}
 

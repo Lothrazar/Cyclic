@@ -29,11 +29,16 @@ public class BaseSpell implements ISpell {
 	protected int experience;
 	protected int cooldown;
 
-	public BaseSpell() {
+	public BaseSpell(int id) {
+		ID = id;
 		// default non-zero costs
 		durability = 100;
 		experience = 1;
 		cooldown = 20;
+	}
+	
+	public String getName(){
+		return "spell.name"+ID;
 	}
 
 	public BaseSpell(int dur, int exp, int cool) {
@@ -60,11 +65,6 @@ public class BaseSpell implements ISpell {
 	@Override
 	public int getCostDurability() {
 		return durability;
-	}
-
-	public ISpell setSpellID(int id) {
-		ID = id;
-		return this;
 	}
 
 	private final static ResourceLocation header = new ResourceLocation(Const.MODID, "textures/spells/exp_cost_dummy.png");
@@ -100,7 +100,7 @@ public class BaseSpell implements ISpell {
 	}
 
 	@Override
-	public int getSpellID() {
+	public int getID() {
 		return ID;
 	}
 

@@ -12,8 +12,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 public class SpellCarbonPaper extends BaseSpell implements ISpell {
-	public SpellCarbonPaper(){
-		super();
+	public SpellCarbonPaper(int id){
+		super(id);
 		this.cooldown = 60;
 	}
 	@Override

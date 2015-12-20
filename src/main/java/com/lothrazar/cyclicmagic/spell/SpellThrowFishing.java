@@ -8,8 +8,8 @@ import net.minecraft.world.World;
 
 public class SpellThrowFishing extends BaseSpell implements ISpell {
 
-	public SpellThrowFishing(){
-		super();
+	public SpellThrowFishing(int id){
+		super(id);
 		this.cooldown = 100;
 	}
 

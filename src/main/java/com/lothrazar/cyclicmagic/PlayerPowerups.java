@@ -66,7 +66,7 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 		}
 		if (spell_id == 0)// == null || spell.isEmpty())
 		{
-			spell_id = SpellCaster.getDefaultSpell().getSpellID();
+			spell_id = SpellCaster.getDefaultSpell().getID();
 			setSpellCurrent(spell_id);
 		}
 

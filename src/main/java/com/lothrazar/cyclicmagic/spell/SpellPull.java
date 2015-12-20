@@ -7,8 +7,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 public class SpellPull extends BaseSpell {
-	public SpellPull(){
-		super();
+	public SpellPull(int id){
+		super(id);
 		cooldown = 5;
 	}
 

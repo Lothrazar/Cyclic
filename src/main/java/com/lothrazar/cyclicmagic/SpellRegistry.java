@@ -37,98 +37,97 @@ public class SpellRegistry {
 		SpellThrowFishing fishing;
 		BaseSpell carbon;
 
-		ghost = new SpellGhost();
-		ghost.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/ghost.png")).setSpellID(++spellId);
+		ghost = new SpellGhost(++spellId);
+		ghost.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/ghost.png"));
 		spellbook.add(ghost);
 
-		jump = new SpellExpPotion();
-		jump.setPotion(Potion.jump.id, potionDuration, PotionRegistry.V).setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/jump.png")).setSpellID(++spellId);
+		jump = new SpellExpPotion(++spellId);
+		jump.setPotion(Potion.jump.id, potionDuration, PotionRegistry.V).setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/jump.png"));
 		spellbook.add(jump);
 
-		phase = new SpellPhasing();
-		phase.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/phasing.png")).setSpellID(++spellId);
+		phase = new SpellPhasing(++spellId);
+		phase.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/phasing.png"));
 		spellbook.add(phase);
 
-		slowfall = new SpellExpPotion();
+		slowfall = new SpellExpPotion(++spellId);
 		slowfall.setPotion(PotionRegistry.slowfall.id, potionDuration, PotionRegistry.I);
 		slowfall.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/slowfall.png"));
-		slowfall.setSpellID(++spellId);
 		spellbook.add(slowfall);
 
-		waterwalk = new SpellExpPotion();
-		waterwalk.setPotion(PotionRegistry.waterwalk.id, potionDuration, PotionRegistry.I).setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/waterwalk.png")).setSpellID(++spellId);
+		waterwalk = new SpellExpPotion(++spellId);
+		waterwalk.setPotion(PotionRegistry.waterwalk.id, potionDuration, PotionRegistry.I).setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/waterwalk.png"));
 		spellbook.add(waterwalk);
 
-		haste = new SpellExpPotion();
-		haste.setPotion(Potion.digSpeed.id, potionDuration, PotionRegistry.II).setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/haste.png")).setSpellID(++spellId);
+		haste = new SpellExpPotion(++spellId);
+		haste.setPotion(Potion.digSpeed.id, potionDuration, PotionRegistry.II).setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/haste.png"));
 		spellbook.add(haste);
 
-		collect = new SpellCollect();
-		collect.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/collect.png")).setSpellID(++spellId);
+		collect = new SpellCollect(++spellId);
+		collect.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/collect.png"));
 		spellbook.add(collect);
 
-		rotate = new SpellRotate();
-		rotate.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/rotate.png")).setSpellID(++spellId);
+		rotate = new SpellRotate(++spellId);
+		rotate.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/rotate.png"));
 		spellbook.add(rotate);
 
-		push = new SpellPush();
-		push.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/push.png")).setSpellID(++spellId);
+		push = new SpellPush(++spellId);
+		push.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/push.png"));
 		spellbook.add(push);
 
-		SpellPull pull = new SpellPull();
-		pull.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/pull.png")).setSpellID(++spellId);
+		SpellPull pull = new SpellPull(++spellId);
+		pull.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/pull.png"));
 		spellbook.add(pull);
 
-		torch = new SpellThrowTorch();
-		torch.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/torch.png")).setSpellID(++spellId);
+		torch = new SpellThrowTorch(++spellId);
+		torch.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/torch.png"));
 		spellbook.add(torch);
 
-		fishing = new SpellThrowFishing();
-		fishing.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/fishing.png")).setSpellID(++spellId);
+		fishing = new SpellThrowFishing(++spellId);
+		fishing.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/fishing.png"));
 		spellbook.add(fishing);
 
-		SpellThrowExplosion explode = new SpellThrowExplosion();
-		explode.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/explode.png")).setSpellID(++spellId);
+		SpellThrowExplosion explode = new SpellThrowExplosion(++spellId);
+		explode.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/explode.png"));
 		spellbook.add(explode);
 
-		SpellThrowFire fire = new SpellThrowFire();
-		fire.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/fire.png")).setSpellID(++spellId);
+		SpellThrowFire fire = new SpellThrowFire(++spellId);
+		fire.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/fire.png"));
 		spellbook.add(fire);
 
-		SpellThrowIce ice = new SpellThrowIce();
-		ice.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/ice.png")).setSpellID(++spellId);
+		SpellThrowIce ice = new SpellThrowIce(++spellId);
+		ice.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/ice.png"));
 		spellbook.add(ice);
 
-		SpellThrowLightning lightning = new SpellThrowLightning();
-		lightning.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/lightning.png")).setSpellID(++spellId);
+		SpellThrowLightning lightning = new SpellThrowLightning(++spellId);
+		lightning.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/lightning.png"));
 		spellbook.add(lightning);
 
-		SpellThrowShear shear = new SpellThrowShear();
-		shear.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/shear.png")).setSpellID(++spellId);
+		SpellThrowShear shear = new SpellThrowShear(++spellId);
+		shear.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/shear.png"));
 		spellbook.add(shear);
 
-		SpellThrowWater water = new SpellThrowWater();
-		water.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/water.png")).setSpellID(++spellId);
+		SpellThrowWater water = new SpellThrowWater(++spellId);
+		water.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/water.png"));
 		spellbook.add(water);
 
-		SpellScaffolding scaffold = new SpellScaffolding();
-		scaffold.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/scaffold.png")).setSpellID(++spellId);
+		SpellScaffolding scaffold = new SpellScaffolding(++spellId);
+		scaffold.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/scaffold.png"));
 		spellbook.add(scaffold);
 
-		SpellChestSack chestsack = new SpellChestSack();
-		chestsack.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/chestsack.png")).setSpellID(++spellId);
+		SpellChestSack chestsack = new SpellChestSack(++spellId);
+		chestsack.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/chestsack.png"));
 		spellbook.add(chestsack);
 
-		SpellThrowSpawnEgg spawnegg = new SpellThrowSpawnEgg();
-		spawnegg.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/spawnegg.png")).setSpellID(++spellId);
+		SpellThrowSpawnEgg spawnegg = new SpellThrowSpawnEgg(++spellId);
+		spawnegg.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/spawnegg.png"));
 		spellbook.add(spawnegg);
 		
-		carbon = new SpellCarbonPaper();
-		carbon.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/carbon.png")).setSpellID(++spellId);
+		carbon = new SpellCarbonPaper(++spellId);
+		carbon.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/carbon.png"));
 		spellbook.add(carbon);
 		
-		SpellGiveLauncher launch = new SpellGiveLauncher();
-		launch.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/launch.png")).setSpellID(++spellId);
+		SpellGiveLauncher launch = new SpellGiveLauncher(++spellId);
+		launch.setIconDisplay(new ResourceLocation(Const.MODID, "textures/spells/launch.png"));
 		spellbook.add(launch);
 	}
 
@@ -137,7 +136,7 @@ public class SpellRegistry {
 			return null;
 		}
 		for (ISpell sp : SpellRegistry.spellbook) {
-			if (sp.getSpellID() == id) {
+			if (sp.getID() == id) {
 				return sp;
 			}
 		}

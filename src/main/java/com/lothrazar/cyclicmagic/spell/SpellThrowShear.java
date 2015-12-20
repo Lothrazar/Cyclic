@@ -8,8 +8,8 @@ import net.minecraft.world.World;
 
 public class SpellThrowShear extends BaseSpell implements ISpell {
 
-	public SpellThrowShear(){
-		super();
+	public SpellThrowShear(int id){
+		super(id);
 		cooldown = 15;
 	}
  

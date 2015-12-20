@@ -17,8 +17,8 @@ public class SpellGhost extends  BaseSpell implements ISpell {
 	private static final String KEY_EATDIM = "ghost_dim";
 	private static final int GHOST_SECONDS = 10;// so 30 seconds
 
-	public SpellGhost(){
-		super();
+	public SpellGhost(int id){
+		super(id);
 		cooldown = 80;
 	}
 

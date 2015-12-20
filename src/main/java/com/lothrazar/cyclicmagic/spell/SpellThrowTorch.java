@@ -8,8 +8,8 @@ import net.minecraft.world.World;
 
 public class SpellThrowTorch extends BaseSpell implements ISpell{
 
-	public SpellThrowTorch(){
-		super();
+	public SpellThrowTorch(int id){
+		super(id);
 		cooldown = 15;
 	}
 

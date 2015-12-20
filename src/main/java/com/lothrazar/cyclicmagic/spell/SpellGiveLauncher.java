@@ -9,8 +9,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 public class SpellGiveLauncher extends BaseSpell implements ISpell {
-	public SpellGiveLauncher(){
-		super();
+	public SpellGiveLauncher(int id){
+		super(id);
 		this.cooldown = 60;
 		this.durability = 1000;
 		this.experience = 1000;

@@ -10,8 +10,8 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 
 public class SpellPhasing extends BaseSpell implements ISpell {
 
-	public SpellPhasing(){
-		super();
+	public SpellPhasing(int id){
+		super(id);
 		cooldown = 10;
 		experience = 50;
 	}

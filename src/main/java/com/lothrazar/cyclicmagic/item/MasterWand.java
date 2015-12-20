@@ -1,10 +1,14 @@
 package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
+import com.lothrazar.cyclicmagic.PlayerPowerups;
+import com.lothrazar.cyclicmagic.SpellRegistry;
+import com.lothrazar.cyclicmagic.spell.ISpell;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -22,9 +26,18 @@ public class MasterWand extends Item {
 	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
 		int charge = stack.getMaxDamage() - stack.getItemDamage();//invese of damge
 		tooltip.add(charge + "/" + MAXCHARGE);
+		PlayerPowerups props = PlayerPowerups.get(playerIn);
+		ISpell spell = SpellRegistry.getSpellFromID(props.getSpellCurrent());
+
+		tooltip.add(spell.getName());
+		tooltip.add(StatCollector.translateToLocal("cost.cooldown") + spell.getCastCooldown());
+		tooltip.add(StatCollector.translateToLocal("cost.durability") + spell.getCostDurability());
+		tooltip.add(StatCollector.translateToLocal("cost.exp") + spell.getCostExp());
+		
 		super.addInformation(stack, playerIn, tooltip, advanced);
 	}
-
+	
+	
 	/*
 	public void onUsingTick(ItemStack stack, EntityPlayer player, int count) {
 		System.out.println("on tick wand using");

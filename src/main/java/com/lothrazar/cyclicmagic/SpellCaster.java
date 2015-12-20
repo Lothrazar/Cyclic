@@ -54,7 +54,7 @@ public class SpellCaster {
 		if (current.left() != null) {
 			PlayerPowerups props = PlayerPowerups.get(player);
 
-			props.setSpellCurrent(current.left().getSpellID());
+			props.setSpellCurrent(current.left().getID());
 			UtilSound.playSoundAt(player, UtilSound.orb );
 		}
 	}
@@ -65,7 +65,7 @@ public class SpellCaster {
 		if (current.right() != null) {
 			PlayerPowerups props = PlayerPowerups.get(player);
 
-			props.setSpellCurrent(current.right().getSpellID());
+			props.setSpellCurrent(current.right().getID());
 			UtilSound.playSoundAt(player, UtilSound.orb );
 		}
 	}
