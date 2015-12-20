@@ -88,8 +88,7 @@ public class ItemPlayerLauncher extends Item {
 				break;
 			}
 
-			//this uses tripe the power than hover mode does
-			stack.damageItem(3, playerIn);
+			stack.damageItem(1, playerIn);
 			if(power > 0){
 				playerIn.addVelocity(velX, velY, velZ);
 			}
@@ -106,8 +105,9 @@ public class ItemPlayerLauncher extends Item {
 	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 		if (this.getMode(stack) == MODE_HOVER) {
 			entityIn.motionY = 0;// goal is to make player not fall
-			if(entityIn instanceof EntityLivingBase && worldIn.getWorldTime() % Const.TICKS_PER_SEC == 0){
-				//only drain durability once per second
+			if(entityIn instanceof EntityLivingBase && worldIn.getWorldTime() % Const.TICKS_PER_SEC == 0 &&
+					worldIn.rand.nextDouble() > 0.9){
+				//only drain durability once per second ... well sometimes. 1/10 means about once every 10 seconds
 				stack.damageItem(1, (EntityLivingBase) entityIn);
 			}
 		}
@@ -118,9 +118,9 @@ public class ItemPlayerLauncher extends Item {
 	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
 		tooltip.add(this.getModeName(this.getMode(stack)));
  
-		//int charge = stack.getMaxDamage() - stack.getItemDamage();//invese of damge
-		//tooltip.add(charge + "/" + stack.getMaxDamage());
+		int charge = stack.getMaxDamage() - stack.getItemDamage();//invese of damge
 		tooltip.add(StatCollector.translateToLocal("wand.launch.info"));
+		tooltip.add(charge + "/" + stack.getMaxDamage());
 		super.addInformation(stack, playerIn, tooltip, advanced);
 	}
 
