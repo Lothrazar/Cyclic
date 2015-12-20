@@ -7,10 +7,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public interface ISpell {
-	public ISpell left();
-
-	public ISpell right();
-
 	public int getID();
 	
 	public String getName();

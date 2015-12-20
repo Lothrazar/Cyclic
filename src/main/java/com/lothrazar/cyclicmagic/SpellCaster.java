@@ -51,23 +51,28 @@ public class SpellCaster {
 	public static void shiftLeft(EntityPlayer player) {
 		ISpell current = getPlayerCurrentISpell(player);
 
-		if (current.left() != null) {
-			PlayerPowerups props = PlayerPowerups.get(player);
-
-			props.setSpellCurrent(current.left().getID());
-			UtilSound.playSoundAt(player, UtilSound.orb );
+		ISpell left = SpellRegistry.left(current);
+		
+		if (left != null) {
+			setCurrentFor(player,left);
 		}
 	}
 
 	public static void shiftRight(EntityPlayer player) {
 		ISpell current = getPlayerCurrentISpell(player);
+		
+		ISpell right = SpellRegistry.right(current);
 
-		if (current.right() != null) {
-			PlayerPowerups props = PlayerPowerups.get(player);
-
-			props.setSpellCurrent(current.right().getID());
-			UtilSound.playSoundAt(player, UtilSound.orb );
+		if (right != null) {
+			setCurrentFor(player,right);
 		}
+	}
+	private static void setCurrentFor(EntityPlayer player, ISpell newCurrent){
+
+		PlayerPowerups props = PlayerPowerups.get(player);
+
+		props.setSpellCurrent(newCurrent.getID());
+		UtilSound.playSoundAt(player, UtilSound.orb );
 	}
 
 	public static void tickSpellTimer(EntityPlayer player) {

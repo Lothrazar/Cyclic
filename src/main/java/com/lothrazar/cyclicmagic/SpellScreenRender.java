@@ -37,14 +37,14 @@ public class SpellScreenRender {
 
 	private static void drawPrevSpells(EntityPlayerSP player, ISpell spellCurrent) {
 
-		ISpell spellPrev = spellCurrent.right();
+		ISpell spellPrev = SpellRegistry.right(spellCurrent);
 		if (spellPrev != null) {
 			int x = xmain + 6;
 			int y = ymain + spellSize;
 			int dim = spellSize / 2;
 			UtilTextureRender.drawTextureSquare(spellPrev.getIconDisplay(), x, y, dim);
 
-			ISpell sRightRight = spellPrev.right();// SpellRegistry.getSpellFromType(spellPrev.getSpellID().prev());
+			ISpell sRightRight = SpellRegistry.right(spellPrev);// SpellRegistry.getSpellFromType(spellPrev.getSpellID().prev());
 
 			if (sRightRight != null && sRightRight.getIconDisplay() != null) {
 				x = xmain + 6 + 4;
@@ -52,7 +52,7 @@ public class SpellScreenRender {
 				dim = spellSize / 2 - 2;
 				UtilTextureRender.drawTextureSquare(sRightRight.getIconDisplay(), x, y, dim);
 
-				ISpell another = sRightRight.right();
+				ISpell another = SpellRegistry.right(sRightRight);
 				if (another != null) {
 					x = xmain + 6 + 7;
 					y = ymain + spellSize + 14 + 10;
@@ -65,7 +65,7 @@ public class SpellScreenRender {
 	}
 
 	private static void drawNextSpells(EntityPlayerSP player, ISpell spellCurrent) {
-		ISpell spellNext = spellCurrent.left();
+		ISpell spellNext = SpellRegistry.left(spellCurrent);
 
 		if (spellNext != null) {
 			int x = xmain - 3;
@@ -73,7 +73,7 @@ public class SpellScreenRender {
 			int dim = spellSize / 2;
 			UtilTextureRender.drawTextureSquare(spellNext.getIconDisplay(), x, y, dim);
 
-			ISpell sLeftLeft = spellNext.left();
+			ISpell sLeftLeft = SpellRegistry.left(spellNext);
 
 			if (sLeftLeft != null && sLeftLeft.getIconDisplay() != null) {
 				x = xmain - 3 - 1;
@@ -81,7 +81,7 @@ public class SpellScreenRender {
 				dim = 16 / 2 - 2;
 				UtilTextureRender.drawTextureSquare(sLeftLeft.getIconDisplay(), x, y, dim);
 
-				ISpell another = sLeftLeft.left();
+				ISpell another = SpellRegistry.left(sLeftLeft);
 				if (another != null) {
 					x = xmain - 3 - 3;
 					y = ymain + spellSize + 14 + 10;

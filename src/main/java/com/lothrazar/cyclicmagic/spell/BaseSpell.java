@@ -9,7 +9,6 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.ItemRegistry;
-import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.util.UtilExperience;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -134,35 +133,5 @@ public class BaseSpell implements ISpell {
 	@Override
 	public ResourceLocation getIconDisplay() {
 		return icon;
-	}
-
-	@Override
-	public ISpell left() {
-		int idx = SpellRegistry.spellbook.indexOf(this);// -1 for not found
-		if (idx == -1) {
-			return null;
-		}
-
-		if (idx == 0)
-			idx = SpellRegistry.spellbook.size() - 1;
-		else
-			idx = idx - 1;
-
-		return SpellRegistry.spellbook.get(idx);
-	}
-
-	@Override
-	public ISpell right() {
-		int idx = SpellRegistry.spellbook.indexOf(this);
-		if (idx == -1) {
-			return null;
-		}
-
-		if (idx == SpellRegistry.spellbook.size() - 1)
-			idx = 0;
-		else
-			idx = idx + 1;
-
-		return SpellRegistry.spellbook.get(idx);
 	}
 }
