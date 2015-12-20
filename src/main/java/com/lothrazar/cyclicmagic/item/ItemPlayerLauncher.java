@@ -15,7 +15,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemPlayerLauncher extends Item {
 
-	public static int DURABILITY = 999;
+	public static int DURABILITY = 200;
 
 	public ItemPlayerLauncher() {
 		super();
@@ -105,7 +105,10 @@ public class ItemPlayerLauncher extends Item {
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
 		tooltip.add(this.getModeName(this.getMode(stack)));
-
+ 
+		int charge = stack.getMaxDamage() - stack.getItemDamage();//invese of damge
+		tooltip.add(charge + "/" + stack.getMaxDamage());
+		
 		super.addInformation(stack, playerIn, tooltip, advanced);
 	}
 

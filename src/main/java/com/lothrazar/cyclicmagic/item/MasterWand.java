@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
+import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.PlayerPowerups;
 import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
@@ -15,7 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class MasterWand extends Item {
 
-	private final int MAXCHARGE = 10000;//10k
+	private static final int MAXCHARGE = 5000;//10k
 
 	public MasterWand() {
 		this.setMaxStackSize(1);
@@ -25,7 +26,7 @@ public class MasterWand extends Item {
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
 		int charge = stack.getMaxDamage() - stack.getItemDamage();//invese of damge
-		tooltip.add(charge + "/" + MAXCHARGE);
+		tooltip.add(charge + "/" + stack.getMaxDamage());
 		PlayerPowerups props = PlayerPowerups.get(playerIn);
 		ISpell spell = SpellRegistry.getSpellFromID(props.getSpellCurrent());
 
@@ -36,33 +37,6 @@ public class MasterWand extends Item {
 		
 		super.addInformation(stack, playerIn, tooltip, advanced);
 	}
-	
-	
-	/*
-	public void onUsingTick(ItemStack stack, EntityPlayer player, int count) {
-		System.out.println("on tick wand using");
-		super.onUsingTick(stack, player, count);
-	}
- 
-  * These do not fire on things like signs/noteblocks. anything that requires player to SHIFT to interact, well
-  * these are cancelled without the shift
-	@Override
-	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn) {
-		System.out.println("onItemRightClick");
-		SpellCaster.tryCastCurrent(worldIn, playerIn, playerIn.getPosition(), null);
-		return super.onItemRightClick(itemStackIn, worldIn, playerIn);
-	}
-
-	@Override
-	public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
-		System.out.println("onItemUse");
-
-		SpellCaster.tryCastCurrent(worldIn, playerIn, pos, side);
-
-		return super.onItemUse(stack, playerIn, worldIn, pos, side, hitX, hitY, hitZ);
-	}
-*/
-
 
 	/**
 	 * Called each tick as long the item is on a player inventory. Uses by maps
@@ -74,7 +48,10 @@ public class MasterWand extends Item {
 			return;
 		}
 		EntityPlayer p = (EntityPlayer) entityIn;
-		if (p.inventory.currentItem != itemSlot && worldIn.rand.nextDouble() > 0.95) {
+		
+		//every second, make a roll. 1/10th of the time then do a repair
+		if (p.inventory.currentItem != itemSlot && worldIn.getWorldTime() % Const.TICKS_PER_SEC == 0 && 
+				worldIn.rand.nextDouble() > 0.9) {
 		
 			int curr = stack.getItemDamage();
 			if(curr > 0){
