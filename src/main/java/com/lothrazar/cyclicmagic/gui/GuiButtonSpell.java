@@ -1,5 +1,7 @@
 package com.lothrazar.cyclicmagic.gui;
 
+import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.net.MessageToggle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraftforge.fml.relauncher.Side;
@@ -21,14 +23,10 @@ public class GuiButtonSpell extends GuiButton{
     	{
     		//button id matches spell id
     		System.out.println("clicked button "+this.id);
-//TODO: send packet
-			//ModEnderBook.network.sendToServer(new PacketWarpButton( bookSlot ));
-			
-			//we would have to wait until tp finishes and then sendToClient in a new 'particle packet' for this
-			//particleAtPlayer(world,mc.thePlayer);
+
+			ModMain.network.sendToServer(new MessageToggle(this.id ));
     	}
     	
     	return pressed;
     }
-
 }

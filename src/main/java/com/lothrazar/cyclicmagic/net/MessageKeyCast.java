@@ -24,7 +24,7 @@ public class MessageKeyCast implements IMessage, IMessageHandler<MessageKeyCast,
 	public MessageKeyCast() {
 	}
 
-	public MessageKeyCast(BlockPos pm, EnumFacing pside, int pentity) {
+	public MessageKeyCast(BlockPos pm, EnumFacing pside) {
 		pos = pm;
 		side = pside;
 

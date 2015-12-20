@@ -92,4 +92,10 @@ public class SpellCaster {
 
 		return current;
 	}
+
+	public static void toggleUnlock(EntityPlayer player, int spell_id) {
+
+		// PlayerPowerups props = PlayerPowerups.get(player);
+		System.out.println(spell_id+"spell unlock TODO");
+	}
 }

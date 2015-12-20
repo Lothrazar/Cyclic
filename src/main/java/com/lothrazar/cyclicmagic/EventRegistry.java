@@ -39,11 +39,6 @@ public class EventRegistry {
 		else if (ClientProxy.keySpellCast.isPressed()) {
 			BlockPos posMouse = null;
 
-			int entity = -1;
-			if(Minecraft.getMinecraft().objectMouseOver.entityHit != null){
-				entity = Minecraft.getMinecraft().objectMouseOver.entityHit.getEntityId(); 
-			}
-			
 			if (Minecraft.getMinecraft().objectMouseOver.getBlockPos() != null) {
 				posMouse = Minecraft.getMinecraft().objectMouseOver.getBlockPos();
 			}
@@ -51,7 +46,7 @@ public class EventRegistry {
 				posMouse = Minecraft.getMinecraft().thePlayer.getPosition();
 			}
 
-			ModMain.network.sendToServer(new MessageKeyCast(posMouse, Minecraft.getMinecraft().objectMouseOver.sideHit, entity));
+			ModMain.network.sendToServer(new MessageKeyCast(posMouse, Minecraft.getMinecraft().objectMouseOver.sideHit));
 		}
 	}
 

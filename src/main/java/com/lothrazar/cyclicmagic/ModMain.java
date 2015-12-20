@@ -44,6 +44,7 @@ public class ModMain {
 		network.registerMessage(MessageKeyCast.class, MessageKeyCast.class, packetID++, Side.SERVER);
 		network.registerMessage(MessageKeyLeft.class, MessageKeyLeft.class, packetID++, Side.SERVER);
 		network.registerMessage(MessageKeyRight.class, MessageKeyRight.class, packetID++, Side.SERVER);
+		network.registerMessage(MessageToggle.class, MessageToggle.class, packetID++, Side.SERVER);
 		//TODO: message is never used - it tells client when/where to spawn particles
 		network.registerMessage(MessageParticle.class, MessageParticle.class, packetID++, Side.CLIENT);
 
