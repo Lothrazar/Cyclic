@@ -8,6 +8,7 @@ wand.launch.mode1=Launch
 wand.launch.mode2=Look
 wand.launch.mode3=Up
 wand.launch.mode4=Hover
+wand.launch.info=Use while sneaking to change modes
 spell.exp.missing=Exp Required: 
 potion.waterwalk=Waterwalk
 potion.slowfall=Slowfall
