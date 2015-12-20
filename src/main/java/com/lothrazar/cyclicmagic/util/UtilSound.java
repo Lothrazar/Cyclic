@@ -11,6 +11,7 @@ public class UtilSound {
 	public static final float volume = 1.0F;
 	public static final float pitch = 1.0F;
 	public static final String portal =  "mob.endermen.portal";
+	public static final String splash = "game.neutral.swim.splash";
 
 	public static void playSoundAt(Entity player, String sound) {
 		player.worldObj.playSoundAtEntity(player, sound, volume,pitch);

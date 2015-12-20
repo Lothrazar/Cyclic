@@ -12,3 +12,6 @@ spell.exp.missing=Exp Required:
 potion.waterwalk=Waterwalk
 potion.slowfall=Slowfall
 potion.frozen=Frost
+cost.cooldown=Cooldown: 
+cost.durability=Durability: 
+cost.exp=Experience: 

@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.projectile; 
  
 import com.lothrazar.cyclicmagic.util.UtilParticle;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.projectile.EntityThrowable;
@@ -42,7 +43,6 @@ public class EntityFishingBolt extends EntityThrowable
        
         if(this.isInWater())
         {
-        	UtilParticle.spawnParticle(this.worldObj, EnumParticleTypes.WATER_BUBBLE, pos);
 
 			EntityItem ei = new EntityItem(worldObj, pos.getX(),pos.getY(),pos.getZ(), getRandomFish());
 			
@@ -51,17 +51,11 @@ public class EntityFishingBolt extends EntityThrowable
 	 			worldObj.spawnEntityInWorld(ei);
 	 		} 
 	 		
-			worldObj.playSoundAtEntity(ei, "game.neutral.swim.splash", 1.0F, 1.0F);
-			this.setDead();
+	 		UtilSound.playSoundAt(ei, UtilSound.splash);
+        	UtilParticle.spawnParticle(this.worldObj, EnumParticleTypes.WATER_BUBBLE, pos);
         }
-        else
-        {
-	 		if(worldObj.isRemote == false) 
-	 		{
-	 			//worldObj.spawnEntityInWorld( new EntityItem(worldObj, pos.getX(),pos.getY(),pos.getZ(), new ItemStack(ItemRegistry.ender_fishing)));
-	 			this.setDead();
-	 		} 
-        }
+
+		this.setDead();
 	}
 
 	private ItemStack getRandomFish() 
