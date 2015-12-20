@@ -123,7 +123,7 @@ public class BaseSpell implements ISpell {
 			return false;//not enough durability
 		}
 		
-		if(getCostExp() > 0 && getCostExp() <= UtilExperience.getExpTotal(player)){
+		if(getCostExp() > 0 && getCostExp() > UtilExperience.getExpTotal(player)){
 			System.out.println("cannot cast - need EXP "+getCostExp());
 			return false;//not enough exp
 		}
