@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.gui;
 
 import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.SpellCaster;
 import com.lothrazar.cyclicmagic.net.MessageToggle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -22,8 +23,9 @@ public class GuiButtonSpell extends GuiButton{
     	if(pressed)
     	{
     		//button id matches spell id
-    		System.out.println("clicked button "+this.id);
 
+    		//TODO: sync client/server
+    		//SpellCaster.toggleUnlock(mc.thePlayer, this.id);//do client and server
 			ModMain.network.sendToServer(new MessageToggle(this.id ));
     	}
     	

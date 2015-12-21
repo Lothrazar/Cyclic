@@ -46,7 +46,7 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 
 		properties.setInteger(NBT_SPELLMAIN, this.player.getDataWatcher().getWatchableObjectInt(SPELLMAIN_WATCHER));
 		properties.setInteger(NBT_SPELLTIMER, this.player.getDataWatcher().getWatchableObjectInt(SPELLTIMER_WATCHER));
-
+	
 		properties.setByteArray(NBT_UNLOCKS, spells);
 
 		compound.setTag(EXT_PROP_NAME, properties);
@@ -71,6 +71,50 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 		spells[spell_id] = (byte) (1 - spells[spell_id]);
 	}
 
+	private int infbreaker = 0;
+	public int nextId(int spell_id) {
+
+		//   check spells[abc] to see if its enabled for player, and
+		// otherwise skip
+		
+		int next;
+		
+		if (spell_id >= spells.length - 1)
+			next = 0;// (int)spells[0];
+		else
+			next = spell_id + 1;// (int)spells[spell_id+1];
+		
+		//dont infloop
+		if(this.isSpellUnlocked(next) == false && infbreaker < 100){
+			System.out.println(next+ " :skip unequipped spell ");
+			infbreaker++;
+			return nextId(next);
+		}
+		
+		infbreaker = 0;
+		return next;
+	}
+
+	public int prevId(int spell_id) {
+		
+		int prev;
+
+		if (spell_id == 0)
+			prev = spells.length - 1;// (int)spells[0];
+		else
+			prev = spell_id - 1;// (int)spells[spell_id-1];
+		//dont infloop
+		if(this.isSpellUnlocked(prev) == false && infbreaker < 100){
+			System.out.println(prev+ " :skip unequipped spell ");
+			infbreaker++;
+			return prevId(prev);
+		}
+		
+		infbreaker = 0;
+		
+		
+		return prev;
+	}/*
 	public int nextId(int spell_id) {
 
 		// TODO: check spells[abc] to see if its enabled for player, and
@@ -87,8 +131,7 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 			return spells.length - 1;// (int)spells[0];
 		else
 			return spell_id - 1;// (int)spells[spell_id-1];
-	}
-
+	}*/
 	public boolean isSpellUnlocked(int spell_id) {
 
 		return (spells[spell_id] == 1);

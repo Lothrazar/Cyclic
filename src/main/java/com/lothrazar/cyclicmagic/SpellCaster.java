@@ -119,7 +119,7 @@ public class SpellCaster {
 
 		PlayerPowerups props = PlayerPowerups.get(player);
 		
-		System.out.println(props.isSpellUnlocked(spell_id) + "  is current state");
+		//System.out.println(props.isSpellUnlocked(spell_id) + "  is current state");
 
 		props.toggleOneSpell(spell_id);
 		
