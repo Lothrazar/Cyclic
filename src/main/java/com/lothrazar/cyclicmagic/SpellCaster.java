@@ -83,14 +83,14 @@ public class SpellCaster {
 		}*/
 	}
  
-	
+	/*
 	private static void setCurrentFor(EntityPlayer player, ISpell newCurrent){
 
 		PlayerPowerups props = PlayerPowerups.get(player);
 
 		props.setSpellCurrent(newCurrent.getID());
 		UtilSound.playSoundAt(player, UtilSound.orb );
-	}
+	}*/
 
 	public static void tickSpellTimer(EntityPlayer player) {
 		PlayerPowerups props = PlayerPowerups.get(player);
