@@ -75,7 +75,7 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 
 		// TODO: check spells[abc] to see if its enabled for player, and
 		// otherwise skip
-		if (spell_id >= spells.length)
+		if (spell_id >= spells.length - 1)
 			return 0;// (int)spells[0];
 		else
 			return spell_id + 1;// (int)spells[spell_id+1];

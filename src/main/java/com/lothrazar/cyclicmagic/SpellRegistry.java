@@ -124,14 +124,16 @@ public class SpellRegistry {
 
 	public static ISpell getSpellFromID(int id) {
 		
-		//TODO: can we just go SpellRegistry.getSpellbook().get(id)
+		if(id >= spellbook.size()){
+			return null;//this should avoid all OOB exceptoins
+		}
+		
 		try{
 			return spellbook.get(id);
 		}
 		catch(IndexOutOfBoundsException  e){
 			System.out.println(id+" SPELL OOB fix yo stuff k");
 			return null;
-			
 		}
 		 /*
 		for (ISpell sp : SpellRegistry.getSpellbook()) {
