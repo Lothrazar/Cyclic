@@ -9,12 +9,11 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 
 public class SpellCaster {
 
-	public static ISpell getDefaultSpell() {
-		return SpellRegistry.spellbook.get(0);
-	}
-
 	public static boolean isBlockedBySpellTImer(EntityPlayer player) {
 		PlayerPowerups props = PlayerPowerups.get(player);
+		return !(props.getSpellTimer() == 0);
+	}
+	public static boolean isBlockedBySpellTImer(PlayerPowerups props) { 
 		return !(props.getSpellTimer() == 0);
 	}
 	public static void tryCastCurrent(World world, EntityPlayer player, BlockPos pos, EnumFacing side) {
@@ -49,24 +48,42 @@ public class SpellCaster {
 	}
 
 	public static void shiftLeft(EntityPlayer player) {
-		ISpell current = getPlayerCurrentISpell(player);
+		//ISpell current = getPlayerCurrentISpell(player);
+		PlayerPowerups props = PlayerPowerups.get(player);
 
-		ISpell left = SpellRegistry.left(current);
+
+		int left = props.prevId(props.getSpellCurrent());
+
+		System.out.println("set left "+props.getSpellCurrent()+ " -> "+left);
+		props.setSpellCurrent(left);
+		UtilSound.playSoundAt(player, UtilSound.orb );
+		/*
+		ISpell left = SpellRegistry.getSpellFromID(props.prevId(props.getSpellCurrent()));//SpellRegistry.left(current);
 		
 		if (left != null) {
 			setCurrentFor(player,left);
-		}
+		}*/
 	}
 
 	public static void shiftRight(EntityPlayer player) {
-		ISpell current = getPlayerCurrentISpell(player);
+		//ISpell current = getPlayerCurrentISpell(player);
+		PlayerPowerups props = PlayerPowerups.get(player);
 		
-		ISpell right = SpellRegistry.right(current);
+		//ISpell right = SpellRegistry.getSpellFromID(props.nextId(props.getSpellCurrent()));//SpellRegistry.left(current);
+		
+		int right = props.nextId(props.getSpellCurrent());
+		System.out.println("set right "+props.getSpellCurrent()+ " -> "+right);
 
+		props.setSpellCurrent(right);
+		UtilSound.playSoundAt(player, UtilSound.orb );
+		//SpellRegistry.right(current);
+/*
 		if (right != null) {
 			setCurrentFor(player,right);
-		}
+		}*/
 	}
+ 
+	
 	private static void setCurrentFor(EntityPlayer player, ISpell newCurrent){
 
 		PlayerPowerups props = PlayerPowerups.get(player);
@@ -92,7 +109,7 @@ public class SpellCaster {
 		ISpell current = SpellRegistry.getSpellFromID(props.getSpellCurrent());
 
 		if (current == null) {
-			current = getDefaultSpell();
+			current = SpellRegistry.getDefaultSpell();
 		}
 
 		return current;
@@ -100,16 +117,12 @@ public class SpellCaster {
 
 	public static void toggleUnlock(EntityPlayer player, int spell_id) {
 
-		System.out.println(spell_id+"  spell unlock TODO");
-
 		PlayerPowerups props = PlayerPowerups.get(player);
 		
-
 		System.out.println(props.isSpellUnlocked(spell_id) + "  is current state");
 
 		props.toggleOneSpell(spell_id);
 		
 		System.out.println(props.isSpellUnlocked(spell_id) + "  is NEW state");
-		
 	}
 }

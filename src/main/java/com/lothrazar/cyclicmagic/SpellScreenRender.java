@@ -13,13 +13,13 @@ public class SpellScreenRender {
 	private static final int xmain = 10;
 	private static final int spellSize = 16;
 
-	private static void drawSpellHeader(EntityPlayerSP player, ISpell spellCurrent) {
+	private static void drawSpellHeader(PlayerPowerups props, ISpell spellCurrent) {
 		int dim = 12;
 
 		int x = 12, y = 2;
 
 		// draw header
-		if (SpellCaster.isBlockedBySpellTImer(player) == false) {
+		if (SpellCaster.isBlockedBySpellTImer(props) == false) {
 			UtilTextureRender.drawTextureSquare(spellCurrent.getIconDisplayHeaderEnabled(), x, y, dim);
 		}
 		else {
@@ -27,7 +27,7 @@ public class SpellScreenRender {
 		}
 	}
 
-	private static void drawCurrentSpell(EntityPlayerSP player, ISpell spellCurrent) {
+	private static void drawCurrentSpell(PlayerPowerups props, ISpell spellCurrent) {
 
 		if (spellCurrent.getIconDisplay() != null) {
 
@@ -35,16 +35,23 @@ public class SpellScreenRender {
 		}
 	}
 
-	private static void drawPrevSpells(EntityPlayerSP player, ISpell spellCurrent) {
+	private static void drawPrevSpells(PlayerPowerups props, ISpell spellCurrent) {
 
-		ISpell spellPrev = SpellRegistry.right(spellCurrent);
+		//PlayerPowerups props = PlayerPowerups.get(player);
+		
+		ISpell spellPrev = SpellRegistry.getSpellFromID(props.prevId(spellCurrent.getID()));
+				//SpellRegistry.right(spellCurrent);
+		if(spellPrev == null){
+			System.out.println("spellPrev is null, prevId from "+spellCurrent.getID()+" -> "+props.prevId(spellCurrent.getID()) );
+		}
 		if (spellPrev != null) {
 			int x = xmain + 6;
 			int y = ymain + spellSize;
 			int dim = spellSize / 2;
 			UtilTextureRender.drawTextureSquare(spellPrev.getIconDisplay(), x, y, dim);
 
-			ISpell sRightRight = SpellRegistry.right(spellPrev);// SpellRegistry.getSpellFromType(spellPrev.getSpellID().prev());
+			ISpell sRightRight = SpellRegistry.getSpellFromID(props.prevId(spellPrev.getID()));
+					//SpellRegistry.right(spellPrev);// SpellRegistry.getSpellFromType(spellPrev.getSpellID().prev());
 
 			if (sRightRight != null && sRightRight.getIconDisplay() != null) {
 				x = xmain + 6 + 4;
@@ -52,7 +59,8 @@ public class SpellScreenRender {
 				dim = spellSize / 2 - 2;
 				UtilTextureRender.drawTextureSquare(sRightRight.getIconDisplay(), x, y, dim);
 
-				ISpell another = SpellRegistry.right(sRightRight);
+				ISpell another = SpellRegistry.getSpellFromID(props.prevId(sRightRight.getID()));
+						//SpellRegistry.right(sRightRight);
 				if (another != null) {
 					x = xmain + 6 + 7;
 					y = ymain + spellSize + 14 + 10;
@@ -61,11 +69,13 @@ public class SpellScreenRender {
 				}
 			}
 		}
-
 	}
 
-	private static void drawNextSpells(EntityPlayerSP player, ISpell spellCurrent) {
-		ISpell spellNext = SpellRegistry.left(spellCurrent);
+	private static void drawNextSpells(PlayerPowerups props, ISpell spellCurrent) {
+
+		//PlayerPowerups props = PlayerPowerups.get(player);
+		ISpell spellNext = SpellRegistry.getSpellFromID(props.nextId(spellCurrent.getID()));
+		// SpellRegistry.left(spellCurrent);
 
 		if (spellNext != null) {
 			int x = xmain - 3;
@@ -73,7 +83,7 @@ public class SpellScreenRender {
 			int dim = spellSize / 2;
 			UtilTextureRender.drawTextureSquare(spellNext.getIconDisplay(), x, y, dim);
 
-			ISpell sLeftLeft = SpellRegistry.left(spellNext);
+			ISpell sLeftLeft =  SpellRegistry.getSpellFromID(props.nextId(spellNext.getID()));//SpellRegistry.left(spellNext);
 
 			if (sLeftLeft != null && sLeftLeft.getIconDisplay() != null) {
 				x = xmain - 3 - 1;
@@ -81,7 +91,7 @@ public class SpellScreenRender {
 				dim = 16 / 2 - 2;
 				UtilTextureRender.drawTextureSquare(sLeftLeft.getIconDisplay(), x, y, dim);
 
-				ISpell another = SpellRegistry.left(sLeftLeft);
+				ISpell another = SpellRegistry.getSpellFromID(props.nextId(sLeftLeft.getID()));//SpellRegistry.left(sLeftLeft);
 				if (another != null) {
 					x = xmain - 3 - 3;
 					y = ymain + spellSize + 14 + 10;
@@ -98,13 +108,14 @@ public class SpellScreenRender {
 		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
 
 		ISpell spellCurrent = SpellCaster.getPlayerCurrentISpell(player);
+		PlayerPowerups props = PlayerPowerups.get(player);
 
-		drawSpellHeader(player, spellCurrent);
+		drawSpellHeader(props, spellCurrent);
 
-		drawCurrentSpell(player, spellCurrent);
+		drawCurrentSpell(props, spellCurrent);
 
-		drawNextSpells(player, spellCurrent);
+		drawNextSpells(props, spellCurrent);
 
-		drawPrevSpells(player, spellCurrent);
+		drawPrevSpells(props, spellCurrent);
 	}
 }

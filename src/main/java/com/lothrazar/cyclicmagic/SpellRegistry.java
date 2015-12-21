@@ -8,19 +8,30 @@ import net.minecraft.potion.Potion;
 
 public class SpellRegistry {
 
-	public static ArrayList<ISpell> spellbook;
+	private static ArrayList<ISpell> spellbook;
+
+	private static void registerSpell(ISpell spell){
+		spellbook.add(spell);
+		
+		System.out.println("spell "+spell.getID()+ " registered "+spell.getName());
+	}
+	public static ISpell getDefaultSpell() {
+		return SpellRegistry.getSpellbook().get(0);
+	}
 
 	public static boolean spellsEnabled(EntityPlayer player) {
 		ItemStack held = player.getHeldItem();
 		return held != null && held.getItem() == ItemRegistry.master_wand;
 	}
+	
+	
 
 	public static void register() {
 		spellbook = new ArrayList<ISpell>();
 
 		int potionDuration = Const.TICKS_PER_SEC * 20;
 
-		int spellId = 0;
+		int spellId = -1;//the smallest spell gets id zero
 
 		// used to be public statics
 		BaseSpell ghost;
@@ -37,96 +48,102 @@ public class SpellRegistry {
 		BaseSpell carbon;
 
 		ghost = new SpellGhost(++spellId,"ghost");
-		spellbook.add(ghost);
+		registerSpell(ghost);
+		
 
 		jump = new SpellExpPotion(++spellId,"jump");
 		jump.setPotion(Potion.jump.id, potionDuration, PotionRegistry.V);
-		spellbook.add(jump);
+		registerSpell(jump);
 
 		phase = new SpellPhasing(++spellId,"phasing");
-		spellbook.add(phase);
+		registerSpell(phase);
 
 		slowfall = new SpellExpPotion(++spellId,"slowfall");
 		slowfall.setPotion(PotionRegistry.slowfall.id, potionDuration, PotionRegistry.I);
-		spellbook.add(slowfall);
+		registerSpell(slowfall);
 
 		waterwalk = new SpellExpPotion(++spellId,"waterwalk");
 		waterwalk.setPotion(PotionRegistry.waterwalk.id, potionDuration, PotionRegistry.I);
-		spellbook.add(waterwalk);
+		registerSpell(waterwalk);
 
 		haste = new SpellExpPotion(++spellId,"haste");
 		haste.setPotion(Potion.digSpeed.id, potionDuration, PotionRegistry.II);
-		spellbook.add(haste);
+		registerSpell(haste);
 
 		collect = new SpellCollect(++spellId,"collect");
-		spellbook.add(collect);
+		registerSpell(collect);
 
 		rotate = new SpellRotate(++spellId,"rotate"); 
-		spellbook.add(rotate);
+		registerSpell(rotate);
 
 		push = new SpellPush(++spellId,"push");
-		spellbook.add(push);
+		registerSpell(push);
 
 		SpellPull pull = new SpellPull(++spellId,"pull");
-		spellbook.add(pull);
+		registerSpell(pull);
 
 		torch = new SpellThrowTorch(++spellId,"torch");
-		spellbook.add(torch);
+		registerSpell(torch);
 
 		fishing = new SpellThrowFishing(++spellId,"fishing");
-		spellbook.add(fishing);
+		registerSpell(fishing);
 
 		SpellThrowExplosion explode = new SpellThrowExplosion(++spellId,"explode");
-		spellbook.add(explode);
+		registerSpell(explode);
 
 		SpellThrowFire fire = new SpellThrowFire(++spellId,"fire");
-		spellbook.add(fire);
+		registerSpell(fire);
 
 		SpellThrowIce ice = new SpellThrowIce(++spellId,"ice");
-		spellbook.add(ice);
+		registerSpell(ice);
 
 		SpellThrowLightning lightning = new SpellThrowLightning(++spellId,"lightning");
-		spellbook.add(lightning);
+		registerSpell(lightning);
 
 		SpellThrowShear shear = new SpellThrowShear(++spellId,"shear");
-		spellbook.add(shear);
+		registerSpell(shear);
 
 		SpellThrowWater water = new SpellThrowWater(++spellId,"water");
-		spellbook.add(water);
+		registerSpell(water);
 
 		SpellScaffolding scaffold = new SpellScaffolding(++spellId,"scaffold");
-		spellbook.add(scaffold);
+		registerSpell(scaffold);
 
 		SpellChestSack chestsack = new SpellChestSack(++spellId,"chestsack");
-		spellbook.add(chestsack);
+		registerSpell(chestsack);
 
 		SpellThrowSpawnEgg spawnegg = new SpellThrowSpawnEgg(++spellId,"spawnegg");
-		spellbook.add(spawnegg);
+		registerSpell(spawnegg);
 		
 		carbon = new SpellCarbonPaper(++spellId,"carbon");
-		spellbook.add(carbon);
+		registerSpell(carbon);
 		
 		SpellGiveLauncher launch = new SpellGiveLauncher(++spellId,"launch");
-		spellbook.add(launch);
-		
-		largestSpellId = spellId;
+		registerSpell(launch);
 	}
 
-	public static int largestSpellId;//workaround to stop powerups crashing
-	
 	public static ISpell getSpellFromID(int id) {
-		if (id == 0) {
-			return null;
+		
+		//TODO: can we just go SpellRegistry.getSpellbook().get(id)
+		try{
+			return spellbook.get(id);
 		}
-		for (ISpell sp : SpellRegistry.spellbook) {
+		catch(IndexOutOfBoundsException  e){
+			System.out.println(id+" SPELL OOB fix yo stuff k");
+			return null;
+			
+		}
+		 /*
+		for (ISpell sp : SpellRegistry.getSpellbook()) {
 			if (sp.getID() == id) {
 				return sp;
 			}
 		}
 
 		return null;
+		*/
 	}
-	
+	/*
 	public static ISpell left(ISpell self) { 
 		int idx = SpellRegistry.spellbook.indexOf(self);// -1 for not found
 		if (idx == -1) {
@@ -154,5 +171,9 @@ public class SpellRegistry {
 
 		return SpellRegistry.spellbook.get(idx);
 	}
-	
+	*/
+
+	public static ArrayList<ISpell> getSpellbook() {
+		return spellbook;
+	}
 }

@@ -34,7 +34,7 @@ public class GuiSpellbook extends GuiScreen {
 		radius = xCenter/3 + 26;
 		// TODO: buttons to add/remove each spell from player rotation
 		
-		arc = (2*Math.PI)/SpellRegistry.spellbook.size();
+		arc = (2*Math.PI)/SpellRegistry.getSpellbook().size();
 		
 		double ang = 0;
 		double cx,cy; 
@@ -43,7 +43,7 @@ public class GuiSpellbook extends GuiScreen {
 		ang = 0;
 		
 		//int spellSize = 16;
-		for (ISpell s : SpellRegistry.spellbook) {
+		for (ISpell s : SpellRegistry.getSpellbook()) {
 			
 			cx = xCenter + radius * Math.cos(ang) - 2;
 			cy = yCenter + radius * Math.sin(ang) - 2;
@@ -82,7 +82,7 @@ public class GuiSpellbook extends GuiScreen {
 		ang = 0;
 		
 		int spellSize = 16;
-		for (ISpell s : SpellRegistry.spellbook) {
+		for (ISpell s : SpellRegistry.getSpellbook()) {
 			
 			cx = xCenter + radius * Math.cos(ang);
 			cy = yCenter + radius * Math.sin(ang);
