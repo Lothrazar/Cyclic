@@ -27,6 +27,7 @@ public class GuiSpellbook extends GuiScreen {
 	PlayerPowerups props;
 
 	public GuiSpellbook(EntityPlayer p) {
+		
 		super();
 		this.entityPlayer = p;
 		this.props = PlayerPowerups.get(entityPlayer);
@@ -36,6 +37,8 @@ public class GuiSpellbook extends GuiScreen {
 	public void initGui() {
 
 		super.initGui();
+		
+		
 		xCenter = this.width / 2;
 		yCenter = this.height / 2;
 		radius = xCenter / 3 + 26;
@@ -65,8 +68,8 @@ public class GuiSpellbook extends GuiScreen {
 			 * 
 			 * if (s.getID() == props.getSpellCurrent()) { //TODO: mark current
 			 * spell with a highlight or some circle texture or something
-			 * drawCenteredString(fontRendererObj, "current", (int)cx, (int)cy,
-			 * FONT); }
+			 * drawCenteredString(fontRendererObj, "current", (int)cx, (int)cy, FONT);
+			 * }
 			 */
 			ang += arc;
 		}
@@ -87,14 +90,15 @@ public class GuiSpellbook extends GuiScreen {
 		
 		UtilTextureRender.drawTextureSimple(background,guiLeft,guiTop, 200,180);
     }
-	//    public void drawBackground(int tint)
+	private final static ResourceLocation ptr = new ResourceLocation(Const.MODID, "textures/spells/exp_cost_dummy.png");
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		//super.drawDefaultBackground();
-		this.drawBackground(1); 
+		//this.drawBackground(1); 
 		super.drawScreen(mouseX, mouseY, partialTicks);
- 
-		//int FONT = 16777215;
+
+		int FONT = 16777215;
+		//drawCenteredString(fontRendererObj, "Add or remove spells from active wheel",xCenter, yCenter, FONT);
 
 	//	drawCenteredString(fontRendererObj, "test", xCenter, yCenter, FONT);
 
@@ -102,6 +106,7 @@ public class GuiSpellbook extends GuiScreen {
 		double cx, cy;
 
 		int spellSize = 16;
+		UtilTextureRender.drawTextureSquare(ptr, mouseX-8,mouseY-8, spellSize);
 		for (ISpell s : SpellRegistry.getSpellbook()) {
 
 			cx = xCenter + radius * Math.cos(ang);
@@ -123,8 +128,10 @@ public class GuiSpellbook extends GuiScreen {
 			UtilTextureRender.drawTextureSimple(header, (int) cx+1, (int) cy-6, spellSize-2,spellSize-4);
 			
 			ang += arc;
+			
+			
 		}
-
+		
 		for (int i = 0; i < buttonList.size(); i++) {
 			if (buttonList.get(i).isMouseOver()  && buttonList.get(i) instanceof GuiButtonSpell) {
 				GuiButtonSpell btn = (GuiButtonSpell) buttonList.get(i);
