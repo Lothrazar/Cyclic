@@ -13,7 +13,7 @@ public class SpellRegistry {
 	private static void registerSpell(ISpell spell){
 		spellbook.add(spell);
 		
-		System.out.println("spell "+spell.getID()+ " registered "+spell.getName());
+		//System.out.println("spell "+spell.getID()+ " registered "+spell.getName());
 	}
 	public static ISpell getDefaultSpell() {
 		return SpellRegistry.getSpellbook().get(0);

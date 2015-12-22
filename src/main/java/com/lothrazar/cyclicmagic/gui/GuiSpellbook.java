@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.gui;
 
+import java.util.List;
 import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.PlayerPowerups;
 import com.lothrazar.cyclicmagic.SpellRegistry;
@@ -9,6 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -97,7 +99,7 @@ public class GuiSpellbook extends GuiScreen {
 		//this.drawBackground(1); 
 		super.drawScreen(mouseX, mouseY, partialTicks);
 
-		int FONT = 16777215;
+		//int FONT = 16777215;
 		//drawCenteredString(fontRendererObj, "Add or remove spells from active wheel",xCenter, yCenter, FONT);
 
 	//	drawCenteredString(fontRendererObj, "test", xCenter, yCenter, FONT);
@@ -113,11 +115,7 @@ public class GuiSpellbook extends GuiScreen {
 			cy = yCenter + radius * Math.sin(ang);
 
 			UtilTextureRender.drawTextureSquare(s.getIconDisplay(), (int) cx, (int) cy, spellSize);
-			/*
-			if (s.getID() == props.getSpellCurrent()) {
-				drawCenteredString(fontRendererObj, "current", (int) cx, (int) cy, FONT);
-			}
-			 */
+			
 			ResourceLocation header; 
 			if(props.isSpellUnlocked(s.getID())){// TODO: do we want different icons for these
 				header = s.getIconDisplayHeaderEnabled();
@@ -128,19 +126,17 @@ public class GuiSpellbook extends GuiScreen {
 			UtilTextureRender.drawTextureSimple(header, (int) cx+1, (int) cy-6, spellSize-2,spellSize-4);
 			
 			ang += arc;
-			
-			
 		}
 		
+		GuiButtonSpell btn;
 		for (int i = 0; i < buttonList.size(); i++) {
 			if (buttonList.get(i).isMouseOver()  && buttonList.get(i) instanceof GuiButtonSpell) {
-				GuiButtonSpell btn = (GuiButtonSpell) buttonList.get(i);
-				if (btn.getTooltip() != null) {
-					drawHoveringText(btn.getTooltip(), mouseX, mouseY, fontRendererObj);
-				}
+				btn = (GuiButtonSpell) buttonList.get(i);
+			
+				drawHoveringText(btn.getTooltipForPlayer(props), mouseX, mouseY, fontRendererObj);
+				break;//cant hover on 2 at once
 			}
 		}
-
 	}
 
 	@Override
