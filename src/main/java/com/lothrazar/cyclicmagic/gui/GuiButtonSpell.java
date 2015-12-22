@@ -8,6 +8,7 @@ import com.lothrazar.cyclicmagic.net.MessageToggle;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.EnumChatFormatting;
@@ -54,10 +55,11 @@ public class GuiButtonSpell extends GuiButton{
             GlStateManager.enableBlend();
             GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
             GlStateManager.blendFunc(770, 771);
-            this.drawTexturedModalRect(this.xPosition, this.yPosition, 0, 0, this.width, this.height);
+          //  this.drawTexturedModalRect(this.xPosition, this.yPosition, 0, 0,16,16);
+            Gui.drawModalRectWithCustomSizedTexture(this.xPosition, this.yPosition, 0F, 0F,16,16,16,16);
           //  this.drawTexturedModalRect(this.xPosition + this.width / 2, this.yPosition, 200 - this.width / 2, 46 + i * 20, this.width / 2, this.height);
             this.mouseDragged(mc, mouseX, mouseY);
-            int j = 14737632;
+           /* int j = 14737632;
 
             if (packedFGColour != 0)
             {
@@ -72,7 +74,7 @@ public class GuiButtonSpell extends GuiButton{
             {
                 j = 16777120;
             }
-
+*/
            // this.drawCenteredString(fontrenderer, this.displayString, this.xPosition + this.width / 2, this.yPosition + (this.height - 8) / 2, j);
         }
     }
