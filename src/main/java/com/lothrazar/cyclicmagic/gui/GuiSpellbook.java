@@ -1,16 +1,15 @@
 package com.lothrazar.cyclicmagic.gui;
 
-import java.util.List;
 import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.PlayerPowerups;
 import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.util.UtilTextureRender;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -47,6 +46,10 @@ public class GuiSpellbook extends GuiScreen {
 		// TODO: buttons to add/remove each spell from player rotation
 
 		arc = (2 * Math.PI) / SpellRegistry.getSpellbook().size();
+
+		//drawCenteredString(fontRendererObj, "Add or remove spells from active wheel",xCenter, yCenter, FONT);
+		GuiButton c = new GuiButton(999,  xCenter, yCenter,20,20,  "test");
+		this.buttonList.add(c);
 
 		double ang = 0;
 		double cx, cy;
@@ -90,7 +93,7 @@ public class GuiSpellbook extends GuiScreen {
 		int guiLeft = screenWidth/2 - textureWidth/2;
 		int guiTop = screenHeight/2 - textureHeight/2;
 		
-		UtilTextureRender.drawTextureSimple(background,guiLeft,guiTop, 200,180);
+		UtilTextureRender.drawTextureSimple(background,guiLeft,guiTop, 200,200);
     }
 	private final static ResourceLocation ptr = new ResourceLocation(Const.MODID, "textures/spells/exp_cost_dummy.png");
 	@Override
@@ -106,7 +109,7 @@ public class GuiSpellbook extends GuiScreen {
 
 		double ang = 0;
 		double cx, cy;
-
+/*
 		int spellSize = 16;
 		UtilTextureRender.drawTextureSquare(ptr, mouseX-8,mouseY-8, spellSize);
 		for (ISpell s : SpellRegistry.getSpellbook()) {
@@ -127,7 +130,7 @@ public class GuiSpellbook extends GuiScreen {
 			
 			ang += arc;
 		}
-		
+		*/
 		GuiButtonSpell btn;
 		for (int i = 0; i < buttonList.size(); i++) {
 			if (buttonList.get(i).isMouseOver()  && buttonList.get(i) instanceof GuiButtonSpell) {
@@ -143,5 +146,4 @@ public class GuiSpellbook extends GuiScreen {
 	public boolean doesGuiPauseGame() {
 		return false;
 	}
-
 }
