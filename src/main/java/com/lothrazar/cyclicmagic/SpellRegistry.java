@@ -23,9 +23,7 @@ public class SpellRegistry {
 		ItemStack held = player.getHeldItem();
 		return held != null && held.getItem() == ItemRegistry.master_wand;
 	}
-	
-	
-
+	 
 	public static void register() {
 		spellbook = new ArrayList<ISpell>();
 

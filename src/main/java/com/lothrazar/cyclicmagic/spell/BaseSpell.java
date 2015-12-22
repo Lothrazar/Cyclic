@@ -29,6 +29,8 @@ public class BaseSpell implements ISpell {
 	protected int durability;
 	protected int experience;
 	protected int cooldown;
+	private final static ResourceLocation header = new ResourceLocation(Const.MODID, "textures/spells/exp_cost_dummy.png");
+	private final static ResourceLocation header_empty = new ResourceLocation(Const.MODID, "textures/spells/exp_cost_empty_dummy.png");
 
 	public BaseSpell(int id, String n) {
 		ID = id;
@@ -66,9 +68,7 @@ public class BaseSpell implements ISpell {
 		return durability;
 	}
 
-	private final static ResourceLocation header = new ResourceLocation(Const.MODID, "textures/spells/exp_cost_dummy.png");
-	private final static ResourceLocation header_empty = new ResourceLocation(Const.MODID, "textures/spells/exp_cost_empty_dummy.png");
-
+	
 	@Override
 	public void onCastFailure(World world, EntityPlayer player, BlockPos pos) {
 

@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.gui;
 
+import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.PlayerPowerups;
 import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
@@ -14,6 +15,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiSpellbook extends GuiScreen {
 
 	private final EntityPlayer entityPlayer;
+	private final static ResourceLocation background = new ResourceLocation(Const.MODID, "textures/gui/spellbook.png");
+
 	// https://github.com/LothrazarMinecraftMods/EnderBook/blob/66363b544fe103d6abf9bcf73f7a4051745ee982/src/main/java/com/lothrazar/enderbook/GuiEnderBook.java
 	private int xCenter;
 	private int yCenter;
@@ -22,6 +25,7 @@ public class GuiSpellbook extends GuiScreen {
 	PlayerPowerups props;
 
 	public GuiSpellbook(EntityPlayer p) {
+		super();
 		this.entityPlayer = p;
 		this.props = PlayerPowerups.get(entityPlayer);
 	}
@@ -68,13 +72,16 @@ public class GuiSpellbook extends GuiScreen {
 
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		super.drawDefaultBackground();
+		//super.drawDefaultBackground();
 
 		super.drawScreen(mouseX, mouseY, partialTicks);
+ 
+		int guiLeft = xCenter/2;
+		int guiTop = yCenter/2;
+		UtilTextureRender.drawTextureSimple(background,guiLeft,guiTop, 146,180);
+		//int FONT = 16777215;
 
-		int FONT = 16777215;
-
-		drawCenteredString(fontRendererObj, "test", xCenter, yCenter, FONT);
+	//	drawCenteredString(fontRendererObj, "test", xCenter, yCenter, FONT);
 
 		double ang = 0;
 		double cx, cy;
