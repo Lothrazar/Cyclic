@@ -5,7 +5,9 @@ import com.lothrazar.cyclicmagic.PlayerPowerups;
 import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.util.UtilTextureRender;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -70,14 +72,20 @@ public class GuiSpellbook extends GuiScreen {
 		}
 	}
 
+	int textureWidth = 200;
+	int textureHeight = 180;
 	@Override
 	public void drawBackground(int tint)
     {
-		System.out.println("drawBackground");
+		ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft());
+
+		int screenWidth = res.getScaledWidth();
+		int screenHeight = res.getScaledHeight();
+
+		int guiLeft = screenWidth/2 - textureWidth/2;
+		int guiTop = screenHeight/2 - textureHeight/2;
 		
-		int guiLeft = xCenter/2;
-		int guiTop = 30;
-		UtilTextureRender.drawTextureSimple(background,guiLeft,guiTop, 146,180);
+		UtilTextureRender.drawTextureSimple(background,guiLeft,guiTop, 200,180);
     }
 	//    public void drawBackground(int tint)
 	@Override
