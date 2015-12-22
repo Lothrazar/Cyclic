@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.util.UtilTextureRender;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -78,8 +79,6 @@ public class GuiSpellbook extends GuiScreen {
 		double ang = 0;
 		double cx, cy;
 
-		ang = 0;
-
 		int spellSize = 16;
 		for (ISpell s : SpellRegistry.getSpellbook()) {
 
@@ -87,13 +86,20 @@ public class GuiSpellbook extends GuiScreen {
 			cy = yCenter + radius * Math.sin(ang);
 
 			UtilTextureRender.drawTextureSquare(s.getIconDisplay(), (int) cx, (int) cy, spellSize);
-
+			/*
 			if (s.getID() == props.getSpellCurrent()) {
-				// TODO: mark current spell with a highlight or some circle
-				// texture or something
 				drawCenteredString(fontRendererObj, "current", (int) cx, (int) cy, FONT);
 			}
-
+			 */
+			ResourceLocation header; 
+			if(props.isSpellUnlocked(s.getID())){// TODO: do we want different icons for these
+				header = s.getIconDisplayHeaderEnabled();
+			}
+			else{
+				header = s.getIconDisplayHeaderDisabled();
+			}
+			UtilTextureRender.drawTextureSimple(header, (int) cx+1, (int) cy-6, spellSize-2,spellSize-4);
+			
 			ang += arc;
 		}
 
