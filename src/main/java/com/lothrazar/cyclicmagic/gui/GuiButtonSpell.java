@@ -8,8 +8,6 @@ import com.lothrazar.cyclicmagic.net.MessageToggle;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.util.UtilTextureRender;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.EnumChatFormatting;
@@ -43,47 +41,28 @@ public class GuiButtonSpell extends GuiButton{
     	
     	return pressed;
     }
+	
 	@Override
-	  public void drawButton(Minecraft mc, int mouseX, int mouseY)
+	public void drawButton(Minecraft mc, int mouseX, int mouseY)
     {
+	   //  override this and draw the texture here, so the vanilla grey square doesnt show up
         if (this.visible)
         {
         	//http://www.minecraftforge.net/forum/index.php?topic=19594.0
-          //  FontRenderer fontrenderer = mc.fontRendererObj;
-           // mc.getTextureManager().bindTexture(spell.getIconDisplay());
+
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             this.hovered = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
-            //int i = this.getHoverState(this.hovered);
+
             GlStateManager.enableBlend();
             GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
             GlStateManager.blendFunc(770, 771);
-          //  this.drawTexturedModalRect(this.xPosition, this.yPosition, 0, 0,16,16);
-            UtilTextureRender.drawTextureSquare(spell.getIconDisplay(),this.xPosition, this.yPosition,btnSize);
-            //Gui.drawModalRectWithCustomSizedTexture(this.xPosition, this.yPosition, 0F, 0F,16,16,16,16);
-          //  this.drawTexturedModalRect(this.xPosition + this.width / 2, this.yPosition, 200 - this.width / 2, 46 + i * 20, this.width / 2, this.height);
-            this.mouseDragged(mc, mouseX, mouseY);
-           /* int j = 14737632;
 
-            if (packedFGColour != 0)
-            {
-                j = packedFGColour;
-            }
-            else
-            if (!this.enabled)
-            {
-                j = 10526880;
-            }
-            else if (this.hovered)
-            {
-                j = 16777120;
-            }
-*/
-           // this.drawCenteredString(fontrenderer, this.displayString, this.xPosition + this.width / 2, this.yPosition + (this.height - 8) / 2, j);
+            UtilTextureRender.drawTextureSquare(spell.getIconDisplay(),this.xPosition, this.yPosition,btnSize);
+
+            this.mouseDragged(mc, mouseX, mouseY);
         }
     }
-    
-   // TODO: override this and draw the texture here, overrides vanilla suare
-    
+
 	public List<String> getTooltipForPlayer(PlayerPowerups props) {
 
 		List<String> tooltips = new ArrayList<String>();

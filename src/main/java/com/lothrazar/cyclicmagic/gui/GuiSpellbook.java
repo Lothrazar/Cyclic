@@ -98,18 +98,13 @@ public class GuiSpellbook extends GuiScreen {
 	private final static ResourceLocation ptr = new ResourceLocation(Const.MODID, "textures/spells/exp_cost_dummy.png");
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		//super.drawDefaultBackground();
-		//this.drawBackground(1); 
+
+		//this.drawBackground(1); //turn this on if we want 'background' on
 		super.drawScreen(mouseX, mouseY, partialTicks);
-
-		//int FONT = 16777215;
-		//drawCenteredString(fontRendererObj, "Add or remove spells from active wheel",xCenter, yCenter, FONT);
-
-	//	drawCenteredString(fontRendererObj, "test", xCenter, yCenter, FONT);
-
 		double ang = 0;
 		double cx, cy;
-/*
+
+ //TODO: move this to btn class as well ??
 		int spellSize = 16;
 		UtilTextureRender.drawTextureSquare(ptr, mouseX-8,mouseY-8, spellSize);
 		for (ISpell s : SpellRegistry.getSpellbook()) {
@@ -117,8 +112,7 @@ public class GuiSpellbook extends GuiScreen {
 			cx = xCenter + radius * Math.cos(ang);
 			cy = yCenter + radius * Math.sin(ang);
 
-			UtilTextureRender.drawTextureSquare(s.getIconDisplay(), (int) cx, (int) cy, spellSize);
-			
+			//TODO: move this to btn class as well? but it would need access to the player props
 			ResourceLocation header; 
 			if(props.isSpellUnlocked(s.getID())){// TODO: do we want different icons for these
 				header = s.getIconDisplayHeaderEnabled();
@@ -130,7 +124,7 @@ public class GuiSpellbook extends GuiScreen {
 			
 			ang += arc;
 		}
-		*/
+	
 		GuiButtonSpell btn;
 		for (int i = 0; i < buttonList.size(); i++) {
 			if (buttonList.get(i).isMouseOver()  && buttonList.get(i) instanceof GuiButtonSpell) {
