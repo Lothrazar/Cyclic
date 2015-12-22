@@ -71,14 +71,21 @@ public class GuiSpellbook extends GuiScreen {
 	}
 
 	@Override
+	public void drawBackground(int tint)
+    {
+		System.out.println("drawBackground");
+		
+		int guiLeft = xCenter/2;
+		int guiTop = 30;
+		UtilTextureRender.drawTextureSimple(background,guiLeft,guiTop, 146,180);
+    }
+	//    public void drawBackground(int tint)
+	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		//super.drawDefaultBackground();
-
+		this.drawBackground(1); 
 		super.drawScreen(mouseX, mouseY, partialTicks);
  
-		int guiLeft = xCenter/2;
-		int guiTop = yCenter/2;
-		UtilTextureRender.drawTextureSimple(background,guiLeft,guiTop, 146,180);
 		//int FONT = 16777215;
 
 	//	drawCenteredString(fontRendererObj, "test", xCenter, yCenter, FONT);
