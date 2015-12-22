@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.PlayerPowerups;
 import com.lothrazar.cyclicmagic.net.MessageToggle;
 import com.lothrazar.cyclicmagic.spell.ISpell;
+import com.lothrazar.cyclicmagic.util.UtilTextureRender;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
@@ -19,8 +20,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiButtonSpell extends GuiButton{
 
 	private ISpell spell;
+	private static final int btnSize = 16;
 	public GuiButtonSpell(int x, int y, ISpell s) {
-		super(s.getID(), x, y, 16,16 ,"");
+		super(s.getID(), x, y, btnSize,btnSize ,"");
 		spell = s;
 	}
 	
@@ -47,16 +49,17 @@ public class GuiButtonSpell extends GuiButton{
         if (this.visible)
         {
         	//http://www.minecraftforge.net/forum/index.php?topic=19594.0
-            FontRenderer fontrenderer = mc.fontRendererObj;
-            mc.getTextureManager().bindTexture(spell.getIconDisplay());
+          //  FontRenderer fontrenderer = mc.fontRendererObj;
+           // mc.getTextureManager().bindTexture(spell.getIconDisplay());
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             this.hovered = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
-            int i = this.getHoverState(this.hovered);
+            //int i = this.getHoverState(this.hovered);
             GlStateManager.enableBlend();
             GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
             GlStateManager.blendFunc(770, 771);
           //  this.drawTexturedModalRect(this.xPosition, this.yPosition, 0, 0,16,16);
-            Gui.drawModalRectWithCustomSizedTexture(this.xPosition, this.yPosition, 0F, 0F,16,16,16,16);
+            UtilTextureRender.drawTextureSquare(spell.getIconDisplay(),this.xPosition, this.yPosition,btnSize);
+            //Gui.drawModalRectWithCustomSizedTexture(this.xPosition, this.yPosition, 0F, 0F,16,16,16,16);
           //  this.drawTexturedModalRect(this.xPosition + this.width / 2, this.yPosition, 200 - this.width / 2, 46 + i * 20, this.width / 2, this.height);
             this.mouseDragged(mc, mouseX, mouseY);
            /* int j = 14737632;
