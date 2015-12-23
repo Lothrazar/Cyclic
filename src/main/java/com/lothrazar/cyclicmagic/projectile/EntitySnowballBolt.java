@@ -40,7 +40,7 @@ public class EntitySnowballBolt extends EntityThrowable {
 	@Override
 	protected void onImpact(MovingObjectPosition mop) {
 		if (mop.entityHit != null && mop.entityHit instanceof EntityLivingBase) {
-System.out.println("hit entity");
+
 			// if we hit an entity
 			mop.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), damage);
 			EntityLivingBase e = (EntityLivingBase) mop.entityHit;
@@ -48,7 +48,7 @@ System.out.println("hit entity");
 			if (e.isBurning()) {
 				e.extinguish();
 			}
-System.out.println("Add Frost Effect");
+
 			PotionRegistry.addOrMergePotionEffect(e, new PotionEffect(PotionRegistry.frost.id, secondsFrozenOnHit * Const.TICKS_PER_SEC, 0));
 
 			UtilParticle.spawnParticle(this.worldObj, EnumParticleTypes.SNOWBALL, e.getPosition());
@@ -56,7 +56,7 @@ System.out.println("Add Frost Effect");
 			this.setDead();
 		}
 		else if (mop.getBlockPos() != null) {
-System.out.println("hit block");
+
 			// else if we hit a block
 
 			BlockPos pos = mop.getBlockPos();
@@ -78,10 +78,10 @@ System.out.println("hit block");
 					// sometimes
 					// it was air and we got ice right above the
 					// water if we dont do this check
-					if (this.worldObj.getBlockState(mop.getBlockPos()) == Blocks.water.getDefaultState()){
+					if (this.worldObj.getBlockState(mop.getBlockPos()) == Blocks.water.getDefaultState()) {
 						posWater = mop.getBlockPos();
 					}
-					else if (this.worldObj.getBlockState(mop.getBlockPos().offset(mop.sideHit)) == Blocks.water.getDefaultState()){
+					else if (this.worldObj.getBlockState(mop.getBlockPos().offset(mop.sideHit)) == Blocks.water.getDefaultState()) {
 						posWater = mop.getBlockPos().offset(mop.sideHit);
 					}
 				}
@@ -103,9 +103,9 @@ System.out.println("hit block");
 				else if (this.worldObj.getBlockState(hitUp).getBlock() == Blocks.snow_layer) {
 					setMoreSnow(this.worldObj, hitUp);
 				}
-				else if (this.worldObj.isAirBlock(hit) == false && this.worldObj.isAirBlock(hitUp) == true
-						&& this.worldObj.isSideSolid(hit, EnumFacing.UP)) {
-					//checking solid side so snow wont go on top of tallgrass/flowers/etc
+				else if (this.worldObj.isAirBlock(hit) == false && this.worldObj.isAirBlock(hitUp) == true && this.worldObj.isSideSolid(hit, EnumFacing.UP)) {
+					// checking solid side so snow wont go on top of
+					// tallgrass/flowers/etc
 					setNewSnow(this.worldObj, hitUp);
 				}
 			}

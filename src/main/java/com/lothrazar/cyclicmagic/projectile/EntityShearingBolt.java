@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.projectile; 
 
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntitySheep;
@@ -14,8 +15,7 @@ import net.minecraft.world.World;
 
 public class EntityShearingBolt extends EntityThrowable
 {
-	public static boolean doesShearChild;
-	public static boolean doesKnockback;
+	public static boolean doesShearChild = true;
     public EntityShearingBolt(World worldIn)
     {
         super(worldIn);
@@ -59,10 +59,9 @@ public class EntityShearingBolt extends EntityThrowable
 	                    entityitem.motionZ += (double)((sheep.worldObj.rand.nextFloat() - sheep.worldObj.rand.nextFloat()) * 0.1F);
 	                }
 	
-	                if(doesKnockback)
-	                	sheep.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 0);
-	                sheep.playSound("mob.sheep.shear", 1.0F, 1.0F);
-                
+                	sheep.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 0);
+                	
+                	UtilSound.playSoundAt(sheep, UtilSound.shears);
 				}
 				//else we hit a child sheep and config disables that
 				

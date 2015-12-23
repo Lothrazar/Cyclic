@@ -10,11 +10,10 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
 public class EntityTorchBolt extends EntityThrowable {
-	private static boolean damageEntityOnHit = true;
 	public EntityTorchBolt(World worldIn) {
 		super(worldIn);
 	}
-	
+
 	public EntityTorchBolt(World worldIn, EntityLivingBase ent) {
 		super(worldIn, ent);
 	}
@@ -29,9 +28,8 @@ public class EntityTorchBolt extends EntityThrowable {
 	@Override
 	protected void onImpact(MovingObjectPosition mop) {
 		if (mop.entityHit != null) {
-			// do the snowball damage, which should be none. put out the fire
-			if (damageEntityOnHit)
-				mop.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 0);
+
+			mop.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 0);
 		}
 
 		BlockPos pos = mop.getBlockPos();

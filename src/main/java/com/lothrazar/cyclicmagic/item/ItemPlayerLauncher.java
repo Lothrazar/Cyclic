@@ -41,6 +41,15 @@ public class ItemPlayerLauncher extends Item {
 			}
 		}
 		else {
+			//I want to split this into multiple items
+			//one hover mode, that just turns on and off
+			//1. launch spell, that works like MODE_LAUNCH here on use
+			//look we might not use? or its own item?
+			//2. and a new item that just auto-applies slowfall effect if it detects
+			//that fall disatnce too great
+			//while we are at it
+			//make the item collect spell an item we can turn on and off as wel
+			//kind of a runestone system that you can toggle on and off
 
 			// thank you REF
 			// http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/modification-development/1435515-how-i-can-do-to-move-to-where-i-look

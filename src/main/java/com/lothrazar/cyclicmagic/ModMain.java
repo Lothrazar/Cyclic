@@ -60,15 +60,20 @@ public class ModMain {
 		SpellRegistry.register();
 
 		proxy.register();
+		
+		
+
+		System.out.println("entity segg TODO: look into sheep color, villager meta, horse meta, other stuff into egg");
 	}
 	
-	
+
+
 	/*
 	 ideas/plans/bugfixes
 	 
 	 fix some particles trying to render only server side and failing
 	 
-	 why is mouse invisible?? -> add gui background
+	 its ok now----why is mouse invisible?? -> add gui background
 	 
 	     TORCH: good speed for projectiles
 	-> still drops torches
