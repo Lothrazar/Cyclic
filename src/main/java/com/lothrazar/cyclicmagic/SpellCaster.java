@@ -55,50 +55,26 @@ public class SpellCaster {
 	}
 
 	public static void shiftLeft(EntityPlayer player) {
-		//ISpell current = getPlayerCurrentISpell(player);
-		PlayerPowerups props = PlayerPowerups.get(player);
 
+		PlayerPowerups props = PlayerPowerups.get(player);
 
 		int left = props.prevId(props.getSpellCurrent());
 
-		System.out.println("set left "+props.getSpellCurrent()+ " -> "+left);
 		props.setSpellCurrent(left);
 		UtilSound.playSoundAt(player, UtilSound.orb );
-		/*
-		ISpell left = SpellRegistry.getSpellFromID(props.prevId(props.getSpellCurrent()));//SpellRegistry.left(current);
-		
-		if (left != null) {
-			setCurrentFor(player,left);
-		}*/
 	}
 
 	public static void shiftRight(EntityPlayer player) {
-		//ISpell current = getPlayerCurrentISpell(player);
+
 		PlayerPowerups props = PlayerPowerups.get(player);
-		
-		//ISpell right = SpellRegistry.getSpellFromID(props.nextId(props.getSpellCurrent()));//SpellRegistry.left(current);
 		
 		int right = props.nextId(props.getSpellCurrent());
 		System.out.println("set right "+props.getSpellCurrent()+ " -> "+right);
 
 		props.setSpellCurrent(right);
 		UtilSound.playSoundAt(player, UtilSound.orb );
-		//SpellRegistry.right(current);
-/*
-		if (right != null) {
-			setCurrentFor(player,right);
-		}*/
 	}
  
-	/*
-	private static void setCurrentFor(EntityPlayer player, ISpell newCurrent){
-
-		PlayerPowerups props = PlayerPowerups.get(player);
-
-		props.setSpellCurrent(newCurrent.getID());
-		UtilSound.playSoundAt(player, UtilSound.orb );
-	}*/
-
 	public static void tickSpellTimer(EntityPlayer player) {
 		PlayerPowerups props = PlayerPowerups.get(player);
 		if (props.getSpellTimer() < 0) {
@@ -126,10 +102,6 @@ public class SpellCaster {
 
 		PlayerPowerups props = PlayerPowerups.get(player);
 		
-		//System.out.println(props.isSpellUnlocked(spell_id) + "  is current state");
-
 		props.toggleOneSpell(spell_id);
-		
-		System.out.println(props.isSpellUnlocked(spell_id) + "  is NEW state");
 	}
 }
