@@ -11,11 +11,12 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class EntityHarvestBolt extends EntityThrowable// EntitySnowball
+public class EntityHarvestBolt extends EntityThrowable 
 {
 	public static int range_main = 4;
 	public static int range_offset = 3;
@@ -30,6 +31,8 @@ public class EntityHarvestBolt extends EntityThrowable// EntitySnowball
 		super(worldIn);
 	}
 
+    public static final String name = "harvestbolt";
+    public static Item item = null;
 	public EntityHarvestBolt(World worldIn, EntityLivingBase ent) {
 		super(worldIn, ent);
 	}

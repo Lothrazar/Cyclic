@@ -46,6 +46,8 @@ public class ProjectileRegistry {
 		
 		EntityRespawnEgg.item = registerProjItem(EntityRespawnEgg.name);
 		EntityRegistry.registerModEntity(EntityRespawnEgg.class, EntityRespawnEgg.name, entityID++, ModMain.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
-
+		
+		EntityHarvestBolt.item = registerProjItem(EntityHarvestBolt.name);
+		EntityRegistry.registerModEntity(EntityHarvestBolt.class, EntityHarvestBolt.name, entityID++, ModMain.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
 	}
 }

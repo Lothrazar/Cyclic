@@ -43,8 +43,6 @@ public class EntityRespawnEgg extends EntityThrowable {
 						stack.setStackDisplayName(mop.entityHit.getCustomNameTag());
 					}
 					
-					System.out.println("TODO: look into sheep color, villager meta, horse meta, other stuff into egg");
-
 					this.worldObj.spawnEntityInWorld(new EntityItem(this.worldObj, this.posX, this.posY, this.posZ, stack));
 				}
 			}

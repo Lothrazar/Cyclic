@@ -48,7 +48,6 @@ public class SpellRegistry {
 		ghost = new SpellGhost(++spellId,"ghost");
 		registerSpell(ghost);
 		
-
 		jump = new SpellExpPotion(++spellId,"jump");
 		jump.setPotion(Potion.jump.id, potionDuration, PotionRegistry.V);
 		registerSpell(jump);
@@ -118,6 +117,9 @@ public class SpellRegistry {
 		
 		SpellGiveLauncher launch = new SpellGiveLauncher(++spellId,"launch");
 		registerSpell(launch);
+		
+		SpellThrowHarvest harvest = new SpellThrowHarvest(++spellId,"harvest");
+		registerSpell(harvest);
 	}
 
 	public static ISpell getSpellFromID(int id) {
