@@ -87,6 +87,7 @@ public class MasterWand extends Item {
        // return super.onItemUse(stack, playerIn, worldIn, pos, side, hitX, hitY, hitZ);
     }
 
+	private double repairSpeed = 0.6;//higher is faster [0,1]
 	/**
 	 * Called each tick as long the item is on a player inventory. Uses by maps
 	 * to check if is on a player hand and update it's contents.
@@ -100,7 +101,8 @@ public class MasterWand extends Item {
 		EntityPlayer p = (EntityPlayer) entityIn;
 
 		// every second, make a roll. 1/10th of the time then do a repair
-		if (p.inventory.currentItem != itemSlot && worldIn.getWorldTime() % Const.TICKS_PER_SEC == 0 && worldIn.rand.nextDouble() > 0.9) {
+		if (p.inventory.currentItem != itemSlot 
+				&& worldIn.getWorldTime() % Const.TICKS_PER_SEC == 0 && worldIn.rand.nextDouble() < repairSpeed) {
 
 			int curr = stack.getItemDamage();
 			if (curr > 0) {

@@ -24,6 +24,18 @@ public class Const {
 	public static final int dye_magenta = 13;
 	public static final int dye_orange = 14;
 	public static final int dye_bonemeal = 15;
+	
+
+	//1 : negative x : west
+	//0 : south : +z
+	//3 east +x
+	//2 north -z
+	//ex the f3 details or 	int direction = MathHelper.floor_double((double)((player.rotationYaw * 4F) / 360F) + 0.5D) & 3;
+	public static final int DIR_WEST = 1;
+	public static final int DIR_SOUTH = 0;
+	public static final int DIR_EAST = 3;
+	public static final int DIR_NORTH = 2;
+	
 
 	public static final int CHEST_RARITY_COMMON = 100;
 	public static final int CHEST_RARITY_REDSTONE = 50;
