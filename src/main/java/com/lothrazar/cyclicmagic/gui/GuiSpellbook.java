@@ -6,7 +6,6 @@ import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.util.UtilTextureRender;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayer;
@@ -25,6 +24,8 @@ public class GuiSpellbook extends GuiScreen {
 	private int yCenter;
 	private int radius;
 	private double arc;
+	int textureWidth = 200;
+	int textureHeight = 180;
 	PlayerPowerups props;
 
 	public GuiSpellbook(EntityPlayer p) {
@@ -39,49 +40,32 @@ public class GuiSpellbook extends GuiScreen {
 
 		super.initGui();
 		
-		
 		xCenter = this.width / 2;
 		yCenter = this.height / 2;
 		radius = xCenter / 3 + 26;
-		// TODO: buttons to add/remove each spell from player rotation
-
+		
 		arc = (2 * Math.PI) / SpellRegistry.getSpellbook().size();
 
-		//drawCenteredString(fontRendererObj, "Add or remove spells from active wheel",xCenter, yCenter, FONT);
-		GuiButton c = new GuiButton(999,  xCenter, yCenter,20,20,  "test");
-		this.buttonList.add(c);
+		this.buttonList.add(new GuiButtonClose(999,  xCenter-15, yCenter-10));
 
 		double ang = 0;
 		double cx, cy;
 
 		ang = 0;
 		GuiButtonSpell b;
-		// int spellSize = 16;
+
 		for (ISpell s : SpellRegistry.getSpellbook()) {
 
 			cx = xCenter + radius * Math.cos(ang) - 2;
 			cy = yCenter + radius * Math.sin(ang) - 2;
 
-			// int buttonId, int x, int y, int widthIn, int heightIn, String
-			// buttonText)
 			b = new GuiButtonSpell((int) cx, (int) cy, s);
 			this.buttonList.add(b);
 
-			/*
-			 * UtilTextureRender.drawTextureSquare(s.getIconDisplay(), (int)cx,
-			 * (int)cy, spellSize);
-			 * 
-			 * if (s.getID() == props.getSpellCurrent()) { //TODO: mark current
-			 * spell with a highlight or some circle texture or something
-			 * drawCenteredString(fontRendererObj, "current", (int)cx, (int)cy, FONT);
-			 * }
-			 */
 			ang += arc;
 		}
 	}
 
-	int textureWidth = 200;
-	int textureHeight = 180;
 	@Override
 	public void drawBackground(int tint)
     {

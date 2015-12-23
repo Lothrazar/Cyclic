@@ -6,6 +6,7 @@ key.spell.down=Select Spell Right
 key.spell.up=Select Spell Left
 spell.enabled=Enabled
 spell.disabled=Disabled
+button.close=Close
 wand.launch.mode1=Launch
 wand.launch.mode2=Look
 wand.launch.mode3=Up
