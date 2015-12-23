@@ -16,14 +16,18 @@ public class SpellCaster {
 	public static boolean isBlockedBySpellTImer(PlayerPowerups props) { 
 		return !(props.getSpellTimer() == 0);
 	}
-	public static void tryCastCurrent(World world, EntityPlayer player, BlockPos pos, EnumFacing side) {
-		tryCast(SpellCaster.getPlayerCurrentISpell(player),world,player,pos,side);
+	public static boolean tryCastCurrent(World world, EntityPlayer player, BlockPos pos, EnumFacing side) {
+		return tryCast(SpellCaster.getPlayerCurrentISpell(player),world,player,pos,side);
 	}
 
-	public static void tryCast(ISpell spell, World world, EntityPlayer player, BlockPos pos, EnumFacing side) {
+	public static boolean tryCast(ISpell spell, World world, EntityPlayer player, BlockPos pos, EnumFacing side) {
 
+		if(world.isRemote){
+			System.out.println("cancel casting client side");
+			return false;
+		}
 		if (isBlockedBySpellTImer(player)) {
-			return;
+			return false;
 		}
 
 		if (spell.canPlayerCast(world, player, pos)) {
@@ -36,7 +40,9 @@ public class SpellCaster {
 
 				PlayerPowerups props = PlayerPowerups.get(player);
 				props.setSpellTimer(spell.getCastCooldown());
+				return true;
 			}
+			return false;
 			//else the spell was cast, but it had no result			
 			// failure does not trigger here. it was cast just didnt work
 			// so maybe just was no valid target, or position was blocked/in use
@@ -44,6 +50,7 @@ public class SpellCaster {
 		else {
 			// not enough XP (resources)
 			spell.onCastFailure(world, player, pos);
+			return false;
 		}
 	}
 

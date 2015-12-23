@@ -16,6 +16,10 @@ public class SpellScaffolding extends BaseSpell {
 	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side ) {
 
 		BlockPos offset = (side == null)? pos : pos.offset(side);
+		if(offset == null){
+			System.out.println("scaffolding null , use player pos.down");
+			offset = player.getPosition().down();
+		}
 		
 		if(world.isAirBlock(offset)){
 			world.setBlockState(offset, BlockRegistry.block_fragile.getDefaultState());

@@ -54,38 +54,7 @@ public class EventRegistry {
 	public void onClonePlayer(PlayerEvent.Clone event) {
 		PlayerPowerups.get(event.entityPlayer).copy(PlayerPowerups.get(event.original));
 	}
-	
-	@SubscribeEvent
-	public void onPlayerInteract(PlayerInteractEvent event)
-  	{    
-		BlockPos sendPos;
-		if(event.pos == null ){
 
-			System.out.println("event.pos == null PlayerInteractEvent");
-			sendPos = event.entityPlayer.getPosition();//TODO: move +1 in facing direction??
-			
-		}
-		else{
-			sendPos = event.pos;
-		}
-		if(event.entityPlayer == null || event.entityPlayer.getHeldItem() == null){return;}
-		//IBlockState bstate = event.entityPlayer.worldObj.getBlockState(event.pos);
-		
-		if(event.entityPlayer.getHeldItem().getItem() == ItemRegistry.master_wand){
-			
-			if(event.action == Action.LEFT_CLICK_BLOCK){//maybe only if you click enchanting table
-				//Minecraft.getMinecraft().displayGuiScreen(new GuiSpellbook( event.entityPlayer));
-			}
-			else{
-
-				//TODO: put this back in the item but override ..doesSneakBypassUse
-				SpellCaster.tryCastCurrent(event.world, event.entityPlayer, sendPos, event.face);
-			}
-		}
-		
-		
-  	}
-	
 	@SubscribeEvent
 	public void onEntityConstructing(EntityConstructing event) {
 		if (event.entity instanceof EntityPlayer && PlayerPowerups.get((EntityPlayer) event.entity) == null) {

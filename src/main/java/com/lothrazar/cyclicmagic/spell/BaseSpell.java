@@ -87,7 +87,10 @@ public class BaseSpell implements ISpell {
 
 	@Override
 	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos) {
-		player.swingItem();
+		
+		if(pos == null){
+			pos = player.getPosition();
+		}
 		UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT, pos);
 
 		System.out.println("cast success, draining cost exp "+this.getCostExp());
