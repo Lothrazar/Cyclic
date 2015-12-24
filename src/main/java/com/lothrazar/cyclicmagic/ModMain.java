@@ -62,46 +62,11 @@ public class ModMain {
 		proxy.register();
 		
 		
-
+//a self-reminding bug list
 		System.out.println("entity segg TODO: look into sheep color, villager meta, horse meta, other stuff into egg");
+		System.out.println("TODO:STAIRS: stay up or stay down, they dont change bbetween");
+		System.out.println("TODO:?? maybe night vision Regeneration / health boost /absorption");
+		System.out.println("TODO:	potion.frost icon and name missing 	potion.frost missing trail of snow, does not leave behind");
+		System.out.println("make default reparis faster (and only serverside ). add a enchant table based repair system");
 	}
-	
-
-
-	/*
-	 ideas/plans/bugfixes
-	 
-	 fix some particles trying to render only server side and failing
-	 
-	 its ok now----why is mouse invisible?? -> add gui background
-	 
-	     TORCH: good speed for projectiles
-	-> still drops torches
-	
-	
-	STAIRS: stay up or stay down, they dont change bbetween
-	
-	
-	purple brick_ go through more than one block?
-	
-	work just in the air
-	
-	Scaffold X block doesnt work in midair
-	
-	?? maybe night vision
-	
-	Regeneration / health boost /absorption
-	
-	
-	they take ? durability in creative mode but shouldnt
-	
-	potion.frost icon and name missing
-	potion.frost missing trail of snow, does not leave behind
-	
-	make default reparis faster (and only serverside )
-	
-	wand spell info put also in tooltips
-	
-	 
-	 * */
 }

@@ -120,6 +120,9 @@ public class SpellRegistry {
 		
 		SpellThrowHarvest harvest = new SpellThrowHarvest(++spellId,"harvest");
 		registerSpell(harvest);
+		
+		SpellLinkingPortal waypoint = new SpellLinkingPortal(++spellId,"waypoint");
+		registerSpell(waypoint);
 	}
 
 	public static ISpell getSpellFromID(int id) {

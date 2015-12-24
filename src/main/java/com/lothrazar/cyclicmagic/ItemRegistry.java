@@ -15,6 +15,7 @@ public class ItemRegistry {
 	public static MasterWand master_wand;
 	public static ItemPlayerLauncher launch_wand;
 	public static ItemPaperCarbon carbon_paper;
+	public static ItemWaypointPortal waypoint_portal;
 
 	public static void register() {
 		chest_sack = new ItemChestSack();
@@ -31,6 +32,9 @@ public class ItemRegistry {
 
 		carbon_paper = new ItemPaperCarbon();
 		ItemRegistry.registerItem(carbon_paper, "carbon_paper");
+
+		waypoint_portal = new ItemWaypointPortal();
+		ItemRegistry.registerItem(waypoint_portal, "waypoint_portal");
 		
 		GameRegistry.addRecipe(new ItemStack(master_wand), //placeholder rec
 				"xxx",
