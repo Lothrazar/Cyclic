@@ -13,7 +13,7 @@ public class ItemRuneSlowfall  extends ItemRuneBase {
 		super();
 	}
 
-	private final static int seconds = 10;
+	private final static int seconds = 20;
 	private final static float falldistance = 5;
 	@Override
 	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
