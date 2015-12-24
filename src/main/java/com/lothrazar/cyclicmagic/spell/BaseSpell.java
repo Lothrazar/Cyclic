@@ -97,9 +97,11 @@ public class BaseSpell implements ISpell {
 		if (this.getCostExp() > 0) {
 			UtilExperience.drainExp(player, this.getCostExp());
 		}
+		/*
 		if (this.getCostDurability() > 0 && player.getHeldItem() != null) {
 			player.getHeldItem().damageItem(this.getCostDurability(), player);
 		}
+		*/
 	}
 
 	@Override

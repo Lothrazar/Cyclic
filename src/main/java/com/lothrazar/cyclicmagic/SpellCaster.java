@@ -22,10 +22,12 @@ public class SpellCaster {
 
 	public static boolean tryCast(ISpell spell, World world, EntityPlayer player, BlockPos pos, EnumFacing side) {
 
+		System.out.println("used to cancel casting client side");/*
 		if(world.isRemote){
-			//.out.println("cancel casting client side");
+			System.out.println("cancel casting client side");
 			return false;
 		}
+		*/
 		if (isBlockedBySpellTImer(player)) {
 			return false;
 		}

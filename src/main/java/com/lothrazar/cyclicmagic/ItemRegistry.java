@@ -13,7 +13,6 @@ public class ItemRegistry {
 	public static ItemRespawnEggAnimal respawn_egg;
 	public static ItemChestSack chest_sack;
 	public static MasterWand master_wand;
-	public static ItemPlayerLauncher launch_wand;
 	public static ItemPaperCarbon carbon_paper;
 	public static ItemWaypointPortal waypoint_portal;
 	
@@ -27,12 +26,9 @@ public class ItemRegistry {
 
 		respawn_egg = new ItemRespawnEggAnimal();
 		ItemRegistry.registerItem(respawn_egg, "respawn_egg");
-		
+
 		master_wand = new MasterWand();
 		ItemRegistry.registerItem(master_wand, "master_wand");
-
-		launch_wand = new ItemPlayerLauncher();
-		ItemRegistry.registerItem(launch_wand, "launch_wand");
 
 		carbon_paper = new ItemPaperCarbon();
 		ItemRegistry.registerItem(carbon_paper, "carbon_paper");

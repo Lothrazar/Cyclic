@@ -57,6 +57,7 @@ public class MasterWand extends Item {
 	public boolean onEntitySwing(EntityLivingBase entity, ItemStack stack) {
 		if (entity instanceof EntityPlayer && entity.worldObj.isRemote) {
 			// client side player swing
+			System.out.println("client side swing left click");
 			Minecraft.getMinecraft().displayGuiScreen(new GuiSpellbook((EntityPlayer) entity));
 			return true;
 		}
@@ -70,7 +71,8 @@ public class MasterWand extends Item {
  
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn) {
-	
+
+		System.out.println("RIGHT CLICK tryCastCurrent");
 		//so this only happens IF either onItemUse did not fire at all, or it fired and casting failed
 		SpellCaster.tryCastCurrent(worldIn, playerIn, null,null);
 		return super.onItemRightClick(itemStackIn, worldIn, playerIn);
@@ -79,6 +81,7 @@ public class MasterWand extends Item {
 	@Override
     public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
+		System.out.println("onItemUse tryCastCurrent");
 		//If onItemUse returns false onItemRightClick will be called.
 		//http://www.minecraftforge.net/forum/index.php?topic=31966.0 
 		//so if this casts and succeeds, the right click is cancelled

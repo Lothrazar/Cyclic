@@ -68,8 +68,7 @@ public class UtilMoveBlock {
 																	// towards
 																	// the
 																	// player
-			world.markBlockForUpdate(posMoveToHere);
-			player.swingItem();
+			world.markBlockForUpdate(posMoveToHere); 
 
 			return true;
 		} else

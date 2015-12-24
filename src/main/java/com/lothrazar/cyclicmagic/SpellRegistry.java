@@ -38,7 +38,6 @@ public class SpellRegistry {
 		SpellExpPotion slowfall;
 		SpellExpPotion waterwalk;
 		SpellExpPotion haste;
-		SpellCollect collect;
 		BaseSpell rotate;
 		BaseSpell push;
 		SpellThrowTorch torch;
@@ -66,9 +65,6 @@ public class SpellRegistry {
 		haste = new SpellExpPotion(++spellId,"haste");
 		haste.setPotion(Potion.digSpeed.id, potionDuration, PotionRegistry.II);
 		registerSpell(haste);
-
-		collect = new SpellCollect(++spellId,"collect");
-		registerSpell(collect);
 
 		rotate = new SpellRotate(++spellId,"rotate"); 
 		registerSpell(rotate);
@@ -115,7 +111,7 @@ public class SpellRegistry {
 		carbon = new SpellCarbonPaper(++spellId,"carbon");
 		registerSpell(carbon);
 		
-		SpellGiveLauncher launch = new SpellGiveLauncher(++spellId,"launch");
+		SpellLaunch launch = new SpellLaunch(++spellId,"launch");
 		registerSpell(launch);
 		
 		SpellThrowHarvest harvest = new SpellThrowHarvest(++spellId,"harvest");
