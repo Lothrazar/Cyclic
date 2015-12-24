@@ -5,11 +5,8 @@ import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.PlayerPowerups;
 import com.lothrazar.cyclicmagic.SpellCaster;
 import com.lothrazar.cyclicmagic.SpellRegistry;
-import com.lothrazar.cyclicmagic.gui.GuiSpellbook;
 import com.lothrazar.cyclicmagic.spell.ISpell;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -53,7 +50,6 @@ public class MasterWand extends Item {
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn) {
 
-		System.out.println("RIGHT CLICK tryCastCurrent");
 		//so this only happens IF either onItemUse did not fire at all, or it fired and casting failed
 		SpellCaster.tryCastCurrent(worldIn, playerIn, null,null);
 		return super.onItemRightClick(itemStackIn, worldIn, playerIn);
@@ -62,12 +58,10 @@ public class MasterWand extends Item {
 	@Override
     public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-		System.out.println("onItemUse tryCastCurrent");
 		//If onItemUse returns false onItemRightClick will be called.
 		//http://www.minecraftforge.net/forum/index.php?topic=31966.0 
 		//so if this casts and succeeds, the right click is cancelled
-		SpellCaster.tryCastCurrent(worldIn, playerIn, pos,side);
-        return super.onItemUse(stack, playerIn, worldIn, pos, side, hitX, hitY, hitZ);
+		return SpellCaster.tryCastCurrent(worldIn, playerIn, pos,side);
     }
 
 	private double repairSpeed = 0.6;//higher is faster [0,1]
