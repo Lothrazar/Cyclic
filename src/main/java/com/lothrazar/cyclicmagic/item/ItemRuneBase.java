@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
+import com.lothrazar.cyclicmagic.Const;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
@@ -12,7 +14,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemRuneBase  extends Item {
+public abstract class ItemRuneBase  extends Item {
 	public ItemRuneBase() {
 		super();
 		this.setMaxStackSize(1);
@@ -21,6 +23,17 @@ public class ItemRuneBase  extends Item {
 	private final static String NBT_MODE = "mode";
 	protected final static int MODE_ON = 1;
 	protected final static int MODE_OFF = 2;
+
+	@Override
+	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+		if (this.getMode(stack) == MODE_ON && worldIn.getWorldTime() % Const.TICKS_PER_SEC == 0) {
+			
+			// tick once per second, if its turned on
+
+			trigger(worldIn, entityIn );
+		}
+		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
+	}
 
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
@@ -35,6 +48,9 @@ public class ItemRuneBase  extends Item {
 		 
 		super.addInformation(stack, playerIn, tooltip, advanced);
 	}
+	
+	//each one must implement this differently
+	protected abstract void trigger(World world,Entity entityIn );
 
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World worldIn, EntityPlayer playerIn) {
