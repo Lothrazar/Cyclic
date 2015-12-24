@@ -63,6 +63,8 @@ public class ModMain {
 		
 		
 //a self-reminding bug list
+		System.out.println("item collector resources");
+		System.out.println("item collector add information on range, show on/off status");
 		System.out.println("WAND 3d model");
 		System.out.println("waypoint sound, particle, lang name");
 		System.out.println("entity segg TODO: look into sheep color, villager meta, horse meta, other stuff into egg");
