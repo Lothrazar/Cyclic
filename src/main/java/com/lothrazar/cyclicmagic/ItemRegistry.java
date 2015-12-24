@@ -16,6 +16,9 @@ public class ItemRegistry {
 	public static ItemPlayerLauncher launch_wand;
 	public static ItemPaperCarbon carbon_paper;
 	public static ItemWaypointPortal waypoint_portal;
+	
+	//convention: runes turn on and off
+	public static ItemCollector rune_collector;
 
 	public static void register() {
 		chest_sack = new ItemChestSack();
@@ -35,6 +38,9 @@ public class ItemRegistry {
 
 		waypoint_portal = new ItemWaypointPortal();
 		ItemRegistry.registerItem(waypoint_portal, "waypoint_portal");
+
+		rune_collector = new ItemCollector();
+		ItemRegistry.registerItem(rune_collector, "rune_collector");
 		
 		GameRegistry.addRecipe(new ItemStack(master_wand), //placeholder rec
 				"xxx",
