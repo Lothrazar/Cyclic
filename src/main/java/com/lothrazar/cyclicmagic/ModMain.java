@@ -63,6 +63,8 @@ public class ModMain {
 		
 		
 //a self-reminding bug list
+		System.out.println("WAND 3d model");
+		System.out.println("waypoint sound, particle, lang name");
 		System.out.println("entity segg TODO: look into sheep color, villager meta, horse meta, other stuff into egg");
 		System.out.println("TODO:STAIRS: stay up or stay down, they dont change bbetween");
 		System.out.println("TODO:?? maybe night vision Regeneration / health boost /absorption");

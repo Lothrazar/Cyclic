@@ -2,6 +2,8 @@ package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
+import com.lothrazar.cyclicmagic.util.UtilParticle;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,6 +11,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound; 
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 
 public class ItemWaypointPortal extends Item
@@ -47,9 +51,25 @@ public class ItemWaypointPortal extends Item
 		
 		BlockPos to = UtilNBT.stringCSVToBlockPos(itemStackIn.getTagCompound().getString(KEY_LOC ));
 		
+		if(itemStackIn.getTagCompound().getInteger(KEY_DIM ) != playerIn.dimension){
+			
+			//bad dimension
+			
+			UtilSound.playSoundAt(playerIn, UtilSound.fizz);
+			playerIn.addChatMessage(new ChatComponentTranslation("teleport.dimension"));
+			
+	        return itemStackIn;
+		}
+		
 		itemStackIn.stackSize = 0;
+		//do the sounds/particles at both locations (before and after);
+		UtilSound.playSoundAt(playerIn, UtilSound.portal);
+		UtilParticle.spawnParticle(worldIn, EnumParticleTypes.PORTAL, playerIn);
 		
 		playerIn.setPositionAndUpdate(to.getX(), to.getY(), to.getZ());
+
+		UtilSound.playSoundAt(playerIn, UtilSound.portal);
+		UtilParticle.spawnParticle(worldIn, EnumParticleTypes.PORTAL, playerIn);
 		
         return itemStackIn;
     }

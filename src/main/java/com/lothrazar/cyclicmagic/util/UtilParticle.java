@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.util;
 
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.net.MessageParticle;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
@@ -24,6 +25,9 @@ public class UtilParticle {
 		spawnParticle(world, sparkle, x, y, z, 12);// default spam count
 	}
 
+	public static void spawnParticle(World world, EnumParticleTypes sparkle, Entity entity) {
+		spawnParticle(world, sparkle, entity.getPosition());
+	}
 	public static void spawnParticle(World world, EnumParticleTypes sparkle, BlockPos pos) {
 		spawnParticle(world, sparkle, pos.getX(), pos.getY(), pos.getZ());
 	}
