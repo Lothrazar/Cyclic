@@ -14,7 +14,6 @@ import com.lothrazar.cyclicmagic.util.Vector3;
 public class ItemRuneCollector extends ItemRuneBase {
 	public ItemRuneCollector() {
 		super();
-		this.setMaxStackSize(1);
 	}
 
 	//was SpellCollect
