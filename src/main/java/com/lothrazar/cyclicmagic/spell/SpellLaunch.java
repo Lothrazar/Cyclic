@@ -13,11 +13,10 @@ public class SpellLaunch extends BaseSpell implements ISpell {
 		this.durability = 50;
 		this.experience = 10;
 	}
-	float power = 2.5F;
+	private static final float power = 1.4F;
 	@Override
 	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side ) {
 
-		System.out.println("launch "+world.isRemote);
 		player.motionY = 0;
 		player.fallDistance = 0;
 		

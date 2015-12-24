@@ -22,12 +22,6 @@ public class SpellCaster {
 
 	public static boolean tryCast(ISpell spell, World world, EntityPlayer player, BlockPos pos, EnumFacing side) {
 
-		System.out.println("used to cancel casting client side");/*
-		if(world.isRemote){
-			System.out.println("cancel casting client side");
-			return false;
-		}
-		*/
 		if (isBlockedBySpellTImer(player)) {
 			return false;
 		}
@@ -71,8 +65,7 @@ public class SpellCaster {
 		PlayerPowerups props = PlayerPowerups.get(player);
 		
 		int right = props.nextId(props.getSpellCurrent());
-		System.out.println("set right "+props.getSpellCurrent()+ " -> "+right);
-
+	
 		props.setSpellCurrent(right);
 		UtilSound.playSoundAt(player, UtilSound.orb );
 	}

@@ -1,9 +1,13 @@
 package com.lothrazar.cyclicmagic.item;
 
+import java.util.List;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -17,7 +21,21 @@ public class ItemRuneBase  extends Item {
 	private final static String NBT_MODE = "mode";
 	protected final static int MODE_ON = 1;
 	protected final static int MODE_OFF = 2;
-	
+
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+ 
+		String base = "rune.mode.";
+		if(this.getMode(stack) == MODE_ON){
+			tooltip.add( EnumChatFormatting.GREEN + StatCollector.translateToLocal(base + "on"));
+		}
+		else{
+			tooltip.add( EnumChatFormatting.RED + StatCollector.translateToLocal(base + "off"));
+		}
+		 
+		super.addInformation(stack, playerIn, tooltip, advanced);
+	}
+
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World worldIn, EntityPlayer playerIn) {
 
@@ -28,7 +46,13 @@ public class ItemRuneBase  extends Item {
 
 		return stack;
 	}
-
+	@Override
+	@SideOnly(Side.CLIENT)
+	public EnumRarity getRarity(ItemStack par1ItemStack)
+	{ 
+		return EnumRarity.UNCOMMON;  
+	}
+	 
 	@SideOnly(Side.CLIENT)
 	public boolean hasEffect(ItemStack stack) {
 		return (this.getMode(stack) == MODE_ON);

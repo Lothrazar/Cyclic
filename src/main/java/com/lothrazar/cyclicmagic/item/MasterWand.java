@@ -8,6 +8,7 @@ import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
@@ -42,6 +43,12 @@ public class MasterWand extends Item {
 		super.addInformation(stack, playerIn, tooltip, advanced);
 	}
 
+	@Override
+	@SideOnly(Side.CLIENT)
+	public EnumRarity getRarity(ItemStack par1ItemStack)
+	{ 
+		return EnumRarity.EPIC;  
+	}
 	@Override
 	public boolean doesSneakBypassUse(World world, BlockPos pos, EntityPlayer player) {
 		return true;// default false

@@ -134,45 +134,7 @@ public class SpellRegistry {
 			System.out.println(id+" SPELL OOB fix yo stuff k");
 			return null;
 		}
-		 /*
-		for (ISpell sp : SpellRegistry.getSpellbook()) {
-			if (sp.getID() == id) {
-				return sp;
-			}
-		}
-
-		return null;
-		*/
 	}
-	/*
-	public static ISpell left(ISpell self) { 
-		int idx = SpellRegistry.spellbook.indexOf(self);// -1 for not found
-		if (idx == -1) {
-			return null;
-		}
-
-		if (idx == 0)
-			idx = SpellRegistry.spellbook.size() - 1;
-		else
-			idx = idx - 1;
-
-		return SpellRegistry.spellbook.get(idx);
-	}
-
-	public static ISpell right(ISpell self) { 
-		int idx = SpellRegistry.spellbook.indexOf(self);
-		if (idx == -1) {
-			return null;
-		}
-
-		if (idx == SpellRegistry.spellbook.size() - 1)
-			idx = 0;
-		else
-			idx = idx + 1;
-
-		return SpellRegistry.spellbook.get(idx);
-	}
-	*/
 
 	public static ArrayList<ISpell> getSpellbook() {
 		return spellbook;

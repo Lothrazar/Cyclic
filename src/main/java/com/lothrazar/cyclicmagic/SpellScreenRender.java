@@ -37,12 +37,12 @@ public class SpellScreenRender {
 
 	private static void drawPrevSpells(PlayerPowerups props, ISpell spellCurrent) {
 
-		//PlayerPowerups props = PlayerPowerups.get(player);
-		
+		// PlayerPowerups props = PlayerPowerups.get(player);
+
 		ISpell spellPrev = SpellRegistry.getSpellFromID(props.prevId(spellCurrent.getID()));
-				//SpellRegistry.right(spellCurrent);
-		if(spellPrev == null){
-			System.out.println("spellPrev is null, prevId from "+spellCurrent.getID()+" -> "+props.prevId(spellCurrent.getID()) );
+		// SpellRegistry.right(spellCurrent);
+		if (spellPrev == null) {
+			System.out.println("spellPrev is null, prevId from " + spellCurrent.getID() + " -> " + props.prevId(spellCurrent.getID()));
 		}
 		if (spellPrev != null) {
 			int x = xmain + 6;
@@ -51,7 +51,8 @@ public class SpellScreenRender {
 			UtilTextureRender.drawTextureSquare(spellPrev.getIconDisplay(), x, y, dim);
 
 			ISpell sRightRight = SpellRegistry.getSpellFromID(props.prevId(spellPrev.getID()));
-					//SpellRegistry.right(spellPrev);// SpellRegistry.getSpellFromType(spellPrev.getSpellID().prev());
+			// SpellRegistry.right(spellPrev);//
+			// SpellRegistry.getSpellFromType(spellPrev.getSpellID().prev());
 
 			if (sRightRight != null && sRightRight.getIconDisplay() != null) {
 				x = xmain + 6 + 4;
@@ -60,7 +61,7 @@ public class SpellScreenRender {
 				UtilTextureRender.drawTextureSquare(sRightRight.getIconDisplay(), x, y, dim);
 
 				ISpell another = SpellRegistry.getSpellFromID(props.prevId(sRightRight.getID()));
-						//SpellRegistry.right(sRightRight);
+				// SpellRegistry.right(sRightRight);
 				if (another != null) {
 					x = xmain + 6 + 7;
 					y = ymain + spellSize + 14 + 10;
@@ -73,7 +74,7 @@ public class SpellScreenRender {
 
 	private static void drawNextSpells(PlayerPowerups props, ISpell spellCurrent) {
 
-		//PlayerPowerups props = PlayerPowerups.get(player);
+		// PlayerPowerups props = PlayerPowerups.get(player);
 		ISpell spellNext = SpellRegistry.getSpellFromID(props.nextId(spellCurrent.getID()));
 		// SpellRegistry.left(spellCurrent);
 
@@ -83,7 +84,7 @@ public class SpellScreenRender {
 			int dim = spellSize / 2;
 			UtilTextureRender.drawTextureSquare(spellNext.getIconDisplay(), x, y, dim);
 
-			ISpell sLeftLeft =  SpellRegistry.getSpellFromID(props.nextId(spellNext.getID()));//SpellRegistry.left(spellNext);
+			ISpell sLeftLeft = SpellRegistry.getSpellFromID(props.nextId(spellNext.getID()));// SpellRegistry.left(spellNext);
 
 			if (sLeftLeft != null && sLeftLeft.getIconDisplay() != null) {
 				x = xmain - 3 - 1;
@@ -91,7 +92,7 @@ public class SpellScreenRender {
 				dim = 16 / 2 - 2;
 				UtilTextureRender.drawTextureSquare(sLeftLeft.getIconDisplay(), x, y, dim);
 
-				ISpell another = SpellRegistry.getSpellFromID(props.nextId(sLeftLeft.getID()));//SpellRegistry.left(sLeftLeft);
+				ISpell another = SpellRegistry.getSpellFromID(props.nextId(sLeftLeft.getID()));// SpellRegistry.left(sLeftLeft);
 				if (another != null) {
 					x = xmain - 3 - 3;
 					y = ymain + spellSize + 14 + 10;
