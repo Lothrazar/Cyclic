@@ -20,12 +20,19 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class MasterWand extends Item {
 
-	private static final int MAXCHARGE = 5000;// 10k
+	private static final int MAXCHARGE = 5000; 
 
 	public MasterWand() {
 		this.setMaxStackSize(1);
 		this.setMaxDamage(MAXCHARGE);
 	}
+
+	@Override
+    @SideOnly(Side.CLIENT)
+    public boolean isFull3D()
+    {
+        return true;
+    }
 
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
