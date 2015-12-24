@@ -45,25 +45,6 @@ public class MasterWand extends Item {
 		super.addInformation(stack, playerIn, tooltip, advanced);
 	}
 
-	/**
-	 * Called when a entity tries to play the 'swing' animation.
-	 *
-	 * @param entityLiving
-	 *            The entity swinging the item.
-	 * @param stack
-	 *            The Item stack
-	 * @return True to cancel any further processing by EntityLiving
-	 */
-	public boolean onEntitySwing(EntityLivingBase entity, ItemStack stack) {
-		if (entity instanceof EntityPlayer && entity.worldObj.isRemote) {
-			// client side player swing
-			System.out.println("client side swing left click");
-			Minecraft.getMinecraft().displayGuiScreen(new GuiSpellbook((EntityPlayer) entity));
-			return true;
-		}
-		return false;
-	}
-
 	@Override
 	public boolean doesSneakBypassUse(World world, BlockPos pos, EntityPlayer player) {
 		return true;// default false
@@ -85,8 +66,8 @@ public class MasterWand extends Item {
 		//If onItemUse returns false onItemRightClick will be called.
 		//http://www.minecraftforge.net/forum/index.php?topic=31966.0 
 		//so if this casts and succeeds, the right click is cancelled
-		return SpellCaster.tryCastCurrent(worldIn, playerIn, pos,side);
-       // return super.onItemUse(stack, playerIn, worldIn, pos, side, hitX, hitY, hitZ);
+		SpellCaster.tryCastCurrent(worldIn, playerIn, pos,side);
+        return super.onItemUse(stack, playerIn, worldIn, pos, side, hitX, hitY, hitZ);
     }
 
 	private double repairSpeed = 0.6;//higher is faster [0,1]

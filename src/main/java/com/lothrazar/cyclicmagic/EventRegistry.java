@@ -3,16 +3,20 @@ package com.lothrazar.cyclicmagic;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
+import com.lothrazar.cyclicmagic.gui.GuiSpellbook;
 import com.lothrazar.cyclicmagic.net.*;
 import com.lothrazar.cyclicmagic.spell.SpellGhost;
 
@@ -44,6 +48,20 @@ public class EventRegistry {
 			}
 
 			ModMain.network.sendToServer(new MessageKeyCast(posMouse, Minecraft.getMinecraft().objectMouseOver.sideHit));
+		}
+	}
+	
+	@SubscribeEvent
+	public void onPlayerInteractEvent(PlayerInteractEvent event){
+
+		if(event.action == Action.LEFT_CLICK_BLOCK && event.world.getBlockState(event.pos) != null
+				&& event.entityPlayer.getHeldItem() != null && event.entityPlayer.getHeldItem().getItem() == ItemRegistry.master_wand ){
+		
+			if(event.world.getBlockState(event.pos).getBlock() == Blocks.enchanting_table){
+
+				Minecraft.getMinecraft().displayGuiScreen(new GuiSpellbook(event.entityPlayer));
+			}
+			//TODO: else maybe other things left clicking other blocks
 		}
 	}
 
