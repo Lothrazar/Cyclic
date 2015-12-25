@@ -69,6 +69,10 @@ public class EntityRespawnEgg extends EntityThrowable {
 							cancelDrop = true;
 						}
 					}
+					if(mop.entityHit instanceof EntityVillager){
+						//lots of complex NBT data, is not balanced/fair to reset trades and careers with this
+						cancelDrop = true;
+					}
 					
 					if(cancelDrop == false){
 
@@ -108,12 +112,6 @@ public class EntityRespawnEgg extends EntityThrowable {
 
 							nbt = new NBTTagCompound();
 							nbt.setInteger(ItemRespawnEggAnimal.NBT_WOLFCOLOR, wolf.getCollarColor().getDyeDamage());
-						}
-						else if(mop.entityHit instanceof EntityVillager){
-							//EntityWolf wolf = ((EntityWolf)mop.entityHit);
-
-							nbt = new NBTTagCompound();
-							//data.setInteger(ItemRespawnEggAnimal.NBT_WOLFCOLOR, wolf.getCollarColor().getDyeDamage());
 						}
 						
 						if (mop.entityHit.hasCustomName()) {
