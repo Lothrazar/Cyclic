@@ -49,12 +49,12 @@ public class EntityRespawnEgg extends EntityThrowable {
 					}
 					
 					if(mop.entityHit instanceof EntitySheep){
-						EnumDyeColor color = ((EntitySheep)mop.entityHit).getFleeceColor();
-
-				        //TODO: data.setBoolean("Sheared", this.getSheared());
+						EntitySheep sheep = ((EntitySheep)mop.entityHit);
+						EnumDyeColor color = sheep.getFleeceColor();
+ 
 						NBTTagCompound data = new NBTTagCompound();
 						data.setInteger(ItemRespawnEggAnimal.NBT_SHEEPCOLOR, color.getDyeDamage());
-						data.setBoolean(ItemRespawnEggAnimal.NBT_SHEEPSHEARED, ((EntitySheep)mop.entityHit).getSheared());
+						data.setBoolean(ItemRespawnEggAnimal.NBT_SHEEPSHEARED, sheep.getSheared());
 						stack.setTagCompound(data);
 					}
 					else if(mop.entityHit instanceof EntityRabbit){

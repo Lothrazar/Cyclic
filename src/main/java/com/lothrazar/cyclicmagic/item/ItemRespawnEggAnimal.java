@@ -102,8 +102,10 @@ public class ItemRespawnEggAnimal extends Item {
 					
 						EntitySheep sheep = ((EntitySheep)entity);
 						sheep.setFleeceColor(EnumDyeColor.byDyeDamage(stack.getTagCompound().getInteger(NBT_SHEEPCOLOR)));
-						
-						sheep.setSheared(stack.getTagCompound().getBoolean(NBT_SHEEPCOLOR));
+
+						if(stack.getTagCompound().getBoolean(NBT_SHEEPSHEARED)){
+							sheep.setSheared(stack.getTagCompound().getBoolean(NBT_SHEEPSHEARED));
+						}
 					}
 					else if(entity instanceof EntityRabbit && stack.getTagCompound().hasKey(NBT_RABBITTYPE)){
 	 
