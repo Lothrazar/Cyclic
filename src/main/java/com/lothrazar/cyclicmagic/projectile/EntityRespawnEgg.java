@@ -51,7 +51,7 @@ public class EntityRespawnEgg extends EntityThrowable {
 						EnumDyeColor color = ((EntitySheep)mop.entityHit).getFleeceColor();
 						
 						NBTTagCompound data = new NBTTagCompound();
-						data.setInteger(ItemRespawnEggAnimal.NBT_SHEEPCOLOR, +color.getDyeDamage());
+						data.setInteger(ItemRespawnEggAnimal.NBT_SHEEPCOLOR, color.getDyeDamage());
 						stack.setTagCompound(data);
 					}
 					

@@ -43,6 +43,17 @@ public class ItemRespawnEggAnimal extends Item {
 		return itemName;
 	}
 
+	@Override
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
+    {
+		if(stack.getTagCompound().hasKey(NBT_SHEEPCOLOR)){
+			EnumDyeColor col = EnumDyeColor.byDyeDamage(stack.getTagCompound().getInteger(NBT_SHEEPCOLOR));
+			
+			tooltip.add(col.getName());
+		}
+    }
+
 	@SideOnly(Side.CLIENT)
 	public int getColorFromItemStack(ItemStack stack, int renderPass) {
 		EntityList.EntityEggInfo entityegginfo = (EntityList.EntityEggInfo) EntityList.entityEggs.get(Integer.valueOf(stack.getMetadata()));
