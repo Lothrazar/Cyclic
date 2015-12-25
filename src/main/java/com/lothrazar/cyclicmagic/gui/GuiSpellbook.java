@@ -88,7 +88,6 @@ public class GuiSpellbook extends GuiScreen {
 		double ang = 0;
 		double cx, cy;
 
- //TODO: move this to btn class as well ??
 		int spellSize = 16;
 		UtilTextureRender.drawTextureSquare(ptr, mouseX-8,mouseY-8, spellSize);
 		for (ISpell s : SpellRegistry.getSpellbook()) {
@@ -96,7 +95,6 @@ public class GuiSpellbook extends GuiScreen {
 			cx = xCenter + radius * Math.cos(ang);
 			cy = yCenter + radius * Math.sin(ang);
 
-			//TODO: move this to btn class as well? but it would need access to the player props
 			ResourceLocation header; 
 			if(props.isSpellUnlocked(s.getID())){// TODO: do we want different icons for these
 				header = s.getIconDisplayHeaderEnabled();
@@ -104,7 +102,7 @@ public class GuiSpellbook extends GuiScreen {
 			else{
 				header = s.getIconDisplayHeaderDisabled();
 			}
-			UtilTextureRender.drawTextureSimple(header, (int) cx+1, (int) cy-6, spellSize-2,spellSize-4);
+			UtilTextureRender.drawTextureSimple(header, (int) cx, (int) cy-8, spellSize-4,spellSize-4);
 			
 			ang += arc;
 		}
