@@ -16,6 +16,9 @@ public class SpellThrowShear extends BaseSpell implements ISpell {
 	@Override
 	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side) {
 
-		return world.spawnEntityInWorld(new EntityShearingBolt(world, player));
+		if(world.isRemote == false){
+			world.spawnEntityInWorld(new EntityShearingBolt(world, player));
+		}
+		return true;
 	}
 }

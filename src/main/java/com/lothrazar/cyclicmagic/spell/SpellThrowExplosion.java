@@ -15,9 +15,11 @@ public class SpellThrowExplosion extends BaseSpell implements ISpell {
 
 	@Override
 	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side ) {
-
-		//in theory, only false if chunk is unloaded
-		//or if we hit a spawn limit and forceSpawn is false
-		return world.spawnEntityInWorld(new EntityDynamite(world, player,EntityDynamite.LEVEL_CREEPER));
+ 
+		if(world.isRemote == false){
+			world.spawnEntityInWorld(new EntityDynamite(world, player,EntityDynamite.LEVEL_CREEPER));
+		}
+		
+		return true;//even client side we want to say this is true
 	}
 }

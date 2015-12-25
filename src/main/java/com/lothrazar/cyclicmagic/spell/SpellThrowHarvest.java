@@ -17,6 +17,9 @@ public class SpellThrowHarvest extends BaseSpell implements ISpell{
 	@Override
 	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side ) {
 
-		return world.spawnEntityInWorld(new EntityHarvestBolt(world, player));
+		if(world.isRemote == false){
+			world.spawnEntityInWorld(new EntityHarvestBolt(world, player));
+		}
+		return true;
 	}
 }
