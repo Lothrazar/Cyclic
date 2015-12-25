@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic;
 
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.item.*;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -43,10 +44,13 @@ public class ItemRegistry {
 		ItemRegistry.registerItem(rune_slowfall, "rune_slowfall");
 		
 		GameRegistry.addRecipe(new ItemStack(master_wand), //placeholder rec
-				"xxx",
-				"xxx",
-				"xxx",
-				'x',Items.leather);
+				"dsd",
+				"qdq",
+				"qoq",
+				'd',Blocks.diamond_block,
+				'q',Blocks.quartz_block,
+				'o',Blocks.obsidian,
+				's',Items.nether_star);
 	}
 
 	public static void registerItem(Item item, String name) {
