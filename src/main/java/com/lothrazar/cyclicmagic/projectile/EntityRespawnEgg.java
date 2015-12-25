@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.projectile;
 
 import com.lothrazar.cyclicmagic.ItemRegistry;
 import com.lothrazar.cyclicmagic.item.ItemRespawnEggAnimal;
+import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -9,6 +10,7 @@ import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.passive.EntityRabbit;
+import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.item.EnumDyeColor;
@@ -51,6 +53,18 @@ public class EntityRespawnEgg extends EntityThrowable {
 					boolean cancelDrop = false;
 					
 					ItemStack stack = new ItemStack(ItemRegistry.respawn_egg, 1, entity_id);
+					
+					if(mop.entityHit instanceof EntityAgeable){
+						if(((EntityAgeable)mop.entityHit).isChild()){
+							cancelDrop = true;
+						}
+					}
+					if(mop.entityHit instanceof EntityTameable){
+						if(((EntityTameable)mop.entityHit).isTamed()){
+							//NOTE: Horse does not use this tameable base class, its different
+							cancelDrop = true;
+						}
+					}
 
 					if (mop.entityHit.hasCustomName()) {
 						stack.setStackDisplayName(mop.entityHit.getCustomNameTag());
@@ -58,12 +72,14 @@ public class EntityRespawnEgg extends EntityThrowable {
 					
 					if(mop.entityHit instanceof EntitySheep){
 						EntitySheep sheep = ((EntitySheep)mop.entityHit);
+					
 						EnumDyeColor color = sheep.getFleeceColor();
  
 						NBTTagCompound data = new NBTTagCompound();
 						data.setInteger(ItemRespawnEggAnimal.NBT_SHEEPCOLOR, color.getDyeDamage());
 						data.setBoolean(ItemRespawnEggAnimal.NBT_SHEEPSHEARED, sheep.getSheared());
 						stack.setTagCompound(data);
+					
 					}
 					else if(mop.entityHit instanceof EntityRabbit){
 
@@ -74,12 +90,7 @@ public class EntityRespawnEgg extends EntityThrowable {
 					else if(mop.entityHit instanceof EntityHorse){
 						EntityHorse horse = ((EntityHorse)mop.entityHit);
 
-						if(horse.isTame()){
-							cancelDrop = true;
-						}
-						else{
-							
-						}
+						
 						//NBTTagCompound data = new NBTTagCompound();
 						//data.setInteger(ItemRespawnEggAnimal.NBT_RABBITTYPE,((EntityRabbit)mop.entityHit).getRabbitType());
 						//stack.setTagCompound(data);
@@ -87,22 +98,17 @@ public class EntityRespawnEgg extends EntityThrowable {
 					else if(mop.entityHit instanceof EntityWolf){
 						EntityWolf wolf = ((EntityWolf)mop.entityHit);
 
-						if(wolf.isTamed()){
-							cancelDrop = true;
-						}
-						else{
-							
-						}
+					
+							/*
+							wolf.getCollarColor()
+        tagCompound.setBoolean("Angry", this.isAngry());
+        tagCompound.setByte("CollarColor", (byte)this.getCollarColor().getDyeDamage());*/
+						
 					}
 					else if(mop.entityHit instanceof EntityOcelot){
 						EntityOcelot cat = ((EntityOcelot)mop.entityHit);
 
-						if(cat.isTamed()){
-							cancelDrop = true;
-						}
-						else{
-							
-						}
+						
 					}
 					
 					if(cancelDrop == false){
