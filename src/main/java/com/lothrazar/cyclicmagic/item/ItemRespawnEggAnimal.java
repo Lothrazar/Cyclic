@@ -12,8 +12,10 @@ import net.minecraft.entity.EntityList.EntityEggInfo;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.passive.EntityRabbit;
 import net.minecraft.entity.passive.EntitySheep;
+import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
@@ -35,6 +37,12 @@ public class ItemRespawnEggAnimal extends Item {
 	public static final String NBT_SHEEPCOLOR = "Color";
 	public static final String NBT_SHEEPSHEARED = "Sheared";
 	public static final String NBT_RABBITTYPE = "RabbitType";
+	public static final String NBT_WOLFCOLOR = "CollarColor";
+
+	public static final String NBT_HORSETYPE = "Type";
+	public static final String NBT_HORSEVARIANT = "Variant";
+	public static final String NBT_HORSETEMPER = "Temper";
+	public static final String NBT_HORSEREPRO = "HasReproduced";
 	/*TODO: maybe save sheep sheard state too??
 	 * 
 	 * 
@@ -111,7 +119,19 @@ public class ItemRespawnEggAnimal extends Item {
 	 
 						((EntityRabbit)entity).setRabbitType(stack.getTagCompound().getInteger(NBT_RABBITTYPE));
 					}
-					//TODO: villagers, horses
+					else if(entity instanceof EntityHorse && stack.getTagCompound().hasKey(NBT_HORSEVARIANT)){
+						//if it has one, just assume it has all the data. they get set as a batch
+						EntityHorse horse = ((EntityHorse)entity);
+						horse.setTemper(stack.getTagCompound().getInteger(NBT_HORSETEMPER));
+						horse.setHorseVariant(stack.getTagCompound().getInteger(NBT_HORSEVARIANT));
+						horse.setHorseType(stack.getTagCompound().getInteger(NBT_HORSETYPE));
+						horse.setHasReproduced(stack.getTagCompound().getBoolean(NBT_HORSEREPRO));
+					}
+					else if(entity instanceof EntityWolf && stack.getTagCompound().hasKey(NBT_WOLFCOLOR)){
+
+						EntityWolf w = ((EntityWolf)entity);
+						w.setCollarColor(EnumDyeColor.byDyeDamage(stack.getTagCompound().getInteger(NBT_WOLFCOLOR)));
+					}
 					
 				}
 				

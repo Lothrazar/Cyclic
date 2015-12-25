@@ -90,24 +90,21 @@ public class EntityRespawnEgg extends EntityThrowable {
 					else if(mop.entityHit instanceof EntityHorse){
 						EntityHorse horse = ((EntityHorse)mop.entityHit);
 
-						
-						//NBTTagCompound data = new NBTTagCompound();
-						//data.setInteger(ItemRespawnEggAnimal.NBT_RABBITTYPE,((EntityRabbit)mop.entityHit).getRabbitType());
-						//stack.setTagCompound(data);
+						NBTTagCompound data = new NBTTagCompound();
+						data.setInteger(ItemRespawnEggAnimal.NBT_HORSETEMPER, horse.getTemper());
+						data.setInteger(ItemRespawnEggAnimal.NBT_HORSEVARIANT, horse.getHorseVariant());
+						data.setInteger(ItemRespawnEggAnimal.NBT_HORSETYPE, horse.getHorseType());
+						data.setBoolean(ItemRespawnEggAnimal.NBT_HORSEREPRO, horse.getHasReproduced());
+
+						//not doing speed/jump/health by design. feel free to reroll these
+						//only works on untamed anyway
+						stack.setTagCompound(data);
 					}
 					else if(mop.entityHit instanceof EntityWolf){
 						EntityWolf wolf = ((EntityWolf)mop.entityHit);
 
-					
-							/*
-							wolf.getCollarColor()
-        tagCompound.setBoolean("Angry", this.isAngry());
-        tagCompound.setByte("CollarColor", (byte)this.getCollarColor().getDyeDamage());*/
-						
-					}
-					else if(mop.entityHit instanceof EntityOcelot){
-						EntityOcelot cat = ((EntityOcelot)mop.entityHit);
-
+						NBTTagCompound data = new NBTTagCompound();
+						data.setInteger(ItemRespawnEggAnimal.NBT_WOLFCOLOR, wolf.getCollarColor().getDyeDamage());
 						
 					}
 					
