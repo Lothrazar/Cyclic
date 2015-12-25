@@ -12,6 +12,7 @@ import net.minecraft.entity.EntityList.EntityEggInfo;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.passive.EntityRabbit;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumDyeColor;
@@ -31,7 +32,15 @@ public class ItemRespawnEggAnimal extends Item {
 		this.setHasSubtypes(true);
 	}
 
-	public static final String NBT_SHEEPCOLOR = "color";
+	public static final String NBT_SHEEPCOLOR = "Color";
+	public static final String NBT_SHEEPSHEARED = "Sheared";
+	public static final String NBT_RABBITTYPE = "RabbitType";
+	/*TODO: maybe save sheep sheard state too??
+	 * 
+	 * 
+        tagCompound.setBoolean("Sheared", this.getSheared());
+        tagCompound.setByte("Color", (byte)this.getFleeceColor().getMetadata());
+        */
 	public String getItemStackDisplayName(ItemStack stack) {
 		String itemName = (StatCollector.translateToLocal(this.getUnlocalizedName() + ".name")).trim();
 		String entityName = EntityList.getStringFromID(stack.getMetadata());
@@ -87,12 +96,23 @@ public class ItemRespawnEggAnimal extends Item {
 					entity.setCustomNameTag(stack.getDisplayName());
 				}
 				
-				if(entity instanceof EntitySheep && stack.hasTagCompound()){
-					//set sheep color color provided it was saved on item creation
-					if(stack.getTagCompound().hasKey(NBT_SHEEPCOLOR)){
-						((EntitySheep)entity).setFleeceColor(EnumDyeColor.byDyeDamage(stack.getTagCompound().getInteger(NBT_SHEEPCOLOR)));
+				if(stack.hasTagCompound()){
+					if(entity instanceof EntitySheep && stack.getTagCompound().hasKey(NBT_SHEEPCOLOR) && stack.getTagCompound().hasKey(NBT_SHEEPCOLOR)){
+						//set sheep color color provided it was saved on item creation
+					
+						EntitySheep sheep = ((EntitySheep)entity);
+						sheep.setFleeceColor(EnumDyeColor.byDyeDamage(stack.getTagCompound().getInteger(NBT_SHEEPCOLOR)));
+						
+						sheep.setSheared(stack.getTagCompound().getBoolean(NBT_SHEEPCOLOR));
 					}
+					else if(entity instanceof EntityRabbit && stack.getTagCompound().hasKey(NBT_RABBITTYPE)){
+	 
+						((EntityRabbit)entity).setRabbitType(stack.getTagCompound().getInteger(NBT_RABBITTYPE));
+					}
+					//TODO: villagers, horses
+					
 				}
+				
 
 				if (!playerIn.capabilities.isCreativeMode) {
 					--stack.stackSize;

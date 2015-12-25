@@ -6,6 +6,7 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntitySheep;
+import net.minecraft.entity.passive.EntityRabbit;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
@@ -49,9 +50,17 @@ public class EntityRespawnEgg extends EntityThrowable {
 					
 					if(mop.entityHit instanceof EntitySheep){
 						EnumDyeColor color = ((EntitySheep)mop.entityHit).getFleeceColor();
-						
+
+				        //TODO: data.setBoolean("Sheared", this.getSheared());
 						NBTTagCompound data = new NBTTagCompound();
 						data.setInteger(ItemRespawnEggAnimal.NBT_SHEEPCOLOR, color.getDyeDamage());
+						data.setBoolean(ItemRespawnEggAnimal.NBT_SHEEPSHEARED, ((EntitySheep)mop.entityHit).getSheared());
+						stack.setTagCompound(data);
+					}
+					else if(mop.entityHit instanceof EntityRabbit){
+
+						NBTTagCompound data = new NBTTagCompound();
+						data.setInteger(ItemRespawnEggAnimal.NBT_RABBITTYPE,((EntityRabbit)mop.entityHit).getRabbitType());
 						stack.setTagCompound(data);
 					}
 					
