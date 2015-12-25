@@ -28,9 +28,6 @@ public class ItemRegistry {
 		respawn_egg = new ItemRespawnEggAnimal();
 		ItemRegistry.registerItem(respawn_egg, "respawn_egg");
 
-		master_wand = new MasterWand();
-		ItemRegistry.registerItem(master_wand, "master_wand");
-
 		carbon_paper = new ItemPaperCarbon();
 		ItemRegistry.registerItem(carbon_paper, "carbon_paper");
 
@@ -42,7 +39,10 @@ public class ItemRegistry {
 
 		rune_slowfall = new ItemRuneSlowfall();
 		ItemRegistry.registerItem(rune_slowfall, "rune_slowfall");
-		
+
+		master_wand = new MasterWand();
+		ItemRegistry.registerItem(master_wand, "master_wand");
+
 		GameRegistry.addRecipe(new ItemStack(master_wand), //placeholder rec
 				"dsd",
 				"qdq",
@@ -51,6 +51,18 @@ public class ItemRegistry {
 				'q',Blocks.quartz_block,
 				'o',Blocks.obsidian,
 				's',Items.nether_star);
+		
+		master_wand.setContainerItem(master_wand);//so it is not consumed on crafting
+		
+		GameRegistry.addShapelessRecipe(new ItemStack(rune_slowfall)
+				,master_wand
+				,Blocks.gold_block
+				,Items.nether_star);
+
+		GameRegistry.addShapelessRecipe(new ItemStack(rune_collector)
+				,master_wand
+				,Blocks.emerald_block
+				,Items.nether_star);
 	}
 
 	public static void registerItem(Item item, String name) {
