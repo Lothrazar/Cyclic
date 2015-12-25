@@ -66,7 +66,8 @@ public class ModMain {
 		System.out.println("item collector add information on range, show on/off status");
 
 		System.out.println("waypoint sound, particle, lang name");
-		System.out.println("entity segg TODO: look into sheep color, villager meta, horse meta, other stuff into egg");
+		System.out.println("entity egg: add display information on item: entity name and sheep color");
+		System.out.println("entity egg: Villager data???");
 		System.out.println("TODO:STAIRS: stay up or stay down, they dont change bbetween");
 		System.out.println("TODO:?? maybe night vision Regeneration / health boost /absorption");
 		System.out.println("TODO:	potion.frost icon and name missing 	potion.frost missing trail of snow, does not leave behind");

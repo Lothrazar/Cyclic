@@ -1,12 +1,16 @@
 package com.lothrazar.cyclicmagic.projectile;
 
 import com.lothrazar.cyclicmagic.ItemRegistry;
+import com.lothrazar.cyclicmagic.item.ItemRespawnEggAnimal;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.projectile.EntityThrowable;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
@@ -41,6 +45,14 @@ public class EntityRespawnEgg extends EntityThrowable {
 
 					if (mop.entityHit.hasCustomName()) {
 						stack.setStackDisplayName(mop.entityHit.getCustomNameTag());
+					}
+					
+					if(mop.entityHit instanceof EntitySheep){
+						EnumDyeColor color = ((EntitySheep)mop.entityHit).getFleeceColor();
+						
+						NBTTagCompound data = new NBTTagCompound();
+						data.setInteger(ItemRespawnEggAnimal.NBT_SHEEPCOLOR, +color.getDyeDamage());
+						stack.setTagCompound(data);
 					}
 					
 					this.worldObj.spawnEntityInWorld(new EntityItem(this.worldObj, this.posX, this.posY, this.posZ, stack));

@@ -12,7 +12,9 @@ import net.minecraft.entity.EntityList.EntityEggInfo;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
@@ -29,6 +31,7 @@ public class ItemRespawnEggAnimal extends Item {
 		this.setHasSubtypes(true);
 	}
 
+	public static final String NBT_SHEEPCOLOR = "color";
 	public String getItemStackDisplayName(ItemStack stack) {
 		String itemName = (StatCollector.translateToLocal(this.getUnlocalizedName() + ".name")).trim();
 		String entityName = EntityList.getStringFromID(stack.getMetadata());
@@ -71,6 +74,13 @@ public class ItemRespawnEggAnimal extends Item {
 			if (entity != null) {
 				if (entity instanceof EntityLivingBase && stack.hasDisplayName()) {
 					entity.setCustomNameTag(stack.getDisplayName());
+				}
+				
+				if(entity instanceof EntitySheep && stack.hasTagCompound()){
+					//set sheep color color provided it was saved on item creation
+					if(stack.getTagCompound().hasKey(NBT_SHEEPCOLOR)){
+						((EntitySheep)entity).setFleeceColor(EnumDyeColor.byDyeDamage(stack.getTagCompound().getInteger(NBT_SHEEPCOLOR)));
+					}
 				}
 
 				if (!playerIn.capabilities.isCreativeMode) {
