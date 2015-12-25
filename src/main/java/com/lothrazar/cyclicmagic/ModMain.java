@@ -45,7 +45,6 @@ public class ModMain {
 		network.registerMessage(MessageKeyLeft.class, MessageKeyLeft.class, packetID++, Side.SERVER);
 		network.registerMessage(MessageKeyRight.class, MessageKeyRight.class, packetID++, Side.SERVER);
 		network.registerMessage(MessageToggle.class, MessageToggle.class, packetID++, Side.SERVER);
-		//TODO: message is never used - it tells client when/where to spawn particles
 		network.registerMessage(MessageParticle.class, MessageParticle.class, packetID++, Side.CLIENT);
 
 		MinecraftForge.EVENT_BUS.register(new EventRegistry());
@@ -61,16 +60,14 @@ public class ModMain {
 
 		proxy.register();
 		
-		
-//a self-reminding bug list
 		System.out.println("item collector add information on range, show on/off status");
+		System.out.println("Config system? hard code each spell id, instead of ++ each time? maybe?");
 
-		System.out.println("waypoint sound, particle, lang name");
-		System.out.println("entity egg: add display information on item: entity name and etc");
-		System.out.println("entity egg: Villager data???");
-		System.out.println("TODO:STAIRS: stay up or stay down, they dont change bbetween");
-		System.out.println("TODO:?? maybe night vision Regeneration / health boost /absorption");
+		System.out.println("waypoint sound, particle, lang name - check partilces on client side system with packet");
+		System.out.println("TODO:STAIRS: stay up or stay down, they dont change bbetween? different meta types");
+		System.out.println("TODO:?? maybe night vision Regeneration / health boost /absorption runes? so night vision would turn on at night OR underwater"
+				+" , absorpt or resistance turns on at low health or damage taken" );
 		
-System.out.println("make default reparis faster (and only serverside ). add a enchant table based repair system");
+		System.out.println("replace repair and maybe exp with mana system? and mana gets refilled by exp or other things");
 	}
 }

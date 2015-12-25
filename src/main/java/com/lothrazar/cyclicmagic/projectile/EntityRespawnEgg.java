@@ -48,10 +48,9 @@ public class EntityRespawnEgg extends EntityThrowable {
 				this.worldObj.removeEntity(mop.entityHit);
 				if (this.worldObj.isRemote == false) {
 						
-					//ignore child mobs and tamed mobs
+					//ignore child mobs and tamed mobs and villagers
 					
 					boolean cancelDrop = false;
-					
 					
 					if(mop.entityHit instanceof EntityAgeable){
 						if(((EntityAgeable)mop.entityHit).isChild()){
@@ -87,13 +86,11 @@ public class EntityRespawnEgg extends EntityThrowable {
 							nbt = new NBTTagCompound();
 							nbt.setInteger(ItemRespawnEggAnimal.NBT_SHEEPCOLOR, color.getDyeDamage());
 							nbt.setBoolean(ItemRespawnEggAnimal.NBT_SHEEPSHEARED, sheep.getSheared());
-							stack.setTagCompound(nbt);
 						}
 						else if(mop.entityHit instanceof EntityRabbit){
 
 							nbt = new NBTTagCompound();
 							nbt.setInteger(ItemRespawnEggAnimal.NBT_RABBITTYPE,((EntityRabbit)mop.entityHit).getRabbitType());
-							stack.setTagCompound(nbt);
 						}
 						else if(mop.entityHit instanceof EntityHorse){
 							EntityHorse horse = ((EntityHorse)mop.entityHit);
