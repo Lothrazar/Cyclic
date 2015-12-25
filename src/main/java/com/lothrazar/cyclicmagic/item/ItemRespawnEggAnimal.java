@@ -43,12 +43,7 @@ public class ItemRespawnEggAnimal extends Item {
 	public static final String NBT_HORSEVARIANT = "Variant";
 	public static final String NBT_HORSETEMPER = "Temper";
 	public static final String NBT_HORSEREPRO = "HasReproduced";
-	/*TODO: maybe save sheep sheard state too??
-	 * 
-	 * 
-        tagCompound.setBoolean("Sheared", this.getSheared());
-        tagCompound.setByte("Color", (byte)this.getFleeceColor().getMetadata());
-        */
+
 	public String getItemStackDisplayName(ItemStack stack) {
 		String itemName = (StatCollector.translateToLocal(this.getUnlocalizedName() + ".name")).trim();
 		String entityName = EntityList.getStringFromID(stack.getMetadata());

@@ -7,10 +7,10 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityHorse;
-import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.passive.EntityRabbit;
 import net.minecraft.entity.passive.EntityTameable;
+import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.item.EnumDyeColor;
@@ -66,10 +66,6 @@ public class EntityRespawnEgg extends EntityThrowable {
 						}
 					}
 
-					if (mop.entityHit.hasCustomName()) {
-						stack.setStackDisplayName(mop.entityHit.getCustomNameTag());
-					}
-					
 					if(mop.entityHit instanceof EntitySheep){
 						EntitySheep sheep = ((EntitySheep)mop.entityHit);
 					
@@ -79,7 +75,6 @@ public class EntityRespawnEgg extends EntityThrowable {
 						data.setInteger(ItemRespawnEggAnimal.NBT_SHEEPCOLOR, color.getDyeDamage());
 						data.setBoolean(ItemRespawnEggAnimal.NBT_SHEEPSHEARED, sheep.getSheared());
 						stack.setTagCompound(data);
-					
 					}
 					else if(mop.entityHit instanceof EntityRabbit){
 
@@ -105,10 +100,21 @@ public class EntityRespawnEgg extends EntityThrowable {
 
 						NBTTagCompound data = new NBTTagCompound();
 						data.setInteger(ItemRespawnEggAnimal.NBT_WOLFCOLOR, wolf.getCollarColor().getDyeDamage());
-						
+						stack.setTagCompound(data);
+					}
+					else if(mop.entityHit instanceof EntityVillager){
+						//EntityWolf wolf = ((EntityWolf)mop.entityHit);
+
+						//NBTTagCompound data = new NBTTagCompound();
+						//data.setInteger(ItemRespawnEggAnimal.NBT_WOLFCOLOR, wolf.getCollarColor().getDyeDamage());
 					}
 					
 					if(cancelDrop == false){
+						
+						if (mop.entityHit.hasCustomName()) {
+							stack.setStackDisplayName(mop.entityHit.getCustomNameTag());
+						}
+						
 						this.worldObj.spawnEntityInWorld(new EntityItem(this.worldObj, this.posX, this.posY, this.posZ, stack));
 					}
 				}
