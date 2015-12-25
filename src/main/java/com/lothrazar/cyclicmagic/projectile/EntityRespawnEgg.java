@@ -5,8 +5,11 @@ import com.lothrazar.cyclicmagic.item.ItemRespawnEggAnimal;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.passive.EntityHorse;
+import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.passive.EntityRabbit;
+import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
@@ -42,6 +45,11 @@ public class EntityRespawnEgg extends EntityThrowable {
 			if (entity_id > 0) {
 				this.worldObj.removeEntity(mop.entityHit);
 				if (this.worldObj.isRemote == false) {
+					
+					//dogs and horses blacklisted if already tamed
+					
+					boolean cancelDrop = false;
+					
 					ItemStack stack = new ItemStack(ItemRegistry.respawn_egg, 1, entity_id);
 
 					if (mop.entityHit.hasCustomName()) {
@@ -63,8 +71,43 @@ public class EntityRespawnEgg extends EntityThrowable {
 						data.setInteger(ItemRespawnEggAnimal.NBT_RABBITTYPE,((EntityRabbit)mop.entityHit).getRabbitType());
 						stack.setTagCompound(data);
 					}
+					else if(mop.entityHit instanceof EntityHorse){
+						EntityHorse horse = ((EntityHorse)mop.entityHit);
+
+						if(horse.isTame()){
+							cancelDrop = true;
+						}
+						else{
+							
+						}
+						//NBTTagCompound data = new NBTTagCompound();
+						//data.setInteger(ItemRespawnEggAnimal.NBT_RABBITTYPE,((EntityRabbit)mop.entityHit).getRabbitType());
+						//stack.setTagCompound(data);
+					}
+					else if(mop.entityHit instanceof EntityWolf){
+						EntityWolf wolf = ((EntityWolf)mop.entityHit);
+
+						if(wolf.isTamed()){
+							cancelDrop = true;
+						}
+						else{
+							
+						}
+					}
+					else if(mop.entityHit instanceof EntityOcelot){
+						EntityOcelot cat = ((EntityOcelot)mop.entityHit);
+
+						if(cat.isTamed()){
+							cancelDrop = true;
+						}
+						else{
+							
+						}
+					}
 					
-					this.worldObj.spawnEntityInWorld(new EntityItem(this.worldObj, this.posX, this.posY, this.posZ, stack));
+					if(cancelDrop == false){
+						this.worldObj.spawnEntityInWorld(new EntityItem(this.worldObj, this.posX, this.posY, this.posZ, stack));
+					}
 				}
 			}
 		}
