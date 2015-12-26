@@ -69,6 +69,16 @@ public class ItemRegistry {
 
 		GameRegistry.addShapelessRecipe(new ItemStack(rune_collector)
 				,master_wand
+				,Blocks.lapis_block
+				,Items.nether_star);
+
+		GameRegistry.addShapelessRecipe(new ItemStack(rune_haste)
+				,master_wand
+				,Blocks.redstone_block
+				,Items.nether_star);
+
+		GameRegistry.addShapelessRecipe(new ItemStack(rune_protection)
+				,master_wand
 				,Blocks.emerald_block
 				,Items.nether_star);
 	}
