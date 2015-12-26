@@ -9,7 +9,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import com.lothrazar.cyclicmagic.util.Vector3;
 
-public class ItemRuneCollector extends ItemRuneBase {
+public class ItemRuneCollector extends RuneBaseAbstract {
 	public ItemRuneCollector() {
 		super();
 	}

@@ -9,7 +9,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
-public class ItemRuneHaste  extends ItemRuneBase {
+public class ItemRuneHaste  extends RuneBaseAbstract {
 	public ItemRuneHaste() {
 		super();
 	}

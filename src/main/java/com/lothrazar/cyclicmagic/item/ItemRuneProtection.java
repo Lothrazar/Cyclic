@@ -8,7 +8,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
-public class ItemRuneProtection  extends ItemRuneBase {
+public class ItemRuneProtection  extends RuneBaseAbstract {
 	public ItemRuneProtection() {
 		super();
 	}
@@ -22,13 +22,23 @@ public class ItemRuneProtection  extends ItemRuneBase {
 		if(entityIn instanceof EntityLivingBase){
 			EntityLivingBase entity = (EntityLivingBase)entityIn;
 			
+			boolean didit = false;
+			
 			if(entity.getHealth() < healthLimit && entity.isPotionActive(Potion.absorption.id) == false){
 
 				PotionRegistry.addOrMergePotionEffect(entity, new PotionEffect(Potion.absorption.id,seconds * Const.TICKS_PER_SEC, PotionRegistry.V));
-				PotionRegistry.addOrMergePotionEffect(entity, new PotionEffect(Potion.resistance.id,seconds * Const.TICKS_PER_SEC, PotionRegistry.II));
+				PotionRegistry.addOrMergePotionEffect(entity, new PotionEffect(Potion.resistance.id,seconds * Const.TICKS_PER_SEC, PotionRegistry.I));
 			
-				return true;
+				didit = true;
 			}
+			if(entity.isBurning() && entity.isPotionActive(Potion.fireResistance.id) == false){
+
+				PotionRegistry.addOrMergePotionEffect(entity, new PotionEffect(Potion.fireResistance.id,seconds * Const.TICKS_PER_SEC, PotionRegistry.V));
+				
+				didit = true;
+			}
+			
+			return didit;//can trigger both fire and regular
 		}
 		return false;
 	}
