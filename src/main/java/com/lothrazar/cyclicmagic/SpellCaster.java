@@ -106,17 +106,16 @@ public class SpellCaster {
 	final int rechargeAmt = 10;
 	public void rechargeWithExp(EntityPlayer player) {
 		PlayerPowerups props = PlayerPowerups.get(player);
-		System.out.println("rechargeWithExp attempt");
 		
 		if(player.capabilities.isCreativeMode){ //always set full
 			PlayerPowerups.get(player).setMana((int)MAXMANA);
 		}
-		else if(rechargeCost < UtilExperience.getExpTotal(player)){
+		else if(rechargeCost < UtilExperience.getExpTotal(player) && props.getMana() + rechargeAmt <= MAXMANA){
 
-			System.out.println("try to recharge");
 			props.rechargeManaBy(rechargeAmt);
 
 			UtilExperience.drainExp(player, rechargeCost);
+			UtilSound.playSoundAt(player, UtilSound.portal);
 		} 
 		else{
 			System.out.println("cannot recharge");
