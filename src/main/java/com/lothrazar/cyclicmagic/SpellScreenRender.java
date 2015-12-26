@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -26,6 +27,15 @@ public class SpellScreenRender {
 		else {
 			UtilTextureRender.drawTextureSquare(spellCurrent.getIconDisplayHeaderDisabled(), x,y, dim);
 		}
+	}
+	
+	private void drawManabar(PlayerPowerups props){
+		 
+		float manaPercent = props.getMana() / PlayerPowerups.MAXMANA;
+		
+		double h = manaHeight * manaPercent;
+
+		UtilTextureRender.drawTextureSimple(manabar, xmain-20,ymain-12, manaWidth,MathHelper.floor_double(h));
 	}
 
 	private void drawCurrentSpell(PlayerPowerups props, ISpell spellCurrent) {
@@ -110,13 +120,6 @@ public class SpellScreenRender {
 				}
 			}
 		}
-	}
-	
-	private void drawManabar(PlayerPowerups props){
-		
-		int x = xmain-20, y = ymain-12 , w=manaWidth, h=manaHeight;
-		  
-		UtilTextureRender.drawTextureSimple(manabar, x,y, w,h);
 	}
 
 	@SideOnly(Side.CLIENT)

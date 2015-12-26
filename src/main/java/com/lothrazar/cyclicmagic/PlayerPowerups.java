@@ -11,40 +11,37 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 	private final EntityPlayer player;// we get one of these powerup classes for
 	//private String spells = null;
 
-	private static final int SPELLUNLK_WATCHER = 21;
+	private static final int UNLOCKS_WATCHER = 21;
 	private static final String NBT_UNLOCKS = "unlocks";
 
-	private static final int SPELLMAIN_WATCHER = 22;
-	private static final String NBT_SPELLMAIN = "samSpell";
+	private static final int CURRENT_WATCHER = 22;
+	private static final String NBT_CURRENT = "samSpell";
 
-	private static final int SPELLTIMER_WATCHER = 25;
-	private static final String NBT_SPELLTIMER = "samSpellTimer";
+	private static final int MANA_WATCHER = 23;
+	private static final String NBT_MANA = "samMana";
+	
+	private static final int TIMER_WATCHER = 25;
+	private static final String NBT_TIMER = "samSpellTimer";
 
 	public PlayerPowerups(EntityPlayer player) {
 		this.player = player;
-		this.player.getDataWatcher().addObject(SPELLMAIN_WATCHER, 0);
-		this.player.getDataWatcher().addObject(SPELLTIMER_WATCHER, 0);
-		String spells = "";//new byte[SpellRegistry.getSpellbook().size()];
+		this.player.getDataWatcher().addObject(CURRENT_WATCHER, 0);
+		this.player.getDataWatcher().addObject(TIMER_WATCHER, 0);
+		this.player.getDataWatcher().addObject(MANA_WATCHER, 5);
+		String spells = "";
 		for (int i = 0; i < SpellRegistry.getSpellbook().size(); i++)
 			spells += "1";
 
-		this.player.getDataWatcher().addObject(SPELLUNLK_WATCHER, spells);
+		this.player.getDataWatcher().addObject(UNLOCKS_WATCHER, spells);
 	}
 	private void setUnlockDefault(){
-		String spells = "";//new byte[SpellRegistry.getSpellbook().size()];
+		String spells = "";
 		for (int i = 0; i < SpellRegistry.getSpellbook().size(); i++)
 			spells += "1";
 
 		this.setSpellUnlocks(spells);
 	}
-	/*
-	private void setCharOf(int idx, char oneOrZero){
-		//https://stackoverflow.com/questions/6952363/replace-a-character-at-a-specific-index-in-a-string
-		char[] myNameChars = spells.toCharArray();
-		myNameChars[idx] = oneOrZero;
-		spells = String.valueOf(myNameChars);
-	}*/
-	
+
 	//this is probably super innefficeint BUT i have no choice
 	//data watcher limits me to only 12 slots [20-32] and has
 	//NO data arrays at all
@@ -66,6 +63,7 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 		}
 		return ret;
 	}
+	
 	private void setUnlocksFromByte(byte[] ret){
 		
 		String spells = "";//new byte[SpellRegistry.getSpellbook().size()];
@@ -80,7 +78,6 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 		this.setSpellUnlocks(spells);
 	}
 	
-
 	@Override
 	public void init(Entity entity, World world) {
 	}
@@ -97,12 +94,11 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 	public void saveNBTData(NBTTagCompound compound) {
 		NBTTagCompound properties = new NBTTagCompound();
 
-		properties.setInteger(NBT_SPELLMAIN, this.player.getDataWatcher().getWatchableObjectInt(SPELLMAIN_WATCHER));
-		properties.setInteger(NBT_SPELLTIMER, this.player.getDataWatcher().getWatchableObjectInt(SPELLTIMER_WATCHER));
-		properties.setString(NBT_UNLOCKS, this.player.getDataWatcher().getWatchableObjectString(SPELLUNLK_WATCHER));
+		properties.setInteger(NBT_CURRENT, this.player.getDataWatcher().getWatchableObjectInt(CURRENT_WATCHER));
+		properties.setInteger(NBT_TIMER, this.player.getDataWatcher().getWatchableObjectInt(TIMER_WATCHER));
+		properties.setString(NBT_UNLOCKS, this.player.getDataWatcher().getWatchableObjectString(UNLOCKS_WATCHER));
+		properties.setInteger(NBT_MANA, this.player.getDataWatcher().getWatchableObjectInt(MANA_WATCHER));
 	
-		//properties.setByteArray(NBT_UNLOCKS, spells);
-
 		compound.setTag(EXT_PROP_NAME, properties);
 	}
 
@@ -113,10 +109,11 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 			properties = new NBTTagCompound();
 		}
 
-		this.player.getDataWatcher().updateObject(SPELLMAIN_WATCHER, properties.getInteger(NBT_SPELLMAIN));
-		this.player.getDataWatcher().updateObject(SPELLTIMER_WATCHER, properties.getInteger(NBT_SPELLTIMER));
+		this.player.getDataWatcher().updateObject(CURRENT_WATCHER, properties.getInteger(NBT_CURRENT));
+		this.player.getDataWatcher().updateObject(TIMER_WATCHER, properties.getInteger(NBT_TIMER));
+		this.player.getDataWatcher().updateObject(MANA_WATCHER, properties.getInteger(NBT_MANA));
 
-		this.player.getDataWatcher().updateObject(SPELLUNLK_WATCHER, properties.getString(NBT_UNLOCKS));
+		this.player.getDataWatcher().updateObject(UNLOCKS_WATCHER, properties.getString(NBT_UNLOCKS));
 		//spells = properties.getByteArray(NBT_UNLOCKS);
 	}
  
@@ -176,36 +173,18 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 
 		this.setUnlocksFromByte(spells);
 		return prev;
-	}/*
-	public int nextId(int spell_id) {
-
-		// TODO: check spells[abc] to see if its enabled for player, and
-		// otherwise skip
-		if (spell_id >= spells.length - 1)
-			return 0;// (int)spells[0];
-		else
-			return spell_id + 1;// (int)spells[spell_id+1];
 	}
 
-	public int prevId(int spell_id) {
-
-		if (spell_id == 0)
-			return spells.length - 1;// (int)spells[0];
-		else
-			return spell_id - 1;// (int)spells[spell_id-1];
-	}*/
 	public boolean isSpellUnlocked(int spell_id) {
 		byte[] spells = this.getUnlocksFromString();
 
-		
-		
 		return (spells[spell_id] == 1);
 	}
 
 	public final int getSpellCurrent() {
 		int spell_id = 0;
 		try {
-			spell_id = this.player.getDataWatcher().getWatchableObjectInt(SPELLMAIN_WATCHER);
+			spell_id = this.player.getDataWatcher().getWatchableObjectInt(CURRENT_WATCHER);
 		}
 		catch (java.lang.ClassCastException e) {
 			System.out.println(e.getMessage());// do not quit, leave it as zero
@@ -215,23 +194,31 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 	}
 
 	public final void setSpellTimer(int current) {
-		this.player.getDataWatcher().updateObject(SPELLTIMER_WATCHER, current);
+		this.player.getDataWatcher().updateObject(TIMER_WATCHER, current);
 	}
 
 	public final int getSpellTimer() {
-		return this.player.getDataWatcher().getWatchableObjectInt(SPELLTIMER_WATCHER);
+		return this.player.getDataWatcher().getWatchableObjectInt(TIMER_WATCHER);
 	}
 	public final void setSpellCurrent(int spell_id) {
-		this.player.getDataWatcher().updateObject(SPELLMAIN_WATCHER, spell_id);
+		this.player.getDataWatcher().updateObject(CURRENT_WATCHER, spell_id);
 	}
 
 	public String getSpellUnlocks( ) {
-		return this.player.getDataWatcher().getWatchableObjectString(SPELLUNLK_WATCHER);
+		return this.player.getDataWatcher().getWatchableObjectString(UNLOCKS_WATCHER);
 	}
 	public void setSpellUnlocks(String s) {
-		this.player.getDataWatcher().updateObject(SPELLUNLK_WATCHER, s);
+		this.player.getDataWatcher().updateObject(UNLOCKS_WATCHER, s);
 	}
 
+	public final int getMana() {
+		return this.player.getDataWatcher().getWatchableObjectInt(MANA_WATCHER);
+	}
+	public final void setMana(int m) {
+		if(m <= MAXMANA)
+			this.player.getDataWatcher().updateObject(MANA_WATCHER, m);
+	}
+	static final float MAXMANA = 90;
 	// http://www.minecraftforum.net/forums/mapping-and-modding/mapping-and-modding-tutorials/1571567-forge-1-6-4-1-8-eventhandler-and
 
 	public void copy(PlayerPowerups props) {
@@ -239,12 +226,14 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 		// https://github.com/coolAlias/Tutorial-Demo/blob/master/src/main/java/tutorial/entity/ExtendedPlayer.java
 
 		// set in the player
-		player.getDataWatcher().updateObject(SPELLMAIN_WATCHER, props.getSpellCurrent());
-		player.getDataWatcher().updateObject(SPELLTIMER_WATCHER, props.getSpellTimer());
-		player.getDataWatcher().updateObject(SPELLUNLK_WATCHER, props.getSpellUnlocks());
+		player.getDataWatcher().updateObject(CURRENT_WATCHER, props.getSpellCurrent());
+		player.getDataWatcher().updateObject(TIMER_WATCHER, props.getSpellTimer());
+		player.getDataWatcher().updateObject(UNLOCKS_WATCHER, props.getSpellUnlocks());
+		player.getDataWatcher().updateObject(MANA_WATCHER, props.getMana());
 		// set here
 		this.setSpellCurrent(props.getSpellCurrent());
 		this.setSpellTimer(props.getSpellTimer());
 		this.setSpellUnlocks(props.getSpellUnlocks());
+		this.setMana(props.getMana());
 	}
 }

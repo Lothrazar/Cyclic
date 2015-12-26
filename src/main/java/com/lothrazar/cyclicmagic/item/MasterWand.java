@@ -1,9 +1,11 @@
 package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
+import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.PlayerPowerups;
 import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
@@ -54,6 +56,25 @@ public class MasterWand extends Item {
 		//so this only happens IF either onItemUse did not fire at all, or it fired and casting failed
 		SpellRegistry.caster.tryCastCurrent(worldIn, playerIn, null,null);
 		return super.onItemRightClick(itemStackIn, worldIn, playerIn);
+	}
+
+	private double repairSpeed = 0.6;//higher is faster [0,1]
+	@Override
+	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+		// if held by something not a player? such as custom npc/zombie/etc
+		if (entityIn instanceof EntityPlayer == false) {
+			return;
+		}
+
+		// every second, make a roll. 1/10th of the time then do a repair
+		if (worldIn.getWorldTime() % Const.TICKS_PER_SEC == 0 && worldIn.rand.nextDouble() < repairSpeed) {
+
+			EntityPlayer p = (EntityPlayer) entityIn;
+			PlayerPowerups props = PlayerPowerups.get(p);
+			System.out.println("increment from "+props.getMana());
+			props.setMana(props.getMana() + 1);
+		}
+		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
 	}
 	
 	@Override
