@@ -38,9 +38,7 @@ public class SpellRegistry {
 
 		// used to be public statics
 		BaseSpell ghost;
-		SpellExpPotion jump;
 		BaseSpell phase;
-		SpellExpPotion slowfall;
 		SpellExpPotion waterwalk;
 		SpellExpPotion haste;
 		BaseSpell rotate;
@@ -52,16 +50,8 @@ public class SpellRegistry {
 		ghost = new SpellGhost(++spellId,"ghost");
 		registerSpell(ghost);
 		
-		jump = new SpellExpPotion(++spellId,"jump");
-		jump.setPotion(Potion.jump.id, potionDuration, PotionRegistry.V);
-		registerSpell(jump);
-
 		phase = new SpellPhasing(++spellId,"phasing");
 		registerSpell(phase);
-
-		slowfall = new SpellExpPotion(++spellId,"slowfall");
-		slowfall.setPotion(PotionRegistry.slowfall.id, potionDuration, PotionRegistry.I);
-		registerSpell(slowfall);
 
 		waterwalk = new SpellExpPotion(++spellId,"waterwalk");
 		waterwalk.setPotion(PotionRegistry.waterwalk.id, potionDuration, PotionRegistry.I);
