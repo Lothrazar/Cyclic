@@ -21,6 +21,10 @@ public class SpellChestSack extends BaseSpell implements ISpell {
  
 		//imported from my old mod https://github.com/PrinceOfAmber/SamsPowerups/blob/b02f6b4243993eb301f4aa2b39984838adf482c1/src/main/java/com/lothrazar/samscontent/item/ItemChestSackEmpty.java
 
+		if(pos == null){
+			return false;// cannot cast in midair
+		}
+		
 		ItemStack drop = ItemChestSack.createStackFromInventory( world,player, pos);
 		
 		if(drop != null){
