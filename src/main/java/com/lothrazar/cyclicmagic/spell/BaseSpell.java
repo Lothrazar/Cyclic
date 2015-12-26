@@ -84,15 +84,9 @@ public class BaseSpell implements ISpell {
 		}
 		UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT, pos);
 
-		System.out.println("cast success, draining cost exp "+this.getCost());
-		if (this.getCost() > 0) {
+		if (this.getCost() > 0 && player.capabilities.isCreativeMode == false) {
 			UtilExperience.drainExp(player, this.getCost());
 		}
-		/*
-		if (this.getCostDurability() > 0 && player.getHeldItem() != null) {
-			player.getHeldItem().damageItem(this.getCostDurability(), player);
-		}
-		*/
 	}
 
 	@Override
@@ -110,8 +104,8 @@ public class BaseSpell implements ISpell {
 			return false;
 		}
 		
+		//TODO: mana instead of xp
 		if(getCost() > 0 && getCost() > UtilExperience.getExpTotal(player)){
-			System.out.println("cannot cast - need EXP "+getCost());
 			return false;//not enough exp
 		}
 			
