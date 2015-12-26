@@ -44,8 +44,8 @@ public class ItemRegistry {
 		ItemRegistry.registerItem(master_wand, "master_wand");
 
 		GameRegistry.addRecipe(new ItemStack(master_wand), //placeholder rec
-				"dsd",
-				"qdq",
+				"sds",
+				" s ",
 				"qoq",
 				'd',Blocks.diamond_block,
 				'q',Blocks.quartz_block,
