@@ -10,7 +10,7 @@ public class SpellThrowExplosion extends BaseSpell implements ISpell {
 	public SpellThrowExplosion(int id,String name){
 		super(id,name);
 		this.cooldown = 60;
-		this.experience = 200;
+		this.cost = 30;
 	}
 
 	@Override

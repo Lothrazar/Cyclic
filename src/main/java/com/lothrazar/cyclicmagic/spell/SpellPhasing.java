@@ -13,7 +13,7 @@ public class SpellPhasing extends BaseSpell implements ISpell {
 	public SpellPhasing(int id,String name){
 		super(id,name);
 		cooldown = 10;
-		experience = 50;
+		cost = 50;
 	}
 
 	@Override

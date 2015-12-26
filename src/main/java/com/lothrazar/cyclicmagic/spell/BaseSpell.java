@@ -26,7 +26,7 @@ public class BaseSpell implements ISpell {
 	private ResourceLocation icon;
 	private int ID;
 	private String name;
-	protected int experience;
+	protected int cost;
 	protected int cooldown;
 	private final static ResourceLocation header = new ResourceLocation(Const.MODID, "textures/spells/header_on.png");
 	private final static ResourceLocation header_empty = new ResourceLocation(Const.MODID, "textures/spells/header_off.png");
@@ -34,7 +34,7 @@ public class BaseSpell implements ISpell {
 	public BaseSpell(int id, String n) {
 		ID = id;
 		name = n;
-		experience = 1;
+		cost = 1;
 		cooldown = 20;
 		
 		icon = new ResourceLocation(Const.MODID, "textures/spells/"+name+".png");
@@ -57,7 +57,7 @@ public class BaseSpell implements ISpell {
 
 	@Override
 	public int getCost() {
-		return experience;
+		return cost;
 	}
 
 	@Override
@@ -83,11 +83,9 @@ public class BaseSpell implements ISpell {
 			pos = player.getPosition();
 		}
 		UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT, pos);
-/*
-		if (this.getCost() > 0 && player.capabilities.isCreativeMode == false) {
-			UtilExperience.drainExp(player, this.getCost());
-		}*/
+
 		if(player.capabilities.isCreativeMode == false){
+			System.out.println("drain "+this.getCost());
 			PlayerPowerups.get(player).drainManaBy(this.getCost());
 		}
 	}

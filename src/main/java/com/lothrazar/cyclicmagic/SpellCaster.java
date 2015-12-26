@@ -10,6 +10,8 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 
 public class SpellCaster {
 
+	final float MAXMANA = 100;
+	
 	public boolean isBlockedBySpellTImer(EntityPlayer player) {
 		PlayerPowerups props = PlayerPowerups.get(player);
 		return !(props.getSpellTimer() == 0);
@@ -107,7 +109,7 @@ public class SpellCaster {
 		System.out.println("rechargeWithExp attempt");
 		
 		if(player.capabilities.isCreativeMode){ //always set full
-			PlayerPowerups.get(player).setMana((int)PlayerPowerups.MAXMANA);
+			PlayerPowerups.get(player).setMana((int)MAXMANA);
 		}
 		else if(rechargeCost < UtilExperience.getExpTotal(player)){
 

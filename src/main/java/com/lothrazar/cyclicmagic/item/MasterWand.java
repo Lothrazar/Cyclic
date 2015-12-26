@@ -59,7 +59,8 @@ public class MasterWand extends Item {
 	}
 
  //TODO: do we even want a passive recharge at all?
-	private double repairSpeed = -1;//higher is faster [0,1] // setting < zero will disable recharge fully
+	private double repairSpeed = .8;//higher is faster [0,1] // setting < zero will disable recharge fully
+
 	@Override
 	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 		// if held by something not a player? such as custom npc/zombie/etc

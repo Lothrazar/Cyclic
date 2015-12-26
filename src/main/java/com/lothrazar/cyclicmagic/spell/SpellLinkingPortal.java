@@ -17,7 +17,7 @@ public class SpellLinkingPortal  extends BaseSpell implements ISpell {
 	public SpellLinkingPortal(int id,String name){
 		super(id,name);
 		this.cooldown = 5;
-		this.experience = 1000;
+		this.cost = 1000;
 	}
 	@Override
 	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side ) {

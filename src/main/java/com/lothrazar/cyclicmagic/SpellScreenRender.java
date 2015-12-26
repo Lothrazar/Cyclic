@@ -31,7 +31,7 @@ public class SpellScreenRender {
 	
 	private void drawManabar(PlayerPowerups props){
 		 
-		float manaPercent = props.getMana() / PlayerPowerups.MAXMANA;
+		float manaPercent = props.getMana() / SpellRegistry.caster.MAXMANA;
 		
 		double h = manaHeight * manaPercent;
 

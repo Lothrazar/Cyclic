@@ -9,7 +9,6 @@ import net.minecraftforge.common.IExtendedEntityProperties;
 public class PlayerPowerups implements IExtendedEntityProperties {
 	private final static String EXT_PROP_NAME = "PlayerPowerups" + Const.MODID;
 	private final EntityPlayer player;// we get one of these powerup classes for
-	//private String spells = null;
 
 	private static final int UNLOCKS_WATCHER = 21;
 	private static final String NBT_UNLOCKS = "unlocks";
@@ -214,10 +213,10 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 	public final int getMana() {
 		return this.player.getDataWatcher().getWatchableObjectInt(MANA_WATCHER);
 	}
-	static final float MAXMANA = 90;
+	
 	public final void setMana(int m) {
 		if(m < 0){m = 0;}
-		int filled = (int) Math.max(m, MAXMANA);
+		int filled = (int) Math.min(m, SpellRegistry.caster.MAXMANA);
 		
 		this.player.getDataWatcher().updateObject(MANA_WATCHER, filled);
 	}

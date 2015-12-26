@@ -10,7 +10,7 @@ public class SpellLaunch extends BaseSpell implements ISpell {
 	public SpellLaunch(int id,String name){
 		super(id,name);
 		this.cooldown = 8;
-		this.experience = 10;
+		this.cost = 10;
 	}
 	private static final float power = 1.4F;
 	@Override
