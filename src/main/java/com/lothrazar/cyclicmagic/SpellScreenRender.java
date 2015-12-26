@@ -17,7 +17,6 @@ public class SpellScreenRender {
 	private static final int manaHeight = 90;
 	private final static ResourceLocation manabar = new ResourceLocation(Const.MODID, "textures/spells/manabar.png");
 	
-
 	private static void drawSpellHeader(PlayerPowerups props, ISpell spellCurrent) {
 		int dim = spellSize - 4, x = xmain+1, y = ymain-12;
   

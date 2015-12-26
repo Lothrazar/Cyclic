@@ -18,6 +18,7 @@ public class GuiSpellbook extends GuiScreen {
 
 	private final EntityPlayer entityPlayer;
 	private final static ResourceLocation background = new ResourceLocation(Const.MODID, "textures/gui/spellbook.png");
+	private final static ResourceLocation ptr = new ResourceLocation(Const.MODID, "textures/spells/mouseptr.png");
 
 	// https://github.com/LothrazarMinecraftMods/EnderBook/blob/66363b544fe103d6abf9bcf73f7a4051745ee982/src/main/java/com/lothrazar/enderbook/GuiEnderBook.java
 	private int xCenter;
@@ -79,7 +80,7 @@ public class GuiSpellbook extends GuiScreen {
 		
 		UtilTextureRender.drawTextureSimple(background,guiLeft,guiTop, 200,200);
     }
-	private final static ResourceLocation ptr = new ResourceLocation(Const.MODID, "textures/spells/exp_cost_dummy.png");
+	
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 

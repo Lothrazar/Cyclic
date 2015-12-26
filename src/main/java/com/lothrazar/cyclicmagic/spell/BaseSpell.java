@@ -28,8 +28,8 @@ public class BaseSpell implements ISpell {
 	private String name;
 	protected int experience;
 	protected int cooldown;
-	private final static ResourceLocation header = new ResourceLocation(Const.MODID, "textures/spells/exp_cost_dummy.png");
-	private final static ResourceLocation header_empty = new ResourceLocation(Const.MODID, "textures/spells/exp_cost_empty_dummy.png");
+	private final static ResourceLocation header = new ResourceLocation(Const.MODID, "textures/spells/header_on.png");
+	private final static ResourceLocation header_empty = new ResourceLocation(Const.MODID, "textures/spells/header_off.png");
 
 	public BaseSpell(int id, String n) {
 		ID = id;
