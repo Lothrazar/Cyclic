@@ -15,9 +15,9 @@ public class SpellScreenRender {
 	private static final int spellSize = 16;
 	private static final int manaWidth = 8;
 	private static final int manaHeight = 90;
-	private final static ResourceLocation manabar = new ResourceLocation(Const.MODID, "textures/spells/manabar.png");
+	private static final ResourceLocation manabar = new ResourceLocation(Const.MODID, "textures/spells/manabar.png");
 	
-	private static void drawSpellHeader(PlayerPowerups props, ISpell spellCurrent) {
+	private void drawSpellHeader(PlayerPowerups props, ISpell spellCurrent) {
 		int dim = spellSize - 4, x = xmain+1, y = ymain-12;
   
 		if (SpellCaster.isBlockedBySpellTImer(props) == false) {
@@ -28,7 +28,7 @@ public class SpellScreenRender {
 		}
 	}
 
-	private static void drawCurrentSpell(PlayerPowerups props, ISpell spellCurrent) {
+	private void drawCurrentSpell(PlayerPowerups props, ISpell spellCurrent) {
 
 		if (spellCurrent.getIconDisplay() != null) {
 
@@ -36,7 +36,7 @@ public class SpellScreenRender {
 		}
 	}
 
-	private static void drawPrevSpells(PlayerPowerups props, ISpell spellCurrent) {
+	private void drawPrevSpells(PlayerPowerups props, ISpell spellCurrent) {
 
 		ISpell prev = SpellRegistry.getSpellFromID(props.prevId(spellCurrent.getID()));
   
@@ -75,7 +75,7 @@ public class SpellScreenRender {
 		}
 	}
 
-	private static void drawNextSpells(PlayerPowerups props, ISpell spellCurrent) {
+	private void drawNextSpells(PlayerPowerups props, ISpell spellCurrent) {
 
 		ISpell next = SpellRegistry.getSpellFromID(props.nextId(spellCurrent.getID()));
 
@@ -112,7 +112,7 @@ public class SpellScreenRender {
 		}
 	}
 	
-	private static void drawManabar(PlayerPowerups props){
+	private void drawManabar(PlayerPowerups props){
 		
 		int x = xmain-20, y = ymain-12 , w=manaWidth, h=manaHeight;
 		  
@@ -120,7 +120,7 @@ public class SpellScreenRender {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public static void drawSpellWheel() {
+	public void drawSpellWheel() {
 
 		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
 

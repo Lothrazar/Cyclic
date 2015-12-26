@@ -84,7 +84,7 @@ public class EventRegistry {
 		//PlayerPowerups props = PlayerPowerups.get(player);
 
 		if (SpellRegistry.spellsEnabled(player)) {
-			SpellScreenRender.drawSpellWheel();
+			SpellRegistry.screen.drawSpellWheel();
 		}
 	}
 
