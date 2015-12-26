@@ -19,6 +19,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class MasterWand extends Item {
 
+	private double repairSpeed = 0.4;//higher is faster [0,1] // setting < zero will disable recharge fully
 	public MasterWand() {
 		this.setMaxStackSize(1);
 	}
@@ -39,6 +40,7 @@ public class MasterWand extends Item {
 		tooltip.add(spell.getName());
 		tooltip.add(StatCollector.translateToLocal("cost.cooldown") + spell.getCastCooldown());
 		tooltip.add(StatCollector.translateToLocal("cost.exp") + spell.getCost());
+		tooltip.add(props.getMana() + "/"+SpellRegistry.caster.MAXMANA);
 
 		super.addInformation(stack, playerIn, tooltip, advanced);
 	}
@@ -58,8 +60,6 @@ public class MasterWand extends Item {
 		return super.onItemRightClick(itemStackIn, worldIn, playerIn);
 	}
 
- //TODO: do we even want a passive recharge at all?
-	private double repairSpeed = 0.4;//higher is faster [0,1] // setting < zero will disable recharge fully
 
 	@Override
 	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {

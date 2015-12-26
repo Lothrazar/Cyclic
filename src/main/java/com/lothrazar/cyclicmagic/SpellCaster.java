@@ -10,7 +10,9 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 
 public class SpellCaster {
 
-	final float MAXMANA = 100;
+	public final float MAXMANA = 500;
+	final int RECHARGE_EXP_COST = 20;
+	final int RECHARGE_MANA_AMT = 75;
 	
 	public boolean isBlockedBySpellTImer(EntityPlayer player) {
 		PlayerPowerups props = PlayerPowerups.get(player);
@@ -102,19 +104,17 @@ public class SpellCaster {
 		
 		props.toggleOneSpell(spell_id);
 	}
-	final int rechargeCost = 20;
-	final int rechargeAmt = 5;
 	public void rechargeWithExp(EntityPlayer player) {
 		PlayerPowerups props = PlayerPowerups.get(player);
 		
 		if(player.capabilities.isCreativeMode){ //always set full
 			PlayerPowerups.get(player).setMana((int)MAXMANA);
 		}
-		else if(rechargeCost < UtilExperience.getExpTotal(player) && props.getMana() + rechargeAmt <= MAXMANA){
+		else if(RECHARGE_EXP_COST < UtilExperience.getExpTotal(player) && props.getMana() + RECHARGE_MANA_AMT <= MAXMANA){
 
-			props.rechargeManaBy(rechargeAmt);
+			props.rechargeManaBy(RECHARGE_MANA_AMT);
 
-			UtilExperience.drainExp(player, rechargeCost);
+			UtilExperience.drainExp(player, RECHARGE_EXP_COST);
 			UtilSound.playSoundAt(player, UtilSound.portal);
 		} 
 		else{
