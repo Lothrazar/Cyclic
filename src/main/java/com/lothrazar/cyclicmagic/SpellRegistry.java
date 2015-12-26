@@ -40,7 +40,7 @@ public class SpellRegistry {
 		BaseSpell ghost;
 		BaseSpell phase;
 		SpellExpPotion waterwalk;
-		SpellExpPotion haste;//TODO: replace with night vision
+		SpellExpPotion nightvision;//TODO: replace with night vision
 		BaseSpell rotate;
 		BaseSpell push;
 		SpellThrowTorch torch;
@@ -57,9 +57,9 @@ public class SpellRegistry {
 		waterwalk.setPotion(PotionRegistry.waterwalk.id, potionDuration, PotionRegistry.I);
 		registerSpell(waterwalk);
 
-		haste = new SpellExpPotion(++spellId,"haste");
-		haste.setPotion(Potion.digSpeed.id, potionDuration, PotionRegistry.II);
-		registerSpell(haste);
+		nightvision = new SpellExpPotion(++spellId,"nightvision");
+		nightvision.setPotion(Potion.nightVision.id, potionDuration, PotionRegistry.I);
+		registerSpell(nightvision);
 
 		rotate = new SpellRotate(++spellId,"rotate"); 
 		registerSpell(rotate);
