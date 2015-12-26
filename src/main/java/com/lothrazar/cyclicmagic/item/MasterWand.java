@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
 import com.lothrazar.cyclicmagic.PlayerPowerups;
-import com.lothrazar.cyclicmagic.SpellCaster;
 import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import net.minecraft.entity.player.EntityPlayer;
@@ -53,7 +52,7 @@ public class MasterWand extends Item {
 	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn) {
 
 		//so this only happens IF either onItemUse did not fire at all, or it fired and casting failed
-		SpellCaster.tryCastCurrent(worldIn, playerIn, null,null);
+		SpellRegistry.caster.tryCastCurrent(worldIn, playerIn, null,null);
 		return super.onItemRightClick(itemStackIn, worldIn, playerIn);
 	}
 	
@@ -63,6 +62,6 @@ public class MasterWand extends Item {
 		//If onItemUse returns false onItemRightClick will be called.
 		//http://www.minecraftforge.net/forum/index.php?topic=31966.0 
 		//so if this casts and succeeds, the right click is cancelled
-		return SpellCaster.tryCastCurrent(worldIn, playerIn, pos,side);
+		return SpellRegistry.caster.tryCastCurrent(worldIn, playerIn, pos,side);
     }
 }

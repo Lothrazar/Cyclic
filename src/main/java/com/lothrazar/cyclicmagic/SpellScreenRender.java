@@ -20,7 +20,7 @@ public class SpellScreenRender {
 	private void drawSpellHeader(PlayerPowerups props, ISpell spellCurrent) {
 		int dim = spellSize - 4, x = xmain+1, y = ymain-12;
   
-		if (SpellCaster.isBlockedBySpellTImer(props) == false) {
+		if (SpellRegistry.caster.isBlockedBySpellTImer(props) == false) {
 			UtilTextureRender.drawTextureSquare(spellCurrent.getIconDisplayHeaderEnabled(), x,y, dim);
 		}
 		else {
@@ -124,7 +124,7 @@ public class SpellScreenRender {
 
 		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
 
-		ISpell spellCurrent = SpellCaster.getPlayerCurrentISpell(player);
+		ISpell spellCurrent = SpellRegistry.caster.getPlayerCurrentISpell(player);
 		PlayerPowerups props = PlayerPowerups.get(player);
 
 		drawSpellHeader(props, spellCurrent);

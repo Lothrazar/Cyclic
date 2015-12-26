@@ -11,6 +11,7 @@ public class SpellRegistry {
 	private static ArrayList<ISpell> spellbook;
 	
 	static SpellScreenRender screen;
+	public static SpellCaster caster;
 
 	private static void registerSpell(ISpell spell){
 		spellbook.add(spell);
@@ -28,6 +29,7 @@ public class SpellRegistry {
 	 
 	public static void register() {
 		screen = new SpellScreenRender();
+		caster = new SpellCaster();
 		spellbook = new ArrayList<ISpell>();
 
 		int potionDuration = Const.TICKS_PER_SEC * 20;

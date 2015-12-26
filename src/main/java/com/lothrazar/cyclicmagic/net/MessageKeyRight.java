@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.net;
   
-import com.lothrazar.cyclicmagic.SpellCaster;
 import com.lothrazar.cyclicmagic.SpellRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -38,7 +37,7 @@ public class MessageKeyRight implements IMessage, IMessageHandler<MessageKeyRigh
 
 		if(SpellRegistry.spellsEnabled(player))
 		{
-			SpellCaster.shiftRight(player);
+			SpellRegistry.caster.shiftRight(player);
 		}
 
 		return null;

@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.net;
 
-import com.lothrazar.cyclicmagic.SpellCaster;
 import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -86,7 +85,7 @@ public class MessageKeyCast implements IMessage, IMessageHandler<MessageKeyCast,
 		// www.minecraftforge.net/forum/index.php/topic,20135.0.html
 
 		if (SpellRegistry.spellsEnabled(player)) {
-			SpellCaster.tryCastCurrent( player.worldObj, player, message.pos, message.side);
+			SpellRegistry.caster.tryCastCurrent( player.worldObj, player, message.pos, message.side);
 		}
 
 		return null;

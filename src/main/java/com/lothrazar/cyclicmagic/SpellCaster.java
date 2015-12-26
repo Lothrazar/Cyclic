@@ -9,18 +9,18 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 
 public class SpellCaster {
 
-	public static boolean isBlockedBySpellTImer(EntityPlayer player) {
+	public boolean isBlockedBySpellTImer(EntityPlayer player) {
 		PlayerPowerups props = PlayerPowerups.get(player);
 		return !(props.getSpellTimer() == 0);
 	}
-	public static boolean isBlockedBySpellTImer(PlayerPowerups props) { 
+	public boolean isBlockedBySpellTImer(PlayerPowerups props) { 
 		return !(props.getSpellTimer() == 0);
 	}
-	public static boolean tryCastCurrent(World world, EntityPlayer player, BlockPos pos, EnumFacing side) {
-		return tryCast(SpellCaster.getPlayerCurrentISpell(player),world,player,pos,side);
+	public boolean tryCastCurrent(World world, EntityPlayer player, BlockPos pos, EnumFacing side) {
+		return tryCast(SpellRegistry.caster.getPlayerCurrentISpell(player),world,player,pos,side);
 	}
 
-	public static boolean tryCast(ISpell spell, World world, EntityPlayer player, BlockPos pos, EnumFacing side) {
+	public boolean tryCast(ISpell spell, World world, EntityPlayer player, BlockPos pos, EnumFacing side) {
 
 		if (isBlockedBySpellTImer(player)) {
 			return false;
@@ -50,7 +50,7 @@ public class SpellCaster {
 		}
 	}
 
-	public static void shiftLeft(EntityPlayer player) {
+	public void shiftLeft(EntityPlayer player) {
 
 		PlayerPowerups props = PlayerPowerups.get(player);
 
@@ -60,7 +60,7 @@ public class SpellCaster {
 		UtilSound.playSoundAt(player, UtilSound.orb );
 	}
 
-	public static void shiftRight(EntityPlayer player) {
+	public void shiftRight(EntityPlayer player) {
 
 		PlayerPowerups props = PlayerPowerups.get(player);
 		
@@ -70,7 +70,7 @@ public class SpellCaster {
 		UtilSound.playSoundAt(player, UtilSound.orb );
 	}
  
-	public static void tickSpellTimer(EntityPlayer player) {
+	public void tickSpellTimer(EntityPlayer player) {
 		PlayerPowerups props = PlayerPowerups.get(player);
 		if (props.getSpellTimer() < 0) {
 			props.setSpellTimer(0);
@@ -80,7 +80,7 @@ public class SpellCaster {
 		}
 	}
 
-	public static ISpell getPlayerCurrentISpell(EntityPlayer player) {
+	public ISpell getPlayerCurrentISpell(EntityPlayer player) {
 
 		PlayerPowerups props = PlayerPowerups.get(player);
 
@@ -93,7 +93,7 @@ public class SpellCaster {
 		return current;
 	}
 
-	public static void toggleUnlock(EntityPlayer player, int spell_id) {
+	public void toggleUnlock(EntityPlayer player, int spell_id) {
 
 		PlayerPowerups props = PlayerPowerups.get(player);
 		

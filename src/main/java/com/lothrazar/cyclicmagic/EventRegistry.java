@@ -97,7 +97,7 @@ public class EventRegistry {
 		if (event.entityLiving instanceof EntityPlayer) {
 			SpellGhost.onPlayerUpdate(event);
 
-			SpellCaster.tickSpellTimer((EntityPlayer) event.entityLiving);
+			SpellRegistry.caster.tickSpellTimer((EntityPlayer) event.entityLiving);
 		}
 
 		PotionRegistry.tickSlowfall(event);
