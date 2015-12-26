@@ -17,6 +17,7 @@ public class SpellScreenRender {
 	private static final int manaWidth = 8;
 	private static final int manaHeight = 90;
 	private static final ResourceLocation manabar = new ResourceLocation(Const.MODID, "textures/spells/manabar.png");
+	private static final ResourceLocation manabar_empty = new ResourceLocation(Const.MODID, "textures/spells/manabar_empty.png");
 	
 	private void drawSpellHeader(PlayerPowerups props, ISpell spellCurrent) {
 		int dim = spellSize - 4, x = xmain+1, y = ymain-12;
@@ -30,12 +31,15 @@ public class SpellScreenRender {
 	}
 	
 	private void drawManabar(PlayerPowerups props){
-		 
+		int x = xmain-20, y = ymain-12;
+		
+		UtilTextureRender.drawTextureSimple(manabar_empty, x,y, manaWidth, manaHeight);
+		
 		float manaPercent = props.getMana() / SpellRegistry.caster.MAXMANA;
 		
 		double h = manaHeight * manaPercent;
 
-		UtilTextureRender.drawTextureSimple(manabar, xmain-20,ymain-12, manaWidth,MathHelper.floor_double(h));
+		UtilTextureRender.drawTextureSimple(manabar, x,y, manaWidth,MathHelper.floor_double(h));
 	}
 
 	private void drawCurrentSpell(PlayerPowerups props, ISpell spellCurrent) {
