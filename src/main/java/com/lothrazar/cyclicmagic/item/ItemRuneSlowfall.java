@@ -16,14 +16,17 @@ public class ItemRuneSlowfall  extends ItemRuneBase {
 	private final static float falldistance = 5;
 
 	@Override
-	protected void trigger(World world,Entity entityIn ) {
+	protected boolean trigger(World world,Entity entityIn ) {
 		//apply slowfall after falling for a while
 		if(entityIn instanceof EntityLivingBase && entityIn.fallDistance >= falldistance){
 			EntityLivingBase entity = (EntityLivingBase)entityIn;
 			
 			if(entity.isPotionActive(PotionRegistry.slowfall) == false){
 				PotionRegistry.addOrMergePotionEffect(entity, new PotionEffect(PotionRegistry.slowfall.id,seconds * Const.TICKS_PER_SEC));
+			
+				return true;
 			}
 		}
+		return false;
 	}
 }

@@ -30,7 +30,9 @@ public abstract class ItemRuneBase  extends Item {
 			
 			// tick once per second, if its turned on
 
-			trigger(worldIn, entityIn );
+			if(trigger(worldIn, entityIn )){
+				//TODO: drain mana/ particle sound/ ??
+			}
 		}
 		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
 	}
@@ -50,7 +52,7 @@ public abstract class ItemRuneBase  extends Item {
 	}
 	
 	//each one must implement this differently
-	protected abstract void trigger(World world,Entity entityIn );
+	protected abstract boolean trigger(World world,Entity entityIn );
 
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World worldIn, EntityPlayer playerIn) {

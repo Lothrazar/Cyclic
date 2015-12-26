@@ -19,7 +19,7 @@ public class ItemRuneCollector extends ItemRuneBase {
 	private final static float speed = 1.2F;
 
 	@Override
-	protected void trigger(World world,Entity entityIn ) {
+	protected boolean trigger(World world,Entity entityIn ) {
 		BlockPos pos = entityIn.getPosition();
 		int x = pos.getX(), y = pos.getY(), z = pos.getZ();
 
@@ -38,8 +38,6 @@ public class ItemRuneCollector extends ItemRuneBase {
 			moved++;
 		}
 
-		if (moved > 0) {
-			// do a particle or a durability?
-		}
+		return (moved > 0);
 	}
 }

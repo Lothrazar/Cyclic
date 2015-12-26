@@ -17,7 +17,7 @@ public class ItemRuneProtection  extends ItemRuneBase {
 	private final static float healthLimit = 10;//1 heart = 2 health
 
 	@Override
-	protected void trigger(World world,Entity entityIn ) {
+	protected boolean trigger(World world,Entity entityIn ) {
 		//apply slowfall after falling for a while
 		if(entityIn instanceof EntityLivingBase){
 			EntityLivingBase entity = (EntityLivingBase)entityIn;
@@ -26,7 +26,10 @@ public class ItemRuneProtection  extends ItemRuneBase {
 
 				PotionRegistry.addOrMergePotionEffect(entity, new PotionEffect(Potion.absorption.id,seconds * Const.TICKS_PER_SEC, PotionRegistry.V));
 				PotionRegistry.addOrMergePotionEffect(entity, new PotionEffect(Potion.resistance.id,seconds * Const.TICKS_PER_SEC, PotionRegistry.II));
+			
+				return true;
 			}
 		}
+		return false;
 	}
 }

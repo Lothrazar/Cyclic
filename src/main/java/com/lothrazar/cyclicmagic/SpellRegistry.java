@@ -40,7 +40,7 @@ public class SpellRegistry {
 		BaseSpell ghost;
 		BaseSpell phase;
 		SpellExpPotion waterwalk;
-		SpellExpPotion haste;
+		SpellExpPotion haste;//TODO: replace with night vision
 		BaseSpell rotate;
 		BaseSpell push;
 		SpellThrowTorch torch;

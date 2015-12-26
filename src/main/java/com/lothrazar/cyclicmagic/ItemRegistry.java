@@ -21,6 +21,7 @@ public class ItemRegistry {
 	public static ItemRuneCollector rune_collector;
 	public static ItemRuneSlowfall rune_slowfall;
 	public static ItemRuneProtection rune_protection;
+	public static ItemRuneHaste rune_haste;
 
 	public static void register() {
 		chest_sack = new ItemChestSack();
@@ -34,6 +35,9 @@ public class ItemRegistry {
 
 		waypoint_portal = new ItemWaypointPortal();
 		ItemRegistry.registerItem(waypoint_portal, "waypoint_portal");
+
+		rune_haste = new ItemRuneHaste();
+		ItemRegistry.registerItem(rune_haste, "rune_haste");
 
 		rune_collector = new ItemRuneCollector();
 		ItemRegistry.registerItem(rune_collector, "rune_collector");
