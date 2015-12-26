@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.spell;
 
 import com.lothrazar.cyclicmagic.projectile.EntityRespawnEgg;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
@@ -21,5 +22,11 @@ public class SpellThrowSpawnEgg extends BaseSpell implements ISpell {
 		}
 		return true;
 	}
-
+	
+	@Override
+	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos) {
+		
+		UtilSound.playSoundAt(player, UtilSound.toss);
+		super.onCastSuccess(world, player, pos);
+	}
 }

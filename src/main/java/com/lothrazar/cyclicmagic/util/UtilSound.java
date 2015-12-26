@@ -6,6 +6,7 @@ import net.minecraft.world.World;
 
 public class UtilSound {
 	public static final String fizz = "random.fizz";
+	public static final String toss = "random.bow";
 	public static final String orb = "random.orb";
 	public static final String snow = "dig.snow";
 	public static final float volume = 1.0F;
@@ -13,6 +14,8 @@ public class UtilSound {
 	public static final String portal =  "mob.endermen.portal";
 	public static final String splash = "game.neutral.swim.splash";
 	public static final String shears = "mob.sheep.shear";
+	public static final String drink = "random.drink";
+	public static final String click = "random.wood_click";
 
 	public static void playSoundAt(Entity player, String sound) {
 		player.worldObj.playSoundAtEntity(player, sound, volume,pitch);

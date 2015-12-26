@@ -1,17 +1,19 @@
 package com.lothrazar.cyclicmagic.spell;
 
 import com.lothrazar.cyclicmagic.item.ItemChestSack;
+import com.lothrazar.cyclicmagic.util.UtilParticle;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 
 public class SpellChestSack extends BaseSpell implements ISpell {
 
 	public SpellChestSack(int id,String name){
 		super(id,name);
-		this.cooldown = 10;
 	}
 
 	@Override
@@ -32,9 +34,14 @@ public class SpellChestSack extends BaseSpell implements ISpell {
 			return true;
 		}
  
-		//Util.spawnParticle(entityPlayer.worldObj, EnumParticleTypes.CRIT, pos);
-		//Util.playSoundAt(entityPlayer, "random.wood_click");
-		
 		return false;
+	}
+
+	@Override
+	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos) {
+		UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT, pos);
+		UtilSound.playSoundAt(player, UtilSound.click);
+		
+		super.onCastSuccess(world, player, pos);
 	}
 }

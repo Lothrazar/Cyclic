@@ -5,6 +5,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import com.lothrazar.cyclicmagic.projectile.EntityHarvestBolt;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 
 public class SpellThrowHarvest extends BaseSpell implements ISpell{
 
@@ -21,5 +22,12 @@ public class SpellThrowHarvest extends BaseSpell implements ISpell{
 			world.spawnEntityInWorld(new EntityHarvestBolt(world, player));
 		}
 		return true;
+	}
+	
+	@Override
+	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos) {
+		
+		UtilSound.playSoundAt(player, UtilSound.toss);
+		super.onCastSuccess(world, player, pos);
 	}
 }

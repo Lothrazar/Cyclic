@@ -45,7 +45,7 @@ public class SpellGhost extends  BaseSpell implements ISpell {
 
 	@Override
 	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos) {
-		UtilSound.playSoundAt(player, "random.drink");
+		UtilSound.playSoundAt(player, UtilSound.drink);
 
 		super.onCastSuccess(world, player, pos);
 	}

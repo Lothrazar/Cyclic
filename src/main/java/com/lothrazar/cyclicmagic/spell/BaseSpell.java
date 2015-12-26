@@ -85,7 +85,6 @@ public class BaseSpell implements ISpell {
 		UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT, pos);
 
 		if(player.capabilities.isCreativeMode == false){
-			System.out.println("drain "+this.getCost());
 			PlayerPowerups.get(player).drainManaBy(this.getCost());
 		}
 	}
