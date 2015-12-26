@@ -15,7 +15,6 @@ public class SpellExpPotion extends BaseSpell implements ISpell {
 	private int potionAmp;
 	public SpellExpPotion(int id,String name){
 		super(id,name);
-		cooldown = 5;
 	}
 
 	public SpellExpPotion setPotion(int id, int effectDuration, int effectAmplifier) {

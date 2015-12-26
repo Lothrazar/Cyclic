@@ -11,7 +11,6 @@ import net.minecraft.world.World;
 public class SpellScaffolding extends BaseSpell {
 	public SpellScaffolding(int id,String name){
 		super(id,name);
-		cooldown = 5;
 	}
  
 	@Override

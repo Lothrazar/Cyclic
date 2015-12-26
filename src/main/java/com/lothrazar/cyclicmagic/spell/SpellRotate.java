@@ -10,7 +10,6 @@ import net.minecraft.world.World;
 public class SpellRotate extends BaseSpell {
 	public SpellRotate(int id,String name){
 		super(id,name);
-		cooldown = 5;
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })

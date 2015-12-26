@@ -14,7 +14,6 @@ import net.minecraft.world.World;
 public class SpellCarbonPaper extends BaseSpell implements ISpell {
 	public SpellCarbonPaper(int id ,String name){
 		super(id,name);
-		this.cooldown = 60;
 	}
 	@Override
 	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side ) {

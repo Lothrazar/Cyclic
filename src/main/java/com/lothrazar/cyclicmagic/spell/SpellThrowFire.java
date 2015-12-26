@@ -11,8 +11,7 @@ public class SpellThrowFire extends BaseSpell implements ISpell {
 
 	public SpellThrowFire(int id,String name){
 		super(id,name);
-		this.cooldown = 30;
-		this.cost = 40;
+		this.cost = 5;
 	}
 
 	@Override

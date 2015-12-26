@@ -11,7 +11,6 @@ public class SpellThrowWater extends BaseSpell implements ISpell {
 
 	public SpellThrowWater(int id,String name){
 		super(id,name);
-		cooldown = 25;
 	}
  
 	@Override

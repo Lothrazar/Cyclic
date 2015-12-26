@@ -19,7 +19,6 @@ public class SpellGhost extends  BaseSpell implements ISpell {
 
 	public SpellGhost(int id, String name){
 		super(id,name);
-		cooldown = 80;
 	}
 
 	@Override

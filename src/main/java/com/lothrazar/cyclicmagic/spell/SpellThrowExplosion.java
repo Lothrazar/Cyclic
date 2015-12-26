@@ -10,8 +10,7 @@ import net.minecraft.world.World;
 public class SpellThrowExplosion extends BaseSpell implements ISpell {
 	public SpellThrowExplosion(int id,String name){
 		super(id,name);
-		this.cooldown = 20;
-		this.cost = 30;
+		this.cost = 10;
 	}
 
 	@Override

@@ -35,7 +35,7 @@ public class BaseSpell implements ISpell {
 		ID = id;
 		name = n;
 		cost = 1;
-		cooldown = 20;
+		cooldown = 5;
 		
 		icon = new ResourceLocation(Const.MODID, "textures/spells/"+name+".png");
 	}

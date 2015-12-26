@@ -9,7 +9,6 @@ import net.minecraft.world.World;
 public class SpellPull extends BaseSpell {
 	public SpellPull(int id,String name){
 		super(id,name);
-		cooldown = 5;
 	}
 
 	@Override

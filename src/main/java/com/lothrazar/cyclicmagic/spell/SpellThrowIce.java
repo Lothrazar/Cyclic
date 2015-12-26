@@ -11,7 +11,6 @@ public class SpellThrowIce extends BaseSpell implements ISpell {
 
 	public SpellThrowIce(int id,String name){
 		super(id,name);
-		cooldown = 10;
 	}
 	@Override
 	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side ) {
