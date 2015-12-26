@@ -56,11 +56,7 @@ public class MasterWand extends Item {
 	{ 
 		return EnumRarity.EPIC;  
 	}
-	@Override
-	public boolean doesSneakBypassUse(World world, BlockPos pos, EntityPlayer player) {
-		return true;// default false
-	}
- 
+	
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn) {
 

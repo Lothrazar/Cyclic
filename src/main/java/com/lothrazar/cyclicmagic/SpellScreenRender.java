@@ -37,7 +37,7 @@ public class SpellScreenRender {
 		ISpell prev = SpellRegistry.getSpellFromID(props.prevId(spellCurrent.getID()));
   
 		if (prev != null) {
-			int x = xmain + 6;
+			int x = xmain + 9;
 			int y = ymain + spellSize;
 			int dim = spellSize / 2;
 			UtilTextureRender.drawTextureSquare(prev.getIconDisplay(), x, y, dim);
@@ -45,8 +45,8 @@ public class SpellScreenRender {
 			prev = SpellRegistry.getSpellFromID(props.prevId(prev.getID()));
 		
 			if (prev != null ) {
-				x += 5;//11
-				y += 14;//14
+				x += 5;
+				y += 14;
 				dim -= 2;
 				UtilTextureRender.drawTextureSquare(prev.getIconDisplay(), x, y, dim);
 
@@ -76,7 +76,7 @@ public class SpellScreenRender {
 		ISpell next = SpellRegistry.getSpellFromID(props.nextId(spellCurrent.getID()));
 
 		if (next != null) {
-			int x = xmain - 3;
+			int x = xmain - 5;
 			int y = ymain + spellSize;
 			int dim = spellSize / 2;
 			UtilTextureRender.drawTextureSquare(next.getIconDisplay(), x, y, dim);
