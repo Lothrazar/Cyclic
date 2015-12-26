@@ -29,4 +29,9 @@ public class ItemRuneSlowfall  extends RuneBaseAbstract {
 		}
 		return false;
 	}
+
+	@Override
+	protected int getCost() {
+		return 10;
+	}
 }

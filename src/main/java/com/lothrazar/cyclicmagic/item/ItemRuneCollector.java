@@ -40,4 +40,9 @@ public class ItemRuneCollector extends RuneBaseAbstract {
 
 		return (moved > 0);
 	}
+
+	@Override
+	protected int getCost() {
+		return 0;
+	}
 }

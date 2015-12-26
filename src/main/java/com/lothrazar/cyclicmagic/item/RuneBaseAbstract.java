@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
 import com.lothrazar.cyclicmagic.Const;
+import com.lothrazar.cyclicmagic.PlayerPowerups;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -26,14 +27,22 @@ public abstract class RuneBaseAbstract  extends Item {
 
 	@Override
 	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-		if (this.getMode(stack) == MODE_ON && worldIn.getWorldTime() % Const.TICKS_PER_SEC == 0) {
+		if (this.getMode(stack) == MODE_ON && worldIn.getWorldTime() % Const.TICKS_PER_SEC == 0 && entityIn instanceof EntityPlayer) {
 			
+			PlayerPowerups props =  PlayerPowerups.get((EntityPlayer)entityIn);
 			// tick once per second, if its turned on
 
-			if(trigger(worldIn, entityIn )){
-				//TODO: drain mana/ particle sound/ ??
+			//some runes might be free. but if not they require the mana
+			if(this.getCost() <= props.getMana() || this.getCost() == 0){
+				
+				if(trigger(worldIn, entityIn )){
+					if(this.getCost() > 0){// collector rune is free
+						props.drainManaBy(this.getCost());
+					}
+				}
 			}
 		}
+		
 		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
 	}
 
@@ -43,23 +52,25 @@ public abstract class RuneBaseAbstract  extends Item {
 		String base = "rune.mode.";
 		if(this.getMode(stack) == MODE_ON){
 			tooltip.add( EnumChatFormatting.GREEN + StatCollector.translateToLocal(base + "on"));
+			tooltip.add(StatCollector.translateToLocal("cost.exp") + this.getCost());
 		}
 		else{
 			tooltip.add( EnumChatFormatting.RED + StatCollector.translateToLocal(base + "off"));
 		}
-		 
+
+		
 		super.addInformation(stack, playerIn, tooltip, advanced);
 	}
 	
 	//each one must implement this differently
 	protected abstract boolean trigger(World world,Entity entityIn );
+	protected abstract int getCost();
 
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World worldIn, EntityPlayer playerIn) {
 
 		if (worldIn.isRemote == false) {
 			this.toggleMode(stack);
-			// playerIn.addChatComponentMessage(new ChatComponentText(this.getModeName(this.getMode(stack))));
 		}
 
 		return stack;

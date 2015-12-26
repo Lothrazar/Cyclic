@@ -32,4 +32,9 @@ public class ItemRuneHaste  extends RuneBaseAbstract {
 		
 		return false;
 	}
+
+	@Override
+	protected int getCost() {
+		return 5;
+	}
 }

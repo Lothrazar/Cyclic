@@ -13,8 +13,8 @@ public class ItemRuneProtection  extends RuneBaseAbstract {
 		super();
 	}
 
+	private final static float healthLimit = 6;//1 heart = 2 health
 	private final static int seconds = 20;
-	private final static float healthLimit = 10;//1 heart = 2 health
 
 	@Override
 	protected boolean trigger(World world,Entity entityIn ) {
@@ -24,9 +24,10 @@ public class ItemRuneProtection  extends RuneBaseAbstract {
 			
 			boolean didit = false;
 			
-			if(entity.getHealth() < healthLimit && entity.isPotionActive(Potion.absorption.id) == false){
-
+			if(entity.getHealth() <= healthLimit && entity.isPotionActive(Potion.absorption.id) == false){
+			
 				PotionRegistry.addOrMergePotionEffect(entity, new PotionEffect(Potion.absorption.id,seconds * Const.TICKS_PER_SEC, PotionRegistry.V));
+			
 				PotionRegistry.addOrMergePotionEffect(entity, new PotionEffect(Potion.resistance.id,seconds * Const.TICKS_PER_SEC, PotionRegistry.I));
 			
 				didit = true;
@@ -41,5 +42,10 @@ public class ItemRuneProtection  extends RuneBaseAbstract {
 			return didit;//can trigger both fire and regular
 		}
 		return false;
+	}
+
+	@Override
+	protected int getCost() {
+		return 20;
 	}
 }
