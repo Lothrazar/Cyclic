@@ -20,6 +20,7 @@ public class ItemRegistry {
 	//convention: runes turn on and off
 	public static ItemRuneCollector rune_collector;
 	public static ItemRuneSlowfall rune_slowfall;
+	public static ItemRuneProtection rune_protection;
 
 	public static void register() {
 		chest_sack = new ItemChestSack();
@@ -36,6 +37,9 @@ public class ItemRegistry {
 
 		rune_collector = new ItemRuneCollector();
 		ItemRegistry.registerItem(rune_collector, "rune_collector");
+
+		rune_protection = new ItemRuneProtection();
+		ItemRegistry.registerItem(rune_protection, "rune_protection");
 
 		rune_slowfall = new ItemRuneSlowfall();
 		ItemRegistry.registerItem(rune_slowfall, "rune_slowfall");
