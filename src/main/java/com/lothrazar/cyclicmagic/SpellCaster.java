@@ -102,8 +102,8 @@ public class SpellCaster {
 		
 		props.toggleOneSpell(spell_id);
 	}
-	final int rechargeCost = 100;
-	final int rechargeAmt = 10;
+	final int rechargeCost = 20;
+	final int rechargeAmt = 5;
 	public void rechargeWithExp(EntityPlayer player) {
 		PlayerPowerups props = PlayerPowerups.get(player);
 		
