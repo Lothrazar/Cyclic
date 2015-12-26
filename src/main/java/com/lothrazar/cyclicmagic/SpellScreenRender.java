@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import com.lothrazar.cyclicmagic.spell.ISpell;
@@ -9,9 +10,13 @@ import com.lothrazar.cyclicmagic.util.UtilTextureRender;
 
 public class SpellScreenRender {
 
+	private static final int xmain = 30;
 	private static final int ymain = 14;
-	private static final int xmain = 20;
 	private static final int spellSize = 16;
+	private static final int manaWidth = 8;
+	private static final int manaHeight = 90;
+	private final static ResourceLocation manabar = new ResourceLocation(Const.MODID, "textures/spells/manabar.png");
+	
 
 	private static void drawSpellHeader(PlayerPowerups props, ISpell spellCurrent) {
 		int dim = spellSize - 4, x = xmain+1, y = ymain-12;
@@ -107,6 +112,13 @@ public class SpellScreenRender {
 			}
 		}
 	}
+	
+	private static void drawManabar(PlayerPowerups props){
+		
+		int x = xmain-20, y = ymain-12 , w=manaWidth, h=manaHeight;
+		  
+		UtilTextureRender.drawTextureSimple(manabar, x,y, w,h);
+	}
 
 	@SideOnly(Side.CLIENT)
 	public static void drawSpellWheel() {
@@ -123,5 +135,7 @@ public class SpellScreenRender {
 		drawNextSpells(props, spellCurrent);
 
 		drawPrevSpells(props, spellCurrent);
+		
+		drawManabar(props);
 	}
 }
