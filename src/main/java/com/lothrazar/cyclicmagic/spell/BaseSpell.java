@@ -9,7 +9,7 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.ItemRegistry;
-import com.lothrazar.cyclicmagic.util.UtilExperience;
+import com.lothrazar.cyclicmagic.PlayerPowerups;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 
@@ -83,9 +83,12 @@ public class BaseSpell implements ISpell {
 			pos = player.getPosition();
 		}
 		UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT, pos);
-
+/*
 		if (this.getCost() > 0 && player.capabilities.isCreativeMode == false) {
 			UtilExperience.drainExp(player, this.getCost());
+		}*/
+		if(player.capabilities.isCreativeMode == false){
+			PlayerPowerups.get(player).drainManaBy(this.getCost());
 		}
 	}
 
@@ -104,11 +107,10 @@ public class BaseSpell implements ISpell {
 			return false;
 		}
 		
-		//TODO: mana instead of xp
-		if(getCost() > 0 && getCost() > UtilExperience.getExpTotal(player)){
-			return false;//not enough exp
+		if( this.getCost() > PlayerPowerups.get(player).getMana()){
+			System.out.println("not enough mana");
+			return false;
 		}
-			
 		return true;
 	}
 

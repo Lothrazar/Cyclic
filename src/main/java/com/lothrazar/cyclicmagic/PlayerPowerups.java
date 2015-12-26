@@ -214,11 +214,19 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 	public final int getMana() {
 		return this.player.getDataWatcher().getWatchableObjectInt(MANA_WATCHER);
 	}
-	public final void setMana(int m) {
-		if(m <= MAXMANA)
-			this.player.getDataWatcher().updateObject(MANA_WATCHER, m);
-	}
 	static final float MAXMANA = 90;
+	public final void setMana(int m) {
+		if(m < 0){m = 0;}
+		int filled = (int) Math.max(m, MAXMANA);
+		
+		this.player.getDataWatcher().updateObject(MANA_WATCHER, filled);
+	}
+	public final void drainManaBy(int m) {
+		this.setMana(this.getMana() - m);
+	}
+	public void rechargeManaBy(int m) {
+		this.setMana(this.getMana() + m);
+	}
 	// http://www.minecraftforum.net/forums/mapping-and-modding/mapping-and-modding-tutorials/1571567-forge-1-6-4-1-8-eventhandler-and
 
 	public void copy(PlayerPowerups props) {

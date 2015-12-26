@@ -5,6 +5,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import com.lothrazar.cyclicmagic.spell.ISpell;
+import com.lothrazar.cyclicmagic.util.UtilExperience;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 
 public class SpellCaster {
@@ -98,5 +99,26 @@ public class SpellCaster {
 		PlayerPowerups props = PlayerPowerups.get(player);
 		
 		props.toggleOneSpell(spell_id);
+	}
+	final int rechargeCost = 100;
+	final int rechargeAmt = 10;
+	public void rechargeWithExp(EntityPlayer player) {
+		PlayerPowerups props = PlayerPowerups.get(player);
+		System.out.println("rechargeWithExp attempt");
+		
+		if(player.capabilities.isCreativeMode){ //always set full
+			PlayerPowerups.get(player).setMana((int)PlayerPowerups.MAXMANA);
+		}
+		else if(rechargeCost < UtilExperience.getExpTotal(player)){
+
+			System.out.println("try to recharge");
+			props.rechargeManaBy(rechargeAmt);
+
+			UtilExperience.drainExp(player, rechargeCost);
+		} 
+		else{
+			System.out.println("cannot recharge");
+			UtilSound.playSoundAt(player, UtilSound.fizz);
+		}
 	}
 }

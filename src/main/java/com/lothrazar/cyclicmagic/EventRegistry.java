@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
@@ -57,11 +58,15 @@ public class EventRegistry {
 		if(event.action == Action.LEFT_CLICK_BLOCK && event.world.getBlockState(event.pos) != null
 				&& event.entityPlayer.getHeldItem() != null && event.entityPlayer.getHeldItem().getItem() == ItemRegistry.master_wand ){
 		
-			if(event.world.getBlockState(event.pos).getBlock() == Blocks.enchanting_table){
+			Block blockHit = event.world.getBlockState(event.pos).getBlock();
+			if(blockHit == Blocks.enchanting_table){
 
 				Minecraft.getMinecraft().displayGuiScreen(new GuiSpellbook(event.entityPlayer));
 			}
-			//TODO: else maybe other things left clicking other blocks
+			else if(blockHit == Blocks.bookshelf){
+				
+				SpellRegistry.caster.rechargeWithExp( event.entityPlayer);
+			}
 		}
 	}
 
