@@ -13,9 +13,7 @@ public interface ISpell {
 
 	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side);
 
-	public int getCostExp();
-
-	public int getCostDurability();
+	public int getCost();
 
 	public int getCastCooldown();
 

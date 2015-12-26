@@ -17,7 +17,6 @@ public class SpellLinkingPortal  extends BaseSpell implements ISpell {
 	public SpellLinkingPortal(int id,String name){
 		super(id,name);
 		this.cooldown = 5;
-		this.durability = 1000;
 		this.experience = 1000;
 	}
 	@Override

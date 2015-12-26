@@ -26,7 +26,6 @@ public class BaseSpell implements ISpell {
 	private ResourceLocation icon;
 	private int ID;
 	private String name;
-	protected int durability;
 	protected int experience;
 	protected int cooldown;
 	private final static ResourceLocation header = new ResourceLocation(Const.MODID, "textures/spells/exp_cost_dummy.png");
@@ -35,8 +34,6 @@ public class BaseSpell implements ISpell {
 	public BaseSpell(int id, String n) {
 		ID = id;
 		name = n;
-		// default non-zero costs
-		durability = 100;
 		experience = 1;
 		cooldown = 20;
 		
@@ -59,16 +56,10 @@ public class BaseSpell implements ISpell {
 	}
 
 	@Override
-	public int getCostExp() {
+	public int getCost() {
 		return experience;
 	}
 
-	@Override
-	public int getCostDurability() {
-		return durability;
-	}
-
-	
 	@Override
 	public void onCastFailure(World world, EntityPlayer player, BlockPos pos) {
 
@@ -93,9 +84,9 @@ public class BaseSpell implements ISpell {
 		}
 		UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT, pos);
 
-		System.out.println("cast success, draining cost exp "+this.getCostExp());
-		if (this.getCostExp() > 0) {
-			UtilExperience.drainExp(player, this.getCostExp());
+		System.out.println("cast success, draining cost exp "+this.getCost());
+		if (this.getCost() > 0) {
+			UtilExperience.drainExp(player, this.getCost());
 		}
 		/*
 		if (this.getCostDurability() > 0 && player.getHeldItem() != null) {
@@ -116,19 +107,11 @@ public class BaseSpell implements ISpell {
 		}
 		
 		if( player.getHeldItem() == null ||  player.getHeldItem().getItem() != ItemRegistry.master_wand){
-			System.out.println("cannot cast - no wand");
 			return false;
 		}
 		
-		int currentCharge = player.getHeldItem().getMaxDamage() - player.getHeldItem().getItemDamage();
-		
-		if(getCostDurability() > 0 && currentCharge < this.getCostDurability()){
-			System.out.println("cannot cast - need charge "+getCostDurability());
-			return false;//not enough durability
-		}
-		
-		if(getCostExp() > 0 && getCostExp() > UtilExperience.getExpTotal(player)){
-			System.out.println("cannot cast - need EXP "+getCostExp());
+		if(getCost() > 0 && getCost() > UtilExperience.getExpTotal(player)){
+			System.out.println("cannot cast - need EXP "+getCost());
 			return false;//not enough exp
 		}
 			

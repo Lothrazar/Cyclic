@@ -60,7 +60,6 @@ public class ModMain {
 
 		proxy.register();
 		
-		System.out.println("item collector add information on range, show on/off status");
 		System.out.println("Config system? hard code each spell id, instead of ++ each time? maybe?");
 
 		System.out.println("waypoint sound, particle, lang name - check partilces on client side system with packet");

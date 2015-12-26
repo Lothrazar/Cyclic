@@ -12,7 +12,6 @@ public class SpellThrowLightning extends BaseSpell implements ISpell {
 		super(id,name);
 		this.cooldown = 200;
 		this.experience = 200;
-		this.durability = 500;
 	}
  
 	@Override
