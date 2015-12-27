@@ -1,10 +1,13 @@
 package com.lothrazar.cyclicmagic.item;
 
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.PotionRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 public class ItemRuneSlowfall  extends RuneBaseAbstract {
@@ -33,5 +36,14 @@ public class ItemRuneSlowfall  extends RuneBaseAbstract {
 	@Override
 	protected int getCost() {
 		return 10;
+	}
+
+	@Override
+	protected List<String> getInfo() {
+		List<String> list = new ArrayList<String>();
+
+		list.add(StatCollector.translateToLocal("rune.slowfall.info"));
+		
+		return list;
 	}
 }

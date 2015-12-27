@@ -33,6 +33,7 @@ public class ItemWaypointPortal extends Item
 	 
 		held.getTagCompound().setString(KEY_LOC , UtilNBT.posToStringCSV(player.getPosition().up()));	
 		held.getTagCompound().setInteger(KEY_DIM , player.dimension);	
+		System.out.println("TODO: Dimension name?");
 		held.getTagCompound().setString(KEY_BIOME , player.worldObj.getBiomeGenForCoords(player.getPosition()).biomeName);		
 	} 
 

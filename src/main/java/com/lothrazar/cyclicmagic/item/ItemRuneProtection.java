@@ -1,11 +1,14 @@
 package com.lothrazar.cyclicmagic.item;
 
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.PotionRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 public class ItemRuneProtection  extends RuneBaseAbstract {
@@ -47,5 +50,15 @@ public class ItemRuneProtection  extends RuneBaseAbstract {
 	@Override
 	protected int getCost() {
 		return 20;
+	}
+
+	@Override
+	protected List<String> getInfo() {
+		List<String> list = new ArrayList<String>();
+
+		list.add(StatCollector.translateToLocal("rune.protection.info1"));
+		list.add(StatCollector.translateToLocal("rune.protection.info2"));
+		
+		return list;
 	}
 }

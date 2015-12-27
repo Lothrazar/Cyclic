@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
+import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.PlayerPowerups;
 import net.minecraft.entity.Entity;
@@ -58,6 +59,12 @@ public abstract class RuneBaseAbstract  extends Item {
 			tooltip.add( EnumChatFormatting.RED + StatCollector.translateToLocal(base + "off"));
 		}
 
+		if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)){
+			tooltip.addAll(this.getInfo());
+		}
+		else{
+			tooltip.add(EnumChatFormatting.GRAY + StatCollector.translateToLocal("rune.shift"));
+		}
 		
 		super.addInformation(stack, playerIn, tooltip, advanced);
 	}
@@ -65,6 +72,7 @@ public abstract class RuneBaseAbstract  extends Item {
 	//each one must implement this differently
 	protected abstract boolean trigger(World world,Entity entityIn );
 	protected abstract int getCost();
+	protected abstract List<String> getInfo();
 
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World worldIn, EntityPlayer playerIn) {

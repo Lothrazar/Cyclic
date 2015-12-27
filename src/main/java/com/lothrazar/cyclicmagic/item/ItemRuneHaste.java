@@ -1,5 +1,7 @@
 package com.lothrazar.cyclicmagic.item;
 
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.PotionRegistry;
 import net.minecraft.entity.Entity;
@@ -7,6 +9,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemTool;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 public class ItemRuneHaste  extends RuneBaseAbstract {
@@ -36,5 +39,14 @@ public class ItemRuneHaste  extends RuneBaseAbstract {
 	@Override
 	protected int getCost() {
 		return 5;
+	}
+
+	@Override
+	protected List<String> getInfo() {
+		List<String> list = new ArrayList<String>();
+		
+		list.add(StatCollector.translateToLocal("rune.haste.info"));
+		
+		return list;
 	}
 }

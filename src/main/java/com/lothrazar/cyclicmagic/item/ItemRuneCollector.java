@@ -1,11 +1,13 @@
 package com.lothrazar.cyclicmagic.item;
 
+import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import com.lothrazar.cyclicmagic.util.Vector3;
 
@@ -44,5 +46,14 @@ public class ItemRuneCollector extends RuneBaseAbstract {
 	@Override
 	protected int getCost() {
 		return 0;
+	}
+
+	@Override
+	protected List<String> getInfo() {
+		List<String> list = new ArrayList<String>();
+
+		list.add(StatCollector.translateToLocal("rune.collector.info"));
+		
+		return list;
 	}
 }
