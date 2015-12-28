@@ -114,6 +114,9 @@ public class SpellRegistry {
 		
 		SpellLinkingPortal waypoint = new SpellLinkingPortal(++spellId,"waypoint");
 		registerSpell(waypoint);
+		
+		SpellBuilder builder = new SpellBuilder(++spellId,"builder");
+		registerSpell(builder);
 	}
 
 	public static ISpell getSpellFromID(int id) {
