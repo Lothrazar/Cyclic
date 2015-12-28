@@ -117,6 +117,9 @@ public class SpellRegistry {
 		
 		SpellBuilder builder = new SpellBuilder(++spellId,"builder");
 		registerSpell(builder);
+		
+		SpellReplacer replacer = new SpellReplacer(++spellId,"replacer");
+		registerSpell(replacer);
 	}
 
 	public static ISpell getSpellFromID(int id) {

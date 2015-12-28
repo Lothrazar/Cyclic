@@ -15,10 +15,6 @@ public class SpellPhasing extends BaseSpell implements ISpell {
 	}
 
 	@Override
-	public int getCastCooldown() {
-		return cooldown;
-	}
-	@Override
 	public boolean canPlayerCast(World world, EntityPlayer player, BlockPos pos) {
 		if (super.canPlayerCast(world, player, pos) == false) {
 			return false;
