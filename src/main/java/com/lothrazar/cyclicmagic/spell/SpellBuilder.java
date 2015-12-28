@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.spell;
 
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -39,18 +40,17 @@ public class SpellBuilder extends BaseSpell {
 				break;
 			}
 		}
-		// damn too bad this is private
-		// int slot =
-		// player.inventory.getInventorySlotContainItem(Item.getItemFromBlock(placeState.getBlock()));
-		//if (player.inventory.hasItem(Item.getItemFromBlock(placeState.getBlock()))) {
 
-			if (world.setBlockState(placePos, placeState)) {
-				// if it worked
+		if (world.setBlockState(placePos, placeState)) {
 
-				player.inventory.decrStackSize(slotFound, 1);
-				return true;
+			player.inventory.decrStackSize(slotFound, 1);
+			
+			if(placeState.getBlock().stepSound != null && placeState.getBlock().stepSound.getBreakSound() != null){
+				UtilSound.playSoundAt(player, placeState.getBlock().stepSound.getPlaceSound());
 			}
-		//}
+			
+			return true;
+		}
 
 		return false;
 	}
@@ -58,7 +58,7 @@ public class SpellBuilder extends BaseSpell {
 	@Override
 	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos) {
 
-		// UtilSound.playSoundAt(player, UtilSound.toss);
-		super.onCastSuccess(world, player, pos);
+
+		//this is here to stop the default success sound from playing
 	}
 }
