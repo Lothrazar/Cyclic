@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.spell;
 
 import com.lothrazar.cyclicmagic.util.UtilSound;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -15,6 +16,8 @@ public class SpellBuilder extends BaseSpell {
 		super(id, n);
 		this.cooldown = 1;
 	}
+	
+	
 
 	@Override
 	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side) {
@@ -32,21 +35,27 @@ public class SpellBuilder extends BaseSpell {
 		BlockPos placePos = pos.offset(side);
 
 		IBlockState placeState = world.getBlockState(pos);
-		int meta = placeState.getBlock().getMetaFromState(placeState);
-		int slotFound = -1;
-		ItemStack curr;
+		//int meta = placeState.getBlock().getMetaFromState(placeState);
+		//Block.isEqualTo(blockIn, other)
 		//TODO: meta is not perfect.
 		//since now it treats top/bottom slabs and stair rotations as all different.
+		//instead find out what 'damage' meta gets dropped. so for example, top slabs and bottom slabs of the same type (eg netherbrick)
+		//drop the same damage
+		int meta = placeState.getBlock().damageDropped(placeState);
+		ItemStack compareStack = new ItemStack(placeState.getBlock(), 1, meta);
+		int slotFound = -1;
+		ItemStack curr;
 		for (int i = 0; i < player.inventory.getSizeInventory(); ++i) {
 			curr = player.inventory.getStackInSlot(i);
 
-			if (curr != null && curr.getItem() == Item.getItemFromBlock(placeState.getBlock()) && curr.getMetadata() == meta) {
+			// && curr.getItem() == Item.getItemFromBlock(placeState.getBlock()) && curr.getMetadata() == meta
+			if (curr != null && curr.isItemEqual(compareStack)) {
 				slotFound = i;
 				break;
 			}
 		}
 		
-		if(slotFound < 0){
+		if(slotFound < 0 ){
 			return false;
 		}
 
