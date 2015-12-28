@@ -36,7 +36,8 @@ public class SpellReplacer extends BaseSpell {
 		}
 		
 		//if there is a block here, we might have to stop
-		Block blockHere = world.getBlockState(pos).getBlock();
+		IBlockState stateHere = world.getBlockState(pos);
+		Block blockHere = stateHere.getBlock();
 
 		if(blockHere.getBlockHardness(world, pos) == -1){
 			return false; // is unbreakable-> like bedrock
@@ -54,7 +55,13 @@ public class SpellReplacer extends BaseSpell {
 			return false;
 		}
 		
-		IBlockState placeState = Block.getBlockFromItem(toPlace.getItem()).getDefaultState();
+		//int toplaceMeta = toPlace.getMetadata()
+		IBlockState placeState = Block.getBlockFromItem(toPlace.getItem()).getStateFromMeta(toPlace.getMetadata());
+		 
+		if(placeState.getBlock() == blockHere && blockHere.getMetaFromState(stateHere) == toPlace.getMetadata()){
+			
+			return false;//dont replace cobblestone with cobblestone
+		}
  
 		if (world.destroyBlock(pos, true) && world.setBlockState(pos, placeState)) {
 
