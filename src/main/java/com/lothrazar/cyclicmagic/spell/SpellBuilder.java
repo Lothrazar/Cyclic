@@ -26,12 +26,17 @@ public class SpellBuilder extends BaseSpell {
 			return false;
 		}
 
+        if(!player.capabilities.allowEdit) {
+        	return false;
+        }
 		BlockPos placePos = pos.offset(side);
 
 		IBlockState placeState = world.getBlockState(pos);
 		int meta = placeState.getBlock().getMetaFromState(placeState);
 		int slotFound = -1;
 		ItemStack curr;
+		//TODO: meta is not perfect.
+		//since now it treats top/bottom slabs and stair rotations as all different.
 		for (int i = 0; i < player.inventory.getSizeInventory(); ++i) {
 			curr = player.inventory.getStackInSlot(i);
 
@@ -45,6 +50,16 @@ public class SpellBuilder extends BaseSpell {
 			return false;
 		}
 
+		
+		if(world.isAirBlock(placePos) == false
+				 &&	world.getBlockState(placePos).getBlock() != null
+				 && world.getBlockState(placePos).getBlock().isReplaceable(world, placePos)){
+			//if its not air but its a replaceable block like torches/grass/water, try to break it first
+			if(world.setBlockToAir(placePos) == false){
+				return false;//if we cant set it to air, we cannot continue
+			}
+		}
+		
 		if (world.setBlockState(placePos, placeState)) {
 
 			player.inventory.decrStackSize(slotFound, 1);
