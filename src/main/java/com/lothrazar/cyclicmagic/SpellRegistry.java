@@ -15,7 +15,6 @@ public class SpellRegistry {
 
 	private static void registerSpell(ISpell spell){
 		spellbook.add(spell);
-		//System.out.println("spell "+spell.getID()+ " registered "+spell.getName());
 	}
 	
 	public static ISpell getDefaultSpell() {
@@ -31,10 +30,9 @@ public class SpellRegistry {
 		screen = new SpellScreenRender();
 		caster = new SpellCaster();
 		spellbook = new ArrayList<ISpell>();
+		//Map<String,Integer> idMap = new HashMap<String,Integer>();
 
 		int potionDuration = Const.TICKS_PER_SEC * 20;
-
-		int spellId = -1;//the smallest spell gets id zero
 
 		// used to be public statics
 		BaseSpell ghost;
@@ -47,78 +45,78 @@ public class SpellRegistry {
 		SpellThrowFishing fishing;
 		BaseSpell carbon;
 
-		ghost = new SpellGhost(++spellId,"ghost");
+		ghost = new SpellGhost(0,"ghost");
 		registerSpell(ghost);
 		
-		phase = new SpellPhasing(++spellId,"phasing");
+		phase = new SpellPhasing(1,"phasing");
 		registerSpell(phase);
 
-		waterwalk = new SpellExpPotion(++spellId,"waterwalk");
+		waterwalk = new SpellExpPotion(2,"waterwalk");
 		waterwalk.setPotion(PotionRegistry.waterwalk.id, potionDuration, PotionRegistry.I);
 		registerSpell(waterwalk);
 
-		nightvision = new SpellExpPotion(++spellId,"nightvision");
+		nightvision = new SpellExpPotion(3,"nightvision");
 		nightvision.setPotion(Potion.nightVision.id, potionDuration, PotionRegistry.I);
 		registerSpell(nightvision);
 
-		rotate = new SpellRotate(++spellId,"rotate"); 
+		rotate = new SpellRotate(4,"rotate"); 
 		registerSpell(rotate);
 
-		push = new SpellPush(++spellId,"push");
+		push = new SpellPush(5,"push");
 		registerSpell(push);
 
-		SpellPull pull = new SpellPull(++spellId,"pull");
+		SpellPull pull = new SpellPull(6,"pull");
 		registerSpell(pull);
 
-		torch = new SpellThrowTorch(++spellId,"torch");
+		torch = new SpellThrowTorch(7,"torch");
 		registerSpell(torch);
 
-		fishing = new SpellThrowFishing(++spellId,"fishing");
+		fishing = new SpellThrowFishing(8,"fishing");
 		registerSpell(fishing);
 
-		SpellThrowExplosion explode = new SpellThrowExplosion(++spellId,"explode");
+		SpellThrowExplosion explode = new SpellThrowExplosion(9,"explode");
 		registerSpell(explode);
 
-		SpellThrowFire fire = new SpellThrowFire(++spellId,"fire");
+		SpellThrowFire fire = new SpellThrowFire(10,"fire");
 		registerSpell(fire);
 
-		SpellThrowIce ice = new SpellThrowIce(++spellId,"ice");
+		SpellThrowIce ice = new SpellThrowIce(11,"ice");
 		registerSpell(ice);
 
-		SpellThrowLightning lightning = new SpellThrowLightning(++spellId,"lightning");
+		SpellThrowLightning lightning = new SpellThrowLightning(12,"lightning");
 		registerSpell(lightning);
 
-		SpellThrowShear shear = new SpellThrowShear(++spellId,"shear");
+		SpellThrowShear shear = new SpellThrowShear(13,"shear");
 		registerSpell(shear);
 
-		SpellThrowWater water = new SpellThrowWater(++spellId,"water");
+		SpellThrowWater water = new SpellThrowWater(14,"water");
 		registerSpell(water);
 
-		SpellScaffolding scaffold = new SpellScaffolding(++spellId,"scaffold");
+		SpellScaffolding scaffold = new SpellScaffolding(15,"scaffold");
 		registerSpell(scaffold);
 
-		SpellChestSack chestsack = new SpellChestSack(++spellId,"chestsack");
+		SpellChestSack chestsack = new SpellChestSack(16,"chestsack");
 		registerSpell(chestsack);
 
-		SpellThrowSpawnEgg spawnegg = new SpellThrowSpawnEgg(++spellId,"spawnegg");
+		SpellThrowSpawnEgg spawnegg = new SpellThrowSpawnEgg(17,"spawnegg");
 		registerSpell(spawnegg);
 		
-		carbon = new SpellCarbonPaper(++spellId,"carbon");
+		carbon = new SpellCarbonPaper(18,"carbon");
 		registerSpell(carbon);
 		
-		SpellLaunch launch = new SpellLaunch(++spellId,"launch");
+		SpellLaunch launch = new SpellLaunch(19,"launch");
 		registerSpell(launch);
 		
-		SpellThrowHarvest harvest = new SpellThrowHarvest(++spellId,"harvest");
+		SpellThrowHarvest harvest = new SpellThrowHarvest(20,"harvest");
 		registerSpell(harvest);
 		
-		SpellLinkingPortal waypoint = new SpellLinkingPortal(++spellId,"waypoint");
+		SpellLinkingPortal waypoint = new SpellLinkingPortal(21,"waypoint");
 		registerSpell(waypoint);
 		
-		SpellBuilder builder = new SpellBuilder(++spellId,"builder");
+		SpellBuilder builder = new SpellBuilder(22,"builder");
 		registerSpell(builder);
 		
-		SpellReplacer replacer = new SpellReplacer(++spellId,"replacer");
+		SpellReplacer replacer = new SpellReplacer(23,"replacer");
 		registerSpell(replacer);
 	}
 
@@ -132,7 +130,6 @@ public class SpellRegistry {
 			return spellbook.get(id);
 		}
 		catch(IndexOutOfBoundsException  e){
-			System.out.println(id+" SPELL OOB fix yo stuff k");
 			return null;
 		}
 	}

@@ -35,7 +35,6 @@ public class SpellReplacer extends BaseSpell {
 			return false;//not chests, etc
 		}
 		
-		//if there is a block here, we might have to stop
 		IBlockState stateHere = world.getBlockState(pos);
 		Block blockHere = stateHere.getBlock();
 
@@ -55,7 +54,6 @@ public class SpellReplacer extends BaseSpell {
 			return false;
 		}
 		
-		//int toplaceMeta = toPlace.getMetadata()
 		IBlockState placeState = Block.getBlockFromItem(toPlace.getItem()).getStateFromMeta(toPlace.getMetadata());
 		 
 		if(placeState.getBlock() == blockHere && blockHere.getMetaFromState(stateHere) == toPlace.getMetadata()){
@@ -74,6 +72,7 @@ public class SpellReplacer extends BaseSpell {
 			if(placeState.getBlock().stepSound != null && placeState.getBlock().stepSound.getBreakSound() != null){
 				UtilSound.playSoundAt(player, placeState.getBlock().stepSound.getPlaceSound());
 			}
+			
 			
 			return true;
 		}

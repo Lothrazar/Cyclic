@@ -23,13 +23,13 @@ public class SpellBuilder extends BaseSpell {
 		if (pos == null || side == null) {
 			return false;
 		}
+        if(!player.capabilities.allowEdit) {
+        	return false;
+        }
 		if (world.getBlockState(pos) == null || world.getBlockState(pos).getBlock() == null) {
 			return false;
 		}
 
-        if(!player.capabilities.allowEdit) {
-        	return false;
-        }
 		BlockPos placePos = pos.offset(side);
 
 		IBlockState placeState = world.getBlockState(pos);
