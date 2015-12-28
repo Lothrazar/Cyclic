@@ -40,6 +40,10 @@ public class SpellBuilder extends BaseSpell {
 				break;
 			}
 		}
+		
+		if(slotFound < 0){
+			return false;
+		}
 
 		if (world.setBlockState(placePos, placeState)) {
 
