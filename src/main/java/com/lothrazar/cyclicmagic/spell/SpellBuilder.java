@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.spell;
 
 import com.lothrazar.cyclicmagic.util.UtilSound;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -51,14 +53,21 @@ public class SpellBuilder extends BaseSpell {
 				return false;
 			}
 		}
-		
-		if(world.isAirBlock(placePos) == false
-				 &&	world.getBlockState(placePos).getBlock() != null
-				 && world.getBlockState(placePos).getBlock().isReplaceable(world, placePos)){
-			//if its not air but its a replaceable block like torches/grass/water, try to break it first
 
-			if(world.destroyBlock(placePos,true) == false){
-				return false;//if we cant set it to air, we cannot continue
+		if(world.isAirBlock(placePos) == false){
+
+			//if there is a block here, we might have to stop
+			Block blockHere = world.getBlockState(placePos).getBlock();
+			if(blockHere.isReplaceable(world, placePos) == false){
+				//for example, torches, and the top half of a slab if you click in the empty space
+				return false;
+			}
+			
+			//ok its a soft block so try to break it first try to destroy it first
+			//unless it is liquid, don't try to destroy liquid
+			if(blockHere.getMaterial() != Material.water && blockHere.getMaterial() != Material.lava){
+				world.destroyBlock(placePos,true);//now this returns true/false but:
+				//but if it fails to destroy, just continue on (eg: water)
 			}
 		}
 		
