@@ -1,10 +1,8 @@
 package com.lothrazar.cyclicmagic.spell;
 
 import com.lothrazar.cyclicmagic.util.UtilSound;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
@@ -17,8 +15,6 @@ public class SpellBuilder extends BaseSpell {
 		this.cooldown = 1;
 	}
 	
-	
-
 	@Override
 	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side) {
 
@@ -70,6 +66,7 @@ public class SpellBuilder extends BaseSpell {
 
 			if(player.capabilities.isCreativeMode == false){
 				player.inventory.decrStackSize(slotFound, 1);
+				player.inventoryContainer.detectAndSendChanges();
 			}
 			
 			if(placeState.getBlock().stepSound != null && placeState.getBlock().stepSound.getBreakSound() != null){
@@ -84,7 +81,6 @@ public class SpellBuilder extends BaseSpell {
 
 	@Override
 	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos) {
-
 
 		//this is here to stop the default success sound from playing
 	}
