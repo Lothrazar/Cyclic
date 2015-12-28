@@ -60,7 +60,8 @@ public class SpellBuilder extends BaseSpell {
 				 &&	world.getBlockState(placePos).getBlock() != null
 				 && world.getBlockState(placePos).getBlock().isReplaceable(world, placePos)){
 			//if its not air but its a replaceable block like torches/grass/water, try to break it first
-			if(world.setBlockToAir(placePos) == false){
+
+			if(world.destroyBlock(placePos,true) == false){
 				return false;//if we cant set it to air, we cannot continue
 			}
 		}
