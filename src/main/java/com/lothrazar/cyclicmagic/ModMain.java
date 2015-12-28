@@ -59,14 +59,15 @@ public class ModMain {
 		SpellRegistry.register();
 
 		proxy.register();
-		
-		System.out.println("Config system? hard code each spell id, instead of ++ each time? maybe?");
+
+		System.out.println("Add Shifting detail info for each spell");
+		System.out.println("harvest projectile still doesnt show up");
+
+		System.out.println("unlock system? dont start with all spells?");
 
 		System.out.println("waypoint sound, particle, lang name - check partilces on client side system with packet");
 		System.out.println("TODO:STAIRS: stay up or stay down, they dont change bbetween? different meta types");
-		System.out.println("TODO:?? maybe night vision Regeneration / health boost /absorption runes? so night vision would turn on at night OR underwater"
-				+" , absorpt or resistance turns on at low health or damage taken" );
-		
-		System.out.println("replace repair and maybe exp with mana system? and mana gets refilled by exp or other things");
+
+		System.out.println("increease mana use or slow down regen?");
 	}
 }
