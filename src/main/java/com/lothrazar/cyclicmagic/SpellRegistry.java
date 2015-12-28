@@ -34,90 +34,81 @@ public class SpellRegistry {
 
 		int potionDuration = Const.TICKS_PER_SEC * 20;
 
-		// used to be public statics
-		BaseSpell ghost;
-		BaseSpell phase;
-		SpellExpPotion waterwalk;
-		SpellExpPotion nightvision;//TODO: replace with night vision
-		BaseSpell rotate;
-		BaseSpell push;
-		SpellThrowTorch torch;
-		SpellThrowFishing fishing;
-		BaseSpell carbon;
+		int spellId = -1;//the smallest spell gets id zero
 
-		ghost = new SpellGhost(0,"ghost");
+		SpellGhost ghost = new SpellGhost(++spellId,"ghost");
 		registerSpell(ghost);
 		
-		phase = new SpellPhasing(1,"phasing");
+		SpellPhasing phase = new SpellPhasing(++spellId,"phasing");
 		registerSpell(phase);
 
-		waterwalk = new SpellExpPotion(2,"waterwalk");
+		SpellExpPotion waterwalk = new SpellExpPotion(++spellId,"waterwalk");
 		waterwalk.setPotion(PotionRegistry.waterwalk.id, potionDuration, PotionRegistry.I);
 		registerSpell(waterwalk);
 
-		nightvision = new SpellExpPotion(3,"nightvision");
+		SpellExpPotion nightvision = new SpellExpPotion(++spellId,"nightvision");
 		nightvision.setPotion(Potion.nightVision.id, potionDuration, PotionRegistry.I);
 		registerSpell(nightvision);
-
-		rotate = new SpellRotate(4,"rotate"); 
-		registerSpell(rotate);
-
-		push = new SpellPush(5,"push");
-		registerSpell(push);
-
-		SpellPull pull = new SpellPull(6,"pull");
-		registerSpell(pull);
-
-		torch = new SpellThrowTorch(7,"torch");
-		registerSpell(torch);
-
-		fishing = new SpellThrowFishing(8,"fishing");
-		registerSpell(fishing);
-
-		SpellThrowExplosion explode = new SpellThrowExplosion(9,"explode");
-		registerSpell(explode);
-
-		SpellThrowFire fire = new SpellThrowFire(10,"fire");
-		registerSpell(fire);
-
-		SpellThrowIce ice = new SpellThrowIce(11,"ice");
-		registerSpell(ice);
-
-		SpellThrowLightning lightning = new SpellThrowLightning(12,"lightning");
-		registerSpell(lightning);
-
-		SpellThrowShear shear = new SpellThrowShear(13,"shear");
-		registerSpell(shear);
-
-		SpellThrowWater water = new SpellThrowWater(14,"water");
-		registerSpell(water);
-
-		SpellScaffolding scaffold = new SpellScaffolding(15,"scaffold");
-		registerSpell(scaffold);
-
-		SpellChestSack chestsack = new SpellChestSack(16,"chestsack");
-		registerSpell(chestsack);
-
-		SpellThrowSpawnEgg spawnegg = new SpellThrowSpawnEgg(17,"spawnegg");
-		registerSpell(spawnegg);
 		
-		carbon = new SpellCarbonPaper(18,"carbon");
-		registerSpell(carbon);
-		
-		SpellLaunch launch = new SpellLaunch(19,"launch");
-		registerSpell(launch);
-		
-		SpellThrowHarvest harvest = new SpellThrowHarvest(20,"harvest");
-		registerSpell(harvest);
-		
-		SpellLinkingPortal waypoint = new SpellLinkingPortal(21,"waypoint");
-		registerSpell(waypoint);
-		
-		SpellBuilder builder = new SpellBuilder(22,"builder");
+		SpellBuilder builder = new SpellBuilder(++spellId,"builder");
 		registerSpell(builder);
 		
-		SpellReplacer replacer = new SpellReplacer(23,"replacer");
+		SpellReplacer replacer = new SpellReplacer(++spellId,"replacer");
 		registerSpell(replacer);
+
+		SpellRotate rotate = new SpellRotate(++spellId,"rotate"); 
+		registerSpell(rotate);
+
+		SpellPush push = new SpellPush(++spellId,"push");
+		registerSpell(push);
+
+		SpellPull pull = new SpellPull(++spellId,"pull");
+		registerSpell(pull);
+
+		SpellChestSack chestsack = new SpellChestSack(++spellId,"chestsack");
+		registerSpell(chestsack);
+
+		SpellThrowTorch torch = new SpellThrowTorch(++spellId,"torch");
+		registerSpell(torch);
+
+		SpellThrowFishing fishing = new SpellThrowFishing(++spellId,"fishing");
+		registerSpell(fishing);
+
+		SpellThrowExplosion explode = new SpellThrowExplosion(++spellId,"explode");
+		registerSpell(explode);
+
+		SpellThrowFire fire = new SpellThrowFire(++spellId,"fire");
+		registerSpell(fire);
+
+		SpellThrowIce ice = new SpellThrowIce(++spellId,"ice");
+		registerSpell(ice);
+
+		SpellThrowLightning lightning = new SpellThrowLightning(++spellId,"lightning");
+		registerSpell(lightning);
+
+		SpellThrowShear shear = new SpellThrowShear(++spellId,"shear");
+		registerSpell(shear);
+		
+		SpellThrowHarvest harvest = new SpellThrowHarvest(++spellId,"harvest");
+		registerSpell(harvest);
+		
+		SpellThrowWater water = new SpellThrowWater(++spellId,"water");
+		registerSpell(water);
+
+		SpellScaffolding scaffold = new SpellScaffolding(++spellId,"scaffold");
+		registerSpell(scaffold);
+
+		SpellThrowSpawnEgg spawnegg = new SpellThrowSpawnEgg(++spellId,"spawnegg");
+		registerSpell(spawnegg);
+		
+		SpellCarbonPaper carbon = new SpellCarbonPaper(++spellId,"carbon");
+		registerSpell(carbon);
+		
+		SpellLaunch launch = new SpellLaunch(++spellId,"launch");
+		registerSpell(launch);
+		
+		SpellLinkingPortal waypoint = new SpellLinkingPortal(++spellId,"waypoint");
+		registerSpell(waypoint);
 	}
 
 	public static ISpell getSpellFromID(int id) {
