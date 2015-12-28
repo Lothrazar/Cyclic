@@ -35,30 +35,26 @@ public class SpellBuilder extends BaseSpell {
 		BlockPos placePos = pos.offset(side);
 
 		IBlockState placeState = world.getBlockState(pos);
-		//int meta = placeState.getBlock().getMetaFromState(placeState);
-		//Block.isEqualTo(blockIn, other)
-		//TODO: meta is not perfect.
-		//since now it treats top/bottom slabs and stair rotations as all different.
-		//instead find out what 'damage' meta gets dropped. so for example, top slabs and bottom slabs of the same type (eg netherbrick)
-		//drop the same damage
-		int meta = placeState.getBlock().damageDropped(placeState);
-		ItemStack compareStack = new ItemStack(placeState.getBlock(), 1, meta);
-		int slotFound = -1;
-		ItemStack curr;
-		for (int i = 0; i < player.inventory.getSizeInventory(); ++i) {
-			curr = player.inventory.getStackInSlot(i);
 
-			// && curr.getItem() == Item.getItemFromBlock(placeState.getBlock()) && curr.getMetadata() == meta
-			if (curr != null && curr.isItemEqual(compareStack)) {
-				slotFound = i;
-				break;
+		int slotFound = -1;
+		if(player.capabilities.isCreativeMode == false){
+			//match using damage dropped, not exact meta value, so wood types line up but it ignores stair/log rotations
+			int meta = placeState.getBlock().damageDropped(placeState);
+			ItemStack compareStack = new ItemStack(placeState.getBlock(), 1, meta);
+			ItemStack curr;
+			for (int i = 0; i < player.inventory.getSizeInventory(); ++i) {
+				curr = player.inventory.getStackInSlot(i);
+	
+				if (curr != null && curr.isItemEqual(compareStack)) {
+					slotFound = i;
+					break;
+				}
+			}
+			
+			if(slotFound < 0 ){
+				return false;
 			}
 		}
-		
-		if(slotFound < 0 ){
-			return false;
-		}
-
 		
 		if(world.isAirBlock(placePos) == false
 				 &&	world.getBlockState(placePos).getBlock() != null
@@ -71,7 +67,9 @@ public class SpellBuilder extends BaseSpell {
 		
 		if (world.setBlockState(placePos, placeState)) {
 
-			player.inventory.decrStackSize(slotFound, 1);
+			if(player.capabilities.isCreativeMode == false){
+				player.inventory.decrStackSize(slotFound, 1);
+			}
 			
 			if(placeState.getBlock().stepSound != null && placeState.getBlock().stepSound.getBreakSound() != null){
 				UtilSound.playSoundAt(player, placeState.getBlock().stepSound.getPlaceSound());
