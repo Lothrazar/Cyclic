@@ -5,6 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
@@ -24,17 +25,39 @@ public class EventRegistry {
 
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
-	public void onKeyInput(InputEvent.KeyInputEvent event) {
+	public void onMouseInput(MouseEvent event){
+		//DO NOT use InputEvent.MouseInputEvent 
+		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+
+		if(SpellRegistry.spellsEnabled(player) == false){
+			return;
+		}
+		
+		if(event.dwheel < 0){
+
+			ModMain.network.sendToServer(new MessageKeyRight());
+			event.setCanceled(true);
+		}
+		else if(event.dwheel > 0){
+
+			ModMain.network.sendToServer(new MessageKeyLeft());
+			event.setCanceled(true);
+		}
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@SubscribeEvent
+	public void onKeyInput(InputEvent.KeyInputEvent event){
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 		
 		if(SpellRegistry.spellsEnabled(player) == false){
 			return;
 		}
 		
-		if (ClientProxy.keySpellUp.isPressed()) {
+		if (ClientProxy.keySpellUp.isPressed()){
 			ModMain.network.sendToServer(new MessageKeyRight());
 		}
-		else if (ClientProxy.keySpellDown.isPressed()) {
+		else if (ClientProxy.keySpellDown.isPressed()){
 			ModMain.network.sendToServer(new MessageKeyLeft());
 		}
 	}
