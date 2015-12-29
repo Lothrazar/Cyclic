@@ -55,7 +55,7 @@ public class EntitySnowballBolt extends EntityThrowable {
 			UtilParticle.spawnParticle(this.worldObj, EnumParticleTypes.SNOW_SHOVEL, e.getPosition());
 			this.setDead();
 		}
-		else if (mop.getBlockPos() != null) {
+		else if (mop.getBlockPos() != null && mop.sideHit == EnumFacing.UP) {
 
 			// else if we hit a block
 
@@ -124,6 +124,10 @@ public class EntitySnowballBolt extends EntityThrowable {
 		// when it hits 7, same size as full block
 		if (m + 1 < 8) {
 			world.setBlockState(pos, Blocks.snow_layer.getStateFromMeta(m + 1));
+		}
+		else{
+			//its full now, so go up one
+			setNewSnow(world, pos.up());
 		}
 
 		UtilSound.playSoundAt(world, pos, UtilSound.snow);

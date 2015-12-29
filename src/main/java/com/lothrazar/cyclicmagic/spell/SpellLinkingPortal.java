@@ -16,7 +16,7 @@ public class SpellLinkingPortal  extends BaseSpell implements ISpell {
 	//also put on display the coords,biome, player who created it
 	public SpellLinkingPortal(int id,String name){
 		super(id,name);
-		this.cost = 10;
+		this.cost = 35;
 	}
 	@Override
 	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side ) {
