@@ -21,7 +21,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class MasterWand extends Item {
 
-	private double repairSpeed = 0.7;//higher is faster [0,1] // setting < zero will disable recharge fully
 	public MasterWand() {
 		this.setMaxStackSize(1);
 	}
@@ -78,8 +77,7 @@ public class MasterWand extends Item {
 			return;
 		}
 
-		// every second, make a roll. 1/10th of the time then do a repair
-		if (worldIn.getWorldTime() % Const.TICKS_PER_SEC == 0 && worldIn.rand.nextDouble() < repairSpeed) {
+		if (worldIn.isRemote == false && worldIn.getWorldTime() % Const.TICKS_PER_SEC == 0) {
 
 			EntityPlayer p = (EntityPlayer) entityIn;
 			PlayerPowerups props = PlayerPowerups.get(p);
