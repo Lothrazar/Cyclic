@@ -63,7 +63,7 @@ public abstract class RuneBaseAbstract  extends Item {
 			tooltip.addAll(this.getInfo());
 		}
 		else{
-			tooltip.add(EnumChatFormatting.GRAY + StatCollector.translateToLocal("rune.shift"));
+			tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("item.shift"));
 		}
 		
 		super.addInformation(stack, playerIn, tooltip, advanced);

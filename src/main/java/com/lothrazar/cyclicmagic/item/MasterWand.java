@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
+import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.PlayerPowerups;
 import com.lothrazar.cyclicmagic.SpellRegistry;
@@ -11,6 +12,7 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
@@ -42,6 +44,14 @@ public class MasterWand extends Item {
 		tooltip.add(StatCollector.translateToLocal("cost.exp") + spell.getCost());
 		tooltip.add(props.getMana() + "/"+SpellRegistry.caster.MAXMANA);
 
+		if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)){
+			tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("wand.gui.info"));
+			tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("wand.recharge.info"));
+		}
+		else{
+			tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("item.shift"));
+		}
+		
 		super.addInformation(stack, playerIn, tooltip, advanced);
 	}
 
