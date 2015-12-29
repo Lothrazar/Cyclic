@@ -12,6 +12,7 @@ public class SpellLaunch extends BaseSpell implements ISpell {
 	
 	public SpellLaunch(int id,String name){
 		super(id,name);
+		this.cost = 5;
 	}
 	
 	@Override

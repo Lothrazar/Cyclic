@@ -105,7 +105,6 @@ public class BaseSpell implements ISpell {
 		}
 		
 		if( this.getCost() > PlayerPowerups.get(player).getMana()){
-			System.out.println("not enough mana");
 			return false;
 		}
 		return true;

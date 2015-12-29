@@ -11,7 +11,7 @@ public class SpellThrowLightning extends BaseSpell implements ISpell {
 
 	public SpellThrowLightning(int id,String name){
 		super(id,name);
-		this.cost = 15;
+		this.cost = 25;
 	}
  
 	@Override

@@ -64,9 +64,6 @@ public class ModMain {
 
 		System.out.println("unlock system? dont start with all spells?");
 
-		System.out.println("waypoint sound, particle, lang name - check partilces on client side system with packet");
-		System.out.println("TODO:STAIRS: stay up or stay down, they dont change bbetween? different meta types");
-
 		System.out.println("increease mana use or slow down regen?");
 	}
 }
