@@ -11,10 +11,6 @@ public class UtilParticle {
 
 	public static void spawnParticle(World world, EnumParticleTypes sparkle, double x, double y, double z, int count) {
 		
-		if(world.isRemote == false){
-			System.out.println("WARN: spawningParticles server side");
-		}
-		
 		// http://www.minecraftforge.net/forum/index.php?topic=9744.0
 		for (int countparticles = 0; countparticles <= count; ++countparticles) {
 			world.spawnParticle(sparkle, x + (world.rand.nextDouble() - 0.5D) * (double) 0.8, y + world.rand.nextDouble() * (double) 1.5 - (double) 0.1, z + (world.rand.nextDouble() - 0.5D) * (double) 0.8, 0.0D, 0.0D, 0.0D);
