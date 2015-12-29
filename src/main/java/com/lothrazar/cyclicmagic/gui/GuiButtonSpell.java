@@ -63,8 +63,7 @@ public class GuiButtonSpell extends GuiButton {
 
 		List<String> tooltips = new ArrayList<String>();
 		tooltips.add(spell.getName());
-		//tooltips.add(StatCollector.translateToLocal("cost.cooldown") + EnumChatFormatting.BLUE + spell.getCastCooldown());
-		tooltips.add(StatCollector.translateToLocal("cost.exp") + EnumChatFormatting.BLUE + spell.getCost());
+		tooltips.add(StatCollector.translateToLocal("spell.cost") + EnumChatFormatting.BLUE + spell.getCost());
 		String ed = (props.isSpellUnlocked(this.id)) ? EnumChatFormatting.GREEN + StatCollector.translateToLocal("spell.enabled") : EnumChatFormatting.RED + StatCollector.translateToLocal("spell.disabled");
 		tooltips.add(ed);
 		return tooltips;
