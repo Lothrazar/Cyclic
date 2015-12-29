@@ -48,11 +48,6 @@ public class ItemRuneProtection  extends RuneBaseAbstract {
 	}
 
 	@Override
-	protected int getCost() {
-		return 20;
-	}
-
-	@Override
 	protected List<String> getInfo() {
 		List<String> list = new ArrayList<String>();
 
