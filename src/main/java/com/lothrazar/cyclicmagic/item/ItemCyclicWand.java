@@ -19,56 +19,54 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class MasterWand extends Item {
+public class ItemCyclicWand extends Item {
 
-	public MasterWand() {
+	public ItemCyclicWand() {
 		this.setMaxStackSize(1);
 	}
 
 	@Override
-    @SideOnly(Side.CLIENT)
-    public boolean isFull3D()
-    {
-        return true;
-    }
+	@SideOnly(Side.CLIENT)
+	public boolean isFull3D() {
+		return true;
+	}
 
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
-		
+
 		PlayerPowerups props = PlayerPowerups.get(playerIn);
 		ISpell spell = SpellRegistry.getSpellFromID(props.getSpellCurrent());
 
 		tooltip.add(spell.getName());
 		tooltip.add(StatCollector.translateToLocal("spell.cost") + spell.getCost());
-		int max = (int)SpellRegistry.caster.MAXMANA;
+		int max = (int) SpellRegistry.caster.MAXMANA;
 		tooltip.add(props.getMana() + "/" + max);
 
-		if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)){
+		if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
 			tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("wand.gui.info"));
 			tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("wand.recharge.info"));
 		}
-		else{
+		else {
 			tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("item.shift"));
 		}
-		
+
 		super.addInformation(stack, playerIn, tooltip, advanced);
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public EnumRarity getRarity(ItemStack par1ItemStack)
-	{ 
-		return EnumRarity.EPIC;  
+	public EnumRarity getRarity(ItemStack par1ItemStack) {
+		return EnumRarity.EPIC;
 	}
-	
+
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn) {
 
-		//so this only happens IF either onItemUse did not fire at all, or it fired and casting failed
-		SpellRegistry.caster.tryCastCurrent(worldIn, playerIn, null,null);
+		// so this only happens IF either onItemUse did not fire at all, or it
+		// fired and casting failed
+		SpellRegistry.caster.tryCastCurrent(worldIn, playerIn, null, null);
 		return super.onItemRightClick(itemStackIn, worldIn, playerIn);
 	}
-
 
 	@Override
 	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
@@ -85,13 +83,12 @@ public class MasterWand extends Item {
 		}
 		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
 	}
-	
+
 	@Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
-    {
-		//If onItemUse returns false onItemRightClick will be called.
-		//http://www.minecraftforge.net/forum/index.php?topic=31966.0 
-		//so if this casts and succeeds, the right click is cancelled
-		return SpellRegistry.caster.tryCastCurrent(worldIn, playerIn, pos,side);
-    }
+	public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
+		// If onItemUse returns false onItemRightClick will be called.
+		// http://www.minecraftforge.net/forum/index.php?topic=31966.0
+		// so if this casts and succeeds, the right click is cancelled
+		return SpellRegistry.caster.tryCastCurrent(worldIn, playerIn, pos, side);
+	}
 }

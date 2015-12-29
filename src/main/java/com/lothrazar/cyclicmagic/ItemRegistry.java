@@ -13,7 +13,7 @@ public class ItemRegistry {
 
 	public static ItemRespawnEggAnimal respawn_egg;
 	public static ItemChestSack chest_sack;
-	public static MasterWand cyclic_wand;
+	public static ItemCyclicWand cyclic_wand;
 	public static ItemPaperCarbon carbon_paper;
 	public static ItemWaypointPortal waypoint_portal;
 	
@@ -48,7 +48,7 @@ public class ItemRegistry {
 		rune_slowfall = new ItemRuneSlowfall();
 		ItemRegistry.registerItem(rune_slowfall, "rune_slowfall");
 
-		cyclic_wand = new MasterWand();
+		cyclic_wand = new ItemCyclicWand();
 		ItemRegistry.registerItem(cyclic_wand, "cyclic_wand");
 
 		GameRegistry.addRecipe(new ItemStack(cyclic_wand), //placeholder rec
