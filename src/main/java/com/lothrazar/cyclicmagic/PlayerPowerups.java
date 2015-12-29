@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
 
 public class PlayerPowerups implements IExtendedEntityProperties {
-	private final static String EXT_PROP_NAME = "PlayerPowerups" + Const.MODID;
+	private final static String EXT_PROP_NAME = "CyclicMagic" + Const.MODID;
 	private final EntityPlayer player;// we get one of these powerup classes for
 
 	private static final int UNLOCKS_WATCHER = 21;

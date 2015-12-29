@@ -17,7 +17,6 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.EntityList;
 
 public class ClientProxy extends CommonProxy {
-	public static KeyBinding keySpellCast;
 	public static KeyBinding keySpellUp;
 	public static KeyBinding keySpellDown;
 	//public static KeyBinding keySpellToggle;
@@ -81,8 +80,6 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	private void registerKeyBindings() {
-		keySpellCast = new KeyBinding("key.spell.cast", Keyboard.KEY_X, keyCategorySpell);
-		ClientRegistry.registerKeyBinding(ClientProxy.keySpellCast);
 
 		keySpellUp = new KeyBinding("key.spell.up", Keyboard.KEY_Z, keyCategorySpell);
 		ClientRegistry.registerKeyBinding(ClientProxy.keySpellUp);

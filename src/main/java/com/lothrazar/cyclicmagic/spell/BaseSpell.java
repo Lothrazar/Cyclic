@@ -100,7 +100,7 @@ public class BaseSpell implements ISpell {
 			return true;//skips everything
 		}
 		
-		if( player.getHeldItem() == null ||  player.getHeldItem().getItem() != ItemRegistry.master_wand){
+		if( player.getHeldItem() == null ||  player.getHeldItem().getItem() != ItemRegistry.cyclic_wand){
 			return false;
 		}
 		

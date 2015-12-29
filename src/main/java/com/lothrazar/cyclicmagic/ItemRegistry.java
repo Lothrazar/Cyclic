@@ -13,7 +13,7 @@ public class ItemRegistry {
 
 	public static ItemRespawnEggAnimal respawn_egg;
 	public static ItemChestSack chest_sack;
-	public static MasterWand master_wand;
+	public static MasterWand cyclic_wand;
 	public static ItemPaperCarbon carbon_paper;
 	public static ItemWaypointPortal waypoint_portal;
 	
@@ -48,10 +48,10 @@ public class ItemRegistry {
 		rune_slowfall = new ItemRuneSlowfall();
 		ItemRegistry.registerItem(rune_slowfall, "rune_slowfall");
 
-		master_wand = new MasterWand();
-		ItemRegistry.registerItem(master_wand, "master_wand");
+		cyclic_wand = new MasterWand();
+		ItemRegistry.registerItem(cyclic_wand, "cyclic_wand");
 
-		GameRegistry.addRecipe(new ItemStack(master_wand), //placeholder rec
+		GameRegistry.addRecipe(new ItemStack(cyclic_wand), //placeholder rec
 				"sds",
 				" s ",
 				"qoq",
@@ -60,25 +60,25 @@ public class ItemRegistry {
 				'o',Blocks.obsidian,
 				's',Items.nether_star);
 		
-		master_wand.setContainerItem(master_wand);//so it is not consumed on crafting
+		cyclic_wand.setContainerItem(cyclic_wand);//so it is not consumed on crafting
 		
 		GameRegistry.addShapelessRecipe(new ItemStack(rune_slowfall)
-				,master_wand
+				,cyclic_wand
 				,Blocks.gold_block
 				,Items.nether_star);
 
 		GameRegistry.addShapelessRecipe(new ItemStack(rune_collector)
-				,master_wand
+				,cyclic_wand
 				,Blocks.lapis_block
 				,Items.nether_star);
 
 		GameRegistry.addShapelessRecipe(new ItemStack(rune_haste)
-				,master_wand
+				,cyclic_wand
 				,Blocks.redstone_block
 				,Items.nether_star);
 
 		GameRegistry.addShapelessRecipe(new ItemStack(rune_protection)
-				,master_wand
+				,cyclic_wand
 				,Blocks.emerald_block
 				,Items.nether_star);
 	}

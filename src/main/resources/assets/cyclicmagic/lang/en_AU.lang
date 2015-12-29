@@ -1,7 +1,7 @@
 item.chest_sack.name=Sack of Holding
 item.respawn_egg.name=Respawn Egg
 item.carbon_paper.name=Carbon Paper
-item.master_wand.name=Cyclic Wand
+item.cyclic_wand.name=Cyclic Wand
 item.waypoint_portal.name=Portable Waypoint
 item.rune_collector.name=Collection Rune
 item.rune_slowfall.name=Slowfall Rune

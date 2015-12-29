@@ -38,25 +38,13 @@ public class EventRegistry {
 		else if (ClientProxy.keySpellDown.isPressed()) {
 			ModMain.network.sendToServer(new MessageKeyLeft());
 		}
-		else if (ClientProxy.keySpellCast.isPressed()) {
-			BlockPos posMouse = null;
-
-			if (Minecraft.getMinecraft().objectMouseOver.getBlockPos() != null) {
-				posMouse = Minecraft.getMinecraft().objectMouseOver.getBlockPos();
-			}
-			else {
-				posMouse = Minecraft.getMinecraft().thePlayer.getPosition();
-			}
-
-			ModMain.network.sendToServer(new MessageKeyCast(posMouse, Minecraft.getMinecraft().objectMouseOver.sideHit));
-		}
 	}
 	
 	@SubscribeEvent
 	public void onPlayerInteractEvent(PlayerInteractEvent event){
 
 		if(event.action == Action.LEFT_CLICK_BLOCK && event.world.getBlockState(event.pos) != null
-				&& event.entityPlayer.getHeldItem() != null && event.entityPlayer.getHeldItem().getItem() == ItemRegistry.master_wand ){
+				&& event.entityPlayer.getHeldItem() != null && event.entityPlayer.getHeldItem().getItem() == ItemRegistry.cyclic_wand ){
 		
 			Block blockHit = event.world.getBlockState(event.pos).getBlock();
 			if(blockHit == Blocks.crafting_table){

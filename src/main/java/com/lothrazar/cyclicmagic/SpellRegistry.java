@@ -23,7 +23,7 @@ public class SpellRegistry {
 
 	public static boolean spellsEnabled(EntityPlayer player) {
 		ItemStack held = player.getHeldItem();
-		return held != null && held.getItem() == ItemRegistry.master_wand;
+		return held != null && held.getItem() == ItemRegistry.cyclic_wand;
 	}
 	private static ArrayList<Integer> typeBuilding;
 	private static ArrayList<Integer> typeExploration;

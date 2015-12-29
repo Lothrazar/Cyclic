@@ -20,9 +20,9 @@ plugins {
     id "net.minecraftforge.gradle.forge" version "2.0.2"
 }
 */
-version = "1.0"
-group= "com.yourname.modid" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "modid"
+version = "1.8.8-1.0.0"
+group= "com.lothrazar.cyclicmagic" 
+archivesBaseName = "cyclicmagic"
 
 minecraft {
     version = "1.8.8-11.15.0.1625-1.8.8"
