@@ -13,12 +13,11 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import com.lothrazar.cyclicmagic.proxy.ClientProxy;
 import com.lothrazar.cyclicmagic.gui.GuiSpellbook;
-import com.lothrazar.cyclicmagic.net.*;
+import com.lothrazar.cyclicmagic.net.MessageKeyLeft;
+import com.lothrazar.cyclicmagic.net.MessageKeyRight;
 import com.lothrazar.cyclicmagic.spell.SpellGhost;
 
 public class EventRegistry {
@@ -29,7 +28,9 @@ public class EventRegistry {
 		//DO NOT use InputEvent.MouseInputEvent 
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 
-		if(SpellRegistry.spellsEnabled(player) == false){
+		if(SpellRegistry.spellsEnabled(player) == false || player.isSneaking()){
+			//either you are not holding the wand - so go as normal
+			//or sneaking, so do the normal action too
 			return;
 		}
 		
@@ -42,23 +43,6 @@ public class EventRegistry {
 
 			ModMain.network.sendToServer(new MessageKeyLeft());
 			event.setCanceled(true);
-		}
-	}
-	
-	@SideOnly(Side.CLIENT)
-	@SubscribeEvent
-	public void onKeyInput(InputEvent.KeyInputEvent event){
-		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-		
-		if(SpellRegistry.spellsEnabled(player) == false){
-			return;
-		}
-		
-		if (ClientProxy.keySpellUp.isPressed()){
-			ModMain.network.sendToServer(new MessageKeyRight());
-		}
-		else if (ClientProxy.keySpellDown.isPressed()){
-			ModMain.network.sendToServer(new MessageKeyLeft());
 		}
 	}
 	

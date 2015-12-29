@@ -42,7 +42,8 @@ public class MasterWand extends Item {
 		tooltip.add(spell.getName());
 		//tooltip.add(StatCollector.translateToLocal("cost.cooldown") + spell.getCastCooldown());
 		tooltip.add(StatCollector.translateToLocal("cost.exp") + spell.getCost());
-		tooltip.add(props.getMana() + "/"+SpellRegistry.caster.MAXMANA);
+		int max = (int)SpellRegistry.caster.MAXMANA;
+		tooltip.add(props.getMana() + "/" + max);
 
 		if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)){
 			tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("wand.gui.info"));
