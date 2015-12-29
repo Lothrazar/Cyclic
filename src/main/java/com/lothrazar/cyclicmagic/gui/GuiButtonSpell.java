@@ -15,61 +15,57 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GuiButtonSpell extends GuiButton{
+public class GuiButtonSpell extends GuiButton {
 
 	private ISpell spell;
 	private static final int btnSize = 16;
+
 	public GuiButtonSpell(int x, int y, ISpell s) {
-		super(s.getID(), x, y, btnSize,btnSize ,"");
+		super(s.getID(), x, y, btnSize, btnSize, "");
 		spell = s;
 	}
-	
+
 	@SideOnly(Side.CLIENT)
-    @Override
-    public boolean mousePressed(Minecraft mc, int mouseX, int mouseY)
-    {
-    	boolean pressed = super.mousePressed(mc, mouseX, mouseY);
-    	
-    	if(pressed)
-    	{
-    		//button id matches spell id
-
-    		//TODO: sync client/server
-    		//SpellCaster.toggleUnlock(mc.thePlayer, this.id);//do client and server
-			ModMain.network.sendToServer(new MessageToggle(this.id ));
-    	}
-    	
-    	return pressed;
-    }
-	
 	@Override
-	public void drawButton(Minecraft mc, int mouseX, int mouseY)
-    {
-	   //  override this and draw the texture here, so the vanilla grey square doesnt show up
-        if (this.visible)
-        {
-        	//http://www.minecraftforge.net/forum/index.php?topic=19594.0
+	public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
+		boolean pressed = super.mousePressed(mc, mouseX, mouseY);
 
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-            this.hovered = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
+		if (pressed) {
+			// button id matches spell id
 
-            GlStateManager.enableBlend();
-            GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-            GlStateManager.blendFunc(770, 771);
+			ModMain.network.sendToServer(new MessageToggle(this.id));
+		}
 
-            UtilTextureRender.drawTextureSquare(spell.getIconDisplay(),this.xPosition, this.yPosition,btnSize);
+		return pressed;
+	}
 
-            this.mouseDragged(mc, mouseX, mouseY);
-        }
-    }
+	@Override
+	public void drawButton(Minecraft mc, int mouseX, int mouseY) {
+		// override this and draw the texture here, so the vanilla grey square
+		// doesnt show up
+		if (this.visible) {
+			// http://www.minecraftforge.net/forum/index.php?topic=19594.0
+
+			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+			this.hovered = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
+
+			GlStateManager.enableBlend();
+			GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+			GlStateManager.blendFunc(770, 771);
+
+			UtilTextureRender.drawTextureSquare(spell.getIconDisplay(), this.xPosition, this.yPosition, btnSize);
+
+			this.mouseDragged(mc, mouseX, mouseY);
+		}
+	}
 
 	public List<String> getTooltipForPlayer(PlayerPowerups props) {
 
 		List<String> tooltips = new ArrayList<String>();
-		tooltips.add(spell.getName()) ;
-		tooltips.add(StatCollector.translateToLocal("cost.cooldown") + EnumChatFormatting.BLUE+ spell.getCastCooldown()) ;
-		tooltips.add(StatCollector.translateToLocal("cost.exp") +EnumChatFormatting.BLUE+ spell.getCost()) ;
-		String ed = (props.isSpellUnlocked(this.id)) ? EnumChatFormatting.GREEN+ StatCollector.translateToLocal("spell.enabled") :EnumChatFormatting.RED+ StatCollector.translateToLocal("spell.disabled");
+		tooltips.add(spell.getName());
+		//tooltips.add(StatCollector.translateToLocal("cost.cooldown") + EnumChatFormatting.BLUE + spell.getCastCooldown());
+		tooltips.add(StatCollector.translateToLocal("cost.exp") + EnumChatFormatting.BLUE + spell.getCost());
+		String ed = (props.isSpellUnlocked(this.id)) ? EnumChatFormatting.GREEN + StatCollector.translateToLocal("spell.enabled") : EnumChatFormatting.RED + StatCollector.translateToLocal("spell.disabled");
 		tooltips.add(ed);
 		return tooltips;
 	}

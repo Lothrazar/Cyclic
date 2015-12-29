@@ -38,7 +38,7 @@ public class MasterWand extends Item {
 		ISpell spell = SpellRegistry.getSpellFromID(props.getSpellCurrent());
 
 		tooltip.add(spell.getName());
-		tooltip.add(StatCollector.translateToLocal("cost.cooldown") + spell.getCastCooldown());
+		//tooltip.add(StatCollector.translateToLocal("cost.cooldown") + spell.getCastCooldown());
 		tooltip.add(StatCollector.translateToLocal("cost.exp") + spell.getCost());
 		tooltip.add(props.getMana() + "/"+SpellRegistry.caster.MAXMANA);
 
