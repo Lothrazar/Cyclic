@@ -19,7 +19,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class MasterWand extends Item {
 
-	private double repairSpeed = 0.4;//higher is faster [0,1] // setting < zero will disable recharge fully
+	private double repairSpeed = 0.2;//higher is faster [0,1] // setting < zero will disable recharge fully
 	public MasterWand() {
 		this.setMaxStackSize(1);
 	}

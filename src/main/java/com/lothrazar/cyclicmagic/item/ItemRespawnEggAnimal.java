@@ -83,6 +83,8 @@ public class ItemRespawnEggAnimal extends Item {
 			return false;
 		}
 		else {
+			
+			//EntityList.createEntityFromNBT(nbt, worldIn)
 			IBlockState iblockstate = worldIn.getBlockState(pos);
 			// this is where we disabled the interaction with monster spawners
 			pos = pos.offset(side);

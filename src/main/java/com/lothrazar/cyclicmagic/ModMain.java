@@ -63,8 +63,5 @@ public class ModMain {
 		System.out.println("Add Shifting detail info for each spell");
 
 		System.out.println("unlock system? dont start with all spells?");
-
-		System.out.println("increease mana use or slow down regen?");
-		System.out.println("SNOW BUGS: if it lands on top of snow layer thats full, it should start a new one on top. if it hits the SIDE of block, it should NOT go up to the top thats weird");
 	}
 }
