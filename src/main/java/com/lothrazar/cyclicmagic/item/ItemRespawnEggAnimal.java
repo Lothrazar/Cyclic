@@ -59,7 +59,7 @@ public class ItemRespawnEggAnimal extends Item {
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
     {
-		if(stack.getTagCompound().hasKey(NBT_SHEEPCOLOR)){
+		if(stack.getTagCompound() != null && stack.getTagCompound().hasKey(NBT_SHEEPCOLOR)){
 			EnumDyeColor col = EnumDyeColor.byDyeDamage(stack.getTagCompound().getInteger(NBT_SHEEPCOLOR));
 			
 			tooltip.add(col.getName());
