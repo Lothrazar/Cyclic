@@ -53,10 +53,10 @@ public class ItemRegistry {
 
 		GameRegistry.addRecipe(new ItemStack(cyclic_wand), //placeholder rec
 				"sds",
-				" s ",
-				"qoq",
+				" o ",
+				"gog",
 				'd',Blocks.diamond_block,
-				'q',Blocks.quartz_block,
+				'g',Items.ghast_tear,
 				'o',Blocks.obsidian,
 				's',Items.nether_star);
 		
