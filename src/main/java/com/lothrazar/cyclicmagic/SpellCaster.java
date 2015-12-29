@@ -11,12 +11,11 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 public class SpellCaster {
 
 	public final float MAXMANA = 500;
-	final int RECHARGE_EXP_COST = 20;
-	final int RECHARGE_MANA_AMT = 75;
+	final int RECHARGE_EXP_COST = 50;
+	final int RECHARGE_MANA_AMT = 25;
 	
 	public boolean isBlockedBySpellTImer(EntityPlayer player) {
-		PlayerPowerups props = PlayerPowerups.get(player);
-		return !(props.getSpellTimer() == 0);
+		return isBlockedBySpellTImer(PlayerPowerups.get(player));
 	}
 	public boolean isBlockedBySpellTImer(PlayerPowerups props) { 
 		return !(props.getSpellTimer() == 0);

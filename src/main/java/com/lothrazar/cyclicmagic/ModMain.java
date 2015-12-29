@@ -63,5 +63,9 @@ public class ModMain {
 		System.out.println("Add Shifting detail info for each spell");
 
 		System.out.println("unlock system? dont start with all spells?");
+		
+
+
+		System.out.println("add chat spam to say what current spell is when you spell change. disable in config");
 	}
 }

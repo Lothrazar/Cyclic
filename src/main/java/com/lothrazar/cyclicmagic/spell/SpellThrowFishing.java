@@ -11,6 +11,8 @@ public class SpellThrowFishing extends BaseSpell implements ISpell {
 
 	public SpellThrowFishing(int id,String name){
 		super(id,name);
+		this.cost = 30;
+		this.cooldown = 10;
 	}
 
 	@Override
