@@ -10,16 +10,16 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 	private final static String EXT_PROP_NAME = "CyclicMagic" + Const.MODID;
 	private final EntityPlayer player;// we get one of these powerup classes for
 
-	private static final int UNLOCKS_WATCHER = 21;
+	private static final int UNLOCKS_WATCHER = 27;
 	private static final String NBT_UNLOCKS = "unlocks";
 
-	private static final int CURRENT_WATCHER = 22;
+	private static final int CURRENT_WATCHER = 28;
 	private static final String NBT_CURRENT = "samSpell";
 
-	private static final int MANA_WATCHER = 23;
+	private static final int MANA_WATCHER = 29;
 	private static final String NBT_MANA = "samMana";
 	
-	private static final int TIMER_WATCHER = 25;
+	private static final int TIMER_WATCHER = 30;
 	private static final String NBT_TIMER = "samSpellTimer";
 
 	public PlayerPowerups(EntityPlayer player) {

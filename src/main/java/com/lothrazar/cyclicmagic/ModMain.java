@@ -61,7 +61,6 @@ public class ModMain {
 		proxy.register();
 
 		System.out.println("Add Shifting detail info for each spell");
-		System.out.println("harvest projectile still doesnt show up");
 
 		System.out.println("unlock system? dont start with all spells?");
 
