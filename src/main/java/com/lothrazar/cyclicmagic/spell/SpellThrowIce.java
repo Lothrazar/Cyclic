@@ -13,6 +13,7 @@ public class SpellThrowIce extends BaseSpell implements ISpell {
 		super(id,name);
 		this.cost = 10;
 	}
+	
 	@Override
 	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side ) {
 

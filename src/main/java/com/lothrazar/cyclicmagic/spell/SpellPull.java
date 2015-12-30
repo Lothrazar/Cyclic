@@ -10,6 +10,7 @@ public class SpellPull extends BaseSpell {
 	public SpellPull(int id,String name){
 		super(id,name);
 		this.cooldown = 1;
+		this.cost = 1;
 	}
 
 	@Override

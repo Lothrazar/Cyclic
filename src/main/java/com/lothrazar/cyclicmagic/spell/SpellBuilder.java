@@ -15,6 +15,7 @@ public class SpellBuilder extends BaseSpell {
 	public SpellBuilder(int id, String n) {
 		super(id, n);
 		this.cooldown = 1;
+		this.cost = 1;
 	}
 	
 	@Override
