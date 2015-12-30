@@ -142,6 +142,8 @@ public class SpellScreenRender {
 
 		drawPrevSpells(props, spellCurrent);
 		
-		drawManabar(props);
+		if(player.capabilities.isCreativeMode == false){
+			drawManabar(props);
+		}
 	}
 }
