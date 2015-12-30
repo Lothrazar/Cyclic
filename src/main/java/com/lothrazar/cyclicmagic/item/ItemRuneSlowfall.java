@@ -16,7 +16,7 @@ public class ItemRuneSlowfall  extends RuneBaseAbstract {
 	}
 
 	private final static int seconds = 20;
-	private final static float falldistance = 5;
+	private final static float falldistance = 3;
 
 	@Override
 	protected boolean trigger(World world,Entity entityIn ) {
