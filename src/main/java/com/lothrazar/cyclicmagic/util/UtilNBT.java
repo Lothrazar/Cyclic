@@ -17,7 +17,7 @@ public class UtilNBT {
 		try {
 			p = new BlockPos(Integer.parseInt(spl[0]), Integer.parseInt(spl[1]), Integer.parseInt(spl[2]));
 		} catch (java.lang.ClassCastException e) {
-			System.out.println(e.getMessage());
+			//System.out.println(e.getMessage());
 		}
 		return p;
 	}

@@ -80,7 +80,7 @@ public class ItemChestSack extends Item {
 	}
 
 	public void sortToExisting(IInventory chest, ItemStack held) {
-		System.out.println("sortFromSackToChestEntity");
+	
 		if (held.getTagCompound() == null) {
 			held.setTagCompound(new NBTTagCompound());
 		}
@@ -92,7 +92,6 @@ public class ItemChestSack extends Item {
 		if (itemids == null) {
 			return;
 		}
-		System.out.println("itemids not null");
 
 		// int totalItemsMoved = 0;
 		int totalSlotsFreed = 0;
@@ -118,7 +117,7 @@ public class ItemChestSack extends Item {
 		// inventory and chest has 9 rows by 3 columns, never changes. same as
 		// 64 max stack size
 		for (int islotChest = 0; islotChest < chest.getSizeInventory(); islotChest++) {
-			System.out.println("islotChest" + islotChest);
+ 
 			chestItem = chest.getStackInSlot(islotChest);
 
 			if (chestItem == null) {
@@ -246,7 +245,7 @@ public class ItemChestSack extends Item {
 	public static ItemStack createStackFromInventory(World world, EntityPlayer player, BlockPos posChest) {
 
 		if (world.getTileEntity(posChest) == null || world.getTileEntity(posChest) instanceof IInventory == false) {
-			System.out.println("bad tile invo:"+posChest.toString());
+	 
 			return null;
 		}
 

@@ -15,8 +15,7 @@ public class PotionCustom extends Potion
 	{
 		super(potionID, location, badEffect,potionColor); 
 
-		//TODO: use names not ids i guess? figure that out?
-		//System.out.println("potion id deprec "+potionID);
+
 		icon = location;
 		this.setPotionName(nameIn);
 	}

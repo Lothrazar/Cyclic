@@ -57,8 +57,6 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 				ret[i] = 0;
 			else if(s.charAt(i) == '1')
 				ret[i] = 1;
-			else
-				System.out.println("error in unlocksFromString");
 		}
 		return ret;
 	}
@@ -71,8 +69,6 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 				spells += "1";
 			else if(ret[i] == 0)
 				spells += "0";
-			else
-				System.out.println("error in setUnlocksFromByte");
 		}
 		this.setSpellUnlocks(spells);
 	}
@@ -141,7 +137,7 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 		
 		//dont infloop
 		if(this.isSpellUnlocked(next) == false && infbreaker < 100){
-			//System.out.println(next+ " :skip unequipped spell ");
+	
 			infbreaker++;
 			return nextId(next);
 		}
@@ -162,7 +158,7 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 			prev = spell_id - 1;// (int)spells[spell_id-1];
 		//dont infloop
 		if(this.isSpellUnlocked(prev) == false && infbreaker < 100){
-			//System.out.println(prev+ " :skip unequipped spell ");
+	
 			infbreaker++;
 			return prevId(prev);
 		}
@@ -186,7 +182,7 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 			spell_id = this.player.getDataWatcher().getWatchableObjectInt(CURRENT_WATCHER);
 		}
 		catch (java.lang.ClassCastException e) {
-			System.out.println(e.getMessage());// do not quit, leave it as zero
+			//System.out.println(e.getMessage());// do not quit, leave it as zero
 		} 
 
 		return spell_id;
