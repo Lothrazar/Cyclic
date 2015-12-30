@@ -88,10 +88,4 @@ public class SpellBuilder extends BaseSpell {
 
 		return false;
 	}
-
-	@Override
-	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos) {
-
-		//this is here to stop the default success sound from playing
-	}
 }

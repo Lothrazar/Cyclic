@@ -3,14 +3,12 @@ package com.lothrazar.cyclicmagic.spell;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.ItemRegistry;
 import com.lothrazar.cyclicmagic.PlayerPowerups;
-import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 
 /**
@@ -79,11 +77,6 @@ public class BaseSpell implements ISpell {
 	@Override
 	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos) {
 		
-		if(pos == null){
-			pos = player.getPosition();
-		}
-		UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT, pos);
-
 		if(player.capabilities.isCreativeMode == false){
 			PlayerPowerups.get(player).drainManaBy(this.getCost());
 		}
