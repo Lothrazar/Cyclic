@@ -54,7 +54,6 @@ public class EntityWaterBolt extends EntityThrowable {
 		}
 
 		BlockPos pos = mop.getBlockPos();
-		BlockPos offset = null;
 
 		if (pos == null) {
 			return;
@@ -62,18 +61,19 @@ public class EntityWaterBolt extends EntityThrowable {
 
 		UtilParticle.spawnParticle(this.worldObj, EnumParticleTypes.WATER_SPLASH, pos);
 
+		if (this.getThrower() instanceof EntityPlayer && mop.sideHit != null) {
+			this.worldObj.extinguishFire((EntityPlayer) this.getThrower(), pos, mop.sideHit);
+		}
+		
 		if (this.dimension == Const.Dimension.nether) {
 			UtilSound.playSoundAt(this, UtilSound.fizz);
 		}
 		else {
 			UtilSound.playSoundAt(this, UtilSound.splash);
-			
+
+			BlockPos offset = null;
 			if(mop.sideHit != null ){
-				offset = mop.getBlockPos().offset(mop.sideHit);
-				
-				if (this.getThrower() instanceof EntityPlayer) {
-					this.worldObj.extinguishFire((EntityPlayer) this.getThrower(), pos, mop.sideHit);
-				}
+				offset = pos.offset(mop.sideHit);
 			}
 
 			if (this.isAirOrWater(pos)) {
