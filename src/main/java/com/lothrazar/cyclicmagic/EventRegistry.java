@@ -56,7 +56,7 @@ public class EventRegistry {
 
 				Minecraft.getMinecraft().displayGuiScreen(new GuiSpellbook(event.entityPlayer));
 			}
-			else if(blockHit == Blocks.bookshelf){
+			else if(blockHit != null){//was only bookshelf
 				
 				SpellRegistry.caster.rechargeWithExp( event.entityPlayer);
 			}
