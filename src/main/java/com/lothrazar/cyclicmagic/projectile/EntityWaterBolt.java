@@ -17,8 +17,11 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
 public class EntityWaterBolt extends EntityThrowable {
+	ArrayList<Block> waterBoth = new ArrayList<Block>();
 	public EntityWaterBolt(World worldIn) {
 		super(worldIn);
+		waterBoth.add(Blocks.flowing_water);
+		waterBoth.add(Blocks.water);
 	}
 
 	public EntityWaterBolt(World worldIn, EntityLivingBase ent) {
@@ -64,33 +67,29 @@ public class EntityWaterBolt extends EntityThrowable {
 		}
 		else {
 			UtilSound.playSoundAt(this, UtilSound.splash);
-			ArrayList<Block> waterBoth = new ArrayList<Block>();
-			waterBoth.add(Blocks.flowing_water);
-			waterBoth.add(Blocks.water);
-
-			if (mop.sideHit != null && this.getThrower() instanceof EntityPlayer) {
-				this.worldObj.extinguishFire((EntityPlayer) this.getThrower(), pos, mop.sideHit);
-
+			
+			if(mop.sideHit != null ){
 				offset = mop.getBlockPos().offset(mop.sideHit);
+				
+				if (this.getThrower() instanceof EntityPlayer) {
+					this.worldObj.extinguishFire((EntityPlayer) this.getThrower(), pos, mop.sideHit);
+				}
 			}
 
-			Block hitBlock = this.worldObj.getBlockState(pos).getBlock();
-
-			if (waterBoth.contains(hitBlock)) {
-				// turn flowing water into solid
+			if (this.isAirOrWater(pos)) {
 				this.worldObj.setBlockState(pos, Blocks.water.getDefaultState());
 			}
+			else if (offset != null && this.isAirOrWater(offset)) {
 
-			if (this.isInWater() == false) {
-				if (this.worldObj.isAirBlock(pos)) {
-					this.worldObj.setBlockState(pos, Blocks.water.getDefaultState());
-				}
-				else if (offset != null && this.worldObj.isAirBlock(mop.getBlockPos().offset(mop.sideHit))) {
-					this.worldObj.setBlockState(mop.getBlockPos().offset(mop.sideHit), Blocks.water.getDefaultState());
-				}
+				this.worldObj.setBlockState(offset, Blocks.water.getDefaultState());
 			}
 		}
 
 		this.setDead();
+	}
+	
+	private boolean isAirOrWater(BlockPos pos){
+		return this.worldObj.isAirBlock(pos) || 
+				(this.worldObj.getBlockState(pos) != null && waterBoth.contains(this.worldObj.getBlockState(pos).getBlock()));
 	}
 }
