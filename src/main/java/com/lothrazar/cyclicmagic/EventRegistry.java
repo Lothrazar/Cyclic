@@ -28,21 +28,20 @@ public class EventRegistry {
 		//DO NOT use InputEvent.MouseInputEvent 
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 
-		if(SpellRegistry.spellsEnabled(player) == false || player.isSneaking()){
-			//either you are not holding the wand - so go as normal
-			//or sneaking, so do the normal action too
+		if(SpellRegistry.spellsEnabled(player) == false){
+			//you are not holding the wand - so go as normal
 			return;
 		}
 		
-		if(event.dwheel < 0){
-
-			ModMain.network.sendToServer(new MessageKeyRight());
-			event.setCanceled(true);
-		}
-		else if(event.dwheel > 0){
-
-			ModMain.network.sendToServer(new MessageKeyLeft());
-			event.setCanceled(true);
+		if(player.isSneaking()){
+			if(event.dwheel < 0){
+				ModMain.network.sendToServer(new MessageKeyRight());
+				event.setCanceled(true);
+			}
+			else if(event.dwheel > 0){
+				ModMain.network.sendToServer(new MessageKeyLeft());
+				event.setCanceled(true);
+			}
 		}
 	}
 	

@@ -11,6 +11,7 @@ spell.enabled=Enabled
 spell.disabled=Disabled
 wand.gui.info=Use on crafting table to open the Spell GUI
 wand.recharge.info=Use on bookshelf to recharge using EXP
+wand.wheel.info=Use mouse wheel while sneaking to change spells
 button.close=Close
 item.shift=Press Shift for more info
 rune.mode.on=On
