@@ -106,7 +106,7 @@ public class SpellRegistry {
 		SpellThrowFishing fishing = new SpellThrowFishing(++spellId,"fishing");
 		registerSpell(fishing);
 		typeFarming.add(fishing.getID());
-
+/*
 		SpellThrowExplosion explode = new SpellThrowExplosion(++spellId,"explode");
 		registerSpell(explode);
 		typeDestruction.add(explode.getID());
@@ -114,14 +114,14 @@ public class SpellRegistry {
 		SpellThrowFire fire = new SpellThrowFire(++spellId,"fire");
 		registerSpell(fire);
 		typeDestruction.add(fire.getID());
-
+*/
 		SpellThrowIce ice = new SpellThrowIce(++spellId,"ice");
 		registerSpell(ice);
-
+/*
 		SpellThrowLightning lightning = new SpellThrowLightning(++spellId,"lightning");
 		registerSpell(lightning);
 		typeDestruction.add(lightning.getID());
-
+*/
 		SpellThrowShear shear = new SpellThrowShear(++spellId,"shear");
 		registerSpell(shear);
 		typeFarming.add(shear.getID());
