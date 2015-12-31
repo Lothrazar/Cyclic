@@ -26,7 +26,7 @@ public class ItemRuneProtection  extends RuneBaseAbstract {
 
 		if(entityIn instanceof EntityLivingBase){
 			EntityLivingBase entity = (EntityLivingBase)entityIn;
-			System.out.println(entity.getAir()); 
+
 			boolean didit = false;
 			
 			if(entity.getHealth() <= HEALTHLIMIT && entity.isPotionActive(Potion.absorption.id) == false){
@@ -69,9 +69,10 @@ public class ItemRuneProtection  extends RuneBaseAbstract {
 	protected List<String> getInfo() {
 		List<String> list = new ArrayList<String>();
 
-		list.add(StatCollector.translateToLocal("rune.protection.info1"));
-		list.add(StatCollector.translateToLocal("rune.protection.info2"));
-		list.add(StatCollector.translateToLocal("rune.slowfall.info"));
+		list.add(StatCollector.translateToLocal("rune.protection.prot"));
+		list.add(StatCollector.translateToLocal("rune.protection.fire"));
+		list.add(StatCollector.translateToLocal("rune.protection.fall"));
+		list.add(StatCollector.translateToLocal("rune.protection.water"));
 		
 		return list;
 	}

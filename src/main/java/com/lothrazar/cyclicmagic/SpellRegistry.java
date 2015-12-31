@@ -30,9 +30,7 @@ public class SpellRegistry {
 		screen = new SpellScreenRender();
 		caster = new SpellCaster();
 		spellbook = new ArrayList<ISpell>();
-
-		int potionDuration = Const.TICKS_PER_SEC * 20;
-
+  
 		int spellId = -1;//the smallest spell gets id zero
 
 		SpellGhost ghost = new SpellGhost(++spellId,"ghost");
@@ -41,16 +39,16 @@ public class SpellRegistry {
 		SpellPhasing phase = new SpellPhasing(++spellId,"phasing");
 		registerSpell(phase);
 
-		SpellExpPotion waterwalk = new SpellExpPotion(++spellId,"waterwalk");
-		waterwalk.setPotion(PotionRegistry.waterwalk.id, potionDuration, PotionRegistry.I);
+		SpellExpPotion waterwalk = new SpellExpPotion(++spellId,"waterwalk",45);
+		waterwalk.setPotion(PotionRegistry.waterwalk.id, Const.TICKS_PER_SEC * 30, PotionRegistry.I);
 		registerSpell(waterwalk);
 
-		SpellExpPotion nightvision = new SpellExpPotion(++spellId,"nightvision");
-		nightvision.setPotion(Potion.nightVision.id, potionDuration, PotionRegistry.I);
+		SpellExpPotion nightvision = new SpellExpPotion(++spellId,"nightvision",30);
+		nightvision.setPotion(Potion.nightVision.id, Const.TICKS_PER_SEC * 30, PotionRegistry.I);
 		registerSpell(nightvision);
 
-		SpellExpPotion haste = new SpellExpPotion(++spellId,"haste");
-		haste.setPotion(Potion.digSpeed.id, potionDuration, PotionRegistry.II);
+		SpellExpPotion haste = new SpellExpPotion(++spellId,"haste",50);
+		haste.setPotion(Potion.digSpeed.id, Const.TICKS_PER_SEC * 60, PotionRegistry.II);
 		registerSpell(haste);
 		
 		SpellBuilder builder = new SpellBuilder(++spellId,"builder");

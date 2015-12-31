@@ -13,8 +13,9 @@ public class SpellExpPotion extends BaseSpell implements ISpell {
 	private int potionId;
 	private int potionDuration;
 	private int potionAmp;
-	public SpellExpPotion(int id,String name){
+	public SpellExpPotion(int id,String name, int pcost){
 		super(id,name);
+		this.cost = pcost;
 	}
 
 	public SpellExpPotion setPotion(int id, int effectDuration, int effectAmplifier) {
