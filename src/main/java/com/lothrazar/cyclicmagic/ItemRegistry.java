@@ -19,9 +19,7 @@ public class ItemRegistry {
 	
 	//convention: runes turn on and off
 	public static ItemRuneCollector rune_collector;
-	public static ItemRuneSlowfall rune_slowfall;
 	public static ItemRuneProtection rune_protection;
-	public static ItemRuneHaste rune_haste;
 
 	public static void register() {
 		chest_sack = new ItemChestSack();
@@ -36,17 +34,11 @@ public class ItemRegistry {
 		waypoint_portal = new ItemWaypointPortal();
 		ItemRegistry.registerItem(waypoint_portal, "waypoint_portal");
 
-		rune_haste = new ItemRuneHaste();
-		ItemRegistry.registerItem(rune_haste, "rune_haste");
-
 		rune_collector = new ItemRuneCollector();
 		ItemRegistry.registerItem(rune_collector, "rune_collector");
 
 		rune_protection = new ItemRuneProtection();
 		ItemRegistry.registerItem(rune_protection, "rune_protection");
-
-		rune_slowfall = new ItemRuneSlowfall();
-		ItemRegistry.registerItem(rune_slowfall, "rune_slowfall");
 
 		cyclic_wand = new ItemCyclicWand();
 		ItemRegistry.registerItem(cyclic_wand, "cyclic_wand");
@@ -62,19 +54,9 @@ public class ItemRegistry {
 		
 		cyclic_wand.setContainerItem(cyclic_wand);//so it is not consumed on crafting
 		
-		GameRegistry.addShapelessRecipe(new ItemStack(rune_slowfall)
-				,cyclic_wand
-				,Blocks.gold_block
-				,Items.nether_star);
-
 		GameRegistry.addShapelessRecipe(new ItemStack(rune_collector)
 				,cyclic_wand
 				,Blocks.lapis_block
-				,Items.nether_star);
-
-		GameRegistry.addShapelessRecipe(new ItemStack(rune_haste)
-				,cyclic_wand
-				,Blocks.redstone_block
 				,Items.nether_star);
 
 		GameRegistry.addShapelessRecipe(new ItemStack(rune_protection)

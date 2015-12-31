@@ -48,6 +48,10 @@ public class SpellRegistry {
 		SpellExpPotion nightvision = new SpellExpPotion(++spellId,"nightvision");
 		nightvision.setPotion(Potion.nightVision.id, potionDuration, PotionRegistry.I);
 		registerSpell(nightvision);
+
+		SpellExpPotion haste = new SpellExpPotion(++spellId,"haste");
+		haste.setPotion(Potion.digSpeed.id, potionDuration, PotionRegistry.II);
+		registerSpell(haste);
 		
 		SpellBuilder builder = new SpellBuilder(++spellId,"builder");
 		registerSpell(builder);

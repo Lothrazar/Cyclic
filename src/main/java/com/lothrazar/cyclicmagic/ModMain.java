@@ -59,6 +59,14 @@ public class ModMain {
 		SpellRegistry.register();
 
 		proxy.register();
+		
+		//1 bring back haste spell
+		//remove haste rune
+		
+		//add anti drowning to protection rune
+		//add falling down past the void to protection rune (from <0 to >255)
+
+		//ADD: spell shoot.. but it just gives you arrows
 
 		//System.out.println("Add Shifting detail info for each spell");
 

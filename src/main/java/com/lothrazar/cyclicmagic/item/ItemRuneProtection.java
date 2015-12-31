@@ -16,30 +16,48 @@ public class ItemRuneProtection  extends RuneBaseAbstract {
 		super();
 	}
 
-	private final static float healthLimit = 10;//1 heart = 2 health
-	private final static int seconds = 20;
+	private final static float HEALTHLIMIT = 10;//1 heart = 2 health
+	private final static int SECONDS = 30;
+	private final static float FALLDISTANCE = 3;
+	private final static float AIRLIMIT = 150;// 300 is a full bar
 
 	@Override
 	protected boolean trigger(World world,Entity entityIn ) {
-		//apply slowfall after falling for a while
+
 		if(entityIn instanceof EntityLivingBase){
 			EntityLivingBase entity = (EntityLivingBase)entityIn;
-			
+			System.out.println(entity.getAir()); 
 			boolean didit = false;
 			
-			if(entity.getHealth() <= healthLimit && entity.isPotionActive(Potion.absorption.id) == false){
+			if(entity.getHealth() <= HEALTHLIMIT && entity.isPotionActive(Potion.absorption.id) == false){
 			
-				PotionRegistry.addOrMergePotionEffect(entity, new PotionEffect(Potion.absorption.id,seconds * Const.TICKS_PER_SEC, PotionRegistry.V));
+				PotionRegistry.addOrMergePotionEffect(entity, new PotionEffect(Potion.absorption.id,SECONDS * Const.TICKS_PER_SEC, PotionRegistry.V));
 			
-				PotionRegistry.addOrMergePotionEffect(entity, new PotionEffect(Potion.resistance.id,seconds * Const.TICKS_PER_SEC, PotionRegistry.I));
+				PotionRegistry.addOrMergePotionEffect(entity, new PotionEffect(Potion.resistance.id,SECONDS * Const.TICKS_PER_SEC, PotionRegistry.I));
 			
 				didit = true;
 			}
 			if(entity.isBurning() && entity.isPotionActive(Potion.fireResistance.id) == false){
 
-				PotionRegistry.addOrMergePotionEffect(entity, new PotionEffect(Potion.fireResistance.id,seconds * Const.TICKS_PER_SEC, PotionRegistry.V));
+				PotionRegistry.addOrMergePotionEffect(entity, new PotionEffect(Potion.fireResistance.id,SECONDS * Const.TICKS_PER_SEC, PotionRegistry.V));
 				
 				didit = true;
+			}
+			if(entityIn.fallDistance >= FALLDISTANCE){
+				
+				if(entity.isPotionActive(PotionRegistry.slowfall) == false){
+					PotionRegistry.addOrMergePotionEffect(entity, new PotionEffect(PotionRegistry.slowfall.id,SECONDS * Const.TICKS_PER_SEC));
+
+					didit = true;
+				}
+			}
+			if(entity.getAir() <= AIRLIMIT){
+				
+				if(entity.isPotionActive(Potion.waterBreathing) == false){
+					PotionRegistry.addOrMergePotionEffect(entity, new PotionEffect(Potion.waterBreathing.id,SECONDS * Const.TICKS_PER_SEC));
+
+					didit = true;
+				}
 			}
 			
 			return didit;//can trigger both fire and regular
@@ -53,6 +71,7 @@ public class ItemRuneProtection  extends RuneBaseAbstract {
 
 		list.add(StatCollector.translateToLocal("rune.protection.info1"));
 		list.add(StatCollector.translateToLocal("rune.protection.info2"));
+		list.add(StatCollector.translateToLocal("rune.slowfall.info"));
 		
 		return list;
 	}
