@@ -109,7 +109,6 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 		this.player.getDataWatcher().updateObject(MANA_WATCHER, properties.getInteger(NBT_MANA));
 
 		this.player.getDataWatcher().updateObject(UNLOCKS_WATCHER, properties.getString(NBT_UNLOCKS));
-		//spells = properties.getByteArray(NBT_UNLOCKS);
 	}
  
 	public void toggleOneSpell(int spell_id) {
@@ -130,7 +129,7 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 		
 		int next;
 		
-		if (spell_id >= spells.length - 1)
+		if (spell_id >= SpellRegistry.getSpellbook().size() - 1)
 			next = 0;// (int)spells[0];
 		else
 			next = spell_id + 1;// (int)spells[spell_id+1];
@@ -153,9 +152,9 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 		int prev;
 
 		if (spell_id == 0)
-			prev = spells.length - 1;// (int)spells[0];
+			prev = SpellRegistry.getSpellbook().size() - 1; 
 		else
-			prev = spell_id - 1;// (int)spells[spell_id-1];
+			prev = spell_id - 1; 
 		//dont infloop
 		if(this.isSpellUnlocked(prev) == false && infbreaker < 100){
 	
