@@ -13,17 +13,11 @@ import net.minecraft.world.World;
 public class UtilMoveBlock {
 	public static ArrayList<Block> ignoreList = new ArrayList<Block>();
 
-	// private static String ignoreListFromConfig = "";
-
 	private static void translateCSV() {
 		// TODO: FROM CONFIG...somehow
-		// do this on the fly, could be items not around yet during config
-		// change
-		if (ignoreList.size() == 0) {
-			// ignoreList =
-			// ModControlBlocks.getBlockListFromCSV(ignoreListFromConfig);
 
-			// ignoreList.add(Blocks.bedrock);
+		if (ignoreList.size() == 0) {
+
 			ignoreList.add(Blocks.end_portal_frame);
 			ignoreList.add(Blocks.end_portal);
 			ignoreList.add(Blocks.portal);
@@ -39,11 +33,6 @@ public class UtilMoveBlock {
 		}
 	}
 
-	/*
-	 * public static void seIgnoreBlocksFromString(String csv) {
-	 * ignoreListFromConfig = csv; }
-	 */
-
 	public static boolean moveBlockTo(World world, EntityPlayer player, BlockPos pos, BlockPos posMoveToHere) {
 		IBlockState hit = world.getBlockState(pos);
 		translateCSV();
@@ -51,27 +40,23 @@ public class UtilMoveBlock {
 		if (hit == null || ignoreList.contains(hit.getBlock())) {
 			return false;
 		}
+		if (hit.getBlock().getBlockHardness(world, posMoveToHere) == -1) {
+			return false;// unbreakable like bedrock
+		}
 
 		if (world.isAirBlock(posMoveToHere) && world.isBlockModifiable(player, pos)) {
 
-			// playSoundAt(player, "random.wood_click");
-
-			// they swap places
-			// world.destroyBlock(posMoveToHere, false);
-			if (world.isRemote == false) {// just to avoid duplicating the sound
-											// effect
+			if (world.isRemote == false) {
 
 				world.destroyBlock(pos, false);
 			}
-			world.setBlockState(posMoveToHere, hit, Const.NOTIFY);// pulls the
-																	// block
-																	// towards
-																	// the
-																	// player
-			world.markBlockForUpdate(posMoveToHere); 
+			world.setBlockState(posMoveToHere, hit, Const.NOTIFY);
+
+			world.markBlockForUpdate(posMoveToHere);
 
 			return true;
-		} else
+		}
+		else
 			return false;
 	}
 
@@ -87,30 +72,22 @@ public class UtilMoveBlock {
 
 		BlockPos posTowardsPlayer = pos.offset(face);
 
-		// BlockPos posAwayPlayer = pos.offset(face.getOpposite());
-
-		// BlockPos posMoveToHere = player.isSneaking() ? posTowardsPlayer :
-		// posAwayPlayer;
-
 		if (moveBlockTo(worldIn, player, pos, posTowardsPlayer)) {
 			return posTowardsPlayer;
-		} else {
+		}
+		else {
 			return null;
 		}
 	}
 
 	public static BlockPos pushBlock(World worldIn, EntityPlayer player, BlockPos pos, EnumFacing face) {
 
-		// BlockPos posTowardsPlayer = pos.offset(face);
-
 		BlockPos posAwayPlayer = pos.offset(face.getOpposite());
-
-		// BlockPos posMoveToHere = player.isSneaking() ? posTowardsPlayer :
-		// posAwayPlayer;
 
 		if (moveBlockTo(worldIn, player, pos, posAwayPlayer)) {
 			return posAwayPlayer;
-		} else {
+		}
+		else {
 			return null;
 		}
 	}
