@@ -16,7 +16,7 @@ public class ItemRuneProtection  extends RuneBaseAbstract {
 		super();
 	}
 
-	private final static float healthLimit = 6;//1 heart = 2 health
+	private final static float healthLimit = 10;//1 heart = 2 health
 	private final static int seconds = 20;
 
 	@Override
