@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.spell;
 
 import com.lothrazar.cyclicmagic.BlockRegistry;
 import com.lothrazar.cyclicmagic.Const;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
@@ -78,6 +79,8 @@ public class SpellScaffolding extends BaseSpell {
 		
 		if(world.isAirBlock(offset)){
 			world.setBlockState(offset, BlockRegistry.block_fragile.getDefaultState());
+			
+			UtilSound.playSoundAt(player, UtilSound.click);
 			
 			return true;
 		}
