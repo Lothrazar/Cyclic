@@ -60,20 +60,10 @@ public class ModMain {
 
 		proxy.register();
 		
-		//1 bring back haste spell
-		//remove haste rune
-		
-		//add anti drowning to protection rune
-		//add falling down past the void to protection rune (from <0 to >255)
-
-		//ADD: spell shoot.. but it just gives you arrows
-
-		//System.out.println("Add Shifting detail info for each spell");
-
-	//	System.out.println("unlock system? dont start with all spells?");
-		
-
-
+		//FALLING BELOW 0 : put you back up at 200 TODO: prot rune!
+	
+//1 
 	//	System.out.println("add chat spam to say what current spell is when you spell change. disable in config");
+		
 	}
 }
