@@ -35,18 +35,18 @@ public class SpellLaunch extends BaseSpell implements ISpell {
 		double velX = (double) (-MathHelper.sin(player.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(player.rotationPitch / 180.0F * (float) Math.PI) * power);
 		double velZ = (double) (MathHelper.cos(player.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(player.rotationPitch / 180.0F * (float) Math.PI) * power);
 
+		player.motionY = 0;
+		player.fallDistance = 0;
 		if (player.ridingEntity != null) {
+			player.ridingEntity.motionY = 0;
+			player.ridingEntity.fallDistance = 0;
 			// boost power a bit, horses are heavy as F
 			player.ridingEntity.addVelocity(velX * mountPower, velY * mountPower, velZ * mountPower);
 
-			player.ridingEntity.motionY = 0;
-			player.ridingEntity.fallDistance = 0;
 		}
 		else {
 			player.addVelocity(velX, velY, velZ);
 		}
-		player.motionY = 0;
-		player.fallDistance = 0;
 
 		return true;
 	}

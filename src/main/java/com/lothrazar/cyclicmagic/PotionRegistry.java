@@ -94,12 +94,15 @@ public class PotionRegistry {
 
 	public static void tickSlowfall(LivingUpdateEvent event) {
 		if (event.entityLiving.isPotionActive(PotionRegistry.slowfall)) {
+			
+			
 			if (event.entityLiving instanceof EntityPlayer) 	{
 				EntityPlayer p = (EntityPlayer) event.entityLiving;
 				if (p.isSneaking()) {
 					return;// so fall normally for now
 				}
 			}
+			
 			// else: so we are either a non-sneaking player, or a non player
 			// entity
 

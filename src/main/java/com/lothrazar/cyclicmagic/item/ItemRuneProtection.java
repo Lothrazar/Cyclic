@@ -51,6 +51,17 @@ public class ItemRuneProtection  extends RuneBaseAbstract {
 					didit = true;
 				}
 			}
+			if(entityIn.ridingEntity != null && entityIn.ridingEntity.fallDistance >= FALLDISTANCE 
+					&& entityIn.ridingEntity instanceof EntityLivingBase){
+				EntityLivingBase maybeHorse = (EntityLivingBase)entityIn.ridingEntity;
+				
+				if(maybeHorse.isPotionActive(PotionRegistry.slowfall) == false){
+
+					PotionRegistry.addOrMergePotionEffect(maybeHorse, new PotionEffect(PotionRegistry.slowfall.id,SECONDS * Const.TICKS_PER_SEC));
+
+					didit = true;
+				}
+			}
 			if(entity.getAir() <= AIRLIMIT){
 				
 				if(entity.isPotionActive(Potion.waterBreathing) == false){
