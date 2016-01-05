@@ -5,6 +5,7 @@ item.cyclic_wand.name=Cyclic Wand
 item.waypoint_portal.name=Portable Waypoint
 item.rune_collector.name=Collection Rune
 item.rune_protection.name=Protection Rune
+teleport.dimension=Cannot cross dimensions
 spell.enabled=Enabled
 spell.disabled=Disabled
 wand.gui.info=Use on crafting table to open the Spell GUI

@@ -23,7 +23,8 @@ public class ItemWaypointPortal extends Item
   
 	public ItemWaypointPortal( )
 	{  
-		super(); 
+		super();
+		this.setMaxDamage(20);
 		this.setMaxStackSize(1);
 	}
 
@@ -68,6 +69,9 @@ public class ItemWaypointPortal extends Item
 		UtilParticle.spawnParticle(worldIn, EnumParticleTypes.PORTAL, playerIn);
 		
 		playerIn.setPositionAndUpdate(to.getX(), to.getY(), to.getZ());
+
+		worldIn.getChunkFromBlockCoords(to).setChunkModified();
+		worldIn.markBlockForUpdate(to);
 
 		UtilSound.playSoundAt(playerIn, UtilSound.portal);
 		UtilParticle.spawnParticle(worldIn, EnumParticleTypes.PORTAL, playerIn);
