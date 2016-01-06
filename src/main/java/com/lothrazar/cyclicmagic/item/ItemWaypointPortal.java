@@ -58,7 +58,9 @@ public class ItemWaypointPortal extends Item {
 			return itemStackIn;
 		}
 
-		itemStackIn.damageItem(1, playerIn);
+		if(worldIn.isRemote == false){
+			itemStackIn.damageItem(1, playerIn);
+		}
 		// do the sounds/particles at both locations (before and after);
 		UtilSound.playSoundAt(playerIn, UtilSound.portal);
 		UtilParticle.spawnParticle(worldIn, EnumParticleTypes.PORTAL, playerIn);
