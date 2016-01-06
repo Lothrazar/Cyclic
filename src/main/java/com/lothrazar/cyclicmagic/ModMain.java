@@ -65,5 +65,7 @@ public class ModMain {
 //1 
 	//	System.out.println("add chat spam to say what current spell is when you spell change. disable in config");
 		
+		
+		//SOUND ON ROTATE SPELL
 	}
 }

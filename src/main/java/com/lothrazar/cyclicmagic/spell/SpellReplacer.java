@@ -69,20 +69,13 @@ public class SpellReplacer extends BaseSpell {
 				player.inventoryContainer.detectAndSendChanges();
 			}
 			
-			if(placeState.getBlock().stepSound != null && placeState.getBlock().stepSound.getBreakSound() != null){
+			if(placeState.getBlock().stepSound != null && placeState.getBlock().stepSound.getPlaceSound() != null){
 				UtilSound.playSoundAt(player, placeState.getBlock().stepSound.getPlaceSound());
 			}
-			
 			
 			return true;
 		}
 
 		return false;
-	}
-
-	@Override
-	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos) {
-
-		//this is here to stop the default success sound from playing
 	}
 }
