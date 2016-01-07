@@ -70,6 +70,11 @@ public class ItemRuneProtection  extends RuneBaseAbstract {
 					didit = true;
 				}
 			}
+			if(entity.getPosition().getY() < -10){
+				entity.setPositionAndUpdate(entity.getPosition().getX(), entity.getPosition().getY() + 256, entity.getPosition().getZ());;
+
+				didit = true;
+			}
 			
 			return didit;//can trigger both fire and regular
 		}

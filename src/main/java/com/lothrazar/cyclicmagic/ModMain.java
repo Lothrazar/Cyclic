@@ -59,13 +59,5 @@ public class ModMain {
 		SpellRegistry.register();
 
 		proxy.register();
-		
-		//FALLING BELOW 0 : put you back up at 200 TODO: prot rune!
-	
-//1 
-	//	System.out.println("add chat spam to say what current spell is when you spell change. disable in config");
-		
-		
-		//SOUND ON ROTATE SPELL
 	}
 }
