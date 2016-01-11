@@ -20,21 +20,15 @@ plugins {
     id "net.minecraftforge.gradle.forge" version "2.0.2"
 }
 */
-version = "1.8.8-1.0.3"
+version = "1.8.9-1.0.3"
 group= "com.lothrazar.cyclicmagic" 
 archivesBaseName = "cyclicmagic"
 
 minecraft {
-    version = "1.8.8-11.15.0.1625-1.8.8"
+    version = "1.8.9-11.15.0.1693"
     runDir = "run"
     
-    // the mappings can be changed at any time, and must be in the following format.
-    // snapshot_YYYYMMDD   snapshot are built nightly.
-    // stable_#            stables are built at the discretion of the MCP team.
-    // Use non-default mappings at your own risk. they may not allways work.
-    // simply re-run your setup task after changing the mappings to update your workspace.
-    mappings = "snapshot_20151122"
-    // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
+    mappings = "stable_20"
 }
 
 dependencies {

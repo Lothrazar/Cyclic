@@ -2,6 +2,8 @@
   "homepage": "http://minecraft.curseforge.com/projects/cyclic-magic",
   "promos": {
     "1.8.8-latest": "1.0.3",
-    "1.8.8-recommended": "1.0.3"
+    "1.8.8-recommended": "1.0.3",
+    "1.8.9-latest": "1.0.3",
+    "1.8.9-recommended": "1.0.3"
   }
 }

@@ -28,7 +28,14 @@ public class ClientProxy extends CommonProxy {
 		
 		RenderManager rm = Minecraft.getMinecraft().getRenderManager();
 		RenderItem ri = Minecraft.getMinecraft().getRenderItem();
-
+	    /**
+	     * Register an entity rendering handler. This will, after mod initialization, be inserted into the main
+	     * render map for entities.
+	     * Call this during Initialization phase.
+	     *
+	     * @deprecated use the factory version during Preinitialization.
+	     * Will be removed in 1.9.
+	     */
 		RenderingRegistry.registerEntityRenderingHandler(EntityTorchBolt.class, new RenderSnowball(rm, EntityTorchBolt.item, ri));
 		RenderingRegistry.registerEntityRenderingHandler(EntityFishingBolt.class, new RenderSnowball(rm, EntityFishingBolt.item, ri));
 		RenderingRegistry.registerEntityRenderingHandler(EntityBlazeBolt.class, new RenderSnowball(rm, EntityBlazeBolt.item, ri));
@@ -38,7 +45,8 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityDynamite.class, new RenderSnowball(rm, EntityDynamite.item, ri));
 		RenderingRegistry.registerEntityRenderingHandler(EntityWaterBolt.class, new RenderSnowball(rm, EntityWaterBolt.item, ri));
 		RenderingRegistry.registerEntityRenderingHandler(EntityShearingBolt.class, new RenderSnowball(rm, EntityShearingBolt.item, ri));
-		RenderingRegistry.registerEntityRenderingHandler(EntityHarvestBolt.class, new RenderSnowball(rm, EntityHarvestBolt.item, ri));RenderingRegistry.registerEntityRenderingHandler(EntityRespawnEgg.class, new RenderSnowball(rm, EntityRespawnEgg.item, ri));
+		RenderingRegistry.registerEntityRenderingHandler(EntityHarvestBolt.class, new RenderSnowball(rm, EntityHarvestBolt.item, ri));
+		RenderingRegistry.registerEntityRenderingHandler(EntityRespawnEgg.class, new RenderSnowball(rm, EntityRespawnEgg.item, ri));
 	}
 
 	private void registerModels() {
