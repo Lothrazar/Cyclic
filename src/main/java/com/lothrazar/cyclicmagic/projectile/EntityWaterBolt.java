@@ -84,7 +84,7 @@ public class EntityWaterBolt extends EntityThrowable {
 				System.out.println("=====");
 				
 				if(pos != null){
-					
+					System.out.println(this.worldObj.getBlockState(pos).getBlock().getUnlocalizedName());
 					if (this.isAirOrWater(pos)){
 						System.out.println("set water");
 						this.worldObj.setBlockState(pos, Blocks.flowing_water.getDefaultState(),3);
@@ -92,6 +92,7 @@ public class EntityWaterBolt extends EntityThrowable {
 					if(mop.sideHit != null){
 						BlockPos offset = pos.offset(mop.sideHit);
 						System.out.println("offset "  + this.isAirOrWater(offset));
+						System.out.println(this.worldObj.getBlockState(offset).getBlock().getUnlocalizedName());
 						if (offset != null && this.isAirOrWater(offset)) {
 					
 							System.out.println("offset water "+ this.worldObj.isRemote );
@@ -111,6 +112,7 @@ public class EntityWaterBolt extends EntityThrowable {
 			return false;
 		}
 		return this.worldObj.isAirBlock(pos) || 
+				this.worldObj.getBlockState(pos).getBlock().getUnlocalizedName().equalsIgnoreCase("tile.water") || 
 				(this.worldObj.getBlockState(pos) != null && waterBoth.contains(this.worldObj.getBlockState(pos).getBlock()));
 	}
 }
