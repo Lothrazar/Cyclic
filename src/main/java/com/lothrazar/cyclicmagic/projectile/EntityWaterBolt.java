@@ -9,7 +9,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
@@ -65,7 +64,7 @@ public class EntityWaterBolt extends EntityThrowable {
 			
 			if (this.getThrower() instanceof EntityPlayer && mop.sideHit != null
 					&& this.worldObj.isRemote == false) {
-				//TODO: could extinguish in a bigger area
+	 
 				this.worldObj.extinguishFire((EntityPlayer) this.getThrower(), pos, mop.sideHit);
 			}
 		}
