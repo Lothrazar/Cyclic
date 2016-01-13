@@ -23,7 +23,7 @@ public class ClientProxy extends CommonProxy {
 		registerEntities();
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({ "unchecked", "rawtypes", "deprecation" })
 	private void registerEntities() {
 		
 		RenderManager rm = Minecraft.getMinecraft().getRenderManager();
