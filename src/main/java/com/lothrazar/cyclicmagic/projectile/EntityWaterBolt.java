@@ -65,6 +65,7 @@ public class EntityWaterBolt extends EntityThrowable {
 			
 			if (this.getThrower() instanceof EntityPlayer && mop.sideHit != null
 					&& this.worldObj.isRemote == false) {
+				//TODO: could extinguish in a bigger area
 				this.worldObj.extinguishFire((EntityPlayer) this.getThrower(), pos, mop.sideHit);
 			}
 		}
@@ -77,26 +78,18 @@ public class EntityWaterBolt extends EntityThrowable {
 			
 			//so far its both client and server
 			if(this.worldObj.isRemote == false){
-				System.out.println("TESTING TIME " + this.worldObj.isRemote);
-				System.out.println(mop.toString());
-				System.out.println(mop.getBlockPos());
-				System.out.println("isAirOrWater "  + this.isAirOrWater(pos));
-				System.out.println("=====");
-				
+	
 				if(pos != null){
-					System.out.println(this.worldObj.getBlockState(pos).getBlock().getUnlocalizedName());
+			 
 					if (this.isAirOrWater(pos)){
-						System.out.println("set water");
+				
 						this.worldObj.setBlockState(pos, Blocks.flowing_water.getDefaultState(),3);
 					}
 					if(mop.sideHit != null){
 						BlockPos offset = pos.offset(mop.sideHit);
-						System.out.println("offset "  + this.isAirOrWater(offset));
-						System.out.println(this.worldObj.getBlockState(offset).getBlock().getUnlocalizedName());
+		
 						if (offset != null && this.isAirOrWater(offset)) {
-					
-							System.out.println("offset water "+ this.worldObj.isRemote );
-			 
+					 
 							this.worldObj.setBlockState(offset, Blocks.flowing_water.getDefaultState(),3);
 						}
 					}
