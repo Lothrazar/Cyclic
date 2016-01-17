@@ -11,6 +11,7 @@ public class SpellThrowShear extends BaseSpell implements ISpell {
 
 	public SpellThrowShear(int id,String name){
 		super(id,name);
+		this.cost = 1;
 	}
  
 	@Override
