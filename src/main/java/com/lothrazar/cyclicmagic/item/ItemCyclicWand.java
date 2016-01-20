@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.PlayerPowerups;
 import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -23,6 +24,8 @@ public class ItemCyclicWand extends Item {
 
 	public ItemCyclicWand() {
 		this.setMaxStackSize(1);
+		this.setHasSubtypes(true);
+		this.setCreativeTab(CreativeTabs.tabAllSearch);
 	}
 
 	@Override
@@ -31,6 +34,20 @@ public class ItemCyclicWand extends Item {
 		return true;
 	}
 
+	public final static int MAX_META = 2;//starts at 0
+    public String getUnlocalizedName(ItemStack stack)
+    {
+        return super.getUnlocalizedName() + "_" +stack.getMetadata();
+    }
+    
+    @SideOnly(Side.CLIENT)
+    public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems)
+    {
+        for (int i = 0; i < ItemCyclicWand.MAX_META; i++){
+            subItems.add(new ItemStack(itemIn, 1, i));
+        }
+    }
+    
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
 

@@ -41,7 +41,9 @@ public class ItemRegistry {
 		ItemRegistry.registerItem(rune_protection, "rune_protection");
 
 		cyclic_wand = new ItemCyclicWand();
-		ItemRegistry.registerItem(cyclic_wand, "cyclic_wand");
+		//ItemRegistry.registerItem(cyclic_wand, "cyclic_wand");
+		cyclic_wand.setUnlocalizedName("cyclic_wand");
+		GameRegistry.registerItem(cyclic_wand, "cyclic_wand");
 
 		GameRegistry.addRecipe(new ItemStack(cyclic_wand), //placeholder rec
 				"sds",

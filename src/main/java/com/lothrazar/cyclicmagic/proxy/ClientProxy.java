@@ -1,8 +1,10 @@
 package com.lothrazar.cyclicmagic.proxy;
 
+import java.util.ArrayList;
 import net.minecraft.item.Item;
 import com.lothrazar.cyclicmagic.ItemRegistry;
 import com.lothrazar.cyclicmagic.Const;
+import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.projectile.*;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraft.client.Minecraft;
@@ -10,6 +12,7 @@ import net.minecraft.client.renderer.ItemModelMesher;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderSnowball;
+import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.entity.EntityList;
 
@@ -64,10 +67,23 @@ public class ClientProxy extends CommonProxy {
 			mesher.register(i, 0, new ModelResourceLocation(name, "inventory"));
 		}
 		
+		ArrayList<String> variants = new ArrayList<String>();
+		
+        for (int i = 0; i < ItemCyclicWand.MAX_META; i++){
+        	name =  Const.TEXTURE_LOCATION + "cyclic_wand_"+i;
+        	variants.add(name);
+        	mesher.register(ItemRegistry.cyclic_wand, i, new ModelResourceLocation(name , "inventory"));	
+        	
+        	System.out.println(name);
+        }
+        
+        ModelBakery.addVariantName(ItemRegistry.cyclic_wand, variants.toArray(new String[variants.size()]));
+        
 		if(ItemRegistry.respawn_egg != null) { 
 			for(Object key : EntityList.entityEggs.keySet()) {
-				  mesher.register(ItemRegistry.respawn_egg, (Integer)key, new
-				  ModelResourceLocation(Const.TEXTURE_LOCATION + "respawn_egg" ,"inventory")); 
+				mesher.register(ItemRegistry.respawn_egg, 
+						(Integer)key, 
+						new ModelResourceLocation(Const.TEXTURE_LOCATION + "respawn_egg" ,"inventory")); 
 			} 
 		}
 	}
