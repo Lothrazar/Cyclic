@@ -21,7 +21,9 @@ import net.minecraftforge.fml.relauncher.Side;
  * 
  * @author Sam Bassett (Lothrazar)
  */
-@Mod(modid = Const.MODID, useMetadata = true)
+@Mod(modid = Const.MODID, useMetadata = true, canBeDeactivated = false, 
+updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json"
+)
 public class ModMain {
 
 	@Instance(value = Const.MODID)
