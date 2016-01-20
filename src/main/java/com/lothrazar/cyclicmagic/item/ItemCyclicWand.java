@@ -22,10 +22,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemCyclicWand extends Item {
 
+	
 	public ItemCyclicWand() {
 		this.setMaxStackSize(1);
 		this.setHasSubtypes(true);
-		this.setCreativeTab(CreativeTabs.tabAllSearch);
+		this.setCreativeTab(CreativeTabs.tabAllSearch);//TODO: remove this for release
 	}
 
 	@Override
@@ -34,16 +35,25 @@ public class ItemCyclicWand extends Item {
 		return true;
 	}
 
-	public final static int MAX_META = 2;//starts at 0
+	@Override
     public String getUnlocalizedName(ItemStack stack)
     {
-        return super.getUnlocalizedName() + "_" +stack.getMetadata();
+		String name = "";
+		try{
+			name = super.getUnlocalizedName() + "_" + Variants.values()[stack.getMetadata()].name().toLowerCase();
+		}
+		catch(Exception e){
+			//will never happen... unless some external tool or mod forces the metadata to invalid state
+			//ex: nbt editor
+			name = super.getUnlocalizedName();
+		}
+        return name;
     }
     
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems)
     {
-        for (int i = 0; i < ItemCyclicWand.MAX_META; i++){
+        for (int i = 0; i <= Variants.values().length; i++){
             subItems.add(new ItemStack(itemIn, 1, i));
         }
     }
@@ -108,5 +118,21 @@ public class ItemCyclicWand extends Item {
 		// http://www.minecraftforge.net/forum/index.php?topic=31966.0
 		// so if this casts and succeeds, the right click is cancelled
 		return SpellRegistry.caster.tryCastCurrent(worldIn, playerIn, pos, side);
+	}
+	
+	public enum Variants{
+		QUARTZ,
+		GOLD,
+		DIAMOND,
+		EMERALD;
+		
+		public int getMetadata() {
+			return ordinal();
+		}
+
+		public String getResource() {
+			
+			return Const.TEXTURE_LOCATION + "cyclic_wand_" + this.name().toLowerCase();
+		}
 	}
 }

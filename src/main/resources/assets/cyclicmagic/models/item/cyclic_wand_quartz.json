@@ -2,7 +2,7 @@
     "textures": {
         "0": "blocks/obsidian",
         "1": "blocks/quartz_block_top",
-        "2": "blocks/diamond_block"
+        "2": "blocks/quartz_block_side"
     },
     "elements": [
         {

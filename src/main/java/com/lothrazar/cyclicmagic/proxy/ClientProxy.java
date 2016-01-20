@@ -52,7 +52,12 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityRespawnEgg.class, new RenderSnowball(rm, EntityRespawnEgg.item, ri));
 	}
 
+	@SuppressWarnings("deprecation")
 	private void registerModels() {
+		
+		//with help from 
+		// http://www.minecraftforge.net/forum/index.php?topic=32492.0
+		//https://github.com/TheOnlySilverClaw/Birdmod/blob/master/src/main/java/silverclaw/birds/client/ClientProxyBirds.java
 		// More info on proxy rendering
 		// http://www.minecraftforge.net/forum/index.php?topic=27684.0
 		// http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/modification-development/2272349-lessons-from-my-first-mc-1-8-mod
@@ -68,11 +73,11 @@ public class ClientProxy extends CommonProxy {
 		}
 		
 		ArrayList<String> variants = new ArrayList<String>();
-		
-        for (int i = 0; i < ItemCyclicWand.MAX_META; i++){
-        	name =  Const.TEXTURE_LOCATION + "cyclic_wand_"+i;
+
+		for(ItemCyclicWand.Variants wandType : ItemCyclicWand.Variants.values()) {
+        	name = wandType.getResource();
         	variants.add(name);
-        	mesher.register(ItemRegistry.cyclic_wand, i, new ModelResourceLocation(name , "inventory"));	
+        	mesher.register(ItemRegistry.cyclic_wand, wandType.getMetadata(), new ModelResourceLocation(name , "inventory"));	
         	
         	System.out.println(name);
         }
