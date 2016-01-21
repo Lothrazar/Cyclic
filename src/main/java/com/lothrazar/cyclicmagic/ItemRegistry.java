@@ -17,10 +17,6 @@ public class ItemRegistry {
 	public static ItemPaperCarbon carbon_paper;
 	public static ItemWaypointPortal waypoint_portal;
 	
-	//convention: runes turn on and off
-	public static ItemRuneCollector rune_collector;
-	public static ItemRuneProtection rune_protection;
-
 	public static void register() {
 		chest_sack = new ItemChestSack();
 		ItemRegistry.registerItem(chest_sack, "chest_sack");
@@ -33,12 +29,6 @@ public class ItemRegistry {
 
 		waypoint_portal = new ItemWaypointPortal();
 		ItemRegistry.registerItem(waypoint_portal, "waypoint_portal");
-
-		rune_collector = new ItemRuneCollector();
-		ItemRegistry.registerItem(rune_collector, "rune_collector");
-
-		rune_protection = new ItemRuneProtection();
-		ItemRegistry.registerItem(rune_protection, "rune_protection");
 
 		cyclic_wand = new ItemCyclicWand();
 		//ItemRegistry.registerItem(cyclic_wand, "cyclic_wand");
@@ -55,16 +45,7 @@ public class ItemRegistry {
 				's',Items.nether_star);
 		
 		cyclic_wand.setContainerItem(cyclic_wand);//so it is not consumed on crafting
-		
-		GameRegistry.addShapelessRecipe(new ItemStack(rune_collector)
-				,cyclic_wand
-				,Blocks.lapis_block
-				,Items.nether_star);
-
-		GameRegistry.addShapelessRecipe(new ItemStack(rune_protection)
-				,cyclic_wand
-				,Blocks.emerald_block
-				,Items.nether_star);
+	
 	}
 
 	public static void registerItem(Item item, String name) {

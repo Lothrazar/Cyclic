@@ -1,13 +1,19 @@
 package com.lothrazar.cyclicmagic;
 
+import java.util.List;
 import com.lothrazar.cyclicmagic.potion.PotionCustom;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
+import com.lothrazar.cyclicmagic.util.Vector3;
 import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
@@ -20,6 +26,7 @@ public class PotionRegistry {
 	public static Potion waterwalk;
 	public static Potion slowfall;
 	public static Potion frost;
+	public static Potion magnet;
 
 	public final static int I = 0;
 	public final static int II = 1;
@@ -45,8 +52,38 @@ public class PotionRegistry {
 		PotionRegistry.slowfall = new PotionCustom(ModMain.cfg.potionIdSlowfall, new ResourceLocation(Const.MODID, "textures/potions/slowfall.png"), false, 0, "potion.slowfall");
 
 		PotionRegistry.frost = new PotionCustom(ModMain.cfg.potionIdFrost, new ResourceLocation(Const.MODID, "textures/potions/frost.png"), false, 0, "potion.frost");
+		
+		PotionRegistry.magnet = new PotionCustom(ModMain.cfg.potionIdMagnet, new ResourceLocation(Const.MODID, "textures/potions/magnet.png"), false, 0, "potion.magnet");
 
 		// TODO: test out brewing api for these?
+	}
+
+	private final static int ITEM_HRADIUS = 20;
+	private final static int ITEM_VRADIUS = 4;
+	private final static float ITEMSPEED = 1.2F;
+	public static void tickMagnet(LivingUpdateEvent event){
+		if (event.entityLiving.isPotionActive(PotionRegistry.magnet)) {
+			Entity entityIn = event.entityLiving;
+			World world = event.entity.worldObj;
+		
+			BlockPos pos = entityIn.getPosition();
+			int x = pos.getX(), y = pos.getY(), z = pos.getZ();
+	
+			List<EntityItem> found = world.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.fromBounds(x - ITEM_HRADIUS, y - ITEM_VRADIUS, z - ITEM_HRADIUS, x + ITEM_HRADIUS, y + ITEM_VRADIUS, z + ITEM_HRADIUS));
+	
+			int moved = 0;
+			for (EntityItem eitem : found) {
+				Vector3.setEntityMotionFromVector(eitem, x, y, z, ITEMSPEED);
+				moved++;
+			}
+	
+			List<EntityXPOrb> foundExp = world.getEntitiesWithinAABB(EntityXPOrb.class, AxisAlignedBB.fromBounds(x - ITEM_HRADIUS, y - ITEM_VRADIUS, z - ITEM_HRADIUS, x + ITEM_HRADIUS, y + ITEM_VRADIUS, z + ITEM_HRADIUS));
+	
+			for (EntityXPOrb eitem : foundExp) {
+				Vector3.setEntityMotionFromVector(eitem, x, y, z, ITEMSPEED);
+				moved++;
+			}
+		}
 	}
 
 	public static void tickFrost(LivingUpdateEvent event) {

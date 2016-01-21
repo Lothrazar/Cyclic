@@ -103,5 +103,7 @@ public class EventRegistry {
 		PotionRegistry.tickWaterwalk(event);
 
 		PotionRegistry.tickFrost(event);
+		
+		PotionRegistry.tickMagnet(event);
 	}
 }

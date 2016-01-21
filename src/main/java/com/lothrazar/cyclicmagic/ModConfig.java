@@ -10,6 +10,7 @@ public class ModConfig {
 	public int potionIdSlowfall;
 	public int potionIdFrost;
 	public float slowfallSpeed;
+	public int potionIdMagnet =43;
 
 	public Configuration instance() {
 		return instance;

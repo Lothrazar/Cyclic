@@ -4,14 +4,22 @@ import java.util.List;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.PlayerPowerups;
+import com.lothrazar.cyclicmagic.PotionRegistry;
 import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
+import com.lothrazar.cyclicmagic.util.Vector3;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.EnumFacing;
@@ -104,15 +112,42 @@ public class ItemCyclicWand extends Item {
 			return;
 		}
 
+		EntityPlayer p = (EntityPlayer) entityIn;
 		if (worldIn.isRemote == false && worldIn.getWorldTime() % Const.TICKS_PER_SEC == 0) {
 
-			EntityPlayer p = (EntityPlayer) entityIn;
 			PlayerPowerups props = PlayerPowerups.get(p);
 			props.setMana(props.getMana() + 1);
 		}
+		
+		
+		triggerRuneEffect(stack,worldIn, p );
+		
 		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
 	}
+	
 
+	private void triggerRuneEffect(ItemStack stack,World world,EntityPlayer entityIn){
+	
+		switch(this.getVariantFromMeta(stack)){
+		case QUARTZ:
+			break;
+		case GOLD:
+			
+			break;
+		case DIAMOND:
+			
+			break;
+		case EMERALD:
+//TODO: balance and crafting
+			Passives.triggerFalling( entityIn);
+			Passives.triggerBreathing( entityIn);
+			Passives.triggerBurning( entityIn);
+			Passives.triggerProtect( entityIn);
+			break;
+		default:break;
+		}
+	}
+	
 	@Override
 	public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
 		// If onItemUse returns false onItemRightClick will be called.
@@ -121,8 +156,66 @@ public class ItemCyclicWand extends Item {
 		return SpellRegistry.caster.tryCastCurrent(worldIn, playerIn, pos, side);
 	}
 	
+	private static class Passives{
+
+		private final static float HEALTHLIMIT = 10;//1 heart = 2 health
+		private final static int SECONDS = 30;
+		private final static float FALLDISTANCE = 3;
+		private final static float AIRLIMIT = 150;// 300 is a full bar
+		
+		private static void triggerProtect(EntityPlayer entity){
+			if(entity.getHealth() <= HEALTHLIMIT && entity.isPotionActive(Potion.absorption.id) == false){
+				
+				PotionRegistry.addOrMergePotionEffect(entity, new PotionEffect(Potion.absorption.id,SECONDS * Const.TICKS_PER_SEC, PotionRegistry.V));
+			
+				PotionRegistry.addOrMergePotionEffect(entity, new PotionEffect(Potion.resistance.id,SECONDS * Const.TICKS_PER_SEC, PotionRegistry.I));
+			}
+		}
+		
+		private static void triggerBurning(EntityPlayer entity){
+			if(entity.isBurning() && entity.isPotionActive(Potion.fireResistance.id) == false){
 	
+				PotionRegistry.addOrMergePotionEffect(entity, new PotionEffect(Potion.fireResistance.id,SECONDS * Const.TICKS_PER_SEC, PotionRegistry.V));
+				
+			}
+			if(entity.ridingEntity != null && entity.ridingEntity.fallDistance >= FALLDISTANCE 
+					&& entity.ridingEntity instanceof EntityLivingBase){
+				EntityLivingBase maybeHorse = (EntityLivingBase)entity.ridingEntity;
+				
+				if(maybeHorse.isPotionActive(PotionRegistry.slowfall) == false){
 	
+					PotionRegistry.addOrMergePotionEffect(maybeHorse, new PotionEffect(PotionRegistry.slowfall.id,SECONDS * Const.TICKS_PER_SEC));
+	
+				}
+			}
+		}
+		
+		private static void triggerBreathing(EntityPlayer entity){
+			if(entity.getAir() <= AIRLIMIT){
+				
+				if(entity.isPotionActive(Potion.waterBreathing) == false){
+					PotionRegistry.addOrMergePotionEffect(entity, new PotionEffect(Potion.waterBreathing.id,SECONDS * Const.TICKS_PER_SEC));
+	
+				}
+			}
+		}
+		
+		private static void triggerFalling(EntityPlayer entity){
+			if(entity.fallDistance >= FALLDISTANCE){
+				
+				if(entity.isPotionActive(PotionRegistry.slowfall) == false){
+					PotionRegistry.addOrMergePotionEffect(entity, new PotionEffect(PotionRegistry.slowfall.id,SECONDS * Const.TICKS_PER_SEC));
+	
+				}
+			}
+			
+			if(entity.getPosition().getY() < -10){
+				entity.setPositionAndUpdate(entity.getPosition().getX(), entity.getPosition().getY() + 256, entity.getPosition().getZ());;
+	
+			}
+		}
+
+	}
 	
 	public enum Variants{
 		QUARTZ,
