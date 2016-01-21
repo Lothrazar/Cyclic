@@ -99,16 +99,23 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 
 	@Override
 	public void loadNBTData(NBTTagCompound compound) {
+		try{
 		NBTTagCompound properties = (NBTTagCompound) compound.getTag(EXT_PROP_NAME);
 		if (properties == null) {
 			properties = new NBTTagCompound();
 		}
 
+		
 		this.player.getDataWatcher().updateObject(CURRENT_WATCHER, properties.getInteger(NBT_CURRENT));
 		this.player.getDataWatcher().updateObject(TIMER_WATCHER, properties.getInteger(NBT_TIMER));
 		this.player.getDataWatcher().updateObject(MANA_WATCHER, properties.getInteger(NBT_MANA));
 
 		this.player.getDataWatcher().updateObject(UNLOCKS_WATCHER, properties.getString(NBT_UNLOCKS));
+		}
+		catch(Exception e){
+			System.out.println("load nbt");
+			System.out.println(e.getMessage());
+		}
 	}
  
 	public void toggleOneSpell(int spell_id) {

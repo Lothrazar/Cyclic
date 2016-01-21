@@ -49,7 +49,7 @@ public class ItemCyclicWand extends Item {
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems)
     {
-        for (int i = 0; i <= Variants.values().length; i++){
+        for (int i = 0; i < Variants.values().length; i++){
             subItems.add(new ItemStack(itemIn, 1, i));
         }
     }
@@ -59,6 +59,7 @@ public class ItemCyclicWand extends Item {
 			return Variants.values()[stack.getMetadata()];
 		}
 		catch(Exception e){
+			//System.out.println("INVALID META::"+stack.getMetadata());
 			return Variants.QUARTZ;//this is damage zero anyway
 		}
     }
