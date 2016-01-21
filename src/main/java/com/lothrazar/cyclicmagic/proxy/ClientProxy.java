@@ -78,8 +78,6 @@ public class ClientProxy extends CommonProxy {
         	name = wandType.getResource();
         	variants.add(name);
         	mesher.register(ItemRegistry.cyclic_wand, wandType.getMetadata(), new ModelResourceLocation(name , "inventory"));	
-        	
-        	System.out.println(name);
         }
         
         ModelBakery.addVariantName(ItemRegistry.cyclic_wand, variants.toArray(new String[variants.size()]));

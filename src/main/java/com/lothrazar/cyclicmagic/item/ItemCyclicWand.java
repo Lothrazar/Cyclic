@@ -22,7 +22,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemCyclicWand extends Item {
 
-	
 	public ItemCyclicWand() {
 		this.setMaxStackSize(1);
 		this.setHasSubtypes(true);
@@ -38,15 +37,8 @@ public class ItemCyclicWand extends Item {
 	@Override
     public String getUnlocalizedName(ItemStack stack)
     {
-		String name = "";
-		try{
-			name = super.getUnlocalizedName() + "_" + Variants.values()[stack.getMetadata()].name().toLowerCase();
-		}
-		catch(Exception e){
-			//will never happen... unless some external tool or mod forces the metadata to invalid state
-			//ex: nbt editor
-			name = super.getUnlocalizedName();
-		}
+		String name = super.getUnlocalizedName() + "_" + getVariantFromMeta(stack).name().toLowerCase();
+
         return name;
     }
     
@@ -56,6 +48,15 @@ public class ItemCyclicWand extends Item {
         for (int i = 0; i <= Variants.values().length; i++){
             subItems.add(new ItemStack(itemIn, 1, i));
         }
+    }
+    
+    private Variants getVariantFromMeta(ItemStack stack){
+    	try{
+			return Variants.values()[stack.getMetadata()];
+		}
+		catch(Exception e){
+			return Variants.QUARTZ;//this is damage zero anyway
+		}
     }
     
 	@SideOnly(Side.CLIENT)
@@ -119,6 +120,9 @@ public class ItemCyclicWand extends Item {
 		// so if this casts and succeeds, the right click is cancelled
 		return SpellRegistry.caster.tryCastCurrent(worldIn, playerIn, pos, side);
 	}
+	
+	
+	
 	
 	public enum Variants{
 		QUARTZ,
