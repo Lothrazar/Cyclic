@@ -101,6 +101,10 @@ public class SpellRegistry {
 		
 		SpellLinkingPortal waypoint = new SpellLinkingPortal(++spellId,"waypoint");
 		registerSpell(waypoint);
+		 
+		SpellExpPotion magnet = new SpellExpPotion(++spellId,"magnet",50);
+		magnet.setPotion(PotionRegistry.magnet.id, Const.TICKS_PER_SEC * 60, PotionRegistry.II);
+		registerSpell(magnet);
 	}
 
 	public static ISpell getSpellFromID(int id) {
