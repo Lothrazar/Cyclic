@@ -7,19 +7,15 @@ import com.lothrazar.cyclicmagic.PlayerPowerups;
 import com.lothrazar.cyclicmagic.PotionRegistry;
 import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
-import com.lothrazar.cyclicmagic.util.Vector3;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.EnumFacing;
@@ -105,6 +101,7 @@ public class ItemCyclicWand extends Item {
 		return super.onItemRightClick(itemStackIn, worldIn, playerIn);
 	}
 
+	private static final int REGEN = 1;
 	@Override
 	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 		// if held by something not a player? such as custom npc/zombie/etc
@@ -116,9 +113,8 @@ public class ItemCyclicWand extends Item {
 		if (worldIn.isRemote == false && worldIn.getWorldTime() % Const.TICKS_PER_SEC == 0) {
 
 			PlayerPowerups props = PlayerPowerups.get(p);
-			props.setMana(props.getMana() + 1);
+			props.setMana(props.getMana() + REGEN);
 		}
-		
 		
 		triggerRuneEffect(stack,worldIn, p );
 		

@@ -71,17 +71,17 @@ public class PotionRegistry {
 	
 			List<EntityItem> found = world.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.fromBounds(x - ITEM_HRADIUS, y - ITEM_VRADIUS, z - ITEM_HRADIUS, x + ITEM_HRADIUS, y + ITEM_VRADIUS, z + ITEM_HRADIUS));
 	
-			int moved = 0;
+			//int moved = 0;
 			for (EntityItem eitem : found) {
 				Vector3.setEntityMotionFromVector(eitem, x, y, z, ITEMSPEED);
-				moved++;
+				//moved++;
 			}
 	
 			List<EntityXPOrb> foundExp = world.getEntitiesWithinAABB(EntityXPOrb.class, AxisAlignedBB.fromBounds(x - ITEM_HRADIUS, y - ITEM_VRADIUS, z - ITEM_HRADIUS, x + ITEM_HRADIUS, y + ITEM_VRADIUS, z + ITEM_HRADIUS));
 	
 			for (EntityXPOrb eitem : foundExp) {
 				Vector3.setEntityMotionFromVector(eitem, x, y, z, ITEMSPEED);
-				moved++;
+				//moved++;
 			}
 		}
 	}
