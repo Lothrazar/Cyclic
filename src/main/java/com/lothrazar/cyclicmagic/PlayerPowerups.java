@@ -13,9 +13,6 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 	private static final int UNLOCKS_WATCHER = 27;
 	private static final String NBT_UNLOCKS = "unlocks";
 
-	private static final int CURRENT_WATCHER = 28;
-	private static final String NBT_CURRENT = "samSpell";
-
 	private static final int MANA_WATCHER = 29;
 	private static final String NBT_MANA = "samMana";
 	
@@ -24,7 +21,6 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 
 	public PlayerPowerups(EntityPlayer player) {
 		this.player = player;
-		this.player.getDataWatcher().addObject(CURRENT_WATCHER, 0);
 		this.player.getDataWatcher().addObject(TIMER_WATCHER, 0);
 		this.player.getDataWatcher().addObject(MANA_WATCHER, 5);
 		String spells = "";
@@ -89,7 +85,6 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 	public void saveNBTData(NBTTagCompound compound) {
 		NBTTagCompound properties = new NBTTagCompound();
 
-		properties.setInteger(NBT_CURRENT, this.player.getDataWatcher().getWatchableObjectInt(CURRENT_WATCHER));
 		properties.setInteger(NBT_TIMER, this.player.getDataWatcher().getWatchableObjectInt(TIMER_WATCHER));
 		properties.setString(NBT_UNLOCKS, this.player.getDataWatcher().getWatchableObjectString(UNLOCKS_WATCHER));
 		properties.setInteger(NBT_MANA, this.player.getDataWatcher().getWatchableObjectInt(MANA_WATCHER));
@@ -105,8 +100,6 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 			properties = new NBTTagCompound();
 		}
 
-		
-		this.player.getDataWatcher().updateObject(CURRENT_WATCHER, properties.getInteger(NBT_CURRENT));
 		this.player.getDataWatcher().updateObject(TIMER_WATCHER, properties.getInteger(NBT_TIMER));
 		this.player.getDataWatcher().updateObject(MANA_WATCHER, properties.getInteger(NBT_MANA));
 
@@ -181,28 +174,13 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 
 		return (spells[spell_id] == 1);
 	}
-
-	public final int getSpellCurrent() {
-		int spell_id = 0;
-		try {
-			spell_id = this.player.getDataWatcher().getWatchableObjectInt(CURRENT_WATCHER);
-		}
-		catch (java.lang.ClassCastException e) {
-			//System.out.println(e.getMessage());// do not quit, leave it as zero
-		} 
-
-		return spell_id;
-	}
-
+	
 	public final void setSpellTimer(int current) {
 		this.player.getDataWatcher().updateObject(TIMER_WATCHER, current);
 	}
 
 	public final int getSpellTimer() {
 		return this.player.getDataWatcher().getWatchableObjectInt(TIMER_WATCHER);
-	}
-	public final void setSpellCurrent(int spell_id) {
-		this.player.getDataWatcher().updateObject(CURRENT_WATCHER, spell_id);
 	}
 
 	public String getSpellUnlocks( ) {
@@ -235,12 +213,10 @@ public class PlayerPowerups implements IExtendedEntityProperties {
 		// https://github.com/coolAlias/Tutorial-Demo/blob/master/src/main/java/tutorial/entity/ExtendedPlayer.java
 
 		// set in the player
-		player.getDataWatcher().updateObject(CURRENT_WATCHER, props.getSpellCurrent());
 		player.getDataWatcher().updateObject(TIMER_WATCHER, props.getSpellTimer());
 		player.getDataWatcher().updateObject(UNLOCKS_WATCHER, props.getSpellUnlocks());
 		player.getDataWatcher().updateObject(MANA_WATCHER, props.getMana());
 		// set here
-		this.setSpellCurrent(props.getSpellCurrent());
 		this.setSpellTimer(props.getSpellTimer());
 		this.setSpellUnlocks(props.getSpellUnlocks());
 		this.setMana(props.getMana());

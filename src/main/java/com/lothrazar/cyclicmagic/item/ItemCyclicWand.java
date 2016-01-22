@@ -14,6 +14,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.BlockPos;
@@ -26,6 +27,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemCyclicWand extends Item {
 
+	private static final String NBT_SPELL = "spell_id";
 	public ItemCyclicWand() {
 		this.setMaxStackSize(1);
 		this.setHasSubtypes(true);
@@ -63,12 +65,29 @@ public class ItemCyclicWand extends Item {
 			return Variants.QUARTZ;//this is damage zero anyway
 		}
     }
-    
+
+	public static int getSpellCurrent(ItemStack stack) {
+		
+		NBTTagCompound tags = stack.hasTagCompound() ? stack.getTagCompound() : new NBTTagCompound();
+
+		int spell_id = tags.getInteger(NBT_SPELL); 
+	
+		return spell_id;
+	}
+	
+	public static void setSpellCurrent(ItemStack stack,int spell_id) {
+		NBTTagCompound tags = stack.hasTagCompound() ? stack.getTagCompound() : new NBTTagCompound();
+		
+		tags.setInteger(NBT_SPELL, spell_id);
+		
+		stack.setTagCompound(tags);
+	}
+
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
 
 		PlayerPowerups props = PlayerPowerups.get(playerIn);
-		ISpell spell = SpellRegistry.getSpellFromID(props.getSpellCurrent());
+		ISpell spell = SpellRegistry.getSpellFromID(getSpellCurrent(stack));
 
 		tooltip.add(spell.getName());
 		tooltip.add(StatCollector.translateToLocal("spell.cost") + spell.getCost());
