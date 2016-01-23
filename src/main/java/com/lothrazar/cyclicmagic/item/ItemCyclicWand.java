@@ -101,7 +101,6 @@ public class ItemCyclicWand extends Item {
 		return super.onItemRightClick(itemStackIn, worldIn, playerIn);
 	}
 
-	private static final int REGEN = 1;
 	@Override
 	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 		// if held by something not a player? such as custom npc/zombie/etc
@@ -113,7 +112,7 @@ public class ItemCyclicWand extends Item {
 		if (worldIn.isRemote == false && worldIn.getWorldTime() % Const.TICKS_PER_SEC == 0) {
 
 			PlayerPowerups props = PlayerPowerups.get(p);
-			props.setMana(props.getMana() + REGEN);
+			props.setMana(props.getMana() + getRegen(stack));
 		}
 		
 		triggerRuneEffect(stack,worldIn, p );
@@ -121,7 +120,20 @@ public class ItemCyclicWand extends Item {
 		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
 	}
 	
-
+	private int getRegen(ItemStack stack){
+		switch(this.getVariantFromMeta(stack)){
+		case QUARTZ:
+			return 1;
+		case GOLD:
+			return 2;
+		case DIAMOND:
+			return 3;
+		case EMERALD:
+			return 5;
+		}
+		return 0;
+	}
+	
 	private void triggerRuneEffect(ItemStack stack,World world,EntityPlayer entityIn){
 	
 		switch(this.getVariantFromMeta(stack)){

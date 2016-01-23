@@ -87,8 +87,6 @@ public class SpellCaster {
 
 	public ISpell getPlayerCurrentISpell(EntityPlayer player) {
 
-		//PlayerPowerups props = PlayerPowerups.get(player);
-
 		ISpell current = SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.getSpellCurrent(player.getHeldItem()));
 
 		if (current == null) {
