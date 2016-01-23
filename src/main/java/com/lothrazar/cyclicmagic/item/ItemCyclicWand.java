@@ -42,6 +42,12 @@ public class ItemCyclicWand extends Item {
 	}
 
 	@Override
+	public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn){
+		//default to all unlocked
+		Spells.setUnlockDefault(stack);
+    }
+	
+	@Override
     public String getUnlocalizedName(ItemStack stack)
     {
 		String name = super.getUnlocalizedName() + "_" + getVariantFromMeta(stack).name().toLowerCase();
@@ -226,12 +232,12 @@ public class ItemCyclicWand extends Item {
 			NBTTagCompound nbt = getStackNBT(stack);
 			nbt.setBoolean(NBT_UNLOCKS + spell.getID(), true);
 			stack.setTagCompound(nbt);
-		}
+		}/*
 		private static void lockSpell(ItemStack stack, ISpell spell){
 			NBTTagCompound nbt = getStackNBT(stack);
 			nbt.setBoolean(NBT_UNLOCKS + spell.getID(), true);
 			stack.setTagCompound(nbt);
-		}
+		}*/
 		public static void toggleSpell(ItemStack stack, int spell_id){
 			NBTTagCompound nbt = getStackNBT(stack);
 			String key = NBT_UNLOCKS + spell_id;
