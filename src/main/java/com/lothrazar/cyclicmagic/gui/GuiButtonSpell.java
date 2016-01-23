@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.PlayerPowerups;
+import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.net.MessageToggle;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.util.UtilTextureRender;
@@ -64,7 +65,10 @@ public class GuiButtonSpell extends GuiButton {
 		List<String> tooltips = new ArrayList<String>();
 		tooltips.add(spell.getName());
 		tooltips.add(StatCollector.translateToLocal("spell.cost") + EnumChatFormatting.BLUE + spell.getCost());
-		String ed = (props.isSpellUnlocked(this.id)) ? EnumChatFormatting.GREEN + StatCollector.translateToLocal("spell.enabled") : EnumChatFormatting.RED + StatCollector.translateToLocal("spell.disabled");
+		
+		boolean unlocked = ItemCyclicWand.Spells.isSpellUnlocked(props.getPlayer().getHeldItem(), spell);
+		
+		String ed = unlocked ? EnumChatFormatting.GREEN + StatCollector.translateToLocal("spell.enabled") : EnumChatFormatting.RED + StatCollector.translateToLocal("spell.disabled");
 		tooltips.add(ed);
 		return tooltips;
 	}

@@ -28,6 +28,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemCyclicWand extends Item {
 
 	private static final String NBT_SPELL = "spell_id";
+	private static final String NBT_UNLOCKS = "unlock_";
 	public ItemCyclicWand() {
 		this.setMaxStackSize(1);
 		this.setHasSubtypes(true);
@@ -55,39 +56,12 @@ public class ItemCyclicWand extends Item {
             subItems.add(new ItemStack(itemIn, 1, i));
         }
     }
-    
-    private Variants getVariantFromMeta(ItemStack stack){
-    	try{
-			return Variants.values()[stack.getMetadata()];
-		}
-		catch(Exception e){
-			//System.out.println("INVALID META::"+stack.getMetadata());
-			return Variants.QUARTZ;//this is damage zero anyway
-		}
-    }
-
-	public static int getSpellCurrent(ItemStack stack) {
-		
-		NBTTagCompound tags = stack.hasTagCompound() ? stack.getTagCompound() : new NBTTagCompound();
-
-		int spell_id = tags.getInteger(NBT_SPELL); 
-	
-		return spell_id;
-	}
-	
-	public static void setSpellCurrent(ItemStack stack,int spell_id) {
-		NBTTagCompound tags = stack.hasTagCompound() ? stack.getTagCompound() : new NBTTagCompound();
-		
-		tags.setInteger(NBT_SPELL, spell_id);
-		
-		stack.setTagCompound(tags);
-	}
-
+     
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
 
 		PlayerPowerups props = PlayerPowerups.get(playerIn);
-		ISpell spell = SpellRegistry.getSpellFromID(getSpellCurrent(stack));
+		ISpell spell = SpellRegistry.getSpellFromID(Spells.getSpellCurrent(stack));
 
 		tooltip.add(spell.getName());
 		tooltip.add(StatCollector.translateToLocal("spell.cost") + spell.getCost());
@@ -172,6 +146,20 @@ public class ItemCyclicWand extends Item {
 		return SpellRegistry.caster.tryCastCurrent(worldIn, playerIn, pos, side);
 	}
 	
+    private static NBTTagCompound getStackNBT(ItemStack stack){
+    	return stack.hasTagCompound() ? stack.getTagCompound() : new NBTTagCompound();
+    }
+    
+    private Variants getVariantFromMeta(ItemStack stack){
+    	try{
+			return Variants.values()[stack.getMetadata()];
+		}
+		catch(Exception e){
+			//System.out.println("INVALID META::"+stack.getMetadata());
+			return Variants.QUARTZ;//this is damage zero anyway
+		}
+    }
+    
 	private static class Passives{
 
 		private final static float HEALTHLIMIT = 10;//1 heart = 2 health
@@ -230,8 +218,106 @@ public class ItemCyclicWand extends Item {
 	
 			}
 		}
-
 	}
+
+	public static class Spells{
+	
+		private static void unlockSpell(ItemStack stack, ISpell spell){
+			NBTTagCompound nbt = getStackNBT(stack);
+			nbt.setBoolean(NBT_UNLOCKS + spell.getID(), true);
+			stack.setTagCompound(nbt);
+		}
+		private static void lockSpell(ItemStack stack, ISpell spell){
+			NBTTagCompound nbt = getStackNBT(stack);
+			nbt.setBoolean(NBT_UNLOCKS + spell.getID(), true);
+			stack.setTagCompound(nbt);
+		}
+		public static void toggleSpell(ItemStack stack, int spell_id){
+			NBTTagCompound nbt = getStackNBT(stack);
+			String key = NBT_UNLOCKS + spell_id;
+			nbt.setBoolean(key, !nbt.getBoolean(key));
+			stack.setTagCompound(nbt);
+		}
+		public static boolean isSpellUnlocked(ItemStack stack, ISpell spell){
+			return isSpellUnlocked(stack,spell.getID());
+		}
+		public static boolean isSpellUnlocked(ItemStack stack, int spell_id){
+			NBTTagCompound nbt = getStackNBT(stack);
+			return nbt.getBoolean(NBT_UNLOCKS + spell_id);
+		}
+		private static void setUnlockDefault(ItemStack stack){
+	
+			NBTTagCompound nbt = getStackNBT(stack);
+			
+			for(ISpell s : SpellRegistry.getSpellbook()){
+				unlockSpell(stack,s);
+			}
+			stack.setTagCompound(nbt);
+		}
+
+		public static int nextId(ItemStack stack,int spell_id ) {
+			return nextId(stack,spell_id,0);
+		}
+		public static int nextId(ItemStack stack,int spell_id,int infbreaker ) {
+		//	byte[] spells = this.getUnlocksFromString();
+	
+			
+			int next;
+			
+			if (spell_id >= SpellRegistry.getSpellbook().size() - 1)
+				next = 0;// (int)spells[0];
+			else
+				next = spell_id + 1;// (int)spells[spell_id+1];
+			
+			//dont infloop
+			if(isSpellUnlocked(stack,next) == false && infbreaker < 100){
+		
+				infbreaker++;
+				return nextId(stack,next,infbreaker);
+			}
+			
+			infbreaker = 0;
+			//this.setUnlocksFromByte(spells);
+			return next;
+		}
+
+		public static int prevId(ItemStack stack,int spell_id ) {
+			return prevId(stack,spell_id,0);
+		}
+		public static int prevId(ItemStack stack,int spell_id,int infbreaker ) {
+		
+			int prev;
+	
+			if (spell_id == 0)
+				prev = SpellRegistry.getSpellbook().size() - 1; 
+			else
+				prev = spell_id - 1; 
+			//dont infloop
+			if(isSpellUnlocked(stack,prev) == false && infbreaker < 100){
+		
+				infbreaker++;
+				return prevId(stack,prev,infbreaker);
+			}
+			
+			infbreaker = 0;
+			
+			return prev;
+		}
+		
+		public static int getSpellCurrent(ItemStack stack) {
+			
+			return getStackNBT(stack).getInteger(NBT_SPELL);
+		}
+		
+		public static void setSpellCurrent(ItemStack stack,int spell_id) {
+			NBTTagCompound tags = getStackNBT(stack);
+			
+			tags.setInteger(NBT_SPELL, spell_id);
+			
+			stack.setTagCompound(tags);
+		}
+	}
+
 	
 	public enum Variants{
 		QUARTZ,

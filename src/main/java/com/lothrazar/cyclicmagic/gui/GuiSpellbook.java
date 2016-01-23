@@ -3,6 +3,7 @@ package com.lothrazar.cyclicmagic.gui;
 import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.PlayerPowerups;
 import com.lothrazar.cyclicmagic.SpellRegistry;
+import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.util.UtilTextureRender;
 import net.minecraft.client.Minecraft;
@@ -97,7 +98,9 @@ public class GuiSpellbook extends GuiScreen {
 			cy = yCenter + radius * Math.sin(ang);
 
 			ResourceLocation header; 
-			if(props.isSpellUnlocked(s.getID())){// TODO: do we want different icons for these
+			boolean unlocked = ItemCyclicWand.Spells.isSpellUnlocked(props.getPlayer().getHeldItem(), s);
+			
+			if(unlocked){
 				header = s.getIconDisplayHeaderEnabled();
 			}
 			else{

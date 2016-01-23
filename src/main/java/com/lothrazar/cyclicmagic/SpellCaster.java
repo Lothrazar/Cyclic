@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
@@ -57,21 +58,20 @@ public class SpellCaster {
 
 	public void shiftLeft(EntityPlayer player) {
 
-		PlayerPowerups props = PlayerPowerups.get(player);
+		ItemStack wand = player.getHeldItem();
 
-		int left = props.prevId(ItemCyclicWand.getSpellCurrent(player.getHeldItem()) );
+		int left = ItemCyclicWand.Spells.prevId(wand,ItemCyclicWand.Spells.getSpellCurrent(wand) );
 
-		ItemCyclicWand.setSpellCurrent(player.getHeldItem(),left);
+		ItemCyclicWand.Spells.setSpellCurrent(wand,left);
 		UtilSound.playSoundAt(player, UtilSound.orb );
 	}
 
 	public void shiftRight(EntityPlayer player) {
-
-		PlayerPowerups props = PlayerPowerups.get(player);
+		ItemStack wand = player.getHeldItem();
 		
-		int right = props.nextId(ItemCyclicWand.getSpellCurrent(player.getHeldItem()));
+		int right = ItemCyclicWand.Spells.nextId(wand, ItemCyclicWand.Spells.getSpellCurrent(wand));
 	
-		ItemCyclicWand.setSpellCurrent(player.getHeldItem(),right);
+		ItemCyclicWand.Spells.setSpellCurrent(wand,right);
 		UtilSound.playSoundAt(player, UtilSound.orb );
 	}
  
@@ -89,7 +89,7 @@ public class SpellCaster {
 
 		//PlayerPowerups props = PlayerPowerups.get(player);
 
-		ISpell current = SpellRegistry.getSpellFromID(ItemCyclicWand.getSpellCurrent(player.getHeldItem()));
+		ISpell current = SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.getSpellCurrent(player.getHeldItem()));
 
 		if (current == null) {
 			current = SpellRegistry.getDefaultSpell();
@@ -98,12 +98,6 @@ public class SpellCaster {
 		return current;
 	}
 
-	public void toggleUnlock(EntityPlayer player, int spell_id) {
-
-		PlayerPowerups props = PlayerPowerups.get(player);
-		
-		props.toggleOneSpell(spell_id);
-	}
 	public void rechargeWithExp(EntityPlayer player) {
 		PlayerPowerups props = PlayerPowerups.get(player);
 		

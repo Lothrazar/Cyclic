@@ -2,10 +2,12 @@ package com.lothrazar.cyclicmagic;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.util.UtilTextureRender;
 
@@ -52,7 +54,9 @@ public class SpellScreenRender {
 
 	private void drawPrevSpells(PlayerPowerups props, ISpell spellCurrent) {
 
-		ISpell prev = SpellRegistry.getSpellFromID(props.prevId(spellCurrent.getID()));
+		ItemStack wand = props.getPlayer().getHeldItem();
+		
+		ISpell prev = SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.prevId(wand,spellCurrent.getID()));
   
 		if (prev != null) {
 			int x = xmain + 9;
@@ -60,7 +64,7 @@ public class SpellScreenRender {
 			int dim = spellSize / 2;
 			UtilTextureRender.drawTextureSquare(prev.getIconDisplay(), x, y, dim);
 
-			prev = SpellRegistry.getSpellFromID(props.prevId(prev.getID()));
+			prev = SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.prevId(wand,prev.getID()));
 		
 			if (prev != null ) {
 				x += 5;
@@ -68,7 +72,7 @@ public class SpellScreenRender {
 				dim -= 2;
 				UtilTextureRender.drawTextureSquare(prev.getIconDisplay(), x, y, dim);
 
-				prev = SpellRegistry.getSpellFromID(props.prevId(prev.getID()));
+				prev = SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.prevId(wand,prev.getID()));
 	
 				if (prev != null) {
 					x += 3;
@@ -76,7 +80,7 @@ public class SpellScreenRender {
 					dim -= 2;
 					UtilTextureRender.drawTextureSquare(prev.getIconDisplay(), x, y, dim);
 					
-					prev = SpellRegistry.getSpellFromID(props.prevId(prev.getID()));
+					prev = SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.prevId(wand,prev.getID()));
 					
 					if (prev != null) {
 						x += 2;
@@ -90,8 +94,9 @@ public class SpellScreenRender {
 	}
 
 	private void drawNextSpells(PlayerPowerups props, ISpell spellCurrent) {
+		ItemStack wand = props.getPlayer().getHeldItem();
 
-		ISpell next = SpellRegistry.getSpellFromID(props.nextId(spellCurrent.getID()));
+		ISpell next = SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.nextId(wand,spellCurrent.getID()));
 
 		if (next != null) {
 			int x = xmain - 5;
@@ -99,7 +104,7 @@ public class SpellScreenRender {
 			int dim = spellSize / 2;
 			UtilTextureRender.drawTextureSquare(next.getIconDisplay(), x, y, dim);
 
-			next = SpellRegistry.getSpellFromID(props.nextId(next.getID())); 
+			next = SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.nextId(wand,next.getID())); 
 
 			if (next != null ) {
 				x -= 2;
@@ -107,14 +112,14 @@ public class SpellScreenRender {
 				dim -= 2;
 				UtilTextureRender.drawTextureSquare(next.getIconDisplay(), x, y, dim);
 
-				next = SpellRegistry.getSpellFromID(props.nextId(next.getID())); 
+				next = SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.nextId(wand,next.getID())); 
 				if (next != null) {
 					x -= 2;
 					y += 10;
 					dim -= 2;
 					UtilTextureRender.drawTextureSquare(next.getIconDisplay(), x, y, dim);
 					
-					next = SpellRegistry.getSpellFromID(props.nextId(next.getID())); 
+					next = SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.nextId(wand,next.getID())); 
 					if (next != null) {
 						x -= 2;
 						y += 10;
