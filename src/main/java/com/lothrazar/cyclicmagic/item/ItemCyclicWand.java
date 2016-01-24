@@ -1,5 +1,7 @@
 package com.lothrazar.cyclicmagic.item;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.Const; 
@@ -81,11 +83,12 @@ public class ItemCyclicWand extends Item {
 		tooltip.add(spell.getName() + " "+EnumChatFormatting.DARK_BLUE + spell.getCost());
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-			tooltip.add(Energy.getCurrent(stack) + "/" + MAX);
+			tooltip.add(Energy.getCurrent(stack) + "/" + MAX);	
+			tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("wand.regen") + EnumChatFormatting.DARK_BLUE + Energy.getRegen(stack));
+			
 			tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("wand.gui.info"));
 			tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("wand.recharge.info"));
 			tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("wand.wheel.info"));
-			tooltip.add(StatCollector.translateToLocal("wand.regen") + Energy.getRegen(stack));
 		}
 		else {
 			tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("item.shift"));
@@ -123,32 +126,26 @@ public class ItemCyclicWand extends Item {
 			//Mana.setMana(stack, Mana.getMana(stack) + Mana.getRegen(stack));
 		}
 		
-		triggerRuneEffect(stack,worldIn, p );
+		switch(Variants.getVariantFromMeta(stack)){
+			case QUARTZ:
+				break;
+			case GOLD:
+				
+				break;
+			case DIAMOND:
+				
+				break;
+			case EMERALD:
+	//TODO: balance and crafting
+				//Passives.triggerFalling( p);
+				//Passives.triggerBreathing( p);
+				//Passives.triggerBurning( p);
+				//Passives.triggerProtect( p);
+				break;
+			default:break;
+		}
 		
 		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
-	}
-	
-	
-	private void triggerRuneEffect(ItemStack stack,World world,EntityPlayer entityIn){
-	
-		switch(Variants.getVariantFromMeta(stack)){
-		case QUARTZ:
-			break;
-		case GOLD:
-			
-			break;
-		case DIAMOND:
-			
-			break;
-		case EMERALD:
-//TODO: balance and crafting
-			Passives.triggerFalling( entityIn);
-			Passives.triggerBreathing( entityIn);
-			Passives.triggerBurning( entityIn);
-			Passives.triggerProtect( entityIn);
-			break;
-		default:break;
-		}
 	}
 	
 	@Override
@@ -162,67 +159,6 @@ public class ItemCyclicWand extends Item {
     private static NBTTagCompound getNBT(ItemStack stack){
     	return stack.hasTagCompound() ? stack.getTagCompound() : new NBTTagCompound();
     }
-    
-    
-	private static class Passives{
-
-		private final static float HEALTHLIMIT = 10;//1 heart = 2 health
-		private final static int SECONDS = 30;
-		private final static float FALLDISTANCE = 3;
-		private final static float AIRLIMIT = 150;// 300 is a full bar
-		
-		private static void triggerProtect(EntityPlayer entity){
-			if(entity.getHealth() <= HEALTHLIMIT && entity.isPotionActive(Potion.absorption.id) == false){
-				
-				PotionRegistry.addOrMergePotionEffect(entity, new PotionEffect(Potion.absorption.id,SECONDS * Const.TICKS_PER_SEC, PotionRegistry.V));
-			
-				PotionRegistry.addOrMergePotionEffect(entity, new PotionEffect(Potion.resistance.id,SECONDS * Const.TICKS_PER_SEC, PotionRegistry.I));
-			}
-		}
-		
-		private static void triggerBurning(EntityPlayer entity){
-			if(entity.isBurning() && entity.isPotionActive(Potion.fireResistance.id) == false){
-	
-				PotionRegistry.addOrMergePotionEffect(entity, new PotionEffect(Potion.fireResistance.id,SECONDS * Const.TICKS_PER_SEC, PotionRegistry.V));
-				
-			}
-			if(entity.ridingEntity != null && entity.ridingEntity.fallDistance >= FALLDISTANCE 
-					&& entity.ridingEntity instanceof EntityLivingBase){
-				EntityLivingBase maybeHorse = (EntityLivingBase)entity.ridingEntity;
-				
-				if(maybeHorse.isPotionActive(PotionRegistry.slowfall) == false){
-	
-					PotionRegistry.addOrMergePotionEffect(maybeHorse, new PotionEffect(PotionRegistry.slowfall.id,SECONDS * Const.TICKS_PER_SEC));
-	
-				}
-			}
-		}
-		
-		private static void triggerBreathing(EntityPlayer entity){
-			if(entity.getAir() <= AIRLIMIT){
-				
-				if(entity.isPotionActive(Potion.waterBreathing) == false){
-					PotionRegistry.addOrMergePotionEffect(entity, new PotionEffect(Potion.waterBreathing.id,SECONDS * Const.TICKS_PER_SEC));
-	
-				}
-			}
-		}
-		
-		private static void triggerFalling(EntityPlayer entity){
-			if(entity.fallDistance >= FALLDISTANCE){
-				
-				if(entity.isPotionActive(PotionRegistry.slowfall) == false){
-					PotionRegistry.addOrMergePotionEffect(entity, new PotionEffect(PotionRegistry.slowfall.id,SECONDS * Const.TICKS_PER_SEC));
-	
-				}
-			}
-			
-			if(entity.getPosition().getY() < -10){
-				entity.setPositionAndUpdate(entity.getPosition().getX(), entity.getPosition().getY() + 256, entity.getPosition().getZ());;
-	
-			}
-		}
-	}
 
 	public static class Spells{
 	
