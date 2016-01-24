@@ -45,11 +45,8 @@ public class PassiveFalling implements IPassiveSpell{
 		}		
 	}
 	
-
 	@Override
 	public ArrayList<String> info() {
-		// TODO Auto-generated method stub
-		return null;
+		return info;
 	}
-
 }

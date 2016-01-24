@@ -1,23 +1,19 @@
 package com.lothrazar.cyclicmagic.item;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.Const; 
-import com.lothrazar.cyclicmagic.PotionRegistry;
 import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
+import com.lothrazar.cyclicmagic.spell.passive.*;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.EnumFacing;
@@ -31,6 +27,7 @@ public class ItemCyclicWand extends Item {
 	private static final String NBT_MANA = "mana";
 	private static final String NBT_SPELL = "spell_id";
 	private static final String NBT_UNLOCKS = "unlock_";
+	
 	public ItemCyclicWand() {
 		this.setMaxStackSize(1);
 		this.setHasSubtypes(true);
@@ -60,7 +57,7 @@ public class ItemCyclicWand extends Item {
 	@Override
     public String getUnlocalizedName(ItemStack stack)
     {
-		String name = super.getUnlocalizedName() + "_" + Variants.getVariantFromMeta(stack).name().toLowerCase();
+		String name = super.getUnlocalizedName() + "_" + Variant.getVariantFromMeta(stack).name().toLowerCase();
 
         return name;
     }
@@ -68,7 +65,7 @@ public class ItemCyclicWand extends Item {
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems)
     {
-        for (int i = 0; i < Variants.values().length; i++){
+        for (int i = 0; i < Variant.values().length; i++){
             subItems.add(new ItemStack(itemIn, 1, i));
         }
     }
@@ -86,6 +83,13 @@ public class ItemCyclicWand extends Item {
 			tooltip.add(Energy.getCurrent(stack) + "/" + MAX);	
 			tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("wand.regen") + EnumChatFormatting.DARK_BLUE + Energy.getRegen(stack));
 			
+			
+			List<IPassiveSpell> passives = Variant.getPassives(stack);
+			
+			for(IPassiveSpell s : passives){
+				tooltip.addAll(s.info());
+			}
+
 			tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("wand.gui.info"));
 			tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("wand.recharge.info"));
 			tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("wand.wheel.info"));
@@ -126,25 +130,14 @@ public class ItemCyclicWand extends Item {
 			//Mana.setMana(stack, Mana.getMana(stack) + Mana.getRegen(stack));
 		}
 		
-		switch(Variants.getVariantFromMeta(stack)){
-			case QUARTZ:
-				break;
-			case GOLD:
-				
-				break;
-			case DIAMOND:
-				
-				break;
-			case EMERALD:
-	//TODO: balance and crafting
-				//Passives.triggerFalling( p);
-				//Passives.triggerBreathing( p);
-				//Passives.triggerBurning( p);
-				//Passives.triggerProtect( p);
-				break;
-			default:break;
-		}
+		List<IPassiveSpell> passives = Variant.getPassives(stack);
 		
+		for(IPassiveSpell spell: passives){
+			if(spell.canTrigger(p)){
+				spell.trigger(p);
+			}
+		}
+	
 		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
 	}
 	
@@ -158,6 +151,13 @@ public class ItemCyclicWand extends Item {
 	
     private static NBTTagCompound getNBT(ItemStack stack){
     	return stack.hasTagCompound() ? stack.getTagCompound() : new NBTTagCompound();
+    }
+    
+    private static class Passives{
+    	private static IPassiveSpell falling = new PassiveFalling();
+    	private static IPassiveSpell breath = new PassiveBreath();
+    	private static IPassiveSpell burn = new PassiveBurn();
+    	private static IPassiveSpell defend = new PassiveDefend();
     }
 
 	public static class Spells{
@@ -258,10 +258,9 @@ public class ItemCyclicWand extends Item {
 		}
 	}
 
-
 	public static class Energy{
 		private static int getRegen(ItemStack stack){
-			switch(Variants.getVariantFromMeta(stack)){
+			switch(Variant.getVariantFromMeta(stack)){
 			case QUARTZ:
 				return 1;
 			case GOLD:
@@ -275,7 +274,7 @@ public class ItemCyclicWand extends Item {
 		}
 		
 		public static int getMaximum(ItemStack stack){
-			switch(Variants.getVariantFromMeta(stack)){
+			switch(Variant.getVariantFromMeta(stack)){
 			case QUARTZ:
 				return 500;
 			case GOLD:
@@ -307,8 +306,7 @@ public class ItemCyclicWand extends Item {
 		}
 	}
 	
-
-	public enum Variants{
+	public enum Variant{
 		QUARTZ,
 		GOLD,
 		DIAMOND,
@@ -322,13 +320,34 @@ public class ItemCyclicWand extends Item {
 			
 			return Const.TEXTURE_LOCATION + "cyclic_wand_" + this.name().toLowerCase();
 		}
-	    static Variants getVariantFromMeta(ItemStack stack){
+		
+		private static List<IPassiveSpell> getPassives(ItemStack stack){
+			List<IPassiveSpell> ret = new ArrayList<IPassiveSpell>();
+			//it trickles down, so the one at the tap also hits the lower ones
+			switch(Variant.getVariantFromMeta(stack)){
+				
+				case EMERALD:
+					ret.add(Passives.defend);
+					ret.add(Passives.falling);
+				case DIAMOND:
+					ret.add(Passives.burn);
+				case GOLD:
+					ret.add(Passives.breath);
+				case QUARTZ://none for u
+					break;
+				default:break;
+			}
+			
+			return ret;
+		}
+		
+	    static Variant getVariantFromMeta(ItemStack stack){
 	    	try{
-				return Variants.values()[stack.getMetadata()];
+				return Variant.values()[stack.getMetadata()];
 			}
 			catch(Exception e){
 				//System.out.println("INVALID META::"+stack.getMetadata());
-				return Variants.QUARTZ;//this is damage zero anyway
+				return Variant.QUARTZ;//this is damage zero anyway
 			}
 	    }
 	}

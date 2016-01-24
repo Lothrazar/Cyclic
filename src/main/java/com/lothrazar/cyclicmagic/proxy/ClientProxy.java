@@ -74,7 +74,7 @@ public class ClientProxy extends CommonProxy {
 		
 		ArrayList<String> variants = new ArrayList<String>();
 
-		for(ItemCyclicWand.Variants wandType : ItemCyclicWand.Variants.values()) {
+		for(ItemCyclicWand.Variant wandType : ItemCyclicWand.Variant.values()) {
         	name = wandType.getResource();
         	variants.add(name);
         	mesher.register(ItemRegistry.cyclic_wand, wandType.getMetadata(), new ModelResourceLocation(name , "inventory"));	
