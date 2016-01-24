@@ -12,7 +12,6 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 
 public class SpellCaster {
 
-	public final float MAXMANA = 1000;
 	final int RECHARGE_EXP_COST = 30;
 	final int RECHARGE_MANA_AMT = 150;
 	
@@ -97,14 +96,16 @@ public class SpellCaster {
 	}
 
 	public void rechargeWithExp(EntityPlayer player) {
-		PlayerPowerups props = PlayerPowerups.get(player);
+
+		int MAX = ItemCyclicWand.Energy.getMaximum(player.getHeldItem());
 		
 		if(player.capabilities.isCreativeMode){ //always set full
-			PlayerPowerups.get(player).setMana((int)MAXMANA);
+			ItemCyclicWand.Energy.setCurrent(player.getHeldItem(),MAX);
 		}
-		else if(RECHARGE_EXP_COST < UtilExperience.getExpTotal(player) && props.getMana() + RECHARGE_MANA_AMT <= MAXMANA){
+		else if(RECHARGE_EXP_COST < UtilExperience.getExpTotal(player) && 
+				ItemCyclicWand.Energy.getCurrent(player.getHeldItem()) + RECHARGE_MANA_AMT <= MAX){
 
-			props.rechargeManaBy(RECHARGE_MANA_AMT);
+			ItemCyclicWand.Energy.rechargeBy(player.getHeldItem(), RECHARGE_MANA_AMT);
 
 			UtilExperience.drainExp(player, RECHARGE_EXP_COST);
 			UtilSound.playSoundAt(player, UtilSound.portal);

@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
@@ -32,12 +33,14 @@ public class SpellScreenRender {
 		}
 	}
 	
-	private void drawManabar(PlayerPowerups props){
+	private void drawManabar(EntityPlayer player){
 		int x = xmain-20, y = ymain-12;
 		
 		UtilTextureRender.drawTextureSimple(manabar_empty, x,y, manaWidth, manaHeight);
-		
-		float manaPercent = props.getMana() / SpellRegistry.caster.MAXMANA;
+
+		int MAX = ItemCyclicWand.Energy.getMaximum(player.getHeldItem());
+		int current = ItemCyclicWand.Energy.getCurrent(player.getHeldItem());
+		float manaPercent = current / MAX;
 		
 		double h = manaHeight * manaPercent;
 
@@ -135,7 +138,7 @@ public class SpellScreenRender {
 	public void drawSpellWheel() {
 
 		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
-
+	
 		ISpell spellCurrent = SpellRegistry.caster.getPlayerCurrentISpell(player);
 		PlayerPowerups props = PlayerPowerups.get(player);
 
@@ -148,7 +151,7 @@ public class SpellScreenRender {
 		drawPrevSpells(props, spellCurrent);
 		
 		if(player.capabilities.isCreativeMode == false){
-			drawManabar(props);
+			drawManabar(player);
 		}
 	}
 }
