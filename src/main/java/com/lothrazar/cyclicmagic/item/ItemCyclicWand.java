@@ -263,8 +263,10 @@ public class ItemCyclicWand extends Item {
 				return 1;
 			case GOLD:
 				return 2;
-			case DIAMOND:
+			case LAPIS:
 				return 3;
+			case DIAMOND:
+				return 4;
 			case EMERALD:
 				return 5;
 			}
@@ -277,10 +279,14 @@ public class ItemCyclicWand extends Item {
 				return 200;
 			case GOLD:
 				return 500;
-			case DIAMOND:
+			case LAPIS:
 				return 700;
-			case EMERALD:
+			case DIAMOND:
 				return 1000;
+			case EMERALD:
+				return 1200;
+			default:
+				break;
 			}
 			return 0;
 		}
@@ -307,6 +313,7 @@ public class ItemCyclicWand extends Item {
 	public enum Variant{
 		QUARTZ,
 		GOLD,
+		LAPIS,
 		DIAMOND,
 		EMERALD;
 		
@@ -323,9 +330,10 @@ public class ItemCyclicWand extends Item {
 			List<IPassiveSpell> ret = new ArrayList<IPassiveSpell>();
 			//it trickles down, so the one at the tap also hits the lower ones
 			switch(Variant.getVariantFromMeta(stack)){
-				
+
 				case EMERALD:
 					ret.add(Passives.defend);
+				case LAPIS:
 					ret.add(Passives.falling);
 				case DIAMOND:
 					ret.add(Passives.burn);

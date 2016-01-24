@@ -3,6 +3,7 @@ item.respawn_egg.name=Respawn Egg
 item.carbon_paper.name=Carbon Paper
 item.cyclic_wand_quartz.name=Cyclic Wand
 item.cyclic_wand_gold.name=Cyclic Wand
+item.cyclic_wand_lapis.name=Cyclic Wand
 item.cyclic_wand_diamond.name=Cyclic Wand
 item.cyclic_wand_emerald.name=Cyclic Wand
 item.waypoint_portal.name=Portable Waypoint

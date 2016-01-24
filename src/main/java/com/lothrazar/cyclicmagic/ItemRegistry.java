@@ -49,8 +49,15 @@ public class ItemRegistry {
 				new ItemStack(Blocks.gold_block),
 				new ItemStack(Blocks.gold_block)  );
 
-		GameRegistry.addShapelessRecipe(new ItemStack(cyclic_wand,1,ItemCyclicWand.Variant.DIAMOND.ordinal()),
+		
+		GameRegistry.addShapelessRecipe(new ItemStack(cyclic_wand,1,ItemCyclicWand.Variant.LAPIS.ordinal()),
 				new ItemStack(cyclic_wand,1,ItemCyclicWand.Variant.GOLD.ordinal()),
+				new ItemStack(Blocks.lapis_block),
+				new ItemStack(Blocks.lapis_block),
+				new ItemStack(Blocks.lapis_block)  );
+		
+		GameRegistry.addShapelessRecipe(new ItemStack(cyclic_wand,1,ItemCyclicWand.Variant.DIAMOND.ordinal()),
+				new ItemStack(cyclic_wand,1,ItemCyclicWand.Variant.LAPIS.ordinal()),
 				new ItemStack(Blocks.diamond_block),
 				new ItemStack(Blocks.diamond_block),
 				new ItemStack(Blocks.diamond_block)  );
