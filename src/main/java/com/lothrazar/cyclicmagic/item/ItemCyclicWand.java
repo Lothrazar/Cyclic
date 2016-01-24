@@ -78,7 +78,7 @@ public class ItemCyclicWand extends Item {
 
 		int MAX = ItemCyclicWand.Energy.getMaximum(stack);
 		//StatCollector.translateToLocal("spell.cost")
-		tooltip.add(spell.getName() + " "+EnumChatFormatting.DARK_BLUE + spell.getCost());
+		tooltip.add(EnumChatFormatting.GREEN + spell.getName() + " "+EnumChatFormatting.DARK_BLUE + spell.getCost());
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
 			tooltip.add(Energy.getCurrent(stack) + "/" + MAX);	

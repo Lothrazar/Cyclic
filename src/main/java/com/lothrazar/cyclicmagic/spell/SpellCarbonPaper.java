@@ -18,6 +18,9 @@ public class SpellCarbonPaper extends BaseSpell implements ISpell {
 	@Override
 	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side ) {
 
+		if(pos == null){
+			return false;
+		}
 		// only copy is done here
 		//then drops new item stack
 		//then paste is only from item

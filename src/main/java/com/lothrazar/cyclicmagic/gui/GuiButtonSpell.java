@@ -63,8 +63,8 @@ public class GuiButtonSpell extends GuiButton {
 	public List<String> getTooltipForPlayer(PlayerPowerups props) {
 
 		List<String> tooltips = new ArrayList<String>();
-		tooltips.add(spell.getName());
-		tooltips.add(StatCollector.translateToLocal("spell.cost") + EnumChatFormatting.BLUE + spell.getCost());
+		tooltips.add(EnumChatFormatting.DARK_GRAY + spell.getName());
+		//tooltips.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("spell.cost") + EnumChatFormatting.BLUE + spell.getCost());
 		
 		boolean unlocked = ItemCyclicWand.Spells.isSpellUnlocked(props.getPlayer().getHeldItem(), spell);
 		

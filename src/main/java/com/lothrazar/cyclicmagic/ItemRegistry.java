@@ -60,9 +60,6 @@ public class ItemRegistry {
 				new ItemStack(Blocks.emerald_block),
 				new ItemStack(Blocks.emerald_block),
 				new ItemStack(Blocks.emerald_block)  );
-		
-		cyclic_wand.setContainerItem(cyclic_wand);//so it is not consumed on crafting
-	
 	}
 
 	public static void registerItem(Item item, String name) {
