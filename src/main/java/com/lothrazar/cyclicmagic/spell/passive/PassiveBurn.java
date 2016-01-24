@@ -1,17 +1,16 @@
 package com.lothrazar.cyclicmagic.spell.passive;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.PotionRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.StatCollector;
 
 public class PassiveBurn  implements IPassiveSpell{
+	private static final String info = "passive.burn";
 	private final static int SECONDS = 30;
 	
-	private static final ArrayList<String> info = new ArrayList<String>(Arrays.asList("passive.burn"));
 	@Override
 	public boolean canTrigger(EntityPlayer entity) {
 		return (entity.isBurning() && entity.isPotionActive(Potion.fireResistance.id) == false);
@@ -24,9 +23,9 @@ public class PassiveBurn  implements IPassiveSpell{
 	
 		//TODO: fire prot on your mount?
 	}
-
+ 
 	@Override
-	public ArrayList<String> info() {
-		return info;
+	public String info() {
+		return StatCollector.translateToLocal(info);
 	}
 }

@@ -1,15 +1,14 @@
 package com.lothrazar.cyclicmagic.spell.passive;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.StatCollector;
 import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.PotionRegistry;
 
 public class PassiveFalling implements IPassiveSpell{
-	private static final ArrayList<String> info = new ArrayList<String>(Arrays.asList("passive.falling"));
+	private static final String info = "passive.falling"; 
 
 	private final static float FALLDISTANCE = 3;
 	private final static int SECONDS = 30;
@@ -26,7 +25,6 @@ public class PassiveFalling implements IPassiveSpell{
 			
 			if(entity.isPotionActive(PotionRegistry.slowfall) == false){
 				PotionRegistry.addOrMergePotionEffect(entity, new PotionEffect(PotionRegistry.slowfall.id,SECONDS * Const.TICKS_PER_SEC));
-
 			}
 		}
 		
@@ -46,7 +44,7 @@ public class PassiveFalling implements IPassiveSpell{
 	}
 	
 	@Override
-	public ArrayList<String> info() {
-		return info;
+	public String info() {
+		return StatCollector.translateToLocal(info);
 	}
 }

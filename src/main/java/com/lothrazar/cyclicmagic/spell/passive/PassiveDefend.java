@@ -1,18 +1,17 @@
 package com.lothrazar.cyclicmagic.spell.passive;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.StatCollector;
 import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.PotionRegistry;
 
 public class PassiveDefend implements IPassiveSpell{
+	private static final String info = "passive.defend";
 	private final static float HEALTHLIMIT = 10;//1 heart = 2 health
 	private final static int SECONDS = 30;
-	
-	private static final ArrayList<String> info = new ArrayList<String>(Arrays.asList("passive.defend"));
+	 
 	
 	public void trigger(EntityPlayer entity){
 		
@@ -27,7 +26,7 @@ public class PassiveDefend implements IPassiveSpell{
 	}
 	
 	@Override
-	public ArrayList<String> info() {
-		return info;
+	public String info() {
+		return StatCollector.translateToLocal(info);
 	}
 }

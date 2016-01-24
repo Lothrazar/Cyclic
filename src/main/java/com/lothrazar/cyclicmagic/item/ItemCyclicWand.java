@@ -83,16 +83,15 @@ public class ItemCyclicWand extends Item {
 			tooltip.add(Energy.getCurrent(stack) + "/" + MAX);	
 			tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("wand.regen") + EnumChatFormatting.DARK_BLUE + Energy.getRegen(stack));
 			
-			
-			List<IPassiveSpell> passives = Variant.getPassives(stack);
-			
-			for(IPassiveSpell s : passives){
-				tooltip.addAll(s.info());
+			for(IPassiveSpell s : Variant.getPassives(stack)){
+				tooltip.add(EnumChatFormatting.DARK_GRAY + s.info());
 			}
 
-			tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("wand.gui.info"));
-			tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("wand.recharge.info"));
-			tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("wand.wheel.info"));
+			//todo: some other way to convey basic tutorial info
+			//bc, once you know , dont need to keep seeing it.
+			//tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("wand.gui.info"));
+			//tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("wand.recharge.info"));
+			//tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("wand.wheel.info"));
 		}
 		else {
 			tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("item.shift"));
