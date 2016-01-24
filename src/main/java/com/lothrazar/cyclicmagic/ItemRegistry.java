@@ -31,18 +31,35 @@ public class ItemRegistry {
 		ItemRegistry.registerItem(waypoint_portal, "waypoint_portal");
 
 		cyclic_wand = new ItemCyclicWand();
-		//ItemRegistry.registerItem(cyclic_wand, "cyclic_wand");
 		cyclic_wand.setUnlocalizedName("cyclic_wand");
 		GameRegistry.registerItem(cyclic_wand, "cyclic_wand");
 
-		GameRegistry.addRecipe(new ItemStack(cyclic_wand), //placeholder rec
+		GameRegistry.addRecipe(new ItemStack(cyclic_wand,1,ItemCyclicWand.Variant.QUARTZ.ordinal()), //placeholder rec
 				"sds",
 				" o ",
 				"gog",
-				'd',Blocks.diamond_block,
+				'd',Blocks.quartz_block,
 				'g',Items.ghast_tear,
 				'o',Blocks.obsidian,
 				's',Items.nether_star);
+		
+		GameRegistry.addShapelessRecipe(new ItemStack(cyclic_wand,1,ItemCyclicWand.Variant.GOLD.ordinal()),
+				new ItemStack(cyclic_wand,1,ItemCyclicWand.Variant.QUARTZ.ordinal()),
+				new ItemStack(Blocks.gold_block),
+				new ItemStack(Blocks.gold_block),
+				new ItemStack(Blocks.gold_block)  );
+
+		GameRegistry.addShapelessRecipe(new ItemStack(cyclic_wand,1,ItemCyclicWand.Variant.DIAMOND.ordinal()),
+				new ItemStack(cyclic_wand,1,ItemCyclicWand.Variant.GOLD.ordinal()),
+				new ItemStack(Blocks.diamond_block),
+				new ItemStack(Blocks.diamond_block),
+				new ItemStack(Blocks.diamond_block)  );
+
+		GameRegistry.addShapelessRecipe(new ItemStack(cyclic_wand,1,ItemCyclicWand.Variant.EMERALD.ordinal()),
+				new ItemStack(cyclic_wand,1,ItemCyclicWand.Variant.DIAMOND.ordinal()),
+				new ItemStack(Blocks.emerald_block),
+				new ItemStack(Blocks.emerald_block),
+				new ItemStack(Blocks.emerald_block)  );
 		
 		cyclic_wand.setContainerItem(cyclic_wand);//so it is not consumed on crafting
 	

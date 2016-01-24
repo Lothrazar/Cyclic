@@ -31,7 +31,6 @@ public class ItemCyclicWand extends Item {
 	public ItemCyclicWand() {
 		this.setMaxStackSize(1);
 		this.setHasSubtypes(true);
-		this.setCreativeTab(CreativeTabs.tabAllSearch);//TODO: remove this for release
 	}
 
 	@Override
@@ -52,6 +51,8 @@ public class ItemCyclicWand extends Item {
 	public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn){
 		//default to all unlocked
 		Spells.setUnlockDefault(stack);
+		
+		Energy.rechargeBy(stack, Energy.START);
     }
 	
 	@Override
@@ -186,12 +187,9 @@ public class ItemCyclicWand extends Item {
 		}
 		private static void setUnlockDefault(ItemStack stack){
 	
-			NBTTagCompound nbt = getNBT(stack);
-			
 			for(ISpell s : SpellRegistry.getSpellbook()){
 				unlockSpell(stack,s);
 			}
-			stack.setTagCompound(nbt);
 		}
 
 		public static int nextId(ItemStack stack,int spell_id ) {
@@ -258,6 +256,7 @@ public class ItemCyclicWand extends Item {
 	}
 
 	public static class Energy{
+		public static final int START = 100; // what you get on crafted
 		private static int getRegen(ItemStack stack){
 			switch(Variant.getVariantFromMeta(stack)){
 			case QUARTZ:
@@ -275,11 +274,11 @@ public class ItemCyclicWand extends Item {
 		public static int getMaximum(ItemStack stack){
 			switch(Variant.getVariantFromMeta(stack)){
 			case QUARTZ:
-				return 500;
+				return 200;
 			case GOLD:
-				return 600;
+				return 500;
 			case DIAMOND:
-				return 800;
+				return 700;
 			case EMERALD:
 				return 1000;
 			}
