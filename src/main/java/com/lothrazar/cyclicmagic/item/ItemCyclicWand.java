@@ -36,6 +36,14 @@ public class ItemCyclicWand extends Item {
 	}
 
 	@Override
+	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged)
+    {
+		if(!slotChanged){
+			return false;//only item data has changed, so do not animate
+		}
+        return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged);
+    }
+	@Override
 	@SideOnly(Side.CLIENT)
 	public boolean isFull3D() {
 		return true;
@@ -68,12 +76,12 @@ public class ItemCyclicWand extends Item {
 
 		ISpell spell = SpellRegistry.getSpellFromID(Spells.getSpellCurrent(stack));
 
-		int MAX = ItemCyclicWand.Energy.getMaximum(playerIn.getHeldItem());
-		
-		tooltip.add(spell.getName() + StatCollector.translateToLocal("spell.cost") + spell.getCost());
+		int MAX = ItemCyclicWand.Energy.getMaximum(stack);
+		//StatCollector.translateToLocal("spell.cost")
+		tooltip.add(spell.getName() + " "+EnumChatFormatting.DARK_BLUE + spell.getCost());
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-			tooltip.add(Energy.getCurrent(playerIn.getHeldItem()) + "/" + MAX);
+			tooltip.add(Energy.getCurrent(stack) + "/" + MAX);
 			tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("wand.gui.info"));
 			tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("wand.recharge.info"));
 			tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("wand.wheel.info"));

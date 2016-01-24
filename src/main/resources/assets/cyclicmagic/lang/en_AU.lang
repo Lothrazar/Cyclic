@@ -21,6 +21,7 @@ rune.protection.fall=Gives Slowfall effect when you fall
 rune.protection.water=Gives Water Breathing when drowning
 potion.waterwalk=Waterwalk
 potion.slowfall=Slowfall
+potion.magnet=Magnet
 potion.frost=Frost
 spell.cost=Cost: 
 spell.builder.name=Builder
