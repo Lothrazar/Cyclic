@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.spell.passive;
 
 import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.PotionRegistry;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -18,10 +19,12 @@ public class PassiveBurn  implements IPassiveSpell{
 
 	@Override
 	public void trigger(EntityPlayer entity) {
-		PotionRegistry.addOrMergePotionEffect(entity, new PotionEffect(Potion.fireResistance.id,SECONDS * Const.TICKS_PER_SEC, PotionRegistry.V));	
+		PotionRegistry.addOrMergePotionEffect(entity, new PotionEffect(Potion.fireResistance.id,SECONDS * Const.TICKS_PER_SEC, PotionRegistry.I));	
 	
-	
-		//TODO: fire prot on your mount?
+		if(entity.ridingEntity != null && entity.ridingEntity instanceof EntityLivingBase){
+			
+			PotionRegistry.addOrMergePotionEffect((EntityLivingBase)entity.ridingEntity, new PotionEffect(Potion.fireResistance.id,SECONDS * Const.TICKS_PER_SEC, PotionRegistry.I));	
+		}
 	}
  
 	@Override
