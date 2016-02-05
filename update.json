@@ -11,7 +11,7 @@
   	"1.0.2":"Portable waypoint now has durability and multiple uses",
   	"1.0.3":"Now protected from falling out of the world",
   	"1.0.4":"Fix water spell making source water blocks correctly",
-  	"1.0.5":"Make the temporary fragile blocks unharvestable even with silk touch.",
-  	"1.1.0":"There are now four wand types, each with the same spells but individual energy bars.  Replaced runestone items with passive spells directly on the wand.  "
+  	"1.0.5":"Make the temporary fragile blocks un-harvestable even with silk touch",
+  	"1.1.0":"Replaced runestone items with passive spells directly on the wand based on type.  Add ingame config support, and option to change HUD from left to right "
   }
 }
