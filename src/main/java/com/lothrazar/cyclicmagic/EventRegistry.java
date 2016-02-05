@@ -12,6 +12,7 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -22,6 +23,13 @@ import com.lothrazar.cyclicmagic.spell.SpellGhost;
 
 public class EventRegistry {
 
+	@SubscribeEvent
+	public void onConfigChanged(OnConfigChangedEvent event) {
+		if (event.modID.equals(Const.MODID)){
+			ModMain.cfg.syncConfig();
+		}
+	}
+	
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void onMouseInput(MouseEvent event){

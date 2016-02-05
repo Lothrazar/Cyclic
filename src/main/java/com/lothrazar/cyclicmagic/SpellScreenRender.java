@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
@@ -14,13 +15,43 @@ import com.lothrazar.cyclicmagic.util.UtilTextureRender;
 
 public class SpellScreenRender {
 
-	private static final int xmain = 30;
+	private static final int xoffset = 30;
+	private static int xmain;
 	private static final int ymain = 14;
 	private static final int spellSize = 16;
 	private static final int manaWidth = 8;
 	private static final int manaHeight = 90;
 	private static final ResourceLocation manabar = new ResourceLocation(Const.MODID, "textures/spells/manabar.png");
 	private static final ResourceLocation manabar_empty = new ResourceLocation(Const.MODID, "textures/spells/manabar_empty.png");
+
+	@SideOnly(Side.CLIENT)
+	public void drawSpellWheel() {
+		
+		if(ModMain.cfg.renderOnLeft){
+			xmain = xoffset;
+		}
+		else{
+			ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft());
+			// NOT Minecraft.getMinecraft().displayWidth
+			xmain = res.getScaledWidth() - xoffset;
+		}
+
+		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+	
+		ISpell spellCurrent = SpellRegistry.caster.getPlayerCurrentISpell(player);
+		
+		drawSpellHeader(PlayerPowerups.get(player), spellCurrent);
+
+		drawCurrentSpell(player, spellCurrent);
+
+		drawNextSpells(player, spellCurrent);
+
+		drawPrevSpells(player, spellCurrent);
+		
+		if(player.capabilities.isCreativeMode == false){
+			drawManabar(player);
+		}
+	}
 	
 	private void drawSpellHeader(PlayerPowerups props, ISpell spellCurrent) {
 		int dim = spellSize - 4, x = xmain+1, y = ymain-12;
@@ -131,26 +162,6 @@ public class SpellScreenRender {
 					}
 				}
 			}
-		}
-	}
-
-	@SideOnly(Side.CLIENT)
-	public void drawSpellWheel() {
-
-		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
-	
-		ISpell spellCurrent = SpellRegistry.caster.getPlayerCurrentISpell(player);
-		
-		drawSpellHeader(PlayerPowerups.get(player), spellCurrent);
-
-		drawCurrentSpell(player, spellCurrent);
-
-		drawNextSpells(player, spellCurrent);
-
-		drawPrevSpells(player, spellCurrent);
-		
-		if(player.capabilities.isCreativeMode == false){
-			drawManabar(player);
 		}
 	}
 }

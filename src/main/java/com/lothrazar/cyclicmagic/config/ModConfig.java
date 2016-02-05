@@ -13,6 +13,8 @@ public class ModConfig {
 	public int potionIdMagnet;
 	
 	public float slowfallSpeed;
+	
+	public boolean renderOnLeft;
 
 	public Configuration instance() {
 		return instance;
@@ -22,10 +24,14 @@ public class ModConfig {
 		instance = c;
 		instance.load();
 
+		syncConfig();
+	}
+
+	public void syncConfig() {
 		category = Const.MODID;
 		
 		
-		
+		renderOnLeft = instance.getBoolean("on_left", category, true, "True for top left of the screen, false for top right");
 
 		category = "effect_ids";
 
