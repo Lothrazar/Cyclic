@@ -10,8 +10,9 @@ public class ModConfig {
 	public int potionIdWaterwalk;
 	public int potionIdSlowfall;
 	public int potionIdFrost;
+	public int potionIdMagnet;
+	
 	public float slowfallSpeed;
-	public int potionIdMagnet =43;
 
 	public Configuration instance() {
 		return instance;
@@ -36,6 +37,8 @@ public class ModConfig {
 		
 		potionIdFrost = instance.get(category, "frost_id", 42).getInt();
 
+		potionIdMagnet = instance.get(category, "magnet_", 43).getInt();
+		
 		category = "effect_tweaks";
 
 		slowfallSpeed = instance.getFloat("slowfall_speed", category, 0.41F, 0.1F, 1F, "This factor affects how much the slowfall effect slows down the entity.");
