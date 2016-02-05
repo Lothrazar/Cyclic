@@ -52,8 +52,8 @@ public class EventRegistry {
 				&& event.entityPlayer.getHeldItem() != null && event.entityPlayer.getHeldItem().getItem() == ItemRegistry.cyclic_wand ){
 		
 			Block blockHit = event.world.getBlockState(event.pos).getBlock();
-			if(blockHit == Blocks.crafting_table){
-
+			if(blockHit == Blocks.crafting_table && event.world.isRemote){
+				//client side only
 				Minecraft.getMinecraft().displayGuiScreen(new GuiSpellbook(event.entityPlayer));
 			}
 			else if(blockHit != null){//was only bookshelf
