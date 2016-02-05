@@ -1,5 +1,6 @@
-package com.lothrazar.cyclicmagic;
+package com.lothrazar.cyclicmagic.config;
 
+import com.lothrazar.cyclicmagic.Const;
 import net.minecraftforge.common.config.Configuration;
 
 public class ModConfig {
@@ -21,6 +22,9 @@ public class ModConfig {
 		instance.load();
 
 		category = Const.MODID;
+		
+		
+		
 
 		category = "effect_ids";
 
