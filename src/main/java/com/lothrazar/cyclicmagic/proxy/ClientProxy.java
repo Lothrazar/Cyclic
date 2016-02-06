@@ -2,6 +2,8 @@ package com.lothrazar.cyclicmagic.proxy;
 
 import java.util.ArrayList;
 import net.minecraft.item.Item;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.MovingObjectPosition;
 import com.lothrazar.cyclicmagic.ItemRegistry;
 import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.gui.GuiSpellbook;
@@ -10,7 +12,11 @@ import com.lothrazar.cyclicmagic.projectile.*;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.ItemModelMesher;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -35,6 +41,39 @@ public class ClientProxy extends CommonProxy {
 
 		Minecraft.getMinecraft().displayGuiScreen(new GuiSpellbook(Minecraft.getMinecraft().thePlayer));
 	}
+	
+	@SideOnly(Side.CLIENT)
+	@Override
+	public BlockPos getBlockMouseover(int max) {
+
+		// Get the player and their held item
+		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+
+ 
+		//int max = 50;
+		MovingObjectPosition mouseOver = Minecraft.getMinecraft().getRenderViewEntity().rayTrace(max, 1f);
+		//now get whatever block position we are mousing over if anything
+
+		if(mouseOver != null && mouseOver.sideHit != null){
+
+			// Get the block position and make sure it is a block
+			//World world = player.worldObj;
+			BlockPos blockPos = mouseOver.getBlockPos();
+			
+			if(blockPos != null && player.worldObj.getBlockState(blockPos) != null){
+	
+				// Make sure the block is valid
+				//IBlockState blockState = player.worldObj.getBlockState(blockPos);
+				//Block block = blockState.getBlock();
+				//if(block != null && block.getMaterial() != Material.air) {
+				
+					return blockPos.offset(mouseOver.sideHit);
+				//}
+			}
+		}
+		return null;
+	}
+	
 	
 	@SuppressWarnings({ "unchecked", "rawtypes", "deprecation" })
 	private void registerEntities() {
