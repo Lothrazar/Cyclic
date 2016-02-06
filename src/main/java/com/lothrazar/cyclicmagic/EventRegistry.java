@@ -6,7 +6,6 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.ChatComponentTranslation;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
@@ -65,14 +64,10 @@ public class EventRegistry {
 			// important: LEFT_CLICK_BLOCK only fires on the server, not the client. Yo
 			// http://www.minecraftforge.net/forum/index.php?topic=22348.0
 			Block blockHit = event.world.getBlockState(event.pos).getBlock();
-			
-			if(blockHit != null)
-				event.entityPlayer.addChatMessage(new ChatComponentTranslation("hit"+event.world.isRemote+"__"+blockHit.getUnlocalizedName()));
-			
+	
 			if(blockHit == Blocks.crafting_table && event.entityPlayer instanceof EntityPlayerMP){
 	
 				ModMain.network.sendTo(new MessageOpenSpellbook(), (EntityPlayerMP)event.entityPlayer);
-			//	ModMain.network.sendToAll(new MessageOpenSpellbook());
 			}
 			else if(blockHit != null){//was only bookshelf
 				
