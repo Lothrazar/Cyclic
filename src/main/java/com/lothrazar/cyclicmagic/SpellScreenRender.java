@@ -2,22 +2,56 @@ package com.lothrazar.cyclicmagic;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.util.UtilTextureRender;
 
 public class SpellScreenRender {
 
-	private static final int xmain = 30;
+	private static final int xoffset = 30;
+	private static int xmain;
 	private static final int ymain = 14;
 	private static final int spellSize = 16;
 	private static final int manaWidth = 8;
 	private static final int manaHeight = 90;
 	private static final ResourceLocation manabar = new ResourceLocation(Const.MODID, "textures/spells/manabar.png");
 	private static final ResourceLocation manabar_empty = new ResourceLocation(Const.MODID, "textures/spells/manabar_empty.png");
+
+	@SideOnly(Side.CLIENT)
+	public void drawSpellWheel() {
+		
+		if(ModMain.cfg.renderOnLeft){
+			xmain = xoffset;
+		}
+		else{
+			ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft());
+			// NOT Minecraft.getMinecraft().displayWidth
+			xmain = res.getScaledWidth() - xoffset;
+		}
+
+		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+	
+		ISpell spellCurrent = SpellRegistry.caster.getPlayerCurrentISpell(player);
+		
+		drawSpellHeader(PlayerPowerups.get(player), spellCurrent);
+
+		drawCurrentSpell(player, spellCurrent);
+
+		drawNextSpells(player, spellCurrent);
+
+		drawPrevSpells(player, spellCurrent);
+		
+		if(player.capabilities.isCreativeMode == false){
+			drawManabar(player);
+		}
+	}
 	
 	private void drawSpellHeader(PlayerPowerups props, ISpell spellCurrent) {
 		int dim = spellSize - 4, x = xmain+1, y = ymain-12;
@@ -30,19 +64,21 @@ public class SpellScreenRender {
 		}
 	}
 	
-	private void drawManabar(PlayerPowerups props){
+	private void drawManabar(EntityPlayer player){
 		int x = xmain-20, y = ymain-12;
 		
 		UtilTextureRender.drawTextureSimple(manabar_empty, x,y, manaWidth, manaHeight);
-		
-		float manaPercent = props.getMana() / SpellRegistry.caster.MAXMANA;
+
+		float MAX = ItemCyclicWand.Energy.getMaximum(player.getHeldItem());
+		float current = ItemCyclicWand.Energy.getCurrent(player.getHeldItem());
+		float manaPercent = current / MAX;
 		
 		double h = manaHeight * manaPercent;
 
 		UtilTextureRender.drawTextureSimple(manabar, x,y, manaWidth,MathHelper.floor_double(h));
 	}
 
-	private void drawCurrentSpell(PlayerPowerups props, ISpell spellCurrent) {
+	private void drawCurrentSpell(EntityPlayer player, ISpell spellCurrent) {
 
 		if (spellCurrent.getIconDisplay() != null) {
 
@@ -50,9 +86,11 @@ public class SpellScreenRender {
 		}
 	}
 
-	private void drawPrevSpells(PlayerPowerups props, ISpell spellCurrent) {
+	private void drawPrevSpells(EntityPlayer player, ISpell spellCurrent) {
 
-		ISpell prev = SpellRegistry.getSpellFromID(props.prevId(spellCurrent.getID()));
+		ItemStack wand = player.getHeldItem();
+		
+		ISpell prev = SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.prevId(wand,spellCurrent.getID()));
   
 		if (prev != null) {
 			int x = xmain + 9;
@@ -60,7 +98,7 @@ public class SpellScreenRender {
 			int dim = spellSize / 2;
 			UtilTextureRender.drawTextureSquare(prev.getIconDisplay(), x, y, dim);
 
-			prev = SpellRegistry.getSpellFromID(props.prevId(prev.getID()));
+			prev = SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.prevId(wand,prev.getID()));
 		
 			if (prev != null ) {
 				x += 5;
@@ -68,7 +106,7 @@ public class SpellScreenRender {
 				dim -= 2;
 				UtilTextureRender.drawTextureSquare(prev.getIconDisplay(), x, y, dim);
 
-				prev = SpellRegistry.getSpellFromID(props.prevId(prev.getID()));
+				prev = SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.prevId(wand,prev.getID()));
 	
 				if (prev != null) {
 					x += 3;
@@ -76,7 +114,7 @@ public class SpellScreenRender {
 					dim -= 2;
 					UtilTextureRender.drawTextureSquare(prev.getIconDisplay(), x, y, dim);
 					
-					prev = SpellRegistry.getSpellFromID(props.prevId(prev.getID()));
+					prev = SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.prevId(wand,prev.getID()));
 					
 					if (prev != null) {
 						x += 2;
@@ -89,9 +127,10 @@ public class SpellScreenRender {
 		}
 	}
 
-	private void drawNextSpells(PlayerPowerups props, ISpell spellCurrent) {
+	private void drawNextSpells(EntityPlayer player, ISpell spellCurrent) {
+		ItemStack wand = player.getHeldItem();
 
-		ISpell next = SpellRegistry.getSpellFromID(props.nextId(spellCurrent.getID()));
+		ISpell next = SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.nextId(wand,spellCurrent.getID()));
 
 		if (next != null) {
 			int x = xmain - 5;
@@ -99,7 +138,7 @@ public class SpellScreenRender {
 			int dim = spellSize / 2;
 			UtilTextureRender.drawTextureSquare(next.getIconDisplay(), x, y, dim);
 
-			next = SpellRegistry.getSpellFromID(props.nextId(next.getID())); 
+			next = SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.nextId(wand,next.getID())); 
 
 			if (next != null ) {
 				x -= 2;
@@ -107,14 +146,14 @@ public class SpellScreenRender {
 				dim -= 2;
 				UtilTextureRender.drawTextureSquare(next.getIconDisplay(), x, y, dim);
 
-				next = SpellRegistry.getSpellFromID(props.nextId(next.getID())); 
+				next = SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.nextId(wand,next.getID())); 
 				if (next != null) {
 					x -= 2;
 					y += 10;
 					dim -= 2;
 					UtilTextureRender.drawTextureSquare(next.getIconDisplay(), x, y, dim);
 					
-					next = SpellRegistry.getSpellFromID(props.nextId(next.getID())); 
+					next = SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.nextId(wand,next.getID())); 
 					if (next != null) {
 						x -= 2;
 						y += 10;
@@ -123,27 +162,6 @@ public class SpellScreenRender {
 					}
 				}
 			}
-		}
-	}
-
-	@SideOnly(Side.CLIENT)
-	public void drawSpellWheel() {
-
-		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
-
-		ISpell spellCurrent = SpellRegistry.caster.getPlayerCurrentISpell(player);
-		PlayerPowerups props = PlayerPowerups.get(player);
-
-		drawSpellHeader(props, spellCurrent);
-
-		drawCurrentSpell(props, spellCurrent);
-
-		drawNextSpells(props, spellCurrent);
-
-		drawPrevSpells(props, spellCurrent);
-		
-		if(player.capabilities.isCreativeMode == false){
-			drawManabar(props);
 		}
 	}
 }

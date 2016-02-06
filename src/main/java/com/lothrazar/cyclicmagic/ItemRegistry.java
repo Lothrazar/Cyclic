@@ -17,10 +17,6 @@ public class ItemRegistry {
 	public static ItemPaperCarbon carbon_paper;
 	public static ItemWaypointPortal waypoint_portal;
 	
-	//convention: runes turn on and off
-	public static ItemRuneCollector rune_collector;
-	public static ItemRuneProtection rune_protection;
-
 	public static void register() {
 		chest_sack = new ItemChestSack();
 		ItemRegistry.registerItem(chest_sack, "chest_sack");
@@ -34,35 +30,43 @@ public class ItemRegistry {
 		waypoint_portal = new ItemWaypointPortal();
 		ItemRegistry.registerItem(waypoint_portal, "waypoint_portal");
 
-		rune_collector = new ItemRuneCollector();
-		ItemRegistry.registerItem(rune_collector, "rune_collector");
-
-		rune_protection = new ItemRuneProtection();
-		ItemRegistry.registerItem(rune_protection, "rune_protection");
-
 		cyclic_wand = new ItemCyclicWand();
-		ItemRegistry.registerItem(cyclic_wand, "cyclic_wand");
+		cyclic_wand.setUnlocalizedName("cyclic_wand");
+		GameRegistry.registerItem(cyclic_wand, "cyclic_wand");
 
-		GameRegistry.addRecipe(new ItemStack(cyclic_wand), //placeholder rec
+		GameRegistry.addRecipe(new ItemStack(cyclic_wand,1,ItemCyclicWand.Variant.QUARTZ.ordinal()), //placeholder rec
 				"sds",
 				" o ",
 				"gog",
-				'd',Blocks.diamond_block,
+				'd',Blocks.quartz_block,
 				'g',Items.ghast_tear,
 				'o',Blocks.obsidian,
 				's',Items.nether_star);
 		
-		cyclic_wand.setContainerItem(cyclic_wand);//so it is not consumed on crafting
-		
-		GameRegistry.addShapelessRecipe(new ItemStack(rune_collector)
-				,cyclic_wand
-				,Blocks.lapis_block
-				,Items.nether_star);
+		GameRegistry.addShapelessRecipe(new ItemStack(cyclic_wand,1,ItemCyclicWand.Variant.GOLD.ordinal()),
+				new ItemStack(cyclic_wand,1,ItemCyclicWand.Variant.QUARTZ.ordinal()),
+				new ItemStack(Blocks.gold_block),
+				new ItemStack(Blocks.gold_block),
+				new ItemStack(Blocks.gold_block)  );
 
-		GameRegistry.addShapelessRecipe(new ItemStack(rune_protection)
-				,cyclic_wand
-				,Blocks.emerald_block
-				,Items.nether_star);
+		
+		GameRegistry.addShapelessRecipe(new ItemStack(cyclic_wand,1,ItemCyclicWand.Variant.LAPIS.ordinal()),
+				new ItemStack(cyclic_wand,1,ItemCyclicWand.Variant.GOLD.ordinal()),
+				new ItemStack(Blocks.lapis_block),
+				new ItemStack(Blocks.lapis_block),
+				new ItemStack(Blocks.lapis_block)  );
+		
+		GameRegistry.addShapelessRecipe(new ItemStack(cyclic_wand,1,ItemCyclicWand.Variant.DIAMOND.ordinal()),
+				new ItemStack(cyclic_wand,1,ItemCyclicWand.Variant.LAPIS.ordinal()),
+				new ItemStack(Blocks.diamond_block),
+				new ItemStack(Blocks.diamond_block),
+				new ItemStack(Blocks.diamond_block)  );
+
+		GameRegistry.addShapelessRecipe(new ItemStack(cyclic_wand,1,ItemCyclicWand.Variant.EMERALD.ordinal()),
+				new ItemStack(cyclic_wand,1,ItemCyclicWand.Variant.DIAMOND.ordinal()),
+				new ItemStack(Blocks.emerald_block),
+				new ItemStack(Blocks.emerald_block),
+				new ItemStack(Blocks.emerald_block)  );
 	}
 
 	public static void registerItem(Item item, String name) {

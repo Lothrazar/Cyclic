@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic;
 
 import org.apache.logging.log4j.Logger;
+import com.lothrazar.cyclicmagic.config.ModConfig;
 import com.lothrazar.cyclicmagic.net.*;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
 import net.minecraftforge.common.MinecraftForge;
@@ -21,7 +22,10 @@ import net.minecraftforge.fml.relauncher.Side;
  * 
  * @author Sam Bassett (Lothrazar)
  */
-@Mod(modid = Const.MODID, useMetadata = true)
+@Mod(modid = Const.MODID, useMetadata = true, canBeDeactivated = false, 
+updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json",
+guiFactory = "com.lothrazar." + Const.MODID + ".config.IngameConfigHandler"
+)
 public class ModMain {
 
 	@Instance(value = Const.MODID)
@@ -46,6 +50,7 @@ public class ModMain {
 		network.registerMessage(MessageKeyRight.class, MessageKeyRight.class, packetID++, Side.SERVER);
 		network.registerMessage(MessageToggle.class, MessageToggle.class, packetID++, Side.SERVER);
 		network.registerMessage(MessageParticle.class, MessageParticle.class, packetID++, Side.CLIENT);
+		network.registerMessage(MessageOpenSpellbook.class, MessageOpenSpellbook.class, packetID++, Side.CLIENT);
 
 		MinecraftForge.EVENT_BUS.register(new EventRegistry());
 	}

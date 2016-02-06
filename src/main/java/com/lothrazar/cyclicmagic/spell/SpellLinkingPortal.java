@@ -21,11 +21,10 @@ public class SpellLinkingPortal  extends BaseSpell implements ISpell {
 	@Override
 	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side ) {
 		
-		ItemStack drop = new ItemStack(ItemRegistry.waypoint_portal);
-		
-		ItemWaypointPortal.saveCurrentLocation(player, drop);
-		 
-		if(world.isRemote == false){
+		if(world.isRemote == false && pos != null){
+			ItemStack drop = new ItemStack(ItemRegistry.waypoint_portal);
+			
+			ItemWaypointPortal.saveCurrentLocation(player, drop);
 			world.spawnEntityInWorld(new EntityItem(world,pos.getX(),pos.getY(),pos.getZ(),drop));
 		}
 		

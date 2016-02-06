@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic;
 
 import java.util.ArrayList;
+import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.spell.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -23,7 +24,7 @@ public class SpellRegistry {
 
 	public static boolean spellsEnabled(EntityPlayer player) {
 		ItemStack held = player.getHeldItem();
-		return held != null && held.getItem() == ItemRegistry.cyclic_wand;
+		return held != null && held.getItem() instanceof ItemCyclicWand;
 	}
 
 	public static void register() {
@@ -101,6 +102,10 @@ public class SpellRegistry {
 		
 		SpellLinkingPortal waypoint = new SpellLinkingPortal(++spellId,"waypoint");
 		registerSpell(waypoint);
+		 
+		SpellExpPotion magnet = new SpellExpPotion(++spellId,"magnet",50);
+		magnet.setPotion(PotionRegistry.magnet.id, Const.TICKS_PER_SEC * 60, PotionRegistry.II);
+		registerSpell(magnet);
 	}
 
 	public static ISpell getSpellFromID(int id) {

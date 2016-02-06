@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.net;
 
-import com.lothrazar.cyclicmagic.SpellRegistry;
+import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -56,7 +56,7 @@ public class MessageToggle implements IMessage, IMessageHandler<MessageToggle, I
 		EntityPlayer player = ctx.getServerHandler().playerEntity;
 	 
  
-		SpellRegistry.caster.toggleUnlock(player,message.spell_id);
+		ItemCyclicWand.Spells.toggleSpell(player.getHeldItem(), message.spell_id);
 	 
 		return null;
 	}

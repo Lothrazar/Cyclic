@@ -1,16 +1,17 @@
 package com.lothrazar.cyclicmagic;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
+import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.util.UtilExperience;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 
 public class SpellCaster {
 
-	public final float MAXMANA = 1000;
 	final int RECHARGE_EXP_COST = 30;
 	final int RECHARGE_MANA_AMT = 150;
 	
@@ -56,21 +57,20 @@ public class SpellCaster {
 
 	public void shiftLeft(EntityPlayer player) {
 
-		PlayerPowerups props = PlayerPowerups.get(player);
+		ItemStack wand = player.getHeldItem();
 
-		int left = props.prevId(props.getSpellCurrent());
+		int left = ItemCyclicWand.Spells.prevId(wand,ItemCyclicWand.Spells.getSpellCurrent(wand) );
 
-		props.setSpellCurrent(left);
+		ItemCyclicWand.Spells.setSpellCurrent(wand,left);
 		UtilSound.playSoundAt(player, UtilSound.orb );
 	}
 
 	public void shiftRight(EntityPlayer player) {
-
-		PlayerPowerups props = PlayerPowerups.get(player);
+		ItemStack wand = player.getHeldItem();
 		
-		int right = props.nextId(props.getSpellCurrent());
+		int right = ItemCyclicWand.Spells.nextId(wand, ItemCyclicWand.Spells.getSpellCurrent(wand));
 	
-		props.setSpellCurrent(right);
+		ItemCyclicWand.Spells.setSpellCurrent(wand,right);
 		UtilSound.playSoundAt(player, UtilSound.orb );
 	}
  
@@ -86,9 +86,7 @@ public class SpellCaster {
 
 	public ISpell getPlayerCurrentISpell(EntityPlayer player) {
 
-		PlayerPowerups props = PlayerPowerups.get(player);
-
-		ISpell current = SpellRegistry.getSpellFromID(props.getSpellCurrent());
+		ISpell current = SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.getSpellCurrent(player.getHeldItem()));
 
 		if (current == null) {
 			current = SpellRegistry.getDefaultSpell();
@@ -97,21 +95,17 @@ public class SpellCaster {
 		return current;
 	}
 
-	public void toggleUnlock(EntityPlayer player, int spell_id) {
-
-		PlayerPowerups props = PlayerPowerups.get(player);
-		
-		props.toggleOneSpell(spell_id);
-	}
 	public void rechargeWithExp(EntityPlayer player) {
-		PlayerPowerups props = PlayerPowerups.get(player);
+
+		int MAX = ItemCyclicWand.Energy.getMaximum(player.getHeldItem());
 		
 		if(player.capabilities.isCreativeMode){ //always set full
-			PlayerPowerups.get(player).setMana((int)MAXMANA);
+			ItemCyclicWand.Energy.setCurrent(player.getHeldItem(),MAX);
 		}
-		else if(RECHARGE_EXP_COST < UtilExperience.getExpTotal(player) && props.getMana() + RECHARGE_MANA_AMT <= MAXMANA){
+		else if(RECHARGE_EXP_COST < UtilExperience.getExpTotal(player) && 
+				ItemCyclicWand.Energy.getCurrent(player.getHeldItem()) + RECHARGE_MANA_AMT <= MAX){
 
-			props.rechargeManaBy(RECHARGE_MANA_AMT);
+			ItemCyclicWand.Energy.rechargeBy(player.getHeldItem(), RECHARGE_MANA_AMT);
 
 			UtilExperience.drainExp(player, RECHARGE_EXP_COST);
 			UtilSound.playSoundAt(player, UtilSound.portal);

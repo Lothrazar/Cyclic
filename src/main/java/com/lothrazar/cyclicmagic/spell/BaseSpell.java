@@ -8,7 +8,7 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.ItemRegistry;
-import com.lothrazar.cyclicmagic.PlayerPowerups;
+import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 
 /**
@@ -78,7 +78,7 @@ public class BaseSpell implements ISpell {
 	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos) {
 		
 		if(player.capabilities.isCreativeMode == false){
-			PlayerPowerups.get(player).drainManaBy(this.getCost());
+			ItemCyclicWand.Energy.drainBy(player.getHeldItem(), this.getCost());
 		}
 	}
 
@@ -97,7 +97,7 @@ public class BaseSpell implements ISpell {
 			return false;
 		}
 		
-		if( this.getCost() > PlayerPowerups.get(player).getMana()){
+		if( this.getCost() > ItemCyclicWand.Energy.getCurrent(player.getHeldItem())){
 			return false;
 		}
 		return true;

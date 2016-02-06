@@ -1,15 +1,21 @@
 package com.lothrazar.cyclicmagic.proxy;
 
+import java.util.ArrayList;
 import net.minecraft.item.Item;
 import com.lothrazar.cyclicmagic.ItemRegistry;
 import com.lothrazar.cyclicmagic.Const;
+import com.lothrazar.cyclicmagic.gui.GuiSpellbook;
+import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.projectile.*;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemModelMesher;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderSnowball;
+import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.entity.EntityList;
 
@@ -23,6 +29,13 @@ public class ClientProxy extends CommonProxy {
 		registerEntities();
 	}
 
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void displayGuiSpellbook() {
+
+		Minecraft.getMinecraft().displayGuiScreen(new GuiSpellbook(Minecraft.getMinecraft().thePlayer));
+	}
+	
 	@SuppressWarnings({ "unchecked", "rawtypes", "deprecation" })
 	private void registerEntities() {
 		
@@ -49,7 +62,12 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityRespawnEgg.class, new RenderSnowball(rm, EntityRespawnEgg.item, ri));
 	}
 
+	@SuppressWarnings("deprecation")
 	private void registerModels() {
+		
+		//with help from 
+		// http://www.minecraftforge.net/forum/index.php?topic=32492.0
+		//https://github.com/TheOnlySilverClaw/Birdmod/blob/master/src/main/java/silverclaw/birds/client/ClientProxyBirds.java
 		// More info on proxy rendering
 		// http://www.minecraftforge.net/forum/index.php?topic=27684.0
 		// http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/modification-development/2272349-lessons-from-my-first-mc-1-8-mod
@@ -64,10 +82,21 @@ public class ClientProxy extends CommonProxy {
 			mesher.register(i, 0, new ModelResourceLocation(name, "inventory"));
 		}
 		
+		ArrayList<String> variants = new ArrayList<String>();
+
+		for(ItemCyclicWand.Variant wandType : ItemCyclicWand.Variant.values()) {
+        	name = wandType.getResource();
+        	variants.add(name);
+        	mesher.register(ItemRegistry.cyclic_wand, wandType.getMetadata(), new ModelResourceLocation(name , "inventory"));	
+        }
+        
+        ModelBakery.addVariantName(ItemRegistry.cyclic_wand, variants.toArray(new String[variants.size()]));
+        
 		if(ItemRegistry.respawn_egg != null) { 
 			for(Object key : EntityList.entityEggs.keySet()) {
-				  mesher.register(ItemRegistry.respawn_egg, (Integer)key, new
-				  ModelResourceLocation(Const.TEXTURE_LOCATION + "respawn_egg" ,"inventory")); 
+				mesher.register(ItemRegistry.respawn_egg, 
+						(Integer)key, 
+						new ModelResourceLocation(Const.TEXTURE_LOCATION + "respawn_egg" ,"inventory")); 
 			} 
 		}
 	}

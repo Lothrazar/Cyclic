@@ -4,7 +4,7 @@
     "modid": "cyclicmagic",
     "name": "Cyclic Spell Wheel",
     "description": "A magic system that adds one magic wand and a few runestones.  Craft the cyclic wand using nether stars and other rare materials.  When holding a wand the spell HUD will show up.  Runestones have an automatic effect when turned on.",
-    "version": "1.0.5",
+    "version": "1.1.1",
     "mcversion": "1.8.9",
     "url": "http://minecraft.curseforge.com/projects/cyclic-magic",
     "updateUrl": "",

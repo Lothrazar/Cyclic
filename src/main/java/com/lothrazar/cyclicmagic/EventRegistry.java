@@ -4,7 +4,9 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
@@ -12,16 +14,25 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import com.lothrazar.cyclicmagic.gui.GuiSpellbook;
+import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.net.MessageKeyLeft;
 import com.lothrazar.cyclicmagic.net.MessageKeyRight;
+import com.lothrazar.cyclicmagic.net.MessageOpenSpellbook;
 import com.lothrazar.cyclicmagic.spell.SpellGhost;
 
 public class EventRegistry {
 
+	@SubscribeEvent
+	public void onConfigChanged(OnConfigChangedEvent event) {
+		if (event.modID.equals(Const.MODID)){
+			ModMain.cfg.syncConfig();
+		}
+	}
+	
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void onMouseInput(MouseEvent event){
@@ -49,12 +60,19 @@ public class EventRegistry {
 	public void onPlayerInteractEvent(PlayerInteractEvent event){
 
 		if(event.action == Action.LEFT_CLICK_BLOCK && event.world.getBlockState(event.pos) != null
-				&& event.entityPlayer.getHeldItem() != null && event.entityPlayer.getHeldItem().getItem() == ItemRegistry.cyclic_wand ){
+				&& event.entityPlayer.getHeldItem() != null && event.entityPlayer.getHeldItem().getItem() instanceof ItemCyclicWand ){
 		
+			// important: LEFT_CLICK_BLOCK only fires on the server, not the client. Yo
+			// http://www.minecraftforge.net/forum/index.php?topic=22348.0
 			Block blockHit = event.world.getBlockState(event.pos).getBlock();
-			if(blockHit == Blocks.crafting_table){
-
-				Minecraft.getMinecraft().displayGuiScreen(new GuiSpellbook(event.entityPlayer));
+			
+			if(blockHit != null)
+				event.entityPlayer.addChatMessage(new ChatComponentTranslation("hit"+event.world.isRemote+"__"+blockHit.getUnlocalizedName()));
+			
+			if(blockHit == Blocks.crafting_table && event.entityPlayer instanceof EntityPlayerMP){
+	
+				ModMain.network.sendTo(new MessageOpenSpellbook(), (EntityPlayerMP)event.entityPlayer);
+			//	ModMain.network.sendToAll(new MessageOpenSpellbook());
 			}
 			else if(blockHit != null){//was only bookshelf
 				
@@ -62,7 +80,7 @@ public class EventRegistry {
 			}
 		}
 	}
-
+	
 	@SubscribeEvent
 	public void onClonePlayer(PlayerEvent.Clone event) {
 		PlayerPowerups.get(event.entityPlayer).copy(PlayerPowerups.get(event.original));
@@ -103,5 +121,7 @@ public class EventRegistry {
 		PotionRegistry.tickWaterwalk(event);
 
 		PotionRegistry.tickFrost(event);
+		
+		PotionRegistry.tickMagnet(event);
 	}
 }

@@ -3,14 +3,16 @@
   "promos": {
     "1.8.8-latest": "1.0.3",
     "1.8.8-recommended": "1.0.3",
-    "1.8.9-latest": "1.0.5",
-    "1.8.9-recommended": "1.0.5"
+    "1.8.9-latest": "1.1.1",
+    "1.8.9-recommended": "1.1.1"
   },
   "1.8.9":{
   	"1.0.1":"Launch spell now also launches any entity you are riding (horses)",
   	"1.0.2":"Portable waypoint now has durability and multiple uses",
   	"1.0.3":"Now protected from falling out of the world",
   	"1.0.4":"Fix water spell making source water blocks correctly",
-  	"1.0.5":"Make the temporary fragile blocks unharvestable even with silk touch."
+  	"1.0.5":"Make the temporary fragile blocks un-harvestable even with silk touch",
+  	"1.1.0":"Replaced runestone items with passive spells directly on the wand based on type.  Add ingame config support, and option to change HUD from left to right ",
+  	"1.1.1":"Fixed the mod crashing servers on startup"
   }
 }
