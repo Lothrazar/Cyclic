@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.spell;
 
 import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.net.MessagePlaceBlock;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -18,15 +19,14 @@ public class SpellFarReach extends BaseSpell {
 	}
 	int maxRange = 50;
 	@Override
-	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side) {
+	public boolean cast(World world, EntityPlayer p, BlockPos pos, EnumFacing side) {
 
 	
-        if(!player.capabilities.allowEdit) {
+        if(!p.capabilities.allowEdit) {
         	return false;
         }
 	
 		System.out.println("far reach cast " + world.isRemote);
-		
 		
 		if(world.isRemote){
 			
@@ -34,10 +34,15 @@ public class SpellFarReach extends BaseSpell {
 			
 			if(mouseover != null){
 				System.out.println(mouseover.toString());
+				int itemSlot = p.inventory.currentItem + 1;
+				
+				if(itemSlot < 9 && p.inventory.getStackInSlot(itemSlot) != null){
+					
+					ItemStack toUse = p.inventory.getStackInSlot(itemSlot);
+				
+					ModMain.network.sendToServer(new MessagePlaceBlock(mouseover,toUse));
+				}
 			}
-			
-			
-			
 		}
 		
 		return false;

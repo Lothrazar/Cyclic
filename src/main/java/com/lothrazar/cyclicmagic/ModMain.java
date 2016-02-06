@@ -51,6 +51,7 @@ public class ModMain {
 		network.registerMessage(MessageToggle.class, MessageToggle.class, packetID++, Side.SERVER);
 		network.registerMessage(MessageParticle.class, MessageParticle.class, packetID++, Side.CLIENT);
 		network.registerMessage(MessageOpenSpellbook.class, MessageOpenSpellbook.class, packetID++, Side.CLIENT);
+		network.registerMessage(MessagePlaceBlock.class, MessagePlaceBlock.class, packetID++, Side.SERVER);
 
 		MinecraftForge.EVENT_BUS.register(new EventRegistry());
 	}

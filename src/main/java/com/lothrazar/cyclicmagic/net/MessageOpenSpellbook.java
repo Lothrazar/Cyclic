@@ -4,7 +4,6 @@ import com.lothrazar.cyclicmagic.ModMain;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import net.minecraftforge.fml.relauncher.Side;
 import io.netty.buffer.ByteBuf;
 
 public class MessageOpenSpellbook implements IMessage, IMessageHandler<MessageOpenSpellbook, IMessage> {
@@ -24,13 +23,12 @@ public class MessageOpenSpellbook implements IMessage, IMessageHandler<MessageOp
 	@Override
 	public IMessage onMessage(MessageOpenSpellbook message, MessageContext ctx) {
 
-		//ctx.getClientHandler() exists but has nothing useful
-		if(ctx.side == Side.CLIENT){
-			
+		if(ctx.side.isClient()){
+
+			//ctx.getClientHandler() exists but has nothing useful
 			//should only have been sent from server to client anyway
 			ModMain.proxy.displayGuiSpellbook();
 		}
-
 		return null;
 	}
 }
