@@ -24,3 +24,4 @@ crash-reports/
 .recommenders/
 .gitattributes
 *.launch
+*.lnk
