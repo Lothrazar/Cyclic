@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.net;
 
-//import com.lothrazar.util.Util;
-
+import com.lothrazar.cyclicmagic.SpellRegistry;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -74,11 +73,8 @@ public class MessagePlaceBlock implements IMessage, IMessageHandler<MessagePlace
 						IBlockState state = Block.getBlockFromItem(toPlace.getItem()).getStateFromMeta(toPlace.getMetadata());
 						
 						if(state != null){
-							p.worldObj.setBlockState(message.pos, state);
 							
-							if(p.capabilities.isCreativeMode == false){
-								p.inventory.decrStackSize(itemSlot, 1);
-							}
+							SpellRegistry.reach.placeFromServerPacket(p, message.pos, state, itemSlot);
 						}
 					}
 				}

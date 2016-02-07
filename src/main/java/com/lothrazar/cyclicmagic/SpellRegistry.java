@@ -26,7 +26,7 @@ public class SpellRegistry {
 		ItemStack held = player.getHeldItem();
 		return held != null && held.getItem() instanceof ItemCyclicWand;
 	}
-
+	public static  SpellFarReach reach ;
 	public static void register() {
 		screen = new SpellScreenRender();
 		caster = new SpellCaster();
@@ -61,7 +61,7 @@ public class SpellRegistry {
 		SpellRotate rotate = new SpellRotate(++spellId,"rotate"); 
 		registerSpell(rotate);
 
-		SpellFarReach reach = new SpellFarReach(++spellId,"reach");
+		reach = new SpellFarReach(++spellId,"reach");
 		registerSpell(reach);
 		
 		SpellPush push = new SpellPush(++spellId,"push");
