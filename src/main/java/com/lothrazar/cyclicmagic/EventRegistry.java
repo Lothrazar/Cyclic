@@ -105,7 +105,7 @@ public class EventRegistry {
 			return;
 		}
 
-		if (event.entityLiving instanceof EntityPlayer) {
+		if (event.entityLiving instanceof EntityPlayer && event.entity.worldObj.isRemote == false) {
 			SpellGhost.onPlayerUpdate(event);
 
 			SpellRegistry.caster.tickSpellTimer((EntityPlayer) event.entityLiving);

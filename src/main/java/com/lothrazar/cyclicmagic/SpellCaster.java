@@ -40,6 +40,7 @@ public class SpellCaster {
 				spell.onCastSuccess(world, player, pos);
 
 				PlayerPowerups props = PlayerPowerups.get(player);
+				
 				props.setSpellTimer(spell.getCastCooldown());
 				return true;
 			}

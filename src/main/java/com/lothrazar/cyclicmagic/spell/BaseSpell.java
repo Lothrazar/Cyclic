@@ -33,13 +33,13 @@ public class BaseSpell implements ISpell {
 		ID = id;
 		name = n;
 		cost = 5;
-		cooldown = 1;
+		cooldown = 3;
 		
-		icon = new ResourceLocation(Const.MODID, "textures/spells/"+name+".png");
+		icon = new ResourceLocation(Const.MODID, "textures/spells/" + name + ".png");
 	}
 	
 	public String getName(){
-		return StatCollector.translateToLocal("spell."+name+".name");
+		return StatCollector.translateToLocal("spell." + name + ".name");
 	}
 
 	@Override
