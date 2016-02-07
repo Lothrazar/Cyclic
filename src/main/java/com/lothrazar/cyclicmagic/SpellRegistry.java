@@ -57,13 +57,13 @@ public class SpellRegistry {
 		
 		SpellReplacer replacer = new SpellReplacer(++spellId,"replacer");
 		registerSpell(replacer);
-
-		SpellFarReach reach = new SpellFarReach(++spellId,"reach");
-		registerSpell(reach);
 		
 		SpellRotate rotate = new SpellRotate(++spellId,"rotate"); 
 		registerSpell(rotate);
 
+		SpellFarReach reach = new SpellFarReach(++spellId,"reach");
+		registerSpell(reach);
+		
 		SpellPush push = new SpellPush(++spellId,"push");
 		registerSpell(push);
 
