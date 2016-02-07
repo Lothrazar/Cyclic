@@ -4,6 +4,8 @@ package com.lothrazar.cyclicmagic.net;
 
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -22,17 +24,17 @@ public class MessagePlaceBlock implements IMessage, IMessageHandler<MessagePlace
 	private int y;
 	private int z;
 	private BlockPos pos;
-	private ItemStack toPlace;
+	//private ItemStack toPlace;
 
 	public MessagePlaceBlock() {
 	}
 
-	public MessagePlaceBlock(BlockPos p, ItemStack is) {
+	public MessagePlaceBlock(BlockPos p) {
 		x = p.getX();
 		y = p.getY();
 		z = p.getZ();
 		pos = p;
-		toPlace = is;
+		//toPlace = is;
 	}
 
 	@Override
@@ -64,7 +66,6 @@ public class MessagePlaceBlock implements IMessage, IMessageHandler<MessagePlace
 		//tags.setTag("stack", tags);
 
 		ByteBufUtils.writeTag(buf, tags);
-		//ByteBufUtils.writeUTF8String(buf, x + "," + y + "," + z);
 	}
 
 	@Override
@@ -83,6 +84,27 @@ public class MessagePlaceBlock implements IMessage, IMessageHandler<MessagePlace
 				//toPlace.toString()+""
 				System.out.println("try place "+message.pos.toString());
 			//}
+				
+				int itemSlot = p.inventory.currentItem + 1;
+				
+				if(itemSlot < 9 && p.inventory.getStackInSlot(itemSlot) != null){
+					
+					ItemStack toPlace = p.inventory.getStackInSlot(itemSlot);
+					
+					
+					if(toPlace != null && toPlace.getItem() != null && 
+							Block.getBlockFromItem(toPlace.getItem()) != null){
+						
+						System.out.println(":"+toPlace.toString());
+						
+						IBlockState state = Block.getBlockFromItem(toPlace.getItem()).getStateFromMeta(toPlace.getMetadata());
+					 
+						
+						p.worldObj.setBlockState(message.pos, state);
+						
+						
+					}
+				}
 			
 		}
 

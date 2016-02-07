@@ -38,9 +38,9 @@ public class SpellFarReach extends BaseSpell {
 				
 				if(itemSlot < 9 && p.inventory.getStackInSlot(itemSlot) != null){
 					
-					ItemStack toUse = p.inventory.getStackInSlot(itemSlot);
+					//ItemStack toUse = p.inventory.getStackInSlot(itemSlot);
 				
-					ModMain.network.sendToServer(new MessagePlaceBlock(mouseover,toUse));
+					ModMain.network.sendToServer(new MessagePlaceBlock(mouseover));
 				}
 			}
 		}
