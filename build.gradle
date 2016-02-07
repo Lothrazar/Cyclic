@@ -20,7 +20,7 @@ plugins {
     id "net.minecraftforge.gradle.forge" version "2.0.2"
 }
 */
-version = "1.8.9-1.1.1"
+version = "1.8.9-1.2.0"
 group= "com.lothrazar.cyclicmagic" 
 archivesBaseName = "cyclicmagic"
 
