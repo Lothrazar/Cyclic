@@ -38,8 +38,7 @@ public class SpellFarReach extends BaseSpell {
 				
 				if(itemSlot < 9 && p.inventory.getStackInSlot(itemSlot) != null){
 					
-					//ItemStack toUse = p.inventory.getStackInSlot(itemSlot);
-				
+					//TODO: we could get block id and meta here, pass along with pos?
 					ModMain.network.sendToServer(new MessagePlaceBlock(mouseover));
 				}
 			}
