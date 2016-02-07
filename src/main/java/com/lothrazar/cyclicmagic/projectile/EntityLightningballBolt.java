@@ -7,7 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class EntityLightningballBolt extends EntityThrowable//EntitySnowball
+public class EntityLightningballBolt extends EntityThrowable
 { 
     public EntityLightningballBolt(World worldIn)
     {

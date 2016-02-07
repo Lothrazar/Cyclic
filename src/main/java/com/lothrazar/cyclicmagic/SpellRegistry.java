@@ -26,7 +26,7 @@ public class SpellRegistry {
 		ItemStack held = player.getHeldItem();
 		return held != null && held.getItem() instanceof ItemCyclicWand;
 	}
-
+	public static  SpellFarReach reach ;
 	public static void register() {
 		screen = new SpellScreenRender();
 		caster = new SpellCaster();
@@ -57,10 +57,13 @@ public class SpellRegistry {
 		
 		SpellReplacer replacer = new SpellReplacer(++spellId,"replacer");
 		registerSpell(replacer);
-
+		
 		SpellRotate rotate = new SpellRotate(++spellId,"rotate"); 
 		registerSpell(rotate);
 
+		reach = new SpellFarReach(++spellId,"reach");
+		registerSpell(reach);
+		
 		SpellPush push = new SpellPush(++spellId,"push");
 		registerSpell(push);
 
@@ -88,11 +91,14 @@ public class SpellRegistry {
 		SpellThrowWater water = new SpellThrowWater(++spellId,"water");
 		registerSpell(water);
 
-		SpellScaffolding scaffold = new SpellScaffolding(++spellId,"scaffold");
-		registerSpell(scaffold);
+		SpellThrowLightning lightning = new SpellThrowLightning(++spellId,"lightning");
+		registerSpell(lightning);
 
 		SpellThrowSpawnEgg spawnegg = new SpellThrowSpawnEgg(++spellId,"spawnegg");
 		registerSpell(spawnegg);
+
+		SpellScaffolding scaffold = new SpellScaffolding(++spellId,"scaffold");
+		registerSpell(scaffold);
 		
 		SpellCarbonPaper carbon = new SpellCarbonPaper(++spellId,"carbon");
 		registerSpell(carbon);
@@ -106,6 +112,7 @@ public class SpellRegistry {
 		SpellExpPotion magnet = new SpellExpPotion(++spellId,"magnet",50);
 		magnet.setPotion(PotionRegistry.magnet.id, Const.TICKS_PER_SEC * 60, PotionRegistry.II);
 		registerSpell(magnet);
+		
 	}
 
 	public static ISpell getSpellFromID(int id) {

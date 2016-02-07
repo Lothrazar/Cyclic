@@ -35,12 +35,7 @@ public class SpellCaster {
 
 			if (spell.cast(world, player, pos, side)) {
 
-				// succes should do things like: drain resources, play sounds
-				// and particles
-				spell.onCastSuccess(world, player, pos);
-
-				PlayerPowerups props = PlayerPowerups.get(player);
-				props.setSpellTimer(spell.getCastCooldown());
+				castSuccess(spell, world, player, pos);
 				return true;
 			}
 			return false;
@@ -53,6 +48,14 @@ public class SpellCaster {
 			spell.onCastFailure(world, player, pos);
 			return false;
 		}
+	}
+	
+	public void castSuccess(ISpell spell, World world, EntityPlayer player, BlockPos pos){
+		// succes should do things like: drain resources, play sounds
+		// and particles
+		spell.onCastSuccess(world, player, pos);
+
+		PlayerPowerups.get(player).setSpellTimer(spell.getCastCooldown());
 	}
 
 	public void shiftLeft(EntityPlayer player) {
