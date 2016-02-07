@@ -91,11 +91,14 @@ public class SpellRegistry {
 		SpellThrowWater water = new SpellThrowWater(++spellId,"water");
 		registerSpell(water);
 
-		SpellScaffolding scaffold = new SpellScaffolding(++spellId,"scaffold");
-		registerSpell(scaffold);
+		SpellThrowLightning lightning = new SpellThrowLightning(++spellId,"lightning");
+		registerSpell(lightning);
 
 		SpellThrowSpawnEgg spawnegg = new SpellThrowSpawnEgg(++spellId,"spawnegg");
 		registerSpell(spawnegg);
+
+		SpellScaffolding scaffold = new SpellScaffolding(++spellId,"scaffold");
+		registerSpell(scaffold);
 		
 		SpellCarbonPaper carbon = new SpellCarbonPaper(++spellId,"carbon");
 		registerSpell(carbon);

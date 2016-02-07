@@ -1,20 +1,13 @@
 package com.lothrazar.cyclicmagic;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.world.World;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -38,47 +31,7 @@ public class EventRegistry {
 			ModMain.cfg.syncConfig();
 		}
 	}
-/*
-	@SideOnly(Side.CLIENT)
-	@SubscribeEvent
-	public void renderWorldLastEvent(RenderWorldLastEvent evt)
-	{
-		// Get the player and their held item
-		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
-		ItemStack heldItem = player.getHeldItem();
-
-		// Check if the held item is an extendo
-		if(heldItem == null) return;
-		if(heldItem.getItem() instanceof ItemCyclicWand){ 
-			int max = 50;
-			MovingObjectPosition mouseOver = Minecraft.getMinecraft().getRenderViewEntity().rayTrace(max, 1f);
-			//now get whatever block position we are mousing over if anything
-
-			if(mouseOver != null && mouseOver.sideHit != null){
-
-			// Get the block position and make sure it is a block
-				World world = player.worldObj;
-				BlockPos blockPos = mouseOver.getBlockPos();
-				
-				if(blockPos != null){
 	
-					// Make sure the block is valid
-					IBlockState blockState = world.getBlockState(blockPos);
-					Block block = blockState.getBlock();
-					if(block != null && block.getMaterial() != Material.air) {
-					
-						BlockPos offset = blockPos.offset(mouseOver.sideHit);
-						
-						
-						SpellRegistry.caster.getPlayerCurrentISpell(player) 
-						
-						
-					}
-				}
-			}
-		}
-	}
-	*/
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void onMouseInput(MouseEvent event){
