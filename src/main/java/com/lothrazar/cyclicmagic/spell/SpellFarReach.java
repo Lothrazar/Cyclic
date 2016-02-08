@@ -54,7 +54,7 @@ public class SpellFarReach extends BaseSpell {
 		}
 		
 		//this kind of should be in on success.........but it doesnt have the block/state access
-		UtilSound.playSoundAt(p, state.getBlock().stepSound.getPlaceSound());
+		UtilSound.playSound(p.worldObj,pos, state.getBlock().stepSound.getPlaceSound());
 		
 		//since it never really returns TRue up a bove, not to the server, we mimic what that would do. again, a hack since
 		//this is hte only packet spell
