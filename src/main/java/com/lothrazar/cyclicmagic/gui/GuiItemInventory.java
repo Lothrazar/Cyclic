@@ -3,7 +3,6 @@ package com.lothrazar.cyclicmagic.gui;
 import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.Const;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiItemInventory extends GuiContainer{
