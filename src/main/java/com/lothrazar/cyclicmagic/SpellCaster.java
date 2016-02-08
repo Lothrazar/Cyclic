@@ -12,8 +12,8 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 
 public class SpellCaster {
 
-	final int RECHARGE_EXP_COST = 30;
-	final int RECHARGE_MANA_AMT = 150;
+	final int RECHARGE_EXP_COST = 10;
+	final int RECHARGE_MANA_AMT = 25;
 	
 	public boolean isBlockedBySpellTImer(EntityPlayer player) {
 		return isBlockedBySpellTImer(PlayerPowerups.get(player));
