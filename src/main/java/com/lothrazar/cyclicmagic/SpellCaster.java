@@ -112,10 +112,10 @@ public class SpellCaster {
 			ItemCyclicWand.Energy.rechargeBy(player.getHeldItem(), RECHARGE_MANA_AMT);
 
 			UtilExperience.drainExp(player, RECHARGE_EXP_COST);
-			UtilSound.playSoundAt(player, UtilSound.portal);
+			UtilSound.playSound(player.worldObj, player.getPosition() , UtilSound.Own.fill);
 		} 
 		else{
-			UtilSound.playSoundAt(player, UtilSound.Own.buzzp);
+			UtilSound.playSound(player.worldObj, player.getPosition() ,UtilSound.Own.buzzp);
 		}
 	}
 }

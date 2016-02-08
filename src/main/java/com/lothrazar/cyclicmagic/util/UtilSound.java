@@ -14,7 +14,6 @@ public class UtilSound {
 	public static final String shears = "mob.sheep.shear";
 	
 	
-	public static final String orb = "random.orb";
 	public static final String portal =  "mob.endermen.portal";
 	public static final String drink = "random.drink";
 	//public static final String click = "random.wood_click";
@@ -26,6 +25,12 @@ public class UtilSound {
 		public static final String bip = Const.MODID+":bip";//spell rotate
 		public static final String buzzp = Const.MODID+":buzzp";//spell cast failure. water bolt hit in nether. portal waypoint x dimension. wand xp refil fail
 		public static final String bwoaaap = Const.MODID+":bwoaaap";//used for launch spell
+		
+		
+		public static final String fill = Const.MODID+":fill";//fill wand energy with xp
+		
+		
+		
 		public static final String pew = Const.MODID+":pew";//thrown spells
 
 		public static final String crackle = Const.MODID+":crackle";//scaffolding
