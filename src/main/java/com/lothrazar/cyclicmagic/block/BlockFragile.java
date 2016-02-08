@@ -14,8 +14,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * imported from https://github.com/PrinceOfAmber/SamsPowerups/blob/
- * 5083ec601e34bbe045d9a3d0ca091e3d44af562f/src/main/java/com/lothrazar/samscontent/BlockRegistry.jav
- * a
+ * 5083ec601e34bbe045d9a3d0ca091e3d44af562f/src/main/java/com/lothrazar/samscontent/BlockRegistry.ja
+ * v a
  * 
  * @author Lothrazar
  *
@@ -26,7 +26,19 @@ public class BlockFragile extends Block {
 		this.setTickRandomly(true);
 		this.setHardness(0F);
 		this.setResistance(0F);
-		this.setStepSound( new Block.SoundType(UtilSound.Own.crackle, 1.0F, 1.0F));
+
+		this.setStepSound(new Block.SoundType(UtilSound.Own.crackle, 1.0F, 1.0F) {
+			//override so default does not prefix with "dig." and break it
+			public String getBreakSound() {
+				return this.soundName;
+			}
+			public String getStepSound() {
+				return this.soundName;
+			}
+			public String getPlaceSound() {
+				return this.soundName;
+			}
+		});
 	}
 
 	@Override
@@ -50,9 +62,9 @@ public class BlockFragile extends Block {
 	public int quantityDropped(Random random) {
 		return 0; // this makes it drop nothing at all
 	}
-	
+
 	@Override
-	public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player){
+	public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
 		return false;
 	}
 }
