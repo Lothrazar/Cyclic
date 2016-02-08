@@ -115,7 +115,7 @@ public class SpellCaster {
 			UtilSound.playSoundAt(player, UtilSound.portal);
 		} 
 		else{
-			UtilSound.playSoundAt(player, UtilSound.fizz);
+			UtilSound.playSoundAt(player, UtilSound.Own.buzzp);
 		}
 	}
 }

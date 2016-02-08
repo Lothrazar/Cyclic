@@ -61,7 +61,7 @@ public class BaseSpell implements ISpell {
 	@Override
 	public void onCastFailure(World world, EntityPlayer player, BlockPos pos) {
 
-		UtilSound.playSoundAt(player, UtilSound.fizz);
+		UtilSound.playSoundAt(player, UtilSound.Own.buzzp);
 	}
 
 	@Override

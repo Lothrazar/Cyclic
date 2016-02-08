@@ -14,8 +14,6 @@ public class UtilSound {
 	public static final String shears = "mob.sheep.shear";
 	
 	
-	
-	public static final String fizz = "random.fizz";
 	public static final String orb = "random.orb";
 	public static final String portal =  "mob.endermen.portal";
 	public static final String drink = "random.drink";
@@ -26,7 +24,7 @@ public class UtilSound {
 		//all are created by ME using a third party tool: http://www.bfxr.net/
 		//then converted from wav to ogg with https://online-audio-converter.com/
 		public static final String bip = Const.MODID+":bip";//spell rotate
-		//public static final String buzzp = Const.MODID+":buzzp";
+		public static final String buzzp = Const.MODID+":buzzp";//spell cast failure. water bolt hit in nether. portal waypoint x dimension. wand xp refil fail
 		public static final String bwoaaap = Const.MODID+":bwoaaap";//used for launch spell
 		public static final String pew = Const.MODID+":pew";//thrown spells
 

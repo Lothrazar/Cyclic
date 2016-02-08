@@ -52,7 +52,7 @@ public class ItemWaypointPortal extends Item {
 
 			// bad dimension
 
-			UtilSound.playSoundAt(playerIn, UtilSound.fizz);
+			UtilSound.playSoundAt(playerIn, UtilSound.Own.buzzp);
 			playerIn.addChatMessage(new ChatComponentTranslation("teleport.dimension"));
 
 			return itemStackIn;
