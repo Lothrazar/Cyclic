@@ -1,9 +1,11 @@
 {
+	"basey":{"category":"player","sounds":["basey"]},
 	"bip":{"category":"player","sounds":["bip"]},
 	"buzzp":{"category":"player","sounds":["buzzp"]},
 	"bwewe":{"category":"player","sounds":["bwewe"]},
 	"bwoaaap":{"category":"player","sounds":["bwoaaap"]},
-	"byeaa":{"category":"player","sounds":["byeaa"]},
+	"crackle":{"category":"player","sounds":["crackle"]},
+	"dcoin":{"category":"player","sounds":["dcoin"]},
 	"dcoin":{"category":"player","sounds":["dcoin"]},
 	"fill":{"category":"player","sounds":["fill"]},
 	"pew":{"category":"player","sounds":["pew"]},

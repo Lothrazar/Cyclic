@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.block;
 
 import java.util.Random;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -25,7 +26,7 @@ public class BlockFragile extends Block {
 		this.setTickRandomly(true);
 		this.setHardness(0F);
 		this.setResistance(0F);
-		this.setStepSound(soundTypeWood);
+		this.setStepSound( new Block.SoundType(UtilSound.Own.crackle, 1.0F, 1.0F));
 	}
 
 	@Override
