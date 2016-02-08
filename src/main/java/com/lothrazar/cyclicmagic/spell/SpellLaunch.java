@@ -49,7 +49,7 @@ public class SpellLaunch extends BaseSpell implements ISpell {
 			player.addVelocity(velX, velY, velZ);
 		}
 
-		UtilSound.playSoundAt(player, "bwoaaap", true);
+		UtilSound.playSoundAt(player, UtilSound.Own.bwoaaap );
 		
 		return true;
 	}

@@ -65,7 +65,7 @@ public class SpellCaster {
 		int left = ItemCyclicWand.Spells.prevId(wand,ItemCyclicWand.Spells.getSpellCurrent(wand) );
 
 		ItemCyclicWand.Spells.setSpellCurrent(wand,left);
-		UtilSound.playSoundAt(player,"beep_mild",true );// was UtilSound.orb 
+		UtilSound.playSoundAt(player,UtilSound.Own.bip );// was UtilSound.orb 
 	}
 
 	public void shiftRight(EntityPlayer player) {
@@ -74,7 +74,7 @@ public class SpellCaster {
 		int right = ItemCyclicWand.Spells.nextId(wand, ItemCyclicWand.Spells.getSpellCurrent(wand));
 	
 		ItemCyclicWand.Spells.setSpellCurrent(wand,right);
-		UtilSound.playSoundAt(player, "beep_mild",true);
+		UtilSound.playSoundAt(player, UtilSound.Own.bip);
 	}
  
 	public void tickSpellTimer(EntityPlayer player) {
