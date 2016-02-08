@@ -38,8 +38,10 @@ public class ItemChestSack extends Item {
 
 		if (worldIn.getTileEntity(pos) != null && worldIn.getTileEntity(pos) instanceof IInventory) {
 
-			sortToExisting(playerIn, (IInventory) worldIn.getTileEntity(pos), stack);
-
+			if(sortToExisting(playerIn, (IInventory) worldIn.getTileEntity(pos), stack)){
+			
+				UtilSound.playSound(worldIn, pos, UtilSound.Own.thunk);
+			}
 		}
 		else {
 			BlockPos offset = pos.offset(side);
@@ -48,7 +50,12 @@ public class ItemChestSack extends Item {
 				return false;
 			}
 
-			createAndFillChest(playerIn, stack, offset);
+			if(createAndFillChest(playerIn, stack, offset)){
+				playerIn.destroyCurrentEquippedItem();
+				
+				UtilSound.playSound(worldIn, pos, UtilSound.Own.thunk);
+			}
+			
 		}
 
 		return false;
@@ -79,21 +86,21 @@ public class ItemChestSack extends Item {
 		super.addInformation(itemStack, player, list, advanced);
 	}
 
-	public void sortToExisting(EntityPlayer player, IInventory chest, ItemStack held) {
+	private boolean sortToExisting(EntityPlayer player, IInventory chest, ItemStack held) {
 
 		if (held.getTagCompound() == null) {
 			held.setTagCompound(new NBTTagCompound());
 		}
 
 		if(held.getTagCompound().hasKey(KEY_ITEMIDS) == false){
-			return;
+			return false;
 		}
 		int[] itemids = held.getTagCompound().getIntArray(KEY_ITEMIDS);
 		int[] itemdmg = held.getTagCompound().getIntArray(KEY_ITEMDMG);
 		int[] itemqty = held.getTagCompound().getIntArray(KEY_ITEMQTY);
 
 		if (itemids == null) {
-			return;
+			return false;
 		}
 
 		int totalItemsMoved = 0;
@@ -164,17 +171,14 @@ public class ItemChestSack extends Item {
 			}// close loop on player inventory items
 		}// close loop on chest items
 
-		if (totalItemsMoved > 0) {
-
-			UtilSound.playSoundAt(player, UtilSound.Own.pew);
-		}
-
 		held.getTagCompound().setIntArray(KEY_ITEMIDS, itemids);
 		held.getTagCompound().setIntArray(KEY_ITEMDMG, itemdmg);
 		held.getTagCompound().setIntArray(KEY_ITEMQTY, itemqty);
+		
+		return(totalItemsMoved > 0);
 	}
 
-	public static void createAndFillChest(EntityPlayer entityPlayer, ItemStack heldChestSack, BlockPos pos) {
+	private boolean createAndFillChest(EntityPlayer entityPlayer, ItemStack heldChestSack, BlockPos pos) {
 
 		int[] itemids = heldChestSack.getTagCompound().getIntArray(KEY_ITEMIDS);
 		int[] itemdmg = heldChestSack.getTagCompound().getIntArray(KEY_ITEMDMG);
@@ -182,13 +186,13 @@ public class ItemChestSack extends Item {
 
 		if (itemids == null) {
 			ModMain.logger.log(Level.WARN, "null nbt problem in itemchestsack");
-			return;
+			return false;
 		}
 
 		if (Block.getBlockById(heldChestSack.getTagCompound().getInteger(KEY_BLOCK)) == null) {
 
 			ModMain.logger.log(Level.WARN, "Null block from id: " + heldChestSack.getTagCompound().getInteger(KEY_BLOCK));
-			return;
+			return false;
 		}
 
 		entityPlayer.worldObj.setBlockState(pos, Block.getBlockById(heldChestSack.getTagCompound().getInteger(KEY_BLOCK)).getDefaultState());
@@ -198,7 +202,7 @@ public class ItemChestSack extends Item {
 
 		if (invo == null) {
 			ModMain.logger.log(Level.WARN, "Null tile entity inventory, cannot fill from item stack");
-			return;
+			return false;
 		}
 
 		int item;
@@ -221,7 +225,7 @@ public class ItemChestSack extends Item {
 		}
 
 		// make the player slot empty
-		entityPlayer.destroyCurrentEquippedItem();
+		return true;
 		// playerIn.inventory.decrStackSize(playerIn.inventory.currentItem, 1);
 	}
 
