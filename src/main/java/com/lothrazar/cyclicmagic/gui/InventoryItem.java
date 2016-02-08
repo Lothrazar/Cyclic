@@ -41,32 +41,28 @@ public class InventoryItem implements IInventory {
 			}
 		}
 	}
-
-	public void writeToNBT(NBTTagCompound compound) {
-		System.out.println("writeToNBT");
+	public void writeToNBT(NBTTagCompound tagcompound)
+	{
 		// Create a new NBT Tag List to store itemstacks as NBT Tags
 		NBTTagList items = new NBTTagList();
 
-		for (int i = 0; i < getSizeInventory(); ++i) {
-			System.out.println(i + "__writeToNBT");
+		for (int i = 0; i < getSizeInventory(); ++i)
+		{
 			// Only write stacks that contain items
-			if (getStackInSlot(i) != null) {
-				// Make a new NBT Tag Compound to write the itemstack and slot
-				// index to
-				NBTTagCompound item = new NBTTagCompound();
-				item.setInteger("Slot", i);
-				// Writes the itemstack in slot(i) to the Tag Compound we just
-				// made
-				getStackInSlot(i).writeToNBT(item);
+			if (getStackInSlot(i) != null)
+			{
+				// Make a new NBT Tag Compound to write the itemstack and slot index to
+				NBTTagCompound itemTags = new NBTTagCompound();
+				itemTags.setInteger("Slot", i);
+				// Writes the itemstack in slot(i) to the Tag Compound we just made
+				getStackInSlot(i).writeToNBT(itemTags);
 
 				// add the tag compound to our tag list
-				System.out.println(i + "__appendTag");
-				items.appendTag(compound);
+				items.appendTag(itemTags);
 			}
 		}
-		// Add the TagList to the ItemStack's Tag Compound with the name
-		// "ItemInventory"
-		compound.setTag("ItemInventory", items);
+		// Add the TagList to the ItemStack's Tag Compound with the name "ItemInventory"
+		tagcompound.setTag("ItemInventory", items);
 	}
 
 	@Override
@@ -97,12 +93,15 @@ public class InventoryItem implements IInventory {
 
 	@Override
 	public ItemStack decrStackSize(int slot, int amount) {
+
 		ItemStack stack = getStackInSlot(slot);
+ 
 		if (stack != null) {
 			if (stack.stackSize > amount) {
 				stack = stack.splitStack(amount);
 				// Don't forget this line or your inventory will not be saved!
-				//markDirty();
+		 
+				markDirty();
 			}
 			else {
 				// this method also calls onInventoryChanged, so we don't need
@@ -110,25 +109,28 @@ public class InventoryItem implements IInventory {
 				setInventorySlotContents(slot, null);
 			}
 		}
+ 	
 		return stack;
 	}
 
 	@Override
 	public ItemStack removeStackFromSlot(int index) {
-		// TODO Auto-generated method stub
-		return null;
+		//used to be getStackInSlotOnClosing
+		ItemStack stack = getStackInSlot(index);
+		setInventorySlotContents(index, null);
+		return stack;
 	}
 
 	@Override
 	public void setInventorySlotContents(int slot, ItemStack stack) {
+	
 		inventory[slot] = stack;
 
 		if (stack != null && stack.stackSize > getInventoryStackLimit()) {
 			stack.stackSize = getInventoryStackLimit();
 		}
 
-		//markDirty();
-
+		markDirty();
 	}
 
 	@Override
@@ -139,10 +141,6 @@ public class InventoryItem implements IInventory {
 	@Override
 	public void markDirty() {
 
-		System.out.println("markDirty");
-		// TODO: this has nbt.copy issue somewhere.doesnt happen if this is
-		// gone?
-
 		for (int i = 0; i < getSizeInventory(); ++i) {
 			if (getStackInSlot(i) != null && getStackInSlot(i).stackSize == 0) {
 				inventory[i] = null;
@@ -151,7 +149,6 @@ public class InventoryItem implements IInventory {
 
 		// This line here does the work:
 		writeToNBT(invItem.getTagCompound());
-
 	}
 
 	@Override
@@ -165,8 +162,7 @@ public class InventoryItem implements IInventory {
 
 	@Override
 	public void closeInventory(EntityPlayer player) {
-		System.out.println("close event dirty");
-		markDirty();
+		System.out.println("closeInventory NEVER FREAKIN HAPPENS EVER");
 	}
 
 	@Override
