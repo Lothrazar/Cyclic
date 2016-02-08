@@ -10,7 +10,7 @@ public class UtilSound {
 	public static final float pitch = 1.0F;
 	
 	public static final String fizz = "random.fizz";
-	public static final String toss = "random.bow";
+	//public static final String toss = "random.bow";
 	public static final String orb = "random.orb";
 	public static final String snow = "dig.snow";
 	public static final String portal =  "mob.endermen.portal";
@@ -28,7 +28,7 @@ public class UtilSound {
 	}
 
 	public static void playSoundAt(Entity player, String sound) {
-		playSoundAt(player,sound);
+		player.playSound(sound, volume, pitch);
 	}
 
 	public static void playSoundAt(World world, BlockPos pos, String sound) {

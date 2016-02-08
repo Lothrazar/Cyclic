@@ -166,7 +166,7 @@ public class ItemChestSack extends Item {
 
 		if (totalItemsMoved > 0) {
 
-			UtilSound.playSoundAt(player, UtilSound.toss);
+			UtilSound.playSoundAt(player, UtilSound.Own.pew);
 		}
 
 		held.getTagCompound().setIntArray(KEY_ITEMIDS, itemids);
