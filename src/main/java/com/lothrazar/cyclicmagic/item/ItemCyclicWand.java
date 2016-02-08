@@ -353,4 +353,16 @@ public class ItemCyclicWand extends Item {
 			}
 	    }
 	}
+	
+	
+	
+	
+	
+	/************************ For item as container *****************************/
+	@Override
+	public int getMaxItemUseDuration(ItemStack stack) {
+		return 1; // Without this method, your inventory will NOT work!!!
+	}
+	
+	
 }

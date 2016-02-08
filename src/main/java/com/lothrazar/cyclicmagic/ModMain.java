@@ -65,5 +65,7 @@ public class ModMain {
 		SpellRegistry.register();
 
 		proxy.register();
+
+		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiRegistry());
 	}
 }

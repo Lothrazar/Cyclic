@@ -5,6 +5,8 @@ public class Const {
 
 	public static final String MODID = "cyclicmagic";
 	public static final String TEXTURE_LOCATION = Const.MODID + ":";
+	
+	public static final int GUI_INDEX = 1;
 
 	public static final int TICKS_PER_SEC = 20;
 	public static final int CHUNK_SIZE = 16;
