@@ -26,8 +26,8 @@ public class SpellThrowLightning extends BaseSpell implements ISpell {
 	
 	@Override
 	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos) {
-		
-		UtilSound.playSoundAt(player, UtilSound.toss);
+
+		UtilSound.playSoundAt(player, UtilSound.Own.pew);
 		super.onCastSuccess(world, player, pos);
 	}
 }

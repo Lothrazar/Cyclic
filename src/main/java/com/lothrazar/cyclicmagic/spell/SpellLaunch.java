@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.spell;
 
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
@@ -48,6 +49,8 @@ public class SpellLaunch extends BaseSpell implements ISpell {
 			player.addVelocity(velX, velY, velZ);
 		}
 
+		UtilSound.playSoundAt(player, UtilSound.Own.bwoaaap );
+		
 		return true;
 	}
 }

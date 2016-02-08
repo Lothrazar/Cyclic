@@ -70,7 +70,7 @@ public class EntityWaterBolt extends EntityThrowable {
 		}
 		
 		if (this.dimension == Const.Dimension.nether){
-			UtilSound.playSoundAt(this, UtilSound.fizz);
+			UtilSound.playSoundAt(this, UtilSound.Own.buzzp);
 		}
 		else {
 			UtilSound.playSoundAt(this, UtilSound.splash);

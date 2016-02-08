@@ -80,7 +80,7 @@ public class SpellScaffolding extends BaseSpell {
 		if(world.isAirBlock(offset)){
 			world.setBlockState(offset, BlockRegistry.block_fragile.getDefaultState());
 			
-			UtilSound.playSoundAt(player, UtilSound.click);
+			UtilSound.playSoundAt(player, UtilSound.Own.crackle);
 			
 			return true;
 		}

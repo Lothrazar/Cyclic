@@ -12,8 +12,8 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 
 public class SpellCaster {
 
-	final int RECHARGE_EXP_COST = 30;
-	final int RECHARGE_MANA_AMT = 150;
+	final int RECHARGE_EXP_COST = 10;
+	final int RECHARGE_MANA_AMT = 25;
 	
 	public boolean isBlockedBySpellTImer(EntityPlayer player) {
 		return isBlockedBySpellTImer(PlayerPowerups.get(player));
@@ -65,7 +65,8 @@ public class SpellCaster {
 		int left = ItemCyclicWand.Spells.prevId(wand,ItemCyclicWand.Spells.getSpellCurrent(wand) );
 
 		ItemCyclicWand.Spells.setSpellCurrent(wand,left);
-		UtilSound.playSoundAt(player, UtilSound.orb );
+		
+		UtilSound.playSound(player.worldObj, player.getPosition(), UtilSound.Own.bip );
 	}
 
 	public void shiftRight(EntityPlayer player) {
@@ -74,7 +75,7 @@ public class SpellCaster {
 		int right = ItemCyclicWand.Spells.nextId(wand, ItemCyclicWand.Spells.getSpellCurrent(wand));
 	
 		ItemCyclicWand.Spells.setSpellCurrent(wand,right);
-		UtilSound.playSoundAt(player, UtilSound.orb );
+		UtilSound.playSound(player.worldObj, player.getPosition(), UtilSound.Own.bip );
 	}
  
 	public void tickSpellTimer(EntityPlayer player) {
@@ -111,10 +112,10 @@ public class SpellCaster {
 			ItemCyclicWand.Energy.rechargeBy(player.getHeldItem(), RECHARGE_MANA_AMT);
 
 			UtilExperience.drainExp(player, RECHARGE_EXP_COST);
-			UtilSound.playSoundAt(player, UtilSound.portal);
+			UtilSound.playSound(player.worldObj, player.getPosition() , UtilSound.Own.fill);
 		} 
 		else{
-			UtilSound.playSoundAt(player, UtilSound.fizz);
+			UtilSound.playSound(player.worldObj, player.getPosition() ,UtilSound.Own.buzzp);
 		}
 	}
 }
