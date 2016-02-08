@@ -21,17 +21,20 @@ public class UtilSound {
 	
 	public static class Own{
 		//internal sounds added by mod
-		public static final String bip = Const.MODID+":bip";
-		public static final String buzzp = Const.MODID+":buzzp";
-		public static final String bwoaaap = Const.MODID+":bwoaaap";
-		public static final String pew = Const.MODID+":pew";
+		//all are created by ME using a third party tool: http://www.bfxr.net/
+		public static final String bip = Const.MODID+":bip";//spell rotate
+		//public static final String buzzp = Const.MODID+":buzzp";
+		public static final String bwoaaap = Const.MODID+":bwoaaap";//used for launch spell
+		public static final String pew = Const.MODID+":pew";//thrown spells
 	}
 
 	public static void playSoundAt(Entity player, String sound) {
+		//for client only, or if you have client/server both
 		player.playSound(sound, volume, pitch);
 	}
 
-	public static void playSoundAt(World world, BlockPos pos, String sound) {
+	public static void playSound(World world, BlockPos pos, String sound) {
+		//works if you play it only on the server
 		world.playSoundEffect(pos.getX(), pos.getY(), pos.getZ(), sound, volume,pitch);
 	}
 }

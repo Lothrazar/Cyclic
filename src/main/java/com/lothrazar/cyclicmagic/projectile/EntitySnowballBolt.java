@@ -130,12 +130,12 @@ public class EntitySnowballBolt extends EntityThrowable {
 			setNewSnow(world, pos.up());
 		}
 
-		UtilSound.playSoundAt(world, pos, UtilSound.snow);
+		UtilSound.playSound(world, pos, UtilSound.snow);
 	}
 
 	private static void setNewSnow(World world, BlockPos pos) {
 		world.setBlockState(pos, Blocks.snow_layer.getDefaultState());
 
-		UtilSound.playSoundAt(world, pos, UtilSound.snow);
+		UtilSound.playSound(world, pos, UtilSound.snow);
 	}
 }
