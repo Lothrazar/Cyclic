@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.gui;
 
 import com.lothrazar.cyclicmagic.ItemRegistry;
+import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -8,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.IChatComponent;
+import net.minecraftforge.common.util.Constants;
 
 public class InventoryItem implements IInventory {
 	public static final int INV_SIZE = 8;
@@ -25,19 +27,18 @@ public class InventoryItem implements IInventory {
 
 	private void readFromNBT(NBTTagCompound compound) {
 
-		System.out.println("read");
-		NBTTagList items = compound.getTagList("ItemInventory", INV_SIZE);
+		NBTTagList items = compound.getTagList("ItemInventory",  Constants.NBT.TAG_COMPOUND);
 
 		for (int i = 0; i < items.tagCount(); ++i) {
 			// 1.7.2+ change to items.getCompoundTagAt(i)
 
 			NBTTagCompound item = (NBTTagCompound) items.getCompoundTagAt(i);
 			int slot = item.getInteger("Slot");
-
-			// Just double-checking that the saved slot index is within our
-			// inventory array bounds
+			
 			if (slot >= 0 && slot < getSizeInventory()) {
 				inventory[slot] = ItemStack.loadItemStackFromNBT(item);
+				if(inventory[slot] != null){
+				}
 			}
 		}
 	}
@@ -45,17 +46,17 @@ public class InventoryItem implements IInventory {
 	{
 		// Create a new NBT Tag List to store itemstacks as NBT Tags
 		NBTTagList items = new NBTTagList();
-
+		ItemStack stack;
 		for (int i = 0; i < getSizeInventory(); ++i)
 		{
-			// Only write stacks that contain items
-			if (getStackInSlot(i) != null)
+			stack = getStackInSlot(i);
+			if (stack != null)
 			{
 				// Make a new NBT Tag Compound to write the itemstack and slot index to
 				NBTTagCompound itemTags = new NBTTagCompound();
 				itemTags.setInteger("Slot", i);
 				// Writes the itemstack in slot(i) to the Tag Compound we just made
-				getStackInSlot(i).writeToNBT(itemTags);
+				stack.writeToNBT(itemTags);
 
 				// add the tag compound to our tag list
 				items.appendTag(itemTags);
@@ -115,7 +116,7 @@ public class InventoryItem implements IInventory {
 
 	@Override
 	public ItemStack removeStackFromSlot(int index) {
-		//used to be getStackInSlotOnClosing
+		//used to be 'getStackInSlotOnClosing'
 		ItemStack stack = getStackInSlot(index);
 		setInventorySlotContents(index, null);
 		return stack;
@@ -153,7 +154,13 @@ public class InventoryItem implements IInventory {
 
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer player) {
-		return true;
+		return (player.getHeldItem() != null) && (player.getHeldItem().getItem() instanceof ItemCyclicWand);
+	}
+	
+	@Override
+	public boolean isItemValidForSlot(int index, ItemStack stack) {
+		// only placeable blocks, not any old item
+		return stack.getItem() != ItemRegistry.cyclic_wand && Block.getBlockFromItem(stack.getItem()) != null;
 	}
 
 	@Override
@@ -162,37 +169,25 @@ public class InventoryItem implements IInventory {
 
 	@Override
 	public void closeInventory(EntityPlayer player) {
-		System.out.println("closeInventory NEVER FREAKIN HAPPENS EVER");
-	}
-
-	@Override
-	public boolean isItemValidForSlot(int index, ItemStack stack) {
-		// only placeable blocks, not any old item
-		return stack.getItem() != ItemRegistry.cyclic_wand && Block.getBlockFromItem(stack.getItem()) != null;
 	}
 
 	@Override
 	public int getField(int id) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public void setField(int id, int value) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public int getFieldCount() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-
 	}
 
 }
