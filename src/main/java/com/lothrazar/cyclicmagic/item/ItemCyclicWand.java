@@ -77,22 +77,18 @@ public class ItemCyclicWand extends Item {
 		ISpell spell = SpellRegistry.getSpellFromID(Spells.getSpellCurrent(stack));
 
 		int MAX = ItemCyclicWand.Energy.getMaximum(stack);
-		//StatCollector.translateToLocal("spell.cost")
-		tooltip.add(EnumChatFormatting.GREEN + spell.getName() + " "+EnumChatFormatting.DARK_BLUE + spell.getCost());
+		
+		//  + " "+EnumChatFormatting.DARK_BLUE + spell.getCost()
+		tooltip.add(EnumChatFormatting.GREEN + spell.getName());
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
+
 			tooltip.add(Energy.getCurrent(stack) + "/" + MAX);	
 			tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("wand.regen") + EnumChatFormatting.DARK_BLUE + Energy.getRegen(stack));
 			
 			for(IPassiveSpell s : Variant.getPassives(stack)){
 				tooltip.add(EnumChatFormatting.DARK_GRAY + s.info());
 			}
-
-			//todo: some other way to convey basic tutorial info
-			//bc, once you know , dont need to keep seeing it.
-			//tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("wand.gui.info"));
-			//tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("wand.recharge.info"));
-			//tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("wand.wheel.info"));
 		}
 		else {
 			tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("item.shift"));

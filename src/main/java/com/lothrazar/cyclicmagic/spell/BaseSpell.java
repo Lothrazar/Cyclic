@@ -41,6 +41,9 @@ public class BaseSpell implements ISpell {
 	public String getName(){
 		return StatCollector.translateToLocal("spell." + name + ".name");
 	}
+	public String getInfo(){
+		return StatCollector.translateToLocal("spell." + name + ".info");
+	}
 
 	@Override
 	public int getCastCooldown() {

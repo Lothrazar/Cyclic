@@ -10,6 +10,7 @@ public interface ISpell {
 	public int getID();
 	
 	public String getName();
+	public String getInfo();
 
 	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side);
 
