@@ -1,3 +1,4 @@
 {
-  "bwoaaap":{"category":"player","sounds":["bwoaaap"]}
+  	"bwoaaap":{"category":"player","sounds":["bwoaaap"]},
+	"beep_mild":{"category":"player","sounds":["beep_mild"]}
 }

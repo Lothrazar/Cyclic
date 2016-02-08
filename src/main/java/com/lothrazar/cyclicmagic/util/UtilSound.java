@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.util;
 
+import com.lothrazar.cyclicmagic.Const;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
@@ -17,8 +18,15 @@ public class UtilSound {
 	public static final String drink = "random.drink";
 	public static final String click = "random.wood_click";
 
+
+	public static void playSoundAt(Entity player, String sound, boolean modded ) {
+
+		String resource = (modded)? Const.MODID+":"+sound : sound;
+		player.worldObj.playSoundAtEntity(player, resource, volume,pitch);
+	}
+	
 	public static void playSoundAt(Entity player, String sound) {
-		player.worldObj.playSoundAtEntity(player, sound, volume,pitch);
+		playSoundAt(player,sound,false);
 	}
 
 	public static void playSoundAt(World world, BlockPos pos, String sound) {
