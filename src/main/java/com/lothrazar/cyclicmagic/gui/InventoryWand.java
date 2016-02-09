@@ -11,12 +11,12 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.IChatComponent;
 import net.minecraftforge.common.util.Constants;
 
-public class InventoryItem implements IInventory {
-	public static final int INV_SIZE = 8;
+public class InventoryWand implements IInventory {
+	public static final int INV_SIZE = 27;
 	private ItemStack[] inventory = new ItemStack[INV_SIZE];
 	private final ItemStack invItem;
 
-	public InventoryItem(ItemStack stack) {
+	public InventoryWand(ItemStack stack) {
 		invItem = stack;
 		if (!invItem.hasTagCompound()) {
 			invItem.setTagCompound(new NBTTagCompound());
@@ -37,8 +37,6 @@ public class InventoryItem implements IInventory {
 			
 			if (slot >= 0 && slot < getSizeInventory()) {
 				inventory[slot] = ItemStack.loadItemStackFromNBT(item);
-				if(inventory[slot] != null){
-				}
 			}
 		}
 	}
@@ -178,7 +176,6 @@ public class InventoryItem implements IInventory {
 
 	@Override
 	public void setField(int id, int value) {
-
 	}
 
 	@Override
@@ -189,5 +186,4 @@ public class InventoryItem implements IInventory {
 	@Override
 	public void clear() {
 	}
-
 }

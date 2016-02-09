@@ -5,9 +5,9 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class SlotItemInv extends Slot{
+public class SlotWand extends Slot{
 
-	public SlotItemInv(IInventory inventoryIn, int index, int xPosition, int yPosition) {
+	public SlotWand(IInventory inventoryIn, int index, int xPosition, int yPosition) {
 		super(inventoryIn, index, xPosition, yPosition);
 		// TODO Auto-generated constructor stub
 	}

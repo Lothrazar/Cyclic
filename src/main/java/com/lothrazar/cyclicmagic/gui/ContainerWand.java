@@ -6,44 +6,30 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class ContainerItem extends Container{
-	final InventoryItem inventory;
+public class ContainerWand extends Container{
+	final InventoryWand inventory;
 
-	public ContainerItem(EntityPlayer par1Player, InventoryPlayer inventoryPlayer, InventoryItem inventoryItem)
+	final int SQ = 18;
+	public ContainerWand(EntityPlayer par1Player, InventoryPlayer inventoryPlayer, InventoryWand inventoryItem)
 	{
 		this.inventory = inventoryItem;
 
 		int i;
 
-		// ITEM INVENTORY - you'll need to adjust the slot locations to match your texture file
-		// I have them set vertically in columns of 4 to the right of the player model
-		for (i = 0; i < InventoryItem.INV_SIZE; ++i)
-		{
-			// You can make a custom Slot if you need different behavior,
-			// such as only certain item types can be put into this slot
-			// We made a custom slot to prevent our inventory-storing item
-			// from being stored within itself, but if you want to allow that and
-			// you followed my advice at the end of the above step, then you
-			// could get away with using the vanilla Slot class
-			this.addSlotToContainer(new SlotItemInv(this.inventory, i, 80 + (18 * (int)(i/4)), 8 + (18*(i%4))));
-		}
-
-		// If you want, you can add ARMOR SLOTS here as well, but you need to
-		// make a public version of SlotArmor. I won't be doing that in this tutorial.
-		/*
-		for (i = 0; i < 4; ++i)
-		{
-			// These are the standard positions for survival inventory layout
-			this.addSlotToContainer(new SlotArmor(this.player, inventoryPlayer, inventoryPlayer.getSizeInventory() - 1 - i, 8, 8 + i * 18, i));
-		}
-		*/
+		for (int l = 0; l < 3; ++l)
+        {
+            for (int j1 = 0; j1 < 9; ++j1)
+            {
+                this.addSlotToContainer(new SlotWand(inventory, j1 + (l + 1) * 9, 8 + j1 * SQ, 36 + l * SQ));
+            }
+        }
 
 		// PLAYER INVENTORY - uses default locations for standard inventory texture file
 		for (i = 0; i < 3; ++i)
 		{
 			for (int j = 0; j < 9; ++j)
 			{
-				this.addSlotToContainer(new Slot(inventoryPlayer, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
+				this.addSlotToContainer(new Slot(inventoryPlayer, j + i * 9 + 9, 8 + j * SQ, 84 + i * SQ));
 			}
 		}
 
@@ -67,7 +53,7 @@ public class ContainerItem extends Container{
 	public boolean canInteractWith(EntityPlayer playerIn) {
 		return inventory.isUseableByPlayer(playerIn);
 	}
-	private static final int INV_START = InventoryItem.INV_SIZE, INV_END = INV_START+26,
+	private static final int INV_START = InventoryWand.INV_SIZE, INV_END = INV_START+26,
 			HOTBAR_START = INV_END+1, HOTBAR_END = HOTBAR_START+8;
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int index)

@@ -1,8 +1,8 @@
 package com.lothrazar.cyclicmagic;
 
-import com.lothrazar.cyclicmagic.gui.ContainerItem;
-import com.lothrazar.cyclicmagic.gui.GuiItemInventory;
-import com.lothrazar.cyclicmagic.gui.InventoryItem;
+import com.lothrazar.cyclicmagic.gui.ContainerWand;
+import com.lothrazar.cyclicmagic.gui.GuiWandInventory;
+import com.lothrazar.cyclicmagic.gui.InventoryWand;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
@@ -15,7 +15,7 @@ public class GuiRegistry implements IGuiHandler {
 	
 		if(ID == Const.GUI_INDEX){
 			
-			return new ContainerItem(player, player.inventory, new InventoryItem(player.getHeldItem()));
+			return new ContainerWand(player, player.inventory, new InventoryWand(player.getHeldItem()));
 		}
 		return null;
 	}
@@ -27,7 +27,7 @@ public class GuiRegistry implements IGuiHandler {
 		{
 			// We have to cast the new container as our custom class
 			// and pass in currently held item for the inventory
-			return new GuiItemInventory((ContainerItem) new ContainerItem(player, player.inventory, new InventoryItem(player.getHeldItem())));
+			return new GuiWandInventory((ContainerWand) new ContainerWand(player, player.inventory, new InventoryWand(player.getHeldItem())));
 			
 		}
 		return null;
