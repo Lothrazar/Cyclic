@@ -35,7 +35,7 @@ public class MessageToggleBuild implements IMessage, IMessageHandler<MessageTogg
 		}
 		
 		
-		ItemCyclicWand.Spells.toggleBuildType(player.getHeldItem());
+		ItemCyclicWand.BuildType.toggleBuildType(player.getHeldItem());
 		
 	 
 		return null;

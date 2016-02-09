@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.net;
 
 import java.util.ArrayList;
+import java.util.Random;
 import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.gui.InventoryWand;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
@@ -64,7 +65,7 @@ public class MessagePlaceBlock implements IMessage, IMessageHandler<MessagePlace
 			if(p.worldObj.isAirBlock(message.pos) || p.worldObj.getBlockState(message.pos).getBlock().isReplaceable(p.worldObj, message.pos)){
 				
 				
-				int buildType = ItemCyclicWand.Spells.getBuildType(p.getHeldItem());
+				int buildType = ItemCyclicWand.BuildType.getBuildType(p.getHeldItem());
 				
 				ItemStack[] inv = InventoryWand.readFromNBT(p.getHeldItem());
 				ArrayList<Integer> slotNonEmpty = new ArrayList<Integer>();
@@ -77,7 +78,11 @@ public class MessagePlaceBlock implements IMessage, IMessageHandler<MessagePlace
 
 				ItemStack toPlace = null;
 				int itemSlot = -1;
+				//brute forcing it. there is surely a more elegant way in each branch
+				//TODO: switch?
+				//TODO: move to Build Type subclass or something?
 				if(buildType == ItemCyclicWand.BuildType.FIRST.ordinal()){
+					System.out.println("FIRST");
 					
 					for(int i = 0; i < inv.length; i++){
 						if(inv[i] != null){
@@ -88,14 +93,51 @@ public class MessagePlaceBlock implements IMessage, IMessageHandler<MessagePlace
 						}
 					}
 				}
-				else if(buildType == ItemCyclicWand.BuildType.RANDOM.ordinal()){
-					System.out.println("todo get random from list");
-				}
 				else if(buildType == ItemCyclicWand.BuildType.ROTATE.ordinal()){
-					System.out.println("todo save list position and move along each time");
+					
+					int rot = ItemCyclicWand.BuildType.getBuildRotation(p.getHeldItem());
+					System.out.println("rot"+rot);
+
+					if(rot < 0 || rot >= inv.length){//JIT validation
+						rot = 0;
+					}
+					int test = 7;//like aninfloop but with a max
+					//in case we have gaps, maybe its [0,1,4] have items, so cycle through
+					for(int i = 0; i < test; i++){
+						
+						if(inv[rot] != null){
+							itemSlot = rot;
+							toPlace = inv[itemSlot];
+							
+							rot++;
+							if(rot >= inv.length){
+								rot = 0;
+							}
+							
+							 ItemCyclicWand.BuildType.setBuildRotation(p.getHeldItem(),rot);
+							
+							break;
+						}
+					}
+					
+					//so if all 5 slots are full. build with 1 first, then 2, then 3, etc
+					
+					//TODO need a new NBT save slot
+					//ALSO: TODO: a visual indicator of current rando pos
+				}
+				else if(buildType == ItemCyclicWand.BuildType.RANDOM.ordinal()){
+					
+					Random rand = new Random();
+					itemSlot = slotNonEmpty.get(rand.nextInt(slotNonEmpty.size()));
+					toPlace = inv[itemSlot];
+					System.out.println("Rando"+itemSlot);
+					
 				}
 				
-				if(toPlace != null 
+				
+				
+				
+				if(toPlace != null //shouldnt be nul anymore
 						&& toPlace.getItem() != null && 
 						Block.getBlockFromItem(toPlace.getItem()) != null){
 					

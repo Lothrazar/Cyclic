@@ -250,31 +250,6 @@ public class ItemCyclicWand extends Item {
 			stack.setTagCompound(tags);
 		}
 		
-
-		public static int getBuildType( ItemStack wand) {
-			if(wand == null){
-				return 0;
-			}
-			NBTTagCompound tags = getNBT(wand);
-			
-			return tags.getInteger("build");
-		}
-		public static void toggleBuildType(ItemStack wand) {
-
-			NBTTagCompound tags = getNBT(wand);
-			
-			int type = tags.getInteger("build");
-			
-			type++;
-			
-			if(type > 2){
-				type = 0;
-			}
-			
-			System.out.println("build type now"+type);
-			tags.setInteger("build", type);
-			
-		}
 	}
 
 	public static class Energy{
@@ -335,7 +310,45 @@ public class ItemCyclicWand extends Item {
 	public enum BuildType{
 		FIRST,
 		ROTATE,
-		RANDOM
+		RANDOM; 
+		public static int getBuildType( ItemStack wand) {
+			if(wand == null){
+				return 0;
+			}
+			NBTTagCompound tags = getNBT(wand);
+			
+			return tags.getInteger("build");
+		}
+		
+		public static void toggleBuildType(ItemStack wand) {
+
+			NBTTagCompound tags = getNBT(wand);
+			
+			int type = tags.getInteger("build");
+			
+			type++;
+			
+			if(type > 2){
+				type = 0;
+			}
+			
+			tags.setInteger("build", type);
+		}
+		
+		public static int getBuildRotation( ItemStack wand) {
+			if(wand == null){
+				return 0;
+			}
+			NBTTagCompound tags = getNBT(wand);
+			
+			return tags.getInteger("rotation");
+		}
+		public static void setBuildRotation( ItemStack wand, int rot) {
+		
+			NBTTagCompound tags = getNBT(wand);
+			
+			tags.setInteger("rotation",rot);
+		}
 	}
 	
 	public enum Variant{

@@ -30,12 +30,7 @@ public class SpellFarReach extends BaseSpell {
 			BlockPos mouseover = ModMain.proxy.getBlockMouseover(maxRange);
 			
 			if(mouseover != null){
-
-		
-				//TODO: we could get block id and meta here, pass along with pos?
 				ModMain.network.sendToServer(new MessagePlaceBlock(mouseover));
-				
-				
 			}
 		}
 		
