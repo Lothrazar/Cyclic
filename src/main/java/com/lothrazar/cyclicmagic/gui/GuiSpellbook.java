@@ -48,20 +48,20 @@ public class GuiSpellbook extends GuiScreen {
 		
 		arc = (2 * Math.PI) / SpellRegistry.getSpellbook().size();
 
-		this.buttonList.add(new GuiButtonClose(999,  xCenter-15, yCenter-10));
+		this.buttonList.add(new ButtonClose(999,  xCenter-15, yCenter-10));
 
 		double ang = 0;
 		double cx, cy;
 
 		ang = 0;
-		GuiButtonSpell b;
+		ButtonSpell b;
 
 		for (ISpell s : SpellRegistry.getSpellbook()) {
 
 			cx = xCenter + radius * Math.cos(ang) - 2;
 			cy = yCenter + radius * Math.sin(ang) - 2;
 
-			b = new GuiButtonSpell((int) cx, (int) cy, s);
+			b = new ButtonSpell((int) cx, (int) cy, s);
 			this.buttonList.add(b);
 
 			ang += arc;
@@ -111,10 +111,10 @@ public class GuiSpellbook extends GuiScreen {
 			ang += arc;
 		}
 	
-		GuiButtonSpell btn;
+		ButtonSpell btn;
 		for (int i = 0; i < buttonList.size(); i++) {
-			if (buttonList.get(i).isMouseOver()  && buttonList.get(i) instanceof GuiButtonSpell) {
-				btn = (GuiButtonSpell) buttonList.get(i);
+			if (buttonList.get(i).isMouseOver()  && buttonList.get(i) instanceof ButtonSpell) {
+				btn = (ButtonSpell) buttonList.get(i);
 			
 				drawHoveringText(btn.getTooltipForPlayer(props), mouseX, mouseY, fontRendererObj);
 				break;//cant hover on 2 at once

@@ -6,15 +6,22 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiWandInventory extends GuiContainer {
-	// private final InventoryItem inventory;
+	private final InventoryWand inventory;
+	private static final ResourceLocation BACKGROUND = new ResourceLocation(Const.MODID, "textures/gui/inventory_wand.png");
 
 	public GuiWandInventory(ContainerWand containerItem) {
 		super(containerItem);
-		// this.inventory = containerItem.inventory;
+		this.inventory = containerItem.inventory;
 	}
 
-	private static final ResourceLocation BACKGROUND = new ResourceLocation(Const.MODID, "textures/gui/inventory_wand.png");
+	@Override
+	public void initGui() {
 
+		super.initGui();
+
+		this.buttonList.add(new ButtonBuildToggle(inventory.getPlayer(), 777,8,8));
+	}
+	
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 

@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.net;
 
+import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.gui.InventoryWand;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
@@ -63,24 +64,36 @@ public class MessagePlaceBlock implements IMessage, IMessageHandler<MessagePlace
 			if(p.worldObj.isAirBlock(message.pos) || p.worldObj.getBlockState(message.pos).getBlock().isReplaceable(p.worldObj, message.pos)){
 				
 				
-				ItemStack[] inv = InventoryWand.readFromNBT(p.getHeldItem());
-				ItemStack toPlace = null;
+				int buildType = ItemCyclicWand.Spells.getBuildType(p.getHeldItem());
 				
-				int itemSlot = -1;
+				ItemStack[] inv = InventoryWand.readFromNBT(p.getHeldItem());
+				ArrayList<Integer> slotNonEmpty = new ArrayList<Integer>();
 				for(int i = 0; i < inv.length; i++){
-					if(inv[i] != null){
-						toPlace = inv[i];
-						
-						itemSlot = i;
-						break;
+					
+					if(inv[i] != null && inv[i].getItem() != null && Block.getBlockFromItem(inv[i].getItem()) != null){
+						slotNonEmpty.add(i);
 					}
 				}
-				
-				
-				//int itemSlot = p.inventory.currentItem + 1;
-				//9 is hotbar size
-				//if(itemSlot < 9 && p.inventory.getStackInSlot(itemSlot) != null)
-				//toPlace = p.inventory.getStackInSlot(itemSlot);
+
+				ItemStack toPlace = null;
+				int itemSlot = -1;
+				if(buildType == ItemCyclicWand.BuildType.FIRST.ordinal()){
+					
+					for(int i = 0; i < inv.length; i++){
+						if(inv[i] != null){
+							toPlace = inv[i];
+							
+							itemSlot = i;
+							break;
+						}
+					}
+				}
+				else if(buildType == ItemCyclicWand.BuildType.RANDOM.ordinal()){
+					System.out.println("todo get random from list");
+				}
+				else if(buildType == ItemCyclicWand.BuildType.ROTATE.ordinal()){
+					System.out.println("todo save list position and move along each time");
+				}
 				
 				if(toPlace != null 
 						&& toPlace.getItem() != null && 

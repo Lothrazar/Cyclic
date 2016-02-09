@@ -48,10 +48,12 @@ public class ModMain {
 		network.registerMessage(MessageKeyCast.class, MessageKeyCast.class, packetID++, Side.SERVER);
 		network.registerMessage(MessageKeyLeft.class, MessageKeyLeft.class, packetID++, Side.SERVER);
 		network.registerMessage(MessageKeyRight.class, MessageKeyRight.class, packetID++, Side.SERVER);
-		network.registerMessage(MessageToggle.class, MessageToggle.class, packetID++, Side.SERVER);
+		network.registerMessage(MessageToggleSpell.class, MessageToggleSpell.class, packetID++, Side.SERVER);
 		network.registerMessage(MessageParticle.class, MessageParticle.class, packetID++, Side.CLIENT);
 		network.registerMessage(MessageOpenSpellbook.class, MessageOpenSpellbook.class, packetID++, Side.CLIENT);
 		network.registerMessage(MessagePlaceBlock.class, MessagePlaceBlock.class, packetID++, Side.SERVER);
+		network.registerMessage(MessageToggleBuild.class, MessageToggleBuild.class, packetID++, Side.SERVER);
+		
 
 		MinecraftForge.EVENT_BUS.register(new EventRegistry());
 	}

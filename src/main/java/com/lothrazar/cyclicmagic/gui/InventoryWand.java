@@ -17,6 +17,10 @@ public class InventoryWand implements IInventory {
 	private final ItemStack internalWand;
 
 	private EntityPlayer thePlayer;
+	
+	public EntityPlayer getPlayer(){
+		return thePlayer;
+	}
 
 	public InventoryWand(EntityPlayer player, ItemStack wand) {
 		internalWand = wand;
@@ -80,13 +84,6 @@ public class InventoryWand implements IInventory {
 		// Add the TagList to the ItemStack's Tag Compound with the name
 		// "ItemInventory"
 		tagcompound.setTag("ItemInventory", items);
-	}
-
-	
-	public static void overwriteWandItems(ItemStack wand, ItemStack[] items) {
-
-		ItemStack[] inv = InventoryWand.readFromNBT(wand);
-
 	}
 
 	@Override

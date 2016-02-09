@@ -31,14 +31,11 @@ public class SpellFarReach extends BaseSpell {
 			
 			if(mouseover != null){
 
-				int itemSlot = p.inventory.currentItem + 1;
+		
+				//TODO: we could get block id and meta here, pass along with pos?
+				ModMain.network.sendToServer(new MessagePlaceBlock(mouseover));
 				
-				if(itemSlot < 9 && p.inventory.getStackInSlot(itemSlot) != null){
-					
-					//TODO: we could get block id and meta here, pass along with pos?
-					ModMain.network.sendToServer(new MessagePlaceBlock(mouseover));
-					
-				}
+				
 			}
 		}
 		

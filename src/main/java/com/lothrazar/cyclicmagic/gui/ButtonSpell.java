@@ -5,7 +5,7 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.PlayerPowerups;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
-import com.lothrazar.cyclicmagic.net.MessageToggle;
+import com.lothrazar.cyclicmagic.net.MessageToggleSpell;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.util.UtilString;
 import com.lothrazar.cyclicmagic.util.UtilTextureRender;
@@ -17,12 +17,12 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GuiButtonSpell extends GuiButton {
+public class ButtonSpell extends GuiButton {
 
 	private ISpell spell;
 	private static final int btnSize = 16;
 
-	public GuiButtonSpell(int x, int y, ISpell s) {
+	public ButtonSpell(int x, int y, ISpell s) {
 		super(s.getID(), x, y, btnSize, btnSize, "");
 		spell = s;
 	}
@@ -35,7 +35,7 @@ public class GuiButtonSpell extends GuiButton {
 		if (pressed) {
 			// button id matches spell id
 
-			ModMain.network.sendToServer(new MessageToggle(this.id));
+			ModMain.network.sendToServer(new MessageToggleSpell(this.id));
 		}
 
 		return pressed;

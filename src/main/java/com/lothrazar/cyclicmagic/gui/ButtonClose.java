@@ -6,9 +6,9 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GuiButtonClose extends GuiButton{
+public class ButtonClose extends GuiButton{
  
-	public GuiButtonClose(int id,int x, int y) {
+	public ButtonClose(int id,int x, int y) {
 		super(id, x, y, 30,20 ,StatCollector.translateToLocal("button.close"));
 	}
 	

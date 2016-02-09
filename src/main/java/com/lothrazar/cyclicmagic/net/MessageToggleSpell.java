@@ -9,16 +9,16 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class MessageToggle implements IMessage, IMessageHandler<MessageToggle, IMessage> {
+public class MessageToggleSpell implements IMessage, IMessageHandler<MessageToggleSpell, IMessage> {
  
 	private NBTTagCompound tags = null;
 	private int spell_id;
 	private static final String NBT_SPELL = "spell"; 
 
-	public MessageToggle() {
+	public MessageToggleSpell() {
 	}
 
-	public MessageToggle(int spell) {
+	public MessageToggleSpell(int spell) {
 		spell_id = spell;
 
 		this.toNBT();
@@ -49,7 +49,7 @@ public class MessageToggle implements IMessage, IMessageHandler<MessageToggle, I
 	}
 
 	@Override
-	public IMessage onMessage(MessageToggle message, MessageContext ctx) {
+	public IMessage onMessage(MessageToggleSpell message, MessageContext ctx) {
 
 		message.fromNBT();
 

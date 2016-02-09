@@ -249,6 +249,32 @@ public class ItemCyclicWand extends Item {
 			
 			stack.setTagCompound(tags);
 		}
+		
+
+		public static int getBuildType( ItemStack wand) {
+			if(wand == null){
+				return 0;
+			}
+			NBTTagCompound tags = getNBT(wand);
+			
+			return tags.getInteger("build");
+		}
+		public static void toggleBuildType(ItemStack wand) {
+
+			NBTTagCompound tags = getNBT(wand);
+			
+			int type = tags.getInteger("build");
+			
+			type++;
+			
+			if(type > 2){
+				type = 0;
+			}
+			
+			System.out.println("build type now"+type);
+			tags.setInteger("build", type);
+			
+		}
 	}
 
 	public static class Energy{
@@ -304,6 +330,12 @@ public class ItemCyclicWand extends Item {
 		public static void rechargeBy(ItemStack stack,int m) {
 			Energy.setCurrent(stack, Energy.getCurrent(stack) + m);
 		}
+	}
+	
+	public enum BuildType{
+		FIRST,
+		ROTATE,
+		RANDOM
 	}
 	
 	public enum Variant{
