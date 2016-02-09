@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.net;
 
 import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.gui.InventoryWand;
+import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -62,13 +63,14 @@ public class MessagePlaceBlock implements IMessage, IMessageHandler<MessagePlace
 			if(p.worldObj.isAirBlock(message.pos) || p.worldObj.getBlockState(message.pos).getBlock().isReplaceable(p.worldObj, message.pos)){
 				
 				
-				ItemStack[] inv = InventoryWand.getFromWand(p.getHeldItem());
+				ItemStack[] inv = InventoryWand.readFromNBT(p.getHeldItem());
 				ItemStack toPlace = null;
-				System.out.println("inv"+inv.length);
+				
 				int itemSlot = -1;
 				for(int i = 0; i < inv.length; i++){
 					if(inv[i] != null){
 						toPlace = inv[i];
+						
 						itemSlot = i;
 						break;
 					}
@@ -86,9 +88,12 @@ public class MessagePlaceBlock implements IMessage, IMessageHandler<MessagePlace
 					
 					IBlockState state = Block.getBlockFromItem(toPlace.getItem()).getStateFromMeta(toPlace.getMetadata());
 					
-					if(state != null){
+					if(state != null && p.getHeldItem()!=null&&p.getHeldItem().getItem() instanceof ItemCyclicWand){
 						
-						SpellRegistry.reach.placeFromServerPacket(p, message.pos, state, itemSlot);
+						SpellRegistry.reach.placeFromServerPacket(p, message.pos, state);
+						inv[itemSlot].stackSize--;
+						
+						InventoryWand.writeToNBT(p.getHeldItem(), inv);
 					}
 				}
 			}

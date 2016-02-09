@@ -45,16 +45,10 @@ public class SpellFarReach extends BaseSpell {
 		return false;
 	}
 	
-	public void placeFromServerPacket(EntityPlayer p, BlockPos pos, IBlockState state, int itemSlot){
+	public void placeFromServerPacket(EntityPlayer p, BlockPos pos, IBlockState state){
 		//kind of workaround since server packet handles message, but we want actual processing done in the spell
 		p.worldObj.setBlockState(pos, state);
-		
-		System.out.println("TODO decr wand invo");
-		/*
-		if(p.capabilities.isCreativeMode == false){
-			p.inventory.decrStackSize(itemSlot, 1);
-		}*/
-		
+	
 		//this kind of should be in on success.........but it doesnt have the block/state access
 		UtilSound.playSound(p.worldObj,pos, state.getBlock().stepSound.getPlaceSound());
 		

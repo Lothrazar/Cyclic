@@ -14,82 +14,79 @@ import net.minecraftforge.common.util.Constants;
 public class InventoryWand implements IInventory {
 	public static final int INV_SIZE = 5;
 	private ItemStack[] inventory = new ItemStack[INV_SIZE];
-	private final ItemStack invItem;
+	private final ItemStack internalWand;
 
 	private EntityPlayer thePlayer;
-	public InventoryWand(EntityPlayer player, ItemStack wand) {
-		invItem = wand;
 
-		//readFromNBT(invItem.getTagCompound());
-		
-		inventory = getFromWand(wand);
-		
+	public InventoryWand(EntityPlayer player, ItemStack wand) {
+		internalWand = wand;
+
+		inventory = readFromNBT(wand);
+
 		thePlayer = player;
 	}
-	
-	public static ItemStack[] getFromWand(ItemStack stack){
+
+	public static ItemStack[] readFromNBT(ItemStack stack) {
 		ItemStack[] inv = new ItemStack[INV_SIZE];
-		
-		if(stack == null || (stack.getItem() instanceof ItemCyclicWand) == false){
+
+		if (stack == null || (stack.getItem() instanceof ItemCyclicWand) == false) {
 			return inv;
 		}
 
 		if (!stack.hasTagCompound()) {
 			stack.setTagCompound(new NBTTagCompound());
 		}
-		NBTTagList items = stack.getTagCompound().getTagList("ItemInventory",  Constants.NBT.TAG_COMPOUND);
+		NBTTagList items = stack.getTagCompound().getTagList("ItemInventory", Constants.NBT.TAG_COMPOUND);
 
 		for (int i = 0; i < items.tagCount(); ++i) {
 			// 1.7.2+ change to items.getCompoundTagAt(i)
 
 			NBTTagCompound item = (NBTTagCompound) items.getCompoundTagAt(i);
 			int slot = item.getInteger("Slot");
-			
+
 			if (slot >= 0 && slot < INV_SIZE) {
 				inv[slot] = ItemStack.loadItemStackFromNBT(item);
 			}
 		}
-		
+
 		return inv;
 	}
-/*
-	private void readFromNBT(NBTTagCompound compound) {
 
-		NBTTagList items = compound.getTagList("ItemInventory",  Constants.NBT.TAG_COMPOUND);
 
-		for (int i = 0; i < items.tagCount(); ++i) {
-			// 1.7.2+ change to items.getCompoundTagAt(i)
-
-			NBTTagCompound item = (NBTTagCompound) items.getCompoundTagAt(i);
-			int slot = item.getInteger("Slot");
-			
-			if (slot >= 0 && slot < getSizeInventory()) {
-				inventory[slot] = ItemStack.loadItemStackFromNBT(item);
-			}
-		}
-	}*/
-	public void writeToNBT(NBTTagCompound tagcompound)
-	{
+	public static void writeToNBT(ItemStack wandStack, ItemStack[] theInventory) {
+		NBTTagCompound tagcompound = wandStack.getTagCompound();
 		// Create a new NBT Tag List to store itemstacks as NBT Tags
 		NBTTagList items = new NBTTagList();
 		ItemStack stack;
-		for (int i = 0; i < getSizeInventory(); ++i)
-		{
-			stack = getStackInSlot(i);
-			if (stack != null)
-			{
-				// Make a new NBT Tag Compound to write the itemstack and slot index to
+		for (int i = 0; i < theInventory.length; ++i) {
+			stack = theInventory[i];
+			if (stack != null && stack.stackSize == 0) {
+				stack = null;
+			}
+
+			if (stack != null) {
+				// Make a new NBT Tag Compound to write the itemstack and slot
+				// index to
 				NBTTagCompound itemTags = new NBTTagCompound();
 				itemTags.setInteger("Slot", i);
-				// Writes the itemstack in slot(i) to the Tag Compound we just made
+				// Writes the itemstack in slot(i) to the Tag Compound we just
+				// made
 				stack.writeToNBT(itemTags);
 
 				// add the tag compound to our tag list
 				items.appendTag(itemTags);
 			}
 		}
-		// Add the TagList to the ItemStack's Tag Compound with the name "ItemInventory"
+		// Add the TagList to the ItemStack's Tag Compound with the name
+		// "ItemInventory"
 		tagcompound.setTag("ItemInventory", items);
+	}
+
+	
+	public static void overwriteWandItems(ItemStack wand, ItemStack[] items) {
+
+		ItemStack[] inv = InventoryWand.readFromNBT(wand);
+
 	}
 
 	@Override
@@ -122,12 +119,12 @@ public class InventoryWand implements IInventory {
 	public ItemStack decrStackSize(int slot, int amount) {
 
 		ItemStack stack = getStackInSlot(slot);
- 
+
 		if (stack != null) {
 			if (stack.stackSize > amount) {
 				stack = stack.splitStack(amount);
 				// Don't forget this line or your inventory will not be saved!
-		 
+
 				markDirty();
 			}
 			else {
@@ -136,13 +133,13 @@ public class InventoryWand implements IInventory {
 				setInventorySlotContents(slot, null);
 			}
 		}
- 	
+
 		return stack;
 	}
 
 	@Override
 	public ItemStack removeStackFromSlot(int index) {
-		//used to be 'getStackInSlotOnClosing'
+		// used to be 'getStackInSlotOnClosing'
 		ItemStack stack = getStackInSlot(index);
 		setInventorySlotContents(index, null);
 		return stack;
@@ -150,7 +147,7 @@ public class InventoryWand implements IInventory {
 
 	@Override
 	public void setInventorySlotContents(int slot, ItemStack stack) {
-	
+
 		inventory[slot] = stack;
 
 		if (stack != null && stack.stackSize > getInventoryStackLimit()) {
@@ -174,25 +171,23 @@ public class InventoryWand implements IInventory {
 			}
 		}
 
-		//set any empty item stacks (red zeroes) to empty
-		for(int i = 0; i < thePlayer.inventory.getSizeInventory(); i++){
-			
-			if(thePlayer.inventory.getStackInSlot(i) != null &&
-					thePlayer.inventory.getStackInSlot(i).stackSize == 0){
-				
+		// set any empty item stacks (red zeroes) to empty
+		for (int i = 0; i < thePlayer.inventory.getSizeInventory(); i++) {
+
+			if (thePlayer.inventory.getStackInSlot(i) != null && thePlayer.inventory.getStackInSlot(i).stackSize == 0) {
+
 				thePlayer.inventory.setInventorySlotContents(i, null);
 			}
 		}
-		
-		// This line here does the work:
-		writeToNBT(invItem.getTagCompound());
+
+		writeToNBT(internalWand, inventory);
 	}
 
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer player) {
 		return (player.getHeldItem() != null) && (player.getHeldItem().getItem() instanceof ItemCyclicWand);
 	}
-	
+
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
 		// only placeable blocks, not any old item
