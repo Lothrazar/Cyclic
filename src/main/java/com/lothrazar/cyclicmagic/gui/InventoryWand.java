@@ -12,7 +12,7 @@ import net.minecraft.util.IChatComponent;
 import net.minecraftforge.common.util.Constants;
 
 public class InventoryWand implements IInventory {
-	public static final int INV_SIZE = 27;
+	public static final int INV_SIZE = 5;
 	private ItemStack[] inventory = new ItemStack[INV_SIZE];
 	private final ItemStack invItem;
 
