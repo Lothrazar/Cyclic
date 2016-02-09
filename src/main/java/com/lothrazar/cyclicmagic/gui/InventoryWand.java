@@ -16,13 +16,16 @@ public class InventoryWand implements IInventory {
 	private ItemStack[] inventory = new ItemStack[INV_SIZE];
 	private final ItemStack invItem;
 
-	public InventoryWand(ItemStack stack) {
+	private EntityPlayer thePlayer;
+	public InventoryWand(EntityPlayer player, ItemStack stack) {
 		invItem = stack;
 		if (!invItem.hasTagCompound()) {
 			invItem.setTagCompound(new NBTTagCompound());
 		}
 
 		readFromNBT(invItem.getTagCompound());
+		
+		thePlayer = player;
 	}
 
 	private void readFromNBT(NBTTagCompound compound) {
@@ -146,6 +149,16 @@ public class InventoryWand implements IInventory {
 			}
 		}
 
+		//set any empty item stacks (red zeroes) to empty
+		for(int i = 0; i < thePlayer.inventory.getSizeInventory(); i++){
+			
+			if(thePlayer.inventory.getStackInSlot(i) != null &&
+					thePlayer.inventory.getStackInSlot(i).stackSize == 0){
+				
+				thePlayer.inventory.setInventorySlotContents(i, null);
+			}
+		}
+		
 		// This line here does the work:
 		writeToNBT(invItem.getTagCompound());
 	}

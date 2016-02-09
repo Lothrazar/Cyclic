@@ -15,7 +15,7 @@ public class GuiRegistry implements IGuiHandler {
 	
 		if(ID == Const.GUI_INDEX){
 			
-			return new ContainerWand(player, player.inventory, new InventoryWand(player.getHeldItem()));
+			return new ContainerWand(player, player.inventory, new InventoryWand(player,player.getHeldItem()));
 		}
 		return null;
 	}
@@ -27,7 +27,7 @@ public class GuiRegistry implements IGuiHandler {
 		{
 			// We have to cast the new container as our custom class
 			// and pass in currently held item for the inventory
-			return new GuiWandInventory((ContainerWand) new ContainerWand(player, player.inventory, new InventoryWand(player.getHeldItem())));
+			return new GuiWandInventory((ContainerWand) new ContainerWand(player, player.inventory, new InventoryWand(player,player.getHeldItem())));
 			
 		}
 		return null;
