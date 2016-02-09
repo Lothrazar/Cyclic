@@ -16,7 +16,7 @@ public class ContainerWand extends Container {
 
 		// player invo. below is copied from ContainerHopper.class
 		for (int j = 0; j < invoWand.getSizeInventory(); j++) {
-			this.addSlotToContainer(new Slot(invoWand, j, 44 + j * 18, 20));
+			this.addSlotToContainer(new SlotWand(invoWand, j, 44 + j * 18, 20));
 		}
 
 		int i = 51;

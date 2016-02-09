@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.net;
 
 import com.lothrazar.cyclicmagic.SpellRegistry;
+import com.lothrazar.cyclicmagic.gui.InventoryWand;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -60,26 +61,39 @@ public class MessagePlaceBlock implements IMessage, IMessageHandler<MessagePlace
 			EntityPlayer p = ctx.getServerHandler().playerEntity;
 			if(p.worldObj.isAirBlock(message.pos) || p.worldObj.getBlockState(message.pos).getBlock().isReplaceable(p.worldObj, message.pos)){
 				
-				int itemSlot = p.inventory.currentItem + 1;
+				
+				ItemStack[] inv = InventoryWand.getFromWand(p.getHeldItem());
+				ItemStack toPlace = null;
+				System.out.println("inv"+inv.length);
+				int itemSlot = -1;
+				for(int i = 0; i < inv.length; i++){
+					if(inv[i] != null){
+						toPlace = inv[i];
+						itemSlot = i;
+						break;
+					}
+				}
+				
+				
+				//int itemSlot = p.inventory.currentItem + 1;
 				//9 is hotbar size
-				if(itemSlot < 9 && p.inventory.getStackInSlot(itemSlot) != null){
+				//if(itemSlot < 9 && p.inventory.getStackInSlot(itemSlot) != null)
+				//toPlace = p.inventory.getStackInSlot(itemSlot);
+				
+				if(toPlace != null 
+						&& toPlace.getItem() != null && 
+						Block.getBlockFromItem(toPlace.getItem()) != null){
 					
-					ItemStack toPlace = p.inventory.getStackInSlot(itemSlot);
+					IBlockState state = Block.getBlockFromItem(toPlace.getItem()).getStateFromMeta(toPlace.getMetadata());
 					
-					if(toPlace != null 
-							&& toPlace.getItem() != null && 
-							Block.getBlockFromItem(toPlace.getItem()) != null){
+					if(state != null){
 						
-						IBlockState state = Block.getBlockFromItem(toPlace.getItem()).getStateFromMeta(toPlace.getMetadata());
-						
-						if(state != null){
-							
-							SpellRegistry.reach.placeFromServerPacket(p, message.pos, state, itemSlot);
-						}
+						SpellRegistry.reach.placeFromServerPacket(p, message.pos, state, itemSlot);
 					}
 				}
 			}
 		}
+		
 		return null;
 	}
 }

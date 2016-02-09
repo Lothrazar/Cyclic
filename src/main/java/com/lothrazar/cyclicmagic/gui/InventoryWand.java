@@ -17,17 +17,42 @@ public class InventoryWand implements IInventory {
 	private final ItemStack invItem;
 
 	private EntityPlayer thePlayer;
-	public InventoryWand(EntityPlayer player, ItemStack stack) {
-		invItem = stack;
-		if (!invItem.hasTagCompound()) {
-			invItem.setTagCompound(new NBTTagCompound());
-		}
+	public InventoryWand(EntityPlayer player, ItemStack wand) {
+		invItem = wand;
 
-		readFromNBT(invItem.getTagCompound());
+		//readFromNBT(invItem.getTagCompound());
+		
+		inventory = getFromWand(wand);
 		
 		thePlayer = player;
 	}
+	
+	public static ItemStack[] getFromWand(ItemStack stack){
+		ItemStack[] inv = new ItemStack[INV_SIZE];
+		
+		if(stack == null || (stack.getItem() instanceof ItemCyclicWand) == false){
+			return inv;
+		}
 
+		if (!stack.hasTagCompound()) {
+			stack.setTagCompound(new NBTTagCompound());
+		}
+		NBTTagList items = stack.getTagCompound().getTagList("ItemInventory",  Constants.NBT.TAG_COMPOUND);
+
+		for (int i = 0; i < items.tagCount(); ++i) {
+			// 1.7.2+ change to items.getCompoundTagAt(i)
+
+			NBTTagCompound item = (NBTTagCompound) items.getCompoundTagAt(i);
+			int slot = item.getInteger("Slot");
+			
+			if (slot >= 0 && slot < INV_SIZE) {
+				inv[slot] = ItemStack.loadItemStackFromNBT(item);
+			}
+		}
+		
+		return inv;
+	}
+/*
 	private void readFromNBT(NBTTagCompound compound) {
 
 		NBTTagList items = compound.getTagList("ItemInventory",  Constants.NBT.TAG_COMPOUND);
@@ -42,7 +67,7 @@ public class InventoryWand implements IInventory {
 				inventory[slot] = ItemStack.loadItemStackFromNBT(item);
 			}
 		}
-	}
+	}*/
 	public void writeToNBT(NBTTagCompound tagcompound)
 	{
 		// Create a new NBT Tag List to store itemstacks as NBT Tags
