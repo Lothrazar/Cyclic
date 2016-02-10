@@ -29,15 +29,12 @@ public class MessageToggleBuild implements IMessage, IMessageHandler<MessageTogg
 
 		EntityPlayer player = ctx.getServerHandler().playerEntity;
 	 
-		System.out.println("MessageToggleBuild");
 		if(player.getHeldItem()==null || player.getHeldItem().getItem() instanceof ItemCyclicWand == false){
 			return null;
 		}
 		
-		
 		ItemCyclicWand.BuildType.toggleBuildType(player.getHeldItem());
 		
-	 
 		return null;
 	}
 }

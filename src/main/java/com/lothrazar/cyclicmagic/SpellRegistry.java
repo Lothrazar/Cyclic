@@ -63,6 +63,9 @@ public class SpellRegistry {
 
 		reach = new SpellFarReach(++spellId,"reach");
 		registerSpell(reach);
+
+		SpellInventory inventory = new SpellInventory(++spellId,"inventory");
+		registerSpell(inventory);
 		
 		SpellPush push = new SpellPush(++spellId,"push");
 		registerSpell(push);

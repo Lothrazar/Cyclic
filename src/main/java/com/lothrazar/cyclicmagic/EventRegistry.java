@@ -69,12 +69,6 @@ public class EventRegistry {
 	
 				ModMain.network.sendTo(new MessageOpenSpellbook(), (EntityPlayerMP)event.entityPlayer);
 			}
-			if(blockHit == Blocks.furnace){
-				System.out.println("gui+"+ event.entityPlayer.worldObj.isRemote);
-				//TODO: make spell
-				if (! event.entityPlayer.worldObj.isRemote)
-					event.entityPlayer.openGui(ModMain.instance, Const.GUI_INDEX, event.entityPlayer.worldObj, 0, 0, 0);
-			}
 			else if(blockHit != null){//was only bookshelf
 				
 				SpellRegistry.caster.rechargeWithExp( event.entityPlayer);

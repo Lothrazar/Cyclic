@@ -323,7 +323,8 @@ public class ItemCyclicWand extends Item {
 				return "button.build."+BuildType.values()[tags.getInteger("build")].toString().toLowerCase();
 			
 			}catch(Exception e){
-				return "wabuttonnd.build."+FIRST.toString().toLowerCase();
+				System.out.println(e.getMessage());
+				return "button.build."+FIRST.toString().toLowerCase();
 			}
 		}
 		
@@ -341,12 +342,12 @@ public class ItemCyclicWand extends Item {
 			NBTTagCompound tags = getNBT(wand);
 			
 			int type = tags.getInteger(NBT_BUILD);
-			
+ 
 			type++;
 			
 			if(type > 2){
 				type = 0;
-			}
+			} 
 			
 			tags.setInteger(NBT_BUILD, type);
 		}
