@@ -82,8 +82,7 @@ public class MessagePlaceBlock implements IMessage, IMessageHandler<MessagePlace
 				//TODO: switch?
 				//TODO: move to Build Type subclass or something?
 				if(buildType == ItemCyclicWand.BuildType.FIRST.ordinal()){
-					System.out.println("FIRST");
-					
+				
 					for(int i = 0; i < inv.length; i++){
 						if(inv[i] != null){
 							toPlace = inv[i];
@@ -96,8 +95,7 @@ public class MessagePlaceBlock implements IMessage, IMessageHandler<MessagePlace
 				else if(buildType == ItemCyclicWand.BuildType.ROTATE.ordinal()){
 					
 					int rot = ItemCyclicWand.BuildType.getBuildRotation(p.getHeldItem());
-					System.out.println("rot"+rot);
-
+				
 					if(rot < 0 || rot >= inv.length){//JIT validation
 						rot = 0;
 					}
@@ -119,23 +117,13 @@ public class MessagePlaceBlock implements IMessage, IMessageHandler<MessagePlace
 							break;
 						}
 					}
-					
-					//so if all 5 slots are full. build with 1 first, then 2, then 3, etc
-					
-					//TODO need a new NBT save slot
-					//ALSO: TODO: a visual indicator of current rando pos
 				}
 				else if(buildType == ItemCyclicWand.BuildType.RANDOM.ordinal()){
 					
 					Random rand = new Random();
 					itemSlot = slotNonEmpty.get(rand.nextInt(slotNonEmpty.size()));
 					toPlace = inv[itemSlot];
-					System.out.println("Rando"+itemSlot);
-					
 				}
-				
-				
-				
 				
 				if(toPlace != null //shouldnt be nul anymore
 						&& toPlace.getItem() != null && 

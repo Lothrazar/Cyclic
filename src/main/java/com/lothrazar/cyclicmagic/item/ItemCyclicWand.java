@@ -311,6 +311,19 @@ public class ItemCyclicWand extends Item {
 		FIRST,
 		ROTATE,
 		RANDOM; 
+
+		public static String getBuildTypeName( ItemStack wand) {
+			
+			try{
+				NBTTagCompound tags = getNBT(wand);
+				
+				return "button.build."+BuildType.values()[tags.getInteger("build")].toString().toLowerCase();
+			
+			}catch(Exception e){
+				return "wabuttonnd.build."+FIRST.toString().toLowerCase();
+			}
+		}
+		
 		public static int getBuildType( ItemStack wand) {
 			if(wand == null){
 				return 0;

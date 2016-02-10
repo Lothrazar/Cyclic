@@ -13,7 +13,7 @@ public class ButtonBuildToggle extends GuiButton{
 
 	final EntityPlayer thePlayer;
 	public ButtonBuildToggle(EntityPlayer player,int buttonId, int x, int y) {
-		super(buttonId, x, y,"type");
+		super(buttonId, x, y,"");
 		thePlayer = player;
 	}
 
@@ -35,7 +35,7 @@ public class ButtonBuildToggle extends GuiButton{
 	@Override
 	public void drawButton(Minecraft mc, int mouseX, int mouseY)
     {
-		this.displayString = "wand.build." + ItemCyclicWand.BuildType.getBuildType(thePlayer.getHeldItem());
+		this.displayString = ItemCyclicWand.BuildType.getBuildTypeName(thePlayer.getHeldItem());
 		
 		super.drawButton(mc, mouseX, mouseY);
     }

@@ -14,7 +14,7 @@ public class SpellFarReach extends BaseSpell {
 
 	public SpellFarReach(int id, String n) {
 		super(id, n);
-		this.cost = 20;
+		this.cost = 5;
 	}
 	
 	int maxRange = 64;//TODO: config
