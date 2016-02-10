@@ -62,13 +62,14 @@ public class MessagePlaceBlock implements IMessage, IMessageHandler<MessagePlace
 			// http://www.minecraftforge.net/forum/index.php?topic=21195.0
 
 			EntityPlayer p = ctx.getServerHandler().playerEntity;
+			
 			if(p.worldObj.isAirBlock(message.pos) || p.worldObj.getBlockState(message.pos).getBlock().isReplaceable(p.worldObj, message.pos)){
-				
 				
 				int buildType = ItemCyclicWand.BuildType.getBuildType(p.getHeldItem());
 				
 				ItemStack[] inv = InventoryWand.readFromNBT(p.getHeldItem());
 				ArrayList<Integer> slotNonEmpty = new ArrayList<Integer>();
+				
 				for(int i = 0; i < inv.length; i++){
 					
 					if(inv[i] != null && inv[i].getItem() != null && Block.getBlockFromItem(inv[i].getItem()) != null){
@@ -99,7 +100,7 @@ public class MessagePlaceBlock implements IMessage, IMessageHandler<MessagePlace
 					if(rot < 0 || rot >= inv.length){//JIT validation
 						rot = 0;
 					}
-					int test = 7;//like aninfloop but with a max
+					int test = InventoryWand.INV_SIZE+2;//like aninfloop but with a max
 					//in case we have gaps, maybe its [0,1,4] have items, so cycle through
 					for(int i = 0; i < test; i++){
 						

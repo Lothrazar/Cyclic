@@ -10,24 +10,26 @@ public class ContainerWand extends Container {
 	final InventoryWand inventory;
 
 	final int SQ = 18;
-
+	final int pad = 8;
+	final int hotbar = 9;
 	public ContainerWand(EntityPlayer par1Player, InventoryPlayer playerInventory, InventoryWand invoWand) {
 		this.inventory = invoWand;
 
+		
 		// player invo. below is copied from ContainerHopper.class
 		for (int j = 0; j < invoWand.getSizeInventory(); j++) {
-			this.addSlotToContainer(new SlotWand(invoWand, j, 44 + j * 18, 20));
+			this.addSlotToContainer(new SlotWand(invoWand, j, pad + j * SQ, 30));
 		}
 
 		int i = 51;
 		for (int l = 0; l < 3; ++l) {
 			for (int k = 0; k < 9; ++k) {
-				this.addSlotToContainer(new Slot(playerInventory, k + l * 9 + 9, 8 + k * 18, l * 18 + i));
+				this.addSlotToContainer(new Slot(playerInventory, k + l * hotbar + hotbar, pad + k * SQ, l * SQ + i));
 			}
 		}
 
-		for (int i1 = 0; i1 < 9; ++i1) {
-			this.addSlotToContainer(new Slot(playerInventory, i1, 8 + i1 * 18, 58 + i));
+		for (int k = 0; k < 9; ++k) {
+			this.addSlotToContainer(new Slot(playerInventory, k, pad + k * SQ, 58 + i));
 		}
 	}
 
