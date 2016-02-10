@@ -311,7 +311,10 @@ public class ItemCyclicWand extends Item {
 		FIRST,
 		ROTATE,
 		RANDOM; 
-
+		
+		final static String NBT_BUILD = "build";
+		final static String NBT_ROT = "rotation";
+		
 		public static String getBuildTypeName( ItemStack wand) {
 			
 			try{
@@ -330,14 +333,14 @@ public class ItemCyclicWand extends Item {
 			}
 			NBTTagCompound tags = getNBT(wand);
 			
-			return tags.getInteger("build");
+			return tags.getInteger(NBT_BUILD);
 		}
 		
 		public static void toggleBuildType(ItemStack wand) {
 
 			NBTTagCompound tags = getNBT(wand);
 			
-			int type = tags.getInteger("build");
+			int type = tags.getInteger(NBT_BUILD);
 			
 			type++;
 			
@@ -345,7 +348,7 @@ public class ItemCyclicWand extends Item {
 				type = 0;
 			}
 			
-			tags.setInteger("build", type);
+			tags.setInteger(NBT_BUILD, type);
 		}
 		
 		public static int getBuildRotation( ItemStack wand) {
@@ -354,13 +357,13 @@ public class ItemCyclicWand extends Item {
 			}
 			NBTTagCompound tags = getNBT(wand);
 			
-			return tags.getInteger("rotation");
+			return tags.getInteger(NBT_ROT);
 		}
 		public static void setBuildRotation( ItemStack wand, int rot) {
 		
 			NBTTagCompound tags = getNBT(wand);
 			
-			tags.setInteger("rotation",rot);
+			tags.setInteger(NBT_ROT,rot);
 		}
 	}
 	

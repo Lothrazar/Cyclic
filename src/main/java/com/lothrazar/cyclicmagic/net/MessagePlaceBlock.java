@@ -112,7 +112,7 @@ public class MessagePlaceBlock implements IMessage, IMessageHandler<MessagePlace
 								rot = 0;
 							}
 							
-							 ItemCyclicWand.BuildType.setBuildRotation(p.getHeldItem(),rot);
+							ItemCyclicWand.BuildType.setBuildRotation(p.getHeldItem(),rot);
 							
 							break;
 						}
@@ -134,9 +134,12 @@ public class MessagePlaceBlock implements IMessage, IMessageHandler<MessagePlace
 					if(state != null && p.getHeldItem()!=null&&p.getHeldItem().getItem() instanceof ItemCyclicWand){
 						
 						SpellRegistry.reach.placeFromServerPacket(p, message.pos, state);
-						inv[itemSlot].stackSize--;
 						
-						InventoryWand.writeToNBT(p.getHeldItem(), inv);
+						if(p.capabilities.isCreativeMode == false){
+							inv[itemSlot].stackSize--;
+							
+							InventoryWand.writeToNBT(p.getHeldItem(), inv);
+						}
 					}
 				}
 			}
