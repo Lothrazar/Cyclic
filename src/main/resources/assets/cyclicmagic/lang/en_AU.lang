@@ -75,3 +75,5 @@ spell.reach.name=Reach
 spell.reach.info=Build at long range
 spell.magnet.name=Magnet
 spell.magnet.info=Apply Magnet potion effect (draws items towards you)
+spell.inventory.name=Inventory
+spell.inventory.info=Open Wand container inventory (Used for Reach spell)
