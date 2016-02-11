@@ -3,6 +3,7 @@ package com.lothrazar.cyclicmagic.proxy;
 import java.util.ArrayList;
 import net.minecraft.item.Item;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MovingObjectPosition;
 import com.lothrazar.cyclicmagic.ItemRegistry;
 import com.lothrazar.cyclicmagic.Const;
@@ -38,7 +39,22 @@ public class ClientProxy extends CommonProxy {
 
 		Minecraft.getMinecraft().displayGuiScreen(new GuiSpellbook(Minecraft.getMinecraft().thePlayer));
 	}
-	
+
+	@SideOnly(Side.CLIENT)
+	@Override
+	public EnumFacing getSideMouseover(int max) {
+		MovingObjectPosition mouseOver = Minecraft.getMinecraft().getRenderViewEntity().rayTrace(max, 1f);
+		//now get whatever block position we are mousing over if anything
+
+		if(mouseOver != null){
+
+			// Get the block position and make sure it is a block
+			//World world = player.worldObj;
+			return mouseOver.sideHit;
+		
+		}
+		return null;
+	}
 	@SideOnly(Side.CLIENT)
 	@Override
 	public BlockPos getBlockMouseoverExact(int max) {

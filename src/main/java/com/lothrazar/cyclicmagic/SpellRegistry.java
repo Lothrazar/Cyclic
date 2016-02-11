@@ -13,7 +13,7 @@ public class SpellRegistry {
 	
 	static SpellScreenRender screen;
 	public static SpellCaster caster;
-
+	public static SpellRotate rotate;
 	private static void registerSpell(ISpell spell){
 		spellbook.add(spell);
 	}
@@ -55,7 +55,7 @@ public class SpellRegistry {
 		SpellReplacer replacer = new SpellReplacer(++spellId,"replacer");
 		registerSpell(replacer);
 		
-		SpellRotate rotate = new SpellRotate(++spellId,"rotate"); 
+		rotate = new SpellRotate(++spellId,"rotate"); 
 		registerSpell(rotate);
 
 		reach = new SpellFarReach(++spellId,"reach");

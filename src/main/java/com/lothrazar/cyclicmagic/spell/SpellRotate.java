@@ -1,5 +1,8 @@
 package com.lothrazar.cyclicmagic.spell;
 
+import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.net.MessageSpellReach;
+import com.lothrazar.cyclicmagic.net.MessageSpellRotate;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
@@ -15,22 +18,44 @@ public class SpellRotate extends BaseSpell {
 		this.cost = 1;
 	}
 
+	int maxRange = 64;//TODO: config
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side ) {
+	public boolean cast(World world, EntityPlayer p, BlockPos pos, EnumFacing side ) {
 
-		if (pos == null || world.getBlockState(pos) == null || side == null) {
+		
+		 if(!p.capabilities.allowEdit) {
+        	return false;
+        }
+	
+		if(world.isRemote){
+			//only client side can call this method. mouseover does not exist on server
+			BlockPos mouseover = ModMain.proxy.getBlockMouseoverExact(maxRange);
+			
+			if(mouseover != null ){
+				ModMain.network.sendToServer(new MessageSpellRotate(mouseover, ModMain.proxy.getSideMouseover(maxRange)));
+			}
+		}
+	
+		/***/
+		
+		return true;
+	}
+
+	public boolean castFromServer(BlockPos pos, EnumFacing side, EntityPlayer p) {
+		// TODO Auto-generated method stub
+		if (pos == null || p.worldObj.getBlockState(pos) == null || side == null) {
 			return false;
 		}
 		
-		IBlockState clicked = world.getBlockState(pos);
+		IBlockState clicked = p.worldObj.getBlockState(pos);
 		if(clicked.getBlock()==null){
 			return false;
 		}
 		
 		boolean isDone = false;
 		
-		if (clicked.getBlock().rotateBlock(world, pos, side)) {
+		if (clicked.getBlock().rotateBlock(p.worldObj, pos, side)) {
 			// for example, BlockMushroom.rotateBlock uses this, and hay bales
 			// use it to swap the 'axis'
 			isDone = true;
@@ -40,7 +65,7 @@ public class SpellRotate extends BaseSpell {
 				// since slabs do not use rotateBlock, swap the up or down half
 				// being used
 				if (prop.getName().equals("half")) {
-					world.setBlockState(pos, clicked.cycleProperty(prop));
+					p.worldObj.setBlockState(pos, clicked.cycleProperty(prop));
 					
 					isDone = true;
 				}
@@ -48,9 +73,8 @@ public class SpellRotate extends BaseSpell {
 		}
 		
 		if(isDone && clicked.getBlock().stepSound != null && clicked.getBlock().stepSound.getPlaceSound() != null){
-			UtilSound.playSoundAt(player, clicked.getBlock().stepSound.getPlaceSound());
+			UtilSound.playSoundAt(p, clicked.getBlock().stepSound.getPlaceSound());
 		}
-		
 		return isDone;
 	}
 }

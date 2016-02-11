@@ -53,6 +53,8 @@ public class ModMain {
 		network.registerMessage(MessageOpenSpellbook.class, MessageOpenSpellbook.class, packetID++, Side.CLIENT);
 		network.registerMessage(MessageSpellReach.class, MessageSpellReach.class, packetID++, Side.SERVER);
 		network.registerMessage(MessageToggleBuild.class, MessageToggleBuild.class, packetID++, Side.SERVER);
+		network.registerMessage(MessageSpellRotate.class, MessageSpellRotate.class, packetID++, Side.SERVER);
+		
 		
 
 		MinecraftForge.EVENT_BUS.register(new EventRegistry());

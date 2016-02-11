@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.proxy;
 
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 
 
 public class CommonProxy {
@@ -18,6 +19,10 @@ public class CommonProxy {
 	}
 	public BlockPos getBlockMouseoverOffset(int max) {
 		///server side
+		return null;
+	}
+
+	public EnumFacing getSideMouseover(int max) {
 		return null;
 	}
 }
