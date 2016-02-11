@@ -205,6 +205,9 @@ public class InventoryWand implements IInventory {
 	}
 	
 	public static ItemStack getFromSlot(ItemStack wand, int i){
+		if(i < 0 || i >= InventoryWand.INV_SIZE){
+			return null;
+		}
 		return InventoryWand.readFromNBT(wand)[i];
 	}
 	
@@ -239,17 +242,17 @@ public class InventoryWand implements IInventory {
 			
 			int rot = ItemCyclicWand.BuildType.getBuildRotation(wand);
 		
-			if(rot < 0 || rot >= inv.length){//JIT validation
-				rot = 0;
-			}
 			int test = InventoryWand.INV_SIZE+2;//like aninfloop but with a max
 			//in case we have gaps, maybe its [0,1,4] have items, so cycle through
 			for(int i = 0; i < test; i++){
-				
+
+				rot++;//first, move one up from last position
+				if(rot < 0 || rot >= inv.length){//JIT validation
+					rot = 0;
+				}
 				if(inv[rot] != null){
 					itemSlot = rot;
 					
-					rot++;
 					if(rot >= inv.length){
 						rot = 0;
 					}
@@ -258,6 +261,7 @@ public class InventoryWand implements IInventory {
 					
 					break;
 				}
+				//otherwise skip over empty slot one and keep looking
 			}
 		}
 		else if(buildType == ItemCyclicWand.BuildType.RANDOM.ordinal()){

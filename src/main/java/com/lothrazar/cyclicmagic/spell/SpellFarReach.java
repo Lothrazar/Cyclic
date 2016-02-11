@@ -41,10 +41,9 @@ public class SpellFarReach extends BaseSpell {
 		return false;
 	}
 	
-
-
 	public void castFromServer(BlockPos pos, EntityPlayer p) {
-		if(p.getHeldItem() == null || p.getHeldItem().getItem() instanceof ItemCyclicWand == false){
+		ItemStack heldWand = p.getHeldItem();
+		if(heldWand == null || heldWand.getItem() instanceof ItemCyclicWand == false){
 			return;
 		}
 		
@@ -52,13 +51,13 @@ public class SpellFarReach extends BaseSpell {
 		ItemStack[] invv = InventoryWand.readFromNBT(p.getHeldItem());
 		ItemStack toPlace = InventoryWand.getFromSlot(p.getHeldItem(),itemSlot);
 		
-		if(toPlace != null //shouldnt be nul anymore
+		if(toPlace != null  
 				&& toPlace.getItem() != null  
-						&& Block.getBlockFromItem(toPlace.getItem()) != null){
+				&& Block.getBlockFromItem(toPlace.getItem()) != null){
 			
 			IBlockState state = Block.getBlockFromItem(toPlace.getItem()).getStateFromMeta(toPlace.getMetadata());
 			
-			if(state != null && p.getHeldItem()!=null&&p.getHeldItem().getItem() instanceof ItemCyclicWand){
+			if(state != null  ){
 				
 				//kind of workaround since server packet handles message, but we want actual processing done in the spell
 				p.worldObj.setBlockState(pos, state);
@@ -74,7 +73,7 @@ public class SpellFarReach extends BaseSpell {
 				if(p.capabilities.isCreativeMode == false){
 					invv[itemSlot].stackSize--;
 					
-					InventoryWand.writeToNBT(p.getHeldItem(), invv);
+					InventoryWand.writeToNBT(heldWand, invv);
 				}
 			}
 		}
