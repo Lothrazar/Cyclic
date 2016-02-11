@@ -11,19 +11,17 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class MessageSpellReach implements IMessage, IMessageHandler<MessageSpellReach, IMessage> {
-	private int x;
-	private int y;
-	private int z;
+
 	private BlockPos pos;
+	private BlockPos posOffset;
 
 	public MessageSpellReach() {
 	}
 
-	public MessageSpellReach(BlockPos p) {
-		x = p.getX();
-		y = p.getY();
-		z = p.getZ();
-		pos = p;
+	public MessageSpellReach(BlockPos mouseover,BlockPos offset) {
+
+		pos = mouseover;
+		posOffset = offset;
 	}
 
 	@Override
@@ -31,19 +29,28 @@ public class MessageSpellReach implements IMessage, IMessageHandler<MessageSpell
 		
 		NBTTagCompound tags =  ByteBufUtils.readTag(buf);
 	
-		x = tags.getInteger("x");
-		y = tags.getInteger("y");
-		z = tags.getInteger("z");
+		int x = tags.getInteger("x");
+		int y = tags.getInteger("y");
+		int z = tags.getInteger("z");
 		pos = new BlockPos(x,y,z);
+		
+		x = tags.getInteger("ox");
+		y = tags.getInteger("oy");
+		z = tags.getInteger("oz");
+		posOffset = new BlockPos(x,y,z);
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf) {
 		
 		NBTTagCompound tags = new NBTTagCompound();
-		tags.setInteger("x", x);
-		tags.setInteger("y", y);
-		tags.setInteger("z", z);
+		tags.setInteger("x", pos.getX());
+		tags.setInteger("y", pos.getY());
+		tags.setInteger("z", pos.getZ());
+		
+		tags.setInteger("ox", posOffset.getX());
+		tags.setInteger("oy", posOffset.getY());
+		tags.setInteger("oz", posOffset.getZ());
 
 		ByteBufUtils.writeTag(buf, tags);
 	}
@@ -55,10 +62,10 @@ public class MessageSpellReach implements IMessage, IMessageHandler<MessageSpell
 
 			EntityPlayer p = ctx.getServerHandler().playerEntity;
 			
-			if(p.worldObj.isAirBlock(message.pos) || p.worldObj.getBlockState(message.pos).getBlock().isReplaceable(p.worldObj, message.pos)){
+			//if( p.worldObj.getBlockState(message.pos).getBlock().isReplaceable(p.worldObj, message.pos)){
 				
-				SpellRegistry.reach.castFromServer(message.pos, p);
-			}
+			SpellRegistry.reach.castFromServer(message.pos,message.posOffset, p);
+			
 		}
 		
 		return null;

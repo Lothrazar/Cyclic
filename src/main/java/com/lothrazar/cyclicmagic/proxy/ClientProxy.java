@@ -41,12 +41,30 @@ public class ClientProxy extends CommonProxy {
 	
 	@SideOnly(Side.CLIENT)
 	@Override
-	public BlockPos getBlockMouseover(int max) {
+	public BlockPos getBlockMouseoverExact(int max) {
+
+		// Get the player and their held item
+
+		MovingObjectPosition mouseOver = Minecraft.getMinecraft().getRenderViewEntity().rayTrace(max, 1f);
+		//now get whatever block position we are mousing over if anything
+
+		if(mouseOver != null){
+
+			// Get the block position and make sure it is a block
+			//World world = player.worldObj;
+			return mouseOver.getBlockPos();
+		
+		}
+		return null;
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@Override
+	public BlockPos getBlockMouseoverOffset(int max) {
 
 		// Get the player and their held item
 		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
 
- 
 		//int max = 50;
 		MovingObjectPosition mouseOver = Minecraft.getMinecraft().getRenderViewEntity().rayTrace(max, 1f);
 		//now get whatever block position we are mousing over if anything
@@ -59,13 +77,7 @@ public class ClientProxy extends CommonProxy {
 			
 			if(blockPos != null && player.worldObj.getBlockState(blockPos) != null){
 	
-				// Make sure the block is valid
-				//IBlockState blockState = player.worldObj.getBlockState(blockPos);
-				//Block block = blockState.getBlock();
-				//if(block != null && block.getMaterial() != Material.air) {
-				
-					return blockPos.offset(mouseOver.sideHit);
-				//}
+				return blockPos.offset(mouseOver.sideHit);
 			}
 		}
 		return null;

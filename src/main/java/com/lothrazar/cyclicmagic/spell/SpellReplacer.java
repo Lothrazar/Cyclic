@@ -78,4 +78,8 @@ public class SpellReplacer extends BaseSpell {
 
 		return false;
 	}
+	
+	
+	
+	
 }

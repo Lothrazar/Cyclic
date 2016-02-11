@@ -310,7 +310,8 @@ public class ItemCyclicWand extends Item {
 	public enum BuildType{
 		FIRST,
 		ROTATE,
-		RANDOM; 
+		RANDOM,
+		MATCH; 
 		
 		final static String NBT_BUILD = "build";
 		final static String NBT_ROT = "rotation";
@@ -322,7 +323,8 @@ public class ItemCyclicWand extends Item {
 				
 				return "button.build."+BuildType.values()[tags.getInteger("build")].toString().toLowerCase();
 			
-			}catch(Exception e){
+			}
+			catch(Exception e){
 				System.out.println(e.getMessage());
 				return "button.build."+FIRST.toString().toLowerCase();
 			}
@@ -345,8 +347,8 @@ public class ItemCyclicWand extends Item {
  
 			type++;
 			
-			if(type > 2){
-				type = 0;
+			if(type > MATCH.ordinal()){
+				type = FIRST.ordinal();
 			} 
 			
 			tags.setInteger(NBT_BUILD, type);
@@ -360,6 +362,7 @@ public class ItemCyclicWand extends Item {
 			
 			return tags.getInteger(NBT_ROT);
 		}
+		
 		public static void setBuildRotation( ItemStack wand, int rot) {
 		
 			NBTTagCompound tags = getNBT(wand);

@@ -12,7 +12,11 @@ public class CommonProxy {
 		//server does nothing
 	}
 
-	public BlockPos getBlockMouseover(int max) {
+	public BlockPos getBlockMouseoverExact(int max) {
+		///server side
+		return null;
+	}
+	public BlockPos getBlockMouseoverOffset(int max) {
 		///server side
 		return null;
 	}

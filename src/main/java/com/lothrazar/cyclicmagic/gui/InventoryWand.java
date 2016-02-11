@@ -5,6 +5,7 @@ import java.util.Random;
 import com.lothrazar.cyclicmagic.ItemRegistry;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -211,7 +212,7 @@ public class InventoryWand implements IInventory {
 		return InventoryWand.readFromNBT(wand)[i];
 	}
 	
-	public static int getSlotByBuildType(ItemStack wand){
+	public static int getSlotByBuildType(ItemStack wand, IBlockState placeState){
 		int itemSlot = -1;
 
 		int buildType = ItemCyclicWand.BuildType.getBuildType(wand);
@@ -226,11 +227,9 @@ public class InventoryWand implements IInventory {
 		}
 
 		//brute forcing it. there is surely a more elegant way in each branch
-		//TODO: switch?
-		//TODO: move to Build Type subclass or something?
 		if(buildType == ItemCyclicWand.BuildType.FIRST.ordinal()){
 		
-			for(int i = 0; i < inv.length; i++){
+			for(int i : slotNonEmpty){
 				if(inv[i] != null){
 					
 					itemSlot = i;
@@ -239,7 +238,7 @@ public class InventoryWand implements IInventory {
 			}
 		}
 		else if(buildType == ItemCyclicWand.BuildType.ROTATE.ordinal()){
-			
+			 
 			int rot = ItemCyclicWand.BuildType.getBuildRotation(wand);
 		
 			int test = InventoryWand.INV_SIZE+2;//like aninfloop but with a max
@@ -268,6 +267,27 @@ public class InventoryWand implements IInventory {
 			
 			Random rand = new Random();
 			itemSlot = slotNonEmpty.get(rand.nextInt(slotNonEmpty.size()));
+		}
+		else if(buildType == ItemCyclicWand.BuildType.MATCH.ordinal()){
+	
+			//damage dropped meaning what it really is , not item version
+			int meta = placeState.getBlock().damageDropped(placeState);
+	
+			ItemStack compareStack = new ItemStack(placeState.getBlock(), 1, meta);
+			ItemStack curr;
+	
+			//for (int i = 0; i < player.inventory.getSizeInventory(); ++i) {
+			for(int i : slotNonEmpty){
+				curr = inv[i] ;//player.inventory.getStackInSlot(i);
+			
+				if (curr != null && curr.isItemEqual(compareStack)) {
+				
+					itemSlot = i;
+					break;
+				}
+			}
+		  
+			//could be null in this one
 		}
 		
 		return itemSlot;
