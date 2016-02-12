@@ -13,7 +13,11 @@ public class SpellRegistry {
 	
 	static SpellScreenRender screen;
 	public static SpellCaster caster;
+	
 	public static SpellRotate rotate;
+	public static SpellPush push;
+	public static SpellPull pull;
+	
 	private static void registerSpell(ISpell spell){
 		spellbook.add(spell);
 	}
@@ -64,10 +68,10 @@ public class SpellRegistry {
 		SpellInventory inventory = new SpellInventory(++spellId,"inventory");
 		registerSpell(inventory);
 		
-		SpellPush push = new SpellPush(++spellId,"push");
+		push = new SpellPush(++spellId,"push");
 		registerSpell(push);
 
-		SpellPull pull = new SpellPull(++spellId,"pull");
+		pull = new SpellPull(++spellId,"pull");
 		registerSpell(pull);
 
 		SpellChestSack chestsack = new SpellChestSack(++spellId,"chestsack");
