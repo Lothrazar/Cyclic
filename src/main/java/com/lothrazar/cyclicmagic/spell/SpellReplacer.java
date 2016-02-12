@@ -1,5 +1,7 @@
 package com.lothrazar.cyclicmagic.spell;
 
+import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.net.MessageSpellReplacer;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -15,18 +17,34 @@ public class SpellReplacer extends BaseSpell {
 		super(id, n);
 		this.cooldown = 1;
 	}
-	
+
+	int maxRange = 64;// TODO: config
 	@Override
 	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side) {
-
+/*// replacing these with mouseover...???//
 		if (pos == null || side == null) {
 			return false;
 		}
-		
+		*/
         if(!player.capabilities.allowEdit) {
         	return false;
         }
-	
+        if (world.isRemote) {
+			// only client side can call this method. mouseover does not exist
+			// on server
+			BlockPos mouseover = ModMain.proxy.getBlockMouseoverExact(maxRange);
+
+			if (mouseover != null) {
+				ModMain.network.sendToServer(new MessageSpellReplacer(mouseover, ModMain.proxy.getSideMouseover(maxRange)));
+			}
+		}
+		return false;
+	}
+
+	public boolean castFromServer(BlockPos pos, EnumFacing side, EntityPlayer player) {
+
+		World world = player.worldObj;
+
 		if (world.getBlockState(pos) == null || world.getBlockState(pos).getBlock() == null) {
 			return false;
 		}
@@ -78,8 +96,4 @@ public class SpellReplacer extends BaseSpell {
 
 		return false;
 	}
-	
-	
-	
-	
 }
