@@ -5,6 +5,7 @@ import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.gui.InventoryWand;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.net.MessageSpellReach;
+import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -13,6 +14,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 
 public class SpellFarReach extends BaseSpell {
@@ -30,6 +32,8 @@ public class SpellFarReach extends BaseSpell {
         	return false;
         }
 	
+        
+        
 		if(world.isRemote){
 			//only client side can call this method. mouseover does not exist on server
 			BlockPos mouseover = ModMain.proxy.getBlockMouseoverExact(maxRange);
@@ -37,6 +41,11 @@ public class SpellFarReach extends BaseSpell {
 			
 			if(mouseover != null && offset != null){
 				ModMain.network.sendToServer(new MessageSpellReach(mouseover,offset));
+				
+				//start is pos, end is offset
+				BlockPos start = p.getPosition();
+				
+				UtilParticle.spawnParticleBeam(world, EnumParticleTypes.SPELL_INSTANT, start, mouseover, 3);
 			}
 		}
 		

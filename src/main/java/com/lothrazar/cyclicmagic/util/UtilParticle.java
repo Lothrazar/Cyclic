@@ -27,6 +27,20 @@ public class UtilParticle {
 	public static void spawnParticle(World world, EnumParticleTypes sparkle, BlockPos pos) {
 		spawnParticle(world, sparkle, pos.getX(), pos.getY(), pos.getZ());
 	}
+	public static void spawnParticleBeam(World world, EnumParticleTypes sparkle, BlockPos start, BlockPos end, int count) {
+		//thanks to http://www.minecraftforge.net/forum/index.php?topic=30567.0
+		//and  http://mathforum.org/library/drmath/view/65721.html
+		float dX = end.getX() - start.getX();
+		float dY = end.getY() - start.getY();
+		float dZ = end.getZ() - start.getZ();
+		float t,x,y,z;
+		for(t = 0.0F; t < 1.0F; t += 0.05F) {
+			x = start.getX() + (dX * t);
+			y = start.getY() + (dY * t);
+			z = start.getZ() + (dZ * t);
+			UtilParticle.spawnParticle(world, sparkle, x,y,z, count);
+		}
+	}
 
 	public static void spawnParticlePacket(BlockPos position, int particleID) {
 		// this. fires only on server side. so send packet for client to spawn
