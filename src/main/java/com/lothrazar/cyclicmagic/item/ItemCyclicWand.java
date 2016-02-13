@@ -178,6 +178,9 @@ public class ItemCyclicWand extends Item {
 			return isSpellUnlocked(stack,spell.getID());
 		}
 		public static boolean isSpellUnlocked(ItemStack stack, int spell_id){
+			if(stack == null){
+				return false;
+			}
 			NBTTagCompound nbt = getNBT(stack);
 			return nbt.getBoolean(NBT_UNLOCKS + spell_id);
 		}

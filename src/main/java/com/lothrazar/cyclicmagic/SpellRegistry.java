@@ -18,6 +18,7 @@ public class SpellRegistry {
 	public static SpellPush push;
 	public static SpellPull pull;
 	public static SpellReplacer replacer;
+	public static SpellInventory inventory;
 	
 	private static void registerSpell(ISpell spell){
 		spellbook.add(spell);
@@ -66,7 +67,7 @@ public class SpellRegistry {
 		reach = new SpellFarReach(++spellId,"reach");
 		registerSpell(reach);
 
-		SpellInventory inventory = new SpellInventory(++spellId,"inventory");
+		inventory = new SpellInventory(++spellId,"inventory");
 		registerSpell(inventory);
 		
 		push = new SpellPush(++spellId,"push");

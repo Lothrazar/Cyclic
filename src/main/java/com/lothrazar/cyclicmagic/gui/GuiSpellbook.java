@@ -93,6 +93,10 @@ public class GuiSpellbook extends GuiScreen {
 		int spellSize = 16;
 		UtilTextureRender.drawTextureSquare(ptr, mouseX-8,mouseY-8, spellSize);
 		for (ISpell s : SpellRegistry.getSpellbook()) {
+			
+
+
+
 
 			cx = xCenter + radius * Math.cos(ang);
 			cy = yCenter + radius * Math.sin(ang);
@@ -106,6 +110,9 @@ public class GuiSpellbook extends GuiScreen {
 			else{
 				header = s.getIconDisplayHeaderDisabled();
 			}
+			
+//TODO: maybe a special header for this guy??
+			//if(s.getID() == SpellRegistry.inventory.getID())
 			UtilTextureRender.drawTextureSimple(header, (int) cx, (int) cy-8, spellSize-4,spellSize-4);
 			
 			ang += arc;
