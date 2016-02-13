@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.spell;
 
 import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.gui.InventoryWand;
+import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.net.MessageSpellReplacer;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
@@ -41,32 +43,34 @@ public class SpellReplacer extends BaseSpell {
 		return false;
 	}
 
-	public boolean castFromServer(BlockPos pos, EnumFacing side, EntityPlayer player) {
+	public boolean castFromServer(BlockPos posMouseover, EnumFacing side, EntityPlayer player) {
 
 		World world = player.worldObj;
-
-		if (world.getBlockState(pos) == null || world.getBlockState(pos).getBlock() == null) {
+		ItemStack heldWand = player.getHeldItem();
+		if(heldWand == null || heldWand.getItem() instanceof ItemCyclicWand == false){
 			return false;
 		}
 		
-		if(world.getTileEntity(pos) != null){
+		if (world.getBlockState(posMouseover) == null || world.getBlockState(posMouseover).getBlock() == null) {
+			return false;
+		}
+		
+		if(world.getTileEntity(posMouseover) != null){
 			return false;//not chests, etc
 		}
 		
-		IBlockState stateHere = world.getBlockState(pos);
+		IBlockState stateHere = world.getBlockState(posMouseover);
 		Block blockHere = stateHere.getBlock();
 
-		if(blockHere.getBlockHardness(world, pos) == -1){
+		if(blockHere.getBlockHardness(world, posMouseover) == -1){
 			return false; // is unbreakable-> like bedrock
 		}
 		
-		int current = player.inventory.currentItem;
-		if(current >= 9){
-			return false;
-		}
-		int slotFound = current + 1;
+		int itemSlot = InventoryWand.getSlotByBuildType(heldWand,world.getBlockState(posMouseover));
+		ItemStack[] invv = InventoryWand.readFromNBT(heldWand);
+		ItemStack toPlace = InventoryWand.getFromSlot(heldWand,itemSlot);
 
-		ItemStack toPlace = player.inventory.getStackInSlot(slotFound);
+		//ItemStack toPlace = player.inventory.getStackInSlot(itemSlot);
 		
 		if(toPlace == null || toPlace.getItem() == null || Block.getBlockFromItem(toPlace.getItem()) == null){
 			return false;
@@ -79,12 +83,15 @@ public class SpellReplacer extends BaseSpell {
 			return false;//dont replace cobblestone with cobblestone
 		}
  
-		if (world.destroyBlock(pos, true) && world.setBlockState(pos, placeState)) {
+		if (world.destroyBlock(posMouseover, true) && world.setBlockState(posMouseover, placeState)) {
 
 			//replacement worked!
 			if(player.capabilities.isCreativeMode == false){
-				player.inventory.decrStackSize(slotFound, 1);
-				player.inventoryContainer.detectAndSendChanges();
+				//player.inventory.decrStackSize(itemSlot, 1);
+				//player.inventoryContainer.detectAndSendChanges();
+				
+				invv[itemSlot].stackSize--;
+				InventoryWand.writeToNBT(heldWand, invv);
 			}
 			
 			if(placeState.getBlock().stepSound != null && placeState.getBlock().stepSound.getPlaceSound() != null){
