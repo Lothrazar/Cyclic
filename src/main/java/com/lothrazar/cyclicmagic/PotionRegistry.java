@@ -92,7 +92,7 @@ public class PotionRegistry {
 			BlockPos pos = event.entityLiving.getPosition();
 
 			if (world.rand.nextDouble() < 0.5) {
-				UtilParticle.spawnParticlePacket(pos, EnumParticleTypes.SNOWBALL.getParticleID());
+				UtilParticle.spawnParticle(world, EnumParticleTypes.SNOWBALL, pos);
 			}
 
 			if (world.rand.nextDouble() < 0.3 

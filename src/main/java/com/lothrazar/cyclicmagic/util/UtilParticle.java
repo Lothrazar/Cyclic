@@ -11,9 +11,16 @@ public class UtilParticle {
 
 	public static void spawnParticle(World world, EnumParticleTypes sparkle, double x, double y, double z, int count) {
 		
-		// http://www.minecraftforge.net/forum/index.php?topic=9744.0
-		for (int countparticles = 0; countparticles <= count; ++countparticles) {
-			world.spawnParticle(sparkle, x + (world.rand.nextDouble() - 0.5D) * (double) 0.8, y + world.rand.nextDouble() * (double) 1.5 - (double) 0.1, z + (world.rand.nextDouble() - 0.5D) * (double) 0.8, 0.0D, 0.0D, 0.0D);
+		if(world.isRemote){
+			//client side
+		
+			// http://www.minecraftforge.net/forum/index.php?topic=9744.0
+			for (int countparticles = 0; countparticles <= count; ++countparticles) {
+				world.spawnParticle(sparkle, x + (world.rand.nextDouble() - 0.5D) * (double) 0.8, y + world.rand.nextDouble() * (double) 1.5 - (double) 0.1, z + (world.rand.nextDouble() - 0.5D) * (double) 0.8, 0.0D, 0.0D, 0.0D);
+			}
+		}
+		else{
+			spawnParticlePacket(sparkle, new BlockPos(x,y,z), count);
 		}
 	}
 
@@ -42,9 +49,9 @@ public class UtilParticle {
 		}
 	}
 
-	public static void spawnParticlePacket(BlockPos position, int particleID) {
+	private static void spawnParticlePacket(EnumParticleTypes particle, BlockPos position , int count) {
 		// this. fires only on server side. so send packet for client to spawn
 		// particles and so on
-		ModMain.network.sendToAll(new MessageParticle(position, particleID));
+		ModMain.network.sendToAll(new MessageParticle(position, particle.getParticleID(), count));
 	}
 }

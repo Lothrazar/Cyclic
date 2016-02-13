@@ -18,23 +18,25 @@ public class MessageParticle implements IMessage, IMessageHandler<MessageParticl
 	private int y;
 	private int z;
 	private int particle;
+	private int count;
 
 	public MessageParticle() {
 	}
 
-	public MessageParticle(BlockPos p, int part) {
+	public MessageParticle(BlockPos p, int part, int c) {
 		x = p.getX();
 		y = p.getY();
 		z = p.getZ();
 		particle = part;
+		count = c;
 	}
-
+/*
 	public MessageParticle(int _x, int _y, int _z, int part) {
 		x = _x;
 		y = _y;
 		z = _z;
 		particle = part;
-	}
+	}*/
 
 	@Override
 	public void fromBytes(ByteBuf buf) {

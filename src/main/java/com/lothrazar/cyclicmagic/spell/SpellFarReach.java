@@ -53,9 +53,8 @@ public class SpellFarReach extends BaseSpell {
 				ModMain.network.sendToServer(new MessageSpellReach(mouseover,offset));
 				
 				//start is pos, end is offset
-				BlockPos start = p.getPosition();
+			 
 				
-				UtilParticle.spawnParticleBeam(world, EnumParticleTypes.SPELL_INSTANT, start, mouseover, 3);
 			}
 		}
 		
@@ -104,6 +103,9 @@ public class SpellFarReach extends BaseSpell {
 						//player.inventoryContainer.detectAndSendChanges();
 						InventoryWand.writeToNBT(heldWand, invv);
 					}
+					
+					//yes im spawning particles on the server side, but the util handles that
+					UtilParticle.spawnParticleBeam(p.worldObj, EnumParticleTypes.SPELL_INSTANT, p.getPosition(), posMouseover, 3);
 				}
 			}
 		}
