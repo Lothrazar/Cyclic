@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 public class SpellReplacer extends BaseSpell {
 
 	public SpellReplacer(int id, String n) {
-		super(id, n);
+		super.init(id, n);
 		this.cooldown = 1;
 	}
 
@@ -97,5 +97,17 @@ public class SpellReplacer extends BaseSpell {
 		}
 
 		return false;
+	}
+
+	@Override
+	public void spawnParticle(World world, EntityPlayer player, BlockPos pos) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void playSound(World world, EntityPlayer player, BlockPos pos) {
+		// TODO Auto-generated method stub
+		
 	}
 }

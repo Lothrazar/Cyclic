@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 
 public class SpellCarbonPaper extends BaseSpell implements ISpell {
 	public SpellCarbonPaper(int id ,String name){
-		super(id,name);
+		super.init(id,name);
 	}
 	@Override
 	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side ) {
@@ -46,5 +46,15 @@ public class SpellCarbonPaper extends BaseSpell implements ISpell {
 		}
 		
 		return false;
+	}
+	
+	@Override
+	public void spawnParticle(World world, EntityPlayer player, BlockPos pos) {
+
+	}
+
+	@Override
+	public void playSound(World world, EntityPlayer player, BlockPos pos) {
+		
 	}
 }

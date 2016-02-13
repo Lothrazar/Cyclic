@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class SpellInventory extends BaseSpell{
 
 	public SpellInventory(int id, String n) {
-		super(id, n);
+		super.init(id, n);
 		this.cost = 0;//so far, the only spell costing zero
 	}
 
@@ -22,5 +22,17 @@ public class SpellInventory extends BaseSpell{
 		}
 		
 		return true;
+	}
+
+	@Override
+	public void spawnParticle(World world, EntityPlayer player, BlockPos pos) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void playSound(World world, EntityPlayer player, BlockPos pos) {
+		// TODO Auto-generated method stub
+		
 	}
 }

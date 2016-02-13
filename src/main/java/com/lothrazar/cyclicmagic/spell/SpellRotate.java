@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 
 public class SpellRotate extends BaseSpell {
 	public SpellRotate(int id, String name) {
-		super(id, name);
+		super.init(id, name);
 		this.cooldown = 1;
 		this.cost = 2;
 	}
@@ -75,5 +75,17 @@ public class SpellRotate extends BaseSpell {
 			UtilSound.playSoundAt(p, clicked.getBlock().stepSound.getPlaceSound());
 		}
 		return isDone;
+	}
+
+	@Override
+	public void spawnParticle(World world, EntityPlayer player, BlockPos pos) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void playSound(World world, EntityPlayer player, BlockPos pos) {
+		// TODO Auto-generated method stub
+		
 	}
 }

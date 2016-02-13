@@ -20,8 +20,18 @@ import net.minecraft.world.World;
 public class SpellFarReach extends BaseSpell {
 
 	public SpellFarReach(int id, String n) {
-		super(id, n);
+		super.init(id, n);
 		this.cost = 5;
+	}
+	
+	@Override
+	public void spawnParticle(World world, EntityPlayer player, BlockPos pos) {
+
+	}
+
+	@Override
+	public void playSound(World world, EntityPlayer player, BlockPos pos) {
+		
 	}
 	
 	int maxRange = 64;//TODO: config

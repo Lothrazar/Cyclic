@@ -13,7 +13,7 @@ public class SpellLaunch extends BaseSpell implements ISpell {
 	private static final float mountPower = 1.01F;
 
 	public SpellLaunch(int id, String name) {
-		super(id, name);
+		super.init(id, name);
 		this.cost = 10;
 	}
 
@@ -52,5 +52,17 @@ public class SpellLaunch extends BaseSpell implements ISpell {
 		UtilSound.playSoundAt(player, UtilSound.Own.bwoaaap );
 		
 		return true;
+	}
+
+	@Override
+	public void spawnParticle(World world, EntityPlayer player, BlockPos pos) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void playSound(World world, EntityPlayer player, BlockPos pos) {
+		// TODO Auto-generated method stub
+		
 	}
 }

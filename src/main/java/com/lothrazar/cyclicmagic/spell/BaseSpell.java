@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.spell;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
@@ -19,7 +18,7 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
  * @author Sam Bassett (Lothrazar)
  *
  */
-public class BaseSpell implements ISpell {
+public abstract class BaseSpell implements ISpell {
 
 	private ResourceLocation icon;
 	private int ID;
@@ -29,7 +28,7 @@ public class BaseSpell implements ISpell {
 	private final static ResourceLocation header = new ResourceLocation(Const.MODID, "textures/spells/header_on.png");
 	private final static ResourceLocation header_empty = new ResourceLocation(Const.MODID, "textures/spells/header_off.png");
 
-	public BaseSpell(int id, String n) {
+	protected void init(int id, String n){
 		ID = id;
 		name = n;
 		cost = 5;
@@ -49,13 +48,7 @@ public class BaseSpell implements ISpell {
 	public int getCastCooldown() {
 		return cooldown;
 	}
-
-	@Override
-	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side) {
-		// never cast a base spell, always override this
-		return false;
-	}
-
+	
 	@Override
 	public int getCost() {
 		return cost;
@@ -78,7 +71,7 @@ public class BaseSpell implements ISpell {
 	}
 
 	@Override
-	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos) {
+	public void payCost(World world, EntityPlayer player, BlockPos pos) {
 		
 		if(player.capabilities.isCreativeMode == false){
 			ItemCyclicWand.Energy.drainBy(player.getHeldItem(), this.getCost());

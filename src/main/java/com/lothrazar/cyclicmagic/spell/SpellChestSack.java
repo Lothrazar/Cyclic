@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 public class SpellChestSack extends BaseSpell implements ISpell {
 
 	public SpellChestSack(int id,String name){
-		super(id,name);
+		super.init(id,name);
 		this.cost = 30;
 	}
 
@@ -45,10 +45,20 @@ public class SpellChestSack extends BaseSpell implements ISpell {
 	}
 
 	@Override
-	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos) {
+	public void payCost(World world, EntityPlayer player, BlockPos pos) {
 		
 		UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT, pos);
 		
-		super.onCastSuccess(world, player, pos);
+		super.payCost(world, player, pos);
+	}
+	
+	@Override
+	public void spawnParticle(World world, EntityPlayer player, BlockPos pos) {
+
+	}
+
+	@Override
+	public void playSound(World world, EntityPlayer player, BlockPos pos) {
+		
 	}
 }

@@ -15,7 +15,7 @@ public class SpellLinkingPortal  extends BaseSpell implements ISpell {
 	//so that when you use it, you return to that exact spot
 	//also put on display the coords,biome, player who created it
 	public SpellLinkingPortal(int id,String name){
-		super(id,name);
+		super.init(id,name);
 		this.cost = 35;
 	}
 	@Override
@@ -29,5 +29,15 @@ public class SpellLinkingPortal  extends BaseSpell implements ISpell {
 		}
 		
 		return false;
+	}
+	@Override
+	public void spawnParticle(World world, EntityPlayer player, BlockPos pos) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void playSound(World world, EntityPlayer player, BlockPos pos) {
+		// TODO Auto-generated method stub
+		
 	}
 }

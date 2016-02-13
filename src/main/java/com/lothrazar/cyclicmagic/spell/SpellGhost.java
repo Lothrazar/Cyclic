@@ -19,8 +19,18 @@ public class SpellGhost extends BaseSpell implements ISpell {
 	private static final int GHOST_SECONDS = 5;
 
 	public SpellGhost(int id, String name) {
-		super(id, name);
+		super.init(id, name);
 		this.cost = 25;
+	}
+	
+	@Override
+	public void spawnParticle(World world, EntityPlayer player, BlockPos pos) {
+
+	}
+
+	@Override
+	public void playSound(World world, EntityPlayer player, BlockPos pos) {
+		
 	}
 
 	@Override
@@ -42,10 +52,10 @@ public class SpellGhost extends BaseSpell implements ISpell {
 	}
 
 	@Override
-	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos) {
+	public void payCost(World world, EntityPlayer player, BlockPos pos) {
 		UtilSound.playSoundAt(player, UtilSound.drink);
 
-		super.onCastSuccess(world, player, pos);
+		super.payCost(world, player, pos);
 	}
 
 	private void setPlayerGhostMode(EntityPlayer player, World par2World) {

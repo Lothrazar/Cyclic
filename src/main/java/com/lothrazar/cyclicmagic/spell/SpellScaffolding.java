@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 
 public class SpellScaffolding extends BaseSpell {
 	public SpellScaffolding(int id,String name){
-		super(id,name);
+		super.init(id,name);
 	}
  
 	@Override
@@ -86,5 +86,17 @@ public class SpellScaffolding extends BaseSpell {
 		}
 		
 		return false;
+	}
+
+	@Override
+	public void spawnParticle(World world, EntityPlayer player, BlockPos pos) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void playSound(World world, EntityPlayer player, BlockPos pos) {
+		// TODO Auto-generated method stub
+		
 	}
 }

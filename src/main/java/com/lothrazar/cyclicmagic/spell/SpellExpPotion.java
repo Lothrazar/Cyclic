@@ -14,8 +14,18 @@ public class SpellExpPotion extends BaseSpell implements ISpell {
 	private int potionDuration;
 	private int potionAmp;
 	public SpellExpPotion(int id,String name, int pcost){
-		super(id,name);
+		super.init(id,name);
 		this.cost = pcost;
+	}
+	
+	@Override
+	public void spawnParticle(World world, EntityPlayer player, BlockPos pos) {
+
+	}
+
+	@Override
+	public void playSound(World world, EntityPlayer player, BlockPos pos) {
+		
 	}
 
 	public SpellExpPotion setPotion(int id, int effectDuration, int effectAmplifier) {
@@ -33,9 +43,9 @@ public class SpellExpPotion extends BaseSpell implements ISpell {
 	}
 
 	@Override
-	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos) {
+	public void payCost(World world, EntityPlayer player, BlockPos pos) {
 		UtilSound.playSoundAt(player, UtilSound.drink);
 
-		super.onCastSuccess(world, player, pos);
+		super.payCost(world, player, pos);
 	}
 }

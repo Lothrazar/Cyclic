@@ -18,8 +18,12 @@ public interface ISpell {
 
 	public int getCastCooldown();
 
-	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos);
+	public void payCost(World world, EntityPlayer player, BlockPos pos);
 
+	public void spawnParticle(World world, EntityPlayer player, BlockPos pos);
+
+	public void playSound(World world, EntityPlayer player, BlockPos pos);
+	
 	public void onCastFailure(World world, EntityPlayer player, BlockPos pos);
 
 	public ResourceLocation getIconDisplay();

@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class SpellThrowTorch extends BaseSpell implements ISpell{
 
 	public SpellThrowTorch(int id,String name){
-		super(id,name);
+		super.init(id,name);
 		this.cost = 15;
 	}
 
@@ -24,9 +24,21 @@ public class SpellThrowTorch extends BaseSpell implements ISpell{
 	}
 	
 	@Override
-	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos) {
+	public void payCost(World world, EntityPlayer player, BlockPos pos) {
 
 		UtilSound.playSoundAt(player, UtilSound.Own.pew);
-		super.onCastSuccess(world, player, pos);
+		super.payCost(world, player, pos);
+	}
+
+	@Override
+	public void spawnParticle(World world, EntityPlayer player, BlockPos pos) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void playSound(World world, EntityPlayer player, BlockPos pos) {
+		// TODO Auto-generated method stub
+		
 	}
 }

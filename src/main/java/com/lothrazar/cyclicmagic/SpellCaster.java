@@ -53,7 +53,7 @@ public class SpellCaster {
 	public void castSuccess(ISpell spell, World world, EntityPlayer player, BlockPos pos){
 		// succes should do things like: drain resources, play sounds
 		// and particles
-		spell.onCastSuccess(world, player, pos);
+		spell.payCost(world, player, pos);
 
 		PlayerPowerups.get(player).setSpellTimer(spell.getCastCooldown());
 	}

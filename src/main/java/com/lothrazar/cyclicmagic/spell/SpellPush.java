@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 
 public class SpellPush extends BaseSpell {
 	public SpellPush(int id,String name){
-		super(id,name);
+		super.init(id,name);
 		this.cooldown = 1;
 		this.cost = 1;
 	}
@@ -40,6 +40,18 @@ public class SpellPush extends BaseSpell {
 		
 		//BlockPos resultPosition = 
 		UtilMoveBlock.pushBlock(p.worldObj, p, pos, side);
+		
+	}
+
+	@Override
+	public void spawnParticle(World world, EntityPlayer player, BlockPos pos) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void playSound(World world, EntityPlayer player, BlockPos pos) {
+		// TODO Auto-generated method stub
 		
 	}
 }
