@@ -5,6 +5,7 @@ import com.lothrazar.cyclicmagic.ModMain;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public class SpellInventory extends BaseSpell{
@@ -12,6 +13,9 @@ public class SpellInventory extends BaseSpell{
 	public SpellInventory(int id, String n) {
 		super.init(id, n);
 		this.cost = 0;//so far, the only spell costing zero
+
+		this.header = new ResourceLocation(Const.MODID, "textures/spells/mouseptr.png");
+		this.header_empty = header;
 	}
 
 	@Override

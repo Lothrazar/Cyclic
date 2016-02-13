@@ -10,14 +10,6 @@ import com.lothrazar.cyclicmagic.ItemRegistry;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 
-/**
- * phasing out ISpell interface. now every spell must extend this base class for
- * now at least, until we make a spell book or some other system to replace this
- * linked list setup
- * 
- * @author Sam Bassett (Lothrazar)
- *
- */
 public abstract class BaseSpell implements ISpell {
 
 	private ResourceLocation icon;
@@ -25,8 +17,8 @@ public abstract class BaseSpell implements ISpell {
 	private String name;
 	protected int cost;
 	protected int cooldown;
-	private final static ResourceLocation header = new ResourceLocation(Const.MODID, "textures/spells/header_on.png");
-	private final static ResourceLocation header_empty = new ResourceLocation(Const.MODID, "textures/spells/header_off.png");
+	protected ResourceLocation header = new ResourceLocation(Const.MODID, "textures/spells/header_on.png");
+	protected ResourceLocation header_empty = new ResourceLocation(Const.MODID, "textures/spells/header_off.png");
 
 	protected void init(int id, String n){
 		ID = id;
