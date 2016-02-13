@@ -10,7 +10,7 @@ public class GuiWandInventory extends GuiContainer {
 	private static final ResourceLocation BACKGROUND = new ResourceLocation(Const.MODID, "textures/gui/inventory_wand.png");
 
 	final int id = 777;
-	final int padding = 4;
+	final int padding = 8;
 	
 	public GuiWandInventory(ContainerWand containerItem) {
 		super(containerItem);
@@ -22,12 +22,16 @@ public class GuiWandInventory extends GuiContainer {
 
 		super.initGui();
 
-		final int x = this.guiLeft + padding;
-		final int y = this.guiTop + padding;
+		final int y = this.guiTop +6;
+		int x = this.guiLeft + 5;
 		int width = 50;
 		this.buttonList.add(new ButtonBuildToggle(inventory.getPlayer(), id,x,y,width));
 		
-		this.buttonList.add(new ButtonSpellCircle(id, x + width + padding, y, width));
+		x += width + padding;
+		this.buttonList.add(new ButtonSpellCircle(id, x  , y, width));
+
+		x += width + padding;
+		this.buttonList.add(new ButtonRecharge(id, x , y, width));
 	}
 	
 	@Override

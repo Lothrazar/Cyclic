@@ -23,6 +23,7 @@ button.build.random=Random
 button.build.match=Match
 button.close=Close
 button.circle=Spells
+button.recharge=Recharge
 item.shift=Press Shift for more info
 spell.meta.cost=Cost: 
 spell.meta.enabled=Enabled

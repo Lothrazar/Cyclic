@@ -69,10 +69,7 @@ public class EventRegistry {
 	
 				ModMain.network.sendTo(new MessageOpenSpellbook(), (EntityPlayerMP)event.entityPlayer);
 			}
-			else if(blockHit != null){//was only bookshelf
-				
-				SpellRegistry.caster.rechargeWithExp( event.entityPlayer);
-			}
+		 
 		}
 	}
 	
