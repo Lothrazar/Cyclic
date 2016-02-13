@@ -5,6 +5,7 @@ package com.lothrazar.cyclicmagic.net;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
@@ -30,29 +31,32 @@ public class MessageParticle implements IMessage, IMessageHandler<MessageParticl
 		particle = part;
 		count = c;
 	}
-/*
-	public MessageParticle(int _x, int _y, int _z, int part) {
-		x = _x;
-		y = _y;
-		z = _z;
-		particle = part;
-	}*/
-
+	
 	@Override
 	public void fromBytes(ByteBuf buf) {
-		String csv = ByteBufUtils.readUTF8String(buf);
 
-		String[] pts = csv.split(",");
-		x = Integer.parseInt(pts[0]);
-		y = Integer.parseInt(pts[1]);
-		z = Integer.parseInt(pts[2]);
-		particle = Integer.parseInt(pts[3]);
+		NBTTagCompound tags =  ByteBufUtils.readTag(buf);
+		
+		x = tags.getInteger("x");
+		y = tags.getInteger("y");
+		z = tags.getInteger("z");
+		
+		particle = tags.getInteger("p");
+		count = tags.getInteger("c");
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf) {
-		//TODO: could use blockpos instead, might be cleaner
-		ByteBufUtils.writeUTF8String(buf, x + "," + y + "," + z + "," + particle);
+		
+		NBTTagCompound tags = new NBTTagCompound();
+		tags.setInteger("x", x);
+		tags.setInteger("y", y);
+		tags.setInteger("z", z);
+		
+		tags.setInteger("p", particle);
+		tags.setInteger("c", count);
+		
+		ByteBufUtils.writeTag(buf, tags);
 	}
 
 	@Override
@@ -61,16 +65,11 @@ public class MessageParticle implements IMessage, IMessageHandler<MessageParticl
 			// http://www.minecraftforge.net/forum/index.php?topic=21195.0
 			if (Minecraft.getMinecraft().thePlayer == null) {
 				return null;
-			}// i think maybe possibly this was null once? [
-			// 20:50:44] [Netty Local Client IO #0/ERROR] [FML]:
-			// SimpleChannelHandlerWrapper exception
-			// java.lang.NullPointerException
-			// at
-			// com.lothrazar.samscontent.potion.MessagePotion.onMessage(MessagePotion.java:69)
-			// ~[MessagePotion.class:?]
-			World world = Minecraft.getMinecraft().thePlayer.worldObj;// Minecraft.getMinecraft().getIntegratedServer().getEntityWorld();
+			}// this was null once  [[Netty Local Client IO #0/ERROR] [FML]:
 
-			UtilParticle.spawnParticle(world, EnumParticleTypes.getParticleFromId(message.particle), new BlockPos(message.x, message.y, message.z));
+			World world = Minecraft.getMinecraft().thePlayer.worldObj;
+
+			UtilParticle.spawnParticle(world, EnumParticleTypes.getParticleFromId(message.particle), message.x, message.y, message.z, message.count);
 		}
 
 		return null;
