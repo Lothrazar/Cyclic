@@ -22,6 +22,7 @@ button.build.rotate=Pattern
 button.build.random=Random
 button.build.match=Match
 button.close=Close
+button.circle=Spells
 item.shift=Press Shift for more info
 spell.meta.cost=Cost: 
 spell.meta.enabled=Enabled

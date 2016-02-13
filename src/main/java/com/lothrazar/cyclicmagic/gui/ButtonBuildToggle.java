@@ -13,8 +13,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ButtonBuildToggle extends GuiButton{
 
 	final EntityPlayer thePlayer;
-	public ButtonBuildToggle(EntityPlayer player,int buttonId, int x, int y) {
-		super(buttonId, x, y,50,20,"");
+	public ButtonBuildToggle(EntityPlayer player,int buttonId, int x, int y, int width) {
+		super(buttonId, x, y,width,20,"");
 		thePlayer = player;
 	}
 

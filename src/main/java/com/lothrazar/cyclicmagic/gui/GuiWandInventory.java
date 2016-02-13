@@ -24,8 +24,10 @@ public class GuiWandInventory extends GuiContainer {
 
 		final int x = this.guiLeft + padding;
 		final int y = this.guiTop + padding;
+		int width = 50;
+		this.buttonList.add(new ButtonBuildToggle(inventory.getPlayer(), id,x,y,width));
 		
-		this.buttonList.add(new ButtonBuildToggle(inventory.getPlayer(), id,x,y));
+		this.buttonList.add(new ButtonSpellCircle(id, x + width + padding, y, width));
 	}
 	
 	@Override

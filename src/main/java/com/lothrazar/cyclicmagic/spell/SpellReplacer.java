@@ -70,8 +70,6 @@ public class SpellReplacer extends BaseSpell {
 		ItemStack[] invv = InventoryWand.readFromNBT(heldWand);
 		ItemStack toPlace = InventoryWand.getFromSlot(heldWand,itemSlot);
 
-		//ItemStack toPlace = player.inventory.getStackInSlot(itemSlot);
-		
 		if(toPlace == null || toPlace.getItem() == null || Block.getBlockFromItem(toPlace.getItem()) == null){
 			return false;
 		}
@@ -85,11 +83,8 @@ public class SpellReplacer extends BaseSpell {
  
 		if (world.destroyBlock(posMouseover, true) && world.setBlockState(posMouseover, placeState)) {
 
-			//replacement worked!
 			if(player.capabilities.isCreativeMode == false){
-				//player.inventory.decrStackSize(itemSlot, 1);
-				//player.inventoryContainer.detectAndSendChanges();
-				
+	
 				invv[itemSlot].stackSize--;
 				InventoryWand.writeToNBT(heldWand, invv);
 			}
