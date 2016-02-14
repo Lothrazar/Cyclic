@@ -1,20 +1,20 @@
-package com.lothrazar.cyclicmagic.gui;
+package com.lothrazar.cyclicmagic.gui.button;
 
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
-import com.lothrazar.cyclicmagic.net.MessageTogglePassive;
-import com.lothrazar.cyclicmagic.spell.passive.IPassiveSpell;
+import com.lothrazar.cyclicmagic.net.MessageToggleBuild;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ButtonPassiveToggle extends GuiButton{
+public class ButtonBuildToggle extends GuiButton{
 
 	final EntityPlayer thePlayer;
 
-	public ButtonPassiveToggle(EntityPlayer player, int buttonId, int x, int y, int width){
+	public ButtonBuildToggle(EntityPlayer player, int buttonId, int x, int y, int width){
 
 		super(buttonId, x, y, width, 20, "");
 		thePlayer = player;
@@ -28,7 +28,7 @@ public class ButtonPassiveToggle extends GuiButton{
 
 		if(pressed){
 
-			ModMain.network.sendToServer(new MessageTogglePassive());
+			ModMain.network.sendToServer(new MessageToggleBuild());
 		}
 
 		return pressed;
@@ -38,11 +38,8 @@ public class ButtonPassiveToggle extends GuiButton{
 	@Override
 	public void drawButton(Minecraft mc, int mouseX, int mouseY){
 
-		IPassiveSpell ps = ItemCyclicWand.Spells.getPassiveCurrent(thePlayer.getHeldItem());
-		
-		if(ps != null){
-			this.displayString = ps.getName();
-		}
+		this.displayString = StatCollector.translateToLocal(ItemCyclicWand.BuildType.getBuildTypeName(thePlayer.getHeldItem()));
+
 		super.drawButton(mc, mouseX, mouseY);
 	}
 }

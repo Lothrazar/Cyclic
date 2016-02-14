@@ -3,6 +3,8 @@ package com.lothrazar.cyclicmagic.gui;
 import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.PlayerPowerups;
 import com.lothrazar.cyclicmagic.SpellRegistry;
+import com.lothrazar.cyclicmagic.gui.button.ButtonClose;
+import com.lothrazar.cyclicmagic.gui.button.ButtonSpell;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.util.UtilTextureRender;

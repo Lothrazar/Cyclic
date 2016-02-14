@@ -1,16 +1,18 @@
-package com.lothrazar.cyclicmagic.gui;
+package com.lothrazar.cyclicmagic.gui.button;
 
+import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.net.MessageRecharge;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ButtonClose extends GuiButton{
+public class ButtonRecharge extends GuiButton{
 
-	public ButtonClose(int id, int x, int y){
+	public ButtonRecharge(int buttonId, int x, int y, int width){
 
-		super(id, x, y, 30, 20, StatCollector.translateToLocal("button.close"));
+		super(buttonId, x, y, width, 20, StatCollector.translateToLocal("button.recharge"));
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -20,7 +22,8 @@ public class ButtonClose extends GuiButton{
 		boolean pressed = super.mousePressed(mc, mouseX, mouseY);
 
 		if(pressed){
-			mc.thePlayer.closeScreen();
+
+			ModMain.network.sendToServer(new MessageRecharge());
 		}
 
 		return pressed;
