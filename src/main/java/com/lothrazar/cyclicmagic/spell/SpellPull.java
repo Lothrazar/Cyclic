@@ -3,9 +3,13 @@ package com.lothrazar.cyclicmagic.spell;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.net.MessageSpellPull;
 import com.lothrazar.cyclicmagic.util.UtilMoveBlock;
+import com.lothrazar.cyclicmagic.util.UtilParticle;
+import com.lothrazar.cyclicmagic.util.UtilSound;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 
 public class SpellPull extends BaseSpell {
@@ -39,9 +43,7 @@ public class SpellPull extends BaseSpell {
 			}
 		}
 		
-
-		//it returns a position if it was moved -> the pos it was moved to
-		return false;// (resultPosition != null);
+		return false;
 	}
 
 	public void castFromServer(BlockPos pos, EnumFacing side, EntityPlayer p) {
@@ -49,18 +51,20 @@ public class SpellPull extends BaseSpell {
 		//BlockPos resultPosition = 
 		UtilMoveBlock.pullBlock(p.worldObj, p, pos, side);
 		
-		//TODO: sounds/etc at pos
+		this.spawnParticle(p.worldObj, p, pos);
+		this.playSound(p.worldObj, null, pos);
 	}
 
 	@Override
 	public void spawnParticle(World world, EntityPlayer player, BlockPos pos) {
-		// TODO Auto-generated method stub
+
+		UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT_MAGIC, pos);
 		
 	}
 
 	@Override
-	public void playSound(World world, EntityPlayer player, BlockPos pos) {
-		// TODO Auto-generated method stub
-		
+	public void playSound(World world, Block block, BlockPos pos) {
+
+		UtilSound.playSound(world, pos, UtilSound.Own.bwoaaap );
 	}
 }

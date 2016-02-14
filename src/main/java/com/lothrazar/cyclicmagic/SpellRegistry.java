@@ -14,10 +14,10 @@ public class SpellRegistry {
 	static SpellScreenRender screen;
 	public static SpellCaster caster;
 	
-	public static SpellRotate rotate;
+	public static SpellRangeRotate rotate;
 	public static SpellPush push;
 	public static SpellPull pull;
-	public static SpellReplacer replacer;
+	public static SpellRangeReplace replacer;
 	public static SpellInventory inventory;
 	
 	private static void registerSpell(ISpell spell){
@@ -32,7 +32,7 @@ public class SpellRegistry {
 		ItemStack held = player.getHeldItem();
 		return held != null && held.getItem() instanceof ItemCyclicWand;
 	}
-	public static  SpellFarReach reach ;
+	public static  SpellRangeBuild reach ;
 	public static void register() {
 		screen = new SpellScreenRender();
 		caster = new SpellCaster();
@@ -58,13 +58,13 @@ public class SpellRegistry {
 		haste.setPotion(Potion.digSpeed.id, Const.TICKS_PER_SEC * 60, PotionRegistry.II);
 		registerSpell(haste);
 		
-		replacer = new SpellReplacer(++spellId,"replacer");
+		replacer = new SpellRangeReplace(++spellId,"replacer");
 		registerSpell(replacer);
 		
-		rotate = new SpellRotate(++spellId,"rotate"); 
+		rotate = new SpellRangeRotate(++spellId,"rotate"); 
 		registerSpell(rotate);
 
-		reach = new SpellFarReach(++spellId,"reach");
+		reach = new SpellRangeBuild(++spellId,"reach");
 		registerSpell(reach);
 
 		inventory = new SpellInventory(++spellId,"inventory");

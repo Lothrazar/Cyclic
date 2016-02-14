@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.spell;
 
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.net.MessageSpellRotate;
-import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -10,14 +9,13 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
-public class SpellRotate extends BaseSpell {
-	public SpellRotate(int id, String name) {
+public class SpellRangeRotate extends BaseSpellRange {
+	
+	public SpellRangeRotate(int id, String name) {
 		super.init(id, name);
 		this.cooldown = 1;
 		this.cost = 2;
 	}
-
-	int maxRange = 64;// TODO: config
 
 	@Override
 	public boolean cast(World world, EntityPlayer p, BlockPos pos, EnumFacing side) {
@@ -40,15 +38,15 @@ public class SpellRotate extends BaseSpell {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public boolean castFromServer(BlockPos pos, EnumFacing side, EntityPlayer p) {
+	public void castFromServer(BlockPos pos, EnumFacing side, EntityPlayer p) {
 		// TODO Auto-generated method stub
 		if (pos == null || p.worldObj.getBlockState(pos) == null || side == null) {
-			return false;
+			return ;
 		}
 
 		IBlockState clicked = p.worldObj.getBlockState(pos);
 		if (clicked.getBlock() == null) {
-			return false;
+			return ;
 		}
 
 		boolean isDone = false;
@@ -71,21 +69,10 @@ public class SpellRotate extends BaseSpell {
 			}
 		}
 
-		if (isDone && clicked.getBlock().stepSound != null && clicked.getBlock().stepSound.getPlaceSound() != null) {
-			UtilSound.playSoundAt(p, clicked.getBlock().stepSound.getPlaceSound());
+		if(isDone){
+			this.playSound(p.worldObj, clicked.getBlock(), pos);
+			this.spawnParticle(p.worldObj, p, pos);
 		}
-		return isDone;
-	}
-
-	@Override
-	public void spawnParticle(World world, EntityPlayer player, BlockPos pos) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void playSound(World world, EntityPlayer player, BlockPos pos) {
-		// TODO Auto-generated method stub
-		
+		return ;
 	}
 }

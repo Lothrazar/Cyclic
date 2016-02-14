@@ -1,11 +1,14 @@
 package com.lothrazar.cyclicmagic.spell;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 import com.lothrazar.cyclicmagic.PotionRegistry;
+import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 
 public class SpellExpPotion extends BaseSpell implements ISpell {
@@ -18,17 +21,7 @@ public class SpellExpPotion extends BaseSpell implements ISpell {
 		this.cost = pcost;
 	}
 	
-	@Override
-	public void spawnParticle(World world, EntityPlayer player, BlockPos pos) {
-
-	}
-
-	@Override
-	public void playSound(World world, EntityPlayer player, BlockPos pos) {
-		
-	}
-
-	public SpellExpPotion setPotion(int id, int effectDuration, int effectAmplifier) {
+	public SpellExpPotion setPotion(int id, int effectDuration, int effectAmplifier){
 		potionId = id;
 		potionDuration = effectDuration;
 		potionAmp = effectAmplifier;
@@ -43,9 +36,14 @@ public class SpellExpPotion extends BaseSpell implements ISpell {
 	}
 
 	@Override
-	public void payCost(World world, EntityPlayer player, BlockPos pos) {
-		UtilSound.playSoundAt(player, UtilSound.drink);
+	public void spawnParticle(World world, EntityPlayer player, BlockPos pos) {
+		UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT_MAGIC, pos);
+		
+	}
 
-		super.payCost(world, player, pos);
+	@Override
+	public void playSound(World world, Block block, BlockPos pos) {
+
+		UtilSound.playSound(world, pos, UtilSound.drink); 
 	}
 }

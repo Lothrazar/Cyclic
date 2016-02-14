@@ -3,9 +3,13 @@ package com.lothrazar.cyclicmagic.spell;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.net.MessageSpellPush;
 import com.lothrazar.cyclicmagic.util.UtilMoveBlock;
+import com.lothrazar.cyclicmagic.util.UtilParticle;
+import com.lothrazar.cyclicmagic.util.UtilSound;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 
 public class SpellPush extends BaseSpell {
@@ -40,18 +44,21 @@ public class SpellPush extends BaseSpell {
 		
 		//BlockPos resultPosition = 
 		UtilMoveBlock.pushBlock(p.worldObj, p, pos, side);
-		
+
+		this.spawnParticle(p.worldObj, p, pos);
+		this.playSound(p.worldObj, null, pos);
 	}
 
 	@Override
 	public void spawnParticle(World world, EntityPlayer player, BlockPos pos) {
-		// TODO Auto-generated method stub
+
+		UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT_MAGIC, pos);
 		
 	}
 
 	@Override
-	public void playSound(World world, EntityPlayer player, BlockPos pos) {
-		// TODO Auto-generated method stub
-		
+	public void playSound(World world, Block block, BlockPos pos) {
+
+		UtilSound.playSound(world, pos, UtilSound.Own.bwoaaap );
 	}
 }

@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.spell;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
@@ -22,7 +23,7 @@ public interface ISpell {
 
 	public void spawnParticle(World world, EntityPlayer player, BlockPos pos);
 
-	public void playSound(World world, EntityPlayer player, BlockPos pos);
+	public void playSound(World world, Block block, BlockPos pos);
 	
 	public void onCastFailure(World world, EntityPlayer player, BlockPos pos);
 

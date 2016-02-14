@@ -3,6 +3,7 @@ package com.lothrazar.cyclicmagic.spell;
 import com.lothrazar.cyclicmagic.item.ItemChestSack;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
@@ -32,7 +33,9 @@ public class SpellChestSack extends BaseSpell implements ISpell {
 
 			world.setBlockToAir(pos); 
 
-			UtilSound.playSound(world,pos, UtilSound.Own.thunk);
+			this.playSound(world,null,pos);
+			
+			this.spawnParticle(world, player, pos);
 			
 			if(world.isRemote == false  ){
 				player.entityDropItem(drop, 1); 
@@ -45,20 +48,13 @@ public class SpellChestSack extends BaseSpell implements ISpell {
 	}
 
 	@Override
-	public void payCost(World world, EntityPlayer player, BlockPos pos) {
-		
-		UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT, pos);
-		
-		super.payCost(world, player, pos);
-	}
-	
-	@Override
 	public void spawnParticle(World world, EntityPlayer player, BlockPos pos) {
 
+		UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT_MAGIC, pos);
 	}
 
 	@Override
-	public void playSound(World world, EntityPlayer player, BlockPos pos) {
-		
+	public void playSound(World world, Block block, BlockPos pos) {
+		UtilSound.playSound(world,pos, UtilSound.Own.thunk);
 	}
 }

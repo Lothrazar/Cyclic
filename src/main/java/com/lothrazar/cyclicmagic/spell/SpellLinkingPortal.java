@@ -2,11 +2,15 @@ package com.lothrazar.cyclicmagic.spell;
 
 import com.lothrazar.cyclicmagic.ItemRegistry;
 import com.lothrazar.cyclicmagic.item.ItemWaypointPortal;
+import com.lothrazar.cyclicmagic.util.UtilParticle;
+import com.lothrazar.cyclicmagic.util.UtilSound;
+import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 
 public class SpellLinkingPortal  extends BaseSpell implements ISpell {
@@ -18,6 +22,7 @@ public class SpellLinkingPortal  extends BaseSpell implements ISpell {
 		super.init(id,name);
 		this.cost = 35;
 	}
+	
 	@Override
 	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side ) {
 		
@@ -30,14 +35,16 @@ public class SpellLinkingPortal  extends BaseSpell implements ISpell {
 		
 		return false;
 	}
+	
 	@Override
 	public void spawnParticle(World world, EntityPlayer player, BlockPos pos) {
-		// TODO Auto-generated method stub
 		
+		UtilParticle.spawnParticle(world, EnumParticleTypes.PORTAL, pos);
 	}
+	
 	@Override
-	public void playSound(World world, EntityPlayer player, BlockPos pos) {
-		// TODO Auto-generated method stub
+	public void playSound(World world, Block block, BlockPos pos) {
 		
+		UtilSound.playSound(world, pos, UtilSound.portal);
 	}
 }

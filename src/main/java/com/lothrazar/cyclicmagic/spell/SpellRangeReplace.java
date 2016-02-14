@@ -4,7 +4,6 @@ import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.InventoryWand;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.net.MessageSpellReplacer;
-import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,14 +12,13 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
-public class SpellReplacer extends BaseSpell {
+public class SpellRangeReplace extends BaseSpellRange {
 
-	public SpellReplacer(int id, String n) {
+	public SpellRangeReplace(int id, String n) {
 		super.init(id, n);
 		this.cooldown = 1;
 	}
 
-	int maxRange = 64;// TODO: config
 	@Override
 	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side) {
 /*// replacing these with mouseover...???//
@@ -43,27 +41,27 @@ public class SpellReplacer extends BaseSpell {
 		return false;
 	}
 
-	public boolean castFromServer(BlockPos posMouseover, EnumFacing side, EntityPlayer player) {
+	public void castFromServer(BlockPos posMouseover, EnumFacing side, EntityPlayer player) {
 
 		World world = player.worldObj;
 		ItemStack heldWand = player.getHeldItem();
 		if(heldWand == null || heldWand.getItem() instanceof ItemCyclicWand == false){
-			return false;
+			return ;
 		}
 		
 		if (world.getBlockState(posMouseover) == null || world.getBlockState(posMouseover).getBlock() == null) {
-			return false;
+			return ;
 		}
 		
 		if(world.getTileEntity(posMouseover) != null){
-			return false;//not chests, etc
+			return ;//not chests, etc
 		}
 		
 		IBlockState stateHere = world.getBlockState(posMouseover);
 		Block blockHere = stateHere.getBlock();
 
 		if(blockHere.getBlockHardness(world, posMouseover) == -1){
-			return false; // is unbreakable-> like bedrock
+			return ; // is unbreakable-> like bedrock
 		}
 		
 		int itemSlot = InventoryWand.getSlotByBuildType(heldWand,world.getBlockState(posMouseover));
@@ -71,14 +69,14 @@ public class SpellReplacer extends BaseSpell {
 		ItemStack toPlace = InventoryWand.getFromSlot(heldWand,itemSlot);
 
 		if(toPlace == null || toPlace.getItem() == null || Block.getBlockFromItem(toPlace.getItem()) == null){
-			return false;
+			return ;
 		}
 		
 		IBlockState placeState = Block.getBlockFromItem(toPlace.getItem()).getStateFromMeta(toPlace.getMetadata());
 		 
 		if(placeState.getBlock() == blockHere && blockHere.getMetaFromState(stateHere) == toPlace.getMetadata()){
 			
-			return false;//dont replace cobblestone with cobblestone
+			return ;//dont replace cobblestone with cobblestone
 		}
  
 		if (world.destroyBlock(posMouseover, true) && world.setBlockState(posMouseover, placeState)) {
@@ -89,25 +87,10 @@ public class SpellReplacer extends BaseSpell {
 				InventoryWand.writeToNBT(heldWand, invv);
 			}
 			
-			if(placeState.getBlock().stepSound != null && placeState.getBlock().stepSound.getPlaceSound() != null){
-				UtilSound.playSoundAt(player, placeState.getBlock().stepSound.getPlaceSound());
-			}
+			this.playSound(world, placeState.getBlock(), posMouseover);
+			this.spawnParticle(world, player, posMouseover);
 			
-			return true;
+			return ;
 		}
-
-		return false;
-	}
-
-	@Override
-	public void spawnParticle(World world, EntityPlayer player, BlockPos pos) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void playSound(World world, EntityPlayer player, BlockPos pos) {
-		// TODO Auto-generated method stub
-		
 	}
 }

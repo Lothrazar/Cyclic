@@ -5,9 +5,8 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import com.lothrazar.cyclicmagic.projectile.EntityHarvestBolt;
-import com.lothrazar.cyclicmagic.util.UtilSound;
 
-public class SpellThrowHarvest extends BaseSpell implements ISpell{
+public class SpellThrowHarvest extends BaseSpellThrown implements ISpell{
 
 	public SpellThrowHarvest(int id, String n) {
 		super.init(id, n);
@@ -21,24 +20,5 @@ public class SpellThrowHarvest extends BaseSpell implements ISpell{
 			world.spawnEntityInWorld(new EntityHarvestBolt(world, player));
 		}
 		return true;
-	}
-	
-	@Override
-	public void payCost(World world, EntityPlayer player, BlockPos pos) {
-
-		UtilSound.playSoundAt(player, UtilSound.Own.pew);
-		super.payCost(world, player, pos);
-	}
-
-	@Override
-	public void spawnParticle(World world, EntityPlayer player, BlockPos pos) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void playSound(World world, EntityPlayer player, BlockPos pos) {
-		// TODO Auto-generated method stub
-		
 	}
 }
