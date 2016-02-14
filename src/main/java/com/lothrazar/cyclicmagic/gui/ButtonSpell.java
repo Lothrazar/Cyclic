@@ -50,7 +50,7 @@ public class ButtonSpell extends GuiButton{
 				return pressed;// cannot toggle current spell
 			}
 
-			if(this.id == SpellRegistry.inventory.getID() && ItemCyclicWand.Spells.isSpellUnlocked(Minecraft.getMinecraft().thePlayer.getHeldItem(), this.id)){
+			if(this.id == SpellRegistry.Spells.inventory.getID() && ItemCyclicWand.Spells.isSpellUnlocked(Minecraft.getMinecraft().thePlayer.getHeldItem(), this.id)){
 				// spell IS unlocked already, do not let player disable it
 				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentTranslation("spell.locked.inventory"));
 			}

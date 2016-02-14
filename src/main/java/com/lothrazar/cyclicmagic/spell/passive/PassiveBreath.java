@@ -30,4 +30,10 @@ public class PassiveBreath implements IPassiveSpell{
 
 		return StatCollector.translateToLocal(info);
 	}
+
+	@Override
+	public int getID(){
+
+		return 1;
+	}
 }

@@ -62,7 +62,7 @@ public class MessageSpellReplacer implements IMessage, IMessageHandler<MessageSp
 			// if( p.worldObj.getBlockState(message.pos).getBlock().isReplaceable(p.worldObj,
 			// message.pos)){
 
-			SpellRegistry.replacer.castFromServer(message.pos, message.side, p);
+			SpellRegistry.Spells.replacer.castFromServer(message.pos, message.side, p);
 
 		}
 

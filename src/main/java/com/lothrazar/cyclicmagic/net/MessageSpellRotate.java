@@ -62,7 +62,7 @@ public class MessageSpellRotate implements IMessage, IMessageHandler<MessageSpel
 			// if( p.worldObj.getBlockState(message.pos).getBlock().isReplaceable(p.worldObj,
 			// message.pos)){
 
-			SpellRegistry.rotate.castFromServer(message.pos, message.side, p);
+			SpellRegistry.Spells.rotate.castFromServer(message.pos, message.side, p);
 
 		}
 

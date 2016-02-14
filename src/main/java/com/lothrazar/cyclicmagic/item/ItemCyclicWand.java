@@ -159,14 +159,6 @@ public class ItemCyclicWand extends Item{
 		return stack.hasTagCompound() ? stack.getTagCompound() : new NBTTagCompound();
 	}
 
-	private static class Passives{
-
-		private static IPassiveSpell falling = new PassiveFalling();
-		private static IPassiveSpell breath = new PassiveBreath();
-		private static IPassiveSpell burn = new PassiveBurn();
-		private static IPassiveSpell defend = new PassiveDefend();
-	}
-
 	public static class Spells{
 
 		private static void unlockSpell(ItemStack stack, ISpell spell){
@@ -274,6 +266,14 @@ public class ItemCyclicWand extends Item{
 			tags.setInteger(NBT_SPELL, spell_id);
 
 			stack.setTagCompound(tags);
+		}
+
+		public static void togglePassive(ItemStack heldItem){
+			System.out.println("TODO: toggle current passive");
+			
+
+			// TODO Auto-generated method stub
+			
 		}
 
 	}
@@ -429,13 +429,13 @@ public class ItemCyclicWand extends Item{
 			//switch(Variant.getVariantFromMeta(stack)){
 
 			//case EMERALD:
-				ret.add(Passives.defend);
+				ret.add(SpellRegistry.Passives.defend);
 			//case LAPIS:
-				ret.add(Passives.falling);
+				ret.add(SpellRegistry.Passives.falling);
 			//case DIAMOND:
-				ret.add(Passives.burn);
+				ret.add(SpellRegistry.Passives.burn);
 			//case GOLD:
-				ret.add(Passives.breath);
+				ret.add(SpellRegistry.Passives.breath);
 			/*case QUARTZ:// none for u
 				break;
 			default:

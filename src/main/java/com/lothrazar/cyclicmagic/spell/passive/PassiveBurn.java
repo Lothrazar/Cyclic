@@ -35,4 +35,10 @@ public class PassiveBurn implements IPassiveSpell{
 
 		return StatCollector.translateToLocal(info);
 	}
+
+	@Override
+	public int getID(){
+
+		return 2;
+	}
 }

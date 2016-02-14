@@ -55,7 +55,7 @@ public class MessageSpellPull implements IMessage, IMessageHandler<MessageSpellP
 			EntityPlayer p = ctx.getServerHandler().playerEntity;
 			// if( p.worldObj.getBlockState(message.pos).getBlock().isReplaceable(p.worldObj,
 			// message.pos)){
-			SpellRegistry.pull.castFromServer(message.pos, message.side, p);
+			SpellRegistry.Spells.pull.castFromServer(message.pos, message.side, p);
 		}
 		return null;
 	}

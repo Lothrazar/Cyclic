@@ -62,7 +62,7 @@ public class MessageSpellPush implements IMessage, IMessageHandler<MessageSpellP
 			// if( p.worldObj.getBlockState(message.pos).getBlock().isReplaceable(p.worldObj,
 			// message.pos)){
 
-			SpellRegistry.push.castFromServer(message.pos, message.side, p);
+			SpellRegistry.Spells.push.castFromServer(message.pos, message.side, p);
 
 		}
 

@@ -49,4 +49,10 @@ public class PassiveFalling implements IPassiveSpell{
 
 		return StatCollector.translateToLocal(info);
 	}
+
+	@Override
+	public int getID(){
+
+		return 4;
+	}
 }

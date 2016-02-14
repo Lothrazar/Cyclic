@@ -66,7 +66,7 @@ public class MessageSpellReach implements IMessage, IMessageHandler<MessageSpell
 			// if( p.worldObj.getBlockState(message.pos).getBlock().isReplaceable(p.worldObj,
 			// message.pos)){
 
-			SpellRegistry.reach.castFromServer(message.pos, message.posOffset, p);
+			SpellRegistry.Spells.reach.castFromServer(message.pos, message.posOffset, p);
 
 		}
 

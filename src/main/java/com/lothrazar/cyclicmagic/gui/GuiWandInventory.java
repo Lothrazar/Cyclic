@@ -36,6 +36,9 @@ public class GuiWandInventory extends GuiContainer{
 
 		x += width + padding;
 		this.buttonList.add(new ButtonRecharge(id, x, y, width));
+
+		x += width + padding;
+		this.buttonList.add(new ButtonPassiveToggle(inventory.getPlayer(), id, x, y, width));
 	}
 
 	@Override

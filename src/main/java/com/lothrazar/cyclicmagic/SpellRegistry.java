@@ -1,8 +1,14 @@
 package com.lothrazar.cyclicmagic;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.spell.*;
+import com.lothrazar.cyclicmagic.spell.passive.IPassiveSpell;
+import com.lothrazar.cyclicmagic.spell.passive.PassiveBreath;
+import com.lothrazar.cyclicmagic.spell.passive.PassiveBurn;
+import com.lothrazar.cyclicmagic.spell.passive.PassiveDefend;
+import com.lothrazar.cyclicmagic.spell.passive.PassiveFalling;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
@@ -10,40 +16,58 @@ import net.minecraft.potion.Potion;
 public class SpellRegistry{
 
 	private static ArrayList<ISpell> spellbook;
+	private static HashMap<Integer, ISpell> hashbook;
+	private static HashMap<Integer, IPassiveSpell> passives;
 
 	static SpellScreenRender screen;
 	public static SpellCaster caster;
 
-	public static SpellRangeRotate rotate;
-	public static SpellRangePush push;
-	public static SpellRangePull pull;
-	public static SpellRangeReplace replacer;
-	public static SpellInventory inventory;
+	public static class Spells{
 
-	private static void registerSpell(ISpell spell){
-
-		spellbook.add(spell);
+		//on purpose, not all spells are in here. only ones that needed to be exposed
+		public static SpellRangeRotate rotate;
+		public static SpellRangePush push;
+		public static SpellRangePull pull;
+		public static SpellRangeReplace replacer;
+		public static SpellInventory inventory;
+		public static SpellRangeBuild reach;
 	}
+	
+	public static class Passives{
+		
+		private static void register(){
+			passives = new HashMap<Integer, IPassiveSpell>();
 
-	public static ISpell getDefaultSpell(){
+			falling = new PassiveFalling(); 
+			breath = new PassiveBreath();   
+			burn = new PassiveBurn();       
+			defend = new PassiveDefend();  
+			
+			passives.put(falling.getID(), falling);
+			passives.put(breath.getID(), breath);
+			passives.put(burn.getID(), burn);
+			passives.put(defend.getID(), defend);
+		}
 
-		return SpellRegistry.getSpellbook().get(0);
+		public static IPassiveSpell falling;
+		public static IPassiveSpell breath;
+		public static IPassiveSpell burn;
+		public static IPassiveSpell defend;
+		
+		public static IPassiveSpell getByID(int id){
+			return passives.get(id);
+		}
 	}
-
-	public static boolean spellsEnabled(EntityPlayer player){
-
-		ItemStack held = player.getHeldItem();
-		return held != null && held.getItem() instanceof ItemCyclicWand;
-	}
-
-	public static SpellRangeBuild reach;
 
 	public static void register(){
 
 		screen = new SpellScreenRender();
 		caster = new SpellCaster();
 		spellbook = new ArrayList<ISpell>();
-
+		hashbook = new HashMap<Integer, ISpell>();
+		
+		Passives.register();
+		
 		int spellId = -1;// the smallest spell gets id zero
 
 		SpellGhost ghost = new SpellGhost(++spellId, "ghost");
@@ -64,23 +88,23 @@ public class SpellRegistry{
 		haste.setPotion(Potion.digSpeed.id, Const.TICKS_PER_SEC * 60, PotionRegistry.II);
 		registerSpell(haste);
 
-		replacer = new SpellRangeReplace(++spellId, "replacer");
-		registerSpell(replacer);
+		Spells.replacer = new SpellRangeReplace(++spellId, "replacer");
+		registerSpell(Spells.replacer);
 
-		rotate = new SpellRangeRotate(++spellId, "rotate");
-		registerSpell(rotate);
+		Spells.rotate = new SpellRangeRotate(++spellId, "rotate");
+		registerSpell(Spells.rotate);
 
-		reach = new SpellRangeBuild(++spellId, "reach");
-		registerSpell(reach);
+		Spells.reach = new SpellRangeBuild(++spellId, "reach");
+		registerSpell(Spells.reach);
 
-		inventory = new SpellInventory(++spellId, "inventory");
-		registerSpell(inventory);
+		Spells.inventory = new SpellInventory(++spellId, "inventory");
+		registerSpell(Spells.inventory);
 
-		push = new SpellRangePush(++spellId, "push");
-		registerSpell(push);
+		Spells.push = new SpellRangePush(++spellId, "push");
+		registerSpell(Spells.push);
 
-		pull = new SpellRangePull(++spellId, "pull");
-		registerSpell(pull);
+		Spells.pull = new SpellRangePull(++spellId, "pull");
+		registerSpell(Spells.pull);
 
 		SpellChestSack chestsack = new SpellChestSack(++spellId, "chestsack");
 		registerSpell(chestsack);
@@ -127,18 +151,30 @@ public class SpellRegistry{
 
 	}
 
+	private static void registerSpell(ISpell spell){
+
+		spellbook.add(spell);
+		hashbook.put(spell.getID(), spell);
+	}
+
+	public static ISpell getDefaultSpell(){
+
+		return getSpellFromID(0);
+	}
+
+	public static boolean spellsEnabled(EntityPlayer player){
+
+		ItemStack held = player.getHeldItem();
+		return held != null && held.getItem() instanceof ItemCyclicWand;
+	}
+
 	public static ISpell getSpellFromID(int id){
 
-		if(id >= spellbook.size()){
-			return null;// this should avoid all OOB exceptoins
+		if(hashbook.containsKey(id)){
+			return hashbook.get(id);
 		}
-
-		try{
-			return spellbook.get(id);
-		}
-		catch (IndexOutOfBoundsException e){
-			return null;
-		}
+		
+		return null;
 	}
 
 	public static ArrayList<ISpell> getSpellbook(){
