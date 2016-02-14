@@ -19,6 +19,7 @@ public class SpellLaunch extends BaseSpell implements ISpell{
 
 		super.init(id, name);
 		this.cost = 10;
+		this.cooldown = 10;
 	}
 
 	@Override
@@ -52,8 +53,8 @@ public class SpellLaunch extends BaseSpell implements ISpell{
 			player.addVelocity(velX, velY, velZ);
 		}
 
-		this.playSound(world, null, pos);
-		this.spawnParticle(world, player, pos);
+		this.playSound(world, null, player.getPosition());
+		this.spawnParticle(world, player, player.getPosition());
 
 		return true;
 	}

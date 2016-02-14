@@ -15,7 +15,7 @@ public class PassiveFalling implements IPassiveSpell{
 	@Override
 	public boolean canTrigger(EntityPlayer entity){
 
-		return true;// there are multiple tests
+		return true;// there are multiple tests,so leave it up to .trigger
 	}
 
 	@Override

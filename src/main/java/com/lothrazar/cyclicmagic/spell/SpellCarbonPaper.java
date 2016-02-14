@@ -19,6 +19,7 @@ public class SpellCarbonPaper extends BaseSpell implements ISpell{
 	public SpellCarbonPaper(int id, String name){
 
 		super.init(id, name);
+		this.cooldown = 5;
 	}
 
 	@Override

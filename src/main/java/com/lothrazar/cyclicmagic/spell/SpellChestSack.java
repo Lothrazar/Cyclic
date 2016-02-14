@@ -17,6 +17,7 @@ public class SpellChestSack extends BaseSpell implements ISpell{
 
 		super.init(id, name);
 		this.cost = 30;
+		this.cooldown = 10;
 	}
 
 	@Override

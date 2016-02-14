@@ -26,6 +26,7 @@ public class SpellGhost extends BaseSpell implements ISpell{
 
 		super.init(id, name);
 		this.cost = 25;
+		this.cooldown = 50;
 	}
 
 	@Override

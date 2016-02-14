@@ -9,7 +9,6 @@ import net.minecraft.util.StatCollector;
 
 public class PassiveBreath implements IPassiveSpell{
 
-	//private static final String info = "passive.breath";
 	private final static int SECONDS = 60;
 	private final static float AIRLIMIT = 150;// 300 is a full bar
 
