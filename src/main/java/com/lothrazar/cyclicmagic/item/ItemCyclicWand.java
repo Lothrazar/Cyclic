@@ -122,17 +122,28 @@ public class ItemCyclicWand extends Item{
 	@Override
 	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected){
 
+		
+		boolean doRegen = false;
+		
+		if(worldIn.getGameRules().getBoolean("doDaylightCycle")){
+			//then check by world tick time
+			doRegen = worldIn.getTotalWorldTime() % Const.TICKS_PER_SEC == 0 && (worldIn.rand.nextDouble() > 0.5);
+		}
+		else{
+			//the WorldTime is constant and never moves, the player or server has turned off the clock
+			//so allow regen even if time is stopped:
+			doRegen = (worldIn.rand.nextDouble() > 0.995);
+		}
+		
+		if(worldIn.isRemote == false && doRegen){
+
+			Energy.rechargeBy(stack, Energy.getRegen(stack));
+		}
 		// if held by something not a player? such as custom npc/zombie/etc
 		if(entityIn instanceof EntityPlayer == false){
 			return;
 		}
-
 		EntityPlayer p = (EntityPlayer) entityIn;
-		if(worldIn.isRemote == false && worldIn.getWorldTime() % Const.TICKS_PER_SEC == 0){
-
-			Energy.rechargeBy(stack, Energy.getRegen(stack));
-		}
-
 		IPassiveSpell pcurrent = ItemCyclicWand.Spells.getPassiveCurrent(stack);
 		if(pcurrent != null && pcurrent.canTrigger(p)){
 			
