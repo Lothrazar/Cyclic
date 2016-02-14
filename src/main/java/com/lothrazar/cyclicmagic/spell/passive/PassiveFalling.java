@@ -9,8 +9,6 @@ import com.lothrazar.cyclicmagic.PotionRegistry;
 
 public class PassiveFalling implements IPassiveSpell{
 
-	private static final String info = "passive.falling";
-
 	private final static float FALLDISTANCE = 3;
 	private final static int SECONDS = 30;
 
@@ -45,14 +43,20 @@ public class PassiveFalling implements IPassiveSpell{
 	}
 
 	@Override
-	public String info(){
+	public String getName(){
 
-		return StatCollector.translateToLocal(info);
+		return StatCollector.translateToLocal("spellpassive.falling.name");
+	}
+
+	@Override
+	public String getInfo(){
+
+		return StatCollector.translateToLocal("spellpassive.falling.info");
 	}
 
 	@Override
 	public int getID(){
 
-		return 4;
+		return 3;
 	}
 }

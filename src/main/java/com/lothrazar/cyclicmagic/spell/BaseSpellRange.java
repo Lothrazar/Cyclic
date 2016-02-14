@@ -21,7 +21,7 @@ public abstract class BaseSpellRange extends BaseSpell{
 	@Override
 	public void playSound(World world, Block block, BlockPos pos){
 
-		if(block.stepSound != null && block.stepSound.getPlaceSound() != null){
+		if(block != null && block.stepSound != null && block.stepSound.getPlaceSound() != null){
 			UtilSound.playSound(world, pos, block.stepSound.getPlaceSound());
 		}
 		else{

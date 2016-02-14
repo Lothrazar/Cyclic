@@ -9,8 +9,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.StatCollector;
 
 public class PassiveBurn implements IPassiveSpell{
-
-	private static final String info = "passive.burn";
+ 
 	private final static int SECONDS = 30;
 
 	@Override
@@ -31,14 +30,19 @@ public class PassiveBurn implements IPassiveSpell{
 	}
 
 	@Override
-	public String info(){
+	public String getName(){
 
-		return StatCollector.translateToLocal(info);
+		return StatCollector.translateToLocal("spellpassive.burn.name");
 	}
 
 	@Override
+	public String getInfo(){
+
+		return StatCollector.translateToLocal("spellpassive.burn.info");
+	}
+	@Override
 	public int getID(){
 
-		return 2;
+		return 1;
 	}
 }

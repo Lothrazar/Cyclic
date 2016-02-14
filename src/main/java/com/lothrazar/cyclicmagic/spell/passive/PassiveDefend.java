@@ -9,7 +9,6 @@ import com.lothrazar.cyclicmagic.PotionRegistry;
 
 public class PassiveDefend implements IPassiveSpell{
 
-	private static final String info = "passive.defend";
 	private final static float HEALTHLIMIT = 10;// 1 heart = 2 health
 	private final static int SECONDS = 30;
 
@@ -27,14 +26,20 @@ public class PassiveDefend implements IPassiveSpell{
 	}
 
 	@Override
-	public String info(){
+	public String getName(){
 
-		return StatCollector.translateToLocal(info);
+		return StatCollector.translateToLocal("spellpassive.defend.name");
+	}
+
+	@Override
+	public String getInfo(){
+
+		return StatCollector.translateToLocal("spellpassive.defend.info");
 	}
 
 	@Override
 	public int getID(){
 
-		return 3;
+		return 2;
 	}
 }

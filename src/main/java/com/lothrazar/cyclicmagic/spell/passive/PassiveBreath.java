@@ -9,7 +9,7 @@ import net.minecraft.util.StatCollector;
 
 public class PassiveBreath implements IPassiveSpell{
 
-	private static final String info = "passive.breath";
+	//private static final String info = "passive.breath";
 	private final static int SECONDS = 30;
 	private final static float AIRLIMIT = 150;// 300 is a full bar
 
@@ -26,14 +26,20 @@ public class PassiveBreath implements IPassiveSpell{
 	}
 
 	@Override
-	public String info(){
+	public int getID(){
 
-		return StatCollector.translateToLocal(info);
+		return 0;
 	}
 
 	@Override
-	public int getID(){
+	public String getName(){
 
-		return 1;
+		return StatCollector.translateToLocal("spellpassive.breath.name");
+	}
+
+	@Override
+	public String getInfo(){
+
+		return StatCollector.translateToLocal("spellpassive.breath.info");
 	}
 }

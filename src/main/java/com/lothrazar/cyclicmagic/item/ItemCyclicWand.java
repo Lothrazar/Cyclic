@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.item;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.Const;
@@ -57,7 +56,7 @@ public class ItemCyclicWand extends Item{
 		Spells.setUnlockDefault(stack);
 
 		Energy.rechargeBy(stack, Energy.START);
-		
+
 		Energy.setMaximum(stack, Energy.MAX_DEFAULT);
 		Energy.setRegen(stack, Energy.REGEN_DEFAULT);
 	}
@@ -85,7 +84,6 @@ public class ItemCyclicWand extends Item{
 
 		int MAX = ItemCyclicWand.Energy.getMaximum(stack);
 
-		// + " "+EnumChatFormatting.DARK_BLUE + spell.getCost()
 		tooltip.add(EnumChatFormatting.GREEN + spell.getName());
 
 		if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)){
@@ -93,8 +91,9 @@ public class ItemCyclicWand extends Item{
 			tooltip.add(Energy.getCurrent(stack) + "/" + MAX);
 			tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("wand.regen") + EnumChatFormatting.DARK_BLUE + Energy.getRegen(stack));
 
-			for(IPassiveSpell s : Variant.getPassives(stack)){
-				tooltip.add(EnumChatFormatting.DARK_GRAY + s.info());
+			IPassiveSpell pcurrent = ItemCyclicWand.Spells.getPassiveCurrent(stack);
+			if(pcurrent != null){
+				tooltip.add(EnumChatFormatting.DARK_GRAY + pcurrent.getInfo());
 			}
 		}
 		else{
@@ -132,15 +131,12 @@ public class ItemCyclicWand extends Item{
 		if(worldIn.isRemote == false && worldIn.getWorldTime() % Const.TICKS_PER_SEC == 0){
 
 			Energy.rechargeBy(stack, Energy.getRegen(stack));
-			// Mana.setMana(stack, Mana.getMana(stack) + Mana.getRegen(stack));
 		}
 
-		List<IPassiveSpell> passives = Variant.getPassives(stack);
-
-		for(IPassiveSpell spell : passives){
-			if(spell.canTrigger(p)){
-				spell.trigger(p);
-			}
+		IPassiveSpell pcurrent = ItemCyclicWand.Spells.getPassiveCurrent(stack);
+		if(pcurrent != null && pcurrent.canTrigger(p)){
+			
+			pcurrent.trigger(p);
 		}
 
 		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
@@ -155,6 +151,12 @@ public class ItemCyclicWand extends Item{
 		return SpellRegistry.caster.tryCastCurrent(worldIn, playerIn, pos, side);
 	}
 
+	@Override
+	public int getMaxItemUseDuration(ItemStack stack){
+
+		return 1; // Without this method, your inventory will NOT work!!!
+	}
+
 	private static NBTTagCompound getNBT(ItemStack stack){
 
 		return stack.hasTagCompound() ? stack.getTagCompound() : new NBTTagCompound();
@@ -167,11 +169,7 @@ public class ItemCyclicWand extends Item{
 			NBTTagCompound nbt = getNBT(stack);
 			nbt.setBoolean(NBT_UNLOCKS + spell.getID(), true);
 			stack.setTagCompound(nbt);
-		}/*
-		 * private static void lockSpell(ItemStack stack, ISpell spell){ NBTTagCompound nbt =
-		 * getStackNBT(stack); nbt.setBoolean(NBT_UNLOCKS + spell.getID(), true);
-		 * stack.setTagCompound(nbt); }
-		 */
+		}
 
 		public static void toggleSpell(ItemStack stack, int spell_id){
 
@@ -208,8 +206,6 @@ public class ItemCyclicWand extends Item{
 		}
 
 		public static int nextId(ItemStack stack, int spell_id, int infbreaker){
-
-			// byte[] spells = this.getUnlocksFromString();
 
 			int next;
 
@@ -268,22 +264,31 @@ public class ItemCyclicWand extends Item{
 
 			stack.setTagCompound(tags);
 		}
-		public static int getPassiveCurrent(ItemStack stack){
+
+		public static int getPassiveCurrentID(ItemStack stack){
 
 			return getNBT(stack).getInteger(NBT_PASSIVECURRENT);
 		}
+
+		public static IPassiveSpell getPassiveCurrent(ItemStack stack){
+
+			return SpellRegistry.Passives.getByID(getNBT(stack).getInteger(NBT_PASSIVECURRENT));
+		}
+
 		public static void togglePassive(ItemStack stack){
-			
+
 			NBTTagCompound tags = getNBT(stack);
 
 			int current = tags.getInteger(NBT_PASSIVECURRENT);
 
 			current++;
-			if(current > 4){current = 1;}//TODO: fix hardcoded magic nums
-			
+			if(current > 4){
+				current = 1;
+			}// TODO: fix hardcoded magic nums
+
 			tags.setInteger(NBT_PASSIVECURRENT, current);
-			System.out.println(": toggle current passive bc"+current);
-			
+			System.out.println(": toggle current passive bc" + current);
+
 			stack.setTagCompound(tags);
 		}
 
@@ -300,36 +305,40 @@ public class ItemCyclicWand extends Item{
 
 		private static int getRegen(ItemStack stack){
 
-			//support for old ones, or ones that werent crafted
+			// support for old ones, or ones that werent crafted
 			NBTTagCompound tags = getNBT(stack);
 			if(!tags.hasKey(NBT_REGEN) || tags.getInteger(NBT_REGEN) <= 0){
-				setMaximum(stack,REGEN_DEFAULT);
+				setRegen(stack, REGEN_DEFAULT);
 			}
 
-			return tags.getInteger(NBT_REGEN);
+			return getNBT(stack).getInteger(NBT_REGEN);
 		}
+
 		private static void setRegen(ItemStack stack, int m){
-			//TODO: planning to upgrade regen and max but not based onmeta
- 
-			getNBT(stack).setInteger(NBT_REGEN, m);
+
+			NBTTagCompound tags = getNBT(stack);
+			tags.setInteger(NBT_REGEN, m);
+			stack.setTagCompound(tags);
 		}
 
 		public static int getMaximum(ItemStack stack){
 
-			//support for old ones, or ones that werent crafted
+			// support for old ones, or ones that werent crafted
 			NBTTagCompound tags = getNBT(stack);
-			if(!tags.hasKey(NBT_MAX) || tags.getInteger(NBT_MAX) <= 0){
-				setMaximum(stack,MAX_DEFAULT);
+			if(!tags.hasKey(NBT_MAX) || tags.getInteger(NBT_MAX) <= 1){
+				setMaximum(stack, MAX_DEFAULT);
 			}
 
-			return tags.getInteger(NBT_MAX);
+			return getNBT(stack).getInteger(NBT_MAX);
 		}
-		
+
 		private static void setMaximum(ItemStack stack, int m){
- 
-			getNBT(stack).setInteger(NBT_MAX, m);
+
+			NBTTagCompound tags = getNBT(stack);
+			tags.setInteger(NBT_MAX, m);
+			stack.setTagCompound(tags);
 		}
-		
+
 		public static int getCurrent(ItemStack stack){
 
 			return getNBT(stack).getInteger(NBT_MANA);
@@ -433,29 +442,6 @@ public class ItemCyclicWand extends Item{
 			return Const.TEXTURE_LOCATION + "cyclic_wand_" + this.name().toLowerCase();
 		}
 
-		private static List<IPassiveSpell> getPassives(ItemStack stack){
-
-			List<IPassiveSpell> ret = new ArrayList<IPassiveSpell>();
-			// it trickles down, so the one at the tap also hits the lower ones
-			//switch(Variant.getVariantFromMeta(stack)){
-
-			//case EMERALD:
-				ret.add(SpellRegistry.Passives.defend);
-			//case LAPIS:
-				ret.add(SpellRegistry.Passives.falling);
-			//case DIAMOND:
-				ret.add(SpellRegistry.Passives.burn);
-			//case GOLD:
-				ret.add(SpellRegistry.Passives.breath);
-			/*case QUARTZ:// none for u
-				break;
-			default:
-				break;
-			}*/
-
-			return ret;
-		}
-
 		static Variant getVariantFromMeta(ItemStack stack){
 
 			try{
@@ -466,13 +452,6 @@ public class ItemCyclicWand extends Item{
 				return Variant.QUARTZ;// this is damage zero anyway
 			}
 		}
-	}
-
-	/************************ For item as container *****************************/
-	@Override
-	public int getMaxItemUseDuration(ItemStack stack){
-
-		return 1; // Without this method, your inventory will NOT work!!!
 	}
 
 }

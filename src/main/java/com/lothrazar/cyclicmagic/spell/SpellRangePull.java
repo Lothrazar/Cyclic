@@ -3,6 +3,7 @@ package com.lothrazar.cyclicmagic.spell;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.net.MessageSpellPull;
 import com.lothrazar.cyclicmagic.util.UtilMoveBlock;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
@@ -34,10 +35,17 @@ public class SpellRangePull extends BaseSpellRange{
 
 	public void castFromServer(BlockPos pos, EnumFacing side, EntityPlayer p){
 
-		// BlockPos resultPosition =
-		UtilMoveBlock.pullBlock(p.worldObj, p, pos, side);
-
-		this.spawnParticle(p.worldObj, p, pos);
-		this.playSound(p.worldObj, null, pos);
+		BlockPos resultPosition = UtilMoveBlock.pullBlock(p.worldObj, p, pos, side);
+		
+		Block newSpot = null;
+		if(resultPosition != null && p.worldObj.getBlockState(resultPosition) != null){
+			newSpot = p.worldObj.getBlockState(resultPosition).getBlock();
+		}
+		
+		if(newSpot != null){
+			this.spawnParticle(p.worldObj, p, pos);
+			this.playSound(p.worldObj, newSpot, pos);
+		}
+		//else it failed, nothing was moved
 	}
 }
