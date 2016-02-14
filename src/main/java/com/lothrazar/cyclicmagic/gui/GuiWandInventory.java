@@ -10,6 +10,8 @@ public class GuiWandInventory extends GuiContainer{
 	private final InventoryWand inventory;
 	private static final ResourceLocation BACKGROUND = new ResourceLocation(Const.MODID, "textures/gui/inventory_wand.png");
 
+	//TODO: TOOLTIPS on all buttons
+	// the swap type tooltop, if its on pattern, should show the current slot number, as i '3/9' 
 	final int id = 777;
 	final int padding = 8;
 

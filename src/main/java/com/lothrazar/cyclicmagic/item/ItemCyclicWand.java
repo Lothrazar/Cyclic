@@ -24,7 +24,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemCyclicWand extends Item{
 
-	private static final String NBT_MANA = "mana";
 	private static final String NBT_SPELL = "spell_id";
 	private static final String NBT_UNLOCKS = "unlock_";
 
@@ -57,6 +56,9 @@ public class ItemCyclicWand extends Item{
 		Spells.setUnlockDefault(stack);
 
 		Energy.rechargeBy(stack, Energy.START);
+		
+		Energy.setMaximum(stack, Energy.MAX_DEFAULT);
+		Energy.setRegen(stack, Energy.REGEN_DEFAULT);
 	}
 
 	@Override
@@ -279,43 +281,44 @@ public class ItemCyclicWand extends Item{
 	public static class Energy{
 
 		public static final int START = 100; // what you get on crafted
+		public static final int MAX_DEFAULT = 1000;
+		public static final int REGEN_DEFAULT = 1;
+		private static final String NBT_MANA = "mana";
+		private static final String NBT_MAX = "max";
+		private static final String NBT_REGEN = "regen";
 
 		private static int getRegen(ItemStack stack){
 
-			switch(Variant.getVariantFromMeta(stack)){
-			case QUARTZ:
-				return 1;
-			case GOLD:
-				return 2;
-			case LAPIS:
-				return 3;
-			case DIAMOND:
-				return 4;
-			case EMERALD:
-				return 5;
+			//support for old ones, or ones that werent crafted
+			NBTTagCompound tags = getNBT(stack);
+			if(!tags.hasKey(NBT_REGEN) || tags.getInteger(NBT_REGEN) <= 0){
+				setMaximum(stack,REGEN_DEFAULT);
 			}
-			return 0;
+
+			return tags.getInteger(NBT_REGEN);
+		}
+		private static void setRegen(ItemStack stack, int m){
+			//TODO: planning to upgrade regen and max but not based onmeta
+ 
+			getNBT(stack).setInteger(NBT_REGEN, m);
 		}
 
 		public static int getMaximum(ItemStack stack){
 
-			switch(Variant.getVariantFromMeta(stack)){
-			case QUARTZ:
-				return 200;
-			case GOLD:
-				return 500;
-			case LAPIS:
-				return 700;
-			case DIAMOND:
-				return 1000;
-			case EMERALD:
-				return 1200;
-			default:
-				break;
+			//support for old ones, or ones that werent crafted
+			NBTTagCompound tags = getNBT(stack);
+			if(!tags.hasKey(NBT_MAX) || tags.getInteger(NBT_MAX) <= 0){
+				setMaximum(stack,MAX_DEFAULT);
 			}
-			return 0;
-		}
 
+			return tags.getInteger(NBT_MAX);
+		}
+		
+		private static void setMaximum(ItemStack stack, int m){
+ 
+			getNBT(stack).setInteger(NBT_MAX, m);
+		}
+		
 		public static int getCurrent(ItemStack stack){
 
 			return getNBT(stack).getInteger(NBT_MANA);
@@ -423,21 +426,21 @@ public class ItemCyclicWand extends Item{
 
 			List<IPassiveSpell> ret = new ArrayList<IPassiveSpell>();
 			// it trickles down, so the one at the tap also hits the lower ones
-			switch(Variant.getVariantFromMeta(stack)){
+			//switch(Variant.getVariantFromMeta(stack)){
 
-			case EMERALD:
+			//case EMERALD:
 				ret.add(Passives.defend);
-			case LAPIS:
+			//case LAPIS:
 				ret.add(Passives.falling);
-			case DIAMOND:
+			//case DIAMOND:
 				ret.add(Passives.burn);
-			case GOLD:
+			//case GOLD:
 				ret.add(Passives.breath);
-			case QUARTZ:// none for u
+			/*case QUARTZ:// none for u
 				break;
 			default:
 				break;
-			}
+			}*/
 
 			return ret;
 		}
