@@ -93,7 +93,7 @@ public class ItemCyclicWand extends Item{
 
 			IPassiveSpell pcurrent = ItemCyclicWand.Spells.getPassiveCurrent(stack);
 			if(pcurrent != null){
-				tooltip.add(EnumChatFormatting.DARK_GRAY + pcurrent.getInfo());
+				tooltip.add(EnumChatFormatting.DARK_GRAY +StatCollector.translateToLocal("spellpassive.prefix")+ pcurrent.getName());
 			}
 		}
 		else{
@@ -283,6 +283,10 @@ public class ItemCyclicWand extends Item{
 
 		public static IPassiveSpell getPassiveCurrent(ItemStack stack){
 
+			if(stack == null){
+				return null;
+			}
+			
 			return SpellRegistry.Passives.getByID(getNBT(stack).getInteger(NBT_PASSIVECURRENT));
 		}
 
@@ -293,12 +297,11 @@ public class ItemCyclicWand extends Item{
 			int current = tags.getInteger(NBT_PASSIVECURRENT);
 
 			current++;
-			if(current > 4){
-				current = 1;
+			if(current > 3){
+				current = 0;
 			}// TODO: fix hardcoded magic nums
 
 			tags.setInteger(NBT_PASSIVECURRENT, current);
-			System.out.println(": toggle current passive bc" + current);
 
 			stack.setTagCompound(tags);
 		}
