@@ -31,11 +31,11 @@ public class SpellChestSack extends BaseSpell implements ISpell {
 		
 		if(drop != null){
 
-			world.setBlockToAir(pos); 
 
 			this.playSound(world,null,pos);
-			
 			this.spawnParticle(world, player, pos);
+
+			world.setBlockToAir(pos); 
 			
 			if(world.isRemote == false  ){
 				player.entityDropItem(drop, 1); 
@@ -55,6 +55,7 @@ public class SpellChestSack extends BaseSpell implements ISpell {
 
 	@Override
 	public void playSound(World world, Block block, BlockPos pos) {
+		
 		UtilSound.playSound(world,pos, UtilSound.Own.thunk);
 	}
 }

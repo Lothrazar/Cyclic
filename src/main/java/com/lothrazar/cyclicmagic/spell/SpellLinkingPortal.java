@@ -31,6 +31,9 @@ public class SpellLinkingPortal  extends BaseSpell implements ISpell {
 			
 			ItemWaypointPortal.saveCurrentLocation(player, drop);
 			world.spawnEntityInWorld(new EntityItem(world,pos.getX(),pos.getY(),pos.getZ(),drop));
+			
+			this.playSound(world, null, player.getPosition());
+			this.spawnParticle(world, player, player.getPosition());
 		}
 		
 		return false;

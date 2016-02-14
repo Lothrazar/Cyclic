@@ -35,20 +35,27 @@ public class SpellCarbonPaper extends BaseSpell implements ISpell {
 			return false;
 		}
 		
+		boolean isDone = false;
+		
 		if ((blockClicked == Blocks.wall_sign || blockClicked == Blocks.standing_sign) && container instanceof TileEntitySign) {
 		 
 			ItemPaperCarbon.copySignAndSpawnItem(world,  (TileEntitySign) container, pos);
 			
-			return true;
+			isDone =  true;
 		}
 		else if (blockClicked == Blocks.noteblock && container instanceof TileEntityNote) {
 		 
 			ItemPaperCarbon.copyNoteAndSpawnItem(world, (TileEntityNote) container, pos);
 
-			return true;
+			isDone =  true;
 		}
 		
-		return false;
+		if(isDone){
+			this.spawnParticle(world, player, pos);
+			this.playSound(world, blockClicked, pos);
+		}
+		
+		return isDone;
 	}
 	
 	@Override
@@ -58,6 +65,6 @@ public class SpellCarbonPaper extends BaseSpell implements ISpell {
 
 	@Override
 	public void playSound(World world, Block block, BlockPos pos) {
-		UtilSound.playSound(world, pos, UtilSound.portal);
+		UtilSound.playSound(world, pos, block.stepSound.getPlaceSound());
 	}
 }

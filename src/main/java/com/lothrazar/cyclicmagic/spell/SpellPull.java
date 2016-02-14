@@ -23,12 +23,6 @@ public class SpellPull extends BaseSpell {
 	@Override
 	public boolean cast(World world, EntityPlayer p, BlockPos pos, EnumFacing side ) {
 
-		//TODO: we are basically replacing these with the mouseover versions... how to genericify these?
-		/*
-		if(side == null || world.getBlockState(pos) == null){
-			return false;
-		}*/
-		
 		if (!p.capabilities.allowEdit) {
 			return false;
 		}
