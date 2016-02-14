@@ -41,7 +41,7 @@ public class ButtonPassiveToggle extends GuiButton implements ITooltipButton{
 	public void drawButton(Minecraft mc, int mouseX, int mouseY){
 
 		IPassiveSpell ps = ItemCyclicWand.Spells.getPassiveCurrent(thePlayer.getHeldItem());
-		
+
 		if(ps != null){
 			this.displayString = ps.getName();
 		}
@@ -49,14 +49,14 @@ public class ButtonPassiveToggle extends GuiButton implements ITooltipButton{
 	}
 
 	public List<String> getTooltips(){
+
 		List<String> tooltips = new ArrayList<String>();
 		IPassiveSpell ps = ItemCyclicWand.Spells.getPassiveCurrent(thePlayer.getHeldItem());
-		
+
 		if(ps != null){
 			tooltips.add(ps.getInfo());
 		}
-		
+
 		return tooltips;
 	}
-	
 }

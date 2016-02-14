@@ -15,8 +15,8 @@ public class GuiWandInventory extends GuiContainer{
 	private final InventoryWand inventory;
 	private static final ResourceLocation BACKGROUND = new ResourceLocation(Const.MODID, "textures/gui/inventory_wand.png");
 
-	//TODO: TOOLTIPS on all buttons
-	// the swap type tooltop, if its on pattern, should show the current slot number, as i '3/9' 
+	// TODO: TOOLTIPS on all buttons
+	// the swap type tooltop, if its on pattern, should show the current slot number, as i '3/9'
 	final int id = 777;
 	final int padding = 8;
 
@@ -33,24 +33,27 @@ public class GuiWandInventory extends GuiContainer{
 
 		final int y = this.guiTop + 6;
 		int x = this.guiLeft + 5;
-		int width = 30;
-		this.buttonList.add(new ButtonBuildToggle(inventory.getPlayer(), id, x, y, width));
 
-		x += width + padding;
+		int width = 20;
 		this.buttonList.add(new ButtonSpellCircle(id, x, y, width));
 
 		x += width + padding;
 		this.buttonList.add(new ButtonRecharge(id, x, y, width));
 
 		x += width + padding;
+		width = 50;
+		this.buttonList.add(new ButtonBuildToggle(inventory.getPlayer(), id, x, y, width));
+
+		x += width + padding;
+		width = 50;
 		this.buttonList.add(new ButtonPassiveToggle(inventory.getPlayer(), id, x, y, width));
 	}
-	
+
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks){
 
 		super.drawScreen(mouseX, mouseY, partialTicks);
-		 
+
 		ITooltipButton btn;
 		for(int i = 0; i < buttonList.size(); i++){
 			if(buttonList.get(i).isMouseOver() && buttonList.get(i) instanceof ITooltipButton){
@@ -61,7 +64,7 @@ public class GuiWandInventory extends GuiContainer{
 			}
 		}
 	}
-	
+
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
 
