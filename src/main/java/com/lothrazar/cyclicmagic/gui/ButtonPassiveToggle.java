@@ -38,7 +38,7 @@ public class ButtonPassiveToggle extends GuiButton{
 	@Override
 	public void drawButton(Minecraft mc, int mouseX, int mouseY){
 
-		//this.displayString = StatCollector.translateToLocal(ItemCyclicWand.BuildType.getBuildTypeName(thePlayer.getHeldItem()));
+		this.displayString = StatCollector.translateToLocal("spell.passive"+ItemCyclicWand.Spells.getPassiveCurrent(thePlayer.getHeldItem()));
 		 
 		super.drawButton(mc, mouseX, mouseY);
 	}

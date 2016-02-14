@@ -24,7 +24,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemCyclicWand extends Item{
 
-	private static final String NBT_SPELL = "spell_id";
+	private static final String NBT_SPELLCURRENT = "spell_id";
+	private static final String NBT_PASSIVECURRENT = "passive_id";
 	private static final String NBT_UNLOCKS = "unlock_";
 
 	public ItemCyclicWand(){
@@ -256,24 +257,34 @@ public class ItemCyclicWand extends Item{
 
 		public static int getSpellCurrent(ItemStack stack){
 
-			return getNBT(stack).getInteger(NBT_SPELL);
+			return getNBT(stack).getInteger(NBT_SPELLCURRENT);
 		}
 
 		public static void setSpellCurrent(ItemStack stack, int spell_id){
 
 			NBTTagCompound tags = getNBT(stack);
 
-			tags.setInteger(NBT_SPELL, spell_id);
+			tags.setInteger(NBT_SPELLCURRENT, spell_id);
 
 			stack.setTagCompound(tags);
 		}
+		public static int getPassiveCurrent(ItemStack stack){
 
-		public static void togglePassive(ItemStack heldItem){
-			System.out.println("TODO: toggle current passive");
+			return getNBT(stack).getInteger(NBT_PASSIVECURRENT);
+		}
+		public static void togglePassive(ItemStack stack){
 			
+			NBTTagCompound tags = getNBT(stack);
 
-			// TODO Auto-generated method stub
+			int current = tags.getInteger(NBT_PASSIVECURRENT);
+
+			current++;
+			if(current > 4){current = 1;}//TODO: fix hardcoded magic nums
 			
+			tags.setInteger(NBT_PASSIVECURRENT, current);
+			System.out.println(": toggle current passive bc"+current);
+			
+			stack.setTagCompound(tags);
 		}
 
 	}

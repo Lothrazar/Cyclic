@@ -28,7 +28,7 @@ public class GuiWandInventory extends GuiContainer{
 
 		final int y = this.guiTop + 6;
 		int x = this.guiLeft + 5;
-		int width = 50;
+		int width = 30;
 		this.buttonList.add(new ButtonBuildToggle(inventory.getPlayer(), id, x, y, width));
 
 		x += width + padding;

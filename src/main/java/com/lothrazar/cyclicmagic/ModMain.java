@@ -50,7 +50,8 @@ public class ModMain{
 		network.registerMessage(MessageSpellPull.class, MessageSpellPull.class, packetID++, Side.SERVER);
 		network.registerMessage(MessageSpellReplacer.class, MessageSpellReplacer.class, packetID++, Side.SERVER);
 		network.registerMessage(MessageRecharge.class, MessageRecharge.class, packetID++, Side.SERVER);
-
+		network.registerMessage(MessageTogglePassive.class, MessageTogglePassive.class, packetID++, Side.SERVER);
+		
 		MinecraftForge.EVENT_BUS.register(new EventRegistry());
 	}
 
