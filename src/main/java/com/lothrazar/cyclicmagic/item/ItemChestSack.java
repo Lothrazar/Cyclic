@@ -17,7 +17,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.Level;
 
-public class ItemChestSack extends Item {
+public class ItemChestSack extends Item{
+
 	private static final String KEY_ITEMQTY = "itemqty";
 	private static final String KEY_ITEMDMG = "itemdmg";
 	private static final String KEY_ITEMIDS = "itemids";
@@ -26,7 +27,8 @@ public class ItemChestSack extends Item {
 	private static final String KEY_BLOCK = "block";
 	private static final String KEY_BLOCKDISPLAY = "blockdisplay";
 
-	public ItemChestSack() {
+	public ItemChestSack(){
+
 		super();
 		this.setMaxStackSize(1);
 		// imported from my old mod
@@ -34,50 +36,51 @@ public class ItemChestSack extends Item {
 	}
 
 	@Override
-	public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
+	public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ){
 
-		if (worldIn.getTileEntity(pos) != null && worldIn.getTileEntity(pos) instanceof IInventory) {
+		if(worldIn.getTileEntity(pos) != null && worldIn.getTileEntity(pos) instanceof IInventory){
 
 			if(sortToExisting(playerIn, (IInventory) worldIn.getTileEntity(pos), stack)){
-			
+
 				UtilSound.playSound(worldIn, pos, UtilSound.Own.thunk);
 			}
 		}
-		else {
+		else{
 			BlockPos offset = pos.offset(side);
 
-			if (worldIn.isAirBlock(offset) == false) {
+			if(worldIn.isAirBlock(offset) == false){
 				return false;
 			}
 
 			if(createAndFillChest(playerIn, stack, offset)){
 				playerIn.destroyCurrentEquippedItem();
-				
+
 				UtilSound.playSound(worldIn, pos, UtilSound.Own.thunk);
 			}
-			
+
 		}
 
 		return false;
 	}
 
 	@Override
-	public void addInformation(ItemStack itemStack, EntityPlayer player, List<String> list, boolean advanced) {
-		if (itemStack.getTagCompound() == null) {
+	public void addInformation(ItemStack itemStack, EntityPlayer player, List<String> list, boolean advanced){
+
+		if(itemStack.getTagCompound() == null){
 			itemStack.setTagCompound(new NBTTagCompound());
 		}
 
-		if (!itemStack.getTagCompound().hasKey(KEY_COUNT) || !itemStack.getTagCompound().hasKey(KEY_STACKS)) {
+		if(!itemStack.getTagCompound().hasKey(KEY_COUNT) || !itemStack.getTagCompound().hasKey(KEY_STACKS)){
 			return;// no info added
 		}
 
 		list.add(itemStack.getTagCompound().getString(KEY_BLOCKDISPLAY));
 		String count = itemStack.getTagCompound().getInteger(KEY_COUNT) + "";
 		String stacks = itemStack.getTagCompound().getInteger(KEY_STACKS) + "";
-		if (count == "") {
+		if(count == ""){
 			count = "0";
 		}
-		if (stacks == "") {
+		if(stacks == ""){
 			stacks = "0";
 		}
 
@@ -86,9 +89,9 @@ public class ItemChestSack extends Item {
 		super.addInformation(itemStack, player, list, advanced);
 	}
 
-	private boolean sortToExisting(EntityPlayer player, IInventory chest, ItemStack held) {
+	private boolean sortToExisting(EntityPlayer player, IInventory chest, ItemStack held){
 
-		if (held.getTagCompound() == null) {
+		if(held.getTagCompound() == null){
 			held.setTagCompound(new NBTTagCompound());
 		}
 
@@ -99,7 +102,7 @@ public class ItemChestSack extends Item {
 		int[] itemdmg = held.getTagCompound().getIntArray(KEY_ITEMDMG);
 		int[] itemqty = held.getTagCompound().getIntArray(KEY_ITEMQTY);
 
-		if (itemids == null) {
+		if(itemids == null){
 			return false;
 		}
 
@@ -115,17 +118,17 @@ public class ItemChestSack extends Item {
 		int meta;
 		int qty;
 
-		for (int islotChest = 0; islotChest < chest.getSizeInventory(); islotChest++) {
+		for(int islotChest = 0; islotChest < chest.getSizeInventory(); islotChest++){
 
 			chestItem = chest.getStackInSlot(islotChest);
 
-			if (chestItem == null) {
+			if(chestItem == null){
 				continue;
 			} // empty chest slot
 
-			for (int i = 0; i < itemids.length; i++) {
+			for(int i = 0; i < itemids.length; i++){
 				item = itemids[i];
-				if (item == 0) {
+				if(item == 0){
 					continue;
 				}// empty inventory slot
 
@@ -134,11 +137,11 @@ public class ItemChestSack extends Item {
 
 				invItem = new ItemStack(Item.getItemById(item), qty, meta);
 
-				if (invItem.getItem().equals(chestItem.getItem()) && invItem.getItemDamage() == chestItem.getItemDamage()) {
+				if(invItem.getItem().equals(chestItem.getItem()) && invItem.getItemDamage() == chestItem.getItemDamage()){
 					chestMax = chestItem.getItem().getItemStackLimit(chestItem);
 					room = chestMax - chestItem.stackSize;
 
-					if (room <= 0) {
+					if(room <= 0){
 						continue;
 					} // no room, check the next spot
 
@@ -153,7 +156,7 @@ public class ItemChestSack extends Item {
 
 					totalItemsMoved += toDeposit;
 
-					if (invItem.stackSize <= 0) {
+					if(invItem.stackSize <= 0){
 						// item stacks with zero count do not destroy
 						// themselves, they show up and have unexpected behavior
 						// in game so set to empty
@@ -162,7 +165,7 @@ public class ItemChestSack extends Item {
 						itemdmg[i] = 0;
 						itemqty[i] = 0;
 					}
-					else {
+					else{
 						// set to new quantity in sack
 						itemqty[i] = invItem.stackSize;
 					}
@@ -174,22 +177,22 @@ public class ItemChestSack extends Item {
 		held.getTagCompound().setIntArray(KEY_ITEMIDS, itemids);
 		held.getTagCompound().setIntArray(KEY_ITEMDMG, itemdmg);
 		held.getTagCompound().setIntArray(KEY_ITEMQTY, itemqty);
-		
-		return(totalItemsMoved > 0);
+
+		return (totalItemsMoved > 0);
 	}
 
-	private boolean createAndFillChest(EntityPlayer entityPlayer, ItemStack heldChestSack, BlockPos pos) {
+	private boolean createAndFillChest(EntityPlayer entityPlayer, ItemStack heldChestSack, BlockPos pos){
 
 		int[] itemids = heldChestSack.getTagCompound().getIntArray(KEY_ITEMIDS);
 		int[] itemdmg = heldChestSack.getTagCompound().getIntArray(KEY_ITEMDMG);
 		int[] itemqty = heldChestSack.getTagCompound().getIntArray(KEY_ITEMQTY);
 
-		if (itemids == null) {
+		if(itemids == null){
 			ModMain.logger.log(Level.WARN, "null nbt problem in itemchestsack");
 			return false;
 		}
 
-		if (Block.getBlockById(heldChestSack.getTagCompound().getInteger(KEY_BLOCK)) == null) {
+		if(Block.getBlockById(heldChestSack.getTagCompound().getInteger(KEY_BLOCK)) == null){
 
 			ModMain.logger.log(Level.WARN, "Null block from id: " + heldChestSack.getTagCompound().getInteger(KEY_BLOCK));
 			return false;
@@ -200,7 +203,7 @@ public class ItemChestSack extends Item {
 		// is also a TileEntityChest
 		IInventory invo = (IInventory) entityPlayer.worldObj.getTileEntity(pos);
 
-		if (invo == null) {
+		if(invo == null){
 			ModMain.logger.log(Level.WARN, "Null tile entity inventory, cannot fill from item stack");
 			return false;
 		}
@@ -210,9 +213,9 @@ public class ItemChestSack extends Item {
 		int qty;
 		ItemStack chestItem;
 
-		for (int i = 0; i < itemids.length; i++) {
+		for(int i = 0; i < itemids.length; i++){
 			item = itemids[i];
-			if (item == 0) {
+			if(item == 0){
 				continue;
 			}// empty slot
 
@@ -229,9 +232,9 @@ public class ItemChestSack extends Item {
 		// playerIn.inventory.decrStackSize(playerIn.inventory.currentItem, 1);
 	}
 
-	public static ItemStack createStackFromInventory(World world, EntityPlayer player, BlockPos posChest) {
+	public static ItemStack createStackFromInventory(World world, EntityPlayer player, BlockPos posChest){
 
-		if (world.getTileEntity(posChest) == null || world.getTileEntity(posChest) instanceof IInventory == false) {
+		if(world.getTileEntity(posChest) == null || world.getTileEntity(posChest) instanceof IInventory == false){
 
 			return null;
 		}
@@ -252,21 +255,21 @@ public class ItemChestSack extends Item {
 
 		// inventory and chest has 9 rows by 3 columns, never changes. same as
 		// 64 max stack size
-		for (int islotChest = 0; islotChest < invo.getSizeInventory(); islotChest++) {
+		for(int islotChest = 0; islotChest < invo.getSizeInventory(); islotChest++){
 			// zeroes to avoid nulls, and signify nothing goes there
 			itemids[islotChest] = 0;
 			itemqty[islotChest] = 0;
 			itemids[islotChest] = 0;
 			chestItem = invo.getStackInSlot(islotChest);
 
-			if (chestItem == null) {
+			if(chestItem == null){
 				continue;
 			}// not an error; empty chest slot
-			if (chestItem.getTagCompound() != null) {
+			if(chestItem.getTagCompound() != null){
 				// probably has an enchantment
 				player.dropPlayerItemWithRandomChoice(chestItem, false);
 			}
-			else {
+			else{
 				stacks++;
 				count += chestItem.stackSize;
 
@@ -279,7 +282,7 @@ public class ItemChestSack extends Item {
 			invo.setInventorySlotContents(islotChest, null);
 		}
 
-		if (drop.getTagCompound() == null) {
+		if(drop.getTagCompound() == null){
 			drop.setTagCompound(new NBTTagCompound());
 		}
 		drop.getTagCompound().setIntArray(KEY_ITEMIDS, itemids);

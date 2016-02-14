@@ -23,26 +23,28 @@ import com.lothrazar.cyclicmagic.net.MessageKeyRight;
 import com.lothrazar.cyclicmagic.net.MessageOpenSpellbook;
 import com.lothrazar.cyclicmagic.spell.SpellGhost;
 
-public class EventRegistry {
+public class EventRegistry{
 
 	@SubscribeEvent
-	public void onConfigChanged(OnConfigChangedEvent event) {
-		if (event.modID.equals(Const.MODID)){
+	public void onConfigChanged(OnConfigChangedEvent event){
+
+		if(event.modID.equals(Const.MODID)){
 			ModMain.cfg.syncConfig();
 		}
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void onMouseInput(MouseEvent event){
-		//DO NOT use InputEvent.MouseInputEvent 
+
+		// DO NOT use InputEvent.MouseInputEvent
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 
 		if(SpellRegistry.spellsEnabled(player) == false){
-			//you are not holding the wand - so go as normal
+			// you are not holding the wand - so go as normal
 			return;
 		}
-		
+
 		if(player.isSneaking()){
 			if(event.dwheel < 0){
 				ModMain.network.sendToServer(new MessageKeyRight());
@@ -54,55 +56,58 @@ public class EventRegistry {
 			}
 		}
 	}
-	
+
 	@SubscribeEvent
 	public void onPlayerInteractEvent(PlayerInteractEvent event){
 
-		if(event.action == Action.LEFT_CLICK_BLOCK && event.world.getBlockState(event.pos) != null
-				&& event.entityPlayer.getHeldItem() != null && event.entityPlayer.getHeldItem().getItem() instanceof ItemCyclicWand ){
-		
+		if(event.action == Action.LEFT_CLICK_BLOCK && event.world.getBlockState(event.pos) != null && event.entityPlayer.getHeldItem() != null && event.entityPlayer.getHeldItem().getItem() instanceof ItemCyclicWand){
+
 			// important: LEFT_CLICK_BLOCK only fires on the server, not the client. Yo
 			// http://www.minecraftforge.net/forum/index.php?topic=22348.0
 			Block blockHit = event.world.getBlockState(event.pos).getBlock();
-	
+
 			if(blockHit == Blocks.crafting_table && event.entityPlayer instanceof EntityPlayerMP){
-	
-				ModMain.network.sendTo(new MessageOpenSpellbook(), (EntityPlayerMP)event.entityPlayer);
+
+				ModMain.network.sendTo(new MessageOpenSpellbook(), (EntityPlayerMP) event.entityPlayer);
 			}
-		 
+
 		}
 	}
-	
+
 	@SubscribeEvent
-	public void onClonePlayer(PlayerEvent.Clone event) {
+	public void onClonePlayer(PlayerEvent.Clone event){
+
 		PlayerPowerups.get(event.entityPlayer).copy(PlayerPowerups.get(event.original));
 	}
 
 	@SubscribeEvent
-	public void onEntityConstructing(EntityConstructing event) {
-		if (event.entity instanceof EntityPlayer && PlayerPowerups.get((EntityPlayer) event.entity) == null) {
+	public void onEntityConstructing(EntityConstructing event){
+
+		if(event.entity instanceof EntityPlayer && PlayerPowerups.get((EntityPlayer) event.entity) == null){
 			PlayerPowerups.register((EntityPlayer) event.entity);
 		}
 	}
 
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
-	public void onRenderTextOverlay(RenderGameOverlayEvent.Text event) {
-		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
-		//PlayerPowerups props = PlayerPowerups.get(player);
+	public void onRenderTextOverlay(RenderGameOverlayEvent.Text event){
 
-		if (SpellRegistry.spellsEnabled(player)) {
+		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+		// PlayerPowerups props = PlayerPowerups.get(player);
+
+		if(SpellRegistry.spellsEnabled(player)){
 			SpellRegistry.screen.drawSpellWheel();
 		}
 	}
 
 	@SubscribeEvent
-	public void onEntityUpdate(LivingUpdateEvent event) {
-		if (event.entityLiving == null) {
+	public void onEntityUpdate(LivingUpdateEvent event){
+
+		if(event.entityLiving == null){
 			return;
 		}
 
-		if (event.entityLiving instanceof EntityPlayer && event.entity.worldObj.isRemote == false) {
+		if(event.entityLiving instanceof EntityPlayer && event.entity.worldObj.isRemote == false){
 			SpellGhost.onPlayerUpdate(event);
 
 			SpellRegistry.caster.tickSpellTimer((EntityPlayer) event.entityLiving);
@@ -113,7 +118,7 @@ public class EventRegistry {
 		PotionRegistry.tickWaterwalk(event);
 
 		PotionRegistry.tickFrost(event);
-		
+
 		PotionRegistry.tickMagnet(event);
 	}
 }

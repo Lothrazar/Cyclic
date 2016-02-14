@@ -13,18 +13,20 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ButtonBuildToggle extends GuiButton{
 
 	final EntityPlayer thePlayer;
-	public ButtonBuildToggle(EntityPlayer player,int buttonId, int x, int y, int width) {
-		super(buttonId, x, y,width,20,"");
+
+	public ButtonBuildToggle(EntityPlayer player, int buttonId, int x, int y, int width){
+
+		super(buttonId, x, y, width, 20, "");
 		thePlayer = player;
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
+	public boolean mousePressed(Minecraft mc, int mouseX, int mouseY){
+
 		boolean pressed = super.mousePressed(mc, mouseX, mouseY);
 
-		if (pressed) {
-	
+		if(pressed){
 
 			ModMain.network.sendToServer(new MessageToggleBuild());
 		}
@@ -34,10 +36,10 @@ public class ButtonBuildToggle extends GuiButton{
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public void drawButton(Minecraft mc, int mouseX, int mouseY)
-    {
+	public void drawButton(Minecraft mc, int mouseX, int mouseY){
+
 		this.displayString = StatCollector.translateToLocal(ItemCyclicWand.BuildType.getBuildTypeName(thePlayer.getHeldItem()));
-		
+
 		super.drawButton(mc, mouseX, mouseY);
-    }
+	}
 }

@@ -12,7 +12,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 
-public class MessageKeyCast implements IMessage, IMessageHandler<MessageKeyCast, IMessage> {
+public class MessageKeyCast implements IMessage, IMessageHandler<MessageKeyCast, IMessage>{
+
 	private BlockPos pos;
 	private EnumFacing side;
 	// private String csv;
@@ -20,72 +21,78 @@ public class MessageKeyCast implements IMessage, IMessageHandler<MessageKeyCast,
 	private static final String NBT_POS = "pos";
 	private static final String NBT_SIDE = "side";
 
-	public MessageKeyCast() {
+	public MessageKeyCast(){
+
 	}
 
-	public MessageKeyCast(BlockPos pm, EnumFacing pside) {
+	public MessageKeyCast(BlockPos pm, EnumFacing pside){
+
 		pos = pm;
 		side = pside;
 
 		this.toNBT();
 	}
 
-	private void toNBT() {
+	private void toNBT(){
+
 		tags = new NBTTagCompound();
 		tags.setString(NBT_POS, UtilNBT.posToStringCSV(pos));
 
-		if (side == null) {
+		if(side == null){
 			tags.setInteger(NBT_SIDE, -1);// DUNSWE
 		}
-		else {
+		else{
 			tags.setInteger(NBT_SIDE, side.getIndex());// DUNSWE
 		}
 	}
 
-	private void fromNBT() {
+	private void fromNBT(){
+
 		// http://www.minecraftforge.net/forum/index.php?topic=20135.0
 		String csv = tags.getString(NBT_POS);
 
-		if (csv == "") {
+		if(csv == ""){
 			pos = null;
 		}
-		else {
+		else{
 			pos = UtilNBT.stringCSVToBlockPos(csv);
 		}
 
 		int iside = tags.getInteger(NBT_SIDE);
-		if (iside < 0) {
+		if(iside < 0){
 			side = null;
 		}
-		else {
+		else{
 			side = EnumFacing.getFront(iside);
 		}
 	}
 
 	@Override
-	public void fromBytes(ByteBuf buf) {
+	public void fromBytes(ByteBuf buf){
+
 		tags = ByteBufUtils.readTag(buf);
 		this.fromNBT();
 	}
 
 	@Override
-	public void toBytes(ByteBuf buf) {
+	public void toBytes(ByteBuf buf){
+
 		this.toNBT();
 		ByteBufUtils.writeTag(buf, tags);
 	}
 
 	@Override
-	public IMessage onMessage(MessageKeyCast message, MessageContext ctx) {
+	public IMessage onMessage(MessageKeyCast message, MessageContext ctx){
 
 		message.fromNBT();
 
 		EntityPlayer player = ctx.getServerHandler().playerEntity;
 		// PlayerPowerups props = PlayerPowerups.get(player);
-	 
+
 		// www.minecraftforge.net/forum/index.php/topic,20135.0.html
 
-		if (SpellRegistry.spellsEnabled(player)) {
-			SpellRegistry.caster.tryCastCurrent( player.worldObj, player, message.pos, message.side);
+		if(SpellRegistry.spellsEnabled(player)){
+			SpellRegistry.caster.tryCastCurrent(player.worldObj, player, message.pos, message.side);
 		}
 
 		return null;

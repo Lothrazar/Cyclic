@@ -10,17 +10,18 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ButtonRecharge extends GuiButton{
 
-	public ButtonRecharge(int buttonId, int x, int y, int width) {
-		super(buttonId, x, y,width,20,StatCollector.translateToLocal("button.recharge"));
+	public ButtonRecharge(int buttonId, int x, int y, int width){
+
+		super(buttonId, x, y, width, 20, StatCollector.translateToLocal("button.recharge"));
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
+	public boolean mousePressed(Minecraft mc, int mouseX, int mouseY){
+
 		boolean pressed = super.mousePressed(mc, mouseX, mouseY);
 
-		if (pressed) {
-	
+		if(pressed){
 
 			ModMain.network.sendToServer(new MessageRecharge());
 		}

@@ -15,19 +15,22 @@ import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 
-public class ItemWaypointPortal extends Item {
+public class ItemWaypointPortal extends Item{
+
 	private final static String KEY_LOC = "location";
 	private final static String KEY_DIM = "dimension";
 	private final static String KEY_BIOME = "biome";
 
-	public ItemWaypointPortal() {
+	public ItemWaypointPortal(){
+
 		super();
 		this.setMaxDamage(20);
 		this.setMaxStackSize(1);
 	}
 
-	public static void saveCurrentLocation(EntityPlayer player, ItemStack held) {
-		if (held.getTagCompound() == null) {
+	public static void saveCurrentLocation(EntityPlayer player, ItemStack held){
+
+		if(held.getTagCompound() == null){
 			held.setTagCompound(new NBTTagCompound());
 		}
 
@@ -39,16 +42,18 @@ public class ItemWaypointPortal extends Item {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced){
+
 		tooltip.add(stack.getTagCompound().getString(KEY_BIOME));
 		tooltip.add(stack.getTagCompound().getString(KEY_LOC));
 	}
 
 	@Override
-	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn) {
+	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn){
+
 		BlockPos to = UtilNBT.stringCSVToBlockPos(itemStackIn.getTagCompound().getString(KEY_LOC));
 
-		if (itemStackIn.getTagCompound().getInteger(KEY_DIM) != playerIn.dimension) {
+		if(itemStackIn.getTagCompound().getInteger(KEY_DIM) != playerIn.dimension){
 
 			// bad dimension
 

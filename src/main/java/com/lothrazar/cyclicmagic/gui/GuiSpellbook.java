@@ -15,7 +15,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiSpellbook extends GuiScreen {
+public class GuiSpellbook extends GuiScreen{
 
 	private final EntityPlayer entityPlayer;
 	private final static ResourceLocation background = new ResourceLocation(Const.MODID, "textures/gui/spellbook.png");
@@ -30,25 +30,25 @@ public class GuiSpellbook extends GuiScreen {
 	int textureHeight = 180;
 	PlayerPowerups props;
 
-	public GuiSpellbook(EntityPlayer p) {
-		
+	public GuiSpellbook(EntityPlayer p){
+
 		super();
 		this.entityPlayer = p;
 		this.props = PlayerPowerups.get(entityPlayer);
 	}
 
 	@Override
-	public void initGui() {
+	public void initGui(){
 
 		super.initGui();
-		
+
 		xCenter = this.width / 2;
 		yCenter = this.height / 2;
 		radius = xCenter / 3 + 26;
-		
+
 		arc = (2 * Math.PI) / SpellRegistry.getSpellbook().size();
 
-		this.buttonList.add(new ButtonClose(999,  xCenter-15, yCenter-10));
+		this.buttonList.add(new ButtonClose(999, xCenter - 15, yCenter - 10));
 
 		double ang = 0;
 		double cx, cy;
@@ -56,7 +56,7 @@ public class GuiSpellbook extends GuiScreen {
 		ang = 0;
 		ButtonSpell b;
 
-		for (ISpell s : SpellRegistry.getSpellbook()) {
+		for(ISpell s : SpellRegistry.getSpellbook()){
 
 			cx = xCenter + radius * Math.cos(ang) - 2;
 			cy = yCenter + radius * Math.sin(ang) - 2;
@@ -69,68 +69,65 @@ public class GuiSpellbook extends GuiScreen {
 	}
 
 	@Override
-	public void drawBackground(int tint)
-    {
+	public void drawBackground(int tint){
+
 		ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft());
 
 		int screenWidth = res.getScaledWidth();
 		int screenHeight = res.getScaledHeight();
 
-		int guiLeft = screenWidth/2 - textureWidth/2;
-		int guiTop = screenHeight/2 - textureHeight/2;
-		
-		UtilTextureRender.drawTextureSimple(background,guiLeft,guiTop, 200,200);
-    }
-	
-	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+		int guiLeft = screenWidth / 2 - textureWidth / 2;
+		int guiTop = screenHeight / 2 - textureHeight / 2;
 
-		//this.drawBackground(1); //turn this on if we want 'background' on
+		UtilTextureRender.drawTextureSimple(background, guiLeft, guiTop, 200, 200);
+	}
+
+	@Override
+	public void drawScreen(int mouseX, int mouseY, float partialTicks){
+
+		// this.drawBackground(1); //turn this on if we want 'background' on
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		double ang = 0;
 		double cx, cy;
 
 		int spellSize = 16;
-		UtilTextureRender.drawTextureSquare(ptr, mouseX-8,mouseY-8, spellSize);
-		for (ISpell s : SpellRegistry.getSpellbook()) {
-			
-
-
-
+		UtilTextureRender.drawTextureSquare(ptr, mouseX - 8, mouseY - 8, spellSize);
+		for(ISpell s : SpellRegistry.getSpellbook()){
 
 			cx = xCenter + radius * Math.cos(ang);
 			cy = yCenter + radius * Math.sin(ang);
 
-			ResourceLocation header; 
+			ResourceLocation header;
 			boolean unlocked = ItemCyclicWand.Spells.isSpellUnlocked(props.getPlayer().getHeldItem(), s);
-			
+
 			if(unlocked){
 				header = s.getIconDisplayHeaderEnabled();
 			}
 			else{
 				header = s.getIconDisplayHeaderDisabled();
 			}
-			
-//TODO: maybe a special header for this guy??
-			//if(s.getID() == SpellRegistry.inventory.getID())
-			UtilTextureRender.drawTextureSimple(header, (int) cx, (int) cy-8, spellSize-4,spellSize-4);
-			
+
+			// TODO: maybe a special header for this guy??
+			// if(s.getID() == SpellRegistry.inventory.getID())
+			UtilTextureRender.drawTextureSimple(header, (int) cx, (int) cy - 8, spellSize - 4, spellSize - 4);
+
 			ang += arc;
 		}
-	
+
 		ButtonSpell btn;
-		for (int i = 0; i < buttonList.size(); i++) {
-			if (buttonList.get(i).isMouseOver()  && buttonList.get(i) instanceof ButtonSpell) {
+		for(int i = 0; i < buttonList.size(); i++){
+			if(buttonList.get(i).isMouseOver() && buttonList.get(i) instanceof ButtonSpell){
 				btn = (ButtonSpell) buttonList.get(i);
-			
+
 				drawHoveringText(btn.getTooltipForPlayer(props), mouseX, mouseY, fontRendererObj);
-				break;//cant hover on 2 at once
+				break;// cant hover on 2 at once
 			}
 		}
 	}
 
 	@Override
-	public boolean doesGuiPauseGame() {
+	public boolean doesGuiPauseGame(){
+
 		return false;
 	}
 }

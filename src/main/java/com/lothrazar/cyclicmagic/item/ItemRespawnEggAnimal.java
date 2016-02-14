@@ -29,8 +29,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemRespawnEggAnimal extends Item {
-	public ItemRespawnEggAnimal() {
+public class ItemRespawnEggAnimal extends Item{
+
+	public ItemRespawnEggAnimal(){
+
 		this.setHasSubtypes(true);
 	}
 
@@ -44,11 +46,12 @@ public class ItemRespawnEggAnimal extends Item {
 	public static final String NBT_HORSETEMPER = "Temper";
 	public static final String NBT_HORSEREPRO = "HasReproduced";
 
-	public String getItemStackDisplayName(ItemStack stack) {
+	public String getItemStackDisplayName(ItemStack stack){
+
 		String itemName = (StatCollector.translateToLocal(this.getUnlocalizedName() + ".name")).trim();
 		String entityName = EntityList.getStringFromID(stack.getMetadata());
 
-		if (entityName != null) {
+		if(entityName != null){
 			itemName = StatCollector.translateToLocal("entity." + entityName + ".name") + " " + itemName;
 		}
 
@@ -56,18 +59,19 @@ public class ItemRespawnEggAnimal extends Item {
 	}
 
 	@Override
-    @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
-    {
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced){
+
 		if(stack.getTagCompound() != null && stack.getTagCompound().hasKey(NBT_SHEEPCOLOR)){
 			EnumDyeColor col = EnumDyeColor.byDyeDamage(stack.getTagCompound().getInteger(NBT_SHEEPCOLOR));
-			
+
 			tooltip.add(col.getName());
 		}
-    }
+	}
 
 	@SideOnly(Side.CLIENT)
-	public int getColorFromItemStack(ItemStack stack, int renderPass) {
+	public int getColorFromItemStack(ItemStack stack, int renderPass){
+
 		EntityList.EntityEggInfo entityegginfo = (EntityList.EntityEggInfo) EntityList.entityEggs.get(Integer.valueOf(stack.getMetadata()));
 
 		int c = entityegginfo != null ? (renderPass == 0 ? entityegginfo.primaryColor : entityegginfo.secondaryColor) : 16777215;
@@ -75,37 +79,38 @@ public class ItemRespawnEggAnimal extends Item {
 		return c;
 	}
 
-	public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
-		if (worldIn.isRemote) {
+	public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ){
+
+		if(worldIn.isRemote){
 			return true;
 		}
-		else if (!playerIn.canPlayerEdit(pos.offset(side), side, stack)) {
+		else if(!playerIn.canPlayerEdit(pos.offset(side), side, stack)){
 			return false;
 		}
-		else {
-			
-			//EntityList.createEntityFromNBT(nbt, worldIn)
+		else{
+
+			// EntityList.createEntityFromNBT(nbt, worldIn)
 			IBlockState iblockstate = worldIn.getBlockState(pos);
 			// this is where we disabled the interaction with monster spawners
 			pos = pos.offset(side);
 			double offsetY = 0.0D;
 
-			if (side == EnumFacing.UP && iblockstate instanceof BlockFence) {
+			if(side == EnumFacing.UP && iblockstate instanceof BlockFence){
 				offsetY = 0.5D;
 			}
 
 			Entity entity = spawnCreature(worldIn, stack.getMetadata(), (double) pos.getX() + 0.5D, (double) pos.getY() + offsetY, (double) pos.getZ() + 0.5D);
 
-			if (entity != null) {
-				if (entity instanceof EntityLivingBase && stack.hasDisplayName()) {
+			if(entity != null){
+				if(entity instanceof EntityLivingBase && stack.hasDisplayName()){
 					entity.setCustomNameTag(stack.getDisplayName());
 				}
-				
+
 				if(stack.hasTagCompound()){
 					if(entity instanceof EntitySheep && stack.getTagCompound().hasKey(NBT_SHEEPCOLOR) && stack.getTagCompound().hasKey(NBT_SHEEPCOLOR)){
-						//set sheep color color provided it was saved on item creation
-					
-						EntitySheep sheep = ((EntitySheep)entity);
+						// set sheep color color provided it was saved on item creation
+
+						EntitySheep sheep = ((EntitySheep) entity);
 						sheep.setFleeceColor(EnumDyeColor.byDyeDamage(stack.getTagCompound().getInteger(NBT_SHEEPCOLOR)));
 
 						if(stack.getTagCompound().getBoolean(NBT_SHEEPSHEARED)){
@@ -113,12 +118,12 @@ public class ItemRespawnEggAnimal extends Item {
 						}
 					}
 					else if(entity instanceof EntityRabbit && stack.getTagCompound().hasKey(NBT_RABBITTYPE)){
-	 
-						((EntityRabbit)entity).setRabbitType(stack.getTagCompound().getInteger(NBT_RABBITTYPE));
+
+						((EntityRabbit) entity).setRabbitType(stack.getTagCompound().getInteger(NBT_RABBITTYPE));
 					}
 					else if(entity instanceof EntityHorse && stack.getTagCompound().hasKey(NBT_HORSEVARIANT)){
-						//if it has one, just assume it has all the data. they get set as a batch
-						EntityHorse horse = ((EntityHorse)entity);
+						// if it has one, just assume it has all the data. they get set as a batch
+						EntityHorse horse = ((EntityHorse) entity);
 						horse.setTemper(stack.getTagCompound().getInteger(NBT_HORSETEMPER));
 						horse.setHorseVariant(stack.getTagCompound().getInteger(NBT_HORSEVARIANT));
 						horse.setHorseType(stack.getTagCompound().getInteger(NBT_HORSETYPE));
@@ -126,14 +131,13 @@ public class ItemRespawnEggAnimal extends Item {
 					}
 					else if(entity instanceof EntityWolf && stack.getTagCompound().hasKey(NBT_WOLFCOLOR)){
 
-						EntityWolf w = ((EntityWolf)entity);
+						EntityWolf w = ((EntityWolf) entity);
 						w.setCollarColor(EnumDyeColor.byDyeDamage(stack.getTagCompound().getInteger(NBT_WOLFCOLOR)));
 					}
-					
-				}
-				
 
-				if (!playerIn.capabilities.isCreativeMode) {
+				}
+
+				if(!playerIn.capabilities.isCreativeMode){
 					--stack.stackSize;
 				}
 			}
@@ -143,40 +147,41 @@ public class ItemRespawnEggAnimal extends Item {
 	}
 
 	/**
-	 * Called whenever this item is equipped and the right mouse button is
-	 * pressed. Args: itemStack, world, entityPlayer
+	 * Called whenever this item is equipped and the right mouse button is pressed. Args:
+	 * itemStack, world, entityPlayer
 	 */
-	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn) {
-		if (worldIn.isRemote) {
+	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn){
+
+		if(worldIn.isRemote){
 			return itemStackIn;
 		}
-		else {
+		else{
 			MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(worldIn, playerIn, true);
 
-			if (movingobjectposition == null) {
+			if(movingobjectposition == null){
 				return itemStackIn;
 			}
-			else {
-				if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
+			else{
+				if(movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK){
 					BlockPos blockpos = movingobjectposition.getBlockPos();
 
-					if (!worldIn.isBlockModifiable(playerIn, blockpos)) {
+					if(!worldIn.isBlockModifiable(playerIn, blockpos)){
 						return itemStackIn;
 					}
 
-					if (!playerIn.canPlayerEdit(blockpos, movingobjectposition.sideHit, itemStackIn)) {
+					if(!playerIn.canPlayerEdit(blockpos, movingobjectposition.sideHit, itemStackIn)){
 						return itemStackIn;
 					}
 
-					if (worldIn.getBlockState(blockpos).getBlock() instanceof BlockLiquid) {
+					if(worldIn.getBlockState(blockpos).getBlock() instanceof BlockLiquid){
 						Entity entity = spawnCreature(worldIn, itemStackIn.getMetadata(), (double) blockpos.getX() + 0.5D, (double) blockpos.getY() + 0.5D, (double) blockpos.getZ() + 0.5D);
 
-						if (entity != null) {
-							if (entity instanceof EntityLivingBase && itemStackIn.hasDisplayName()) {
+						if(entity != null){
+							if(entity instanceof EntityLivingBase && itemStackIn.hasDisplayName()){
 								((EntityLiving) entity).setCustomNameTag(itemStackIn.getDisplayName());
 							}
 
-							if (!playerIn.capabilities.isCreativeMode) {
+							if(!playerIn.capabilities.isCreativeMode){
 								--itemStackIn.stackSize;
 							}
 
@@ -191,20 +196,21 @@ public class ItemRespawnEggAnimal extends Item {
 	}
 
 	/**
-	 * Spawns the creature specified by the egg's type in the location specified
-	 * by the last three parameters. Parameters: world, entityID, x, y, z.
+	 * Spawns the creature specified by the egg's type in the location specified by the last three
+	 * parameters. Parameters: world, entityID, x, y, z.
 	 */
-	public static Entity spawnCreature(World worldIn, int entityID, double x, double y, double z) {
-		if (!EntityList.entityEggs.containsKey(Integer.valueOf(entityID))) {
+	public static Entity spawnCreature(World worldIn, int entityID, double x, double y, double z){
+
+		if(!EntityList.entityEggs.containsKey(Integer.valueOf(entityID))){
 			return null;
 		}
-		else {
+		else{
 			Entity entity = null;
 
-			for (int j = 0; j < 1; ++j) {
+			for(int j = 0; j < 1; ++j){
 				entity = EntityList.createEntityByID(entityID, worldIn);
 
-				if (entity instanceof EntityLivingBase) {
+				if(entity instanceof EntityLivingBase){
 					EntityLiving entityliving = (EntityLiving) entity;
 					entity.setLocationAndAngles(x, y, z, MathHelper.wrapAngleTo180_float(worldIn.rand.nextFloat() * 360.0F), 0.0F);
 					entityliving.rotationYawHead = entityliving.rotationYaw;
@@ -222,10 +228,11 @@ public class ItemRespawnEggAnimal extends Item {
 
 	@SuppressWarnings("deprecation")
 	@SideOnly(Side.CLIENT)
-	public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems) {
+	public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems){
+
 		Iterator<EntityEggInfo> iterator = EntityList.entityEggs.values().iterator();
 
-		while (iterator.hasNext()) {
+		while (iterator.hasNext()){
 			EntityList.EntityEggInfo entityegginfo = (EntityList.EntityEggInfo) iterator.next();
 			subItems.add(new ItemStack(itemIn, 1, entityegginfo.spawnedID));
 		}

@@ -20,36 +20,38 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ButtonSpell extends GuiButton {
+public class ButtonSpell extends GuiButton{
 
 	private ISpell spell;
 	private static final int btnSize = 16;
 
-	public ButtonSpell(int x, int y, ISpell s) {
+	public ButtonSpell(int x, int y, ISpell s){
+
 		super(s.getID(), x, y, btnSize, btnSize, "");
 		spell = s;
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
+	public boolean mousePressed(Minecraft mc, int mouseX, int mouseY){
+
 		boolean pressed = super.mousePressed(mc, mouseX, mouseY);
 
-		if (pressed) {
+		if(pressed){
 			// button id matches spell id
 			ItemStack wand = Minecraft.getMinecraft().thePlayer.getHeldItem();
-			
+
 			if(wand == null || wand.getItem() instanceof ItemCyclicWand == false){
 				return pressed;
 			}
-			
+
 			if(this.id == ItemCyclicWand.Spells.getSpellCurrent(wand)){
 				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentTranslation("spell.locked.current"));
-				return pressed;//cannot toggle current spell
+				return pressed;// cannot toggle current spell
 			}
-		
+
 			if(this.id == SpellRegistry.inventory.getID() && ItemCyclicWand.Spells.isSpellUnlocked(Minecraft.getMinecraft().thePlayer.getHeldItem(), this.id)){
-				//spell IS unlocked already, do not let player disable it
+				// spell IS unlocked already, do not let player disable it
 				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentTranslation("spell.locked.inventory"));
 			}
 			else{
@@ -61,10 +63,11 @@ public class ButtonSpell extends GuiButton {
 	}
 
 	@Override
-	public void drawButton(Minecraft mc, int mouseX, int mouseY) {
+	public void drawButton(Minecraft mc, int mouseX, int mouseY){
+
 		// override this and draw the texture here, so the vanilla grey square
 		// doesnt show up
-		if (this.visible) {
+		if(this.visible){
 			// http://www.minecraftforge.net/forum/index.php?topic=19594.0
 
 			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -80,18 +83,18 @@ public class ButtonSpell extends GuiButton {
 		}
 	}
 
-	public List<String> getTooltipForPlayer(PlayerPowerups props) {
+	public List<String> getTooltipForPlayer(PlayerPowerups props){
 
 		List<String> tooltips = new ArrayList<String>();
 		tooltips.add(EnumChatFormatting.LIGHT_PURPLE + spell.getName());
 		tooltips.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("spell.meta.cost") + EnumChatFormatting.BLUE + spell.getCost());
 
-		//tooltips.add(EnumChatFormatting.LIGHT_PURPLE + spell.getInfo());
-		
-		tooltips.addAll(  UtilString.splitIntoLine(spell.getInfo(),28)  );
-		
+		// tooltips.add(EnumChatFormatting.LIGHT_PURPLE + spell.getInfo());
+
+		tooltips.addAll(UtilString.splitIntoLine(spell.getInfo(), 28));
+
 		boolean unlocked = ItemCyclicWand.Spells.isSpellUnlocked(props.getPlayer().getHeldItem(), spell);
-		
+
 		String ed = unlocked ? EnumChatFormatting.GREEN + StatCollector.translateToLocal("spell.meta.enabled") : EnumChatFormatting.RED + StatCollector.translateToLocal("spell.meta.disabled");
 		tooltips.add(ed);
 		return tooltips;

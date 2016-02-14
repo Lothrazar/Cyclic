@@ -16,17 +16,8 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 
-/**
- * Split out into a standalone mod from my old abandoned one
- * https://github.com/PrinceOfAmber/SamsPowerups
- * 
- * @author Sam Bassett (Lothrazar)
- */
-@Mod(modid = Const.MODID, useMetadata = true, canBeDeactivated = false, 
-updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json",
-guiFactory = "com.lothrazar." + Const.MODID + ".config.IngameConfigHandler"
-)
-public class ModMain {
+@Mod(modid = Const.MODID, useMetadata = true, canBeDeactivated = false, updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json", guiFactory = "com.lothrazar." + Const.MODID + ".config.IngameConfigHandler")
+public class ModMain{
 
 	@Instance(value = Const.MODID)
 	public static ModMain instance;
@@ -37,7 +28,8 @@ public class ModMain {
 	public static SimpleNetworkWrapper network;
 
 	@EventHandler
-	public void onPreInit(FMLPreInitializationEvent event) {
+	public void onPreInit(FMLPreInitializationEvent event){
+
 		logger = event.getModLog();
 
 		cfg = new ModConfig(new Configuration(event.getSuggestedConfigurationFile()));
@@ -58,12 +50,13 @@ public class ModMain {
 		network.registerMessage(MessageSpellPull.class, MessageSpellPull.class, packetID++, Side.SERVER);
 		network.registerMessage(MessageSpellReplacer.class, MessageSpellReplacer.class, packetID++, Side.SERVER);
 		network.registerMessage(MessageRecharge.class, MessageRecharge.class, packetID++, Side.SERVER);
-		
+
 		MinecraftForge.EVENT_BUS.register(new EventRegistry());
 	}
 
 	@EventHandler
-	public void onInit(FMLInitializationEvent event) {
+	public void onInit(FMLInitializationEvent event){
+
 		ItemRegistry.register();
 		BlockRegistry.register();
 		ProjectileRegistry.register();

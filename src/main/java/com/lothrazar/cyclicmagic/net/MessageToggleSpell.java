@@ -9,55 +9,59 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class MessageToggleSpell implements IMessage, IMessageHandler<MessageToggleSpell, IMessage> {
- 
+public class MessageToggleSpell implements IMessage, IMessageHandler<MessageToggleSpell, IMessage>{
+
 	private NBTTagCompound tags = null;
 	private int spell_id;
-	private static final String NBT_SPELL = "spell"; 
+	private static final String NBT_SPELL = "spell";
 
-	public MessageToggleSpell() {
+	public MessageToggleSpell(){
+
 	}
 
-	public MessageToggleSpell(int spell) {
+	public MessageToggleSpell(int spell){
+
 		spell_id = spell;
 
 		this.toNBT();
 	}
 
-	private void toNBT() {
+	private void toNBT(){
+
 		tags = new NBTTagCompound();
 
 		tags.setInteger(NBT_SPELL, spell_id);// DUNSWE
-	
+
 	}
 
-	private void fromNBT() {
- 
+	private void fromNBT(){
+
 		spell_id = tags.getInteger(NBT_SPELL);
 	}
 
 	@Override
-	public void fromBytes(ByteBuf buf) {
+	public void fromBytes(ByteBuf buf){
+
 		tags = ByteBufUtils.readTag(buf);
 		this.fromNBT();
 	}
 
 	@Override
-	public void toBytes(ByteBuf buf) {
+	public void toBytes(ByteBuf buf){
+
 		this.toNBT();
 		ByteBufUtils.writeTag(buf, tags);
 	}
 
 	@Override
-	public IMessage onMessage(MessageToggleSpell message, MessageContext ctx) {
+	public IMessage onMessage(MessageToggleSpell message, MessageContext ctx){
 
 		message.fromNBT();
 
 		EntityPlayer player = ctx.getServerHandler().playerEntity;
-	 
- 
+
 		ItemCyclicWand.Spells.toggleSpell(player.getHeldItem(), message.spell_id);
-	 
+
 		return null;
 	}
 }
