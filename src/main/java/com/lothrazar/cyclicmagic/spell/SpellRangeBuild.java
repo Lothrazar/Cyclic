@@ -22,8 +22,6 @@ public class SpellRangeBuild extends BaseSpellRange {
 		this.cost = 5;
 	}
 
-	int maxRange = 64;// TODO: config
-
 	@Override
 	public boolean cast(World world, EntityPlayer p, BlockPos pos, EnumFacing side) {
 

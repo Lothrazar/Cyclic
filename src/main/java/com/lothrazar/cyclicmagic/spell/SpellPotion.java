@@ -11,17 +11,17 @@ import com.lothrazar.cyclicmagic.PotionRegistry;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 
-public class SpellExpPotion extends BaseSpell implements ISpell {
+public class SpellPotion extends BaseSpell implements ISpell {
 
 	private int potionId;
 	private int potionDuration;
 	private int potionAmp;
-	public SpellExpPotion(int id,String name, int pcost){
+	public SpellPotion(int id,String name, int pcost){
 		super.init(id,name);
 		this.cost = pcost;
 	}
 	
-	public SpellExpPotion setPotion(int id, int effectDuration, int effectAmplifier){
+	public SpellPotion setPotion(int id, int effectDuration, int effectAmplifier){
 		potionId = id;
 		potionDuration = effectDuration;
 		potionAmp = effectAmplifier;
@@ -31,6 +31,9 @@ public class SpellExpPotion extends BaseSpell implements ISpell {
 	@Override
 	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side ) {
 		PotionRegistry.addOrMergePotionEffect(player, new PotionEffect(potionId, potionDuration, potionAmp));
+		
+		this.spawnParticle(world, player, player.getPosition());
+		this.playSound(world, null, player.getPosition());
 		
 		return true;
 	}

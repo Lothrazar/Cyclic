@@ -46,15 +46,15 @@ public class SpellRegistry {
 		SpellPhasing phase = new SpellPhasing(++spellId,"phasing");
 		registerSpell(phase);
 
-		SpellExpPotion waterwalk = new SpellExpPotion(++spellId,"waterwalk",45);
+		SpellPotion waterwalk = new SpellPotion(++spellId,"waterwalk",45);
 		waterwalk.setPotion(PotionRegistry.waterwalk.id, Const.TICKS_PER_SEC * 30, PotionRegistry.I);
 		registerSpell(waterwalk);
 
-		SpellExpPotion nightvision = new SpellExpPotion(++spellId,"nightvision",30);
+		SpellPotion nightvision = new SpellPotion(++spellId,"nightvision",30);
 		nightvision.setPotion(Potion.nightVision.id, Const.TICKS_PER_SEC * 30, PotionRegistry.I);
 		registerSpell(nightvision);
 
-		SpellExpPotion haste = new SpellExpPotion(++spellId,"haste",50);
+		SpellPotion haste = new SpellPotion(++spellId,"haste",50);
 		haste.setPotion(Potion.digSpeed.id, Const.TICKS_PER_SEC * 60, PotionRegistry.II);
 		registerSpell(haste);
 		
@@ -115,7 +115,7 @@ public class SpellRegistry {
 		SpellLinkingPortal waypoint = new SpellLinkingPortal(++spellId,"waypoint");
 		registerSpell(waypoint);
 		 
-		SpellExpPotion magnet = new SpellExpPotion(++spellId,"magnet",50);
+		SpellPotion magnet = new SpellPotion(++spellId,"magnet",50);
 		magnet.setPotion(PotionRegistry.magnet.id, Const.TICKS_PER_SEC * 60, PotionRegistry.II);
 		registerSpell(magnet);
 		
