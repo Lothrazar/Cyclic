@@ -84,7 +84,8 @@ public class ItemCyclicWand extends Item{
 
 		int MAX = ItemCyclicWand.Energy.getMaximum(stack);
 
-		tooltip.add(EnumChatFormatting.GREEN + spell.getName());
+		String cost = EnumChatFormatting.DARK_GRAY + "[" + EnumChatFormatting.DARK_PURPLE +spell.getCost() + EnumChatFormatting.DARK_GRAY +"]";
+		tooltip.add(EnumChatFormatting.GREEN + spell.getName()+" "+cost);
 
 		if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)){
 
@@ -107,7 +108,7 @@ public class ItemCyclicWand extends Item{
 	@SideOnly(Side.CLIENT)
 	public EnumRarity getRarity(ItemStack par1ItemStack){
 
-		return EnumRarity.EPIC;
+		return EnumRarity.UNCOMMON;
 	}
 
 	@Override
