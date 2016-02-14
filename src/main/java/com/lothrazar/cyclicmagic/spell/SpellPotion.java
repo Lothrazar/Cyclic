@@ -11,17 +11,20 @@ import com.lothrazar.cyclicmagic.PotionRegistry;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 
-public class SpellPotion extends BaseSpell implements ISpell {
+public class SpellPotion extends BaseSpell implements ISpell{
 
 	private int potionId;
 	private int potionDuration;
 	private int potionAmp;
-	public SpellPotion(int id,String name, int pcost){
-		super.init(id,name);
+
+	public SpellPotion(int id, String name, int pcost){
+
+		super.init(id, name);
 		this.cost = pcost;
 	}
-	
+
 	public SpellPotion setPotion(int id, int effectDuration, int effectAmplifier){
+
 		potionId = id;
 		potionDuration = effectDuration;
 		potionAmp = effectAmplifier;
@@ -29,24 +32,26 @@ public class SpellPotion extends BaseSpell implements ISpell {
 	}
 
 	@Override
-	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side ) {
+	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side){
+
 		PotionRegistry.addOrMergePotionEffect(player, new PotionEffect(potionId, potionDuration, potionAmp));
-		
+
 		this.spawnParticle(world, player, player.getPosition());
 		this.playSound(world, null, player.getPosition());
-		
+
 		return true;
 	}
 
 	@Override
-	public void spawnParticle(World world, EntityPlayer player, BlockPos pos) {
+	public void spawnParticle(World world, EntityPlayer player, BlockPos pos){
+
 		UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT_MAGIC, pos);
-		
+
 	}
 
 	@Override
-	public void playSound(World world, Block block, BlockPos pos) {
+	public void playSound(World world, Block block, BlockPos pos){
 
-		UtilSound.playSound(world, pos, UtilSound.drink); 
+		UtilSound.playSound(world, pos, UtilSound.drink);
 	}
 }

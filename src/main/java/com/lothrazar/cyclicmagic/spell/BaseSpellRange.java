@@ -13,25 +13,25 @@ public abstract class BaseSpellRange extends BaseSpell{
 	protected int maxRange = 64;// TODO: config
 
 	@Override
-	public void spawnParticle(World world, EntityPlayer p, BlockPos pos) {
+	public void spawnParticle(World world, EntityPlayer p, BlockPos pos){
 
 		UtilParticle.spawnParticleBeam(p.worldObj, EnumParticleTypes.SPELL_INSTANT, p.getPosition(), pos, 3);
 	}
 
 	@Override
-	public void playSound(World world, Block block, BlockPos pos) {
+	public void playSound(World world, Block block, BlockPos pos){
 
 		if(block.stepSound != null && block.stepSound.getPlaceSound() != null){
 			UtilSound.playSound(world, pos, block.stepSound.getPlaceSound());
 		}
 		else{
-			UtilSound.playSound(world, pos, UtilSound.Own.crackle);//only if we miss. but then this might not get called
+			UtilSound.playSound(world, pos, UtilSound.Own.crackle);
 		}
 	}
-	
+
 	@Override
-	public boolean canPlayerCast(World world, EntityPlayer p, BlockPos pos) {
-		
+	public boolean canPlayerCast(World world, EntityPlayer p, BlockPos pos){
+
 		return p.capabilities.allowEdit;
 	}
 }

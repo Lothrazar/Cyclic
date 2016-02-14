@@ -7,10 +7,12 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-public interface ISpell {
+public interface ISpell{
+
 	public int getID();
-	
+
 	public String getName();
+
 	public String getInfo();
 
 	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side);
@@ -24,7 +26,7 @@ public interface ISpell {
 	public void spawnParticle(World world, EntityPlayer player, BlockPos pos);
 
 	public void playSound(World world, Block block, BlockPos pos);
-	
+
 	public void onCastFailure(World world, EntityPlayer player, BlockPos pos);
 
 	public ResourceLocation getIconDisplay();

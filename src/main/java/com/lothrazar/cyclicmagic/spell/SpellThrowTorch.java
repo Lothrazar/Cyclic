@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.spell;
 
-import com.lothrazar.cyclicmagic.projectile.EntityTorchBolt; 
+import com.lothrazar.cyclicmagic.projectile.EntityTorchBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
@@ -8,17 +8,22 @@ import net.minecraft.world.World;
 
 public class SpellThrowTorch extends BaseSpellThrown implements ISpell{
 
-	public SpellThrowTorch(int id,String name){
-		super.init(id,name);
+	public SpellThrowTorch(int id, String name){
+
+		super.init(id, name);
 		this.cost = 15;
 	}
 
 	@Override
-	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side) {
+	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side){
 
 		if(world.isRemote == false){
-			world.spawnEntityInWorld(new EntityTorchBolt(world,player));
+			world.spawnEntityInWorld(new EntityTorchBolt(world, player));
 		}
+
+		this.playSound(world, null, player.getPosition());
+		this.spawnParticle(world, player, player.getPosition());
+
 		return true;
 	}
 }

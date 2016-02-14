@@ -14,33 +14,35 @@ import net.minecraft.world.World;
 
 public class SpellInventory extends BaseSpell{
 
-	public SpellInventory(int id, String n) {
+	public SpellInventory(int id, String n){
+
 		super.init(id, n);
-		this.cost = 0;//so far, the only spell costing zero
+		this.cost = 0;// so far, the only spell costing zero
 
 		this.header = new ResourceLocation(Const.MODID, "textures/spells/mouseptr.png");
 		this.header_empty = header;
 	}
 
 	@Override
-	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side) {
-		
-		if (! world.isRemote){ 	//TODO: does the isRemote check actually matter
+	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side){
+
+		if(!world.isRemote){ // TODO: does the isRemote check actually matter
 			player.openGui(ModMain.instance, Const.GUI_INDEX, world, 0, 0, 0);
 		}
-		
+
 		return true;
 	}
 
 	@Override
-	public void spawnParticle(World world, EntityPlayer player, BlockPos pos) {
+	public void spawnParticle(World world, EntityPlayer player, BlockPos pos){
+
 		UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT_MAGIC, pos);
-		
+
 	}
 
 	@Override
-	public void playSound(World world, Block block, BlockPos pos) {
+	public void playSound(World world, Block block, BlockPos pos){
 
-		UtilSound.playSound(world, pos, UtilSound.drink); 
+		UtilSound.playSound(world, pos, UtilSound.drink);
 	}
 }

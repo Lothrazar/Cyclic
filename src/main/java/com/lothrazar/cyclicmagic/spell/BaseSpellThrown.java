@@ -9,16 +9,16 @@ import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 
 public abstract class BaseSpellThrown extends BaseSpell{
-	
+
 	@Override
-	public void spawnParticle(World world, EntityPlayer player, BlockPos pos) {
-		
+	public void spawnParticle(World world, EntityPlayer player, BlockPos pos){
+
 		UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT_MAGIC, pos);
 	}
 
 	@Override
-	public void playSound(World world, Block block, BlockPos pos) {
+	public void playSound(World world, Block block, BlockPos pos){
 
-		UtilSound.playSound(world, pos, UtilSound.drink); 
+		UtilSound.playSound(world, pos, UtilSound.Own.pew);
 	}
 }

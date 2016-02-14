@@ -12,78 +12,79 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
-public class SpellRangeReplace extends BaseSpellRange {
+public class SpellRangeReplace extends BaseSpellRange{
 
-	public SpellRangeReplace(int id, String n) {
+	public SpellRangeReplace(int id, String n){
+
 		super.init(id, n);
 		this.cooldown = 1;
 	}
 
 	@Override
-	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side) {
+	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side){
 
-        if (world.isRemote) {
+		if(world.isRemote){
 			// only client side can call this method. mouseover does not exist
 			// on server
 			BlockPos mouseover = ModMain.proxy.getBlockMouseoverExact(maxRange);
 
-			if (mouseover != null) {
+			if(mouseover != null){
 				ModMain.network.sendToServer(new MessageSpellReplacer(mouseover, ModMain.proxy.getSideMouseover(maxRange)));
 			}
 		}
 		return false;
 	}
 
-	public void castFromServer(BlockPos posMouseover, EnumFacing side, EntityPlayer player) {
+	public void castFromServer(BlockPos posMouseover, EnumFacing side, EntityPlayer player){
 
 		World world = player.worldObj;
 		ItemStack heldWand = player.getHeldItem();
 		if(heldWand == null || heldWand.getItem() instanceof ItemCyclicWand == false){
-			return ;
+			return;
 		}
-		
-		if (world.getBlockState(posMouseover) == null || world.getBlockState(posMouseover).getBlock() == null) {
-			return ;
+
+		if(world.getBlockState(posMouseover) == null || world.getBlockState(posMouseover).getBlock() == null){
+			return;
 		}
-		
+
 		if(world.getTileEntity(posMouseover) != null){
-			return ;//not chests, etc
+			return;// not chests, etc
 		}
-		
+
 		IBlockState stateHere = world.getBlockState(posMouseover);
 		Block blockHere = stateHere.getBlock();
 
 		if(blockHere.getBlockHardness(world, posMouseover) == -1){
-			return ; // is unbreakable-> like bedrock
+			return; // is unbreakable-> like bedrock
 		}
-		
-		int itemSlot = InventoryWand.getSlotByBuildType(heldWand,world.getBlockState(posMouseover));
+
+		int itemSlot = InventoryWand.getSlotByBuildType(heldWand, world.getBlockState(posMouseover));
 		ItemStack[] invv = InventoryWand.readFromNBT(heldWand);
-		ItemStack toPlace = InventoryWand.getFromSlot(heldWand,itemSlot);
+		ItemStack toPlace = InventoryWand.getFromSlot(heldWand, itemSlot);
 
 		if(toPlace == null || toPlace.getItem() == null || Block.getBlockFromItem(toPlace.getItem()) == null){
-			return ;
+			return;
 		}
-		
+
 		IBlockState placeState = Block.getBlockFromItem(toPlace.getItem()).getStateFromMeta(toPlace.getMetadata());
-		 
+
 		if(placeState.getBlock() == blockHere && blockHere.getMetaFromState(stateHere) == toPlace.getMetadata()){
-			
-			return ;//dont replace cobblestone with cobblestone
+
+			return;// dont replace cobblestone with cobblestone
 		}
- 
-		if (world.destroyBlock(posMouseover, true) && world.setBlockState(posMouseover, placeState)) {
+
+		if(world.destroyBlock(posMouseover, true) && world.setBlockState(posMouseover, placeState)){
 
 			if(player.capabilities.isCreativeMode == false){
-	
+
 				invv[itemSlot].stackSize--;
 				InventoryWand.writeToNBT(heldWand, invv);
 			}
-			
+
 			this.playSound(world, placeState.getBlock(), posMouseover);
 			this.spawnParticle(world, player, posMouseover);
-			
-			return ;
+
+			return;
 		}
 	}
 }

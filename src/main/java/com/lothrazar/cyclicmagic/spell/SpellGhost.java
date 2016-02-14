@@ -14,7 +14,7 @@ import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 
-public class SpellGhost extends BaseSpell implements ISpell {
+public class SpellGhost extends BaseSpell implements ISpell{
 
 	private static final String KEY_BOOLEAN = "ghost_on";
 	private static final String KEY_TIMER = "ghost_timer";
@@ -22,26 +22,26 @@ public class SpellGhost extends BaseSpell implements ISpell {
 	private static final String KEY_EATDIM = "ghost_dim";
 	private static final int GHOST_SECONDS = 5;
 
-	public SpellGhost(int id, String name) {
+	public SpellGhost(int id, String name){
 
 		super.init(id, name);
 		this.cost = 25;
 	}
 
 	@Override
-	public void spawnParticle(World world, EntityPlayer player, BlockPos pos) {
+	public void spawnParticle(World world, EntityPlayer player, BlockPos pos){
 
 		UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT_MAGIC, pos);
 	}
 
 	@Override
-	public void playSound(World world, Block block, BlockPos pos) {
+	public void playSound(World world, Block block, BlockPos pos){
 
 		UtilSound.playSound(world, pos, UtilSound.drink);
 	}
 
 	@Override
-	public boolean canPlayerCast(World world, EntityPlayer player, BlockPos pos) {
+	public boolean canPlayerCast(World world, EntityPlayer player, BlockPos pos){
 
 		// if already in ghost mode, then disallow
 		if(player.capabilities.isCreativeMode || player.getEntityData().getBoolean(KEY_BOOLEAN)){
@@ -52,7 +52,7 @@ public class SpellGhost extends BaseSpell implements ISpell {
 	}
 
 	@Override
-	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side) {
+	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side){
 
 		this.setPlayerGhostMode(player, player.worldObj);
 
@@ -62,7 +62,7 @@ public class SpellGhost extends BaseSpell implements ISpell {
 		return true;
 	}
 
-	private void setPlayerGhostMode(EntityPlayer player, World par2World) {
+	private void setPlayerGhostMode(EntityPlayer player, World par2World){
 
 		if(par2World.isRemote == false) // false means serverside
 		{
@@ -75,7 +75,7 @@ public class SpellGhost extends BaseSpell implements ISpell {
 		}
 	}
 
-	public static void onPlayerUpdate(LivingUpdateEvent event) {
+	public static void onPlayerUpdate(LivingUpdateEvent event){
 
 		if(event.entityLiving instanceof EntityPlayer == false){
 			return;

@@ -8,33 +8,35 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
-public class SpellRangePull extends BaseSpellRange {
-	public SpellRangePull(int id,String name){
-		super.init(id,name);
+public class SpellRangePull extends BaseSpellRange{
+
+	public SpellRangePull(int id, String name){
+
+		super.init(id, name);
 		this.cooldown = 1;
 		this.cost = 1;
 	}
-	
-	@Override
-	public boolean cast(World world, EntityPlayer p, BlockPos pos, EnumFacing side ) {
 
-		if (world.isRemote) {
-			
+	@Override
+	public boolean cast(World world, EntityPlayer p, BlockPos pos, EnumFacing side){
+
+		if(world.isRemote){
+
 			BlockPos mouseover = ModMain.proxy.getBlockMouseoverExact(maxRange);
 
-			if (mouseover != null) {
+			if(mouseover != null){
 				ModMain.network.sendToServer(new MessageSpellPull(mouseover, ModMain.proxy.getSideMouseover(maxRange)));
 			}
 		}
-		
+
 		return true;
 	}
 
-	public void castFromServer(BlockPos pos, EnumFacing side, EntityPlayer p) {
+	public void castFromServer(BlockPos pos, EnumFacing side, EntityPlayer p){
 
-		//BlockPos resultPosition = 
+		// BlockPos resultPosition =
 		UtilMoveBlock.pullBlock(p.worldObj, p, pos, side);
-		
+
 		this.spawnParticle(p.worldObj, p, pos);
 		this.playSound(p.worldObj, null, pos);
 	}

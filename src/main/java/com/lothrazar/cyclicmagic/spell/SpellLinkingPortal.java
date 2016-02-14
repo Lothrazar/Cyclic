@@ -13,41 +13,43 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 
-public class SpellLinkingPortal  extends BaseSpell implements ISpell {
-//on use, spawns an item (purple orb texture maybe)
-	//that saves its current coordinates. acts like a one time use linking book.
-	//so that when you use it, you return to that exact spot
-	//also put on display the coords,biome, player who created it
-	public SpellLinkingPortal(int id,String name){
-		super.init(id,name);
+public class SpellLinkingPortal extends BaseSpell implements ISpell{
+
+	// on use, spawns an item (purple orb texture maybe)
+	// that saves its current coordinates. acts like a one time use linking book.
+	// so that when you use it, you return to that exact spot
+	// also put on display the coords,biome, player who created it
+	public SpellLinkingPortal(int id, String name){
+
+		super.init(id, name);
 		this.cost = 35;
 	}
-	
+
 	@Override
-	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side ) {
-		
+	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side){
+
 		if(world.isRemote == false && pos != null){
 			ItemStack drop = new ItemStack(ItemRegistry.waypoint_portal);
-			
+
 			ItemWaypointPortal.saveCurrentLocation(player, drop);
-			world.spawnEntityInWorld(new EntityItem(world,pos.getX(),pos.getY(),pos.getZ(),drop));
-			
+			world.spawnEntityInWorld(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), drop));
+
 			this.playSound(world, null, player.getPosition());
 			this.spawnParticle(world, player, player.getPosition());
 		}
-		
+
 		return false;
 	}
-	
+
 	@Override
-	public void spawnParticle(World world, EntityPlayer player, BlockPos pos) {
-		
+	public void spawnParticle(World world, EntityPlayer player, BlockPos pos){
+
 		UtilParticle.spawnParticle(world, EnumParticleTypes.PORTAL, pos);
 	}
-	
+
 	@Override
-	public void playSound(World world, Block block, BlockPos pos) {
-		
+	public void playSound(World world, Block block, BlockPos pos){
+
 		UtilSound.playSound(world, pos, UtilSound.portal);
 	}
 }
