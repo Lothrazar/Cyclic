@@ -15,8 +15,8 @@ public class SpellRegistry {
 	public static SpellCaster caster;
 	
 	public static SpellRangeRotate rotate;
-	public static SpellPush push;
-	public static SpellPull pull;
+	public static SpellRangePush push;
+	public static SpellRangePull pull;
 	public static SpellRangeReplace replacer;
 	public static SpellInventory inventory;
 	
@@ -70,10 +70,10 @@ public class SpellRegistry {
 		inventory = new SpellInventory(++spellId,"inventory");
 		registerSpell(inventory);
 		
-		push = new SpellPush(++spellId,"push");
+		push = new SpellRangePush(++spellId,"push");
 		registerSpell(push);
 
-		pull = new SpellPull(++spellId,"pull");
+		pull = new SpellRangePull(++spellId,"pull");
 		registerSpell(pull);
 
 		SpellChestSack chestsack = new SpellChestSack(++spellId,"chestsack");

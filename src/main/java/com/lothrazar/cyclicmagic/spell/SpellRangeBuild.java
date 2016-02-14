@@ -25,10 +25,6 @@ public class SpellRangeBuild extends BaseSpellRange {
 	@Override
 	public boolean cast(World world, EntityPlayer p, BlockPos pos, EnumFacing side) {
 
-		if (!p.capabilities.allowEdit) {
-			return false;
-		}
-
 		if (world.isRemote) {
 			// only client side can call this method. mouseover does not exist
 			// on server

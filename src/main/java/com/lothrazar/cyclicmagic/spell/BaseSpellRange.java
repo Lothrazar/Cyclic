@@ -28,5 +28,10 @@ public abstract class BaseSpellRange extends BaseSpell{
 			UtilSound.playSound(world, pos, UtilSound.Own.crackle);//only if we miss. but then this might not get called
 		}
 	}
-
+	
+	@Override
+	public boolean canPlayerCast(World world, EntityPlayer p, BlockPos pos) {
+		
+		return p.capabilities.allowEdit;
+	}
 }

@@ -21,14 +21,7 @@ public class SpellRangeReplace extends BaseSpellRange {
 
 	@Override
 	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side) {
-/*// replacing these with mouseover...???//
-		if (pos == null || side == null) {
-			return false;
-		}
-		*/
-        if(!player.capabilities.allowEdit) {
-        	return false;
-        }
+
         if (world.isRemote) {
 			// only client side can call this method. mouseover does not exist
 			// on server
