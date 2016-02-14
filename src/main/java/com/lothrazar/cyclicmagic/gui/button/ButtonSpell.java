@@ -13,6 +13,7 @@ import com.lothrazar.cyclicmagic.util.UtilTextureRender;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
@@ -20,15 +21,17 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ButtonSpell extends GuiButton{
+public class ButtonSpell extends GuiButton implements ITooltipButton{
 
+	final EntityPlayer thePlayer;
 	private ISpell spell;
 	private static final int btnSize = 16;
 
-	public ButtonSpell(int x, int y, ISpell s){
+	public ButtonSpell(EntityPlayer player,int x, int y, ISpell s){
 
 		super(s.getID(), x, y, btnSize, btnSize, "");
 		spell = s;
+		thePlayer = player;
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -83,8 +86,9 @@ public class ButtonSpell extends GuiButton{
 		}
 	}
 
-	public List<String> getTooltipForPlayer(PlayerPowerups props){
+	public List<String> getTooltips(){
 
+		PlayerPowerups props = PlayerPowerups.get(thePlayer);
 		List<String> tooltips = new ArrayList<String>();
 		tooltips.add(EnumChatFormatting.LIGHT_PURPLE + spell.getName());
 		tooltips.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("spell.meta.cost") + EnumChatFormatting.BLUE + spell.getCost());

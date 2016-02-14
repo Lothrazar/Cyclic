@@ -32,6 +32,7 @@ button.build.match=Match
 button.close=Close
 button.circle=Spells
 button.recharge=Recharge
+button.recharge.tooltip=Gain wand energy at the cost of EXP
 item.shift=Press Shift for more info
 spell.locked.current=Cannot toggle current spell
 spell.locked.inventory=Inventory spell cannot be disabled

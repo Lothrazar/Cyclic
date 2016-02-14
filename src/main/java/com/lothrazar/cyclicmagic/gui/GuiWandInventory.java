@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.gui.button.ButtonBuildToggle;
 import com.lothrazar.cyclicmagic.gui.button.ButtonPassiveToggle;
 import com.lothrazar.cyclicmagic.gui.button.ButtonRecharge;
 import com.lothrazar.cyclicmagic.gui.button.ButtonSpellCircle;
+import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.ResourceLocation;
 
@@ -44,7 +45,23 @@ public class GuiWandInventory extends GuiContainer{
 		x += width + padding;
 		this.buttonList.add(new ButtonPassiveToggle(inventory.getPlayer(), id, x, y, width));
 	}
+	
+	@Override
+	public void drawScreen(int mouseX, int mouseY, float partialTicks){
 
+		super.drawScreen(mouseX, mouseY, partialTicks);
+		 
+		ITooltipButton btn;
+		for(int i = 0; i < buttonList.size(); i++){
+			if(buttonList.get(i).isMouseOver() && buttonList.get(i) instanceof ITooltipButton){
+				btn = (ITooltipButton) buttonList.get(i);
+
+				drawHoveringText(btn.getTooltips(), mouseX, mouseY, fontRendererObj);
+				break;// cant hover on 2 at once
+			}
+		}
+	}
+	
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
 

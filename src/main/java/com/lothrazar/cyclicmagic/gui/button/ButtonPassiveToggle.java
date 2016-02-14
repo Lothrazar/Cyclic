@@ -1,5 +1,7 @@
 package com.lothrazar.cyclicmagic.gui.button;
 
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.net.MessageTogglePassive;
@@ -10,7 +12,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ButtonPassiveToggle extends GuiButton{
+public class ButtonPassiveToggle extends GuiButton implements ITooltipButton{
 
 	final EntityPlayer thePlayer;
 
@@ -45,4 +47,16 @@ public class ButtonPassiveToggle extends GuiButton{
 		}
 		super.drawButton(mc, mouseX, mouseY);
 	}
+
+	public List<String> getTooltips(){
+		List<String> tooltips = new ArrayList<String>();
+		IPassiveSpell ps = ItemCyclicWand.Spells.getPassiveCurrent(thePlayer.getHeldItem());
+		
+		if(ps != null){
+			tooltips.add(ps.getInfo());
+		}
+		
+		return tooltips;
+	}
+	
 }

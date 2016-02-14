@@ -5,6 +5,7 @@ import com.lothrazar.cyclicmagic.PlayerPowerups;
 import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.gui.button.ButtonClose;
 import com.lothrazar.cyclicmagic.gui.button.ButtonSpell;
+import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.util.UtilTextureRender;
@@ -19,7 +20,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiSpellbook extends GuiScreen{
 
-	private final EntityPlayer entityPlayer;
+	private final EntityPlayer thePlayer;
 	private final static ResourceLocation background = new ResourceLocation(Const.MODID, "textures/gui/spellbook.png");
 	private final static ResourceLocation ptr = new ResourceLocation(Const.MODID, "textures/spells/mouseptr.png");
 
@@ -35,8 +36,8 @@ public class GuiSpellbook extends GuiScreen{
 	public GuiSpellbook(EntityPlayer p){
 
 		super();
-		this.entityPlayer = p;
-		this.props = PlayerPowerups.get(entityPlayer);
+		this.thePlayer = p;
+		this.props = PlayerPowerups.get(thePlayer);
 	}
 
 	@Override
@@ -63,7 +64,7 @@ public class GuiSpellbook extends GuiScreen{
 			cx = xCenter + radius * Math.cos(ang) - 2;
 			cy = yCenter + radius * Math.sin(ang) - 2;
 
-			b = new ButtonSpell((int) cx, (int) cy, s);
+			b = new ButtonSpell(thePlayer, (int) cx, (int) cy, s);
 			this.buttonList.add(b);
 
 			ang += arc;
@@ -116,12 +117,12 @@ public class GuiSpellbook extends GuiScreen{
 			ang += arc;
 		}
 
-		ButtonSpell btn;
+		ITooltipButton btn;
 		for(int i = 0; i < buttonList.size(); i++){
-			if(buttonList.get(i).isMouseOver() && buttonList.get(i) instanceof ButtonSpell){
-				btn = (ButtonSpell) buttonList.get(i);
+			if(buttonList.get(i).isMouseOver() && buttonList.get(i) instanceof ITooltipButton){
+				btn = (ITooltipButton) buttonList.get(i);
 
-				drawHoveringText(btn.getTooltipForPlayer(props), mouseX, mouseY, fontRendererObj);
+				drawHoveringText(btn.getTooltips(), mouseX, mouseY, fontRendererObj);
 				break;// cant hover on 2 at once
 			}
 		}
