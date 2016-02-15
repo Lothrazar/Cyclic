@@ -31,6 +31,23 @@ public class SpellRegistry{
 		public static SpellRangeReplace replacer;
 		public static SpellInventory inventory;
 		public static SpellRangeBuild reach;
+		public static SpellPotion haste;
+		public static SpellChestSack chestsack;
+		public static SpellThrowTorch torch;
+		public static SpellPotion waterwalk;
+		public static ISpell phase;
+		public static ISpell ghost;
+		public static SpellPotion nightvision;
+		public static SpellThrowFishing fishing;
+		public static ISpell ice;
+		public static ISpell shear;
+		public static SpellPotion magnet;
+		public static SpellLaunch launch;
+		public static SpellCarbonPaper carbon;
+		public static SpellScaffolding scaffold;
+		public static SpellThrowSpawnEgg spawnegg;
+		public static SpellThrowLightning lightning;
+		public static SpellLinkingPortal waypoint;
 	}
 	
 	public static class Passives{
@@ -70,23 +87,23 @@ public class SpellRegistry{
 		
 		int spellId = -1;// the smallest spell gets id zero
 
-		SpellGhost ghost = new SpellGhost(++spellId, "ghost");
-		registerSpell(ghost);
+		Spells.ghost = new SpellGhost(++spellId, "ghost");
+		registerSpell(Spells.ghost);
 
-		SpellPhasing phase = new SpellPhasing(++spellId, "phasing");
-		registerSpell(phase);
+		Spells.phase = new SpellPhasing(++spellId, "phasing");
+		registerSpell(Spells.phase);
 
-		SpellPotion waterwalk = new SpellPotion(++spellId, "waterwalk", 45);
-		waterwalk.setPotion(PotionRegistry.waterwalk.id, Const.TICKS_PER_SEC * 30, PotionRegistry.I);
-		registerSpell(waterwalk);
+		Spells.waterwalk = new SpellPotion(++spellId, "waterwalk", 45);
+		Spells.waterwalk.setPotion(PotionRegistry.waterwalk.id, Const.TICKS_PER_SEC * 30, PotionRegistry.I);
+		registerSpell(Spells.waterwalk);
 
-		SpellPotion nightvision = new SpellPotion(++spellId, "nightvision", 30);
-		nightvision.setPotion(Potion.nightVision.id, Const.TICKS_PER_SEC * 30, PotionRegistry.I);
-		registerSpell(nightvision);
+		Spells.nightvision = new SpellPotion(++spellId, "nightvision", 30);
+		Spells.nightvision.setPotion(Potion.nightVision.id, Const.TICKS_PER_SEC * 30, PotionRegistry.I);
+		registerSpell(Spells.nightvision);
 
-		SpellPotion haste = new SpellPotion(++spellId, "haste", 50);
-		haste.setPotion(Potion.digSpeed.id, Const.TICKS_PER_SEC * 60, PotionRegistry.II);
-		registerSpell(haste);
+		Spells.haste = new SpellPotion(++spellId, "haste", 50);
+		Spells.haste.setPotion(Potion.digSpeed.id, Const.TICKS_PER_SEC * 60, PotionRegistry.II);
+		registerSpell(Spells.haste);
 
 		Spells.replacer = new SpellRangeReplace(++spellId, "replacer");
 		registerSpell(Spells.replacer);
@@ -106,20 +123,20 @@ public class SpellRegistry{
 		Spells.pull = new SpellRangePull(++spellId, "pull");
 		registerSpell(Spells.pull);
 
-		SpellChestSack chestsack = new SpellChestSack(++spellId, "chestsack");
-		registerSpell(chestsack);
+		Spells.chestsack = new SpellChestSack(++spellId, "chestsack");
+		registerSpell(Spells.chestsack);
 
-		SpellThrowTorch torch = new SpellThrowTorch(++spellId, "torch");
-		registerSpell(torch);
+		Spells.torch = new SpellThrowTorch(++spellId, "torch");
+		registerSpell(Spells.torch);
 
-		SpellThrowFishing fishing = new SpellThrowFishing(++spellId, "fishing");
-		registerSpell(fishing);
+		Spells.fishing = new SpellThrowFishing(++spellId, "fishing");
+		registerSpell(Spells.fishing);
 
-		SpellThrowIce ice = new SpellThrowIce(++spellId, "ice");
-		registerSpell(ice);
+		Spells.ice = new SpellThrowIce(++spellId, "ice");
+		registerSpell(Spells.ice);
 
-		SpellThrowShear shear = new SpellThrowShear(++spellId, "shear");
-		registerSpell(shear);
+		Spells.shear = new SpellThrowShear(++spellId, "shear");
+		registerSpell(Spells.shear);
 
 		SpellThrowHarvest harvest = new SpellThrowHarvest(++spellId, "harvest");
 		registerSpell(harvest);
@@ -127,27 +144,27 @@ public class SpellRegistry{
 		SpellThrowWater water = new SpellThrowWater(++spellId, "water");
 		registerSpell(water);
 
-		SpellThrowLightning lightning = new SpellThrowLightning(++spellId, "lightning");
-		registerSpell(lightning);
+		Spells.lightning = new SpellThrowLightning(++spellId, "lightning");
+		registerSpell(Spells.lightning);
 
-		SpellThrowSpawnEgg spawnegg = new SpellThrowSpawnEgg(++spellId, "spawnegg");
-		registerSpell(spawnegg);
+		Spells.spawnegg = new SpellThrowSpawnEgg(++spellId, "spawnegg");
+		registerSpell(Spells.spawnegg);
 
-		SpellScaffolding scaffold = new SpellScaffolding(++spellId, "scaffold");
-		registerSpell(scaffold);
+		Spells.scaffold = new SpellScaffolding(++spellId, "scaffold");
+		registerSpell(Spells.scaffold);
 
-		SpellCarbonPaper carbon = new SpellCarbonPaper(++spellId, "carbon");
-		registerSpell(carbon);
+		Spells.carbon = new SpellCarbonPaper(++spellId, "carbon");
+		registerSpell(Spells.carbon);
 
-		SpellLaunch launch = new SpellLaunch(++spellId, "launch");
-		registerSpell(launch);
+		Spells.launch = new SpellLaunch(++spellId, "launch");
+		registerSpell(Spells.launch);
 
-		SpellLinkingPortal waypoint = new SpellLinkingPortal(++spellId, "waypoint");
-		registerSpell(waypoint);
+		Spells.waypoint = new SpellLinkingPortal(++spellId, "waypoint");
+		registerSpell(Spells.waypoint);
 
-		SpellPotion magnet = new SpellPotion(++spellId, "magnet", 50);
-		magnet.setPotion(PotionRegistry.magnet.id, Const.TICKS_PER_SEC * 60, PotionRegistry.II);
-		registerSpell(magnet);
+		Spells.magnet = new SpellPotion(++spellId, "magnet", 50);
+		Spells.magnet.setPotion(PotionRegistry.magnet.id, Const.TICKS_PER_SEC * 60, PotionRegistry.II);
+		registerSpell(Spells.magnet);
 
 	}
 

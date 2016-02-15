@@ -21,13 +21,13 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ButtonSpell extends GuiButton implements ITooltipButton{
+public class ButtonSpellToggle extends GuiButton implements ITooltipButton{
 
 	final EntityPlayer thePlayer;
 	private ISpell spell;
 	private static final int btnSize = 16;
 
-	public ButtonSpell(EntityPlayer player,int x, int y, ISpell s){
+	public ButtonSpellToggle(EntityPlayer player,int x, int y, ISpell s){
 
 		super(s.getID(), x, y, btnSize, btnSize, "");
 		spell = s;

@@ -9,41 +9,41 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class MessageToggleSpell implements IMessage, IMessageHandler<MessageToggleSpell, IMessage>{
+public class MessageToggleSpellGroup implements IMessage, IMessageHandler<MessageToggleSpellGroup, IMessage>{
 
-	private int spell_id;
+	private String group;
 	private static final String NBT_SPELL = "spell";
 
-	public MessageToggleSpell(){
+	public MessageToggleSpellGroup(){
+
 	}
 
-	public MessageToggleSpell(int spell){
+	public MessageToggleSpellGroup(String g){
 
-		spell_id = spell;
+		group = g;
 	}
 
 	@Override
 	public void fromBytes(ByteBuf buf){
 
 		NBTTagCompound tags = ByteBufUtils.readTag(buf);
-		spell_id = tags.getInteger(NBT_SPELL);
+		group = tags.getString(NBT_SPELL);
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf){
 
 		NBTTagCompound tags = new NBTTagCompound();
-
-		tags.setInteger(NBT_SPELL, spell_id);
+		tags.setString(NBT_SPELL, group);
 		ByteBufUtils.writeTag(buf, tags);
 	}
 
 	@Override
-	public IMessage onMessage(MessageToggleSpell message, MessageContext ctx){
+	public IMessage onMessage(MessageToggleSpellGroup message, MessageContext ctx){
 
 		EntityPlayer player = ctx.getServerHandler().playerEntity;
 
-		ItemCyclicWand.Spells.toggleSpell(player.getHeldItem(), message.spell_id);
+		ItemCyclicWand.Spells.toggleSpellGroup(player.getHeldItem(), message.group);
 
 		return null;
 	}

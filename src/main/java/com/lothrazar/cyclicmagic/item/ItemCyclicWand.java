@@ -1,5 +1,7 @@
 package com.lothrazar.cyclicmagic.item;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.Const;
@@ -176,10 +178,14 @@ public class ItemCyclicWand extends Item{
 
 	public static class Spells{
 
-		private static void unlockSpell(ItemStack stack, ISpell spell){
+		private static void unlockSpell(ItemStack stack, ISpell spell, boolean unlocked){
+
+			unlockSpell(stack,spell.getID(), unlocked);
+		}
+		private static void unlockSpell(ItemStack stack, int spell_id, boolean unlocked){
 
 			NBTTagCompound nbt = getNBT(stack);
-			nbt.setBoolean(NBT_UNLOCKS + spell.getID(), true);
+			nbt.setBoolean(NBT_UNLOCKS + spell_id, unlocked);
 			stack.setTagCompound(nbt);
 		}
 
@@ -208,7 +214,7 @@ public class ItemCyclicWand extends Item{
 		private static void setUnlockDefault(ItemStack stack){
 
 			for(ISpell s : SpellRegistry.getSpellbook()){
-				unlockSpell(stack, s);
+				unlockSpell(stack, s, true);
 			}
 		}
 
@@ -307,6 +313,47 @@ public class ItemCyclicWand extends Item{
 			stack.setTagCompound(tags);
 		}
 
+		public static void toggleSpellGroup(ItemStack heldItem, String group){
+
+			List<Integer> active = new ArrayList<Integer>();
+
+			switch(SpellGroup.valueOf(group)){
+			case BUILDER:
+				Collections.addAll(active, SpellRegistry.Spells.inventory.getID()
+						, SpellRegistry.Spells.pull.getID()
+						, SpellRegistry.Spells.push.getID()
+						, SpellRegistry.Spells.scaffold.getID()
+						, SpellRegistry.Spells.rotate.getID()
+						, SpellRegistry.Spells.replacer.getID()
+						, SpellRegistry.Spells.reach.getID()
+						 );
+				break;
+			case EXPLORER:
+
+				Collections.addAll(active, SpellRegistry.Spells.inventory.getID()
+						,SpellRegistry.Spells.nightvision.getID()
+						,SpellRegistry.Spells.ghost.getID()
+						,SpellRegistry.Spells.launch.getID()
+						,SpellRegistry.Spells.torch.getID()
+						,SpellRegistry.Spells.waterwalk.getID()
+						,SpellRegistry.Spells.waypoint.getID()
+						,SpellRegistry.Spells.phase.getID()
+						,SpellRegistry.Spells.spawnegg.getID());
+				break;
+			case FIGHTER:
+				Collections.addAll(active,SpellRegistry.Spells.inventory.getID());
+				break;
+			default:
+				break;
+			}
+			
+			int spellId;
+			for(ISpell s : SpellRegistry.getSpellbook()){
+				spellId = s.getID();
+				unlockSpell(heldItem, spellId, active.contains(spellId));
+			}
+		}
+
 	}
 
 	public static class Energy{
@@ -381,6 +428,11 @@ public class ItemCyclicWand extends Item{
 		}
 	}
 
+	public enum SpellGroup{
+		EXPLORER,BUILDER,FIGHTER;
+		//TODO: FARMER ??
+	}
+	
 	public enum BuildType {
 		FIRST, ROTATE, RANDOM, MATCH;
 
