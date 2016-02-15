@@ -11,7 +11,8 @@ public class SpellThrowHarvest extends BaseSpellThrown implements ISpell{
 	public SpellThrowHarvest(int id, String n){
 
 		super.init(id, n);
-		this.cost = 30;
+		this.cost = 40;
+		this.cooldown = 30;
 	}
 
 	@Override

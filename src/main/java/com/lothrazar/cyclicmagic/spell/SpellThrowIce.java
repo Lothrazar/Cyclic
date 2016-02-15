@@ -12,6 +12,7 @@ public class SpellThrowIce extends BaseSpellThrown implements ISpell{
 
 		super.init(id, name);
 		this.cost = 10;
+		this.cooldown = 20;
 	}
 
 	@Override

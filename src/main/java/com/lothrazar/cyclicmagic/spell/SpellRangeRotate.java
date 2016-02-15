@@ -14,8 +14,8 @@ public class SpellRangeRotate extends BaseSpellRange{
 	public SpellRangeRotate(int id, String name){
 
 		super.init(id, name);
-		this.cooldown = 1;
-		this.cost = 2;
+		this.cooldown = 8;
+		this.cost = 5;
 	}
 
 	@Override

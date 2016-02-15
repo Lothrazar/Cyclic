@@ -12,6 +12,7 @@ public class SpellThrowShear extends BaseSpellThrown implements ISpell{
 
 		super.init(id, name);
 		this.cost = 1;
+		this.cooldown = 20;
 	}
 
 	@Override

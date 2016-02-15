@@ -11,7 +11,8 @@ public class SpellThrowTorch extends BaseSpellThrown implements ISpell{
 	public SpellThrowTorch(int id, String name){
 
 		super.init(id, name);
-		this.cost = 15;
+		this.cost = 35;
+		this.cooldown = 30;
 	}
 
 	@Override

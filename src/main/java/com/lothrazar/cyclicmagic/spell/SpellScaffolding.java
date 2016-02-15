@@ -17,6 +17,8 @@ public class SpellScaffolding extends BaseSpell{
 	public SpellScaffolding(int id, String name){
 
 		super.init(id, name);
+		this.cost = 8;
+		this.cooldown = 10;
 	}
 
 	@Override

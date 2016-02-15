@@ -11,8 +11,8 @@ public class SpellThrowSpawnEgg extends BaseSpellThrown implements ISpell{
 	public SpellThrowSpawnEgg(int id, String name){
 
 		super.init(id, name);
-		cooldown = 20;
-		this.cost = 25;
+		this.cost = 100;
+		this.cooldown = 20;
 	}
 
 	@Override

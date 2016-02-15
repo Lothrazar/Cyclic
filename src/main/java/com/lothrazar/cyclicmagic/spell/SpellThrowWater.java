@@ -11,7 +11,8 @@ public class SpellThrowWater extends BaseSpellThrown implements ISpell{
 	public SpellThrowWater(int id, String name){
 
 		super.init(id, name);
-		this.cost = 15;
+		this.cost = 20;
+		this.cooldown = 40;
 	}
 
 	@Override

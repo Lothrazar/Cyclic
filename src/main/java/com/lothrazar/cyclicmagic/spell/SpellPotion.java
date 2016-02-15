@@ -21,6 +21,7 @@ public class SpellPotion extends BaseSpell implements ISpell{
 
 		super.init(id, name);
 		this.cost = pcost;
+		this.cooldown = 10;
 	}
 
 	public SpellPotion setPotion(int id, int effectDuration, int effectAmplifier){

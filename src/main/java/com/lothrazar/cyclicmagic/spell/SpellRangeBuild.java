@@ -20,6 +20,7 @@ public class SpellRangeBuild extends BaseSpellRange{
 	public SpellRangeBuild(int id, String n){
 
 		super.init(id, n);
+		this.cooldown = 8;
 		this.cost = 5;
 	}
 

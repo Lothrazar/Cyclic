@@ -12,7 +12,7 @@ public class SpellThrowLightning extends BaseSpellThrown implements ISpell{
 
 		super.init(id, name);
 		this.cost = 75;
-		this.cooldown = 10;
+		this.cooldown = 60;
 	}
 
 	@Override
