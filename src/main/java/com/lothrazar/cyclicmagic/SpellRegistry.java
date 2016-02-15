@@ -48,6 +48,8 @@ public class SpellRegistry{
 		public static SpellThrowSpawnEgg spawnegg;
 		public static SpellThrowLightning lightning;
 		public static SpellLinkingPortal waypoint;
+		public static SpellThrowHarvest harvest;
+		public static SpellThrowWater water;
 	}
 	
 	public static class Passives{
@@ -138,11 +140,11 @@ public class SpellRegistry{
 		Spells.shear = new SpellThrowShear(++spellId, "shear");
 		registerSpell(Spells.shear);
 
-		SpellThrowHarvest harvest = new SpellThrowHarvest(++spellId, "harvest");
-		registerSpell(harvest);
+		Spells.harvest = new SpellThrowHarvest(++spellId, "harvest");
+		registerSpell(Spells.harvest);
 
-		SpellThrowWater water = new SpellThrowWater(++spellId, "water");
-		registerSpell(water);
+		Spells.water = new SpellThrowWater(++spellId, "water");
+		registerSpell(Spells.water);
 
 		Spells.lightning = new SpellThrowLightning(++spellId, "lightning");
 		registerSpell(Spells.lightning);

@@ -61,7 +61,7 @@ public class GuiSpellbook extends GuiScreen{
 		int pad = 8;
 		this.buttonList.add(new ButtonSpellGroup(ItemCyclicWand.SpellGroup.EXPLORER.toString(), btnID++, pad, btnCenter, width));
 		this.buttonList.add(new ButtonSpellGroup(ItemCyclicWand.SpellGroup.BUILDER.toString(), btnID++, pad, btnCenter - pad - h, width));
-		this.buttonList.add(new ButtonSpellGroup(ItemCyclicWand.SpellGroup.FIGHTER.toString(), btnID++, pad, btnCenter + pad + h, width));
+		this.buttonList.add(new ButtonSpellGroup(ItemCyclicWand.SpellGroup.FARMER.toString(), btnID++, pad, btnCenter + pad + h, width));
 
 		double ang = 0;
 		double cx, cy;

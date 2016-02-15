@@ -316,17 +316,19 @@ public class ItemCyclicWand extends Item{
 		public static void toggleSpellGroup(ItemStack heldItem, String group){
 
 			List<Integer> active = new ArrayList<Integer>();
-
+			//order here has no impact
 			switch(SpellGroup.valueOf(group)){
 			case BUILDER:
 				Collections.addAll(active, SpellRegistry.Spells.inventory.getID()
 						, SpellRegistry.Spells.pull.getID()
 						, SpellRegistry.Spells.push.getID()
 						, SpellRegistry.Spells.scaffold.getID()
+						,SpellRegistry.Spells.launch.getID()
 						, SpellRegistry.Spells.rotate.getID()
 						, SpellRegistry.Spells.replacer.getID()
 						, SpellRegistry.Spells.reach.getID()
-						 );
+						,SpellRegistry.Spells.haste.getID()
+						);
 				break;
 			case EXPLORER:
 
@@ -338,10 +340,21 @@ public class ItemCyclicWand extends Item{
 						,SpellRegistry.Spells.waterwalk.getID()
 						,SpellRegistry.Spells.waypoint.getID()
 						,SpellRegistry.Spells.phase.getID()
-						,SpellRegistry.Spells.spawnegg.getID());
+						,SpellRegistry.Spells.spawnegg.getID()
+						,SpellRegistry.Spells.haste.getID()
+						);
 				break;
-			case FIGHTER:
-				Collections.addAll(active,SpellRegistry.Spells.inventory.getID());
+			case FARMER:
+				Collections.addAll(active,SpellRegistry.Spells.inventory.getID()
+						,SpellRegistry.Spells.shear.getID()
+						,SpellRegistry.Spells.magnet.getID()
+						,SpellRegistry.Spells.harvest.getID()
+						,SpellRegistry.Spells.water.getID()
+						,SpellRegistry.Spells.chestsack.getID()
+						,SpellRegistry.Spells.fishing.getID()
+						,SpellRegistry.Spells.launch.getID()
+						,SpellRegistry.Spells.haste.getID()
+						);
 				break;
 			default:
 				break;
@@ -429,7 +442,7 @@ public class ItemCyclicWand extends Item{
 	}
 
 	public enum SpellGroup{
-		EXPLORER,BUILDER,FIGHTER;
+		EXPLORER,BUILDER,FARMER;
 		//TODO: FARMER ??
 	}
 	
