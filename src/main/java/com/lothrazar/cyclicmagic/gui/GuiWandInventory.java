@@ -18,7 +18,7 @@ public class GuiWandInventory extends GuiContainer{
 	// TODO: TOOLTIPS on all buttons
 	// the swap type tooltop, if its on pattern, should show the current slot number, as i '3/9'
 	final int id = 777;
-	final int padding = 8;
+	final int padding = 6;
 
 	public GuiWandInventory(ContainerWand containerItem){
 
@@ -31,7 +31,7 @@ public class GuiWandInventory extends GuiContainer{
 
 		super.initGui();
 
-		final int y = this.guiTop + 6;
+		final int y = this.guiTop + padding  ;
 		int x = this.guiLeft + 5;
 
 		int width = 20;

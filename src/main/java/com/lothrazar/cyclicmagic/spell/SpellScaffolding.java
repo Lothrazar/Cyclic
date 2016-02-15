@@ -103,6 +103,6 @@ public class SpellScaffolding extends BaseSpell{
 	@Override
 	public void playSound(World world, Block block, BlockPos pos){
 
-		UtilSound.playSound(world, pos, UtilSound.drink);
+		UtilSound.playSound(world, pos, UtilSound.Own.crackle);
 	}
 }
