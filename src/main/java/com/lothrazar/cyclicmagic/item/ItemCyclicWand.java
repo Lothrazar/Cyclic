@@ -1,9 +1,10 @@
 package com.lothrazar.cyclicmagic.item;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.lwjgl.input.Keyboard;
-import com.lothrazar.cyclicmagic.Const; 
+import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.spell.passive.*;
@@ -22,89 +23,98 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemCyclicWand extends Item {
+public class ItemCyclicWand extends Item{
 
-	private static final String NBT_MANA = "mana";
-	private static final String NBT_SPELL = "spell_id";
+	private static final String NBT_SPELLCURRENT = "spell_id";
+	private static final String NBT_PASSIVECURRENT = "passive_id";
 	private static final String NBT_UNLOCKS = "unlock_";
-	
-	public ItemCyclicWand() {
+
+	public ItemCyclicWand(){
+
 		this.setMaxStackSize(1);
 		this.setHasSubtypes(true);
 	}
 
 	@Override
-	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged)
-    {
+	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged){
+
 		if(!slotChanged){
-			return false;//only item data has changed, so do not animate
+			return false;// only item data has changed, so do not animate
 		}
-        return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged);
-    }
+		return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged);
+	}
+
 	@Override
 	@SideOnly(Side.CLIENT)
-	public boolean isFull3D() {
+	public boolean isFull3D(){
+
 		return true;
 	}
 
 	@Override
 	public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn){
-		//default to all unlocked
+
+		// default to all unlocked
 		Spells.setUnlockDefault(stack);
-		
+
 		Energy.rechargeBy(stack, Energy.START);
-    }
-	
+
+		Energy.setMaximum(stack, Energy.MAX_DEFAULT);
+		Energy.setRegen(stack, Energy.REGEN_DEFAULT);
+	}
+
 	@Override
-    public String getUnlocalizedName(ItemStack stack)
-    {
+	public String getUnlocalizedName(ItemStack stack){
+
 		String name = super.getUnlocalizedName() + "_" + Variant.getVariantFromMeta(stack).name().toLowerCase();
 
-        return name;
-    }
-    
-    @SideOnly(Side.CLIENT)
-    public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems)
-    {
-        for (int i = 0; i < Variant.values().length; i++){
-            subItems.add(new ItemStack(itemIn, 1, i));
-        }
-    }
-     
+		return name;
+	}
+
 	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+	public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems){
+
+		for(int i = 0; i < Variant.values().length; i++){
+			subItems.add(new ItemStack(itemIn, 1, i));
+		}
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced){
 
 		ISpell spell = SpellRegistry.getSpellFromID(Spells.getSpellCurrent(stack));
 
 		int MAX = ItemCyclicWand.Energy.getMaximum(stack);
-		
-		//  + " "+EnumChatFormatting.DARK_BLUE + spell.getCost()
-		tooltip.add(EnumChatFormatting.GREEN + spell.getName());
 
-		if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
+		String cost = EnumChatFormatting.DARK_GRAY + "[" + EnumChatFormatting.DARK_PURPLE +spell.getCost() + EnumChatFormatting.DARK_GRAY +"]";
+		tooltip.add(EnumChatFormatting.GREEN + spell.getName()+" "+cost);
 
-			tooltip.add(Energy.getCurrent(stack) + "/" + MAX);	
+		if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)){
+
+			tooltip.add(Energy.getCurrent(stack) + "/" + MAX);
 			tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("wand.regen") + EnumChatFormatting.DARK_BLUE + Energy.getRegen(stack));
-			
-			for(IPassiveSpell s : Variant.getPassives(stack)){
-				tooltip.add(EnumChatFormatting.DARK_GRAY + s.info());
+
+			IPassiveSpell pcurrent = ItemCyclicWand.Spells.getPassiveCurrent(stack);
+			if(pcurrent != null){
+				tooltip.add(EnumChatFormatting.DARK_GRAY +StatCollector.translateToLocal("spellpassive.prefix")+ pcurrent.getName());
 			}
 		}
-		else {
+		else{
 			tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("item.shift"));
 		}
-		
+
 		super.addInformation(stack, playerIn, tooltip, advanced);
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public EnumRarity getRarity(ItemStack par1ItemStack) {
-		return EnumRarity.EPIC;
+	public EnumRarity getRarity(ItemStack par1ItemStack){
+
+		return EnumRarity.UNCOMMON;
 	}
 
 	@Override
-	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn) {
+	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn){
 
 		// so this only happens IF either onItemUse did not fire at all, or it
 		// fired and casting failed
@@ -113,244 +123,415 @@ public class ItemCyclicWand extends Item {
 	}
 
 	@Override
-	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-		// if held by something not a player? such as custom npc/zombie/etc
-		if (entityIn instanceof EntityPlayer == false) {
-			return;
-		}
+	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected){
 
-		EntityPlayer p = (EntityPlayer) entityIn;
-		if (worldIn.isRemote == false && worldIn.getWorldTime() % Const.TICKS_PER_SEC == 0){
+		
+		boolean doRegen = false;
+		
+		if(worldIn.getGameRules().getBoolean("doDaylightCycle")){
+			//then check by world tick time
+			doRegen = worldIn.getTotalWorldTime() % Const.TICKS_PER_SEC == 0 && (worldIn.rand.nextDouble() > 0.5);
+		}
+		else{
+			//the WorldTime is constant and never moves, the player or server has turned off the clock
+			//so allow regen even if time is stopped:
+			doRegen = (worldIn.rand.nextDouble() > 0.995);
+		}
+		
+		if(worldIn.isRemote == false && doRegen){
 
 			Energy.rechargeBy(stack, Energy.getRegen(stack));
-			//Mana.setMana(stack, Mana.getMana(stack) + Mana.getRegen(stack));
 		}
-		
-		List<IPassiveSpell> passives = Variant.getPassives(stack);
-		
-		for(IPassiveSpell spell: passives){
-			if(spell.canTrigger(p)){
-				spell.trigger(p);
-			}
+		// if held by something not a player? such as custom npc/zombie/etc
+		if(entityIn instanceof EntityPlayer == false){
+			return;
 		}
-	
+		EntityPlayer p = (EntityPlayer) entityIn;
+		IPassiveSpell pcurrent = ItemCyclicWand.Spells.getPassiveCurrent(stack);
+		if(pcurrent != null && pcurrent.canTrigger(p)){
+			
+			pcurrent.trigger(p);
+		}
+
 		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
 	}
-	
+
 	@Override
-	public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
+	public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ){
+
 		// If onItemUse returns false onItemRightClick will be called.
 		// http://www.minecraftforge.net/forum/index.php?topic=31966.0
 		// so if this casts and succeeds, the right click is cancelled
 		return SpellRegistry.caster.tryCastCurrent(worldIn, playerIn, pos, side);
 	}
-	
-    private static NBTTagCompound getNBT(ItemStack stack){
-    	return stack.hasTagCompound() ? stack.getTagCompound() : new NBTTagCompound();
-    }
-    
-    private static class Passives{
-    	private static IPassiveSpell falling = new PassiveFalling();
-    	private static IPassiveSpell breath = new PassiveBreath();
-    	private static IPassiveSpell burn = new PassiveBurn();
-    	private static IPassiveSpell defend = new PassiveDefend();
-    }
+
+	@Override
+	public int getMaxItemUseDuration(ItemStack stack){
+
+		return 1; // Without this method, your inventory will NOT work!!!
+	}
+
+	private static NBTTagCompound getNBT(ItemStack stack){
+
+		return stack.hasTagCompound() ? stack.getTagCompound() : new NBTTagCompound();
+	}
 
 	public static class Spells{
-	
-		private static void unlockSpell(ItemStack stack, ISpell spell){
+
+		private static void unlockSpell(ItemStack stack, ISpell spell, boolean unlocked){
+
+			unlockSpell(stack,spell.getID(), unlocked);
+		}
+		private static void unlockSpell(ItemStack stack, int spell_id, boolean unlocked){
+
 			NBTTagCompound nbt = getNBT(stack);
-			nbt.setBoolean(NBT_UNLOCKS + spell.getID(), true);
+			nbt.setBoolean(NBT_UNLOCKS + spell_id, unlocked);
 			stack.setTagCompound(nbt);
-		}/*
-		private static void lockSpell(ItemStack stack, ISpell spell){
-			NBTTagCompound nbt = getStackNBT(stack);
-			nbt.setBoolean(NBT_UNLOCKS + spell.getID(), true);
-			stack.setTagCompound(nbt);
-		}*/
+		}
+
 		public static void toggleSpell(ItemStack stack, int spell_id){
+
 			NBTTagCompound nbt = getNBT(stack);
 			String key = NBT_UNLOCKS + spell_id;
 			nbt.setBoolean(key, !nbt.getBoolean(key));
 			stack.setTagCompound(nbt);
 		}
+
 		public static boolean isSpellUnlocked(ItemStack stack, ISpell spell){
-			return isSpellUnlocked(stack,spell.getID());
+
+			return isSpellUnlocked(stack, spell.getID());
 		}
+
 		public static boolean isSpellUnlocked(ItemStack stack, int spell_id){
+
+			if(stack == null){
+				return false;
+			}
 			NBTTagCompound nbt = getNBT(stack);
 			return nbt.getBoolean(NBT_UNLOCKS + spell_id);
 		}
+
 		private static void setUnlockDefault(ItemStack stack){
-	
+
 			for(ISpell s : SpellRegistry.getSpellbook()){
-				unlockSpell(stack,s);
+				unlockSpell(stack, s, true);
 			}
 		}
 
-		public static int nextId(ItemStack stack,int spell_id ) {
-			return nextId(stack,spell_id,0);
+		public static int nextId(ItemStack stack, int spell_id){
+
+			return nextId(stack, spell_id, 0);
 		}
-		public static int nextId(ItemStack stack,int spell_id,int infbreaker ) {
-		//	byte[] spells = this.getUnlocksFromString();
-	
-			
+
+		public static int nextId(ItemStack stack, int spell_id, int infbreaker){
+
 			int next;
-			
-			if (spell_id >= SpellRegistry.getSpellbook().size() - 1)
+
+			if(spell_id >= SpellRegistry.getSpellbook().size() - 1)
 				next = 0;// (int)spells[0];
 			else
 				next = spell_id + 1;// (int)spells[spell_id+1];
-			
-			//dont infloop
-			if(isSpellUnlocked(stack,next) == false && infbreaker < 100){
-		
+
+			// dont infloop
+			if(isSpellUnlocked(stack, next) == false && infbreaker < 100){
+
 				infbreaker++;
-				return nextId(stack,next,infbreaker);
+				return nextId(stack, next, infbreaker);
 			}
-			
+
 			infbreaker = 0;
-			//this.setUnlocksFromByte(spells);
+			// this.setUnlocksFromByte(spells);
 			return next;
 		}
 
-		public static int prevId(ItemStack stack,int spell_id ) {
-			return prevId(stack,spell_id,0);
+		public static int prevId(ItemStack stack, int spell_id){
+
+			return prevId(stack, spell_id, 0);
 		}
-		public static int prevId(ItemStack stack,int spell_id,int infbreaker ) {
-		
+
+		public static int prevId(ItemStack stack, int spell_id, int infbreaker){
+
 			int prev;
-	
-			if (spell_id == 0)
-				prev = SpellRegistry.getSpellbook().size() - 1; 
+
+			if(spell_id == 0)
+				prev = SpellRegistry.getSpellbook().size() - 1;
 			else
-				prev = spell_id - 1; 
-			//dont infloop
-			if(isSpellUnlocked(stack,prev) == false && infbreaker < 100){
-		
+				prev = spell_id - 1;
+			// dont infloop
+			if(isSpellUnlocked(stack, prev) == false && infbreaker < 100){
+
 				infbreaker++;
-				return prevId(stack,prev,infbreaker);
+				return prevId(stack, prev, infbreaker);
 			}
-			
+
 			infbreaker = 0;
-			
+
 			return prev;
 		}
-		
-		public static int getSpellCurrent(ItemStack stack) {
-			
-			return getNBT(stack).getInteger(NBT_SPELL);
+
+		public static int getSpellCurrent(ItemStack stack){
+
+			return getNBT(stack).getInteger(NBT_SPELLCURRENT);
 		}
-		
-		public static void setSpellCurrent(ItemStack stack,int spell_id) {
+
+		public static void setSpellCurrent(ItemStack stack, int spell_id){
+
 			NBTTagCompound tags = getNBT(stack);
-			
-			tags.setInteger(NBT_SPELL, spell_id);
-			
+
+			tags.setInteger(NBT_SPELLCURRENT, spell_id);
+
 			stack.setTagCompound(tags);
 		}
-	}
 
-	public static class Energy{
-		public static final int START = 100; // what you get on crafted
-		private static int getRegen(ItemStack stack){
-			switch(Variant.getVariantFromMeta(stack)){
-			case QUARTZ:
-				return 1;
-			case GOLD:
-				return 2;
-			case LAPIS:
-				return 3;
-			case DIAMOND:
-				return 4;
-			case EMERALD:
-				return 5;
-			}
-			return 0;
+		public static int getPassiveCurrentID(ItemStack stack){
+
+			return getNBT(stack).getInteger(NBT_PASSIVECURRENT);
 		}
-		
-		public static int getMaximum(ItemStack stack){
-			switch(Variant.getVariantFromMeta(stack)){
-			case QUARTZ:
-				return 200;
-			case GOLD:
-				return 500;
-			case LAPIS:
-				return 700;
-			case DIAMOND:
-				return 1000;
-			case EMERALD:
-				return 1200;
+
+		public static IPassiveSpell getPassiveCurrent(ItemStack stack){
+
+			if(stack == null){
+				return null;
+			}
+			
+			return SpellRegistry.Passives.getByID(getNBT(stack).getInteger(NBT_PASSIVECURRENT));
+		}
+
+		public static void togglePassive(ItemStack stack){
+
+			NBTTagCompound tags = getNBT(stack);
+
+			int current = tags.getInteger(NBT_PASSIVECURRENT);
+
+			current++;
+			if(current > 3){
+				current = 0;
+			}// TODO: fix hardcoded magic nums
+
+			tags.setInteger(NBT_PASSIVECURRENT, current);
+
+			stack.setTagCompound(tags);
+		}
+
+		public static void toggleSpellGroup(ItemStack heldItem, String group){
+
+			List<Integer> active = new ArrayList<Integer>();
+			//order here has no impact
+			switch(SpellGroup.valueOf(group)){
+			case BUILDER:
+				Collections.addAll(active, SpellRegistry.Spells.inventory.getID()
+						, SpellRegistry.Spells.pull.getID()
+						, SpellRegistry.Spells.push.getID()
+						, SpellRegistry.Spells.scaffold.getID()
+						,SpellRegistry.Spells.launch.getID()
+						, SpellRegistry.Spells.rotate.getID()
+						, SpellRegistry.Spells.replacer.getID()
+						, SpellRegistry.Spells.reach.getID()
+						,SpellRegistry.Spells.haste.getID()
+						);
+				break;
+			case EXPLORER:
+
+				Collections.addAll(active, SpellRegistry.Spells.inventory.getID()
+						,SpellRegistry.Spells.nightvision.getID()
+						,SpellRegistry.Spells.ghost.getID()
+						,SpellRegistry.Spells.launch.getID()
+						,SpellRegistry.Spells.torch.getID()
+						,SpellRegistry.Spells.waterwalk.getID()
+						,SpellRegistry.Spells.waypoint.getID()
+						,SpellRegistry.Spells.phase.getID()
+						,SpellRegistry.Spells.spawnegg.getID()
+						,SpellRegistry.Spells.haste.getID()
+						);
+				break;
+			case FARMER:
+				Collections.addAll(active,SpellRegistry.Spells.inventory.getID()
+						,SpellRegistry.Spells.shear.getID()
+						,SpellRegistry.Spells.magnet.getID()
+						,SpellRegistry.Spells.harvest.getID()
+						,SpellRegistry.Spells.water.getID()
+						,SpellRegistry.Spells.chestsack.getID()
+						,SpellRegistry.Spells.fishing.getID()
+						,SpellRegistry.Spells.launch.getID()
+						,SpellRegistry.Spells.haste.getID()
+						);
+				break;
 			default:
 				break;
 			}
-			return 0;
+			
+			int spellId;
+			for(ISpell s : SpellRegistry.getSpellbook()){
+				spellId = s.getID();
+				unlockSpell(heldItem, spellId, active.contains(spellId));
+			}
 		}
 
-		public static int getCurrent(ItemStack stack) {
+	}
+
+	public static class Energy{
+
+		public static final int START = 100; // what you get on crafted
+		public static final int MAX_DEFAULT = 1000;
+		public static final int REGEN_DEFAULT = 1;
+		private static final String NBT_MANA = "mana";
+		private static final String NBT_MAX = "max";
+		private static final String NBT_REGEN = "regen";
+
+		private static int getRegen(ItemStack stack){
+
+			// support for old ones, or ones that werent crafted
+			NBTTagCompound tags = getNBT(stack);
+			if(!tags.hasKey(NBT_REGEN) || tags.getInteger(NBT_REGEN) <= 0){
+				setRegen(stack, REGEN_DEFAULT);
+			}
+
+			return getNBT(stack).getInteger(NBT_REGEN);
+		}
+
+		private static void setRegen(ItemStack stack, int m){
+
+			NBTTagCompound tags = getNBT(stack);
+			tags.setInteger(NBT_REGEN, m);
+			stack.setTagCompound(tags);
+		}
+
+		public static int getMaximum(ItemStack stack){
+
+			// support for old ones, or ones that werent crafted
+			NBTTagCompound tags = getNBT(stack);
+			if(!tags.hasKey(NBT_MAX) || tags.getInteger(NBT_MAX) <= 1){
+				setMaximum(stack, MAX_DEFAULT);
+			}
+
+			return getNBT(stack).getInteger(NBT_MAX);
+		}
+
+		private static void setMaximum(ItemStack stack, int m){
+
+			NBTTagCompound tags = getNBT(stack);
+			tags.setInteger(NBT_MAX, m);
+			stack.setTagCompound(tags);
+		}
+
+		public static int getCurrent(ItemStack stack){
+
 			return getNBT(stack).getInteger(NBT_MANA);
 		}
-		
-		public static void setCurrent(ItemStack stack,int m) {
-			if(m < 0){m = 0;}
+
+		public static void setCurrent(ItemStack stack, int m){
+
+			if(m < 0){
+				m = 0;
+			}
 			int MAX = ItemCyclicWand.Energy.getMaximum(stack);
 			int filled = (int) Math.min(m, MAX);
 
 			getNBT(stack).setInteger(NBT_MANA, filled);
 		}
-		public static void drainBy(ItemStack stack,int m) {
+
+		public static void drainBy(ItemStack stack, int m){
+
 			Energy.setCurrent(stack, Energy.getCurrent(stack) - m);
 		}
-		public static void rechargeBy(ItemStack stack,int m) {
+
+		public static void rechargeBy(ItemStack stack, int m){
+
 			Energy.setCurrent(stack, Energy.getCurrent(stack) + m);
 		}
 	}
+
+	public enum SpellGroup{
+		EXPLORER,BUILDER,FARMER;
+		//TODO: FARMER ??
+	}
 	
-	public enum Variant{
-		QUARTZ,
-		GOLD,
-		LAPIS,
-		DIAMOND,
-		EMERALD;
-		
-		public int getMetadata() {
+	public enum BuildType {
+		FIRST, ROTATE, RANDOM, MATCH;
+
+		final static String NBT_BUILD = "build";
+		final static String NBT_ROT = "rotation";
+
+		public static String getBuildTypeName(ItemStack wand){
+
+			try{
+				NBTTagCompound tags = getNBT(wand);
+
+				return "button.build." + BuildType.values()[tags.getInteger("build")].toString().toLowerCase();
+
+			}
+			catch (Exception e){
+				System.out.println(e.getMessage());
+				return "button.build." + FIRST.toString().toLowerCase();
+			}
+		}
+
+		public static int getBuildType(ItemStack wand){
+
+			if(wand == null){
+				return 0;
+			}
+			NBTTagCompound tags = getNBT(wand);
+
+			return tags.getInteger(NBT_BUILD);
+		}
+
+		public static void toggleBuildType(ItemStack wand){
+
+			NBTTagCompound tags = getNBT(wand);
+
+			int type = tags.getInteger(NBT_BUILD);
+
+			type++;
+
+			if(type > MATCH.ordinal()){
+				type = FIRST.ordinal();
+			}
+
+			tags.setInteger(NBT_BUILD, type);
+		}
+
+		public static int getBuildRotation(ItemStack wand){
+
+			if(wand == null){
+				return 0;
+			}
+			NBTTagCompound tags = getNBT(wand);
+
+			return tags.getInteger(NBT_ROT);
+		}
+
+		public static void setBuildRotation(ItemStack wand, int rot){
+
+			NBTTagCompound tags = getNBT(wand);
+
+			tags.setInteger(NBT_ROT, rot);
+		}
+	}
+
+	public enum Variant {
+		QUARTZ, GOLD, LAPIS, DIAMOND, EMERALD;
+
+		public int getMetadata(){
+
 			return ordinal();
 		}
 
-		public String getResource() {
-			
+		public String getResource(){
+
 			return Const.TEXTURE_LOCATION + "cyclic_wand_" + this.name().toLowerCase();
 		}
-		
-		private static List<IPassiveSpell> getPassives(ItemStack stack){
-			List<IPassiveSpell> ret = new ArrayList<IPassiveSpell>();
-			//it trickles down, so the one at the tap also hits the lower ones
-			switch(Variant.getVariantFromMeta(stack)){
 
-				case EMERALD:
-					ret.add(Passives.defend);
-				case LAPIS:
-					ret.add(Passives.falling);
-				case DIAMOND:
-					ret.add(Passives.burn);
-				case GOLD:
-					ret.add(Passives.breath);
-				case QUARTZ://none for u
-					break;
-				default:break;
-			}
-			
-			return ret;
-		}
-		
-	    static Variant getVariantFromMeta(ItemStack stack){
-	    	try{
+		static Variant getVariantFromMeta(ItemStack stack){
+
+			try{
 				return Variant.values()[stack.getMetadata()];
 			}
-			catch(Exception e){
-				//System.out.println("INVALID META::"+stack.getMetadata());
-				return Variant.QUARTZ;//this is damage zero anyway
+			catch (Exception e){
+				// System.out.println("INVALID META::"+stack.getMetadata());
+				return Variant.QUARTZ;// this is damage zero anyway
 			}
-	    }
+		}
 	}
+
 }

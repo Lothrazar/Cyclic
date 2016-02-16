@@ -22,16 +22,20 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class EntityRespawnEgg extends EntityThrowable {
-	public EntityRespawnEgg(World worldIn) {
+public class EntityRespawnEgg extends EntityThrowable{
+
+	public EntityRespawnEgg(World worldIn){
+
 		super(worldIn);
 	}
 
-	public EntityRespawnEgg(World worldIn, EntityLivingBase ent) {
+	public EntityRespawnEgg(World worldIn, EntityLivingBase ent){
+
 		super(worldIn, ent);
 	}
 
-	public EntityRespawnEgg(World worldIn, double x, double y, double z) {
+	public EntityRespawnEgg(World worldIn, double x, double y, double z){
+
 		super(worldIn, x, y, z);
 	}
 
@@ -39,56 +43,58 @@ public class EntityRespawnEgg extends EntityThrowable {
 	public static Item item = null;
 
 	@Override
-	protected void onImpact(MovingObjectPosition mop) {
-		if (mop.entityHit != null && mop.entityHit instanceof EntityLivingBase && this.worldObj.isRemote == false) {
-			
+	protected void onImpact(MovingObjectPosition mop){
+
+		if(mop.entityHit != null && mop.entityHit instanceof EntityLivingBase && this.worldObj.isRemote == false){
+
 			mop.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 0);
 			// do the snowball damage, which should be none. put out the fire
-			
+
 			int entity_id = EntityList.getEntityID(mop.entityHit);
 
-			if (entity_id > 0) {
-						
-				//ignore child mobs and tamed mobs and villagers
-				
+			if(entity_id > 0){
+
+				// ignore child mobs and tamed mobs and villagers
+
 				boolean cancelDrop = false;
-				
+
 				if(mop.entityHit instanceof EntityAgeable){
-					if(((EntityAgeable)mop.entityHit).isChild()){
+					if(((EntityAgeable) mop.entityHit).isChild()){
 						cancelDrop = true;
 					}
 				}
 				if(mop.entityHit instanceof EntityTameable){
-					if(((EntityTameable)mop.entityHit).isTamed()){
-						//NOTE: Horse does not use this tameable base class, its different
+					if(((EntityTameable) mop.entityHit).isTamed()){
+						// NOTE: Horse does not use this tameable base class, its different
 						cancelDrop = true;
 					}
 				}
 				if(mop.entityHit instanceof EntityHorse){
-					if(((EntityHorse)mop.entityHit).isTame()){
+					if(((EntityHorse) mop.entityHit).isTame()){
 						cancelDrop = true;
 					}
 				}
 				if(mop.entityHit instanceof EntityVillager){
-					//lots of complex NBT data, is not balanced/fair to reset trades and careers with this
+					// lots of complex NBT data, is not balanced/fair to reset trades and careers
+					// with this
 					cancelDrop = true;
 				}
 				if(mop.entityHit instanceof EntityGolem){
-					//iron or snowman - does not have v egg
+					// iron or snowman - does not have v egg
 					cancelDrop = true;
 				}
-				
+
 				if(cancelDrop == false){
 
 					this.worldObj.removeEntity(mop.entityHit);
 					ItemStack stack = new ItemStack(ItemRegistry.respawn_egg, 1, entity_id);
 					NBTTagCompound nbt = null;
-					
+
 					if(mop.entityHit instanceof EntitySheep){
-						EntitySheep sheep = ((EntitySheep)mop.entityHit);
-					
+						EntitySheep sheep = ((EntitySheep) mop.entityHit);
+
 						EnumDyeColor color = sheep.getFleeceColor();
- 
+
 						nbt = new NBTTagCompound();
 						nbt.setInteger(ItemRespawnEggAnimal.NBT_SHEEPCOLOR, color.getDyeDamage());
 						nbt.setBoolean(ItemRespawnEggAnimal.NBT_SHEEPSHEARED, sheep.getSheared());
@@ -96,10 +102,10 @@ public class EntityRespawnEgg extends EntityThrowable {
 					else if(mop.entityHit instanceof EntityRabbit){
 
 						nbt = new NBTTagCompound();
-						nbt.setInteger(ItemRespawnEggAnimal.NBT_RABBITTYPE,((EntityRabbit)mop.entityHit).getRabbitType());
+						nbt.setInteger(ItemRespawnEggAnimal.NBT_RABBITTYPE, ((EntityRabbit) mop.entityHit).getRabbitType());
 					}
 					else if(mop.entityHit instanceof EntityHorse){
-						EntityHorse horse = ((EntityHorse)mop.entityHit);
+						EntityHorse horse = ((EntityHorse) mop.entityHit);
 
 						nbt = new NBTTagCompound();
 						nbt.setInteger(ItemRespawnEggAnimal.NBT_HORSETEMPER, horse.getTemper());
@@ -107,20 +113,20 @@ public class EntityRespawnEgg extends EntityThrowable {
 						nbt.setInteger(ItemRespawnEggAnimal.NBT_HORSETYPE, horse.getHorseType());
 						nbt.setBoolean(ItemRespawnEggAnimal.NBT_HORSEREPRO, horse.getHasReproduced());
 
-						//not doing speed/jump/health by design. feel free to reroll these
-						//only works on untamed anyway
+						// not doing speed/jump/health by design. feel free to reroll these
+						// only works on untamed anyway
 					}
 					else if(mop.entityHit instanceof EntityWolf){
-						EntityWolf wolf = ((EntityWolf)mop.entityHit);
+						EntityWolf wolf = ((EntityWolf) mop.entityHit);
 
 						nbt = new NBTTagCompound();
 						nbt.setInteger(ItemRespawnEggAnimal.NBT_WOLFCOLOR, wolf.getCollarColor().getDyeDamage());
 					}
-					
-					if (mop.entityHit.hasCustomName()) {
+
+					if(mop.entityHit.hasCustomName()){
 						stack.setStackDisplayName(mop.entityHit.getCustomNameTag());
 					}
-					
+
 					if(nbt != null){
 						stack.setTagCompound(nbt);
 					}

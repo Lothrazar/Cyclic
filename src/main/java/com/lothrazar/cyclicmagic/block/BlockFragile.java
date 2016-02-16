@@ -14,57 +14,68 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * imported from https://github.com/PrinceOfAmber/SamsPowerups/blob/
- * 5083ec601e34bbe045d9a3d0ca091e3d44af562f/src/main/java/com/lothrazar/samscontent/BlockRegistry.ja
- * v a
+ * 5083ec601e34bbe045d9a3d0ca091e3d44af562f/src/main/java/com/lothrazar/samscontent/BlockRegistry.j
+ * a v a
  * 
  * @author Lothrazar
  *
  */
-public class BlockFragile extends Block {
-	public BlockFragile() {
+public class BlockFragile extends Block{
+
+	public BlockFragile(){
+
 		super(Material.wood);
 		this.setTickRandomly(true);
 		this.setHardness(0F);
 		this.setResistance(0F);
 
 		this.setStepSound(new Block.SoundType(UtilSound.Own.crackle, 1.0F, 1.0F) {
-			//override so default does not prefix with "dig." and break it
-			public String getBreakSound() {
+
+			// override so default does not prefix with "dig." and break it
+			public String getBreakSound(){
+
 				return this.soundName;
 			}
-			public String getStepSound() {
+
+			public String getStepSound(){
+
 				return this.soundName;
 			}
-			public String getPlaceSound() {
+
+			public String getPlaceSound(){
+
 				return this.soundName;
 			}
 		});
 	}
 
 	@Override
-	public boolean isOpaqueCube() {
+	public boolean isOpaqueCube(){
+
 		return false;// transparency
 	}
 
 	@SideOnly(Side.CLIENT)
-	public EnumWorldBlockLayer getBlockLayer() {
+	public EnumWorldBlockLayer getBlockLayer(){
+
 		return EnumWorldBlockLayer.CUTOUT;// transparency
 	}
 
 	@Override
-	public void updateTick(World worldObj, BlockPos pos, IBlockState state, Random rand) {
-		// TODO: maybe an extra random counter here
-		// true would make it drop the 'block items' - but no recpie for them
+	public void updateTick(World worldObj, BlockPos pos, IBlockState state, Random rand){
+
 		worldObj.destroyBlock(pos, false);
 	}
 
 	@Override
-	public int quantityDropped(Random random) {
+	public int quantityDropped(Random random){
+
 		return 0; // this makes it drop nothing at all
 	}
 
 	@Override
-	public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+	public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player){
+
 		return false;
 	}
 }

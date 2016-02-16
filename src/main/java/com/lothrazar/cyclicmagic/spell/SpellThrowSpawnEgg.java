@@ -1,33 +1,30 @@
 package com.lothrazar.cyclicmagic.spell;
 
 import com.lothrazar.cyclicmagic.projectile.EntityRespawnEgg;
-import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
-public class SpellThrowSpawnEgg extends BaseSpell implements ISpell {
-	
-	public SpellThrowSpawnEgg(int id,String name){
-		super(id,name);
-		cooldown = 20;
-		this.cost = 25;
+public class SpellThrowSpawnEgg extends BaseSpellThrown implements ISpell{
+
+	public SpellThrowSpawnEgg(int id, String name){
+
+		super.init(id, name);
+		this.cost = 100;
+		this.cooldown = 20;
 	}
 
 	@Override
-	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side) {
+	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side){
 
 		if(world.isRemote == false){
 			world.spawnEntityInWorld(new EntityRespawnEgg(world, player));
 		}
-		return true;
-	}
-	
-	@Override
-	public void onCastSuccess(World world, EntityPlayer player, BlockPos pos) {
 
-		UtilSound.playSoundAt(player, UtilSound.Own.pew);
-		super.onCastSuccess(world, player, pos);
+		this.playSound(world, null, player.getPosition());
+		this.spawnParticle(world, player, player.getPosition());
+
+		return true;
 	}
 }

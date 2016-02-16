@@ -8,22 +8,38 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.StatCollector;
 
 public class PassiveBreath implements IPassiveSpell{
-	private static final String info = "passive.breath"; 
-	private final static int SECONDS = 30;
+
+	private final static int SECONDS = 60;
 	private final static float AIRLIMIT = 150;// 300 is a full bar
 
 	@Override
-	public boolean canTrigger(EntityPlayer entity) {
+	public boolean canTrigger(EntityPlayer entity){
+
 		return (entity.getAir() <= AIRLIMIT) && (entity.isPotionActive(Potion.waterBreathing) == false);
 	}
 
 	@Override
-	public void trigger(EntityPlayer entity) {
-		PotionRegistry.addOrMergePotionEffect(entity, new PotionEffect(Potion.waterBreathing.id,SECONDS * Const.TICKS_PER_SEC));
+	public void trigger(EntityPlayer entity){
+
+		PotionRegistry.addOrMergePotionEffect(entity, new PotionEffect(Potion.waterBreathing.id, SECONDS * Const.TICKS_PER_SEC));
+		PotionRegistry.addOrMergePotionEffect(entity, new PotionEffect(Potion.nightVision.id, SECONDS * Const.TICKS_PER_SEC));
 	}
- 
+
 	@Override
-	public String info() {
-		return StatCollector.translateToLocal(info);
+	public int getID(){
+
+		return 0;
+	}
+
+	@Override
+	public String getName(){
+
+		return StatCollector.translateToLocal("spellpassive.breath.name");
+	}
+
+	@Override
+	public String getInfo(){
+
+		return StatCollector.translateToLocal("spellpassive.breath.info");
 	}
 }

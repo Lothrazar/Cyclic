@@ -16,17 +16,8 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 
-/**
- * Split out into a standalone mod from my old abandoned one
- * https://github.com/PrinceOfAmber/SamsPowerups
- * 
- * @author Sam Bassett (Lothrazar)
- */
-@Mod(modid = Const.MODID, useMetadata = true, canBeDeactivated = false, 
-updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json",
-guiFactory = "com.lothrazar." + Const.MODID + ".config.IngameConfigHandler"
-)
-public class ModMain {
+@Mod(modid = Const.MODID, useMetadata = true, canBeDeactivated = false, updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json", guiFactory = "com.lothrazar." + Const.MODID + ".config.IngameConfigHandler")
+public class ModMain{
 
 	@Instance(value = Const.MODID)
 	public static ModMain instance;
@@ -37,7 +28,8 @@ public class ModMain {
 	public static SimpleNetworkWrapper network;
 
 	@EventHandler
-	public void onPreInit(FMLPreInitializationEvent event) {
+	public void onPreInit(FMLPreInitializationEvent event){
+
 		logger = event.getModLog();
 
 		cfg = new ModConfig(new Configuration(event.getSuggestedConfigurationFile()));
@@ -48,16 +40,25 @@ public class ModMain {
 		network.registerMessage(MessageKeyCast.class, MessageKeyCast.class, packetID++, Side.SERVER);
 		network.registerMessage(MessageKeyLeft.class, MessageKeyLeft.class, packetID++, Side.SERVER);
 		network.registerMessage(MessageKeyRight.class, MessageKeyRight.class, packetID++, Side.SERVER);
-		network.registerMessage(MessageToggle.class, MessageToggle.class, packetID++, Side.SERVER);
+		network.registerMessage(MessageToggleSpell.class, MessageToggleSpell.class, packetID++, Side.SERVER);
 		network.registerMessage(MessageParticle.class, MessageParticle.class, packetID++, Side.CLIENT);
 		network.registerMessage(MessageOpenSpellbook.class, MessageOpenSpellbook.class, packetID++, Side.CLIENT);
-		network.registerMessage(MessagePlaceBlock.class, MessagePlaceBlock.class, packetID++, Side.SERVER);
-
+		network.registerMessage(MessageSpellReach.class, MessageSpellReach.class, packetID++, Side.SERVER);
+		network.registerMessage(MessageToggleBuild.class, MessageToggleBuild.class, packetID++, Side.SERVER);
+		network.registerMessage(MessageSpellRotate.class, MessageSpellRotate.class, packetID++, Side.SERVER);
+		network.registerMessage(MessageSpellPush.class, MessageSpellPush.class, packetID++, Side.SERVER);
+		network.registerMessage(MessageSpellPull.class, MessageSpellPull.class, packetID++, Side.SERVER);
+		network.registerMessage(MessageSpellReplacer.class, MessageSpellReplacer.class, packetID++, Side.SERVER);
+		network.registerMessage(MessageRecharge.class, MessageRecharge.class, packetID++, Side.SERVER);
+		network.registerMessage(MessageTogglePassive.class, MessageTogglePassive.class, packetID++, Side.SERVER);
+		network.registerMessage(MessageToggleSpellGroup.class, MessageToggleSpellGroup.class, packetID++, Side.SERVER);
+		
 		MinecraftForge.EVENT_BUS.register(new EventRegistry());
 	}
 
 	@EventHandler
-	public void onInit(FMLInitializationEvent event) {
+	public void onInit(FMLInitializationEvent event){
+
 		ItemRegistry.register();
 		BlockRegistry.register();
 		ProjectileRegistry.register();
@@ -65,5 +66,7 @@ public class ModMain {
 		SpellRegistry.register();
 
 		proxy.register();
+
+		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiRegistry());
 	}
 }

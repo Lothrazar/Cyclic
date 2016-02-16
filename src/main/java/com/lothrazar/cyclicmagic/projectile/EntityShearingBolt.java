@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.projectile; 
+package com.lothrazar.cyclicmagic.projectile;
 
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.EntityLivingBase;
@@ -13,70 +13,66 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class EntityShearingBolt extends EntityThrowable
-{
+public class EntityShearingBolt extends EntityThrowable{
+
 	public static boolean doesShearChild = true;
-    public EntityShearingBolt(World worldIn)
-    {
-        super(worldIn);
-    }
 
-    public EntityShearingBolt(World worldIn, EntityLivingBase ent)
-    {
-        super(worldIn, ent);
-    }
+	public EntityShearingBolt(World worldIn){
 
-    public EntityShearingBolt(World worldIn, double x, double y, double z)
-    {
-        super(worldIn, x, y, z);
-    }
+		super(worldIn);
+	}
 
-    public static final String name = "shearingbolt";
-    public static Item item = null;
+	public EntityShearingBolt(World worldIn, EntityLivingBase ent){
+
+		super(worldIn, ent);
+	}
+
+	public EntityShearingBolt(World worldIn, double x, double y, double z){
+
+		super(worldIn, x, y, z);
+	}
+
+	public static final String name = "shearingbolt";
+	public static Item item = null;
+
 	@Override
-	protected void onImpact(MovingObjectPosition mop) 
-	{
-		if (mop.entityHit != null && mop.entityHit instanceof EntitySheep)
-        {
-			EntitySheep sheep = (EntitySheep)mop.entityHit;
+	protected void onImpact(MovingObjectPosition mop){
 
-			//imported from MY  unreleased/abandoned BlockShearWool.java in ./FarmingBlocks/
-			if(sheep.getSheared() == false && sheep.worldObj.isRemote == false)
-			{ 
-				//this part is the same as how EntitySheep goes, use a random number
-				if(sheep.isChild() == false || //either an adult, or child that passes config
-						( EntityShearingBolt.doesShearChild == true && sheep.isChild() == true)
-						)
-				{
+		if(mop.entityHit != null && mop.entityHit instanceof EntitySheep){
+			EntitySheep sheep = (EntitySheep) mop.entityHit;
+
+			// imported from MY unreleased/abandoned BlockShearWool.java in ./FarmingBlocks/
+			if(sheep.getSheared() == false && sheep.worldObj.isRemote == false){
+				// this part is the same as how EntitySheep goes, use a random number
+				if(sheep.isChild() == false || // either an adult, or child that passes config
+				(EntityShearingBolt.doesShearChild == true && sheep.isChild() == true)){
 					sheep.setSheared(true);
-	                int i = 1 + sheep.worldObj.rand.nextInt(3);
-	
-	                for (int j = 0; j < i; ++j)
-	                {
-	                    EntityItem entityitem = sheep.entityDropItem(new ItemStack(Item.getItemFromBlock(Blocks.wool), 1, sheep.getFleeceColor().getMetadata()), 1.0F);
-	                    entityitem.motionY += (double)(sheep.worldObj.rand.nextFloat() * 0.05F);
-	                    entityitem.motionX += (double)((sheep.worldObj.rand.nextFloat() - sheep.worldObj.rand.nextFloat()) * 0.1F);
-	                    entityitem.motionZ += (double)((sheep.worldObj.rand.nextFloat() - sheep.worldObj.rand.nextFloat()) * 0.1F);
-	                }
-	
-                	sheep.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 0);
-                	
-                	UtilSound.playSoundAt(sheep, UtilSound.shears);
+					int i = 1 + sheep.worldObj.rand.nextInt(3);
+
+					for(int j = 0; j < i; ++j){
+						EntityItem entityitem = sheep.entityDropItem(new ItemStack(Item.getItemFromBlock(Blocks.wool), 1, sheep.getFleeceColor().getMetadata()), 1.0F);
+						entityitem.motionY += (double) (sheep.worldObj.rand.nextFloat() * 0.05F);
+						entityitem.motionX += (double) ((sheep.worldObj.rand.nextFloat() - sheep.worldObj.rand.nextFloat()) * 0.1F);
+						entityitem.motionZ += (double) ((sheep.worldObj.rand.nextFloat() - sheep.worldObj.rand.nextFloat()) * 0.1F);
+					}
+
+					sheep.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 0);
+
+					UtilSound.playSoundAt(sheep, UtilSound.shears);
 				}
-				//else we hit a child sheep and config disables that
-				
-                this.setDead();
-			} 
-        }
-		else
-		{
+				// else we hit a child sheep and config disables that
+
+				this.setDead();
+			}
+		}
+		else{
 			BlockPos pos = mop.getBlockPos();
 
-	 		if(pos != null && worldObj.isRemote == false) 
-	 		{
-	 			//worldObj.spawnEntityInWorld( new EntityItem(worldObj, pos.getX(),pos.getY(),pos.getZ(), new ItemStack(ItemRegistry.ender_wool)));
-	 			this.setDead();
-	 		} 
+			if(pos != null && worldObj.isRemote == false){
+				// worldObj.spawnEntityInWorld( new EntityItem(worldObj,
+				// pos.getX(),pos.getY(),pos.getZ(), new ItemStack(ItemRegistry.ender_wool)));
+				this.setDead();
+			}
 		}
 	}
 }

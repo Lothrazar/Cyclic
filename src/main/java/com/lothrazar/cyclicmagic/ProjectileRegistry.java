@@ -4,15 +4,16 @@ import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import com.lothrazar.cyclicmagic.projectile.*;
 
-public class ProjectileRegistry {
+public class ProjectileRegistry{
 
-	private static Item registerProjItem(String projectileName) {
+	private static Item registerProjItem(String projectileName){
+
 		Item item = new Item();
 		ItemRegistry.registerItem(item, projectileName);
 		return item;
 	}
 
-	public static void register() {
+	public static void register(){
 
 		int entityID = 777;
 
@@ -37,10 +38,10 @@ public class ProjectileRegistry {
 
 		EntityShearingBolt.item = registerProjItem(EntityShearingBolt.name);
 		EntityRegistry.registerModEntity(EntityShearingBolt.class, EntityShearingBolt.name, entityID++, ModMain.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
-		
+
 		EntityRespawnEgg.item = registerProjItem(EntityRespawnEgg.name);
 		EntityRegistry.registerModEntity(EntityRespawnEgg.class, EntityRespawnEgg.name, entityID++, ModMain.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
-		
+
 		EntityHarvestBolt.item = registerProjItem(EntityHarvestBolt.name);
 		EntityRegistry.registerModEntity(EntityHarvestBolt.class, EntityHarvestBolt.name, entityID++, ModMain.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
 	}

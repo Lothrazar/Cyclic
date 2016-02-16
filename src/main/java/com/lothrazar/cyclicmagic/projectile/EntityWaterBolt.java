@@ -16,19 +16,24 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class EntityWaterBolt extends EntityThrowable {
+public class EntityWaterBolt extends EntityThrowable{
+
 	ArrayList<Block> waterBoth = new ArrayList<Block>();
-	public EntityWaterBolt(World worldIn) {
+
+	public EntityWaterBolt(World worldIn){
+
 		super(worldIn);
 		waterBoth.add(Blocks.flowing_water);
 		waterBoth.add(Blocks.water);
 	}
 
-	public EntityWaterBolt(World worldIn, EntityLivingBase ent) {
+	public EntityWaterBolt(World worldIn, EntityLivingBase ent){
+
 		super(worldIn, ent);
 	}
 
-	public EntityWaterBolt(World worldIn, double x, double y, double z) {
+	public EntityWaterBolt(World worldIn, double x, double y, double z){
+
 		super(worldIn, x, y, z);
 	}
 
@@ -36,19 +41,19 @@ public class EntityWaterBolt extends EntityThrowable {
 	public static Item item = null;
 
 	@Override
-	protected void onImpact(MovingObjectPosition mop) {
+	protected void onImpact(MovingObjectPosition mop){
 
-		if (mop.entityHit != null) {
+		if(mop.entityHit != null){
 			// do the snowball damage, which should be none. put out the fire
 
-			if (mop.entityHit instanceof EntityLivingBase) {
+			if(mop.entityHit instanceof EntityLivingBase){
 				mop.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 0);
 
 				UtilParticle.spawnParticle(this.worldObj, EnumParticleTypes.WATER_SPLASH, mop.entityHit.getPosition());
 
 				EntityLivingBase e = (EntityLivingBase) mop.entityHit;
 
-				if (e.isBurning()) {
+				if(e.isBurning()){
 					e.extinguish();
 				}
 			}
@@ -61,35 +66,34 @@ public class EntityWaterBolt extends EntityThrowable {
 
 		if(pos != null){
 			UtilParticle.spawnParticle(this.worldObj, EnumParticleTypes.WATER_SPLASH, pos);
-			
-			if (this.getThrower() instanceof EntityPlayer && mop.sideHit != null
-					&& this.worldObj.isRemote == false) {
-	 
+
+			if(this.getThrower() instanceof EntityPlayer && mop.sideHit != null && this.worldObj.isRemote == false){
+
 				this.worldObj.extinguishFire((EntityPlayer) this.getThrower(), pos, mop.sideHit);
 			}
 		}
-		
-		if (this.dimension == Const.Dimension.nether){
+
+		if(this.dimension == Const.Dimension.nether){
 			UtilSound.playSoundAt(this, UtilSound.Own.buzzp);
 		}
-		else {
+		else{
 			UtilSound.playSoundAt(this, UtilSound.splash);
-			
-			//so far its both client and server
+
+			// so far its both client and server
 			if(this.worldObj.isRemote == false){
-	
+
 				if(pos != null){
-			 
-					if (this.isAirOrWater(pos)){
-				
-						this.worldObj.setBlockState(pos, Blocks.flowing_water.getDefaultState(),3);
+
+					if(this.isAirOrWater(pos)){
+
+						this.worldObj.setBlockState(pos, Blocks.flowing_water.getDefaultState(), 3);
 					}
 					if(mop.sideHit != null){
 						BlockPos offset = pos.offset(mop.sideHit);
-		
-						if (offset != null && this.isAirOrWater(offset)) {
-					 
-							this.worldObj.setBlockState(offset, Blocks.flowing_water.getDefaultState(),3);
+
+						if(offset != null && this.isAirOrWater(offset)){
+
+							this.worldObj.setBlockState(offset, Blocks.flowing_water.getDefaultState(), 3);
 						}
 					}
 				}
@@ -98,13 +102,12 @@ public class EntityWaterBolt extends EntityThrowable {
 
 		this.setDead();
 	}
-	
+
 	private boolean isAirOrWater(BlockPos pos){
+
 		if(pos == null){
 			return false;
 		}
-		return this.worldObj.isAirBlock(pos) || 
-				this.worldObj.getBlockState(pos).getBlock().getUnlocalizedName().equalsIgnoreCase("tile.water") || 
-				(this.worldObj.getBlockState(pos) != null && waterBoth.contains(this.worldObj.getBlockState(pos).getBlock()));
+		return this.worldObj.isAirBlock(pos) || this.worldObj.getBlockState(pos).getBlock().getUnlocalizedName().equalsIgnoreCase("tile.water") || (this.worldObj.getBlockState(pos) != null && waterBoth.contains(this.worldObj.getBlockState(pos).getBlock()));
 	}
 }

@@ -18,19 +18,23 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class EntitySnowballBolt extends EntityThrowable {
+public class EntitySnowballBolt extends EntityThrowable{
+
 	public static final int secondsFrozenOnHit = 5;
 	private static final float damage = 0;
 
-	public EntitySnowballBolt(World worldIn) {
+	public EntitySnowballBolt(World worldIn){
+
 		super(worldIn);
 	}
 
-	public EntitySnowballBolt(World worldIn, EntityLivingBase ent) {
+	public EntitySnowballBolt(World worldIn, EntityLivingBase ent){
+
 		super(worldIn, ent);
 	}
 
-	public EntitySnowballBolt(World worldIn, double x, double y, double z) {
+	public EntitySnowballBolt(World worldIn, double x, double y, double z){
+
 		super(worldIn, x, y, z);
 	}
 
@@ -38,14 +42,15 @@ public class EntitySnowballBolt extends EntityThrowable {
 	public static Item item = null;
 
 	@Override
-	protected void onImpact(MovingObjectPosition mop) {
-		if (mop.entityHit != null && mop.entityHit instanceof EntityLivingBase) {
+	protected void onImpact(MovingObjectPosition mop){
+
+		if(mop.entityHit != null && mop.entityHit instanceof EntityLivingBase){
 
 			// if we hit an entity
 			mop.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), damage);
 			EntityLivingBase e = (EntityLivingBase) mop.entityHit;
 
-			if (e.isBurning()) {
+			if(e.isBurning()){
 				e.extinguish();
 			}
 
@@ -55,7 +60,7 @@ public class EntitySnowballBolt extends EntityThrowable {
 			UtilParticle.spawnParticle(this.worldObj, EnumParticleTypes.SNOW_SHOVEL, e.getPosition());
 			this.setDead();
 		}
-		else if (mop.getBlockPos() != null && mop.sideHit == EnumFacing.UP) {
+		else if(mop.getBlockPos() != null && mop.sideHit == EnumFacing.UP){
 
 			// else if we hit a block
 
@@ -64,46 +69,46 @@ public class EntitySnowballBolt extends EntityThrowable {
 			UtilParticle.spawnParticle(this.worldObj, EnumParticleTypes.SNOWBALL, pos);
 			UtilParticle.spawnParticle(this.worldObj, EnumParticleTypes.SNOW_SHOVEL, pos);
 
-			if (mop.sideHit != null && this.getThrower() instanceof EntityPlayer) {
+			if(mop.sideHit != null && this.getThrower() instanceof EntityPlayer){
 				this.worldObj.extinguishFire((EntityPlayer) this.getThrower(), pos, mop.sideHit);
 			}
 
-			if (this.isInWater()) {
+			if(this.isInWater()){
 				// try to turn water into ice
 				BlockPos posWater = this.getPosition();
 
-				if (this.worldObj.getBlockState(posWater) != Blocks.water.getDefaultState()) {
+				if(this.worldObj.getBlockState(posWater) != Blocks.water.getDefaultState()){
 					posWater = null;
 					// look for the closest water source,
 					// sometimes
 					// it was air and we got ice right above the
 					// water if we dont do this check
-					if (this.worldObj.getBlockState(mop.getBlockPos()) == Blocks.water.getDefaultState()) {
+					if(this.worldObj.getBlockState(mop.getBlockPos()) == Blocks.water.getDefaultState()){
 						posWater = mop.getBlockPos();
 					}
-					else if (this.worldObj.getBlockState(mop.getBlockPos().offset(mop.sideHit)) == Blocks.water.getDefaultState()) {
+					else if(this.worldObj.getBlockState(mop.getBlockPos().offset(mop.sideHit)) == Blocks.water.getDefaultState()){
 						posWater = mop.getBlockPos().offset(mop.sideHit);
 					}
 				}
 
-				if (posWater != null) {
+				if(posWater != null){
 					this.worldObj.setBlockState(posWater, Blocks.ice.getDefaultState());
 				}
 			}
-			else {
+			else{
 				// put snow on the land
 				BlockPos hit = pos;
 				BlockPos hitDown = hit.down();
 				BlockPos hitUp = hit.up();
 
 				IBlockState hitState = this.worldObj.getBlockState(hit);
-				if (hitState.getBlock() == Blocks.snow_layer || this.worldObj.getBlockState(hitDown).getBlock() == Blocks.snow_layer) {
+				if(hitState.getBlock() == Blocks.snow_layer || this.worldObj.getBlockState(hitDown).getBlock() == Blocks.snow_layer){
 					setMoreSnow(this.worldObj, hit);
 				}
-				else if (this.worldObj.getBlockState(hitUp).getBlock() == Blocks.snow_layer) {
+				else if(this.worldObj.getBlockState(hitUp).getBlock() == Blocks.snow_layer){
 					setMoreSnow(this.worldObj, hitUp);
 				}
-				else if (this.worldObj.isAirBlock(hit) == false && this.worldObj.isAirBlock(hitUp) == true && this.worldObj.isSideSolid(hit, EnumFacing.UP)) {
+				else if(this.worldObj.isAirBlock(hit) == false && this.worldObj.isAirBlock(hitUp) == true && this.worldObj.isSideSolid(hit, EnumFacing.UP)){
 					// checking solid side so snow wont go on top of
 					// tallgrass/flowers/etc
 					setNewSnow(this.worldObj, hitUp);
@@ -115,25 +120,27 @@ public class EntitySnowballBolt extends EntityThrowable {
 		}
 	}
 
-	private static void setMoreSnow(World world, BlockPos pos) {
+	private static void setMoreSnow(World world, BlockPos pos){
+
 		// so of the block hit, get metadata, and add +1 to it, unless its full
 		// like 8 or more
 
 		IBlockState hitState = world.getBlockState(pos);
 		int m = hitState.getBlock().getMetaFromState(hitState);
 		// when it hits 7, same size as full block
-		if (m + 1 < 8) {
+		if(m + 1 < 8){
 			world.setBlockState(pos, Blocks.snow_layer.getStateFromMeta(m + 1));
 		}
 		else{
-			//its full now, so go up one
+			// its full now, so go up one
 			setNewSnow(world, pos.up());
 		}
 
 		UtilSound.playSound(world, pos, UtilSound.snow);
 	}
 
-	private static void setNewSnow(World world, BlockPos pos) {
+	private static void setNewSnow(World world, BlockPos pos){
+
 		world.setBlockState(pos, Blocks.snow_layer.getDefaultState());
 
 		UtilSound.playSound(world, pos, UtilSound.snow);

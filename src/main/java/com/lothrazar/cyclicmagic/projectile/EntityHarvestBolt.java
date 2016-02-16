@@ -16,8 +16,8 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class EntityHarvestBolt extends EntityThrowable 
-{
+public class EntityHarvestBolt extends EntityThrowable{
+
 	public static int range_main = 4;
 	public static int range_offset = 3;
 	public static boolean doesHarvestStem = false;
@@ -27,23 +27,28 @@ public class EntityHarvestBolt extends EntityThrowable
 	public static boolean doesPumpkinBlocks = true;
 	public static boolean doesMelonBlocks = true;
 
-	public EntityHarvestBolt(World worldIn) {
+	public EntityHarvestBolt(World worldIn){
+
 		super(worldIn);
 	}
 
-    public static final String name = "harvestbolt";
-    public static Item item = null;
-	public EntityHarvestBolt(World worldIn, EntityLivingBase ent) {
+	public static final String name = "harvestbolt";
+	public static Item item = null;
+
+	public EntityHarvestBolt(World worldIn, EntityLivingBase ent){
+
 		super(worldIn, ent);
 	}
 
-	public EntityHarvestBolt(World worldIn, double x, double y, double z) {
+	public EntityHarvestBolt(World worldIn, double x, double y, double z){
+
 		super(worldIn, x, y, z);
 	}
 
 	@Override
-	protected void onImpact(MovingObjectPosition mop) {
-		if (this.getThrower() != null && mop.sideHit != null) {
+	protected void onImpact(MovingObjectPosition mop){
+
+		if(this.getThrower() != null && mop.sideHit != null){
 			BlockPos offset = mop.getBlockPos().offset(mop.sideHit);
 
 			// it harvests a horizontal slice each time
@@ -56,7 +61,8 @@ public class EntityHarvestBolt extends EntityThrowable
 		this.setDead();
 	}
 
-	public static int harvestArea(World world, EntityLivingBase player, BlockPos pos, int radius) {
+	public static int harvestArea(World world, EntityLivingBase player, BlockPos pos, int radius){
+
 		int x = (int) player.posX;
 		// int y = (int)player.posY;
 		int z = (int) player.posZ;
@@ -73,53 +79,53 @@ public class EntityHarvestBolt extends EntityThrowable
 
 		int countHarvested = 0;
 		boolean doBreak, doReplant;
-		for (int xLoop = xMin; xLoop <= xMax; xLoop++) {
-			for (int zLoop = zMin; zLoop <= zMax; zLoop++) {
+		for(int xLoop = xMin; xLoop <= xMax; xLoop++){
+			for(int zLoop = zMin; zLoop <= zMax; zLoop++){
 				posCurrent = new BlockPos(xLoop, eventy, zLoop);
 				IBlockState bs = world.getBlockState(posCurrent);
 				Block blockCheck = bs.getBlock();
 
 				doBreak = false;
 				doReplant = true;
-				if (blockCheck instanceof IGrowable) {
+				if(blockCheck instanceof IGrowable){
 					IGrowable plant = (IGrowable) blockCheck;
 					// TODO: this if else could be structured better??? oh
 					// well// it
 					// is fully grown
-					if (plant.canGrow(world, posCurrent, bs, world.isRemote) == false) {
-						if ((blockCheck instanceof BlockStem) == true && doesHarvestStem == false) {
+					if(plant.canGrow(world, posCurrent, bs, world.isRemote) == false){
+						if((blockCheck instanceof BlockStem) == true && doesHarvestStem == false){
 							continue;// disabled harvesting
 										// pumpkin/melon/similar stems
 						}
-						if ((blockCheck instanceof BlockSapling) == true && doesHarvestSapling == false) {
+						if((blockCheck instanceof BlockSapling) == true && doesHarvestSapling == false){
 							continue;// disabled harvesting
 						}
-						if ((blockCheck instanceof BlockTallGrass || blockCheck instanceof BlockDoublePlant) == true && doesHarvestTallgrass == false) {
+						if((blockCheck instanceof BlockTallGrass || blockCheck instanceof BlockDoublePlant) == true && doesHarvestTallgrass == false){
 							continue;// disabled harvesting
 						}
-						if ((blockCheck instanceof BlockMushroom) == true && doesHarvestMushroom == false) {
+						if((blockCheck instanceof BlockMushroom) == true && doesHarvestMushroom == false){
 							continue;// disabled harvesting
 						}
 
 						doBreak = true;
 					}
 				}
-				else if (blockCheck == Blocks.pumpkin && doesPumpkinBlocks) {
+				else if(blockCheck == Blocks.pumpkin && doesPumpkinBlocks){
 					doBreak = true;
 					doReplant = false;
 				}
-				else if (blockCheck == Blocks.melon_block && doesMelonBlocks) {
+				else if(blockCheck == Blocks.melon_block && doesMelonBlocks){
 					doBreak = true;
 					doReplant = false;
 				}
 				// no , for now is fine, do not do blocks
 
-				if (doBreak)// break fully grown,
+				if(doBreak)// break fully grown,
 				{
-					if (world.isRemote == false) {
+					if(world.isRemote == false){
 						world.destroyBlock(posCurrent, true);
 					}
-					if (doReplant) {// plant new seed
+					if(doReplant){// plant new seed
 						world.setBlockState(posCurrent, blockCheck.getDefaultState());
 					}
 
