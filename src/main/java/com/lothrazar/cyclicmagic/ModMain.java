@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic;
 
 import org.apache.logging.log4j.Logger;
 import com.lothrazar.cyclicmagic.config.ModConfig;
-import com.lothrazar.cyclicmagic.net.*;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
@@ -14,7 +13,6 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import net.minecraftforge.fml.relauncher.Side;
 
 @Mod(modid = Const.MODID, useMetadata = true, canBeDeactivated = false, updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json", guiFactory = "com.lothrazar." + Const.MODID + ".config.IngameConfigHandler")
 public class ModMain{
@@ -34,24 +32,7 @@ public class ModMain{
 
 		cfg = new ModConfig(new Configuration(event.getSuggestedConfigurationFile()));
 
-		network = NetworkRegistry.INSTANCE.newSimpleChannel(Const.MODID);
-
-		int packetID = 11;
-		network.registerMessage(MessageKeyCast.class, MessageKeyCast.class, packetID++, Side.SERVER);
-		network.registerMessage(MessageKeyLeft.class, MessageKeyLeft.class, packetID++, Side.SERVER);
-		network.registerMessage(MessageKeyRight.class, MessageKeyRight.class, packetID++, Side.SERVER);
-		network.registerMessage(MessageToggleSpell.class, MessageToggleSpell.class, packetID++, Side.SERVER);
-		network.registerMessage(MessageParticle.class, MessageParticle.class, packetID++, Side.CLIENT);
-		network.registerMessage(MessageOpenSpellbook.class, MessageOpenSpellbook.class, packetID++, Side.CLIENT);
-		network.registerMessage(MessageSpellReach.class, MessageSpellReach.class, packetID++, Side.SERVER);
-		network.registerMessage(MessageToggleBuild.class, MessageToggleBuild.class, packetID++, Side.SERVER);
-		network.registerMessage(MessageSpellRotate.class, MessageSpellRotate.class, packetID++, Side.SERVER);
-		network.registerMessage(MessageSpellPush.class, MessageSpellPush.class, packetID++, Side.SERVER);
-		network.registerMessage(MessageSpellPull.class, MessageSpellPull.class, packetID++, Side.SERVER);
-		network.registerMessage(MessageSpellReplacer.class, MessageSpellReplacer.class, packetID++, Side.SERVER);
-		network.registerMessage(MessageRecharge.class, MessageRecharge.class, packetID++, Side.SERVER);
-		network.registerMessage(MessageTogglePassive.class, MessageTogglePassive.class, packetID++, Side.SERVER);
-		network.registerMessage(MessageToggleSpellGroup.class, MessageToggleSpellGroup.class, packetID++, Side.SERVER);
+		PacketRegistry.register();
 		
 		MinecraftForge.EVENT_BUS.register(new EventRegistry());
 	}
