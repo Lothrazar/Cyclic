@@ -44,7 +44,7 @@ public class ModConfig{
 
 		potionIdFrost = instance.get(category, "frost_id", 42).getInt();
 
-		potionIdMagnet = instance.get(category, "magnet_", 43).getInt();
+		potionIdMagnet = instance.get(category, "magnet_id", 43).getInt();
 
 		category = "effect_tweaks";
 
