@@ -378,6 +378,9 @@ public class ItemCyclicWand extends Item{
 		private static final String NBT_MAX = "max";
 		private static final String NBT_REGEN = "regen";
 
+		public static final int RECHARGE_EXP_COST = 10;
+		public static final int RECHARGE_MANA_AMT = 25;
+
 		private static int getRegen(ItemStack stack){
 
 			// support for old ones, or ones that werent crafted

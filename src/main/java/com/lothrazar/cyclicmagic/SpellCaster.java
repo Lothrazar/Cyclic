@@ -6,14 +6,12 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
+import com.lothrazar.cyclicmagic.item.ItemCyclicWand.Energy;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.util.UtilExperience;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 
 public class SpellCaster{
-
-	final int RECHARGE_EXP_COST = 10;
-	final int RECHARGE_MANA_AMT = 25;
 
 	public boolean isBlockedBySpellTImer(EntityPlayer player){
 
@@ -114,11 +112,11 @@ public class SpellCaster{
 		if(player.capabilities.isCreativeMode){ // always set full
 			ItemCyclicWand.Energy.setCurrent(player.getHeldItem(), MAX);
 		}
-		else if(RECHARGE_EXP_COST < UtilExperience.getExpTotal(player) && ItemCyclicWand.Energy.getCurrent(player.getHeldItem()) + RECHARGE_MANA_AMT <= MAX){
+		else if(Energy.RECHARGE_EXP_COST < UtilExperience.getExpTotal(player) && ItemCyclicWand.Energy.getCurrent(player.getHeldItem()) + Energy.RECHARGE_MANA_AMT <= MAX){
 
-			ItemCyclicWand.Energy.rechargeBy(player.getHeldItem(), RECHARGE_MANA_AMT);
+			ItemCyclicWand.Energy.rechargeBy(player.getHeldItem(), Energy.RECHARGE_MANA_AMT);
 
-			UtilExperience.drainExp(player, RECHARGE_EXP_COST);
+			UtilExperience.drainExp(player, Energy.RECHARGE_EXP_COST);
 			UtilSound.playSound(player.worldObj, player.getPosition(), UtilSound.Own.fill);
 		}
 		else{
