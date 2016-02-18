@@ -21,8 +21,8 @@ public class SpellScreenRender{
 	private static final int spellSize = 16;
 	private static final int manaWidth = 8;
 	private static final int manaHeight = 90;
-	private static final ResourceLocation manabar = new ResourceLocation(Const.MODID, "textures/spells/manabar.png");
-	private static final ResourceLocation manabar_empty = new ResourceLocation(Const.MODID, "textures/spells/manabar_empty.png");
+	private static final ResourceLocation manabar = new ResourceLocation(Const.MODID, "textures/hud/manabar.png");
+	private static final ResourceLocation manabar_empty = new ResourceLocation(Const.MODID, "textures/hud/manabar_empty.png");
 
 	@SideOnly(Side.CLIENT)
 	public void drawSpellWheel(){
