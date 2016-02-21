@@ -125,7 +125,77 @@ public class ItemCyclicWand extends Item{
 	@Override
 	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected){
 
+		updateRecharge(stack,worldIn);
 		
+		// if held by something not a player? such as custom npc/zombie/etc
+		if(entityIn instanceof EntityPlayer == false){
+			return;
+		}
+		EntityPlayer p = (EntityPlayer) entityIn;
+		IPassiveSpell pcurrent = ItemCyclicWand.Spells.getPassiveCurrent(stack);
+		if(pcurrent != null && pcurrent.canTrigger(p)){
+			
+			pcurrent.trigger(p);
+		}
+
+		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
+	}
+	
+	private void updateRecharge(ItemStack stack, World worldIn){
+		
+		
+		//1- a counter since it was last used for a spell (not counting inventory)
+		// -> set to zero on use. 
+		// -> increment by 1 each second (not tick)
+		//2 a recharge level (rate)
+		// when counter passes certain thresholds, it updates the level
+		//3 when a recharge event happens, it checks the level and increments accordingly
+		
+		boolean perSecond = (worldIn.getTotalWorldTime() % Const.TICKS_PER_SEC == 0);
+		
+		
+		
+		//sample levels/sets
+		
+		//  1 mana per 1 sec. stay here for a while
+		//  2 mana per sec
+		//  3, 4, 5 mana per sec at most
+		
+		int counter = Energy.getCooldownCounter(stack); 
+		
+		if(perSecond){
+			Energy.setCooldownCounter(stack, counter + 1);
+		 
+			
+			int rate = 0;
+			if(counter > 10){
+				rate = 1;
+			}
+			else if(counter < 20){
+				rate = 2;
+			}
+			else if(counter < 25){
+				rate = 3;
+			}
+			else if(counter < 30){
+				rate = 4;
+			}
+			else{
+				rate = 5;
+			}
+		
+			
+			//TODO: replace getRegen with this dynamic system based on worldtime
+			rate =Energy.getRegen(stack);
+		
+		
+		
+		}
+		
+		
+		
+		
+
 		boolean doRegen = false;
 		
 		if(worldIn.getGameRules().getBoolean("doDaylightCycle")){
@@ -142,18 +212,6 @@ public class ItemCyclicWand extends Item{
 
 			Energy.rechargeBy(stack, Energy.getRegen(stack));
 		}
-		// if held by something not a player? such as custom npc/zombie/etc
-		if(entityIn instanceof EntityPlayer == false){
-			return;
-		}
-		EntityPlayer p = (EntityPlayer) entityIn;
-		IPassiveSpell pcurrent = ItemCyclicWand.Spells.getPassiveCurrent(stack);
-		if(pcurrent != null && pcurrent.canTrigger(p)){
-			
-			pcurrent.trigger(p);
-		}
-
-		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
 	}
 
 	@Override
@@ -390,6 +448,18 @@ public class ItemCyclicWand extends Item{
 			}
 
 			return getNBT(stack).getInteger(NBT_REGEN);
+		}
+
+		public static void setCooldownCounter(ItemStack stack, int i){
+
+			// TODO Auto-generated method stub
+			
+		}
+
+		public static int getCooldownCounter(ItemStack stack){
+
+			// TODO Auto-generated method stub
+			return 0;
 		}
 
 		private static void setRegen(ItemStack stack, int m){
