@@ -39,6 +39,7 @@ public class SpellCaster{
 			if(spell.cast(world, player, pos, side)){
 
 				castSuccess(spell, world, player, pos);
+				
 				return true;
 			}
 			return false;
@@ -58,6 +59,8 @@ public class SpellCaster{
 		// succes should do things like: drain resources, play sounds
 		// and particles
 		spell.payCost(world, player, pos);
+		
+		ItemCyclicWand.Energy.setCooldownCounter(player.getHeldItem(), world.getTotalWorldTime());
 
 		PlayerPowerups.get(player).setSpellTimer(spell.getCastCooldown());
 	}
