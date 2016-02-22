@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic;
 
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.item.*;
+import com.lothrazar.cyclicmagic.item.ItemCyclicWand.Variant;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -35,31 +36,18 @@ public class ItemRegistry{
 		cyclic_wand = new ItemCyclicWand();
 		cyclic_wand.setUnlocalizedName("cyclic_wand");
 		GameRegistry.registerItem(cyclic_wand, "cyclic_wand");
-
-		GameRegistry.addRecipe(new ItemStack(cyclic_wand, 1, ItemCyclicWand.Variant.QUARTZ.ordinal()), 
-				"sds", 
-				" o ", 
-				"gog", 'd', Blocks.quartz_block, 'g', Items.ghast_tear, 'o', Blocks.obsidian, 's', Items.nether_star);
-
-		GameRegistry.addRecipe(new ItemStack(cyclic_wand, 1, ItemCyclicWand.Variant.GOLD.ordinal()), 
-				"sds", 
-				" o ", 
-				"gog", 'd', Blocks.gold_block, 'g', Items.ghast_tear, 'o', Blocks.obsidian, 's', Items.nether_star);
-
-		GameRegistry.addRecipe(new ItemStack(cyclic_wand, 1, ItemCyclicWand.Variant.LAPIS.ordinal()), 
-				"sds", 
-				" o ", 
-				"gog", 'd', Blocks.lapis_block, 'g', Items.ghast_tear, 'o', Blocks.obsidian, 's', Items.nether_star);
 		
-		GameRegistry.addRecipe(new ItemStack(cyclic_wand, 1, ItemCyclicWand.Variant.DIAMOND.ordinal()), 
-				"sds", 
-				" o ", 
-				"gog", 'd', Blocks.diamond_block, 'g', Items.ghast_tear, 'o', Blocks.obsidian, 's', Items.nether_star);
-		
-		GameRegistry.addRecipe(new ItemStack(cyclic_wand, 1, ItemCyclicWand.Variant.EMERALD.ordinal()), 
-				"sds", 
-				" o ", 
-				"gog", 'd', Blocks.emerald_block, 'g', Items.ghast_tear, 'o', Blocks.obsidian, 's', Items.nether_star);
+		for(Variant v : ItemCyclicWand.Variant.values()){
+
+			GameRegistry.addRecipe(new ItemStack(cyclic_wand, 1, v.ordinal()), 
+					"sds", 
+					" o ", 
+					"gog", 
+					'd', Variant.getMaterialFromVariant(v), 
+					'g', Items.ghast_tear, 
+					'o', Blocks.obsidian, 
+					's', Items.nether_star);
+		}
 	}
 
 	public static void registerItem(Item item, String name){

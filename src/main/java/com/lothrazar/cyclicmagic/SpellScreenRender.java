@@ -77,7 +77,7 @@ public class SpellScreenRender{
  
 		UtilTextureRender.drawTextureSimple(mana_container, xHud,yHud, manaCtrWidth, manaCtrHeight);
 
-		float MAX = ItemCyclicWand.Energy.getMaximum(player.getHeldItem());
+		float MAX = ItemCyclicWand.Variant.getMaximum(player.getHeldItem());
 		float current = ItemCyclicWand.Energy.getCurrent(player.getHeldItem());
 		float manaPercent = current / MAX;
 

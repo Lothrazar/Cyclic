@@ -14,6 +14,12 @@ public class ModConfig{
 	public int potionIdMagnet;
 	public float slowfallSpeed;
 	public boolean renderOnLeft;
+	public int maxEmerald;
+	public int maxQuartz;
+	public int maxLapis;
+	public int maxDiamond;
+	public int maxRedstone;
+	public int maxGold;
 
 	public Configuration instance(){
 
@@ -45,7 +51,16 @@ public class ModConfig{
 		potionIdFrost = instance.get(category, "frost_id", 42).getInt();
 
 		potionIdMagnet = instance.get(category, "magnet_id", 43).getInt();
+		
+		category = "maximum_energy";
 
+		maxQuartz = instance.get(category, "max_quartz", 500).getInt();
+		maxLapis = instance.get(category, "max_lapis", 600).getInt();
+		maxGold = instance.get(category, "max_gold", 700).getInt();
+		maxRedstone = instance.get(category, "max_redstone", 800).getInt();
+		maxDiamond = instance.get(category, "max_diamond", 900).getInt();
+		maxEmerald = instance.get(category, "max_emerald", 1000).getInt();
+		
 		category = "effect_tweaks";
 
 		slowfallSpeed = instance.getFloat("slowfall_speed", category, 0.41F, 0.1F, 1F, "This factor affects how much the slowfall effect slows down the entity.");
