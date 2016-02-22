@@ -53,13 +53,14 @@ public class ModConfig{
 		potionIdMagnet = instance.get(category, "magnet_id", 43).getInt();
 		
 		category = "maximum_energy";
-
-		maxQuartz = instance.get(category, "max_quartz", 500).getInt();
-		maxLapis = instance.get(category, "max_lapis", 600).getInt();
-		maxGold = instance.get(category, "max_gold", 700).getInt();
-		maxRedstone = instance.get(category, "max_redstone", 800).getInt();
-		maxDiamond = instance.get(category, "max_diamond", 900).getInt();
-		maxEmerald = instance.get(category, "max_emerald", 1000).getInt();
+		int min = 100;
+		int max = 2000;
+		maxQuartz   = instance.getInt("max_quartz",  category,  500,min,max,"");
+		maxLapis    = instance.getInt("max_lapis",   category,  600,min,max,"");
+		maxGold     = instance.getInt("max_gold",    category,  700,min,max,"");
+		maxRedstone = instance.getInt("max_redstone",category,  800,min,max,"");
+		maxDiamond  = instance.getInt("max_diamond", category,  900,min,max,"");
+		maxEmerald  = instance.getInt("max_emerald", category,  1000,min,max,"");
 		
 		category = "effect_tweaks";
 

@@ -22,7 +22,7 @@ public class SpellScreenRender{
 	private static final int ymain = 14;
 	private static final int spellSize = 16;
 	private static final int manaWidth = 6;
-	private static final int manaHeight = 90;
+	private static final int manaHeightEmpty = 90;
 	
 
 	private static final int manaCtrWidth = 8;
@@ -74,16 +74,21 @@ public class SpellScreenRender{
 	}
 
 	private void drawManabar(EntityPlayer player){
+
+		float MAX = ItemCyclicWand.Variant.getMaximum(player.getHeldItem());
+		
+		// 
+		
  
 		UtilTextureRender.drawTextureSimple(mana_container, xHud,yHud, manaCtrWidth, manaCtrHeight);
 
-		float MAX = ItemCyclicWand.Variant.getMaximum(player.getHeldItem());
 		float current = ItemCyclicWand.Energy.getCurrent(player.getHeldItem());
 		float manaPercent = current / MAX;
 
-		double h = manaHeight * manaPercent;
+		double hEmpty = manaHeightEmpty * manaPercent;
+		
 
-		UtilTextureRender.drawTextureSimple(mana, xHud+1,yHud+1, manaWidth, MathHelper.floor_double(h));
+		UtilTextureRender.drawTextureSimple(mana, xHud+1,yHud+1, manaWidth, MathHelper.floor_double(hEmpty));
 	}
 
 	private void drawCurrentSpell(EntityPlayer player, ISpell spellCurrent){
