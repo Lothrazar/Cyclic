@@ -546,6 +546,10 @@ public class ItemCyclicWand extends Item{
 				return null; 
 			} 
 		}
+		public static int getMaximumLargest(){
+			return ModMain.cfg.maxLargestForManabar;//literally exists only to draw manabar
+		}
+		
 
 		public static int getMaximum(ItemStack stack){
 

@@ -1,5 +1,7 @@
 package com.lothrazar.cyclicmagic.config;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import com.lothrazar.cyclicmagic.Const;
 import net.minecraftforge.common.config.Configuration;
 
@@ -20,6 +22,7 @@ public class ModConfig{
 	public int maxDiamond;
 	public int maxRedstone;
 	public int maxGold;
+	public Integer maxLargestForManabar;
 
 	public Configuration instance(){
 
@@ -61,6 +64,16 @@ public class ModConfig{
 		maxRedstone = instance.getInt("max_redstone",category,  800,min,max,"");
 		maxDiamond  = instance.getInt("max_diamond", category,  900,min,max,"");
 		maxEmerald  = instance.getInt("max_emerald", category,  1000,min,max,"");
+		
+
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		list.add(maxDiamond);
+		list.add(maxEmerald);
+		list.add(maxGold);
+		list.add(maxLapis);
+		list.add(maxQuartz);
+		list.add(maxRedstone);
+		maxLargestForManabar = Collections.max(list);
 		
 		category = "effect_tweaks";
 
