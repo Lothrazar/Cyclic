@@ -126,7 +126,6 @@ public class ItemCyclicWand extends Item{
 	@Override
 	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected){
  
-		
 		boolean perSecond = (worldIn.getTotalWorldTime() % Const.TICKS_PER_SEC == 0);
  
 		if(worldIn.isRemote == false && perSecond){ 
@@ -174,6 +173,7 @@ public class ItemCyclicWand extends Item{
 
 			unlockSpell(stack,spell.getID(), unlocked);
 		}
+		
 		private static void unlockSpell(ItemStack stack, int spell_id, boolean unlocked){
 
 			NBTTagCompound nbt = getNBT(stack);
@@ -304,61 +304,6 @@ public class ItemCyclicWand extends Item{
 
 			stack.setTagCompound(tags);
 		}
-
-		public static void toggleSpellGroup(ItemStack heldItem, String group){
-
-			List<Integer> active = new ArrayList<Integer>();
-			//order here has no impact
-			switch(SpellGroup.valueOf(group)){
-			case BUILDER:
-				Collections.addAll(active, SpellRegistry.Spells.inventory.getID()
-						, SpellRegistry.Spells.pull.getID()
-						, SpellRegistry.Spells.push.getID()
-						, SpellRegistry.Spells.scaffold.getID()
-						,SpellRegistry.Spells.launch.getID()
-						, SpellRegistry.Spells.rotate.getID()
-						, SpellRegistry.Spells.replacer.getID()
-						, SpellRegistry.Spells.reach.getID()
-						,SpellRegistry.Spells.haste.getID()
-						);
-				break;
-			case EXPLORER:
-
-				Collections.addAll(active, SpellRegistry.Spells.inventory.getID()
-						,SpellRegistry.Spells.nightvision.getID()
-						,SpellRegistry.Spells.ghost.getID()
-						,SpellRegistry.Spells.launch.getID()
-						,SpellRegistry.Spells.torch.getID()
-						,SpellRegistry.Spells.waterwalk.getID()
-						,SpellRegistry.Spells.waypoint.getID()
-						,SpellRegistry.Spells.phase.getID()
-						,SpellRegistry.Spells.spawnegg.getID()
-						,SpellRegistry.Spells.haste.getID()
-						);
-				break;
-			case FARMER:
-				Collections.addAll(active,SpellRegistry.Spells.inventory.getID()
-						,SpellRegistry.Spells.shear.getID()
-						,SpellRegistry.Spells.magnet.getID()
-						,SpellRegistry.Spells.harvest.getID()
-						,SpellRegistry.Spells.water.getID()
-						,SpellRegistry.Spells.chestsack.getID()
-						,SpellRegistry.Spells.fishing.getID()
-						,SpellRegistry.Spells.launch.getID()
-						,SpellRegistry.Spells.haste.getID()
-						);
-				break;
-			default:
-				break;
-			}
-			
-			int spellId;
-			for(ISpell s : SpellRegistry.getSpellbook()){
-				spellId = s.getID();
-				unlockSpell(heldItem, spellId, active.contains(spellId));
-			}
-		}
-
 	}
 
 	public static class Energy{
@@ -455,6 +400,60 @@ public class ItemCyclicWand extends Item{
 
 	public enum SpellGroup{
 		EXPLORER,BUILDER,FARMER;
+
+		public static void toggle(ItemStack heldItem, String group){
+			//TODO: making the list every time is a bit of a waste innit
+			List<Integer> active = new ArrayList<Integer>();
+			//order here has no impact
+			switch(SpellGroup.valueOf(group)){
+			case BUILDER:
+				Collections.addAll(active, SpellRegistry.Spells.inventory.getID()
+						, SpellRegistry.Spells.pull.getID()
+						, SpellRegistry.Spells.push.getID()
+						, SpellRegistry.Spells.scaffold.getID()
+						,SpellRegistry.Spells.launch.getID()
+						, SpellRegistry.Spells.rotate.getID()
+						, SpellRegistry.Spells.replacer.getID()
+						, SpellRegistry.Spells.reach.getID()
+						,SpellRegistry.Spells.haste.getID()
+						);
+				break;
+			case EXPLORER:
+
+				Collections.addAll(active, SpellRegistry.Spells.inventory.getID()
+						,SpellRegistry.Spells.nightvision.getID()
+						,SpellRegistry.Spells.ghost.getID()
+						,SpellRegistry.Spells.launch.getID()
+						,SpellRegistry.Spells.torch.getID()
+						,SpellRegistry.Spells.waterwalk.getID()
+						,SpellRegistry.Spells.waypoint.getID()
+						,SpellRegistry.Spells.phase.getID()
+						,SpellRegistry.Spells.spawnegg.getID()
+						,SpellRegistry.Spells.haste.getID()
+						);
+				break;
+			case FARMER:
+				Collections.addAll(active,SpellRegistry.Spells.inventory.getID()
+						,SpellRegistry.Spells.shear.getID()
+						,SpellRegistry.Spells.magnet.getID()
+						,SpellRegistry.Spells.harvest.getID()
+						,SpellRegistry.Spells.water.getID()
+						,SpellRegistry.Spells.chestsack.getID()
+						,SpellRegistry.Spells.fishing.getID()
+						,SpellRegistry.Spells.launch.getID()
+						,SpellRegistry.Spells.haste.getID()
+						);
+				break;
+			default:
+				break;
+			}
+			
+			int spellId;
+			for(ISpell s : SpellRegistry.getSpellbook()){
+				spellId = s.getID();
+				Spells.unlockSpell(heldItem, spellId, active.contains(spellId));
+			}
+		}
 	}
 	
 	public enum PlaceType {
@@ -472,6 +471,15 @@ public class ItemCyclicWand extends Item{
 			return tags.getInteger(NBT);
 		}
 
+		public static PlaceType getType(ItemStack wand){
+
+			try{
+				return PlaceType.values()[getNBT(wand).getInteger(NBT)];
+			}
+			catch (Exception e){ 
+				return PLACE;
+			}
+		}
 		public static void toggle(ItemStack wand){
 
 			NBTTagCompound tags = getNBT(wand);
@@ -490,9 +498,7 @@ public class ItemCyclicWand extends Item{
 		public static String getName(ItemStack wand){
 
 			try{
-				NBTTagCompound tags = getNBT(wand);
-	
-				return "button.place." + BuildType.values()[tags.getInteger(NBT)].toString().toLowerCase();
+				return "button.place." + PlaceType.values()[getNBT(wand).getInteger(NBT)].toString().toLowerCase();
 			}
 			catch (Exception e){
 				System.out.println(e.getMessage());
@@ -533,7 +539,6 @@ public class ItemCyclicWand extends Item{
 		public static void toggle(ItemStack wand){
 
 			NBTTagCompound tags = getNBT(wand);
-
 			int type = tags.getInteger(NBT);
 
 			type++;
@@ -571,7 +576,6 @@ public class ItemCyclicWand extends Item{
 		QUARTZ, GOLD, LAPIS, DIAMOND, EMERALD, REDSTONE;
 
 		public int getMetadata(){
-
 			return ordinal();
 		}
 		
@@ -593,11 +597,11 @@ public class ItemCyclicWand extends Item{
 				return null; 
 			} 
 		}
+		
 		public static int getMaximumLargest(){
 			return ModMain.cfg.maxLargestForManabar;//literally exists only to draw manabar
 		}
 		
-
 		public static int getMaximum(ItemStack stack){
 
 			switch(getVariantFromMeta(stack)){
@@ -634,5 +638,4 @@ public class ItemCyclicWand extends Item{
 			}
 		}
 	}
-
 }

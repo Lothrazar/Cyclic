@@ -43,7 +43,7 @@ public class MessageToggleSpellGroup implements IMessage, IMessageHandler<Messag
 
 		EntityPlayer player = ctx.getServerHandler().playerEntity;
 
-		ItemCyclicWand.Spells.toggleSpellGroup(player.getHeldItem(), message.group);
+		ItemCyclicWand.SpellGroup.toggle(player.getHeldItem(), message.group);
 
 		return null;
 	}

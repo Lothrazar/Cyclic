@@ -50,7 +50,7 @@ public class ButtonPlaceToggle extends GuiButton implements ITooltipButton{
 
 		List<String> tooltips = new ArrayList<String>();
 		//tooltips.add(StatCollector.translateToLocal("button.build.tooltip"));
-		String key = ItemCyclicWand.PlaceType.get(thePlayer.getHeldItem())+".tooltip";
+		String key = ItemCyclicWand.PlaceType.getName(thePlayer.getHeldItem())+".tooltip";
 		tooltips.add(StatCollector.translateToLocal(key));
 		tooltips.add(StatCollector.translateToLocal("button.build.meta"));
 		

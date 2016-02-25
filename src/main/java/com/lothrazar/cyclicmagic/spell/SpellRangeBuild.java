@@ -4,6 +4,7 @@ import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.gui.InventoryWand;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
+import com.lothrazar.cyclicmagic.item.ItemCyclicWand.PlaceType;
 import com.lothrazar.cyclicmagic.net.MessageSpellReach;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
@@ -32,7 +33,8 @@ public class SpellRangeBuild extends BaseSpellRange{
 			// on server
 			BlockPos mouseover = ModMain.proxy.getBlockMouseoverExact(maxRange);
 			BlockPos offset = ModMain.proxy.getBlockMouseoverOffset(maxRange);
-
+			
+			
 			if(mouseover != null && offset != null){
 
 				ModMain.network.sendToServer(new MessageSpellReach(mouseover, offset));
@@ -44,6 +46,10 @@ public class SpellRangeBuild extends BaseSpellRange{
 
 	public void castFromServer(BlockPos posMouseover, BlockPos posOffset, EntityPlayer p){
 
+		PlaceType place = ItemCyclicWand.PlaceType.getType(p.getHeldItem());
+
+		System.out.println("TODO: place type"+place);
+		
 		ItemStack heldWand = p.getHeldItem();
 		if(heldWand == null || heldWand.getItem() instanceof ItemCyclicWand == false){
 			return;
