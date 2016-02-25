@@ -457,18 +457,61 @@ public class ItemCyclicWand extends Item{
 		EXPLORER,BUILDER,FARMER;
 	}
 	
+	public enum PlaceType {
+		PLACE, UP, DOWN, BEHIND;
+		
+		final static String NBT = "build";
+
+		public static int get(ItemStack wand){
+
+			if(wand == null){
+				return 0;
+			}
+			NBTTagCompound tags = getNBT(wand);
+
+			return tags.getInteger(NBT);
+		}
+
+		public static void toggle(ItemStack wand){
+
+			NBTTagCompound tags = getNBT(wand);
+
+			int type = tags.getInteger(NBT);
+
+			type++;
+
+			if(type > BEHIND.ordinal()){
+				type = PLACE.ordinal();
+			}
+
+			tags.setInteger(NBT, type);
+		}
+
+		public static String getName(ItemStack wand){
+
+			try{
+				NBTTagCompound tags = getNBT(wand);
+	
+				return "button.place." + BuildType.values()[tags.getInteger(NBT)].toString().toLowerCase();
+			}
+			catch (Exception e){
+				System.out.println(e.getMessage());
+				return "button.build." + PLACE.toString().toLowerCase();
+			}
+		}
+	}
+	
 	public enum BuildType {
 		FIRST, ROTATE, RANDOM, MATCH;
 
-		final static String NBT_BUILD = "build";
-		final static String NBT_ROT = "rotation";
+		private final static String NBT = "build";
 
-		public static String getBuildTypeName(ItemStack wand){
+		public static String getName(ItemStack wand){
 
 			try{
 				NBTTagCompound tags = getNBT(wand);
 
-				return "button.build." + BuildType.values()[tags.getInteger("build")].toString().toLowerCase();
+				return "button.build." + BuildType.values()[tags.getInteger(NBT)].toString().toLowerCase();
 
 			}
 			catch (Exception e){
@@ -477,21 +520,21 @@ public class ItemCyclicWand extends Item{
 			}
 		}
 
-		public static int getBuildType(ItemStack wand){
+		public static int get(ItemStack wand){
 
 			if(wand == null){
 				return 0;
 			}
 			NBTTagCompound tags = getNBT(wand);
 
-			return tags.getInteger(NBT_BUILD);
+			return tags.getInteger(NBT);
 		}
 
-		public static void toggleBuildType(ItemStack wand){
+		public static void toggle(ItemStack wand){
 
 			NBTTagCompound tags = getNBT(wand);
 
-			int type = tags.getInteger(NBT_BUILD);
+			int type = tags.getInteger(NBT);
 
 			type++;
 
@@ -499,24 +542,28 @@ public class ItemCyclicWand extends Item{
 				type = FIRST.ordinal();
 			}
 
-			tags.setInteger(NBT_BUILD, type);
-		}
+			tags.setInteger(NBT, type);
+		} 
+	}
+	
+	public static class InventoryRotation{
 
-		public static int getBuildRotation(ItemStack wand){
+		private final static String NBT = "rotation";
+		public static int get(ItemStack wand){
 
 			if(wand == null){
 				return 0;
 			}
 			NBTTagCompound tags = getNBT(wand);
 
-			return tags.getInteger(NBT_ROT);
+			return tags.getInteger(NBT);
 		}
 
-		public static void setBuildRotation(ItemStack wand, int rot){
+		public static void set(ItemStack wand, int rot){
 
 			NBTTagCompound tags = getNBT(wand);
 
-			tags.setInteger(NBT_ROT, rot);
+			tags.setInteger(NBT, rot);
 		}
 	}
 

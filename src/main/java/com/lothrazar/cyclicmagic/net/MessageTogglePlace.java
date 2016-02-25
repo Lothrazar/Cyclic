@@ -7,9 +7,9 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 
-public class MessageToggleBuild implements IMessage, IMessageHandler<MessageToggleBuild, IMessage>{
+public class MessageTogglePlace implements IMessage, IMessageHandler<MessageTogglePlace, IMessage>{
 
-	public MessageToggleBuild(){
+	public MessageTogglePlace(){
 
 	}
 
@@ -24,7 +24,7 @@ public class MessageToggleBuild implements IMessage, IMessageHandler<MessageTogg
 	}
 
 	@Override
-	public IMessage onMessage(MessageToggleBuild message, MessageContext ctx){
+	public IMessage onMessage(MessageTogglePlace message, MessageContext ctx){
 
 		EntityPlayer player = ctx.getServerHandler().playerEntity;
 
@@ -32,7 +32,7 @@ public class MessageToggleBuild implements IMessage, IMessageHandler<MessageTogg
 			return null;
 		}
 
-		ItemCyclicWand.BuildType.toggle(player.getHeldItem());
+		ItemCyclicWand.PlaceType.toggle(player.getHeldItem());
 
 		return null;
 	}

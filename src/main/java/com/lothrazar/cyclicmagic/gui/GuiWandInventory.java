@@ -2,11 +2,7 @@ package com.lothrazar.cyclicmagic.gui;
 
 import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.Const;
-import com.lothrazar.cyclicmagic.gui.button.ButtonBuildToggle;
-import com.lothrazar.cyclicmagic.gui.button.ButtonPassiveToggle;
-import com.lothrazar.cyclicmagic.gui.button.ButtonRecharge;
-import com.lothrazar.cyclicmagic.gui.button.ButtonSpellCircle;
-import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
+import com.lothrazar.cyclicmagic.gui.button.*;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.ResourceLocation;
 
@@ -15,9 +11,8 @@ public class GuiWandInventory extends GuiContainer{
 	private final InventoryWand inventory;
 	private static final ResourceLocation BACKGROUND = new ResourceLocation(Const.MODID, "textures/gui/inventory_wand.png");
 
-	// TODO: TOOLTIPS on all buttons
-	// the swap type tooltop, if its on pattern, should show the current slot number, as i '3/9'
-	final int id = 777;
+	// TODO: the swap type tooltop, if its on pattern, should show the current slot number, as i '3/9'
+	int id = 777;
 	final int padding = 6;
 
 	public GuiWandInventory(ContainerWand containerItem){
@@ -37,16 +32,24 @@ public class GuiWandInventory extends GuiContainer{
 		int width = 20;
 		this.buttonList.add(new ButtonSpellCircle(id, x, y, width));
 
+		id++;
 		x += width + padding;
 		this.buttonList.add(new ButtonRecharge(id, x, y, width));
 
+		id++;
+		x += width + padding;
+		width = 50;
+		this.buttonList.add(new ButtonPassiveToggle(inventory.getPlayer(), id, x, y, width));
+
+		id++;
 		x += width + padding;
 		width = 50;
 		this.buttonList.add(new ButtonBuildToggle(inventory.getPlayer(), id, x, y, width));
 
+		id++;
 		x += width + padding;
 		width = 50;
-		this.buttonList.add(new ButtonPassiveToggle(inventory.getPlayer(), id, x, y, width));
+		this.buttonList.add(new ButtonPlaceToggle(inventory.getPlayer(), id, x, y, width));
 	}
 
 	@Override

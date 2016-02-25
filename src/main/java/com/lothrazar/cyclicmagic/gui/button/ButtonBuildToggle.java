@@ -40,7 +40,7 @@ public class ButtonBuildToggle extends GuiButton implements ITooltipButton{
 	@Override
 	public void drawButton(Minecraft mc, int mouseX, int mouseY){
 
-		this.displayString = StatCollector.translateToLocal(ItemCyclicWand.BuildType.getBuildTypeName(thePlayer.getHeldItem()));
+		this.displayString = StatCollector.translateToLocal(ItemCyclicWand.BuildType.getName(thePlayer.getHeldItem()));
 
 		super.drawButton(mc, mouseX, mouseY);
 	}
@@ -49,7 +49,8 @@ public class ButtonBuildToggle extends GuiButton implements ITooltipButton{
 	public List<String> getTooltips(){
 
 		List<String> tooltips = new ArrayList<String>();
-		String key = ItemCyclicWand.BuildType.getBuildTypeName(thePlayer.getHeldItem())+".tooltip";
+		tooltips.add(StatCollector.translateToLocal("button.build.tooltip"));
+		String key = ItemCyclicWand.BuildType.getName(thePlayer.getHeldItem())+".tooltip";
 		tooltips.add(StatCollector.translateToLocal(key));
 		tooltips.add(StatCollector.translateToLocal("button.build.meta"));
 		

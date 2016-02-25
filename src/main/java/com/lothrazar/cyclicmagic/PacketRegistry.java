@@ -2,22 +2,7 @@ package com.lothrazar.cyclicmagic;
 
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
-import com.lothrazar.cyclicmagic.net.MessageKeyCast;
-import com.lothrazar.cyclicmagic.net.MessageKeyLeft;
-import com.lothrazar.cyclicmagic.net.MessageKeyRight;
-import com.lothrazar.cyclicmagic.net.MessageOpenSpellbook;
-import com.lothrazar.cyclicmagic.net.MessageParticle;
-import com.lothrazar.cyclicmagic.net.MessageRecharge;
-import com.lothrazar.cyclicmagic.net.MessageSpellPull;
-import com.lothrazar.cyclicmagic.net.MessageSpellPush;
-import com.lothrazar.cyclicmagic.net.MessageSpellReach;
-import com.lothrazar.cyclicmagic.net.MessageSpellReplacer;
-import com.lothrazar.cyclicmagic.net.MessageSpellRotate;
-import com.lothrazar.cyclicmagic.net.MessageToggleBuild;
-import com.lothrazar.cyclicmagic.net.MessageTogglePassive;
-import com.lothrazar.cyclicmagic.net.MessageToggleSpell;
-import com.lothrazar.cyclicmagic.net.MessageToggleSpellGroup;
-
+import com.lothrazar.cyclicmagic.net.*;
 
 public class PacketRegistry{
 
@@ -41,6 +26,6 @@ public class PacketRegistry{
 		ModMain.network.registerMessage(MessageRecharge.class, MessageRecharge.class, packetID++, Side.SERVER);
 		ModMain.network.registerMessage(MessageTogglePassive.class, MessageTogglePassive.class, packetID++, Side.SERVER);
 		ModMain.network.registerMessage(MessageToggleSpellGroup.class, MessageToggleSpellGroup.class, packetID++, Side.SERVER);
-		
+		ModMain.network.registerMessage(MessageTogglePlace.class, MessageTogglePlace.class, packetID++, Side.SERVER);
 	}
 }

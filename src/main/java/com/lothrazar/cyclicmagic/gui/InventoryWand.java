@@ -231,7 +231,7 @@ public class InventoryWand implements IInventory{
 
 		int itemSlot = -1;
 
-		int buildType = ItemCyclicWand.BuildType.getBuildType(wand);
+		int buildType = ItemCyclicWand.BuildType.get(wand);
 		ItemStack[] inv = InventoryWand.readFromNBT(wand);
 		ArrayList<Integer> slotNonEmpty = new ArrayList<Integer>();
 
@@ -255,7 +255,7 @@ public class InventoryWand implements IInventory{
 		}
 		else if(buildType == ItemCyclicWand.BuildType.ROTATE.ordinal()){
 
-			int rot = ItemCyclicWand.BuildType.getBuildRotation(wand);
+			int rot = ItemCyclicWand.InventoryRotation.get(wand);
 
 			int test = InventoryWand.INV_SIZE + 2;// like aninfloop but with a max
 			// in case we have gaps, maybe its [0,1,4] have items, so cycle through
@@ -272,7 +272,7 @@ public class InventoryWand implements IInventory{
 						rot = 0;
 					}
 
-					ItemCyclicWand.BuildType.setBuildRotation(wand, rot);
+					ItemCyclicWand.InventoryRotation.set(wand, rot);
 
 					break;
 				}
