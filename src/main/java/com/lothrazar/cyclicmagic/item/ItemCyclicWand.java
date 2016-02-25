@@ -457,7 +457,7 @@ public class ItemCyclicWand extends Item{
 	}
 	
 	public enum PlaceType {
-		PLACE, UP, DOWN, BEHIND;
+		PLACE, UP, DOWN;
 		
 		final static String NBT = "build";
 
@@ -488,7 +488,7 @@ public class ItemCyclicWand extends Item{
 
 			type++;
 
-			if(type > BEHIND.ordinal()){
+			if(type > DOWN.ordinal()){
 				type = PLACE.ordinal();
 			}
 

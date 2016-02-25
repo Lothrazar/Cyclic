@@ -46,16 +46,14 @@ public class SpellRangeBuild extends BaseSpellRange{
 
 	public void castFromServer(BlockPos posMouseover, BlockPos posOffset, EntityPlayer p){
 
-		PlaceType place = ItemCyclicWand.PlaceType.getType(p.getHeldItem());
-
-		System.out.println("TODO: place type"+place);
+		World world = p.worldObj;
 		
 		ItemStack heldWand = p.getHeldItem();
 		if(heldWand == null || heldWand.getItem() instanceof ItemCyclicWand == false){
 			return;
 		}
 
-		int itemSlot = InventoryWand.getSlotByBuildType(heldWand, p.worldObj.getBlockState(posMouseover));
+		int itemSlot = InventoryWand.getSlotByBuildType(heldWand, world.getBlockState(posMouseover));
 		ItemStack[] invv = InventoryWand.readFromNBT(heldWand);
 		ItemStack toPlace = InventoryWand.getFromSlot(heldWand, itemSlot);
 
@@ -64,13 +62,49 @@ public class SpellRangeBuild extends BaseSpellRange{
 			IBlockState state = Block.getBlockFromItem(toPlace.getItem()).getStateFromMeta(toPlace.getMetadata());
 
 			if(state != null){
+				BlockPos posToPlaceAt = null;
+				PlaceType place = ItemCyclicWand.PlaceType.getType(p.getHeldItem());
+				int max = 32;
+				
+				switch(place){
+				case DOWN:
+					//start at posMouseover, go DOWN until air
+					BlockPos posLoop = posMouseover;
+					for(int i = 0; i < max; i++){
+						if(world.isAirBlock(posLoop)){
+							posToPlaceAt = posLoop;
+							break;
+						}
+						else{
+							posLoop = posLoop.down();
+						}
+					}
+					break;
+				case PLACE:
+					//use offset NOT mouseover
+					posToPlaceAt = posOffset;
+					break;
+				case UP:
+					//start at posMouseover, go up until air
+					BlockPos pLoop = posMouseover;
+					for(int i = 0; i < max; i++){
+						if(world.isAirBlock(pLoop)){
+							posToPlaceAt = pLoop;
+							break;
+						}
+						else{
+							pLoop = pLoop.up();
+						}
+					}
+					break;
+				default:
+					break;
+				}
 
-				SpellRegistry.caster.castSuccess(this, p.worldObj, p, posOffset);
+				if(placeStateSafe(p.worldObj, p, posToPlaceAt, state)){
 
-				// p.worldObj.setBlockState(pos, state);
-
-				if(placeStateSafe(p.worldObj, p, posOffset, state)){
-
+					SpellRegistry.caster.castSuccess(this, p.worldObj, p, posOffset);
+					
 					if(state.getBlock().stepSound != null && state.getBlock().stepSound.getBreakSound() != null){
 						UtilSound.playSoundAt(p, state.getBlock().stepSound.getPlaceSound());
 					}
@@ -85,14 +119,15 @@ public class SpellRangeBuild extends BaseSpellRange{
 					// util handles that
 					this.spawnParticle(p.worldObj, p, posMouseover);
 					this.playSound(p.worldObj, state.getBlock(), posOffset);
-
 				}
 			}
 		}
 	}
 
 	private boolean placeStateSafe(World world, EntityPlayer player, BlockPos placePos, IBlockState placeState){
-
+		if(placePos == null){
+			return false;
+		}
 		if(world.isAirBlock(placePos) == false){
 
 			// if there is a block here, we might have to stop
