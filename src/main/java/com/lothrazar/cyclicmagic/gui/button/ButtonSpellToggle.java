@@ -37,9 +37,10 @@ public class ButtonSpellToggle extends GuiButton implements ITooltipButton{
 	@Override
 	public boolean mousePressed(Minecraft mc, int mouseX, int mouseY){
 
+		
 		boolean pressed = super.mousePressed(mc, mouseX, mouseY);
 
-		if(pressed){
+		if(pressed || false){ // DEPRECATED !!
 			// button id matches spell id
 			ItemStack wand = Minecraft.getMinecraft().thePlayer.getHeldItem();
 

@@ -52,7 +52,7 @@ public class GuiSpellbook extends GuiScreen{
 
 		xCenter = this.width / 2;
 		yCenter = this.height / 2;
-		radius = xCenter / 3 + 16;//was 26
+		radius = xCenter / 3 + 10;//was 26
 
 		arc = (2 * Math.PI) / spellbook.size();
 		int btnCenter = yCenter - h / 2;

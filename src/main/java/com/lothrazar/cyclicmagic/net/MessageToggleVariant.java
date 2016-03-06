@@ -13,9 +13,9 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class MessageToggleSpellGroup implements IMessage, IMessageHandler<MessageToggleSpellGroup, IMessage>{
+public class MessageToggleVariant implements IMessage, IMessageHandler<MessageToggleVariant, IMessage>{
  
-	public MessageToggleSpellGroup(){
+	public MessageToggleVariant(){
 
 	}
  
@@ -33,7 +33,7 @@ public class MessageToggleSpellGroup implements IMessage, IMessageHandler<Messag
 	}
 
 	@Override
-	public IMessage onMessage(MessageToggleSpellGroup message, MessageContext ctx){
+	public IMessage onMessage(MessageToggleVariant message, MessageContext ctx){
 
 		EntityPlayer player = ctx.getServerHandler().playerEntity;
 
