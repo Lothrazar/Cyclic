@@ -75,8 +75,8 @@ public class SpellScreenRender{
 
 	private void drawManabar(EntityPlayer player){
 
-		double MAX = ItemCyclicWand.Variant.getMaximum(player.getHeldItem());
-		double largest = ItemCyclicWand.Variant.getMaximumLargest();
+		double MAX = ItemCyclicWand.Energy.getMaximum(player.getHeldItem());
+		double largest = ItemCyclicWand.Energy.getMaximumLargest();
 		
 		double ratio = MAX / largest;
 		

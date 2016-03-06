@@ -47,6 +47,10 @@ public class MessageToggleVariant implements IMessage, IMessageHandler<MessageTo
 			Spells.unlockSpell(player.getHeldItem(), spellId, active.contains(spellId));
 		}
 		
+		System.out.println("JUST TESTING MAX");
+		
+		ItemCyclicWand.Energy.increaseMaximum(player.getHeldItem(), 50);
+		
 		return null;
 	}
 }

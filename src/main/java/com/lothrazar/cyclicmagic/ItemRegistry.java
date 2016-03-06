@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic;
 
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.item.*;
-import com.lothrazar.cyclicmagic.item.ItemCyclicWand.Variant;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -36,18 +35,16 @@ public class ItemRegistry{
 		cyclic_wand = new ItemCyclicWand();
 		cyclic_wand.setUnlocalizedName("cyclic_wand");
 		GameRegistry.registerItem(cyclic_wand, "cyclic_wand");
-		
-		for(Variant v : ItemCyclicWand.Variant.values()){
 
-			GameRegistry.addRecipe(new ItemStack(cyclic_wand, 1, v.ordinal()), 
-					"sds", 
-					" o ", 
-					"gog", 
-					'd', Variant.getMaterialFromVariant(v), 
-					'g', Items.ghast_tear, 
-					'o', Blocks.obsidian, 
-					's', Items.nether_star);
-		}
+		GameRegistry.addRecipe(new ItemStack(cyclic_wand), 
+				"sds", 
+				" o ", 
+				"gog", 
+				'd', new ItemStack(Blocks.diamond_block), 
+				'g', Items.ghast_tear, 
+				'o', Blocks.obsidian, 
+				's', Items.nether_star);
+	
 	}
 
 	public static void registerItem(Item item, String name){

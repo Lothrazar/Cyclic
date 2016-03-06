@@ -110,7 +110,7 @@ public class SpellCaster{
 
 	public void rechargeWithExp(EntityPlayer player){
 
-		int MAX = ItemCyclicWand.Variant.getMaximum(player.getHeldItem());
+		int MAX = ItemCyclicWand.Energy.getMaximum(player.getHeldItem());
 
 		if(player.capabilities.isCreativeMode){ // always set full
 			ItemCyclicWand.Energy.setCurrent(player.getHeldItem(), MAX);
