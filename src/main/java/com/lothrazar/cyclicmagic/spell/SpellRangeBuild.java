@@ -4,25 +4,31 @@ import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.gui.InventoryWand;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
-import com.lothrazar.cyclicmagic.item.ItemCyclicWand.PlaceType;
-import com.lothrazar.cyclicmagic.net.MessageSpellReach;
+import com.lothrazar.cyclicmagic.net.MessageSpellFromServer;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
-public class SpellRangeBuild extends BaseSpellRange{
+public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer{
 
-	public SpellRangeBuild(int id, String n){
+	//TODO: baseclass
+	public static enum PlaceType {
+		PLACE, UP, DOWN;
+	}
+	private PlaceType type;
+	public SpellRangeBuild(int id, String n,PlaceType t){
 
 		super.init(id, n);
 		this.cooldown = 8;
 		this.cost = 5;
+		this.type = t;
 	}
 
 	@Override
@@ -37,15 +43,16 @@ public class SpellRangeBuild extends BaseSpellRange{
 			
 			if(mouseover != null && offset != null){
 
-				ModMain.network.sendToServer(new MessageSpellReach(mouseover, offset));
+				ModMain.network.sendToServer(new MessageSpellFromServer(mouseover, offset, this.getID()));
 			}
 		}
 
 		return false;
 	}
 
-	public void castFromServer(BlockPos posMouseover, BlockPos posOffset, EntityPlayer p){
+	public  void castFromServer(BlockPos posMouseover, BlockPos posOffset, EntityPlayer p){
 
+		System.out.println("castFromServer"+this.getID());
 		World world = p.worldObj;
 		
 		ItemStack heldWand = p.getHeldItem();
@@ -63,10 +70,10 @@ public class SpellRangeBuild extends BaseSpellRange{
 
 			if(state != null){
 				BlockPos posToPlaceAt = null;
-				PlaceType place = ItemCyclicWand.PlaceType.getType(p.getHeldItem());
+			
 				int max = 32;
 				
-				switch(place){
+				switch(type){
 				case DOWN:
 					//start at posMouseover, go DOWN until air
 					BlockPos posLoop = posMouseover;
@@ -124,7 +131,7 @@ public class SpellRangeBuild extends BaseSpellRange{
 		}
 	}
 
-	private boolean placeStateSafe(World world, EntityPlayer player, BlockPos placePos, IBlockState placeState){
+	private  boolean placeStateSafe(World world, EntityPlayer player, BlockPos placePos, IBlockState placeState){
 		if(placePos == null){
 			return false;
 		}

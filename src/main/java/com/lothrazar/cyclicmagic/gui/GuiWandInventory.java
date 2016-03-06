@@ -3,7 +3,6 @@ package com.lothrazar.cyclicmagic.gui;
 import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.gui.button.*;
-import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.ResourceLocation;
 

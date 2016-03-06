@@ -1,12 +1,10 @@
 package com.lothrazar.cyclicmagic.gui;
 
-import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.PlayerPowerups;
 import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.gui.button.ButtonClose;
-import com.lothrazar.cyclicmagic.gui.button.ButtonSpellGroup;
 import com.lothrazar.cyclicmagic.gui.button.ButtonSpellToggle;
 import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
@@ -54,18 +52,12 @@ public class GuiSpellbook extends GuiScreen{
 
 		xCenter = this.width / 2;
 		yCenter = this.height / 2;
-		radius = xCenter / 3 + 26;
+		radius = xCenter / 3 + 16;//was 26
 
 		arc = (2 * Math.PI) / spellbook.size();
 		int btnCenter = yCenter - h / 2;
 		int btnID = 999;
 		this.buttonList.add(new ButtonClose(btnID++, xCenter - 15, btnCenter));
-
-		int width = 60;
-		// (String g,int id,int x, int y, int width){
-		int pad = 8;
-	//this.buttonList.add(new ButtonSpellGroup(ItemCyclicWand.SpellGroup.BUILDER.toString(), btnID++, pad, btnCenter - pad - h, width));
-		//this.buttonList.add(new ButtonSpellGroup(ItemCyclicWand.SpellGroup.FARMER.toString(), btnID++, pad, btnCenter + pad + h, width));
 
 		double ang = 0;
 		double cx, cy;
@@ -111,7 +103,7 @@ public class GuiSpellbook extends GuiScreen{
 
 		// this.drawBackground(1); //turn this on if we want 'background' on
 		super.drawScreen(mouseX, mouseY, partialTicks);
-		
+		/*
 		List<Integer> spellbook = ItemCyclicWand.Variant.getSpellsFromVariant(ItemCyclicWand.Variant.getVariantFromMeta(thePlayer.getHeldItem()));
 		
 		
@@ -132,7 +124,7 @@ public class GuiSpellbook extends GuiScreen{
 			if(!unlocked){
 				continue;
 			}
-/*
+
 			ResourceLocation header;
 			if(unlocked){
 				header = s.getIconDisplayHeaderEnabled();
@@ -144,10 +136,10 @@ public class GuiSpellbook extends GuiScreen{
 			// TODO: maybe a special header for this guy??
 			// if(s.getID() == SpellRegistry.inventory.getID())
 			UtilTextureRender.drawTextureSimple(header, (int) cx, (int) cy - 8, spellSize - 4, spellSize - 4);
-*/
+
 			ang += arc;
 		}
-
+*/
 		ITooltipButton btn;
 		for(int i = 0; i < buttonList.size(); i++){
 			if(buttonList.get(i).isMouseOver() && buttonList.get(i) instanceof ITooltipButton){

@@ -17,7 +17,7 @@ public class PacketRegistry{
 		ModMain.network.registerMessage(MessageToggleSpell.class, MessageToggleSpell.class, packetID++, Side.SERVER);
 		ModMain.network.registerMessage(MessageParticle.class, MessageParticle.class, packetID++, Side.CLIENT);
 		ModMain.network.registerMessage(MessageOpenSpellbook.class, MessageOpenSpellbook.class, packetID++, Side.CLIENT);
-		ModMain.network.registerMessage(MessageSpellReach.class, MessageSpellReach.class, packetID++, Side.SERVER);
+		ModMain.network.registerMessage(MessageSpellFromServer.class, MessageSpellFromServer.class, packetID++, Side.SERVER);
 		ModMain.network.registerMessage(MessageToggleBuild.class, MessageToggleBuild.class, packetID++, Side.SERVER);
 		ModMain.network.registerMessage(MessageSpellRotate.class, MessageSpellRotate.class, packetID++, Side.SERVER);
 		ModMain.network.registerMessage(MessageSpellPush.class, MessageSpellPush.class, packetID++, Side.SERVER);
@@ -26,6 +26,6 @@ public class PacketRegistry{
 		ModMain.network.registerMessage(MessageRecharge.class, MessageRecharge.class, packetID++, Side.SERVER);
 		ModMain.network.registerMessage(MessageTogglePassive.class, MessageTogglePassive.class, packetID++, Side.SERVER);
 		ModMain.network.registerMessage(MessageToggleSpellGroup.class, MessageToggleSpellGroup.class, packetID++, Side.SERVER);
-		ModMain.network.registerMessage(MessageTogglePlace.class, MessageTogglePlace.class, packetID++, Side.SERVER);
+		//ModMain.network.registerMessage(MessageTogglePlace.class, MessageTogglePlace.class, packetID++, Side.SERVER);
 	}
 }

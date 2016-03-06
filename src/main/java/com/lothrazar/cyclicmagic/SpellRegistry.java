@@ -35,7 +35,7 @@ public class SpellRegistry{
 		public static SpellRangePull pull;
 		public static SpellRangeReplace replacer;
 		public static SpellInventory inventory;
-		public static SpellRangeBuild reach;
+		public static SpellRangeBuild reachdown;
 		public static SpellPotion haste;
 		public static SpellChestSack chestsack;
 		public static SpellThrowTorch torch;
@@ -55,6 +55,8 @@ public class SpellRegistry{
 		public static SpellLinkingPortal waypoint;
 		public static SpellThrowHarvest harvest;
 		public static SpellThrowWater water;
+		public static SpellRangeBuild reachup;
+		public static SpellRangeBuild reachplace;
 	}
 	
 	public static class Passives{
@@ -118,8 +120,8 @@ public class SpellRegistry{
 		Spells.rotate = new SpellRangeRotate(++spellId, "rotate");
 		registerSpell(Spells.rotate);
 
-		Spells.reach = new SpellRangeBuild(++spellId, "reach");
-		registerSpell(Spells.reach);
+		Spells.reachdown = new SpellRangeBuild(++spellId, "reachdown",SpellRangeBuild.PlaceType.DOWN);
+		registerSpell(Spells.reachdown);
 
 		Spells.inventory = new SpellInventory(++spellId, "inventory");
 		registerSpell(Spells.inventory);
@@ -173,6 +175,12 @@ public class SpellRegistry{
 		Spells.magnet.setPotion(PotionRegistry.magnet.id, Const.TICKS_PER_SEC * 60, PotionRegistry.II);
 		registerSpell(Spells.magnet);
 
+		Spells.reachup = new SpellRangeBuild(++spellId, "reachup",SpellRangeBuild.PlaceType.UP);
+		registerSpell(Spells.reachup);
+		
+		Spells.reachplace = new SpellRangeBuild(++spellId, "reachplace",SpellRangeBuild.PlaceType.PLACE);
+		registerSpell(Spells.reachplace);
+		
 		Collections.addAll(builder, SpellRegistry.Spells.inventory.getID()
 				, SpellRegistry.Spells.pull.getID()
 				, SpellRegistry.Spells.push.getID()
@@ -180,7 +188,9 @@ public class SpellRegistry{
 				,SpellRegistry.Spells.launch.getID()
 				, SpellRegistry.Spells.rotate.getID()
 				, SpellRegistry.Spells.replacer.getID()
-				, SpellRegistry.Spells.reach.getID()
+				, SpellRegistry.Spells.reachdown.getID()
+				, SpellRegistry.Spells.reachup.getID()
+				, SpellRegistry.Spells.reachplace.getID() 
 				,SpellRegistry.Spells.haste.getID()
 				);
  

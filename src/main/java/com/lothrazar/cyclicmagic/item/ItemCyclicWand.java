@@ -403,57 +403,6 @@ public class ItemCyclicWand extends Item{
 
 	}
 	
-	public enum PlaceType {
-		PLACE, UP, DOWN;
-		
-		final static String NBT = "build";
-
-		public static int get(ItemStack wand){
-
-			if(wand == null){
-				return 0;
-			}
-			NBTTagCompound tags = getNBT(wand);
-
-			return tags.getInteger(NBT);
-		}
-
-		public static PlaceType getType(ItemStack wand){
-
-			try{
-				return PlaceType.values()[getNBT(wand).getInteger(NBT)];
-			}
-			catch (Exception e){ 
-				return PLACE;
-			}
-		}
-		public static void toggle(ItemStack wand){
-
-			NBTTagCompound tags = getNBT(wand);
-
-			int type = tags.getInteger(NBT);
-
-			type++;
-
-			if(type > DOWN.ordinal()){
-				type = PLACE.ordinal();
-			}
-
-			tags.setInteger(NBT, type);
-		}
-
-		public static String getName(ItemStack wand){
-
-			try{
-				return "button.place." + PlaceType.values()[getNBT(wand).getInteger(NBT)].toString().toLowerCase();
-			}
-			catch (Exception e){
-				System.out.println(e.getMessage());
-				return "button.build." + PLACE.toString().toLowerCase();
-			}
-		}
-	}
-	
 	public enum BuildType {
 		FIRST, ROTATE, RANDOM, MATCH;
 

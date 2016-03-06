@@ -1,6 +1,9 @@
 package com.lothrazar.cyclicmagic.net;
 
 import com.lothrazar.cyclicmagic.SpellRegistry;
+import com.lothrazar.cyclicmagic.spell.ISpell;
+import com.lothrazar.cyclicmagic.spell.ISpellFromServer;
+import com.lothrazar.cyclicmagic.spell.SpellRangeBuild.PlaceType;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -10,19 +13,20 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class MessageSpellReach implements IMessage, IMessageHandler<MessageSpellReach, IMessage>{
+public class MessageSpellFromServer implements IMessage, IMessageHandler<MessageSpellFromServer, IMessage>{
 
 	private BlockPos pos;
 	private BlockPos posOffset;
-
-	public MessageSpellReach(){
+	private int spellID;
+	public MessageSpellFromServer(){
 
 	}
 
-	public MessageSpellReach(BlockPos mouseover, BlockPos offset){
+	public MessageSpellFromServer(BlockPos mouseover, BlockPos offset, int spellid){
 
 		pos = mouseover;
 		posOffset = offset;
+		spellID = spellid;
 	}
 
 	@Override
@@ -39,6 +43,7 @@ public class MessageSpellReach implements IMessage, IMessageHandler<MessageSpell
 		y = tags.getInteger("oy");
 		z = tags.getInteger("oz");
 		posOffset = new BlockPos(x, y, z);
+		spellID = tags.getInteger("spell");
 	}
 
 	@Override
@@ -52,12 +57,13 @@ public class MessageSpellReach implements IMessage, IMessageHandler<MessageSpell
 		tags.setInteger("ox", posOffset.getX());
 		tags.setInteger("oy", posOffset.getY());
 		tags.setInteger("oz", posOffset.getZ());
+		tags.setInteger("spell", spellID);
 
 		ByteBufUtils.writeTag(buf, tags);
 	}
 
 	@Override
-	public IMessage onMessage(MessageSpellReach message, MessageContext ctx){
+	public IMessage onMessage(MessageSpellFromServer message, MessageContext ctx){
 
 		if(ctx.side.isServer() && message != null && message.pos != null){
 
@@ -65,9 +71,15 @@ public class MessageSpellReach implements IMessage, IMessageHandler<MessageSpell
 
 			// if( p.worldObj.getBlockState(message.pos).getBlock().isReplaceable(p.worldObj,
 			// message.pos)){
+			
+			ISpell spell =SpellRegistry.getSpellFromID(message.spellID);
 
-			SpellRegistry.Spells.reach.castFromServer(message.pos, message.posOffset, p);
-
+			if(spell != null && spell instanceof ISpellFromServer){
+				((ISpellFromServer)spell).castFromServer(message.pos, message.posOffset, p);
+			}
+			else{
+				System.out.println("WARNING: Message from server: spell not found"+message.spellID);
+			}
 		}
 
 		return null;
