@@ -539,22 +539,22 @@ public class ItemCyclicWand extends Item{
 			//TODO: instead do a getGroupFromVariant.. this is temporary
 			switch( v){
 			case DIAMOND:	
-				active = SpellRegistry.builder; 
+				active = SpellRegistry.diamondGroup; 
 				break;
 			case EMERALD:
-				active = SpellRegistry.builder; 
+				active = SpellRegistry.emeraldGroup; 
 				break;
 			case GOLD:
-				active = SpellRegistry.farmer; 
+				active = SpellRegistry.goldGroup; 
 				break;
 			case LAPIS:
-				active = SpellRegistry.builder; 
+				active = SpellRegistry.lapisGroup; 
 				break;
 			case QUARTZ:
-				active = SpellRegistry.explorer; 
+				active = SpellRegistry.quartzGroup; 
 				break;
 			case REDSTONE:
-				active = SpellRegistry.builder; 
+				active = SpellRegistry.redstoneGroup; 
 				break;
 			default:
 				break;

@@ -20,9 +20,12 @@ public class SpellRegistry{
 	private static ArrayList<ISpell> spellbook;
 	private static HashMap<Integer, ISpell> hashbook;
 	private static HashMap<Integer, IPassiveSpell> passives;
-	public static List<Integer> builder = new ArrayList<Integer>(); 
-	public static List<Integer> explorer = new ArrayList<Integer>();
-	public static List<Integer> farmer = new ArrayList<Integer>();
+	public static List<Integer> redstoneGroup = new ArrayList<Integer>(); 
+	public static List<Integer> lapisGroup = new ArrayList<Integer>();
+	public static List<Integer> emeraldGroup = new ArrayList<Integer>();
+	public static List<Integer> diamondGroup = new ArrayList<Integer>();
+	public static List<Integer> goldGroup = new ArrayList<Integer>();
+	public static List<Integer> quartzGroup = new ArrayList<Integer>();
 
 	static SpellScreenRender screen;
 	public static SpellCaster caster;
@@ -119,10 +122,7 @@ public class SpellRegistry{
 
 		Spells.rotate = new SpellRangeRotate(++spellId, "rotate");
 		registerSpell(Spells.rotate);
-
-		Spells.reachdown = new SpellRangeBuild(++spellId, "reachdown",SpellRangeBuild.PlaceType.DOWN);
-		registerSpell(Spells.reachdown);
-
+		
 		Spells.inventory = new SpellInventory(++spellId, "inventory");
 		registerSpell(Spells.inventory);
 
@@ -180,42 +180,56 @@ public class SpellRegistry{
 		
 		Spells.reachplace = new SpellRangeBuild(++spellId, "reachplace",SpellRangeBuild.PlaceType.PLACE);
 		registerSpell(Spells.reachplace);
-		
-		Collections.addAll(builder, SpellRegistry.Spells.inventory.getID()
+
+		Spells.reachdown = new SpellRangeBuild(++spellId, "reachdown",SpellRangeBuild.PlaceType.DOWN);
+		registerSpell(Spells.reachdown);
+ 
+		Collections.addAll(redstoneGroup, SpellRegistry.Spells.inventory.getID()
 				, SpellRegistry.Spells.pull.getID()
 				, SpellRegistry.Spells.push.getID()
 				, SpellRegistry.Spells.scaffold.getID()
-				,SpellRegistry.Spells.launch.getID()
+			 	,SpellRegistry.Spells.launch.getID()
+				//TODO: also make a 'levitate' and a 'vertical' one
 				, SpellRegistry.Spells.rotate.getID()
 				, SpellRegistry.Spells.replacer.getID()
 				, SpellRegistry.Spells.reachdown.getID()
 				, SpellRegistry.Spells.reachup.getID()
 				, SpellRegistry.Spells.reachplace.getID() 
-				,SpellRegistry.Spells.haste.getID()
+				//,SpellRegistry.Spells.haste.getID()
 				);
- 
-		Collections.addAll(explorer, SpellRegistry.Spells.inventory.getID()
+//TODO: maybe remove these/ rethink. needs testing
+		Collections.addAll(goldGroup, SpellRegistry.Spells.inventory.getID()
+				
+				);
+		Collections.addAll(quartzGroup, SpellRegistry.Spells.inventory.getID()
+				
+				);
+		Collections.addAll(lapisGroup, SpellRegistry.Spells.inventory.getID()
 				,SpellRegistry.Spells.nightvision.getID()
 				,SpellRegistry.Spells.ghost.getID()
 				,SpellRegistry.Spells.launch.getID()
 				,SpellRegistry.Spells.torch.getID()
 				,SpellRegistry.Spells.waterwalk.getID()
 				,SpellRegistry.Spells.waypoint.getID()
-				,SpellRegistry.Spells.phase.getID()
+				//,SpellRegistry.Spells.phase.getID()
 				,SpellRegistry.Spells.spawnegg.getID()
 				,SpellRegistry.Spells.haste.getID()
 				);
-
-
-		Collections.addAll(farmer,SpellRegistry.Spells.inventory.getID()
+ 
+		Collections.addAll(diamondGroup,SpellRegistry.Spells.inventory.getID()
+				,SpellRegistry.Spells.magnet.getID()
+				,SpellRegistry.Spells.torch.getID()
+				,SpellRegistry.Spells.launch.getID()
+				,SpellRegistry.Spells.haste.getID()
+				);
+		
+		Collections.addAll(emeraldGroup,SpellRegistry.Spells.inventory.getID()
 				,SpellRegistry.Spells.shear.getID()
 				,SpellRegistry.Spells.magnet.getID()
 				,SpellRegistry.Spells.harvest.getID()
 				,SpellRegistry.Spells.water.getID()
 				,SpellRegistry.Spells.chestsack.getID()
 				,SpellRegistry.Spells.fishing.getID()
-				,SpellRegistry.Spells.launch.getID()
-				,SpellRegistry.Spells.haste.getID()
 				);
 		
 	}
