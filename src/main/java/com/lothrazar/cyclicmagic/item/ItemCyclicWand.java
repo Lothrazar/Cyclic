@@ -174,7 +174,7 @@ public class ItemCyclicWand extends Item{
 			unlockSpell(stack,spell.getID(), unlocked);
 		}
 		
-		private static void unlockSpell(ItemStack stack, int spell_id, boolean unlocked){
+		public static void unlockSpell(ItemStack stack, int spell_id, boolean unlocked){
 
 			NBTTagCompound nbt = getNBT(stack);
 			nbt.setBoolean(NBT_UNLOCKS + spell_id, unlocked);
@@ -401,59 +401,6 @@ public class ItemCyclicWand extends Item{
 	public enum SpellGroup{
 		EXPLORER,BUILDER,FARMER;
 
-		public static void toggle(ItemStack heldItem, String group){
-			//TODO: making the list every time is a bit of a waste innit
-			List<Integer> active = new ArrayList<Integer>();
-			//order here has no impact
-			switch(SpellGroup.valueOf(group)){
-			case BUILDER:
-				Collections.addAll(active, SpellRegistry.Spells.inventory.getID()
-						, SpellRegistry.Spells.pull.getID()
-						, SpellRegistry.Spells.push.getID()
-						, SpellRegistry.Spells.scaffold.getID()
-						,SpellRegistry.Spells.launch.getID()
-						, SpellRegistry.Spells.rotate.getID()
-						, SpellRegistry.Spells.replacer.getID()
-						, SpellRegistry.Spells.reach.getID()
-						,SpellRegistry.Spells.haste.getID()
-						);
-				break;
-			case EXPLORER:
-
-				Collections.addAll(active, SpellRegistry.Spells.inventory.getID()
-						,SpellRegistry.Spells.nightvision.getID()
-						,SpellRegistry.Spells.ghost.getID()
-						,SpellRegistry.Spells.launch.getID()
-						,SpellRegistry.Spells.torch.getID()
-						,SpellRegistry.Spells.waterwalk.getID()
-						,SpellRegistry.Spells.waypoint.getID()
-						,SpellRegistry.Spells.phase.getID()
-						,SpellRegistry.Spells.spawnegg.getID()
-						,SpellRegistry.Spells.haste.getID()
-						);
-				break;
-			case FARMER:
-				Collections.addAll(active,SpellRegistry.Spells.inventory.getID()
-						,SpellRegistry.Spells.shear.getID()
-						,SpellRegistry.Spells.magnet.getID()
-						,SpellRegistry.Spells.harvest.getID()
-						,SpellRegistry.Spells.water.getID()
-						,SpellRegistry.Spells.chestsack.getID()
-						,SpellRegistry.Spells.fishing.getID()
-						,SpellRegistry.Spells.launch.getID()
-						,SpellRegistry.Spells.haste.getID()
-						);
-				break;
-			default:
-				break;
-			}
-			
-			int spellId;
-			for(ISpell s : SpellRegistry.getSpellbook()){
-				spellId = s.getID();
-				Spells.unlockSpell(heldItem, spellId, active.contains(spellId));
-			}
-		}
 	}
 	
 	public enum PlaceType {
@@ -627,7 +574,7 @@ public class ItemCyclicWand extends Item{
 			return Const.TEXTURE_LOCATION + "cyclic_wand_" + this.name().toLowerCase();
 		}
 
-		static Variant getVariantFromMeta(ItemStack stack){
+		public static Variant getVariantFromMeta(ItemStack stack){
 
 			try{
 				return Variant.values()[stack.getMetadata()];
@@ -635,6 +582,61 @@ public class ItemCyclicWand extends Item{
 			catch (Exception e){
 				// System.out.println("INVALID META::"+stack.getMetadata());
 				return Variant.QUARTZ;// this is damage zero anyway
+			}
+		}
+
+		public static List<Integer> getSpellsFromVariant(Variant v){
+
+			List<Integer> active = new ArrayList<Integer>();
+			//TODO: instead do a getGroupFromVariant.. this is temporary
+			switch( v){
+			case DIAMOND:	
+				active = SpellRegistry.builder; 
+				break;
+			case EMERALD:
+				active = SpellRegistry.builder; 
+				break;
+			case GOLD:
+				active = SpellRegistry.farmer; 
+				break;
+			case LAPIS:
+				active = SpellRegistry.builder; 
+				break;
+			case QUARTZ:
+				active = SpellRegistry.explorer; 
+				break;
+			case REDSTONE:
+				active = SpellRegistry.builder; 
+				break;
+			default:
+				break;
+			}
+			return active;
+		}
+		
+		public static void toggle(ItemStack heldItem){
+			//TODO: instead do a getGroupFromVariant.. this is temporary
+			switch( getVariantFromMeta(heldItem)){
+			case DIAMOND:	
+				heldItem.setItemDamage(Variant.EMERALD.ordinal());
+				break;
+			case EMERALD:
+				heldItem.setItemDamage(Variant.REDSTONE.ordinal());
+				break;
+			case GOLD:
+				heldItem.setItemDamage(Variant.LAPIS.ordinal());
+				break;
+			case LAPIS:
+				heldItem.setItemDamage(Variant.DIAMOND.ordinal());
+				break;
+			case QUARTZ:
+				heldItem.setItemDamage(Variant.GOLD.ordinal());
+				break;
+			case REDSTONE:
+				heldItem.setItemDamage(Variant.QUARTZ.ordinal());
+				break;
+			default:
+				break;
 			}
 		}
 	}

@@ -1,5 +1,7 @@
 package com.lothrazar.cyclicmagic.gui;
 
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.PlayerPowerups;
 import com.lothrazar.cyclicmagic.SpellRegistry;
@@ -45,13 +47,16 @@ public class GuiSpellbook extends GuiScreen{
 	@Override
 	public void initGui(){
 
-		super.initGui();
+		super.initGui();	
+		
+		List<Integer> spellbook = ItemCyclicWand.Variant.getSpellsFromVariant(ItemCyclicWand.Variant.getVariantFromMeta(thePlayer.getHeldItem()));
+		
 
 		xCenter = this.width / 2;
 		yCenter = this.height / 2;
 		radius = xCenter / 3 + 26;
 
-		arc = (2 * Math.PI) / SpellRegistry.getSpellbook().size();
+		arc = (2 * Math.PI) / spellbook.size();
 		int btnCenter = yCenter - h / 2;
 		int btnID = 999;
 		this.buttonList.add(new ButtonClose(btnID++, xCenter - 15, btnCenter));
@@ -59,9 +64,8 @@ public class GuiSpellbook extends GuiScreen{
 		int width = 60;
 		// (String g,int id,int x, int y, int width){
 		int pad = 8;
-		this.buttonList.add(new ButtonSpellGroup(ItemCyclicWand.SpellGroup.EXPLORER.toString(), btnID++, pad, btnCenter, width));
-		this.buttonList.add(new ButtonSpellGroup(ItemCyclicWand.SpellGroup.BUILDER.toString(), btnID++, pad, btnCenter - pad - h, width));
-		this.buttonList.add(new ButtonSpellGroup(ItemCyclicWand.SpellGroup.FARMER.toString(), btnID++, pad, btnCenter + pad + h, width));
+	//this.buttonList.add(new ButtonSpellGroup(ItemCyclicWand.SpellGroup.BUILDER.toString(), btnID++, pad, btnCenter - pad - h, width));
+		//this.buttonList.add(new ButtonSpellGroup(ItemCyclicWand.SpellGroup.FARMER.toString(), btnID++, pad, btnCenter + pad + h, width));
 
 		double ang = 0;
 		double cx, cy;
@@ -69,11 +73,18 @@ public class GuiSpellbook extends GuiScreen{
 		ang = 0;
 		ButtonSpellToggle b;
 		//from here on, btnID++ is not used; the spell id is instead used as the id
-		for(ISpell s : SpellRegistry.getSpellbook()){
-
+		
+		ISpell s;
+		for(int sp : spellbook){
+			s = SpellRegistry.getSpellFromID(sp); 
+			
+			boolean unlocked = ItemCyclicWand.Spells.isSpellUnlocked(props.getPlayer().getHeldItem(), s);
+			if(!unlocked){
+				continue;
+			}
 			cx = xCenter + radius * Math.cos(ang) - 2;
 			cy = yCenter + radius * Math.sin(ang) - 2;
-
+			
 			b = new ButtonSpellToggle(thePlayer, (int) cx, (int) cy, s);
 			this.buttonList.add(b);
 
@@ -100,20 +111,29 @@ public class GuiSpellbook extends GuiScreen{
 
 		// this.drawBackground(1); //turn this on if we want 'background' on
 		super.drawScreen(mouseX, mouseY, partialTicks);
-
+		
+		List<Integer> spellbook = ItemCyclicWand.Variant.getSpellsFromVariant(ItemCyclicWand.Variant.getVariantFromMeta(thePlayer.getHeldItem()));
+		
+		
 		double ang = 0;
 		double cx, cy;
 
 		int spellSize = 16;
 		UtilTextureRender.drawTextureSquare(ptr, mouseX - 8, mouseY - 8, spellSize);
-		for(ISpell s : SpellRegistry.getSpellbook()){
+
+		ISpell s;
+		for(int sp : spellbook){
+			s = SpellRegistry.getSpellFromID(sp); 
 
 			cx = xCenter + radius * Math.cos(ang);
 			cy = yCenter + radius * Math.sin(ang);
 
-			ResourceLocation header;
 			boolean unlocked = ItemCyclicWand.Spells.isSpellUnlocked(props.getPlayer().getHeldItem(), s);
-
+			if(!unlocked){
+				continue;
+			}
+/*
+			ResourceLocation header;
 			if(unlocked){
 				header = s.getIconDisplayHeaderEnabled();
 			}
@@ -124,7 +144,7 @@ public class GuiSpellbook extends GuiScreen{
 			// TODO: maybe a special header for this guy??
 			// if(s.getID() == SpellRegistry.inventory.getID())
 			UtilTextureRender.drawTextureSimple(header, (int) cx, (int) cy - 8, spellSize - 4, spellSize - 4);
-
+*/
 			ang += arc;
 		}
 

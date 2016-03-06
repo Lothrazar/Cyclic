@@ -9,13 +9,11 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ButtonSpellGroup extends GuiButton{
-
-	private String group;
+ 
 
 	public ButtonSpellGroup(String g,int id,int x, int y, int width){
 
-		super(id, x, y, width, 20 , StatCollector.translateToLocal("button.group."+g.toLowerCase()));
-		group = g;
+		super(id, x, y, width, 20 , "getgroup"); 
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -26,7 +24,7 @@ public class ButtonSpellGroup extends GuiButton{
 
 		if(pressed){
 	
-			ModMain.network.sendToServer(new MessageToggleSpellGroup(this.group));
+			ModMain.network.sendToServer(new MessageToggleSpellGroup());
 		}
 
 		return pressed;

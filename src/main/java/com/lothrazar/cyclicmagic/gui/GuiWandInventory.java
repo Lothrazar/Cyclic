@@ -3,6 +3,7 @@ package com.lothrazar.cyclicmagic.gui;
 import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.gui.button.*;
+import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.ResourceLocation;
 
@@ -13,7 +14,7 @@ public class GuiWandInventory extends GuiContainer{
 
 	// TODO: the swap type tooltop, if its on pattern, should show the current slot number, as i '3/9'
 	int id = 777;
-	final int padding = 6;
+	final int padding = 4;
 
 	public GuiWandInventory(ContainerWand containerItem){
 
@@ -32,10 +33,12 @@ public class GuiWandInventory extends GuiContainer{
 		int width = 20;
 		this.buttonList.add(new ButtonSpellCircle(id, x, y, width));
 
+		/*
 		id++;
 		x += width + padding;
 		this.buttonList.add(new ButtonRecharge(id, x, y, width));
-
+*/
+		
 		id++;
 		x += width + padding;
 		width = 50;
@@ -45,11 +48,19 @@ public class GuiWandInventory extends GuiContainer{
 		x += width + padding;
 		width = 50;
 		this.buttonList.add(new ButtonBuildToggle(inventory.getPlayer(), id, x, y, width));
+		
 
 		id++;
 		x += width + padding;
 		width = 50;
+		this.buttonList.add(new ButtonSpellGroup("", id, x, y, width));
+		
+		/*
+		id++;
+		x += width + padding;
+		width = 50;
 		this.buttonList.add(new ButtonPlaceToggle(inventory.getPlayer(), id, x, y, width));
+		*/
 	}
 
 	@Override

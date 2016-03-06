@@ -13,7 +13,7 @@ public class ButtonSpellCircle extends GuiButton implements ITooltipButton{
 
 	public ButtonSpellCircle(int id, int x, int y, int width){
 
-		super(id, x, y, width, 20, "");
+		super(id, x, y, width, 20, "?");
 	}
 
 	@SideOnly(Side.CLIENT)

@@ -14,7 +14,7 @@ public class ButtonRecharge extends GuiButton implements ITooltipButton{
 
 	public ButtonRecharge(int buttonId, int x, int y, int width){
 
-		super(buttonId, x, y, width, 20, "");//StatCollector.translateToLocal("button.recharge")
+		super(buttonId, x, y, width, 20, "X");//StatCollector.translateToLocal("button.recharge")
 	}
 
 	@SideOnly(Side.CLIENT)

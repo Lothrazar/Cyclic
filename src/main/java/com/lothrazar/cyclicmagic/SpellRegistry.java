@@ -1,7 +1,9 @@
 package com.lothrazar.cyclicmagic;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.spell.*;
 import com.lothrazar.cyclicmagic.spell.passive.IPassiveSpell;
@@ -18,6 +20,9 @@ public class SpellRegistry{
 	private static ArrayList<ISpell> spellbook;
 	private static HashMap<Integer, ISpell> hashbook;
 	private static HashMap<Integer, IPassiveSpell> passives;
+	public static List<Integer> builder = new ArrayList<Integer>(); 
+	public static List<Integer> explorer = new ArrayList<Integer>();
+	public static List<Integer> farmer = new ArrayList<Integer>();
 
 	static SpellScreenRender screen;
 	public static SpellCaster caster;
@@ -168,6 +173,41 @@ public class SpellRegistry{
 		Spells.magnet.setPotion(PotionRegistry.magnet.id, Const.TICKS_PER_SEC * 60, PotionRegistry.II);
 		registerSpell(Spells.magnet);
 
+		Collections.addAll(builder, SpellRegistry.Spells.inventory.getID()
+				, SpellRegistry.Spells.pull.getID()
+				, SpellRegistry.Spells.push.getID()
+				, SpellRegistry.Spells.scaffold.getID()
+				,SpellRegistry.Spells.launch.getID()
+				, SpellRegistry.Spells.rotate.getID()
+				, SpellRegistry.Spells.replacer.getID()
+				, SpellRegistry.Spells.reach.getID()
+				,SpellRegistry.Spells.haste.getID()
+				);
+ 
+		Collections.addAll(explorer, SpellRegistry.Spells.inventory.getID()
+				,SpellRegistry.Spells.nightvision.getID()
+				,SpellRegistry.Spells.ghost.getID()
+				,SpellRegistry.Spells.launch.getID()
+				,SpellRegistry.Spells.torch.getID()
+				,SpellRegistry.Spells.waterwalk.getID()
+				,SpellRegistry.Spells.waypoint.getID()
+				,SpellRegistry.Spells.phase.getID()
+				,SpellRegistry.Spells.spawnegg.getID()
+				,SpellRegistry.Spells.haste.getID()
+				);
+
+
+		Collections.addAll(farmer,SpellRegistry.Spells.inventory.getID()
+				,SpellRegistry.Spells.shear.getID()
+				,SpellRegistry.Spells.magnet.getID()
+				,SpellRegistry.Spells.harvest.getID()
+				,SpellRegistry.Spells.water.getID()
+				,SpellRegistry.Spells.chestsack.getID()
+				,SpellRegistry.Spells.fishing.getID()
+				,SpellRegistry.Spells.launch.getID()
+				,SpellRegistry.Spells.haste.getID()
+				);
+		
 	}
 
 	private static void registerSpell(ISpell spell){

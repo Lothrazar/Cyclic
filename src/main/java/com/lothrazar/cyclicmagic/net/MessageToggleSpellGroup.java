@@ -1,6 +1,10 @@
 package com.lothrazar.cyclicmagic.net;
 
+import java.util.List;
+import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
+import com.lothrazar.cyclicmagic.item.ItemCyclicWand.Spells;
+import com.lothrazar.cyclicmagic.spell.ISpell;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -10,31 +14,24 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class MessageToggleSpellGroup implements IMessage, IMessageHandler<MessageToggleSpellGroup, IMessage>{
-
-	private String group;
+ 
 	private static final String NBT_SPELL = "spell";
 
 	public MessageToggleSpellGroup(){
 
 	}
-
-	public MessageToggleSpellGroup(String g){
-
-		group = g;
-	}
+ 
 
 	@Override
 	public void fromBytes(ByteBuf buf){
 
-		NBTTagCompound tags = ByteBufUtils.readTag(buf);
-		group = tags.getString(NBT_SPELL);
+		NBTTagCompound tags = ByteBufUtils.readTag(buf); 
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf){
 
-		NBTTagCompound tags = new NBTTagCompound();
-		tags.setString(NBT_SPELL, group);
+		NBTTagCompound tags = new NBTTagCompound(); 
 		ByteBufUtils.writeTag(buf, tags);
 	}
 
@@ -43,8 +40,16 @@ public class MessageToggleSpellGroup implements IMessage, IMessageHandler<Messag
 
 		EntityPlayer player = ctx.getServerHandler().playerEntity;
 
-		ItemCyclicWand.SpellGroup.toggle(player.getHeldItem(), message.group);
+		ItemCyclicWand.Variant.toggle(player.getHeldItem());
 
+
+		List<Integer> active = ItemCyclicWand.Variant.getSpellsFromVariant(ItemCyclicWand.Variant.getVariantFromMeta(player.getHeldItem()));
+		int spellId;
+		for(ISpell s : SpellRegistry.getSpellbook()){
+			spellId = s.getID();
+			Spells.unlockSpell(player.getHeldItem(), spellId, active.contains(spellId));
+		}
+		
 		return null;
 	}
 }
