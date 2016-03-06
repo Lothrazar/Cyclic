@@ -10,15 +10,13 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.item.ItemStack; 
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer{
-
-	//TODO: baseclass
+ 
 	public static enum PlaceType {
 		PLACE, UP, DOWN;
 	}

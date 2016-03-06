@@ -4,7 +4,6 @@ import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.net.MessageToggleSpellGroup;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -13,7 +12,7 @@ public class ButtonSpellGroup extends GuiButton{
 
 	public ButtonSpellGroup(String g,int id,int x, int y, int width){
 
-		super(id, x, y, width, 20 , "getgroup"); 
+		super(id, x, y, width, 20 , "!"); 
 	}
 
 	@SideOnly(Side.CLIENT)

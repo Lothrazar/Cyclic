@@ -15,8 +15,6 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class MessageToggleSpellGroup implements IMessage, IMessageHandler<MessageToggleSpellGroup, IMessage>{
  
-	private static final String NBT_SPELL = "spell";
-
 	public MessageToggleSpellGroup(){
 
 	}
@@ -25,7 +23,6 @@ public class MessageToggleSpellGroup implements IMessage, IMessageHandler<Messag
 	@Override
 	public void fromBytes(ByteBuf buf){
 
-		NBTTagCompound tags = ByteBufUtils.readTag(buf); 
 	}
 
 	@Override

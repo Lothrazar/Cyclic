@@ -103,6 +103,9 @@ public class GuiSpellbook extends GuiScreen{
 
 		// this.drawBackground(1); //turn this on if we want 'background' on
 		super.drawScreen(mouseX, mouseY, partialTicks);
+		int spellSize = 16;
+		UtilTextureRender.drawTextureSquare(ptr, mouseX - 8, mouseY - 8, spellSize);
+		
 		/*
 		List<Integer> spellbook = ItemCyclicWand.Variant.getSpellsFromVariant(ItemCyclicWand.Variant.getVariantFromMeta(thePlayer.getHeldItem()));
 		
@@ -110,8 +113,6 @@ public class GuiSpellbook extends GuiScreen{
 		double ang = 0;
 		double cx, cy;
 
-		int spellSize = 16;
-		UtilTextureRender.drawTextureSquare(ptr, mouseX - 8, mouseY - 8, spellSize);
 
 		ISpell s;
 		for(int sp : spellbook){
