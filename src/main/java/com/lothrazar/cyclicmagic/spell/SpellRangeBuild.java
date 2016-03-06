@@ -50,7 +50,6 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer{
 
 	public  void castFromServer(BlockPos posMouseover, BlockPos posOffset, EntityPlayer p){
 
-		System.out.println("castFromServer"+this.getID());
 		World world = p.worldObj;
 		
 		ItemStack heldWand = p.getHeldItem();

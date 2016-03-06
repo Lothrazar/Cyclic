@@ -3,7 +3,6 @@ package com.lothrazar.cyclicmagic.gui.button;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.PlayerPowerups;
 import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.net.MessageToggleSpell;
@@ -88,7 +87,7 @@ public class ButtonSpellToggle extends GuiButton implements ITooltipButton{
 
 	public List<String> getTooltips(){
 
-		PlayerPowerups props = PlayerPowerups.get(thePlayer);
+		//PlayerPowerups props = PlayerPowerups.get(thePlayer);
 		List<String> tooltips = new ArrayList<String>();
 		tooltips.add(EnumChatFormatting.LIGHT_PURPLE + spell.getName());
 		tooltips.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("spell.meta.cost") + EnumChatFormatting.BLUE + spell.getCost());
@@ -97,10 +96,10 @@ public class ButtonSpellToggle extends GuiButton implements ITooltipButton{
 
 		tooltips.addAll(UtilString.splitIntoLine(spell.getInfo(), 28));
 
-		boolean unlocked = ItemCyclicWand.Spells.isSpellUnlocked(props.getPlayer().getHeldItem(), spell);
+		//boolean unlocked = ItemCyclicWand.Spells.isSpellUnlocked(props.getPlayer().getHeldItem(), spell);
 
-		String ed = unlocked ? EnumChatFormatting.GREEN + StatCollector.translateToLocal("spell.meta.enabled") : EnumChatFormatting.RED + StatCollector.translateToLocal("spell.meta.disabled");
-		tooltips.add(ed);
+		//String ed = unlocked ? EnumChatFormatting.GREEN + StatCollector.translateToLocal("spell.meta.enabled") : EnumChatFormatting.RED + StatCollector.translateToLocal("spell.meta.disabled");
+		//tooltips.add(ed);
 		return tooltips;
 	}
 }
