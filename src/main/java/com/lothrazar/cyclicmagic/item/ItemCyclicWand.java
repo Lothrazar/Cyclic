@@ -5,12 +5,14 @@ import java.util.Collections;
 import java.util.List;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.Const;
+import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.spell.passive.*;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -57,10 +59,7 @@ public class ItemCyclicWand extends Item{
 		// default to all unlocked
 		Spells.setUnlockDefault(stack);
 
-		Energy.rechargeBy(stack, Energy.START);
-
-		Energy.setMaximum(stack, Energy.MAX_DEFAULT);
-		Energy.setRegen(stack, Energy.REGEN_DEFAULT);
+		Energy.rechargeBy(stack, Energy.START); 
 	}
 
 	@Override
@@ -84,7 +83,7 @@ public class ItemCyclicWand extends Item{
 
 		ISpell spell = SpellRegistry.getSpellFromID(Spells.getSpellCurrent(stack));
 
-		int MAX = ItemCyclicWand.Energy.getMaximum(stack);
+		int MAX = ItemCyclicWand.Variant.getMaximum(stack);
 
 		String cost = EnumChatFormatting.DARK_GRAY + "[" + EnumChatFormatting.DARK_PURPLE +spell.getCost() + EnumChatFormatting.DARK_GRAY +"]";
 		tooltip.add(EnumChatFormatting.GREEN + spell.getName()+" "+cost);
@@ -92,7 +91,9 @@ public class ItemCyclicWand extends Item{
 		if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)){
 
 			tooltip.add(Energy.getCurrent(stack) + "/" + MAX);
-			tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("wand.regen") + EnumChatFormatting.DARK_BLUE + Energy.getRegen(stack));
+			int reg = Energy.getRegen(playerIn.worldObj,stack);
+			
+			tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("wand.regen") + EnumChatFormatting.DARK_BLUE + reg);
 
 			IPassiveSpell pcurrent = ItemCyclicWand.Spells.getPassiveCurrent(stack);
 			if(pcurrent != null){
@@ -124,24 +125,15 @@ public class ItemCyclicWand extends Item{
 
 	@Override
 	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected){
+ 
+		
+		boolean perSecond = (worldIn.getTotalWorldTime() % Const.TICKS_PER_SEC == 0);
+ 
+		if(worldIn.isRemote == false && perSecond){ 
 
-		
-		boolean doRegen = false;
-		
-		if(worldIn.getGameRules().getBoolean("doDaylightCycle")){
-			//then check by world tick time
-			doRegen = worldIn.getTotalWorldTime() % Const.TICKS_PER_SEC == 0 && (worldIn.rand.nextDouble() > 0.5);
+			Energy.rechargeBy(stack, Energy.getRegen(worldIn,stack));
 		}
-		else{
-			//the WorldTime is constant and never moves, the player or server has turned off the clock
-			//so allow regen even if time is stopped:
-			doRegen = (worldIn.rand.nextDouble() > 0.995);
-		}
-		
-		if(worldIn.isRemote == false && doRegen){
 
-			Energy.rechargeBy(stack, Energy.getRegen(stack));
-		}
 		// if held by something not a player? such as custom npc/zombie/etc
 		if(entityIn instanceof EntityPlayer == false){
 			return;
@@ -155,7 +147,7 @@ public class ItemCyclicWand extends Item{
 
 		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
 	}
-
+	
 	@Override
 	public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ){
 
@@ -372,46 +364,64 @@ public class ItemCyclicWand extends Item{
 	public static class Energy{
 
 		public static final int START = 100; // what you get on crafted
-		public static final int MAX_DEFAULT = 1000;
-		public static final int REGEN_DEFAULT = 1;
+		//public static final int REGEN_DEFAULT = 1;
 		private static final String NBT_MANA = "mana";
-		private static final String NBT_MAX = "max";
-		private static final String NBT_REGEN = "regen";
+		//private static final String NBT_REGEN = "regen";
+		private static final String NBT_LASTUSED = "used";
 
-		private static int getRegen(ItemStack stack){
+		public static final int RECHARGE_EXP_COST = 10;
+		public static final int RECHARGE_MANA_AMT = 25;
 
-			// support for old ones, or ones that werent crafted
+		private static int getRegen(World world, ItemStack stack){
+
+			//1- a counter since it was last used for a spell (not counting inventory)
+			// -> set to zero on use. 
+			// -> increment by 1 each second (not tick)
+			//2 a recharge level (rate)
+			// when counter passes certain thresholds, it updates the level
+			//3 when a recharge event happens, it checks the level and increments accordingly
+
+
+			long lastUsed = Energy.getCooldownCounter(stack);
+			
+			long timeSinceLast = (world.getTotalWorldTime() - lastUsed) / Const.TICKS_PER_SEC;
+			
+			if(timeSinceLast < 0 || timeSinceLast >= 30){
+				return 5;//because -1 for never used
+			}
+			else{
+				int rate = 0;
+				if(timeSinceLast < 15){
+					rate = 1;
+				}
+				else if(timeSinceLast < 20){
+					rate = 2;
+				}
+				else if(timeSinceLast < 25){
+					rate = 3;
+				}
+				else if(timeSinceLast < 30){
+					rate = 4;
+				}
+				return rate; 
+			}
+		}
+
+		public static void setCooldownCounter(ItemStack stack, long i){
+
 			NBTTagCompound tags = getNBT(stack);
-			if(!tags.hasKey(NBT_REGEN) || tags.getInteger(NBT_REGEN) <= 0){
-				setRegen(stack, REGEN_DEFAULT);
+			tags.setLong(NBT_LASTUSED, i);
+			stack.setTagCompound(tags); 
+		}
+
+		public static long getCooldownCounter(ItemStack stack){
+			
+			NBTTagCompound tags = getNBT(stack);
+			if(!tags.hasKey(NBT_LASTUSED) ){
+				return -1;
 			}
 
-			return getNBT(stack).getInteger(NBT_REGEN);
-		}
-
-		private static void setRegen(ItemStack stack, int m){
-
-			NBTTagCompound tags = getNBT(stack);
-			tags.setInteger(NBT_REGEN, m);
-			stack.setTagCompound(tags);
-		}
-
-		public static int getMaximum(ItemStack stack){
-
-			// support for old ones, or ones that werent crafted
-			NBTTagCompound tags = getNBT(stack);
-			if(!tags.hasKey(NBT_MAX) || tags.getInteger(NBT_MAX) <= 1){
-				setMaximum(stack, MAX_DEFAULT);
-			}
-
-			return getNBT(stack).getInteger(NBT_MAX);
-		}
-
-		private static void setMaximum(ItemStack stack, int m){
-
-			NBTTagCompound tags = getNBT(stack);
-			tags.setInteger(NBT_MAX, m);
-			stack.setTagCompound(tags);
+			return tags.getLong(NBT_LASTUSED);
 		}
 
 		public static int getCurrent(ItemStack stack){
@@ -424,10 +434,12 @@ public class ItemCyclicWand extends Item{
 			if(m < 0){
 				m = 0;
 			}
-			int MAX = ItemCyclicWand.Energy.getMaximum(stack);
+			int MAX = ItemCyclicWand.Variant.getMaximum(stack);
 			int filled = (int) Math.min(m, MAX);
-
-			getNBT(stack).setInteger(NBT_MANA, filled);
+			
+			NBTTagCompound tags = getNBT(stack);
+			tags.setInteger(NBT_MANA, filled); 
+			stack.setTagCompound(tags); 
 		}
 
 		public static void drainBy(ItemStack stack, int m){
@@ -443,7 +455,6 @@ public class ItemCyclicWand extends Item{
 
 	public enum SpellGroup{
 		EXPLORER,BUILDER,FARMER;
-		//TODO: FARMER ??
 	}
 	
 	public enum BuildType {
@@ -510,11 +521,54 @@ public class ItemCyclicWand extends Item{
 	}
 
 	public enum Variant {
-		QUARTZ, GOLD, LAPIS, DIAMOND, EMERALD;
+		QUARTZ, GOLD, LAPIS, DIAMOND, EMERALD, REDSTONE;
 
 		public int getMetadata(){
 
 			return ordinal();
+		}
+		
+		public static ItemStack getMaterialFromVariant(Variant v){
+			switch(v){
+			case DIAMOND:
+				return new ItemStack(Blocks.diamond_block); 
+			case EMERALD:
+				return new ItemStack(Blocks.emerald_block); 
+			case GOLD:
+				return new ItemStack(Blocks.gold_block); 
+			case LAPIS:
+				return new ItemStack(Blocks.lapis_block); 
+			case QUARTZ:
+				return new ItemStack(Blocks.quartz_block); 
+			case REDSTONE:
+				return new ItemStack(Blocks.redstone_block); 
+			default:
+				return null; 
+			} 
+		}
+		public static int getMaximumLargest(){
+			return ModMain.cfg.maxLargestForManabar;//literally exists only to draw manabar
+		}
+		
+
+		public static int getMaximum(ItemStack stack){
+
+			switch(getVariantFromMeta(stack)){
+			case DIAMOND:
+				return ModMain.cfg.maxDiamond; 
+			case EMERALD:
+				return ModMain.cfg.maxEmerald; 
+			case GOLD:
+				return ModMain.cfg.maxGold; 
+			case LAPIS:
+				return ModMain.cfg.maxLapis; 
+			case QUARTZ:
+				return ModMain.cfg.maxQuartz; 
+			case REDSTONE:
+				return ModMain.cfg.maxRedstone; 
+			default:
+				return 0; 
+			} 
 		}
 
 		public String getResource(){

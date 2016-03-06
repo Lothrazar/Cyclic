@@ -16,6 +16,7 @@
   	"1.1.1":"Fixed the mod crashing servers on startup",
   	"1.2.0":"Add far-reach building spell and lightning bolt spell",
   	"1.2.1":"Adds custom made sounds. ",
-  	"1.3.0":"Building spells now work at 64 range.  Add custom inventory inside the wand used by building spells.  Sounds and particles changed/added. "
+  	"1.3.0":"Building spells now work at 64 range.  Add custom inventory inside the wand used by building spells.  Sounds and particles changed/added. ",
+  	"1.3.1":"Wand energy configurable.  Regen is dynamic, starts slow and speeds up after not using wand for a while.  Added redstone variant.  ",
   }
 }

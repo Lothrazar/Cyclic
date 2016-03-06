@@ -17,12 +17,18 @@ public class SpellScreenRender{
 
 	private static final int xoffset = 30;
 	private static int xmain;
+	private static int xHud;
+	private static int yHud;
 	private static final int ymain = 14;
 	private static final int spellSize = 16;
-	private static final int manaWidth = 8;
-	private static final int manaHeight = 90;
-	private static final ResourceLocation manabar = new ResourceLocation(Const.MODID, "textures/spells/manabar.png");
-	private static final ResourceLocation manabar_empty = new ResourceLocation(Const.MODID, "textures/spells/manabar_empty.png");
+	
+
+	private static final int manaCtrWidth = 8;
+	private static final int manaCtrHeight = 92;
+	private static final int manaWidth = manaCtrWidth - 2;
+	//private static final int manaHeight = manaCtrHeight - 2;
+	private static final ResourceLocation mana = new ResourceLocation(Const.MODID, "textures/hud/manabar.png");
+	private static final ResourceLocation mana_container = new ResourceLocation(Const.MODID, "textures/hud/manabar_empty.png");
 
 	@SideOnly(Side.CLIENT)
 	public void drawSpellWheel(){
@@ -35,6 +41,8 @@ public class SpellScreenRender{
 			// NOT Minecraft.getMinecraft().displayWidth
 			xmain = res.getScaledWidth() - xoffset;
 		}
+		xHud = xmain - 20;
+		yHud = ymain - 12;
 
 		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
 
@@ -67,17 +75,23 @@ public class SpellScreenRender{
 
 	private void drawManabar(EntityPlayer player){
 
-		int x = xmain - 20, y = ymain - 12;
+		double MAX = ItemCyclicWand.Variant.getMaximum(player.getHeldItem());
+		double largest = ItemCyclicWand.Variant.getMaximumLargest();
+		
+		double ratio = MAX / largest;
+		
+		double hFull = manaCtrHeight * ratio;
+		
+		//draw the outer container
+		UtilTextureRender.drawTextureSimple(mana_container, xHud,yHud, manaCtrWidth, MathHelper.floor_double(hFull));
 
-		UtilTextureRender.drawTextureSimple(manabar_empty, x, y, manaWidth, manaHeight);
+		double current = ItemCyclicWand.Energy.getCurrent(player.getHeldItem());
+		double manaPercent = current / MAX;//not using MAX anymore!!!
 
-		float MAX = ItemCyclicWand.Energy.getMaximum(player.getHeldItem());
-		float current = ItemCyclicWand.Energy.getCurrent(player.getHeldItem());
-		float manaPercent = current / MAX;
-
-		double h = manaHeight * manaPercent;
-
-		UtilTextureRender.drawTextureSimple(manabar, x, y, manaWidth, MathHelper.floor_double(h));
+		double hEmpty = (hFull - 2) * manaPercent;
+		
+		//draw the filling inside
+		UtilTextureRender.drawTextureSimple(mana, xHud+1,yHud+1, manaWidth, MathHelper.floor_double(hEmpty));
 	}
 
 	private void drawCurrentSpell(EntityPlayer player, ISpell spellCurrent){

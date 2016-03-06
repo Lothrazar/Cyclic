@@ -23,6 +23,7 @@ public class SpellLinkingPortal extends BaseSpell implements ISpell{
 
 		super.init(id, name);
 		this.cost = 35;
+		this.cooldown = 20;
 	}
 
 	@Override
@@ -38,7 +39,7 @@ public class SpellLinkingPortal extends BaseSpell implements ISpell{
 			this.spawnParticle(world, player, player.getPosition());
 		}
 
-		return false;
+		return true;
 	}
 
 	@Override
