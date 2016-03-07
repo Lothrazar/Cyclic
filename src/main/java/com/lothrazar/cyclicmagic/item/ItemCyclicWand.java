@@ -313,6 +313,7 @@ public class ItemCyclicWand extends Item{
 
 		public static final int RECHARGE_EXP_COST = 10;
 		public static final int RECHARGE_MANA_AMT = 25;
+		public static final int UPGRADE_EXP_COST = 500;
 
 		public static int getMaximumLargest(){
 			return 1000;//literally exists only to draw manabar
