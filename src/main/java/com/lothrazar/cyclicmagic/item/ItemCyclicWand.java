@@ -53,10 +53,18 @@ public class ItemCyclicWand extends Item{
 	@Override
 	public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn){
 
-		// default to all unlocked
-		Spells.setUnlockDefault(stack);
-
+		for(ISpell s : SpellRegistry.getSpellbook()){
+			Spells.unlockSpell(stack, s.getID(), false);
+		}
+		//only these are unlocked
+		List<Integer> spellbook = Variant.getSpellsFromVariant(Variant.getVariantFromMeta(stack));
+		for(int id : spellbook){
+			Spells.unlockSpell(stack, id, true);
+		}
+ 
 		Energy.rechargeBy(stack, Energy.START); 
+		
+		super.onCreated(stack, worldIn, playerIn);
 	}
 
 	@Override
@@ -165,12 +173,12 @@ public class ItemCyclicWand extends Item{
 	}
 
 	public static class Spells{
-
+/*
 		private static void unlockSpell(ItemStack stack, ISpell spell, boolean unlocked){
 
 			unlockSpell(stack,spell.getID(), unlocked);
 		}
-		
+		*/
 		public static void unlockSpell(ItemStack stack, int spell_id, boolean unlocked){
 
 			NBTTagCompound nbt = getNBT(stack);
@@ -200,13 +208,6 @@ public class ItemCyclicWand extends Item{
 			return nbt.getBoolean(NBT_UNLOCKS + spell_id);
 		}
 
-		private static void setUnlockDefault(ItemStack stack){
-
-			for(ISpell s : SpellRegistry.getSpellbook()){
-				unlockSpell(stack, s, true);
-			}
-		}
-
 		public static int nextId(ItemStack stack, int spell_id){
 
 			return nextId(stack, spell_id, 0);
@@ -215,7 +216,7 @@ public class ItemCyclicWand extends Item{
 		public static int nextId(ItemStack stack, int spell_id, int infbreaker){
 
 			int next;
-
+ 
 			if(spell_id >= SpellRegistry.getSpellbook().size() - 1)
 				next = 0;// (int)spells[0];
 			else

@@ -2,10 +2,6 @@ package com.lothrazar.cyclicmagic.gui.button;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.SpellRegistry;
-import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
-import com.lothrazar.cyclicmagic.net.MessageToggleSpell;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.util.UtilString;
 import com.lothrazar.cyclicmagic.util.UtilTextureRender;
@@ -13,8 +9,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
@@ -39,29 +33,6 @@ public class ButtonSpellToggle extends GuiButton implements ITooltipButton{
 
 		
 		boolean pressed = super.mousePressed(mc, mouseX, mouseY);
-
-		if(pressed || false){ // DEPRECATED !!
-			// button id matches spell id
-			ItemStack wand = Minecraft.getMinecraft().thePlayer.getHeldItem();
-
-			if(wand == null || wand.getItem() instanceof ItemCyclicWand == false){
-				return pressed;
-			}
-
-			if(this.id == ItemCyclicWand.Spells.getSpellCurrent(wand)){
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentTranslation("spell.locked.current"));
-				return pressed;// cannot toggle current spell
-			}
-
-			if(this.id == SpellRegistry.Spells.inventory.getID() && ItemCyclicWand.Spells.isSpellUnlocked(Minecraft.getMinecraft().thePlayer.getHeldItem(), this.id)){
-				// spell IS unlocked already, do not let player disable it
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentTranslation("spell.locked.inventory"));
-			}
-			else{
-				ModMain.network.sendToServer(new MessageToggleSpell(this.id));
-			}
-		}
-
 		return pressed;
 	}
 

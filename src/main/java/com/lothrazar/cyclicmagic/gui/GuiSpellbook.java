@@ -52,7 +52,7 @@ public class GuiSpellbook extends GuiScreen{
 
 		xCenter = this.width / 2;
 		yCenter = this.height / 2;
-		radius = xCenter / 3 + 10;//was 26
+		radius = xCenter / 3 + 8;//was 26
 
 		arc = (2 * Math.PI) / spellbook.size();
 		int btnCenter = yCenter - h / 2;
@@ -69,11 +69,11 @@ public class GuiSpellbook extends GuiScreen{
 		ISpell s;
 		for(int sp : spellbook){
 			s = SpellRegistry.getSpellFromID(sp); 
-			
+			/*
 			boolean unlocked = ItemCyclicWand.Spells.isSpellUnlocked(props.getPlayer().getHeldItem(), s);
 			if(!unlocked){
 				continue;
-			}
+			}*/
 			cx = xCenter + radius * Math.cos(ang) - 2;
 			cy = yCenter + radius * Math.sin(ang) - 2;
 			
