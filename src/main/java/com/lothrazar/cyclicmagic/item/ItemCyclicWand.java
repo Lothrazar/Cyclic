@@ -496,7 +496,7 @@ public class ItemCyclicWand extends Item{
 	}
 
 	public enum Variant {
-		QUARTZ, GOLD, LAPIS, DIAMOND, EMERALD, REDSTONE;
+		DIAMOND, LAPIS,EMERALD, REDSTONE;
 
 		public int getMetadata(){
 			return ordinal();
@@ -515,7 +515,7 @@ public class ItemCyclicWand extends Item{
 			}
 			catch (Exception e){
 				// System.out.println("INVALID META::"+stack.getMetadata());
-				return Variant.QUARTZ;// this is damage zero anyway
+				return Variant.DIAMOND;// this is damage zero anyway
 			}
 		}
 
@@ -529,16 +529,10 @@ public class ItemCyclicWand extends Item{
 				break;
 			case EMERALD:
 				active = SpellRegistry.emeraldGroup; 
-				break;
-			case GOLD:
-				active = SpellRegistry.goldGroup; 
-				break;
+				break; 
 			case LAPIS:
 				active = SpellRegistry.lapisGroup; 
-				break;
-			case QUARTZ:
-				active = SpellRegistry.quartzGroup; 
-				break;
+				break; 
 			case REDSTONE:
 				active = SpellRegistry.redstoneGroup; 
 				break;
@@ -556,18 +550,12 @@ public class ItemCyclicWand extends Item{
 				break;
 			case EMERALD:
 				heldItem.setItemDamage(Variant.REDSTONE.ordinal());
-				break;
-			case GOLD:
+				break; 
+			case REDSTONE:
 				heldItem.setItemDamage(Variant.LAPIS.ordinal());
-				break;
+				break; 
 			case LAPIS:
 				heldItem.setItemDamage(Variant.DIAMOND.ordinal());
-				break;
-			case QUARTZ:
-				heldItem.setItemDamage(Variant.GOLD.ordinal());
-				break;
-			case REDSTONE:
-				heldItem.setItemDamage(Variant.QUARTZ.ordinal());
 				break;
 			default:
 				break;

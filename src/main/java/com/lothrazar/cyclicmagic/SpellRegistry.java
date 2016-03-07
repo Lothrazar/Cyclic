@@ -24,8 +24,8 @@ public class SpellRegistry{
 	public static List<Integer> lapisGroup = new ArrayList<Integer>();
 	public static List<Integer> emeraldGroup = new ArrayList<Integer>();
 	public static List<Integer> diamondGroup = new ArrayList<Integer>();
-	public static List<Integer> goldGroup = new ArrayList<Integer>();
-	public static List<Integer> quartzGroup = new ArrayList<Integer>();
+	//public static List<Integer> goldGroup = new ArrayList<Integer>();
+	//public static List<Integer> quartzGroup = new ArrayList<Integer>();
 
 	static SpellScreenRender screen;
 	public static SpellCaster caster;
@@ -197,13 +197,7 @@ public class SpellRegistry{
 				, SpellRegistry.Spells.reachplace.getID() 
 				//,SpellRegistry.Spells.haste.getID()
 				);
-//TODO: maybe remove these/ rethink. needs testing
-		Collections.addAll(goldGroup, SpellRegistry.Spells.inventory.getID()
-				
-				);
-		Collections.addAll(quartzGroup, SpellRegistry.Spells.inventory.getID()
-				
-				);
+ 
 		Collections.addAll(lapisGroup, SpellRegistry.Spells.inventory.getID()
 				,SpellRegistry.Spells.nightvision.getID()
 				,SpellRegistry.Spells.ghost.getID()
