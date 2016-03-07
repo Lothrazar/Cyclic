@@ -50,4 +50,24 @@ public class ModMain{
 
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiRegistry());
 	}
+	
+
+/*131 (unreleased)
+
+-fix typo in config file
+-add max and mins to wand energy in config	
+-fix cooldown and mana cost of waypoint spell
+-change manabar render apperaance to match quantity
+
+ * --- COST of each spell in config !!! 
+ * 
+1. text message if we use a build spell but invo is empty
+- max and regen in nbt, not config
+2. fix phasing spell, or get rid of it!
+3. maybe add some levitation thing
+4. chest give failure message text (only useable on a container)
+
+regen space in text
+set maximum function/button
+*/
 }
