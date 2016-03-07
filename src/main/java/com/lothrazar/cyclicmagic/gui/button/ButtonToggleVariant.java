@@ -1,13 +1,16 @@
 package com.lothrazar.cyclicmagic.gui.button;
 
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.net.MessageToggleVariant;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ButtonToggleVariant extends GuiButton{
+public class ButtonToggleVariant extends GuiButton implements ITooltipButton{
  
 
 	public ButtonToggleVariant(String g,int id,int x, int y, int width){
@@ -27,5 +30,12 @@ public class ButtonToggleVariant extends GuiButton{
 		}
 
 		return pressed;
+	}
+
+	@Override
+	public List<String> getTooltips(){
+		List<String> tooltips = new ArrayList<String>();
+		tooltips.add(StatCollector.translateToLocal("button.variant.tooltip"));
+		return tooltips;
 	}
 }

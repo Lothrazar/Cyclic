@@ -27,19 +27,28 @@ public class GuiWandInventory extends GuiContainer{
 
 		super.initGui();
 
-		final int y = this.guiTop + padding  ;
+		int y = this.guiTop + padding  ;
 		int x = this.guiLeft + 5;
 
 		int width = 20;
 		this.buttonList.add(new ButtonSpellCircle(id, x, y, width));
 
-		/*
+		 
+		id++;
+		x += width + padding;
+		this.buttonList.add(new ButtonUpgrade(inventory.getPlayer(),id, x, y, width));
+ 
+
 		id++;
 		x += width + padding;
 		this.buttonList.add(new ButtonRecharge(id, x, y, width));
-*/
+		
+		//Next row
+		x = this.guiLeft + 5;
+		y += 20 + padding;
+		
 		id++;
-		x += width + padding;
+		//x += width + padding;
 		this.buttonList.add(new ButtonToggleVariant("", id, x, y, width));
 		
 		id++;

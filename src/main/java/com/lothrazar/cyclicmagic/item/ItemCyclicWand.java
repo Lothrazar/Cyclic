@@ -306,7 +306,7 @@ public class ItemCyclicWand extends Item{
 	public static class Energy{
 
 		public static final int START = 100; // what you get on crafted
-		//public static final int REGEN_DEFAULT = 1;
+		public static final int MAX_DEFAULT = 300;
 		private static final String NBT_MANA = "mana";
 		private static final String NBT_MAX = "energymax";
 		private static final String NBT_LASTUSED = "used";
@@ -322,7 +322,7 @@ public class ItemCyclicWand extends Item{
 
 			int max = getNBT(stack).getInteger(NBT_MAX);
 			if(max <= 0){
-				max = 200;
+				max = MAX_DEFAULT;
 			}
 			return max;
 		}
