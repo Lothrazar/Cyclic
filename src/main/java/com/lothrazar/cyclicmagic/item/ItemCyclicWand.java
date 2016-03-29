@@ -120,11 +120,21 @@ public class ItemCyclicWand extends Item{
 	}
 
 	@Override
+	public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ){
+
+		// If onItemUse returns false onItemRightClick will be called.
+		// http://www.minecraftforge.net/forum/index.php?topic=31966.0
+		// so if this casts and succeeds, the right click is cancelled
+		return SpellRegistry.caster.tryCastCurrent(worldIn, playerIn, pos, side);
+	}
+	
+	@Override
 	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn){
 
 		// so this only happens IF either onItemUse did not fire at all, or it
 		// fired and casting failed
 		SpellRegistry.caster.tryCastCurrent(worldIn, playerIn, null, null);
+		
 		return super.onItemRightClick(itemStackIn, worldIn, playerIn);
 	}
 
@@ -150,15 +160,6 @@ public class ItemCyclicWand extends Item{
 		}
 
 		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
-	}
-	
-	@Override
-	public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ){
-
-		// If onItemUse returns false onItemRightClick will be called.
-		// http://www.minecraftforge.net/forum/index.php?topic=31966.0
-		// so if this casts and succeeds, the right click is cancelled
-		return SpellRegistry.caster.tryCastCurrent(worldIn, playerIn, pos, side);
 	}
 
 	@Override
@@ -450,15 +451,17 @@ public class ItemCyclicWand extends Item{
 
 		public static boolean isBlockedBySpellTimer(ItemStack wand){
 
-			return getSpellTimer(wand) == 0;
+			int t = getSpellTimer(wand);
+			return (t > 0);
 		}
 		public static void tickSpellTimer(ItemStack wand){
-			
-			if(getSpellTimer(wand) < 0){
+
+			int t = getSpellTimer(wand);
+			if(t < 0){
 				setSpellTimer(wand,0);
 			}
-			else if(getSpellTimer(wand) > 0){
-				setSpellTimer(wand,getSpellTimer(wand) - 1);
+			else if(t > 0){
+				setSpellTimer(wand,t - 1);
 			}
 		}
 	}
