@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.gui;
 
 import java.util.List;
 import com.lothrazar.cyclicmagic.Const;
-import com.lothrazar.cyclicmagic.PlayerPowerups;
 import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.gui.button.ButtonClose;
 import com.lothrazar.cyclicmagic.gui.button.ButtonSpellToggle;
@@ -33,13 +32,11 @@ public class GuiSpellbook extends GuiScreen{
 	final int textureWidth = 200;
 	final int textureHeight = 180;
 	final int h = 20;// all btn height
-	PlayerPowerups props;
 
 	public GuiSpellbook(EntityPlayer p){
 
 		super();
 		this.thePlayer = p;
-		this.props = PlayerPowerups.get(thePlayer);
 	}
 
 	@Override

@@ -29,6 +29,8 @@ minecraft {
     runDir = "run"
     
     mappings = "stable_20"
+    
+     makeObfSourceJar = false
 }
 
 dependencies {

@@ -48,7 +48,7 @@ public class SpellScreenRender{
 
 		ISpell spellCurrent = SpellRegistry.caster.getPlayerCurrentISpell(player);
 
-		drawSpellHeader(PlayerPowerups.get(player), spellCurrent);
+		drawSpellHeader(player, spellCurrent);
 
 		drawCurrentSpell(player, spellCurrent);
 
@@ -61,11 +61,11 @@ public class SpellScreenRender{
 		}
 	}
 
-	private void drawSpellHeader(PlayerPowerups props, ISpell spellCurrent){
+	private void drawSpellHeader(EntityPlayer player, ISpell spellCurrent){
 
 		int dim = spellSize - 4, x = xmain + 1, y = ymain - 12;
 
-		if(SpellRegistry.caster.isBlockedBySpellTImer(props) == false){
+		if(ItemCyclicWand.Timer.isBlockedBySpellTimer(player.getHeldItem()) == false){
 			UtilTextureRender.drawTextureSquare(spellCurrent.getIconDisplayHeaderEnabled(), x, y, dim);
 		}
 		else{

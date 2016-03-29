@@ -432,6 +432,37 @@ public class ItemCyclicWand extends Item{
 		}
 	}
  
+	public static class Timer{
+		private final static String NBT = "casttimeout";
+		
+		public static int getSpellTimer(ItemStack wand){
+ 
+			NBTTagCompound tags = getNBT(wand);
+
+			return tags.getInteger(NBT);
+		}
+		public static void setSpellTimer(ItemStack wand,int current){
+
+			NBTTagCompound tags = getNBT(wand);
+
+			tags.setInteger(NBT,current);
+		}
+
+		public static boolean isBlockedBySpellTimer(ItemStack wand){
+
+			return getSpellTimer(wand) == 0;
+		}
+		public static void tickSpellTimer(ItemStack wand){
+
+			if(getSpellTimer(wand) < 0){
+				setSpellTimer(wand,0);
+			}
+			else if(getSpellTimer(wand) > 0){
+				setSpellTimer(wand,getSpellTimer(wand) - 1);
+			}
+		}
+	}
+	
 	public enum BuildType {
 		FIRST, ROTATE, RANDOM, MATCH;
 

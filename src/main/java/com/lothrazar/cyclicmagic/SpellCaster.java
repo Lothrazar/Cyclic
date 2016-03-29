@@ -13,15 +13,6 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 
 public class SpellCaster{
 
-	public boolean isBlockedBySpellTImer(EntityPlayer player){
-
-		return isBlockedBySpellTImer(PlayerPowerups.get(player));
-	}
-
-	public boolean isBlockedBySpellTImer(PlayerPowerups props){
-
-		return !(props.getSpellTimer() == 0);
-	}
 
 	public boolean tryCastCurrent(World world, EntityPlayer player, BlockPos pos, EnumFacing side){
 
@@ -30,7 +21,7 @@ public class SpellCaster{
 
 	public boolean tryCast(ISpell spell, World world, EntityPlayer player, BlockPos pos, EnumFacing side){
 
-		if(isBlockedBySpellTImer(player)){
+		if(ItemCyclicWand.Timer.isBlockedBySpellTimer(player.getHeldItem())){
 			return false;
 		}
 
@@ -62,7 +53,7 @@ public class SpellCaster{
 		
 		ItemCyclicWand.Energy.setCooldownCounter(player.getHeldItem(), world.getTotalWorldTime());
 
-		PlayerPowerups.get(player).setSpellTimer(spell.getCastCooldown());
+		ItemCyclicWand.Timer.setSpellTimer(player.getHeldItem(),spell.getCastCooldown());
 	}
 
 	public void shiftLeft(EntityPlayer player){
@@ -86,16 +77,6 @@ public class SpellCaster{
 		UtilSound.playSound(player.worldObj, player.getPosition(), UtilSound.Own.bip);
 	}
 
-	public void tickSpellTimer(EntityPlayer player){
-
-		PlayerPowerups props = PlayerPowerups.get(player);
-		if(props.getSpellTimer() < 0){
-			props.setSpellTimer(0);
-		}
-		else if(props.getSpellTimer() > 0){
-			props.setSpellTimer(props.getSpellTimer() - 1);
-		}
-	}
 
 	public ISpell getPlayerCurrentISpell(EntityPlayer player){
 

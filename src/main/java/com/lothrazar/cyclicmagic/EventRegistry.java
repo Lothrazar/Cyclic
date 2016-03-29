@@ -8,9 +8,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
@@ -74,20 +72,6 @@ public class EventRegistry{
 		}
 	}
 
-	@SubscribeEvent
-	public void onClonePlayer(PlayerEvent.Clone event){
-
-		PlayerPowerups.get(event.entityPlayer).copy(PlayerPowerups.get(event.original));
-	}
-
-	@SubscribeEvent
-	public void onEntityConstructing(EntityConstructing event){
-
-		if(event.entity instanceof EntityPlayer && PlayerPowerups.get((EntityPlayer) event.entity) == null){
-			PlayerPowerups.register((EntityPlayer) event.entity);
-		}
-	}
-
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void onRenderTextOverlay(RenderGameOverlayEvent.Text event){
@@ -108,9 +92,10 @@ public class EventRegistry{
 		}
 
 		if(event.entityLiving instanceof EntityPlayer && event.entity.worldObj.isRemote == false){
+			EntityPlayer p = (EntityPlayer) event.entityLiving;
 			SpellGhost.onPlayerUpdate(event);
 
-			SpellRegistry.caster.tickSpellTimer((EntityPlayer) event.entityLiving);
+			ItemCyclicWand.Timer.tickSpellTimer(p.getHeldItem());
 		}
 
 		PotionRegistry.tickSlowfall(event);
