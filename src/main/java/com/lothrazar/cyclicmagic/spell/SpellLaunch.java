@@ -1,9 +1,13 @@
 package com.lothrazar.cyclicmagic.spell;
 
+import com.lothrazar.cyclicmagic.Const;
+import com.lothrazar.cyclicmagic.PotionRegistry;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
@@ -14,6 +18,7 @@ public class SpellLaunch extends BaseSpell implements ISpell{
 
 	private static final float power = 1.005F;
 	private static final float mountPower = 1.01F;
+	private static final int slowfallSec = 10;//TODO: this 10 seconds in config..??
 
 	public SpellLaunch(int id, String name){
 
@@ -48,6 +53,10 @@ public class SpellLaunch extends BaseSpell implements ISpell{
 			// boost power a bit, horses are heavy as F
 			player.ridingEntity.addVelocity(velX * mountPower, velY * mountPower, velZ * mountPower);
 
+			if(player.ridingEntity instanceof EntityLivingBase){
+				//if its a horse or something
+				((EntityLivingBase)player.ridingEntity).addPotionEffect(new PotionEffect(PotionRegistry.slowfall.id,slowfallSec * Const.TICKS_PER_SEC));
+			}
 		}
 		else{
 			player.addVelocity(velX, velY, velZ);
@@ -55,6 +64,9 @@ public class SpellLaunch extends BaseSpell implements ISpell{
 
 		this.playSound(world, null, player.getPosition());
 		this.spawnParticle(world, player, player.getPosition());
+		
+		
+		player.addPotionEffect(new PotionEffect(PotionRegistry.slowfall.id,slowfallSec * Const.TICKS_PER_SEC));
 
 		return true;
 	}

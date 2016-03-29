@@ -100,5 +100,14 @@ public class EventRegistry{
 				ItemCyclicWand.Timer.tickSpellTimer(wand);
 			}
 		}
+		
+
+		PotionRegistry.tickSlowfall(event);
+
+		PotionRegistry.tickWaterwalk(event);
+
+		PotionRegistry.tickFrost(event);
+
+		PotionRegistry.tickMagnet(event);
 	}
 }

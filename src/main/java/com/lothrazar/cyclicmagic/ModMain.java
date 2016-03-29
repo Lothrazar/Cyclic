@@ -43,6 +43,7 @@ public class ModMain{
 		ItemRegistry.register();
 		BlockRegistry.register();
 		SpellRegistry.register();
+		PotionRegistry.register();
 
 		proxy.register();
 
@@ -67,5 +68,8 @@ public class ModMain{
 
 regen space in text
 set maximum function/button
+
+
+
 */
 }
