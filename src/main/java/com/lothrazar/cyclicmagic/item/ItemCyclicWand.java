@@ -453,7 +453,7 @@ public class ItemCyclicWand extends Item{
 			return getSpellTimer(wand) == 0;
 		}
 		public static void tickSpellTimer(ItemStack wand){
-
+			
 			if(getSpellTimer(wand) < 0){
 				setSpellTimer(wand,0);
 			}

@@ -6,6 +6,7 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
@@ -95,7 +96,10 @@ public class EventRegistry{
 			EntityPlayer p = (EntityPlayer) event.entityLiving;
 			SpellGhost.onPlayerUpdate(event);
 
-			ItemCyclicWand.Timer.tickSpellTimer(p.getHeldItem());
+			ItemStack wand = p.getHeldItem();
+			if(wand != null && wand.getItem() instanceof ItemCyclicWand){
+				ItemCyclicWand.Timer.tickSpellTimer(wand);
+			}
 		}
 
 		PotionRegistry.tickSlowfall(event);
