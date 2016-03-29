@@ -50,12 +50,12 @@ public class GuiWandInventory extends GuiContainer{
 		id++;
 		//x += width + padding;
 		this.buttonList.add(new ButtonToggleVariant("", id, x, y, width));
-		
+		/*
 		id++;
 		x += width + padding;
 		width = 50;
 		this.buttonList.add(new ButtonPassiveToggle(inventory.getPlayer(), id, x, y, width));
-
+*/
 		id++;
 		x += width + padding;
 		width = 50;

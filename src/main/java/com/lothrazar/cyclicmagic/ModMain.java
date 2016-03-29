@@ -42,8 +42,6 @@ public class ModMain{
 
 		ItemRegistry.register();
 		BlockRegistry.register();
-		ProjectileRegistry.register();
-		PotionRegistry.register();
 		SpellRegistry.register();
 
 		proxy.register();

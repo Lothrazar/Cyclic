@@ -1,12 +1,10 @@
 package com.lothrazar.cyclicmagic.item;
 
-import java.util.ArrayList; 
 import java.util.List;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
-import com.lothrazar.cyclicmagic.spell.passive.*;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -25,7 +23,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemCyclicWand extends Item{
 
 	private static final String NBT_SPELLCURRENT = "spell_id";
-	private static final String NBT_PASSIVECURRENT = "passive_id";
 	private static final String NBT_UNLOCKS = "unlock_";
 
 	public ItemCyclicWand(){
@@ -99,11 +96,12 @@ public class ItemCyclicWand extends Item{
 			int reg = Energy.getRegen(playerIn.worldObj,stack);
 			
 			tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("wand.regen") + EnumChatFormatting.DARK_BLUE + reg);
-
+/*
 			IPassiveSpell pcurrent = ItemCyclicWand.Spells.getPassiveCurrent(stack);
 			if(pcurrent != null){
 				tooltip.add(EnumChatFormatting.DARK_GRAY +StatCollector.translateToLocal("spellpassive.prefix")+ pcurrent.getName());
 			}
+			*/
 		}
 		else{
 			tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("item.shift"));
@@ -148,17 +146,19 @@ public class ItemCyclicWand extends Item{
 			Energy.rechargeBy(stack, Energy.getRegen(worldIn,stack));
 		}
 
+		/*
 		// if held by something not a player? such as custom npc/zombie/etc
 		if(entityIn instanceof EntityPlayer == false){
 			return;
 		}
 		EntityPlayer p = (EntityPlayer) entityIn;
+		
 		IPassiveSpell pcurrent = ItemCyclicWand.Spells.getPassiveCurrent(stack);
 		if(pcurrent != null && pcurrent.canTrigger(p)){
 			
 			pcurrent.trigger(p);
 		}
-
+*/
 		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
 	}
 
@@ -273,7 +273,7 @@ public class ItemCyclicWand extends Item{
 
 			stack.setTagCompound(tags);
 		}
-
+/*
 		public static int getPassiveCurrentID(ItemStack stack){
 
 			return getNBT(stack).getInteger(NBT_PASSIVECURRENT);
@@ -302,7 +302,7 @@ public class ItemCyclicWand extends Item{
 			tags.setInteger(NBT_PASSIVECURRENT, current);
 
 			stack.setTagCompound(tags);
-		}
+		}*/
 	}
 
 	public static class Energy{
@@ -556,7 +556,7 @@ public class ItemCyclicWand extends Item{
 		}
 
 		public static List<Integer> getSpellsFromVariant(Variant v){
-
+/*
 			List<Integer> active = new ArrayList<Integer>();
 			//TODO: instead do a getGroupFromVariant.. this is temporary
 			switch( v){
@@ -574,8 +574,8 @@ public class ItemCyclicWand extends Item{
 				break;
 			default:
 				break;
-			}
-			return active;
+			}*/
+			return SpellRegistry.redstoneGroup;
 		}
 		
 		public static void toggle(ItemStack heldItem){

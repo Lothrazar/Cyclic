@@ -20,7 +20,6 @@ import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.net.MessageKeyLeft;
 import com.lothrazar.cyclicmagic.net.MessageKeyRight;
 import com.lothrazar.cyclicmagic.net.MessageOpenSpellbook;
-import com.lothrazar.cyclicmagic.spell.SpellGhost;
 
 public class EventRegistry{
 
@@ -94,20 +93,12 @@ public class EventRegistry{
 
 		if(event.entityLiving instanceof EntityPlayer && event.entity.worldObj.isRemote == false){
 			EntityPlayer p = (EntityPlayer) event.entityLiving;
-			SpellGhost.onPlayerUpdate(event);
+			//SpellGhost.onPlayerUpdate(event);
 
 			ItemStack wand = p.getHeldItem();
 			if(wand != null && wand.getItem() instanceof ItemCyclicWand){
 				ItemCyclicWand.Timer.tickSpellTimer(wand);
 			}
 		}
-
-		PotionRegistry.tickSlowfall(event);
-
-		PotionRegistry.tickWaterwalk(event);
-
-		PotionRegistry.tickFrost(event);
-
-		PotionRegistry.tickMagnet(event);
 	}
 }

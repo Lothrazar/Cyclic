@@ -12,25 +12,9 @@ public class ItemRegistry{
 
 	public static ArrayList<Item> items = new ArrayList<Item>();
 
-	public static ItemRespawnEggAnimal respawn_egg;
-	public static ItemChestSack chest_sack;
 	public static ItemCyclicWand cyclic_wand;
-	public static ItemPaperCarbon carbon_paper;
-	public static ItemWaypointPortal waypoint_portal;
 
 	public static void register(){
-
-		chest_sack = new ItemChestSack();
-		ItemRegistry.registerItem(chest_sack, "chest_sack");
-
-		respawn_egg = new ItemRespawnEggAnimal();
-		ItemRegistry.registerItem(respawn_egg, "respawn_egg");
-
-		carbon_paper = new ItemPaperCarbon();
-		ItemRegistry.registerItem(carbon_paper, "carbon_paper");
-
-		waypoint_portal = new ItemWaypointPortal();
-		ItemRegistry.registerItem(waypoint_portal, "waypoint_portal");
 
 		cyclic_wand = new ItemCyclicWand();
 		cyclic_wand.setUnlocalizedName("cyclic_wand");
