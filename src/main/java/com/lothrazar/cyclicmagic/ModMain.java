@@ -69,7 +69,7 @@ public class ModMain{
 regen space in text
 set maximum function/button
 
-
+//TODO: waterwalk/slowfall/frost potions are unused
 
 */
 }

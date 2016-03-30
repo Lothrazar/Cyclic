@@ -3,6 +3,9 @@ package com.lothrazar.cyclicmagic;
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.block.*;
 import net.minecraft.block.Block;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockRegistry{
@@ -22,5 +25,12 @@ public class BlockRegistry{
 
 		block_fragile = new BlockFragile();
 		BlockRegistry.registerBlock(block_fragile, "block_fragile");
+		block_fragile.setCreativeTab(CreativeTabs.tabMisc);
+		
+		GameRegistry.addRecipe(new ItemStack(block_fragile), 
+				"s s", 
+				" s ", 
+				"s s", 
+				's', new ItemStack(Items.stick));
 	}
 }
