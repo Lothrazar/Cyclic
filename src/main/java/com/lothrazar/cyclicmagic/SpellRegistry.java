@@ -12,9 +12,7 @@ import net.minecraft.item.ItemStack;
 public class SpellRegistry{
 
 	private static ArrayList<ISpell> spellbook;
-	private static HashMap<Integer, ISpell> hashbook;
-	//private static HashMap<Integer, IPassiveSpell> passives;
-	public static List<Integer> redstoneGroup = new ArrayList<Integer>(); 
+	private static HashMap<Integer, ISpell> hashbook; 
 
 
 	static SpellScreenRender screen;
@@ -71,22 +69,7 @@ public class SpellRegistry{
 
 		Spells.reachdown = new SpellRangeBuild(++spellId, "reachdown",SpellRangeBuild.PlaceType.DOWN);
 		registerSpell(Spells.reachdown);
- 
-		Collections.addAll(redstoneGroup, SpellRegistry.Spells.inventory.getID()
-				, SpellRegistry.Spells.pull.getID()
-				, SpellRegistry.Spells.push.getID()
-		
-			 	,SpellRegistry.Spells.launch.getID()
-				//TODO: also make a 'levitate' and a 'vertical' one
-				, SpellRegistry.Spells.rotate.getID()
-				, SpellRegistry.Spells.replacer.getID()
-				, SpellRegistry.Spells.reachdown.getID()
-				, SpellRegistry.Spells.reachup.getID()
-				, SpellRegistry.Spells.reachplace.getID() 
-				//,SpellRegistry.Spells.haste.getID()
-				);
- 
-		
+  
 	}
 
 	private static void registerSpell(ISpell spell){

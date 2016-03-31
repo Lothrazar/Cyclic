@@ -41,14 +41,14 @@ public class ItemCyclicWand extends Item{
 		}
 		return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged);
 	}
-
+/*
 	@Override
 	@SideOnly(Side.CLIENT)
 	public boolean isFull3D(){
 
 		return true;
 	}
-
+*/
 	@Override
 	public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn){
 
@@ -56,32 +56,15 @@ public class ItemCyclicWand extends Item{
 			Spells.unlockSpell(stack, s.getID(), false);
 		}
 		//only these are unlocked
-		List<Integer> spellbook = Variant.getSpellsFromVariant(Variant.getVariantFromMeta(stack));
-		for(int id : spellbook){
-			Spells.unlockSpell(stack, id, true);
+		for(ISpell s :  SpellRegistry.getSpellbook()){
+			Spells.unlockSpell(stack, s.getID(), true);
 		}
  
 		Energy.rechargeBy(stack, Energy.START); 
 		
 		super.onCreated(stack, worldIn, playerIn);
 	}
-
-	@Override
-	public String getUnlocalizedName(ItemStack stack){
-
-		String name = super.getUnlocalizedName() + "_" + Variant.getVariantFromMeta(stack).name().toLowerCase();
-
-		return name;
-	}
-
-	@SideOnly(Side.CLIENT)
-	public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems){
-
-		for(int i = 0; i < Variant.values().length; i++){
-			subItems.add(new ItemStack(itemIn, 1, i));
-		}
-	}
-
+	
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced){
 
@@ -544,71 +527,4 @@ public class ItemCyclicWand extends Item{
 		}
 	}
 
-	public enum Variant {
-		DIAMOND, LAPIS,EMERALD, REDSTONE;
-
-		public int getMetadata(){
-			return ordinal();
-		}
- 
-		
-		public String getResource(){
-
-			return Const.TEXTURE_LOCATION + "cyclic_wand_" + this.name().toLowerCase();
-		}
-
-		public static Variant getVariantFromMeta(ItemStack stack){
-
-			try{
-				return Variant.values()[stack.getMetadata()];
-			}
-			catch (Exception e){
-				// System.out.println("INVALID META::"+stack.getMetadata());
-				return Variant.DIAMOND;// this is damage zero anyway
-			}
-		}
-
-		public static List<Integer> getSpellsFromVariant(Variant v){
-/*
-			List<Integer> active = new ArrayList<Integer>();
-			//TODO: instead do a getGroupFromVariant.. this is temporary
-			switch( v){
-			case DIAMOND:	
-				active = SpellRegistry.diamondGroup; 
-				break;
-			case EMERALD:
-				active = SpellRegistry.emeraldGroup; 
-				break; 
-			case LAPIS:
-				active = SpellRegistry.lapisGroup; 
-				break; 
-			case REDSTONE:
-				active = SpellRegistry.redstoneGroup; 
-				break;
-			default:
-				break;
-			}*/
-			return SpellRegistry.redstoneGroup;
-		}
-		
-		public static void toggle(ItemStack heldItem){
-			//TODO: instead do a getGroupFromVariant.. this is temporary
-			switch( getVariantFromMeta(heldItem)){
-			case DIAMOND:	
-				heldItem.setItemDamage(Variant.EMERALD.ordinal());
-				break;
-			case EMERALD:
-				heldItem.setItemDamage(Variant.REDSTONE.ordinal());
-				break; 
-			case REDSTONE:
-				heldItem.setItemDamage(Variant.LAPIS.ordinal());
-				break; 
-			case LAPIS:
-				heldItem.setItemDamage(Variant.DIAMOND.ordinal());
-				break;
-			default:
-				break;
-			}
-		}
-	}
 }

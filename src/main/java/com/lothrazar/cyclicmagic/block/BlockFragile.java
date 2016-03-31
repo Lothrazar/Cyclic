@@ -35,7 +35,7 @@ public class BlockFragile extends Block{
 
 		//float volumeIn, float pitchIn, SoundEvent breakSoundIn, SoundEvent stepSoundIn, SoundEvent placeSoundIn, SoundEvent hitSoundIn, SoundEvent fallSoundIn)
 	    
-		ResourceLocation resSound = new ResourceLocation(UtilSound.Own.crackle);
+		ResourceLocation resSound = new ResourceLocation(Const.MODID,"sounds/"+UtilSound.Own.crackle);
 		SoundEvent s = new SoundEvent(resSound);
 		
 		this.setStepSound(new SoundType( 1.0F, 1.0F, s,s,s,s,s)		);

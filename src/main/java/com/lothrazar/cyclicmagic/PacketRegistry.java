@@ -25,7 +25,7 @@ public class PacketRegistry{
 		ModMain.network.registerMessage(MessageSpellReplacer.class, MessageSpellReplacer.class, packetID++, Side.SERVER);
 		ModMain.network.registerMessage(MessageRecharge.class, MessageRecharge.class, packetID++, Side.SERVER);
 		//ModMain.network.registerMessage(MessageTogglePassive.class, MessageTogglePassive.class, packetID++, Side.SERVER);
-		ModMain.network.registerMessage(MessageToggleVariant.class, MessageToggleVariant.class, packetID++, Side.SERVER);
+	//	ModMain.network.registerMessage(MessageToggleVariant.class, MessageToggleVariant.class, packetID++, Side.SERVER);
 		//ModMain.network.registerMessage(MessageTogglePlace.class, MessageTogglePlace.class, packetID++, Side.SERVER);
 		ModMain.network.registerMessage(MessageUpgrade.class, MessageUpgrade.class, packetID++, Side.SERVER);
 		

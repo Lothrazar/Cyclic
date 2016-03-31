@@ -33,12 +33,6 @@ public class GuiWandInventory extends GuiContainer{
 		int width = 20;
 		this.buttonList.add(new ButtonSpellCircle(id, x, y, width));
 
-		 /*
-		id++;
-		x += width + padding;
-		this.buttonList.add(new ButtonUpgrade(inventory.getPlayer(),id, x, y, width));
- */
-
 		id++;
 		x += width + padding;
 		this.buttonList.add(new ButtonRecharge(id, x, y, width));
@@ -46,16 +40,7 @@ public class GuiWandInventory extends GuiContainer{
 		//Next row
 		x = this.guiLeft + 5;
 		y += 20 + padding;
-		
-		id++;
-		//x += width + padding;
-		this.buttonList.add(new ButtonToggleVariant("", id, x, y, width));
-		/*
-		id++;
-		x += width + padding;
-		width = 50;
-		this.buttonList.add(new ButtonPassiveToggle(inventory.getPlayer(), id, x, y, width));
-*/
+	
 		id++;
 		x += width + padding;
 		width = 50;

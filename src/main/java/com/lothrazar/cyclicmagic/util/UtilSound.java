@@ -27,20 +27,20 @@ public class UtilSound{
 		// internal sounds added by mod
 		// all are created by ME using a third party tool: http://www.bfxr.net/
 		// then converted from wav to ogg with https://online-audio-converter.com/
-		public static final String bip = Const.MODID + ":bip";// spell rotate
-		public static final String buzzp = Const.MODID + ":buzzp";// spell cast failure. water bolt
+		public static final String bip = "bip";// spell rotate
+		public static final String buzzp = "buzzp";// spell cast failure. water bolt
 																	// hit in nether. portal
 																	// waypoint x dimension. wand
 																	// xp refil fail
-		public static final String bwoaaap = Const.MODID + ":bwoaaap";// used for launch spell
+		public static final String bwoaaap =  "bwoaaap";// used for launch spell
 
-		public static final String fill = Const.MODID + ":fill";// fill wand energy with xp
+		public static final String fill =  "fill";// fill wand energy with xp
 
-		public static final String pew = Const.MODID + ":pew";// thrown spells
+		public static final String pew = "pew";// thrown spells
 
-		public static final String crackle = Const.MODID + ":crackle";// scaffolding
+		public static final String crackle = "crackle";// scaffolding
 
-		public static final String thunk = Const.MODID + ":thunk";// chest sack create
+		public static final String thunk ="thunk";// chest sack create
 	}
 
 	public static void playSoundAt(Entity player, String sound){

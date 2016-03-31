@@ -49,14 +49,14 @@ public class GuiSpellbook extends GuiScreen{
 		ItemStack wand = SpellCaster.getPlayerWandIfHeld(thePlayer);
 		
 		
-		List<Integer> spellbook = ItemCyclicWand.Variant.getSpellsFromVariant(ItemCyclicWand.Variant.getVariantFromMeta(wand));
+		//List<Integer> spellbook = ;// ItemCyclicWand.Variant.getSpellsFromVariant(ItemCyclicWand.Variant.getVariantFromMeta(wand));
 		
 
 		xCenter = this.width / 2;
 		yCenter = this.height / 2;
 		radius = xCenter / 3 + 8;//was 26
 
-		arc = (2 * Math.PI) / spellbook.size();
+		arc = (2 * Math.PI) / SpellRegistry.getSpellbook().size();
 		int btnCenter = yCenter - h / 2;
 		int btnID = 999;
 		this.buttonList.add(new ButtonClose(btnID++, xCenter - 15, btnCenter));
@@ -68,9 +68,7 @@ public class GuiSpellbook extends GuiScreen{
 		ButtonSpellToggle b;
 		//from here on, btnID++ is not used; the spell id is instead used as the id
 		
-		ISpell s;
-		for(int sp : spellbook){
-			s = SpellRegistry.getSpellFromID(sp); 
+		for(ISpell s : SpellRegistry.getSpellbook()){
 			/*
 			boolean unlocked = ItemCyclicWand.Spells.isSpellUnlocked(props.getPlayer().getHeldItem(), s);
 			if(!unlocked){

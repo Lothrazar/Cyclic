@@ -17,8 +17,7 @@ public class ItemRegistry{
 	public static void register(){
 
 		cyclic_wand = new ItemCyclicWand();
-		cyclic_wand.setUnlocalizedName("cyclic_wand");
-		GameRegistry.registerItem(cyclic_wand, "cyclic_wand");
+		registerItem(cyclic_wand, "cyclic_wand");
 
 		GameRegistry.addRecipe(new ItemStack(cyclic_wand), 
 				"sds", 

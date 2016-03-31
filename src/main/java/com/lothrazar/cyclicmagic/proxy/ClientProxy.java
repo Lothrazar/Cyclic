@@ -5,12 +5,14 @@ import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.RayTraceResult;
+import com.lothrazar.cyclicmagic.BlockRegistry;
 import com.lothrazar.cyclicmagic.ItemRegistry;
 import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.gui.GuiSpellbook;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.ItemModelMesher;
@@ -107,7 +109,14 @@ public class ClientProxy extends CommonProxy{
 		ItemModelMesher mesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
 
 		String name;
+		Item item;
+		for(Block b : BlockRegistry.blocks){
+			item = Item.getItemFromBlock(b);
+			name = Const.TEXTURE_LOCATION + b.getUnlocalizedName().replaceAll("tile.", "");
 
+			mesher.register(item, 0, new ModelResourceLocation(name, "inventory"));
+		}
+		
 		for(Item i : ItemRegistry.items){
 			name = Const.TEXTURE_LOCATION + i.getUnlocalizedName().replaceAll("item.", "");
 
