@@ -1,4 +1,5 @@
 {
+     "parent": "item/handheld",
     "textures": {
         "0": "blocks/obsidian",
         "1": "blocks/quartz_block_top",

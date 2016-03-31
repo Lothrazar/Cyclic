@@ -43,7 +43,7 @@ public class UtilSound{
 		public static final String thunk ="thunk";// chest sack create
 	}
 
-	public static void playSoundAt(Entity player, String sound){
+	public static void playSound(Entity player, String sound){
 
 		// for client only, or if you have client/server both
 		//player.playSound(sound, volume, pitch);

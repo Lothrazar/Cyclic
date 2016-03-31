@@ -30,7 +30,16 @@ public class ItemRegistry{
 		
 		Item multitool = new ItemMultiTool();
 		registerItem(multitool,"multitool");
-	
+		
+		Item carbon_paper = new ItemPaperCarbon();
+		registerItem(carbon_paper,"carbon_paper");
+		
+		GameRegistry.addRecipe(new ItemStack(carbon_paper,8),
+				"ppp",
+				"pcp",
+				"ppp",
+				'c',new ItemStack(Items.coal,1,1), //charcoal
+				'p',Items.paper  );
 	}
 
 	public static void registerItem(Item item, String name){
