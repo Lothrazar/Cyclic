@@ -31,7 +31,6 @@ public class ItemCyclicWand extends Item{
 	public ItemCyclicWand(){
 
 		this.setMaxStackSize(1);
-		this.setHasSubtypes(true);
 	}
 
 	@Override

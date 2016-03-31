@@ -40,17 +40,16 @@ public class BlockFragile extends Block{
 		
 		this.setStepSound(new SoundType( 1.0F, 1.0F, s,s,s,s,s)		);
 	}
-
+	
 	@Override
-	public boolean isVisuallyOpaque(){  //isOpaqueCube(){
-
-		return false;// transparency
+	public boolean isOpaqueCube(IBlockState state){
+		// http://greyminecraftcoder.blogspot.ca/2014/12/transparent-blocks-18.html
+		return false;
 	}
 
 	@SideOnly(Side.CLIENT)
 	public BlockRenderLayer getBlockLayer(){
-
-		return BlockRenderLayer.CUTOUT;// transparency
+		return BlockRenderLayer.TRANSLUCENT;//CUTOUT; 
 	}
 
 	@Override

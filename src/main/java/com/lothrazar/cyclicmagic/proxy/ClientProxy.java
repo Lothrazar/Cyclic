@@ -113,7 +113,7 @@ public class ClientProxy extends CommonProxy{
 
 			mesher.register(i, 0, new ModelResourceLocation(name, "inventory"));
 		}
-
+/*
 		ArrayList<String> variants = new ArrayList<String>();
 
 		for(ItemCyclicWand.Variant wandType : ItemCyclicWand.Variant.values()){
@@ -123,6 +123,8 @@ public class ClientProxy extends CommonProxy{
 		}
 
 		System.out.println("TODO: need resource locs here to register");
+		*/
+		
 		//ModelBakery.registerItemVariants(ItemRegistry.cyclic_wand, variants.toArray(new String[variants.size()]));
 
 	}
