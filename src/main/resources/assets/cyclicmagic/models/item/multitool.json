@@ -1,7 +1,7 @@
 {
     "parent": "builtin/generated",
     "textures": {
-        "layer0": "cyclicmagic:projectile/shearingbolt"
+        "layer0": "cyclicmagic:items/multitool"
     },
     "display": {
         "thirdperson": {

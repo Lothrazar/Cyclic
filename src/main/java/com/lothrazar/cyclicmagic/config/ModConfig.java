@@ -8,9 +8,7 @@ public class ModConfig{
 	private Configuration instance;
 	private String category = "";
 
-	public int potionIdWaterwalk;
 	public int potionIdSlowfall;
-	public int potionIdFrost;
 	public int potionIdMagnet;
 	public float slowfallSpeed;
 	public boolean renderOnLeft;
@@ -38,11 +36,7 @@ public class ModConfig{
 
 		instance.addCustomCategoryComment(category, "IDs are only exposed to avoid conflicts with other mods.  Messing with these might break the game.   ");
 
-		potionIdWaterwalk = instance.get(category, "waterwalk_id", 40).getInt();
-
 		potionIdSlowfall = instance.get(category, "slowfall_id", 41).getInt();
-
-		potionIdFrost = instance.get(category, "frost_id", 42).getInt();
 
 		potionIdMagnet = instance.get(category, "magnet_id", 43).getInt();
   
@@ -50,8 +44,8 @@ public class ModConfig{
 
 		slowfallSpeed = instance.getFloat("slowfall_speed", category, 0.41F, 0.1F, 1F, "This factor affects how much the slowfall effect slows down the entity.");
 
-		if(instance.hasChanged()){
+		//if(instance.hasChanged()){
 			instance.save();
-		}
+		//}
 	}
 }

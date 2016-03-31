@@ -23,9 +23,7 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 public class PotionRegistry{
 
 	// tired;//http://www.minecraftforge.net/wiki/Potion_Tutorial
-	public static Potion waterwalk;
 	public static Potion slowfall;
-	public static Potion frost;
 	public static Potion magnet;
 
 	public final static int I = 0;
@@ -44,11 +42,7 @@ public class PotionRegistry{
 		// http://www.minecraftforge.net/forum/index.php?topic=11024.0
 		// ??? http://www.minecraftforge.net/forum/index.php?topic=12358.0
 
-		PotionRegistry.waterwalk = new PotionCustom(ModMain.cfg.potionIdWaterwalk, new ResourceLocation(Const.MODID, "textures/potions/waterwalk.png"), false, 0, "potion.waterwalk");
-
 		PotionRegistry.slowfall = new PotionCustom(ModMain.cfg.potionIdSlowfall, new ResourceLocation(Const.MODID, "textures/potions/slowfall.png"), false, 0, "potion.slowfall");
-
-		PotionRegistry.frost = new PotionCustom(ModMain.cfg.potionIdFrost, new ResourceLocation(Const.MODID, "textures/potions/frost.png"), false, 0, "potion.frost");
 
 		PotionRegistry.magnet = new PotionCustom(ModMain.cfg.potionIdMagnet, new ResourceLocation(Const.MODID, "textures/potions/magnet.png"), false, 0, "potion.magnet");
 
@@ -82,49 +76,6 @@ public class PotionRegistry{
 				Vector3.setEntityMotionFromVector(eitem, x, y, z, ITEMSPEED);
 				// moved++;
 			}
-		}
-	}
-
-	public static void tickFrost(LivingUpdateEvent event){
-
-		if(event.entityLiving.isPotionActive(PotionRegistry.frost)){
-			World world = event.entityLiving.worldObj;
-			BlockPos pos = event.entityLiving.getPosition();
-
-			if(world.rand.nextDouble() < 0.5){
-				UtilParticle.spawnParticle(world, EnumParticleTypes.SNOWBALL, pos);
-			}
-
-			if(world.rand.nextDouble() < 0.3 && world.getBlockState(pos.down()).getBlock() != Blocks.snow_layer && world.isAirBlock(pos.down()) == false && world.isSideSolid(pos, EnumFacing.UP)){
-				world.setBlockState(pos, Blocks.snow_layer.getDefaultState());
-			}
-		}
-	}
-
-	public static void tickWaterwalk(LivingUpdateEvent event){
-
-		if(event.entityLiving.isPotionActive(PotionRegistry.waterwalk)){
-			tickLiquidWalk(event, Blocks.water);
-		}
-	}
-
-	private static void tickLiquidWalk(LivingUpdateEvent event, Block liquid){
-
-		World world = event.entityLiving.worldObj;
-
-		if(world.getBlockState(event.entityLiving.getPosition().down()).getBlock() == liquid && world.isAirBlock(event.entityLiving.getPosition()) && event.entityLiving.motionY < 0){
-			if(event.entityLiving instanceof EntityPlayer){
-
-				EntityPlayer p = (EntityPlayer) event.entityLiving;
-				if(p.isSneaking()){
-					return;// let them slip down into it, they cancelling
-				}
-			}
-
-			event.entityLiving.motionY = 0;// stop falling
-			event.entityLiving.onGround = true; // act as if on solid ground
-			event.entityLiving.setAIMoveSpeed(0.1F);// walking and not sprinting
-													// is this speed
 		}
 	}
 

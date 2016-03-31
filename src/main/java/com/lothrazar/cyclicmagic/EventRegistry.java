@@ -101,12 +101,7 @@ public class EventRegistry{
 			}
 		}
 		
-
 		PotionRegistry.tickSlowfall(event);
-
-		PotionRegistry.tickWaterwalk(event);
-
-		PotionRegistry.tickFrost(event);
 
 		PotionRegistry.tickMagnet(event);
 	}
