@@ -44,6 +44,7 @@ public class ModMain{
 		BlockRegistry.register();
 		SpellRegistry.register();
 		PotionRegistry.register();
+		RecipeRegistry.register();
 
 		proxy.register();
 
