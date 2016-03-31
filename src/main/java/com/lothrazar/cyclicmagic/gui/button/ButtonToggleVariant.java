@@ -6,7 +6,7 @@ import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.net.MessageToggleVariant;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -35,7 +35,7 @@ public class ButtonToggleVariant extends GuiButton implements ITooltipButton{
 	@Override
 	public List<String> getTooltips(){
 		List<String> tooltips = new ArrayList<String>();
-		tooltips.add(StatCollector.translateToLocal("button.variant.tooltip"));
+		tooltips.add(I18n.translateToLocal("button.variant.tooltip"));
 		return tooltips;
 	}
 }

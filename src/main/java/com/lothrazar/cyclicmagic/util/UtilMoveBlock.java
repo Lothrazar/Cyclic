@@ -6,8 +6,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class UtilMoveBlock{
@@ -43,7 +43,7 @@ public class UtilMoveBlock{
 		if(hit == null || ignoreList.contains(hit.getBlock())){
 			return false;
 		}
-		if(hit.getBlock().getBlockHardness(world, posMoveToHere) == -1){
+		if(hit.getBlock().getBlockHardness(hit,world, posMoveToHere) == -1){
 			return false;// unbreakable like bedrock
 		}
 
@@ -55,7 +55,8 @@ public class UtilMoveBlock{
 			}
 			world.setBlockState(posMoveToHere, hit, Const.NOTIFY);
 
-			world.markBlockForUpdate(posMoveToHere);
+			//shouldnt be needed..??
+			//world.markBlockForUpdate(posMoveToHere);
 
 			return true;
 		}

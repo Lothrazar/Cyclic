@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.spell;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
@@ -21,8 +21,8 @@ public abstract class BaseSpellRange extends BaseSpell{
 	@Override
 	public void playSound(World world, Block block, BlockPos pos){
 
-		if(block != null && block.stepSound != null && block.stepSound.getPlaceSound() != null){
-			UtilSound.playSound(world, pos, block.stepSound.getPlaceSound());
+		if(block != null && block.getStepSound() != null && block.getStepSound().getPlaceSound() != null){
+			UtilSound.playSound(world, pos, block.getStepSound().getPlaceSound());
 		}
 		else{
 			UtilSound.playSound(world, pos, UtilSound.Own.crackle);

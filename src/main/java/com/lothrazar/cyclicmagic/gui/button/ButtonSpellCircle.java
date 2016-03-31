@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModMain;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.util.StatCollector;
+import net.minecraft.client.gui.GuiButton; 
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -36,7 +35,7 @@ public class ButtonSpellCircle extends GuiButton implements ITooltipButton{
 	public List<String> getTooltips(){
 		List<String> tooltips = new ArrayList<String>();
  
-		tooltips.add(StatCollector.translateToLocal("button.circle"));
+		tooltips.add(net.minecraft.util.text.translation.I18n.translateToLocal("button.circle"));
 		 
 		return tooltips;
 	}

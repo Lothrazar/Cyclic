@@ -3,12 +3,14 @@ package com.lothrazar.cyclicmagic.gui.button;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.SpellCaster;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.net.MessageToggleBuild;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.StatCollector;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -40,7 +42,8 @@ public class ButtonBuildToggle extends GuiButton implements ITooltipButton{
 	@Override
 	public void drawButton(Minecraft mc, int mouseX, int mouseY){
 
-		this.displayString = StatCollector.translateToLocal(ItemCyclicWand.BuildType.getName(thePlayer.getHeldItem()));
+		ItemStack wand = SpellCaster.getPlayerWandIfHeld(thePlayer);
+		this.displayString = I18n.translateToLocal(ItemCyclicWand.BuildType.getName(wand));
 
 		super.drawButton(mc, mouseX, mouseY);
 	}
@@ -49,10 +52,10 @@ public class ButtonBuildToggle extends GuiButton implements ITooltipButton{
 	public List<String> getTooltips(){
 
 		List<String> tooltips = new ArrayList<String>();
-		tooltips.add(StatCollector.translateToLocal("button.build.tooltip"));
-		String key = ItemCyclicWand.BuildType.getName(thePlayer.getHeldItem())+".tooltip";
-		tooltips.add(StatCollector.translateToLocal(key));
-		tooltips.add(StatCollector.translateToLocal("button.build.meta"));
+		tooltips.add(I18n.translateToLocal("button.build.tooltip"));
+		//String key = ItemCyclicWand.BuildType.getName(thePlayer.getHeldItem())+".tooltip";
+		//tooltips.add(I18n.translateToLocal(key));
+		tooltips.add(I18n.translateToLocal("button.build.meta"));
 		
 		return tooltips;
 	}

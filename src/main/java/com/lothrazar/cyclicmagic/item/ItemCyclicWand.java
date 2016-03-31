@@ -12,10 +12,13 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -87,15 +90,15 @@ public class ItemCyclicWand extends Item{
 
 		int MAX = Energy.getMaximum(stack);
 
-		String cost = EnumChatFormatting.DARK_GRAY + "[" + EnumChatFormatting.DARK_PURPLE +spell.getCost() + EnumChatFormatting.DARK_GRAY +"]";
-		tooltip.add(EnumChatFormatting.GREEN + spell.getName()+" "+cost);
+		String cost = TextFormatting.DARK_GRAY + "[" + TextFormatting.DARK_PURPLE +spell.getCost() + TextFormatting.DARK_GRAY +"]";
+		tooltip.add(TextFormatting.GREEN + spell.getName()+" "+cost);
 
 		if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)){
 
 			tooltip.add(Energy.getCurrent(stack) + "/" + MAX);
 			int reg = Energy.getRegen(playerIn.worldObj,stack);
 			
-			tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("wand.regen") + EnumChatFormatting.DARK_BLUE + reg);
+			tooltip.add(TextFormatting.DARK_GRAY + I18n.translateToLocal("wand.regen") + TextFormatting.DARK_BLUE + reg);
 /*
 			IPassiveSpell pcurrent = ItemCyclicWand.Spells.getPassiveCurrent(stack);
 			if(pcurrent != null){
@@ -104,7 +107,7 @@ public class ItemCyclicWand extends Item{
 			*/
 		}
 		else{
-			tooltip.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("item.shift"));
+			tooltip.add(TextFormatting.DARK_GRAY + I18n.translateToLocal("item.shift"));
 		}
 
 		super.addInformation(stack, playerIn, tooltip, advanced);
@@ -118,22 +121,32 @@ public class ItemCyclicWand extends Item{
 	}
 
 	@Override
-	public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ){
+	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos,EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ){
 
+		
 		// If onItemUse returns false onItemRightClick will be called.
 		// http://www.minecraftforge.net/forum/index.php?topic=31966.0
 		// so if this casts and succeeds, the right click is cancelled
-		return SpellRegistry.caster.tryCastCurrent(worldIn, playerIn, pos, side);
+		return SpellRegistry.caster.tryCastCurrent(worldIn, playerIn, pos, side)
+				? EnumActionResult.SUCCESS : EnumActionResult.FAIL;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
-	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn){
+	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn,EnumHand hand){
 
 		// so this only happens IF either onItemUse did not fire at all, or it
 		// fired and casting failed
-		SpellRegistry.caster.tryCastCurrent(worldIn, playerIn, null, null);
+		boolean success = SpellRegistry.caster.tryCastCurrent(worldIn, playerIn, null, null);
 		
-		return super.onItemRightClick(itemStackIn, worldIn, playerIn);
+		if(success){
+			 return new ActionResult(EnumActionResult.SUCCESS, itemStackIn);
+		}
+		else{
+			return new ActionResult(EnumActionResult.FAIL, itemStackIn);
+		}
+		
+		//return super.onItemRightClick(itemStackIn, worldIn, playerIn,hand);
 	}
 
 	@Override
@@ -146,6 +159,7 @@ public class ItemCyclicWand extends Item{
 			Energy.rechargeBy(stack, Energy.getRegen(worldIn,stack));
 		}
 
+		ItemCyclicWand.Timer.tickSpellTimer(stack);
 		/*
 		// if held by something not a player? such as custom npc/zombie/etc
 		if(entityIn instanceof EntityPlayer == false){

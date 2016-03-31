@@ -18,9 +18,12 @@ public class ItemMultiTool extends ItemTool{
 
 	private static final Set<Block> EFFECTIVE_ON = Sets.newHashSet(Iterables.concat(AXE_EFFECTIVE_ON, PICKAXE_EFFECTIVE_ON, SPADE_EFFECTIVE_ON));
 
+    protected static float damageVsEntity = 1;
+    protected static float attackSpeed = -2.8F;
 	public ItemMultiTool(){
 
-		super(1.0F, ToolMaterial.EMERALD, EFFECTIVE_ON);
+		//hardcoc
+		super(damageVsEntity,attackSpeed, ToolMaterial.DIAMOND, EFFECTIVE_ON);
 		this.setCreativeTab(CreativeTabs.tabTools);
 
 		this.setMaxDamage(-1);
@@ -33,6 +36,7 @@ public class ItemMultiTool extends ItemTool{
 		return this.toolMaterial.getHarvestLevel();
 	}
 
+	/*
 	@Override
 	public float getDigSpeed(ItemStack stack, net.minecraft.block.state.IBlockState state){
 
@@ -42,7 +46,7 @@ public class ItemMultiTool extends ItemTool{
 		}
 		return digSpeed;
 	}
-
+*/
 	@Override
 	public Set<String> getToolClasses(ItemStack stack){
 

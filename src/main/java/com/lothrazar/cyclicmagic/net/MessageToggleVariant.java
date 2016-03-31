@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.net;
 
 import java.util.List;
+import com.lothrazar.cyclicmagic.SpellCaster;
 import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand.Spells;
@@ -11,6 +12,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class MessageToggleVariant implements IMessage, IMessageHandler<MessageToggleVariant, IMessage>{
@@ -36,15 +38,16 @@ public class MessageToggleVariant implements IMessage, IMessageHandler<MessageTo
 	public IMessage onMessage(MessageToggleVariant message, MessageContext ctx){
 
 		EntityPlayer player = ctx.getServerHandler().playerEntity;
+		ItemStack wand = SpellCaster.getPlayerWandIfHeld(player);
 
-		ItemCyclicWand.Variant.toggle(player.getHeldItem());
+		ItemCyclicWand.Variant.toggle(wand);
 
 
-		List<Integer> active = ItemCyclicWand.Variant.getSpellsFromVariant(ItemCyclicWand.Variant.getVariantFromMeta(player.getHeldItem()));
+		List<Integer> active = ItemCyclicWand.Variant.getSpellsFromVariant(ItemCyclicWand.Variant.getVariantFromMeta(wand));
 		int spellId;
 		for(ISpell s : SpellRegistry.getSpellbook()){
 			spellId = s.getID();
-			Spells.unlockSpell(player.getHeldItem(), spellId, active.contains(spellId));
+			Spells.unlockSpell(wand, spellId, active.contains(spellId));
 		}
 		
 		

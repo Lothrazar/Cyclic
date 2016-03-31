@@ -5,7 +5,7 @@ import com.lothrazar.cyclicmagic.net.MessageSpellRotate;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
@@ -56,9 +56,12 @@ public class SpellRangeRotate extends BaseSpellRange{
 		}
 		else{
 			// any property that is not variant?
-			for(IProperty prop : (java.util.Set<IProperty>) clicked.getProperties().keySet()){
+
+			for(IProperty prop : (com.google.common.collect.ImmutableSet<IProperty<?>>) clicked.getProperties().keySet()){
+				//for(IProperty prop : (java.util.Set<IProperty>) clicked.getProperties().keySet()){
 				// since slabs do not use rotateBlock, swap the up or down half
 				// being used
+				
 				if(prop.getName().equals("half")){
 					p.worldObj.setBlockState(pos, clicked.cycleProperty(prop));
 

@@ -101,9 +101,8 @@ public class SpellRegistry{
 	}
 
 	public static boolean spellsEnabled(EntityPlayer player){
-
-		ItemStack held = player.getHeldItem();
-		return held != null && held.getItem() instanceof ItemCyclicWand;
+		//current requirement is only a wand
+		return SpellCaster.getPlayerWandIfHeld(player) != null;
 	}
 
 	public static ISpell getSpellFromID(int id){

@@ -2,9 +2,9 @@ package com.lothrazar.cyclicmagic.proxy;
 
 import java.util.ArrayList;
 import net.minecraft.item.Item;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.math.RayTraceResult;
 import com.lothrazar.cyclicmagic.ItemRegistry;
 import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.gui.GuiSpellbook;
@@ -14,8 +14,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.ItemModelMesher;
-import net.minecraft.client.resources.model.ModelBakery;
-import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.model.ModelBakery;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 
 public class ClientProxy extends CommonProxy{
 
@@ -37,7 +37,7 @@ public class ClientProxy extends CommonProxy{
 	@Override
 	public EnumFacing getSideMouseover(int max){
 
-		MovingObjectPosition mouseOver = Minecraft.getMinecraft().getRenderViewEntity().rayTrace(max, 1f);
+		RayTraceResult mouseOver = Minecraft.getMinecraft().getRenderViewEntity().rayTrace(max, 1f);
 		// now get whatever block position we are mousing over if anything
 
 		if(mouseOver != null){
@@ -56,7 +56,7 @@ public class ClientProxy extends CommonProxy{
 
 		// Get the player and their held item
 
-		MovingObjectPosition mouseOver = Minecraft.getMinecraft().getRenderViewEntity().rayTrace(max, 1f);
+		RayTraceResult mouseOver = Minecraft.getMinecraft().getRenderViewEntity().rayTrace(max, 1f);
 		// now get whatever block position we are mousing over if anything
 
 		if(mouseOver != null){
@@ -77,7 +77,7 @@ public class ClientProxy extends CommonProxy{
 		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
 
 		// int max = 50;
-		MovingObjectPosition mouseOver = Minecraft.getMinecraft().getRenderViewEntity().rayTrace(max, 1f);
+		RayTraceResult mouseOver = Minecraft.getMinecraft().getRenderViewEntity().rayTrace(max, 1f);
 		// now get whatever block position we are mousing over if anything
 
 		if(mouseOver != null && mouseOver.sideHit != null){
@@ -122,7 +122,8 @@ public class ClientProxy extends CommonProxy{
 			mesher.register(ItemRegistry.cyclic_wand, wandType.getMetadata(), new ModelResourceLocation(name, "inventory"));
 		}
 
-		ModelBakery.addVariantName(ItemRegistry.cyclic_wand, variants.toArray(new String[variants.size()]));
+		System.out.println("TODO: need resource locs here to register");
+		//ModelBakery.registerItemVariants(ItemRegistry.cyclic_wand, variants.toArray(new String[variants.size()]));
 
 	}
 }

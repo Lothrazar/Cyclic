@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.util;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 
 public class UtilNBT{
 

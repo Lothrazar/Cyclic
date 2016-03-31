@@ -33,11 +33,11 @@ public class GuiWandInventory extends GuiContainer{
 		int width = 20;
 		this.buttonList.add(new ButtonSpellCircle(id, x, y, width));
 
-		 
+		 /*
 		id++;
 		x += width + padding;
 		this.buttonList.add(new ButtonUpgrade(inventory.getPlayer(),id, x, y, width));
- 
+ */
 
 		id++;
 		x += width + padding;

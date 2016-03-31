@@ -5,8 +5,7 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.net.MessageRecharge;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.util.StatCollector;
+import net.minecraft.client.gui.GuiButton; 
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -35,7 +34,7 @@ public class ButtonRecharge extends GuiButton implements ITooltipButton{
 	public List<String> getTooltips(){
 
 		List<String> tooltips = new ArrayList<String>();
-		tooltips.add(StatCollector.translateToLocal("button.recharge.tooltip"));
+		tooltips.add(net.minecraft.util.text.translation.I18n.translateToLocal("button.recharge.tooltip"));
 		return tooltips;
 	}
 }

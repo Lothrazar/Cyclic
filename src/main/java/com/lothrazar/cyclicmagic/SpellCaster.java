@@ -2,8 +2,8 @@ package com.lothrazar.cyclicmagic;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand.Energy;
@@ -12,6 +12,20 @@ import com.lothrazar.cyclicmagic.util.UtilExperience;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 
 public class SpellCaster{
+	
+	public static ItemStack getPlayerWandIfHeld(EntityPlayer player){
+		
+		ItemStack wand = player.getHeldItemMainhand();
+		if(wand != null && wand.getItem() instanceof ItemCyclicWand){
+			return wand;
+		}
+		wand = player.getHeldItemOffhand();
+		if(wand != null && wand.getItem() instanceof ItemCyclicWand){
+			return wand;
+		}
+		
+		return null;
+	}
 
 
 	public boolean tryCastCurrent(World world, EntityPlayer player, BlockPos pos, EnumFacing side){
@@ -21,7 +35,12 @@ public class SpellCaster{
 
 	public boolean tryCast(ISpell spell, World world, EntityPlayer player, BlockPos pos, EnumFacing side){
 
-		if(ItemCyclicWand.Timer.isBlockedBySpellTimer(player.getHeldItem())){
+		ItemStack wand = getPlayerWandIfHeld(player);
+		if(wand == null){
+			return false;
+		}
+		
+		if(ItemCyclicWand.Timer.isBlockedBySpellTimer(wand)){
 			return false;
 		}
 
@@ -51,14 +70,14 @@ public class SpellCaster{
 		// and particles
 		spell.payCost(world, player, pos);
 		
-		ItemCyclicWand.Energy.setCooldownCounter(player.getHeldItem(), world.getTotalWorldTime());
+		ItemCyclicWand.Energy.setCooldownCounter(getPlayerWandIfHeld(player), world.getTotalWorldTime());
 
-		ItemCyclicWand.Timer.setSpellTimer(player.getHeldItem(),spell.getCastCooldown());
+		ItemCyclicWand.Timer.setSpellTimer(getPlayerWandIfHeld(player),spell.getCastCooldown());
 	}
 
 	public void shiftLeft(EntityPlayer player){
 
-		ItemStack wand = player.getHeldItem();
+		ItemStack wand = getPlayerWandIfHeld(player);
 
 		int left = ItemCyclicWand.Spells.prevId(wand, ItemCyclicWand.Spells.getSpellCurrent(wand));
 
@@ -69,7 +88,7 @@ public class SpellCaster{
 
 	public void shiftRight(EntityPlayer player){
 
-		ItemStack wand = player.getHeldItem();
+		ItemStack wand = getPlayerWandIfHeld(player);
 
 		int right = ItemCyclicWand.Spells.nextId(wand, ItemCyclicWand.Spells.getSpellCurrent(wand));
 
@@ -79,8 +98,9 @@ public class SpellCaster{
 
 
 	public ISpell getPlayerCurrentISpell(EntityPlayer player){
+		ItemStack wand = getPlayerWandIfHeld(player);
 
-		ISpell current = SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.getSpellCurrent(player.getHeldItem()));
+		ISpell current = SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.getSpellCurrent(wand));
 
 		if(current == null){
 			current = SpellRegistry.getDefaultSpell();
@@ -90,15 +110,17 @@ public class SpellCaster{
 	}
 
 	public void rechargeWithExp(EntityPlayer player){
-
-		int MAX = ItemCyclicWand.Energy.getMaximum(player.getHeldItem());
+		ItemStack wand = getPlayerWandIfHeld(player);
+		
+		
+		int MAX = ItemCyclicWand.Energy.getMaximum(wand);
 
 		if(player.capabilities.isCreativeMode){ // always set full
-			ItemCyclicWand.Energy.setCurrent(player.getHeldItem(), MAX);
+			ItemCyclicWand.Energy.setCurrent(wand, MAX);
 		}
-		else if(Energy.RECHARGE_EXP_COST < UtilExperience.getExpTotal(player) && ItemCyclicWand.Energy.getCurrent(player.getHeldItem()) + Energy.RECHARGE_MANA_AMT <= MAX){
+		else if(Energy.RECHARGE_EXP_COST < UtilExperience.getExpTotal(player) && ItemCyclicWand.Energy.getCurrent(wand) + Energy.RECHARGE_MANA_AMT <= MAX){
 
-			ItemCyclicWand.Energy.rechargeBy(player.getHeldItem(), Energy.RECHARGE_MANA_AMT);
+			ItemCyclicWand.Energy.rechargeBy(wand, Energy.RECHARGE_MANA_AMT);
 
 			UtilExperience.drainExp(player, Energy.RECHARGE_EXP_COST);
 			UtilSound.playSound(player.worldObj, player.getPosition(), UtilSound.Own.fill);

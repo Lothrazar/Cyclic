@@ -12,8 +12,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
@@ -53,16 +53,16 @@ public class PotionRegistry{
 	private final static int ITEM_VRADIUS = 4;
 	private final static float ITEMSPEED = 1.2F;
 
-	public static void tickMagnet(LivingUpdateEvent event){
+	public static void tickMagnet(EntityLivingBase entityLiving){
 
-		if(event.entityLiving.isPotionActive(PotionRegistry.magnet)){
-			Entity entityIn = event.entityLiving;
-			World world = event.entity.worldObj;
+		if(entityLiving.isPotionActive(PotionRegistry.magnet)){
+	
+			World world = entityLiving.worldObj;
 
-			BlockPos pos = entityIn.getPosition();
+			BlockPos pos = entityLiving.getPosition();
 			int x = pos.getX(), y = pos.getY(), z = pos.getZ();
 
-			List<EntityItem> found = world.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.fromBounds(x - ITEM_HRADIUS, y - ITEM_VRADIUS, z - ITEM_HRADIUS, x + ITEM_HRADIUS, y + ITEM_VRADIUS, z + ITEM_HRADIUS));
+			List<EntityItem> found = world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(x - ITEM_HRADIUS, y - ITEM_VRADIUS, z - ITEM_HRADIUS, x + ITEM_HRADIUS, y + ITEM_VRADIUS, z + ITEM_HRADIUS));
 
 			// int moved = 0;
 			for(EntityItem eitem : found){
@@ -70,7 +70,7 @@ public class PotionRegistry{
 				// moved++;
 			}
 
-			List<EntityXPOrb> foundExp = world.getEntitiesWithinAABB(EntityXPOrb.class, AxisAlignedBB.fromBounds(x - ITEM_HRADIUS, y - ITEM_VRADIUS, z - ITEM_HRADIUS, x + ITEM_HRADIUS, y + ITEM_VRADIUS, z + ITEM_HRADIUS));
+			List<EntityXPOrb> foundExp = world.getEntitiesWithinAABB(EntityXPOrb.class, new AxisAlignedBB(x - ITEM_HRADIUS, y - ITEM_VRADIUS, z - ITEM_HRADIUS, x + ITEM_HRADIUS, y + ITEM_VRADIUS, z + ITEM_HRADIUS));
 
 			for(EntityXPOrb eitem : foundExp){
 				Vector3.setEntityMotionFromVector(eitem, x, y, z, ITEMSPEED);
@@ -79,12 +79,12 @@ public class PotionRegistry{
 		}
 	}
 
-	public static void tickSlowfall(LivingUpdateEvent event){
+	public static void tickSlowfall(EntityLivingBase entityLiving){
 
-		if(event.entityLiving.isPotionActive(PotionRegistry.slowfall)){
+		if(entityLiving.isPotionActive(PotionRegistry.slowfall)){
 
-			if(event.entityLiving instanceof EntityPlayer){
-				EntityPlayer p = (EntityPlayer) event.entityLiving;
+			if(entityLiving instanceof EntityPlayer){
+				EntityPlayer p = (EntityPlayer) entityLiving;
 				if(p.isSneaking()){
 					return;// so fall normally for now
 				}
@@ -95,10 +95,10 @@ public class PotionRegistry{
 
 			// a normal fall seems to go up to 0, -1.2, -1.4, -1.6, then
 			// flattens out at -0.078
-			if(event.entityLiving.motionY < 0){
-				event.entityLiving.motionY *= ModMain.cfg.slowfallSpeed;
+			if(entityLiving.motionY < 0){
+				entityLiving.motionY *= ModMain.cfg.slowfallSpeed;
 
-				event.entityLiving.fallDistance = 0f; // for no fall damage
+				entityLiving.fallDistance = 0f; // for no fall damage
 			}
 		}
 	}
@@ -106,13 +106,13 @@ public class PotionRegistry{
 	public static void addOrMergePotionEffect(EntityLivingBase player, PotionEffect newp){
 
 		// this could be in a utilPotion class i guess...
-		if(player.isPotionActive(newp.getPotionID())){
+		if(player.isPotionActive(newp.getPotion())){
 			// do not use built in 'combine' function, just add up duration
-			PotionEffect p = player.getActivePotionEffect(Potion.potionTypes[newp.getPotionID()]);
+			PotionEffect p = player.getActivePotionEffect(newp.getPotion());
 
 			int ampMax = Math.max(p.getAmplifier(), newp.getAmplifier());
 
-			player.addPotionEffect(new PotionEffect(newp.getPotionID(), newp.getDuration() + p.getDuration(), ampMax));
+			player.addPotionEffect(new PotionEffect(newp.getPotion(), newp.getDuration() + p.getDuration(), ampMax));
 		}
 		else{
 			player.addPotionEffect(newp);

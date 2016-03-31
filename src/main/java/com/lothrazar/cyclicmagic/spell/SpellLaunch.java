@@ -5,13 +5,14 @@ import com.lothrazar.cyclicmagic.PotionRegistry;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class SpellLaunch extends BaseSpell implements ISpell{
@@ -47,15 +48,18 @@ public class SpellLaunch extends BaseSpell implements ISpell{
 
 		player.motionY = 0;
 		player.fallDistance = 0;
-		if(player.ridingEntity != null){
-			player.ridingEntity.motionY = 0;
-			player.ridingEntity.fallDistance = 0;
+		
+		Entity ridingEntity = player.getRidingEntity();
+		
+		if(ridingEntity != null){
+			ridingEntity.motionY = 0;
+			ridingEntity.fallDistance = 0;
 			// boost power a bit, horses are heavy as F
-			player.ridingEntity.addVelocity(velX * mountPower, velY * mountPower, velZ * mountPower);
+			ridingEntity.addVelocity(velX * mountPower, velY * mountPower, velZ * mountPower);
 
-			if(player.ridingEntity instanceof EntityLivingBase){
+			if(ridingEntity instanceof EntityLivingBase){
 				//if its a horse or something
-				((EntityLivingBase)player.ridingEntity).addPotionEffect(new PotionEffect(PotionRegistry.slowfall.id,slowfallSec * Const.TICKS_PER_SEC));
+				((EntityLivingBase)ridingEntity).addPotionEffect(new PotionEffect(PotionRegistry.slowfall,slowfallSec * Const.TICKS_PER_SEC));
 			}
 		}
 		else{
@@ -66,7 +70,7 @@ public class SpellLaunch extends BaseSpell implements ISpell{
 		this.spawnParticle(world, player, player.getPosition());
 		
 		
-		player.addPotionEffect(new PotionEffect(PotionRegistry.slowfall.id,slowfallSec * Const.TICKS_PER_SEC));
+		player.addPotionEffect(new PotionEffect(PotionRegistry.slowfall,slowfallSec * Const.TICKS_PER_SEC));
 
 		return true;
 	}

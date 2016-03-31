@@ -1,11 +1,13 @@
 package com.lothrazar.cyclicmagic.net;
 
+import com.lothrazar.cyclicmagic.SpellCaster;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 
 public class MessageToggleBuild implements IMessage, IMessageHandler<MessageToggleBuild, IMessage>{
 
@@ -27,12 +29,13 @@ public class MessageToggleBuild implements IMessage, IMessageHandler<MessageTogg
 	public IMessage onMessage(MessageToggleBuild message, MessageContext ctx){
 
 		EntityPlayer player = ctx.getServerHandler().playerEntity;
+		ItemStack wand = SpellCaster.getPlayerWandIfHeld(player);
 
-		if(player.getHeldItem() == null || player.getHeldItem().getItem() instanceof ItemCyclicWand == false){
+		if(wand == null){
 			return null;
 		}
 
-		ItemCyclicWand.BuildType.toggle(player.getHeldItem());
+		ItemCyclicWand.BuildType.toggle(wand);
 
 		return null;
 	}

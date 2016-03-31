@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.spell;
 
 import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.SpellCaster;
 import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.gui.InventoryWand;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
@@ -11,7 +12,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack; 
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
@@ -52,8 +53,9 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer{
 
 		World world = p.worldObj;
 		
-		ItemStack heldWand = p.getHeldItem();
-		if(heldWand == null || heldWand.getItem() instanceof ItemCyclicWand == false){
+		ItemStack heldWand = SpellCaster.getPlayerWandIfHeld(p);
+		
+		if(heldWand == null){
 			return;
 		}
 
@@ -109,8 +111,8 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer{
 
 					SpellRegistry.caster.castSuccess(this, p.worldObj, p, posOffset);
 					
-					if(state.getBlock().stepSound != null && state.getBlock().stepSound.getBreakSound() != null){
-						UtilSound.playSoundAt(p, state.getBlock().stepSound.getPlaceSound());
+					if(state.getBlock().getStepSound() != null && state.getBlock().getStepSound().getBreakSound() != null){
+						UtilSound.playSound(p, state.getBlock().getStepSound().getPlaceSound());
 					}
 
 					if(p.capabilities.isCreativeMode == false){
@@ -135,7 +137,9 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer{
 		if(world.isAirBlock(placePos) == false){
 
 			// if there is a block here, we might have to stop
-			Block blockHere = world.getBlockState(placePos).getBlock();
+			IBlockState stateHere = world.getBlockState(placePos);
+			Block blockHere = stateHere.getBlock();
+			
 			if(blockHere.isReplaceable(world, placePos) == false){
 				// for example, torches, and the top half of a slab if you click
 				// in the empty space
@@ -145,7 +149,7 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer{
 			// ok its a soft block so try to break it first try to destroy it
 			// first
 			// unless it is liquid, don't try to destroy liquid
-			if(blockHere.getMaterial() != Material.water && blockHere.getMaterial() != Material.lava){
+			if(blockHere.getMaterial(stateHere) != Material.water && blockHere.getMaterial(stateHere) != Material.lava){
 				boolean dropBlock = true;
 				world.destroyBlock(placePos, dropBlock);
 			}

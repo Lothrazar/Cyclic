@@ -1,13 +1,17 @@
 package com.lothrazar.cyclicmagic.block;
 
 import java.util.Random;
+import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.BlockRenderLayer;//EnumWorldBlockLayer;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -29,36 +33,24 @@ public class BlockFragile extends Block{
 		this.setHardness(0F);
 		this.setResistance(0F);
 
-		this.setStepSound(new Block.SoundType(UtilSound.Own.crackle, 1.0F, 1.0F) {
-
-			// override so default does not prefix with "dig." and break it
-			public String getBreakSound(){
-
-				return this.soundName;
-			}
-
-			public String getStepSound(){
-
-				return this.soundName;
-			}
-
-			public String getPlaceSound(){
-
-				return this.soundName;
-			}
-		});
+		//float volumeIn, float pitchIn, SoundEvent breakSoundIn, SoundEvent stepSoundIn, SoundEvent placeSoundIn, SoundEvent hitSoundIn, SoundEvent fallSoundIn)
+	    
+		ResourceLocation resSound = new ResourceLocation(UtilSound.Own.crackle);
+		SoundEvent s = new SoundEvent(resSound);
+		
+		this.setStepSound(new SoundType( 1.0F, 1.0F, s,s,s,s,s)		);
 	}
 
 	@Override
-	public boolean isOpaqueCube(){
+	public boolean isVisuallyOpaque(){  //isOpaqueCube(){
 
 		return false;// transparency
 	}
 
 	@SideOnly(Side.CLIENT)
-	public EnumWorldBlockLayer getBlockLayer(){
+	public BlockRenderLayer getBlockLayer(){
 
-		return EnumWorldBlockLayer.CUTOUT;// transparency
+		return BlockRenderLayer.CUTOUT;// transparency
 	}
 
 	@Override

@@ -11,10 +11,10 @@ public class PotionCustom extends Potion{
 
 	private ResourceLocation icon;
 
-	@SuppressWarnings("deprecation")
 	public PotionCustom(int potionID, ResourceLocation location, boolean badEffect, int potionColor, String nameIn){
 
-		super(potionID, location, badEffect, potionColor);
+		//  Potion(boolean isBadEffectIn, int liquidColorIn)
+		super(badEffect, potionColor);
 
 		icon = location;
 		this.setPotionName(nameIn);

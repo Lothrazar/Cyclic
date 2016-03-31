@@ -5,7 +5,7 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -65,7 +65,7 @@ public class SpellScreenRender{
 
 		int dim = spellSize - 4, x = xmain + 1, y = ymain - 12;
 
-		if(ItemCyclicWand.Timer.isBlockedBySpellTimer(player.getHeldItem()) == false){
+		if(ItemCyclicWand.Timer.isBlockedBySpellTimer(SpellCaster.getPlayerWandIfHeld(player)) == false){
 			UtilTextureRender.drawTextureSquare(spellCurrent.getIconDisplayHeaderEnabled(), x, y, dim);
 		}
 		else{
@@ -74,8 +74,9 @@ public class SpellScreenRender{
 	}
 
 	private void drawManabar(EntityPlayer player){
+		ItemStack wand = SpellCaster.getPlayerWandIfHeld(player);
 
-		double MAX = ItemCyclicWand.Energy.getMaximum(player.getHeldItem());
+		double MAX = ItemCyclicWand.Energy.getMaximum(wand);
 		double largest = ItemCyclicWand.Energy.getMaximumLargest();
 		
 		double ratio = MAX / largest;
@@ -85,7 +86,7 @@ public class SpellScreenRender{
 		//draw the outer container
 		UtilTextureRender.drawTextureSimple(mana_container, xHud,yHud, manaCtrWidth, MathHelper.floor_double(hFull));
 
-		double current = ItemCyclicWand.Energy.getCurrent(player.getHeldItem());
+		double current = ItemCyclicWand.Energy.getCurrent(wand);
 		double manaPercent = current / MAX;//not using MAX anymore!!!
 
 		double hEmpty = (hFull - 2) * manaPercent;
@@ -104,7 +105,7 @@ public class SpellScreenRender{
 
 	private void drawPrevSpells(EntityPlayer player, ISpell spellCurrent){
 
-		ItemStack wand = player.getHeldItem();
+		ItemStack wand = SpellCaster.getPlayerWandIfHeld(player);
 
 		ISpell prev = SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.prevId(wand, spellCurrent.getID()));
 
@@ -145,7 +146,7 @@ public class SpellScreenRender{
 
 	private void drawNextSpells(EntityPlayer player, ISpell spellCurrent){
 
-		ItemStack wand = player.getHeldItem();
+		ItemStack wand = SpellCaster.getPlayerWandIfHeld(player);
 
 		ISpell next = SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.nextId(wand, spellCurrent.getID()));
 

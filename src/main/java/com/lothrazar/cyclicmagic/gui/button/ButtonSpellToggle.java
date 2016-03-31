@@ -9,8 +9,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -61,8 +61,8 @@ public class ButtonSpellToggle extends GuiButton implements ITooltipButton{
 
 		//PlayerPowerups props = PlayerPowerups.get(thePlayer);
 		List<String> tooltips = new ArrayList<String>();
-		tooltips.add(EnumChatFormatting.LIGHT_PURPLE + spell.getName());
-		tooltips.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("spell.meta.cost") + EnumChatFormatting.BLUE + spell.getCost());
+		tooltips.add(TextFormatting.LIGHT_PURPLE + spell.getName());
+		tooltips.add(TextFormatting.DARK_GRAY + I18n.translateToLocal("spell.meta.cost") + TextFormatting.BLUE + spell.getCost());
 
 		// tooltips.add(EnumChatFormatting.LIGHT_PURPLE + spell.getInfo());
 

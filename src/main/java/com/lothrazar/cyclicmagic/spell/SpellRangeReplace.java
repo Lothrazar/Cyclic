@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.spell;
 
 import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.SpellCaster;
 import com.lothrazar.cyclicmagic.gui.InventoryWand;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.net.MessageSpellReplacer;
@@ -8,7 +9,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
@@ -38,13 +39,15 @@ public class SpellRangeReplace extends BaseSpellRange{
 
 	public void castFromServer(BlockPos posMouseover, EnumFacing side, EntityPlayer player){
 
-		World world = player.worldObj;
-		ItemStack heldWand = player.getHeldItem();
-		if(heldWand == null || heldWand.getItem() instanceof ItemCyclicWand == false){
+		ItemStack heldWand = SpellCaster.getPlayerWandIfHeld(player);
+		if(heldWand == null){
 			return;
 		}
+		World world = player.worldObj;
 
-		if(world.getBlockState(posMouseover) == null || world.getBlockState(posMouseover).getBlock() == null){
+
+		IBlockState stateHere = world.getBlockState(posMouseover);
+		if(stateHere == null || stateHere.getBlock() == null){
 			return;
 		}
 
@@ -52,10 +55,9 @@ public class SpellRangeReplace extends BaseSpellRange{
 			return;// not chests, etc
 		}
 
-		IBlockState stateHere = world.getBlockState(posMouseover);
 		Block blockHere = stateHere.getBlock();
 
-		if(blockHere.getBlockHardness(world, posMouseover) == -1){
+		if(blockHere.getBlockHardness(stateHere,world, posMouseover) == -1){
 			return; // is unbreakable-> like bedrock
 		}
 
