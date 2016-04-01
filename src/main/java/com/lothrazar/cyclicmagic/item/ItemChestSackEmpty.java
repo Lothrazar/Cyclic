@@ -57,6 +57,11 @@ public class ItemChestSackEmpty extends Item{
 		
 		entityPlayer.dropPlayerItemWithRandomChoice(drop, false);
 		
+		world.setBlockToAir(pos);
+		
+		stack.stackSize--;
+		//entityPlayer.setHeldItem(hand, stack);
+		
 		return EnumActionResult.SUCCESS;
 	}
 	
