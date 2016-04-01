@@ -35,6 +35,9 @@ public class ItemRegistry{
 	public static ToolMaterial MATERIAL_EMERALD;
 	public static ArmorMaterial ARMOR_MATERIAL_EMERALD;
 	
+
+	public final static Item REPAIR_EMERALD = Items.emerald;
+	
 	public final static CreativeTabs tabSamsContent = CreativeTabs.tabMisc;//TODO: own
 
 //we copy diamond 
@@ -54,6 +57,8 @@ public static ArmorMaterial addArmorMaterial(String name, String textureName, in
   //TODO: FIX 
    * customCraftingMaterial
 */
+	
+	
 	private static void registerMaterials(){
 
 		ARMOR_MATERIAL_EMERALD = 
