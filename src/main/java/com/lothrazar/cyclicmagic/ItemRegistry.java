@@ -17,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
+import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -35,15 +36,50 @@ public class ItemRegistry{
 	public static ArmorMaterial ARMOR_MATERIAL_EMERALD;
 	
 	public final static CreativeTabs tabSamsContent = CreativeTabs.tabMisc;//TODO: own
-	
-	
-	
-//TODO: fix
-	public static int emerald_durability=9;
-	public static int[] reductionAmounts =  new int[]{2, 5, 3, 1};
-	public static int emerald_enchantability = 30;
+
+//we copy diamond 
+	/* public static enum ArmorMaterial
+    {
+        LEATHER("leather", 5, new int[]{1, 2, 3, 1}, 15, SoundEvents.item_armor_equip_leather),
+        CHAIN("chainmail", 15, new int[]{1, 4, 5, 2}, 12, SoundEvents.item_armor_equip_chain),
+        IRON("iron", 15, new int[]{2, 5, 6, 2}, 9, SoundEvents.item_armor_equip_iron),
+        GOLD("gold", 7, new int[]{1, 3, 5, 2}, 25, SoundEvents.item_armor_equip_gold),
+        DIAMOND("diamond", 33, new int[]{3, 6, 8, 3}, 10, SoundEvents.item_armor_equip_diamond);
+        
+//private ArmorMaterial(String nameIn, int maxDamageFactorIn, int[] damageReductionArrayIn, int enchantabilityIn, SoundEvent equipSoundEventIn)
+       
+       
+public static ArmorMaterial addArmorMaterial(String name, String textureName, int durability, int[] reductionAmounts, int enchantability, SoundEvent soundOnEquip)
+  
+  //TODO: FIX 
+   * customCraftingMaterial
+*/
+	private static void registerMaterials(){
+
+		ARMOR_MATERIAL_EMERALD = 
+				//the 33 is private final int maxDamageFactor;, no getter
+				//array is damageReductionAmountArray  
+		//TODO: how to set repair item
+		EnumHelper.addArmorMaterial("emerald",Const.MODID+":emerald",
+				33,new int[]{3, 6, 8, 3}, ArmorMaterial.DIAMOND.getEnchantability() , ArmorMaterial.DIAMOND.getSoundEvent());
+		 
+		MATERIAL_EMERALD = ToolMaterial.DIAMOND;
+		
+				/*
+				//using this causes a forge crash actually
+				EnumHelper.addToolMaterial("emerald", 
+				3, //harvestLevel 3 same as diamond
+				1600, //maxUses more than diamond
+				15.0F, //efficiency more than gold
+				3.5F, //damage more than diamond
+				5+25 );//enchantability more than gold 
+		    */
+
+	}
 
 	public static void register(){
+		
+		registerMaterials();
 
 		cyclic_wand = new ItemCyclicWand();
 		registerItem(cyclic_wand, "cyclic_wand");
@@ -78,24 +114,6 @@ public class ItemRegistry{
 		chest_sack_empty = new ItemChestSackEmpty();
 		registerItem(chest_sack_empty,"chest_sack_empty"); 
 		
-		
-		
-
-		 //TODO: fix own materia..>??
-		ARMOR_MATERIAL_EMERALD = EnumHelper.addArmorMaterial("emerald",Const.MODID+":emerald", emerald_durability, reductionAmounts , emerald_enchantability, SoundEvents.item_armor_equip_diamond);
-		 
-		MATERIAL_EMERALD = 		ToolMaterial.DIAMOND;
-		
-				/*
-				
-				EnumHelper.addToolMaterial("emerald", 
-				3, //harvestLevel 3 same as diamond
-				1600, //maxUses more than diamond
-				15.0F, //efficiency more than gold
-				3.5F, //damage more than diamond
-				5+25 );//enchantability more than gold 
-		    */
-
 		//thanks for help: http://bedrockminer.jimdo.com/modding-tutorials/basic-modding-1-7/custom-tools-swords/
 		 int xp = 1;
 		
