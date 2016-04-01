@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.command;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +15,6 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
@@ -142,6 +140,7 @@ public class CommandRecipe  extends BaseCommand implements ICommand
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public static ItemStack[] getRecipeInput(IRecipe recipe)
 	{
 		System.out.println("TODO: UtilRecipe");
@@ -287,7 +286,7 @@ public class CommandRecipe  extends BaseCommand implements ICommand
 		Map<String, String> namenumbers = new HashMap<String, String>();
 		
 		String name;
-		int j = 0;
+		//int j = 0;
 		for(int i = 0; i < size; i++)
     	{
     		if(i < recipeItems.length  && recipeItems[i] != null)
@@ -303,7 +302,7 @@ public class CommandRecipe  extends BaseCommand implements ICommand
     				namenumbers.put(name, ""+i);
     			}
     			
-    			j++;
+    			//j++;
     			
     			//ModCommands.addChatMessage(player, i + " : " + recipeItems[i].getDisplayName());
     			if(i < grid.length)

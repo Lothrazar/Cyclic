@@ -14,6 +14,9 @@ public class ItemRegistry{
 
 	public static ItemCyclicWand cyclic_wand;
 
+	public static ItemChestSack chest_sack;
+	public static ItemChestSackEmpty chest_sack_empty;
+
 	public static void register(){
 
 		cyclic_wand = new ItemCyclicWand();
@@ -43,11 +46,11 @@ public class ItemRegistry{
 		
 		
 
-		Item chest_sack = new ItemChestSack();
+		chest_sack = new ItemChestSack();
 		registerItem(chest_sack,"chest_sack");
-		
-		Item chest_sack_empty = new ItemChestSackEmpty();
-		registerItem(chest_sack_empty,"chest_sack_empty");
+
+		chest_sack_empty = new ItemChestSackEmpty();
+		registerItem(chest_sack_empty,"chest_sack_empty"); 
 	}
 
 	public static void registerItem(Item item, String name){

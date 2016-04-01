@@ -1,28 +1,18 @@
 package com.lothrazar.cyclicmagic;
 
-import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.net.MessageKeyLeft;
 import com.lothrazar.cyclicmagic.net.MessageKeyRight;
-import com.lothrazar.cyclicmagic.net.MessageOpenSpellbook;
 
 public class EventRegistry{
 
@@ -77,7 +67,7 @@ public class EventRegistry{
 		if(entityLiving == null){
 			return;
 		}
-		World world = entityLiving.getEntityWorld();
+		//World world = entityLiving.getEntityWorld();
 		
 		PotionRegistry.tickSlowfall(entityLiving);
 

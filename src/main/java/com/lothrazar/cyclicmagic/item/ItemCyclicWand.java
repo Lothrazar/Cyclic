@@ -5,7 +5,6 @@ import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -113,7 +112,6 @@ public class ItemCyclicWand extends Item{
 				? EnumActionResult.SUCCESS : EnumActionResult.FAIL;
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn,EnumHand hand){
 
@@ -122,10 +120,10 @@ public class ItemCyclicWand extends Item{
 		boolean success = SpellRegistry.caster.tryCastCurrent(worldIn, playerIn, null, null);
 		
 		if(success){
-			 return new ActionResult(EnumActionResult.SUCCESS, itemStackIn);
+			 return new ActionResult<ItemStack> (EnumActionResult.SUCCESS, itemStackIn);
 		}
 		else{
-			return new ActionResult(EnumActionResult.FAIL, itemStackIn);
+			return new ActionResult<ItemStack> (EnumActionResult.FAIL, itemStackIn);
 		}
 		
 		//return super.onItemRightClick(itemStackIn, worldIn, playerIn,hand);

@@ -55,7 +55,6 @@ public class ModMain{
 	@EventHandler
 	public void onServerStarting(FMLServerStartingEvent event)
 	{
-
 		event.registerServerCommand(new CommandEnderChest("enderchest",true));
 		event.registerServerCommand(new CommandGetHome("gethome",true));
 		event.registerServerCommand(new CommandHearts("sethearts",true));

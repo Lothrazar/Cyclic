@@ -12,14 +12,13 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.BlockPos;
 
 public class CommandKit extends BaseCommand implements ICommand
 { 
 	public static boolean REQUIRES_OP;
 	//public static ArrayList<String> contents = new ArrayList<String>();
 	private static ArrayList<Item> giveItems = new ArrayList<Item>();
-	private static String giveItemsFromConfig = "";
+	//private static String giveItemsFromConfig = "";
 	
 	private ArrayList<String> aliases = new ArrayList<String>();
 
@@ -32,7 +31,7 @@ public class CommandKit extends BaseCommand implements ICommand
 	}
 
 	@Override
-	public List getCommandAliases()
+	public List<String> getCommandAliases()
 	{ 
 		return aliases;
 	}

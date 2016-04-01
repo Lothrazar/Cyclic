@@ -85,7 +85,7 @@ public class Location
 		String showName = " ";
 		if(name != null && name.isEmpty() == false) showName = "  :  " + name;
 		
-		return Math.round(X) + ", " + Math.round(Y) + ", " + Math.round(Z) ;		
+		return showName + Math.round(X) + ", " + Math.round(Y) + ", " + Math.round(Z) ;		
 	} 
 	
 	public String toDisplayNoCoords()

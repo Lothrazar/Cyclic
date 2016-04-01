@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.command;
 
-import java.util.ArrayList;
 import java.util.List; 
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.command.CommandException;
@@ -11,7 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class CommandUses extends BaseCommand implements ICommand

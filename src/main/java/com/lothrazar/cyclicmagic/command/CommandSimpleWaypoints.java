@@ -1,32 +1,23 @@
 package com.lothrazar.cyclicmagic.command;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;     
 import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer; 
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.common.DimensionManager;
 
 public class CommandSimpleWaypoints  extends BaseCommand implements ICommand
 {
 	//public static boolean ENABLE_TP = false;
 	private static String NBT_KEY = Const.MODID+"_swp";
-	private ArrayList<String> aliases = new ArrayList<String>();
 
 	public CommandSimpleWaypoints(String n, boolean op){
 
 		super(n, op);
-		this.aliases.add("simplewaypoint"); 
-		this.aliases.add("swp"); 
-		this.aliases.add("SWP");
-		this.aliases.add(getCommandName().toUpperCase());
 	}
 	
 
@@ -41,11 +32,11 @@ public class CommandSimpleWaypoints  extends BaseCommand implements ICommand
 	//private static String MODE_TP = "tp"; 
 	//private static String MODE_DISPLAY = "get"; 
 	//private static String MODE_HIDEDISPLAY = "hide";
-	private static String MODE_LIST = "list";
-	private static String MODE_SAVE = "save";
-	private static String MODE_CLEAR = "delete"; 
+	private final static String MODE_LIST = "list";
+	private final static String MODE_SAVE = "save";
+	private final static String MODE_CLEAR = "delete"; 
 	//private static String KEY_CURRENT = "simplewp_current";
-	public static boolean PERSIST_DEATH;
+	public static boolean PERSIST_DEATH = true;//TODO: mayb econfig
 	
 	@Override
 	public void execute(MinecraftServer server,ICommandSender icommandsender, String[] args) 

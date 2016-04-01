@@ -5,7 +5,6 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.passive.EntityVillager;
@@ -13,8 +12,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
 
@@ -22,27 +19,15 @@ public class CommandSearchTrades extends BaseCommand  implements ICommand
 {
 	// https://github.com/LothrazarMinecraftMods/MinecraftSearchCommands/blob/master/src/main/java/com/lothrazar/searchcommands/command/CommandSearchTrades.java
 	
-	public static boolean REQUIRES_OP;  
-	private ArrayList<String> aliases = new ArrayList<String>();
-
 	public CommandSearchTrades(String n, boolean op){
 
-		super(n, op);/*
-		aliases.add("searcht");
-		aliases.add("SEARCHTRADE"); 
-		aliases.add("SEARCHT");   */
+		super(n, op);
 	}
  
 	@Override
 	public String getCommandUsage(ICommandSender ic) 
 	{ 
 		return  "/" + getCommandName()+" <item name> <qty>";
-	}
-
-	@Override
-	public List getCommandAliases() 
-	{ 
-		return aliases;
 	}
 
 	@Override
@@ -81,16 +66,17 @@ public class CommandSearchTrades extends BaseCommand  implements ICommand
 		 List<EntityVillager> merchants = ic.getEntityWorld().getEntitiesWithinAABB(EntityVillager.class, searchRange);
 
 		 //List merchants = ic.getEntityWorld().getEntitiesWithinAABB(IMerchant.class, searchRange);
-		 List<EntityLiving> villagers = new ArrayList();
+		 List<EntityVillager> villagers = new ArrayList<EntityVillager>();
 		 
 		 //double check that it should be an adult villager
 		 //recall that 
 		 // public class EntityVillager extends EntityAgeable implements INpc, IMerchant
-		 for (Entity m : merchants) 
+		 for (EntityVillager m : merchants) 
 		 {
-		     if(m instanceof EntityLiving && ((EntityLiving)m).isChild() == false && (IMerchant)m != null)
+			 // && (IMerchant)m != null
+		     if(m.isChild() == false)
 		     { 
-		    	 villagers.add((EntityLiving)m);
+		    	 villagers.add(m);
 		     }
 		 }
 		 
@@ -108,7 +94,7 @@ public class CommandSearchTrades extends BaseCommand  implements ICommand
 		 for(int i = 0; i < villagers.size(); i++)
 		 { 
 			 v_entity = villagers.get(i);
-			 v_merch = (IMerchant)villagers.get(i);///not null for sure based on how we constructed the list
+			 v_merch = villagers.get(i);///not null for sure based on how we constructed the list
 			 
 			 list = v_merch.getRecipes(p); 
 			 

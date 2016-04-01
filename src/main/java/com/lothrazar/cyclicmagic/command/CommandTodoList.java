@@ -1,22 +1,11 @@
 package com.lothrazar.cyclicmagic.command;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.common.DimensionManager;
 
 public class CommandTodoList extends BaseCommand implements ICommand
 {    
@@ -25,11 +14,11 @@ public class CommandTodoList extends BaseCommand implements ICommand
 		super(n, op);  
 	}
 
-	private static String MODE_ADD = "add"; 
-	private static String MODE_REMOVE = "delete"; 
-	private static String MODE_SET = "set";
-	private static String MODE_GET = "get";
-	private static String NBT_KEY = Const.MODID+"_todo";
+	private static final String MODE_ADD = "add"; 
+	private static final String MODE_REMOVE = "delete"; 
+	private static final String MODE_SET = "set";
+	private static final String MODE_GET = "get";
+	private static final String NBT_KEY = Const.MODID+"_todo";
 
 	public static boolean PERSIST_DEATH;
 

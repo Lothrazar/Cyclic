@@ -17,6 +17,8 @@ public class Const{
 	public static final int DIR_EAST = 3;
 	public static final int DIR_NORTH = 2;
 
+	public static final int HOTBAR_SIZE = 9;
+
 	public class Dimension{
 
 		public static final int overworld = 0;

@@ -10,6 +10,36 @@ import net.minecraft.util.math.BlockPos;
 
 public class UtilSearchWorld{
 
+
+	public static ArrayList<IInventory> findTileEntityInventories(EntityPlayer player, int RADIUS) {
+		// function imported
+		// https://github.com/PrinceOfAmber/SamsPowerups/blob/master/Commands/src/main/java/com/lothrazar/samscommands/ModCommands.java#L193
+		ArrayList<IInventory> found = new ArrayList<IInventory>();
+		int xMin = (int) player.posX - RADIUS;
+		int xMax = (int) player.posX + RADIUS;
+
+		int yMin = (int) player.posY - RADIUS;
+		int yMax = (int) player.posY + RADIUS;
+
+		int zMin = (int) player.posZ - RADIUS;
+		int zMax = (int) player.posZ + RADIUS;
+
+		BlockPos posCurrent = null;
+		for (int xLoop = xMin; xLoop <= xMax; xLoop++) {
+			for (int yLoop = yMin; yLoop <= yMax; yLoop++) {
+				for (int zLoop = zMin; zLoop <= zMax; zLoop++) {
+					posCurrent = new BlockPos(xLoop, yLoop, zLoop);
+					if (player.worldObj.getTileEntity(posCurrent) instanceof IInventory) {
+						found.add((IInventory) player.worldObj.getTileEntity(posCurrent));
+					}
+				}
+			}
+		}
+
+		return found;
+	}
+
+	
 	public static int searchTileInventory(String search, IInventory inventory) 
 	{
 		int foundQty;

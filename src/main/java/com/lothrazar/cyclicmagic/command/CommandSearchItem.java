@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.command;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;    
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilSearchWorld;
 import net.minecraft.command.ICommand;
@@ -11,10 +10,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.EnumParticleTypes;
 
 public class CommandSearchItem  extends BaseCommand implements ICommand
 {

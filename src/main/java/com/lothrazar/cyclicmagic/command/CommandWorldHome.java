@@ -1,8 +1,6 @@
 package com.lothrazar.cyclicmagic.command;
 
 import java.util.ArrayList;
-import java.util.List; 
- 
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilTeleport;
@@ -10,7 +8,6 @@ import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.BlockPos;
 //import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.world.World;
 

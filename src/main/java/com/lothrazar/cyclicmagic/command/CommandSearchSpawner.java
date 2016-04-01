@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.command;
 
 import java.util.ArrayList;
-import java.util.List; 
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilSearchWorld;
 import net.minecraft.command.CommandException;
@@ -50,8 +49,7 @@ public class CommandSearchSpawner extends BaseCommand implements ICommand
 			UtilChat.addChatMessage(player, "None Found with radius "+radius ); 
 		}
 		else
-		{
-			String m;
+		{ 
 			for(BlockPos found : founds) //if(found != null)
 			{ 
 				UtilChat.addChatMessage(player, UtilChat.blockPosToString( found)); 
