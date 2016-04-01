@@ -1,13 +1,14 @@
-package com.lothrazar.samscommands.command;
+package com.lothrazar.cyclicmagic.command;
 
 import java.util.ArrayList; 
-
-import com.lothrazar.samscommands.ModCommands; 
+import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
@@ -29,20 +30,20 @@ public class PlaceLib
 		
 		if(player.inventory.getCurrentItem() == null || player.inventory.getCurrentItem().stackSize == 0)
 		{
-			ModCommands.addChatMessage(player, "command.place.empty"); 
+			UtilChat.addChatMessage(player, "command.place.empty"); 
 			return false;
 		}
 		Block pblock = Block.getBlockFromItem(player.inventory.getCurrentItem().getItem());
 
 		if(pblock == null)
 		{
-			ModCommands.addChatMessage(player, "command.place.empty"); 
+			UtilChat.addChatMessage(player, "command.place.empty"); 
 			return false;
 		}
 			
 		if(PlaceLib.isAllowed(pblock) == false)
 		{ 
-			ModCommands.addChatMessage(player, "command.place.notallowed"); 
+			UtilChat.addChatMessage(player, "command.place.notallowed"); 
 			return false;
 		}
 		
@@ -52,8 +53,11 @@ public class PlaceLib
 	public static void translateCSV()
 	{
 		//do this on the fly, could be items not around yet during config change
+		System.out.println("placelib getBlockListFromCSV");
+		/*
 		if(PlaceLib.allowed.size() == 0)
 			PlaceLib.allowed = ModCommands.getBlockListFromCSV(PlaceLib.allowedFromConfig); 
+		*/
 	}         
 
 	public static boolean isAllowed(Block pblock)
@@ -158,7 +162,7 @@ public class PlaceLib
     
 		boolean goVert = true;	
 	
-		EnumFacing pfacing = ModCommands.getPlayerFacing(player);
+		EnumFacing pfacing = UtilEntity.getPlayerFacing(player);
 
         //it starts at eye level, so do down and forward one first
 		BlockPos posCurrent = player.getPosition().down().offset(pfacing);
@@ -191,7 +195,7 @@ public class PlaceLib
       //  boolean isLookingUp = (player.getLookVec().yCoord >= 0);//TODO: use this somehow? to place up/down? 
         
 		BlockPos posCurrent;
-		EnumFacing efacing = (player.isSneaking()) ? EnumFacing.DOWN : ModCommands.getPlayerFacing(player);
+		EnumFacing efacing = (player.isSneaking()) ? EnumFacing.DOWN : UtilEntity.getPlayerFacing(player);
 		
 		for(int i = 1; i < want + 1; i = i + skip)
 		{
@@ -211,11 +215,12 @@ public class PlaceLib
 	{
 		world.setBlockState(posCurrent, placing);
 
-		ModCommands.playSoundAt(player, placing.getBlock().stepSound.getPlaceSound());
+		UtilSound.playSound(player, placing.getBlock().getStepSound().getPlaceSound());
 		
 		if(player.capabilities.isCreativeMode == false)
 		{
-			ModCommands.decrHeldStackSize(player);
+			player.inventory.decrStackSize(player.inventory.currentItem, 1);
+			//ModCommands.decrHeldStackSize(player);
 		}
 	}
 }

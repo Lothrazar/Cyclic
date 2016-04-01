@@ -1,4 +1,4 @@
-package com.lothrazar.samscommands.command;
+package com.lothrazar.cyclicmagic.command;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -9,39 +9,34 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.lothrazar.samscommands.ModCommands;
-
+import com.lothrazar.cyclicmagic.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentTranslation; 
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.DimensionManager;
 
-public class CommandTodoList implements ICommand
-{   
-	public static boolean REQUIRES_OP = false; 
+public class CommandTodoList extends BaseCommand implements ICommand
+{    
+	public CommandTodoList(String n, boolean op){
 
-	private ArrayList<String> aliases = new ArrayList<String>(); 
-
-	public CommandTodoList()
-	{  
-	    this.aliases.add(getName().toUpperCase());   
+		super(n, op);  
 	}
 
 	private static String MODE_ADD = "add"; 
 	private static String MODE_REMOVE = "delete"; 
 	private static String MODE_SET = "set";
 	private static String MODE_GET = "get";
-	private static String NBT_KEY = ModCommands.MODID+"_todo";
+	private static String NBT_KEY = Const.MODID+"_todo";
 
 	public static boolean PERSIST_DEATH;
 
 	@Override
 	public String getCommandUsage(ICommandSender s) 
 	{ 
-		return "/" + getName()+" <"+MODE_GET +"|"+MODE_SET + "|" +MODE_ADD + "|" +MODE_REMOVE+  "> <text>";
+		return "/" + getCommandName()+" <"+MODE_GET +"|"+MODE_SET + "|" +MODE_ADD + "|" +MODE_REMOVE+  "> <text>";
 	}
    
 	
@@ -60,7 +55,7 @@ public class CommandTodoList implements ICommand
 	}
 	
 	@Override
-	public void execute(ICommandSender icommandsender, String[] args)
+	public void execute(MinecraftServer server,ICommandSender icommandsender, String[] args)
 	{ 
 		EntityPlayer player = (EntityPlayer)icommandsender; 
   
@@ -71,7 +66,7 @@ public class CommandTodoList implements ICommand
 		 {
 			// player.addChatMessage(new ChatComponentTranslation(getCommandUsage(icommandsender))); 
 
-			 ModCommands.addChatMessage(player,getCommandUsage(icommandsender));
+			 UtilChat.addChatMessage(player,getCommandUsage(icommandsender));
 			 
 			 return; 
 		 }
@@ -81,7 +76,7 @@ public class CommandTodoList implements ICommand
 		 if(args[0].equals(MODE_GET))
 		 { 
 			//just display current in chat
-			 ModCommands.addChatMessage(player,getTodoForPlayer(player));
+			 UtilChat.addChatMessage(player,getTodoForPlayer(player));
 		 } 
 		 else if(args[0].equals(MODE_REMOVE))
 		 { 
@@ -110,45 +105,7 @@ public class CommandTodoList implements ICommand
 		 }
  
 		 setTodoForPlayer(player, todoCurrent); 
-	}
-	 
- 
-	@Override
-	public List getAliases() 
-	{ 
-		return aliases;
-	}
-	 
-
-	@Override
-	public String getName() 
-	{ 
-		return "todo";
-	}
-
-	@Override
-	public int compareTo(Object arg0)
-	{ 
-		return 0;
-	}
-
-	@Override
-	public boolean canCommandSenderUse(ICommandSender ic)
-	{
-		return (REQUIRES_OP) ? ic.canUseCommand(2, this.getName()) : true; 
-	}
-
-	@Override
-	public List addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos)
-	{ 
-		return null;
-	}
-
-	@Override
-	public boolean isUsernameIndex(String[] args, int index)
-	{ 
-		return false;
-	}
+	} 
 }
 
 

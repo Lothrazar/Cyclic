@@ -1,63 +1,50 @@
-package com.lothrazar.samscommands.command;
+package com.lothrazar.cyclicmagic.command;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.samscommands.ModCommands; 
+import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 
-public class CommandHearts implements ICommand
+public class CommandHearts extends BaseCommand implements ICommand
 {
-	private static boolean REQUIRES_OP = true; // always
-	private ArrayList<String> aliases = new ArrayList<String>();
+	public CommandHearts(String n, boolean op){
 
-	@Override
-	public int compareTo(Object arg0)
-	{
-		return 0;
-	}
-
-	@Override
-	public String getName()
-	{
-		return "sethearts";
+		super(n, op);
 	}
 
 	@Override
 	public String getCommandUsage(ICommandSender sender)
 	{
-		return "/"+getName()+" <player> <hearts>";
+		return "/"+getCommandName()+" <player> <hearts>";
 	}
 
 	@Override
-	public List getAliases()
-	{
-		return aliases;
-	}
-
-	@Override
-	public void execute(ICommandSender sender, String[] args)		throws CommandException
+	public void execute(MinecraftServer server,ICommandSender sender, String[] args)		throws CommandException
 	{ 
 		EntityPlayer ptarget  = null;
 		
 		int hearts = 0;
 		try
 		{
-			ptarget = MinecraftServer.getServer().getConfigurationManager().getPlayerByUsername(args[0]);
+			ptarget = super.getPlayerByUsername(server,args[0]);
 			
 			if(ptarget == null)
 			{
-				ModCommands.addChatMessage(sender,getCommandUsage(sender));
+				UtilChat.addChatMessage(sender,getCommandUsage(sender));
 				return;
 			}
 		}
 		catch (Exception e)
 		{
-			ModCommands.addChatMessage(sender,getCommandUsage(sender));
+			UtilChat.addChatMessage(sender,getCommandUsage(sender));
 			return;
 		}
 		try
@@ -66,31 +53,12 @@ public class CommandHearts implements ICommand
 		}
 		catch (Exception e)
 		{
-			ModCommands.addChatMessage(sender,getCommandUsage(sender));
+			UtilChat.addChatMessage(sender,getCommandUsage(sender));
 			return;
 		}
 		
 		if(hearts < 1) {hearts = 1;}
 		
-		ModCommands.setMaxHealth(ptarget, hearts*2);
+		UtilEntity.setMaxHealth(ptarget, hearts*2);
 	}
-
-	@Override
-	public boolean canCommandSenderUse(ICommandSender sender)
-	{ 
-		return (REQUIRES_OP) ? sender.canUseCommand(2, this.getName()) : true; 
-	}
-
-	@Override
-	public List addTabCompletionOptions(ICommandSender sender, String[] args,	BlockPos pos)
-	{
-		return null;
-	}
-
-	@Override
-	public boolean isUsernameIndex(String[] args, int index)
-	{
-		return false;
-	}
-
 }

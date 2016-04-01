@@ -1,62 +1,44 @@
-package com.lothrazar.samscommands.command;
+package com.lothrazar.cyclicmagic.command;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;     
-
-import com.lothrazar.samscommands.*; 
-
+import com.lothrazar.cyclicmagic.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer; 
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.DimensionManager;
 
-public class CommandSimpleWaypoints  implements ICommand
+public class CommandSimpleWaypoints  extends BaseCommand implements ICommand
 {
-	public static boolean REQUIRES_OP; 
-	public static boolean ENABLE_TP;
-	private static String NBT_KEY = ModCommands.MODID+"_swp";
+	//public static boolean ENABLE_TP = false;
+	private static String NBT_KEY = Const.MODID+"_swp";
 	private ArrayList<String> aliases = new ArrayList<String>();
 
-	public CommandSimpleWaypoints()
-	{  
+	public CommandSimpleWaypoints(String n, boolean op){
+
+		super(n, op);
 		this.aliases.add("simplewaypoint"); 
 		this.aliases.add("swp"); 
 		this.aliases.add("SWP");
-		this.aliases.add(getName().toUpperCase());
+		this.aliases.add(getCommandName().toUpperCase());
 	}
 	
-	@Override
-	public int compareTo(Object arg0) 
-	{ 
-		return 0;
-	}
-
-	@Override
-	public String getName() 
-	{ 
-		return "simplewp";
-	}
 
 	@Override
 	public String getCommandUsage(ICommandSender p_71518_1_) 
 	{  
-		String tp = ENABLE_TP ?  "|" + MODE_TP : "";
+		//String tp = ENABLE_TP ?  "|" + MODE_TP : "";
 		// + "|" + MODE_HIDEDISPLAY
-		return "/" + getName()+" <"+MODE_LIST + "|" + MODE_SAVE + "|"  +MODE_CLEAR + tp + "> [displayname | showindex]";
+		return "/" + getCommandName()+" <"+MODE_LIST + "|" + MODE_SAVE + "|"  +MODE_CLEAR + "> [name | index]";
 	}
 
-	@Override
-	public List getAliases() 
-	{ 
-		return this.aliases;
-	}
-
-	private static String MODE_TP = "tp"; 
+	//private static String MODE_TP = "tp"; 
 	//private static String MODE_DISPLAY = "get"; 
 	//private static String MODE_HIDEDISPLAY = "hide";
 	private static String MODE_LIST = "list";
@@ -66,13 +48,13 @@ public class CommandSimpleWaypoints  implements ICommand
 	public static boolean PERSIST_DEATH;
 	
 	@Override
-	public void execute(ICommandSender icommandsender, String[] args) 
+	public void execute(MinecraftServer server,ICommandSender icommandsender, String[] args) 
 	{  
 		EntityPlayer p = (EntityPlayer)icommandsender;
 		
 		if(args == null || args.length == 0 || args[0] == null || args[0].length() == 0)
 		{ 
-			p.addChatMessage(new ChatComponentTranslation(getCommandUsage(icommandsender))); 
+			UtilChat.addChatMessage(icommandsender,getCommandUsage(icommandsender)); 
 	 
 			return;//not enough args
 		}
@@ -95,17 +77,17 @@ public class CommandSimpleWaypoints  implements ICommand
 		int index = -1;
 		
 		try{
-		index = Integer.parseInt(args[1]);//TODO: trycatch on this , it might not be integer
+			index = Integer.parseInt(args[1]);//TODO: trycatch on this , it might not be integer
 		}
 		catch(Exception e)
 		{
-			p.addChatMessage(new ChatComponentTranslation(getCommandUsage(icommandsender))); 
+			UtilChat.addChatMessage(icommandsender,getCommandUsage(icommandsender)); 
 			return;
 		}
 		if(index <= 0 ) //invalid number, or int parse failed
 		{
 			// ZERO NOT ALLOWED
-			p.addChatMessage(new ChatComponentTranslation(getCommandUsage(icommandsender))); 
+			UtilChat.addChatMessage(icommandsender,getCommandUsage(icommandsender)); 
 			return;
 		}
 		
@@ -114,16 +96,10 @@ public class CommandSimpleWaypoints  implements ICommand
 			executeClear(p, index);
 			return;
 		} 
-		
-		if(ENABLE_TP && args[0].equals(MODE_TP))
-		{
-			executeTp(p, index);
-			return;
-		} 
-
+	 
 		//if nothing else, as not matched anything:
 		//then this is like the default case in a switch statement
-		p.addChatMessage(new ChatComponentTranslation(getCommandUsage(icommandsender))); 
+		UtilChat.addChatMessage(icommandsender,getCommandUsage(icommandsender)); 
 	}
 	
 	private void executeSave(EntityPlayer p, String name) 
@@ -143,47 +119,7 @@ public class CommandSimpleWaypoints  implements ICommand
 		 
 		overwriteForPlayer(p,lines);
 	} 
-/*
-	private void executeHide(EntityPlayer p) 
-	{
-		ArrayList<String> lines = getForPlayer(p);
-		
-		if(lines.size() < 1){return;}
-		lines.set(0,"0");
-		overwriteForPlayer(p,lines); 
-	}*/
-//	public static int EXP_COST_TP = 100;//TODO: CONFIG
-	private void executeTp(EntityPlayer player,int index) 
-	{
-		/*if(ModMain.getExpTotal(player) < EXP_COST_TP)
-		{
-			ModMain.addChatMessage(player, ModMain.lang("waypoints.tp.exp")+EXP_COST_TP);
-			return;
-		}
-		*/
-		Location loc = getSingleForPlayer(player,index);
-
-		//System.out.println("try and teleport to loc "+index);
-		
-		
-		if(loc == null)
-		{
-			ModCommands.addChatMessage(player, "waypoints.tp.notfound");
-		}
-		else
-		{
-			if(player.dimension != loc.dimension)
-			{
-				ModCommands.addChatMessage(player, "waypoints.tp.dimension");
-			}
-			else
-			{
-				ModCommands.teleportWallSafe(player, player.worldObj, new BlockPos(loc.X,loc.Y,loc.Z));
-				//TODO:
-				//ModMain.drainExp(player, EXP_COST_TP);
-			}
-		}
-	}
+	 
 	private void executeClear(EntityPlayer p, int index) 
 	{
 		ArrayList<String> lines = getForPlayer(p);
@@ -211,7 +147,7 @@ public class CommandSimpleWaypoints  implements ICommand
 
 	private void executeList(EntityPlayer p) 
 	{ 
-		boolean showCoords = !p.worldObj.getGameRules().getGameRuleBooleanValue("reducedDebugInfo");
+		boolean showCoords = true;// !p.worldObj.getGameRules().getGameRuleBooleanValue("reducedDebugInfo");
 		
 		ArrayList<String> lines = getForPlayer(p);
 		
@@ -224,14 +160,14 @@ public class CommandSimpleWaypoints  implements ICommand
 			if(i == 0){i++;continue;}//just a weird bug that happens, since we index by 1
 			
 			if(line == null || line.isEmpty()) {continue;}
-			msg = EnumChatFormatting.WHITE+"";//overworld and all other dimensions
+			msg = TextFormatting.WHITE+"";//overworld and all other dimensions
 			loc = new Location(line);
 			
 		 
 			if(loc.dimension == 1)//END
-				msg = EnumChatFormatting.DARK_PURPLE+"";
+				msg = TextFormatting.DARK_PURPLE+"";
 			else if(loc.dimension == -1)//NETHER
-				msg = EnumChatFormatting.RED+"";
+				msg = TextFormatting.RED+"";
 			
 			msg += "<" + i + "> ";
 			
@@ -240,7 +176,7 @@ public class CommandSimpleWaypoints  implements ICommand
 			else
 				msg += loc.name;
 				
-			p.addChatMessage(new ChatComponentTranslation(msg)); 
+			UtilChat.addChatMessage(p,msg); 
 			
 			i++;
 		}
@@ -251,18 +187,7 @@ public class CommandSimpleWaypoints  implements ICommand
 	{ 
 		return false;
 	} 
-	 /* 
-	private void SetCurrentForPlayer(EntityPlayer player, int current)
-	{
-		//String playerName = player.getDisplayName().getUnformattedText();
-		
-		ArrayList<String> lines = getForPlayer(player);
-		
-		lines.set(0, current+"");//overwrite the current index
- 
-		overwriteForPlayer(player, lines);
-	}*/
- 
+
 	public static void overwriteForPlayer(EntityPlayer player, ArrayList<String> lines)
 	{ 
 		String csv = "";
@@ -311,15 +236,4 @@ public class CommandSimpleWaypoints  implements ICommand
 	} 
 	
 
-	@Override
-	public boolean canCommandSenderUse(ICommandSender ic)
-	{
-		return (REQUIRES_OP) ? ic.canUseCommand(2, this.getName()) : true; 
-	}
-
-	@Override
-	public List addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos)
-	{ 
-		return null;
-	}
 }

@@ -1,85 +1,48 @@
-package com.lothrazar.samscommands.command;
+package com.lothrazar.cyclicmagic.command;
 
 import java.util.ArrayList;
 import java.util.List; 
-
-import com.lothrazar.samscommands.ModCommands; 
+ 
+import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilSound;
+import com.lothrazar.cyclicmagic.util.UtilTeleport;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.math.BlockPos;
 //import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.world.World;
 
-public class CommandWorldHome  implements ICommand
+public class CommandWorldHome extends BaseCommand  implements ICommand
 {
 	public static boolean REQUIRES_OP; 
 	
 	private ArrayList<String> aliases = new ArrayList<String>();
-	public CommandWorldHome()
-	{
-		aliases.add("WORLDHOME");
-	}
-	@Override
-	public int compareTo(Object o)
-	{ 
-		return 0;
+	public CommandWorldHome(String n, boolean op){
+
+		super(n, op);
+		aliases.add(n.toUpperCase());
 	}
 
 	@Override
-	public String getName()
-	{ 
-		return "worldhome";
-	}
-
-	@Override
-	public String getCommandUsage(ICommandSender ic)
-	{ 
-		return "/" + getName();
-	}
-
-	@Override
-	public List getAliases()
-	{ 
-		return aliases;
-	}
-
-	@Override
-	public void execute(ICommandSender ic, String[] args)
+	public void execute(MinecraftServer server,ICommandSender ic, String[] args)
 	{
 		World world = ic.getCommandSenderEntity().worldObj; 
-		EntityPlayer player = world.getClosestPlayer(ic.getPosition().getX(), ic.getPosition().getY(), ic.getPosition().getZ(), 5);
+		
+		EntityPlayer player = (EntityPlayer)ic;//world.getClosestPlayer(ic.getPosition().getX(), ic.getPosition().getY(), ic.getPosition().getZ(), 5);
  
 		if(player.dimension != 0)
 		{
 			//TODO:"Can only teleport to worldhome in the overworld"
-			 player.addChatMessage(new ChatComponentTranslation("command.worldhome.dim"));
+			 UtilChat.addChatMessage(player,"command.worldhome.dim");
 			 return;
 		}
 		
 		//this tends to always get something at y=64, regardless if there is AIR or not 
 		//so we need to safely push the player up out of any blocks they are in
 		
-		ModCommands.teleportWallSafe(player, world, world.getSpawnPoint()); 
-		ModCommands.playSoundAt(player,  "mob.endermen.portal");
+		UtilTeleport.teleportWallSafe(player, world, world.getSpawnPoint()); 
+		UtilSound.playSound(player,  "mob.endermen.portal");
 	}
- 
-	@Override
-	public boolean canCommandSenderUse(ICommandSender ic)
-	{
-		return (REQUIRES_OP) ? ic.canUseCommand(2, this.getName()) : true; 
-	}
- 
-	@Override
-	public boolean isUsernameIndex(String[] ic, int args)
-	{ 
-		return false;
-	}
-
-	@Override
-	public List addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos)
-	{ 
-		return null;
-	} 
 }

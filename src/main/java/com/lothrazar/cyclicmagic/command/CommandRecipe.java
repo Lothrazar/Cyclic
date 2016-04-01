@@ -1,13 +1,11 @@
-package com.lothrazar.samscommands.command;
+package com.lothrazar.cyclicmagic.command;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.lang.reflect.Field;
-
-import com.lothrazar.samscommands.ModCommands; 
-
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -17,46 +15,21 @@ import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
-import net.minecraft.util.BlockPos;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
-public class CommandRecipe  implements ICommand
+public class CommandRecipe  extends BaseCommand implements ICommand
 {
-	public static boolean REQUIRES_OP;  
-	private ArrayList<String> aliases = new ArrayList<String>();
-	
-	public CommandRecipe()
-	{
-		this.aliases.add(getName().toUpperCase());
-	}
-	@Override
-	public int compareTo(Object o)
-	{
-		return 0;
+	public CommandRecipe(String n, boolean op){
+
+		super(n, op);
 	}
 
 	@Override
-	public String getName()
-	{
-		return "recipe";
-	}
-
-	@Override
-	public String getCommandUsage(ICommandSender sender)
-	{
-		return "/"+getName();
-	}
-
-	@Override
-	public List getAliases()
-	{
-		return aliases;
-	}
-
-	@Override
-	public void execute(ICommandSender sender, String[] args)		throws CommandException
+	public void execute(MinecraftServer server, ICommandSender sender, String[] args)		throws CommandException
 	{ 
 		World world = sender.getEntityWorld();
 		if(! (sender instanceof EntityPlayer)){return;}//does not work from command blocks and such
@@ -66,7 +39,7 @@ public class CommandRecipe  implements ICommand
 		
 		if(held == null && world.isRemote)
 		{
-			ModCommands.addChatMessage(player, "command.recipes.empty");
+			UtilChat.addChatMessage(player, "command.recipes.empty");
 			return;
 		}
 
@@ -102,7 +75,7 @@ public class CommandRecipe  implements ICommand
 		    	
 		    	//System.out.println(isInventory+"isInventory is from : "+r.recipeHeight+" "+r.recipeWidth);
 
-		    	ModCommands.addChatMessage(player, "command.recipes.found");
+		    	UtilChat.addChatMessage(player, "command.recipes.found");
 		    	addChatShapedRecipe(player, getRecipeInput(recipe), isInventory);
 		    	foundSomething = true;
 		    }
@@ -142,13 +115,13 @@ public class CommandRecipe  implements ICommand
 	
 				isInventory = (sum == 4);
 
-		    	ModCommands.addChatMessage(player, "command.recipes.found");
+				UtilChat.addChatMessage(player, "command.recipes.found");
 		    	addChatShapedRecipe(player,recipeItems, isInventory);
 		    	foundSomething = true;
 		    } 
 		    else if(recipe instanceof ShapelessRecipes || recipe instanceof ShapelessOreRecipe)
 			{
-		    	ModCommands.addChatMessage(player, "command.recipes.found");
+		    	UtilChat.addChatMessage(player, "command.recipes.found");
 				addChatShapelessRecipe(player,getRecipeInput(recipe));
 		    	foundSomething = true;
 		    }
@@ -165,29 +138,13 @@ public class CommandRecipe  implements ICommand
 		
 		if(foundSomething == false)
 		{
-			ModCommands.addChatMessage(player, "command.recipes.notfound");
+			UtilChat.addChatMessage(player, "command.recipes.notfound");
 		}
 	}
 
-	@Override
-	public boolean canCommandSenderUse(ICommandSender sender)
-	{ 
-		return (REQUIRES_OP) ? sender.canUseCommand(2, this.getName()) : true; 
-	}
-
-	@Override
-	public List addTabCompletionOptions(ICommandSender sender, String[] args,	BlockPos pos)
-	{
-		return null;
-	}
-
-	@Override
-	public boolean isUsernameIndex(String[] args, int index)
-	{
-		return false;
-	}
 	public static ItemStack[] getRecipeInput(IRecipe recipe)
 	{
+		System.out.println("TODO: UtilRecipe");
 		ItemStack[] recipeItems = null;
 	    if(recipe instanceof ShapedRecipes)
 	    { 
@@ -300,7 +257,7 @@ public class CommandRecipe  implements ICommand
     		ItemStack is = recipeItems[i];
     		
     		//list.add(is.getDisplayName());
-        	ModCommands.addChatMessage(player, " - "+is.getDisplayName());
+        	UtilChat.addChatMessage(player, " - "+is.getDisplayName());
     		
     	}
     	//TODO: cleanup/make ncer,etc
@@ -357,21 +314,21 @@ public class CommandRecipe  implements ICommand
 		
 		if(isInventory)
 		{
-			ModCommands.addChatMessage(player, grid[0]+grid[1]);
-			ModCommands.addChatMessage(player, grid[2]+grid[3]);
+			UtilChat.addChatMessage(player, grid[0]+grid[1]);
+			UtilChat.addChatMessage(player, grid[2]+grid[3]);
 		}
 		else
 		{
-			ModCommands.addChatMessage(player, grid[0]+grid[1]+grid[2]);
-			ModCommands.addChatMessage(player, grid[3]+grid[4]+grid[5]);
-			ModCommands.addChatMessage(player, grid[6]+grid[7]+grid[8]);
+			UtilChat.addChatMessage(player, grid[0]+grid[1]+grid[2]);
+			UtilChat.addChatMessage(player, grid[3]+grid[4]+grid[5]);
+			UtilChat.addChatMessage(player, grid[6]+grid[7]+grid[8]);
 		}
 		for (Map.Entry<String, String> entry : namenumbers.entrySet()) 
 		{
 		    String item = entry.getKey();
 		    String nums = entry.getValue();
 
-			ModCommands.addChatMessage(player, item + " : "+nums);
+		    UtilChat.addChatMessage(player, item + " : "+nums);
 		}
 	}
 }

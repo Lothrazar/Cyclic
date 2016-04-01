@@ -1,10 +1,8 @@
-package com.lothrazar.samscommands.command;
+package com.lothrazar.cyclicmagic.command;
 
 import java.util.ArrayList;
 import java.util.List; 
-
-import com.lothrazar.samscommands.ModCommands;
-
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.Entity;
@@ -13,55 +11,47 @@ import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
 
-public class CommandSearchTrades  implements ICommand
+public class CommandSearchTrades extends BaseCommand  implements ICommand
 {
+	// https://github.com/LothrazarMinecraftMods/MinecraftSearchCommands/blob/master/src/main/java/com/lothrazar/searchcommands/command/CommandSearchTrades.java
+	
 	public static boolean REQUIRES_OP;  
 	private ArrayList<String> aliases = new ArrayList<String>();
 
-	public CommandSearchTrades()
-	{
+	public CommandSearchTrades(String n, boolean op){
+
+		super(n, op);/*
 		aliases.add("searcht");
 		aliases.add("SEARCHTRADE"); 
-		aliases.add("SEARCHT");   
+		aliases.add("SEARCHT");   */
 	}
-	@Override
-	public int compareTo(Object arg0) 
-	{ 
-		return 0;
-	}
-
-	@Override
-	public String getName() 
-	{ 
-		return "searchtrade";
-	}
-
+ 
 	@Override
 	public String getCommandUsage(ICommandSender ic) 
 	{ 
-		return  "/" + getName()+" <item name> <qty>";
+		return  "/" + getCommandName()+" <item name> <qty>";
 	}
 
 	@Override
-	public List getAliases() 
+	public List getCommandAliases() 
 	{ 
 		return aliases;
 	}
 
 	@Override
-	public void execute(ICommandSender ic, String[] args) 
+	public void execute(MinecraftServer server,ICommandSender ic, String[] args) 
 	{
 		EntityPlayer p = (EntityPlayer)ic;
 		if(args.length == 0)
 		{  
-			p.addChatMessage(new ChatComponentTranslation(getCommandUsage(ic))); 
+			UtilChat.addChatMessage(p,getCommandUsage(ic)); 
 			return;
 		}
 		
@@ -80,14 +70,15 @@ public class CommandSearchTrades  implements ICommand
 		
 		double range = 64;
 		
-		AxisAlignedBB searchRange = AxisAlignedBB.fromBounds(
+		System.out.println("TODO: UtilSearchWorld .entities");
+		AxisAlignedBB searchRange = new AxisAlignedBB(
 				X + 0.5D - range, 0.0D, 
 				Z + 0.5D - range, 
 				X + 0.5D + range, 255.0D, 
 				Z + 0.5D + range);
 		 
 
-		 List<Entity> merchants = ic.getEntityWorld().getEntitiesWithinAABB(EntityVillager.class, searchRange);
+		 List<EntityVillager> merchants = ic.getEntityWorld().getEntitiesWithinAABB(EntityVillager.class, searchRange);
 
 		 //List merchants = ic.getEntityWorld().getEntitiesWithinAABB(IMerchant.class, searchRange);
 		 List<EntityLiving> villagers = new ArrayList();
@@ -156,46 +147,28 @@ public class CommandSearchTrades  implements ICommand
 				 if(match)
 				 {
 					 m =  disabled  +
-							 ModCommands.posToString(v_entity.getPosition()) + " " + 
+							 UtilChat.blockPosToString(v_entity.getPosition()) + " " + 
 							 sell.stackSize +" "+sell.getDisplayName()+
 							 " :: "+
 							 buy.stackSize+" "+buy.getDisplayName();
 					 messages.add(m); 
 					 
-					 
+					 /*
 					 ModCommands.spawnParticlePacketByID(((Entity)villagers.get(i)).getPosition()
 							 ,EnumParticleTypes.CRIT_MAGIC.getParticleID());
-					
+					*/
 				 }
 			 } 
 		 }
  
 		 for(int j = 0; j < messages.size();j++)
 		 {
-			p.addChatMessage(new ChatComponentTranslation(messages.get(j))); 
+			UtilChat.addChatMessage(p,messages.get(j)); 
 		 }
 		 
 		 if(messages.size() == 0)
 		 {
-			p.addChatMessage(new ChatComponentTranslation("No matching trades found in nearby villagers ("+range+"m).")); 
+			 UtilChat.addChatMessage(p,"No matching trades found in nearby villagers ("+range+"m)."); 
 		 } 
 	}
- 
-	@Override
-	public boolean isUsernameIndex(String[] args, int i) 
-	{ 
-		return false;
-	}
-
-	@Override
-	public boolean canCommandSenderUse(ICommandSender ic)
-	{
-		return (REQUIRES_OP) ? ic.canUseCommand(2, this.getName()) : true; 
-	}
-
-	@Override
-	public List addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos)
-	{ 
-		return null;
-	} 
 }

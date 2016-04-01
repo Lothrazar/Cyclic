@@ -50,7 +50,7 @@ public class MessageUpgrade implements IMessage, IMessageHandler<MessageUpgrade,
 			else{
 				UtilSound.playSound(player.worldObj, player.getPosition(), UtilSound.Own.buzzp);
 				
-				UtilChat.message(player, I18n.translateToLocal("upgrade.notenough") + " "+  Energy.UPGRADE_EXP_COST);
+				UtilChat.addChatMessage(player, I18n.translateToLocal("upgrade.notenough") + " "+  Energy.UPGRADE_EXP_COST);
 			}
 		}
 		

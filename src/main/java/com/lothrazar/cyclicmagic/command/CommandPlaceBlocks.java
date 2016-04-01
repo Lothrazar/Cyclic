@@ -1,9 +1,8 @@
-package com.lothrazar.samscommands.command;
+package com.lothrazar.cyclicmagic.command;
 
 import java.util.ArrayList;
 import java.util.List; 
-
-import com.lothrazar.samscommands.ModCommands; 
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.CommandException;
@@ -11,45 +10,26 @@ import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.math.BlockPos;
 
-public class CommandPlaceBlocks implements ICommand
+public class CommandPlaceBlocks extends BaseCommand implements ICommand
 {
-	public static boolean REQUIRES_OP=false;   
-	private ArrayList<String> aliases = new ArrayList<String>();
 	public static int VERTICAL_MAX = 5; //TODO from config file 
 	
-	public CommandPlaceBlocks()
-	{
-		this.aliases.add(getName().toUpperCase());
-	}
-	
-	@Override
-	public int compareTo(Object arg0) 
-	{
-		return 0;
-	}
+	public CommandPlaceBlocks(String n, boolean op){
 
-	@Override
-	public String getName() 
-	{
-		return "place";
+		super(n, op);//"place"
 	}
 
 	@Override
 	public String getCommandUsage(ICommandSender sender) 
 	{
-		return "/"+getName() + "<line|stair|floor|circle> <dist|radius> [skip] [voffset]";
+		return "/"+getCommandName() + "<line|stair|floor|circle> <dist|radius> [skip] [voffset]";
 	}
 
 	@Override
-	public List getAliases() 
-	{
-		return aliases;
-	}
-	
-	@Override
-	public void execute(ICommandSender sender, String[] args)	throws CommandException 
+	public void execute(MinecraftServer server,ICommandSender sender, String[] args)	throws CommandException 
 	{
 		if(PlaceLib.canSenderPlace(sender) == false) {return;}
 
@@ -60,7 +40,7 @@ public class CommandPlaceBlocks implements ICommand
 
 		if(args.length == 0)
 		{ 
-			ModCommands.addChatMessage(player, getCommandUsage(sender));
+			UtilChat.addChatMessage(player, getCommandUsage(sender));
 			return;
 		}
 		
@@ -74,7 +54,7 @@ public class CommandPlaceBlocks implements ICommand
 		}
 		catch (Exception e)
 		{
-			ModCommands.addChatMessage(player, getCommandUsage(sender));
+			UtilChat.addChatMessage(player, getCommandUsage(sender));
 			return;
 		}
 
@@ -87,7 +67,7 @@ public class CommandPlaceBlocks implements ICommand
     		}
     		catch (NumberFormatException e)
     		{
-    			ModCommands.addChatMessage(player, getCommandUsage(sender));
+    			UtilChat.addChatMessage(player, getCommandUsage(sender));
     			return;
     		}
         }
@@ -100,7 +80,7 @@ public class CommandPlaceBlocks implements ICommand
 			}
 			catch (NumberFormatException e)
 			{
-				ModCommands.addChatMessage(player, getCommandUsage(sender));
+				UtilChat.addChatMessage(player, getCommandUsage(sender));
     			return;
 			}
         }
@@ -110,7 +90,7 @@ public class CommandPlaceBlocks implements ICommand
 		if( vertOffset > VERTICAL_MAX ||
 			vertOffset < VERTICAL_MAX*-1) 
 		{
-			ModCommands.addChatMessage(player, ModCommands.lang("command.place.vertical"));
+			UtilChat.addChatMessage(player, "command.place.vertical");
 			return;
 		}
 		
@@ -134,22 +114,4 @@ public class CommandPlaceBlocks implements ICommand
 			PlaceLib.circle(player.worldObj, player, startPos, placing, distOrRadius);//, skip,vertOffset
 		}
     }
-	
-	@Override
-	public boolean canCommandSenderUse(ICommandSender ic) 
-	{
-		return (REQUIRES_OP) ? ic.canUseCommand(2, this.getName()) : true; 
-	}
-
-	@Override
-	public List addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) 
-	{
-		return null;
-	}
-
-	@Override
-	public boolean isUsernameIndex(String[] args, int index) 
-	{
-		return false;
-	}
 }

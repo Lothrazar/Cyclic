@@ -6,65 +6,42 @@ import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.BlockPos;
+import net.minecraft.server.MinecraftServer;
 
-public class CommandEnderChest implements ICommand
+public class CommandEnderChest extends BaseCommand implements ICommand
 {
 	public static boolean REQUIRES_OP; 
 	private ArrayList<String> aliases = new ArrayList<String>();
 
-	public CommandEnderChest()
+	public CommandEnderChest(String n, boolean op)
 	{ 
+		super(n, op);
 		this.aliases.add("ec"); 
-		this.aliases.add(getName().toUpperCase());
+		this.aliases.add(getCommandName().toUpperCase());
 	}
 
 	@Override
-	public String getName()
+	public String getCommandName()
 	{
 		return "enderchest";
 	}
 
 	@Override
-	public String getCommandUsage(ICommandSender icommandsender)
-	{
-		return "/" + getName();
-	}
-  
-	@Override
-	public void execute(ICommandSender sender, String[] args) throws CommandException
+	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException
 	{
 		EntityPlayer p = (EntityPlayer) sender;
 		p.displayGUIChest(p.getInventoryEnderChest());
 	}
  
 	@Override
-	public boolean isUsernameIndex(String[] astring, int i)
-	{
-		return false;
-	}
-
-	@Override
-	public int compareTo(Object o)
-	{
-		return 0;
-	}
-  
-	@Override
-	public List getAliases()
+	public List<String> getCommandAliases()
 	{
 		return this.aliases;
 	}
   
 	@Override
-	public boolean canCommandSenderUse(ICommandSender ic)
+	public boolean checkPermission(MinecraftServer server, ICommandSender ic)
 	{
-		return (REQUIRES_OP) ? ic.canUseCommand(2, this.getName()) : true; 
-	}
-
-	@Override
-	public List addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos)
-	{ 
-		return null;
-	}
+		return (REQUIRES_OP) ? super.checkPermission(server, ic) : true; 
+	} 
 }

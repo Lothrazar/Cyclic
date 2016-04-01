@@ -1,51 +1,30 @@
-package com.lothrazar.samscommands.command;
+package com.lothrazar.cyclicmagic.command;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.lothrazar.samscommands.ModCommands; 
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.BlockPos;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.math.BlockPos;
 
-public class CommandPing implements ICommand
+public class CommandPing extends BaseCommand implements ICommand
 {
-	public static boolean REQUIRES_OP;  //TODO:CONFIG
-	private ArrayList<String> aliases = new ArrayList<String>();
+	public CommandPing(String n, boolean op){
 
-	public CommandPing()
-	{
-		this.aliases.add(getName().toUpperCase());
+		super(n, op);
 	}
-
-	@Override
-	public int compareTo(Object arg0)
-	{
-		return 0;
-	}
-
-	@Override
-	public String getName()
-	{
-		return "ping";
-	}
-
+ 
 	@Override
 	public String getCommandUsage(ICommandSender sender)
 	{
-		return "/"+getName() + "[nether]";
+		return "/"+getCommandName() + "[nether]";
 	}
 
 	@Override
-	public List getAliases()
-	{
-		return aliases;
-	}
-
-	@Override
-	public void execute(ICommandSender sender, String[] args)	throws CommandException
+	public void execute(MinecraftServer server,ICommandSender sender, String[] args)	throws CommandException
 	{
 		EntityPlayer player = (EntityPlayer)sender;
 		if(player == null){return;}
@@ -59,29 +38,12 @@ public class CommandPing implements ICommand
 			double z = p.getZ();
 			BlockPos n = new BlockPos(x/netherRatio,p.getY(),z/netherRatio);
 			
-			ModCommands.addChatMessage(player, ModCommands.posToString(n));
+			//TODO: ModCommands.posToString(n)
+			UtilChat.addChatMessage(player, n.toString());
 			
 			return;
 		}
 		
-		ModCommands.addChatMessage(player, ModCommands.posToString(player.getPosition()));
-	}
-
-	@Override
-	public boolean canCommandSenderUse(ICommandSender sender)
-	{
-		return (REQUIRES_OP) ? sender.canUseCommand(2, this.getName()) : true; 
-	}
-
-	@Override
-	public List addTabCompletionOptions(ICommandSender sender, String[] args,	BlockPos pos)
-	{
-		return null;
-	}
-
-	@Override
-	public boolean isUsernameIndex(String[] args, int index)
-	{
-		return false;
+		UtilChat.addChatMessage(player, player.getPosition().toString());
 	}
 }
