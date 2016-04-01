@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic;
 
 import org.apache.logging.log4j.Logger;
+import com.lothrazar.cyclicmagic.command.*;
 import com.lothrazar.cyclicmagic.config.ModConfig;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
 import net.minecraftforge.common.MinecraftForge;
@@ -11,6 +12,7 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
@@ -50,7 +52,27 @@ public class ModMain{
 
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiRegistry());
 	}
-	
+	@EventHandler
+	public void onServerStarting(FMLServerStartingEvent event)
+	{
+
+		event.registerServerCommand(new CommandEnderChest("enderchest",true));
+		event.registerServerCommand(new CommandGetHome("gethome",true));
+		event.registerServerCommand(new CommandHearts("sethearts",true));
+		event.registerServerCommand(new CommandHome("home",false));
+		event.registerServerCommand(new CommandKit("kit",false)); 
+		event.registerServerCommand(new CommandPing("ping",false));
+		event.registerServerCommand(new CommandPlaceBlocks("place",false));
+		event.registerServerCommand(new CommandRecipe("searchrecipe",false));
+		event.registerServerCommand(new CommandSearchItem("searchitem",false)); 
+		event.registerServerCommand(new CommandSearchSpawner("searchspawner",true)); 
+		event.registerServerCommand(new CommandSearchTrades("searchtrade",false)); 
+		event.registerServerCommand(new CommandSimpleWaypoints("waypoint",false)); 
+		event.registerServerCommand(new CommandTodoList("todo",false));  
+		event.registerServerCommand(new CommandUses("searchuses",false));
+		event.registerServerCommand(new CommandVillageInfo("villageinfo",false));
+		event.registerServerCommand(new CommandWorldHome("worldhome",false)); 
+	}
 
 /*131 (unreleased)
 
