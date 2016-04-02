@@ -39,7 +39,7 @@ public class ModMain{
 	@SidedProxy(clientSide = "com.lothrazar." + Const.MODID + ".proxy.ClientProxy", serverSide = "com.lothrazar." + Const.MODID + ".proxy.CommonProxy")
 	public static CommonProxy proxy;
 	public static Logger logger;
-	public static Configuration config;
+	private static Configuration config;
 	public static SimpleNetworkWrapper network;
 
 	@EventHandler
@@ -52,10 +52,11 @@ public class ModMain{
 
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(Const.MODID);
 		
-		SpellRegistry.syncConfig();
-		PotionRegistry.syncConfig();
+		SpellRegistry.syncConfig(getConfig());
+		PotionRegistry.syncConfig(getConfig());
+		EventRegistry.syncConfig(getConfig());
 		
-		config.save();
+		getConfig().save();
 		
 		registerPackets();
 		
@@ -65,7 +66,6 @@ public class ModMain{
 	@EventHandler
 	public void onInit(FMLInitializationEvent event){
 
-		
 		ItemRegistry.register();
 		BlockRegistry.register();
 		SpellRegistry.register();
@@ -76,12 +76,10 @@ public class ModMain{
 		proxy.register();
 
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiRegistry());
-		
 	}
 	
 	@EventHandler
-	public void onServerStarting(FMLServerStartingEvent event)
-	{
+	public void onServerStarting(FMLServerStartingEvent event){
 		event.registerServerCommand(new CommandEnderChest("enderchest",true));
 		event.registerServerCommand(new CommandGetHome("gethome",true));
 		event.registerServerCommand(new CommandHearts("sethearts",true));
@@ -100,7 +98,6 @@ public class ModMain{
 		event.registerServerCommand(new CommandWorldHome("worldhome",false)); 
 	}
 	
-	
 	private void registerPackets(){
 
 		ModMain.network.registerMessage(MessageKeyCast.class, MessageKeyCast.class, MessageKeyCast.ID, Side.SERVER);
@@ -117,14 +114,11 @@ public class ModMain{
 		ModMain.network.registerMessage(MessageSpellReplacer.class, MessageSpellReplacer.class, MessageSpellReplacer.ID, Side.SERVER);
 		ModMain.network.registerMessage(MessageRecharge.class, MessageRecharge.class, MessageRecharge.ID, Side.SERVER);
 		ModMain.network.registerMessage(MessageUpgrade.class, MessageUpgrade.class, MessageUpgrade.ID, Side.SERVER);
-		
-		
-		
+	}
 
-		//ModMain.network.registerMessage(MessageTogglePassive.class, MessageTogglePassive.class, packetID++, Side.SERVER);
-	//	ModMain.network.registerMessage(MessageToggleVariant.class, MessageToggleVariant.class, packetID++, Side.SERVER);
-		//ModMain.network.registerMessage(MessageTogglePlace.class, MessageTogglePlace.class, packetID++, Side.SERVER);
-		
+	public static Configuration getConfig(){
+
+		return config;
 	}
 
 /*131 (unreleased)

@@ -15,6 +15,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 
 public class PotionRegistry{
 
@@ -117,12 +118,12 @@ public class PotionRegistry{
 		}
 	}
 
-	public static void syncConfig(){
+	public static void syncConfig(Configuration config){
 
 		String category = "";
 		category = Const.MODID;
 
-		PotionRegistry.slowfallSpeed = ModMain.config.getFloat("slowfall_speed", category, 0.41F, 0.1F, 1F, "This factor affects how much the slowfall effect slows down the entity.");
+		PotionRegistry.slowfallSpeed = config.getFloat("slowfall_speed", category, 0.41F, 0.1F, 1F, "This factor affects how much the slowfall effect slows down the entity.");
 
 	}
 }

@@ -6,7 +6,7 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 
-public class EventPlayerDeath{
+public class EventPlayerDeathCoords{
 
 	@SubscribeEvent
 	public void onLivingDeathEvent(LivingDeathEvent event){

@@ -11,7 +11,7 @@ public class IngameConfigGui extends GuiConfig{
 
 	public IngameConfigGui(GuiScreen parent){
 
-		super(parent, new ConfigElement(ModMain.config.getCategory(Const.MODID)).getChildElements(), 
+		super(parent, new ConfigElement(ModMain.getConfig().getCategory(Const.MODID)).getChildElements(), 
 				Const.MODID, false, false, "Cyclic Magic");
 		this.titleLine2 = "See the " + Const.MODID + ".cfg file for even more options";
 	}
