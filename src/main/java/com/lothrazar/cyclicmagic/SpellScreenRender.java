@@ -31,10 +31,11 @@ public class SpellScreenRender{
 	private static final ResourceLocation mana = new ResourceLocation(Const.MODID, "textures/hud/manabar.png");
 	private static final ResourceLocation mana_container = new ResourceLocation(Const.MODID, "textures/hud/manabar_empty.png");
 
+
 	@SideOnly(Side.CLIENT)
 	public void drawSpellWheel(){
 
-		if(ModMain.cfg.renderOnLeft){
+		if(SpellRegistry.renderOnLeft){
 			xmain = xoffset;
 		}
 		else{

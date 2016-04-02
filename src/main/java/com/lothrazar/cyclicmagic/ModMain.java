@@ -3,6 +3,20 @@ package com.lothrazar.cyclicmagic;
 import org.apache.logging.log4j.Logger;
 import com.lothrazar.cyclicmagic.command.*;
 import com.lothrazar.cyclicmagic.config.ModConfig;
+import com.lothrazar.cyclicmagic.net.MessageKeyCast;
+import com.lothrazar.cyclicmagic.net.MessageKeyLeft;
+import com.lothrazar.cyclicmagic.net.MessageKeyRight;
+import com.lothrazar.cyclicmagic.net.MessageOpenSpellbook;
+import com.lothrazar.cyclicmagic.net.MessageParticle;
+import com.lothrazar.cyclicmagic.net.MessageRecharge;
+import com.lothrazar.cyclicmagic.net.MessageSpellFromServer;
+import com.lothrazar.cyclicmagic.net.MessageSpellPull;
+import com.lothrazar.cyclicmagic.net.MessageSpellPush;
+import com.lothrazar.cyclicmagic.net.MessageSpellReplacer;
+import com.lothrazar.cyclicmagic.net.MessageSpellRotate;
+import com.lothrazar.cyclicmagic.net.MessageToggleBuild;
+import com.lothrazar.cyclicmagic.net.MessageToggleSpell;
+import com.lothrazar.cyclicmagic.net.MessageUpgrade;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
 import com.lothrazar.cyclicmagic.registry.*;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -16,6 +30,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.fml.relauncher.Side;
 
 @Mod(modid = Const.MODID, useMetadata = true, canBeDeactivated = false, updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json", guiFactory = "com.lothrazar." + Const.MODID + ".config.IngameConfigHandler")
 public class ModMain{
@@ -25,7 +40,7 @@ public class ModMain{
 	@SidedProxy(clientSide = "com.lothrazar." + Const.MODID + ".proxy.ClientProxy", serverSide = "com.lothrazar." + Const.MODID + ".proxy.CommonProxy")
 	public static CommonProxy proxy;
 	public static Logger logger;
-	public static ModConfig cfg;
+	public static Configuration config;
 	public static SimpleNetworkWrapper network;
 
 	@EventHandler
@@ -33,9 +48,16 @@ public class ModMain{
 
 		logger = event.getModLog();
 
-		cfg = new ModConfig(new Configuration(event.getSuggestedConfigurationFile()));
+		config = new Configuration(event.getSuggestedConfigurationFile());
+		config.load();
 
-		PacketRegistry.register();
+		network = NetworkRegistry.INSTANCE.newSimpleChannel(Const.MODID);
+		
+		
+		
+		ModConfig.syncConfig();
+	 
+		registerPackets();
 		
 		EventRegistry.register();
 	}
@@ -43,6 +65,11 @@ public class ModMain{
 	@EventHandler
 	public void onInit(FMLInitializationEvent event){
 
+		proxy.register();
+
+		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiRegistry());
+		
+		
 		ItemRegistry.register();
 		BlockRegistry.register();
 		SpellRegistry.register();
@@ -50,10 +77,8 @@ public class ModMain{
 		RecipeRegistry.register();
 		MobSpawningRegistry.register();
 		
-		proxy.register();
-
-		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiRegistry());
 	}
+	
 	@EventHandler
 	public void onServerStarting(FMLServerStartingEvent event)
 	{
@@ -73,6 +98,33 @@ public class ModMain{
 		event.registerServerCommand(new CommandUses("searchuses",false));
 		event.registerServerCommand(new CommandVillageInfo("villageinfo",false));
 		event.registerServerCommand(new CommandWorldHome("worldhome",false)); 
+	}
+	
+	
+	private void registerPackets(){
+
+		ModMain.network.registerMessage(MessageKeyCast.class, MessageKeyCast.class, MessageKeyCast.ID, Side.SERVER);
+		ModMain.network.registerMessage(MessageKeyLeft.class, MessageKeyLeft.class, MessageKeyLeft.ID, Side.SERVER);
+		ModMain.network.registerMessage(MessageKeyRight.class, MessageKeyRight.class, MessageKeyRight.ID, Side.SERVER);
+		ModMain.network.registerMessage(MessageToggleSpell.class, MessageToggleSpell.class, MessageKeyRight.ID, Side.SERVER);
+		ModMain.network.registerMessage(MessageParticle.class, MessageParticle.class, MessageParticle.ID, Side.CLIENT);
+		ModMain.network.registerMessage(MessageOpenSpellbook.class, MessageOpenSpellbook.class, MessageOpenSpellbook.ID, Side.CLIENT);
+		ModMain.network.registerMessage(MessageSpellFromServer.class, MessageSpellFromServer.class, MessageSpellFromServer.ID, Side.SERVER);
+		ModMain.network.registerMessage(MessageToggleBuild.class, MessageToggleBuild.class, MessageToggleBuild.ID, Side.SERVER);
+		ModMain.network.registerMessage(MessageSpellRotate.class, MessageSpellRotate.class, MessageSpellRotate.ID, Side.SERVER);
+		ModMain.network.registerMessage(MessageSpellPush.class, MessageSpellPush.class, MessageSpellPush.ID, Side.SERVER);
+		ModMain.network.registerMessage(MessageSpellPull.class, MessageSpellPull.class, MessageSpellPull.ID, Side.SERVER);
+		ModMain.network.registerMessage(MessageSpellReplacer.class, MessageSpellReplacer.class, MessageSpellReplacer.ID, Side.SERVER);
+		ModMain.network.registerMessage(MessageRecharge.class, MessageRecharge.class, MessageRecharge.ID, Side.SERVER);
+		ModMain.network.registerMessage(MessageUpgrade.class, MessageUpgrade.class, MessageUpgrade.ID, Side.SERVER);
+		
+		
+		
+
+		//ModMain.network.registerMessage(MessageTogglePassive.class, MessageTogglePassive.class, packetID++, Side.SERVER);
+	//	ModMain.network.registerMessage(MessageToggleVariant.class, MessageToggleVariant.class, packetID++, Side.SERVER);
+		//ModMain.network.registerMessage(MessageTogglePlace.class, MessageTogglePlace.class, packetID++, Side.SERVER);
+		
 	}
 
 /*131 (unreleased)

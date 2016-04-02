@@ -15,6 +15,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class MessageParticle implements IMessage, IMessageHandler<MessageParticle, IMessage>{
 
+	public static final int ID = 14;
 	private int x;
 	private int y;
 	private int z;

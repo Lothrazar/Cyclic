@@ -20,6 +20,7 @@ public class MessageKeyCast implements IMessage, IMessageHandler<MessageKeyCast,
 	private NBTTagCompound tags = null;
 	private static final String NBT_POS = "pos";
 	private static final String NBT_SIDE = "side";
+	public static final int ID = 11;
 
 	public MessageKeyCast(){
 

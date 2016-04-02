@@ -18,6 +18,8 @@ import net.minecraft.world.World;
 
 public class PotionRegistry{
 
+	public static float slowfallSpeed;
+	public static boolean renderOnLeft;
 	// tired;//http://www.minecraftforge.net/wiki/Potion_Tutorial
 	public static Potion slowfall;
 	public static Potion magnet;
@@ -92,7 +94,7 @@ public class PotionRegistry{
 			// a normal fall seems to go up to 0, -1.2, -1.4, -1.6, then
 			// flattens out at -0.078
 			if(entityLiving.motionY < 0){
-				entityLiving.motionY *= ModMain.cfg.slowfallSpeed;
+				entityLiving.motionY *= slowfallSpeed;
 
 				entityLiving.fallDistance = 0f; // for no fall damage
 			}

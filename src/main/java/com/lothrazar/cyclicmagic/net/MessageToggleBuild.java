@@ -11,6 +11,8 @@ import net.minecraft.item.ItemStack;
 
 public class MessageToggleBuild implements IMessage, IMessageHandler<MessageToggleBuild, IMessage>{
 
+	public static final int ID = 17;
+
 	public MessageToggleBuild(){
 
 	}

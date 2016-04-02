@@ -13,6 +13,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class MessageSpellRotate implements IMessage, IMessageHandler<MessageSpellRotate, IMessage>{
 
+	public static final int ID = 18;
 	private BlockPos pos;
 	private EnumFacing side;
 

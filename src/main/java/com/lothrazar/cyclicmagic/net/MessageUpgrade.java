@@ -17,6 +17,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 public class MessageUpgrade implements IMessage, IMessageHandler<MessageUpgrade, IMessage>{
 
 	public static final int upgrade = 50;
+	public static final int ID = 23;
 	public MessageUpgrade(){
 
 	}

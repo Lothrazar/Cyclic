@@ -8,6 +8,8 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class MessageRecharge implements IMessage, IMessageHandler<MessageRecharge, IMessage>{
 
+	public static final int ID = 22;
+
 	public MessageRecharge(){
 
 	}

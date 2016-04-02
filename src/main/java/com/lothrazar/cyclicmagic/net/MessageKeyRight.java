@@ -10,6 +10,8 @@ import net.minecraft.util.math.BlockPos;
 
 public class MessageKeyRight implements IMessage, IMessageHandler<MessageKeyRight, IMessage>{
 
+	public static final int ID = 13;
+
 	public MessageKeyRight(){
 
 	}

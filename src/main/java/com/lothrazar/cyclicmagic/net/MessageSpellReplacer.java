@@ -13,6 +13,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class MessageSpellReplacer implements IMessage, IMessageHandler<MessageSpellReplacer, IMessage>{
 
+	public static final int ID = 21;
 	private BlockPos pos;
 	private EnumFacing side;
 

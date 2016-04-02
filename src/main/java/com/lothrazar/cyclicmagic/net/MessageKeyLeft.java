@@ -9,6 +9,8 @@ import net.minecraft.entity.player.EntityPlayer;
 
 public class MessageKeyLeft implements IMessage, IMessageHandler<MessageKeyLeft, IMessage>{
 
+	public static final int ID = 12;
+
 	public MessageKeyLeft(){
 
 	}

@@ -6,7 +6,7 @@ import com.lothrazar.cyclicmagic.spell.*;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class SpellRegistry{
-
+	public static boolean renderOnLeft;
 	private static ArrayList<ISpell> spellbook;
 	private static HashMap<Integer, ISpell> hashbook; 
 

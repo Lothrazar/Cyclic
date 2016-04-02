@@ -13,6 +13,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class MessageSpellPush implements IMessage, IMessageHandler<MessageSpellPush, IMessage>{
 
+	public static final int ID = 19;
 	private BlockPos pos;
 	private EnumFacing side;
 
