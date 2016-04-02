@@ -108,13 +108,13 @@ public class ClientProxy extends CommonProxy{
 		Item item;
 		for(Block b : BlockRegistry.blocks){
 			item = Item.getItemFromBlock(b);
-			name = Const.TEXTURE_LOCATION + b.getUnlocalizedName().replaceAll("tile.", "");
+			name = Const.MODRES + b.getUnlocalizedName().replaceAll("tile.", "");
 
 			mesher.register(item, 0, new ModelResourceLocation(name, "inventory"));
 		}
 		
 		for(Item i : ItemRegistry.items){
-			name = Const.TEXTURE_LOCATION + i.getUnlocalizedName().replaceAll("item.", "");
+			name = Const.MODRES + i.getUnlocalizedName().replaceAll("item.", "");
 
 			mesher.register(i, 0, new ModelResourceLocation(name, "inventory"));
 		}

@@ -11,7 +11,7 @@ public class Const {
 	public static final int NOTIFY = 2;
 
 	public static final String MODID = "cyclicmagic";
-	public static final String TEXTURE_LOCATION = Const.MODID + ":";
+	public static final String MODRES = Const.MODID + ":";
 
 	public static final int GUI_INDEX = 1;
 
