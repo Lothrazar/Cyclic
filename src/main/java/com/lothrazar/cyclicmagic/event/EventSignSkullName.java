@@ -17,6 +17,7 @@ public class EventSignSkullName{
 
 	@SubscribeEvent
 	public void onPlayerInteract(PlayerInteractEvent event){
+		System.out.println("PlayerInteractEvent");
 
 		EntityPlayer entityPlayer = event.getEntityPlayer();
 		BlockPos pos = event.getPos();
@@ -31,12 +32,19 @@ public class EventSignSkullName{
 		}
 
 		// event has no hand??
-		ItemStack held = entityPlayer.getActiveItemStack();
+		//and no item stack. and right click rarely works. known bug
+		// http://www.minecraftforge.net/forum/index.php?topic=37416.0
+		ItemStack held = entityPlayer.getHeldItemMainhand();
+		if(held == null){
+			held = entityPlayer.getHeldItemOffhand();
+		}
 
 		TileEntity container = worldObj.getTileEntity(pos);
 
-		if(event.getAction() == PlayerInteractEvent.Action.LEFT_CLICK_BLOCK && entityPlayer.isSneaking() && held != null && held.getItem() == Items.skull && held.getItemDamage() == Const.skull_player && container != null && container instanceof TileEntitySign){
+		// event.getAction() == PlayerInteractEvent.Action.LEFT_CLICK_BLOCK && 
+		if(entityPlayer.isSneaking() && held != null && held.getItem() == Items.skull && held.getItemDamage() == Const.skull_player && container != null && container instanceof TileEntitySign){
 			TileEntitySign sign = (TileEntitySign) container;
+			System.out.println("hit sign with skull");
 			String firstLine = sign.signText[0].getUnformattedText();
 
 			if(firstLine == null){
