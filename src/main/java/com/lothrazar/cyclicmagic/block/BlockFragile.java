@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.block;
 
 import java.util.Random;
-import com.lothrazar.cyclicmagic.Const;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;

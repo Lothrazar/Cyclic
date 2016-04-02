@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.config;
 
-import com.lothrazar.cyclicmagic.Const;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraftforge.common.config.Configuration;
 
 public class ModConfig{

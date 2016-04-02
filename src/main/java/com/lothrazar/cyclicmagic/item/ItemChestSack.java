@@ -2,8 +2,8 @@ package com.lothrazar.cyclicmagic.item;
 
 
 import java.util.List;
-import com.lothrazar.cyclicmagic.ItemRegistry;
 import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;

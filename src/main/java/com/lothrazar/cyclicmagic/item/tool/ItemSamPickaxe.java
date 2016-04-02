@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.item.tool;
 
-import com.lothrazar.cyclicmagic.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 

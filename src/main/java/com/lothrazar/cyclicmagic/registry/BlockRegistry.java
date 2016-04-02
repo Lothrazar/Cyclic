@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic;
+package com.lothrazar.cyclicmagic.registry;
 
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.block.*;

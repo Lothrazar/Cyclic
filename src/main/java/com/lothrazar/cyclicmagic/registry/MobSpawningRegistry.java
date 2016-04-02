@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic;
+package com.lothrazar.cyclicmagic.registry;
  
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.monster.EntityBlaze;

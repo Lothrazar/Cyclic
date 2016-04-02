@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.item.armor;
  
-import com.lothrazar.cyclicmagic.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;

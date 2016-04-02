@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.spell;
 
-import com.lothrazar.cyclicmagic.Const;
-import com.lothrazar.cyclicmagic.PotionRegistry;
+import com.lothrazar.cyclicmagic.registry.PotionRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;

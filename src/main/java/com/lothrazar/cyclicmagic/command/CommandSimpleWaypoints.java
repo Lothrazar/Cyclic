@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.command;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import com.lothrazar.cyclicmagic.Const;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;

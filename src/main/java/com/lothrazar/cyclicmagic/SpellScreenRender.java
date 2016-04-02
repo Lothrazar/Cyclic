@@ -11,6 +11,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.spell.ISpell;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilTextureRender;
 
 public class SpellScreenRender{

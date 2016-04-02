@@ -11,7 +11,7 @@ public class SpellRegistry{
 	private static HashMap<Integer, ISpell> hashbook; 
 
 
-	static SpellScreenRender screen;
+	public static SpellScreenRender screen;
 	public static SpellCaster caster;
 
 	public static class Spells{

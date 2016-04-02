@@ -2,9 +2,9 @@ package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
 import org.lwjgl.input.Keyboard;
-import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;

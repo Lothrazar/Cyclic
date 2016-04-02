@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic;
+package com.lothrazar.cyclicmagic.registry;
 
 import java.util.List;
 import net.minecraft.block.Block;
@@ -37,8 +37,11 @@ import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEve
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.net.MessageKeyLeft;
 import com.lothrazar.cyclicmagic.net.MessageKeyRight;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 
 public class EventRegistry{

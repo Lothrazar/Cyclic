@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.item;
 
 
-import com.lothrazar.cyclicmagic.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;

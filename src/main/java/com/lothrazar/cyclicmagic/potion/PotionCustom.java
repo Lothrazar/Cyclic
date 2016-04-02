@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic;
+package com.lothrazar.cyclicmagic.potion;
 
 import com.lothrazar.cyclicmagic.util.UtilTextureRender;
 import net.minecraft.potion.Potion;

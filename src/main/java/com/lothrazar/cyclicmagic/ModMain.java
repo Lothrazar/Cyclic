@@ -4,6 +4,8 @@ import org.apache.logging.log4j.Logger;
 import com.lothrazar.cyclicmagic.command.*;
 import com.lothrazar.cyclicmagic.config.ModConfig;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
+import com.lothrazar.cyclicmagic.registry.*;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;

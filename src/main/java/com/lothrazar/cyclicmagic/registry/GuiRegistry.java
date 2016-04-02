@@ -1,8 +1,10 @@
-package com.lothrazar.cyclicmagic;
+package com.lothrazar.cyclicmagic.registry;
 
+import com.lothrazar.cyclicmagic.SpellCaster;
 import com.lothrazar.cyclicmagic.gui.ContainerWand;
 import com.lothrazar.cyclicmagic.gui.GuiWandInventory;
 import com.lothrazar.cyclicmagic.gui.InventoryWand;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;

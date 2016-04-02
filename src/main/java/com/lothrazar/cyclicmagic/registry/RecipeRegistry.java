@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic;
+package com.lothrazar.cyclicmagic.registry;
 
 
 public class RecipeRegistry{

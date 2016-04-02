@@ -1,6 +1,6 @@
-package com.lothrazar.cyclicmagic;
+package com.lothrazar.cyclicmagic.util;
 
-public class Const{
+public class Const {
 
 	public static final int skull_skeleton = 0;	
 	public static final int skull_wither = 1;

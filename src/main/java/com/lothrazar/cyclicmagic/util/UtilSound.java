@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.util;
 
-import com.lothrazar.cyclicmagic.Const;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;

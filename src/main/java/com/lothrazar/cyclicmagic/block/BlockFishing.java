@@ -5,7 +5,7 @@ import java.util.Random;
  
 
 
-import com.lothrazar.cyclicmagic.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;

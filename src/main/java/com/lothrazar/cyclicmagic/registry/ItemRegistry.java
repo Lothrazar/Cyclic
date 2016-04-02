@@ -1,9 +1,10 @@
-package com.lothrazar.cyclicmagic;
+package com.lothrazar.cyclicmagic.registry;
 
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.item.*;
 import com.lothrazar.cyclicmagic.item.tool.*;
 import com.lothrazar.cyclicmagic.item.armor.*;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;

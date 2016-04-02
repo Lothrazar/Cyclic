@@ -1,8 +1,10 @@
-package com.lothrazar.cyclicmagic;
+package com.lothrazar.cyclicmagic.registry;
 
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
+import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.net.*;
+import com.lothrazar.cyclicmagic.util.Const;
 
 public class PacketRegistry{
 
