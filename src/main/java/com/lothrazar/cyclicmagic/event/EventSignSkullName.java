@@ -44,7 +44,7 @@ public class EventSignSkullName{
 		// entityPlayer.isSneaking() && 
 		if(held != null && held.getItem() == Items.skull && held.getItemDamage() == Const.skull_player && container != null && container instanceof TileEntitySign){
 			TileEntitySign sign = (TileEntitySign) container;
-			System.out.println("hit sign with skull");
+	
 			String firstLine = sign.signText[0].getUnformattedText();
 
 			if(firstLine == null){
