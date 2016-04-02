@@ -40,20 +40,23 @@ public class UtilSound{
 		public static final String crackle = "crackle";// scaffolding
 
 		public static final String thunk ="thunk";// chest sack create
+		
 	}
+	public static SoundEvent bwoaaap;
 
 	public static void playSound(Entity player, String sound){
 
 		// for client only, or if you have client/server both
 		//player.playSound(sound, volume, pitch);
-		System.out.println("TODO: fix sounds"+sound);
+		System.out.println("TODO: fix sounds P"+sound);
 	}
 
 	public static void playSound(World world, BlockPos pos, String sound){
 
 		// works if you play it only on the server
 		//world.playSoundEffect(pos.getX(), pos.getY(), pos.getZ(), sound, volume, pitch);
-		System.out.println("TODO: fix sounds"+sound);
+		System.out.println("TODO: fix sounds W"+sound);
+		
 	}
 
 	public static void playSound(Entity entity, SoundEvent soundIn){

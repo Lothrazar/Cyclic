@@ -35,14 +35,11 @@ public class ItemCyclicWand extends Item implements IHasRecipe{
 		this.setMaxStackSize(1);
 	}
 
-
 	@Override
 	public void addRecipe(){
 
 		GameRegistry.addRecipe(new ItemStack(this), 
 				"sds", " o ", "gog", 'd', new ItemStack(Blocks.diamond_block), 'g', Items.ghast_tear, 'o', Blocks.obsidian, 's', Items.nether_star);
-
-		
 	}
 
 	@Override
@@ -53,14 +50,14 @@ public class ItemCyclicWand extends Item implements IHasRecipe{
 		}
 		return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged);
 	}
-/*
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public boolean isFull3D(){
 
 		return true;
 	}
-*/
+
 	@Override
 	public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn){
 

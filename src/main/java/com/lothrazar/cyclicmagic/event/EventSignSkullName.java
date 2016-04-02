@@ -25,6 +25,7 @@ public class EventSignSkullName{
 		if(pos == null){
 			return;
 		}
+		
 		IBlockState bstate = worldObj.getBlockState(pos);
 		if(bstate == null){
 			return;
@@ -34,6 +35,7 @@ public class EventSignSkullName{
 		// and no item stack. and right click rarely works. known bug
 		// http://www.minecraftforge.net/forum/index.php?topic=37416.0
 		ItemStack held = entityPlayer.getHeldItemMainhand();
+		
 		if(held == null){
 			held = entityPlayer.getHeldItemOffhand();
 		}

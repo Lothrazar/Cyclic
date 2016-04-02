@@ -14,9 +14,9 @@ public class EventPotions{
 		if(entityLiving == null){
 			return;
 		}
+		
 		PotionRegistry.tickSlowfall(entityLiving);
 
 		PotionRegistry.tickMagnet(entityLiving);
-
 	}
 }
