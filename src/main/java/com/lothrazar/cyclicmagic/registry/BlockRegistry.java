@@ -18,6 +18,7 @@ public class BlockRegistry{
 
 		s.setUnlocalizedName(name);
 		GameRegistry.registerBlock(s, name);
+		s.setCreativeTab(ItemRegistry.tab);
 		blocks.add(s);
 	}
 
@@ -27,10 +28,5 @@ public class BlockRegistry{
 		BlockRegistry.registerBlock(block_fragile, "block_fragile");
 		block_fragile.setCreativeTab(CreativeTabs.tabMisc);
 		
-		GameRegistry.addRecipe(new ItemStack(block_fragile), 
-				"s s", 
-				" s ", 
-				"s s", 
-				's', new ItemStack(Items.stick));
 	}
 }

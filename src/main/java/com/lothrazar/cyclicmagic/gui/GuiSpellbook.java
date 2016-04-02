@@ -1,20 +1,16 @@
 package com.lothrazar.cyclicmagic.gui;
-
-import java.util.List;
-import com.lothrazar.cyclicmagic.SpellCaster;
+ 
 import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.gui.button.ButtonClose;
 import com.lothrazar.cyclicmagic.gui.button.ButtonSpellToggle;
 import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
-import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilTextureRender;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
+import net.minecraft.entity.player.EntityPlayer; 
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -46,7 +42,7 @@ public class GuiSpellbook extends GuiScreen{
 
 		super.initGui();	
 
-		ItemStack wand = SpellCaster.getPlayerWandIfHeld(thePlayer);
+		//ItemStack wand = SpellCaster.getPlayerWandIfHeld(thePlayer);
 		
 		
 		//List<Integer> spellbook = ;// ItemCyclicWand.Variant.getSpellsFromVariant(ItemCyclicWand.Variant.getVariantFromMeta(wand));

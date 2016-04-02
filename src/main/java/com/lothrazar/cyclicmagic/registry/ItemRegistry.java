@@ -46,7 +46,7 @@ public class ItemRegistry{
 
 	public final static Item REPAIR_EMERALD = Items.emerald;
 
-	public static CreativeTabs tab = new CreativeTabs("tab_"+Const.MODID) {
+	public final static CreativeTabs tab = new CreativeTabs("tab_"+Const.MODID) {
 
 		@Override
 		public Item getTabIconItem(){

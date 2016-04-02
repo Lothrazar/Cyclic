@@ -1,14 +1,8 @@
 package com.lothrazar.cyclicmagic.util;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack; 
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class UtilInventory {

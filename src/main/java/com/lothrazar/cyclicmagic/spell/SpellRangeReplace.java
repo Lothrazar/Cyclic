@@ -3,7 +3,6 @@ package com.lothrazar.cyclicmagic.spell;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.SpellCaster;
 import com.lothrazar.cyclicmagic.gui.InventoryWand;
-import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.net.MessageSpellReplacer;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
