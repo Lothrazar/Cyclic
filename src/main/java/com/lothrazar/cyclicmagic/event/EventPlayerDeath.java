@@ -21,9 +21,9 @@ public class EventPlayerDeath{
 
 			// TODO: could restrict to certain damage soruces
 			// event.getSource() == DamageSource.
-			ItemStack skull = UtilNBT.buildNamedPlayerSkull(player);
+			//ItemStack skull = UtilNBT.buildNamedPlayerSkull(player);
 
-			UtilEntity.dropItemStackInWorld(entity.worldObj, player.getPosition(), skull);
+			//UtilEntity.dropItemStackInWorld(entity.worldObj, player.getPosition(), skull);
 
 			String coordsStr = UtilChat.blockPosToString(player.getPosition());
 			UtilChat.addChatMessage(player, player.getDisplayNameString() + " player.death.location " + coordsStr);
