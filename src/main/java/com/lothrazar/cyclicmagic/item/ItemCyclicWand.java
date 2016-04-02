@@ -55,7 +55,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe{
 	@SideOnly(Side.CLIENT)
 	public boolean isFull3D(){
 
-		return true;
+		return false;
 	}
 
 	@Override
