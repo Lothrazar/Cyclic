@@ -33,6 +33,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe{
 	public ItemCyclicWand(){
 
 		this.setMaxStackSize(1);
+		this.setFull3D();
 	}
 
 	@Override
@@ -51,12 +52,6 @@ public class ItemCyclicWand extends Item implements IHasRecipe{
 		return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged);
 	}
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public boolean isFull3D(){
-
-		return false;
-	}
 
 	@Override
 	public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn){

@@ -6,9 +6,6 @@ import com.lothrazar.cyclicmagic.config.ModConfig;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
 import com.lothrazar.cyclicmagic.registry.*;
 import com.lothrazar.cyclicmagic.util.Const;
-import com.lothrazar.cyclicmagic.util.UtilSound;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -51,8 +48,7 @@ public class ModMain{
 		SpellRegistry.register();
 		PotionRegistry.register();
 		RecipeRegistry.register();
-
-		(new MobSpawningRegistry()).register();
+		MobSpawningRegistry.register();
 		
 		proxy.register();
 

@@ -32,4 +32,7 @@ public class Const {
 		public static final int end = 1;
 		public static final int nether = -1;
 	}
+
+	public static final int dye_bonemeal = 15;
+	public static final int wool_white = 0;
 }// ends class reference
