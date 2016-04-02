@@ -5,6 +5,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityCow;
+import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -13,13 +14,12 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 
-public class EventMobDrops{
+public class EventAnimalDropBuffs{
 
-	public int cowExtraLeather = 3;
-	public boolean removeZombieCarrotPotato = true;
+	private static final int cowExtraLeather = 3;
+	private static final int pigExtraMeat = 5;
 
-	public int chanceZombieChildFeather = 50;
-	public int chanceZombieVillagerEmerald = 50;
+	private static final int chanceZombieVillagerEmerald = 50;
 
 	@SubscribeEvent
 	public void onLivingDropsEvent(LivingDropsEvent event){
@@ -34,18 +34,6 @@ public class EventMobDrops{
 		{
 			EntityZombie z = (EntityZombie) entity;
 
-			for(int i = 0; i < drops.size(); i++){
-				EntityItem item = drops.get(i);
-
-				if(item.getEntityItem().getItem() == Items.carrot || item.getEntityItem().getItem() == Items.potato){
-					drops.remove(i);
-				}
-			}
-
-			if(z.isChild() && chanceZombieChildFeather > 0 && worldObj.rand.nextInt(100) <= chanceZombieChildFeather){
-				drops.add(new EntityItem(worldObj, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Items.feather)));
-			}
-
 			if(z.isVillager() && chanceZombieVillagerEmerald > 0 && worldObj.rand.nextInt(100) <= chanceZombieVillagerEmerald){
 				drops.add(new EntityItem(worldObj, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Items.emerald)));
 			}
@@ -53,6 +41,10 @@ public class EventMobDrops{
 
 		if(cowExtraLeather > 0 && entity instanceof EntityCow){
 			UtilEntity.dropItemStackInWorld(worldObj, pos, new ItemStack(Items.leather, cowExtraLeather));
+		}
+		
+		if(pigExtraMeat > 0 && entity instanceof EntityPig){
+			UtilEntity.dropItemStackInWorld(worldObj, pos, new ItemStack(Items.porkchop, pigExtraMeat));
 		}
 	}
 

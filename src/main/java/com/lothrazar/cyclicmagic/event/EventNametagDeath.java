@@ -18,19 +18,16 @@ public class EventNametagDeath{
 		Entity entity = event.getEntity();
 		World worldObj = entity.getEntityWorld();
 
-		if(entity.getCustomNameTag() != null && // 'custom' is blank if no nametag
-		entity.getCustomNameTag() != ""){
+		if(entity.getCustomNameTag() != null && 
+				entity.getCustomNameTag() != ""){
 			// item stack NBT needs the name enchanted onto it
 			ItemStack nameTag = UtilNBT.buildEnchantedNametag(entity.getCustomNameTag());
 
 			UtilEntity.dropItemStackInWorld(worldObj, entity.getPosition(), nameTag);
 		}
 
-		if(entity instanceof EntityLivingBase && entity.getCustomNameTag() != null && // 'custom'
-																						// is blank
-																						// if no
-																						// nametag
-		entity.getCustomNameTag() != "" && entity.worldObj.isRemote == false){
+		if(entity instanceof EntityLivingBase && entity.getCustomNameTag() != null && 
+				entity.getCustomNameTag() != "" && entity.worldObj.isRemote == false){
 			// show message as if player, works since EntityLiving extends EntityLivingBase
 
 			UtilChat.addChatMessage(worldObj, (event.getSource().getDeathMessage((EntityLivingBase) entity)));

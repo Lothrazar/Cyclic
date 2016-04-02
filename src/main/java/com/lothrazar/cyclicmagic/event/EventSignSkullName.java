@@ -12,6 +12,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
 
 public class EventSignSkullName{
 
@@ -58,10 +59,9 @@ public class EventSignSkullName{
 			else{
 				firstLine = firstLine.split(" ")[0];
 
-				if(held.getTagCompound() == null)
-					held.setTagCompound(new NBTTagCompound());
-
-				held.getTagCompound().setString(Const.SkullOwner, firstLine);
+				NBTTagCompound nbt = UtilNBT.getTagCompoundNotNull(held);
+				
+				nbt.setString(Const.SkullOwner, firstLine);
 			}
 		} // end of skullSignNames
 	}

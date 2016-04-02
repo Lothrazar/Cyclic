@@ -17,19 +17,17 @@ public class EventNameVillager{
 		ItemStack held = entityPlayer.getHeldItem(event.getHand());
 		Entity target = event.getTarget();
 
-		if(held != null && held.getItem() == Items.name_tag && held.hasDisplayName()){
-			if(target instanceof EntityVillager){
+		if(held != null && held.getItem() == Items.name_tag && held.hasDisplayName() && target instanceof EntityVillager){
 
-				EntityVillager v = (EntityVillager) target;
+			EntityVillager v = (EntityVillager) target;
 
-				v.setCustomNameTag(held.getDisplayName());
+			v.setCustomNameTag(held.getDisplayName());
 
-				if(entityPlayer.capabilities.isCreativeMode == false){
-					entityPlayer.inventory.decrStackSize(entityPlayer.inventory.currentItem, 1);
-				}
-
-				event.setCanceled(true);// stop the GUI inventory opening
+			if(entityPlayer.capabilities.isCreativeMode == false){
+				entityPlayer.inventory.decrStackSize(entityPlayer.inventory.currentItem, 1);
 			}
+
+			event.setCanceled(true);// stop the GUI inventory opening
 		}
 	}
 }

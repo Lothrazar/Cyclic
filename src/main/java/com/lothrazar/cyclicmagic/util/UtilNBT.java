@@ -146,4 +146,13 @@ public class UtilNBT{
 		
 		return skull; 
 	}
+
+	public static NBTTagCompound getTagCompoundNotNull(ItemStack held){
+
+		if(held.getTagCompound() == null){
+			held.setTagCompound(new NBTTagCompound());
+		}
+		
+		return held.getTagCompound();
+	}
 }

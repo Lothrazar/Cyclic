@@ -9,11 +9,7 @@ public class EventRegistry{
 	
 	private static ArrayList<Object> events = new ArrayList<Object>();
 
-	private static boolean enderDropBlock = true;
-
 	private static boolean nameTagDeath;
-
-	//private static boolean nameVillager;
 
 	private static boolean playerWakeup;
 
@@ -24,44 +20,38 @@ public class EventRegistry{
 
 		String category = "mobs";
 		
-		enderDropBlock = config.getBoolean("enderDropBlock", category, true, "Drop carried block on death");
-
 		nameTagDeath = config.getBoolean("nameTagDeath", category, true, "");
 
-		//nameVillager = config.getBoolean("nameVillager", category, true, "");
+		category = "items";
 
-
-		enderDropBlock = config.getBoolean("enderDropBlock", category, true, "");
-		
 		signSkullName = config.getBoolean("signSkullName", category, true, "");
-		
-		playerDeathCoords = config.getBoolean("playerDeathCoords", category, true, "");
-		
 
 		category = "player";
 
 		playerWakeup = config.getBoolean("playerWakeup", category, true, "");
+		playerDeathCoords = config.getBoolean("playerDeathCoords", category, true, "");
 	}
 
 	public static void register(){
-		//some just always have to happen
+		//some just always have to happen no matter what. for other features.
 		events.add(new EventConfigChanged());
 		events.add(new EventPotions());
 		events.add(new EventSpells());
 		
+		//no reason to turn these off
+		events.add(new EventNameVillager());
+		events.add(new EventEndermanDropBlock());
+		
 		//some events are featured that get configured
 		
-		if(enderDropBlock)
-			events.add(new EventEndermanDropBlock());
 		
-		//TODO: decide if we split this event out for each mob or something?
-		events.add(new EventMobDrops());
+		//TODO: decide if we split this event out for each mob or something? and figure configs out
+		events.add(new EventAnimalDropBuffs());
+		events.add(new EventMobDropsReduced());
 		
 		if(nameTagDeath)
 			events.add(new EventNametagDeath());
-		
-		//events.add(new EventNameVillager());
-		
+
 		if(playerDeathCoords)
 			events.add(new EventPlayerDeathCoords());
 		
