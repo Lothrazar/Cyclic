@@ -24,6 +24,7 @@ public class Const {
 	public static final int DIR_NORTH = 2;
 
 	public static final int HOTBAR_SIZE = 9;
+	public static final String SkullOwner = "SkullOwner";
 
 	public class Dimension{
 

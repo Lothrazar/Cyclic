@@ -34,11 +34,11 @@ public class BlockFragile extends Block{
 		this.setResistance(0F);
 
 		//float volumeIn, float pitchIn, SoundEvent breakSoundIn, SoundEvent stepSoundIn, SoundEvent placeSoundIn, SoundEvent hitSoundIn, SoundEvent fallSoundIn)
-	    
+	    //TODO: SOUND REGISTRY
 		ResourceLocation resSound = new ResourceLocation(Const.MODID,"sounds/"+UtilSound.Own.crackle);
 		SoundEvent s = new SoundEvent(resSound);
 		
-		this.setStepSound(new SoundType( 1.0F, 1.0F, s,s,s,s,s)		);
+		this.setStepSound(new SoundType( 1.0F, 1.0F, s,s,s,s,s));
 	}
 	
 	@Override

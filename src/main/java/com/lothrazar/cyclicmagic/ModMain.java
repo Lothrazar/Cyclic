@@ -38,7 +38,7 @@ public class ModMain{
 
 		PacketRegistry.register();
 		
-		MinecraftForge.EVENT_BUS.register(new EventRegistry());
+		EventRegistry.register();
 	}
 
 	@EventHandler

@@ -13,8 +13,6 @@ public class ItemEmeraldArmor extends ItemArmor implements IHasRecipe{
 	public ItemEmeraldArmor(EntityEquipmentSlot armorType){
 
 		super(ItemRegistry.ARMOR_MATERIAL_EMERALD, 0, armorType);
-
-		this.setCreativeTab(ItemRegistry.tabSamsContent);
 	}
 
 	@Override

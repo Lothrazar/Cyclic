@@ -6,19 +6,14 @@ import com.lothrazar.cyclicmagic.item.tool.*;
 import com.lothrazar.cyclicmagic.item.armor.*;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemSpade;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
-import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -37,16 +32,28 @@ public class ItemRegistry{
 	public static ArmorMaterial ARMOR_MATERIAL_EMERALD;
 
 	public static void registerItem(Item item, String name){
+		registerItem(item,name,false);//default is not hidden
+	}
+	public static void registerItem(Item item, String name, boolean isHidden){
 
 		item.setUnlocalizedName(name);
 		GameRegistry.registerItem(item, name);
+		if(isHidden == false){
+			item.setCreativeTab(tab);
+		}
 		items.add(item);
 	}
 
 	public final static Item REPAIR_EMERALD = Items.emerald;
 
-	public final static CreativeTabs tabSamsContent = CreativeTabs.tabMisc;// TODO: own
+	public static CreativeTabs tab = new CreativeTabs("tab_"+Const.MODID) {
 
+		@Override
+		public Item getTabIconItem(){
+
+			return ItemRegistry.chest_sack;
+		}
+	};
 	// only because theyre private, with no getters
 	private static final int diamondDurability = 33;
 	private static final int[] diamondreductionAmounts = new int[] { 3, 6, 8, 3 };
@@ -88,7 +95,7 @@ public class ItemRegistry{
 		registerItem(carbon_paper, "carbon_paper");
 
 		chest_sack = new ItemChestSack();
-		registerItem(chest_sack, "chest_sack");
+		registerItem(chest_sack, "chest_sack",true);//true for ishidden
 
 		chest_sack_empty = new ItemChestSackEmpty();
 		registerItem(chest_sack_empty, "chest_sack_empty");
@@ -98,23 +105,18 @@ public class ItemRegistry{
 
 		ItemSword emerald_sword = new ItemEmeraldSword();
 		ItemRegistry.registerItem(emerald_sword, "emerald_sword");
-		emerald_sword.setCreativeTab(tabSamsContent);
 
 		ItemEmeraldPickaxe emerald_pickaxe = new ItemEmeraldPickaxe();
 		registerItem(emerald_pickaxe, "emerald_pickaxe");
-		emerald_pickaxe.setCreativeTab(tabSamsContent);
 
 		ItemEmeraldAxe emerald_axe = new ItemEmeraldAxe();
 		ItemRegistry.registerItem(emerald_axe, "emerald_axe");
-		emerald_axe.setCreativeTab(tabSamsContent);
 
 		ItemSpade emerald_spade = new ItemEmeraldSpade();
 		ItemRegistry.registerItem(emerald_spade, "emerald_spade");
-		emerald_spade.setCreativeTab(tabSamsContent);
 
 		ItemHoe emerald_hoe = new ItemEmeraldHoe();
 		ItemRegistry.registerItem(emerald_hoe, "emerald_hoe");
-		emerald_hoe.setCreativeTab(tabSamsContent);
 
 		emerald_helmet = new ItemEmeraldArmor(EntityEquipmentSlot.HEAD);
 		ItemRegistry.registerItem(emerald_helmet, "emerald_helmet");

@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.util;
 
 import java.util.ArrayList;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -110,5 +111,39 @@ public class UtilNBT{
 		}
 		
 		return list;
+	}
+	
+
+	public static ItemStack buildEnchantedNametag(String customNameTag) 
+	{
+		//build multi-level NBT tag so it matches a freshly enchanted one
+		
+		ItemStack nameTag = new ItemStack(Items.name_tag, 1); 
+		  
+		NBTTagCompound nbt = new NBTTagCompound(); 
+		NBTTagCompound display = new NBTTagCompound();
+		display.setString("Name", customNameTag);//NOT "CustomName" implied by commandblocks/google 
+		nbt.setTag("display",display);
+		nbt.setInteger("RepairCost", 1);
+		
+		nameTag.setTagCompound(nbt);//put the data into the item stack
+		 
+		return nameTag;
+	}
+	
+
+	public static ItemStack buildNamedPlayerSkull(EntityPlayer player) 
+	{
+		return buildNamedPlayerSkull(player.getDisplayNameString());
+	}
+	public static ItemStack buildNamedPlayerSkull(String displayNameString) 
+	{
+		ItemStack skull =  new ItemStack(Items.skull,1,Const.skull_player);
+
+		if(skull.getTagCompound() == null) {skull.setTagCompound(new NBTTagCompound());}
+		
+		skull.getTagCompound().setString(Const.SkullOwner,displayNameString);
+		
+		return skull; 
 	}
 }

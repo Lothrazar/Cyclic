@@ -24,7 +24,6 @@ public class BlockFishing extends Block
 	public BlockFishing()
 	{
 		super(Material.wood);  
-		this.setCreativeTab(ItemRegistry.tabSamsContent);
 		this.setHardness(3F);
 		this.setResistance(5F); 
 		//this.setStepSound(soundTypeWood);

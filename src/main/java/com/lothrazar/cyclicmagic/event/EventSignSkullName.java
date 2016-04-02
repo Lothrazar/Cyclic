@@ -1,0 +1,58 @@
+package com.lothrazar.cyclicmagic.event;
+
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntitySign;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import com.lothrazar.cyclicmagic.util.Const;
+
+public class EventSignSkullName{
+
+	@SubscribeEvent
+	public void onPlayerInteract(PlayerInteractEvent event){
+
+		EntityPlayer entityPlayer = event.getEntityPlayer();
+		BlockPos pos = event.getPos();
+		World worldObj = event.getWorld();
+
+		if(pos == null){
+			return;
+		}
+		IBlockState bstate = worldObj.getBlockState(pos);
+		if(bstate == null){
+			return;
+		}
+
+		// event has no hand??
+		ItemStack held = entityPlayer.getActiveItemStack();
+
+		TileEntity container = worldObj.getTileEntity(pos);
+
+		if(event.getAction() == PlayerInteractEvent.Action.LEFT_CLICK_BLOCK && entityPlayer.isSneaking() && held != null && held.getItem() == Items.skull && held.getItemDamage() == Const.skull_player && container != null && container instanceof TileEntitySign){
+			TileEntitySign sign = (TileEntitySign) container;
+			String firstLine = sign.signText[0].getUnformattedText();
+
+			if(firstLine == null){
+				firstLine = "";
+			}
+			if(firstLine.isEmpty() || firstLine.split(" ").length == 0){
+				held.setTagCompound(null);
+			}
+			else{
+				firstLine = firstLine.split(" ")[0];
+
+				if(held.getTagCompound() == null)
+					held.setTagCompound(new NBTTagCompound());
+
+				held.getTagCompound().setString(Const.SkullOwner, firstLine);
+			}
+		} // end of skullSignNames
+	}
+}

@@ -1,8 +1,14 @@
 package com.lothrazar.cyclicmagic.util;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 
 public class UtilEntity{
@@ -26,4 +32,26 @@ public class UtilEntity{
        
 		return EnumFacing.getHorizontal( facing/2 );
 	}
+	
+
+	public static EntityItem dropItemStackInWorld(World worldObj, BlockPos pos, Block block)
+	{
+		return dropItemStackInWorld(worldObj, pos, new ItemStack(block));  
+	}
+	
+	public static EntityItem dropItemStackInWorld(World worldObj, BlockPos pos, Item item)
+	{
+		return dropItemStackInWorld(worldObj, pos, new ItemStack(item)); 
+	}
+	
+	public static EntityItem dropItemStackInWorld(World worldObj, BlockPos pos, ItemStack stack)
+	{
+		EntityItem entityItem = new EntityItem(worldObj, pos.getX(),pos.getY(),pos.getZ(), stack); 
+
+ 		if(worldObj.isRemote==false)//do not spawn a second 'ghost' one on client side
+ 			worldObj.spawnEntityInWorld(entityItem);
+    	return entityItem;
+	}
+	
+	
 }
