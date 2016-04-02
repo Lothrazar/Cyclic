@@ -55,6 +55,7 @@ public class UtilNBT{
 			invo.setInventorySlotContents(slot, stack);
 		}
 	}
+	
 	public static NBTTagCompound writeInventoryToTag(IInventory invo, NBTTagCompound returnTag, String key){
 		
 		ItemStack chestItem;
@@ -89,8 +90,14 @@ public class UtilNBT{
 	public static NBTTagCompound writeInventoryToNewTag(IInventory invo, String key){
 		return writeInventoryToTag(invo,new NBTTagCompound(),key);
 	}
+
+	public static int countItemsFromNBT(NBTTagCompound tags, String key){
+		NBTTagList items = tags.getTagList(key, tags.getId());
+		
+		return items.tagCount();
+	}
 	
-	public ArrayList<ItemStack> readItemsFromNBT(NBTTagCompound tags, String key){
+	public static ArrayList<ItemStack> readItemsFromNBT(NBTTagCompound tags, String key){
 		ArrayList<ItemStack> list = new ArrayList<ItemStack>();
 		
 		NBTTagList items = tags.getTagList(key, tags.getId());

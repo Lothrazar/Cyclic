@@ -7,6 +7,8 @@ import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -19,10 +21,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemCyclicWand extends Item{
+public class ItemCyclicWand extends Item implements IHasRecipe{
 
 	private static final String NBT_SPELLCURRENT = "spell_id";
 	private static final String NBT_UNLOCKS = "unlock_";
@@ -30,6 +33,16 @@ public class ItemCyclicWand extends Item{
 	public ItemCyclicWand(){
 
 		this.setMaxStackSize(1);
+	}
+
+
+	@Override
+	public void addRecipe(){
+
+		GameRegistry.addRecipe(new ItemStack(this), 
+				"sds", " o ", "gog", 'd', new ItemStack(Blocks.diamond_block), 'g', Items.ghast_tear, 'o', Blocks.obsidian, 's', Items.nether_star);
+
+		
 	}
 
 	@Override
@@ -524,5 +537,4 @@ public class ItemCyclicWand extends Item{
 			tags.setInteger(NBT, rot);
 		}
 	}
-
 }

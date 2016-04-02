@@ -82,7 +82,7 @@ public class MobSpawningRegistry
 	public int heartsVillager;
 	public int heartsCatTamed;
 	//public boolean appleFrost;
-	public void registerSpawns()
+	public void register()
 	{  
 		
 		

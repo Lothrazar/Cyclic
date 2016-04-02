@@ -50,6 +50,8 @@ public class ModMain{
 		PotionRegistry.register();
 		RecipeRegistry.register();
 
+		(new MobSpawningRegistry()).register();
+		
 		proxy.register();
 
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiRegistry());

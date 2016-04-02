@@ -4,7 +4,6 @@ import java.util.Set;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
 import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
@@ -24,7 +23,6 @@ public class ItemMultiTool extends ItemTool{
 
 		//hardcoc
 		super(damageVsEntity,attackSpeed, ToolMaterial.DIAMOND, EFFECTIVE_ON);
-		this.setCreativeTab(CreativeTabs.tabTools);
 
 		this.setMaxDamage(-1);
 

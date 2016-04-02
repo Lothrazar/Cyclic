@@ -4,9 +4,9 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -21,8 +21,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class ItemPaperCarbon extends Item{
+public class ItemPaperCarbon extends Item implements IHasRecipe{
 
 	public static int NOTE_EMPTY = -1;
 	private static final String KEY_SIGN0 = "sign_0";
@@ -34,7 +35,6 @@ public class ItemPaperCarbon extends Item{
 	public ItemPaperCarbon(){
 
 		super();
-		this.setCreativeTab(CreativeTabs.tabMisc);
 	}
 
 	private static void setItemStackNBT(ItemStack item, String prop, String value){
@@ -270,5 +270,16 @@ public class ItemPaperCarbon extends Item{
 		}
 
 		return s;
+	}
+
+	@Override
+	public void addRecipe(){
+		
+		GameRegistry.addRecipe(new ItemStack(this, 8),
+				"ppp",
+				"pcp",
+				"ppp",
+				'c',new ItemStack(Items.coal,1,1), //charcoal
+				'p',Items.paper  );
 	}
 }
