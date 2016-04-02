@@ -17,8 +17,7 @@ public class EventSignSkullName{
 
 	@SubscribeEvent
 	public void onPlayerInteract(PlayerInteractEvent event){
-		System.out.println("PlayerInteractEvent");
-
+	
 		EntityPlayer entityPlayer = event.getEntityPlayer();
 		BlockPos pos = event.getPos();
 		World worldObj = event.getWorld();
@@ -42,7 +41,8 @@ public class EventSignSkullName{
 		TileEntity container = worldObj.getTileEntity(pos);
 
 		// event.getAction() == PlayerInteractEvent.Action.LEFT_CLICK_BLOCK && 
-		if(entityPlayer.isSneaking() && held != null && held.getItem() == Items.skull && held.getItemDamage() == Const.skull_player && container != null && container instanceof TileEntitySign){
+		// entityPlayer.isSneaking() && 
+		if(held != null && held.getItem() == Items.skull && held.getItemDamage() == Const.skull_player && container != null && container instanceof TileEntitySign){
 			TileEntitySign sign = (TileEntitySign) container;
 			System.out.println("hit sign with skull");
 			String firstLine = sign.signText[0].getUnformattedText();
