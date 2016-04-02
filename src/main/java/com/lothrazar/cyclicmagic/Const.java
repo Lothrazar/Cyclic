@@ -2,6 +2,12 @@ package com.lothrazar.cyclicmagic;
 
 public class Const{
 
+	public static final int skull_skeleton = 0;	
+	public static final int skull_wither = 1;
+	public static final int skull_zombie = 2;
+	public static final int skull_player = 3;
+	public static final int skull_creeper = 4;
+	
 	public static final int NOTIFY = 2;
 
 	public static final String MODID = "cyclicmagic";
