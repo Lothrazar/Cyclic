@@ -38,9 +38,9 @@ public class PotionRegistry{
 		// http://www.minecraftforge.net/forum/index.php?topic=11024.0
 		// ??? http://www.minecraftforge.net/forum/index.php?topic=12358.0
 
-		PotionRegistry.slowfall = new PotionCustom(ModMain.cfg.potionIdSlowfall, new ResourceLocation(Const.MODID, "textures/potions/slowfall.png"), false, 0, "potion.slowfall");
+		PotionRegistry.slowfall = new PotionCustom( new ResourceLocation(Const.MODID, "textures/potions/slowfall.png"), false, 0, "potion.slowfall");
 
-		PotionRegistry.magnet = new PotionCustom(ModMain.cfg.potionIdMagnet, new ResourceLocation(Const.MODID, "textures/potions/magnet.png"), false, 0, "potion.magnet");
+		PotionRegistry.magnet = new PotionCustom( new ResourceLocation(Const.MODID, "textures/potions/magnet.png"), false, 0, "potion.magnet");
 
 		// TODO: test out brewing api for these?
 	}

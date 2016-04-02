@@ -11,9 +11,8 @@ public class PotionCustom extends Potion{
 
 	private ResourceLocation icon;
 
-	public PotionCustom(int potionID, ResourceLocation location, boolean badEffect, int potionColor, String nameIn){
+	public PotionCustom(ResourceLocation location, boolean badEffect, int potionColor, String nameIn){
 
-		//  Potion(boolean isBadEffectIn, int liquidColorIn)
 		super(badEffect, potionColor);
 
 		icon = location;
