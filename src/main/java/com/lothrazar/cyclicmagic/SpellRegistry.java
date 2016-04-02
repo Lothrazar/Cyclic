@@ -3,6 +3,7 @@ package com.lothrazar.cyclicmagic;
 import java.util.ArrayList;
 import java.util.HashMap;
 import com.lothrazar.cyclicmagic.spell.*; 
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class SpellRegistry{
@@ -96,5 +97,17 @@ public class SpellRegistry{
 	public static ArrayList<ISpell> getSpellbook(){
 
 		return spellbook;
+	}
+
+	public static void syncConfig(){
+
+		String category = "";
+		category = Const.MODID;
+
+		SpellRegistry.renderOnLeft = ModMain.config.getBoolean("on_left", category, true, "True for top left of the screen, false for top right");
+
+		category = "effect_tweaks";
+
+		
 	}
 }

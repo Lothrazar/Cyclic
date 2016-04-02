@@ -1,12 +1,10 @@
 package com.lothrazar.cyclicmagic.proxy;
 
-import java.util.ArrayList;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.RayTraceResult;
 import com.lothrazar.cyclicmagic.gui.GuiSpellbook;
-import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -16,7 +14,6 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.ItemModelMesher;
-import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 
 public class ClientProxy extends CommonProxy{
@@ -96,7 +93,6 @@ public class ClientProxy extends CommonProxy{
 		return null;
 	}
 
-	@SuppressWarnings("deprecation")
 	private void registerModels(){
 
 		// with help from
@@ -122,7 +118,8 @@ public class ClientProxy extends CommonProxy{
 
 			mesher.register(i, 0, new ModelResourceLocation(name, "inventory"));
 		}
-/*
+/* 
+ * 
 		ArrayList<String> variants = new ArrayList<String>();
 
 		for(ItemCyclicWand.Variant wandType : ItemCyclicWand.Variant.values()){

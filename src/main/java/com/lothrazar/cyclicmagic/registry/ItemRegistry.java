@@ -104,31 +104,31 @@ public class ItemRegistry{
 		// http://bedrockminer.jimdo.com/modding-tutorials/basic-modding-1-7/custom-tools-swords/
 
 		ItemSword emerald_sword = new ItemEmeraldSword();
-		ItemRegistry.registerItem(emerald_sword, "emerald_sword");
+		registerItem(emerald_sword, "emerald_sword");
 
 		ItemEmeraldPickaxe emerald_pickaxe = new ItemEmeraldPickaxe();
 		registerItem(emerald_pickaxe, "emerald_pickaxe");
 
 		ItemEmeraldAxe emerald_axe = new ItemEmeraldAxe();
-		ItemRegistry.registerItem(emerald_axe, "emerald_axe");
+		registerItem(emerald_axe, "emerald_axe");
 
 		ItemSpade emerald_spade = new ItemEmeraldSpade();
-		ItemRegistry.registerItem(emerald_spade, "emerald_spade");
+		registerItem(emerald_spade, "emerald_spade");
 
 		ItemHoe emerald_hoe = new ItemEmeraldHoe();
-		ItemRegistry.registerItem(emerald_hoe, "emerald_hoe");
+		registerItem(emerald_hoe, "emerald_hoe");
 
 		emerald_helmet = new ItemEmeraldArmor(EntityEquipmentSlot.HEAD);
-		ItemRegistry.registerItem(emerald_helmet, "emerald_helmet");
+		registerItem(emerald_helmet, "emerald_helmet");
 
 		emerald_chestplate = new ItemEmeraldArmor(EntityEquipmentSlot.CHEST);
-		ItemRegistry.registerItem(emerald_chestplate, "emerald_chestplate");
+		registerItem(emerald_chestplate, "emerald_chestplate");
 
 		emerald_leggings = new ItemEmeraldArmor(EntityEquipmentSlot.LEGS);
-		ItemRegistry.registerItem(emerald_leggings, "emerald_leggings");
+		registerItem(emerald_leggings, "emerald_leggings");
 
 		emerald_boots = new ItemEmeraldArmor(EntityEquipmentSlot.FEET);
-		ItemRegistry.registerItem(emerald_boots, "emerald_boots");
+		registerItem(emerald_boots, "emerald_boots");
 
 		registerRecipes();
 	}

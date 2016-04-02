@@ -116,4 +116,13 @@ public class PotionRegistry{
 			player.addPotionEffect(newp);
 		}
 	}
+
+	public static void syncConfig(){
+
+		String category = "";
+		category = Const.MODID;
+
+		PotionRegistry.slowfallSpeed = ModMain.config.getFloat("slowfall_speed", category, 0.41F, 0.1F, 1F, "This factor affects how much the slowfall effect slows down the entity.");
+
+	}
 }

@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic;
 
 import org.apache.logging.log4j.Logger;
 import com.lothrazar.cyclicmagic.command.*;
-import com.lothrazar.cyclicmagic.config.ModConfig;
 import com.lothrazar.cyclicmagic.net.MessageKeyCast;
 import com.lothrazar.cyclicmagic.net.MessageKeyLeft;
 import com.lothrazar.cyclicmagic.net.MessageKeyRight;
@@ -53,10 +52,11 @@ public class ModMain{
 
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(Const.MODID);
 		
+		SpellRegistry.syncConfig();
+		PotionRegistry.syncConfig();
 		
+		config.save();
 		
-		ModConfig.syncConfig();
-	 
 		registerPackets();
 		
 		EventRegistry.register();
@@ -65,10 +65,6 @@ public class ModMain{
 	@EventHandler
 	public void onInit(FMLInitializationEvent event){
 
-		proxy.register();
-
-		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiRegistry());
-		
 		
 		ItemRegistry.register();
 		BlockRegistry.register();
@@ -76,6 +72,10 @@ public class ModMain{
 		PotionRegistry.register();
 		RecipeRegistry.register();
 		MobSpawningRegistry.register();
+
+		proxy.register();
+
+		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiRegistry());
 		
 	}
 	
