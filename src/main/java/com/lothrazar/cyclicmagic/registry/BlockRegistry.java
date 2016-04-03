@@ -37,7 +37,10 @@ public class BlockRegistry{
 		//block.setRegistryName(Const.MODID ,name);
 		//GameRegistry.register(block);
 		//GameRegistry.register(new ItemBlock(block), new ResourceLocation(Const.MODID ,name));
+
 		
+		//if it worked like items, this would be donezo
+		//GameRegistry.register(block, new ResourceLocation(Const.MODID,name));
 		
 		GameRegistry.registerBlock(block,ItemBlock.class,name);
 

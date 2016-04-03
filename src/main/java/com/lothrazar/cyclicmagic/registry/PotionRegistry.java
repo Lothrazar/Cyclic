@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.registry;
 
 import java.util.List;
-import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.potion.PotionCustom;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Vector3;

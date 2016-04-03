@@ -14,6 +14,7 @@ import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemSword;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -38,8 +39,13 @@ public class ItemRegistry{
 
 		item.setUnlocalizedName(name);
 		
-		//item.setRegistryName(Const.MODID, name)
-		GameRegistry.registerItem(item, name);
+		
+		
+		//GameRegistry.registerItem(item, name);
+
+		GameRegistry.register(item, new ResourceLocation(Const.MODID,name));
+		
+		
 		if(isHidden == false){
 			item.setCreativeTab(tab);
 		}
