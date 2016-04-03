@@ -52,7 +52,16 @@ public class UtilMoveBlock{
 
 				world.destroyBlock(pos, false);
 			}
-			world.setBlockState(posMoveToHere, hit, Const.NOTIFY);
+			
+
+/**
+ * Sets the block state at a given location. Flag 1 will cause a block update. Flag 2 will send the change to
+ * clients (you almost always want this). Flag 4 prevents the block from being re-rendered, if this is a client
+ * world. Flags can be added together.
+ */
+			
+			//2 causes..crash?
+			world.setBlockState(posMoveToHere, hit);
 
 			//shouldnt be needed..??
 			//world.markBlockForUpdate(posMoveToHere);
