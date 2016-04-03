@@ -57,6 +57,7 @@ public class ModMain{
 		EventRegistry.syncConfig(getConfig());
 		BlockRegistry.syncConfig(getConfig());
 		ItemRegistry.syncConfig(getConfig());
+		MobSpawningRegistry.syncConfig(getConfig());
 		
 		getConfig().save();
 		
