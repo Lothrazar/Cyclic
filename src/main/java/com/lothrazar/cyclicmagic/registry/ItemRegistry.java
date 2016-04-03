@@ -18,6 +18,7 @@ import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -101,6 +102,7 @@ public class ItemRegistry{
 		registerItem(multitool, "multitool");
 		
 		if(configToggle.get(ItemEnderPearlReuse.name)){
+			
 			ItemEnderPearlReuse ender_pearl_reuse = new ItemEnderPearlReuse();
 			registerItem(ender_pearl_reuse, ItemEnderPearlReuse.name);
 			
@@ -164,12 +166,20 @@ public class ItemRegistry{
 		
 		config.setCategoryComment(category, "Items added to the game");
 		
-		configToggle.put(ItemEnderPearlReuse.name, config.get(category,ItemEnderPearlReuse.name, true).getBoolean());
-		configToggle.put(ItemPaperCarbon.name, config.get(category,ItemPaperCarbon.name, true).getBoolean());
-		configToggle.put(ItemChestSack.name, config.get(category,ItemChestSack.name, true).getBoolean());
-		configToggle.put("emerald_gear", config.get(category,"emerald_gear", true).getBoolean());
+		Property prop = config.get(category,ItemEnderPearlReuse.name, true,"Reuseable ender pearl");
+		prop.setRequiresMcRestart(true);
+		configToggle.put(ItemEnderPearlReuse.name, prop.getBoolean());
 		
-		//configToggle
+		prop = config.get(category,ItemPaperCarbon.name, true,"Special paper to copy signs and note block data");
+		prop.setRequiresMcRestart(true);
+		configToggle.put(ItemPaperCarbon.name, prop.getBoolean());
 		
+		prop = config.get(category,ItemChestSack.name, true,"A bag that transports chests along with its contents");
+		prop.setRequiresMcRestart(true);
+		configToggle.put(ItemChestSack.name, prop.getBoolean());
+		
+		prop = config.get(category,"emerald_gear", true,"Full set of emerald gear with similar properties as diamond");
+		prop.setRequiresMcRestart(true);
+		configToggle.put("emerald_gear", prop.getBoolean());
 	}
 }

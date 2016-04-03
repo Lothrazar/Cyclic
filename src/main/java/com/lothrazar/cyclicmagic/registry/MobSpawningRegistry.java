@@ -14,6 +14,7 @@ import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.init.Biomes;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 public class MobSpawningRegistry{
@@ -57,8 +58,12 @@ public class MobSpawningRegistry{
 
 		String category = Const.MODCONF+"mob_spawning";
 
-		config.setCategoryComment("mob_spawning", "Allow tons of mobs to spawn in more biomes.  Horses in more places; Cave spiders in mesa and roofed forests; some nether mobs in the desert; enderman in the nether; snowmen in winter biomes;  ghasts in deep ocean; Iron Golems in the jungle; Guardians in rivers.");
+		String msg =  "Allow tons of mobs to spawn in more biomes.  Horses in more places; Cave spiders in mesa and roofed forests; some nether mobs in the desert; enderman in the nether; snowmen in winter biomes;  ghasts in deep ocean; Iron Golems in the jungle; Guardians in rivers.";
+		
+		config.setCategoryComment(category, msg);
 
-		enabled = config.get(category, "enabled", true).getBoolean();
+		Property prop = config.get(category, "enabled", true,msg);
+		//
+		enabled = prop.getBoolean();
 	}
 }
