@@ -139,4 +139,14 @@ public class ClientProxy extends CommonProxy{
 			mesher.register(i, 0, new ModelResourceLocation(name, "inventory"));
 		}
 	}
+
+	@SideOnly(Side.CLIENT)
+	public static boolean isKeyDown(KeyBinding keybinding){
+
+		//inside a GUI , we have to check the keyboard directly
+		//thanks to Inventory tweaks, reminding me of alternate way to check keydown while in config
+		// https://github.com/Inventory-Tweaks/inventory-tweaks/blob/develop/src/main/java/invtweaks/InvTweaks.java
+		
+		return keybinding.isPressed() || Keyboard.isKeyDown(keybinding.getKeyCode()) ;
+	}
 }
