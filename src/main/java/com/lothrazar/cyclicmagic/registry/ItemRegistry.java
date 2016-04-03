@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.registry;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import com.lothrazar.cyclicmagic.item.*;
 import com.lothrazar.cyclicmagic.item.tool.*;
 import com.lothrazar.cyclicmagic.item.armor.*;
@@ -15,13 +17,14 @@ import net.minecraft.item.ItemSword;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemRegistry{
 
 	public static ArrayList<Item> items = new ArrayList<Item>();
-
+	private static Map<String,Boolean> configToggle = new HashMap<String,Boolean>();
 	public static Item emerald_helmet;
 	public static Item emerald_chestplate;
 	public static Item emerald_leggings;
@@ -89,55 +92,84 @@ public class ItemRegistry{
 	public static void register(){
 
 		registerMaterials();
-
-		ItemEnderPearlReuse ender_pearl_reuse = new ItemEnderPearlReuse();
-		registerItem(ender_pearl_reuse, "ender_pearl_reuse");
-
+		//TODO: figure out how to config
 		cyclic_wand = new ItemCyclicWand();
 		registerItem(cyclic_wand, "cyclic_wand");
 
+		//TODO: retexture and/or decide if we are even keeping this
 		Item multitool = new ItemMultiTool();
 		registerItem(multitool, "multitool");
+		
+		if(configToggle.get(ItemEnderPearlReuse.name)){
+			ItemEnderPearlReuse ender_pearl_reuse = new ItemEnderPearlReuse();
+			registerItem(ender_pearl_reuse, ItemEnderPearlReuse.name);
+			
+		}
 
-		Item carbon_paper = new ItemPaperCarbon();
-		registerItem(carbon_paper, "carbon_paper");
 
-		chest_sack = new ItemChestSack();
-		registerItem(chest_sack, "chest_sack",true);//true for ishidden
+		if(configToggle.get(ItemPaperCarbon.name)){
 
-		chest_sack_empty = new ItemChestSackEmpty();
-		registerItem(chest_sack_empty, "chest_sack_empty");
+			Item carbon_paper = new ItemPaperCarbon();
+			registerItem(carbon_paper, ItemPaperCarbon.name);
+		}
+
+		if(configToggle.get(ItemChestSack.name)){
+
+			chest_sack = new ItemChestSack();
+			registerItem(chest_sack, ItemChestSack.name ,true);//true for ishidden
+
+			chest_sack_empty = new ItemChestSackEmpty();
+			registerItem(chest_sack_empty, ItemChestSackEmpty.name);
+		}
 
 		// thanks for help:
 		// http://bedrockminer.jimdo.com/modding-tutorials/basic-modding-1-7/custom-tools-swords/
 
-		ItemSword emerald_sword = new ItemEmeraldSword();
-		registerItem(emerald_sword, "emerald_sword");
+		if(configToggle.get("emerald_gear")){
+			
+			ItemSword emerald_sword = new ItemEmeraldSword();
+			registerItem(emerald_sword, ItemEmeraldSword.name);
+	
+			ItemEmeraldPickaxe emerald_pickaxe = new ItemEmeraldPickaxe();
+			registerItem(emerald_pickaxe, ItemEmeraldPickaxe.name);
+	
+			ItemEmeraldAxe emerald_axe = new ItemEmeraldAxe();
+			registerItem(emerald_axe, ItemEmeraldAxe.name);
+	
+			ItemSpade emerald_spade = new ItemEmeraldSpade();
+			registerItem(emerald_spade, ItemEmeraldSpade.name);
+	
+			ItemHoe emerald_hoe = new ItemEmeraldHoe();
+			registerItem(emerald_hoe, ItemEmeraldHoe.name);
+	
+			//..yeah.. kind of breaks the pattern. i could make one class for each i guess.
+			emerald_helmet = new ItemEmeraldArmor(EntityEquipmentSlot.HEAD);
+			registerItem(emerald_helmet, "emerald_helmet");
+	
+			emerald_chestplate = new ItemEmeraldArmor(EntityEquipmentSlot.CHEST);
+			registerItem(emerald_chestplate, "emerald_chestplate");
+	
+			emerald_leggings = new ItemEmeraldArmor(EntityEquipmentSlot.LEGS);
+			registerItem(emerald_leggings, "emerald_leggings");
+	
+			emerald_boots = new ItemEmeraldArmor(EntityEquipmentSlot.FEET);
+			registerItem(emerald_boots, "emerald_boots");
 
-		ItemEmeraldPickaxe emerald_pickaxe = new ItemEmeraldPickaxe();
-		registerItem(emerald_pickaxe, "emerald_pickaxe");
-
-		ItemEmeraldAxe emerald_axe = new ItemEmeraldAxe();
-		registerItem(emerald_axe, "emerald_axe");
-
-		ItemSpade emerald_spade = new ItemEmeraldSpade();
-		registerItem(emerald_spade, "emerald_spade");
-
-		ItemHoe emerald_hoe = new ItemEmeraldHoe();
-		registerItem(emerald_hoe, "emerald_hoe");
-
-		emerald_helmet = new ItemEmeraldArmor(EntityEquipmentSlot.HEAD);
-		registerItem(emerald_helmet, "emerald_helmet");
-
-		emerald_chestplate = new ItemEmeraldArmor(EntityEquipmentSlot.CHEST);
-		registerItem(emerald_chestplate, "emerald_chestplate");
-
-		emerald_leggings = new ItemEmeraldArmor(EntityEquipmentSlot.LEGS);
-		registerItem(emerald_leggings, "emerald_leggings");
-
-		emerald_boots = new ItemEmeraldArmor(EntityEquipmentSlot.FEET);
-		registerItem(emerald_boots, "emerald_boots");
-
+		}
 		registerRecipes();
+	}
+	public static void syncConfig(Configuration config){
+
+		String category = "items";
+		
+		config.setCategoryComment(category, "Items added to the game");
+		
+		configToggle.put(ItemEnderPearlReuse.name, config.get(category,ItemEnderPearlReuse.name, true).getBoolean());
+		configToggle.put(ItemPaperCarbon.name, config.get(category,ItemPaperCarbon.name, true).getBoolean());
+		configToggle.put(ItemChestSack.name, config.get(category,ItemChestSack.name, true).getBoolean());
+		configToggle.put("emerald_gear", config.get(category,"emerald_gear", true).getBoolean());
+		
+		//configToggle
+		
 	}
 }

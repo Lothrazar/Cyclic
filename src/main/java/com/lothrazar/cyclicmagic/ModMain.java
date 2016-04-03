@@ -55,6 +55,8 @@ public class ModMain{
 		SpellRegistry.syncConfig(getConfig());
 		PotionRegistry.syncConfig(getConfig());
 		EventRegistry.syncConfig(getConfig());
+		BlockRegistry.syncConfig(getConfig());
+		ItemRegistry.syncConfig(getConfig());
 		
 		getConfig().save();
 		

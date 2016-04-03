@@ -9,6 +9,7 @@ import com.lothrazar.cyclicmagic.item.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 
 public class ItemEmeraldSword extends ItemSword implements IHasRecipe{
+	public static final String name = "emerald_sword";
 
 	public ItemEmeraldSword(){
 

@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 
 public class ItemMultiTool extends ItemTool{
+	public static final String name = "";
 
 	// copied from tool base classes not imported since private
 	private static final Set<Block> AXE_EFFECTIVE_ON = Sets.newHashSet(new Block[] { Blocks.planks, Blocks.bookshelf, Blocks.log, Blocks.log2, Blocks.chest, Blocks.pumpkin, Blocks.lit_pumpkin, Blocks.melon_block, Blocks.ladder });

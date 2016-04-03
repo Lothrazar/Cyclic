@@ -30,6 +30,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  */
 public class BlockFragile extends Block implements IHasRecipe{
 
+	public static final String name = "block_fragile";
+	
 	public BlockFragile(){
 
 		super(Material.wood);

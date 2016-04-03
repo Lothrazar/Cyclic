@@ -18,6 +18,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemChestSack extends Item implements IHasRecipe{
 
+	public static final String name = "chest_sack";
+	
 	public static final String KEY_NBT = "itemtags";
 	public static final String KEY_BLOCK = "block";
 

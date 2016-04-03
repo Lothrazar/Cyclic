@@ -25,6 +25,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemPaperCarbon extends Item implements IHasRecipe{
 
+	public static final String name = "carbon_paper";
+	
 	public static int NOTE_EMPTY = -1;
 	private static final String KEY_SIGN0 = "sign_0";
 	private static final String KEY_SIGN1 = "sign_1";

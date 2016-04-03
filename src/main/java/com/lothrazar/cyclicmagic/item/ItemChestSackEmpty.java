@@ -16,6 +16,7 @@ import net.minecraft.world.World;
 
 public class ItemChestSackEmpty extends Item{
 
+	public static final String name = "chest_sack_empty";
 	public ItemChestSackEmpty(){
 
 		super();

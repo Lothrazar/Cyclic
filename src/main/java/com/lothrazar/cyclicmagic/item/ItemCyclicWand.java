@@ -27,6 +27,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemCyclicWand extends Item implements IHasRecipe{
 
+	public static final String name = "";
+	
 	private static final String NBT_SPELLCURRENT = "spell_id";
 	private static final String NBT_UNLOCKS = "unlock_";
 

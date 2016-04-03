@@ -1,6 +1,9 @@
 package com.lothrazar.cyclicmagic.registry;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.Map;
 import com.lothrazar.cyclicmagic.block.*;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.Block;
@@ -9,12 +12,13 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockRegistry{
 
 	public static ArrayList<Block> blocks = new ArrayList<Block>();
-
+	private static Map<String,Boolean> configToggle = new HashMap<String,Boolean>();
 	public static BlockFragile block_fragile;
 
 	private static void registerBlock(Block block, String name){
@@ -48,11 +52,22 @@ public class BlockRegistry{
 		block.setCreativeTab(ItemRegistry.tab);
 		blocks.add(block);
 	}
-
+	
 	public static void register(){
 
-		block_fragile = new BlockFragile();
-		BlockRegistry.registerBlock(block_fragile, "block_fragile");
+		if(configToggle.get(BlockFragile.name)){
+
+			block_fragile = new BlockFragile();
+			BlockRegistry.registerBlock(block_fragile, BlockFragile.name);
+		}
+	}
+
+	public static void syncConfig(Configuration config){
+		String category = "blocks";
 		
+		config.setCategoryComment(category, "Blocks added to the game");
+		
+		configToggle.put(BlockFragile.name,config.getBoolean(BlockFragile.name, category, true, "Enable the scaffolding block that breaks by itself"));
+
 	}
 }

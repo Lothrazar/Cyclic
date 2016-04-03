@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemEmeraldAxe extends ItemAxe implements IHasRecipe{
 
+	public static final String name = "emerald_axe";
 	public ItemEmeraldAxe(){
 
 		super(ItemRegistry.MATERIAL_EMERALD);

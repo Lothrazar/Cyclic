@@ -15,14 +15,13 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 
 public class ItemEnderPearlReuse extends ItemEnderPearl implements IHasRecipe{
+	public static final String name = "ender_pearl_reuse";
 
-	public ItemEnderPearlReuse()
-    {
+	public ItemEnderPearlReuse(){
         this.maxStackSize = 1;
     }
 
-    public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand)
-    {
+    public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand){
 
         worldIn.playSound((EntityPlayer)null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.entity_enderpearl_throw, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
         playerIn.getCooldownTracker().setCooldown(this, 20);

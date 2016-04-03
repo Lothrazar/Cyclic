@@ -19,14 +19,16 @@ public class EventRegistry{
 	public static void syncConfig(Configuration config){
 
 		String category = "mobs";
+
+		config.setCategoryComment(category, "Changes to mobs");
 		
 		nameTagDeath = config.getBoolean("nameTagDeath", category, true, "When an entity dies that is named with a tag, it drops the nametag");
 
-		category = "items";
-
-		signSkullName = config.getBoolean("signSkullName", category, true, "Use a player skull on a sign to name the skull based on the top line");
-
 		category = "player";
+
+		config.setCategoryComment(category, "Changes to player properties or actions");
+		
+		signSkullName = config.getBoolean("signSkullName", category, true, "Use a player skull on a sign to name the skull based on the top line");
 
 		playerWakeup = config.getBoolean("playerWakeup", category, true, "Using a bed to skip the night has some mild potion effect related drawbacks");
 		
