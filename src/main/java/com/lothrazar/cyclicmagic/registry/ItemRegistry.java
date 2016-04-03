@@ -37,6 +37,8 @@ public class ItemRegistry{
 	public static void registerItem(Item item, String name, boolean isHidden){
 
 		item.setUnlocalizedName(name);
+		
+		//item.setRegistryName(Const.MODID, name)
 		GameRegistry.registerItem(item, name);
 		if(isHidden == false){
 			item.setCreativeTab(tab);
