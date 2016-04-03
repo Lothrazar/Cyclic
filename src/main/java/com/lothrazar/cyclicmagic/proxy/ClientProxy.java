@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.proxy;
 
+import org.lwjgl.input.Keyboard;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
@@ -8,6 +9,7 @@ import com.lothrazar.cyclicmagic.gui.GuiSpellbook;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -15,14 +17,32 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.ItemModelMesher;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.settings.KeyBinding;
 
 public class ClientProxy extends CommonProxy{
-
+	public static KeyBinding keyShiftUp;
+	public static KeyBinding keyShiftDown; 
+	public static KeyBinding keyBarUp;
+	public static KeyBinding keyBarDown;  
+ 
+	static final String keyCategoryInventory = "key.categories.inventorycontrol";
+	
 	@Override
 	public void register(){
 
 		registerModels();
- 
+		
+		keyShiftUp = new KeyBinding("key.columnshiftup", Keyboard.KEY_Y, keyCategoryInventory);
+        ClientRegistry.registerKeyBinding(ClientProxy.keyShiftUp);
+    
+		keyShiftDown = new KeyBinding("key.columnshiftdown", Keyboard.KEY_H, keyCategoryInventory); 
+        ClientRegistry.registerKeyBinding(ClientProxy.keyShiftDown); 
+
+        keyBarUp = new KeyBinding("key.columnbarup", Keyboard.KEY_U, keyCategoryInventory);
+        ClientRegistry.registerKeyBinding(ClientProxy.keyBarUp);
+         
+        keyBarDown = new KeyBinding("key.columnbardown", Keyboard.KEY_J, keyCategoryInventory); 
+        ClientRegistry.registerKeyBinding(ClientProxy.keyBarDown);
 	}
 
 	@SideOnly(Side.CLIENT)

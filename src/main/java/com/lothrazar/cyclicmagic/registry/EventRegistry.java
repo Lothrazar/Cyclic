@@ -41,7 +41,7 @@ public class EventRegistry{
 		events.add(new EventConfigChanged());
 		events.add(new EventPotions());
 		events.add(new EventSpells());
-		
+		events.add(new EventKeyInput());
 		//no reason to turn these off
 		events.add(new EventNameVillager());
 		events.add(new EventEndermanDropBlock());
