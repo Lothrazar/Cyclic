@@ -48,8 +48,10 @@ public class UtilEntity{
 	{
 		EntityItem entityItem = new EntityItem(worldObj, pos.getX(),pos.getY(),pos.getZ(), stack); 
 
- 		if(worldObj.isRemote==false)//do not spawn a second 'ghost' one on client side
+ 		if(worldObj.isRemote==false) { //do not spawn a second 'ghost' one on client side
+ 			
  			worldObj.spawnEntityInWorld(entityItem);
+ 		}
     	return entityItem;
 	}
 	

@@ -20,16 +20,17 @@ public class EventRegistry{
 
 		String category = "mobs";
 		
-		nameTagDeath = config.getBoolean("nameTagDeath", category, true, "");
+		nameTagDeath = config.getBoolean("nameTagDeath", category, true, "When an entity dies that is named with a tag, it drops the nametag");
 
 		category = "items";
 
-		signSkullName = config.getBoolean("signSkullName", category, true, "");
+		signSkullName = config.getBoolean("signSkullName", category, true, "Use a player skull on a sign to name the skull based on the top line");
 
 		category = "player";
 
-		playerWakeup = config.getBoolean("playerWakeup", category, true, "");
-		playerDeathCoords = config.getBoolean("playerDeathCoords", category, true, "");
+		playerWakeup = config.getBoolean("playerWakeup", category, true, "Using a bed to skip the night has some mild potion effect related drawbacks");
+		
+		playerDeathCoords = config.getBoolean("playerDeathCoords", category, true, "Display your coordinates in chat when you die");
 	}
 
 	public static void register(){
