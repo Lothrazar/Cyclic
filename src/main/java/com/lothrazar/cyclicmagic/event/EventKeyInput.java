@@ -39,8 +39,6 @@ public class EventKeyInput{
 
 	@SideOnly(Side.CLIENT)
 	private void detectAndFireKey(int slot){
-		///boolean isDown;
-		System.out.println("SLOTNUM "+slot);
 
 		if(ClientProxy.isKeyDown(ClientProxy.keyShiftUp)){
 			ModMain.network.sendToServer(new MessageSlotMove(slot,false));

@@ -15,6 +15,7 @@ public class MessageToggleSpell implements IMessage, IMessageHandler<MessageTogg
 
 	private int spell_id;
 	private static final String NBT_SPELL = "spell";
+	public static final int ID = 1;
 
 	public MessageToggleSpell(){
 	}
