@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.event;
 
-import org.lwjgl.input.Keyboard;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -8,10 +8,8 @@ import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.net.MessageBarDown;
-import com.lothrazar.cyclicmagic.net.MessageBarUp;
-import com.lothrazar.cyclicmagic.net.MessageSlotDown;
-import com.lothrazar.cyclicmagic.net.MessageSlotUp;
+import com.lothrazar.cyclicmagic.net.MessageBarMove;
+import com.lothrazar.cyclicmagic.net.MessageSlotMove;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
 
 public class EventKeyInput{
@@ -20,7 +18,8 @@ public class EventKeyInput{
 	@SubscribeEvent
 	public void onKeyInput(InputEvent.KeyInputEvent event){
 
-		detectAndFireKey();
+		int slot = Minecraft.getMinecraft().thePlayer.inventory.currentItem;
+		detectAndFireKey(slot);
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -30,24 +29,30 @@ public class EventKeyInput{
 		// only for player survival invo
 		if(event.getGui() instanceof GuiInventory){
 
-			detectAndFireKey();
+			GuiInventory gui = (GuiInventory)event.getGui();
+			if(gui.getSlotUnderMouse() != null){
+				//only becuase it expects actually a column number
+				detectAndFireKey(gui.getSlotUnderMouse().slotNumber % 9);
+			}
 		}
 	}
 
 	@SideOnly(Side.CLIENT)
-	private void detectAndFireKey(){
+	private void detectAndFireKey(int slot){
+		///boolean isDown;
+		System.out.println("SLOTNUM "+slot);
 
 		if(ClientProxy.isKeyDown(ClientProxy.keyShiftUp)){
-			ModMain.network.sendToServer(new MessageSlotUp());
+			ModMain.network.sendToServer(new MessageSlotMove(slot,false));
 		}
 		else if(ClientProxy.isKeyDown(ClientProxy.keyShiftDown)){
-			ModMain.network.sendToServer(new MessageSlotDown());
+			ModMain.network.sendToServer(new MessageSlotMove(slot,true));
 		}
 		else if(ClientProxy.isKeyDown(ClientProxy.keyBarUp)){
-			ModMain.network.sendToServer(new MessageBarUp());
+			ModMain.network.sendToServer(new MessageBarMove(false));
 		}
 		else if(ClientProxy.isKeyDown(ClientProxy.keyBarDown)){
-			ModMain.network.sendToServer(new MessageBarDown());
+			ModMain.network.sendToServer(new MessageBarMove(true));
 		}
 	}
 }

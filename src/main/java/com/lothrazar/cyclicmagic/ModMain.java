@@ -111,7 +111,6 @@ public class ModMain{
 		network.registerMessage(MessageKeyLeft.class, MessageKeyLeft.class, MessageKeyLeft.ID, Side.SERVER);
 		network.registerMessage(MessageKeyRight.class, MessageKeyRight.class, MessageKeyRight.ID, Side.SERVER);
 		
-		
 		network.registerMessage(MessageToggleSpell.class, MessageToggleSpell.class, MessageKeyRight.ID, Side.SERVER);
 		network.registerMessage(MessageParticle.class, MessageParticle.class, MessageParticle.ID, Side.CLIENT);
 		network.registerMessage(MessageOpenSpellbook.class, MessageOpenSpellbook.class, MessageOpenSpellbook.ID, Side.CLIENT);
@@ -124,12 +123,8 @@ public class ModMain{
 		network.registerMessage(MessageRecharge.class, MessageRecharge.class, MessageRecharge.ID, Side.SERVER);
 		network.registerMessage(MessageUpgrade.class, MessageUpgrade.class, MessageUpgrade.ID, Side.SERVER);
 	
-		//TODO: merge these into all one packet? pass in a value
-		int packetID = 1;
-    	network.registerMessage(MessageSlotUp.class, MessageSlotUp.class, packetID++, Side.SERVER);
-    	network.registerMessage(MessageSlotDown.class, MessageSlotDown.class, packetID++, Side.SERVER);
-    	network.registerMessage(MessageBarUp.class, MessageBarUp.class, packetID++, Side.SERVER);
-    	network.registerMessage(MessageBarDown.class, MessageBarDown.class, packetID++, Side.SERVER);
+    	network.registerMessage(MessageSlotMove.class, MessageSlotMove.class, MessageSlotMove.ID, Side.SERVER);
+    	network.registerMessage(MessageBarMove.class, MessageBarMove.class, MessageBarMove.ID, Side.SERVER);
 	
 	}
 
