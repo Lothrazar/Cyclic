@@ -56,6 +56,7 @@ public class ModMain{
 		MobSpawningRegistry.syncConfig(getConfig());
 		RecipeAlterRegistry.syncConfig(getConfig());
 		RecipeNewRegistry.syncConfig(getConfig());
+		WorldGenRegistry.syncConfig(getConfig());
 		
 		config.save();
 	}
@@ -68,6 +69,7 @@ public class ModMain{
 		SpellRegistry.register();
 		PotionRegistry.register();
 		MobSpawningRegistry.register();
+		WorldGenRegistry.register();
 		
 		if(RecipeAlterRegistry.enabled){
 			RecipeAlterRegistry.register();

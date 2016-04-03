@@ -37,6 +37,7 @@ public class SpellRangeRotate extends BaseSpellRange{
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void castFromServer(BlockPos pos, EnumFacing side, EntityPlayer p){
 
+		
 		// TODO Auto-generated method stub
 		if(pos == null || p.worldObj.getBlockState(pos) == null || side == null){
 			return;
@@ -63,9 +64,11 @@ public class SpellRangeRotate extends BaseSpellRange{
 				// being used
 				
 				if(prop.getName().equals("half")){
+					
 					p.worldObj.setBlockState(pos, clicked.cycleProperty(prop));
 
 					isDone = true;
+					break;
 				}
 			}
 		}

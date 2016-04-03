@@ -20,6 +20,7 @@ public class BlockRegistry{
 	public static ArrayList<Block> blocks = new ArrayList<Block>();
 	private static Map<String,Boolean> configToggle = new HashMap<String,Boolean>();
 	public static BlockFragile block_fragile;
+	public static BlockNetherGold nether_gold_ore;
 
 	private static void registerBlock(Block block, String name){
 
@@ -60,6 +61,10 @@ public class BlockRegistry{
 			block_fragile = new BlockFragile();
 			BlockRegistry.registerBlock(block_fragile, BlockFragile.name);
 		}
+		
+		nether_gold_ore = new BlockNetherGold();
+		BlockRegistry.registerBlock(nether_gold_ore, BlockNetherGold.name);
+		GameRegistry.addSmelting(nether_gold_ore, new ItemStack(Items.gold_ingot), 1);
 	}
 
 	public static void syncConfig(Configuration config){
