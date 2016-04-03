@@ -64,7 +64,6 @@ public class BlockRegistry{
 		
 		nether_gold_ore = new BlockNetherGold();
 		BlockRegistry.registerBlock(nether_gold_ore, BlockNetherGold.name);
-		GameRegistry.addSmelting(nether_gold_ore, new ItemStack(Items.gold_ingot), 1);
 	}
 
 	public static void syncConfig(Configuration config){
