@@ -13,10 +13,7 @@ public class EventConfigChanged{
 
 		if(event.getModID().equals(Const.MODID)){
  
-			//TODO: some better way to identify that this part of config is ingame
-			SpellRegistry.syncConfig(ModMain.getConfig());
-			
-			ModMain.getConfig().save();
+			ModMain.syncConfig();
 		}
 	}
 }

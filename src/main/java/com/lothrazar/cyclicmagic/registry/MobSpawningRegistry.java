@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.registry;
 
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.entity.monster.EntityCaveSpider;
@@ -40,9 +41,6 @@ public class MobSpawningRegistry{
 
 		EntityRegistry.addSpawn(EntityGuardian.class, group, min, max, EnumCreatureType.WATER_CREATURE, new BiomeGenBase[] { Biomes.river });
 		
-		
-		
-
 		EntityRegistry.addSpawn(EntitySnowman.class, group, min, max, EnumCreatureType.CREATURE, new BiomeGenBase[] { Biomes.iceMountains, Biomes.icePlains });
 
 		EntityRegistry.addSpawn(EntityHorse.class, group, min, max, EnumCreatureType.CREATURE, new BiomeGenBase[] { Biomes.iceMountains, Biomes.extremeHills, Biomes.icePlains, Biomes.deepOcean });
@@ -57,9 +55,9 @@ public class MobSpawningRegistry{
 
 	public static void syncConfig(Configuration config){
 
-		String category = "mob_spawning";
+		String category = Const.MODCONF+"mob_spawning";
 
-		config.setCategoryComment(category, "Allow tons of mobs to spawn in more biomes.  Horses in more places; Cave spiders in mesa and roofed forests; some nether mobs in the desert; enderman in the nether; snowmen in winter biomes;  ghasts in deep ocean; Iron Golems in the jungle; Guardians in rivers.");
+		config.setCategoryComment("mob_spawning", "Allow tons of mobs to spawn in more biomes.  Horses in more places; Cave spiders in mesa and roofed forests; some nether mobs in the desert; enderman in the nether; snowmen in winter biomes;  ghasts in deep ocean; Iron Golems in the jungle; Guardians in rivers.");
 
 		enabled = config.get(category, "enabled", true).getBoolean();
 	}

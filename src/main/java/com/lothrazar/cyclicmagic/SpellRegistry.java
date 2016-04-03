@@ -67,7 +67,6 @@ public class SpellRegistry{
 
 		Spells.reachdown = new SpellRangeBuild(++spellId, "reachdown",SpellRangeBuild.PlaceType.DOWN);
 		registerSpell(Spells.reachdown);
-  
 	}
 
 	private static void registerSpell(ISpell spell){
@@ -103,12 +102,9 @@ public class SpellRegistry{
 	public static void syncConfig(Configuration config){
 
 		String category = "";
-		category = Const.MODID;
+		category = Const.MODCONF+"gui";
 
-		SpellRegistry.renderOnLeft = config.getBoolean("on_left", category, true, "True for top left of the screen, false for top right");
+		SpellRegistry.renderOnLeft = config.getBoolean("spell_gui_on_left", category, true, "True for top left of the screen, false for top right");
 
-		category = "effect_tweaks";
-
-		
 	}
 }

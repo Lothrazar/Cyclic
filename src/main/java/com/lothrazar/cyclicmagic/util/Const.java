@@ -12,6 +12,7 @@ public class Const {
 
 	public static final String MODID = "cyclicmagic";
 	public static final String MODRES = Const.MODID + ":";
+	public static final String MODCONF = Const.MODID + ".";
 
 	public static final int GUI_INDEX = 1;
 

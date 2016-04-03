@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import com.lothrazar.cyclicmagic.event.*;
+import com.lothrazar.cyclicmagic.util.Const;
 
 public class EventRegistry{
 	
@@ -18,13 +19,13 @@ public class EventRegistry{
 	private static boolean playerDeathCoords;
 	public static void syncConfig(Configuration config){
 
-		String category = "mobs";
+		String category = Const.MODCONF+"mobs";
 
 		config.setCategoryComment(category, "Changes to mobs");
 		
 		nameTagDeath = config.getBoolean("nameTagDeath", category, true, "When an entity dies that is named with a tag, it drops the nametag");
 
-		category = "player";
+		category = Const.MODCONF+"player";
 
 		config.setCategoryComment(category, "Changes to player properties or actions");
 		

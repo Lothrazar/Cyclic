@@ -63,7 +63,7 @@ public class BlockRegistry{
 	}
 
 	public static void syncConfig(Configuration config){
-		String category = "blocks";
+		String category = Const.MODCONF+"blocks";
 		
 		config.setCategoryComment(category, "Blocks added to the game");
 		

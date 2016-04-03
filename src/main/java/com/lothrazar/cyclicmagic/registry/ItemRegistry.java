@@ -160,7 +160,7 @@ public class ItemRegistry{
 	}
 	public static void syncConfig(Configuration config){
 
-		String category = "items";
+		String category = Const.MODCONF+"items";
 		
 		config.setCategoryComment(category, "Items added to the game");
 		

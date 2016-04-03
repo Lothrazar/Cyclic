@@ -52,18 +52,25 @@ public class ModMain{
 
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(Const.MODID);
 		
+		syncConfig();
+		
+		registerPackets();
+		
+		EventRegistry.register();
+	}
+
+	public static void syncConfig(){
+
 		SpellRegistry.syncConfig(getConfig());
 		PotionRegistry.syncConfig(getConfig());
 		EventRegistry.syncConfig(getConfig());
 		BlockRegistry.syncConfig(getConfig());
 		ItemRegistry.syncConfig(getConfig());
 		MobSpawningRegistry.syncConfig(getConfig());
+		RecipeAlterRegistry.syncConfig(getConfig());
+		RecipeNewRegistry.syncConfig(getConfig());
 		
-		getConfig().save();
-		
-		registerPackets();
-		
-		EventRegistry.register();
+		config.save();
 	}
 
 	@EventHandler
@@ -73,8 +80,14 @@ public class ModMain{
 		BlockRegistry.register();
 		SpellRegistry.register();
 		PotionRegistry.register();
-		RecipeRegistry.register();
 		MobSpawningRegistry.register();
+		
+		if(RecipeAlterRegistry.enabled){
+			RecipeAlterRegistry.register();
+		}
+		if(RecipeNewRegistry.enabled){
+			RecipeNewRegistry.register();
+		}
 
 		proxy.register();
 
@@ -144,5 +157,33 @@ set maximum function/button
 
 //TODO: waterwalk/slowfall/frost potions are unused
 
+//IDEA: nether iron and gold
+
+//IDEA: make boats float
+ * https://www.reddit.com/r/minecraftsuggestions/comments/4d4ob1/make_boats_float_again/
+ 
+ https://www.reddit.com/r/minecraftsuggestions/?count=100&after=t3_4ciqqv
+ 
+ https://www.reddit.com/r/minecraftsuggestions/comments/4chlpo/add_a_control_option_for_elytra_automatically/
+ 
+ * 
+ // https://www.reddit.com/r/minecraftsuggestions/comments/4cr84c/blocks_of_quartz_can_be_crafted_back_into_4_quartz/
+ 
+ https://www.reddit.com/r/minecraftsuggestions/comments/4d20g5/bring_back_the_notch_apple_crafting_recipe/
+ * 
+ * 
+ //stardew valley style furnace
+  * https://www.reddit.com/r/minecraftsuggestions/comments/4d4eqy/leftclick_on_furnaces_holding_an_item_to_be/
+ 
+ 
+ 
+ //do we need custom ItemBlocks for these?
+		//top logs recipe
+
+		//smoothstone block
+		 //mushroomies?
+ 
+ 
+ idea: make ladders faster
 */
 }
