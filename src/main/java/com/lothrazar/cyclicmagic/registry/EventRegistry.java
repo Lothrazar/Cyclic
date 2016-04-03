@@ -46,6 +46,10 @@ public class EventRegistry{
 		events.add(new EventNameVillager());
 		events.add(new EventEndermanDropBlock());
 		
+		//TODO: consider configs for these 
+		events.add(new EventFoodDetails());
+		events.add(new EventFragileTorches());
+		
 		//some events are featured that get configured
 		
 		
