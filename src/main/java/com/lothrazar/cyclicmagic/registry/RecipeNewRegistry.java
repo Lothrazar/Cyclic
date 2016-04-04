@@ -1,8 +1,6 @@
 package com.lothrazar.cyclicmagic.registry;
 
 import com.lothrazar.cyclicmagic.util.Const;
-import com.lothrazar.cyclicmagic.util.UtilItem;
-import com.lothrazar.cyclicmagic.util.UtilRecipe;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
@@ -11,11 +9,7 @@ import net.minecraft.init.Blocks;
 
 public class RecipeNewRegistry{
 	
-	
-
-
 	public static boolean enabled = true;
-
 
 	public static void syncConfig(Configuration config){
 
@@ -134,7 +128,6 @@ public class RecipeNewRegistry{
 		} 
 	}
 	
- 
 	private static void simpleDispenser() {
 	
 		GameRegistry.addRecipe(new ItemStack(Blocks.dispenser), 

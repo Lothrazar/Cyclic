@@ -8,7 +8,6 @@ import com.lothrazar.cyclicmagic.registry.*;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
@@ -61,7 +60,8 @@ public class ModMain{
 		RecipeAlterRegistry.syncConfig(getConfig());
 		RecipeNewRegistry.syncConfig(getConfig());
 		WorldGenRegistry.syncConfig(getConfig());
-		
+
+		StackSizeRegistry.syncConfig(getConfig());
 		
 		//if it works, do we do it in event registry? block? make a new one for 'behaviors'
 		//Blocks.wheat
@@ -81,9 +81,9 @@ public class ModMain{
 		PotionRegistry.register();
 		MobSpawningRegistry.register();
 		WorldGenRegistry.register();
-		
-		StackSizeRegistry.register();
-		
+		if(StackSizeRegistry.enabled){
+			StackSizeRegistry.register();
+		}
 		if(RecipeAlterRegistry.enabled){
 			RecipeAlterRegistry.register();
 		}

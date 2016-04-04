@@ -1,33 +1,59 @@
 package com.lothrazar.cyclicmagic.registry;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
 
 
 public class StackSizeRegistry{
 
-	
+	public static boolean enabled;
+
 	public static void register(){
 
-		ArrayList<Item> stackTo8 = new ArrayList<Item>();
-		stackTo8.add(Items.potionitem);
+		Map<Item,Integer> stackMap = new HashMap<Item,Integer>();
+		stackMap.put(Items.potionitem,8);
+		stackMap.put(Items.splash_potion,8);
+		stackMap.put(Items.lingering_potion,8);
+		int boat = 16;
 		
-		//TODO: could do a hashmap => stacksize thing instead
-		ArrayList<Item> stackTo64 = new ArrayList<Item>();
+		stackMap.put(Items.boat,64);
+		stackMap.put(Items.acacia_boat,boat);
+		stackMap.put(Items.birch_boat,boat);
+		stackMap.put(Items.spruce_boat,boat);
+		stackMap.put(Items.dark_oak_boat,boat);
+		stackMap.put(Items.jungle_boat,boat);
+		stackMap.put(Items.minecart,boat);
+		stackMap.put(Items.chest_minecart,boat);
+		stackMap.put(Items.furnace_minecart,boat);
+		stackMap.put(Items.hopper_minecart,boat);
+		stackMap.put(Items.tnt_minecart,boat);
+		stackMap.put(Items.snowball,64);
+		stackMap.put(Items.banner,64);
+		stackMap.put(Items.snowball,64);
+		stackMap.put(Items.armor_stand,64);
+		stackMap.put(Items.sign,64);
+		stackMap.put(Items.bed,64);
+		stackMap.put(Items.bucket,64);
 		
-		stackTo64.add(Items.boat);
-		stackTo64.add(Items.acacia_boat);
-		stackTo64.add(Items.birch_boat);
-		stackTo64.add(Items.spruce_boat);
-		stackTo64.add(Items.dark_oak_boat);
-		stackTo64.add(Items.jungle_boat);
-		
-		for(Item item : stackTo64){
-			item.setMaxStackSize(64); 
+		for (Map.Entry<Item,Integer> entry : stackMap.entrySet()) {
+			
+			entry.getKey().setMaxStackSize(entry.getValue());
 		}
+	}
 
-		ArrayList<Item> stackTo16 = new ArrayList<Item>();
+	public static void syncConfig(Configuration config){
+
+		String category = Const.MODCONF + "stack_size";
 		
+		//config.setCategoryComment(category, "Tons of new recipes for existing blocks and items.  Bonemeal to undye wool; repeater and dispenser tweaks;  making player skulls out of the four mob heads...");
+
+		Property prop = config.get(category, "enabled", true,"Increase stack size of many vanilla items");
+		prop.setRequiresWorldRestart(true);
+		enabled = prop.getBoolean();
 	}
 }
