@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.net;
  
-import com.lothrazar.cyclicmagic.util.UtilPlayerInventory;
+import com.lothrazar.cyclicmagic.util.UtilInventory;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -44,10 +44,10 @@ public class MessageSlotMove implements IMessage, IMessageHandler<MessageSlotMov
 		EntityPlayer player = ctx.getServerHandler().playerEntity; 
  
 		if(message.isDown){
-			UtilPlayerInventory.shiftSlotUp(player, message.slot); 
+			UtilInventory.shiftSlotUp(player, message.slot); 
 		}
 		else{
-			UtilPlayerInventory.shiftSlotDown(player, message.slot); 
+			UtilInventory.shiftSlotDown(player, message.slot); 
 		}
 
 		return null;

@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.net;
  
-import com.lothrazar.cyclicmagic.util.UtilPlayerInventory;
+import com.lothrazar.cyclicmagic.util.UtilInventory;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -38,10 +38,10 @@ public class MessageBarMove implements IMessage, IMessageHandler<MessageBarMove,
 		EntityPlayer player = ctx.getServerHandler().playerEntity; 
 
 		if(message.isDown){
-			UtilPlayerInventory.shiftBarDown(player);
+			UtilInventory.shiftBarDown(player);
 		}
 		else{
-			UtilPlayerInventory.shiftBarUp(player);
+			UtilInventory.shiftBarUp(player);
 		}
  	
 		return null;
