@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.event;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -15,7 +14,7 @@ import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 
 public class EventSignSkullName{
-
+	
 	@SubscribeEvent
 	public void onPlayerInteract(PlayerInteractEvent event){
 
@@ -26,12 +25,7 @@ public class EventSignSkullName{
 		if(pos == null){
 			return;
 		}
-		
-		IBlockState bstate = worldObj.getBlockState(pos);
-		if(bstate == null){
-			return;
-		}
-
+	
 		// event has no hand??
 		// and no item stack. and right click rarely works. known bug
 		// http://www.minecraftforge.net/forum/index.php?topic=37416.0

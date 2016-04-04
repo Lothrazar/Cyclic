@@ -45,6 +45,8 @@ public class EventRegistry{
 		//no reason to turn these off
 		events.add(new EventNameVillager());
 		events.add(new EventEndermanDropBlock());
+
+		events.add(new EventFurnaceStardew());
 		
 		//TODO: consider configs for these 
 		events.add(new EventFoodDetails());
