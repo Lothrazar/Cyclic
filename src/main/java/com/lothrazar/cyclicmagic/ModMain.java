@@ -67,7 +67,7 @@ public class ModMain{
 		//Blocks.wheat
 		//also figure out how to make my own 'behavior-place block' type thing
 		//but i dont want to make a full out "block placer" thing, just for planting.
-		BlockDispenser.dispenseBehaviorRegistry.putObject(Items.wheat_seeds, new BehaviorDefaultDispenseItem());
+		BlockDispenser.dispenseBehaviorRegistry.putObject(Items.wheat_seeds, new BehaviorDispenserPlaceBlock());
 		
 		config.save();
 	}
