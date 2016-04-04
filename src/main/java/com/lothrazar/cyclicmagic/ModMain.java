@@ -82,6 +82,8 @@ public class ModMain{
 		MobSpawningRegistry.register();
 		WorldGenRegistry.register();
 		
+		StackSizeRegistry.register();
+		
 		if(RecipeAlterRegistry.enabled){
 			RecipeAlterRegistry.register();
 		}
