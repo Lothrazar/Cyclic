@@ -7,10 +7,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
+import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 public class EventFurnaceStardew{
 
@@ -45,7 +47,7 @@ public class EventFurnaceStardew{
 		}
 
 		TileEntity tile = worldObj.getTileEntity(pos);
-
+		
 		if(tile instanceof TileEntityFurnace){
 
 			TileEntityFurnace furnace = (TileEntityFurnace) tile;

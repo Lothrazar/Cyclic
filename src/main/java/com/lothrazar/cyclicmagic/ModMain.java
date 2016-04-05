@@ -202,5 +202,7 @@ set maximum function/button
  idea: make ladders faster
  
  
+ 
+ //FUEL REGISTRY, make more stuff burn   implements IFuelHandler {
 */
 }
