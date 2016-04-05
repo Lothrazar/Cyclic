@@ -14,6 +14,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
@@ -63,11 +64,6 @@ public class ModMain{
 
 		StackSizeRegistry.syncConfig(getConfig());
 		
-		//if it works, do we do it in event registry? block? make a new one for 'behaviors'
-		//Blocks.wheat
-		//also figure out how to make my own 'behavior-place block' type thing
-		//but i dont want to make a full out "block placer" thing, just for planting.
-		BlockDispenser.dispenseBehaviorRegistry.putObject(Items.wheat_seeds, new BehaviorDispenserPlaceBlock());
 		
 		config.save();
 	}
@@ -90,11 +86,20 @@ public class ModMain{
 		if(RecipeNewRegistry.enabled){
 			RecipeNewRegistry.register();
 		}
+		
+
 
 		proxy.register();
 
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiRegistry());
 	}
+
+	@EventHandler
+	public void onPostInit(FMLPostInitializationEvent event){
+
+		BlockDispenser.dispenseBehaviorRegistry.putObject(Items.wheat_seeds, new BehaviorPlantSeed());
+	}
+	
 	
 	@EventHandler
 	public void onServerStarting(FMLServerStartingEvent event){
