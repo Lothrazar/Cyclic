@@ -9,6 +9,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.block.state.IBlockState;
+import net.minecraftforge.common.IPlantable;
 
 public class BehaviorPlantSeed extends BehaviorDefaultDispenseItem{
 
@@ -20,9 +21,9 @@ public class BehaviorPlantSeed extends BehaviorDefaultDispenseItem{
 		BlockPos posForPlant = source.getBlockPos().offset(BlockDispenser.getFacing(source.getBlockMetadata()));
 		BlockPos posSoil = posForPlant.down();
 
-		if(stack != null && stack.getItem() instanceof ItemSeeds){
+		if(stack != null && stack.getItem() instanceof IPlantable){
 
-			ItemSeeds seed = (ItemSeeds) stack.getItem();
+			IPlantable seed = (IPlantable) stack.getItem();
 
 			IBlockState crop = seed.getPlant(world, posForPlant);
 
@@ -33,11 +34,19 @@ public class BehaviorPlantSeed extends BehaviorDefaultDispenseItem{
 
 				boolean canSustainPlant = state.getBlock().canSustainPlant(state, world, posSoil, EnumFacing.UP, seed);
 
-				if(canSustainPlant && world.isAirBlock(posForPlant)){
-					world.setBlockState(posForPlant, crop);
-					stack.stackSize--;
+				if(canSustainPlant ){
+					
+					if(world.isAirBlock(posForPlant)){
+							
+						world.setBlockState(posForPlant, crop);
+						stack.stackSize--;
 
-					return stack;
+						return stack;
+					}
+					else{
+						//System.out.println("can sustain plant yes, but not an air block. so do NOT drop on ground");
+						return stack;//ie, dont do super
+					}
 				}
 			}
 		}

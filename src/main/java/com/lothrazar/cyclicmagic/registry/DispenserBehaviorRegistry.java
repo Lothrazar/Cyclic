@@ -3,6 +3,7 @@ package com.lothrazar.cyclicmagic.registry;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemSeeds;
+import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameData;
 import com.lothrazar.cyclicmagic.BehaviorPlantSeed;
@@ -21,9 +22,9 @@ public class DispenserBehaviorRegistry{
 		for(Item item : Item.itemRegistry){ //GameData.getBlockItemMap().entrySet()){
 			if( item == null){continue;}
 			
-			if(item instanceof ItemSeeds){
+			if(item instanceof IPlantable){
 
-				//System.out.println("Register plant dispense for "+item.getClass().toString());
+				System.out.println("BehaviorPlantSeed : "+item.getUnlocalizedName());
 				
 				BlockDispenser.dispenseBehaviorRegistry.putObject(item, new BehaviorPlantSeed());
 			}
