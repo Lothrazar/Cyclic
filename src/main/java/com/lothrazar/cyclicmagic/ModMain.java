@@ -6,9 +6,6 @@ import com.lothrazar.cyclicmagic.net.*;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
 import com.lothrazar.cyclicmagic.registry.*;
 import com.lothrazar.cyclicmagic.util.Const;
-import net.minecraft.block.BlockDispenser;
-import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
-import net.minecraft.init.Items;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -61,7 +58,7 @@ public class ModMain{
 		RecipeAlterRegistry.syncConfig(getConfig());
 		RecipeNewRegistry.syncConfig(getConfig());
 		WorldGenRegistry.syncConfig(getConfig());
-
+		DispenserBehaviorRegistry.syncConfig(getConfig());
 		StackSizeRegistry.syncConfig(getConfig());
 		
 		
@@ -96,8 +93,10 @@ public class ModMain{
 
 	@EventHandler
 	public void onPostInit(FMLPostInitializationEvent event){
-
-		BlockDispenser.dispenseBehaviorRegistry.putObject(Items.wheat_seeds, new BehaviorPlantSeed());
+	
+		//registers all plantable crops. the plan is to work with non vanilla data also
+		DispenserBehaviorRegistry.register();
+		
 	}
 	
 	
