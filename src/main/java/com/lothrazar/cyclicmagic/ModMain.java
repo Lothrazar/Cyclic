@@ -74,6 +74,8 @@ public class ModMain{
 		PotionRegistry.register();
 		MobSpawningRegistry.register();
 		WorldGenRegistry.register();
+		FuelRegistry.register();
+		
 		if(StackSizeRegistry.enabled){
 			StackSizeRegistry.register();
 		}
@@ -84,8 +86,6 @@ public class ModMain{
 			RecipeNewRegistry.register();
 		}
 		
-
-
 		proxy.register();
 
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiRegistry());
@@ -181,17 +181,7 @@ set maximum function/button
  
  https://www.reddit.com/r/minecraftsuggestions/comments/4chlpo/add_a_control_option_for_elytra_automatically/
  
- * 
- // https://www.reddit.com/r/minecraftsuggestions/comments/4cr84c/blocks_of_quartz_can_be_crafted_back_into_4_quartz/
- 
- https://www.reddit.com/r/minecraftsuggestions/comments/4d20g5/bring_back_the_notch_apple_crafting_recipe/
- * 
- * 
- //stardew valley style furnace
-  * https://www.reddit.com/r/minecraftsuggestions/comments/4d4eqy/leftclick_on_furnaces_holding_an_item_to_be/
- 
- 
- 
+
  //do we need custom ItemBlocks for these?
 		//top logs recipe
 
@@ -201,8 +191,5 @@ set maximum function/button
  
  idea: make ladders faster
  
- 
- 
- //FUEL REGISTRY, make more stuff burn   implements IFuelHandler {
-*/
+ */
 }
