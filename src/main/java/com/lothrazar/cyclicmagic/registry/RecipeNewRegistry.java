@@ -40,9 +40,21 @@ public class RecipeNewRegistry{
 		
    		RecipeNewRegistry.minecartsSimple();
 
+   		RecipeNewRegistry.notchApple();
 
 	//https://github.com/PrinceOfAmber/SamsPowerups/blob/master/Recipes/src/main/java/com/lothrazar/samsrecipes/RecipeRegistry.java	
  
+	}
+
+	private static void notchApple(){
+		GameRegistry.addRecipe(new ItemStack(Items.golden_apple,1,1),
+				"ggg",
+				"gag",
+				"ggg",
+				'g', new ItemStack(Blocks.gold_block),
+				'a', new ItemStack(Items.apple)
+				);
+		
 	}
 
 	private static void playerSkull(){
