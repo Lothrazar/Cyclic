@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.net;
 
-import com.lothrazar.cyclicmagic.SpellCaster;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
+import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -31,7 +31,7 @@ public class MessageToggleBuild implements IMessage, IMessageHandler<MessageTogg
 	public IMessage onMessage(MessageToggleBuild message, MessageContext ctx){
 
 		EntityPlayer player = ctx.getServerHandler().playerEntity;
-		ItemStack wand = SpellCaster.getPlayerWandIfHeld(player);
+		ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
 
 		if(wand == null){
 			return null;

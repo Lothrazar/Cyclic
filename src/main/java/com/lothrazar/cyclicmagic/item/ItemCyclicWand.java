@@ -2,9 +2,10 @@ package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
 import org.lwjgl.input.Keyboard;
-import com.lothrazar.cyclicmagic.SpellRegistry;
+import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -115,7 +116,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe{
 		// If onItemUse returns false onItemRightClick will be called.
 		// http://www.minecraftforge.net/forum/index.php?topic=31966.0
 		// so if this casts and succeeds, the right click is cancelled
-		return SpellRegistry.caster.tryCastCurrent(worldIn, playerIn, pos, side)
+		return UtilSpellCaster.tryCastCurrent(worldIn, playerIn, pos, side)
 				? EnumActionResult.SUCCESS : EnumActionResult.FAIL;
 	}
 	
@@ -124,7 +125,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe{
 
 		// so this only happens IF either onItemUse did not fire at all, or it
 		// fired and casting failed
-		boolean success = SpellRegistry.caster.tryCastCurrent(worldIn, playerIn, null, null);
+		boolean success = UtilSpellCaster.tryCastCurrent(worldIn, playerIn, null, null);
 		
 		if(success){
 			 return new ActionResult<ItemStack> (EnumActionResult.SUCCESS, itemStackIn);

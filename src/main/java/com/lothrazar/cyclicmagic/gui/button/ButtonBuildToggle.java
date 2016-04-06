@@ -3,9 +3,9 @@ package com.lothrazar.cyclicmagic.gui.button;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.SpellCaster;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.net.MessageToggleBuild;
+import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
@@ -42,7 +42,7 @@ public class ButtonBuildToggle extends GuiButton implements ITooltipButton{
 	@Override
 	public void drawButton(Minecraft mc, int mouseX, int mouseY){
 
-		ItemStack wand = SpellCaster.getPlayerWandIfHeld(thePlayer);
+		ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(thePlayer);
 		this.displayString = I18n.translateToLocal(ItemCyclicWand.BuildType.getName(wand));
 
 		super.drawButton(mc, mouseX, mouseY);

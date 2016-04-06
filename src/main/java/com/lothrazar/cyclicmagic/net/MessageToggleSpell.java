@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.net;
 
-import com.lothrazar.cyclicmagic.SpellCaster;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
+import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -45,7 +45,7 @@ public class MessageToggleSpell implements IMessage, IMessageHandler<MessageTogg
 	public IMessage onMessage(MessageToggleSpell message, MessageContext ctx){
 
 		EntityPlayer player = ctx.getServerHandler().playerEntity;
-		ItemStack wand = SpellCaster.getPlayerWandIfHeld(player);
+		ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
 
 		ItemCyclicWand.Spells.toggleSpell(wand, message.spell_id);
 

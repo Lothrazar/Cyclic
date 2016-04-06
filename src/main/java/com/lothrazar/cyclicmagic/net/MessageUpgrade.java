@@ -1,11 +1,11 @@
 package com.lothrazar.cyclicmagic.net;
 
-import com.lothrazar.cyclicmagic.SpellCaster;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand.Energy;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilExperience;
 import com.lothrazar.cyclicmagic.util.UtilSound;
+import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -36,7 +36,7 @@ public class MessageUpgrade implements IMessage, IMessageHandler<MessageUpgrade,
 	public IMessage onMessage(MessageUpgrade message, MessageContext ctx){
 
 		EntityPlayer player = ctx.getServerHandler().playerEntity;
-		ItemStack wand = SpellCaster.getPlayerWandIfHeld(player);
+		ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
 		
 		if(wand != null){
 			

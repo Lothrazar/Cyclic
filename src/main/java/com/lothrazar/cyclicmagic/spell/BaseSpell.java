@@ -4,10 +4,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import com.lothrazar.cyclicmagic.SpellCaster;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilSound;
+import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.translation.I18n;
 
@@ -75,7 +75,7 @@ public abstract class BaseSpell implements ISpell{
 	public void payCost(World world, EntityPlayer player, BlockPos pos){
 
 		if(player.capabilities.isCreativeMode == false){
-			ItemCyclicWand.Energy.drainBy(SpellCaster.getPlayerWandIfHeld(player), this.getCost());
+			ItemCyclicWand.Energy.drainBy(UtilSpellCaster.getPlayerWandIfHeld(player), this.getCost());
 		}
 	}
 
@@ -92,7 +92,7 @@ public abstract class BaseSpell implements ISpell{
 			return true;// skips everything
 		}
 		
-		ItemStack wand = SpellCaster.getPlayerWandIfHeld(player);
+		ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
 
 		if(wand == null){
 			return false;

@@ -2,9 +2,9 @@ package com.lothrazar.cyclicmagic.gui;
 
 import java.util.ArrayList;
 import java.util.Random;
-import com.lothrazar.cyclicmagic.SpellCaster;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -140,7 +140,7 @@ public class InventoryWand implements IInventory{
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer player){
 
-		return SpellCaster.getPlayerWandIfHeld(player) != null;
+		return UtilSpellCaster.getPlayerWandIfHeld(player) != null;
 	}
 
 	@Override

@@ -1,9 +1,9 @@
 package com.lothrazar.cyclicmagic.spell;
 
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.SpellCaster;
 import com.lothrazar.cyclicmagic.gui.InventoryWand;
 import com.lothrazar.cyclicmagic.net.MessageSpellReplacer;
+import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -38,7 +38,7 @@ public class SpellRangeReplace extends BaseSpellRange{
 
 	public void castFromServer(BlockPos posMouseover, EnumFacing side, EntityPlayer player){
 
-		ItemStack heldWand = SpellCaster.getPlayerWandIfHeld(player);
+		ItemStack heldWand = UtilSpellCaster.getPlayerWandIfHeld(player);
 		if(heldWand == null){
 			return;
 		}

@@ -1,9 +1,9 @@
 package com.lothrazar.cyclicmagic.gui;
  
-import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.gui.button.ButtonClose;
 import com.lothrazar.cyclicmagic.gui.button.ButtonSpellToggle;
 import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
+import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilTextureRender;

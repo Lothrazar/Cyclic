@@ -1,9 +1,10 @@
-package com.lothrazar.cyclicmagic;
+package com.lothrazar.cyclicmagic.registry;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import com.lothrazar.cyclicmagic.spell.*; 
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.config.Configuration;
 
@@ -12,9 +13,6 @@ public class SpellRegistry{
 	private static ArrayList<ISpell> spellbook;
 	private static HashMap<Integer, ISpell> hashbook; 
 
-
-	public static SpellScreenRender screen;
-	public static SpellCaster caster;
 
 	public static class Spells{
 
@@ -34,8 +32,6 @@ public class SpellRegistry{
 
 	public static void register(){
 
-		screen = new SpellScreenRender();
-		caster = new SpellCaster();
 		spellbook = new ArrayList<ISpell>();
 		hashbook = new HashMap<Integer, ISpell>();
 		  
@@ -82,7 +78,7 @@ public class SpellRegistry{
 
 	public static boolean spellsEnabled(EntityPlayer player){
 		//current requirement is only a wand
-		return SpellCaster.getPlayerWandIfHeld(player) != null;
+		return UtilSpellCaster.getPlayerWandIfHeld(player) != null;
 	}
 
 	public static ISpell getSpellFromID(int id){
@@ -107,4 +103,7 @@ public class SpellRegistry{
 		SpellRegistry.renderOnLeft = config.getBoolean("spell_gui_on_left", category, true, "True for top left of the screen, false for top right");
 
 	}
+	
+	
+	
 }

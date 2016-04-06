@@ -1,11 +1,11 @@
 package com.lothrazar.cyclicmagic.spell;
 
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.SpellCaster;
-import com.lothrazar.cyclicmagic.SpellRegistry;
 import com.lothrazar.cyclicmagic.gui.InventoryWand;
 import com.lothrazar.cyclicmagic.net.MessageSpellFromServer;
+import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.util.UtilSound;
+import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -52,7 +52,7 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer{
 
 		World world = p.worldObj;
 		
-		ItemStack heldWand = SpellCaster.getPlayerWandIfHeld(p);
+		ItemStack heldWand = UtilSpellCaster.getPlayerWandIfHeld(p);
 		
 		if(heldWand == null){
 			return;
@@ -108,7 +108,7 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer{
 
 				if(placeStateSafe(p.worldObj, p, posToPlaceAt, state)){
 
-					SpellRegistry.caster.castSuccess(this, p.worldObj, p, posOffset);
+					UtilSpellCaster.castSuccess(this, p.worldObj, p, posOffset);
 					
 					if(state.getBlock().getStepSound() != null && state.getBlock().getStepSound().getBreakSound() != null){
 						UtilSound.playSound(p, state.getBlock().getStepSound().getPlaceSound());
