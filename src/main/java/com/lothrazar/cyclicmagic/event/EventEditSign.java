@@ -14,7 +14,7 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 public class EventEditSign{
 
 	@SubscribeEvent
-	public void onPlayerFurnace(PlayerInteractEvent event){
+	public void onInteract(PlayerInteractEvent event){
 
 		EntityPlayer entityPlayer = event.getEntityPlayer();
 		BlockPos pos = event.getPos();
@@ -33,7 +33,7 @@ public class EventEditSign{
 		
 		//test
 		if(held == null && tile instanceof TileEntitySign){
-			System.out.println("TRY edit sign");
+
 			TileEntitySign sign = (TileEntitySign)tile;
 			//sign.setEditable(true);
 			ReflectionHelper.setPrivateValue(TileEntitySign.class, sign, true, "isEditable", "field_145916_j");

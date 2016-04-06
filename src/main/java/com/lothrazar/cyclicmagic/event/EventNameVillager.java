@@ -5,13 +5,14 @@ import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.event.entity.player.EntityInteractEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
+//import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EventNameVillager{
 
 	@SubscribeEvent
-	public void onEntityInteractEvent(EntityInteractEvent event){
+	public void onEntityInteractEvent(EntityInteract event){
 
 		EntityPlayer entityPlayer = event.getEntityPlayer();
 		ItemStack held = entityPlayer.getHeldItem(event.getHand());

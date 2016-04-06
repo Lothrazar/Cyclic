@@ -18,6 +18,7 @@ public class FuelHandler implements IFuelHandler {
 	 /*THE PLAN:
 	  * FUEL REGISTRY, make more stuff burn   implements IFuelHandler {
 	  * wood doors
+	  * BOATS
 	  * ferns, grass, vines, lillypad
 	  * leaf blocks
 	  * ladder 
@@ -32,7 +33,12 @@ public class FuelHandler implements IFuelHandler {
 		int log = TileEntityFurnace.getItemBurnTime(new ItemStack(Blocks.log));
 		int coal = TileEntityFurnace.getItemBurnTime(new ItemStack(Items.coal));
 		//blazerod, coalblock, lava bucket are above these
-		
+
+		fuelMap.put(Items.sign, log);
+		fuelMap.put(Items.sign, log);
+		fuelMap.put(Items.sign, log);
+		fuelMap.put(Items.sign, log);
+		fuelMap.put(Items.sign, log);
 		fuelMap.put(Items.sign, log);
 		fuelMap.put(Item.getItemFromBlock(Blocks.ladder), log);
 		fuelMap.put(Items.painting, log);
