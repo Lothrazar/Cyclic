@@ -145,6 +145,11 @@ public class ModMain{
     	network.registerMessage(MessageSlotMove.class, MessageSlotMove.class, MessageSlotMove.ID, Side.SERVER);
     	network.registerMessage(MessageBarMove.class, MessageBarMove.class, MessageBarMove.ID, Side.SERVER);
 	
+    	int packetID = 26;
+		network.registerMessage(PacketWarpButton.class, PacketWarpButton.class, packetID++, Side.SERVER);
+		network.registerMessage(PacketNewButton.class, PacketNewButton.class, packetID++, Side.SERVER);
+		network.registerMessage(PacketDeleteButton.class, PacketDeleteButton.class, packetID++, Side.SERVER);
+	
 	}
 
 	public static Configuration getConfig(){

@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.util;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -65,6 +66,20 @@ public class UtilSound{
 	public static void playSound(World world, BlockPos pos, SoundEvent soundIn){
 
 		world.playSound(pos.getX(), pos.getY(), pos.getZ(), soundIn, SoundCategory.PLAYERS, volume, pitch, distanceDelay);
+		
+	}
+
+	public static void playSound(EntityPlayer player, SoundEvent soundIn, SoundCategory cat) {
+		// TODO Auto-generated method stub
+		BlockPos pos = player.getPosition();
+		player.worldObj.playSound(pos.getX(), pos.getY(), pos.getZ(), soundIn, cat, volume, pitch, distanceDelay);
+		
+	}
+
+	public static void playSound(World worldObj, BlockPos pos, SoundEvent soundIn,
+			SoundCategory cat) {
+		
+		worldObj.playSound(pos.getX(), pos.getY(), pos.getZ(), soundIn, cat, volume, pitch, distanceDelay);
 		
 	}
 }
