@@ -9,11 +9,34 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class UtilTextureRender{
 
+	@SideOnly(Side.CLIENT)
 	public static void drawTextureSimple(ResourceLocation res, int x, int y, int w, int h){
 
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		Minecraft.getMinecraft().getTextureManager().bindTexture(res);
-		Gui.drawModalRectWithCustomSizedTexture(x, y, 0F, 0F, w, h, w, h);
+		if(res == null){
+			System.out.println("null RL passed to drawTextureSimple ");
+			return;
+		}
+		
+		try{
+		
+			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+			Minecraft.getMinecraft().getTextureManager().bindTexture(res);
+			Gui.drawModalRectWithCustomSizedTexture(x, y, 0F, 0F, w, h, w, h);
+		
+		}
+		catch(NullPointerException e){
+			System.out.println("Null pointer drawTexture;Simple "+res.getResourcePath());
+			System.out.println(e.getMessage());
+			System.out.println(e.getStackTrace());
+			
+		}
+		catch(net.minecraft.util.ReportedException e){
+			System.out.println("net.minecraft.util.ReportedException ");
+			System.out.println(res.getResourceDomain()+":"+res.getResourcePath());
+			System.out.println(e.getMessage());
+			System.out.println(e.getStackTrace());
+			
+		}
 	}
 
 	@SideOnly(Side.CLIENT)
