@@ -36,6 +36,11 @@ public abstract class BaseSpell implements ISpell{
 		return I18n.translateToLocal("spell." + name + ".name");
 	}
 
+	public String getUnlocalizedName(){
+
+		return name;
+	}
+	
 	public String getInfo(){
 
 		return I18n.translateToLocal("spell." + name + ".info");

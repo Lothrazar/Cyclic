@@ -13,6 +13,8 @@ public interface ISpell{
 
 	public String getName();
 
+	public String getUnlocalizedName();
+
 	public String getInfo();
 
 	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side);

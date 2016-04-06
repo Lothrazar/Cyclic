@@ -167,6 +167,9 @@ set maximum function/button
  * https://www.reddit.com/r/minecraftsuggestions/comments/4d4ob1/make_boats_float_again/
  
  
+ 
+	public String getTranslatedName();
+ 
  https://www.reddit.com/r/minecraftsuggestions/comments/4chlpo/add_a_control_option_for_elytra_automatically/
  
 

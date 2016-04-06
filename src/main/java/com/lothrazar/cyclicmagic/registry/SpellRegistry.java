@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.registry;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import com.lothrazar.cyclicmagic.spell.*; 
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
@@ -11,7 +12,8 @@ import net.minecraftforge.common.config.Configuration;
 public class SpellRegistry{
 	public static boolean renderOnLeft;
 	private static ArrayList<ISpell> spellbook;
-	private static HashMap<Integer, ISpell> hashbook; 
+	private static Map<Integer, ISpell> hashbook; 
+	private static Map<String, ISpell> spellRegistry; 
 
 
 	public static class Spells{
@@ -34,6 +36,7 @@ public class SpellRegistry{
 
 		spellbook = new ArrayList<ISpell>();
 		hashbook = new HashMap<Integer, ISpell>();
+		spellRegistry = new HashMap<String, ISpell>();
 		  
 		int spellId = -1;// the smallest spell gets id zero
 
@@ -69,6 +72,7 @@ public class SpellRegistry{
 
 		spellbook.add(spell);
 		hashbook.put(spell.getID(), spell);
+		spellRegistry.put(spell.getUnlocalizedName(), spell);
 	}
 
 	public static ISpell getDefaultSpell(){
