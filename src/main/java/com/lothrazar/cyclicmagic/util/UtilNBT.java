@@ -16,6 +16,14 @@ public class UtilNBT{
 		return position.getX() + "," + position.getY() + "," + position.getZ();
 	}
 
+	public static void setItemStackNBT(ItemStack item, String prop, int value){
+
+		if(item.getTagCompound() == null){
+			item.setTagCompound(new NBTTagCompound());
+		}
+		item.getTagCompound().setInteger(prop, value);
+	}
+
 	public static BlockPos stringCSVToBlockPos(String csv){
 
 		String[] spl = csv.split(",");

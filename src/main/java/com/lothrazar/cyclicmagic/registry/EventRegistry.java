@@ -53,6 +53,8 @@ public class EventRegistry{
 		events.add(new EventEditSign());
 		events.add(new EventFurnaceStardew());
 		events.add(new EventMountedPearl());
+		events.add(new EventHorseFood());
+		events.add(new EventBucketBlocksBreak());
 
 		// some events are featured that get configured
 

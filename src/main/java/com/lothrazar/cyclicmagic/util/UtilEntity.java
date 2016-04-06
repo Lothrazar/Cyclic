@@ -43,15 +43,47 @@ public class UtilEntity{
 	{
 		return dropItemStackInWorld(worldObj, pos, new ItemStack(item)); 
 	}
-	
+	/*
+	public static EntityItem dropItemStackInWorld(World worldObj, BlockPos pos, ItemStack stack){
+
+		EntityItem entityItem = new EntityItem(worldObj, pos.getX(), pos.getY(), pos.getZ(), stack);
+
+		if(worldObj.isRemote == false)// do not spawn a second 'ghost' one on
+										// client side
+		{
+			worldObj.spawnEntityInWorld(entityItem);
+		}
+		return entityItem;
+	}*/
 	public static EntityItem dropItemStackInWorld(World worldObj, BlockPos pos, ItemStack stack)
 	{
 		EntityItem entityItem = new EntityItem(worldObj, pos.getX(),pos.getY(),pos.getZ(), stack); 
 
- 		if(worldObj.isRemote==false) { //do not spawn a second 'ghost' one on client side
+ 		if(worldObj.isRemote == false) { //do not spawn a second 'ghost' one on client side
  			
  			worldObj.spawnEntityInWorld(entityItem);
  		}
     	return entityItem;
 	} 
+	
+
+	public static double getSpeedTranslated(double speed){
+
+		return speed * 100;
+	}
+
+	public static double getJumpTranslated(double jump){
+
+		// double jump = horse.getHorseJumpStrength();
+		// convert from scale factor to blocks
+		double jumpHeight = 0;
+		double gravity = 0.98;
+		while (jump > 0){
+			jumpHeight += jump;
+			jump -= 0.08;
+			jump *= gravity;
+		}
+		return jumpHeight;
+	}
+
 }
