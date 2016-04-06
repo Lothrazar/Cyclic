@@ -1,10 +1,9 @@
-package com.lothrazar.cyclicmagic.command;
+package com.lothrazar.cyclicmagic.util;
 
 import java.util.ArrayList; 
-import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
-import com.lothrazar.cyclicmagic.util.UtilSound;
+import java.util.ConcurrentModificationException;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,61 +11,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
-public class PlaceLib
+public class UtilPlaceBlocks
 {
-	//library of functions/configs that apply to all /place[] commands
-	//for all of these, we allow the player to be null
 	
-	//TODO: should xp cost be here as well?
-	public static ArrayList<Block> allowed = new ArrayList<Block>();
-	public static String allowedFromConfig = "";
-	//public static int XP_COST_PER_PLACE;
-
-	public static boolean canSenderPlace(ICommandSender sender)
-	{
-		EntityPlayer player = (EntityPlayer)sender;
-		
-		if(player == null){return false;}//was sent by command block or something, ignore it
-		
-		if(player.inventory.getCurrentItem() == null || player.inventory.getCurrentItem().stackSize == 0)
-		{
-			UtilChat.addChatMessage(player, "command.place.empty"); 
-			return false;
-		}
-		Block pblock = Block.getBlockFromItem(player.inventory.getCurrentItem().getItem());
-
-		if(pblock == null)
-		{
-			UtilChat.addChatMessage(player, "command.place.empty"); 
-			return false;
-		}
-			
-		if(PlaceLib.isAllowed(pblock) == false)
-		{ 
-			UtilChat.addChatMessage(player, "command.place.notallowed"); 
-			return false;
-		}
-		
-		return true;
-	}
-	
-	public static void translateCSV()
-	{
-		//do this on the fly, could be items not around yet during config change
-		System.out.println("placelib getBlockListFromCSV");
-		/*
-		if(PlaceLib.allowed.size() == 0)
-			PlaceLib.allowed = ModCommands.getBlockListFromCSV(PlaceLib.allowedFromConfig); 
-		*/
-	}         
-
-	public static boolean isAllowed(Block pblock)
-	{
-		translateCSV();
-		
-		return PlaceLib.allowed.size() == 0 || PlaceLib.allowed.contains(pblock);
-	}
- 
 	public static void circle(World world, EntityPlayer player, BlockPos pos, IBlockState placing, int radius) 
 	{
 		// based on http://stackoverflow.com/questions/1022178/how-to-make-a-circle-on-a-grid
@@ -118,7 +65,7 @@ public class PlaceLib
 
 			//if(tryDrainExp(world,player,p) == false){break;}
 
-			placeSingle(world,player,posCurrent,placing);
+			placeWithSoundAndDecrement(world,player,posCurrent,placing);
 		}
 	}
 
@@ -149,7 +96,7 @@ public class PlaceLib
 				
 				//if(tryDrainExp(world,player,posCurrent) == false){break;}
 	 
-				placeSingle(world,player,posCurrent,placing);
+				placeWithSoundAndDecrement(world,player,posCurrent,placing);
 				
 			}  
 		} //end of the outer loop
@@ -186,7 +133,7 @@ public class PlaceLib
 			if(player.inventory.getCurrentItem() == null || player.inventory.getCurrentItem() .stackSize == 0) {return;}
 	
 
-			placeSingle(world,player,posCurrent,placing);
+			placeWithSoundAndDecrement(world,player,posCurrent,placing);
 		}
 	}
 	
@@ -207,20 +154,84 @@ public class PlaceLib
 
 			//if(tryDrainExp(world,player,posCurrent) == false){break;}
 			
-			placeSingle(world,player,posCurrent,placing);
+			placeWithSoundAndDecrement(world,player,posCurrent,placing);
 		}
 	}
 
-	private static void placeSingle(World world,EntityPlayer player, BlockPos posCurrent,  IBlockState placing)
+	//from command place blocks
+	private static boolean placeWithSoundAndDecrement(World world,EntityPlayer player, BlockPos posCurrent,  IBlockState placing)
 	{
-		world.setBlockState(posCurrent, placing);
+		//world.setBlockState(posCurrent, placing);
+		//changed to use safe
+		boolean success = placeStateSafe(world,player,posCurrent,placing);
 
-		UtilSound.playSound(player, placing.getBlock().getStepSound().getPlaceSound());
-		
-		if(player.capabilities.isCreativeMode == false)
-		{
-			player.inventory.decrStackSize(player.inventory.currentItem, 1);
-			//ModCommands.decrHeldStackSize(player);
+		if(success){
+			
+			UtilSound.playSound(player, placing.getBlock().getStepSound().getPlaceSound());
+	
+			
+			if(player.capabilities.isCreativeMode == false)
+			{
+				player.inventory.decrStackSize(player.inventory.currentItem, 1);
+				//ModCommands.decrHeldStackSize(player);
+			}
 		}
+		
+		
+		return success;
 	}
+	
+	
+	
+	//from spell range build
+	public static boolean placeStateSafe(World world, EntityPlayer player, BlockPos placePos, IBlockState placeState){
+		if(placePos == null){
+			return false;
+		}
+		
+		if(world.isAirBlock(placePos) == false){
+
+			// if there is a block here, we might have to stop
+			IBlockState stateHere = world.getBlockState(placePos);
+			
+			if(stateHere != null){
+				
+				Block blockHere = stateHere.getBlock();
+				
+				if(blockHere.isReplaceable(world, placePos) == false){
+					// for example, torches, and the top half of a slab if you click
+					// in the empty space
+					return false;
+				}
+	
+				// ok its a soft block so try to break it first try to destroy it
+				// unless it is liquid, don't try to destroy liquid
+				if(blockHere.getMaterial(stateHere) != Material.water && blockHere.getMaterial(stateHere) != Material.lava){
+					boolean dropBlock = true;
+					world.destroyBlock(placePos, dropBlock);
+				}
+			}
+		}
+		
+		boolean success = false;
+		
+		try{
+			//as soon as i added the try catch, it started never (rarely) happening
+			
+			//we used to pass a flag as third argument, such as '2'
+			//default is '3'
+			success = world.setBlockState(placePos, placeState);
+			
+			//world.markBlockForUpdate(posMoveToHere);
+		}
+		catch(ConcurrentModificationException e){
+			System.out.println("ConcurrentModificationException");
+			System.out.println(e.getMessage());//message is null??
+			System.out.println(e.getStackTrace().toString());
+			success = false;
+		}
+		// either it was air, or it wasnt and we broke it
+		return success;
+	}
+	
 }

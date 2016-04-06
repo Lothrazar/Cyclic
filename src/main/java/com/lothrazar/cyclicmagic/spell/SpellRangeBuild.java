@@ -1,8 +1,10 @@
 package com.lothrazar.cyclicmagic.spell;
 
+import java.util.ConcurrentModificationException;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.InventoryWand;
 import com.lothrazar.cyclicmagic.net.MessageSpellFromServer;
+import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.block.Block;
@@ -105,7 +107,7 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer{
 					break;
 				}
 
-				if(placeStateSafe(p.worldObj, p, posToPlaceAt, state)){
+				if(UtilPlaceBlocks.placeStateSafe(p.worldObj, p, posToPlaceAt, state)){
 
 					UtilSpellCaster.castSuccess(this, p.worldObj, p, posOffset);
 					
@@ -128,32 +130,4 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer{
 		}
 	}
 
-	private  boolean placeStateSafe(World world, EntityPlayer player, BlockPos placePos, IBlockState placeState){
-		if(placePos == null){
-			return false;
-		}
-		if(world.isAirBlock(placePos) == false){
-
-			// if there is a block here, we might have to stop
-			IBlockState stateHere = world.getBlockState(placePos);
-			Block blockHere = stateHere.getBlock();
-			
-			if(blockHere.isReplaceable(world, placePos) == false){
-				// for example, torches, and the top half of a slab if you click
-				// in the empty space
-				return false;
-			}
-
-			// ok its a soft block so try to break it first try to destroy it
-			// first
-			// unless it is liquid, don't try to destroy liquid
-			if(blockHere.getMaterial(stateHere) != Material.water && blockHere.getMaterial(stateHere) != Material.lava){
-				boolean dropBlock = true;
-				world.destroyBlock(placePos, dropBlock);
-			}
-		}
-
-		// either it was air, or it wasnt and we broke it
-		return world.setBlockState(placePos, placeState);
-	}
 }

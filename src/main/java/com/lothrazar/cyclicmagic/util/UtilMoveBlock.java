@@ -36,13 +36,13 @@ public class UtilMoveBlock{
 
 	public static boolean moveBlockTo(World world, EntityPlayer player, BlockPos pos, BlockPos posMoveToHere){
 
-		IBlockState hit = world.getBlockState(pos);
+		IBlockState newStateToPlace = world.getBlockState(pos);
 		translateCSV();
 
-		if(hit == null || ignoreList.contains(hit.getBlock())){
+		if(newStateToPlace == null || ignoreList.contains(newStateToPlace.getBlock())){
 			return false;
 		}
-		if(hit.getBlock().getBlockHardness(hit,world, posMoveToHere) == -1){
+		if(newStateToPlace.getBlock().getBlockHardness(newStateToPlace,world, posMoveToHere) == -1){
 			return false;// unbreakable like bedrock
 		}
 
@@ -53,20 +53,7 @@ public class UtilMoveBlock{
 				world.destroyBlock(pos, false);
 			}
 			
-
-/**
- * Sets the block state at a given location. Flag 1 will cause a block update. Flag 2 will send the change to
- * clients (you almost always want this). Flag 4 prevents the block from being re-rendered, if this is a client
- * world. Flags can be added together.
- */
-			
-			//2 causes..crash?
-			world.setBlockState(posMoveToHere, hit);
-
-			//shouldnt be needed..??
-			//world.markBlockForUpdate(posMoveToHere);
-
-			return true;
+			return UtilPlaceBlocks.placeStateSafe(world, player, posMoveToHere, newStateToPlace);
 		}
 		else
 			return false;

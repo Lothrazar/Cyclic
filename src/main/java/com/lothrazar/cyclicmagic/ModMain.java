@@ -153,6 +153,13 @@ public class ModMain{
 	}
 
 /* 
+ * 
+ * 
+ //BUG: spells get casted even if you have zero mana 
+ * 
+ * 
+ *disable entire wand in config
+ *OR
  * --- COST of each spell in config !!! 
  * 
 1. text message if we use a build spell but invo is empty
