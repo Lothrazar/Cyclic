@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.util;
 
+import org.apache.logging.log4j.Level;
 import org.lwjgl.opengl.GL11;
+import com.lothrazar.cyclicmagic.ModMain;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.util.ResourceLocation;
@@ -13,29 +15,28 @@ public class UtilTextureRender{
 	public static void drawTextureSimple(ResourceLocation res, int x, int y, int w, int h){
 
 		if(res == null){
-			System.out.println("null RL passed to drawTextureSimple ");
 			return;
 		}
-		
+
 		try{
-		
+
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 			Minecraft.getMinecraft().getTextureManager().bindTexture(res);
 			Gui.drawModalRectWithCustomSizedTexture(x, y, 0F, 0F, w, h, w, h);
-		
+
 		}
-		catch(NullPointerException e){
-			System.out.println("Null pointer drawTexture;Simple "+res.getResourcePath());
-			System.out.println(e.getMessage());
-			System.out.println(e.getStackTrace());
+		catch (NullPointerException e){
 			
+			ModMain.logger.log(Level.ERROR, "Null pointer drawTexture;Simple " + res.getResourcePath());
+			ModMain.logger.log(Level.ERROR, e.getMessage());
+			ModMain.logger.log(Level.ERROR, e.getStackTrace());
+
 		}
-		catch(net.minecraft.util.ReportedException e){
-			System.out.println("net.minecraft.util.ReportedException ");
-			System.out.println(res.getResourceDomain()+":"+res.getResourcePath());
-			System.out.println(e.getMessage());
-			System.out.println(e.getStackTrace());
-			
+		catch (net.minecraft.util.ReportedException e){
+			ModMain.logger.log(Level.ERROR, "net.minecraft.util.ReportedException ");
+			ModMain.logger.log(Level.ERROR, res.getResourceDomain() + ":" + res.getResourcePath());
+			ModMain.logger.log(Level.ERROR, e.getMessage());
+			ModMain.logger.log(Level.ERROR, e.getStackTrace());
 		}
 	}
 

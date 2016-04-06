@@ -2,6 +2,8 @@ package com.lothrazar.cyclicmagic.util;
 
 import java.util.ArrayList; 
 import java.util.ConcurrentModificationException;
+import org.apache.logging.log4j.Level;
+import com.lothrazar.cyclicmagic.ModMain;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -224,9 +226,9 @@ public class UtilPlaceBlocks
 			//world.markBlockForUpdate(posMoveToHere);
 		}
 		catch(ConcurrentModificationException e){
-			System.out.println("ConcurrentModificationException");
-			System.out.println(e.getMessage());//message is null??
-			System.out.println(e.getStackTrace().toString());
+			ModMain.logger.log(Level.WARN,"ConcurrentModificationException");
+			ModMain.logger.log(Level.WARN,e.getMessage());//message is null??
+			ModMain.logger.log(Level.WARN,e.getStackTrace().toString());
 			success = false;
 		}
 		// either it was air, or it wasnt and we broke it
