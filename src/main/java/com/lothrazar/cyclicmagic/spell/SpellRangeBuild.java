@@ -3,7 +3,6 @@ package com.lothrazar.cyclicmagic.spell;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.InventoryWand;
 import com.lothrazar.cyclicmagic.net.MessageSpellFromServer;
-import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.block.Block;
@@ -24,8 +23,8 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer{
 	public SpellRangeBuild(int id, String n,PlaceType t){
 
 		super.init(id, n);
-		this.cooldown = 8;
-		this.cost = 5;
+		this.cost = 30;
+		this.cooldown = 5;
 		this.type = t;
 	}
 

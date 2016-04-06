@@ -31,7 +31,7 @@ public class FuelHandler implements IFuelHandler {
 		// http://minecraft.gamepedia.com/Smelting
 		int stick = TileEntityFurnace.getItemBurnTime(new ItemStack(Items.stick));
 		int log = TileEntityFurnace.getItemBurnTime(new ItemStack(Blocks.log));
-		int coal = TileEntityFurnace.getItemBurnTime(new ItemStack(Items.coal));
+		//int coal = TileEntityFurnace.getItemBurnTime(new ItemStack(Items.coal));
 		//blazerod, coalblock, lava bucket are above these
 
 		fuelMap.put(Items.sign, log);

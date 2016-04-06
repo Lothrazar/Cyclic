@@ -47,7 +47,7 @@ public class RecipeNewRegistry{
 	}
 
 	private static void notchApple(){
-		 https://www.reddit.com/r/minecraftsuggestions/comments/4d20g5/bring_back_the_notch_apple_crafting_recipe/
+	//	 https://www.reddit.com/r/minecraftsuggestions/comments/4d20g5/bring_back_the_notch_apple_crafting_recipe/
 		GameRegistry.addRecipe(new ItemStack(Items.golden_apple,1,1),
 				"ggg",
 				"gag",

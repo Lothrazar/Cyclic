@@ -17,8 +17,8 @@ public class SpellRangeReplace extends BaseSpellRange{
 	public SpellRangeReplace(int id, String n){
 
 		super.init(id, n);
-		this.cooldown = 8;
-		this.cost = 5;
+		this.cost = 30;
+		this.cooldown = 5;
 	}
 
 	@Override

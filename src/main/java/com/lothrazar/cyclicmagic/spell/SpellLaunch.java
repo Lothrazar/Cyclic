@@ -24,7 +24,7 @@ public class SpellLaunch extends BaseSpell implements ISpell{
 	public SpellLaunch(int id, String name){
 
 		super.init(id, name);
-		this.cost = 10;
+		this.cost = 25;
 		this.cooldown = 10;
 	}
 

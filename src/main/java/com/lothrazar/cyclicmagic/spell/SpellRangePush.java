@@ -14,8 +14,8 @@ public class SpellRangePush extends BaseSpellRange{
 	public SpellRangePush(int id, String name){
 
 		super.init(id, name);
-		this.cooldown = 8;
-		this.cost = 5;
+		this.cost = 30;
+		this.cooldown = 5;
 	}
 
 	@Override
