@@ -102,12 +102,11 @@ public class SpellRegistry{
 	public static void syncConfig(Configuration config){
 
 		String category = "";
-		category = Const.MODCONF+"gui";
+		category = Const.MODCONF + "Spells";
 
-		SpellRegistry.renderOnLeft = config.getBoolean("spell_gui_on_left", category, true, "True for top left of the screen, false for top right");
+		SpellRegistry.renderOnLeft = config.getBoolean("HUD on left", category, true, "True for top left of the screen, false for top right");
+
+		BaseSpellRange.maxRange = config.getInt("Max Range", category, 64,8,128, "Maximum range for all spells");
 
 	}
-	
-	
-	
 }

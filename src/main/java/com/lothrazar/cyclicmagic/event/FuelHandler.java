@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic;
+package com.lothrazar.cyclicmagic.event;
 
 import java.util.HashMap;
 import java.util.Map;

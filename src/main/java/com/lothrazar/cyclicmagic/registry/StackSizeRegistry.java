@@ -48,7 +48,7 @@ public class StackSizeRegistry{
 
 	public static void syncConfig(Configuration config){
 
-		String category = Const.MODCONF + "stack_size";
+		String category = Const.MODCONF + "Stack Size";
 		
 		//config.setCategoryComment(category, "Tons of new recipes for existing blocks and items.  Bonemeal to undye wool; repeater and dispenser tweaks;  making player skulls out of the four mob heads...");
 

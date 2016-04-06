@@ -14,15 +14,15 @@ public class WorldGenRegistry{
 
 	public static void syncConfig(Configuration config){
 		
-		String category = Const.MODCONF + "world_generation";
+		String category = Const.MODCONF + "World Generation";
 		
 		config.setCategoryComment(category, "Tons of new recipes for existing blocks and items.  Bonemeal to undye wool; repeater and dispenser tweaks;  making player skulls out of the four mob heads...");
 
-		Property prop = config.get(category, "oceanEnabled", true,"Generate clay, sand, and dirt in the ocean instead of only gravel (like the old days)");
+		Property prop = config.get(category, "Classic Oceans", true,"Generate clay, sand, and dirt in the ocean instead of only gravel (like the old days)");
 		prop.setRequiresWorldRestart(true);
 		oceanEnabled = prop.getBoolean();
 		
-		prop = config.get(category, "netherGoldEnabled", true,"Generate gold ore in netherrack");
+		prop = config.get(category, "Nether Gold", true,"Generate gold ore in netherrack that gives nuggets when mined");
 		prop.setRequiresMcRestart(true);
 		netherGoldEnabled = prop.getBoolean();
 	}

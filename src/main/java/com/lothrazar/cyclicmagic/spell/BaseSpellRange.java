@@ -10,7 +10,7 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 
 public abstract class BaseSpellRange extends BaseSpell{
 
-	protected int maxRange = 64;// TODO: config
+	public static int maxRange = 64;// TODO: config
 
 	@Override
 	public void spawnParticle(World world, EntityPlayer p, BlockPos pos){
