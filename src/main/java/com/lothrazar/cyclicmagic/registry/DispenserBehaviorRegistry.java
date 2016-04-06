@@ -35,7 +35,7 @@ public class DispenserBehaviorRegistry{
 				
 				if(item instanceof IPlantable){
 	
-					System.out.println("BehaviorPlantSeed : "+item.getUnlocalizedName());
+					//System.out.println("BehaviorPlantSeed : "+item.getUnlocalizedName());
 					
 					BlockDispenser.dispenseBehaviorRegistry.putObject(item, new BehaviorPlantSeed());
 				}

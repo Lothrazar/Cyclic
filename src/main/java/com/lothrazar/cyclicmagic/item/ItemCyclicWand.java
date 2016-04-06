@@ -43,7 +43,13 @@ public class ItemCyclicWand extends Item implements IHasRecipe{
 	public void addRecipe(){
 
 		GameRegistry.addRecipe(new ItemStack(this), 
-				"sds", " o ", "gog", 'd', new ItemStack(Blocks.diamond_block), 'g', Items.ghast_tear, 'o', Blocks.obsidian, 's', Items.nether_star);
+				"sds", 
+				" o ", 
+				"gog", 
+				'd', new ItemStack(Blocks.diamond_block), 
+				'g', Items.ghast_tear, 
+				'o', Blocks.obsidian, 
+				's', Items.nether_star);
 	}
 
 	@Override
@@ -310,7 +316,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe{
 	public static class Energy{
 
 		public static final int START = 100; // what you get on crafted
-		public static final int MAX_DEFAULT = 300;
+		public static final int MAX_DEFAULT = 1000;
 		private static final String NBT_MANA = "mana";
 		private static final String NBT_MAX = "energymax";
 		private static final String NBT_LASTUSED = "used";

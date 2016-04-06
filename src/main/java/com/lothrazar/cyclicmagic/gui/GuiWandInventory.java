@@ -38,8 +38,8 @@ public class GuiWandInventory extends GuiContainer{
 		this.buttonList.add(new ButtonRecharge(id, x, y, width));
 		
 		//Next row
-		x = this.guiLeft + 5;
-		y += 20 + padding;
+		//x = this.guiLeft + 5;
+		//y += 20 + padding;
 	
 		id++;
 		x += width + padding;
