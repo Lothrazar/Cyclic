@@ -1,7 +1,7 @@
 {
     "parent": "builtin/generated",
     "textures": {
-        "layer0": "samshorsefood:items/horse_upgrade_health"
+        "layer0": "cyclicmagic:items/horse_upgrade_health"
     },
     "display": {
         "thirdperson": {

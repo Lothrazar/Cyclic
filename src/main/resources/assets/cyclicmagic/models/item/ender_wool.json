@@ -1,7 +1,7 @@
 {
     "parent": "builtin/generated",
     "textures": {
-        "layer0": "samsprojectiles:items/ender_wool"
+        "layer0": "cyclicmagic:items/ender_wool"
     },
     "display": {
         "thirdperson": {

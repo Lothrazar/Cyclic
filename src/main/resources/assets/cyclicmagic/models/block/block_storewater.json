@@ -1,6 +1,6 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "samsbucketblocks:blocks/block_storewater"
+        "all": "cyclicmagic:blocks/block_storewater"
     }
 }

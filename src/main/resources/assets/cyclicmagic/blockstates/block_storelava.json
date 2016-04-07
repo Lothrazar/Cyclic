@@ -1,5 +1,5 @@
 {
     "variants": {
-        "normal": { "model": "samsbucketblocks:block_storelava" }
+        "normal": { "model": "cyclicmagic:block_storelava" }
     }
 }

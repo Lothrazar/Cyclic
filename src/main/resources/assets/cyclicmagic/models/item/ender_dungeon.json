@@ -1,7 +1,7 @@
 {
     "parent": "builtin/generated",
     "textures": {
-        "layer0": "samsprojectiles:items/ender_dungeon"
+        "layer0": "cyclicmagic:items/ender_dungeon"
     },
     "display": {
         "thirdperson": {

@@ -1,5 +1,5 @@
  {
-     "parent": "samsbucketblocks:block/block_storeempty",
+     "parent": "cyclicmagic:block/block_storeempty",
      "display": {
          "thirdperson": {
              "rotation": [ 10, -45, 170 ],
