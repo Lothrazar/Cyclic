@@ -28,7 +28,6 @@ public class ItemEnderBook extends Item implements IHasRecipe
 { 
 	public static String KEY_LOC = "location"; 
 	public static String KEY_LARGEST = "loc_largest"; 
-	public static ItemEnderBook itemEnderBook; 
 	
 	public ItemEnderBook( )
 	{   
@@ -74,7 +73,7 @@ public class ItemEnderBook extends Item implements IHasRecipe
 	private static ItemStack getPlayersBook(EntityPlayer player){
 
 		ItemStack book = player.getHeldItem(EnumHand.MAIN_HAND);
-		if(book == null || book.getItem() != ItemEnderBook.itemEnderBook){
+		if(book == null || book.getItem() != ItemRegistry.itemEnderBook){
 			book = player.getHeldItem(EnumHand.OFF_HAND);
 		}
 		
@@ -168,7 +167,7 @@ public class ItemEnderBook extends Item implements IHasRecipe
 	{
 		
 		if(ItemRegistry.craftNetherStar)
-			GameRegistry.addRecipe(new ItemStack(itemEnderBook), 
+			GameRegistry.addRecipe(new ItemStack(this), 
 				"ene", 
 				"ebe",
 				"eee", 
@@ -177,7 +176,7 @@ public class ItemEnderBook extends Item implements IHasRecipe
 				'n', Items.nether_star  
 				);
 		else
-			GameRegistry.addRecipe(new ItemStack(itemEnderBook), 
+			GameRegistry.addRecipe(new ItemStack(this), 
 				"eee", 
 				"ebe",
 				"eee", 
@@ -186,7 +185,7 @@ public class ItemEnderBook extends Item implements IHasRecipe
 				);
 
 		//if you want to clean out the book and start over
-		GameRegistry.addShapelessRecipe(new ItemStack(itemEnderBook), new ItemStack(itemEnderBook));
+		GameRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this));
 	}
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer entityPlayer, EnumHand hand)

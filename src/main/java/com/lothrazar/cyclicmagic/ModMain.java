@@ -289,6 +289,10 @@ public class ModMain{
  * 
  * 
  //BUG: spells get casted even if you have zero mana 
+  * 
+  * BUG: nether ore does not drop eXP
+  * 
+  * ender book - addInformation about waypoints - count of them?
  * 
  * 
  *disable entire wand in config

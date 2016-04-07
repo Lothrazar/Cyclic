@@ -328,7 +328,6 @@ public class ItemRegistry{
 	public static int maximumSaved;
 	public static int btnsPerColumn;
 	public static int expCostPerTeleport;
-	public static Configuration config;
 	public static String category_public;
 
 	public static void syncConfig(Configuration config){
@@ -379,7 +378,7 @@ public class ItemRegistry{
 		ItemHorseFood.JUMP_MAX = config.getInt("jump_max", category, 6, 1, 20, "Maximum value of jump.  Naturally spawned/bred horses seem to max out at 5.5");
 		ItemHorseFood.SPEED_MAX = config.getInt("speed_max", category, 50, 1, 99, "Maximum value of speed (this is NOT blocks/per second or anything like that)");
 
-		projectileConfig();
+		projectileConfig(config);
 		
 		
 		if(config.hasChanged()){config.save();}
@@ -397,7 +396,7 @@ public class ItemRegistry{
 	public static int tnt_recipe;
 	public static int blaze_recipe;
 
-	private static void projectileConfig(){
+	private static void projectileConfig(Configuration config){
 
 		//config.load();
 		//config.addCustomCategoryComment(MODID, "For each item, you can decide how many the recipe produces.  Set to zero to disable the crafting recipe.");
