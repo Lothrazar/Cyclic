@@ -14,6 +14,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketDeleteButton  implements IMessage, IMessageHandler<PacketDeleteButton, IMessage>
 {
+	public static final int ID = 28;
 	public int slot;
 	public PacketDeleteButton(){}
 	public PacketDeleteButton(int s)

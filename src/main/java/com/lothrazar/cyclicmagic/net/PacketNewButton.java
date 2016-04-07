@@ -12,6 +12,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketNewButton  implements IMessage, IMessageHandler<PacketNewButton, IMessage>
 {
+	public static final int ID = 27;
 	public PacketNewButton(){}
 	private String name;
 	public PacketNewButton(String n)

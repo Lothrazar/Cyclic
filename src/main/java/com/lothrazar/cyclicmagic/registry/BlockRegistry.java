@@ -12,8 +12,10 @@ import com.lothrazar.cyclicmagic.util.UtilUncraft;
 
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -71,6 +73,19 @@ public class BlockRegistry{
 	}
 	
 	public static void register(){
+		
+		
+		BlockUncrafting uncrafting_block = new BlockUncrafting();
+		uncrafting_block.setUnlocalizedName("uncrafting_block");
+		GameRegistry.registerBlock(uncrafting_block, "uncrafting_block");
+
+		GameRegistry.addRecipe(new ItemStack(uncrafting_block), 
+				" r ", 
+				"fdf", 
+				" o ", 'o', Blocks.obsidian, 'f', Blocks.furnace, 'r', Blocks.dropper, 'd', Blocks.diamond_block);
+
+		
+		
 
 		if(configToggle.get(BlockFragile.name)){
 

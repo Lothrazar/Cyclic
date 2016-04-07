@@ -14,7 +14,7 @@ public class Const {
 	public static final String MODRES = Const.MODID + ":";
 	public static final String MODCONF = Const.MODID + ".";
 
-	public static final int GUI_INDEX = 1;
+	public static final int GUI_INDEX_WAND = 1;
 
 	public static final int TICKS_PER_SEC = 20;
 	public static final int CHUNK_SIZE = 16;

@@ -27,7 +27,7 @@ public class SpellInventory extends BaseSpell{
 	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side){
 
 		if(!world.isRemote){ // TODO: does the isRemote check actually matter
-			player.openGui(ModMain.instance, Const.GUI_INDEX, world, 0, 0, 0);
+			player.openGui(ModMain.instance, Const.GUI_INDEX_WAND, world, 0, 0, 0);
 		}
 
 		return true;

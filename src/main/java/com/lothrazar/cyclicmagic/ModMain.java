@@ -60,16 +60,19 @@ public class ModMain{
 
 		config = new Configuration(event.getSuggestedConfigurationFile());
 		config.load();
+		syncConfig();
 
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(Const.MODID);
 		
-		syncConfig();
-		
-		registerPackets();
+		PacketRegistry.register(network);
 		
 		EventRegistry.register();
 		
 		initReflection();
+	}
+
+	public static Configuration getConfig(){
+		return config;
 	}
 
 	public static IAttribute horseJumpStrength = null;
@@ -141,21 +144,21 @@ public class ModMain{
 	}
 
 	public static void syncConfig(){
-
-		SpellRegistry.syncConfig(getConfig());
-		PotionRegistry.syncConfig(getConfig());
-		EventRegistry.syncConfig(getConfig());
-		BlockRegistry.syncConfig(getConfig());
-		ItemRegistry.syncConfig(getConfig());
-		MobSpawningRegistry.syncConfig(getConfig());
-		RecipeAlterRegistry.syncConfig(getConfig());
-		RecipeNewRegistry.syncConfig(getConfig());
-		WorldGenRegistry.syncConfig(getConfig());
-		DispenserBehaviorRegistry.syncConfig(getConfig());
-		StackSizeRegistry.syncConfig(getConfig());
+		//hit on startup and on change event from 
+		Configuration c = getConfig();
+		SpellRegistry.syncConfig(c);
+		PotionRegistry.syncConfig(c);
+		EventRegistry.syncConfig(c);
+		BlockRegistry.syncConfig(c);
+		ItemRegistry.syncConfig(c);
+		MobSpawningRegistry.syncConfig(c);
+		RecipeAlterRegistry.syncConfig(c);
+		RecipeNewRegistry.syncConfig(c);
+		WorldGenRegistry.syncConfig(c);
+		DispenserBehaviorRegistry.syncConfig(c);
+		StackSizeRegistry.syncConfig(c);
 		
-		
-		config.save();
+		c.save();
 	}
 
 	@EventHandler
@@ -181,42 +184,12 @@ public class ModMain{
 		
 		proxy.register();
 
-		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiRegistry());
+		TileEntityRegistry.register();
+
+		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandlerWand());
+		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandlerUncrafting());
 		
-		
-		initEntities(event);
-		initUncrafting(event);
-	}
-
-	public void initUncrafting(FMLInitializationEvent event) {
-		BlockUncrafting uncrafting_block = new BlockUncrafting();
-		uncrafting_block.setUnlocalizedName("uncrafting_block");
-		GameRegistry.registerBlock(uncrafting_block, "uncrafting_block");
-
-		GameRegistry.addRecipe(new ItemStack(uncrafting_block), 
-				" r ", 
-				"fdf", 
-				" o ", 'o', Blocks.obsidian, 'f', Blocks.furnace, 'r', Blocks.dropper, 'd', Blocks.diamond_block);
-
-		GameRegistry.registerTileEntity(TileEntityUncrafting.class, "uncrafting_block_te");
-		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
-		proxy.register();
-	}
-	public void initEntities(FMLInitializationEvent event){
-
-		int entityID = 999;
-
-		EntityRegistry.registerModEntity(EntityLightningballBolt.class, "lightningbolt", entityID++, instance, 64, 1, true);
-		EntityRegistry.registerModEntity(EntityHarvestBolt.class, "harvestbolt", entityID++, instance, 64, 1, true);
-		EntityRegistry.registerModEntity(EntityWaterBolt.class, "waterbolt", entityID++, instance, 64, 1, true);
-		EntityRegistry.registerModEntity(EntitySnowballBolt.class, "frostbolt", entityID++, instance, 64, 1, true);
-		EntityRegistry.registerModEntity(EntityTorchBolt.class, "torchbolt", entityID++, instance, 64, 1, true);
-		EntityRegistry.registerModEntity(EntityShearingBolt.class, "woolbolt", entityID++, instance, 64, 1, true);
-		EntityRegistry.registerModEntity(EntityFishingBolt.class, "fishingbolt", entityID++, instance, 64, 1, true);
-		EntityRegistry.registerModEntity(EntityHomeBolt.class, "bedbolt", entityID++, instance, 64, 1, true);
-		EntityRegistry.registerModEntity(EntityDungeonEye.class, "dungeonbolt", entityID++, instance, 64, 1, true);
-		EntityRegistry.registerModEntity(EntityDynamite.class, "tntbolt", entityID++, instance, 64, 1, true);
-		EntityRegistry.registerModEntity(EntityBlazeBolt.class, "tntbolt", entityID++, instance, 64, 1, true);
+		ProjectileRegistry.register(event);
 	}
 
 	@EventHandler
@@ -227,64 +200,11 @@ public class ModMain{
 		
 	}
 	
-	
 	@EventHandler
 	public void onServerStarting(FMLServerStartingEvent event){
-		event.registerServerCommand(new CommandEnderChest("enderchest",true));
-		event.registerServerCommand(new CommandGetHome("gethome",true));
-		event.registerServerCommand(new CommandHearts("sethearts",true));
-		event.registerServerCommand(new CommandHome("home",false));
-		event.registerServerCommand(new CommandKit("kit",false)); 
-		event.registerServerCommand(new CommandPing("ping",false));
-		event.registerServerCommand(new CommandPlaceBlocks("place",false));
-		event.registerServerCommand(new CommandRecipe("searchrecipe",false));
-		event.registerServerCommand(new CommandSearchItem("searchitem",false)); 
-		event.registerServerCommand(new CommandSearchSpawner("searchspawner",true)); 
-		event.registerServerCommand(new CommandSearchTrades("searchtrade",false)); 
-		event.registerServerCommand(new CommandSimpleWaypoints("waypoint",false)); 
-		event.registerServerCommand(new CommandTodoList("todo",false));  
-		event.registerServerCommand(new CommandUses("searchuses",false));
-		event.registerServerCommand(new CommandVillageInfo("villageinfo",false));
-		event.registerServerCommand(new CommandWorldHome("worldhome",false)); 
+		CommandRegistry.register(event);
 	}
 	
-	private void registerPackets(){
-
-		
-		//
-		network.registerMessage(MessageKeyCast.class, MessageKeyCast.class, MessageKeyCast.ID, Side.SERVER);
-		
-		//merge into key shift packet?
-		network.registerMessage(MessageKeyLeft.class, MessageKeyLeft.class, MessageKeyLeft.ID, Side.SERVER);
-		network.registerMessage(MessageKeyRight.class, MessageKeyRight.class, MessageKeyRight.ID, Side.SERVER);
-		
-		network.registerMessage(MessageToggleSpell.class, MessageToggleSpell.class, MessageToggleSpell.ID, Side.SERVER);
-		network.registerMessage(MessageParticle.class, MessageParticle.class, MessageParticle.ID, Side.CLIENT);
-		network.registerMessage(MessageOpenSpellbook.class, MessageOpenSpellbook.class, MessageOpenSpellbook.ID, Side.CLIENT);
-		network.registerMessage(MessageSpellFromServer.class, MessageSpellFromServer.class, MessageSpellFromServer.ID, Side.SERVER);
-		network.registerMessage(MessageToggleBuild.class, MessageToggleBuild.class, MessageToggleBuild.ID, Side.SERVER);
-		network.registerMessage(MessageSpellRotate.class, MessageSpellRotate.class, MessageSpellRotate.ID, Side.SERVER);
-		network.registerMessage(MessageSpellPush.class, MessageSpellPush.class, MessageSpellPush.ID, Side.SERVER);
-		network.registerMessage(MessageSpellPull.class, MessageSpellPull.class, MessageSpellPull.ID, Side.SERVER);
-		network.registerMessage(MessageSpellReplacer.class, MessageSpellReplacer.class, MessageSpellReplacer.ID, Side.SERVER);
-		network.registerMessage(MessageRecharge.class, MessageRecharge.class, MessageRecharge.ID, Side.SERVER);
-		network.registerMessage(MessageUpgrade.class, MessageUpgrade.class, MessageUpgrade.ID, Side.SERVER);
-	
-    	network.registerMessage(MessageSlotMove.class, MessageSlotMove.class, MessageSlotMove.ID, Side.SERVER);
-    	network.registerMessage(MessageBarMove.class, MessageBarMove.class, MessageBarMove.ID, Side.SERVER);
-	
-    	int packetID = 26;
-		network.registerMessage(PacketWarpButton.class, PacketWarpButton.class, packetID++, Side.SERVER);
-		network.registerMessage(PacketNewButton.class, PacketNewButton.class, packetID++, Side.SERVER);
-		network.registerMessage(PacketDeleteButton.class, PacketDeleteButton.class, packetID++, Side.SERVER);
-	
-	}
-
-	public static Configuration getConfig(){
-
-		return config;
-	}
-
 /* 
  * 
  * 
@@ -294,6 +214,8 @@ public class ModMain{
   * 
   * ender book - addInformation about waypoints - count of them?
  * 
+ * 
+ * SPELL: bring back ghost - let it put you in new location but only if air blocks
  * 
  *disable entire wand in config
  *OR

@@ -1,6 +1,5 @@
-package com.lothrazar.cyclicmagic.item.tool;
+package com.lothrazar.cyclicmagic.item;
 
-import com.lothrazar.cyclicmagic.item.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
