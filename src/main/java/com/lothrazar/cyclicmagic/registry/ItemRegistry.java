@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityBlazeBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityHarvestBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityShearingBolt;
@@ -70,29 +71,19 @@ public class ItemRegistry{
 
 		item.setUnlocalizedName(name);
 		
-		
-		
 		//GameRegistry.registerItem(item, name);
 
 		GameRegistry.register(item, new ResourceLocation(Const.MODID,name));
 		
 		
 		if(isHidden == false){
-			item.setCreativeTab(tab);
+			item.setCreativeTab(ModMain.TAB);
 		}
 		items.add(item);
 	}
 
 	public final static Item REPAIR_EMERALD = Items.emerald;
 
-	public final static CreativeTabs tab = new CreativeTabs("tab_"+Const.MODID) {
-
-		@Override
-		public Item getTabIconItem(){
-
-			return ItemRegistry.chest_sack;
-		}
-	};
 	// only because theyre private, with no getters
 	private static final int diamondDurability = 33;
 	private static final int[] diamondreductionAmounts = new int[] { 3, 6, 8, 3 };

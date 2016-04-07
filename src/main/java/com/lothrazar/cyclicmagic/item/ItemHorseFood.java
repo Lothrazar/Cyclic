@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityHorse;
@@ -149,17 +150,17 @@ public class ItemHorseFood extends Item{
 			}
 		}
 		else if(held.getItem() == ItemRegistry.horse_upgrade_jump){
-			if(ModMain.horseJumpStrength != null)// only happpens if mod installing preInit
+			if(ReflectionRegistry.horseJumpStrength != null)// only happpens if mod installing preInit
 														// method fails to find it
 			{
-				double jump = horse.getEntityAttribute(ModMain.horseJumpStrength).getAttributeValue();// horse.getHorseJumpStrength()
+				double jump = horse.getEntityAttribute(ReflectionRegistry.horseJumpStrength).getAttributeValue();// horse.getHorseJumpStrength()
 																											// ;
 
 				double newjump = jump * JUMP_SCALE;
 
 				// double jumpHeight = getJumpTranslated(horse.getHorseJumpStrength());
 				if(UtilEntity.getJumpTranslated(newjump) < JUMP_MAX){
-					horse.getEntityAttribute(ModMain.horseJumpStrength).setBaseValue(newjump);
+					horse.getEntityAttribute(ReflectionRegistry.horseJumpStrength).setBaseValue(newjump);
 					// System.out.println("newjump = "+newjump);
 					success = true;
 				}

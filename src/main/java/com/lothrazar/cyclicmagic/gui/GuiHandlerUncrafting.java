@@ -1,8 +1,6 @@
-package com.lothrazar.cyclicmagic;
+package com.lothrazar.cyclicmagic.gui;
 
 import com.lothrazar.cyclicmagic.block.TileEntityUncrafting;
-import com.lothrazar.cyclicmagic.gui.ContainerUncrafting;
-import com.lothrazar.cyclicmagic.gui.GuiUncrafting;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -12,6 +10,7 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
 
 public class GuiHandlerUncrafting implements IGuiHandler {
 
+	public static final int guiId = 0;
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		TileEntity tileEntity = world.getTileEntity(new BlockPos(x, y, z));

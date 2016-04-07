@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.spell;
 
 import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.gui.GuiHandlerWand;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -27,7 +28,7 @@ public class SpellInventory extends BaseSpell{
 	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side){
 
 		if(!world.isRemote){ // TODO: does the isRemote check actually matter
-			player.openGui(ModMain.instance, Const.GUI_INDEX_WAND, world, 0, 0, 0);
+			player.openGui(ModMain.instance, GuiHandlerWand.GUI_INDEX_WAND, world, 0, 0, 0);
 		}
 
 		return true;

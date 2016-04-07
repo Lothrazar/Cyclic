@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.block.*;
 import com.lothrazar.cyclicmagic.itemblock.ItemBlockBucket;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -37,6 +39,9 @@ public class BlockRegistry{
 		s.setUnlocalizedName(name);
 
 		GameRegistry.registerBlock(s, ItemBlockBucket.class, name);
+		
+
+		s.setCreativeTab(ModMain.TAB);
 
 		blocks.add(s);
 	}
@@ -68,12 +73,12 @@ public class BlockRegistry{
 		GameRegistry.registerBlock(block,ItemBlock.class,name);
 
 
-		block.setCreativeTab(ItemRegistry.tab);
+		block.setCreativeTab(ModMain.TAB);
+		
 		blocks.add(block);
 	}
 	
 	public static void register(){
-		
 		
 		BlockUncrafting uncrafting_block = new BlockUncrafting();
 		uncrafting_block.setUnlocalizedName("uncrafting_block");
@@ -83,9 +88,6 @@ public class BlockRegistry{
 				" r ", 
 				"fdf", 
 				" o ", 'o', Blocks.obsidian, 'f', Blocks.furnace, 'r', Blocks.dropper, 'd', Blocks.diamond_block);
-
-		
-		
 
 		if(configToggle.get(BlockFragile.name)){
 

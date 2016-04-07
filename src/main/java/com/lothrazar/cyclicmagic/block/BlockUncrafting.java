@@ -3,6 +3,8 @@ package com.lothrazar.cyclicmagic.block;
 import java.util.Random;
 
 import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.gui.GuiHandlerUncrafting;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -129,7 +131,7 @@ public class BlockUncrafting extends Block {
 		}
 
 		int x = pos.getX(), y = pos.getY(), z = pos.getZ();
-		player.openGui(ModMain.instance, ModMain.guiId, world, x, y, z);
+		player.openGui(ModMain.instance, GuiHandlerUncrafting.guiId, world, x, y, z);
 
 		return true;
 	}
