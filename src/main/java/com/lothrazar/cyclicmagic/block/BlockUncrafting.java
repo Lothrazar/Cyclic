@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.GuiHandlerUncrafting;
+import com.lothrazar.cyclicmagic.item.IHasRecipe;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -15,7 +16,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer; 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -29,10 +31,11 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockUncrafting extends Block {
+public class BlockUncrafting extends Block implements IHasRecipe {
 	// dont use blockContainer !!
 	// http://www.minecraftforge.net/forum/index.php?topic=31953.0
 	private static final PropertyDirection PROPERTYFACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
@@ -191,5 +194,13 @@ public class BlockUncrafting extends Block {
 	@Override
 	public boolean hasTileEntity(IBlockState state) {
 		return true;
+	}
+
+	@Override
+	public void addRecipe() {
+		GameRegistry.addRecipe(new ItemStack(this), 
+				" r ", 
+				"fdf", 
+				" o ", 'o', Blocks.obsidian, 'f', Blocks.furnace, 'r', Blocks.dropper, 'd', Blocks.diamond_block);
 	}
 }

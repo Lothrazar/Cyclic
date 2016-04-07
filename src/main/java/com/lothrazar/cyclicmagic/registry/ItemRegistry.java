@@ -12,7 +12,6 @@ import com.lothrazar.cyclicmagic.entity.projectile.EntitySnowballBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityTorchBolt;
 import com.lothrazar.cyclicmagic.item.*;
 import com.lothrazar.cyclicmagic.util.Const;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;

@@ -1,8 +1,6 @@
 package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
-
-import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
 import com.lothrazar.cyclicmagic.util.UtilEntity;

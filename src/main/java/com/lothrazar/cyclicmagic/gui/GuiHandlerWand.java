@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.gui;
 
-import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;

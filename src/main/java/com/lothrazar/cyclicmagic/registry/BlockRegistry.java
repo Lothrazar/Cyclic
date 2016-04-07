@@ -24,30 +24,24 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class BlockRegistry{
 
 	public static ArrayList<Block> blocks = new ArrayList<Block>();
+	
 	private static Map<String,Boolean> configToggle = new HashMap<String,Boolean>();
 	public static BlockFragile block_fragile;
 	public static BlockNetherGold nether_gold_ore;
-
 	public static BlockBucketStorage block_storelava;
 	public static BlockBucketStorage block_storewater;
 	public static BlockBucketStorage block_storemilk;
 	public static BlockBucketStorage block_storeempty;
 
-	
-	public static void registerBucketBlock(Block s, String name){
+	@SuppressWarnings("rawtypes")
+	public static void registerBlock(Block b,Class c, String name,boolean isHidden){
 
-		s.setUnlocalizedName(name);
-
-		GameRegistry.registerBlock(s, ItemBlockBucket.class, name);
+		b.setUnlocalizedName(name);
+		GameRegistry.registerBlock(b, c, name);
 		
-
-		s.setCreativeTab(ModMain.TAB);
-
-		blocks.add(s);
-	}
-	private static void registerBlock(Block block, String name){
-
-		block.setUnlocalizedName(name);
+		if(isHidden == false){
+			b.setCreativeTab(ModMain.TAB);
+		}
 
 		//the new 'correct' undeprecated methods give 
 		/*[16:59:41] [Client thread/WARN] [FML]: * Dangerous alternative prefix cyclicmagic: for name block_fragile, invalid registry invocation/invalid name?
@@ -70,55 +64,41 @@ public class BlockRegistry{
 		//if it worked like items, this would be donezo
 		//GameRegistry.register(block, new ResourceLocation(Const.MODID,name));
 		
-		GameRegistry.registerBlock(block,ItemBlock.class,name);
-
-
-		block.setCreativeTab(ModMain.TAB);
-		
-		blocks.add(block);
+		blocks.add(b);
 	}
 	
+	private static void registerBlock(Block block, String name){
+		registerBlock(block,ItemBlock.class,name,false);
+	}
+
 	public static void register(){
 		
 		BlockUncrafting uncrafting_block = new BlockUncrafting();
-		uncrafting_block.setUnlocalizedName("uncrafting_block");
-		GameRegistry.registerBlock(uncrafting_block, "uncrafting_block");
-
-		GameRegistry.addRecipe(new ItemStack(uncrafting_block), 
-				" r ", 
-				"fdf", 
-				" o ", 'o', Blocks.obsidian, 'f', Blocks.furnace, 'r', Blocks.dropper, 'd', Blocks.diamond_block);
+		registerBlock(uncrafting_block,"uncrafting_block");
 
 		if(configToggle.get(BlockFragile.name)){
 
 			block_fragile = new BlockFragile();
-			BlockRegistry.registerBlock(block_fragile, BlockFragile.name);
+			registerBlock(block_fragile, BlockFragile.name);
 		}
 		
 		nether_gold_ore = new BlockNetherGold();
-		BlockRegistry.registerBlock(nether_gold_ore, BlockNetherGold.name);
+		registerBlock(nether_gold_ore, BlockNetherGold.name);
 		
-		
-		
-		
+		block_storewater = new BlockBucketStorage(Items.water_bucket);
+		registerBlock(block_storewater, ItemBlockBucket.class,"block_storewater",true);
 
-		BlockRegistry.block_storewater = new BlockBucketStorage(Items.water_bucket);
-		registerBucketBlock(BlockRegistry.block_storewater, "block_storewater");
+		block_storemilk = new BlockBucketStorage(Items.milk_bucket);
+		registerBlock(block_storemilk,ItemBlockBucket.class, "block_storemilk",true);
 
-		BlockRegistry.block_storemilk = new BlockBucketStorage(Items.milk_bucket);
-		registerBucketBlock(BlockRegistry.block_storemilk, "block_storemilk");
+		block_storelava = new BlockBucketStorage(Items.lava_bucket);
+		registerBlock(block_storelava,ItemBlockBucket.class, "block_storelava",true);
 
-		BlockRegistry.block_storelava = new BlockBucketStorage(Items.lava_bucket);
-		registerBucketBlock(BlockRegistry.block_storelava, "block_storelava");
+		block_storeempty = new BlockBucketStorage(null); 
+		registerBlock(block_storeempty,ItemBlockBucket.class, "block_storeempty",false);
 
-		GameRegistry.registerTileEntity(TileEntityBucketStorage.class, Const.MODID);
-
-		BlockRegistry.block_storeempty = new BlockBucketStorage(null); 
-		BlockRegistry.block_storeempty.setCreativeTab(CreativeTabs.tabMisc);
-		registerBucketBlock(BlockRegistry.block_storeempty, "block_storeempty");
-
-		BlockRegistry.block_storeempty.addRecipe();
-		
+		//not irecipe so just like this is fine i guess
+		block_storeempty.addRecipe();
 	}
 
 	public static void syncConfig(Configuration config){
