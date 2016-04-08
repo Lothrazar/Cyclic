@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.gui.button.GuiButtonEnderbookDelete;
+import com.lothrazar.cyclicmagic.gui.button.GuiButtonEnderbookNew;
+import com.lothrazar.cyclicmagic.gui.button.GuiButtonEnderbookTeleport;
 import com.lothrazar.cyclicmagic.item.ItemEnderBook;
 import com.lothrazar.cyclicmagic.item.ItemEnderBook.BookLocation;
 import com.lothrazar.cyclicmagic.net.PacketDeleteButton;

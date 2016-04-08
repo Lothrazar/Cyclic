@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.gui;
+package com.lothrazar.cyclicmagic.gui.slot;
 
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import net.minecraft.block.Block;

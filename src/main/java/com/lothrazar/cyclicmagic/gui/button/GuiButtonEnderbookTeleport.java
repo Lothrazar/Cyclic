@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.gui;
+package com.lothrazar.cyclicmagic.gui.button;
 
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.net.PacketWarpButton; 

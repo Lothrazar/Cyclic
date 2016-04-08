@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.gui;
+package com.lothrazar.cyclicmagic.gui.button;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.text.translation.I18n;
