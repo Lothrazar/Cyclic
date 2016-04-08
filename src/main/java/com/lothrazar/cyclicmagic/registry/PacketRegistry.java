@@ -1,5 +1,7 @@
 package com.lothrazar.cyclicmagic.registry;
 
+import com.lothrazar.cyclicmagic.net.DepositAllPacket;
+import com.lothrazar.cyclicmagic.net.LootAllPacket;
 import com.lothrazar.cyclicmagic.net.MessageBarMove;
 import com.lothrazar.cyclicmagic.net.MessageKeyCast;
 import com.lothrazar.cyclicmagic.net.MessageKeyLeft;
@@ -19,6 +21,8 @@ import com.lothrazar.cyclicmagic.net.MessageUpgrade;
 import com.lothrazar.cyclicmagic.net.PacketDeleteButton;
 import com.lothrazar.cyclicmagic.net.PacketNewButton;
 import com.lothrazar.cyclicmagic.net.PacketWarpButton;
+import com.lothrazar.cyclicmagic.net.QuickStackPacket;
+import com.lothrazar.cyclicmagic.net.RestockPacket;
 
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
@@ -52,5 +56,12 @@ public class PacketRegistry {
 		network.registerMessage(PacketNewButton.class, PacketNewButton.class, PacketNewButton.ID, Side.SERVER);
 		network.registerMessage(PacketDeleteButton.class, PacketDeleteButton.class, PacketDeleteButton.ID, Side.SERVER);
 	
+int packetID=30;
+    	network.registerMessage(DepositAllPacket.class,  DepositAllPacket.class,  packetID++, Side.SERVER);
+    	network.registerMessage(LootAllPacket.class,  LootAllPacket.class,  packetID++, Side.SERVER);
+    	network.registerMessage(QuickStackPacket.class,  QuickStackPacket.class,  packetID++, Side.SERVER);
+    	network.registerMessage(RestockPacket.class,  RestockPacket.class,  packetID++, Side.SERVER);
+		
+		
 	}
 }

@@ -40,6 +40,7 @@ public class EventRegistry{
 	public static void register(){
 
 		// some just always have to happen no matter what. for other features.
+		events.add(new EventGuiAddButtons());
 		events.add(new EventConfigChanged());
 		events.add(new EventPotions());
 		events.add(new EventSpells());

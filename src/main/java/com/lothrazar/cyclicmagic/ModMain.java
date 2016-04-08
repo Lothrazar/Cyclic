@@ -53,6 +53,8 @@ public class ModMain{
 		
 		ReflectionRegistry.register();
 		
+		ExtraButtonRegistry.register();
+		
 		PacketRegistry.register(network);
 	}
 
@@ -118,6 +120,7 @@ public class ModMain{
 		DispenserBehaviorRegistry.syncConfig(c);
 		StackSizeRegistry.syncConfig(c);
 		SpellRegistry.syncConfig(c);
+		ExtraButtonRegistry.syncConfig(c);
 		
 		c.save();
 	}

@@ -1,3 +1,11 @@
+itemGroup.cyclicmagic=Non Content
+btn.deposit=Deposit
+
+btn.lootall=Loot All
+
+btn.quickstack=Quick Stack
+
+btn.restock=Restock
 key.categories.inventorycontrol=Inventory Movement
 key.columnshiftup=Item Shift Up
 key.columnshiftdown=Item Shift Down

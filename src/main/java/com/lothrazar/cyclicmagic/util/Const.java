@@ -2,6 +2,20 @@ package com.lothrazar.cyclicmagic.util;
 
 public class Const {
 
+	public static final int SQ = 18;
+	public static final int ARMOR_SIZE = 4; 
+	public static final int ROWS_VANILLA = 3; 
+	public static final int COLS_VANILLA = 9; 
+	
+	
+	public static final int btnWidth = 60;
+	public static final int btnHeight = 20;
+	
+	
+	
+	
+	
+	
 	public static final int skull_skeleton = 0;	
 	public static final int skull_wither = 1;
 	public static final int skull_zombie = 2;
