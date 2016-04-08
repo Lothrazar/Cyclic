@@ -3,6 +3,7 @@ package com.lothrazar.cyclicmagic.block;
 import java.util.ArrayList;
 
 import com.lothrazar.cyclicmagic.gui.ContainerUncrafting;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilUncraft;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -272,9 +273,9 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 			timer = UtilUncraft.TIMER_FULL;
 			triggerUncraft = true;
 		}
-
-		// Here comes the rest of my code
+ 
 		if(triggerUncraft){
+			System.out.println("triggerUncraft" );
 			// detect what direction my block faces)
 			EnumFacing facing = null;
 			// not sure why this happens or if it ever will again, just being
@@ -302,26 +303,35 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 			double x = this.pos.getX() + 0.5 + dx;
 			double y = this.pos.getY() + 0.5;
 			double z = this.pos.getZ() + 0.5 + dz;
+			BlockPos here = new BlockPos(x, y, z);
 
 			UtilUncraft uncrafter = new UtilUncraft(stack);
 			if(uncrafter.doUncraft()){
 				// drop the items
 
 				if(this.worldObj.isRemote == false){
+					System.out.println("uncrafter.doUncraft()" + uncrafter.getDrops().toString());
 					ArrayList<ItemStack> uncrafterOutput = uncrafter.getDrops();
 					ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
  
-					TileEntity attached = this.worldObj.getTileEntity(new BlockPos(x, y, z));
+					TileEntity attached = this.worldObj.getTileEntity(here);
 
 					if(attached != null && attached instanceof IInventory){
+						System.out.println("insert into attached" +attached.getClass() );
  
 						IInventory attachedInv = (IInventory) attached;
 
 						toDrop = dumpToIInventory(uncrafterOutput, attachedInv);
 					}
-					
+					else{
+						toDrop = uncrafterOutput;
+					}
+
+					System.out.println("Remaining"+toDrop.size()  );
 					for(ItemStack s : toDrop){
-						this.worldObj.spawnEntityInWorld(new EntityItem(this.worldObj, x, y, z, s));
+						System.out.println("DROP ITEM"+s.toString());
+						UtilEntity.dropItemStackInWorld(worldObj, here, s);
+						//this.worldObj.spawnEntityInWorld(new EntityItem(this.worldObj, x, y, z, s));
 					}
 				}
 

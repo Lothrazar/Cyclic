@@ -32,12 +32,6 @@ public class CommandHome extends BaseCommand implements ICommand
 	}
  
 	@Override
-	public String getCommandName()
-	{ 
-		return "home";
-	}
-
-	@Override
 	public String getCommandUsage(ICommandSender ic)
 	{ 
 		return "/"+getCommandName();

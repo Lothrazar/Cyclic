@@ -107,7 +107,7 @@ public class ModMain{
 	public static void syncConfig(){
 		//hit on startup and on change event from 
 		Configuration c = getConfig();
-		SpellRegistry.syncConfig(c);
+		WorldGenRegistry.syncConfig(c);
 		PotionRegistry.syncConfig(c);
 		EventRegistry.syncConfig(c);
 		BlockRegistry.syncConfig(c);
@@ -115,9 +115,9 @@ public class ModMain{
 		MobSpawningRegistry.syncConfig(c);
 		RecipeAlterRegistry.syncConfig(c);
 		RecipeNewRegistry.syncConfig(c);
-		WorldGenRegistry.syncConfig(c);
 		DispenserBehaviorRegistry.syncConfig(c);
 		StackSizeRegistry.syncConfig(c);
+		SpellRegistry.syncConfig(c);
 		
 		c.save();
 	}

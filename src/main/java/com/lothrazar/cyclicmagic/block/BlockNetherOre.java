@@ -4,34 +4,48 @@ import java.util.Random;
 import net.minecraft.block.BlockOre;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class BlockNetherGold extends BlockOre {
+public class BlockNetherOre extends BlockOre {
 
-	public static final String name = "nether_gold_ore";
+	private Item dropped;
+	private int droppedMeta;
+	private int randomMax;
+	public BlockNetherOre(Item drop) {
+		this(drop,0);
+	}
 
-	public BlockNetherGold() {
+	public BlockNetherOre(Item drop, int dmg) {
+		this(drop,0,1);
+	}
+
+	public BlockNetherOre(Item drop, int dmg, int max) {
 
 		super();
+		dropped = drop;
+		droppedMeta = dmg;
+		randomMax = max;
 		this.setStepSound(SoundType.STONE);
-		// copy what gold ore uses)
 		this.setHardness(3.0F).setResistance(5.0F);
 	}
+    public int damageDropped(IBlockState state)
+    {
+        return droppedMeta;
+    }
 
 	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-
-		return Items.gold_nugget;
+		return dropped;
 	}
 
 	public int quantityDropped(Random random) {
-
-		// lapis uses 4 + random.nextInt(5);
-		return 3 + random.nextInt(3);
+		if(randomMax == 1){
+			return 1;
+		}
+		return 1 + random.nextInt(randomMax);
 	}
 
 	@Override

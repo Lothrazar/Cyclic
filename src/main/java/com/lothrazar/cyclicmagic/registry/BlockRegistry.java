@@ -2,10 +2,7 @@ package com.lothrazar.cyclicmagic.registry;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.block.*;
 import com.lothrazar.cyclicmagic.itemblock.ItemBlockBucket;
@@ -13,11 +10,9 @@ import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilUncraft;
 
 import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -25,13 +20,26 @@ public class BlockRegistry{
 
 	public static ArrayList<Block> blocks = new ArrayList<Block>();
 	
-	private static Map<String,Boolean> configToggle = new HashMap<String,Boolean>();
 	public static BlockFragile block_fragile;
-	public static BlockNetherGold nether_gold_ore;
 	public static BlockBucketStorage block_storelava;
 	public static BlockBucketStorage block_storewater;
 	public static BlockBucketStorage block_storemilk;
 	public static BlockBucketStorage block_storeempty;
+
+	public static BlockNetherOre nether_gold_ore;
+	public static BlockNetherOre nether_coal_ore;
+	public static BlockNetherOre nether_lapis_ore;
+	public static BlockNetherOre nether_emerald_ore;
+
+
+	public static BlockNetherOre end_redstone_ore;
+	public static BlockNetherOre end_coal_ore;
+	public static BlockNetherOre end_lapis_ore;
+	public static BlockNetherOre end_emerald_ore;
+
+	private static boolean enabledBucketBlocks = true;
+
+	private static boolean enableBlockFragile;
 
 	@SuppressWarnings("rawtypes")
 	public static void registerBlock(Block b,Class c, String name,boolean isHidden){
@@ -76,47 +84,69 @@ public class BlockRegistry{
 		BlockUncrafting uncrafting_block = new BlockUncrafting();
 		registerBlock(uncrafting_block,"uncrafting_block");
 
-		if(configToggle.get(BlockFragile.name)){
+		if(enableBlockFragile){
 
 			block_fragile = new BlockFragile();
 			registerBlock(block_fragile, BlockFragile.name);
 		}
+
+		if(WorldGenRegistry.netherOreEnabled ){
+			
+			nether_gold_ore = new BlockNetherOre(Items.gold_nugget,0,4);
+			registerBlock(nether_gold_ore, "nether_gold_ore");
+	
+			nether_coal_ore = new BlockNetherOre(Items.coal);
+			registerBlock(nether_coal_ore, "nether_coal_ore");
+	
+			nether_lapis_ore = new BlockNetherOre(Items.dye,EnumDyeColor.BLUE.getDyeDamage(),3);
+			registerBlock(nether_lapis_ore, "nether_lapis_ore");
+	
+			nether_emerald_ore = new BlockNetherOre(Items.emerald);
+			registerBlock(nether_emerald_ore, "nether_emerald_ore");
+		}
 		
-		nether_gold_ore = new BlockNetherGold();
-		registerBlock(nether_gold_ore, BlockNetherGold.name);
-		
-		block_storewater = new BlockBucketStorage(Items.water_bucket);
-		registerBlock(block_storewater, ItemBlockBucket.class,"block_storewater",true);
+		if(WorldGenRegistry.endOreEnabled  ){
+			
+			end_redstone_ore = new BlockNetherOre(Items.redstone);
+			registerBlock(end_redstone_ore, "end_redstone_ore");
+	
+			end_coal_ore = new BlockNetherOre(Items.coal);
+			registerBlock(end_coal_ore, "end_coal_ore");
+	
+			end_lapis_ore = new BlockNetherOre(Items.dye,EnumDyeColor.BLUE.getDyeDamage(),3);
+			registerBlock(end_lapis_ore, "end_lapis_ore");
+	
+			end_emerald_ore = new BlockNetherOre(Items.emerald);
+			registerBlock(end_emerald_ore, "end_emerald_ore");
+		}
 
-		block_storemilk = new BlockBucketStorage(Items.milk_bucket);
-		registerBlock(block_storemilk,ItemBlockBucket.class, "block_storemilk",true);
-
-		block_storelava = new BlockBucketStorage(Items.lava_bucket);
-		registerBlock(block_storelava,ItemBlockBucket.class, "block_storelava",true);
-
-		block_storeempty = new BlockBucketStorage(null); 
-		registerBlock(block_storeempty,ItemBlockBucket.class, "block_storeempty",false);
-
-		//not irecipe so just like this is fine i guess
-		block_storeempty.addRecipe();
+		if(enabledBucketBlocks   ){
+			block_storewater = new BlockBucketStorage(Items.water_bucket);
+			registerBlock(block_storewater, ItemBlockBucket.class,"block_storewater",true);
+	
+			block_storemilk = new BlockBucketStorage(Items.milk_bucket);
+			registerBlock(block_storemilk,ItemBlockBucket.class, "block_storemilk",true);
+	
+			block_storelava = new BlockBucketStorage(Items.lava_bucket);
+			registerBlock(block_storelava,ItemBlockBucket.class, "block_storelava",true);
+	
+			block_storeempty = new BlockBucketStorage(null); 
+			registerBlock(block_storeempty,ItemBlockBucket.class, "block_storeempty",false);
+	
+			//not irecipe so just like this is fine i guess
+			block_storeempty.addRecipe();
+		}
 	}
 
 	public static void syncConfig(Configuration config){
-		String category = Const.MODCONF+"blocks";
+		String category = Const.MODCONF + "Blocks";
 		
+		//TODO : requires restart
 		config.setCategoryComment(category, "Blocks added to the game");
 		
-		configToggle.put(BlockFragile.name,config.getBoolean(BlockFragile.name, category, true, "Enable the scaffolding block that breaks by itself"));
+		enableBlockFragile = config.getBoolean(BlockFragile.name, category, true, "Enable the scaffolding block that breaks by itself");
 
-		
-		syncConfigUncrafting(config);
-	}
-	
-
-
-
-	public static void syncConfigUncrafting(Configuration config) {
-		String category = Configuration.CATEGORY_GENERAL;
+		category = category+".Uncrafting";
 		UtilUncraft.TIMER_FULL = config.getInt("speed_uncraft", category, 75, 10, 99999, "How fast this can uncraft items and blocks.  Lower numbers are faster");
 
 		// blockIfCannotDoit = config.getBoolean("auto_block_slots", category,
@@ -140,8 +170,9 @@ public class BlockRegistry{
 		csv = config.getString("blacklist_output", category, def, "Comma seperated items that cannot come out of crafting recipes.  For example, if milk is in here, then cake is uncrafted you get all items except the milk buckets.  ");
 
 		UtilUncraft.blacklistOutput = (List<String>) Arrays.asList(csv.split(","));
-		if (UtilUncraft.blacklistOutput == null)
+		if (UtilUncraft.blacklistOutput == null){
 			UtilUncraft.blacklistOutput = new ArrayList<String>();
+		}
 
 	}
 }

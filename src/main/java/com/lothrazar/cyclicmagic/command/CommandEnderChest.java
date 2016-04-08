@@ -21,12 +21,6 @@ public class CommandEnderChest extends BaseCommand implements ICommand
 	}
 
 	@Override
-	public String getCommandName()
-	{
-		return "enderchest";
-	}
-
-	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException
 	{
 		EntityPlayer p = (EntityPlayer) sender;

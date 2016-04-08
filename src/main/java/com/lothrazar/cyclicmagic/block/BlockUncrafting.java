@@ -13,7 +13,6 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection; 
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -42,7 +41,7 @@ public class BlockUncrafting extends Block implements IHasRecipe {
 
 	public BlockUncrafting() {
 		super(Material.iron);
-		this.setHardness(3.0F).setResistance(5.0F).setCreativeTab(CreativeTabs.tabTools);
+		this.setHardness(3.0F).setResistance(5.0F);
 		this.setStepSound(SoundType.METAL);
 		this.setTickRandomly(true);
 	}
@@ -193,7 +192,7 @@ public class BlockUncrafting extends Block implements IHasRecipe {
 
 	@Override
 	public boolean hasTileEntity(IBlockState state) {
-		return true;
+		return hasTileEntity();
 	}
 
 	@Override

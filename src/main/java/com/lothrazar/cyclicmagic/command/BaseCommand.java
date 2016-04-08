@@ -10,7 +10,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 
-
 public  class BaseCommand implements ICommand{
 	// https://github.com/LothrazarMinecraftMods/MinecraftSearchCommands/blob/master/src/main/java/com/lothrazar/searchcommands/command/CommandSearchTrades.java
 	// https://github.com/PrinceOfAmber/SamsPowerups/tree/master/Commands/src/main/java/com/lothrazar/samscommands/command
@@ -43,9 +42,9 @@ public  class BaseCommand implements ICommand{
 	{
 		return this.aliases;
 	}
+	
 	@Override
 	public String getCommandName(){
-
 		return name;
 	}
 	
@@ -82,9 +81,6 @@ public  class BaseCommand implements ICommand{
 		return false;
 	}
 
-	
-	//not overrides, util msgs
-	
 	public EntityPlayerMP getPlayerByUsername(MinecraftServer server, String name){
 		return server.getPlayerList().getPlayerByUsername(name);
 	}
@@ -92,9 +88,7 @@ public  class BaseCommand implements ICommand{
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException{
 
-
 		System.out.println("Warning: command not implemented "+ Const.MODID +":" + this.getCommandName());
 		
 	}
-	
 }

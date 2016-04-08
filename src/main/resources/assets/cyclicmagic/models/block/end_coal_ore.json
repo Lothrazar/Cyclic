@@ -1,6 +1,6 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "cyclicmagic:blocks/block_fragile"
+        "all": "cyclicmagic:blocks/end_coal_ore"
     }
 }

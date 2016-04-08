@@ -58,9 +58,4 @@ public class CommandSearchSpawner extends BaseCommand implements ICommand
 	}
  
 
-	@Override
-	public boolean isUsernameIndex(String[] args, int index) 
-	{ 
-		return false;
-	} 
 }
