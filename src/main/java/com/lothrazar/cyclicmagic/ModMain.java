@@ -126,11 +126,15 @@ public class ModMain{
 	}
 	
 /* 
+ * TODO LIST
+ * CONFIG to disable each command
  * 
+ * PLACE COMMAND refactored into spells
+ * 
+ * realign invo buttons
  * 
  //BUG: spells get casted even if you have zero mana 
-  * 
-  * BUG: nether ore does not drop eXP
+  *  
   * 
   * ender book - addInformation about waypoints - count of them?
  * 
@@ -146,16 +150,12 @@ public class ModMain{
  
 4. chest give failure message text (only useable on a container)
 
-regen space in text
-set maximum function/button
+
   
 //IDEA: make boats float
  * https://www.reddit.com/r/minecraftsuggestions/comments/4d4ob1/make_boats_float_again/
  
- 
- 
-	public String getTranslatedName();
- 
+  
  https://www.reddit.com/r/minecraftsuggestions/comments/4chlpo/add_a_control_option_for_elytra_automatically/
  
 
