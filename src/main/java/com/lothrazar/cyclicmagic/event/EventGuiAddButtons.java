@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.event;
   
+import com.lothrazar.cyclicmagic.gui.button.GuiButtonCrafting;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonDepositAll;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonLootAll;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonQuickStack;
@@ -81,7 +82,12 @@ public class EventGuiAddButtons
 			y += yDelta;
 
 			event.getButtonList().add(new GuiButtonRestock(button_id++, x,y));
+			
+
+			x += xDelta;
+			y += yDelta;
+
+			event.getButtonList().add(new GuiButtonCrafting(button_id++, x,y));
 		}
 	}
-    
 }

@@ -18,6 +18,7 @@ import com.lothrazar.cyclicmagic.net.MessageSpellRotate;
 import com.lothrazar.cyclicmagic.net.MessageToggleBuild;
 import com.lothrazar.cyclicmagic.net.MessageToggleSpell;
 import com.lothrazar.cyclicmagic.net.MessageUpgrade;
+import com.lothrazar.cyclicmagic.net.OpenCraftingPacket;
 import com.lothrazar.cyclicmagic.net.PacketDeleteButton;
 import com.lothrazar.cyclicmagic.net.PacketNewButton;
 import com.lothrazar.cyclicmagic.net.PacketWarpButton;
@@ -62,6 +63,9 @@ int packetID=30;
     	network.registerMessage(QuickStackPacket.class,  QuickStackPacket.class,  packetID++, Side.SERVER);
     	network.registerMessage(RestockPacket.class,  RestockPacket.class,  packetID++, Side.SERVER);
 		
+    	network.registerMessage(OpenCraftingPacket.class,  OpenCraftingPacket.class,  packetID++, Side.SERVER);
+		
+    	
 		
 	}
 }
