@@ -2,8 +2,6 @@ package com.lothrazar.cyclicmagic;
 
 import org.apache.logging.log4j.Logger;
 
-import com.lothrazar.cyclicmagic.gui.GuiHandlerUncrafting;
-import com.lothrazar.cyclicmagic.gui.GuiHandlerWand;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
 import com.lothrazar.cyclicmagic.registry.*;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -83,8 +81,7 @@ public class ModMain{
 
 		TileEntityRegistry.register();
 
-		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandlerWand());
-		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandlerUncrafting());
+		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 		
 		ProjectileRegistry.register(event);
 	}

@@ -2,8 +2,8 @@ package com.lothrazar.cyclicmagic.block;
 
 import java.util.Random;
 
+import com.lothrazar.cyclicmagic.GuiHandler;
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.gui.GuiHandlerUncrafting;
 import com.lothrazar.cyclicmagic.item.IHasRecipe;
 
 import net.minecraft.block.Block;
@@ -133,7 +133,7 @@ public class BlockUncrafting extends Block implements IHasRecipe {
 		}
 
 		int x = pos.getX(), y = pos.getY(), z = pos.getZ();
-		player.openGui(ModMain.instance, GuiHandlerUncrafting.guiId, world, x, y, z);
+		player.openGui(ModMain.instance, GuiHandler.GUI_INDEX_UNCRAFTING, world, x, y, z);
 
 		return true;
 	}

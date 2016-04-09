@@ -2,15 +2,18 @@ package com.lothrazar.cyclicmagic.gui;
 
 import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.gui.button.*;
+import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.util.Const;
 
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiWandInventory extends GuiContainer{
 
 	private final InventoryWand inventory;
+	private final ItemStack internalWand;
 	//176x156
 	private static final ResourceLocation BACKGROUND = new ResourceLocation(Const.MODID, "textures/gui/inventory_wand.png");
 
@@ -21,10 +24,11 @@ public class GuiWandInventory extends GuiContainer{
 
 	GuiTextField buildSize;
 
-	public GuiWandInventory(ContainerWand containerItem){
+	public GuiWandInventory(ContainerWand containerItem, ItemStack wand){
 
 		super(containerItem);
 		this.inventory = containerItem.inventory;
+		this.internalWand = wand;
 	}
 
 	@Override
@@ -51,15 +55,29 @@ public class GuiWandInventory extends GuiContainer{
 		width = 50;
 		this.buttonList.add(new ButtonBuildToggle(inventory.getPlayer(), id, x, y, width));
 		
+		
+		
 		id++;
 		x += width + padding;
-		
-		
+		y += 10;
+
+		int size = ItemCyclicWand.BuildType.getBuildSize(internalWand);
+		if(size <= 0){
+			size = 1;
+		}
+		System.out.println("set visible based on spell:size="+size); 
 		buildSize = new GuiTextField(id,this.fontRendererObj,
 				x,y,30,20);
 		buildSize.setMaxStringLength(2);
-		buildSize.setText("2");//TODO: save this in data
-		buildSize.setFocused(true);
+		buildSize.setText(""+size);//TODO: save this in data
+		buildSize.setVisible(true);
+		
+		
+		
+		//buildSize.setVisible(isVisible);
+	//	buildSize.setFocused(true);
+		
+		
 		
 		
 		/*
@@ -70,6 +88,23 @@ public class GuiWandInventory extends GuiContainer{
 		*/
 	}
 
+	@Override
+    public void onGuiClosed(){
+
+		System.out.println("save on closed="); 
+
+		int size = 1;
+	
+		try{
+			size = Integer.parseInt(buildSize.getText());
+		}catch(Exception e){
+			
+			return;//if its not an integer, then do notsave`
+		}
+		
+		ItemCyclicWand.BuildType.setBuildSize(internalWand,size);
+    }
+	
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks){
 

@@ -478,6 +478,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe{
 		FIRST, ROTATE, RANDOM, MATCH;
 
 		private final static String NBT = "build";
+		private final static String NBTSIZE = "buildsize";
 
 		public static String getName(ItemStack wand){
 
@@ -515,6 +516,19 @@ public class ItemCyclicWand extends Item implements IHasRecipe{
 			}
 
 			tags.setInteger(NBT, type);
+		}
+
+		public static int getBuildSize(ItemStack wand) {
+
+			NBTTagCompound tags = getNBT(wand);
+
+			return tags.getInteger(NBTSIZE);
+		} 
+
+		public static void setBuildSize(ItemStack wand, int size) {
+
+			NBTTagCompound tags = getNBT(wand);
+			tags.setInteger(NBTSIZE,size);
 		} 
 	}
 	
