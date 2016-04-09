@@ -7,14 +7,12 @@ import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.button.*;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
-import com.lothrazar.cyclicmagic.net.LootAllPacket;
 import com.lothrazar.cyclicmagic.net.PacketBuildSize;
 import com.lothrazar.cyclicmagic.util.Const;
 
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiWandInventory extends GuiContainer{
@@ -93,6 +91,10 @@ public class GuiWandInventory extends GuiContainer{
 		}catch(Exception e){
 
 			return;//if its not an integer, then do notsave`
+		}
+		
+		if(size > 16){
+			size = 16;
 		}
 
 		ModMain.network.sendToServer(new PacketBuildSize(size));

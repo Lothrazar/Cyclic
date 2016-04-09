@@ -1,7 +1,9 @@
 package com.lothrazar.cyclicmagic.spell;
 
+import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
+import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -33,9 +35,9 @@ public class SpellPlaceFloor extends BaseSpellPlace{
 			startPos = startPos.offset(side);
 		}
 		IBlockState placing = Blocks.stone.getDefaultState();
-		int distOrRadius = 10;
+		int distOrRadius = ItemCyclicWand.BuildType.getBuildSize(UtilSpellCaster.getPlayerWandIfHeld(player));
 		
-		EnumFacing efacing = (player.isSneaking()) ? EnumFacing.DOWN : UtilEntity.getPlayerFacing(player);
+		//EnumFacing efacing = (player.isSneaking()) ? EnumFacing.DOWN : UtilEntity.getPlayerFacing(player);
 	      //  boolean isLookingUp = (player.getLookVec().yCoord >= 0);//TODO: use this somehow? to place up/down? 
         
 		

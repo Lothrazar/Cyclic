@@ -1,7 +1,9 @@
 package com.lothrazar.cyclicmagic.spell;
 
+import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
+import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -33,15 +35,15 @@ public class SpellPlaceLine extends BaseSpellPlace{
 			startPos = startPos.offset(side);
 		}
 		IBlockState placing = Blocks.stone.getDefaultState();
-		int distOrRadius = 10;
-		int skip = 0;
+		int distOrRadius = ItemCyclicWand.BuildType.getBuildSize(UtilSpellCaster.getPlayerWandIfHeld(player));
+		//int skip = 0;
 		System.out.println("place line of stone"+startPos.toString()); 
 		EnumFacing efacing = (player.isSneaking()) ? EnumFacing.DOWN : UtilEntity.getPlayerFacing(player);
 	      //  boolean isLookingUp = (player.getLookVec().yCoord >= 0);//TODO: use this somehow? to place up/down? 
         
 		
 		if(world.isRemote == false)
-			UtilPlaceBlocks.line(world, player, startPos,efacing, placing, distOrRadius, skip );//,vertOffset
+			UtilPlaceBlocks.line(world, player, startPos,efacing, placing, distOrRadius, 0 );//,vertOffset
 		
 		
 		return false;

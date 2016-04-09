@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.command;
-
+/*
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
@@ -12,7 +12,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
-
+*/
 public class CommandPlaceBlocks //extends BaseCommand implements ICommand
 {
 	/*

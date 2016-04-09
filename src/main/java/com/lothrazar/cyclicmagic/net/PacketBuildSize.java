@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.net;
  
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
-import com.lothrazar.cyclicmagic.util.UtilInventory;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 
 import net.minecraftforge.fml.common.network.ByteBufUtils;
