@@ -1,10 +1,7 @@
 itemGroup.cyclicmagic=Non Content
 btn.deposit=Deposit
-
 btn.lootall=Loot All
-
 btn.quickstack=Quick Stack
-
 btn.restock=Restock
 btn.crafting=Crafting
 key.categories.inventorycontrol=Inventory Movement
@@ -85,6 +82,18 @@ button.group.builder=Builder
 button.group.explorer=Explorer
 button.group.farmer=Farmer
 item.shift=Press Shift for more info
+spell.reachup.name=Build Up
+spell.reachup.info=Build at range, always up
+spell.reachdown.name=Build Down
+spell.reachdown.info=Build at range, always down
+spell.placeline.name=Line
+spell.placeline.info=Build in a line
+spell.placecircle.name=Circle
+spell.placecircle.info=Build circles
+spell.placestair.name=Stair
+spell.placestair.info=Build stairs
+spell.placefloor.name=Floor
+spell.placefloor.info=Build a floor
 spell.locked.current=Cannot toggle current spell
 spell.locked.inventory=Inventory spell cannot be disabled
 spell.meta.cost=Cost: 
