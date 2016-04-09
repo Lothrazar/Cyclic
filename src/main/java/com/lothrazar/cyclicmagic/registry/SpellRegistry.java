@@ -30,6 +30,10 @@ public class SpellRegistry{
 
 		public static SpellRangeBuild reachup;
 		public static SpellRangeBuild reachplace;
+		public static SpellPlaceLine placeline;
+		public static SpellPlaceCircle placecircle;
+		public static SpellPlaceStair placestair;
+		public static SpellPlaceFloor placefloor;
 	}
 
 	public static void register(){
@@ -66,6 +70,19 @@ public class SpellRegistry{
 
 		Spells.reachdown = new SpellRangeBuild(++spellId, "reachdown",SpellRangeBuild.PlaceType.DOWN);
 		registerSpell(Spells.reachdown);
+
+		Spells.placeline = new SpellPlaceLine(++spellId, "placeline");
+		registerSpell(Spells.placeline);
+
+		Spells.placecircle = new SpellPlaceCircle(++spellId, "placecircle");
+		registerSpell(Spells.placecircle);
+
+		Spells.placestair = new SpellPlaceStair(++spellId, "placestair");
+		registerSpell(Spells.placestair);
+		
+		Spells.placefloor = new SpellPlaceFloor(++spellId, "placefloor");
+		registerSpell(Spells.placefloor);
+		
 	}
 
 	private static void registerSpell(ISpell spell){

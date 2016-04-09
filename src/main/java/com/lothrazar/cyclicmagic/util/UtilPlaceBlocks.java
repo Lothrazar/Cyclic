@@ -138,23 +138,25 @@ public class UtilPlaceBlocks
 		}
 	}
 	
-	public static void line(World world, EntityPlayer player,BlockPos pos, IBlockState placing, int want, int skip)
+	public static void line(World world, EntityPlayer player,BlockPos pos,EnumFacing efacing, IBlockState placing, int want, int skip)
 	{
-      //  boolean isLookingUp = (player.getLookVec().yCoord >= 0);//TODO: use this somehow? to place up/down? 
-        
+		if(skip <= 0){
+			skip = 1;
+		}
 		BlockPos posCurrent;
-		EnumFacing efacing = (player.isSneaking()) ? EnumFacing.DOWN : UtilEntity.getPlayerFacing(player);
 		
 		for(int i = 1; i < want + 1; i = i + skip)
 		{
+			System.out.println("line; i = "+i);
 			posCurrent = pos.offset(efacing, i);
 			
-			if(world.isAirBlock(posCurrent) == false){continue;}
+			//if(world.isAirBlock(posCurrent) == false){continue;}
 			//but for the next 2 checks, halt if we run out of blocks/cost
-			if(player.inventory.getCurrentItem() == null || player.inventory.getCurrentItem() .stackSize == 0) {return;}
+			//if(player.inventory.getCurrentItem() == null || playe``r.inventory.getCurrentItem() .stackSize == 0) {return;}
 
 			//if(tryDrainExp(world,player,posCurrent) == false){break;}
-			
+
+			System.out.println("placeWithSoundAndDecrement= "+posCurrent.toString());
 			placeWithSoundAndDecrement(world,player,posCurrent,placing);
 		}
 	}
@@ -167,15 +169,16 @@ public class UtilPlaceBlocks
 		boolean success = placeStateSafe(world,player,posCurrent,placing);
 
 		if(success){
-			
+
+			System.out.println("successs=>playSound ");
 			UtilSound.playSound(player, placing.getBlock().getStepSound().getPlaceSound());
 	
-			
+			/*
 			if(player.capabilities.isCreativeMode == false)
 			{
 				player.inventory.decrStackSize(player.inventory.currentItem, 1);
 				//ModCommands.decrHeldStackSize(player);
-			}
+			}*/
 		}
 		
 		

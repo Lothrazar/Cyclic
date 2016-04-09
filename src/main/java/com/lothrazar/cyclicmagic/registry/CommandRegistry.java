@@ -12,7 +12,6 @@ public class CommandRegistry {
 		event.registerServerCommand(new CommandHearts("sethearts",true));
 		event.registerServerCommand(new CommandHome("home",false));
 		event.registerServerCommand(new CommandPing("ping",false));
-		event.registerServerCommand(new CommandPlaceBlocks("place",false));
 		event.registerServerCommand(new CommandRecipe("searchrecipe",false));
 		event.registerServerCommand(new CommandSearchItem("searchitem",false)); 
 		event.registerServerCommand(new CommandSearchSpawner("searchspawner",true)); 

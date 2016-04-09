@@ -16,7 +16,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiSpellbook extends GuiScreen{
+public class GuiSpellWheel extends GuiScreen{
 
 	private final EntityPlayer thePlayer;
 	private final static ResourceLocation background = new ResourceLocation(Const.MODID, "textures/gui/spellbook.png");
@@ -31,7 +31,7 @@ public class GuiSpellbook extends GuiScreen{
 	final int textureHeight = 180;
 	final int h = 20;// all btn height
 
-	public GuiSpellbook(EntityPlayer p){
+	public GuiSpellWheel(EntityPlayer p){
 
 		super();
 		this.thePlayer = p;

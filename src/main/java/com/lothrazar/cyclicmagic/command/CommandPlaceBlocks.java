@@ -13,8 +13,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 
-public class CommandPlaceBlocks extends BaseCommand implements ICommand
+public class CommandPlaceBlocks //extends BaseCommand implements ICommand
 {
+	/*
 	public static int VERTICAL_MAX = 5; //TODO from config file 
 	
 	public CommandPlaceBlocks(String n, boolean op){
@@ -99,7 +100,7 @@ public class CommandPlaceBlocks extends BaseCommand implements ICommand
 		
 		if(type.equalsIgnoreCase("line"))
 		{
-			UtilPlaceBlocks.line(player.worldObj, player, startPos, placing, distOrRadius, skip);//,vertOffset
+			//UtilPlaceBlocks.line(player.worldObj, player, startPos, placing, distOrRadius, skip);//,vertOffset
 		}
 		if(type.equalsIgnoreCase("stair"))
 		{ 
@@ -156,10 +157,10 @@ public class CommandPlaceBlocks extends BaseCommand implements ICommand
 		{
 			//do this on the fly, could be items not around yet during config change
 			System.out.println("placelib getBlockListFromCSV");
-			/*
-			if(PlaceLib.allowed.size() == 0)
-				PlaceLib.allowed = ModCommands.getBlockListFromCSV(PlaceLib.allowedFromConfig); 
-			*/
+			
+			//if(PlaceLib.allowed.size() == 0)
+			//	PlaceLib.allowed = ModCommands.getBlockListFromCSV(PlaceLib.allowedFromConfig); 
+			
 		}         
 
 		public static boolean isAllowed(Block pblock)
@@ -168,6 +169,6 @@ public class CommandPlaceBlocks extends BaseCommand implements ICommand
 			
 			return allowed.size() == 0 || allowed.contains(pblock);
 		}
-	
+	*/
 	
 }

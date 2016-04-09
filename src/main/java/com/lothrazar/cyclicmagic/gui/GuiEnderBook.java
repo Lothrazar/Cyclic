@@ -68,7 +68,6 @@ public class GuiEnderBook  extends GuiScreen
 			buttonNew.enabled = false;//also a tooltip?
 		}
 
-		
 		txtNew = new GuiTextField(buttonID++,this.fontRendererObj,
 				buttonNew.xPosition + buttonNew.width + 20,
 				buttonNew.yPosition, 
