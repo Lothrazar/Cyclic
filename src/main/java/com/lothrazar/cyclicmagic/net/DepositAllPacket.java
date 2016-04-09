@@ -13,6 +13,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
  
 public class DepositAllPacket  implements IMessage , IMessageHandler<DepositAllPacket, IMessage>
 {
+	public static final int ID = 29;
 	NBTTagCompound tags = new NBTTagCompound(); 
 	public DepositAllPacket(){}
 	public DepositAllPacket(NBTTagCompound ptags)

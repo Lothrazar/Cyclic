@@ -13,6 +13,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
  
 public class QuickStackPacket  implements IMessage , IMessageHandler<QuickStackPacket, IMessage>
 {
+	public static final int ID = 31;
 	NBTTagCompound tags = new NBTTagCompound(); 
 	public QuickStackPacket(){}
 	public QuickStackPacket(NBTTagCompound ptags)

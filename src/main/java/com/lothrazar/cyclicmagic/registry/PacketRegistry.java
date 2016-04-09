@@ -1,29 +1,6 @@
 package com.lothrazar.cyclicmagic.registry;
 
-import com.lothrazar.cyclicmagic.net.DepositAllPacket;
-import com.lothrazar.cyclicmagic.net.LootAllPacket;
-import com.lothrazar.cyclicmagic.net.MessageBarMove;
-import com.lothrazar.cyclicmagic.net.MessageKeyCast;
-import com.lothrazar.cyclicmagic.net.MessageKeyLeft;
-import com.lothrazar.cyclicmagic.net.MessageKeyRight;
-import com.lothrazar.cyclicmagic.net.MessageOpenSpellbook;
-import com.lothrazar.cyclicmagic.net.MessageParticle;
-import com.lothrazar.cyclicmagic.net.MessageRecharge;
-import com.lothrazar.cyclicmagic.net.MessageSlotMove;
-import com.lothrazar.cyclicmagic.net.MessageSpellFromServer;
-import com.lothrazar.cyclicmagic.net.MessageSpellPull;
-import com.lothrazar.cyclicmagic.net.MessageSpellPush;
-import com.lothrazar.cyclicmagic.net.MessageSpellReplacer;
-import com.lothrazar.cyclicmagic.net.MessageSpellRotate;
-import com.lothrazar.cyclicmagic.net.MessageToggleBuild;
-import com.lothrazar.cyclicmagic.net.MessageToggleSpell;
-import com.lothrazar.cyclicmagic.net.MessageUpgrade;
-import com.lothrazar.cyclicmagic.net.OpenCraftingPacket;
-import com.lothrazar.cyclicmagic.net.PacketDeleteButton;
-import com.lothrazar.cyclicmagic.net.PacketNewButton;
-import com.lothrazar.cyclicmagic.net.PacketWarpButton;
-import com.lothrazar.cyclicmagic.net.QuickStackPacket;
-import com.lothrazar.cyclicmagic.net.RestockPacket;
+import com.lothrazar.cyclicmagic.net.*;
 
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
@@ -56,16 +33,15 @@ public class PacketRegistry {
 		network.registerMessage(PacketWarpButton.class, PacketWarpButton.class, PacketWarpButton.ID, Side.SERVER);
 		network.registerMessage(PacketNewButton.class, PacketNewButton.class, PacketNewButton.ID, Side.SERVER);
 		network.registerMessage(PacketDeleteButton.class, PacketDeleteButton.class, PacketDeleteButton.ID, Side.SERVER);
-	
-int packetID=30;
-    	network.registerMessage(DepositAllPacket.class,  DepositAllPacket.class,  packetID++, Side.SERVER);
-    	network.registerMessage(LootAllPacket.class,  LootAllPacket.class,  packetID++, Side.SERVER);
-    	network.registerMessage(QuickStackPacket.class,  QuickStackPacket.class,  packetID++, Side.SERVER);
-    	network.registerMessage(RestockPacket.class,  RestockPacket.class,  packetID++, Side.SERVER);
+	 
+    	network.registerMessage(DepositAllPacket.class,  DepositAllPacket.class,  DepositAllPacket.ID, Side.SERVER);
+    	network.registerMessage(LootAllPacket.class,  LootAllPacket.class, LootAllPacket.ID, Side.SERVER);
+    	network.registerMessage(QuickStackPacket.class,  QuickStackPacket.class, QuickStackPacket.ID, Side.SERVER);
+    	network.registerMessage(RestockPacket.class,  RestockPacket.class,  RestockPacket.ID, Side.SERVER);
 		
-    	network.registerMessage(OpenCraftingPacket.class,  OpenCraftingPacket.class,  packetID++, Side.SERVER);
-		
+    	network.registerMessage(OpenCraftingPacket.class,  OpenCraftingPacket.class, OpenCraftingPacket.ID, Side.SERVER);
+
+    	network.registerMessage(PacketBuildSize.class,  PacketBuildSize.class, PacketBuildSize.ID, Side.SERVER);
     	
-		
 	}
 }

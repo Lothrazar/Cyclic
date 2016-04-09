@@ -12,6 +12,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class OpenCraftingPacket implements IMessage, IMessageHandler<OpenCraftingPacket, IMessage> {
+	public static final int ID = 33;
 	NBTTagCompound tags = new NBTTagCompound();
 
 	public OpenCraftingPacket() {

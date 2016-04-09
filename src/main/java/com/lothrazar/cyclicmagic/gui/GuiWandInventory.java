@@ -3,13 +3,18 @@ package com.lothrazar.cyclicmagic.gui;
 import java.io.IOException;
 
 import org.lwjgl.opengl.GL11;
+
+import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.button.*;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
+import com.lothrazar.cyclicmagic.net.LootAllPacket;
+import com.lothrazar.cyclicmagic.net.PacketBuildSize;
 import com.lothrazar.cyclicmagic.util.Const;
 
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiWandInventory extends GuiContainer{
@@ -67,7 +72,7 @@ public class GuiWandInventory extends GuiContainer{
 		if(size <= 0){
 			size = 1;
 		}
-		System.out.println("set visible based on spell:size="+size); 
+
 		buildSize = new GuiTextField(id,this.fontRendererObj,
 				x,y, 
 				30,20);
@@ -87,13 +92,10 @@ public class GuiWandInventory extends GuiContainer{
 			size = Integer.parseInt(buildSize.getText());
 		}catch(Exception e){
 
-
-			System.out.println("fail int"); 
 			return;//if its not an integer, then do notsave`
 		}
 
-		System.out.println("save on closed="+size); 
-		ItemCyclicWand.BuildType.setBuildSize(internalWand,size);
+		ModMain.network.sendToServer(new PacketBuildSize(size));
     }
 	
 	@Override

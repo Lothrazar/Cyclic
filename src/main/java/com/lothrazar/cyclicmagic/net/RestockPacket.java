@@ -14,6 +14,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
  
 public class RestockPacket  implements IMessage , IMessageHandler<RestockPacket, IMessage>
 {
+	public static final int ID = 32;
 	NBTTagCompound tags = new NBTTagCompound(); 
 	public RestockPacket(){}
 	public RestockPacket(NBTTagCompound ptags)
