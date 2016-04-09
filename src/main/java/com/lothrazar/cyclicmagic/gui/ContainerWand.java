@@ -19,9 +19,15 @@ public class ContainerWand extends Container{
 	public ContainerWand(EntityPlayer par1Player, InventoryPlayer playerInventory, InventoryWand invoWand){
 
 		this.inventory = invoWand;
-		int y = 53;
+		int x,y = 35;
 		for(int j = 0; j < invoWand.getSizeInventory(); j++){
-			this.addSlotToContainer(new SlotWand(invoWand, j, pad + j * SQ, y));
+			x =  pad + (j%9) * SQ;
+			if(j == InventoryWand.INV_SIZE / 2){
+
+				//x = pad;
+				y += SQ;
+			}
+			this.addSlotToContainer(new SlotWand(invoWand, j,x, y));
 		}
 
 		y += 21;

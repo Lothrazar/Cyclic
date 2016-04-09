@@ -17,7 +17,7 @@ import net.minecraftforge.common.util.Constants;
 
 public class InventoryWand implements IInventory{
 
-	public static final int INV_SIZE = 9;// same size as hotbar
+	public static final int INV_SIZE = 18;// same size as hotbar
 	private ItemStack[] inventory = new ItemStack[INV_SIZE];
 	private final ItemStack internalWand;
 
