@@ -6,11 +6,13 @@ import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import com.lothrazar.cyclicmagic.util.UtilTextureRender;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.entity.player.EntityPlayer; 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -42,7 +44,7 @@ public class GuiSpellWheel extends GuiScreen{
 
 		super.initGui();	
 
-		//ItemStack wand = SpellCaster.getPlayerWandIfHeld(thePlayer);
+		ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(thePlayer);
 		
 		
 		//List<Integer> spellbook = ;// ItemCyclicWand.Variant.getSpellsFromVariant(ItemCyclicWand.Variant.getVariantFromMeta(wand));
@@ -52,7 +54,7 @@ public class GuiSpellWheel extends GuiScreen{
 		yCenter = this.height / 2;
 		radius = xCenter / 3 + 8;//was 26
 
-		arc = (2 * Math.PI) / SpellRegistry.getSpellbook().size();
+		arc = (2 * Math.PI) / SpellRegistry.getSpellbook(wand).size();
 		int btnCenter = yCenter - h / 2;
 		int btnID = 999;
 		this.buttonList.add(new ButtonClose(btnID++, xCenter - 15, btnCenter));
@@ -64,7 +66,7 @@ public class GuiSpellWheel extends GuiScreen{
 		ButtonSpellToggle b;
 		//from here on, btnID++ is not used; the spell id is instead used as the id
 		
-		for(ISpell s : SpellRegistry.getSpellbook()){
+		for(ISpell s : SpellRegistry.getSpellbook(wand)){
 			/*
 			boolean unlocked = ItemCyclicWand.Spells.isSpellUnlocked(props.getPlayer().getHeldItem(), s);
 			if(!unlocked){

@@ -28,8 +28,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemCyclicWand extends Item implements IHasRecipe{
 
-	public static final String name = "";
-	
 	private static final String NBT_SPELLCURRENT = "spell_id";
 	private static final String NBT_UNLOCKS = "unlock_";
 
@@ -65,14 +63,6 @@ public class ItemCyclicWand extends Item implements IHasRecipe{
 	@Override
 	public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn){
 
-		for(ISpell s : SpellRegistry.getSpellbook()){
-			Spells.unlockSpell(stack, s.getID(), false);
-		}
-		//only these are unlocked
-		for(ISpell s :  SpellRegistry.getSpellbook()){
-			Spells.unlockSpell(stack, s.getID(), true);
-		}
- 
 		Energy.rechargeBy(stack, Energy.START); 
 		
 		super.onCreated(stack, worldIn, playerIn);
@@ -182,89 +172,30 @@ public class ItemCyclicWand extends Item implements IHasRecipe{
 	}
 
 	public static class Spells{
-/*
-		private static void unlockSpell(ItemStack stack, ISpell spell, boolean unlocked){
-
-			unlockSpell(stack,spell.getID(), unlocked);
-		}
-		*/
-		public static void unlockSpell(ItemStack stack, int spell_id, boolean unlocked){
-
-			NBTTagCompound nbt = getNBT(stack);
-			nbt.setBoolean(NBT_UNLOCKS + spell_id, unlocked);
-			stack.setTagCompound(nbt);
-		}
-
-		public static void toggleSpell(ItemStack stack, int spell_id){
-
-			NBTTagCompound nbt = getNBT(stack);
-			String key = NBT_UNLOCKS + spell_id;
-			nbt.setBoolean(key, !nbt.getBoolean(key));
-			stack.setTagCompound(nbt);
-		}
-
-		public static boolean isSpellUnlocked(ItemStack stack, ISpell spell){
-
-			return isSpellUnlocked(stack, spell.getID());
-		}
-
-		public static boolean isSpellUnlocked(ItemStack stack, int spell_id){
-
-			if(stack == null){
-				return false;
-			}
-			NBTTagCompound nbt = getNBT(stack);
-			return nbt.getBoolean(NBT_UNLOCKS + spell_id);
-		}
 
 		public static int nextId(ItemStack stack, int spell_id){
 
-			return nextId(stack, spell_id, 0);
-		}
-
-		public static int nextId(ItemStack stack, int spell_id, int infbreaker){
-
 			int next;
  
-			if(spell_id >= SpellRegistry.getSpellbook().size() - 1)
+			if(spell_id >= SpellRegistry.getSpellbook(stack).size() - 1)
 				next = 0;// (int)spells[0];
 			else
 				next = spell_id + 1;// (int)spells[spell_id+1];
 
-			// dont infloop
-			if(isSpellUnlocked(stack, next) == false && infbreaker < 100){
-
-				infbreaker++;
-				return nextId(stack, next, infbreaker);
-			}
-
-			infbreaker = 0;
+			System.out.println("next from " + spell_id + " IS "+next);
 			// this.setUnlocksFromByte(spells);
 			return next;
 		}
 
 		public static int prevId(ItemStack stack, int spell_id){
 
-			return prevId(stack, spell_id, 0);
-		}
-
-		public static int prevId(ItemStack stack, int spell_id, int infbreaker){
-
 			int prev;
 
 			if(spell_id == 0)
-				prev = SpellRegistry.getSpellbook().size() - 1;
+				prev = SpellRegistry.getSpellbook(stack).size() - 1;
 			else
 				prev = spell_id - 1;
-			// dont infloop
-			if(isSpellUnlocked(stack, prev) == false && infbreaker < 100){
-
-				infbreaker++;
-				return prevId(stack, prev, infbreaker);
-			}
-
-			infbreaker = 0;
-
+	
 			return prev;
 		}
 
@@ -281,36 +212,6 @@ public class ItemCyclicWand extends Item implements IHasRecipe{
 
 			stack.setTagCompound(tags);
 		}
-/*
-		public static int getPassiveCurrentID(ItemStack stack){
-
-			return getNBT(stack).getInteger(NBT_PASSIVECURRENT);
-		}
-
-		public static IPassiveSpell getPassiveCurrent(ItemStack stack){
-
-			if(stack == null){
-				return null;
-			}
-			
-			return SpellRegistry.Passives.getByID(getNBT(stack).getInteger(NBT_PASSIVECURRENT));
-		}
-
-		public static void togglePassive(ItemStack stack){
-
-			NBTTagCompound tags = getNBT(stack);
-
-			int current = tags.getInteger(NBT_PASSIVECURRENT);
-
-			current++;
-			if(current > 3){
-				current = 0;
-			}// TODO: fix hardcoded magic nums
-
-			tags.setInteger(NBT_PASSIVECURRENT, current);
-
-			stack.setTagCompound(tags);
-		}*/
 	}
 
 	public static class Energy{
@@ -537,7 +438,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe{
 		} 
 	}
 	
-	public static class InventoryRotation{
+	public static class InventoryRotation {
 
 		private final static String NBT = "rotation";
 		public static int get(ItemStack wand){

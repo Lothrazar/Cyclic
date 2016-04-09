@@ -61,6 +61,7 @@ public class ItemRegistry{
 	public static ItemProjectile ender_tnt_2;// chcr
 	public static ItemProjectile ender_tnt_4;// tnt
 	public static ItemProjectile ender_tnt_6;// ender crystal
+	public static ItemCyclicWand cyclic_wand_range;
 
 
 	public static void registerItem(Item item, String name){
@@ -114,6 +115,9 @@ public class ItemRegistry{
 		//TODO: figure out how to config
 		cyclic_wand = new ItemCyclicWand();
 		registerItem(cyclic_wand, "cyclic_wand");
+		
+		cyclic_wand_range = new ItemCyclicWand();
+		registerItem(cyclic_wand_range, "cyclic_wand_range");
 
 		//TODO: retexture and/or decide if we are even keeping this
 		Item multitool = new ItemMultiTool();
@@ -123,9 +127,7 @@ public class ItemRegistry{
 			
 			ItemEnderPearlReuse ender_pearl_reuse = new ItemEnderPearlReuse();
 			registerItem(ender_pearl_reuse, ItemEnderPearlReuse.name);
-			
 		}
-
 
 		if(configToggle.get(ItemPaperCarbon.name)){
 
