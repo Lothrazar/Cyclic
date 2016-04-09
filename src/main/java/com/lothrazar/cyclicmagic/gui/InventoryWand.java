@@ -2,8 +2,9 @@ package com.lothrazar.cyclicmagic.gui;
 
 import java.util.ArrayList;
 import java.util.Random;
-import com.lothrazar.cyclicmagic.ItemRegistry;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,7 +12,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.util.Constants;
 
 public class InventoryWand implements IInventory{
@@ -49,7 +50,7 @@ public class InventoryWand implements IInventory{
 	}
 
 	@Override
-	public IChatComponent getDisplayName(){
+	public ITextComponent getDisplayName(){
 
 		return null;
 	}
@@ -139,7 +140,7 @@ public class InventoryWand implements IInventory{
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer player){
 
-		return (player.getHeldItem() != null) && (player.getHeldItem().getItem() instanceof ItemCyclicWand);
+		return UtilSpellCaster.getPlayerWandIfHeld(player) != null;
 	}
 
 	@Override
@@ -231,7 +232,7 @@ public class InventoryWand implements IInventory{
 
 		int itemSlot = -1;
 
-		int buildType = ItemCyclicWand.BuildType.getBuildType(wand);
+		int buildType = ItemCyclicWand.BuildType.get(wand);
 		ItemStack[] inv = InventoryWand.readFromNBT(wand);
 		ArrayList<Integer> slotNonEmpty = new ArrayList<Integer>();
 
@@ -255,7 +256,7 @@ public class InventoryWand implements IInventory{
 		}
 		else if(buildType == ItemCyclicWand.BuildType.ROTATE.ordinal()){
 
-			int rot = ItemCyclicWand.BuildType.getBuildRotation(wand);
+			int rot = ItemCyclicWand.InventoryRotation.get(wand);
 
 			int test = InventoryWand.INV_SIZE + 2;// like aninfloop but with a max
 			// in case we have gaps, maybe its [0,1,4] have items, so cycle through
@@ -272,7 +273,7 @@ public class InventoryWand implements IInventory{
 						rot = 0;
 					}
 
-					ItemCyclicWand.BuildType.setBuildRotation(wand, rot);
+					ItemCyclicWand.InventoryRotation.set(wand, rot);
 
 					break;
 				}

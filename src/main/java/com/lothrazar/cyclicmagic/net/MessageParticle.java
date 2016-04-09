@@ -5,8 +5,8 @@ import com.lothrazar.cyclicmagic.util.UtilParticle;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -15,6 +15,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class MessageParticle implements IMessage, IMessageHandler<MessageParticle, IMessage>{
 
+	public static final int ID = 14;
 	private int x;
 	private int y;
 	private int z;

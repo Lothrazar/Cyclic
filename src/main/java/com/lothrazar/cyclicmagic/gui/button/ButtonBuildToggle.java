@@ -5,16 +5,19 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.net.MessageToggleBuild;
+import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.StatCollector;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ButtonBuildToggle extends GuiButton implements ITooltipButton{
 
-	final EntityPlayer thePlayer;
+	final EntityPlayer thePlayer;//TODO: could store player instead of wand
 
 	public ButtonBuildToggle(EntityPlayer player, int buttonId, int x, int y, int width){
 
@@ -40,7 +43,8 @@ public class ButtonBuildToggle extends GuiButton implements ITooltipButton{
 	@Override
 	public void drawButton(Minecraft mc, int mouseX, int mouseY){
 
-		this.displayString = StatCollector.translateToLocal(ItemCyclicWand.BuildType.getBuildTypeName(thePlayer.getHeldItem()));
+		ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(thePlayer);
+		this.displayString = I18n.translateToLocal(ItemCyclicWand.BuildType.getName(wand));
 
 		super.drawButton(mc, mouseX, mouseY);
 	}
@@ -49,9 +53,11 @@ public class ButtonBuildToggle extends GuiButton implements ITooltipButton{
 	public List<String> getTooltips(){
 
 		List<String> tooltips = new ArrayList<String>();
-		String key = ItemCyclicWand.BuildType.getBuildTypeName(thePlayer.getHeldItem())+".tooltip";
-		tooltips.add(StatCollector.translateToLocal(key));
-		tooltips.add(StatCollector.translateToLocal("button.build.meta"));
+		//tooltips.add(I18n.translateToLocal("button.build.tooltip"));
+		ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(thePlayer);
+		String key = ItemCyclicWand.BuildType.getName(wand)+".tooltip";
+		tooltips.add(I18n.translateToLocal(key));
+		tooltips.add(TextFormatting.GRAY + I18n.translateToLocal("button.build.meta"));
 		
 		return tooltips;
 	}

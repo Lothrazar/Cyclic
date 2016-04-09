@@ -2,11 +2,6 @@ package com.lothrazar.cyclicmagic.gui.button;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.PlayerPowerups;
-import com.lothrazar.cyclicmagic.SpellRegistry;
-import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
-import com.lothrazar.cyclicmagic.net.MessageToggleSpell;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.util.UtilString;
 import com.lothrazar.cyclicmagic.util.UtilTextureRender;
@@ -14,10 +9,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -38,30 +31,8 @@ public class ButtonSpellToggle extends GuiButton implements ITooltipButton{
 	@Override
 	public boolean mousePressed(Minecraft mc, int mouseX, int mouseY){
 
+		
 		boolean pressed = super.mousePressed(mc, mouseX, mouseY);
-
-		if(pressed){
-			// button id matches spell id
-			ItemStack wand = Minecraft.getMinecraft().thePlayer.getHeldItem();
-
-			if(wand == null || wand.getItem() instanceof ItemCyclicWand == false){
-				return pressed;
-			}
-
-			if(this.id == ItemCyclicWand.Spells.getSpellCurrent(wand)){
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentTranslation("spell.locked.current"));
-				return pressed;// cannot toggle current spell
-			}
-
-			if(this.id == SpellRegistry.Spells.inventory.getID() && ItemCyclicWand.Spells.isSpellUnlocked(Minecraft.getMinecraft().thePlayer.getHeldItem(), this.id)){
-				// spell IS unlocked already, do not let player disable it
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentTranslation("spell.locked.inventory"));
-			}
-			else{
-				ModMain.network.sendToServer(new MessageToggleSpell(this.id));
-			}
-		}
-
 		return pressed;
 	}
 
@@ -88,19 +59,19 @@ public class ButtonSpellToggle extends GuiButton implements ITooltipButton{
 
 	public List<String> getTooltips(){
 
-		PlayerPowerups props = PlayerPowerups.get(thePlayer);
+		//PlayerPowerups props = PlayerPowerups.get(thePlayer);
 		List<String> tooltips = new ArrayList<String>();
-		tooltips.add(EnumChatFormatting.LIGHT_PURPLE + spell.getName());
-		tooltips.add(EnumChatFormatting.DARK_GRAY + StatCollector.translateToLocal("spell.meta.cost") + EnumChatFormatting.BLUE + spell.getCost());
+		tooltips.add(TextFormatting.LIGHT_PURPLE + spell.getName());
+		tooltips.add(TextFormatting.DARK_GRAY + I18n.translateToLocal("spell.meta.cost") + TextFormatting.BLUE + spell.getCost());
 
 		// tooltips.add(EnumChatFormatting.LIGHT_PURPLE + spell.getInfo());
 
 		tooltips.addAll(UtilString.splitIntoLine(spell.getInfo(), 28));
 
-		boolean unlocked = ItemCyclicWand.Spells.isSpellUnlocked(props.getPlayer().getHeldItem(), spell);
+		//boolean unlocked = ItemCyclicWand.Spells.isSpellUnlocked(props.getPlayer().getHeldItem(), spell);
 
-		String ed = unlocked ? EnumChatFormatting.GREEN + StatCollector.translateToLocal("spell.meta.enabled") : EnumChatFormatting.RED + StatCollector.translateToLocal("spell.meta.disabled");
-		tooltips.add(ed);
+		//String ed = unlocked ? EnumChatFormatting.GREEN + StatCollector.translateToLocal("spell.meta.enabled") : EnumChatFormatting.RED + StatCollector.translateToLocal("spell.meta.disabled");
+		//tooltips.add(ed);
 		return tooltips;
 	}
 }

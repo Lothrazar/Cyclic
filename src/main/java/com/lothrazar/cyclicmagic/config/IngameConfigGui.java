@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.config;
 
-import com.lothrazar.cyclicmagic.Const;
 import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.common.config.ConfigElement;
@@ -11,7 +11,8 @@ public class IngameConfigGui extends GuiConfig{
 
 	public IngameConfigGui(GuiScreen parent){
 
-		super(parent, new ConfigElement(ModMain.cfg.instance().getCategory(Const.MODID)).getChildElements(), Const.MODID, false, false, "Cyclic Magic");
+		super(parent, new ConfigElement(ModMain.getConfig().getCategory(Const.MODID)).getChildElements(), 
+				Const.MODID, false, false, "Cyclic Magic");
 		this.titleLine2 = "See the " + Const.MODID + ".cfg file for even more options";
 	}
 

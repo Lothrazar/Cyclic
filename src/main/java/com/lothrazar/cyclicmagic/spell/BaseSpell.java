@@ -1,14 +1,15 @@
 package com.lothrazar.cyclicmagic.spell;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.BlockPos;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import com.lothrazar.cyclicmagic.Const;
-import com.lothrazar.cyclicmagic.ItemRegistry;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilSound;
+import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.translation.I18n;
 
 public abstract class BaseSpell implements ISpell{
 
@@ -32,12 +33,17 @@ public abstract class BaseSpell implements ISpell{
 
 	public String getName(){
 
-		return StatCollector.translateToLocal("spell." + name + ".name");
+		return I18n.translateToLocal("spell." + name + ".name");
 	}
 
+	public String getUnlocalizedName(){
+
+		return name;
+	}
+	
 	public String getInfo(){
 
-		return StatCollector.translateToLocal("spell." + name + ".info");
+		return I18n.translateToLocal("spell." + name + ".info");
 	}
 
 	@Override
@@ -55,7 +61,7 @@ public abstract class BaseSpell implements ISpell{
 	@Override
 	public void onCastFailure(World world, EntityPlayer player, BlockPos pos){
 
-		UtilSound.playSoundAt(player, UtilSound.Own.buzzp);
+		UtilSound.playSound(player, UtilSound.Own.buzzp);
 	}
 
 	@Override
@@ -74,7 +80,7 @@ public abstract class BaseSpell implements ISpell{
 	public void payCost(World world, EntityPlayer player, BlockPos pos){
 
 		if(player.capabilities.isCreativeMode == false){
-			ItemCyclicWand.Energy.drainBy(player.getHeldItem(), this.getCost());
+			ItemCyclicWand.Energy.drainBy(UtilSpellCaster.getPlayerWandIfHeld(player), this.getCost());
 		}
 	}
 
@@ -90,12 +96,14 @@ public abstract class BaseSpell implements ISpell{
 		if(player.capabilities.isCreativeMode){
 			return true;// skips everything
 		}
+		
+		ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
 
-		if(player.getHeldItem() == null || player.getHeldItem().getItem() != ItemRegistry.cyclic_wand){
+		if(wand == null){
 			return false;
 		}
 
-		if(this.getCost() > ItemCyclicWand.Energy.getCurrent(player.getHeldItem())){
+		if(this.getCost() > ItemCyclicWand.Energy.getCurrent(wand)){
 			return false;
 		}
 		return true;

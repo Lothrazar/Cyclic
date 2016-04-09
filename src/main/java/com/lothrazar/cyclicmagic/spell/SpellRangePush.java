@@ -5,7 +5,7 @@ import com.lothrazar.cyclicmagic.net.MessageSpellPush;
 import com.lothrazar.cyclicmagic.util.UtilMoveBlock;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
@@ -14,8 +14,8 @@ public class SpellRangePush extends BaseSpellRange{
 	public SpellRangePush(int id, String name){
 
 		super.init(id, name);
-		this.cooldown = 8;
-		this.cost = 5;
+		this.cost = 30;
+		this.cooldown = 5;
 	}
 
 	@Override

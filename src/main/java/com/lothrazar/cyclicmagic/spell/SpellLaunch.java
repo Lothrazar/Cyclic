@@ -1,24 +1,30 @@
 package com.lothrazar.cyclicmagic.spell;
 
+import com.lothrazar.cyclicmagic.registry.PotionRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.BlockPos;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class SpellLaunch extends BaseSpell implements ISpell{
 
 	private static final float power = 1.005F;
 	private static final float mountPower = 1.01F;
+	private static final int slowfallSec = 10;//TODO: this 10 seconds in config..??
 
 	public SpellLaunch(int id, String name){
 
 		super.init(id, name);
-		this.cost = 10;
+		this.cost = 25;
 		this.cooldown = 10;
 	}
 
@@ -42,12 +48,19 @@ public class SpellLaunch extends BaseSpell implements ISpell{
 
 		player.motionY = 0;
 		player.fallDistance = 0;
-		if(player.ridingEntity != null){
-			player.ridingEntity.motionY = 0;
-			player.ridingEntity.fallDistance = 0;
+		
+		Entity ridingEntity = player.getRidingEntity();
+		
+		if(ridingEntity != null){
+			ridingEntity.motionY = 0;
+			ridingEntity.fallDistance = 0;
 			// boost power a bit, horses are heavy as F
-			player.ridingEntity.addVelocity(velX * mountPower, velY * mountPower, velZ * mountPower);
+			ridingEntity.addVelocity(velX * mountPower, velY * mountPower, velZ * mountPower);
 
+			if(ridingEntity instanceof EntityLivingBase){
+				//if its a horse or something
+				((EntityLivingBase)ridingEntity).addPotionEffect(new PotionEffect(PotionRegistry.slowfall,slowfallSec * Const.TICKS_PER_SEC));
+			}
 		}
 		else{
 			player.addVelocity(velX, velY, velZ);
@@ -55,6 +68,9 @@ public class SpellLaunch extends BaseSpell implements ISpell{
 
 		this.playSound(world, null, player.getPosition());
 		this.spawnParticle(world, player, player.getPosition());
+		
+		
+		player.addPotionEffect(new PotionEffect(PotionRegistry.slowfall,slowfallSec * Const.TICKS_PER_SEC));
 
 		return true;
 	}

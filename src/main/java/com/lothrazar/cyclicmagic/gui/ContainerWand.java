@@ -1,7 +1,10 @@
 package com.lothrazar.cyclicmagic.gui;
 
+import com.lothrazar.cyclicmagic.gui.slot.SlotWand;
+import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -16,33 +19,35 @@ public class ContainerWand extends Container{
 	public ContainerWand(EntityPlayer par1Player, InventoryPlayer playerInventory, InventoryWand invoWand){
 
 		this.inventory = invoWand;
-
-		// player invo. below is copied from ContainerHopper.class
+		int y = 53;
 		for(int j = 0; j < invoWand.getSizeInventory(); j++){
-			this.addSlotToContainer(new SlotWand(invoWand, j, pad + j * SQ, 30));
+			this.addSlotToContainer(new SlotWand(invoWand, j, pad + j * SQ, y));
 		}
 
-		int i = 51;
+		y += 21;
 		for(int l = 0; l < 3; ++l){
 			for(int k = 0; k < 9; ++k){
-				this.addSlotToContainer(new Slot(playerInventory, k + l * hotbar + hotbar, pad + k * SQ, l * SQ + i));
+				this.addSlotToContainer(new Slot(playerInventory, k + l * hotbar + hotbar, pad + k * SQ, l * SQ + y));
 			}
 		}
 
+		y += SQ*3 + 4;
 		for(int k = 0; k < 9; ++k){
-			this.addSlotToContainer(new Slot(playerInventory, k, pad + k * SQ, 58 + i));
+			this.addSlotToContainer(new Slot(playerInventory, k, pad + k * SQ, y));
 		}
 	}
 
+	// slotClick
 	@Override
-	public ItemStack slotClick(int slot, int button, int flag, EntityPlayer player){
+	public ItemStack func_184996_a(int slot, int dragType, ClickType clickTypeIn, EntityPlayer player){
 
+		ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
 		// this will prevent the player from interacting with the item that
 		// opened the inventory:
-		if(slot >= 0 && getSlot(slot) != null && getSlot(slot).getStack() == player.getHeldItem()){
+		if(slot >= 0 && getSlot(slot) != null && getSlot(slot).getStack() == wand){
 			return null;
 		}
-		return super.slotClick(slot, button, flag, player);
+		return super.func_184996_a(slot, dragType, clickTypeIn, player);
 	}
 
 	@Override

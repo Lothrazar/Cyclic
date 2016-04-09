@@ -1,7 +1,8 @@
 package com.lothrazar.cyclicmagic.net;
 
-import com.lothrazar.cyclicmagic.SpellRegistry;
+import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
+import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -9,7 +10,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 
 public class MessageKeyCast implements IMessage, IMessageHandler<MessageKeyCast, IMessage>{
@@ -20,6 +21,7 @@ public class MessageKeyCast implements IMessage, IMessageHandler<MessageKeyCast,
 	private NBTTagCompound tags = null;
 	private static final String NBT_POS = "pos";
 	private static final String NBT_SIDE = "side";
+	public static final int ID = 11;
 
 	public MessageKeyCast(){
 
@@ -92,7 +94,7 @@ public class MessageKeyCast implements IMessage, IMessageHandler<MessageKeyCast,
 		// www.minecraftforge.net/forum/index.php/topic,20135.0.html
 
 		if(SpellRegistry.spellsEnabled(player)){
-			SpellRegistry.caster.tryCastCurrent(player.worldObj, player, message.pos, message.side);
+			UtilSpellCaster.tryCastCurrent(player.worldObj, player, message.pos, message.side);
 		}
 
 		return null;

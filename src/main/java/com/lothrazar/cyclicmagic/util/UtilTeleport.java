@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.util;
 
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class UtilTeleport{
@@ -15,7 +15,7 @@ public class UtilTeleport{
 
 	public static void moveEntityWallSafe(EntityLivingBase entity, World world){
 
-		while (!world.getCollidingBoundingBoxes(entity, entity.getEntityBoundingBox()).isEmpty()){
+		while (world.collidesWithAnyBlock(entity.getEntityBoundingBox())){
 			entity.setPositionAndUpdate(entity.posX, entity.posY + 1.0D, entity.posZ);
 		}
 	}

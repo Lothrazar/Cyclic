@@ -1,15 +1,18 @@
 package com.lothrazar.cyclicmagic.util;
 
-import com.lothrazar.cyclicmagic.Const;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class UtilSound{
 
 	public static final float volume = 1.0F;
 	public static final float pitch = 1.0F;
-
+	public static final boolean distanceDelay = false;
+	
 	public static final String snow = "dig.snow";
 	public static final String splash = "game.neutral.swim.splash";
 	public static final String shears = "mob.sheep.shear";
@@ -24,31 +27,59 @@ public class UtilSound{
 		// internal sounds added by mod
 		// all are created by ME using a third party tool: http://www.bfxr.net/
 		// then converted from wav to ogg with https://online-audio-converter.com/
-		public static final String bip = Const.MODID + ":bip";// spell rotate
-		public static final String buzzp = Const.MODID + ":buzzp";// spell cast failure. water bolt
+		public static final String bip = "bip";// spell rotate
+		public static final String buzzp = "buzzp";// spell cast failure. water bolt
 																	// hit in nether. portal
 																	// waypoint x dimension. wand
 																	// xp refil fail
-		public static final String bwoaaap = Const.MODID + ":bwoaaap";// used for launch spell
+		public static final String bwoaaap =  "bwoaaap";// used for launch spell
 
-		public static final String fill = Const.MODID + ":fill";// fill wand energy with xp
+		public static final String fill =  "fill";// fill wand energy with xp
 
-		public static final String pew = Const.MODID + ":pew";// thrown spells
+		public static final String pew = "pew";// thrown spells
 
-		public static final String crackle = Const.MODID + ":crackle";// scaffolding
+		public static final String crackle = "crackle";// scaffolding
 
-		public static final String thunk = Const.MODID + ":thunk";// chest sack create
+		public static final String thunk ="thunk";// chest sack create
+		
 	}
+	public static SoundEvent bwoaaap;
 
-	public static void playSoundAt(Entity player, String sound){
+	public static void playSound(Entity player, String sound){
 
 		// for client only, or if you have client/server both
-		player.playSound(sound, volume, pitch);
+		//player.playSound(sound, volume, pitch);
+		System.out.println("TODO: fix sounds P"+sound);
 	}
 
 	public static void playSound(World world, BlockPos pos, String sound){
 
 		// works if you play it only on the server
-		world.playSoundEffect(pos.getX(), pos.getY(), pos.getZ(), sound, volume, pitch);
+		//world.playSoundEffect(pos.getX(), pos.getY(), pos.getZ(), sound, volume, pitch);
+		System.out.println("TODO: fix sounds W"+sound);
+		
+	}
+
+	public static void playSound(Entity entity, SoundEvent soundIn){
+		playSound(entity.getEntityWorld(),entity.getPosition(),soundIn);
+	}
+	public static void playSound(World world, BlockPos pos, SoundEvent soundIn){
+
+		world.playSound(pos.getX(), pos.getY(), pos.getZ(), soundIn, SoundCategory.PLAYERS, volume, pitch, distanceDelay);
+		
+	}
+
+	public static void playSound(EntityPlayer player, SoundEvent soundIn, SoundCategory cat) {
+		// TODO Auto-generated method stub
+		BlockPos pos = player.getPosition();
+		player.worldObj.playSound(pos.getX(), pos.getY(), pos.getZ(), soundIn, cat, volume, pitch, distanceDelay);
+		
+	}
+
+	public static void playSound(World worldObj, BlockPos pos, SoundEvent soundIn,
+			SoundCategory cat) {
+		
+		worldObj.playSound(pos.getX(), pos.getY(), pos.getZ(), soundIn, cat, volume, pitch, distanceDelay);
+		
 	}
 }

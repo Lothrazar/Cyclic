@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.spell;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -12,6 +12,8 @@ public interface ISpell{
 	public int getID();
 
 	public String getName();
+
+	public String getUnlocalizedName();
 
 	public String getInfo();
 

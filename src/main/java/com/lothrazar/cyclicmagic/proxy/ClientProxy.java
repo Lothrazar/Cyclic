@@ -1,50 +1,109 @@
 package com.lothrazar.cyclicmagic.proxy;
 
-import java.util.ArrayList;
+import org.lwjgl.input.Keyboard;
 import net.minecraft.item.Item;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MovingObjectPosition;
-import com.lothrazar.cyclicmagic.ItemRegistry;
-import com.lothrazar.cyclicmagic.Const;
-import com.lothrazar.cyclicmagic.gui.GuiSpellbook;
-import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
-import com.lothrazar.cyclicmagic.projectile.*;
+import net.minecraft.util.math.RayTraceResult;
+
+import com.lothrazar.cyclicmagic.entity.projectile.EntityBlazeBolt;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityDungeonEye;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamite;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityFishingBolt;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityHarvestBolt;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityHomeBolt;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityLightningballBolt;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityShearingBolt;
+import com.lothrazar.cyclicmagic.entity.projectile.EntitySnowballBolt;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityTorchBolt;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityWaterBolt;
+import com.lothrazar.cyclicmagic.gui.GuiSpellWheel;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.ItemModelMesher;
-import net.minecraft.client.renderer.entity.RenderItem;
+import net.minecraft.client.renderer.RenderItem;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderSnowball;
-import net.minecraft.client.resources.model.ModelBakery;
-import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.entity.EntityList;
+import net.minecraft.client.settings.KeyBinding;
 
 public class ClientProxy extends CommonProxy{
-
+	public static KeyBinding keyShiftUp;
+	public static KeyBinding keyShiftDown; 
+	public static KeyBinding keyBarUp;
+	public static KeyBinding keyBarDown;  
+ 
+	static final String keyCategoryInventory = "key.categories.inventorycontrol";
+	
 	@Override
 	public void register(){
 
 		registerModels();
+		
+        registerKeys();
+        
+        registerEntities();
+	}
+	
+	private void registerKeys(){
 
-		registerEntities();
+		keyShiftUp = new KeyBinding("key.columnshiftup", Keyboard.KEY_Y, keyCategoryInventory);
+        ClientRegistry.registerKeyBinding(ClientProxy.keyShiftUp);
+    
+		keyShiftDown = new KeyBinding("key.columnshiftdown", Keyboard.KEY_H, keyCategoryInventory); 
+        ClientRegistry.registerKeyBinding(ClientProxy.keyShiftDown); 
+
+        keyBarUp = new KeyBinding("key.columnbarup", Keyboard.KEY_U, keyCategoryInventory);
+        ClientRegistry.registerKeyBinding(ClientProxy.keyBarUp);
+         
+        keyBarDown = new KeyBinding("key.columnbardown", Keyboard.KEY_J, keyCategoryInventory); 
+        ClientRegistry.registerKeyBinding(ClientProxy.keyBarDown);
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes", "deprecation" })
+	private void registerEntities(){
+
+		RenderManager rm = Minecraft.getMinecraft().getRenderManager();
+		RenderItem ri = Minecraft.getMinecraft().getRenderItem();
+
+		// works similar to vanilla which is like
+		// Minecraft.getMinecraft().getRenderManager().entityRenderMap.put(EntitySoulstoneBolt.class,
+		// new RenderSnowball(Minecraft.getMinecraft().getRenderManager(), ItemRegistry.soulstone,
+		// Minecraft.getMinecraft().getRenderItem()));
+
+		RenderingRegistry.registerEntityRenderingHandler(EntityLightningballBolt.class, new RenderSnowball(rm, ItemRegistry.ender_lightning, ri));
+		RenderingRegistry.registerEntityRenderingHandler(EntityHarvestBolt.class, new RenderSnowball(rm, ItemRegistry.ender_harvest, ri));
+		RenderingRegistry.registerEntityRenderingHandler(EntityWaterBolt.class, new RenderSnowball(rm, ItemRegistry.ender_water, ri));
+		RenderingRegistry.registerEntityRenderingHandler(EntitySnowballBolt.class, new RenderSnowball(rm, ItemRegistry.ender_snow, ri));
+		RenderingRegistry.registerEntityRenderingHandler(EntityTorchBolt.class, new RenderSnowball(rm, ItemRegistry.ender_torch, ri));
+		RenderingRegistry.registerEntityRenderingHandler(EntityFishingBolt.class, new RenderSnowball(rm, ItemRegistry.ender_fishing, ri));
+		RenderingRegistry.registerEntityRenderingHandler(EntityShearingBolt.class, new RenderSnowball(rm, ItemRegistry.ender_wool, ri));
+		RenderingRegistry.registerEntityRenderingHandler(EntityHomeBolt.class, new RenderSnowball(rm, ItemRegistry.ender_bed, ri));
+		RenderingRegistry.registerEntityRenderingHandler(EntityDungeonEye.class, new RenderSnowball(rm, ItemRegistry.ender_dungeon, ri));
+		RenderingRegistry.registerEntityRenderingHandler(EntityDynamite.class, new RenderSnowball(rm, ItemRegistry.ender_tnt_1, ri));
+		RenderingRegistry.registerEntityRenderingHandler(EntityBlazeBolt.class, new RenderSnowball(rm, ItemRegistry.ender_blaze, ri));
+
+	}
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void displayGuiSpellbook(){
 
-		Minecraft.getMinecraft().displayGuiScreen(new GuiSpellbook(Minecraft.getMinecraft().thePlayer));
+		Minecraft.getMinecraft().displayGuiScreen(new GuiSpellWheel(Minecraft.getMinecraft().thePlayer));
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public EnumFacing getSideMouseover(int max){
 
-		MovingObjectPosition mouseOver = Minecraft.getMinecraft().getRenderViewEntity().rayTrace(max, 1f);
+		RayTraceResult mouseOver = Minecraft.getMinecraft().getRenderViewEntity().rayTrace(max, 1f);
 		// now get whatever block position we are mousing over if anything
 
 		if(mouseOver != null){
@@ -63,7 +122,7 @@ public class ClientProxy extends CommonProxy{
 
 		// Get the player and their held item
 
-		MovingObjectPosition mouseOver = Minecraft.getMinecraft().getRenderViewEntity().rayTrace(max, 1f);
+		RayTraceResult mouseOver = Minecraft.getMinecraft().getRenderViewEntity().rayTrace(max, 1f);
 		// now get whatever block position we are mousing over if anything
 
 		if(mouseOver != null){
@@ -84,7 +143,7 @@ public class ClientProxy extends CommonProxy{
 		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
 
 		// int max = 50;
-		MovingObjectPosition mouseOver = Minecraft.getMinecraft().getRenderViewEntity().rayTrace(max, 1f);
+		RayTraceResult mouseOver = Minecraft.getMinecraft().getRenderViewEntity().rayTrace(max, 1f);
 		// now get whatever block position we are mousing over if anything
 
 		if(mouseOver != null && mouseOver.sideHit != null){
@@ -101,28 +160,6 @@ public class ClientProxy extends CommonProxy{
 		return null;
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes", "deprecation" })
-	private void registerEntities(){
-
-		RenderManager rm = Minecraft.getMinecraft().getRenderManager();
-		RenderItem ri = Minecraft.getMinecraft().getRenderItem();
-		/**
-		 * Register an entity rendering handler. This will, after mod initialization, be inserted
-		 * into the main render map for entities. Call this during Initialization phase.
-		 *
-		 * @deprecated use the factory version during Preinitialization. Will be removed in 1.9.
-		 */
-		RenderingRegistry.registerEntityRenderingHandler(EntityTorchBolt.class, new RenderSnowball(rm, EntityTorchBolt.item, ri));
-		RenderingRegistry.registerEntityRenderingHandler(EntityFishingBolt.class, new RenderSnowball(rm, EntityFishingBolt.item, ri));
-		RenderingRegistry.registerEntityRenderingHandler(EntityLightningballBolt.class, new RenderSnowball(rm, EntityLightningballBolt.item, ri));
-		RenderingRegistry.registerEntityRenderingHandler(EntitySnowballBolt.class, new RenderSnowball(rm, EntitySnowballBolt.item, ri));
-		RenderingRegistry.registerEntityRenderingHandler(EntityWaterBolt.class, new RenderSnowball(rm, EntityWaterBolt.item, ri));
-		RenderingRegistry.registerEntityRenderingHandler(EntityShearingBolt.class, new RenderSnowball(rm, EntityShearingBolt.item, ri));
-		RenderingRegistry.registerEntityRenderingHandler(EntityHarvestBolt.class, new RenderSnowball(rm, EntityHarvestBolt.item, ri));
-		RenderingRegistry.registerEntityRenderingHandler(EntityRespawnEgg.class, new RenderSnowball(rm, EntityRespawnEgg.item, ri));
-	}
-
-	@SuppressWarnings("deprecation")
 	private void registerModels(){
 
 		// with help from
@@ -135,27 +172,28 @@ public class ClientProxy extends CommonProxy{
 		ItemModelMesher mesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
 
 		String name;
+		Item item;
+		for(Block b : BlockRegistry.blocks){
+			item = Item.getItemFromBlock(b);
+			name = Const.MODRES + b.getUnlocalizedName().replaceAll("tile.", "");
 
+			mesher.register(item, 0, new ModelResourceLocation(name, "inventory"));
+		}
+		
 		for(Item i : ItemRegistry.items){
-			name = Const.TEXTURE_LOCATION + i.getUnlocalizedName().replaceAll("item.", "");
+			name = Const.MODRES + i.getUnlocalizedName().replaceAll("item.", "");
 
 			mesher.register(i, 0, new ModelResourceLocation(name, "inventory"));
 		}
+	}
 
-		ArrayList<String> variants = new ArrayList<String>();
+	@SideOnly(Side.CLIENT)
+	public static boolean isKeyDown(KeyBinding keybinding){
 
-		for(ItemCyclicWand.Variant wandType : ItemCyclicWand.Variant.values()){
-			name = wandType.getResource();
-			variants.add(name);
-			mesher.register(ItemRegistry.cyclic_wand, wandType.getMetadata(), new ModelResourceLocation(name, "inventory"));
-		}
-
-		ModelBakery.addVariantName(ItemRegistry.cyclic_wand, variants.toArray(new String[variants.size()]));
-
-		if(ItemRegistry.respawn_egg != null){
-			for(Object key : EntityList.entityEggs.keySet()){
-				mesher.register(ItemRegistry.respawn_egg, (Integer) key, new ModelResourceLocation(Const.TEXTURE_LOCATION + "respawn_egg", "inventory"));
-			}
-		}
+		//inside a GUI , we have to check the keyboard directly
+		//thanks to Inventory tweaks, reminding me of alternate way to check keydown while in config
+		// https://github.com/Inventory-Tweaks/inventory-tweaks/blob/develop/src/main/java/invtweaks/InvTweaks.java
+		
+		return keybinding.isPressed() || Keyboard.isKeyDown(keybinding.getKeyCode()) ;
 	}
 }

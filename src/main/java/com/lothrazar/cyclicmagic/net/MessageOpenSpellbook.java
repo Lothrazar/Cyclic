@@ -8,6 +8,8 @@ import io.netty.buffer.ByteBuf;
 
 public class MessageOpenSpellbook implements IMessage, IMessageHandler<MessageOpenSpellbook, IMessage>{
 
+	public static final int ID = 15;
+
 	public MessageOpenSpellbook(){
 
 	}

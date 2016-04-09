@@ -1,12 +1,14 @@
 package com.lothrazar.cyclicmagic.net;
 
-import com.lothrazar.cyclicmagic.SpellRegistry;
+import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class MessageRecharge implements IMessage, IMessageHandler<MessageRecharge, IMessage>{
+
+	public static final int ID = 22;
 
 	public MessageRecharge(){
 
@@ -25,7 +27,7 @@ public class MessageRecharge implements IMessage, IMessageHandler<MessageRecharg
 	@Override
 	public IMessage onMessage(MessageRecharge message, MessageContext ctx){
 
-		SpellRegistry.caster.rechargeWithExp(ctx.getServerHandler().playerEntity);
+		UtilSpellCaster.rechargeWithExp(ctx.getServerHandler().playerEntity);
 		return null;
 	}
 }

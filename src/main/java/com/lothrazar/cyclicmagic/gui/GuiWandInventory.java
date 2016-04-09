@@ -1,24 +1,25 @@
 package com.lothrazar.cyclicmagic.gui;
 
 import org.lwjgl.opengl.GL11;
-import com.lothrazar.cyclicmagic.Const;
-import com.lothrazar.cyclicmagic.gui.button.ButtonBuildToggle;
-import com.lothrazar.cyclicmagic.gui.button.ButtonPassiveToggle;
-import com.lothrazar.cyclicmagic.gui.button.ButtonRecharge;
-import com.lothrazar.cyclicmagic.gui.button.ButtonSpellCircle;
-import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
+import com.lothrazar.cyclicmagic.gui.button.*;
+import com.lothrazar.cyclicmagic.util.Const;
+
+import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiWandInventory extends GuiContainer{
 
 	private final InventoryWand inventory;
+	//176x156
 	private static final ResourceLocation BACKGROUND = new ResourceLocation(Const.MODID, "textures/gui/inventory_wand.png");
 
-	// TODO: TOOLTIPS on all buttons
-	// the swap type tooltop, if its on pattern, should show the current slot number, as i '3/9'
-	final int id = 777;
-	final int padding = 6;
+	// TODO: the swap type tooltop, if its on pattern, should show the current slot number, as i '3/9'
+	int id = 777;
+	final int padding = 4;
+	
+
+	GuiTextField buildSize;
 
 	public GuiWandInventory(ContainerWand containerItem){
 
@@ -31,22 +32,42 @@ public class GuiWandInventory extends GuiContainer{
 
 		super.initGui();
 
-		final int y = this.guiTop + padding  ;
+		int y = this.guiTop + padding  ;
 		int x = this.guiLeft + 5;
 
 		int width = 20;
 		this.buttonList.add(new ButtonSpellCircle(id, x, y, width));
 
+		id++;
 		x += width + padding;
 		this.buttonList.add(new ButtonRecharge(id, x, y, width));
-
+		
+		//Next row
+		//x = this.guiLeft + 5;
+		//y += 20 + padding;
+	
+		id++;
 		x += width + padding;
 		width = 50;
 		this.buttonList.add(new ButtonBuildToggle(inventory.getPlayer(), id, x, y, width));
-
+		
+		id++;
+		x += width + padding;
+		
+		
+		buildSize = new GuiTextField(id,this.fontRendererObj,
+				x,y,30,20);
+		buildSize.setMaxStringLength(2);
+		buildSize.setText("2");//TODO: save this in data
+		buildSize.setFocused(true);
+		
+		
+		/*
+		id++;
 		x += width + padding;
 		width = 50;
-		this.buttonList.add(new ButtonPassiveToggle(inventory.getPlayer(), id, x, y, width));
+		this.buttonList.add(new ButtonPlaceToggle(inventory.getPlayer(), id, x, y, width));
+		*/
 	}
 
 	@Override

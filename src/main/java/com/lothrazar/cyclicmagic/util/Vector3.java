@@ -23,8 +23,8 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.Vec3d;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
@@ -59,7 +59,7 @@ public class Vector3{
 		z = vec.z;
 	}
 
-	public Vector3(Vec3 vec){
+	public Vector3(Vec3d vec){
 
 		x = vec.xCoord;
 		y = vec.yCoord;

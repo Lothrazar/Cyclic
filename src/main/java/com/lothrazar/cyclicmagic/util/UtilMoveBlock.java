@@ -1,13 +1,12 @@
 package com.lothrazar.cyclicmagic.util;
 
 import java.util.ArrayList;
-import com.lothrazar.cyclicmagic.Const;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class UtilMoveBlock{
@@ -37,13 +36,13 @@ public class UtilMoveBlock{
 
 	public static boolean moveBlockTo(World world, EntityPlayer player, BlockPos pos, BlockPos posMoveToHere){
 
-		IBlockState hit = world.getBlockState(pos);
+		IBlockState newStateToPlace = world.getBlockState(pos);
 		translateCSV();
 
-		if(hit == null || ignoreList.contains(hit.getBlock())){
+		if(newStateToPlace == null || ignoreList.contains(newStateToPlace.getBlock())){
 			return false;
 		}
-		if(hit.getBlock().getBlockHardness(world, posMoveToHere) == -1){
+		if(newStateToPlace.getBlock().getBlockHardness(newStateToPlace,world, posMoveToHere) == -1){
 			return false;// unbreakable like bedrock
 		}
 
@@ -53,11 +52,8 @@ public class UtilMoveBlock{
 
 				world.destroyBlock(pos, false);
 			}
-			world.setBlockState(posMoveToHere, hit, Const.NOTIFY);
-
-			world.markBlockForUpdate(posMoveToHere);
-
-			return true;
+			
+			return UtilPlaceBlocks.placeStateSafe(world, player, posMoveToHere, newStateToPlace);
 		}
 		else
 			return false;
