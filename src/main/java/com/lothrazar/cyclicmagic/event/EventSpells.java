@@ -161,7 +161,8 @@ public class EventSpells{
 	
 			ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
 	
-			ISpell prev = SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.prevId(wand, spellCurrent.getID()));
+			ISpell prev = SpellRegistry.prev(wand,  spellCurrent);
+					//SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.prevId(wand, spellCurrent.getID()));
 	
 			if(prev != null){
 				int x = xmain + 9;
@@ -169,7 +170,8 @@ public class EventSpells{
 				int dim = spellSize / 2;
 				UtilTextureRender.drawTextureSquare(prev.getIconDisplay(), x, y, dim);
 	
-				prev = SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.prevId(wand, prev.getID()));
+				prev = SpellRegistry.prev(wand,  prev);
+				//SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.prevId(wand, prev.getID()));
 	
 				if(prev != null){
 					x += 5;
@@ -177,7 +179,8 @@ public class EventSpells{
 					dim -= 2;
 					UtilTextureRender.drawTextureSquare(prev.getIconDisplay(), x, y, dim);
 	
-					prev = SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.prevId(wand, prev.getID()));
+					prev = SpellRegistry.prev(wand,  prev);
+					//SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.prevId(wand, prev.getID()));
 	
 					if(prev != null){
 						x += 3;
@@ -185,7 +188,8 @@ public class EventSpells{
 						dim -= 2;
 						UtilTextureRender.drawTextureSquare(prev.getIconDisplay(), x, y, dim);
 	
-						prev = SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.prevId(wand, prev.getID()));
+						prev = SpellRegistry.prev(wand,  prev);
+						//SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.prevId(wand, prev.getID()));
 	
 						if(prev != null){
 							x += 2;
@@ -202,7 +206,8 @@ public class EventSpells{
 	
 			ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
 	
-			ISpell next = SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.nextId(wand, spellCurrent.getID()));
+			ISpell next = SpellRegistry.next(wand,  spellCurrent);
+					//SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.nextId(wand, spellCurrent.getID()));
 	
 			if(next != null){
 				int x = xmain - 5;
@@ -210,7 +215,8 @@ public class EventSpells{
 				int dim = spellSize / 2;
 				UtilTextureRender.drawTextureSquare(next.getIconDisplay(), x, y, dim);
 	
-				next = SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.nextId(wand, next.getID()));
+				next = SpellRegistry.next(wand,  next);
+				//SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.nextId(wand, next.getID()));
 	
 				if(next != null){
 					x -= 2;
@@ -218,14 +224,16 @@ public class EventSpells{
 					dim -= 2;
 					UtilTextureRender.drawTextureSquare(next.getIconDisplay(), x, y, dim);
 	
-					next = SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.nextId(wand, next.getID()));
+					next = SpellRegistry.next(wand,  next);
+					//SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.nextId(wand, next.getID()));
 					if(next != null){
 						x -= 2;
 						y += 10;
 						dim -= 2;
 						UtilTextureRender.drawTextureSquare(next.getIconDisplay(), x, y, dim);
 	
-						next = SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.nextId(wand, next.getID()));
+						next = SpellRegistry.next(wand,  next);
+						//SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.nextId(wand, next.getID()));
 						if(next != null){
 							x -= 2;
 							y += 10;

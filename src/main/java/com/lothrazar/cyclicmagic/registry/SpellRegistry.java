@@ -3,6 +3,7 @@ package com.lothrazar.cyclicmagic.registry;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
 import com.lothrazar.cyclicmagic.spell.*; 
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
@@ -49,62 +50,61 @@ public class SpellRegistry{
 		int spellId = -1;// the smallest spell gets id zero
 
 		Spells.replacer = new SpellRangeReplace(++spellId, "replacer");
-		registerSpell(Spells.replacer);
-		spellbookRange.add(Spells.replacer);
+		registerReachSpell(Spells.replacer);
 
 		Spells.rotate = new SpellRangeRotate(++spellId, "rotate");
-		registerSpell(Spells.rotate);
-		spellbookRange.add(Spells.rotate);
+		registerReachSpell(Spells.rotate);
 		
 		Spells.inventory = new SpellInventory(++spellId, "inventory");
-		registerSpell(Spells.inventory);
+		registerSpell(Spells.inventory);//special case where its in both
 		spellbookRange.add(Spells.inventory);
 		spellbookBuild.add(Spells.inventory);
 
 		Spells.push = new SpellRangePush(++spellId, "push");
-		registerSpell(Spells.push);
-		spellbookRange.add(Spells.push);
+		registerReachSpell(Spells.push);
 
 		Spells.pull = new SpellRangePull(++spellId, "pull");
-		registerSpell(Spells.pull);
-		spellbookRange.add(Spells.pull);
+		registerReachSpell(Spells.pull);
 
 		Spells.launch = new SpellLaunch(++spellId, "launch");
 		registerSpell(Spells.launch);
-		spellbookRange.add(Spells.launch);
+		spellbookRange.add(Spells.inventory);
+		spellbookBuild.add(Spells.inventory);
 
 		Spells.reachup = new SpellRangeBuild(++spellId, "reachup",SpellRangeBuild.PlaceType.UP);
-		registerSpell(Spells.reachup);
-		spellbookRange.add(Spells.reachup);
+		registerReachSpell(Spells.reachup);
 		
 		Spells.reachplace = new SpellRangeBuild(++spellId, "reachplace",SpellRangeBuild.PlaceType.PLACE);
-		registerSpell(Spells.reachplace);
-		spellbookRange.add(Spells.reachplace);
+		registerReachSpell(Spells.reachplace);
 
 		Spells.reachdown = new SpellRangeBuild(++spellId, "reachdown",SpellRangeBuild.PlaceType.DOWN);
-		registerSpell(Spells.reachdown);
-		spellbookRange.add(Spells.reachdown);
+		registerReachSpell(Spells.reachdown);
 
 		Spells.placeline = new SpellPlaceLine(++spellId, "placeline");
-		registerSpell(Spells.placeline);
-		spellbookBuild.add(Spells.placeline);
+		registerBuildSpell(Spells.placeline);
 
 		Spells.placecircle = new SpellPlaceCircle(++spellId, "placecircle");
-		registerSpell(Spells.placecircle);
-		spellbookBuild.add(Spells.placecircle);
+		registerBuildSpell(Spells.placecircle);
 
 		Spells.placestair = new SpellPlaceStair(++spellId, "placestair");
-		registerSpell(Spells.placestair);
-		spellbookBuild.add(Spells.placestair);
+		registerBuildSpell(Spells.placestair);
 		
 		Spells.placefloor = new SpellPlaceFloor(++spellId, "placefloor");
-		registerSpell(Spells.placefloor);
-		spellbookBuild.add(Spells.placefloor);
+		registerBuildSpell(Spells.placefloor);
 	}
 
+
+	private static void registerBuildSpell(ISpell spell){
+		registerSpell(spell);
+		spellbookBuild.add(spell);
+	
+	}
+	private static void registerReachSpell(ISpell spell){
+		registerSpell(spell);
+		spellbookRange.add(spell);
+	}
 	private static void registerSpell(ISpell spell){
 
-		//spellbook.add(spell);
 		hashbook.put(spell.getID(), spell);
 		spellRegistry.put(spell.getUnlocalizedName(), spell);
 	}
@@ -130,11 +130,9 @@ public class SpellRegistry{
 
 	public static ArrayList<ISpell> getSpellbook(ItemStack wand){
 		if(wand.getItem() == ItemRegistry.cyclic_wand){
-			System.out.println("range book");
 			return spellbookRange;
 		}
 		else if(wand.getItem() == ItemRegistry.cyclic_wand_range){
-			System.out.println("!!!spellbookBuild");
 			return spellbookBuild;
 		}
 		
@@ -151,4 +149,61 @@ public class SpellRegistry{
 		BaseSpellRange.maxRange = config.getInt("Max Range", category, 64,8,128, "Maximum range for all spells");
 
 	}
+	
+	public static ISpell next(ItemStack wand, ISpell spell){
+		
+		ArrayList<ISpell> book = SpellRegistry.getSpellbook(wand);
+		
+		int indexCurrent = book.indexOf(spell);
+		int indexNext;
+		if(indexCurrent >= book.size() - 1)
+			indexNext = 0;// (int)spells[0];
+		else
+			indexNext = indexCurrent + 1;// (int)spells[spell_id+1];
+		
+		
+		return book.get(indexNext);
+				//SpellRegistry.getSpellFromID(indexNext);
+	}
+
+	public static ISpell prev(ItemStack wand, ISpell spell){
+
+		ArrayList<ISpell> book = SpellRegistry.getSpellbook(wand);
+		
+		int indexCurrent = book.indexOf(spell);
+		int indexPrev;
+		
+		if(indexCurrent <= 0)//not that it ever WOULD be.. negative.. yeah
+			indexPrev = book.size() - 1;
+		else
+			indexPrev = indexCurrent - 1;
+		
+		return book.get(indexPrev);//SpellRegistry.getSpellFromID(indexPrev);
+		
+	}
+	/*
+	private static int nextId(ItemStack stack, int spell_id){
+
+		int next;
+
+		if(spell_id >= SpellRegistry.getSpellbook(stack).size() - 1)
+			next = 0;// (int)spells[0];
+		else
+			next = spell_id + 1;// (int)spells[spell_id+1];
+
+		return next;
+	}
+
+	private static int prevId(ItemStack stack, int spell_id){
+
+		int prev;
+
+		if(spell_id == 0)
+			prev = SpellRegistry.getSpellbook(stack).size() - 1;
+		else
+			prev = spell_id - 1;
+
+		return prev;
+	}
+*/
 }

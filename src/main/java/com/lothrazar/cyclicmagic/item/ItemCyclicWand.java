@@ -71,7 +71,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe{
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced){
 
-		ISpell spell = SpellRegistry.getSpellFromID(Spells.getSpellCurrent(stack));
+		ISpell spell = SpellRegistry.getSpellFromID(Spells.getSpellIDCurrent(stack));
 
 		int MAX = Energy.getMaximum(stack);
 
@@ -173,35 +173,13 @@ public class ItemCyclicWand extends Item implements IHasRecipe{
 
 	public static class Spells{
 
-		public static int nextId(ItemStack stack, int spell_id){
-
-			int next;
- 
-			if(spell_id >= SpellRegistry.getSpellbook(stack).size() - 1)
-				next = 0;// (int)spells[0];
-			else
-				next = spell_id + 1;// (int)spells[spell_id+1];
-
-			System.out.println("next from " + spell_id + " IS "+next);
-			// this.setUnlocksFromByte(spells);
-			return next;
-		}
-
-		public static int prevId(ItemStack stack, int spell_id){
-
-			int prev;
-
-			if(spell_id == 0)
-				prev = SpellRegistry.getSpellbook(stack).size() - 1;
-			else
-				prev = spell_id - 1;
-	
-			return prev;
-		}
-
-		public static int getSpellCurrent(ItemStack stack){
+		public static int getSpellIDCurrent(ItemStack stack){
 
 			return getNBT(stack).getInteger(NBT_SPELLCURRENT);
+		}
+		public static ISpell getSpellCurrent(ItemStack stack){
+
+			return SpellRegistry.getSpellFromID(getSpellIDCurrent(stack));
 		}
 
 		public static void setSpellCurrent(ItemStack stack, int spell_id){

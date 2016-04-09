@@ -83,7 +83,7 @@ public class UtilSpellCaster{
 
 		ItemStack wand = getPlayerWandIfHeld(player);
 
-		int left = ItemCyclicWand.Spells.prevId(wand, ItemCyclicWand.Spells.getSpellCurrent(wand));
+		int left = SpellRegistry.prev(wand, ItemCyclicWand.Spells.getSpellCurrent(wand)).getID();
 
 		ItemCyclicWand.Spells.setSpellCurrent(wand, left);
 
@@ -94,7 +94,7 @@ public class UtilSpellCaster{
 
 		ItemStack wand = getPlayerWandIfHeld(player);
 
-		int right = ItemCyclicWand.Spells.nextId(wand, ItemCyclicWand.Spells.getSpellCurrent(wand));
+		int right = SpellRegistry.next(wand, ItemCyclicWand.Spells.getSpellCurrent(wand)).getID();
 
 		ItemCyclicWand.Spells.setSpellCurrent(wand, right);
 		UtilSound.playSound(player.worldObj, player.getPosition(), UtilSound.Own.bip);
@@ -104,7 +104,7 @@ public class UtilSpellCaster{
 	public static ISpell getPlayerCurrentISpell(EntityPlayer player){
 		ItemStack wand = getPlayerWandIfHeld(player);
 
-		ISpell current = SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.getSpellCurrent(wand));
+		ISpell current = SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.getSpellIDCurrent(wand));
 
 		if(current == null){
 			current = SpellRegistry.getDefaultSpell();
