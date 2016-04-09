@@ -119,7 +119,7 @@ public class GuiEnderBook  extends GuiScreen
 		
 		// http://www.minecraftforge.net/forum/index.php?topic=22378.0
 		//no idea why this is sometimes randomly null and only on world start if i open it too quick??
-		if(txtNew!=null)txtNew.drawTextBox();
+		if(txtNew != null) {txtNew.drawTextBox();}
 		
 		//super draws buttons and such
 		super.drawScreen(x, y, par3);
@@ -181,13 +181,13 @@ public class GuiEnderBook  extends GuiScreen
 	public void updateScreen()
     {
         super.updateScreen();
-        if(txtNew != null)txtNew.updateCursorCounter();
+        if(txtNew != null){txtNew.updateCursorCounter();}
     }
 	@Override
 	protected void keyTyped(char par1, int par2) throws IOException
     {
         super.keyTyped(par1, par2);
-        if(txtNew != null)txtNew.textboxKeyTyped(par1, par2);
+        if(txtNew != null){txtNew.textboxKeyTyped(par1, par2);}
     }
 	@Override
 	protected void mouseClicked(int x, int y, int btn) throws IOException 

@@ -455,6 +455,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe{
 			NBTTagCompound tags = getNBT(wand);
 
 			tags.setInteger(NBT,current);
+			wand.setTagCompound(tags); 
 		}
 
 		public static boolean isBlockedBySpellTimer(ItemStack wand){
@@ -516,19 +517,23 @@ public class ItemCyclicWand extends Item implements IHasRecipe{
 			}
 
 			tags.setInteger(NBT, type);
+			wand.setTagCompound(tags); 
 		}
 
 		public static int getBuildSize(ItemStack wand) {
 
 			NBTTagCompound tags = getNBT(wand);
-
-			return tags.getInteger(NBTSIZE);
+			int s = tags.getInteger(NBTSIZE);
+			System.out.println("getBuildSize:"+s);
+			return s;
 		} 
 
 		public static void setBuildSize(ItemStack wand, int size) {
 
 			NBTTagCompound tags = getNBT(wand);
 			tags.setInteger(NBTSIZE,size);
+			System.out.println("SET:"+size);
+			wand.setTagCompound(tags); 
 		} 
 	}
 	

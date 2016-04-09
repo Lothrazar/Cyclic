@@ -1,5 +1,7 @@
 package com.lothrazar.cyclicmagic.gui;
 
+import java.io.IOException;
+
 import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.gui.button.*;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
@@ -40,6 +42,7 @@ public class GuiWandInventory extends GuiContainer{
 		int x = this.guiLeft + 5;
 
 		int width = 20;
+		
 		this.buttonList.add(new ButtonSpellCircle(id, x, y, width));
 
 		id++;
@@ -53,13 +56,12 @@ public class GuiWandInventory extends GuiContainer{
 		id++;
 		x += width + padding;
 		width = 50;
-		this.buttonList.add(new ButtonBuildToggle(inventory.getPlayer(), id, x, y, width));
-		
-		
+		ButtonBuildToggle btn = new ButtonBuildToggle(inventory.getPlayer(), id, x, y, width);
+		this.buttonList.add(btn);
 		
 		id++;
-		x += width + padding;
-		y += 10;
+		x += width + padding+8;
+		//y += 10;
 
 		int size = ItemCyclicWand.BuildType.getBuildSize(internalWand);
 		if(size <= 0){
@@ -67,41 +69,30 @@ public class GuiWandInventory extends GuiContainer{
 		}
 		System.out.println("set visible based on spell:size="+size); 
 		buildSize = new GuiTextField(id,this.fontRendererObj,
-				x,y,30,20);
+				x,y, 
+				30,20);
 		buildSize.setMaxStringLength(2);
-		buildSize.setText(""+size);//TODO: save this in data
+		buildSize.setText(""+size);
 		buildSize.setVisible(true);
+		buildSize.setFocused(true);
 		
-		
-		
-		//buildSize.setVisible(isVisible);
-	//	buildSize.setFocused(true);
-		
-		
-		
-		
-		/*
-		id++;
-		x += width + padding;
-		width = 50;
-		this.buttonList.add(new ButtonPlaceToggle(inventory.getPlayer(), id, x, y, width));
-		*/
 	}
 
 	@Override
     public void onGuiClosed(){
-
-		System.out.println("save on closed="); 
 
 		int size = 1;
 	
 		try{
 			size = Integer.parseInt(buildSize.getText());
 		}catch(Exception e){
-			
+
+
+			System.out.println("fail int"); 
 			return;//if its not an integer, then do notsave`
 		}
-		
+
+		System.out.println("save on closed="+size); 
 		ItemCyclicWand.BuildType.setBuildSize(internalWand,size);
     }
 	
@@ -110,6 +101,8 @@ public class GuiWandInventory extends GuiContainer{
 
 		super.drawScreen(mouseX, mouseY, partialTicks);
 
+		if(buildSize != null) {buildSize.drawTextBox();}
+		
 		ITooltipButton btn;
 		for(int i = 0; i < buttonList.size(); i++){
 			if(buttonList.get(i).isMouseOver() && buttonList.get(i) instanceof ITooltipButton){
@@ -134,4 +127,22 @@ public class GuiWandInventory extends GuiContainer{
 
 		this.drawTexturedModalRect((this.width - this.xSize) / 2, (this.height - this.ySize) / 2, 0, 0, this.xSize, this.ySize);
 	}
+	@Override
+	public void updateScreen()
+    {
+        super.updateScreen();
+        if(buildSize != null){buildSize.updateCursorCounter();}
+    }
+	@Override
+	protected void keyTyped(char par1, int par2) throws IOException
+    {
+        super.keyTyped(par1, par2);
+        if(buildSize != null){buildSize.textboxKeyTyped(par1, par2);}
+    }
+	@Override
+	protected void mouseClicked(int x, int y, int btn) throws IOException 
+	{
+        super.mouseClicked(x, y, btn);
+        if(buildSize != null){buildSize.mouseClicked(x, y, btn);}
+    }
 }
