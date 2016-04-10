@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.button.*;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.net.PacketBuildSize;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -71,7 +72,9 @@ public class GuiWandInventory extends GuiContainer {
 		buildSize = new GuiTextField(id, this.fontRendererObj, x, y, 30, 20);
 		buildSize.setMaxStringLength(2);
 		buildSize.setText("" + size);
-		buildSize.setVisible(true);
+		 
+		buildSize.setVisible(internalWand.getItem() != ItemRegistry.cyclic_wand_range);
+		
 		buildSize.setFocused(true);
 
 	}

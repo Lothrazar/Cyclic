@@ -31,11 +31,14 @@ public class SpellPlaceLine extends BaseSpellPlace {
 			startPos = startPos.offset(side);
 		}
 
-		EnumFacing efacing = (player.isSneaking()) ? EnumFacing.DOWN : UtilEntity.getPlayerFacing(player);
+		if(side == null){
+			return false;//it means block was not clicked on, it was clicked in midair
+		} 
+
 		// boolean isLookingUp = (player.getLookVec().yCoord >= 0);//TODO: use this
 		// somehow? to place up/down?
 
-		UtilPlaceBlocks.line(world, player, wand, startPos, efacing);// ,vertOffset
+		UtilPlaceBlocks.line(world, player, wand, startPos, UtilEntity.getPlayerFacing(player));
 
 		return true;
 	}

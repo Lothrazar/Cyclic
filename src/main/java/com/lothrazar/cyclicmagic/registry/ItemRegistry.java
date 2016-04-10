@@ -62,6 +62,7 @@ public class ItemRegistry {
 	public static ItemProjectile				ender_tnt_6;																		// ender
 	                                                                                    // crystal
 	public static ItemCyclicWand				cyclic_wand_range;
+	public static ItemCyclicWand cyclic_wand_fly;
 
 	public static void registerItem(Item item, String name) {
 		registerItem(item, name, false);// default is not hidden
@@ -119,6 +120,10 @@ public class ItemRegistry {
 		cyclic_wand_range = new ItemCyclicWand();
 		registerItem(cyclic_wand_range, "cyclic_wand_range");
 
+		cyclic_wand_fly = new ItemCyclicWand();
+		registerItem(cyclic_wand_fly, "cyclic_wand_fly");
+		
+		
 		// TODO: retexture and/or decide if we are even keeping this
 		Item multitool = new ItemMultiTool();
 		registerItem(multitool, "multitool");

@@ -14,6 +14,7 @@ public class SpellRegistry {
 	public static boolean								renderOnLeft;
 	private static ArrayList<ISpell>		spellbookRange;
 	private static ArrayList<ISpell>		spellbookBuild;
+	private static ArrayList<ISpell>		spellbookFly;
 	private static Map<Integer, ISpell>	hashbook;
 	// TODO: move from ints to strings one day..??
 	// private static Map<String, ISpell> spellRegistry;
@@ -44,6 +45,7 @@ public class SpellRegistry {
 		// spellbook = new ArrayList<ISpell>();
 		spellbookRange = new ArrayList<ISpell>();
 		spellbookBuild = new ArrayList<ISpell>();
+		spellbookFly = new ArrayList<ISpell>();
 		hashbook = new HashMap<Integer, ISpell>();
 		// spellRegistry = new HashMap<String, ISpell>();
 
@@ -68,8 +70,7 @@ public class SpellRegistry {
 
 		Spells.launch = new SpellLaunch(++spellId, "launch");
 		registerSpell(Spells.launch);
-		spellbookRange.add(Spells.launch);
-		spellbookBuild.add(Spells.launch);
+		spellbookFly.add(Spells.launch);
 
 		Spells.reachup = new SpellRangeBuild(++spellId, "reachup", SpellRangeBuild.PlaceType.UP);
 		registerReachSpell(Spells.reachup);
@@ -130,8 +131,14 @@ public class SpellRegistry {
 		if (wand.getItem() == ItemRegistry.cyclic_wand) {
 			return spellbookRange;
 		}
-		else if (wand.getItem() == ItemRegistry.cyclic_wand_range) { return spellbookBuild; }
+		if (wand.getItem() == ItemRegistry.cyclic_wand_range) { 
+			return spellbookBuild; 
+		}
 
+		if (wand.getItem() == ItemRegistry.cyclic_wand_fly) { 
+			return spellbookFly; 
+		}
+		
 		return null;
 	}
 

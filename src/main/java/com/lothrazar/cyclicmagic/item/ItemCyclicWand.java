@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
 import org.lwjgl.input.Keyboard;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
@@ -50,16 +51,23 @@ public class ItemCyclicWand extends Item implements IHasRecipe {
 		return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged);
 	}
 
-	/*
-	 * @Override
-	 * public void onCreated(ItemStack stack, World worldIn, EntityPlayer
-	 * playerIn){
-	 * 
-	 * Energy.rechargeBy(stack, Energy.START);
-	 * 
-	 * super.onCreated(stack, worldIn, playerIn);
-	 * }
-	 */
+	
+	  @Override
+	  public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn){
+	  
+	//  Energy.rechargeBy(stack, Energy.START);
+	  
+	  if(stack.getItem() == ItemRegistry.cyclic_wand_fly){
+
+		  Spells.setSpellCurrent(stack,SpellRegistry.Spells.launch.getID());
+	  }
+	  else{		  
+	  	Spells.setSpellCurrent(stack,SpellRegistry.Spells.inventory.getID());
+	  }
+	  
+	  super.onCreated(stack, worldIn, playerIn);
+	 }
+	 
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
 
@@ -162,8 +170,13 @@ public class ItemCyclicWand extends Item implements IHasRecipe {
 	public static class Spells {
 
 		public static int getSpellIDCurrent(ItemStack stack) {
+			//workaround for default spell being replace. and oncrafting not firing
+			if(stack.getItem() == ItemRegistry.cyclic_wand_fly){
+				return SpellRegistry.Spells.launch.getID();
+			}
 
-			return getNBT(stack).getInteger(NBT_SPELLCURRENT);
+			int c = getNBT(stack).getInteger(NBT_SPELLCURRENT);
+			return c;
 		}
 
 		public static ISpell getSpellCurrent(ItemStack stack) {

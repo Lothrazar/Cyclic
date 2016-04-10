@@ -14,6 +14,7 @@ import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.net.MessageKeyLeft;
 import com.lothrazar.cyclicmagic.net.MessageKeyRight;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
@@ -35,11 +36,17 @@ public class EventSpells {
 		// DO NOT use InputEvent.MouseInputEvent
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 
-		if (SpellRegistry.spellsEnabled(player) == false) {
+		ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
+		
+		//special new case: no hud for this type
+		if (wand == null || wand.getItem() == ItemRegistry.cyclic_wand_fly) {
+ 
 			// you are not holding the wand - so go as normal
 			return;
 		}
 
+		
+		
 		if (player.isSneaking()) {
 			if (event.getDwheel() < 0) {
 				ModMain.network.sendToServer(new MessageKeyRight());
@@ -59,7 +66,11 @@ public class EventSpells {
 		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
 		// PlayerPowerups props = PlayerPowerups.get(player);
 
-		if (SpellRegistry.spellsEnabled(player)) {
+		//wand.getItem() == ItemRegistry.cyclic_wand_fly
+		ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
+		
+		//special new case: no hud for this type
+		if (wand != null && wand.getItem() != ItemRegistry.cyclic_wand_fly) {
 			spellHud.drawSpellWheel();
 		}
 	}
