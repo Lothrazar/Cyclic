@@ -19,7 +19,7 @@ public class FuelRegistry {
 
 	public static void syncConfig(Configuration config) {
 
-		String category = Const.MODCONF + "misc";
+		String category = Const.MODCONF + "Misc";
 
 		String msg = "Tons more things are burnable as fuel, such as signs, ladders, seeds, plants";
 
