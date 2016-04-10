@@ -5,8 +5,6 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -18,7 +16,6 @@ import com.lothrazar.cyclicmagic.net.MessageKeyLeft;
 import com.lothrazar.cyclicmagic.net.MessageKeyRight;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
-import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import com.lothrazar.cyclicmagic.util.UtilTextureRender;
 
@@ -69,17 +66,17 @@ public class EventSpells {
 
 	private static final int							xoffset					= 30;
 	private static int										xmain;
-	private static int										xHud;
-	private static int										yHud;
+	////private static int										xHud;
+	//private static int										yHud;
 	private static final int							ymain						= 14;
 	private static final int							spellSize				= 16;
 
-	private static final int							manaCtrWidth		= 8;
-	private static final int							manaCtrHeight		= 92;
-	private static final int							manaWidth				= manaCtrWidth - 2;
+	//private static final int							manaCtrWidth		= 8;
+	//private static final int							manaCtrHeight		= 92;
+	//private static final int							manaWidth				= manaCtrWidth - 2;
 	// private static final int manaHeight = manaCtrHeight - 2;
-	private static final ResourceLocation	mana						= new ResourceLocation(Const.MODID, "textures/hud/manabar.png");
-	private static final ResourceLocation	mana_container	= new ResourceLocation(Const.MODID, "textures/hud/manabar_empty.png");
+	//private static final ResourceLocation	mana						= new ResourceLocation(Const.MODID, "textures/hud/manabar.png");
+	//private static final ResourceLocation	mana_container	= new ResourceLocation(Const.MODID, "textures/hud/manabar_empty.png");
 
 	private class SpellHud {
 
@@ -94,8 +91,8 @@ public class EventSpells {
 				// NOT Minecraft.getMinecraft().displayWidth
 				xmain = res.getScaledWidth() - xoffset;
 			}
-			xHud = xmain - 20;
-			yHud = ymain - 12;
+			//xHud = xmain - 20;
+			//yHud = ymain - 12;
 
 			EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
 
