@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.command;
 
-import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilTeleport;
@@ -12,14 +11,11 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 
 public class CommandWorldHome extends BaseCommand implements ICommand {
-	public static boolean			REQUIRES_OP;
 
-	private ArrayList<String>	aliases	= new ArrayList<String>();
-
+	public static final String name = "worldhome";
 	public CommandWorldHome(String n, boolean op) {
 
 		super(n, op);
-		aliases.add(n.toUpperCase());
 	}
 
 	@Override

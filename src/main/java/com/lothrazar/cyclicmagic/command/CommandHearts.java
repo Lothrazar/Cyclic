@@ -9,8 +9,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 
 public class CommandHearts extends BaseCommand implements ICommand {
-	public CommandHearts(String n, boolean op) {
 
+	public static final String name = "sethearts";
+	
+	public CommandHearts(String n, boolean op) {
 		super(n, op);
 	}
 

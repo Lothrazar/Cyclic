@@ -10,6 +10,7 @@ import com.lothrazar.cyclicmagic.entity.projectile.EntityShearingBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntitySnowballBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityTorchBolt;
 import com.lothrazar.cyclicmagic.item.*;
+import com.lothrazar.cyclicmagic.spell.BaseSpellRange;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -113,35 +114,40 @@ public class ItemRegistry {
 	public static void register() {
 
 		registerMaterials();
-
-		cyclic_wand = new ItemCyclicWand();
-		registerItem(cyclic_wand, "cyclic_wand");
-		GameRegistry.addRecipe(new ItemStack(cyclic_wand), 
-					"sds", 
-					" o ", 
-					"gog", 
-					'd', new ItemStack(Blocks.diamond_block),'g', Items.ghast_tear, 'o', Blocks.obsidian, 's', Items.nether_star);
 		
-		cyclic_wand_range = new ItemCyclicWand();
-		registerItem(cyclic_wand_range, "cyclic_wand_range");
-		GameRegistry.addRecipe(new ItemStack(cyclic_wand_range), 
-					"sds", 
-					" o ", 
-					"gog", 
-					'd', new ItemStack(Blocks.emerald_block),'g', Items.ghast_tear, 'o', Blocks.obsidian, 's', Items.nether_star);
-	
-		cyclic_wand_fly = new ItemCyclicWand();
-		registerItem(cyclic_wand_fly, "cyclic_wand_fly");
-		GameRegistry.addRecipe(new ItemStack(cyclic_wand_fly), 
-					"sds", 
-					" o ", 
-					"gog", 
-					'd', new ItemStack(Blocks.redstone_block),'g', Items.ghast_tear, 'o', Blocks.obsidian, 's', Items.nether_star);
-	
-		// TODO: retexture and/or decide if we are even keeping this
-		Item multitool = new ItemMultiTool();
-		registerItem(multitool,ItemMultiTool.name);
+		if(sceptersEnabled){
 
+			cyclic_wand = new ItemCyclicWand();
+			registerItem(cyclic_wand, "cyclic_wand");
+			GameRegistry.addRecipe(new ItemStack(cyclic_wand), 
+						"sds", 
+						" o ", 
+						"gog", 
+						'd', new ItemStack(Blocks.diamond_block),'g', Items.ghast_tear, 'o', Blocks.obsidian, 's', Items.nether_star);
+			
+			cyclic_wand_range = new ItemCyclicWand();
+			registerItem(cyclic_wand_range, "cyclic_wand_range");
+			GameRegistry.addRecipe(new ItemStack(cyclic_wand_range), 
+						"sds", 
+						" o ", 
+						"gog", 
+						'd', new ItemStack(Blocks.emerald_block),'g', Items.ghast_tear, 'o', Blocks.obsidian, 's', Items.nether_star);
+		
+			cyclic_wand_fly = new ItemCyclicWand();
+			registerItem(cyclic_wand_fly, "cyclic_wand_fly");
+			GameRegistry.addRecipe(new ItemStack(cyclic_wand_fly), 
+						"sds", 
+						" o ", 
+						"gog", 
+						'd', new ItemStack(Blocks.redstone_block),'g', Items.ghast_tear, 'o', Blocks.obsidian, 's', Items.nether_star);
+		}
+		
+		// TODO: retexture and/or decide if we are even keeping this
+		if (configToggle.get(ItemEnderPearlReuse.name)) {
+			Item multitool = new ItemMultiTool();
+			registerItem(multitool,ItemMultiTool.name);
+		}
+		
 		if (configToggle.get(ItemEnderPearlReuse.name)) {
 
 			ItemEnderPearlReuse ender_pearl_reuse = new ItemEnderPearlReuse();
@@ -320,13 +326,36 @@ public class ItemRegistry {
 	public static int			expCostPerTeleport;
 	public static String	category_public;
 
+	public static int	fishing_recipe;
+	public static int	wool_recipe;
+	public static int	torch_recipe;
+	public static int	lightning_recipe;
+	public static int	snow_recipe;
+	public static int	water_recipe;
+	public static int	harvest_recipe;
+	public static int	bed_recipe;
+	public static int	dungeon_recipe;
+	public static int	tnt_recipe;
+	public static int	blaze_recipe;
+	private static boolean sceptersEnabled;
+
 	public static void syncConfig(Configuration config) {
 
-		String category = Const.MODCONF + "items";
+		String category = Const.MODCONF + "Items";
+		
+		sceptersEnabled = config.getBoolean("sceptersEnabled", category, true, "Enable the building scepters");
+
+		SpellRegistry.renderOnLeft = config.getBoolean("scepter_HUD_left", category, true, "True for top left of the screen, false for top right");
+
+		BaseSpellRange.maxRange = config.getInt("scepter_MaxRange", category, 64, 8, 128, "Maximum range for all spells");
 
 		config.setCategoryComment(category, "Items added to the game");
 
-		Property prop = config.get(category, ItemEnderPearlReuse.name, true, "Reuseable ender pearl");
+		Property prop = config.get(category, ItemMultiTool.name, true, "Overpowered Multi Tool");
+		prop.setRequiresMcRestart(true);
+		configToggle.put(ItemMultiTool.name, prop.getBoolean());
+
+		prop = config.get(category, ItemEnderPearlReuse.name, true, "Reuseable ender pearl");
 		prop.setRequiresMcRestart(true);
 		configToggle.put(ItemEnderPearlReuse.name, prop.getBoolean());
 
@@ -342,7 +371,7 @@ public class ItemRegistry {
 		prop.setRequiresMcRestart(true);
 		configToggle.put("emerald_gear", prop.getBoolean());
 
-		category = Const.MODCONF + "items.EnderBook";
+		category = Const.MODCONF + "Items.EnderBook";
 		doesPauseGame = config.getBoolean("pause_game_sp", category, false, "The Ender Book GUI will pause the game (single player)");
 
 		craftNetherStar = config.getBoolean("needs_nether_star", category, true, "The Ender Book requires a nether star to craft.  REQUIRES RESTART.");
@@ -361,62 +390,42 @@ public class ItemRegistry {
 		ItemHorseFood.JUMP_MAX = config.getInt("jump_max", category, 6, 1, 20, "Maximum value of jump.  Naturally spawned/bred horses seem to max out at 5.5");
 		ItemHorseFood.SPEED_MAX = config.getInt("speed_max", category, 50, 1, 99, "Maximum value of speed (this is NOT blocks/per second or anything like that)");
 
-		projectileConfig(config);
-
-		if (config.hasChanged()) {
-			config.save();
-		}
-	}
-
-	public static int	fishing_recipe;
-	public static int	wool_recipe;
-	public static int	torch_recipe;
-	public static int	lightning_recipe;
-	public static int	snow_recipe;
-	public static int	water_recipe;
-	public static int	harvest_recipe;
-	public static int	bed_recipe;
-	public static int	dungeon_recipe;
-	public static int	tnt_recipe;
-	public static int	blaze_recipe;
-
-	private static void projectileConfig(Configuration config) {
 
 		// config.load();
-		// config.addCustomCategoryComment(MODID, "For each item, you can decide how
-		// many the recipe produces. Set to zero to disable the crafting recipe.");
+		//
 
-		String MODID = Const.MODID;
-		torch_recipe = config.getInt("torch.crafted", MODID, 6, 0, 64, "");
-		lightning_recipe = config.getInt("lightning.crafted", MODID, 1, 0, 64, "");
-		snow_recipe = config.getInt("snow.crafted", MODID, 4, 0, 64, "");
-		water_recipe = config.getInt("water.crafted", MODID, 4, 0, 64, "");
-		harvest_recipe = config.getInt("harvest.crafted", MODID, 4, 0, 64, "");
-		wool_recipe = config.getInt("wool.crafted", MODID, 32, 0, 64, "");
-		fishing_recipe = config.getInt("fishing.recipe", MODID, 10, 0, 64, "");
-		bed_recipe = config.getInt("bed.recipe", MODID, 4, 0, 64, "");
-		dungeon_recipe = config.getInt("dungeon.recipe", MODID, 4, 0, 64, "");
-		tnt_recipe = config.getInt("tnt.recipe", MODID, 6, 0, 64, "");
-		blaze_recipe = config.getInt("blaze.recipe", MODID, 3, 0, 64, "");
+		category = Const.MODCONF + "Items.ProjectileRecipes";
+		config.addCustomCategoryComment(category, "For each item, you can decide how many the recipe produces. Set to zero to disable the crafting recipe.");
+		torch_recipe = config.getInt("torch.crafted", category, 6, 0, 64, "");
+		lightning_recipe = config.getInt("lightning.crafted", category, 1, 0, 64, "");
+		snow_recipe = config.getInt("snow.crafted", category, 4, 0, 64, "");
+		water_recipe = config.getInt("water.crafted", category, 4, 0, 64, "");
+		harvest_recipe = config.getInt("harvest.crafted", category, 4, 0, 64, "");
+		wool_recipe = config.getInt("wool.crafted", category, 32, 0, 64, "");
+		fishing_recipe = config.getInt("fishing.recipe", category, 10, 0, 64, "");
+		bed_recipe = config.getInt("bed.recipe", category, 4, 0, 64, "");
+		dungeon_recipe = config.getInt("dungeon.recipe", category, 4, 0, 64, "");
+		tnt_recipe = config.getInt("tnt.recipe", category, 6, 0, 64, "");
+		blaze_recipe = config.getInt("blaze.recipe", category, 3, 0, 64, "");
 
-		ItemProjectile.DUNGEONRADIUS = config.getInt("dungeon.radius", MODID, 64, 8, 128, "Search distance");
+		ItemProjectile.DUNGEONRADIUS = config.getInt("dungeon.radius", category, 64, 8, 128, "Search distance");
 
-		EntityShearingBolt.doesKnockback = config.getBoolean("wool.does_knockback", MODID, true, "Does appear to damage sheep on contact");
-		EntityShearingBolt.doesShearChild = config.getBoolean("wool.does_child", MODID, true, "Does shear child sheep as well.");
+		EntityShearingBolt.doesKnockback = config.getBoolean("wool.does_knockback", category, true, "Does appear to damage sheep on contact");
+		EntityShearingBolt.doesShearChild = config.getBoolean("wool.does_child", category, true, "Does shear child sheep as well.");
 
-		EntityBlazeBolt.fireSeconds = config.getInt("blaze.fire_seconds", MODID, 3, 0, 64, "Seconds of fire to put on entity when hit");
-		EntityBlazeBolt.damageEntityOnHit = config.getBoolean("blaze.does_knockback", MODID, true, "Does it damage entity or not on hit (0 damage to blaze, 1 to others)");
-		EntitySnowballBolt.damageEntityOnHit = config.getBoolean("snow.does_knockback", MODID, true, "Does it damage entity or not on hit (1 damage to blaze, 0 to others)");
-		EntityTorchBolt.damageEntityOnHit = config.getBoolean("torch.does_knockback", MODID, true, "Does it damage entity or not on hit (0 dmg like a snowball)");
+		EntityBlazeBolt.fireSeconds = config.getInt("blaze.fire_seconds", category, 3, 0, 64, "Seconds of fire to put on entity when hit");
+		EntityBlazeBolt.damageEntityOnHit = config.getBoolean("blaze.does_knockback", category, true, "Does it damage entity or not on hit (0 damage to blaze, 1 to others)");
+		EntitySnowballBolt.damageEntityOnHit = config.getBoolean("snow.does_knockback", category, true, "Does it damage entity or not on hit (1 damage to blaze, 0 to others)");
+		EntityTorchBolt.damageEntityOnHit = config.getBoolean("torch.does_knockback", category, true, "Does it damage entity or not on hit (0 dmg like a snowball)");
 
-		EntityHarvestBolt.range_main = config.getInt("harvest.range_main", MODID, 6, 1, 32, "Horizontal range on level of hit to harvest");
-		EntityHarvestBolt.range_offset = config.getInt("harvest.range_offset", MODID, 4, 1, 32, "Horizontal range on further heights to harvest");
-		EntityHarvestBolt.doesHarvestStem = config.getBoolean("harvest.does_harvest_stem", MODID, false, "Does it harvest stems (pumkin/melon)");
-		EntityHarvestBolt.doesHarvestSapling = config.getBoolean("harvest.does_harvest_sapling", MODID, false, "Does it harvest sapling");
-		EntityHarvestBolt.doesHarvestTallgrass = config.getBoolean("harvest.does_harvest_tallgrass", MODID, false, "Does it harvest tallgrass/doubleplants");
-		EntityHarvestBolt.doesHarvestMushroom = config.getBoolean("harvest.does_harvest_mushroom", MODID, true, "Does it harvest mushrooms");
-		EntityHarvestBolt.doesMelonBlocks = config.getBoolean("harvest.does_harvest_melonblock", MODID, true, "Does it harvest pumpkin block");
-		EntityHarvestBolt.doesPumpkinBlocks = config.getBoolean("harvest.does_harvest_pumpkinblock", MODID, true, "Does it harvest melon block");
+		EntityHarvestBolt.range_main = config.getInt("harvest.range_main", category, 6, 1, 32, "Horizontal range on level of hit to harvest");
+		EntityHarvestBolt.range_offset = config.getInt("harvest.range_offset", category, 4, 1, 32, "Horizontal range on further heights to harvest");
+		EntityHarvestBolt.doesHarvestStem = config.getBoolean("harvest.does_harvest_stem", category, false, "Does it harvest stems (pumkin/melon)");
+		EntityHarvestBolt.doesHarvestSapling = config.getBoolean("harvest.does_harvest_sapling", category, false, "Does it harvest sapling");
+		EntityHarvestBolt.doesHarvestTallgrass = config.getBoolean("harvest.does_harvest_tallgrass", category, false, "Does it harvest tallgrass/doubleplants");
+		EntityHarvestBolt.doesHarvestMushroom = config.getBoolean("harvest.does_harvest_mushroom", category, true, "Does it harvest mushrooms");
+		EntityHarvestBolt.doesMelonBlocks = config.getBoolean("harvest.does_harvest_melonblock", category, true, "Does it harvest pumpkin block");
+		EntityHarvestBolt.doesPumpkinBlocks = config.getBoolean("harvest.does_harvest_pumpkinblock", category, true, "Does it harvest melon block");
 
 	}
 }

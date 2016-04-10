@@ -14,6 +14,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 
 public class CommandSearchItem extends BaseCommand implements ICommand {
+	public static final String name = "searchitem";
 	public CommandSearchItem(String n, boolean op) {
 
 		super(n, op);

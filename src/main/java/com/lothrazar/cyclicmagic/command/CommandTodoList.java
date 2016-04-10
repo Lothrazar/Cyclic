@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 
 public class CommandTodoList extends BaseCommand implements ICommand {
+	public static final String name = "todo";
 	public CommandTodoList(String n, boolean op) {
 
 		super(n, op);

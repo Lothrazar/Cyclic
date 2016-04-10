@@ -20,8 +20,9 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class CommandRecipe extends BaseCommand implements ICommand {
+	public static final String name = "searchrecipe";
+	
 	public CommandRecipe(String n, boolean op) {
-
 		super(n, op);
 	}
 

@@ -27,10 +27,11 @@ public class ExtraButtonRegistry {
 		valid.add(posLeft);
 		valid.add(posRight);
 		valid.add(posBottom);
+		
+		
+		restockLeaveOne = config.getBoolean("restock_leave_one",category, false, "By default (false) the Restock feature will empty your chests if possible.  If you change this to true, then using Restock will leave one behind of each item stack");
 
-		restockLeaveOne = config.getBoolean("restock_leave_one", Configuration.CATEGORY_GENERAL, false, "By default (false) the Restock feature will empty your chests if possible.  If you change this to true, then using Restock will leave one behind of each item stack");
-
-		position = config.getString("button_location", Configuration.CATEGORY_GENERAL, posRight, "Location of the buttons, " + "valid entries are: " + String.join(",", valid));
+		position = config.getString("button_location", category, posRight, "Location of the buttons, " + "valid entries are: " + String.join(",", valid));
 
 		if (valid.contains(position) == false) {
 			position = posRight;// default

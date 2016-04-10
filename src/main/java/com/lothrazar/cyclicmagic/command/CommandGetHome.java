@@ -8,8 +8,8 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 
 public class CommandGetHome extends BaseCommand implements ICommand {
-	public static boolean REQUIRES_OP;
 
+	public static final String name = "gethome";
 	public CommandGetHome(String n, boolean op) {
 		super(n, op);
 	}

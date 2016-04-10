@@ -18,21 +18,15 @@ public class BaseCommand implements ICommand {
 	private String						name;
 	private boolean						requiresOP;
 	private final static int	OP	= 2;
-	private ArrayList<String>	aliases;
+	protected ArrayList<String>	aliases;
 
 	public BaseCommand(String n, boolean op) {
-		name = n;
-		requiresOP = op;
-		setupAliases(null);
+		this(n,op,null);
 	}
 
 	public BaseCommand(String n, boolean op, ArrayList<String> paliases) {
 		name = n;
 		requiresOP = op;
-		setupAliases(paliases);
-	}
-
-	private void setupAliases(ArrayList<String> paliases) {
 		aliases = (paliases == null) ? new ArrayList<String>() : paliases;
 		aliases.add(name.toUpperCase());
 	}

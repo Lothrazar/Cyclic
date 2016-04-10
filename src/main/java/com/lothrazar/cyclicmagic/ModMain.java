@@ -118,6 +118,7 @@ public class ModMain {
 		StackSizeRegistry.syncConfig(c);
 		SpellRegistry.syncConfig(c);
 		ExtraButtonRegistry.syncConfig(c);
+		CommandRegistry.syncConfig(c);
 
 		c.save();
 	}

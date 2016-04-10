@@ -1,7 +1,5 @@
 package com.lothrazar.cyclicmagic.command;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilTeleport;
@@ -16,28 +14,11 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
 public class CommandHome extends BaseCommand implements ICommand {
-	private ArrayList<String>	aliases;
-	public static boolean			REQUIRES_OP;
 
+	public static final String name = "home";
 	public CommandHome(String n, boolean op) {
 
 		super(n, op);
-		aliases = new ArrayList<String>();
-	}
-
-	@Override
-	public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
-		return (REQUIRES_OP) ? super.checkPermission(server, sender) : true;
-	}
-
-	@Override
-	public String getCommandUsage(ICommandSender ic) {
-		return "/" + getCommandName();
-	}
-
-	@Override
-	public List<String> getCommandAliases() {
-		return aliases;
 	}
 
 	@Override

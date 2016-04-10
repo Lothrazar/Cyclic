@@ -39,6 +39,8 @@ public class BlockRegistry {
 
 	private static boolean						enableBlockFragile;
 
+	private static boolean enableBlockUncrafting;
+
 	@SuppressWarnings("rawtypes")
 	public static void registerBlock(Block b, Class c, String name, boolean isHidden) {
 
@@ -92,8 +94,10 @@ public class BlockRegistry {
 
 	public static void register() {
 
-		BlockUncrafting uncrafting_block = new BlockUncrafting();
-		registerBlock(uncrafting_block, "uncrafting_block");
+		if(enableBlockUncrafting){
+			BlockUncrafting uncrafting_block = new BlockUncrafting();
+			registerBlock(uncrafting_block, "uncrafting_block");
+		}
 
 		if (enableBlockFragile) {
 
@@ -157,7 +161,14 @@ public class BlockRegistry {
 
 		enableBlockFragile = config.getBoolean(BlockFragile.name, category, true, "Enable the scaffolding block that breaks by itself");
 
-		category = category + ".Uncrafting";
+		enabledBucketBlocks = config.getBoolean("Bucket Blocks", category, true, "Enable Bucket Storage Blocks");
+
+
+		category = Const.MODCONF +  "Blocks.Uncrafting";
+		
+		enableBlockUncrafting = config.getBoolean("enabled", category, true, "Enable uncrafting");
+
+		
 		UtilUncraft.TIMER_FULL = config.getInt("speed_uncraft", category, 75, 10, 99999, "How fast this can uncraft items and blocks.  Lower numbers are faster");
 
 		// blockIfCannotDoit = config.getBoolean("auto_block_slots", category,
@@ -168,7 +179,6 @@ public class BlockRegistry {
 
 		UtilUncraft.dictionaryFreedom = config.getBoolean("pick_first_metadata", category, true, "If you change this to true, then the uncrafting will just take the first of many options in any recipe that takes multiple input types.  For example, false means chests cannot be uncrafted, but true means chests will ALWAYS give oak wooden planks.");
 
-		category = "blacklist_items";
 		config.addCustomCategoryComment(category, "Here you can blacklist any thing, vanilla or modded.  Mostly for creating modpacks.  Input means you cannot uncraft it at all.  Output means it will not come out of a recipe.");
 
 		// so when uncrafting cake, you do not get milk buckets back
@@ -176,9 +186,9 @@ public class BlockRegistry {
 		String csv = config.getString("blacklist_input", category, def, "Items that cannot be uncrafted; not allowed in the slots.  EXAMPLE : 'item.stick,tile.hayBlock,tile.chest'  ");
 		// [item.stick, tile.cloth]
 		UtilUncraft.blacklistInput = (List<String>) Arrays.asList(csv.split(","));
-		if (UtilUncraft.blacklistInput == null)
+		if (UtilUncraft.blacklistInput == null){
 			UtilUncraft.blacklistInput = new ArrayList<String>();
-
+		}
 		def = "item.milk";
 		csv = config.getString("blacklist_output", category, def, "Comma seperated items that cannot come out of crafting recipes.  For example, if milk is in here, then cake is uncrafted you get all items except the milk buckets.  ");
 
@@ -186,6 +196,5 @@ public class BlockRegistry {
 		if (UtilUncraft.blacklistOutput == null) {
 			UtilUncraft.blacklistOutput = new ArrayList<String>();
 		}
-
 	}
 }

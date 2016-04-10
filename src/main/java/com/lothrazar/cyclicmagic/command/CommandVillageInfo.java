@@ -14,6 +14,7 @@ import net.minecraft.world.World;
 public class CommandVillageInfo extends BaseCommand implements ICommand {
 //5852309458819775221
 	// is a seed with village at spawn; for testing
+	public static final String name = "villageinfo";
 	public CommandVillageInfo(String n, boolean op) {
 
 		super(n, op);

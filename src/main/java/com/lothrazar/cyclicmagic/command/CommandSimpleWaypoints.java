@@ -12,6 +12,7 @@ import net.minecraft.util.text.TextFormatting;
 
 public class CommandSimpleWaypoints extends BaseCommand implements ICommand {
 	// public static boolean ENABLE_TP = false;
+	public static final String name = "waypoint";
 	private static String NBT_KEY = Const.MODID + "_swp";
 
 	public CommandSimpleWaypoints(String n, boolean op) {

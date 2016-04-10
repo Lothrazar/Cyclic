@@ -18,6 +18,7 @@ import net.minecraft.village.MerchantRecipeList;
 public class CommandSearchTrades extends BaseCommand implements ICommand {
 	// https://github.com/LothrazarMinecraftMods/MinecraftSearchCommands/blob/master/src/main/java/com/lothrazar/searchcommands/command/CommandSearchTrades.java
 
+	public static final String name = "searchtrade";
 	public CommandSearchTrades(String n, boolean op) {
 
 		super(n, op);

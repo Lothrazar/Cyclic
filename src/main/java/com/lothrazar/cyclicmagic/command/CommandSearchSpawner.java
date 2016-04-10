@@ -12,16 +12,10 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 
 public class CommandSearchSpawner extends BaseCommand implements ICommand {
+	public static final String name = "searchspawner";
 	public CommandSearchSpawner(String n, boolean op) {
 
 		super(n, op);
-		/*
-		 * aliases.add("SEARCHSPAWNER");
-		 * aliases.add("searchdungeon");
-		 * aliases.add("SEARCHDUNGEON");
-		 * aliases.add("searchs");
-		 * aliases.add("searchd");
-		 */
 	}
 
 	public static final int	MAXRADIUS			= 128;// TODO: config file for these?

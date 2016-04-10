@@ -13,6 +13,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 
 public class CommandUses extends BaseCommand implements ICommand {
+	public static final String name = "searchuses";
 	public CommandUses(String n, boolean op) {
 
 		super(n, op);

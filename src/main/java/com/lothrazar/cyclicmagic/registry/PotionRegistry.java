@@ -118,10 +118,11 @@ public class PotionRegistry {
 
 	public static void syncConfig(Configuration config) {
 
+		/*
 		String category = "";
 		category = Const.MODCONF + "potions";
 
 		PotionRegistry.slowfallSpeed = config.getFloat("slowfall_speed", category, 0.41F, 0.1F, 1F, "This factor affects how much the slowfall effect slows down the entity.");
-
+*/
 	}
 }
