@@ -296,7 +296,7 @@ public class InventoryWand implements IInventory{
 			Random rand = new Random();
 			itemSlot = slotNonEmpty.get(rand.nextInt(slotNonEmpty.size()));
 		}
-		else if(buildType == ItemCyclicWand.BuildType.MATCH.ordinal()){
+		else if(buildType == ItemCyclicWand.BuildType.MATCH.ordinal() && placeState != null){
 
 			// damage dropped meaning what it really is , not item version
 			int meta = placeState.getBlock().damageDropped(placeState);

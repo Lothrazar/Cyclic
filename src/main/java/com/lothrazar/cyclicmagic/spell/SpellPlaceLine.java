@@ -8,6 +8,7 @@ import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -33,16 +34,21 @@ public class SpellPlaceLine extends BaseSpellPlace{
 			//we have a valid start position that was clicked on.  was the face of a block clicked on too?
 			startPos = startPos.offset(side);
 		}
-		IBlockState placing = Blocks.stone.getDefaultState();
+
 		int distOrRadius = ItemCyclicWand.BuildType.getBuildSize(UtilSpellCaster.getPlayerWandIfHeld(player));
 		//int skip = 0;
-		System.out.println("place line of stone"+startPos.toString()); 
+
+		ItemStack heldWand = UtilSpellCaster.getPlayerWandIfHeld(player);
+		
+		if(heldWand == null){
+			return false;
+		}
 		EnumFacing efacing = (player.isSneaking()) ? EnumFacing.DOWN : UtilEntity.getPlayerFacing(player);
 	      //  boolean isLookingUp = (player.getLookVec().yCoord >= 0);//TODO: use this somehow? to place up/down? 
         
 		
 		if(world.isRemote == false)
-			UtilPlaceBlocks.line(world, player, startPos,efacing, placing, distOrRadius, 0 );//,vertOffset
+			UtilPlaceBlocks.line(world, player,heldWand, startPos,efacing,  distOrRadius );//,vertOffset
 		
 		
 		return false;

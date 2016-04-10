@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import org.apache.logging.log4j.Level;
 import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.gui.InventoryWand;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
@@ -137,16 +140,27 @@ public class UtilPlaceBlocks
 		}
 	}
 	
-	public static void line(World world, EntityPlayer player,BlockPos pos,EnumFacing efacing, IBlockState placing, int want, int skip)
+	public static void line(World world, EntityPlayer player,ItemStack heldWand, BlockPos pos,EnumFacing efacing,int want)
 	{
-		if(skip <= 0){
-			skip = 1;
-		}
-		BlockPos posCurrent;
+			int skip = 1;
 		
+		BlockPos posCurrent;
+
+		int itemSlot; 
+		IBlockState state;
+		boolean success;
 		for(int i = 1; i < want + 1; i = i + skip)
 		{ 
 			posCurrent = pos.offset(efacing, i);
+
+			itemSlot = InventoryWand.getSlotByBuildType(heldWand, null);
+			state = InventoryWand.getToPlaceFromSlot(heldWand, itemSlot);
+
+
+			if(state == null){
+				return;//then inventory is completely empty
+			}
+			
 			
 			//if(world.isAirBlock(posCurrent) == false){continue;}
 			//but for the next 2 checks, halt if we run out of blocks/cost
@@ -154,7 +168,16 @@ public class UtilPlaceBlocks
 
 			//if(tryDrainExp(world,player,posCurrent) == false){break;}
 
-			placeWithSoundAndDecrement(world,player,posCurrent,placing);
+			success = placeWithSoundAndDecrement(world,player,posCurrent,state);
+			
+			if(success){
+
+				if(player.capabilities.isCreativeMode == false)
+				{
+					//player.inventory.decrStackSize(player.inventory.currentItem, 1);
+					InventoryWand.decrementSlot(heldWand,itemSlot);
+				}
+			}
 		}
 	}
 
@@ -169,12 +192,6 @@ public class UtilPlaceBlocks
 
 			UtilSound.playSound(player, placing.getBlock().getStepSound().getPlaceSound());
 	
-			/*
-			if(player.capabilities.isCreativeMode == false)
-			{
-				player.inventory.decrStackSize(player.inventory.currentItem, 1);
-				//ModCommands.decrHeldStackSize(player);
-			}*/
 		}
 		
 		
