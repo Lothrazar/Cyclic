@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.event;
 
 import java.text.DecimalFormat;
-
 import com.lothrazar.cyclicmagic.item.ItemHorseFood;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.client.Minecraft;
@@ -20,16 +19,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class EventHorseFood {
 
 	@SubscribeEvent
-	public void onEntityInteractEvent(EntityInteract event){
+	public void onEntityInteractEvent(EntityInteract event) {
 
-		if(event.getEntity() instanceof EntityPlayer == false){
-			return;
-		}
-		EntityPlayer entityPlayer = (EntityPlayer)event.getEntity();
+		if (event.getEntity() instanceof EntityPlayer == false) { return; }
+		EntityPlayer entityPlayer = (EntityPlayer) event.getEntity();
 		ItemStack held = entityPlayer.getHeldItemMainhand();
 
-		if(held != null && held.getItem() instanceof ItemHorseFood){
-			if(event.getTarget() instanceof EntityHorse){
+		if (held != null && held.getItem() instanceof ItemHorseFood) {
+			if (event.getTarget() instanceof EntityHorse) {
 				ItemHorseFood.onHorseInteract((EntityHorse) event.getTarget(), entityPlayer, held);
 
 				event.setCanceled(true);// stop the GUI inventory opening
@@ -39,11 +36,11 @@ public class EventHorseFood {
 
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
-	public void addHorseInfo(RenderGameOverlayEvent.Text event){
+	public void addHorseInfo(RenderGameOverlayEvent.Text event) {
 
 		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
-		if(Minecraft.getMinecraft().gameSettings.showDebugInfo){
-			if(player.getRidingEntity() != null && player.getRidingEntity() instanceof EntityHorse){
+		if (Minecraft.getMinecraft().gameSettings.showDebugInfo) {
+			if (player.getRidingEntity() != null && player.getRidingEntity() instanceof EntityHorse) {
 				EntityHorse horse = (EntityHorse) player.getRidingEntity();
 
 				double speed = UtilEntity.getSpeedTranslated(horse.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue());
@@ -53,7 +50,7 @@ public class EventHorseFood {
 				double jumpHeight = UtilEntity.getJumpTranslated(horse.getHorseJumpStrength());
 
 				DecimalFormat df = new DecimalFormat("0.00");
-  
+
 				event.getLeft().add(I18n.translateToLocal("debug.horsespeed") + "  " + df.format(speed));
 
 				df = new DecimalFormat("0.0");

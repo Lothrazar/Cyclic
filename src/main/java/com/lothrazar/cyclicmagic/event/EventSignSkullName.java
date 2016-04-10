@@ -13,25 +13,23 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 
-public class EventSignSkullName{
-	
+public class EventSignSkullName {
+
 	@SubscribeEvent
-	public void onPlayerInteract(PlayerInteractEvent event){
+	public void onPlayerInteract(PlayerInteractEvent event) {
 
 		EntityPlayer entityPlayer = event.getEntityPlayer();
 		BlockPos pos = event.getPos();
 		World worldObj = event.getWorld();
 
-		if(pos == null){
-			return;
-		}
-	
+		if (pos == null) { return; }
+
 		// event has no hand??
 		// and no item stack. and right click rarely works. known bug
 		// http://www.minecraftforge.net/forum/index.php?topic=37416.0
 		ItemStack held = entityPlayer.getHeldItemMainhand();
-		
-		if(held == null){
+
+		if (held == null) {
 			held = entityPlayer.getHeldItemOffhand();
 		}
 
@@ -39,22 +37,22 @@ public class EventSignSkullName{
 
 		// event.getAction() == PlayerInteractEvent.Action.LEFT_CLICK_BLOCK &&
 		// entityPlayer.isSneaking() &&
-		if(held != null && held.getItem() == Items.skull && held.getItemDamage() == Const.skull_player && container != null && container instanceof TileEntitySign){
+		if (held != null && held.getItem() == Items.skull && held.getItemDamage() == Const.skull_player && container != null && container instanceof TileEntitySign) {
 			TileEntitySign sign = (TileEntitySign) container;
 
 			String firstLine = sign.signText[0].getUnformattedText();
 
-			if(firstLine == null){
+			if (firstLine == null) {
 				firstLine = "";
 			}
-			if(firstLine.isEmpty() || firstLine.split(" ").length == 0){
+			if (firstLine.isEmpty() || firstLine.split(" ").length == 0) {
 				held.setTagCompound(null);
 			}
-			else{
+			else {
 				firstLine = firstLine.split(" ")[0];
 
 				NBTTagCompound nbt = UtilNBT.getTagCompoundNotNull(held);
-				
+
 				nbt.setString(Const.SkullOwner, firstLine);
 			}
 		} // end of skullSignNames

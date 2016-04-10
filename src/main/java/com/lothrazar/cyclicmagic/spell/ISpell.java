@@ -8,7 +8,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-public interface ISpell{
+public interface ISpell {
 
 	public int getID();
 

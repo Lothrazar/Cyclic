@@ -17,16 +17,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EventGuiAddButtons {
-	
-	
-	
+
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void onGuiPostInit(InitGuiEvent.Post event) {
 		GuiScreen gui = event.getGui();
-		if (gui == null) {
-			return;
-		} // probably doesn't ever happen
+		if (gui == null) { return; } // probably doesn't ever happen
 
 		// all containers by default
 		// but with a blacklist in config
@@ -40,26 +36,27 @@ public class EventGuiAddButtons {
 		if (event.getGui() instanceof GuiInventory) {
 
 			event.getButtonList().add(new GuiButtonCrafting(button_id++, x, y));
-			
+
 		}
-		else if (gui instanceof GuiContainer && ExtraButtonRegistry.blacklistGuis.contains(self) == false
-				&& gui instanceof net.minecraft.client.gui.inventory.GuiInventory == false) {
-			
-			//align to different area depending on config
+		else if (gui instanceof GuiContainer && ExtraButtonRegistry.blacklistGuis.contains(self) == false && gui instanceof net.minecraft.client.gui.inventory.GuiInventory == false) {
+
+			// align to different area depending on config
 			if (ExtraButtonRegistry.position.equalsIgnoreCase(ExtraButtonRegistry.posLeft)) {
 				x = padding;
 				y = padding;
 				// we are moving top to bottom, so
 				xDelta = 0;
 				yDelta = Const.btnHeight + padding;
-			} else if (ExtraButtonRegistry.position.equalsIgnoreCase(ExtraButtonRegistry.posRight)) {
-				
+			}
+			else if (ExtraButtonRegistry.position.equalsIgnoreCase(ExtraButtonRegistry.posRight)) {
+
 				x = Minecraft.getMinecraft().displayWidth / 2 - Const.btnWidth - padding;
 				y = padding;
 				// we are moving top to bottom, so
 				xDelta = 0;
 				yDelta = Const.btnHeight + padding;
-			} else if (ExtraButtonRegistry.position.equalsIgnoreCase(ExtraButtonRegistry.posBottom)) {
+			}
+			else if (ExtraButtonRegistry.position.equalsIgnoreCase(ExtraButtonRegistry.posBottom)) {
 				// test bottom
 				x = padding;
 				y = Minecraft.getMinecraft().displayHeight / 2 - padding - Const.btnHeight;

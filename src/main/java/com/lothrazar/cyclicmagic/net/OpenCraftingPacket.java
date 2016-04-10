@@ -12,11 +12,10 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class OpenCraftingPacket implements IMessage, IMessageHandler<OpenCraftingPacket, IMessage> {
-	public static final int ID = 33;
-	NBTTagCompound tags = new NBTTagCompound();
+	public static final int	ID		= 33;
+	NBTTagCompound					tags	= new NBTTagCompound();
 
-	public OpenCraftingPacket() {
-	}
+	public OpenCraftingPacket() {}
 
 	public OpenCraftingPacket(NBTTagCompound ptags) {
 		tags = ptags;
@@ -44,8 +43,7 @@ public class OpenCraftingPacket implements IMessage, IMessageHandler<OpenCraftin
 
 		player.getNextWindowId();
 
-		player.playerNetServerHandler.sendPacket(new SPacketOpenWindow(player.currentWindowId,
-				"minecraft:crafting_table", p.getDisplayName(), 0, player.getEntityId()));
+		player.playerNetServerHandler.sendPacket(new SPacketOpenWindow(player.currentWindowId, "minecraft:crafting_table", p.getDisplayName(), 0, player.getEntityId()));
 		player.openContainer = new ContainerFakeWorkbench(player.inventory, player.worldObj);
 		player.openContainer.windowId = player.currentWindowId;
 		player.openContainer.onCraftGuiOpened(player);

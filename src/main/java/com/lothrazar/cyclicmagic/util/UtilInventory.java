@@ -5,15 +5,15 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class UtilInventory{
+public class UtilInventory {
 
 	final static int width = 9;
 
-	public static void mergeItemsBetweenStacks(ItemStack takeFrom, ItemStack moveTo){
+	public static void mergeItemsBetweenStacks(ItemStack takeFrom, ItemStack moveTo) {
 
 		int room = moveTo.getMaxStackSize() - moveTo.stackSize;
 
-		if(room > 0){
+		if (room > 0) {
 			int moveover = Math.min(takeFrom.stackSize, room);
 
 			moveTo.stackSize += moveover;
@@ -22,12 +22,13 @@ public class UtilInventory{
 		}
 	}
 
-	public static void shiftSlotDown(EntityPlayer player, int currentItem){
+	public static void shiftSlotDown(EntityPlayer player, int currentItem) {
 
 		int topNumber = currentItem + width;
 		int midNumber = topNumber + width;
 		int lowNumber = midNumber + width;
-		// so if we had the final slot hit (8 for keyboard 9) we would go 8, 17, 26, 35
+		// so if we had the final slot hit (8 for keyboard 9) we would go 8, 17, 26,
+		// 35
 
 		ItemStack bar = player.inventory.getStackInSlot(currentItem);
 		ItemStack top = player.inventory.getStackInSlot(topNumber);
@@ -35,7 +36,8 @@ public class UtilInventory{
 		ItemStack low = player.inventory.getStackInSlot(lowNumber);
 
 		player.inventory.setInventorySlotContents(currentItem, null);
-		player.inventory.setInventorySlotContents(currentItem, top);// lot so 0 gets what 9 had
+		player.inventory.setInventorySlotContents(currentItem, top);// lot so 0 gets
+		                                                            // what 9 had
 
 		player.inventory.setInventorySlotContents(topNumber, null);
 		player.inventory.setInventorySlotContents(topNumber, mid);
@@ -47,13 +49,14 @@ public class UtilInventory{
 		player.inventory.setInventorySlotContents(lowNumber, bar);
 	}
 
-	public static void shiftSlotUp(EntityPlayer player, int currentItem){
+	public static void shiftSlotUp(EntityPlayer player, int currentItem) {
 
 		// so we move each up by nine
 		int topNumber = currentItem + width;
 		int midNumber = topNumber + width;
 		int lowNumber = midNumber + width;
-		// so if we had the final slot hit (8 for keyboard 9) we would go 8, 17, 26, 35
+		// so if we had the final slot hit (8 for keyboard 9) we would go 8, 17, 26,
+		// 35
 
 		ItemStack bar = player.inventory.getStackInSlot(currentItem);
 		ItemStack top = player.inventory.getStackInSlot(topNumber);
@@ -61,7 +64,8 @@ public class UtilInventory{
 		ItemStack low = player.inventory.getStackInSlot(lowNumber);
 
 		player.inventory.setInventorySlotContents(currentItem, null);
-		player.inventory.setInventorySlotContents(currentItem, low);// lot so 0 gets what 9 had
+		player.inventory.setInventorySlotContents(currentItem, low);// lot so 0 gets
+		                                                            // what 9 had
 
 		player.inventory.setInventorySlotContents(lowNumber, null);
 		player.inventory.setInventorySlotContents(lowNumber, mid);
@@ -73,7 +77,7 @@ public class UtilInventory{
 		player.inventory.setInventorySlotContents(topNumber, bar);
 	}
 
-	public static void shiftBarDown(EntityPlayer player){
+	public static void shiftBarDown(EntityPlayer player) {
 
 		shiftSlotDown(player, 0);
 		shiftSlotDown(player, 1);
@@ -86,7 +90,7 @@ public class UtilInventory{
 		shiftSlotDown(player, 8);
 	}
 
-	public static void shiftBarUp(EntityPlayer player){
+	public static void shiftBarUp(EntityPlayer player) {
 
 		shiftSlotUp(player, 0);
 		shiftSlotUp(player, 1);
@@ -99,7 +103,7 @@ public class UtilInventory{
 		shiftSlotUp(player, 8);
 	}
 
-	public static void sortFromPlayerToInventory(World world, IInventory chest, EntityPlayer player){
+	public static void sortFromPlayerToInventory(World world, IInventory chest, EntityPlayer player) {
 
 		// source:
 		// https://github.com/PrinceOfAmber/SamsPowerups/blob/master/Spells/src/main/java/com/lothrazar/samsmagic/spell/SpellChestDeposit.java#L84
@@ -117,28 +121,28 @@ public class UtilInventory{
 
 		// inventory and chest has 9 rows by 3 columns, never changes. same as
 		// 64 max stack size
-		for(int islotChest = START_CHEST; islotChest < END_CHEST; islotChest++){
+		for (int islotChest = START_CHEST; islotChest < END_CHEST; islotChest++) {
 			chestItem = chest.getStackInSlot(islotChest);
 
-			if(chestItem == null){
+			if (chestItem == null) {
 				continue;
 			}// empty chest slot
 
-			for(int islotInv = 2 * Const.HOTBAR_SIZE; islotInv < player.inventory.getSizeInventory(); islotInv++){
+			for (int islotInv = 2 * Const.HOTBAR_SIZE; islotInv < player.inventory.getSizeInventory(); islotInv++) {
 
 				invItem = player.inventory.getStackInSlot(islotInv);
 
-				if(invItem == null){
+				if (invItem == null) {
 					continue;
 				}// empty inventory slot
 
-				if(invItem.getItem().equals(chestItem.getItem()) && invItem.getItemDamage() == chestItem.getItemDamage()){
+				if (invItem.getItem().equals(chestItem.getItem()) && invItem.getItemDamage() == chestItem.getItemDamage()) {
 					// same item, including damage (block state)
 
 					chestMax = chestItem.getItem().getItemStackLimit(chestItem);
 					room = chestMax - chestItem.stackSize;
 
-					if(room <= 0){
+					if (room <= 0) {
 						continue;
 					} // no room, check the next spot
 
@@ -151,13 +155,13 @@ public class UtilInventory{
 
 					invItem.stackSize -= toDeposit;
 
-					if(invItem.stackSize <= 0){
+					if (invItem.stackSize <= 0) {
 						// item stacks with zero count do not destroy
 						// themselves, they show up and have unexpected behavior
 						// in game so set to empty
 						player.inventory.setInventorySlotContents(islotInv, null);
 					}
-					else{
+					else {
 						// set to new quantity
 						player.inventory.setInventorySlotContents(islotInv, invItem);
 					}

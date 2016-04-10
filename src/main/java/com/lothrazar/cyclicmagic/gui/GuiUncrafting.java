@@ -3,7 +3,6 @@ package com.lothrazar.cyclicmagic.gui;
 import com.lothrazar.cyclicmagic.block.TileEntityUncrafting;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilUncraft;
-
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -31,10 +30,10 @@ public class GuiUncrafting extends GuiContainer {
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 	}
 
-	private static final String folder = "textures/gui/";
-	private static final ResourceLocation table = new ResourceLocation(Const.MODID, folder + "table.png");
-	private static final ResourceLocation slot = new ResourceLocation(Const.MODID, folder + "inventory_slot.png");
-	private static final ResourceLocation progress = new ResourceLocation(Const.MODID, folder + "progress.png");
+	private static final String						folder		= "textures/gui/";
+	private static final ResourceLocation	table			= new ResourceLocation(Const.MODID, folder + "table.png");
+	private static final ResourceLocation	slot			= new ResourceLocation(Const.MODID, folder + "inventory_slot.png");
+	private static final ResourceLocation	progress	= new ResourceLocation(Const.MODID, folder + "progress.png");
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {

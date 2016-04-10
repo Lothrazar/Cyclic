@@ -12,69 +12,71 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
-public class EntityWaterBolt extends EntityThrowable{
+public class EntityWaterBolt extends EntityThrowable {
 
-	public EntityWaterBolt(World worldIn){
+	public EntityWaterBolt(World worldIn) {
 
 		super(worldIn);
 	}
 
-	public EntityWaterBolt(World worldIn, EntityLivingBase ent){
+	public EntityWaterBolt(World worldIn, EntityLivingBase ent) {
 
 		super(worldIn, ent);
 	}
 
-	public EntityWaterBolt(World worldIn, double x, double y, double z){
+	public EntityWaterBolt(World worldIn, double x, double y, double z) {
 
 		super(worldIn, x, y, z);
 	}
-	
-	public static final int nether = -1;
-	@Override
-	protected void onImpact(RayTraceResult mop){
 
-		if(mop.entityHit != null){
-			
-			if(mop.entityHit instanceof EntityLivingBase){
+	public static final int nether = -1;
+
+	@Override
+	protected void onImpact(RayTraceResult mop) {
+
+		if (mop.entityHit != null) {
+
+			if (mop.entityHit instanceof EntityLivingBase) {
 				EntityLivingBase e = (EntityLivingBase) mop.entityHit;
 
-				if(e.isBurning()){
+				if (e.isBurning()) {
 					e.extinguish();
 				}
 			}
 		}
 
 		BlockPos pos = mop.getBlockPos();
-		if(pos == null){
+		if (pos == null) {
 			pos = this.getPosition();
 		}
 
-		if(pos != null){
-			//UtilParticle.spawnParticle(this.worldObj, EnumParticleTypes.WATER_SPLASH, pos);
+		if (pos != null) {
+			// UtilParticle.spawnParticle(this.worldObj,
+			// EnumParticleTypes.WATER_SPLASH, pos);
 
-			if(this.getThrower() instanceof EntityPlayer && mop.sideHit != null && this.worldObj.isRemote == false){
+			if (this.getThrower() instanceof EntityPlayer && mop.sideHit != null && this.worldObj.isRemote == false) {
 
 				this.worldObj.extinguishFire((EntityPlayer) this.getThrower(), pos, mop.sideHit);
 			}
 		}
-		
-		if(this.dimension != nether){
-		
+
+		if (this.dimension != nether) {
+
 			worldObj.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.entity_player_splash, SoundCategory.PLAYERS, 1.0F, 1.0F, false);
 
 			// so far its both client and server
-			if(this.worldObj.isRemote == false){
+			if (this.worldObj.isRemote == false) {
 
-				if(pos != null){
+				if (pos != null) {
 
-					if(this.isAirOrWater(pos)){
+					if (this.isAirOrWater(pos)) {
 
 						this.worldObj.setBlockState(pos, Blocks.flowing_water.getDefaultState(), 3);
 					}
-					if(mop.sideHit != null){
+					if (mop.sideHit != null) {
 						BlockPos offset = pos.offset(mop.sideHit);
 
-						if(offset != null && this.isAirOrWater(offset)){
+						if (offset != null && this.isAirOrWater(offset)) {
 
 							this.worldObj.setBlockState(offset, Blocks.flowing_water.getDefaultState(), 3);
 						}
@@ -82,18 +84,16 @@ public class EntityWaterBolt extends EntityThrowable{
 				}
 			}
 		}
-		
+
 		this.setDead();
 	}
-	
-	private boolean isAirOrWater(BlockPos pos){
+
+	private boolean isAirOrWater(BlockPos pos) {
 
 		ArrayList<Block> waterBoth = new ArrayList<Block>();
 		waterBoth.add(Blocks.flowing_water);
 		waterBoth.add(Blocks.water);
-		if(pos == null){
-			return false;
-		}
+		if (pos == null) { return false; }
 		return this.worldObj.isAirBlock(pos) || this.worldObj.getBlockState(pos).getBlock().getUnlocalizedName().equalsIgnoreCase("tile.water") || (this.worldObj.getBlockState(pos) != null && waterBoth.contains(this.worldObj.getBlockState(pos).getBlock()));
 	}
 }

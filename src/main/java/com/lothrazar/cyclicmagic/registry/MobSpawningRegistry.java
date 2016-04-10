@@ -17,14 +17,14 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
-public class MobSpawningRegistry{
+public class MobSpawningRegistry {
 
-	private final static int group = 3;
-	private final static int min = 1;
-	private final static int max = 4;
-	public static boolean enabled = true;
+	private final static int	group		= 3;
+	private final static int	min			= 1;
+	private final static int	max			= 4;
+	public static boolean			enabled	= true;
 
-	public static void register(){
+	public static void register() {
 
 		EntityRegistry.addSpawn(EntityEnderman.class, group, min, max, EnumCreatureType.MONSTER, new BiomeGenBase[] { Biomes.hell });
 
@@ -37,32 +37,33 @@ public class MobSpawningRegistry{
 		EntityRegistry.addSpawn(EntityGhast.class, group, min, max, EnumCreatureType.MONSTER, new BiomeGenBase[] { Biomes.deepOcean });
 
 		// existing horses only spawn in plains and savanah
-		// horses dont like trees, so biomes without them makes sense. ocean means those little
+		// horses dont like trees, so biomes without them makes sense. ocean means
+		// those little
 		// islands
 
 		EntityRegistry.addSpawn(EntityGuardian.class, group, min, max, EnumCreatureType.WATER_CREATURE, new BiomeGenBase[] { Biomes.river });
-		
+
 		EntityRegistry.addSpawn(EntitySnowman.class, group, min, max, EnumCreatureType.CREATURE, new BiomeGenBase[] { Biomes.iceMountains, Biomes.icePlains });
 
 		EntityRegistry.addSpawn(EntityHorse.class, group, min, max, EnumCreatureType.CREATURE, new BiomeGenBase[] { Biomes.iceMountains, Biomes.extremeHills, Biomes.icePlains, Biomes.deepOcean });
 
-
 //TODO: wolves and villagers?
-		// WOLVES only spawn naturally in forest, taiga, mega taiga, cold taiga, and cold taiga M
+		// WOLVES only spawn naturally in forest, taiga, mega taiga, cold taiga, and
+		// cold taiga M
 
 		EntityRegistry.addSpawn(EntityIronGolem.class, group, min, max, EnumCreatureType.CREATURE, new BiomeGenBase[] { Biomes.jungleHills, Biomes.jungle });
 
 	}
 
-	public static void syncConfig(Configuration config){
+	public static void syncConfig(Configuration config) {
 
-		String category = Const.MODCONF+"mob_spawning";
+		String category = Const.MODCONF + "mob_spawning";
 
-		String msg =  "Allow tons of mobs to spawn in more biomes.  Horses in more places; Cave spiders in mesa and roofed forests; some nether mobs in the desert; enderman in the nether; snowmen in winter biomes;  ghasts in deep ocean; Iron Golems in the jungle; Guardians in rivers.";
-		
+		String msg = "Allow tons of mobs to spawn in more biomes.  Horses in more places; Cave spiders in mesa and roofed forests; some nether mobs in the desert; enderman in the nether; snowmen in winter biomes;  ghasts in deep ocean; Iron Golems in the jungle; Guardians in rivers.";
+
 		config.setCategoryComment(category, msg);
 
-		Property prop = config.get(category, "enabled", true,msg);
+		Property prop = config.get(category, "enabled", true, msg);
 		//
 		enabled = prop.getBoolean();
 	}

@@ -7,28 +7,29 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class SpellPlaceStair extends BaseSpellPlace{
+public class SpellPlaceStair extends BaseSpellPlace {
 
-	public SpellPlaceStair(int id, String name){
+	public SpellPlaceStair(int id, String name) {
 
 		super.init(id, name);
 		this.cost = 25;
 		this.cooldown = 120;
 	}
-	
+
 	@Override
-	public boolean cast(World world, EntityPlayer player, ItemStack wand,BlockPos pos, EnumFacing side) {
+	public boolean cast(World world, EntityPlayer player, ItemStack wand, BlockPos pos, EnumFacing side) {
 
 		BlockPos startPos = pos;
-		if(startPos == null){
+		if (startPos == null) {
 			startPos = player.getPosition();
 		}
-		else{
-			//we have a valid start position that was clicked on.  was the face of a block clicked on too?
+		else {
+			// we have a valid start position that was clicked on. was the face of a
+			// block clicked on too?
 			startPos = startPos.offset(side);
 		}
 
-		UtilPlaceBlocks.stairway(world, player, wand,startPos );
+		UtilPlaceBlocks.stairway(world, player, wand, startPos);
 
 		return true;
 	}

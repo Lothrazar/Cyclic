@@ -1,35 +1,32 @@
 package com.lothrazar.cyclicmagic.gui;
 
 import java.io.IOException;
-
 import org.lwjgl.opengl.GL11;
-
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.button.*;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.net.PacketBuildSize;
 import com.lothrazar.cyclicmagic.util.Const;
-
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-public class GuiWandInventory extends GuiContainer{
+public class GuiWandInventory extends GuiContainer {
 
-	private final InventoryWand inventory;
-	private final ItemStack internalWand;
-	//176x156
-	private static final ResourceLocation BACKGROUND = new ResourceLocation(Const.MODID, "textures/gui/inventory_wand.png");
+	private final InventoryWand						inventory;
+	private final ItemStack								internalWand;
+	// 176x156
+	private static final ResourceLocation	BACKGROUND	= new ResourceLocation(Const.MODID, "textures/gui/inventory_wand.png");
 
-	// TODO: the swap type tooltop, if its on pattern, should show the current slot number, as i '3/9'
-	int id = 777;
-	final int padding = 4;
-	
+	// TODO: the swap type tooltop, if its on pattern, should show the current
+	// slot number, as i '3/9'
+	int																		id					= 777;
+	final int															padding			= 4;
 
-	GuiTextField buildSize;
+	GuiTextField													buildSize;
 
-	public GuiWandInventory(ContainerWand containerItem, ItemStack wand){
+	public GuiWandInventory(ContainerWand containerItem, ItemStack wand) {
 
 		super(containerItem);
 		this.inventory = containerItem.inventory;
@@ -37,79 +34,79 @@ public class GuiWandInventory extends GuiContainer{
 	}
 
 	@Override
-	public void initGui(){
+	public void initGui() {
 
 		super.initGui();
 
-		int y = this.guiTop + padding  ;
+		int y = this.guiTop + padding;
 		int x = this.guiLeft + 5;
 
 		int width = 20;
-		
+
 		this.buttonList.add(new ButtonSpellCircle(id, x, y, width));
 
 		id++;
 		x += width + padding;
 		this.buttonList.add(new ButtonRecharge(id, x, y, width));
-		
-		//Next row
-		//x = this.guiLeft + 5;
-		//y += 20 + padding;
-	
+
+		// Next row
+		// x = this.guiLeft + 5;
+		// y += 20 + padding;
+
 		id++;
 		x += width + padding;
 		width = 50;
 		ButtonBuildToggle btn = new ButtonBuildToggle(inventory.getPlayer(), id, x, y, width);
 		this.buttonList.add(btn);
-		
+
 		id++;
-		x += width + padding+8;
-		//y += 10;
+		x += width + padding + 8;
+		// y += 10;
 
 		int size = ItemCyclicWand.BuildType.getBuildSize(internalWand);
-		if(size <= 0){
+		if (size <= 0) {
 			size = 1;
 		}
 
-		buildSize = new GuiTextField(id,this.fontRendererObj,
-				x,y, 
-				30,20);
+		buildSize = new GuiTextField(id, this.fontRendererObj, x, y, 30, 20);
 		buildSize.setMaxStringLength(2);
-		buildSize.setText(""+size);
+		buildSize.setText("" + size);
 		buildSize.setVisible(true);
 		buildSize.setFocused(true);
-		
+
 	}
 
 	@Override
-    public void onGuiClosed(){
+	public void onGuiClosed() {
 
 		int size = 1;
-	
-		try{
-			size = Integer.parseInt(buildSize.getText());
-		}catch(Exception e){
 
-			return;//if its not an integer, then do notsave`
+		try {
+			size = Integer.parseInt(buildSize.getText());
+		} catch (Exception e) {
+
+			return;// if its not an integer, then do notsave`
 		}
-		
-		if(size > 16){
+
+		if (size > 16) {
 			size = 16;
 		}
 
 		ModMain.network.sendToServer(new PacketBuildSize(size));
-    }
-	
+	}
+
 	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks){
+	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 
 		super.drawScreen(mouseX, mouseY, partialTicks);
 
-		if(buildSize != null) {buildSize.drawTextBox();}
-		
+		if (buildSize != null) {
+			buildSize.drawTextBox();
+		}
+
 		ITooltipButton btn;
-		for(int i = 0; i < buttonList.size(); i++){
-			if(buttonList.get(i).isMouseOver() && buttonList.get(i) instanceof ITooltipButton){
+		for (int i = 0; i < buttonList.size(); i++) {
+			if (buttonList.get(i).isMouseOver() && buttonList.get(i) instanceof ITooltipButton) {
 				btn = (ITooltipButton) buttonList.get(i);
 
 				drawHoveringText(btn.getTooltips(), mouseX, mouseY, fontRendererObj);
@@ -119,34 +116,40 @@ public class GuiWandInventory extends GuiContainer{
 	}
 
 	@Override
-	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
+	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 	}
 
-	protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3){
+	protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {
 
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.mc.getTextureManager().bindTexture(BACKGROUND);
 
 		this.drawTexturedModalRect((this.width - this.xSize) / 2, (this.height - this.ySize) / 2, 0, 0, this.xSize, this.ySize);
 	}
+
 	@Override
-	public void updateScreen()
-    {
-        super.updateScreen();
-        if(buildSize != null){buildSize.updateCursorCounter();}
-    }
+	public void updateScreen() {
+		super.updateScreen();
+		if (buildSize != null) {
+			buildSize.updateCursorCounter();
+		}
+	}
+
 	@Override
-	protected void keyTyped(char par1, int par2) throws IOException
-    {
-        super.keyTyped(par1, par2);
-        if(buildSize != null){buildSize.textboxKeyTyped(par1, par2);}
-    }
+	protected void keyTyped(char par1, int par2) throws IOException {
+		super.keyTyped(par1, par2);
+		if (buildSize != null) {
+			buildSize.textboxKeyTyped(par1, par2);
+		}
+	}
+
 	@Override
-	protected void mouseClicked(int x, int y, int btn) throws IOException 
-	{
-        super.mouseClicked(x, y, btn);
-        if(buildSize != null){buildSize.mouseClicked(x, y, btn);}
-    }
+	protected void mouseClicked(int x, int y, int btn) throws IOException {
+		super.mouseClicked(x, y, btn);
+		if (buildSize != null) {
+			buildSize.mouseClicked(x, y, btn);
+		}
+	}
 }

@@ -16,13 +16,14 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class SpellLaunch extends BaseSpell implements ISpell{
+public class SpellLaunch extends BaseSpell implements ISpell {
 
-	private static final float power = 1.005F;
-	private static final float mountPower = 1.01F;
-	private static final int slowfallSec = 10;//TODO: this 10 seconds in config..??
+	private static final float	power				= 1.005F;
+	private static final float	mountPower	= 1.01F;
+	private static final int		slowfallSec	= 10;			// TODO: this 10 seconds in
+	                                                  // config..??
 
-	public SpellLaunch(int id, String name){
+	public SpellLaunch(int id, String name) {
 
 		super.init(id, name);
 		this.cost = 25;
@@ -30,17 +31,17 @@ public class SpellLaunch extends BaseSpell implements ISpell{
 	}
 
 	@Override
-	public boolean cast(World world, EntityPlayer player, ItemStack wand,BlockPos pos, EnumFacing side){
+	public boolean cast(World world, EntityPlayer player, ItemStack wand, BlockPos pos, EnumFacing side) {
 
 		double velY = (double) (-MathHelper.sin((player.rotationPitch) / 180.0F * (float) Math.PI) * power);
 
-		if(velY < 0){
+		if (velY < 0) {
 			velY *= -1;// make it always up never down
 		}
 		// launch the player up and forward at minimum angle
 		// regardless of look vector
 
-		if(velY < 0.4){
+		if (velY < 0.4) {
 			velY = 0.4 + player.jumpMovementFactor;
 		}
 
@@ -49,42 +50,41 @@ public class SpellLaunch extends BaseSpell implements ISpell{
 
 		player.motionY = 0;
 		player.fallDistance = 0;
-		
+
 		Entity ridingEntity = player.getRidingEntity();
-		
-		if(ridingEntity != null){
+
+		if (ridingEntity != null) {
 			ridingEntity.motionY = 0;
 			ridingEntity.fallDistance = 0;
 			// boost power a bit, horses are heavy as F
 			ridingEntity.addVelocity(velX * mountPower, velY * mountPower, velZ * mountPower);
 
-			if(ridingEntity instanceof EntityLivingBase){
-				//if its a horse or something
-				((EntityLivingBase)ridingEntity).addPotionEffect(new PotionEffect(PotionRegistry.slowfall,slowfallSec * Const.TICKS_PER_SEC));
+			if (ridingEntity instanceof EntityLivingBase) {
+				// if its a horse or something
+				((EntityLivingBase) ridingEntity).addPotionEffect(new PotionEffect(PotionRegistry.slowfall, slowfallSec * Const.TICKS_PER_SEC));
 			}
 		}
-		else{
+		else {
 			player.addVelocity(velX, velY, velZ);
 		}
 
 		this.playSound(world, null, player.getPosition());
 		this.spawnParticle(world, player, player.getPosition());
-		
-		
-		player.addPotionEffect(new PotionEffect(PotionRegistry.slowfall,slowfallSec * Const.TICKS_PER_SEC));
+
+		player.addPotionEffect(new PotionEffect(PotionRegistry.slowfall, slowfallSec * Const.TICKS_PER_SEC));
 
 		return true;
 	}
 
 	@Override
-	public void spawnParticle(World world, EntityPlayer player, BlockPos pos){
+	public void spawnParticle(World world, EntityPlayer player, BlockPos pos) {
 
 		UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT_MAGIC, pos);
 
 	}
 
 	@Override
-	public void playSound(World world, Block block, BlockPos pos){
+	public void playSound(World world, Block block, BlockPos pos) {
 
 		UtilSound.playSound(world, pos, UtilSound.Own.bwoaaap);
 

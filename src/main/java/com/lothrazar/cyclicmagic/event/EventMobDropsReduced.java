@@ -8,27 +8,28 @@ import net.minecraft.init.Items;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventMobDropsReduced{
+public class EventMobDropsReduced {
 
 	public boolean removeZombieCarrotPotato = true;
 
 	@SubscribeEvent
-	public void onLivingDropsEvent(LivingDropsEvent event){
+	public void onLivingDropsEvent(LivingDropsEvent event) {
 
 		Entity entity = event.getEntity();
-		//World worldObj = entity.getEntityWorld();
+		// World worldObj = entity.getEntityWorld();
 		List<EntityItem> drops = event.getDrops();
 
-		//BlockPos pos = entity.getPosition();
+		// BlockPos pos = entity.getPosition();
 
-		if(entity instanceof EntityZombie) // how to get this all into its own class
+		if (entity instanceof EntityZombie) // how to get this all into its own
+		                                    // class
 		{
-			//EntityZombie z = (EntityZombie) entity;
+			// EntityZombie z = (EntityZombie) entity;
 
-			for(int i = 0; i < drops.size(); i++){
+			for (int i = 0; i < drops.size(); i++) {
 				EntityItem item = drops.get(i);
 
-				if(item.getEntityItem().getItem() == Items.carrot || item.getEntityItem().getItem() == Items.potato){
+				if (item.getEntityItem().getItem() == Items.carrot || item.getEntityItem().getItem() == Items.potato) {
 					drops.remove(i);
 				}
 			}

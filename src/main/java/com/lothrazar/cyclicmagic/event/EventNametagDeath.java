@@ -8,32 +8,33 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventNametagDeath{
+public class EventNametagDeath {
 
 	@SubscribeEvent
-	public void onLivingDropsEvent(LivingDropsEvent event){
+	public void onLivingDropsEvent(LivingDropsEvent event) {
 
 		Entity entity = event.getEntity();
 		World worldObj = entity.getEntityWorld();
 
-		if(entity.getCustomNameTag() != null && 
-				entity.getCustomNameTag() != ""){
-			
+		if (entity.getCustomNameTag() != null && entity.getCustomNameTag() != "") {
+
 			// item stack NBT needs the name enchanted onto it
-			
-			if(entity.worldObj.isRemote == false){
+
+			if (entity.worldObj.isRemote == false) {
 				ItemStack nameTag = UtilNBT.buildEnchantedNametag(entity.getCustomNameTag());
-	
+
 				UtilEntity.dropItemStackInWorld(worldObj, entity.getPosition(), nameTag);
 			}
 			/*
-			//not sure why isnt working...not critical
-			if(entity instanceof EntityLivingBase){
-				// show message as if player, works since EntityLiving extends EntityLivingBase
-
-				UtilChat.addChatMessage(worldObj, (event.getSource().getDeathMessage((EntityLivingBase) entity)));
-			}
-			*/
+			 * //not sure why isnt working...not critical
+			 * if(entity instanceof EntityLivingBase){
+			 * // show message as if player, works since EntityLiving extends
+			 * EntityLivingBase
+			 * 
+			 * UtilChat.addChatMessage(worldObj,
+			 * (event.getSource().getDeathMessage((EntityLivingBase) entity)));
+			 * }
+			 */
 		}
 	}
 }

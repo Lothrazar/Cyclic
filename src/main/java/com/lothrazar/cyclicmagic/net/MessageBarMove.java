@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.net;
- 
+
 import com.lothrazar.cyclicmagic.util.UtilInventory;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -9,42 +9,43 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class MessageBarMove implements IMessage, IMessageHandler<MessageBarMove, IMessage>
-{
+public class MessageBarMove implements IMessage, IMessageHandler<MessageBarMove, IMessage> {
 	public static final int ID = 25;
-	public MessageBarMove()	{ 	}
+
+	public MessageBarMove() {}
+
 	private boolean isDown;
-	public MessageBarMove(  boolean upordown)	{ 	
-	 
+
+	public MessageBarMove(boolean upordown) {
+
 		isDown = upordown;
 	}
+
 	@Override
-	public void fromBytes(ByteBuf buf)	{	
+	public void fromBytes(ByteBuf buf) {
 		NBTTagCompound tags = ByteBufUtils.readTag(buf);
 		isDown = tags.getBoolean("isDown");
 	}
-	
+
 	@Override
-	public void toBytes(ByteBuf buf)	{	
+	public void toBytes(ByteBuf buf) {
 
 		NBTTagCompound tags = new NBTTagCompound();
 		tags.setBoolean("isDown", isDown);
 		ByteBufUtils.writeTag(buf, tags);
 	}
-	
-	@Override
-	public IMessage onMessage(MessageBarMove message, MessageContext ctx)
-	{  
-		EntityPlayer player = ctx.getServerHandler().playerEntity; 
 
-		if(message.isDown){
+	@Override
+	public IMessage onMessage(MessageBarMove message, MessageContext ctx) {
+		EntityPlayer player = ctx.getServerHandler().playerEntity;
+
+		if (message.isDown) {
 			UtilInventory.shiftBarDown(player);
 		}
-		else{
+		else {
 			UtilInventory.shiftBarUp(player);
 		}
- 	
+
 		return null;
 	}
 }
- 

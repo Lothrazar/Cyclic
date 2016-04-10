@@ -1,24 +1,24 @@
 package com.lothrazar.cyclicmagic.gui.button;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton; 
+import net.minecraft.client.gui.GuiButton;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ButtonClose extends GuiButton{
+public class ButtonClose extends GuiButton {
 
-	public ButtonClose(int id, int x, int y){
+	public ButtonClose(int id, int x, int y) {
 
 		super(id, x, y, 30, 20, net.minecraft.util.text.translation.I18n.translateToLocal("button.close"));
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public boolean mousePressed(Minecraft mc, int mouseX, int mouseY){
+	public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
 
 		boolean pressed = super.mousePressed(mc, mouseX, mouseY);
 
-		if(pressed){
+		if (pressed) {
 			mc.thePlayer.closeScreen();
 		}
 

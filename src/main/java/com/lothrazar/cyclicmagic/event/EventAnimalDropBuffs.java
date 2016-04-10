@@ -14,15 +14,15 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 
-public class EventAnimalDropBuffs{
+public class EventAnimalDropBuffs {
 
-	private static final int cowExtraLeather = 3;
-	private static final int pigExtraMeat = 5;
+	private static final int	cowExtraLeather							= 3;
+	private static final int	pigExtraMeat								= 5;
 
-	private static final int chanceZombieVillagerEmerald = 50;
+	private static final int	chanceZombieVillagerEmerald	= 50;
 
 	@SubscribeEvent
-	public void onLivingDropsEvent(LivingDropsEvent event){
+	public void onLivingDropsEvent(LivingDropsEvent event) {
 
 		Entity entity = event.getEntity();
 		World worldObj = entity.getEntityWorld();
@@ -30,20 +30,21 @@ public class EventAnimalDropBuffs{
 
 		BlockPos pos = entity.getPosition();
 
-		if(entity instanceof EntityZombie) // how to get this all into its own class
+		if (entity instanceof EntityZombie) // how to get this all into its own
+		                                    // class
 		{
 			EntityZombie z = (EntityZombie) entity;
 
-			if(z.isVillager() && chanceZombieVillagerEmerald > 0 && worldObj.rand.nextInt(100) <= chanceZombieVillagerEmerald){
+			if (z.isVillager() && chanceZombieVillagerEmerald > 0 && worldObj.rand.nextInt(100) <= chanceZombieVillagerEmerald) {
 				drops.add(new EntityItem(worldObj, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Items.emerald)));
 			}
 		}
 
-		if(cowExtraLeather > 0 && entity instanceof EntityCow){
+		if (cowExtraLeather > 0 && entity instanceof EntityCow) {
 			UtilEntity.dropItemStackInWorld(worldObj, pos, new ItemStack(Items.leather, cowExtraLeather));
 		}
-		
-		if(pigExtraMeat > 0 && entity instanceof EntityPig){
+
+		if (pigExtraMeat > 0 && entity instanceof EntityPig) {
 			UtilEntity.dropItemStackInWorld(worldObj, pos, new ItemStack(Items.porkchop, pigExtraMeat));
 		}
 	}

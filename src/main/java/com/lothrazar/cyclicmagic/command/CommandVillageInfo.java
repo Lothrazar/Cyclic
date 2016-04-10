@@ -11,54 +11,49 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.village.Village;
 import net.minecraft.world.World;
 
-public class CommandVillageInfo extends BaseCommand implements ICommand
-{ 
+public class CommandVillageInfo extends BaseCommand implements ICommand {
 //5852309458819775221
-	//is a seed with village at spawn; for testing
-	public CommandVillageInfo(String n, boolean op){
+	// is a seed with village at spawn; for testing
+	public CommandVillageInfo(String n, boolean op) {
 
-		super(n, op); 
+		super(n, op);
 	}
- 
+
 	@Override
-	public void execute(MinecraftServer server,ICommandSender sender, String[] args) throws CommandException
-	{
+	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 		BlockPos pos = sender.getPosition();
 		World world = sender.getEntityWorld();
-		
-		int dX,dZ;
-		 
+
+		int dX, dZ;
+
 		int range = 64;
 
 		Village closest = world.villageCollectionObj.getNearestVillage(pos, range);
-		 
-		if(closest == null)
-		{
-			UtilChat.addChatMessage(sender,"debug.novillage");
+
+		if (closest == null) {
+			UtilChat.addChatMessage(sender, "debug.novillage");
 		}
-		else
-		{ 
+		else {
 			int doors = closest.getNumVillageDoors();
-		    int villagers = closest.getNumVillagers();
-		    
-		    UtilChat.addChatMessage(sender,"debug.villagepop"+"  "+String.format("%d",villagers));
-		    UtilChat.addChatMessage(sender,"debug.villagedoors"+"  "+String.format("%d",doors));
-		   
-		    if(sender instanceof EntityPlayer)
-		    {
-		    	//command blocks/server controllers do not have reputation
-		    	EntityPlayer player = (EntityPlayer)sender;
-			    int rep = closest.getReputationForPlayer(player.getName());
-			    
-			    UtilChat.addChatMessage(sender,player.getName()+" "+"debug.villagerep"+"  "+String.format("%d",rep));
-		    }
-            
-		    dX = pos.getX() - closest.getCenter().getX();
-		    dZ = pos.getZ() - closest.getCenter().getZ();
-		    
-		    int dist = MathHelper.floor_double(Math.sqrt( dX*dX + dZ*dZ));
-            
-		    UtilChat.addChatMessage(sender,UtilChat.lang("debug.villagedistcenter")+"  "+String.format("%d", dist)); 
+			int villagers = closest.getNumVillagers();
+
+			UtilChat.addChatMessage(sender, "debug.villagepop" + "  " + String.format("%d", villagers));
+			UtilChat.addChatMessage(sender, "debug.villagedoors" + "  " + String.format("%d", doors));
+
+			if (sender instanceof EntityPlayer) {
+				// command blocks/server controllers do not have reputation
+				EntityPlayer player = (EntityPlayer) sender;
+				int rep = closest.getReputationForPlayer(player.getName());
+
+				UtilChat.addChatMessage(sender, player.getName() + " " + "debug.villagerep" + "  " + String.format("%d", rep));
+			}
+
+			dX = pos.getX() - closest.getCenter().getX();
+			dZ = pos.getZ() - closest.getCenter().getZ();
+
+			int dist = MathHelper.floor_double(Math.sqrt(dX * dX + dZ * dZ));
+
+			UtilChat.addChatMessage(sender, UtilChat.lang("debug.villagedistcenter") + "  " + String.format("%d", dist));
 		}
 	}
 }

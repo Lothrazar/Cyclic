@@ -11,24 +11,24 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class MessageSpellPush implements IMessage, IMessageHandler<MessageSpellPush, IMessage>{
+public class MessageSpellPush implements IMessage, IMessageHandler<MessageSpellPush, IMessage> {
 
-	public static final int ID = 19;
-	private BlockPos pos;
-	private EnumFacing side;
+	public static final int	ID	= 19;
+	private BlockPos				pos;
+	private EnumFacing			side;
 
-	public MessageSpellPush(){
+	public MessageSpellPush() {
 
 	}
 
-	public MessageSpellPush(BlockPos mouseover, EnumFacing s){
+	public MessageSpellPush(BlockPos mouseover, EnumFacing s) {
 
 		pos = mouseover;
 		side = s;
 	}
 
 	@Override
-	public void fromBytes(ByteBuf buf){
+	public void fromBytes(ByteBuf buf) {
 
 		NBTTagCompound tags = ByteBufUtils.readTag(buf);
 
@@ -41,7 +41,7 @@ public class MessageSpellPush implements IMessage, IMessageHandler<MessageSpellP
 	}
 
 	@Override
-	public void toBytes(ByteBuf buf){
+	public void toBytes(ByteBuf buf) {
 
 		NBTTagCompound tags = new NBTTagCompound();
 		tags.setInteger("x", pos.getX());
@@ -54,13 +54,14 @@ public class MessageSpellPush implements IMessage, IMessageHandler<MessageSpellP
 	}
 
 	@Override
-	public IMessage onMessage(MessageSpellPush message, MessageContext ctx){
+	public IMessage onMessage(MessageSpellPush message, MessageContext ctx) {
 
-		if(ctx.side.isServer() && message != null && message.pos != null){
+		if (ctx.side.isServer() && message != null && message.pos != null) {
 
 			EntityPlayer p = ctx.getServerHandler().playerEntity;
 
-			// if( p.worldObj.getBlockState(message.pos).getBlock().isReplaceable(p.worldObj,
+			// if(
+			// p.worldObj.getBlockState(message.pos).getBlock().isReplaceable(p.worldObj,
 			// message.pos)){
 
 			SpellRegistry.Spells.push.castFromServer(message.pos, message.side, p);

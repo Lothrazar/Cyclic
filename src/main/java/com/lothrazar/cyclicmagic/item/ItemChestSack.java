@@ -16,14 +16,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class ItemChestSack extends Item implements IHasRecipe{
+public class ItemChestSack extends Item implements IHasRecipe {
 
-	public static final String name = "chest_sack";
-	
-	public static final String KEY_NBT = "itemtags";
-	public static final String KEY_BLOCK = "block";
+	public static final String	name			= "chest_sack";
 
-	public ItemChestSack(){
+	public static final String	KEY_NBT		= "itemtags";
+	public static final String	KEY_BLOCK	= "block";
+
+	public ItemChestSack() {
 
 		super();
 		this.setMaxStackSize(1);
@@ -35,15 +35,13 @@ public class ItemChestSack extends Item implements IHasRecipe{
 	 * Called when a Block is right-clicked with this Item
 	 */
 	@Override
-	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ){
+	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
 
 		BlockPos offset = pos.offset(side);
 
-		if(worldIn.isAirBlock(offset) == false){
-			return EnumActionResult.FAIL;
-		}
+		if (worldIn.isAirBlock(offset) == false) { return EnumActionResult.FAIL; }
 
-		if(createAndFillChest(playerIn, stack, offset)){
+		if (createAndFillChest(playerIn, stack, offset)) {
 			playerIn.setHeldItem(hand, null);
 
 			UtilSound.playSound(worldIn, pos, UtilSound.Own.thunk);
@@ -52,10 +50,10 @@ public class ItemChestSack extends Item implements IHasRecipe{
 		return EnumActionResult.SUCCESS;
 	}
 
-	private boolean createAndFillChest(EntityPlayer entityPlayer, ItemStack heldChestSack, BlockPos pos){
+	private boolean createAndFillChest(EntityPlayer entityPlayer, ItemStack heldChestSack, BlockPos pos) {
 
 		Block block = Block.getBlockById(heldChestSack.getTagCompound().getInteger(KEY_BLOCK));
-		if(Block.getBlockById(heldChestSack.getTagCompound().getInteger(KEY_BLOCK)) == null){
+		if (Block.getBlockById(heldChestSack.getTagCompound().getInteger(KEY_BLOCK)) == null) {
 
 			// ModMain.logger.log(Level.WARN, "Null block from id: " +
 			// heldChestSack.getTagCompound().getInteger(KEY_BLOCK));
@@ -64,7 +62,7 @@ public class ItemChestSack extends Item implements IHasRecipe{
 
 		entityPlayer.worldObj.setBlockState(pos, block.getDefaultState());
 		IInventory invo = (IInventory) entityPlayer.worldObj.getTileEntity(pos);
-		if(invo == null){
+		if (invo == null) {
 			// ModMain.logger.log(Level.WARN,
 			// "Null tile entity inventory, cannot fill from item stack");
 			return false;
@@ -79,15 +77,15 @@ public class ItemChestSack extends Item implements IHasRecipe{
 	}
 
 	@Override
-	public void addRecipe(){
+	public void addRecipe() {
 
 		GameRegistry.addShapedRecipe(new ItemStack(this), " s ", "l l", "lll", 'l', new ItemStack(Items.leather), 's', new ItemStack(Items.string));
 	}
-	
-	@Override 
-	public void addInformation(ItemStack itemStack, EntityPlayer player, List<String> list, boolean advanced){
-	
-		int count = UtilNBT.countItemsFromNBT( itemStack.getTagCompound(), ItemChestSack.KEY_NBT);
-		list.add(""+count);
+
+	@Override
+	public void addInformation(ItemStack itemStack, EntityPlayer player, List<String> list, boolean advanced) {
+
+		int count = UtilNBT.countItemsFromNBT(itemStack.getTagCompound(), ItemChestSack.KEY_NBT);
+		list.add("" + count);
 	}
 }

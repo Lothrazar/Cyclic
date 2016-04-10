@@ -16,45 +16,45 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
-public class PotionRegistry{
+public class PotionRegistry {
 
-	public static float slowfallSpeed;
-	public static boolean renderOnLeft;
+	public static float			slowfallSpeed;
+	public static boolean		renderOnLeft;
 	// tired;//http://www.minecraftforge.net/wiki/Potion_Tutorial
-	public static Potion slowfall;
-	public static Potion magnet;
+	public static Potion		slowfall;
+	public static Potion		magnet;
 
-	public final static int I = 0;
-	public final static int II = 1;
-	public final static int III = 2;
-	public final static int IV = 3;
-	public final static int V = 4;
+	public final static int	I		= 0;
+	public final static int	II	= 1;
+	public final static int	III	= 2;
+	public final static int	IV	= 3;
+	public final static int	V		= 4;
 
-	public static void register(){
+	public static void register() {
 
 		registerNewPotionEffects();
 	}
 
-	private static void registerNewPotionEffects(){
+	private static void registerNewPotionEffects() {
 
 		// http://www.minecraftforge.net/forum/index.php?topic=11024.0
 		// ??? http://www.minecraftforge.net/forum/index.php?topic=12358.0
 
-		PotionRegistry.slowfall = new PotionCustom( new ResourceLocation(Const.MODID, "textures/potions/slowfall.png"), false, 0, "potion.slowfall");
+		PotionRegistry.slowfall = new PotionCustom(new ResourceLocation(Const.MODID, "textures/potions/slowfall.png"), false, 0, "potion.slowfall");
 
-		PotionRegistry.magnet = new PotionCustom( new ResourceLocation(Const.MODID, "textures/potions/magnet.png"), false, 0, "potion.magnet");
+		PotionRegistry.magnet = new PotionCustom(new ResourceLocation(Const.MODID, "textures/potions/magnet.png"), false, 0, "potion.magnet");
 
 		// TODO: test out brewing api for these?
 	}
 
-	private final static int ITEM_HRADIUS = 20;
-	private final static int ITEM_VRADIUS = 4;
-	private final static float ITEMSPEED = 1.2F;
+	private final static int		ITEM_HRADIUS	= 20;
+	private final static int		ITEM_VRADIUS	= 4;
+	private final static float	ITEMSPEED			= 1.2F;
 
-	public static void tickMagnet(EntityLivingBase entityLiving){
+	public static void tickMagnet(EntityLivingBase entityLiving) {
 
-		if(entityLiving.isPotionActive(PotionRegistry.magnet)){
-	
+		if (entityLiving.isPotionActive(PotionRegistry.magnet)) {
+
 			World world = entityLiving.worldObj;
 
 			BlockPos pos = entityLiving.getPosition();
@@ -63,28 +63,27 @@ public class PotionRegistry{
 			List<EntityItem> found = world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(x - ITEM_HRADIUS, y - ITEM_VRADIUS, z - ITEM_HRADIUS, x + ITEM_HRADIUS, y + ITEM_VRADIUS, z + ITEM_HRADIUS));
 
 			// int moved = 0;
-			for(EntityItem eitem : found){
+			for (EntityItem eitem : found) {
 				Vector3.setEntityMotionFromVector(eitem, x, y, z, ITEMSPEED);
 				// moved++;
 			}
 
 			List<EntityXPOrb> foundExp = world.getEntitiesWithinAABB(EntityXPOrb.class, new AxisAlignedBB(x - ITEM_HRADIUS, y - ITEM_VRADIUS, z - ITEM_HRADIUS, x + ITEM_HRADIUS, y + ITEM_VRADIUS, z + ITEM_HRADIUS));
 
-			for(EntityXPOrb eitem : foundExp){
+			for (EntityXPOrb eitem : foundExp) {
 				Vector3.setEntityMotionFromVector(eitem, x, y, z, ITEMSPEED);
 				// moved++;
 			}
 		}
 	}
 
-	public static void tickSlowfall(EntityLivingBase entityLiving){
+	public static void tickSlowfall(EntityLivingBase entityLiving) {
 
-		if(entityLiving.isPotionActive(PotionRegistry.slowfall)){
+		if (entityLiving.isPotionActive(PotionRegistry.slowfall)) {
 
-			if(entityLiving instanceof EntityPlayer){
+			if (entityLiving instanceof EntityPlayer) {
 				EntityPlayer p = (EntityPlayer) entityLiving;
-				if(p.isSneaking()){
-					return;// so fall normally for now
+				if (p.isSneaking()) { return;// so fall normally for now
 				}
 			}
 
@@ -93,7 +92,7 @@ public class PotionRegistry{
 
 			// a normal fall seems to go up to 0, -1.2, -1.4, -1.6, then
 			// flattens out at -0.078
-			if(entityLiving.motionY < 0){
+			if (entityLiving.motionY < 0) {
 				entityLiving.motionY *= slowfallSpeed;
 
 				entityLiving.fallDistance = 0f; // for no fall damage
@@ -101,10 +100,10 @@ public class PotionRegistry{
 		}
 	}
 
-	public static void addOrMergePotionEffect(EntityLivingBase player, PotionEffect newp){
+	public static void addOrMergePotionEffect(EntityLivingBase player, PotionEffect newp) {
 
 		// this could be in a utilPotion class i guess...
-		if(player.isPotionActive(newp.getPotion())){
+		if (player.isPotionActive(newp.getPotion())) {
 			// do not use built in 'combine' function, just add up duration
 			PotionEffect p = player.getActivePotionEffect(newp.getPotion());
 
@@ -112,15 +111,15 @@ public class PotionRegistry{
 
 			player.addPotionEffect(new PotionEffect(newp.getPotion(), newp.getDuration() + p.getDuration(), ampMax));
 		}
-		else{
+		else {
 			player.addPotionEffect(newp);
 		}
 	}
 
-	public static void syncConfig(Configuration config){
+	public static void syncConfig(Configuration config) {
 
 		String category = "";
-		category = Const.MODCONF+"potions";
+		category = Const.MODCONF + "potions";
 
 		PotionRegistry.slowfallSpeed = config.getFloat("slowfall_speed", category, 0.41F, 0.1F, 1F, "This factor affects how much the slowfall effect slows down the entity.");
 

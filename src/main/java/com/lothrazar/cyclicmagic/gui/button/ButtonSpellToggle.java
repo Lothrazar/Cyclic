@@ -14,13 +14,13 @@ import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ButtonSpellToggle extends GuiButton implements ITooltipButton{
+public class ButtonSpellToggle extends GuiButton implements ITooltipButton {
 
-	final EntityPlayer thePlayer;
-	private ISpell spell;
-	private static final int btnSize = 16;
+	final EntityPlayer				thePlayer;
+	private ISpell						spell;
+	private static final int	btnSize	= 16;
 
-	public ButtonSpellToggle(EntityPlayer player,int x, int y, ISpell s){
+	public ButtonSpellToggle(EntityPlayer player, int x, int y, ISpell s) {
 
 		super(s.getID(), x, y, btnSize, btnSize, "");
 		spell = s;
@@ -29,19 +29,18 @@ public class ButtonSpellToggle extends GuiButton implements ITooltipButton{
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public boolean mousePressed(Minecraft mc, int mouseX, int mouseY){
+	public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
 
-		
 		boolean pressed = super.mousePressed(mc, mouseX, mouseY);
 		return pressed;
 	}
 
 	@Override
-	public void drawButton(Minecraft mc, int mouseX, int mouseY){
+	public void drawButton(Minecraft mc, int mouseX, int mouseY) {
 
 		// override this and draw the texture here, so the vanilla grey square
 		// doesnt show up
-		if(this.visible){
+		if (this.visible) {
 			// http://www.minecraftforge.net/forum/index.php?topic=19594.0
 
 			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -57,9 +56,9 @@ public class ButtonSpellToggle extends GuiButton implements ITooltipButton{
 		}
 	}
 
-	public List<String> getTooltips(){
+	public List<String> getTooltips() {
 
-		//PlayerPowerups props = PlayerPowerups.get(thePlayer);
+		// PlayerPowerups props = PlayerPowerups.get(thePlayer);
 		List<String> tooltips = new ArrayList<String>();
 		tooltips.add(TextFormatting.LIGHT_PURPLE + spell.getName());
 		tooltips.add(TextFormatting.DARK_GRAY + I18n.translateToLocal("spell.meta.cost") + TextFormatting.BLUE + spell.getCost());
@@ -68,10 +67,15 @@ public class ButtonSpellToggle extends GuiButton implements ITooltipButton{
 
 		tooltips.addAll(UtilString.splitIntoLine(spell.getInfo(), 28));
 
-		//boolean unlocked = ItemCyclicWand.Spells.isSpellUnlocked(props.getPlayer().getHeldItem(), spell);
+		// boolean unlocked =
+		// ItemCyclicWand.Spells.isSpellUnlocked(props.getPlayer().getHeldItem(),
+		// spell);
 
-		//String ed = unlocked ? EnumChatFormatting.GREEN + StatCollector.translateToLocal("spell.meta.enabled") : EnumChatFormatting.RED + StatCollector.translateToLocal("spell.meta.disabled");
-		//tooltips.add(ed);
+		// String ed = unlocked ? EnumChatFormatting.GREEN +
+		// StatCollector.translateToLocal("spell.meta.enabled") :
+		// EnumChatFormatting.RED +
+		// StatCollector.translateToLocal("spell.meta.disabled");
+		// tooltips.add(ed);
 		return tooltips;
 	}
 }

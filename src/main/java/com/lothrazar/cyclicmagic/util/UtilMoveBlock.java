@@ -9,15 +9,15 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class UtilMoveBlock{
+public class UtilMoveBlock {
 
 	public static ArrayList<Block> ignoreList = new ArrayList<Block>();
 
-	private static void translateCSV(){
+	private static void translateCSV() {
 
 		// TODO: FROM CONFIG...somehow
 
-		if(ignoreList.size() == 0){
+		if (ignoreList.size() == 0) {
 
 			ignoreList.add(Blocks.end_portal_frame);
 			ignoreList.add(Blocks.end_portal);
@@ -34,25 +34,24 @@ public class UtilMoveBlock{
 		}
 	}
 
-	public static boolean moveBlockTo(World world, EntityPlayer player, BlockPos pos, BlockPos posMoveToHere){
+	public static boolean moveBlockTo(World world, EntityPlayer player, BlockPos pos, BlockPos posMoveToHere) {
 
 		IBlockState newStateToPlace = world.getBlockState(pos);
 		translateCSV();
 
-		if(newStateToPlace == null || ignoreList.contains(newStateToPlace.getBlock())){
-			return false;
-		}
-		if(newStateToPlace.getBlock().getBlockHardness(newStateToPlace,world, posMoveToHere) == -1){
-			return false;// unbreakable like bedrock
+		if (newStateToPlace == null || ignoreList.contains(newStateToPlace.getBlock())) { return false; }
+		if (newStateToPlace.getBlock().getBlockHardness(newStateToPlace, world, posMoveToHere) == -1) { return false;// unbreakable
+		                                                                                                             // like
+		                                                                                                             // bedrock
 		}
 
-		if(world.isAirBlock(posMoveToHere) && world.isBlockModifiable(player, pos)){
+		if (world.isAirBlock(posMoveToHere) && world.isBlockModifiable(player, pos)) {
 
-			if(world.isRemote == false){
+			if (world.isRemote == false) {
 
 				world.destroyBlock(pos, false);
 			}
-			
+
 			return UtilPlaceBlocks.placeStateSafe(world, player, posMoveToHere, newStateToPlace);
 		}
 		else
@@ -67,26 +66,26 @@ public class UtilMoveBlock{
 	 * @param pos
 	 * @param face
 	 */
-	public static BlockPos pullBlock(World worldIn, EntityPlayer player, BlockPos pos, EnumFacing face){
+	public static BlockPos pullBlock(World worldIn, EntityPlayer player, BlockPos pos, EnumFacing face) {
 
 		BlockPos posTowardsPlayer = pos.offset(face);
 
-		if(moveBlockTo(worldIn, player, pos, posTowardsPlayer)){
+		if (moveBlockTo(worldIn, player, pos, posTowardsPlayer)) {
 			return posTowardsPlayer;
 		}
-		else{
+		else {
 			return null;
 		}
 	}
 
-	public static BlockPos pushBlock(World worldIn, EntityPlayer player, BlockPos pos, EnumFacing face){
+	public static BlockPos pushBlock(World worldIn, EntityPlayer player, BlockPos pos, EnumFacing face) {
 
 		BlockPos posAwayPlayer = pos.offset(face.getOpposite());
 
-		if(moveBlockTo(worldIn, player, pos, posAwayPlayer)){
+		if (moveBlockTo(worldIn, player, pos, posAwayPlayer)) {
 			return posAwayPlayer;
 		}
-		else{
+		else {
 			return null;
 		}
 	}

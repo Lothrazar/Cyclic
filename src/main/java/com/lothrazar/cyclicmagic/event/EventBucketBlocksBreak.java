@@ -4,7 +4,6 @@ import com.lothrazar.cyclicmagic.block.BlockBucketStorage;
 import com.lothrazar.cyclicmagic.block.TileEntityBucketStorage;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -15,9 +14,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EventBucketBlocksBreak {
 
-	
 	@SubscribeEvent
-	public void onBreakEvent(BreakEvent event){
+	public void onBreakEvent(BreakEvent event) {
 
 		World world = event.getWorld();
 		BlockPos pos = event.getPos();
@@ -27,7 +25,7 @@ public class EventBucketBlocksBreak {
 		// TODO; check tool/pickaxe? if notHarvestable or whatever, drop the
 		// buckets and the ..glass?
 
-		if(ent != null && ent instanceof TileEntityBucketStorage){
+		if (ent != null && ent instanceof TileEntityBucketStorage) {
 			TileEntityBucketStorage t = (TileEntityBucketStorage) ent;
 			ItemStack stack = new ItemStack(state.getBlock());
 

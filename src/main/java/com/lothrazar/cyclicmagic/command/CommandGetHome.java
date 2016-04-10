@@ -31,7 +31,8 @@ public class CommandGetHome extends BaseCommand implements ICommand {
 			// TODO: get the ID for this chat for translation purposes
 			UtilChat.addChatMessage(player, "Your home bed was missing or obstructed.");
 
-		} else {
+		}
+		else {
 			String pos = coords.getX() + ", " + coords.getY() + ", " + coords.getZ();
 
 			UtilChat.addChatMessage(player, "Your home bed is at " + pos);

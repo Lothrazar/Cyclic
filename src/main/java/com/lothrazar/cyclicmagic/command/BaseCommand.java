@@ -10,53 +10,53 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 
-public  class BaseCommand implements ICommand{
+public class BaseCommand implements ICommand {
 	// https://github.com/LothrazarMinecraftMods/MinecraftSearchCommands/blob/master/src/main/java/com/lothrazar/searchcommands/command/CommandSearchTrades.java
 	// https://github.com/PrinceOfAmber/SamsPowerups/tree/master/Commands/src/main/java/com/lothrazar/samscommands/command
 	// CommandSimpleWaypoints removed TP feature -> we have ender book already
-	
-	private String name; 
-	private boolean requiresOP;
-	private final static int OP = 2;
-	private ArrayList<String> aliases;
-	
-	public BaseCommand(String n, boolean op){
+
+	private String						name;
+	private boolean						requiresOP;
+	private final static int	OP	= 2;
+	private ArrayList<String>	aliases;
+
+	public BaseCommand(String n, boolean op) {
 		name = n;
 		requiresOP = op;
 		setupAliases(null);
 	}
 
-	public BaseCommand(String n, boolean op,ArrayList<String> paliases){
+	public BaseCommand(String n, boolean op, ArrayList<String> paliases) {
 		name = n;
 		requiresOP = op;
 		setupAliases(paliases);
 	}
-	
-	private void setupAliases(ArrayList<String> paliases){
+
+	private void setupAliases(ArrayList<String> paliases) {
 		aliases = (paliases == null) ? new ArrayList<String>() : paliases;
 		aliases.add(name.toUpperCase());
 	}
 
 	@Override
-	public List<String> getCommandAliases()
-	{
+	public List<String> getCommandAliases() {
 		return this.aliases;
 	}
-	
+
 	@Override
-	public String getCommandName(){
+	public String getCommandName() {
 		return name;
 	}
-	
+
 	@Override
-	public int compareTo(ICommand arg0){
+	public int compareTo(ICommand arg0) {
 		return this.equals(arg0) ? 1 : 0;
 	}
+
 	/**
 	 * Override to specify any arguments or info
 	 */
 	@Override
-	public String getCommandUsage(ICommandSender sender){
+	public String getCommandUsage(ICommandSender sender) {
 		return "/" + this.getCommandName();
 	}
 
@@ -65,30 +65,30 @@ public  class BaseCommand implements ICommand{
 	 * override to change
 	 */
 	@Override
-	public boolean checkPermission(MinecraftServer server, ICommandSender sender){
+	public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
 
-		return (requiresOP) ? sender.canCommandSenderUseCommand(OP, this.getCommandName()) : true; 
+		return (requiresOP) ? sender.canCommandSenderUseCommand(OP, this.getCommandName()) : true;
 	}
 
 	@Override
-	public List<String> getTabCompletionOptions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos pos){
+	public List<String> getTabCompletionOptions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos pos) {
 
 		return new ArrayList<String>();
 	}
 
 	@Override
-	public boolean isUsernameIndex(String[] args, int index){
+	public boolean isUsernameIndex(String[] args, int index) {
 		return false;
 	}
 
-	public EntityPlayerMP getPlayerByUsername(MinecraftServer server, String name){
+	public EntityPlayerMP getPlayerByUsername(MinecraftServer server, String name) {
 		return server.getPlayerList().getPlayerByUsername(name);
 	}
-	
-	@Override
-	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException{
 
-		System.out.println("Warning: command not implemented "+ Const.MODID +":" + this.getCommandName());
-		
+	@Override
+	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+
+		System.out.println("Warning: command not implemented " + Const.MODID + ":" + this.getCommandName());
+
 	}
 }

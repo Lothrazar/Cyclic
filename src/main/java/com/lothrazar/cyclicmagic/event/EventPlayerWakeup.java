@@ -8,19 +8,20 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventPlayerWakeup{
+public class EventPlayerWakeup {
 
-	int levelBoost = PotionRegistry.I;// 1 means Hunger II. int = 2 means Hunger III, etc.
-	int sleeping_hunger_seconds = 30;
+	int	levelBoost							= PotionRegistry.I;	// 1 means Hunger II. int = 2
+	                                                // means Hunger III, etc.
+	int	sleeping_hunger_seconds	= 30;
 
 	// TODO: this should be in standalone , but what goes with it?
 	@SubscribeEvent
-	public void onPlayerWakeUpEvent(PlayerWakeUpEvent event){
+	public void onPlayerWakeUpEvent(PlayerWakeUpEvent event) {
 
 		EntityPlayer entityPlayer = event.getEntityPlayer();
 		boolean didSleepAllNight = !event.updateWorld();
 
-		if(entityPlayer.worldObj.isRemote == false && didSleepAllNight){
+		if (entityPlayer.worldObj.isRemote == false && didSleepAllNight) {
 
 			entityPlayer.addPotionEffect(new PotionEffect(MobEffects.hunger, sleeping_hunger_seconds * Const.TICKS_PER_SEC, levelBoost));
 			entityPlayer.addPotionEffect(new PotionEffect(MobEffects.digSlowdown, sleeping_hunger_seconds * Const.TICKS_PER_SEC, levelBoost));

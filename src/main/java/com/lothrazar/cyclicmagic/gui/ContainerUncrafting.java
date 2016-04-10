@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.gui;
 
 import com.lothrazar.cyclicmagic.block.TileEntityUncrafting;
 import com.lothrazar.cyclicmagic.gui.slot.SlotUncraft;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -11,12 +10,12 @@ import net.minecraft.item.ItemStack;
 
 public class ContainerUncrafting extends Container {
 	// tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
-	public static final int SLOTX = 79;
-	public static final int SLOTY = 10;
-	public static final int SLOT = 0;
-	public static final int SLOT_SECOND = 1;
-	public static final int SLOT_THIRD = 2;
-	protected TileEntityUncrafting tileEntity;
+	public static final int					SLOTX				= 79;
+	public static final int					SLOTY				= 10;
+	public static final int					SLOT				= 0;
+	public static final int					SLOT_SECOND	= 1;
+	public static final int					SLOT_THIRD	= 2;
+	protected TileEntityUncrafting	tileEntity;
 
 	public ContainerUncrafting(InventoryPlayer inventoryPlayer, TileEntityUncrafting te) {
 		tileEntity = te;
@@ -54,15 +53,11 @@ public class ContainerUncrafting extends Container {
 
 			// merges the item into player inventory since its in the tileEntity
 			if (slot < tileEntity.getSizeInventory()) {
-				if (!this.mergeItemStack(stackInSlot, tileEntity.getSizeInventory(), 36 + tileEntity.getSizeInventory(), true)) {
-					return null;
-				}
+				if (!this.mergeItemStack(stackInSlot, tileEntity.getSizeInventory(), 36 + tileEntity.getSizeInventory(), true)) { return null; }
 			}
 			// places it into the tileEntity is possible since its in the player
 			// inventory
-			else if (!this.mergeItemStack(stackInSlot, 0, tileEntity.getSizeInventory(), false)) {
-				return null;
-			}
+			else if (!this.mergeItemStack(stackInSlot, 0, tileEntity.getSizeInventory(), false)) { return null; }
 
 			if (stackInSlot.stackSize == 0) {
 				slotObject.putStack(null);
@@ -71,9 +66,7 @@ public class ContainerUncrafting extends Container {
 				slotObject.onSlotChanged();
 			}
 
-			if (stackInSlot.stackSize == stack.stackSize) {
-				return null;
-			}
+			if (stackInSlot.stackSize == stack.stackSize) { return null; }
 			slotObject.onPickupFromSlot(player, stackInSlot);
 		}
 		return stack;

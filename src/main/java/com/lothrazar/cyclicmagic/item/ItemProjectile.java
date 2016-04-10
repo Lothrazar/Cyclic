@@ -13,7 +13,6 @@ import com.lothrazar.cyclicmagic.entity.projectile.EntityTorchBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityWaterBolt;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.UtilSearchWorld;
-
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
@@ -28,95 +27,93 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ItemProjectile extends Item{
+public class ItemProjectile extends Item {
 
-	public static int DUNGEONRADIUS = 64;//TODO:CONFIG
+	public static int DUNGEONRADIUS = 64;// TODO:CONFIG
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand){
+	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
 
 		onItemThrow(itemStackIn, worldIn, playerIn, hand);
 
 		return new ActionResult<ItemStack>(EnumActionResult.PASS, itemStackIn);
 	}
-	
-	private void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand){
 
-		if(held == null){
-			return;
-		}
+	private void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
 
-		if(held.getItem() == ItemRegistry.ender_dungeon){
+		if (held == null) { return; }
+
+		if (held.getItem() == ItemRegistry.ender_dungeon) {
 
 			BlockPos blockpos = UtilSearchWorld.findClosestBlock(player, Blocks.mob_spawner, DUNGEONRADIUS);
 
-			if(blockpos != null){
+			if (blockpos != null) {
 
 				EntityDungeonEye entityendereye = new EntityDungeonEye(world, player);
-			
+
 				doThrow(world, player, hand, entityendereye);
 
 				entityendereye.moveTowards(blockpos);
 			}
-			else{
+			else {
 				// not found, so play sounds to alert player
 
-				//also drop it on ground to signal a failed throw
-				if(player.capabilities.isCreativeMode == false){
+				// also drop it on ground to signal a failed throw
+				if (player.capabilities.isCreativeMode == false) {
 					player.inventory.decrStackSize(player.inventory.currentItem, 1);
 				}
 				BlockPos pos = player.getPosition();
-				world.spawnEntityInWorld(new EntityItem(world,pos.getX(), pos.getY(), pos.getZ(),new ItemStack(ItemRegistry.ender_dungeon)));
+				world.spawnEntityInWorld(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegistry.ender_dungeon)));
 
 				world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.item_firecharge_use, SoundCategory.PLAYERS, 1.0F, 1.0F, false);
 
 			}
 		}
-		else if(held.getItem() == ItemRegistry.ender_tnt_1){
+		else if (held.getItem() == ItemRegistry.ender_tnt_1) {
 			doThrow(world, player, hand, new EntityDynamite(world, player, 1));
 		}
-		else if(held.getItem() == ItemRegistry.ender_tnt_2){
+		else if (held.getItem() == ItemRegistry.ender_tnt_2) {
 			doThrow(world, player, hand, new EntityDynamite(world, player, 2));
 		}
-		else if(held.getItem() == ItemRegistry.ender_tnt_4){
+		else if (held.getItem() == ItemRegistry.ender_tnt_4) {
 			doThrow(world, player, hand, new EntityDynamite(world, player, 4));
 		}
-		else if(held.getItem() == ItemRegistry.ender_tnt_6){
+		else if (held.getItem() == ItemRegistry.ender_tnt_6) {
 			doThrow(world, player, hand, new EntityDynamite(world, player, 6));
 		}
-		else if(held.getItem() == ItemRegistry.ender_blaze){
+		else if (held.getItem() == ItemRegistry.ender_blaze) {
 			doThrow(world, player, hand, new EntityBlazeBolt(world, player));
 		}
-		else if(held.getItem() == ItemRegistry.ender_bed){
+		else if (held.getItem() == ItemRegistry.ender_bed) {
 			doThrow(world, player, hand, new EntityHomeBolt(world, player));
 		}
-		else if(held.getItem() == ItemRegistry.ender_torch){
+		else if (held.getItem() == ItemRegistry.ender_torch) {
 			doThrow(world, player, hand, new EntityTorchBolt(world, player));
 		}
-		else if(held.getItem() == ItemRegistry.ender_wool){
+		else if (held.getItem() == ItemRegistry.ender_wool) {
 			doThrow(world, player, hand, new EntityShearingBolt(world, player));
 		}
-		else if(held.getItem() == ItemRegistry.ender_fishing){
+		else if (held.getItem() == ItemRegistry.ender_fishing) {
 			doThrow(world, player, hand, new EntityFishingBolt(world, player));
 		}
-		else if(held.getItem() == ItemRegistry.ender_snow){
+		else if (held.getItem() == ItemRegistry.ender_snow) {
 			doThrow(world, player, hand, new EntitySnowballBolt(world, player));
 		}
-		else if(held.getItem() == ItemRegistry.ender_water){
+		else if (held.getItem() == ItemRegistry.ender_water) {
 			doThrow(world, player, hand, new EntityWaterBolt(world, player));
 		}
-		else if(held.getItem() == ItemRegistry.ender_harvest){
+		else if (held.getItem() == ItemRegistry.ender_harvest) {
 			doThrow(world, player, hand, new EntityHarvestBolt(world, player));
 		}
-		else if(held.getItem() == ItemRegistry.ender_lightning){
+		else if (held.getItem() == ItemRegistry.ender_lightning) {
 			doThrow(world, player, hand, new EntityLightningballBolt(world, player));
 		}
 	}
 
-	private static void doThrow(World world, EntityPlayer player, EnumHand hand, EntityThrowable thing){
+	private static void doThrow(World world, EntityPlayer player, EnumHand hand, EntityThrowable thing) {
 
-		if(!world.isRemote){
-			
+		if (!world.isRemote) {
+
 			thing.func_184538_a(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
 			world.spawnEntityInWorld(thing);
 		}
@@ -126,24 +123,30 @@ public class ItemProjectile extends Item{
 		BlockPos pos = player.getPosition();
 		world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.entity_egg_throw, SoundCategory.PLAYERS, 1.0F, 1.0F, false);
 
-		if(player.capabilities.isCreativeMode == false){
+		if (player.capabilities.isCreativeMode == false) {
 			player.inventory.decrStackSize(player.inventory.currentItem, 1);
 		}
 	}
 
-	//backup in case function is renamed or removed -> ItemEnderPearl
-	/*  public void func_184538_a(Entity p_184538_1_, float p_184538_2_, float p_184538_3_, float p_184538_4_, float p_184538_5_, float p_184538_6_)
-    {
-        float f = -MathHelper.sin(p_184538_3_ * 0.017453292F) * MathHelper.cos(p_184538_2_ * 0.017453292F);
-        float f1 = -MathHelper.sin((p_184538_2_ + p_184538_4_) * 0.017453292F);
-        float f2 = MathHelper.cos(p_184538_3_ * 0.017453292F) * MathHelper.cos(p_184538_2_ * 0.017453292F);
-        this.setThrowableHeading((double)f, (double)f1, (double)f2, p_184538_5_, p_184538_6_);
-        this.motionX += p_184538_1_.motionX;
-        this.motionZ += p_184538_1_.motionZ;
-
-        if (!p_184538_1_.onGround)
-        {
-            this.motionY += p_184538_1_.motionY;
-        }
-    }*/
+	// backup in case function is renamed or removed -> ItemEnderPearl
+	/*
+	 * public void func_184538_a(Entity p_184538_1_, float p_184538_2_, float
+	 * p_184538_3_, float p_184538_4_, float p_184538_5_, float p_184538_6_)
+	 * {
+	 * float f = -MathHelper.sin(p_184538_3_ * 0.017453292F) *
+	 * MathHelper.cos(p_184538_2_ * 0.017453292F);
+	 * float f1 = -MathHelper.sin((p_184538_2_ + p_184538_4_) * 0.017453292F);
+	 * float f2 = MathHelper.cos(p_184538_3_ * 0.017453292F) *
+	 * MathHelper.cos(p_184538_2_ * 0.017453292F);
+	 * this.setThrowableHeading((double)f, (double)f1, (double)f2, p_184538_5_,
+	 * p_184538_6_);
+	 * this.motionX += p_184538_1_.motionX;
+	 * this.motionZ += p_184538_1_.motionZ;
+	 * 
+	 * if (!p_184538_1_.onGround)
+	 * {
+	 * this.motionY += p_184538_1_.motionY;
+	 * }
+	 * }
+	 */
 }

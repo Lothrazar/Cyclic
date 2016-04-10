@@ -1,16 +1,14 @@
 package com.lothrazar.cyclicmagic.block;
 
 import java.util.Random;
-
 import com.lothrazar.cyclicmagic.GuiHandler;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.item.IHasRecipe;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyDirection; 
+import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -20,7 +18,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity; 
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
@@ -85,15 +83,11 @@ public class BlockUncrafting extends Block implements IHasRecipe {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void randomTick(World world, BlockPos pos, IBlockState state, Random rand) {
-		//was randomDisplayTick in 1.8.x
+		// was randomDisplayTick in 1.8.x
 		// http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/modification-development/1431325-1-5-1-forge-spawning-fire-particle
-		if (world.getTileEntity(pos) == null) {
-			return;
-		}
+		if (world.getTileEntity(pos) == null) { return; }
 		TileEntityUncrafting tile = (TileEntityUncrafting) world.getTileEntity(pos);
-		if (tile == null) {
-			return;
-		}
+		if (tile == null) { return; }
 
 		if (tile.isBurning()) {
 
@@ -107,30 +101,33 @@ public class BlockUncrafting extends Block implements IHasRecipe {
 
 		}
 
-		/*	private static String SOUND_SUCCESS = "random.break" ==>> entity.arrow.shoot;// http://minecraft.gamepedia.com/Sounds.json
-	private static String SOUND_REJECTED = "random.bow";*/
+		/*
+		 * private static String SOUND_SUCCESS = "random.break" ==>>
+		 * entity.arrow.shoot;// http://minecraft.gamepedia.com/Sounds.json
+		 * private static String SOUND_REJECTED = "random.bow";
+		 */
 		String playSound = tile.getAndClearSound();
 		if (playSound != null && playSound.isEmpty() == false) {
-			SoundEvent sound = (SoundEvent)SoundEvent.soundEventRegistry.getObject(new ResourceLocation(playSound));
-			if(sound != null){		
-				world.playSound(pos.getX(), pos.getY(), pos.getZ(),  sound, SoundCategory.BLOCKS,  1, 1, false);
-			} 
-			else{
-				System.out.println("dead sound"+playSound);
+			SoundEvent sound = (SoundEvent) SoundEvent.soundEventRegistry.getObject(new ResourceLocation(playSound));
+			if (sound != null) {
+				world.playSound(pos.getX(), pos.getY(), pos.getZ(), sound, SoundCategory.BLOCKS, 1, 1, false);
+			}
+			else {
+				System.out.println("dead sound" + playSound);
 			}
 		}
 
 		super.randomTick(world, pos, state, rand);
 	}
 
-	// onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
+	// onBlockActivated(World worldIn, BlockPos pos, IBlockState state,
+	// EntityPlayer playerIn, EnumHand hand, ItemStack heldItem, EnumFacing side,
+	// float hitX, float hitY, float hitZ)
 	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player,EnumHand hand, ItemStack heldItem,EnumFacing side, float hitX, float hitY, float hitZ) {
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
 		TileEntity tileEntity = world.getTileEntity(pos);
 
-		if (tileEntity == null || player.isSneaking()) {
-			return false;
-		}
+		if (tileEntity == null || player.isSneaking()) { return false; }
 
 		int x = pos.getX(), y = pos.getY(), z = pos.getZ();
 		player.openGui(ModMain.instance, GuiHandler.GUI_INDEX_UNCRAFTING, world, x, y, z);
@@ -148,9 +145,7 @@ public class BlockUncrafting extends Block implements IHasRecipe {
 		Random rand = world.rand;
 
 		TileEntity tile = world.getTileEntity(pos);
-		if (tile instanceof IInventory == false) {
-			return;
-		}
+		if (tile instanceof IInventory == false) { return; }
 
 		int x = pos.getX(), y = pos.getY(), z = pos.getZ();
 
@@ -197,9 +192,6 @@ public class BlockUncrafting extends Block implements IHasRecipe {
 
 	@Override
 	public void addRecipe() {
-		GameRegistry.addRecipe(new ItemStack(this), 
-				" r ", 
-				"fdf", 
-				" o ", 'o', Blocks.obsidian, 'f', Blocks.furnace, 'r', Blocks.dropper, 'd', Blocks.diamond_block);
+		GameRegistry.addRecipe(new ItemStack(this), " r ", "fdf", " o ", 'o', Blocks.obsidian, 'f', Blocks.furnace, 'r', Blocks.dropper, 'd', Blocks.diamond_block);
 	}
 }

@@ -14,10 +14,11 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ItemChestSackEmpty extends Item{
+public class ItemChestSackEmpty extends Item {
 
 	public static final String name = "chest_sack_empty";
-	public ItemChestSackEmpty(){
+
+	public ItemChestSackEmpty() {
 
 		super();
 		this.setMaxStackSize(64);
@@ -29,15 +30,11 @@ public class ItemChestSackEmpty extends Item{
 	 * Called when a Block is right-clicked with this Item
 	 */
 	@Override
-	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer entityPlayer, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ){
+	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer entityPlayer, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
 
-		if(pos == null){
-			return EnumActionResult.FAIL;
-		}
+		if (pos == null) { return EnumActionResult.FAIL; }
 
-		if(world.getTileEntity(pos) instanceof IInventory == false){
-			return EnumActionResult.FAIL;
-		}
+		if (world.getTileEntity(pos) instanceof IInventory == false) { return EnumActionResult.FAIL; }
 
 		IInventory invo = (IInventory) world.getTileEntity(pos);
 

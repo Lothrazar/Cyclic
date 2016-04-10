@@ -5,24 +5,24 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.net.MessageRecharge;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton; 
+import net.minecraft.client.gui.GuiButton;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ButtonRecharge extends GuiButton implements ITooltipButton{
+public class ButtonRecharge extends GuiButton implements ITooltipButton {
 
-	public ButtonRecharge(int buttonId, int x, int y, int width){
+	public ButtonRecharge(int buttonId, int x, int y, int width) {
 
-		super(buttonId, x, y, width, 20, "X");//StatCollector.translateToLocal("button.recharge")
+		super(buttonId, x, y, width, 20, "X");// StatCollector.translateToLocal("button.recharge")
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public boolean mousePressed(Minecraft mc, int mouseX, int mouseY){
+	public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
 
 		boolean pressed = super.mousePressed(mc, mouseX, mouseY);
 
-		if(pressed){
+		if (pressed) {
 
 			ModMain.network.sendToServer(new MessageRecharge());
 		}
@@ -31,7 +31,7 @@ public class ButtonRecharge extends GuiButton implements ITooltipButton{
 	}
 
 	@Override
-	public List<String> getTooltips(){
+	public List<String> getTooltips() {
 
 		List<String> tooltips = new ArrayList<String>();
 		tooltips.add(net.minecraft.util.text.translation.I18n.translateToLocal("button.recharge.tooltip"));

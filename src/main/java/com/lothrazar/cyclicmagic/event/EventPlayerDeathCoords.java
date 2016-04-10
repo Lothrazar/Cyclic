@@ -6,21 +6,22 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 
-public class EventPlayerDeathCoords{
+public class EventPlayerDeathCoords {
 
 	@SubscribeEvent
-	public void onLivingDeathEvent(LivingDeathEvent event){
+	public void onLivingDeathEvent(LivingDeathEvent event) {
 
 		Entity entity = event.getEntity();
 
-		if(entity instanceof EntityPlayer){
+		if (entity instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) entity;
 
 			// TODO: could restrict to certain damage soruces
 			// event.getSource() == DamageSource.
-			//ItemStack skull = UtilNBT.buildNamedPlayerSkull(player);
+			// ItemStack skull = UtilNBT.buildNamedPlayerSkull(player);
 
-			//UtilEntity.dropItemStackInWorld(entity.worldObj, player.getPosition(), skull);
+			// UtilEntity.dropItemStackInWorld(entity.worldObj, player.getPosition(),
+			// skull);
 
 			String coordsStr = UtilChat.blockPosToString(player.getPosition());
 			UtilChat.addChatMessage(player, player.getDisplayNameString() + " player.death.location " + coordsStr);

@@ -12,17 +12,18 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class MessageSpellFromServer implements IMessage, IMessageHandler<MessageSpellFromServer, IMessage>{
+public class MessageSpellFromServer implements IMessage, IMessageHandler<MessageSpellFromServer, IMessage> {
 
-	public static final int ID = 16;
-	private BlockPos pos;
-	private BlockPos posOffset;
-	private int spellID;
-	public MessageSpellFromServer(){
+	public static final int	ID	= 16;
+	private BlockPos				pos;
+	private BlockPos				posOffset;
+	private int							spellID;
+
+	public MessageSpellFromServer() {
 
 	}
 
-	public MessageSpellFromServer(BlockPos mouseover, BlockPos offset, int spellid){
+	public MessageSpellFromServer(BlockPos mouseover, BlockPos offset, int spellid) {
 
 		pos = mouseover;
 		posOffset = offset;
@@ -30,7 +31,7 @@ public class MessageSpellFromServer implements IMessage, IMessageHandler<Message
 	}
 
 	@Override
-	public void fromBytes(ByteBuf buf){
+	public void fromBytes(ByteBuf buf) {
 
 		NBTTagCompound tags = ByteBufUtils.readTag(buf);
 
@@ -47,7 +48,7 @@ public class MessageSpellFromServer implements IMessage, IMessageHandler<Message
 	}
 
 	@Override
-	public void toBytes(ByteBuf buf){
+	public void toBytes(ByteBuf buf) {
 
 		NBTTagCompound tags = new NBTTagCompound();
 		tags.setInteger("x", pos.getX());
@@ -63,22 +64,23 @@ public class MessageSpellFromServer implements IMessage, IMessageHandler<Message
 	}
 
 	@Override
-	public IMessage onMessage(MessageSpellFromServer message, MessageContext ctx){
+	public IMessage onMessage(MessageSpellFromServer message, MessageContext ctx) {
 
-		if(ctx.side.isServer() && message != null && message.pos != null){
+		if (ctx.side.isServer() && message != null && message.pos != null) {
 
 			EntityPlayer p = ctx.getServerHandler().playerEntity;
 
-			// if( p.worldObj.getBlockState(message.pos).getBlock().isReplaceable(p.worldObj,
+			// if(
+			// p.worldObj.getBlockState(message.pos).getBlock().isReplaceable(p.worldObj,
 			// message.pos)){
-			
-			ISpell spell =SpellRegistry.getSpellFromID(message.spellID);
 
-			if(spell != null && spell instanceof ISpellFromServer){
-				((ISpellFromServer)spell).castFromServer(message.pos, message.posOffset, p);
+			ISpell spell = SpellRegistry.getSpellFromID(message.spellID);
+
+			if (spell != null && spell instanceof ISpellFromServer) {
+				((ISpellFromServer) spell).castFromServer(message.pos, message.posOffset, p);
 			}
-			else{
-				System.out.println("WARNING: Message from server: spell not found"+message.spellID);
+			else {
+				System.out.println("WARNING: Message from server: spell not found" + message.spellID);
 			}
 		}
 

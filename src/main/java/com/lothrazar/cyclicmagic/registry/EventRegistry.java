@@ -6,19 +6,19 @@ import net.minecraftforge.common.config.Configuration;
 import com.lothrazar.cyclicmagic.event.*;
 import com.lothrazar.cyclicmagic.util.Const;
 
-public class EventRegistry{
+public class EventRegistry {
 
-	private static ArrayList<Object> events = new ArrayList<Object>();
+	private static ArrayList<Object>	events	= new ArrayList<Object>();
 
-	private static boolean nameTagDeath;
+	private static boolean						nameTagDeath;
 
-	private static boolean playerWakeup;
+	private static boolean						playerWakeup;
 
-	private static boolean signSkullName;
+	private static boolean						signSkullName;
 
-	private static boolean playerDeathCoords;
+	private static boolean						playerDeathCoords;
 
-	public static void syncConfig(Configuration config){
+	public static void syncConfig(Configuration config) {
 
 		String category = Const.MODCONF + "mobs";
 
@@ -37,7 +37,7 @@ public class EventRegistry{
 		playerDeathCoords = config.getBoolean("playerDeathCoords", category, true, "Display your coordinates in chat when you die");
 	}
 
-	public static void register(){
+	public static void register() {
 
 		// some just always have to happen no matter what. for other features.
 		events.add(new EventGuiAddButtons());
@@ -59,39 +59,45 @@ public class EventRegistry{
 
 		// some events are featured that get configured
 
-		// TODO: decide if we split this event out for each mob or something? and figure configs
+		// TODO: decide if we split this event out for each mob or something? and
+		// figure configs
 		// out
 		events.add(new EventAnimalDropBuffs());
 		events.add(new EventMobDropsReduced());
 
-		if(nameTagDeath){
+		if (nameTagDeath) {
 			events.add(new EventNametagDeath());
 		}
-		if(playerDeathCoords){
+		if (playerDeathCoords) {
 			events.add(new EventPlayerDeathCoords());
 		}
-		if(playerWakeup){
+		if (playerWakeup) {
 			events.add(new EventPlayerWakeup());
 		}
-		if(signSkullName){
+		if (signSkullName) {
 			events.add(new EventSignSkullName());
 		}
-		for(Object e : events){
+		for (Object e : events) {
 			MinecraftForge.EVENT_BUS.register(e);
 		}
 	}
 
 	/*
-	 * @SubscribeEvent public void onEntityJoinWorldEvent(EntityJoinWorldEvent event) {
+	 * @SubscribeEvent public void onEntityJoinWorldEvent(EntityJoinWorldEvent
+	 * event) {
 	 * 
-	 * if(event.entity instanceof EntityLivingBase && event.world.isRemote) { EntityLivingBase
+	 * if(event.entity instanceof EntityLivingBase && event.world.isRemote) {
+	 * EntityLivingBase
 	 * living = (EntityLivingBase)event.entity;
 	 * 
 	 * if(living instanceof EntityWolf && ((EntityWolf)living).isTamed()) {
-	 * setMaxHealth(living,heartsWolfTamed*2); } if(living instanceof EntityOcelot &&
-	 * ((EntityOcelot)living).isTamed()) { setMaxHealth(living,heartsCatTamed*2); }
+	 * setMaxHealth(living,heartsWolfTamed*2); } if(living instanceof EntityOcelot
+	 * &&
+	 * ((EntityOcelot)living).isTamed()) { setMaxHealth(living,heartsCatTamed*2);
+	 * }
 	 * 
-	 * if(living instanceof EntityVillager && ((EntityVillager)living).isChild() == false) {
+	 * if(living instanceof EntityVillager && ((EntityVillager)living).isChild()
+	 * == false) {
 	 * setMaxHealth(living,heartsVillager*2); } } }
 	 */
 

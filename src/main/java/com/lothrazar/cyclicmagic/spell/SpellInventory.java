@@ -14,9 +14,9 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-public class SpellInventory extends BaseSpell{
+public class SpellInventory extends BaseSpell {
 
-	public SpellInventory(int id, String n){
+	public SpellInventory(int id, String n) {
 
 		super.init(id, n);
 		this.cost = 0;// so far, the only spell costing zero
@@ -26,9 +26,9 @@ public class SpellInventory extends BaseSpell{
 	}
 
 	@Override
-	public boolean cast(World world, EntityPlayer player, ItemStack wand,BlockPos pos, EnumFacing side){
- 
-		if(!world.isRemote){ // TODO: does the isRemote check actually matter
+	public boolean cast(World world, EntityPlayer player, ItemStack wand, BlockPos pos, EnumFacing side) {
+
+		if (!world.isRemote) { // TODO: does the isRemote check actually matter
 			player.openGui(ModMain.instance, GuiHandler.GUI_INDEX_WAND, world, 0, 0, 0);
 		}
 
@@ -36,14 +36,14 @@ public class SpellInventory extends BaseSpell{
 	}
 
 	@Override
-	public void spawnParticle(World world, EntityPlayer player, BlockPos pos){
+	public void spawnParticle(World world, EntityPlayer player, BlockPos pos) {
 
 		UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT_MAGIC, pos);
 
 	}
 
 	@Override
-	public void playSound(World world, Block block, BlockPos pos){
+	public void playSound(World world, Block block, BlockPos pos) {
 
 		UtilSound.playSound(world, pos, UtilSound.drink);
 	}

@@ -8,32 +8,32 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
-public class EntityTorchBolt extends EntityThrowable{
+public class EntityTorchBolt extends EntityThrowable {
 
 	public static boolean damageEntityOnHit;
 
-	public EntityTorchBolt(World worldIn){
+	public EntityTorchBolt(World worldIn) {
 
 		super(worldIn);
 	}
 
-	public EntityTorchBolt(World worldIn, EntityLivingBase ent){
+	public EntityTorchBolt(World worldIn, EntityLivingBase ent) {
 
 		super(worldIn, ent);
 	}
 
-	public EntityTorchBolt(World worldIn, double x, double y, double z){
+	public EntityTorchBolt(World worldIn, double x, double y, double z) {
 
 		super(worldIn, x, y, z);
 	}
 
 	@Override
-	protected void onImpact(RayTraceResult mop){
+	protected void onImpact(RayTraceResult mop) {
 
-		if(mop.entityHit != null){
+		if (mop.entityHit != null) {
 
 			// do the snowball damage, which should be none. put out the fire
-			if(damageEntityOnHit)
+			if (damageEntityOnHit)
 				mop.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 0);
 
 		}
@@ -41,12 +41,12 @@ public class EntityTorchBolt extends EntityThrowable{
 		BlockPos pos = mop.getBlockPos();
 		BlockPos offset = null;
 
-		if(mop.sideHit != null){
+		if (mop.sideHit != null) {
 
 			offset = pos.offset(mop.sideHit);
 		}
 
-		if(this.isInWater() == false && offset != null && this.worldObj.isAirBlock(offset) && !this.worldObj.isRemote){
+		if (this.isInWater() == false && offset != null && this.worldObj.isAirBlock(offset) && !this.worldObj.isRemote) {
 			// http://minecraft.gamepedia.com/Torch#Block_data
 			int faceEast = 1;
 			int faceWest = 2;
@@ -55,22 +55,22 @@ public class EntityTorchBolt extends EntityThrowable{
 			int faceUp = 5;
 			int blockdata;
 
-			switch(mop.sideHit){
+			switch (mop.sideHit) {
 			case WEST:
 				blockdata = faceWest;
-				break;
+			break;
 			case EAST:
 				blockdata = faceEast;
-				break;
+			break;
 			case NORTH:
 				blockdata = faceNorth;
-				break;
+			break;
 			case SOUTH:
 				blockdata = faceSouth;
-				break;
+			break;
 			default:
 				blockdata = faceUp;
-				break;
+			break;
 			}
 
 			this.worldObj.setBlockState(offset, Blocks.torch.getStateFromMeta(blockdata));

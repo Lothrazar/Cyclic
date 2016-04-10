@@ -9,33 +9,31 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
-public class MessageToggleBuild implements IMessage, IMessageHandler<MessageToggleBuild, IMessage>{
+public class MessageToggleBuild implements IMessage, IMessageHandler<MessageToggleBuild, IMessage> {
 
 	public static final int ID = 17;
 
-	public MessageToggleBuild(){
+	public MessageToggleBuild() {
 
 	}
 
 	@Override
-	public void fromBytes(ByteBuf buf){
+	public void fromBytes(ByteBuf buf) {
 
 	}
 
 	@Override
-	public void toBytes(ByteBuf buf){
+	public void toBytes(ByteBuf buf) {
 
 	}
 
 	@Override
-	public IMessage onMessage(MessageToggleBuild message, MessageContext ctx){
+	public IMessage onMessage(MessageToggleBuild message, MessageContext ctx) {
 
 		EntityPlayer player = ctx.getServerHandler().playerEntity;
 		ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
 
-		if(wand == null){
-			return null;
-		}
+		if (wand == null) { return null; }
 
 		ItemCyclicWand.BuildType.toggle(wand);
 

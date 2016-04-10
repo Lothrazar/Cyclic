@@ -9,22 +9,22 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract
 //import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventNameVillager{
+public class EventNameVillager {
 
 	@SubscribeEvent
-	public void onEntityInteractEvent(EntityInteract event){
+	public void onEntityInteractEvent(EntityInteract event) {
 
 		EntityPlayer entityPlayer = event.getEntityPlayer();
 		ItemStack held = entityPlayer.getHeldItem(event.getHand());
 		Entity target = event.getTarget();
 
-		if(held != null && held.getItem() == Items.name_tag && held.hasDisplayName() && target instanceof EntityVillager){
+		if (held != null && held.getItem() == Items.name_tag && held.hasDisplayName() && target instanceof EntityVillager) {
 
 			EntityVillager v = (EntityVillager) target;
 
 			v.setCustomNameTag(held.getDisplayName());
 
-			if(entityPlayer.capabilities.isCreativeMode == false){
+			if (entityPlayer.capabilities.isCreativeMode == false) {
 				entityPlayer.inventory.decrStackSize(entityPlayer.inventory.currentItem, 1);
 			}
 

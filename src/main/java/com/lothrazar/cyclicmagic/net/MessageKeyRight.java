@@ -9,35 +9,35 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 
-public class MessageKeyRight implements IMessage, IMessageHandler<MessageKeyRight, IMessage>{
+public class MessageKeyRight implements IMessage, IMessageHandler<MessageKeyRight, IMessage> {
 
 	public static final int ID = 13;
 
-	public MessageKeyRight(){
+	public MessageKeyRight() {
 
 	}
 
-	public MessageKeyRight(BlockPos pm){
-
-	}
-
-	@Override
-	public void fromBytes(ByteBuf buf){
+	public MessageKeyRight(BlockPos pm) {
 
 	}
 
 	@Override
-	public void toBytes(ByteBuf buf){
+	public void fromBytes(ByteBuf buf) {
 
 	}
 
 	@Override
-	public IMessage onMessage(MessageKeyRight message, MessageContext ctx){
+	public void toBytes(ByteBuf buf) {
+
+	}
+
+	@Override
+	public IMessage onMessage(MessageKeyRight message, MessageContext ctx) {
 
 		EntityPlayer player = ctx.getServerHandler().playerEntity;
 		// PlayerPowerups props = PlayerPowerups.get(player);
 		// www.minecraftforge.net/forum/index.php/topic,20135.0.html
-		if(SpellRegistry.spellsEnabled(player)){
+		if (SpellRegistry.spellsEnabled(player)) {
 			UtilSpellCaster.shiftRight(player);
 		}
 		return null;

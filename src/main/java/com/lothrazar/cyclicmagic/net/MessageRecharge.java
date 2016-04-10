@@ -6,26 +6,26 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class MessageRecharge implements IMessage, IMessageHandler<MessageRecharge, IMessage>{
+public class MessageRecharge implements IMessage, IMessageHandler<MessageRecharge, IMessage> {
 
 	public static final int ID = 22;
 
-	public MessageRecharge(){
+	public MessageRecharge() {
 
 	}
 
 	@Override
-	public void fromBytes(ByteBuf buf){
+	public void fromBytes(ByteBuf buf) {
 
 	}
 
 	@Override
-	public void toBytes(ByteBuf buf){
+	public void toBytes(ByteBuf buf) {
 
 	}
 
 	@Override
-	public IMessage onMessage(MessageRecharge message, MessageContext ctx){
+	public IMessage onMessage(MessageRecharge message, MessageContext ctx) {
 
 		UtilSpellCaster.rechargeWithExp(ctx.getServerHandler().playerEntity);
 		return null;

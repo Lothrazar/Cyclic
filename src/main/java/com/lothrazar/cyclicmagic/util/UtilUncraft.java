@@ -10,25 +10,23 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class UtilUncraft {
-	
-	// static boolean blockIfCannotDoit;
-	public static boolean dictionaryFreedom;
 
-	public static List<String> blacklistInput = new ArrayList<String>();
+	// static boolean blockIfCannotDoit;
+	public static boolean					dictionaryFreedom;
+
+	public static List<String>		blacklistInput	= new ArrayList<String>();
 
 	// also, when crafting cake you get the empty bucket back.
 	// so dont refund full buckets or else thats free infinite iron
-	public static List<String> blacklistOutput = new ArrayList<String>();// They were
-																	// null
+	public static List<String>		blacklistOutput	= new ArrayList<String>();// They
+	                                                                        // were
+	// null
 
-	public static int TIMER_FULL;
+	public static int							TIMER_FULL;
 
-	
-	
-	
-	private ArrayList<ItemStack> drops;
-	private ItemStack toUncraft;
-	private int outsize;
+	private ArrayList<ItemStack>	drops;
+	private ItemStack							toUncraft;
+	private int										outsize;
 
 	public UtilUncraft(ItemStack stuff) {
 		this.drops = new ArrayList<ItemStack>();
@@ -46,13 +44,9 @@ public class UtilUncraft {
 
 	private void addDrop(ItemStack s) {
 		// this fn is null safe, it gets nulls all the time
-		if (s == null || s.getItem() == null) {
-			return;
-		}
+		if (s == null || s.getItem() == null) { return; }
 
-		if (blacklistOutput.contains(s.getItem().getUnlocalizedName())) {
-			return;
-		}
+		if (blacklistOutput.contains(s.getItem().getUnlocalizedName())) { return; }
 
 		ItemStack stack = s.copy();
 		stack.stackSize = 1;
@@ -83,13 +77,9 @@ public class UtilUncraft {
 	@SuppressWarnings("unchecked")
 	public boolean doUncraft()// World world, ItemStack toUncraft, BlockPos po
 	{
-		if (toUncraft == null || toUncraft.getItem() == null) {
-			return false;
-		}
+		if (toUncraft == null || toUncraft.getItem() == null) { return false; }
 
-		if (blacklistInput.contains(toUncraft.getItem().getUnlocalizedName())) {
-			return false;
-		}
+		if (blacklistInput.contains(toUncraft.getItem().getUnlocalizedName())) { return false; }
 
 		int i;
 		Object maybeOres;

@@ -7,11 +7,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class PotionCustom extends Potion{
+public class PotionCustom extends Potion {
 
 	private ResourceLocation icon;
 
-	public PotionCustom(ResourceLocation location, boolean badEffect, int potionColor, String nameIn){
+	public PotionCustom(ResourceLocation location, boolean badEffect, int potionColor, String nameIn) {
 
 		super(badEffect, potionColor);
 
@@ -20,21 +20,21 @@ public class PotionCustom extends Potion{
 	}
 
 	@Override
-	public Potion setIconIndex(int par1, int par2){
+	public Potion setIconIndex(int par1, int par2) {
 
 		super.setIconIndex(par1, par2);
 		return this;
 	}
 
 	@SideOnly(Side.CLIENT)
-	public boolean hasStatusIcon(){
+	public boolean hasStatusIcon() {
 
 		return false;// to block it from looking for one of the vanilla textures
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void renderInventoryEffect(int x, int y, PotionEffect effect, net.minecraft.client.Minecraft mc){
+	public void renderInventoryEffect(int x, int y, PotionEffect effect, net.minecraft.client.Minecraft mc) {
 
 		int border = 6;
 		UtilTextureRender.drawTextureSquare(icon, x + border, y + border, 16);

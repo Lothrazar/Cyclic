@@ -15,11 +15,11 @@ import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ButtonBuildToggle extends GuiButton implements ITooltipButton{
+public class ButtonBuildToggle extends GuiButton implements ITooltipButton {
 
-	final EntityPlayer thePlayer;//TODO: could store player instead of wand
+	final EntityPlayer thePlayer;// TODO: could store player instead of wand
 
-	public ButtonBuildToggle(EntityPlayer player, int buttonId, int x, int y, int width){
+	public ButtonBuildToggle(EntityPlayer player, int buttonId, int x, int y, int width) {
 
 		super(buttonId, x, y, width, 20, "");
 		thePlayer = player;
@@ -27,11 +27,11 @@ public class ButtonBuildToggle extends GuiButton implements ITooltipButton{
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public boolean mousePressed(Minecraft mc, int mouseX, int mouseY){
+	public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
 
 		boolean pressed = super.mousePressed(mc, mouseX, mouseY);
 
-		if(pressed){
+		if (pressed) {
 
 			ModMain.network.sendToServer(new MessageToggleBuild());
 		}
@@ -41,7 +41,7 @@ public class ButtonBuildToggle extends GuiButton implements ITooltipButton{
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public void drawButton(Minecraft mc, int mouseX, int mouseY){
+	public void drawButton(Minecraft mc, int mouseX, int mouseY) {
 
 		ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(thePlayer);
 		this.displayString = I18n.translateToLocal(ItemCyclicWand.BuildType.getName(wand));
@@ -50,15 +50,15 @@ public class ButtonBuildToggle extends GuiButton implements ITooltipButton{
 	}
 
 	@Override
-	public List<String> getTooltips(){
+	public List<String> getTooltips() {
 
 		List<String> tooltips = new ArrayList<String>();
-		//tooltips.add(I18n.translateToLocal("button.build.tooltip"));
+		// tooltips.add(I18n.translateToLocal("button.build.tooltip"));
 		ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(thePlayer);
-		String key = ItemCyclicWand.BuildType.getName(wand)+".tooltip";
+		String key = ItemCyclicWand.BuildType.getName(wand) + ".tooltip";
 		tooltips.add(I18n.translateToLocal(key));
 		tooltips.add(TextFormatting.GRAY + I18n.translateToLocal("button.build.meta"));
-		
+
 		return tooltips;
 	}
 }

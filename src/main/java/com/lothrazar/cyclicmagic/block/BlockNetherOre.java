@@ -11,15 +11,16 @@ import net.minecraft.world.World;
 
 public class BlockNetherOre extends BlockOre {
 
-	private Item dropped;
-	private int droppedMeta;
-	private int randomMax;
+	private Item	dropped;
+	private int		droppedMeta;
+	private int		randomMax;
+
 	public BlockNetherOre(Item drop) {
-		this(drop,0);
+		this(drop, 0);
 	}
 
 	public BlockNetherOre(Item drop, int dmg) {
-		this(drop,0,1);
+		this(drop, 0, 1);
 	}
 
 	public BlockNetherOre(Item drop, int dmg, int max) {
@@ -31,10 +32,10 @@ public class BlockNetherOre extends BlockOre {
 		this.setStepSound(SoundType.STONE);
 		this.setHardness(3.0F).setResistance(5.0F);
 	}
-    public int damageDropped(IBlockState state)
-    {
-        return droppedMeta;
-    }
+
+	public int damageDropped(IBlockState state) {
+		return droppedMeta;
+	}
 
 	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
@@ -42,9 +43,7 @@ public class BlockNetherOre extends BlockOre {
 	}
 
 	public int quantityDropped(Random random) {
-		if(randomMax == 1){
-			return 1;
-		}
+		if (randomMax == 1) { return 1; }
 		return 1 + random.nextInt(randomMax);
 	}
 
