@@ -34,11 +34,12 @@ public class FuelHandler implements IFuelHandler {
 		// blazerod, coalblock, lava bucket are above these
 
 		fuelMap.put(Items.sign, log);
-		fuelMap.put(Items.sign, log);
-		fuelMap.put(Items.sign, log);
-		fuelMap.put(Items.sign, log);
-		fuelMap.put(Items.sign, log);
-		fuelMap.put(Items.sign, log);
+		fuelMap.put(Items.acacia_boat, log);
+		fuelMap.put(Items.jungle_boat, log);
+		fuelMap.put(Items.birch_boat, log);
+		fuelMap.put(Items.boat, log);//oak
+		fuelMap.put(Items.dark_oak_boat, log);
+		fuelMap.put(Items.spruce_boat, log);
 		fuelMap.put(Item.getItemFromBlock(Blocks.ladder), log);
 		fuelMap.put(Items.painting, log);
 		fuelMap.put(Items.wheat_seeds, stick);
@@ -47,6 +48,7 @@ public class FuelHandler implements IFuelHandler {
 		fuelMap.put(Item.getItemFromBlock(Blocks.vine), stick);
 		fuelMap.put(Item.getItemFromBlock(Blocks.tallgrass), stick);
 		fuelMap.put(Item.getItemFromBlock(Blocks.waterlily), stick);
+		fuelMap.put(Item.getItemFromBlock(Blocks.deadbush), stick);
 		fuelMap.put(Item.getItemFromBlock(Blocks.leaves), stick);
 		fuelMap.put(Item.getItemFromBlock(Blocks.leaves2), stick);
 	}

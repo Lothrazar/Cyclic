@@ -64,7 +64,7 @@ public class MobSpawningRegistry {
 		config.setCategoryComment(category, msg);
 
 		Property prop = config.get(category, "enabled", true, msg);
-		//
+	
 		enabled = prop.getBoolean();
 	}
 }

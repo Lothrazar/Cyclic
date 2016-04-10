@@ -112,6 +112,7 @@ public class ModMain {
 		EventRegistry.syncConfig(c);
 		BlockRegistry.syncConfig(c);
 		ItemRegistry.syncConfig(c);
+		FuelRegistry.syncConfig(c);
 		MobSpawningRegistry.syncConfig(c);
 		RecipeAlterRegistry.syncConfig(c);
 		RecipeNewRegistry.syncConfig(c);
