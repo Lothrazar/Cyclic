@@ -89,7 +89,7 @@ public class ItemMultiTool extends ItemTool implements IHasRecipe {
 
 		GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.diamondCarrot), 
 				Items.diamond_pickaxe, Items.diamond_axe, Items.diamond_shovel, Items.diamond_hoe,
-				Items.chorus_fruit, Items.nether_star, Blocks.emerald_block, Items.ghast_tear,
+				Items.chorus_fruit, Items.emerald, Items.blaze_rod, Items.ghast_tear,
 				Items.prismarine_crystals
 		);
 	}
