@@ -18,53 +18,92 @@ public class EventRegistry {
 
 	private static boolean						playerDeathCoords;
 
+	private static boolean farmDropBuffs;
+
+	private static boolean monsterDropsNerfed;
+
+	private static boolean endermanDrop;
+
+	private static boolean nameVillagerTag;
+
+	private static boolean editableSigns;
+
 	public static void syncConfig(Configuration config) {
 
-		String category = Const.MODCONF + "mobs";
+		String category = Const.MODCONF + "Mobs";
 
 		config.setCategoryComment(category, "Changes to mobs");
 
-		nameTagDeath = config.getBoolean("nameTagDeath", category, true, "When an entity dies that is named with a tag, it drops the nametag");
+		farmDropBuffs = config.getBoolean("Farm Drops Buffed", category, true, "Increase drops of farm animals: more leather, more wool from shearing, pigs drop a bit more pork");
+		
+		monsterDropsNerfed = config.getBoolean("Monster Drops Nerfed", category, true, "Zombies no longer drops crops or iron");
+		
+		nameTagDeath = config.getBoolean("Name Tag Death", category, true, "When an entity dies that is named with a tag, it drops the nametag");
+		endermanDrop = config.getBoolean("Enderman Block", category, true, "Enderman will always drop block they are carrying 100%");
 
-		category = Const.MODCONF + "player";
+
+		category = Const.MODCONF + "Misc";
+		
+		signSkullName = config.getBoolean("Name Player Skulls with Sign", category, true, "Use a player skull on a sign to name the skull based on the top line");
+		nameVillagerTag = config.getBoolean("Villager Nametag", category, true, "Let nametags work on villagers");
+
+
+		editableSigns = config.getBoolean("Editable Signs", category, true, "Allow editing a sign with right click");
+		
+
+		category = Const.MODCONF + "Player";
 
 		config.setCategoryComment(category, "Changes to player properties or actions");
+		
+		playerWakeup = config.getBoolean("Wakeup Curse", category, true, "Using a bed to skip the night has some mild potion effect related drawbacks");
 
-		signSkullName = config.getBoolean("signSkullName", category, true, "Use a player skull on a sign to name the skull based on the top line");
+		playerDeathCoords = config.getBoolean("Death Coords", category, true, "Display your coordinates in chat when you die");
+	
+	
 
-		playerWakeup = config.getBoolean("playerWakeup", category, true, "Using a bed to skip the night has some mild potion effect related drawbacks");
-
-		playerDeathCoords = config.getBoolean("playerDeathCoords", category, true, "Display your coordinates in chat when you die");
+		
 	}
 
 	public static void register() {
 
 		// some just always have to happen no matter what. for other features.
+		//they will do nothing if for example their items do not exist or otherwise disabled
 		events.add(new EventGuiAddButtons());
 		events.add(new EventConfigChanged());
 		events.add(new EventPotions());
 		events.add(new EventSpells());
 		events.add(new EventKeyInput());
+		events.add(new EventHorseFood());
 		// no reason to turn these off
-		events.add(new EventNameVillager());
-		events.add(new EventEndermanDropBlock());
+		
 		// TODO: consider configs for these
 		events.add(new EventFoodDetails());
 		events.add(new EventFragileTorches());
-		events.add(new EventEditSign());
 		events.add(new EventFurnaceStardew());
 		events.add(new EventMountedPearl());
-		events.add(new EventHorseFood());
 		events.add(new EventBucketBlocksBreak());
+		
+		
 
-		// some events are featured that get configured
+		if(editableSigns){
+			events.add(new EventEditSign());
+		}
 
-		// TODO: decide if we split this event out for each mob or something? and
-		// figure configs
-		// out
-		events.add(new EventAnimalDropBuffs());
-		events.add(new EventMobDropsReduced());
+		if(nameVillagerTag){
+			events.add(new EventNameVillager());
+		}
 
+		if(endermanDrop){
+			events.add(new EventEndermanDropBlock());
+		}
+		if(farmDropBuffs){
+			
+			events.add(new EventAnimalDropBuffs());
+		}
+		
+		if(monsterDropsNerfed){
+			events.add(new EventMobDropsReduced());
+		}
 		if (nameTagDeath) {
 			events.add(new EventNametagDeath());
 		}

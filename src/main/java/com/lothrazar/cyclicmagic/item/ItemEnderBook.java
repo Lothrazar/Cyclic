@@ -72,7 +72,7 @@ public class ItemEnderBook extends Item implements IHasRecipe {
 	private static ItemStack getPlayersBook(EntityPlayer player) {
 
 		ItemStack book = player.getHeldItem(EnumHand.MAIN_HAND);
-		if (book == null || book.getItem() != ItemRegistry.itemEnderBook) {
+		if (book == null || book.getItem() != ItemRegistry.book_ender) {
 			book = player.getHeldItem(EnumHand.OFF_HAND);
 		}
 

@@ -25,7 +25,7 @@ public class FuelRegistry {
 
 		config.setCategoryComment(category, msg);
 
-		Property prop = config.get(category, "moreFuelEnabled", true, msg);
+		Property prop = config.get(category, "More Fuel Enabled", true, msg);
 
 		enabled = prop.getBoolean();
 

@@ -41,7 +41,7 @@ public class ItemRegistry {
 	public static ItemChestSackEmpty		chest_sack_empty;
 	public static ToolMaterial					MATERIAL_EMERALD;
 	public static ArmorMaterial					ARMOR_MATERIAL_EMERALD;
-	public static ItemEnderBook					itemEnderBook;
+	public static ItemEnderBook					book_ender;
 	public static ItemHorseFood					emeraldCarrot;
 	public static ItemHorseFood					lapisCarrot;
 	public static ItemHorseFood					diamondCarrot;
@@ -205,29 +205,31 @@ public class ItemRegistry {
 
 		}
 
-		itemEnderBook = new ItemEnderBook();
+		if(enderBookEnabled){
+			book_ender = new ItemEnderBook();
+			registerItem(book_ender, "book_ender");
+		}
+		
+		if(horseFoodEnabled){
+			
 
-		String name = "book_ender";
-		registerItem(itemEnderBook, name);
-		// itemEnderBook.setUnlocalizedName(name);//.setTextureName(ModEnderBook.TEXTURE_LOCATION
-		// + name);
-		// GameRegistry.registerItem(itemEnderBook,name);
+			emeraldCarrot = new ItemHorseFood();
+			ItemRegistry.registerItem(emeraldCarrot, "horse_upgrade_type");
+	
+			lapisCarrot = new ItemHorseFood();
+			ItemRegistry.registerItem(lapisCarrot, "horse_upgrade_variant");
+	
+			diamondCarrot = new ItemHorseFood();
+			ItemRegistry.registerItem(diamondCarrot, "horse_upgrade_health");
+	
+			horse_upgrade_speed = new ItemHorseFood();
+			ItemRegistry.registerItem(horse_upgrade_speed, "horse_upgrade_speed");
+	
+			horse_upgrade_jump = new ItemHorseFood();
+			ItemRegistry.registerItem(horse_upgrade_jump, "horse_upgrade_jump");
 
-		emeraldCarrot = new ItemHorseFood();
-		ItemRegistry.registerItem(emeraldCarrot, "horse_upgrade_type");
-
-		lapisCarrot = new ItemHorseFood();
-		ItemRegistry.registerItem(lapisCarrot, "horse_upgrade_variant");
-
-		diamondCarrot = new ItemHorseFood();
-		ItemRegistry.registerItem(diamondCarrot, "horse_upgrade_health");
-
-		horse_upgrade_speed = new ItemHorseFood();
-		ItemRegistry.registerItem(horse_upgrade_speed, "horse_upgrade_speed");
-
-		horse_upgrade_jump = new ItemHorseFood();
-		ItemRegistry.registerItem(horse_upgrade_jump, "horse_upgrade_jump");
-
+		}
+		
 		ender_tnt_1 = new ItemProjectile();
 		ItemRegistry.registerItem(ender_tnt_1, "ender_tnt_1");
 		ender_tnt_2 = new ItemProjectile();
@@ -338,6 +340,8 @@ public class ItemRegistry {
 	public static int	tnt_recipe;
 	public static int	blaze_recipe;
 	private static boolean sceptersEnabled;
+	private static boolean enderBookEnabled;
+	private static boolean horseFoodEnabled;
 
 	public static void syncConfig(Configuration config) {
 
@@ -372,29 +376,31 @@ public class ItemRegistry {
 		configToggle.put("emerald_gear", prop.getBoolean());
 
 		category = Const.MODCONF + "Items.EnderBook";
-		doesPauseGame = config.getBoolean("pause_game_sp", category, false, "The Ender Book GUI will pause the game (single player)");
 
-		craftNetherStar = config.getBoolean("needs_nether_star", category, true, "The Ender Book requires a nether star to craft.  REQUIRES RESTART.");
+		enderBookEnabled = config.getBoolean("Enabled", category, true, "To disable this ender book item");
 
-		showCoordTooltips = config.getBoolean("show_coordinates_tooltip", category, true, "Waypoint buttons will show the exact coordinates in a hover tooltip.");
+		
+		doesPauseGame = config.getBoolean("Gui Pauses Game", category, false, "The Ender Book GUI will pause the game (single player)");
 
-		maximumSaved = config.getInt("max_saved", category, 16, 1, 999, "How many waypoints the book can store.");
+		craftNetherStar = config.getBoolean("Recipe Nether Star", category, true, "The Ender Book requires a nether star to craft.  REQUIRES RESTART.");
 
-		btnsPerColumn = config.getInt("show_per_column", category, 8, 1, 50, "Number of waypoints per column.  Change this if they are going off the screen for your chosen GUI Scale.");
+		showCoordTooltips = config.getBoolean("Show Tooltip Coords", category, true, "Waypoint buttons will show the exact coordinates in a hover tooltip.");
 
-		expCostPerTeleport = config.getInt("exp_per_teleport", category, 10, 0, 9999, "How many experience points are drained from the player on each teleport.  Set to zero for free teleports to your waypoints.");
+		maximumSaved = config.getInt("Max Saved", category, 16, 1, 999, "How many waypoints the book can store.");
+
+		btnsPerColumn = config.getInt("Column Size", category, 8, 1, 50, "Number of waypoints per column.  Change this if they are going off the screen for your chosen GUI Scale.");
+
+		expCostPerTeleport = config.getInt("Exp Cost", category, 10, 0, 9999, "How many experience points are drained from the player on each teleport.  Set to zero for free teleports to your waypoints.");
 
 		category = Const.MODCONF + "items.HorseFood";
+		
+		horseFoodEnabled = config.getBoolean("Enabled", category, true, "To disable all horse upgrade food");
 
-		ItemHorseFood.HEARTS_MAX = config.getInt("hearts_max", category, 20, 1, 100, "Maximum number of upgraded hearts");
-		ItemHorseFood.JUMP_MAX = config.getInt("jump_max", category, 6, 1, 20, "Maximum value of jump.  Naturally spawned/bred horses seem to max out at 5.5");
-		ItemHorseFood.SPEED_MAX = config.getInt("speed_max", category, 50, 1, 99, "Maximum value of speed (this is NOT blocks/per second or anything like that)");
+		ItemHorseFood.HEARTS_MAX = config.getInt("Max Hearts", category, 20, 1, 100, "Maximum number of upgraded hearts");
+		ItemHorseFood.JUMP_MAX = config.getInt("Max Jump", category, 6, 1, 20, "Maximum value of jump.  Naturally spawned/bred horses seem to max out at 5.5");
+		ItemHorseFood.SPEED_MAX = config.getInt("Max Speed", category, 50, 1, 99, "Maximum value of speed (this is NOT blocks/per second or anything like that)");
 
-
-		// config.load();
-		//
-
-		category = Const.MODCONF + "Items.ProjectileRecipes";
+		category = Const.MODCONF + "Items.Projectiles";
 		config.addCustomCategoryComment(category, "For each item, you can decide how many the recipe produces. Set to zero to disable the crafting recipe.");
 		torch_recipe = config.getInt("torch.crafted", category, 6, 0, 64, "");
 		lightning_recipe = config.getInt("lightning.crafted", category, 1, 0, 64, "");

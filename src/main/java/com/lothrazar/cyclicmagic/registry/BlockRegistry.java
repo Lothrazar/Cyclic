@@ -159,10 +159,9 @@ public class BlockRegistry {
 		// TODO : requires restart
 		config.setCategoryComment(category, "Blocks added to the game");
 
-		enableBlockFragile = config.getBoolean(BlockFragile.name, category, true, "Enable the scaffolding block that breaks by itself");
+		enableBlockFragile = config.getBoolean("Scaffolding", category, true, "Enable the scaffolding block that breaks by itself");
 
 		enabledBucketBlocks = config.getBoolean("Bucket Blocks", category, true, "Enable Bucket Storage Blocks");
-
 
 		category = Const.MODCONF +  "Blocks.Uncrafting";
 		
