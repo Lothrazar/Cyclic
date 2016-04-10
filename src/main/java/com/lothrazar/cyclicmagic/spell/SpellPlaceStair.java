@@ -33,17 +33,13 @@ public class SpellPlaceStair extends BaseSpellPlace{
 			//we have a valid start position that was clicked on.  was the face of a block clicked on too?
 			startPos = startPos.offset(side);
 		}
-		IBlockState placing = Blocks.stone.getDefaultState();
-
+	
 		int distOrRadius = ItemCyclicWand.BuildType.getBuildSize(wand);
 		
-		System.out.println("place line of stone"+startPos.toString()); 
 		//EnumFacing efacing = (player.isSneaking()) ? EnumFacing.DOWN : UtilEntity.getPlayerFacing(player);
 	      //  boolean isLookingUp = (player.getLookVec().yCoord >= 0);//TODO: use this somehow? to place up/down? 
         
-		
-		if(world.isRemote == false)
-			UtilPlaceBlocks.stairway(world, player, startPos,placing, distOrRadius );//,vertOffset
+		UtilPlaceBlocks.stairway(world, player, wand,startPos, distOrRadius );//,vertOffset
 		
 		
 		return false;

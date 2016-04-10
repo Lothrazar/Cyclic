@@ -42,8 +42,7 @@ public class SpellPlaceLine extends BaseSpellPlace{
 	      //  boolean isLookingUp = (player.getLookVec().yCoord >= 0);//TODO: use this somehow? to place up/down? 
         
 		
-		if(world.isRemote == false)
-			UtilPlaceBlocks.line(world, player,wand, startPos,efacing,  distOrRadius );//,vertOffset
+		UtilPlaceBlocks.line(world, player,wand, startPos,efacing,  distOrRadius );//,vertOffset
 		
 		
 		return false;

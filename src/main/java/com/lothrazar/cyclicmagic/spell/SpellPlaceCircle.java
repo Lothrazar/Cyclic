@@ -32,7 +32,7 @@ public class SpellPlaceCircle extends BaseSpellPlace{
 			//we have a valid start position that was clicked on.  was the face of a block clicked on too?
 			startPos = startPos.offset(side);
 		}
-		IBlockState placing = Blocks.stone.getDefaultState();
+	
 		int distOrRadius = ItemCyclicWand.BuildType.getBuildSize(wand);
 
 
@@ -40,8 +40,7 @@ public class SpellPlaceCircle extends BaseSpellPlace{
 	      //  boolean isLookingUp = (player.getLookVec().yCoord >= 0);//TODO: use this somehow? to place up/down? 
         
 		
-		if(world.isRemote == false)
-			UtilPlaceBlocks.circle(world, player, startPos,placing, distOrRadius );//,vertOffset
+		UtilPlaceBlocks.circle(world, player, wand,startPos, distOrRadius );//,vertOffset
 		
 		
 		return false;

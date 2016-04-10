@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 public class UtilPlaceBlocks
 {
 	
-	public static void circle(World world, EntityPlayer player, BlockPos pos, IBlockState placing, int radius) 
+	public static void circle(World world, EntityPlayer player, ItemStack heldWand,BlockPos pos, int radius) 
 	{
 		// based on http://stackoverflow.com/questions/1022178/how-to-make-a-circle-on-a-grid
 		//also http://rosettacode.org/wiki/Bitmap/Midpoint_circle_algorithm
@@ -59,21 +59,19 @@ public class UtilPlaceBlocks
 	    } 
 		while (x <= z);
 		
+
+		int itemSlot; 
+		IBlockState state;
 		for(BlockPos posCurrent : circleList)
 		{
-			if(world.isAirBlock(pos) == false){continue;}
-
-			//but for the next 2 checks, halt if we run out of blocks/cost
-			if(player.inventory.getCurrentItem() == null || player.inventory.getCurrentItem() .stackSize == 0) {return;}
+			itemSlot = InventoryWand.getSlotByBuildType(heldWand, null);
+			state = InventoryWand.getToPlaceFromSlot(heldWand, itemSlot);
 			
-
-			//if(tryDrainExp(world,player,p) == false){break;}
-
-			placeWithSoundAndDecrement(world,player,posCurrent,placing);
+			placeWithSoundAndDecrement(world,player,heldWand,itemSlot,posCurrent,state);
 		}
 	}
 
-	public static void square(World world, EntityPlayer player, BlockPos pos, IBlockState placing, int radius)
+	public static void square(World world, EntityPlayer player, ItemStack heldWand,BlockPos pos, int radius)
 	{
 		//search in a cube
 		int xMin = pos.getX() - radius;
@@ -84,29 +82,28 @@ public class UtilPlaceBlocks
 		int y = pos.getY();
 		
 		BlockPos posCurrent;
-	 
-		//int numPlaced = 0;
+
+		int itemSlot; 
+		IBlockState state;
 		for (int x = xMin; x <= xMax; x++)
 		{ 
 			for (int z = zMin; z <= zMax; z++)
 			{
+				itemSlot = InventoryWand.getSlotByBuildType(heldWand, null);
+				state = InventoryWand.getToPlaceFromSlot(heldWand, itemSlot);
+				
 				posCurrent = new BlockPos(x, y, z);
 				
 				if(world.isAirBlock(posCurrent) == false){continue;}
-			 
-				//but for the next 2 checks, halt if we run out of blocks/cost
-				if(player.inventory.getCurrentItem() == null || player.inventory.getCurrentItem() .stackSize == 0) {return;}
-				
-				//if(tryDrainExp(world,player,posCurrent) == false){break;}
-	 
-				placeWithSoundAndDecrement(world,player,posCurrent,placing);
+			  
+				placeWithSoundAndDecrement(world,player,heldWand,itemSlot,posCurrent,state);
 				
 			}  
 		} //end of the outer loop
    
 	}
 
-	public static void stairway(World world, EntityPlayer player,BlockPos position, IBlockState placing, int want)
+	public static void stairway(World world, EntityPlayer player,ItemStack heldWand,BlockPos position, int want)
 	{ 
 		boolean isLookingUp = (player.getLookVec().yCoord >= 0);//TODO: use this somehow? to place up/down? 
     
@@ -117,8 +114,16 @@ public class UtilPlaceBlocks
         //it starts at eye level, so do down and forward one first
 		BlockPos posCurrent = player.getPosition().down().offset(pfacing);
 		
+
+		int itemSlot; 
+		IBlockState state;
 		for(int i = 1; i < want + 1; i++)
 		{
+
+			itemSlot = InventoryWand.getSlotByBuildType(heldWand, null);
+			state = InventoryWand.getToPlaceFromSlot(heldWand, itemSlot);
+
+			
 			if(goVert)
 			{
 				if(isLookingUp)
@@ -126,29 +131,23 @@ public class UtilPlaceBlocks
 				else
 					posCurrent = posCurrent.down();
 			}
-			else
+			else{
 				posCurrent = posCurrent.offset(pfacing);
-			
+			}
 			goVert = (i % 2 == 0);//alternate between going forward and going vertical
 			
-			if(world.isAirBlock(posCurrent) == false){continue;}
-			//but for the next 2 checks, halt if we run out of blocks/cost
-			if(player.inventory.getCurrentItem() == null || player.inventory.getCurrentItem() .stackSize == 0) {return;}
-	
-
-			placeWithSoundAndDecrement(world,player,posCurrent,placing);
+			placeWithSoundAndDecrement(world,player, heldWand,itemSlot,posCurrent,state);
 		}
 	}
 	
 	public static void line(World world, EntityPlayer player,ItemStack heldWand, BlockPos pos,EnumFacing efacing,int want)
 	{
-			int skip = 1;
+		int skip = 1;
 		
 		BlockPos posCurrent;
 
 		int itemSlot; 
 		IBlockState state;
-		boolean success;
 		for(int i = 1; i < want + 1; i = i + skip)
 		{ 
 			posCurrent = pos.offset(efacing, i);
@@ -161,39 +160,26 @@ public class UtilPlaceBlocks
 				return;//then inventory is completely empty
 			}
 			
+			placeWithSoundAndDecrement(world,player,heldWand,itemSlot,posCurrent,state);
 			
-			//if(world.isAirBlock(posCurrent) == false){continue;}
-			//but for the next 2 checks, halt if we run out of blocks/cost
-			//if(player.inventory.getCurrentItem() == null || playe``r.inventory.getCurrentItem() .stackSize == 0) {return;}
-
-			//if(tryDrainExp(world,player,posCurrent) == false){break;}
-
-			success = placeWithSoundAndDecrement(world,player,posCurrent,state);
-			
-			if(success){
-
-				if(player.capabilities.isCreativeMode == false)
-				{
-					//player.inventory.decrStackSize(player.inventory.currentItem, 1);
-					InventoryWand.decrementSlot(heldWand,itemSlot);
-				}
-			}
 		}
 	}
 
 	//from command place blocks
-	private static boolean placeWithSoundAndDecrement(World world,EntityPlayer player, BlockPos posCurrent,  IBlockState placing)
+	private static boolean placeWithSoundAndDecrement(World world,EntityPlayer player, ItemStack heldWand,int itemSlot,BlockPos posCurrent,  IBlockState placing)
 	{
-		//world.setBlockState(posCurrent, placing);
-		//changed to use safe
 		boolean success = placeStateSafe(world,player,posCurrent,placing);
 
 		if(success){
 
 			UtilSound.playSound(player, placing.getBlock().getStepSound().getPlaceSound());
-	
+
+			if(player.capabilities.isCreativeMode == false)
+			{
+				//player.inventory.decrStackSize(player.inventory.currentItem, 1);
+				InventoryWand.decrementSlot(heldWand,itemSlot);
+			}
 		}
-		
 		
 		return success;
 	}
