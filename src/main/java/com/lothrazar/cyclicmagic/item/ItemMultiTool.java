@@ -3,12 +3,27 @@ package com.lothrazar.cyclicmagic.item;
 import java.util.Set;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Enchantments;
+import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class ItemMultiTool extends ItemTool {
+public class ItemMultiTool extends ItemTool implements IHasRecipe {
 	public static final String			name									= "";
 
 	// copied from tool base classes not imported since private
@@ -24,11 +39,19 @@ public class ItemMultiTool extends ItemTool {
 
 	public ItemMultiTool() {
 
-		// hardcoc
 		super(damageVsEntity, attackSpeed, ToolMaterial.DIAMOND, EFFECTIVE_ON);
 
-		this.setMaxDamage(-1);
+		this.setMaxDamage(-1);// unbreakable
 
+	}
+
+	@Override
+	public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn) {
+
+		stack.addEnchantment(Enchantments.efficiency, 4);
+		stack.addEnchantment(Enchantments.silkTouch, 0);
+
+		super.onCreated(stack, worldIn, playerIn);
 	}
 
 	@Override
@@ -59,5 +82,56 @@ public class ItemMultiTool extends ItemTool {
 	public int getItemEnchantability(ItemStack stack) {
 
 		return ToolMaterial.GOLD.getEnchantability();
+	}
+
+	@Override
+	public void addRecipe() {
+
+		GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.diamondCarrot), 
+				Items.diamond_pickaxe, Items.diamond_axe, Items.diamond_shovel, Items.diamond_hoe,
+				Items.chorus_fruit, Items.nether_star, Blocks.emerald_block, Items.ghast_tear,
+				Items.prismarine_crystals
+		);
+	}
+
+	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		if (!playerIn.canPlayerEdit(pos.offset(facing), facing, stack)) {
+			return EnumActionResult.FAIL;
+		}
+		else {
+			IBlockState iblockstate = worldIn.getBlockState(pos);
+			Block block = iblockstate.getBlock();
+
+			if (playerIn.isSneaking() && facing != EnumFacing.DOWN && worldIn.isAirBlock(pos.up()) 
+					&& (block == Blocks.grass || block == Blocks.grass_path || block == Blocks.dirt )) {
+
+				//sneaking: do what a hoe does to till dirt
+
+				if (!worldIn.isRemote) {
+					worldIn.setBlockState(pos, Blocks.farmland.getDefaultState(), 11);
+					//stack.damageItem(1, playerIn);
+				}
+
+				UtilSound.playSound(worldIn,  pos, SoundEvents.item_hoe_till, SoundCategory.BLOCKS);
+				
+				
+				return EnumActionResult.SUCCESS;
+			}
+			else if (facing != EnumFacing.DOWN && worldIn.getBlockState(pos.up()).getMaterial() == Material.air && block == Blocks.grass) {
+				// do what a shovel does to make a path
+	
+				UtilSound.playSound(worldIn,  pos, SoundEvents.item_shovel_flatten, SoundCategory.BLOCKS);
+				//worldIn.playSound(playerIn, pos, SoundEvents.item_shovel_flatten, SoundCategory.BLOCKS, 1.0F, 1.0F);
+
+				if (!worldIn.isRemote) {
+					worldIn.setBlockState(pos, Blocks.grass_path.getDefaultState(), 11);
+				}
+
+				return EnumActionResult.SUCCESS;
+			}
+			else {
+				return EnumActionResult.PASS;
+			}
+		}
 	}
 }

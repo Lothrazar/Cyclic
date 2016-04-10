@@ -51,29 +51,28 @@ public class ItemCyclicWand extends Item implements IHasRecipe {
 		return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged);
 	}
 
-	
-	  @Override
-	  public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn){
-	  
-	//  Energy.rechargeBy(stack, Energy.START);
-	  
-	  if(stack.getItem() == ItemRegistry.cyclic_wand_fly){
+	@Override
+	public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn) {
 
-		  Spells.setSpellCurrent(stack,SpellRegistry.Spells.launch.getID());
-	  }
-	  else{		  
-	  	Spells.setSpellCurrent(stack,SpellRegistry.Spells.inventory.getID());
-	  }
-	  
-	  super.onCreated(stack, worldIn, playerIn);
-	 }
-	 
+		// Energy.rechargeBy(stack, Energy.START);
+
+		if (stack.getItem() == ItemRegistry.cyclic_wand_fly) {
+
+			Spells.setSpellCurrent(stack, SpellRegistry.Spells.launch.getID());
+		}
+		else {
+			Spells.setSpellCurrent(stack, SpellRegistry.Spells.inventory.getID());
+		}
+
+		super.onCreated(stack, worldIn, playerIn);
+	}
+
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
 
 		ISpell spell = SpellRegistry.getSpellFromID(Spells.getSpellIDCurrent(stack));
 		tooltip.add(TextFormatting.GREEN + spell.getName());
-		
+
 		super.addInformation(stack, playerIn, tooltip, advanced);
 	}
 
@@ -113,8 +112,9 @@ public class ItemCyclicWand extends Item implements IHasRecipe {
 	@Override
 	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 		/*
-		boolean perSecond = (worldIn.getTotalWorldTime() % Const.TICKS_PER_SEC == 0);
-		
+		 * boolean perSecond = (worldIn.getTotalWorldTime() % Const.TICKS_PER_SEC ==
+		 * 0);
+		 * 
 		 * if(worldIn.isRemote == false && perSecond){
 		 * 
 		 * Energy.rechargeBy(stack, Energy.getRegen(worldIn,stack));
@@ -153,10 +153,8 @@ public class ItemCyclicWand extends Item implements IHasRecipe {
 	public static class Spells {
 
 		public static int getSpellIDCurrent(ItemStack stack) {
-			//workaround for default spell being replace. and oncrafting not firing
-			if(stack.getItem() == ItemRegistry.cyclic_wand_fly){
-				return SpellRegistry.Spells.launch.getID();
-			}
+			// workaround for default spell being replace. and oncrafting not firing
+			if (stack.getItem() == ItemRegistry.cyclic_wand_fly) { return SpellRegistry.Spells.launch.getID(); }
 
 			int c = getNBT(stack).getInteger(NBT_SPELLCURRENT);
 			return c;
@@ -358,7 +356,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe {
 				return "button.build." + BuildType.values()[tags.getInteger(NBT)].toString().toLowerCase();
 
 			} catch (Exception e) {
-				//System.out.println(e.getMessage());
+				// System.out.println(e.getMessage());
 				return "button.build." + FIRST.toString().toLowerCase();
 			}
 		}

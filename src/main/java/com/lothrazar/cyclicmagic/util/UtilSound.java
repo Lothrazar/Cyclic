@@ -74,10 +74,9 @@ public class UtilSound {
 	}
 
 	public static void playSound(EntityPlayer player, SoundEvent soundIn, SoundCategory cat) {
-		// TODO Auto-generated method stub
-		BlockPos pos = player.getPosition();
-		player.worldObj.playSound(pos.getX(), pos.getY(), pos.getZ(), soundIn, cat, volume, pitch, distanceDelay);
 
+		BlockPos pos = player.getPosition();
+		playSound(	player.worldObj,pos, soundIn, cat);
 	}
 
 	public static void playSound(World worldObj, BlockPos pos, SoundEvent soundIn, SoundCategory cat) {
