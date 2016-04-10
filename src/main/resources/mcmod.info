@@ -1,12 +1,12 @@
 {
   "modListVersion": 2,
   "modList": [{
-    "modid": "samsprojectiles",
-    "name": "Ender Projectiles",
-    "description": "Adds tons of throwable items: Bombs, lightning, water, snow that lands on the ground, throwing torches, a dungeonfinder, and a ruby that sends you home.",
-    "version": "1.2.2",
+    "modid": "cyclicmagic",
+    "name": "Merged all my mods together",
+    "description": "",
+    "version": "1.0.0",
     "mcversion": "1.9",
-    "url": "http://www.curse.com/mc-mods/minecraft/232155-ender-projectiles-adds-throwable-items-including",
+    "url": "",
     "updateUrl": "",
     "authorList": [ "Lothrazar" ],
     "credits": "",

@@ -47,9 +47,9 @@ public class DispenserBehaviorRegistry {
 	}
 
 	public static void syncConfig(Configuration config) {
-		String category = Const.MODCONF + "dispenser_planting";
+		String category = Const.MODCONF + "Misc";
 
-		Property prop = config.get(category, "seeds_enabled", true, "Dispensers can plant any growable seed");
+		Property prop = config.get(category, "DispenserSeedsEnabled", true, "Dispensers can plant any growable seed");
 		prop.setRequiresWorldRestart(true);
 		seedsEnabled = prop.getBoolean();
 	}

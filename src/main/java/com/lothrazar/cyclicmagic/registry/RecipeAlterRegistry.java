@@ -24,11 +24,11 @@ public class RecipeAlterRegistry {
 
 	public static void syncConfig(Configuration config) {
 
-		String category = Const.MODCONF + "new_recipes";
+		String category = Const.MODCONF + "Recipes";
 
-		config.setCategoryComment(category, "Tons of new recipes for existing blocks and items.  Bonemeal to undye wool; repeater and dispenser tweaks;  making player skulls out of the four mob heads...");
+		config.setCategoryComment(category, "Furnace requires coal in the middle, stone tools require smoothstone to be fully repaired");
 
-		enabled = config.get(category, "enabled", true).getBoolean();
+		enabled = config.get(category, "Altered Recipes Enabled", true).getBoolean();
 
 	}
 

@@ -57,13 +57,13 @@ public class MobSpawningRegistry {
 
 	public static void syncConfig(Configuration config) {
 
-		String category = Const.MODCONF + "mob_spawning";
+		String category = Const.MODCONF + "Mobs";
 
 		String msg = "Allow tons of mobs to spawn in more biomes.  Horses in more places; Cave spiders in mesa and roofed forests; some nether mobs in the desert; enderman in the nether; snowmen in winter biomes;  ghasts in deep ocean; Iron Golems in the jungle; Guardians in rivers.";
 
 		config.setCategoryComment(category, msg);
 
-		Property prop = config.get(category, "enabled", true, msg);
+		Property prop = config.get(category, "Extra Spawns Enabled", true, msg);
 	
 		enabled = prop.getBoolean();
 	}
