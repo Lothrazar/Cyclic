@@ -16,7 +16,8 @@ public class SpellRegistry{
 	private static ArrayList<ISpell> spellbookRange;
 	private static ArrayList<ISpell> spellbookBuild;
 	private static Map<Integer, ISpell> hashbook; 
-	private static Map<String, ISpell> spellRegistry; 
+	//TODO: move from ints to strings one day..??
+	//private static Map<String, ISpell> spellRegistry; 
 
 
 	public static class Spells{
@@ -45,7 +46,7 @@ public class SpellRegistry{
 		spellbookRange = new ArrayList<ISpell>();
 		spellbookBuild = new ArrayList<ISpell>();
 		hashbook = new HashMap<Integer, ISpell>();
-		spellRegistry = new HashMap<String, ISpell>();
+		//spellRegistry = new HashMap<String, ISpell>();
 		  
 		int spellId = -1;// the smallest spell gets id zero
 
@@ -68,8 +69,8 @@ public class SpellRegistry{
 
 		Spells.launch = new SpellLaunch(++spellId, "launch");
 		registerSpell(Spells.launch);
-		spellbookRange.add(Spells.inventory);
-		spellbookBuild.add(Spells.inventory);
+		spellbookRange.add(Spells.launch);
+		spellbookBuild.add(Spells.launch);
 
 		Spells.reachup = new SpellRangeBuild(++spellId, "reachup",SpellRangeBuild.PlaceType.UP);
 		registerReachSpell(Spells.reachup);
@@ -97,16 +98,17 @@ public class SpellRegistry{
 	private static void registerBuildSpell(ISpell spell){
 		registerSpell(spell);
 		spellbookBuild.add(spell);
-	
 	}
+	
 	private static void registerReachSpell(ISpell spell){
 		registerSpell(spell);
 		spellbookRange.add(spell);
 	}
+	
 	private static void registerSpell(ISpell spell){
 
 		hashbook.put(spell.getID(), spell);
-		spellRegistry.put(spell.getUnlocalizedName(), spell);
+		//spellRegistry.put(spell.getUnlocalizedName(), spell);
 	}
 
 	public static ISpell getDefaultSpell(){
@@ -155,12 +157,11 @@ public class SpellRegistry{
 		ArrayList<ISpell> book = SpellRegistry.getSpellbook(wand);
 		
 		int indexCurrent = book.indexOf(spell);
-		int indexNext;
-		if(indexCurrent >= book.size() - 1)
-			indexNext = 0;// (int)spells[0];
-		else
-			indexNext = indexCurrent + 1;// (int)spells[spell_id+1];
-		
+
+		int indexNext = indexCurrent + 1;
+		if(indexNext >= book.size()){
+			indexNext = 0;
+		}
 		
 		return book.get(indexNext);
 				//SpellRegistry.getSpellFromID(indexNext);
@@ -178,7 +179,10 @@ public class SpellRegistry{
 		else
 			indexPrev = indexCurrent - 1;
 		
-		return book.get(indexPrev);//SpellRegistry.getSpellFromID(indexPrev);
+		
+		ISpell ret = book.get(indexPrev);
+
+		return ret;//SpellRegistry.getSpellFromID(indexPrev);
 		
 	}
 	/*

@@ -171,6 +171,7 @@ public class EventSpells{
 				UtilTextureRender.drawTextureSquare(prev.getIconDisplay(), x, y, dim);
 	
 				prev = SpellRegistry.prev(wand,  prev);
+				
 				//SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.prevId(wand, prev.getID()));
 	
 				if(prev != null){
@@ -210,35 +211,39 @@ public class EventSpells{
 					//SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.nextId(wand, spellCurrent.getID()));
 	
 			if(next != null){
+				//System.out.println("nx1 -> "+next.getUnlocalizedName());
 				int x = xmain - 5;
 				int y = ymain + spellSize;
 				int dim = spellSize / 2;
 				UtilTextureRender.drawTextureSquare(next.getIconDisplay(), x, y, dim);
 	
-				next = SpellRegistry.next(wand,  next);
+				ISpell next2 = SpellRegistry.next(wand,  next);
 				//SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.nextId(wand, next.getID()));
 	
-				if(next != null){
+				if(next2 != null){
+					//System.out.println("nx2 -> "+next2.getUnlocalizedName());
 					x -= 2;
 					y += 14;
 					dim -= 2;
-					UtilTextureRender.drawTextureSquare(next.getIconDisplay(), x, y, dim);
+					UtilTextureRender.drawTextureSquare(next2.getIconDisplay(), x, y, dim);
 	
-					next = SpellRegistry.next(wand,  next);
+					ISpell next3 = SpellRegistry.next(wand,  next2);
 					//SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.nextId(wand, next.getID()));
-					if(next != null){
+					if(next3 != null){
+						//System.out.println("nx3 -> "+next3.getUnlocalizedName());
 						x -= 2;
 						y += 10;
 						dim -= 2;
-						UtilTextureRender.drawTextureSquare(next.getIconDisplay(), x, y, dim);
+						UtilTextureRender.drawTextureSquare(next3.getIconDisplay(), x, y, dim);
 	
-						next = SpellRegistry.next(wand,  next);
+						ISpell next4 = SpellRegistry.next(wand,  next3);
 						//SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.nextId(wand, next.getID()));
-						if(next != null){
+						if(next4 != null){
+							//System.out.println("nx4 -> "+next4.getUnlocalizedName());
 							x -= 2;
 							y += 10;
 							dim -= 1;
-							UtilTextureRender.drawTextureSquare(next.getIconDisplay(), x, y, dim);
+							UtilTextureRender.drawTextureSquare(next4.getIconDisplay(), x, y, dim);
 						}
 					}
 				}

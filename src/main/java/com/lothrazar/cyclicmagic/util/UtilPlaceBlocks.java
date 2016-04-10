@@ -81,8 +81,7 @@ public class UtilPlaceBlocks
 		int y = pos.getY();
 		
 		BlockPos posCurrent;
-		System.out.println("square start");
-
+	 
 		//int numPlaced = 0;
 		for (int x = xMin; x <= xMax; x++)
 		{ 
@@ -91,7 +90,7 @@ public class UtilPlaceBlocks
 				posCurrent = new BlockPos(x, y, z);
 				
 				if(world.isAirBlock(posCurrent) == false){continue;}
-				System.out.println(x+" "+z);
+			 
 				//but for the next 2 checks, halt if we run out of blocks/cost
 				if(player.inventory.getCurrentItem() == null || player.inventory.getCurrentItem() .stackSize == 0) {return;}
 				
@@ -146,8 +145,7 @@ public class UtilPlaceBlocks
 		BlockPos posCurrent;
 		
 		for(int i = 1; i < want + 1; i = i + skip)
-		{
-			System.out.println("line; i = "+i);
+		{ 
 			posCurrent = pos.offset(efacing, i);
 			
 			//if(world.isAirBlock(posCurrent) == false){continue;}
@@ -156,7 +154,6 @@ public class UtilPlaceBlocks
 
 			//if(tryDrainExp(world,player,posCurrent) == false){break;}
 
-			System.out.println("placeWithSoundAndDecrement= "+posCurrent.toString());
 			placeWithSoundAndDecrement(world,player,posCurrent,placing);
 		}
 	}
@@ -170,7 +167,6 @@ public class UtilPlaceBlocks
 
 		if(success){
 
-			System.out.println("successs=>playSound ");
 			UtilSound.playSound(player, placing.getBlock().getStepSound().getPlaceSound());
 	
 			/*
