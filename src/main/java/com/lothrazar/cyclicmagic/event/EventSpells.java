@@ -128,6 +128,7 @@ public class EventSpells{
 		}
 	
 		private void drawManabar(EntityPlayer player){
+			/*
 			ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
 	
 			double MAX = ItemCyclicWand.Energy.getMaximum(wand);
@@ -147,6 +148,7 @@ public class EventSpells{
 			
 			//draw the filling inside
 			UtilTextureRender.drawTextureSimple(mana, xHud+1,yHud+1, manaWidth, MathHelper.floor_double(hEmpty));
+		*/
 		}
 	
 		private void drawCurrentSpell(EntityPlayer player, ISpell spellCurrent){

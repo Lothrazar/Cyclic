@@ -13,7 +13,7 @@ public class SpellPlaceCircle extends BaseSpellPlace{
 
 		super.init(id, name);
 		this.cost = 25;
-		this.cooldown = 10;
+		this.cooldown = 120;
 	}
 	@Override
 	public boolean cast(World world, EntityPlayer player, ItemStack wand,BlockPos pos, EnumFacing side) {
@@ -23,7 +23,7 @@ public class SpellPlaceCircle extends BaseSpellPlace{
 		
 		UtilPlaceBlocks.circle(world, player, wand,startPos );
 		
-		return false;
+		return true;
 	}
 
 }

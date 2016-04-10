@@ -14,7 +14,7 @@ public class SpellPlaceLine extends BaseSpellPlace{
 
 		super.init(id, name);
 		this.cost = 25;
-		this.cooldown = 10;
+		this.cooldown = 120;
 	}
 	@Override
 	public boolean cast(World world, EntityPlayer player,ItemStack wand, BlockPos pos, EnumFacing side) {
@@ -35,7 +35,7 @@ public class SpellPlaceLine extends BaseSpellPlace{
         
 		
 		UtilPlaceBlocks.line(world, player,wand, startPos,efacing );//,vertOffset
-		
-		return false;
+
+		return true;
 	}
 }

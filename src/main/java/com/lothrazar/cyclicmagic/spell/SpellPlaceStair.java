@@ -13,7 +13,7 @@ public class SpellPlaceStair extends BaseSpellPlace{
 
 		super.init(id, name);
 		this.cost = 25;
-		this.cooldown = 10;
+		this.cooldown = 120;
 	}
 	
 	@Override
@@ -29,7 +29,7 @@ public class SpellPlaceStair extends BaseSpellPlace{
 		}
 
 		UtilPlaceBlocks.stairway(world, player, wand,startPos );
-		
-		return false;
+
+		return true;
 	}
 }

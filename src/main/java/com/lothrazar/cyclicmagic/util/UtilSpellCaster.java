@@ -6,7 +6,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
-import com.lothrazar.cyclicmagic.item.ItemCyclicWand.Energy;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 
@@ -74,7 +73,7 @@ public class UtilSpellCaster{
 		// and particles
 		spell.payCost(world, player, pos);
 		
-		ItemCyclicWand.Energy.setCooldownCounter(getPlayerWandIfHeld(player), world.getTotalWorldTime());
+		//ItemCyclicWand.Energy.setCooldownCounter(getPlayerWandIfHeld(player), world.getTotalWorldTime());
 
 		ItemCyclicWand.Timer.setSpellTimer(getPlayerWandIfHeld(player),spell.getCastCooldown());
 	}
@@ -114,6 +113,7 @@ public class UtilSpellCaster{
 	}
 
 	public static void rechargeWithExp(EntityPlayer player){
+		/*
 		ItemStack wand = getPlayerWandIfHeld(player);
 		
 		
@@ -132,5 +132,7 @@ public class UtilSpellCaster{
 		else{
 			UtilSound.playSound(player.worldObj, player.getPosition(), UtilSound.Own.buzzp);
 		}
+		*/
 	}
+	
 }

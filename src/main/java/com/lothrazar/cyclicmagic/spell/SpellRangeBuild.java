@@ -44,7 +44,7 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer{
 			}
 		}
 
-		return false;
+		return true;
 	}
 
 	public  void castFromServer(BlockPos posMouseover, BlockPos posOffset, EntityPlayer p){

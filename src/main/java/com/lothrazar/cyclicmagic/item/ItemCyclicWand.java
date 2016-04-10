@@ -58,7 +58,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe{
 		return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged);
 	}
 
-
+/*
 	@Override
 	public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn){
 
@@ -66,29 +66,24 @@ public class ItemCyclicWand extends Item implements IHasRecipe{
 		
 		super.onCreated(stack, worldIn, playerIn);
 	}
-	
+	*/
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced){
 
 		ISpell spell = SpellRegistry.getSpellFromID(Spells.getSpellIDCurrent(stack));
 
-		int MAX = Energy.getMaximum(stack);
+		//int MAX = Energy.getMaximum(stack);
 
 		String cost = TextFormatting.DARK_GRAY + "[" + TextFormatting.DARK_PURPLE +spell.getCost() + TextFormatting.DARK_GRAY +"]";
 		tooltip.add(TextFormatting.GREEN + spell.getName()+" "+cost);
 
 		if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)){
 
-			tooltip.add(Energy.getCurrent(stack) + "/" + MAX);
-			int reg = Energy.getRegen(playerIn.worldObj,stack);
+			//tooltip.add(Energy.getCurrent(stack) + "/" + MAX);
+			//int reg = Energy.getRegen(playerIn.worldObj,stack);
 			
-			tooltip.add(TextFormatting.DARK_GRAY + I18n.translateToLocal("wand.regen") + TextFormatting.DARK_BLUE + reg);
-/*
-			IPassiveSpell pcurrent = ItemCyclicWand.Spells.getPassiveCurrent(stack);
-			if(pcurrent != null){
-				tooltip.add(EnumChatFormatting.DARK_GRAY +StatCollector.translateToLocal("spellpassive.prefix")+ pcurrent.getName());
-			}
-			*/
+			//tooltip.add(TextFormatting.DARK_GRAY + I18n.translateToLocal("wand.regen") + TextFormatting.DARK_BLUE + reg);
+
 		}
 		else{
 			tooltip.add(TextFormatting.DARK_GRAY + I18n.translateToLocal("item.shift"));
@@ -136,13 +131,15 @@ public class ItemCyclicWand extends Item implements IHasRecipe{
 	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected){
  
 		boolean perSecond = (worldIn.getTotalWorldTime() % Const.TICKS_PER_SEC == 0);
- 
+ /*
 		if(worldIn.isRemote == false && perSecond){ 
 
 			Energy.rechargeBy(stack, Energy.getRegen(worldIn,stack));
 		}
+		*/
 
 		ItemCyclicWand.Timer.tickSpellTimer(stack);
+		
 		/*
 		// if held by something not a player? such as custom npc/zombie/etc
 		if(entityIn instanceof EntityPlayer == false){
@@ -191,6 +188,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe{
 		}
 	}
 
+	/*
 	public static class Energy{
 
 		public static final int START = 100; // what you get on crafted
@@ -318,7 +316,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe{
 			Energy.setCurrent(stack, Energy.getCurrent(stack) + m);
 		}
 	}
- 
+ */
 	public static class Timer{
 		private final static String NBT = "casttimeout";
 		
