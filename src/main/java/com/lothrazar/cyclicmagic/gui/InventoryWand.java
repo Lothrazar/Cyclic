@@ -228,6 +228,17 @@ public class InventoryWand implements IInventory{
 		return InventoryWand.readFromNBT(wand)[i];
 	}
 
+	public static IBlockState getToPlaceFromSlot(ItemStack wand, int i){
+
+		ItemStack toPlace = getFromSlot(wand, i);
+
+		if(toPlace != null && toPlace.getItem() != null && Block.getBlockFromItem(toPlace.getItem()) != null){
+
+			return Block.getBlockFromItem(toPlace.getItem()).getStateFromMeta(toPlace.getMetadata());
+		}
+		return null;
+	}
+	
 	public static int getSlotByBuildType(ItemStack wand, IBlockState placeState){
 
 		int itemSlot = -1;
