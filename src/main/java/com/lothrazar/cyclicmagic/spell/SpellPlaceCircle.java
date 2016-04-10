@@ -1,11 +1,7 @@
 package com.lothrazar.cyclicmagic.spell;
 
-import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
-import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -25,7 +21,7 @@ public class SpellPlaceCircle extends BaseSpellPlace{
 		//JUST for the circle, we ignore clicked pos and always start on players position
 		BlockPos startPos = player.getPosition();
 		
-		UtilPlaceBlocks.circle(world, player, wand,startPos, ItemCyclicWand.BuildType.getBuildSize(wand) );
+		UtilPlaceBlocks.circle(world, player, wand,startPos );
 		
 		return false;
 	}

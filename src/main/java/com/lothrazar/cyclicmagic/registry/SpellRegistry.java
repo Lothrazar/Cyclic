@@ -37,7 +37,7 @@ public class SpellRegistry{
 		public static SpellPlaceLine placeline;
 		public static SpellPlaceCircle placecircle;
 		public static SpellPlaceStair placestair;
-		public static SpellPlaceFloor placefloor;
+		//public static SpellPlaceFloor placefloor;
 	}
 
 	public static void register(){
@@ -90,8 +90,8 @@ public class SpellRegistry{
 		Spells.placestair = new SpellPlaceStair(++spellId, "placestair");
 		registerBuildSpell(Spells.placestair);
 		
-		Spells.placefloor = new SpellPlaceFloor(++spellId, "placefloor");
-		registerBuildSpell(Spells.placefloor);
+		//Spells.placefloor = new SpellPlaceFloor(++spellId, "placefloor");
+		//registerBuildSpell(Spells.placefloor);
 	}
 
 

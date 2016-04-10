@@ -5,6 +5,7 @@ import java.util.ConcurrentModificationException;
 import org.apache.logging.log4j.Level;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.InventoryWand;
+import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -18,8 +19,9 @@ import net.minecraft.world.World;
 public class UtilPlaceBlocks
 {
 	
-	public static void circle(World world, EntityPlayer player, ItemStack heldWand,BlockPos pos, int diameter) 
+	public static void circle(World world, EntityPlayer player, ItemStack heldWand,BlockPos pos) 
 	{
+		int diameter = ItemCyclicWand.BuildType.getBuildSize(heldWand);
 		// based on http://stackoverflow.com/questions/1022178/how-to-make-a-circle-on-a-grid
 		//also http://rosettacode.org/wiki/Bitmap/Midpoint_circle_algorithm
 				
@@ -105,8 +107,9 @@ public class UtilPlaceBlocks
    
 	}
 
-	public static void stairway(World world, EntityPlayer player,ItemStack heldWand,BlockPos position, int want)
+	public static void stairway(World world, EntityPlayer player,ItemStack heldWand,BlockPos position)
 	{ 
+		int want = ItemCyclicWand.BuildType.getBuildSize(heldWand);
 		boolean isLookingUp = (player.getLookVec().yCoord >= 0);//TODO: use this somehow? to place up/down? 
     
 		boolean goVert = true;	
@@ -142,8 +145,9 @@ public class UtilPlaceBlocks
 		}
 	}
 	
-	public static void line(World world, EntityPlayer player,ItemStack heldWand, BlockPos pos,EnumFacing efacing,int want)
+	public static void line(World world, EntityPlayer player,ItemStack heldWand, BlockPos pos,EnumFacing efacing)
 	{
+		int want = ItemCyclicWand.BuildType.getBuildSize(heldWand);
 		int skip = 1;
 		
 		BlockPos posCurrent;
