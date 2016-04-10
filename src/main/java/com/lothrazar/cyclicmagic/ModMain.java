@@ -126,22 +126,20 @@ public class ModMain {
 	 * TODO LIST
 	 * CONFIG to disable each command
 	 * 
-	 * PLACE COMMAND refactored into spells
+	 * config for emerald/multitool
 	 * 
-	 * realign invo buttons
-	 * 
-	 * //BUG: spells get casted even if you have zero mana
-	 * 
-	 * 
+	 * config to logspam every enabled feature on startup
+
 	 * ender book - addInformation about waypoints - count of them?
+	 *   - needs config
+	 * 
 	 * 
 	 * 
 	 * SPELL: bring back ghost - let it put you in new location but only if air
 	 * blocks
 	 * 
 	 * disable entire wand in config
-	 * OR
-	 * --- COST of each spell in config !!!
+
 	 * 
 	 * 1. text message if we use a build spell but invo is empty
 	 * - max and regen in nbt, not config

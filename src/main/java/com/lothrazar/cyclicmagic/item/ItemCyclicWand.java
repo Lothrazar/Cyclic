@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
-import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
@@ -20,13 +19,12 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemCyclicWand extends Item implements IHasRecipe {
+public class ItemCyclicWand extends Item {
 
 	private static final String NBT_SPELLCURRENT = "spell_id";
 
@@ -34,12 +32,6 @@ public class ItemCyclicWand extends Item implements IHasRecipe {
 
 		this.setMaxStackSize(1);
 		this.setFull3D();
-	}
-
-	@Override
-	public void addRecipe() {
-
-		GameRegistry.addRecipe(new ItemStack(this), "sds", " o ", "gog", 'd', new ItemStack(Blocks.diamond_block), 'g', Items.ghast_tear, 'o', Blocks.obsidian, 's', Items.nether_star);
 	}
 
 	@Override

@@ -113,20 +113,34 @@ public class ItemRegistry {
 	public static void register() {
 
 		registerMaterials();
-		// TODO: figure out how to config
+
 		cyclic_wand = new ItemCyclicWand();
 		registerItem(cyclic_wand, "cyclic_wand");
-
+		GameRegistry.addRecipe(new ItemStack(cyclic_wand), 
+					"sds", 
+					" o ", 
+					"gog", 
+					'd', new ItemStack(Blocks.diamond_block),'g', Items.ghast_tear, 'o', Blocks.obsidian, 's', Items.nether_star);
+		
 		cyclic_wand_range = new ItemCyclicWand();
 		registerItem(cyclic_wand_range, "cyclic_wand_range");
-
+		GameRegistry.addRecipe(new ItemStack(cyclic_wand_range), 
+					"sds", 
+					" o ", 
+					"gog", 
+					'd', new ItemStack(Blocks.emerald_block),'g', Items.ghast_tear, 'o', Blocks.obsidian, 's', Items.nether_star);
+	
 		cyclic_wand_fly = new ItemCyclicWand();
 		registerItem(cyclic_wand_fly, "cyclic_wand_fly");
-		
-		
+		GameRegistry.addRecipe(new ItemStack(cyclic_wand_fly), 
+					"sds", 
+					" o ", 
+					"gog", 
+					'd', new ItemStack(Blocks.redstone_block),'g', Items.ghast_tear, 'o', Blocks.obsidian, 's', Items.nether_star);
+	
 		// TODO: retexture and/or decide if we are even keeping this
 		Item multitool = new ItemMultiTool();
-		registerItem(multitool, "multitool");
+		registerItem(multitool,ItemMultiTool.name);
 
 		if (configToggle.get(ItemEnderPearlReuse.name)) {
 
@@ -262,13 +276,7 @@ public class ItemRegistry {
 		if (wool_recipe > 0) {
 			GameRegistry.addShapelessRecipe(new ItemStack(ender_wool, wool_recipe), new ItemStack(Items.ender_pearl), new ItemStack(Blocks.wool), new ItemStack(Items.shears));
 		}
-		/*
-		 * soulstone = new Item(); ItemRegistry.registerItem(soulstone,
-		 * "soulstone");
-		 * GameRegistry.addShapelessRecipe(new ItemStack(soulstone,2) ,new
-		 * ItemStack(Items.ender_pearl) ,new ItemStack(Items.nether_wart) ,new
-		 * ItemStack(Items.ghast_tear));
-		 */
+
 		ender_torch = new ItemProjectile();
 		ItemRegistry.registerItem(ender_torch, "ender_torch");
 		if (torch_recipe > 0) {
