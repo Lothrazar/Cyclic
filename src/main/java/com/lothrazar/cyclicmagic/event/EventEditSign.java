@@ -20,11 +20,7 @@ public class EventEditSign {
 		World worldObj = event.getWorld();
 		if (pos == null) { return; }
 
-		ItemStack held = entityPlayer.getHeldItemMainhand();
-
-		if (held == null) {
-			held = entityPlayer.getHeldItemOffhand();
-		}
+		ItemStack held = entityPlayer.getHeldItem(event.getHand());
 
 		TileEntity tile = worldObj.getTileEntity(pos);
 

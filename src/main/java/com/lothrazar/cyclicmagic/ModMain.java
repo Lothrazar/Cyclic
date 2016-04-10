@@ -126,6 +126,9 @@ public class ModMain {
 	}
 
 	/*
+	 * 
+	 * BUG: carbon paper broken on signs?
+	 * 
 	 * TODO LIST
 	 * CONFIG to disable each command
 	 * 

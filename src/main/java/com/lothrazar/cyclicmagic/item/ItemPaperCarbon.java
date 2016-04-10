@@ -53,7 +53,7 @@ public class ItemPaperCarbon extends Item implements IHasRecipe {
 		return s;
 	}
 
-	private static void copySign(World world, EntityPlayer entityPlayer, TileEntitySign sign, ItemStack held) {
+	public static void copySign(World world, EntityPlayer entityPlayer, TileEntitySign sign, ItemStack held) {
 
 		if (held.getTagCompound() == null) {
 			held.setTagCompound(new NBTTagCompound());
@@ -68,7 +68,7 @@ public class ItemPaperCarbon extends Item implements IHasRecipe {
 		// entityPlayer.swingItem();
 	}
 
-	private static void pasteSign(World world, EntityPlayer entityPlayer, TileEntitySign sign, ItemStack held) {
+	public static void pasteSign(World world, EntityPlayer entityPlayer, TileEntitySign sign, ItemStack held) {
 
 		if (held.getTagCompound() == null) {
 			held.setTagCompound(new NBTTagCompound());
@@ -84,15 +84,15 @@ public class ItemPaperCarbon extends Item implements IHasRecipe {
 		// entityPlayer.swingItem();
 	}
 
-	private static void copyNote(World world, EntityPlayer entityPlayer, TileEntityNote noteblock, ItemStack held) {
+	public static void copyNote(World world, EntityPlayer entityPlayer, TileEntityNote noteblock, ItemStack held) {
 
-		if (held.getTagCompound() == null)
+		if (held.getTagCompound() == null){
 			held.setTagCompound(new NBTTagCompound());
-
+		}
 		held.getTagCompound().setByte(KEY_NOTE, noteblock.note);
 	}
 
-	private static void pasteNote(World world, EntityPlayer entityPlayer, TileEntityNote noteblock, ItemStack held) {
+	public static void pasteNote(World world, EntityPlayer entityPlayer, TileEntityNote noteblock, ItemStack held) {
 
 		if (held.getTagCompound() == null) { return; }// nothing ot paste
 		if (held.getTagCompound().getByte(KEY_NOTE) == NOTE_EMPTY) { return; }
@@ -107,7 +107,7 @@ public class ItemPaperCarbon extends Item implements IHasRecipe {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public void addInformation(ItemStack held, EntityPlayer player, List list, boolean par4) {
+	public void addInformation(ItemStack held, EntityPlayer player, List<String> list, boolean par4) {
 
 		boolean isEmpty = (held.getTagCompound() == null);
 		if (isEmpty) {
@@ -134,16 +134,18 @@ public class ItemPaperCarbon extends Item implements IHasRecipe {
 	@Override
 	public EnumActionResult onItemUse(ItemStack held, EntityPlayer entityPlayer, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 
-		Block blockClicked = world.getBlockState(pos).getBlock();
+		//Block blockClicked = world.getBlockState(pos).getBlock();
 		TileEntity container = world.getTileEntity(pos);
 		boolean isValid = false;
 		boolean wasCopy = false;
 
 		boolean isEmpty = (held.getTagCompound() == null);
 
-		if ((blockClicked == Blocks.wall_sign || blockClicked == Blocks.standing_sign) && container instanceof TileEntitySign) {
+		//(blockClicked == Blocks.wall_sign || blockClicked == Blocks.standing_sign) && 
+		if (container instanceof TileEntitySign) {
 			TileEntitySign sign = (TileEntitySign) container;
 
+			System.out.println("sign go");
 			if (isEmpty) {
 				copySign(world, entityPlayer, sign, held);
 				wasCopy = true;
@@ -155,9 +157,11 @@ public class ItemPaperCarbon extends Item implements IHasRecipe {
 
 			isValid = true;
 		}
-		if (blockClicked == Blocks.noteblock && container instanceof TileEntityNote) {
+		//blockClicked == Blocks.noteblock && 
+		if (container instanceof TileEntityNote) {
 			TileEntityNote noteblock = (TileEntityNote) container;
 
+			System.out.println("note go");
 			if (isEmpty) {
 				copyNote(world, entityPlayer, noteblock, held);
 				wasCopy = true;
