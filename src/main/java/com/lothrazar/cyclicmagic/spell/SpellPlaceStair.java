@@ -7,6 +7,7 @@ import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -20,7 +21,7 @@ public class SpellPlaceStair extends BaseSpellPlace{
 		this.cooldown = 10;
 	}
 	@Override
-	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side) {
+	public boolean cast(World world, EntityPlayer player, ItemStack wand,BlockPos pos, EnumFacing side) {
 		// TODO Auto-generated method stub
 		
 		
@@ -34,7 +35,7 @@ public class SpellPlaceStair extends BaseSpellPlace{
 		}
 		IBlockState placing = Blocks.stone.getDefaultState();
 
-		int distOrRadius = ItemCyclicWand.BuildType.getBuildSize(UtilSpellCaster.getPlayerWandIfHeld(player));
+		int distOrRadius = ItemCyclicWand.BuildType.getBuildSize(wand);
 		
 		System.out.println("place line of stone"+startPos.toString()); 
 		//EnumFacing efacing = (player.isSneaking()) ? EnumFacing.DOWN : UtilEntity.getPlayerFacing(player);

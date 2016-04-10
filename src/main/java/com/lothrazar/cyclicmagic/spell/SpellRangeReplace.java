@@ -22,7 +22,7 @@ public class SpellRangeReplace extends BaseSpellRange{
 	}
 
 	@Override
-	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side){
+	public boolean cast(World world, EntityPlayer player, ItemStack wand,BlockPos pos, EnumFacing side){
 
 		if(world.isRemote){
 			// only client side can call this method. mouseover does not exist

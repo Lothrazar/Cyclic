@@ -5,6 +5,7 @@ import com.lothrazar.cyclicmagic.net.MessageSpellPull;
 import com.lothrazar.cyclicmagic.util.UtilMoveBlock;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
@@ -19,7 +20,7 @@ public class SpellRangePull extends BaseSpellRange{
 	}
 
 	@Override
-	public boolean cast(World world, EntityPlayer p, BlockPos pos, EnumFacing side){
+	public boolean cast(World world, EntityPlayer p, ItemStack wand,BlockPos pos, EnumFacing side){
 
 		if(world.isRemote){
 

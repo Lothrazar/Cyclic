@@ -7,6 +7,7 @@ import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
@@ -25,9 +26,8 @@ public class SpellInventory extends BaseSpell{
 	}
 
 	@Override
-	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side){
-
-		System.out.println("inventory spell");
+	public boolean cast(World world, EntityPlayer player, ItemStack wand,BlockPos pos, EnumFacing side){
+ 
 		if(!world.isRemote){ // TODO: does the isRemote check actually matter
 			player.openGui(ModMain.instance, GuiHandler.GUI_INDEX_WAND, world, 0, 0, 0);
 		}

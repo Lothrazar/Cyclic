@@ -22,7 +22,7 @@ public class SpellPlaceLine extends BaseSpellPlace{
 		this.cooldown = 10;
 	}
 	@Override
-	public boolean cast(World world, EntityPlayer player, BlockPos pos, EnumFacing side) {
+	public boolean cast(World world, EntityPlayer player,ItemStack wand, BlockPos pos, EnumFacing side) {
 		// TODO Auto-generated method stub
 		
 		
@@ -35,20 +35,15 @@ public class SpellPlaceLine extends BaseSpellPlace{
 			startPos = startPos.offset(side);
 		}
 
-		int distOrRadius = ItemCyclicWand.BuildType.getBuildSize(UtilSpellCaster.getPlayerWandIfHeld(player));
+		int distOrRadius = ItemCyclicWand.BuildType.getBuildSize(wand);
 		//int skip = 0;
-
-		ItemStack heldWand = UtilSpellCaster.getPlayerWandIfHeld(player);
-		
-		if(heldWand == null){
-			return false;
-		}
+  
 		EnumFacing efacing = (player.isSneaking()) ? EnumFacing.DOWN : UtilEntity.getPlayerFacing(player);
 	      //  boolean isLookingUp = (player.getLookVec().yCoord >= 0);//TODO: use this somehow? to place up/down? 
         
 		
 		if(world.isRemote == false)
-			UtilPlaceBlocks.line(world, player,heldWand, startPos,efacing,  distOrRadius );//,vertOffset
+			UtilPlaceBlocks.line(world, player,wand, startPos,efacing,  distOrRadius );//,vertOffset
 		
 		
 		return false;

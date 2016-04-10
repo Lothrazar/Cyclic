@@ -50,7 +50,7 @@ public class UtilSpellCaster{
 
 		if(spell.canPlayerCast(world, player, pos)){
 
-			if(spell.cast(world, player, pos, side)){
+			if(spell.cast(world, player, wand,pos, side)){
 
 				castSuccess(spell, world, player, pos);
 				
