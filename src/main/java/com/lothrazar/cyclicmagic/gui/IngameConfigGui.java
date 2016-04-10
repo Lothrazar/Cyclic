@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.config;
+package com.lothrazar.cyclicmagic.gui;
 
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.util.Const;

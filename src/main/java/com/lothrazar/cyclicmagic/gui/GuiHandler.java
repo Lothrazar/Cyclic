@@ -1,11 +1,6 @@
-package com.lothrazar.cyclicmagic;
+package com.lothrazar.cyclicmagic.gui;
 
 import com.lothrazar.cyclicmagic.block.TileEntityUncrafting;
-import com.lothrazar.cyclicmagic.gui.ContainerUncrafting;
-import com.lothrazar.cyclicmagic.gui.ContainerWand;
-import com.lothrazar.cyclicmagic.gui.GuiUncrafting;
-import com.lothrazar.cyclicmagic.gui.GuiWandInventory;
-import com.lothrazar.cyclicmagic.gui.InventoryWand;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

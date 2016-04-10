@@ -5,7 +5,7 @@ import net.minecraft.item.Item;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
-import com.lothrazar.cyclicmagic.BehaviorPlantSeed;
+import com.lothrazar.cyclicmagic.dispenser.*;
 import com.lothrazar.cyclicmagic.util.Const;
 
 public class DispenserBehaviorRegistry {

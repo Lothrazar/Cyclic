@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic;
 
 import org.apache.logging.log4j.Logger;
+import com.lothrazar.cyclicmagic.gui.GuiHandler;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
 import com.lothrazar.cyclicmagic.registry.*;
 import com.lothrazar.cyclicmagic.util.Const;

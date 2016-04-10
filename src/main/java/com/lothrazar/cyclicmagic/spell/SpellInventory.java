@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.spell;
 
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.GuiHandler;
+import com.lothrazar.cyclicmagic.gui.GuiHandler;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;

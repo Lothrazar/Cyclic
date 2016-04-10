@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.config;
+package com.lothrazar.cyclicmagic.gui;
 
 import java.util.Set;
 import net.minecraft.client.Minecraft;

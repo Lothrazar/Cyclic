@@ -1,8 +1,8 @@
 package com.lothrazar.cyclicmagic.block;
 
 import java.util.Random;
-import com.lothrazar.cyclicmagic.GuiHandler;
 import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.gui.GuiHandler;
 import com.lothrazar.cyclicmagic.item.IHasRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
