@@ -363,7 +363,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe {
 				return "button.build." + BuildType.values()[tags.getInteger(NBT)].toString().toLowerCase();
 
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
+				//System.out.println(e.getMessage());
 				return "button.build." + FIRST.toString().toLowerCase();
 			}
 		}
@@ -395,7 +395,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe {
 
 			NBTTagCompound tags = getNBT(wand);
 			int s = tags.getInteger(NBTSIZE);
-			System.out.println("getBuildSize:" + s);
+
 			return s;
 		}
 
@@ -403,7 +403,6 @@ public class ItemCyclicWand extends Item implements IHasRecipe {
 
 			NBTTagCompound tags = getNBT(wand);
 			tags.setInteger(NBTSIZE, size);
-			System.out.println("SET:" + size);
 			wand.setTagCompound(tags);
 		}
 	}

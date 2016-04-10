@@ -14,7 +14,7 @@ public class SpellPlaceLine extends BaseSpellPlace {
 
 		super.init(id, name);
 		this.cost = 25;
-		this.cooldown = 120;
+		this.cooldown = 15;
 	}
 
 	@Override

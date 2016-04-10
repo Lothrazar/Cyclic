@@ -13,7 +13,7 @@ public class SpellPlaceStair extends BaseSpellPlace {
 
 		super.init(id, name);
 		this.cost = 25;
-		this.cooldown = 120;
+		this.cooldown = 20;
 	}
 
 	@Override
@@ -29,6 +29,9 @@ public class SpellPlaceStair extends BaseSpellPlace {
 			startPos = startPos.offset(side);
 		}
 
+		
+		System.out.println("Place stairs at "+startPos.toString());
+		
 		UtilPlaceBlocks.stairway(world, player, wand, startPos);
 
 		return true;

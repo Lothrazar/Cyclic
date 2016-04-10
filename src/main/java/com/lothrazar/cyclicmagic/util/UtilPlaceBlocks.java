@@ -32,7 +32,7 @@ public class UtilPlaceBlocks {
 
 		int z = radius;
 		int x = 0;
-		int d = 2 - diameter;
+		int d = 2 - (2*radius);//dont use Diameter again, for integer roundoff
 
 		ArrayList<BlockPos> circleList = new ArrayList<BlockPos>();
 

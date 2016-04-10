@@ -13,7 +13,7 @@ public class SpellPlaceCircle extends BaseSpellPlace {
 
 		super.init(id, name);
 		this.cost = 25;
-		this.cooldown = 120;
+		this.cooldown = 20;
 	}
 
 	@Override
@@ -23,6 +23,8 @@ public class SpellPlaceCircle extends BaseSpellPlace {
 		// position
 		BlockPos startPos = player.getPosition();
 
+		System.out.println("circle at "+startPos.toString());
+		
 		UtilPlaceBlocks.circle(world, player, wand, startPos);
 
 		return true;
