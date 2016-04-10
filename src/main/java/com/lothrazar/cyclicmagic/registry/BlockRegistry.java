@@ -157,7 +157,7 @@ public class BlockRegistry {
 		String category = Const.MODCONF + "Blocks";
 
 		// TODO : requires restart
-		config.setCategoryComment(category, "Blocks added to the game");
+		config.setCategoryComment(category, "Disable or customize blocks added to the game");
 
 		enableBlockFragile = config.getBoolean("Scaffolding", category, true, "Enable the scaffolding block that breaks by itself");
 

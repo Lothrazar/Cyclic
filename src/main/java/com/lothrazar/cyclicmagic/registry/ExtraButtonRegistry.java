@@ -22,6 +22,7 @@ public class ExtraButtonRegistry {
 
 	public static void syncConfig(Configuration config) {
 		String category = Const.MODCONF + "Inventory Buttons";
+		config.setCategoryComment(category, "Terraria-inspired inventory helper buttons");
 
 		List<String> valid = new ArrayList<String>();
 		valid.add(posLeft);

@@ -15,6 +15,8 @@ public class WorldGenRegistry {
 	public static void syncConfig(Configuration config) {
 
 		String category = Const.MODCONF + "World Generation";
+		
+		config.setCategoryComment(category, "Control any blocks that get generated in new chunks & new worlds");
 
 		Property prop = config.get(category, "Classic Oceans", true, "Generate clay, sand, and dirt in the ocean instead of only gravel (like the old days)");
 		prop.setRequiresWorldRestart(true);

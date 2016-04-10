@@ -28,6 +28,8 @@ public class EventRegistry {
 
 	private static boolean editableSigns;
 
+	private static boolean mountedPearl;
+
 	public static void syncConfig(Configuration config) {
 
 		String category = Const.MODCONF + "Mobs";
@@ -45,22 +47,20 @@ public class EventRegistry {
 		category = Const.MODCONF + "Misc";
 		
 		signSkullName = config.getBoolean("Name Player Skulls with Sign", category, true, "Use a player skull on a sign to name the skull based on the top line");
-		nameVillagerTag = config.getBoolean("Villager Nametag", category, true, "Let nametags work on villagers");
-
-
-		editableSigns = config.getBoolean("Editable Signs", category, true, "Allow editing a sign with right click");
 		
 
 		category = Const.MODCONF + "Player";
-
 		config.setCategoryComment(category, "Changes to player properties or actions");
+		
+		nameVillagerTag = config.getBoolean("Villager Nametag", category, true, "Let players name villagers with nametags");
+
+		editableSigns = config.getBoolean("Editable Signs", category, true, "Allow editing a sign with right click");
 		
 		playerWakeup = config.getBoolean("Wakeup Curse", category, true, "Using a bed to skip the night has some mild potion effect related drawbacks");
 
 		playerDeathCoords = config.getBoolean("Death Coords", category, true, "Display your coordinates in chat when you die");
 	
-	
-
+		mountedPearl = config.getBoolean("Pearls On Horseback", category, true, "Enderpearls work on a horse, bringing it with you");
 		
 	}
 
@@ -68,7 +68,6 @@ public class EventRegistry {
 
 		// some just always have to happen no matter what. for other features.
 		//they will do nothing if for example their items do not exist or otherwise disabled
-		events.add(new EventGuiAddButtons());
 		events.add(new EventConfigChanged());
 		events.add(new EventPotions());
 		events.add(new EventSpells());
@@ -77,10 +76,14 @@ public class EventRegistry {
 		// no reason to turn these off
 		
 		// TODO: consider configs for these
+		events.add(new EventGuiAddButtons());
 		events.add(new EventFoodDetails());
 		events.add(new EventFragileTorches());
 		events.add(new EventFurnaceStardew());
-		events.add(new EventMountedPearl());
+		
+		if(mountedPearl){
+			events.add(new EventMountedPearl());
+		}
 		events.add(new EventBucketBlocksBreak());
 		
 		

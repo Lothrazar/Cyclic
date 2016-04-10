@@ -346,6 +346,7 @@ public class ItemRegistry {
 	public static void syncConfig(Configuration config) {
 
 		String category = Const.MODCONF + "Items";
+		config.setCategoryComment(category, "Disable or customize items added to the game");
 		
 		sceptersEnabled = config.getBoolean("sceptersEnabled", category, true, "Enable the building scepters");
 
@@ -353,7 +354,6 @@ public class ItemRegistry {
 
 		BaseSpellRange.maxRange = config.getInt("scepter_MaxRange", category, 64, 8, 128, "Maximum range for all spells");
 
-		config.setCategoryComment(category, "Items added to the game");
 
 		Property prop = config.get(category, ItemMultiTool.name, true, "Overpowered Multi Tool");
 		prop.setRequiresMcRestart(true);

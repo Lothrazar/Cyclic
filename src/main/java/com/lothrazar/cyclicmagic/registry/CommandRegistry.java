@@ -31,6 +31,7 @@ public class CommandRegistry {
 
 	public static void syncConfig(Configuration config) {
 		String category = Const.MODCONF + "Commands";
+		config.setCategoryComment(category, "Disable any command that was added");
 
 		Property prop = config.get(category, CommandEnderChest.name, true, " ");
 		prop.setRequiresMcRestart(true);

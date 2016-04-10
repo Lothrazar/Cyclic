@@ -14,11 +14,11 @@ public class RecipeNewRegistry {
 	public static void syncConfig(Configuration config) {
 
 		// TODO: could config each one by one i guess but this is fine for now
-		String category = Const.MODCONF + "Recipes";
+		String category = Const.MODCONF + "Recipes";	
+		config.setCategoryComment(category, "New and altered recipes");
+		
 
-		config.setCategoryComment(category, "New recipes added for existing blocks and items.  Bonemeal to undye wool; repeater and dispenser tweaks;  making player skulls out of the four mob heads...");
-
-		enabled = config.get(category, "New Recipes Enabled", true).getBoolean();
+		enabled = config.get(category, "New Recipes Enabled", true,"New recipes added for existing blocks and items.  Bonemeal to undye wool; repeater and dispenser tweaks;  making player skulls out of the four mob heads; create mushroom blocks from items...").getBoolean();
 
 	}
 

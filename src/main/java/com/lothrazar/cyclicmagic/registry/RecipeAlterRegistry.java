@@ -26,9 +26,7 @@ public class RecipeAlterRegistry {
 
 		String category = Const.MODCONF + "Recipes";
 
-		config.setCategoryComment(category, "Furnace requires coal in the middle, stone tools require smoothstone to be fully repaired");
-
-		enabled = config.get(category, "Altered Recipes Enabled", true).getBoolean();
+		enabled = config.get(category, "Altered Recipes Enabled", true,"Furnace requires coal in the middle, stone tools require smoothstone to be fully repaired").getBoolean();
 
 	}
 

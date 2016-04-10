@@ -21,7 +21,7 @@ public class FuelRegistry {
 
 		String category = Const.MODCONF + "Misc";
 
-		String msg = "Tons more things are burnable as fuel, such as signs, ladders, seeds, plants";
+		String msg = "Other Features";
 
 		config.setCategoryComment(category, msg);
 
