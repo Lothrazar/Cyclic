@@ -21,27 +21,11 @@ public class SpellPlaceCircle extends BaseSpellPlace{
 	}
 	@Override
 	public boolean cast(World world, EntityPlayer player, ItemStack wand,BlockPos pos, EnumFacing side) {
-		// TODO Auto-generated method stub
-		
-		
-		BlockPos startPos = pos;
-		if(startPos == null){
-			startPos = player.getPosition();
-		}
-		else{
-			//we have a valid start position that was clicked on.  was the face of a block clicked on too?
-			startPos = startPos.offset(side);
-		}
-	
-		int distOrRadius = ItemCyclicWand.BuildType.getBuildSize(wand);
 
-
-		//EnumFacing efacing = (player.isSneaking()) ? EnumFacing.DOWN : UtilEntity.getPlayerFacing(player);
-	      //  boolean isLookingUp = (player.getLookVec().yCoord >= 0);//TODO: use this somehow? to place up/down? 
-        
+		//JUST for the circle, we ignore clicked pos and always start on players position
+		BlockPos startPos = player.getPosition();
 		
-		UtilPlaceBlocks.circle(world, player, wand,startPos, distOrRadius );//,vertOffset
-		
+		UtilPlaceBlocks.circle(world, player, wand,startPos, ItemCyclicWand.BuildType.getBuildSize(wand) );
 		
 		return false;
 	}

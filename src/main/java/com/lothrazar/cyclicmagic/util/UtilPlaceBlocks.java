@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 public class UtilPlaceBlocks
 {
 	
-	public static void circle(World world, EntityPlayer player, ItemStack heldWand,BlockPos pos, int radius) 
+	public static void circle(World world, EntityPlayer player, ItemStack heldWand,BlockPos pos, int diameter) 
 	{
 		// based on http://stackoverflow.com/questions/1022178/how-to-make-a-circle-on-a-grid
 		//also http://rosettacode.org/wiki/Bitmap/Midpoint_circle_algorithm
@@ -28,9 +28,11 @@ public class UtilPlaceBlocks
 		
 		int height = (int)pos.getY();
 		
+		int radius = diameter/2;
+		
 		int z = radius;
 		int x = 0;
-		int d = 2 - (2 * radius);
+		int d = 2 - diameter;
 		
 		ArrayList<BlockPos> circleList = new ArrayList<BlockPos>(); 
 		
@@ -174,7 +176,7 @@ public class UtilPlaceBlocks
 
 			UtilSound.playSound(player, placing.getBlock().getStepSound().getPlaceSound());
 
-			if(player.capabilities.isCreativeMode == false)
+			if(player.capabilities.isCreativeMode == false )
 			{
 				//player.inventory.decrStackSize(player.inventory.currentItem, 1);
 				InventoryWand.decrementSlot(heldWand,itemSlot);
