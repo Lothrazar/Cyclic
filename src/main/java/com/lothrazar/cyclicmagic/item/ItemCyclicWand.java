@@ -72,25 +72,8 @@ public class ItemCyclicWand extends Item implements IHasRecipe {
 	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
 
 		ISpell spell = SpellRegistry.getSpellFromID(Spells.getSpellIDCurrent(stack));
-
-		// int MAX = Energy.getMaximum(stack);
-
-		String cost = TextFormatting.DARK_GRAY + "[" + TextFormatting.DARK_PURPLE + spell.getCost() + TextFormatting.DARK_GRAY + "]";
-		tooltip.add(TextFormatting.GREEN + spell.getName() + " " + cost);
-
-		if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-
-			// tooltip.add(Energy.getCurrent(stack) + "/" + MAX);
-			// int reg = Energy.getRegen(playerIn.worldObj,stack);
-
-			// tooltip.add(TextFormatting.DARK_GRAY +
-			// I18n.translateToLocal("wand.regen") + TextFormatting.DARK_BLUE + reg);
-
-		}
-		else {
-			tooltip.add(TextFormatting.DARK_GRAY + I18n.translateToLocal("item.shift"));
-		}
-
+		tooltip.add(TextFormatting.GREEN + spell.getName());
+		
 		super.addInformation(stack, playerIn, tooltip, advanced);
 	}
 
