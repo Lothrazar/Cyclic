@@ -33,6 +33,14 @@ public class SpellLaunch extends BaseSpell implements ISpell {
 	@Override
 	public boolean cast(World world, EntityPlayer player, ItemStack wand, BlockPos pos, EnumFacing side) {
 
+		
+		if(player.isSneaking()){
+
+			PotionRegistry.addOrMergePotionEffect(player, new PotionEffect(PotionRegistry.slowfall, slowfallSec * Const.TICKS_PER_SEC));
+			//player.addPotionEffect();
+			return true;
+		}
+		
 		double velY = (double) (-MathHelper.sin((player.rotationPitch) / 180.0F * (float) Math.PI) * power);
 
 		if (velY < 0) {
@@ -70,8 +78,6 @@ public class SpellLaunch extends BaseSpell implements ISpell {
 
 		this.playSound(world, null, player.getPosition());
 		this.spawnParticle(world, player, player.getPosition());
-
-		player.addPotionEffect(new PotionEffect(PotionRegistry.slowfall, slowfallSec * Const.TICKS_PER_SEC));
 
 		return true;
 	}
