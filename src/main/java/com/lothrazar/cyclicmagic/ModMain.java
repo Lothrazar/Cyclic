@@ -126,6 +126,7 @@ public class ModMain {
 	}
 
 	/*
+	 * BUG: enderman drop block: does it make doubel?
 	 * 
 	 * BUG: carbon paper broken on signs?
 	 * 

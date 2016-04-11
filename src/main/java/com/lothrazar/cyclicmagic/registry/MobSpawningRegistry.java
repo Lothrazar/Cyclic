@@ -26,6 +26,9 @@ public class MobSpawningRegistry {
 
 	public static void register() {
 
+		if(!enabled){
+			return;
+		}
 		EntityRegistry.addSpawn(EntityEnderman.class, group, min, max, EnumCreatureType.MONSTER, new BiomeGenBase[] { Biomes.hell });
 
 		EntityRegistry.addSpawn(EntityBlaze.class, group, min, max, EnumCreatureType.MONSTER, new BiomeGenBase[] { Biomes.desertHills });

@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 
 public class SpellLaunch extends BaseSpell implements ISpell {
 
-	private static final float	power				= 1.005F;
+	private static final float	power				= 1.07F;
 	private static final float	mountPower	= 1.01F;
 	private static final int		slowfallSec	= 10;			// TODO: this 10 seconds in
 	                                                  // config..??
