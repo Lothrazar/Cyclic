@@ -105,7 +105,6 @@ public class ItemPaperCarbon extends Item implements IHasRecipe {
 		// entityPlayer.swingItem();
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void addInformation(ItemStack held, EntityPlayer player, List<String> list, boolean par4) {
 
@@ -131,13 +130,19 @@ public class ItemPaperCarbon extends Item implements IHasRecipe {
 		}
 	}
 
+	//onItemUse
+//	public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand)
+  
 	@Override
-	public EnumActionResult onItemUse(ItemStack held, EntityPlayer entityPlayer, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+	public EnumActionResult onItemUseFirst(ItemStack held, EntityPlayer entityPlayer, World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, EnumHand hand) {
 
+		System.out.println("onItemUseFirst");
 		//Block blockClicked = world.getBlockState(pos).getBlock();
 		TileEntity container = world.getTileEntity(pos);
 		boolean isValid = false;
-		boolean wasCopy = false;
+		boolean consumeItem = false;
+
+		//if(!entityPlayer.isSneaking()) { return EnumActionResult.FAIL; }
 
 		boolean isEmpty = (held.getTagCompound() == null);
 
@@ -148,11 +153,11 @@ public class ItemPaperCarbon extends Item implements IHasRecipe {
 			System.out.println("sign go");
 			if (isEmpty) {
 				copySign(world, entityPlayer, sign, held);
-				wasCopy = true;
+				consumeItem = false;
 			}
 			else {
 				pasteSign(world, entityPlayer, sign, held);
-				wasCopy = false;
+				consumeItem = true;
 			}
 
 			isValid = true;
@@ -164,11 +169,11 @@ public class ItemPaperCarbon extends Item implements IHasRecipe {
 			System.out.println("note go");
 			if (isEmpty) {
 				copyNote(world, entityPlayer, noteblock, held);
-				wasCopy = true;
+				consumeItem = false;
 			}
 			else {
 				pasteNote(world, entityPlayer, noteblock, held);
-				wasCopy = false;
+				consumeItem = true;
 			}
 
 			isValid = true;
@@ -178,7 +183,7 @@ public class ItemPaperCarbon extends Item implements IHasRecipe {
 
 			UtilParticle.spawnParticle(world, EnumParticleTypes.PORTAL, pos.getX(), pos.getY(), pos.getZ());
 
-			if (wasCopy == false)// on paste, we consume the item
+			if (consumeItem)// on paste, we consume the item
 			{
 				if (entityPlayer.capabilities.isCreativeMode == false) {
 					entityPlayer.inventory.decrStackSize(entityPlayer.inventory.currentItem, 1);
@@ -281,5 +286,8 @@ public class ItemPaperCarbon extends Item implements IHasRecipe {
 
 		GameRegistry.addRecipe(new ItemStack(this, 8), "ppp", "pcp", "ppp", 'c', new ItemStack(Items.coal, 1, 1), // charcoal
 		    'p', Items.paper);
+		
+		//also let you clean off the paper , make one with no NBT
+		GameRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this));
 	}
 }

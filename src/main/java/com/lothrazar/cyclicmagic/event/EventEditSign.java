@@ -19,6 +19,7 @@ public class EventEditSign {
 		BlockPos pos = event.getPos();
 		World worldObj = event.getWorld();
 		if (pos == null) { return; }
+		//if (entityPlayer.isSneaking()) { return; }
 
 		ItemStack held = entityPlayer.getHeldItem(event.getHand());
 
