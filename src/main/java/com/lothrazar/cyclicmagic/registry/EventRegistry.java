@@ -30,6 +30,12 @@ public class EventRegistry {
 
 	private static boolean mountedPearl;
 
+	private static boolean stardewFurnace;
+
+	private static boolean fragileTorches;
+
+	private static boolean foodDetails;
+
 	public static void syncConfig(Configuration config) {
 
 		String category = Const.MODCONF + "Mobs";
@@ -37,30 +43,25 @@ public class EventRegistry {
 		config.setCategoryComment(category, "Changes to mobs");
 
 		farmDropBuffs = config.getBoolean("Farm Drops Buffed", category, true, "Increase drops of farm animals: more leather, more wool from shearing, pigs drop a bit more pork");
-		
 		monsterDropsNerfed = config.getBoolean("Monster Drops Nerfed", category, true, "Zombies no longer drops crops or iron");
-		
 		nameTagDeath = config.getBoolean("Name Tag Death", category, true, "When an entity dies that is named with a tag, it drops the nametag");
 		endermanDrop = config.getBoolean("Enderman Block", category, true, "Enderman will always drop block they are carrying 100%");
-
 
 		category = Const.MODCONF + "Misc";
 		
 		signSkullName = config.getBoolean("Name Player Skulls with Sign", category, true, "Use a player skull on a sign to name the skull based on the top line");
+		fragileTorches = config.getBoolean("Fragile Torches", category, true, "Torches can get knocked over when passed through by living entities");
+		foodDetails = config.getBoolean("Food Details", category, true, "Add food value and saturation to its info");
 		
-
 		category = Const.MODCONF + "Player";
 		config.setCategoryComment(category, "Changes to player properties or actions");
 		
 		nameVillagerTag = config.getBoolean("Villager Nametag", category, true, "Let players name villagers with nametags");
-
 		editableSigns = config.getBoolean("Editable Signs", category, true, "Allow editing a sign with right click");
-		
 		playerWakeup = config.getBoolean("Wakeup Curse", category, true, "Using a bed to skip the night has some mild potion effect related drawbacks");
-
 		playerDeathCoords = config.getBoolean("Death Coords", category, true, "Display your coordinates in chat when you die");
-	
-		mountedPearl = config.getBoolean("Pearls On Horseback", category, true, "Enderpearls work on a horse, bringing it with you");
+		mountedPearl = config.getBoolean("Pearls On Horseback", category, true, "Enderpearls work on a horse, bringing it with you");		
+		stardewFurnace = config.getBoolean("Furnace Speed", category, true, "Quickly fill a furnace by hitting it with fuel or an item, or interact with an empty hand to pull out the results [Inspired by Stardew Valley]");
 		
 	}
 
@@ -73,37 +74,35 @@ public class EventRegistry {
 		events.add(new EventSpells());
 		events.add(new EventKeyInput());
 		events.add(new EventHorseFood());
-		// no reason to turn these off
+		events.add(new EventBucketBlocksBreak());
 		
 		// TODO: consider configs for these
 		events.add(new EventGuiAddButtons());
-		events.add(new EventFoodDetails());
-		events.add(new EventFragileTorches());
-		events.add(new EventFurnaceStardew());
 		
+		if(foodDetails){
+			events.add(new EventFoodDetails());
+		}
+		if(fragileTorches){
+			events.add(new EventFragileTorches());
+		}
+		if(stardewFurnace){
+			events.add(new EventFurnaceStardew());
+		}
 		if(mountedPearl){
 			events.add(new EventMountedPearl());
 		}
-		events.add(new EventBucketBlocksBreak());
-		
-		
-
 		if(editableSigns){
 			events.add(new EventEditSign());
 		}
-
 		if(nameVillagerTag){
 			events.add(new EventNameVillager());
 		}
-
 		if(endermanDrop){
 			events.add(new EventEndermanDropBlock());
 		}
 		if(farmDropBuffs){
-			
 			events.add(new EventAnimalDropBuffs());
 		}
-		
 		if(monsterDropsNerfed){
 			events.add(new EventMobDropsReduced());
 		}
