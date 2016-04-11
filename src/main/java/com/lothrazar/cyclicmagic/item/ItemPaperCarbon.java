@@ -3,9 +3,7 @@ package com.lothrazar.cyclicmagic.item;
 import java.util.List;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -110,7 +108,7 @@ public class ItemPaperCarbon extends Item implements IHasRecipe {
 
 		boolean isEmpty = (held.getTagCompound() == null);
 		if (isEmpty) {
-			list.add("Click to copy a sign or noteblock");
+			list.add("Use to copy a sign or noteblock");
 			return;
 		}
 
@@ -136,8 +134,6 @@ public class ItemPaperCarbon extends Item implements IHasRecipe {
 	@Override
 	public EnumActionResult onItemUseFirst(ItemStack held, EntityPlayer entityPlayer, World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, EnumHand hand) {
 
-		System.out.println("onItemUseFirst");
-		//Block blockClicked = world.getBlockState(pos).getBlock();
 		TileEntity container = world.getTileEntity(pos);
 		boolean isValid = false;
 		boolean consumeItem = false;
@@ -146,11 +142,9 @@ public class ItemPaperCarbon extends Item implements IHasRecipe {
 
 		boolean isEmpty = (held.getTagCompound() == null);
 
-		//(blockClicked == Blocks.wall_sign || blockClicked == Blocks.standing_sign) && 
 		if (container instanceof TileEntitySign) {
 			TileEntitySign sign = (TileEntitySign) container;
 
-			System.out.println("sign go");
 			if (isEmpty) {
 				copySign(world, entityPlayer, sign, held);
 				consumeItem = false;
@@ -162,11 +156,10 @@ public class ItemPaperCarbon extends Item implements IHasRecipe {
 
 			isValid = true;
 		}
-		//blockClicked == Blocks.noteblock && 
+
 		if (container instanceof TileEntityNote) {
 			TileEntityNote noteblock = (TileEntityNote) container;
 
-			System.out.println("note go");
 			if (isEmpty) {
 				copyNote(world, entityPlayer, noteblock, held);
 				consumeItem = false;

@@ -13,7 +13,7 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 public class EventEditSign {
 
 	@SubscribeEvent
-	public void onInteract(PlayerInteractEvent event) {
+	public void onInteract(PlayerInteractEvent.RightClickBlock event) {
 
 		EntityPlayer entityPlayer = event.getEntityPlayer();
 		BlockPos pos = event.getPos();
@@ -21,7 +21,7 @@ public class EventEditSign {
 		if (pos == null) { return; }
 		//if (entityPlayer.isSneaking()) { return; }
 
-		ItemStack held = entityPlayer.getHeldItem(event.getHand());
+		ItemStack held = event.getItemStack();//entityPlayer.getHeldItem(event.getHand());
 
 		TileEntity tile = worldObj.getTileEntity(pos);
 
