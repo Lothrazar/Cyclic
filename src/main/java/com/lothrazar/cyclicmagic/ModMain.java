@@ -42,6 +42,7 @@ public class ModMain {
 		logger = event.getModLog();
 
 		config = new Configuration(event.getSuggestedConfigurationFile());
+		
 		config.load();
 		syncConfig();
 
@@ -126,6 +127,26 @@ public class ModMain {
 	}
 
 	/*
+	 * APPLES
+	 * 
+	 * add potion brewing!! work with the real brew stands to make new custom potions
+	 * 
+	 * ways to increase Vanilla Player Health
+	 * 
+	 * if you right click on an item frame or a sign
+	 * and if its attached to a chest or sign
+	 * then cancel tthat interaction and force action on teh chest instead
+	 * hook PlayerInteractEvent.RightClickBlock , cancel the result
+	 * and then call a   .onBlockActivated(
+	 * 
+	 * Lex added a new GuiScreenEvent.PotionShiftEvent
+	 * maybe add a config to cancel that
+	 * 
+	 * 
+	 * add the villager trades that were removed in snapshots//old versions
+	 * 
+	 * add storage inventory pages - same way the crafting table works
+	 * 
 	 * BUG: enderman drop block: does it make doubel?
 	 * 
 	 *UNCRAFITNG: add more slots - horizontal
