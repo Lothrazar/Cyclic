@@ -4,6 +4,10 @@ import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.net.MessageSpellRotate;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockDoubleStoneSlab;
+import net.minecraft.block.BlockSlab;
+import net.minecraft.block.BlockStone;
+import net.minecraft.block.BlockStone.EnumType;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -48,37 +52,61 @@ public class SpellRangeRotate extends BaseSpellRange {
 		IBlockState clicked = worldObj.getBlockState(pos);
 		if (clicked.getBlock() == null) { return; }
 		Block clickedBlock = clicked.getBlock();
-		int clickedMeta = clickedBlock.getMetaFromState(clicked);
+		
+		//avoiding using the integer values of properties
+		//int clickedMeta = clickedBlock.getMetaFromState(clicked);
 
-		boolean isDone = false;
+		//the built in function doues the properties: ("facing")|| ("rotation")
+		// for example, BlockMushroom.rotateBlock uses this, and hay bales
+		boolean isDone = clickedBlock.rotateBlock(worldObj, pos, side);
 
-		if (clickedBlock.rotateBlock(worldObj, pos, side)) {
-			//the built in function doues the properties: ("facing")|| ("rotation")
-			// for example, BlockMushroom.rotateBlock uses this, and hay bales
-			// acts similar to axis
-			isDone = true;
-		}
-		else {
-			// any property that is not variant?
-			
+		
+		if(!isDone){
+
 			//first handle any special cases
-			/*
-			if(clickedBlock == Blocks.double_stone_slab){
+			
+			if(clickedBlock == Blocks.stone){
 
-				worldObj.setBlockState(pos, Blocks.double_stone_slab.getStateFromMeta(Const.Slab.stone_double_secret));
+				EnumType variant = clicked.getValue(BlockStone.VARIANT);//.getProperties().get(BlockStone.VARIANT);
+				//basically we want to toggle the "smooth" property on and off
+				//but there is no property 'smooth' its just within the variant
+				switch(variant){
+				case ANDESITE:
+					worldObj.setBlockState(pos, clicked.withProperty(BlockStone.VARIANT, EnumType.ANDESITE_SMOOTH));
+					isDone = true;
+					break;
+				case ANDESITE_SMOOTH:
+					worldObj.setBlockState(pos, clicked.withProperty(BlockStone.VARIANT, EnumType.ANDESITE));
+					isDone = true;
+					break;
+				case DIORITE:
+					worldObj.setBlockState(pos, clicked.withProperty(BlockStone.VARIANT, EnumType.DIORITE_SMOOTH));
+					isDone = true;
+					break;
+				case DIORITE_SMOOTH:
+					worldObj.setBlockState(pos, clicked.withProperty(BlockStone.VARIANT, EnumType.DIORITE));
+					isDone = true;
+					break;
+				case GRANITE:
+					worldObj.setBlockState(pos, clicked.withProperty(BlockStone.VARIANT, EnumType.GRANITE_SMOOTH));
+					isDone = true;
+					break;
+				case GRANITE_SMOOTH:
+					worldObj.setBlockState(pos, clicked.withProperty(BlockStone.VARIANT, EnumType.GRANITE));
+					isDone = true;
+					break;
+				case STONE:
+				default:
+					break;
+				}
 			}
-			else if(clickedBlock == Blocks.double_stone_slab && clickedMeta == Const.Slab.stone_double_secret){
+			
+			//now try something else if not done
 
-				worldObj.setBlockState(pos,  Blocks.stone.getDefaultState());
-			}
-			else 
-				*/
-			for (IProperty prop : (com.google.common.collect.ImmutableSet<IProperty<?>>) clicked.getProperties().keySet()) {
+			if(!isDone)for (IProperty prop : (com.google.common.collect.ImmutableSet<IProperty<?>>) clicked.getProperties().keySet()) {
 				
-				//never use "variant": it changes wood types, stone types, etc.
-
 				if (prop.getName().equals("half")) {
-
+					//also exists as object in BlockSlab.HALF
 					worldObj.setBlockState(pos, clicked.cycleProperty(prop));
 
 					isDone = true;
@@ -86,6 +114,13 @@ public class SpellRangeRotate extends BaseSpellRange {
 				}
 				else if (prop.getName().equals("seamless")) {
 					//http://minecraft.gamepedia.com/Slab#Block_state
+					worldObj.setBlockState(pos, clicked.cycleProperty(prop));
+
+					isDone = true;
+					break;
+				}
+				else if (prop.getName().equals("axis")) {
+					//i dont remember what blocks use this. rotateBlock might cover it in some cases
 					worldObj.setBlockState(pos, clicked.cycleProperty(prop));
 
 					isDone = true;

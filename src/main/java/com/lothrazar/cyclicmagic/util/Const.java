@@ -32,25 +32,7 @@ public class Const {
 
 	public static final int			HOTBAR_SIZE			= 9;
 	public static final String	SkullOwner			= "SkullOwner";
-/*
-	public class Slab {
-		// http://minecraft.gamepedia.com/Slab#Block_data
-		public static final int			stone_double			= 0;
-		public static final int			stone_double_secret			= 8;
 
-		public static final int			sandstone_stone_double			= 1;
-		public static final int			sandstone_stone_double_secret			= 9;
-		
-	}
-	public class Slab2 {
-		//hey, minecraft calls it double_stone_slab2 so
-		// http://minecraft.gamepedia.com/Slab#Block_data
-		public static final int			redsandstone_double			= 0;
-		public static final int			redsandstone_double_secret			= 8;
-
-		
-	}
-	*/
 	public class Dimension {
 
 		public static final int	overworld	= 0;
