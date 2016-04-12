@@ -11,14 +11,10 @@ public class EventLadderClimb {
 		
 		if(event.getEntityLiving() instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) event.getEntityLiving();
-			//move up or down without 'w'
 			if(player.isOnLadder() && !player.isSneaking() && player.moveForward == 0){
-				System.out.println("rotationPitch="+player.rotationPitch);
-
-				if( player.rotationPitch > 75){
-					player.moveEntity(0, -0.15, 0);
-				}
-				if( player.rotationPitch < -75){
+				//move up faster without 'w'
+		
+				if( player.rotationPitch < -78){
 					//even bigger to counter gravity
 					player.moveEntity(0, +0.4, 0);
 				}

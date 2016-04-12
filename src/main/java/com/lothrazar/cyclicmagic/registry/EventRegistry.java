@@ -36,6 +36,8 @@ public class EventRegistry {
 
 	private static boolean foodDetails;
 
+	private static boolean fastLadderClimb;
+
 	public static void syncConfig(Configuration config) {
 
 		String category = Const.MODCONF + "Mobs";
@@ -63,6 +65,8 @@ public class EventRegistry {
 		mountedPearl = config.getBoolean("Pearls On Horseback", category, true, "Enderpearls work on a horse, bringing it with you");		
 		stardewFurnace = config.getBoolean("Furnace Speed", category, true, "Quickly fill a furnace by hitting it with fuel or an item, or interact with an empty hand to pull out the results [Inspired by Stardew Valley]");
 		
+		fastLadderClimb = config.getBoolean("Faster Ladders", category, true, "Allows you to quickly climb ladders by looking up instead of moving forward");
+		
 	}
 
 	public static void register() {
@@ -76,10 +80,13 @@ public class EventRegistry {
 		events.add(new EventHorseFood());
 		events.add(new EventBucketBlocksBreak());
 		
-		// TODO: consider configs for these
-		events.add(new EventLadderClimb());
+		//we already have the extraButtonsRegistry config for this
 		events.add(new EventGuiAddButtons());
 		
+		
+		if(fastLadderClimb){
+			events.add(new EventLadderClimb());
+		}
 		if(foodDetails){
 			events.add(new EventFoodDetails());
 		}
