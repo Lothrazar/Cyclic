@@ -128,7 +128,8 @@ public class ModMain {
 	/*
 	 * BUG: enderman drop block: does it make doubel?
 	 * 
-	 * 
+	 *UNCRAFITNG: add more slots - horizontal
+	 * test/fix hopper interaction
 	 * 
 	 * config to logspam every enabled feature on startup
  

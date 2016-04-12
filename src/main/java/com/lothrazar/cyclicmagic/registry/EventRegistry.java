@@ -77,6 +77,7 @@ public class EventRegistry {
 		events.add(new EventBucketBlocksBreak());
 		
 		// TODO: consider configs for these
+		events.add(new EventLadderClimb());
 		events.add(new EventGuiAddButtons());
 		
 		if(foodDetails){

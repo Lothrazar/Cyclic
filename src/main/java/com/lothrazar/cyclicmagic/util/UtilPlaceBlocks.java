@@ -63,6 +63,8 @@ public class UtilPlaceBlocks {
 			itemSlot = InventoryWand.getSlotByBuildType(heldWand, null);
 			state = InventoryWand.getToPlaceFromSlot(heldWand, itemSlot);
 
+			if (state == null) { return;	}// then inventory is completely empty
+		
 			placeWithSoundAndDecrement(world, player, heldWand, itemSlot, posCurrent, state);
 		}
 	}
@@ -85,6 +87,8 @@ public class UtilPlaceBlocks {
 				itemSlot = InventoryWand.getSlotByBuildType(heldWand, null);
 				state = InventoryWand.getToPlaceFromSlot(heldWand, itemSlot);
 
+				if (state == null) { return;	}// then inventory is completely empty
+			
 				posCurrent = new BlockPos(x, y, z);
 
 				if (world.isAirBlock(posCurrent) == false) {
@@ -118,6 +122,9 @@ public class UtilPlaceBlocks {
 			itemSlot = InventoryWand.getSlotByBuildType(heldWand, null);
 			state = InventoryWand.getToPlaceFromSlot(heldWand, itemSlot);
 
+			if (state == null) { return;	}// then inventory is completely empty
+		
+
 			if (goVert) {
 				if (isLookingUp)
 					posCurrent = posCurrent.up();
@@ -148,8 +155,8 @@ public class UtilPlaceBlocks {
 			itemSlot = InventoryWand.getSlotByBuildType(heldWand, null);
 			state = InventoryWand.getToPlaceFromSlot(heldWand, itemSlot);
 
-			if (state == null) { return;// then inventory is completely empty
-			}
+			if (state == null) { return;	}// then inventory is completely empty
+		
 
 			placeWithSoundAndDecrement(world, player, heldWand, itemSlot, posCurrent, state);
 
