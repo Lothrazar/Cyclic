@@ -128,16 +128,10 @@ public class ModMain {
 	/*
 	 * BUG: enderman drop block: does it make doubel?
 	 * 
-	 * BUG: carbon paper broken on signs?
 	 * 
-	 * TODO LIST
-	 * CONFIG to disable each command
-	 * 
-	 * config for emerald/multitool
 	 * 
 	 * config to logspam every enabled feature on startup
 
-	 * ender book - addInformation about waypoints - count of them?
 	 *   - needs config
 	 * 
 	 * 

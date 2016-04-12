@@ -1,11 +1,15 @@
 package com.lothrazar.cyclicmagic.item;
 
 import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclicmagic.gui.GuiEnderBook;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.UtilExperience;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,7 +18,6 @@ import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -40,7 +43,7 @@ public class ItemEnderBook extends Item implements IHasRecipe {
 		for (int i = 0; i <= end; i++) {
 			KEY = KEY_LOC + "_" + i;
 
-			String csv = itemStack.getTagCompound().getString(KEY);
+			String csv = UtilNBT.getTagCompoundNotNull(itemStack).getString(KEY);
 
 			if (csv == null || csv.isEmpty()) {
 				continue;
@@ -51,19 +54,30 @@ public class ItemEnderBook extends Item implements IHasRecipe {
 
 		return list;
 	}
+	
+	private static int getLocationsCount(ItemStack itemStack){
+		return getLocations(itemStack).size();
+	}
+
+  @SideOnly(Side.CLIENT)
+  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
+  {
+  	tooltip.add(""+ getLocationsCount(stack));
+  }
 
 	public static int getLargestSlot(ItemStack itemStack) {
-		return itemStack.getTagCompound().getInteger(KEY_LARGEST);
+		
+		return UtilNBT.getTagCompoundNotNull(itemStack).getInteger(KEY_LARGEST);
 	}
 
 	public static int getEmptySlotAndIncrement(ItemStack itemStack) {
-		int empty = itemStack.getTagCompound().getInteger(KEY_LARGEST);
+		int empty = UtilNBT.getTagCompoundNotNull(itemStack).getInteger(KEY_LARGEST);
 
 		if (empty == 0) {
 			empty = 1;
 		}// first index is 1 not zero
 
-		itemStack.getTagCompound().setInteger(KEY_LARGEST, empty + 1);// save the
+		UtilNBT.getTagCompoundNotNull(itemStack).setInteger(KEY_LARGEST, empty + 1);// save the
 		                                                              // next empty
 		                                                              // one
 		return empty;
@@ -76,9 +90,7 @@ public class ItemEnderBook extends Item implements IHasRecipe {
 			book = player.getHeldItem(EnumHand.OFF_HAND);
 		}
 
-		if (book.getTagCompound() == null) {
-			book.setTagCompound(new NBTTagCompound());
-		}
+		UtilNBT.getTagCompoundNotNull(book);
 		return book;
 	}
 

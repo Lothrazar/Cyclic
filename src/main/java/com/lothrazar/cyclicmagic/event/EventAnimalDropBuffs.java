@@ -6,21 +6,44 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.passive.EntityPig;
+import net.minecraft.entity.passive.EntitySheep;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteractSpecific;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 
 public class EventAnimalDropBuffs {
 
-	private static final int	cowExtraLeather							= 3;
+	private static final int	cowExtraLeather							= 4;
 	private static final int	pigExtraMeat								= 5;
-
 	private static final int	chanceZombieVillagerEmerald	= 50;
-
+	public static final int sheepExtraWool = 5;
+ 
+	
+	@SubscribeEvent
+	public void onEntityInteractSpecific(EntityInteractSpecific event) {
+		
+		if(event.getEntityPlayer() != null && event.getTarget() instanceof EntitySheep){
+			EntityPlayer p = event.getEntityPlayer();
+			EntitySheep s = (EntitySheep)event.getTarget();
+			
+			if(event.getHand() != null && p.getHeldItem(event.getHand()) != null && 
+					p.getHeldItem(event.getHand()).getItem() == Items.shears){
+				
+				int meta = s.getFleeceColor().getMetadata();
+				
+				UtilEntity.dropItemStackInWorld(event.getWorld(), event.getPos(), new ItemStack(Blocks.wool, sheepExtraWool ,meta));
+				
+			}	
+		}
+	}
+	
 	@SubscribeEvent
 	public void onLivingDropsEvent(LivingDropsEvent event) {
 

@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.entity.projectile;
 
+import com.lothrazar.cyclicmagic.event.EventAnimalDropBuffs;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntitySheep;
@@ -52,7 +54,7 @@ public class EntityShearingBolt extends EntityThrowable {
 					int i = 1 + sheep.worldObj.rand.nextInt(3);
 
 					for (int j = 0; j < i; ++j) {
-						EntityItem entityitem = sheep.entityDropItem(new ItemStack(Item.getItemFromBlock(Blocks.wool), 1, sheep.getFleeceColor().getMetadata()), 1.0F);
+						EntityItem entityitem = sheep.entityDropItem(new ItemStack(Item.getItemFromBlock(Blocks.wool), EventAnimalDropBuffs.sheepExtraWool, sheep.getFleeceColor().getMetadata()), 1.0F);
 						entityitem.motionY += (double) (sheep.worldObj.rand.nextFloat() * 0.05F);
 						entityitem.motionX += (double) ((sheep.worldObj.rand.nextFloat() - sheep.worldObj.rand.nextFloat()) * 0.1F);
 						entityitem.motionZ += (double) ((sheep.worldObj.rand.nextFloat() - sheep.worldObj.rand.nextFloat()) * 0.1F);
@@ -63,7 +65,8 @@ public class EntityShearingBolt extends EntityThrowable {
 					}
 
 					BlockPos pos = sheep.getPosition();
-					worldObj.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.entity_sheep_shear, SoundCategory.PLAYERS, 1.0F, 1.0F, false);
+					UtilSound.playSound(sheep.worldObj,pos, SoundEvents.entity_sheep_shear,SoundCategory.NEUTRAL);
+					//worldObj.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.entity_sheep_shear, SoundCategory.PLAYERS, 1.0F, 1.0F, false);
 
 				}
 				// else we hit a child sheep and config disables that
