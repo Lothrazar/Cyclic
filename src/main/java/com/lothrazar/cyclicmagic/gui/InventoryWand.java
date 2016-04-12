@@ -148,7 +148,7 @@ public class InventoryWand implements IInventory {
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
 
 		// only placeable blocks, not any old item
-		return stack.getItem() != ItemRegistry.cyclic_wand && Block.getBlockFromItem(stack.getItem()) != null;
+		return !(stack.getItem() instanceof ItemCyclicWand) && Block.getBlockFromItem(stack.getItem()) != null;
 	}
 
 	/************** public static ******************/

@@ -36,7 +36,7 @@ public class ItemRegistry {
 	public static Item									emerald_chestplate;
 	public static Item									emerald_leggings;
 	public static Item									emerald_boots;
-	public static ItemCyclicWand				cyclic_wand;
+	public static ItemCyclicWand				cyclic_wand_build;
 	public static ItemChestSack					chest_sack;
 	public static ItemChestSackEmpty		chest_sack_empty;
 	public static ToolMaterial					MATERIAL_EMERALD;
@@ -117,9 +117,9 @@ public class ItemRegistry {
 		
 		if(sceptersEnabled){
 
-			cyclic_wand = new ItemCyclicWand();
-			registerItem(cyclic_wand, "cyclic_wand");
-			GameRegistry.addRecipe(new ItemStack(cyclic_wand), 
+			cyclic_wand_build = new ItemCyclicWand();
+			registerItem(cyclic_wand_build, "cyclic_wand_build");
+			GameRegistry.addRecipe(new ItemStack(cyclic_wand_build), 
 						"sds", 
 						" o ", 
 						"gog", 

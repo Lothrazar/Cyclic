@@ -127,11 +127,11 @@ public class SpellRegistry {
 	}
 
 	public static ArrayList<ISpell> getSpellbook(ItemStack wand) {
-		if (wand.getItem() == ItemRegistry.cyclic_wand) {
-			return spellbookRange;
+		if (wand.getItem() == ItemRegistry.cyclic_wand_build) {
+			return spellbookBuild;
 		}
 		if (wand.getItem() == ItemRegistry.cyclic_wand_range) { 
-			return spellbookBuild; 
+			return spellbookRange; 
 		}
 
 		if (wand.getItem() == ItemRegistry.cyclic_wand_fly) { 
