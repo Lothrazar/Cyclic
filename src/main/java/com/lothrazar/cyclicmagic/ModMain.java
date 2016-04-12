@@ -131,16 +131,13 @@ public class ModMain {
 	 * 
 	 * 
 	 * config to logspam every enabled feature on startup
-
-	 *   - needs config
+ 
 	 * 
 	 * 
 	 * 
 	 * SPELL: bring back ghost - let it put you in new location but only if air
 	 * blocks
-	 * 
-	 * disable entire wand in config
-
+	 *  
 	 * 
 	 * 1. text message if we use a build spell but invo is empty
 	 * - max and regen in nbt, not config
