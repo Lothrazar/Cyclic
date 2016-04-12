@@ -12,8 +12,9 @@ import com.lothrazar.cyclicmagic.entity.projectile.EntitySnowballBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityTorchBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityWaterBolt;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilSearchWorld;
-import net.minecraft.entity.item.EntityItem;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Blocks;
@@ -59,14 +60,16 @@ public class ItemProjectile extends Item {
 				// not found, so play sounds to alert player
 
 				// also drop it on ground to signal a failed throw
+				BlockPos pos = player.getPosition();
 				if (player.capabilities.isCreativeMode == false) {
 					player.inventory.decrStackSize(player.inventory.currentItem, 1);
+					
+					UtilEntity.dropItemStackInWorld(world, pos, new ItemStack(ItemRegistry.ender_dungeon));
+			
 				}
-				BlockPos pos = player.getPosition();
-				world.spawnEntityInWorld(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegistry.ender_dungeon)));
-
-				world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.item_firecharge_use, SoundCategory.PLAYERS, 1.0F, 1.0F, false);
-
+				//fizz sound
+				UtilSound.playSound(world,pos,SoundEvents.block_fire_extinguish);
+			
 			}
 		}
 		else if (held.getItem() == ItemRegistry.ender_tnt_1) {
@@ -121,8 +124,9 @@ public class ItemProjectile extends Item {
 		player.swingArm(hand);
 
 		BlockPos pos = player.getPosition();
-		world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.entity_egg_throw, SoundCategory.PLAYERS, 1.0F, 1.0F, false);
 
+		UtilSound.playSound(world, pos, SoundEvents.entity_egg_throw, SoundCategory.PLAYERS);
+	
 		if (player.capabilities.isCreativeMode == false) {
 			player.inventory.decrStackSize(player.inventory.currentItem, 1);
 		}

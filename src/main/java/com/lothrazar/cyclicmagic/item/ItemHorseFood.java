@@ -4,6 +4,7 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.passive.HorseArmorType;
@@ -189,8 +190,8 @@ public class ItemHorseFood extends Item {
 				horse.worldObj.spawnParticle(EnumParticleTypes.SMOKE_LARGE, x + (horse.worldObj.rand.nextDouble() - 0.5D) * (double) 0.8, y + horse.worldObj.rand.nextDouble() * (double) 1.5 - (double) 0.1, z + (horse.worldObj.rand.nextDouble() - 0.5D) * (double) 0.8, 0.0D, 0.0D, 0.0D);
 			}
 
-			player.worldObj.playSound(x, y, z, SoundEvents.entity_horse_eat, SoundCategory.NEUTRAL, 1.0F, 1.0F, true);
-
+			UtilSound.playSound(player.worldObj, horse.getPosition(), SoundEvents.entity_horse_eat, SoundCategory.NEUTRAL);
+		
 			horse.setEatingHaystack(true); // makes horse animate and bend down to eat
 		}
 	}

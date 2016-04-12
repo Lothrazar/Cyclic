@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.entity.projectile;
 
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -42,8 +43,10 @@ public class EntityHomeBolt extends EntityThrowable {
 			}
 
 			teleportWallSafe(player, worldObj, realBedPos);
-			worldObj.playSound(realBedPos.getX(), realBedPos.getY(), realBedPos.getZ(), SoundEvents.entity_endermen_teleport, SoundCategory.PLAYERS, 1.0F, 1.0F, false);
+			
 
+			UtilSound.playSound(worldObj, realBedPos, SoundEvents.entity_endermen_teleport, SoundCategory.PLAYERS);
+			
 			this.setDead();
 		}
 	}

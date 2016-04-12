@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.entity.projectile;
 
 import java.util.ArrayList;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -62,8 +63,8 @@ public class EntityWaterBolt extends EntityThrowable {
 
 		if (this.dimension != nether) {
 
-			worldObj.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.entity_player_splash, SoundCategory.PLAYERS, 1.0F, 1.0F, false);
-
+			UtilSound.playSound(worldObj, pos, SoundEvents.entity_player_splash, SoundCategory.PLAYERS);
+			
 			// so far its both client and server
 			if (this.worldObj.isRemote == false) {
 

@@ -4,6 +4,7 @@ import java.util.Random;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.GuiHandler;
 import com.lothrazar.cyclicmagic.item.IHasRecipe;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -110,7 +111,9 @@ public class BlockUncrafting extends Block implements IHasRecipe {
 		if (playSound != null && playSound.isEmpty() == false) {
 			SoundEvent sound = (SoundEvent) SoundEvent.soundEventRegistry.getObject(new ResourceLocation(playSound));
 			if (sound != null) {
-				world.playSound(pos.getX(), pos.getY(), pos.getZ(), sound, SoundCategory.BLOCKS, 1, 1, false);
+				
+				UtilSound.playSound(world, pos, sound, SoundCategory.BLOCKS);
+				
 			}
 			else {
 				System.out.println("dead sound" + playSound);

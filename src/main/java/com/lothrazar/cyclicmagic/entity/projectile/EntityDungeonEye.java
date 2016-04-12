@@ -38,7 +38,6 @@ public class EntityDungeonEye extends EntityThrowable {
 		// // double dz = this.targetZ - this.posZ;
 		// float dist = MathHelper.sqrt_double(dx * dx + dz * dz);
 
-		System.out.println("TARGET " + pos.toString());
 
 		this.setThrowableHeading(this.targetX, this.targetY, this.targetZ, (float) (this.getGravityVelocity()), 0.01F);
 	}
@@ -83,7 +82,6 @@ public class EntityDungeonEye extends EntityThrowable {
 					this.motionY *= -1;
 				}
 			}
-			System.out.println("motionY=" + this.motionY);
 		}
 		float f3 = 0.25F;
 		for (int i = 0; i < particleCount; ++i) {

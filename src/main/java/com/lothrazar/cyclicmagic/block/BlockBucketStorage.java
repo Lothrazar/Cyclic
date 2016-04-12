@@ -4,6 +4,7 @@ import java.util.Random;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
@@ -153,7 +154,10 @@ public class BlockBucketStorage extends Block implements ITileEntityProvider {
 				world.updateComparatorOutputLevel(pos, blockClicked);
 			}
 			// both sides
-			world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.block_piston_extend, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
+			
+
+			UtilSound.playSound(world,pos,SoundEvents.block_piston_extend, SoundCategory.BLOCKS);
+
 			spawnMyParticle(world, block.bucketItem, pos);// .offset(face)
 
 		}
@@ -228,8 +232,10 @@ public class BlockBucketStorage extends Block implements ITileEntityProvider {
 					world.updateComparatorOutputLevel(pos, blockClicked);
 				}
 				// both sides
-				world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.block_piston_extend, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
+				
 
+				UtilSound.playSound(world,pos,SoundEvents.block_piston_extend, SoundCategory.BLOCKS);
+			
 				spawnMyParticle(world, held.getItem(), pos);// .offset(face)
 			}
 
@@ -248,8 +254,8 @@ public class BlockBucketStorage extends Block implements ITileEntityProvider {
 			}
 
 			// both sides
-			world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.block_piston_extend, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
-
+			UtilSound.playSound(world,pos,SoundEvents.block_piston_extend, SoundCategory.BLOCKS);
+	
 			spawnMyParticle(world, block.bucketItem, pos);// .offset(face)
 			return;
 		}

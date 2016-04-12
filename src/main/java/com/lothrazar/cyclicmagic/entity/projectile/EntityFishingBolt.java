@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.entity.projectile;
 
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.projectile.EntityThrowable;
@@ -52,8 +53,8 @@ public class EntityFishingBolt extends EntityThrowable {
 				worldObj.spawnEntityInWorld(ei);
 			}
 
-			worldObj.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.entity_player_splash, SoundCategory.PLAYERS, 1.0F, 1.0F, false);
-
+			UtilSound.playSound(worldObj, pos, SoundEvents.entity_player_splash, SoundCategory.PLAYERS);
+			
 			// SoundEvent.soundEventRegistry.
 			// worldObj.playSoundAtEntity(ei, "game.neutral.swim.splash", 1.0F, 1.0F);
 			this.setDead();
