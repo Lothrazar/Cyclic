@@ -2,10 +2,7 @@ package com.lothrazar.cyclicmagic.spell;
 
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.net.MessageSpellRotate;
-import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockDoubleStoneSlab;
-import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockStone;
 import net.minecraft.block.BlockStone.EnumType;
 import net.minecraft.block.properties.IProperty;

@@ -55,8 +55,10 @@ public static void register() {
 
 		PotionRegistry.magnet = new PotionCustom(new ResourceLocation(Const.MODID, "textures/potions/magnet.png"), false, 0, "potion.magnet");
 
-	//	Potion.potionRegistry.putObject(ender.getIcon(),ender);
-		//Potion.potionRegistry.putObject(waterwalk.getIcon(),waterwalk);
+		Potion.potionRegistry.putObject(ender.getIcon(),ender);
+		Potion.potionRegistry.putObject(waterwalk.getIcon(),waterwalk);
+		Potion.potionRegistry.putObject(slowfall.getIcon(),slowfall);
+		Potion.potionRegistry.putObject(magnet.getIcon(),magnet);
 		// TODO: test out brewing api for these?
 	}
 

@@ -3,7 +3,6 @@ package com.lothrazar.cyclicmagic.item;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.PotionRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -69,7 +68,6 @@ public class ItemFoodAppleMagic extends ItemFood {
 	final static int smeltexp = 0;
 
 	public static void addRecipe(ItemFoodAppleMagic apple, ItemStack ingredient, boolean isExpensive) {
-		int refund = 8;
 
 		if (isExpensive) {
 			GameRegistry.addRecipe(new ItemStack(apple), "lll", "lal", "lll", 'l', ingredient, 'a', Items.apple);
@@ -77,7 +75,6 @@ public class ItemFoodAppleMagic extends ItemFood {
 		else {
 			GameRegistry.addShapelessRecipe(new ItemStack(apple), ingredient, Items.apple);
 
-			refund = 1;
 		}
 
 	}

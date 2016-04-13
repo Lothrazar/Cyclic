@@ -3,7 +3,6 @@ package com.lothrazar.cyclicmagic.gui;
 import java.util.ArrayList;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
-import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -17,8 +16,7 @@ import net.minecraftforge.common.util.Constants;
 
 public class InventoryWand implements IInventory {
 
-	public static final int	INV_SIZE	= 18;											// same size as
-	                                                            // hotbar
+	public static final int	INV_SIZE	= 18;		
 	private ItemStack[]			inventory	= new ItemStack[INV_SIZE];
 	private final ItemStack	internalWand;
 

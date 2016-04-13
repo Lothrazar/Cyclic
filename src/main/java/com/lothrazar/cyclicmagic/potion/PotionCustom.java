@@ -26,10 +26,15 @@ public class PotionCustom extends Potion {
 		return this;
 	}
 */
+	
+	
 	private final boolean showsInTopRight = false;
 	@SideOnly(Side.CLIENT)
 	public boolean hasStatusIcon() {
 //id love to ACTUALLY show it, but the resource location doesnt get used
+		//vanilla code shows the outer box but not the real thing
+		//my common proxy didnt work,
+		//and registering  with Potion.potionRegistry.putObject doesnt work
 		return showsInTopRight;// to block it from looking for one of the vanilla textures
 	}
 

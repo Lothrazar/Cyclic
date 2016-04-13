@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.proxy;
 
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.EnumFacing;
 
 public class CommonProxy {

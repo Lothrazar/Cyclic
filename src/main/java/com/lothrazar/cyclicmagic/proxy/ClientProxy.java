@@ -8,6 +8,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.RayTraceResult;
 import com.google.common.collect.Ordering;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityBlazeBolt;
@@ -42,7 +43,6 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.entity.EntityLivingBase;
 
 public class ClientProxy extends CommonProxy {
 	public static KeyBinding	keyShiftUp;
@@ -52,16 +52,24 @@ public class ClientProxy extends CommonProxy {
 
 	static final String				keyCategoryInventory	= "key.categories.inventorycontrol";
 
+	private boolean doRenderPotions = false;
+	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void renderPotions() {
 
+		if(!doRenderPotions){
+			return;
+		}
+		
+		//the INTENTION of this was to.. fix/force the top right potion rendering.
+		//somehow it doesnt work
 
     Collection<PotionEffect> collection = Minecraft.getMinecraft().thePlayer.getActivePotionEffects();
     Minecraft mc =  Minecraft.getMinecraft();
 
     ScaledResolution resolution = new ScaledResolution(mc);
-   System.out.println("drawtextures"+collection.size());
+ 
         if (!collection.isEmpty())
         {
             GlStateManager.enableBlend();
@@ -74,36 +82,40 @@ public class ClientProxy extends CommonProxy {
 
                 if (potion instanceof PotionCustom)
                 {
-                  System.out.println("trydraw"+ potion.getName());
-                    int k = resolution.getScaledWidth();
-                    int l = 1;
-                    int i1 = potion.getStatusIconIndex();
+                  
+                    int xLoc = resolution.getScaledWidth()/2;
+                    int yLoc = 1    +8;
+                    //int i1 = potion.getStatusIconIndex();
                     float f = 1.0F;
 
                     if (potion.func_188408_i())
                     {
                         ++i;
-                        k = k - 25 * i;
+                        xLoc = xLoc - 25 * i;
                     }
                     else
                     {
                         ++j;
-                        k = k - 25 * j;
-                        l += 26;
+                        xLoc = xLoc - 25 * j;
+                        yLoc += 26;
                     }
 
+                    
+                    //??testing
+                   
                     mc.getTextureManager().bindTexture(GuiContainer.inventoryBackground);
+                    GlStateManager.enableBlend();
                     GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
                     if (potioneffect.getIsAmbient())
                     {
                     	//the background with no border
-                        mc.ingameGUI.drawTexturedModalRect(k, l, 165, 166, 24, 24);
+                        mc.ingameGUI.drawTexturedModalRect(xLoc, yLoc, 165, 166, 24, 24);
                     }
                     else
                     {
                     	// background with blue border
-                    	mc.ingameGUI.drawTexturedModalRect(k, l, 141, 166, 24, 24);
+                    	mc.ingameGUI.drawTexturedModalRect(xLoc, yLoc, 141, 166, 24, 24);
 
                         if (potioneffect.getDuration() <= 200)
                         {
@@ -112,12 +124,13 @@ public class ClientProxy extends CommonProxy {
                         }
                     }
 
-                    
-                    mc.getTextureManager().bindTexture(    	((PotionCustom) potion).getIcon()  );
+                    ResourceLocation pot = ((PotionCustom) potion).getIcon();
+                  
+                    mc.getTextureManager().bindTexture(  pot  	  );
                     GlStateManager.color(1.0F, 1.0F, 1.0F, f);
                     //dont hack in my potion texture to the bottom of inventory. we have standalone textures LIKE A BOSS
                     // i1 % 8 * 18, 198 + i1 / 8 * 18 	
-                    mc.ingameGUI.drawTexturedModalRect(k + 3, l + 3,   0,0, 18, 18);
+                    mc.ingameGUI.drawTexturedModalRect(xLoc + 3, yLoc + 3,   0,0, 16, 16);
                 }
             }
         }
