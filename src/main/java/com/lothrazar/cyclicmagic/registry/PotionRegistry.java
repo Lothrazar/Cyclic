@@ -20,45 +20,40 @@ import net.minecraftforge.common.config.Configuration;
 
 public class PotionRegistry {
 
-	public static float			slowfallSpeed;
-	public static boolean		renderOnLeft;
+	public static float					slowfallSpeed;
+	public static boolean				renderOnLeft;
 	// tired;//http://www.minecraftforge.net/wiki/Potion_Tutorial
-	public static PotionCustom		slowfall;
-	public static PotionCustom		magnet;
-	public static PotionCustom ender; 
-	public static PotionCustom waterwalk;
-	
-	public final static int	I		= 0;
-	public final static int	II	= 1;
-	public final static int	III	= 2;
-	public final static int	IV	= 3;
-	public final static int	V		= 4;
+	public static PotionCustom	slowfall;
+	public static PotionCustom	magnet;
+	public static PotionCustom	ender;
+	public static PotionCustom	waterwalk;
 
- 
-/*
-	public static int getPotionID(PotionEffect pot){
-		return Potion.potionRegistry.getIDForObject(pot.getPotion());
-	}
-	public static int getPotionID(Potion pot){
-		return Potion.potionRegistry.getIDForObject(pot);
-	}
-*/
-public static void register() {
+	public final static int			I		= 0;
+	public final static int			II	= 1;
+	public final static int			III	= 2;
+	public final static int			IV	= 3;
+	public final static int			V		= 4;
+
+	public static void register() {
 
 		// http://www.minecraftforge.net/forum/index.php?topic=11024.0
 		// ??? http://www.minecraftforge.net/forum/index.php?topic=12358.0
-		PotionRegistry.ender = new PotionCustom( new ResourceLocation(Const.MODID,"textures/items/apple_ender.png"), false, 0,"potion.ender");
-  
-		PotionRegistry.waterwalk = new PotionCustom( new ResourceLocation("minecraft","textures/items/prismarine_shard.png") , false, 0,"potion.waterwalk");
-		
+		PotionRegistry.ender = new PotionCustom(new ResourceLocation(Const.MODID, "textures/items/apple_ender.png"), false, 0, "potion.ender");
+
+		PotionRegistry.waterwalk = new PotionCustom(new ResourceLocation("minecraft", "textures/items/prismarine_shard.png"), false, 0, "potion.waterwalk");
+
 		PotionRegistry.slowfall = new PotionCustom(new ResourceLocation(Const.MODID, "textures/potions/slowfall.png"), false, 0, "potion.slowfall");
 
 		PotionRegistry.magnet = new PotionCustom(new ResourceLocation(Const.MODID, "textures/potions/magnet.png"), false, 0, "potion.magnet");
 
-		Potion.potionRegistry.putObject(ender.getIcon(),ender);
-		Potion.potionRegistry.putObject(waterwalk.getIcon(),waterwalk);
-		Potion.potionRegistry.putObject(slowfall.getIcon(),slowfall);
-		Potion.potionRegistry.putObject(magnet.getIcon(),magnet);
+		// ..no thats internal use only, weird
+		// ref
+		// https://github.com/MinecraftForge/MinecraftForge/commit/e72c224294519aa80334de786710fb5e24b3fb77
+		// GameData.getPotionRegistry()
+		Potion.potionRegistry.putObject(ender.getIcon(), ender);
+		Potion.potionRegistry.putObject(waterwalk.getIcon(), waterwalk);
+		Potion.potionRegistry.putObject(slowfall.getIcon(), slowfall);
+		Potion.potionRegistry.putObject(magnet.getIcon(), magnet);
 		// TODO: test out brewing api for these?
 	}
 
@@ -66,33 +61,32 @@ public static void register() {
 	private final static int		ITEM_VRADIUS	= 4;
 	private final static float	ITEMSPEED			= 1.2F;
 
-	public static void tickWaterwalk(EntityLivingBase entityLiving) 
-	{
-	   
-		tickLiquidWalk(entityLiving,Blocks.water);
-	  
-	} 
-	private static void tickLiquidWalk(EntityLivingBase entityLiving, Block liquid)
-	{
-    	 World world = entityLiving.worldObj;
-    	 
-    	 if(world.getBlockState(entityLiving.getPosition().down()).getBlock() == liquid && 
-    			 world.isAirBlock(entityLiving.getPosition()) && 
-    			 entityLiving.motionY < 0)
-    	 { 
-    		 if(entityLiving instanceof EntityPlayer)  //now wait here, since if we are a sneaking player we cancel it
-    		 {
-    			 EntityPlayer p = (EntityPlayer)entityLiving;
-    			 if(p.isSneaking())
-    				 return;//let them slip down into it
-    		 }
-    		 
-    		 entityLiving.motionY  = 0;//stop falling
-    		 entityLiving.onGround = true; //act as if on solid ground
-    		 entityLiving.setAIMoveSpeed(0.1F);//walking and not sprinting is this speed
-    	 }  
+	public static void tickWaterwalk(EntityLivingBase entityLiving) {
+
+		tickLiquidWalk(entityLiving, Blocks.water);
+
 	}
-	
+
+	private static void tickLiquidWalk(EntityLivingBase entityLiving, Block liquid) {
+		World world = entityLiving.worldObj;
+
+		if (world.getBlockState(entityLiving.getPosition().down()).getBlock() == liquid && world.isAirBlock(entityLiving.getPosition()) && entityLiving.motionY < 0) {
+			if (entityLiving instanceof EntityPlayer)  // now wait here, since if we
+			                                           // are a sneaking player we
+			                                           // cancel it
+			{
+				EntityPlayer p = (EntityPlayer) entityLiving;
+				if (p.isSneaking())
+					return;// let them slip down into it
+			}
+
+			entityLiving.motionY = 0;// stop falling
+			entityLiving.onGround = true; // act as if on solid ground
+			entityLiving.setAIMoveSpeed(0.1F);// walking and not sprinting is this
+			                                  // speed
+		}
+	}
+
 	public static void tickMagnet(EntityLivingBase entityLiving) {
 
 		World world = entityLiving.worldObj;
@@ -126,36 +120,35 @@ public static void register() {
 			tickMagnet(entity);
 		}
 
-		if(entity.isPotionActive(PotionRegistry.waterwalk)) {
+		if (entity.isPotionActive(PotionRegistry.waterwalk)) {
 			tickWaterwalk(entity);
 		}
-		if(entity.isPotionActive(PotionRegistry.ender)) {
-			
-			//tick ender ?
-			//tickWaterwalk(entity);
+		if (entity.isPotionActive(PotionRegistry.ender)) {
+
+			// tick ender ?
+			// tickWaterwalk(entity);
 		}
-			
+
 	}
 
 	public static void tickSlowfall(EntityLivingBase entityLiving) {
 
-
-			if (entityLiving instanceof EntityPlayer) {
-				EntityPlayer p = (EntityPlayer) entityLiving;
-				if (p.isSneaking()) { return;// so fall normally for now
-				}
+		if (entityLiving instanceof EntityPlayer) {
+			EntityPlayer p = (EntityPlayer) entityLiving;
+			if (p.isSneaking()) { return;// so fall normally for now
 			}
+		}
 
-			// else: so we are either a non-sneaking player, or a non player
-			// entity
+		// else: so we are either a non-sneaking player, or a non player
+		// entity
 
-			// a normal fall seems to go up to 0, -1.2, -1.4, -1.6, then
-			// flattens out at -0.078
-			if (entityLiving.motionY < 0) {
-				entityLiving.motionY *= slowfallSpeed;
+		// a normal fall seems to go up to 0, -1.2, -1.4, -1.6, then
+		// flattens out at -0.078
+		if (entityLiving.motionY < 0) {
+			entityLiving.motionY *= slowfallSpeed;
 
-				entityLiving.fallDistance = 0f; // for no fall damage
-			}
+			entityLiving.fallDistance = 0f; // for no fall damage
+		}
 	}
 
 	public static void addOrMergePotionEffect(EntityLivingBase player, PotionEffect newp) {

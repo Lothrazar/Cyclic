@@ -344,7 +344,7 @@ public class ItemRegistry {
 						"gog", 
 						'd', new ItemStack(Blocks.redstone_block),'g', Items.ghast_tear, 'o', Blocks.obsidian, 's', Items.nether_star);
 		}
-		
+
 		// TODO: retexture and/or decide if we are even keeping this
 		if (configToggle.get(ItemEnderPearlReuse.name)) {
 			Item multitool = new ItemMultiTool();

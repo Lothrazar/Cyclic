@@ -38,6 +38,8 @@ public class EventRegistry {
 
 	private static boolean fastLadderClimb;
 
+	public static boolean cancelPotionInventoryShift;
+
 	public static void syncConfig(Configuration config) {
 
 		String category = Const.MODCONF + "Mobs";
@@ -66,6 +68,10 @@ public class EventRegistry {
 		stardewFurnace = config.getBoolean("Furnace Speed", category, true, "Quickly fill a furnace by hitting it with fuel or an item, or interact with an empty hand to pull out the results [Inspired by Stardew Valley]");
 		
 		fastLadderClimb = config.getBoolean("Faster Ladders", category, true, "Allows you to quickly climb ladders by looking up instead of moving forward");
+		
+		
+		cancelPotionInventoryShift = config.getBoolean("Potion Inventory Shift", category, true, "When true, this blocks the potions moving the inventory over");
+		
 		
 	}
 
