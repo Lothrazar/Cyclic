@@ -127,6 +127,13 @@ public class ModMain {
 	}
 
 	/*
+	 * 
+	 * achievemnets give exp
+	 * 
+	 * more achieves - inspire by consoles and also my own
+	 * 
+	 * 
+	 * 
 	 * APPLES
 	 * 
 	 * add potion brewing!! work with the real brew stands to make new custom potions
@@ -154,6 +161,12 @@ public class ModMain {
 	 * 
 	 * config to logspam every enabled feature on startup
  
+	 * 
+	 * refactor seed logic into util
+	 * 
+	 * refactor noteblock/sign into util
+	 * 
+	 * try to auto detect home biomes of saplings for modded compat
 	 * 
 	 * 
 	 * 
