@@ -86,7 +86,8 @@ public class ItemFoodAppleMagic extends ItemFood {
 	public void addInformation(ItemStack held, EntityPlayer player, List<String> list, boolean par4) {
 		for (int i = 0; i < potions.size(); i++) {
 
-			list.add(I18n.translateToLocal(potions.get(i).getName()));
+			if(potions.get(i) != null)
+				list.add(I18n.translateToLocal(potions.get(i).getName()));
 		}
 	}
 

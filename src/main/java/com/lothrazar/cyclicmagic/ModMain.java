@@ -60,10 +60,10 @@ public class ModMain {
 	@EventHandler
 	public void onInit(FMLInitializationEvent event) {
 
+		PotionRegistry.register();
 		ItemRegistry.register();
 		BlockRegistry.register();
 		SpellRegistry.register();
-		PotionRegistry.register();
 		MobSpawningRegistry.register();
 		WorldGenRegistry.register();
 		FuelRegistry.register();
