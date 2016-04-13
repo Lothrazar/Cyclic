@@ -1,0 +1,10 @@
+itemGroup.tabSamsApples=Pommes magiques
+item.apple_bone.name=Pomme en os
+item.apple_emerald.name=Pomme en émeraude
+item.apple_netherwart.name=Pomme du Tréfond
+item.apple_ender.name=Pomme du Néant
+item.apple_diamond.name=Pomme en diamant
+item.apple_lapis.name=Pomme en lapis
+item.apple_chocolate.name=Pomme en chocolat
+potion.ender=Néant
+potion.nav=Navigation

@@ -14,6 +14,7 @@ import com.lothrazar.cyclicmagic.spell.BaseSpellRange;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemHoe;
@@ -32,6 +33,208 @@ public class ItemRegistry {
 
 	public static ArrayList<Item>				items					= new ArrayList<Item>();
 	private static Map<String, Boolean>	configToggle	= new HashMap<String, Boolean>();
+	
+
+	public static void syncConfig(Configuration config) {
+
+		String category = Const.MODCONF + "Items";
+		config.setCategoryComment(category, "Disable or customize items added to the game");
+		
+		sceptersEnabled = config.getBoolean("sceptersEnabled", category, true, "Enable the building scepters");
+
+		SpellRegistry.renderOnLeft = config.getBoolean("scepter_HUD_left", category, true, "True for top left of the screen, false for top right");
+
+		BaseSpellRange.maxRange = config.getInt("scepter_MaxRange", category, 64, 8, 128, "Maximum range for all spells");
+
+
+		Property prop = config.get(category, ItemMultiTool.name, true, "Overpowered Multi Tool");
+		prop.setRequiresMcRestart(true);
+		configToggle.put(ItemMultiTool.name, prop.getBoolean());
+
+		prop = config.get(category, ItemEnderPearlReuse.name, true, "Reuseable ender pearl");
+		prop.setRequiresMcRestart(true);
+		configToggle.put(ItemEnderPearlReuse.name, prop.getBoolean());
+
+		prop = config.get(category, ItemPaperCarbon.name, true, "Special paper to copy signs and note block data");
+		prop.setRequiresMcRestart(true);
+		configToggle.put(ItemPaperCarbon.name, prop.getBoolean());
+
+		prop = config.get(category, ItemChestSack.name, true, "A bag that transports chests along with its contents");
+		prop.setRequiresMcRestart(true);
+		configToggle.put(ItemChestSack.name, prop.getBoolean());
+
+		prop = config.get(category, "emerald_gear", true, "Full set of emerald gear with similar properties as diamond");
+		prop.setRequiresMcRestart(true);
+		configToggle.put("emerald_gear", prop.getBoolean());
+
+		category = Const.MODCONF + "Items.EnderBook";
+
+		enderBookEnabled = config.getBoolean("Enabled", category, true, "To disable this ender book item");
+
+		
+		doesPauseGame = config.getBoolean("Gui Pauses Game", category, false, "The Ender Book GUI will pause the game (single player)");
+
+		craftNetherStar = config.getBoolean("Recipe Nether Star", category, true, "The Ender Book requires a nether star to craft.  REQUIRES RESTART.");
+
+		showCoordTooltips = config.getBoolean("Show Tooltip Coords", category, true, "Waypoint buttons will show the exact coordinates in a hover tooltip.");
+
+		maximumSaved = config.getInt("Max Saved", category, 16, 1, 999, "How many waypoints the book can store.");
+
+		btnsPerColumn = config.getInt("Column Size", category, 8, 1, 50, "Number of waypoints per column.  Change this if they are going off the screen for your chosen GUI Scale.");
+
+		expCostPerTeleport = config.getInt("Exp Cost", category, 10, 0, 9999, "How many experience points are drained from the player on each teleport.  Set to zero for free teleports to your waypoints.");
+
+		category = Const.MODCONF + "items.HorseFood";
+		
+		horseFoodEnabled = config.getBoolean("Enabled", category, true, "To disable all horse upgrade food");
+
+		ItemHorseFood.HEARTS_MAX = config.getInt("Max Hearts", category, 20, 1, 100, "Maximum number of upgraded hearts");
+		ItemHorseFood.JUMP_MAX = config.getInt("Max Jump", category, 6, 1, 20, "Maximum value of jump.  Naturally spawned/bred horses seem to max out at 5.5");
+		ItemHorseFood.SPEED_MAX = config.getInt("Max Speed", category, 50, 1, 99, "Maximum value of speed (this is NOT blocks/per second or anything like that)");
+
+		category = Const.MODCONF + "Items.Projectiles";
+		config.addCustomCategoryComment(category, "For each item, you can decide how many the recipe produces. Set to zero to disable the crafting recipe.");
+		torch_recipe = config.getInt("torch.crafted", category, 6, 0, 64, "");
+		lightning_recipe = config.getInt("lightning.crafted", category, 1, 0, 64, "");
+		snow_recipe = config.getInt("snow.crafted", category, 4, 0, 64, "");
+		water_recipe = config.getInt("water.crafted", category, 4, 0, 64, "");
+		harvest_recipe = config.getInt("harvest.crafted", category, 4, 0, 64, "");
+		wool_recipe = config.getInt("wool.crafted", category, 32, 0, 64, "");
+		fishing_recipe = config.getInt("fishing.recipe", category, 10, 0, 64, "");
+		bed_recipe = config.getInt("bed.recipe", category, 4, 0, 64, "");
+		dungeon_recipe = config.getInt("dungeon.recipe", category, 4, 0, 64, "");
+		tnt_recipe = config.getInt("tnt.recipe", category, 6, 0, 64, "");
+		blaze_recipe = config.getInt("blaze.recipe", category, 3, 0, 64, "");
+
+		ItemProjectile.DUNGEONRADIUS = config.getInt("dungeon.radius", category, 64, 8, 128, "Search distance");
+
+		EntityShearingBolt.doesKnockback = config.getBoolean("wool.does_knockback", category, true, "Does appear to damage sheep on contact");
+		EntityShearingBolt.doesShearChild = config.getBoolean("wool.does_child", category, true, "Does shear child sheep as well.");
+
+		EntityBlazeBolt.fireSeconds = config.getInt("blaze.fire_seconds", category, 3, 0, 64, "Seconds of fire to put on entity when hit");
+		EntityBlazeBolt.damageEntityOnHit = config.getBoolean("blaze.does_knockback", category, true, "Does it damage entity or not on hit (0 damage to blaze, 1 to others)");
+		EntitySnowballBolt.damageEntityOnHit = config.getBoolean("snow.does_knockback", category, true, "Does it damage entity or not on hit (1 damage to blaze, 0 to others)");
+		EntityTorchBolt.damageEntityOnHit = config.getBoolean("torch.does_knockback", category, true, "Does it damage entity or not on hit (0 dmg like a snowball)");
+
+		EntityHarvestBolt.range_main = config.getInt("harvest.range_main", category, 6, 1, 32, "Horizontal range on level of hit to harvest");
+		EntityHarvestBolt.range_offset = config.getInt("harvest.range_offset", category, 4, 1, 32, "Horizontal range on further heights to harvest");
+		EntityHarvestBolt.doesHarvestStem = config.getBoolean("harvest.does_harvest_stem", category, false, "Does it harvest stems (pumkin/melon)");
+		EntityHarvestBolt.doesHarvestSapling = config.getBoolean("harvest.does_harvest_sapling", category, false, "Does it harvest sapling");
+		EntityHarvestBolt.doesHarvestTallgrass = config.getBoolean("harvest.does_harvest_tallgrass", category, false, "Does it harvest tallgrass/doubleplants");
+		EntityHarvestBolt.doesHarvestMushroom = config.getBoolean("harvest.does_harvest_mushroom", category, true, "Does it harvest mushrooms");
+		EntityHarvestBolt.doesMelonBlocks = config.getBoolean("harvest.does_harvest_melonblock", category, true, "Does it harvest pumpkin block");
+		EntityHarvestBolt.doesPumpkinBlocks = config.getBoolean("harvest.does_harvest_pumpkinblock", category, true, "Does it harvest melon block");
+
+		
+
+		category = Const.MODCONF + "items.PowerApples";
+
+		ItemRegistry.apple_bone_enabled = config.get(category, "apple_bone_enabled", true).getBoolean();
+		ItemRegistry.apple_emerald_enabled = config.get(category, "apple_emerald_enabled", true).getBoolean();
+		ItemRegistry.apple_diamond_enabled = config.get(category, "apple_diamond_enabled", true).getBoolean();
+		ItemRegistry.apple_ender_enabled = config.get(category, "apple_ender_enabled", true).getBoolean();
+		ItemRegistry.apple_lapis_enabled = config.get(category, "apple_lapis_enabled", true).getBoolean();
+		ItemRegistry.apple_chocolate_enabled = config.get(category, "apple_chocolate_enabled", true).getBoolean();
+		ItemRegistry.apple_netherwart_enabled = config.get(category, "apple_netherwart_enabled", true).getBoolean();
+		ItemRegistry.apple_prismarine_enabled = config.get(category, "apple_prismarine_enabled", true).getBoolean();
+		ItemRegistry.apple_clownfish_enabled = config.get(category, "apple_clownfish_enabled", true).getBoolean();
+		ItemRegistry.apple_chorus_enabled = config.get(category, "apple_chorus_enabled", true).getBoolean();
+
+		//category = Const.MODCONF + "items.PowerApples.Recipes";
+		
+		config.addCustomCategoryComment(category, "True means you have to fully surround the apple with 8 items, false means only a single item will craft with the red apple.");
+
+		ItemRegistry.apple_bone_expensive 	 = config.get(category, "apple_bone_expensive", true).getBoolean();
+		ItemRegistry.apple_emerald_expensive = config.get(category, "apple_emerald_expensive", true).getBoolean();
+		ItemRegistry.apple_diamond_expensive = config.get(category, "apple_diamond_expensive", false).getBoolean();
+		ItemRegistry.apple_ender_expensive 	 = config.get(category, "apple_ender_expensive", true).getBoolean();
+		ItemRegistry.apple_lapis_expensive   = config.get(category, "apple_lapis_expensive", true).getBoolean();
+		ItemRegistry.apple_chocolate_expensive  = config.get(category, "apple_chocolate_expensive", true).getBoolean();
+		ItemRegistry.apple_netherwart_expensive = config.get(category, "apple_netherwart_expensive", true).getBoolean();
+		ItemRegistry.apple_prismarine_expensive = config.get(category, "apple_prismarine_expensive", true).getBoolean();
+		ItemRegistry.apple_clownfish_expensive  = config.get(category, "apple_clownfish_expensive", false).getBoolean();
+		ItemRegistry.apple_chorus_expensive     = config.get(category, "apple_chorus_expensive", false).getBoolean();
+
+		
+		
+		
+		
+	}
+
+	public static boolean	doesPauseGame;
+	public static boolean	craftNetherStar;
+	public static boolean	showCoordTooltips;
+	public static int			maximumSaved;
+	public static int			btnsPerColumn;
+	public static int			expCostPerTeleport;
+	public static String	category_public;
+
+	public static int	fishing_recipe;
+	public static int	wool_recipe;
+	public static int	torch_recipe;
+	public static int	lightning_recipe;
+	public static int	snow_recipe;
+	public static int	water_recipe;
+	public static int	harvest_recipe;
+	public static int	bed_recipe;
+	public static int	dungeon_recipe;
+	public static int	tnt_recipe;
+	public static int	blaze_recipe;
+	private static boolean sceptersEnabled;
+	private static boolean enderBookEnabled;
+	private static boolean horseFoodEnabled;
+
+
+	public final static int I = 0; 
+	public final static int II = 1;
+	public final static int III = 2;
+	public final static int IV = 3;
+	public final static int V = 4;
+
+	public static int hunger = 4; 
+	public static int time = 8 * 60;// 8:00
+
+	public static boolean apple_emerald_enabled;
+	public static boolean apple_diamond_enabled; 
+	public static boolean apple_ender_enabled; 
+	public static boolean apple_bone_enabled; 
+	public static boolean apple_lapis_enabled; 
+	public static boolean apple_chocolate_enabled;
+	public static boolean apple_netherwart_enabled; 
+	public static boolean apple_prismarine_enabled;
+	public static boolean apple_clownfish_enabled;
+
+	public static boolean apple_emerald_expensive;
+	public static boolean apple_diamond_expensive; 
+	public static boolean apple_ender_expensive; 
+	public static boolean apple_bone_expensive; 
+	public static boolean apple_lapis_expensive; 
+	public static boolean apple_chocolate_expensive;
+	public static boolean apple_netherwart_expensive; 
+	public static boolean apple_prismarine_expensive;
+	public static boolean apple_clownfish_expensive;
+
+	public static boolean apple_chorus_expensive; 
+	public static boolean apple_chorus_enabled; 
+	
+	public static ItemFoodAppleMagic apple_emerald;
+	public static ItemFoodAppleMagic apple_diamond; 
+	public static ItemFoodAppleMagic apple_ender; 
+	public static ItemFoodAppleMagic apple_bone; 
+	public static ItemFoodAppleMagic apple_lapis; 
+	public static ItemFoodAppleMagic apple_chocolate;
+	public static ItemFoodAppleMagic apple_netherwart; 
+	public static ItemFoodAppleMagic apple_prismarine;
+	public static ItemFoodAppleMagic apple_slowfall;
+	public static ItemFoodAppleMagic apple_chorus;
+	
+	private static final int clownfish = 2;
+
+	public static final int dye_cocoa = 3;
+	public static final int dye_lapis = 4;
+
+
+	
 	public static Item									emerald_helmet;
 	public static Item									emerald_chestplate;
 	public static Item									emerald_leggings;
@@ -317,121 +520,100 @@ public class ItemRegistry {
 			GameRegistry.addShapelessRecipe(new ItemStack(ender_lightning, lightning_recipe), new ItemStack(Items.ender_pearl), new ItemStack(Items.quartz), new ItemStack(Items.ghast_tear));
 		}
 
+	
+		if(apple_chorus_enabled){
+			ItemRegistry.apple_chorus = new ItemFoodAppleMagic(hunger, false);
+			 
+			ItemRegistry.apple_chorus.addEffect(PotionRegistry.getPotionID(MobEffects.levitation), 60, I);
+			ItemRegistry.registerItem(ItemRegistry.apple_chorus, "apple_chorus");
+	
+			ItemFoodAppleMagic.addRecipe(ItemRegistry.apple_chorus,new ItemStack(Items.chorus_fruit),apple_chorus_expensive);
+		}
+		
+		if(apple_chorus_enabled)
+		{
+			ItemRegistry.apple_ender = new ItemFoodAppleMagic(hunger, false);
+		 
+			ItemRegistry.apple_ender.addEffect(PotionRegistry.getPotionID(PotionRegistry.ender), time, I);
+			ItemRegistry.registerItem(ItemRegistry.apple_ender, "apple_ender");
+	
+			ItemFoodAppleMagic.addRecipe(ItemRegistry.apple_ender,new ItemStack(Items.ender_pearl),apple_ender_expensive);
+		}
+		
+		if(apple_emerald_enabled)
+		{ 
+			ItemRegistry.apple_emerald = new ItemFoodAppleMagic(hunger, false);
+			ItemRegistry.apple_emerald.addEffect(PotionRegistry.getPotionID(MobEffects.moveSpeed), time, II);  
+			ItemRegistry.apple_emerald.addEffect(PotionRegistry.getPotionID(MobEffects.absorption), time, I);  
+			ItemRegistry.apple_emerald.addEffect(PotionRegistry.getPotionID(MobEffects.saturation), time, I); 
+			ItemRegistry.registerItem(ItemRegistry.apple_emerald, "apple_emerald");
+			ItemFoodAppleMagic.addRecipe(ItemRegistry.apple_emerald,new ItemStack(Items.emerald),apple_emerald_expensive);
+		}
+		
+		if(apple_chocolate_enabled)
+		{
+			ItemRegistry.apple_chocolate = new ItemFoodAppleMagic(hunger, false); 
+			ItemRegistry.apple_chocolate.addEffect(PotionRegistry.getPotionID(MobEffects.weakness), time, I);
+			ItemRegistry.apple_chocolate.addEffect(PotionRegistry.getPotionID(MobEffects.moveSpeed), time, I); 
+			ItemRegistry.registerItem(ItemRegistry.apple_chocolate, "apple_chocolate");
+			ItemFoodAppleMagic.addRecipe(ItemRegistry.apple_chocolate, new ItemStack(Items.dye, 1, dye_cocoa),apple_chocolate_expensive );
+		}
+		
+		if(apple_lapis_enabled)
+		{
+			ItemRegistry.apple_lapis = new ItemFoodAppleMagic(hunger, false); 
+			ItemRegistry.apple_lapis.addEffect(PotionRegistry.getPotionID(MobEffects.digSpeed), time, II); //Haste
+			ItemRegistry.registerItem(ItemRegistry.apple_lapis, "apple_lapis");
+			ItemFoodAppleMagic.addRecipe(ItemRegistry.apple_lapis, new ItemStack(Items.dye, 1, dye_lapis),apple_lapis_expensive );
+		}
+		if(apple_diamond_enabled)
+		{
+			ItemRegistry.apple_diamond = new ItemFoodAppleMagic(hunger, false);
+			ItemRegistry.registerItem(ItemRegistry.apple_diamond, "apple_diamond");
+			ItemRegistry.apple_diamond.addEffect(PotionRegistry.getPotionID(MobEffects.resistance), time, I); 
+			ItemRegistry.apple_diamond.addEffect(PotionRegistry.getPotionID(MobEffects.healthBoost), time, V); 
+			ItemRegistry.apple_diamond.addEffect(PotionRegistry.getPotionID(MobEffects.saturation), time, I); 	
+			
+			ItemFoodAppleMagic.addRecipe(apple_diamond,new ItemStack(Items.diamond),apple_diamond_expensive);
+		 
+		}
+		
+		if(apple_bone_enabled)
+		{
+			apple_bone = new ItemFoodAppleMagic(hunger, false);
+			ItemRegistry.registerItem(ItemRegistry.apple_bone, "apple_bone");
+			ItemRegistry.apple_bone.addEffect(PotionRegistry.getPotionID(MobEffects.luck), time, I); 
+			ItemFoodAppleMagic.addRecipe(apple_bone,new ItemStack(Items.bone),apple_bone_expensive);
+		}
+		
+		if(apple_netherwart_enabled)
+		{
+			apple_netherwart = new ItemFoodAppleMagic(hunger, false);
+			ItemRegistry.registerItem(ItemRegistry.apple_netherwart, "apple_netherwart");
+			ItemRegistry.apple_netherwart.addEffect(PotionRegistry.getPotionID(MobEffects.digSlowdown), time, I); //Mining Fatigue
+			ItemRegistry.apple_netherwart.addEffect(PotionRegistry.getPotionID(MobEffects.waterBreathing), time, I);  
+			ItemFoodAppleMagic.addRecipe(apple_netherwart,new ItemStack(Items.nether_wart),apple_netherwart_expensive);
+		}
+		
+		if(apple_prismarine_enabled)
+		{
+			apple_prismarine = new ItemFoodAppleMagic(hunger, false);
+			ItemRegistry.registerItem(ItemRegistry.apple_prismarine, "apple_prismarine");
+			ItemRegistry.apple_prismarine.addEffect(PotionRegistry.getPotionID(PotionRegistry.waterwalk), time, I); 
+			ItemFoodAppleMagic.addRecipe(apple_prismarine,new ItemStack(Items.prismarine_shard),apple_prismarine_expensive);
+		}
+
+		if(apple_clownfish_enabled)
+		{
+			apple_slowfall = new ItemFoodAppleMagic(hunger, false);
+			ItemRegistry.registerItem(ItemRegistry.apple_slowfall, "apple_slowfall");
+			ItemRegistry.apple_slowfall.addEffect(PotionRegistry.getPotionID(PotionRegistry.slowfall), time, I); 
+			ItemFoodAppleMagic.addRecipe(apple_slowfall,new ItemStack(Items.fish,1,clownfish),apple_clownfish_expensive);
+			 
+		}
+		
+
 		registerRecipes();
 	}
-
-	public static boolean	doesPauseGame;
-	public static boolean	craftNetherStar;
-	public static boolean	showCoordTooltips;
-	public static int			maximumSaved;
-	public static int			btnsPerColumn;
-	public static int			expCostPerTeleport;
-	public static String	category_public;
-
-	public static int	fishing_recipe;
-	public static int	wool_recipe;
-	public static int	torch_recipe;
-	public static int	lightning_recipe;
-	public static int	snow_recipe;
-	public static int	water_recipe;
-	public static int	harvest_recipe;
-	public static int	bed_recipe;
-	public static int	dungeon_recipe;
-	public static int	tnt_recipe;
-	public static int	blaze_recipe;
-	private static boolean sceptersEnabled;
-	private static boolean enderBookEnabled;
-	private static boolean horseFoodEnabled;
-
-	public static void syncConfig(Configuration config) {
-
-		String category = Const.MODCONF + "Items";
-		config.setCategoryComment(category, "Disable or customize items added to the game");
-		
-		sceptersEnabled = config.getBoolean("sceptersEnabled", category, true, "Enable the building scepters");
-
-		SpellRegistry.renderOnLeft = config.getBoolean("scepter_HUD_left", category, true, "True for top left of the screen, false for top right");
-
-		BaseSpellRange.maxRange = config.getInt("scepter_MaxRange", category, 64, 8, 128, "Maximum range for all spells");
-
-
-		Property prop = config.get(category, ItemMultiTool.name, true, "Overpowered Multi Tool");
-		prop.setRequiresMcRestart(true);
-		configToggle.put(ItemMultiTool.name, prop.getBoolean());
-
-		prop = config.get(category, ItemEnderPearlReuse.name, true, "Reuseable ender pearl");
-		prop.setRequiresMcRestart(true);
-		configToggle.put(ItemEnderPearlReuse.name, prop.getBoolean());
-
-		prop = config.get(category, ItemPaperCarbon.name, true, "Special paper to copy signs and note block data");
-		prop.setRequiresMcRestart(true);
-		configToggle.put(ItemPaperCarbon.name, prop.getBoolean());
-
-		prop = config.get(category, ItemChestSack.name, true, "A bag that transports chests along with its contents");
-		prop.setRequiresMcRestart(true);
-		configToggle.put(ItemChestSack.name, prop.getBoolean());
-
-		prop = config.get(category, "emerald_gear", true, "Full set of emerald gear with similar properties as diamond");
-		prop.setRequiresMcRestart(true);
-		configToggle.put("emerald_gear", prop.getBoolean());
-
-		category = Const.MODCONF + "Items.EnderBook";
-
-		enderBookEnabled = config.getBoolean("Enabled", category, true, "To disable this ender book item");
-
-		
-		doesPauseGame = config.getBoolean("Gui Pauses Game", category, false, "The Ender Book GUI will pause the game (single player)");
-
-		craftNetherStar = config.getBoolean("Recipe Nether Star", category, true, "The Ender Book requires a nether star to craft.  REQUIRES RESTART.");
-
-		showCoordTooltips = config.getBoolean("Show Tooltip Coords", category, true, "Waypoint buttons will show the exact coordinates in a hover tooltip.");
-
-		maximumSaved = config.getInt("Max Saved", category, 16, 1, 999, "How many waypoints the book can store.");
-
-		btnsPerColumn = config.getInt("Column Size", category, 8, 1, 50, "Number of waypoints per column.  Change this if they are going off the screen for your chosen GUI Scale.");
-
-		expCostPerTeleport = config.getInt("Exp Cost", category, 10, 0, 9999, "How many experience points are drained from the player on each teleport.  Set to zero for free teleports to your waypoints.");
-
-		category = Const.MODCONF + "items.HorseFood";
-		
-		horseFoodEnabled = config.getBoolean("Enabled", category, true, "To disable all horse upgrade food");
-
-		ItemHorseFood.HEARTS_MAX = config.getInt("Max Hearts", category, 20, 1, 100, "Maximum number of upgraded hearts");
-		ItemHorseFood.JUMP_MAX = config.getInt("Max Jump", category, 6, 1, 20, "Maximum value of jump.  Naturally spawned/bred horses seem to max out at 5.5");
-		ItemHorseFood.SPEED_MAX = config.getInt("Max Speed", category, 50, 1, 99, "Maximum value of speed (this is NOT blocks/per second or anything like that)");
-
-		category = Const.MODCONF + "Items.Projectiles";
-		config.addCustomCategoryComment(category, "For each item, you can decide how many the recipe produces. Set to zero to disable the crafting recipe.");
-		torch_recipe = config.getInt("torch.crafted", category, 6, 0, 64, "");
-		lightning_recipe = config.getInt("lightning.crafted", category, 1, 0, 64, "");
-		snow_recipe = config.getInt("snow.crafted", category, 4, 0, 64, "");
-		water_recipe = config.getInt("water.crafted", category, 4, 0, 64, "");
-		harvest_recipe = config.getInt("harvest.crafted", category, 4, 0, 64, "");
-		wool_recipe = config.getInt("wool.crafted", category, 32, 0, 64, "");
-		fishing_recipe = config.getInt("fishing.recipe", category, 10, 0, 64, "");
-		bed_recipe = config.getInt("bed.recipe", category, 4, 0, 64, "");
-		dungeon_recipe = config.getInt("dungeon.recipe", category, 4, 0, 64, "");
-		tnt_recipe = config.getInt("tnt.recipe", category, 6, 0, 64, "");
-		blaze_recipe = config.getInt("blaze.recipe", category, 3, 0, 64, "");
-
-		ItemProjectile.DUNGEONRADIUS = config.getInt("dungeon.radius", category, 64, 8, 128, "Search distance");
-
-		EntityShearingBolt.doesKnockback = config.getBoolean("wool.does_knockback", category, true, "Does appear to damage sheep on contact");
-		EntityShearingBolt.doesShearChild = config.getBoolean("wool.does_child", category, true, "Does shear child sheep as well.");
-
-		EntityBlazeBolt.fireSeconds = config.getInt("blaze.fire_seconds", category, 3, 0, 64, "Seconds of fire to put on entity when hit");
-		EntityBlazeBolt.damageEntityOnHit = config.getBoolean("blaze.does_knockback", category, true, "Does it damage entity or not on hit (0 damage to blaze, 1 to others)");
-		EntitySnowballBolt.damageEntityOnHit = config.getBoolean("snow.does_knockback", category, true, "Does it damage entity or not on hit (1 damage to blaze, 0 to others)");
-		EntityTorchBolt.damageEntityOnHit = config.getBoolean("torch.does_knockback", category, true, "Does it damage entity or not on hit (0 dmg like a snowball)");
-
-		EntityHarvestBolt.range_main = config.getInt("harvest.range_main", category, 6, 1, 32, "Horizontal range on level of hit to harvest");
-		EntityHarvestBolt.range_offset = config.getInt("harvest.range_offset", category, 4, 1, 32, "Horizontal range on further heights to harvest");
-		EntityHarvestBolt.doesHarvestStem = config.getBoolean("harvest.does_harvest_stem", category, false, "Does it harvest stems (pumkin/melon)");
-		EntityHarvestBolt.doesHarvestSapling = config.getBoolean("harvest.does_harvest_sapling", category, false, "Does it harvest sapling");
-		EntityHarvestBolt.doesHarvestTallgrass = config.getBoolean("harvest.does_harvest_tallgrass", category, false, "Does it harvest tallgrass/doubleplants");
-		EntityHarvestBolt.doesHarvestMushroom = config.getBoolean("harvest.does_harvest_mushroom", category, true, "Does it harvest mushrooms");
-		EntityHarvestBolt.doesMelonBlocks = config.getBoolean("harvest.does_harvest_melonblock", category, true, "Does it harvest pumpkin block");
-		EntityHarvestBolt.doesPumpkinBlocks = config.getBoolean("harvest.does_harvest_pumpkinblock", category, true, "Does it harvest melon block");
-
-	}
+	
 }
