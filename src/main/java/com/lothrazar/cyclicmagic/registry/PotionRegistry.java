@@ -17,6 +17,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class PotionRegistry {
 
@@ -46,14 +47,16 @@ public class PotionRegistry {
 
 		PotionRegistry.magnet = new PotionCustom(new ResourceLocation(Const.MODID, "textures/potions/magnet.png"), false, 0, "potion.magnet");
 
-		// ..no thats internal use only, weird
-		// ref
-		// https://github.com/MinecraftForge/MinecraftForge/commit/e72c224294519aa80334de786710fb5e24b3fb77
-		// GameData.getPotionRegistry()
-		Potion.potionRegistry.putObject(ender.getIcon(), ender);
-		Potion.potionRegistry.putObject(waterwalk.getIcon(), waterwalk);
-		Potion.potionRegistry.putObject(slowfall.getIcon(), slowfall);
-		Potion.potionRegistry.putObject(magnet.getIcon(), magnet);
+		GameRegistry.register(ender,ender.getIcon());
+		GameRegistry.register(waterwalk,waterwalk.getIcon());
+		GameRegistry.register(slowfall,slowfall.getIcon());
+		GameRegistry.register(magnet,magnet.getIcon());
+		//this is bad
+	// GameData.getPotionRegistry()
+		
+		// this is also bad:
+	//	Potion.potionRegistry.putObject(ender.getIcon(), ender);
+
 		// TODO: test out brewing api for these?
 	}
 
