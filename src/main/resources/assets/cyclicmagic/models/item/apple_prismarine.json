@@ -1,7 +1,7 @@
 {
     "parent": "builtin/generated",
     "textures": {
-        "layer0": "samsapples:items/apple_prismarine"
+        "layer0": "cyclicmagicitems/apple_prismarine"
     },
     "display": {
         "thirdperson": {

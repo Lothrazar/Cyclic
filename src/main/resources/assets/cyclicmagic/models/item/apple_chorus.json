@@ -1,7 +1,7 @@
 {
     "parent": "builtin/generated",
     "textures": {
-        "layer0": "samsapples:items/apple_chorus"
+        "layer0": "cyclicmagicitems/apple_chorus"
     },
     "display": {
         "thirdperson": {

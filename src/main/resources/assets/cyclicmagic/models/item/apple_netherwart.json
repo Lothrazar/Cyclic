@@ -1,7 +1,7 @@
 {
     "parent": "builtin/generated",
     "textures": {
-        "layer0": "samsapples:items/apple_netherwart"
+        "layer0": "cyclicmagicitems/apple_netherwart"
     },
     "display": {
         "thirdperson": {

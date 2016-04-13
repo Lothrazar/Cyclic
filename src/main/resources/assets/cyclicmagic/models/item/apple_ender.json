@@ -1,7 +1,7 @@
 {
     "parent": "builtin/generated",
     "textures": {
-        "layer0": "samsapples:items/apple_ender"
+        "layer0": "cyclicmagicitems/apple_ender"
     },
     "display": {
         "thirdperson": {
