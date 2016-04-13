@@ -40,6 +40,8 @@ public class EventRegistry {
 
 	public static boolean cancelPotionInventoryShift;
 
+	private static boolean easyEnderChest;
+
 	public static void syncConfig(Configuration config) {
 
 		String category = Const.MODCONF + "Mobs";
@@ -69,9 +71,9 @@ public class EventRegistry {
 		
 		fastLadderClimb = config.getBoolean("Faster Ladders", category, true, "Allows you to quickly climb ladders by looking up instead of moving forward");
 		
+		easyEnderChest = config.getBoolean("Easy Enderchest", category, true, "Open ender chest without placing it down, just attack with it");
 		
 		cancelPotionInventoryShift = config.getBoolean("Potion Inventory Shift", category, true, "When true, this blocks the potions moving the inventory over");
-		
 		
 	}
 
@@ -89,7 +91,10 @@ public class EventRegistry {
 		//we already have the extraButtonsRegistry config for this
 		events.add(new EventGuiAddButtons());
 		
-		
+		//TODO CONFIG:
+		if(easyEnderChest){
+		events.add(new EventEnderChest());
+		}
 		if(fastLadderClimb){
 			events.add(new EventLadderClimb());
 		}

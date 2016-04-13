@@ -31,7 +31,7 @@ public class EventFurnaceStardew {
 		BlockPos pos = event.getPos();
 		World worldObj = event.getWorld();
 		if (pos == null) { return; }
-		ItemStack held = entityPlayer.getHeldItemMainhand();
+		ItemStack held = entityPlayer.getHeldItem(event.getHand());
 		int playerSlot = entityPlayer.inventory.currentItem;
 
 		if (held == null) {
