@@ -23,10 +23,10 @@ public class PotionRegistry {
 	public static float			slowfallSpeed;
 	public static boolean		renderOnLeft;
 	// tired;//http://www.minecraftforge.net/wiki/Potion_Tutorial
-	public static Potion		slowfall;
-	public static Potion		magnet;
-	public static Potion ender; 
-	public static Potion waterwalk;
+	public static PotionCustom		slowfall;
+	public static PotionCustom		magnet;
+	public static PotionCustom ender; 
+	public static PotionCustom waterwalk;
 	
 	public final static int	I		= 0;
 	public final static int	II	= 1;
@@ -34,19 +34,16 @@ public class PotionRegistry {
 	public final static int	IV	= 3;
 	public final static int	V		= 4;
 
-	public static void register() {
-
-		registerNewPotionEffects();
-	}
-
+ 
+/*
 	public static int getPotionID(PotionEffect pot){
 		return Potion.potionRegistry.getIDForObject(pot.getPotion());
 	}
 	public static int getPotionID(Potion pot){
 		return Potion.potionRegistry.getIDForObject(pot);
 	}
-
-	private static void registerNewPotionEffects() {
+*/
+public static void register() {
 
 		// http://www.minecraftforge.net/forum/index.php?topic=11024.0
 		// ??? http://www.minecraftforge.net/forum/index.php?topic=12358.0
@@ -58,6 +55,8 @@ public class PotionRegistry {
 
 		PotionRegistry.magnet = new PotionCustom(new ResourceLocation(Const.MODID, "textures/potions/magnet.png"), false, 0, "potion.magnet");
 
+	//	Potion.potionRegistry.putObject(ender.getIcon(),ender);
+		//Potion.potionRegistry.putObject(waterwalk.getIcon(),waterwalk);
 		// TODO: test out brewing api for these?
 	}
 
@@ -128,6 +127,11 @@ public class PotionRegistry {
 		if(entity.isPotionActive(PotionRegistry.waterwalk)) {
 			tickWaterwalk(entity);
 		}
+		if(entity.isPotionActive(PotionRegistry.ender)) {
+			
+			//tick ender ?
+			//tickWaterwalk(entity);
+		}
 			
 	}
 
@@ -160,8 +164,9 @@ public class PotionRegistry {
 			PotionEffect p = player.getActivePotionEffect(newp.getPotion());
 
 			int ampMax = Math.max(p.getAmplifier(), newp.getAmplifier());
+			int dur = newp.getDuration() + p.getDuration();
 
-			player.addPotionEffect(new PotionEffect(newp.getPotion(), newp.getDuration() + p.getDuration(), ampMax));
+			player.addPotionEffect(new PotionEffect(newp.getPotion(), dur, ampMax));
 		}
 		else {
 			player.addPotionEffect(newp);

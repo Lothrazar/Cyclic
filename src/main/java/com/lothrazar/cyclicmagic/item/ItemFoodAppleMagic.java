@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.PotionRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -79,37 +80,22 @@ public class ItemFoodAppleMagic extends ItemFood {
 			refund = 1;
 		}
 
-		GameRegistry.addSmelting(apple, new ItemStack(ingredient.getItem(), refund, ingredient.getMetadata()), smeltexp);
 	}
 
 	@Override
 	public void addInformation(ItemStack held, EntityPlayer player, List<String> list, boolean par4) {
 		for (int i = 0; i < potions.size(); i++) {
 
-			if(potions.get(i) != null)
+			//if(potions.get(i) != null)
 				list.add(I18n.translateToLocal(potions.get(i).getName()));
 		}
 	}
 
 	public void addAllEffects(World world, EntityLivingBase player) {
-		if (world.isRemote == false)  // false means serverside
-			for (int i = 0; i < potions.size(); i++) {
-				addOrMergePotionEffect(player, new PotionEffect(potions.get(i), potionDurations.get(i), potionAmplifiers.get(i)));
-			}
-	}
 
-	public static void addOrMergePotionEffect(EntityLivingBase player, PotionEffect newp) {
-		if (player.isPotionActive(newp.getPotion())) {
-			// do not use built in 'combine' function, just add up duration myself
-			PotionEffect p = player.getActivePotionEffect(newp.getPotion());
+		for (int i = 0; i < potions.size(); i++) {
 
-			int ampMax = Math.max(p.getAmplifier(), newp.getAmplifier());
-
-			player.addPotionEffect(new PotionEffect(newp.getPotion(), newp.getDuration() + p.getDuration(), ampMax));
-		}
-		else {
-			player.addPotionEffect(newp);
+			PotionRegistry.addOrMergePotionEffect(player, new PotionEffect(potions.get(i), potionDurations.get(i), potionAmplifiers.get(i)));
 		}
 	}
-
 }

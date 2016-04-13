@@ -79,7 +79,7 @@ public class EventRegistry {
 		events.add(new EventKeyInput());
 		events.add(new EventHorseFood());
 		events.add(new EventBucketBlocksBreak());
-		
+		events.add(new EventAppleUse());
 		//we already have the extraButtonsRegistry config for this
 		events.add(new EventGuiAddButtons());
 		

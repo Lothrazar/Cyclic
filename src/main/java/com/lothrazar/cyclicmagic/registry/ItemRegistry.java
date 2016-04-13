@@ -608,6 +608,9 @@ public class ItemRegistry {
 			apple_slowfall = new ItemFoodAppleMagic(hunger, false);
 			ItemRegistry.registerItem(ItemRegistry.apple_slowfall, "apple_slowfall");
 			ItemRegistry.apple_slowfall.addEffect(PotionRegistry.slowfall, time, I); 
+			ItemRegistry.apple_slowfall.addEffect(PotionRegistry.magnet, time, I); 
+			
+			
 			ItemFoodAppleMagic.addRecipe(apple_slowfall,new ItemStack(Items.fish,1,clownfish),apple_clownfish_expensive);
 			 
 		}

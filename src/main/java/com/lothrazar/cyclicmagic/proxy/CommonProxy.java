@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.proxy;
 
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.EnumFacing;
 
 public class CommonProxy {
@@ -26,5 +27,9 @@ public class CommonProxy {
 	public EnumFacing getSideMouseover(int max) {
 
 		return null;
+	}
+
+	public void renderPotions() {
+	
 	}
 }

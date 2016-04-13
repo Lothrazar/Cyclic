@@ -15,21 +15,22 @@ public class PotionCustom extends Potion {
 
 		super(badEffect, potionColor);
 
-		icon = location;
+		this.setIcon(location);
 		this.setPotionName(nameIn);
 	}
-
+/*
 	@Override
 	public Potion setIconIndex(int par1, int par2) {
 
 		super.setIconIndex(par1, par2);
 		return this;
 	}
-
+*/
+	private final boolean showsInTopRight = false;
 	@SideOnly(Side.CLIENT)
 	public boolean hasStatusIcon() {
-
-		return false;// to block it from looking for one of the vanilla textures
+//id love to ACTUALLY show it, but the resource location doesnt get used
+		return showsInTopRight;// to block it from looking for one of the vanilla textures
 	}
 
 	@Override
@@ -37,6 +38,12 @@ public class PotionCustom extends Potion {
 	public void renderInventoryEffect(int x, int y, PotionEffect effect, net.minecraft.client.Minecraft mc) {
 
 		int border = 6;
-		UtilTextureRender.drawTextureSquare(icon, x + border, y + border, 16);
+		UtilTextureRender.drawTextureSquare(getIcon(), x + border, y + border, 16);
+	}
+	public ResourceLocation getIcon() {
+		return icon;
+	}
+	public void setIcon(ResourceLocation icon) {
+		this.icon = icon;
 	}
 }

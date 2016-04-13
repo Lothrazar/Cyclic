@@ -1,10 +1,15 @@
 package com.lothrazar.cyclicmagic.proxy;
 
+import java.util.Collection;
 import org.lwjgl.input.Keyboard;
 import net.minecraft.item.Item;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.RayTraceResult;
+import com.google.common.collect.Ordering;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityBlazeBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDungeonEye;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamite;
@@ -17,6 +22,7 @@ import com.lothrazar.cyclicmagic.entity.projectile.EntitySnowballBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityTorchBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityWaterBolt;
 import com.lothrazar.cyclicmagic.gui.GuiSpellWheel;
+import com.lothrazar.cyclicmagic.potion.PotionCustom;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -27,12 +33,16 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.ItemModelMesher;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.EntityLivingBase;
 
 public class ClientProxy extends CommonProxy {
 	public static KeyBinding	keyShiftUp;
@@ -42,6 +52,80 @@ public class ClientProxy extends CommonProxy {
 
 	static final String				keyCategoryInventory	= "key.categories.inventorycontrol";
 
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void renderPotions() {
+
+
+    Collection<PotionEffect> collection = Minecraft.getMinecraft().thePlayer.getActivePotionEffects();
+    Minecraft mc =  Minecraft.getMinecraft();
+
+    ScaledResolution resolution = new ScaledResolution(mc);
+   System.out.println("drawtextures"+collection.size());
+        if (!collection.isEmpty())
+        {
+            GlStateManager.enableBlend();
+            int i = 0;
+            int j = 0;
+
+            for (PotionEffect potioneffect : Ordering.natural().reverse().sortedCopy(collection))
+            {
+                Potion potion = potioneffect.getPotion();
+
+                if (potion instanceof PotionCustom)
+                {
+                  System.out.println("trydraw"+ potion.getName());
+                    int k = resolution.getScaledWidth();
+                    int l = 1;
+                    int i1 = potion.getStatusIconIndex();
+                    float f = 1.0F;
+
+                    if (potion.func_188408_i())
+                    {
+                        ++i;
+                        k = k - 25 * i;
+                    }
+                    else
+                    {
+                        ++j;
+                        k = k - 25 * j;
+                        l += 26;
+                    }
+
+                    mc.getTextureManager().bindTexture(GuiContainer.inventoryBackground);
+                    GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+
+                    if (potioneffect.getIsAmbient())
+                    {
+                    	//the background with no border
+                        mc.ingameGUI.drawTexturedModalRect(k, l, 165, 166, 24, 24);
+                    }
+                    else
+                    {
+                    	// background with blue border
+                    	mc.ingameGUI.drawTexturedModalRect(k, l, 141, 166, 24, 24);
+
+                        if (potioneffect.getDuration() <= 200)
+                        {
+                            int j1 = 10 - potioneffect.getDuration() / 20;
+                            f = MathHelper.clamp_float((float)potioneffect.getDuration() / 10.0F / 5.0F * 0.5F, 0.0F, 0.5F) + MathHelper.cos((float)potioneffect.getDuration() * (float)Math.PI / 5.0F) * MathHelper.clamp_float((float)j1 / 10.0F * 0.25F, 0.0F, 0.25F);
+                        }
+                    }
+
+                    
+                    mc.getTextureManager().bindTexture(    	((PotionCustom) potion).getIcon()  );
+                    GlStateManager.color(1.0F, 1.0F, 1.0F, f);
+                    //dont hack in my potion texture to the bottom of inventory. we have standalone textures LIKE A BOSS
+                    // i1 % 8 * 18, 198 + i1 / 8 * 18 	
+                    mc.ingameGUI.drawTexturedModalRect(k + 3, l + 3,   0,0, 18, 18);
+                }
+            }
+        }
+    
+    
+		
+	}
+	
 	@Override
 	public void register() {
 

@@ -65,14 +65,4 @@ public class EventAppleUse{
 			// mob.setEating(true); //makes horse animate and bend down to eat
 		}
 	}
-
-	@SubscribeEvent
-	public void onEntityUpdate(LivingUpdateEvent event){
-
-		if(event.getEntity() instanceof EntityLivingBase == false){
-			return;
-		}
-		
-		PotionRegistry.handle((EntityLivingBase)event.getEntity());
-	}
 }
