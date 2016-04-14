@@ -126,7 +126,7 @@ public class ModMain {
 		c.save();
 	}
 
-	/*
+	/* TODO LIST
 	 * 
 	 * achievemnets give exp
 	 * 
@@ -134,20 +134,8 @@ public class ModMain {
 	 * 
 	 * 
 	 * 
-	 * APPLES
-	 * 
 	 * add potion brewing!! work with the real brew stands to make new custom potions
 	 * 
-	 * ways to increase Vanilla Player Health
-	 * 
-	 * if you right click on an item frame or a sign
-	 * and if its attached to a chest or sign
-	 * then cancel tthat interaction and force action on teh chest instead
-	 * hook PlayerInteractEvent.RightClickBlock , cancel the result
-	 * and then call a   .onBlockActivated(
-	 * 
-	 * Lex added a new GuiScreenEvent.PotionShiftEvent
-	 * maybe add a config to cancel that
 	 * 
 	 * 
 	 * add the villager trades that were removed in snapshots//old versions
@@ -160,7 +148,6 @@ public class ModMain {
 	 * test/fix hopper interaction
 	 * 
 	 * config to logspam every enabled feature on startup
- 
 	 * 
 	 * refactor seed logic into util
 	 * 
@@ -180,7 +167,6 @@ public class ModMain {
 	 * 4. chest give failure message text (only useable on a container)
 	 * 
 	 * 
-	 * 
 	 * //IDEA: make boats float
 	 * https://www.reddit.com/r/minecraftsuggestions/comments/4d4ob1/
 	 * make_boats_float_again/
@@ -190,14 +176,6 @@ public class ModMain {
 	 * add_a_control_option_for_elytra_automatically/
 	 * 
 	 * 
-	 * //do we need custom ItemBlocks for these?
-	 * //top logs recipe
-	 * 
-	 * //smoothstone block
-	 * //mushroomies?
-	 * 
-	 * 
-	 * idea: make ladders faster
 	 * 
 	 */
 }
