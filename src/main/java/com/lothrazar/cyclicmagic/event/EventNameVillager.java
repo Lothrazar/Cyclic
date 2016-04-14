@@ -5,6 +5,7 @@ import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 //import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -17,6 +18,7 @@ public class EventNameVillager {
 		EntityPlayer entityPlayer = event.getEntityPlayer();
 		ItemStack held = entityPlayer.getHeldItem(event.getHand());
 		Entity target = event.getTarget();
+		
 
 		if (held != null && held.getItem() == Items.name_tag && held.hasDisplayName() && target instanceof EntityVillager) {
 
