@@ -42,6 +42,8 @@ public class EventRegistry {
 
 	private static boolean easyEnderChest;
 
+	private static boolean passThroughClick;
+
 	public static void syncConfig(Configuration config) {
 
 		String category = Const.MODCONF + "Mobs";
@@ -63,7 +65,7 @@ public class EventRegistry {
 		config.setCategoryComment(category, "Changes to player properties or actions");
 		
 		nameVillagerTag = config.getBoolean("Villager Nametag", category, true, "Let players name villagers with nametags");
-		editableSigns = config.getBoolean("Editable Signs", category, true, "Allow editing a sign with right click");
+		editableSigns = config.getBoolean("Editable Signs", category, true, "Allow editing signs with an empty hand");
 		playerWakeup = config.getBoolean("Wakeup Curse", category, true, "Using a bed to skip the night has some mild potion effect related drawbacks");
 		playerDeathCoords = config.getBoolean("Death Coords", category, true, "Display your coordinates in chat when you die");
 		mountedPearl = config.getBoolean("Pearls On Horseback", category, true, "Enderpearls work on a horse, bringing it with you");		
@@ -74,6 +76,9 @@ public class EventRegistry {
 		easyEnderChest = config.getBoolean("Easy Enderchest", category, true, "Open ender chest without placing it down, just attack with it");
 		
 		cancelPotionInventoryShift = config.getBoolean("Potion Inventory Shift", category, true, "When true, this blocks the potions moving the inventory over");
+		
+		
+		passThroughClick = config.getBoolean("PassThroughClick", category, true, "Open chests (and other containers) by passing right through the attached signs, banners, and item frames");
 		
 	}
 
@@ -90,7 +95,10 @@ public class EventRegistry {
 		events.add(new EventAppleUse());
 		//we already have the extraButtonsRegistry config for this
 		events.add(new EventGuiAddButtons());
-		events.add(new EventPassthroughAction());
+
+		if(passThroughClick){
+			events.add(new EventPassthroughAction());
+		}
 		
 		//TODO CONFIG:
 		if(easyEnderChest){

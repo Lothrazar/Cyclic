@@ -26,7 +26,8 @@ public class EventPassthroughAction {
 		Entity target = event.getTarget();
 		World worldObj = event.getWorld();
 
-		if (target instanceof EntityItemFrame) {
+		//dont do this if player is sneaking, let them use the item frame
+		if (target instanceof EntityItemFrame  && entityPlayer.isSneaking() == false) {
 
 			BlockPos pos = target.getPosition();
 
@@ -54,11 +55,12 @@ public class EventPassthroughAction {
 		BlockPos pos = event.getPos();
 		World worldObj = event.getWorld();
 		if (pos == null) { return; }
-		// if (entityPlayer.isSneaking()) { return; }
+		if (entityPlayer.isSneaking()) { return; }
 		ItemStack held = event.getItemStack();// entityPlayer.getHeldItem(event.getHand());
 
 		IBlockState state = event.getWorld().getBlockState(pos);
-		if (state != null && entityPlayer.isSneaking() == false && (state.getBlock() == Blocks.wall_sign || state.getBlock() == Blocks.wall_banner)) {
+		//removed  && entityPlayer.isSneaking() == false
+		if (state != null && (state.getBlock() == Blocks.wall_sign || state.getBlock() == Blocks.wall_banner)) {
 			// but NOT standing sign or standing banner
 	
 			EnumFacing face = EnumFacing.getFront(state.getBlock().getMetaFromState(state));

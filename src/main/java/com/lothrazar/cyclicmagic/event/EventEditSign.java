@@ -1,11 +1,6 @@
 package com.lothrazar.cyclicmagic.event;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntitySign;
@@ -14,13 +9,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 
 public class EventEditSign {
 
 	@SubscribeEvent
-	public void onInteract(PlayerInteractEvent.RightClickBlock event) {
+	public void onInteract(PlayerInteractEvent.LeftClickBlock event) {
 
 		EntityPlayer entityPlayer = event.getEntityPlayer();
 		BlockPos pos = event.getPos();
