@@ -90,6 +90,7 @@ public class EventRegistry {
 		events.add(new EventAppleUse());
 		//we already have the extraButtonsRegistry config for this
 		events.add(new EventGuiAddButtons());
+		events.add(new EventPassthroughAction());
 		
 		//TODO CONFIG:
 		if(easyEnderChest){
