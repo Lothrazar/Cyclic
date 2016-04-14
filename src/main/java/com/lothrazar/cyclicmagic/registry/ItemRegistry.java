@@ -33,19 +33,17 @@ public class ItemRegistry {
 
 	public static ArrayList<Item>				items					= new ArrayList<Item>();
 	private static Map<String, Boolean>	configToggle	= new HashMap<String, Boolean>();
-	
 
 	public static void syncConfig(Configuration config) {
 
 		String category = Const.MODCONF + "Items";
 		config.setCategoryComment(category, "Disable or customize items added to the game");
-		
+
 		sceptersEnabled = config.getBoolean("sceptersEnabled", category, true, "Enable the building scepters");
 
 		SpellRegistry.renderOnLeft = config.getBoolean("scepter_HUD_left", category, true, "True for top left of the screen, false for top right");
 
 		BaseSpellRange.maxRange = config.getInt("scepter_MaxRange", category, 64, 8, 128, "Maximum range for all spells");
-
 
 		Property prop = config.get(category, ItemMultiTool.name, true, "Overpowered Multi Tool");
 		prop.setRequiresMcRestart(true);
@@ -71,7 +69,6 @@ public class ItemRegistry {
 
 		enderBookEnabled = config.getBoolean("Enabled", category, true, "To disable this ender book item");
 
-		
 		doesPauseGame = config.getBoolean("Gui Pauses Game", category, false, "The Ender Book GUI will pause the game (single player)");
 
 		craftNetherStar = config.getBoolean("Recipe Nether Star", category, true, "The Ender Book requires a nether star to craft.  REQUIRES RESTART.");
@@ -85,7 +82,7 @@ public class ItemRegistry {
 		expCostPerTeleport = config.getInt("Exp Cost", category, 10, 0, 9999, "How many experience points are drained from the player on each teleport.  Set to zero for free teleports to your waypoints.");
 
 		category = Const.MODCONF + "items.HorseFood";
-		
+
 		horseFoodEnabled = config.getBoolean("Enabled", category, true, "To disable all horse upgrade food");
 
 		ItemHorseFood.HEARTS_MAX = config.getInt("Max Hearts", category, 20, 1, 100, "Maximum number of upgraded hearts");
@@ -125,8 +122,6 @@ public class ItemRegistry {
 		EntityHarvestBolt.doesMelonBlocks = config.getBoolean("harvest.does_harvest_melonblock", category, true, "Does it harvest pumpkin block");
 		EntityHarvestBolt.doesPumpkinBlocks = config.getBoolean("harvest.does_harvest_pumpkinblock", category, true, "Does it harvest melon block");
 
-		
-
 		category = Const.MODCONF + "items.PowerApples";
 
 		ItemRegistry.apple_bone_enabled = config.get(category, "apple_bone_enabled", true).getBoolean();
@@ -140,133 +135,116 @@ public class ItemRegistry {
 		ItemRegistry.apple_clownfish_enabled = config.get(category, "apple_clownfish_enabled", true).getBoolean();
 		ItemRegistry.apple_chorus_enabled = config.get(category, "apple_chorus_enabled", true).getBoolean();
 
-		//category = Const.MODCONF + "items.PowerApples.Recipes";
-		
+		// category = Const.MODCONF + "items.PowerApples.Recipes";
+
 		config.addCustomCategoryComment(category, "True means you have to fully surround the apple with 8 items, false means only a single item will craft with the red apple.");
 
-		ItemRegistry.apple_bone_expensive 	 = config.get(category, "apple_bone_expensive", true).getBoolean();
+		ItemRegistry.apple_bone_expensive = config.get(category, "apple_bone_expensive", true).getBoolean();
 		ItemRegistry.apple_emerald_expensive = config.get(category, "apple_emerald_expensive", true).getBoolean();
 		ItemRegistry.apple_diamond_expensive = config.get(category, "apple_diamond_expensive", false).getBoolean();
-		ItemRegistry.apple_ender_expensive 	 = config.get(category, "apple_ender_expensive", true).getBoolean();
-		ItemRegistry.apple_lapis_expensive   = config.get(category, "apple_lapis_expensive", true).getBoolean();
-		ItemRegistry.apple_chocolate_expensive  = config.get(category, "apple_chocolate_expensive", true).getBoolean();
+		ItemRegistry.apple_ender_expensive = config.get(category, "apple_ender_expensive", true).getBoolean();
+		ItemRegistry.apple_lapis_expensive = config.get(category, "apple_lapis_expensive", true).getBoolean();
+		ItemRegistry.apple_chocolate_expensive = config.get(category, "apple_chocolate_expensive", true).getBoolean();
 		ItemRegistry.apple_netherwart_expensive = config.get(category, "apple_netherwart_expensive", true).getBoolean();
 		ItemRegistry.apple_prismarine_expensive = config.get(category, "apple_prismarine_expensive", true).getBoolean();
-		ItemRegistry.apple_clownfish_expensive  = config.get(category, "apple_clownfish_expensive", false).getBoolean();
-		ItemRegistry.apple_chorus_expensive     = config.get(category, "apple_chorus_expensive", false).getBoolean();
+		ItemRegistry.apple_clownfish_expensive = config.get(category, "apple_clownfish_expensive", false).getBoolean();
+		ItemRegistry.apple_chorus_expensive = config.get(category, "apple_chorus_expensive", false).getBoolean();
 
-		
-		
-		
-		
 	}
 
-	public static boolean	doesPauseGame;
-	public static boolean	craftNetherStar;
-	public static boolean	showCoordTooltips;
-	public static int			maximumSaved;
-	public static int			btnsPerColumn;
-	public static int			expCostPerTeleport;
-	public static String	category_public;
+	public static boolean							doesPauseGame;
+	public static boolean							craftNetherStar;
+	public static boolean							showCoordTooltips;
+	public static int									maximumSaved;
+	public static int									btnsPerColumn;
+	public static int									expCostPerTeleport;
+	public static String							category_public;
 
-	public static int	fishing_recipe;
-	public static int	wool_recipe;
-	public static int	torch_recipe;
-	public static int	lightning_recipe;
-	public static int	snow_recipe;
-	public static int	water_recipe;
-	public static int	harvest_recipe;
-	public static int	bed_recipe;
-	public static int	dungeon_recipe;
-	public static int	tnt_recipe;
-	public static int	blaze_recipe;
-	private static boolean sceptersEnabled;
-	private static boolean enderBookEnabled;
-	private static boolean horseFoodEnabled;
+	public static int									fishing_recipe;
+	public static int									wool_recipe;
+	public static int									torch_recipe;
+	public static int									lightning_recipe;
+	public static int									snow_recipe;
+	public static int									water_recipe;
+	public static int									harvest_recipe;
+	public static int									bed_recipe;
+	public static int									dungeon_recipe;
+	public static int									tnt_recipe;
+	public static int									blaze_recipe;
+	private static boolean						sceptersEnabled;
+	private static boolean						enderBookEnabled;
+	private static boolean						horseFoodEnabled;
 
+	public final static int						I					= 0;
+	public final static int						II				= 1;
+	public final static int						III				= 2;
+	public final static int						IV				= 3;
+	public final static int						V					= 4;
 
-	public final static int I = 0; 
-	public final static int II = 1;
-	public final static int III = 2;
-	public final static int IV = 3;
-	public final static int V = 4;
+	public static int									hunger		= 4;
+	public static int									time			= 8 * 60;					// 8:00
 
-	public static int hunger = 4; 
-	public static int time = 8 * 60;// 8:00
+	public static boolean							apple_emerald_enabled;
+	public static boolean							apple_diamond_enabled;
+	public static boolean							apple_ender_enabled;
+	public static boolean							apple_bone_enabled;
+	public static boolean							apple_lapis_enabled;
+	public static boolean							apple_chocolate_enabled;
+	public static boolean							apple_netherwart_enabled;
+	public static boolean							apple_prismarine_enabled;
+	public static boolean							apple_clownfish_enabled;
 
-	public static boolean apple_emerald_enabled;
-	public static boolean apple_diamond_enabled; 
-	public static boolean apple_ender_enabled; 
-	public static boolean apple_bone_enabled; 
-	public static boolean apple_lapis_enabled; 
-	public static boolean apple_chocolate_enabled;
-	public static boolean apple_netherwart_enabled; 
-	public static boolean apple_prismarine_enabled;
-	public static boolean apple_clownfish_enabled;
+	public static boolean							apple_emerald_expensive;
+	public static boolean							apple_diamond_expensive;
+	public static boolean							apple_ender_expensive;
+	public static boolean							apple_bone_expensive;
+	public static boolean							apple_lapis_expensive;
+	public static boolean							apple_chocolate_expensive;
+	public static boolean							apple_netherwart_expensive;
+	public static boolean							apple_prismarine_expensive;
+	public static boolean							apple_clownfish_expensive;
 
-	public static boolean apple_emerald_expensive;
-	public static boolean apple_diamond_expensive; 
-	public static boolean apple_ender_expensive; 
-	public static boolean apple_bone_expensive; 
-	public static boolean apple_lapis_expensive; 
-	public static boolean apple_chocolate_expensive;
-	public static boolean apple_netherwart_expensive; 
-	public static boolean apple_prismarine_expensive;
-	public static boolean apple_clownfish_expensive;
-
-	public static boolean apple_chorus_expensive; 
-	public static boolean apple_chorus_enabled; 
-	
-	public static ItemFoodAppleMagic apple_emerald;
-	public static ItemFoodAppleMagic apple_diamond; 
-	public static ItemFoodAppleMagic apple_ender; 
-	public static ItemFoodAppleMagic apple_bone; 
-	public static ItemFoodAppleMagic apple_lapis; 
-	public static ItemFoodAppleMagic apple_chocolate;
-	public static ItemFoodAppleMagic apple_netherwart; 
-	public static ItemFoodAppleMagic apple_prismarine;
-	public static ItemFoodAppleMagic apple_slowfall;
-	public static ItemFoodAppleMagic apple_chorus;
-	
-	private static final int clownfish = 2;
-
-	public static final int dye_cocoa = 3;
-	public static final int dye_lapis = 4;
+	public static boolean							apple_chorus_expensive;
+	public static boolean							apple_chorus_enabled;
 
 
-	
-	public static Item									emerald_helmet;
-	public static Item									emerald_chestplate;
-	public static Item									emerald_leggings;
-	public static Item									emerald_boots;
-	public static ItemCyclicWand				cyclic_wand_build;
-	public static ItemChestSack					chest_sack;
-	public static ItemChestSackEmpty		chest_sack_empty;
-	public static ToolMaterial					MATERIAL_EMERALD;
-	public static ArmorMaterial					ARMOR_MATERIAL_EMERALD;
-	public static ItemEnderBook					book_ender;
-	public static ItemHorseFood					emeraldCarrot;
-	public static ItemHorseFood					lapisCarrot;
-	public static ItemHorseFood					diamondCarrot;
-	public static ItemHorseFood					horse_upgrade_jump;
-	public static ItemHorseFood					horse_upgrade_speed;
-	public static ItemProjectile				ender_water;
-	public static ItemProjectile				ender_snow;
-	public static ItemProjectile				ender_harvest;
-	public static ItemProjectile				ender_lightning;
-	public static ItemProjectile				ender_torch;
-	public static ItemProjectile				ender_wool;
-	public static ItemProjectile				ender_fishing;
-	public static ItemProjectile				ender_dungeon;
-	public static ItemProjectile				ender_blaze;
-	public static ItemProjectile				ender_bed;
-	public static ItemProjectile				ender_tnt_1;																		// creeper
-	public static ItemProjectile				ender_tnt_2;																		// chcr
-	public static ItemProjectile				ender_tnt_4;																		// tnt
-	public static ItemProjectile				ender_tnt_6;																		// ender
-	                                                                                    // crystal
-	public static ItemCyclicWand				cyclic_wand_range;
-	public static ItemCyclicWand cyclic_wand_fly;
+	private static final int					clownfish	= 2;
+
+	public static final int						dye_cocoa	= 3;
+	public static final int						dye_lapis	= 4;
+
+	public static Item								emerald_helmet;
+	public static Item								emerald_chestplate;
+	public static Item								emerald_leggings;
+	public static Item								emerald_boots;
+	public static ItemCyclicWand			cyclic_wand_build;
+	public static ItemChestSack				chest_sack;
+	public static ItemChestSackEmpty	chest_sack_empty;
+	public static ToolMaterial				MATERIAL_EMERALD;
+	public static ArmorMaterial				ARMOR_MATERIAL_EMERALD;
+	public static ItemEnderBook				book_ender;
+	public static ItemHorseFood				emeraldCarrot;
+	public static ItemHorseFood				lapisCarrot;
+	public static ItemHorseFood				diamondCarrot;
+	public static ItemHorseFood				horse_upgrade_jump;
+	public static ItemHorseFood				horse_upgrade_speed;
+	public static ItemProjectile			ender_water;
+	public static ItemProjectile			ender_snow;
+	public static ItemProjectile			ender_harvest;
+	public static ItemProjectile			ender_lightning;
+	public static ItemProjectile			ender_torch;
+	public static ItemProjectile			ender_wool;
+	public static ItemProjectile			ender_fishing;
+	public static ItemProjectile			ender_dungeon;
+	public static ItemProjectile			ender_blaze;
+	public static ItemProjectile			ender_bed;
+	public static ItemProjectile			ender_tnt_1;																										// creeper
+	public static ItemProjectile			ender_tnt_2;																										// chcr
+	public static ItemProjectile			ender_tnt_4;																										// tnt
+	public static ItemProjectile			ender_tnt_6;																										// ender
+	                                                              																		// crystal
+	public static ItemCyclicWand			cyclic_wand_range;
+	public static ItemCyclicWand			cyclic_wand_fly;
 
 	public static void registerItem(Item item, String name) {
 		registerItem(item, name, false);// default is not hidden
@@ -317,40 +295,28 @@ public class ItemRegistry {
 	public static void register() {
 
 		registerMaterials();
-		
-		if(sceptersEnabled){
+
+		if (sceptersEnabled) {
 
 			cyclic_wand_build = new ItemCyclicWand();
 			registerItem(cyclic_wand_build, "cyclic_wand_build");
-			GameRegistry.addRecipe(new ItemStack(cyclic_wand_build), 
-						"sds", 
-						" o ", 
-						"gog", 
-						'd', new ItemStack(Blocks.diamond_block),'g', Items.ghast_tear, 'o', Blocks.obsidian, 's', Items.nether_star);
-			
+			GameRegistry.addRecipe(new ItemStack(cyclic_wand_build), "sds", " o ", "gog", 'd', new ItemStack(Blocks.diamond_block), 'g', Items.ghast_tear, 'o', Blocks.obsidian, 's', Items.nether_star);
+
 			cyclic_wand_range = new ItemCyclicWand();
 			registerItem(cyclic_wand_range, "cyclic_wand_range");
-			GameRegistry.addRecipe(new ItemStack(cyclic_wand_range), 
-						"sds", 
-						" o ", 
-						"gog", 
-						'd', new ItemStack(Blocks.emerald_block),'g', Items.ghast_tear, 'o', Blocks.obsidian, 's', Items.nether_star);
-		
+			GameRegistry.addRecipe(new ItemStack(cyclic_wand_range), "sds", " o ", "gog", 'd', new ItemStack(Blocks.emerald_block), 'g', Items.ghast_tear, 'o', Blocks.obsidian, 's', Items.nether_star);
+
 			cyclic_wand_fly = new ItemCyclicWand();
 			registerItem(cyclic_wand_fly, "cyclic_wand_fly");
-			GameRegistry.addRecipe(new ItemStack(cyclic_wand_fly), 
-						"sds", 
-						" o ", 
-						"gog", 
-						'd', new ItemStack(Blocks.redstone_block),'g', Items.ghast_tear, 'o', Blocks.obsidian, 's', Items.nether_star);
+			GameRegistry.addRecipe(new ItemStack(cyclic_wand_fly), "sds", " o ", "gog", 'd', new ItemStack(Blocks.redstone_block), 'g', Items.ghast_tear, 'o', Blocks.obsidian, 's', Items.nether_star);
 		}
 
 		// TODO: retexture and/or decide if we are even keeping this
 		if (configToggle.get(ItemEnderPearlReuse.name)) {
 			Item multitool = new ItemMultiTool();
-			registerItem(multitool,ItemMultiTool.name);
+			registerItem(multitool, ItemMultiTool.name);
 		}
-		
+
 		if (configToggle.get(ItemEnderPearlReuse.name)) {
 
 			ItemEnderPearlReuse ender_pearl_reuse = new ItemEnderPearlReuse();
@@ -408,31 +374,30 @@ public class ItemRegistry {
 
 		}
 
-		if(enderBookEnabled){
+		if (enderBookEnabled) {
 			book_ender = new ItemEnderBook();
 			registerItem(book_ender, "book_ender");
 		}
-		
-		if(horseFoodEnabled){
-			
+
+		if (horseFoodEnabled) {
 
 			emeraldCarrot = new ItemHorseFood();
 			ItemRegistry.registerItem(emeraldCarrot, "horse_upgrade_type");
-	
+
 			lapisCarrot = new ItemHorseFood();
 			ItemRegistry.registerItem(lapisCarrot, "horse_upgrade_variant");
-	
+
 			diamondCarrot = new ItemHorseFood();
 			ItemRegistry.registerItem(diamondCarrot, "horse_upgrade_health");
-	
+
 			horse_upgrade_speed = new ItemHorseFood();
 			ItemRegistry.registerItem(horse_upgrade_speed, "horse_upgrade_speed");
-	
+
 			horse_upgrade_jump = new ItemHorseFood();
 			ItemRegistry.registerItem(horse_upgrade_jump, "horse_upgrade_jump");
 
 		}
-		
+
 		ender_tnt_1 = new ItemProjectile();
 		ItemRegistry.registerItem(ender_tnt_1, "ender_tnt_1");
 		ender_tnt_2 = new ItemProjectile();
@@ -505,7 +470,6 @@ public class ItemRegistry {
 		ItemRegistry.registerItem(ender_snow, "ender_snow");
 		if (snow_recipe > 0) {
 			GameRegistry.addShapelessRecipe(new ItemStack(ender_snow, snow_recipe), new ItemStack(Items.ender_pearl), new ItemStack(Blocks.ice), new ItemStack(Items.snowball));
-
 		}
 
 		ender_harvest = new ItemProjectile();
@@ -520,103 +484,83 @@ public class ItemRegistry {
 			GameRegistry.addShapelessRecipe(new ItemStack(ender_lightning, lightning_recipe), new ItemStack(Items.ender_pearl), new ItemStack(Items.quartz), new ItemStack(Items.ghast_tear));
 		}
 
-	
-		if(apple_chorus_enabled){
-			ItemRegistry.apple_chorus = new ItemFoodAppleMagic(hunger, false);
-			 
-			ItemRegistry.apple_chorus.addEffect(MobEffects.levitation, 60, I);
-			ItemRegistry.registerItem(ItemRegistry.apple_chorus, "apple_chorus");
-	
-			ItemFoodAppleMagic.addRecipe(ItemRegistry.apple_chorus,new ItemStack(Items.chorus_fruit),apple_chorus_expensive);
-		}
-		
-		if(apple_chorus_enabled)
-		{
-			ItemRegistry.apple_ender = new ItemFoodAppleMagic(hunger, false);
-		 
-			ItemRegistry.apple_ender.addEffect(PotionRegistry.ender, time, I);
-			ItemRegistry.registerItem(ItemRegistry.apple_ender, "apple_ender");
-	
-			ItemFoodAppleMagic.addRecipe(ItemRegistry.apple_ender,new ItemStack(Items.ender_pearl),apple_ender_expensive);
-		}
-		
-		if(apple_emerald_enabled)
-		{ 
-			ItemRegistry.apple_emerald = new ItemFoodAppleMagic(hunger, false);
-			ItemRegistry.apple_emerald.addEffect(MobEffects.moveSpeed, time, II);  
-			ItemRegistry.apple_emerald.addEffect(MobEffects.absorption, time, I);  
-			ItemRegistry.apple_emerald.addEffect(MobEffects.saturation, time, I); 
-			ItemRegistry.registerItem(ItemRegistry.apple_emerald, "apple_emerald");
-			ItemFoodAppleMagic.addRecipe(ItemRegistry.apple_emerald,new ItemStack(Items.emerald),apple_emerald_expensive);
-		}
-		
-		if(apple_chocolate_enabled)
-		{
-			ItemRegistry.apple_chocolate = new ItemFoodAppleMagic(hunger, false); 
-			ItemRegistry.apple_chocolate.addEffect(MobEffects.weakness, time, I);
-			ItemRegistry.apple_chocolate.addEffect(MobEffects.moveSpeed, time, I); 
-			ItemRegistry.registerItem(ItemRegistry.apple_chocolate, "apple_chocolate");
-			ItemFoodAppleMagic.addRecipe(ItemRegistry.apple_chocolate, new ItemStack(Items.dye, 1, dye_cocoa),apple_chocolate_expensive );
-		}
-		
-		if(apple_lapis_enabled)
-		{
-			ItemRegistry.apple_lapis = new ItemFoodAppleMagic(hunger, false); 
-			ItemRegistry.apple_lapis.addEffect(MobEffects.digSpeed, time, II); //Haste
-			ItemRegistry.registerItem(ItemRegistry.apple_lapis, "apple_lapis");
-			ItemFoodAppleMagic.addRecipe(ItemRegistry.apple_lapis, new ItemStack(Items.dye, 1, dye_lapis),apple_lapis_expensive );
-		}
-		if(apple_diamond_enabled)
-		{
-			ItemRegistry.apple_diamond = new ItemFoodAppleMagic(hunger, false);
-			ItemRegistry.registerItem(ItemRegistry.apple_diamond, "apple_diamond");
-			ItemRegistry.apple_diamond.addEffect(MobEffects.resistance, time, I); 
-			ItemRegistry.apple_diamond.addEffect(MobEffects.healthBoost, time, V); 
-			ItemRegistry.apple_diamond.addEffect(MobEffects.saturation, time, I); 	
-			
-			ItemFoodAppleMagic.addRecipe(apple_diamond,new ItemStack(Items.diamond),apple_diamond_expensive);
-		 
-		}
-		
-		if(apple_bone_enabled)
-		{
-			apple_bone = new ItemFoodAppleMagic(hunger, false);
-			ItemRegistry.registerItem(ItemRegistry.apple_bone, "apple_bone");
-			ItemRegistry.apple_bone.addEffect(MobEffects.luck, time, I); 
-			ItemFoodAppleMagic.addRecipe(apple_bone,new ItemStack(Items.bone),apple_bone_expensive);
-		}
-		
-		if(apple_netherwart_enabled)
-		{
-			apple_netherwart = new ItemFoodAppleMagic(hunger, false);
-			ItemRegistry.registerItem(ItemRegistry.apple_netherwart, "apple_netherwart");
-			ItemRegistry.apple_netherwart.addEffect(MobEffects.digSlowdown, time, I); //Mining Fatigue
-			ItemRegistry.apple_netherwart.addEffect(MobEffects.waterBreathing, time, I);  
-			ItemFoodAppleMagic.addRecipe(apple_netherwart,new ItemStack(Items.nether_wart),apple_netherwart_expensive);
-		}
-		
-		if(apple_prismarine_enabled)
-		{
-			apple_prismarine = new ItemFoodAppleMagic(hunger, false);
-			ItemRegistry.registerItem(ItemRegistry.apple_prismarine, "apple_prismarine");
-			ItemRegistry.apple_prismarine.addEffect(PotionRegistry.waterwalk, time, I); 
-			ItemFoodAppleMagic.addRecipe(apple_prismarine,new ItemStack(Items.prismarine_shard),apple_prismarine_expensive);
+		if (apple_chorus_enabled) {
+			ItemFoodAppleMagic apple_chorus = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.chorus_fruit), apple_chorus_expensive);
+
+			apple_chorus.addEffect(MobEffects.levitation, 30, I);
+			ItemRegistry.registerItem(apple_chorus, "apple_chorus");
+ 
 		}
 
-		if(apple_clownfish_enabled)
-		{
-			apple_slowfall = new ItemFoodAppleMagic(hunger, false);
-			ItemRegistry.registerItem(ItemRegistry.apple_slowfall, "apple_slowfall");
-			ItemRegistry.apple_slowfall.addEffect(PotionRegistry.slowfall, time, I); 
-			ItemRegistry.apple_slowfall.addEffect(PotionRegistry.magnet, time, I); 
-			
-			
-			ItemFoodAppleMagic.addRecipe(apple_slowfall,new ItemStack(Items.fish,1,clownfish),apple_clownfish_expensive);
-			 
+		if (apple_chorus_enabled) {
+			ItemFoodAppleMagic apple_ender = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.ender_pearl), apple_ender_expensive);
+
+			apple_ender.addEffect(PotionRegistry.ender, time, I);
+			ItemRegistry.registerItem(apple_ender, "apple_ender");
+ 
 		}
-		
+
+		if (apple_emerald_enabled) {
+			ItemFoodAppleMagic apple_emerald = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.emerald), apple_emerald_expensive);
+			apple_emerald.addEffect(MobEffects.moveSpeed, time, II);
+			apple_emerald.addEffect(MobEffects.absorption, time, I);
+			// ItemRegistry.apple_emerald.addEffect(MobEffects.saturation, time, I);
+			apple_emerald.addEffect(MobEffects.healthBoost, time, V);
+			ItemRegistry.registerItem(apple_emerald, "apple_emerald"); 
+		}
+
+		if (apple_chocolate_enabled) {
+			ItemFoodAppleMagic apple_chocolate = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.dye, 1, dye_cocoa), apple_chocolate_expensive);
+			apple_chocolate.addEffect(MobEffects.saturation, time, I);
+			apple_chocolate.addEffect(MobEffects.moveSpeed, time, I);
+			ItemRegistry.registerItem(apple_chocolate, "apple_chocolate"); 
+		}
+
+		if (apple_lapis_enabled) {
+			ItemFoodAppleMagic apple_lapis = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.dye, 1, dye_lapis), apple_lapis_expensive);
+			apple_lapis.addEffect(MobEffects.digSpeed, time, II); // Haste
+			apple_lapis.addEffect(MobEffects.saturation, time, I);
+			ItemRegistry.registerItem(apple_lapis, "apple_lapis"); 
+		}
+		if (apple_diamond_enabled) {
+			ItemFoodAppleMagic apple_diamond = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.diamond), apple_diamond_expensive);
+			ItemRegistry.registerItem(apple_diamond, "apple_diamond");
+			apple_diamond.addEffect(MobEffects.resistance, time, I);
+			apple_diamond.addEffect(MobEffects.saturation, time, I);
+ 
+
+		}
+
+		if (apple_bone_enabled) {
+			ItemFoodAppleMagic apple_bone = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.bone), apple_bone_expensive);
+			ItemRegistry.registerItem(apple_bone, "apple_bone");
+			apple_bone.addEffect(MobEffects.luck, time, I);
+			apple_bone.addEffect(MobEffects.saturation, time, I);
+		}
+
+		if (apple_netherwart_enabled) {
+			ItemFoodAppleMagic apple_netherwart = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.nether_wart), apple_netherwart_expensive);
+			ItemRegistry.registerItem(apple_netherwart, "apple_netherwart");
+			apple_netherwart.addEffect(PotionRegistry.magnet, time, I);
+			apple_netherwart.addEffect(MobEffects.saturation, time, I);
+		}
+
+		if (apple_prismarine_enabled) {
+			ItemFoodAppleMagic apple_prismarine = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.prismarine_shard), apple_prismarine_expensive);
+			ItemRegistry.registerItem(apple_prismarine, "apple_prismarine");
+			apple_prismarine.addEffect(PotionRegistry.waterwalk, time, I);
+			apple_prismarine.addEffect(MobEffects.saturation, time, I);
+		}
+
+		if (apple_clownfish_enabled) {
+			ItemFoodAppleMagic apple_slowfall = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.fish, 1, clownfish), apple_clownfish_expensive);
+			ItemRegistry.registerItem(apple_slowfall, "apple_slowfall");
+			apple_slowfall.addEffect(PotionRegistry.slowfall, time, I);
+			apple_slowfall.addEffect(MobEffects.saturation, time, I);
+
+		}
 
 		registerRecipes();
 	}
-	
+
 }

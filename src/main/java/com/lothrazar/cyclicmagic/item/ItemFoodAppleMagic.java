@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.registry.PotionRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -18,13 +19,14 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 
-public class ItemFoodAppleMagic extends ItemFood {
+public class ItemFoodAppleMagic extends ItemFood implements IHasRecipe {
 	private boolean							hasEffect	= false;
 	private ArrayList<Potion>		potions;
 	private ArrayList<Integer>	potionDurations;
 	private ArrayList<Integer>	potionAmplifiers;
-
-	public ItemFoodAppleMagic(int fillsHunger, boolean has_effect) {
+	private ItemStack recipeInput;
+	private boolean isExpensive;
+	public ItemFoodAppleMagic(int fillsHunger, boolean has_effect, ItemStack rec, boolean exp) {
 		super(fillsHunger, false);// is not edible by wolf
 		hasEffect = has_effect;// true gives it enchantment shine
 
@@ -33,13 +35,14 @@ public class ItemFoodAppleMagic extends ItemFood {
 		potions = new ArrayList<Potion>();
 		potionDurations = new ArrayList<Integer>();
 		potionAmplifiers = new ArrayList<Integer>();
+		recipeInput = rec;
+		isExpensive = exp;
 	}
 
 	public ItemFoodAppleMagic addEffect(Potion potionId, int potionDuration, int potionAmplifier) {
-		int TICKS_PER_SEC = 20;
 
 		potions.add(potionId);
-		potionDurations.add(potionDuration * TICKS_PER_SEC);
+		potionDurations.add(potionDuration * Const.TICKS_PER_SEC);
 		potionAmplifiers.add(potionAmplifier);
 
 		return this;// to chain together
@@ -48,12 +51,18 @@ public class ItemFoodAppleMagic extends ItemFood {
 	@Override
 	protected void onFoodEaten(ItemStack par1ItemStack, World world, EntityPlayer player) {
 		addAllEffects(world, player);
+		
+/*	if(par1ItemStack.getItem() == ItemRegistry.apple_diamond){
+			
+			double prev = player.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).getBaseValue();
+			
+			player.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(prev + 2);
+	}*/	
 	}
 
 	@Override
 	public boolean hasEffect(ItemStack par1ItemStack) {
-		return hasEffect; // give it shimmer, depending on if this was set in
-		                  // constructor
+		return hasEffect; 
 	}
 
 	@Override
@@ -65,18 +74,15 @@ public class ItemFoodAppleMagic extends ItemFood {
 			return EnumRarity.RARE;
 	}
 
-	final static int smeltexp = 0;
-
-	public static void addRecipe(ItemFoodAppleMagic apple, ItemStack ingredient, boolean isExpensive) {
+	public void addRecipe() {
 
 		if (isExpensive) {
-			GameRegistry.addRecipe(new ItemStack(apple), "lll", "lal", "lll", 'l', ingredient, 'a', Items.apple);
+			GameRegistry.addRecipe(new ItemStack(this), "lll", "lal", "lll", 'l', recipeInput, 'a', Items.apple);
 		}
 		else {
-			GameRegistry.addShapelessRecipe(new ItemStack(apple), ingredient, Items.apple);
+			GameRegistry.addShapelessRecipe(new ItemStack(this), recipeInput, Items.apple);
 
 		}
-
 	}
 
 	@Override
