@@ -245,6 +245,7 @@ public class ItemRegistry {
 	                                                              																		// crystal
 	public static ItemCyclicWand			cyclic_wand_range;
 	public static ItemCyclicWand			cyclic_wand_fly;
+	public static ItemFoodAppleMagic apple_diamond;
 
 	public static void registerItem(Item item, String name) {
 		registerItem(item, name, false);// default is not hidden
@@ -523,7 +524,7 @@ public class ItemRegistry {
 			ItemRegistry.registerItem(apple_lapis, "apple_lapis"); 
 		}
 		if (apple_diamond_enabled) {
-			ItemFoodAppleMagic apple_diamond = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.diamond), apple_diamond_expensive);
+			apple_diamond = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.diamond), apple_diamond_expensive);
 			ItemRegistry.registerItem(apple_diamond, "apple_diamond");
 			apple_diamond.addEffect(MobEffects.resistance, time, I);
 			apple_diamond.addEffect(MobEffects.saturation, time, I);

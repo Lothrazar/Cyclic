@@ -3,12 +3,15 @@ package com.lothrazar.cyclicmagic.item;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.PotionRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
@@ -52,12 +55,10 @@ public class ItemFoodAppleMagic extends ItemFood implements IHasRecipe {
 	protected void onFoodEaten(ItemStack par1ItemStack, World world, EntityPlayer player) {
 		addAllEffects(world, player);
 		
-/*	if(par1ItemStack.getItem() == ItemRegistry.apple_diamond){
+		if(par1ItemStack.getItem() == ItemRegistry.apple_diamond){
 			
-			double prev = player.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).getBaseValue();
-			
-			player.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(prev + 2);
-	}*/	
+			UtilEntity.incrementMaxHealth(player, 2);
+		}
 	}
 
 	@Override

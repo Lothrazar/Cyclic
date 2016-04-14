@@ -12,9 +12,18 @@ import net.minecraft.world.World;
 
 public class UtilEntity {
 
-	public static void setMaxHealth(EntityLivingBase living, int max) {
+	public static void setMaxHealth(EntityLivingBase living, double max) {
 		living.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(max);
 	}
+	public static double getMaxHealth(EntityLivingBase living) {
+		return living.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).getBaseValue();
+	}
+	
+	public static void incrementMaxHealth(EntityLivingBase living, int by) {
+		setMaxHealth(living,getMaxHealth(living) + by);
+	}
+	
+
 
 	public static EnumFacing getPlayerFacing(EntityLivingBase entity) {
 		int yaw = (int) entity.rotationYaw;
