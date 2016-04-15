@@ -10,23 +10,17 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.World;
 import com.google.common.collect.Ordering;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityBlazeBolt;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityDungeonEye;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamite;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityFishingBolt;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityHarvestBolt;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityHomeBolt;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityLightningballBolt;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityShearingBolt;
-import com.lothrazar.cyclicmagic.entity.projectile.EntitySnowballBolt;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityTorchBolt;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityWaterBolt;
+import com.lothrazar.cyclicmagic.entity.projectile.*;
 import com.lothrazar.cyclicmagic.gui.GuiSpellWheel;
+import com.lothrazar.cyclicmagic.inventory.EventGuiInventory;
 import com.lothrazar.cyclicmagic.potion.PotionCustom;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -53,7 +47,17 @@ public class ClientProxy extends CommonProxy {
 	static final String				keyCategoryInventory	= "key.categories.inventorycontrol";
 
 	private boolean doRenderPotions = false;
-	
+
+	@Override
+	public World getClientWorld() {
+		return FMLClientHandler.instance().getClient().theWorld;
+	}	
+	@Override
+	public void registerEvents() {
+
+		MinecraftForge.EVENT_BUS.register(new EventGuiInventory());
+	}
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void renderPotions() {

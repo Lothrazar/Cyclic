@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.proxy;
 
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraft.util.EnumFacing;
 
 public class CommonProxy {
@@ -9,6 +11,9 @@ public class CommonProxy {
 
 	}
 
+	public World getClientWorld() {
+		return null;
+	}
 	public void displayGuiSpellbook() {
 
 	}
@@ -30,5 +35,10 @@ public class CommonProxy {
 
 	public void renderPotions() {
 	
+	}
+
+	public void registerEvents() {
+		// TODO Auto-generated method stub
+		
 	}
 }

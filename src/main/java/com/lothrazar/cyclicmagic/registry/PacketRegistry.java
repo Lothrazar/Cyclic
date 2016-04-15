@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.registry;
 
+import com.lothrazar.cyclicmagic.inventory.*;
 import com.lothrazar.cyclicmagic.net.*;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
@@ -8,6 +9,14 @@ public class PacketRegistry {
 
 	public static void register(SimpleNetworkWrapper network) {
 
+
+		network.registerMessage(PacketOpenExtendedInventory.class, PacketOpenExtendedInventory.class, 0, Side.SERVER);
+		network.registerMessage(PacketOpenNormalInventory.class, PacketOpenNormalInventory.class, 1, Side.SERVER);
+		network.registerMessage(PacketSyncBauble.class, PacketSyncBauble.class, 2, Side.CLIENT);
+	
+
+		
+		
 		network.registerMessage(MessageKeyCast.class, MessageKeyCast.class, MessageKeyCast.ID, Side.SERVER);
 
 		// merge into key shift packet?
