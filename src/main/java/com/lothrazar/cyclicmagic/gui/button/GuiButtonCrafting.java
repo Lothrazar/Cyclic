@@ -31,7 +31,7 @@ public class GuiButtonCrafting extends GuiButton {
 	
 					ModMain.network.sendToServer(new OpenCraftingPacket(new NBTTagCompound()));
 			}
-			else if (this.gui instanceof GuiPlayerExtended || this.gui instanceof GuiCrafting) {
+			else {//if (this.gui instanceof GuiPlayerExtended || this.gui instanceof GuiCrafting) {
 				 
 					this.gui.mc.displayGuiScreen(new GuiInventory(gui.mc.thePlayer));
 					ModMain.network.sendToServer(new PacketOpenNormalInventory(this.gui.mc.thePlayer));			 

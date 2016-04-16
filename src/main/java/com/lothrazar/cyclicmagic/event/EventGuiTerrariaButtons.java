@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.event;
 
+import com.lothrazar.cyclicmagic.gui.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonDepositAll;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonLootAll;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonQuickStack;
@@ -9,6 +10,7 @@ import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.inventory.GuiCrafting;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -37,7 +39,9 @@ public class EventGuiTerrariaButtons {
 		//	event.getButtonList().add(new GuiButtonCrafting( x, y));
 
 		}
-		else if (gui instanceof GuiContainer && ExtraButtonRegistry.blacklistGuis.contains(self) == false && gui instanceof net.minecraft.client.gui.inventory.GuiInventory == false) {
+		else if (gui instanceof GuiContainer && 
+				!(gui instanceof GuiCrafting ) &&	!(gui instanceof GuiPlayerExtended ) &&
+				ExtraButtonRegistry.blacklistGuis.contains(self) == false && gui instanceof net.minecraft.client.gui.inventory.GuiInventory == false) {
 
 			// align to different area depending on config
 			if (ExtraButtonRegistry.position.equalsIgnoreCase(ExtraButtonRegistry.posLeft)) {

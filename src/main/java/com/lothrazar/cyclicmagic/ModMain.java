@@ -132,6 +132,13 @@ public class ModMain {
 
 	/* TODO LIST
 	 * 
+	 * SHOW IButtons in horse invo
+	 * 
+	 * 
+	 * ROTATE: STAIRS: allow switch frop top to bottom
+	 * 
+	 * PLAY BLOCCK SOUND on rotate spell...+others
+	 * 
 	 * achievemnets give exp
 	 * 
 	 * more achieves - inspire by consoles and also my own

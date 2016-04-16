@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.gui.button.GuiButtonInventory;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiCrafting;
 import net.minecraft.client.gui.inventory.GuiInventory;
+import net.minecraft.client.gui.inventory.GuiScreenHorseInventory;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -19,8 +20,9 @@ public class EventGuiInventory {
 		GuiScreen gui = event.getGui();
 		
 		if (gui instanceof GuiInventory || gui instanceof GuiPlayerExtended
-				|| gui instanceof GuiCrafting ) {
-		//	GuiContainer gui = (GuiContainer) event.getGui();
+				|| gui instanceof GuiCrafting 
+				|| gui instanceof GuiScreenHorseInventory) {
+		
 
 			// TODO: reflection helper?
 			// gui left and top are private, so are the sizes
@@ -39,12 +41,12 @@ public class EventGuiInventory {
 			event.getButtonList().add(new GuiButtonCrafting(gui, x - 12, y));
 		}
 	}
-
+	/*
 	@SideOnly(value = Side.CLIENT)
 	@SubscribeEvent
 	public void guiPostAction(GuiScreenEvent.ActionPerformedEvent.Post event) {
 System.out.println("version with 51 cancelled");
-		/*
+		
 		if (event.getGui() instanceof GuiInventory) {
 			if (event.getButton().id == buttonId) {
 				ModMain.network.sendToServer(new PacketOpenExtendedInventory(event.getGui().mc.thePlayer));
@@ -56,6 +58,6 @@ System.out.println("version with 51 cancelled");
 				event.getGui().mc.displayGuiScreen(new GuiInventory(event.getGui().mc.thePlayer));
 				ModMain.network.sendToServer(new PacketOpenNormalInventory(event.getGui().mc.thePlayer));
 			}
-		}*/
-	}
+		}
+	}*/
 }

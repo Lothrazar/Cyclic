@@ -34,7 +34,7 @@ public class GuiButtonInventory extends GuiButton{
 				 
 					ModMain.network.sendToServer(new PacketOpenExtendedInventory(this.gui.mc.thePlayer));
 			}
-			else if (this.gui instanceof GuiPlayerExtended || this.gui instanceof GuiCrafting) {
+			else {//if (this.gui instanceof GuiPlayerExtended || this.gui instanceof GuiCrafting) {
 				 
 					this.gui.mc.displayGuiScreen(new GuiInventory(gui.mc.thePlayer));
 					ModMain.network.sendToServer(new PacketOpenNormalInventory(this.gui.mc.thePlayer));		 
