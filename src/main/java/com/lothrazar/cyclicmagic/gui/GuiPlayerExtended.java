@@ -8,7 +8,6 @@ import net.minecraft.client.gui.achievement.GuiStats;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.InventoryEffectRenderer;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiPlayerExtended extends InventoryEffectRenderer {
@@ -54,12 +53,6 @@ public class GuiPlayerExtended extends InventoryEffectRenderer {
 		int l = this.guiTop;
 		this.drawTexturedModalRect(k, l, 0, 0, this.xSize, this.ySize);
 
-		for (int i1 = 0; i1 < this.inventorySlots.inventorySlots.size(); ++i1) {
-			Slot slot = (Slot) this.inventorySlots.inventorySlots.get(i1);
-			if (slot.getHasStack() && slot.getSlotStackLimit() == 1) {
-				this.drawTexturedModalRect(k + slot.xDisplayPosition, l + slot.yDisplayPosition, 200, 0, 16, 16);
-			}
-		}
 	}
 
 	@Override
