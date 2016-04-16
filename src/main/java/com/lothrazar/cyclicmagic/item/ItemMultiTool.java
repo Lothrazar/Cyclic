@@ -41,15 +41,14 @@ public class ItemMultiTool extends ItemTool implements IHasRecipe {
 
 		super(damageVsEntity, attackSpeed, ToolMaterial.DIAMOND, EFFECTIVE_ON);
 
-		this.setMaxDamage(-1);// unbreakable
+		this.setMaxDamage(500000);// unbreakable
 
 	}
 
 	@Override
 	public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn) {
 
-		stack.addEnchantment(Enchantments.efficiency, 4);
-		stack.addEnchantment(Enchantments.silkTouch, 0);
+		stack.addEnchantment(Enchantments.efficiency, 5);
 
 		super.onCreated(stack, worldIn, playerIn);
 	}
