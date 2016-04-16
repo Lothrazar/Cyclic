@@ -6,7 +6,9 @@ import com.lothrazar.cyclicmagic.gui.button.GuiButtonCrafting;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonInventory;
 import com.lothrazar.cyclicmagic.net.PacketOpenExtendedInventory;
 import com.lothrazar.cyclicmagic.net.PacketOpenNormalInventory;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.inventory.GuiCrafting;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -15,15 +17,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EventGuiInventory {
 
-	final int buttonId = 55;
-
 	@SideOnly(value = Side.CLIENT)
 	@SubscribeEvent
 	public void guiPostInit(GuiScreenEvent.InitGuiEvent.Post event) {
-
+		GuiScreen gui = event.getGui();
 		
-		if (event.getGui() instanceof GuiInventory || event.getGui() instanceof GuiPlayerExtended) {
-			GuiContainer gui = (GuiContainer) event.getGui();
+		if (gui instanceof GuiInventory || gui instanceof GuiPlayerExtended
+				|| gui instanceof GuiCrafting ) {
+		//	GuiContainer gui = (GuiContainer) event.getGui();
 
 			// TODO: reflection helper?
 			// gui left and top are private, so are the sizes
@@ -36,21 +37,18 @@ public class EventGuiInventory {
 			int guiTop = (gui.height - ySize) / 2;
 			int x = 30 + guiLeft;
 			int y = guiTop + 2;
-			event.getButtonList().add(new GuiButtonInventory(buttonId, x, y));
+			event.getButtonList().add(new GuiButtonInventory(gui, x, y));
 		
 
-			if (event.getGui() instanceof GuiInventory) {
-
-				event.getButtonList().add(new GuiButtonCrafting( x - 12, y));
-
-			}
+			event.getButtonList().add(new GuiButtonCrafting(gui, x - 12, y));
 		}
 	}
 
 	@SideOnly(value = Side.CLIENT)
 	@SubscribeEvent
 	public void guiPostAction(GuiScreenEvent.ActionPerformedEvent.Post event) {
-
+System.out.println("version with 51 cancelled");
+		/*
 		if (event.getGui() instanceof GuiInventory) {
 			if (event.getButton().id == buttonId) {
 				ModMain.network.sendToServer(new PacketOpenExtendedInventory(event.getGui().mc.thePlayer));
@@ -62,6 +60,6 @@ public class EventGuiInventory {
 				event.getGui().mc.displayGuiScreen(new GuiInventory(event.getGui().mc.thePlayer));
 				ModMain.network.sendToServer(new PacketOpenNormalInventory(event.getGui().mc.thePlayer));
 			}
-		}
+		}*/
 	}
 }
