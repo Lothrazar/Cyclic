@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.registry;
+package com.lothrazar.cyclicmagic.event;
 
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.GuiPlayerExtended;
@@ -30,15 +30,16 @@ public class EventGuiInventory {
 			// gui left and top are private, so are the sizes
 			// int guiLeft = ;//gui.guiLeft
 			// int guiTop = ;//gui.guiTop
-			int x = 30;
-			int y = 2;
+		
 			int w = 10;
 			int h = 20;
 			int xSize = 176;
 			int ySize = 166;
 			int guiLeft = (gui.width - xSize) / 2;
 			int guiTop = (gui.height - ySize) / 2;
-			event.getButtonList().add(new GuiButtonInventory(buttonId, guiLeft, guiTop, x, y, w, h, I18n.format((event.getGui() instanceof GuiInventory) ? "button.inventory" : "button.normal", new Object[0])));
+			int x = 30 + guiLeft;
+			int y = guiTop + 2;
+			event.getButtonList().add(new GuiButtonInventory(buttonId, x, y));
 		
 
 			if (event.getGui() instanceof GuiInventory) {
@@ -46,11 +47,7 @@ public class EventGuiInventory {
 				event.getButtonList().add(new GuiButtonCrafting( x - 12, y));
 
 			}
-		
 		}
-		
-		
-
 	}
 
 	@SideOnly(value = Side.CLIENT)

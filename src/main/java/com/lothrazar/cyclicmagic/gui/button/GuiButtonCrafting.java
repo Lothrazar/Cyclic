@@ -12,7 +12,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiButtonCrafting extends GuiButton {
 	public GuiButtonCrafting( int x, int y) {
-		super(256, x, y, 10, Const.btnHeight, I18n.translateToLocal("btn.crafting"));
+		super(256, x, y, 10, Const.btnHeight, "C");
 	}
 
 	@SideOnly(Side.CLIENT)
