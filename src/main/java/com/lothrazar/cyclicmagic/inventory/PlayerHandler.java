@@ -19,25 +19,25 @@ import com.lothrazar.cyclicmagic.ModMain;
 
 public class PlayerHandler {
 
-	private static HashMap<String, InventoryPlayerExtended> playerBaubles = new HashMap<String, InventoryPlayerExtended>();
+	private static HashMap<String, InventoryPlayerExtended> playerItems = new HashMap<String, InventoryPlayerExtended>();
 
-	public static void clearPlayerBaubles(EntityPlayer player) {
-		playerBaubles.remove(player.getDisplayNameString());
+	public static void clearPlayerInventory(EntityPlayer player) {
+		playerItems.remove(player.getDisplayNameString());
 	}
 
-	public static InventoryPlayerExtended getPlayerBaubles(EntityPlayer player) {
-		if (!playerBaubles.containsKey(player.getDisplayNameString())) {
+	public static InventoryPlayerExtended getPlayerInventory(EntityPlayer player) {
+		if (!playerItems.containsKey(player.getDisplayNameString())) {
 			InventoryPlayerExtended inventory = new InventoryPlayerExtended(player);
-			playerBaubles.put(player.getDisplayNameString(), inventory);
+			playerItems.put(player.getDisplayNameString(), inventory);
 		}
-		return playerBaubles.get(player.getDisplayNameString());
+		return playerItems.get(player.getDisplayNameString());
 	}
 
-	public static void setPlayerBaubles(EntityPlayer player, InventoryPlayerExtended inventory) {
-		playerBaubles.put(player.getDisplayNameString(), inventory);
+	public static void setPlayerInventory(EntityPlayer player, InventoryPlayerExtended inventory) {
+		playerItems.put(player.getDisplayNameString(), inventory);
 	}
 
-	public static void loadPlayerBaubles(EntityPlayer player, File file1, File file2) {
+	public static void loadPlayerInventory(EntityPlayer player, File file1, File file2) {
 		if (player != null && !player.worldObj.isRemote) {
 			try {
 				NBTTagCompound data = null;
@@ -69,7 +69,7 @@ public class PlayerHandler {
 				if (data != null) {
 					InventoryPlayerExtended inventory = new InventoryPlayerExtended(player);
 					inventory.readNBT(data);
-					playerBaubles.put(player.getDisplayNameString(), inventory);
+					playerItems.put(player.getDisplayNameString(), inventory);
 					if (save)
 						savePlayerBaubles(player, file1, file2);
 				}
@@ -93,7 +93,7 @@ public class PlayerHandler {
 
 				try {
 					if (file1 != null) {
-						InventoryPlayerExtended inventory = getPlayerBaubles(player);
+						InventoryPlayerExtended inventory = getPlayerInventory(player);
 						NBTTagCompound data = new NBTTagCompound();
 						inventory.saveNBT(data);
 

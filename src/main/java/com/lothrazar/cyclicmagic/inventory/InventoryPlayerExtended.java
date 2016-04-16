@@ -26,7 +26,7 @@ public class InventoryPlayerExtended implements IInventory {
 	public static final int IROW = 4;
 	public static final int ICOL = 8;
 	public InventoryPlayerExtended(EntityPlayer player) {
-		this.stackList = new ItemStack[IROW * ICOL];
+		this.stackList = new ItemStack[IROW * ICOL + 20];
 		this.player = new WeakReference<EntityPlayer>(player);
 	}
 
@@ -44,8 +44,9 @@ public class InventoryPlayerExtended implements IInventory {
 	}
 
 	@Override
-	public ItemStack getStackInSlot(int par1) {
-		return par1 >= this.getSizeInventory() ? null : this.stackList[par1];
+	public ItemStack getStackInSlot(int s) {
+		//System.out.println("getStackInSlot "+s);
+		return s >= this.getSizeInventory() ? null : this.stackList[s];
 	}
 
 	@Override
@@ -69,10 +70,11 @@ public class InventoryPlayerExtended implements IInventory {
 	 * GUI.
 	 */
 	@Override
-	public ItemStack removeStackFromSlot(int par1) {
-		if (this.stackList[par1] != null) {
-			ItemStack itemstack = this.stackList[par1];
-			this.stackList[par1] = null;
+	public ItemStack removeStackFromSlot(int s) {
+		//System.out.println("removeStackFromSlot "+s);
+		if (this.stackList[s] != null) {
+			ItemStack itemstack = this.stackList[s];
+			this.stackList[s] = null;
 			return itemstack;
 		}
 		else {
@@ -122,14 +124,13 @@ public class InventoryPlayerExtended implements IInventory {
 	 * crafting or armor sections).
 	 */
 	@Override
-	public void setInventorySlotContents(int par1, ItemStack stack) {
+	public void setInventorySlotContents(int idx, ItemStack stack) {
 
+		//System.out.println("setInventorySlotContents "+idx);
 
-		this.stackList[par1] = stack;
+		this.stackList[idx] = stack;
 
-		if (eventHandler != null)
-			this.eventHandler.onCraftMatrixChanged(this);
-		syncSlotToClients(par1);
+		syncSlotToClients(idx);
 	}
 
 	@Override
@@ -225,7 +226,7 @@ public class InventoryPlayerExtended implements IInventory {
 	}
 
 	public void dropItems(ArrayList<EntityItem> drops) {
-		for (int i = 0; i < 4; ++i) {
+		for (int i = 0; i < this.getSizeInventory(); ++i) {
 			if (this.stackList[i] != null) {
 				EntityItem ei = new EntityItem(player.get().worldObj, player.get().posX, player.get().posY + player.get().getEyeHeight(), player.get().posZ, this.stackList[i].copy());
 				ei.setPickupDelay(40);
@@ -242,7 +243,7 @@ public class InventoryPlayerExtended implements IInventory {
 	}
 
 	public void dropItemsAt(List<EntityItem> drops, Entity e) {
-		for (int i = 0; i < 4; ++i) {
+		for (int i = 0; i < this.getSizeInventory(); ++i) {
 			if (this.stackList[i] != null) {
 				EntityItem ei = new EntityItem(e.worldObj, e.posX, e.posY + e.getEyeHeight(), e.posZ, this.stackList[i].copy());
 				ei.setPickupDelay(40);

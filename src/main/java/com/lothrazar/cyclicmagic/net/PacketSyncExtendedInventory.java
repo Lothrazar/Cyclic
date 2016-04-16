@@ -25,7 +25,7 @@ public class PacketSyncExtendedInventory implements IMessage, IMessageHandler<Pa
 
 	public PacketSyncExtendedInventory(EntityPlayer player, int slot) {
 		this.slot = slot;
-		this.bauble = PlayerHandler.getPlayerBaubles(player).getStackInSlot(slot);
+		this.bauble = PlayerHandler.getPlayerInventory(player).getStackInSlot(slot);
 		this.playerId = player.getEntityId();
 	}
 
@@ -62,7 +62,7 @@ public class PacketSyncExtendedInventory implements IMessage, IMessageHandler<Pa
 			return;
 		Entity p = world.getEntityByID(message.playerId);
 		if (p != null && p instanceof EntityPlayer) {
-			PlayerHandler.getPlayerBaubles((EntityPlayer) p).stackList[message.slot] = message.bauble;
+			PlayerHandler.getPlayerInventory((EntityPlayer) p).stackList[message.slot] = message.bauble;
 		}
 		return;
 	}

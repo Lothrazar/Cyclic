@@ -43,13 +43,13 @@ public class EventHandlerEntity {
 	@SubscribeEvent
 	public void playerDeath(PlayerDropsEvent event) {
 		if (event.getEntity() instanceof EntityPlayer && !event.getEntity().worldObj.isRemote && !event.getEntity().worldObj.getGameRules().getBoolean("keepInventory")) {
-			PlayerHandler.getPlayerBaubles(event.getEntityPlayer()).dropItemsAt(event.getDrops(), event.getEntityPlayer());
+			PlayerHandler.getPlayerInventory(event.getEntityPlayer()).dropItemsAt(event.getDrops(), event.getEntityPlayer());
 		}
 	}
 
 	@SubscribeEvent
 	public void playerLoad(PlayerEvent.LoadFromFile event) {
-		PlayerHandler.clearPlayerBaubles(event.getEntityPlayer());
+		PlayerHandler.clearPlayerInventory(event.getEntityPlayer());
 
 		File playerFile = getPlayerFile(ext, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString());
 		if (!playerFile.exists()) {
@@ -66,7 +66,7 @@ public class EventHandlerEntity {
 			}
 		}
 
-		PlayerHandler.loadPlayerBaubles(event.getEntityPlayer(), playerFile, getPlayerFile(extback, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString()));
+		PlayerHandler.loadPlayerInventory(event.getEntityPlayer(), playerFile, getPlayerFile(extback, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString()));
 		EventHandlerEntity.playerEntityIds.add(event.getEntityPlayer().getEntityId());
 	}
 	

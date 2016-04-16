@@ -18,27 +18,27 @@ public class ContainerPlayerExtended extends Container {
 	 */
 	public boolean															isLocalWorld;
 	private final EntityPlayer									thePlayer;
-	private static final EntityEquipmentSlot[]	ARMOR	= new EntityEquipmentSlot[] { EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET };
+	private static final EntityEquipmentSlot[]	ARMOR				= new EntityEquipmentSlot[] { EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET };
 
+	public static final int											SLOT_SHIELD	= 40;
+	public static final int											SQ					= 18;
+	public static final int											VROW				= 3;
+	public static final int											VCOL				= 9;
+	public static final int											HOTBAR_SIZE	= 9;
+	final int																		pad					= 8;
 
-	public static final int			SLOT_SHIELD			= 40;
-	public static final int			SQ			= 18;
-	public static final int			VROW			= 3;
-	public static final int			VCOL			= 9;
-	public static final int			HOTBAR_SIZE			= 9;
-	final int pad = 8;
 	public ContainerPlayerExtended(InventoryPlayer playerInv, boolean par2, EntityPlayer player) {
 		this.isLocalWorld = par2;
 		this.thePlayer = player;
 		inventory = new InventoryPlayerExtended(player);
 		inventory.setEventHandler(this);
 		if (!player.worldObj.isRemote) {
-			inventory.stackList = PlayerHandler.getPlayerBaubles(player).stackList;
+			inventory.stackList = PlayerHandler.getPlayerInventory(player).stackList;
 		}
 
 		for (int k = 0; k < ARMOR.length; k++) {
 			final EntityEquipmentSlot slot = ARMOR[k];
-			this.addSlotToContainer(new Slot(playerInv, 4*VCOL + (VROW - k), pad, pad + k * SQ) {
+			this.addSlotToContainer(new Slot(playerInv, 4 * VCOL + (VROW - k), pad, pad + k * SQ) {
 				@Override
 				public int getSlotStackLimit() {
 					return 1;
@@ -62,25 +62,35 @@ public class ContainerPlayerExtended extends Container {
 			});
 		}
 
-		int xPos,yPos;
+		int xPos, yPos, sl;
 		for (int i = 0; i < InventoryPlayerExtended.IROW; ++i) {
 			for (int j = 0; j < InventoryPlayerExtended.ICOL; ++j) {
-				
-				xPos = pad + (j+1) * SQ;
+
+				xPos = pad + (j + 1) * SQ;
 				yPos = pad + i * SQ;
-				
-				this.addSlotToContainer(new Slot(inventory, j+i+1, xPos, yPos));
+				sl = j + (i + 1) * InventoryPlayerExtended.ICOL;
+
+				System.out.println("addSlotToContainer "+sl);
+				this.addSlotToContainer(new Slot(inventory, sl, xPos, yPos));
 			}
 		}
 
 		for (int i = 0; i < VROW; ++i) {
 			for (int j = 0; j < VCOL; ++j) {
-				this.addSlotToContainer(new Slot(playerInv, j + (i + 1) * HOTBAR_SIZE, pad + j * SQ, 84 + i * SQ));
+
+				xPos = pad + j * SQ;
+				yPos = 84 + i * SQ;
+				sl = j + (i + 1) * HOTBAR_SIZE;
+				this.addSlotToContainer(new Slot(playerInv, sl, xPos, yPos));
 			}
 		}
 
+		yPos = 142;
 		for (int i = 0; i < HOTBAR_SIZE; ++i) {
-			this.addSlotToContainer(new Slot(playerInv, i, pad + i * SQ, 142));
+
+			xPos = pad + i * SQ;
+			sl = i;
+			this.addSlotToContainer(new Slot(playerInv, sl, xPos, yPos));
 		}
 	}
 
@@ -92,7 +102,7 @@ public class ContainerPlayerExtended extends Container {
 		super.onContainerClosed(player);
 
 		if (!player.worldObj.isRemote) {
-			PlayerHandler.setPlayerBaubles(player, inventory);
+			PlayerHandler.setPlayerInventory(player, inventory);
 		}
 	}
 
@@ -100,6 +110,7 @@ public class ContainerPlayerExtended extends Container {
 	public boolean canInteractWith(EntityPlayer par1EntityPlayer) {
 		return true;
 	}
+
 	/**
 	 * Called when a player shift-clicks on a slot. You must override this or you
 	 * will crash when someone does that.
@@ -114,12 +125,12 @@ public class ContainerPlayerExtended extends Container {
 			itemstack = itemstack1.copy();
 
 			if (iSlot == 0) {
-				if (!this.mergeItemStack(itemstack1, HOTBAR_SIZE + 4, 36+9 + 4, true)) { return null; }
+				if (!this.mergeItemStack(itemstack1, HOTBAR_SIZE + 4, 36 + 9 + 4, true)) { return null; }
 
 				slot.onSlotChange(itemstack1, itemstack);
 			}
 			else if (iSlot >= 1 && iSlot < HOTBAR_SIZE) {
-				if (!this.mergeItemStack(itemstack1, HOTBAR_SIZE + 4, 36+9 + 4, false)) { return null; }
+				if (!this.mergeItemStack(itemstack1, HOTBAR_SIZE + 4, 36 + 9 + 4, false)) { return null; }
 			}
 			else if (itemstack.getItem() instanceof ItemArmor) {
 				ItemArmor armor = (ItemArmor) itemstack1.getItem();
@@ -130,7 +141,7 @@ public class ContainerPlayerExtended extends Container {
 			else if (iSlot >= HOTBAR_SIZE + 4 && iSlot < 36 + 4) {
 				if (!this.mergeItemStack(itemstack1, 36 + 4, 45 + 4, false)) { return null; }
 			}
-			else if (iSlot >= 36 + 4 && iSlot < 36+9 + 4) {
+			else if (iSlot >= 36 + 4 && iSlot < 36 + 9 + 4) {
 				if (!this.mergeItemStack(itemstack1, HOTBAR_SIZE + 4, 36 + 4, false)) { return null; }
 			}
 			else if (!this.mergeItemStack(itemstack1, HOTBAR_SIZE + 4, 45 + 4, false, slot)) { return null; }

@@ -18,7 +18,7 @@ public class EventHandlerNetwork {
 
 	public static void syncBaubles(EntityPlayer player) {
 		for (int a = 0; a < 4; a++) {
-			PlayerHandler.getPlayerBaubles(player).syncSlotToClients(a);
+			PlayerHandler.getPlayerInventory(player).syncSlotToClients(a);
 		}
 	}
 
