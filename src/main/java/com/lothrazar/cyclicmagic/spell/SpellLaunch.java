@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 
 public class SpellLaunch extends BaseSpell implements ISpell {
 
-	private static final float	power				= 1.07F;
+	private static final float	power				= 1.10F;
 	private static final float	mountPower	= 1.01F;
 	private static final int		slowfallSec	= 10;			// TODO: this 10 seconds in
 	                                                  // config..??
@@ -27,7 +27,7 @@ public class SpellLaunch extends BaseSpell implements ISpell {
 
 		super.init(id, name);
 		this.cost = 25;
-		this.cooldown = 10;
+		this.cooldown = 6;
 	}
 
 	@Override
@@ -40,7 +40,10 @@ public class SpellLaunch extends BaseSpell implements ISpell {
 			//player.addPotionEffect();
 			return true;
 		}
-		
+
+		double velX = (double) (-MathHelper.sin(player.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(player.rotationPitch / 180.0F * (float) Math.PI) * power);
+		double velZ = (double) (MathHelper.cos(player.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(player.rotationPitch / 180.0F * (float) Math.PI) * power);
+
 		double velY = (double) (-MathHelper.sin((player.rotationPitch) / 180.0F * (float) Math.PI) * power);
 
 		if (velY < 0) {
@@ -51,11 +54,12 @@ public class SpellLaunch extends BaseSpell implements ISpell {
 
 		if (velY < 0.4) {
 			velY = 0.4 + player.jumpMovementFactor;
+			boolean isLookingDown = (player.getLookVec().yCoord < -20);
+			
+			if(isLookingDown){
+				velY += 0.9;
+			}
 		}
-
-		double velX = (double) (-MathHelper.sin(player.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(player.rotationPitch / 180.0F * (float) Math.PI) * power);
-		double velZ = (double) (MathHelper.cos(player.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(player.rotationPitch / 180.0F * (float) Math.PI) * power);
-
 		player.motionY = 0;
 		player.fallDistance = 0;
 

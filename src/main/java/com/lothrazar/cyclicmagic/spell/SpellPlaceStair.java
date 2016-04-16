@@ -29,9 +29,6 @@ public class SpellPlaceStair extends BaseSpellPlace {
 			startPos = startPos.offset(side);
 		}
 
-		
-		System.out.println("Place stairs at "+startPos.toString());
-		
 		UtilPlaceBlocks.stairway(world, player, wand, startPos);
 
 		return true;

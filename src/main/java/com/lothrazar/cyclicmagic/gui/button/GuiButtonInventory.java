@@ -9,6 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.inventory.GuiCrafting;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
@@ -32,16 +33,12 @@ public class GuiButtonInventory extends GuiButton{
 			if (this.gui instanceof GuiInventory) {
 				 
 					ModMain.network.sendToServer(new PacketOpenExtendedInventory(this.gui.mc.thePlayer));
-				 
 			}
-
-			if (this.gui instanceof GuiPlayerExtended) {
+			else if (this.gui instanceof GuiPlayerExtended || this.gui instanceof GuiCrafting) {
 				 
 					this.gui.mc.displayGuiScreen(new GuiInventory(gui.mc.thePlayer));
-					ModMain.network.sendToServer(new PacketOpenNormalInventory(this.gui.mc.thePlayer));
-				 
+					ModMain.network.sendToServer(new PacketOpenNormalInventory(this.gui.mc.thePlayer));		 
 			}
-			
 		}
 
 		return pressed;

@@ -60,6 +60,7 @@ public class UtilSound {
 		// world.playSoundEffect(pos.getX(), pos.getY(), pos.getZ(), sound, volume,
 		// pitch);
 		System.out.println("TODO: fix sounds W" + sound);
+		playSound(world,pos,bwoaaap,SoundCategory.PLAYERS);
 
 	}
 

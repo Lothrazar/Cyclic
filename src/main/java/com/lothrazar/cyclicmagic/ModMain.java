@@ -69,6 +69,7 @@ public class ModMain {
 		MobSpawningRegistry.register();
 		WorldGenRegistry.register();
 		FuelRegistry.register();
+		SoundRegistry.register();
 
 		if (StackSizeRegistry.enabled) {
 			StackSizeRegistry.register();
