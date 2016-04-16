@@ -20,7 +20,13 @@ public class ContainerPlayerExtended extends Container {
 	private final EntityPlayer									thePlayer;
 	private static final EntityEquipmentSlot[]	ARMOR	= new EntityEquipmentSlot[] { EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET };
 
-	
+
+	public static final int			SLOT_SHIELD			= 40;
+	public static final int			SQ			= 18;
+	public static final int			VROW			= 3;
+	public static final int			VCOL			= 9;
+	public static final int			HOTBAR_SIZE			= 9;
+	final int pad = 8;
 	public ContainerPlayerExtended(InventoryPlayer playerInv, boolean par2, EntityPlayer player) {
 		this.isLocalWorld = par2;
 		this.thePlayer = player;
@@ -30,9 +36,9 @@ public class ContainerPlayerExtended extends Container {
 			inventory.stackList = PlayerHandler.getPlayerBaubles(player).stackList;
 		}
 
-		for (int k = 0; k < 4; k++) {
+		for (int k = 0; k < ARMOR.length; k++) {
 			final EntityEquipmentSlot slot = ARMOR[k];
-			this.addSlotToContainer(new Slot(playerInv, 36 + (3 - k), 8, 8 + k * 18) {
+			this.addSlotToContainer(new Slot(playerInv, 4*VCOL + (VROW - k), pad, pad + k * SQ) {
 				@Override
 				public int getSlotStackLimit() {
 					return 1;
@@ -60,33 +66,22 @@ public class ContainerPlayerExtended extends Container {
 		for (int i = 0; i < InventoryPlayerExtended.IROW; ++i) {
 			for (int j = 0; j < InventoryPlayerExtended.ICOL; ++j) {
 				
-				xPos = 60 + j * SQ;
-				yPos = 8 + i * SQ;
+				xPos = pad + (j+1) * SQ;
+				yPos = pad + i * SQ;
 				
 				this.addSlotToContainer(new Slot(inventory, j+i+1, xPos, yPos));
 			}
 		}
 
-		
-
 		for (int i = 0; i < VROW; ++i) {
 			for (int j = 0; j < VCOL; ++j) {
-				this.addSlotToContainer(new Slot(playerInv, j + (i + 1) * HOTBAR_SIZE, 8 + j * SQ, 84 + i * SQ));
+				this.addSlotToContainer(new Slot(playerInv, j + (i + 1) * HOTBAR_SIZE, pad + j * SQ, 84 + i * SQ));
 			}
 		}
 
 		for (int i = 0; i < HOTBAR_SIZE; ++i) {
-			this.addSlotToContainer(new Slot(playerInv, i, 8 + i * SQ, 142));
+			this.addSlotToContainer(new Slot(playerInv, i, pad + i * SQ, 142));
 		}
-
-		this.addSlotToContainer(new Slot(playerInv, SLOT_SHIELD, 97, 62) {
-		
-			@Override
-			@SideOnly(Side.CLIENT)
-			public String getSlotTexture() {
-				return "minecraft:items/empty_armor_slot_shield";
-			}
-		});
 	}
 
 	/**
@@ -105,12 +100,6 @@ public class ContainerPlayerExtended extends Container {
 	public boolean canInteractWith(EntityPlayer par1EntityPlayer) {
 		return true;
 	}
-
-	public static final int			SLOT_SHIELD			= 40;
-	public static final int			SQ			= 18;
-	public static final int			VROW			= 3;
-	public static final int			VCOL			= 9;
-	public static final int			HOTBAR_SIZE			= 9;
 	/**
 	 * Called when a player shift-clicks on a slot. You must override this or you
 	 * will crash when someone does that.

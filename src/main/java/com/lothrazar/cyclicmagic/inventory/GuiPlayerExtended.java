@@ -16,9 +16,9 @@ public class GuiPlayerExtended extends InventoryEffectRenderer {
 	public static final ResourceLocation	background	= new ResourceLocation(Const.MODID, "textures/gui/inventory.png");
 
 
-	private float													xSizeFloat;
+	//private float													xSizeFloat;
 
-	private float													ySizeFloat;
+//	private float													ySizeFloat;
 
 	public GuiPlayerExtended(EntityPlayer player) {
 		super(new ContainerPlayerExtended(player.inventory, !player.worldObj.isRemote, player));
@@ -41,14 +41,14 @@ public class GuiPlayerExtended extends InventoryEffectRenderer {
 	} 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int p_146979_1_, int p_146979_2_) {
-		this.fontRendererObj.drawString(I18n.format("container.crafting", new Object[0]), 97, 8, 4210752);
+		//this.fontRendererObj.drawString(I18n.format("container.crafting", new Object[0]), 97, 8, 4210752);
 	}
  
 	@Override
 	public void drawScreen(int par1, int par2, float par3) {
 		super.drawScreen(par1, par2, par3);
-		this.xSizeFloat = (float) par1;
-		this.ySizeFloat = (float) par2;
+		//this.xSizeFloat = (float) par1;
+		//this.ySizeFloat = (float) par2;
 	}
 
 	@Override

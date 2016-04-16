@@ -22,7 +22,7 @@ public class InventoryPlayerExtended implements IInventory {
 	public WeakReference<EntityPlayer>	player;
 	public boolean											blockEvents	= false;
 
-	public static final int IROW = 3;
+	public static final int IROW = 4;
 	public static final int ICOL = 8;
 	public InventoryPlayerExtended(EntityPlayer player) {
 		this.stackList = new ItemStack[IROW * ICOL];
