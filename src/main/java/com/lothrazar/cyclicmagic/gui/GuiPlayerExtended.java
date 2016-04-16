@@ -7,25 +7,19 @@ import net.minecraft.client.gui.achievement.GuiAchievements;
 import net.minecraft.client.gui.achievement.GuiStats;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.InventoryEffectRenderer;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiPlayerExtended extends InventoryEffectRenderer {
 
-	public static final ResourceLocation	background	= new ResourceLocation(Const.MODID, "textures/gui/inventory.png");
-
-
-	//private float													xSizeFloat;
-
-//	private float													ySizeFloat;
+	public static final ResourceLocation background = new ResourceLocation(Const.MODID, "textures/gui/inventory.png");
 
 	public GuiPlayerExtended(EntityPlayer player) {
 		super(new ContainerPlayerExtended(player.inventory, !player.worldObj.isRemote, player));
 		this.allowUserInput = true;
 	}
- 
+
 	@Override
 	public void updateScreen() {
 		try {
@@ -33,23 +27,23 @@ public class GuiPlayerExtended extends InventoryEffectRenderer {
 		} catch (Exception e) {}
 		this.updateActivePotionEffects();
 	}
- 
+
 	@Override
 	public void initGui() {
 		this.buttonList.clear();
 		super.initGui();
 
-	} 
+	}
+
 	@Override
 	protected void drawGuiContainerForegroundLayer(int p_146979_1_, int p_146979_2_) {
-		//this.fontRendererObj.drawString(I18n.format("container.crafting", new Object[0]), 97, 8, 4210752);
+		// this.fontRendererObj.drawString(I18n.format("container.crafting", new
+		// Object[0]), 97, 8, 4210752);
 	}
- 
+
 	@Override
 	public void drawScreen(int par1, int par2, float par3) {
 		super.drawScreen(par1, par2, par3);
-		//this.xSizeFloat = (float) par1;
-		//this.ySizeFloat = (float) par2;
 	}
 
 	@Override
@@ -67,7 +61,6 @@ public class GuiPlayerExtended extends InventoryEffectRenderer {
 			}
 		}
 	}
-
 
 	@Override
 	protected void actionPerformed(GuiButton button) {

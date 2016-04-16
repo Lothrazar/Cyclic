@@ -8,7 +8,6 @@ import com.lothrazar.cyclicmagic.net.PacketOpenExtendedInventory;
 import com.lothrazar.cyclicmagic.net.PacketOpenNormalInventory;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiInventory;
-import net.minecraft.client.resources.I18n;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -30,9 +29,7 @@ public class EventGuiInventory {
 			// gui left and top are private, so are the sizes
 			// int guiLeft = ;//gui.guiLeft
 			// int guiTop = ;//gui.guiTop
-		
-			int w = 10;
-			int h = 20;
+
 			int xSize = 176;
 			int ySize = 166;
 			int guiLeft = (gui.width - xSize) / 2;

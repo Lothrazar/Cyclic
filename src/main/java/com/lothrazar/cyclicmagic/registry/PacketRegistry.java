@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.registry;
 
-import com.lothrazar.cyclicmagic.inventory.*;
 import com.lothrazar.cyclicmagic.net.*;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;

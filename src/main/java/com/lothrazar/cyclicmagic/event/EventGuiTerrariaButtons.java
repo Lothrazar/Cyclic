@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.event;
 
-import com.lothrazar.cyclicmagic.gui.button.GuiButtonCrafting;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonDepositAll;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonLootAll;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonQuickStack;
