@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.event;
 
-import com.lothrazar.cyclicmagic.gui.button.GuiButtonCrafting;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonDepositAll;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonLootAll;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonQuickStack;
@@ -16,7 +15,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EventGuiAddButtons {
+public class EventGuiTerrariaButtons {
 
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
@@ -35,7 +34,7 @@ public class EventGuiAddButtons {
 		// not GuiContainerCreative
 		if (event.getGui() instanceof GuiInventory) {
 
-			event.getButtonList().add(new GuiButtonCrafting(button_id++, x, y));
+		//	event.getButtonList().add(new GuiButtonCrafting( x, y));
 
 		}
 		else if (gui instanceof GuiContainer && ExtraButtonRegistry.blacklistGuis.contains(self) == false && gui instanceof net.minecraft.client.gui.inventory.GuiInventory == false) {

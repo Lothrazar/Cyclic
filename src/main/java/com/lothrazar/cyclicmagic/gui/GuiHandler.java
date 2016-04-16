@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.gui;
 
 import com.lothrazar.cyclicmagic.block.TileEntityUncrafting;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
+import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -13,17 +14,26 @@ public class GuiHandler implements IGuiHandler {
 
 	public static final int	GUI_INDEX_UNCRAFTING	= 0;
 	public static final int	GUI_INDEX_WAND				= 1;
+	public static final int	GUI_INDEX_EXTENDED		= 2;
 
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		if (ID == GUI_INDEX_UNCRAFTING) {
+	 
+		switch (ID) {
+		case GUI_INDEX_EXTENDED:
+			return new com.lothrazar.cyclicmagic.inventory.ContainerPlayerExtended(player.inventory, !world.isRemote, player);
 
+			
+		case GUI_INDEX_WAND:
+			ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
+			return new ContainerWand(player, player.inventory, new InventoryWand(player, wand)); 
+	 
+		case GUI_INDEX_UNCRAFTING:
 			TileEntity tileEntity = world.getTileEntity(new BlockPos(x, y, z));
 			if (tileEntity instanceof TileEntityUncrafting) { return new ContainerUncrafting(player.inventory, (TileEntityUncrafting) tileEntity); }
+	
+			break;
 		}
-		if (ID == GUI_INDEX_WAND) {
-
-		return new ContainerWand(player, player.inventory, new InventoryWand(player, UtilSpellCaster.getPlayerWandIfHeld(player))); }
 		return null;
 	}
 
@@ -40,6 +50,12 @@ public class GuiHandler implements IGuiHandler {
 			ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
 			return new GuiWandInventory(new ContainerWand(player, player.inventory, new InventoryWand(player, wand)), wand);
 
+		}
+		if (world instanceof WorldClient) {
+			switch (ID) {
+			case GUI_INDEX_EXTENDED:
+				return new GuiPlayerExtended(player);
+			}
 		}
 		return null;
 	}
