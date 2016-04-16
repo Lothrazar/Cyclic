@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.gui;
 
 import com.lothrazar.cyclicmagic.block.TileEntityUncrafting;
-import com.lothrazar.cyclicmagic.inventory.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.player.EntityPlayer;

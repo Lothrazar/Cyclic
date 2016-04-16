@@ -12,7 +12,7 @@ public class PacketRegistry {
 
 		network.registerMessage(PacketOpenExtendedInventory.class, PacketOpenExtendedInventory.class, 0, Side.SERVER);
 		network.registerMessage(PacketOpenNormalInventory.class, PacketOpenNormalInventory.class, 1, Side.SERVER);
-		network.registerMessage(PacketSyncBauble.class, PacketSyncBauble.class, 2, Side.CLIENT);
+		network.registerMessage(PacketSyncExtendedInventory.class, PacketSyncExtendedInventory.class, 2, Side.CLIENT);
 	
 
 		

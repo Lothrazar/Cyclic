@@ -1,9 +1,8 @@
-package com.lothrazar.cyclicmagic.inventory;
+package com.lothrazar.cyclicmagic.gui.button;
 
 import java.util.ArrayList;
 import java.util.List;
 import org.lwjgl.opengl.GL11;
-import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;

@@ -94,7 +94,7 @@ public class EventRegistry {
 		events.add(new EventBucketBlocksBreak());
 		events.add(new EventAppleUse());
 		//we already have the extraButtonsRegistry config for this
-		events.add(new EventGuiAddButtons());
+		events.add(new EventGuiTerrariaButtons());
 
 		if(passThroughClick){
 			events.add(new EventPassthroughAction());

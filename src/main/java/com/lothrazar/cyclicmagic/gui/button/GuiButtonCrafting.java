@@ -11,8 +11,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiButtonCrafting extends GuiButton {
-	public GuiButtonCrafting(int buttonId, int x, int y) {
-		super(buttonId, x, y, Const.btnWidth, Const.btnHeight, I18n.translateToLocal("btn.crafting"));
+	public GuiButtonCrafting( int x, int y) {
+		super(256, x, y, 10, Const.btnHeight, I18n.translateToLocal("btn.crafting"));
 	}
 
 	@SideOnly(Side.CLIENT)

@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.inventory;
+package com.lothrazar.cyclicmagic.net;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;

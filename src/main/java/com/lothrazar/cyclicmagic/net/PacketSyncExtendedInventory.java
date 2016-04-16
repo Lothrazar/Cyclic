@@ -1,6 +1,7 @@
-package com.lothrazar.cyclicmagic.inventory;
+package com.lothrazar.cyclicmagic.net;
 
 import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.inventory.PlayerHandler;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -14,15 +15,15 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class PacketSyncBauble implements IMessage, IMessageHandler<PacketSyncBauble, IMessage> {
+public class PacketSyncExtendedInventory implements IMessage, IMessageHandler<PacketSyncExtendedInventory, IMessage> {
 
 	int				slot;
 	int				playerId;
 	ItemStack	bauble	= null;
 
-	public PacketSyncBauble() {}
+	public PacketSyncExtendedInventory() {}
 
-	public PacketSyncBauble(EntityPlayer player, int slot) {
+	public PacketSyncExtendedInventory(EntityPlayer player, int slot) {
 		this.slot = slot;
 		this.bauble = PlayerHandler.getPlayerBaubles(player).getStackInSlot(slot);
 		this.playerId = player.getEntityId();
@@ -44,7 +45,7 @@ public class PacketSyncBauble implements IMessage, IMessageHandler<PacketSyncBau
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public IMessage onMessage(final PacketSyncBauble message, MessageContext ctx) {
+	public IMessage onMessage(final PacketSyncExtendedInventory message, MessageContext ctx) {
 		Minecraft.getMinecraft().addScheduledTask(new Runnable() {
 			public void run() {
 				processMessage(message);
@@ -54,7 +55,7 @@ public class PacketSyncBauble implements IMessage, IMessageHandler<PacketSyncBau
 	}
 
 	@SideOnly(Side.CLIENT)
-	void processMessage(PacketSyncBauble message) {
+	void processMessage(PacketSyncExtendedInventory message) {
 
 		World world = ModMain.proxy.getClientWorld();
 		if (world == null)

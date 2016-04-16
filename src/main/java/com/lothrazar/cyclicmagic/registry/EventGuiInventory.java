@@ -1,6 +1,11 @@
-package com.lothrazar.cyclicmagic.inventory;
+package com.lothrazar.cyclicmagic.registry;
 
 import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.gui.GuiPlayerExtended;
+import com.lothrazar.cyclicmagic.gui.button.GuiButtonCrafting;
+import com.lothrazar.cyclicmagic.gui.button.GuiButtonInventory;
+import com.lothrazar.cyclicmagic.net.PacketOpenExtendedInventory;
+import com.lothrazar.cyclicmagic.net.PacketOpenNormalInventory;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.resources.I18n;
@@ -17,6 +22,7 @@ public class EventGuiInventory {
 	@SubscribeEvent
 	public void guiPostInit(GuiScreenEvent.InitGuiEvent.Post event) {
 
+		
 		if (event.getGui() instanceof GuiInventory || event.getGui() instanceof GuiPlayerExtended) {
 			GuiContainer gui = (GuiContainer) event.getGui();
 
@@ -27,13 +33,23 @@ public class EventGuiInventory {
 			int x = 30;
 			int y = 2;
 			int w = 10;
-			int h = 10;
+			int h = 20;
 			int xSize = 176;
 			int ySize = 166;
 			int guiLeft = (gui.width - xSize) / 2;
 			int guiTop = (gui.height - ySize) / 2;
 			event.getButtonList().add(new GuiButtonInventory(buttonId, guiLeft, guiTop, x, y, w, h, I18n.format((event.getGui() instanceof GuiInventory) ? "button.inventory" : "button.normal", new Object[0])));
+		
+
+			if (event.getGui() instanceof GuiInventory) {
+
+				event.getButtonList().add(new GuiButtonCrafting( x - 12, y));
+
+			}
+		
 		}
+		
+		
 
 	}
 

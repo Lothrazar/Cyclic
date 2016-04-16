@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.inventory;
+package com.lothrazar.cyclicmagic.net;
 
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.GuiHandler;
