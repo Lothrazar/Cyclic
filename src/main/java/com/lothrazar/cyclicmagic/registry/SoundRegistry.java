@@ -15,5 +15,7 @@ public class SoundRegistry {
 		UtilSound.bwoaaap = new SoundEvent(rl);
 		
 		GameRegistry.register(UtilSound.bwoaaap,rl);
+		
+		SoundEvent.soundEventRegistry.register(200, rl, 		UtilSound.bwoaaap );
 	}
 }

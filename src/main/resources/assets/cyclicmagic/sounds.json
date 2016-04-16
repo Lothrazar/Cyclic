@@ -3,7 +3,7 @@
 	"bip"     : {"category" : "player", "sounds" : ["cyclicmagic:bip"]},
 	"buzzp"   : {"category" : "player", "sounds" : ["cyclicmagic:buzzp"]},
 	"bwewe"   : {"category" : "player", "sounds" : ["cyclicmagic:bwewe"]},
-	"bwoaaap" : {"category" : "player", "sounds" : ["cyclicmagic:bwoaaap"]},
+	"bwoaaap" : {"category" : "player", "sounds" : ["cyclicmagic:sounds/bwoaaap.ogg"]},
 	"crackle" : {"category" : "player", "sounds" : ["cyclicmagic:crackle"]},
 	"dcoin"   : {"category" : "player", "sounds" : ["cyclicmagic:dcoin"]},
 	"fill"    : {"category" : "player", "sounds" : ["cyclicmagic:fill"]},

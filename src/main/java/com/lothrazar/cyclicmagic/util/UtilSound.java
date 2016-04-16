@@ -8,7 +8,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class UtilSound {
-
+//REF BROKEN http://www.minecraftforge.net/forum/index.php?topic=37547.0
 	public static final float		volume				= 1.0F;
 	public static final float		pitch					= 1.0F;
 	public static final boolean	distanceDelay	= false;
@@ -51,7 +51,8 @@ public class UtilSound {
 
 		// for client only, or if you have client/server both
 		// player.playSound(sound, volume, pitch);
-		System.out.println("TODO: fix sounds P" + sound);
+	//	System.out.println("TODO: fix sounds P" + sound);
+		player.playSound(bwoaaap, volume, pitch);
 	}
 
 	public static void playSound(World world, BlockPos pos, String sound) {
@@ -59,7 +60,7 @@ public class UtilSound {
 		// works if you play it only on the server
 		// world.playSoundEffect(pos.getX(), pos.getY(), pos.getZ(), sound, volume,
 		// pitch);
-		System.out.println("TODO: fix sounds W" + sound);
+	//	System.out.println("TODO: fix sounds W" + sound);
 		playSound(world,pos,bwoaaap,SoundCategory.PLAYERS);
 
 	}

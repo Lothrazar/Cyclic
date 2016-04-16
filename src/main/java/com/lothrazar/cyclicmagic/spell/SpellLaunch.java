@@ -80,7 +80,8 @@ public class SpellLaunch extends BaseSpell implements ISpell {
 			player.addVelocity(velX, velY, velZ);
 		}
 
-		this.playSound(world, null, player.getPosition());
+		//this.playSound(world, null, player.getPosition());
+		UtilSound.playSound(player, UtilSound.Own.bwoaaap);
 		this.spawnParticle(world, player, player.getPosition());
 
 		return true;
