@@ -70,7 +70,6 @@ public class ContainerPlayerExtended extends Container {
 				yPos = pad + i * SQ;
 				sl = j + (i + 1) * InventoryPlayerExtended.ICOL;
 
-				System.out.println("addSlotToContainer "+sl);
 				this.addSlotToContainer(new Slot(inventory, sl, xPos, yPos));
 			}
 		}
@@ -119,43 +118,52 @@ public class ContainerPlayerExtended extends Container {
 	public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int iSlot) {
 		ItemStack itemstack = null;
 		Slot slot = (Slot) this.inventorySlots.get(iSlot);
+	//	System.out.println("Transfer "+iSlot);
 
+		int playerStart = 36, playerEnd=63, topStart=4,topEnd=36,hotbarStart=63,hotbarEnd=72
+				,armorStart=0,armorEnd=4;
+		//36 to 62 is lower
+		//4 to 40 is bottom
 		if (slot != null && slot.getHasStack()) {
-			ItemStack itemstack1 = slot.getStack();
-			itemstack = itemstack1.copy();
+			ItemStack copy = slot.getStack();
+			itemstack = copy.copy();
+			
+			if (itemstack.getItem() instanceof ItemArmor) {
+		
+				//ItemArmor armor = (ItemArmor) copy.getItem();
+				//int armorSlot = 8 - armor.armorType.getIndex();
 
-			if (iSlot == 0) {
-				if (!this.mergeItemStack(itemstack1, HOTBAR_SIZE + 4, 36 + 9 + 4, true)) { return null; }
-
-				slot.onSlotChange(itemstack1, itemstack);
+				//if (!this.mergeItemStack(copy, armorSlot, armorSlot + 1, false)) { return null; }
+				if (armorStart <= iSlot && iSlot < armorEnd) {
+					
+					if (!this.mergeItemStack(copy,playerStart, playerEnd, false)) { return null; }
+				}
+				else  {
+					if (!this.mergeItemStack(copy, 0, 4, false)) { return null; }
+				
+				}
 			}
-			else if (iSlot >= 1 && iSlot < HOTBAR_SIZE) {
-				if (!this.mergeItemStack(itemstack1, HOTBAR_SIZE + 4, 36 + 9 + 4, false)) { return null; }
+			else if (playerStart <= iSlot && iSlot < playerEnd) {
+		
+				if (!this.mergeItemStack(copy,topStart, topEnd, false)) { return null; }
 			}
-			else if (itemstack.getItem() instanceof ItemArmor) {
-				ItemArmor armor = (ItemArmor) itemstack1.getItem();
-				int armorSlot = 8 - armor.armorType.getIndex();
-
-				if (!this.mergeItemStack(itemstack1, armorSlot, armorSlot + 1, false)) { return null; }
+			else if (topStart <= iSlot && iSlot < topEnd) {
+			
+				if (!this.mergeItemStack(copy,playerStart, playerEnd, false)) { return null; }
 			}
-			else if (iSlot >= HOTBAR_SIZE + 4 && iSlot < 36 + 4) {
-				if (!this.mergeItemStack(itemstack1, 36 + 4, 45 + 4, false)) { return null; }
+			else if (hotbarStart <= iSlot && iSlot < hotbarEnd) {
+				if (!this.mergeItemStack(copy, topStart, topEnd, false)) { return null; }
 			}
-			else if (iSlot >= 36 + 4 && iSlot < 36 + 9 + 4) {
-				if (!this.mergeItemStack(itemstack1, HOTBAR_SIZE + 4, 36 + 4, false)) { return null; }
-			}
-			else if (!this.mergeItemStack(itemstack1, HOTBAR_SIZE + 4, 45 + 4, false, slot)) { return null; }
-
-			if (itemstack1.stackSize == 0) {
+			if (copy.stackSize == 0) {
 				slot.putStack((ItemStack) null);
 			}
 			else {
 				slot.onSlotChanged();
 			}
 
-			if (itemstack1.stackSize == itemstack.stackSize) { return null; }
+			if (copy.stackSize == itemstack.stackSize) { return null; }
 
-			slot.onPickupFromSlot(par1EntityPlayer, itemstack1);
+			slot.onPickupFromSlot(par1EntityPlayer, copy);
 		}
 
 		return itemstack;
