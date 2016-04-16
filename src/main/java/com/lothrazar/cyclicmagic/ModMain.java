@@ -1,9 +1,8 @@
 package com.lothrazar.cyclicmagic;
 
 import org.apache.logging.log4j.Logger;
+import com.lothrazar.cyclicmagic.event.EventExtendedInventory;
 import com.lothrazar.cyclicmagic.gui.GuiHandler;
-import com.lothrazar.cyclicmagic.inventory.EventHandlerEntity;
-import com.lothrazar.cyclicmagic.inventory.EventHandlerNetwork;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
 import com.lothrazar.cyclicmagic.registry.*;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -51,14 +50,6 @@ public class ModMain {
 
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(Const.MODID);
 		
-
-
-		EventHandlerEntity entityEventHandler = new EventHandlerEntity();
-		EventHandlerNetwork entityEventNetwork = new EventHandlerNetwork();
-
-		MinecraftForge.EVENT_BUS.register(entityEventHandler);
-		MinecraftForge.EVENT_BUS.register(entityEventNetwork);
-
 		EventRegistry.register();
 
 		ReflectionRegistry.register();

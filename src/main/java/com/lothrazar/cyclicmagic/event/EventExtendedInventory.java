@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.inventory;
+package com.lothrazar.cyclicmagic.event;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,13 +6,31 @@ import java.util.HashSet;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.player.PlayerDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
 import com.google.common.io.Files;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.inventory.PlayerHandler;
 
-public class EventHandlerEntity {
+public class EventExtendedInventory {
 
 	static HashSet<Integer> playerEntityIds = new HashSet<Integer>();
+
+	@SubscribeEvent
+	public void playerLoggedInEvent(PlayerLoggedInEvent event) {
+		Side side = FMLCommonHandler.instance().getEffectiveSide();
+		if (side == Side.SERVER) {
+			EventExtendedInventory.playerEntityIds.add(event.player.getEntityId());
+		}
+	}
+
+	public static void syncBaubles(EntityPlayer player) {
+		for (int a = 0; a < 4; a++) {
+			PlayerHandler.getPlayerInventory(player).syncSlotToClients(a);
+		}
+	}
 
 	@SubscribeEvent
 	public void playerTick(PlayerEvent.LivingUpdateEvent event) {
@@ -22,7 +40,7 @@ public class EventHandlerEntity {
 			EntityPlayer player = (EntityPlayer) event.getEntity();
 
 			if (!playerEntityIds.isEmpty() && playerEntityIds.contains(player.getEntityId())) {
-				EventHandlerNetwork.syncBaubles(player);
+				syncBaubles(player);
 				playerEntityIds.remove(player.getEntityId());
 			}
 
@@ -67,7 +85,7 @@ public class EventHandlerEntity {
 		}
 
 		PlayerHandler.loadPlayerInventory(event.getEntityPlayer(), playerFile, getPlayerFile(extback, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString()));
-		EventHandlerEntity.playerEntityIds.add(event.getEntityPlayer().getEntityId());
+		EventExtendedInventory.playerEntityIds.add(event.getEntityPlayer().getEntityId());
 	}
 	
 	final String ext = "invo";

@@ -95,6 +95,7 @@ public class EventRegistry {
 		events.add(new EventAppleUse());
 		//we already have the extraButtonsRegistry config for this
 		events.add(new EventGuiTerrariaButtons());
+		events.add(new EventExtendedInventory()); 
 
 		if(passThroughClick){
 			events.add(new EventPassthroughAction());
