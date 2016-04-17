@@ -44,46 +44,23 @@ public class BlockRegistry {
 	@SuppressWarnings("rawtypes")
 	public static void registerBlock(Block b, Class c, String name, boolean isHidden) {
 
-		b.setUnlocalizedName(name);
-		GameRegistry.registerBlock(b, c, name);
+	//	b.setUnlocalizedName(name);
+		//GameRegistry.registerBlock(b, c, name);
+		
+		//above is old way below is NEW WAY
+		
+		b.setRegistryName(name);
+		b.setUnlocalizedName(name); // b.getRegistryName().toString()
+		//GameRegistry.register(c, b.getRegistryName().toString());
+
+		GameRegistry.register(b);
+		ItemBlock ib = new ItemBlock(b);
+		ib.setRegistryName(b.getRegistryName());
+		GameRegistry.register(ib);
 
 		if (isHidden == false) {
 			b.setCreativeTab(ModMain.TAB);
 		}
-
-		// the new 'correct' undeprecated methods give
-		/*
-		 * [16:59:41] [Client thread/WARN] [FML]: * Dangerous alternative prefix
-		 * cyclicmagic: for name block_fragile, invalid registry invocation/invalid
-		 * name?
-		 * [16:59:41] [Client thread/WARN] [FML]: * at
-		 * net.minecraftforge.fml.common.registry.IForgeRegistryEntry$Impl.
-		 * setRegistryName(IForgeRegistryEntry.java:63)
-		 * [16:59:41] [Client thread/WARN] [FML]: * at
-		 * net.minecraftforge.fml.common.registry.IForgeRegistryEntry$Impl.
-		 * setRegistryName(IForgeRegistryEntry.java:72)
-		 * [16:59:41] [Client thread/WARN] [FML]: * at
-		 * com.lothrazar.cyclicmagic.registry.BlockRegistry.registerBlock(
-		 * BlockRegistry.java:24)
-		 * [16:59:41] [Client thread/WARN] [FML]: * at
-		 * com.lothrazar.cyclicmagic.registry.BlockRegistry.register(BlockRegistry.
-		 * java:40)
-		 * [16:59:41] [Client thread/WARN] [FML]: * at
-		 * com.lothrazar.cyclicmagic.ModMain.onInit(ModMain.java:70)
-		 * [16:59:41] [Client thread/WARN] [FML]: * at
-		 * sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)...
-		 * 
-		 * about:blank
-		 *
-		 */
-
-		// block.setRegistryName(Const.MODID ,name);
-		// GameRegistry.register(block);
-		// GameRegistry.register(new ItemBlock(block), new
-		// ResourceLocation(Const.MODID ,name));
-
-		// if it worked like items, this would be donezo
-		// GameRegistry.register(block, new ResourceLocation(Const.MODID,name));
 
 		blocks.add(b);
 	}
