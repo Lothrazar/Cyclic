@@ -35,10 +35,6 @@ public class OpenCraftingPacket implements IMessage, IMessageHandler<OpenCraftin
 	public IMessage onMessage(OpenCraftingPacket message, MessageContext ctx) {
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
 
-		if (p.openContainer != null) {
-			p.closeScreen();
-		}
-
 		EntityPlayerMP player = (EntityPlayerMP) p;
 
 		player.getNextWindowId();

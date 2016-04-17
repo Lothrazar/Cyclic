@@ -1,17 +1,12 @@
 package com.lothrazar.cyclicmagic.gui.button;
 
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.gui.GuiPlayerExtended;
-import com.lothrazar.cyclicmagic.net.OpenCraftingPacket;
 import com.lothrazar.cyclicmagic.net.PacketOpenExtendedInventory;
 import com.lothrazar.cyclicmagic.net.PacketOpenNormalInventory;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.inventory.GuiCrafting;
 import net.minecraft.client.gui.inventory.GuiInventory;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 

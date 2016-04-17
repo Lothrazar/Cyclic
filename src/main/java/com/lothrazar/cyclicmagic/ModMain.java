@@ -132,8 +132,6 @@ public class ModMain {
 
 	/* TODO LIST
 	 * 
-	 * CENTER the mouse back on C buttn
-	 * 
 	 * reachplace.name spell name
 	 * 
 	 * rebalance emerald armor numbers plan.
