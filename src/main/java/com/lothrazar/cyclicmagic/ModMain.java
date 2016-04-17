@@ -7,6 +7,11 @@ import com.lothrazar.cyclicmagic.proxy.CommonProxy;
 import com.lothrazar.cyclicmagic.registry.*;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.passive.EntityVillager;
+import net.minecraft.entity.passive.EntityVillager.EmeraldForItems;
+import net.minecraft.entity.passive.EntityVillager.ITradeList;
+import net.minecraft.entity.passive.EntityVillager.PriceInfo;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
@@ -20,6 +25,9 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.fml.common.registry.VillagerRegistry;
+import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerCareer;
+import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerProfession;
 
 @Mod(modid = Const.MODID, useMetadata = true, canBeDeactivated = false, updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json", guiFactory = "com.lothrazar." + Const.MODID + ".gui.IngameConfigHandler")
 public class ModMain {
@@ -57,6 +65,44 @@ public class ModMain {
 		ExtraButtonRegistry.register();
 
 		PacketRegistry.register(network);
+		
+		
+		 registerVillagers();
+     
+     //.init(trades );
+   //  (new VillagerCareer(prof, "fisherman")).init(VanillaTrades.trades[0][1]);
+    // (new VillagerCareer(prof, "shepherd")).init(VanillaTrades.trades[0][2]);
+    // (new VillagerCareer(prof, "fletcher")).init(VanillaTrades.trades[0][3]);
+ 
+     
+	}
+
+	private void registerVillagers() {
+		//TOO TEST: /summon Villager ~ ~ ~ {Profession:5}
+		VillagerProfession prof = new VillagerProfession(Const.MODRES+"sage", Const.MODRES+"textures/entity/villager/sage.png");
+     
+		 VillagerRegistry.instance().register(prof);
+		 
+		 final EntityVillager.ITradeList[][] trades = {
+				 {
+				 new EmeraldForItems(Items.ender_pearl, new PriceInfo(8, 16))
+				 },
+				 {
+				 new EmeraldForItems(Items.beetroot, new PriceInfo(5, 10))
+				 }
+		 };
+		 
+		 
+		 VillagerCareer c = new VillagerCareer(prof, "sage"){
+			 
+			 @Override
+       public ITradeList[][] getTrades()
+       {
+           return trades;
+       }
+		 };
+		 
+		 
 	}
 
 	@EventHandler
@@ -146,8 +192,6 @@ public class ModMain {
 	 * All spells that do not use wand inventory moved to other
 	 * item.:
 	 * : push pull rotate 
-	 * 
-	 * SHOW IButtons in horse invo
 	 * 
 	 * 
 	 * ROTATE: STAIRS: allow switch frop top to bottom

@@ -246,6 +246,11 @@ public class ItemRegistry {
 	public static ItemCyclicWand			cyclic_wand_range;
 	public static ItemCyclicWand			cyclic_wand_fly;
 	public static ItemFoodAppleMagic apple_diamond;
+	public static ItemEmeraldPickaxe emerald_pickaxe;
+	public static ItemEmeraldAxe emerald_axe;
+	public static ItemEmeraldSpade emerald_spade;
+	public static ItemEmeraldHoe emerald_hoe;
+	public static ItemEmeraldSword emerald_sword;
 
 	public static void registerItem(Item item, String name) {
 		registerItem(item, name, false);// default is not hidden
@@ -344,19 +349,19 @@ public class ItemRegistry {
 
 		if (configToggle.get("emerald_gear")) {
 
-			ItemSword emerald_sword = new ItemEmeraldSword();
+			emerald_sword = new ItemEmeraldSword();
 			registerItem(emerald_sword, ItemEmeraldSword.name);
 
-			ItemEmeraldPickaxe emerald_pickaxe = new ItemEmeraldPickaxe();
+			emerald_pickaxe = new ItemEmeraldPickaxe();
 			registerItem(emerald_pickaxe, ItemEmeraldPickaxe.name);
 
-			ItemEmeraldAxe emerald_axe = new ItemEmeraldAxe();
+			emerald_axe = new ItemEmeraldAxe();
 			registerItem(emerald_axe, ItemEmeraldAxe.name);
 
-			ItemSpade emerald_spade = new ItemEmeraldSpade();
+			emerald_spade = new ItemEmeraldSpade();
 			registerItem(emerald_spade, ItemEmeraldSpade.name);
 
-			ItemHoe emerald_hoe = new ItemEmeraldHoe();
+			emerald_hoe = new ItemEmeraldHoe();
 			registerItem(emerald_hoe, ItemEmeraldHoe.name);
 
 			// ..yeah.. kind of breaks the pattern. i could make one class for each i
