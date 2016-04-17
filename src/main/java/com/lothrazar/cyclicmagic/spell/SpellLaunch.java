@@ -18,8 +18,8 @@ import net.minecraft.world.World;
 
 public class SpellLaunch extends BaseSpell implements ISpell {
 
-	private static final float	power				= 1.10F;
-	private static final float	mountPower	= 1.01F;
+	private static final double	power				= 2;
+	private static final double	mountPower	= power - 0.5;
 	private static final int		slowfallSec	= 10;			// TODO: this 10 seconds in
 	                                                  // config..??
 
@@ -27,17 +27,16 @@ public class SpellLaunch extends BaseSpell implements ISpell {
 
 		super.init(id, name);
 		this.cost = 25;
-		this.cooldown = 6;
+		this.cooldown = 15;
 	}
 
 	@Override
 	public boolean cast(World world, EntityPlayer player, ItemStack wand, BlockPos pos, EnumFacing side) {
 
-		
 		if(player.isSneaking()){
 
 			PotionRegistry.addOrMergePotionEffect(player, new PotionEffect(PotionRegistry.slowfall, slowfallSec * Const.TICKS_PER_SEC));
-			//player.addPotionEffect();
+
 			return true;
 		}
 
@@ -46,20 +45,19 @@ public class SpellLaunch extends BaseSpell implements ISpell {
 
 		double velY = (double) (-MathHelper.sin((player.rotationPitch) / 180.0F * (float) Math.PI) * power);
 
+		// launch the player up and forward at minimum angle
+		// regardless of look vector
 		if (velY < 0) {
 			velY *= -1;// make it always up never down
 		}
-		// launch the player up and forward at minimum angle
-		// regardless of look vector
-
 		if (velY < 0.4) {
 			velY = 0.4 + player.jumpMovementFactor;
-			boolean isLookingDown = (player.getLookVec().yCoord < -20);
-			
-			if(isLookingDown){
-				velY += 0.9;
-			}
 		}
+		boolean isLookingDown = (player.getLookVec().yCoord < -20);
+		if(isLookingDown){
+			velY += 3;
+		}
+		
 		player.motionY = 0;
 		player.fallDistance = 0;
 

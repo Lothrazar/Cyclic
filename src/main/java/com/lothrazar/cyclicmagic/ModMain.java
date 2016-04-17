@@ -132,6 +132,24 @@ public class ModMain {
 
 	/* TODO LIST
 	 * 
+	 * CENTER the mouse back on C buttn
+	 * 
+	 * reachplace.name spell name
+	 * 
+	 * rebalance emerald armor numbers plan.
+	 * 
+	 * PEARL BUG BROKEN?REVERSED
+	 * 
+	 * remove multi tool
+	 * -> instead add a transforming tool? changes between
+	 * all the types for emerald
+	 * 
+	 * all block spells use block sound.
+	 * 
+	 * All spells that do not use wand inventory moved to other
+	 * item.:
+	 * : push pull rotate 
+	 * 
 	 * SHOW IButtons in horse invo
 	 * 
 	 * 

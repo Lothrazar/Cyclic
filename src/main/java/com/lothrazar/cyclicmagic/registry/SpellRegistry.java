@@ -11,7 +11,7 @@ import net.minecraftforge.common.config.Configuration;
 
 public class SpellRegistry {
 	public static boolean								renderOnLeft;
-	private static ArrayList<ISpell>		spellbookRange;
+	private static ArrayList<ISpell>		spellbookNoInventory;
 	private static ArrayList<ISpell>		spellbookBuild;
 	private static ArrayList<ISpell>		spellbookFly;
 	private static Map<Integer, ISpell>	hashbook;
@@ -42,43 +42,37 @@ public class SpellRegistry {
 	public static void register() {
 
 		// spellbook = new ArrayList<ISpell>();
-		spellbookRange = new ArrayList<ISpell>();
+		spellbookNoInventory = new ArrayList<ISpell>();
 		spellbookBuild = new ArrayList<ISpell>();
 		spellbookFly = new ArrayList<ISpell>();
 		hashbook = new HashMap<Integer, ISpell>();
 		// spellRegistry = new HashMap<String, ISpell>();
 
 		int spellId = -1;// the smallest spell gets id zero
-
-		Spells.replacer = new SpellRangeReplace(++spellId, "replacer");
-		registerReachSpell(Spells.replacer);
-
-		Spells.rotate = new SpellRangeRotate(++spellId, "rotate");
-		registerReachSpell(Spells.rotate);
-
+		
 		Spells.inventory = new SpellInventory(++spellId, "inventory");
-		registerSpell(Spells.inventory);// special case where its in both
-		spellbookRange.add(Spells.inventory);
-		spellbookBuild.add(Spells.inventory);
+		registerBuildSpell(Spells.inventory);
+		
+		Spells.rotate = new SpellRangeRotate(++spellId, "rotate");
+		registerSimpleSpell(Spells.rotate);
 
 		Spells.push = new SpellRangePush(++spellId, "push");
-		registerReachSpell(Spells.push);
+		registerSimpleSpell(Spells.push);
 
 		Spells.pull = new SpellRangePull(++spellId, "pull");
-		registerReachSpell(Spells.pull);
+		registerSimpleSpell(Spells.pull);
 
-		Spells.launch = new SpellLaunch(++spellId, "launch");
-		registerSpell(Spells.launch);
-		spellbookFly.add(Spells.launch);
+		Spells.replacer = new SpellRangeReplace(++spellId, "replacer");
+		registerBuildSpell(Spells.replacer);
 
 		Spells.reachup = new SpellRangeBuild(++spellId, "reachup", SpellRangeBuild.PlaceType.UP);
-		registerReachSpell(Spells.reachup);
+		registerBuildSpell(Spells.reachup);
 
 		Spells.reachplace = new SpellRangeBuild(++spellId, "reachplace", SpellRangeBuild.PlaceType.PLACE);
-		registerReachSpell(Spells.reachplace);
+		registerBuildSpell(Spells.reachplace);
 
 		Spells.reachdown = new SpellRangeBuild(++spellId, "reachdown", SpellRangeBuild.PlaceType.DOWN);
-		registerReachSpell(Spells.reachdown);
+		registerBuildSpell(Spells.reachdown);
 
 		Spells.placeline = new SpellPlaceLine(++spellId, "placeline");
 		registerBuildSpell(Spells.placeline);
@@ -89,6 +83,12 @@ public class SpellRegistry {
 		Spells.placestair = new SpellPlaceStair(++spellId, "placestair");
 		registerBuildSpell(Spells.placestair);
 
+		
+		
+
+		Spells.launch = new SpellLaunch(++spellId, "launch");
+		registerSpell(Spells.launch);
+		spellbookFly.add(Spells.launch);
 		// Spells.placefloor = new SpellPlaceFloor(++spellId, "placefloor");
 		// registerBuildSpell(Spells.placefloor);
 	}
@@ -98,9 +98,9 @@ public class SpellRegistry {
 		spellbookBuild.add(spell);
 	}
 
-	private static void registerReachSpell(ISpell spell) {
+	private static void registerSimpleSpell(ISpell spell) {
 		registerSpell(spell);
-		spellbookRange.add(spell);
+		spellbookNoInventory.add(spell);
 	}
 
 	private static void registerSpell(ISpell spell) {
@@ -131,7 +131,7 @@ public class SpellRegistry {
 			return spellbookBuild;
 		}
 		if (wand.getItem() == ItemRegistry.cyclic_wand_range) { 
-			return spellbookRange; 
+			return spellbookNoInventory; 
 		}
 
 		if (wand.getItem() == ItemRegistry.cyclic_wand_fly) { 
