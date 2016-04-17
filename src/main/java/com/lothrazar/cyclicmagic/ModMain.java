@@ -138,7 +138,6 @@ public class ModMain {
 	 * 
 	 * rebalance emerald armor numbers plan.
 	 * 
-	 * PEARL BUG BROKEN?REVERSED
 	 * 
 	 * remove multi tool
 	 * -> instead add a transforming tool? changes between
