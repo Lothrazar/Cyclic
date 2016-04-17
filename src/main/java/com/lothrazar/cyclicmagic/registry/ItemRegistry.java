@@ -45,11 +45,11 @@ public class ItemRegistry {
 
 		BaseSpellRange.maxRange = config.getInt("scepter_MaxRange", category, 64, 8, 128, "Maximum range for all spells");
 
-		Property prop = config.get(category, ItemMultiTool.name, true, "Overpowered Multi Tool");
-		prop.setRequiresMcRestart(true);
-		configToggle.put(ItemMultiTool.name, prop.getBoolean());
+	//	Property prop = config.get(category, ItemMultiTool.name, true, "Overpowered Multi Tool");
+	//	prop.setRequiresMcRestart(true);
+	//	configToggle.put(ItemMultiTool.name, prop.getBoolean());
 
-		prop = config.get(category, ItemEnderPearlReuse.name, true, "Reuseable ender pearl");
+		Property prop = config.get(category, ItemEnderPearlReuse.name, true, "Reuseable ender pearl");
 		prop.setRequiresMcRestart(true);
 		configToggle.put(ItemEnderPearlReuse.name, prop.getBoolean());
 
@@ -313,10 +313,10 @@ public class ItemRegistry {
 		}
 
 		// TODO: retexture and/or decide if we are even keeping this
-		if (configToggle.get(ItemEnderPearlReuse.name)) {
-			Item multitool = new ItemMultiTool();
-			registerItem(multitool, ItemMultiTool.name);
-		}
+		//if (configToggle.get(ItemEnderPearlReuse.name)) {
+		//	Item multitool = new ItemMultiTool();
+		//	registerItem(multitool, ItemMultiTool.name);
+		//}
 
 		if (configToggle.get(ItemEnderPearlReuse.name)) {
 
