@@ -9,10 +9,15 @@ import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.passive.EntityVillager.EmeraldForItems;
+import net.minecraft.entity.passive.EntityVillager.ListItemForEmeralds;
+import net.minecraft.entity.passive.EntityVillager.ListItemForEmeralds;
 import net.minecraft.entity.passive.EntityVillager.ITradeList;
 import net.minecraft.entity.passive.EntityVillager.PriceInfo;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
@@ -112,30 +117,65 @@ public class ModMain {
 		//System.out.println("test isNull :"+ (test == null));
 		
 		 
-		 final EntityVillager.ITradeList[][] trades = {
-				 {
-				 new EmeraldForItems(Items.ender_pearl, new PriceInfo(8, 16))
-				 },
-				 {
-				 new EmeraldForItems(Items.beetroot, new PriceInfo(5, 10))
-				 },
-				 {
-				 new EmeraldForItems(Items.wheat_seeds, new PriceInfo(64, 64))
-				 },
-				 {
-				 new EmeraldForItems(Items.poisonous_potato, new PriceInfo(3, 4))
-				 },
-				 {
-				 new EmeraldForItems(Items.spider_eye, new PriceInfo(4, 6))
-				 }
+		 final EntityVillager.ITradeList[][] sageTrades = {
+				 
+				 {new EmeraldForItems(Items.ender_pearl, new PriceInfo(16, 16)) 	 },// New to mod
+			
+				 {new EmeraldForItems(Items.beetroot, new PriceInfo(8, 12)) 	 },//New to mod
+				 
+				 {new EmeraldForItems(Items.wheat_seeds, new PriceInfo(64, 64))  },//New to mod
+				
+				 {new EmeraldForItems(Items.bone, new PriceInfo(32, 32)) }, //New to mod
+				 
+				 {new EmeraldForItems(Items.gunpowder, new PriceInfo(5, 5))  },//New to mod
+						
+				 {new EmeraldForItems(Items.feather, new PriceInfo(16, 16))  },//New to mod		
+				 {new EmeraldForItems(Items.nether_wart, new PriceInfo(16, 16))  },//New to mod			
+				 {new EmeraldForItems(Items.mutton, new PriceInfo(16, 16))  },//New to mod			
+				 
+				 {new EmeraldForItems(Items.blaze_rod, new PriceInfo(16, 16))  },//New to mod
+				
+				 {new EmeraldForItems(Item.getItemFromBlock(Blocks.brown_mushroom), new PriceInfo(16, 16)) },//New to mod
+				 
+				 {new EmeraldForItems(Item.getItemFromBlock(Blocks.red_mushroom), new PriceInfo(16, 16))  },	//New to mod
+									 
+				 {new EmeraldForItems(Items.blaze_rod, new PriceInfo(16, 16))  },//New to mod
+								 
+				 {new EmeraldForItems(Items.slime_ball, new PriceInfo(16,16)) }, //New to mod				
+				 
+				 {new EmeraldForItems(Items.poisonous_potato, new PriceInfo(3, 3))  },//New to mod				
+				 
+				 {new EmeraldForItems(Items.spider_eye, new PriceInfo(9, 9))  },//New to mod				
+				 
+				 {new EmeraldForItems(Items.ghast_tear, new PriceInfo(2, 2)) },//New to mod				 
+				 
+				 {new EmeraldForItems(Items.diamond, new PriceInfo(9, 9)) },//New to mod, 9 emeralds = 1 diamond
+				 				 
+				 {new EmeraldForItems(Items.cooked_fish, new PriceInfo(9, 12)) },//removed from Farmer, not in 1.9
+								 
+				 {new ListItemForEmeralds(Items.apple, new PriceInfo(5,5)) },//Refund at most				
+				 
+				 {new ListItemForEmeralds(Items.chicken, new PriceInfo(14,17))	 },//is no longer in farmer
+			
+				 {new EmeraldForItems(Items.beef, new PriceInfo(14, 17)) },// removed from Butcher, not in 1.9
+				 {new EmeraldForItems(Items.rabbit, new PriceInfo(14, 17)) },// NEW to mod
+				
+				 {new EmeraldForItems(Items.experience_bottle, new PriceInfo(2, 4)) },// removed from Priest, not in 1.9 (better deal V has 3-11  emeralds for 1 bottle)
+				
+				 {new EmeraldForItems(Items.redstone, new PriceInfo(4,4)) },// REFUND at most
+				
+				 {new EmeraldForItems(Items.glowstone_dust, new PriceInfo(12,12))}// REFUND at most, since we can buy 1emerald = 3blocks = 12 dust
+			
 		 };
 		 
-		 VillagerCareer c = new VillagerCareer(prof, "sage_career"){
+		 VillagerProfession libr =	VillagerRegistry.instance().getRegistry().getValue(new ResourceLocation("minecraft:librarian"));
+			
+		 VillagerCareer c = new VillagerCareer(libr, "sage_career"){
 			 
 			 @Override
        public ITradeList[][] getTrades()
        {
-           return trades;
+           return sageTrades;
        }
 		 };
 		 
