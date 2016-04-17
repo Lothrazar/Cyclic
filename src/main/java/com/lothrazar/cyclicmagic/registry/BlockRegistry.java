@@ -41,20 +41,21 @@ public class BlockRegistry {
 
 	private static boolean enableBlockUncrafting;
 
-	@SuppressWarnings("rawtypes")
-	public static void registerBlock(Block b, Class c, String name, boolean isHidden) {
+	public static void registerBlock(Block b, String name) {
+		registerBlock(b,name,false);
+	}
 
-	//	b.setUnlocalizedName(name);
-		//GameRegistry.registerBlock(b, c, name);
-		
-		//above is old way below is NEW WAY
-		
+	public static void registerBlock(Block b, String name, boolean isHidden) {
+
+		registerBlock(b,new ItemBlock(b),name,isHidden);
+	}
+
+	private static void registerBlock(Block b, ItemBlock ib, String name,boolean isHidden) {
 		b.setRegistryName(name);
-		b.setUnlocalizedName(name); // b.getRegistryName().toString()
-		//GameRegistry.register(c, b.getRegistryName().toString());
+		b.setUnlocalizedName(name); 
 
 		GameRegistry.register(b);
-		ItemBlock ib = new ItemBlock(b);
+
 		ib.setRegistryName(b.getRegistryName());
 		GameRegistry.register(ib);
 
@@ -63,10 +64,6 @@ public class BlockRegistry {
 		}
 
 		blocks.add(b);
-	}
-
-	private static void registerBlock(Block block, String name) {
-		registerBlock(block, ItemBlock.class, name, false);
 	}
 
 	public static void register() {
@@ -114,16 +111,16 @@ public class BlockRegistry {
 
 		if (enabledBucketBlocks) {
 			block_storewater = new BlockBucketStorage(Items.water_bucket);
-			registerBlock(block_storewater, ItemBlockBucket.class, "block_storewater", true);
+			registerBlock(block_storewater, new ItemBlockBucket(block_storewater), "block_storewater", true);
 
 			block_storemilk = new BlockBucketStorage(Items.milk_bucket);
-			registerBlock(block_storemilk, ItemBlockBucket.class, "block_storemilk", true);
+			registerBlock(block_storemilk, new ItemBlockBucket(block_storemilk), "block_storemilk", true);
 
 			block_storelava = new BlockBucketStorage(Items.lava_bucket);
-			registerBlock(block_storelava, ItemBlockBucket.class, "block_storelava", true);
+			registerBlock(block_storelava, new ItemBlockBucket(block_storelava), "block_storelava", true);
 
 			block_storeempty = new BlockBucketStorage(null);
-			registerBlock(block_storeempty, ItemBlockBucket.class, "block_storeempty", false);
+			registerBlock(block_storeempty, new ItemBlockBucket(block_storeempty), "block_storeempty", false);
 
 			// not irecipe so just like this is fine i guess
 			block_storeempty.addRecipe();
