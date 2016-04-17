@@ -15,7 +15,9 @@ public class SoundRegistry {
 		UtilSound.bwoaaap = new SoundEvent(rl);
 		
 		GameRegistry.register(UtilSound.bwoaaap,rl);
-		
-		SoundEvent.soundEventRegistry.register(200, rl, 		UtilSound.bwoaaap );
+		//IF WE DO BOTH:
+		//* The object net.minecraft.util.SoundEvent@6683cf7a has been registered twice for the same name cyclicmagic:sounds/bwoaaap.ogg.
+
+	//	SoundEvent.soundEventRegistry.register(200, rl, 		UtilSound.bwoaaap );
 	}
 }

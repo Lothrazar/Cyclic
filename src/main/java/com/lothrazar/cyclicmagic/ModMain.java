@@ -13,6 +13,7 @@ import net.minecraft.entity.passive.EntityVillager.ITradeList;
 import net.minecraft.entity.passive.EntityVillager.PriceInfo;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
@@ -79,9 +80,37 @@ public class ModMain {
 
 	private void registerVillagers() {
 		//TOO TEST: /summon Villager ~ ~ ~ {Profession:5}
-		VillagerProfession prof = new VillagerProfession(Const.MODRES+"sage", Const.MODRES+"textures/entity/villager/sage.png");
+		//kill: /kill @e[type=Villager]
+		//CONFIRMED: IT does spawn randomly when using default villager eggs
+		
+			/*
+		//PROBLEM WITH TEXTURE
+		in EntityVillager:
+    public int getProfession()
+    {
+        return Math.max(((Integer)this.dataWatcher.get(PROFESSION)).intValue() % 5, 0);
+    
+    }
+    //that %5 needs to be removed, it forces max of 4 profs
+    */
+		
+		VillagerProfession prof = new VillagerProfession(Const.MODRES+"sage", Const.MODRES+"textures/entity/villager/sage.png")/*{
+			@Override
+      public ResourceLocation getSkin() {
+
+				System.out.println("getSkin"+this.getSkin().getResourceDomain()+"_"+this.getSkin().getResourcePath());
+				return super.getSkin();
+			}
+		}
+		*/;
      
-		 VillagerRegistry.instance().register(prof);
+		
+		VillagerRegistry.instance().register(prof);
+		
+	//	VillagerProfession test = prof = net.minecraftforge.fml.common.registry.VillagerRegistry.instance().getRegistry().getValue(new ResourceLocation(Const.MODRES+"sage"));
+		 
+		//System.out.println("test isNull :"+ (test == null));
+		
 		 
 		 final EntityVillager.ITradeList[][] trades = {
 				 {
@@ -89,11 +118,19 @@ public class ModMain {
 				 },
 				 {
 				 new EmeraldForItems(Items.beetroot, new PriceInfo(5, 10))
+				 },
+				 {
+				 new EmeraldForItems(Items.wheat_seeds, new PriceInfo(64, 64))
+				 },
+				 {
+				 new EmeraldForItems(Items.poisonous_potato, new PriceInfo(3, 4))
+				 },
+				 {
+				 new EmeraldForItems(Items.spider_eye, new PriceInfo(4, 6))
 				 }
 		 };
 		 
-		 
-		 VillagerCareer c = new VillagerCareer(prof, "sage"){
+		 VillagerCareer c = new VillagerCareer(prof, "sage_career"){
 			 
 			 @Override
        public ITradeList[][] getTrades()
