@@ -44,10 +44,10 @@ public class CommandSearchSpawner extends BaseCommand implements ICommand {
 
 		if (founds.size() == 0) {
 			// TODO: lang file for this string
-			UtilChat.addChatMessage(player, "None Found with radius " + radius);
+			UtilChat.addChatMessage(player, UtilChat.lang("command.searchspawner.none") + radius);
 		}
 		else {
-			for (BlockPos found : founds) // if(found != null)
+			for (BlockPos found : founds)  if(found != null)
 			{
 				UtilChat.addChatMessage(player, UtilChat.blockPosToString(found));
 			}

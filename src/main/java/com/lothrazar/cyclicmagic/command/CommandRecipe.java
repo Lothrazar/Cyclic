@@ -145,7 +145,7 @@ public class CommandRecipe extends BaseCommand implements ICommand {
 
 	@SuppressWarnings("unchecked")
 	public static ItemStack[] getRecipeInput(IRecipe recipe) {
-		System.out.println("TODO: UtilRecipe");
+		//.out.println("TODO: UtilRecipe");
 		ItemStack[] recipeItems = null;
 		if (recipe instanceof ShapedRecipes) {
 			ShapedRecipes r = ((ShapedRecipes) recipe);

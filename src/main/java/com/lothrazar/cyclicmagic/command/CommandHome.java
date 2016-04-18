@@ -27,7 +27,8 @@ public class CommandHome extends BaseCommand implements ICommand {
 		World world = player.worldObj;
 
 		if (player.dimension != 0) {
-			UtilChat.addChatMessage(player, new TextComponentTranslation("Can only teleport to your home in the overworld"));
+			UtilChat.addChatMessage(player, 
+					"command.home.overworld");
 			return;
 		}
 
@@ -36,7 +37,7 @@ public class CommandHome extends BaseCommand implements ICommand {
 		if (pos == null) {
 			// has not been sent in a bed
 			// TODO: get the ID for this chat for translation purposes
-			UtilChat.addChatMessage(ic, "Your home bed was missing or obstructed.");
+			UtilChat.addChatMessage(ic, "command.gethome.bed");
 			return;
 		}
 		IBlockState state = world.getBlockState(pos);
@@ -54,7 +55,7 @@ public class CommandHome extends BaseCommand implements ICommand {
 		else {
 			// spawn point was set, so the coords were not null, but player broke the
 			// bed (probably recently)
-			UtilChat.addChatMessage(player, "Your home bed was missing or obstructed.");
+			UtilChat.addChatMessage(player, "command.gethome.bed");
 			return;
 		}
 

@@ -53,7 +53,7 @@ public class CommandSearchTrades extends BaseCommand implements ICommand {
 
 		double range = 64;
 
-		System.out.println("TODO: UtilSearchWorld .entities");
+		//.out.println("TODO: UtilSearchWorld .entities");
 		AxisAlignedBB searchRange = new AxisAlignedBB(X + 0.5D - range, 0.0D, Z + 0.5D - range, X + 0.5D + range, 255.0D, Z + 0.5D + range);
 
 		List<EntityVillager> merchants = ic.getEntityWorld().getEntitiesWithinAABB(EntityVillager.class, searchRange);
@@ -137,7 +137,7 @@ public class CommandSearchTrades extends BaseCommand implements ICommand {
 		}
 
 		if (messages.size() == 0) {
-			UtilChat.addChatMessage(p, "No matching trades found in nearby villagers (" + range + "m).");
+			UtilChat.addChatMessage(p, UtilChat.lang("command.searchtrade.none")+ " [" + range + "]");
 		}
 	}
 }

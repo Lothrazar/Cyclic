@@ -20,7 +20,7 @@ public class CommandGetHome extends BaseCommand implements ICommand {
 		// World world = player.worldObj;
 
 		if (player.dimension != 0) {
-			UtilChat.addChatMessage(player, "No home outside the overworld");
+			UtilChat.addChatMessage(player, "command.gethome.overworld");
 			return;
 		}
 
@@ -29,13 +29,13 @@ public class CommandGetHome extends BaseCommand implements ICommand {
 		if (coords == null) {
 			// has not been sent in a bed
 			// TODO: get the ID for this chat for translation purposes
-			UtilChat.addChatMessage(player, "Your home bed was missing or obstructed.");
+			UtilChat.addChatMessage(player, "command.gethome.bed");
 
 		}
 		else {
 			String pos = coords.getX() + ", " + coords.getY() + ", " + coords.getZ();
 
-			UtilChat.addChatMessage(player, "Your home bed is at " + pos);
+			UtilChat.addChatMessage(player, UtilChat.lang("command.gethome.yours") + pos);
 
 		}
 	}

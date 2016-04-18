@@ -81,7 +81,7 @@ public class CommandSearchItem extends BaseCommand implements ICommand {
 			foundQtyTotal = UtilSearchWorld.searchTileInventory(searchQuery, inventory);
 
 			if (foundQtyTotal > 0) {
-				String totalsStr = foundQtyTotal + " found : ";
+				String totalsStr = foundQtyTotal + " : ";
 
 				// TODO we COULD have configs for each of these, that is, one config
 				// flag for SEND_CHAT
@@ -95,7 +95,7 @@ public class CommandSearchItem extends BaseCommand implements ICommand {
 		int ifound = foundMessages.size();
 
 		if (ifound == 0) {
-			UtilChat.addChatMessage(player, "No items found within search radius : " + radius);
+			UtilChat.addChatMessage(player, UtilChat.lang("command.searchitem.none")+ " : " + radius);
 		}
 		else {
 			for (int i = 0; i < ifound; i++) {
