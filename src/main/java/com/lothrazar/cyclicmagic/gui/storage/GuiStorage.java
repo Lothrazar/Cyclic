@@ -19,7 +19,7 @@ import net.minecraft.util.ResourceLocation;
 public class GuiStorage extends GuiContainer {
 
 	// 176x156
-	private static final ResourceLocation	BACKGROUND	= new ResourceLocation(Const.MODID, "textures/gui/inventory_wand.png");
+	private static final ResourceLocation	BACKGROUND	= new ResourceLocation(Const.MODID, "textures/gui/inventory_storage.png");
 
 	// TODO: the swap type tooltop, if its on pattern, should show the current
 	// slot number, as i '3/9'

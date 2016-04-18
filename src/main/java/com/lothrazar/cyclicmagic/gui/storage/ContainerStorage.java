@@ -18,26 +18,26 @@ public class ContainerStorage extends Container {
 	public ContainerStorage(EntityPlayer par1Player, InventoryPlayer playerInventory, InventoryStorage invoWand) {
 
 		this.inventory = invoWand;
-		int x, y = 35;
-		for (int j = 0; j < invoWand.getSizeInventory(); j++) {
-			x = pad + (j % 9) * SQ;
-			if (j == InventoryStorage.INV_SIZE / 2) {
-
-				// x = pad;
-				y += SQ;
-			}
-			this.addSlotToContainer(new Slot(invoWand, j, x, y));
+		int x, y = pad,k,l,slot;
+		for (l = 0; l < 6; ++l) {
+			for (k = 0; k < 9; ++k) {
+			x = pad + k * SQ;
+			y = pad + l * SQ;
+			slot = k + l * hotbar;
+			this.addSlotToContainer(new Slot(invoWand, slot, x, y));
 		}
+	}
 
-		y += 21;
-		for (int l = 0; l < 3; ++l) {
-			for (int k = 0; k < 9; ++k) {
-				this.addSlotToContainer(new Slot(playerInventory, k + l * hotbar + hotbar, pad + k * SQ, l * SQ + y));
+	 int yBase = pad+6* SQ + 21;
+		for (l = 0; l < 3; ++l) {
+			for (k = 0; k < 9; ++k) {
+				slot = k + l * hotbar + hotbar;
+				this.addSlotToContainer(new Slot(playerInventory, slot, pad + k * SQ, l * SQ + yBase));
 			}
 		}
 
 		y += SQ * 3 + 4;
-		for (int k = 0; k < 9; ++k) {
+		for ( k = 0; k < 9; ++k) {
 			this.addSlotToContainer(new Slot(playerInventory, k, pad + k * SQ, y));
 		}
 	}
