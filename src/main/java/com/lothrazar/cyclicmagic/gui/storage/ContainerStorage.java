@@ -19,6 +19,7 @@ public class ContainerStorage extends Container {
 
 		this.inventory = invoWand;
 		int x, y = pad,k,l,slot;
+		//start the main container area
 		for (l = 0; l < 6; ++l) {
 			for (k = 0; k < 9; ++k) {
 			x = pad + k * SQ;
@@ -28,7 +29,8 @@ public class ContainerStorage extends Container {
 		}
 	}
 
-	 int yBase = pad+6* SQ + 21;
+	 int yBase = pad+6* SQ + 14;
+	 //start the players inventory
 		for (l = 0; l < 3; ++l) {
 			for (k = 0; k < 9; ++k) {
 				x = pad + k * SQ;
@@ -38,8 +40,8 @@ public class ContainerStorage extends Container {
 			}
 		}
 
-		//now the actual hotbar
-		int yhotbar = yBase + 3 * SQ;//y += SQ * 3 + 4;
+		//players hotbar
+		int yhotbar = yBase + 3 * SQ + pad/2;//y += SQ * 3 + 4;
 		for ( k = 0; k < hotbar; ++k) {
 			slot = k;
 			x = pad + k * SQ;
