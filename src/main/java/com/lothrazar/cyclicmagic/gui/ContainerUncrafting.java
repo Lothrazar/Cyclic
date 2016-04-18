@@ -10,20 +10,27 @@ import net.minecraft.item.ItemStack;
 
 public class ContainerUncrafting extends Container {
 	// tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
-	public static final int					SLOTX				= 79;
-	public static final int					SLOTY				= 10;
-	public static final int					SLOT				= 0;
-	public static final int					SLOT_SECOND	= 1;
-	public static final int					SLOT_THIRD	= 2;
+	
+	public static final int					SLOTX_START				= 10;
+	public static final int					SLOTY				= 28;
+	//public static final int					SLOT				= 0;
+	
+	public static final int					SQ	= 18;
+//	public static final int					SLOT_SECOND	= 1;
+//	public static final int					SLOT_THIRD	= 2;
 	protected TileEntityUncrafting	tileEntity;
 
 	public ContainerUncrafting(InventoryPlayer inventoryPlayer, TileEntityUncrafting te) {
 		tileEntity = te;
 
-		addSlotToContainer(new SlotUncraft(tileEntity, SLOT, SLOTX, SLOTY));
-		addSlotToContainer(new SlotUncraft(tileEntity, SLOT_SECOND, SLOTX, SLOTY + 18));
-		addSlotToContainer(new SlotUncraft(tileEntity, SLOT_THIRD, SLOTX, SLOTY + 18 + 18));
+		//addSlotToContainer(new SlotUncraft(tileEntity, SLOT, SLOTX, SLOTY));
+		//addSlotToContainer(new SlotUncraft(tileEntity, SLOT_SECOND, SLOTX, SLOTY + 18));
+		//addSlotToContainer(new SlotUncraft(tileEntity, SLOT_THIRD, SLOTX, SLOTY + 18 + 18));
 
+		for(int i = 0; i < tileEntity.getSizeInventory(); i++){
+
+			addSlotToContainer(new SlotUncraft(tileEntity, i, SLOTX_START + i*SQ, SLOTY));
+		}
 		// commonly used vanilla code that adds the player's inventory
 		bindPlayerInventory(inventoryPlayer);
 

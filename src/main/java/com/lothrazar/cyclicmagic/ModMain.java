@@ -134,12 +134,23 @@ public class ModMain {
 
 	/* TODO LIST
 	 * 
+	 * make sure fragile scaffolding can be placed in midair
+	 * 
+	 * more plants that give monster loot ie pearls/ blaze powder/ gunpowder?
+	 * 
+	 * a supertorch? gives off bigger light radius?
+	 * 
+	 * simple redstone additions? timers/ block update detectors?
+	 * 
+	 * some sort of tool that displays trade of every nearby villager?
+	 * 
+	 * some sort of super backpack for more storage
+	 * 
 	 * reachplace.name spell name
 	 * 
 	 * rebalance emerald armor numbers plan.
 	 * 
-	 * 
-	 * remove multi tool
+	 *  
 	 * -> instead add a transforming tool? changes between
 	 * all the types for emerald
 	 * 
@@ -163,10 +174,6 @@ public class ModMain {
 	 * add potion brewing!! work with the real brew stands to make new custom potions
 	 * 
 	 * 
-	 * 
-	 * add the villager trades that were removed in snapshots//old versions
-	 * 
-	 * add storage inventory pages - same way the crafting table works
 	 * 
 	 * BUG: enderman drop block: does it make doubel?
 	 * 

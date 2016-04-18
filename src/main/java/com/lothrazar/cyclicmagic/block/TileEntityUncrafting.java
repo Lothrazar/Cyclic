@@ -40,7 +40,7 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 
 	public TileEntityUncrafting() {
 
-		inv = new ItemStack[3];
+		inv = new ItemStack[9];
 		timer = 0;
 		playSound = null;
 	}
@@ -226,25 +226,22 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 
 	private void tryShiftStacksUp() {
 
-		ItemStack main = getStackInSlot(ContainerUncrafting.SLOT);
-
-		ItemStack second = getStackInSlot(ContainerUncrafting.SLOT_SECOND);
-
-		if (main == null && second != null) { // if the one below this is not
-			// empty, move it up
-			this.setInventorySlotContents(ContainerUncrafting.SLOT_SECOND, null);
-			this.setInventorySlotContents(ContainerUncrafting.SLOT, second);
-		}
-		// move 3 up to 2
-		ItemStack third = getStackInSlot(ContainerUncrafting.SLOT_THIRD);
-
-		if (second == null && third != null) { // if the one below this is not
-			// empty, move it up
-			this.setInventorySlotContents(ContainerUncrafting.SLOT_SECOND, third);
-			this.setInventorySlotContents(ContainerUncrafting.SLOT_THIRD, null);
+		for(int i = 0; i < this.getSizeInventory() - 1; i++){
+			_tryShiftPairUp(i, i+1);
 		}
 	}
 
+	private void _tryShiftPairUp(int low, int high){
+		ItemStack main = getStackInSlot(low);
+		ItemStack second = getStackInSlot(high);
+
+		if (main == null && second != null) { // if the one below this is not
+			// empty, move it up
+			this.setInventorySlotContents(high, null);
+			this.setInventorySlotContents(low, second);
+		}
+	}
+	
 	public boolean isBurning() {
 
 		return this.timer > 0 && this.timer < UtilUncraft.TIMER_FULL;
@@ -258,7 +255,7 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 		// eventually but not constantly)
 		this.tryShiftStacksUp();
 
-		ItemStack stack = getStackInSlot(ContainerUncrafting.SLOT);
+		ItemStack stack = getStackInSlot(0);
 		if (stack == null) {
 			timer = UtilUncraft.TIMER_FULL;// reset just like you would in a
 			// furnace
@@ -274,7 +271,7 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 		}
 
 		if (triggerUncraft) {
-			System.out.println("triggerUncraft");
+
 			// detect what direction my block faces)
 			EnumFacing facing = null;
 			// not sure why this happens or if it ever will again, just being
@@ -309,14 +306,14 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 				// drop the items
 
 				if (this.worldObj.isRemote == false) {
-					System.out.println("uncrafter.doUncraft()" + uncrafter.getDrops().toString());
+
 					ArrayList<ItemStack> uncrafterOutput = uncrafter.getDrops();
 					ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
 
 					TileEntity attached = this.worldObj.getTileEntity(here);
 
 					if (attached != null && attached instanceof IInventory) {
-						System.out.println("insert into attached" + attached.getClass());
+
 
 						IInventory attachedInv = (IInventory) attached;
 
@@ -326,9 +323,9 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 						toDrop = uncrafterOutput;
 					}
 
-					System.out.println("Remaining" + toDrop.size());
+				//	System.out.println("Remaining" + toDrop.size());
 					for (ItemStack s : toDrop) {
-						System.out.println("DROP ITEM" + s.toString());
+						//System.out.println("DROP ITEM" + s.toString());
 						UtilEntity.dropItemStackInWorld(worldObj, here, s);
 						// this.worldObj.spawnEntityInWorld(new EntityItem(this.worldObj, x,
 						// y, z, s));
@@ -341,9 +338,9 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 			}
 			else {
 				// drop the source item since the uncraft failed
-				if (this.worldObj.isRemote == false) // server side only
+				if (this.worldObj.isRemote == false) {// server side only
 					this.worldObj.spawnEntityInWorld(new EntityItem(this.worldObj, x, y, z, stack));
-
+				}
 				this.decrStackSize(0, stack.stackSize);
 
 				// and play a different sound
@@ -377,8 +374,7 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 				chestStack = inventory.getStackInSlot(i);
 
 				if (chestStack == null) {
-					if (debug)
-						System.out.println("DUMP " + i);
+					if (debug){ System.out.println("DUMP " + i);}
 
 					inventory.setInventorySlotContents(i, current);
 					// and dont add current ot remainder at all ! sweet!
@@ -392,8 +388,8 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 
 					if (toDeposit > 0) {
 
-						if (debug)
-							System.out.println("merge " + i + " ; toDeposit =  " + toDeposit);
+						if (debug) 	{System.out.println("merge " + i + " ; toDeposit =  " + toDeposit);}
+						
 						current.stackSize -= toDeposit;
 						chestStack.stackSize += toDeposit;
 
@@ -404,14 +400,12 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 				}
 			}// finished current pass over inventory
 			if (current != null) {
-				if (debug)
-					System.out.println("remaining.add : stackSize = " + current.stackSize);
+				if (debug)					{System.out.println("remaining.add : stackSize = " + current.stackSize);}
 				remaining.add(current);
 			}
 		}
 
-		if (debug)
-			System.out.println("remaining" + remaining.size());
+		if (debug){			System.out.println("remaining" + remaining.size());}
 		return remaining;
 	}
 
