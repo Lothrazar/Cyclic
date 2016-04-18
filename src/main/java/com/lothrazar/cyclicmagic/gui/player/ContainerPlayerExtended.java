@@ -1,5 +1,6 @@
-package com.lothrazar.cyclicmagic.inventory;
+package com.lothrazar.cyclicmagic.gui.player;
 
+import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -33,7 +34,7 @@ public class ContainerPlayerExtended extends Container {
 		inventory = new InventoryPlayerExtended(player);
 		inventory.setEventHandler(this);
 		if (!player.worldObj.isRemote) {
-			inventory.stackList = PlayerHandler.getPlayerInventory(player).stackList;
+			inventory.stackList = UtilPlayerInventoryFilestorage.getPlayerInventory(player).stackList;
 		}
 
 		for (int k = 0; k < ARMOR.length; k++) {
@@ -101,7 +102,7 @@ public class ContainerPlayerExtended extends Container {
 		super.onContainerClosed(player);
 
 		if (!player.worldObj.isRemote) {
-			PlayerHandler.setPlayerInventory(player, inventory);
+			UtilPlayerInventoryFilestorage.setPlayerInventory(player, inventory);
 		}
 	}
 

@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.item;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.gui.GuiEnderBook;
+import com.lothrazar.cyclicmagic.gui.waypoints.GuiEnderBook;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.UtilExperience;
 import com.lothrazar.cyclicmagic.util.UtilNBT;

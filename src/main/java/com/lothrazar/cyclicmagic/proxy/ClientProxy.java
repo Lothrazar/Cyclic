@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 import com.google.common.collect.Ordering;
 import com.lothrazar.cyclicmagic.entity.projectile.*;
 import com.lothrazar.cyclicmagic.event.EventGuiInventory;
-import com.lothrazar.cyclicmagic.gui.GuiSpellWheel;
+import com.lothrazar.cyclicmagic.gui.spell.GuiSpellWheel;
 import com.lothrazar.cyclicmagic.potion.PotionCustom;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;

@@ -1,6 +1,12 @@
 package com.lothrazar.cyclicmagic.gui;
 
 import com.lothrazar.cyclicmagic.block.TileEntityUncrafting;
+import com.lothrazar.cyclicmagic.gui.player.GuiPlayerExtended;
+import com.lothrazar.cyclicmagic.gui.spell.ContainerWand;
+import com.lothrazar.cyclicmagic.gui.spell.GuiWandInventory;
+import com.lothrazar.cyclicmagic.gui.spell.InventoryWand;
+import com.lothrazar.cyclicmagic.gui.uncrafting.ContainerUncrafting;
+import com.lothrazar.cyclicmagic.gui.uncrafting.GuiUncrafting;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.player.EntityPlayer;
@@ -10,7 +16,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 
-public class GuiHandler implements IGuiHandler {
+public class ModGuiHandler implements IGuiHandler {
 
 	public static final int	GUI_INDEX_UNCRAFTING	= 0;
 	public static final int	GUI_INDEX_WAND				= 1;
@@ -21,7 +27,7 @@ public class GuiHandler implements IGuiHandler {
 	 
 		switch (ID) {
 		case GUI_INDEX_EXTENDED:
-			return new com.lothrazar.cyclicmagic.inventory.ContainerPlayerExtended(player.inventory, !world.isRemote, player);
+			return new com.lothrazar.cyclicmagic.gui.player.ContainerPlayerExtended(player.inventory, !world.isRemote, player);
 
 			
 		case GUI_INDEX_WAND:

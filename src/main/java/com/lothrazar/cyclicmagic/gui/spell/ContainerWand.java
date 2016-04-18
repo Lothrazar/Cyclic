@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.gui;
+package com.lothrazar.cyclicmagic.gui.spell;
 
 import com.lothrazar.cyclicmagic.gui.slot.SlotWand;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;

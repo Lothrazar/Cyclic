@@ -1,10 +1,10 @@
 package com.lothrazar.cyclicmagic.event;
 
-import com.lothrazar.cyclicmagic.gui.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonDepositAll;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonLootAll;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonQuickStack;
 import com.lothrazar.cyclicmagic.gui.button.GuiButtonRestock;
+import com.lothrazar.cyclicmagic.gui.player.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.registry.ExtraButtonRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.Minecraft;

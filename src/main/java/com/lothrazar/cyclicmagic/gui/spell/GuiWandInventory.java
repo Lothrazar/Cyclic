@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.gui;
+package com.lothrazar.cyclicmagic.gui.spell;
 
 import java.io.IOException;
 import org.lwjgl.opengl.GL11;

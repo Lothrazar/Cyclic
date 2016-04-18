@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.gui;
+package com.lothrazar.cyclicmagic.gui.spell;
 
 import java.util.ArrayList;
 import java.util.Random;

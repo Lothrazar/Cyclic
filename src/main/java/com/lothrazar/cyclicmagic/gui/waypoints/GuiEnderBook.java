@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.gui;
+package com.lothrazar.cyclicmagic.gui.waypoints;
 
 import java.io.IOException;
 import java.util.ArrayList;

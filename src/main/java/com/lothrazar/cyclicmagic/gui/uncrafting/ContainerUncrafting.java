@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.gui;
+package com.lothrazar.cyclicmagic.gui.uncrafting;
 
 import com.lothrazar.cyclicmagic.block.TileEntityUncrafting;
 import com.lothrazar.cyclicmagic.gui.slot.SlotUncraft;

@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.inventory;
+package com.lothrazar.cyclicmagic.util;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,15 +9,19 @@ import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import com.google.common.io.Files;
 import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.gui.player.InventoryPlayerExtended;
 
 
 /*Thank you so much for the help azanor
+ * for basically writing this class and releasing it open source
+ * 
  * https://github.com/Azanor/Baubles
+ * 
  * which is under Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0) license.
  * so i was able to use parts of that to make this
  * **/
 
-public class PlayerHandler {
+public class UtilPlayerInventoryFilestorage {
 
 	private static HashMap<String, InventoryPlayerExtended> playerItems = new HashMap<String, InventoryPlayerExtended>();
 

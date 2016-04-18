@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.inventory;
+package com.lothrazar.cyclicmagic.gui.player;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

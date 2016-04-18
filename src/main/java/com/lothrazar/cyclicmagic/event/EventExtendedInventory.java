@@ -12,7 +12,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import com.google.common.io.Files;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.inventory.PlayerHandler;
+import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
 
 public class EventExtendedInventory {
 
@@ -28,7 +28,7 @@ public class EventExtendedInventory {
 
 	public static void syncBaubles(EntityPlayer player) {
 		for (int a = 0; a < 4; a++) {
-			PlayerHandler.getPlayerInventory(player).syncSlotToClients(a);
+			UtilPlayerInventoryFilestorage.getPlayerInventory(player).syncSlotToClients(a);
 		}
 	}
 
@@ -61,13 +61,13 @@ public class EventExtendedInventory {
 	@SubscribeEvent
 	public void playerDeath(PlayerDropsEvent event) {
 		if (event.getEntity() instanceof EntityPlayer && !event.getEntity().worldObj.isRemote && !event.getEntity().worldObj.getGameRules().getBoolean("keepInventory")) {
-			PlayerHandler.getPlayerInventory(event.getEntityPlayer()).dropItemsAt(event.getDrops(), event.getEntityPlayer());
+			UtilPlayerInventoryFilestorage.getPlayerInventory(event.getEntityPlayer()).dropItemsAt(event.getDrops(), event.getEntityPlayer());
 		}
 	}
 
 	@SubscribeEvent
 	public void playerLoad(PlayerEvent.LoadFromFile event) {
-		PlayerHandler.clearPlayerInventory(event.getEntityPlayer());
+		UtilPlayerInventoryFilestorage.clearPlayerInventory(event.getEntityPlayer());
 
 		File playerFile = getPlayerFile(ext, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString());
 		if (!playerFile.exists()) {
@@ -84,7 +84,7 @@ public class EventExtendedInventory {
 			}
 		}
 
-		PlayerHandler.loadPlayerInventory(event.getEntityPlayer(), playerFile, getPlayerFile(extback, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString()));
+		UtilPlayerInventoryFilestorage.loadPlayerInventory(event.getEntityPlayer(), playerFile, getPlayerFile(extback, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString()));
 		EventExtendedInventory.playerEntityIds.add(event.getEntityPlayer().getEntityId());
 	}
 	
@@ -99,7 +99,7 @@ public class EventExtendedInventory {
 
 	@SubscribeEvent
 	public void playerSave(PlayerEvent.SaveToFile event) {
-		PlayerHandler.savePlayerBaubles(event.getEntityPlayer(), getPlayerFile(ext, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString()), getPlayerFile(extback, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString()));
+		UtilPlayerInventoryFilestorage.savePlayerBaubles(event.getEntityPlayer(), getPlayerFile(ext, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString()), getPlayerFile(extback, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString()));
 	}
 
 }

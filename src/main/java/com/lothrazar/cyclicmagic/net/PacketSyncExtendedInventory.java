@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.net;
 
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.inventory.PlayerHandler;
+import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -25,7 +25,7 @@ public class PacketSyncExtendedInventory implements IMessage, IMessageHandler<Pa
 
 	public PacketSyncExtendedInventory(EntityPlayer player, int slot) {
 		this.slot = slot;
-		this.bauble = PlayerHandler.getPlayerInventory(player).getStackInSlot(slot);
+		this.bauble = UtilPlayerInventoryFilestorage.getPlayerInventory(player).getStackInSlot(slot);
 		this.playerId = player.getEntityId();
 	}
 
@@ -62,7 +62,7 @@ public class PacketSyncExtendedInventory implements IMessage, IMessageHandler<Pa
 			return;
 		Entity p = world.getEntityByID(message.playerId);
 		if (p != null && p instanceof EntityPlayer) {
-			PlayerHandler.getPlayerInventory((EntityPlayer) p).stackList[message.slot] = message.bauble;
+			UtilPlayerInventoryFilestorage.getPlayerInventory((EntityPlayer) p).stackList[message.slot] = message.bauble;
 		}
 		return;
 	}

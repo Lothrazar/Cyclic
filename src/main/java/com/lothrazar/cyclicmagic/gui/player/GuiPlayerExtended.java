@@ -1,6 +1,5 @@
-package com.lothrazar.cyclicmagic.gui;
+package com.lothrazar.cyclicmagic.gui.player;
 
-import com.lothrazar.cyclicmagic.inventory.ContainerPlayerExtended;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.achievement.GuiAchievements;
