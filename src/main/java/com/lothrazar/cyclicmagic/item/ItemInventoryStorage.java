@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
+import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
@@ -40,9 +42,14 @@ public class ItemInventoryStorage extends Item {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World world, EntityPlayer player, EnumHand hand) {
 
 		System.out.println("onItemRightClick");
+		BlockPos pos = player.getPosition();
+		int x = pos.getX(), y = pos.getY(), z = pos.getZ();
+		player.openGui(ModMain.instance, ModGuiHandler.GUI_INDEX_STORAGE, world, x, y, z);
+
+		
 		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);
 		/*
 		// so this only happens IF either onItemUse did not fire at all, or it
