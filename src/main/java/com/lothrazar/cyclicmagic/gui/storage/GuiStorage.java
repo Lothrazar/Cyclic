@@ -11,6 +11,7 @@ import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.net.PacketBuildSize;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
@@ -48,7 +49,16 @@ public class GuiStorage extends GuiContainer {
 
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.mc.getTextureManager().bindTexture(BACKGROUND);
+		int thisX = (this.width - this.xSize) / 2;
+		int thisY = (this.height - this.ySize) / 2;
+		int texture_width = 176;
+		int texture_height = 222;
+		int u = 0, v = 0;
+		//old
+	//	Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, this.xSize, this.ySize, texture_width, texture_height);
 
-		this.drawTexturedModalRect((this.width - this.xSize) / 2, (this.height - this.ySize) / 2, 0, 0, this.xSize, this.ySize);
+
+		Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v,  texture_width, texture_height, texture_width, texture_height);
+	//	this.drawTexturedModalRect((this.width - this.xSize) / 2, (this.height - this.ySize) / 2, 0, 0, this.xSize, this.ySize);
 	}
 }
