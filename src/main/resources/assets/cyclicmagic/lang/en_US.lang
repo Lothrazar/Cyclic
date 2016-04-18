@@ -67,6 +67,7 @@ item.ender_tnt_6.name=Ender Bomb
 item.ender_blaze.name=Ender Blaze
 item.chest_sack.name=Sack of Holding
 item.chest_sack_empty.name=Empty Sack of Holding
+item.storage_bag.name=Sack of Storage
 item.respawn_egg.name=Respawn Egg
 item.ender_pearl_reuse.name=Ender Orb
 item.carbon_paper.name=Carbon Paper

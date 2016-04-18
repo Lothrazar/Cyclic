@@ -320,8 +320,9 @@ public class ItemRegistry {
 		//	registerItem(multitool, ItemMultiTool.name);
 		//}
 
-		ItemInventoryStorage item_storage = new ItemInventoryStorage();
-		registerItem(item_storage, "item_storage");
+		//TODO: CONFIG STORAGE
+		ItemInventoryStorage storage_bag = new ItemInventoryStorage();
+		registerItem(storage_bag, "storage_bag");
 		
 		if (configToggle.get(ItemEnderPearlReuse.name)) {
 

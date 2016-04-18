@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.gui.storage;
 
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilInventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -11,7 +12,7 @@ import net.minecraft.item.ItemStack;
 public class ContainerStorage extends Container {
 
 	final InventoryStorage	inventory;
-	final int						SQ			= 18;
+	
 	final int						pad			= 8;
 	final int						hotbar	= 9;
 
@@ -22,29 +23,29 @@ public class ContainerStorage extends Container {
 		//start the main container area
 		for (l = 0; l < 6; ++l) {
 			for (k = 0; k < 9; ++k) {
-			x = pad + k * SQ;
-			y = pad + l * SQ;
+			x = pad + k * Const.SQ;
+			y = pad + l * Const.SQ;
 			slot = k + l * hotbar;
 			this.addSlotToContainer(new Slot(invoWand, slot, x, y));
 		}
 	}
 
-	 int yBase = pad+6* SQ + 14;
+	 int yBase = pad+6* Const.SQ + 14;
 	 //start the players inventory
 		for (l = 0; l < 3; ++l) {
 			for (k = 0; k < 9; ++k) {
-				x = pad + k * SQ;
-				y = l * SQ + yBase;
+				x = pad + k * Const.SQ;
+				y = l * Const.SQ + yBase;
 				slot = k + l * hotbar + hotbar;
 				this.addSlotToContainer(new Slot(playerInventory, slot, x, y));
 			}
 		}
 
 		//players hotbar
-		int yhotbar = yBase + 3 * SQ + pad/2;//y += SQ * 3 + 4;
+		int yhotbar = yBase + 3 * Const.SQ + pad/2;//y += SQ * 3 + 4;
 		for ( k = 0; k < hotbar; ++k) {
 			slot = k;
-			x = pad + k * SQ;
+			x = pad + k * Const.SQ;
 			this.addSlotToContainer(new Slot(playerInventory, slot, x, yhotbar));
 		}
 	}
