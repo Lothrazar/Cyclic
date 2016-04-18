@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.gui.spell;
+package com.lothrazar.cyclicmagic.gui.wand;
 
 import java.io.IOException;
 import org.lwjgl.opengl.GL11;
@@ -46,13 +46,6 @@ public class GuiWandInventory extends GuiContainer {
 
 		this.buttonList.add(new ButtonSpellCircle(id, x, y, width));
 
-		id++;
-		x += width + padding;
-		this.buttonList.add(new ButtonRecharge(id, x, y, width));
-
-		// Next row
-		// x = this.guiLeft + 5;
-		// y += 20 + padding;
 
 		id++;
 		x += width + padding;

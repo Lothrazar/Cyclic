@@ -1,20 +1,19 @@
-package com.lothrazar.cyclicmagic.gui.spell;
+package com.lothrazar.cyclicmagic.gui.wand;
 
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
-import com.lothrazar.cyclicmagic.net.MessageRecharge;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ButtonRecharge extends GuiButton implements ITooltipButton {
+public class ButtonSpellCircle extends GuiButton implements ITooltipButton {
 
-	public ButtonRecharge(int buttonId, int x, int y, int width) {
+	public ButtonSpellCircle(int id, int x, int y, int width) {
 
-		super(buttonId, x, y, width, 20, "X");// StatCollector.translateToLocal("button.recharge")
+		super(id, x, y, width, 20, "?");
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -24,8 +23,10 @@ public class ButtonRecharge extends GuiButton implements ITooltipButton {
 		boolean pressed = super.mousePressed(mc, mouseX, mouseY);
 
 		if (pressed) {
+			mc.thePlayer.closeScreen();
 
-			ModMain.network.sendToServer(new MessageRecharge());
+			// this only works on the clientside anwyway :)
+			ModMain.proxy.displayGuiSpellbook();
 		}
 
 		return pressed;
@@ -33,9 +34,10 @@ public class ButtonRecharge extends GuiButton implements ITooltipButton {
 
 	@Override
 	public List<String> getTooltips() {
-
 		List<String> tooltips = new ArrayList<String>();
-		tooltips.add(net.minecraft.util.text.translation.I18n.translateToLocal("button.recharge.tooltip"));
+
+		tooltips.add(net.minecraft.util.text.translation.I18n.translateToLocal("button.circle"));
+
 		return tooltips;
 	}
 }
