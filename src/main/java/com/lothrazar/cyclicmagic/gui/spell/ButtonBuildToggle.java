@@ -1,8 +1,9 @@
-package com.lothrazar.cyclicmagic.gui.button;
+package com.lothrazar.cyclicmagic.gui.spell;
 
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.net.MessageToggleBuild;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;

@@ -1,7 +1,8 @@
-package com.lothrazar.cyclicmagic.gui.button;
+package com.lothrazar.cyclicmagic.gui.spell;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.util.UtilString;
 import com.lothrazar.cyclicmagic.util.UtilTextureRender;

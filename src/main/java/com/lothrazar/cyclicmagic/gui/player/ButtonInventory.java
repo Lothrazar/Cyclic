@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.gui.button;
+package com.lothrazar.cyclicmagic.gui.player;
 
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.net.PacketOpenExtendedInventory;
@@ -10,10 +10,10 @@ import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GuiButtonInventory extends GuiButton{
+public class ButtonInventory extends GuiButton{
 
 	private GuiScreen gui;
-	public GuiButtonInventory(GuiScreen g, int x, int y) {
+	public ButtonInventory(GuiScreen g, int x, int y) {
 		super(51, x, y, 10, 10, "I");
 		gui = g;
 

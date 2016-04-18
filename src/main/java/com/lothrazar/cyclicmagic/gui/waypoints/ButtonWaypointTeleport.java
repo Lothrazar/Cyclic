@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.gui.button;
+package com.lothrazar.cyclicmagic.gui.waypoints;
 
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.net.PacketWarpButton;
@@ -10,14 +10,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GuiButtonEnderbookTeleport extends GuiButton {
+public class ButtonWaypointTeleport extends GuiButton {
 	private int bookSlot;
 
 	public int getSlot() {
 		return bookSlot;
 	}
 
-	public GuiButtonEnderbookTeleport(int id, int x, int y, int w, int h, String txt, int slot) {
+	public ButtonWaypointTeleport(int id, int x, int y, int w, int h, String txt, int slot) {
 		super(id, x, y, w, h, txt);
 		bookSlot = slot;
 	}

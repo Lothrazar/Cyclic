@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.event;
 
-import com.lothrazar.cyclicmagic.gui.button.GuiButtonCrafting;
-import com.lothrazar.cyclicmagic.gui.button.GuiButtonInventory;
+import com.lothrazar.cyclicmagic.gui.player.ButtonCrafting;
+import com.lothrazar.cyclicmagic.gui.player.ButtonInventory;
 import com.lothrazar.cyclicmagic.gui.player.GuiPlayerExtended;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiCrafting;
@@ -35,10 +35,10 @@ public class EventGuiInventory {
 			int guiTop = (gui.height - ySize) / 2;
 			int x = 30 + guiLeft;
 			int y = guiTop + 2;
-			event.getButtonList().add(new GuiButtonInventory(gui, x, y));
+			event.getButtonList().add(new ButtonInventory(gui, x, y));
 		
 
-			event.getButtonList().add(new GuiButtonCrafting(gui, x - 12, y));
+			event.getButtonList().add(new ButtonCrafting(gui, x - 12, y));
 		}
 	}
 	/*

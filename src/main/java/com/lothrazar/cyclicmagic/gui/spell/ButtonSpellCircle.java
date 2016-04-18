@@ -1,8 +1,9 @@
-package com.lothrazar.cyclicmagic.gui.button;
+package com.lothrazar.cyclicmagic.gui.spell;
 
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraftforge.fml.relauncher.Side;

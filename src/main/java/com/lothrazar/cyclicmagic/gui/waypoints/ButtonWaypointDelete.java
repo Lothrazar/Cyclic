@@ -1,15 +1,15 @@
-package com.lothrazar.cyclicmagic.gui.button;
+package com.lothrazar.cyclicmagic.gui.waypoints;
 
 import net.minecraft.client.gui.GuiButton;
 
-public class GuiButtonEnderbookDelete extends GuiButton {
+public class ButtonWaypointDelete extends GuiButton {
 	private int bookSlot;
 
 	public int getSlot() {
 		return bookSlot;
 	}
 
-	public GuiButtonEnderbookDelete(int id, int x, int y, int w, int h, String txt, int slot) {
+	public ButtonWaypointDelete(int id, int x, int y, int w, int h, String txt, int slot) {
 		super(id, x, y, w, h, txt);
 		bookSlot = slot;
 	}

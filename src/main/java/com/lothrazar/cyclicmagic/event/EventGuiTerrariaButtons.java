@@ -1,9 +1,9 @@
 package com.lothrazar.cyclicmagic.event;
 
-import com.lothrazar.cyclicmagic.gui.button.GuiButtonDepositAll;
-import com.lothrazar.cyclicmagic.gui.button.GuiButtonLootAll;
-import com.lothrazar.cyclicmagic.gui.button.GuiButtonQuickStack;
-import com.lothrazar.cyclicmagic.gui.button.GuiButtonRestock;
+import com.lothrazar.cyclicmagic.gui.player.ButtonDepositAll;
+import com.lothrazar.cyclicmagic.gui.player.ButtonLootAll;
+import com.lothrazar.cyclicmagic.gui.player.ButtonQuickStack;
+import com.lothrazar.cyclicmagic.gui.player.ButtonRestock;
 import com.lothrazar.cyclicmagic.gui.player.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.registry.ExtraButtonRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -67,22 +67,22 @@ public class EventGuiTerrariaButtons {
 				yDelta = 0;
 			}
 
-			event.getButtonList().add(new GuiButtonLootAll(button_id++, x, y));
+			event.getButtonList().add(new ButtonLootAll(button_id++, x, y));
 
 			x += xDelta;
 			y += yDelta;
 
-			event.getButtonList().add(new GuiButtonDepositAll(button_id++, x, y));
+			event.getButtonList().add(new ButtonDepositAll(button_id++, x, y));
 
 			x += xDelta;
 			y += yDelta;
 
-			event.getButtonList().add(new GuiButtonQuickStack(button_id++, x, y));
+			event.getButtonList().add(new ButtonQuickStack(button_id++, x, y));
 
 			x += xDelta;
 			y += yDelta;
 
-			event.getButtonList().add(new GuiButtonRestock(button_id++, x, y));
+			event.getButtonList().add(new ButtonRestock(button_id++, x, y));
 
 		}
 	}

@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.gui.button;
+package com.lothrazar.cyclicmagic.gui.player;
 
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.net.DepositAllPacket;
@@ -10,8 +10,8 @@ import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GuiButtonDepositAll extends GuiButton {
-	public GuiButtonDepositAll(int buttonId, int x, int y) {
+public class ButtonDepositAll extends GuiButton {
+	public ButtonDepositAll(int buttonId, int x, int y) {
 		super(buttonId, x, y, Const.btnWidth, Const.btnHeight, I18n.translateToLocal("btn.deposit"));
 	}
 

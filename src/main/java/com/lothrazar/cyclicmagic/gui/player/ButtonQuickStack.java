@@ -1,7 +1,7 @@
-package com.lothrazar.cyclicmagic.gui.button;
+package com.lothrazar.cyclicmagic.gui.player;
 
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.net.RestockPacket;
+import com.lothrazar.cyclicmagic.net.QuickStackPacket;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -10,9 +10,9 @@ import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GuiButtonRestock extends GuiButton {
-	public GuiButtonRestock(int buttonId, int x, int y) {
-		super(buttonId, x, y, Const.btnWidth, Const.btnHeight, I18n.translateToLocal("btn.restock"));
+public class ButtonQuickStack extends GuiButton {
+	public ButtonQuickStack(int buttonId, int x, int y) {
+		super(buttonId, x, y, Const.btnWidth, Const.btnHeight, I18n.translateToLocal("btn.quickstack"));
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -21,7 +21,10 @@ public class GuiButtonRestock extends GuiButton {
 		boolean pressed = super.mousePressed(mc, mouseX, mouseY);
 
 		if (pressed) {
-			ModMain.network.sendToServer(new RestockPacket(new NBTTagCompound()));
+
+			// playerIn.displayGui(new BlockWorkbench.InterfaceCraftingTable(worldIn,
+			// pos));
+			ModMain.network.sendToServer(new QuickStackPacket(new NBTTagCompound()));
 		}
 
 		return pressed;

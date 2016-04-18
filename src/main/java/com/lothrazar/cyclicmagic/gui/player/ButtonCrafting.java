@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.gui.button;
+package com.lothrazar.cyclicmagic.gui.player;
 
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.net.OpenCraftingPacket;
@@ -11,9 +11,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GuiButtonCrafting extends GuiButton {
+public class ButtonCrafting extends GuiButton {
 	private GuiScreen gui;
-	public GuiButtonCrafting(GuiScreen g, int x, int y) {
+	public ButtonCrafting(GuiScreen g, int x, int y) {
 		super(256, x, y, 10, 10, "C");
 		gui = g;
 	}

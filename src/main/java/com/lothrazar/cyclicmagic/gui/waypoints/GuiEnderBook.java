@@ -4,9 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.gui.button.GuiButtonEnderbookDelete;
-import com.lothrazar.cyclicmagic.gui.button.GuiButtonEnderbookNew;
-import com.lothrazar.cyclicmagic.gui.button.GuiButtonEnderbookTeleport;
 import com.lothrazar.cyclicmagic.item.ItemEnderBook;
 import com.lothrazar.cyclicmagic.item.ItemEnderBook.BookLocation;
 import com.lothrazar.cyclicmagic.net.PacketDeleteButton;
@@ -55,7 +52,7 @@ public class GuiEnderBook extends GuiScreen {
 		buttonID++;
 		ArrayList<BookLocation> list = ItemEnderBook.getLocations(bookStack);
 
-		buttonNew = new GuiButtonEnderbookNew(buttonIdNew, this.width / 2 - w,// x
+		buttonNew = new ButtonWaypointNew(buttonIdNew, this.width / 2 - w,// x
 		    20,// y
 		    w, h, buttonIdNew);
 
@@ -72,7 +69,7 @@ public class GuiEnderBook extends GuiScreen {
 		txtNew.setText(entityPlayer.worldObj.getBiomeGenForCoords(entityPlayer.getPosition()).getBiomeName());
 		txtNew.setFocused(true);
 
-		GuiButtonEnderbookTeleport btn;
+		ButtonWaypointTeleport btn;
 		GuiButton del;
 		BookLocation loc;
 		String buttonText;
@@ -93,13 +90,13 @@ public class GuiEnderBook extends GuiScreen {
 				y += h + ypad;
 			}
 
-			btn = new GuiButtonEnderbookTeleport(buttonID++, x, y, w, h, buttonText, loc.id);// +"
+			btn = new ButtonWaypointTeleport(buttonID++, x, y, w, h, buttonText, loc.id);// +"
 			                                                                                 // "+loc.id
 			btn.setTooltip(list.get(i).coordsDisplay());
 			btn.enabled = (loc.dimension == this.entityPlayer.dimension);
 			buttonList.add(btn);
 
-			del = new GuiButtonEnderbookDelete(buttonID++, x - delete_w - 2, y, delete_w, h, "X", loc.id);
+			del = new ButtonWaypointDelete(buttonID++, x - delete_w - 2, y, delete_w, h, "X", loc.id);
 			buttonList.add(del);
 		}
 	}
@@ -132,8 +129,8 @@ public class GuiEnderBook extends GuiScreen {
 
 		if (ItemRegistry.showCoordTooltips)
 			for (int i = 0; i < buttonList.size(); i++) {
-				if (buttonList.get(i) instanceof GuiButtonEnderbookTeleport) {
-					GuiButtonEnderbookTeleport btn = (GuiButtonEnderbookTeleport) buttonList.get(i);
+				if (buttonList.get(i) instanceof ButtonWaypointTeleport) {
+					ButtonWaypointTeleport btn = (ButtonWaypointTeleport) buttonList.get(i);
 					// func_146115_a
 					if (btn.isMouseOver() && btn.getTooltip() != null) {
 						// it takes a list, one on each line. but we use single line
@@ -149,10 +146,10 @@ public class GuiEnderBook extends GuiScreen {
 		if (btn.id == buttonIdNew) {
 			ModMain.network.sendToServer(new PacketNewButton(txtNew.getText()));
 		}
-		else if (btn instanceof GuiButtonEnderbookDelete) {
-			ModMain.network.sendToServer(new PacketDeleteButton(((GuiButtonEnderbookDelete) btn).getSlot()));
+		else if (btn instanceof ButtonWaypointDelete) {
+			ModMain.network.sendToServer(new PacketDeleteButton(((ButtonWaypointDelete) btn).getSlot()));
 		}
-		else if (btn instanceof GuiButtonEnderbookTeleport) {
+		else if (btn instanceof ButtonWaypointTeleport) {
 			// moved to btn class
 		}
 
