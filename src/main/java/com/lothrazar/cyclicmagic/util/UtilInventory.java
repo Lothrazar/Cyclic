@@ -7,6 +7,16 @@ import net.minecraft.world.World;
 
 public class UtilInventory {
 
+
+	public static ItemStack getPlayerItemIfHeld(EntityPlayer player) {
+
+		ItemStack wand = player.getHeldItemMainhand();
+		if(wand == null){
+			wand = player.getHeldItemOffhand();
+		}
+		return wand;
+	}
+	
 	final static int width = 9;
 
 	public static void mergeItemsBetweenStacks(ItemStack takeFrom, ItemStack moveTo) {

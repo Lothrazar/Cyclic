@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import org.apache.logging.log4j.Level;
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.gui.spell.InventoryWand;
+import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.gui.spell;
+package com.lothrazar.cyclicmagic.gui.wand;
 
 import java.util.ArrayList;
 import java.util.List;
