@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.block;
 
 import java.util.ArrayList;
-import com.lothrazar.cyclicmagic.gui.uncrafting.ContainerUncrafting;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilUncraft;
 import net.minecraft.entity.item.EntityItem;

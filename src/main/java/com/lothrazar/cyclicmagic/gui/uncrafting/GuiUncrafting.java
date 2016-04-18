@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.gui.uncrafting;
 
 import com.lothrazar.cyclicmagic.block.TileEntityUncrafting;
-import com.lothrazar.cyclicmagic.gui.slot.SlotUncraft;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilUncraft;
 import net.minecraft.client.gui.Gui;
