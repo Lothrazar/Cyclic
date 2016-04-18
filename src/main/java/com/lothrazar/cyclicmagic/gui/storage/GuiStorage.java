@@ -52,7 +52,7 @@ public class GuiStorage extends GuiContainer {
 		int thisX = (this.width - this.xSize) / 2;
 		int thisY = (this.height - this.ySize) / 2;
 		int texture_width = 176;
-		int texture_height = 222;
+		int texture_height = 212;
 		int u = 0, v = 0;
 		//old
 	//	Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, this.xSize, this.ySize, texture_width, texture_height);

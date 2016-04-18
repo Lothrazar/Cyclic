@@ -31,14 +31,19 @@ public class ContainerStorage extends Container {
 	 int yBase = pad+6* SQ + 21;
 		for (l = 0; l < 3; ++l) {
 			for (k = 0; k < 9; ++k) {
+				x = pad + k * SQ;
+				y = l * SQ + yBase;
 				slot = k + l * hotbar + hotbar;
-				this.addSlotToContainer(new Slot(playerInventory, slot, pad + k * SQ, l * SQ + yBase));
+				this.addSlotToContainer(new Slot(playerInventory, slot, x, y));
 			}
 		}
 
-		y += SQ * 3 + 4;
-		for ( k = 0; k < 9; ++k) {
-			this.addSlotToContainer(new Slot(playerInventory, k, pad + k * SQ, y));
+		//now the actual hotbar
+		int yhotbar = yBase + 3 * SQ;//y += SQ * 3 + 4;
+		for ( k = 0; k < hotbar; ++k) {
+			slot = k;
+			x = pad + k * SQ;
+			this.addSlotToContainer(new Slot(playerInventory, slot, x, yhotbar));
 		}
 	}
 
