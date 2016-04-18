@@ -18,8 +18,6 @@ import net.minecraft.util.ResourceLocation;
 
 public class GuiStorage extends GuiContainer {
 
-	private final InventoryStorage						inventory;
-	private final ItemStack								internalWand;
 	// 176x156
 	private static final ResourceLocation	BACKGROUND	= new ResourceLocation(Const.MODID, "textures/gui/inventory_wand.png");
 
@@ -28,14 +26,11 @@ public class GuiStorage extends GuiContainer {
 	int																		id					= 777;
 	final int															padding			= 4;
 
-
 	public GuiStorage(ContainerStorage containerItem, ItemStack wand) {
 
 		super(containerItem);
-		this.inventory = containerItem.inventory;
-		this.internalWand = wand;
 	}
-	
+
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 

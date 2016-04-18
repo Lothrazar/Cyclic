@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.gui.storage;
 
-import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -148,7 +147,7 @@ public class InventoryStorage implements IInventory {
 
 		ItemStack[] inv = new ItemStack[INV_SIZE];
 
-		if (stack == null || (stack.getItem() instanceof ItemCyclicWand) == false) { return inv; }
+		if (stack == null) { return inv; }
  
 		NBTTagList items = UtilNBT.getTagCompoundNotNull(stack).getTagList("ItemInventory", Constants.NBT.TAG_COMPOUND);
  
@@ -166,9 +165,9 @@ public class InventoryStorage implements IInventory {
 		return inv;
 	}
 
-	public static void writeToNBT(ItemStack wandStack, ItemStack[] theInventory) {
+	public static void writeToNBT(ItemStack item, ItemStack[] theInventory) {
 
-		NBTTagCompound tagcompound = UtilNBT.getTagCompoundNotNull(wandStack);
+		NBTTagCompound tagcompound = UtilNBT.getTagCompoundNotNull(item);
 		// Create a new NBT Tag List to store itemstacks as NBT Tags
 		NBTTagList items = new NBTTagList();
 		ItemStack stack;
@@ -196,21 +195,21 @@ public class InventoryStorage implements IInventory {
 		tagcompound.setTag("ItemInventory", items);
 	}
 
-	public static void decrementSlot(ItemStack wand, int itemSlot) {
+	public static void decrementSlot(ItemStack stack, int itemSlot) {
 
-		ItemStack[] invv = InventoryStorage.readFromNBT(wand);
+		ItemStack[] invv = InventoryStorage.readFromNBT(stack);
 		invv[itemSlot].stackSize--;
 
 		if (invv[itemSlot].stackSize == 0) {
 			invv[itemSlot] = null;
 		}
-		InventoryStorage.writeToNBT(wand, invv);
+		InventoryStorage.writeToNBT(stack, invv);
 	}
 
-	public static ItemStack getFromSlot(ItemStack wand, int i) {
+	public static ItemStack getFromSlot(ItemStack stack, int i) {
 
 		if (i < 0 || i >= InventoryStorage.INV_SIZE) { return null; }
-		return InventoryStorage.readFromNBT(wand)[i];
+		return InventoryStorage.readFromNBT(stack)[i];
 	}
  
 	/******** required unmodified ****/

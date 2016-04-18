@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.gui.storage;
 
-import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
+import com.lothrazar.cyclicmagic.util.UtilInventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ClickType;
@@ -58,7 +58,7 @@ public class ContainerStorage extends Container {
 	@Override
 	public ItemStack func_184996_a(int slot, int dragType, ClickType clickTypeIn, EntityPlayer player) {
 
-		ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
+		ItemStack wand = UtilInventory.getPlayerItemIfHeld(player);
 		// this will prevent the player from interacting with the item that
 		// opened the inventory:
 		if (slot >= 0 && getSlot(slot) != null && getSlot(slot).getStack() == wand) { return null; }

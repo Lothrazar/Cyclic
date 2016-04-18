@@ -10,6 +10,7 @@ import com.lothrazar.cyclicmagic.gui.wand.GuiWandInventory;
 import com.lothrazar.cyclicmagic.gui.uncrafting.ContainerUncrafting;
 import com.lothrazar.cyclicmagic.gui.uncrafting.GuiUncrafting;
 import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
+import com.lothrazar.cyclicmagic.util.UtilInventory;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.player.EntityPlayer;
@@ -43,7 +44,7 @@ public class ModGuiHandler implements IGuiHandler {
 
 		break;
 		case GUI_INDEX_STORAGE:
-			ItemStack s = UtilSpellCaster.getPlayerItemIfHeld(player);
+			ItemStack s = UtilInventory.getPlayerItemIfHeld(player);
 
 			return new ContainerStorage(player, player.inventory, new InventoryStorage(player, s));
 		}
@@ -69,7 +70,7 @@ public class ModGuiHandler implements IGuiHandler {
 
 			break;
 			case GUI_INDEX_STORAGE:
-				ItemStack s = UtilSpellCaster.getPlayerItemIfHeld(player);
+				ItemStack s = UtilInventory.getPlayerItemIfHeld(player);
 
 				return new GuiStorage(new ContainerStorage(player, player.inventory, new InventoryStorage(player, s)), s);
 

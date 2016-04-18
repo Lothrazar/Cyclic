@@ -11,14 +11,6 @@ import com.lothrazar.cyclicmagic.spell.ISpell;
 
 public class UtilSpellCaster {
 
-	public static ItemStack getPlayerItemIfHeld(EntityPlayer player) {
-
-		ItemStack wand = player.getHeldItemMainhand();
-		if(wand == null){
-			wand = player.getHeldItemOffhand();
-		}
-		return wand;
-	}
 	public static ItemStack getPlayerWandIfHeld(EntityPlayer player) {
 
 		ItemStack wand = player.getHeldItemMainhand();
