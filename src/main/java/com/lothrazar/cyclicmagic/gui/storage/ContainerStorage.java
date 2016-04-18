@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.gui.storage;
 
-import com.lothrazar.cyclicmagic.gui.slot.SlotWand;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -27,7 +26,7 @@ public class ContainerStorage extends Container {
 				// x = pad;
 				y += SQ;
 			}
-			this.addSlotToContainer(new SlotWand(invoWand, j, x, y));
+			this.addSlotToContainer(new Slot(invoWand, j, x, y));
 		}
 
 		y += 21;
@@ -43,6 +42,18 @@ public class ContainerStorage extends Container {
 		}
 	}
 
+/*
+	@Override
+  public Slot getSlot(int slotId)
+  {
+		int s = slotId;
+		if(s > this.inventory.getSizeInventory()){
+			System.out.println("Reduceby");
+			s -= this.inventory.getSizeInventory();
+		}
+    return super.getSlot(s);
+  }
+*/
 	// slotClick
 	@Override
 	public ItemStack func_184996_a(int slot, int dragType, ClickType clickTypeIn, EntityPlayer player) {

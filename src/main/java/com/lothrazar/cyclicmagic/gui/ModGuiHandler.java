@@ -24,56 +24,56 @@ public class ModGuiHandler implements IGuiHandler {
 	public static final int	GUI_INDEX_UNCRAFTING	= 0;
 	public static final int	GUI_INDEX_WAND				= 1;
 	public static final int	GUI_INDEX_EXTENDED		= 2;
-	public static final int	GUI_INDEX_STORAGE		= 3;
+	public static final int	GUI_INDEX_STORAGE			= 3;
 
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-	 
+
 		switch (ID) {
 		case GUI_INDEX_EXTENDED:
 			return new com.lothrazar.cyclicmagic.gui.player.ContainerPlayerExtended(player.inventory, !world.isRemote, player);
 
-			
 		case GUI_INDEX_WAND:
 			ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
-			return new ContainerWand(player, player.inventory, new InventoryWand(player, wand)); 
-	 
+			return new ContainerWand(player, player.inventory, new InventoryWand(player, wand));
+
 		case GUI_INDEX_UNCRAFTING:
 			TileEntity tileEntity = world.getTileEntity(new BlockPos(x, y, z));
 			if (tileEntity instanceof TileEntityUncrafting) { return new ContainerUncrafting(player.inventory, (TileEntityUncrafting) tileEntity); }
-	
-			break;
+
+		break;
 		case GUI_INDEX_STORAGE:
-			ItemStack s = UtilSpellCaster.getPlayerWandIfHeld(player);
-			return new ContainerStorage(player, player.inventory, new InventoryStorage(player, s)); 
-		
+			ItemStack s = UtilSpellCaster.getPlayerItemIfHeld(player);
+
+			return new ContainerStorage(player, player.inventory, new InventoryStorage(player, s));
 		}
 		return null;
 	}
 
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-	
+
 		if (world instanceof WorldClient)
-		switch (ID) {
-		case GUI_INDEX_EXTENDED:
-			return new GuiPlayerExtended(player);
-			
-		case GUI_INDEX_WAND:
-			ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
-			return new GuiWandInventory(new ContainerWand(player, player.inventory, new InventoryWand(player, wand)), wand);
+			switch (ID) {
+			case GUI_INDEX_EXTENDED:
+				return new GuiPlayerExtended(player);
 
-		case GUI_INDEX_UNCRAFTING:
+			case GUI_INDEX_WAND:
+				ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
+				return new GuiWandInventory(new ContainerWand(player, player.inventory, new InventoryWand(player, wand)), wand);
 
-			TileEntity tileEntity = world.getTileEntity(new BlockPos(x, y, z));
-			if (tileEntity instanceof TileEntityUncrafting) { return new GuiUncrafting(player.inventory, (TileEntityUncrafting) tileEntity); }
-		
+			case GUI_INDEX_UNCRAFTING:
+
+				TileEntity tileEntity = world.getTileEntity(new BlockPos(x, y, z));
+				if (tileEntity instanceof TileEntityUncrafting) { return new GuiUncrafting(player.inventory, (TileEntityUncrafting) tileEntity); }
+
 			break;
-		case GUI_INDEX_STORAGE:
-			ItemStack s = UtilSpellCaster.getPlayerWandIfHeld(player);
-			return new GuiStorage(new ContainerStorage(player, player.inventory, new InventoryStorage(player, s)), s);
+			case GUI_INDEX_STORAGE:
+				ItemStack s = UtilSpellCaster.getPlayerItemIfHeld(player);
 
-		}
+				return new GuiStorage(new ContainerStorage(player, player.inventory, new InventoryStorage(player, s)), s);
+
+			}
 		return null;
 	}
 }

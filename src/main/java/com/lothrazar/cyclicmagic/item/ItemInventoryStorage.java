@@ -29,7 +29,10 @@ public class ItemInventoryStorage extends Item {
 
 		this.setMaxStackSize(1);
 	}
-
+	@Override
+	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+return false;
+	}
 	@Override
 	public int getMaxItemUseDuration(ItemStack stack) {
 
@@ -44,10 +47,10 @@ public class ItemInventoryStorage extends Item {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World world, EntityPlayer player, EnumHand hand) {
 
-		System.out.println("onItemRightClick");
 		BlockPos pos = player.getPosition();
 		int x = pos.getX(), y = pos.getY(), z = pos.getZ();
-		player.openGui(ModMain.instance, ModGuiHandler.GUI_INDEX_STORAGE, world, x, y, z);
+		if(world.isRemote==false)
+			player.openGui(ModMain.instance, ModGuiHandler.GUI_INDEX_STORAGE, world, x, y, z);
 
 		
 		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);

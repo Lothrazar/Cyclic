@@ -1,11 +1,7 @@
 package com.lothrazar.cyclicmagic.gui.storage;
 
-import java.util.ArrayList;
-import java.util.Random;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
-import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -16,7 +12,7 @@ import net.minecraftforge.common.util.Constants;
 
 public class InventoryStorage implements IInventory {
 
-	public static final int	INV_SIZE	= 64;		
+	public static final int	INV_SIZE	= 16;		
 	private ItemStack[]			inventory	= new ItemStack[INV_SIZE];
 	private final ItemStack	internalWand;
 
@@ -31,7 +27,7 @@ public class InventoryStorage implements IInventory {
 
 		internalWand = wand;
 
-		inventory = readFromNBT(wand);
+		inventory = readFromNBT(internalWand);
 
 		thePlayer = player;
 	}
@@ -138,15 +134,12 @@ public class InventoryStorage implements IInventory {
 
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer player) {
-
-		return UtilSpellCaster.getPlayerWandIfHeld(player) != null;
+		return true;
 	}
 
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
-
-		// only placeable blocks, not any old item
-		return !(stack.getItem() instanceof ItemCyclicWand) && Block.getBlockFromItem(stack.getItem()) != null;
+		return true;
 	}
 
 	/************** public static ******************/
@@ -156,12 +149,9 @@ public class InventoryStorage implements IInventory {
 		ItemStack[] inv = new ItemStack[INV_SIZE];
 
 		if (stack == null || (stack.getItem() instanceof ItemCyclicWand) == false) { return inv; }
-
-		if (!stack.hasTagCompound()) {
-			stack.setTagCompound(new NBTTagCompound());
-		}
-		NBTTagList items = stack.getTagCompound().getTagList("ItemInventory", Constants.NBT.TAG_COMPOUND);
-
+ 
+		NBTTagList items = UtilNBT.getTagCompoundNotNull(stack).getTagList("ItemInventory", Constants.NBT.TAG_COMPOUND);
+ 
 		for (int i = 0; i < items.tagCount(); ++i) {
 			// 1.7.2+ change to items.getCompoundTagAt(i)
 
@@ -178,7 +168,7 @@ public class InventoryStorage implements IInventory {
 
 	public static void writeToNBT(ItemStack wandStack, ItemStack[] theInventory) {
 
-		NBTTagCompound tagcompound = wandStack.getTagCompound();
+		NBTTagCompound tagcompound = UtilNBT.getTagCompoundNotNull(wandStack);
 		// Create a new NBT Tag List to store itemstacks as NBT Tags
 		NBTTagList items = new NBTTagList();
 		ItemStack stack;
@@ -222,99 +212,7 @@ public class InventoryStorage implements IInventory {
 		if (i < 0 || i >= InventoryStorage.INV_SIZE) { return null; }
 		return InventoryStorage.readFromNBT(wand)[i];
 	}
-
-	public static IBlockState getToPlaceFromSlot(ItemStack wand, int i) {
-
-		ItemStack toPlace = getFromSlot(wand, i);
-
-		if (toPlace != null && toPlace.getItem() != null && Block.getBlockFromItem(toPlace.getItem()) != null) {
-
-		return Block.getBlockFromItem(toPlace.getItem()).getStateFromMeta(toPlace.getMetadata()); }
-		return null;
-	}
-
-	public static int getSlotByBuildType(ItemStack wand, IBlockState placeState) {
-
-		int itemSlot = -1;
-
-		int buildType = ItemCyclicWand.BuildType.get(wand);
-		ItemStack[] inv = InventoryStorage.readFromNBT(wand);
-		ArrayList<Integer> slotNonEmpty = new ArrayList<Integer>();
-
-		for (int i = 0; i < inv.length; i++) {
-
-			if (inv[i] != null && inv[i].getItem() != null && Block.getBlockFromItem(inv[i].getItem()) != null) {
-				slotNonEmpty.add(i);
-			}
-		}
-
-		// brute forcing it. there is surely a more elegant way in each branch
-		if (buildType == ItemCyclicWand.BuildType.FIRST.ordinal()) {
-
-			for (int i : slotNonEmpty) {
-				if (inv[i] != null) {
-
-					itemSlot = i;
-					break;
-				}
-			}
-		}
-		else if (buildType == ItemCyclicWand.BuildType.ROTATE.ordinal()) {
-
-			int rot = ItemCyclicWand.InventoryRotation.get(wand);
-
-			int test = InventoryStorage.INV_SIZE + 2;// like aninfloop but with a max
-			// in case we have gaps, maybe its [0,1,4] have items, so cycle through
-			for (int i = 0; i < test; i++) {
-
-				rot++;// first, move one up from last position
-				if (rot < 0 || rot >= inv.length) {// JIT validation
-					rot = 0;
-				}
-				if (inv[rot] != null) {
-					itemSlot = rot;
-
-					if (rot >= inv.length) {
-						rot = 0;
-					}
-
-					ItemCyclicWand.InventoryRotation.set(wand, rot);
-
-					break;
-				}
-				// otherwise skip over empty slot one and keep looking
-			}
-		}
-		else if (buildType == ItemCyclicWand.BuildType.RANDOM.ordinal()) {
-
-			Random rand = new Random();
-			itemSlot = slotNonEmpty.get(rand.nextInt(slotNonEmpty.size()));
-		}
-		else if (buildType == ItemCyclicWand.BuildType.MATCH.ordinal() && placeState != null) {
-
-			// damage dropped meaning what it really is , not item version
-			int meta = placeState.getBlock().damageDropped(placeState);
-
-			ItemStack compareStack = new ItemStack(placeState.getBlock(), 1, meta);
-			ItemStack curr;
-
-			// for (int i = 0; i < player.inventory.getSizeInventory(); ++i) {
-			for (int i : slotNonEmpty) {
-				curr = inv[i];// player.inventory.getStackInSlot(i);
-
-				if (curr != null && curr.isItemEqual(compareStack)) {
-
-					itemSlot = i;
-					break;
-				}
-			}
-
-			// could be null in this one
-		}
-
-		return itemSlot;
-	}
-
+ 
 	/******** required unmodified ****/
 
 	@Override
