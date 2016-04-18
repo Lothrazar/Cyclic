@@ -20,8 +20,14 @@ public class VillageTradeRegistry {
 	final static String sage = Const.MODRES+"textures/entity/villager/elder.png";
 	final static ResourceLocation sageTexture = new ResourceLocation(sage);
 	private static VillagerProfession  elderProfession;
+	private static boolean extraVillagersEnabled;
 
 	public static void register(){
+		
+		if(!extraVillagersEnabled){
+			return;
+		}
+		
 		elderProfession = new VillagerProfession(Const.MODRES+"elder", sage){
 				@Override
 		    public ResourceLocation getSkin() {
@@ -116,6 +122,7 @@ public class VillageTradeRegistry {
 	 };
 	
 	public static void syncConfig(Configuration c){
-		
+		String category = Const.MODCONF + "More Trades";
+		extraVillagersEnabled = c.getBoolean("enableVillagers", category, true, "Adds more (secretly rich) villager types with more trades such as gunpowder, blaze rods, beef, spider eyes, and more.  Test with the /summon command using profession 5 and careers 0,1.  Also spawn naturally. ");
 	}
 }
