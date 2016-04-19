@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic;
+ package com.lothrazar.cyclicmagic;
 
 import org.apache.logging.log4j.Logger;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
@@ -144,8 +144,6 @@ public class ModMain {
 	 * 
 	 * some sort of tool that displays trade of every nearby villager?
 	 * 
-	 * some sort of super backpack for more storage
-	 * 
 	 * reachplace.name spell name
 	 * 
 	 * rebalance emerald armor numbers plan.
@@ -177,8 +175,7 @@ public class ModMain {
 	 * 
 	 * BUG: enderman drop block: does it make doubel?
 	 * 
-	 *UNCRAFITNG: add more slots - horizontal
-	 * test/fix hopper interaction
+	 *UNCRAFITNG:  test/fix hopper interaction
 	 * 
 	 * config to logspam every enabled feature on startup
 	 * 

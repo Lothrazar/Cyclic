@@ -3,7 +3,9 @@ package com.lothrazar.cyclicmagic.event;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -12,10 +14,13 @@ import net.minecraftforge.fml.relauncher.Side;
 import com.google.common.io.Files;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.gui.player.InventoryPlayerExtended;
 import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
 
 public class EventExtendedInventory {
 
+
+	public static boolean dropOnDeath = false;//TODO: from config
 	static HashSet<Integer> playerEntityIds = new HashSet<Integer>();
 
 	@SubscribeEvent
@@ -27,7 +32,8 @@ public class EventExtendedInventory {
 	}
 
 	public static void syncBaubles(EntityPlayer player) {
-		for (int a = 0; a < 4; a++) {
+		int size = InventoryPlayerExtended.ICOL*InventoryPlayerExtended.IROW;
+		for (int a = 0; a < size; a++) {
 			UtilPlayerInventoryFilestorage.getPlayerInventory(player).syncSlotToClients(a);
 		}
 	}
@@ -43,24 +49,18 @@ public class EventExtendedInventory {
 				syncBaubles(player);
 				playerEntityIds.remove(player.getEntityId());
 			}
-
-			/*
-			 * InventoryBaubles baubles = PlayerHandler.getPlayerBaubles(player);
-			 * for (int a = 0; a < baubles.getSizeInventory(); a++) {
-			 * if (baubles.getStackInSlot(a) != null
-			 * && baubles.getStackInSlot(a).getItem() instanceof IBauble) {
-			 * ((IBauble) baubles.getStackInSlot(a).getItem()).onWornTick(
-			 * baubles.getStackInSlot(a), player);
-			 * }
-			 * }
-			 */
-
 		}
 	}
-
 	@SubscribeEvent
 	public void playerDeath(PlayerDropsEvent event) {
-		if (event.getEntity() instanceof EntityPlayer && !event.getEntity().worldObj.isRemote && !event.getEntity().worldObj.getGameRules().getBoolean("keepInventory")) {
+		if(dropOnDeath == false){
+			return;
+		}
+		//else drop on death is true, so do it
+		Entity entity = event.getEntity();
+		World world = entity.getEntityWorld();
+		
+		if (entity instanceof EntityPlayer && !world.isRemote && !world.getGameRules().getBoolean("keepInventory")) {
 			UtilPlayerInventoryFilestorage.getPlayerInventory(event.getEntityPlayer()).dropItemsAt(event.getDrops(), event.getEntityPlayer());
 		}
 	}
@@ -101,5 +101,4 @@ public class EventExtendedInventory {
 	public void playerSave(PlayerEvent.SaveToFile event) {
 		UtilPlayerInventoryFilestorage.savePlayerBaubles(event.getEntityPlayer(), getPlayerFile(ext, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString()), getPlayerFile(extback, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString()));
 	}
-
 }

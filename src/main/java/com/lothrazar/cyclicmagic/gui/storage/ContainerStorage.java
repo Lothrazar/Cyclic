@@ -12,7 +12,10 @@ import net.minecraft.item.ItemStack;
 public class ContainerStorage extends Container {
 
 	final InventoryStorage	inventory;
-	
+
+
+	public static final int INV_START = InventoryStorage.INV_SIZE, INV_END = INV_START + 26, HOTBAR_START = INV_END + 1, HOTBAR_END = HOTBAR_START + 8;
+
 	final int						pad			= 8;
 	final int						hotbar	= 9;
 
@@ -78,9 +81,7 @@ public class ContainerStorage extends Container {
 
 		return inventory.isUseableByPlayer(playerIn);
 	}
-
-	public static final int INV_START = InventoryStorage.INV_SIZE, INV_END = INV_START + 26, HOTBAR_START = INV_END + 1, HOTBAR_END = HOTBAR_START + 8;
-
+	
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int index) {
 
