@@ -134,41 +134,50 @@ public class ModMain {
 
 	/* TODO LIST
 	 * 
+	 * MAKE horses (my current mount) invincible to my arrows. ?? and ender pearls? and sword swings? all damage really
+	 * 
+	 * Make minecarts kill and push through entities that get hit (ex: pigmen on rail)
+	 * 
+	 * 
+	 * Getting hit by a bat causes blindness to player
+	 * 
+	 * ROTATE SPELL: should it be it own tool?
+	 * https://www.reddit.com/r/minecraftsuggestions/comments/4f9ib5/hammer_or_something_like_it/
+	 * 
+	 * 
+	 * 
+	 * fix villager skins
+	 * 
+	 * bring back energy bar. for the jump one for sure. other ones maybe?
+	 * 
+   * Uncrafter - turn off with redstone. or maybe only on with redstone?
+   * 
+   * uncrafter -maybe try using fuel source
+	 * 
+	 * uncrafter - persist smoking ? like furnace?
+	 * 
+	 * Undo button - for mass placing. only lasts a few seconds then goes away?
+	 * 
 	 * reach scepter starts on inventory spell for a second
 	 * 
 	 * make sure fragile scaffolding can be placed in midair
 	 * 
 	 * more plants that give monster loot ie pearls/ blaze powder/ gunpowder?
 	 * 
-	 * a supertorch? gives off bigger light radius?
-	 * 
-	 * simple redstone additions? timers/ block update detectors?
-	 * 
 	 * some sort of tool that displays trade of every nearby villager?
 	 * 
-	 * WAND: turn particle beam on / off
-	 * 
-	 * reachplace.name = Place Block
+	 * WAND: turn particle beam on / off in config
 	 * 
 	 * SPELLS that use numbers, put in their name 'name' +" ["+ number + "]";
 	 * 
-	 * 
 	 * rebalance emerald armor numbers plan.
 	 * 
-	 *  
 	 * -> instead add a transforming tool? changes between
 	 * all the types for emerald
 	 * 
 	 * all block spells use block sound.
 	 * 
-	 * All spells that do not use wand inventory moved to other
-	 * item.:
-	 * : push pull rotate 
-	 * 
-	 * 
 	 * ROTATE: STAIRS: allow switch frop top to bottom
-	 * 
-	 * PLAY BLOCCK SOUND on rotate spell...+others
 	 * 
 	 * achievemnets give exp
 	 * 
@@ -192,7 +201,7 @@ public class ModMain {
 	 * 
 	 * try to auto detect home biomes of saplings for modded compat
 	 * 
-	 * 
+	 * crafting table hotkeys - numpad?
 	 * 
 	 * SPELL: bring back ghost - let it put you in new location but only if air
 	 * blocks
@@ -203,15 +212,29 @@ public class ModMain {
 	 * 
 	 * 4. chest give failure message text (only useable on a container)
 	 * 
+	 * dont add crops without a reason
+	 * 
+	 * https://www.reddit.com/r/minecraftsuggestions/comments/4fgcb2/make_dry_sponges_usable_by_dispensers/
 	 * 
 	 * //IDEA: make boats float
 	 * https://www.reddit.com/r/minecraftsuggestions/comments/4d4ob1/
 	 * make_boats_float_again/
 	 * 
+	 * https://www.reddit.com/r/minecraftsuggestions/comments/4fhjhv/inspawnchunks_truefalse_into_f3_screen/
 	 * 
 	 * https://www.reddit.com/r/minecraftsuggestions/comments/4chlpo/
 	 * add_a_control_option_for_elytra_automatically/
 	 * 
+	 * https://www.reddit.com/r/minecraftsuggestions/comments/4ff8bu/armor_stand_with_arms/
+	 * ^^ and can they hold weapons???
+	 * 
+	 * https://www.reddit.com/r/minecraftsuggestions/comments/4f5xzq/golden_compass_points_to_its_creation_spot/
+	 * https://www.reddit.com/r/minecraftsuggestions/comments/4f6420/a_new_type_of_compass_that_points_to_your_most/
+	 * 
+	 * 
+	 * Chorus potions: levitate 
+	 * 
+	 * https://www.reddit.com/r/minecraftsuggestions/comments/4f35fx/red_sand_should_generate_on_lava_ocean_beaches_in/
 	 * 
 	 * CONCURRENT : 
 	 * 
