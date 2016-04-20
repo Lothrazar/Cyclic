@@ -7,6 +7,8 @@ import com.lothrazar.cyclicmagic.registry.*;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -18,6 +20,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @Mod(modid = Const.MODID, useMetadata = true, canBeDeactivated = false, updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json", guiFactory = "com.lothrazar." + Const.MODID + ".gui.IngameConfigFactory")
 public class ModMain {
@@ -57,8 +60,18 @@ public class ModMain {
 		PacketRegistry.register(network);
 		
 		VillageTradeRegistry.register();
+		
+		
+//TODO: create a SoundRegistry class. for now just happy it works
+		//thanks for the help: https://github.com/Choonster/TestMod3/tree/162914a163c7fcb6bdd992917fcbc699584e40de/src/main/java/com/choonster/testmod3
+		// and http://www.minecraftforge.net/forum/index.php?topic=38076.0
+		final ResourceLocation res = new ResourceLocation(Const.MODID, "crackle");//new ResourceLocation(Const.MODID, "sounds/" + UtilSound.Own.crackle+".ogg");
+		crackle = new SoundEvent(res);
+		crackle.setRegistryName(res);
+		GameRegistry.register(crackle);
 	}
 
+	public static SoundEvent crackle;
 
 	@EventHandler
 	public void onInit(FMLInitializationEvent event) {
@@ -133,6 +146,8 @@ public class ModMain {
 	}
 
 	/* TODO LIST
+	 * 
+	 * a /heal command - default to OP only
 	 * 
 	 * MAKE horses (my current mount) invincible to my arrows. ?? and ender pearls? and sword swings? all damage really
 	 * 

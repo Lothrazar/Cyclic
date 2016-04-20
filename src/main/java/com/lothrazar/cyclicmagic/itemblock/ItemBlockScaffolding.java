@@ -1,6 +1,9 @@
 package com.lothrazar.cyclicmagic.itemblock;
 
+import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.block.BlockScaffolding;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
@@ -94,6 +97,7 @@ public class ItemBlockScaffolding extends ItemBlock {
 	@Override
 	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 
+		//UtilSound.playSound(playerIn, ModMain.crackle,SoundCategory.PLAYERS);
 		return super.onItemUse(stack, playerIn, worldIn, pos, hand, facing, hitX, hitY, hitZ);
 		/*
 		 * IBlockState iblockstate = worldIn.getBlockState(pos);
