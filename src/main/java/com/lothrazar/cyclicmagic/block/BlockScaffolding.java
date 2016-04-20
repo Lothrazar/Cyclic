@@ -3,6 +3,7 @@ package com.lothrazar.cyclicmagic.block;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.item.IHasRecipe;
+import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
@@ -45,7 +46,7 @@ public class BlockScaffolding extends Block implements IHasRecipe {
 		// fallSoundIn)
 		// TODO: SOUND REGISTRY
 		//why doesnt this fix it?
-		SoundEvent crackle = ModMain.crackle;
+		SoundEvent crackle = SoundRegistry.crackle;
 	 	this.setStepSound(new SoundType(1.0F, 1.0F, crackle,crackle,crackle,crackle,crackle));
 	}
 	

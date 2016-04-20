@@ -1,13 +1,13 @@
 {
-	"basey"   : {"category" : "player", "sounds" : ["basey"]},
-	"bip"     : {"category" : "player", "sounds" : ["bip"]},
-	"buzzp"   : {"category" : "player", "sounds" : ["buzzp"]},
-	"bwewe"   : {"category" : "player", "sounds" : ["bwewe"]},
-	"bwoaaap" : {"category" : "player", "sounds" : ["bwoaaap"]},
+	"basey"   : {"category" : "player", "sounds" : [{"name":"cyclicmagic:basey"}]},
+	"bip"     : {"category" : "player", "sounds" : [{"name":"cyclicmagic:bip"}]},
+	"buzzp"   : {"category" : "player", "sounds" : [{"name":"cyclicmagic:buzzp"}]},
+	"bwewe"   : {"category" : "player", "sounds" : [{"name":"cyclicmagic:bwewe"}]},
+	"bwoaaap" : {"category" : "player", "sounds" : [{"name":"cyclicmagic:bwoaaap"}]},
 	"crackle" : {"category" : "player", "sounds" : [{"name":"cyclicmagic:crackle",stream:false}]},
-	"dcoin"   : {"category" : "player", "sounds" : ["dcoin"]},
-	"fill"    : {"category" : "player", "sounds" : ["fill"]},
-	"pew"     : {"category" : "player", "sounds" : ["pew"]},
-	"pow"     : {"category" : "player", "sounds" : ["pow"]},
-	"thunk"   : {"category" : "player", "sounds" : ["thunk"]}
+	"dcoin"   : {"category" : "player", "sounds" : [{"name":"cyclicmagic:dcoin"}]},
+	"fill"    : {"category" : "player", "sounds" : [{"name":"cyclicmagic:fill"}]},
+	"pew"     : {"category" : "player", "sounds" : [{"name":"cyclicmagic:pew"}]},
+	"pow"     : {"category" : "player", "sounds" : [{"name":"cyclicmagic:pow"}]},
+	"thunk"   : {"category" : "player", "sounds" : [{"name":"cyclicmagic:thunk"}]}
 }

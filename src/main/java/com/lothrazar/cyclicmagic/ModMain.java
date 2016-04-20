@@ -61,17 +61,10 @@ public class ModMain {
 		
 		VillageTradeRegistry.register();
 		
-		
-//TODO: create a SoundRegistry class. for now just happy it works
-		//thanks for the help: https://github.com/Choonster/TestMod3/tree/162914a163c7fcb6bdd992917fcbc699584e40de/src/main/java/com/choonster/testmod3
-		// and http://www.minecraftforge.net/forum/index.php?topic=38076.0
-		final ResourceLocation res = new ResourceLocation(Const.MODID, "crackle");//new ResourceLocation(Const.MODID, "sounds/" + UtilSound.Own.crackle+".ogg");
-		crackle = new SoundEvent(res);
-		crackle.setRegistryName(res);
-		GameRegistry.register(crackle);
+		SoundRegistry.register();
+
 	}
 
-	public static SoundEvent crackle;
 
 	@EventHandler
 	public void onInit(FMLInitializationEvent event) {
@@ -83,7 +76,6 @@ public class ModMain {
 		MobSpawningRegistry.register();
 		WorldGenRegistry.register();
 		FuelRegistry.register();
-		SoundRegistry.register();
 
 		if (StackSizeRegistry.enabled) {
 			StackSizeRegistry.register();
