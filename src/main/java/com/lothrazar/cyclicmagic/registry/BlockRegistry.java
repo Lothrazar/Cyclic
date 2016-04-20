@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.block.*;
+import com.lothrazar.cyclicmagic.block.BlockDimensionOre.SpawnType;
 import com.lothrazar.cyclicmagic.itemblock.ItemBlockBucket;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilUncraft;
@@ -25,15 +26,15 @@ public class BlockRegistry {
 	public static BlockBucketStorage	block_storemilk;
 	public static BlockBucketStorage	block_storeempty;
 
-	public static BlockNetherOre			nether_gold_ore;
-	public static BlockNetherOre			nether_coal_ore;
-	public static BlockNetherOre			nether_lapis_ore;
-	public static BlockNetherOre			nether_emerald_ore;
+	public static BlockDimensionOre			nether_gold_ore;
+	public static BlockDimensionOre			nether_coal_ore;
+	public static BlockDimensionOre			nether_lapis_ore;
+	public static BlockDimensionOre			nether_emerald_ore;
 
-	public static BlockNetherOre			end_redstone_ore;
-	public static BlockNetherOre			end_coal_ore;
-	public static BlockNetherOre			end_lapis_ore;
-	public static BlockNetherOre			end_emerald_ore;
+	public static BlockDimensionOre			end_redstone_ore;
+	public static BlockDimensionOre			end_coal_ore;
+	public static BlockDimensionOre			end_lapis_ore;
+	public static BlockDimensionOre			end_emerald_ore;
 
 	private static boolean						enabledBucketBlocks	= true;
 
@@ -81,31 +82,39 @@ public class BlockRegistry {
 
 		if (WorldGenRegistry.netherOreEnabled) {
 
-			nether_gold_ore = new BlockNetherOre(Items.gold_nugget, 0, 4);
+			nether_gold_ore = new BlockDimensionOre(Items.gold_nugget, 0, 4);
+			nether_gold_ore.setSpawnType(SpawnType.SILVERFISH, 1);
 			registerBlock(nether_gold_ore, "nether_gold_ore");
 
-			nether_coal_ore = new BlockNetherOre(Items.coal);
+			nether_coal_ore = new BlockDimensionOre(Items.coal);
+			nether_coal_ore.setSpawnType(SpawnType.SILVERFISH, 1);
 			registerBlock(nether_coal_ore, "nether_coal_ore");
 
-			nether_lapis_ore = new BlockNetherOre(Items.dye, EnumDyeColor.BLUE.getDyeDamage(), 3);
+			nether_lapis_ore = new BlockDimensionOre(Items.dye, EnumDyeColor.BLUE.getDyeDamage(), 3);
+			nether_lapis_ore.setSpawnType(SpawnType.SILVERFISH, 2);
 			registerBlock(nether_lapis_ore, "nether_lapis_ore");
 
-			nether_emerald_ore = new BlockNetherOre(Items.emerald);
+			nether_emerald_ore = new BlockDimensionOre(Items.emerald);
+			nether_emerald_ore.setSpawnType(SpawnType.SILVERFISH, 5);
 			registerBlock(nether_emerald_ore, "nether_emerald_ore");
 		}
 
 		if (WorldGenRegistry.endOreEnabled) {
 
-			end_redstone_ore = new BlockNetherOre(Items.redstone);
+			end_redstone_ore = new BlockDimensionOre(Items.redstone);
+			end_redstone_ore.setSpawnType(SpawnType.ENDERMITE, 3);
 			registerBlock(end_redstone_ore, "end_redstone_ore");
 
-			end_coal_ore = new BlockNetherOre(Items.coal);
+			end_coal_ore = new BlockDimensionOre(Items.coal);
+			end_coal_ore.setSpawnType(SpawnType.ENDERMITE, 1);
 			registerBlock(end_coal_ore, "end_coal_ore");
 
-			end_lapis_ore = new BlockNetherOre(Items.dye, EnumDyeColor.BLUE.getDyeDamage(), 3);
+			end_lapis_ore = new BlockDimensionOre(Items.dye, EnumDyeColor.BLUE.getDyeDamage(), 3);
+			end_lapis_ore.setSpawnType(SpawnType.ENDERMITE, 5);
 			registerBlock(end_lapis_ore, "end_lapis_ore");
 
-			end_emerald_ore = new BlockNetherOre(Items.emerald);
+			end_emerald_ore = new BlockDimensionOre(Items.emerald);
+			end_emerald_ore.setSpawnType(SpawnType.ENDERMITE, 8);
 			registerBlock(end_emerald_ore, "end_emerald_ore");
 		}
 

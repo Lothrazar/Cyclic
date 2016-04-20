@@ -102,6 +102,8 @@ public class EventRegistry {
 		//we already have the extraButtonsRegistry config for this
 		events.add(new EventGuiTerrariaButtons());
 		events.add(new EventExtendedInventory()); 
+		
+		events.add(new EventOreMined());
 
 		if(passThroughClick){
 			events.add(new EventPassthroughAction());

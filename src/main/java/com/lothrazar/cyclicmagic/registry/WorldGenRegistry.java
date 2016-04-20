@@ -11,6 +11,7 @@ public class WorldGenRegistry {
 	public static boolean	oceanEnabled;
 	public static boolean	netherOreEnabled;
 	public static boolean	endOreEnabled;
+	public static boolean	oreSpawns = true;
 
 	public static void syncConfig(Configuration config) {
 
@@ -29,6 +30,9 @@ public class WorldGenRegistry {
 		prop = config.get(category, "End Ore", true, "Generate ore in the end (lapis, emerald, redstone, coal)");
 		prop.setRequiresMcRestart(true);
 		endOreEnabled = prop.getBoolean();
+		
+		prop = config.get(category, "Ore Spawns", true, "These dimension ores have a chance to spawn mites");
+		oreSpawns = prop.getBoolean();
 	}
 
 	final static int weight = 0;
