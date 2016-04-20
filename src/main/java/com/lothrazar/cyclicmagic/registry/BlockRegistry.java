@@ -5,8 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.block.*;
+import com.lothrazar.cyclicmagic.itemblock.*;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre.SpawnType;
-import com.lothrazar.cyclicmagic.itemblock.ItemBlockBucket;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilUncraft;
 import net.minecraft.block.Block;
@@ -20,7 +20,7 @@ public class BlockRegistry {
 
 	public static ArrayList<Block>		blocks							= new ArrayList<Block>();
 
-	public static BlockFragile				block_fragile;
+	public static BlockScaffolding					block_fragile;
 	public static BlockBucketStorage	block_storelava;
 	public static BlockBucketStorage	block_storewater;
 	public static BlockBucketStorage	block_storemilk;
@@ -41,16 +41,18 @@ public class BlockRegistry {
 	private static boolean						enableBlockFragile;
 
 	private static boolean enableBlockUncrafting;
-
-	public static void registerBlock(Block b, String name) {
+//lots of helpers/overrides with defaults
+	private static void registerBlock(Block b, String name) {
 		registerBlock(b,name,false);
 	}
-
-	public static void registerBlock(Block b, String name, boolean isHidden) {
+	private static void registerBlock(Block b, String name, boolean isHidden) {
 
 		registerBlock(b,new ItemBlock(b),name,isHidden);
 	}
+	private static void registerBlock(Block b, ItemBlock ib, String name) {
 
+		registerBlock(b,ib,name,false);
+	}
 	private static void registerBlock(Block b, ItemBlock ib, String name,boolean isHidden) {
 		b.setRegistryName(name);
 		b.setUnlocalizedName(name); 
@@ -76,8 +78,8 @@ public class BlockRegistry {
 
 		if (enableBlockFragile) {
 
-			block_fragile = new BlockFragile();
-			registerBlock(block_fragile, BlockFragile.name);
+			block_fragile = new BlockScaffolding();
+			registerBlock(block_fragile,new ItemBlockScaffolding(block_fragile), BlockScaffolding.name);
 		}
 
 		if (WorldGenRegistry.netherOreEnabled) {
