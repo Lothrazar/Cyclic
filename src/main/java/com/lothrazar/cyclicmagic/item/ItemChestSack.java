@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
+import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
@@ -44,7 +45,7 @@ public class ItemChestSack extends Item implements IHasRecipe {
 		if (createAndFillChest(playerIn, stack, offset)) {
 			playerIn.setHeldItem(hand, null);
 
-			UtilSound.playSound(worldIn, pos, UtilSound.Own.thunk);
+			UtilSound.playSound(worldIn, pos, SoundRegistry.thunk);
 		}
 
 		return EnumActionResult.SUCCESS;

@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.spell;
 
 import com.lothrazar.cyclicmagic.registry.PotionRegistry;
+import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -79,7 +80,7 @@ public class SpellLaunch extends BaseSpell implements ISpell {
 		}
 
 		//this.playSound(world, null, player.getPosition());
-		UtilSound.playSound(player, UtilSound.Own.bwoaaap);
+		UtilSound.playSound(player, SoundRegistry.bwoaaap);
 		this.spawnParticle(world, player, player.getPosition());
 
 		return true;
@@ -95,7 +96,7 @@ public class SpellLaunch extends BaseSpell implements ISpell {
 	@Override
 	public void playSound(World world, Block block, BlockPos pos) {
 
-		UtilSound.playSound(world, pos, UtilSound.Own.bwoaaap);
+		UtilSound.playSound(world, pos, SoundRegistry.bwoaaap);
 
 	}
 }

@@ -6,6 +6,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
+import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 
@@ -78,7 +79,7 @@ public class UtilSpellCaster {
 
 		ItemCyclicWand.Spells.setSpellCurrent(wand, left);
 
-		UtilSound.playSound(player.worldObj, player.getPosition(), UtilSound.Own.bip);
+		UtilSound.playSound(player.worldObj, player.getPosition(), SoundRegistry.bip);
 	}
 
 	public static void shiftRight(EntityPlayer player) {
@@ -88,7 +89,7 @@ public class UtilSpellCaster {
 		int right = SpellRegistry.next(wand, ItemCyclicWand.Spells.getSpellCurrent(wand)).getID();
 
 		ItemCyclicWand.Spells.setSpellCurrent(wand, right);
-		UtilSound.playSound(player.worldObj, player.getPosition(), UtilSound.Own.bip);
+		UtilSound.playSound(player.worldObj, player.getPosition(), SoundRegistry.bip);
 	}
 
 	public static ISpell getPlayerCurrentISpell(EntityPlayer player) {

@@ -20,51 +20,6 @@ public class UtilSound {
 	public static final String	portal				= "mob.endermen.portal";
 	public static final String	drink					= "random.drink";
 
-	// public static final String click = "random.wood_click";
-
-	public static class Own {
-
-		// internal sounds added by mod
-		// all are created by ME using a third party tool: http://www.bfxr.net/
-		// then converted from wav to ogg with https://online-audio-converter.com/
-		public static final String	bip			= "bip";		// spell rotate
-		public static final String	buzzp		= "buzzp";	// spell cast failure. water
-		                                                // bolt
-		// hit in nether. portal
-		// waypoint x dimension. wand
-		// xp refil fail
-		public static final String	bwoaaap	= "bwoaaap";// used for launch spell
-
-		public static final String	fill		= "fill";		// fill wand energy with xp
-
-		public static final String	pew			= "pew";		// thrown spells
-
-		public static final String	crackle	= "crackle";// scaffolding
-
-		public static final String	thunk		= "thunk";	// chest sack create
-
-	}
-
-	public static SoundEvent bwoaaap;
-
-	public static void playSound(Entity player, String sound) {
-
-		// for client only, or if you have client/server both
-		// player.playSound(sound, volume, pitch);
-	//	System.out.println("TODO: fix sounds P" + sound);
-		player.playSound(bwoaaap, volume, pitch);
-	}
-
-	public static void playSound(World world, BlockPos pos, String sound) {
-
-		// works if you play it only on the server
-		// world.playSoundEffect(pos.getX(), pos.getY(), pos.getZ(), sound, volume,
-		// pitch);
-	//	System.out.println("TODO: fix sounds W" + sound);
-		playSound(world,pos,bwoaaap,SoundCategory.PLAYERS);
-
-	}
-
 	public static void playSound(Entity entity, SoundEvent soundIn) {
 		playSound(entity.getEntityWorld(), entity.getPosition(), soundIn);
 	}

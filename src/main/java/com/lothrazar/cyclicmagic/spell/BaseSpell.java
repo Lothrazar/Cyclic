@@ -4,6 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
@@ -60,7 +61,7 @@ public abstract class BaseSpell implements ISpell {
 	@Override
 	public void onCastFailure(World world, EntityPlayer player, BlockPos pos) {
 
-		UtilSound.playSound(player, UtilSound.Own.buzzp);
+		UtilSound.playSound(player, SoundRegistry.buzzp);
 	}
 
 	@Override

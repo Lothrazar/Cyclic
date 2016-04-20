@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.spell;
 
+import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,7 +18,7 @@ public abstract class BaseSpellPlace extends BaseSpell {
 			UtilSound.playSound(world, pos, block.getStepSound().getPlaceSound());
 		}
 		else {
-			UtilSound.playSound(world, pos, UtilSound.Own.crackle);
+			UtilSound.playSound(world, pos, SoundRegistry.crackle);
 		}
 	}
 

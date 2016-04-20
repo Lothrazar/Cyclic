@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
+import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
@@ -183,7 +184,7 @@ public class ItemPaperCarbon extends Item implements IHasRecipe {
 				}
 			}
 
-			UtilSound.playSound(entityPlayer, "random.fizz");
+			UtilSound.playSound(entityPlayer, SoundRegistry.buzzp);
 		}
 
 		return EnumActionResult.PASS;

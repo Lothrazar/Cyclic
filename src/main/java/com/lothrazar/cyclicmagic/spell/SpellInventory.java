@@ -2,11 +2,13 @@ package com.lothrazar.cyclicmagic.spell;
 
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
+import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
@@ -45,6 +47,6 @@ public class SpellInventory extends BaseSpell {
 	@Override
 	public void playSound(World world, Block block, BlockPos pos) {
 
-		UtilSound.playSound(world, pos, UtilSound.drink);
+		UtilSound.playSound(world, pos, SoundEvents.entity_generic_drink);
 	}
 }

@@ -8,6 +8,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -73,6 +74,6 @@ public class CommandHome extends BaseCommand implements ICommand {
 
 		UtilTeleport.teleportWallSafe(player, world, pos);
 
-		UtilSound.playSound(player, "mob.endermen.portal");
+		UtilSound.playSound(player, SoundEvents.entity_endermen_teleport);
 	}
 }

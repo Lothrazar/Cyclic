@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.util.UtilTeleport;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.server.MinecraftServer;
 //import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.world.World;
@@ -37,6 +38,6 @@ public class CommandWorldHome extends BaseCommand implements ICommand {
 		// so we need to safely push the player up out of any blocks they are in
 
 		UtilTeleport.teleportWallSafe(player, world, world.getSpawnPoint());
-		UtilSound.playSound(player, "mob.endermen.portal");
+		UtilSound.playSound(player, SoundEvents.entity_endermen_teleport);
 	}
 }
