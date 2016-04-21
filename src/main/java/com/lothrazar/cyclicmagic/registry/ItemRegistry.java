@@ -320,6 +320,10 @@ public class ItemRegistry {
 		//	registerItem(multitool, ItemMultiTool.name);
 		//}
 
+		//TODO: CONFIG
+		ItemToolRotate tool_rotate = new ItemToolRotate();
+		registerItem(tool_rotate, "tool_rotate");
+
 		//TODO: CONFIG STORAGE
 		ItemInventoryStorage storage_bag = new ItemInventoryStorage();
 		registerItem(storage_bag, "storage_bag");

@@ -24,6 +24,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemCyclicWand extends Item {
 
 	private static final String NBT_SPELLCURRENT = "spell_id";
+	
 
 	public ItemCyclicWand() {
 

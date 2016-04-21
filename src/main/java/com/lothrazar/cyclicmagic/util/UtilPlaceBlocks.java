@@ -7,9 +7,13 @@ import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockStone;
+import net.minecraft.block.BlockStone.EnumType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
@@ -179,7 +183,13 @@ public class UtilPlaceBlocks {
 
 		return success;
 	}
-
+	public static boolean placeStateDetsroy(World world, EntityPlayer player, BlockPos placePos, IBlockState placeState,boolean dropBlock) {
+		
+		if(world.destroyBlock(placePos, dropBlock)){
+			return placeStateSafe( world,  player,  placePos,  placeState);
+		}
+		return false;
+	}
 	// from spell range build
 	public static boolean placeStateSafe(World world, EntityPlayer player, BlockPos placePos, IBlockState placeState) {
 		if (placePos == null) { return false; }
@@ -228,4 +238,172 @@ public class UtilPlaceBlocks {
 		return success;
 	}
 
+	public static ArrayList<Block> ignoreList = new ArrayList<Block>();
+
+	private static void translateCSV() {
+
+		// TODO: FROM CONFIG...somehow
+
+		if (ignoreList.size() == 0) {
+
+			ignoreList.add(Blocks.end_portal_frame);
+			ignoreList.add(Blocks.end_portal);
+			ignoreList.add(Blocks.portal);
+			ignoreList.add(Blocks.bed);
+			ignoreList.add(Blocks.dark_oak_door);
+			ignoreList.add(Blocks.acacia_door);
+			ignoreList.add(Blocks.birch_door);
+			ignoreList.add(Blocks.oak_door);
+			ignoreList.add(Blocks.spruce_door);
+			ignoreList.add(Blocks.jungle_door);
+			ignoreList.add(Blocks.iron_door);
+			ignoreList.add(Blocks.skull);
+		}
+	}
+
+	public static boolean moveBlockTo(World world, EntityPlayer player, BlockPos pos, BlockPos posMoveToHere) {
+
+		IBlockState newStateToPlace = world.getBlockState(pos);
+		translateCSV();
+
+		if (newStateToPlace == null || ignoreList.contains(newStateToPlace.getBlock())) { return false; }
+		if (newStateToPlace.getBlock().getBlockHardness(newStateToPlace, world, posMoveToHere) == -1) { return false;// unbreakable
+		                                                                                                             // like
+		                                                                                                             // bedrock
+		}
+
+		if (world.isAirBlock(posMoveToHere) && world.isBlockModifiable(player, pos)) {
+
+			if (world.isRemote == false) {
+
+				world.destroyBlock(pos, false);
+			}
+
+			return UtilPlaceBlocks.placeStateSafe(world, player, posMoveToHere, newStateToPlace);
+		}
+		else
+			return false;
+	}
+
+	/**
+	 * wrap moveBlockTo but detect the destination based on the side hit
+	 * 
+	 * @param worldIn
+	 * @param player
+	 * @param pos
+	 * @param face
+	 */
+	public static BlockPos pullBlock(World worldIn, EntityPlayer player, BlockPos pos, EnumFacing face) {
+
+		BlockPos posTowardsPlayer = pos.offset(face);
+
+		if (moveBlockTo(worldIn, player, pos, posTowardsPlayer)) {
+			return posTowardsPlayer;
+		}
+		else {
+			return null;
+		}
+	}
+
+	public static BlockPos pushBlock(World worldIn, EntityPlayer player, BlockPos pos, EnumFacing face) {
+
+		BlockPos posAwayPlayer = pos.offset(face.getOpposite());
+
+		if (moveBlockTo(worldIn, player, pos, posAwayPlayer)) {
+			return posAwayPlayer;
+		}
+		else {
+			return null;
+		}
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public static boolean rotateBlockValidState(BlockPos pos,World worldObj, EnumFacing side, EntityPlayer p){
+
+		if (pos == null || worldObj.getBlockState(pos) == null || side == null) { return false; }
+
+		IBlockState clicked = worldObj.getBlockState(pos);
+		if (clicked.getBlock() == null) { return false; }
+		Block clickedBlock = clicked.getBlock();
+		
+		//avoiding using the integer values of properties
+		//int clickedMeta = clickedBlock.getMetaFromState(clicked);
+
+		//the built in function doues the properties: ("facing")|| ("rotation")
+		// for example, BlockMushroom.rotateBlock uses this, and hay bales
+		boolean isDone = clickedBlock.rotateBlock(worldObj, pos, side);
+
+		
+		if(!isDone){
+
+			//first handle any special cases
+			
+			if(clickedBlock == Blocks.stone){
+
+				EnumType variant = clicked.getValue(BlockStone.VARIANT);//.getProperties().get(BlockStone.VARIANT);
+				//basically we want to toggle the "smooth" property on and off
+				//but there is no property 'smooth' its just within the variant
+				IBlockState placeState = null;
+				switch(variant){
+				case ANDESITE:
+					placeState = clicked.withProperty(BlockStone.VARIANT, EnumType.ANDESITE_SMOOTH);
+					break;
+				case ANDESITE_SMOOTH:
+					placeState = clicked.withProperty(BlockStone.VARIANT, EnumType.ANDESITE);
+					break;
+				case DIORITE:
+					placeState = clicked.withProperty(BlockStone.VARIANT, EnumType.DIORITE_SMOOTH);
+					break;
+				case DIORITE_SMOOTH:
+					placeState = clicked.withProperty(BlockStone.VARIANT, EnumType.DIORITE);
+					break;
+				case GRANITE:
+					placeState = clicked.withProperty(BlockStone.VARIANT, EnumType.GRANITE_SMOOTH);
+					break;
+				case GRANITE_SMOOTH:
+					placeState = clicked.withProperty(BlockStone.VARIANT, EnumType.GRANITE);
+					break;
+				case STONE:
+				default:
+					break;
+				}
+				if(placeState != null){
+					isDone = UtilPlaceBlocks.placeStateDetsroy(worldObj, p, pos, placeState,false);
+				}
+			}
+			
+			//now try something else if not done
+
+			if(!isDone)for (IProperty prop : (com.google.common.collect.ImmutableSet<IProperty<?>>) clicked.getProperties().keySet()) {
+				
+				if (prop.getName().equals("half")) {
+					//also exists as object in BlockSlab.HALF
+					isDone = UtilPlaceBlocks.placeStateDetsroy(worldObj, p, pos,  clicked.cycleProperty(prop),false);
+					//worldObj.setBlockState(pos, clicked.cycleProperty(prop));
+
+					break;
+				}
+				else if (prop.getName().equals("seamless")) {
+					//http://minecraft.gamepedia.com/Slab#Block_state
+					
+					isDone = UtilPlaceBlocks.placeStateDetsroy(worldObj, p, pos,  clicked.cycleProperty(prop),false);
+					
+					//worldObj.setBlockState(pos, clicked.cycleProperty(prop));
+
+					break;
+				}
+				else if (prop.getName().equals("axis")) {
+					//i dont remember what blocks use this. rotateBlock might cover it in some cases
+					
+					isDone = UtilPlaceBlocks.placeStateDetsroy(worldObj, p, pos,  clicked.cycleProperty(prop),false);
+					
+					//worldObj.setBlockState(pos, clicked.cycleProperty(prop));
+
+					break;
+				}
+			}
+		}
+
+		return isDone;
+	}
 }

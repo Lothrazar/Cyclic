@@ -151,6 +151,9 @@ public class ModMain {
 	 * ROTATE SPELL: should it be it own tool?
 	 * https://www.reddit.com/r/minecraftsuggestions/comments/4f9ib5/hammer_or_something_like_it/
 	 * 
+	 * player.location.death better lang and stuff
+	 * 
+	 * 
 	 * 
 	 * 
 	 * fix villager skins
