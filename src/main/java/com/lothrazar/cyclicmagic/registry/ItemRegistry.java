@@ -321,6 +321,12 @@ public class ItemRegistry {
 		//}
 
 		//TODO: CONFIG
+		ItemToolPull tool_pull = new ItemToolPull();
+		registerItem(tool_pull, "tool_pull");
+
+		ItemToolPush tool_push = new ItemToolPush();
+		registerItem(tool_push, "tool_push");
+		
 		ItemToolRotate tool_rotate = new ItemToolRotate();
 		registerItem(tool_rotate, "tool_rotate");
 

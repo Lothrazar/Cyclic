@@ -14,35 +14,32 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ItemToolRotate extends Item implements IHasRecipe{
+public class ItemToolRotate extends Item implements IHasRecipe {
 
-	
-	public ItemToolRotate(){
+	public ItemToolRotate() {
 		super();
 	}
-	
+
 	@Override
 	public void addRecipe() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
-	@Override 
-	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer p, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
-  {
 
-		if (pos == null || p.worldObj.getBlockState(pos) == null || side == null) { return super.onItemUse(stack, p, world, pos, hand, side, hitX, hitY, hitZ); }
+	@Override
+	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer p, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
 
-		World worldObj = p.worldObj;
+		if (pos == null || worldObj.getBlockState(pos) == null || side == null) { return super.onItemUse(stack, p, worldObj, pos, hand, side, hitX, hitY, hitZ); }
+ 
 		IBlockState clicked = worldObj.getBlockState(pos);
-		if (clicked.getBlock() == null) { return super.onItemUse(stack, p, world, pos, hand, side, hitX, hitY, hitZ); }
+		if (clicked.getBlock() == null) { return super.onItemUse(stack, p, worldObj, pos, hand, side, hitX, hitY, hitZ); }
 
 		boolean isDone = UtilPlaceBlocks.rotateBlockValidState(pos, worldObj, side, p);
 		if (isDone) {
-		//	this.playSound(worldObj, clickedBlock, pos);
-			//this.spawnParticle(worldObj, p, pos);
+			// this.playSound(worldObj, clickedBlock, pos);
+			// this.spawnParticle(worldObj, p, pos);
 		}
-		
-    return super.onItemUse(stack, p, world, pos, hand, side, hitX, hitY, hitZ);//EnumActionResult.PASS;
-  }
+
+		return super.onItemUse(stack, p, worldObj, pos, hand, side, hitX, hitY, hitZ);// EnumActionResult.PASS;
+	}
 }
