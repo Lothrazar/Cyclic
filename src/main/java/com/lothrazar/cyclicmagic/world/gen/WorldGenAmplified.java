@@ -20,15 +20,17 @@ import net.minecraftforge.fml.common.IWorldGenerator;
 public class WorldGenAmplified implements IWorldGenerator {
 
 	public class OreProperties{
-		public OreProperties(int m, int x,int ch){
+		public OreProperties(int m, int x,int ch,int size){
 			min = m;
 			max = x;
 			chance = ch;
+			blockCount = size;
 			dimension = Const.Dimension.overworld;
 		}
 		public int max;
 		public int min;
 		public int chance;
+		public int blockCount;
 		public int dimension;
 		public WorldGenerator gen;
 		//TODO: could be some fancy biome list, but this is enough
@@ -41,33 +43,34 @@ public class WorldGenAmplified implements IWorldGenerator {
 	public WorldGenAmplified(){
 		//http://minecraft.gamepedia.com/Ore#Availability
 		//use the vanilla max height as our generators MIN height
+		int chancesPerRun = 55;
 		
-		OreProperties coal = new OreProperties(132,Const.WORLDHEIGHT,8);
-		coal.gen = new WorldGenMinable(Blocks.coal_ore.getDefaultState(), 8, BlockMatcher.forBlock(Blocks.stone));
+		OreProperties coal = new OreProperties(132,Const.WORLDHEIGHT,chancesPerRun,10);
+		coal.gen = new WorldGenMinable(Blocks.coal_ore.getDefaultState(), coal.blockCount, BlockMatcher.forBlock(Blocks.stone));
 		properties.add(coal);
 		
-		OreProperties iron = new OreProperties(68,Const.WORLDHEIGHT,8);
-		iron.gen = new WorldGenMinable(Blocks.iron_ore.getDefaultState(), 10, BlockMatcher.forBlock(Blocks.stone));
+		OreProperties iron = new OreProperties(68,Const.WORLDHEIGHT,chancesPerRun,8);
+		iron.gen = new WorldGenMinable(Blocks.iron_ore.getDefaultState(), iron.blockCount, BlockMatcher.forBlock(Blocks.stone));
 		properties.add(iron);
 
-		OreProperties lapis = new OreProperties(34,Const.WORLDHEIGHT,8);
-		lapis.gen = new WorldGenMinable(Blocks.lapis_ore.getDefaultState(), 3, BlockMatcher.forBlock(Blocks.stone));
+		OreProperties lapis = new OreProperties(34,Const.WORLDHEIGHT,chancesPerRun,3);
+		lapis.gen = new WorldGenMinable(Blocks.lapis_ore.getDefaultState(), lapis.blockCount, BlockMatcher.forBlock(Blocks.stone));
 		properties.add(lapis);
 		
-		OreProperties gold = new OreProperties(34,Const.WORLDHEIGHT,8);
-		gold.gen = new WorldGenMinable(Blocks.gold_ore.getDefaultState(), 4, BlockMatcher.forBlock(Blocks.stone));
+		OreProperties gold = new OreProperties(34,Const.WORLDHEIGHT,chancesPerRun,4);
+		gold.gen = new WorldGenMinable(Blocks.gold_ore.getDefaultState(), gold.blockCount, BlockMatcher.forBlock(Blocks.stone));
 		properties.add(gold);
 		
-		OreProperties diamond = new OreProperties(16,Const.WORLDHEIGHT,1);
-		diamond.gen = new WorldGenMinable(Blocks.diamond_ore.getDefaultState(), 1, BlockMatcher.forBlock(Blocks.stone));
+		OreProperties diamond = new OreProperties(16,Const.WORLDHEIGHT,chancesPerRun,1);
+		diamond.gen = new WorldGenMinable(Blocks.diamond_ore.getDefaultState(), diamond.blockCount, BlockMatcher.forBlock(Blocks.stone));
 		properties.add(diamond);
 
-		OreProperties redstone = new OreProperties(16,Const.WORLDHEIGHT,8);
-		redstone.gen = new WorldGenMinable(Blocks.redstone_ore.getDefaultState(), 3, BlockMatcher.forBlock(Blocks.stone));
+		OreProperties redstone = new OreProperties(16,Const.WORLDHEIGHT,chancesPerRun,3);
+		redstone.gen = new WorldGenMinable(Blocks.redstone_ore.getDefaultState(), redstone.blockCount, BlockMatcher.forBlock(Blocks.stone));
 		properties.add(redstone);
 		
-		OreProperties emerald = new OreProperties(33,Const.WORLDHEIGHT,8);
-		emerald.gen = new WorldGenMinable(Blocks.emerald_ore.getDefaultState(), 2, BlockMatcher.forBlock(Blocks.stone));
+		OreProperties emerald = new OreProperties(33,Const.WORLDHEIGHT,chancesPerRun,2);
+		emerald.gen = new WorldGenMinable(Blocks.emerald_ore.getDefaultState(), emerald.blockCount, BlockMatcher.forBlock(Blocks.stone));
 		emerald.extremeHillsOnly = true;
 		properties.add(emerald);
 	}
@@ -86,7 +89,7 @@ public class WorldGenAmplified implements IWorldGenerator {
 	private void run(WorldGenerator generator, World world, Random rand, int chunk_X, int chunk_Z, int chancesToSpawn, int minHeight, int maxHeight
 			,boolean extremeHillsOnly) {
 
-		if (minHeight < 0 || maxHeight > 256 || minHeight > maxHeight)
+		if (minHeight < 0 || maxHeight > Const.WORLDHEIGHT || minHeight > maxHeight)
 			throw new IllegalArgumentException("Illegal Height Arguments for WorldGenerator");
 
 		int heightDiff = maxHeight - minHeight;
