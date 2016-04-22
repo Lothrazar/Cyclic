@@ -12,7 +12,8 @@ public class WorldGenRegistry {
 	public static boolean	netherOreEnabled;
 	public static boolean	endOreEnabled;
 	public static boolean	oreSpawns = true;
-	private static boolean heightEnabled=true;
+	private static boolean emeraldHeight=true;
+	private static boolean goldRiver;
 
 	public static void syncConfig(Configuration config) {
 
@@ -32,8 +33,16 @@ public class WorldGenRegistry {
 		prop.setRequiresMcRestart(true);
 		endOreEnabled = prop.getBoolean();
 		
-		prop = config.get(category, "Ore Spawns", true, "These dimension ores have a chance to spawn mites");
+		prop = config.get(category, "Infested Ores", true, "These dimension ores (nether and end) have a chance to spawn endermites or silverfish");
 		oreSpawns = prop.getBoolean();
+		
+		prop = config.get(category, "Emerald Ore Boost", true, "Vanilla emerald ore now can spawn at any height, not only below the ground [still only in the Extreme Hills biomes as normal]");
+		prop.setRequiresMcRestart(true);
+		emeraldHeight = prop.getBoolean();
+		
+		prop = config.get(category, "Gold Rivers", true, "Vanilla gold ore can spawn in river biomes");
+		prop.setRequiresMcRestart(true);
+		goldRiver = prop.getBoolean();
 	}
 
 	final static int weight = 0;
@@ -52,8 +61,12 @@ public class WorldGenRegistry {
 			GameRegistry.registerWorldGenerator(new WorldGenEndOre(), weight);
 		}
 
-		if(heightEnabled){
-			GameRegistry.registerWorldGenerator(new WorldGenAmplified(), weight);
+		if(emeraldHeight){
+			GameRegistry.registerWorldGenerator(new WorldGenEmeraldHeight(), weight);
+		}
+
+		if(goldRiver){
+			GameRegistry.registerWorldGenerator(new WorldGenGoldRiver(), weight);
 		}
 	}
 }
