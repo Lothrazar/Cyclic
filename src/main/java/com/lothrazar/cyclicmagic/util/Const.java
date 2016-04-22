@@ -42,4 +42,5 @@ public class Const {
 
 	public static final int	dye_bonemeal	= 15;
 	public static final int	wool_white		= 0;
+	public static final int WORLDHEIGHT = 256;
 }// ends class reference
