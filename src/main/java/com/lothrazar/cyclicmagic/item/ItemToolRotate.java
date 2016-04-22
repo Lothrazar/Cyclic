@@ -14,7 +14,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ItemToolRotate extends Item implements IHasRecipe {
+public class ItemToolRotate extends BaseTool implements IHasRecipe {
 
 	public ItemToolRotate() {
 		super();

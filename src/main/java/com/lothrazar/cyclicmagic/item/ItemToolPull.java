@@ -10,7 +10,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ItemToolPull  extends Item implements IHasRecipe{
+public class ItemToolPull  extends BaseTool implements IHasRecipe{
 
 	@Override
 	public void addRecipe() {
