@@ -27,7 +27,7 @@ public class WorldGenEmeraldHeight implements IWorldGenerator {
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
  
-		int spawnTries = 40;
+		int spawnTries = 70;
 		if(Const.Dimension.overworld == world.provider.getDimension()){
 			this.run(genEmerald, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, spawnTries, 0, Const.WORLDHEIGHT-1);
 		}

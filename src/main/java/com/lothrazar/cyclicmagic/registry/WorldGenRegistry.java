@@ -40,7 +40,7 @@ public class WorldGenRegistry {
 		prop.setRequiresMcRestart(true);
 		emeraldHeight = prop.getBoolean();
 		
-		prop = config.get(category, "Gold Rivers", true, "Vanilla gold ore can spawn in river biomes");
+		prop = config.get(category, "Gold Rivers", true, "Vanilla gold ore can spawn in and river biomes at any height");
 		prop.setRequiresMcRestart(true);
 		goldRiver = prop.getBoolean();
 	}

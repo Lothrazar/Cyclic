@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.IWorldGenerator;
 public class WorldGenGoldRiver implements IWorldGenerator {
 
 	private WorldGenerator	genGold;
-	int blockCount = 8;
+	int blockCount = 3;
 	public WorldGenGoldRiver(){
 		//http://minecraft.gamepedia.com/Ore#Availability
 		// http://minecraft.gamepedia.com/Customized#Ore_settings
