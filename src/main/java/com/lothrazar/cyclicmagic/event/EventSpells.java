@@ -5,6 +5,8 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -17,6 +19,7 @@ import com.lothrazar.cyclicmagic.net.MessageKeyRight;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import com.lothrazar.cyclicmagic.util.UtilTextureRender;
 
@@ -37,22 +40,19 @@ public class EventSpells {
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 
 		ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
-		
-		//special new case: no hud for this type
+
+		// special new case: no hud for this type
 		if (wand == null || wand.getItem() == ItemRegistry.cyclic_wand_fly) {
- 
+
 			// you are not holding the wand - so go as normal
 			return;
 		}
 
-		
-		
 		if (player.isSneaking()) {
 			if (event.getDwheel() < 0) {
 				ModMain.network.sendToServer(new MessageKeyRight());
 				event.setCanceled(true);
-			}
-			else if (event.getDwheel() > 0) {
+			} else if (event.getDwheel() > 0) {
 				ModMain.network.sendToServer(new MessageKeyLeft());
 				event.setCanceled(true);
 			}
@@ -66,28 +66,29 @@ public class EventSpells {
 		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
 		// PlayerPowerups props = PlayerPowerups.get(player);
 
-		//wand.getItem() == ItemRegistry.cyclic_wand_fly
+		// wand.getItem() == ItemRegistry.cyclic_wand_fly
 		ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
-		
-		//special new case: no hud for this type
-		if (wand != null && wand.getItem() != ItemRegistry.cyclic_wand_fly) {
+
+		// special new case: no hud for this type
+		if (wand != null) {
 			spellHud.drawSpellWheel();
 		}
 	}
 
-	private static final int							xoffset					= 30;
-	private static int										xmain;
-	////private static int										xHud;
-	//private static int										yHud;
-	private static final int							ymain						= 14;
-	private static final int							spellSize				= 16;
+	private static final int xoffset = 30;
+	private static int xmain;
+	private static int xHud;
+	private static int yHud;
+	private static final int ymain = 14;
+	private static final int spellSize = 16;
 
-	//private static final int							manaCtrWidth		= 8;
-	//private static final int							manaCtrHeight		= 92;
-	//private static final int							manaWidth				= manaCtrWidth - 2;
-	// private static final int manaHeight = manaCtrHeight - 2;
-	//private static final ResourceLocation	mana						= new ResourceLocation(Const.MODID, "textures/hud/manabar.png");
-	//private static final ResourceLocation	mana_container	= new ResourceLocation(Const.MODID, "textures/hud/manabar_empty.png");
+	private static final int manaCtrWidth = 8;
+	private static final int manaCtrHeight = 92;
+	private static final int manaWidth = manaCtrWidth - 2;
+	private static final int manaHeight = manaCtrHeight - 2;
+	private static final ResourceLocation mana = new ResourceLocation(Const.MODID, "textures/hud/manabar.png");
+	private static final ResourceLocation mana_container = new ResourceLocation(Const.MODID,
+			"textures/hud/manabar_empty.png");
 
 	private class SpellHud {
 
@@ -96,14 +97,13 @@ public class EventSpells {
 
 			if (SpellRegistry.renderOnLeft) {
 				xmain = xoffset;
-			}
-			else {
+			} else {
 				ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft());
 				// NOT Minecraft.getMinecraft().displayWidth
 				xmain = res.getScaledWidth() - xoffset;
 			}
-			//xHud = xmain - 20;
-			//yHud = ymain - 12;
+			// xHud = xmain - 20;
+			// yHud = ymain - 12;
 
 			EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
 
@@ -128,36 +128,34 @@ public class EventSpells {
 
 			if (ItemCyclicWand.Timer.isBlockedBySpellTimer(UtilSpellCaster.getPlayerWandIfHeld(player)) == false) {
 				UtilTextureRender.drawTextureSquare(spellCurrent.getIconDisplayHeaderEnabled(), x, y, dim);
-			}
-			else {
+			} else {
 				UtilTextureRender.drawTextureSquare(spellCurrent.getIconDisplayHeaderDisabled(), x, y, dim);
 			}
 		}
 
 		private void drawManabar(EntityPlayer player) {
-			/*
-			 * ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
-			 * 
-			 * double MAX = ItemCyclicWand.Energy.getMaximum(wand);
-			 * double largest = ItemCyclicWand.Energy.getMaximumLargest();
-			 * 
-			 * double ratio = MAX / largest;
-			 * 
-			 * double hFull = manaCtrHeight * ratio;
-			 * 
-			 * //draw the outer container
-			 * UtilTextureRender.drawTextureSimple(mana_container, xHud,yHud,
-			 * manaCtrWidth, MathHelper.floor_double(hFull));
-			 * 
-			 * double current = ItemCyclicWand.Energy.getCurrent(wand);
-			 * double manaPercent = current / MAX;//not using MAX anymore!!!
-			 * 
-			 * double hEmpty = (hFull - 2) * manaPercent;
-			 * 
-			 * //draw the filling inside
-			 * UtilTextureRender.drawTextureSimple(mana, xHud+1,yHud+1, manaWidth,
-			 * MathHelper.floor_double(hEmpty));
-			 */
+
+			ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
+
+			double MAX = ItemCyclicWand.Energy.getMaximum(wand);
+			double largest = ItemCyclicWand.Energy.getMaximumLargest();
+
+			double ratio = MAX / largest;
+
+			double hFull = manaCtrHeight * ratio;
+
+			// draw the outer container
+			UtilTextureRender.drawTextureSimple(mana_container, xHud, yHud, manaCtrWidth,
+					MathHelper.floor_double(hFull));
+
+			double current = ItemCyclicWand.Energy.getCurrent(wand);
+			double manaPercent = current / MAX;// not using MAX anymore!!!
+
+			double hEmpty = (hFull - 2) * manaPercent;
+
+			// draw the filling inside
+			UtilTextureRender.drawTextureSimple(mana, xHud + 1, yHud + 1, manaWidth, MathHelper.floor_double(hEmpty));
+
 		}
 
 		private void drawCurrentSpell(EntityPlayer player, ISpell spellCurrent) {
@@ -248,7 +246,8 @@ public class EventSpells {
 					// SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.nextId(wand,
 					// next.getID()));
 					if (next3 != null) {
-						// System.out.println("nx3 -> "+next3.getUnlocalizedName());
+						// System.out.println("nx3 ->
+						// "+next3.getUnlocalizedName());
 						x -= 2;
 						y += 10;
 						dim -= 2;
@@ -258,7 +257,8 @@ public class EventSpells {
 						// SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.nextId(wand,
 						// next.getID()));
 						if (next4 != null) {
-							// System.out.println("nx4 -> "+next4.getUnlocalizedName());
+							// System.out.println("nx4 ->
+							// "+next4.getUnlocalizedName());
 							x -= 2;
 							y += 10;
 							dim -= 1;
