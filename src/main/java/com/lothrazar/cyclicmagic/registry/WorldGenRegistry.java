@@ -12,6 +12,7 @@ public class WorldGenRegistry {
 	public static boolean	netherOreEnabled;
 	public static boolean	endOreEnabled;
 	public static boolean	oreSpawns = true;
+	private static boolean heightEnabled=true;
 
 	public static void syncConfig(Configuration config) {
 
@@ -49,6 +50,10 @@ public class WorldGenRegistry {
 
 		if (endOreEnabled) {
 			GameRegistry.registerWorldGenerator(new WorldGenEndOre(), weight);
+		}
+
+		if(heightEnabled){
+			GameRegistry.registerWorldGenerator(new WorldGenAmplified(), weight);
 		}
 	}
 }
