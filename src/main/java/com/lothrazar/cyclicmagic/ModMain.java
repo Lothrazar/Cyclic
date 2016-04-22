@@ -201,7 +201,7 @@ public class ModMain {
 	 * 
 	 * BUG: enderman drop block: does it make doubel?
 	 * 
-	 *UNCRAFITNG:  test/fix hopper interaction
+	 * UNCRAFITNG:  test/fix hopper interaction
 	 * 
 	 * config to logspam every enabled feature on startup
 	 * 
@@ -246,27 +246,6 @@ public class ModMain {
 	 * 
 	 * https://www.reddit.com/r/minecraftsuggestions/comments/4f35fx/red_sand_should_generate_on_lava_ocean_beaches_in/
 	 * 
-	 * CONCURRENT : 
-	 * 
 	 * 
 	 */
-	
-	/*There was a critical exception handling a packet on channel cyclicmagic
-java.util.ConcurrentModificationException
-	at java.util.WeakHashMap$HashIterator.nextEntry(Unknown Source) ~[?:1.8.0_77]
-	at java.util.WeakHashMap$KeyIterator.next(Unknown Source) ~[?:1.8.0_77]
-	at java.util.AbstractCollection.toArray(Unknown Source) ~[?:1.8.0_77]
-	at net.minecraft.pathfinding.PathWorldListener.notifyBlockUpdate(PathWorldListener.java:28) ~[PathWorldListener.class:?]
-	at net.minecraft.world.World.notifyBlockUpdate(World.java:465) ~[World.class:?]
-	at net.minecraft.world.World.markAndNotifyBlock(World.java:407) ~[World.class:?]
-	at net.minecraft.world.World.setBlockState(World.java:393) ~[World.class:?]
-	at net.minecraft.world.World.destroyBlock(World.java:449) ~[World.class:?]
-	at com.lothrazar.cyclicmagic.util.UtilMoveBlock.moveBlockTo(UtilMoveBlock.java:52) ~[UtilMoveBlock.class:?]
-	at com.lothrazar.cyclicmagic.util.UtilMoveBlock.pushBlock(UtilMoveBlock.java:85) ~[UtilMoveBlock.class:?]
-	at com.lothrazar.cyclicmagic.spell.SpellRangePush.castFromServer(SpellRangePush.java:40) ~[SpellRangePush.class:?]
-	at com.lothrazar.cyclicmagic.net.MessageSpellPush.onMessage(MessageSpellPush.java:67) ~[MessageSpellPush.class:?]
-	at com.lothrazar.cyclicmagic.net.MessageSpellPush.onMessage(MessageSpellPush.java:1) ~[MessageSpellPush.class:?]
-
-	 
-	*/
 }

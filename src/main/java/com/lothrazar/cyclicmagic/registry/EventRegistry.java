@@ -104,6 +104,8 @@ public class EventRegistry {
 		events.add(new EventExtendedInventory()); 
 		
 		events.add(new EventOreMined());
+		
+		events.add(new EntitySafeMount());
 
 		if(passThroughClick){
 			events.add(new EventPassthroughAction());
