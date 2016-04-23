@@ -62,9 +62,10 @@ public class EventSpawnChunks {
 		
 		BlockPos here = player.getPosition();
 		Chunk chunkHere = player.worldObj.getChunkFromBlockCoords(here);
-		
 		int xCenterOfChunk = chunkToBlock(chunkHere.xPosition) + Const.CHUNK_SIZE/2;
 		int zCenterOfChunk = chunkToBlock(chunkHere.zPosition) + Const.CHUNK_SIZE/2;
+		/*
+		//start center
 		
 		String f = "";
 		
@@ -74,26 +75,24 @@ public class EventSpawnChunks {
 			f = TextFormatting.GREEN + "";
 		}
 		event.getLeft().add(UtilChat.lang("debug.chunk.center")+" : " + f +xCenterOfChunk +","+zCenterOfChunk);
+		//end center
 		
-		
-		// xborder
-		f = "";
-		if(here.getX() % Const.CHUNK_SIZE <= away){
-			f = TextFormatting.GREEN + "";
-		}
+		//start border
 		int l = chunkToBlock(chunkHere.xPosition);
 		int r = chunkToBlock(chunkHere.xPosition) + Const.CHUNK_SIZE;
-		
-		event.getLeft().add(UtilChat.lang("debug.chunk.xborder") +" : "+ f+ l+","+r);
+
+		int t = chunkToBlock(chunkHere.zPosition);
+		int b = chunkToBlock(chunkHere.zPosition) + Const.CHUNK_SIZE;
 
 		f = "";
-		if(here.getZ() % Const.CHUNK_SIZE <= away){
+		if(here.getZ() % Const.CHUNK_SIZE <= away || here.getX() % Const.CHUNK_SIZE <= away){
 			f = TextFormatting.GREEN + "";
 		}
-		l = chunkToBlock(chunkHere.zPosition);
-		r = chunkToBlock(chunkHere.zPosition) + Const.CHUNK_SIZE;
-		event.getLeft().add(UtilChat.lang("debug.chunk.zborder") +" : "+ f+l +","+r);
+		event.getLeft().add(UtilChat.lang("debug.chunk.border")+ f +" ["+ l+","+r+" ["+ t +","+b+"]");
+		*/
+//end border
 		
+		//start spawnchunk
 		
 		//actually its the distance not from ME but from my current chunk.
 		//is the center of my chunk within 128 of worldspawn
@@ -104,11 +103,11 @@ public class EventSpawnChunks {
 		//int xDistance = Math.abs(here.getX() - spawn.getX());
 		//int zDistance = Math.abs(here.getZ() - spawn.getZ());
 
-		DecimalFormat df = new DecimalFormat("0.00");
+		DecimalFormat df = new DecimalFormat("0.0");
 
 		double dist = UtilSearchWorld.distanceBetweenHorizontal(here, spawn);
 
-		event.getLeft().add(UtilChat.lang("debug.spawn.distance") + " " + df.format(dist));
+		event.getLeft().add(UtilChat.lang("debug.spawn.distance") +  df.format(dist));
 		
 		if (xFromSpawn < SPAWN_RADIUS && zFromSpawn < SPAWN_RADIUS) {
 
@@ -116,5 +115,6 @@ public class EventSpawnChunks {
 			event.getLeft().add(TextFormatting.GREEN + UtilChat.lang("debug.spawn.chunks"));
 			
 		} 
+		//end spawnchunk
 	}
 }
