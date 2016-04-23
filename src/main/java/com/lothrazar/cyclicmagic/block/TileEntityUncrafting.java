@@ -414,7 +414,7 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 		return remaining;
 	}
 
-	private int[] hopperInput = { 0, 1, 2 };// all slots for all faces
+	private int[] hopperInput = { 0, 1, 2,3,4,5,6,7,8 };// all slots for all faces
 
 	@Override
 	public int[] getSlotsForFace(EnumFacing side) {
@@ -425,14 +425,14 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 	@Override
 	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
 
-		return true;// this.isItemValidForSlot(index, itemStackIn);
+		return this.isItemValidForSlot(index, itemStackIn);
 	}
 
 	@Override
 	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
 
-		// hoppers only extract from bottom direction. all items and indexes
-		return true;// direction == EnumFacing.DOWN;
+		//do not let hoppers pull out of here for any reason
+		return false;// direction == EnumFacing.DOWN;
 	}
 
 	@Override
