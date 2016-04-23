@@ -239,8 +239,8 @@ public class ModMain {
 	 * ^^ and can they hold weapons???
 	 * 
 	 * https://www.reddit.com/r/minecraftsuggestions/comments/4f5xzq/golden_compass_points_to_its_creation_spot/
-	 * https://www.reddit.com/r/minecraftsuggestions/comments/4f6420/a_new_type_of_compass_that_points_to_your_most/
 	 * 
+	 * https://www.reddit.com/r/minecraftsuggestions/comments/4f6420/a_new_type_of_compass_that_points_to_your_most/
 	 * 
 	 * Chorus potions: levitate 
 	 * 
