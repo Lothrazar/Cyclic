@@ -142,8 +142,6 @@ public class ModMain {
 	 * 
 	 * fix villager skins
 	 * 
-   * Uncrafter - turn off with redstone. or maybe only on with redstone?
-   * 
    * uncrafter -maybe try using fuel source
 	 * 
 	 * UNCRAFITNG:  test/fix hopper interaction

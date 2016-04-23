@@ -254,7 +254,8 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 		// eventually but not constantly)
 		this.tryShiftStacksUp();
 
-		if(this.worldObj.getStrongPower(this.getPos()) == 0){
+		if(this.worldObj.getStrongPower(this.getPos()) > 1){
+			//block / cancel if getting power
 			return;
 		}
 		
