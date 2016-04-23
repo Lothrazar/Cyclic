@@ -254,6 +254,11 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 		// eventually but not constantly)
 		this.tryShiftStacksUp();
 
+		if(this.worldObj.getStrongPower(this.getPos()) == 0){
+			return;
+		}
+		
+
 		ItemStack stack = getStackInSlot(0);
 		if (stack == null) {
 			timer = UtilUncraft.TIMER_FULL;// reset just like you would in a

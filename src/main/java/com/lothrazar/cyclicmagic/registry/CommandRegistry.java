@@ -69,6 +69,10 @@ public class CommandRegistry {
 		prop.setRequiresMcRestart(true);
 		configToggle.put(CommandEnderChest.name, prop.getBoolean());
 
+		prop = config.get(category, CommandHeal.name, true, " ");
+		prop.setRequiresMcRestart(true);
+		configToggle.put(CommandHeal.name, prop.getBoolean());
+		
 		prop = config.get(category, CommandHearts.name, true, " ");
 		prop.setRequiresMcRestart(true);
 		configToggle.put(CommandHearts.name, prop.getBoolean());
@@ -124,5 +128,10 @@ public class CommandRegistry {
 		prop = config.get(category, CommandWorldHome.name, true, " ");
 		prop.setRequiresMcRestart(true);
 		configToggle.put(CommandWorldHome.name, prop.getBoolean());
+
+		prop = config.get(category, CommandHeal.name, true, " ");
+		prop.setRequiresMcRestart(true);
+		configToggle.put(CommandHeal.name, prop.getBoolean());
+		
 	}
 }
