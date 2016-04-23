@@ -141,13 +141,6 @@ public class ModMain {
 	 * 
 	 * a /heal command - default to OP only
 	 * 
-	 * MAKE horses (my current mount) invincible to my arrows. ?? and ender pearls? and sword swings? all damage really
-	 * 
-	 * Make minecarts kill and push through entities that get hit (ex: pigmen on rail)
-	 * 
-	 * 
-	 * Getting hit by a bat causes blindness to player
-	 * 
 	 * ROTATE SPELL: should it be it own tool?
 	 * https://www.reddit.com/r/minecraftsuggestions/comments/4f9ib5/hammer_or_something_like_it/
 	 * 
@@ -193,6 +186,11 @@ public class ModMain {
 	 * 
 	 * more achieves - inspire by consoles and also my own
 	 * 
+	 * 
+	 * Make minecarts kill and push through entities that get hit (ex: pigmen on rail)
+	 * 
+	 * 
+	 * Getting hit by a bat causes blindness to player
 	 * 
 	 * 
 	 * add potion brewing!! work with the real brew stands to make new custom potions

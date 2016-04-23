@@ -16,9 +16,9 @@ import net.minecraft.world.World;
 public class CommandHome extends BaseCommand implements ICommand {
 
 	public static final String name = "home";
-	public CommandHome(String n, boolean op) {
+	public CommandHome( boolean op) {
 
-		super(n, op);
+		super(name, op);
 	}
 
 	@Override

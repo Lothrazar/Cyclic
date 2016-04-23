@@ -10,8 +10,8 @@ import net.minecraft.util.math.BlockPos;
 public class CommandGetHome extends BaseCommand implements ICommand {
 
 	public static final String name = "gethome";
-	public CommandGetHome(String n, boolean op) {
-		super(n, op);
+	public CommandGetHome(boolean op) {
+		super(name, op);
 	}
 
 	@Override

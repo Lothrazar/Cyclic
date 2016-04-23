@@ -11,9 +11,9 @@ import net.minecraft.util.math.BlockPos;
 public class CommandPing extends BaseCommand implements ICommand {
 	public static final String name = "ping";
 	
-	public CommandPing(String n, boolean op) {
+	public CommandPing(boolean op) {
 
-		super(n, op);
+		super(name, op);
 	}
 
 	@Override

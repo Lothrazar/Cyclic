@@ -10,23 +10,55 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
 public class CommandRegistry {
 
-	private static Map<String, Boolean>	configToggle	= new HashMap<String, Boolean>();
-	
+	private static Map<String, Boolean> configToggle = new HashMap<String, Boolean>();
+
 	public static void register(FMLServerStartingEvent event) {
-		event.registerServerCommand(new CommandEnderChest(CommandEnderChest.name, true));
-		event.registerServerCommand(new CommandGetHome(CommandGetHome.name, true));
-		event.registerServerCommand(new CommandHearts(CommandHearts.name, true));
-		event.registerServerCommand(new CommandHome(CommandHome.name, false));
-		event.registerServerCommand(new CommandPing(CommandPing.name, false));
-		event.registerServerCommand(new CommandRecipe(CommandRecipe.name, false));
-		event.registerServerCommand(new CommandSearchItem(CommandSearchItem.name, false));
-		event.registerServerCommand(new CommandSearchSpawner(CommandSearchSpawner.name, true));
-		event.registerServerCommand(new CommandSearchTrades(CommandSearchTrades.name, false));
-		event.registerServerCommand(new CommandSimpleWaypoints(CommandSimpleWaypoints.name, false));
-		event.registerServerCommand(new CommandTodoList(CommandTodoList.name, false));
-		event.registerServerCommand(new CommandUses(CommandUses.name, false));
-		event.registerServerCommand(new CommandVillageInfo(CommandVillageInfo.name, false));
-		event.registerServerCommand(new CommandWorldHome(CommandWorldHome.name, false));
+
+		if (configToggle.get(CommandEnderChest.name)) {
+			event.registerServerCommand(new CommandEnderChest( true));
+		}
+		if (configToggle.get(CommandGetHome.name)) {
+			event.registerServerCommand(new CommandGetHome( true));
+		}
+		if (configToggle.get(CommandHeal.name)) {
+			event.registerServerCommand(new CommandHeal(true));
+		}
+		if (configToggle.get(CommandHearts.name)) {
+			event.registerServerCommand(new CommandHearts( true));
+		}
+		if (configToggle.get(CommandHome.name)) {
+			event.registerServerCommand(new CommandHome( true));
+		}
+		if (configToggle.get(CommandPing.name)) {
+			event.registerServerCommand(new CommandPing( true));
+		}
+		if (configToggle.get(CommandRecipe.name)) {
+			event.registerServerCommand(new CommandRecipe( true));
+		}
+		if (configToggle.get(CommandSearchItem.name)) {
+			event.registerServerCommand(new CommandSearchItem( true));
+		}
+		if (configToggle.get(CommandSearchSpawner.name)) {
+			event.registerServerCommand(new CommandSearchSpawner( true));
+		}
+		if (configToggle.get(CommandSearchTrades.name)) {
+			event.registerServerCommand(new CommandSearchTrades( true));
+		}
+		if (configToggle.get(CommandSimpleWaypoints.name)) {
+			event.registerServerCommand(new CommandSimpleWaypoints( true));
+		}
+		if (configToggle.get(CommandTodoList.name)) {
+			event.registerServerCommand(new CommandTodoList( true));
+		}
+		if (configToggle.get(CommandUses.name)) {
+			event.registerServerCommand(new CommandUses( true));
+		}
+		if (configToggle.get(CommandVillageInfo.name)) {
+			event.registerServerCommand(new CommandVillageInfo( true));
+		}
+		if (configToggle.get(CommandWorldHome.name)) {
+			event.registerServerCommand(new CommandWorldHome( true));
+		}
 	}
 
 	public static void syncConfig(Configuration config) {
@@ -88,7 +120,9 @@ public class CommandRegistry {
 		prop = config.get(category, CommandWorldHome.name, true, " ");
 		prop.setRequiresMcRestart(true);
 		configToggle.put(CommandWorldHome.name, prop.getBoolean());
-		
-		
+
+		prop = config.get(category, CommandWorldHome.name, true, " ");
+		prop.setRequiresMcRestart(true);
+		configToggle.put(CommandWorldHome.name, prop.getBoolean());
 	}
 }

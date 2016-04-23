@@ -15,9 +15,9 @@ import net.minecraft.util.math.BlockPos;
 
 public class CommandSearchItem extends BaseCommand implements ICommand {
 	public static final String name = "searchitem";
-	public CommandSearchItem(String n, boolean op) {
+	public CommandSearchItem( boolean op) {
 
-		super(n, op);
+		super(name, op);
 	}
 
 	@Override

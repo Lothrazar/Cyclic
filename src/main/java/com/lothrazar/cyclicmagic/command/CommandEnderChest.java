@@ -9,8 +9,8 @@ import net.minecraft.server.MinecraftServer;
 public class CommandEnderChest extends BaseCommand implements ICommand {
 
 	public static final String name = "enderchest";
-	public CommandEnderChest(String n, boolean op) {
-		super(n, op);
+	public CommandEnderChest( boolean op) {
+		super(name, op);
 		this.aliases.add("ec");
 	}
 

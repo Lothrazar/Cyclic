@@ -13,9 +13,9 @@ import net.minecraft.util.math.BlockPos;
 
 public class CommandSearchSpawner extends BaseCommand implements ICommand {
 	public static final String name = "searchspawner";
-	public CommandSearchSpawner(String n, boolean op) {
+	public CommandSearchSpawner(boolean op) {
 
-		super(n, op);
+		super(name, op);
 	}
 
 	public static final int	MAXRADIUS			= 128;// TODO: config file for these?

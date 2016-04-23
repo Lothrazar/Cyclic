@@ -9,9 +9,9 @@ import net.minecraft.server.MinecraftServer;
 
 public class CommandTodoList extends BaseCommand implements ICommand {
 	public static final String name = "todo";
-	public CommandTodoList(String n, boolean op) {
+	public CommandTodoList( boolean op) {
 
-		super(n, op);
+		super(name, op);
 	}
 
 	private static final String	MODE_ADD		= "add";

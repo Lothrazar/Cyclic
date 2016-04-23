@@ -19,9 +19,9 @@ public class CommandSearchTrades extends BaseCommand implements ICommand {
 	// https://github.com/LothrazarMinecraftMods/MinecraftSearchCommands/blob/master/src/main/java/com/lothrazar/searchcommands/command/CommandSearchTrades.java
 
 	public static final String name = "searchtrade";
-	public CommandSearchTrades(String n, boolean op) {
+	public CommandSearchTrades( boolean op) {
 
-		super(n, op);
+		super(name, op);
 	}
 
 	@Override

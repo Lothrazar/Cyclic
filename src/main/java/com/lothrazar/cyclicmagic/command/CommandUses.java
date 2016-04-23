@@ -14,9 +14,9 @@ import net.minecraft.world.World;
 
 public class CommandUses extends BaseCommand implements ICommand {
 	public static final String name = "searchuses";
-	public CommandUses(String n, boolean op) {
+	public CommandUses( boolean op) {
 
-		super(n, op);
+		super(name, op);
 	}
 
 	@Override

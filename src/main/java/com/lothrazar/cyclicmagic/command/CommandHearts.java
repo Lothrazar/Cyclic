@@ -12,8 +12,8 @@ public class CommandHearts extends BaseCommand implements ICommand {
 
 	public static final String name = "sethearts";
 	
-	public CommandHearts(String n, boolean op) {
-		super(n, op);
+	public CommandHearts( boolean op) {
+		super(name, op);
 	}
 
 	@Override
