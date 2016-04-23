@@ -139,31 +139,21 @@ public class ModMain {
 
 	/* TODO LIST
 	 * 
-	 * a /heal command - default to OP only
-	 * 
-	 * ROTATE SPELL: should it be it own tool?
-	 * https://www.reddit.com/r/minecraftsuggestions/comments/4f9ib5/hammer_or_something_like_it/
-	 * 
-	 * player.location.death better lang and stuff
-	 * 
-	 * 
 	 * 
 	 * 
 	 * fix villager skins
 	 * 
-	 * bring back energy bar. for the jump one for sure. other ones maybe?
-	 * 
    * Uncrafter - turn off with redstone. or maybe only on with redstone?
    * 
    * uncrafter -maybe try using fuel source
+	 * 
+	 * UNCRAFITNG:  test/fix hopper interaction
 	 * 
 	 * uncrafter - persist smoking ? like furnace?
 	 * 
 	 * Undo button - for mass placing. only lasts a few seconds then goes away?
 	 * 
 	 * reach scepter starts on inventory spell for a second
-	 * 
-	 * make sure fragile scaffolding can be placed in midair
 	 * 
 	 * more plants that give monster loot ie pearls/ blaze powder/ gunpowder?
 	 * 
@@ -175,9 +165,6 @@ public class ModMain {
 	 * 
 	 * rebalance emerald armor numbers plan.
 	 * 
-	 * -> instead add a transforming tool? changes between
-	 * all the types for emerald
-	 * 
 	 * all block spells use block sound.
 	 * 
 	 * ROTATE: STAIRS: allow switch frop top to bottom
@@ -186,20 +173,13 @@ public class ModMain {
 	 * 
 	 * more achieves - inspire by consoles and also my own
 	 * 
-	 * 
 	 * Make minecarts kill and push through entities that get hit (ex: pigmen on rail)
-	 * 
 	 * 
 	 * Getting hit by a bat causes blindness to player
 	 * 
-	 * 
 	 * add potion brewing!! work with the real brew stands to make new custom potions
 	 * 
-	 * 
-	 * 
 	 * BUG: enderman drop block: does it make doubel?
-	 * 
-	 * UNCRAFITNG:  test/fix hopper interaction
 	 * 
 	 * config to logspam every enabled feature on startup
 	 * 
@@ -214,13 +194,11 @@ public class ModMain {
 	 * SPELL: bring back ghost - let it put you in new location but only if air
 	 * blocks
 	 *  
+	 *  text message if we use a build spell but invo is empty
 	 * 
-	 * 1. text message if we use a build spell but invo is empty
-	 * - max and regen in nbt, not config
+	 *  chest give failure message text (only useable on a container)
 	 * 
-	 * 4. chest give failure message text (only useable on a container)
-	 * 
-	 * dont add crops without a reason
+	 * Chorus potions: levitate 
 	 * 
 	 * https://www.reddit.com/r/minecraftsuggestions/comments/4fgcb2/make_dry_sponges_usable_by_dispensers/
 	 * 
@@ -228,19 +206,12 @@ public class ModMain {
 	 * https://www.reddit.com/r/minecraftsuggestions/comments/4d4ob1/
 	 * make_boats_float_again/
 	 * 
-	 * https://www.reddit.com/r/minecraftsuggestions/comments/4fhjhv/inspawnchunks_truefalse_into_f3_screen/
-	 * 
-	 * https://www.reddit.com/r/minecraftsuggestions/comments/4chlpo/
-	 * add_a_control_option_for_elytra_automatically/
-	 * 
 	 * https://www.reddit.com/r/minecraftsuggestions/comments/4ff8bu/armor_stand_with_arms/
 	 * ^^ and can they hold weapons???
 	 * 
 	 * https://www.reddit.com/r/minecraftsuggestions/comments/4f5xzq/golden_compass_points_to_its_creation_spot/
 	 * 
 	 * https://www.reddit.com/r/minecraftsuggestions/comments/4f6420/a_new_type_of_compass_that_points_to_your_most/
-	 * 
-	 * Chorus potions: levitate 
 	 * 
 	 * https://www.reddit.com/r/minecraftsuggestions/comments/4f35fx/red_sand_should_generate_on_lava_ocean_beaches_in/
 	 * 
