@@ -112,12 +112,12 @@ public class ItemRegistry {
 
 		EntityHarvestBolt.range_main = config.getInt("harvest.range_main", category, 6, 1, 32, "Horizontal range on level of hit to harvest");
 		EntityHarvestBolt.range_offset = config.getInt("harvest.range_offset", category, 4, 1, 32, "Horizontal range on further heights to harvest");
-		EntityHarvestBolt.doesHarvestStem = config.getBoolean("harvest.does_harvest_stem", category, false, "Does it harvest stems (pumkin/melon)");
-		EntityHarvestBolt.doesHarvestSapling = config.getBoolean("harvest.does_harvest_sapling", category, false, "Does it harvest sapling");
-		EntityHarvestBolt.doesHarvestTallgrass = config.getBoolean("harvest.does_harvest_tallgrass", category, false, "Does it harvest tallgrass/doubleplants");
-		EntityHarvestBolt.doesHarvestMushroom = config.getBoolean("harvest.does_harvest_mushroom", category, true, "Does it harvest mushrooms");
-		EntityHarvestBolt.doesMelonBlocks = config.getBoolean("harvest.does_harvest_melonblock", category, true, "Does it harvest pumpkin block");
-		EntityHarvestBolt.doesPumpkinBlocks = config.getBoolean("harvest.does_harvest_pumpkinblock", category, true, "Does it harvest melon block");
+		//EntityHarvestBolt.doesHarvestStem = config.getBoolean("harvest.does_harvest_stem", category, false, "Does it harvest stems (pumkin/melon)");
+		//EntityHarvestBolt.doesHarvestSapling = config.getBoolean("harvest.does_harvest_sapling", category, false, "Does it harvest sapling");
+		//EntityHarvestBolt.doesHarvestTallgrass = config.getBoolean("harvest.does_harvest_tallgrass", category, false, "Does it harvest tallgrass/doubleplants");
+		//EntityHarvestBolt.doesHarvestMushroom = config.getBoolean("harvest.does_harvest_mushroom", category, true, "Does it harvest mushrooms");
+		//EntityHarvestBolt.doesMelonBlocks = config.getBoolean("harvest.does_harvest_melonblock", category, true, "Does it harvest pumpkin block");
+		//EntityHarvestBolt.doesPumpkinBlocks = config.getBoolean("harvest.does_harvest_pumpkinblock", category, true, "Does it harvest melon block");
 
 		category = Const.MODCONF + "items.PowerApples";
 
@@ -321,6 +321,9 @@ public class ItemRegistry {
 		//}
 
 		//TODO: CONFIG
+		ItemToolHarvest tool_harvest = new ItemToolHarvest();
+		registerItem(tool_harvest, "tool_harvest");
+		
 		ItemToolPull tool_pull = new ItemToolPull();
 		registerItem(tool_pull, "tool_pull");
 

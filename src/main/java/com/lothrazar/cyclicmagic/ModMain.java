@@ -138,9 +138,7 @@ public class ModMain {
 	 * 
 	 ***** BUGS
 	 * 
-	 *  chest sack give failure message text (only useable on a container)
-	 * 
-	 * recipes for item push/pull/rotate
+	 * recipes for item push/pull/rotate/harvest
 	 * 
 	 * SPELLS that use build sizes/numbers, put in their name 'name' +" ["+ number + "]";
 	 * 
