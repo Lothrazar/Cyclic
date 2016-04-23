@@ -136,35 +136,57 @@ public class ModMain {
 
 	/* TODO LIST
 	 * 
+	 ***** BUGS
+	 * 
+	 *  chest sack give failure message text (only useable on a container)
+	 * 
 	 * recipes for item push/pull/rotate
 	 * 
-	 *spell wand item shuld take args for spellbook and HUD display details
+	 * SPELLS that use build sizes/numbers, put in their name 'name' +" ["+ number + "]";
 	 * 
-	 * fix villager skins
+	 * reach scepter starts on inventory spell for a second
 	 * 
-   * uncrafter -maybe try using fuel source
+	 * enderman drop block: does it make doubel?
 	 * 
-	 * UNCRAFITNG:  test/fix hopper interaction
+	 *  text message if we use a build spell but invo is empty
+	 * 
+	 ***** FEATURES
+	 * 
+	 * ROTATE: STAIRS: allow switch frop top to bottom
+	 * 
+	 * all block spells use block sound.
+	 * 
+	 * WAND: turn particle beam on / off in config
+	 * 
+     * uncrafter -maybe try using fuel source
 	 * 
 	 * uncrafter - persist smoking ? like furnace?
 	 * 
 	 * Undo button - for mass placing. only lasts a few seconds then goes away?
 	 * 
-	 * reach scepter starts on inventory spell for a second
+	 ***** REFACTOR
+	 * 
+	 * try to auto detect home biomes of saplings for modded compat
+	 * 
+	 * spell wand item shuld take args for spellbook and HUD display details
+	 * 
+	 * refactor seed logic into util
+	 * 
+	 * refactor noteblock/sign into util
+	 * 
+	 ***** BACKLOG
+	 * 
+	 * fix villager skins
 	 * 
 	 * more plants that give monster loot ie pearls/ blaze powder/ gunpowder?
 	 * 
+	 * crafting table hotkeys - numpad?
+	 * 
+	 * SPELL: bring back ghost - let it put you in new location but only if air	 blocks
+	 *  
 	 * some sort of tool that displays trade of every nearby villager?
 	 * 
-	 * WAND: turn particle beam on / off in config
-	 * 
-	 * SPELLS that use numbers, put in their name 'name' +" ["+ number + "]";
-	 * 
 	 * rebalance emerald armor numbers plan.
-	 * 
-	 * all block spells use block sound.
-	 * 
-	 * ROTATE: STAIRS: allow switch frop top to bottom
 	 * 
 	 * achievemnets give exp
 	 * 
@@ -176,24 +198,7 @@ public class ModMain {
 	 * 
 	 * add potion brewing!! work with the real brew stands to make new custom potions
 	 * 
-	 * BUG: enderman drop block: does it make doubel?
-	 * 
 	 * config to logspam every enabled feature on startup
-	 * 
-	 * refactor seed logic into util
-	 * 
-	 * refactor noteblock/sign into util
-	 * 
-	 * try to auto detect home biomes of saplings for modded compat
-	 * 
-	 * crafting table hotkeys - numpad?
-	 * 
-	 * SPELL: bring back ghost - let it put you in new location but only if air
-	 * blocks
-	 *  
-	 *  text message if we use a build spell but invo is empty
-	 * 
-	 *  chest give failure message text (only useable on a container)
 	 * 
 	 * Chorus potions: levitate 
 	 * 
