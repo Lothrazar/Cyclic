@@ -16,6 +16,7 @@ command.villageinfo.center=Center
 command.worldhome.dim=Wrong Dimension
 debug.spawn.chunks=Within Spawn Chunk
 debug.spawn.distance=From Spawn : 
+item.chest_sack_empty.inventory=Only works on inventories
 btn.deposit=Deposit
 btn.lootall=Loot All
 btn.quickstack=Quick Stack

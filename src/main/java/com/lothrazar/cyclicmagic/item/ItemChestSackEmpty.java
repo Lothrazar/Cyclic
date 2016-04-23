@@ -1,7 +1,11 @@
 package com.lothrazar.cyclicmagic.item;
 
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
+import com.lothrazar.cyclicmagic.util.UtilSound;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -34,13 +38,20 @@ public class ItemChestSackEmpty extends Item {
 
 		if (pos == null) { return EnumActionResult.FAIL; }
 
-		if (world.getTileEntity(pos) instanceof IInventory == false) { return EnumActionResult.FAIL; }
+		if (world.getTileEntity(pos) instanceof IInventory == false) { 
+			
+			if(world.isRemote){
+				UtilChat.addChatMessage(entityPlayer, "item.chest_sack_empty.inventory");
+			}
+			
+			return EnumActionResult.FAIL; 
+		}
 
 		IInventory invo = (IInventory) world.getTileEntity(pos);
 
 		NBTTagCompound itemTag = UtilNBT.writeInventoryToNewTag(invo, ItemChestSack.KEY_NBT);
 
-		ItemStack drop = new ItemStack(ItemRegistry.chest_sack); // , 1, 0
+		ItemStack drop = new ItemStack(ItemRegistry.chest_sack);  
 
 		drop.setTagCompound(itemTag);
 
@@ -51,8 +62,9 @@ public class ItemChestSackEmpty extends Item {
 		world.setBlockToAir(pos);
 
 		stack.stackSize--;
-		// entityPlayer.setHeldItem(hand, stack);
-
+		
+		UtilSound.playSound(entityPlayer, SoundRegistry.thunk);
+ 
 		return EnumActionResult.SUCCESS;
 	}
 }
