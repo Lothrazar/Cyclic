@@ -7,8 +7,6 @@ import com.lothrazar.cyclicmagic.registry.*;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -20,7 +18,6 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @Mod(modid = Const.MODID, useMetadata = true, canBeDeactivated = false, updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json", guiFactory = "com.lothrazar." + Const.MODID + ".gui.IngameConfigFactory")
 public class ModMain {
@@ -139,7 +136,9 @@ public class ModMain {
 
 	/* TODO LIST
 	 * 
+	 * recipes for item push/pull/rotate
 	 * 
+	 *spell wand item shuld take args for spellbook and HUD display details
 	 * 
 	 * fix villager skins
 	 * 

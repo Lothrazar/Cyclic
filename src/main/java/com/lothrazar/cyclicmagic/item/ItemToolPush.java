@@ -1,9 +1,7 @@
 package com.lothrazar.cyclicmagic.item;
 
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
@@ -14,10 +12,10 @@ import net.minecraft.world.World;
 public class ItemToolPush  extends BaseTool implements IHasRecipe{
 
 	@Override
-	public void addRecipe() {
-		// TODO Auto-generated method stub
+	public void addRecipe() { 
 		
 	}
+	@SuppressWarnings("unused")
 	@Override
 	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer p, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
 		

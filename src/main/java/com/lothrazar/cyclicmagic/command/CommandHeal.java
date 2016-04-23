@@ -1,7 +1,5 @@
 package com.lothrazar.cyclicmagic.command;
 
-import com.lothrazar.cyclicmagic.util.Const;
-
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.EntityLivingBase;

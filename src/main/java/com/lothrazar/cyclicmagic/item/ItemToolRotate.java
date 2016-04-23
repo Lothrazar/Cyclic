@@ -1,12 +1,8 @@
 package com.lothrazar.cyclicmagic.item;
 
-import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
-import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
@@ -21,8 +17,7 @@ public class ItemToolRotate extends BaseTool implements IHasRecipe {
 	}
 
 	@Override
-	public void addRecipe() {
-		// TODO Auto-generated method stub
+	public void addRecipe() { 
 
 	}
 

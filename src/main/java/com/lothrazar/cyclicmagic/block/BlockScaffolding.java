@@ -1,11 +1,8 @@
 package com.lothrazar.cyclicmagic.block;
 
 import java.util.Random;
-import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.item.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
-import com.lothrazar.cyclicmagic.util.Const;
-import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -14,7 +11,6 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.BlockRenderLayer;// EnumWorldBlockLayer;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
