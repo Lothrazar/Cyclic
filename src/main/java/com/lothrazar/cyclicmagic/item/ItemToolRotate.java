@@ -17,23 +17,25 @@ public class ItemToolRotate extends BaseTool implements IHasRecipe {
 	}
 
 	@Override
-	public void addRecipe() { 
+	public void addRecipe() {
 
 	}
 
 	@Override
-	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer p, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer p, World worldObj, BlockPos pos, EnumHand hand,
+			EnumFacing side, float hitX, float hitY, float hitZ) {
 
-		if (pos == null || worldObj.getBlockState(pos) == null || side == null) { return super.onItemUse(stack, p, worldObj, pos, hand, side, hitX, hitY, hitZ); }
- 
-		IBlockState clicked = worldObj.getBlockState(pos);
-		if (clicked.getBlock() == null) { return super.onItemUse(stack, p, worldObj, pos, hand, side, hitX, hitY, hitZ); }
-
-		boolean isDone = UtilPlaceBlocks.rotateBlockValidState(pos, worldObj, side, p);
-		if (isDone) {
-			// this.playSound(worldObj, clickedBlock, pos);
-			// this.spawnParticle(worldObj, p, pos);
+		if (pos == null || worldObj.getBlockState(pos) == null || side == null) {
+			return super.onItemUse(stack, p, worldObj, pos, hand, side, hitX, hitY, hitZ);
 		}
+
+		IBlockState clicked = worldObj.getBlockState(pos);
+		if (clicked.getBlock() == null) {
+			//cancelled
+			return super.onItemUse(stack, p, worldObj, pos, hand, side, hitX, hitY, hitZ);
+		}
+
+		UtilPlaceBlocks.rotateBlockValidState(pos, worldObj, side, p);
 
 		return super.onItemUse(stack, p, worldObj, pos, hand, side, hitX, hitY, hitZ);// EnumActionResult.PASS;
 	}

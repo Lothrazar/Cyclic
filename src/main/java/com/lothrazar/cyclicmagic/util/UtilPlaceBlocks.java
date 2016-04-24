@@ -69,7 +69,7 @@ public class UtilPlaceBlocks {
 
 			if (state == null) { return;	}// then inventory is completely empty
 		
-			placeWithSoundAndDecrement(world, player, heldWand, itemSlot, posCurrent, state);
+			placeAndDecrementFromWand(world, player, heldWand, itemSlot, posCurrent, state);
 		}
 	}
 
@@ -99,7 +99,7 @@ public class UtilPlaceBlocks {
 					continue;
 				}
 
-				placeWithSoundAndDecrement(world, player, heldWand, itemSlot, posCurrent, state);
+				placeAndDecrementFromWand(world, player, heldWand, itemSlot, posCurrent, state);
 
 			}
 		} // end of the outer loop
@@ -141,7 +141,7 @@ public class UtilPlaceBlocks {
 			goVert = (i % 2 == 0);// alternate between going forward and going
 			                      // vertical
 
-			placeWithSoundAndDecrement(world, player, heldWand, itemSlot, posCurrent, state);
+			placeAndDecrementFromWand(world, player, heldWand, itemSlot, posCurrent, state);
 		}
 	}
 
@@ -162,18 +162,16 @@ public class UtilPlaceBlocks {
 			if (state == null) { return;	}// then inventory is completely empty
 		
 
-			placeWithSoundAndDecrement(world, player, heldWand, itemSlot, posCurrent, state);
+			placeAndDecrementFromWand(world, player, heldWand, itemSlot, posCurrent, state);
 
 		}
 	}
 
 	// from command place blocks
-	private static boolean placeWithSoundAndDecrement(World world, EntityPlayer player, ItemStack heldWand, int itemSlot, BlockPos posCurrent, IBlockState placing) {
+	private static boolean placeAndDecrementFromWand(World world, EntityPlayer player, ItemStack heldWand, int itemSlot, BlockPos posCurrent, IBlockState placing) {
 		boolean success = placeStateSafe(world, player, posCurrent, placing);
 
 		if (success) {
-
-			UtilSound.playSound(player, placing.getBlock().getStepSound().getPlaceSound());
 
 			if (player.capabilities.isCreativeMode == false) {
 				// player.inventory.decrStackSize(player.inventory.currentItem, 1);
@@ -183,6 +181,7 @@ public class UtilPlaceBlocks {
 
 		return success;
 	}
+
 	public static boolean placeStateDetsroy(World world, EntityPlayer player, BlockPos placePos, IBlockState placeState,boolean dropBlock) {
 		
 		if(world.destroyBlock(placePos, dropBlock)){
@@ -190,14 +189,21 @@ public class UtilPlaceBlocks {
 		}
 		return false;
 	}
+	public static boolean placeStateOverwrite(World world, EntityPlayer player, BlockPos placePos, IBlockState placeState) {
+		
+		if(world.setBlockToAir(placePos)){
+			return placeStateSafe( world,  player,  placePos,  placeState);
+		}
+		return false;
+	}
 	// from spell range build
 	public static boolean placeStateSafe(World world, EntityPlayer player, BlockPos placePos, IBlockState placeState) {
 		if (placePos == null) { return false; }
-
+		IBlockState stateHere = null;
 		if (world.isAirBlock(placePos) == false) {
 
 			// if there is a block here, we might have to stop
-			IBlockState stateHere = world.getBlockState(placePos);
+			stateHere = world.getBlockState(placePos);
 
 			if (stateHere != null) {
 
@@ -234,6 +240,13 @@ public class UtilPlaceBlocks {
 			ModMain.logger.log(Level.WARN, e.getStackTrace().toString());
 			success = false;
 		}
+ 
+		 if(success && placeState.getBlock().getStepSound() != null){
+				
+			UtilSound.playSoundPlaceBlock(player ,placeState.getBlock());
+		
+		 }
+	 
 		// either it was air, or it wasnt and we broke it
 		return success;
 	}
@@ -333,77 +346,76 @@ public class UtilPlaceBlocks {
 		// for example, BlockMushroom.rotateBlock uses this, and hay bales
 		boolean isDone = clickedBlock.rotateBlock(worldObj, pos, side);
 
+		if(isDone){
+			//rotateBlock does not have any sounds attached, so add our own
+			UtilSound.playSoundPlaceBlock(p , clickedBlock);
+			return true;
+		}
 		
-		if(!isDone){
 
-			//first handle any special cases
+		//first handle any special cases : currently just for stone
+		if(clickedBlock == Blocks.stone){
+
+			EnumType variant = clicked.getValue(BlockStone.VARIANT);//.getProperties().get(BlockStone.VARIANT);
+			//basically we want to toggle the "smooth" property on and off
+			//but there is no property 'smooth' its just within the variant
+			IBlockState placeState = null;
+			switch(variant){
+			case ANDESITE:
+				placeState = clicked.withProperty(BlockStone.VARIANT, EnumType.ANDESITE_SMOOTH);
+				break;
+			case ANDESITE_SMOOTH:
+				placeState = clicked.withProperty(BlockStone.VARIANT, EnumType.ANDESITE);
+				break;
+			case DIORITE:
+				placeState = clicked.withProperty(BlockStone.VARIANT, EnumType.DIORITE_SMOOTH);
+				break;
+			case DIORITE_SMOOTH:
+				placeState = clicked.withProperty(BlockStone.VARIANT, EnumType.DIORITE);
+				break;
+			case GRANITE:
+				placeState = clicked.withProperty(BlockStone.VARIANT, EnumType.GRANITE_SMOOTH);
+				break;
+			case GRANITE_SMOOTH:
+				placeState = clicked.withProperty(BlockStone.VARIANT, EnumType.GRANITE);
+				break;
+			case STONE:
+			default:
+				break;
+			}
+			if(placeState != null){
+				isDone = UtilPlaceBlocks.placeStateOverwrite(worldObj, p, pos, placeState);
+			}
+		}//end special case for 'stone'
+		
+		if(isDone){
+			return true; 
+		}
+			//now try something else if not done
+		
+		for (IProperty prop : (com.google.common.collect.ImmutableSet<IProperty<?>>) clicked.getProperties().keySet()) {
 			
-			if(clickedBlock == Blocks.stone){
-
-				EnumType variant = clicked.getValue(BlockStone.VARIANT);//.getProperties().get(BlockStone.VARIANT);
-				//basically we want to toggle the "smooth" property on and off
-				//but there is no property 'smooth' its just within the variant
-				IBlockState placeState = null;
-				switch(variant){
-				case ANDESITE:
-					placeState = clicked.withProperty(BlockStone.VARIANT, EnumType.ANDESITE_SMOOTH);
-					break;
-				case ANDESITE_SMOOTH:
-					placeState = clicked.withProperty(BlockStone.VARIANT, EnumType.ANDESITE);
-					break;
-				case DIORITE:
-					placeState = clicked.withProperty(BlockStone.VARIANT, EnumType.DIORITE_SMOOTH);
-					break;
-				case DIORITE_SMOOTH:
-					placeState = clicked.withProperty(BlockStone.VARIANT, EnumType.DIORITE);
-					break;
-				case GRANITE:
-					placeState = clicked.withProperty(BlockStone.VARIANT, EnumType.GRANITE_SMOOTH);
-					break;
-				case GRANITE_SMOOTH:
-					placeState = clicked.withProperty(BlockStone.VARIANT, EnumType.GRANITE);
-					break;
-				case STONE:
-				default:
-					break;
-				}
-				if(placeState != null){
-					isDone = UtilPlaceBlocks.placeStateDetsroy(worldObj, p, pos, placeState,false);
-				}
+			if(isDone){
+				break;//stop looping right away if we are done
 			}
 			
-			//now try something else if not done
-
-			if(!isDone)for (IProperty prop : (com.google.common.collect.ImmutableSet<IProperty<?>>) clicked.getProperties().keySet()) {
+			if (prop.getName().equals("half")) {
+				//also exists as object in BlockSlab.HALF
+				isDone = UtilPlaceBlocks.placeStateOverwrite(worldObj, p, pos,  clicked.cycleProperty(prop));
+			
+			}
+			else if (prop.getName().equals("seamless")) {
+				//http://minecraft.gamepedia.com/Slab#Block_state
 				
-				if (prop.getName().equals("half")) {
-					//also exists as object in BlockSlab.HALF
-					isDone = UtilPlaceBlocks.placeStateDetsroy(worldObj, p, pos,  clicked.cycleProperty(prop),false);
-					//worldObj.setBlockState(pos, clicked.cycleProperty(prop));
-
-					break;
-				}
-				else if (prop.getName().equals("seamless")) {
-					//http://minecraft.gamepedia.com/Slab#Block_state
-					
-					isDone = UtilPlaceBlocks.placeStateDetsroy(worldObj, p, pos,  clicked.cycleProperty(prop),false);
-					
-					//worldObj.setBlockState(pos, clicked.cycleProperty(prop));
-
-					break;
-				}
-				else if (prop.getName().equals("axis")) {
-					//i dont remember what blocks use this. rotateBlock might cover it in some cases
-					
-					isDone = UtilPlaceBlocks.placeStateDetsroy(worldObj, p, pos,  clicked.cycleProperty(prop),false);
-					
-					//worldObj.setBlockState(pos, clicked.cycleProperty(prop));
-
-					break;
-				}
+				isDone = UtilPlaceBlocks.placeStateOverwrite(worldObj, p, pos,  clicked.cycleProperty(prop));
+			}
+			else if (prop.getName().equals("axis")) {
+				//i dont remember what blocks use this. rotateBlock might cover it in some cases
+				
+				isDone = UtilPlaceBlocks.placeStateOverwrite(worldObj, p, pos,  clicked.cycleProperty(prop));
 			}
 		}
-
+		
 		return isDone;
 	}
 }

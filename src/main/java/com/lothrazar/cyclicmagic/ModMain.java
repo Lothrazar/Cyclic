@@ -144,15 +144,9 @@ public class ModMain {
 	 * 
 	 * reach scepter starts on inventory spell for a second
 	 * 
-	 * enderman drop block: does it make doubel?
-	 * 
-	 *  text message if we use a build spell but invo is empty
-	 * 
 	 ***** FEATURES
 	 * 
 	 * ROTATE: STAIRS: allow switch frop top to bottom
-	 * 
-	 * all block spells use block sound.
 	 * 
 	 * WAND: turn particle beam on / off in config
 	 * 
