@@ -132,19 +132,31 @@ public class ModMain {
 		VillageTradeRegistry.syncConfig(c);
 
 		c.save();
+		 
 	}
 
 	/* TODO LIST
 	 * 
 	 ***** BUGS
 	 * 
-	 * recipes for item push/pull/rotate/harvest
-	 * 
-	 * SPELLS that use build sizes/numbers, put in their name 'name' +" ["+ number + "]";
-	 * 
 	 * reach scepter starts on inventory spell for a second
 	 * 
 	 ***** FEATURES
+	 *
+	 * world generate growing plants - random patches of wheat & beetroomt in certain biomes
+		 * maybe:
+		 * wheat - plains
+		 * beetroot - forest
+		 * potato - taiga
+		 * carrot - extreme hills
+	 *
+	 * clay generation in some biomes , all the way down -- plains and swamp?
+	 * 
+	 * Hardened clay in patches all the way down - mesa only ?
+	 * 
+	 * recipes for item push/pull/rotate/harvest
+	 * 
+	 * SPELLS that use build sizes/numbers, put in their name 'name' +" ["+ number + "]";
 	 * 
 	 * ROTATE: STAIRS: allow switch frop top to bottom
 	 * 
