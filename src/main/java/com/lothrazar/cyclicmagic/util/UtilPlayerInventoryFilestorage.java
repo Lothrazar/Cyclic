@@ -77,9 +77,9 @@ public class UtilPlayerInventoryFilestorage {
 					if (save)
 						savePlayerBaubles(player, file1, file2);
 				}
-			} catch (Exception exception1) {
-				ModMain.logger.fatal("Error loading baubles inventory");
-				exception1.printStackTrace();
+			} catch (Exception e) {
+				ModMain.logger.fatal("Error loading player extended inventory");
+				e.printStackTrace();
 			}
 		}
 	}

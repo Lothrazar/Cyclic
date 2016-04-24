@@ -75,7 +75,10 @@ public class EventExtendedInventory {
 			if (fileNew.exists()) {
 				try {
 					Files.copy(fileNew, playerFile);
+					
+					
 					ModMain.logger.info("Using and converting UUID Baubles savefile for " + event.getEntityPlayer().getDisplayNameString());
+					
 					fileNew.delete();
 					File fb = event.getPlayerFile(extback);
 					if (fb.exists())

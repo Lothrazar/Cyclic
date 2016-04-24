@@ -24,15 +24,15 @@ public class UtilTextureRender {
 
 		} catch (NullPointerException e) {
 
-			ModMain.logger.log(Level.ERROR, "Null pointer drawTexture;Simple " + res.getResourcePath());
-			ModMain.logger.log(Level.ERROR, e.getMessage());
-			ModMain.logger.log(Level.ERROR, e.getStackTrace());
+			ModMain.logger.error( "Null pointer drawTexture;Simple " + res.getResourcePath());
+			ModMain.logger.error( e.getMessage());
+			e.printStackTrace();
 
 		} catch (net.minecraft.util.ReportedException e) {
-			ModMain.logger.log(Level.ERROR, "net.minecraft.util.ReportedException ");
-			ModMain.logger.log(Level.ERROR, res.getResourceDomain() + ":" + res.getResourcePath());
-			ModMain.logger.log(Level.ERROR, e.getMessage());
-			ModMain.logger.log(Level.ERROR, e.getStackTrace());
+			ModMain.logger.error("net.minecraft.util.ReportedException ");
+			ModMain.logger.error(res.getResourceDomain() + ":" + res.getResourcePath());
+			ModMain.logger.error(e.getMessage());
+			e.printStackTrace();
 		}
 	}
 

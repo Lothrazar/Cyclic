@@ -235,9 +235,11 @@ public class UtilPlaceBlocks {
 
 			// world.markBlockForUpdate(posMoveToHere);
 		} catch (ConcurrentModificationException e) {
-			ModMain.logger.log(Level.WARN, "ConcurrentModificationException");
-			ModMain.logger.log(Level.WARN, e.getMessage());// message is null??
-			ModMain.logger.log(Level.WARN, e.getStackTrace().toString());
+			
+			
+			ModMain.logger.warn("ConcurrentModificationException");
+			ModMain.logger.warn(e.getMessage());// message is null??
+			ModMain.logger.warn(e.getStackTrace().toString());
 			success = false;
 		}
  

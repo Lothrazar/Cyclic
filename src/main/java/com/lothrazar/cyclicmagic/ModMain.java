@@ -26,7 +26,8 @@ public class ModMain {
 	public static CommonProxy						proxy;
 	@Instance(value = Const.MODID)
 	public static ModMain								instance;
-	public static Logger								logger;
+	//public static Logger								logger;
+	public static ModLogger								logger;
 	private static Configuration				config;
 	public static SimpleNetworkWrapper	network;
 	public final static CreativeTabs		TAB	= new CreativeTabs(Const.MODID) {
@@ -39,7 +40,7 @@ public class ModMain {
 	@EventHandler
 	public void onPreInit(FMLPreInitializationEvent event) {
 
-		logger = event.getModLog();
+		logger = new ModLogger(event.getModLog());
 
 		config = new Configuration(event.getSuggestedConfigurationFile());
 		
