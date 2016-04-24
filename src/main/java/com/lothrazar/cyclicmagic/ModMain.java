@@ -141,6 +141,12 @@ public class ModMain {
 	 * 
 	 * reach scepter starts on inventory spell for a second
 	 * 
+	 * harvester: doesnt break 1 high tallgrass
+	 * 
+	 * harvester: if it breaks only top part of tallgrass.. it turns to sunflower??
+	 * 
+	 * harvester: does not break pumpkins?
+	 * 
 	 ***** FEATURES
 	 *
 	 * world generate growing plants - random patches of wheat & beetroomt in certain biomes
