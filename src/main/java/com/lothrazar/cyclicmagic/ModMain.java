@@ -1,6 +1,5 @@
  package com.lothrazar.cyclicmagic;
 
-import org.apache.logging.log4j.Logger;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
 import com.lothrazar.cyclicmagic.registry.*;
@@ -22,20 +21,19 @@ import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 @Mod(modid = Const.MODID, useMetadata = true, canBeDeactivated = false, updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json", guiFactory = "com.lothrazar." + Const.MODID + ".gui.IngameConfigFactory")
 public class ModMain {
 
-	@SidedProxy(clientSide = "com.lothrazar." + Const.MODID + ".proxy.ClientProxy", serverSide = "com.lothrazar." + Const.MODID + ".proxy.CommonProxy")
-	public static CommonProxy						proxy;
 	@Instance(value = Const.MODID)
-	public static ModMain								instance;
-	//public static Logger								logger;
-	public static ModLogger								logger;
+	public static ModMain						instance;
+	@SidedProxy(clientSide = "com.lothrazar." + Const.MODID + ".proxy.ClientProxy", serverSide = "com.lothrazar." + Const.MODID + ".proxy.CommonProxy")
+	public static CommonProxy					proxy;
+	public static ModLogger						logger;
 	private static Configuration				config;
-	public static SimpleNetworkWrapper	network;
-	public final static CreativeTabs		TAB	= new CreativeTabs(Const.MODID) {
-		                                        @Override
-		                                        public Item getTabIconItem() {
-			                                        return ItemRegistry.chest_sack;
-		                                        }
-	                                        };
+	public static SimpleNetworkWrapper			network;
+	public final static CreativeTabs			TAB	= new CreativeTabs(Const.MODID) {
+        @Override
+        public Item getTabIconItem() {
+            return ItemRegistry.chest_sack;
+        }
+    };
 
 	@EventHandler
 	public void onPreInit(FMLPreInitializationEvent event) {
@@ -60,7 +58,6 @@ public class ModMain {
 		VillageTradeRegistry.register();
 		
 		SoundRegistry.register();
-
 	}
 
 
@@ -99,9 +96,7 @@ public class ModMain {
 	public void onPostInit(FMLPostInitializationEvent event) {
 
 		// registers all plantable crops. the plan is to work with non vanilla data
-		// also
 		DispenserBehaviorRegistry.register();
-
 	}
 
 	@EventHandler
@@ -141,12 +136,6 @@ public class ModMain {
 	 ***** BUGS
 	 * 
 	 * reach scepter starts on inventory spell for a second
-	 * 
-	 * harvester: doesnt break 1 high tallgrass
-	 * 
-	 * harvester: if it breaks only top part of tallgrass.. it turns to sunflower??
-	 * 
-	 * harvester: does not break pumpkins?
 	 * 
 	 ***** FEATURES
 	 *

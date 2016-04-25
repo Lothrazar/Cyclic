@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.util;
 
-import org.apache.logging.log4j.Level;
 import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.ModMain;
 import net.minecraft.client.Minecraft;

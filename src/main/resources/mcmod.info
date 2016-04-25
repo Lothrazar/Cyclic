@@ -2,12 +2,13 @@
   "modListVersion": 2,
   "modList": [{
     "modid": "cyclicmagic",
-    "name": "Merged all my mods together",
-    "description": "",
-    "version": "1.0.0",
+    "name": "Cyclic",
+    "description": "I added everything I wanted the game to have, including powerful items, inventory features, world generation, and more.  Everything is controlled by config.  Balanced around 
+single player survival, but there should be no problem on servers.",
+    "version": "alpha.v1",
     "mcversion": "1.9",
-    "url": "",
-    "updateUrl": "",
+    "url": "http://minecraft.curseforge.com/projects/cyclic-magic",
+    "updateUrl": "http://minecraft.curseforge.com/projects/cyclic-magic",
     "authorList": [ "Lothrazar" ],
     "credits": "",
     "logoFile": "",
