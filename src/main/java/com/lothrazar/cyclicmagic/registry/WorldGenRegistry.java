@@ -16,6 +16,7 @@ public class WorldGenRegistry {
 	public static boolean	oreSpawns = true;
 	private static boolean emeraldHeight=true;
 	private static boolean goldRiver;
+	private static boolean oreSingletons;
 
 	public static void syncConfig(Configuration config) {
 
@@ -45,6 +46,11 @@ public class WorldGenRegistry {
 		prop = config.get(category, "Gold Rivers", true, "Vanilla gold ore can spawn in and river biomes at any height");
 		prop.setRequiresMcRestart(true);
 		goldRiver = prop.getBoolean();
+		
+		prop = config.get(category, "Ore Singletons", true, "Vanilla ores of all kinds can rarely spawn at all world heights, but only in veins of size one.  Great for amplified terrain.");
+		prop.setRequiresMcRestart(true);
+		oreSingletons = prop.getBoolean();
+		
 	}
 
 	final static int weight = 0;
@@ -70,15 +76,14 @@ public class WorldGenRegistry {
 		if(goldRiver){
 			GameRegistry.registerWorldGenerator(new WorldGenGoldRiver(), weight);
 		}
-		
-		//TODO if singletons enabled
-
-		GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.coal_ore, 132), weight);
-		GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.iron_ore, 68), weight);
-		GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.gold_ore, 34), weight);
-		GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.lapis_ore, 34), weight);
-		GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.redstone_ore, 16), weight);
-		GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.diamond_ore, 16), weight);
-		
+		 
+		if(oreSingletons){
+			GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.coal_ore, 132), weight);
+			GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.iron_ore, 68), weight);
+			GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.gold_ore, 34), weight);
+			GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.lapis_ore, 34), weight);
+			GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.redstone_ore, 16), weight);
+			GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.diamond_ore, 16), weight);
+		}
 	}
 }
