@@ -2,6 +2,8 @@ package com.lothrazar.cyclicmagic.registry;
 
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.world.gen.*;
+
+import net.minecraft.init.Blocks;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -68,5 +70,15 @@ public class WorldGenRegistry {
 		if(goldRiver){
 			GameRegistry.registerWorldGenerator(new WorldGenGoldRiver(), weight);
 		}
+		
+		//TODO if singletons enabled
+
+		GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.coal_ore, 132), weight);
+		GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.iron_ore, 68), weight);
+		GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.gold_ore, 34), weight);
+		GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.lapis_ore, 34), weight);
+		GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.redstone_ore, 16), weight);
+		GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.diamond_ore, 16), weight);
+		
 	}
 }
