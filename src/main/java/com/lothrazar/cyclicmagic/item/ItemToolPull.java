@@ -22,8 +22,6 @@ public class ItemToolPull  extends BaseTool implements IHasRecipe{
 
 		BlockPos resultPosition = UtilPlaceBlocks.pullBlock(world, p, pos, side);
 		
-		
-		
 		return super.onItemUse(stack, p, world, pos, hand, side, hitX, hitY, hitZ);// EnumActionResult.PASS;
 
 	}

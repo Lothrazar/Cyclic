@@ -134,6 +134,8 @@ public class ModMain {
 	/* TODO LIST
 	 * 
 	 ***** BUGS
+	 *
+	 *swing item animations on wands/etc consistent
 	 * 
 	 * reach scepter starts on inventory spell for a second
 	 * 

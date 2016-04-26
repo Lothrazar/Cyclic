@@ -24,7 +24,7 @@ public class ItemToolPush  extends BaseTool implements IHasRecipe{
 		Block newSpot = null;
 
 		if (resultPosition != null && p.worldObj.getBlockState(resultPosition) != null) {
-			newSpot = p.worldObj.getn            mnn                      nh nn nnnn  xxzzzzzzzzzzzzzzz					11BlockState(resultPosition).getBlock();
+			newSpot = p.worldObj.getBlockState(resultPosition).getBlock();
 		}
 
 		if (newSpot != null) {
