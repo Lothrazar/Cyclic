@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.world.gen;
 
+import java.util.List;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.util.Const;
 
@@ -20,23 +21,23 @@ import net.minecraftforge.fml.common.IWorldGenerator;
 public class WorldGenPlantBiome implements IWorldGenerator {
 
 	private GeneratePlant	gen;
-	private BlockCrops blockPlant;
-	private BiomeGenBase biome;
+	private BlockCrops blockPlant; 
+	private List<BiomeGenBase> biomes;
 	private int minHeight = 1;
-	public WorldGenPlantBiome(BlockCrops plant, BiomeGenBase b){
+	public WorldGenPlantBiome(BlockCrops plant, List<BiomeGenBase> b){
 		//http://minecraft.gamepedia.com/Ore#Availability
 		// http://minecraft.gamepedia.com/Customized#Ore_settings
 
 		blockPlant = plant;
-		biome = b;
+		biomes = b;
 		
-		gen = new GeneratePlant(blockPlant.getDefaultState());
+		gen = new GeneratePlant(blockPlant);
 	}
 
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
  
-		int spawnTries = 30;
+		int spawnTries = 25;
 		if(Const.Dimension.overworld == world.provider.getDimension()){
 			this.run(gen, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, spawnTries, minHeight , Const.WORLDHEIGHT-1);
 		}
@@ -59,8 +60,7 @@ public class WorldGenPlantBiome implements IWorldGenerator {
 			pos = new BlockPos(x, y, z);
 			b = world.getBiomeGenForCoords(pos);
 			
-			if(biome == b){
-				System.out.println("plant biome go");
+			if(biomes.contains(b)){
 				generator.generate(world, rand, pos);
 			}
 		}

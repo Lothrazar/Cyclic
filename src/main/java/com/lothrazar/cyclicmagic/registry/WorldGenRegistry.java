@@ -1,11 +1,15 @@
 package com.lothrazar.cyclicmagic.registry;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.world.gen.*;
 
 import net.minecraft.block.BlockCrops;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
+import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -97,14 +101,13 @@ public class WorldGenRegistry {
 		 * carrot - extreme hills*/
 		
 		//carrot/potato/wheat/beetroot are crops
-		//TODO: fullgrown or a randomness to the state
-	//	int fullGrownMeta = ((BlockCrops)Blocks.carrots).func_185526_g();
-		 
+	
 		//TODO: i guess take array list
-		GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops)Blocks.carrots, Biomes.extremeHills), weight);
-		GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops)Blocks.wheat, Biomes.plains), weight);
-		GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops)Blocks.beetroots, Biomes.forest), weight);
-		GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops)Blocks.beetroots, Biomes.birchForest), weight);
-		GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops)Blocks.potatoes, Biomes.taiga), weight);
+		GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops)Blocks.carrots, Arrays.asList(Biomes.extremeHills)), weight);
+		
+		GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops)Blocks.wheat,Arrays.asList( Biomes.plains)), weight);
+		GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops)Blocks.beetroots, Arrays.asList(Biomes.forest, Biomes.birchForest)), weight);
+
+		GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops)Blocks.potatoes,Arrays.asList( Biomes.taiga)), weight);
 	}
 }
