@@ -3,6 +3,8 @@ package com.lothrazar.cyclicmagic.registry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.world.gen.*;
 
+import net.minecraft.block.BlockCrops;
+import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
@@ -85,5 +87,24 @@ public class WorldGenRegistry {
 			GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.redstone_ore, 16), weight);
 			GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.diamond_ore, 16), weight);
 		}
+		
+		
+/* * world generate growing plants - random patches of wheat & beetroomt in certain biomes
+		 * maybe:
+		 * wheat - plains
+		 * beetroot - forest
+		 * potato - taiga
+		 * carrot - extreme hills*/
+		
+		//carrot/potato/wheat/beetroot are crops
+		//TODO: fullgrown or a randomness to the state
+	//	int fullGrownMeta = ((BlockCrops)Blocks.carrots).func_185526_g();
+		 
+		//TODO: i guess take array list
+		GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops)Blocks.carrots, Biomes.extremeHills), weight);
+		GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops)Blocks.wheat, Biomes.plains), weight);
+		GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops)Blocks.beetroots, Biomes.forest), weight);
+		GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops)Blocks.beetroots, Biomes.birchForest), weight);
+		GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops)Blocks.potatoes, Biomes.taiga), weight);
 	}
 }
