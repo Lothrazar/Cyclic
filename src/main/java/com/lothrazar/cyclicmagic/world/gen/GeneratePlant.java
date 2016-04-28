@@ -19,7 +19,8 @@ public class GeneratePlant extends WorldGenerator {
 	}
 
 	public boolean generate(World worldIn, Random rand, BlockPos pos) {
-		//   fullgrown or a randomness to the state
+		//similar to WolrdGenPumpkin in vanilla code
+		//  getAge of fullgrown plant, then randomize it
 		int fullGrownMeta = (crop).func_185526_g();
 
 		for (int i = 0; i < 26; ++i) {

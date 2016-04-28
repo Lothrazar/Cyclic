@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.registry;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.lothrazar.cyclicmagic.util.Const;
@@ -9,7 +8,6 @@ import com.lothrazar.cyclicmagic.world.gen.*;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
-import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.registry.GameRegistry;
