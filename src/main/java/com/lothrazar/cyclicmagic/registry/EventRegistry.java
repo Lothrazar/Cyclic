@@ -94,13 +94,11 @@ public class EventRegistry {
 		passThroughClick = config.getBoolean("PassThroughClick", category, true,
 				"Open chests (and other containers) by passing right through the attached signs, banners, and item frames");
 
-		category = Const.MODCONF + "PlayerInventory";
-		// EventExtendedInventory
-
-		EventExtendedInventory.dropOnDeath = config.getBoolean("dropItemsOnDeath", category, true,
-				"When false, this never drops your extra inventories items on death.  If true, this will obey the keepInventory rule");
-		// TODO: 'enabled', which hides the button
-		// and 'enabled 3x3 crafting' as well
+		EventExtendedInventory.dropOnDeath = config.getBoolean("DropExtendedInventoryOnDeath", category, true,
+				"When false, this never drops your extra inventories items on death (for the extended inventory).  If true, this will obey the keepInventory rule");
+		
+		// TODO: 'enabled', which hides the button for invo
+		//  TODO: and  one for 'enabled 3x3 crafting' as well
 	}
 
 	public static void register() {

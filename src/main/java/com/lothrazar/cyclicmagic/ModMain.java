@@ -139,14 +139,13 @@ public class ModMain {
 	 * 
 	 * reach scepter starts on inventory spell for a second
 	 * 
+	 * commands:  config toggles to require OP or not
+	 * 
+	 * commands: config tooltips do say what it does
+	 * 
+	 * config: add toggles to disable extra crafting or extra inventory
+	 * 
 	 ***** FEATURES
-	 *
-	 * world generate growing plants - random patches of wheat & beetroomt in certain biomes
-		 * maybe:
-		 * wheat - plains
-		 * beetroot - forest
-		 * potato - taiga
-		 * carrot - extreme hills
 	 *
 	 * clay generation in some biomes , all the way down -- plains and swamp?
 	 * 
@@ -176,7 +175,12 @@ public class ModMain {
 	 * 
 	 * refactor noteblock/sign into util
 	 * 
-	 ***** BACKLOG
+	 * Note: D:\git\noncontent\build\sources\main\java\com\lothrazar\cyclicmagic\block\BlockUncrafting.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+
+	 ***** BACKLOG // ideas
+	 *
+	 *make mushroom soup and beetroot stew stackable? so when you eat one you still get the bowl and dont consume whole stack?
 	 * 
 	 * fix villager skins
 	 * 
