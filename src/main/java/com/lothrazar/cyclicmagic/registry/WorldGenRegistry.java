@@ -21,6 +21,7 @@ public class WorldGenRegistry {
 	private static boolean emeraldHeight=true;
 	private static boolean goldRiver;
 	private static boolean oreSingletons;
+	private static boolean biomeCrops;
 
 	public static void syncConfig(Configuration config) {
 
@@ -54,6 +55,10 @@ public class WorldGenRegistry {
 		prop = config.get(category, "Ore Singletons", true, "Vanilla ores of all kinds can rarely spawn at all world heights, but only in veins of size one.  Great for amplified terrain.");
 		prop.setRequiresMcRestart(true);
 		oreSingletons = prop.getBoolean();
+		
+		prop = config.get(category, "Biome Crops", true, "Crops spawn randomly with nature.  Carrots in extreme hills, wheat in plains, beetroot in forests, potatoes in taiga.");
+		prop.setRequiresMcRestart(true);
+		biomeCrops = prop.getBoolean();
 		
 	}
 
@@ -101,11 +106,15 @@ public class WorldGenRegistry {
 		//carrot/potato/wheat/beetroot are crops
 	
 		//TODO: i guess take array list
-		GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops)Blocks.carrots, Arrays.asList(Biomes.extremeHills)), weight);
 		
-		GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops)Blocks.wheat,Arrays.asList( Biomes.plains)), weight);
-		GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops)Blocks.beetroots, Arrays.asList(Biomes.forest, Biomes.birchForest)), weight);
-
-		GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops)Blocks.potatoes,Arrays.asList( Biomes.taiga)), weight);
+		if(biomeCrops){
+			GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops)Blocks.carrots, Arrays.asList(Biomes.extremeHills)), weight);
+			
+			GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops)Blocks.wheat,Arrays.asList( Biomes.plains)), weight);
+			
+			GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops)Blocks.beetroots, Arrays.asList(Biomes.forest, Biomes.birchForest)), weight);
+	
+			GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops)Blocks.potatoes,Arrays.asList( Biomes.taiga)), weight);
+		}
 	}
 }
