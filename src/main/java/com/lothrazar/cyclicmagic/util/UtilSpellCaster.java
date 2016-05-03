@@ -74,8 +74,16 @@ public class UtilSpellCaster {
 	public static void shiftLeft(EntityPlayer player) {
 
 		ItemStack wand = getPlayerWandIfHeld(player);
+//
 
-		int left = SpellRegistry.prev(wand, ItemCyclicWand.Spells.getSpellCurrent(wand)).getID();
+		//System.out.println("is wand null"+(wand==null));
+		ISpell curr = ItemCyclicWand.Spells.getSpellCurrent(wand);
+		//System.out.println("is getSpellCurrent null"+(curr==null));
+		
+		int left = SpellRegistry.prev(wand, curr).getID();
+		//System.out.println("is left" + left );
+		//
+		//int left = SpellRegistry.prev(wand, ItemCyclicWand.Spells.getSpellCurrent(wand)).getID();
 
 		ItemCyclicWand.Spells.setSpellCurrent(wand, left);
 
@@ -86,7 +94,13 @@ public class UtilSpellCaster {
 
 		ItemStack wand = getPlayerWandIfHeld(player);
 
-		int right = SpellRegistry.next(wand, ItemCyclicWand.Spells.getSpellCurrent(wand)).getID();
+		
+		//System.out.println("is wand null"+(wand==null));
+		ISpell curr = ItemCyclicWand.Spells.getSpellCurrent(wand);
+		//System.out.println("is getSpellCurrent null"+(curr==null));
+		
+		int right = SpellRegistry.next(wand, curr).getID();
+		//System.out.println("is right" + right );
 
 		ItemCyclicWand.Spells.setSpellCurrent(wand, right);
 		UtilSound.playSound(player.worldObj, player.getPosition(), SoundRegistry.bip);
@@ -98,7 +112,7 @@ public class UtilSpellCaster {
 		ISpell current = SpellRegistry.getSpellFromID(ItemCyclicWand.Spells.getSpellIDCurrent(wand));
 
 		if (current == null) {
-			current = SpellRegistry.getDefaultSpell();
+			current = SpellRegistry.getSpellbook(wand).get(0);
 		}
 
 		return current;
