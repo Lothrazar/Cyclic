@@ -214,7 +214,6 @@ public class ItemRegistry {
 	public static Item								emerald_chestplate;
 	public static Item								emerald_leggings;
 	public static Item								emerald_boots;
-	public static ItemCyclicWand			cyclic_wand_build;
 	public static ItemChestSack				chest_sack;
 	public static ItemChestSackEmpty	chest_sack_empty;
 	public static ToolMaterial				MATERIAL_EMERALD;
@@ -239,7 +238,8 @@ public class ItemRegistry {
 	public static ItemProjectile			ender_tnt_2;																										// chcr
 	public static ItemProjectile			ender_tnt_4;																										// tnt
 	public static ItemProjectile			ender_tnt_6;																										// ender
-	                                                              																		// crystal
+
+	public static ItemCyclicWand			cyclic_wand_build;       																		// crystal
 	public static ItemCyclicWand			cyclic_wand_range;
 	public static ItemCyclicWand			cyclic_wand_fly;
 	public static ItemFoodAppleMagic apple_diamond;

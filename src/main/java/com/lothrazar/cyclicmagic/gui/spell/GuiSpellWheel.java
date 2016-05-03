@@ -1,5 +1,7 @@
 package com.lothrazar.cyclicmagic.gui.spell;
 
+import java.util.List;
+
 import com.lothrazar.cyclicmagic.gui.button.ButtonClose;
 import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
@@ -54,7 +56,8 @@ public class GuiSpellWheel extends GuiScreen {
 		yCenter = this.height / 2;
 		radius = xCenter / 3 + 8;// was 26
 
-		arc = (2 * Math.PI) / SpellRegistry.getSpellbook(wand).size();
+		List<ISpell> book = SpellRegistry.getSpellbook(wand);
+		arc = (2 * Math.PI) / book.size();
 		int btnCenter = yCenter - h / 2;
 		int btnID = 999;
 		this.buttonList.add(new ButtonClose(btnID++, xCenter - 15, btnCenter));
@@ -66,7 +69,7 @@ public class GuiSpellWheel extends GuiScreen {
 		ButtonSpellToggle b;
 		// from here on, btnID++ is not used; the spell id is instead used as the id
 
-		for (ISpell s : SpellRegistry.getSpellbook(wand)) {
+		for (ISpell s : book) {
 			/*
 			 * boolean unlocked =
 			 * ItemCyclicWand.Spells.isSpellUnlocked(props.getPlayer().getHeldItem(),
