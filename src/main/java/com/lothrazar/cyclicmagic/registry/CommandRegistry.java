@@ -63,51 +63,49 @@ public class CommandRegistry {
 		}
 	}
 
-	private static void syncCommandConfig(Configuration config, String name, boolean defaultNeedsOp) {
+	private static void syncCommandConfig(Configuration config, String name, boolean defaultNeedsOp,String comment) {
 
-		Property prop = config.get(category, name, true, " ");
+		Property prop = config.get(category, name, true, comment);
 		prop.setRequiresMcRestart(true);
 		configToggle.put(name, prop.getBoolean());
 
-		prop = config.get(category, name, defaultNeedsOp, " ");
+		prop = config.get(category, name + ".needs_op", defaultNeedsOp, "If true, only server OPs can run this command (or cheats enabled in single player)");
 		prop.setRequiresMcRestart(true);
-		commandNeedsOp.put(name + ".needs_op", prop.getBoolean());
+		commandNeedsOp.put(name, prop.getBoolean());
 	}
 
 	public static void syncConfig(Configuration config) {
 		category = Const.MODCONF + "Commands";
 		config.setCategoryComment(category, "Disable any command that was added");
 
-		syncCommandConfig(config, CommandEnderChest.name, false);
+		syncCommandConfig(config, CommandEnderChest.name, false, "Opens your ender chest");
 
-		syncCommandConfig(config, CommandHeal.name, false);
+		syncCommandConfig(config, CommandGetHome.name, false,"Get where your current spawn is set (by a bed)");
 
-		syncCommandConfig(config, CommandHearts.name, true);
+		syncCommandConfig(config, CommandHeal.name, false,"Heal yourself to full");
 
-		syncCommandConfig(config, CommandGetHome.name, false);
+		syncCommandConfig(config, CommandHearts.name, true,"Increase your maximum hearts (lasts until death)");
 
-		syncCommandConfig(config, CommandHome.name, false);
+		syncCommandConfig(config, CommandHome.name, false,"Teleport you to your current spawn (if its set)");
 
-		syncCommandConfig(config, CommandPing.name, false);
+		syncCommandConfig(config, CommandPing.name, false,"Display your current coordinates");
 
-		syncCommandConfig(config, CommandRecipe.name, false);
+		syncCommandConfig(config, CommandRecipe.name, false,"Find recipes for an item");
 
-		syncCommandConfig(config, CommandSearchItem.name, false);
+		syncCommandConfig(config, CommandSearchItem.name, false,"Search for an item in nearby containers");
 
-		syncCommandConfig(config, CommandSearchSpawner.name, true);
+		syncCommandConfig(config, CommandSearchSpawner.name, true,"Search the world nearby for spawners (dungeons, etc)");
 
-		syncCommandConfig(config, CommandSearchTrades.name, false);
+		syncCommandConfig(config, CommandSearchTrades.name, false,"Search nearby villagers for trades based on item names");
 
-		syncCommandConfig(config, CommandSimpleWaypoints.name, false);
+		syncCommandConfig(config, CommandSimpleWaypoints.name, false,"Save a waypoint and set them as headings.");
 
-		syncCommandConfig(config, CommandTodoList.name, false);
+		syncCommandConfig(config, CommandTodoList.name, false,"Set reminders on screen for yourself");
 
-		syncCommandConfig(config, CommandUses.name, false);
+		syncCommandConfig(config, CommandUses.name, false,"Find how an item is used in other recipes");
 
-		syncCommandConfig(config, CommandVillageInfo.name, false);
+		syncCommandConfig(config, CommandVillageInfo.name, false,"Get the stats on the nearest village (if any)");
 
-		syncCommandConfig(config, CommandWorldHome.name, false);
-
-		syncCommandConfig(config, CommandHeal.name, true);
+		syncCommandConfig(config, CommandWorldHome.name, false,"Find out where true worldspawn is");
 	}
 }
