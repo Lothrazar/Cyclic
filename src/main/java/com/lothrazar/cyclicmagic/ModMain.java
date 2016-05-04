@@ -135,31 +135,27 @@ public class ModMain {
 	 * 
 	 ***** BUGS
 	 *
-	 *tools: add durability
+	 *pull/push: either make it work with tile entities keeping the data (signs/chests) OR
+	 *disable it for TE
+	 *
+	 *build up spell + others: no sound
+	 *
+	 *rotate: sound works from tool not from spell
+	 *
+	 *swing item animations on wands/etc consistent
+	 * 
+	 * 
+	 ***** POSTPONED for later release [bugs or disabled features]
+	 *
+	 *build up and down spell: need 2 new spells: a left and right
+	 *
+	 * config: add toggles to disable extra crafting or extra inventory
 	 *
 	 *circle build: does not work with 'pattern'. 
 	 *
 	 *circle build: is more of an oval, not symmetric
 	 *
 	 *MAYBE: disable the 'mass building' spells for first release.
-	 *
-	 *build up and down spell: need a left and right
-	 *t
-	 *build up spell + others: no sound
-	 *
-	 *tool_harvest.name missing
-	 *
-	 *rotate: works from tool not from spell
-	 *
-	 *swing item animations on wands/etc consistent
-	 * 
-	 * reach scepter starts on inventory spell for a second
-	 * 
-	 * commands:  config toggles to require OP or not
-	 * 
-	 * commands: config tooltips do say what it does
-	 * 
-	 * config: add toggles to disable extra crafting or extra inventory
 	 * 
 	 ***** FEATURES
 	 *

@@ -35,6 +35,7 @@ gui.chatexp=Not enough experience
 item.tool_pull.name=Pull Tool
 item.tool_push.name=Push Tool
 item.tool_rotate.name=Rotate Tool
+item.tool_harvest.name=Harvester
 item.apple_bone.name=Bone Apple
 item.apple_emerald.name=Emerald Apple
 item.apple_netherwart.name=Nether Apple
