@@ -143,6 +143,8 @@ public class ModMain {
 	 *rotate: sound works from tool not from spell
 	 *
 	 *swing item animations on wands/etc consistent
+	 *
+	 *pull/pushreplace: make sure never work on fixed blacklist [bedrock, bed, endportal, spawner]
 	 * 
 	 * 
 	 ***** POSTPONED for later release [bugs or disabled features]
@@ -158,6 +160,14 @@ public class ModMain {
 	 *MAYBE: disable the 'mass building' spells for first release.
 	 * 
 	 ***** FEATURES
+	 *
+	 *increase hardness of spawner block
+	 *
+	 *make silk touch work on silverfish blocks
+	 *
+	 *trade: you used to do 1 written book = 1 emerald
+	 *
+	 *Some way to get mending/frost enchants
 	 *
 	 * clay generation in some biomes , all the way down -- plains and swamp?
 	 * 
