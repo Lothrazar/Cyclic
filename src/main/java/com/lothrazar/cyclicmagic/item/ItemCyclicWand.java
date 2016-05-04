@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
-import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -25,19 +24,25 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemCyclicWand extends Item {
 
 	private static final String NBT_SPELLCURRENT = "spell_id";
+	private List<ISpell> spellbook;
 
 	public ItemCyclicWand() {
 
 		this.setMaxStackSize(1);
 		this.setFull3D();
 	}
-
+	
+	public void setSpells(List<ISpell> spells){
+		this.spellbook = spells;
+	} 
+	public List<ISpell>  getSpells(){
+		return this.spellbook;
+	} 
 	@Override
 	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
 
 		if (!slotChanged) {
-			return false;// only item data has changed, so do not
-							// animate
+			return false;// only item data has changed, so do notanimate
 		}
 		return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged);
 	}
@@ -46,13 +51,9 @@ public class ItemCyclicWand extends Item {
 	public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn) {
 
 		Energy.rechargeBy(stack, Energy.START);
-
-		if (stack.getItem() == ItemRegistry.cyclic_wand_fly) {
-
-			Spells.setSpellCurrent(stack, SpellRegistry.Spells.launch.getID());
-		} else {
-			Spells.setSpellCurrent(stack, SpellRegistry.Spells.inventory.getID());
-		}
+ 
+		Spells.setSpellCurrent(stack, SpellRegistry.getSpellbook(stack).get(0).getID());
+		
 
 		super.onCreated(stack, worldIn, playerIn);
 	}
@@ -144,17 +145,30 @@ public class ItemCyclicWand extends Item {
 		public static int getSpellIDCurrent(ItemStack stack) {
 			// workaround for default spell being replace. and oncrafting not
 			// firing
+			/*
 			if (stack.getItem() == ItemRegistry.cyclic_wand_fly) {
 				return SpellRegistry.Spells.launch.getID();
 			}
-
+			
+*/
+			if(getNBT(stack).hasKey(NBT_SPELLCURRENT) == false){
+				//what is default spell for that then?
+				return SpellRegistry.getSpellbook(stack).get(0).getID();
+			}
+			
 			int c = getNBT(stack).getInteger(NBT_SPELLCURRENT);
 			return c;
 		}
 
 		public static ISpell getSpellCurrent(ItemStack stack) {
 
-			return SpellRegistry.getSpellFromID(getSpellIDCurrent(stack));
+			ISpell s = SpellRegistry.getSpellFromID(getSpellIDCurrent(stack));
+			
+			if(s == null){
+				s = SpellRegistry.getSpellbook(stack).get(0);
+			}
+			
+			return s;
 		}
 
 		public static void setSpellCurrent(ItemStack stack, int spell_id) {
