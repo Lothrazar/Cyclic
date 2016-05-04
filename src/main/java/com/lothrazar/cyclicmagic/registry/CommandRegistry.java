@@ -11,127 +11,103 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 public class CommandRegistry {
 
 	private static Map<String, Boolean> configToggle = new HashMap<String, Boolean>();
+	private static Map<String, Boolean> commandNeedsOp = new HashMap<String, Boolean>();
+	private static String category;
 
 	public static void register(FMLServerStartingEvent event) {
 
 		if (configToggle.get(CommandEnderChest.name)) {
-			event.registerServerCommand(new CommandEnderChest( true));
+			event.registerServerCommand(new CommandEnderChest(commandNeedsOp.get(CommandEnderChest.name)));
 		}
 		if (configToggle.get(CommandGetHome.name)) {
-			event.registerServerCommand(new CommandGetHome( true));
+			event.registerServerCommand(new CommandGetHome(commandNeedsOp.get(CommandGetHome.name)));
 		}
 		if (configToggle.get(CommandHeal.name)) {
-			event.registerServerCommand(new CommandHeal(true));
+			event.registerServerCommand(new CommandHeal(commandNeedsOp.get(CommandHeal.name)));
 		}
 		if (configToggle.get(CommandHearts.name)) {
-			event.registerServerCommand(new CommandHearts( true));
+			event.registerServerCommand(new CommandHearts(commandNeedsOp.get(CommandHearts.name)));
 		}
 		if (configToggle.get(CommandHome.name)) {
-			event.registerServerCommand(new CommandHome( true));
+			event.registerServerCommand(new CommandHome(commandNeedsOp.get(CommandHome.name)));
 		}
 		if (configToggle.get(CommandPing.name)) {
-			event.registerServerCommand(new CommandPing( true));
+			event.registerServerCommand(new CommandPing(commandNeedsOp.get(CommandPing.name)));
 		}
 		if (configToggle.get(CommandRecipe.name)) {
-			event.registerServerCommand(new CommandRecipe( true));
+			event.registerServerCommand(new CommandRecipe(commandNeedsOp.get(CommandRecipe.name)));
 		}
 		if (configToggle.get(CommandSearchItem.name)) {
-			event.registerServerCommand(new CommandSearchItem( true));
+			event.registerServerCommand(new CommandSearchItem(commandNeedsOp.get(CommandSearchItem.name)));
 		}
 		if (configToggle.get(CommandSearchSpawner.name)) {
-			event.registerServerCommand(new CommandSearchSpawner( true));
+			event.registerServerCommand(new CommandSearchSpawner(commandNeedsOp.get(CommandSearchSpawner.name)));
 		}
 		if (configToggle.get(CommandSearchTrades.name)) {
-			event.registerServerCommand(new CommandSearchTrades( true));
+			event.registerServerCommand(new CommandSearchTrades(commandNeedsOp.get(CommandSearchTrades.name)));
 		}
 		if (configToggle.get(CommandSimpleWaypoints.name)) {
-			event.registerServerCommand(new CommandSimpleWaypoints( true));
+			event.registerServerCommand(new CommandSimpleWaypoints(commandNeedsOp.get(CommandSimpleWaypoints.name)));
 		}
 		if (configToggle.get(CommandTodoList.name)) {
-			event.registerServerCommand(new CommandTodoList( true));
+			event.registerServerCommand(new CommandTodoList(commandNeedsOp.get(CommandTodoList.name)));
 		}
 		if (configToggle.get(CommandUses.name)) {
-			event.registerServerCommand(new CommandUses( true));
+			event.registerServerCommand(new CommandUses(commandNeedsOp.get(CommandUses.name)));
 		}
 		if (configToggle.get(CommandVillageInfo.name)) {
-			event.registerServerCommand(new CommandVillageInfo( true));
+			event.registerServerCommand(new CommandVillageInfo(commandNeedsOp.get(CommandVillageInfo.name)));
 		}
 		if (configToggle.get(CommandWorldHome.name)) {
-			event.registerServerCommand(new CommandWorldHome( true));
+			event.registerServerCommand(new CommandWorldHome(commandNeedsOp.get(CommandWorldHome.name)));
 		}
 	}
 
+	private static void syncCommandConfig(Configuration config, String name, boolean defaultNeedsOp) {
+
+		Property prop = config.get(category, name, true, " ");
+		prop.setRequiresMcRestart(true);
+		configToggle.put(name, prop.getBoolean());
+
+		prop = config.get(category, name, defaultNeedsOp, " ");
+		prop.setRequiresMcRestart(true);
+		commandNeedsOp.put(name + ".needs_op", prop.getBoolean());
+	}
+
 	public static void syncConfig(Configuration config) {
-		String category = Const.MODCONF + "Commands";
+		category = Const.MODCONF + "Commands";
 		config.setCategoryComment(category, "Disable any command that was added");
 
-		Property prop = config.get(category, CommandEnderChest.name, true, " ");
-		prop.setRequiresMcRestart(true);
-		configToggle.put(CommandEnderChest.name, prop.getBoolean());
+		syncCommandConfig(config, CommandEnderChest.name, false);
 
-		prop = config.get(category, CommandHeal.name, true, " ");
-		prop.setRequiresMcRestart(true);
-		configToggle.put(CommandHeal.name, prop.getBoolean());
-		
-		prop = config.get(category, CommandHearts.name, true, " ");
-		prop.setRequiresMcRestart(true);
-		configToggle.put(CommandHearts.name, prop.getBoolean());
+		syncCommandConfig(config, CommandHeal.name, false);
 
-		prop = config.get(category, CommandGetHome.name, true, " ");
-		prop.setRequiresMcRestart(true);
-		configToggle.put(CommandGetHome.name, prop.getBoolean());
+		syncCommandConfig(config, CommandHearts.name, true);
 
-		prop = config.get(category, CommandHome.name, true, " ");
-		prop.setRequiresMcRestart(true);
-		configToggle.put(CommandHome.name, prop.getBoolean());
+		syncCommandConfig(config, CommandGetHome.name, false);
 
-		prop = config.get(category, CommandPing.name, true, " ");
-		prop.setRequiresMcRestart(true);
-		configToggle.put(CommandPing.name, prop.getBoolean());
+		syncCommandConfig(config, CommandHome.name, false);
 
-		prop = config.get(category, CommandRecipe.name, true, " ");
-		prop.setRequiresMcRestart(true);
-		configToggle.put(CommandRecipe.name, prop.getBoolean());
+		syncCommandConfig(config, CommandPing.name, false);
 
-		prop = config.get(category, CommandSearchItem.name, true, " ");
-		prop.setRequiresMcRestart(true);
-		configToggle.put(CommandSearchItem.name, prop.getBoolean());
+		syncCommandConfig(config, CommandRecipe.name, false);
 
-		prop = config.get(category, CommandSearchSpawner.name, true, " ");
-		prop.setRequiresMcRestart(true);
-		configToggle.put(CommandSearchSpawner.name, prop.getBoolean());
+		syncCommandConfig(config, CommandSearchItem.name, false);
 
-		prop = config.get(category, CommandSearchTrades.name, true, " ");
-		prop.setRequiresMcRestart(true);
-		configToggle.put(CommandSearchTrades.name, prop.getBoolean());
+		syncCommandConfig(config, CommandSearchSpawner.name, true);
 
-		prop = config.get(category, CommandSimpleWaypoints.name, true, " ");
-		prop.setRequiresMcRestart(true);
-		configToggle.put(CommandSimpleWaypoints.name, prop.getBoolean());
+		syncCommandConfig(config, CommandSearchTrades.name, false);
 
-		prop = config.get(category, CommandTodoList.name, true, " ");
-		prop.setRequiresMcRestart(true);
-		configToggle.put(CommandTodoList.name, prop.getBoolean());
+		syncCommandConfig(config, CommandSimpleWaypoints.name, false);
 
-		prop = config.get(category, CommandUses.name, true, " ");
-		prop.setRequiresMcRestart(true);
-		configToggle.put(CommandUses.name, prop.getBoolean());
+		syncCommandConfig(config, CommandTodoList.name, false);
 
-		prop = config.get(category, CommandVillageInfo.name, true, " ");
-		prop.setRequiresMcRestart(true);
-		configToggle.put(CommandVillageInfo.name, prop.getBoolean());
+		syncCommandConfig(config, CommandUses.name, false);
 
-		prop = config.get(category, CommandWorldHome.name, true, " ");
-		prop.setRequiresMcRestart(true);
-		configToggle.put(CommandWorldHome.name, prop.getBoolean());
+		syncCommandConfig(config, CommandVillageInfo.name, false);
 
-		prop = config.get(category, CommandWorldHome.name, true, " ");
-		prop.setRequiresMcRestart(true);
-		configToggle.put(CommandWorldHome.name, prop.getBoolean());
+		syncCommandConfig(config, CommandWorldHome.name, false);
 
-		prop = config.get(category, CommandHeal.name, true, " ");
-		prop.setRequiresMcRestart(true);
-		configToggle.put(CommandHeal.name, prop.getBoolean());
-		
+		syncCommandConfig(config, CommandHeal.name, true);
 	}
 }
