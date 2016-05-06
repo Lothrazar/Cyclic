@@ -146,7 +146,6 @@ public class ModMain {
 	 *
 	 *pull/pushreplace: make sure never work on fixed blacklist [bedrock, bed, endportal, spawner]
 	 * 
-	 * 
 	 ***** POSTPONED for later release [bugs or disabled features]
 	 *
 	 *build up and down spell: need 2 new spells: a left and right

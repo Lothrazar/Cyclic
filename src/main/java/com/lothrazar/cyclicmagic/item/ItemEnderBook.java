@@ -21,7 +21,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -138,7 +137,7 @@ public class ItemEnderBook extends Item implements IHasRecipe {
 		UtilExperience.drainExp(player, cost);
 		// play twice on purpose. at old and new locations
 
-		UtilSound.playSound(player, SoundEvents.item_chorus_fruit_teleport, SoundCategory.PLAYERS);
+		UtilSound.playSound(player,player.getPosition(), SoundEvents.item_chorus_fruit_teleport);
 
 		if (player instanceof EntityPlayerMP) {
 			// thanks so much to
@@ -166,7 +165,7 @@ public class ItemEnderBook extends Item implements IHasRecipe {
 			 */
 		}
 
-		UtilSound.playSound(player, SoundEvents.item_chorus_fruit_teleport, SoundCategory.PLAYERS);
+		UtilSound.playSound(player, player.getPosition(),SoundEvents.item_chorus_fruit_teleport);
 	}
 
 	public void addRecipe() {

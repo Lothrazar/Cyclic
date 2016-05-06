@@ -87,7 +87,7 @@ public class UtilSpellCaster {
 
 		ItemCyclicWand.Spells.setSpellCurrent(wand, left);
 
-		UtilSound.playSound(player.worldObj, player.getPosition(), SoundRegistry.bip);
+		UtilSound.playSound(player, player.getPosition(), SoundRegistry.bip);
 	}
 
 	public static void shiftRight(EntityPlayer player) {
@@ -103,7 +103,7 @@ public class UtilSpellCaster {
 		//System.out.println("is right" + right );
 
 		ItemCyclicWand.Spells.setSpellCurrent(wand, right);
-		UtilSound.playSound(player.worldObj, player.getPosition(), SoundRegistry.bip);
+		UtilSound.playSound(player, player.getPosition(), SoundRegistry.bip);
 	}
 
 	public static ISpell getPlayerCurrentISpell(EntityPlayer player) {

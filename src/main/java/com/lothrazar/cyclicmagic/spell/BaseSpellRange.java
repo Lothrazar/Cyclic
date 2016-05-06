@@ -20,13 +20,18 @@ public abstract class BaseSpellRange extends BaseSpell {
 	}
 
 	@Override
-	public void playSound(World world, Block block, BlockPos pos) {
+	public void playSound(World world,EntityPlayer player, Block block, BlockPos pos) {
 
+		if(block==null||pos==null){
+			return;
+		}
+		System.out.println("PlaySound at"+pos.toString());
+		System.out.println("Block at"+block.getUnlocalizedName());
 		if (block != null && block.getStepSound() != null && block.getStepSound().getPlaceSound() != null) {
-			UtilSound.playSound(world, pos, block.getStepSound().getPlaceSound());
+			UtilSound.playSound(player, pos, block.getStepSound().getPlaceSound());
 		}
 		else {
-			UtilSound.playSound(world, pos, SoundRegistry.crackle);
+			UtilSound.playSound(player, pos, SoundRegistry.crackle);
 		}
 	}
 

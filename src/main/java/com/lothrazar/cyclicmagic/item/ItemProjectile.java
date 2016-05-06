@@ -68,7 +68,7 @@ public class ItemProjectile extends Item {
 			
 				}
 				//fizz sound
-				UtilSound.playSound(world,pos,SoundEvents.block_fire_extinguish);
+				UtilSound.playSound(player,pos,SoundEvents.block_fire_extinguish);
 			
 			}
 		}
@@ -125,7 +125,7 @@ public class ItemProjectile extends Item {
 
 		BlockPos pos = player.getPosition();
 
-		UtilSound.playSound(world, pos, SoundEvents.entity_egg_throw, SoundCategory.PLAYERS);
+		UtilSound.playSound(player, pos, SoundEvents.entity_egg_throw, SoundCategory.PLAYERS);
 	
 		if (player.capabilities.isCreativeMode == false) {
 			player.inventory.decrStackSize(player.inventory.currentItem, 1);

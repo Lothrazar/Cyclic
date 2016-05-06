@@ -190,7 +190,7 @@ public class ItemHorseFood extends Item {
 				horse.worldObj.spawnParticle(EnumParticleTypes.SMOKE_LARGE, x + (horse.worldObj.rand.nextDouble() - 0.5D) * (double) 0.8, y + horse.worldObj.rand.nextDouble() * (double) 1.5 - (double) 0.1, z + (horse.worldObj.rand.nextDouble() - 0.5D) * (double) 0.8, 0.0D, 0.0D, 0.0D);
 			}
 
-			UtilSound.playSound(player.worldObj, horse.getPosition(), SoundEvents.entity_horse_eat, SoundCategory.NEUTRAL);
+			UtilSound.playSound(player, horse.getPosition(), SoundEvents.entity_horse_eat, SoundCategory.NEUTRAL);
 		
 			horse.setEatingHaystack(true); // makes horse animate and bend down to eat
 		}

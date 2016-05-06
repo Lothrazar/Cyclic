@@ -53,7 +53,8 @@ public class EntityFishingBolt extends EntityThrowable {
 				worldObj.spawnEntityInWorld(ei);
 			}
 
-			UtilSound.playSound(worldObj, pos, SoundEvents.entity_player_splash, SoundCategory.PLAYERS);
+			
+			UtilSound.playSound(worldObj, pos, SoundEvents.entity_player_splash, SoundCategory.BLOCKS);
 			
 			// SoundEvent.soundEventRegistry.
 			// worldObj.playSoundAtEntity(ei, "game.neutral.swim.splash", 1.0F, 1.0F);

@@ -63,7 +63,7 @@ public class ItemChestSackEmpty extends Item {
 
 		stack.stackSize--;
 		
-		UtilSound.playSound(entityPlayer, SoundRegistry.thunk);
+		UtilSound.playSound(entityPlayer,pos, SoundRegistry.thunk);
  
 		return EnumActionResult.SUCCESS;
 	}

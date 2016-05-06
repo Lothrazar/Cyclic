@@ -44,8 +44,8 @@ public class SpellInventory extends BaseSpell {
 	}
 
 	@Override
-	public void playSound(World world, Block block, BlockPos pos) {
+	public void playSound(World world,EntityPlayer player, Block block, BlockPos pos) {
 
-		UtilSound.playSound(world, pos, SoundEvents.entity_generic_drink);
+		UtilSound.playSound(player, pos, SoundEvents.entity_generic_drink);
 	}
 }

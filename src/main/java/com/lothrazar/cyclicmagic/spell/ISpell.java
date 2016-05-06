@@ -28,7 +28,7 @@ public interface ISpell {
 
 	public void spawnParticle(World world, EntityPlayer player, BlockPos pos);
 
-	public void playSound(World world, Block block, BlockPos pos);
+	public void playSound(World world, EntityPlayer player, Block block, BlockPos pos);
 
 	public void onCastFailure(World world, EntityPlayer player, BlockPos pos);
 

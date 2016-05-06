@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import com.lothrazar.cyclicmagic.util.UtilInventory;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
@@ -179,12 +180,11 @@ public class ItemPaperCarbon extends Item implements IHasRecipe {
 
 			if (consumeItem)// on paste, we consume the item
 			{
-				if (entityPlayer.capabilities.isCreativeMode == false) {
-					entityPlayer.inventory.decrStackSize(entityPlayer.inventory.currentItem, 1);
-				}
+				UtilInventory.decrStackSize(entityPlayer,entityPlayer.inventory.currentItem);
+				
 			}
 
-			UtilSound.playSound(entityPlayer, SoundRegistry.buzzp);
+			UtilSound.playSound(entityPlayer, pos,SoundRegistry.buzzp);
 		}
 
 		return EnumActionResult.PASS;

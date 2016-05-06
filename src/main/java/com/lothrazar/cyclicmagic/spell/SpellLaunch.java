@@ -80,7 +80,8 @@ public class SpellLaunch extends BaseSpell implements ISpell {
 		}
 
 		//this.playSound(world, null, player.getPosition());
-		UtilSound.playSound(player, SoundRegistry.bwoaaap);
+		//UtilSound.playSound(player, SoundRegistry.bwoaaap);
+		this.playSound(world, player, null, pos);
 		this.spawnParticle(world, player, player.getPosition());
 
 		return true;
@@ -94,9 +95,9 @@ public class SpellLaunch extends BaseSpell implements ISpell {
 	}
 
 	@Override
-	public void playSound(World world, Block block, BlockPos pos) {
+	public void playSound(World world, EntityPlayer player,Block block, BlockPos pos) {
 
-		UtilSound.playSound(world, pos, SoundRegistry.bwoaaap);
+		UtilSound.playSound(player, pos, SoundRegistry.bwoaaap);
 
 	}
 }

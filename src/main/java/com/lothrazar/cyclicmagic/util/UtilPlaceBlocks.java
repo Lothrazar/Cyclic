@@ -244,7 +244,7 @@ public class UtilPlaceBlocks {
  
 		 if(success && placeState.getBlock().getStepSound() != null){
 				
-			UtilSound.playSoundPlaceBlock(player ,placeState.getBlock());
+			UtilSound.playSoundPlaceBlock(player ,placePos,placeState.getBlock());
 		
 		 }
 	 
@@ -349,7 +349,7 @@ public class UtilPlaceBlocks {
 
 		if(isDone){
 			//rotateBlock does not have any sounds attached, so add our own
-			UtilSound.playSoundPlaceBlock(p , clickedBlock);
+			UtilSound.playSoundPlaceBlock(p ,pos, clickedBlock);
 			return true;
 		}
 		

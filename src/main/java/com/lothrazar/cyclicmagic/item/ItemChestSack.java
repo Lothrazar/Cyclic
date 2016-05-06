@@ -45,7 +45,7 @@ public class ItemChestSack extends Item implements IHasRecipe {
 		if (createAndFillChest(playerIn, stack, offset)) {
 			playerIn.setHeldItem(hand, null);
 
-			UtilSound.playSound(worldIn, pos, SoundRegistry.thunk);
+			UtilSound.playSound(playerIn, pos, SoundRegistry.thunk);
 		}
 
 		return EnumActionResult.SUCCESS;

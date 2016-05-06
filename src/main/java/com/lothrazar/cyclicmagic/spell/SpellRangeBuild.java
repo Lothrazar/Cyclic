@@ -4,7 +4,6 @@ import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
 import com.lothrazar.cyclicmagic.net.MessageSpellFromServer;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
-import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -43,6 +42,7 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
 			if (mouseover != null && offset != null) {
 
 				ModMain.network.sendToServer(new MessageSpellFromServer(mouseover, offset, this.getID()));
+
 			}
 		}
 
@@ -103,9 +103,8 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
 
 			UtilSpellCaster.castSuccess(this, p.worldObj, p, posOffset);
 
-			if (state.getBlock().getStepSound() != null && state.getBlock().getStepSound().getBreakSound() != null) {
-				UtilSound.playSound(p, state.getBlock().getStepSound().getPlaceSound());
-			}
+			//UtilSound.playSoundPlaceBlock(p, state.getBlock());
+			
 
 			if (p.capabilities.isCreativeMode == false) {
 
@@ -119,7 +118,7 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
 			// yes im spawning particles on the server side, but the
 			// util handles that
 			this.spawnParticle(p.worldObj, p, posMouseover);
-			this.playSound(p.worldObj, state.getBlock(), posOffset);
+			this.playSound(p.worldObj,p, state.getBlock(), posOffset);
 		}
 	}
 }

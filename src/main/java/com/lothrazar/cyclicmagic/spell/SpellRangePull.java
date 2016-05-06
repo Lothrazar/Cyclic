@@ -45,7 +45,7 @@ public class SpellRangePull extends BaseSpellRange {
 
 		if (newSpot != null) {
 			this.spawnParticle(p.worldObj, p, pos);
-			this.playSound(p.worldObj, newSpot, pos);
+			this.playSound(p.worldObj,p, newSpot, pos);
 		}
 		// else it failed, nothing was moved
 	}

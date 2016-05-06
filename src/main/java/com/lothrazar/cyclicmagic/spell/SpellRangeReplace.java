@@ -77,7 +77,7 @@ public class SpellRangeReplace extends BaseSpellRange {
 				InventoryWand.writeToNBT(heldWand, invv);
 			}
 
-			this.playSound(world, placeState.getBlock(), posMouseover);
+			this.playSound(world, player,placeState.getBlock(), posMouseover);
 			this.spawnParticle(world, player, posMouseover);
 
 			return;
