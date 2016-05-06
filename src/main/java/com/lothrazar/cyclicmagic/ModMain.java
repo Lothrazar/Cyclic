@@ -137,8 +137,6 @@ public class ModMain {
 	 *
 	 *Spell sounds: why does push/pull/rotate sound WORK< but build up spells dont?
 	 *
-	 *swing item animations on wands/etc consistent
-	 *
 	 *clean up item models/textures on tools/wands
 	 *
 	 *FIX * Dangerous alternative prefix `minecraft` for name `textures/items/prismarine_shard.png`, expected `cyclicmagic` invalid registry invocation/invalid name?
