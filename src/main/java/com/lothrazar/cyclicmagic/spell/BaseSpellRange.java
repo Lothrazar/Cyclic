@@ -25,8 +25,8 @@ public abstract class BaseSpellRange extends BaseSpell {
 		if(block==null||pos==null){
 			return;
 		}
-		System.out.println("PlaySound at"+pos.toString());
-		System.out.println("Block at"+block.getUnlocalizedName());
+		//System.out.println("PlaySound at"+pos.toString());
+		//System.out.println("Block at"+block.getUnlocalizedName());
 		if (block != null && block.getStepSound() != null && block.getStepSound().getPlaceSound() != null) {
 			UtilSound.playSound(player, pos, block.getStepSound().getPlaceSound());
 		}

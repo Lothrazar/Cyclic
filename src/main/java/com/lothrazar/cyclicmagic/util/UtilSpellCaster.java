@@ -3,6 +3,7 @@ package com.lothrazar.cyclicmagic.util;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
@@ -27,14 +28,14 @@ public class UtilSpellCaster {
 		return UtilSpellCaster.getPlayerWandIfHeld(player) != null;
 	}
 
-	public static boolean tryCastCurrent(World world, EntityPlayer player, BlockPos pos, EnumFacing side) {
+	public static boolean tryCastCurrent(World world, EntityPlayer player, BlockPos pos, EnumFacing side,ItemStack wand,EnumHand hand) {
 
-		return tryCast(getPlayerCurrentISpell(player), world, player, pos, side);
+		return tryCast(getPlayerCurrentISpell(player), world, player, pos, side,wand,hand);
 	}
 
-	public static boolean tryCast(ISpell spell, World world, EntityPlayer player, BlockPos pos, EnumFacing side) {
+	public static boolean tryCast(ISpell spell, World world, EntityPlayer player, BlockPos pos, EnumFacing side,ItemStack wand,EnumHand hand) {
 
-		ItemStack wand = getPlayerWandIfHeld(player);
+		//ItemStack wand = getPlayerWandIfHeld(player);
 		if (wand == null) { return false; }
 
 		if (ItemCyclicWand.Timer.isBlockedBySpellTimer(wand)) { return false; }
@@ -45,6 +46,10 @@ public class UtilSpellCaster {
 
 				castSuccess(spell, world, player, pos);
 
+				//TODO: shouldn't this be inside the castSuccess??
+				if(hand != null){
+					player.swingArm(hand);
+				}
 				return true;
 			}
 			return false;
@@ -64,7 +69,7 @@ public class UtilSpellCaster {
 		// succes should do things like: drain resources, play sounds
 		// and particles
 		spell.payCost(world, player, pos);
-
+		
 		ItemCyclicWand.Energy.setCooldownCounter(getPlayerWandIfHeld(player),  world.getTotalWorldTime());
 
 		ItemCyclicWand.Timer.setSpellTimer(getPlayerWandIfHeld(player), spell.getCastCooldown());

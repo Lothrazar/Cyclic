@@ -135,9 +135,7 @@ public class ModMain {
 	 * 
 	 ***** BUGS
 	 *
-	 *build up spell + others: no sound
-	 *
-	 *rotate: sound works from tool not from spell
+	 *Spell sounds: why does push/pull/rotate sound WORK< but build up spells dont?
 	 *
 	 *swing item animations on wands/etc consistent
 	 *

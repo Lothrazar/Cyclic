@@ -89,7 +89,7 @@ public class ItemCyclicWand extends Item {
 		// If onItemUse returns false onItemRightClick will be called.
 		// http://www.minecraftforge.net/forum/index.php?topic=31966.0
 		// so if this casts and succeeds, the right click is cancelled
-		return UtilSpellCaster.tryCastCurrent(worldIn, playerIn, pos, side) ? EnumActionResult.SUCCESS
+		return UtilSpellCaster.tryCastCurrent(worldIn, playerIn, pos, side,stack,hand) ? EnumActionResult.SUCCESS
 				: EnumActionResult.FAIL;
 	}
 
@@ -99,7 +99,7 @@ public class ItemCyclicWand extends Item {
 
 		// so this only happens IF either onItemUse did not fire at all, or it
 		// fired and casting failed
-		boolean success = UtilSpellCaster.tryCastCurrent(worldIn, playerIn, null, null);
+		boolean success = UtilSpellCaster.tryCastCurrent(worldIn, playerIn, null, null,itemStackIn,hand);
 
 		if (success) {
 			return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);
