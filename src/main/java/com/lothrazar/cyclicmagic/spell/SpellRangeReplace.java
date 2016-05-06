@@ -50,10 +50,8 @@ public class SpellRangeReplace extends BaseSpellRange {
 
 		Block blockHere = stateHere.getBlock();
 
-		if (blockHere.getBlockHardness(stateHere, world, posMouseover) == -1) { return; // is
-		                                                                                // unbreakable->
-		                                                                                // like
-		                                                                                // bedrock
+		if (blockHere.getBlockHardness(stateHere, world, posMouseover) == -1) { 
+			return; 
 		}
 
 		int itemSlot = InventoryWand.getSlotByBuildType(heldWand, world.getBlockState(posMouseover));
@@ -66,7 +64,7 @@ public class SpellRangeReplace extends BaseSpellRange {
 
 		if (placeState.getBlock() == blockHere && blockHere.getMetaFromState(stateHere) == toPlace.getMetadata()) {
 
-		return;// dont replace cobblestone with cobblestone
+			return;// dont replace cobblestone with cobblestone
 		}
 
 		if (world.destroyBlock(posMouseover, true) && world.setBlockState(posMouseover, placeState)) {

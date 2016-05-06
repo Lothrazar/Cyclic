@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.spell;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
@@ -25,14 +26,24 @@ public abstract class BaseSpellRange extends BaseSpell {
 		if(block==null||pos==null){
 			return;
 		}
-		//System.out.println("PlaySound at"+pos.toString());
-		//System.out.println("Block at"+block.getUnlocalizedName());
+		/*
+		System.out.println("BaseSpellRange.PlaySound at"+pos.toString());
+		System.out.println("Block at"+block.getUnlocalizedName());
+		System.out.println("isRemote at"+player.worldObj.isRemote);
+
+		System.out.println("getStepSound at"+ block.getStepSound().toString());
+
+boolean ismp = (player instanceof EntityPlayerMP);
+		System.out.println("ismp"+ ismp);
+		*/
 		if (block != null && block.getStepSound() != null && block.getStepSound().getPlaceSound() != null) {
+			
 			UtilSound.playSound(player, pos, block.getStepSound().getPlaceSound());
 		}
+		/*
 		else {
 			UtilSound.playSound(player, pos, SoundRegistry.crackle);
-		}
+		}*/
 	}
 
 	@Override

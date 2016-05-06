@@ -5,6 +5,8 @@ import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
 import com.lothrazar.cyclicmagic.net.MessageSpellFromServer;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
+
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -117,8 +119,16 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
 
 			// yes im spawning particles on the server side, but the
 			// util handles that
+
 			this.spawnParticle(p.worldObj, p, posMouseover);
-			this.playSound(p.worldObj,p, state.getBlock(), posOffset);
+			
+			Block newSpot = null;
+			if (p.worldObj.getBlockState(posToPlaceAt) != null) {
+				newSpot = p.worldObj.getBlockState(posToPlaceAt).getBlock();
+
+				this.playSound(p.worldObj,p, newSpot, posToPlaceAt);
+			}
+			
 		}
 	}
 }

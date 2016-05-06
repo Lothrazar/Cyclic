@@ -135,12 +135,17 @@ public class ModMain {
 	 * 
 	 ***** BUGS
 	 *
-	 *Spell sounds: why does push/pull/rotate sound WORK< but build up spells dont?
 	 *
 	 *clean up item models/textures on tools/wands
 	 *
+	 *<safe to release after this>
+	 *
 	 *FIX * Dangerous alternative prefix `minecraft` for name `textures/items/prismarine_shard.png`, expected `cyclicmagic` invalid registry invocation/invalid name?
      *  at com.lothrazar.cyclicmagic.registry.PotionRegistry.register(PotionRegistry.java:50)...
+	 * 
+	 *Spell sounds: why does push/pull/rotate sound WORK< but build up spells dont?
+	 *-->> answer: neither one plays the actual sound. if it breaks a block for you, THATS the one you hear
+	 * need a network packet.sendToAllAround and hit the sound up manual (clientside)
 	 * 
 	 ***** POSTPONED for later release [bugs or disabled features]
 	 *

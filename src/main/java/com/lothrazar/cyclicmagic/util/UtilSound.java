@@ -28,6 +28,8 @@ public class UtilSound {
 	public static void playSound(EntityPlayer player,BlockPos pos, SoundEvent soundIn, SoundCategory cat) {
 		BlockPos here = (pos == null) ? player.getPosition() : pos;
 		
+		System.out.println("playSound "+soundIn.toString());
+		
 		player.worldObj.playSound(player, here, soundIn, cat, volume, pitch);
 	}
 	
