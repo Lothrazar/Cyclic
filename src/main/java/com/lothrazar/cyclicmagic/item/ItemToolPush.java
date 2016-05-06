@@ -20,18 +20,7 @@ public class ItemToolPush  extends BaseTool implements IHasRecipe{
 	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer p, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
 		
 		BlockPos resultPosition = UtilPlaceBlocks.pushBlock(worldObj, p, pos, side);
-		/*
-		Block newSpot = null;
-
-		if (resultPosition != null && p.worldObj.getBlockState(resultPosition) != null) {
-			newSpot = p.worldObj.getBlockState(resultPosition).getBlock();
-		}
-
-		if (newSpot != null) {
-			this.spawnParticle(p.worldObj, p, pos);
-			this.playSound(p.worldObj, newSpot, pos);
-		}
-		*/
+ 
 		return super.onItemUse(stack, p, worldObj, pos, hand, side, hitX, hitY, hitZ);// EnumActionResult.PASS;
 	}
 }

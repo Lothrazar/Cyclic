@@ -253,6 +253,7 @@ public class UtilPlaceBlocks {
 	}
 
 	public static ArrayList<Block> ignoreList = new ArrayList<Block>();
+	private static boolean ignoreTileEntities=true;
 
 	private static void translateCSV() {
 
@@ -281,11 +282,16 @@ public class UtilPlaceBlocks {
 		translateCSV();
 
 		if (newStateToPlace == null || ignoreList.contains(newStateToPlace.getBlock())) { return false; }
-		if (newStateToPlace.getBlock().getBlockHardness(newStateToPlace, world, posMoveToHere) == -1) { return false;// unbreakable
-		                                                                                                             // like
-		                                                                                                             // bedrock
+		//negative hardness: unbreakable like bedrock
+		if (newStateToPlace.getBlock().getBlockHardness(newStateToPlace, world, posMoveToHere) == -1) { 
+			return false;
 		}
 
+
+		if(world.getTileEntity(pos) != null && ignoreTileEntities){
+			return false;
+		}
+		
 		if (world.isAirBlock(posMoveToHere) && world.isBlockModifiable(player, pos)) {
 
 			if (world.isRemote == false) {
@@ -311,6 +317,7 @@ public class UtilPlaceBlocks {
 
 		BlockPos posTowardsPlayer = pos.offset(face);
 
+ 
 		if (moveBlockTo(worldIn, player, pos, posTowardsPlayer)) {
 			return posTowardsPlayer;
 		}
@@ -322,7 +329,7 @@ public class UtilPlaceBlocks {
 	public static BlockPos pushBlock(World worldIn, EntityPlayer player, BlockPos pos, EnumFacing face) {
 
 		BlockPos posAwayPlayer = pos.offset(face.getOpposite());
-
+		 
 		if (moveBlockTo(worldIn, player, pos, posAwayPlayer)) {
 			return posAwayPlayer;
 		}
