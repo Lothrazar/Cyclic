@@ -16,7 +16,7 @@ public class SpellRangePull extends BaseSpellRange {
 
 		super.init(id, name);
 		this.cost = 30;
-		this.cooldown = 5;
+		this.cooldown = 10;
 	}
 
 	@Override

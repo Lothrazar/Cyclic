@@ -65,8 +65,7 @@ public class UtilSpellCaster {
 		// and particles
 		spell.payCost(world, player, pos);
 
-		// ItemCyclicWand.Energy.setCooldownCounter(getPlayerWandIfHeld(player),
-		// world.getTotalWorldTime());
+		ItemCyclicWand.Energy.setCooldownCounter(getPlayerWandIfHeld(player),  world.getTotalWorldTime());
 
 		ItemCyclicWand.Timer.setSpellTimer(getPlayerWandIfHeld(player), spell.getCastCooldown());
 	}

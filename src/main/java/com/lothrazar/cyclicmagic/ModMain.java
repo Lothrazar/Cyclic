@@ -135,16 +135,16 @@ public class ModMain {
 	 * 
 	 ***** BUGS
 	 *
-	 *pull/push: either make it work with tile entities keeping the data (signs/chests) OR
-	 *disable it for TE
-	 *
 	 *build up spell + others: no sound
 	 *
 	 *rotate: sound works from tool not from spell
 	 *
 	 *swing item animations on wands/etc consistent
 	 *
-	 *pull/pushreplace: make sure never work on fixed blacklist [bedrock, bed, endportal, spawner]
+	 *clean up item models/textures on tools/wands
+	 *
+	 *FIX * Dangerous alternative prefix `minecraft` for name `textures/items/prismarine_shard.png`, expected `cyclicmagic` invalid registry invocation/invalid name?
+     *  at com.lothrazar.cyclicmagic.registry.PotionRegistry.register(PotionRegistry.java:50)...
 	 * 
 	 ***** POSTPONED for later release [bugs or disabled features]
 	 *

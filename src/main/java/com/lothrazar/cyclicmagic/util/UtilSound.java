@@ -13,20 +13,22 @@ public class UtilSound {
 	public static final float		pitch					= 1.0F;
 	public static final boolean	distanceDelay	= false;
 
-
-	
 	public static void playSoundPlaceBlock(EntityPlayer player,BlockPos pos, Block block) {
+		BlockPos here = (pos == null) ? player.getPosition() : pos;
 		
 		if(block != null && block.getStepSound() != null){
-			playSound(player ,pos,block.getStepSound().getPlaceSound(),SoundCategory.BLOCKS);
+			playSound(player ,here,block.getStepSound().getPlaceSound(),SoundCategory.BLOCKS);
 		}
 	}
-	public static void playSound(EntityPlayer entityPlayer, BlockPos pos,SoundEvent thunk) {
-		playSound(entityPlayer,pos,thunk,entityPlayer.getSoundCategory());
+	public static void playSound(EntityPlayer player, BlockPos pos,SoundEvent thunk) {
+		BlockPos here = (pos == null) ? player.getPosition() : pos;
+		playSound(player,here,thunk,player.getSoundCategory());
 	}
 
 	public static void playSound(EntityPlayer player,BlockPos pos, SoundEvent soundIn, SoundCategory cat) {
-		player.worldObj.playSound(player, pos, soundIn, cat, volume, pitch);
+		BlockPos here = (pos == null) ? player.getPosition() : pos;
+		
+		player.worldObj.playSound(player, here, soundIn, cat, volume, pitch);
 	}
 	
 	
