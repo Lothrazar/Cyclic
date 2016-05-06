@@ -31,13 +31,15 @@ public class ItemCyclicWand extends Item {
 		this.setMaxStackSize(1);
 		this.setFull3D();
 	}
-	
-	public void setSpells(List<ISpell> spells){
+
+	public void setSpells(List<ISpell> spells) {
 		this.spellbook = spells;
-	} 
-	public List<ISpell>  getSpells(){
+	}
+
+	public List<ISpell> getSpells() {
 		return this.spellbook;
-	} 
+	}
+
 	@Override
 	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
 
@@ -51,9 +53,8 @@ public class ItemCyclicWand extends Item {
 	public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn) {
 
 		Energy.rechargeBy(stack, Energy.START);
- 
+
 		Spells.setSpellCurrent(stack, SpellRegistry.getSpellbook(stack).get(0).getID());
-		
 
 		super.onCreated(stack, worldIn, playerIn);
 	}
@@ -62,8 +63,15 @@ public class ItemCyclicWand extends Item {
 	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
 
 		ISpell spell = SpellRegistry.getSpellFromID(Spells.getSpellIDCurrent(stack));
-		tooltip.add(TextFormatting.GREEN + spell.getName());
 
+		String cost = TextFormatting.DARK_GRAY + "[" + TextFormatting.LIGHT_PURPLE +spell.getCost() + TextFormatting.DARK_GRAY +"]";
+		tooltip.add(TextFormatting.GREEN + spell.getName()+" "+cost);
+ 
+		String regen = "["+Energy.getRegen(playerIn.worldObj, stack) + "/sec]";
+		
+		tooltip.add(TextFormatting.DARK_PURPLE + "" + Energy.getCurrent(stack) + "/" + Energy.getMaximum(stack)
+			+ TextFormatting.DARK_GRAY + regen);
+		
 		super.addInformation(stack, playerIn, tooltip, advanced);
 	}
 
@@ -104,28 +112,16 @@ public class ItemCyclicWand extends Item {
 
 	@Override
 	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-		
-		boolean perSecond = (worldIn.getTotalWorldTime() %
-		Const.TICKS_PER_SEC == 0);
-		
-		if(worldIn.isRemote == false && perSecond){
-		
-		Energy.rechargeBy(stack, Energy.getRegen(worldIn,stack)); }
-		
+
+		boolean perSecond = (worldIn.getTotalWorldTime() % Const.TICKS_PER_SEC == 0);
+
+		if (worldIn.isRemote == false && perSecond) {
+
+			Energy.rechargeBy(stack, Energy.getRegen(worldIn, stack));
+		}
 
 		ItemCyclicWand.Timer.tickSpellTimer(stack);
 
-		/*
-		// if held by something not a player? such as custom npc/zombie/etc
-		if(entityIn instanceof EntityPlayer == false){ return; } EntityPlayer
-		p = (EntityPlayer) entityIn;
-		
-		IPassiveSpell pcurrent =
-		ItemCyclicWand.Spells.getPassiveCurrent(stack); if(pcurrent != null
-		&& pcurrent.canTrigger(p)){
-		
-		pcurrent.trigger(p); }*/
-		
 		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
 	}
 
@@ -146,16 +142,15 @@ public class ItemCyclicWand extends Item {
 			// workaround for default spell being replace. and oncrafting not
 			// firing
 			/*
-			if (stack.getItem() == ItemRegistry.cyclic_wand_fly) {
-				return SpellRegistry.Spells.launch.getID();
-			}
-			
-*/
-			if(getNBT(stack).hasKey(NBT_SPELLCURRENT) == false){
-				//what is default spell for that then?
+			 * if (stack.getItem() == ItemRegistry.cyclic_wand_fly) { return
+			 * SpellRegistry.Spells.launch.getID(); }
+			 * 
+			 */
+			if (getNBT(stack).hasKey(NBT_SPELLCURRENT) == false) {
+				// what is default spell for that then?
 				return SpellRegistry.getSpellbook(stack).get(0).getID();
 			}
-			
+
 			int c = getNBT(stack).getInteger(NBT_SPELLCURRENT);
 			return c;
 		}
@@ -163,11 +158,11 @@ public class ItemCyclicWand extends Item {
 		public static ISpell getSpellCurrent(ItemStack stack) {
 
 			ISpell s = SpellRegistry.getSpellFromID(getSpellIDCurrent(stack));
-			
-			if(s == null){
+
+			if (s == null) {
 				s = SpellRegistry.getSpellbook(stack).get(0);
 			}
-			
+
 			return s;
 		}
 
@@ -221,50 +216,45 @@ public class ItemCyclicWand extends Item {
 			return true;
 		}
 
-	private static int getRegen(World world, ItemStack stack){
-	
-	//1- a counter since it was last used for a spell (not counting inventory)
-	// -> set to zero on use.
-	// -> increment by 1 each second (not tick)
-	//2 a recharge level (rate)
-	// when counter passes certain thresholds, it updates the level
-	//3 when a recharge event happens, it checks the level and increments
-	//accordingly
-	
-	
-	long lastUsed = Energy.getCooldownCounter(stack);
-	
-	long timeSinceLast = (world.getTotalWorldTime() - lastUsed) /	Const.TICKS_PER_SEC;
-	
-	if(timeSinceLast < 0){
-	return 20;//because -1 for never used
-	}
-	
-	int rate = 0;
-	if(timeSinceLast < 5){
-	rate = 1;
-	}
-	else if(timeSinceLast < 10){
-	rate = 3;
-	}
-	else if(timeSinceLast < 15){
-	rate = 5;
-	}
-	else if(timeSinceLast < 20){
-	rate = 7;
-	}
-	else if(timeSinceLast < 25){
-	rate = 10;
-	}
-	else if(timeSinceLast < 30){
-	rate = 15;
-	}
-	else{
-	rate = 20;
-	}
-	return rate;
-	
-	}
+		private static int getRegen(World world, ItemStack stack) {
+
+			// 1- a counter since it was last used for a spell (not counting
+			// inventory)
+			// -> set to zero on use.
+			// -> increment by 1 each second (not tick)
+			// 2 a recharge level (rate)
+			// when counter passes certain thresholds, it updates the level
+			// 3 when a recharge event happens, it checks the level and
+			// increments
+			// accordingly
+
+			long lastUsed = Energy.getCooldownCounter(stack);
+
+			long timeSinceLast = (world.getTotalWorldTime() - lastUsed) / Const.TICKS_PER_SEC;
+
+			if (timeSinceLast < 0) {
+				return 20;// because -1 for never used
+			}
+
+			int rate = 0;
+			if (timeSinceLast < 5) {
+				rate = 1;
+			} else if (timeSinceLast < 10) {
+				rate = 3;
+			} else if (timeSinceLast < 15) {
+				rate = 5;
+			} else if (timeSinceLast < 20) {
+				rate = 7;
+			} else if (timeSinceLast < 25) {
+				rate = 10;
+			} else if (timeSinceLast < 30) {
+				rate = 15;
+			} else {
+				rate = 20;
+			}
+			return rate;
+
+		}
 
 		public static void setCooldownCounter(ItemStack stack, long i) {
 
