@@ -98,7 +98,8 @@ public class VillageTradeRegistry {
 			 ,new EmeraldForItems(Items.chicken, new PriceInfo(14,17))	 },
 		 
 			 {	new EmeraldForItems(Items.poisonous_potato, new PriceInfo(1, 3))
-				 ,new EmeraldForItems(Items.spider_eye, new PriceInfo(3, 6))}
+				 ,new EmeraldForItems(Items.spider_eye, new PriceInfo(3, 6))
+				 ,new EmeraldForItems(Items.written_book, new PriceInfo(1, 1))}
 	 };
 	
   final static EntityVillager.ITradeList[][] sageTrades = {
