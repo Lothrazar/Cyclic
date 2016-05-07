@@ -47,6 +47,7 @@ public class EventRegistry {
 	public static void syncConfig(Configuration config) {
 
 		String category = Const.MODCONF + "Mobs";
+		
 
 		config.setCategoryComment(category, "Changes to mobs");
 
@@ -99,6 +100,11 @@ public class EventRegistry {
 		
 		// TODO: 'enabled', which hides the button for invo
 		//  TODO: and  one for 'enabled 3x3 crafting' as well
+		
+		
+		
+		EventSaplingBlockGrowth.syncConfig(config);
+		EventEntityItemExpire.syncConfig(config);
 	}
 
 	public static void register() {
@@ -122,7 +128,14 @@ public class EventRegistry {
 		events.add(new EntitySafeMount());
 		
 		events.add(new EventSpawnChunks());
-
+		
+		
+		events.add(new EventSaplingBlockGrowth());
+		
+		if(EventEntityItemExpire.enabled){
+			events.add(new EventEntityItemExpire());
+		}
+					
 		if (passThroughClick) {
 			events.add(new EventPassthroughAction());
 		}
