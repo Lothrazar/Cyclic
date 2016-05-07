@@ -5,7 +5,6 @@ import com.lothrazar.cyclicmagic.proxy.CommonProxy;
 import com.lothrazar.cyclicmagic.registry.*;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
@@ -149,8 +148,6 @@ public class ModMain {
 	 *MAYBE: disable the 'mass building' spells for first release.
 	 * 
 	 ***** FEATURES
-	 *
-	 *increase hardness of spawner block
 	 *
 	 *make silk touch work on silverfish blocks
 	 *
