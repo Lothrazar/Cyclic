@@ -75,8 +75,7 @@ public class ModMain {
 		StackSizeRegistry.register();
 		RecipeAlterRegistry.register();
 		RecipeNewRegistry.register();
-		
-		
+
 		proxy.register();
 		proxy.registerEvents();
 

@@ -10,6 +10,7 @@ import com.lothrazar.cyclicmagic.block.BlockDimensionOre.SpawnType;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilUncraft;
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemBlock;
@@ -41,6 +42,8 @@ public class BlockRegistry {
 	private static boolean						enableBlockFragile;
 
 	private static boolean enableBlockUncrafting;
+
+	private static boolean spawnersUnbreakable;
 //lots of helpers/overrides with defaults
 	private static void registerBlock(Block b, String name) {
 		registerBlock(b,name,false);
@@ -70,7 +73,13 @@ public class BlockRegistry {
 	}
 
 	public static void register() {
-
+		
+		if(spawnersUnbreakable){
+			Blocks.mob_spawner.setBlockUnbreakable();
+		}
+		//??maybe? nah.
+		//Blocks.obsidian.setHardness(Blocks.obsidian.getHarvestLevel(Blocks.obsidian.getDefaultState()) / 2);
+		
 		if(enableBlockUncrafting){
 			BlockUncrafting uncrafting_block = new BlockUncrafting();
 			registerBlock(uncrafting_block, "uncrafting_block");
@@ -148,6 +157,10 @@ public class BlockRegistry {
 
 		enabledBucketBlocks = config.getBoolean("Bucket Blocks", category, true, "Enable Bucket Storage Blocks");
 
+		spawnersUnbreakable = config.getBoolean("Spawners Unbreakable", category, true, "Make mob spawners unbreakable");
+
+		
+		
 		category = Const.MODCONF +  "Blocks.Uncrafting";
 		
 		enableBlockUncrafting = config.getBoolean("enabled", category, true, "Enable uncrafting");
