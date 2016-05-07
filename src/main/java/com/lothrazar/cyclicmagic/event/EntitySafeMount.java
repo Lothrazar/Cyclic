@@ -8,12 +8,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.client.GuiIngameForge;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EntitySafeMount {
+public class EntitySafeMount implements IFeatureEvent{
 
 	@SubscribeEvent
 	public void onLivingHurtEvent(LivingHurtEvent event){
@@ -56,6 +57,13 @@ public class EntitySafeMount {
 			//TODO: if space bar is down, then hide jump bar and show this
 			GuiIngameForge.renderExperiance = true;
 		//}
+	}
+
+
+	@Override
+	public void syncConfig(Configuration config) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

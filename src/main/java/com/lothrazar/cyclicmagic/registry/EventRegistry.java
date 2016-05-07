@@ -7,9 +7,26 @@ import com.lothrazar.cyclicmagic.event.*;
 import com.lothrazar.cyclicmagic.util.Const;
 
 public class EventRegistry {
-
-	private static ArrayList<Object> events = new ArrayList<Object>();
-
+	
+	private ArrayList<IFeatureEvent> featureEvents = new ArrayList<IFeatureEvent>();
+	
+	public EventRegistry(){
+		featureEvents.add(new EventSaplingBlockGrowth());
+		featureEvents.add(new EventConfigChanged());
+		featureEvents.add(new EventPotions());
+		featureEvents.add(new EventSpells());
+		featureEvents.add(new EventKeyInput());
+		featureEvents.add(new EventHorseFood());
+		featureEvents.add(new EventBucketBlocksBreak());
+		featureEvents.add(new EventAppleUse());
+		featureEvents.add(new EventGuiTerrariaButtons());
+		featureEvents.add(new EventExtendedInventory());
+		featureEvents.add(new EventOreMined());
+		featureEvents.add(new EntitySafeMount());
+		featureEvents.add(new EventSpawnChunks());
+		featureEvents.add(new EventPassthroughAction());
+	}
+ 
 	private static boolean nameTagDeath;
 
 	private static boolean playerWakeup;
@@ -40,12 +57,12 @@ public class EventRegistry {
 
 	public static boolean cancelPotionInventoryShift;
 
-	private static boolean easyEnderChest;
+	public void syncConfig(Configuration config) {
 
-	private static boolean passThroughClick;
-
-	public static void syncConfig(Configuration config) {
-
+		for (IFeatureEvent e : featureEvents) {
+			e.syncConfig(config);
+		}
+		
 		String category = Const.MODCONF + "Mobs";
 		
 
@@ -86,14 +103,8 @@ public class EventRegistry {
 		fastLadderClimb = config.getBoolean("Faster Ladders", category, true,
 				"Allows you to quickly climb ladders by looking up instead of moving forward");
 
-		easyEnderChest = config.getBoolean("Easy Enderchest", category, true,
-				"Open ender chest without placing it down, just attack with it");
-
 		cancelPotionInventoryShift = config.getBoolean("Potion Inventory Shift", category, true,
 				"When true, this blocks the potions moving the inventory over");
-
-		passThroughClick = config.getBoolean("PassThroughClick", category, true,
-				"Open chests (and other containers) by passing right through the attached signs, banners, and item frames");
 
 		EventExtendedInventory.dropOnDeath = config.getBoolean("DropExtendedInventoryOnDeath", category, true,
 				"When false, this never drops your extra inventories items on death (for the extended inventory).  If true, this will obey the keepInventory rule");
@@ -101,92 +112,65 @@ public class EventRegistry {
 		// TODO: 'enabled', which hides the button for invo
 		//  TODO: and  one for 'enabled 3x3 crafting' as well
 		
-		
-		
-		EventSaplingBlockGrowth.syncConfig(config);
-		EventEntityItemExpire.syncConfig(config);
+		//EventEntityItemExpire.syncConfig(config);
 	}
 
-	public static void register() {
+	public void register() {
 
 		// some just always have to happen no matter what. for other features.
 		// they will do nothing if for example their items do not exist or
 		// otherwise disabled
-		events.add(new EventConfigChanged());
-		events.add(new EventPotions());
-		events.add(new EventSpells());
-		events.add(new EventKeyInput());
-		events.add(new EventHorseFood());
-		events.add(new EventBucketBlocksBreak());
-		events.add(new EventAppleUse());
-		// we already have the extraButtonsRegistry config for this
-		events.add(new EventGuiTerrariaButtons());
-		events.add(new EventExtendedInventory());
-
-		events.add(new EventOreMined());
-
-		events.add(new EntitySafeMount());
-		
-		events.add(new EventSpawnChunks());
-		
-		
-		events.add(new EventSaplingBlockGrowth());
 		
 		if(EventEntityItemExpire.enabled){
-			events.add(new EventEntityItemExpire());
+			featureEvents.add(new EventEntityItemExpire());
 		}
 					
-		if (passThroughClick) {
-			events.add(new EventPassthroughAction());
-		}
-
-		// TODO CONFIG:
-		if (easyEnderChest) {
-			events.add(new EventEnderChest());
-		}
+		
+		featureEvents.add(new EventEnderChest());
+		
 		if (fastLadderClimb) {
-			events.add(new EventLadderClimb());
+			featureEvents.add(new EventLadderClimb());
 		}
 		if (foodDetails) {
-			events.add(new EventFoodDetails());
+			featureEvents.add(new EventFoodDetails());
 		}
 		if (fragileTorches) {
-			events.add(new EventFragileTorches());
+			featureEvents.add(new EventFragileTorches());
 		}
 		if (stardewFurnace) {
-			events.add(new EventFurnaceStardew());
+			featureEvents.add(new EventFurnaceStardew());
 		}
 		if (mountedPearl) {
-			events.add(new EventMountedPearl());
+			featureEvents.add(new EventMountedPearl());
 		}
 		if (editableSigns) {
-			events.add(new EventEditSign());
+			featureEvents.add(new EventEditSign());
 		}
 		if (nameVillagerTag) {
-			events.add(new EventNameVillager());
+			featureEvents.add(new EventNameVillager());
 		}
 		if (endermanDrop) {
-			events.add(new EventEndermanDropBlock());
+			featureEvents.add(new EventEndermanDropBlock());
 		}
 		if (farmDropBuffs) {
-			events.add(new EventAnimalDropBuffs());
+			featureEvents.add(new EventAnimalDropBuffs());
 		}
 		if (monsterDropsNerfed) {
-			events.add(new EventMobDropsReduced());
+			featureEvents.add(new EventMobDropsReduced());
 		}
 		if (nameTagDeath) {
-			events.add(new EventNametagDeath());
+			featureEvents.add(new EventNametagDeath());
 		}
 		if (playerDeathCoords) {
-			events.add(new EventPlayerDeathCoords());
+			featureEvents.add(new EventPlayerDeathCoords());
 		}
 		if (playerWakeup) {
-			events.add(new EventPlayerWakeup());
+			featureEvents.add(new EventPlayerWakeup());
 		}
 		if (signSkullName) {
-			events.add(new EventSignSkullName());
+			featureEvents.add(new EventSignSkullName());
 		}
-		for (Object e : events) {
+		for (IFeatureEvent e : featureEvents) {
 			MinecraftForge.EVENT_BUS.register(e);
 		}
 	}

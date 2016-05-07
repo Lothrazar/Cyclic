@@ -2,11 +2,12 @@ package com.lothrazar.cyclicmagic.event;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 
-public class EventPlayerDeathCoords {
+public class EventPlayerDeathCoords  implements IFeatureEvent{
 
 	@SubscribeEvent
 	public void onLivingDeathEvent(LivingDeathEvent event) {
@@ -41,6 +42,12 @@ public class EventPlayerDeathCoords {
 
 	}
 */
+
+	@Override
+	public void syncConfig(Configuration config) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	/*
 	@SubscribeEvent

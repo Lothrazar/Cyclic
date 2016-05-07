@@ -6,6 +6,7 @@ import java.util.HashSet;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.PlayerDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -17,7 +18,7 @@ import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.player.InventoryPlayerExtended;
 import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
 
-public class EventExtendedInventory {
+public class EventExtendedInventory implements IFeatureEvent{
 
 
 	public static boolean dropOnDeath = false;//TODO: from config
@@ -103,5 +104,11 @@ public class EventExtendedInventory {
 	@SubscribeEvent
 	public void playerSave(PlayerEvent.SaveToFile event) {
 		UtilPlayerInventoryFilestorage.savePlayerBaubles(event.getEntityPlayer(), getPlayerFile(ext, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString()), getPlayerFile(extback, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString()));
+	}
+
+	@Override
+	public void syncConfig(Configuration config) {
+		// TODO Auto-generated method stub
+		
 	}
 }

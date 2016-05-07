@@ -5,10 +5,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.init.Items;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventMobDropsReduced {
+public class EventMobDropsReduced  implements IFeatureEvent{
 
 	public boolean removeZombieCarrotPotato = true;
 
@@ -34,5 +35,11 @@ public class EventMobDropsReduced {
 				}
 			}
 		}
+	}
+
+	@Override
+	public void syncConfig(Configuration config) {
+		// TODO Auto-generated method stub
+		
 	}
 }

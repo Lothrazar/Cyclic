@@ -1,10 +1,11 @@
 package com.lothrazar.cyclicmagic.event;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventLadderClimb {
+public class EventLadderClimb  implements IFeatureEvent{
 	
 	@SubscribeEvent
 	public void onPlayerTick(LivingUpdateEvent event) {
@@ -20,5 +21,11 @@ public class EventLadderClimb {
 				}
 			}
 		}
+	}
+
+	@Override
+	public void syncConfig(Configuration config) {
+		// TODO Auto-generated method stub
+		
 	}
 }

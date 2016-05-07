@@ -13,12 +13,13 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteractSpecific;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 
-public class EventAnimalDropBuffs {
+public class EventAnimalDropBuffs  implements IFeatureEvent{
 
 	private static final int	cowExtraLeather							= 4;
 	private static final int	pigExtraMeat								= 5;
@@ -70,6 +71,12 @@ public class EventAnimalDropBuffs {
 		if (pigExtraMeat > 0 && entity instanceof EntityPig) {
 			UtilEntity.dropItemStackInWorld(worldObj, pos, new ItemStack(Items.porkchop, pigExtraMeat));
 		}
+	}
+
+	@Override
+	public void syncConfig(Configuration config) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

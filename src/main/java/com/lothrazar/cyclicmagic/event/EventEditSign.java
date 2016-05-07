@@ -6,11 +6,12 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
-public class EventEditSign {
+public class EventEditSign  implements IFeatureEvent{
 
 	@SubscribeEvent
 	public void onInteract(PlayerInteractEvent.LeftClickBlock event) {
@@ -35,5 +36,11 @@ public class EventEditSign {
 
 			entityPlayer.openEditSign(sign);
 		}
+	}
+
+	@Override
+	public void syncConfig(Configuration config) {
+		// TODO Auto-generated method stub
+		
 	}
 }

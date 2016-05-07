@@ -5,11 +5,12 @@ import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 //import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventNameVillager {
+public class EventNameVillager  implements IFeatureEvent{
 
 	@SubscribeEvent
 	public void onEntityInteractEvent(EntityInteract event) {
@@ -31,5 +32,11 @@ public class EventNameVillager {
 
 			event.setCanceled(true);// stop the GUI inventory opening
 		}
+	}
+
+	@Override
+	public void syncConfig(Configuration config) {
+		// TODO Auto-generated method stub
+		
 	}
 }

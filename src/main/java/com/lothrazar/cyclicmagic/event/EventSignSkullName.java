@@ -8,12 +8,13 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 
-public class EventSignSkullName {
+public class EventSignSkullName  implements IFeatureEvent{
 
 	@SubscribeEvent
 	public void onPlayerInteract(PlayerInteractEvent event) {
@@ -56,5 +57,11 @@ public class EventSignSkullName {
 				nbt.setString(Const.SkullOwner, firstLine);
 			}
 		} // end of skullSignNames
+	}
+
+	@Override
+	public void syncConfig(Configuration config) {
+		// TODO Auto-generated method stub
+		
 	}
 }

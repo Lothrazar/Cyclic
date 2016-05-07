@@ -3,10 +3,11 @@ package com.lothrazar.cyclicmagic.event;
 import org.lwjgl.input.Keyboard;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventFoodDetails {
+public class EventFoodDetails  implements IFeatureEvent{
 
 	@SubscribeEvent
 	public void onItemTooltipEvent(ItemTooltipEvent event) {
@@ -23,5 +24,11 @@ public class EventFoodDetails {
 				event.getToolTip().add(hunger + " (" + satur + ")");
 			}
 		}
+	}
+
+	@Override
+	public void syncConfig(Configuration config) {
+		// TODO Auto-generated method stub
+		
 	}
 }

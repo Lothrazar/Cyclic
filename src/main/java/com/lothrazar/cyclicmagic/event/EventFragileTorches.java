@@ -5,10 +5,11 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventFragileTorches {
+public class EventFragileTorches  implements IFeatureEvent{
 
 	@SubscribeEvent
 	public void onEntityUpdate(LivingUpdateEvent event) {
@@ -35,5 +36,11 @@ public class EventFragileTorches {
 				living.worldObj.destroyBlock(living.getPosition(), true);
 			}
 		}
+	}
+
+	@Override
+	public void syncConfig(Configuration config) {
+		// TODO Auto-generated method stub
+		
 	}
 }

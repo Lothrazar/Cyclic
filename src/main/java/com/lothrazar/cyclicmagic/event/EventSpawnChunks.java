@@ -12,11 +12,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EventSpawnChunks {
+public class EventSpawnChunks implements IFeatureEvent{
 
 	final static int SPAWN_RADIUS = 8 * Const.CHUNK_SIZE;// 128 is spawn size
 
@@ -116,5 +117,11 @@ public class EventSpawnChunks {
 			
 		} 
 		//end spawnchunk
+	}
+
+	@Override
+	public void syncConfig(Configuration config) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -34,20 +34,22 @@ public class ModMain {
             return ItemRegistry.chest_sack;
         }
     };
+    private EventRegistry events;
 
 	@EventHandler
 	public void onPreInit(FMLPreInitializationEvent event) {
 
 		logger = new ModLogger(event.getModLog());
-
 		config = new Configuration(event.getSuggestedConfigurationFile());
+		
+		events = new EventRegistry();
 		
 		config.load();
 		syncConfig();
 
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(Const.MODID);
 		
-		EventRegistry.register();
+		events.register();
 
 		ReflectionRegistry.register();
 
@@ -101,12 +103,12 @@ public class ModMain {
 		return config;
 	}
 
-	public static void syncConfig() {
+	public  void syncConfig() {
 		// hit on startup and on change event from
 		Configuration c = getConfig();
 		WorldGenRegistry.syncConfig(c);
 		PotionRegistry.syncConfig(c);
-		EventRegistry.syncConfig(c);
+		events.syncConfig(c);
 		BlockRegistry.syncConfig(c);
 		ItemRegistry.syncConfig(c);
 		FuelRegistry.syncConfig(c);

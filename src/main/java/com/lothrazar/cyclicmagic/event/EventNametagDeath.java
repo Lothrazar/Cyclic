@@ -5,10 +5,11 @@ import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventNametagDeath {
+public class EventNametagDeath  implements IFeatureEvent{
 
 	@SubscribeEvent
 	public void onLivingDropsEvent(LivingDropsEvent event) {
@@ -36,5 +37,11 @@ public class EventNametagDeath {
 			 * }
 			 */
 		}
+	}
+
+	@Override
+	public void syncConfig(Configuration config) {
+		// TODO Auto-generated method stub
+		
 	}
 }

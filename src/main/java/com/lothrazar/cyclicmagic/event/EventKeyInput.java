@@ -3,6 +3,7 @@ package com.lothrazar.cyclicmagic.event;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraftforge.client.event.GuiScreenEvent;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -12,7 +13,7 @@ import com.lothrazar.cyclicmagic.net.MessageBarMove;
 import com.lothrazar.cyclicmagic.net.MessageSlotMove;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
 
-public class EventKeyInput {
+public class EventKeyInput implements IFeatureEvent{
 
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
@@ -52,5 +53,11 @@ public class EventKeyInput {
 		else if (ClientProxy.isKeyDown(ClientProxy.keyBarDown)) {
 			ModMain.network.sendToServer(new MessageBarMove(true));
 		}
+	}
+
+	@Override
+	public void syncConfig(Configuration config) {
+		// TODO Auto-generated method stub
+		
 	}
 }

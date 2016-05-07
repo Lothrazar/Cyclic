@@ -9,11 +9,12 @@ import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundCategory;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventAppleUse{
+public class EventAppleUse implements IFeatureEvent{
 
 	@SubscribeEvent
 	public void onEnderTeleportEvent(EnderTeleportEvent event){
@@ -63,5 +64,11 @@ public class EventAppleUse{
 
 			// mob.setEating(true); //makes horse animate and bend down to eat
 		}
+	}
+
+	@Override
+	public void syncConfig(Configuration config) {
+		// TODO Auto-generated method stub
+		
 	}
 }

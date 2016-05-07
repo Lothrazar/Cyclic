@@ -9,10 +9,11 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventFurnaceStardew {
+public class EventFurnaceStardew  implements IFeatureEvent{
 
 	// inspired by stardew valley
 
@@ -111,6 +112,12 @@ public class EventFurnaceStardew {
 
 		// how long does it burn for? zero means it isnt fuel
 		return TileEntityFurnace.getItemBurnTime(input) > 0;
+	}
+
+	@Override
+	public void syncConfig(Configuration config) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

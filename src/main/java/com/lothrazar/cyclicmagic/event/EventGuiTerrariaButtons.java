@@ -13,11 +13,12 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiCrafting;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EventGuiTerrariaButtons {
+public class EventGuiTerrariaButtons implements IFeatureEvent{
 
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
@@ -85,5 +86,11 @@ public class EventGuiTerrariaButtons {
 			event.getButtonList().add(new ButtonRestock(button_id++, x, y));
 
 		}
+	}
+
+	@Override
+	public void syncConfig(Configuration config) {
+		// TODO Auto-generated method stub
+		
 	}
 }

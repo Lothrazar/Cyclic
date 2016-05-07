@@ -3,10 +3,11 @@ package com.lothrazar.cyclicmagic.event;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventMountedPearl {
+public class EventMountedPearl  implements IFeatureEvent{
 
 //	private static final String NBT_RIDING_ENTITY = "ride";
 
@@ -65,4 +66,10 @@ public class EventMountedPearl {
 		}
 	}
 */
+
+	@Override
+	public void syncConfig(Configuration config) {
+		// TODO Auto-generated method stub
+		
+	}
 }
