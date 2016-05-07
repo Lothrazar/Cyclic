@@ -38,9 +38,9 @@ public class PotionRegistry {
 
 		// http://www.minecraftforge.net/forum/index.php?topic=11024.0
 		// ??? http://www.minecraftforge.net/forum/index.php?topic=12358.0
-		PotionRegistry.ender = new PotionCustom(new ResourceLocation(Const.MODID, "textures/items/apple_ender.png"), false, 0, "potion.ender");
+		PotionRegistry.ender = new PotionCustom(new ResourceLocation(Const.MODID, "textures/potions/ender.png"), false, 0, "potion.ender");
 
-		PotionRegistry.waterwalk = new PotionCustom(new ResourceLocation("minecraft", "textures/items/prismarine_shard.png"), false, 0, "potion.waterwalk");
+		PotionRegistry.waterwalk = new PotionCustom(new ResourceLocation(Const.MODID, "textures/potions/waterwalk.png"), false, 0, "potion.waterwalk");
 
 		PotionRegistry.slowfall = new PotionCustom(new ResourceLocation(Const.MODID, "textures/potions/slowfall.png"), false, 0, "potion.slowfall");
 
