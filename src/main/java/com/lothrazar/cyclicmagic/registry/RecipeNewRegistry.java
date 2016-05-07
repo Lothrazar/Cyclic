@@ -24,6 +24,9 @@ public class RecipeNewRegistry {
 
 	// static int EXP = 0;
 	public static void register() {
+		if(enabled == false){
+			return;
+		}
 
 		RecipeNewRegistry.playerSkull();
 

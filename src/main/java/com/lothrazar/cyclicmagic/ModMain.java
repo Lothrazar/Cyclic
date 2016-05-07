@@ -5,6 +5,7 @@ import com.lothrazar.cyclicmagic.proxy.CommonProxy;
 import com.lothrazar.cyclicmagic.registry.*;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
@@ -71,17 +72,11 @@ public class ModMain {
 		MobSpawningRegistry.register();
 		WorldGenRegistry.register();
 		FuelRegistry.register();
-
-		if (StackSizeRegistry.enabled) {
-			StackSizeRegistry.register();
-		}
-		if (RecipeAlterRegistry.enabled) {
-			RecipeAlterRegistry.register();
-		}
-		if (RecipeNewRegistry.enabled) {
-			RecipeNewRegistry.register();
-		}
-
+		StackSizeRegistry.register();
+		RecipeAlterRegistry.register();
+		RecipeNewRegistry.register();
+		
+		
 		proxy.register();
 		proxy.registerEvents();
 
@@ -210,6 +205,7 @@ Note: Recompile with -Xlint:deprecation for details.
 	 * rebalance emerald armor numbers plan.
 	 * 
 	 * achievemnets give exp
+	 *  // https://github.com/PrinceOfAmber/SamsPowerups/blob/5ac4556cb99266fa3f322ef8bfdf75683aa2f26a/src/main/java/com/lothrazar/samspowerups/util/AchievementFinder.java
 	 * 
 	 * more achieves - inspire by consoles and also my own
 	 * 

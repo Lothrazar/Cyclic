@@ -15,6 +15,9 @@ public class RecipeAlterRegistry {
 	public static boolean enabled = true;
 
 	public static void register() {
+		if(enabled == false){
+			return;
+		}
 
 		smoothstoneRequired();
 
