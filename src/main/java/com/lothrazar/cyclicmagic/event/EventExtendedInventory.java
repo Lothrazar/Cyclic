@@ -112,7 +112,7 @@ public class EventExtendedInventory implements IFeatureEvent{
 	public void syncConfig(Configuration config) {
 
 
-		String category = Const.ConfigCategory.player;// + "Player"; 
+		String category = Const.ConfigCategory.inventory;  
 		dropOnDeath = config.getBoolean("DropExtendedInventoryOnDeath", category, true,
 				"When false, this never drops your extra inventories items on death (for the extended inventory).  If true, this will obey the keepInventory rule");
 		

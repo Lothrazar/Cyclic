@@ -11,17 +11,17 @@ public class Const {
 		public static final String worldGen = MODCONF + "world generation";
 		public static final String mobs = MODCONF + "mobs";
 		public static final String blocks = MODCONF + "blocks";
+		public static final String blocks_uncrafting = blocks +  ".uncrafting";
 		public static final String blockChanges = MODCONF + "blockchanges";
 		public static final String environment = MODCONF + "environment";
-		public static final String commands = "commands";
-		public static final String inventory = "Inventory";
-		public static final String items = "items";
-		public static final String items_enderbook = items+".enderbook";
-		public static final String items_horseFood = items+".horsefood";
-		public static final String items_projectiles = items+".projectiles";
-		public static final String recipes = "recipes";
-		public static final String villagers = "villagers";
-		
+		public static final String commands = MODCONF + "commands";
+		public static final String inventory = MODCONF + "Inventory";
+		public static final String items = MODCONF + "items";
+		public static final String items_enderbook = items + ".enderbook";
+		public static final String items_horseFood = items + ".horsefood";
+		public static final String items_projectiles = items + ".projectiles";
+		public static final String recipes = MODCONF + "recipes";
+		public static final String villagers = MODCONF + "villagers";
 	}
 
 	public static final int SQ = 18;

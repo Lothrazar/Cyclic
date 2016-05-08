@@ -166,7 +166,7 @@ public class BlockRegistry {
 
 		
 		
-		category = Const.ConfigCategory.blocks +  ".Uncrafting";
+		category = Const.ConfigCategory.blocks_uncrafting;
 		
 		enableBlockUncrafting = config.getBoolean("enabled", category, true, "Enable uncrafting");
 
