@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.gui.waypoints.GuiEnderBook;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilExperience;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
+
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -225,5 +228,20 @@ public class ItemEnderBook extends Item implements IHasRecipe {
 			return Math.round(X) + ", " + Math.round(Y) + ", " + Math.round(Z);	// +
 			                                                                   	// showName
 		}
+	}
+
+	public static void syncConfig(Configuration config) {
+		String category;
+		
+		category = Const.ConfigCategory.items_enderbook; 
+		
+		ItemRegistry.enderBookEnabled = config.getBoolean("Enabled", category, true, "To disable this ender book item");		
+		ItemRegistry.doesPauseGame = config.getBoolean("Gui Pauses Game", category, false, "The Ender Book GUI will pause the game (single player)");	
+		ItemRegistry.craftNetherStar = config.getBoolean("Recipe Nether Star", category, true, "The Ender Book requires a nether star to craft.  REQUIRES RESTART.");
+		ItemRegistry.showCoordTooltips = config.getBoolean("Show Tooltip Coords", category, true, "Waypoint buttons will show the exact coordinates in a hover tooltip.");		
+		ItemRegistry.maximumSaved = config.getInt("Max Saved", category, 16, 1, 999, "How many waypoints the book can store.");	
+		ItemRegistry.btnsPerColumn = config.getInt("Column Size", category, 8, 1, 50, "Number of waypoints per column.  Change this if they are going off the screen for your chosen GUI Scale.");	
+		ItemRegistry.expCostPerTeleport = config.getInt("Exp Cost", category, 10, 0, 9999, "How many experience points are drained from the player on each teleport.  Set to zero for free teleports to your waypoints.");
+
 	}
 }

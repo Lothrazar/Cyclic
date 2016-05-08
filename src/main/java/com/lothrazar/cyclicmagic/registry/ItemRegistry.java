@@ -28,24 +28,13 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemRegistry {
 
-	public static ArrayList<Item>				items					= new ArrayList<Item>();
+	public static ArrayList<Item> items					= new ArrayList<Item>();
 	private static Map<String, Boolean>	configToggle	= new HashMap<String, Boolean>();
 
 	public static void syncConfig(Configuration config) {
-
 		String category = Const.ConfigCategory.items;
-
-		config.setCategoryComment(category, "Disable or customize items added to the game");
-
-		sceptersEnabled = config.getBoolean("sceptersEnabled", category, true, "Enable the building scepters");
-
-		SpellRegistry.renderOnLeft = config.getBoolean("scepter_HUD_left", category, true, "True for top left of the screen, false for top right");
-
-		BaseSpellRange.maxRange = config.getInt("scepter_MaxRange", category, 64, 8, 128, "Maximum range for all spells");
-
-	//	Property prop = config.get(category, ItemMultiTool.name, true, "Overpowered Multi Tool");
-	//	prop.setRequiresMcRestart(true);
-	//	configToggle.put(ItemMultiTool.name, prop.getBoolean());
+		
+		ItemCyclicWand.syncConfig(config);
 
 		Property prop = config.get(category, ItemEnderPearlReuse.name, true, "Reuseable ender pearl");
 		prop.setRequiresMcRestart(true);
@@ -63,22 +52,7 @@ public class ItemRegistry {
 		prop.setRequiresMcRestart(true);
 		configToggle.put("emerald_gear", prop.getBoolean());
 
-		category = Const.ConfigCategory.items_enderbook; 
-
-		enderBookEnabled = config.getBoolean("Enabled", category, true, "To disable this ender book item");
-
-		doesPauseGame = config.getBoolean("Gui Pauses Game", category, false, "The Ender Book GUI will pause the game (single player)");
-
-		craftNetherStar = config.getBoolean("Recipe Nether Star", category, true, "The Ender Book requires a nether star to craft.  REQUIRES RESTART.");
-
-		showCoordTooltips = config.getBoolean("Show Tooltip Coords", category, true, "Waypoint buttons will show the exact coordinates in a hover tooltip.");
-
-		maximumSaved = config.getInt("Max Saved", category, 16, 1, 999, "How many waypoints the book can store.");
-
-		btnsPerColumn = config.getInt("Column Size", category, 8, 1, 50, "Number of waypoints per column.  Change this if they are going off the screen for your chosen GUI Scale.");
-
-		expCostPerTeleport = config.getInt("Exp Cost", category, 10, 0, 9999, "How many experience points are drained from the player on each teleport.  Set to zero for free teleports to your waypoints.");
-
+		ItemEnderBook.syncConfig(config);
 		category = Const.ConfigCategory.items_horseFood; 
 
 		horseFoodEnabled = config.getBoolean("Enabled", category, true, "To disable all horse upgrade food");
@@ -170,8 +144,8 @@ public class ItemRegistry {
 	public static int									dungeon_recipe;
 	public static int									tnt_recipe;
 	public static int									blaze_recipe;
-	private static boolean						sceptersEnabled;
-	private static boolean						enderBookEnabled;
+	public static boolean						sceptersEnabled;
+	public static boolean						enderBookEnabled;
 	private static boolean						horseFoodEnabled;
 
 	public final static int						I					= 0;

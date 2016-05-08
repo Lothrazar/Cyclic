@@ -137,19 +137,30 @@ public class ModMain {
 	 *		-->> answer: neither one plays the actual sound. if it breaks a block for you, THATS the one you hear
 	 *		 need a network packet.sendToAllAround and hit the sound up manual (clientside)
 	 * 
-	 ***** POSTPONED for later release [bugs or disabled features]
+	 ***** FEATURES upcoming
+	 *
+	 *Farm Drops Buffed-split up per mob. add iron golems
+	 *
+	 *Monster Drops Nerfed-split up per drop
+	 *
+	 *B:"Extra Spawns Enabled= split up per mob . then we will have 'mob drops' category and 'mob spawns'
+	 *
+	 *environment.sapling biomes: hide biome ints outside of neseted config, use a simple disabled flag
+	 *
+	 *Blacklist Container CSV hide outside of ingame config. a 'for modpack' config
 	 *
 	 *build up and down spell: need 2 new spells: a left and right
 	 *
 	 * config: add toggles to disable extra crafting or extra inventory
-	 *
-	 *circle build: does not work with 'pattern'. 
-	 *
-	 *circle build: is more of an oval, not symmetric
-	 *
-	 *MAYBE: disable the 'mass building' spells for first release.
 	 * 
-	 ***** FEATURES
+	 * items.apples: cleanup config names/ recipes. add comments
+	 *
+	 * 
+	 ***** FEATURES backlog 
+	 *
+	 *[disabled]circle build: does not work with 'pattern'. 
+	 *
+	 *[disabled]circle build: is more of an oval, not symmetric
 	 *
 	 *
 		// config todo TODO: 'enabled', which hides the button for invo
