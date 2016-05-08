@@ -1,19 +1,27 @@
 package com.lothrazar.cyclicmagic.event;
 
 import java.util.List;
+
+import com.lothrazar.cyclicmagic.util.Const;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.init.Items;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventMobDropsReduced {
+public class EventMobDropsReduced  implements IFeatureEvent{
 
-	public boolean removeZombieCarrotPotato = true;
+
+	private static boolean monsterDropsNerfed;
+
+	//public boolean removeZombieCarrotPotato = true;
 
 	@SubscribeEvent
 	public void onLivingDropsEvent(LivingDropsEvent event) {
+		if(!monsterDropsNerfed){return;}
 
 		Entity entity = event.getEntity();
 		// World worldObj = entity.getEntityWorld();
@@ -34,5 +42,15 @@ public class EventMobDropsReduced {
 				}
 			}
 		}
+	}
+
+	@Override
+	public void syncConfig(Configuration config) {
+		String category = Const.MODCONF + "Mobs";
+		 
+		monsterDropsNerfed = config.getBoolean("Monster Drops Nerfed", category, true,
+				"Zombies no longer drops crops or iron");
+	 
+		
 	}
 }

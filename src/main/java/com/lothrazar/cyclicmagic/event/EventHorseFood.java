@@ -11,12 +11,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EventHorseFood {
+public class EventHorseFood implements IFeatureEvent {
 
 	@SubscribeEvent
 	public void onEntityInteractEvent(EntityInteract event) {
@@ -58,5 +59,11 @@ public class EventHorseFood {
 				event.getLeft().add(I18n.translateToLocal("debug.horsejump") + "  " + df.format(jumpHeight));
 			}
 		}
+	}
+
+	@Override
+	public void syncConfig(Configuration config) {
+		// TODO Auto-generated method stub
+		
 	}
 }

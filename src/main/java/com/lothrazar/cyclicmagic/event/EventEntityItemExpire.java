@@ -11,7 +11,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.item.ItemExpireEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventEntityItemExpire {
+public class EventEntityItemExpire  implements IFeatureEvent{
 
 	public static boolean enabled = true;
 
@@ -22,6 +22,11 @@ public class EventEntityItemExpire {
 	
 	@SubscribeEvent
 	public void onItemExpireEvent(ItemExpireEvent event) {
+		
+		if(!enabled){
+			return;
+		}
+		
 		EntityItem entityItem = event.getEntityItem();
 		Entity entity = event.getEntity();
 		ItemStack is = entityItem.getEntityItem();
@@ -48,7 +53,7 @@ public class EventEntityItemExpire {
 		}
 	}
 
-	public static void syncConfig(Configuration config) {
+	public  void syncConfig(Configuration config) {
 		String category = Const.MODCONF + "misc";
 		
 		enabled = config.getBoolean("plantDespawningSaplings", category, true, "Plant saplings if they despawn on grass/dirt");

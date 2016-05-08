@@ -13,13 +13,18 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteractSpecific;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 
-public class EventAnimalDropBuffs {
+public class EventAnimalDropBuffs  implements IFeatureEvent{
 
+	private static boolean farmDropBuffs;
+	
 	private static final int	cowExtraLeather							= 4;
 	private static final int	pigExtraMeat								= 5;
 	private static final int	chanceZombieVillagerEmerald	= 50;
@@ -28,6 +33,7 @@ public class EventAnimalDropBuffs {
 	
 	@SubscribeEvent
 	public void onEntityInteractSpecific(EntityInteractSpecific event) {
+		if(!farmDropBuffs){return;}
 		
 		if(event.getEntityPlayer() != null && event.getTarget() instanceof EntitySheep){
 			EntityPlayer p = event.getEntityPlayer();
@@ -46,6 +52,7 @@ public class EventAnimalDropBuffs {
 	
 	@SubscribeEvent
 	public void onLivingDropsEvent(LivingDropsEvent event) {
+		if(!farmDropBuffs){return;}
 
 		Entity entity = event.getEntity();
 		World worldObj = entity.getEntityWorld();
@@ -70,6 +77,15 @@ public class EventAnimalDropBuffs {
 		if (pigExtraMeat > 0 && entity instanceof EntityPig) {
 			UtilEntity.dropItemStackInWorld(worldObj, pos, new ItemStack(Items.porkchop, pigExtraMeat));
 		}
+	}
+
+	@Override
+	public void syncConfig(Configuration config) {
+		String category = Const.MODCONF + "Mobs";
+		
+		farmDropBuffs = config.getBoolean("Farm Drops Buffed", category, true,
+				"Increase drops of farm animals: more leather, more wool from shearing, pigs drop a bit more pork");
+		
 	}
 
 }

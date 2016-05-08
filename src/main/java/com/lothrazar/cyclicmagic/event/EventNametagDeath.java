@@ -1,17 +1,22 @@
 package com.lothrazar.cyclicmagic.event;
 
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventNametagDeath {
+public class EventNametagDeath  implements IFeatureEvent{
 
+	private boolean nameTagDeath;
+	
 	@SubscribeEvent
 	public void onLivingDropsEvent(LivingDropsEvent event) {
+		if(!nameTagDeath){return;}
 
 		Entity entity = event.getEntity();
 		World worldObj = entity.getEntityWorld();
@@ -36,5 +41,16 @@ public class EventNametagDeath {
 			 * }
 			 */
 		}
+	}
+
+	@Override
+	public void syncConfig(Configuration config) {
+
+		String category = Const.MODCONF + "Mobs";
+		
+	 	nameTagDeath = config.getBoolean("Name Tag Death", category, true,
+				"When an entity dies that is named with a tag, it drops the nametag");
+
+		
 	}
 }

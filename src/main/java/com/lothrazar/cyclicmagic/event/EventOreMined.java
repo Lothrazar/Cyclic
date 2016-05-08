@@ -5,9 +5,10 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 
-public class EventOreMined {
+public class EventOreMined implements IFeatureEvent{
 
 	@SubscribeEvent
 	public void onBreakEvent(BreakEvent event){
@@ -28,5 +29,11 @@ public class EventOreMined {
 			
 			block.trySpawnTriggeredEntity(world, pos);
 		}
+	}
+
+	@Override
+	public void syncConfig(Configuration config) {
+		// TODO Auto-generated method stub
+		
 	}
 }

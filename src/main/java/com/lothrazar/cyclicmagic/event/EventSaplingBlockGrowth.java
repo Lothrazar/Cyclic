@@ -18,7 +18,7 @@ import net.minecraftforge.event.terraingen.SaplingGrowTreeEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 
-public class EventSaplingBlockGrowth {
+public class EventSaplingBlockGrowth implements IFeatureEvent{
 
 	private static final int sapling_oak = 0;
 	private static final int sapling_spruce = 1;
@@ -94,8 +94,8 @@ public class EventSaplingBlockGrowth {
 			
 		}
 	}
-	
-	public static void syncConfig(Configuration config) {
+	@Override
+	public void syncConfig(Configuration config) {
 		config.load();
 		String category = Const.MODCONF + "saplingBiomes";
 	

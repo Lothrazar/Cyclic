@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.event;
 
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilInventory;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,10 +10,13 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventFurnaceStardew {
+public class EventFurnaceStardew  implements IFeatureEvent{
+
+	private static boolean stardewFurnace;
 
 	// inspired by stardew valley
 
@@ -23,6 +27,7 @@ public class EventFurnaceStardew {
 
 	@SubscribeEvent
 	public void onPlayerFurnace(PlayerInteractEvent event) {
+		if(!stardewFurnace){return;}
 
 		EntityPlayer entityPlayer = event.getEntityPlayer();
 		// ignore in creative// left clicking just breaks it anyway
@@ -113,4 +118,13 @@ public class EventFurnaceStardew {
 		return TileEntityFurnace.getItemBurnTime(input) > 0;
 	}
 
+	@Override
+	public void syncConfig(Configuration config) {
+		String category = Const.MODCONF + "Player";
+		
+		stardewFurnace = config.getBoolean("Furnace Speed", category, true,
+				"Quickly fill a furnace by hitting it with fuel or an item, or interact with an empty hand to pull out the results [Inspired by Stardew Valley]");
+
+		
+	}
 }

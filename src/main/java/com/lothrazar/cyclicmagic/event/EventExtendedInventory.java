@@ -6,6 +6,7 @@ import java.util.HashSet;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.PlayerDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -15,12 +16,14 @@ import com.google.common.io.Files;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.player.InventoryPlayerExtended;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
 
-public class EventExtendedInventory {
+public class EventExtendedInventory implements IFeatureEvent{
 
 
-	public static boolean dropOnDeath = false;//TODO: from config
+	public boolean dropOnDeath;
+	
 	static HashSet<Integer> playerEntityIds = new HashSet<Integer>();
 
 	@SubscribeEvent
@@ -103,5 +106,16 @@ public class EventExtendedInventory {
 	@SubscribeEvent
 	public void playerSave(PlayerEvent.SaveToFile event) {
 		UtilPlayerInventoryFilestorage.savePlayerBaubles(event.getEntityPlayer(), getPlayerFile(ext, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString()), getPlayerFile(extback, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString()));
+	}
+
+	@Override
+	public void syncConfig(Configuration config) {
+
+
+		String category = Const.MODCONF + "Player"; 
+		dropOnDeath = config.getBoolean("DropExtendedInventoryOnDeath", category, true,
+				"When false, this never drops your extra inventories items on death (for the extended inventory).  If true, this will obey the keepInventory rule");
+		
+		
 	}
 }

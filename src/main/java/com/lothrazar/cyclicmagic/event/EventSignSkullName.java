@@ -8,15 +8,19 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 
-public class EventSignSkullName {
+public class EventSignSkullName  implements IFeatureEvent{
 
+	private boolean signSkullName;
+	
 	@SubscribeEvent
 	public void onPlayerInteract(PlayerInteractEvent event) {
+		if(!signSkullName){return;}
 
 		EntityPlayer entityPlayer = event.getEntityPlayer();
 		BlockPos pos = event.getPos();
@@ -56,5 +60,15 @@ public class EventSignSkullName {
 				nbt.setString(Const.SkullOwner, firstLine);
 			}
 		} // end of skullSignNames
+	}
+
+	@Override
+	public void syncConfig(Configuration config) {
+		 
+		String category = Const.MODCONF + "Misc"; 
+		signSkullName = config.getBoolean("Name Player Skulls with Sign", category, true,
+				"Use a player skull on a sign to name the skull based on the top line");
+
+		
 	}
 }

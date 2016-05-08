@@ -148,7 +148,14 @@ public class BlockRegistry {
 	}
 
 	public static void syncConfig(Configuration config) {
-		String category = Const.MODCONF + "Blocks";
+
+		String category = Const.MODCONF + "BlockChanges";
+		
+		spawnersUnbreakable = config.getBoolean("Spawners Unbreakable", category, true, "Make mob spawners unbreakable");
+
+		
+		
+		category = Const.MODCONF + "Blocks";
 
 		// TODO : requires restart
 		config.setCategoryComment(category, "Disable or customize blocks added to the game");
@@ -156,8 +163,6 @@ public class BlockRegistry {
 		enableBlockFragile = config.getBoolean("Scaffolding", category, true, "Enable the scaffolding block that breaks by itself");
 
 		enabledBucketBlocks = config.getBoolean("Bucket Blocks", category, true, "Enable Bucket Storage Blocks");
-
-		spawnersUnbreakable = config.getBoolean("Spawners Unbreakable", category, true, "Make mob spawners unbreakable");
 
 		
 		

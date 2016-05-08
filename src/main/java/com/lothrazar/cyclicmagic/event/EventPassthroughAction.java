@@ -1,5 +1,7 @@
 package com.lothrazar.cyclicmagic.event;
 
+import com.lothrazar.cyclicmagic.util.Const;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItemFrame;
@@ -9,12 +11,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventPassthroughAction {
-	
+public class EventPassthroughAction  implements IFeatureEvent{
+
+	private static boolean passThroughClick;
 
 	//TODO: why does the chest not animate? or only sometimes?
 
@@ -50,6 +54,10 @@ public class EventPassthroughAction {
 
 	@SubscribeEvent
 	public void onInteract(PlayerInteractEvent.RightClickBlock event) {
+		
+		if(passThroughClick == false){
+			return;
+		}
 
 		EntityPlayer entityPlayer = event.getEntityPlayer();
 		BlockPos pos = event.getPos();
@@ -83,5 +91,16 @@ public class EventPassthroughAction {
 
 			}
 		}
+	}
+
+	@Override
+	public void syncConfig(Configuration config) {
+
+		String category = Const.MODCONF + "Player";
+		
+		passThroughClick = config.getBoolean("PassThroughClick", category, true,
+				"Open chests (and other containers) by passing right through the attached signs, banners, and item frames");
+
+		
 	}
 }

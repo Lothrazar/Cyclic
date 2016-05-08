@@ -9,10 +9,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventBucketBlocksBreak {
+public class EventBucketBlocksBreak implements IFeatureEvent{
 
 	@SubscribeEvent
 	public void onBreakEvent(BreakEvent event) {
@@ -35,5 +36,11 @@ public class EventBucketBlocksBreak {
 
 			t.setBuckets(0);
 		}
+	}
+
+	@Override
+	public void syncConfig(Configuration config) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -1,17 +1,24 @@
 package com.lothrazar.cyclicmagic.event;
 
+import com.lothrazar.cyclicmagic.util.Const;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventFragileTorches {
+public class EventFragileTorches  implements IFeatureEvent{
+
+	private boolean fragileTorches;
 
 	@SubscribeEvent
 	public void onEntityUpdate(LivingUpdateEvent event) {
+		if(!fragileTorches){return;}
+		
 		Entity ent = event.getEntity();
 		if (ent instanceof EntityLiving == false) { return; }
 		EntityLivingBase living = (EntityLivingBase) event.getEntity();
@@ -35,5 +42,15 @@ public class EventFragileTorches {
 				living.worldObj.destroyBlock(living.getPosition(), true);
 			}
 		}
+	}
+
+	@Override
+	public void syncConfig(Configuration config) {
+		String category = Const.MODCONF + "Player";
+		
+		fragileTorches = config.getBoolean("Fragile Torches", category, true,
+				"Torches can get knocked over when passed through by living entities");
+	
+		
 	}
 }
