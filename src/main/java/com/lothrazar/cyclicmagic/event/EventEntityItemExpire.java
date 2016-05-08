@@ -22,6 +22,11 @@ public class EventEntityItemExpire  implements IFeatureEvent{
 	
 	@SubscribeEvent
 	public void onItemExpireEvent(ItemExpireEvent event) {
+		
+		if(!enabled){
+			return;
+		}
+		
 		EntityItem entityItem = event.getEntityItem();
 		Entity entity = event.getEntity();
 		ItemStack is = entityItem.getEntityItem();

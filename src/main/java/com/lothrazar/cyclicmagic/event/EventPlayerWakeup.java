@@ -11,13 +11,15 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EventPlayerWakeup  implements IFeatureEvent{
 
-	int	levelBoost							= PotionRegistry.I;	// 1 means Hunger II. int = 2
-	                                                // means Hunger III, etc.
+	private boolean playerWakeup;
+	
+	int	levelBoost = PotionRegistry.I;	
 	int	sleeping_hunger_seconds	= 30;
 
 	// TODO: this should be in standalone , but what goes with it?
 	@SubscribeEvent
 	public void onPlayerWakeUpEvent(PlayerWakeUpEvent event) {
+		if(!playerWakeup){return;}
 
 		EntityPlayer entityPlayer = event.getEntityPlayer();
 		boolean didSleepAllNight = !event.updateWorld();
@@ -32,7 +34,10 @@ public class EventPlayerWakeup  implements IFeatureEvent{
 
 	@Override
 	public void syncConfig(Configuration config) {
-		// TODO Auto-generated method stub
-		
+
+		String category = Const.MODCONF + "Player"; 
+		playerWakeup = config.getBoolean("Wakeup Curse", category, true,
+				"Using a bed to skip the night has some mild potion effect related drawbacks");
+
 	}
 }

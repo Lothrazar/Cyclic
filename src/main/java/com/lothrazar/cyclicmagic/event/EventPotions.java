@@ -7,23 +7,25 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.registry.EventRegistry;
 import com.lothrazar.cyclicmagic.registry.PotionRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 
 public class EventPotions implements IFeatureEvent {
 
+	public boolean cancelPotionInventoryShift;
+	
 	@SubscribeEvent
 	public void onEntityUpdate(LivingUpdateEvent event) {
 
+		
 		EntityLivingBase entityLiving = event.getEntityLiving();
 		if (entityLiving == null) { return; }
 
-
 		PotionRegistry.handle((EntityLivingBase)event.getEntity());
-	
 		
-		if(entityLiving instanceof EntityPlayer && entityLiving.worldObj.isRemote)
+		if(entityLiving instanceof EntityPlayer && entityLiving.worldObj.isRemote){
 			ModMain.proxy.renderPotions();
+		}
 	}
 	
 	
@@ -31,7 +33,8 @@ public class EventPotions implements IFeatureEvent {
 
 	@SubscribeEvent
 	public void onPotionShiftEvent(GuiScreenEvent.PotionShiftEvent event) {
-		event.setCanceled(EventRegistry.cancelPotionInventoryShift);
+		
+		event.setCanceled(cancelPotionInventoryShift);
 	}
 
 
@@ -39,7 +42,11 @@ public class EventPotions implements IFeatureEvent {
 
 	@Override
 	public void syncConfig(Configuration config) {
-		// TODO Auto-generated method stub
+
+		String category = Const.MODCONF + "Player"; 
+		cancelPotionInventoryShift = config.getBoolean("Potion Inventory Shift", category, true,
+				"When true, this blocks the potions moving the inventory over");
+
 		
 	}
 	

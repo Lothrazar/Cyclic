@@ -1,5 +1,7 @@
 package com.lothrazar.cyclicmagic.event;
 
+import com.lothrazar.cyclicmagic.util.Const;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -13,8 +15,11 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 public class EventEditSign  implements IFeatureEvent{
 
+	private boolean editableSigns;
+	
 	@SubscribeEvent
 	public void onInteract(PlayerInteractEvent.LeftClickBlock event) {
+		if(!editableSigns){return;}
 
 		EntityPlayer entityPlayer = event.getEntityPlayer();
 		BlockPos pos = event.getPos();
@@ -40,7 +45,9 @@ public class EventEditSign  implements IFeatureEvent{
 
 	@Override
 	public void syncConfig(Configuration config) {
+		String category = Const.MODCONF + "Player";
 		// TODO Auto-generated method stub
+		editableSigns = config.getBoolean("Editable Signs", category, true, "Allow editing signs with an empty hand");
 		
 	}
 }

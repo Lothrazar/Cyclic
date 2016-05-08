@@ -151,6 +151,12 @@ public class ModMain {
 	 * 
 	 ***** FEATURES
 	 *
+	 *
+		// config todo TODO: 'enabled', which hides the button for invo
+		//  TODO: and  one for 'enabled 3x3 crafting' as well
+		//TODO: pets live longer and/or respawn
+	
+	 *
 	 *make silk touch work on silverfish blocks
 	 *
 	 *Some way to get mending/frost enchants

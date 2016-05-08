@@ -16,8 +16,11 @@ import com.lothrazar.cyclicmagic.util.UtilNBT;
 
 public class EventSignSkullName  implements IFeatureEvent{
 
+	private boolean signSkullName;
+	
 	@SubscribeEvent
 	public void onPlayerInteract(PlayerInteractEvent event) {
+		if(!signSkullName){return;}
 
 		EntityPlayer entityPlayer = event.getEntityPlayer();
 		BlockPos pos = event.getPos();
@@ -61,7 +64,11 @@ public class EventSignSkullName  implements IFeatureEvent{
 
 	@Override
 	public void syncConfig(Configuration config) {
-		// TODO Auto-generated method stub
+		 
+		String category = Const.MODCONF + "Misc"; 
+		signSkullName = config.getBoolean("Name Player Skulls with Sign", category, true,
+				"Use a player skull on a sign to name the skull based on the top line");
+
 		
 	}
 }

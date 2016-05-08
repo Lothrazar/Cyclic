@@ -1,6 +1,9 @@
 package com.lothrazar.cyclicmagic.event;
 
 import org.lwjgl.input.Keyboard;
+
+import com.lothrazar.cyclicmagic.util.Const;
+
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
@@ -9,8 +12,11 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EventFoodDetails  implements IFeatureEvent{
 
+	private boolean foodDetails;
+
 	@SubscribeEvent
 	public void onItemTooltipEvent(ItemTooltipEvent event) {
+		if(!foodDetails){return;}
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
 			// https://www.reddit.com/r/minecraftsuggestions/comments/3brh7v/when_hovering_over_a_food_it_shows_how_many_food/
@@ -28,7 +34,10 @@ public class EventFoodDetails  implements IFeatureEvent{
 
 	@Override
 	public void syncConfig(Configuration config) {
-		// TODO Auto-generated method stub
+		String category = Const.MODCONF + "Player";
+		
+		foodDetails = config.getBoolean("Food Details", category, true, "Add food value and saturation to its info");
+
 		
 	}
 }

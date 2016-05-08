@@ -6,12 +6,17 @@ import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 
 public class EventEndermanDropBlock  implements IFeatureEvent{
 
+	private boolean endermanDrop;
+	
 	@SubscribeEvent
 	public void onLivingDeathEvent(LivingDeathEvent event) {
+		if(!endermanDrop){return;}
 
 		Entity entity = event.getEntity();
 
@@ -28,7 +33,10 @@ public class EventEndermanDropBlock  implements IFeatureEvent{
 
 	@Override
 	public void syncConfig(Configuration config) {
-		// TODO Auto-generated method stub
-		
+		String category = Const.MODCONF + "Mobs";
+ 
+		endermanDrop = config.getBoolean("Enderman Block", category, true,
+				"Enderman will always drop block they are carrying 100%");
+
 	}
 }

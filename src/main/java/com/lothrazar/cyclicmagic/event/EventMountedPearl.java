@@ -1,5 +1,7 @@
 package com.lothrazar.cyclicmagic.event;
 
+import com.lothrazar.cyclicmagic.util.Const;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,10 +11,13 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EventMountedPearl  implements IFeatureEvent{
 
+	private boolean mountedPearl;
+
 //	private static final String NBT_RIDING_ENTITY = "ride";
 
 	@SubscribeEvent
 	public void onEnderTeleportEvent(EnderTeleportEvent event) {
+		if(!mountedPearl){return;}
 
 		Entity ent = event.getEntity();
 		if (ent instanceof EntityLivingBase == false) { return; }
@@ -69,7 +74,11 @@ public class EventMountedPearl  implements IFeatureEvent{
 
 	@Override
 	public void syncConfig(Configuration config) {
-		// TODO Auto-generated method stub
+		String category = Const.MODCONF + "Player";
+		
+		mountedPearl = config.getBoolean("Pearls On Horseback", category, true,
+				"Enderpearls work on a horse, bringing it with you");
+
 		
 	}
 }
