@@ -21,7 +21,8 @@ public class ExtraButtonRegistry {
 	public static List<String>	blacklistGuis;
 
 	public static void syncConfig(Configuration config) {
-		String category = Const.MODCONF + "Inventory Buttons";
+		String category = Const.ConfigCategory.inventory;
+		 
 		config.setCategoryComment(category, "Terraria-inspired inventory helper buttons");
 
 		List<String> valid = new ArrayList<String>();

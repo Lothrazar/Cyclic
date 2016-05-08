@@ -45,7 +45,7 @@ public class EventEditSign  implements IFeatureEvent{
 
 	@Override
 	public void syncConfig(Configuration config) {
-		String category = Const.MODCONF + "Player";
+		String category = Const.ConfigCategory.player;
 		// TODO Auto-generated method stub
 		editableSigns = config.getBoolean("Editable Signs", category, true, "Allow editing signs with an empty hand");
 		

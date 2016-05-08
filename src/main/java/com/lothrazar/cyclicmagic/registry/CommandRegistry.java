@@ -75,7 +75,8 @@ public class CommandRegistry {
 	}
 
 	public static void syncConfig(Configuration config) {
-		category = Const.MODCONF + "Commands";
+		category = Const.ConfigCategory.commands;
+
 		config.setCategoryComment(category, "Disable any command that was added");
 
 		syncCommandConfig(config, CommandEnderChest.name, false, "Opens your ender chest");

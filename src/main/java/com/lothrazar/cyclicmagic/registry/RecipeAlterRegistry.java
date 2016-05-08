@@ -27,7 +27,7 @@ public class RecipeAlterRegistry {
 
 	public static void syncConfig(Configuration config) {
 
-		String category = Const.MODCONF + "Recipes";
+		String category = Const.ConfigCategory.recipes;
 
 		enabled = config.get(category, "Altered Recipes Enabled", true,"Furnace requires coal in the middle, stone tools require smoothstone to be fully repaired").getBoolean();
 

@@ -35,7 +35,8 @@ public class EventPlayerWakeup  implements IFeatureEvent{
 	@Override
 	public void syncConfig(Configuration config) {
 
-		String category = Const.MODCONF + "Player"; 
+		String category = Const.ConfigCategory.player;
+
 		playerWakeup = config.getBoolean("Wakeup Curse", category, true,
 				"Using a bed to skip the night has some mild potion effect related drawbacks");
 

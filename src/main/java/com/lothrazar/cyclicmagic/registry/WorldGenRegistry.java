@@ -25,7 +25,7 @@ public class WorldGenRegistry {
 
 	public static void syncConfig(Configuration config) {
 
-		String category = Const.MODCONF + "World Generation";
+		String category = Const.ConfigCategory.worldGen;
 		
 		config.setCategoryComment(category, "Control any blocks that get generated in new chunks & new worlds");
 

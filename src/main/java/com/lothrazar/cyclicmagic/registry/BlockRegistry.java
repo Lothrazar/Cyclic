@@ -149,13 +149,13 @@ public class BlockRegistry {
 
 	public static void syncConfig(Configuration config) {
 
-		String category = Const.MODCONF + "BlockChanges";
-		
+		String category = Const.ConfigCategory.blockChanges;
+
 		spawnersUnbreakable = config.getBoolean("Spawners Unbreakable", category, true, "Make mob spawners unbreakable");
 
 		
 		
-		category = Const.MODCONF + "Blocks";
+		category = Const.ConfigCategory.blocks;
 
 		// TODO : requires restart
 		config.setCategoryComment(category, "Disable or customize blocks added to the game");
@@ -166,7 +166,7 @@ public class BlockRegistry {
 
 		
 		
-		category = Const.MODCONF +  "Blocks.Uncrafting";
+		category = Const.ConfigCategory.blocks +  ".Uncrafting";
 		
 		enableBlockUncrafting = config.getBoolean("enabled", category, true, "Enable uncrafting");
 

@@ -42,7 +42,8 @@ public class EventNameVillager  implements IFeatureEvent{
 
 	@Override
 	public void syncConfig(Configuration config) {
-		String category = Const.MODCONF + "Player";
+		String category = Const.ConfigCategory.player;
+
 		nameVillagerTag = config.getBoolean("Villager Nametag", category, true,
 				"Let players name villagers with nametags");
 		

@@ -33,7 +33,7 @@ public class EventEnderChest  implements IFeatureEvent{
 	@Override
 	public void syncConfig(Configuration config) {
 
-		String category = Const.MODCONF + "Player";
+		String category = Const.ConfigCategory.player;
 		easyEnderChest = config.getBoolean("Easy Enderchest", category, true,
 				"Open ender chest without placing it down, just attack with it");
 

@@ -60,7 +60,7 @@ public class MobSpawningRegistry {
 
 	public static void syncConfig(Configuration config) {
 
-		String category = Const.MODCONF + "Mobs";
+		String category = Const.ConfigCategory.mobs;
 
 		String msg = "Allow tons of mobs to spawn in more biomes.  Horses in more places; Cave spiders in mesa and roofed forests; some nether mobs in the desert; enderman in the nether; snowmen in winter biomes;  ghasts in deep ocean; Iron Golems in the jungle; Guardians in rivers.";
 

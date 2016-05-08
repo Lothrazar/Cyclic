@@ -43,7 +43,8 @@ public class EventPotions implements IFeatureEvent {
 	@Override
 	public void syncConfig(Configuration config) {
 
-		String category = Const.MODCONF + "Player"; 
+		String category = Const.ConfigCategory.player;
+
 		cancelPotionInventoryShift = config.getBoolean("Potion Inventory Shift", category, true,
 				"When true, this blocks the potions moving the inventory over");
 

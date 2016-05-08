@@ -123,7 +123,7 @@ public class VillageTradeRegistry {
 	 };
 	
 	public static void syncConfig(Configuration c){
-		String category = Const.MODCONF + "Villagers";
+		String category = Const.ConfigCategory.villagers;
 		extraVillagersEnabled = c.getBoolean("More Trades", category, true, "Adds more  villager types (professions) with more trades such as gunpowder, blaze rods, beef, spider eyes, and more.  Test with the /summon command using profession 5 and careers 0,1.  Also spawn naturally. ");
 	}
 }

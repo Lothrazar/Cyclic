@@ -74,8 +74,8 @@ public class EventMountedPearl  implements IFeatureEvent{
 
 	@Override
 	public void syncConfig(Configuration config) {
-		String category = Const.MODCONF + "Player";
-		
+		String category = Const.ConfigCategory.player;
+
 		mountedPearl = config.getBoolean("Pearls On Horseback", category, true,
 				"Enderpearls work on a horse, bringing it with you");
 

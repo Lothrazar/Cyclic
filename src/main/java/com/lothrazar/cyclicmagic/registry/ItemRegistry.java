@@ -33,7 +33,8 @@ public class ItemRegistry {
 
 	public static void syncConfig(Configuration config) {
 
-		String category = Const.MODCONF + "Items";
+		String category = Const.ConfigCategory.items;
+
 		config.setCategoryComment(category, "Disable or customize items added to the game");
 
 		sceptersEnabled = config.getBoolean("sceptersEnabled", category, true, "Enable the building scepters");
@@ -62,7 +63,7 @@ public class ItemRegistry {
 		prop.setRequiresMcRestart(true);
 		configToggle.put("emerald_gear", prop.getBoolean());
 
-		category = Const.MODCONF + "Items.EnderBook";
+		category = Const.ConfigCategory.items_enderbook; 
 
 		enderBookEnabled = config.getBoolean("Enabled", category, true, "To disable this ender book item");
 
@@ -78,7 +79,7 @@ public class ItemRegistry {
 
 		expCostPerTeleport = config.getInt("Exp Cost", category, 10, 0, 9999, "How many experience points are drained from the player on each teleport.  Set to zero for free teleports to your waypoints.");
 
-		category = Const.MODCONF + "items.HorseFood";
+		category = Const.ConfigCategory.items_horseFood; 
 
 		horseFoodEnabled = config.getBoolean("Enabled", category, true, "To disable all horse upgrade food");
 
@@ -86,7 +87,8 @@ public class ItemRegistry {
 		ItemHorseFood.JUMP_MAX = config.getInt("Max Jump", category, 6, 1, 20, "Maximum value of jump.  Naturally spawned/bred horses seem to max out at 5.5");
 		ItemHorseFood.SPEED_MAX = config.getInt("Max Speed", category, 50, 1, 99, "Maximum value of speed (this is NOT blocks/per second or anything like that)");
 
-		category = Const.MODCONF + "Items.Projectiles";
+		category = Const.ConfigCategory.items_projectiles; 
+		
 		config.addCustomCategoryComment(category, "For each item, you can decide how many the recipe produces. Set to zero to disable the crafting recipe.");
 		torch_recipe = config.getInt("torch.crafted", category, 6, 0, 64, "");
 		lightning_recipe = config.getInt("lightning.crafted", category, 1, 0, 64, "");
@@ -119,7 +121,7 @@ public class ItemRegistry {
 		//EntityHarvestBolt.doesMelonBlocks = config.getBoolean("harvest.does_harvest_melonblock", category, true, "Does it harvest pumpkin block");
 		//EntityHarvestBolt.doesPumpkinBlocks = config.getBoolean("harvest.does_harvest_pumpkinblock", category, true, "Does it harvest melon block");
 
-		category = Const.MODCONF + "items.PowerApples";
+		category = Const.ConfigCategory.items;
 
 		ItemRegistry.apple_bone_enabled = config.get(category, "apple_bone_enabled", true).getBoolean();
 		ItemRegistry.apple_emerald_enabled = config.get(category, "apple_emerald_enabled", true).getBoolean();

@@ -96,8 +96,8 @@ public class EventPassthroughAction  implements IFeatureEvent{
 	@Override
 	public void syncConfig(Configuration config) {
 
-		String category = Const.MODCONF + "Player";
-		
+		String category = Const.ConfigCategory.player;
+
 		passThroughClick = config.getBoolean("PassThroughClick", category, true,
 				"Open chests (and other containers) by passing right through the attached signs, banners, and item frames");
 

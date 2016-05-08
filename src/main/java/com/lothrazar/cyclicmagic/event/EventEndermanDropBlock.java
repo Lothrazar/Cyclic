@@ -33,7 +33,7 @@ public class EventEndermanDropBlock  implements IFeatureEvent{
 
 	@Override
 	public void syncConfig(Configuration config) {
-		String category = Const.MODCONF + "Mobs";
+		String category = Const.ConfigCategory.mobs;//.MODCONF + "Mobs";
  
 		endermanDrop = config.getBoolean("Enderman Block", category, true,
 				"Enderman will always drop block they are carrying 100%");

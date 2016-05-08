@@ -81,7 +81,7 @@ public class EventAnimalDropBuffs  implements IFeatureEvent{
 
 	@Override
 	public void syncConfig(Configuration config) {
-		String category = Const.MODCONF + "Mobs";
+		String category = Const.ConfigCategory.mobs;
 		
 		farmDropBuffs = config.getBoolean("Farm Drops Buffed", category, true,
 				"Increase drops of farm animals: more leather, more wool from shearing, pigs drop a bit more pork");

@@ -52,7 +52,7 @@ public class StackSizeRegistry {
 
 	public static void syncConfig(Configuration config) {
 
-		String category = Const.MODCONF + "Misc";
+		String category = Const.ConfigCategory.blockChanges;
 
 		// config.setCategoryComment(category, "Tons of new recipes for existing
 		// blocks and items. Bonemeal to undye wool; repeater and dispenser tweaks;

@@ -46,7 +46,7 @@ public class EventNametagDeath  implements IFeatureEvent{
 	@Override
 	public void syncConfig(Configuration config) {
 
-		String category = Const.MODCONF + "Mobs";
+		String category = Const.ConfigCategory.mobs; 
 		
 	 	nameTagDeath = config.getBoolean("Name Tag Death", category, true,
 				"When an entity dies that is named with a tag, it drops the nametag");

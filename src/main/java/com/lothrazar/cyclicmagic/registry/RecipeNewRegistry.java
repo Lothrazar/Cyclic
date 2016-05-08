@@ -14,7 +14,7 @@ public class RecipeNewRegistry {
 	public static void syncConfig(Configuration config) {
 
 		// TODO: could config each one by one i guess but this is fine for now
-		String category = Const.MODCONF + "Recipes";	
+		String category = Const.ConfigCategory.recipes;	
 		config.setCategoryComment(category, "New and altered recipes");
 		
 

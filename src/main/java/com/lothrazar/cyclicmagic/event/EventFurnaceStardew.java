@@ -120,7 +120,7 @@ public class EventFurnaceStardew  implements IFeatureEvent{
 
 	@Override
 	public void syncConfig(Configuration config) {
-		String category = Const.MODCONF + "Player";
+		String category = Const.ConfigCategory.player; 
 		
 		stardewFurnace = config.getBoolean("Furnace Speed", category, true,
 				"Quickly fill a furnace by hitting it with fuel or an item, or interact with an empty hand to pull out the results [Inspired by Stardew Valley]");

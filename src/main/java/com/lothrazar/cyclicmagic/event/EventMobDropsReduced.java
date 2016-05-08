@@ -46,8 +46,8 @@ public class EventMobDropsReduced  implements IFeatureEvent{
 
 	@Override
 	public void syncConfig(Configuration config) {
-		String category = Const.MODCONF + "Mobs";
-		 
+		String category = Const.ConfigCategory.mobs;
+
 		monsterDropsNerfed = config.getBoolean("Monster Drops Nerfed", category, true,
 				"Zombies no longer drops crops or iron");
 	 

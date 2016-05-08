@@ -65,7 +65,8 @@ public class EventSignSkullName  implements IFeatureEvent{
 	@Override
 	public void syncConfig(Configuration config) {
 		 
-		String category = Const.MODCONF + "Misc"; 
+		String category = Const.ConfigCategory.player;
+
 		signSkullName = config.getBoolean("Name Player Skulls with Sign", category, true,
 				"Use a player skull on a sign to name the skull based on the top line");
 

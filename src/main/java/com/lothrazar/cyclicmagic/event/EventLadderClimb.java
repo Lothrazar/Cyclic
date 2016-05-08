@@ -33,7 +33,7 @@ public class EventLadderClimb  implements IFeatureEvent{
 	@Override
 	public void syncConfig(Configuration config) {
 
-		String category = Const.MODCONF + "Player";
+		String category = Const.ConfigCategory.player;
 		fastLadderClimb = config.getBoolean("Faster Ladders", category, true,
 				"Allows you to quickly climb ladders by looking up instead of moving forward");
 

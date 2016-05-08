@@ -46,7 +46,7 @@ public class EventFragileTorches  implements IFeatureEvent{
 
 	@Override
 	public void syncConfig(Configuration config) {
-		String category = Const.MODCONF + "Player";
+		String category = Const.ConfigCategory.environment; 
 		
 		fragileTorches = config.getBoolean("Fragile Torches", category, true,
 				"Torches can get knocked over when passed through by living entities");

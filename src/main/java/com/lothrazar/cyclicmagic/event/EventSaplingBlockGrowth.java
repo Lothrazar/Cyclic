@@ -97,8 +97,8 @@ public class EventSaplingBlockGrowth implements IFeatureEvent{
 	@Override
 	public void syncConfig(Configuration config) {
 		config.load();
-		String category = Const.MODCONF + "saplingBiomes";
-	
+		String category = Const.ConfigCategory.environment;
+
 		config.addCustomCategoryComment(category, "A list of biome IDs that each sapling is allowed to grow in.  ");
 
 		String oakCSV = config.get(category, "oak", "4, 18, 132, 39, 166, 167, 21, 23, 151, 149, 22, 6, 134, 3, 20, 34, 12, 29, 157").getString();

@@ -34,7 +34,7 @@ public class EventFoodDetails  implements IFeatureEvent{
 
 	@Override
 	public void syncConfig(Configuration config) {
-		String category = Const.MODCONF + "Player";
+		String category = Const.ConfigCategory.player; 
 		
 		foodDetails = config.getBoolean("Food Details", category, true, "Add food value and saturation to its info");
 

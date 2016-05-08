@@ -54,7 +54,7 @@ public class EventEntityItemExpire  implements IFeatureEvent{
 	}
 
 	public  void syncConfig(Configuration config) {
-		String category = Const.MODCONF + "misc";
+		String category = Const.ConfigCategory.environment;
 		
 		enabled = config.getBoolean("plantDespawningSaplings", category, true, "Plant saplings if they despawn on grass/dirt");
 		

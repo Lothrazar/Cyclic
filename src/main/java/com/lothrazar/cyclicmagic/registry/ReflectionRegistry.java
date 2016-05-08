@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.registry;
 
 import java.lang.reflect.Field;
+
+import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.passive.EntityHorse;
@@ -37,10 +39,8 @@ public class ReflectionRegistry {
 		}
 
 		if (horseJumpStrength == null) {
-			System.err.println(Const.MODID + ":horseJumpStrength: Error - field not found using reflection");
-			System.err.println(Const.MODID + ":horseJumpStrength: Error - field not found using reflection");
-			System.err.println(Const.MODID + ":horseJumpStrength: Error - field not found using reflection");
-			System.err.println(Const.MODID + ":horseJumpStrength: Error - field not found using reflection");
+			 
+			ModMain.logger.error(Const.MODID + ":horseJumpStrength: Error - field not found using reflection");
 		}
 	}
 }
