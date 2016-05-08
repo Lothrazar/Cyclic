@@ -50,7 +50,7 @@ public class EventPlayerDeathCoords  implements IFeatureEvent{
 
 	@Override
 	public void syncConfig(Configuration config) {
-		String category = Const.MODCONF + "Misc";
+		String category = Const.MODCONF + "Player";
 		playerDeathCoords = config.getBoolean("Death Coords", category, true,
 				"Display your coordinates in chat when you die");
 	

@@ -20,8 +20,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class PotionRegistry {
 
-	public static float					slowfallSpeed;
-	public static boolean				renderOnLeft;
+	public static final float slowfallSpeed = 0.41F;
+
 	// tired;//http://www.minecraftforge.net/wiki/Potion_Tutorial
 	public static PotionCustom	slowfall;
 	public static PotionCustom	magnet;
@@ -171,10 +171,6 @@ public class PotionRegistry {
 	}
 
 	public static void syncConfig(Configuration config) {
-
-		String category = Const.MODCONF + "Misc";
-
-		PotionRegistry.slowfallSpeed = config.getFloat("Slowfall Speed", category, 0.41F, 0.1F, 1F, "This factor affects how much the slowfall effect slows down the entity.");
 
 	}
 }
