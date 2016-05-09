@@ -7,10 +7,11 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 
-public class EventEndermanDropBlock  implements IFeatureEvent{
+public class EventEndermanDropBlock  implements IHasConfig{
 
 	private boolean endermanDrop;
 	

@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.item;
 
+import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.util.UtilHarvestCrops;
 
 import net.minecraft.entity.player.EntityPlayer;

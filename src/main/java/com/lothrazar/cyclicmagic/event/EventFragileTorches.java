@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.event;
 
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.util.Const;
 
 import net.minecraft.entity.Entity;
@@ -11,7 +12,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventFragileTorches  implements IFeatureEvent{
+public class EventFragileTorches  implements IHasConfig{
 
 	private boolean fragileTorches;
 

@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
+
+import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilInventory;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
@@ -28,6 +30,8 @@ public class ItemPaperCarbon extends Item implements IHasRecipe {
 	public static final String	name				= "carbon_paper";
 
 	public static int						NOTE_EMPTY	= -1;
+
+	public static boolean enabled;
 	private static final String	KEY_SIGN0		= "sign_0";
 	private static final String	KEY_SIGN1		= "sign_1";
 	private static final String	KEY_SIGN2		= "sign_2";

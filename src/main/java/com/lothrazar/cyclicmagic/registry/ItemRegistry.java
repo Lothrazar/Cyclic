@@ -3,6 +3,9 @@ package com.lothrazar.cyclicmagic.registry;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.lothrazar.cyclicmagic.IHasConfig;
+import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityBlazeBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityHarvestBolt;
@@ -27,35 +30,50 @@ import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemRegistry {
-
 	public static ArrayList<Item> items					= new ArrayList<Item>();
-	private static Map<String, Boolean>	configToggle	= new HashMap<String, Boolean>();
+	private static boolean emeraldGearEnabled ; 
+	
+	public static class ModItems{
+		
+		static ItemEnderPearlReuse ender_pearl_reuse;
+	}
+	
+	public ItemRegistry(){
+
+		ModItems.ender_pearl_reuse = new ItemEnderPearlReuse();
+		items.add(ModItems.ender_pearl_reuse);
+	}
 
 	public static void syncConfig(Configuration config) {
-		String category = Const.ConfigCategory.items;
+		Property prop;
+		for (Item item : items) {
+			if (item instanceof IHasConfig) {
+				((IHasConfig) item).syncConfig(config);
+			}
+		}
 		
 		ItemCyclicWand.syncConfig(config);
 
-		Property prop = config.get(category, ItemEnderPearlReuse.name, true, "Reuseable ender pearl");
-		prop.setRequiresMcRestart(true);
-		configToggle.put(ItemEnderPearlReuse.name, prop.getBoolean());
+		String category = Const.ConfigCategory.items;
+		  
 
 		prop = config.get(category, ItemPaperCarbon.name, true, "Special paper to copy signs and note block data");
 		prop.setRequiresMcRestart(true);
-		configToggle.put(ItemPaperCarbon.name, prop.getBoolean());
+		ItemPaperCarbon.enabled = prop.getBoolean();
 
 		prop = config.get(category, ItemChestSack.name, true, "A bag that transports chests along with its contents");
 		prop.setRequiresMcRestart(true);
-		configToggle.put(ItemChestSack.name, prop.getBoolean());
+		ItemChestSack.enabled = prop.getBoolean();
 
-		prop = config.get(category, "emerald_gear", true, "Full set of emerald gear with similar properties as diamond");
+		prop = config.get(category, "emeraldGear", true, "Full set of emerald gear with similar properties as diamond");
 		prop.setRequiresMcRestart(true);
-		configToggle.put("emerald_gear", prop.getBoolean());
+		emeraldGearEnabled  =   prop.getBoolean();
 
 		ItemEnderBook.syncConfig(config);
 		category = Const.ConfigCategory.items_horseFood; 
 
-		horseFoodEnabled = config.getBoolean("Enabled", category, true, "To disable all horse upgrade food");
+		//ItemHorseFood.syncConfig.
+		ItemHorseFood.horseFoodEnabled = config.getBoolean("Enabled", category, true, "To disable all horse upgrade food");
 
 		ItemHorseFood.HEARTS_MAX = config.getInt("Max Hearts", category, 20, 1, 100, "Maximum number of upgraded hearts");
 		ItemHorseFood.JUMP_MAX = config.getInt("Max Jump", category, 6, 1, 20, "Maximum value of jump.  Naturally spawned/bred horses seem to max out at 5.5");
@@ -110,18 +128,18 @@ public class ItemRegistry {
 
 		// category = Const.MODCONF + "items.PowerApples.Recipes";
 
-		config.addCustomCategoryComment(category, "True means you have to fully surround the apple with 8 items, false means only a single item will craft with the red apple.");
+		//config.addCustomCategoryComment(category, "True means you have to fully surround the apple with 8 items, false means only a single item will craft with the red apple.");
 
-		ItemRegistry.apple_bone_expensive = config.get(category, "apple_bone_expensive", true).getBoolean();
-		ItemRegistry.apple_emerald_expensive = config.get(category, "apple_emerald_expensive", true).getBoolean();
-		ItemRegistry.apple_diamond_expensive = config.get(category, "apple_diamond_expensive", false).getBoolean();
-		ItemRegistry.apple_ender_expensive = config.get(category, "apple_ender_expensive", true).getBoolean();
-		ItemRegistry.apple_lapis_expensive = config.get(category, "apple_lapis_expensive", true).getBoolean();
-		ItemRegistry.apple_chocolate_expensive = config.get(category, "apple_chocolate_expensive", true).getBoolean();
-		ItemRegistry.apple_netherwart_expensive = config.get(category, "apple_netherwart_expensive", true).getBoolean();
-		ItemRegistry.apple_prismarine_expensive = config.get(category, "apple_prismarine_expensive", true).getBoolean();
-		ItemRegistry.apple_clownfish_expensive = config.get(category, "apple_clownfish_expensive", false).getBoolean();
-		ItemRegistry.apple_chorus_expensive = config.get(category, "apple_chorus_expensive", false).getBoolean();
+		ItemRegistry.apple_bone_expensive = 		true;//config.get(category, "apple_bone_expensive", true).getBoolean();
+		ItemRegistry.apple_emerald_expensive = 		true;//config.get(category, "apple_emerald_expensive", true).getBoolean();
+		ItemRegistry.apple_diamond_expensive =		true;// config.get(category, "apple_diamond_expensive", false).getBoolean();
+		ItemRegistry.apple_ender_expensive =		true;//	 config.get(category, "apple_ender_expensive", true).getBoolean();
+		ItemRegistry.apple_lapis_expensive = 		true;//config.get(category, "apple_lapis_expensive", true).getBoolean();
+		ItemRegistry.apple_chocolate_expensive =	true;//	 config.get(category, "apple_chocolate_expensive", true).getBoolean();
+		ItemRegistry.apple_netherwart_expensive = 	true;//	config.get(category, "apple_netherwart_expensive", true).getBoolean();
+		ItemRegistry.apple_prismarine_expensive = 	true;//	config.get(category, "apple_prismarine_expensive", true).getBoolean();
+		ItemRegistry.apple_clownfish_expensive =	true;//		 config.get(category, "apple_clownfish_expensive", false).getBoolean();
+		ItemRegistry.apple_chorus_expensive = 		true;//config.get(category, "apple_chorus_expensive", false).getBoolean();
 
 	}
 
@@ -144,9 +162,7 @@ public class ItemRegistry {
 	public static int									dungeon_recipe;
 	public static int									tnt_recipe;
 	public static int									blaze_recipe;
-	public static boolean						sceptersEnabled;
 	public static boolean						enderBookEnabled;
-	private static boolean						horseFoodEnabled;
 
 	public final static int						I					= 0;
 	public final static int						II				= 1;
@@ -264,6 +280,7 @@ public class ItemRegistry {
 	private static void registerRecipes() {
 
 		ItemHorseFood.addRecipes();// TODO:
+		
 		for (Item item : items) {
 			if (item instanceof IHasRecipe) {
 				((IHasRecipe) item).addRecipe();
@@ -275,7 +292,7 @@ public class ItemRegistry {
 
 		registerMaterials();
 
-		if (sceptersEnabled) {
+		if (ItemCyclicWand.sceptersEnabled) {
 
 			cyclic_wand_build = new ItemCyclicWand();
 			registerItem(cyclic_wand_build, "cyclic_wand_build");
@@ -313,19 +330,18 @@ public class ItemRegistry {
 		ItemInventoryStorage storage_bag = new ItemInventoryStorage();
 		registerItem(storage_bag, "storage_bag");
 		
-		if (configToggle.get(ItemEnderPearlReuse.name)) {
+		if (ItemEnderPearlReuse.enabled) {
 
-			ItemEnderPearlReuse ender_pearl_reuse = new ItemEnderPearlReuse();
-			registerItem(ender_pearl_reuse, ItemEnderPearlReuse.name);
+			registerItem(ModItems.ender_pearl_reuse, ItemEnderPearlReuse.name);
 		}
 
-		if (configToggle.get(ItemPaperCarbon.name)) {
+		if (ItemPaperCarbon.enabled) {
 
 			Item carbon_paper = new ItemPaperCarbon();
 			registerItem(carbon_paper, ItemPaperCarbon.name);
 		}
 
-		if (configToggle.get(ItemChestSack.name)) {
+		if (ItemChestSack.enabled) {
 
 			chest_sack = new ItemChestSack();
 			registerItem(chest_sack, ItemChestSack.name, true);// true for ishidden
@@ -337,7 +353,7 @@ public class ItemRegistry {
 		// thanks for help:
 		// http://bedrockminer.jimdo.com/modding-tutorials/basic-modding-1-7/custom-tools-swords/
 
-		if (configToggle.get("emerald_gear")) {
+		if (emeraldGearEnabled) {
 
 			emerald_sword = new ItemEmeraldSword();
 			registerItem(emerald_sword, ItemEmeraldSword.name);
@@ -375,7 +391,7 @@ public class ItemRegistry {
 			registerItem(book_ender, "book_ender");
 		}
 
-		if (horseFoodEnabled) {
+		if (ItemHorseFood.horseFoodEnabled) {
 
 			emeraldCarrot = new ItemHorseFood();
 			ItemRegistry.registerItem(emeraldCarrot, "horse_upgrade_type");

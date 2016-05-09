@@ -2,6 +2,8 @@ package com.lothrazar.cyclicmagic.event;
 
 import java.util.List;
 
+import com.lothrazar.cyclicmagic.IHasConfig;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,7 +16,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EventMounted implements IFeatureEvent{
+public class EventMounted implements IHasConfig{
 
 	@SubscribeEvent
 	public void onLivingHurtEvent(LivingHurtEvent event){

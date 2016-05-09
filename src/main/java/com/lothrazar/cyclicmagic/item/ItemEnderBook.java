@@ -2,6 +2,8 @@ package com.lothrazar.cyclicmagic.item;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.gui.waypoints.GuiEnderBook;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;

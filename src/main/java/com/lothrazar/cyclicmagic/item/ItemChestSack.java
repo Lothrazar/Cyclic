@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
+
+import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -23,6 +25,8 @@ public class ItemChestSack extends Item implements IHasRecipe {
 
 	public static final String	KEY_NBT		= "itemtags";
 	public static final String	KEY_BLOCK	= "block";
+
+	public static boolean enabled;
 
 	public ItemChestSack() {
 

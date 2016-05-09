@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.event;
 
 import java.text.DecimalFormat;
+
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.item.ItemHorseFood;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.client.Minecraft;
@@ -17,7 +19,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EventHorseFood implements IFeatureEvent {
+public class EventHorseFood implements IHasConfig {
 
 	@SubscribeEvent
 	public void onEntityInteractEvent(EntityInteract event) {

@@ -8,12 +8,14 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.net.MessageBarMove;
 import com.lothrazar.cyclicmagic.net.MessageSlotMove;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
 
-public class EventKeyInput implements IFeatureEvent{
+public class EventKeyInput implements IHasConfig{
 
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent

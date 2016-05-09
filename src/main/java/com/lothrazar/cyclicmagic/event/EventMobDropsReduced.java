@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.event;
 
 import java.util.List;
 
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.util.Const;
 
 import net.minecraft.entity.Entity;
@@ -12,7 +13,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventMobDropsReduced  implements IFeatureEvent{
+public class EventMobDropsReduced  implements IHasConfig{
 
 
 	private static boolean monsterDropsNerfed;

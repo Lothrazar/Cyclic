@@ -18,10 +18,11 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteractSpecific;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 
-public class EventAnimalDropBuffs  implements IFeatureEvent{
+public class EventAnimalDropBuffs  implements IHasConfig{
 
 	private static boolean farmDropBuffs;
 	

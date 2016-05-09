@@ -28,6 +28,8 @@ public class ItemHorseFood extends Item {
 	private static double	JUMP_SCALE	= 1.02;	// %age
 	private static double	SPEED_SCALE	= 1.05;	// %age
 
+	public static boolean						horseFoodEnabled;
+	
 	public ItemHorseFood() {
 
 		super();

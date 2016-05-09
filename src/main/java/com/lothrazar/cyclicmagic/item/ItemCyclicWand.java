@@ -29,6 +29,7 @@ public class ItemCyclicWand extends Item {
 
 	private static final String NBT_SPELLCURRENT = "spell_id";
 	private List<ISpell> spellbook;
+	public static boolean						sceptersEnabled;
 
 	public ItemCyclicWand() {
 
@@ -429,7 +430,7 @@ public class ItemCyclicWand extends Item {
 
 		config.setCategoryComment(category, "Disable or customize items added to the game");
 
-		ItemRegistry.sceptersEnabled = config.getBoolean("sceptersEnabled", category, true, "Enable the building scepters");
+		sceptersEnabled = config.getBoolean("sceptersEnabled", category, true, "Enable the building scepters");
 
 		SpellRegistry.renderOnLeft = config.getBoolean("scepter_HUD_left", category, true, "True for top left of the screen, false for top right");
 

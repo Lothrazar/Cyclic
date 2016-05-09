@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
+
+import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import net.minecraft.entity.player.EntityPlayer;

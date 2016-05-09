@@ -3,11 +3,13 @@ package com.lothrazar.cyclicmagic.registry;
 import java.util.ArrayList;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
+
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.event.*;
 
 public class EventRegistry {
 	
-	private ArrayList<IFeatureEvent> featureEvents = new ArrayList<IFeatureEvent>();
+	private ArrayList<IHasConfig> featureEvents = new ArrayList<IHasConfig>();
 	
 	public EventRegistry(){
 		featureEvents.add(new EventAnimalDropBuffs());
@@ -44,13 +46,13 @@ public class EventRegistry {
 	}
  
 	public void syncConfig(Configuration config) {
-		for (IFeatureEvent e : featureEvents) {
+		for (IHasConfig e : featureEvents) {
 			e.syncConfig(config);
 		}
 	}
 
 	public void register() {
-		for (IFeatureEvent e : featureEvents) {
+		for (IHasConfig e : featureEvents) {
 			MinecraftForge.EVENT_BUS.register(e);
 		}
 	}

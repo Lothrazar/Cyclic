@@ -6,10 +6,11 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 
-public class EventPlayerDeathCoords  implements IFeatureEvent{
+public class EventPlayerDeathCoords  implements IHasConfig{
 
 	private static boolean playerDeathCoords;
 	
