@@ -3,6 +3,7 @@ package com.lothrazar.cyclicmagic.item;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.gui.waypoints.GuiEnderBook;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
@@ -29,9 +30,11 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ItemEnderBook extends Item implements IHasRecipe {
+public class ItemEnderBook extends Item implements IHasRecipe,IHasConfig {
 	public static String	KEY_LOC			= "location";
 	public static String	KEY_LARGEST	= "loc_largest";
+	public static boolean enabled;
+	public static final String name = "book_ender";
 
 	public ItemEnderBook() {
 		super();
@@ -90,7 +93,7 @@ public class ItemEnderBook extends Item implements IHasRecipe {
 	private static ItemStack getPlayersBook(EntityPlayer player) {
 
 		ItemStack book = player.getHeldItem(EnumHand.MAIN_HAND);
-		if (book == null || book.getItem() != ItemRegistry.book_ender) {
+		if (book == null || book.getItem() instanceof ItemEnderBook == false) {
 			book = player.getHeldItem(EnumHand.OFF_HAND);
 		}
 
@@ -232,12 +235,12 @@ public class ItemEnderBook extends Item implements IHasRecipe {
 		}
 	}
 
-	public static void syncConfig(Configuration config) {
+	public void syncConfig(Configuration config) {
 		String category;
 		
 		category = Const.ConfigCategory.items_enderbook; 
 		
-		ItemRegistry.enderBookEnabled = config.getBoolean("Enabled", category, true, "To disable this ender book item");		
+		enabled = config.getBoolean("Enabled", category, true, "To disable this ender book item");		
 		ItemRegistry.doesPauseGame = config.getBoolean("Gui Pauses Game", category, false, "The Ender Book GUI will pause the game (single player)");	
 		ItemRegistry.craftNetherStar = config.getBoolean("Recipe Nether Star", category, true, "The Ender Book requires a nether star to craft.  REQUIRES RESTART.");
 		ItemRegistry.showCoordTooltips = config.getBoolean("Show Tooltip Coords", category, true, "Waypoint buttons will show the exact coordinates in a hover tooltip.");		

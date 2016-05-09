@@ -51,7 +51,7 @@ public class ItemChestSackEmpty extends Item {
 
 		NBTTagCompound itemTag = UtilNBT.writeInventoryToNewTag(invo, ItemChestSack.KEY_NBT);
 
-		ItemStack drop = new ItemStack(ItemRegistry.chest_sack);  
+		ItemStack drop = new ItemStack(this);  
 
 		drop.setTagCompound(itemTag);
 

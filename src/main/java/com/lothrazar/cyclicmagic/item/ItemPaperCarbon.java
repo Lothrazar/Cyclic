@@ -2,8 +2,11 @@ package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
 
+import net.minecraftforge.common.config.Property;
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilInventory;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -23,9 +26,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class ItemPaperCarbon extends Item implements IHasRecipe {
+public class ItemPaperCarbon extends Item implements IHasRecipe, IHasConfig {
 
 	public static final String	name				= "carbon_paper";
 
@@ -287,5 +291,15 @@ public class ItemPaperCarbon extends Item implements IHasRecipe {
 		
 		//also let you clean off the paper , make one with no NBT
 		GameRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this));
+	}
+
+	@Override
+	public void syncConfig(Configuration config) {
+
+
+		Property prop = config.get(Const.ConfigCategory.items, ItemPaperCarbon.name, true, "Special paper to copy signs and note block data");
+		prop.setRequiresMcRestart(true);
+		ItemPaperCarbon.enabled = prop.getBoolean();
+
 	}
 }

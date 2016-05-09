@@ -36,12 +36,19 @@ public class ItemRegistry {
 	public static class ModItems{
 		
 		static ItemEnderPearlReuse ender_pearl_reuse;
+		static ItemPaperCarbon carbon_paper;
+		public static ItemChestSack	chest_sack;
+		static ItemEnderBook book_ender;
 	}
 	
 	public ItemRegistry(){
 
 		ModItems.ender_pearl_reuse = new ItemEnderPearlReuse();
 		items.add(ModItems.ender_pearl_reuse);
+		ModItems.carbon_paper = new ItemPaperCarbon();
+		items.add(ModItems.carbon_paper);
+		ModItems.book_ender = new ItemEnderBook();
+		items.add(ModItems.book_ender);
 	}
 
 	public static void syncConfig(Configuration config) {
@@ -56,25 +63,16 @@ public class ItemRegistry {
 
 		String category = Const.ConfigCategory.items;
 		  
-
-		prop = config.get(category, ItemPaperCarbon.name, true, "Special paper to copy signs and note block data");
-		prop.setRequiresMcRestart(true);
-		ItemPaperCarbon.enabled = prop.getBoolean();
-
-		prop = config.get(category, ItemChestSack.name, true, "A bag that transports chests along with its contents");
-		prop.setRequiresMcRestart(true);
-		ItemChestSack.enabled = prop.getBoolean();
-
 		prop = config.get(category, "emeraldGear", true, "Full set of emerald gear with similar properties as diamond");
 		prop.setRequiresMcRestart(true);
 		emeraldGearEnabled  =   prop.getBoolean();
 
-		ItemEnderBook.syncConfig(config);
+		//ItemEnderBook.syncConfig(config);
+		
+		
 		category = Const.ConfigCategory.items_horseFood; 
 
-		//ItemHorseFood.syncConfig.
 		ItemHorseFood.horseFoodEnabled = config.getBoolean("Enabled", category, true, "To disable all horse upgrade food");
-
 		ItemHorseFood.HEARTS_MAX = config.getInt("Max Hearts", category, 20, 1, 100, "Maximum number of upgraded hearts");
 		ItemHorseFood.JUMP_MAX = config.getInt("Max Jump", category, 6, 1, 20, "Maximum value of jump.  Naturally spawned/bred horses seem to max out at 5.5");
 		ItemHorseFood.SPEED_MAX = config.getInt("Max Speed", category, 50, 1, 99, "Maximum value of speed (this is NOT blocks/per second or anything like that)");
@@ -162,8 +160,7 @@ public class ItemRegistry {
 	public static int									dungeon_recipe;
 	public static int									tnt_recipe;
 	public static int									blaze_recipe;
-	public static boolean						enderBookEnabled;
-
+	 
 	public final static int						I					= 0;
 	public final static int						II				= 1;
 	public final static int						III				= 2;
@@ -206,11 +203,9 @@ public class ItemRegistry {
 	public static Item								emerald_chestplate;
 	public static Item								emerald_leggings;
 	public static Item								emerald_boots;
-	public static ItemChestSack				chest_sack;
-	public static ItemChestSackEmpty	chest_sack_empty;
 	public static ToolMaterial				MATERIAL_EMERALD;
 	public static ArmorMaterial				ARMOR_MATERIAL_EMERALD;
-	public static ItemEnderBook				book_ender;
+
 	public static ItemHorseFood				emeraldCarrot;
 	public static ItemHorseFood				lapisCarrot;
 	public static ItemHorseFood				diamondCarrot;
@@ -337,17 +332,21 @@ public class ItemRegistry {
 
 		if (ItemPaperCarbon.enabled) {
 
-			Item carbon_paper = new ItemPaperCarbon();
-			registerItem(carbon_paper, ItemPaperCarbon.name);
+			registerItem(ModItems.carbon_paper, ItemPaperCarbon.name);
 		}
 
 		if (ItemChestSack.enabled) {
 
-			chest_sack = new ItemChestSack();
-			registerItem(chest_sack, ItemChestSack.name, true);// true for ishidden
+			ModItems.chest_sack = new ItemChestSack();
+			registerItem(ModItems.chest_sack, ItemChestSack.name, true);// true for ishidden
 
-			chest_sack_empty = new ItemChestSackEmpty();
+			ItemChestSackEmpty chest_sack_empty = new ItemChestSackEmpty();
 			registerItem(chest_sack_empty, ItemChestSackEmpty.name);
+		}
+		
+		if(ItemEnderBook.enabled){
+			registerItem(ModItems.book_ender, ItemEnderBook.name);
+			
 		}
 
 		// thanks for help:
@@ -385,12 +384,6 @@ public class ItemRegistry {
 			registerItem(emerald_boots, "emerald_boots");
 
 		}
-
-		if (enderBookEnabled) {
-			book_ender = new ItemEnderBook();
-			registerItem(book_ender, "book_ender");
-		}
-
 		if (ItemHorseFood.horseFoodEnabled) {
 
 			emeraldCarrot = new ItemHorseFood();
