@@ -30,11 +30,17 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ItemEnderBook extends Item implements IHasRecipe,IHasConfig {
-	public static String	KEY_LOC			= "location";
-	public static String	KEY_LARGEST	= "loc_largest";
+public class ItemEnderBook extends Item implements IHasRecipe, IHasConfig {
+	public static String KEY_LOC = "location";
+	public static String KEY_LARGEST = "loc_largest";
 	public static boolean enabled;
 	public static final String name = "book_ender";
+	public boolean craftNetherStar;
+	public boolean doesPauseGame;
+	public boolean showCoordTooltips;
+	public int maximumSaved;
+	public int btnsPerColumn;
+	public static int expCostPerTeleport;
 
 	public ItemEnderBook() {
 		super();
@@ -61,19 +67,18 @@ public class ItemEnderBook extends Item implements IHasRecipe,IHasConfig {
 
 		return list;
 	}
-	
-	private static int getLocationsCount(ItemStack itemStack){
+
+	private static int getLocationsCount(ItemStack itemStack) {
 		return getLocations(itemStack).size();
 	}
 
-  @SideOnly(Side.CLIENT)
-  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
-  {
-  	tooltip.add(""+ getLocationsCount(stack));
-  }
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+		tooltip.add("" + getLocationsCount(stack));
+	}
 
 	public static int getLargestSlot(ItemStack itemStack) {
-		
+
 		return UtilNBT.getTagCompoundNotNull(itemStack).getInteger(KEY_LARGEST);
 	}
 
@@ -82,11 +87,12 @@ public class ItemEnderBook extends Item implements IHasRecipe,IHasConfig {
 
 		if (empty == 0) {
 			empty = 1;
-		}// first index is 1 not zero
+		} // first index is 1 not zero
 
-		UtilNBT.getTagCompoundNotNull(itemStack).setInteger(KEY_LARGEST, empty + 1);// save the
-		                                                              // next empty
-		                                                              // one
+		UtilNBT.getTagCompoundNotNull(itemStack).setInteger(KEY_LARGEST, empty + 1);// save
+																					// the
+		// next empty
+		// one
 		return empty;
 	}
 
@@ -112,8 +118,8 @@ public class ItemEnderBook extends Item implements IHasRecipe,IHasConfig {
 		ItemStack book = getPlayersBook(player);
 
 		int id = getEmptySlotAndIncrement(book);// int slot =
-		                                        // entityPlayer.inventory.currentItem
-		                                        // + 1;
+												// entityPlayer.inventory.currentItem
+												// + 1;
 
 		BookLocation loc = new BookLocation(id, player, name);
 
@@ -123,63 +129,67 @@ public class ItemEnderBook extends Item implements IHasRecipe,IHasConfig {
 	private static BookLocation getLocation(ItemStack stack, int slot) {
 		String csv = stack.getTagCompound().getString(ItemEnderBook.KEY_LOC + "_" + slot);
 
-		if (csv == null || csv.isEmpty()) { return null; }
+		if (csv == null || csv.isEmpty()) {
+			return null;
+		}
 
 		return new BookLocation(csv);
 	}
 
 	public static void teleport(EntityPlayer player, int slot)// ItemStack
-	                                                          // enderBookInstance
+																// enderBookInstance
 	{
 		ItemStack book = getPlayersBook(player);
 
 		String csv = book.getTagCompound().getString(ItemEnderBook.KEY_LOC + "_" + slot);
 
-		if (csv == null || csv.isEmpty()) { return; }
+		if (csv == null || csv.isEmpty()) {
+			return;
+		}
 
 		BookLocation loc = getLocation(book, slot);
-		if (player.dimension != loc.dimension) { return; }
+		if (player.dimension != loc.dimension) {
+			return;
+		}
 
 		// then drain
-		int cost = (int) ItemRegistry.expCostPerTeleport;
+		int cost = (int) expCostPerTeleport;
 		UtilExperience.drainExp(player, cost);
 		// play twice on purpose. at old and new locations
 
-		UtilSound.playSound(player,player.getPosition(), SoundEvents.item_chorus_fruit_teleport);
+		UtilSound.playSound(player, player.getPosition(), SoundEvents.item_chorus_fruit_teleport);
 
 		if (player instanceof EntityPlayerMP) {
 			// thanks so much to
 			// http://www.minecraftforge.net/forum/index.php?topic=18308.0
 			EntityPlayerMP p = ((EntityPlayerMP) player);
-			float f = 0.5F;// center the player on the block. also moving up so not
-			               // stuck in floor
-			p.playerNetServerHandler.setPlayerLocation(loc.X - f, loc.Y + 0.9, loc.Z - f, p.rotationYaw, p.rotationPitch);
+			float f = 0.5F;// center the player on the block. also moving up so
+							// not
+							// stuck in floor
+			p.playerNetServerHandler.setPlayerLocation(loc.X - f, loc.Y + 0.9, loc.Z - f, p.rotationYaw,
+					p.rotationPitch);
 			BlockPos dest = new BlockPos(loc.X, loc.Y, loc.Z);
 			// try and force chunk loading
 
 			player.worldObj.getChunkFromBlockCoords(dest).setChunkModified();// .markChunkDirty(dest,
-			                                                                 // null);
+																				// null);
 			/*
 			 * //player.worldObj.markBlockForUpdate(dest);
-			 * if(MinecraftServer.getServer().worldServers.length > 0)
-			 * {
-			 * WorldServer s = MinecraftServer.getServer().worldServers[0];
-			 * if(s != null)
-			 * {
-			 * s.theChunkProviderServer.chunkLoadOverride = true;
-			 * s.theChunkProviderServer.loadChunk(dest.getX(),dest.getZ());
-			 * }
-			 * }
+			 * if(MinecraftServer.getServer().worldServers.length > 0) {
+			 * WorldServer s = MinecraftServer.getServer().worldServers[0]; if(s
+			 * != null) { s.theChunkProviderServer.chunkLoadOverride = true;
+			 * s.theChunkProviderServer.loadChunk(dest.getX(),dest.getZ()); } }
 			 */
 		}
 
-		UtilSound.playSound(player, player.getPosition(),SoundEvents.item_chorus_fruit_teleport);
+		UtilSound.playSound(player, player.getPosition(), SoundEvents.item_chorus_fruit_teleport);
 	}
 
 	public void addRecipe() {
 
-		if (ItemRegistry.craftNetherStar)
-			GameRegistry.addRecipe(new ItemStack(this), "ene", "ebe", "eee", 'e', Items.ender_pearl, 'b', Items.book, 'n', Items.nether_star);
+		if (craftNetherStar)
+			GameRegistry.addRecipe(new ItemStack(this), "ene", "ebe", "eee", 'e', Items.ender_pearl, 'b', Items.book,
+					'n', Items.nether_star);
 		else
 			GameRegistry.addRecipe(new ItemStack(this), "eee", "ebe", "eee", 'e', Items.ender_pearl, 'b', Items.book);
 
@@ -188,8 +198,11 @@ public class ItemEnderBook extends Item implements IHasRecipe,IHasConfig {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer entityPlayer, EnumHand hand) {
-		if (stack == null || stack.getItem() == null) { return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack); }
+	public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer entityPlayer,
+			EnumHand hand) {
+		if (stack == null || stack.getItem() == null) {
+			return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
+		}
 
 		Minecraft.getMinecraft().displayGuiScreen(new GuiEnderBook(entityPlayer, stack));
 
@@ -197,12 +210,12 @@ public class ItemEnderBook extends Item implements IHasRecipe,IHasConfig {
 	}
 
 	public static class BookLocation {
-		public double	X;
-		public double	Y;
-		public double	Z;
-		public int		id;
-		public int		dimension;
-		public String	display;
+		public double X;
+		public double Y;
+		public double Z;
+		public int id;
+		public int dimension;
+		public String display;
 
 		public BookLocation(int idx, EntityPlayer p, String d) {
 			X = p.posX;
@@ -230,23 +243,28 @@ public class ItemEnderBook extends Item implements IHasRecipe,IHasConfig {
 
 		public String coordsDisplay() {
 			// "["+id + "] "+
-			return Math.round(X) + ", " + Math.round(Y) + ", " + Math.round(Z);	// +
-			                                                                   	// showName
+			return Math.round(X) + ", " + Math.round(Y) + ", " + Math.round(Z); // +
+																				// showName
 		}
 	}
 
 	public void syncConfig(Configuration config) {
 		String category;
-		
-		category = Const.ConfigCategory.items_enderbook; 
-		
-		enabled = config.getBoolean("Enabled", category, true, "To disable this ender book item");		
-		ItemRegistry.doesPauseGame = config.getBoolean("Gui Pauses Game", category, false, "The Ender Book GUI will pause the game (single player)");	
-		ItemRegistry.craftNetherStar = config.getBoolean("Recipe Nether Star", category, true, "The Ender Book requires a nether star to craft.  REQUIRES RESTART.");
-		ItemRegistry.showCoordTooltips = config.getBoolean("Show Tooltip Coords", category, true, "Waypoint buttons will show the exact coordinates in a hover tooltip.");		
-		ItemRegistry.maximumSaved = config.getInt("Max Saved", category, 16, 1, 999, "How many waypoints the book can store.");	
-		ItemRegistry.btnsPerColumn = config.getInt("Column Size", category, 8, 1, 50, "Number of waypoints per column.  Change this if they are going off the screen for your chosen GUI Scale.");	
-		ItemRegistry.expCostPerTeleport = config.getInt("Exp Cost", category, 10, 0, 9999, "How many experience points are drained from the player on each teleport.  Set to zero for free teleports to your waypoints.");
+
+		category = Const.ConfigCategory.items_enderbook;
+
+		enabled = config.getBoolean("Enabled", category, true, "To disable this ender book item");
+		doesPauseGame = config.getBoolean("Gui Pauses Game", category, false,
+				"The Ender Book GUI will pause the game (single player)");
+		craftNetherStar = config.getBoolean("Recipe Nether Star", category, true,
+				"The Ender Book requires a nether star to craft.  REQUIRES RESTART.");
+		showCoordTooltips = config.getBoolean("Show Tooltip Coords", category, true,
+				"Waypoint buttons will show the exact coordinates in a hover tooltip.");
+		maximumSaved = config.getInt("Max Saved", category, 16, 1, 999, "How many waypoints the book can store.");
+		btnsPerColumn = config.getInt("Column Size", category, 8, 1, 50,
+				"Number of waypoints per column.  Change this if they are going off the screen for your chosen GUI Scale.");
+		expCostPerTeleport = config.getInt("Exp Cost", category, 10, 0, 9999,
+				"How many experience points are drained from the player on each teleport.  Set to zero for free teleports to your waypoints.");
 
 	}
 }

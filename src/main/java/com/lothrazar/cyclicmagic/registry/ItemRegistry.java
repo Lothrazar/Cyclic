@@ -67,17 +67,16 @@ public class ItemRegistry {
 		prop.setRequiresMcRestart(true);
 		emeraldGearEnabled  =   prop.getBoolean();
 
-		//ItemEnderBook.syncConfig(config);
+
+		ItemHorseFood.syncConfig(config);
+		ItemFoodAppleMagic.syncConfig(config);
 		
 		
-		category = Const.ConfigCategory.items_horseFood; 
-
-		ItemHorseFood.horseFoodEnabled = config.getBoolean("Enabled", category, true, "To disable all horse upgrade food");
-		ItemHorseFood.HEARTS_MAX = config.getInt("Max Hearts", category, 20, 1, 100, "Maximum number of upgraded hearts");
-		ItemHorseFood.JUMP_MAX = config.getInt("Max Jump", category, 6, 1, 20, "Maximum value of jump.  Naturally spawned/bred horses seem to max out at 5.5");
-		ItemHorseFood.SPEED_MAX = config.getInt("Max Speed", category, 50, 1, 99, "Maximum value of speed (this is NOT blocks/per second or anything like that)");
-
+		
+		
 		category = Const.ConfigCategory.items_projectiles; 
+		//TODO: need to set ItemProjectile to have both interfaces
+		//each can do "name" + crafted for recipe config
 		
 		config.addCustomCategoryComment(category, "For each item, you can decide how many the recipe produces. Set to zero to disable the crafting recipe.");
 		torch_recipe = config.getInt("torch.crafted", category, 6, 0, 64, "");
@@ -111,43 +110,8 @@ public class ItemRegistry {
 		//EntityHarvestBolt.doesMelonBlocks = config.getBoolean("harvest.does_harvest_melonblock", category, true, "Does it harvest pumpkin block");
 		//EntityHarvestBolt.doesPumpkinBlocks = config.getBoolean("harvest.does_harvest_pumpkinblock", category, true, "Does it harvest melon block");
 
-		category = Const.ConfigCategory.items;
-
-		ItemRegistry.apple_bone_enabled = config.get(category, "apple_bone_enabled", true).getBoolean();
-		ItemRegistry.apple_emerald_enabled = config.get(category, "apple_emerald_enabled", true).getBoolean();
-		ItemRegistry.apple_diamond_enabled = config.get(category, "apple_diamond_enabled", true).getBoolean();
-		ItemRegistry.apple_ender_enabled = config.get(category, "apple_ender_enabled", true).getBoolean();
-		ItemRegistry.apple_lapis_enabled = config.get(category, "apple_lapis_enabled", true).getBoolean();
-		ItemRegistry.apple_chocolate_enabled = config.get(category, "apple_chocolate_enabled", true).getBoolean();
-		ItemRegistry.apple_netherwart_enabled = config.get(category, "apple_netherwart_enabled", true).getBoolean();
-		ItemRegistry.apple_prismarine_enabled = config.get(category, "apple_prismarine_enabled", true).getBoolean();
-		ItemRegistry.apple_clownfish_enabled = config.get(category, "apple_clownfish_enabled", true).getBoolean();
-		ItemRegistry.apple_chorus_enabled = config.get(category, "apple_chorus_enabled", true).getBoolean();
-
-		// category = Const.MODCONF + "items.PowerApples.Recipes";
-
-		//config.addCustomCategoryComment(category, "True means you have to fully surround the apple with 8 items, false means only a single item will craft with the red apple.");
-
-		ItemRegistry.apple_bone_expensive = 		true;//config.get(category, "apple_bone_expensive", true).getBoolean();
-		ItemRegistry.apple_emerald_expensive = 		true;//config.get(category, "apple_emerald_expensive", true).getBoolean();
-		ItemRegistry.apple_diamond_expensive =		true;// config.get(category, "apple_diamond_expensive", false).getBoolean();
-		ItemRegistry.apple_ender_expensive =		true;//	 config.get(category, "apple_ender_expensive", true).getBoolean();
-		ItemRegistry.apple_lapis_expensive = 		true;//config.get(category, "apple_lapis_expensive", true).getBoolean();
-		ItemRegistry.apple_chocolate_expensive =	true;//	 config.get(category, "apple_chocolate_expensive", true).getBoolean();
-		ItemRegistry.apple_netherwart_expensive = 	true;//	config.get(category, "apple_netherwart_expensive", true).getBoolean();
-		ItemRegistry.apple_prismarine_expensive = 	true;//	config.get(category, "apple_prismarine_expensive", true).getBoolean();
-		ItemRegistry.apple_clownfish_expensive =	true;//		 config.get(category, "apple_clownfish_expensive", false).getBoolean();
-		ItemRegistry.apple_chorus_expensive = 		true;//config.get(category, "apple_chorus_expensive", false).getBoolean();
-
 	}
 
-	public static boolean							doesPauseGame;
-	public static boolean							craftNetherStar;
-	public static boolean							showCoordTooltips;
-	public static int									maximumSaved;
-	public static int									btnsPerColumn;
-	public static int									expCostPerTeleport;
-	public static String							category_public;
 
 	public static int									fishing_recipe;
 	public static int									wool_recipe;
@@ -192,12 +156,6 @@ public class ItemRegistry {
 
 	public static boolean							apple_chorus_expensive;
 	public static boolean							apple_chorus_enabled;
-
-
-	private static final int					clownfish	= 2;
-
-	public static final int						dye_cocoa	= 3;
-	public static final int						dye_lapis	= 4;
 
 	public static Item								emerald_helmet;
 	public static Item								emerald_chestplate;
@@ -515,14 +473,14 @@ public class ItemRegistry {
 		}
 
 		if (apple_chocolate_enabled) {
-			ItemFoodAppleMagic apple_chocolate = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.dye, 1, dye_cocoa), apple_chocolate_expensive);
+			ItemFoodAppleMagic apple_chocolate = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.dye, 1, Const.dye_cocoa), apple_chocolate_expensive);
 			apple_chocolate.addEffect(MobEffects.saturation, time, I);
 			apple_chocolate.addEffect(MobEffects.moveSpeed, time, I);
 			ItemRegistry.registerItem(apple_chocolate, "apple_chocolate"); 
 		}
 
 		if (apple_lapis_enabled) {
-			ItemFoodAppleMagic apple_lapis = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.dye, 1, dye_lapis), apple_lapis_expensive);
+			ItemFoodAppleMagic apple_lapis = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.dye, 1, Const.dye_lapis), apple_lapis_expensive);
 			apple_lapis.addEffect(MobEffects.digSpeed, time, II); // Haste
 			apple_lapis.addEffect(MobEffects.saturation, time, I);
 			ItemRegistry.registerItem(apple_lapis, "apple_lapis"); 
@@ -558,7 +516,7 @@ public class ItemRegistry {
 		}
 
 		if (apple_clownfish_enabled) {
-			ItemFoodAppleMagic apple_slowfall = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.fish, 1, clownfish), apple_clownfish_expensive);
+			ItemFoodAppleMagic apple_slowfall = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.fish, 1, Const.clownfish), apple_clownfish_expensive);
 			ItemRegistry.registerItem(apple_slowfall, "apple_slowfall");
 			apple_slowfall.addEffect(PotionRegistry.slowfall, time, I);
 			apple_slowfall.addEffect(MobEffects.saturation, time, I);

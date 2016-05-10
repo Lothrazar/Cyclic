@@ -25,6 +25,12 @@ public class Const {
 		public static final String items_scepters = items+".scepters";
 	}
 
+
+	public static final int					clownfish	= 2;
+
+	public static final int						dye_cocoa	= 3;
+	public static final int						dye_lapis	= 4;
+
 	public static final int SQ = 18;
 	public static final int ARMOR_SIZE = 4;
 	public static final int ROWS_VANILLA = 3;

@@ -9,6 +9,8 @@ import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.PotionRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
+
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -102,5 +104,37 @@ public class ItemFoodAppleMagic extends ItemFood implements IHasRecipe {
 
 			PotionRegistry.addOrMergePotionEffect(player, new PotionEffect(potions.get(i), potionDurations.get(i), potionAmplifiers.get(i)));
 		}
+	}
+
+	public static void syncConfig(Configuration config) {
+
+		String category = Const.ConfigCategory.items;
+
+		ItemRegistry.apple_bone_enabled = config.get(category, "apple_bone_enabled", true).getBoolean();
+		ItemRegistry.apple_emerald_enabled = config.get(category, "apple_emerald_enabled", true).getBoolean();
+		ItemRegistry.apple_diamond_enabled = config.get(category, "apple_diamond_enabled", true).getBoolean();
+		ItemRegistry.apple_ender_enabled = config.get(category, "apple_ender_enabled", true).getBoolean();
+		ItemRegistry.apple_lapis_enabled = config.get(category, "apple_lapis_enabled", true).getBoolean();
+		ItemRegistry.apple_chocolate_enabled = config.get(category, "apple_chocolate_enabled", true).getBoolean();
+		ItemRegistry.apple_netherwart_enabled = config.get(category, "apple_netherwart_enabled", true).getBoolean();
+		ItemRegistry.apple_prismarine_enabled = config.get(category, "apple_prismarine_enabled", true).getBoolean();
+		ItemRegistry.apple_clownfish_enabled = config.get(category, "apple_clownfish_enabled", true).getBoolean();
+		ItemRegistry.apple_chorus_enabled = config.get(category, "apple_chorus_enabled", true).getBoolean();
+
+		// category = Const.MODCONF + "items.PowerApples.Recipes";
+
+		//config.addCustomCategoryComment(category, "True means you have to fully surround the apple with 8 items, false means only a single item will craft with the red apple.");
+
+		ItemRegistry.apple_bone_expensive = 		true;//config.get(category, "apple_bone_expensive", true).getBoolean();
+		ItemRegistry.apple_emerald_expensive = 		true;//config.get(category, "apple_emerald_expensive", true).getBoolean();
+		ItemRegistry.apple_diamond_expensive =		true;// config.get(category, "apple_diamond_expensive", false).getBoolean();
+		ItemRegistry.apple_ender_expensive =		true;//	 config.get(category, "apple_ender_expensive", true).getBoolean();
+		ItemRegistry.apple_lapis_expensive = 		true;//config.get(category, "apple_lapis_expensive", true).getBoolean();
+		ItemRegistry.apple_chocolate_expensive =	true;//	 config.get(category, "apple_chocolate_expensive", true).getBoolean();
+		ItemRegistry.apple_netherwart_expensive = 	true;//	config.get(category, "apple_netherwart_expensive", true).getBoolean();
+		ItemRegistry.apple_prismarine_expensive = 	true;//	config.get(category, "apple_prismarine_expensive", true).getBoolean();
+		ItemRegistry.apple_clownfish_expensive =	true;//		 config.get(category, "apple_clownfish_expensive", false).getBoolean();
+		ItemRegistry.apple_chorus_expensive = 		true;//config.get(category, "apple_chorus_expensive", false).getBoolean();
+
 	}
 }
