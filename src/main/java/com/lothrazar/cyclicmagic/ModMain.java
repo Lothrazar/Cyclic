@@ -31,7 +31,7 @@ public class ModMain {
 	public final static CreativeTabs			TAB	= new CreativeTabs(Const.MODID) {
         @Override
         public Item getTabIconItem() {
-            return ItemRegistry.chest_sack;
+            return ItemRegistry.ModItems.chest_sack;
         }
     };
     private EventRegistry events;
