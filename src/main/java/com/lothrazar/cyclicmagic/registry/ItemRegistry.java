@@ -11,6 +11,7 @@ import com.lothrazar.cyclicmagic.entity.projectile.EntitySnowballBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityTorchBolt;
 import com.lothrazar.cyclicmagic.item.*;
 import com.lothrazar.cyclicmagic.item.projectile.*;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry.ModItems;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -103,30 +104,6 @@ public class ItemRegistry {
 		ItemHorseFood.syncConfig(config);
 		
 		ItemFoodAppleMagic.syncConfig(config);
-		
-		category = Const.ConfigCategory.items_projectiles; 
-		//TODO: need to set ItemProjectile to have both interfaces
-		//each can do "name" + crafted for recipe config
-
-		BaseItemProjectile.DUNGEONRADIUS = config.getInt("dungeon.radius", category, 64, 8, 128, "Search distance");
-
-		EntityShearingBolt.doesKnockback = config.getBoolean("wool.knockback", category, true, "Does appear to damage sheep on contact");
-		EntityShearingBolt.doesShearChild = config.getBoolean("wool.child", category, true, "Does shear child sheep as well.");
-
-		EntityBlazeBolt.fireSeconds = config.getInt("blaze.fire_seconds", category, 3, 0, 64, "Seconds of fire to put on entity when hit");
-		EntityBlazeBolt.damageEntityOnHit = config.getBoolean("blaze.knockback", category, true, "Does it damage entity or not on hit (0 damage to blaze, 1 to others)");
-		EntitySnowballBolt.damageEntityOnHit = config.getBoolean("snow.knockback", category, true, "Does it damage entity or not on hit (1 damage to blaze, 0 to others)");
-		EntityTorchBolt.damageEntityOnHit = config.getBoolean("torch.knockback", category, true, "Does it damage entity or not on hit (0 dmg like a snowball)");
-
-		EntityHarvestBolt.range_main = config.getInt("harvest.range", category, 6, 1, 32, "Horizontal range on level of hit to harvest");
-		EntityHarvestBolt.range_offset = config.getInt("harvest.rangeOffset", category, 4, 1, 32, "Horizontal range on further heights to harvest");
-		//EntityHarvestBolt.doesHarvestStem = config.getBoolean("harvest.does_harvest_stem", category, false, "Does it harvest stems (pumkin/melon)");
-		//EntityHarvestBolt.doesHarvestSapling = config.getBoolean("harvest.does_harvest_sapling", category, false, "Does it harvest sapling");
-		//EntityHarvestBolt.doesHarvestTallgrass = config.getBoolean("harvest.does_harvest_tallgrass", category, false, "Does it harvest tallgrass/doubleplants");
-		//EntityHarvestBolt.doesHarvestMushroom = config.getBoolean("harvest.does_harvest_mushroom", category, true, "Does it harvest mushrooms");
-		//EntityHarvestBolt.doesMelonBlocks = config.getBoolean("harvest.does_harvest_melonblock", category, true, "Does it harvest pumpkin block");
-		//EntityHarvestBolt.doesPumpkinBlocks = config.getBoolean("harvest.does_harvest_pumpkinblock", category, true, "Does it harvest melon block");
-
 	}
 
 
@@ -292,22 +269,19 @@ public class ItemRegistry {
 
 		}
 
-		ModItems.ender_tnt_1 = new BaseItemProjectile();
+		ModItems.ender_tnt_1 = new ItemProjectileTNT(1);
 		ItemRegistry.registerItem(ModItems.ender_tnt_1, "ender_tnt_1");
-		ModItems.ender_tnt_2 = new BaseItemProjectile();
+		ModItems.ender_tnt_2 = new ItemProjectileTNT(2);
 		ItemRegistry.registerItem(ModItems.ender_tnt_2, "ender_tnt_2");
-		ModItems.ender_tnt_4 = new BaseItemProjectile();
+		ModItems.ender_tnt_4 = new ItemProjectileTNT(3);
 		ItemRegistry.registerItem(ModItems.ender_tnt_4, "ender_tnt_4");
-		ModItems.ender_tnt_6 = new BaseItemProjectile();
+		ModItems.ender_tnt_6 = new ItemProjectileTNT(4);
 		ItemRegistry.registerItem(ModItems.ender_tnt_6, "ender_tnt_6");
 
-		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender_tnt_1, 6), new ItemStack(Items.ender_pearl), new ItemStack(Blocks.tnt), new ItemStack(Items.clay_ball));
-
-		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender_tnt_2, 1), new ItemStack(ModItems.ender_tnt_1), new ItemStack(Items.gunpowder));
-
-		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender_tnt_4, 1), new ItemStack(ModItems.ender_tnt_2), new ItemStack(Items.gunpowder));
-
-		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender_tnt_6, 1), new ItemStack(ModItems.ender_tnt_4), new ItemStack(Items.gunpowder));
+		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender_tnt_1), new ItemStack(Items.ender_pearl), new ItemStack(Blocks.tnt), new ItemStack(Items.clay_ball));
+		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender_tnt_2), new ItemStack(ModItems.ender_tnt_1), new ItemStack(Items.gunpowder), new ItemStack(Items.gunpowder));
+		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender_tnt_4), new ItemStack(ModItems.ender_tnt_2), new ItemStack(Items.gunpowder), new ItemStack(Items.gunpowder));
+		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender_tnt_6), new ItemStack(ModItems.ender_tnt_4), new ItemStack(Items.gunpowder), new ItemStack(Items.gunpowder));
 
 		
 
@@ -330,41 +304,33 @@ public class ItemRegistry {
 		ItemRegistry.registerItem(ModItems.ender_fishing, "ender_fishing");
 
 
-		ModItems.ender_wool = new BaseItemProjectile();
+		ModItems.ender_wool = new ItemProjectileWool();
 		ItemRegistry.registerItem(ModItems.ender_wool, "ender_wool");
 
-		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender_wool, 32), new ItemStack(Items.ender_pearl), new ItemStack(Blocks.wool), new ItemStack(Items.shears));
 		
 
-		ModItems.ender_torch = new BaseItemProjectile();
+		ModItems.ender_torch = new ItemProjectileTorch();
 		ItemRegistry.registerItem(ModItems.ender_torch, "ender_torch");
 		
-		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender_torch, 8), new ItemStack(Items.ender_pearl), new ItemStack(Items.stick), new ItemStack(Items.coal));
-		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender_torch, 8), new ItemStack(Items.ender_pearl), new ItemStack(Items.stick), new ItemStack(Items.coal, 1, 1));// charcoal
-		
+	
 
-		ModItems.ender_water = new BaseItemProjectile();
+		ModItems.ender_water = new ItemProjectileWater();
 		ItemRegistry.registerItem(ModItems.ender_water, "ender_water");
 	
-		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender_water, 4), new ItemStack(Items.blaze_rod), new ItemStack(Items.ender_pearl), new ItemStack(Blocks.ice));
 		
 
-		ModItems.ender_snow = new BaseItemProjectile();
+		ModItems.ender_snow = new ItemProjectileSnow();
 		ItemRegistry.registerItem(ModItems.ender_snow, "ender_snow");
 		
-		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender_snow, 6), new ItemStack(Items.ender_pearl), new ItemStack(Blocks.ice), new ItemStack(Items.snowball));
 		
 
-		ModItems.ender_harvest = new BaseItemProjectile();
+		ModItems.ender_harvest = new ItemProjectileHarvest();
 		ItemRegistry.registerItem(ModItems.ender_harvest, "ender_harvest");
 		
-		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender_harvest, 4), new ItemStack(Items.ender_pearl), new ItemStack(Items.wheat), new ItemStack(Items.wheat_seeds));
-		
+	
 
-		ModItems.ender_lightning = new BaseItemProjectile();
+		ModItems.ender_lightning = new ItemProjectileLightning();
 		ItemRegistry.registerItem(ModItems.ender_lightning, "ender_lightning");
-		
-		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender_lightning, 1), new ItemStack(Items.ender_pearl), new ItemStack(Items.quartz), new ItemStack(Items.ghast_tear));
 		
 
 		int I = PotionRegistry.I;

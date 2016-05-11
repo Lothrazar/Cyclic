@@ -4,7 +4,9 @@ import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDungeonEye;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilInventory;
 import com.lothrazar.cyclicmagic.util.UtilSearchWorld;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,10 +22,13 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRecipe, IHasConfig{
 
+	private static int DUNGEONRADIUS = 64; 
+
 	@Override
 	public void syncConfig(Configuration config) {
-		// TODO Auto-generated method stub
-		
+ 
+		DUNGEONRADIUS = config.getInt("dungeon.radius", Const.ConfigCategory.items_projectiles, 64, 8, 128, "Search distance");
+
 	}
 
 	@Override
@@ -50,12 +55,10 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
 			// also drop it on ground to signal a failed throw
 			BlockPos pos = player.getPosition();
 			
-			if (player.capabilities.isCreativeMode == false) {
-				player.inventory.decrStackSize(player.inventory.currentItem, 1);
-				
-				UtilEntity.dropItemStackInWorld(world, pos, new ItemStack(ItemRegistry.ModItems.ender_dungeon));
-		
-			}
+			UtilInventory.decrStackSize(player, player.inventory.currentItem);
+			
+			UtilEntity.dropItemStackInWorld(world, pos, new ItemStack(ItemRegistry.ModItems.ender_dungeon));
+			
 			//fizz sound
 			UtilSound.playSound(player,pos,SoundEvents.block_fire_extinguish);
 		

@@ -1,24 +1,8 @@
 package com.lothrazar.cyclicmagic.item.projectile;
 
-import com.lothrazar.cyclicmagic.entity.projectile.EntityBlazeBolt;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityDungeonEye;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamite;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityFishingBolt;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityHarvestBolt;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityHomeBolt;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityLightningballBolt;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityShearingBolt;
-import com.lothrazar.cyclicmagic.entity.projectile.EntitySnowballBolt;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityTorchBolt;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityWaterBolt;
-import com.lothrazar.cyclicmagic.registry.ItemRegistry;
-import com.lothrazar.cyclicmagic.registry.ItemRegistry.ModItems;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
-import com.lothrazar.cyclicmagic.util.UtilSearchWorld;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -31,63 +15,15 @@ import net.minecraft.world.World;
 
 public abstract class BaseItemProjectile extends Item {
 
-	public static int DUNGEONRADIUS = 64;// TODO:CONFIG
-
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
 
 		onItemThrow(itemStackIn, worldIn, playerIn, hand);
 		
-		
-
 		return new ActionResult<ItemStack>(EnumActionResult.PASS, itemStackIn);
 	}
 
 	abstract void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand);
-	/*{
-
-		if (held == null) { return; }
-
-		if (held.getItem() == ItemRegistry.ModItems.ender_dungeon) {
-
-		
-		}
-		else if (held.getItem() == ItemRegistry.ModItems.ender_tnt_1) {
-			doThrow(world, player, hand, new EntityDynamite(world, player, 1));
-		}
-		else if (held.getItem() == ItemRegistry.ModItems.ender_tnt_2) {
-			doThrow(world, player, hand, new EntityDynamite(world, player, 2));
-		}
-		else if (held.getItem() == ItemRegistry.ModItems.ender_tnt_4) {
-			doThrow(world, player, hand, new EntityDynamite(world, player, 4));
-		}
-		else if (held.getItem() == ItemRegistry.ModItems.ender_tnt_6) {
-			doThrow(world, player, hand, new EntityDynamite(world, player, 6));
-		}
-		
-		else if (held.getItem() == ItemRegistry.ModItems.ender_bed) {
-			doThrow(world, player, hand, new EntityHomeBolt(world, player));
-		}
-		else if (held.getItem() == ItemRegistry.ModItems.ender_torch) {
-			doThrow(world, player, hand, new EntityTorchBolt(world, player));
-		}
-		else if (held.getItem() == ItemRegistry.ModItems.ender_wool) {
-			doThrow(world, player, hand, new EntityShearingBolt(world, player));
-		}
-	 
-		else if (held.getItem() == ItemRegistry.ModItems.ender_snow) {
-			doThrow(world, player, hand, new EntitySnowballBolt(world, player));
-		}
-		else if (held.getItem() == ItemRegistry.ModItems.ender_water) {
-			doThrow(world, player, hand, new EntityWaterBolt(world, player));
-		}
-		else if (held.getItem() == ItemRegistry.ModItems.ender_harvest) {
-			doThrow(world, player, hand, new EntityHarvestBolt(world, player));
-		}
-		else if (held.getItem() == ItemRegistry.ModItems.ender_lightning) {
-			doThrow(world, player, hand, new EntityLightningballBolt(world, player));
-		}
-	}*/
 
 	protected void doThrow(World world, EntityPlayer player, EnumHand hand, EntityThrowable thing) {
 

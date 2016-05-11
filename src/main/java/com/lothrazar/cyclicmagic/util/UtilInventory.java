@@ -183,9 +183,8 @@ public class UtilInventory {
 	public static void decrStackSize(EntityPlayer entityPlayer, int currentItem) {
 
 		if (entityPlayer.capabilities.isCreativeMode == false) {
-			entityPlayer.inventory.decrStackSize(entityPlayer.inventory.currentItem, 1);
+			entityPlayer.inventory.decrStackSize(currentItem, 1);
 		}
-		
 	}
 
 }
