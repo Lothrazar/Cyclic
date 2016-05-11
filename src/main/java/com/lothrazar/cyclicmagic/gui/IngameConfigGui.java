@@ -10,14 +10,12 @@ import net.minecraftforge.fml.client.config.GuiConfig;
 public class IngameConfigGui extends GuiConfig {
 
 	public IngameConfigGui(GuiScreen parent) {
-
-		super(parent, new ConfigElement(ModMain.getConfig().getCategory(Const.MODID)).getChildElements(), Const.MODID, false, false, "Cyclic Magic");
-		//this.titleLine2 = "See the " + Const.MODID + ".cfg file for even more options";
+		super(parent, new ConfigElement(ModMain.getConfig().getCategory(Const.MODID)).getChildElements(), Const.MODID,
+				false, false, "Cyclic");
 	}
 
 	@Override
 	public void initGui() {
-
 		super.initGui();
 	}
 
