@@ -34,10 +34,6 @@ public class ItemRegistry {
 	
 	public static class ModItems{
 		
-		static ItemEnderPearlReuse ender_pearl_reuse;
-		static ItemPaperCarbon carbon_paper;
-		public static ItemChestSack	chest_sack;
-		public static ItemEnderBook book_ender;
 		public static ItemHorseFood				emeraldCarrot;
 		public static ItemHorseFood				lapisCarrot;
 		public static ItemHorseFood				diamondCarrot;
@@ -47,20 +43,6 @@ public class ItemRegistry {
 		public static Item						emerald_chestplate;
 		public static Item						emerald_leggings;
 		public static Item						emerald_boots;
-		public static BaseItemProjectile			ender_water;
-		public static BaseItemProjectile			ender_snow;
-		public static BaseItemProjectile			ender_harvest;
-		public static BaseItemProjectile			ender_lightning;
-		public static BaseItemProjectile			ender_torch;
-		public static BaseItemProjectile			ender_wool;
-		public static BaseItemProjectile			ender_fishing;
-		public static BaseItemProjectile			ender_dungeon;
-		public static BaseItemProjectile			ender_blaze;
-		//public static BaseItemProjectile			ender_bed;
-		public static BaseItemProjectile			ender_tnt_1;																										// creeper
-		public static BaseItemProjectile			ender_tnt_2;																										// chcr
-		public static BaseItemProjectile			ender_tnt_4;																										// tnt
-		public static BaseItemProjectile			ender_tnt_6;																										// ender
 
 		public static ItemCyclicWand			cyclic_wand_build;       																		// crystal
 		public static ItemCyclicWand			cyclic_wand_range;
@@ -84,7 +66,20 @@ public class ItemRegistry {
 		items.add(new ItemInventoryStorage().setRawName("storage_bag"));
 		items.add(new ItemChestSack().setRawName("chest_sack").setHidden(true));
 		items.add(new ItemChestSackEmpty().setRawName("chest_sack_empty"));
-
+		items.add(new ItemProjectileBlaze().setRawName("ender_blaze"));
+		items.add(new ItemProjectileDungeon().setRawName("ender_dungeon"));
+		items.add(new ItemProjectileFishing().setRawName("ender_fishing"));
+		items.add(new ItemProjectileWool().setRawName("ender_wool"));
+		items.add(new ItemProjectileTorch().setRawName("ender_torch"));
+		items.add(new ItemProjectileWater().setRawName("ender_water"));
+		items.add(new ItemProjectileSnow().setRawName("ender_snow"));
+		items.add(new ItemProjectileHarvest().setRawName("ender_harvest"));
+		items.add(new ItemProjectileLightning().setRawName("ender_lightning"));
+		items.add(new ItemProjectileTNT(1).setRawName("ender_tnt_1"));
+		items.add(new ItemProjectileTNT(2).setRawName("ender_tnt_2"));
+		items.add(new ItemProjectileTNT(3).setRawName("ender_tnt_4"));
+		items.add(new ItemProjectileTNT(4).setRawName("ender_tnt_6"));
+		
 	}
 
 	public static void syncConfig(Configuration config) {
@@ -174,11 +169,6 @@ public class ItemRegistry {
 			GameRegistry.addRecipe(new ItemStack(ModItems.cyclic_wand_fly), "sds", " o ", "gog", 'd', new ItemStack(Blocks.redstone_block), 'g', Items.ghast_tear, 'o', Blocks.obsidian, 's', Items.nether_star);
 		}
 
-		if(ItemEnderBook.enabled){
-			registerItem(ModItems.book_ender, ItemEnderBook.name);
-			
-		}
-
 		// thanks for help:
 		// http://bedrockminer.jimdo.com/modding-tutorials/basic-modding-1-7/custom-tools-swords/
 
@@ -233,68 +223,6 @@ public class ItemRegistry {
 
 		}
 
-		ModItems.ender_tnt_1 = new ItemProjectileTNT(1);
-		ItemRegistry.registerItem(ModItems.ender_tnt_1, "ender_tnt_1");
-		ModItems.ender_tnt_2 = new ItemProjectileTNT(2);
-		ItemRegistry.registerItem(ModItems.ender_tnt_2, "ender_tnt_2");
-		ModItems.ender_tnt_4 = new ItemProjectileTNT(3);
-		ItemRegistry.registerItem(ModItems.ender_tnt_4, "ender_tnt_4");
-		ModItems.ender_tnt_6 = new ItemProjectileTNT(4);
-		ItemRegistry.registerItem(ModItems.ender_tnt_6, "ender_tnt_6");
-
-		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender_tnt_1), new ItemStack(Items.ender_pearl), new ItemStack(Blocks.tnt), new ItemStack(Items.clay_ball));
-		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender_tnt_2), new ItemStack(ModItems.ender_tnt_1), new ItemStack(Items.gunpowder), new ItemStack(Items.gunpowder));
-		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender_tnt_4), new ItemStack(ModItems.ender_tnt_2), new ItemStack(Items.gunpowder), new ItemStack(Items.gunpowder));
-		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender_tnt_6), new ItemStack(ModItems.ender_tnt_4), new ItemStack(Items.gunpowder), new ItemStack(Items.gunpowder));
-
-		
-
-		ModItems.ender_blaze = new ItemProjectileBlaze();
-		ItemRegistry.registerItem(ModItems.ender_blaze, "ender_blaze");
-
-		ModItems.ender_dungeon = new ItemProjectileDungeon();
-		ItemRegistry.registerItem(ModItems.ender_dungeon, "ender_dungeon");
-
-	 
-	
-
-		//ModItems.ender_bed = new BaseItemProjectile();
-		//ItemRegistry.registerItem(ModItems.ender_bed, "ender_bed");
-
-		//GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender_bed, 4), new ItemStack(Items.ender_pearl), new ItemStack(Items.redstone), new ItemStack(Items.bed));
-		
-
-		ModItems.ender_fishing = new ItemProjectileFishing();
-		ItemRegistry.registerItem(ModItems.ender_fishing, "ender_fishing");
-
-
-		ModItems.ender_wool = new ItemProjectileWool();
-		ItemRegistry.registerItem(ModItems.ender_wool, "ender_wool");
-
-		
-
-		ModItems.ender_torch = new ItemProjectileTorch();
-		ItemRegistry.registerItem(ModItems.ender_torch, "ender_torch");
-		
-	
-
-		ModItems.ender_water = new ItemProjectileWater();
-		ItemRegistry.registerItem(ModItems.ender_water, "ender_water");
-	
-		
-
-		ModItems.ender_snow = new ItemProjectileSnow();
-		ItemRegistry.registerItem(ModItems.ender_snow, "ender_snow");
-		
-		
-
-		ModItems.ender_harvest = new ItemProjectileHarvest();
-		ItemRegistry.registerItem(ModItems.ender_harvest, "ender_harvest");
-		
-	
-
-		ModItems.ender_lightning = new ItemProjectileLightning();
-		ItemRegistry.registerItem(ModItems.ender_lightning, "ender_lightning");
 		
 
 		int I = PotionRegistry.I;
