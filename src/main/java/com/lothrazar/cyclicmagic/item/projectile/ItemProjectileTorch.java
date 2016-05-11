@@ -3,7 +3,6 @@ package com.lothrazar.cyclicmagic.item.projectile;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityTorchBolt;
-import com.lothrazar.cyclicmagic.registry.ItemRegistry.ModItems;
 import com.lothrazar.cyclicmagic.util.Const;
 
 import net.minecraft.entity.player.EntityPlayer;

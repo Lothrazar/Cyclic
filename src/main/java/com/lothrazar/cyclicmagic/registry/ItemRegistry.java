@@ -35,34 +35,7 @@ public class ItemRegistry {
 	// only because theyre private, with no getters
 	private static final int		diamondDurability				= 33;
 	private static final int[]	diamondreductionAmounts	= new int[] { 3, 6, 8, 3 };
-	
-	public static class ModItems{
-/*
-		//TODO: fix config for this issue
-		public static ItemEnderBook						book_ender;
-		
-
-		public static ItemHorseFood				emeraldCarrot;
-		public static ItemHorseFood				lapisCarrot;
-		public static ItemHorseFood				diamondCarrot;
-		public static ItemHorseFood				horse_upgrade_jump;
-		public static ItemHorseFood				horse_upgrade_speed;
-		public static Item						emerald_helmet;
-		public static Item						emerald_chestplate;
-		public static Item						emerald_leggings;
-		public static Item						emerald_boots;
-
-		public static ItemCyclicWand			cyclic_wand_build;       																		// crystal
-		public static ItemCyclicWand			cyclic_wand_range;
-		public static ItemCyclicWand			cyclic_wand_fly;
-		public static ItemFoodAppleMagic apple_diamond;
-		public static ItemEmeraldPickaxe emerald_pickaxe;
-		public static ItemEmeraldAxe emerald_axe;
-		public static ItemEmeraldSpade emerald_spade;
-		public static ItemEmeraldHoe emerald_hoe;
-		public static ItemEmeraldSword emerald_sword;
-		*/
-	}
+ 
 	
 	private void addItem(BaseItem i){
 		items.add(i);
@@ -93,6 +66,15 @@ public class ItemRegistry {
 		addItem(new ItemProjectileTNT(3).setRawName("ender_tnt_4"));
 		addItem(new ItemProjectileTNT(4).setRawName("ender_tnt_6"));
 		
+		int dye_lapis = 4;
+ 
+		addItem(new ItemHorseFood(new ItemStack(Items.emerald)).setRawName("horse_upgrade_type"));
+
+		addItem(new ItemHorseFood(new ItemStack(Items.dye, 1, dye_lapis)).setRawName("horse_upgrade_variant"));
+		addItem(new ItemHorseFood(new ItemStack(Items.diamond)).setRawName("horse_upgrade_health"));
+		addItem(new ItemHorseFood(new ItemStack(Items.redstone)).setRawName("horse_upgrade_speed"));
+		addItem(new ItemHorseFood(new ItemStack(Items.ender_eye)).setRawName("horse_upgrade_jump"));
+  
 		//only some need static references
 		addItem(new ItemEnderBook().setRawName("book_ender")); 
 		
@@ -109,11 +91,9 @@ public class ItemRegistry {
 		ItemCyclicWand.syncConfig(config);
 
 		String category = Const.ConfigCategory.items;
-		  
 		prop = config.get(category, "emeraldGear", true, "Full set of emerald gear with similar properties as diamond");
 		prop.setRequiresMcRestart(true);
 		emeraldGearEnabled  =   prop.getBoolean();
-
 
 		ItemHorseFood.syncConfig(config);
 		
@@ -150,8 +130,7 @@ public class ItemRegistry {
 
 	private static void registerRecipes() {
 
-		ItemHorseFood.addRecipes();// TODO:
-		
+		 
 		for (Item item : items) {
 			if (item instanceof IHasRecipe) {
 				((IHasRecipe) item).addRecipe();
@@ -168,7 +147,8 @@ public class ItemRegistry {
 				((BaseItem) item).register();
 			}
 			else{
-				//registerItem(item);
+				System.out.println("WARN: unregistered item"+item.getUnlocalizedName()); 
+				//registerItem(item);//NAME??
 			}
 		}
 
@@ -191,6 +171,8 @@ public class ItemRegistry {
 		// thanks for help:
 		// http://bedrockminer.jimdo.com/modding-tutorials/basic-modding-1-7/custom-tools-swords/
 
+		
+		
 		if (emeraldGearEnabled) {
 
 			Item emerald_sword = new ItemEmeraldSword();
@@ -223,26 +205,7 @@ public class ItemRegistry {
 			registerItem(emerald_boots, "emerald_boots");
 
 		}
-		if (ItemHorseFood.horseFoodEnabled) {
-
-			Item emeraldCarrot = new ItemHorseFood();
-			ItemRegistry.registerItem(emeraldCarrot, "horse_upgrade_type");
-
-			Item lapisCarrot = new ItemHorseFood();
-			ItemRegistry.registerItem(lapisCarrot, "horse_upgrade_variant");
-
-			Item diamondCarrot = new ItemHorseFood();
-			ItemRegistry.registerItem(diamondCarrot, "horse_upgrade_health");
-
-			Item horse_upgrade_speed = new ItemHorseFood();
-			ItemRegistry.registerItem(horse_upgrade_speed, "horse_upgrade_speed");
-
-			Item horse_upgrade_jump = new ItemHorseFood();
-			ItemRegistry.registerItem(horse_upgrade_jump, "horse_upgrade_jump");
-
-		}
-
-		
+ 
 
 		int I = PotionRegistry.I;
 		int II = PotionRegistry.II;
