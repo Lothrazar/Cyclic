@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.item;
+package com.lothrazar.cyclicmagic.item.projectile;
 
 import com.lothrazar.cyclicmagic.entity.projectile.EntityBlazeBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDungeonEye;
@@ -29,7 +29,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ItemProjectile extends Item {
+public abstract class BaseItemProjectile extends Item {
 
 	public static int DUNGEONRADIUS = 64;// TODO:CONFIG
 
@@ -43,37 +43,14 @@ public class ItemProjectile extends Item {
 		return new ActionResult<ItemStack>(EnumActionResult.PASS, itemStackIn);
 	}
 
-	private void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
+	abstract void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand);
+	/*{
 
 		if (held == null) { return; }
 
 		if (held.getItem() == ItemRegistry.ModItems.ender_dungeon) {
 
-			BlockPos blockpos = UtilSearchWorld.findClosestBlock(player, Blocks.mob_spawner, DUNGEONRADIUS);
-
-			if (blockpos != null) {
-
-				EntityDungeonEye entityendereye = new EntityDungeonEye(world, player);
-
-				doThrow(world, player, hand, entityendereye);
-
-				entityendereye.moveTowards(blockpos);
-			}
-			else {
-				// not found, so play sounds to alert player
-
-				// also drop it on ground to signal a failed throw
-				BlockPos pos = player.getPosition();
-				if (player.capabilities.isCreativeMode == false) {
-					player.inventory.decrStackSize(player.inventory.currentItem, 1);
-					
-					UtilEntity.dropItemStackInWorld(world, pos, new ItemStack(ItemRegistry.ModItems.ender_dungeon));
-			
-				}
-				//fizz sound
-				UtilSound.playSound(player,pos,SoundEvents.block_fire_extinguish);
-			
-			}
+		
 		}
 		else if (held.getItem() == ItemRegistry.ModItems.ender_tnt_1) {
 			doThrow(world, player, hand, new EntityDynamite(world, player, 1));
@@ -87,9 +64,7 @@ public class ItemProjectile extends Item {
 		else if (held.getItem() == ItemRegistry.ModItems.ender_tnt_6) {
 			doThrow(world, player, hand, new EntityDynamite(world, player, 6));
 		}
-		else if (held.getItem() == ItemRegistry.ModItems.ender_blaze) {
-			doThrow(world, player, hand, new EntityBlazeBolt(world, player));
-		}
+		
 		else if (held.getItem() == ItemRegistry.ModItems.ender_bed) {
 			doThrow(world, player, hand, new EntityHomeBolt(world, player));
 		}
@@ -99,9 +74,7 @@ public class ItemProjectile extends Item {
 		else if (held.getItem() == ItemRegistry.ModItems.ender_wool) {
 			doThrow(world, player, hand, new EntityShearingBolt(world, player));
 		}
-		else if (held.getItem() == ItemRegistry.ModItems.ender_fishing) {
-			doThrow(world, player, hand, new EntityFishingBolt(world, player));
-		}
+	 
 		else if (held.getItem() == ItemRegistry.ModItems.ender_snow) {
 			doThrow(world, player, hand, new EntitySnowballBolt(world, player));
 		}
@@ -114,9 +87,9 @@ public class ItemProjectile extends Item {
 		else if (held.getItem() == ItemRegistry.ModItems.ender_lightning) {
 			doThrow(world, player, hand, new EntityLightningballBolt(world, player));
 		}
-	}
+	}*/
 
-	private static void doThrow(World world, EntityPlayer player, EnumHand hand, EntityThrowable thing) {
+	protected void doThrow(World world, EntityPlayer player, EnumHand hand, EntityThrowable thing) {
 
 		if (!world.isRemote) {
 

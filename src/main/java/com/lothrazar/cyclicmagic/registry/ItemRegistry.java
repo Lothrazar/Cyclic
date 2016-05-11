@@ -10,6 +10,7 @@ import com.lothrazar.cyclicmagic.entity.projectile.EntityShearingBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntitySnowballBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityTorchBolt;
 import com.lothrazar.cyclicmagic.item.*;
+import com.lothrazar.cyclicmagic.item.projectile.*;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -46,20 +47,20 @@ public class ItemRegistry {
 		public static Item						emerald_chestplate;
 		public static Item						emerald_leggings;
 		public static Item						emerald_boots;
-		public static ItemProjectile			ender_water;
-		public static ItemProjectile			ender_snow;
-		public static ItemProjectile			ender_harvest;
-		public static ItemProjectile			ender_lightning;
-		public static ItemProjectile			ender_torch;
-		public static ItemProjectile			ender_wool;
-		public static ItemProjectile			ender_fishing;
-		public static ItemProjectile			ender_dungeon;
-		public static ItemProjectile			ender_blaze;
-		public static ItemProjectile			ender_bed;
-		public static ItemProjectile			ender_tnt_1;																										// creeper
-		public static ItemProjectile			ender_tnt_2;																										// chcr
-		public static ItemProjectile			ender_tnt_4;																										// tnt
-		public static ItemProjectile			ender_tnt_6;																										// ender
+		public static BaseItemProjectile			ender_water;
+		public static BaseItemProjectile			ender_snow;
+		public static BaseItemProjectile			ender_harvest;
+		public static BaseItemProjectile			ender_lightning;
+		public static BaseItemProjectile			ender_torch;
+		public static BaseItemProjectile			ender_wool;
+		public static BaseItemProjectile			ender_fishing;
+		public static BaseItemProjectile			ender_dungeon;
+		public static BaseItemProjectile			ender_blaze;
+		//public static BaseItemProjectile			ender_bed;
+		public static BaseItemProjectile			ender_tnt_1;																										// creeper
+		public static BaseItemProjectile			ender_tnt_2;																										// chcr
+		public static BaseItemProjectile			ender_tnt_4;																										// tnt
+		public static BaseItemProjectile			ender_tnt_6;																										// ender
 
 		public static ItemCyclicWand			cyclic_wand_build;       																		// crystal
 		public static ItemCyclicWand			cyclic_wand_range;
@@ -107,7 +108,7 @@ public class ItemRegistry {
 		//TODO: need to set ItemProjectile to have both interfaces
 		//each can do "name" + crafted for recipe config
 
-		ItemProjectile.DUNGEONRADIUS = config.getInt("dungeon.radius", category, 64, 8, 128, "Search distance");
+		BaseItemProjectile.DUNGEONRADIUS = config.getInt("dungeon.radius", category, 64, 8, 128, "Search distance");
 
 		EntityShearingBolt.doesKnockback = config.getBoolean("wool.knockback", category, true, "Does appear to damage sheep on contact");
 		EntityShearingBolt.doesShearChild = config.getBoolean("wool.child", category, true, "Does shear child sheep as well.");
@@ -291,13 +292,13 @@ public class ItemRegistry {
 
 		}
 
-		ModItems.ender_tnt_1 = new ItemProjectile();
+		ModItems.ender_tnt_1 = new BaseItemProjectile();
 		ItemRegistry.registerItem(ModItems.ender_tnt_1, "ender_tnt_1");
-		ModItems.ender_tnt_2 = new ItemProjectile();
+		ModItems.ender_tnt_2 = new BaseItemProjectile();
 		ItemRegistry.registerItem(ModItems.ender_tnt_2, "ender_tnt_2");
-		ModItems.ender_tnt_4 = new ItemProjectile();
+		ModItems.ender_tnt_4 = new BaseItemProjectile();
 		ItemRegistry.registerItem(ModItems.ender_tnt_4, "ender_tnt_4");
-		ModItems.ender_tnt_6 = new ItemProjectile();
+		ModItems.ender_tnt_6 = new BaseItemProjectile();
 		ItemRegistry.registerItem(ModItems.ender_tnt_6, "ender_tnt_6");
 
 		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender_tnt_1, 6), new ItemStack(Items.ender_pearl), new ItemStack(Blocks.tnt), new ItemStack(Items.clay_ball));
@@ -310,63 +311,57 @@ public class ItemRegistry {
 
 		
 
-		ModItems.ender_blaze = new ItemProjectile();
+		ModItems.ender_blaze = new ItemProjectileBlaze();
 		ItemRegistry.registerItem(ModItems.ender_blaze, "ender_blaze");
 
-		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender_blaze, 3), new ItemStack(Items.ender_pearl), new ItemStack(Items.blaze_powder), new ItemStack(Items.flint));
-		
-
-		ModItems.ender_dungeon = new ItemProjectile();
+		ModItems.ender_dungeon = new ItemProjectileDungeon();
 		ItemRegistry.registerItem(ModItems.ender_dungeon, "ender_dungeon");
 
 	 
-		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender_dungeon, 6), new ItemStack(Items.ender_pearl), new ItemStack(Blocks.mossy_cobblestone), new ItemStack(Items.nether_wart));// Blocks.iron_bars
-		 
+	
 
-		ModItems.ender_bed = new ItemProjectile();
-		ItemRegistry.registerItem(ModItems.ender_bed, "ender_bed");
+		//ModItems.ender_bed = new BaseItemProjectile();
+		//ItemRegistry.registerItem(ModItems.ender_bed, "ender_bed");
 
-		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender_bed, 4), new ItemStack(Items.ender_pearl), new ItemStack(Items.redstone), new ItemStack(Items.bed));
+		//GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender_bed, 4), new ItemStack(Items.ender_pearl), new ItemStack(Items.redstone), new ItemStack(Items.bed));
 		
 
-		ModItems.ender_fishing = new ItemProjectile();
+		ModItems.ender_fishing = new ItemProjectileFishing();
 		ItemRegistry.registerItem(ModItems.ender_fishing, "ender_fishing");
 
-		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender_fishing, 8), new ItemStack(Items.ender_pearl), new ItemStack(Items.gunpowder), new ItemStack(Items.string));
-		
 
-		ModItems.ender_wool = new ItemProjectile();
+		ModItems.ender_wool = new BaseItemProjectile();
 		ItemRegistry.registerItem(ModItems.ender_wool, "ender_wool");
 
 		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender_wool, 32), new ItemStack(Items.ender_pearl), new ItemStack(Blocks.wool), new ItemStack(Items.shears));
 		
 
-		ModItems.ender_torch = new ItemProjectile();
+		ModItems.ender_torch = new BaseItemProjectile();
 		ItemRegistry.registerItem(ModItems.ender_torch, "ender_torch");
 		
 		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender_torch, 8), new ItemStack(Items.ender_pearl), new ItemStack(Items.stick), new ItemStack(Items.coal));
 		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender_torch, 8), new ItemStack(Items.ender_pearl), new ItemStack(Items.stick), new ItemStack(Items.coal, 1, 1));// charcoal
 		
 
-		ModItems.ender_water = new ItemProjectile();
+		ModItems.ender_water = new BaseItemProjectile();
 		ItemRegistry.registerItem(ModItems.ender_water, "ender_water");
 	
 		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender_water, 4), new ItemStack(Items.blaze_rod), new ItemStack(Items.ender_pearl), new ItemStack(Blocks.ice));
 		
 
-		ModItems.ender_snow = new ItemProjectile();
+		ModItems.ender_snow = new BaseItemProjectile();
 		ItemRegistry.registerItem(ModItems.ender_snow, "ender_snow");
 		
 		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender_snow, 6), new ItemStack(Items.ender_pearl), new ItemStack(Blocks.ice), new ItemStack(Items.snowball));
 		
 
-		ModItems.ender_harvest = new ItemProjectile();
+		ModItems.ender_harvest = new BaseItemProjectile();
 		ItemRegistry.registerItem(ModItems.ender_harvest, "ender_harvest");
 		
 		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender_harvest, 4), new ItemStack(Items.ender_pearl), new ItemStack(Items.wheat), new ItemStack(Items.wheat_seeds));
 		
 
-		ModItems.ender_lightning = new ItemProjectile();
+		ModItems.ender_lightning = new BaseItemProjectile();
 		ItemRegistry.registerItem(ModItems.ender_lightning, "ender_lightning");
 		
 		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender_lightning, 1), new ItemStack(Items.ender_pearl), new ItemStack(Items.quartz), new ItemStack(Items.ghast_tear));
