@@ -23,7 +23,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class ItemChestSack extends Item implements IHasRecipe,IHasConfig {
+public class ItemChestSack extends BaseItem implements IHasRecipe,IHasConfig {
 
 	public static final String	name			= "chest_sack";
 

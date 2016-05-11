@@ -21,7 +21,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemEnderPearlReuse extends ItemEnderPearl implements IHasRecipe, IHasConfig {
+public class ItemEnderPearlReuse extends BaseItem implements IHasRecipe, IHasConfig {
 	public static final String name = "ender_pearl_reuse";
 	public static boolean enabled; 
 
@@ -31,6 +31,7 @@ public class ItemEnderPearlReuse extends ItemEnderPearl implements IHasRecipe, I
 		//TODO: Durability
 	}
 
+	@Override
 	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
 
 		worldIn.playSound((EntityPlayer) null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.entity_enderpearl_throw, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
@@ -47,26 +48,24 @@ public class ItemEnderPearlReuse extends ItemEnderPearl implements IHasRecipe, I
 
 	@Override
 	public void addRecipe() {
-		
-		//if(!recipeEnabled){return;}
-
+		 
 		GameRegistry.addShapedRecipe(new ItemStack(this), "eee", "ese", "eee", 'e', new ItemStack(Items.ender_eye), 's', new ItemStack(Items.nether_star));
 	}
-  @SideOnly(Side.CLIENT)
-  public boolean hasEffect(ItemStack stack)
-  {
-      return true;
-  }
+	  @SideOnly(Side.CLIENT)
+	  public boolean hasEffect(ItemStack stack)
+	  {
+	      return true;
+	  }
 
-@Override
-public void syncConfig(Configuration config) {
-
-	Property prop = config.get(Const.ConfigCategory.items, "EnderPearlReuse", true, "Reuseable ender pearl");
-	prop.setRequiresMcRestart(true);
-	this.enabled = prop.getBoolean();
+	@Override
+	public void syncConfig(Configuration config) {
 	
-
-	//TODO: Durability
+		Property prop = config.get(Const.ConfigCategory.items, "EnderPearlReuse", true, "Reuseable ender pearl");
+		prop.setRequiresMcRestart(true);
+		this.enabled = prop.getBoolean();
+		
 	
-}
+		//TODO: Durability
+		
+	}
 }

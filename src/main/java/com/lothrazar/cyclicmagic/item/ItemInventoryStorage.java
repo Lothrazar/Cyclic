@@ -19,7 +19,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemInventoryStorage extends Item implements IHasRecipe{
+public class ItemInventoryStorage extends BaseItem implements IHasRecipe{
 
 	public ItemInventoryStorage() {
 		this.setMaxStackSize(1);

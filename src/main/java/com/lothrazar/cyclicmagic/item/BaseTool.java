@@ -11,7 +11,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BaseTool extends Item{
+public class BaseTool extends BaseItem{
 	private static final int DURABILITY = 1000;
 	
 	public BaseTool(){

@@ -4,14 +4,8 @@ import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityBlazeBolt;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityHarvestBolt;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityShearingBolt;
-import com.lothrazar.cyclicmagic.entity.projectile.EntitySnowballBolt;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityTorchBolt;
 import com.lothrazar.cyclicmagic.item.*;
 import com.lothrazar.cyclicmagic.item.projectile.*;
-import com.lothrazar.cyclicmagic.registry.ItemRegistry.ModItems;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -28,10 +22,15 @@ import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemRegistry {
-	public static ArrayList<Item> items					= new ArrayList<Item>();
+	public static ArrayList<Item> items	= new ArrayList<Item>();
 	private static boolean emeraldGearEnabled ; 
-	public static ToolMaterial				MATERIAL_EMERALD;
-	public static ArmorMaterial				ARMOR_MATERIAL_EMERALD;
+	public static ToolMaterial		MATERIAL_EMERALD;
+	public static ArmorMaterial		ARMOR_MATERIAL_EMERALD;
+	public final static Item		REPAIR_EMERALD = Items.emerald;
+
+	// only because theyre private, with no getters
+	private static final int		diamondDurability				= 33;
+	private static final int[]	diamondreductionAmounts	= new int[] { 3, 6, 8, 3 };
 	
 	public static class ModItems{
 		
@@ -75,13 +74,17 @@ public class ItemRegistry {
 	}
 	
 	public ItemRegistry(){
+		items.add(new ItemEnderPearlReuse().setRawName("ender_pearl_reuse")); 
+		items.add(new ItemPaperCarbon().setRawName("carbon_paper")); 
+		items.add(new ItemEnderBook().setRawName("book_ender"));
+		items.add(new ItemToolHarvest().setRawName("tool_harvest"));
+		items.add(new ItemToolPull().setRawName("tool_pull"));
+		items.add(new ItemToolPush().setRawName("tool_push"));
+		items.add(new ItemToolRotate().setRawName("tool_rotate"));
+		items.add(new ItemInventoryStorage().setRawName("storage_bag"));
+		items.add(new ItemChestSack().setRawName("chest_sack").setHidden(true));
+		items.add(new ItemChestSackEmpty().setRawName("chest_sack_empty"));
 
-		ModItems.ender_pearl_reuse = new ItemEnderPearlReuse();
-		items.add(ModItems.ender_pearl_reuse);
-		ModItems.carbon_paper = new ItemPaperCarbon();
-		items.add(ModItems.carbon_paper);
-		ModItems.book_ender = new ItemEnderBook();
-		items.add(ModItems.book_ender);
 	}
 
 	public static void syncConfig(Configuration config) {
@@ -106,8 +109,6 @@ public class ItemRegistry {
 		ItemFoodAppleMagic.syncConfig(config);
 	}
 
-
-
 	public static void registerItem(Item item, String name) {
 		registerItem(item, name, false);// default is not hidden
 	}
@@ -116,8 +117,6 @@ public class ItemRegistry {
 
 		item.setUnlocalizedName(name);
 
-		// GameRegistry.registerItem(item, name);
-
 		GameRegistry.register(item, new ResourceLocation(Const.MODID, name));
 
 		if (isHidden == false) {
@@ -125,12 +124,6 @@ public class ItemRegistry {
 		}
 		items.add(item);
 	}
-
-	public final static Item		REPAIR_EMERALD					= Items.emerald;
-
-	// only because theyre private, with no getters
-	private static final int		diamondDurability				= 33;
-	private static final int[]	diamondreductionAmounts	= new int[] { 3, 6, 8, 3 };
 
 	private static void registerMaterials() {
 
@@ -156,8 +149,15 @@ public class ItemRegistry {
 	}
 
 	public static void register() {
-
 		registerMaterials();
+		
+		//maybe one day it will be all base items
+		for (Item item : items) {
+			if (item instanceof BaseItem) {
+				((BaseItem) item).register();
+			}
+		}
+
 
 		if (ItemCyclicWand.sceptersEnabled) {
 
@@ -174,42 +174,6 @@ public class ItemRegistry {
 			GameRegistry.addRecipe(new ItemStack(ModItems.cyclic_wand_fly), "sds", " o ", "gog", 'd', new ItemStack(Blocks.redstone_block), 'g', Items.ghast_tear, 'o', Blocks.obsidian, 's', Items.nether_star);
 		}
 
-		//TODO: CONFIG
-		ItemToolHarvest tool_harvest = new ItemToolHarvest();
-		registerItem(tool_harvest, "tool_harvest");
-		
-		ItemToolPull tool_pull = new ItemToolPull();
-		registerItem(tool_pull, "tool_pull");
-
-		ItemToolPush tool_push = new ItemToolPush();
-		registerItem(tool_push, "tool_push");
-		
-		ItemToolRotate tool_rotate = new ItemToolRotate();
-		registerItem(tool_rotate, "tool_rotate");
-
-		//TODO: CONFIG STORAGE
-		ItemInventoryStorage storage_bag = new ItemInventoryStorage();
-		registerItem(storage_bag, "storage_bag");
-		
-		if (ItemEnderPearlReuse.enabled) {
-
-			registerItem(ModItems.ender_pearl_reuse, ItemEnderPearlReuse.name);
-		}
-
-		if (ItemPaperCarbon.enabled) {
-
-			registerItem(ModItems.carbon_paper, ItemPaperCarbon.name);
-		}
-
-		if (ItemChestSack.enabled) {
-
-			ModItems.chest_sack = new ItemChestSack();
-			registerItem(ModItems.chest_sack, ItemChestSack.name, true);// true for ishidden
-
-			ItemChestSackEmpty chest_sack_empty = new ItemChestSackEmpty();
-			registerItem(chest_sack_empty, ItemChestSackEmpty.name);
-		}
-		
 		if(ItemEnderBook.enabled){
 			registerItem(ModItems.book_ender, ItemEnderBook.name);
 			

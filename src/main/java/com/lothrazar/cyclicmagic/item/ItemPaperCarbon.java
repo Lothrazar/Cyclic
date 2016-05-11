@@ -29,7 +29,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class ItemPaperCarbon extends Item implements IHasRecipe, IHasConfig {
+public class ItemPaperCarbon extends BaseItem implements IHasRecipe, IHasConfig {
 
 	public static final String	name				= "carbon_paper";
 

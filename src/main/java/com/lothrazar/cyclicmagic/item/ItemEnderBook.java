@@ -30,7 +30,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ItemEnderBook extends Item implements IHasRecipe, IHasConfig {
+public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
 	public static String KEY_LOC = "location";
 	public static String KEY_LARGEST = "loc_largest";
 	public static boolean enabled;

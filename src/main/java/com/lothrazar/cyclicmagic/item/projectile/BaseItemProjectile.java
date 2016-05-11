@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.item.projectile;
 
+import com.lothrazar.cyclicmagic.item.BaseItem;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
@@ -13,7 +14,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public abstract class BaseItemProjectile extends Item {
+public abstract class BaseItemProjectile extends BaseItem {
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
