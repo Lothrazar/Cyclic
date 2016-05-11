@@ -3,6 +3,7 @@ package com.lothrazar.cyclicmagic.item;
 import java.util.List;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry.ModItems;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -55,15 +56,15 @@ public class ItemHorseFood extends Item {
 
 		int dye_lapis = 4;
 
-		GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.emeraldCarrot), Items.carrot, Items.emerald);
+		GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.ModItems.emeraldCarrot), Items.carrot, Items.emerald);
 
-		GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.lapisCarrot), Items.carrot, new ItemStack(Items.dye, 1, dye_lapis));
+		GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.ModItems.lapisCarrot), Items.carrot, new ItemStack(Items.dye, 1, dye_lapis));
 
-		GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.diamondCarrot), Items.carrot, Items.diamond);
+		GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.ModItems.diamondCarrot), Items.carrot, Items.diamond);
 
-		GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.horse_upgrade_jump), Items.carrot, Items.ender_eye);
+		GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.ModItems.horse_upgrade_jump), Items.carrot, Items.ender_eye);
 
-		GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.horse_upgrade_speed), Items.carrot, Items.redstone);
+		GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.ModItems.horse_upgrade_speed), Items.carrot, Items.redstone);
 	}
 
 	public static void onHorseInteract(EntityHorse horse, EntityPlayer player, ItemStack held) {
@@ -78,7 +79,7 @@ public class ItemHorseFood extends Item {
 		 * //or let it through if no owner exists ("owner = "+ownerID);
 		 * ("player = "+player.getUniqueID().toString());
 		 */
-		if (held.getItem() == ItemRegistry.emeraldCarrot) {
+		if (held.getItem() == ItemRegistry.ModItems.emeraldCarrot) {
 			switch (horse.getType()) {
 			case HORSE:
 				horse.setType(HorseArmorType.ZOMBIE);
@@ -101,7 +102,7 @@ public class ItemHorseFood extends Item {
 			break;
 			}
 		}
-		else if (held.getItem() == ItemRegistry.lapisCarrot) {
+		else if (held.getItem() == ItemRegistry.ModItems.lapisCarrot) {
 			int var = horse.getHorseVariant();
 			int var_reduced = 0;
 			int var_new = 0;
@@ -142,7 +143,7 @@ public class ItemHorseFood extends Item {
 
 			success = true;
 		}
-		else if (held.getItem() == ItemRegistry.diamondCarrot) {
+		else if (held.getItem() == ItemRegistry.ModItems.diamondCarrot) {
 			float mh = (float) horse.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).getAttributeValue();
 
 			if (mh < 2 * HEARTS_MAX) // 20 hearts == 40 health points
@@ -152,7 +153,7 @@ public class ItemHorseFood extends Item {
 				success = true;
 			}
 		}
-		else if (held.getItem() == ItemRegistry.horse_upgrade_jump) {
+		else if (held.getItem() == ItemRegistry.ModItems.horse_upgrade_jump) {
 			if (ReflectionRegistry.horseJumpStrength != null)// only happpens if mod
 			                                                 // installing preInit
 			// method fails to find it
@@ -170,7 +171,7 @@ public class ItemHorseFood extends Item {
 				}
 			}
 		}
-		else if (held.getItem() == ItemRegistry.horse_upgrade_speed) {
+		else if (held.getItem() == ItemRegistry.ModItems.horse_upgrade_speed) {
 			double speed = horse.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue();
 
 			double newSpeed = speed * SPEED_SCALE;

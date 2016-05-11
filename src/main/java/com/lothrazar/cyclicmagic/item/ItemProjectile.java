@@ -12,6 +12,7 @@ import com.lothrazar.cyclicmagic.entity.projectile.EntitySnowballBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityTorchBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityWaterBolt;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry.ModItems;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilSearchWorld;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -36,6 +37,8 @@ public class ItemProjectile extends Item {
 	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
 
 		onItemThrow(itemStackIn, worldIn, playerIn, hand);
+		
+		
 
 		return new ActionResult<ItemStack>(EnumActionResult.PASS, itemStackIn);
 	}
@@ -44,7 +47,7 @@ public class ItemProjectile extends Item {
 
 		if (held == null) { return; }
 
-		if (held.getItem() == ItemRegistry.ender_dungeon) {
+		if (held.getItem() == ItemRegistry.ModItems.ender_dungeon) {
 
 			BlockPos blockpos = UtilSearchWorld.findClosestBlock(player, Blocks.mob_spawner, DUNGEONRADIUS);
 
@@ -64,7 +67,7 @@ public class ItemProjectile extends Item {
 				if (player.capabilities.isCreativeMode == false) {
 					player.inventory.decrStackSize(player.inventory.currentItem, 1);
 					
-					UtilEntity.dropItemStackInWorld(world, pos, new ItemStack(ItemRegistry.ender_dungeon));
+					UtilEntity.dropItemStackInWorld(world, pos, new ItemStack(ItemRegistry.ModItems.ender_dungeon));
 			
 				}
 				//fizz sound
@@ -72,43 +75,43 @@ public class ItemProjectile extends Item {
 			
 			}
 		}
-		else if (held.getItem() == ItemRegistry.ender_tnt_1) {
+		else if (held.getItem() == ItemRegistry.ModItems.ender_tnt_1) {
 			doThrow(world, player, hand, new EntityDynamite(world, player, 1));
 		}
-		else if (held.getItem() == ItemRegistry.ender_tnt_2) {
+		else if (held.getItem() == ItemRegistry.ModItems.ender_tnt_2) {
 			doThrow(world, player, hand, new EntityDynamite(world, player, 2));
 		}
-		else if (held.getItem() == ItemRegistry.ender_tnt_4) {
+		else if (held.getItem() == ItemRegistry.ModItems.ender_tnt_4) {
 			doThrow(world, player, hand, new EntityDynamite(world, player, 4));
 		}
-		else if (held.getItem() == ItemRegistry.ender_tnt_6) {
+		else if (held.getItem() == ItemRegistry.ModItems.ender_tnt_6) {
 			doThrow(world, player, hand, new EntityDynamite(world, player, 6));
 		}
-		else if (held.getItem() == ItemRegistry.ender_blaze) {
+		else if (held.getItem() == ItemRegistry.ModItems.ender_blaze) {
 			doThrow(world, player, hand, new EntityBlazeBolt(world, player));
 		}
-		else if (held.getItem() == ItemRegistry.ender_bed) {
+		else if (held.getItem() == ItemRegistry.ModItems.ender_bed) {
 			doThrow(world, player, hand, new EntityHomeBolt(world, player));
 		}
-		else if (held.getItem() == ItemRegistry.ender_torch) {
+		else if (held.getItem() == ItemRegistry.ModItems.ender_torch) {
 			doThrow(world, player, hand, new EntityTorchBolt(world, player));
 		}
-		else if (held.getItem() == ItemRegistry.ender_wool) {
+		else if (held.getItem() == ItemRegistry.ModItems.ender_wool) {
 			doThrow(world, player, hand, new EntityShearingBolt(world, player));
 		}
-		else if (held.getItem() == ItemRegistry.ender_fishing) {
+		else if (held.getItem() == ItemRegistry.ModItems.ender_fishing) {
 			doThrow(world, player, hand, new EntityFishingBolt(world, player));
 		}
-		else if (held.getItem() == ItemRegistry.ender_snow) {
+		else if (held.getItem() == ItemRegistry.ModItems.ender_snow) {
 			doThrow(world, player, hand, new EntitySnowballBolt(world, player));
 		}
-		else if (held.getItem() == ItemRegistry.ender_water) {
+		else if (held.getItem() == ItemRegistry.ModItems.ender_water) {
 			doThrow(world, player, hand, new EntityWaterBolt(world, player));
 		}
-		else if (held.getItem() == ItemRegistry.ender_harvest) {
+		else if (held.getItem() == ItemRegistry.ModItems.ender_harvest) {
 			doThrow(world, player, hand, new EntityHarvestBolt(world, player));
 		}
-		else if (held.getItem() == ItemRegistry.ender_lightning) {
+		else if (held.getItem() == ItemRegistry.ModItems.ender_lightning) {
 			doThrow(world, player, hand, new EntityLightningballBolt(world, player));
 		}
 	}
