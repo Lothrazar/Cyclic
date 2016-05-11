@@ -78,7 +78,7 @@ public class EntityShearingBolt extends EntityThrowable {
 			BlockPos pos = mop.getBlockPos();
 
 			if (pos != null && worldObj.isRemote == false) {
-				worldObj.spawnEntityInWorld(new EntityItem(worldObj, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegistry.ModItems.ender_wool)));
+				worldObj.spawnEntityInWorld(new EntityItem(worldObj, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegistry.itemMap.get("ender_wool"))));
 				this.setDead();
 			}
 		}

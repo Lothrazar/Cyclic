@@ -62,7 +62,7 @@ public class EntityFishingBolt extends EntityThrowable {
 		}
 		else {
 			if (worldObj.isRemote == false) {
-				worldObj.spawnEntityInWorld(new EntityItem(worldObj, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegistry.ModItems.ender_fishing)));
+				worldObj.spawnEntityInWorld(new EntityItem(worldObj, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegistry.itemMap.get("ender_fishing"))));
 				this.setDead();
 			}
 		}

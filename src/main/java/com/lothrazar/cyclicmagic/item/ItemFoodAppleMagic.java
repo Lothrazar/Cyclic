@@ -57,12 +57,16 @@ public class ItemFoodAppleMagic extends ItemFood implements IHasRecipe {
                           
 	public static boolean apple_chorus_expensive;
 	public static boolean apple_chorus_enabled;
-
 	
+	private boolean givesHearts = false;
+
 	public ItemFoodAppleMagic(int fillsHunger, boolean has_effect, ItemStack rec, boolean exp) {
+		this(fillsHunger,has_effect,rec,exp,false);
+	}
+	
+	public ItemFoodAppleMagic(int fillsHunger, boolean has_effect, ItemStack rec, boolean exp, boolean hearts) {
 		super(fillsHunger, false);// is not edible by wolf
 		hasEffect = has_effect;// true gives it enchantment shine
-
 		this.setAlwaysEdible(); // can eat even if full hunger
 		this.setCreativeTab(ModMain.TAB);
 		potions = new ArrayList<Potion>();
@@ -70,7 +74,11 @@ public class ItemFoodAppleMagic extends ItemFood implements IHasRecipe {
 		potionAmplifiers = new ArrayList<Integer>();
 		recipeInput = rec;
 		isExpensive = exp;
+		
+
+		givesHearts = hearts;
 	}
+	
 
 	public ItemFoodAppleMagic addEffect(Potion potionId, int potionDuration, int potionAmplifier) {
 
@@ -85,7 +93,7 @@ public class ItemFoodAppleMagic extends ItemFood implements IHasRecipe {
 	protected void onFoodEaten(ItemStack par1ItemStack, World world, EntityPlayer player) {
 		addAllEffects(world, player);
 		
-		if(par1ItemStack.getItem() == ItemRegistry.ModItems.apple_diamond){
+		if(this.givesHearts){
 			
 			UtilEntity.incrementMaxHealth(player, 2);
 		}

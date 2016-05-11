@@ -5,6 +5,7 @@ import com.lothrazar.cyclicmagic.proxy.CommonProxy;
 import com.lothrazar.cyclicmagic.registry.*;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
@@ -31,7 +32,7 @@ public class ModMain {
 	public final static CreativeTabs			TAB	= new CreativeTabs(Const.MODID) {
         @Override
         public Item getTabIconItem() {
-            return ItemRegistry.ModItems.chest_sack;
+            return Items.diamond;//ItemRegistry.ModItems.chest_sack;
         }
     };
     private EventRegistry events;

@@ -27,8 +27,8 @@ public class ItemProjectileTorch extends BaseItemProjectile implements IHasRecip
 	@Override
 	public void addRecipe() {
 
-		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender_torch, 8), new ItemStack(Items.ender_pearl), new ItemStack(Items.stick), new ItemStack(Items.coal));
-		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ender_torch, 8), new ItemStack(Items.ender_pearl), new ItemStack(Items.stick), new ItemStack(Items.coal, 1, 1));// charcoal
+		GameRegistry.addShapelessRecipe(new ItemStack(this, 8), new ItemStack(Items.ender_pearl), new ItemStack(Items.stick), new ItemStack(Items.coal));
+		GameRegistry.addShapelessRecipe(new ItemStack(this, 8), new ItemStack(Items.ender_pearl), new ItemStack(Items.stick), new ItemStack(Items.coal, 1, 1));// charcoal
 		
 	}
 

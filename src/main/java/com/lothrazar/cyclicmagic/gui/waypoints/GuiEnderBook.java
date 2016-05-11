@@ -58,7 +58,7 @@ public class GuiEnderBook extends GuiScreen {
 
 		buttonList.add(buttonNew);
 
-		if (bookStack != null && ItemEnderBook.getLocations(bookStack).size() >= ItemRegistry.ModItems.book_ender.maximumSaved) {
+		if (bookStack != null && ItemEnderBook.getLocations(bookStack).size() >= ItemEnderBook.maximumSaved) {
 			buttonNew.enabled = false;// also a tooltip?
 		}
 
@@ -81,7 +81,7 @@ public class GuiEnderBook extends GuiScreen {
 			loc = list.get(i);
 			buttonText = (loc.display == null) ? I18n.translateToLocal("gui.enderbook.go") : loc.display;
 
-			if (i % ItemRegistry.ModItems.book_ender.btnsPerColumn == 0)  // do we start a new row?
+			if (i % ItemEnderBook.btnsPerColumn == 0)  // do we start a new row?
 			{
 				x += w + delete_w + rowpad;
 				y = yStart;
@@ -127,7 +127,7 @@ public class GuiEnderBook extends GuiScreen {
 
 		// http://www.minecraftforge.net/forum/index.php?topic=18043.0
 
-		if (ItemRegistry.ModItems.book_ender.showCoordTooltips)
+		if (ItemEnderBook.showCoordTooltips)
 			for (int i = 0; i < buttonList.size(); i++) {
 				if (buttonList.get(i) instanceof ButtonWaypointTeleport) {
 					ButtonWaypointTeleport btn = (ButtonWaypointTeleport) buttonList.get(i);
@@ -158,7 +158,7 @@ public class GuiEnderBook extends GuiScreen {
 
 	@Override
 	public boolean doesGuiPauseGame() {
-		return ItemRegistry.ModItems.book_ender.doesPauseGame;
+		return ItemEnderBook.doesPauseGame;
 	}
 
 	// http://www.minecraftforge.net/forum/index.php?topic=22378.0

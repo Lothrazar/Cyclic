@@ -20,12 +20,15 @@ public class BaseItem extends Item{
 		this.hideFromCreativeTab = hide;
 		return this;
 	}
+	public String getRawName() {
+		return rawName;
+	}
 
 	public void register(){
 		
-		this.setUnlocalizedName(rawName);
+		this.setUnlocalizedName(getRawName());
 		
-		GameRegistry.register(this, new ResourceLocation(Const.MODID, rawName));
+		GameRegistry.register(this, new ResourceLocation(Const.MODID, getRawName()));
 
 		if (hideFromCreativeTab == false) {
 			this.setCreativeTab(ModMain.TAB);

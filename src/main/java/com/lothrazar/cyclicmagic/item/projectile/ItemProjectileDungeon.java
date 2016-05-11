@@ -57,7 +57,7 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
 			
 			UtilInventory.decrStackSize(player, player.inventory.currentItem);
 			
-			UtilEntity.dropItemStackInWorld(world, pos, new ItemStack(ItemRegistry.ModItems.ender_dungeon));
+			UtilEntity.dropItemStackInWorld(world, pos, new ItemStack(this));
 			
 			//fizz sound
 			UtilSound.playSound(player,pos,SoundEvents.block_fire_extinguish);

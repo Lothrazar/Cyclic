@@ -36,10 +36,10 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
 	public static boolean enabled;
 	public static final String name = "book_ender";
 	public boolean craftNetherStar;
-	public boolean doesPauseGame;
-	public boolean showCoordTooltips;
-	public int maximumSaved;
-	public int btnsPerColumn;
+	public static boolean doesPauseGame;
+	public static boolean showCoordTooltips;
+	public static int maximumSaved;
+	public static int btnsPerColumn;
 	public static int expCostPerTeleport;
 
 	public ItemEnderBook() {

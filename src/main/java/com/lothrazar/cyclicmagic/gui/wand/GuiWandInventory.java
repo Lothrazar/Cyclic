@@ -66,7 +66,8 @@ public class GuiWandInventory extends GuiContainer {
 		buildSize.setMaxStringLength(2);
 		buildSize.setText("" + size);
 		 
-		buildSize.setVisible(internalWand.getItem() != ItemRegistry.ModItems.cyclic_wand_range);
+		System.out.println("todo determine build size visible");
+		//buildSize.setVisible(internalWand.getItem() != ItemRegistry.ModItems.cyclic_wand_range);
 		
 		buildSize.setFocused(true);
 

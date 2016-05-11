@@ -100,17 +100,12 @@ public class SpellRegistry {
 		registerSpell(Spells.launch);
 		spellbookFly.add(Spells.launch);
 		
-		if(ItemRegistry.ModItems.cyclic_wand_fly != null){
-			ItemRegistry.ModItems.cyclic_wand_fly.setSpells(spellbookFly);
-		}
-		if(ItemRegistry.ModItems.cyclic_wand_range != null){
-			ItemRegistry.ModItems.cyclic_wand_range.setSpells(spellbookNoInvo);
-		}
-		if(ItemRegistry.ModItems.cyclic_wand_build != null){
-			ItemRegistry.ModItems.cyclic_wand_build.setSpells(spellbookBuild);
-		}
 		
-		
+//TODO: a cleaner way?
+		((ItemCyclicWand)ItemRegistry.itemMap.get("cyclic_wand_fly")).setSpells(spellbookFly);
+		((ItemCyclicWand)ItemRegistry.itemMap.get("cyclic_wand_range")).setSpells(spellbookNoInvo);
+		((ItemCyclicWand)ItemRegistry.itemMap.get("cyclic_wand_build")).setSpells(spellbookBuild);
+	 
 		// Spells.placefloor = new SpellPlaceFloor(++spellId, "placefloor");
 		// registerBuildSpell(Spells.placefloor);
 	}

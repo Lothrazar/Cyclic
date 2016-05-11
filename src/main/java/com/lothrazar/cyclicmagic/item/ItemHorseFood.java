@@ -56,15 +56,20 @@ public class ItemHorseFood extends Item {
 
 		int dye_lapis = 4;
 
-		GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.ModItems.emeraldCarrot), Items.carrot, Items.emerald);
+		GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.ModItems.emeraldCarrot)
+				, Items.carrot, Items.emerald);
 
-		GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.ModItems.lapisCarrot), Items.carrot, new ItemStack(Items.dye, 1, dye_lapis));
+		GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.ModItems.lapisCarrot)
+				, Items.carrot, new ItemStack(Items.dye, 1, dye_lapis));
 
-		GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.ModItems.diamondCarrot), Items.carrot, Items.diamond);
+		GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.ModItems.diamondCarrot
+				), Items.carrot, Items.diamond);
 
-		GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.ModItems.horse_upgrade_jump), Items.carrot, Items.ender_eye);
+		GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.ModItems.horse_upgrade_jump)
+				, Items.carrot, Items.ender_eye);
 
-		GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.ModItems.horse_upgrade_speed), Items.carrot, Items.redstone);
+		GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.ModItems.horse_upgrade_speed)
+				, Items.carrot, Items.redstone);
 	}
 
 	public static void onHorseInteract(EntityHorse horse, EntityPlayer player, ItemStack held) {

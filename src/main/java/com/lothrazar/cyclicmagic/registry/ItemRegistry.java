@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.registry;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
@@ -23,6 +25,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemRegistry {
 	public static ArrayList<Item> items	= new ArrayList<Item>();
+	public static HashMap<String,Item> itemMap	= new HashMap<String,Item>();
+	
 	private static boolean emeraldGearEnabled ; 
 	public static ToolMaterial		MATERIAL_EMERALD;
 	public static ArmorMaterial		ARMOR_MATERIAL_EMERALD;
@@ -33,7 +37,11 @@ public class ItemRegistry {
 	private static final int[]	diamondreductionAmounts	= new int[] { 3, 6, 8, 3 };
 	
 	public static class ModItems{
+/*
+		//TODO: fix config for this issue
+		public static ItemEnderBook						book_ender;
 		
+
 		public static ItemHorseFood				emeraldCarrot;
 		public static ItemHorseFood				lapisCarrot;
 		public static ItemHorseFood				diamondCarrot;
@@ -53,32 +61,40 @@ public class ItemRegistry {
 		public static ItemEmeraldSpade emerald_spade;
 		public static ItemEmeraldHoe emerald_hoe;
 		public static ItemEmeraldSword emerald_sword;
+		*/
+	}
+	
+	private void addItem(BaseItem i){
+		items.add(i);
+		itemMap.put(i.getRawName(), i);
 	}
 	
 	public ItemRegistry(){
-		items.add(new ItemEnderPearlReuse().setRawName("ender_pearl_reuse")); 
-		items.add(new ItemPaperCarbon().setRawName("carbon_paper")); 
-		items.add(new ItemEnderBook().setRawName("book_ender"));
-		items.add(new ItemToolHarvest().setRawName("tool_harvest"));
-		items.add(new ItemToolPull().setRawName("tool_pull"));
-		items.add(new ItemToolPush().setRawName("tool_push"));
-		items.add(new ItemToolRotate().setRawName("tool_rotate"));
-		items.add(new ItemInventoryStorage().setRawName("storage_bag"));
-		items.add(new ItemChestSack().setRawName("chest_sack").setHidden(true));
-		items.add(new ItemChestSackEmpty().setRawName("chest_sack_empty"));
-		items.add(new ItemProjectileBlaze().setRawName("ender_blaze"));
-		items.add(new ItemProjectileDungeon().setRawName("ender_dungeon"));
-		items.add(new ItemProjectileFishing().setRawName("ender_fishing"));
-		items.add(new ItemProjectileWool().setRawName("ender_wool"));
-		items.add(new ItemProjectileTorch().setRawName("ender_torch"));
-		items.add(new ItemProjectileWater().setRawName("ender_water"));
-		items.add(new ItemProjectileSnow().setRawName("ender_snow"));
-		items.add(new ItemProjectileHarvest().setRawName("ender_harvest"));
-		items.add(new ItemProjectileLightning().setRawName("ender_lightning"));
-		items.add(new ItemProjectileTNT(1).setRawName("ender_tnt_1"));
-		items.add(new ItemProjectileTNT(2).setRawName("ender_tnt_2"));
-		items.add(new ItemProjectileTNT(3).setRawName("ender_tnt_4"));
-		items.add(new ItemProjectileTNT(4).setRawName("ender_tnt_6"));
+		addItem(new ItemEnderPearlReuse().setRawName("ender_pearl_reuse")); 
+		addItem(new ItemPaperCarbon().setRawName("carbon_paper")); 
+		addItem(new ItemToolHarvest().setRawName("tool_harvest"));
+		addItem(new ItemToolPull().setRawName("tool_pull"));
+		addItem(new ItemToolPush().setRawName("tool_push"));
+		addItem(new ItemToolRotate().setRawName("tool_rotate"));
+		addItem(new ItemInventoryStorage().setRawName("storage_bag"));
+		addItem(new ItemChestSack().setRawName("chest_sack").setHidden(true));
+		addItem(new ItemChestSackEmpty().setRawName("chest_sack_empty"));
+		addItem(new ItemProjectileBlaze().setRawName("ender_blaze"));
+		addItem(new ItemProjectileDungeon().setRawName("ender_dungeon"));
+		addItem(new ItemProjectileFishing().setRawName("ender_fishing"));
+		addItem(new ItemProjectileWool().setRawName("ender_wool"));
+		addItem(new ItemProjectileTorch().setRawName("ender_torch"));
+		addItem(new ItemProjectileWater().setRawName("ender_water"));
+		addItem(new ItemProjectileSnow().setRawName("ender_snow"));
+		addItem(new ItemProjectileHarvest().setRawName("ender_harvest"));
+		addItem(new ItemProjectileLightning().setRawName("ender_lightning"));
+		addItem(new ItemProjectileTNT(1).setRawName("ender_tnt_1"));
+		addItem(new ItemProjectileTNT(2).setRawName("ender_tnt_2"));
+		addItem(new ItemProjectileTNT(3).setRawName("ender_tnt_4"));
+		addItem(new ItemProjectileTNT(4).setRawName("ender_tnt_6"));
+		
+		//only some need static references
+		addItem(new ItemEnderBook().setRawName("book_ender")); 
 		
 	}
 
@@ -151,22 +167,25 @@ public class ItemRegistry {
 			if (item instanceof BaseItem) {
 				((BaseItem) item).register();
 			}
+			else{
+				//registerItem(item);
+			}
 		}
 
 
 		if (ItemCyclicWand.sceptersEnabled) {
 
-			ModItems.cyclic_wand_build = new ItemCyclicWand();
-			registerItem(ModItems.cyclic_wand_build, "cyclic_wand_build");
-			GameRegistry.addRecipe(new ItemStack(ModItems.cyclic_wand_build), "sds", " o ", "gog", 'd', new ItemStack(Blocks.diamond_block), 'g', Items.ghast_tear, 'o', Blocks.obsidian, 's', Items.nether_star);
+			ItemCyclicWand cyclic_wand_build = new ItemCyclicWand();
+			registerItem(cyclic_wand_build, "cyclic_wand_build");
+			GameRegistry.addRecipe(new ItemStack(cyclic_wand_build), "sds", " o ", "gog", 'd', new ItemStack(Blocks.diamond_block), 'g', Items.ghast_tear, 'o', Blocks.obsidian, 's', Items.nether_star);
 
-			ModItems.cyclic_wand_range = new ItemCyclicWand();
-			registerItem(ModItems.cyclic_wand_range, "cyclic_wand_range");
-			GameRegistry.addRecipe(new ItemStack(ModItems.cyclic_wand_range), "sds", " o ", "gog", 'd', new ItemStack(Blocks.emerald_block), 'g', Items.ghast_tear, 'o', Blocks.obsidian, 's', Items.nether_star);
+			ItemCyclicWand cyclic_wand_range = new ItemCyclicWand();
+			registerItem(cyclic_wand_range, "cyclic_wand_range");
+			GameRegistry.addRecipe(new ItemStack(cyclic_wand_range), "sds", " o ", "gog", 'd', new ItemStack(Blocks.emerald_block), 'g', Items.ghast_tear, 'o', Blocks.obsidian, 's', Items.nether_star);
 
-			ModItems.cyclic_wand_fly = new ItemCyclicWand();
-			registerItem(ModItems.cyclic_wand_fly, "cyclic_wand_fly");
-			GameRegistry.addRecipe(new ItemStack(ModItems.cyclic_wand_fly), "sds", " o ", "gog", 'd', new ItemStack(Blocks.redstone_block), 'g', Items.ghast_tear, 'o', Blocks.obsidian, 's', Items.nether_star);
+			ItemCyclicWand cyclic_wand_fly = new ItemCyclicWand();
+			registerItem(cyclic_wand_fly, "cyclic_wand_fly");
+			GameRegistry.addRecipe(new ItemStack(cyclic_wand_fly), "sds", " o ", "gog", 'd', new ItemStack(Blocks.redstone_block), 'g', Items.ghast_tear, 'o', Blocks.obsidian, 's', Items.nether_star);
 		}
 
 		// thanks for help:
@@ -174,52 +193,52 @@ public class ItemRegistry {
 
 		if (emeraldGearEnabled) {
 
-			ModItems.emerald_sword = new ItemEmeraldSword();
-			registerItem(ModItems.emerald_sword, ItemEmeraldSword.name);
+			Item emerald_sword = new ItemEmeraldSword();
+			registerItem(emerald_sword, ItemEmeraldSword.name);
 
-			ModItems.emerald_pickaxe = new ItemEmeraldPickaxe();
-			registerItem(ModItems.emerald_pickaxe, ItemEmeraldPickaxe.name);
+			Item emerald_pickaxe = new ItemEmeraldPickaxe();
+			registerItem(emerald_pickaxe, ItemEmeraldPickaxe.name);
 
-			ModItems.emerald_axe = new ItemEmeraldAxe();
-			registerItem(ModItems.emerald_axe, ItemEmeraldAxe.name);
+			Item emerald_axe = new ItemEmeraldAxe();
+			registerItem(emerald_axe, ItemEmeraldAxe.name);
 
-			ModItems.emerald_spade = new ItemEmeraldSpade();
-			registerItem(ModItems.emerald_spade, ItemEmeraldSpade.name);
+			Item emerald_spade = new ItemEmeraldSpade();
+			registerItem(emerald_spade, ItemEmeraldSpade.name);
 
-			ModItems.emerald_hoe = new ItemEmeraldHoe();
-			registerItem(ModItems.emerald_hoe, ItemEmeraldHoe.name);
+			Item emerald_hoe = new ItemEmeraldHoe();
+			registerItem(emerald_hoe, ItemEmeraldHoe.name);
 
 			// ..yeah.. kind of breaks the pattern. i could make one class for each i
 			// guess.
-			ModItems.emerald_helmet = new ItemEmeraldArmor(EntityEquipmentSlot.HEAD);
-			registerItem(ModItems.emerald_helmet, "emerald_helmet");
+			Item emerald_helmet = new ItemEmeraldArmor(EntityEquipmentSlot.HEAD);
+			registerItem(emerald_helmet, "emerald_helmet");
 
-			ModItems.emerald_chestplate = new ItemEmeraldArmor(EntityEquipmentSlot.CHEST);
-			registerItem(ModItems.emerald_chestplate, "emerald_chestplate");
+			Item emerald_chestplate = new ItemEmeraldArmor(EntityEquipmentSlot.CHEST);
+			registerItem(emerald_chestplate, "emerald_chestplate");
 
-			ModItems.emerald_leggings = new ItemEmeraldArmor(EntityEquipmentSlot.LEGS);
-			registerItem(ModItems.emerald_leggings, "emerald_leggings");
+			Item emerald_leggings = new ItemEmeraldArmor(EntityEquipmentSlot.LEGS);
+			registerItem(emerald_leggings, "emerald_leggings");
 
-			ModItems.emerald_boots = new ItemEmeraldArmor(EntityEquipmentSlot.FEET);
-			registerItem(ModItems.emerald_boots, "emerald_boots");
+			Item emerald_boots = new ItemEmeraldArmor(EntityEquipmentSlot.FEET);
+			registerItem(emerald_boots, "emerald_boots");
 
 		}
 		if (ItemHorseFood.horseFoodEnabled) {
 
-			ModItems.emeraldCarrot = new ItemHorseFood();
-			ItemRegistry.registerItem(ModItems.emeraldCarrot, "horse_upgrade_type");
+			Item emeraldCarrot = new ItemHorseFood();
+			ItemRegistry.registerItem(emeraldCarrot, "horse_upgrade_type");
 
-			ModItems.lapisCarrot = new ItemHorseFood();
-			ItemRegistry.registerItem(ModItems.lapisCarrot, "horse_upgrade_variant");
+			Item lapisCarrot = new ItemHorseFood();
+			ItemRegistry.registerItem(lapisCarrot, "horse_upgrade_variant");
 
-			ModItems.diamondCarrot = new ItemHorseFood();
-			ItemRegistry.registerItem(ModItems.diamondCarrot, "horse_upgrade_health");
+			Item diamondCarrot = new ItemHorseFood();
+			ItemRegistry.registerItem(diamondCarrot, "horse_upgrade_health");
 
-			ModItems.horse_upgrade_speed = new ItemHorseFood();
-			ItemRegistry.registerItem(ModItems.horse_upgrade_speed, "horse_upgrade_speed");
+			Item horse_upgrade_speed = new ItemHorseFood();
+			ItemRegistry.registerItem(horse_upgrade_speed, "horse_upgrade_speed");
 
-			ModItems.horse_upgrade_jump = new ItemHorseFood();
-			ItemRegistry.registerItem(ModItems.horse_upgrade_jump, "horse_upgrade_jump");
+			Item horse_upgrade_jump = new ItemHorseFood();
+			ItemRegistry.registerItem(horse_upgrade_jump, "horse_upgrade_jump");
 
 		}
 
@@ -274,10 +293,10 @@ public class ItemRegistry {
 			ItemRegistry.registerItem(apple_lapis, "apple_lapis"); 
 		}
 		if (ItemFoodAppleMagic.apple_diamond_enabled) {
-			ModItems.apple_diamond = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.diamond), ItemFoodAppleMagic.apple_diamond_expensive);
-			ItemRegistry.registerItem(ModItems.apple_diamond, "apple_diamond");
-			ModItems.apple_diamond.addEffect(MobEffects.resistance, time, I);
-			ModItems.apple_diamond.addEffect(MobEffects.saturation, time, I);
+			ItemFoodAppleMagic apple_diamond = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.diamond), ItemFoodAppleMagic.apple_diamond_expensive,true);
+			ItemRegistry.registerItem(apple_diamond, "apple_diamond");
+			apple_diamond.addEffect(MobEffects.resistance, time, I);
+			apple_diamond.addEffect(MobEffects.saturation, time, I);
  
 
 		}
