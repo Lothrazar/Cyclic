@@ -114,6 +114,7 @@ public class ItemRegistry {
 			item.setCreativeTab(ModMain.TAB);
 		}
 		items.add(item);
+		itemMap.put(name, item);
 	}
 
 	private static void registerMaterials() {
