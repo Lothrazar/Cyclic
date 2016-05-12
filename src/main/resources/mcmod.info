@@ -5,7 +5,7 @@
     "name": "Cyclic",
     "description": "I added everything I wanted the game to have, including powerful items, inventory features, world generation, and more.  Everything is controlled by config.  Balanced around 
 single player survival, but there should be no problem on servers.",
-    "version": "alpha.v1",
+    "version": "alpha.v2",
     "mcversion": "1.9",
     "url": "http://minecraft.curseforge.com/projects/cyclic-magic",
     "updateUrl": "http://minecraft.curseforge.com/projects/cyclic-magic",
