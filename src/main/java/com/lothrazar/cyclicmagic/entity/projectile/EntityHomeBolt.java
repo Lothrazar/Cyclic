@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.entity.projectile;
 
 import com.lothrazar.cyclicmagic.util.UtilSound;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;

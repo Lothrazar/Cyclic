@@ -2,10 +2,12 @@ package com.lothrazar.cyclicmagic.gui.spell;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.util.UtilString;
 import com.lothrazar.cyclicmagic.util.UtilTextureRender;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;

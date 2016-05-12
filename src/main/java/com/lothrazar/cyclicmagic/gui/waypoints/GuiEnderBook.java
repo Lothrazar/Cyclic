@@ -3,15 +3,16 @@ package com.lothrazar.cyclicmagic.gui.waypoints;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.item.ItemEnderBook;
 import com.lothrazar.cyclicmagic.item.ItemEnderBook.BookLocation;
 import com.lothrazar.cyclicmagic.net.PacketDeleteButton;
 import com.lothrazar.cyclicmagic.net.PacketNewButton;
-import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiTextField;// http://www.minecraftforge.net/forum/index.php?topic=22378.0
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.GuiTextField;// http://www.minecraftforge.net/forum/index.php?topic=22378.0
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;

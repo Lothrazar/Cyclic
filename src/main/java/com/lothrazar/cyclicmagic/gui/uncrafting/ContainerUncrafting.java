@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.gui.uncrafting;
 
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityUncrafting;
 import com.lothrazar.cyclicmagic.gui.slot.SlotUncraft;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;

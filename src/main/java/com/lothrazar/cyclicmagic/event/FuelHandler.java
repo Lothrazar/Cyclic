@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.event;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;

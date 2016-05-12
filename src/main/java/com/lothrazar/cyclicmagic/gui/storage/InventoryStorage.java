@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.gui.storage;
 
 import com.lothrazar.cyclicmagic.util.UtilNBT;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;

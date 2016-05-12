@@ -2,18 +2,38 @@
 
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
-import com.lothrazar.cyclicmagic.registry.*;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
+import com.lothrazar.cyclicmagic.registry.CommandRegistry;
+import com.lothrazar.cyclicmagic.registry.DispenserBehaviorRegistry;
+import com.lothrazar.cyclicmagic.registry.EventRegistry;
+import com.lothrazar.cyclicmagic.registry.ExtraButtonRegistry;
+import com.lothrazar.cyclicmagic.registry.FuelRegistry;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.MobSpawningRegistry;
+import com.lothrazar.cyclicmagic.registry.PacketRegistry;
+import com.lothrazar.cyclicmagic.registry.PotionRegistry;
+import com.lothrazar.cyclicmagic.registry.ProjectileRegistry;
+import com.lothrazar.cyclicmagic.registry.RecipeAlterRegistry;
+import com.lothrazar.cyclicmagic.registry.RecipeNewRegistry;
+import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
+import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import com.lothrazar.cyclicmagic.registry.SpellRegistry;
+import com.lothrazar.cyclicmagic.registry.StackSizeRegistry;
+import com.lothrazar.cyclicmagic.registry.TileEntityRegistry;
+import com.lothrazar.cyclicmagic.registry.VillageTradeRegistry;
+import com.lothrazar.cyclicmagic.registry.WorldGenRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -137,9 +157,6 @@ public class ModMain {
 	 *Spell sounds: why does push/pull/rotate sound WORK< but build up spells dont?
 	 *		-->> answer: neither one plays the actual sound. if it breaks a block for you, THATS the one you hear
 	 *		 need a network packet.sendToAllAround and hit the sound up manual (clientside)
-	 * 
-	 * ??  [Client thread/WARN]: Missing sound for event: cyclicmagic:byeaa 
-	 * 
 	 * 
 	 * 
 	 ***** FEATURES upcoming

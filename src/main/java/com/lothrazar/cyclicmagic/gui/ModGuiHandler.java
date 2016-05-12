@@ -5,13 +5,14 @@ import com.lothrazar.cyclicmagic.gui.player.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.gui.storage.ContainerStorage;
 import com.lothrazar.cyclicmagic.gui.storage.GuiStorage;
 import com.lothrazar.cyclicmagic.gui.storage.InventoryStorage;
-import com.lothrazar.cyclicmagic.gui.wand.ContainerWand;
-import com.lothrazar.cyclicmagic.gui.wand.GuiWandInventory;
 import com.lothrazar.cyclicmagic.gui.uncrafting.ContainerUncrafting;
 import com.lothrazar.cyclicmagic.gui.uncrafting.GuiUncrafting;
+import com.lothrazar.cyclicmagic.gui.wand.ContainerWand;
+import com.lothrazar.cyclicmagic.gui.wand.GuiWandInventory;
 import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
 import com.lothrazar.cyclicmagic.util.UtilInventory;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
+
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.net;
 
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
+
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;

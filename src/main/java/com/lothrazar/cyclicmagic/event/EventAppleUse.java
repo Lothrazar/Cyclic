@@ -3,6 +3,7 @@ package com.lothrazar.cyclicmagic.event;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.item.ItemFoodAppleMagic;
 import com.lothrazar.cyclicmagic.registry.PotionRegistry;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;

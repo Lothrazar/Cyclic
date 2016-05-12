@@ -8,6 +8,7 @@ import com.lothrazar.cyclicmagic.gui.player.ButtonRestock;
 import com.lothrazar.cyclicmagic.gui.player.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.registry.ExtraButtonRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;

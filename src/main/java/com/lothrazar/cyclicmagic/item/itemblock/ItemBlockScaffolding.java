@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.item.itemblock;
 
 import com.lothrazar.cyclicmagic.util.Const;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;

@@ -1,7 +1,9 @@
 package com.lothrazar.cyclicmagic.entity.projectile;
 
 import java.util.ArrayList;
+
 import com.lothrazar.cyclicmagic.util.UtilSound;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;

@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.util;
 
 import java.util.ArrayList;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;

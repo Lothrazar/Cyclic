@@ -3,7 +3,13 @@ package com.lothrazar.cyclicmagic.registry;
 import java.util.Arrays;
 
 import com.lothrazar.cyclicmagic.util.Const;
-import com.lothrazar.cyclicmagic.world.gen.*;
+import com.lothrazar.cyclicmagic.world.gen.WorldGenEmeraldHeight;
+import com.lothrazar.cyclicmagic.world.gen.WorldGenEndOre;
+import com.lothrazar.cyclicmagic.world.gen.WorldGenGoldRiver;
+import com.lothrazar.cyclicmagic.world.gen.WorldGenNetherOre;
+import com.lothrazar.cyclicmagic.world.gen.WorldGenOcean;
+import com.lothrazar.cyclicmagic.world.gen.WorldGenOreSingleton;
+import com.lothrazar.cyclicmagic.world.gen.WorldGenPlantBiome;
 
 import net.minecraft.block.BlockCrops;
 import net.minecraft.init.Biomes;

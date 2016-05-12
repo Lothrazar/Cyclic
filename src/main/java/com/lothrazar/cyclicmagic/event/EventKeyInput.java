@@ -1,5 +1,11 @@
 package com.lothrazar.cyclicmagic.event;
 
+import com.lothrazar.cyclicmagic.IHasConfig;
+import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.net.MessageBarMove;
+import com.lothrazar.cyclicmagic.net.MessageSlotMove;
+import com.lothrazar.cyclicmagic.proxy.ClientProxy;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraftforge.client.event.GuiScreenEvent;
@@ -8,12 +14,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import com.lothrazar.cyclicmagic.IHasConfig;
-import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.net.MessageBarMove;
-import com.lothrazar.cyclicmagic.net.MessageSlotMove;
-import com.lothrazar.cyclicmagic.proxy.ClientProxy;
 
 public class EventKeyInput implements IHasConfig{
 

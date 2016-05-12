@@ -3,6 +3,7 @@ package com.lothrazar.cyclicmagic.event;
 import com.lothrazar.cyclicmagic.gui.player.ButtonCrafting;
 import com.lothrazar.cyclicmagic.gui.player.ButtonInventory;
 import com.lothrazar.cyclicmagic.gui.player.GuiPlayerExtended;
+
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiCrafting;
 import net.minecraft.client.gui.inventory.GuiInventory;

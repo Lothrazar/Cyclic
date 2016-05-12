@@ -3,7 +3,9 @@ package com.lothrazar.cyclicmagic.registry;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import com.lothrazar.cyclicmagic.util.Const;
+
 import net.minecraftforge.common.config.Configuration;
 
 public class ExtraButtonRegistry {

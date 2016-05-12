@@ -3,7 +3,6 @@ package com.lothrazar.cyclicmagic.item;
 import com.lothrazar.cyclicmagic.util.UtilItem;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;

@@ -1,12 +1,13 @@
 package com.lothrazar.cyclicmagic.net;
 
+import com.lothrazar.cyclicmagic.item.ItemEnderBook;
+import com.lothrazar.cyclicmagic.util.UtilSound;
+
+import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.util.SoundCategory;
-import com.lothrazar.cyclicmagic.item.ItemEnderBook;
-import com.lothrazar.cyclicmagic.util.UtilSound;
-import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;

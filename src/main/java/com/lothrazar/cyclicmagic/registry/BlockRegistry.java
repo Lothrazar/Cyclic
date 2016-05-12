@@ -3,13 +3,18 @@ package com.lothrazar.cyclicmagic.registry;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.block.*;
-import com.lothrazar.cyclicmagic.item.itemblock.*;
+import com.lothrazar.cyclicmagic.block.BlockBucketStorage;
+import com.lothrazar.cyclicmagic.block.BlockDimensionOre;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre.SpawnType;
+import com.lothrazar.cyclicmagic.block.BlockScaffolding;
+import com.lothrazar.cyclicmagic.block.BlockUncrafting;
+import com.lothrazar.cyclicmagic.item.itemblock.ItemBlockBucket;
 import com.lothrazar.cyclicmagic.item.itemblock.ItemBlockScaffolding;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilUncraft;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;

@@ -8,7 +8,6 @@ import net.minecraft.entity.item.EntityEnderPearl;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.ItemEnderPearl;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
@@ -62,7 +61,7 @@ public class ItemEnderPearlReuse extends BaseItem implements IHasRecipe, IHasCon
 	
 		Property prop = config.get(Const.ConfigCategory.items, "EnderPearlReuse", true, "Reuseable ender pearl");
 		prop.setRequiresMcRestart(true);
-		this.enabled = prop.getBoolean();
+		enabled = prop.getBoolean();
 		
 	
 		//TODO: Durability

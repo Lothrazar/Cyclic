@@ -2,8 +2,10 @@ package com.lothrazar.cyclicmagic.command;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilSearchWorld;
+
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;

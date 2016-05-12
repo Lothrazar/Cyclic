@@ -1,7 +1,9 @@
 package com.lothrazar.cyclicmagic.command;
 
 import java.util.List;
+
 import com.lothrazar.cyclicmagic.util.UtilChat;
+
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
