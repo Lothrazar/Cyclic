@@ -56,7 +56,7 @@ public class EntityShearingBolt extends EntityThrowable {
 					int i = 1 + sheep.worldObj.rand.nextInt(3);
 
 					if(EventAnimalDropBuffs.sheepShearBuffed){
-						i += MathHelper.getRandomIntegerInRange(sheep.worldObj.rand, 3, 6);
+						i += MathHelper.getRandomIntegerInRange(sheep.worldObj.rand, 1, 6);
 					}
 					
 					for (int j = 0; j < i; ++j) {

@@ -46,7 +46,7 @@ public class EventAnimalDropBuffs  implements IHasConfig{
 				
 				int meta = s.getFleeceColor().getMetadata();
 				
-				int rand = MathHelper.getRandomIntegerInRange(event.getWorld().rand, 3, 6);
+				int rand = MathHelper.getRandomIntegerInRange(event.getWorld().rand, 1, 6);
 				UtilEntity.dropItemStackInWorld(event.getWorld(), event.getPos(), new ItemStack(Blocks.wool, rand ,meta));
 				
 			}	
@@ -71,7 +71,7 @@ public class EventAnimalDropBuffs  implements IHasConfig{
 		}
 
 		if (extraLeather && entity instanceof EntityCow) {
-			int rand = MathHelper.getRandomIntegerInRange(worldObj.rand, 2, 6);
+			int rand = MathHelper.getRandomIntegerInRange(worldObj.rand, 1, 8);
 			UtilEntity.dropItemStackInWorld(worldObj, pos, new ItemStack(Items.leather, rand));
 		}
 
@@ -91,20 +91,20 @@ public class EventAnimalDropBuffs  implements IHasConfig{
 		
 		String category = Const.ConfigCategory.mobs;
  
-		sheepShearBuffed = config.getBoolean("Farm Drops Buffed", category, true,
-				"Increase drops of farm animals: more leather, more wool from shearing, pigs drop a bit more pork");
+		sheepShearBuffed = config.getBoolean("SheepBonus", category, true,
+				"Shearing sheep randomly adds bonus wool");
 
-		zombieVillagerEmeralds = config.getBoolean("Farm Drops Buffed", category, true,
-				"Increase drops of farm animals: more leather, more wool from shearing, pigs drop a bit more pork");
+		zombieVillagerEmeralds = config.getBoolean("ZVillagerEmerald", category, true,
+				"Zombie villagers have a "+this.chanceZombieVillagerEmerald+"% chance to drop an emerald");
 
-		extraLeather = config.getBoolean("Farm Drops Buffed", category, true,
-				"Increase drops of farm animals: more leather, more wool from shearing, pigs drop a bit more pork");
+		extraLeather = config.getBoolean("LeatherBonus", category, true,
+				"Leather drops randomly increased");
 
-		bonusPork = config.getBoolean("Farm Drops Buffed", category, true,
-				"Increase drops of farm animals: more leather, more wool from shearing, pigs drop a bit more pork");
+		bonusPork = config.getBoolean("PorkBonus", category, true,
+				"Pig drops randomly increased");
 
-		bonusGolemIron = config.getBoolean("Farm Drops Buffed", category, true,
-				"Increase drops of farm animals: more leather, more wool from shearing, pigs drop a bit more pork");
+		bonusGolemIron = config.getBoolean("IronBonus", category, true,
+				"Iron Golem random iron ingot drops increased");
 		
 	}
 }

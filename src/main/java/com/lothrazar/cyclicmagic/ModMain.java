@@ -161,8 +161,6 @@ public class ModMain {
 	 * 
 	 ***** FEATURES upcoming
 	 *
-	 *Farm Drops Buffed-split up per mob. add iron golems
-	 *
 	 *Monster Drops Nerfed-split up per drop
 	 *
 	 *B:"Extra Spawns Enabled= split up per mob . then we will have 'mob drops' category and 'mob spawns'
