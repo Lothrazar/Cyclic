@@ -2,6 +2,8 @@ package com.lothrazar.cyclicmagic.registry;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
@@ -25,7 +27,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemRegistry {
 	public static ArrayList<Item> items	= new ArrayList<Item>();
-	public static HashMap<String,Item> itemMap	= new HashMap<String,Item>();
+	public static Map<String,Item> itemMap	= new HashMap<String,Item>();
 	
 	private static boolean emeraldGearEnabled ; 
 	public static ToolMaterial		MATERIAL_EMERALD;
@@ -36,50 +38,6 @@ public class ItemRegistry {
 	private static final int		diamondDurability				= 33;
 	private static final int[]	diamondreductionAmounts	= new int[] { 3, 6, 8, 3 };
  
-	
-	private void addItem(BaseItem i){
-		items.add(i);
-		itemMap.put(i.getRawName(), i);
-	}
-	
-	public ItemRegistry(){
-		addItem(new ItemEnderPearlReuse().setRawName("ender_pearl_reuse")); 
-		addItem(new ItemPaperCarbon().setRawName("carbon_paper")); 
-		addItem(new ItemToolHarvest().setRawName("tool_harvest"));
-		addItem(new ItemToolPull().setRawName("tool_pull"));
-		addItem(new ItemToolPush().setRawName("tool_push"));
-		addItem(new ItemToolRotate().setRawName("tool_rotate"));
-		addItem(new ItemInventoryStorage().setRawName("storage_bag"));
-		addItem(new ItemChestSack().setRawName("chest_sack").setHidden(true));
-		addItem(new ItemChestSackEmpty().setRawName("chest_sack_empty"));
-		addItem(new ItemProjectileBlaze().setRawName("ender_blaze"));
-		addItem(new ItemProjectileDungeon().setRawName("ender_dungeon"));
-		addItem(new ItemProjectileFishing().setRawName("ender_fishing"));
-		addItem(new ItemProjectileWool().setRawName("ender_wool"));
-		addItem(new ItemProjectileTorch().setRawName("ender_torch"));
-		addItem(new ItemProjectileWater().setRawName("ender_water"));
-		addItem(new ItemProjectileSnow().setRawName("ender_snow"));
-		addItem(new ItemProjectileHarvest().setRawName("ender_harvest"));
-		addItem(new ItemProjectileLightning().setRawName("ender_lightning"));
-		addItem(new ItemProjectileTNT(1).setRawName("ender_tnt_1"));
-		addItem(new ItemProjectileTNT(2).setRawName("ender_tnt_2"));
-		addItem(new ItemProjectileTNT(3).setRawName("ender_tnt_4"));
-		addItem(new ItemProjectileTNT(4).setRawName("ender_tnt_6"));
-		
-		int dye_lapis = 4;
- 
-		addItem(new ItemHorseFood(new ItemStack(Items.emerald)).setRawName("horse_upgrade_type"));
-
-		addItem(new ItemHorseFood(new ItemStack(Items.dye, 1, dye_lapis)).setRawName("horse_upgrade_variant"));
-		addItem(new ItemHorseFood(new ItemStack(Items.diamond)).setRawName("horse_upgrade_health"));
-		addItem(new ItemHorseFood(new ItemStack(Items.redstone)).setRawName("horse_upgrade_speed"));
-		addItem(new ItemHorseFood(new ItemStack(Items.ender_eye)).setRawName("horse_upgrade_jump"));
-  
-		//only some need static references
-		addItem(new ItemEnderBook().setRawName("book_ender")); 
-		
-	}
-
 	public static void syncConfig(Configuration config) {
 		Property prop;
 		for (Item item : items) {
@@ -99,36 +57,6 @@ public class ItemRegistry {
 		
 		ItemFoodAppleMagic.syncConfig(config);
 	}
-
-	public static void registerItem(Item item, String name) {
-		registerItem(item, name, false);// default is not hidden
-	}
-
-	public static void registerItem(Item item, String name, boolean isHidden) {
-
-		item.setUnlocalizedName(name);
-
-		GameRegistry.register(item, new ResourceLocation(Const.MODID, name));
-
-		if (isHidden == false) {
-			item.setCreativeTab(ModMain.TAB);
-		}
-		items.add(item);
-		itemMap.put(name, item);
-	}
-
-	private static void registerMaterials() {
-
-		ARMOR_MATERIAL_EMERALD = EnumHelper.addArmorMaterial("emerald", Const.MODID + ":emerald", diamondDurability, diamondreductionAmounts, ArmorMaterial.DIAMOND.getEnchantability(), ArmorMaterial.DIAMOND.getSoundEvent());
-
-		MATERIAL_EMERALD = ToolMaterial.DIAMOND;
-		// TODO: addToolMat causes a bug/crash, not sure if forge will fix.
-
-		// EnumHelper.addToolMaterial("emerald", 3, harvestLevel 3 same as diamond
-		// 1600,3.5F, 5+25 );
-
-	}
-
 	private static void registerRecipes() {
 
 		 
@@ -142,15 +70,46 @@ public class ItemRegistry {
 	public static void register() {
 		registerMaterials();
 		
+		addItem(new ItemEnderPearlReuse().setRawName("ender_pearl_reuse")); 
+		addItem(new ItemPaperCarbon().setRawName("carbon_paper")); 
+		addItem(new ItemToolHarvest().setRawName("tool_harvest"));
+		addItem(new ItemToolPull().setRawName("tool_pull"));
+		addItem(new ItemToolPush().setRawName("tool_push"));
+		addItem(new ItemToolRotate().setRawName("tool_rotate"));
+		addItem(new ItemInventoryStorage().setRawName("storage_bag"));
+		addItem(new ItemChestSack().setRawName("chest_sack").setHidden());
+		addItem(new ItemChestSackEmpty().setRawName("chest_sack_empty"));
+		addItem(new ItemProjectileBlaze().setRawName("ender_blaze"));
+		addItem(new ItemProjectileDungeon().setRawName("ender_dungeon"));
+		addItem(new ItemProjectileFishing().setRawName("ender_fishing"));
+		addItem(new ItemProjectileWool().setRawName("ender_wool"));
+		addItem(new ItemProjectileTorch().setRawName("ender_torch"));
+		addItem(new ItemProjectileWater().setRawName("ender_water"));
+		addItem(new ItemProjectileSnow().setRawName("ender_snow"));
+		addItem(new ItemProjectileHarvest().setRawName("ender_harvest"));
+		addItem(new ItemProjectileLightning().setRawName("ender_lightning"));
+		addItem(new ItemProjectileTNT(1).setRawName("ender_tnt_1"));
+		addItem(new ItemProjectileTNT(2).setRawName("ender_tnt_2"));
+		addItem(new ItemProjectileTNT(3).setRawName("ender_tnt_4"));
+		addItem(new ItemProjectileTNT(4).setRawName("ender_tnt_6"));
+		addItem(new ItemHorseFood(new ItemStack(Items.emerald)).setRawName("horse_upgrade_type"));
+		addItem(new ItemHorseFood(new ItemStack(Items.dye, 1, Const.dye_lapis)).setRawName("horse_upgrade_variant"));
+		addItem(new ItemHorseFood(new ItemStack(Items.diamond)).setRawName("horse_upgrade_health"));
+		addItem(new ItemHorseFood(new ItemStack(Items.redstone)).setRawName("horse_upgrade_speed"));
+		addItem(new ItemHorseFood(new ItemStack(Items.ender_eye)).setRawName("horse_upgrade_jump"));
+  
+		//only some need static references
+		addItem(new ItemEnderBook().setRawName("book_ender")); 
+ 
 		//maybe one day it will be all base items
-		for (Item item : items) {
+		for (Item item : items) { 
 			if (item instanceof BaseItem) {
 				((BaseItem) item).register();
 			}
-			else{
-				System.out.println("WARN: unregistered item"+item.getUnlocalizedName()); 
-				//registerItem(item);//NAME??
-			}
+//			else{
+//				System.out.println("WARN: unregistered item"+item.getClass()); 
+//				//registerItem(item);//NAME??
+//			}
 		}
 
 
@@ -295,6 +254,44 @@ public class ItemRegistry {
 		}
 
 		registerRecipes();
+	}
+
+
+	private static void registerMaterials() {
+
+		ARMOR_MATERIAL_EMERALD = EnumHelper.addArmorMaterial("emerald", Const.MODID + ":emerald", diamondDurability, diamondreductionAmounts, ArmorMaterial.DIAMOND.getEnchantability(), ArmorMaterial.DIAMOND.getSoundEvent());
+
+		MATERIAL_EMERALD = ToolMaterial.DIAMOND;
+		// TODO: addToolMat causes a bug/crash, not sure if forge will fix.
+
+		// EnumHelper.addToolMaterial("emerald", 3, harvestLevel 3 same as diamond
+		// 1600,3.5F, 5+25 );
+
+	}
+
+	private static void addItem(BaseItem i){
+		items.add(i);
+		itemMap.put(i.getRawName(), i);
+	}
+	 
+	public static void registerItem(Item item, String name) {
+		registerItem(item, name, false);// default is not hidden
+	}
+
+	public static void registerItem(Item item, String name, boolean isHidden) {
+
+		item.setUnlocalizedName(name);
+
+		GameRegistry.register(item, new ResourceLocation(Const.MODID, name));
+
+		if (isHidden == false) {
+			item.setCreativeTab(ModMain.TAB);
+		}
+		items.add(item);
+		itemMap.put(name, item);
+		
+
+		System.out.println("classic "+name);
 	}
 
 }

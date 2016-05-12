@@ -16,8 +16,8 @@ public class BaseItem extends Item{
 		this.rawName = s;
 		return this;
 	}
-	public BaseItem setHidden(boolean hide){
-		this.hideFromCreativeTab = hide;
+	public BaseItem setHidden(){
+		this.hideFromCreativeTab = true;
 		return this;
 	}
 	public String getRawName() {
@@ -33,5 +33,7 @@ public class BaseItem extends Item{
 		if (hideFromCreativeTab == false) {
 			this.setCreativeTab(ModMain.TAB);
 		}
+		
+		System.out.println("base "+getRawName());
 	}
 }
