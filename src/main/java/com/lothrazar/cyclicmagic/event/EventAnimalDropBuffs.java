@@ -8,6 +8,7 @@ import com.lothrazar.cyclicmagic.util.UtilEntity;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.passive.EntityPig;
@@ -17,6 +18,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -25,19 +27,17 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EventAnimalDropBuffs  implements IHasConfig{
 
-	private static boolean farmDropBuffs;
-	
-	private static final int	cowExtraLeather							= 4;
-	private static final int	pigExtraMeat								= 5;
-	private static final int	chanceZombieVillagerEmerald	= 50;
-	public static final int sheepExtraWool = 5;
- 
+	public static boolean sheepShearBuffed;
+	private boolean zombieVillagerEmeralds;
+	private boolean extraLeather;
+	private boolean bonusPork;
+	private boolean bonusGolemIron;
+	private final int chanceZombieVillagerEmerald = 25;
 	
 	@SubscribeEvent
 	public void onEntityInteractSpecific(EntityInteractSpecific event) {
-		if(!farmDropBuffs){return;}
 		
-		if(event.getEntityPlayer() != null && event.getTarget() instanceof EntitySheep){
+		if(sheepShearBuffed && event.getEntityPlayer() != null && event.getTarget() instanceof EntitySheep){
 			EntityPlayer p = event.getEntityPlayer();
 			EntitySheep s = (EntitySheep)event.getTarget();
 			
@@ -46,7 +46,8 @@ public class EventAnimalDropBuffs  implements IHasConfig{
 				
 				int meta = s.getFleeceColor().getMetadata();
 				
-				UtilEntity.dropItemStackInWorld(event.getWorld(), event.getPos(), new ItemStack(Blocks.wool, sheepExtraWool ,meta));
+				int rand = MathHelper.getRandomIntegerInRange(event.getWorld().rand, 3, 6);
+				UtilEntity.dropItemStackInWorld(event.getWorld(), event.getPos(), new ItemStack(Blocks.wool, rand ,meta));
 				
 			}	
 		}
@@ -54,40 +55,56 @@ public class EventAnimalDropBuffs  implements IHasConfig{
 	
 	@SubscribeEvent
 	public void onLivingDropsEvent(LivingDropsEvent event) {
-		if(!farmDropBuffs){return;}
-
+ 
 		Entity entity = event.getEntity();
 		World worldObj = entity.getEntityWorld();
 		List<EntityItem> drops = event.getDrops();
 
 		BlockPos pos = entity.getPosition();
 
-		if (entity instanceof EntityZombie) // how to get this all into its own
-		                                    // class
-		{
+		if (entity instanceof EntityZombie && zombieVillagerEmeralds){
 			EntityZombie z = (EntityZombie) entity;
 
-			if (z.isVillager() && chanceZombieVillagerEmerald > 0 && worldObj.rand.nextInt(100) <= chanceZombieVillagerEmerald) {
+			if (z.isVillager() && chanceZombieVillagerEmerald  > 0 && worldObj.rand.nextInt(100) <= chanceZombieVillagerEmerald) {
 				drops.add(new EntityItem(worldObj, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Items.emerald)));
 			}
 		}
 
-		if (cowExtraLeather > 0 && entity instanceof EntityCow) {
-			UtilEntity.dropItemStackInWorld(worldObj, pos, new ItemStack(Items.leather, cowExtraLeather));
+		if (extraLeather && entity instanceof EntityCow) {
+			int rand = MathHelper.getRandomIntegerInRange(worldObj.rand, 2, 6);
+			UtilEntity.dropItemStackInWorld(worldObj, pos, new ItemStack(Items.leather, rand));
 		}
 
-		if (pigExtraMeat > 0 && entity instanceof EntityPig) {
-			UtilEntity.dropItemStackInWorld(worldObj, pos, new ItemStack(Items.porkchop, pigExtraMeat));
+		if (bonusPork && entity instanceof EntityPig) {
+			int rand = MathHelper.getRandomIntegerInRange(worldObj.rand, 1, 8);
+			UtilEntity.dropItemStackInWorld(worldObj, pos, new ItemStack(Items.porkchop, rand));
+		}
+
+		if (bonusGolemIron && entity instanceof EntityIronGolem) {
+			int rand = MathHelper.getRandomIntegerInRange(worldObj.rand, 1, 18);
+			UtilEntity.dropItemStackInWorld(worldObj, pos, new ItemStack(Items.iron_ingot, rand));
 		}
 	}
 
 	@Override
 	public void syncConfig(Configuration config) {
-		String category = Const.ConfigCategory.mobs;
 		
-		farmDropBuffs = config.getBoolean("Farm Drops Buffed", category, true,
+		String category = Const.ConfigCategory.mobs;
+ 
+		sheepShearBuffed = config.getBoolean("Farm Drops Buffed", category, true,
+				"Increase drops of farm animals: more leather, more wool from shearing, pigs drop a bit more pork");
+
+		zombieVillagerEmeralds = config.getBoolean("Farm Drops Buffed", category, true,
+				"Increase drops of farm animals: more leather, more wool from shearing, pigs drop a bit more pork");
+
+		extraLeather = config.getBoolean("Farm Drops Buffed", category, true,
+				"Increase drops of farm animals: more leather, more wool from shearing, pigs drop a bit more pork");
+
+		bonusPork = config.getBoolean("Farm Drops Buffed", category, true,
+				"Increase drops of farm animals: more leather, more wool from shearing, pigs drop a bit more pork");
+
+		bonusGolemIron = config.getBoolean("Farm Drops Buffed", category, true,
 				"Increase drops of farm animals: more leather, more wool from shearing, pigs drop a bit more pork");
 		
 	}
-
 }
