@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.gui;
 
-import com.lothrazar.cyclicmagic.block.TileEntityUncrafting;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityUncrafting;
 import com.lothrazar.cyclicmagic.gui.player.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.gui.storage.ContainerStorage;
 import com.lothrazar.cyclicmagic.gui.storage.GuiStorage;

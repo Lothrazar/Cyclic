@@ -138,6 +138,10 @@ public class ModMain {
 	 *		-->> answer: neither one plays the actual sound. if it breaks a block for you, THATS the one you hear
 	 *		 need a network packet.sendToAllAround and hit the sound up manual (clientside)
 	 * 
+	 * ??  [Client thread/WARN]: Missing sound for event: cyclicmagic:byeaa 
+	 * 
+	 * 
+	 * 
 	 ***** FEATURES upcoming
 	 *
 	 *Farm Drops Buffed-split up per mob. add iron golems
@@ -155,6 +159,14 @@ public class ModMain {
 	 * config: add toggles to disable extra crafting or extra inventory
 	 * 
 	 * items.apples: cleanup config names/ recipes. add comments
+	 *
+	 *uncrafting config: better names, no underscores
+	 *
+	 *config MISSING: for toosl: push/pull/rotate/harvest 
+	 *config MISSING for: 
+	 *config MISSING: carbon paper, storage sack, ender pearl reuse, enderbook, ItemInventoryStorage
+	 *
+	 *config RECIPES: split to individual
 	 *
 	 * 
 	 ***** FEATURES backlog 

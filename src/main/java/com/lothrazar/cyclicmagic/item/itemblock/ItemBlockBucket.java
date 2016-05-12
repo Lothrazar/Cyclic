@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.itemblock;
+package com.lothrazar.cyclicmagic.item.itemblock;
 
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.BlockBucketStorage;

@@ -33,7 +33,5 @@ public class BaseItem extends Item{
 		if (hideFromCreativeTab == false) {
 			this.setCreativeTab(ModMain.TAB);
 		}
-		
-		System.out.println("base "+getRawName());
 	}
 }

@@ -220,8 +220,6 @@ public class ItemRegistry {
 			ItemRegistry.registerItem(apple_diamond, "apple_diamond");
 			apple_diamond.addEffect(MobEffects.resistance, time, I);
 			apple_diamond.addEffect(MobEffects.saturation, time, I);
- 
-
 		}
 
 		if (ItemFoodAppleMagic.apple_bone_enabled) {
@@ -256,7 +254,6 @@ public class ItemRegistry {
 		registerRecipes();
 	}
 
-
 	private static void registerMaterials() {
 
 		ARMOR_MATERIAL_EMERALD = EnumHelper.addArmorMaterial("emerald", Const.MODID + ":emerald", diamondDurability, diamondreductionAmounts, ArmorMaterial.DIAMOND.getEnchantability(), ArmorMaterial.DIAMOND.getSoundEvent());
@@ -289,9 +286,5 @@ public class ItemRegistry {
 		}
 		items.add(item);
 		itemMap.put(name, item);
-		
-
-		System.out.println("classic "+name);
 	}
-
 }
