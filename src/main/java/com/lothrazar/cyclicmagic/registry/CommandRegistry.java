@@ -2,8 +2,24 @@ package com.lothrazar.cyclicmagic.registry;
 
 import java.util.HashMap;
 import java.util.Map;
-import com.lothrazar.cyclicmagic.command.*;
+
+import com.lothrazar.cyclicmagic.command.CommandEnderChest;
+import com.lothrazar.cyclicmagic.command.CommandGetHome;
+import com.lothrazar.cyclicmagic.command.CommandHeal;
+import com.lothrazar.cyclicmagic.command.CommandHearts;
+import com.lothrazar.cyclicmagic.command.CommandHome;
+import com.lothrazar.cyclicmagic.command.CommandPing;
+import com.lothrazar.cyclicmagic.command.CommandRecipe;
+import com.lothrazar.cyclicmagic.command.CommandSearchItem;
+import com.lothrazar.cyclicmagic.command.CommandSearchSpawner;
+import com.lothrazar.cyclicmagic.command.CommandSearchTrades;
+import com.lothrazar.cyclicmagic.command.CommandSimpleWaypoints;
+import com.lothrazar.cyclicmagic.command.CommandTodoList;
+import com.lothrazar.cyclicmagic.command.CommandUses;
+import com.lothrazar.cyclicmagic.command.CommandVillageInfo;
+import com.lothrazar.cyclicmagic.command.CommandWorldHome;
 import com.lothrazar.cyclicmagic.util.Const;
+
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;

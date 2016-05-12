@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.util;
 
 import java.lang.reflect.Field;
+
 import net.minecraft.block.Block;
 
 public class UtilReflection {

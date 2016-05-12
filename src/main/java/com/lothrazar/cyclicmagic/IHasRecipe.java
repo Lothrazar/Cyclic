@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.item;
+package com.lothrazar.cyclicmagic;
 
 public interface IHasRecipe {
 

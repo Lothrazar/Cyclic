@@ -1,7 +1,9 @@
 package com.lothrazar.cyclicmagic.gui.storage;
 
 import org.lwjgl.opengl.GL11;
+
 import com.lothrazar.cyclicmagic.util.Const;
+
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;

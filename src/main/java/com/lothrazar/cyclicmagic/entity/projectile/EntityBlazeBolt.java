@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.entity.projectile;
 
 import java.util.ArrayList;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityBlaze;

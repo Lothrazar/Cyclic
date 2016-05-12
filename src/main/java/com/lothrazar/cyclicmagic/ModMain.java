@@ -2,17 +2,38 @@
 
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
-import com.lothrazar.cyclicmagic.registry.*;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
+import com.lothrazar.cyclicmagic.registry.CommandRegistry;
+import com.lothrazar.cyclicmagic.registry.DispenserBehaviorRegistry;
+import com.lothrazar.cyclicmagic.registry.EventRegistry;
+import com.lothrazar.cyclicmagic.registry.ExtraButtonRegistry;
+import com.lothrazar.cyclicmagic.registry.FuelRegistry;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.MobSpawningRegistry;
+import com.lothrazar.cyclicmagic.registry.PacketRegistry;
+import com.lothrazar.cyclicmagic.registry.PotionRegistry;
+import com.lothrazar.cyclicmagic.registry.ProjectileRegistry;
+import com.lothrazar.cyclicmagic.registry.RecipeAlterRegistry;
+import com.lothrazar.cyclicmagic.registry.RecipeNewRegistry;
+import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
+import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import com.lothrazar.cyclicmagic.registry.SpellRegistry;
+import com.lothrazar.cyclicmagic.registry.StackSizeRegistry;
+import com.lothrazar.cyclicmagic.registry.TileEntityRegistry;
+import com.lothrazar.cyclicmagic.registry.VillageTradeRegistry;
+import com.lothrazar.cyclicmagic.registry.WorldGenRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
+
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -31,7 +52,7 @@ public class ModMain {
 	public final static CreativeTabs			TAB	= new CreativeTabs(Const.MODID) {
         @Override
         public Item getTabIconItem() {
-            return ItemRegistry.chest_sack;
+            return Items.diamond;//ItemRegistry.ModItems.chest_sack;
         }
     };
     private EventRegistry events;
@@ -137,19 +158,37 @@ public class ModMain {
 	 *		-->> answer: neither one plays the actual sound. if it breaks a block for you, THATS the one you hear
 	 *		 need a network packet.sendToAllAround and hit the sound up manual (clientside)
 	 * 
-	 ***** POSTPONED for later release [bugs or disabled features]
+	 * 
+	 ***** FEATURES upcoming
+	 *
+	 *Monster Drops Nerfed-split up per drop
+	 *
+	 *B:"Extra Spawns Enabled= split up per mob . then we will have 'mob drops' category and 'mob spawns'
+	 *
+	 *environment.sapling biomes: hide biome ints outside of neseted config, use a simple disabled flag
+	 *
+	 *Blacklist Container CSV hide outside of ingame config. a 'for modpack' config
 	 *
 	 *build up and down spell: need 2 new spells: a left and right
 	 *
 	 * config: add toggles to disable extra crafting or extra inventory
-	 *
-	 *circle build: does not work with 'pattern'. 
-	 *
-	 *circle build: is more of an oval, not symmetric
-	 *
-	 *MAYBE: disable the 'mass building' spells for first release.
 	 * 
-	 ***** FEATURES
+	 * items.apples: cleanup config names/ recipes. add comments
+	 *
+	 *uncrafting config: better names, no underscores
+	 *
+	 *config MISSING: for toosl: push/pull/rotate/harvest 
+	 *config MISSING for: 
+	 *config MISSING: carbon paper, storage sack, ender pearl reuse, enderbook, ItemInventoryStorage
+	 *
+	 *config RECIPES: split to individual
+	 *
+	 * 
+	 ***** FEATURES backlog 
+	 *
+	 *[disabled]circle build: does not work with 'pattern'. 
+	 *
+	 *[disabled]circle build: is more of an oval, not symmetric
 	 *
 	 *
 		// config todo TODO: 'enabled', which hides the button for invo

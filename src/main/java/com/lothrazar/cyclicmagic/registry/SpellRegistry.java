@@ -6,8 +6,19 @@ import java.util.List;
 import java.util.Map;
 
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
-import com.lothrazar.cyclicmagic.spell.*;
+import com.lothrazar.cyclicmagic.spell.ISpell;
+import com.lothrazar.cyclicmagic.spell.SpellInventory;
+import com.lothrazar.cyclicmagic.spell.SpellLaunch;
+import com.lothrazar.cyclicmagic.spell.SpellPlaceCircle;
+import com.lothrazar.cyclicmagic.spell.SpellPlaceLine;
+import com.lothrazar.cyclicmagic.spell.SpellPlaceStair;
+import com.lothrazar.cyclicmagic.spell.SpellRangeBuild;
+import com.lothrazar.cyclicmagic.spell.SpellRangePull;
+import com.lothrazar.cyclicmagic.spell.SpellRangePush;
+import com.lothrazar.cyclicmagic.spell.SpellRangeReplace;
+import com.lothrazar.cyclicmagic.spell.SpellRangeRotate;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
@@ -100,17 +111,12 @@ public class SpellRegistry {
 		registerSpell(Spells.launch);
 		spellbookFly.add(Spells.launch);
 		
-		if(ItemRegistry.cyclic_wand_fly != null){
-			ItemRegistry.cyclic_wand_fly.setSpells(spellbookFly);
-		}
-		if(ItemRegistry.cyclic_wand_range != null){
-			ItemRegistry.cyclic_wand_range.setSpells(spellbookNoInvo);
-		}
-		if(ItemRegistry.cyclic_wand_build != null){
-			ItemRegistry.cyclic_wand_build.setSpells(spellbookBuild);
-		}
 		
-		
+//TODO: a cleaner way?
+		((ItemCyclicWand)ItemRegistry.itemMap.get("cyclic_wand_fly")).setSpells(spellbookFly);
+		((ItemCyclicWand)ItemRegistry.itemMap.get("cyclic_wand_range")).setSpells(spellbookNoInvo);
+		((ItemCyclicWand)ItemRegistry.itemMap.get("cyclic_wand_build")).setSpells(spellbookBuild);
+	 
 		// Spells.placefloor = new SpellPlaceFloor(++spellId, "placefloor");
 		// registerBuildSpell(Spells.placefloor);
 	}

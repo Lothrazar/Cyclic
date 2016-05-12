@@ -1,8 +1,10 @@
-package com.lothrazar.cyclicmagic.itemblock;
+package com.lothrazar.cyclicmagic.item.itemblock;
 
 import java.util.List;
+
 import com.lothrazar.cyclicmagic.block.BlockBucketStorage;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;

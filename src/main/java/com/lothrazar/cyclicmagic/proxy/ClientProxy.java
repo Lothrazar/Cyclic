@@ -1,30 +1,27 @@
 package com.lothrazar.cyclicmagic.proxy;
 
 import java.util.Collection;
+
 import org.lwjgl.input.Keyboard;
-import net.minecraft.item.Item;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
+
 import com.google.common.collect.Ordering;
-import com.lothrazar.cyclicmagic.entity.projectile.*;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityBlazeBolt;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityDungeonEye;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamite;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityFishingBolt;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityHarvestBolt;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityLightningballBolt;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityShearingBolt;
+import com.lothrazar.cyclicmagic.entity.projectile.EntitySnowballBolt;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityTorchBolt;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityWaterBolt;
 import com.lothrazar.cyclicmagic.event.EventGuiInventory;
 import com.lothrazar.cyclicmagic.gui.spell.GuiSpellWheel;
 import com.lothrazar.cyclicmagic.potion.PotionCustom;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.client.FMLClientHandler;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -37,6 +34,21 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.item.Item;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ClientProxy extends CommonProxy {
 	public static KeyBinding	keyShiftUp;
@@ -180,17 +192,17 @@ public class ClientProxy extends CommonProxy {
 		// ItemRegistry.soulstone,
 		// Minecraft.getMinecraft().getRenderItem()));
 
-		RenderingRegistry.registerEntityRenderingHandler(EntityLightningballBolt.class, new RenderSnowball(rm, ItemRegistry.ender_lightning, ri));
-		RenderingRegistry.registerEntityRenderingHandler(EntityHarvestBolt.class, new RenderSnowball(rm, ItemRegistry.ender_harvest, ri));
-		RenderingRegistry.registerEntityRenderingHandler(EntityWaterBolt.class, new RenderSnowball(rm, ItemRegistry.ender_water, ri));
-		RenderingRegistry.registerEntityRenderingHandler(EntitySnowballBolt.class, new RenderSnowball(rm, ItemRegistry.ender_snow, ri));
-		RenderingRegistry.registerEntityRenderingHandler(EntityTorchBolt.class, new RenderSnowball(rm, ItemRegistry.ender_torch, ri));
-		RenderingRegistry.registerEntityRenderingHandler(EntityFishingBolt.class, new RenderSnowball(rm, ItemRegistry.ender_fishing, ri));
-		RenderingRegistry.registerEntityRenderingHandler(EntityShearingBolt.class, new RenderSnowball(rm, ItemRegistry.ender_wool, ri));
-		RenderingRegistry.registerEntityRenderingHandler(EntityHomeBolt.class, new RenderSnowball(rm, ItemRegistry.ender_bed, ri));
-		RenderingRegistry.registerEntityRenderingHandler(EntityDungeonEye.class, new RenderSnowball(rm, ItemRegistry.ender_dungeon, ri));
-		RenderingRegistry.registerEntityRenderingHandler(EntityDynamite.class, new RenderSnowball(rm, ItemRegistry.ender_tnt_1, ri));
-		RenderingRegistry.registerEntityRenderingHandler(EntityBlazeBolt.class, new RenderSnowball(rm, ItemRegistry.ender_blaze, ri));
+		RenderingRegistry.registerEntityRenderingHandler(EntityLightningballBolt.class, new RenderSnowball(rm, ItemRegistry.itemMap.get("ender_lightning"), ri));
+		RenderingRegistry.registerEntityRenderingHandler(EntityHarvestBolt.class, new RenderSnowball(rm, ItemRegistry.itemMap.get("ender_harvest"), ri));
+		RenderingRegistry.registerEntityRenderingHandler(EntityWaterBolt.class, new RenderSnowball(rm, ItemRegistry.itemMap.get("ender_water"), ri));
+		RenderingRegistry.registerEntityRenderingHandler(EntitySnowballBolt.class, new RenderSnowball(rm, ItemRegistry.itemMap.get("ender_snow"), ri));
+		RenderingRegistry.registerEntityRenderingHandler(EntityTorchBolt.class, new RenderSnowball(rm, ItemRegistry.itemMap.get("ender_torch"), ri));
+		RenderingRegistry.registerEntityRenderingHandler(EntityFishingBolt.class, new RenderSnowball(rm, ItemRegistry.itemMap.get("ender_fishing"), ri));
+		RenderingRegistry.registerEntityRenderingHandler(EntityShearingBolt.class, new RenderSnowball(rm, ItemRegistry.itemMap.get("ender_wool"), ri));
+		//RenderingRegistry.registerEntityRenderingHandler(EntityHomeBolt.class, new RenderSnowball(rm, ItemRegistry.ModItems.ender_bed, ri));
+		RenderingRegistry.registerEntityRenderingHandler(EntityDungeonEye.class, new RenderSnowball(rm, ItemRegistry.itemMap.get("ender_dungeon"), ri));
+		RenderingRegistry.registerEntityRenderingHandler(EntityDynamite.class, new RenderSnowball(rm, ItemRegistry.itemMap.get("ender_tnt_1"), ri));
+		RenderingRegistry.registerEntityRenderingHandler(EntityBlazeBolt.class, new RenderSnowball(rm, ItemRegistry.itemMap.get("ender_blaze"), ri));
 
 	}
 

@@ -3,6 +3,7 @@ package com.lothrazar.cyclicmagic.entity.projectile;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.projectile.EntityThrowable;
@@ -62,7 +63,7 @@ public class EntityFishingBolt extends EntityThrowable {
 		}
 		else {
 			if (worldObj.isRemote == false) {
-				worldObj.spawnEntityInWorld(new EntityItem(worldObj, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegistry.ender_fishing)));
+				worldObj.spawnEntityInWorld(new EntityItem(worldObj, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegistry.itemMap.get("ender_fishing"))));
 				this.setDead();
 			}
 		}

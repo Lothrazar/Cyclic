@@ -1,8 +1,9 @@
 package com.lothrazar.cyclicmagic.gui.uncrafting;
 
-import com.lothrazar.cyclicmagic.block.TileEntityUncrafting;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityUncrafting;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilUncraft;
+
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;

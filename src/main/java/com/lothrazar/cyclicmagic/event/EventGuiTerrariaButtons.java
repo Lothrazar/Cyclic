@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.event;
 
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.gui.player.ButtonDepositAll;
 import com.lothrazar.cyclicmagic.gui.player.ButtonLootAll;
 import com.lothrazar.cyclicmagic.gui.player.ButtonQuickStack;
@@ -7,6 +8,7 @@ import com.lothrazar.cyclicmagic.gui.player.ButtonRestock;
 import com.lothrazar.cyclicmagic.gui.player.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.registry.ExtraButtonRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -18,7 +20,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EventGuiTerrariaButtons implements IFeatureEvent{
+public class EventGuiTerrariaButtons implements IHasConfig{
 
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent

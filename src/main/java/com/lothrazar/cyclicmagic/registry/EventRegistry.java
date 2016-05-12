@@ -1,13 +1,45 @@
 package com.lothrazar.cyclicmagic.registry;
 
 import java.util.ArrayList;
+
+import com.lothrazar.cyclicmagic.IHasConfig;
+import com.lothrazar.cyclicmagic.event.EventAnimalDropBuffs;
+import com.lothrazar.cyclicmagic.event.EventAppleUse;
+import com.lothrazar.cyclicmagic.event.EventBucketBlocksBreak;
+import com.lothrazar.cyclicmagic.event.EventConfigChanged;
+import com.lothrazar.cyclicmagic.event.EventEditSign;
+import com.lothrazar.cyclicmagic.event.EventEnderChest;
+import com.lothrazar.cyclicmagic.event.EventEndermanDropBlock;
+import com.lothrazar.cyclicmagic.event.EventEntityItemExpire;
+import com.lothrazar.cyclicmagic.event.EventExtendedInventory;
+import com.lothrazar.cyclicmagic.event.EventFoodDetails;
+import com.lothrazar.cyclicmagic.event.EventFragileTorches;
+import com.lothrazar.cyclicmagic.event.EventFurnaceStardew;
+import com.lothrazar.cyclicmagic.event.EventGuiTerrariaButtons;
+import com.lothrazar.cyclicmagic.event.EventHorseFood;
+import com.lothrazar.cyclicmagic.event.EventKeyInput;
+import com.lothrazar.cyclicmagic.event.EventLadderClimb;
+import com.lothrazar.cyclicmagic.event.EventMobDropsReduced;
+import com.lothrazar.cyclicmagic.event.EventMounted;
+import com.lothrazar.cyclicmagic.event.EventMountedPearl;
+import com.lothrazar.cyclicmagic.event.EventNameVillager;
+import com.lothrazar.cyclicmagic.event.EventNametagDeath;
+import com.lothrazar.cyclicmagic.event.EventOreMined;
+import com.lothrazar.cyclicmagic.event.EventPassthroughAction;
+import com.lothrazar.cyclicmagic.event.EventPlayerDeathCoords;
+import com.lothrazar.cyclicmagic.event.EventPlayerWakeup;
+import com.lothrazar.cyclicmagic.event.EventPotions;
+import com.lothrazar.cyclicmagic.event.EventSaplingBlockGrowth;
+import com.lothrazar.cyclicmagic.event.EventSignSkullName;
+import com.lothrazar.cyclicmagic.event.EventSpawnChunks;
+import com.lothrazar.cyclicmagic.event.EventSpells;
+
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
-import com.lothrazar.cyclicmagic.event.*;
 
 public class EventRegistry {
 	
-	private ArrayList<IFeatureEvent> featureEvents = new ArrayList<IFeatureEvent>();
+	private ArrayList<IHasConfig> featureEvents = new ArrayList<IHasConfig>();
 	
 	public EventRegistry(){
 		featureEvents.add(new EventAnimalDropBuffs());
@@ -44,13 +76,13 @@ public class EventRegistry {
 	}
  
 	public void syncConfig(Configuration config) {
-		for (IFeatureEvent e : featureEvents) {
+		for (IHasConfig e : featureEvents) {
 			e.syncConfig(config);
 		}
 	}
 
 	public void register() {
-		for (IFeatureEvent e : featureEvents) {
+		for (IHasConfig e : featureEvents) {
 			MinecraftForge.EVENT_BUS.register(e);
 		}
 	}

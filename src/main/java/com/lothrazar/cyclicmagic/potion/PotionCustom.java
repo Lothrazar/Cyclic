@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.potion;
 
 import com.lothrazar.cyclicmagic.util.UtilTextureRender;
+
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;

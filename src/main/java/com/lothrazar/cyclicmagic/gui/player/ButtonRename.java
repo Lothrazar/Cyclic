@@ -3,6 +3,7 @@ package com.lothrazar.cyclicmagic.gui.player;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.net.RenamePacket;
 import com.lothrazar.cyclicmagic.util.Const;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.nbt.NBTTagCompound;

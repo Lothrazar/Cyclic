@@ -3,6 +3,7 @@ package com.lothrazar.cyclicmagic.gui.player;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.net.OpenCraftingPacket;
 import com.lothrazar.cyclicmagic.net.PacketOpenNormalInventory;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;

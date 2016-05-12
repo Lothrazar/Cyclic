@@ -1,10 +1,12 @@
 package com.lothrazar.cyclicmagic.command;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.lang.reflect.Field;
+
 import com.lothrazar.cyclicmagic.util.UtilChat;
+
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;

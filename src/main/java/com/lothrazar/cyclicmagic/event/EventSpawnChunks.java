@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.event;
 
 import java.text.DecimalFormat;
 
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilSearchWorld;
@@ -17,7 +18,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EventSpawnChunks implements IFeatureEvent{
+public class EventSpawnChunks implements IHasConfig{
 
 	final static int SPAWN_RADIUS = 8 * Const.CHUNK_SIZE;// 128 is spawn size
 

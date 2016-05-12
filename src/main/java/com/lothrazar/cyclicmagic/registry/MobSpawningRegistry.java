@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.registry;
 
 import com.lothrazar.cyclicmagic.util.Const;
+
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.entity.monster.EntityCaveSpider;

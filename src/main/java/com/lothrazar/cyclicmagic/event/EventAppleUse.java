@@ -1,7 +1,9 @@
 package com.lothrazar.cyclicmagic.event;
 
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.item.ItemFoodAppleMagic;
 import com.lothrazar.cyclicmagic.registry.PotionRegistry;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,7 +16,7 @@ import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventAppleUse implements IFeatureEvent{
+public class EventAppleUse implements IHasConfig{
 
 	@SubscribeEvent
 	public void onEnderTeleportEvent(EnderTeleportEvent event){

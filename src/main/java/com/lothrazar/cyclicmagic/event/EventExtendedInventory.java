@@ -3,6 +3,14 @@ package com.lothrazar.cyclicmagic.event;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
+
+import com.google.common.io.Files;
+import com.lothrazar.cyclicmagic.IHasConfig;
+import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.gui.player.InventoryPlayerExtended;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
@@ -11,15 +19,10 @@ import net.minecraftforge.event.entity.player.PlayerDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import com.google.common.io.Files;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
-import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.gui.player.InventoryPlayerExtended;
-import com.lothrazar.cyclicmagic.util.Const;
-import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
+import net.minecraftforge.fml.relauncher.Side;
 
-public class EventExtendedInventory implements IFeatureEvent{
+public class EventExtendedInventory implements IHasConfig{
 
 
 	public boolean dropOnDeath;

@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.block;
+package com.lothrazar.cyclicmagic.block.tileentity;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;

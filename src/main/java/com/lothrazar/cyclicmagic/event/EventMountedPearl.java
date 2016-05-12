@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.event;
 
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.util.Const;
 
 import net.minecraft.entity.Entity;
@@ -9,7 +10,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventMountedPearl  implements IFeatureEvent{
+public class EventMountedPearl  implements IHasConfig{
 
 	private boolean mountedPearl;
 

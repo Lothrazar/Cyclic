@@ -3,6 +3,7 @@ package com.lothrazar.cyclicmagic.entity.projectile;
 import com.lothrazar.cyclicmagic.event.EventAnimalDropBuffs;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.UtilSound;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntitySheep;
@@ -14,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
@@ -53,8 +55,12 @@ public class EntityShearingBolt extends EntityThrowable {
 					sheep.setSheared(true);
 					int i = 1 + sheep.worldObj.rand.nextInt(3);
 
+					if(EventAnimalDropBuffs.sheepShearBuffed){
+						i += MathHelper.getRandomIntegerInRange(sheep.worldObj.rand, 1, 6);
+					}
+					
 					for (int j = 0; j < i; ++j) {
-						EntityItem entityitem = sheep.entityDropItem(new ItemStack(Item.getItemFromBlock(Blocks.wool), EventAnimalDropBuffs.sheepExtraWool, sheep.getFleeceColor().getMetadata()), 1.0F);
+						EntityItem entityitem = sheep.entityDropItem(new ItemStack(Item.getItemFromBlock(Blocks.wool),1 , sheep.getFleeceColor().getMetadata()), 1.0F);
 						entityitem.motionY += (double) (sheep.worldObj.rand.nextFloat() * 0.05F);
 						entityitem.motionX += (double) ((sheep.worldObj.rand.nextFloat() - sheep.worldObj.rand.nextFloat()) * 0.1F);
 						entityitem.motionZ += (double) ((sheep.worldObj.rand.nextFloat() - sheep.worldObj.rand.nextFloat()) * 0.1F);
@@ -78,7 +84,7 @@ public class EntityShearingBolt extends EntityThrowable {
 			BlockPos pos = mop.getBlockPos();
 
 			if (pos != null && worldObj.isRemote == false) {
-				worldObj.spawnEntityInWorld(new EntityItem(worldObj, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegistry.ender_wool)));
+				worldObj.spawnEntityInWorld(new EntityItem(worldObj, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegistry.itemMap.get("ender_wool"))));
 				this.setDead();
 			}
 		}

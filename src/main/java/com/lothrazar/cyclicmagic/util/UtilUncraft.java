@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.util;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.ShapedRecipes;

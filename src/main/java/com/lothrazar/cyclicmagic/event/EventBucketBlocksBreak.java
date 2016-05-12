@@ -1,9 +1,11 @@
 package com.lothrazar.cyclicmagic.event;
 
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.block.BlockBucketStorage;
-import com.lothrazar.cyclicmagic.block.TileEntityBucketStorage;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBucketStorage;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -13,7 +15,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventBucketBlocksBreak implements IFeatureEvent{
+public class EventBucketBlocksBreak implements IHasConfig{
 
 	@SubscribeEvent
 	public void onBreakEvent(BreakEvent event) {

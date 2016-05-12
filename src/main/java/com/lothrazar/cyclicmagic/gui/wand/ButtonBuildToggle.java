@@ -2,11 +2,13 @@ package com.lothrazar.cyclicmagic.gui.wand;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.net.MessageToggleBuild;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;

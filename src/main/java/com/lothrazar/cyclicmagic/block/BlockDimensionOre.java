@@ -1,7 +1,9 @@
 package com.lothrazar.cyclicmagic.block;
 
 import java.util.Random;
+
 import com.lothrazar.cyclicmagic.registry.WorldGenRegistry;
+
 import net.minecraft.block.BlockOre;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;

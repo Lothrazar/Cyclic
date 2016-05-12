@@ -3,6 +3,7 @@ package com.lothrazar.cyclicmagic.event;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
@@ -15,10 +16,10 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.terraingen.SaplingGrowTreeEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventSaplingBlockGrowth implements IFeatureEvent{
+public class EventSaplingBlockGrowth implements IHasConfig{
 
 	private static final int sapling_oak = 0;
 	private static final int sapling_spruce = 1;

@@ -3,9 +3,11 @@ package com.lothrazar.cyclicmagic.gui.player;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.net.PacketSyncExtendedInventory;
 import com.lothrazar.cyclicmagic.util.Const;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;

@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.item;
 
-import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
@@ -9,7 +8,6 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumActionResult;
@@ -18,7 +16,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ItemChestSackEmpty extends Item {
+public class ItemChestSackEmpty extends BaseItem {
 
 	public static final String name = "chest_sack_empty";
 
@@ -51,7 +49,7 @@ public class ItemChestSackEmpty extends Item {
 
 		NBTTagCompound itemTag = UtilNBT.writeInventoryToNewTag(invo, ItemChestSack.KEY_NBT);
 
-		ItemStack drop = new ItemStack(ItemRegistry.chest_sack);  
+		ItemStack drop = new ItemStack(this);  
 
 		drop.setTagCompound(itemTag);
 

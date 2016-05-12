@@ -1,28 +1,36 @@
 package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
+
+import com.lothrazar.cyclicmagic.IHasConfig;
+import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class ItemChestSack extends Item implements IHasRecipe {
+public class ItemChestSack extends BaseItem implements IHasRecipe,IHasConfig {
 
 	public static final String	name			= "chest_sack";
 
 	public static final String	KEY_NBT		= "itemtags";
 	public static final String	KEY_BLOCK	= "block";
+
+	public static boolean enabled;
 
 	public ItemChestSack() {
 
@@ -88,5 +96,14 @@ public class ItemChestSack extends Item implements IHasRecipe {
 
 		int count = UtilNBT.countItemsFromNBT(itemStack.getTagCompound(), ItemChestSack.KEY_NBT);
 		list.add("" + count);
+	}
+
+	@Override
+	public void syncConfig(Configuration config) {
+
+		Property prop = config.get(Const.ConfigCategory.items, ItemChestSack.name, true, "A bag that transports chests along with its contents");
+		prop.setRequiresMcRestart(true);
+		ItemChestSack.enabled = prop.getBoolean();
+		
 	}
 }

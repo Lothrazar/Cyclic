@@ -1,13 +1,15 @@
 package com.lothrazar.cyclicmagic.gui.wand;
 
 import java.io.IOException;
+
 import org.lwjgl.opengl.GL11;
+
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.gui.button.*;
+import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.net.PacketBuildSize;
-import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
+
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
@@ -66,7 +68,8 @@ public class GuiWandInventory extends GuiContainer {
 		buildSize.setMaxStringLength(2);
 		buildSize.setText("" + size);
 		 
-		buildSize.setVisible(internalWand.getItem() != ItemRegistry.cyclic_wand_range);
+		System.out.println("todo determine build size visible");
+		//buildSize.setVisible(internalWand.getItem() != ItemRegistry.ModItems.cyclic_wand_range);
 		
 		buildSize.setFocused(true);
 

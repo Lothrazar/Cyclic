@@ -1,11 +1,13 @@
 package com.lothrazar.cyclicmagic.item;
 
+import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 
 public class ItemEmeraldSword extends ItemSword implements IHasRecipe {
 	public static final String name = "emerald_sword";

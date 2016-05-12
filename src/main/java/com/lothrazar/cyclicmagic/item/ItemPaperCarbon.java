@@ -1,13 +1,17 @@
 package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
+
+import com.lothrazar.cyclicmagic.IHasConfig;
+import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilInventory;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -21,13 +25,17 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class ItemPaperCarbon extends Item implements IHasRecipe {
+public class ItemPaperCarbon extends BaseItem implements IHasRecipe, IHasConfig {
 
 	public static final String	name				= "carbon_paper";
 
 	public static int						NOTE_EMPTY	= -1;
+
+	public static boolean enabled;
 	private static final String	KEY_SIGN0		= "sign_0";
 	private static final String	KEY_SIGN1		= "sign_1";
 	private static final String	KEY_SIGN2		= "sign_2";
@@ -283,5 +291,15 @@ public class ItemPaperCarbon extends Item implements IHasRecipe {
 		
 		//also let you clean off the paper , make one with no NBT
 		GameRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this));
+	}
+
+	@Override
+	public void syncConfig(Configuration config) {
+
+
+		Property prop = config.get(Const.ConfigCategory.items, ItemPaperCarbon.name, true, "Special paper to copy signs and note block data");
+		prop.setRequiresMcRestart(true);
+		ItemPaperCarbon.enabled = prop.getBoolean();
+
 	}
 }

@@ -3,15 +3,16 @@ package com.lothrazar.cyclicmagic.gui.waypoints;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.item.ItemEnderBook;
 import com.lothrazar.cyclicmagic.item.ItemEnderBook.BookLocation;
 import com.lothrazar.cyclicmagic.net.PacketDeleteButton;
 import com.lothrazar.cyclicmagic.net.PacketNewButton;
-import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiTextField;// http://www.minecraftforge.net/forum/index.php?topic=22378.0
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.GuiTextField;// http://www.minecraftforge.net/forum/index.php?topic=22378.0
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -58,7 +59,7 @@ public class GuiEnderBook extends GuiScreen {
 
 		buttonList.add(buttonNew);
 
-		if (bookStack != null && ItemEnderBook.getLocations(bookStack).size() >= ItemRegistry.maximumSaved) {
+		if (bookStack != null && ItemEnderBook.getLocations(bookStack).size() >= ItemEnderBook.maximumSaved) {
 			buttonNew.enabled = false;// also a tooltip?
 		}
 
@@ -81,7 +82,7 @@ public class GuiEnderBook extends GuiScreen {
 			loc = list.get(i);
 			buttonText = (loc.display == null) ? I18n.translateToLocal("gui.enderbook.go") : loc.display;
 
-			if (i % ItemRegistry.btnsPerColumn == 0)  // do we start a new row?
+			if (i % ItemEnderBook.btnsPerColumn == 0)  // do we start a new row?
 			{
 				x += w + delete_w + rowpad;
 				y = yStart;
@@ -127,7 +128,7 @@ public class GuiEnderBook extends GuiScreen {
 
 		// http://www.minecraftforge.net/forum/index.php?topic=18043.0
 
-		if (ItemRegistry.showCoordTooltips)
+		if (ItemEnderBook.showCoordTooltips)
 			for (int i = 0; i < buttonList.size(); i++) {
 				if (buttonList.get(i) instanceof ButtonWaypointTeleport) {
 					ButtonWaypointTeleport btn = (ButtonWaypointTeleport) buttonList.get(i);
@@ -158,7 +159,7 @@ public class GuiEnderBook extends GuiScreen {
 
 	@Override
 	public boolean doesGuiPauseGame() {
-		return ItemRegistry.doesPauseGame;
+		return ItemEnderBook.doesPauseGame;
 	}
 
 	// http://www.minecraftforge.net/forum/index.php?topic=22378.0

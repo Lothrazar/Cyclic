@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.gui.wand;
 
 import com.lothrazar.cyclicmagic.gui.slot.SlotWand;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ClickType;

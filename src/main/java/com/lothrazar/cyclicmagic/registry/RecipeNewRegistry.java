@@ -1,11 +1,12 @@
 package com.lothrazar.cyclicmagic.registry;
 
 import com.lothrazar.cyclicmagic.util.Const;
+
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraft.init.Blocks;
 
 public class RecipeNewRegistry {
 

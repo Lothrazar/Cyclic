@@ -1,7 +1,8 @@
 package com.lothrazar.cyclicmagic.registry;
 
-import com.lothrazar.cyclicmagic.block.TileEntityBucketStorage;
-import com.lothrazar.cyclicmagic.block.TileEntityUncrafting;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBucketStorage;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityUncrafting;
+
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class TileEntityRegistry {

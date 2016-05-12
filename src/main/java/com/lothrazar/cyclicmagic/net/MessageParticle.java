@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.net;
 
 //import com.lothrazar.util.Util;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
+
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;

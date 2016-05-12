@@ -1,10 +1,13 @@
 package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
+
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
+import com.lothrazar.cyclicmagic.spell.BaseSpellRange;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -18,6 +21,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -25,6 +29,7 @@ public class ItemCyclicWand extends Item {
 
 	private static final String NBT_SPELLCURRENT = "spell_id";
 	private List<ISpell> spellbook;
+	public static boolean						sceptersEnabled;
 
 	public ItemCyclicWand() {
 
@@ -417,5 +422,20 @@ public class ItemCyclicWand extends Item {
 
 			tags.setInteger(NBT, rot);
 		}
+	}
+
+	public static void syncConfig(Configuration config) {
+
+		String category = Const.ConfigCategory.items_scepters;
+
+		config.setCategoryComment(category, "Disable or customize items added to the game");
+
+		sceptersEnabled = config.getBoolean("sceptersEnabled", category, true, "Enable the building scepters");
+
+		SpellRegistry.renderOnLeft = config.getBoolean("scepter_HUD_left", category, true, "True for top left of the screen, false for top right");
+
+		BaseSpellRange.maxRange = config.getInt("scepter_MaxRange", category, 64, 8, 128, "Maximum range for all spells");
+
+		
 	}
 }
