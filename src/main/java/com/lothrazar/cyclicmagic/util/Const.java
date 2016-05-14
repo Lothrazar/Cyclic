@@ -24,6 +24,7 @@ public class Const {
 		public static final String recipes = MODCONF + "recipes";
 		public static final String villagers = MODCONF + "villagers";
 		public static final String items_scepters = items + ".scepters";
+		public static final String modpacks = "SaplingGrowthDetail";
 	}
 
 

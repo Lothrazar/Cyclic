@@ -10,7 +10,7 @@ import com.lothrazar.cyclicmagic.event.EventConfigChanged;
 import com.lothrazar.cyclicmagic.event.EventEditSign;
 import com.lothrazar.cyclicmagic.event.EventEnderChest;
 import com.lothrazar.cyclicmagic.event.EventEndermanDropBlock;
-import com.lothrazar.cyclicmagic.event.EventEntityItemExpire;
+import com.lothrazar.cyclicmagic.event.EventSaplingPlantDespawn;
 import com.lothrazar.cyclicmagic.event.EventExtendedInventory;
 import com.lothrazar.cyclicmagic.event.EventFoodDetails;
 import com.lothrazar.cyclicmagic.event.EventFragileTorches;
@@ -49,7 +49,7 @@ public class EventRegistry {
 		featureEvents.add(new EventEditSign());
 		featureEvents.add(new EventEnderChest());
 		featureEvents.add(new EventEndermanDropBlock());
-		featureEvents.add(new EventEntityItemExpire());
+		featureEvents.add(new EventSaplingPlantDespawn());
 		featureEvents.add(new EventExtendedInventory());
 		featureEvents.add(new EventFoodDetails());	
 		featureEvents.add(new EventFragileTorches());		

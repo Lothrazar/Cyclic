@@ -161,12 +161,6 @@ public class ModMain {
 	 * 
 	 ***** FEATURES upcoming
 	 *
-	 *Monster Drops Nerfed-split up per drop
-	 *
-	 *B:"Extra Spawns Enabled= split up per mob . then we will have 'mob drops' category and 'mob spawns'
-	 *
-	 *environment.sapling biomes: hide biome ints outside of neseted config, use a simple disabled flag
-	 *
 	 *Blacklist Container CSV hide outside of ingame config. a 'for modpack' config
 	 *
 	 *build up and down spell: need 2 new spells: a left and right

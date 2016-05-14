@@ -12,11 +12,11 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.item.ItemExpireEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventEntityItemExpire  implements IHasConfig{
+public class EventSaplingPlantDespawn  implements IHasConfig{
 
 	public static boolean enabled = true;
 
-	public EventEntityItemExpire() {
+	public EventSaplingPlantDespawn() {
 		//from one of my mods https://github.com/LothrazarMinecraftMods/SaplingGrowthControl/blob/master/src/main/java/com/lothrazar/samssaplings/ModConfig.java
 		
 	}
@@ -38,10 +38,7 @@ public class EventEntityItemExpire  implements IHasConfig{
 		Block blockhere = entity.worldObj.getBlockState(entityItem.getPosition()).getBlock();
 		Block blockdown = entity.worldObj.getBlockState(entityItem.getPosition().down()).getBlock();
 
-		if (blockhere == Blocks.air && blockdown == Blocks.dirt || // includes
-																	// podzol
-																	// and such
-		blockdown == Blocks.grass) {
+		if (blockhere == Blocks.air && blockdown == Blocks.dirt || blockdown == Blocks.grass) {
 			// plant the sapling, replacing the air and on top of dirt/plantable
 
 			if (Block.getBlockFromItem(is.getItem()) == Blocks.sapling)
@@ -57,7 +54,7 @@ public class EventEntityItemExpire  implements IHasConfig{
 	public  void syncConfig(Configuration config) {
 		String category = Const.ConfigCategory.environment;
 		
-		enabled = config.getBoolean("plantDespawningSaplings", category, true, "Plant saplings if they despawn on grass/dirt");
+		enabled = config.getBoolean("PlantDespawningSaplings", category, true, "Plant saplings (and mushrooms) if they despawn on grass/dirt");
 		
 	}
 }

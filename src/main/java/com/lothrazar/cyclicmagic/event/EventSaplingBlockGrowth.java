@@ -34,20 +34,28 @@ public class EventSaplingBlockGrowth implements IHasConfig{
 	private static List<Integer> birchBiomes;
 	private static List<Integer> darkoakBiomes;
 	private static List<Integer> jungleBiomes;
+	private boolean enabled;
 
 	@SubscribeEvent
 	public void onSaplingGrowTreeEvent(SaplingGrowTreeEvent event) {
+		
+		if(!enabled){
+			return;
+		}
+		
 		World world = event.getWorld();
 		BlockPos pos = event.getPos();
 		Block b = world.getBlockState(pos).getBlock();
 
-		boolean treeAllowedToGrow = false;
 		// this may not always be true: such as trees
 		// added by Mods, so not a vanilla tree, but
 		// throwing same event
 		if (b != Blocks.sapling){
-			return;//modded sapling?
+			return;
 		}
+		
+		boolean treeAllowedToGrow = false;
+		
 		int meta = Blocks.sapling.getMetaFromState(world.getBlockState(pos));
  
 		int biomeID = BiomeGenBase.getIdForBiome(world.getBiomeGenForCoords(pos));// event.world.getBiomeGenForCoords(event.pos).biomeID;
@@ -95,12 +103,18 @@ public class EventSaplingBlockGrowth implements IHasConfig{
 			
 		}
 	}
+	
 	@Override
 	public void syncConfig(Configuration config) {
-		config.load();
-		String category = Const.ConfigCategory.environment;
+		
 
-		config.addCustomCategoryComment(category, "A list of biome IDs that each sapling is allowed to grow in.  ");
+		String category = Const.ConfigCategory.environment;
+		
+		enabled = config.getBoolean("SaplingHomeBiomes", category, true, "Saplings are only allowed to grow into trees in their home biome, otherwise they turn to dead bushes");
+	 
+		category = Const.ConfigCategory.modpacks;
+
+		config.addCustomCategoryComment(category, "A list of biome IDs that each sapling is allowed to grow in.  Useful for modpacks that add extra biomes.  ");
 
 		String oakCSV = config.get(category, "oak", "4, 18, 132, 39, 166, 167, 21, 23, 151, 149, 22, 6, 134, 3, 20, 34, 12, 29, 157").getString();
 		oakBiomes = csvToInt(oakCSV);
@@ -119,10 +133,7 @@ public class EventSaplingBlockGrowth implements IHasConfig{
 
 		String jungleCSV = config.get(category, "jungle", "21, 23, 22, 149, 151").getString();
 		jungleBiomes = csvToInt(jungleCSV);
-
-		if (config.hasChanged()) {
-			config.save();
-		}
+ 
 	}
 
 	private static List<Integer> csvToInt(String csv) {
