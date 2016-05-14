@@ -161,24 +161,25 @@ public class ModMain {
 	 * 
 	 ***** FEATURES upcoming
 	 *
-	 *Blacklist Container CSV hide outside of ingame config. a 'for modpack' config
+	 *NEW PLAN: give launching scepter 3 spells: levitation & slowfall (potion spells, max 10sec, NOT stacking)
+	 *
+	 *chorus apple: make sure it works on other entities
+	 *
+	 * items.apples: cleanup config names/ recipes. add comments
 	 *
 	 *build up and down spell: need 2 new spells: a left and right
-	 *
-	 * config: add toggles to disable extra crafting or extra inventory
-	 * 
-	 * items.apples: cleanup config names/ recipes. add comments
 	 *
 	 *uncrafting config: better names, no underscores
 	 *
 	 *config MISSING: for toosl: push/pull/rotate/harvest 
 	 *config MISSING for: 
-	 *config MISSING: carbon paper, storage sack, ender pearl reuse, enderbook, ItemInventoryStorage
+	 *config MISSING: carbon paper, storage sack, ender pearl reuse, enderbook, 
+	 *		ItemInventoryStorage
 	 *
 	 *config RECIPES: split to individual
 	 *
+	 *[big change[ ENDER BOOK: remove and replace with another invo-tab
 	 * 
-	 ***** FEATURES backlog 
 	 *
 	 *[disabled]circle build: does not work with 'pattern'. 
 	 *
@@ -224,9 +225,7 @@ public class ModMain {
 	 * 
 	 * Note: D:\git\noncontent\build\sources\main\java\com\lothrazar\cyclicmagic\block\BlockUncrafting.java uses or overrides a deprecated API.
 Note: Recompile with -Xlint:deprecation for details.
-
-	 ***** BACKLOG // ideas
-	 *
+ 
 	 *make mushroom soup and beetroot stew stackable? so when you eat one you still get the bowl and dont consume whole stack?
 	 * 
 	 * fix villager skins

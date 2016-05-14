@@ -20,12 +20,12 @@ plugins {
     id "net.minecraftforge.gradle.forge" version "2.0.2"
 }
 */
-version = "1.9-alpha.2"
+version = "1.9-alpha.3"
 group= "com.lothrazar.cyclicmagic" 
 archivesBaseName = "Cyclic"
 
 minecraft {
-    version = "1.9-12.16.0.1865-1.9"
+    version = "1.9-12.16.1.1905"
     runDir = "run"
     
     mappings = "snapshot_20160312"

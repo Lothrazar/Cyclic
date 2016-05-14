@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.registry;
 
+import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.util.Const;
 
 import net.minecraft.entity.passive.EntityVillager;
@@ -59,25 +60,29 @@ public class VillageTradeRegistry {
 
 		//TOO TEST: /summon Villager ~ ~ ~ {Profession:5,Career:1}
 		addVillagerDruid();
-		 
+
+		ModMain.logger.warn("Villager trading disabled, need to use new forge system");
 	}
 
+	
 	private static void addVillagerSage() {
 
 		  new VillagerCareer(elderProfession, "sage_career"){
+				 /*
 			 @Override
        public ITradeList[][] getTrades(){
            return sageTrades;
-       }
+       }*/
 		 };
 	}
 	private static void addVillagerDruid() {
 
 	  new VillagerCareer(elderProfession, "druid_career"){
+		  /*
 		 @Override
      public ITradeList[][] getTrades(){
          return druidTrades;
-     }
+     }*/
 	 };
 		
 	}

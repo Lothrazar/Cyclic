@@ -213,7 +213,7 @@ public class ItemRegistry {
  
 		}
 
-		if (ItemFoodAppleMagic.apple_chorus_enabled) {
+		if (ItemFoodAppleMagic.apple_ender_enabled) {
 			ItemFoodAppleMagic apple_ender = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.ender_pearl), ItemFoodAppleMagic.apple_ender_expensive);
 
 			apple_ender.addEffect(PotionRegistry.ender, time, I);
