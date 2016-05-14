@@ -15,7 +15,6 @@ import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.init.Biomes;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 public class MobSpawningRegistry {
@@ -23,52 +22,70 @@ public class MobSpawningRegistry {
 	private final static int	group		= 3;
 	private final static int	min			= 1;
 	private final static int	max			= 4;
-	public static boolean			enabled	= true;
+	private static boolean endermanNether;
+	private static boolean blazeDesertHills;
+	private static boolean magmaDesert;
+	private static boolean caveSpiderMesaRoofed;
+	private static boolean ghastDeepOcean;
+	private static boolean guardianRiver;
+	private static boolean snowmanIcePlainsMount;
+	private static boolean horseIceExtrhillsOcean;
+	private static boolean ironGolemJungle;
 
 	public static void register() {
 
-		if(!enabled){
-			return;
+		if(endermanNether){
+			EntityRegistry.addSpawn(EntityEnderman.class, group, min, max, EnumCreatureType.MONSTER, new BiomeGenBase[] { Biomes.hell });
 		}
-		EntityRegistry.addSpawn(EntityEnderman.class, group, min, max, EnumCreatureType.MONSTER, new BiomeGenBase[] { Biomes.hell });
+		
+		if(blazeDesertHills){
+			EntityRegistry.addSpawn(EntityBlaze.class, group, min, max, EnumCreatureType.MONSTER, new BiomeGenBase[] { Biomes.desertHills });
+		}
+		if(magmaDesert){
+			EntityRegistry.addSpawn(EntityMagmaCube.class, group, min, max, EnumCreatureType.MONSTER, new BiomeGenBase[] { Biomes.desertHills, Biomes.desert });
+		}
+		
+		if(caveSpiderMesaRoofed){
+			EntityRegistry.addSpawn(EntityCaveSpider.class, group, min, max, EnumCreatureType.MONSTER, new BiomeGenBase[] { Biomes.mesa, Biomes.roofedForest });
+		}
+		
+		if(ghastDeepOcean){
+			EntityRegistry.addSpawn(EntityGhast.class, group, min, max, EnumCreatureType.MONSTER, new BiomeGenBase[] { Biomes.deepOcean });
+		}
+		
+		if(guardianRiver){
+			EntityRegistry.addSpawn(EntityGuardian.class, group, min, max, EnumCreatureType.WATER_CREATURE, new BiomeGenBase[] { Biomes.river });
+		}
+		if(snowmanIcePlainsMount){
+			EntityRegistry.addSpawn(EntitySnowman.class, group, min, max, EnumCreatureType.CREATURE, new BiomeGenBase[] { Biomes.iceMountains, Biomes.icePlains });
+		}
+		if(horseIceExtrhillsOcean){
+			// existing horses only spawn in plains and savanah
+			EntityRegistry.addSpawn(EntityHorse.class, group, min, max, EnumCreatureType.CREATURE, new BiomeGenBase[] { Biomes.extremeHills, Biomes.icePlains });
+		}
+		if(ironGolemJungle){
+			EntityRegistry.addSpawn(EntityIronGolem.class, group, min, max, EnumCreatureType.CREATURE, new BiomeGenBase[] { Biomes.jungleHills, Biomes.jungle });
+		}
+		
 
-		EntityRegistry.addSpawn(EntityBlaze.class, group, min, max, EnumCreatureType.MONSTER, new BiomeGenBase[] { Biomes.desertHills });
-
-		EntityRegistry.addSpawn(EntityMagmaCube.class, group, min, max, EnumCreatureType.MONSTER, new BiomeGenBase[] { Biomes.desertHills, Biomes.desert });
-
-		EntityRegistry.addSpawn(EntityCaveSpider.class, group, min, max, EnumCreatureType.MONSTER, new BiomeGenBase[] { Biomes.mesa, Biomes.roofedForest, Biomes.jungle });
-
-		EntityRegistry.addSpawn(EntityGhast.class, group, min, max, EnumCreatureType.MONSTER, new BiomeGenBase[] { Biomes.deepOcean });
-
-		// existing horses only spawn in plains and savanah
-		// horses dont like trees, so biomes without them makes sense. ocean means
-		// those little
-		// islands
-
-		EntityRegistry.addSpawn(EntityGuardian.class, group, min, max, EnumCreatureType.WATER_CREATURE, new BiomeGenBase[] { Biomes.river });
-
-		EntityRegistry.addSpawn(EntitySnowman.class, group, min, max, EnumCreatureType.CREATURE, new BiomeGenBase[] { Biomes.iceMountains, Biomes.icePlains });
-
-		EntityRegistry.addSpawn(EntityHorse.class, group, min, max, EnumCreatureType.CREATURE, new BiomeGenBase[] { Biomes.iceMountains, Biomes.extremeHills, Biomes.icePlains, Biomes.deepOcean });
-
-//TODO: wolves and villagers?
-		// WOLVES only spawn naturally in forest, taiga, mega taiga, cold taiga, and
-		// cold taiga M
-
-		EntityRegistry.addSpawn(EntityIronGolem.class, group, min, max, EnumCreatureType.CREATURE, new BiomeGenBase[] { Biomes.jungleHills, Biomes.jungle });
+		//TODO: wolves and villagers?
+		// WOLVES only spawn naturally in forest, taiga, mega taiga, cold taiga, and cold taiga M
 
 	}
 
 	public static void syncConfig(Configuration config) {
 
-		String category = Const.ConfigCategory.mobs;
+		String category = Const.ConfigCategory.mobspawns;
+		
+		endermanNether = config.getBoolean("EndermanNether", category, true, "Adds random Enderman spawns into the nether");
+		blazeDesertHills = config.getBoolean("BlazeDesertHills", category, true, "Adds random Blaze spawns into Desert Hills");
+		magmaDesert = config.getBoolean("MagmacubeDesert", category, true, "Adds random Magma Cube spawns into Desert");
+		caveSpiderMesaRoofed = config.getBoolean("CSMesaRoofed", category, true, "Adds random Cave Spider spawns into Mesa and Roofed Forests");
+		ghastDeepOcean = config.getBoolean("GhastDeepOcean", category, true, "Adds random Ghast spawns into Deep Oceans");
+		guardianRiver = config.getBoolean("GuardianRiver", category, true, "Adds random Guardian spawns into Rivers");
+		snowmanIcePlainsMount = config.getBoolean("SnowmanIce", category, true, "Adds random Snowman spawns into Ice Plains and Ice Mountains");
+		horseIceExtrhillsOcean = config.getBoolean("HorseIceHills", category, true, "Adds random Horse spawns into Extreme Hills and Ice Plains");
+		ironGolemJungle = config.getBoolean("IGolemJungle", category, true, "Adds random IronGolem spawns into the Jungle");
 
-		String msg = "Allow tons of mobs to spawn in more biomes.  Horses in more places; Cave spiders in mesa and roofed forests; some nether mobs in the desert; enderman in the nether; snowmen in winter biomes;  ghasts in deep ocean; Iron Golems in the jungle; Guardians in rivers.";
-
-		config.setCategoryComment(category, msg);
-
-		Property prop = config.get(category, "Extra Spawns Enabled", true, msg);
-	
-		enabled = prop.getBoolean();
 	}
 }

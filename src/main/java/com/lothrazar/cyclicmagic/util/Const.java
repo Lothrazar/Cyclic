@@ -10,6 +10,7 @@ public class Const {
 		public static final String player = MODCONF + "player";
 		public static final String worldGen = MODCONF + "world generation";
 		public static final String mobs = MODCONF + "mobs";
+		public static final String mobspawns = MODCONF + "Mob Spawns";
 		public static final String blocks = MODCONF + "blocks";
 		public static final String blocks_uncrafting = blocks +  ".uncrafting";
 		public static final String blockChanges = MODCONF + "blockchanges";
@@ -22,7 +23,7 @@ public class Const {
 		public static final String items_projectiles = items + ".projectiles";
 		public static final String recipes = MODCONF + "recipes";
 		public static final String villagers = MODCONF + "villagers";
-		public static final String items_scepters = items+".scepters";
+		public static final String items_scepters = items + ".scepters";
 	}
 
 
