@@ -7,7 +7,7 @@ import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
-import com.lothrazar.cyclicmagic.net.PacketBuildSize;
+import com.lothrazar.cyclicmagic.net.PacketSpellBuildSize;
 import com.lothrazar.cyclicmagic.util.Const;
 
 import net.minecraft.client.gui.GuiTextField;
@@ -91,7 +91,7 @@ public class GuiWandInventory extends GuiContainer {
 			size = 16;
 		}
 
-		ModMain.network.sendToServer(new PacketBuildSize(size));
+		ModMain.network.sendToServer(new PacketSpellBuildSize(size));
 	}
 
 	@Override

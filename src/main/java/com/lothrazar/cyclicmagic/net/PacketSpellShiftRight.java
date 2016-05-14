@@ -10,15 +10,15 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class MessageKeyRight implements IMessage, IMessageHandler<MessageKeyRight, IMessage> {
+public class PacketSpellShiftRight implements IMessage, IMessageHandler<PacketSpellShiftRight, IMessage> {
 
 	public static final int ID = 13;
 
-	public MessageKeyRight() {
+	public PacketSpellShiftRight() {
 
 	}
 
-	public MessageKeyRight(BlockPos pm) {
+	public PacketSpellShiftRight(BlockPos pm) {
 
 	}
 
@@ -33,7 +33,7 @@ public class MessageKeyRight implements IMessage, IMessageHandler<MessageKeyRigh
 	}
 
 	@Override
-	public IMessage onMessage(MessageKeyRight message, MessageContext ctx) {
+	public IMessage onMessage(PacketSpellShiftRight message, MessageContext ctx) {
 
 		EntityPlayer player = ctx.getServerHandler().playerEntity;
 		// PlayerPowerups props = PlayerPowerups.get(player);

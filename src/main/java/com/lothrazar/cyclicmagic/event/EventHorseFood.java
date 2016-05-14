@@ -3,7 +3,7 @@ package com.lothrazar.cyclicmagic.event;
 import java.text.DecimalFormat;
 
 import com.lothrazar.cyclicmagic.IHasConfig;
-import com.lothrazar.cyclicmagic.item.ItemHorseFood;
+import com.lothrazar.cyclicmagic.item.ItemFoodHorse;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 
 import net.minecraft.client.Minecraft;
@@ -29,9 +29,9 @@ public class EventHorseFood implements IHasConfig {
 		EntityPlayer entityPlayer = (EntityPlayer) event.getEntity();
 		ItemStack held = entityPlayer.getHeldItemMainhand();
 
-		if (held != null && held.getItem() instanceof ItemHorseFood) {
+		if (held != null && held.getItem() instanceof ItemFoodHorse) {
 			if (event.getTarget() instanceof EntityHorse) {
-				ItemHorseFood.onHorseInteract((EntityHorse) event.getTarget(), entityPlayer, held);
+				ItemFoodHorse.onHorseInteract((EntityHorse) event.getTarget(), entityPlayer, held);
 
 				event.setCanceled(true);// stop the GUI inventory opening
 			}

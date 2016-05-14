@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class MessageParticle implements IMessage, IMessageHandler<MessageParticle, IMessage> {
+public class PacketParticleAtPosition implements IMessage, IMessageHandler<PacketParticleAtPosition, IMessage> {
 
 	public static final int	ID	= 14;
 	private int							x;
@@ -23,11 +23,11 @@ public class MessageParticle implements IMessage, IMessageHandler<MessageParticl
 	private int							particle;
 	private int							count;
 
-	public MessageParticle() {
+	public PacketParticleAtPosition() {
 
 	}
 
-	public MessageParticle(BlockPos p, int part, int c) {
+	public PacketParticleAtPosition(BlockPos p, int part, int c) {
 
 		x = p.getX();
 		y = p.getY();
@@ -60,20 +60,13 @@ public class MessageParticle implements IMessage, IMessageHandler<MessageParticl
 	}
 
 	@Override
-	public IMessage onMessage(MessageParticle message, MessageContext ctx) {
+	public IMessage onMessage(PacketParticleAtPosition message, MessageContext ctx) {
 
 		if (ctx.side.isClient()) {
 			// http://www.minecraftforge.net/forum/index.php?topic=21195.0
-			if (Minecraft.getMinecraft().thePlayer == null) { return null; }// this
-			                                                                // was
-			                                                                // null
-			                                                                // once
-			                                                                // [[Netty
-			                                                                // Local
-			                                                                // Client
-			                                                                // IO
-			                                                                // #0/ERROR]
-			                                                                // [FML]:
+			//yes, this being null happened once
+			if (Minecraft.getMinecraft().thePlayer == null) { return null; }
+			
 			World world = Minecraft.getMinecraft().thePlayer.worldObj;
 			UtilParticle.spawnParticle(world, EnumParticleTypes.getParticleFromId(message.particle), message.x, message.y, message.z, message.count);
 		}

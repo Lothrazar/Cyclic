@@ -11,13 +11,13 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class QuickStackPacket implements IMessage, IMessageHandler<QuickStackPacket, IMessage> {
+public class PacketQuickStack implements IMessage, IMessageHandler<PacketQuickStack, IMessage> {
 	public static final int	ID		= 31;
 	NBTTagCompound					tags	= new NBTTagCompound();
 
-	public QuickStackPacket() {}
+	public PacketQuickStack() {}
 
-	public QuickStackPacket(NBTTagCompound ptags) {
+	public PacketQuickStack(NBTTagCompound ptags) {
 		tags = ptags;
 	}
 
@@ -32,7 +32,7 @@ public class QuickStackPacket implements IMessage, IMessageHandler<QuickStackPac
 	}
 
 	@Override
-	public IMessage onMessage(QuickStackPacket message, MessageContext ctx) {
+	public IMessage onMessage(PacketQuickStack message, MessageContext ctx) {
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
 
 		if (p.openContainer == null || p.openContainer.getSlot(0) == null || p.openContainer.getSlot(0).inventory == null) {

@@ -1,7 +1,7 @@
-package com.lothrazar.cyclicmagic.gui.player;
+package com.lothrazar.cyclicmagic.gui.button;
 
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.net.RenamePacket;
+import com.lothrazar.cyclicmagic.net.PacketDepositPlayerToNearby;
 import com.lothrazar.cyclicmagic.util.Const;
 
 import net.minecraft.client.Minecraft;
@@ -11,9 +11,9 @@ import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ButtonRename extends GuiButton {
-	public ButtonRename(int buttonId, int x, int y) {
-		super(buttonId, x, y, Const.btnWidth, Const.btnHeight, I18n.translateToLocal("btn.rename"));
+public class ButtonTerrariaDepositAll extends GuiButton {
+	public ButtonTerrariaDepositAll(int buttonId, int x, int y) {
+		super(buttonId, x, y, Const.btnWidth, Const.btnHeight, I18n.translateToLocal("btn.deposit"));
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -22,7 +22,10 @@ public class ButtonRename extends GuiButton {
 		boolean pressed = super.mousePressed(mc, mouseX, mouseY);
 
 		if (pressed) {
-			ModMain.network.sendToServer(new RenamePacket(new NBTTagCompound()));
+			// TODO: can we get TE xyz here
+			// Minecraft.getMinecraft().thePlayer.openContainer.
+
+			ModMain.network.sendToServer(new PacketDepositPlayerToNearby(new NBTTagCompound()));
 		}
 
 		return pressed;

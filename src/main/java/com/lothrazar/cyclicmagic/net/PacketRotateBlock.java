@@ -12,17 +12,17 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class MessageSpellPush implements IMessage, IMessageHandler<MessageSpellPush, IMessage> {
+public class PacketRotateBlock implements IMessage, IMessageHandler<PacketRotateBlock, IMessage> {
 
-	public static final int	ID	= 19;
+	public static final int	ID	= 18;
 	private BlockPos				pos;
 	private EnumFacing			side;
 
-	public MessageSpellPush() {
+	public PacketRotateBlock() {
 
 	}
 
-	public MessageSpellPush(BlockPos mouseover, EnumFacing s) {
+	public PacketRotateBlock(BlockPos mouseover, EnumFacing s) {
 
 		pos = mouseover;
 		side = s;
@@ -55,7 +55,7 @@ public class MessageSpellPush implements IMessage, IMessageHandler<MessageSpellP
 	}
 
 	@Override
-	public IMessage onMessage(MessageSpellPush message, MessageContext ctx) {
+	public IMessage onMessage(PacketRotateBlock message, MessageContext ctx) {
 
 		if (ctx.side.isServer() && message != null && message.pos != null) {
 
@@ -65,7 +65,7 @@ public class MessageSpellPush implements IMessage, IMessageHandler<MessageSpellP
 			// p.worldObj.getBlockState(message.pos).getBlock().isReplaceable(p.worldObj,
 			// message.pos)){
 
-			SpellRegistry.Spells.push.castFromServer(message.pos, message.side, p);
+			SpellRegistry.Spells.rotate.castFromServer(message.pos, message.side, p);
 
 		}
 

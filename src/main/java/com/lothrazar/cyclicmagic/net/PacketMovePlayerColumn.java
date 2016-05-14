@@ -10,21 +10,23 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class MessageBarMove implements IMessage, IMessageHandler<MessageBarMove, IMessage> {
-	public static final int ID = 25;
+public class PacketMovePlayerColumn implements IMessage, IMessageHandler<PacketMovePlayerColumn, IMessage> {
+	public static final int ID = 24;
 
-	public MessageBarMove() {}
+	public PacketMovePlayerColumn() {}
 
-	private boolean isDown;
+	private int			slot;
+	private boolean	isDown;
 
-	public MessageBarMove(boolean upordown) {
-
+	public PacketMovePlayerColumn(int slotnum, boolean upordown) {
+		slot = slotnum;
 		isDown = upordown;
 	}
 
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		NBTTagCompound tags = ByteBufUtils.readTag(buf);
+		slot = tags.getInteger("slot");
 		isDown = tags.getBoolean("isDown");
 	}
 
@@ -32,19 +34,20 @@ public class MessageBarMove implements IMessage, IMessageHandler<MessageBarMove,
 	public void toBytes(ByteBuf buf) {
 
 		NBTTagCompound tags = new NBTTagCompound();
+		tags.setInteger("slot", slot);
 		tags.setBoolean("isDown", isDown);
 		ByteBufUtils.writeTag(buf, tags);
 	}
 
 	@Override
-	public IMessage onMessage(MessageBarMove message, MessageContext ctx) {
+	public IMessage onMessage(PacketMovePlayerColumn message, MessageContext ctx) {
 		EntityPlayer player = ctx.getServerHandler().playerEntity;
 
 		if (message.isDown) {
-			UtilInventory.shiftBarDown(player);
+			UtilInventory.shiftSlotUp(player, message.slot);
 		}
 		else {
-			UtilInventory.shiftBarUp(player);
+			UtilInventory.shiftSlotDown(player, message.slot);
 		}
 
 		return null;

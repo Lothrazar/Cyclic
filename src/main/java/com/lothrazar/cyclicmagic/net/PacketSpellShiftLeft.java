@@ -9,11 +9,11 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class MessageKeyLeft implements IMessage, IMessageHandler<MessageKeyLeft, IMessage> {
+public class PacketSpellShiftLeft implements IMessage, IMessageHandler<PacketSpellShiftLeft, IMessage> {
 
 	public static final int ID = 12;
 
-	public MessageKeyLeft() {
+	public PacketSpellShiftLeft() {
 
 	}
 
@@ -28,7 +28,7 @@ public class MessageKeyLeft implements IMessage, IMessageHandler<MessageKeyLeft,
 	}
 
 	@Override
-	public IMessage onMessage(MessageKeyLeft message, MessageContext ctx) {
+	public IMessage onMessage(PacketSpellShiftLeft message, MessageContext ctx) {
 
 		EntityPlayer player = ctx.getServerHandler().playerEntity;
 		// PlayerPowerups props = PlayerPowerups.get(player);

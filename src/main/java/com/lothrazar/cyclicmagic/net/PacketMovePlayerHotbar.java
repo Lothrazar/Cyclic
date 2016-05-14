@@ -1,50 +1,50 @@
 package com.lothrazar.cyclicmagic.net;
 
-import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
-import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
+import com.lothrazar.cyclicmagic.util.UtilInventory;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class PacketBuildSize implements IMessage, IMessageHandler<PacketBuildSize, IMessage> {
-	public static final int ID = 34;
+public class PacketMovePlayerHotbar implements IMessage, IMessageHandler<PacketMovePlayerHotbar, IMessage> {
+	public static final int ID = 25;
 
-	public PacketBuildSize() {}
+	public PacketMovePlayerHotbar() {}
 
-	private int size;
+	private boolean isDown;
 
-	public PacketBuildSize(int s) {
-		size = s;
+	public PacketMovePlayerHotbar(boolean upordown) {
+
+		isDown = upordown;
 	}
 
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		NBTTagCompound tags = ByteBufUtils.readTag(buf);
-		size = tags.getInteger("size");
+		isDown = tags.getBoolean("isDown");
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf) {
 
 		NBTTagCompound tags = new NBTTagCompound();
-		tags.setInteger("size", size);
+		tags.setBoolean("isDown", isDown);
 		ByteBufUtils.writeTag(buf, tags);
 	}
 
 	@Override
-	public IMessage onMessage(PacketBuildSize message, MessageContext ctx) {
+	public IMessage onMessage(PacketMovePlayerHotbar message, MessageContext ctx) {
 		EntityPlayer player = ctx.getServerHandler().playerEntity;
 
-		ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
-
-		if (wand != null) {
-			ItemCyclicWand.BuildType.setBuildSize(wand, message.size);
+		if (message.isDown) {
+			UtilInventory.shiftBarDown(player);
+		}
+		else {
+			UtilInventory.shiftBarUp(player);
 		}
 
 		return null;

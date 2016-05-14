@@ -11,10 +11,10 @@ import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ButtonInventory extends GuiButton{
+public class ButtonTabToggleInventory extends GuiButton{
 
 	private GuiScreen gui;
-	public ButtonInventory(GuiScreen g, int x, int y) {
+	public ButtonTabToggleInventory(GuiScreen g, int x, int y) {
 		super(51, x, y, 10, 10, "I");
 		gui = g;
 

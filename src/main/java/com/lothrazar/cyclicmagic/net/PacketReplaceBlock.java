@@ -12,17 +12,17 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class MessageSpellReplacer implements IMessage, IMessageHandler<MessageSpellReplacer, IMessage> {
+public class PacketReplaceBlock implements IMessage, IMessageHandler<PacketReplaceBlock, IMessage> {
 
 	public static final int	ID	= 21;
 	private BlockPos				pos;
 	private EnumFacing			side;
 
-	public MessageSpellReplacer() {
+	public PacketReplaceBlock() {
 
 	}
 
-	public MessageSpellReplacer(BlockPos mouseover, EnumFacing s) {
+	public PacketReplaceBlock(BlockPos mouseover, EnumFacing s) {
 
 		pos = mouseover;
 		side = s;
@@ -55,16 +55,12 @@ public class MessageSpellReplacer implements IMessage, IMessageHandler<MessageSp
 	}
 
 	@Override
-	public IMessage onMessage(MessageSpellReplacer message, MessageContext ctx) {
+	public IMessage onMessage(PacketReplaceBlock message, MessageContext ctx) {
 
 		if (ctx.side.isServer() && message != null && message.pos != null) {
 
 			EntityPlayer p = ctx.getServerHandler().playerEntity;
-
-			// if(
-			// p.worldObj.getBlockState(message.pos).getBlock().isReplaceable(p.worldObj,
-			// message.pos)){
-
+ 
 			SpellRegistry.Spells.replacer.castFromServer(message.pos, message.side, p);
 
 		}

@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.net;
 
+import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.util.UtilInventorySort;
 
 import io.netty.buffer.ByteBuf;
@@ -11,13 +12,13 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class LootAllPacket implements IMessage, IMessageHandler<LootAllPacket, IMessage> {
-	public static final int	ID		= 30;
+public class PacketDepositPlayerToNearby implements IMessage, IMessageHandler<PacketDepositPlayerToNearby, IMessage> {
+	public static final int	ID		= 29;
 	NBTTagCompound					tags	= new NBTTagCompound();
 
-	public LootAllPacket() {}
+	public PacketDepositPlayerToNearby() {}
 
-	public LootAllPacket(NBTTagCompound ptags) {
+	public PacketDepositPlayerToNearby(NBTTagCompound ptags) {
 		tags = ptags;
 	}
 
@@ -32,12 +33,12 @@ public class LootAllPacket implements IMessage, IMessageHandler<LootAllPacket, I
 	}
 
 	@Override
-	public IMessage onMessage(LootAllPacket message, MessageContext ctx) {
+	public IMessage onMessage(PacketDepositPlayerToNearby message, MessageContext ctx) {
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
 
 		if (p.openContainer == null || p.openContainer.getSlot(0) == null || p.openContainer.getSlot(0).inventory == null) {
 			// TODO: use logger
-			System.out.println("ERROR LOG: null container inventory");
+			ModMain.logger.error("ERROR LOG: null container inventory");
 		}
 		else {
 			// a workaround since player does not reference the inventory, only the
@@ -45,7 +46,7 @@ public class LootAllPacket implements IMessage, IMessageHandler<LootAllPacket, I
 			// and Container has no get method
 			IInventory openInventory = p.openContainer.getSlot(0).inventory;
 
-			UtilInventorySort.dumpFromIInventoryToPlayer(p.worldObj, openInventory, p);
+			UtilInventorySort.dumpFromPlayerToIInventory(p.worldObj, openInventory, p);
 
 			UtilInventorySort.updatePlayerContainerClient(p);
 		}

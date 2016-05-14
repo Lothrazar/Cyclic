@@ -12,13 +12,13 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class RestockPacket implements IMessage, IMessageHandler<RestockPacket, IMessage> {
+public class PacketRestockContainerToPlayer implements IMessage, IMessageHandler<PacketRestockContainerToPlayer, IMessage> {
 	public static final int	ID		= 32;
 	NBTTagCompound					tags	= new NBTTagCompound();
 
-	public RestockPacket() {}
+	public PacketRestockContainerToPlayer() {}
 
-	public RestockPacket(NBTTagCompound ptags) {
+	public PacketRestockContainerToPlayer(NBTTagCompound ptags) {
 		tags = ptags;
 	}
 
@@ -33,7 +33,7 @@ public class RestockPacket implements IMessage, IMessageHandler<RestockPacket, I
 	}
 
 	@Override
-	public IMessage onMessage(RestockPacket message, MessageContext ctx) {
+	public IMessage onMessage(PacketRestockContainerToPlayer message, MessageContext ctx) {
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
 
 		if (p.openContainer == null || p.openContainer.getSlot(0) == null || p.openContainer.getSlot(0).inventory == null) {

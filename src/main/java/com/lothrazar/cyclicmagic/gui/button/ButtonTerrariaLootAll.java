@@ -1,7 +1,7 @@
-package com.lothrazar.cyclicmagic.gui.player;
+package com.lothrazar.cyclicmagic.gui.button;
 
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.net.LootAllPacket;
+import com.lothrazar.cyclicmagic.net.PacketDepositContainerToPlayer;
 import com.lothrazar.cyclicmagic.util.Const;
 
 import net.minecraft.client.Minecraft;
@@ -11,8 +11,8 @@ import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ButtonLootAll extends GuiButton {
-	public ButtonLootAll(int buttonId, int x, int y) {
+public class ButtonTerrariaLootAll extends GuiButton {
+	public ButtonTerrariaLootAll(int buttonId, int x, int y) {
 		super(buttonId, x, y, Const.btnWidth, Const.btnHeight, I18n.translateToLocal("btn.lootall"));
 	}
 
@@ -22,7 +22,7 @@ public class ButtonLootAll extends GuiButton {
 		boolean pressed = super.mousePressed(mc, mouseX, mouseY);
 
 		if (pressed) {
-			ModMain.network.sendToServer(new LootAllPacket(new NBTTagCompound()));
+			ModMain.network.sendToServer(new PacketDepositContainerToPlayer(new NBTTagCompound()));
 		}
 
 		return pressed;

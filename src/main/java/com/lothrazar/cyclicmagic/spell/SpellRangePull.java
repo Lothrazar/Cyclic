@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.spell;
 
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.net.MessageSpellPull;
+import com.lothrazar.cyclicmagic.net.PacketSpellPull;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 
 import net.minecraft.block.Block;
@@ -28,7 +28,7 @@ public class SpellRangePull extends BaseSpellRange {
 			BlockPos mouseover = ModMain.proxy.getBlockMouseoverExact(maxRange);
 
 			if (mouseover != null) {
-				ModMain.network.sendToServer(new MessageSpellPull(mouseover, ModMain.proxy.getSideMouseover(maxRange)));
+				ModMain.network.sendToServer(new PacketSpellPull(mouseover, ModMain.proxy.getSideMouseover(maxRange)));
 			}
 		}
 

@@ -12,17 +12,17 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class MessageSpellRotate implements IMessage, IMessageHandler<MessageSpellRotate, IMessage> {
+public class PacketSpellPull implements IMessage, IMessageHandler<PacketSpellPull, IMessage> {
 
-	public static final int	ID	= 18;
+	public static final int	ID	= 20;
 	private BlockPos				pos;
 	private EnumFacing			side;
 
-	public MessageSpellRotate() {
+	public PacketSpellPull() {
 
 	}
 
-	public MessageSpellRotate(BlockPos mouseover, EnumFacing s) {
+	public PacketSpellPull(BlockPos mouseover, EnumFacing s) {
 
 		pos = mouseover;
 		side = s;
@@ -32,12 +32,10 @@ public class MessageSpellRotate implements IMessage, IMessageHandler<MessageSpel
 	public void fromBytes(ByteBuf buf) {
 
 		NBTTagCompound tags = ByteBufUtils.readTag(buf);
-
 		int x = tags.getInteger("x");
 		int y = tags.getInteger("y");
 		int z = tags.getInteger("z");
 		pos = new BlockPos(x, y, z);
-
 		side = EnumFacing.values()[tags.getInteger("side")];
 	}
 
@@ -48,27 +46,19 @@ public class MessageSpellRotate implements IMessage, IMessageHandler<MessageSpel
 		tags.setInteger("x", pos.getX());
 		tags.setInteger("y", pos.getY());
 		tags.setInteger("z", pos.getZ());
-
 		tags.setInteger("side", side.ordinal());
-
 		ByteBufUtils.writeTag(buf, tags);
 	}
 
 	@Override
-	public IMessage onMessage(MessageSpellRotate message, MessageContext ctx) {
+	public IMessage onMessage(PacketSpellPull message, MessageContext ctx) {
 
 		if (ctx.side.isServer() && message != null && message.pos != null) {
-
+			
 			EntityPlayer p = ctx.getServerHandler().playerEntity;
 
-			// if(
-			// p.worldObj.getBlockState(message.pos).getBlock().isReplaceable(p.worldObj,
-			// message.pos)){
-
-			SpellRegistry.Spells.rotate.castFromServer(message.pos, message.side, p);
-
+			SpellRegistry.Spells.pull.castFromServer(message.pos, message.side, p);
 		}
-
 		return null;
 	}
 }
