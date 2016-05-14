@@ -7,7 +7,7 @@ import java.util.Arrays;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.item.ItemEnderBook;
 import com.lothrazar.cyclicmagic.item.ItemEnderBook.BookLocation;
-import com.lothrazar.cyclicmagic.net.PacketDeleteButton;
+import com.lothrazar.cyclicmagic.net.PacketDeleteWaypoint;
 import com.lothrazar.cyclicmagic.net.PacketNewButton;
 
 import net.minecraft.client.gui.GuiButton;
@@ -148,7 +148,7 @@ public class GuiEnderBook extends GuiScreen {
 			ModMain.network.sendToServer(new PacketNewButton(txtNew.getText()));
 		}
 		else if (btn instanceof ButtonWaypointDelete) {
-			ModMain.network.sendToServer(new PacketDeleteButton(((ButtonWaypointDelete) btn).getSlot()));
+			ModMain.network.sendToServer(new PacketDeleteWaypoint(((ButtonWaypointDelete) btn).getSlot()));
 		}
 		else if (btn instanceof ButtonWaypointTeleport) {
 			// moved to btn class

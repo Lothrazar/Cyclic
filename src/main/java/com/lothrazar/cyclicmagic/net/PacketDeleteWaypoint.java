@@ -12,13 +12,13 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class PacketDeleteButton implements IMessage, IMessageHandler<PacketDeleteButton, IMessage> {
+public class PacketDeleteWaypoint implements IMessage, IMessageHandler<PacketDeleteWaypoint, IMessage> {
 	public static final int	ID	= 28;
 	public int							slot;
 
-	public PacketDeleteButton() {}
+	public PacketDeleteWaypoint() {}
 
-	public PacketDeleteButton(int s) {
+	public PacketDeleteWaypoint(int s) {
 		slot = s;
 	}
 
@@ -33,7 +33,7 @@ public class PacketDeleteButton implements IMessage, IMessageHandler<PacketDelet
 	}
 
 	@Override
-	public IMessage onMessage(PacketDeleteButton message, MessageContext ctx) {
+	public IMessage onMessage(PacketDeleteWaypoint message, MessageContext ctx) {
 		EntityPlayer player = ((NetHandlerPlayServer) ctx.netHandler).playerEntity;
 
 		ItemEnderBook.deleteWaypoint(player, message.slot);

@@ -20,7 +20,7 @@ import com.lothrazar.cyclicmagic.item.ItemEmeraldSword;
 import com.lothrazar.cyclicmagic.item.ItemEnderBook;
 import com.lothrazar.cyclicmagic.item.ItemEnderPearlReuse;
 import com.lothrazar.cyclicmagic.item.ItemFoodAppleMagic;
-import com.lothrazar.cyclicmagic.item.ItemHorseFood;
+import com.lothrazar.cyclicmagic.item.ItemFoodHorse;
 import com.lothrazar.cyclicmagic.item.ItemInventoryStorage;
 import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
 import com.lothrazar.cyclicmagic.item.ItemToolHarvest;
@@ -81,7 +81,7 @@ public class ItemRegistry {
 		prop.setRequiresMcRestart(true);
 		emeraldGearEnabled  =   prop.getBoolean();
 
-		ItemHorseFood.syncConfig(config);
+		ItemFoodHorse.syncConfig(config);
 		
 		ItemFoodAppleMagic.syncConfig(config);
 	}
@@ -120,11 +120,11 @@ public class ItemRegistry {
 		addItem(new ItemProjectileTNT(2).setRawName("ender_tnt_2"));
 		addItem(new ItemProjectileTNT(3).setRawName("ender_tnt_4"));
 		addItem(new ItemProjectileTNT(4).setRawName("ender_tnt_6"));
-		addItem(new ItemHorseFood(new ItemStack(Items.emerald)).setRawName("horse_upgrade_type"));
-		addItem(new ItemHorseFood(new ItemStack(Items.dye, 1, Const.dye_lapis)).setRawName("horse_upgrade_variant"));
-		addItem(new ItemHorseFood(new ItemStack(Items.diamond)).setRawName("horse_upgrade_health"));
-		addItem(new ItemHorseFood(new ItemStack(Items.redstone)).setRawName("horse_upgrade_speed"));
-		addItem(new ItemHorseFood(new ItemStack(Items.ender_eye)).setRawName("horse_upgrade_jump"));
+		addItem(new ItemFoodHorse(new ItemStack(Items.emerald)).setRawName("horse_upgrade_type"));
+		addItem(new ItemFoodHorse(new ItemStack(Items.dye, 1, Const.dye_lapis)).setRawName("horse_upgrade_variant"));
+		addItem(new ItemFoodHorse(new ItemStack(Items.diamond)).setRawName("horse_upgrade_health"));
+		addItem(new ItemFoodHorse(new ItemStack(Items.redstone)).setRawName("horse_upgrade_speed"));
+		addItem(new ItemFoodHorse(new ItemStack(Items.ender_eye)).setRawName("horse_upgrade_jump"));
   
 		//only some need static references
 		addItem(new ItemEnderBook().setRawName("book_ender")); 

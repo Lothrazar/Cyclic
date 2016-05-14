@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.spell;
 
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
-import com.lothrazar.cyclicmagic.net.MessageSpellFromServer;
+import com.lothrazar.cyclicmagic.net.PacketSpellFromServer;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 
@@ -43,7 +43,7 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
 
 			if (mouseover != null && offset != null) {
 
-				ModMain.network.sendToServer(new MessageSpellFromServer(mouseover, offset, this.getID()));
+				ModMain.network.sendToServer(new PacketSpellFromServer(mouseover, offset, this.getID()));
 
 			}
 		}

@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.spell;
 
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
-import com.lothrazar.cyclicmagic.net.MessageSpellReplacer;
+import com.lothrazar.cyclicmagic.net.PacketReplaceBlock;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 
 import net.minecraft.block.Block;
@@ -31,7 +31,7 @@ public class SpellRangeReplace extends BaseSpellRange {
 			BlockPos mouseover = ModMain.proxy.getBlockMouseoverExact(maxRange);
 
 			if (mouseover != null) {
-				ModMain.network.sendToServer(new MessageSpellReplacer(mouseover, ModMain.proxy.getSideMouseover(maxRange)));
+				ModMain.network.sendToServer(new PacketReplaceBlock(mouseover, ModMain.proxy.getSideMouseover(maxRange)));
 			}
 		}
 		return false;

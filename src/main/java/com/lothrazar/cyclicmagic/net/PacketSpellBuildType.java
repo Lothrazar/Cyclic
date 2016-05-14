@@ -10,11 +10,11 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class MessageToggleBuild implements IMessage, IMessageHandler<MessageToggleBuild, IMessage> {
+public class PacketSpellBuildType implements IMessage, IMessageHandler<PacketSpellBuildType, IMessage> {
 
 	public static final int ID = 17;
 
-	public MessageToggleBuild() {
+	public PacketSpellBuildType() {
 
 	}
 
@@ -29,7 +29,7 @@ public class MessageToggleBuild implements IMessage, IMessageHandler<MessageTogg
 	}
 
 	@Override
-	public IMessage onMessage(MessageToggleBuild message, MessageContext ctx) {
+	public IMessage onMessage(PacketSpellBuildType message, MessageContext ctx) {
 
 		EntityPlayer player = ctx.getServerHandler().playerEntity;
 		ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);

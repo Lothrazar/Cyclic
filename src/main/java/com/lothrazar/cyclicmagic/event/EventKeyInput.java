@@ -2,8 +2,8 @@ package com.lothrazar.cyclicmagic.event;
 
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.net.MessageBarMove;
-import com.lothrazar.cyclicmagic.net.MessageSlotMove;
+import com.lothrazar.cyclicmagic.net.PacketMovePlayerHotbar;
+import com.lothrazar.cyclicmagic.net.PacketMovePlayerColumn;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
 
 import net.minecraft.client.Minecraft;
@@ -44,16 +44,16 @@ public class EventKeyInput implements IHasConfig{
 	private void detectAndFireKey(int slot) {
 
 		if (ClientProxy.isKeyDown(ClientProxy.keyShiftUp)) {
-			ModMain.network.sendToServer(new MessageSlotMove(slot, false));
+			ModMain.network.sendToServer(new PacketMovePlayerColumn(slot, false));
 		}
 		else if (ClientProxy.isKeyDown(ClientProxy.keyShiftDown)) {
-			ModMain.network.sendToServer(new MessageSlotMove(slot, true));
+			ModMain.network.sendToServer(new PacketMovePlayerColumn(slot, true));
 		}
 		else if (ClientProxy.isKeyDown(ClientProxy.keyBarUp)) {
-			ModMain.network.sendToServer(new MessageBarMove(false));
+			ModMain.network.sendToServer(new PacketMovePlayerHotbar(false));
 		}
 		else if (ClientProxy.isKeyDown(ClientProxy.keyBarDown)) {
-			ModMain.network.sendToServer(new MessageBarMove(true));
+			ModMain.network.sendToServer(new PacketMovePlayerHotbar(true));
 		}
 	}
 

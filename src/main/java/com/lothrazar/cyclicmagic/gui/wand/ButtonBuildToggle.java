@@ -6,7 +6,7 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
-import com.lothrazar.cyclicmagic.net.MessageToggleBuild;
+import com.lothrazar.cyclicmagic.net.PacketSpellBuildType;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 
 import net.minecraft.client.Minecraft;
@@ -36,7 +36,7 @@ public class ButtonBuildToggle extends GuiButton implements ITooltipButton {
 
 		if (pressed) {
 
-			ModMain.network.sendToServer(new MessageToggleBuild());
+			ModMain.network.sendToServer(new PacketSpellBuildType());
 		}
 
 		return pressed;

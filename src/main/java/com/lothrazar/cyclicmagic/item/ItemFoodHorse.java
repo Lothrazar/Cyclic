@@ -25,7 +25,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemHorseFood extends BaseItem implements IHasRecipe {
+public class ItemFoodHorse extends BaseItem implements IHasRecipe {
 
 	public static int			HEARTS_MAX;
 	public static int			SPEED_MAX;
@@ -36,7 +36,7 @@ public class ItemHorseFood extends BaseItem implements IHasRecipe {
 	public static boolean						horseFoodEnabled;
 	private ItemStack recipeItem;
 	
-	public ItemHorseFood(ItemStack rec) {
+	public ItemFoodHorse(ItemStack rec) {
 
 		super();
 		recipeItem = rec;
@@ -222,10 +222,10 @@ public class ItemHorseFood extends BaseItem implements IHasRecipe {
 
 		String category = Const.ConfigCategory.items_horseFood; 
 
-		ItemHorseFood.horseFoodEnabled = config.getBoolean("Enabled", category, true, "To disable all horse upgrade food");
-		ItemHorseFood.HEARTS_MAX = config.getInt("Max Hearts", category, 20, 1, 100, "Maximum number of upgraded hearts");
-		ItemHorseFood.JUMP_MAX = config.getInt("Max Jump", category, 6, 1, 20, "Maximum value of jump.  Naturally spawned/bred horses seem to max out at 5.5");
-		ItemHorseFood.SPEED_MAX = config.getInt("Max Speed", category, 50, 1, 99, "Maximum value of speed (this is NOT blocks/per second or anything like that)");
+		ItemFoodHorse.horseFoodEnabled = config.getBoolean("Enabled", category, true, "To disable all horse upgrade food");
+		ItemFoodHorse.HEARTS_MAX = config.getInt("Max Hearts", category, 20, 1, 100, "Maximum number of upgraded hearts");
+		ItemFoodHorse.JUMP_MAX = config.getInt("Max Jump", category, 6, 1, 20, "Maximum value of jump.  Naturally spawned/bred horses seem to max out at 5.5");
+		ItemFoodHorse.SPEED_MAX = config.getInt("Max Speed", category, 50, 1, 99, "Maximum value of speed (this is NOT blocks/per second or anything like that)");
 
 		
 	}

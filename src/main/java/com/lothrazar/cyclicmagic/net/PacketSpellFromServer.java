@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.net;
 
+import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.spell.ISpellFromServer;
@@ -13,18 +14,18 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class MessageSpellFromServer implements IMessage, IMessageHandler<MessageSpellFromServer, IMessage> {
+public class PacketSpellFromServer implements IMessage, IMessageHandler<PacketSpellFromServer, IMessage> {
 
 	public static final int	ID	= 16;
 	private BlockPos				pos;
 	private BlockPos				posOffset;
 	private int							spellID;
 
-	public MessageSpellFromServer() {
+	public PacketSpellFromServer() {
 
 	}
 
-	public MessageSpellFromServer(BlockPos mouseover, BlockPos offset, int spellid) {
+	public PacketSpellFromServer(BlockPos mouseover, BlockPos offset, int spellid) {
 
 		pos = mouseover;
 		posOffset = offset;
@@ -65,7 +66,7 @@ public class MessageSpellFromServer implements IMessage, IMessageHandler<Message
 	}
 
 	@Override
-	public IMessage onMessage(MessageSpellFromServer message, MessageContext ctx) {
+	public IMessage onMessage(PacketSpellFromServer message, MessageContext ctx) {
 
 		if (ctx.side.isServer() && message != null && message.pos != null) {
 
@@ -81,7 +82,7 @@ public class MessageSpellFromServer implements IMessage, IMessageHandler<Message
 				((ISpellFromServer) spell).castFromServer(message.pos, message.posOffset, p);
 			}
 			else {
-				System.out.println("WARNING: Message from server: spell not found" + message.spellID);
+				ModMain.logger.warn("WARNING: Message from server: spell not found" + message.spellID);
 			}
 		}
 

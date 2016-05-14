@@ -12,13 +12,13 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class OpenCraftingPacket implements IMessage, IMessageHandler<OpenCraftingPacket, IMessage> {
+public class PacketFakeWorkbench implements IMessage, IMessageHandler<PacketFakeWorkbench, IMessage> {
 	public static final int	ID		= 33;
 	NBTTagCompound					tags	= new NBTTagCompound();
 
-	public OpenCraftingPacket() {}
+	public PacketFakeWorkbench() {}
 
-	public OpenCraftingPacket(NBTTagCompound ptags) {
+	public PacketFakeWorkbench(NBTTagCompound ptags) {
 		tags = ptags;
 	}
 
@@ -33,7 +33,7 @@ public class OpenCraftingPacket implements IMessage, IMessageHandler<OpenCraftin
 	}
 
 	@Override
-	public IMessage onMessage(OpenCraftingPacket message, MessageContext ctx) {
+	public IMessage onMessage(PacketFakeWorkbench message, MessageContext ctx) {
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
 
 		EntityPlayerMP player = (EntityPlayerMP) p;

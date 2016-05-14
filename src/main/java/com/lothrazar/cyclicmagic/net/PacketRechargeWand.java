@@ -7,11 +7,11 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class MessageRecharge implements IMessage, IMessageHandler<MessageRecharge, IMessage> {
+public class PacketRechargeWand implements IMessage, IMessageHandler<PacketRechargeWand, IMessage> {
 
 	public static final int ID = 22;
 
-	public MessageRecharge() {
+	public PacketRechargeWand() {
 
 	}
 
@@ -26,7 +26,7 @@ public class MessageRecharge implements IMessage, IMessageHandler<MessageRecharg
 	}
 
 	@Override
-	public IMessage onMessage(MessageRecharge message, MessageContext ctx) {
+	public IMessage onMessage(PacketRechargeWand message, MessageContext ctx) {
 
 		UtilSpellCaster.rechargeWithExp(ctx.getServerHandler().playerEntity);
 		return null;

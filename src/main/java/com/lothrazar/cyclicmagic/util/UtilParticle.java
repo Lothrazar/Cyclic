@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.util;
 
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.net.MessageParticle;
+import com.lothrazar.cyclicmagic.net.PacketParticleAtPosition;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.util.EnumParticleTypes;
@@ -62,6 +62,6 @@ public class UtilParticle {
 
 		// this. fires only on server side. so send packet for client to spawn
 		// particles and so on
-		ModMain.network.sendToAll(new MessageParticle(position, particle.getParticleID(), count));
+		ModMain.network.sendToAll(new PacketParticleAtPosition(position, particle.getParticleID(), count));
 	}
 }
