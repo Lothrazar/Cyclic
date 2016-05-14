@@ -15,7 +15,6 @@ import com.lothrazar.cyclicmagic.entity.projectile.EntityShearingBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntitySnowballBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityTorchBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityWaterBolt;
-import com.lothrazar.cyclicmagic.event.deleteMe;
 import com.lothrazar.cyclicmagic.gui.spell.GuiSpellWheel;
 import com.lothrazar.cyclicmagic.potion.PotionCustom;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
@@ -42,8 +41,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
+import net.minecraft.world.World; 
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -64,11 +62,13 @@ public class ClientProxy extends CommonProxy {
 	public World getClientWorld() {
 		return FMLClientHandler.instance().getClient().theWorld;
 	}	
+	/*
+	 *TODO: this was for sideonly == client events, do i need ot bring them back?
 	@Override
 	public void registerEvents() {
 
 		MinecraftForge.EVENT_BUS.register(new deleteMe());
-	}
+	}*/
 
 	@Override
 	@SideOnly(Side.CLIENT)
