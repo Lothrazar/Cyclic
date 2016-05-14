@@ -15,7 +15,7 @@ import com.lothrazar.cyclicmagic.entity.projectile.EntityShearingBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntitySnowballBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityTorchBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityWaterBolt;
-import com.lothrazar.cyclicmagic.event.EventGuiInventory;
+import com.lothrazar.cyclicmagic.event.deleteMe;
 import com.lothrazar.cyclicmagic.gui.spell.GuiSpellWheel;
 import com.lothrazar.cyclicmagic.potion.PotionCustom;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
@@ -67,7 +67,7 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void registerEvents() {
 
-		MinecraftForge.EVENT_BUS.register(new EventGuiInventory());
+		MinecraftForge.EVENT_BUS.register(new deleteMe());
 	}
 
 	@Override

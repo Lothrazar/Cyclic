@@ -17,6 +17,7 @@ public class Const {
 		public static final String environment = MODCONF + "environment";
 		public static final String commands = MODCONF + "commands";
 		public static final String inventory = MODCONF + "Inventory";
+		public static final String inventoryButtons = inventory + "Buttons";
 		public static final String items = MODCONF + "items";
 		public static final String items_enderbook = items + ".enderbook";
 		public static final String items_horseFood = items + ".horsefood";
@@ -25,6 +26,7 @@ public class Const {
 		public static final String villagers = MODCONF + "villagers";
 		public static final String items_scepters = items + ".scepters";
 		public static final String modpacks = "SaplingGrowthDetail";
+		public static final String inventoryModpack = "TerrariaButtonsModpackGuis";
 	}
 
 

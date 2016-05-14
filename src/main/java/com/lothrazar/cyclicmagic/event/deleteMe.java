@@ -13,35 +13,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EventGuiInventory {
+public class deleteMe {
 
-	@SideOnly(value = Side.CLIENT)
-	@SubscribeEvent
-	public void guiPostInit(GuiScreenEvent.InitGuiEvent.Post event) {
-		GuiScreen gui = event.getGui();
-		
-		if (gui instanceof GuiInventory || gui instanceof GuiPlayerExtended
-				|| gui instanceof GuiCrafting 
-				|| gui instanceof GuiScreenHorseInventory) {
-		
-
-			// TODO: reflection helper?
-			// gui left and top are private, so are the sizes
-			// int guiLeft = ;//gui.guiLeft
-			// int guiTop = ;//gui.guiTop
-
-			int xSize = 176;
-			int ySize = 166;
-			int guiLeft = (gui.width - xSize) / 2;
-			int guiTop = (gui.height - ySize) / 2;
-			int x = 30 + guiLeft;
-			int y = guiTop + 2;
-			event.getButtonList().add(new ButtonTabToggleInventory(gui, x, y));
-		
-
-			event.getButtonList().add(new ButtonTabToggleCrafting(gui, x - 12, y));
-		}
-	}
 	/*
 	@SideOnly(value = Side.CLIENT)
 	@SubscribeEvent

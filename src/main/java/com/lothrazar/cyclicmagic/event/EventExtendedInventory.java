@@ -7,13 +7,21 @@ import java.util.HashSet;
 import com.google.common.io.Files;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.gui.player.ButtonTabToggleCrafting;
+import com.lothrazar.cyclicmagic.gui.player.ButtonTabToggleInventory;
+import com.lothrazar.cyclicmagic.gui.player.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.gui.player.InventoryPlayerExtended;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
 
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.inventory.GuiCrafting;
+import net.minecraft.client.gui.inventory.GuiInventory;
+import net.minecraft.client.gui.inventory.GuiScreenHorseInventory;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.PlayerDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -21,6 +29,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EventExtendedInventory implements IHasConfig{
 
@@ -37,7 +46,7 @@ public class EventExtendedInventory implements IHasConfig{
 		}
 	}
 
-	public static void syncBaubles(EntityPlayer player) {
+	public static void syncItems(EntityPlayer player) {
 		int size = InventoryPlayerExtended.ICOL*InventoryPlayerExtended.IROW;
 		for (int a = 0; a < size; a++) {
 			UtilPlayerInventoryFilestorage.getPlayerInventory(player).syncSlotToClients(a);
@@ -52,7 +61,7 @@ public class EventExtendedInventory implements IHasConfig{
 			EntityPlayer player = (EntityPlayer) event.getEntity();
 
 			if (!playerEntityIds.isEmpty() && playerEntityIds.contains(player.getEntityId())) {
-				syncBaubles(player);
+				syncItems(player);
 				playerEntityIds.remove(player.getEntityId());
 			}
 		}
@@ -100,6 +109,10 @@ public class EventExtendedInventory implements IHasConfig{
 	final String ext = "invo";
 	final String extback = "backup";
 
+	private boolean extendedInventory;
+
+	private boolean extendedCrafting;
+
 	public File getPlayerFile(String suffix, File playerDirectory, String playername) {
 	//	if ("dat".equals(suffix))
 			//throw new IllegalArgumentException("The suffix 'dat' is reserved");
@@ -110,12 +123,51 @@ public class EventExtendedInventory implements IHasConfig{
 	public void playerSave(PlayerEvent.SaveToFile event) {
 		UtilPlayerInventoryFilestorage.savePlayerBaubles(event.getEntityPlayer(), getPlayerFile(ext, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString()), getPlayerFile(extback, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString()));
 	}
+	
+
+	@SideOnly(value = Side.CLIENT)
+	@SubscribeEvent
+	public void guiPostInit(GuiScreenEvent.InitGuiEvent.Post event) {
+		GuiScreen gui = event.getGui();
+		
+		if (gui instanceof GuiInventory || gui instanceof GuiPlayerExtended
+				|| gui instanceof GuiCrafting 
+				|| gui instanceof GuiScreenHorseInventory) {
+		
+
+			// TODO: reflection helper?
+			// gui left and top are private, so are the sizes
+			// int guiLeft = ;//gui.guiLeft
+			// int guiTop = ;//gui.guiTop
+
+			int xSize = 176;
+			int ySize = 166;
+			int guiLeft = (gui.width - xSize) / 2;
+			int guiTop = (gui.height - ySize) / 2;
+			int x = 30 + guiLeft;
+			int y = guiTop + 2;
+			
+			if(extendedInventory){
+				event.getButtonList().add(new ButtonTabToggleInventory(gui, x, y));
+			}
+			if(extendedCrafting){
+				event.getButtonList().add(new ButtonTabToggleCrafting(gui, x - 12, y));
+			}
+		}
+	}
+	
+	
 
 	@Override
 	public void syncConfig(Configuration config) {
 
 
 		String category = Const.ConfigCategory.inventory;  
+		
+		extendedCrafting = config.getBoolean("CraftingTab", category, true, "A tab for 3x3 crafting in the survival inventory");
+
+		extendedInventory = config.getBoolean("ExtendedStorageTab", category, true, "A tab for extended item storage in the survival inventory");
+		
 		dropOnDeath = config.getBoolean("DropExtendedInventoryOnDeath", category, true,
 				"When false, this never drops your extra inventories items on death (for the extended inventory).  If true, this will obey the keepInventory rule");
 		
