@@ -1,17 +1,14 @@
 package com.lothrazar.cyclicmagic.registry;
 
-import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.util.Const;
 
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.passive.EntityVillager.EmeraldForItems;
-import net.minecraft.entity.passive.EntityVillager.ITradeList;
 import net.minecraft.entity.passive.EntityVillager.ListItemForEmeralds;
 import net.minecraft.entity.passive.EntityVillager.PriceInfo;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerCareer;
@@ -20,7 +17,7 @@ import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerProfessio
 public class VillageTradeRegistry {
 
 	final static String sage = Const.MODRES+"textures/entity/villager/elder.png";
-	final static ResourceLocation sageTexture = new ResourceLocation(sage);
+	//final static ResourceLocation sageTexture = new ResourceLocation(sage);
 	private static VillagerProfession  elderProfession;
 	private static boolean extraVillagersEnabled;
 
@@ -30,64 +27,26 @@ public class VillageTradeRegistry {
 			return;
 		}
 		
-		elderProfession = new VillagerProfession(Const.MODRES+"elder", sage){
-				@Override
-		    public ResourceLocation getSkin() {
-					return sageTexture;
-				}
-			};
-		//kill: /kill @e[type=Villager]
-		//CONFIRMED: IT does spawn randomly when using default villager eggs
+		//vanilla example :  new VillagerProfession("minecraft:butcher", "minecraft:textures/entity/villager/butcher.png");
+		elderProfession = new VillagerProfession(Const.MODRES+"elder", sage);
 		
-			/*
-		//PROBLEM WITH TEXTURE
-		in EntityVillager:
-    public int getProfession()
-    {
-        return Math.max(((Integer)this.dataWatcher.get(PROFESSION)).intValue() % 5, 0);
-    
-    }
-    //that %5 needs to be removed, it forces max of 4 profs
-    */
-
-		//	System.out.println("getSkin"+this.getSkin().getResourceDomain()+"_"+this.getSkin().getResourcePath());
-
-     
 		VillagerRegistry.instance().register(elderProfession);
 
-		//TOO TEST: /summon Villager ~ ~ ~ {Profession:5,Career:0}
-		addVillagerSage();
+		//TO TEST: /summon Villager ~ ~ ~ {Profession:5,Career:0}
+		VillagerCareer sage = new VillagerCareer(elderProfession, "sage");
+		for(int i = 0; i < sageTrades.length; i++){
+			sage.addTrade(i+1, sageTrades[i]);
+		}
 
-		//TOO TEST: /summon Villager ~ ~ ~ {Profession:5,Career:1}
-		addVillagerDruid();
-
-		ModMain.logger.warn("Villager trading disabled, need to use new forge system");
+		//TO TEST: /summon Villager ~ ~ ~ {Profession:5,Career:1}
+		VillagerCareer druid = new VillagerCareer(elderProfession, "druid");
+		for(int i = 0; i < druidTrades.length; i++){
+			druid.addTrade(i+1, druidTrades[i]);
+		}
 	}
+ 
 
-	
-	private static void addVillagerSage() {
-
-		  new VillagerCareer(elderProfession, "sage_career"){
-				 /*
-			 @Override
-       public ITradeList[][] getTrades(){
-           return sageTrades;
-       }*/
-		 };
-	}
-	private static void addVillagerDruid() {
-
-	  new VillagerCareer(elderProfession, "druid_career"){
-		  /*
-		 @Override
-     public ITradeList[][] getTrades(){
-         return druidTrades;
-     }*/
-	 };
-		
-	}
-
-  final static EntityVillager.ITradeList[][] druidTrades = {
+	final static EntityVillager.ITradeList[][] druidTrades = {
 
  		 {	new EmeraldForItems(Items.cooked_fish, new PriceInfo(9, 12))
  			 ,new EmeraldForItems(Items.apple, new PriceInfo(3,6)) 
@@ -108,7 +67,7 @@ public class VillageTradeRegistry {
 				 ,new EmeraldForItems(Items.written_book, new PriceInfo(1, 1))}
 	 };
 	
-  final static EntityVillager.ITradeList[][] sageTrades = {
+	final static EntityVillager.ITradeList[][] sageTrades = {
 		 
 		 {	new EmeraldForItems(Items.gunpowder, new PriceInfo(5, 8))
 			 ,new EmeraldForItems(Items.nether_wart, new PriceInfo(12, 16))},
