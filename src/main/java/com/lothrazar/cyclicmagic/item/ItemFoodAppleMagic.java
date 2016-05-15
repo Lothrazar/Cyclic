@@ -30,8 +30,6 @@ public class ItemFoodAppleMagic extends ItemFood implements IHasRecipe {
 	private ArrayList<Integer>	potionDurations;
 	private ArrayList<Integer>	potionAmplifiers;
 	private ItemStack recipeInput;
-	private boolean isExpensive;
-	
 
 	public static boolean apple_emerald_enabled;
 	public static boolean apple_diamond_enabled;
@@ -42,27 +40,15 @@ public class ItemFoodAppleMagic extends ItemFood implements IHasRecipe {
 	public static boolean apple_netherwart_enabled;
 	public static boolean apple_prismarine_enabled;
 	public static boolean apple_clownfish_enabled;
-                          
-	public static boolean apple_emerald_expensive;
-	public static boolean apple_diamond_expensive;
-	public static boolean apple_ender_expensive;
-	public static boolean apple_bone_expensive;
-	public static boolean apple_lapis_expensive;
-	public static boolean apple_chocolate_expensive;
-	public static boolean apple_netherwart_expensive;
-	public static boolean apple_prismarine_expensive;
-	public static boolean apple_clownfish_expensive;
-                          
-	public static boolean apple_chorus_expensive;
 	public static boolean apple_chorus_enabled;
 	
 	private boolean givesHearts = false;
 
-	public ItemFoodAppleMagic(int fillsHunger, boolean has_effect, ItemStack rec, boolean exp) {
-		this(fillsHunger,has_effect,rec,exp,false);
+	public ItemFoodAppleMagic(int fillsHunger, boolean has_effect, ItemStack rec) {
+		this(fillsHunger,has_effect,rec,false);
 	}
 	
-	public ItemFoodAppleMagic(int fillsHunger, boolean has_effect, ItemStack rec, boolean exp, boolean hearts) {
+	public ItemFoodAppleMagic(int fillsHunger, boolean has_effect, ItemStack rec, boolean hearts) {
 		super(fillsHunger, false);// is not edible by wolf
 		hasEffect = has_effect;// true gives it enchantment shine
 		this.setAlwaysEdible(); // can eat even if full hunger
@@ -70,9 +56,7 @@ public class ItemFoodAppleMagic extends ItemFood implements IHasRecipe {
 		potions = new ArrayList<Potion>();
 		potionDurations = new ArrayList<Integer>();
 		potionAmplifiers = new ArrayList<Integer>();
-		recipeInput = rec;
-		isExpensive = exp;
-		
+		recipeInput = rec; 
 
 		givesHearts = hearts;
 	}
@@ -112,14 +96,9 @@ public class ItemFoodAppleMagic extends ItemFood implements IHasRecipe {
 	}
 
 	public void addRecipe() {
-
-		if (isExpensive) {
-			GameRegistry.addRecipe(new ItemStack(this), "lll", "lal", "lll", 'l', recipeInput, 'a', Items.apple);
-		}
-		else {
-			GameRegistry.addShapelessRecipe(new ItemStack(this), recipeInput, Items.apple);
-
-		}
+ 
+		GameRegistry.addRecipe(new ItemStack(this), "lll", "lal", "lll", 'l', recipeInput, 'a', Items.apple);
+	 
 	}
 
 	@Override
@@ -143,31 +122,16 @@ public class ItemFoodAppleMagic extends ItemFood implements IHasRecipe {
 
 		String category = Const.ConfigCategory.items;
 
-		apple_bone_enabled = config.get(category, "apple_bone_enabled", true).getBoolean();
-		apple_emerald_enabled = config.get(category, "apple_emerald_enabled", true).getBoolean();
-		apple_diamond_enabled = config.get(category, "apple_diamond_enabled", true).getBoolean();
-		apple_ender_enabled = config.get(category, "apple_ender_enabled", true).getBoolean();
-		apple_lapis_enabled = config.get(category, "apple_lapis_enabled", true).getBoolean();
-		apple_chocolate_enabled = config.get(category, "apple_chocolate_enabled", true).getBoolean();
-		apple_netherwart_enabled = config.get(category, "apple_netherwart_enabled", true).getBoolean();
-		apple_prismarine_enabled = config.get(category, "apple_prismarine_enabled", true).getBoolean();
-		apple_clownfish_enabled = config.get(category, "apple_clownfish_enabled", true).getBoolean();
-		apple_chorus_enabled = config.get(category, "apple_chorus_enabled", true).getBoolean();
-
-		// category = Const.MODCONF + "items.PowerApples.Recipes";
-
-		//config.addCustomCategoryComment(category, "True means you have to fully surround the apple with 8 items, false means only a single item will craft with the red apple.");
-
-		apple_bone_expensive = 		true;//config.get(category, "apple_bone_expensive", true).getBoolean();
-		apple_emerald_expensive = 		true;//config.get(category, "apple_emerald_expensive", true).getBoolean();
-		apple_diamond_expensive =		true;// config.get(category, "apple_diamond_expensive", false).getBoolean();
-		apple_ender_expensive =		true;//	 config.get(category, "apple_ender_expensive", true).getBoolean();
-		apple_lapis_expensive = 		true;//config.get(category, "apple_lapis_expensive", true).getBoolean();
-		apple_chocolate_expensive =	true;//	 config.get(category, "apple_chocolate_expensive", true).getBoolean();
-		apple_netherwart_expensive = 	true;//	config.get(category, "apple_netherwart_expensive", true).getBoolean();
-		apple_prismarine_expensive = 	true;//	config.get(category, "apple_prismarine_expensive", true).getBoolean();
-		apple_clownfish_expensive =	true;//		 config.get(category, "apple_clownfish_expensive", false).getBoolean();
-		apple_chorus_expensive = 		true;//config.get(category, "apple_chorus_expensive", false).getBoolean();
-
+		apple_bone_enabled 		= config.getBoolean("AppleBone", 		category, true,"A magic apple that gives the glowing effect (like spectral arrows)");
+		apple_emerald_enabled 	= config.getBoolean("AppleEmerald", 	category, true,"A magic apple that gives health booost V");
+		apple_diamond_enabled 	= config.getBoolean("AppleDiamond", 	category, true,"A magic apple that gives the resistance effect, as well as giving you extra hearts (until death)");
+		apple_ender_enabled 	= config.getBoolean("AppleEnder", 		category, true,"A magic apple that gives a new custom ender aura effect (negates ender pearl damage)");
+		apple_lapis_enabled 	= config.getBoolean("AppleLapis", 		category, true,"A magic apple that gives the haste effect");
+		apple_chocolate_enabled = config.getBoolean("AppleChocolate", 	category, true,"A magic apple that gives the luck effect");
+		apple_netherwart_enabled= config.getBoolean("AppleNetherwart",  category, true,"A magic apple that gives a new custom magnet potion effect that pulls all nearby items towards you");
+		apple_prismarine_enabled= config.getBoolean("ApplePrismarine",  category, true,"A magic apple that gives a new custom waterwalking effect");
+		apple_clownfish_enabled = config.getBoolean("AppleClownfish", 	category, true,"A magic apple that gives a new custom slowfall potion effect");
+		apple_chorus_enabled    = config.getBoolean("AppleChorus", 		category, true,"A magic apple that gives the levitation effect (just like shulkers)");
+ 
 	}
 }

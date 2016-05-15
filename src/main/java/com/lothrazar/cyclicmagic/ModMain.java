@@ -161,6 +161,7 @@ public class ModMain {
 	 * 
 	 ***** FEATURES upcoming
 	 *
+	 *
 	 *NEW PLAN: give launching scepter 3 spells: levitation & slowfall (potion spells, max 10sec, NOT stacking)
 	 *
 	 *chorus apple: make sure it works on other entities
@@ -185,6 +186,7 @@ public class ModMain {
 	 *
 	 *[disabled]circle build: is more of an oval, not symmetric
 	 *
+	 *brewing recipe for existing potion of luck??
 	 *
 		// config todo TODO: 'enabled', which hides the button for invo
 		//  TODO: and  one for 'enabled 3x3 crafting' as well

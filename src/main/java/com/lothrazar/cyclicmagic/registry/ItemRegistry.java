@@ -85,9 +85,9 @@ public class ItemRegistry {
 		
 		ItemFoodAppleMagic.syncConfig(config);
 	}
+	
 	private static void registerRecipes() {
 
-		 
 		for (Item item : items) {
 			if (item instanceof IHasRecipe) {
 				((IHasRecipe) item).addRecipe();
@@ -204,79 +204,69 @@ public class ItemRegistry {
 
 		 
 		final int hunger		= 4;
-		final int time			= 8 * 60;					// 8:00
+		final int time			= 8 * 60; // 8:00
+		
 		if (ItemFoodAppleMagic.apple_chorus_enabled) {
-			ItemFoodAppleMagic apple_chorus = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.chorus_fruit), ItemFoodAppleMagic.apple_chorus_expensive);
+			ItemFoodAppleMagic apple_chorus = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.chorus_fruit));
 
 			apple_chorus.addEffect(MobEffects.levitation, 30, I);
 			ItemRegistry.registerItem(apple_chorus, "apple_chorus");
- 
 		}
 
 		if (ItemFoodAppleMagic.apple_ender_enabled) {
-			ItemFoodAppleMagic apple_ender = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.ender_pearl), ItemFoodAppleMagic.apple_ender_expensive);
+			ItemFoodAppleMagic apple_ender = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.ender_pearl));
 
 			apple_ender.addEffect(PotionRegistry.ender, time, I);
 			ItemRegistry.registerItem(apple_ender, "apple_ender");
- 
 		}
 
 		if (ItemFoodAppleMagic.apple_emerald_enabled) {
-			ItemFoodAppleMagic apple_emerald = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.emerald), ItemFoodAppleMagic.apple_emerald_expensive);
-			apple_emerald.addEffect(MobEffects.moveSpeed, time, II);
-			apple_emerald.addEffect(MobEffects.absorption, time, I);
-			// ItemRegistry.apple_emerald.addEffect(MobEffects.saturation, time, I);
+			ItemFoodAppleMagic apple_emerald = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.emerald));
+		
 			apple_emerald.addEffect(MobEffects.healthBoost, time, V);
 			ItemRegistry.registerItem(apple_emerald, "apple_emerald"); 
 		}
 
 		if (ItemFoodAppleMagic.apple_chocolate_enabled) {
-			ItemFoodAppleMagic apple_chocolate = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.dye, 1, Const.dye_cocoa), ItemFoodAppleMagic.apple_chocolate_expensive);
-			apple_chocolate.addEffect(MobEffects.saturation, time, I);
-			apple_chocolate.addEffect(MobEffects.moveSpeed, time, I);
+			ItemFoodAppleMagic apple_chocolate = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.dye, 1, Const.dye_cocoa));
+			apple_chocolate.addEffect(MobEffects.luck, time, II);
 			ItemRegistry.registerItem(apple_chocolate, "apple_chocolate"); 
 		}
 
 		if (ItemFoodAppleMagic.apple_lapis_enabled) {
-			ItemFoodAppleMagic apple_lapis = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.dye, 1, Const.dye_lapis), ItemFoodAppleMagic.apple_lapis_expensive);
+			ItemFoodAppleMagic apple_lapis = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.dye, 1, Const.dye_lapis));
 			apple_lapis.addEffect(MobEffects.digSpeed, time, II); // Haste
-			apple_lapis.addEffect(MobEffects.saturation, time, I);
 			ItemRegistry.registerItem(apple_lapis, "apple_lapis"); 
 		}
+		
 		if (ItemFoodAppleMagic.apple_diamond_enabled) {
-			ItemFoodAppleMagic apple_diamond = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.diamond), ItemFoodAppleMagic.apple_diamond_expensive,true);
+			ItemFoodAppleMagic apple_diamond = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.diamond),true);
 			ItemRegistry.registerItem(apple_diamond, "apple_diamond");
 			apple_diamond.addEffect(MobEffects.resistance, time, I);
-			apple_diamond.addEffect(MobEffects.saturation, time, I);
 		}
 
 		if (ItemFoodAppleMagic.apple_bone_enabled) {
-			ItemFoodAppleMagic apple_bone = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.bone), ItemFoodAppleMagic.apple_bone_expensive);
+			ItemFoodAppleMagic apple_bone = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.bone));
 			ItemRegistry.registerItem(apple_bone, "apple_bone");
-			apple_bone.addEffect(MobEffects.luck, time, I);
-			apple_bone.addEffect(MobEffects.saturation, time, I);
+			apple_bone.addEffect(MobEffects.glowing, time, I);
 		}
 
 		if (ItemFoodAppleMagic.apple_netherwart_enabled) {
-			ItemFoodAppleMagic apple_netherwart = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.nether_wart), ItemFoodAppleMagic.apple_netherwart_expensive);
+			ItemFoodAppleMagic apple_netherwart = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.nether_wart));
 			ItemRegistry.registerItem(apple_netherwart, "apple_netherwart");
 			apple_netherwart.addEffect(PotionRegistry.magnet, time, I);
-			apple_netherwart.addEffect(MobEffects.saturation, time, I);
 		}
 
 		if (ItemFoodAppleMagic.apple_prismarine_enabled) {
-			ItemFoodAppleMagic apple_prismarine = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.prismarine_shard), ItemFoodAppleMagic.apple_prismarine_expensive);
+			ItemFoodAppleMagic apple_prismarine = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.prismarine_shard));
 			ItemRegistry.registerItem(apple_prismarine, "apple_prismarine");
-			apple_prismarine.addEffect(PotionRegistry.waterwalk, time, I);
-			apple_prismarine.addEffect(MobEffects.saturation, time, I);
+			apple_prismarine.addEffect(PotionRegistry.waterwalk, time, I); 
 		}
 
 		if (ItemFoodAppleMagic.apple_clownfish_enabled) {
-			ItemFoodAppleMagic apple_slowfall = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.fish, 1, Const.clownfish), ItemFoodAppleMagic.apple_clownfish_expensive);
+			ItemFoodAppleMagic apple_slowfall = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.fish, 1, Const.clownfish));
 			ItemRegistry.registerItem(apple_slowfall, "apple_slowfall");
 			apple_slowfall.addEffect(PotionRegistry.slowfall, time, I);
-			apple_slowfall.addEffect(MobEffects.saturation, time, I);
-
 		}
 
 		registerRecipes();
