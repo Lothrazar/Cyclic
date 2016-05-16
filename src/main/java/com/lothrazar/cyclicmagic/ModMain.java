@@ -64,6 +64,7 @@ public class ModMain {
 		config = new Configuration(event.getSuggestedConfigurationFile());
 		
 		events = new EventRegistry();
+		ItemRegistry.construct();//MAYBE it should be a constructed, not static
 		
 		config.load();
 		syncConfig();
@@ -73,13 +74,9 @@ public class ModMain {
 		events.register();
 
 		ReflectionRegistry.register();
-
 		ExtraButtonRegistry.register();
-
 		PacketRegistry.register(network);
-		
 		VillageTradeRegistry.register();
-		
 		SoundRegistry.register();
 	}
 

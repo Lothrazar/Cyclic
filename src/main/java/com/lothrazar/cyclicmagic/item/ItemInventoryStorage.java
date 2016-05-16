@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -24,9 +25,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemInventoryStorage extends BaseItem implements IHasRecipe,IHasConfig{
-
-	private boolean enabled;
-
+ 
 	public ItemInventoryStorage() {
 		this.setMaxStackSize(1);
 	}
@@ -72,7 +71,8 @@ public class ItemInventoryStorage extends BaseItem implements IHasRecipe,IHasCon
 	public void syncConfig(Configuration config) {
 
 		Property prop = config.get(Const.ConfigCategory.items, "StorageBag", true, "Simple storage bag");
-		prop.setRequiresMcRestart(true);
-		this.enabled = prop.getBoolean();
+		//prop.setRequiresMcRestart(true);
+		ItemRegistry.setConfigMap(this,prop.getBoolean());
+		 
 	}
 }

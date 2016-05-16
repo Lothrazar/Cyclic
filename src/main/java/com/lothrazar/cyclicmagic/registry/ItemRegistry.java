@@ -38,6 +38,7 @@ import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileTorch;
 import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileWater;
 import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileWool;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilItem;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -56,8 +57,46 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class ItemRegistry {
 
 	public static Map<String,Item> itemMap	= new HashMap<String,Item>();
+	public static Map<String,Boolean> configMap	= new HashMap<String,Boolean>();
+	
+	public static void construct(){
+		//TODO: maybe constructor. MUST be done before config
+
+		addItem(new ItemEnderPearlReuse(),"ender_pearl_reuse"); 
+		addItem(new ItemPaperCarbon(),"carbon_paper"); 
+		addItem(new ItemToolHarvest(),"tool_harvest");
+		addItem(new ItemToolPull(),"tool_pull");
+		addItem(new ItemToolPush(),"tool_push");
+		addItem(new ItemToolRotate(),"tool_rotate");
+		addItem(new ItemInventoryStorage(),"storage_bag"); 
+		addItem(new ItemChestSack().setHidden(),"chest_sack");
+		addItem(new ItemChestSackEmpty(),"chest_sack_empty");
+		addItem(new ItemProjectileBlaze(),"ender_blaze");
+		addItem(new ItemProjectileDungeon(),"ender_dungeon");
+		addItem(new ItemProjectileFishing(),"ender_fishing");
+		addItem(new ItemProjectileWool(),"ender_wool");
+		addItem(new ItemProjectileTorch(),"ender_torch");
+		addItem(new ItemProjectileWater(),"ender_water");
+		addItem(new ItemProjectileSnow(),"ender_snow");
+		addItem(new ItemProjectileHarvest(),"ender_harvest");
+		addItem(new ItemProjectileLightning(),"ender_lightning");
+		addItem(new ItemProjectileTNT(1),"ender_tnt_1");
+		addItem(new ItemProjectileTNT(2),"ender_tnt_2");
+		addItem(new ItemProjectileTNT(3),"ender_tnt_4");
+		addItem(new ItemProjectileTNT(4),"ender_tnt_6");
+		addItem(new ItemFoodHorse(new ItemStack(Items.emerald)),"horse_upgrade_type");
+		addItem(new ItemFoodHorse(new ItemStack(Items.dye, 1, Const.dye_lapis)),"horse_upgrade_variant");
+		addItem(new ItemFoodHorse(new ItemStack(Items.diamond)),"horse_upgrade_health");
+		addItem(new ItemFoodHorse(new ItemStack(Items.redstone)),"horse_upgrade_speed");
+		addItem(new ItemFoodHorse(new ItemStack(Items.ender_eye)),"horse_upgrade_jump");
+		addItem(new ItemEnderBook(),"book_ender"); 
+ 
+
+		addItem(new ItemFoodHeart(),"heart_food"); 
+	}
 
 	private static void addItem(Item i, String key){ 
+		i.setUnlocalizedName(key);
 		itemMap.put(key, i);
 	}
 	
@@ -106,37 +145,6 @@ public class ItemRegistry {
 	public static void register() {
 		registerMaterials();
 		
-		addItem(new ItemEnderPearlReuse(),"ender_pearl_reuse"); 
-		addItem(new ItemPaperCarbon(),"carbon_paper"); 
-		addItem(new ItemToolHarvest(),"tool_harvest");
-		addItem(new ItemToolPull(),"tool_pull");
-		addItem(new ItemToolPush(),"tool_push");
-		addItem(new ItemToolRotate(),"tool_rotate");
-		addItem(new ItemInventoryStorage(),"storage_bag"); 
-		addItem(new ItemChestSack().setHidden(),"chest_sack");
-		addItem(new ItemChestSackEmpty(),"chest_sack_empty");
-		addItem(new ItemProjectileBlaze(),"ender_blaze");
-		addItem(new ItemProjectileDungeon(),"ender_dungeon");
-		addItem(new ItemProjectileFishing(),"ender_fishing");
-		addItem(new ItemProjectileWool(),"ender_wool");
-		addItem(new ItemProjectileTorch(),"ender_torch");
-		addItem(new ItemProjectileWater(),"ender_water");
-		addItem(new ItemProjectileSnow(),"ender_snow");
-		addItem(new ItemProjectileHarvest(),"ender_harvest");
-		addItem(new ItemProjectileLightning(),"ender_lightning");
-		addItem(new ItemProjectileTNT(1),"ender_tnt_1");
-		addItem(new ItemProjectileTNT(2),"ender_tnt_2");
-		addItem(new ItemProjectileTNT(3),"ender_tnt_4");
-		addItem(new ItemProjectileTNT(4),"ender_tnt_6");
-		addItem(new ItemFoodHorse(new ItemStack(Items.emerald)),"horse_upgrade_type");
-		addItem(new ItemFoodHorse(new ItemStack(Items.dye, 1, Const.dye_lapis)),"horse_upgrade_variant");
-		addItem(new ItemFoodHorse(new ItemStack(Items.diamond)),"horse_upgrade_health");
-		addItem(new ItemFoodHorse(new ItemStack(Items.redstone)),"horse_upgrade_speed");
-		addItem(new ItemFoodHorse(new ItemStack(Items.ender_eye)),"horse_upgrade_jump");
-		addItem(new ItemEnderBook(),"book_ender"); 
- 
-
-		addItem(new ItemFoodHeart(),"heart_food"); 
 
 		if (ItemCyclicWand.sceptersEnabled) {
 
@@ -274,6 +282,13 @@ public class ItemRegistry {
 		Item item;
 		for (String key : itemMap.keySet()) {
 			item = itemMap.get(key);
+			
+			if(getConfigMap(item) == false){
+				//it works. TODO: fix item configs this way
+				//System.out.println("disabled by config"+item.getUnlocalizedName());
+				continue;
+			}
+			
 			if (item instanceof BaseItem) {
 				((BaseItem) item).register(key);
 			}
@@ -304,12 +319,26 @@ public class ItemRegistry {
 
 	public static void registerItem(Item item, String name, boolean isHidden) {
 
-		item.setUnlocalizedName(name);
+		//item.setUnlocalizedName(name);
 
 		GameRegistry.register(item, new ResourceLocation(Const.MODID, name));
 
 		if (isHidden == false) {
 			item.setCreativeTab(ModMain.TAB);
 		} 
+	}
+
+	public static boolean getConfigMap(Item item) { 
+		String name = UtilItem.getRawName(item);
+
+		if(!ItemRegistry.configMap.containsKey(name)){
+		//if it doesnt have a key, then its always enabled so do it anyway
+			return true;
+		}
+		//else return whatever the config file has set
+		return ItemRegistry.configMap.get(name);
+	}
+	public static void setConfigMap(Item item, boolean bool) { 
+		ItemRegistry.configMap.put(UtilItem.getRawName(item), bool);
 	}
 }

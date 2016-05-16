@@ -18,4 +18,7 @@ public class UtilItem {
 			s.damageItem(1, p);
 		}
 	}
+	public static String getRawName(Item item) { 
+		return item.getUnlocalizedName().replaceAll("item.", "");
+	}
 }
