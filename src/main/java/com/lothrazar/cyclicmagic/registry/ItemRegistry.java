@@ -56,6 +56,10 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class ItemRegistry {
 
 	public static Map<String,Item> itemMap	= new HashMap<String,Item>();
+
+	private static void addItem(BaseItem i, String key){ 
+		itemMap.put(key, i);
+	}
 	
 	private static boolean emeraldGearEnabled ; 
 	public static ToolMaterial		MATERIAL_EMERALD;
@@ -102,43 +106,41 @@ public class ItemRegistry {
 	public static void register() {
 		registerMaterials();
 		
-		addItem(new ItemEnderPearlReuse().setRawName("ender_pearl_reuse")); 
-		addItem(new ItemPaperCarbon().setRawName("carbon_paper")); 
-		addItem(new ItemToolHarvest().setRawName("tool_harvest"));
-		addItem(new ItemToolPull().setRawName("tool_pull"));
-		addItem(new ItemToolPush().setRawName("tool_push"));
-		addItem(new ItemToolRotate().setRawName("tool_rotate"));
-		addItem(new ItemInventoryStorage().setRawName("storage_bag"));
-		addItem(new ItemChestSack().setRawName("chest_sack").setHidden());
-		addItem(new ItemChestSackEmpty().setRawName("chest_sack_empty"));
-		addItem(new ItemProjectileBlaze().setRawName("ender_blaze"));
-		addItem(new ItemProjectileDungeon().setRawName("ender_dungeon"));
-		addItem(new ItemProjectileFishing().setRawName("ender_fishing"));
-		addItem(new ItemProjectileWool().setRawName("ender_wool"));
-		addItem(new ItemProjectileTorch().setRawName("ender_torch"));
-		addItem(new ItemProjectileWater().setRawName("ender_water"));
-		addItem(new ItemProjectileSnow().setRawName("ender_snow"));
-		addItem(new ItemProjectileHarvest().setRawName("ender_harvest"));
-		addItem(new ItemProjectileLightning().setRawName("ender_lightning"));
-		addItem(new ItemProjectileTNT(1).setRawName("ender_tnt_1"));
-		addItem(new ItemProjectileTNT(2).setRawName("ender_tnt_2"));
-		addItem(new ItemProjectileTNT(3).setRawName("ender_tnt_4"));
-		addItem(new ItemProjectileTNT(4).setRawName("ender_tnt_6"));
-		addItem(new ItemFoodHorse(new ItemStack(Items.emerald)).setRawName("horse_upgrade_type"));
-		addItem(new ItemFoodHorse(new ItemStack(Items.dye, 1, Const.dye_lapis)).setRawName("horse_upgrade_variant"));
-		addItem(new ItemFoodHorse(new ItemStack(Items.diamond)).setRawName("horse_upgrade_health"));
-		addItem(new ItemFoodHorse(new ItemStack(Items.redstone)).setRawName("horse_upgrade_speed"));
-		addItem(new ItemFoodHorse(new ItemStack(Items.ender_eye)).setRawName("horse_upgrade_jump"));
-  
-		//only some need static references
-		addItem(new ItemEnderBook().setRawName("book_ender")); 
+		addItem(new ItemEnderPearlReuse(),"ender_pearl_reuse"); 
+		addItem(new ItemPaperCarbon(),"carbon_paper"); 
+		addItem(new ItemToolHarvest(),"tool_harvest");
+		addItem(new ItemToolPull(),"tool_pull");
+		addItem(new ItemToolPush(),"tool_push");
+		addItem(new ItemToolRotate(),"tool_rotate");
+		addItem(new ItemInventoryStorage(),"storage_bag"); 
+		addItem(new ItemChestSack().setHidden(),"chest_sack");
+		addItem(new ItemChestSackEmpty(),"chest_sack_empty");
+		addItem(new ItemProjectileBlaze(),"ender_blaze");
+		addItem(new ItemProjectileDungeon(),"ender_dungeon");
+		addItem(new ItemProjectileFishing(),"ender_fishing");
+		addItem(new ItemProjectileWool(),"ender_wool");
+		addItem(new ItemProjectileTorch(),"ender_torch");
+		addItem(new ItemProjectileWater(),"ender_water");
+		addItem(new ItemProjectileSnow(),"ender_snow");
+		addItem(new ItemProjectileHarvest(),"ender_harvest");
+		addItem(new ItemProjectileLightning(),"ender_lightning");
+		addItem(new ItemProjectileTNT(1),"ender_tnt_1");
+		addItem(new ItemProjectileTNT(2),"ender_tnt_2");
+		addItem(new ItemProjectileTNT(3),"ender_tnt_4");
+		addItem(new ItemProjectileTNT(4),"ender_tnt_6");
+		addItem(new ItemFoodHorse(new ItemStack(Items.emerald)),"horse_upgrade_type");
+		addItem(new ItemFoodHorse(new ItemStack(Items.dye, 1, Const.dye_lapis)),"horse_upgrade_variant");
+		addItem(new ItemFoodHorse(new ItemStack(Items.diamond)),"horse_upgrade_health");
+		addItem(new ItemFoodHorse(new ItemStack(Items.redstone)),"horse_upgrade_speed");
+		addItem(new ItemFoodHorse(new ItemStack(Items.ender_eye)),"horse_upgrade_jump");
+		addItem(new ItemEnderBook(),"book_ender"); 
  
 		//maybe one day it will be all base items
 		Item item;
 		for (String key : itemMap.keySet()) {
 			item = itemMap.get(key);
 			if (item instanceof BaseItem) {
-				((BaseItem) item).register();
+				((BaseItem) item).register(key);
 			}
 //			else{
 //				System.out.println("WARN: unregistered item"+item.getClass()); 
@@ -288,11 +290,6 @@ public class ItemRegistry {
 		// EnumHelper.addToolMaterial("emerald", 3, harvestLevel 3 same as diamond
 		// 1600,3.5F, 5+25 );
 
-	}
-
-	private static void addItem(BaseItem i){
-	 
-		itemMap.put(i.getRawName(), i);
 	}
 	 
 	public static void registerItem(Item item, String name) {
