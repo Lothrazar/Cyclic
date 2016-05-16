@@ -32,6 +32,7 @@ gui.enderbook.new=New
 gui.enderbook.go=Go
 gui.enderbook.title=Ender Book Waypoints
 gui.chatexp=Not enough experience
+item.heart_food.name=Heart
 item.tool_pull.name=Pull Tool
 item.tool_push.name=Push Tool
 item.tool_rotate.name=Rotate Tool

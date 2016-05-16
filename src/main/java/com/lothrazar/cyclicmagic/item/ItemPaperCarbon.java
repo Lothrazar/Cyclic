@@ -295,8 +295,7 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe, IHasConfig 
 
 	@Override
 	public void syncConfig(Configuration config) {
-
-
+ 
 		Property prop = config.get(Const.ConfigCategory.items, ItemPaperCarbon.name, true, "Special paper to copy signs and note block data");
 		prop.setRequiresMcRestart(true);
 		ItemPaperCarbon.enabled = prop.getBoolean();
