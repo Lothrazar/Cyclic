@@ -122,16 +122,16 @@ public class ItemFoodAppleMagic extends ItemFood implements IHasRecipe {
 
 		String category = Const.ConfigCategory.items;
 
-		apple_bone_enabled 		= config.getBoolean("AppleBone", 		category, true,"A magic apple that gives the glowing effect (like spectral arrows)");
+		apple_bone_enabled 		= config.getBoolean("AppleBone", 		category, true,"A magic apple that gives the glowing effect - like spectral arrows. (Works on any living entity)");
 		apple_emerald_enabled 	= config.getBoolean("AppleEmerald", 	category, true,"A magic apple that gives health booost V");
 		apple_diamond_enabled 	= config.getBoolean("AppleDiamond", 	category, true,"A magic apple that gives the resistance effect, as well as giving you extra hearts (until death)");
-		apple_ender_enabled 	= config.getBoolean("AppleEnder", 		category, true,"A magic apple that gives a new custom ender aura effect (negates ender pearl damage)");
-		apple_lapis_enabled 	= config.getBoolean("AppleLapis", 		category, true,"A magic apple that gives the haste effect");
-		apple_chocolate_enabled = config.getBoolean("AppleChocolate", 	category, true,"A magic apple that gives the luck effect");
-		apple_netherwart_enabled= config.getBoolean("AppleNetherwart",  category, true,"A magic apple that gives a new custom magnet potion effect that pulls all nearby items towards you");
-		apple_prismarine_enabled= config.getBoolean("ApplePrismarine",  category, true,"A magic apple that gives a new custom waterwalking effect");
-		apple_clownfish_enabled = config.getBoolean("AppleClownfish", 	category, true,"A magic apple that gives a new custom slowfall potion effect");
-		apple_chorus_enabled    = config.getBoolean("AppleChorus", 		category, true,"A magic apple that gives the levitation effect (just like shulkers)");
+		apple_ender_enabled 	= config.getBoolean("AppleEnder", 		category, true,"A magic apple that gives a new custom ender aura effect negates ender pearl damage");
+		apple_lapis_enabled 	= config.getBoolean("AppleLapis", 		category, true,"A magic apple that gives the haste effect. (Works on any living entity)");
+		apple_chocolate_enabled = config.getBoolean("AppleChocolate", 	category, true,"A magic apple that gives the luck effect. (Works on any living entity)");
+		apple_netherwart_enabled= config.getBoolean("AppleNetherwart",  category, true,"A magic apple that gives a new custom magnet potion effect that pulls all nearby items towards you. (Works on any living entity)");
+		apple_prismarine_enabled= config.getBoolean("ApplePrismarine",  category, true,"A magic apple that gives a new custom waterwalking effect. (Works on any living entity)");
+		apple_clownfish_enabled = config.getBoolean("AppleClownfish", 	category, true,"A magic apple that gives a new custom slowfall potion effect. (Works on any living entity)");
+		apple_chorus_enabled    = config.getBoolean("AppleChorus", 		category, true,"A magic apple that gives the levitation effect - just like shulkers. (Works on any living entity)");
  
 	}
 }
