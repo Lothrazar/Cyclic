@@ -54,7 +54,7 @@ import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemRegistry {
-	public static ArrayList<Item> items	= new ArrayList<Item>();
+
 	public static Map<String,Item> itemMap	= new HashMap<String,Item>();
 	
 	private static boolean emeraldGearEnabled ; 
@@ -68,7 +68,9 @@ public class ItemRegistry {
  
 	public static void syncConfig(Configuration config) {
 		Property prop;
-		for (Item item : items) {
+		Item item;
+		for (String key : itemMap.keySet()) {
+			item = itemMap.get(key);
 			if (item instanceof IHasConfig) {
 				((IHasConfig) item).syncConfig(config);
 			}
@@ -88,7 +90,9 @@ public class ItemRegistry {
 	
 	private static void registerRecipes() {
 
-		for (Item item : items) {
+		Item item;
+		for (String key : itemMap.keySet()) {
+			item = itemMap.get(key);
 			if (item instanceof IHasRecipe) {
 				((IHasRecipe) item).addRecipe();
 			}
@@ -130,7 +134,9 @@ public class ItemRegistry {
 		addItem(new ItemEnderBook().setRawName("book_ender")); 
  
 		//maybe one day it will be all base items
-		for (Item item : items) { 
+		Item item;
+		for (String key : itemMap.keySet()) {
+			item = itemMap.get(key);
 			if (item instanceof BaseItem) {
 				((BaseItem) item).register();
 			}
@@ -285,7 +291,7 @@ public class ItemRegistry {
 	}
 
 	private static void addItem(BaseItem i){
-		items.add(i);
+	 
 		itemMap.put(i.getRawName(), i);
 	}
 	 
@@ -302,7 +308,7 @@ public class ItemRegistry {
 		if (isHidden == false) {
 			item.setCreativeTab(ModMain.TAB);
 		}
-		items.add(item);
+
 		itemMap.put(name, item);
 	}
 }

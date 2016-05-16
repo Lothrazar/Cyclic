@@ -292,11 +292,12 @@ public class ClientProxy extends CommonProxy {
 
 			mesher.register(item, 0, new ModelResourceLocation(name, "inventory"));
 		}
+ 
+		for (String key : ItemRegistry.itemMap.keySet()) {
+			item =  ItemRegistry.itemMap.get(key);
+			name = Const.MODRES + item.getUnlocalizedName().replaceAll("item.", "");
 
-		for (Item i : ItemRegistry.items) {
-			name = Const.MODRES + i.getUnlocalizedName().replaceAll("item.", "");
-
-			mesher.register(i, 0, new ModelResourceLocation(name, "inventory"));
+			mesher.register(item, 0, new ModelResourceLocation(name, "inventory"));
 		}
 	}
 
