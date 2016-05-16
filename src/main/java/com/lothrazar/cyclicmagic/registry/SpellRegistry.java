@@ -113,9 +113,19 @@ public class SpellRegistry {
 		
 		
 //TODO: a cleaner way?
-		((ItemCyclicWand)ItemRegistry.itemMap.get("cyclic_wand_fly")).setSpells(spellbookFly);
-		((ItemCyclicWand)ItemRegistry.itemMap.get("cyclic_wand_range")).setSpells(spellbookNoInvo);
-		((ItemCyclicWand)ItemRegistry.itemMap.get("cyclic_wand_build")).setSpells(spellbookBuild);
+		ItemCyclicWand cyclic_wand_fly = ((ItemCyclicWand)ItemRegistry.itemMap.get("cyclic_wand_fly"));
+		if(cyclic_wand_fly != null)
+			cyclic_wand_fly.setSpells(spellbookFly);
+		
+
+		ItemCyclicWand cyclic_wand_range = ((ItemCyclicWand)ItemRegistry.itemMap.get("cyclic_wand_range"));
+		if(cyclic_wand_range != null)
+			cyclic_wand_range.setSpells(spellbookNoInvo);
+		
+
+		ItemCyclicWand cyclic_wand_build = ((ItemCyclicWand)ItemRegistry.itemMap.get("cyclic_wand_build"));
+		if(cyclic_wand_build != null)
+			cyclic_wand_build.setSpells(spellbookBuild);
 	 
 		// Spells.placefloor = new SpellPlaceFloor(++spellId, "placefloor");
 		// registerBuildSpell(Spells.placefloor);
