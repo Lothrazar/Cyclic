@@ -41,14 +41,13 @@ public class ItemFoodAppleMagic extends ItemFood implements IHasRecipe {
 	public static boolean apple_prismarine_enabled;
 	public static boolean apple_clownfish_enabled;
 	public static boolean apple_chorus_enabled;
-	
-	private boolean givesHearts = false;
-
+	/*
 	public ItemFoodAppleMagic(int fillsHunger, boolean has_effect, ItemStack rec) {
-		this(fillsHunger,has_effect,rec,false);
-	}
+		this(fillsHunger,has_effect,rec);
+	}*/
 	
-	public ItemFoodAppleMagic(int fillsHunger, boolean has_effect, ItemStack rec, boolean hearts) {
+	public ItemFoodAppleMagic(int fillsHunger, boolean has_effect, ItemStack rec
+			,Potion potionId, int potionDuration, int potionAmplifier) {
 		super(fillsHunger, false);// is not edible by wolf
 		hasEffect = has_effect;// true gives it enchantment shine
 		this.setAlwaysEdible(); // can eat even if full hunger
@@ -56,14 +55,13 @@ public class ItemFoodAppleMagic extends ItemFood implements IHasRecipe {
 		potions = new ArrayList<Potion>();
 		potionDurations = new ArrayList<Integer>();
 		potionAmplifiers = new ArrayList<Integer>();
-		recipeInput = rec; 
-
-		givesHearts = hearts;
+		recipeInput = rec;
 	}
 	
 
 	public ItemFoodAppleMagic addEffect(Potion potionId, int potionDuration, int potionAmplifier) {
 
+		//currently, items pretty much just have one potion. but keeping the arrays in case that changes later
 		potions.add(potionId);
 		potionDurations.add(potionDuration * Const.TICKS_PER_SEC);
 		potionAmplifiers.add(potionAmplifier);
@@ -74,11 +72,9 @@ public class ItemFoodAppleMagic extends ItemFood implements IHasRecipe {
 	@Override
 	protected void onFoodEaten(ItemStack par1ItemStack, World world, EntityPlayer player) {
 		addAllEffects(world, player);
-		
-		if(this.givesHearts){
-			
-			UtilEntity.incrementMaxHealth(player, 2);
-		}
+		 
+		UtilEntity.incrementMaxHealth(player, 2);
+		 
 	}
 
 	@Override
