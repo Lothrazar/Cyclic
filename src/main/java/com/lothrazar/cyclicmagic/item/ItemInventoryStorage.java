@@ -2,9 +2,11 @@ package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
 
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
+import com.lothrazar.cyclicmagic.util.Const;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -15,11 +17,15 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemInventoryStorage extends BaseItem implements IHasRecipe{
+public class ItemInventoryStorage extends BaseItem implements IHasRecipe,IHasConfig{
+
+	private boolean enabled;
 
 	public ItemInventoryStorage() {
 		this.setMaxStackSize(1);
@@ -60,5 +66,13 @@ public class ItemInventoryStorage extends BaseItem implements IHasRecipe{
 				'd',Blocks.diamond_block
 				);
 		
+	}
+
+	@Override
+	public void syncConfig(Configuration config) {
+
+		Property prop = config.get(Const.ConfigCategory.items, "StorageBag", true, "Simple storage bag");
+		prop.setRequiresMcRestart(true);
+		this.enabled = prop.getBoolean();
 	}
 }

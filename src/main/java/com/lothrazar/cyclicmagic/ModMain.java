@@ -151,6 +151,8 @@ public class ModMain {
 	 * 
 	 ***** BUGS
 	 *
+	 *crafting recipe AND config for HEART
+	 *
 	 *
 	 *clean up item models/textures on tools/wands
 	 *
