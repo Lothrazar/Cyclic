@@ -5,8 +5,7 @@ import com.lothrazar.cyclicmagic.proxy.CommonProxy;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.CommandRegistry;
 import com.lothrazar.cyclicmagic.registry.DispenserBehaviorRegistry;
-import com.lothrazar.cyclicmagic.registry.EventRegistry;
-import com.lothrazar.cyclicmagic.registry.ExtraButtonRegistry;
+import com.lothrazar.cyclicmagic.registry.EventRegistry; 
 import com.lothrazar.cyclicmagic.registry.FuelRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.MobSpawningRegistry;
@@ -73,8 +72,7 @@ public class ModMain {
 		
 		events.register();
 
-		ReflectionRegistry.register();
-		ExtraButtonRegistry.register();
+		ReflectionRegistry.register(); 
 		PacketRegistry.register(network);
 		VillageTradeRegistry.register();
 		SoundRegistry.register();
@@ -123,6 +121,7 @@ public class ModMain {
 
 	public  void syncConfig() {
 		// hit on startup and on change event from
+		//we cant make this a list/loop because the order does matter
 		Configuration c = getConfig();
 		WorldGenRegistry.syncConfig(c);
 		PotionRegistry.syncConfig(c);
@@ -135,8 +134,7 @@ public class ModMain {
 		RecipeNewRegistry.syncConfig(c);
 		DispenserBehaviorRegistry.syncConfig(c);
 		StackSizeRegistry.syncConfig(c);
-		SpellRegistry.syncConfig(c);
-		ExtraButtonRegistry.syncConfig(c);
+		SpellRegistry.syncConfig(c); 
 		CommandRegistry.syncConfig(c);
 		VillageTradeRegistry.syncConfig(c);
 
@@ -147,6 +145,8 @@ public class ModMain {
 	/* TODO LIST
 	 * 
 	 ***** BUGS
+	 *
+	 *easy/spimple ender chest uses right click SHOULD BE left
 	 *
 	 *block terraria buttons from village rgui. test all containers and pick a side
 	 *

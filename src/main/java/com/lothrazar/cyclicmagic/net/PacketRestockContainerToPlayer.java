@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.net;
 
-import com.lothrazar.cyclicmagic.registry.ExtraButtonRegistry;
+import com.lothrazar.cyclicmagic.event.EventGuiTerrariaButtons; 
 import com.lothrazar.cyclicmagic.util.UtilInventorySort;
 
 import io.netty.buffer.ByteBuf;
@@ -48,7 +48,8 @@ public class PacketRestockContainerToPlayer implements IMessage, IMessageHandler
 
 			// Reverse of quickstack
 
-			UtilInventorySort.sortFromInventoryToPlayer(p.worldObj, openInventory, p, ExtraButtonRegistry.restockLeaveOne);
+			//TODO: restock leave one should be passed in from event/packet
+			UtilInventorySort.sortFromInventoryToPlayer(p.worldObj, openInventory, p, EventGuiTerrariaButtons.restockLeaveOne);
 
 			UtilInventorySort.updatePlayerContainerClient(p);
 		}
