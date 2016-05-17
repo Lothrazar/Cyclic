@@ -64,7 +64,6 @@ public class ItemInventoryStorage extends BaseItem implements IHasRecipe,IHasCon
 				'r',Items.redstone,
 				'd',Blocks.diamond_block
 				);
-		
 	}
 
 	@Override

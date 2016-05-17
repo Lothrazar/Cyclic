@@ -17,15 +17,19 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemFoodHeart extends ItemFood implements IHasRecipe,IHasConfig{
  
+	private static final int numFood = 2;
+	private static final int numHearts = 1;
+	
 	public ItemFoodHeart() {
-		super(2, false); 
+		super(numFood, false);  
 		this.setAlwaysEdible();
 	}
 	
 	@Override
 	protected void onFoodEaten(ItemStack par1ItemStack, World world, EntityPlayer player) {
  
-		UtilEntity.incrementMaxHealth(player, 2);  
+		//one heart is 2 health points (half heart = 1 health)
+		UtilEntity.incrementMaxHealth(player, 2 * numHearts);  
 	}
 
 	@Override
@@ -34,22 +38,21 @@ public class ItemFoodHeart extends ItemFood implements IHasRecipe,IHasConfig{
 		Property prop = config.get(Const.ConfigCategory.items, "HeartFood", true, "Edible hearts that increase your heath (permanently, until death");
 		prop.setRequiresMcRestart(true);
 		ItemRegistry.setConfigMap(this,prop.getBoolean());
-		
 	}
 
 	@Override
 	public void addRecipe() {
 
 		GameRegistry.addShapelessRecipe(new ItemStack(this) 
-				,Items.beetroot
+				,Items.beetroot_soup
 				,Items.rabbit_stew
 				,Items.pumpkin_pie
 				,Items.mushroom_stew
 				,Items.cake
-				,Items.cooked_fish
-				,Items.cooked_rabbit
+				,Items.cookie
+				,new ItemStack(Items.fish,1,Const.fish_salmon)
 				,Items.golden_apple
-				,Items.speckled_melon
+				,Items.poisonous_potato
 				);
 	} 
 }

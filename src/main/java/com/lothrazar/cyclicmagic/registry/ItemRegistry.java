@@ -273,7 +273,7 @@ public class ItemRegistry {
 
 		if (ItemFoodAppleMagic.apple_clownfish_enabled) {
 			ItemFoodAppleMagic apple_slowfall = new ItemFoodAppleMagic(hunger, false, 
-					new ItemStack(Items.fish, 1, Const.clownfish),PotionRegistry.slowfall, time, I);
+					new ItemStack(Items.fish, 1, Const.fish_puffer),PotionRegistry.slowfall, time, I);
 			 
 			addItem(apple_slowfall, "apple_slowfall");
 		}

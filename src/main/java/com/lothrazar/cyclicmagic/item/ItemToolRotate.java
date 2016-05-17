@@ -8,6 +8,7 @@ import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
@@ -16,6 +17,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemToolRotate extends BaseTool implements IHasRecipe ,IHasConfig{
 
@@ -51,8 +53,9 @@ public class ItemToolRotate extends BaseTool implements IHasRecipe ,IHasConfig{
 
 	@Override
 	public void addRecipe() {
-
-		System.out.println("REMINDER: needs recipe");
+		GameRegistry.addRecipe(new ItemStack(this, 8), "b  ", " b ", "  s", 
+			'b',Items.blaze_rod, 
+		    's',Items.emerald); 
 	}
 
 }

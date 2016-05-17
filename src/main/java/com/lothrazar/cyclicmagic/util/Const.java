@@ -30,7 +30,10 @@ public class Const {
 	}
 
 
-	public static final int					clownfish	= 2;
+	public static final int					fish_normal	= 0;
+	public static final int					fish_salmon	= 1;
+	public static final int					fish_clown	= 2;
+	public static final int					fish_puffer	= 3;
 
 	public static final int						dye_cocoa	= 3;
 	public static final int						dye_lapis	= 4;

@@ -7,6 +7,7 @@ import com.lothrazar.cyclicmagic.util.Const;
 
 import net.minecraft.entity.item.EntityEnderPearl;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -48,13 +49,13 @@ public class ItemEnderPearlReuse extends BaseItem implements IHasRecipe, IHasCon
 	@Override
 	public void addRecipe() {
 		 
-		GameRegistry.addShapedRecipe(new ItemStack(this), "eee", "ese", "eee", 'e', new ItemStack(Items.ender_eye), 's', new ItemStack(Items.nether_star));
+		GameRegistry.addShapedRecipe(new ItemStack(this), "eee", "ese", "eee", 'e', new ItemStack(Items.ender_eye), 
+				's', new ItemStack(Blocks.emerald_block));
 	}
-	  @SideOnly(Side.CLIENT)
-	  public boolean hasEffect(ItemStack stack)
-	  {
-	      return true;
-	  }
+	@SideOnly(Side.CLIENT)
+	public boolean hasEffect(ItemStack stack){
+	    return true;
+	}
 
 	@Override
 	public void syncConfig(Configuration config) {
@@ -63,6 +64,5 @@ public class ItemEnderPearlReuse extends BaseItem implements IHasRecipe, IHasCon
 		prop.setRequiresMcRestart(true);
 
 		ItemRegistry.setConfigMap(this,prop.getBoolean());
-		
 	}
 }
