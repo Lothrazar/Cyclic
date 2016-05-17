@@ -148,8 +148,9 @@ public class ModMain {
 	 * 
 	 ***** BUGS
 	 *
-	 *crafting recipe AND config for HEART
+	 *block terraria buttons from village rgui. test all containers and pick a side
 	 *
+	 *DURABILITY FOR : tools, ender orb 
 	 *
 	 *clean up item models/textures on tools/wands
 	 *
@@ -161,22 +162,13 @@ public class ModMain {
 	 ***** FEATURES upcoming
 	 *
 	 *
-	 *NEW PLAN: give launching scepter 3 spells: levitation & slowfall (potion spells, max 10sec, NOT stacking)
-	 *
-	 *chorus apple: make sure it works on other entities
-	 *
-	 * items.apples: cleanup config names/ recipes. add comments
+	 *NEW PLAN: give launching scepter 3 spells: levitati  
 	 *
 	 *build up and down spell: need 2 new spells: a left and right
 	 *
 	 *uncrafting config: better names, no underscores
-	 *
-	 *config MISSING: for toosl: push/pull/rotate/harvest 
-	 *config MISSING for: 
-	 *config MISSING: carbon paper, storage sack, ender pearl reuse, enderbook, 
-	 *		ItemInventoryStorage
-	 *
-	 *config RECIPES: split to individual
+	 * 
+	 * 
 	 *
 	 *[big change[ ENDER BOOK: remove and replace with another invo-tab
 	 * 
