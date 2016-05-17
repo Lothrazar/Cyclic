@@ -1,6 +1,9 @@
 package com.lothrazar.cyclicmagic.item;
 
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 
 import net.minecraft.block.state.IBlockState;
@@ -11,18 +14,14 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
 
-public class ItemToolRotate extends BaseTool implements IHasRecipe {
+public class ItemToolRotate extends BaseTool implements IHasRecipe ,IHasConfig{
 
 	public ItemToolRotate() {
 		super();
 	}
-
-	@Override
-	public void addRecipe() {
-
-	}
-
 	@Override
 	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer p, World worldObj, BlockPos pos, EnumHand hand,
 			EnumFacing side, float hitX, float hitY, float hitZ) {
@@ -41,4 +40,19 @@ public class ItemToolRotate extends BaseTool implements IHasRecipe {
 
 		return super.onItemUse(stack, p, worldObj, pos, hand, side, hitX, hitY, hitZ);// EnumActionResult.PASS;
 	}
+
+	@Override
+	public void syncConfig(Configuration config) {
+
+		Property prop = config.get(Const.ConfigCategory.items, "ToolRotate", true, "Tool that can rotate almost anything");
+		prop.setRequiresMcRestart(true); 
+		ItemRegistry.setConfigMap(this,prop.getBoolean());
+	}
+
+	@Override
+	public void addRecipe() {
+
+		System.out.println("REMINDER: needs recipe");
+	}
+
 }

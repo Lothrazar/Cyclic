@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.item;
 
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 
 import net.minecraft.entity.item.EntityEnderPearl;
@@ -22,8 +23,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemEnderPearlReuse extends BaseItem implements IHasRecipe, IHasConfig {
 	public static final String name = "ender_pearl_reuse";
-	public static boolean enabled; 
-
+ 
 	public ItemEnderPearlReuse() {
 		this.maxStackSize = 1;
 		
@@ -61,10 +61,8 @@ public class ItemEnderPearlReuse extends BaseItem implements IHasRecipe, IHasCon
 	
 		Property prop = config.get(Const.ConfigCategory.items, "EnderPearlReuse", true, "Reuseable ender pearl");
 		prop.setRequiresMcRestart(true);
-		enabled = prop.getBoolean();
-		
-	
-		//TODO: Durability
+
+		ItemRegistry.setConfigMap(this,prop.getBoolean());
 		
 	}
 }

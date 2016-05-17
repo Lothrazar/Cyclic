@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilInventory;
@@ -34,8 +35,7 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe, IHasConfig 
 	public static final String	name				= "carbon_paper";
 
 	public static int						NOTE_EMPTY	= -1;
-
-	public static boolean enabled;
+ 
 	private static final String	KEY_SIGN0		= "sign_0";
 	private static final String	KEY_SIGN1		= "sign_1";
 	private static final String	KEY_SIGN2		= "sign_2";
@@ -296,9 +296,10 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe, IHasConfig 
 	@Override
 	public void syncConfig(Configuration config) {
  
-		Property prop = config.get(Const.ConfigCategory.items, ItemPaperCarbon.name, true, "Special paper to copy signs and note block data");
+		Property prop = config.get(Const.ConfigCategory.items, "CarbonPaper", true, "Special paper to copy signs and note block data");
 		prop.setRequiresMcRestart(true);
-		ItemPaperCarbon.enabled = prop.getBoolean();
+
+		ItemRegistry.setConfigMap(this,prop.getBoolean());
 
 	}
 }

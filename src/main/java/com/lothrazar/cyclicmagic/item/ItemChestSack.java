@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
@@ -29,9 +30,7 @@ public class ItemChestSack extends BaseItem implements IHasRecipe,IHasConfig {
 
 	public static final String	KEY_NBT		= "itemtags";
 	public static final String	KEY_BLOCK	= "block";
-
-	public static boolean enabled;
-
+ 
 	public ItemChestSack() {
 
 		super();
@@ -101,9 +100,10 @@ public class ItemChestSack extends BaseItem implements IHasRecipe,IHasConfig {
 	@Override
 	public void syncConfig(Configuration config) {
 
-		Property prop = config.get(Const.ConfigCategory.items, ItemChestSack.name, true, "A bag that transports chests along with its contents");
+		Property prop = config.get(Const.ConfigCategory.items, "ChestSack", true, "A bag that transports chests along with its contents");
 		prop.setRequiresMcRestart(true);
-		ItemChestSack.enabled = prop.getBoolean();
+
+		ItemRegistry.setConfigMap(this,prop.getBoolean());
 		
 	}
 }

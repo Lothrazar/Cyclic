@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.item;
 
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 
@@ -15,9 +16,7 @@ import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemFoodHeart extends ItemFood implements IHasRecipe,IHasConfig{
-
-	private boolean enabled;
-
+ 
 	public ItemFoodHeart() {
 		super(2, false); 
 		this.setAlwaysEdible();
@@ -34,7 +33,7 @@ public class ItemFoodHeart extends ItemFood implements IHasRecipe,IHasConfig{
 
 		Property prop = config.get(Const.ConfigCategory.items, "HeartFood", true, "Edible hearts that increase your heath (permanently, until death");
 		prop.setRequiresMcRestart(true);
-		this.enabled = prop.getBoolean(); 
+		ItemRegistry.setConfigMap(this,prop.getBoolean());
 		
 	}
 
