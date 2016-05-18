@@ -22,7 +22,7 @@ public class UtilHarvestCrops {
 	private static boolean doesPumpkinBlocks = true;
 	private static boolean doesMelonBlocks = true;
 
-	// flower
+	// red_flower and yellow_flower TODO--BlockYellowFlower,BlockRedFlower
 	public static int harvestArea(World world, EntityLivingBase player, BlockPos pos, int radius) {
 
 		int x = (int) player.posX;
@@ -52,14 +52,11 @@ public class UtilHarvestCrops {
 				if(world.isAirBlock(posCurrent)){continue;}
 
 				bs = world.getBlockState(posCurrent);
-				if (bs == null) {
-					continue;
-				}
+				if (bs == null) {	continue;	}
+				
 				bsAbove = world.getBlockState(posCurrent.up());
 				blockCheck = bs.getBlock();
-				if (blockCheck == null) {
-					continue;
-				}
+				if (blockCheck == null) {	continue;  }
 				//ModMain.logger.info(" === " + UtilChat.blockPosToString(posCurrent));
 
 				//ModMain.logger.info("blockCheck = " + blockCheck.getClass().getName() + " -> " + blockCheck.getUnlocalizedName());
@@ -67,8 +64,7 @@ public class UtilHarvestCrops {
 				doBreakAbove = false;
 				doBreak = false;
 				doReplant = false;
-				
-
+				 
 				if (blockCheck instanceof IGrowable) {
 					IGrowable plant = (IGrowable) blockCheck;
 					//ModMain.logger.info(" IGrowable ");
@@ -88,10 +84,10 @@ public class UtilHarvestCrops {
 				} else if ((blockCheck instanceof BlockTallGrass || blockCheck instanceof BlockDoublePlant)
 						&& doesHarvestTallgrass) {
 					doBreak = true;
+ 
+					//ModMain.logger.info(posCurrent.toString()+" tallgrass ");
 
-					//ModMain.logger.info(" tallgrass ");
-
-					if (blockCheck == Blocks.tallgrass && bsAbove != null && bsAbove.getBlock() == Blocks.tallgrass) {
+					if (blockCheck instanceof BlockDoublePlant && bsAbove != null && bsAbove.getBlock() instanceof BlockDoublePlant) {
 						doBreakAbove = true;
 						//ModMain.logger.info("above " + UtilChat.blockPosToString(posCurrent.up()));
 					}
@@ -116,6 +112,7 @@ public class UtilHarvestCrops {
 					if (doBreakAbove) {
 						world.destroyBlock(posCurrent.up(), true);
 					}
+					 
 					world.destroyBlock(posCurrent, true);
 						
 					if (doReplant) {// plant new seed
