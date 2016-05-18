@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 public class UtilSound {
 //REF BROKEN http://www.minecraftforge.net/forum/index.php?topic=37547.0
 	public static final float		volume				= 1.0F;
-	public static final float		pitch					= 1.0F;
+	public static final float		pitch				= 1.0F;
 	public static final boolean	distanceDelay	= false;
 
 	public static void playSoundPlaceBlock(EntityPlayer player,BlockPos pos, Block block) {
@@ -27,20 +27,11 @@ public class UtilSound {
 
 	public static void playSound(EntityPlayer player,BlockPos pos, SoundEvent soundIn, SoundCategory cat) {
 		BlockPos here = (pos == null) ? player.getPosition() : pos;
-		
-		System.out.println("playSound "+soundIn.toString());
-		
+		 
 		player.worldObj.playSound(player, here, soundIn, cat, volume, pitch);
 	}
-	
-	
-	
-	
-	
+	 
 	public static void playSound(World worldObj, BlockPos pos, SoundEvent soundIn, SoundCategory category) {
-
 		worldObj.playSound(pos.getX(),pos.getY(),pos.getZ(), soundIn, category, volume, pitch, distanceDelay);
-	
 	}
-
 }
