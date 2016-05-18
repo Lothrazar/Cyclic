@@ -64,6 +64,7 @@ public class ModMain {
 		
 		events = new EventRegistry();
 		ItemRegistry.construct();//MAYBE it should be a constructed, not static
+		BlockRegistry.construct(); 
 		
 		config.load();
 		syncConfig();
@@ -158,9 +159,7 @@ public class ModMain {
 	 *NEW PLAN: give launching scepter 3 spells: levitati  
 	 *
 	 *build up and down spell: need 2 new spells: a left and right
-	 *
-	 *uncrafting config: better names, no underscores
-	 *  
+	 * 
 	 *[big change[ ENDER BOOK: remove and replace with another invo-tab
 	 *  
 	 *[disabled]circle build: does not work with 'pattern'. 
