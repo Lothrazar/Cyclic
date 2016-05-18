@@ -165,8 +165,6 @@ public class ModMain {
 	 *[disabled]circle build: does not work with 'pattern'. 
 	 *
 	 *[disabled]circle build: is more of an oval, not symmetric
-	 *
-	 *brewing recipe for existing potion of luck??
 	 * 
 	 * pets live longer and/or respawn
 	 *
