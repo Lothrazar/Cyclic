@@ -144,11 +144,7 @@ public class ModMain {
 
 	/* TODO LIST
 	 * 
-	 ***** BUGS
-	 *
-	 *easy/spimple ender chest uses right click SHOULD BE left
-	 *
-	 *block terraria buttons from village rgui. test all containers and pick a side
+	 ***** BUGS 
 	 *
 	 *DURABILITY FOR : tools, ender orb 
 	 *
@@ -160,29 +156,22 @@ public class ModMain {
 	 * 
 	 * 
 	 ***** FEATURES upcoming
-	 *
-	 *
+	 * 
 	 *NEW PLAN: give launching scepter 3 spells: levitati  
 	 *
 	 *build up and down spell: need 2 new spells: a left and right
 	 *
 	 *uncrafting config: better names, no underscores
-	 * 
-	 * 
-	 *
+	 *  
 	 *[big change[ ENDER BOOK: remove and replace with another invo-tab
-	 * 
-	 *
+	 *  
 	 *[disabled]circle build: does not work with 'pattern'. 
 	 *
 	 *[disabled]circle build: is more of an oval, not symmetric
 	 *
 	 *brewing recipe for existing potion of luck??
-	 *
-		// config todo TODO: 'enabled', which hides the button for invo
-		//  TODO: and  one for 'enabled 3x3 crafting' as well
-		//TODO: pets live longer and/or respawn
-	
+	 * 
+	 * pets live longer and/or respawn
 	 *
 	 *make silk touch work on silverfish blocks
 	 *
@@ -205,29 +194,20 @@ public class ModMain {
 	 * uncrafter - persist smoking ? like furnace?
 	 * 
 	 * Undo button - for mass placing. only lasts a few seconds then goes away?
+	 *  
+	 * [refactor] try to auto detect home biomes of saplings for modded compat
 	 * 
-	 ***** REFACTOR
+	 *[refactor]  spell wand item shuld take args for spellbook and HUD display details
 	 * 
-	 * try to auto detect home biomes of saplings for modded compat
+	 * [refactor]  seed logic into util
 	 * 
-	 * spell wand item shuld take args for spellbook and HUD display details
-	 * 
-	 * refactor seed logic into util
-	 * 
-	 * refactor noteblock/sign into util
-	 * 
-	 * Note: D:\git\noncontent\build\sources\main\java\com\lothrazar\cyclicmagic\block\BlockUncrafting.java uses or overrides a deprecated API.
-Note: Recompile with -Xlint:deprecation for details.
- 
-	 *make mushroom soup and beetroot stew stackable? so when you eat one you still get the bowl and dont consume whole stack?
-	 * 
-	 * fix villager skins
-	 * 
+	 * [refactor]  noteblock/sign into util
+	 *   
 	 * more plants that give monster loot ie pearls/ blaze powder/ gunpowder?
 	 * 
 	 * crafting table hotkeys - numpad?
 	 * 
-	 * SPELL: bring back ghost - let it put you in new location but only if air	 blocks
+	 * SPELL: bring back ghost - let it put you in new location but only if air	 blocks. add SLOWNESS effect??
 	 *  
 	 * some sort of tool that displays trade of every nearby villager?
 	 * 
@@ -241,12 +221,6 @@ Note: Recompile with -Xlint:deprecation for details.
 	 * Make minecarts kill and push through entities that get hit (ex: pigmen on rail)
 	 * 
 	 * Getting hit by a bat causes blindness to player
-	 * 
-	 * add potion brewing!! work with the real brew stands to make new custom potions
-	 * 
-	 * config to logspam every enabled feature on startup
-	 * 
-	 * Chorus potions: levitate 
 	 * 
 	 * https://www.reddit.com/r/minecraftsuggestions/comments/4fgcb2/make_dry_sponges_usable_by_dispensers/
 	 * 

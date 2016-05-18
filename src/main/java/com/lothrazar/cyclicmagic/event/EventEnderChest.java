@@ -17,7 +17,7 @@ public class EventEnderChest  implements IHasConfig{
 
 
 	@SubscribeEvent
-	public void onHit(PlayerInteractEvent.RightClickBlock event) {
+	public void onHit(PlayerInteractEvent.LeftClickBlock event) {
 		if(!easyEnderChest){
 			return;
 		}
@@ -37,7 +37,5 @@ public class EventEnderChest  implements IHasConfig{
 		String category = Const.ConfigCategory.player;
 		easyEnderChest = config.getBoolean("Easy Enderchest", category, true,
 				"Open ender chest without placing it down, just attack with it");
-
-		
 	}
 }
