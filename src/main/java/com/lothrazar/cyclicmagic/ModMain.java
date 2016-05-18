@@ -146,12 +146,6 @@ public class ModMain {
 	 * 
 	 ***** BUGS 
 	 *
-	 *PUSH PULL TOOLS: if its on a tall plant, either : break top first, move top first, or just disable fully on taht
-	 *
-	 *pulpush tool sound lSound:playSound:31]: playSound net.minecraft.util.SoundEvent@74aa9c72
-	 *
-	 *DURABILITY FOR : tools, ender orb 
-	 *
 	 *clean up item models/textures on tools/wands
 	 *
 	 *Spell sounds: why does push/pull/rotate sound WORK< but build up spells dont?

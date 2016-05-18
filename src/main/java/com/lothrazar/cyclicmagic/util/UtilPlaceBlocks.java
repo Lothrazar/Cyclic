@@ -275,6 +275,7 @@ public class UtilPlaceBlocks {
 			ignoreList.add(Blocks.jungle_door);
 			ignoreList.add(Blocks.iron_door);
 			ignoreList.add(Blocks.skull);
+			ignoreList.add(Blocks.double_plant);
 		}
 	}
 
@@ -319,7 +320,6 @@ public class UtilPlaceBlocks {
 
 		BlockPos posTowardsPlayer = pos.offset(face);
 
- 
 		if (moveBlockTo(worldIn, player, pos, posTowardsPlayer)) {
 			return posTowardsPlayer;
 		}
