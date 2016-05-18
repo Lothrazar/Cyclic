@@ -14,16 +14,26 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class UtilHarvestCrops {
+ 
+	public static class HarestCropsConfig{ 
+		public HarestCropsConfig(){
+			
+		}
 
-	private static boolean doesHarvestStem = false;
-	private static boolean doesHarvestTallgrass = true;
-	private static boolean doesHarvestSapling = false;
-	private static boolean doesHarvestMushroom = true;
-	private static boolean doesPumpkinBlocks = true;
-	private static boolean doesMelonBlocks = true;
+		public boolean doesHarvestStem = false;
+		public boolean doesHarvestSapling = false;
+		public boolean doesHarvestMushroom = true;
+		public boolean doesPumpkinBlocks = true;
+		public boolean doesMelonBlocks = true;
 
-	// red_flower and yellow_flower TODO--BlockYellowFlower,BlockRedFlower
-	public static int harvestArea(World world, EntityLivingBase player, BlockPos pos, int radius) {
+		//TODO: this hits both the short regular grass, and tall grass, and 2 high flowers. split it up
+		public boolean doesHarvestTallgrass = true;
+
+		// red_flower and yellow_flower TODO--BlockYellowFlower,BlockRedFlower
+		
+	}
+
+	public static int harvestArea(World world, EntityLivingBase player, BlockPos pos, int radius, HarestCropsConfig conf) {
 
 		int x = (int) player.posX;
 		// int y = (int)player.posY;
@@ -75,14 +85,14 @@ public class UtilHarvestCrops {
 						doBreak = true;
 					}
 				} 
-				if ((blockCheck instanceof BlockStem) && doesHarvestStem) {
+				if ((blockCheck instanceof BlockStem) && conf.doesHarvestStem) {
 					//ModMain.logger.info(" stem ");
 					doBreak = true;
-				} else if ((blockCheck instanceof BlockSapling) && doesHarvestSapling) {
+				} else if ((blockCheck instanceof BlockSapling) && conf.doesHarvestSapling) {
 					//ModMain.logger.info(" sapling ");
 					doBreak = true;
 				} else if ((blockCheck instanceof BlockTallGrass || blockCheck instanceof BlockDoublePlant)
-						&& doesHarvestTallgrass) {
+						&& conf.doesHarvestTallgrass) {
 					doBreak = true;
  
 					//ModMain.logger.info(posCurrent.toString()+" tallgrass ");
@@ -91,14 +101,14 @@ public class UtilHarvestCrops {
 						doBreakAbove = true;
 						//ModMain.logger.info("above " + UtilChat.blockPosToString(posCurrent.up()));
 					}
-				} else if ((blockCheck instanceof BlockMushroom) && doesHarvestMushroom) {
+				} else if ((blockCheck instanceof BlockMushroom) && conf.doesHarvestMushroom) {
 					//ModMain.logger.info(" BlockMushroom ");
 					doBreak = true;
-				} else if (blockCheck == Blocks.pumpkin && doesPumpkinBlocks) {
+				} else if (blockCheck == Blocks.pumpkin && conf.doesPumpkinBlocks) {
 					//ModMain.logger.info(" pumpkin ");
 					doBreak = true;
 					doReplant = false;
-				} else if (blockCheck == Blocks.melon_block && doesMelonBlocks) {
+				} else if (blockCheck == Blocks.melon_block && conf.doesMelonBlocks) {
 					//ModMain.logger.info(" melon_block ");
 					doBreak = true;
 					doReplant = false;

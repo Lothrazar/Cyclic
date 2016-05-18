@@ -152,9 +152,8 @@ public class ModMain {
 	 *Spell sounds: why does push/pull/rotate sound WORK< but build up spells dont?
 	 *		-->> answer: neither one plays the actual sound. if it breaks a block for you, THATS the one you hear
 	 *		 need a network packet.sendToAllAround and hit the sound up manual (clientside)
-	 * 
-	 * 
-	 ***** FEATURES upcoming
+	 *
+	 * HARVESTER :: add a GUI with toggle buttons to turn configs on and off
 	 * 
 	 *NEW PLAN: give launching scepter 3 spells: levitati  
 	 *

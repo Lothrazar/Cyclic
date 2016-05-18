@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.entity.projectile;
 
 import com.lothrazar.cyclicmagic.util.UtilHarvestCrops;
+import com.lothrazar.cyclicmagic.util.UtilHarvestCrops.HarestCropsConfig;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityThrowable;
@@ -35,11 +36,12 @@ public class EntityHarvestBolt extends EntityThrowable// EntitySnowball
 		if (this.getThrower() != null && mop.sideHit != null) {
 			BlockPos offset = mop.getBlockPos().offset(mop.sideHit);
 
+			HarestCropsConfig conf = new HarestCropsConfig();
 			// it harvests a horizontal slice each time
-			UtilHarvestCrops.harvestArea(this.worldObj, this.getThrower(), mop.getBlockPos(), range_main);
-			UtilHarvestCrops.harvestArea(this.worldObj, this.getThrower(), offset, range_main);
-			UtilHarvestCrops.harvestArea(this.worldObj, this.getThrower(), offset.up(), range_offset);
-			UtilHarvestCrops.harvestArea(this.worldObj, this.getThrower(), offset.down(), range_offset);
+			UtilHarvestCrops.harvestArea(this.worldObj, this.getThrower(), mop.getBlockPos(), range_main,conf);
+			UtilHarvestCrops.harvestArea(this.worldObj, this.getThrower(), offset, range_main,conf);
+			UtilHarvestCrops.harvestArea(this.worldObj, this.getThrower(), offset.up(), range_offset,conf);
+			UtilHarvestCrops.harvestArea(this.worldObj, this.getThrower(), offset.down(), range_offset,conf);
 		}
 
 		this.setDead();

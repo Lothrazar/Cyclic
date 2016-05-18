@@ -5,6 +5,7 @@ import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilHarvestCrops;
+import com.lothrazar.cyclicmagic.util.UtilHarvestCrops.HarestCropsConfig;
 
 import net.minecraft.entity.player.EntityPlayer; 
 import net.minecraft.init.Items;
@@ -30,8 +31,9 @@ public class ItemToolHarvest extends BaseTool implements IHasRecipe, IHasConfig{
 	@Override
 	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
 
-		UtilHarvestCrops.harvestArea(worldObj, player, pos, range);
-		UtilHarvestCrops.harvestArea(worldObj, player, pos.up(), range);
+		HarestCropsConfig conf = new HarestCropsConfig(); 
+		UtilHarvestCrops.harvestArea(worldObj, player, pos, range,conf);
+		UtilHarvestCrops.harvestArea(worldObj, player, pos.up(), range,conf);
 
 		super.onUse(stack, player, worldObj, hand);
 		return super.onItemUse(stack, player, worldObj, pos, hand, side, hitX, hitY, hitZ);
