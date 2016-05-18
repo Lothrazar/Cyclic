@@ -19,7 +19,7 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
 	final static int max = 32;// max search range
 
 	public static enum PlaceType {
-		PLACE, UP, DOWN;//,LEFT;
+		PLACE, UP, DOWN,LEFT,RIGHT;
 	}
 
 	private PlaceType type;
@@ -66,6 +66,8 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
 
 		BlockPos posToPlaceAt = null;
 		EnumFacing facing = null;
+		EnumFacing playerFacing = p.getHorizontalFacing();
+		 
 		switch (type) { 
 		case DOWN:
 			 facing = EnumFacing.DOWN;
@@ -73,9 +75,51 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
 		case UP:
 			 facing = EnumFacing.UP;
 			 break;
-		//case LEFT:
+		case LEFT:
+			switch(playerFacing){
+			case DOWN:
+				break;
+			case EAST:
+				facing = EnumFacing.NORTH;
+				break;
+			case NORTH:
+				facing = EnumFacing.WEST;
+				break;
+			case SOUTH:
+				facing = EnumFacing.EAST;
+				break;
+			case UP:
+				break;
+			case WEST:
+				facing = EnumFacing.SOUTH;
+				break;
+			default:
+				break; 
+			}
 			
-			//break;
+			break; 
+		case RIGHT:
+			switch(playerFacing){
+			case DOWN:
+				break;
+			case EAST:
+				facing = EnumFacing.SOUTH;
+				break;
+			case NORTH:
+				facing = EnumFacing.EAST;
+				break;
+			case SOUTH:
+				facing = EnumFacing.WEST;
+				break;
+			case UP:
+				break;
+			case WEST:
+				facing = EnumFacing.NORTH;
+				break;
+			default:
+				break; 
+			} 
+			break;
 		case PLACE:
 			break;
 		default:

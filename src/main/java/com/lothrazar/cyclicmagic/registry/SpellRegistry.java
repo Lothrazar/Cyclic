@@ -83,9 +83,11 @@ public class SpellRegistry {
 		registerSpell(Spells.reachdown);
 		
 
-		//SpellRangeBuild reachleft = new SpellRangeBuild(++spellId, "reachleft", SpellRangeBuild.PlaceType.LEFT);
-		//registerSpell(reachleft);
-		//spellbookBuild.add(Spells.placestair);
+		SpellRangeBuild reachleft = new SpellRangeBuild(++spellId, "reachleft", SpellRangeBuild.PlaceType.LEFT);
+		registerSpell(reachleft); 
+
+		SpellRangeBuild reachright = new SpellRangeBuild(++spellId, "reachright", SpellRangeBuild.PlaceType.RIGHT);
+		registerSpell(reachright); 
 
 		//TODO: currently there is no tool for this
 		// it would not have the BUILD TOGGLE TYPE.. once its working
@@ -97,10 +99,7 @@ public class SpellRegistry {
 
 		Spells.placestair = new SpellPlaceStair(++spellId, "placestair");
 		registerSpell(Spells.placestair);
-
-		
-
-
+ 
 		Spells.launch = new SpellLaunch(++spellId, "launch");
 		registerSpell(Spells.launch);
 		
@@ -120,9 +119,9 @@ public class SpellRegistry {
 		spellbookBuild.add(Spells.reachup);
 		spellbookBuild.add(Spells.reachplace);
 		spellbookBuild.add(Spells.reachdown);
-		//spellbookBuild.add(reachleft);
-		
-		
+		spellbookBuild.add(reachleft);
+		spellbookBuild.add(reachright);
+		 
 //TODO: a cleaner way?
 		ItemCyclicWand cyclic_wand_fly = ((ItemCyclicWand)ItemRegistry.itemMap.get("cyclic_wand_fly"));
 		if(cyclic_wand_fly != null)
