@@ -17,7 +17,7 @@ import com.lothrazar.cyclicmagic.item.ItemEmeraldPickaxe;
 import com.lothrazar.cyclicmagic.item.ItemEmeraldSpade;
 import com.lothrazar.cyclicmagic.item.ItemEmeraldSword;
 import com.lothrazar.cyclicmagic.item.ItemEnderBook;
-import com.lothrazar.cyclicmagic.item.ItemEnderPearlReuse;
+import com.lothrazar.cyclicmagic.item.ItemToolPearlReuse;
 import com.lothrazar.cyclicmagic.item.ItemFoodAppleMagic;
 import com.lothrazar.cyclicmagic.item.ItemFoodHeart;
 import com.lothrazar.cyclicmagic.item.ItemFoodHorse;
@@ -62,7 +62,7 @@ public class ItemRegistry {
 	public static void construct(){
 		//TODO: maybe constructor. MUST be done before config
 
-		addItem(new ItemEnderPearlReuse(),"ender_pearl_reuse"); 
+		addItem(new ItemToolPearlReuse(),"ender_pearl_reuse"); 
 		addItem(new ItemPaperCarbon(),"carbon_paper"); 
 		addItem(new ItemToolHarvest(),"tool_harvest");
 		addItem(new ItemToolPull(),"tool_pull");

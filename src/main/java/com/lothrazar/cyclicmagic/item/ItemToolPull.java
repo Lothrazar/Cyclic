@@ -20,14 +20,21 @@ import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemToolPull  extends BaseTool implements  IHasRecipe, IHasConfig{
- 
+
+private static final int durability = 5000;
+	
+	public ItemToolPull(){
+		super(durability);
+	}
+	
 	@SuppressWarnings("unused")
 	@Override
-	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer p, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
 
-		BlockPos resultPosition = UtilPlaceBlocks.pullBlock(world, p, pos, side);
-		
-		return super.onItemUse(stack, p, world, pos, hand, side, hitX, hitY, hitZ);// EnumActionResult.PASS;
+		BlockPos resultPosition = UtilPlaceBlocks.pullBlock(worldObj, player, pos, side);
+
+		super.onUse(stack, player, worldObj, hand);
+		return super.onItemUse(stack, player, worldObj, pos, hand, side, hitX, hitY, hitZ); 
 
 	}
 	@Override

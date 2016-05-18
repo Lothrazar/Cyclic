@@ -20,15 +20,21 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemToolHarvest extends BaseTool implements IHasRecipe, IHasConfig{
 
-	private static int			range_main		= 6;
+	private static final int range = 6;
+	private static final int durability = 1000;
+	
+	public ItemToolHarvest(){
+		super(durability);
+	}
 	 
 	@Override
-	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer p, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
 
-		UtilHarvestCrops.harvestArea(worldObj, p, pos, range_main);
-		UtilHarvestCrops.harvestArea(worldObj, p, pos.up(), range_main);
-		
-		return super.onItemUse(stack, p, worldObj, pos, hand, side, hitX, hitY, hitZ);
+		UtilHarvestCrops.harvestArea(worldObj, player, pos, range);
+		UtilHarvestCrops.harvestArea(worldObj, player, pos.up(), range);
+
+		super.onUse(stack, player, worldObj, hand);
+		return super.onItemUse(stack, player, worldObj, pos, hand, side, hitX, hitY, hitZ);
 	}
 
 	@Override

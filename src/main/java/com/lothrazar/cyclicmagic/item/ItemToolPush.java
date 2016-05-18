@@ -20,14 +20,19 @@ import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemToolPush  extends BaseTool implements IHasRecipe,IHasConfig{
-
+private static final int durability = 5000;
+	
+	public ItemToolPush(){
+		super(durability);
+	}
 	@SuppressWarnings("unused")
 	@Override
-	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer p, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
 		
-		BlockPos resultPosition = UtilPlaceBlocks.pushBlock(worldObj, p, pos, side);
- 
-		return super.onItemUse(stack, p, worldObj, pos, hand, side, hitX, hitY, hitZ);// EnumActionResult.PASS;
+		BlockPos resultPosition = UtilPlaceBlocks.pushBlock(worldObj, player, pos, side);
+
+		super.onUse(stack, player, worldObj, hand);
+		return super.onItemUse(stack, player, worldObj, pos, hand, side, hitX, hitY, hitZ);// EnumActionResult.PASS;
 	}
 	@Override
 	public void syncConfig(Configuration config) {

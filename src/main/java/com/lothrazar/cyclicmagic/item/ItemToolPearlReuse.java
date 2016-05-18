@@ -22,20 +22,20 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemEnderPearlReuse extends BaseItem implements IHasRecipe, IHasConfig {
+public class ItemToolPearlReuse extends BaseTool implements IHasRecipe, IHasConfig {
 	public static final String name = "ender_pearl_reuse";
+	private static final int durability = 2000;
+	private static final int cooldown = 10;
  
-	public ItemEnderPearlReuse() {
-		this.maxStackSize = 1;
-		
-		//TODO: Durability
+	public ItemToolPearlReuse() {
+		super(durability);  
 	}
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
 
 		worldIn.playSound((EntityPlayer) null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.entity_enderpearl_throw, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
-		playerIn.getCooldownTracker().setCooldown(this, 20);
+		playerIn.getCooldownTracker().setCooldown(this, cooldown);
 
 		if (!worldIn.isRemote) {
 			EntityEnderPearl entityenderpearl = new EntityEnderPearl(worldIn, playerIn);
@@ -43,6 +43,7 @@ public class ItemEnderPearlReuse extends BaseItem implements IHasRecipe, IHasCon
 			worldIn.spawnEntityInWorld(entityenderpearl);
 		}
 
+		super.onUse(itemStackIn, playerIn, worldIn, hand);
 		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);
 	}
 
@@ -52,6 +53,7 @@ public class ItemEnderPearlReuse extends BaseItem implements IHasRecipe, IHasCon
 		GameRegistry.addShapedRecipe(new ItemStack(this), "eee", "ese", "eee", 'e', new ItemStack(Items.ender_eye), 
 				's', new ItemStack(Blocks.emerald_block));
 	}
+	
 	@SideOnly(Side.CLIENT)
 	public boolean hasEffect(ItemStack stack){
 	    return true;

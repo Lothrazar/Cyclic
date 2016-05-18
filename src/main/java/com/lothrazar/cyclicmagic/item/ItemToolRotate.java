@@ -20,27 +20,29 @@ import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemToolRotate extends BaseTool implements IHasRecipe ,IHasConfig{
-
-	public ItemToolRotate() {
-		super();
-	}
+private static final int durability = 8000;
+	
+	public ItemToolRotate(){
+		super(durability);
+	} 
 	@Override
-	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer p, World worldObj, BlockPos pos, EnumHand hand,
+	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand,
 			EnumFacing side, float hitX, float hitY, float hitZ) {
 
 		if (pos == null || worldObj.getBlockState(pos) == null || side == null) {
-			return super.onItemUse(stack, p, worldObj, pos, hand, side, hitX, hitY, hitZ);
+			return super.onItemUse(stack, player, worldObj, pos, hand, side, hitX, hitY, hitZ);
 		}
 
 		IBlockState clicked = worldObj.getBlockState(pos);
 		if (clicked.getBlock() == null) {
 			//cancelled
-			return super.onItemUse(stack, p, worldObj, pos, hand, side, hitX, hitY, hitZ);
+			return super.onItemUse(stack, player, worldObj, pos, hand, side, hitX, hitY, hitZ);
 		}
 
-		UtilPlaceBlocks.rotateBlockValidState(pos, worldObj, side, p);
+		UtilPlaceBlocks.rotateBlockValidState(pos, worldObj, side, player);
 
-		return super.onItemUse(stack, p, worldObj, pos, hand, side, hitX, hitY, hitZ);// EnumActionResult.PASS;
+		super.onUse(stack, player, worldObj, hand);
+		return super.onItemUse(stack, player, worldObj, pos, hand, side, hitX, hitY, hitZ);// EnumActionResult.PASS;
 	}
 
 	@Override
