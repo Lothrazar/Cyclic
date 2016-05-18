@@ -52,8 +52,6 @@ public class SpellRegistry {
 	public static void register() {
 
 	 
-		ArrayList<ISpell>	spellbookBuild = new ArrayList<ISpell>();
-		ArrayList<ISpell>	spellbookNoInvo = new ArrayList<ISpell>();
 		
 		hashbook = new HashMap<Integer, ISpell>();
 		// spellRegistry = new HashMap<String, ISpell>();
@@ -62,34 +60,31 @@ public class SpellRegistry {
 		
 		Spells.inventory = new SpellInventory(++spellId, "inventory");
 		registerSpell(Spells.inventory);
-		spellbookBuild.add(Spells.inventory);
 		
 		Spells.rotate = new SpellRangeRotate(++spellId, "rotate");
 		registerSpell(Spells.rotate);
-		spellbookNoInvo.add(Spells.rotate);
 
 		Spells.push = new SpellRangePush(++spellId, "push");
 		registerSpell(Spells.push);
-		spellbookNoInvo.add(Spells.push);
 
 		Spells.pull = new SpellRangePull(++spellId, "pull");
 		registerSpell(Spells.pull);
-		spellbookNoInvo.add(Spells.pull);
 
 		Spells.replacer = new SpellRangeReplace(++spellId, "replacer");
 		registerSpell(Spells.replacer);
-		spellbookBuild.add(Spells.replacer);
 
 		Spells.reachup = new SpellRangeBuild(++spellId, "reachup", SpellRangeBuild.PlaceType.UP);
 		registerSpell(Spells.reachup);
-		spellbookBuild.add(Spells.reachup);
 
 		Spells.reachplace = new SpellRangeBuild(++spellId, "reachplace", SpellRangeBuild.PlaceType.PLACE);
 		registerSpell(Spells.reachplace);
-		spellbookBuild.add(Spells.reachplace);
 
 		Spells.reachdown = new SpellRangeBuild(++spellId, "reachdown", SpellRangeBuild.PlaceType.DOWN);
 		registerSpell(Spells.reachdown);
+		
+
+		//SpellRangeBuild reachleft = new SpellRangeBuild(++spellId, "reachleft", SpellRangeBuild.PlaceType.LEFT);
+		//registerSpell(reachleft);
 		//spellbookBuild.add(Spells.placestair);
 
 		//TODO: currently there is no tool for this
@@ -105,11 +100,27 @@ public class SpellRegistry {
 
 		
 
-		ArrayList<ISpell>		 spellbookFly = new ArrayList<ISpell>();
 
 		Spells.launch = new SpellLaunch(++spellId, "launch");
 		registerSpell(Spells.launch);
+		
+
+		ArrayList<ISpell>		 spellbookFly = new ArrayList<ISpell>();
 		spellbookFly.add(Spells.launch);
+
+
+		ArrayList<ISpell>	spellbookNoInvo = new ArrayList<ISpell>();
+		spellbookNoInvo.add(Spells.rotate);
+		spellbookNoInvo.add(Spells.push);
+		spellbookNoInvo.add(Spells.pull);
+
+		ArrayList<ISpell>	spellbookBuild = new ArrayList<ISpell>();
+		spellbookBuild.add(Spells.inventory);
+		spellbookBuild.add(Spells.replacer);
+		spellbookBuild.add(Spells.reachup);
+		spellbookBuild.add(Spells.reachplace);
+		spellbookBuild.add(Spells.reachdown);
+		//spellbookBuild.add(reachleft);
 		
 		
 //TODO: a cleaner way?

@@ -19,7 +19,7 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
 	final static int max = 32;// max search range
 
 	public static enum PlaceType {
-		PLACE, UP, DOWN;
+		PLACE, UP, DOWN;//,LEFT;
 	}
 
 	private PlaceType type;
@@ -65,10 +65,27 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
 		if (state == null) { return; }
 
 		BlockPos posToPlaceAt = null;
-
-		switch (type) {
+		EnumFacing facing = null;
+		switch (type) { 
 		case DOWN:
-			// start at posMouseover, go DOWN until air
+			 facing = EnumFacing.DOWN;
+			 break;
+		case UP:
+			 facing = EnumFacing.UP;
+			 break;
+		//case LEFT:
+			
+			//break;
+		case PLACE:
+			break;
+		default:
+			break; 
+		}
+		
+		if(facing == null){ 
+			posToPlaceAt = posOffset;
+		}
+		else{
 			BlockPos posLoop = posMouseover;
 			for (int i = 0; i < max; i++) {
 				if (world.isAirBlock(posLoop)) {
@@ -76,29 +93,9 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
 					break;
 				}
 				else {
-					posLoop = posLoop.down();
+					posLoop = posLoop.offset(facing);
 				}
 			}
-		break;
-		case PLACE:
-			// use offset NOT mouseover
-			posToPlaceAt = posOffset;
-		break;
-		case UP:
-			// start at posMouseover, go up until air
-			BlockPos pLoop = posMouseover;
-			for (int i = 0; i < max; i++) {
-				if (world.isAirBlock(pLoop)) {
-					posToPlaceAt = pLoop;
-					break;
-				}
-				else {
-					pLoop = pLoop.up();
-				}
-			}
-		break;
-		default:
-		break;
 		}
 
 		if (UtilPlaceBlocks.placeStateSafe(p.worldObj, p, posToPlaceAt, state)) {
@@ -110,11 +107,7 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
 
 			if (p.capabilities.isCreativeMode == false) {
 
-				InventoryWand.decrementSlot(heldWand, itemSlot);
-				// ItemStack[] invv = InventoryWand.readFromNBT(heldWand);
-				// invv[itemSlot].stackSize--;
-				// player.inventoryContainer.detectAndSendChanges();
-				// InventoryWand.writeToNBT(heldWand, invv);
+				InventoryWand.decrementSlot(heldWand, itemSlot); 
 			}
 
 			// yes im spawning particles on the server side, but the
@@ -127,8 +120,7 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
 				newSpot = p.worldObj.getBlockState(posToPlaceAt).getBlock();
 
 				this.playSound(p.worldObj,p, newSpot, posToPlaceAt);
-			}
-			
+			} 
 		}
 	}
 }
