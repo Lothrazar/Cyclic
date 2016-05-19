@@ -45,8 +45,12 @@ private static final int durability = 5000;
 	}
 	@Override
 	public void addRecipe() { 
-		GameRegistry.addRecipe(new ItemStack(this, 8), "b  ", " b ", "  p", 
+		GameRegistry.addRecipe(new ItemStack(this),
+				" gp", 
+				" bg", 
+				"b  ", 
 			'b',Items.blaze_rod, 
+			'g',Items.ghast_tear, 
 		    'p',Blocks.sticky_piston);  
 	}
 }
