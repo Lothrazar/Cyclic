@@ -157,8 +157,6 @@ public class ModMain {
 	 * 
 	 *NEW PLAN: give launching scepter 3 spells: levitati  
 	 *
-	 *build up and down spell: need 2 new spells: a left and right
-	 * 
 	 *[big change[ ENDER BOOK: remove and replace with another invo-tab
 	 *  
 	 *[disabled]circle build: does not work with 'pattern'. 
@@ -174,8 +172,6 @@ public class ModMain {
 	 * clay generation in some biomes , all the way down -- plains and swamp?
 	 * 
 	 * Hardened clay in patches all the way down - mesa only ?
-	 * 
-	 * recipes for item push/pull/rotate/harvest
 	 * 
 	 * SPELLS that use build sizes/numbers, put in their name 'name' +" ["+ number + "]";
 	 * 

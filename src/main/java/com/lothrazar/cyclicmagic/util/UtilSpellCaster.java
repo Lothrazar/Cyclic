@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.util;
 
-import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
-import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import com.lothrazar.cyclicmagic.item.ItemCyclicWand; 
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 
@@ -79,36 +78,23 @@ public class UtilSpellCaster {
 	public static void shiftLeft(EntityPlayer player) {
 
 		ItemStack wand = getPlayerWandIfHeld(player);
-//
 
-		//System.out.println("is wand null"+(wand==null));
 		ISpell curr = ItemCyclicWand.Spells.getSpellCurrent(wand);
-		//System.out.println("is getSpellCurrent null"+(curr==null));
-		
-		int left = SpellRegistry.prev(wand, curr).getID();
-		//System.out.println("is left" + left );
-		//
-		//int left = SpellRegistry.prev(wand, ItemCyclicWand.Spells.getSpellCurrent(wand)).getID();
-
-		ItemCyclicWand.Spells.setSpellCurrent(wand, left);
-
-		UtilSound.playSound(player, player.getPosition(), SoundRegistry.bip);
+ 
+		int left = SpellRegistry.prev(wand, curr).getID(); 
+ 
+		ItemCyclicWand.Spells.setSpellCurrent(wand, left); 
 	}
 
 	public static void shiftRight(EntityPlayer player) {
 
 		ItemStack wand = getPlayerWandIfHeld(player);
-
+ 
+		ISpell curr = ItemCyclicWand.Spells.getSpellCurrent(wand); 
 		
-		//System.out.println("is wand null"+(wand==null));
-		ISpell curr = ItemCyclicWand.Spells.getSpellCurrent(wand);
-		//System.out.println("is getSpellCurrent null"+(curr==null));
-		
-		int right = SpellRegistry.next(wand, curr).getID();
-		//System.out.println("is right" + right );
+		int right = SpellRegistry.next(wand, curr).getID(); 
 
 		ItemCyclicWand.Spells.setSpellCurrent(wand, right);
-		UtilSound.playSound(player, player.getPosition(), SoundRegistry.bip);
 	}
 
 	public static ISpell getPlayerCurrentISpell(EntityPlayer player) {

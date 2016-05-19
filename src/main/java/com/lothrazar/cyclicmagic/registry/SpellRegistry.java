@@ -12,6 +12,7 @@ import com.lothrazar.cyclicmagic.spell.SpellLaunch;
 import com.lothrazar.cyclicmagic.spell.SpellPlaceCircle;
 import com.lothrazar.cyclicmagic.spell.SpellPlaceLine;
 import com.lothrazar.cyclicmagic.spell.SpellPlaceStair;
+import com.lothrazar.cyclicmagic.spell.SpellPotion;
 import com.lothrazar.cyclicmagic.spell.SpellRangeBuild;
 import com.lothrazar.cyclicmagic.spell.SpellRangePull;
 import com.lothrazar.cyclicmagic.spell.SpellRangePush;
@@ -20,6 +21,7 @@ import com.lothrazar.cyclicmagic.spell.SpellRangeRotate;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 
@@ -88,6 +90,14 @@ public class SpellRegistry {
 
 		SpellRangeBuild reachright = new SpellRangeBuild(++spellId, "reachright", SpellRangeBuild.PlaceType.RIGHT);
 		registerSpell(reachright); 
+		
+		SpellPotion levitate = new SpellPotion(++spellId, "levitation");
+		levitate.setPotion(MobEffects.levitation, 9, 0);
+		registerSpell(levitate);
+
+		SpellPotion slowfall = new SpellPotion(++spellId, "slowfall");
+		slowfall.setPotion(PotionRegistry.slowfall, 9, 0);
+		registerSpell(slowfall);
 
 		//TODO: currently there is no tool for this
 		// it would not have the BUILD TOGGLE TYPE.. once its working
@@ -106,7 +116,8 @@ public class SpellRegistry {
 
 		ArrayList<ISpell>		 spellbookFly = new ArrayList<ISpell>();
 		spellbookFly.add(Spells.launch);
-
+		spellbookFly.add(slowfall);
+		spellbookFly.add(levitate);
 
 		ArrayList<ISpell>	spellbookNoInvo = new ArrayList<ISpell>();
 		spellbookNoInvo.add(Spells.rotate);
