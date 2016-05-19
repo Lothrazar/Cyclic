@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.spell;
 
 import com.lothrazar.cyclicmagic.registry.PotionRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 
 import net.minecraft.block.Block;
@@ -27,7 +28,7 @@ public class SpellPotion extends BaseSpell {
 	
 	public void setPotion(Potion id, int effectDuration, int effectAmplifier) {
 		potionId = id;
-		potionDuration = effectDuration;
+		potionDuration = effectDuration * Const.TICKS_PER_SEC;
 		potionAmp = effectAmplifier;
 		//return this;
 	}
