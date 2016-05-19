@@ -93,9 +93,11 @@ public class SpellRegistry {
 		
 		SpellPotion levitate = new SpellPotion(++spellId, "levitation");
 		levitate.setPotion(MobEffects.levitation, 9, 0);
+		registerSpell(levitate);
 
 		SpellPotion slowfall = new SpellPotion(++spellId, "slowfall");
 		slowfall.setPotion(PotionRegistry.slowfall, 9, 0);
+		registerSpell(slowfall);
 
 		//TODO: currently there is no tool for this
 		// it would not have the BUILD TOGGLE TYPE.. once its working

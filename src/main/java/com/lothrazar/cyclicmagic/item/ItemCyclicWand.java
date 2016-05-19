@@ -145,12 +145,7 @@ public class ItemCyclicWand extends Item {
 
 		public static int getSpellIDCurrent(ItemStack stack) {
 			// workaround for default spell being replace. and oncrafting not
-			// firing
-			/*
-			 * if (stack.getItem() == ItemRegistry.cyclic_wand_fly) { return
-			 * SpellRegistry.Spells.launch.getID(); }
-			 * 
-			 */
+	 
 			if (getNBT(stack).hasKey(NBT_SPELLCURRENT) == false) {
 				// what is default spell for that then?
 				return SpellRegistry.getSpellbook(stack).get(0).getID();
@@ -162,17 +157,15 @@ public class ItemCyclicWand extends Item {
 
 		public static ISpell getSpellCurrent(ItemStack stack) {
 
-			ISpell s = SpellRegistry.getSpellFromID(getSpellIDCurrent(stack));
-
-			if (s == null) {
-				s = SpellRegistry.getSpellbook(stack).get(0);
-			}
-
+			int idCurrent = getSpellIDCurrent(stack);
+ 
+			ISpell s = SpellRegistry.getSpellFromID(idCurrent);
+ 
 			return s;
 		}
 
 		public static void setSpellCurrent(ItemStack stack, int spell_id) {
-
+ 
 			NBTTagCompound tags = getNBT(stack);
 
 			tags.setInteger(NBT_SPELLCURRENT, spell_id);
@@ -356,7 +349,7 @@ public class ItemCyclicWand extends Item {
 				return "button.build." + BuildType.values()[tags.getInteger(NBT)].toString().toLowerCase();
 
 			} catch (Exception e) {
-				// System.out.println(e.getMessage());
+			 
 				return "button.build." + FIRST.toString().toLowerCase();
 			}
 		}
