@@ -50,7 +50,12 @@ public class ItemToolPearlReuse extends BaseTool implements IHasRecipe, IHasConf
 	@Override
 	public void addRecipe() {
 		 
-		GameRegistry.addShapedRecipe(new ItemStack(this), "eee", "ese", "eee", 'e', new ItemStack(Items.ender_eye), 
+		GameRegistry.addShapedRecipe(new ItemStack(this), 
+				"ere", 
+				"rsr", 
+				"ere", 
+				'e', new ItemStack(Items.ender_eye), 
+				'r', new ItemStack(Items.redstone), 
 				's', new ItemStack(Blocks.emerald_block));
 	}
 	
