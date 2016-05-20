@@ -7,9 +7,7 @@ import com.lothrazar.cyclicmagic.block.BlockUncrafting;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
-import com.lothrazar.cyclicmagic.util.UtilUncraft;
-
-import net.minecraft.entity.item.EntityItem;
+import com.lothrazar.cyclicmagic.util.UtilUncraft; 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.IInventory;
@@ -305,43 +303,58 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 			x += dx; 
 			z += dz;
 			BlockPos posOffsetFacing = new BlockPos(x, y, z);
+			TileEntity attached = this.worldObj.getTileEntity(posOffsetFacing);
+			IInventory attachedInv = null;
+			if (attached != null && attached instanceof IInventory) {				 
+				attachedInv = (IInventory) attached;
+			}
 
 			UtilUncraft uncrafter = new UtilUncraft(stack);
 			if (uncrafter.doUncraft()) {
 				// drop the items
 
-				if (this.worldObj.isRemote == false) {
+				//if (this.worldObj.isRemote == false) {
 
 					ArrayList<ItemStack> uncrafterOutput = uncrafter.getDrops();
 					ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
-
-					TileEntity attached = this.worldObj.getTileEntity(posOffsetFacing);
-
-					if (attached != null && attached instanceof IInventory) {
-
-
-						IInventory attachedInv = (IInventory) attached;
-
+ 
+					if (attached != null){
 						toDrop = dumpToIInventory(uncrafterOutput, attachedInv);
 					}
-					else {
+					else{
 						toDrop = uncrafterOutput;
 					}
  
-					for (ItemStack s : toDrop) { 
+					for (ItemStack s : toDrop){ 
 						UtilEntity.dropItemStackInWorld(worldObj, posOffsetFacing, s); 
 					}
-				}
+				//}
 
 				this.decrStackSize(0, uncrafter.getOutsize());
 			 
 				UtilSound.playSound(worldObj, this.getPos(), SoundEvents.entity_item_break,SoundCategory.BLOCKS);
 			}
 			else {
-				// drop the source item since the uncraft failed
-				if (this.worldObj.isRemote == false) {// server side only
-					this.worldObj.spawnEntityInWorld(new EntityItem(this.worldObj, x, y, z, stack));
+				//try to dump to inventory first
+
+				if (attached != null){
+					ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
+					toDrop.add(stack);
+					toDrop = dumpToIInventory(toDrop, attachedInv);
+					
+					//it only had one in it. so if theres one left, it didnt work
+					if(toDrop.size() == 1){
+						UtilEntity.dropItemStackInWorld(worldObj, posOffsetFacing, toDrop.get(0));
+					}
 				}
+				else{
+					UtilEntity.dropItemStackInWorld(worldObj, posOffsetFacing, stack);
+				}
+				
+				// drop the source item since the uncraft failed
+//				if (this.worldObj.isRemote == false) {// server side only
+//					this.worldObj.spawnEntityInWorld(new EntityItem(this.worldObj, x, y, z, stack));
+//				}
 				this.decrStackSize(0, stack.stackSize);
  
 				UtilSound.playSound(worldObj, this.getPos(), SoundEvents.entity_arrow_shoot,SoundCategory.BLOCKS);
