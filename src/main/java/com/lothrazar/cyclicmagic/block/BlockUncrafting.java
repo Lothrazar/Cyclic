@@ -11,7 +11,6 @@ import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityUncrafting;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.util.Const;
-import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilUncraft;
 
 import net.minecraft.block.Block;
@@ -31,17 +30,11 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockUncrafting extends Block implements IHasRecipe,IHasConfig {
 	// dont use blockContainer !!
@@ -90,52 +83,7 @@ public class BlockUncrafting extends Block implements IHasRecipe,IHasConfig {
 
 		return this.getDefaultState().withProperty(PROPERTYFACING, enumfacing);
 	}
-
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void randomTick(World world, BlockPos pos, IBlockState state, Random rand) {
-		// was randomDisplayTick in 1.8.x
-		// http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/modification-development/1431325-1-5-1-forge-spawning-fire-particle
-		if (world.getTileEntity(pos) == null) { return; }
-		TileEntityUncrafting tile = (TileEntityUncrafting) world.getTileEntity(pos);
-		if (tile == null) { return; }
-
-		if (tile.isBurning()) {
-
-			// first we center everything, but vertiically up a but more than
-			// the others
-			double dx = (float) pos.getX() + world.rand.nextFloat(); // 0.5F +
-			double dy = (float) pos.getY() + world.rand.nextFloat(); // 0.7F +
-			double dz = (float) pos.getZ() + world.rand.nextFloat(); // 0.5F +
-
-			world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, dx, dy, dz, 0, 0, 0);
-
-		}
-
-		/*
-		 * private static String SOUND_SUCCESS = "random.break" ==>>
-		 * entity.arrow.shoot;// http://minecraft.gamepedia.com/Sounds.json
-		 * private static String SOUND_REJECTED = "random.bow";
-		 */
-		String playSound = tile.getAndClearSound();
-		if (playSound != null && playSound.isEmpty() == false) {
-			SoundEvent sound = (SoundEvent) SoundEvent.soundEventRegistry.getObject(new ResourceLocation(playSound));
-			if (sound != null) {
-				
-				UtilSound.playSound(world, pos, sound, SoundCategory.BLOCKS);
-				
-			}
-			else {
-				System.out.println("dead sound" + playSound);
-			}
-		}
-
-		super.randomTick(world, pos, state, rand);
-	}
-
-	// onBlockActivated(World worldIn, BlockPos pos, IBlockState state,
-	// EntityPlayer playerIn, EnumHand hand, ItemStack heldItem, EnumFacing side,
-	// float hitX, float hitY, float hitZ)
+ 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
 		TileEntity tileEntity = world.getTileEntity(pos);

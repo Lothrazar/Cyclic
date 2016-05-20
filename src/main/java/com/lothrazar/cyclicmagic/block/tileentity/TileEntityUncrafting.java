@@ -6,10 +6,12 @@ import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.block.BlockUncrafting;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilUncraft;
 
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -22,6 +24,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 
@@ -35,19 +38,17 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 	// http://www.minecraftforge.net/forum/index.php?topic=18871.0
 	private ItemStack[]					inv;
 	private int									timer;
-	private String							playSound;
+ 
 	private static final String	NBT_INV					= "Inventory";
 	private static final String	NBT_SLOT				= "Slot";
 	private static final String	NBT_TIMER				= "Timer";
-	private static final String	NBT_SOUND				= "Sound";
-	private static String				SOUND_SUCCESS		= "entity.arrow.shoot";	// http://minecraft.gamepedia.com/Sounds.json
-	private static String				SOUND_REJECTED	= "random.bow";
+	//private static final String	NBT_SOUND				= "Sound";
+
 
 	public TileEntityUncrafting() {
 
 		inv = new ItemStack[9];
 		timer = 0;
-		playSound = null;
 	}
 
 	@Override
@@ -161,8 +162,7 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 		super.readFromNBT(tagCompound);
 
 		timer = tagCompound.getInteger(NBT_TIMER);
-		if (tagCompound.hasKey(NBT_SOUND))
-			playSound = tagCompound.getString(NBT_SOUND);
+ 
 		NBTTagList tagList = tagCompound.getTagList(NBT_INV, 10);
 		for (int i = 0; i < tagList.tagCount(); i++) {
 			NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
@@ -179,9 +179,7 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 		super.writeToNBT(tagCompound);
 
 		tagCompound.setInteger(NBT_TIMER, timer);
-		// boo java.lang.IllegalArgumentException: Empty string not allowed
-		if (playSound != null)
-			tagCompound.setString(NBT_SOUND, playSound);
+ 
 		NBTTagList itemList = new NBTTagList();
 		for (int i = 0; i < inv.length; i++) {
 			ItemStack stack = inv[i];
@@ -221,14 +219,7 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 
 		return timer;
 	}
-
-	public String getAndClearSound() {
-
-		String get = playSound; // a one time use secret.
-		playSound = null;
-		return get;
-	}
-
+ 
 	private void shiftAllUp() {
 
 		for(int i = 0; i < this.getSizeInventory() - 1; i++){
@@ -343,8 +334,8 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 				}
 
 				this.decrStackSize(0, uncrafter.getOutsize());
-
-				playSound = SOUND_SUCCESS;
+			 
+				UtilSound.playSound(worldObj, this.getPos(), SoundEvents.entity_item_break,SoundCategory.BLOCKS);
 			}
 			else {
 				// drop the source item since the uncraft failed
@@ -352,9 +343,8 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 					this.worldObj.spawnEntityInWorld(new EntityItem(this.worldObj, x, y, z, stack));
 				}
 				this.decrStackSize(0, stack.stackSize);
-
-				// and play a different sound
-				playSound = SOUND_REJECTED;
+ 
+				UtilSound.playSound(worldObj, this.getPos(), SoundEvents.entity_arrow_shoot,SoundCategory.BLOCKS);
 			}
 			
 			this.worldObj.markBlockRangeForRenderUpdate(this.getPos(), this.getPos().up());
