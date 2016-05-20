@@ -147,31 +147,21 @@ public class ModMain {
 	 * 
 	 ***** BUGS 
 	 *
-	 *clean up item models/textures on tools/wands
-	 *
 	 *Spell sounds: why does push/pull/rotate sound WORK< but build up spells dont?
 	 *		-->> answer: neither one plays the actual sound. if it breaks a block for you, THATS the one you hear
 	 *		 need a network packet.sendToAllAround and hit the sound up manual (clientside)
 	 *
 	 * HARVESTER :: add a GUI with toggle buttons to turn configs on and off
 	 * 
-	 *NEW PLAN: give launching scepter 3 spells: levitati  
-	 *
 	 *[big change[ ENDER BOOK: remove and replace with another invo-tab
 	 *  
-	 *[disabled]circle build: does not work with 'pattern'. 
-	 *
-	 *[disabled]circle build: is more of an oval, not symmetric
+	 *[disabled] building spells: make phantom/ghost/outline/particle blocks
 	 * 
 	 * pets live longer and/or respawn
 	 *
 	 *make silk touch work on silverfish blocks
 	 *
-	 *Some way to get mending/frost enchants
-	 *
 	 * clay generation in some biomes , all the way down -- plains and swamp?
-	 * 
-	 * Hardened clay in patches all the way down - mesa only ?
 	 * 
 	 * SPELLS that use build sizes/numbers, put in their name 'name' +" ["+ number + "]";
 	 * 
@@ -183,13 +173,7 @@ public class ModMain {
 	 * 
 	 * uncrafter - persist smoking ? like furnace?
 	 * 
-	 * Undo button - for mass placing. only lasts a few seconds then goes away?
-	 *  
 	 * [refactor] try to auto detect home biomes of saplings for modded compat
-	 * 
-	 *[refactor]  spell wand item shuld take args for spellbook and HUD display details
-	 * 
-	 * [refactor]  seed logic into util
 	 * 
 	 * [refactor]  noteblock/sign into util
 	 *   
@@ -205,8 +189,6 @@ public class ModMain {
 	 * 
 	 * achievemnets give exp
 	 *  // https://github.com/PrinceOfAmber/SamsPowerups/blob/5ac4556cb99266fa3f322ef8bfdf75683aa2f26a/src/main/java/com/lothrazar/samspowerups/util/AchievementFinder.java
-	 * 
-	 * more achieves - inspire by consoles and also my own
 	 * 
 	 * Make minecarts kill and push through entities that get hit (ex: pigmen on rail)
 	 * 

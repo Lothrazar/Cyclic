@@ -54,6 +54,7 @@ public class UtilHarvestCrops {
 		Block blockCheck;
 		int countHarvested = 0;
 		boolean doBreak, doBreakAbove = false, doReplant;
+		
 		for (int xLoop = xMin; xLoop <= xMax; xLoop++) {
 			for (int zLoop = zMin; zLoop <= zMax; zLoop++) {
 
@@ -83,6 +84,7 @@ public class UtilHarvestCrops {
 
 						//ModMain.logger.info(" fully grown ");
 						doBreak = true;
+						doReplant = true; 
 					}
 				} 
 				if ((blockCheck instanceof BlockStem) && conf.doesHarvestStem) {

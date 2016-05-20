@@ -8,6 +8,7 @@ import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
@@ -55,9 +56,13 @@ private static final int durability = 8000;
 
 	@Override
 	public void addRecipe() {
-		GameRegistry.addRecipe(new ItemStack(this, 8), "b  ", " b ", "  s", 
+		GameRegistry.addRecipe(new ItemStack(this, 8), 
+				" dr", 
+				" bd", 
+				"b  ", 
 			'b',Items.blaze_rod, 
-		    's',Items.emerald); 
+		    'd',Items.diamond,
+		    'r',Blocks.lapis_block); 
 	}
 
 }
