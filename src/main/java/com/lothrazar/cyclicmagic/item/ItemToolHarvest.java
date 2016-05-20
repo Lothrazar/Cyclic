@@ -48,8 +48,13 @@ public class ItemToolHarvest extends BaseTool implements IHasRecipe, IHasConfig{
 
 	@Override
 	public void addRecipe() { 
-		GameRegistry.addRecipe(new ItemStack(this, 8), "b  ", " b ", "  s", 
+
+		GameRegistry.addRecipe(new ItemStack(this), 
+				" gs", 
+				" bg", 
+				"b  ", 
 			'b',Items.blaze_rod, 
+			'g',Items.ghast_tear, 
 		    's',Items.shears); 
 	}
 }

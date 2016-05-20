@@ -51,7 +51,9 @@ public class ModMain {
 	public final static CreativeTabs			TAB	= new CreativeTabs(Const.MODID) {
         @Override
         public Item getTabIconItem() {
-            return Items.diamond;//ItemRegistry.ModItems.chest_sack;
+        	Item tab = ItemRegistry.itemMap.get("apple_diamond");
+        	if(tab == null){tab = Items.diamond;}
+            return tab;
         }
     };
     private EventRegistry events;
