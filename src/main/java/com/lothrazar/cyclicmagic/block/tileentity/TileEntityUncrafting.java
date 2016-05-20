@@ -2,8 +2,10 @@ package com.lothrazar.cyclicmagic.block.tileentity;
 
 import java.util.ArrayList;
 
+import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.block.BlockUncrafting;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilUncraft;
 
 import net.minecraft.entity.item.EntityItem;
@@ -18,6 +20,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;// net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -226,14 +229,14 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 		return get;
 	}
 
-	private void tryShiftStacksUp() {
+	private void shiftAllUp() {
 
 		for(int i = 0; i < this.getSizeInventory() - 1; i++){
-			_tryShiftPairUp(i, i+1);
+			shiftPairUp(i, i+1);
 		}
 	}
 
-	private void _tryShiftPairUp(int low, int high){
+	private void shiftPairUp(int low, int high){
 		ItemStack main = getStackInSlot(low);
 		ItemStack second = getStackInSlot(high);
 
@@ -255,13 +258,19 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 		// this is from interface IUpdatePlayerListBox
 		// change up the timer on both client and server (it gets synced
 		// eventually but not constantly)
-		this.tryShiftStacksUp();
-
-		if(this.worldObj.getStrongPower(this.getPos()) > 1){
-			//block / cancel if getting power
+		this.shiftAllUp();
+		boolean triggerUncraft = false;
+		
+		if(this.worldObj.getStrongPower(this.getPos()) == 0){
+			//it works ONLY if its powered
 			return;
 		}
-		
+
+
+		//center of the block
+		double x = this.getPos().getX() + 0.5;
+		double y = this.getPos().getY() + 0.5;
+		double z = this.getPos().getZ() + 0.5;
 
 		ItemStack stack = getStackInSlot(0);
 		if (stack == null) {
@@ -270,7 +279,6 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 			return;
 		}
 
-		boolean triggerUncraft = false;
 
 		timer--;
 		if (timer <= 0) {
@@ -302,12 +310,10 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 			else if (facing == EnumFacing.WEST) {
 				dx = +1;
 			}
-
-			// the 0.5 is to make it centered
-			double x = this.pos.getX() + 0.5 + dx;
-			double y = this.pos.getY() + 0.5;
-			double z = this.pos.getZ() + 0.5 + dz;
-			BlockPos here = new BlockPos(x, y, z);
+ 
+			x += dx; 
+			z += dz;
+			BlockPos posOffsetFacing = new BlockPos(x, y, z);
 
 			UtilUncraft uncrafter = new UtilUncraft(stack);
 			if (uncrafter.doUncraft()) {
@@ -318,7 +324,7 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 					ArrayList<ItemStack> uncrafterOutput = uncrafter.getDrops();
 					ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
 
-					TileEntity attached = this.worldObj.getTileEntity(here);
+					TileEntity attached = this.worldObj.getTileEntity(posOffsetFacing);
 
 					if (attached != null && attached instanceof IInventory) {
 
@@ -330,13 +336,9 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 					else {
 						toDrop = uncrafterOutput;
 					}
-
-				//	System.out.println("Remaining" + toDrop.size());
-					for (ItemStack s : toDrop) {
-						//System.out.println("DROP ITEM" + s.toString());
-						UtilEntity.dropItemStackInWorld(worldObj, here, s);
-						// this.worldObj.spawnEntityInWorld(new EntityItem(this.worldObj, x,
-						// y, z, s));
+ 
+					for (ItemStack s : toDrop) { 
+						UtilEntity.dropItemStackInWorld(worldObj, posOffsetFacing, s); 
 					}
 				}
 
@@ -354,17 +356,25 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 				// and play a different sound
 				playSound = SOUND_REJECTED;
 			}
-
-			this.worldObj.markBlockRangeForRenderUpdate(pos, pos.up());
+			
+			this.worldObj.markBlockRangeForRenderUpdate(this.getPos(), this.getPos().up());
 			this.markDirty();
+		}
+		else{
+			//dont trigger an uncraft event, its still processing
+
+			if(this.worldObj.isRemote && this.worldObj.rand.nextDouble() < 0.1){
+		
+				UtilParticle.spawnParticle(worldObj, EnumParticleTypes.SMOKE_NORMAL, x, y, z); 
+			}
 		}
 	}
 
 	public static ArrayList<ItemStack> dumpToIInventory(ArrayList<ItemStack> stacks, IInventory inventory) {
 
 		boolean debug = false;
-		ArrayList<ItemStack> remaining = new ArrayList<ItemStack>();// returns the
-		                                                            // remainder
+		//and return the remainder after dumping
+		ArrayList<ItemStack> remaining = new ArrayList<ItemStack>();
 
 		ItemStack chestStack;
 
@@ -382,7 +392,7 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 				chestStack = inventory.getStackInSlot(i);
 
 				if (chestStack == null) {
-					if (debug){ System.out.println("DUMP " + i);}
+					if (debug){ ModMain.logger.info("DUMP " + i);}
 
 					inventory.setInventorySlotContents(i, current);
 					// and dont add current ot remainder at all ! sweet!
@@ -396,7 +406,7 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 
 					if (toDeposit > 0) {
 
-						if (debug) 	{System.out.println("merge " + i + " ; toDeposit =  " + toDeposit);}
+						if (debug) 	{ ModMain.logger.info("merge " + i + " ; toDeposit =  " + toDeposit);}
 						
 						current.stackSize -= toDeposit;
 						chestStack.stackSize += toDeposit;
@@ -408,12 +418,12 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 				}
 			}// finished current pass over inventory
 			if (current != null) {
-				if (debug)					{System.out.println("remaining.add : stackSize = " + current.stackSize);}
+				if (debug) {ModMain.logger.info("remaining.add : stackSize = " + current.stackSize);}
 				remaining.add(current);
 			}
 		}
 
-		if (debug){			System.out.println("remaining" + remaining.size());}
+		if (debug){	ModMain.logger.info("remaining" + remaining.size());}
 		return remaining;
 	}
 

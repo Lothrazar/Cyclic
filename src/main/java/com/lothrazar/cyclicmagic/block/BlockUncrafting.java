@@ -215,8 +215,7 @@ public class BlockUncrafting extends Block implements IHasRecipe,IHasConfig {
 		
 		String category = Const.ConfigCategory.blocks_uncrafting;
 		
-		enableBlockUncrafting = config.getBoolean("Enabled", category, true, "Enable uncrafting");
-
+		enableBlockUncrafting = config.getBoolean("Enabled", category, true, "Enable the uncrafting grinder block. It reverses the recipe of what you put into it.  Requires redstone power.  ");
 		
 		UtilUncraft.TIMER_FULL = config.getInt("Speed", category, 75, 10, 99999, "How fast this can uncraft items and blocks.  Lower numbers are faster");
 

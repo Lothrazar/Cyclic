@@ -9,6 +9,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class UtilParticle {
+	private static final int count = 12;//if you just spawn one, its basically invisible. unless its over time like potions
 
 	public static void spawnParticle(World world, EnumParticleTypes sparkle, double x, double y, double z, int count) {
 
@@ -27,7 +28,7 @@ public class UtilParticle {
 
 	public static void spawnParticle(World world, EnumParticleTypes sparkle, double x, double y, double z) {
 
-		spawnParticle(world, sparkle, x, y, z, 12);// default spam count
+		spawnParticle(world, sparkle, x, y, z, count);
 	}
 
 	public static void spawnParticle(World world, EnumParticleTypes sparkle, Entity entity) {
@@ -37,9 +38,12 @@ public class UtilParticle {
 
 	public static void spawnParticle(World world, EnumParticleTypes sparkle, BlockPos pos) {
 
-		if (pos != null) {
-			spawnParticle(world, sparkle, pos.getX(), pos.getY(), pos.getZ());
+		if (pos == null) {
+			ModMain.logger.warn("Particle at position null");
+			return;
 		}
+		spawnParticle(world, sparkle, pos.getX(), pos.getY(), pos.getZ());
+		
 	}
 
 	public static void spawnParticleBeam(World world, EnumParticleTypes sparkle, BlockPos start, BlockPos end, int count) {
