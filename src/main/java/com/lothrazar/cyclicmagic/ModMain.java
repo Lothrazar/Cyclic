@@ -97,7 +97,6 @@ public class ModMain {
 		RecipeNewRegistry.register();
 
 		proxy.register();
-		proxy.registerEvents();
 
 		TileEntityRegistry.register();
 

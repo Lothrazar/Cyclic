@@ -31,13 +31,5 @@ public class CommonProxy {
 	public EnumFacing getSideMouseover(int max) {
 
 		return null;
-	}
-
-	public void renderPotions() {
-
-	}
-
-	public void registerEvents() {
-
-	}
+	} 
 }

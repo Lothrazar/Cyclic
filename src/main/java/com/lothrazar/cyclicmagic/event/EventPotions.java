@@ -18,30 +18,19 @@ public class EventPotions implements IHasConfig {
 	
 	@SubscribeEvent
 	public void onEntityUpdate(LivingUpdateEvent event) {
-
-		
+ 
 		EntityLivingBase entityLiving = event.getEntityLiving();
 		if (entityLiving == null) { return; }
 
-		PotionRegistry.handle((EntityLivingBase)event.getEntity());
-		
-		if(entityLiving instanceof EntityPlayer && entityLiving.worldObj.isRemote){
-			ModMain.proxy.renderPotions();
-		}
+		PotionRegistry.handle((EntityLivingBase)event.getEntity()); 
 	}
-	
-	
-	
-
+	 
 	@SubscribeEvent
 	public void onPotionShiftEvent(GuiScreenEvent.PotionShiftEvent event) {
 		
 		event.setCanceled(cancelPotionInventoryShift);
 	}
-
-
-
-
+ 
 	@Override
 	public void syncConfig(Configuration config) {
 
@@ -49,9 +38,5 @@ public class EventPotions implements IHasConfig {
 
 		cancelPotionInventoryShift = config.getBoolean("Potion Inventory Shift", category, true,
 				"When true, this blocks the potions moving the inventory over");
-
-		
 	}
-	
-	
 }
