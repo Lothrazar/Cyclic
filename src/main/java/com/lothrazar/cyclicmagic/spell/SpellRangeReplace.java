@@ -46,14 +46,12 @@ public class SpellRangeReplace extends BaseSpellRange {
 		IBlockState stateHere = world.getBlockState(posMouseover);
 		if (stateHere == null || stateHere.getBlock() == null) { return; }
 
-		if (world.getTileEntity(posMouseover) != null) { return;// not chests, etc
-		}
+		if (world.getTileEntity(posMouseover) != null) { return; }
 
 		Block blockHere = stateHere.getBlock();
-
-		if (blockHere.getBlockHardness(stateHere, world, posMouseover) == -1) { 
-			return; 
-		}
+ 
+		//if (blockHere.getBlockHardness(stateHere, world, posMouseover) == -1) { 
+		if (stateHere.getBlockHardness(world, posMouseover) == -1) {  return;  }
 
 		int itemSlot = InventoryWand.getSlotByBuildType(heldWand, world.getBlockState(posMouseover));
 		ItemStack[] invv = InventoryWand.readFromNBT(heldWand);

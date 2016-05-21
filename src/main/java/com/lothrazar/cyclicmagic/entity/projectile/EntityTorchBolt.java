@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.entity.projectile;
 
+import net.minecraft.block.BlockTorch;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Blocks;
@@ -73,6 +74,7 @@ public class EntityTorchBolt extends EntityThrowable {
 			break;
 			}
 
+			//BlockTorch.FACING
 			this.worldObj.setBlockState(offset, Blocks.TORCH.getStateFromMeta(blockdata));
 		}
 

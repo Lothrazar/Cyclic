@@ -4,6 +4,7 @@ import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.util.Const;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockSapling;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
@@ -41,6 +42,8 @@ public class EventSaplingPlantDespawn  implements IHasConfig{
 		if (blockhere == Blocks.AIR && blockdown == Blocks.DIRT || blockdown == Blocks.GRASS) {
 			// plant the sapling, replacing the air and on top of dirt/plantable
 
+			//BlockSapling.TYPE
+			
 			if (Block.getBlockFromItem(is.getItem()) == Blocks.SAPLING)
 				entity.worldObj.setBlockState(entityItem.getPosition(), Blocks.SAPLING.getStateFromMeta(is.getItemDamage()));
 			else if (Block.getBlockFromItem(is.getItem()) == Blocks.RED_MUSHROOM)

@@ -218,7 +218,9 @@ public class UtilPlaceBlocks {
 
 				// ok its a soft block so try to break it first try to destroy it
 				// unless it is liquid, don't try to destroy liquid
-				if (blockHere.getMaterial(stateHere) != Material.WATER && blockHere.getMaterial(stateHere) != Material.LAVA) {
+				
+				//blockHere.getMaterial(stateHere)
+				if (stateHere.getMaterial() != Material.WATER && stateHere.getMaterial() != Material.LAVA) {
 					boolean dropBlock = true;
 					world.destroyBlock(placePos, dropBlock);
 				}
@@ -286,7 +288,8 @@ public class UtilPlaceBlocks {
 
 		if (newStateToPlace == null || ignoreList.contains(newStateToPlace.getBlock())) { return false; }
 		//negative hardness: unbreakable like bedrock
-		if (newStateToPlace.getBlock().getBlockHardness(newStateToPlace, world, posMoveToHere) == -1) { 
+		//if (newStateToPlace.getBlock().getBlockHardness(newStateToPlace, world, posMoveToHere) == -1) { 
+		if (newStateToPlace.getBlockHardness(world, posMoveToHere) == -1) { 
 			return false;
 		}
 

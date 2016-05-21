@@ -3,6 +3,7 @@ package com.lothrazar.cyclicmagic.entity.projectile;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 
+import net.minecraft.block.BlockSnow;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityBlaze;
@@ -151,6 +152,7 @@ public class EntitySnowballBolt extends EntityThrowable {
 		IBlockState hitState = world.getBlockState(pos);
 		int m = hitState.getBlock().getMetaFromState(hitState);
 		// when it hits 7, same size as full block
+		//BlockSnow.LAYERS
 		if (m + 1 < 8){
 			world.setBlockState(pos, Blocks.SNOW_LAYER.getStateFromMeta(m + 1));
 		}
