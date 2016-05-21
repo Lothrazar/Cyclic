@@ -3,6 +3,7 @@ package com.lothrazar.cyclicmagic.potion;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilTextureRender;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
@@ -43,5 +44,9 @@ public class PotionCustom extends Potion {
 
 	public void setIcon(ResourceLocation icon) {
 		this.icon = icon;
+	}
+	
+	public void tick(EntityLivingBase entity){
+		
 	}
 }
