@@ -49,6 +49,7 @@ import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.common.util.EnumHelper;
@@ -302,8 +303,14 @@ public class ItemRegistry {
 	}
 
 	private static void registerMaterials() {
-
-		ARMOR_MATERIAL_EMERALD = EnumHelper.addArmorMaterial("emerald", Const.MODID + ":emerald", diamondDurability, diamondreductionAmounts, ArmorMaterial.DIAMOND.getEnchantability(), ArmorMaterial.DIAMOND.getSoundEvent());
+		
+		
+		//addArmorMaterial(String name, String textureName, int durability, int[] reductionAmounts, int enchantability, SoundEvent soundOnEquip)
+	    
+		ARMOR_MATERIAL_EMERALD = ArmorMaterial.DIAMOND;
+		//enum helper is broken
+		//https://github.com/MinecraftForge/MinecraftForge/issues/2870
+				//EnumHelper.addArmorMaterial("emerald", Const.MODID + ":emerald", diamondDurability, diamondreductionAmounts, ArmorMaterial.DIAMOND.getEnchantability(), ArmorMaterial.DIAMOND.getSoundEvent());
 
 		MATERIAL_EMERALD = ToolMaterial.DIAMOND;
 		// TODO: addToolMat causes a bug/crash, not sure if forge will fix.
