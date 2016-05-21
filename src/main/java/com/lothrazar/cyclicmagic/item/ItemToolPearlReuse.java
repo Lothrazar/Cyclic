@@ -39,7 +39,8 @@ public class ItemToolPearlReuse extends BaseTool implements IHasRecipe, IHasConf
 
 		if (!worldIn.isRemote) {
 			EntityEnderPearl entityenderpearl = new EntityEnderPearl(worldIn, playerIn);
-			entityenderpearl.func_184538_a(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
+			//func_184538_a
+			entityenderpearl.setHeadingFromThrower(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
 			worldIn.spawnEntityInWorld(entityenderpearl);
 		}
 

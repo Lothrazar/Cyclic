@@ -40,10 +40,11 @@ public class PacketFakeWorkbench implements IMessage, IMessageHandler<PacketFake
 
 		player.getNextWindowId();
 
-		player.playerNetServerHandler.sendPacket(new SPacketOpenWindow(player.currentWindowId, "minecraft:crafting_table", p.getDisplayName(), 0, player.getEntityId()));
+		//playerNetServerHandler
+		player.connection.sendPacket(new SPacketOpenWindow(player.currentWindowId, "minecraft:crafting_table", p.getDisplayName(), 0, player.getEntityId()));
 		player.openContainer = new ContainerFakeWorkbench(player.inventory, player.worldObj);
-		player.openContainer.windowId = player.currentWindowId;
-		player.openContainer.onCraftGuiOpened(player);
+		player.openContainer.windowId = player.currentWindowId; 
+		//player.openContainer.onCraftGuiOpened(player);
 
 		return null;
 	}

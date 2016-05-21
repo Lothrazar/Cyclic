@@ -159,7 +159,7 @@ public class BlockBucketStorage extends Block implements ITileEntityProvider {
 			// both sides
 			
 
-			UtilSound.playSound(world,pos,SoundEvents.block_piston_extend, SoundCategory.BLOCKS);
+			UtilSound.playSound(world,pos,SoundEvents.BLOCK_PISTON_EXTEND, SoundCategory.BLOCKS);
 
 			spawnMyParticle(world, block.bucketItem, pos);// .offset(face)
 
@@ -185,7 +185,7 @@ public class BlockBucketStorage extends Block implements ITileEntityProvider {
 
 		Block blockClicked = bstate.getBlock();
 
-		if (blockClicked == null || blockClicked == Blocks.air) { return; }
+		if (blockClicked == null || blockClicked == Blocks.AIR) { return; }
 		if ((blockClicked instanceof BlockBucketStorage) == false) { return; }
 
 		BlockBucketStorage block = (BlockBucketStorage) blockClicked;
@@ -212,13 +212,13 @@ public class BlockBucketStorage extends Block implements ITileEntityProvider {
 		if (blockClicked == BlockRegistry.block_storeempty && block.bucketItem == null) {
 			IBlockState state = null;
 
-			if (held.getItem() == Items.lava_bucket) {
+			if (held.getItem() == Items.LAVA_BUCKET) {
 				state = BlockRegistry.block_storelava.getDefaultState();
 			}
-			else if (held.getItem() == Items.water_bucket) {
+			else if (held.getItem() == Items.WATER_BUCKET) {
 				state = BlockRegistry.block_storewater.getDefaultState();
 			}
-			if (held.getItem() == Items.milk_bucket) {
+			if (held.getItem() == Items.MILK_BUCKET) {
 				state = BlockRegistry.block_storemilk.getDefaultState();
 			}
 
@@ -237,7 +237,7 @@ public class BlockBucketStorage extends Block implements ITileEntityProvider {
 				// both sides
 				
 
-				UtilSound.playSound(world,pos,SoundEvents.block_piston_extend, SoundCategory.BLOCKS);
+				UtilSound.playSound(world,pos,SoundEvents.BLOCK_PISTON_EXTEND, SoundCategory.BLOCKS);
 			
 				spawnMyParticle(world, held.getItem(), pos);// .offset(face)
 			}
@@ -257,7 +257,7 @@ public class BlockBucketStorage extends Block implements ITileEntityProvider {
 			}
 
 			// both sides
-			UtilSound.playSound(world,pos,SoundEvents.block_piston_extend, SoundCategory.BLOCKS);
+			UtilSound.playSound(world,pos,SoundEvents.BLOCK_PISTON_EXTEND, SoundCategory.BLOCKS);
 	
 			spawnMyParticle(world, block.bucketItem, pos);// .offset(face)
 			return;
@@ -289,11 +289,11 @@ public class BlockBucketStorage extends Block implements ITileEntityProvider {
 	 */
 	private void spawnMyParticle(World world, Item item, BlockPos pos) {
 
-		if (item == Items.milk_bucket)
+		if (item == Items.MILK_BUCKET)
 			UtilParticle.spawnParticle(world, EnumParticleTypes.SNOW_SHOVEL, pos);
-		else if (item == Items.lava_bucket)
+		else if (item == Items.LAVA_BUCKET)
 			UtilParticle.spawnParticle(world, EnumParticleTypes.LAVA, pos);
-		else if (item == Items.water_bucket)
+		else if (item == Items.WATER_BUCKET)
 			UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_SPLASH, pos);
 	}
 
@@ -306,7 +306,7 @@ public class BlockBucketStorage extends Block implements ITileEntityProvider {
 
 	public void addRecipe() {
 
-		GameRegistry.addRecipe(new ItemStack(BlockRegistry.block_storeempty), "i i", " o ", "i i", 'o', Blocks.obsidian, 'i', Blocks.iron_block);
+		GameRegistry.addRecipe(new ItemStack(BlockRegistry.block_storeempty), "i i", " o ", "i i", 'o', Blocks.OBSIDIAN, 'i', Blocks.IRON_BLOCK);
 
 		// the filled ones are not crafted, only obtained when filled and then
 		// harvested

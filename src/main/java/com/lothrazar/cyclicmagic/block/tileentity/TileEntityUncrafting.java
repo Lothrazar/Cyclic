@@ -16,7 +16,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;// net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -189,10 +188,9 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 		tagCompound.setTag(NBT_INV, itemList);
 		return super.writeToNBT(tagCompound);
 	}
-
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+ 
 	@Override
-	public Packet getDescriptionPacket() {
+	public SPacketUpdateTileEntity getUpdatePacket(){//getDescriptionPacket() {
 
 		// Gathers data into a packet (S35PacketUpdateTileEntity) that is to be
 		// sent to the client. Called on server only.

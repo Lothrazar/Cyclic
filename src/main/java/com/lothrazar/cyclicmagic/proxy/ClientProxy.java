@@ -104,7 +104,8 @@ public class ClientProxy extends CommonProxy {
                     //int i1 = potion.getStatusIconIndex();
                     float f = 1.0F;
 
-                    if (potion.func_188408_i())
+                    
+                    if (potion.isBeneficial())//func_188408_i())
                     {
                         ++i;
                         xLoc = xLoc - 25 * i;

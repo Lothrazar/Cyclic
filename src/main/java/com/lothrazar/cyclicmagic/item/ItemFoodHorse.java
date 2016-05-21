@@ -12,6 +12,7 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.passive.HorseArmorType;
+import net.minecraft.entity.passive.HorseType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
@@ -81,15 +82,16 @@ public class ItemFoodHorse extends BaseItem implements IHasRecipe {
 			switch (horse.getType()) {
 			case HORSE: 
 				
-				horse.setType(HorseArmorType.ZOMBIE);
+				
+				horse.setType(HorseType.ZOMBIE);
 				success = true;
 			break;
 			case ZOMBIE:
-				horse.setType(HorseArmorType.SKELETON);
+				horse.setType(HorseType.SKELETON);
 				success = true;
 			break;
 			case SKELETON:
-				horse.setType(HorseArmorType.HORSE);
+				horse.setType(HorseType.HORSE);
 				success = true;
 			break;
 			// donkey and mule ignored by design

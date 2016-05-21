@@ -163,8 +163,10 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
 			float f = 0.5F;// center the player on the block. also moving up so
 							// not
 							// stuck in floor
-			p.playerNetServerHandler.setPlayerLocation(loc.X - f, loc.Y + 0.9, loc.Z - f, p.rotationYaw,
-					p.rotationPitch);
+
+
+			//p.playerNetServerHandler
+			p.connection.setPlayerLocation(loc.X - f, loc.Y + 0.9, loc.Z - f, p.rotationYaw,p.rotationPitch);
 			BlockPos dest = new BlockPos(loc.X, loc.Y, loc.Z);
 			// try and force chunk loading
 

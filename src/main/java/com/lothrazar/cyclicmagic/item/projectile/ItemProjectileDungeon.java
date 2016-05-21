@@ -39,7 +39,7 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
 
 	@Override
 	void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
-		BlockPos blockpos = UtilSearchWorld.findClosestBlock(player, Blocks.mob_spawner, DUNGEONRADIUS);
+		BlockPos blockpos = UtilSearchWorld.findClosestBlock(player, Blocks.MOB_SPAWNER, DUNGEONRADIUS);
 
 		if (blockpos != null) {
 
@@ -60,7 +60,7 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
 			UtilEntity.dropItemStackInWorld(world, pos, new ItemStack(this));
 			
 			//fizz sound
-			UtilSound.playSound(player,pos,SoundEvents.block_fire_extinguish);
+			UtilSound.playSound(player,pos,SoundEvents.BLOCK_FIRE_EXTINGUISH);
 		
 		}
 	}
