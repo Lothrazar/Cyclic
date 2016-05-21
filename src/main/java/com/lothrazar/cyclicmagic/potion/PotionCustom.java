@@ -35,7 +35,7 @@ public class PotionCustom extends Potion {
 	@SideOnly(Side.CLIENT)
 	public void renderHUDEffect(int x, int y, PotionEffect effect, net.minecraft.client.Minecraft mc, float alpha) {
 
-		UtilTextureRender.drawTextureSquare(getIcon(), x + 5, y + 3, Const.SQ-2);
+		UtilTextureRender.drawTextureSquare(getIcon(), x + 4, y + 3, Const.SQ-2);
 	}
 
 	public ResourceLocation getIcon() {

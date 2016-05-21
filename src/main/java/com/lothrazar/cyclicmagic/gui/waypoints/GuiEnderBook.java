@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.gui.button.ButtonClose;
 import com.lothrazar.cyclicmagic.item.ItemEnderBook;
 import com.lothrazar.cyclicmagic.item.ItemEnderBook.BookLocation;
 import com.lothrazar.cyclicmagic.net.PacketDeleteWaypoint;
@@ -59,6 +60,10 @@ public class GuiEnderBook extends GuiScreen {
 
 		buttonList.add(buttonNew);
 
+		ButtonClose buttonClose = new ButtonClose(9999, this.width / 2 - w - 50, 20);
+
+		buttonList.add(buttonClose);
+		
 		if (bookStack != null && ItemEnderBook.getLocations(bookStack).size() >= ItemEnderBook.maximumSaved) {
 			buttonNew.enabled = false;// also a tooltip?
 		}

@@ -146,10 +146,9 @@ public class ModMain {
 
 	/* TODO LIST
 	 * 
-	 ***** BUGS 
-	 *magnet&slowfall potion not centered, move a bit left
-	 *ENDER BOOK: close button
-	 *ENDER BOOK: Display Exp Required - ALSO: Base it on experience???
+	 ***** BUGS  
+	 *ENDER BOOK: Display Exp Required - 
+	 *ENDER BOOK: it on experience???
 	 *ENDER BOOK: add a copy paste feature???
 	 *
 	 *Spell sounds: why does push/pull/rotate sound WORK< but build up spells dont?
