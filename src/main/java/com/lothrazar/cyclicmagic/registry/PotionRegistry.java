@@ -39,21 +39,6 @@ public class PotionRegistry {
 		GameRegistry.register(magnet,magnet.getIcon());
 	}
 
-	public static void handle(EntityLivingBase entity) {
-
-		if (entity.isPotionActive(PotionRegistry.slowfall)) {
-			PotionRegistry.slowfall.tick(entity);
-		}
-
-		if (entity.isPotionActive(PotionRegistry.magnet)) {
-			PotionRegistry.magnet.tick(entity);
-		}
-
-		if (entity.isPotionActive(PotionRegistry.waterwalk)) {
-			PotionRegistry.waterwalk.tick(entity);
-		}  
-	}
-
 	public static void addOrMergePotionEffect(EntityLivingBase player, PotionEffect newp) {
 
 		// this could be in a utilPotion class i guess...
@@ -73,5 +58,6 @@ public class PotionRegistry {
 
 	public static void syncConfig(Configuration config) {
 
+		//TODO: magnet has properties. so does slowfall
 	}
 }
