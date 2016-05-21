@@ -34,7 +34,7 @@ public class EventMobDropsReduced  implements IHasConfig{
 
 				item = drops.get(i).getEntityItem().getItem();
 				
-				if (item == Items.carrot || item == Items.potato || item == Items.iron_ingot) {
+				if (item == Items.CARROT || item == Items.POTATO || item == Items.IRON_INGOT) {
 					drops.remove(i);
 				}
 			}

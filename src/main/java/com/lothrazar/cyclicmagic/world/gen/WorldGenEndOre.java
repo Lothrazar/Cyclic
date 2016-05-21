@@ -27,16 +27,20 @@ public class WorldGenEndOre implements IWorldGenerator {
 
 	public WorldGenEndOre() {
 		int blockCount = 8;
-		this.genGold = new WorldGenMinable(BlockRegistry.end_redstone_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.end_stone));
+		this.genGold = new WorldGenMinable(BlockRegistry.end_redstone_ore.getDefaultState(), 
+				blockCount, BlockMatcher.forBlock(Blocks.END_STONE));
 
 		blockCount = 8;
-		this.genCoal = new WorldGenMinable(BlockRegistry.end_coal_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.end_stone));
+		this.genCoal = new WorldGenMinable(BlockRegistry.end_coal_ore.getDefaultState(), 
+				blockCount, BlockMatcher.forBlock(Blocks.END_STONE));
 
 		blockCount = 4;
-		this.genEmerald = new WorldGenMinable(BlockRegistry.end_emerald_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.end_stone));
+		this.genEmerald = new WorldGenMinable(BlockRegistry.end_emerald_ore.getDefaultState(), 
+				blockCount, BlockMatcher.forBlock(Blocks.END_STONE));
 
 		blockCount = 8;
-		this.genLapis = new WorldGenMinable(BlockRegistry.end_lapis_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.end_stone));
+		this.genLapis = new WorldGenMinable(BlockRegistry.end_lapis_ore.getDefaultState(), 
+				blockCount, BlockMatcher.forBlock(Blocks.END_STONE));
 	}
 
 	@Override

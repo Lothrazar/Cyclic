@@ -35,7 +35,7 @@ public class ItemProjectileHarvest extends BaseItemProjectile implements IHasRec
 	@Override
 	public void addRecipe() {
 
-		GameRegistry.addShapelessRecipe(new ItemStack(this, 4), new ItemStack(Items.ender_pearl), new ItemStack(Items.wheat), new ItemStack(Items.wheat_seeds));
+		GameRegistry.addShapelessRecipe(new ItemStack(this, 4), new ItemStack(Items.ENDER_PEARL), new ItemStack(Items.WHEAT), new ItemStack(Items.WHEAT_SEEDS));
 		
 	}
 

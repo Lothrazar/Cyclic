@@ -55,7 +55,7 @@ public class ItemChestSackEmpty extends BaseItem {
 
 		drop.getTagCompound().setInteger(ItemChestSack.KEY_BLOCK, Block.getIdFromBlock(world.getBlockState(pos).getBlock()));
 
-		entityPlayer.dropPlayerItemWithRandomChoice(drop, false);
+		entityPlayer.dropItem(drop, false);
 
 		world.setBlockToAir(pos);
 

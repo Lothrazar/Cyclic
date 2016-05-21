@@ -48,43 +48,43 @@ public class VillageTradeRegistry {
 
 	final static EntityVillager.ITradeList[][] druidTrades = {
 
- 		 {	new EmeraldForItems(Items.cooked_fish, new PriceInfo(9, 12))
- 			 ,new EmeraldForItems(Items.apple, new PriceInfo(3,6)) 
- 			 ,new EmeraldForItems(Items.beetroot, new PriceInfo(8, 12)) },
+ 		 {	new EmeraldForItems(Items.COOKED_FISH, new PriceInfo(9, 12))
+ 			 ,new EmeraldForItems(Items.APPLE, new PriceInfo(3,6)) 
+ 			 ,new EmeraldForItems(Items.BEETROOT, new PriceInfo(8, 12)) },
  		 
-		 {	new EmeraldForItems(Items.feather, new PriceInfo(12, 13)) 
-			 ,new EmeraldForItems(Items.wheat_seeds, new PriceInfo(50, 64))  },
+		 {	new EmeraldForItems(Items.FEATHER, new PriceInfo(12, 13)) 
+			 ,new EmeraldForItems(Items.WHEAT_SEEDS, new PriceInfo(50, 64))  },
 		 
-		 {	new EmeraldForItems(Item.getItemFromBlock(Blocks.brown_mushroom), new PriceInfo(8, 12))
-			 ,new EmeraldForItems(Item.getItemFromBlock(Blocks.red_mushroom), new PriceInfo(8, 12)) },
+		 {	new EmeraldForItems(Item.getItemFromBlock(Blocks.BROWN_MUSHROOM), new PriceInfo(8, 12))
+			 ,new EmeraldForItems(Item.getItemFromBlock(Blocks.RED_MUSHROOM), new PriceInfo(8, 12)) },
 		 
-		 {	new EmeraldForItems(Items.beef, new PriceInfo(14, 17))
-			 ,new EmeraldForItems(Items.rabbit, new PriceInfo(14, 17))
-			 ,new EmeraldForItems(Items.chicken, new PriceInfo(14,17))	 },
+		 {	new EmeraldForItems(Items.BEEF, new PriceInfo(14, 17))
+			 ,new EmeraldForItems(Items.RABBIT, new PriceInfo(14, 17))
+			 ,new EmeraldForItems(Items.CHICKEN, new PriceInfo(14,17))	 },
 		 
-			 {	new EmeraldForItems(Items.poisonous_potato, new PriceInfo(1, 3))
-				 ,new EmeraldForItems(Items.spider_eye, new PriceInfo(3, 6))
-				 ,new EmeraldForItems(Items.written_book, new PriceInfo(1, 1))}
+			 {	new EmeraldForItems(Items.POISONOUS_POTATO, new PriceInfo(1, 3))
+				 ,new EmeraldForItems(Items.SPIDER_EYE, new PriceInfo(3, 6))
+				 ,new EmeraldForItems(Items.WRITTEN_BOOK, new PriceInfo(1, 1))}
 	 };
 	
 	final static EntityVillager.ITradeList[][] sageTrades = {
 		 
-		 {	new EmeraldForItems(Items.gunpowder, new PriceInfo(5, 8))
-			 ,new EmeraldForItems(Items.nether_wart, new PriceInfo(12, 16))},
+		 {	new EmeraldForItems(Items.GUNPOWDER, new PriceInfo(5, 8))
+			 ,new EmeraldForItems(Items.NETHER_WART, new PriceInfo(12, 16))},
 		 
-		 {	new EmeraldForItems(Items.bone, new PriceInfo(26, 32))
-			 ,new EmeraldForItems(Items.mutton, new PriceInfo(12, 16))},
+		 {	new EmeraldForItems(Items.BONE, new PriceInfo(26, 32))
+			 ,new EmeraldForItems(Items.MUTTON, new PriceInfo(12, 16))},
 		 
-		 {	new EmeraldForItems(Items.blaze_rod, new PriceInfo(12, 16))
-			 ,new EmeraldForItems(Items.slime_ball, new PriceInfo(12,16))},
+		 {	new EmeraldForItems(Items.BLAZE_ROD, new PriceInfo(12, 16))
+			 ,new EmeraldForItems(Items.SLIME_BALL, new PriceInfo(12,16))},
 		 
-		 {	new EmeraldForItems(Items.ghast_tear, new PriceInfo(2, 3))
-			 ,new EmeraldForItems(Items.redstone, new PriceInfo(4,6)) 
+		 {	new EmeraldForItems(Items.GHAST_TEAR, new PriceInfo(2, 3))
+			 ,new EmeraldForItems(Items.REDSTONE, new PriceInfo(4,6)) 
 			 },	
-		 {	new EmeraldForItems(Items.glowstone_dust, new PriceInfo(12,16))
-			 ,new ListItemForEmeralds(Items.experience_bottle, new PriceInfo(2, 4))
-			 ,new EmeraldForItems(Items.diamond, new PriceInfo(1, 1))
-			 ,new EmeraldForItems(Items.ender_pearl, new PriceInfo(12, 16))}
+		 {	new EmeraldForItems(Items.GLOWSTONE_DUST, new PriceInfo(12,16))
+			 ,new ListItemForEmeralds(Items.EXPERIENCE_BOTTLE, new PriceInfo(2, 4))
+			 ,new EmeraldForItems(Items.DIAMOND, new PriceInfo(1, 1))
+			 ,new EmeraldForItems(Items.ENDER_PEARL, new PriceInfo(12, 16))}
 	 };
 	
 	public static void syncConfig(Configuration c){

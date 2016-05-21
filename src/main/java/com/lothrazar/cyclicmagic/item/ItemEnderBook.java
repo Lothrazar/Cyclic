@@ -42,8 +42,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
 
 	public ItemEnderBook() {
 		super();
-		this.setMaxStackSize(1);
-		setCreativeTab(CreativeTabs.tabTransport);
+		this.setMaxStackSize(1); 
 	}
 
 	public static ArrayList<BookLocation> getLocations(ItemStack itemStack) {
@@ -155,7 +154,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
 		UtilExperience.drainExp(player, cost);
 		// play twice on purpose. at old and new locations
 
-		UtilSound.playSound(player, player.getPosition(), SoundEvents.item_chorus_fruit_teleport);
+		UtilSound.playSound(player, player.getPosition(), SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT);
 
 		if (player instanceof EntityPlayerMP) {
 			// thanks so much to
@@ -180,16 +179,16 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
 			 */
 		}
 
-		UtilSound.playSound(player, player.getPosition(), SoundEvents.item_chorus_fruit_teleport);
+		UtilSound.playSound(player, player.getPosition(), SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT);
 	}
 
 	public void addRecipe() {
 
 		if (craftNetherStar)
-			GameRegistry.addRecipe(new ItemStack(this), "ene", "ebe", "eee", 'e', Items.ender_pearl, 'b', Items.book,
-					'n', Items.nether_star);
+			GameRegistry.addRecipe(new ItemStack(this), "ene", "ebe", "eee", 'e', Items.ENDER_PEARL, 'b', Items.BOOK,
+					'n', Items.NETHER_STAR);
 		else
-			GameRegistry.addRecipe(new ItemStack(this), "eee", "ebe", "eee", 'e', Items.ender_pearl, 'b', Items.book);
+			GameRegistry.addRecipe(new ItemStack(this), "eee", "ebe", "eee", 'e', Items.ENDER_PEARL, 'b', Items.BOOK);
 
 		// if you want to clean out the book and start over
 		GameRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this));

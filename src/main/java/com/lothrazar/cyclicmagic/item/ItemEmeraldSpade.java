@@ -20,6 +20,6 @@ public class ItemEmeraldSpade extends ItemSpade implements IHasRecipe {
 
 	@Override
 	public void addRecipe() {
-		GameRegistry.addShapedRecipe(new ItemStack(this), " e ", " s ", " s ", 'e', new ItemStack(Blocks.emerald_block), 's', new ItemStack(Items.stick));
+		GameRegistry.addShapedRecipe(new ItemStack(this), " e ", " s ", " s ", 'e', new ItemStack(Blocks.EMERALD_BLOCK), 's', new ItemStack(Items.STICK));
 	}
 }

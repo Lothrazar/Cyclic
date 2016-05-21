@@ -83,20 +83,20 @@ public class EntitySnowballBolt extends EntityThrowable {
 		if (this.isInWater()) {
 			BlockPos posWater = this.getPosition();
 
-			if (this.worldObj.getBlockState(posWater) != Blocks.water.getDefaultState()) {
+			if (this.worldObj.getBlockState(posWater) != Blocks.WATER.getDefaultState()) {
 				posWater = null;// look for the closest water source, sometimes it was
 				                // air and we
 				// got ice right above the water if we dont do this check
 
-				if (this.worldObj.getBlockState(mop.getBlockPos()) == Blocks.water.getDefaultState())
+				if (this.worldObj.getBlockState(mop.getBlockPos()) == Blocks.WATER.getDefaultState())
 					posWater = mop.getBlockPos();
-				else if (this.worldObj.getBlockState(mop.getBlockPos().offset(mop.sideHit)) == Blocks.water.getDefaultState())
+				else if (this.worldObj.getBlockState(mop.getBlockPos().offset(mop.sideHit)) == Blocks.WATER.getDefaultState())
 					posWater = mop.getBlockPos().offset(mop.sideHit);
 			}
 
 			if (posWater != null) // rarely happens but it does
 			{
-				this.worldObj.setBlockState(posWater, Blocks.ice.getDefaultState());
+				this.worldObj.setBlockState(posWater, Blocks.ICE.getDefaultState());
 			}
 		}
 		else {
@@ -106,16 +106,16 @@ public class EntitySnowballBolt extends EntityThrowable {
 			BlockPos hitUp = hit.up();
 
 			IBlockState hitState = this.worldObj.getBlockState(hit);
-			if (hitState.getBlock() == Blocks.snow_layer) {
+			if (hitState.getBlock() == Blocks.SNOW_LAYER) {
 				setMoreSnow(this.worldObj, hit);
 
 			}// these other cases do not really fire, i think. unless the entity goes
 			 // inside a
 			 // block before despawning
-			else if (this.worldObj.getBlockState(hitDown).getBlock() == Blocks.snow_layer) {
+			else if (this.worldObj.getBlockState(hitDown).getBlock() == Blocks.SNOW_LAYER) {
 				setMoreSnow(this.worldObj, hitDown);
 			}
-			else if (this.worldObj.getBlockState(hitUp).getBlock() == Blocks.snow_layer) {
+			else if (this.worldObj.getBlockState(hitUp).getBlock() == Blocks.SNOW_LAYER) {
 				setMoreSnow(this.worldObj, hitUp);
 			}
 			else if (this.worldObj.isAirBlock(hit) == false // one below us cannot be
@@ -152,19 +152,19 @@ public class EntitySnowballBolt extends EntityThrowable {
 		int m = hitState.getBlock().getMetaFromState(hitState);
 		// when it hits 7, same size as full block
 		if (m + 1 < 8){
-			world.setBlockState(pos, Blocks.snow_layer.getStateFromMeta(m + 1));
+			world.setBlockState(pos, Blocks.SNOW_LAYER.getStateFromMeta(m + 1));
 		}
 
-		UtilSound.playSound(world, pos, SoundEvents.block_snow_place, SoundCategory.BLOCKS);
+		UtilSound.playSound(world, pos, SoundEvents.BLOCK_SNOW_PLACE, SoundCategory.BLOCKS);
 		
 	}
 
 	private static void setNewSnow(World world, BlockPos pos) {
 
-		world.setBlockState(pos, Blocks.snow_layer.getDefaultState());
+		world.setBlockState(pos, Blocks.SNOW_LAYER.getDefaultState());
 
 
-		UtilSound.playSound(world, pos, SoundEvents.block_snow_place, SoundCategory.BLOCKS);
+		UtilSound.playSound(world, pos, SoundEvents.BLOCK_SNOW_PLACE, SoundCategory.BLOCKS);
 		
 	}
 }

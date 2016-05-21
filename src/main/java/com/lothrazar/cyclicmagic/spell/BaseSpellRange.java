@@ -35,9 +35,9 @@ public abstract class BaseSpellRange extends BaseSpell {
 boolean ismp = (player instanceof EntityPlayerMP);
 		System.out.println("ismp"+ ismp);
 		*/
-		if (block != null && block.getStepSound() != null && block.getStepSound().getPlaceSound() != null) {
+		if (block != null && block.getSoundType() != null && block.getSoundType().getPlaceSound() != null) {
 			
-			UtilSound.playSound(player, pos, block.getStepSound().getPlaceSound());
+			UtilSound.playSound(player, pos, block.getSoundType().getPlaceSound());
 		}
 		/*
 		else {

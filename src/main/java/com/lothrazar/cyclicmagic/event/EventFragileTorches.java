@@ -24,7 +24,7 @@ public class EventFragileTorches  implements IHasConfig{
 		if (ent instanceof EntityLiving == false) { return; }
 		EntityLivingBase living = (EntityLivingBase) event.getEntity();
 		if (living == null) { return; }
-		if (living.worldObj.getBlockState(living.getPosition()).getBlock() == Blocks.torch) {
+		if (living.worldObj.getBlockState(living.getPosition()).getBlock() == Blocks.TORCH) {
 			float oddsWillBreak = 0.01F;// TODO: in config or something? or make this
 			                            // 1/100
 			boolean playerCancelled = false;

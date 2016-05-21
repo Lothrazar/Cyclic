@@ -36,41 +36,41 @@ public class RecipeAlterRegistry {
 
 	private static void furnaceNeedsCoal() {
 
-		UtilRecipe.removeRecipe(Blocks.furnace);
+		UtilRecipe.removeRecipe(Blocks.FURNACE);
 
-		GameRegistry.addRecipe(new ItemStack(Blocks.furnace), "bbb", "bcb", "bbb", 'b', Blocks.cobblestone, 'c', Items.coal);
+		GameRegistry.addRecipe(new ItemStack(Blocks.FURNACE), "bbb", "bcb", "bbb", 'b', Blocks.COBBLESTONE, 'c', Items.COAL);
 	}
 
 	private static void smoothstoneRequired() {
 
-		UtilRecipe.removeRecipe(Items.stone_pickaxe);
+		UtilRecipe.removeRecipe(Items.STONE_PICKAXE);
 
-		GameRegistry.addRecipe(new ItemStack(Items.stone_pickaxe, 1, UtilItem.getMaxDmgFraction(Items.stone_pickaxe, 4)), "sss", " t ", " t ", 's', Blocks.cobblestone, 't', Items.stick);
-		GameRegistry.addRecipe(new ItemStack(Items.stone_pickaxe), "sss", " t ", " t ", 's', Blocks.stone, 't', Items.stick);
+		GameRegistry.addRecipe(new ItemStack(Items.STONE_PICKAXE, 1, UtilItem.getMaxDmgFraction(Items.STONE_PICKAXE, 4)), "sss", " t ", " t ", 's', Blocks.COBBLESTONE, 't', Items.STICK);
+		GameRegistry.addRecipe(new ItemStack(Items.STONE_PICKAXE), "sss", " t ", " t ", 's', Blocks.STONE, 't', Items.STICK);
 
-		UtilRecipe.removeRecipe(Items.stone_sword);
+		UtilRecipe.removeRecipe(Items.STONE_SWORD);
 
-		GameRegistry.addRecipe(new ItemStack(Items.stone_sword, 1, UtilItem.getMaxDmgFraction(Items.stone_sword, 4)), " s ", " s ", " t ", 's', Blocks.cobblestone, 't', Items.stick);
-		GameRegistry.addRecipe(new ItemStack(Items.stone_sword), " s ", " s ", " t ", 's', Blocks.stone, 't', Items.stick);
+		GameRegistry.addRecipe(new ItemStack(Items.STONE_SWORD, 1, UtilItem.getMaxDmgFraction(Items.STONE_SWORD, 4)), " s ", " s ", " t ", 's', Blocks.COBBLESTONE, 't', Items.STICK);
+		GameRegistry.addRecipe(new ItemStack(Items.STONE_SWORD), " s ", " s ", " t ", 's', Blocks.STONE, 't', Items.STICK);
 
-		UtilRecipe.removeRecipe(Items.stone_axe);
+		UtilRecipe.removeRecipe(Items.STONE_AXE);
 
-		GameRegistry.addRecipe(new ItemStack(Items.stone_axe, 1, UtilItem.getMaxDmgFraction(Items.stone_axe, 4)), "ss ", "st ", " t ", 's', Blocks.cobblestone, 't', Items.stick);
-		GameRegistry.addRecipe(new ItemStack(Items.stone_axe, 1, UtilItem.getMaxDmgFraction(Items.stone_axe, 4)), " ss", " ts", " t ", 's', Blocks.cobblestone, 't', Items.stick);
-		GameRegistry.addRecipe(new ItemStack(Items.stone_axe), "ss ", "st ", " t ", 's', Blocks.stone, 't', Items.stick);
-		GameRegistry.addRecipe(new ItemStack(Items.stone_axe), " ss", " ts", " t ", 's', Blocks.stone, 't', Items.stick);
+		GameRegistry.addRecipe(new ItemStack(Items.STONE_AXE, 1, UtilItem.getMaxDmgFraction(Items.STONE_AXE, 4)), "ss ", "st ", " t ", 's', Blocks.COBBLESTONE, 't', Items.STICK);
+		GameRegistry.addRecipe(new ItemStack(Items.STONE_AXE, 1, UtilItem.getMaxDmgFraction(Items.STONE_AXE, 4)), " ss", " ts", " t ", 's', Blocks.COBBLESTONE, 't', Items.STICK);
+		GameRegistry.addRecipe(new ItemStack(Items.STONE_AXE), "ss ", "st ", " t ", 's', Blocks.STONE, 't', Items.STICK);
+		GameRegistry.addRecipe(new ItemStack(Items.STONE_AXE), " ss", " ts", " t ", 's', Blocks.STONE, 't', Items.STICK);
 
-		UtilRecipe.removeRecipe(Items.stone_hoe);
+		UtilRecipe.removeRecipe(Items.STONE_HOE);
 
-		GameRegistry.addRecipe(new ItemStack(Items.stone_hoe, 1, UtilItem.getMaxDmgFraction(Items.stone_hoe, 4)), "ss ", " t ", " t ", 's', Blocks.cobblestone, 't', Items.stick);
-		GameRegistry.addRecipe(new ItemStack(Items.stone_hoe, 1, UtilItem.getMaxDmgFraction(Items.stone_hoe, 4)), " ss", " t ", " t ", 's', Blocks.cobblestone, 't', Items.stick);
-		GameRegistry.addRecipe(new ItemStack(Items.stone_hoe), "ss ", " t ", " t ", 's', Blocks.stone, 't', Items.stick);
-		GameRegistry.addRecipe(new ItemStack(Items.stone_hoe), " ss", " t ", " t ", 's', Blocks.stone, 't', Items.stick);
+		GameRegistry.addRecipe(new ItemStack(Items.STONE_HOE, 1, UtilItem.getMaxDmgFraction(Items.STONE_HOE, 4)), "ss ", " t ", " t ", 's', Blocks.COBBLESTONE, 't', Items.STICK);
+		GameRegistry.addRecipe(new ItemStack(Items.STONE_HOE, 1, UtilItem.getMaxDmgFraction(Items.STONE_HOE, 4)), " ss", " t ", " t ", 's', Blocks.COBBLESTONE, 't', Items.STICK);
+		GameRegistry.addRecipe(new ItemStack(Items.STONE_HOE), "ss ", " t ", " t ", 's', Blocks.STONE, 't', Items.STICK);
+		GameRegistry.addRecipe(new ItemStack(Items.STONE_HOE), " ss", " t ", " t ", 's', Blocks.STONE, 't', Items.STICK);
 
-		UtilRecipe.removeRecipe(Items.stone_shovel);
+		UtilRecipe.removeRecipe(Items.STONE_SHOVEL);
 
-		GameRegistry.addRecipe(new ItemStack(Items.stone_shovel, 1, UtilItem.getMaxDmgFraction(Items.stone_shovel, 4)), " s ", " t ", " t ", 's', Blocks.cobblestone, 't', Items.stick);
-		GameRegistry.addRecipe(new ItemStack(Items.stone_shovel), " s ", " t ", " t ", 's', Blocks.stone, 't', Items.stick);
+		GameRegistry.addRecipe(new ItemStack(Items.STONE_SHOVEL, 1, UtilItem.getMaxDmgFraction(Items.STONE_SHOVEL, 4)), " s ", " t ", " t ", 's', Blocks.COBBLESTONE, 't', Items.STICK);
+		GameRegistry.addRecipe(new ItemStack(Items.STONE_SHOVEL), " s ", " t ", " t ", 's', Blocks.STONE, 't', Items.STICK);
 	}
 
 }

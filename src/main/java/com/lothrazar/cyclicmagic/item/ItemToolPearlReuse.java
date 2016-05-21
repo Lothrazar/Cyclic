@@ -34,7 +34,7 @@ public class ItemToolPearlReuse extends BaseTool implements IHasRecipe, IHasConf
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
 
-		worldIn.playSound((EntityPlayer) null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.entity_enderpearl_throw, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+		worldIn.playSound((EntityPlayer) null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_ENDERPEARL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
 		playerIn.getCooldownTracker().setCooldown(this, cooldown);
 
 		if (!worldIn.isRemote) {
@@ -54,9 +54,9 @@ public class ItemToolPearlReuse extends BaseTool implements IHasRecipe, IHasConf
 				"ere", 
 				"rsr", 
 				"ere", 
-				'e', new ItemStack(Items.ender_eye), 
-				'r', new ItemStack(Items.redstone), 
-				's', new ItemStack(Blocks.emerald_block));
+				'e', new ItemStack(Items.ENDER_EYE), 
+				'r', new ItemStack(Items.REDSTONE), 
+				's', new ItemStack(Blocks.EMERALD_BLOCK));
 	}
 	
 	@SideOnly(Side.CLIENT)

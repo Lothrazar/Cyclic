@@ -65,7 +65,7 @@ public class EntityWaterBolt extends EntityThrowable {
 
 		if (this.dimension != nether) {
 
-			UtilSound.playSound(worldObj, pos, SoundEvents.entity_player_splash, SoundCategory.PLAYERS);
+			UtilSound.playSound(worldObj, pos, SoundEvents.ENTITY_PLAYER_SPLASH, SoundCategory.PLAYERS);
 			
 			// so far its both client and server
 			if (this.worldObj.isRemote == false) {
@@ -74,14 +74,14 @@ public class EntityWaterBolt extends EntityThrowable {
 
 					if (this.isAirOrWater(pos)) {
 
-						this.worldObj.setBlockState(pos, Blocks.flowing_water.getDefaultState(), 3);
+						this.worldObj.setBlockState(pos, Blocks.FLOWING_WATER.getDefaultState(), 3);
 					}
 					if (mop.sideHit != null) {
 						BlockPos offset = pos.offset(mop.sideHit);
 
 						if (offset != null && this.isAirOrWater(offset)) {
 
-							this.worldObj.setBlockState(offset, Blocks.flowing_water.getDefaultState(), 3);
+							this.worldObj.setBlockState(offset, Blocks.FLOWING_WATER.getDefaultState(), 3);
 						}
 					}
 				}
@@ -94,8 +94,8 @@ public class EntityWaterBolt extends EntityThrowable {
 	private boolean isAirOrWater(BlockPos pos) {
 
 		ArrayList<Block> waterBoth = new ArrayList<Block>();
-		waterBoth.add(Blocks.flowing_water);
-		waterBoth.add(Blocks.water);
+		waterBoth.add(Blocks.FLOWING_WATER);
+		waterBoth.add(Blocks.WATER);
 		if (pos == null) { return false; }
 		return this.worldObj.isAirBlock(pos) || this.worldObj.getBlockState(pos).getBlock().getUnlocalizedName().equalsIgnoreCase("tile.water") || (this.worldObj.getBlockState(pos) != null && waterBoth.contains(this.worldObj.getBlockState(pos).getBlock()));
 	}

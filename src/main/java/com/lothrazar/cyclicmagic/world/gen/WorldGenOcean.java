@@ -9,7 +9,7 @@ import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
@@ -36,9 +36,9 @@ public class WorldGenOcean implements IWorldGenerator {
 
 	public WorldGenOcean() {
 
-		this.genClay = new WorldGenMinable(Blocks.clay.getDefaultState(), clayNumBlocks, BlockMatcher.forBlock(Blocks.gravel));
-		this.genSand = new WorldGenMinable(Blocks.dirt.getDefaultState(), dirtNumBlocks, BlockMatcher.forBlock(Blocks.gravel));
-		this.genDirt = new WorldGenMinable(Blocks.sand.getDefaultState(), sandNumBlocks, BlockMatcher.forBlock(Blocks.gravel));
+		this.genClay = new WorldGenMinable(Blocks.CLAY.getDefaultState(), clayNumBlocks, BlockMatcher.forBlock(Blocks.GRAVEL));
+		this.genSand = new WorldGenMinable(Blocks.DIRT.getDefaultState(), dirtNumBlocks, BlockMatcher.forBlock(Blocks.GRAVEL));
+		this.genDirt = new WorldGenMinable(Blocks.SAND.getDefaultState(), sandNumBlocks, BlockMatcher.forBlock(Blocks.GRAVEL));
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public class WorldGenOcean implements IWorldGenerator {
 		int heightDiff = maxHeight - minHeight;
 
 		BlockPos pos;
-		BiomeGenBase biome;
+		Biome biome;
 
 		for (int i = 0; i < chancesToSpawn; i++) {
 			int x = chunk_X + rand.nextInt(Const.CHUNK_SIZE);
@@ -69,7 +69,7 @@ public class WorldGenOcean implements IWorldGenerator {
 			pos = new BlockPos(x, y, z);
 			biome = world.getBiomeGenForCoords(pos);
 
-			if (biome == Biomes.ocean || biome == Biomes.deepOcean || biome == Biomes.frozenOcean) {
+			if (biome == Biomes.OCEAN || biome == Biomes.DEEP_OCEAN || biome == Biomes.FROZEN_OCEAN) {
 				generator.generate(world, rand, pos);
 			}
 		}

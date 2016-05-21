@@ -25,7 +25,7 @@ public class EventEnderChest  implements IHasConfig{
 		EntityPlayer entityPlayer = event.getEntityPlayer();
 		ItemStack held = entityPlayer.getHeldItem(event.getHand());
 		
-		if(held != null && held.getItem() == Item.getItemFromBlock(Blocks.ender_chest)){
+		if(held != null && held.getItem() == Item.getItemFromBlock(Blocks.ENDER_CHEST)){
 
 			entityPlayer.displayGUIChest(entityPlayer.getInventoryEnderChest());
 		}

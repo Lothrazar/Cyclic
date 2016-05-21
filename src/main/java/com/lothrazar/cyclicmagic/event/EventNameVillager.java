@@ -27,7 +27,7 @@ public class EventNameVillager  implements IHasConfig{
 		Entity target = event.getTarget();
 		
 
-		if (held != null && held.getItem() == Items.name_tag && held.hasDisplayName() && target instanceof EntityVillager) {
+		if (held != null && held.getItem() == Items.NAME_TAG && held.hasDisplayName() && target instanceof EntityVillager) {
 
 			EntityVillager v = (EntityVillager) target;
 

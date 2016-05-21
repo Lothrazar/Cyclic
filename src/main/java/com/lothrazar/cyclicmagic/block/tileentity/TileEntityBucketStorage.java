@@ -65,11 +65,11 @@ public class TileEntityBucketStorage extends TileEntity {
 	}
 
 	@Override
-	public void writeToNBT(NBTTagCompound nbt) {
+	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 
 		nbt.setInteger(TileEntityBucketStorage.NBT_ID, this.buckets);
 		nbt.setLong(TileEntityBucketStorage.NBT_TIME, this.timeLastRemoved);
-		super.writeToNBT(nbt);
+		return super.writeToNBT(nbt);
 	}
 
 	@Override

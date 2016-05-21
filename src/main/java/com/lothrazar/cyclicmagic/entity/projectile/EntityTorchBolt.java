@@ -73,7 +73,7 @@ public class EntityTorchBolt extends EntityThrowable {
 			break;
 			}
 
-			this.worldObj.setBlockState(offset, Blocks.torch.getStateFromMeta(blockdata));
+			this.worldObj.setBlockState(offset, Blocks.TORCH.getStateFromMeta(blockdata));
 		}
 
 		this.setDead();

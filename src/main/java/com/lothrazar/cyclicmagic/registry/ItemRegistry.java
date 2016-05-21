@@ -84,11 +84,11 @@ public class ItemRegistry {
 		addItem(new ItemProjectileTNT(2),"ender_tnt_2");
 		addItem(new ItemProjectileTNT(3),"ender_tnt_4");
 		addItem(new ItemProjectileTNT(4),"ender_tnt_6");
-		addItem(new ItemFoodHorse(new ItemStack(Items.emerald)),"horse_upgrade_type");
-		addItem(new ItemFoodHorse(new ItemStack(Items.dye, 1, Const.dye_lapis)),"horse_upgrade_variant");
-		addItem(new ItemFoodHorse(new ItemStack(Items.diamond)),"horse_upgrade_health");
-		addItem(new ItemFoodHorse(new ItemStack(Items.redstone)),"horse_upgrade_speed");
-		addItem(new ItemFoodHorse(new ItemStack(Items.ender_eye)),"horse_upgrade_jump");
+		addItem(new ItemFoodHorse(new ItemStack(Items.EMERALD)),"horse_upgrade_type");
+		addItem(new ItemFoodHorse(new ItemStack(Items.DYE, 1, Const.dye_lapis)),"horse_upgrade_variant");
+		addItem(new ItemFoodHorse(new ItemStack(Items.DIAMOND)),"horse_upgrade_health");
+		addItem(new ItemFoodHorse(new ItemStack(Items.REDSTONE)),"horse_upgrade_speed");
+		addItem(new ItemFoodHorse(new ItemStack(Items.ENDER_EYE)),"horse_upgrade_jump");
 		addItem(new ItemEnderBook(),"book_ender"); 
  
 
@@ -103,7 +103,7 @@ public class ItemRegistry {
 	private static boolean emeraldGearEnabled ; 
 	public static ToolMaterial		MATERIAL_EMERALD;
 	public static ArmorMaterial		ARMOR_MATERIAL_EMERALD;
-	public final static Item		REPAIR_EMERALD = Items.emerald;
+	public final static Item		REPAIR_EMERALD = Items.EMERALD;
 
 	// only because theyre private, with no getters
 	private static final int		diamondDurability				= 33;
@@ -150,15 +150,15 @@ public class ItemRegistry {
 
 			ItemCyclicWand cyclic_wand_build = new ItemCyclicWand();
 			addItem(cyclic_wand_build, "cyclic_wand_build");
-			GameRegistry.addRecipe(new ItemStack(cyclic_wand_build), "sds", " o ", "gog", 'd', new ItemStack(Blocks.diamond_block), 'g', Items.ghast_tear, 'o', Blocks.obsidian, 's', Items.nether_star);
+			GameRegistry.addRecipe(new ItemStack(cyclic_wand_build), "sds", " o ", "gog", 'd', new ItemStack(Blocks.DIAMOND_BLOCK), 'g', Items.GHAST_TEAR, 'o', Blocks.OBSIDIAN, 's', Items.NETHER_STAR);
 
 			ItemCyclicWand cyclic_wand_range = new ItemCyclicWand();
 			addItem(cyclic_wand_range, "cyclic_wand_range");
-			GameRegistry.addRecipe(new ItemStack(cyclic_wand_range), "sds", " o ", "gog", 'd', new ItemStack(Blocks.emerald_block), 'g', Items.ghast_tear, 'o', Blocks.obsidian, 's', Items.nether_star);
+			GameRegistry.addRecipe(new ItemStack(cyclic_wand_range), "sds", " o ", "gog", 'd', new ItemStack(Blocks.EMERALD_BLOCK), 'g', Items.GHAST_TEAR, 'o', Blocks.OBSIDIAN, 's', Items.NETHER_STAR);
 
 			ItemCyclicWand cyclic_wand_fly = new ItemCyclicWand();
 			addItem(cyclic_wand_fly, "cyclic_wand_fly");
-			GameRegistry.addRecipe(new ItemStack(cyclic_wand_fly), "sds", " o ", "gog", 'd', new ItemStack(Blocks.redstone_block), 'g', Items.ghast_tear, 'o', Blocks.obsidian, 's', Items.nether_star);
+			GameRegistry.addRecipe(new ItemStack(cyclic_wand_fly), "sds", " o ", "gog", 'd', new ItemStack(Blocks.REDSTONE_BLOCK), 'g', Items.GHAST_TEAR, 'o', Blocks.OBSIDIAN, 's', Items.NETHER_STAR);
 		}
 
 		// thanks for help:
@@ -211,15 +211,15 @@ public class ItemRegistry {
 		
 		if (ItemFoodAppleMagic.apple_chorus_enabled) {
 			ItemFoodAppleMagic apple_chorus = new ItemFoodAppleMagic(hunger, false, 
-					new ItemStack(Items.chorus_fruit)
-					,MobEffects.levitation, 30, I);
+					new ItemStack(Items.CHORUS_FRUIT)
+					,MobEffects.LEVITATION, 30, I);
  
 			addItem(apple_chorus, "apple_chorus");
 		}
 
 		if (ItemFoodAppleMagic.apple_ender_enabled) {
 			ItemFoodAppleMagic apple_ender = new ItemFoodAppleMagic(hunger, false, 
-					new ItemStack(Items.ender_pearl)
+					new ItemStack(Items.ENDER_PEARL)
 					,PotionRegistry.ender, time, I);
  
 			addItem(apple_ender, "apple_ender");
@@ -227,53 +227,53 @@ public class ItemRegistry {
 
 		if (ItemFoodAppleMagic.apple_emerald_enabled) {
 			ItemFoodAppleMagic apple_emerald = new ItemFoodAppleMagic(hunger, false, 
-					new ItemStack(Items.emerald)
-					,MobEffects.healthBoost, time, V);
+					new ItemStack(Items.EMERALD)
+					,MobEffects.HEALTH_BOOST, time, V);
 		 
 			addItem(apple_emerald, "apple_emerald"); 
 		}
 
 		if (ItemFoodAppleMagic.apple_chocolate_enabled) {
 			ItemFoodAppleMagic apple_chocolate = new ItemFoodAppleMagic(hunger, false, 
-					new ItemStack(Items.dye, 1, Const.dye_cocoa)
-					,MobEffects.luck, time, II); 
+					new ItemStack(Items.DYE, 1, Const.dye_cocoa)
+					,MobEffects.LUCK, time, II); 
 			addItem(apple_chocolate, "apple_chocolate"); 
 		}
 
 		if (ItemFoodAppleMagic.apple_lapis_enabled) {
 			ItemFoodAppleMagic apple_lapis = new ItemFoodAppleMagic(hunger, false, 
-					new ItemStack(Items.dye, 1, Const.dye_lapis),MobEffects.digSpeed, time, II);
+					new ItemStack(Items.DYE, 1, Const.dye_lapis),MobEffects.HASTE, time, II);
 		 
 			addItem(apple_lapis, "apple_lapis"); 
 		}
 		
 		if (ItemFoodAppleMagic.apple_diamond_enabled) {
 			ItemFoodAppleMagic apple_diamond = new ItemFoodAppleMagic(hunger, false, 
-					new ItemStack(Items.diamond),MobEffects.resistance, time, I);
+					new ItemStack(Items.DIAMOND),MobEffects.RESISTANCE, time, I);
 			addItem(apple_diamond, "apple_diamond"); 
 		}
 
 		if (ItemFoodAppleMagic.apple_bone_enabled) {
-			ItemFoodAppleMagic apple_bone = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.bone)
-					,MobEffects.glowing, time, I);
+			ItemFoodAppleMagic apple_bone = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.BONE)
+					,MobEffects.GLOWING, time, I);
 			addItem(apple_bone, "apple_bone"); 
 		}
 
 		if (ItemFoodAppleMagic.apple_netherwart_enabled) {
 			ItemFoodAppleMagic apple_netherwart = new ItemFoodAppleMagic(hunger, false, 
-					new ItemStack(Items.nether_wart),PotionRegistry.magnet, time, I);
+					new ItemStack(Items.NETHER_WART),PotionRegistry.magnet, time, I);
 			addItem(apple_netherwart, "apple_netherwart"); 
 		}
 
 		if (ItemFoodAppleMagic.apple_prismarine_enabled) {
 			ItemFoodAppleMagic apple_prismarine = new ItemFoodAppleMagic(hunger, false, 
-					new ItemStack(Items.prismarine_shard),PotionRegistry.waterwalk, time, I);
+					new ItemStack(Items.PRISMARINE_SHARD),PotionRegistry.waterwalk, time, I);
 			addItem(apple_prismarine, "apple_prismarine"); 
 		}
 
 		if (ItemFoodAppleMagic.apple_clownfish_enabled) {
 			ItemFoodAppleMagic apple_slowfall = new ItemFoodAppleMagic(hunger, false, 
-					new ItemStack(Items.fish, 1, Const.fish_puffer),PotionRegistry.slowfall, time, I);
+					new ItemStack(Items.FISH, 1, Const.fish_puffer),PotionRegistry.slowfall, time, I);
 			 
 			addItem(apple_slowfall, "apple_slowfall");
 		}

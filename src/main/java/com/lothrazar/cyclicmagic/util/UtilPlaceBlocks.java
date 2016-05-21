@@ -218,7 +218,7 @@ public class UtilPlaceBlocks {
 
 				// ok its a soft block so try to break it first try to destroy it
 				// unless it is liquid, don't try to destroy liquid
-				if (blockHere.getMaterial(stateHere) != Material.water && blockHere.getMaterial(stateHere) != Material.lava) {
+				if (blockHere.getMaterial(stateHere) != Material.WATER && blockHere.getMaterial(stateHere) != Material.LAVA) {
 					boolean dropBlock = true;
 					world.destroyBlock(placePos, dropBlock);
 				}
@@ -244,7 +244,7 @@ public class UtilPlaceBlocks {
 			success = false;
 		}
  
-		 if(success && placeState.getBlock().getStepSound() != null){
+		 if(success){
 				
 			UtilSound.playSoundPlaceBlock(player ,placePos,placeState.getBlock());
 		
@@ -263,19 +263,19 @@ public class UtilPlaceBlocks {
 
 		if (ignoreList.size() == 0) {
 
-			ignoreList.add(Blocks.end_portal_frame);
-			ignoreList.add(Blocks.end_portal);
-			ignoreList.add(Blocks.portal);
-			ignoreList.add(Blocks.bed);
-			ignoreList.add(Blocks.dark_oak_door);
-			ignoreList.add(Blocks.acacia_door);
-			ignoreList.add(Blocks.birch_door);
-			ignoreList.add(Blocks.oak_door);
-			ignoreList.add(Blocks.spruce_door);
-			ignoreList.add(Blocks.jungle_door);
-			ignoreList.add(Blocks.iron_door);
-			ignoreList.add(Blocks.skull);
-			ignoreList.add(Blocks.double_plant);
+			ignoreList.add(Blocks.END_PORTAL_FRAME);
+			ignoreList.add(Blocks.END_PORTAL);
+			ignoreList.add(Blocks.PORTAL);
+			ignoreList.add(Blocks.BED);
+			ignoreList.add(Blocks.DARK_OAK_DOOR);
+			ignoreList.add(Blocks.ACACIA_DOOR);
+			ignoreList.add(Blocks.BIRCH_DOOR);
+			ignoreList.add(Blocks.OAK_DOOR);
+			ignoreList.add(Blocks.SPRUCE_DOOR);
+			ignoreList.add(Blocks.JUNGLE_DOOR);
+			ignoreList.add(Blocks.IRON_DOOR);
+			ignoreList.add(Blocks.SKULL);
+			ignoreList.add(Blocks.DOUBLE_PLANT);
 		}
 	}
 
@@ -364,7 +364,7 @@ public class UtilPlaceBlocks {
 		
 
 		//first handle any special cases : currently just for stone
-		if(clickedBlock == Blocks.stone){
+		if(clickedBlock == Blocks.STONE){
 
 			EnumType variant = clicked.getValue(BlockStone.VARIANT);//.getProperties().get(BlockStone.VARIANT);
 			//basically we want to toggle the "smooth" property on and off

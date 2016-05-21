@@ -75,6 +75,6 @@ public class CommandHome extends BaseCommand implements ICommand {
 
 		UtilTeleport.teleportWallSafe(player, world, pos);
 
-		UtilSound.playSound(player,pos, SoundEvents.entity_endermen_teleport);
+		UtilSound.playSound(player,pos, SoundEvents.ENTITY_ENDERMEN_TELEPORT);
 	}
 }

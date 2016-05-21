@@ -27,8 +27,8 @@ public class ItemEmeraldAxe extends ItemAxe implements IHasRecipe {
 
 	@Override
 	public void addRecipe() {
-		GameRegistry.addShapedRecipe(new ItemStack(this), "ee ", "es ", " s ", 'e', new ItemStack(Blocks.emerald_block), 's', new ItemStack(Items.stick));
+		GameRegistry.addShapedRecipe(new ItemStack(this), "ee ", "es ", " s ", 'e', new ItemStack(Blocks.EMERALD_BLOCK), 's', new ItemStack(Items.STICK));
 
-		GameRegistry.addShapedRecipe(new ItemStack(this), " ee", " se", " s ", 'e', new ItemStack(Blocks.emerald_block), 's', new ItemStack(Items.stick));
+		GameRegistry.addShapedRecipe(new ItemStack(this), " ee", " se", " s ", 'e', new ItemStack(Blocks.EMERALD_BLOCK), 's', new ItemStack(Items.STICK));
 	}
 }

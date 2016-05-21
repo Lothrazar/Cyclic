@@ -119,7 +119,7 @@ public class ClientProxy extends CommonProxy {
                     
                     //??testing
                    
-                    mc.getTextureManager().bindTexture(GuiContainer.inventoryBackground);
+                    mc.getTextureManager().bindTexture(GuiContainer.INVENTORY_BACKGROUND);
                     GlStateManager.enableBlend();
                     GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 

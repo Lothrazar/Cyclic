@@ -27,7 +27,7 @@ public class WorldGenOreSingleton implements IWorldGenerator {
 		blockOre = ore;
 		minHeight = mh;
 		
-		gen = new WorldGenMinable(blockOre.getDefaultState(), 1, BlockMatcher.forBlock(Blocks.stone));
+		gen = new WorldGenMinable(blockOre.getDefaultState(), 1, BlockMatcher.forBlock(Blocks.STONE));
 	}
 
 	@Override

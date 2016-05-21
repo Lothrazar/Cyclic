@@ -55,7 +55,7 @@ public class EntityFishingBolt extends EntityThrowable {
 			}
 
 			
-			UtilSound.playSound(worldObj, pos, SoundEvents.entity_player_splash, SoundCategory.BLOCKS);
+			UtilSound.playSound(worldObj, pos, SoundEvents.ENTITY_PLAYER_SPLASH, SoundCategory.BLOCKS);
 			
 			// SoundEvent.soundEventRegistry.
 			// worldObj.playSoundAtEntity(ei, "game.neutral.swim.splash", 1.0F, 1.0F);
@@ -77,16 +77,16 @@ public class EntityFishingBolt extends EntityThrowable {
 		double diceRoll = rand.nextDouble() * 100;
 
 		if (diceRoll < plainChance) {
-			fishSpawned = new ItemStack(Items.fish, 1, 0); // plain
+			fishSpawned = new ItemStack(Items.FISH, 1, 0); // plain
 		}
 		else if (diceRoll < salmonChance) {
-			fishSpawned = new ItemStack(Items.fish, 1, 1);// salmon
+			fishSpawned = new ItemStack(Items.FISH, 1, 1);// salmon
 		}
 		else if (diceRoll < clownfishChance) {
-			fishSpawned = new ItemStack(Items.fish, 1, 2);// clown
+			fishSpawned = new ItemStack(Items.FISH, 1, 2);// clown
 		}
 		else {
-			fishSpawned = new ItemStack(Items.fish, 1, 3);// puffer
+			fishSpawned = new ItemStack(Items.FISH, 1, 3);// puffer
 		}
 
 		return fishSpawned;

@@ -42,9 +42,9 @@ public class BlockUncrafting extends Block implements IHasRecipe,IHasConfig {
 	private static final PropertyDirection PROPERTYFACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 
 	public BlockUncrafting() {
-		super(Material.iron);
+		super(Material.IRON);
 		this.setHardness(3.0F).setResistance(5.0F);
-		this.setStepSound(SoundType.METAL);
+		this.setSoundType(SoundType.METAL);
 		this.setTickRandomly(true);
 	}
 
@@ -153,7 +153,9 @@ public class BlockUncrafting extends Block implements IHasRecipe,IHasConfig {
 
 	@Override
 	public void addRecipe() {
-		GameRegistry.addRecipe(new ItemStack(this), " r ", "fdf", " o ", 'o', Blocks.obsidian, 'f', Blocks.furnace, 'r', Blocks.dropper, 'd', Blocks.diamond_block);
+		GameRegistry.addRecipe(new ItemStack(this), " r ", "fdf", " o ", 
+				'o', Blocks.OBSIDIAN, 
+				'f', Blocks.FURNACE, 'r', Blocks.DROPPER, 'd', Blocks.DIAMOND_BLOCK);
 	}
 
 	public static boolean enableBlockUncrafting;

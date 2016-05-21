@@ -41,7 +41,7 @@ public class BlockDimensionOre extends BlockOre {
 		dropped = drop;
 		droppedMeta = dmg;
 		randomMax = max;
-		this.setStepSound(SoundType.STONE);
+		this.setSoundType(SoundType.STONE);
 		this.setHardness(3.0F).setResistance(5.0F);
 	}
 	

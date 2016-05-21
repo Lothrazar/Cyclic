@@ -30,33 +30,33 @@ public class ItemProjectileTNT extends BaseItemProjectile implements IHasRecipe{
 		switch(strength){
 		case 1:
 			GameRegistry.addShapelessRecipe(new ItemStack(this)
-					, new ItemStack(Items.ender_pearl)
-					, new ItemStack(Items.gunpowder)
-					, new ItemStack(Items.clay_ball));
+					, new ItemStack(Items.ENDER_PEARL)
+					, new ItemStack(Items.GUNPOWDER)
+					, new ItemStack(Items.CLAY_BALL));
 			break;
 		case 2:
 			GameRegistry.addShapelessRecipe(new ItemStack(this)
-					, new ItemStack(Items.ender_pearl)
-					, new ItemStack(Items.gunpowder)
-					, new ItemStack(Items.gunpowder)
-					, new ItemStack(Items.clay_ball));
+					, new ItemStack(Items.ENDER_PEARL)
+					, new ItemStack(Items.GUNPOWDER)
+					, new ItemStack(Items.GUNPOWDER)
+					, new ItemStack(Items.CLAY_BALL));
 			break;
 		case 3:
 			GameRegistry.addShapelessRecipe(new ItemStack(this)
-					, new ItemStack(Items.ender_pearl)
-					, new ItemStack(Items.gunpowder)
-					, new ItemStack(Items.gunpowder)
-					, new ItemStack(Items.gunpowder)
-					, new ItemStack(Items.clay_ball));
+					, new ItemStack(Items.ENDER_PEARL)
+					, new ItemStack(Items.GUNPOWDER)
+					, new ItemStack(Items.GUNPOWDER)
+					, new ItemStack(Items.GUNPOWDER)
+					, new ItemStack(Items.CLAY_BALL));
 			break;
 		case 4:
 			GameRegistry.addShapelessRecipe(new ItemStack(this)
-					, new ItemStack(Items.ender_pearl)
-					, new ItemStack(Items.gunpowder)
-					, new ItemStack(Items.gunpowder)
-					, new ItemStack(Items.gunpowder)
-					, new ItemStack(Items.gunpowder)
-					, new ItemStack(Items.clay_ball));
+					, new ItemStack(Items.ENDER_PEARL)
+					, new ItemStack(Items.GUNPOWDER)
+					, new ItemStack(Items.GUNPOWDER)
+					, new ItemStack(Items.GUNPOWDER)
+					, new ItemStack(Items.GUNPOWDER)
+					, new ItemStack(Items.CLAY_BALL));
 
 			break;
 		}

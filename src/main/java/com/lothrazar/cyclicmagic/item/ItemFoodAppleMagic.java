@@ -93,7 +93,7 @@ public class ItemFoodAppleMagic extends ItemFood implements IHasRecipe {
 
 	public void addRecipe() {
  
-		GameRegistry.addRecipe(new ItemStack(this), "lll", "lal", "lll", 'l', recipeInput, 'a', Items.apple);
+		GameRegistry.addRecipe(new ItemStack(this), "lll", "lal", "lll", 'l', recipeInput, 'a', Items.APPLE);
 	 
 	}
 

@@ -59,10 +59,10 @@ public class ItemInventoryStorage extends BaseItem implements IHasRecipe,IHasCon
 	@Override
 	public void addRecipe() {
 		GameRegistry.addRecipe(new ItemStack(this),"lsl","ldl","lrl", 
-				'l',Items.leather,
-				's',Items.string,
-				'r',Items.redstone,
-				'd',Blocks.diamond_block
+				'l',Items.LEATHER,
+				's',Items.STRING,
+				'r',Items.REDSTONE,
+				'd',Blocks.DIAMOND_BLOCK
 				);
 	}
 

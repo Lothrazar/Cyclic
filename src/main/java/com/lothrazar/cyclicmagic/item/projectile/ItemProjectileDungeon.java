@@ -33,7 +33,7 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
 
 	@Override
 	public void addRecipe() {
-		GameRegistry.addShapelessRecipe(new ItemStack(this, 6), new ItemStack(Items.ender_pearl), new ItemStack(Blocks.mossy_cobblestone), new ItemStack(Items.nether_wart));// Blocks.iron_bars
+		GameRegistry.addShapelessRecipe(new ItemStack(this, 6), new ItemStack(Items.ENDER_PEARL), new ItemStack(Blocks.MOSSY_COBBLESTONE), new ItemStack(Items.NETHER_WART));// Blocks.iron_bars
 		 
 	}
 

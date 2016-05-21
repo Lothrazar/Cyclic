@@ -286,8 +286,8 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe, IHasConfig 
 	@Override
 	public void addRecipe() {
 
-		GameRegistry.addRecipe(new ItemStack(this, 8), "ppp", "pcp", "ppp", 'c', new ItemStack(Items.coal, 1, 1), // charcoal
-		    'p', Items.paper);
+		GameRegistry.addRecipe(new ItemStack(this, 8), "ppp", "pcp", "ppp", 'c', new ItemStack(Items.COAL, 1, 1), // charcoal
+		    'p', Items.PAPER);
 		
 		//also let you clean off the paper , make one with no NBT
 		GameRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this));

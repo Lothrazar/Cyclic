@@ -34,7 +34,7 @@ public class BlockScaffolding extends Block implements IHasRecipe {
 
 	public BlockScaffolding() {
 
-		super(Material.wood);
+		super(Material.WOOD);
 		this.setTickRandomly(true);
 		this.setHardness(0F);
 		this.setResistance(0F);
@@ -45,7 +45,7 @@ public class BlockScaffolding extends Block implements IHasRecipe {
 		// TODO: SOUND REGISTRY
 		//why doesnt this fix it?
 		SoundEvent crackle = SoundRegistry.crackle;
-	 	this.setStepSound(new SoundType(1.0F, 1.0F, crackle,crackle,crackle,crackle,crackle));
+	 	this.setSoundType(new SoundType(1.0F, 1.0F, crackle,crackle,crackle,crackle,crackle));
 	}
 	
 	@Override
@@ -73,7 +73,7 @@ public class BlockScaffolding extends Block implements IHasRecipe {
 	@Override
 	public void addRecipe() {
 
-		GameRegistry.addRecipe(new ItemStack(this), "s s", " s ", "s s", 's', new ItemStack(Items.stick));
+		GameRegistry.addRecipe(new ItemStack(this), "s s", " s ", "s s", 's', new ItemStack(Items.STICK));
 
 	}
 }

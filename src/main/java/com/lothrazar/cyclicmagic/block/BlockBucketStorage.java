@@ -40,10 +40,10 @@ public class BlockBucketStorage extends Block implements ITileEntityProvider {
 
 	public BlockBucketStorage(Item bucketIn) {
 
-		super(Material.iron);
+		super(Material.IRON);
 		this.setHardness(7F);
-		this.setResistance(7F);
-		this.setStepSound(SoundType.GLASS);
+		this.setResistance(7F); 
+		this.setSoundType(SoundType.GLASS);
 		this.setHarvestLevel("pickaxe", 1);
 		bucketItem = bucketIn;
 	}

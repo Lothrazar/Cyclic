@@ -31,7 +31,7 @@ public class DispenserBehaviorRegistry {
 			// something to TODO look in the future
 			// DOES work with all plants even netherwart
 
-			for (Item item : Item.itemRegistry) { // GameData.getBlockItemMap().entrySet()){
+			for (Item item : Item.REGISTRY) { // GameData.getBlockItemMap().entrySet()){
 				if (item == null) {
 					continue;
 				}
@@ -40,8 +40,8 @@ public class DispenserBehaviorRegistry {
 
 					// System.out.println("BehaviorPlantSeed :
 					// "+item.getUnlocalizedName());
-
-					BlockDispenser.dispenseBehaviorRegistry.putObject(item, new BehaviorPlantSeed());
+ 
+					BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(item, new BehaviorPlantSeed());
 				}
 			}
 		}

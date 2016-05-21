@@ -28,8 +28,8 @@ public class ItemProjectileBlaze extends BaseItemProjectile implements IHasRecip
 	public void addRecipe() {
 
 		GameRegistry.addShapelessRecipe(new ItemStack(this, 3)
-				, new ItemStack(Items.ender_pearl)
-				, new ItemStack(Items.blaze_powder), new ItemStack(Items.flint));
+				, new ItemStack(Items.ENDER_PEARL)
+				, new ItemStack(Items.BLAZE_POWDER), new ItemStack(Items.FLINT));
 	}
 
 	@Override

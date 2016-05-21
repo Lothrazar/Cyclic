@@ -32,7 +32,7 @@ public class UtilItemRenderer{
 
 		TextureAtlasSprite textureAtlasSprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(iBakedModel.getParticleTexture().getIconName());
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
+		Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 
 		if(Minecraft.getMinecraft().currentScreen != null){
 			Minecraft.getMinecraft().currentScreen.drawTexturedModalRect(x, y, textureAtlasSprite, dim, dim);

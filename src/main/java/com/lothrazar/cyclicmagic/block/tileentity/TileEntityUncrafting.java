@@ -172,9 +172,7 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 	}
 
 	@Override
-	public void writeToNBT(NBTTagCompound tagCompound) {
-
-		super.writeToNBT(tagCompound);
+	public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
 
 		tagCompound.setInteger(NBT_TIMER, timer);
  
@@ -189,6 +187,7 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 			}
 		}
 		tagCompound.setTag(NBT_INV, itemList);
+		return super.writeToNBT(tagCompound);
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -332,7 +331,7 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 
 				this.decrStackSize(0, uncrafter.getOutsize());
 			 
-				UtilSound.playSound(worldObj, this.getPos(), SoundEvents.entity_item_break,SoundCategory.BLOCKS);
+				UtilSound.playSound(worldObj, this.getPos(), SoundEvents.ENTITY_ITEM_BREAK,SoundCategory.BLOCKS);
 			}
 			else {
 				//try to dump to inventory first
@@ -357,7 +356,7 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 //				}
 				this.decrStackSize(0, stack.stackSize);
  
-				UtilSound.playSound(worldObj, this.getPos(), SoundEvents.entity_arrow_shoot,SoundCategory.BLOCKS);
+				UtilSound.playSound(worldObj, this.getPos(), SoundEvents.ENTITY_ARROW_SHOOT,SoundCategory.BLOCKS);
 			}
 			
 			this.worldObj.markBlockRangeForRenderUpdate(this.getPos(), this.getPos().up());

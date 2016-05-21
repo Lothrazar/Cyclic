@@ -13,7 +13,7 @@ import net.minecraft.entity.monster.EntityMagmaCube;
 import net.minecraft.entity.monster.EntitySnowman;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.init.Biomes;
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
@@ -35,36 +35,36 @@ public class MobSpawningRegistry {
 	public static void register() {
 
 		if(endermanNether){
-			EntityRegistry.addSpawn(EntityEnderman.class, group, min, max, EnumCreatureType.MONSTER, new BiomeGenBase[] { Biomes.hell });
+			EntityRegistry.addSpawn(EntityEnderman.class, group, min, max, EnumCreatureType.MONSTER, new Biome[] { Biomes.HELL });
 		}
 		
 		if(blazeDesertHills){
-			EntityRegistry.addSpawn(EntityBlaze.class, group, min, max, EnumCreatureType.MONSTER, new BiomeGenBase[] { Biomes.desertHills });
+			EntityRegistry.addSpawn(EntityBlaze.class, group, min, max, EnumCreatureType.MONSTER, new Biome[] { Biomes.DESERT_HILLS });
 		}
 		if(magmaDesert){
-			EntityRegistry.addSpawn(EntityMagmaCube.class, group, min, max, EnumCreatureType.MONSTER, new BiomeGenBase[] { Biomes.desertHills, Biomes.desert });
+			EntityRegistry.addSpawn(EntityMagmaCube.class, group, min, max, EnumCreatureType.MONSTER, new Biome[] { Biomes.DESERT_HILLS, Biomes.DESERT });
 		}
 		
 		if(caveSpiderMesaRoofed){
-			EntityRegistry.addSpawn(EntityCaveSpider.class, group, min, max, EnumCreatureType.MONSTER, new BiomeGenBase[] { Biomes.mesa, Biomes.roofedForest });
+			EntityRegistry.addSpawn(EntityCaveSpider.class, group, min, max, EnumCreatureType.MONSTER, new Biome[] { Biomes.MESA, Biomes.ROOFED_FOREST });
 		}
 		
 		if(ghastDeepOcean){
-			EntityRegistry.addSpawn(EntityGhast.class, group, min, max, EnumCreatureType.MONSTER, new BiomeGenBase[] { Biomes.deepOcean });
+			EntityRegistry.addSpawn(EntityGhast.class, group, min, max, EnumCreatureType.MONSTER, new Biome[] { Biomes.DEEP_OCEAN });
 		}
 		
 		if(guardianRiver){
-			EntityRegistry.addSpawn(EntityGuardian.class, group, min, max, EnumCreatureType.WATER_CREATURE, new BiomeGenBase[] { Biomes.river });
+			EntityRegistry.addSpawn(EntityGuardian.class, group, min, max, EnumCreatureType.WATER_CREATURE, new Biome[] { Biomes.RIVER });
 		}
 		if(snowmanIcePlainsMount){
-			EntityRegistry.addSpawn(EntitySnowman.class, group, min, max, EnumCreatureType.CREATURE, new BiomeGenBase[] { Biomes.iceMountains, Biomes.icePlains });
+			EntityRegistry.addSpawn(EntitySnowman.class, group, min, max, EnumCreatureType.CREATURE, new Biome[] { Biomes.ICE_MOUNTAINS, Biomes.ICE_PLAINS });
 		}
 		if(horseIceExtrhillsOcean){
 			// existing horses only spawn in plains and savanah
-			EntityRegistry.addSpawn(EntityHorse.class, group, min, max, EnumCreatureType.CREATURE, new BiomeGenBase[] { Biomes.extremeHills, Biomes.icePlains });
+			EntityRegistry.addSpawn(EntityHorse.class, group, min, max, EnumCreatureType.CREATURE, new Biome[] { Biomes.EXTREME_HILLS, Biomes.ICE_PLAINS });
 		}
 		if(ironGolemJungle){
-			EntityRegistry.addSpawn(EntityIronGolem.class, group, min, max, EnumCreatureType.CREATURE, new BiomeGenBase[] { Biomes.jungleHills, Biomes.jungle });
+			EntityRegistry.addSpawn(EntityIronGolem.class, group, min, max, EnumCreatureType.CREATURE, new Biome[] { Biomes.JUNGLE_HILLS, Biomes.JUNGLE });
 		}
 		
 
