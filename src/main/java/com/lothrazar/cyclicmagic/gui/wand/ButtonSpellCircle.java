@@ -38,7 +38,7 @@ public class ButtonSpellCircle extends GuiButton implements ITooltipButton {
 	public List<String> getTooltips() {
 		List<String> tooltips = new ArrayList<String>();
 
-		tooltips.add(net.minecraft.util.text.translation.I18n.translateToLocal("button.circle"));
+		tooltips.add(net.minecraft.client.resources.I18n.format("button.circle"));
 
 		return tooltips;
 	}

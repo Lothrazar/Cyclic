@@ -10,7 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.translation.I18n;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.world.World;
 
 public abstract class BaseSpell implements ISpell {
@@ -35,7 +35,7 @@ public abstract class BaseSpell implements ISpell {
 
 	public String getName() {
 
-		return I18n.translateToLocal("spell." + name + ".name");
+		return I18n.format("spell." + name + ".name");
 	}
 
 	public String getUnlocalizedName() {
@@ -45,7 +45,7 @@ public abstract class BaseSpell implements ISpell {
 
 	public String getInfo() {
 
-		return I18n.translateToLocal("spell." + name + ".info");
+		return I18n.format("spell." + name + ".info");
 	}
 
 	@Override

@@ -6,9 +6,7 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.registry.PotionRegistry;
-import com.lothrazar.cyclicmagic.util.Const;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
-
+import com.lothrazar.cyclicmagic.util.Const; 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -17,7 +15,7 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.text.translation.I18n;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -100,7 +98,7 @@ public class ItemFoodAppleMagic extends ItemFood implements IHasRecipe {
 	public void addInformation(ItemStack held, EntityPlayer player, List<String> list, boolean par4) {
 		for (int i = 0; i < potions.size(); i++) {
 
-			list.add(I18n.translateToLocal(potions.get(i).getName()));
+			list.add(I18n.format(potions.get(i).getName()));
 		}
 	}
 

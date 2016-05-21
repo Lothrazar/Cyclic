@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.gui.waypoints;
 
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.util.text.translation.I18n;
+import net.minecraft.client.resources.I18n;
 
 public class ButtonWaypointNew extends GuiButton {
 	private int bookSlot;
@@ -11,7 +11,7 @@ public class ButtonWaypointNew extends GuiButton {
 	}
 
 	public ButtonWaypointNew(int id, int x, int y, int w, int h, int slot) {
-		super(id, x, y, w, h, I18n.translateToLocal("gui.enderbook.new"));
+		super(id, x, y, w, h, I18n.format("gui.enderbook.new"));
 		bookSlot = slot;
 	}
 

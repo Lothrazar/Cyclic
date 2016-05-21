@@ -10,8 +10,7 @@ import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.passive.EntityHorse;
-import net.minecraft.entity.passive.HorseArmorType;
+import net.minecraft.entity.passive.EntityHorse; 
 import net.minecraft.entity.passive.HorseType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -20,7 +19,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.text.translation.I18n;
+import net.minecraft.client.resources.I18n;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -54,7 +53,7 @@ public class ItemFoodHorse extends BaseItem implements IHasRecipe {
 		if (stack == null || stack.getItem() == null) { return; }// just being safe
 		Item carrot = stack.getItem();
 
-		tooltip.add(I18n.translateToLocal(carrot.getUnlocalizedName(stack) + ".effect"));
+		tooltip.add(I18n.format(carrot.getUnlocalizedName(stack) + ".effect"));
 	}
 
 	public void addRecipe() {

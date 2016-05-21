@@ -49,10 +49,8 @@ import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
-import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemRegistry {
@@ -107,8 +105,8 @@ public class ItemRegistry {
 	public final static Item		REPAIR_EMERALD = Items.EMERALD;
 
 	// only because theyre private, with no getters
-	private static final int		diamondDurability				= 33;
-	private static final int[]	diamondreductionAmounts	= new int[] { 3, 6, 8, 3 };
+//	private static final int		diamondDurability				= 33;
+	//private static final int[]	diamondreductionAmounts	= new int[] { 3, 6, 8, 3 };
  
 	public static void syncConfig(Configuration config) {
 		Property prop;

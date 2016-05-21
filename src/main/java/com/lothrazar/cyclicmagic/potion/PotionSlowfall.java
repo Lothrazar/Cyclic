@@ -1,7 +1,5 @@
 package com.lothrazar.cyclicmagic.potion;
 
-import com.lothrazar.cyclicmagic.registry.PotionRegistry;
-
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 

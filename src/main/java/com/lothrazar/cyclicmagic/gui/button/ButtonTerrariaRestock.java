@@ -7,13 +7,13 @@ import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.text.translation.I18n;
+import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ButtonTerrariaRestock extends GuiButton {
 	public ButtonTerrariaRestock(int buttonId, int x, int y) {
-		super(buttonId, x, y, Const.btnWidth, Const.btnHeight, I18n.translateToLocal("btn.restock"));
+		super(buttonId, x, y, Const.btnWidth, Const.btnHeight, I18n.format("button.terraria.restock"));
 	}
 
 	@SideOnly(Side.CLIENT)

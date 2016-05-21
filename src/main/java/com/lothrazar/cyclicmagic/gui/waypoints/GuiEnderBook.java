@@ -16,7 +16,7 @@ import net.minecraft.client.gui.GuiTextField;// http://www.minecraftforge.net/fo
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.text.translation.I18n;
+import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -80,7 +80,7 @@ public class GuiEnderBook extends GuiScreen {
 		int y = yStart;
 		for (int i = 0; i < list.size(); i++) {
 			loc = list.get(i);
-			buttonText = (loc.display == null) ? I18n.translateToLocal("gui.enderbook.go") : loc.display;
+			buttonText = (loc.display == null) ? I18n.format("gui.enderbook.go") : loc.display;
 
 			if (i % ItemEnderBook.btnsPerColumn == 0)  // do we start a new row?
 			{
@@ -105,7 +105,7 @@ public class GuiEnderBook extends GuiScreen {
 	@Override
 	public void drawScreen(int x, int y, float par3) {
 		drawDefaultBackground();
-		drawCenteredString(fontRendererObj, I18n.translateToLocal("gui.enderbook.title"), width / 2, 6, 16777215);
+		drawCenteredString(fontRendererObj, I18n.format("gui.enderbook.title"), width / 2, 6, 16777215);
 
 		// http://www.minecraftforge.net/forum/index.php?topic=22378.0
 		// no idea why this is sometimes randomly null and only on world start if i

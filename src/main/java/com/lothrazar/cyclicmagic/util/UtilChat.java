@@ -5,7 +5,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.util.text.translation.I18n;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.world.World;
 
 public class UtilChat {
@@ -28,7 +28,7 @@ public class UtilChat {
 	}
 
 	public static String lang(String string) {
-		return I18n.translateToLocal(string);
+		return I18n.format(string);
 	}
 
 	public static void addChatMessage(World worldObj, ITextComponent textComponentTranslation) {

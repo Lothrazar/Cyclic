@@ -2,14 +2,15 @@ package com.lothrazar.cyclicmagic.gui.button;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ButtonClose extends GuiButton {
 
 	public ButtonClose(int id, int x, int y) {
-
-		super(id, x, y, 30, 20, net.minecraft.util.text.translation.I18n.translateToLocal("button.close"));
+  
+		super(id, x, y, 30, 20,I18n.format("button.close"));
 	}
 
 	@SideOnly(Side.CLIENT)

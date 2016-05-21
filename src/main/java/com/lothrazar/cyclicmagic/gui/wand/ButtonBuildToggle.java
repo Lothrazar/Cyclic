@@ -14,7 +14,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.translation.I18n;
+import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -47,7 +47,7 @@ public class ButtonBuildToggle extends GuiButton implements ITooltipButton {
 	public void drawButton(Minecraft mc, int mouseX, int mouseY) {
 
 		ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(thePlayer);
-		this.displayString = I18n.translateToLocal(ItemCyclicWand.BuildType.getName(wand));
+		this.displayString = I18n.format(ItemCyclicWand.BuildType.getName(wand));
 
 		super.drawButton(mc, mouseX, mouseY);
 	}
@@ -56,11 +56,11 @@ public class ButtonBuildToggle extends GuiButton implements ITooltipButton {
 	public List<String> getTooltips() {
 
 		List<String> tooltips = new ArrayList<String>();
-		// tooltips.add(I18n.translateToLocal("button.build.tooltip"));
+		// tooltips.add(I18n.format("button.build.tooltip"));
 		ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(thePlayer);
 		String key = ItemCyclicWand.BuildType.getName(wand) + ".tooltip";
-		tooltips.add(I18n.translateToLocal(key));
-		tooltips.add(TextFormatting.GRAY + I18n.translateToLocal("button.build.meta"));
+		tooltips.add(I18n.format(key));
+		tooltips.add(TextFormatting.GRAY + I18n.format("button.build.meta"));
 
 		return tooltips;
 	}
