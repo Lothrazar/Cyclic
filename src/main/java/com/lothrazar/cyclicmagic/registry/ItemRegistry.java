@@ -310,6 +310,7 @@ public class ItemRegistry {
 		ARMOR_MATERIAL_EMERALD = ArmorMaterial.DIAMOND;
 		//enum helper is broken
 		//https://github.com/MinecraftForge/MinecraftForge/issues/2870
+		//https://github.com/MinecraftForge/MinecraftForge/pull/2874
 				//EnumHelper.addArmorMaterial("emerald", Const.MODID + ":emerald", diamondDurability, diamondreductionAmounts, ArmorMaterial.DIAMOND.getEnchantability(), ArmorMaterial.DIAMOND.getSoundEvent());
 
 		MATERIAL_EMERALD = ToolMaterial.DIAMOND;
