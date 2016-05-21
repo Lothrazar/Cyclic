@@ -9,6 +9,8 @@ import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EventPotions implements IHasConfig {
 
@@ -33,6 +35,7 @@ public class EventPotions implements IHasConfig {
 		}  
 	}
 	 
+	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void onPotionShiftEvent(GuiScreenEvent.PotionShiftEvent event) {
 		
