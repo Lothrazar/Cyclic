@@ -69,7 +69,7 @@ public class EventPassthroughAction  implements IHasConfig{
 
 		IBlockState state = event.getWorld().getBlockState(pos);
 		//removed  && entityPlayer.isSneaking() == false
-		if (state != null && (state.getBlock() == Blocks.wall_sign || state.getBlock() == Blocks.wall_banner)) {
+		if (state != null && (state.getBlock() == Blocks.WALL_SIGN || state.getBlock() == Blocks.WALL_BANNER)) {
 			// but NOT standing sign or standing banner
 	
 			EnumFacing face = EnumFacing.getFront(state.getBlock().getMetaFromState(state));

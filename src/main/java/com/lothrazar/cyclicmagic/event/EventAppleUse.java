@@ -33,7 +33,7 @@ public class EventAppleUse implements IHasConfig{
 			{
 				EntityItem entityItem = new EntityItem(entityLiving.worldObj, 
 						event.getTargetX(), event.getTargetY(), event.getTargetZ(), 
-						new ItemStack(Items.ender_pearl));
+						new ItemStack(Items.ENDER_PEARL));
 				entityLiving.worldObj.spawnEntityInWorld(entityItem);
 			}
 		}
@@ -61,7 +61,7 @@ public class EventAppleUse implements IHasConfig{
 				entityPlayer.inventory.decrStackSize(entityPlayer.inventory.currentItem, 1);
 			}
 
-			entityPlayer.worldObj.playSound(mob.getPosition().getX(), mob.getPosition().getY(), mob.getPosition().getZ(), SoundEvents.entity_horse_eat, SoundCategory.PLAYERS, 1.0F, 1.0F, false);
+			entityPlayer.worldObj.playSound(mob.getPosition().getX(), mob.getPosition().getY(), mob.getPosition().getZ(), SoundEvents.ENTITY_HORSE_EAT, SoundCategory.PLAYERS, 1.0F, 1.0F, false);
 			// event.entityLiving .setea
 
 			// mob.setEating(true); //makes horse animate and bend down to eat

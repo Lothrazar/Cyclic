@@ -16,8 +16,8 @@ public abstract class BaseSpellPlace extends BaseSpell {
 	public void playSound(World world, EntityPlayer player,Block block, BlockPos pos) {
 
 		UtilSound.playSoundPlaceBlock(player, pos, block);
-		if (block != null && block.getStepSound() != null && block.getStepSound().getPlaceSound() != null) {
-			UtilSound.playSound(player, pos, block.getStepSound().getPlaceSound());
+		if (block != null && block.getSoundType() != null && block.getSoundType().getPlaceSound() != null) {
+			UtilSound.playSound(player, pos, block.getSoundType().getPlaceSound());
 		}
 		else {
 			UtilSound.playSound(player, pos, SoundRegistry.crackle);

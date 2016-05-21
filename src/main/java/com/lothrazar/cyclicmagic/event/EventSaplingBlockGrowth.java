@@ -13,7 +13,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.Biome; 
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.terraingen.SaplingGrowTreeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
@@ -50,15 +50,15 @@ public class EventSaplingBlockGrowth implements IHasConfig{
 		// this may not always be true: such as trees
 		// added by Mods, so not a vanilla tree, but
 		// throwing same event
-		if (b != Blocks.sapling){
+		if (b != Blocks.SAPLING){
 			return;
 		}
 		
 		boolean treeAllowedToGrow = false;
 		
-		int meta = Blocks.sapling.getMetaFromState(world.getBlockState(pos));
+		int meta = Blocks.SAPLING.getMetaFromState(world.getBlockState(pos));
  
-		int biomeID = BiomeGenBase.getIdForBiome(world.getBiomeGenForCoords(pos));// event.world.getBiomeGenForCoords(event.pos).biomeID;
+		int biomeID = Biome.getIdForBiome(world.getBiomeGenForCoords(pos));// event.world.getBiomeGenForCoords(event.pos).biomeID;
 
 		int growth_data = 8;// 0-5 is the type, then it adds on a 0x8
 		// and we know that it is always maxed out at ready to grow 8 since
@@ -97,9 +97,9 @@ public class EventSaplingBlockGrowth implements IHasConfig{
 
 			// overwrite the sapling. - we could set to Air first, but dont
 			// see much reason to
-			world.setBlockState(pos, Blocks.deadbush.getDefaultState());
+			world.setBlockState(pos, Blocks.DEADBUSH.getDefaultState());
 			
-			UtilEntity.dropItemStackInWorld(world, pos, new ItemStack(Blocks.sapling, 1, tree_type));
+			UtilEntity.dropItemStackInWorld(world, pos, new ItemStack(Blocks.SAPLING, 1, tree_type));
 			
 		}
 	}

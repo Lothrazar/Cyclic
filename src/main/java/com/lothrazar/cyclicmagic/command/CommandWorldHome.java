@@ -37,9 +37,9 @@ public class CommandWorldHome extends BaseCommand implements ICommand {
 		// this tends to always get something at y=64, regardless if there is AIR or
 		// not
 		// so we need to safely push the player up out of any blocks they are in
-		UtilSound.playSound(player, player.getPosition(),SoundEvents.entity_endermen_teleport,player.getSoundCategory());
+		UtilSound.playSound(player, player.getPosition(),SoundEvents.ENTITY_ENDERMEN_TELEPORT,player.getSoundCategory());
 		
 		UtilTeleport.teleportWallSafe(player, world, world.getSpawnPoint());
-		UtilSound.playSound(player, world.getSpawnPoint(),SoundEvents.entity_endermen_teleport,player.getSoundCategory());
+		UtilSound.playSound(player, world.getSpawnPoint(),SoundEvents.ENTITY_ENDERMEN_TELEPORT,player.getSoundCategory());
 	}
 }

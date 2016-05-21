@@ -9,7 +9,7 @@ import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
@@ -24,7 +24,7 @@ public class WorldGenGoldRiver implements IWorldGenerator {
 		//http://minecraft.gamepedia.com/Ore#Availability
 		// http://minecraft.gamepedia.com/Customized#Ore_settings
 
-		genGold = new WorldGenMinable(Blocks.gold_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.stone));
+		genGold = new WorldGenMinable(Blocks.GOLD_ORE.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.STONE));
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class WorldGenGoldRiver implements IWorldGenerator {
 		int heightDiff = maxHeight - minHeight;
 
 		BlockPos pos;
-		BiomeGenBase biome;
+		Biome biome;
 
 		for (int i = 0; i < chancesToSpawn; i++) {
 			int x = chunk_X + rand.nextInt(Const.CHUNK_SIZE);
@@ -55,7 +55,7 @@ public class WorldGenGoldRiver implements IWorldGenerator {
 			
 			biome = world.getBiomeGenForCoords(pos);
 			
-			if(biome == Biomes.river || biome == Biomes.frozenRiver){
+			if(biome == Biomes.RIVER || biome == Biomes.FROZEN_RIVER){
 				generator.generate(world, rand, pos);
 			}
 		}

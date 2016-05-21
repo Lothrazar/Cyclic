@@ -74,7 +74,7 @@ public class BlockRegistry {
 	public static void register() {
 		
 		if(spawnersUnbreakable){
-			Blocks.mob_spawner.setBlockUnbreakable();
+			Blocks.MOB_SPAWNER.setBlockUnbreakable();
 		}
 		//??maybe? nah.
 		//Blocks.obsidian.setHardness(Blocks.obsidian.getHarvestLevel(Blocks.obsidian.getDefaultState()) / 2);
@@ -89,50 +89,50 @@ public class BlockRegistry {
 
 		if (WorldGenRegistry.netherOreEnabled) {
 
-			nether_gold_ore = new BlockDimensionOre(Items.gold_nugget, 0, 4);
+			nether_gold_ore = new BlockDimensionOre(Items.GOLD_NUGGET, 0, 4);
 			nether_gold_ore.setSpawnType(SpawnType.SILVERFISH, 1);
 			registerBlock(nether_gold_ore, "nether_gold_ore");
 
-			nether_coal_ore = new BlockDimensionOre(Items.coal);
+			nether_coal_ore = new BlockDimensionOre(Items.COAL);
 			nether_coal_ore.setSpawnType(SpawnType.SILVERFISH, 1);
 			registerBlock(nether_coal_ore, "nether_coal_ore");
 
-			nether_lapis_ore = new BlockDimensionOre(Items.dye, EnumDyeColor.BLUE.getDyeDamage(), 3);
+			nether_lapis_ore = new BlockDimensionOre(Items.DYE, EnumDyeColor.BLUE.getDyeDamage(), 3);
 			nether_lapis_ore.setSpawnType(SpawnType.SILVERFISH, 2);
 			registerBlock(nether_lapis_ore, "nether_lapis_ore");
 
-			nether_emerald_ore = new BlockDimensionOre(Items.emerald);
+			nether_emerald_ore = new BlockDimensionOre(Items.EMERALD);
 			nether_emerald_ore.setSpawnType(SpawnType.SILVERFISH, 5);
 			registerBlock(nether_emerald_ore, "nether_emerald_ore");
 		}
 
 		if (WorldGenRegistry.endOreEnabled) {
 
-			end_redstone_ore = new BlockDimensionOre(Items.redstone);
+			end_redstone_ore = new BlockDimensionOre(Items.REDSTONE);
 			end_redstone_ore.setSpawnType(SpawnType.ENDERMITE, 3);
 			registerBlock(end_redstone_ore, "end_redstone_ore");
 
-			end_coal_ore = new BlockDimensionOre(Items.coal);
+			end_coal_ore = new BlockDimensionOre(Items.COAL);
 			end_coal_ore.setSpawnType(SpawnType.ENDERMITE, 1);
 			registerBlock(end_coal_ore, "end_coal_ore");
 
-			end_lapis_ore = new BlockDimensionOre(Items.dye, EnumDyeColor.BLUE.getDyeDamage(), 3);
+			end_lapis_ore = new BlockDimensionOre(Items.DYE, EnumDyeColor.BLUE.getDyeDamage(), 3);
 			end_lapis_ore.setSpawnType(SpawnType.ENDERMITE, 5);
 			registerBlock(end_lapis_ore, "end_lapis_ore");
 
-			end_emerald_ore = new BlockDimensionOre(Items.emerald);
+			end_emerald_ore = new BlockDimensionOre(Items.EMERALD);
 			end_emerald_ore.setSpawnType(SpawnType.ENDERMITE, 8);
 			registerBlock(end_emerald_ore, "end_emerald_ore");
 		}
 
 		if (enabledBucketBlocks) {
-			block_storewater = new BlockBucketStorage(Items.water_bucket);
+			block_storewater = new BlockBucketStorage(Items.WATER_BUCKET);
 			registerBlock(block_storewater, new ItemBlockBucket(block_storewater), "block_storewater", true);
 
-			block_storemilk = new BlockBucketStorage(Items.milk_bucket);
+			block_storemilk = new BlockBucketStorage(Items.MILK_BUCKET);
 			registerBlock(block_storemilk, new ItemBlockBucket(block_storemilk), "block_storemilk", true);
 
-			block_storelava = new BlockBucketStorage(Items.lava_bucket);
+			block_storelava = new BlockBucketStorage(Items.LAVA_BUCKET);
 			registerBlock(block_storelava, new ItemBlockBucket(block_storelava), "block_storelava", true);
 
 			block_storeempty = new BlockBucketStorage(null);

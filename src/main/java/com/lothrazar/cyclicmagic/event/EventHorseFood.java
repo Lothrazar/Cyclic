@@ -5,7 +5,7 @@ import java.text.DecimalFormat;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.item.ItemFoodHorse;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
-
+import net.minecraft.util.text.translation.LanguageMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.SharedMonsterAttributes;

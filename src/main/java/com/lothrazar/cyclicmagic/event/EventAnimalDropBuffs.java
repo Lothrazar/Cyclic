@@ -42,12 +42,12 @@ public class EventAnimalDropBuffs  implements IHasConfig{
 			EntitySheep s = (EntitySheep)event.getTarget();
 			
 			if(event.getHand() != null && p.getHeldItem(event.getHand()) != null && 
-					p.getHeldItem(event.getHand()).getItem() == Items.shears){
+					p.getHeldItem(event.getHand()).getItem() == Items.SHEARS){
 				
 				int meta = s.getFleeceColor().getMetadata();
 				
 				int rand = MathHelper.getRandomIntegerInRange(event.getWorld().rand, 1, 6);
-				UtilEntity.dropItemStackInWorld(event.getWorld(), event.getPos(), new ItemStack(Blocks.wool, rand ,meta));
+				UtilEntity.dropItemStackInWorld(event.getWorld(), event.getPos(), new ItemStack(Blocks.WOOL, rand ,meta));
 				
 			}	
 		}
@@ -66,23 +66,23 @@ public class EventAnimalDropBuffs  implements IHasConfig{
 			EntityZombie z = (EntityZombie) entity;
 
 			if (z.isVillager() && chanceZombieVillagerEmerald  > 0 && worldObj.rand.nextInt(100) <= chanceZombieVillagerEmerald) {
-				drops.add(new EntityItem(worldObj, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Items.emerald)));
+				drops.add(new EntityItem(worldObj, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Items.EMERALD)));
 			}
 		}
 
 		if (extraLeather && entity instanceof EntityCow) {
 			int rand = MathHelper.getRandomIntegerInRange(worldObj.rand, 1, 8);
-			UtilEntity.dropItemStackInWorld(worldObj, pos, new ItemStack(Items.leather, rand));
+			UtilEntity.dropItemStackInWorld(worldObj, pos, new ItemStack(Items.LEATHER, rand));
 		}
 
 		if (bonusPork && entity instanceof EntityPig) {
 			int rand = MathHelper.getRandomIntegerInRange(worldObj.rand, 1, 8);
-			UtilEntity.dropItemStackInWorld(worldObj, pos, new ItemStack(Items.porkchop, rand));
+			UtilEntity.dropItemStackInWorld(worldObj, pos, new ItemStack(Items.PORKCHOP, rand));
 		}
 
 		if (bonusGolemIron && entity instanceof EntityIronGolem) {
 			int rand = MathHelper.getRandomIntegerInRange(worldObj.rand, 1, 18);
-			UtilEntity.dropItemStackInWorld(worldObj, pos, new ItemStack(Items.iron_ingot, rand));
+			UtilEntity.dropItemStackInWorld(worldObj, pos, new ItemStack(Items.IRON_INGOT, rand));
 		}
 	}
 

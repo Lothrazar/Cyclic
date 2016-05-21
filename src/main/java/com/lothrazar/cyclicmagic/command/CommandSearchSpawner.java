@@ -42,7 +42,7 @@ public class CommandSearchSpawner extends BaseCommand implements ICommand {
 		// BlockPos found = Util.findClosestBlock(player, Blocks.mob_spawner,
 		// radius);
 
-		ArrayList<BlockPos> founds = UtilSearchWorld.findBlocks(player, Blocks.mob_spawner, radius);
+		ArrayList<BlockPos> founds = UtilSearchWorld.findBlocks(player, Blocks.MOB_SPAWNER, radius);
 
 		if (founds.size() == 0) {
 			// TODO: lang file for this string

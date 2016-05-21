@@ -27,16 +27,16 @@ public class WorldGenNetherOre implements IWorldGenerator {
 
 	public WorldGenNetherOre() {
 		int blockCount = 8;
-		this.genGold = new WorldGenMinable(BlockRegistry.nether_gold_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.netherrack));
+		this.genGold = new WorldGenMinable(BlockRegistry.nether_gold_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.NETHERRACK));
 
 		blockCount = 8;
-		this.genCoal = new WorldGenMinable(BlockRegistry.nether_coal_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.netherrack));
+		this.genCoal = new WorldGenMinable(BlockRegistry.nether_coal_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.NETHERRACK));
 
 		blockCount = 4;
-		this.genEmerald = new WorldGenMinable(BlockRegistry.nether_emerald_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.netherrack));
+		this.genEmerald = new WorldGenMinable(BlockRegistry.nether_emerald_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.NETHERRACK));
 
 		blockCount = 8;
-		this.genLapis = new WorldGenMinable(BlockRegistry.nether_lapis_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.netherrack));
+		this.genLapis = new WorldGenMinable(BlockRegistry.nether_lapis_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.NETHERRACK));
 	}
 
 	@Override

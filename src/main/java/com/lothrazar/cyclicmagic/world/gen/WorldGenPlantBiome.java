@@ -8,7 +8,7 @@ import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenerator;
@@ -18,9 +18,9 @@ public class WorldGenPlantBiome implements IWorldGenerator {
 
 	private GeneratePlant	gen;
 	private BlockCrops blockPlant; 
-	private List<BiomeGenBase> biomes;
+	private List<Biome> biomes;
 	private int minHeight = 1;
-	public WorldGenPlantBiome(BlockCrops plant, List<BiomeGenBase> b){
+	public WorldGenPlantBiome(BlockCrops plant, List<Biome> b){
 		blockPlant = plant;
 		biomes = b;
 		
@@ -44,7 +44,7 @@ public class WorldGenPlantBiome implements IWorldGenerator {
 		int heightDiff = maxHeight - minHeight;
 
 		BlockPos pos;
-		BiomeGenBase b;
+		Biome b;
 		for (int i = 0; i < chancesToSpawn; i++) {
 			int x = chunk_X + rand.nextInt(Const.CHUNK_SIZE);
 			int y = minHeight + rand.nextInt(heightDiff);

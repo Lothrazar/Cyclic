@@ -51,19 +51,19 @@ public class RecipeNewRegistry {
 
 	private static void notchApple() {
 		// https://www.reddit.com/r/minecraftsuggestions/comments/4d20g5/bring_back_the_notch_apple_crafting_recipe/
-		GameRegistry.addRecipe(new ItemStack(Items.golden_apple, 1, 1), "ggg", "gag", "ggg", 'g', new ItemStack(Blocks.gold_block), 'a', new ItemStack(Items.apple));
+		GameRegistry.addRecipe(new ItemStack(Items.GOLDEN_APPLE, 1, 1), "ggg", "gag", "ggg", 'g', new ItemStack(Blocks.GOLD_BLOCK), 'a', new ItemStack(Items.APPLE));
 
 	}
 
 	private static void playerSkull() {
 
-		GameRegistry.addShapelessRecipe(new ItemStack(Items.skull, 4, Const.skull_player), new ItemStack(Items.skull, 1, Const.skull_wither), new ItemStack(Items.skull, 1, Const.skull_skeleton), new ItemStack(Items.skull, 1, Const.skull_zombie), new ItemStack(Items.skull, 1, Const.skull_creeper));
+		GameRegistry.addShapelessRecipe(new ItemStack(Items.SKULL, 4, Const.skull_player), new ItemStack(Items.SKULL, 1, Const.skull_wither), new ItemStack(Items.SKULL, 1, Const.skull_skeleton), new ItemStack(Items.SKULL, 1, Const.skull_zombie), new ItemStack(Items.SKULL, 1, Const.skull_creeper));
 	}
 
 	private static void mushroomBlocks() {
 
-		GameRegistry.addRecipe(new ItemStack(Blocks.red_mushroom_block), "mm", "mm", 'm', Blocks.red_mushroom);
-		GameRegistry.addRecipe(new ItemStack(Blocks.brown_mushroom_block), "mm", "mm", 'm', Blocks.brown_mushroom);
+		GameRegistry.addRecipe(new ItemStack(Blocks.RED_MUSHROOM_BLOCK), "mm", "mm", 'm', Blocks.RED_MUSHROOM);
+		GameRegistry.addRecipe(new ItemStack(Blocks.BROWN_MUSHROOM_BLOCK), "mm", "mm", 'm', Blocks.BROWN_MUSHROOM);
 	}
 
 	private static void bonemealWool() {
@@ -74,12 +74,12 @@ public class RecipeNewRegistry {
 		// http://minecraft.gamepedia.com/Dye#Data_values
 		// but wool is inverse: wool has zero for white
 		for (int i = 0; i < Const.dye_bonemeal; i++)
-			GameRegistry.addShapelessRecipe(new ItemStack(Blocks.wool, 1, Const.wool_white), new ItemStack(Blocks.wool, 1, i), new ItemStack(Items.dye, 1, Const.dye_bonemeal));
+			GameRegistry.addShapelessRecipe(new ItemStack(Blocks.WOOL, 1, Const.wool_white), new ItemStack(Blocks.WOOL, 1, i), new ItemStack(Items.DYE, 1, Const.dye_bonemeal));
 	}
 
 	private static void repeaterSimple() {
 
-		GameRegistry.addRecipe(new ItemStack(Items.repeater), "r r", "srs", "ttt", 't', new ItemStack(Blocks.stone), 's', new ItemStack(Items.stick), 'r', new ItemStack(Items.redstone));
+		GameRegistry.addRecipe(new ItemStack(Items.REPEATER), "r r", "srs", "ttt", 't', new ItemStack(Blocks.STONE), 's', new ItemStack(Items.STICK), 'r', new ItemStack(Items.REDSTONE));
 	}
 
 	private static void minecartsSimple() {
@@ -87,13 +87,13 @@ public class RecipeNewRegistry {
 		// normally you would need the minecart created in a different step. this is
 		// faster
 
-		GameRegistry.addRecipe(new ItemStack(Items.chest_minecart), "   ", "ici", "iii", 'i', Items.iron_ingot, 'c', Blocks.chest);
+		GameRegistry.addRecipe(new ItemStack(Items.CHEST_MINECART), "   ", "ici", "iii", 'i', Items.IRON_INGOT, 'c', Blocks.CHEST);
 
-		GameRegistry.addRecipe(new ItemStack(Items.tnt_minecart), "   ", "ici", "iii", 'i', Items.iron_ingot, 'c', Blocks.tnt);
+		GameRegistry.addRecipe(new ItemStack(Items.TNT_MINECART), "   ", "ici", "iii", 'i', Items.IRON_INGOT, 'c', Blocks.TNT);
 
-		GameRegistry.addRecipe(new ItemStack(Items.hopper_minecart), "   ", "ici", "iii", 'i', Items.iron_ingot, 'c', Blocks.hopper);
+		GameRegistry.addRecipe(new ItemStack(Items.HOPPER_MINECART), "   ", "ici", "iii", 'i', Items.IRON_INGOT, 'c', Blocks.HOPPER);
 
-		GameRegistry.addRecipe(new ItemStack(Items.furnace_minecart), "   ", "ici", "iii", 'i', Items.iron_ingot, 'c', Blocks.furnace);
+		GameRegistry.addRecipe(new ItemStack(Items.FURNACE_MINECART), "   ", "ici", "iii", 'i', Items.IRON_INGOT, 'c', Blocks.FURNACE);
 	}
 
 	private static void woolDyeSavings() {
@@ -105,13 +105,13 @@ public class RecipeNewRegistry {
 			if (dye != Const.dye_bonemeal) {
 				// removeRecipe(new ItemStack(Blocks.wool,1,dye));
 
-				GameRegistry.addRecipe(new ItemStack(Blocks.wool, 8, dye), "www", "wdw", "www", 'w', new ItemStack(Blocks.wool, 1, Const.dye_bonemeal), 'd', new ItemStack(Items.dye, 1, dye));
+				GameRegistry.addRecipe(new ItemStack(Blocks.WOOL, 8, dye), "www", "wdw", "www", 'w', new ItemStack(Blocks.WOOL, 1, Const.dye_bonemeal), 'd', new ItemStack(Items.DYE, 1, dye));
 			}
 		}
 	}
 
 	private static void simpleDispenser() {
 
-		GameRegistry.addRecipe(new ItemStack(Blocks.dispenser), "ccc", "csc", "crc", 'c', Blocks.cobblestone, 's', Items.string, 'r', Items.redstone);
+		GameRegistry.addRecipe(new ItemStack(Blocks.DISPENSER), "ccc", "csc", "crc", 'c', Blocks.COBBLESTONE, 's', Items.STRING, 'r', Items.REDSTONE);
 	}
 }

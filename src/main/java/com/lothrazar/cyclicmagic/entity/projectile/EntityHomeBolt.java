@@ -46,7 +46,7 @@ public class EntityHomeBolt extends EntityThrowable {
 			teleportWallSafe(player, worldObj, realBedPos);
 			
 
-			UtilSound.playSound(worldObj, realBedPos, SoundEvents.entity_endermen_teleport, SoundCategory.PLAYERS);
+			UtilSound.playSound(worldObj, realBedPos, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.PLAYERS);
 			
 			this.setDead();
 		}
@@ -62,7 +62,7 @@ public class EntityHomeBolt extends EntityThrowable {
 			IBlockState state = world.getBlockState(coords);
 			Block block = state.getBlock();
 
-			if (block.equals(Blocks.bed) || block.isBed(state, world, coords, player)) {
+			if (block.equals(Blocks.BED) || block.isBed(state, world, coords, player)) {
 				// then move over according to how/where the bed wants me to spawn
 				realBedPos = block.getBedSpawnPosition(state, world, coords, player);
 			}

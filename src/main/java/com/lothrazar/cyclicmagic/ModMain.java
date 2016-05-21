@@ -52,7 +52,7 @@ public class ModMain {
         @Override
         public Item getTabIconItem() {
         	Item tab = ItemRegistry.itemMap.get("apple_diamond");
-        	if(tab == null){tab = Items.diamond;}
+        	if(tab == null){tab = Items.DIAMOND;}
             return tab;
         }
     };

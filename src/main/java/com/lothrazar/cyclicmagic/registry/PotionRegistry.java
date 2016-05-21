@@ -67,8 +67,7 @@ public class PotionRegistry {
 
 	public static void tickWaterwalk(EntityLivingBase entityLiving) {
 
-		tickLiquidWalk(entityLiving, Blocks.water);
-
+		tickLiquidWalk(entityLiving, Blocks.WATER); 
 	}
 
 	private static void tickLiquidWalk(EntityLivingBase entityLiving, Block liquid) {

@@ -39,7 +39,7 @@ public class PacketDeleteWaypoint implements IMessage, IMessageHandler<PacketDel
 		ItemEnderBook.deleteWaypoint(player, message.slot);
 
 		// http://minecraft.gamepedia.com/Sounds.json
-		UtilSound.playSound(player, player.getPosition(), SoundEvents.item_chorus_fruit_teleport, SoundCategory.PLAYERS);
+		UtilSound.playSound(player, player.getPosition(), SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT, SoundCategory.PLAYERS);
 		// player.playSound("mob.endermen.portal", 1, 1);
 
 		return null;

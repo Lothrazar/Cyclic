@@ -22,20 +22,16 @@ public class ItemProjectileWool extends BaseItemProjectile implements IHasRecipe
 
 		EntityShearingBolt.doesKnockback = config.getBoolean("wool.knockback", category, true, "Does appear to damage sheep on contact");
 		EntityShearingBolt.doesShearChild = config.getBoolean("wool.child", category, true, "Does shear child sheep as well.");
-
 	}
 
 	@Override
 	public void addRecipe() {
-
 		GameRegistry.addShapelessRecipe(new ItemStack(this, 32)
-				, new ItemStack(Items.ender_pearl), new ItemStack(Blocks.wool), new ItemStack(Items.shears));
-		
+				, new ItemStack(Items.ENDER_PEARL), new ItemStack(Blocks.WOOL), new ItemStack(Items.SHEARS));	
 	}
 
 	@Override
 	void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
 		this.doThrow(world, player, hand, new EntityShearingBolt(world, player));
 	}
-
 }

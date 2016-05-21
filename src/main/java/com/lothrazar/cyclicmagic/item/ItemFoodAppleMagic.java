@@ -56,6 +56,8 @@ public class ItemFoodAppleMagic extends ItemFood implements IHasRecipe {
 		potionDurations = new ArrayList<Integer>();
 		potionAmplifiers = new ArrayList<Integer>();
 		recipeInput = rec;
+		
+		this.addEffect(potionId, potionDuration, potionAmplifier);
 	}
 	
 
@@ -72,9 +74,6 @@ public class ItemFoodAppleMagic extends ItemFood implements IHasRecipe {
 	@Override
 	protected void onFoodEaten(ItemStack par1ItemStack, World world, EntityPlayer player) {
 		addAllEffects(world, player);
-		 
-		UtilEntity.incrementMaxHealth(player, 2);
-		 
 	}
 
 	@Override
@@ -93,7 +92,7 @@ public class ItemFoodAppleMagic extends ItemFood implements IHasRecipe {
 
 	public void addRecipe() {
  
-		GameRegistry.addRecipe(new ItemStack(this), "lll", "lal", "lll", 'l', recipeInput, 'a', Items.apple);
+		GameRegistry.addRecipe(new ItemStack(this), "lll", "lal", "lll", 'l', recipeInput, 'a', Items.APPLE);
 	 
 	}
 
@@ -101,8 +100,7 @@ public class ItemFoodAppleMagic extends ItemFood implements IHasRecipe {
 	public void addInformation(ItemStack held, EntityPlayer player, List<String> list, boolean par4) {
 		for (int i = 0; i < potions.size(); i++) {
 
-			//if(potions.get(i) != null)
-				list.add(I18n.translateToLocal(potions.get(i).getName()));
+			list.add(I18n.translateToLocal(potions.get(i).getName()));
 		}
 	}
 
@@ -120,7 +118,7 @@ public class ItemFoodAppleMagic extends ItemFood implements IHasRecipe {
 
 		apple_bone_enabled 		= config.getBoolean("AppleBone", 		category, true,"A magic apple that gives the glowing effect - like spectral arrows. (Works on any living entity)");
 		apple_emerald_enabled 	= config.getBoolean("AppleEmerald", 	category, true,"A magic apple that gives health booost V");
-		apple_diamond_enabled 	= config.getBoolean("AppleDiamond", 	category, true,"A magic apple that gives the resistance effect, as well as giving you extra hearts (until death)");
+		apple_diamond_enabled 	= config.getBoolean("AppleDiamond", 	category, true,"A magic apple that gives the resistance effect");
 		apple_ender_enabled 	= config.getBoolean("AppleEnder", 		category, true,"A magic apple that gives a new custom ender aura effect negates ender pearl damage");
 		apple_lapis_enabled 	= config.getBoolean("AppleLapis", 		category, true,"A magic apple that gives the haste effect. (Works on any living entity)");
 		apple_chocolate_enabled = config.getBoolean("AppleChocolate", 	category, true,"A magic apple that gives the luck effect. (Works on any living entity)");

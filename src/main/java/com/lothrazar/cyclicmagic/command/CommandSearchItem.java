@@ -56,19 +56,19 @@ public class CommandSearchItem extends BaseCommand implements ICommand {
 		HashMap<IInventory, BlockPos> dictionary = new HashMap<IInventory, BlockPos>();
 		IInventory tile;
 
-		ArrayList<BlockPos> foundChests = UtilSearchWorld.findBlocks(player, Blocks.chest, radius);
+		ArrayList<BlockPos> foundChests = UtilSearchWorld.findBlocks(player, Blocks.CHEST, radius);
 		for (BlockPos pos : foundChests) {
 			tile = (IInventory) player.worldObj.getTileEntity(pos);
 			tilesToSearch.add(tile);
 			dictionary.put(tile, pos);
 		}
-		ArrayList<BlockPos> foundTrapChests = UtilSearchWorld.findBlocks(player, Blocks.trapped_chest, radius);
+		ArrayList<BlockPos> foundTrapChests = UtilSearchWorld.findBlocks(player, Blocks.TRAPPED_CHEST, radius);
 		for (BlockPos pos : foundTrapChests) {
 			tile = (IInventory) player.worldObj.getTileEntity(pos);
 			tilesToSearch.add(tile);
 			dictionary.put(tile, pos);
 		}
-		ArrayList<BlockPos> foundDisp = UtilSearchWorld.findBlocks(player, Blocks.dispenser, radius);
+		ArrayList<BlockPos> foundDisp = UtilSearchWorld.findBlocks(player, Blocks.DISPENSER, radius);
 		for (BlockPos pos : foundDisp) {
 			tile = (IInventory) player.worldObj.getTileEntity(pos);
 			tilesToSearch.add(tile);

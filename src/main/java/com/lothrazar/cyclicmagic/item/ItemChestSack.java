@@ -87,7 +87,7 @@ public class ItemChestSack extends BaseItem implements IHasRecipe,IHasConfig {
 	@Override
 	public void addRecipe() {
 
-		GameRegistry.addShapedRecipe(new ItemStack(this), " s ", "l l", "lll", 'l', new ItemStack(Items.leather), 's', new ItemStack(Items.string));
+		GameRegistry.addShapedRecipe(new ItemStack(this), " s ", "l l", "lll", 'l', new ItemStack(Items.LEATHER), 's', new ItemStack(Items.STRING));
 	}
 
 	@Override

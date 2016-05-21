@@ -92,7 +92,7 @@ public class SpellRegistry {
 		registerSpell(reachright); 
 		
 		SpellPotion levitate = new SpellPotion(++spellId, "levitation");
-		levitate.setPotion(MobEffects.levitation, 9, 0);
+		levitate.setPotion(MobEffects.LEVITATION, 9, 0);
 		registerSpell(levitate);
 
 		SpellPotion slowfall = new SpellPotion(++spellId, "slowfall");

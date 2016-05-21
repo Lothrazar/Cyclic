@@ -21,30 +21,30 @@ public class StackSizeRegistry {
 			return;
 		}
 
-		stackMap.put(Items.potionitem, 8);
-		stackMap.put(Items.splash_potion, 8);
-		stackMap.put(Items.lingering_potion, 8);
+		stackMap.put(Items.POTIONITEM, 8);
+		stackMap.put(Items.SPLASH_POTION, 8);
+		stackMap.put(Items.LINGERING_POTION, 8);
 		int boat = 16;
 		int MAX = 64;
 
-		stackMap.put(Items.boat, boat);
-		stackMap.put(Items.acacia_boat, boat);
-		stackMap.put(Items.birch_boat, boat);
-		stackMap.put(Items.spruce_boat, boat);
-		stackMap.put(Items.dark_oak_boat, boat);
-		stackMap.put(Items.jungle_boat, boat);
-		stackMap.put(Items.minecart, boat);
-		stackMap.put(Items.chest_minecart, boat);
-		stackMap.put(Items.furnace_minecart, boat);
-		stackMap.put(Items.hopper_minecart, boat);
-		stackMap.put(Items.tnt_minecart, boat);
-		stackMap.put(Items.snowball, MAX);
-		stackMap.put(Items.banner, MAX);
-		stackMap.put(Items.snowball, MAX);
-		stackMap.put(Items.armor_stand, MAX);
-		stackMap.put(Items.sign, MAX);
-		stackMap.put(Items.bed, MAX);
-		stackMap.put(Items.bucket, MAX);
+		stackMap.put(Items.BOAT, boat);
+		stackMap.put(Items.ACACIA_BOAT, boat);
+		stackMap.put(Items.BIRCH_BOAT, boat);
+		stackMap.put(Items.SPRUCE_BOAT, boat);
+		stackMap.put(Items.DARK_OAK_BOAT, boat);
+		stackMap.put(Items.JUNGLE_BOAT, boat);
+		stackMap.put(Items.MINECART, boat);
+		stackMap.put(Items.CHEST_MINECART, boat);
+		stackMap.put(Items.FURNACE_MINECART, boat);
+		stackMap.put(Items.HOPPER_MINECART, boat);
+		stackMap.put(Items.TNT_MINECART, boat);
+		stackMap.put(Items.SNOWBALL, MAX);
+		stackMap.put(Items.BANNER, MAX);
+		stackMap.put(Items.SNOWBALL, MAX);
+		stackMap.put(Items.ARMOR_STAND, MAX);
+		stackMap.put(Items.SIGN, MAX);
+		stackMap.put(Items.BED, MAX);
+		stackMap.put(Items.BUCKET, MAX);
 
 		for (Map.Entry<Item, Integer> entry : stackMap.entrySet()) {
 

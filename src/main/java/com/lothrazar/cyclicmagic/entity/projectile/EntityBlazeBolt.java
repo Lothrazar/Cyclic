@@ -66,8 +66,8 @@ public class EntityBlazeBolt extends EntityThrowable {
 		if (pos == null) { return; }// hasn't happened yet, but..
 
 		ArrayList<Block> waterBoth = new ArrayList<Block>();
-		waterBoth.add(Blocks.flowing_water);
-		waterBoth.add(Blocks.water);
+		waterBoth.add(Blocks.FLOWING_WATER);
+		waterBoth.add(Blocks.WATER);
 		// Util.spawnParticle(this.worldObj, EnumParticleTypes.SNOWBALL, pos);
 		// Util.spawnParticle(this.worldObj, EnumParticleTypes.SNOW_SHOVEL, pos);
 
@@ -86,7 +86,7 @@ public class EntityBlazeBolt extends EntityThrowable {
 			if (this.worldObj.isAirBlock(pos)) {
 				toSetFire.add(pos);
 				// turn flowing water into solid
-				this.worldObj.setBlockState(pos, Blocks.fire.getDefaultState());
+				this.worldObj.setBlockState(pos, Blocks.FIRE.getDefaultState());
 
 			}
 			if (this.worldObj.isAirBlock(pos.offset(EnumFacing.EAST))) {
@@ -125,7 +125,7 @@ public class EntityBlazeBolt extends EntityThrowable {
 			}
 
 			for (BlockPos p : toSetFire) {
-				this.worldObj.setBlockState(p, Blocks.fire.getDefaultState());
+				this.worldObj.setBlockState(p, Blocks.FIRE.getDefaultState());
 
 				this.worldObj.spawnParticle(EnumParticleTypes.FLAME, p.up().getX(), p.up().getY(), p.up().getZ(), 0, 0, 0);
 			}

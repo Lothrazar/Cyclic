@@ -60,7 +60,7 @@ public class EntityShearingBolt extends EntityThrowable {
 					}
 					
 					for (int j = 0; j < i; ++j) {
-						EntityItem entityitem = sheep.entityDropItem(new ItemStack(Item.getItemFromBlock(Blocks.wool),1 , sheep.getFleeceColor().getMetadata()), 1.0F);
+						EntityItem entityitem = sheep.entityDropItem(new ItemStack(Item.getItemFromBlock(Blocks.WOOL),1 , sheep.getFleeceColor().getMetadata()), 1.0F);
 						entityitem.motionY += (double) (sheep.worldObj.rand.nextFloat() * 0.05F);
 						entityitem.motionX += (double) ((sheep.worldObj.rand.nextFloat() - sheep.worldObj.rand.nextFloat()) * 0.1F);
 						entityitem.motionZ += (double) ((sheep.worldObj.rand.nextFloat() - sheep.worldObj.rand.nextFloat()) * 0.1F);
@@ -71,7 +71,7 @@ public class EntityShearingBolt extends EntityThrowable {
 					}
 
 					BlockPos pos = sheep.getPosition();
-					UtilSound.playSound(sheep.worldObj,pos, SoundEvents.entity_sheep_shear,SoundCategory.NEUTRAL);
+					UtilSound.playSound(sheep.worldObj,pos, SoundEvents.ENTITY_SHEEP_SHEAR,SoundCategory.NEUTRAL);
 					//worldObj.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.entity_sheep_shear, SoundCategory.PLAYERS, 1.0F, 1.0F, false);
 
 				}

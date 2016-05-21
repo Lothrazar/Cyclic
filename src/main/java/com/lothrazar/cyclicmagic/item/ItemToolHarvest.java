@@ -53,8 +53,8 @@ public class ItemToolHarvest extends BaseTool implements IHasRecipe, IHasConfig{
 				" gs", 
 				" bg", 
 				"b  ", 
-			'b',Items.blaze_rod, 
-			'g',Items.ghast_tear, 
-		    's',Items.shears); 
+			'b',Items.BLAZE_ROD, 
+			'g',Items.GHAST_TEAR, 
+		    's',Items.SHEARS); 
 	}
 }

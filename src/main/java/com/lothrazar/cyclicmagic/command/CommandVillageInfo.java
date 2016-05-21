@@ -44,8 +44,8 @@ public class CommandVillageInfo extends BaseCommand implements ICommand {
 
 			if (sender instanceof EntityPlayer) {
 				// command blocks/server controllers do not have reputation
-				EntityPlayer player = (EntityPlayer) sender;
-				int rep = closest.getReputationForPlayer(player.getName());
+				EntityPlayer player = (EntityPlayer) sender; 
+				int rep = closest.getPlayerReputation(player.getName());
 
 				UtilChat.addChatMessage(sender, player.getName() + " " + UtilChat.lang("command.villageinfo.villagerep") + "  " + String.format("%d", rep));
 			}

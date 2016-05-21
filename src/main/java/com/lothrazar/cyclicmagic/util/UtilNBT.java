@@ -123,7 +123,7 @@ public class UtilNBT {
 	public static ItemStack buildEnchantedNametag(String customNameTag) {
 		// build multi-level NBT tag so it matches a freshly enchanted one
 
-		ItemStack nameTag = new ItemStack(Items.name_tag, 1);
+		ItemStack nameTag = new ItemStack(Items.NAME_TAG, 1);
 
 		NBTTagCompound nbt = new NBTTagCompound();
 		NBTTagCompound display = new NBTTagCompound();
@@ -142,7 +142,7 @@ public class UtilNBT {
 	}
 
 	public static ItemStack buildNamedPlayerSkull(String displayNameString) {
-		ItemStack skull = new ItemStack(Items.skull, 1, Const.skull_player);
+		ItemStack skull = new ItemStack(Items.SKULL, 1, Const.skull_player);
 
 		if (skull.getTagCompound() == null) {
 			skull.setTagCompound(new NBTTagCompound());

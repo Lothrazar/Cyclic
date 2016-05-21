@@ -46,8 +46,8 @@ private static final int durability = 5000;
 				" gp", 
 				" bg", 
 				"b  ", 
-			'b',Items.blaze_rod, 
-			'g',Items.ghast_tear, 
-		    'p',Blocks.piston); 
+			'b',Items.BLAZE_ROD, 
+			'g',Items.GHAST_TEAR, 
+		    'p',Blocks.PISTON); 
 	}
 }

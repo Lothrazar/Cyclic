@@ -38,15 +38,15 @@ public class EventSaplingPlantDespawn  implements IHasConfig{
 		Block blockhere = entity.worldObj.getBlockState(entityItem.getPosition()).getBlock();
 		Block blockdown = entity.worldObj.getBlockState(entityItem.getPosition().down()).getBlock();
 
-		if (blockhere == Blocks.air && blockdown == Blocks.dirt || blockdown == Blocks.grass) {
+		if (blockhere == Blocks.AIR && blockdown == Blocks.DIRT || blockdown == Blocks.GRASS) {
 			// plant the sapling, replacing the air and on top of dirt/plantable
 
-			if (Block.getBlockFromItem(is.getItem()) == Blocks.sapling)
-				entity.worldObj.setBlockState(entityItem.getPosition(), Blocks.sapling.getStateFromMeta(is.getItemDamage()));
-			else if (Block.getBlockFromItem(is.getItem()) == Blocks.red_mushroom)
-				entity.worldObj.setBlockState(entityItem.getPosition(), Blocks.red_mushroom.getDefaultState());
-			else if (Block.getBlockFromItem(is.getItem()) == Blocks.brown_mushroom)
-				entity.worldObj.setBlockState(entityItem.getPosition(), Blocks.brown_mushroom.getDefaultState());
+			if (Block.getBlockFromItem(is.getItem()) == Blocks.SAPLING)
+				entity.worldObj.setBlockState(entityItem.getPosition(), Blocks.SAPLING.getStateFromMeta(is.getItemDamage()));
+			else if (Block.getBlockFromItem(is.getItem()) == Blocks.RED_MUSHROOM)
+				entity.worldObj.setBlockState(entityItem.getPosition(), Blocks.RED_MUSHROOM.getDefaultState());
+			else if (Block.getBlockFromItem(is.getItem()) == Blocks.BROWN_MUSHROOM)
+				entity.worldObj.setBlockState(entityItem.getPosition(), Blocks.BROWN_MUSHROOM.getDefaultState());
 
 		}
 	}

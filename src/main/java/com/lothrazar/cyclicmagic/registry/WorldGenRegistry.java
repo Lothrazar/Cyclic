@@ -93,12 +93,12 @@ public class WorldGenRegistry {
 		}
 		 
 		if(oreSingletons){
-			GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.coal_ore, 132), weight);
-			GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.iron_ore, 68), weight);
-			GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.gold_ore, 34), weight);
-			GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.lapis_ore, 34), weight);
-			GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.redstone_ore, 16), weight);
-			GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.diamond_ore, 16), weight);
+//			GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.COAL_ORE, 132), weight);
+			GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.IRON_ORE, 68), weight);
+			GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.GOLD_ORE, 34), weight);
+			GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.LAPIS_ORE, 34), weight);
+			GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.REDSTONE_ORE, 16), weight);
+			GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.DIAMOND_ORE, 16), weight);
 		}
 		
 		
@@ -114,13 +114,13 @@ public class WorldGenRegistry {
 		//TODO: i guess take array list
 		
 		if(biomeCrops){
-			GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops)Blocks.carrots, Arrays.asList(Biomes.extremeHills)), weight);
+			GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops)Blocks.CARROTS, Arrays.asList(Biomes.EXTREME_HILLS)), weight);
 			
-			GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops)Blocks.wheat,Arrays.asList( Biomes.plains)), weight);
+			GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops)Blocks.WHEAT,Arrays.asList( Biomes.PLAINS)), weight);
 			
-			GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops)Blocks.beetroots, Arrays.asList(Biomes.forest, Biomes.birchForest)), weight);
+			GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops)Blocks.BEETROOTS, Arrays.asList(Biomes.FOREST, Biomes.BIRCH_FOREST)), weight);
 	
-			GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops)Blocks.potatoes,Arrays.asList( Biomes.taiga)), weight);
+			GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops)Blocks.POTATOES,Arrays.asList( Biomes.TAIGA)), weight);
 		}
 	}
 }

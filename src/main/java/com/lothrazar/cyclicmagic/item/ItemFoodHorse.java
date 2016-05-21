@@ -12,6 +12,7 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.passive.HorseArmorType;
+import net.minecraft.entity.passive.HorseType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
@@ -57,12 +58,10 @@ public class ItemFoodHorse extends BaseItem implements IHasRecipe {
 	}
 
 	public void addRecipe() {
-
-
+ 
 		GameRegistry.addShapelessRecipe(new ItemStack(this)
-				, Items.carrot, recipeItem);
-
-	
+				, Items.CARROT, recipeItem);
+ 
 	}
 
 	public static void onHorseInteract(EntityHorse horse, EntityPlayer player, ItemStack held) {
@@ -81,16 +80,18 @@ public class ItemFoodHorse extends BaseItem implements IHasRecipe {
 		//TODO: USE AN EnumType flag passed by constructor, if u dont want to do new classes
 		if (held.getItem() == ItemRegistry.itemMap.get("emeraldCarrot")) {
 			switch (horse.getType()) {
-			case HORSE:
-				horse.setType(HorseArmorType.ZOMBIE);
+			case HORSE: 
+				
+				
+				horse.setType(HorseType.ZOMBIE);
 				success = true;
 			break;
 			case ZOMBIE:
-				horse.setType(HorseArmorType.SKELETON);
+				horse.setType(HorseType.SKELETON);
 				success = true;
 			break;
 			case SKELETON:
-				horse.setType(HorseArmorType.HORSE);
+				horse.setType(HorseType.HORSE);
 				success = true;
 			break;
 			// donkey and mule ignored by design
@@ -195,7 +196,7 @@ public class ItemFoodHorse extends BaseItem implements IHasRecipe {
 				horse.worldObj.spawnParticle(EnumParticleTypes.SMOKE_LARGE, x + (horse.worldObj.rand.nextDouble() - 0.5D) * (double) 0.8, y + horse.worldObj.rand.nextDouble() * (double) 1.5 - (double) 0.1, z + (horse.worldObj.rand.nextDouble() - 0.5D) * (double) 0.8, 0.0D, 0.0D, 0.0D);
 			}
 
-			UtilSound.playSound(player, horse.getPosition(), SoundEvents.entity_horse_eat, SoundCategory.NEUTRAL);
+			UtilSound.playSound(player, horse.getPosition(), SoundEvents.ENTITY_HORSE_EAT, SoundCategory.NEUTRAL);
 		
 			horse.setEatingHaystack(true); // makes horse animate and bend down to eat
 		}

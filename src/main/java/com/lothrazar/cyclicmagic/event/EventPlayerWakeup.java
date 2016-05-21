@@ -28,9 +28,9 @@ public class EventPlayerWakeup  implements IHasConfig{
 
 		if (entityPlayer.worldObj.isRemote == false && didSleepAllNight) {
 
-			entityPlayer.addPotionEffect(new PotionEffect(MobEffects.hunger, sleeping_hunger_seconds * Const.TICKS_PER_SEC, levelBoost));
-			entityPlayer.addPotionEffect(new PotionEffect(MobEffects.digSlowdown, sleeping_hunger_seconds * Const.TICKS_PER_SEC, levelBoost));
-			entityPlayer.addPotionEffect(new PotionEffect(MobEffects.weakness, sleeping_hunger_seconds * Const.TICKS_PER_SEC, levelBoost));
+			entityPlayer.addPotionEffect(new PotionEffect(MobEffects.HUNGER, sleeping_hunger_seconds * Const.TICKS_PER_SEC, levelBoost));
+			entityPlayer.addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, sleeping_hunger_seconds * Const.TICKS_PER_SEC, levelBoost));
+			entityPlayer.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, sleeping_hunger_seconds * Const.TICKS_PER_SEC, levelBoost));
 		}
 	}
 

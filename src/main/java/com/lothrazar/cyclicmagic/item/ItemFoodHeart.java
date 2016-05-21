@@ -44,15 +44,15 @@ public class ItemFoodHeart extends ItemFood implements IHasRecipe,IHasConfig{
 	public void addRecipe() {
 
 		GameRegistry.addShapelessRecipe(new ItemStack(this) 
-				,Items.beetroot_soup
-				,Items.rabbit_stew
-				,Items.pumpkin_pie
-				,Items.mushroom_stew
-				,Items.cake
-				,Items.cookie
-				,new ItemStack(Items.fish,1,Const.fish_salmon)
-				,Items.golden_apple
-				,Items.poisonous_potato
+				,Items.BEETROOT_SOUP
+				,Items.RABBIT_STEW
+				,Items.PUMPKIN_PIE
+				,Items.MUSHROOM_STEW
+				,Items.CAKE
+				,Items.COOKIE
+				,new ItemStack(Items.FISH,1,Const.fish_salmon)
+				,Items.GOLDEN_APPLE
+				,Items.POISONOUS_POTATO
 				);
 	} 
 }

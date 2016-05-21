@@ -106,11 +106,11 @@ public class UtilHarvestCrops {
 				} else if ((blockCheck instanceof BlockMushroom) && conf.doesHarvestMushroom) {
 					//ModMain.logger.info(" BlockMushroom ");
 					doBreak = true;
-				} else if (blockCheck == Blocks.pumpkin && conf.doesPumpkinBlocks) {
+				} else if (blockCheck == Blocks.PUMPKIN && conf.doesPumpkinBlocks) {
 					//ModMain.logger.info(" pumpkin ");
 					doBreak = true;
 					doReplant = false;
-				} else if (blockCheck == Blocks.melon_block && conf.doesMelonBlocks) {
+				} else if (blockCheck == Blocks.MELON_BLOCK && conf.doesMelonBlocks) {
 					//ModMain.logger.info(" melon_block ");
 					doBreak = true;
 					doReplant = false;

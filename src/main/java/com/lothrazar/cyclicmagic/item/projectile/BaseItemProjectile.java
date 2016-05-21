@@ -29,8 +29,9 @@ public abstract class BaseItemProjectile extends BaseItem {
 	protected void doThrow(World world, EntityPlayer player, EnumHand hand, EntityThrowable thing) {
 
 		if (!world.isRemote) {
-
-			thing.func_184538_a(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
+			
+			// func_184538_a
+			thing.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
 			world.spawnEntityInWorld(thing);
 		}
 
@@ -38,7 +39,7 @@ public abstract class BaseItemProjectile extends BaseItem {
 
 		BlockPos pos = player.getPosition();
 
-		UtilSound.playSound(player, pos, SoundEvents.entity_egg_throw, SoundCategory.PLAYERS);
+		UtilSound.playSound(player, pos, SoundEvents.ENTITY_EGG_THROW, SoundCategory.PLAYERS);
 	
 		if (player.capabilities.isCreativeMode == false) {
 			player.inventory.decrStackSize(player.inventory.currentItem, 1);

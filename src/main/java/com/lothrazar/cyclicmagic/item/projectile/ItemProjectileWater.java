@@ -16,7 +16,7 @@ public class ItemProjectileWater extends BaseItemProjectile implements IHasRecip
 	@Override
 	public void addRecipe() {
 
-		GameRegistry.addShapelessRecipe(new ItemStack(this, 4), new ItemStack(Items.blaze_rod), new ItemStack(Items.ender_pearl), new ItemStack(Blocks.ice));
+		GameRegistry.addShapelessRecipe(new ItemStack(this, 4), new ItemStack(Items.BLAZE_ROD), new ItemStack(Items.ENDER_PEARL), new ItemStack(Blocks.ICE));
 		
 	}
 

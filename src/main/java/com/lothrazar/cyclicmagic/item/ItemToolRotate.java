@@ -60,9 +60,9 @@ private static final int durability = 8000;
 				" dr", 
 				" bd", 
 				"b  ", 
-			'b',Items.blaze_rod, 
-		    'd',Items.diamond,
-		    'r',Blocks.lapis_block); 
+			'b',Items.BLAZE_ROD, 
+		    'd',Items.DIAMOND,
+		    'r',Blocks.LAPIS_BLOCK); 
 	}
 
 }

@@ -66,15 +66,16 @@ public class ContainerStorage extends Container {
     return super.getSlot(s);
   }
 */
-	// slotClick
+
+	//func_184996_a
 	@Override
-	public ItemStack func_184996_a(int slot, int dragType, ClickType clickTypeIn, EntityPlayer player) {
+	public ItemStack slotClick(int slot, int dragType, ClickType clickTypeIn, EntityPlayer player) {
 
 		ItemStack wand = UtilInventory.getPlayerItemIfHeld(player);
 		// this will prevent the player from interacting with the item that
 		// opened the inventory:
 		if (slot >= 0 && getSlot(slot) != null && getSlot(slot).getStack() == wand) { return null; }
-		return super.func_184996_a(slot, dragType, clickTypeIn, player);
+		return super.slotClick(slot, dragType, clickTypeIn, player);
 	}
 
 	@Override

@@ -29,29 +29,29 @@ public class FuelHandler implements IFuelHandler {
 	public FuelHandler() {
 
 		// http://minecraft.gamepedia.com/Smelting
-		int stick = TileEntityFurnace.getItemBurnTime(new ItemStack(Items.stick));
-		int log = TileEntityFurnace.getItemBurnTime(new ItemStack(Blocks.log));
+		int stick = TileEntityFurnace.getItemBurnTime(new ItemStack(Items.STICK));
+		int log = TileEntityFurnace.getItemBurnTime(new ItemStack(Blocks.LOG));
 		// int coal = TileEntityFurnace.getItemBurnTime(new ItemStack(Items.coal));
 		// blazerod, coalblock, lava bucket are above these
 
-		fuelMap.put(Items.sign, log);
-		fuelMap.put(Items.acacia_boat, log);
-		fuelMap.put(Items.jungle_boat, log);
-		fuelMap.put(Items.birch_boat, log);
-		fuelMap.put(Items.boat, log);//oak
-		fuelMap.put(Items.dark_oak_boat, log);
-		fuelMap.put(Items.spruce_boat, log);
-		fuelMap.put(Item.getItemFromBlock(Blocks.ladder), log);
-		fuelMap.put(Items.painting, log);
-		fuelMap.put(Items.wheat_seeds, stick);
-		fuelMap.put(Items.pumpkin_seeds, stick);
-		fuelMap.put(Items.melon_seeds, stick);
-		fuelMap.put(Item.getItemFromBlock(Blocks.vine), stick);
-		fuelMap.put(Item.getItemFromBlock(Blocks.tallgrass), stick);
-		fuelMap.put(Item.getItemFromBlock(Blocks.waterlily), stick);
-		fuelMap.put(Item.getItemFromBlock(Blocks.deadbush), stick);
-		fuelMap.put(Item.getItemFromBlock(Blocks.leaves), stick);
-		fuelMap.put(Item.getItemFromBlock(Blocks.leaves2), stick);
+		fuelMap.put(Items.SIGN, log);
+		fuelMap.put(Items.ACACIA_BOAT, log);
+		fuelMap.put(Items.JUNGLE_BOAT, log);
+		fuelMap.put(Items.BIRCH_BOAT, log);
+		fuelMap.put(Items.BOAT, log);//oak
+		fuelMap.put(Items.DARK_OAK_BOAT, log);
+		fuelMap.put(Items.SPRUCE_BOAT, log);
+		fuelMap.put(Item.getItemFromBlock(Blocks.LADDER), log);
+		fuelMap.put(Items.PAINTING, log);
+		fuelMap.put(Items.WHEAT_SEEDS, stick);
+		fuelMap.put(Items.PUMPKIN_SEEDS, stick);
+		fuelMap.put(Items.MELON_SEEDS, stick);
+		fuelMap.put(Item.getItemFromBlock(Blocks.VINE), stick);
+		fuelMap.put(Item.getItemFromBlock(Blocks.TALLGRASS), stick);
+		fuelMap.put(Item.getItemFromBlock(Blocks.WATERLILY), stick);
+		fuelMap.put(Item.getItemFromBlock(Blocks.DEADBUSH), stick);
+		fuelMap.put(Item.getItemFromBlock(Blocks.LEAVES), stick);
+		fuelMap.put(Item.getItemFromBlock(Blocks.LEAVES2), stick);
 	}
 
 	@Override

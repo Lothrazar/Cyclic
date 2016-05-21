@@ -33,13 +33,13 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
 
 	@Override
 	public void addRecipe() {
-		GameRegistry.addShapelessRecipe(new ItemStack(this, 6), new ItemStack(Items.ender_pearl), new ItemStack(Blocks.mossy_cobblestone), new ItemStack(Items.nether_wart));// Blocks.iron_bars
+		GameRegistry.addShapelessRecipe(new ItemStack(this, 6), new ItemStack(Items.ENDER_PEARL), new ItemStack(Blocks.MOSSY_COBBLESTONE), new ItemStack(Items.NETHER_WART));// Blocks.iron_bars
 		 
 	}
 
 	@Override
 	void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
-		BlockPos blockpos = UtilSearchWorld.findClosestBlock(player, Blocks.mob_spawner, DUNGEONRADIUS);
+		BlockPos blockpos = UtilSearchWorld.findClosestBlock(player, Blocks.MOB_SPAWNER, DUNGEONRADIUS);
 
 		if (blockpos != null) {
 
@@ -60,7 +60,7 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
 			UtilEntity.dropItemStackInWorld(world, pos, new ItemStack(this));
 			
 			//fizz sound
-			UtilSound.playSound(player,pos,SoundEvents.block_fire_extinguish);
+			UtilSound.playSound(player,pos,SoundEvents.BLOCK_FIRE_EXTINGUISH);
 		
 		}
 	}
