@@ -10,6 +10,7 @@ import com.lothrazar.cyclicmagic.gui.uncrafting.GuiUncrafting;
 import com.lothrazar.cyclicmagic.gui.wand.ContainerWand;
 import com.lothrazar.cyclicmagic.gui.wand.GuiWandInventory;
 import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
+import com.lothrazar.cyclicmagic.gui.waypoints.GuiEnderBook;
 import com.lothrazar.cyclicmagic.util.UtilInventory;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 
@@ -27,6 +28,7 @@ public class ModGuiHandler implements IGuiHandler {
 	public static final int	GUI_INDEX_WAND				= 1;
 	public static final int	GUI_INDEX_EXTENDED		= 2;
 	public static final int	GUI_INDEX_STORAGE			= 3;
+	public static final int GUI_INDEX_WAYPOINT = 4;
 
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -48,6 +50,8 @@ public class ModGuiHandler implements IGuiHandler {
 			ItemStack s = UtilInventory.getPlayerItemIfHeld(player);
 
 			return new ContainerStorage(player, player.inventory, new InventoryStorage(player, s));
+		case GUI_INDEX_WAYPOINT:
+			return null;
 		}
 		return null;
 	}
@@ -74,7 +78,10 @@ public class ModGuiHandler implements IGuiHandler {
 				ItemStack s = UtilInventory.getPlayerItemIfHeld(player);
 
 				return new GuiStorage(new ContainerStorage(player, player.inventory, new InventoryStorage(player, s)), s);
+			case GUI_INDEX_WAYPOINT:
 
+				//Minecraft.getMinecraft().displayGuiScreen(new GuiEnderBook(entityPlayer, stack));
+				return new GuiEnderBook(player, UtilInventory.getPlayerItemIfHeld(player));
 			}
 		return null;
 	}

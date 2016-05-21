@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.gui.waypoints.GuiEnderBook;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilExperience;
@@ -12,7 +14,6 @@ import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
@@ -203,7 +204,8 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
 			return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
 		}
 
-		Minecraft.getMinecraft().displayGuiScreen(new GuiEnderBook(entityPlayer, stack));
+		//Minecraft.getMinecraft().displayGuiScreen(new GuiEnderBook(entityPlayer, stack));
+		entityPlayer.openGui(ModMain.instance, ModGuiHandler.GUI_INDEX_WAYPOINT, world, 0, 0, 0);
 
 		return super.onItemRightClick(stack, world, entityPlayer, hand);
 	}
