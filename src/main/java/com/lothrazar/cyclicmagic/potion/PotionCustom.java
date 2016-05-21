@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.potion;
 
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilTextureRender;
 
 import net.minecraft.potion.Potion;
@@ -11,33 +12,29 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class PotionCustom extends Potion {
 
 	private ResourceLocation icon;
-
-	public PotionCustom(ResourceLocation location, boolean badEffect, int potionColor, String nameIn) {
-
-		super(badEffect, potionColor);
-
-		this.setIcon(location);
-		this.setPotionName(nameIn);
+	private boolean beneficial;
+ 
+	 public PotionCustom(String name, boolean b, int potionColor) {
+		super(false, potionColor);
+		this.beneficial = b;
+		this.setIcon(new ResourceLocation(Const.MODID, "textures/potions/"+name+".png"));
+		this.setPotionName("potion."+name);
 	}
-
-	private final boolean showsInTopRight = false;
-
 	@SideOnly(Side.CLIENT)
-	public boolean hasStatusIcon() {
-//id love to ACTUALLY show it, but the resource location doesnt get used
-		// vanilla code shows the outer box but not the real thing
-		// my common proxy didnt work,
-		// and registering with Potion.potionRegistry.putObject doesnt work
-		return showsInTopRight;// to block it from looking for one of the vanilla
-		                       // textures
-	}
-
+    public boolean isBeneficial(){
+        return this.beneficial;//decides top or bottom row
+    } 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void renderInventoryEffect(int x, int y, PotionEffect effect, net.minecraft.client.Minecraft mc) {
 
-		int border = 6;
-		UtilTextureRender.drawTextureSquare(getIcon(), x + border, y + border, 16);
+		UtilTextureRender.drawTextureSquare(getIcon(), x + 6, y + 6, Const.SQ-2);
+	}
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void renderHUDEffect(int x, int y, PotionEffect effect, net.minecraft.client.Minecraft mc, float alpha) {
+
+		UtilTextureRender.drawTextureSquare(getIcon(), x + 5, y + 3, Const.SQ-2);
 	}
 
 	public ResourceLocation getIcon() {

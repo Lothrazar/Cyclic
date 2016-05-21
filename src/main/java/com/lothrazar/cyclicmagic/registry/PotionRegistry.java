@@ -30,40 +30,30 @@ public class PotionRegistry {
 	public static PotionCustom	ender;
 	public static PotionCustom	waterwalk;
 
-	public final static int			I		= 0;
+	public final static int			I	= 0;
 	public final static int			II	= 1;
 	public final static int			III	= 2;
 	public final static int			IV	= 3;
-	public final static int			V		= 4;
+	public final static int			V	= 4;
 
 	public static void register() {
 
 		// http://www.minecraftforge.net/forum/index.php?topic=11024.0
 		// ??? http://www.minecraftforge.net/forum/index.php?topic=12358.0
-		PotionRegistry.ender = new PotionCustom(new ResourceLocation(Const.MODID, "textures/potions/ender.png"), false, 0, "potion.ender");
+		PotionRegistry.ender = new PotionCustom("ender", true, 0);
+		PotionRegistry.waterwalk = new PotionCustom("waterwalk", true, 0);
+		PotionRegistry.slowfall = new PotionCustom("slowfall", true, 0);
+		PotionRegistry.magnet = new PotionCustom("magnet", true, 0);
 
-		PotionRegistry.waterwalk = new PotionCustom(new ResourceLocation(Const.MODID, "textures/potions/waterwalk.png"), false, 0, "potion.waterwalk");
-
-		PotionRegistry.slowfall = new PotionCustom(new ResourceLocation(Const.MODID, "textures/potions/slowfall.png"), false, 0, "potion.slowfall");
-
-		PotionRegistry.magnet = new PotionCustom(new ResourceLocation(Const.MODID, "textures/potions/magnet.png"), false, 0, "potion.magnet");
-
-		GameRegistry.register(ender,ender.getIcon());
+		GameRegistry.register(ender,ender.getIcon());//was geticon
 		GameRegistry.register(waterwalk,waterwalk.getIcon());
 		GameRegistry.register(slowfall,slowfall.getIcon());
 		GameRegistry.register(magnet,magnet.getIcon());
-		//this is bad
-	// GameData.getPotionRegistry()
-		
-		// this is also bad:
-	//	Potion.potionRegistry.putObject(ender.getIcon(), ender);
-
-		// TODO: test out brewing api for these?
 	}
 
-	private final static int		ITEM_HRADIUS	= 20;
-	private final static int		ITEM_VRADIUS	= 4;
-	private final static float	ITEMSPEED			= 1.2F;
+	private final static int	ITEM_HRADIUS	= 20;
+	private final static int	ITEM_VRADIUS	= 4;
+	private final static float	ITEMSPEED		= 1.2F;
 
 	public static void tickWaterwalk(EntityLivingBase entityLiving) {
 
