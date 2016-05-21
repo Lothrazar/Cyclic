@@ -2,14 +2,15 @@ package com.lothrazar.cyclicmagic.gui.waypoints;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.button.ButtonClose;
+import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
 import com.lothrazar.cyclicmagic.item.ItemEnderBook;
 import com.lothrazar.cyclicmagic.item.ItemEnderBook.BookLocation;
 import com.lothrazar.cyclicmagic.net.PacketDeleteWaypoint;
 import com.lothrazar.cyclicmagic.net.PacketNewButton;
+import com.lothrazar.cyclicmagic.util.UtilSearchWorld;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -17,6 +18,7 @@ import net.minecraft.client.gui.GuiTextField;// http://www.minecraftforge.net/fo
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -96,9 +98,13 @@ public class GuiEnderBook extends GuiScreen {
 				y += h + ypad;
 			}
 
-			btn = new ButtonWaypointTeleport(buttonID++, x, y, w, h, buttonText, loc.id);// +"
-			                                                                                 // "+loc.id
-			btn.setTooltip(list.get(i).coordsDisplay());
+			btn = new ButtonWaypointTeleport(buttonID++, x, y, w, h, buttonText, loc.id);
+			BlockPos toPos = list.get(i).toBlockPos();
+			int distance = (int)UtilSearchWorld.distanceBetweenHorizontal(toPos, entityPlayer.getPosition());
+			int cost = ItemEnderBook.getExpCostPerTeleport(entityPlayer,bookStack,loc.id);
+			btn.addTooltipLine(list.get(i).coordsDisplay());
+			btn.addTooltipLine(I18n.format("button.waypoint.distance")+" " + distance);
+			btn.addTooltipLine(I18n.format("button.waypoint.cost")+" " + cost);
 			btn.enabled = (loc.dimension == this.entityPlayer.dimension);
 			buttonList.add(btn);
 
@@ -118,33 +124,17 @@ public class GuiEnderBook extends GuiScreen {
 		if (txtNew != null) {
 			txtNew.drawTextBox();
 		}
-
-		// super draws buttons and such
+ 
 		super.drawScreen(x, y, par3);
-		/*
-		 * GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		 * GL11.glScalef(1.0F, 1.0F, 1.0F);//so it does not change scale
-		 * this.mc.getTextureManager().bindTexture(new
-		 * ResourceLocation(ModEnderBook.MODID, "textures/gui/book.png"));
-		 */
-		// drawTexturedQuadFit(this.guiLeft, this.guiTop,this.xSize,this.ySize,0);
-		// id fucking love to but 1.8.8 changed it all
-		// drawTexturedQuadFit(50, 20,this.width,this.height,0);
-
-		// http://www.minecraftforge.net/forum/index.php?topic=18043.0
-
-		if (ItemEnderBook.showCoordTooltips)
-			for (int i = 0; i < buttonList.size(); i++) {
-				if (buttonList.get(i) instanceof ButtonWaypointTeleport) {
-					ButtonWaypointTeleport btn = (ButtonWaypointTeleport) buttonList.get(i);
-					// func_146115_a
-					if (btn.isMouseOver() && btn.getTooltip() != null) {
-						// it takes a list, one on each line. but we use single line
-						// tooltips
-						drawHoveringText(Arrays.asList(new String[] { btn.getTooltip() }), x, y, fontRendererObj);
-					}
-				}
+ 
+		for (int i = 0; i < buttonList.size(); i++) {
+			if (buttonList.get(i).isMouseOver() && buttonList.get(i) instanceof ITooltipButton) {
+				ITooltipButton btn = (ITooltipButton) buttonList.get(i);
+		  
+				drawHoveringText(btn.getTooltips(), x, y, fontRendererObj);
 			}
+		}
+		
 	}
 
 	@Override
@@ -155,13 +145,16 @@ public class GuiEnderBook extends GuiScreen {
 		else if (btn instanceof ButtonWaypointDelete) {
 			ModMain.network.sendToServer(new PacketDeleteWaypoint(((ButtonWaypointDelete) btn).getSlot()));
 		}
-		 
+		else if (btn instanceof ButtonWaypointTeleport) {
+			// moved to btn class
+		}
+
 		this.entityPlayer.closeScreen();
 	}
 
 	@Override
 	public boolean doesGuiPauseGame() {
-		return ItemEnderBook.doesPauseGame;
+		return false;
 	}
 
 	// http://www.minecraftforge.net/forum/index.php?topic=22378.0

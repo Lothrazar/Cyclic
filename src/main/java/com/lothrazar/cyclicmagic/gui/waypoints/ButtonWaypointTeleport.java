@@ -1,6 +1,10 @@
 package com.lothrazar.cyclicmagic.gui.waypoints;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
 import com.lothrazar.cyclicmagic.net.PacketWarpButton;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 
@@ -11,8 +15,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ButtonWaypointTeleport extends GuiButton {
-	private int bookSlot;
+public class ButtonWaypointTeleport extends GuiButton implements ITooltipButton{
+	private int bookSlot; 
+	List<String> tooltips = new ArrayList<String>();
 
 	public int getSlot() {
 		return bookSlot;
@@ -22,15 +27,14 @@ public class ButtonWaypointTeleport extends GuiButton {
 		super(id, x, y, w, h, txt);
 		bookSlot = slot;
 	}
-
-	private String tooltip = null;
-
-	public void setTooltip(String s) {
-		tooltip = s;
+ 
+	@Override
+	public List<String> getTooltips() {
+		return tooltips;
 	}
-
-	public String getTooltip() {
-		return tooltip;
+ 
+	public void addTooltipLine(String s) {
+		tooltips.add(s);
 	}
 
 	@SideOnly(Side.CLIENT)

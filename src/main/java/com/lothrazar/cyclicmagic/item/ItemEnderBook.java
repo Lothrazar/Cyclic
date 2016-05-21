@@ -10,6 +10,7 @@ import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilExperience;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
+import com.lothrazar.cyclicmagic.util.UtilSearchWorld;
 import com.lothrazar.cyclicmagic.util.UtilSound; 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -31,12 +32,9 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
 	public static String KEY_LARGEST = "loc_largest";
 	public static boolean enabled;
 	public static final String name = "book_ender";
-	public boolean craftNetherStar;
-	public static boolean doesPauseGame;
-	public static boolean showCoordTooltips;
-	public static int maximumSaved;
-	public static int btnsPerColumn;
-	public static int expCostPerTeleport;
+
+	public static int maximumSaved = 16;
+	public static int btnsPerColumn = 8;
 
 	public ItemEnderBook() {
 		super();
@@ -91,7 +89,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
 		return empty;
 	}
 
-	private static ItemStack getPlayersBook(EntityPlayer player) {
+	public static ItemStack getPlayersBook(EntityPlayer player) {
 
 		ItemStack book = player.getHeldItem(EnumHand.MAIN_HAND);
 		if (book == null || book.getItem() instanceof ItemEnderBook == false) {
@@ -131,9 +129,17 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
 		return new BookLocation(csv);
 	}
 
-	public static void teleport(EntityPlayer player, int slot)// ItemStack
-																// enderBookInstance
-	{
+
+	public static BlockPos getLocationPos(ItemStack stack, int slot) {
+ 
+		BookLocation loc = getLocation(stack, slot);
+		if (loc == null) {
+			return null;
+		}
+		return  new BlockPos(loc.X, loc.Y, loc.Z);
+	}
+
+	public static void teleport(EntityPlayer player, int slot){
 		ItemStack book = getPlayersBook(player);
 
 		String csv = book.getTagCompound().getString(ItemEnderBook.KEY_LOC + "_" + slot);
@@ -148,7 +154,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
 		}
 
 		// then drain
-		int cost = (int) expCostPerTeleport;
+		int cost = (int) getExpCostPerTeleport(player,book,slot);
 		UtilExperience.drainExp(player, cost);
 		// play twice on purpose. at old and new locations
 
@@ -184,12 +190,10 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
 
 	public void addRecipe() {
 
-		if (craftNetherStar)
-			GameRegistry.addRecipe(new ItemStack(this), "ene", "ebe", "eee", 'e', Items.ENDER_PEARL, 'b', Items.BOOK,
+		GameRegistry.addRecipe(new ItemStack(this), "ene", "ebe", "eee", 
+				'e', Items.ENDER_PEARL, 'b', Items.BOOK,
 					'n', Items.NETHER_STAR);
-		else
-			GameRegistry.addRecipe(new ItemStack(this), "eee", "ebe", "eee", 'e', Items.ENDER_PEARL, 'b', Items.BOOK);
-
+		
 		// if you want to clean out the book and start over
 		GameRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this));
 	}
@@ -238,6 +242,9 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
 		public String toCSV() {
 			return id + "," + X + "," + Y + "," + Z + "," + dimension + "," + display;
 		}
+		public BlockPos toBlockPos() {
+			return new BlockPos( X, Y, Z);
+		}
 
 		public String coordsDisplay() {
 			// "["+id + "] "+
@@ -249,20 +256,15 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
 	public void syncConfig(Configuration config) {
 		String category;
 
-		category = Const.ConfigCategory.items_enderbook;
+		category = Const.ConfigCategory.items;
 
-		enabled = config.getBoolean("Enabled", category, true, "To disable this ender book item");
-		doesPauseGame = config.getBoolean("Gui Pauses Game", category, false,
-				"The Ender Book GUI will pause the game (single player)");
-		craftNetherStar = config.getBoolean("Recipe Nether Star", category, true,
-				"The Ender Book requires a nether star to craft.  REQUIRES RESTART.");
-		showCoordTooltips = config.getBoolean("Show Tooltip Coords", category, true,
-				"Waypoint buttons will show the exact coordinates in a hover tooltip.");
-		maximumSaved = config.getInt("Max Saved", category, 16, 1, 999, "How many waypoints the book can store.");
-		btnsPerColumn = config.getInt("Column Size", category, 8, 1, 50,
-				"Number of waypoints per column.  Change this if they are going off the screen for your chosen GUI Scale.");
-		expCostPerTeleport = config.getInt("Exp Cost", category, 10, 0, 9999,
-				"How many experience points are drained from the player on each teleport.  Set to zero for free teleports to your waypoints.");
+		enabled = config.getBoolean("EnderBook", category, true, "A special book that can store your location as a waypoint, and let you teleport back.  Cost is 1 exp per 10 blocks of horizontal distance");
+		
+	}
 
+	public static int getExpCostPerTeleport(EntityPlayer player,ItemStack book, int slot) {
+		BlockPos toPos = getLocationPos(book,slot);
+		int distance = (int)UtilSearchWorld.distanceBetweenHorizontal(toPos, player.getPosition());
+		return distance/10;
 	}
 }
