@@ -155,10 +155,7 @@ public class GuiEnderBook extends GuiScreen {
 		else if (btn instanceof ButtonWaypointDelete) {
 			ModMain.network.sendToServer(new PacketDeleteWaypoint(((ButtonWaypointDelete) btn).getSlot()));
 		}
-		else if (btn instanceof ButtonWaypointTeleport) {
-			// moved to btn class
-		}
-
+		 
 		this.entityPlayer.closeScreen();
 	}
 
