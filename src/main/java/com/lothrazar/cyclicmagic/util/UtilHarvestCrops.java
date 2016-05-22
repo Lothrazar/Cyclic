@@ -17,7 +17,6 @@ public class UtilHarvestCrops {
  
 	public static class HarestCropsConfig{ 
 		public HarestCropsConfig(){
-			
 		}
 
 		public boolean doesHarvestStem = false;
@@ -25,6 +24,8 @@ public class UtilHarvestCrops {
 		public boolean doesHarvestMushroom = true;
 		public boolean doesPumpkinBlocks = true;
 		public boolean doesMelonBlocks = true;
+		public boolean doesFlowers = true;
+		public boolean doesLeaves = true;
 
 		//TODO: this hits both the short regular grass, and tall grass, and 2 high flowers. split it up
 		public boolean doesHarvestTallgrass = true;
@@ -121,6 +122,15 @@ public class UtilHarvestCrops {
 					doBreak = true;
 					doReplant = false;
 				}
+				else if(blockCheck == Blocks.RED_FLOWER || blockCheck == Blocks.YELLOW_FLOWER && conf.doesFlowers){
+					doBreak = true;
+					doReplant = false;
+				}
+				else if(blockCheck == Blocks.LEAVES || blockCheck == Blocks.LEAVES2 && conf.doesLeaves){
+					doBreak = true;
+					doReplant = false;
+				}
+				
 				// no , for now is fine, do not do blocks
 
 				if (doBreak) {
