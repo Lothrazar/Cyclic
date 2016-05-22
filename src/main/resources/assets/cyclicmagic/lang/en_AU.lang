@@ -166,4 +166,5 @@ tile.nether_emerald_ore.name=Nether Emerald Ore
 tile.nether_gold_ore.name=Nether Gold Ore
 tile.nether_lapis_ore.name=Nether Lapis Ore
 tile.uncrafting_block.name=Uncrafting Grinder
+tooltip.burntime=Burn Time: 
 wand.regen=Regen:

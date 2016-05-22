@@ -46,6 +46,7 @@ public class FuelHandler implements IFuelHandler {
 		fuelMap.put(Items.WHEAT_SEEDS, stick);
 		fuelMap.put(Items.PUMPKIN_SEEDS, stick);
 		fuelMap.put(Items.MELON_SEEDS, stick);
+		fuelMap.put(Items.PAPER, stick);
 		fuelMap.put(Item.getItemFromBlock(Blocks.VINE), stick);
 		fuelMap.put(Item.getItemFromBlock(Blocks.TALLGRASS), stick);
 		fuelMap.put(Item.getItemFromBlock(Blocks.WATERLILY), stick);
