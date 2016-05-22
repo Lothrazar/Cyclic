@@ -13,7 +13,6 @@ import net.minecraft.block.BlockStoneBrick;
 import net.minecraft.block.BlockStone.EnumType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -403,7 +402,7 @@ public class UtilPlaceBlocks {
 			}
 		}
 		else if(clickedBlock == Blocks.STONEBRICK){
-
+			//basically we rotate variant, buut not all of them. and smoothstone is a different block
 			if(Blocks.STONEBRICK.getMetaFromState(clicked) == BlockStoneBrick.DEFAULT_META){
 
 				placeState = Blocks.STONEBRICK.getStateFromMeta(BlockStoneBrick.CHISELED_META); 
@@ -414,6 +413,8 @@ public class UtilPlaceBlocks {
 			}
 		}
 
+		//ENDBRICK
+		
 		if(placeState != null){
 			isDone = UtilPlaceBlocks.placeStateOverwrite(worldObj, p, pos, placeState);
 		}
@@ -428,6 +429,7 @@ public class UtilPlaceBlocks {
 			if(isDone){
 				break;//stop looping right away if we are done
 			}
+			//variant is commonly used, but we dont want to rotate on it
 			
 			if (prop.getName().equals("half")) {
 				//also exists as object in BlockSlab.HALF
@@ -442,6 +444,10 @@ public class UtilPlaceBlocks {
 			else if (prop.getName().equals("axis")) {
 				//i dont remember what blocks use this. rotateBlock might cover it in some cases
 				
+				isDone = UtilPlaceBlocks.placeStateOverwrite(worldObj, p, pos,  clicked.cycleProperty(prop));
+			}
+			else if(prop.getName().equals("type") && 
+					(clickedBlock == Blocks.SANDSTONE || clickedBlock == Blocks.RED_SANDSTONE)){
 				isDone = UtilPlaceBlocks.placeStateOverwrite(worldObj, p, pos,  clicked.cycleProperty(prop));
 			}
 		}
