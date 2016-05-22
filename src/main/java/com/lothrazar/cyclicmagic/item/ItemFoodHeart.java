@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.item;
 
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.event.EventNoclipUpdate;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
@@ -28,6 +29,7 @@ public class ItemFoodHeart extends ItemFood implements IHasRecipe,IHasConfig{
 	@Override
 	protected void onFoodEaten(ItemStack par1ItemStack, World world, EntityPlayer player) {
  
+		EventNoclipUpdate.setPlayerGhostMode(player, world);
 		//one heart is 2 health points (half heart = 1 health)
 		UtilEntity.incrementMaxHealth(player, 2 * numHearts);  
 	}
