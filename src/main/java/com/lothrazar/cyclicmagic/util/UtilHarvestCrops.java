@@ -50,10 +50,10 @@ public class UtilHarvestCrops {
 		BlockPos posCurrent;
 
 		IBlockState bs;
-		IBlockState bsAbove;
+		IBlockState bsAbove,bsBelow;
 		Block blockCheck;
 		int countHarvested = 0;
-		boolean doBreak, doBreakAbove = false, doReplant;
+		boolean doBreak, doBreakAbove = false,doBreakBelow = true, doReplant;
 		
 		for (int xLoop = xMin; xLoop <= xMax; xLoop++) {
 			for (int zLoop = zMin; zLoop <= zMax; zLoop++) {
@@ -64,15 +64,17 @@ public class UtilHarvestCrops {
 
 				bs = world.getBlockState(posCurrent);
 				if (bs == null) {	continue;	}
-				
-				bsAbove = world.getBlockState(posCurrent.up());
 				blockCheck = bs.getBlock();
 				if (blockCheck == null) {	continue;  }
+				
+				bsAbove = world.getBlockState(posCurrent.up());
+				bsBelow = world.getBlockState(posCurrent.down());
 				//ModMain.logger.info(" === " + UtilChat.blockPosToString(posCurrent));
 
 				//ModMain.logger.info("blockCheck = " + blockCheck.getClass().getName() + " -> " + blockCheck.getUnlocalizedName());
 
 				doBreakAbove = false;
+				doBreakBelow = false;
 				doBreak = false;
 				doReplant = false;
 				 
@@ -96,11 +98,15 @@ public class UtilHarvestCrops {
 				} else if ((blockCheck instanceof BlockTallGrass || blockCheck instanceof BlockDoublePlant)
 						&& conf.doesHarvestTallgrass) {
 					doBreak = true;
- 
+					doReplant = false;
 					//ModMain.logger.info(posCurrent.toString()+" tallgrass ");
 
 					if (blockCheck instanceof BlockDoublePlant && bsAbove != null && bsAbove.getBlock() instanceof BlockDoublePlant) {
 						doBreakAbove = true;
+						//ModMain.logger.info("above " + UtilChat.blockPosToString(posCurrent.up()));
+					}
+					if (bsBelow instanceof BlockDoublePlant && bsBelow != null && bsBelow.getBlock() instanceof BlockDoublePlant) {
+						doBreakBelow = true;
 						//ModMain.logger.info("above " + UtilChat.blockPosToString(posCurrent.up()));
 					}
 				} else if ((blockCheck instanceof BlockMushroom) && conf.doesHarvestMushroom) {
@@ -118,15 +124,16 @@ public class UtilHarvestCrops {
 				// no , for now is fine, do not do blocks
 
 				if (doBreak) {
-					//dont check isRemote, do on client side too to avoid desync.
-					
+				
+					world.destroyBlock(posCurrent, true);
 					//break above first BECAUSE 2 high tallgrass otherwise will bug out if you break bottom first
 					if (doBreakAbove) {
-						world.destroyBlock(posCurrent.up(), true);
+						world.destroyBlock(posCurrent.up(), false);
 					}
-					 
-					world.destroyBlock(posCurrent, true);
-						
+					if (doBreakBelow) {
+						world.destroyBlock(posCurrent.down(), false);
+					}
+					
 					if (doReplant) {// plant new seed
 						world.setBlockState(posCurrent, blockCheck.getDefaultState());
 					}

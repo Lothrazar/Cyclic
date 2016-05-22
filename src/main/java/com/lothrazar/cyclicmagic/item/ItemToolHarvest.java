@@ -32,8 +32,7 @@ public class ItemToolHarvest extends BaseTool implements IHasRecipe, IHasConfig{
 	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
 
 		HarestCropsConfig conf = new HarestCropsConfig(); 
-		UtilHarvestCrops.harvestArea(worldObj, player, pos, range,conf);
-		UtilHarvestCrops.harvestArea(worldObj, player, pos.up(), range,conf);
+		UtilHarvestCrops.harvestArea(worldObj, player, pos.offset(side), range,conf);
 
 		super.onUse(stack, player, worldObj, hand);
 		return super.onItemUse(stack, player, worldObj, pos, hand, side, hitX, hitY, hitZ);
