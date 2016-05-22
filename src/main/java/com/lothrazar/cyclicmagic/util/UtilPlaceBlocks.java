@@ -9,9 +9,11 @@ import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStone;
+import net.minecraft.block.BlockStoneBrick;
 import net.minecraft.block.BlockStone.EnumType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -366,13 +368,13 @@ public class UtilPlaceBlocks {
 		}
 		
 
-		//first handle any special cases : currently just for stone
+		//first handle any special cases 
+		IBlockState placeState = null;
 		if(clickedBlock == Blocks.STONE){
 
 			EnumType variant = clicked.getValue(BlockStone.VARIANT);//.getProperties().get(BlockStone.VARIANT);
 			//basically we want to toggle the "smooth" property on and off
 			//but there is no property 'smooth' its just within the variant
-			IBlockState placeState = null;
 			switch(variant){
 			case ANDESITE:
 				placeState = clicked.withProperty(BlockStone.VARIANT, EnumType.ANDESITE_SMOOTH);
@@ -393,18 +395,33 @@ public class UtilPlaceBlocks {
 				placeState = clicked.withProperty(BlockStone.VARIANT, EnumType.GRANITE);
 				break;
 			case STONE:
+				
+				placeState = Blocks.STONEBRICK.getDefaultState();
+				
 			default:
 				break;
 			}
-			if(placeState != null){
-				isDone = UtilPlaceBlocks.placeStateOverwrite(worldObj, p, pos, placeState);
+		}
+		else if(clickedBlock == Blocks.STONEBRICK){
+
+			if(Blocks.STONEBRICK.getMetaFromState(clicked) == BlockStoneBrick.DEFAULT_META){
+
+				placeState = Blocks.STONEBRICK.getStateFromMeta(BlockStoneBrick.CHISELED_META); 
 			}
-		}//end special case for 'stone'
+			else if(Blocks.STONEBRICK.getMetaFromState(clicked) == BlockStoneBrick.CHISELED_META){
+
+				placeState = Blocks.STONE.getDefaultState();
+			}
+		}
+
+		if(placeState != null){
+			isDone = UtilPlaceBlocks.placeStateOverwrite(worldObj, p, pos, placeState);
+		}
 		
 		if(isDone){
 			return true; 
 		}
-			//now try something else if not done
+		//now try something else if not done
 		
 		for (IProperty prop : (com.google.common.collect.ImmutableSet<IProperty<?>>) clicked.getProperties().keySet()) {
 			

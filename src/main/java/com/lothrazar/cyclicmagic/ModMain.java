@@ -146,18 +146,7 @@ public class ModMain {
 
 	/* TODO LIST
 	 * 
-	 ***** BUGS  
-	 *ENDER BOOK: Display Exp Required - 
-	 *ENDER BOOK: it on experience???
-	 *ENDER BOOK: add a copy paste feature???
-	 *
-	 *Spell sounds: why does push/pull/rotate sound WORK< but build up spells dont?
-	 *		-->> answer: neither one plays the actual sound. if it breaks a block for you, THATS the one you hear
-	 *		 need a network packet.sendToAllAround and hit the sound up manual (clientside)
-	 *
-	 * HARVESTER :: add a GUI with toggle buttons to turn configs on and off
-	 * 
-	 *[big change[ ENDER BOOK: remove and replace with another invo-tab
+	 ***** TODO
 	 *  
 	 *[disabled] building spells: make phantom/ghost/outline/particle blocks
 	 * 
@@ -167,20 +156,12 @@ public class ModMain {
 	 *
 	 * clay generation in some biomes , all the way down -- plains and swamp?
 	 * 
-	 * SPELLS that use build sizes/numbers, put in their name 'name' +" ["+ number + "]";
-	 * 
 	 * ROTATE: STAIRS: allow switch frop top to bottom
 	 * 
 	 * WAND: turn particle beam on / off in config
 	 * 
-     * uncrafter -maybe try using fuel source
-	 * 
-	 * uncrafter - persist smoking ? like furnace?
-	 * 
 	 * [refactor] try to auto detect home biomes of saplings for modded compat
 	 * 
-	 * [refactor]  noteblock/sign into util
-	 *   
 	 * more plants that give monster loot ie pearls/ blaze powder/ gunpowder?
 	 * 
 	 * crafting table hotkeys - numpad?
