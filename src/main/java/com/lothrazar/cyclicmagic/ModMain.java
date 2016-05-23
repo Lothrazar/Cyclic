@@ -258,7 +258,7 @@ public class ModMain {
 				tags = (NBTTagCompound) nbt;
 			}
 			instance.setSleeping(tags.getByte("isSleeping") == 1);
-			instance.setInventoryExtended(tags.getByte("hasInventoryCrafting") == 1);
+			instance.setInventoryCrafting(tags.getByte("hasInventoryCrafting") == 1);
 			instance.setInventoryExtended(tags.getByte("hasInventoryExtended") == 1);
 		}
 	}

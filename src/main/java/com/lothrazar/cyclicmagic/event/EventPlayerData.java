@@ -12,13 +12,34 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.event.entity.player.SleepingLocationCheckEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 
-public class EventPlayerData implements IHasConfig
-{
+public class EventPlayerData implements IHasConfig{
+
+    @SubscribeEvent
+	public void onPlayerClone(PlayerEvent.Clone event){
+		System.out.println("CLONE");
+
+		IPlayerExtendedProperties src = ModMain.getPlayerProperties(event.getOriginal());
+
+		System.out.println("original has crafting="+src.hasInventoryCrafting());
+		
+		IPlayerExtendedProperties dest = ModMain.getPlayerProperties(event.getEntityPlayer());
+		System.out.println("PLAYER has crafting="+dest.hasInventoryCrafting());
+//original has true, player has false
+		dest.setInventoryCrafting(src.hasInventoryCrafting());
+		dest.setInventoryExtended(src.hasInventoryExtended());
+		
+		
+
+		System.out.println("AFTER COPY has crafting="+dest.hasInventoryCrafting());
+		
+	}
+	
     @SubscribeEvent
     public void onEntityConstruct(AttachCapabilitiesEvent evt)
     {
