@@ -27,6 +27,7 @@ import com.lothrazar.cyclicmagic.event.EventNametagDeath;
 import com.lothrazar.cyclicmagic.event.EventNoclipUpdate;
 import com.lothrazar.cyclicmagic.event.EventOreMined;
 import com.lothrazar.cyclicmagic.event.EventPassthroughAction;
+import com.lothrazar.cyclicmagic.event.EventPlayerData;
 import com.lothrazar.cyclicmagic.event.EventPlayerDeathCoords;
 import com.lothrazar.cyclicmagic.event.EventPlayerWakeup;
 import com.lothrazar.cyclicmagic.event.EventPotions;
@@ -75,6 +76,7 @@ public class EventRegistry {
 		featureEvents.add(new EventSignSkullName());
 		featureEvents.add(new EventSpawnChunks());
 		featureEvents.add(new EventSpells());
+		featureEvents.add(new EventPlayerData());
 	}
  
 	public void syncConfig(Configuration config) {
