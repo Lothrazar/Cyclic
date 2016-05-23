@@ -24,12 +24,11 @@ public class EventNoclipUpdate implements IHasConfig{
 	private static final String KEY_TIMER = "ghost_timer";
 	private static final String KEY_EATLOC = "ghost_location";
 	private static final String KEY_EATDIM = "ghost_dim";
-	private static final int GHOST_SECONDS = 5;
+	private static final int GHOST_SECONDS = 10;
+	private final static int POTION_SECONDS = 20;
 	
-
 	public static void setPlayerGhostMode(EntityPlayer player, World par2World) {
-		if (par2World.isRemote == false) // false means serverside
-		{
+		if (par2World.isRemote == false){
 			player.setGameType(GameType.SPECTATOR);
 
 			UtilNBT.incrementPlayerIntegerNBT(player, KEY_TIMER, GHOST_SECONDS * Const.TICKS_PER_SEC);
@@ -39,7 +38,6 @@ public class EventNoclipUpdate implements IHasConfig{
 		}
 	}
 
-	private final static int potionSeconds = 20;
 
 	@SubscribeEvent
 	public void onPlayerUpdate(LivingUpdateEvent event) {
@@ -56,7 +54,8 @@ public class EventNoclipUpdate implements IHasConfig{
 			
 			if (playerGhost > 0) {
 				if(playerGhost % Const.TICKS_PER_SEC == 0){
-					UtilChat.addChatMessage(player, ""+playerGhost);
+					int secs = playerGhost / Const.TICKS_PER_SEC;
+					UtilChat.addChatMessage(player, "" + secs);
 				}
 				
 				UtilNBT.incrementPlayerIntegerNBT(player, KEY_TIMER, -1);
@@ -84,8 +83,8 @@ public class EventNoclipUpdate implements IHasConfig{
 					
 					if(world.isAirBlock(currentPos) && world.isAirBlock(currentPos.up())){
 						//then we can stay, but add nausea
-						player.addPotionEffect(new PotionEffect(MobEffects.NAUSEA,Const.TICKS_PER_SEC*potionSeconds ));
-						player.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS,Const.TICKS_PER_SEC*potionSeconds ));
+						player.addPotionEffect(new PotionEffect(MobEffects.NAUSEA,Const.TICKS_PER_SEC*POTION_SECONDS ));
+						player.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS,Const.TICKS_PER_SEC*POTION_SECONDS ));
 					}
 					else{
 						//teleport back home	

@@ -19,6 +19,7 @@ import com.lothrazar.cyclicmagic.item.ItemEmeraldSword;
 import com.lothrazar.cyclicmagic.item.ItemEnderBook;
 import com.lothrazar.cyclicmagic.item.ItemToolPearlReuse;
 import com.lothrazar.cyclicmagic.item.ItemFoodAppleMagic;
+import com.lothrazar.cyclicmagic.item.ItemFoodCorruptedChorus;
 import com.lothrazar.cyclicmagic.item.ItemFoodHeart;
 import com.lothrazar.cyclicmagic.item.ItemFoodHorse;
 import com.lothrazar.cyclicmagic.item.ItemInventoryStorage;
@@ -89,8 +90,7 @@ public class ItemRegistry {
 		addItem(new ItemFoodHorse(new ItemStack(Items.REDSTONE)),"horse_upgrade_speed");
 		addItem(new ItemFoodHorse(new ItemStack(Items.ENDER_EYE)),"horse_upgrade_jump");
 		addItem(new ItemEnderBook(),"book_ender"); 
- 
-
+		addItem(new ItemFoodCorruptedChorus(),"corrupted_chorus");
 		addItem(new ItemFoodHeart(),"heart_food"); 
 	}
 
