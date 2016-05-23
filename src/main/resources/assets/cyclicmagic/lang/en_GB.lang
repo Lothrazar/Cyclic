@@ -58,6 +58,7 @@ item.carbon_paper.name=Carbon Paper
 item.chest_sack.name=Sack of Holding
 item.chest_sack_empty.inventory=Only works on inventories
 item.chest_sack_empty.name=Empty Sack of Holding
+item.corrupted_chorus.name=Corrupted Chorus
 item.cyclic_wand_build.name=Build Scepter
 item.cyclic_wand_fly.name=Launch Scepter
 item.cyclic_wand_range.name=Reach Scepter

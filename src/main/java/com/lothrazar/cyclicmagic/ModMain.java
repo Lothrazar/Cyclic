@@ -149,6 +149,8 @@ public class ModMain {
 	 ***** TODO
 	 *  
 	 *[disabled] building spells: make phantom/ghost/outline/particle blocks
+	 *
+	 *some sort of noclip feature? temporary?
 	 * 
 	 * pets live longer and/or respawn
 	 *
@@ -158,16 +160,8 @@ public class ModMain {
 	 * 
 	 * ROTATE: STAIRS: allow switch frop top to bottom
 	 * 
-	 * WAND: turn particle beam on / off in config
-	 * 
-	 * [refactor] try to auto detect home biomes of saplings for modded compat
-	 * 
-	 * more plants that give monster loot ie pearls/ blaze powder/ gunpowder?
-	 * 
 	 * crafting table hotkeys - numpad?
 	 * 
-	 * SPELL: bring back ghost - let it put you in new location but only if air	 blocks. add SLOWNESS effect??
-	 *  
 	 * some sort of tool that displays trade of every nearby villager?
 	 * 
 	 * rebalance emerald armor numbers plan.
