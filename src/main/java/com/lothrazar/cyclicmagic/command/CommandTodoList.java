@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.command;
 
+import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 
@@ -29,6 +30,7 @@ public class CommandTodoList extends BaseCommand implements ICommand {
 	}
 
 	public static String getTodoForPlayer(EntityPlayer player) {
+		ModMain.logger.warn("WARN: dont use entitydata here");
 		String todoCurrent = player.getEntityData().getString(NBT_KEY);
 
 		if (todoCurrent == null)
@@ -38,6 +40,7 @@ public class CommandTodoList extends BaseCommand implements ICommand {
 	}
 
 	public static void setTodoForPlayer(EntityPlayer player, String todoCurrent) {
+		ModMain.logger.warn("WARN: dont use entitydata here");
 		player.getEntityData().setString(NBT_KEY, todoCurrent);
 	}
 

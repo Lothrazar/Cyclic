@@ -7,6 +7,7 @@ import java.util.HashSet;
 import com.google.common.io.Files;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModMain.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.gui.player.ButtonTabToggleCrafting;
 import com.lothrazar.cyclicmagic.gui.player.ButtonTabToggleInventory;
 import com.lothrazar.cyclicmagic.gui.player.GuiPlayerExtended;
@@ -110,9 +111,7 @@ public class EventExtendedInventory implements IHasConfig{
 	
 	final String ext = "invo";
 	final String extback = "backup";
-
-	private boolean extendedInventory;
-
+ 
 	public File getPlayerFile(String suffix, File playerDirectory, String playername) {
 	//	if ("dat".equals(suffix))
 			//throw new IllegalArgumentException("The suffix 'dat' is reserved");
@@ -148,12 +147,13 @@ public class EventExtendedInventory implements IHasConfig{
 			int y = guiTop + 2;
 
 			EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-			
-			if(player.getEntityData().getBoolean(ItemFoodInventory.NBT_INVO)){
+			final IPlayerExtendedProperties data = ModMain.getPlayerProperties(player);
+		
+			if(data.hasInventoryExtended()){
 				event.getButtonList().add(new ButtonTabToggleInventory(gui, x, y));
 			}
 			
-			if(player.getEntityData().getBoolean(ItemFoodCrafting.NBT_CRAFT)){
+			if(data.hasInventoryCrafting()){
 				event.getButtonList().add(new ButtonTabToggleCrafting(gui, x - 12, y));
 			}
 		}

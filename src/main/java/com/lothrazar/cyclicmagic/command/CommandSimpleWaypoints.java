@@ -205,6 +205,7 @@ public class CommandSimpleWaypoints extends BaseCommand implements ICommand {
 	public static ArrayList<String> getForPlayer(EntityPlayer player) {
 		ArrayList<String> lines = new ArrayList<String>();
 
+		System.out.println("WARN: dont use entitydata here");
 		String csv = player.getEntityData().getString(NBT_KEY);
 
 		lines = new ArrayList<String>(Arrays.asList(csv.split(System.lineSeparator())));

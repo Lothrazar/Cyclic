@@ -2,6 +2,8 @@ package com.lothrazar.cyclicmagic.item;
 
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModMain.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -20,8 +22,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class ItemFoodCrafting extends ItemFood implements IHasRecipe,IHasConfig{
  
 	private static final int numFood = 2;
-	public final static String NBT_CRAFT = Const.MODID + "crafting";
-	
+
 	public ItemFoodCrafting() {
 		super(numFood, false);  
 		this.setAlwaysEdible();
@@ -30,7 +31,10 @@ public class ItemFoodCrafting extends ItemFood implements IHasRecipe,IHasConfig{
 	@Override
 	protected void onFoodEaten(ItemStack stack, World world, EntityPlayer player) {
 
-		player.getEntityData().setBoolean(NBT_CRAFT, true);
+
+		final IPlayerExtendedProperties data = ModMain.getPlayerProperties(player);
+		data.setInventoryCrafting(true);
+		player.getEntityData().setBoolean("X", true);
 		
 		UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT_MAGIC, player.getPosition());
 		UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT_MAGIC, player.getPosition().up());
