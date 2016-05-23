@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTBase.NBTPrimitive;
 import net.minecraft.nbt.NBTTagByte;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
@@ -48,9 +49,9 @@ public class NoBedSleepingTest
     {
         public void preInit(FMLPreInitializationEvent event)
         {
-            GameRegistry.register(ItemSleepingPill.instance);
+            GameRegistry.register(ItemSleepingBag.instance);
             CapabilityManager.INSTANCE.register(IExtraSleeping.class, new Storage(), DefaultImpl.class);
-            MinecraftForge.EVENT_BUS.register(new EventHandler());
+            MinecraftForge.EVENT_BUS.register(new EventPlayerData());
         }
     }
 
@@ -62,7 +63,7 @@ public class NoBedSleepingTest
         public void preInit(FMLPreInitializationEvent event)
         {
             super.preInit(event);
-            ModelLoader.setCustomModelResourceLocation(ItemSleepingPill.instance, 0, new ModelResourceLocation(new ResourceLocation(MODID, ItemSleepingPill.name), "inventory"));
+            ModelLoader.setCustomModelResourceLocation(ItemSleepingBag.instance, 0, new ModelResourceLocation(new ResourceLocation(MODID, ItemSleepingBag.name), "inventory"));
         }
     }
 
@@ -72,12 +73,12 @@ public class NoBedSleepingTest
         proxy.preInit(event);
     }
 
-    public static class EventHandler
+    public static class EventPlayerData
     {
         @SubscribeEvent
         public void onEntityConstruct(AttachCapabilitiesEvent evt)
         {
-            evt.addCapability(new ResourceLocation(MODID, "IExtraSleeping"), new ICapabilitySerializable<NBTPrimitive>()
+            evt.addCapability(new ResourceLocation(MODID, "IModdedSleeping"), new ICapabilitySerializable<NBTTagCompound>()
             {
                 IExtraSleeping inst = SLEEP_CAP.getDefaultInstance();
                 @Override
@@ -91,12 +92,16 @@ public class NoBedSleepingTest
                 }
 
                 @Override
-                public NBTPrimitive serializeNBT() {
-                    return (NBTPrimitive)SLEEP_CAP.getStorage().writeNBT(SLEEP_CAP, inst, null);
+                public NBTTagCompound serializeNBT() {
+                	try{
+                    return (NBTTagCompound)SLEEP_CAP.getStorage().writeNBT(SLEEP_CAP, inst, null);
+                	}catch(java.lang.ClassCastException e){
+                		return new NBTTagCompound();
+                	}
                 }
 
                 @Override
-                public void deserializeNBT(NBTPrimitive nbt) {
+                public void deserializeNBT(NBTTagCompound nbt) {
                     SLEEP_CAP.getStorage().readNBT(SLEEP_CAP, inst, null, nbt);
                 }
             });
@@ -129,36 +134,59 @@ public class NoBedSleepingTest
     public interface IExtraSleeping {
         boolean isSleeping();
         void setSleeping(boolean value);
+//        boolean canSleep();
+//        void setCanSleep(boolean value);
     }
 
     public static class Storage implements IStorage<IExtraSleeping>
     {
         @Override
-        public NBTBase writeNBT(Capability<IExtraSleeping> capability, IExtraSleeping instance, EnumFacing side)
+        public NBTTagCompound writeNBT(Capability<IExtraSleeping> capability, IExtraSleeping instance, EnumFacing side)
         {
-            return new NBTTagByte((byte)(instance.isSleeping() ? 1 : 0));
+//NBTTagCompound extends NBTBase so its fine
+        	NBTTagCompound tags = new NBTTagCompound();
+        	tags.setByte("isSleeping", (byte)(instance.isSleeping() ? 1 : 0));
+        	//NBTTagByte tag = new NBTTagByte((byte)(instance.isSleeping() ? 1 : 0));
+            return tags;
         }
 
         @Override
         public void readNBT(Capability<IExtraSleeping> capability, IExtraSleeping instance, EnumFacing side, NBTBase nbt)
         {
-            instance.setSleeping(((NBTPrimitive)nbt).getByte() == 1);
+        	NBTTagCompound tags ;
+        	if(nbt instanceof NBTTagCompound == false){
+        		//then discard it and make a new one
+            	tags = new NBTTagCompound();
+        	}
+        	else
+        		tags = (NBTTagCompound)nbt;
+        	
+            instance.setSleeping( tags.getByte("isSleeping") == 1 );
         }
     }
 
     public static class DefaultImpl implements IExtraSleeping
     {
         private boolean isSleeping = false;
+        //private boolean canSleep = false;
         @Override public boolean isSleeping() { return isSleeping; }
         @Override public void setSleeping(boolean value) { this.isSleeping = value; }
+//		@Override
+//		public boolean canSleep() {
+//			return canSleep;
+//		}
+//		@Override
+//		public void setCanSleep(boolean value) {
+//			canSleep = value;
+//		}
     }
 
-    public static class ItemSleepingPill extends Item
+    public static class ItemSleepingBag extends Item
     {
-        public static final ItemSleepingPill instance = new ItemSleepingPill();
+        public static final ItemSleepingBag instance = new ItemSleepingBag();
         public static final String name = "sleeping_pill";
 
-        private ItemSleepingPill()
+        private ItemSleepingBag()
         {
             setCreativeTab(ModMain.TAB);
             setUnlocalizedName(MODID + ":" + name);
@@ -171,7 +199,6 @@ public class NoBedSleepingTest
             if (!world.isRemote)
             {
 
-            	System.out.println("onItemRightClick ");
                 final EntityPlayer.SleepResult result = player.trySleep(player.getPosition());
                 if (result == EntityPlayer.SleepResult.OK)
                 {
