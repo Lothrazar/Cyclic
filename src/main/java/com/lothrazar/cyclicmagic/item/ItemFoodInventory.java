@@ -15,14 +15,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class ItemFoodCrafting extends ItemFood implements IHasRecipe,IHasConfig{
+public class ItemFoodInventory extends ItemFood implements IHasRecipe,IHasConfig{
  
 	private static final int numFood = 2;
-	public final static String NBT_CRAFT = Const.MODID + "crafting";
+	public final static String NBT_INVO = Const.MODID + "extended";
 	
-	public ItemFoodCrafting() {
+	public ItemFoodInventory() {
 		super(numFood, false);  
 		this.setAlwaysEdible();
 	}
@@ -30,12 +31,12 @@ public class ItemFoodCrafting extends ItemFood implements IHasRecipe,IHasConfig{
 	@Override
 	protected void onFoodEaten(ItemStack stack, World world, EntityPlayer player) {
 
-		player.getEntityData().setBoolean(NBT_CRAFT, true);
+		player.getEntityData().setBoolean(NBT_INVO, true);
 		
 		UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT_MAGIC, player.getPosition());
 		UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT_MAGIC, player.getPosition().up());
 		
-		UtilChat.addChatMessage(player, "unlocks.crafting");
+		UtilChat.addChatMessage(player, "unlocks.extended");
 	}
 
 	@Override
@@ -50,7 +51,7 @@ public class ItemFoodCrafting extends ItemFood implements IHasRecipe,IHasConfig{
 	public void addRecipe() {
 
 		GameRegistry.addShapelessRecipe(new ItemStack(this) 
-				,Blocks.CRAFTING_TABLE 
+				,Blocks.CHEST 
 				,Items.PUMPKIN_PIE 
 				,Items.CAKE
 				,Items.COOKIE
