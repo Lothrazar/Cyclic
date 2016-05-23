@@ -11,9 +11,11 @@ import com.lothrazar.cyclicmagic.gui.player.ButtonTabToggleCrafting;
 import com.lothrazar.cyclicmagic.gui.player.ButtonTabToggleInventory;
 import com.lothrazar.cyclicmagic.gui.player.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.gui.player.InventoryPlayerExtended;
+import com.lothrazar.cyclicmagic.item.ItemFoodCrafting;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiCrafting;
 import net.minecraft.client.gui.inventory.GuiInventory;
@@ -32,7 +34,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EventExtendedInventory implements IHasConfig{
-
 
 	public boolean dropOnDeath;
 	
@@ -111,8 +112,6 @@ public class EventExtendedInventory implements IHasConfig{
 
 	private boolean extendedInventory;
 
-	private boolean extendedCrafting;
-
 	public File getPlayerFile(String suffix, File playerDirectory, String playername) {
 	//	if ("dat".equals(suffix))
 			//throw new IllegalArgumentException("The suffix 'dat' is reserved");
@@ -150,7 +149,9 @@ public class EventExtendedInventory implements IHasConfig{
 			if(extendedInventory){
 				event.getButtonList().add(new ButtonTabToggleInventory(gui, x, y));
 			}
-			if(extendedCrafting){
+			
+			EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+			if(player.getEntityData().getBoolean(ItemFoodCrafting.NBT_CRAFT)){
 				event.getButtonList().add(new ButtonTabToggleCrafting(gui, x - 12, y));
 			}
 		}
@@ -164,7 +165,7 @@ public class EventExtendedInventory implements IHasConfig{
 
 		String category = Const.ConfigCategory.inventory;  
 		
-		extendedCrafting = config.getBoolean("CraftingTab", category, true, "A tab for 3x3 crafting in the survival inventory");
+//		extendedCrafting = config.getBoolean("CraftingTab", category, true, "A tab for 3x3 crafting in the survival inventory");
 
 		extendedInventory = config.getBoolean("ExtendedStorageTab", category, true, "A tab for extended item storage in the survival inventory");
 		
