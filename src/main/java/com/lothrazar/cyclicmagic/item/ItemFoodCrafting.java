@@ -31,7 +31,6 @@ public class ItemFoodCrafting extends ItemFood implements IHasRecipe,IHasConfig{
 	@Override
 	protected void onFoodEaten(ItemStack stack, World world, EntityPlayer player) {
 
-
 		final IPlayerExtendedProperties data = ModMain.getPlayerProperties(player);
 		data.setInventoryCrafting(true);
 		player.getEntityData().setBoolean("X", true);
@@ -39,7 +38,9 @@ public class ItemFoodCrafting extends ItemFood implements IHasRecipe,IHasConfig{
 		UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT_MAGIC, player.getPosition());
 		UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT_MAGIC, player.getPosition().up());
 		
-		UtilChat.addChatMessage(player, "unlocks.crafting");
+		if(player.worldObj.isRemote){
+			UtilChat.addChatMessage(player, "unlocks.crafting");
+		}
 	}
 
 	@Override
