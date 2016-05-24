@@ -200,6 +200,9 @@ public class ModMain {
 		boolean hasInventoryExtended();
 
 		void setInventoryExtended(boolean value);
+		
+		NBTTagCompound getDataAsNBT();
+		void setDataFromNBT(NBTTagCompound nbt);
 	}
 
 	public static class InstancePlayerExtendedProperties implements IPlayerExtendedProperties {
@@ -236,30 +239,47 @@ public class ModMain {
 		public void setInventoryExtended(boolean value) {
 			hasInventoryExtended = value;
 		}
-	}
 
-	public static class Storage implements IStorage<IPlayerExtendedProperties> {
 		@Override
-		public NBTTagCompound writeNBT(Capability<IPlayerExtendedProperties> capability, IPlayerExtendedProperties instance, EnumFacing side) {
+		public NBTTagCompound getDataAsNBT() {
 			NBTTagCompound tags = new NBTTagCompound();
-			tags.setByte("isSleeping", (byte) (instance.isSleeping() ? 1 : 0));
-			tags.setByte("hasInventoryCrafting", (byte) (instance.hasInventoryCrafting() ? 1 : 0));
-			tags.setByte("hasInventoryExtended", (byte) (instance.hasInventoryExtended() ? 1 : 0));
+			tags.setByte("isSleeping", (byte) (this.isSleeping() ? 1 : 0));
+			tags.setByte("hasInventoryCrafting", (byte) (this.hasInventoryCrafting() ? 1 : 0));
+			tags.setByte("hasInventoryExtended", (byte) (this.hasInventoryExtended() ? 1 : 0));
 
 			return tags;
 		}
 
 		@Override
-		public void readNBT(Capability<IPlayerExtendedProperties> capability, IPlayerExtendedProperties instance, EnumFacing side, NBTBase nbt) {
+		public void setDataFromNBT(NBTTagCompound nbt) {
 			NBTTagCompound tags;
 			if (nbt instanceof NBTTagCompound == false) {
 				tags = new NBTTagCompound();
 			} else {
 				tags = (NBTTagCompound) nbt;
 			}
-			instance.setSleeping(tags.getByte("isSleeping") == 1);
-			instance.setInventoryCrafting(tags.getByte("hasInventoryCrafting") == 1);
-			instance.setInventoryExtended(tags.getByte("hasInventoryExtended") == 1);
+			this.setSleeping(tags.getByte("isSleeping") == 1);
+			this.setInventoryCrafting(tags.getByte("hasInventoryCrafting") == 1);
+			this.setInventoryExtended(tags.getByte("hasInventoryExtended") == 1);
+		}
+	}
+
+	public static class Storage implements IStorage<IPlayerExtendedProperties> {
+		@Override
+		public NBTTagCompound writeNBT(Capability<IPlayerExtendedProperties> capability, IPlayerExtendedProperties instance, EnumFacing side) {
+
+			return instance.getDataAsNBT();
+		}
+
+		@Override
+		public void readNBT(Capability<IPlayerExtendedProperties> capability, IPlayerExtendedProperties instance, EnumFacing side, NBTBase nbt) {
+			try{
+				instance.setDataFromNBT((NBTTagCompound)nbt);
+			}
+			catch(Exception e){
+				logger.error("Invalid NBT compound: "+e.getMessage());
+				logger.error(e.getStackTrace().toString());
+			}
 		}
 	}
 
