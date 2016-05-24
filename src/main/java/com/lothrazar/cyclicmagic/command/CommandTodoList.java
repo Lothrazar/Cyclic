@@ -46,6 +46,9 @@ public class CommandTodoList extends BaseCommand implements ICommand {
 
 	@Override
 	public void execute(MinecraftServer server, ICommandSender icommandsender, String[] args) {
+		if(icommandsender instanceof EntityPlayer == false){
+			return;
+		}
 		EntityPlayer player = (EntityPlayer) icommandsender;
 
 		String todoCurrent = getTodoForPlayer(player);

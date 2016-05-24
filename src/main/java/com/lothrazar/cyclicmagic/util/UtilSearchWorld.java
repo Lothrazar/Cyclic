@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public class UtilSearchWorld {
 
@@ -107,23 +108,24 @@ public class UtilSearchWorld {
 		return found;
 	}
 
-	public static ArrayList<BlockPos> findBlocks(EntityPlayer player, Block blockHunt, int RADIUS) {
+	public static ArrayList<BlockPos> findBlocks(World world, BlockPos start, Block blockHunt, int RADIUS) {
+		
 		ArrayList<BlockPos> found = new ArrayList<BlockPos>();
-		int xMin = (int) player.posX - RADIUS;
-		int xMax = (int) player.posX + RADIUS;
+		int xMin = (int) start.getX() - RADIUS;
+		int xMax = (int) start.getX() + RADIUS;
 
-		int yMin = (int) player.posY - RADIUS;
-		int yMax = (int) player.posY + RADIUS;
+		int yMin = (int) start.getY() - RADIUS;
+		int yMax = (int) start.getY() + RADIUS;
 
-		int zMin = (int) player.posZ - RADIUS;
-		int zMax = (int) player.posZ + RADIUS;
+		int zMin = (int) start.getZ() - RADIUS;
+		int zMax = (int) start.getZ() + RADIUS;
 
 		BlockPos posCurrent = null;
 		for (int xLoop = xMin; xLoop <= xMax; xLoop++) {
 			for (int yLoop = yMin; yLoop <= yMax; yLoop++) {
 				for (int zLoop = zMin; zLoop <= zMax; zLoop++) {
 					posCurrent = new BlockPos(xLoop, yLoop, zLoop);
-					if (player.worldObj.getBlockState(posCurrent).getBlock().equals(blockHunt)) {
+					if (world.getBlockState(posCurrent).getBlock().equals(blockHunt)) {
 						found.add(posCurrent);
 					}
 				}

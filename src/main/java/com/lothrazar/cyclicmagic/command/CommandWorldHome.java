@@ -22,15 +22,16 @@ public class CommandWorldHome extends BaseCommand implements ICommand {
 
 	@Override
 	public void execute(MinecraftServer server, ICommandSender ic, String[] args) {
+		if(ic instanceof EntityPlayer == false){
+			return;
+		}
 		World world = ic.getCommandSenderEntity().worldObj;
 
-		EntityPlayer player = (EntityPlayer) ic;// world.getClosestPlayer(ic.getPosition().getX(),
-		                                        // ic.getPosition().getY(),
-		                                        // ic.getPosition().getZ(), 5);
+		EntityPlayer player = (EntityPlayer) ic; 
 
 		if (player.dimension != 0) {
 			// TODO:"Can only teleport to worldhome in the overworld"
-			UtilChat.addChatMessage(player, "command.worldhome.dim");
+			UtilChat.addChatMessage(ic, "command.worldhome.dim");
 			return;
 		}
 

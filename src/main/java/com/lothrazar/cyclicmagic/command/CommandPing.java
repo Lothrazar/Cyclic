@@ -24,8 +24,10 @@ public class CommandPing extends BaseCommand implements ICommand {
 
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+		if(sender instanceof EntityPlayer == false){
+			return;
+		}
 		EntityPlayer player = (EntityPlayer) sender;
-		if (player == null) { return; }
 
 		if (args.length > 0 && args[0] != null && args[0].equalsIgnoreCase("nether")) {
 			BlockPos p = player.getPosition();

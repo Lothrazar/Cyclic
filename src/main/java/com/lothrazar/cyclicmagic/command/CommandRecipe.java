@@ -31,8 +31,9 @@ public class CommandRecipe extends BaseCommand implements ICommand {
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 		World world = sender.getEntityWorld();
-		if (!(sender instanceof EntityPlayer)) { return; }// does not work from
-		                                                  // command blocks and such
+		if(sender instanceof EntityPlayer == false){
+			return;
+		}
 
 		EntityPlayer player = (EntityPlayer) sender;
 		ItemStack held = player.inventory.getCurrentItem();

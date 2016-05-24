@@ -24,7 +24,10 @@ public class CommandHome extends BaseCommand implements ICommand {
 
 	@Override
 	public void execute(MinecraftServer server, ICommandSender ic, String[] args) {
-		EntityPlayer player = ((EntityPlayer) ic);
+		if(ic instanceof EntityPlayer == false){
+			return;
+		}
+		EntityPlayer player = (EntityPlayer) ic;
 		World world = player.worldObj;
 
 		if (player.dimension != 0) {

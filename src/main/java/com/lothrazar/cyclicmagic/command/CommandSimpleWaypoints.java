@@ -40,6 +40,9 @@ public class CommandSimpleWaypoints extends BaseCommand implements ICommand {
 
 	@Override
 	public void execute(MinecraftServer server, ICommandSender icommandsender, String[] args) {
+		if(icommandsender instanceof EntityPlayer == false){
+			return;
+		}
 		EntityPlayer p = (EntityPlayer) icommandsender;
 
 		if (args == null || args.length == 0 || args[0] == null || args[0].length() == 0) {
