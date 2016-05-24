@@ -35,12 +35,15 @@ public class PacketSyncPlayerData implements IMessage, IMessageHandler<PacketSyn
 	public IMessage onMessage(PacketSyncPlayerData message, MessageContext ctx) {
 		
 		if(ctx.side == Side.CLIENT){
+			if(Minecraft.getMinecraft().thePlayer == null){
+				return null;
+			}
 
 			IPlayerExtendedProperties props = ModMain.getPlayerProperties(Minecraft.getMinecraft().thePlayer);
 			if(props == null){
-				ModMain.logger.error("IPlayerExtendedProperties NULL PROBLEM");
+				return null;
 			}
-			else{
+			else{    
 				props.setDataFromNBT(message.tags);
 			}
 		}

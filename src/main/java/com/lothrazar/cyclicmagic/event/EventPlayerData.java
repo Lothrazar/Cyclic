@@ -20,20 +20,41 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.event.entity.player.SleepingLocationCheckEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 
 public class EventPlayerData implements IHasConfig{
 	
+	
+	@SubscribeEvent
+    public void onSpawn(PlayerLoggedInEvent event){
+		if(event.player instanceof EntityPlayerMP && event.player.worldObj.isRemote == false){
+
+			EntityPlayerMP p = (EntityPlayerMP)event.player;
+			onPlayerJoinServerside(p);
+		}
+	}
 	@SubscribeEvent
     public void onSpawn(EntityJoinWorldEvent event){
-		if(event.getEntity() instanceof EntityPlayer && event.getEntity().worldObj.isRemote == false
-				&& event.getEntity() instanceof EntityPlayerMP){
-			System.out.println("Player join world");
-			EntityPlayer p = (EntityPlayer)event.getEntity();
-			 
-			ModMain.network.sendTo(new PacketSyncPlayerData(ModMain.getPlayerProperties(p).getDataAsNBT()), (EntityPlayerMP)p);
+		if(event.getEntity() instanceof EntityPlayerMP && event.getEntity().worldObj.isRemote == false){
+			EntityPlayerMP p = (EntityPlayerMP)event.getEntity();
+			
+			onPlayerJoinServerside(p);
 		}
     }
+	private void onPlayerJoinServerside(EntityPlayerMP p){
+		// send from both events to avoid NULL player; known issue due to threading race conditions
+		// https://github.com/MinecraftForge/MinecraftForge/issues/1583
+		if(p == null){
+			return;
+		}
+
+		IPlayerExtendedProperties props = ModMain.getPlayerProperties(p); 
+		
+		if(props != null){
+			ModMain.network.sendTo(new PacketSyncPlayerData(props.getDataAsNBT()), p);
+		}
+	}
 
     @SubscribeEvent
 	public void onPlayerClone(PlayerEvent.Clone event){

@@ -184,6 +184,10 @@ public class ModMain {
 	// }
 	
 	public static IPlayerExtendedProperties getPlayerProperties(EntityPlayer player){
+		if(player == null){
+			ModMain.logger.error("Null player, cannot get properties");
+			return null;
+		}
 		return player.getCapability(ModMain.CAPABILITYSTORAGE, null);
 	}
 
