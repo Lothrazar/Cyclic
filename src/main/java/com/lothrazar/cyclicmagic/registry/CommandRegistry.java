@@ -13,7 +13,6 @@ import com.lothrazar.cyclicmagic.command.CommandRecipe;
 import com.lothrazar.cyclicmagic.command.CommandSearchItem;
 import com.lothrazar.cyclicmagic.command.CommandSearchSpawner;
 import com.lothrazar.cyclicmagic.command.CommandSearchTrades;
-import com.lothrazar.cyclicmagic.command.CommandSimpleWaypoints;
 import com.lothrazar.cyclicmagic.command.CommandTodoList;
 import com.lothrazar.cyclicmagic.command.CommandUses;
 import com.lothrazar.cyclicmagic.command.CommandVillageInfo;
@@ -62,9 +61,6 @@ public class CommandRegistry {
 		if (configToggle.get(CommandSearchTrades.name)) {
 			event.registerServerCommand(new CommandSearchTrades(commandNeedsOp.get(CommandSearchTrades.name)));
 		}
-		if (configToggle.get(CommandSimpleWaypoints.name)) {
-			event.registerServerCommand(new CommandSimpleWaypoints(commandNeedsOp.get(CommandSimpleWaypoints.name)));
-		}
 		if (configToggle.get(CommandTodoList.name)) {
 			event.registerServerCommand(new CommandTodoList(commandNeedsOp.get(CommandTodoList.name)));
 		}
@@ -99,9 +95,9 @@ public class CommandRegistry {
 
 		syncCommandConfig(config, CommandGetHome.name, false,"Get where your current spawn is set (by a bed)");
 
-		syncCommandConfig(config, CommandHeal.name, true,"Heal yourself to full");
+		syncCommandConfig(config, CommandHeal.name, true,"Heal yourself (or a target player) to full");
 
-		syncCommandConfig(config, CommandHearts.name, true,"Increase your maximum hearts (lasts until death)");
+		syncCommandConfig(config, CommandHearts.name, true,"Increase the maximum hearts of a target player (lasts until death)");
 
 		syncCommandConfig(config, CommandHome.name, false,"Teleport you to your current spawn (if its set)");
 
@@ -114,8 +110,6 @@ public class CommandRegistry {
 		syncCommandConfig(config, CommandSearchSpawner.name, true,"Search the world nearby for spawners (dungeons, etc)");
 
 		syncCommandConfig(config, CommandSearchTrades.name, false,"Search nearby villagers for trades based on item names");
-
-		syncCommandConfig(config, CommandSimpleWaypoints.name, false,"Save a waypoint and set them as headings.");
 
 		syncCommandConfig(config, CommandTodoList.name, false,"Set reminders on screen for yourself");
 
