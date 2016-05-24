@@ -86,7 +86,7 @@ public class CapabilityRegistry {
 			tags.setByte("isSleeping", (byte) (this.isSleeping() ? 1 : 0));
 			tags.setByte("hasInventoryCrafting", (byte) (this.hasInventoryCrafting() ? 1 : 0));
 			tags.setByte("hasInventoryExtended", (byte) (this.hasInventoryExtended() ? 1 : 0));
-			tags.setString("todo",todo);
+			tags.setString("todo",this.getTODO());
 
 			return tags;
 		}

@@ -58,9 +58,7 @@ public class EventPlayerData implements IHasConfig{
  
 		IPlayerExtendedProperties dest = CapabilityRegistry.getPlayerProperties(event.getEntityPlayer());
  
-		dest.setInventoryCrafting(src.hasInventoryCrafting());
-		dest.setInventoryExtended(src.hasInventoryExtended());
-		  
+		dest.setDataFromNBT(src.getDataAsNBT());
 	}
 	
     @SubscribeEvent
