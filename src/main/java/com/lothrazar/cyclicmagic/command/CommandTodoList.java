@@ -1,12 +1,13 @@
 package com.lothrazar.cyclicmagic.command;
 
-import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
+import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 
 public class CommandTodoList extends BaseCommand implements ICommand {
@@ -20,28 +21,13 @@ public class CommandTodoList extends BaseCommand implements ICommand {
 	private static final String	MODE_REMOVE	    = "delete";
 	private static final String	MODE_SET		= "set";
 	private static final String	MODE_GET		= "get";
-	private static final String	NBT_KEY			= Const.MODID + "_todo";
+	//private static final String	NBT_KEY			= Const.MODID + "_todo";
 
 	public static boolean				PERSIST_DEATH;
 
 	@Override
 	public String getCommandUsage(ICommandSender s) {
 		return "/" + getCommandName() + " <" + MODE_GET + "|" + MODE_SET + "|" + MODE_ADD + "|" + MODE_REMOVE + "> <text>";
-	}
-
-	public static String getTodoForPlayer(EntityPlayer player) {
-		ModMain.logger.warn("WARN: dont use entitydata here");
-		String todoCurrent = player.getEntityData().getString(NBT_KEY);
-
-		if (todoCurrent == null)
-			todoCurrent = "";
-
-		return todoCurrent;
-	}
-
-	public static void setTodoForPlayer(EntityPlayer player, String todoCurrent) {
-		ModMain.logger.warn("WARN: dont use entitydata here");
-		player.getEntityData().setString(NBT_KEY, todoCurrent);
 	}
 
 	@Override
@@ -93,5 +79,22 @@ public class CommandTodoList extends BaseCommand implements ICommand {
 		}
 
 		setTodoForPlayer(player, todoCurrent);
+	}
+
+	private void setTodoForPlayer(EntityPlayer player, String todoCurrent) { 
+		
+		IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(player);
+		 
+		props.setTODO(todoCurrent);
+		 
+		if(player instanceof EntityPlayerMP){
+			CapabilityRegistry.syncServerDataToClient((EntityPlayerMP)player);
+		}
+	}
+
+	public static String getTodoForPlayer(EntityPlayer player) {
+		IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(player);
+		
+		return props.getTODO();
 	}
 }

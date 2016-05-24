@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.event;
 
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.net.PacketSyncPlayerData;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -48,12 +47,8 @@ public class EventPlayerData implements IHasConfig{
 		if(p == null){
 			return;
 		}
-
-		IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(p); 
 		
-		if(props != null){
-			ModMain.network.sendTo(new PacketSyncPlayerData(props.getDataAsNBT()), p);
-		}
+		CapabilityRegistry.syncServerDataToClient(p);
 	}
 
     @SubscribeEvent
