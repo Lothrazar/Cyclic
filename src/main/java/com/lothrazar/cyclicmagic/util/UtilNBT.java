@@ -2,6 +2,8 @@ package com.lothrazar.cyclicmagic.util;
 
 import java.util.ArrayList;
 
+import com.lothrazar.cyclicmagic.ModMain;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
@@ -44,6 +46,7 @@ public class UtilNBT {
 
 		int prev = player.getEntityData().getInteger(prop);
 		prev += inc;
+		ModMain.logger.warn("WARN: dont use entitydata here");
 		player.getEntityData().setInteger(prop, prev);
 	}
 

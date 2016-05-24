@@ -21,6 +21,7 @@ import com.lothrazar.cyclicmagic.net.PacketNewButton;
 import com.lothrazar.cyclicmagic.net.PacketOpenExtendedInventory;
 import com.lothrazar.cyclicmagic.net.PacketOpenNormalInventory;
 import com.lothrazar.cyclicmagic.net.PacketSyncExtendedInventory;
+import com.lothrazar.cyclicmagic.net.PacketSyncPlayerData;
 import com.lothrazar.cyclicmagic.net.PacketWarpButton;
 import com.lothrazar.cyclicmagic.net.PacketQuickStack;
 import com.lothrazar.cyclicmagic.net.PacketRestockContainerToPlayer;
@@ -76,5 +77,8 @@ public class PacketRegistry {
 
 		network.registerMessage(PacketSpellBuildSize.class, PacketSpellBuildSize.class, PacketSpellBuildSize.ID, Side.SERVER);
 
+		network.registerMessage(PacketSyncPlayerData.class, PacketSyncPlayerData.class, PacketSyncPlayerData.ID, Side.CLIENT);
+
+		
 	}
 }

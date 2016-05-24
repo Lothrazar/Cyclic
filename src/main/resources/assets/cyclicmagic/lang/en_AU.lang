@@ -169,3 +169,5 @@ tile.nether_lapis_ore.name=Nether Lapis Ore
 tile.uncrafting_block.name=Uncrafting Grinder
 tooltip.burntime=Burn Time: 
 wand.regen=Regen:
+unlocks.extended=Unlocked Extended Inventory
+unlocks.crafting=Unlocked Inventory Crafting
