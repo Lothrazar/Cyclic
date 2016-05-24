@@ -17,7 +17,7 @@ public class CommandTodoList extends BaseCommand implements ICommand {
 	}
 
 	private static final String	MODE_ADD		= "add";
-	private static final String	MODE_REMOVE	= "delete";
+	private static final String	MODE_REMOVE	    = "delete";
 	private static final String	MODE_SET		= "set";
 	private static final String	MODE_GET		= "get";
 	private static final String	NBT_KEY			= Const.MODID + "_todo";

@@ -1,7 +1,8 @@
 package com.lothrazar.cyclicmagic.item;
 
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.ModMain.IPlayerExtendedProperties;
+import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
+import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.util.Const;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -36,7 +37,7 @@ public class ItemSleepingBag extends Item {
 			if (result == EntityPlayer.SleepResult.OK) {
 				
 				//final IPlayerExtendedProperties sleep = player.getCapability(ModMain.CAPABILITYSTORAGE, null);
-				final IPlayerExtendedProperties sleep = ModMain.getPlayerProperties(player);
+				final IPlayerExtendedProperties sleep = CapabilityRegistry.getPlayerProperties(player);
 				if (sleep != null) {
 					sleep.setSleeping(true);
 				}

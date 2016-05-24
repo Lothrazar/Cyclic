@@ -1,7 +1,8 @@
 package com.lothrazar.cyclicmagic.net;
 
-import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.ModMain.IPlayerExtendedProperties;
+import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
+import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
+
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
@@ -39,7 +40,7 @@ public class PacketSyncPlayerData implements IMessage, IMessageHandler<PacketSyn
 				return null;
 			}
 
-			IPlayerExtendedProperties props = ModMain.getPlayerProperties(Minecraft.getMinecraft().thePlayer);
+			IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(Minecraft.getMinecraft().thePlayer);
 			if(props == null){
 				return null;
 			}

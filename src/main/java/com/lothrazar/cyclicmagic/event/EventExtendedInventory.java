@@ -6,14 +6,15 @@ import java.util.HashSet;
 
 import com.google.common.io.Files;
 import com.lothrazar.cyclicmagic.IHasConfig;
-import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.ModMain.IPlayerExtendedProperties;
+import com.lothrazar.cyclicmagic.ModMain; 
 import com.lothrazar.cyclicmagic.gui.player.ButtonTabToggleCrafting;
 import com.lothrazar.cyclicmagic.gui.player.ButtonTabToggleInventory;
 import com.lothrazar.cyclicmagic.gui.player.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.gui.player.InventoryPlayerExtended;
 import com.lothrazar.cyclicmagic.item.ItemFoodCrafting;
 import com.lothrazar.cyclicmagic.item.ItemFoodInventory;
+import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
+import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
 
@@ -147,7 +148,7 @@ public class EventExtendedInventory implements IHasConfig{
 			int y = guiTop + 2;
 
 			EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-			final IPlayerExtendedProperties data = ModMain.getPlayerProperties(player);
+			final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(player);
 		
 			if(data.hasInventoryExtended()){
 				event.getButtonList().add(new ButtonTabToggleInventory(gui, x, y));

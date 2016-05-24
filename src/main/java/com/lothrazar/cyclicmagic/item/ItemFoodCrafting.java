@@ -2,8 +2,8 @@ package com.lothrazar.cyclicmagic.item;
 
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.ModMain.IPlayerExtendedProperties;
+import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
+import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
@@ -31,7 +31,7 @@ public class ItemFoodCrafting extends ItemFood implements IHasRecipe,IHasConfig{
 	@Override
 	protected void onFoodEaten(ItemStack stack, World world, EntityPlayer player) {
 
-		final IPlayerExtendedProperties data = ModMain.getPlayerProperties(player);
+		final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(player);
 		data.setInventoryCrafting(true);
 		player.getEntityData().setBoolean("X", true);
 		

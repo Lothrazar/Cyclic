@@ -2,11 +2,11 @@ package com.lothrazar.cyclicmagic.event;
 
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.ModMain.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.net.PacketSyncPlayerData;
+import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
+import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.util.Const;
 
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -49,7 +49,7 @@ public class EventPlayerData implements IHasConfig{
 			return;
 		}
 
-		IPlayerExtendedProperties props = ModMain.getPlayerProperties(p); 
+		IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(p); 
 		
 		if(props != null){
 			ModMain.network.sendTo(new PacketSyncPlayerData(props.getDataAsNBT()), p);
@@ -58,22 +58,14 @@ public class EventPlayerData implements IHasConfig{
 
     @SubscribeEvent
 	public void onPlayerClone(PlayerEvent.Clone event){
-		System.out.println("CLONE");
-
-		IPlayerExtendedProperties src = ModMain.getPlayerProperties(event.getOriginal());
-
-		System.out.println("original has crafting="+src.hasInventoryCrafting());
-		
-		IPlayerExtendedProperties dest = ModMain.getPlayerProperties(event.getEntityPlayer());
-		System.out.println("PLAYER has crafting="+dest.hasInventoryCrafting());
-//original has true, player has false
+	 
+		IPlayerExtendedProperties src = CapabilityRegistry.getPlayerProperties(event.getOriginal());
+ 
+		IPlayerExtendedProperties dest = CapabilityRegistry.getPlayerProperties(event.getEntityPlayer());
+ 
 		dest.setInventoryCrafting(src.hasInventoryCrafting());
 		dest.setInventoryExtended(src.hasInventoryExtended());
-		
-		
-
-		System.out.println("AFTER COPY has crafting="+dest.hasInventoryCrafting());
-		
+		  
 	}
 	
     @SubscribeEvent
@@ -112,11 +104,12 @@ public class EventPlayerData implements IHasConfig{
     public void onBedCheck(SleepingLocationCheckEvent evt)
     {
         final IPlayerExtendedProperties sleep = evt.getEntityPlayer().getCapability(ModMain.CAPABILITYSTORAGE, null);
-    	System.out.println("onBedCheck isnull "+ (sleep==null));
+    	
     	if(sleep!=null)System.out.println("onWakeUp.isSleeping "+sleep.isSleeping());
     	
-        if (sleep != null && sleep.isSleeping())
+        if (sleep != null && sleep.isSleeping()){
             evt.setResult(Result.ALLOW);
+        }
     }
 
     @SubscribeEvent
@@ -124,11 +117,12 @@ public class EventPlayerData implements IHasConfig{
     {
 
         final IPlayerExtendedProperties sleep = evt.getEntityPlayer().getCapability(ModMain.CAPABILITYSTORAGE, null);
-    	System.out.println("onWakeUp isnull "+ (sleep==null));
+    	
     	if(sleep!=null)System.out.println("onWakeUp.isSleeping "+sleep.isSleeping());
     	
-        if (sleep != null)
+        if (sleep != null){
             sleep.setSleeping(false);
+        }
     }
 
 	@Override

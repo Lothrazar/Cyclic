@@ -4,6 +4,8 @@ import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.item.ItemSleepingBag;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
+import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
+import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.registry.CommandRegistry;
 import com.lothrazar.cyclicmagic.registry.DispenserBehaviorRegistry;
 import com.lothrazar.cyclicmagic.registry.EventRegistry;
@@ -25,16 +27,10 @@ import com.lothrazar.cyclicmagic.registry.WorldGenRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.nbt.NBTBase;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
-import net.minecraftforge.common.capabilities.CapabilityManager;
-import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -57,6 +53,7 @@ public class ModMain {
 	public static CommonProxy proxy;
 	public static ModLogger logger;
 	private static Configuration config;
+	private EventRegistry events;
 	public static SimpleNetworkWrapper network;
 	public final static CreativeTabs TAB = new CreativeTabs(Const.MODID) {
 		@Override
@@ -68,7 +65,11 @@ public class ModMain {
 			return tab;
 		}
 	};
-	private EventRegistry events;
+
+	// thank you for the examples forge. player data storage based on API source code example:
+	// https://github.com/MinecraftForge/MinecraftForge/blob/1.9/src/test/java/net/minecraftforge/test/NoBedSleepingTest.java
+	@CapabilityInject(IPlayerExtendedProperties.class)
+	public static final Capability<IPlayerExtendedProperties> CAPABILITYSTORAGE = null;
 
 	@EventHandler
 	public void onPreInit(FMLPreInitializationEvent event) {
@@ -88,8 +89,7 @@ public class ModMain {
 		events.register();
 
 		GameRegistry.register(ItemSleepingBag.instance);
-		CapabilityManager.INSTANCE.register(IPlayerExtendedProperties.class, new Storage(),
-				InstancePlayerExtendedProperties.class);
+		CapabilityRegistry.register();
 		// MinecraftForge.EVENT_BUS.register(new EventPlayerData());
 
 		ReflectionRegistry.register();
@@ -161,14 +161,6 @@ public class ModMain {
 
 	}
 
-	// thank you for the examples forge. player data storage based on API source
-	// code example:
-	// !!
-	// https://github.com/MinecraftForge/MinecraftForge/blob/1.9/src/test/java/net/minecraftforge/test/NoBedSleepingTest.java
-
-	@CapabilityInject(IPlayerExtendedProperties.class)
-	public static final Capability<IPlayerExtendedProperties> CAPABILITYSTORAGE = null;
-
 	// public static final class ServerProxy extends CommonProxy {}
 	//
 	// public static final class ClientProxy extends CommonProxy
@@ -183,113 +175,10 @@ public class ModMain {
 	// }
 	// }
 	
-	public static IPlayerExtendedProperties getPlayerProperties(EntityPlayer player){
-		if(player == null){
-			ModMain.logger.error("Null player, cannot get properties");
-			return null;
-		}
-		return player.getCapability(ModMain.CAPABILITYSTORAGE, null);
-	}
-
-	public interface IPlayerExtendedProperties {
-		boolean isSleeping();
-
-		void setSleeping(boolean value);
-
-		boolean hasInventoryCrafting();
-
-		void setInventoryCrafting(boolean value);
-
-		boolean hasInventoryExtended();
-
-		void setInventoryExtended(boolean value);
-		
-		NBTTagCompound getDataAsNBT();
-		void setDataFromNBT(NBTTagCompound nbt);
-	}
-
-	public static class InstancePlayerExtendedProperties implements IPlayerExtendedProperties {
-		private boolean isSleeping = false;
-		private boolean hasInventoryCrafting = false;
-		private boolean hasInventoryExtended = false;
-
-		@Override
-		public boolean isSleeping() {
-			return isSleeping;
-		}
-
-		@Override
-		public void setSleeping(boolean value) {
-			this.isSleeping = value;
-		}
-
-		@Override
-		public boolean hasInventoryCrafting() {
-			return hasInventoryCrafting;
-		}
-
-		@Override
-		public void setInventoryCrafting(boolean value) {
-			hasInventoryCrafting = value;
-		}
-
-		@Override
-		public boolean hasInventoryExtended() {
-			return hasInventoryExtended;
-		}
-
-		@Override
-		public void setInventoryExtended(boolean value) {
-			hasInventoryExtended = value;
-		}
-
-		@Override
-		public NBTTagCompound getDataAsNBT() {
-			NBTTagCompound tags = new NBTTagCompound();
-			tags.setByte("isSleeping", (byte) (this.isSleeping() ? 1 : 0));
-			tags.setByte("hasInventoryCrafting", (byte) (this.hasInventoryCrafting() ? 1 : 0));
-			tags.setByte("hasInventoryExtended", (byte) (this.hasInventoryExtended() ? 1 : 0));
-
-			return tags;
-		}
-
-		@Override
-		public void setDataFromNBT(NBTTagCompound nbt) {
-			NBTTagCompound tags;
-			if (nbt instanceof NBTTagCompound == false) {
-				tags = new NBTTagCompound();
-			} else {
-				tags = (NBTTagCompound) nbt;
-			}
-			this.setSleeping(tags.getByte("isSleeping") == 1);
-			this.setInventoryCrafting(tags.getByte("hasInventoryCrafting") == 1);
-			this.setInventoryExtended(tags.getByte("hasInventoryExtended") == 1);
-		}
-	}
-
-	public static class Storage implements IStorage<IPlayerExtendedProperties> {
-		@Override
-		public NBTTagCompound writeNBT(Capability<IPlayerExtendedProperties> capability, IPlayerExtendedProperties instance, EnumFacing side) {
-
-			return instance.getDataAsNBT();
-		}
-
-		@Override
-		public void readNBT(Capability<IPlayerExtendedProperties> capability, IPlayerExtendedProperties instance, EnumFacing side, NBTBase nbt) {
-			try{
-				instance.setDataFromNBT((NBTTagCompound)nbt);
-			}
-			catch(Exception e){
-				logger.error("Invalid NBT compound: "+e.getMessage());
-				logger.error(e.getStackTrace().toString());
-			}
-		}
-	}
-
 	/*
 	 * TODO LIST
 	 * 
-	 ***** TODO
+PULL SLEEPING DATA OUT OF EventPlayerData
 	 * 
 	 * [disabled] building spells: make phantom/ghost/outline/particle blocks
 	 *
