@@ -2,12 +2,8 @@ package com.lothrazar.cyclicmagic.net;
 
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.ModMain.IPlayerExtendedProperties;
-import com.lothrazar.cyclicmagic.util.UtilInventorySort;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -45,7 +41,6 @@ public class PacketSyncPlayerData implements IMessage, IMessageHandler<PacketSyn
 				ModMain.logger.error("IPlayerExtendedProperties NULL PROBLEM");
 			}
 			else{
-				ModMain.logger.info("PacketSyncPlayerData");
 				props.setDataFromNBT(message.tags);
 			}
 		}

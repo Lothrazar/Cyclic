@@ -4,7 +4,6 @@ import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.ModMain.IPlayerExtendedProperties;
-import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
@@ -17,7 +16,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemFoodInventory extends ItemFood implements IHasRecipe,IHasConfig{
@@ -26,6 +24,7 @@ public class ItemFoodInventory extends ItemFood implements IHasRecipe,IHasConfig
  
 	public ItemFoodInventory() {
 		super(numFood, false);  
+		this.setMaxStackSize(1);
 		this.setAlwaysEdible();
 	}
 	
@@ -33,8 +32,7 @@ public class ItemFoodInventory extends ItemFood implements IHasRecipe,IHasConfig
 	protected void onFoodEaten(ItemStack stack, World world, EntityPlayer player) {
 		final IPlayerExtendedProperties data = ModMain.getPlayerProperties(player);
 		data.setInventoryExtended(true);
-		//player.getEntityData().setBoolean(NBT_INVO, true);
-		
+	
 		UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT_MAGIC, player.getPosition());
 		UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT_MAGIC, player.getPosition().up());
 		

@@ -4,7 +4,6 @@ import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.ModMain.IPlayerExtendedProperties;
-import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
@@ -25,6 +24,7 @@ public class ItemFoodCrafting extends ItemFood implements IHasRecipe,IHasConfig{
 
 	public ItemFoodCrafting() {
 		super(numFood, false);  
+		this.setMaxStackSize(1);
 		this.setAlwaysEdible();
 	}
 	

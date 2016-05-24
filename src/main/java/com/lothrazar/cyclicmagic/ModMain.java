@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic;
 
-import com.lothrazar.cyclicmagic.ModMain.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.item.ItemSleepingBag;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
