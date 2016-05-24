@@ -95,11 +95,11 @@ public class CommandRegistry {
 
 		config.setCategoryComment(category, "Disable any command that was added");
 
-		syncCommandConfig(config, CommandEnderChest.name, false, "Opens your ender chest");
+		syncCommandConfig(config, CommandEnderChest.name, true, "Opens your ender chest");
 
 		syncCommandConfig(config, CommandGetHome.name, false,"Get where your current spawn is set (by a bed)");
 
-		syncCommandConfig(config, CommandHeal.name, false,"Heal yourself to full");
+		syncCommandConfig(config, CommandHeal.name, true,"Heal yourself to full");
 
 		syncCommandConfig(config, CommandHearts.name, true,"Increase your maximum hearts (lasts until death)");
 
@@ -123,6 +123,6 @@ public class CommandRegistry {
 
 		syncCommandConfig(config, CommandVillageInfo.name, false,"Get the stats on the nearest village (if any)");
 
-		syncCommandConfig(config, CommandWorldHome.name, false,"Find out where true worldspawn is");
+		syncCommandConfig(config, CommandWorldHome.name, false,"Teleport to true worldspawn");
 	}
 }
