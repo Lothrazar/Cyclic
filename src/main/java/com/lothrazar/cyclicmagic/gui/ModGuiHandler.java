@@ -11,6 +11,7 @@ import com.lothrazar.cyclicmagic.gui.wand.ContainerWand;
 import com.lothrazar.cyclicmagic.gui.wand.GuiWandInventory;
 import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
 import com.lothrazar.cyclicmagic.gui.waypoints.GuiEnderBook;
+import com.lothrazar.cyclicmagic.item.ItemInventoryStorage;
 import com.lothrazar.cyclicmagic.util.UtilInventory;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 
@@ -47,7 +48,7 @@ public class ModGuiHandler implements IGuiHandler {
 
 		break;
 		case GUI_INDEX_STORAGE:
-			ItemStack s = UtilInventory.getPlayerItemIfHeld(player);
+			ItemStack s = ItemInventoryStorage.getPlayerItemIfHeld(player);
 
 			return new ContainerStorage(player, player.inventory, new InventoryStorage(player, s));
 		case GUI_INDEX_WAYPOINT:
@@ -75,7 +76,7 @@ public class ModGuiHandler implements IGuiHandler {
 
 			break;
 			case GUI_INDEX_STORAGE:
-				ItemStack s = UtilInventory.getPlayerItemIfHeld(player);
+				ItemStack s = ItemInventoryStorage.getPlayerItemIfHeld(player);
 
 				return new GuiStorage(new ContainerStorage(player, player.inventory, new InventoryStorage(player, s)), s);
 			case GUI_INDEX_WAYPOINT:

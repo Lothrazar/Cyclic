@@ -69,7 +69,7 @@ public class UtilSpellCaster {
 		// succes should do things like: drain resources, play sounds
 		// and particles
 		spell.payCost(world, player, pos);
-		
+
 		ItemCyclicWand.Energy.setCooldownCounter(getPlayerWandIfHeld(player),  world.getTotalWorldTime());
 
 		ItemCyclicWand.Timer.setSpellTimer(getPlayerWandIfHeld(player), spell.getCastCooldown());

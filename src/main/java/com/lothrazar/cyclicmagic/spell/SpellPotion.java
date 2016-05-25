@@ -38,6 +38,8 @@ public class SpellPotion extends BaseSpell {
 		
 		PotionRegistry.addOrMergePotionEffect(player, new PotionEffect(potionId, potionDuration, potionAmp));
 		
+		this.playSound(world, player, null, pos);
+		
 		//https://github.com/PrinceOfAmber/Cyclic/blob/2c947d4a91c28f8f853c6d1171ad019002892972/src/main/java/com/lothrazar/cyclicmagic/spell/SpellExpPotion.java
 		return true;
 	}

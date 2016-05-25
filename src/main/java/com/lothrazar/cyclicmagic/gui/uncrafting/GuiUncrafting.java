@@ -31,7 +31,7 @@ public class GuiUncrafting extends GuiContainer {
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 	}
 
-	private static final String						folder		= "textures/gui/";
+	private static final String				folder		= "textures/gui/";
 	private static final ResourceLocation	table			= new ResourceLocation(Const.MODID, folder + "table.png");
 	private static final ResourceLocation	slot			= new ResourceLocation(Const.MODID, folder + "inventory_slot.png");
 	private static final ResourceLocation	progress	= new ResourceLocation(Const.MODID, folder + "progress.png");
@@ -52,7 +52,7 @@ public class GuiUncrafting extends GuiContainer {
 		
 		for(int k = 0; k < this.tile.getSizeInventory(); k++){
 			
-			Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerUncrafting.SLOTX_START-1 +k*Const.SQ, this.guiTop + ContainerUncrafting.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);	
+			Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerUncrafting.SLOTX_START - 3 +k*Const.SQ, this.guiTop + ContainerUncrafting.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);	
 		}
 
 		if (tile.getTimer() > 0 && tile.getStackInSlot(0) != null) {

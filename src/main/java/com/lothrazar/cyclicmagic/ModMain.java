@@ -176,13 +176,17 @@ public class ModMain {
 	// }
 	
 	/*
+	 * 
 	 * TODO LIST
+	 * 
+	 * UNCRAFTING GUI: offcenter
+	 * 
+	 * TERRARIA BUTTONS: default to lower left. or find new position?
+	 * 
+	 * SACK OF HOLDING: add information
 	 *  
 	 * REVISIT furnace recipe && stone tools thing
 	 *  
-	 * shorter cooldowns on all spells
-	 *  
-	 * 
 PULL SLEEPING DATA OUT OF EventPlayerData
 	 * 
 	 * [disabled] building spells: make phantom/ghost/outline/particle blocks

@@ -28,8 +28,8 @@ public class SpellLaunch extends BaseSpell implements ISpell {
 	public SpellLaunch(int id, String name) {
 
 		super.init(id, name);
-		this.cost = 100;
-		this.cooldown = 20;
+		this.cost = 75;
+		this.cooldown = 15;
 	}
 
 	@Override

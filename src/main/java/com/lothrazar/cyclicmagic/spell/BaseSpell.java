@@ -68,13 +68,11 @@ public abstract class BaseSpell implements ISpell {
 
 	@Override
 	public ResourceLocation getIconDisplayHeaderEnabled() {
-
 		return header;
 	}
 
 	@Override
 	public ResourceLocation getIconDisplayHeaderDisabled() {
-
 		return header_empty;
 	}
 
@@ -88,24 +86,23 @@ public abstract class BaseSpell implements ISpell {
 
 	@Override
 	public int getID() {
-
 		return ID;
 	}
 
 	@Override
 	public boolean canPlayerCast(World world, EntityPlayer player, BlockPos pos) {
 
-		if (player.capabilities.isCreativeMode) { return true;// skips everything
-		}
+		if (player.capabilities.isCreativeMode) { return true; }
 
 		ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
 
 		if (wand == null) { return false; }
-		/*
-		 * if(this.getCost() > ItemCyclicWand.Energy.getCurrent(wand)){
-		 * return false;
-		 * }
-		 */
+		
+		if(this.getCost() > ItemCyclicWand.Energy.getCurrent(wand)){
+			this.onCastFailure(world, player, pos);
+			return false;
+		}
+		
 		return true;
 	}
 
