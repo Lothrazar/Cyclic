@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.registry;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
@@ -42,7 +41,7 @@ import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileWater;
 import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileWool;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilItem;
-
+import net.minecraftforge.common.util.EnumHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
@@ -52,6 +51,7 @@ import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -307,21 +307,35 @@ public class ItemRegistry {
 
 	private static void registerMaterials() {
 		
-		
-		//addArmorMaterial(String name, String textureName, int durability, int[] reductionAmounts, int enchantability, SoundEvent soundOnEquip)
-	    
-		ARMOR_MATERIAL_EMERALD = ArmorMaterial.DIAMOND;
+		ARMOR_MATERIAL_EMERALD = 
+				EnumHelper.addArmorMaterial("emerald", Const.MODID + ":emerald",  
+						33,//same as diamond   
+						new int[]{
+							 ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.HEAD)
+							,ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.CHEST)
+							,ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.LEGS)
+							,ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.FEET)
+						}, 
+						ArmorMaterial.DIAMOND.getEnchantability(), 
+						ArmorMaterial.DIAMOND.getSoundEvent(),
+						ArmorMaterial.DIAMOND.getToughness());
+
 		//enum helper is broken
 		//https://github.com/MinecraftForge/MinecraftForge/issues/2870
 		//https://github.com/MinecraftForge/MinecraftForge/pull/2874
-				//EnumHelper.addArmorMaterial("emerald", Const.MODID + ":emerald", diamondDurability, diamondreductionAmounts, ArmorMaterial.DIAMOND.getEnchantability(), ArmorMaterial.DIAMOND.getSoundEvent());
-
-		MATERIAL_EMERALD = ToolMaterial.DIAMOND;
 		// TODO: addToolMat causes a bug/crash, not sure if forge will fix.
-
+		//	EnumHelper.addToolMaterial("emerald", harvestLevel, maxUses, efficiency, damage, enchantability)
+		//ToolMaterial.DIAMOND;
+		MATERIAL_EMERALD = //ToolMaterial.DIAMOND;
+		
+			EnumHelper.addToolMaterial("emerald", 
+				ToolMaterial.DIAMOND.getHarvestLevel(), ToolMaterial.DIAMOND.getMaxUses(), 
+				ToolMaterial.DIAMOND.getEfficiencyOnProperMaterial(), 
+				ToolMaterial.DIAMOND.getDamageVsEntity(), 
+				ToolMaterial.DIAMOND.getEnchantability());
+		
 		// EnumHelper.addToolMaterial("emerald", 3, harvestLevel 3 same as diamond
 		// 1600,3.5F, 5+25 );
-
 	}
 	 
 	public static void registerItem(Item item, String name) {
