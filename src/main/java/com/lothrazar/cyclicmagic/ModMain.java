@@ -177,25 +177,11 @@ public class ModMain {
 	
 	/*
 	 * TODO LIST
-	 * 
-	 * alpha 5 playtest results:
-	 * 
+	 *  
 	 * REVISIT furnace recipe && stone tools thing
-	 * 
-	 * new food names?
-	 * 
-	 * empty sack of holidng recipe
-	 * 
-	 * ender orb-> redstone blocks
-	 * 
-	 * add farmland recipe?
-	 * 
-	 * recipe fix? uncrafting grinder and scaffolding?
-	 * 
+	 *  
 	 * shorter cooldowns on all spells
-	 * 
-	 * 
-	 * TODO: the old list
+	 *  
 	 * 
 PULL SLEEPING DATA OUT OF EventPlayerData
 	 * 

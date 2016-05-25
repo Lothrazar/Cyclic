@@ -56,7 +56,7 @@ public class ItemToolPearlReuse extends BaseTool implements IHasRecipe, IHasConf
 				"rsr", 
 				"ere", 
 				'e', new ItemStack(Items.ENDER_EYE), 
-				'r', new ItemStack(Items.REDSTONE), 
+				'r', new ItemStack(Blocks.REDSTONE_BLOCK), 
 				's', new ItemStack(Blocks.EMERALD_BLOCK));
 	}
 	

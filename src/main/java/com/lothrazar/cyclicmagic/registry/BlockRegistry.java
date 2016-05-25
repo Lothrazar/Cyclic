@@ -81,10 +81,12 @@ public class BlockRegistry {
 		
 		if(BlockUncrafting.enableBlockUncrafting){
 			registerBlock(uncrafting_block, "uncrafting_block");
+			uncrafting_block.addRecipe();
 		}
 
 		if (enableBlockFragile) { 
 			registerBlock(block_fragile,new ItemBlockScaffolding(block_fragile), BlockScaffolding.name);
+			block_fragile.addRecipe();
 		}
 
 		if (WorldGenRegistry.netherOreEnabled) {
