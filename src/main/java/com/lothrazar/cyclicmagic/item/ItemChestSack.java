@@ -3,16 +3,15 @@ package com.lothrazar.cyclicmagic.item;
 import java.util.List;
 
 import com.lothrazar.cyclicmagic.IHasConfig;
-import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
@@ -22,9 +21,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class ItemChestSack extends BaseItem implements IHasRecipe,IHasConfig {
+public class ItemChestSack extends BaseItem implements IHasConfig {
 
 	public static final String	name			= "chest_sack";
 
@@ -53,6 +51,8 @@ public class ItemChestSack extends BaseItem implements IHasRecipe,IHasConfig {
 			playerIn.setHeldItem(hand, null);
 
 			UtilSound.playSound(playerIn, pos, SoundRegistry.thunk);
+			
+			UtilEntity.dropItemStackInWorld(worldIn, playerIn.getPosition(), ItemRegistry.itemMap.get(ItemChestSackEmpty.name));
 		}
 
 		return EnumActionResult.SUCCESS;
@@ -82,12 +82,6 @@ public class ItemChestSack extends BaseItem implements IHasRecipe,IHasConfig {
 		heldChestSack.setTagCompound(null);
 
 		return true;
-	}
-
-	@Override
-	public void addRecipe() {
-
-		GameRegistry.addShapedRecipe(new ItemStack(this), " s ", "l l", "lll", 'l', new ItemStack(Items.LEATHER), 's', new ItemStack(Items.STRING));
 	}
 
 	@Override

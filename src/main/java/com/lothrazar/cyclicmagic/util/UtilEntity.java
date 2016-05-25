@@ -48,27 +48,11 @@ public class UtilEntity {
 		return dropItemStackInWorld(worldObj, pos, new ItemStack(item));
 	}
 
-	/*
-	 * public static EntityItem dropItemStackInWorld(World worldObj, BlockPos pos,
-	 * ItemStack stack){
-	 * 
-	 * EntityItem entityItem = new EntityItem(worldObj, pos.getX(), pos.getY(),
-	 * pos.getZ(), stack);
-	 * 
-	 * if(worldObj.isRemote == false)// do not spawn a second 'ghost' one on
-	 * // client side
-	 * {
-	 * worldObj.spawnEntityInWorld(entityItem);
-	 * }
-	 * return entityItem;
-	 * }
-	 */
 	public static EntityItem dropItemStackInWorld(World worldObj, BlockPos pos, ItemStack stack) {
 		EntityItem entityItem = new EntityItem(worldObj, pos.getX(), pos.getY(), pos.getZ(), stack);
 
-		if (worldObj.isRemote == false) { // do not spawn a second 'ghost' one on
-		                                  // client side
-
+		if (worldObj.isRemote == false) { 
+			// do not spawn a second 'ghost' one onclient side
 			worldObj.spawnEntityInWorld(entityItem);
 		}
 		return entityItem;

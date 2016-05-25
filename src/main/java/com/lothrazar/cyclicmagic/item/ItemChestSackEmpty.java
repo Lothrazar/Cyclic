@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.item;
 
+import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
@@ -7,6 +8,7 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -15,8 +17,9 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class ItemChestSackEmpty extends BaseItem {
+public class ItemChestSackEmpty extends BaseItem implements IHasRecipe{
 
 	public static final String name = "chest_sack_empty";
 
@@ -64,5 +67,17 @@ public class ItemChestSackEmpty extends BaseItem {
 		UtilSound.playSound(entityPlayer,pos, SoundRegistry.thunk);
  
 		return EnumActionResult.SUCCESS;
+	}
+
+	@Override
+	public void addRecipe() {
+
+		GameRegistry.addShapedRecipe(new ItemStack(this), 
+				" s ", 
+				"lbl", 
+				"lll", 
+				'l', new ItemStack(Items.LEATHER), 
+				'b', new ItemStack(Items.SLIME_BALL), 
+				's', new ItemStack(Items.STRING));
 	}
 }
