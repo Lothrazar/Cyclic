@@ -88,7 +88,6 @@ public class ModMain {
 
 		events.register();
 
-		GameRegistry.register(ItemSleepingBag.instance);
 		CapabilityRegistry.register();
 		// MinecraftForge.EVENT_BUS.register(new EventPlayerData());
 
@@ -179,12 +178,8 @@ public class ModMain {
 	 * 
 	 * TODO LIST
 	 * 
-	 * UNCRAFTING GUI: offcenter
-	 * 
 	 * TERRARIA BUTTONS: default to lower left. or find new position?
 	 * 
-	 * SACK OF HOLDING: add information
-	 *  
 	 * REVISIT furnace recipe && stone tools thing
 	 *  
 PULL SLEEPING DATA OUT OF EventPlayerData

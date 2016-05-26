@@ -28,7 +28,7 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
 
 		super.init(id, n);
 		this.cost = 30;
-		this.cooldown = 15;
+		this.cooldown = 5;
 		this.type = t;
 	}
 

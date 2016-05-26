@@ -25,6 +25,7 @@ import com.lothrazar.cyclicmagic.item.ItemFoodHorse;
 import com.lothrazar.cyclicmagic.item.ItemFoodInventory;
 import com.lothrazar.cyclicmagic.item.ItemInventoryStorage;
 import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
+import com.lothrazar.cyclicmagic.item.ItemSleepingBag;
 import com.lothrazar.cyclicmagic.item.ItemToolHarvest;
 import com.lothrazar.cyclicmagic.item.ItemToolPull;
 import com.lothrazar.cyclicmagic.item.ItemToolPush;
@@ -96,7 +97,7 @@ public class ItemRegistry {
 		addItem(new ItemFoodHeart(),"heart_food"); 
 		addItem(new ItemFoodCrafting(),"crafting_food");
 		addItem(new ItemFoodInventory(),"inventory_food");
-		
+		addItem(new ItemSleepingBag(),"sleeping_mat");
 	}
 
 	private static void addItem(Item i, String key){ 
