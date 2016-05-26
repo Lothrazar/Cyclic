@@ -16,15 +16,11 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
-import net.minecraftforge.event.entity.player.SleepingLocationCheckEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
-import net.minecraftforge.fml.common.eventhandler.Event.Result;
 
 public class EventPlayerData implements IHasConfig{
-	
-	
+	 
 	@SubscribeEvent
     public void onSpawn(PlayerLoggedInEvent event){
 		if(event.player instanceof EntityPlayerMP && event.player.worldObj.isRemote == false){
@@ -91,31 +87,6 @@ public class EventPlayerData implements IHasConfig{
             	ModMain.CAPABILITYSTORAGE.getStorage().readNBT(ModMain.CAPABILITYSTORAGE, inst, null, nbt);
             }
         });
-    }
-
-    @SubscribeEvent
-    public void onBedCheck(SleepingLocationCheckEvent evt)
-    {
-        final IPlayerExtendedProperties sleep = evt.getEntityPlayer().getCapability(ModMain.CAPABILITYSTORAGE, null);
-    	
-    	if(sleep!=null)System.out.println("onWakeUp.isSleeping "+sleep.isSleeping());
-    	
-        if (sleep != null && sleep.isSleeping()){
-            evt.setResult(Result.ALLOW);
-        }
-    }
-
-    @SubscribeEvent
-    public void onWakeUp(PlayerWakeUpEvent evt)
-    {
-
-        final IPlayerExtendedProperties sleep = evt.getEntityPlayer().getCapability(ModMain.CAPABILITYSTORAGE, null);
-    	
-    	if(sleep!=null)System.out.println("onWakeUp.isSleeping "+sleep.isSleeping());
-    	
-        if (sleep != null){
-            sleep.setSleeping(false);
-        }
     }
 
 	@Override

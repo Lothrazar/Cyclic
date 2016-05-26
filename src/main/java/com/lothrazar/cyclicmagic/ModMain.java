@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic;
 
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
-import com.lothrazar.cyclicmagic.item.ItemSleepingBag;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
@@ -42,7 +41,6 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @Mod(modid = Const.MODID, useMetadata = true, canBeDeactivated = false, updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json", guiFactory = "com.lothrazar." + Const.MODID + ".gui.IngameConfigFactory")
 public class ModMain {

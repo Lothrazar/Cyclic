@@ -5,19 +5,13 @@ import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
-import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilInventory;
-import com.lothrazar.cyclicmagic.util.UtilWorld;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
@@ -42,29 +36,29 @@ public class ItemSleepingBag extends Item  implements IHasRecipe,IHasConfig{
 	public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {	
 		if (!world.isRemote) {
 			final EntityPlayer.SleepResult result = player.trySleep(player.getPosition());
-			
+
+//			if(UtilWorld.isNight(world) == false){
 			if (result == EntityPlayer.SleepResult.OK) {
 				
 				//final IPlayerExtendedProperties sleep = player.getCapability(ModMain.CAPABILITYSTORAGE, null);
 				final IPlayerExtendedProperties sleep = CapabilityRegistry.getPlayerProperties(player);
 				if (sleep != null) {
-					if(UtilWorld.isNight(world) == false){
-						UtilChat.addChatMessage(player, "tile.bed.noSleep");
-					}
-					else{
-						sleep.setSleeping(true);
-	
-						stack.stackSize--;
-						
-						if(stack.stackSize == 0){
-							stack = null;
-						}
+
+					sleep.setSleeping(true);
+					stack.stackSize--;
+					if(stack.stackSize == 0){
+						stack = null;
 					}
 				}
 				else{
 					ModMain.logger.error("NULL IPlayerExtendedProperties found");
+					//should never happen... but just in case
+					UtilChat.addChatMessage(player, "tile.bed.noSleep");
 				}
 				return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
+			}
+			else{
+				UtilChat.addChatMessage(player, "tile.bed.noSleep");
 			}
 		}
 		return ActionResult.newResult(EnumActionResult.PASS, stack);

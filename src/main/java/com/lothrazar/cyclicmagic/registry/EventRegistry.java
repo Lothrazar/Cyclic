@@ -29,6 +29,7 @@ import com.lothrazar.cyclicmagic.event.EventOreMined;
 import com.lothrazar.cyclicmagic.event.EventPassthroughAction;
 import com.lothrazar.cyclicmagic.event.EventPlayerData;
 import com.lothrazar.cyclicmagic.event.EventPlayerDeathCoords;
+import com.lothrazar.cyclicmagic.event.EventPlayerSleep;
 import com.lothrazar.cyclicmagic.event.EventPlayerWakeup;
 import com.lothrazar.cyclicmagic.event.EventPotions;
 import com.lothrazar.cyclicmagic.event.EventSaplingBlockGrowth;
@@ -77,6 +78,8 @@ public class EventRegistry {
 		featureEvents.add(new EventSpawnChunks());
 		featureEvents.add(new EventSpells());
 		featureEvents.add(new EventPlayerData());
+		featureEvents.add(new EventPlayerSleep());
+		
 	}
  
 	public void syncConfig(Configuration config) {
