@@ -176,16 +176,10 @@ public class ModMain {
 	 * 
 	 * TODO LIST
 	 * 
-	 * TERRARIA BUTTONS: default to lower left. or find new position?
-	 * 
 	 * REVISIT furnace recipe && stone tools thing
 	 *  
-PULL SLEEPING DATA OUT OF EventPlayerData
-	 * 
 	 * [disabled] building spells: make phantom/ghost/outline/particle blocks
 	 *
-	 * some sort of noclip feature? temporary?
-	 * 
 	 * pets live longer and/or respawn
 	 *
 	 * make silk touch work on silverfish blocks
