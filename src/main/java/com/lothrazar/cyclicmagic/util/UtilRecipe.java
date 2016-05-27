@@ -11,15 +11,15 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class UtilRecipe {
 
-	public static void removeRecipe(Item resultItem) {
-		removeRecipe(new ItemStack(resultItem,1,OreDictionary.WILDCARD_VALUE));
+	public static int removeRecipe(Item resultItem) {
+		return removeRecipe(new ItemStack(resultItem,1,OreDictionary.WILDCARD_VALUE));
 	}
 
-	public static void removeRecipe(Block resultItem) {
-		removeRecipe(new ItemStack(resultItem,1,OreDictionary.WILDCARD_VALUE));
+	public static int removeRecipe(Block resultItem) {
+		return removeRecipe(new ItemStack(resultItem,1,OreDictionary.WILDCARD_VALUE));
 	}
 
-	public static void removeRecipe(ItemStack resultItem) {
+	public static int removeRecipe(ItemStack resultItem) {
 		// REFERENCES
 		// http://www.minecraftforge.net/forum/index.php/topic,7146.0.html
 		// http://stackoverflow.com/questions/27459815/minecraft-forge-1-7-10-removing-recipes-from-id
@@ -40,13 +40,6 @@ public class UtilRecipe {
 			}
 		}
 		
-		/*]: REMOVED :0 FOR ITEM item.pickaxeStone
-[22:58:23] [Client thread/INFO] [STDOUT]: [com.lothrazar.cyclicmagic.util.UtilRecipe:removeRecipe:42]: REMOVED :0 FOR ITEM item.swordStone
-[22:58:23] [Client thread/INFO] [STDOUT]: [com.lothrazar.cyclicmagic.util.UtilRecipe:removeRecipe:42]: REMOVED :0 FOR ITEM item.hatchetStone
-[22:58:23] [Client thread/INFO] [STDOUT]: [com.lothrazar.cyclicmagic.util.UtilRecipe:removeRecipe:42]: REMOVED :0 FOR ITEM item.hoeStone
-[22:58:23] [Client thread/INFO] [STDOUT]: [com.lothrazar.cyclicmagic.util.UtilRecipe:removeRecipe:42]: REMOVED :0 FOR ITEM item.shovelStone
-[22:58:23] [Client thread/INFO] [STDOUT]: [com.lothrazar.cyclicmagic.util.UtilRecipe:removeRecipe:42]: REMOVED :0 FOR ITEM tile.furnace*/
-		System.out.println("REMOVED :"+countRemoved+" FOR ITEM "+resultItem.getItem().getUnlocalizedName());
-		
+		return countRemoved;
 	}
 }
