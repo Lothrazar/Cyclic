@@ -9,6 +9,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class RecipeAlterRegistry {
 	// does not handle recipes for items added new in the mod
@@ -76,6 +77,16 @@ public class RecipeAlterRegistry {
 
 //		GameRegistry.addRecipe(new ItemStack(Items.STONE_SHOVEL, 1, UtilItem.getMaxDmgFraction(Items.STONE_SHOVEL, 4)), " s ", " t ", " t ", 's', Blocks.COBBLESTONE, 't', Items.STICK);
 		GameRegistry.addRecipe(new ItemStack(Items.STONE_SHOVEL), " s ", " t ", " t ", 's', Blocks.STONE, 't', Items.STICK);
+	
+	
+		GameRegistry.addRecipe(new ItemStack(Items.IRON_CHESTPLATE, 1, UtilItem.getMaxDmgFraction(Items.IRON_CHESTPLATE, 2)), 
+				"i i", "iii", "iii", 'i',Items.IRON_INGOT);
+
+		GameRegistry.addShapelessRecipe(new ItemStack(Items.IRON_CHESTPLATE),
+				new ItemStack(Items.IRON_CHESTPLATE, 1, OreDictionary.WILDCARD_VALUE),
+				new ItemStack(Items.LEATHER_CHESTPLATE, 1, OreDictionary.WILDCARD_VALUE)
+				);
+	
 	}
 
 }
