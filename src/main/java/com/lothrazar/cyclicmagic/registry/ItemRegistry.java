@@ -16,6 +16,7 @@ import com.lothrazar.cyclicmagic.item.ItemEmeraldPickaxe;
 import com.lothrazar.cyclicmagic.item.ItemEmeraldSpade;
 import com.lothrazar.cyclicmagic.item.ItemEmeraldSword;
 import com.lothrazar.cyclicmagic.item.ItemEnderBook;
+import com.lothrazar.cyclicmagic.item.ItemFlintTool;
 import com.lothrazar.cyclicmagic.item.ItemToolPearlReuse;
 import com.lothrazar.cyclicmagic.item.ItemFoodAppleMagic;
 import com.lothrazar.cyclicmagic.item.ItemFoodCorruptedChorus;
@@ -97,6 +98,7 @@ public class ItemRegistry {
 		addItem(new ItemFoodCrafting(),"crafting_food");
 		addItem(new ItemFoodInventory(),"inventory_food");
 		addItem(new ItemSleepingBag(),"sleeping_mat");
+		
 	}
 
 	private static void addItem(Item i, String key){ 
@@ -148,7 +150,8 @@ public class ItemRegistry {
 
 	public static void register() {
 		registerMaterials();
-		
+
+		addItem(new ItemFlintTool(),"flint_tool");
 
 		if (ItemCyclicWand.sceptersEnabled) {
 

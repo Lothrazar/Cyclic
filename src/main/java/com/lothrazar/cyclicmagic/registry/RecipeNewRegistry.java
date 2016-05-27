@@ -44,9 +44,20 @@ public class RecipeNewRegistry {
 		RecipeNewRegistry.minecartsSimple();
 
 		RecipeNewRegistry.notchApple();
+		
+		RecipeNewRegistry.dirtToGravel();
 
 		// https://github.com/PrinceOfAmber/SamsPowerups/blob/master/Recipes/src/main/java/com/lothrazar/samsrecipes/RecipeRegistry.java
 
+	}
+
+	private static void dirtToGravel() {
+		GameRegistry.addShapelessRecipe(new ItemStack(Blocks.GRAVEL,2), 
+				new ItemStack(Blocks.DIRT), 
+				new ItemStack(Blocks.SAND));
+		GameRegistry.addShapelessRecipe(new ItemStack(Items.FLINT), 
+				new ItemStack(Blocks.GRAVEL), 
+				new ItemStack(Blocks.GRAVEL));
 	}
 
 	private static void notchApple() {
@@ -57,7 +68,11 @@ public class RecipeNewRegistry {
 
 	private static void playerSkull() {
 
-		GameRegistry.addShapelessRecipe(new ItemStack(Items.SKULL, 4, Const.skull_player), new ItemStack(Items.SKULL, 1, Const.skull_wither), new ItemStack(Items.SKULL, 1, Const.skull_skeleton), new ItemStack(Items.SKULL, 1, Const.skull_zombie), new ItemStack(Items.SKULL, 1, Const.skull_creeper));
+		GameRegistry.addShapelessRecipe(new ItemStack(Items.SKULL, 4, Const.skull_player), 
+				new ItemStack(Items.SKULL, 1, Const.skull_wither), 
+				new ItemStack(Items.SKULL, 1, Const.skull_skeleton), 
+				new ItemStack(Items.SKULL, 1, Const.skull_zombie), 
+				new ItemStack(Items.SKULL, 1, Const.skull_creeper));
 	}
 
 	private static void mushroomBlocks() {
