@@ -18,8 +18,8 @@ public class ItemProjectileTorch extends BaseItemProjectile implements IHasRecip
 	@Override
 	public void syncConfig(Configuration config) {
 
-		String category = Const.ConfigCategory.items_projectiles; 
-		EntityTorchBolt.damageEntityOnHit = config.getBoolean("torch.knockback", category, true, "Does it damage entity or not on hit (0 dmg like a snowball)");
+		//String category = Const.ConfigCategory.items_projectiles; 
+	//	EntityTorchBolt.damageEntityOnHit = config.getBoolean("torch.knockback", category, true, "Does it damage entity or not on hit (0 dmg like a snowball)");
 
 	}
 

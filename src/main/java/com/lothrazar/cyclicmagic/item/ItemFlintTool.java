@@ -31,5 +31,6 @@ public class ItemFlintTool extends ItemAxe implements IHasRecipe {
 				"f ", 
 				" s", 
 				'f',new ItemStack(Items.FLINT), 
-				's', new ItemStack(Items.STICK));	}
+				's', new ItemStack(Items.STICK));	
+		}
 }
