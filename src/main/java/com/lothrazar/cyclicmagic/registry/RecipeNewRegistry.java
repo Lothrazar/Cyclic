@@ -45,13 +45,13 @@ public class RecipeNewRegistry {
 
 		RecipeNewRegistry.notchApple();
 		
-		RecipeNewRegistry.dirtToGravel();
+		RecipeNewRegistry.craftingFlint();
 
 		// https://github.com/PrinceOfAmber/SamsPowerups/blob/master/Recipes/src/main/java/com/lothrazar/samsrecipes/RecipeRegistry.java
 
 	}
 
-	private static void dirtToGravel() {
+	private static void craftingFlint() {
 		GameRegistry.addShapelessRecipe(new ItemStack(Blocks.GRAVEL,2), 
 				new ItemStack(Blocks.DIRT), 
 				new ItemStack(Blocks.SAND));

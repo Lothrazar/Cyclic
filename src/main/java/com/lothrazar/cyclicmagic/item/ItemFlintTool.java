@@ -15,7 +15,7 @@ public class ItemFlintTool extends ItemAxe implements IHasRecipe {
 	public ItemFlintTool() {
 		// protected ItemAxe(Item.ToolMaterial material, int damage, int speed)
 		super(ToolMaterial.WOOD,1,-3);
-		this.setMaxDamage(10);
+		this.setMaxDamage(3);
 	}
 
 	@Override

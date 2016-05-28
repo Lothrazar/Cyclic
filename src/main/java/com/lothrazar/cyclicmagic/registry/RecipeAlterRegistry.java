@@ -32,7 +32,6 @@ public class RecipeAlterRegistry {
 		String category = Const.ConfigCategory.recipes;
 
 		enabled = config.get(category, "Altered Recipes Enabled", true,"Furnace requires coal in the middle, stone tools require smoothstone to be fully repaired").getBoolean();
-
 	}
 
 	private static void furnaceNeedsCoal() {
@@ -79,13 +78,13 @@ public class RecipeAlterRegistry {
 		GameRegistry.addRecipe(new ItemStack(Items.STONE_SHOVEL), " s ", " t ", " t ", 's', Blocks.STONE, 't', Items.STICK);
 	
 	
-		GameRegistry.addRecipe(new ItemStack(Items.IRON_CHESTPLATE, 1, UtilItem.getMaxDmgFraction(Items.IRON_CHESTPLATE, 2)), 
-				"i i", "iii", "iii", 'i',Items.IRON_INGOT);
-
-		GameRegistry.addShapelessRecipe(new ItemStack(Items.IRON_CHESTPLATE),
-				new ItemStack(Items.IRON_CHESTPLATE, 1, OreDictionary.WILDCARD_VALUE),
-				new ItemStack(Items.LEATHER_CHESTPLATE, 1, OreDictionary.WILDCARD_VALUE)
-				);
+//		GameRegistry.addRecipe(new ItemStack(Items.IRON_CHESTPLATE, 1, UtilItem.getMaxDmgFraction(Items.IRON_CHESTPLATE, 2)), 
+//				"i i", "iii", "iii", 'i',Items.IRON_INGOT);
+//
+//		GameRegistry.addShapelessRecipe(new ItemStack(Items.IRON_CHESTPLATE),
+//				new ItemStack(Items.IRON_CHESTPLATE, 1, OreDictionary.WILDCARD_VALUE),
+//				new ItemStack(Items.LEATHER_CHESTPLATE, 1, OreDictionary.WILDCARD_VALUE)
+//				);
 	
 	}
 
