@@ -42,7 +42,6 @@ import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileTorch;
 import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileWater;
 import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileWool;
 import com.lothrazar.cyclicmagic.util.Const;
-import com.lothrazar.cyclicmagic.util.UtilItem;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
