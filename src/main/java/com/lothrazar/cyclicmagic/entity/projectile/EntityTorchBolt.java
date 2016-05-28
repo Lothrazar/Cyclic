@@ -1,5 +1,8 @@
 package com.lothrazar.cyclicmagic.entity.projectile;
 
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
+
 import net.minecraft.block.BlockTorch;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityThrowable;
@@ -10,9 +13,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
 public class EntityTorchBolt extends EntityThrowable {
-
-	public static boolean damageEntityOnHit;
-
+ 
 	public EntityTorchBolt(World worldIn) {
 
 		super(worldIn);
@@ -31,12 +32,9 @@ public class EntityTorchBolt extends EntityThrowable {
 	@Override
 	protected void onImpact(RayTraceResult mop) {
 
-		if (mop.entityHit != null) {
-
-			// do the snowball damage, which should be none. put out the fire
-			if (damageEntityOnHit)
-				mop.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 0);
-
+		if (mop.entityHit != null) { 
+			//zero damage means just knockback
+			mop.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 0);
 		}
 
 		BlockPos pos = mop.getBlockPos();
@@ -47,37 +45,18 @@ public class EntityTorchBolt extends EntityThrowable {
 			offset = pos.offset(mop.sideHit);
 		}
 
-		if (this.isInWater() == false && offset != null && this.worldObj.isAirBlock(offset) && !this.worldObj.isRemote) {
-			// http://minecraft.gamepedia.com/Torch#Block_data
-			int faceEast = 1;
-			int faceWest = 2;
-			int faceSouth = 3;
-			int faceNorth = 4;
-			int faceUp = 5;
-			int blockdata;
-
-			switch (mop.sideHit) {
-			case WEST:
-				blockdata = faceWest;
-			break;
-			case EAST:
-				blockdata = faceEast;
-			break;
-			case NORTH:
-				blockdata = faceNorth;
-			break;
-			case SOUTH:
-				blockdata = faceSouth;
-			break;
-			default:
-				blockdata = faceUp;
-			break;
-			}
-
-			//BlockTorch.FACING
-			this.worldObj.setBlockState(offset, Blocks.TORCH.getStateFromMeta(blockdata));
+		if (this.isInWater() == false && offset != null && this.worldObj.isAirBlock(offset) 
+				&& BlockTorch.FACING.getAllowedValues().contains(mop.sideHit)
+				//&& mop.sideHit != EnumFacing.DOWN //illegal state
+				) {
+			
+			this.worldObj.setBlockState(offset, 
+					Blocks.TORCH.getDefaultState().withProperty(BlockTorch.FACING, mop.sideHit));
 		}
-
+		else{
+			UtilEntity.dropItemStackInWorld(worldObj, this.getPosition(), ItemRegistry.itemMap.get("ender_torch"));
+		}
+		
 		this.setDead();
 	}
 }

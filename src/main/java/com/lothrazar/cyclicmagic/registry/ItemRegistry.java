@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.registry;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
@@ -17,6 +16,7 @@ import com.lothrazar.cyclicmagic.item.ItemEmeraldPickaxe;
 import com.lothrazar.cyclicmagic.item.ItemEmeraldSpade;
 import com.lothrazar.cyclicmagic.item.ItemEmeraldSword;
 import com.lothrazar.cyclicmagic.item.ItemEnderBook;
+import com.lothrazar.cyclicmagic.item.ItemFlintTool;
 import com.lothrazar.cyclicmagic.item.ItemToolPearlReuse;
 import com.lothrazar.cyclicmagic.item.ItemFoodAppleMagic;
 import com.lothrazar.cyclicmagic.item.ItemFoodCorruptedChorus;
@@ -26,6 +26,7 @@ import com.lothrazar.cyclicmagic.item.ItemFoodHorse;
 import com.lothrazar.cyclicmagic.item.ItemFoodInventory;
 import com.lothrazar.cyclicmagic.item.ItemInventoryStorage;
 import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
+import com.lothrazar.cyclicmagic.item.ItemSleepingBag;
 import com.lothrazar.cyclicmagic.item.ItemToolHarvest;
 import com.lothrazar.cyclicmagic.item.ItemToolPull;
 import com.lothrazar.cyclicmagic.item.ItemToolPush;
@@ -42,7 +43,7 @@ import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileWater;
 import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileWool;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilItem;
-
+import net.minecraftforge.common.util.EnumHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
@@ -59,8 +60,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class ItemRegistry {
 
 	public static Map<String,Item> itemMap	= new HashMap<String,Item>();
-	public static Map<String,Boolean> configMap	= new HashMap<String,Boolean>();
-	
+
 	public static void construct(){
 		//TODO: maybe constructor. MUST be done before config
 
@@ -96,6 +96,7 @@ public class ItemRegistry {
 		addItem(new ItemFoodHeart(),"heart_food"); 
 		addItem(new ItemFoodCrafting(),"crafting_food");
 		addItem(new ItemFoodInventory(),"inventory_food");
+		addItem(new ItemSleepingBag(),"sleeping_mat");
 		
 	}
 
@@ -148,7 +149,8 @@ public class ItemRegistry {
 
 	public static void register() {
 		registerMaterials();
-		
+
+		addItem(new ItemFlintTool(),"flint_tool");
 
 		if (ItemCyclicWand.sceptersEnabled) {
 
@@ -287,12 +289,6 @@ public class ItemRegistry {
 		for (String key : itemMap.keySet()) {
 			item = itemMap.get(key);
 			
-			if(getConfigMap(item) == false){
-				//it works. TODO: fix item configs this way
-				//System.out.println("disabled by config"+item.getUnlocalizedName());
-				continue;
-			}
-			
 			if (item instanceof BaseItem) {
 				((BaseItem) item).register(key);
 			}
@@ -307,21 +303,35 @@ public class ItemRegistry {
 
 	private static void registerMaterials() {
 		
-		
-		//addArmorMaterial(String name, String textureName, int durability, int[] reductionAmounts, int enchantability, SoundEvent soundOnEquip)
-	    
-		ARMOR_MATERIAL_EMERALD = ArmorMaterial.DIAMOND;
+		ARMOR_MATERIAL_EMERALD = 
+				EnumHelper.addArmorMaterial("emerald", Const.MODID + ":emerald",  
+						33,//same as diamond   
+						new int[]{
+							 ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.HEAD)
+							,ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.CHEST)
+							,ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.LEGS)
+							,ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.FEET)
+						}, 
+						ArmorMaterial.DIAMOND.getEnchantability(), 
+						ArmorMaterial.DIAMOND.getSoundEvent(),
+						ArmorMaterial.DIAMOND.getToughness());
+
 		//enum helper is broken
 		//https://github.com/MinecraftForge/MinecraftForge/issues/2870
 		//https://github.com/MinecraftForge/MinecraftForge/pull/2874
-				//EnumHelper.addArmorMaterial("emerald", Const.MODID + ":emerald", diamondDurability, diamondreductionAmounts, ArmorMaterial.DIAMOND.getEnchantability(), ArmorMaterial.DIAMOND.getSoundEvent());
-
-		MATERIAL_EMERALD = ToolMaterial.DIAMOND;
 		// TODO: addToolMat causes a bug/crash, not sure if forge will fix.
-
+		//	EnumHelper.addToolMaterial("emerald", harvestLevel, maxUses, efficiency, damage, enchantability)
+		//ToolMaterial.DIAMOND;
+		MATERIAL_EMERALD = //ToolMaterial.DIAMOND;
+		
+			EnumHelper.addToolMaterial("emerald", 
+				ToolMaterial.DIAMOND.getHarvestLevel(), ToolMaterial.DIAMOND.getMaxUses(), 
+				ToolMaterial.DIAMOND.getEfficiencyOnProperMaterial(), 
+				ToolMaterial.DIAMOND.getDamageVsEntity(), 
+				ToolMaterial.DIAMOND.getEnchantability());
+		
 		// EnumHelper.addToolMaterial("emerald", 3, harvestLevel 3 same as diamond
 		// 1600,3.5F, 5+25 );
-
 	}
 	 
 	public static void registerItem(Item item, String name) {
@@ -337,19 +347,5 @@ public class ItemRegistry {
 		if (isHidden == false) {
 			item.setCreativeTab(ModMain.TAB);
 		} 
-	}
-
-	public static boolean getConfigMap(Item item) { 
-		String name = UtilItem.getRawName(item);
-
-		if(!ItemRegistry.configMap.containsKey(name)){
-		//if it doesnt have a key, then its always enabled so do it anyway
-			return true;
-		}
-		//else return whatever the config file has set
-		return ItemRegistry.configMap.get(name);
-	}
-	public static void setConfigMap(Item item, boolean bool) { 
-		ItemRegistry.configMap.put(UtilItem.getRawName(item), bool);
 	}
 }

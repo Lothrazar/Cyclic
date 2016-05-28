@@ -96,7 +96,7 @@ public class EventGuiTerrariaButtons implements IHasConfig{
 
 	@Override
 	public void syncConfig(Configuration config) {
-		String category = Const.ConfigCategory.inventoryButtons;
+		String category = Const.ConfigCategory.inventory;
 		 
 		config.setCategoryComment(category, "Terraria-inspired inventory helper buttons");
 
@@ -105,10 +105,9 @@ public class EventGuiTerrariaButtons implements IHasConfig{
 		valid.add(posRight);
 		valid.add(posBottom);
 		
-		
 		restockLeaveOne = config.getBoolean("Restock Leave One",category, false, "By default (false) the Restock feature will empty your chests if possible.  If you change this to true, then using Restock will leave one behind of each item stack");
 
-		position = config.getString("Button Location", category, posRight, "Location of the extra inventory buttons, valid entries are: " + String.join(",", valid));
+		position = config.getString("Button Location", category, posBottom, "Location of the extra inventory buttons, valid entries are: " + String.join(",", valid));
 
 		if (valid.contains(position) == false) {
 			position = posRight;// default

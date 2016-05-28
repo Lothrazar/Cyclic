@@ -39,9 +39,10 @@ private static final int durability = 5000;
 	}
 	@Override
 	public void syncConfig(Configuration config) {
-		Property prop = config.get(Const.ConfigCategory.items, "ToolPull", true, "Tool that can pull almost anything");
-		prop.setRequiresMcRestart(true); 
-		ItemRegistry.setConfigMap(this,prop.getBoolean());
+//		Property prop = config.get(Const.ConfigCategory.items, "ToolPull", true, 
+		//"Tool that can pull almost anything");
+//		prop.setRequiresMcRestart(true); 
+//		ItemRegistry.setConfigMap(this,prop.getBoolean());
 	}
 	@Override
 	public void addRecipe() { 

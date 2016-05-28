@@ -16,6 +16,7 @@ import com.lothrazar.cyclicmagic.event.EventFoodDetails;
 import com.lothrazar.cyclicmagic.event.EventFragileTorches;
 import com.lothrazar.cyclicmagic.event.EventFurnaceStardew;
 import com.lothrazar.cyclicmagic.event.EventGuiTerrariaButtons;
+import com.lothrazar.cyclicmagic.event.EventHarvestBlock;
 import com.lothrazar.cyclicmagic.event.EventHorseFood;
 import com.lothrazar.cyclicmagic.event.EventKeyInput;
 import com.lothrazar.cyclicmagic.event.EventLadderClimb;
@@ -29,6 +30,7 @@ import com.lothrazar.cyclicmagic.event.EventOreMined;
 import com.lothrazar.cyclicmagic.event.EventPassthroughAction;
 import com.lothrazar.cyclicmagic.event.EventPlayerData;
 import com.lothrazar.cyclicmagic.event.EventPlayerDeathCoords;
+import com.lothrazar.cyclicmagic.event.EventPlayerSleep;
 import com.lothrazar.cyclicmagic.event.EventPlayerWakeup;
 import com.lothrazar.cyclicmagic.event.EventPotions;
 import com.lothrazar.cyclicmagic.event.EventSaplingBlockGrowth;
@@ -41,7 +43,7 @@ import net.minecraftforge.common.config.Configuration;
 
 public class EventRegistry {
 	
-	private ArrayList<IHasConfig> featureEvents = new ArrayList<IHasConfig>();
+	private ArrayList<Object> featureEvents = new ArrayList<Object>();
 	
 	public EventRegistry(){
 		featureEvents.add(new EventAnimalDropBuffs());
@@ -51,13 +53,12 @@ public class EventRegistry {
 		featureEvents.add(new EventEditSign());
 		featureEvents.add(new EventEnderChest());
 		featureEvents.add(new EventEndermanDropBlock());
-		featureEvents.add(new EventSaplingPlantDespawn());
 		featureEvents.add(new EventExtendedInventory());
 		featureEvents.add(new EventFoodDetails());	
 		featureEvents.add(new EventFragileTorches());		
 		featureEvents.add(new EventFurnaceStardew());	
-		//EventGuiInventory is done in client proxy
-		featureEvents.add(new EventGuiTerrariaButtons());	
+		featureEvents.add(new EventGuiTerrariaButtons());
+		featureEvents.add(new EventHarvestBlock());	
 		featureEvents.add(new EventHorseFood());
 		featureEvents.add(new EventKeyInput());
 		featureEvents.add(new EventLadderClimb());	
@@ -73,20 +74,25 @@ public class EventRegistry {
 		featureEvents.add(new EventPlayerWakeup());
 		featureEvents.add(new EventPotions());
 		featureEvents.add(new EventSaplingBlockGrowth());
+		featureEvents.add(new EventSaplingPlantDespawn());
 		featureEvents.add(new EventSignSkullName());
 		featureEvents.add(new EventSpawnChunks());
 		featureEvents.add(new EventSpells());
 		featureEvents.add(new EventPlayerData());
+		featureEvents.add(new EventPlayerSleep());
+		
 	}
  
 	public void syncConfig(Configuration config) {
-		for (IHasConfig e : featureEvents) {
-			e.syncConfig(config);
+		for (Object e : featureEvents) {
+			if(e instanceof IHasConfig){
+				((IHasConfig)e).syncConfig(config);
+			}
 		}
 	}
 
 	public void register() {
-		for (IHasConfig e : featureEvents) {
+		for (Object e : featureEvents) {
 			MinecraftForge.EVENT_BUS.register(e);
 		}
 	}

@@ -143,6 +143,17 @@ public class InventoryStorage implements IInventory {
 	}
 
 	/************** public static ******************/
+	
+	public static int countNonEmpty(ItemStack stack){
+		ItemStack[] inv = readFromNBT(stack) ;
+		int count = 0;
+
+		for (int i = 0; i < inv.length; ++i) {
+			if(inv[i] != null){count++;}		
+		}
+		
+		return count;
+	}
 
 	public static ItemStack[] readFromNBT(ItemStack stack) {
 

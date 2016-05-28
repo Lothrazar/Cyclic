@@ -36,9 +36,9 @@ private static final int durability = 5000;
 	}
 	@Override
 	public void syncConfig(Configuration config) {
-		Property prop = config.get(Const.ConfigCategory.items, "ToolPush", true, "Tool that can push almost anything");
-		prop.setRequiresMcRestart(true); 
-		ItemRegistry.setConfigMap(this,prop.getBoolean());
+//		Property prop = config.get(Const.ConfigCategory.items, "ToolPush", true, "Tool that can push almost anything");
+//		prop.setRequiresMcRestart(true); 
+//		ItemRegistry.setConfigMap(this,prop.getBoolean());
 	}
 	@Override
 	public void addRecipe() { 
