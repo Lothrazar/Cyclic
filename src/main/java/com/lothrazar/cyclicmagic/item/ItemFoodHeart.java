@@ -31,23 +31,21 @@ public class ItemFoodHeart extends ItemFood implements IHasRecipe,IHasConfig{
 		//one heart is 2 health points (half heart = 1 health)
 		UtilEntity.incrementMaxHealth(player, 2 * numHearts);  
 	}
-
+//Edible hearts that increase your heath (permanently; until death)
 	@Override
 	public void syncConfig(Configuration config) {
 
-		Property prop = config.get(Const.ConfigCategory.items, "HeartFood", true, "Edible hearts that increase your heath (permanently; until death)");
-		prop.setRequiresMcRestart(true);
-		ItemRegistry.setConfigMap(this,prop.getBoolean());
+//TODO: get hearts persisting through death config to wipe on death?
 	}
 
 	@Override
 	public void addRecipe() {
 
 		GameRegistry.addShapelessRecipe(new ItemStack(this) 
-				,Items.BEETROOT_SOUP
-				,Items.RABBIT_STEW
+				,Items.BEETROOT
+				,Items.RABBIT
 				,Items.PUMPKIN_PIE
-				,Items.MUSHROOM_STEW
+				,Items.DIAMOND
 				,Items.CAKE
 				,Items.COOKIE
 				,new ItemStack(Items.FISH,1,Const.fish_salmon)

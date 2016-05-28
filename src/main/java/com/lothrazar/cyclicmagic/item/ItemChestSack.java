@@ -94,10 +94,11 @@ public class ItemChestSack extends BaseItem implements IHasConfig {
 	@Override
 	public void syncConfig(Configuration config) {
 
-		Property prop = config.get(Const.ConfigCategory.items, "ChestSack", true, "A bag that transports chests along with its contents");
-		prop.setRequiresMcRestart(true);
-
-		ItemRegistry.setConfigMap(this,prop.getBoolean());
+//		Property prop = config.get(Const.ConfigCategory.items, "ChestSack", true,
+		//"A bag that transports chests along with its contents");
+//		prop.setRequiresMcRestart(true);
+//
+//		ItemRegistry.setConfigMap(this,prop.getBoolean());
 		
 	}
 }

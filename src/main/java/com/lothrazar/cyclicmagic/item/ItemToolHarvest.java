@@ -37,12 +37,11 @@ public class ItemToolHarvest extends BaseTool implements IHasRecipe, IHasConfig{
 		super.onUse(stack, player, worldObj, hand);
 		return super.onItemUse(stack, player, worldObj, pos, hand, side, hitX, hitY, hitZ);
 	}
+//"Tool that harvests grass, flowers, and fully grown crops from the nearby area");
 
 	@Override
 	public void syncConfig(Configuration config) {
-		Property prop = config.get(Const.ConfigCategory.items, "ToolHarvest", true, "Tool that harvests grass, flowers, and fully grown crops from the nearby area");
-		prop.setRequiresMcRestart(true); 
-		ItemRegistry.setConfigMap(this,prop.getBoolean());
+		 
 	}
 
 	@Override

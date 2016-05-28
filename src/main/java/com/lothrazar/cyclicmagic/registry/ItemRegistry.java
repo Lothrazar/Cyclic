@@ -60,8 +60,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class ItemRegistry {
 
 	public static Map<String,Item> itemMap	= new HashMap<String,Item>();
-	public static Map<String,Boolean> configMap	= new HashMap<String,Boolean>();
-	
+
 	public static void construct(){
 		//TODO: maybe constructor. MUST be done before config
 
@@ -290,12 +289,6 @@ public class ItemRegistry {
 		for (String key : itemMap.keySet()) {
 			item = itemMap.get(key);
 			
-			if(getConfigMap(item) == false){
-				//it works. TODO: fix item configs this way
-				//System.out.println("disabled by config"+item.getUnlocalizedName());
-				continue;
-			}
-			
 			if (item instanceof BaseItem) {
 				((BaseItem) item).register(key);
 			}
@@ -354,19 +347,5 @@ public class ItemRegistry {
 		if (isHidden == false) {
 			item.setCreativeTab(ModMain.TAB);
 		} 
-	}
-
-	public static boolean getConfigMap(Item item) { 
-		String name = UtilItem.getRawName(item);
-
-		if(!ItemRegistry.configMap.containsKey(name)){
-		//if it doesnt have a key, then its always enabled so do it anyway
-			return true;
-		}
-		//else return whatever the config file has set
-		return ItemRegistry.configMap.get(name);
-	}
-	public static void setConfigMap(Item item, boolean bool) { 
-		ItemRegistry.configMap.put(UtilItem.getRawName(item), bool);
 	}
 }

@@ -68,9 +68,10 @@ public class ItemToolPearlReuse extends BaseTool implements IHasRecipe, IHasConf
 	@Override
 	public void syncConfig(Configuration config) {
 	
-		Property prop = config.get(Const.ConfigCategory.items, "EnderPearlReuse", true, "Reuseable ender pearl");
-		prop.setRequiresMcRestart(true);
+		//Property prop = config.get(Const.ConfigCategory.items, "EnderPearlReuse", true, 
+				//"Reuseable ender pearl");
+		//prop.setRequiresMcRestart(true);
 
-		ItemRegistry.setConfigMap(this,prop.getBoolean());
+		//ItemRegistry.setConfigMap(this,prop.getBoolean());
 	}
 }

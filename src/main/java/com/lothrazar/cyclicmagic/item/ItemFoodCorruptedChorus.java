@@ -18,7 +18,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class ItemFoodCorruptedChorus extends ItemFood implements IHasRecipe,IHasConfig{
  
 	private static final int numFood = 2;
-	
+	String tooltip = "Lets you phase through walls for a few seconds";
 	public ItemFoodCorruptedChorus() {
 		super(numFood, false);  
 		this.setAlwaysEdible();
@@ -31,19 +31,16 @@ public class ItemFoodCorruptedChorus extends ItemFood implements IHasRecipe,IHas
 	}
 
 	@Override
-	public void syncConfig(Configuration config) {
-
-		Property prop = config.get(Const.ConfigCategory.items, "CorruptedChorus", true, "Lets you phase through walls for a few seconds");
-		prop.setRequiresMcRestart(true);
-		ItemRegistry.setConfigMap(this,prop.getBoolean());
-	}
-
-	@Override
 	public void addRecipe(){
 
 		GameRegistry.addRecipe(new ItemStack(this,3), 
 				"lal", "lal", "lal", 
 				'l', Items.FERMENTED_SPIDER_EYE, 
 				'a', Items.CHORUS_FRUIT);
+	}
+
+	@Override
+	public void syncConfig(Configuration config) {
+		// TODO SECONDS
 	} 
 }

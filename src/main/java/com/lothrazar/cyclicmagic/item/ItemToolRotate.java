@@ -49,9 +49,9 @@ private static final int durability = 8000;
 	@Override
 	public void syncConfig(Configuration config) {
 
-		Property prop = config.get(Const.ConfigCategory.items, "ToolRotate", true, "Tool that can rotate almost anything");
-		prop.setRequiresMcRestart(true); 
-		ItemRegistry.setConfigMap(this,prop.getBoolean());
+//		Property prop = config.get(Const.ConfigCategory.items, "ToolRotate", true, "Tool that can rotate almost anything");
+//		prop.setRequiresMcRestart(true); 
+//		ItemRegistry.setConfigMap(this,prop.getBoolean());
 	}
 
 	@Override

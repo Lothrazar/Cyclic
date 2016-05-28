@@ -30,7 +30,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class ItemPaperCarbon extends BaseItem implements IHasRecipe, IHasConfig {
+public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
 
 	public static final String	name				= "carbon_paper";
 
@@ -291,15 +291,5 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe, IHasConfig 
 		
 		//also let you clean off the paper , make one with no NBT
 		GameRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this));
-	}
-
-	@Override
-	public void syncConfig(Configuration config) {
- 
-		Property prop = config.get(Const.ConfigCategory.items, "CarbonPaper", true, "Special paper to copy signs and note block data");
-		prop.setRequiresMcRestart(true);
-
-		ItemRegistry.setConfigMap(this,prop.getBoolean());
-
 	}
 }

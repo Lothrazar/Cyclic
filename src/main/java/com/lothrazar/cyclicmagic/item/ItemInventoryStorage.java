@@ -83,10 +83,7 @@ public class ItemInventoryStorage extends BaseItem implements IHasRecipe,IHasCon
 
 	@Override
 	public void syncConfig(Configuration config) {
-
-		Property prop = config.get(Const.ConfigCategory.items, "StorageBag", true, "Simple storage bag");
-		//prop.setRequiresMcRestart(true);
-		ItemRegistry.setConfigMap(this,prop.getBoolean());
-		 
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -96,7 +96,7 @@ public class EventGuiTerrariaButtons implements IHasConfig{
 
 	@Override
 	public void syncConfig(Configuration config) {
-		String category = Const.ConfigCategory.inventoryButtons;
+		String category = Const.ConfigCategory.inventory;
 		 
 		config.setCategoryComment(category, "Terraria-inspired inventory helper buttons");
 
