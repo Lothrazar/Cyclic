@@ -61,6 +61,8 @@ public class ItemRegistry {
 
 	public static Map<String,Item> itemMap	= new HashMap<String,Item>();
 
+	public static Item corrupted_chorus;
+
 	public static final ItemPotionCustom potion_viscous = new ItemPotionCustom();
 	public static final ItemPotionCustom potion_levitation = new ItemPotionCustom(MobEffects.LEVITATION, 30);
 	public static final ItemPotionCustom potion_luck = new ItemPotionCustom(MobEffects.LUCK, 60*3);
@@ -69,13 +71,13 @@ public class ItemRegistry {
 //	public static final ItemPotionCustom waterwalk_potion = new ItemPotionCustom(false,PotionRegistry.waterwalk, 60*3);
 //	public static final ItemPotionCustom slowfall_potion = new ItemPotionCustom(false,PotionRegistry.slowfall, 60*3);
 	public static final ItemPotionCustom potion_ender = new ItemPotionCustom();
-	public static final ItemPotionCustom magnet_potion = new ItemPotionCustom();
-	public static final ItemPotionCustom waterwalk_potion = new ItemPotionCustom();
-	public static final ItemPotionCustom slowfall_potion = new ItemPotionCustom();
-	public static final ItemPotionCustom glowing_potion = new ItemPotionCustom(MobEffects.GLOWING, 60*3);
-	public static final ItemPotionCustom resistance_potion = new ItemPotionCustom(MobEffects.RESISTANCE, 60*3);
-	public static final ItemPotionCustom boost_potion = new ItemPotionCustom(MobEffects.HEALTH_BOOST, 60*3, PotionRegistry.V);
-	public static final ItemPotionCustom haste_potion = new ItemPotionCustom(MobEffects.HASTE, 60*3);
+	public static final ItemPotionCustom potion_magnet = new ItemPotionCustom();
+	public static final ItemPotionCustom potion_waterwalk = new ItemPotionCustom();
+	public static final ItemPotionCustom potion_slowfall = new ItemPotionCustom();
+	public static final ItemPotionCustom potion_glowing = new ItemPotionCustom(MobEffects.GLOWING, 60*3);
+	public static final ItemPotionCustom potion_resistance = new ItemPotionCustom(MobEffects.RESISTANCE, 60*3);
+	public static final ItemPotionCustom potion_boost = new ItemPotionCustom(MobEffects.HEALTH_BOOST, 60*3, PotionRegistry.V);
+	public static final ItemPotionCustom potion_haste = new ItemPotionCustom(MobEffects.HASTE, 60*3);
 	
 	public static void construct(){
 		//TODO: maybe constructor. MUST be done before config
@@ -108,22 +110,22 @@ public class ItemRegistry {
 		addItem(new ItemFoodHorse(new ItemStack(Items.REDSTONE)),"horse_upgrade_speed");
 		addItem(new ItemFoodHorse(new ItemStack(Items.ENDER_EYE)),"horse_upgrade_jump");
 		addItem(new ItemEnderBook(),"book_ender"); 
-		addItem(new ItemFoodCorruptedChorus(),"corrupted_chorus");
+		corrupted_chorus = addItem(new ItemFoodCorruptedChorus(),"corrupted_chorus");
 		addItem(new ItemFoodHeart(),"heart_food"); 
 		addItem(new ItemFoodCrafting(),"crafting_food");
 		addItem(new ItemFoodInventory(),"inventory_food");
 		addItem(new ItemSleepingBag(),"sleeping_mat");
-		addItem(haste_potion, "potion_haste");
+		addItem(potion_haste, "potion_haste");
 		addItem(potion_ender, "potion_ender");
 		addItem(potion_luck, "potion_luck");	
 		addItem(potion_levitation, "potion_levitation");
 		addItem(potion_viscous, "potion_viscous");
-		addItem(boost_potion, "potion_boost");
-		addItem(resistance_potion, "potion_resistance");
-		addItem(waterwalk_potion, "potion_waterwalk");
-		addItem(slowfall_potion, "potion_slowfall");
-		addItem(glowing_potion, "potion_glowing");
-		addItem(magnet_potion, "potion_magnet");
+		addItem(potion_boost, "potion_boost");
+		addItem(potion_resistance, "potion_resistance");
+		addItem(potion_waterwalk, "potion_waterwalk");
+		addItem(potion_slowfall, "potion_slowfall");
+		addItem(potion_glowing, "potion_glowing");
+		addItem(potion_magnet, "potion_magnet");
 	}
 
 	private static Item addItem(Item i, String key){ 
@@ -180,9 +182,9 @@ public class ItemRegistry {
 		addItem(new ItemFlintTool(),"flint_tool");
 
 		potion_ender.addEffect(PotionRegistry.ender, 60*3,PotionRegistry.I);
-		magnet_potion.addEffect(PotionRegistry.magnet, 60*3,PotionRegistry.I);
-		waterwalk_potion.addEffect(PotionRegistry.waterwalk, 60*3,PotionRegistry.I);
-		slowfall_potion.addEffect(PotionRegistry.slowfall, 60*3,PotionRegistry.I);
+		potion_magnet.addEffect(PotionRegistry.magnet, 60*3,PotionRegistry.I);
+		potion_waterwalk.addEffect(PotionRegistry.waterwalk, 60*3,PotionRegistry.I);
+		potion_slowfall.addEffect(PotionRegistry.slowfall, 60*3,PotionRegistry.I);
 		
 		if (ItemCyclicWand.sceptersEnabled) {
 

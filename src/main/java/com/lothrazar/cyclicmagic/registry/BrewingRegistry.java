@@ -1,8 +1,10 @@
 package com.lothrazar.cyclicmagic.registry;
 
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 
@@ -39,19 +41,62 @@ public class BrewingRegistry {
 				new ItemStack(ItemRegistry.itemMap.get("potion_viscous")));
 		
 		BrewingRecipeRegistry.addRecipe(
-				new ItemStack(ItemRegistry.itemMap.get("potion_viscous")),
+				new ItemStack(ItemRegistry.potion_viscous),
 				new ItemStack(Items.FEATHER),
-				new ItemStack(ItemRegistry.itemMap.get("potion_levitation")));
+				new ItemStack(ItemRegistry.potion_levitation));
 
 		BrewingRegistry.addRecipe(
-				ItemRegistry.itemMap.get("potion_viscous"),
+				ItemRegistry.potion_viscous,
 				Items.FEATHER,
-				ItemRegistry.itemMap.get("potion_levitation"));
-	 
+				ItemRegistry.potion_levitation);
+		
+		BrewingRecipeRegistry.addRecipe(
+				new ItemStack(ItemRegistry.potion_viscous),
+				new ItemStack(Items.FISH,1,ItemFishFood.FishType.CLOWNFISH.getMetadata()),
+				new ItemStack(ItemRegistry.potion_luck));
+
+		BrewingRegistry.addRecipe(
+				ItemRegistry.potion_viscous,
+				Items.ENDER_EYE,
+				ItemRegistry.potion_ender);
+
+		BrewingRegistry.addRecipe(
+				ItemRegistry.potion_viscous,
+				Items.EMERALD,
+				ItemRegistry.potion_haste);
+
+		BrewingRegistry.addRecipe(
+				ItemRegistry.potion_viscous,
+				Items.PRISMARINE_CRYSTALS,
+				ItemRegistry.potion_waterwalk);
+
+		BrewingRegistry.addRecipe(
+				ItemRegistry.potion_viscous,
+				Items.GOLDEN_APPLE,
+				ItemRegistry.potion_boost);
+		
+		BrewingRegistry.addRecipe(
+				ItemRegistry.potion_viscous,
+				Items.DIAMOND,
+				ItemRegistry.potion_resistance);
+		
+		BrewingRegistry.addRecipe(
+				ItemRegistry.potion_viscous,
+				Items.IRON_INGOT,
+				ItemRegistry.potion_magnet);
+		
+		BrewingRecipeRegistry.addRecipe(
+				new ItemStack(ItemRegistry.potion_viscous),
+				new ItemStack(Blocks.GLOWSTONE),
+				new ItemStack(ItemRegistry.potion_glowing));
+		
+		BrewingRecipeRegistry.addRecipe(
+				new ItemStack(ItemRegistry.potion_viscous),
+				new ItemStack(ItemRegistry.corrupted_chorus),
+				new ItemStack(ItemRegistry.potion_slowfall));
 	}
 
 	private static void addRecipe(Item input, Item ingredient, Item output){
-
 		 BrewingRecipeRegistry.addRecipe(
 				 new ItemStack(input), 
 				 new ItemStack(ingredient), 
