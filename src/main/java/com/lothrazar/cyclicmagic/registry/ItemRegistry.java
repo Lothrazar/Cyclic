@@ -50,6 +50,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
+import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
@@ -96,7 +97,6 @@ public class ItemRegistry {
 		addItem(new ItemFoodCrafting(),"crafting_food");
 		addItem(new ItemFoodInventory(),"inventory_food");
 		addItem(new ItemSleepingBag(),"sleeping_mat");
-		
 	}
 
 	private static void addItem(Item i, String key){ 
@@ -214,75 +214,56 @@ public class ItemRegistry {
 		final int hunger		= 4;
 		final int time			= 8 * 60; // 8:00
 		
-		if (ItemFoodAppleMagic.apple_chorus_enabled) {
+	 
 			ItemFoodAppleMagic apple_chorus = new ItemFoodAppleMagic(hunger, false, 
 					new ItemStack(Items.CHORUS_FRUIT)
 					,MobEffects.LEVITATION, 30, I);
  
 			addItem(apple_chorus, "apple_chorus");
-		}
-
-		if (ItemFoodAppleMagic.apple_ender_enabled) {
+	  
 			ItemFoodAppleMagic apple_ender = new ItemFoodAppleMagic(hunger, false, 
 					new ItemStack(Items.ENDER_PEARL)
 					,PotionRegistry.ender, time, I);
  
 			addItem(apple_ender, "apple_ender");
-		}
-
-		if (ItemFoodAppleMagic.apple_emerald_enabled) {
+	 
 			ItemFoodAppleMagic apple_emerald = new ItemFoodAppleMagic(hunger, false, 
 					new ItemStack(Items.EMERALD)
 					,MobEffects.HEALTH_BOOST, time, V);
 		 
 			addItem(apple_emerald, "apple_emerald"); 
-		}
-
-		if (ItemFoodAppleMagic.apple_chocolate_enabled) {
+ 
 			ItemFoodAppleMagic apple_chocolate = new ItemFoodAppleMagic(hunger, false, 
 					new ItemStack(Items.DYE, 1, Const.dye_cocoa)
 					,MobEffects.LUCK, time, II); 
 			addItem(apple_chocolate, "apple_chocolate"); 
-		}
-
-		if (ItemFoodAppleMagic.apple_lapis_enabled) {
+	 
 			ItemFoodAppleMagic apple_lapis = new ItemFoodAppleMagic(hunger, false, 
 					new ItemStack(Items.DYE, 1, Const.dye_lapis),MobEffects.HASTE, time, II);
 		 
 			addItem(apple_lapis, "apple_lapis"); 
-		}
-		
-		if (ItemFoodAppleMagic.apple_diamond_enabled) {
+	 
 			ItemFoodAppleMagic apple_diamond = new ItemFoodAppleMagic(hunger, false, 
 					new ItemStack(Items.DIAMOND),MobEffects.RESISTANCE, time, I);
 			addItem(apple_diamond, "apple_diamond"); 
-		}
-
-		if (ItemFoodAppleMagic.apple_bone_enabled) {
+	 
 			ItemFoodAppleMagic apple_bone = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.BONE)
 					,MobEffects.GLOWING, time, I);
 			addItem(apple_bone, "apple_bone"); 
-		}
-
-		if (ItemFoodAppleMagic.apple_netherwart_enabled) {
+	 
 			ItemFoodAppleMagic apple_netherwart = new ItemFoodAppleMagic(hunger, false, 
 					new ItemStack(Items.NETHER_WART),PotionRegistry.magnet, time, I);
 			addItem(apple_netherwart, "apple_netherwart"); 
-		}
 
-		if (ItemFoodAppleMagic.apple_prismarine_enabled) {
 			ItemFoodAppleMagic apple_prismarine = new ItemFoodAppleMagic(hunger, false, 
 					new ItemStack(Items.PRISMARINE_SHARD),PotionRegistry.waterwalk, time, I);
 			addItem(apple_prismarine, "apple_prismarine"); 
-		}
-
-		if (ItemFoodAppleMagic.apple_clownfish_enabled) {
+ 
 			ItemFoodAppleMagic apple_slowfall = new ItemFoodAppleMagic(hunger, false, 
 					new ItemStack(Items.FISH, 1, Const.fish_puffer),PotionRegistry.slowfall, time, I);
 			 
 			addItem(apple_slowfall, "apple_slowfall");
-		}
-		
+	 
 		//maybe one day it will be all base items
 		Item item;
 		for (String key : itemMap.keySet()) {

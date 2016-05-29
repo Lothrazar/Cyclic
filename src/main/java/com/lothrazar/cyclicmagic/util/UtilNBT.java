@@ -166,15 +166,30 @@ public class UtilNBT {
 		return held.getTagCompound();
 	}
 
-	public static NBTTagCompound buildPotionTag(Potion potionIn, int level, int duration, String name) {
+	public static NBTTagCompound buildPotionSimple(String name) {
+		// REF : http://minecraft.gamepedia.com/Player.dat_format#Potion_Effects
+		//example: minecraft:thick/awkward has no effects
 		NBTTagCompound tags = new NBTTagCompound();
+//		NBTTagCompound inner = new NBTTagCompound();
+//		inner.setInteger("Id", Potion.getIdFromPotion(potionIn));
+//		inner.setInteger("Amplifier", level);
+//		inner.setInteger("Duration", duration);
+//		inner.setBoolean("ShowParticles", true);
+//		tags.setTag("CustomPotionEffects", inner);
+		tags.setString("Potion", name);
+		
+		return tags;
+	}
+	public static NBTTagCompound buildPotionTag(Potion potionIn, int level, int duration, String name) {
+		// REF : http://minecraft.gamepedia.com/Player.dat_format#Potion_Effects
+		NBTTagCompound tags = new NBTTagCompound();
+		tags.setString("Potion", name);
 		NBTTagCompound inner = new NBTTagCompound();
 		inner.setInteger("Id", Potion.getIdFromPotion(potionIn));
 		inner.setInteger("Amplifier", level);
 		inner.setInteger("Duration", duration);
 		inner.setBoolean("ShowParticles", true);
 		tags.setTag("CustomPotionEffects", inner);
-		tags.setString("Potion", name);
 		
 		return tags;
 	}
