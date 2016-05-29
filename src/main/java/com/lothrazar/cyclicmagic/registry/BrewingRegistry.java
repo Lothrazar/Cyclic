@@ -6,7 +6,9 @@ import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.PotionTypes;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -38,21 +40,25 @@ public class BrewingRegistry {
 
 		//CANT USE input as  APPLES:
 		// Inputs must have a max size of 1 just like water bottles. Brewing Stands override the input with the output when the brewing is done, items that stack would end up getting lost.
+		ItemStack awkward = BrewingRecipeRegistry.getOutput(new ItemStack(Items.POTIONITEM), new ItemStack(Items.NETHER_WART));
+//		
+		BrewingRecipeRegistry.addRecipe(
+				awkward,
+				new ItemStack(Items.DYE,1,EnumDyeColor.BLUE.getDyeDamage()),
+				new ItemStack(ItemRegistry.itemMap.get("potion_viscous")));
 		
+		BrewingRecipeRegistry.addRecipe(
+				new ItemStack(ItemRegistry.itemMap.get("potion_viscous")),
+				new ItemStack(Items.FEATHER),
+				new ItemStack(ItemRegistry.itemMap.get("potion_levitation")));
+
 		BrewingRegistry.addRecipe(
-				ItemRegistry.itemMap.get("apple_netherwart"),
-				Items.DIAMOND,
-				ItemRegistry.itemMap.get("apple_diamond"));
+				ItemRegistry.itemMap.get("potion_viscous"),
+				Items.FEATHER,
+				ItemRegistry.itemMap.get("potion_levitation"));
 	 
 	}
 
-	private static void addRecipe(ItemStack input, Item ingredient, Item output){
-
-		 BrewingRecipeRegistry.addRecipe(
-				 input, 
-				 new ItemStack(ingredient), 
-				 new ItemStack(output));
-	}
 	private static void addRecipe(Item input, Item ingredient, Item output){
 
 		 BrewingRecipeRegistry.addRecipe(

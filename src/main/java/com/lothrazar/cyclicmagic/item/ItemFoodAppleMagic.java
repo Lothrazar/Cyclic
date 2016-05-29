@@ -54,7 +54,6 @@ public class ItemFoodAppleMagic extends ItemFood implements IHasRecipe {
 		potionDurations = new ArrayList<Integer>();
 		potionAmplifiers = new ArrayList<Integer>();
 		recipeInput = rec;
-		
 		this.setMaxStackSize(1);
 		
 		this.addEffect(potionId, potionDuration, potionAmplifier);

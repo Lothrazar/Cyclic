@@ -26,6 +26,7 @@ import com.lothrazar.cyclicmagic.item.ItemFoodHorse;
 import com.lothrazar.cyclicmagic.item.ItemFoodInventory;
 import com.lothrazar.cyclicmagic.item.ItemInventoryStorage;
 import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
+import com.lothrazar.cyclicmagic.item.ItemPotionCustom;
 import com.lothrazar.cyclicmagic.item.ItemSleepingBag;
 import com.lothrazar.cyclicmagic.item.ItemToolHarvest;
 import com.lothrazar.cyclicmagic.item.ItemToolPull;
@@ -214,11 +215,16 @@ public class ItemRegistry {
 		final int hunger		= 4;
 		final int time			= 8 * 60; // 8:00
 		
+		
+		ItemPotionCustom potion_viscous = new ItemPotionCustom(false);
+		addItem(potion_viscous, "potion_viscous");
+
+		ItemPotionCustom potion_levitation = new ItemPotionCustom(false,MobEffects.LEVITATION, 30, I);
+		addItem(potion_levitation, "potion_levitation");
 	 
 			ItemFoodAppleMagic apple_chorus = new ItemFoodAppleMagic(hunger, false, 
 					new ItemStack(Items.CHORUS_FRUIT)
 					,MobEffects.LEVITATION, 30, I);
- 
 			addItem(apple_chorus, "apple_chorus");
 	  
 			ItemFoodAppleMagic apple_ender = new ItemFoodAppleMagic(hunger, false, 
