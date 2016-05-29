@@ -61,9 +61,24 @@ public class BrewingRegistry {
 				ItemRegistry.potion_ender);
 
 		BrewingRegistry.addRecipe(
+				ItemRegistry.potion_ender,
+				Items.REDSTONE,
+				ItemRegistry.potion_ender_long);
+
+		BrewingRegistry.addRecipe(
 				ItemRegistry.potion_viscous,
 				Items.EMERALD,
 				ItemRegistry.potion_haste);
+		
+		BrewingRegistry.addRecipe(
+				ItemRegistry.potion_haste,
+				Items.REDSTONE,
+				ItemRegistry.potion_haste_long);
+		
+		BrewingRegistry.addRecipe(
+				ItemRegistry.potion_haste,
+				Items.GLOWSTONE_DUST,
+				ItemRegistry.potion_haste_strong);
 
 		BrewingRegistry.addRecipe(
 				ItemRegistry.potion_viscous,
@@ -71,9 +86,19 @@ public class BrewingRegistry {
 				ItemRegistry.potion_waterwalk);
 
 		BrewingRegistry.addRecipe(
+				ItemRegistry.potion_waterwalk,
+				Items.REDSTONE,
+				ItemRegistry.potion_waterwalk_long);
+
+		BrewingRegistry.addRecipe(
 				ItemRegistry.potion_viscous,
 				Items.GOLDEN_APPLE,
 				ItemRegistry.potion_boost);
+
+		BrewingRegistry.addRecipe(
+				ItemRegistry.potion_boost,
+				Items.REDSTONE,
+				ItemRegistry.potion_boost_long);
 		
 		BrewingRegistry.addRecipe(
 				ItemRegistry.potion_viscous,
@@ -81,19 +106,44 @@ public class BrewingRegistry {
 				ItemRegistry.potion_resistance);
 		
 		BrewingRegistry.addRecipe(
+				ItemRegistry.potion_resistance,
+				Items.REDSTONE,
+				ItemRegistry.potion_resistance_long);
+		
+		BrewingRegistry.addRecipe(
+				ItemRegistry.potion_resistance,
+				Items.GLOWSTONE_DUST,
+				ItemRegistry.potion_resistance_strong);
+		
+		BrewingRegistry.addRecipe(
 				ItemRegistry.potion_viscous,
 				Items.IRON_INGOT,
 				ItemRegistry.potion_magnet);
 		
+		BrewingRegistry.addRecipe(
+				ItemRegistry.potion_magnet,
+				Items.REDSTONE,
+				ItemRegistry.potion_magnet_long);
+		
 		BrewingRecipeRegistry.addRecipe(
 				new ItemStack(ItemRegistry.potion_viscous),
-				new ItemStack(Blocks.GLOWSTONE),
+				new ItemStack(Blocks.REDSTONE_LAMP),
 				new ItemStack(ItemRegistry.potion_glowing));
+		
+		BrewingRecipeRegistry.addRecipe(
+				new ItemStack(ItemRegistry.potion_glowing),
+				new ItemStack(Items.REDSTONE),
+				new ItemStack(ItemRegistry.potion_glowing_long));
 		
 		BrewingRecipeRegistry.addRecipe(
 				new ItemStack(ItemRegistry.potion_viscous),
 				new ItemStack(ItemRegistry.corrupted_chorus),
 				new ItemStack(ItemRegistry.potion_slowfall));
+		
+		BrewingRecipeRegistry.addRecipe(
+				new ItemStack(ItemRegistry.potion_slowfall),
+				new ItemStack(Items.REDSTONE),
+				new ItemStack(ItemRegistry.potion_slowfall_long));
 	}
 
 	private static void addRecipe(Item input, Item ingredient, Item output){
