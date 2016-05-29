@@ -21,41 +21,41 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.StringUtils;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemPotionCustom extends ItemFood  {
-	private boolean							hasEffect	= false;
 	private ArrayList<Potion>	potions = new ArrayList<Potion>();
 	private ArrayList<Integer>	potionDurations = new ArrayList<Integer>();
 	private ArrayList<Integer>	potionAmplifiers = new ArrayList<Integer>();
 
-	public ItemPotionCustom(boolean has_effect) { 
+	public ItemPotionCustom() { 
 		super(2, false);// is not edible by wolf
-		hasEffect = has_effect;// true gives it enchantment shine
 		this.setAlwaysEdible(); // can eat even if full hunger
 		this.setCreativeTab(ModMain.TAB);
 		this.setMaxStackSize(1);
 	}
 
-	public ItemPotionCustom(boolean has_effect
-			,Potion potionId, int potionDuration, int potionAmplifier) {
-		//super(2, false);// is not edible by wolf
-		this(has_effect);
+	public ItemPotionCustom(Potion potionId, int potionDuration) {
+		this(potionId,potionDuration,PotionRegistry.I);
+	}
+	public ItemPotionCustom(Potion potionId, int potionDuration, int potionAmplifier) {
+		this();
 
 		this.addEffect(potionId, potionDuration, potionAmplifier);
 	}
 	
-	public ItemPotionCustom addEffect(Potion potionId, int potionDuration, int potionAmplifier) {
+	public void addEffect(Potion potionId, int potionDuration, int potionAmplifier) {
 
 		//currently, items pretty much just have one potion. but keeping the arrays in case that changes later
 		potions.add(potionId);
 		potionDurations.add(potionDuration * Const.TICKS_PER_SEC);
 		potionAmplifiers.add(potionAmplifier);
 
-		return this;// to chain together
 	}
 
 	@Override
@@ -64,21 +64,18 @@ public class ItemPotionCustom extends ItemFood  {
 	}
 
 	@Override
-	public EnumAction getItemUseAction(ItemStack stack)
-    {
+	public EnumAction getItemUseAction(ItemStack stack){
         return EnumAction.DRINK;
     }
 
 	@Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand)
-    {
+    public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand){
         playerIn.setActiveHand(hand);
         return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);
     }
 	@Override
     public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving){
-       
-
+        
         if (entityLiving instanceof EntityPlayer){
             EntityPlayer entityplayer = (EntityPlayer)entityLiving;
             entityplayer.getFoodStats().addStats(this, stack);
@@ -87,44 +84,33 @@ public class ItemPotionCustom extends ItemFood  {
             this.onFoodEaten(stack, worldIn, entityplayer);
             entityplayer.addStat(StatList.getObjectUseStats(this));
             
-
             if (entityplayer == null || !entityplayer.capabilities.isCreativeMode)
             {
             	stack.stackSize--;
-                if (stack.stackSize <= 0)
-                {
+                if (stack.stackSize <= 0){
                     return new ItemStack(Items.GLASS_BOTTLE);
                 }
 
-                if (entityplayer != null)
-                {
+                if (entityplayer != null){
                     entityplayer.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE));
                 }
             }
-            
         }
-
         return stack;
     }
 
 	@Override
 	public boolean hasEffect(ItemStack par1ItemStack) {
-		return hasEffect; 
+		return true; 
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
-	public EnumRarity getRarity(ItemStack par1ItemStack) {
-		if (hasEffect)
-			return EnumRarity.EPIC; // dynamic text to match the two apple colours
-		else
-			return EnumRarity.RARE;
-	}
- 
-	@Override
 	public void addInformation(ItemStack held, EntityPlayer player, List<String> list, boolean par4) {
+		String n;
 		for (int i = 0; i < potions.size(); i++) {
-			list.add(I18n.format(potions.get(i).getName()));
+			n = TextFormatting.BLUE + I18n.format(potions.get(i).getName());
+			n += " ("+StringUtils.ticksToElapsedTime(potionDurations.get(i))+")";
+			list.add(n);
 		}
 	}
 

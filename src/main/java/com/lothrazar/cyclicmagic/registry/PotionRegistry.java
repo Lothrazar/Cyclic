@@ -59,5 +59,5 @@ public class PotionRegistry {
 	public static void syncConfig(Configuration config) {
 
 		//TODO: magnet has properties. so does slowfall
-	}
+	} 
 }
