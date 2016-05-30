@@ -45,7 +45,7 @@ public class BrewingRegistry {
 		
 		BrewingRecipeRegistry.addRecipe(
 				new ItemStack(ItemRegistry.potion_viscous),
-				new ItemStack(Items.FEATHER),
+				new ItemStack(Items.CHORUS_FRUIT),
 				new ItemStack(ItemRegistry.potion_levitation));
 
 		BrewingRegistry.addRecipe(
