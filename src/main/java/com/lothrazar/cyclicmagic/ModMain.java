@@ -3,6 +3,7 @@ package com.lothrazar.cyclicmagic;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
+import com.lothrazar.cyclicmagic.registry.BrewingRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.registry.CommandRegistry;
@@ -100,6 +101,7 @@ public class ModMain {
 
 		PotionRegistry.register();
 		ItemRegistry.register();
+		BrewingRegistry.register();
 		BlockRegistry.register();
 		SpellRegistry.register();
 		MobSpawningRegistry.register();

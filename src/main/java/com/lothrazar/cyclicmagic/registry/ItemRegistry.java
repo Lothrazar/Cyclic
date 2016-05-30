@@ -26,6 +26,7 @@ import com.lothrazar.cyclicmagic.item.ItemFoodHorse;
 import com.lothrazar.cyclicmagic.item.ItemFoodInventory;
 import com.lothrazar.cyclicmagic.item.ItemInventoryStorage;
 import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
+import com.lothrazar.cyclicmagic.item.ItemPotionCustom;
 import com.lothrazar.cyclicmagic.item.ItemSleepingBag;
 import com.lothrazar.cyclicmagic.item.ItemToolHarvest;
 import com.lothrazar.cyclicmagic.item.ItemToolPull;
@@ -42,7 +43,6 @@ import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileTorch;
 import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileWater;
 import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileWool;
 import com.lothrazar.cyclicmagic.util.Const;
-import com.lothrazar.cyclicmagic.util.UtilItem;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -61,6 +61,32 @@ public class ItemRegistry {
 
 	public static Map<String,Item> itemMap	= new HashMap<String,Item>();
 
+	public static Item corrupted_chorus;
+	 
+	public static final ItemPotionCustom potion_viscous = new ItemPotionCustom(false);
+	public static final ItemPotionCustom potion_levitation = new ItemPotionCustom(true,MobEffects.LEVITATION, 60*3);
+	public static final ItemPotionCustom potion_levitation_long = new ItemPotionCustom(true,MobEffects.LUCK, 60*8);
+	public static final ItemPotionCustom potion_luck = new ItemPotionCustom(true,MobEffects.LUCK, 60*3);
+	public static final ItemPotionCustom potion_luck_long = new ItemPotionCustom(true,MobEffects.LEVITATION, 60*8);
+	public static final ItemPotionCustom potion_ender = new ItemPotionCustom(true);
+	public static final ItemPotionCustom potion_ender_long = new ItemPotionCustom(true);
+	public static final ItemPotionCustom potion_magnet = new ItemPotionCustom(false);
+	public static final ItemPotionCustom potion_magnet_long = new ItemPotionCustom(false);
+	public static final ItemPotionCustom potion_waterwalk = new ItemPotionCustom(false);
+	public static final ItemPotionCustom potion_waterwalk_long = new ItemPotionCustom(false);
+	public static final ItemPotionCustom potion_slowfall = new ItemPotionCustom(true);
+	public static final ItemPotionCustom potion_slowfall_long = new ItemPotionCustom(true);
+//	public static final ItemPotionCustom potion_glowing = new ItemPotionCustom(MobEffects.GLOWING, 60*3);
+//	public static final ItemPotionCustom potion_glowing_long = new ItemPotionCustom(MobEffects.GLOWING, 60*8);
+	public static final ItemPotionCustom potion_resistance = new ItemPotionCustom(true,MobEffects.RESISTANCE, 60*3);
+	public static final ItemPotionCustom potion_resistance_strong = new ItemPotionCustom(true,MobEffects.RESISTANCE, 90,PotionRegistry.II);
+	public static final ItemPotionCustom potion_resistance_long = new ItemPotionCustom(true,MobEffects.RESISTANCE, 60*8);
+	public static final ItemPotionCustom potion_boost = new ItemPotionCustom(true,MobEffects.HEALTH_BOOST, 60*3, PotionRegistry.V);
+	public static final ItemPotionCustom potion_boost_long = new ItemPotionCustom(true,MobEffects.HEALTH_BOOST, 60*8, PotionRegistry.V);
+	public static final ItemPotionCustom potion_haste = new ItemPotionCustom(false,MobEffects.HASTE, 60*3);
+	public static final ItemPotionCustom potion_haste_strong = new ItemPotionCustom(false,MobEffects.HASTE, 90, PotionRegistry.II);
+	public static final ItemPotionCustom potion_haste_long = new ItemPotionCustom(false,MobEffects.HASTE, 60*8);
+	
 	public static void construct(){
 		//TODO: maybe constructor. MUST be done before config
 
@@ -92,17 +118,40 @@ public class ItemRegistry {
 		addItem(new ItemFoodHorse(new ItemStack(Items.REDSTONE)),"horse_upgrade_speed");
 		addItem(new ItemFoodHorse(new ItemStack(Items.ENDER_EYE)),"horse_upgrade_jump");
 		addItem(new ItemEnderBook(),"book_ender"); 
-		addItem(new ItemFoodCorruptedChorus(),"corrupted_chorus");
+		corrupted_chorus = addItem(new ItemFoodCorruptedChorus(),"corrupted_chorus");
 		addItem(new ItemFoodHeart(),"heart_food"); 
 		addItem(new ItemFoodCrafting(),"crafting_food");
 		addItem(new ItemFoodInventory(),"inventory_food");
 		addItem(new ItemSleepingBag(),"sleeping_mat");
-		
+		addItem(potion_viscous, "potion_viscous");
+		addItem(potion_boost, "potion_boost");
+		addItem(potion_boost_long, "potion_boost_long");
+		addItem(potion_resistance, "potion_resistance");
+		addItem(potion_resistance_long, "potion_resistance_long");
+		addItem(potion_resistance_strong, "potion_resistance_strong");
+		addItem(potion_waterwalk, "potion_waterwalk");
+		addItem(potion_waterwalk_long, "potion_waterwalk_long");
+		addItem(potion_slowfall, "potion_slowfall");
+		addItem(potion_slowfall_long, "potion_slowfall_long");
+//		addItem(potion_glowing, "potion_glowing");
+//		addItem(potion_glowing_long, "potion_glowing_long");
+		addItem(potion_magnet, "potion_magnet");
+		addItem(potion_magnet_long, "potion_magnet_long");
+		addItem(potion_haste, "potion_haste");
+		addItem(potion_haste_long, "potion_haste_long");
+		addItem(potion_haste_strong, "potion_haste_strong");
+		addItem(potion_ender, "potion_ender");
+		addItem(potion_ender_long, "potion_ender_long");
+		addItem(potion_luck, "potion_luck");	
+		addItem(potion_luck_long, "potion_luck_long");	
+		addItem(potion_levitation, "potion_levitation");
+		addItem(potion_levitation_long, "potion_levitation_long");
 	}
 
-	private static void addItem(Item i, String key){ 
+	private static Item addItem(Item i, String key){ 
 		i.setUnlocalizedName(key);
 		itemMap.put(key, i);
+		return i;
 	}
 	
 	private static boolean emeraldGearEnabled ; 
@@ -152,6 +201,16 @@ public class ItemRegistry {
 
 		addItem(new ItemFlintTool(),"flint_tool");
 
+		potion_ender.addEffect(PotionRegistry.ender, 60*3,PotionRegistry.I);
+		potion_magnet.addEffect(PotionRegistry.magnet, 60*3,PotionRegistry.I);
+		potion_waterwalk.addEffect(PotionRegistry.waterwalk, 60*3,PotionRegistry.I);
+		potion_slowfall.addEffect(PotionRegistry.slowfall, 60*3,PotionRegistry.I);
+		
+		potion_ender_long.addEffect(PotionRegistry.ender, 60*8,PotionRegistry.I);
+		potion_magnet_long.addEffect(PotionRegistry.magnet, 60*8,PotionRegistry.I);
+		potion_waterwalk_long.addEffect(PotionRegistry.waterwalk, 60*8,PotionRegistry.I);
+		potion_slowfall_long.addEffect(PotionRegistry.slowfall, 60*8,PotionRegistry.I);
+		
 		if (ItemCyclicWand.sceptersEnabled) {
 
 			ItemCyclicWand cyclic_wand_build = new ItemCyclicWand();
@@ -214,76 +273,56 @@ public class ItemRegistry {
  
 		final int hunger		= 4;
 		final int time			= 8 * 60; // 8:00
+
 		
-		if (ItemFoodAppleMagic.apple_chorus_enabled) {
-			ItemFoodAppleMagic apple_chorus = new ItemFoodAppleMagic(hunger, false, 
-					new ItemStack(Items.CHORUS_FRUIT)
-					,MobEffects.LEVITATION, 30, I);
+		
+		ItemFoodAppleMagic apple_chorus = new ItemFoodAppleMagic(hunger, false, 
+				new ItemStack(Items.CHORUS_FRUIT)
+				,MobEffects.LEVITATION, 30, I);
+		addItem(apple_chorus, "apple_chorus");
+	  
+		ItemFoodAppleMagic apple_ender = new ItemFoodAppleMagic(hunger, false, 
+				new ItemStack(Items.ENDER_PEARL)
+				,PotionRegistry.ender, time, I);
+		addItem(apple_ender, "apple_ender");
  
-			addItem(apple_chorus, "apple_chorus");
-		}
-
-		if (ItemFoodAppleMagic.apple_ender_enabled) {
-			ItemFoodAppleMagic apple_ender = new ItemFoodAppleMagic(hunger, false, 
-					new ItemStack(Items.ENDER_PEARL)
-					,PotionRegistry.ender, time, I);
+		ItemFoodAppleMagic apple_emerald = new ItemFoodAppleMagic(hunger, false, 
+				new ItemStack(Items.EMERALD)
+				,MobEffects.HEALTH_BOOST, time, V);
+	 
+		addItem(apple_emerald, "apple_emerald"); 
  
-			addItem(apple_ender, "apple_ender");
-		}
-
-		if (ItemFoodAppleMagic.apple_emerald_enabled) {
-			ItemFoodAppleMagic apple_emerald = new ItemFoodAppleMagic(hunger, false, 
-					new ItemStack(Items.EMERALD)
-					,MobEffects.HEALTH_BOOST, time, V);
+		ItemFoodAppleMagic apple_chocolate = new ItemFoodAppleMagic(hunger, false, 
+				new ItemStack(Items.DYE, 1, Const.dye_cocoa)
+				,MobEffects.LUCK, time, II); 
+		addItem(apple_chocolate, "apple_chocolate"); 
+ 
+		ItemFoodAppleMagic apple_lapis = new ItemFoodAppleMagic(hunger, false, 
+				new ItemStack(Items.DYE, 1, Const.dye_lapis),MobEffects.HASTE, time, II);
+	 
+		addItem(apple_lapis, "apple_lapis"); 
+ 
+		ItemFoodAppleMagic apple_diamond = new ItemFoodAppleMagic(hunger, false, 
+				new ItemStack(Items.DIAMOND),MobEffects.RESISTANCE, time, I);
+		addItem(apple_diamond, "apple_diamond"); 
+ 
+		ItemFoodAppleMagic apple_bone = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.BONE)
+				,MobEffects.GLOWING, time, I);
+		addItem(apple_bone, "apple_bone"); 
+ 
+		ItemFoodAppleMagic apple_netherwart = new ItemFoodAppleMagic(hunger, false, 
+				new ItemStack(Items.NETHER_WART),PotionRegistry.magnet, time, I);
+		addItem(apple_netherwart, "apple_netherwart"); 
+	
+		ItemFoodAppleMagic apple_prismarine = new ItemFoodAppleMagic(hunger, false, 
+				new ItemStack(Items.PRISMARINE_SHARD),PotionRegistry.waterwalk, time, I);
+		addItem(apple_prismarine, "apple_prismarine"); 
+ 
+		ItemFoodAppleMagic apple_slowfall = new ItemFoodAppleMagic(hunger, false, 
+				new ItemStack(Items.FISH, 1, Const.fish_puffer),PotionRegistry.slowfall, time, I);
 		 
-			addItem(apple_emerald, "apple_emerald"); 
-		}
-
-		if (ItemFoodAppleMagic.apple_chocolate_enabled) {
-			ItemFoodAppleMagic apple_chocolate = new ItemFoodAppleMagic(hunger, false, 
-					new ItemStack(Items.DYE, 1, Const.dye_cocoa)
-					,MobEffects.LUCK, time, II); 
-			addItem(apple_chocolate, "apple_chocolate"); 
-		}
-
-		if (ItemFoodAppleMagic.apple_lapis_enabled) {
-			ItemFoodAppleMagic apple_lapis = new ItemFoodAppleMagic(hunger, false, 
-					new ItemStack(Items.DYE, 1, Const.dye_lapis),MobEffects.HASTE, time, II);
-		 
-			addItem(apple_lapis, "apple_lapis"); 
-		}
-		
-		if (ItemFoodAppleMagic.apple_diamond_enabled) {
-			ItemFoodAppleMagic apple_diamond = new ItemFoodAppleMagic(hunger, false, 
-					new ItemStack(Items.DIAMOND),MobEffects.RESISTANCE, time, I);
-			addItem(apple_diamond, "apple_diamond"); 
-		}
-
-		if (ItemFoodAppleMagic.apple_bone_enabled) {
-			ItemFoodAppleMagic apple_bone = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.BONE)
-					,MobEffects.GLOWING, time, I);
-			addItem(apple_bone, "apple_bone"); 
-		}
-
-		if (ItemFoodAppleMagic.apple_netherwart_enabled) {
-			ItemFoodAppleMagic apple_netherwart = new ItemFoodAppleMagic(hunger, false, 
-					new ItemStack(Items.NETHER_WART),PotionRegistry.magnet, time, I);
-			addItem(apple_netherwart, "apple_netherwart"); 
-		}
-
-		if (ItemFoodAppleMagic.apple_prismarine_enabled) {
-			ItemFoodAppleMagic apple_prismarine = new ItemFoodAppleMagic(hunger, false, 
-					new ItemStack(Items.PRISMARINE_SHARD),PotionRegistry.waterwalk, time, I);
-			addItem(apple_prismarine, "apple_prismarine"); 
-		}
-
-		if (ItemFoodAppleMagic.apple_clownfish_enabled) {
-			ItemFoodAppleMagic apple_slowfall = new ItemFoodAppleMagic(hunger, false, 
-					new ItemStack(Items.FISH, 1, Const.fish_puffer),PotionRegistry.slowfall, time, I);
-			 
-			addItem(apple_slowfall, "apple_slowfall");
-		}
-		
+		addItem(apple_slowfall, "apple_slowfall");
+ 
 		//maybe one day it will be all base items
 		Item item;
 		for (String key : itemMap.keySet()) {

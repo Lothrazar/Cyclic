@@ -28,17 +28,17 @@ public class ItemFoodAppleMagic extends ItemFood implements IHasRecipe {
 	private ArrayList<Integer>	potionDurations;
 	private ArrayList<Integer>	potionAmplifiers;
 	private ItemStack recipeInput;
-
-	public static boolean apple_emerald_enabled;
-	public static boolean apple_diamond_enabled;
-	public static boolean apple_ender_enabled;
-	public static boolean apple_bone_enabled;
-	public static boolean apple_lapis_enabled;
-	public static boolean apple_chocolate_enabled;
-	public static boolean apple_netherwart_enabled;
-	public static boolean apple_prismarine_enabled;
-	public static boolean apple_clownfish_enabled;
-	public static boolean apple_chorus_enabled;
+//
+//	public static boolean apple_emerald_enabled;
+//	public static boolean apple_diamond_enabled;
+//	public static boolean apple_ender_enabled;
+//	public static boolean apple_bone_enabled;
+//	public static boolean apple_lapis_enabled;
+//	public static boolean apple_chocolate_enabled;
+//	public static boolean apple_netherwart_enabled;
+//	public static boolean apple_prismarine_enabled;
+//	public static boolean apple_clownfish_enabled;
+//	public static boolean apple_chorus_enabled;
 	/*
 	public ItemFoodAppleMagic(int fillsHunger, boolean has_effect, ItemStack rec) {
 		this(fillsHunger,has_effect,rec);
@@ -54,6 +54,7 @@ public class ItemFoodAppleMagic extends ItemFood implements IHasRecipe {
 		potionDurations = new ArrayList<Integer>();
 		potionAmplifiers = new ArrayList<Integer>();
 		recipeInput = rec;
+		this.setMaxStackSize(1);
 		
 		this.addEffect(potionId, potionDuration, potionAmplifier);
 	}
@@ -112,18 +113,18 @@ public class ItemFoodAppleMagic extends ItemFood implements IHasRecipe {
 
 	public static void syncConfig(Configuration config) {
 
-		String category = Const.ConfigCategory.items;
-
-		apple_bone_enabled 		= config.getBoolean("AppleBone", 		category, true,"A magic apple that gives the glowing effect - like spectral arrows. (Works on any living entity)");
-		apple_emerald_enabled 	= config.getBoolean("AppleEmerald", 	category, true,"A magic apple that gives health booost V");
-		apple_diamond_enabled 	= config.getBoolean("AppleDiamond", 	category, true,"A magic apple that gives the resistance effect");
-		apple_ender_enabled 	= config.getBoolean("AppleEnder", 		category, true,"A magic apple that gives a new custom ender aura effect negates ender pearl damage");
-		apple_lapis_enabled 	= config.getBoolean("AppleLapis", 		category, true,"A magic apple that gives the haste effect. (Works on any living entity)");
-		apple_chocolate_enabled = config.getBoolean("AppleChocolate", 	category, true,"A magic apple that gives the luck effect. (Works on any living entity)");
-		apple_netherwart_enabled= config.getBoolean("AppleNetherwart",  category, true,"A magic apple that gives a new custom magnet potion effect that pulls all nearby items towards you. (Works on any living entity)");
-		apple_prismarine_enabled= config.getBoolean("ApplePrismarine",  category, true,"A magic apple that gives a new custom waterwalking effect. (Works on any living entity)");
-		apple_clownfish_enabled = config.getBoolean("AppleClownfish", 	category, true,"A magic apple that gives a new custom slowfall potion effect. (Works on any living entity)");
-		apple_chorus_enabled    = config.getBoolean("AppleChorus", 		category, true,"A magic apple that gives the levitation effect - just like shulkers. (Works on any living entity)");
+//		String category = Const.ConfigCategory.items;
+//
+//		apple_bone_enabled 		= config.getBoolean("AppleBone", 		category, true,"A magic apple that gives the glowing effect - like spectral arrows. (Works on any living entity)");
+//		apple_emerald_enabled 	= config.getBoolean("AppleEmerald", 	category, true,"A magic apple that gives health booost V");
+//		apple_diamond_enabled 	= config.getBoolean("AppleDiamond", 	category, true,"A magic apple that gives the resistance effect");
+//		apple_ender_enabled 	= config.getBoolean("AppleEnder", 		category, true,"A magic apple that gives a new custom ender aura effect negates ender pearl damage");
+//		apple_lapis_enabled 	= config.getBoolean("AppleLapis", 		category, true,"A magic apple that gives the haste effect. (Works on any living entity)");
+//		apple_chocolate_enabled = config.getBoolean("AppleChocolate", 	category, true,"A magic apple that gives the luck effect. (Works on any living entity)");
+//		apple_netherwart_enabled= config.getBoolean("AppleNetherwart",  category, true,"A magic apple that gives a new custom magnet potion effect that pulls all nearby items towards you. (Works on any living entity)");
+//		apple_prismarine_enabled= config.getBoolean("ApplePrismarine",  category, true,"A magic apple that gives a new custom waterwalking effect. (Works on any living entity)");
+//		apple_clownfish_enabled = config.getBoolean("AppleClownfish", 	category, true,"A magic apple that gives a new custom slowfall potion effect. (Works on any living entity)");
+//		apple_chorus_enabled    = config.getBoolean("AppleChorus", 		category, true,"A magic apple that gives the levitation effect - just like shulkers. (Works on any living entity)");
  
 	}
 }

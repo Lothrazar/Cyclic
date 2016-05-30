@@ -21,9 +21,6 @@ public class StackSizeRegistry {
 			return;
 		}
 
-		stackMap.put(Items.POTIONITEM, 8);
-		stackMap.put(Items.SPLASH_POTION, 8);
-		stackMap.put(Items.LINGERING_POTION, 8);
 		int boat = 16;
 		int MAX = 64;
 
