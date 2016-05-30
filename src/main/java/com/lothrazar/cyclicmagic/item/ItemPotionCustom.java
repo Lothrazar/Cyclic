@@ -29,19 +29,21 @@ public class ItemPotionCustom extends ItemFood  {
 	private ArrayList<Potion>	potions = new ArrayList<Potion>();
 	private ArrayList<Integer>	potionDurations = new ArrayList<Integer>();
 	private ArrayList<Integer>	potionAmplifiers = new ArrayList<Integer>();
+	private boolean hasEffect;
 
-	public ItemPotionCustom() { 
+	public ItemPotionCustom(boolean shiny) { 
 		super(2, false);// is not edible by wolf
 		this.setAlwaysEdible(); // can eat even if full hunger
 		this.setCreativeTab(ModMain.TAB);
 		this.setMaxStackSize(1);
+		this.hasEffect = shiny;
 	}
 
-	public ItemPotionCustom(Potion potionId, int potionDuration) {
-		this(potionId,potionDuration,PotionRegistry.I);
+	public ItemPotionCustom(boolean shiny,Potion potionId, int potionDuration) {
+		this(shiny,potionId,potionDuration,PotionRegistry.I);
 	}
-	public ItemPotionCustom(Potion potionId, int potionDuration, int potionAmplifier) {
-		this();
+	public ItemPotionCustom(boolean shiny,Potion potionId, int potionDuration, int potionAmplifier) {
+		this(shiny);
 
 		this.addEffect(potionId, potionDuration, potionAmplifier);
 	}
@@ -98,7 +100,7 @@ public class ItemPotionCustom extends ItemFood  {
 
 	@Override
 	public boolean hasEffect(ItemStack par1ItemStack) {
-		return true; 
+		return hasEffect; 
 	}
 
 	@Override

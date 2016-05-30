@@ -63,29 +63,29 @@ public class ItemRegistry {
 
 	public static Item corrupted_chorus;
 	 
-	public static final ItemPotionCustom potion_viscous = new ItemPotionCustom();
-	public static final ItemPotionCustom potion_levitation = new ItemPotionCustom(MobEffects.LEVITATION, 60*3);
-	public static final ItemPotionCustom potion_levitation_long = new ItemPotionCustom(MobEffects.LUCK, 60*8);
-	public static final ItemPotionCustom potion_luck = new ItemPotionCustom(MobEffects.LUCK, 60*3);
-	public static final ItemPotionCustom potion_luck_long = new ItemPotionCustom(MobEffects.LEVITATION, 60*8);
-	public static final ItemPotionCustom potion_ender = new ItemPotionCustom();
-	public static final ItemPotionCustom potion_ender_long = new ItemPotionCustom();
-	public static final ItemPotionCustom potion_magnet = new ItemPotionCustom();
-	public static final ItemPotionCustom potion_magnet_long = new ItemPotionCustom();
-	public static final ItemPotionCustom potion_waterwalk = new ItemPotionCustom();
-	public static final ItemPotionCustom potion_waterwalk_long = new ItemPotionCustom();
-	public static final ItemPotionCustom potion_slowfall = new ItemPotionCustom();
-	public static final ItemPotionCustom potion_slowfall_long = new ItemPotionCustom();
+	public static final ItemPotionCustom potion_viscous = new ItemPotionCustom(false);
+	public static final ItemPotionCustom potion_levitation = new ItemPotionCustom(true,MobEffects.LEVITATION, 60*3);
+	public static final ItemPotionCustom potion_levitation_long = new ItemPotionCustom(true,MobEffects.LUCK, 60*8);
+	public static final ItemPotionCustom potion_luck = new ItemPotionCustom(true,MobEffects.LUCK, 60*3);
+	public static final ItemPotionCustom potion_luck_long = new ItemPotionCustom(true,MobEffects.LEVITATION, 60*8);
+	public static final ItemPotionCustom potion_ender = new ItemPotionCustom(true);
+	public static final ItemPotionCustom potion_ender_long = new ItemPotionCustom(true);
+	public static final ItemPotionCustom potion_magnet = new ItemPotionCustom(false);
+	public static final ItemPotionCustom potion_magnet_long = new ItemPotionCustom(false);
+	public static final ItemPotionCustom potion_waterwalk = new ItemPotionCustom(false);
+	public static final ItemPotionCustom potion_waterwalk_long = new ItemPotionCustom(false);
+	public static final ItemPotionCustom potion_slowfall = new ItemPotionCustom(true);
+	public static final ItemPotionCustom potion_slowfall_long = new ItemPotionCustom(true);
 //	public static final ItemPotionCustom potion_glowing = new ItemPotionCustom(MobEffects.GLOWING, 60*3);
 //	public static final ItemPotionCustom potion_glowing_long = new ItemPotionCustom(MobEffects.GLOWING, 60*8);
-	public static final ItemPotionCustom potion_resistance = new ItemPotionCustom(MobEffects.RESISTANCE, 60*3);
-	public static final ItemPotionCustom potion_resistance_strong = new ItemPotionCustom(MobEffects.RESISTANCE, 90,PotionRegistry.II);
-	public static final ItemPotionCustom potion_resistance_long = new ItemPotionCustom(MobEffects.RESISTANCE, 60*8);
-	public static final ItemPotionCustom potion_boost = new ItemPotionCustom(MobEffects.HEALTH_BOOST, 60*3, PotionRegistry.V);
-	public static final ItemPotionCustom potion_boost_long = new ItemPotionCustom(MobEffects.HEALTH_BOOST, 60*8, PotionRegistry.V);
-	public static final ItemPotionCustom potion_haste = new ItemPotionCustom(MobEffects.HASTE, 60*3);
-	public static final ItemPotionCustom potion_haste_strong = new ItemPotionCustom(MobEffects.HASTE, 90, PotionRegistry.II);
-	public static final ItemPotionCustom potion_haste_long = new ItemPotionCustom(MobEffects.HASTE, 60*8);
+	public static final ItemPotionCustom potion_resistance = new ItemPotionCustom(true,MobEffects.RESISTANCE, 60*3);
+	public static final ItemPotionCustom potion_resistance_strong = new ItemPotionCustom(true,MobEffects.RESISTANCE, 90,PotionRegistry.II);
+	public static final ItemPotionCustom potion_resistance_long = new ItemPotionCustom(true,MobEffects.RESISTANCE, 60*8);
+	public static final ItemPotionCustom potion_boost = new ItemPotionCustom(true,MobEffects.HEALTH_BOOST, 60*3, PotionRegistry.V);
+	public static final ItemPotionCustom potion_boost_long = new ItemPotionCustom(true,MobEffects.HEALTH_BOOST, 60*8, PotionRegistry.V);
+	public static final ItemPotionCustom potion_haste = new ItemPotionCustom(false,MobEffects.HASTE, 60*3);
+	public static final ItemPotionCustom potion_haste_strong = new ItemPotionCustom(false,MobEffects.HASTE, 90, PotionRegistry.II);
+	public static final ItemPotionCustom potion_haste_long = new ItemPotionCustom(false,MobEffects.HASTE, 60*8);
 	
 	public static void construct(){
 		//TODO: maybe constructor. MUST be done before config
