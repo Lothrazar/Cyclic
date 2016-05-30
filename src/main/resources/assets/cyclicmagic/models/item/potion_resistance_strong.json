@@ -1,7 +1,7 @@
 {
     "parent": "builtin/generated",
     "textures": {
-        "layer0": "cyclicmagic:items/potion/potion_resistance_strong"
+        "layer0": "cyclicmagic:items/potion/potion_resistance"
     },
     "display": {
         "thirdperson": {
