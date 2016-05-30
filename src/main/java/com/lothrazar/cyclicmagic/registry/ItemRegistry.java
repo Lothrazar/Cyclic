@@ -76,8 +76,8 @@ public class ItemRegistry {
 	public static final ItemPotionCustom potion_waterwalk_long = new ItemPotionCustom();
 	public static final ItemPotionCustom potion_slowfall = new ItemPotionCustom();
 	public static final ItemPotionCustom potion_slowfall_long = new ItemPotionCustom();
-	public static final ItemPotionCustom potion_glowing = new ItemPotionCustom(MobEffects.GLOWING, 60*3);
-	public static final ItemPotionCustom potion_glowing_long = new ItemPotionCustom(MobEffects.GLOWING, 60*8);
+//	public static final ItemPotionCustom potion_glowing = new ItemPotionCustom(MobEffects.GLOWING, 60*3);
+//	public static final ItemPotionCustom potion_glowing_long = new ItemPotionCustom(MobEffects.GLOWING, 60*8);
 	public static final ItemPotionCustom potion_resistance = new ItemPotionCustom(MobEffects.RESISTANCE, 60*3);
 	public static final ItemPotionCustom potion_resistance_strong = new ItemPotionCustom(MobEffects.RESISTANCE, 90,PotionRegistry.II);
 	public static final ItemPotionCustom potion_resistance_long = new ItemPotionCustom(MobEffects.RESISTANCE, 60*8);
@@ -133,8 +133,8 @@ public class ItemRegistry {
 		addItem(potion_waterwalk_long, "potion_waterwalk_long");
 		addItem(potion_slowfall, "potion_slowfall");
 		addItem(potion_slowfall_long, "potion_slowfall_long");
-		addItem(potion_glowing, "potion_glowing");
-		addItem(potion_glowing_long, "potion_glowing_long");
+//		addItem(potion_glowing, "potion_glowing");
+//		addItem(potion_glowing_long, "potion_glowing_long");
 		addItem(potion_magnet, "potion_magnet");
 		addItem(potion_magnet_long, "potion_magnet_long");
 		addItem(potion_haste, "potion_haste");

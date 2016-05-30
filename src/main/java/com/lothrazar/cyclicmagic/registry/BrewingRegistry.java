@@ -40,8 +40,8 @@ public class BrewingRegistry {
 //		
 		BrewingRecipeRegistry.addRecipe(
 				awkward,
-				new ItemStack(Items.DYE,1,EnumDyeColor.BLUE.getDyeDamage()),
-				new ItemStack(ItemRegistry.itemMap.get("potion_viscous")));
+				new ItemStack(Items.DYE,1,EnumDyeColor.BROWN.getDyeDamage()),
+				new ItemStack(ItemRegistry.potion_viscous));
 		
 		BrewingRecipeRegistry.addRecipe(
 				new ItemStack(ItemRegistry.potion_viscous),
@@ -55,7 +55,7 @@ public class BrewingRegistry {
 		
 		BrewingRecipeRegistry.addRecipe(
 				new ItemStack(ItemRegistry.potion_viscous),
-				new ItemStack(Items.FISH,1,ItemFishFood.FishType.CLOWNFISH.getMetadata()),
+				new ItemStack(Items.SLIME_BALL),
 				new ItemStack(ItemRegistry.potion_luck));
 
 		BrewingRegistry.addRecipe(
@@ -118,29 +118,29 @@ public class BrewingRegistry {
 				Items.GLOWSTONE_DUST,
 				ItemRegistry.potion_resistance_strong);
 		
-		BrewingRegistry.addRecipe(
-				ItemRegistry.potion_viscous,
-				Items.IRON_INGOT,
-				ItemRegistry.potion_magnet);
+		BrewingRecipeRegistry.addRecipe(
+				new ItemStack(ItemRegistry.potion_viscous),
+				new ItemStack(Items.DYE,1,EnumDyeColor.BLUE.getDyeDamage()),
+				new ItemStack(ItemRegistry.potion_magnet));
 		
 		BrewingRegistry.addRecipe(
 				ItemRegistry.potion_magnet,
 				Items.REDSTONE,
 				ItemRegistry.potion_magnet_long);
 		
-		BrewingRecipeRegistry.addRecipe(
-				new ItemStack(ItemRegistry.potion_viscous),
-				new ItemStack(Blocks.REDSTONE_LAMP),
-				new ItemStack(ItemRegistry.potion_glowing));
+//		BrewingRecipeRegistry.addRecipe(
+//				new ItemStack(ItemRegistry.potion_viscous),
+//				new ItemStack(Blocks.REDSTONE_LAMP),
+//				new ItemStack(ItemRegistry.potion_glowing));
+//		
+//		BrewingRecipeRegistry.addRecipe(
+//				new ItemStack(ItemRegistry.potion_glowing),
+//				new ItemStack(Items.REDSTONE),
+//				new ItemStack(ItemRegistry.potion_glowing_long));
 		
 		BrewingRecipeRegistry.addRecipe(
-				new ItemStack(ItemRegistry.potion_glowing),
-				new ItemStack(Items.REDSTONE),
-				new ItemStack(ItemRegistry.potion_glowing_long));
-		
-		BrewingRecipeRegistry.addRecipe(
 				new ItemStack(ItemRegistry.potion_viscous),
-				new ItemStack(ItemRegistry.corrupted_chorus),
+				new ItemStack(Items.FISH,1,ItemFishFood.FishType.CLOWNFISH.getMetadata()),
 				new ItemStack(ItemRegistry.potion_slowfall));
 		
 		BrewingRecipeRegistry.addRecipe(
