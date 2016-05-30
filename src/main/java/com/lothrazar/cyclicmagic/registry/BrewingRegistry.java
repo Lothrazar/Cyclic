@@ -33,6 +33,9 @@ public class BrewingRegistry {
 
 		//CANT USE input as  APPLES:
 		// Inputs must have a max size of 1 just like water bottles. Brewing Stands override the input with the output when the brewing is done, items that stack would end up getting lost.
+		
+		//todo;:??ItemSplashPotion
+		
 		ItemStack awkward = BrewingRecipeRegistry.getOutput(new ItemStack(Items.POTIONITEM), new ItemStack(Items.NETHER_WART));
 //		
 		BrewingRecipeRegistry.addRecipe(
