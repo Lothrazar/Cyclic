@@ -16,7 +16,6 @@ import com.lothrazar.cyclicmagic.item.ItemEmeraldPickaxe;
 import com.lothrazar.cyclicmagic.item.ItemEmeraldSpade;
 import com.lothrazar.cyclicmagic.item.ItemEmeraldSword;
 import com.lothrazar.cyclicmagic.item.ItemEnderBook;
-import com.lothrazar.cyclicmagic.item.ItemFlintTool;
 import com.lothrazar.cyclicmagic.item.ItemToolPearlReuse;
 import com.lothrazar.cyclicmagic.item.ItemFoodAppleMagic;
 import com.lothrazar.cyclicmagic.item.ItemFoodCorruptedChorus;

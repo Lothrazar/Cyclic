@@ -177,8 +177,6 @@ public class ModMain {
 	/*
 	 * 
 	 * TODO LIST
-	 * 
-	 * REVISIT furnace recipe && stone tools thing
 	 *  
 	 * [disabled] building spells: make phantom/ghost/outline/particle blocks
 	 *

@@ -28,9 +28,7 @@ import com.lothrazar.cyclicmagic.event.EventNoclipUpdate;
 import com.lothrazar.cyclicmagic.event.EventOreMined;
 import com.lothrazar.cyclicmagic.event.EventPassthroughAction;
 import com.lothrazar.cyclicmagic.event.EventPlayerData;
-import com.lothrazar.cyclicmagic.event.EventPlayerDeathCoords;
 import com.lothrazar.cyclicmagic.event.EventPlayerSleep;
-import com.lothrazar.cyclicmagic.event.EventPlayerWakeup;
 import com.lothrazar.cyclicmagic.event.EventPotions;
 import com.lothrazar.cyclicmagic.event.EventSaplingBlockGrowth;
 import com.lothrazar.cyclicmagic.event.EventSignSkullName;
@@ -68,8 +66,6 @@ public class EventRegistry {
 		featureEvents.add(new EventNoclipUpdate());
 		featureEvents.add(new EventOreMined());
 		featureEvents.add(new EventPassthroughAction()); 
-		featureEvents.add(new EventPlayerDeathCoords());
-		featureEvents.add(new EventPlayerWakeup());
 		featureEvents.add(new EventPotions());
 		featureEvents.add(new EventSaplingBlockGrowth());
 		featureEvents.add(new EventSaplingPlantDespawn());
