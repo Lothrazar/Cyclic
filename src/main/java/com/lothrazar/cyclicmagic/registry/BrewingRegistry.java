@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.registry;
 
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;

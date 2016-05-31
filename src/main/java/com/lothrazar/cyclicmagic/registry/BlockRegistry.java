@@ -37,6 +37,8 @@ public class BlockRegistry {
 	public static BlockDimensionOre			end_coal_ore;
 	public static BlockDimensionOre			end_lapis_ore;
 	public static BlockDimensionOre			end_emerald_ore;
+	public static BlockDimensionOre			nether_diamond_ore; 
+	public static BlockDimensionOre			end_diamond_ore;
 
 	private static boolean						enabledBucketBlocks; 
 	private static boolean						enableBlockFragile;
@@ -106,6 +108,10 @@ public class BlockRegistry {
 			nether_emerald_ore = new BlockDimensionOre(Items.EMERALD);
 			nether_emerald_ore.setSpawnType(SpawnType.SILVERFISH, 5);
 			registerBlock(nether_emerald_ore, "nether_emerald_ore");
+
+			nether_diamond_ore = new BlockDimensionOre(Items.DIAMOND);
+			nether_diamond_ore.setSpawnType(SpawnType.SILVERFISH, 8);
+			registerBlock(nether_diamond_ore, "nether_diamond_ore");
 		}
 
 		if (WorldGenRegistry.endOreEnabled) {
@@ -125,6 +131,10 @@ public class BlockRegistry {
 			end_emerald_ore = new BlockDimensionOre(Items.EMERALD);
 			end_emerald_ore.setSpawnType(SpawnType.ENDERMITE, 8);
 			registerBlock(end_emerald_ore, "end_emerald_ore");
+
+			end_diamond_ore = new BlockDimensionOre(Items.DIAMOND);
+			end_diamond_ore.setSpawnType(SpawnType.ENDERMITE, 8);
+			registerBlock(end_diamond_ore, "end_diamond_ore");
 		}
 
 		if (enabledBucketBlocks) {
