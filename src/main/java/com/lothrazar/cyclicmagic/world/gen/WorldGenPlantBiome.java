@@ -20,17 +20,17 @@ public class WorldGenPlantBiome implements IWorldGenerator {
 	private BlockCrops blockPlant; 
 	private List<Biome> biomes;
 	private int minHeight = 1;
-	public WorldGenPlantBiome(BlockCrops plant, List<Biome> b){
+	private int spawnTries;
+	public WorldGenPlantBiome(BlockCrops plant, List<Biome> b,int chances){
 		blockPlant = plant;
 		biomes = b;
-		
+		spawnTries = chances;
 		gen = new GeneratePlant(blockPlant);
 	}
 
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
  
-		int spawnTries = 25;
 		if(Const.Dimension.overworld == world.provider.getDimension()){
 			this.run(gen, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, spawnTries, minHeight , Const.WORLDHEIGHT-1);
 		}

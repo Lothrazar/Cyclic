@@ -114,13 +114,13 @@ public class WorldGenRegistry {
 		//TODO: i guess take array list
 		
 		if(biomeCrops){
-			GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops)Blocks.CARROTS, Arrays.asList(Biomes.EXTREME_HILLS)), weight);
+			GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops)Blocks.CARROTS, Arrays.asList(Biomes.EXTREME_HILLS),15), weight);
 			
-			GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops)Blocks.WHEAT,Arrays.asList( Biomes.PLAINS)), weight);
+			GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops)Blocks.WHEAT,Arrays.asList( Biomes.PLAINS),8), weight);
 			
-			GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops)Blocks.BEETROOTS, Arrays.asList(Biomes.FOREST, Biomes.BIRCH_FOREST)), weight);
+			GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops)Blocks.BEETROOTS, Arrays.asList(Biomes.FOREST, Biomes.BIRCH_FOREST),18), weight);
 	
-			GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops)Blocks.POTATOES,Arrays.asList( Biomes.TAIGA)), weight);
+			GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops)Blocks.POTATOES,Arrays.asList( Biomes.TAIGA),10), weight);
 		}
 	}
 }
