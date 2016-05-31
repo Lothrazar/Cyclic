@@ -24,6 +24,7 @@ public class WorldGenNetherOre implements IWorldGenerator {
 	private WorldGenerator	genCoal;
 	private WorldGenerator	genEmerald;
 	private WorldGenerator	genLapis;
+	private WorldGenerator	genDiamond;
 
 	public WorldGenNetherOre() {
 		int blockCount = 8;
@@ -37,14 +38,18 @@ public class WorldGenNetherOre implements IWorldGenerator {
 
 		blockCount = 8;
 		this.genLapis = new WorldGenMinable(BlockRegistry.nether_lapis_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.NETHERRACK));
+
+		blockCount = 2;
+		this.genDiamond = new WorldGenMinable(BlockRegistry.nether_diamond_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.NETHERRACK));
 	}
 
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
 
-		int chance = 45;
+		int chance;
 		if (world.provider.getDimension() == Const.Dimension.nether) {
 
+			chance = 45;
 			this.run(this.genGold, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, chance, MIN_HEIGHT, MAX_HEIGHT);
 
 			chance = 25;
@@ -55,6 +60,9 @@ public class WorldGenNetherOre implements IWorldGenerator {
 
 			chance = 15;
 			this.run(this.genLapis, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, chance, MIN_HEIGHT, MAX_HEIGHT);
+		
+			chance = 10;//same odds as emerald, but smaller vein size
+			this.run(this.genDiamond, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, chance, MIN_HEIGHT, MAX_HEIGHT);		
 		}
 	}
 
