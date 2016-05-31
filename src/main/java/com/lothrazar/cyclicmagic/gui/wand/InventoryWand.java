@@ -231,7 +231,8 @@ public class InventoryWand implements IInventory {
 
 		if (toPlace != null && toPlace.getItem() != null && Block.getBlockFromItem(toPlace.getItem()) != null) {
 
-		return Block.getBlockFromItem(toPlace.getItem()).getStateFromMeta(toPlace.getMetadata()); }
+			return Block.getBlockFromItem(toPlace.getItem()).getStateFromMeta(toPlace.getMetadata()); 
+		}
 		return null;
 	}
 

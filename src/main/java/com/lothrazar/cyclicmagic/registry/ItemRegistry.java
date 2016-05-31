@@ -199,7 +199,7 @@ public class ItemRegistry {
 	public static void register() {
 		registerMaterials();
 
-		addItem(new ItemFlintTool(),"flint_tool");
+//		addItem(new ItemFlintTool(),"flint_tool");
 
 		potion_ender.addEffect(PotionRegistry.ender, 60*3,PotionRegistry.I);
 		potion_magnet.addEffect(PotionRegistry.magnet, 60*3,PotionRegistry.I);
