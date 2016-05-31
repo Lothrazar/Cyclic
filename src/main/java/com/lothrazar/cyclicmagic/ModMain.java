@@ -159,70 +159,23 @@ public class ModMain {
 		c.save();
 
 	}
-
-	// public static final class ServerProxy extends CommonProxy {}
-	//
-	// public static final class ClientProxy extends CommonProxy
-	// {
-	// @Override
-	// public void preInit(FMLPreInitializationEvent event)
-	// {
-	// super.preInit(event);
-	// ModelLoader.setCustomModelResourceLocation(ItemSleepingBag.instance, 0,
-	// new ModelResourceLocation(new ResourceLocation(MODID,
-	// ItemSleepingBag.name), "inventory"));
-	// }
-	// }
-	
 	/*
 	 * 
 	 * TODO LIST
+	 * 
+	 * crafting table hotkeys - numpad?
 	 *  
 	 * [disabled] building spells: make phantom/ghost/outline/particle blocks
 	 *
 	 * pets live longer and/or respawn
 	 *
-	 * make silk touch work on silverfish blocks
-	 *
-	 * clay generation in some biomes , all the way down -- plains and swamp?
-	 * 
 	 * ROTATE: STAIRS: allow switch frop top to bottom
 	 * 
-	 * crafting table hotkeys - numpad?
+	 * Trading Tool // gui
 	 * 
-	 * some sort of tool that displays trade of every nearby villager?
+	 * rebalance emerald armor ?? diamond strength + gold ench?
 	 * 
-	 * rebalance emerald armor numbers plan.
-	 * 
-	 * achievemnets give exp //
-	 * https://github.com/PrinceOfAmber/SamsPowerups/blob/
-	 * 5ac4556cb99266fa3f322ef8bfdf75683aa2f26a/src/main/java/com/lothrazar/
-	 * samspowerups/util/AchievementFinder.java
-	 * 
-	 * Make minecarts kill and push through entities that get hit (ex: pigmen on
-	 * rail)
-	 * 
-	 * Getting hit by a bat causes blindness to player
-	 * 
-	 * https://www.reddit.com/r/minecraftsuggestions/comments/4fgcb2/
-	 * make_dry_sponges_usable_by_dispensers/
-	 * 
-	 * //IDEA: make boats float
-	 * https://www.reddit.com/r/minecraftsuggestions/comments/4d4ob1/
-	 * make_boats_float_again/
-	 * 
-	 * https://www.reddit.com/r/minecraftsuggestions/comments/4ff8bu/
-	 * armor_stand_with_arms/ ^^ and can they hold weapons???
-	 * 
-	 * https://www.reddit.com/r/minecraftsuggestions/comments/4f5xzq/
-	 * golden_compass_points_to_its_creation_spot/
-	 * 
-	 * https://www.reddit.com/r/minecraftsuggestions/comments/4f6420/
-	 * a_new_type_of_compass_that_points_to_your_most/
-	 * 
-	 * https://www.reddit.com/r/minecraftsuggestions/comments/4f35fx/
-	 * red_sand_should_generate_on_lava_ocean_beaches_in/
-	 * 
+	 * achievemnets give exp 
 	 * 
 	 */
 }

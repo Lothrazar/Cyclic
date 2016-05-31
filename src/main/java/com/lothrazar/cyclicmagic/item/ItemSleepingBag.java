@@ -31,7 +31,6 @@ public class ItemSleepingBag extends Item  implements IHasRecipe,IHasConfig{
 	public ItemSleepingBag() {
 		super();  
 		this.setMaxStackSize(1);
-		setCreativeTab(ModMain.TAB);
 		//setUnlocalizedName(Const.MODID + ":" + name);
 		//setRegistryName(new ResourceLocation(Const.MODID, name));
 	}

@@ -122,6 +122,7 @@ item.potion_waterwalk.name=Potion of Waterwalk
 item.potion_waterwalk_long.name=Potion of Waterwalk
 item.respawn_egg.name=Respawn Egg
 item.shift=Press Shift for more info
+item.sleeping_mat.name=Sleeping Mat
 item.storage_bag.name=Sack of Storage
 item.tool_harvest.name=Harvester
 item.tool_pull.name=Sticky Piston Scepter
