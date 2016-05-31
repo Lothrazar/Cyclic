@@ -12,7 +12,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class RecipeAlterRegistry {
 	// does not handle recipes for items added new in the mod
 
-	public static boolean enabled = true;
+	public static boolean enabled;
 
 	public static void register() {
 		if(enabled == false){
@@ -22,14 +22,16 @@ public class RecipeAlterRegistry {
 		smoothstoneRequired();
 
 		furnaceNeedsCoal();
-
 	}
 
 	public static void syncConfig(Configuration config) {
 
 		String category = Const.ConfigCategory.recipes;
 
-		enabled = config.get(category, "Altered Recipes Enabled", true,"Furnace requires coal in the middle, stone tools require smoothstone to be fully repaired").getBoolean();
+		enabled = config.get(category, "AlteredStone", 
+				false,
+				"True will mean that the furnace recipe requires coal in the middle, and stone tools require smoothstone.")
+				.getBoolean();
 	}
 
 	private static void furnaceNeedsCoal() {

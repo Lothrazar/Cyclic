@@ -10,56 +10,72 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class RecipeNewRegistry {
 
-	public static boolean enabled = true;
+	private static boolean playerSkull;
+	private static boolean mushroomBlocks;
+	private static boolean bonemealWool;
+	private static boolean simpleDispenser;
+	private static boolean woolDyeSavings;
+	private static boolean repeaterSimple;
+	private static boolean minecartsSimple;
+	private static boolean notchApple;
 
 	public static void syncConfig(Configuration config) {
-
 		// TODO: could config each one by one i guess but this is fine for now
 		String category = Const.ConfigCategory.recipes;	
 		config.setCategoryComment(category, "New and altered recipes");
 		
+		playerSkull = config.get(category, "PlayerSkulls", 
+				true,"Create a player skull by combining wither, skeleton, zombie, and creeper skulls").getBoolean();
+	
+		mushroomBlocks = config.get(category, "MushroomBlocks", 
+				true,"Create mushroom blocks from items").getBoolean();
 
-		enabled = config.get(category, "New Recipes Enabled", true,"New recipes added for existing blocks and items.  Bonemeal to undye wool; repeater and dispenser tweaks;  making player skulls out of the four mob heads; create mushroom blocks from items...").getBoolean();
+		bonemealWool = config.get(category, "BonemealWool", 
+				true,"Bonemeal can be used to dye coloured wool white").getBoolean();
 
+		simpleDispenser = config.get(category, "SimpleDispenser", 
+				true,"Craft a dispenser with string instead of a bow").getBoolean();
+
+		repeaterSimple = config.get(category, "SimpleRepeater", 
+				true,"Craft repeaters using sticks and redstone in place of redstone torches").getBoolean();
+
+		minecartsSimple = config.get(category, "SimpleMinecarts", 
+				true,"Craft the minecart combinations using five iron as well as minecarts").getBoolean();
+
+		notchApple = config.get(category, "NotchApple", 
+				true,"Craft a notch apple with golden blocks as usual").getBoolean();
+	
 	}
 
-	// static int EXP = 0;
 	public static void register() {
-		if(enabled == false){
-			return;
+		if(playerSkull){
+			RecipeNewRegistry.playerSkull();
 		}
-
-		RecipeNewRegistry.playerSkull();
-
-		RecipeNewRegistry.mushroomBlocks();
-
-		RecipeNewRegistry.bonemealWool();
-
-		RecipeNewRegistry.simpleDispenser();
-
-		RecipeNewRegistry.woolDyeSavings();
-
-		RecipeNewRegistry.repeaterSimple();
-
-		RecipeNewRegistry.minecartsSimple();
-
-		RecipeNewRegistry.notchApple();
-		
-		RecipeNewRegistry.craftingFlint();
-
+		if(mushroomBlocks){
+			RecipeNewRegistry.mushroomBlocks();
+		}
+		if(bonemealWool){
+			RecipeNewRegistry.bonemealWool();
+		} 
+		if(simpleDispenser){
+			RecipeNewRegistry.simpleDispenser();
+		}
+		if(woolDyeSavings){
+			RecipeNewRegistry.woolDyeSavings();
+		}
+		if(repeaterSimple){
+			RecipeNewRegistry.repeaterSimple();
+		}
+		if(minecartsSimple){
+			RecipeNewRegistry.minecartsSimple();
+		}
+		if(notchApple){
+			RecipeNewRegistry.notchApple();
+		}
 		// https://github.com/PrinceOfAmber/SamsPowerups/blob/master/Recipes/src/main/java/com/lothrazar/samsrecipes/RecipeRegistry.java
 
 	}
-
-	private static void craftingFlint() {
-		GameRegistry.addShapelessRecipe(new ItemStack(Blocks.GRAVEL,2), 
-				new ItemStack(Blocks.DIRT), 
-				new ItemStack(Blocks.SAND));
-		GameRegistry.addShapelessRecipe(new ItemStack(Items.FLINT), 
-				new ItemStack(Blocks.GRAVEL), 
-				new ItemStack(Blocks.GRAVEL));
-	}
-
+	
 	private static void notchApple() {
 		// https://www.reddit.com/r/minecraftsuggestions/comments/4d20g5/bring_back_the_notch_apple_crafting_recipe/
 		GameRegistry.addRecipe(new ItemStack(Items.GOLDEN_APPLE, 1, 1), "ggg", "gag", "ggg", 'g', new ItemStack(Blocks.GOLD_BLOCK), 'a', new ItemStack(Items.APPLE));
@@ -77,8 +93,10 @@ public class RecipeNewRegistry {
 
 	private static void mushroomBlocks() {
 
-		GameRegistry.addRecipe(new ItemStack(Blocks.RED_MUSHROOM_BLOCK), "mm", "mm", 'm', Blocks.RED_MUSHROOM);
-		GameRegistry.addRecipe(new ItemStack(Blocks.BROWN_MUSHROOM_BLOCK), "mm", "mm", 'm', Blocks.BROWN_MUSHROOM);
+		GameRegistry.addRecipe(new ItemStack(Blocks.RED_MUSHROOM_BLOCK), 
+				"mm", "mm", 'm', Blocks.RED_MUSHROOM);
+		GameRegistry.addRecipe(new ItemStack(Blocks.BROWN_MUSHROOM_BLOCK), 
+				"mm", "mm", 'm', Blocks.BROWN_MUSHROOM);
 	}
 
 	private static void bonemealWool() {
@@ -94,7 +112,9 @@ public class RecipeNewRegistry {
 
 	private static void repeaterSimple() {
 
-		GameRegistry.addRecipe(new ItemStack(Items.REPEATER), "r r", "srs", "ttt", 't', new ItemStack(Blocks.STONE), 's', new ItemStack(Items.STICK), 'r', new ItemStack(Items.REDSTONE));
+		GameRegistry.addRecipe(new ItemStack(Items.REPEATER), 
+				"r r", "srs", "ttt", 
+				't', new ItemStack(Blocks.STONE), 's', new ItemStack(Items.STICK), 'r', new ItemStack(Items.REDSTONE));
 	}
 
 	private static void minecartsSimple() {
@@ -127,6 +147,8 @@ public class RecipeNewRegistry {
 
 	private static void simpleDispenser() {
 
-		GameRegistry.addRecipe(new ItemStack(Blocks.DISPENSER), "ccc", "csc", "crc", 'c', Blocks.COBBLESTONE, 's', Items.STRING, 'r', Items.REDSTONE);
+		GameRegistry.addRecipe(new ItemStack(Blocks.DISPENSER), 
+				"ccc", "csc", "crc", 
+				'c', Blocks.COBBLESTONE, 's', Items.STRING, 'r', Items.REDSTONE);
 	}
 }

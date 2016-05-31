@@ -16,7 +16,6 @@ import com.lothrazar.cyclicmagic.event.EventFoodDetails;
 import com.lothrazar.cyclicmagic.event.EventFragileTorches;
 import com.lothrazar.cyclicmagic.event.EventFurnaceStardew;
 import com.lothrazar.cyclicmagic.event.EventGuiTerrariaButtons;
-import com.lothrazar.cyclicmagic.event.EventHarvestBlock;
 import com.lothrazar.cyclicmagic.event.EventHorseFood;
 import com.lothrazar.cyclicmagic.event.EventKeyInput;
 import com.lothrazar.cyclicmagic.event.EventLadderClimb;
@@ -58,7 +57,6 @@ public class EventRegistry {
 		featureEvents.add(new EventFragileTorches());		
 		featureEvents.add(new EventFurnaceStardew());	
 		featureEvents.add(new EventGuiTerrariaButtons());
-		featureEvents.add(new EventHarvestBlock());	
 		featureEvents.add(new EventHorseFood());
 		featureEvents.add(new EventKeyInput());
 		featureEvents.add(new EventLadderClimb());	

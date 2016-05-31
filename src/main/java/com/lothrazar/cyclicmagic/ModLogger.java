@@ -25,7 +25,4 @@ public class ModLogger {
 	public void error(String string) {	
 		logger.error(string);
 	}
-	
-	
-	
 }
