@@ -3,6 +3,7 @@ package com.lothrazar.cyclicmagic.spell;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
 import com.lothrazar.cyclicmagic.net.PacketSpellFromServer;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 
@@ -62,7 +63,10 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
 		int itemSlot = InventoryWand.getSlotByBuildType(heldWand, world.getBlockState(posMouseover));
 		IBlockState state = InventoryWand.getToPlaceFromSlot(heldWand, itemSlot);
 
-		if (state == null) { return; }
+		if (state == null || state.getBlock() == null) { 
+			UtilChat.addChatMessage(p, "wand.inventory.empty");
+			return; 
+		}
 
 		BlockPos posToPlaceAt = null;
 		EnumFacing facing = null;

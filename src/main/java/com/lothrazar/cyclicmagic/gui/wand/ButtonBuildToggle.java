@@ -13,7 +13,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -60,7 +59,7 @@ public class ButtonBuildToggle extends GuiButton implements ITooltipButton {
 		ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(thePlayer);
 		String key = ItemCyclicWand.BuildType.getName(wand) + ".tooltip";
 		tooltips.add(I18n.format(key));
-		tooltips.add(TextFormatting.GRAY + I18n.format("button.build.meta"));
+//		tooltips.add(TextFormatting.GRAY + I18n.format("button.build.meta"));
 
 		return tooltips;
 	}

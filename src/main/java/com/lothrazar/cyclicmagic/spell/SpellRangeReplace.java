@@ -3,6 +3,7 @@ package com.lothrazar.cyclicmagic.spell;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
 import com.lothrazar.cyclicmagic.net.PacketReplaceBlock;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 
 import net.minecraft.block.Block;
@@ -57,8 +58,10 @@ public class SpellRangeReplace extends BaseSpellRange {
 		ItemStack[] invv = InventoryWand.readFromNBT(heldWand);
 		ItemStack toPlace = InventoryWand.getFromSlot(heldWand, itemSlot);
 
-		if (toPlace == null || toPlace.getItem() == null || Block.getBlockFromItem(toPlace.getItem()) == null) { return; }
-
+		if (toPlace == null || toPlace.getItem() == null || Block.getBlockFromItem(toPlace.getItem()) == null) { 
+			UtilChat.addChatMessage(player, "wand.inventory.empty");
+			return; 
+		}
 		IBlockState placeState = Block.getBlockFromItem(toPlace.getItem()).getStateFromMeta(toPlace.getMetadata());
 
 		if (placeState.getBlock() == blockHere && blockHere.getMetaFromState(stateHere) == toPlace.getMetadata()) {
