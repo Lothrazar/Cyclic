@@ -13,7 +13,6 @@ public class UtilItem {
 		return tool.getMaxDamage() - (int) MathHelper.floor_double(tool.getMaxDamage() / d);
 	}
 	public static void damageItem(EntityPlayer p, ItemStack s) {
-
 		if(p.capabilities.isCreativeMode == false){
 			s.damageItem(1, p);
 		}

@@ -163,8 +163,6 @@ public class ModMain {
 	 * 
 	 * TODO LIST
 	 * 
-	 * REMOVE ? button and textbox from build scepter inventory
-	 * 
 	 * INVESTIGATE different uses/keybindings/ways of launching. maybe new equipment screen.
 	 * 
 	 * crafting table hotkeys - numpad?

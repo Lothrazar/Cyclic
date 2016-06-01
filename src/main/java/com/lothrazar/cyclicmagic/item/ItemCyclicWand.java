@@ -2,6 +2,8 @@ package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
 
+import com.lothrazar.cyclicmagic.IHasConfig;
+import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.BaseSpellRange;
 import com.lothrazar.cyclicmagic.spell.ISpell;
@@ -10,6 +12,8 @@ import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -22,14 +26,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemCyclicWand extends Item {
+public class ItemCyclicWand extends Item implements IHasRecipe ,IHasConfig{
 
 	private static final String NBT_SPELLCURRENT = "spell_id";
 	private List<ISpell> spellbook;
-	public static boolean						sceptersEnabled;
 
 	public ItemCyclicWand() {
 
@@ -69,13 +73,13 @@ public class ItemCyclicWand extends Item {
 
 		ISpell spell = SpellRegistry.getSpellFromID(Spells.getSpellIDCurrent(stack));
 
-		String cost = TextFormatting.DARK_GRAY + "[" + TextFormatting.LIGHT_PURPLE +spell.getCost() + TextFormatting.DARK_GRAY +"]";
+		String cost = TextFormatting.DARK_GRAY + "[" + TextFormatting.LIGHT_PURPLE + spell.getCost() + TextFormatting.DARK_GRAY +"] ";
 		tooltip.add(TextFormatting.GREEN + spell.getName()+" "+cost);
  
 		String regen = "["+Energy.getRegen(playerIn.worldObj, stack) + "/sec]";
 		
 		tooltip.add(TextFormatting.DARK_PURPLE + "" + Energy.getCurrent(stack) + "/" + Energy.getMaximum(stack)
-			+ TextFormatting.DARK_GRAY + regen);
+			+ TextFormatting.DARK_GRAY +" "+ regen);
 		
 		super.addInformation(stack, playerIn, tooltip, advanced);
 	}
@@ -99,8 +103,7 @@ public class ItemCyclicWand extends Item {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn,
-			EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn,EnumHand hand) {
 
 		// so this only happens IF either onItemUse did not fire at all, or it
 		// fired and casting failed
@@ -111,8 +114,6 @@ public class ItemCyclicWand extends Item {
 		} else {
 			return new ActionResult<ItemStack>(EnumActionResult.FAIL, itemStackIn);
 		}
-
-		// return super.onItemRightClick(itemStackIn, worldIn, playerIn,hand);
 	}
 
 	@Override
@@ -191,7 +192,6 @@ public class ItemCyclicWand extends Item {
 		}
 
 		public static int getMaximum(ItemStack stack) {
-
 			int max = getNBT(stack).getInteger(NBT_MAX);
 			if (max <= 0) {
 				max = MAX_DEFAULT;
@@ -251,18 +251,15 @@ public class ItemCyclicWand extends Item {
 				rate = 20;
 			}
 			return rate;
-
 		}
 
 		public static void setCooldownCounter(ItemStack stack, long i) {
-
 			NBTTagCompound tags = getNBT(stack);
 			tags.setLong(NBT_LASTUSED, i);
 			stack.setTagCompound(tags);
 		}
 
 		public static long getCooldownCounter(ItemStack stack) {
-
 			NBTTagCompound tags = getNBT(stack);
 			if (!tags.hasKey(NBT_LASTUSED)) {
 				return -1;
@@ -272,12 +269,10 @@ public class ItemCyclicWand extends Item {
 		}
 
 		public static int getCurrent(ItemStack stack) {
-
 			return getNBT(stack).getInteger(NBT_MANA);
 		}
 
 		public static void setCurrent(ItemStack stack, int m) {
-
 			if (m < 0) {
 				m = 0;
 			}
@@ -290,7 +285,6 @@ public class ItemCyclicWand extends Item {
 		}
 
 		public static void drainBy(ItemStack stack, int m) {
-
 			Energy.setCurrent(stack, Energy.getCurrent(stack) - m);
 		}
 
@@ -342,7 +336,6 @@ public class ItemCyclicWand extends Item {
 		private final static String NBTSIZE = "buildsize";
 
 		public static String getName(ItemStack wand) {
-
 			try {
 				NBTTagCompound tags = getNBT(wand);
 
@@ -355,7 +348,6 @@ public class ItemCyclicWand extends Item {
 		}
 
 		public static int get(ItemStack wand) {
-
 			if (wand == null) {
 				return 0;
 			}
@@ -400,7 +392,6 @@ public class ItemCyclicWand extends Item {
 		private final static String NBT = "rotation";
 
 		public static int get(ItemStack wand) {
-
 			if (wand == null) {
 				return 0;
 			}
@@ -410,25 +401,30 @@ public class ItemCyclicWand extends Item {
 		}
 
 		public static void set(ItemStack wand, int rot) {
-
 			NBTTagCompound tags = getNBT(wand);
 
 			tags.setInteger(NBT, rot);
 		}
 	}
 
-	public static void syncConfig(Configuration config) {
+	@Override
+	public void syncConfig(Configuration config) {
+		String category = Const.ConfigCategory.items;
 
-		String category = Const.ConfigCategory.items_scepters;
+		SpellRegistry.renderOnLeft = config.getBoolean("ScepterHUD", category, true, "True for top left of the screen, false for top right");
 
-		config.setCategoryComment(category, "Disable or customize items added to the game");
+		BaseSpellRange.maxRange = config.getInt("ScepterMaxRange", category, 64, 8, 128, "Maximum range for all spells");
+	}
 
-		sceptersEnabled = config.getBoolean("sceptersEnabled", category, true, "Enable the building scepters");
-
-		SpellRegistry.renderOnLeft = config.getBoolean("scepter_HUD_left", category, true, "True for top left of the screen, false for top right");
-
-		BaseSpellRange.maxRange = config.getInt("scepter_MaxRange", category, 64, 8, 128, "Maximum range for all spells");
-
-		
+	@Override
+	public void addRecipe() {
+		GameRegistry.addRecipe(new ItemStack(this), 
+				"sds", 
+				" o ", 
+				"gog", 
+				'd', new ItemStack(Blocks.DIAMOND_BLOCK), 
+				'g', Items.GHAST_TEAR, 
+				'o', Blocks.OBSIDIAN, 
+				's', Items.NETHER_STAR);
 	}
 }

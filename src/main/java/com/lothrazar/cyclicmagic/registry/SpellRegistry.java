@@ -29,9 +29,7 @@ public class SpellRegistry {
 	public static boolean								renderOnLeft;
 
 	private static Map<Integer, ISpell>	hashbook;
-	// TODO: move from ints to strings one day..??
-	// private static Map<String, ISpell> spellRegistry;
-
+	 
 	public static class Spells {
 
 		// on purpose, not all spells are in here. only ones that needed to be
@@ -52,12 +50,9 @@ public class SpellRegistry {
 	}
 
 	public static void register() {
-
-	 
-		
+ 
 		hashbook = new HashMap<Integer, ISpell>();
-		// spellRegistry = new HashMap<String, ISpell>();
-
+		 
 		int spellId = -1;// the smallest spell gets id zero
 		
 		Spells.inventory = new SpellInventory(++spellId, "inventory");
@@ -83,8 +78,7 @@ public class SpellRegistry {
 
 		Spells.reachdown = new SpellRangeBuild(++spellId, "reachdown", SpellRangeBuild.PlaceType.DOWN);
 		registerSpell(Spells.reachdown);
-		
-
+		 
 		SpellRangeBuild reachleft = new SpellRangeBuild(++spellId, "reachleft", SpellRangeBuild.PlaceType.LEFT);
 		registerSpell(reachleft); 
 
@@ -116,14 +110,9 @@ public class SpellRegistry {
 
 		ArrayList<ISpell>		 spellbookFly = new ArrayList<ISpell>();
 		spellbookFly.add(Spells.launch);
-		spellbookFly.add(slowfall);
-		spellbookFly.add(levitate);
-
-		ArrayList<ISpell>	spellbookNoInvo = new ArrayList<ISpell>();
-		spellbookNoInvo.add(Spells.rotate);
-		spellbookNoInvo.add(Spells.push);
-		spellbookNoInvo.add(Spells.pull);
-
+//		spellbookFly.add(slowfall);
+//		spellbookFly.add(levitate);
+ 
 		ArrayList<ISpell>	spellbookBuild = new ArrayList<ISpell>();
 		spellbookBuild.add(Spells.inventory);
 		spellbookBuild.add(Spells.replacer);
@@ -132,30 +121,15 @@ public class SpellRegistry {
 		spellbookBuild.add(Spells.reachdown);
 		spellbookBuild.add(reachleft);
 		spellbookBuild.add(reachright);
-		 
-//TODO: a cleaner way?
-		ItemCyclicWand cyclic_wand_fly = ((ItemCyclicWand)ItemRegistry.itemMap.get("cyclic_wand_fly"));
-		if(cyclic_wand_fly != null)
-			cyclic_wand_fly.setSpells(spellbookFly);
-		
-
-		ItemCyclicWand cyclic_wand_range = ((ItemCyclicWand)ItemRegistry.itemMap.get("cyclic_wand_range"));
-		if(cyclic_wand_range != null)
-			cyclic_wand_range.setSpells(spellbookNoInvo);
-		
-
-		ItemCyclicWand cyclic_wand_build = ((ItemCyclicWand)ItemRegistry.itemMap.get("cyclic_wand_build"));
-		if(cyclic_wand_build != null)
-			cyclic_wand_build.setSpells(spellbookBuild);
-	 
-		// Spells.placefloor = new SpellPlaceFloor(++spellId, "placefloor");
-		// registerBuildSpell(Spells.placefloor);
+		spellbookBuild.add(Spells.rotate);
+		spellbookBuild.add(Spells.push);
+		spellbookBuild.add(Spells.pull);
+ 
+		ItemRegistry.cyclic_wand_build.setSpells(spellbookBuild);
 	}
  
 	private static void registerSpell(ISpell spell) {
-
 		hashbook.put(spell.getID(), spell);
-		// spellRegistry.put(spell.getUnlocalizedName(), spell);
 	}
 
 	public static boolean spellsEnabled(EntityPlayer player) {
@@ -164,8 +138,9 @@ public class SpellRegistry {
 	}
 
 	public static ISpell getSpellFromID(int id) {
-
-		if (hashbook.containsKey(id)) { return hashbook.get(id); }
+		if (hashbook.containsKey(id)) {
+			return hashbook.get(id); 
+		}
 
 		return null;
 	}
@@ -189,7 +164,6 @@ public class SpellRegistry {
 		}
 
 		return book.get(indexNext);
-		// SpellRegistry.getSpellFromID(indexNext);
 	}
 
 	public static ISpell prev(ItemStack wand, ISpell spell) {
@@ -206,33 +180,6 @@ public class SpellRegistry {
 
 		ISpell ret = book.get(indexPrev);
 
-		return ret;// SpellRegistry.getSpellFromID(indexPrev);
-
+		return ret;
 	}
-	/*
-	 * private static int nextId(ItemStack stack, int spell_id){
-	 * 
-	 * int next;
-	 * 
-	 * if(spell_id >= SpellRegistry.getSpellbook(stack).size() - 1)
-	 * next = 0;// (int)spells[0];
-	 * else
-	 * next = spell_id + 1;// (int)spells[spell_id+1];
-	 * 
-	 * return next;
-	 * }
-	 * 
-	 * private static int prevId(ItemStack stack, int spell_id){
-	 * 
-	 * int prev;
-	 * 
-	 * if(spell_id == 0)
-	 * prev = SpellRegistry.getSpellbook(stack).size() - 1;
-	 * else
-	 * prev = spell_id - 1;
-	 * 
-	 * return prev;
-	 * }
-	 */
-
 }
