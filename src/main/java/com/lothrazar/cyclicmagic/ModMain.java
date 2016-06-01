@@ -163,6 +163,12 @@ public class ModMain {
 	 * 
 	 * TODO LIST
 	 * 
+	 * ADD RECIPE for sleeping roll. also add durability
+	 * 
+	 * REMOVE ? button and textbox from build scepter inventory
+	 * 
+	 * INVESTIGATE different uses/keybindings/ways of launching. maybe new equipment screen.
+	 * 
 	 * crafting table hotkeys - numpad?
 	 *  
 	 * [disabled] building spells: make phantom/ghost/outline/particle blocks

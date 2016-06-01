@@ -9,8 +9,8 @@ import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProp
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ActionResult;
@@ -18,21 +18,20 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class ItemSleepingBag extends Item  implements IHasRecipe,IHasConfig{
+public class ItemSleepingBag extends BaseTool  implements IHasRecipe,IHasConfig{
 	// thank you for the examples forge. player data storage based on API source
 	// code example:
 	// !!
 	// https://github.com/MinecraftForge/MinecraftForge/blob/1.9/src/test/java/net/minecraftforge/test/NoBedSleepingTest.java
 
-	int	levelBoost = PotionRegistry.I;	
-	int	sleeping_hunger_seconds	= 20;
+	private static final int	levelBoost = PotionRegistry.I;	
+	private static final int	seconds	= 20;
+	private static final int	durability	= 100;
 
 	public ItemSleepingBag() {
-		super();  
-		this.setMaxStackSize(1);
-		//setUnlocalizedName(Const.MODID + ":" + name);
-		//setRegistryName(new ResourceLocation(Const.MODID, name));
+		super(durability);  
 	}
 
 	@Override
@@ -48,15 +47,12 @@ public class ItemSleepingBag extends Item  implements IHasRecipe,IHasConfig{
 				if (sleep != null) {
 
 					sleep.setSleeping(true);
-					stack.stackSize--;
-					if(stack.stackSize == 0){
-						stack = null;
-					}
-					
-					player.addPotionEffect(new PotionEffect(MobEffects.HUNGER, sleeping_hunger_seconds * Const.TICKS_PER_SEC, levelBoost));
-					player.addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, sleeping_hunger_seconds * Const.TICKS_PER_SEC, levelBoost));
-					player.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, sleeping_hunger_seconds * Const.TICKS_PER_SEC, levelBoost));
 				
+					player.addPotionEffect(new PotionEffect(MobEffects.HUNGER, seconds * Const.TICKS_PER_SEC, levelBoost));
+					player.addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, seconds * Const.TICKS_PER_SEC, levelBoost));
+					player.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, seconds * Const.TICKS_PER_SEC, levelBoost));
+
+					this.onUse(stack, player, world, hand);
 				}
 				else{
 					ModMain.logger.error("NULL IPlayerExtendedProperties found");
@@ -69,6 +65,7 @@ public class ItemSleepingBag extends Item  implements IHasRecipe,IHasConfig{
 				UtilChat.addChatMessage(player, "tile.bed.noSleep");
 			}
 		}
+		
 		return ActionResult.newResult(EnumActionResult.PASS, stack);
 	}
 
@@ -80,7 +77,12 @@ public class ItemSleepingBag extends Item  implements IHasRecipe,IHasConfig{
 
 	@Override
 	public void addRecipe() {
-		// TODO Auto-generated method stub
-		
+
+		GameRegistry.addRecipe(new ItemStack(this), 
+				"   ", 
+				"lbl", 
+				"   ", 
+			'b',Items.BED, 
+			'l',Items.LEATHER); 
 	}
 }
