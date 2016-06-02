@@ -22,8 +22,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemToolLaunch extends BaseTool implements IHasRecipe {
 
 	private static final int durability 	= 1000;
-	private static final double	power		= 2;
-	private static final int cooldown 		= 25;
+	private static final double	power		= 1.5;
+	private static final int cooldown 		= 21;
 	private static final double	mountPower	= power - 0.5;
  
 	public ItemToolLaunch() {
@@ -53,25 +53,34 @@ public class ItemToolLaunch extends BaseTool implements IHasRecipe {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer player, EnumHand hand) {
 
-		double velX = (double) (-MathHelper.sin(player.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(player.rotationPitch / 180.0F * (float) Math.PI) * power);
-		double velZ = (double) (MathHelper.cos(player.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(player.rotationPitch / 180.0F * (float) Math.PI) * power);
+	//	rotationYaw -89.250336
+		// rotationPitch  :  57.14997
+		
+		float rotationYaw = player.rotationYaw ;
+		//fixed vertical launch angle
+		float rotationPitch = 57;//player.rotationPitch ;
+		 
+		
+		double velX = (double) (-MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power);
+		double velZ = (double) (MathHelper.cos(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power);
 
-		double velY = (double) (-MathHelper.sin((player.rotationPitch) / 180.0F * (float) Math.PI) * power);
+		double velY = (double) (-MathHelper.sin((rotationPitch) / 180.0F * (float) Math.PI) * power);
 
 		// launch the player up and forward at minimum angle
 		// regardless of look vector
 		if (velY < 0) {
 			velY *= -1;// make it always up never down
 		}
-		if (velY < 0.4) {
-			velY = 0.4 + player.jumpMovementFactor;
-		}
-		boolean isLookingDown = (player.getLookVec().yCoord < -20);
-		if(isLookingDown){
-			velY += 2.5;
-		}
+//		if (velY < 0.4) {
+//			System.out.println("A");
+//			velY = 0.4 + player.jumpMovementFactor;
+//		}
+//		boolean isLookingDown = (player.getLookVec().yCoord < -20);
+//		if(isLookingDown){
+//			System.out.println("B");
+//			velY += 2.5;
+//		}
 		
-
 		Entity ridingEntity = player.getRidingEntity();
 
 		if (ridingEntity != null) {

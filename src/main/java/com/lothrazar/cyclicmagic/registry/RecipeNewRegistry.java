@@ -1,12 +1,14 @@
 package com.lothrazar.cyclicmagic.registry;
 
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilItem;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class RecipeNewRegistry {
 
@@ -18,6 +20,7 @@ public class RecipeNewRegistry {
 	private static boolean repeaterSimple;
 	private static boolean minecartsSimple;
 	private static boolean notchApple;
+	private static boolean ElytraRepair;
 
 	public static void syncConfig(Configuration config) {
 		// TODO: could config each one by one i guess but this is fine for now
@@ -45,6 +48,9 @@ public class RecipeNewRegistry {
 		notchApple = config.get(category, "NotchApple", 
 				true,"Craft a notch apple with golden blocks as usual").getBoolean();
 	
+
+		ElytraRepair = config.get(category, "ElytraRepair", 
+				true,"You can mostly repair elytra wings with a wither skull; but it loses all enchants").getBoolean();
 	}
 
 	public static void register() {
@@ -72,10 +78,21 @@ public class RecipeNewRegistry {
 		if(notchApple){
 			RecipeNewRegistry.notchApple();
 		}
+		if(ElytraRepair){
+			elytraRepair();
+		}
 		// https://github.com/PrinceOfAmber/SamsPowerups/blob/master/Recipes/src/main/java/com/lothrazar/samsrecipes/RecipeRegistry.java
 
 	}
 	
+	private static void elytraRepair() {
+		// TODO Auto-generated method stub
+
+		GameRegistry.addShapelessRecipe(new ItemStack(Items.ELYTRA,1,UtilItem.getMaxDmgFraction(Items.ELYTRA, 10)), 
+				new ItemStack(Items.SKULL, 1, Const.skull_wither),
+				new ItemStack(Items.ELYTRA,1,OreDictionary.WILDCARD_VALUE));
+	}
+
 	private static void notchApple() {
 		// https://www.reddit.com/r/minecraftsuggestions/comments/4d20g5/bring_back_the_notch_apple_crafting_recipe/
 		GameRegistry.addRecipe(new ItemStack(Items.GOLDEN_APPLE, 1, 1), "ggg", "gag", "ggg", 'g', new ItemStack(Blocks.GOLD_BLOCK), 'a', new ItemStack(Items.APPLE));
