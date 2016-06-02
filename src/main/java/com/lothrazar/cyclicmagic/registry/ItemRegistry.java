@@ -28,6 +28,7 @@ import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
 import com.lothrazar.cyclicmagic.item.ItemPotionCustom;
 import com.lothrazar.cyclicmagic.item.ItemSleepingBag;
 import com.lothrazar.cyclicmagic.item.ItemToolHarvest;
+import com.lothrazar.cyclicmagic.item.ItemToolLaunch;
 import com.lothrazar.cyclicmagic.item.ItemToolPull;
 import com.lothrazar.cyclicmagic.item.ItemToolPush;
 import com.lothrazar.cyclicmagic.item.ItemToolRotate;
@@ -43,7 +44,6 @@ import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileWater;
 import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileWool;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraftforge.common.util.EnumHelper;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -61,7 +61,9 @@ public class ItemRegistry {
 	public static Map<String,Item> itemMap	= new HashMap<String,Item>();
 
 	public static Item corrupted_chorus;
-	 
+
+	public static final ItemToolLaunch corrupted_elytra = new ItemToolLaunch();
+	public static final ItemCyclicWand cyclic_wand_build = new ItemCyclicWand();
 	public static final ItemPotionCustom potion_viscous = new ItemPotionCustom(false);
 	public static final ItemPotionCustom potion_levitation = new ItemPotionCustom(true,MobEffects.LEVITATION, 60*3);
 	public static final ItemPotionCustom potion_levitation_long = new ItemPotionCustom(true,MobEffects.LUCK, 60*8);
@@ -145,6 +147,8 @@ public class ItemRegistry {
 		addItem(potion_luck_long, "potion_luck_long");	
 		addItem(potion_levitation, "potion_levitation");
 		addItem(potion_levitation_long, "potion_levitation_long");
+		addItem(corrupted_elytra ,"corrupted_elytra");
+		addItem(cyclic_wand_build, "cyclic_wand_build");
 	}
 
 	private static Item addItem(Item i, String key){ 
@@ -172,12 +176,10 @@ public class ItemRegistry {
 			}
 		}
 		
-		ItemCyclicWand.syncConfig(config);
-
 		String category = Const.ConfigCategory.items;
-		prop = config.get(category, "emeraldGear", true, "Full set of emerald gear with similar properties as diamond");
+		prop = config.get(category, "EmeraldGear", true, "Full set of emerald gear with similar properties as diamond");
 		prop.setRequiresMcRestart(true);
-		emeraldGearEnabled  =   prop.getBoolean();
+		emeraldGearEnabled = prop.getBoolean();
 
 		ItemFoodHorse.syncConfig(config);
 		
@@ -209,21 +211,9 @@ public class ItemRegistry {
 		potion_magnet_long.addEffect(PotionRegistry.magnet, 60*8,PotionRegistry.I);
 		potion_waterwalk_long.addEffect(PotionRegistry.waterwalk, 60*8,PotionRegistry.I);
 		potion_slowfall_long.addEffect(PotionRegistry.slowfall, 60*8,PotionRegistry.I);
-		
-		if (ItemCyclicWand.sceptersEnabled) {
+	
+			
 
-			ItemCyclicWand cyclic_wand_build = new ItemCyclicWand();
-			addItem(cyclic_wand_build, "cyclic_wand_build");
-			GameRegistry.addRecipe(new ItemStack(cyclic_wand_build), "sds", " o ", "gog", 'd', new ItemStack(Blocks.DIAMOND_BLOCK), 'g', Items.GHAST_TEAR, 'o', Blocks.OBSIDIAN, 's', Items.NETHER_STAR);
-
-			ItemCyclicWand cyclic_wand_range = new ItemCyclicWand();
-			addItem(cyclic_wand_range, "cyclic_wand_range");
-			GameRegistry.addRecipe(new ItemStack(cyclic_wand_range), "sds", " o ", "gog", 'd', new ItemStack(Blocks.EMERALD_BLOCK), 'g', Items.GHAST_TEAR, 'o', Blocks.OBSIDIAN, 's', Items.NETHER_STAR);
-
-			ItemCyclicWand cyclic_wand_fly = new ItemCyclicWand();
-			addItem(cyclic_wand_fly, "cyclic_wand_fly");
-			GameRegistry.addRecipe(new ItemStack(cyclic_wand_fly), "sds", " o ", "gog", 'd', new ItemStack(Blocks.REDSTONE_BLOCK), 'g', Items.GHAST_TEAR, 'o', Blocks.OBSIDIAN, 's', Items.NETHER_STAR);
-		}
 
 		// thanks for help:
 		// http://bedrockminer.jimdo.com/modding-tutorials/basic-modding-1-7/custom-tools-swords/

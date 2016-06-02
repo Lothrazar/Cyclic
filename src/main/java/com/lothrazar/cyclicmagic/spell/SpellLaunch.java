@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 
 public class SpellLaunch extends BaseSpell implements ISpell {
 
-	private static final double	power				= 2;
+	private static final double	power		= 2;
 	private static final double	mountPower	= power - 0.5;
 	private static final int		slowfallSec	= 10;			// TODO: this 10 seconds in
 	                                                  // config..??
