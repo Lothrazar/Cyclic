@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.event;
 
-import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.net.PacketMovePlayerHotbar;
 import com.lothrazar.cyclicmagic.net.PacketMovePlayerColumn;
@@ -9,18 +8,18 @@ import com.lothrazar.cyclicmagic.proxy.ClientProxy;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraftforge.client.event.GuiScreenEvent;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EventKeyInput implements IHasConfig{
+public class EventKeyInput{
 
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void onKeyInput(InputEvent.KeyInputEvent event) {
-
+		 
+ 
 		int slot = Minecraft.getMinecraft().thePlayer.inventory.currentItem;
 		detectAndFireKey(slot);
 	}
@@ -28,7 +27,7 @@ public class EventKeyInput implements IHasConfig{
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void onGuiKeyboardEvent(GuiScreenEvent.KeyboardInputEvent.Pre event) {
-
+ 
 		// only for player survival invo
 		if (event.getGui() instanceof GuiInventory) {
 
@@ -55,11 +54,7 @@ public class EventKeyInput implements IHasConfig{
 		else if (ClientProxy.isKeyDown(ClientProxy.keyBarDown)) {
 			ModMain.network.sendToServer(new PacketMovePlayerHotbar(true));
 		}
-	}
-
-	@Override
-	public void syncConfig(Configuration config) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 }

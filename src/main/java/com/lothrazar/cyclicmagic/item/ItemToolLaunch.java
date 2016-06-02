@@ -22,7 +22,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemToolLaunch extends BaseTool implements IHasRecipe {
 
-	private static final int durability 	= 500;
+	private static final int durability 	= 1000;
 	private static final double	power		= 2;
 	private static final int cooldown 		= 25;
 	private static final double	mountPower	= power - 0.5;
