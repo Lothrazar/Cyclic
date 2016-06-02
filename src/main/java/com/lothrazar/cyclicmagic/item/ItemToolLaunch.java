@@ -7,7 +7,6 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -16,7 +15,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -72,21 +71,18 @@ public class ItemToolLaunch extends BaseTool implements IHasRecipe {
 			velY += 2.5;
 		}
 		
-		System.out.println("vel xyz = : " +velX+":"+velY+":"+velZ);
-		
-		
-		player.motionY = 0;
 
 		Entity ridingEntity = player.getRidingEntity();
 
 		if (ridingEntity != null) {
-			ridingEntity.motionY = 0;
 			
 			// boost power a bit, horses are heavy as F
+			ridingEntity.motionY = 0;
 			ridingEntity.addVelocity(velX * mountPower, velY * mountPower, velZ * mountPower);
 
 		}
 		else {
+			player.motionY = 0;
 			player.addVelocity(velX, velY, velZ);
 		}
 
@@ -100,10 +96,10 @@ public class ItemToolLaunch extends BaseTool implements IHasRecipe {
 
 	@Override
 	public void addRecipe() {
-		GameRegistry.addShapelessRecipe(new ItemStack(this)
-				, new ItemStack(Items.ELYTRA)
-				, new ItemStack(Items.NETHER_STAR)
-				, new ItemStack(Blocks.REDSTONE_BLOCK));
+		BrewingRecipeRegistry.addRecipe(
+				 new ItemStack(Items.ELYTRA),
+				 new ItemStack(Items.NETHER_STAR),
+				 new ItemStack(this));
 	}
 	
 	@SideOnly(Side.CLIENT)

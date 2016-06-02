@@ -62,7 +62,7 @@ public class ItemRegistry {
 
 	public static Item corrupted_chorus;
 
-	public static final ItemToolLaunch launch_tool = new ItemToolLaunch();
+	public static final ItemToolLaunch corrupted_elytra = new ItemToolLaunch();
 	public static final ItemCyclicWand cyclic_wand_build = new ItemCyclicWand();
 	public static final ItemPotionCustom potion_viscous = new ItemPotionCustom(false);
 	public static final ItemPotionCustom potion_levitation = new ItemPotionCustom(true,MobEffects.LEVITATION, 60*3);
@@ -147,7 +147,7 @@ public class ItemRegistry {
 		addItem(potion_luck_long, "potion_luck_long");	
 		addItem(potion_levitation, "potion_levitation");
 		addItem(potion_levitation_long, "potion_levitation_long");
-		addItem(launch_tool ,"launch_tool");
+		addItem(corrupted_elytra ,"corrupted_elytra");
 		addItem(cyclic_wand_build, "cyclic_wand_build");
 	}
 
