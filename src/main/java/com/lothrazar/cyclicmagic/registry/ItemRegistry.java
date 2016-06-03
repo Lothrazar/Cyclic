@@ -29,7 +29,6 @@ import com.lothrazar.cyclicmagic.item.ItemPotionCustom;
 import com.lothrazar.cyclicmagic.item.ItemSleepingBag;
 import com.lothrazar.cyclicmagic.item.ItemToolHarvest;
 import com.lothrazar.cyclicmagic.item.ItemToolLaunch;
-import com.lothrazar.cyclicmagic.item.ItemToolPull;
 import com.lothrazar.cyclicmagic.item.ItemToolPush;
 import com.lothrazar.cyclicmagic.item.ItemToolRotate;
 import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileBlaze;
@@ -60,8 +59,7 @@ public class ItemRegistry {
 
 	public static Map<String,Item> itemMap	= new HashMap<String,Item>();
 
-	public static Item corrupted_chorus;
-
+	public static final Item corrupted_chorus = new ItemFoodCorruptedChorus();
 	public static final ItemToolLaunch corrupted_elytra = new ItemToolLaunch();
 	public static final ItemCyclicWand cyclic_wand_build = new ItemCyclicWand();
 	public static final ItemPotionCustom potion_viscous = new ItemPotionCustom(false);
@@ -94,7 +92,6 @@ public class ItemRegistry {
 		addItem(new ItemToolPearlReuse(),"ender_pearl_reuse"); 
 		addItem(new ItemPaperCarbon(),"carbon_paper"); 
 		addItem(new ItemToolHarvest(),"tool_harvest");
-		addItem(new ItemToolPull(),"tool_pull");
 		addItem(new ItemToolPush(),"tool_push");
 		addItem(new ItemToolRotate(),"tool_rotate");
 		addItem(new ItemInventoryStorage(),"storage_bag"); 
@@ -119,7 +116,7 @@ public class ItemRegistry {
 		addItem(new ItemFoodHorse(new ItemStack(Items.REDSTONE)),"horse_upgrade_speed");
 		addItem(new ItemFoodHorse(new ItemStack(Items.ENDER_EYE)),"horse_upgrade_jump");
 		addItem(new ItemEnderBook(),"book_ender"); 
-		corrupted_chorus = addItem(new ItemFoodCorruptedChorus(),"corrupted_chorus");
+		addItem(corrupted_chorus,"corrupted_chorus");
 		addItem(new ItemFoodHeart(),"heart_food"); 
 		addItem(new ItemFoodCrafting(),"crafting_food");
 		addItem(new ItemFoodInventory(),"inventory_food");

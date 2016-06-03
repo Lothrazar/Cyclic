@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.item;
 
-import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 
@@ -13,10 +12,9 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class ItemToolPull  extends BaseTool implements  IHasRecipe, IHasConfig{
+public class ItemToolPull  extends BaseTool implements  IHasRecipe{
 
 private static final int durability = 5000;
 	
@@ -24,23 +22,21 @@ private static final int durability = 5000;
 		super(durability);
 	}
 	
-	@SuppressWarnings("unused")
 	@Override
 	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+ 
+		BlockPos resultPosition;
+		if(player.isSneaking()){
+			resultPosition = UtilPlaceBlocks.pushBlock(worldObj, player, pos, side);
+		}
+		else{
+			resultPosition = UtilPlaceBlocks.pullBlock(worldObj, player, pos, side);
+		}
 
-		BlockPos resultPosition = UtilPlaceBlocks.pullBlock(worldObj, player, pos, side);
-
-		super.onUse(stack, player, worldObj, hand);
-		return super.onItemUse(stack, player, worldObj, pos, hand, side, hitX, hitY, hitZ); 
-
+		onUse(stack, player, worldObj, hand);
+		return super.onItemUse(stack, player, worldObj, resultPosition, hand, side, hitX, hitY, hitZ); 
 	}
-	@Override
-	public void syncConfig(Configuration config) {
-//		Property prop = config.get(Const.ConfigCategory.items, "ToolPull", true, 
-		//"Tool that can pull almost anything");
-//		prop.setRequiresMcRestart(true); 
-//		ItemRegistry.setConfigMap(this,prop.getBoolean());
-	}
+
 	@Override
 	public void addRecipe() { 
 		GameRegistry.addRecipe(new ItemStack(this),

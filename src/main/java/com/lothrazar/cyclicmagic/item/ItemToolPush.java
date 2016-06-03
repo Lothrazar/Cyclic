@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class ItemToolPush  extends BaseTool implements IHasRecipe,IHasConfig{
+public class ItemToolPush  extends BaseTool implements IHasRecipe{
 private static final int durability = 5000;
 	
 	public ItemToolPush(){
@@ -25,18 +25,19 @@ private static final int durability = 5000;
 	@SuppressWarnings("unused")
 	@Override
 	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-		
-		BlockPos resultPosition = UtilPlaceBlocks.pushBlock(worldObj, player, pos, side);
 
-		super.onUse(stack, player, worldObj, hand);
-		return super.onItemUse(stack, player, worldObj, pos, hand, side, hitX, hitY, hitZ);// EnumActionResult.PASS;
+		BlockPos resultPosition;
+		if(player.isSneaking()){
+			resultPosition = UtilPlaceBlocks.pullBlock(worldObj, player, pos, side);
+		}
+		else{
+			resultPosition = UtilPlaceBlocks.pushBlock(worldObj, player, pos, side);
+		}
+		
+		onUse(stack, player, worldObj, hand);
+		return super.onItemUse(stack, player, worldObj, resultPosition, hand, side, hitX, hitY, hitZ);// EnumActionResult.PASS;
 	}
-	@Override
-	public void syncConfig(Configuration config) {
-//		Property prop = config.get(Const.ConfigCategory.items, "ToolPush", true, "Tool that can push almost anything");
-//		prop.setRequiresMcRestart(true); 
-//		ItemRegistry.setConfigMap(this,prop.getBoolean());
-	}
+
 	@Override
 	public void addRecipe() { 
 		GameRegistry.addRecipe(new ItemStack(this),
