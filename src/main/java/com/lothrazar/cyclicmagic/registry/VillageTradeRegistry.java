@@ -38,7 +38,7 @@ public class VillageTradeRegistry {
 		}
 
 		//TO TEST: /summon Villager ~ ~ ~ {Profession:6,Career:0}
-		name = "sage";
+		name = "sage"; 
 		VillagerProfession sageProfession = new VillagerProfession(Const.MODRES + name, Const.MODRES + "textures/entity/villager/" + name + ".png");
 		VillagerRegistry.instance().register(sageProfession);
 		VillagerCareer sage = new VillagerCareer(sageProfession, name);
