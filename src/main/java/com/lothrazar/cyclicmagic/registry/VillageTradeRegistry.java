@@ -15,10 +15,7 @@ import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerCareer;
 import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerProfession;
 
 public class VillageTradeRegistry {
-
-	final static String sage = Const.MODRES+"textures/entity/villager/elder.png";
-	//final static ResourceLocation sageTexture = new ResourceLocation(sage);
-	private static VillagerProfession  elderProfession;
+ 
 	private static boolean extraVillagersEnabled;
 
 	public static void register(){
@@ -27,27 +24,30 @@ public class VillageTradeRegistry {
 			return;
 		}
 		
-		//vanilla example :  new VillagerProfession("minecraft:butcher", "minecraft:textures/entity/villager/butcher.png");
-		elderProfession = new VillagerProfession(Const.MODRES+"elder", sage);
 		
-		VillagerRegistry.instance().register(elderProfession);
+		//vanilla example :  new VillagerProfession("minecraft:butcher", "minecraft:textures/entity/villager/butcher.png");
+		String name;
 
 		//TO TEST: /summon Villager ~ ~ ~ {Profession:5,Career:0}
-		VillagerCareer sage = new VillagerCareer(elderProfession, "sage");
-		for(int i = 0; i < sageTrades.length; i++){
-			sage.addTrade(i+1, sageTrades[i]);
-		}
-
-		//TO TEST: /summon Villager ~ ~ ~ {Profession:5,Career:1}
-		VillagerCareer druid = new VillagerCareer(elderProfession, "druid");
+		name = "druid";
+		VillagerProfession druidProfession = new VillagerProfession(Const.MODRES + name, Const.MODRES + "textures/entity/villager/" + name + ".png");
+		VillagerRegistry.instance().register(druidProfession);
+		VillagerCareer druid = new VillagerCareer(druidProfession, name);
 		for(int i = 0; i < druidTrades.length; i++){
 			druid.addTrade(i+1, druidTrades[i]);
 		}
+
+		//TO TEST: /summon Villager ~ ~ ~ {Profession:6,Career:0}
+		name = "sage";
+		VillagerProfession sageProfession = new VillagerProfession(Const.MODRES + name, Const.MODRES + "textures/entity/villager/" + name + ".png");
+		VillagerRegistry.instance().register(sageProfession);
+		VillagerCareer sage = new VillagerCareer(sageProfession, name);
+		for(int i = 0; i < sageTrades.length; i++){
+			sage.addTrade(i+1, sageTrades[i]);
+		}
 	}
  
-
 	final static EntityVillager.ITradeList[][] druidTrades = {
-
  		 {	new EmeraldForItems(Items.COOKED_FISH, new PriceInfo(9, 12))
  			 ,new EmeraldForItems(Items.APPLE, new PriceInfo(3,6)) 
  			 ,new EmeraldForItems(Items.BEETROOT, new PriceInfo(8, 12)) },
@@ -61,10 +61,10 @@ public class VillageTradeRegistry {
 		 {	new EmeraldForItems(Items.BEEF, new PriceInfo(14, 17))
 			 ,new EmeraldForItems(Items.RABBIT, new PriceInfo(14, 17))
 			 ,new EmeraldForItems(Items.CHICKEN, new PriceInfo(14,17))	 },
-		 
-			 {	new EmeraldForItems(Items.POISONOUS_POTATO, new PriceInfo(1, 3))
-				 ,new EmeraldForItems(Items.SPIDER_EYE, new PriceInfo(3, 6))
-				 ,new EmeraldForItems(Items.WRITTEN_BOOK, new PriceInfo(1, 1))}
+	 
+		 {	new EmeraldForItems(Items.POISONOUS_POTATO, new PriceInfo(1, 3))
+			 ,new EmeraldForItems(Items.SPIDER_EYE, new PriceInfo(3, 6))
+			 ,new EmeraldForItems(Items.WRITTEN_BOOK, new PriceInfo(1, 1))}
 	 };
 	
 	final static EntityVillager.ITradeList[][] sageTrades = {
