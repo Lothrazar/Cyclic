@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.item;
 
-import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 
@@ -13,7 +12,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemToolPush  extends BaseTool implements IHasRecipe{
@@ -22,7 +20,7 @@ private static final int durability = 5000;
 	public ItemToolPush(){
 		super(durability);
 	}
-	@SuppressWarnings("unused")
+
 	@Override
 	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
 

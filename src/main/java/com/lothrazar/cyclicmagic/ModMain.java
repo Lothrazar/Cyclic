@@ -159,10 +159,7 @@ public class ModMain {
 		c.save();
 
 	}
-	/*
-	 * remove all aapples but one - it can give saturation
-	 * - a second apple can instantly cure villagers
-	 * -maybe a third apple can unlock all trades for all villagrers? 
+	/* 
 	 * 
 	 * new tnt recipe-break down the block into the parts-9 single. add missing #s (3,5) that are combined from singles
 	 * 
