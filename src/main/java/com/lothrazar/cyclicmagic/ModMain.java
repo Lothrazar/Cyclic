@@ -160,14 +160,13 @@ public class ModMain {
 
 	}
 	/* 
-	 * 
-	 * new tnt recipe-break down the block into the parts-9 single. add missing #s (3,5) that are combined from singles
-	 * 
-	 * RENAME heart-heart container-PERSIST ON DEATH
-	 * 
 	 * TODO LIST
+	 *  
+	 * heart container-PERSIST ON DEATH
 	 * 
-	 * INVESTIGATE different uses/keybindings/ways of launching. maybe new equipment screen.
+	 * achievemnets give exp 
+	 * 
+	 * INVESTIGATE   maybe new equipment screen., hotkey to use the matched itemslot
 	 * 
 	 * crafting table hotkeys - numpad?
 	 *  
@@ -181,7 +180,6 @@ public class ModMain {
 	 * 
 	 * rebalance emerald armor ?? diamond strength + gold ench?
 	 * 
-	 * achievemnets give exp 
 	 * 
 	 */
 }
