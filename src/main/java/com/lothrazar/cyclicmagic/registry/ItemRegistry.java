@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.item.BaseItem;
+import com.lothrazar.cyclicmagic.item.ItemAppleEmerald;
 import com.lothrazar.cyclicmagic.item.ItemChestSack;
 import com.lothrazar.cyclicmagic.item.ItemChestSackEmpty;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
@@ -17,7 +18,6 @@ import com.lothrazar.cyclicmagic.item.ItemEmeraldSpade;
 import com.lothrazar.cyclicmagic.item.ItemEmeraldSword;
 import com.lothrazar.cyclicmagic.item.ItemEnderBook;
 import com.lothrazar.cyclicmagic.item.ItemToolPearlReuse;
-import com.lothrazar.cyclicmagic.item.ItemFoodAppleMagic;
 import com.lothrazar.cyclicmagic.item.ItemFoodCorruptedChorus;
 import com.lothrazar.cyclicmagic.item.ItemFoodCrafting;
 import com.lothrazar.cyclicmagic.item.ItemFoodHeart;
@@ -146,6 +146,8 @@ public class ItemRegistry {
 		addItem(potion_levitation_long, "potion_levitation_long");
 		addItem(corrupted_elytra ,"corrupted_elytra");
 		addItem(cyclic_wand_build, "cyclic_wand_build");
+
+		addItem(new ItemAppleEmerald(), "apple_emerald"); 
 	}
 
 	private static Item addItem(Item i, String key){ 
@@ -179,8 +181,6 @@ public class ItemRegistry {
 		emeraldGearEnabled = prop.getBoolean();
 
 		ItemFoodHorse.syncConfig(config);
-		
-		ItemFoodAppleMagic.syncConfig(config);
 	}
 	
 	private static void registerRecipes() {
@@ -249,66 +249,8 @@ public class ItemRegistry {
 			addItem(emerald_boots, "emerald_boots");
 
 		}
- 
-
-		int I = PotionRegistry.I;
-		int II = PotionRegistry.II;
-	////	int III = PotionRegistry.III;
-	//	int IV = PotionRegistry.IV;
-		int V = PotionRegistry.V;
- 
-		final int hunger		= 4;
-		final int time			= 8 * 60; // 8:00
-
-		
-		
-		ItemFoodAppleMagic apple_chorus = new ItemFoodAppleMagic(hunger, false, 
-				new ItemStack(Items.CHORUS_FRUIT)
-				,MobEffects.LEVITATION, 30, I);
-		addItem(apple_chorus, "apple_chorus");
-	  
-		ItemFoodAppleMagic apple_ender = new ItemFoodAppleMagic(hunger, false, 
-				new ItemStack(Items.ENDER_PEARL)
-				,PotionRegistry.ender, time, I);
-		addItem(apple_ender, "apple_ender");
- 
-		ItemFoodAppleMagic apple_emerald = new ItemFoodAppleMagic(hunger, false, 
-				new ItemStack(Items.EMERALD)
-				,MobEffects.HEALTH_BOOST, time, V);
-	 
-		addItem(apple_emerald, "apple_emerald"); 
- 
-		ItemFoodAppleMagic apple_chocolate = new ItemFoodAppleMagic(hunger, false, 
-				new ItemStack(Items.DYE, 1, Const.dye_cocoa)
-				,MobEffects.LUCK, time, II); 
-		addItem(apple_chocolate, "apple_chocolate"); 
- 
-		ItemFoodAppleMagic apple_lapis = new ItemFoodAppleMagic(hunger, false, 
-				new ItemStack(Items.DYE, 1, Const.dye_lapis),MobEffects.HASTE, time, II);
-	 
-		addItem(apple_lapis, "apple_lapis"); 
- 
-		ItemFoodAppleMagic apple_diamond = new ItemFoodAppleMagic(hunger, false, 
-				new ItemStack(Items.DIAMOND),MobEffects.RESISTANCE, time, I);
-		addItem(apple_diamond, "apple_diamond"); 
- 
-		ItemFoodAppleMagic apple_bone = new ItemFoodAppleMagic(hunger, false, new ItemStack(Items.BONE)
-				,MobEffects.GLOWING, time, I);
-		addItem(apple_bone, "apple_bone"); 
- 
-		ItemFoodAppleMagic apple_netherwart = new ItemFoodAppleMagic(hunger, false, 
-				new ItemStack(Items.NETHER_WART),PotionRegistry.magnet, time, I);
-		addItem(apple_netherwart, "apple_netherwart"); 
-	
-		ItemFoodAppleMagic apple_prismarine = new ItemFoodAppleMagic(hunger, false, 
-				new ItemStack(Items.PRISMARINE_SHARD),PotionRegistry.waterwalk, time, I);
-		addItem(apple_prismarine, "apple_prismarine"); 
- 
-		ItemFoodAppleMagic apple_slowfall = new ItemFoodAppleMagic(hunger, false, 
-				new ItemStack(Items.FISH, 1, Const.fish_puffer),PotionRegistry.slowfall, time, I);
-		 
-		addItem(apple_slowfall, "apple_slowfall");
- 
+  
+  
 		//maybe one day it will be all base items
 		Item item;
 		for (String key : itemMap.keySet()) {
