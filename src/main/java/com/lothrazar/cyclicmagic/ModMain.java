@@ -161,6 +161,8 @@ public class ModMain {
 	}
 	/* 
 	 * TODO LIST
+	 * 
+	 * SORTING
 	 *  
 	 * heart container-PERSIST ON DEATH
 	 * 
