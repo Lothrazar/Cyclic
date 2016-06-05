@@ -57,7 +57,7 @@ public class ModMain {
 	public final static CreativeTabs TAB = new CreativeTabs(Const.MODID) {
 		@Override
 		public Item getTabIconItem() {
-			Item tab = ItemRegistry.itemMap.get("apple_diamond");
+			Item tab = ItemRegistry.cyclic_wand_build;
 			if (tab == null) {
 				tab = Items.DIAMOND;
 			}

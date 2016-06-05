@@ -9,7 +9,7 @@ saves/
 .gradle/
 .settings/
 server.properties 
-screenshots/
+run/screenshots/
 .metadata/
 .settings/
 .classpath
