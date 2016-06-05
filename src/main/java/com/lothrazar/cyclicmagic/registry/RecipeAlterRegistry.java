@@ -28,7 +28,7 @@ public class RecipeAlterRegistry {
 
 		String category = Const.ConfigCategory.recipes;
 
-		enabled = config.get(category, "AlteredStone", 
+		enabled = config.get(category, "Altered Stone", 
 				false,
 				"WARNING: this removes vanilla recipes:  True will mean that the furnace recipe requires coal in the middle, and stone tools require smoothstone.")
 				.getBoolean();
