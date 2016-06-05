@@ -159,11 +159,14 @@ public class ModMain {
 		c.save();
 
 	}
-	/*
-	 * 
+	/* 
 	 * TODO LIST
 	 * 
-	 * INVESTIGATE different uses/keybindings/ways of launching. maybe new equipment screen.
+	 * SORTING
+	 *  
+	 * achievemnets give exp 
+	 * 
+	 * INVESTIGATE   maybe new equipment screen., hotkey to use the matched itemslot
 	 * 
 	 * crafting table hotkeys - numpad?
 	 *  
@@ -177,7 +180,6 @@ public class ModMain {
 	 * 
 	 * rebalance emerald armor ?? diamond strength + gold ench?
 	 * 
-	 * achievemnets give exp 
 	 * 
 	 */
 }

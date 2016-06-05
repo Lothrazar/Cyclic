@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.event.EventAnimalDropBuffs;
-import com.lothrazar.cyclicmagic.event.EventAppleUse;
 import com.lothrazar.cyclicmagic.event.EventBucketBlocksBreak;
 import com.lothrazar.cyclicmagic.event.EventConfigChanged;
 import com.lothrazar.cyclicmagic.event.EventEditSign;
@@ -44,7 +43,6 @@ public class EventRegistry {
 	
 	public EventRegistry(){
 		featureEvents.add(new EventAnimalDropBuffs());
-		featureEvents.add(new EventAppleUse());
 		featureEvents.add(new EventBucketBlocksBreak());
 		featureEvents.add(new EventConfigChanged());
 		featureEvents.add(new EventEditSign());

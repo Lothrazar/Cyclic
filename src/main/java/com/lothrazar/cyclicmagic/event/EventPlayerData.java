@@ -5,6 +5,7 @@ import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -55,6 +56,11 @@ public class EventPlayerData implements IHasConfig{
 		IPlayerExtendedProperties dest = CapabilityRegistry.getPlayerProperties(event.getEntityPlayer());
  
 		dest.setDataFromNBT(src.getDataAsNBT());
+		
+		if(event.isWasDeath()){
+			
+			UtilEntity.setMaxHealth(event.getEntityPlayer(), src.getMaxHealth());
+		}
 	}
 	
     @SubscribeEvent

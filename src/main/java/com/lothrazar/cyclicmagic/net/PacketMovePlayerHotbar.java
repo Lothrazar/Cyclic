@@ -17,9 +17,9 @@ public class PacketMovePlayerHotbar implements IMessage, IMessageHandler<PacketM
 
 	private boolean isDown;
 
-	public PacketMovePlayerHotbar(boolean upordown) {
+	public PacketMovePlayerHotbar(boolean isdown) {
 
-		isDown = upordown;
+		isDown = isdown;
 	}
 
 	@Override

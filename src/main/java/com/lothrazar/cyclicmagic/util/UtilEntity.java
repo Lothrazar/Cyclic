@@ -19,8 +19,11 @@ public class UtilEntity {
 		return living.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).getBaseValue();
 	}
 	
-	public static void incrementMaxHealth(EntityLivingBase living, int by) {
-		setMaxHealth(living,getMaxHealth(living) + by);
+	public static int incrementMaxHealth(EntityLivingBase living, int by) {
+		int newVal = (int)getMaxHealth(living) + by;
+		setMaxHealth(living,newVal);
+		
+		return newVal;
 	}
 	
 

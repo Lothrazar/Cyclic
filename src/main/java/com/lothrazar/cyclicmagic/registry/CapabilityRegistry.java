@@ -36,6 +36,9 @@ public class CapabilityRegistry {
 
 		boolean hasInventoryExtended();
 		void setInventoryExtended(boolean value);
+
+		int getMaxHealth();
+		void setMaxHealth(int value);
 		
 		NBTTagCompound getDataAsNBT();
 		void setDataFromNBT(NBTTagCompound nbt);
@@ -49,6 +52,7 @@ public class CapabilityRegistry {
 		private boolean hasInventoryCrafting = false;
 		private boolean hasInventoryExtended = false;
 		private String todo = "";
+		private int health = 20;
 
 		@Override
 		public boolean isSleeping() {
@@ -87,7 +91,7 @@ public class CapabilityRegistry {
 			tags.setByte("hasInventoryCrafting", (byte) (this.hasInventoryCrafting() ? 1 : 0));
 			tags.setByte("hasInventoryExtended", (byte) (this.hasInventoryExtended() ? 1 : 0));
 			tags.setString("todo",this.getTODO());
- 
+			tags.setInteger("mhealth",this.getMaxHealth());
 			
 			return tags;
 		}
@@ -104,6 +108,7 @@ public class CapabilityRegistry {
 			this.setInventoryCrafting(tags.getByte("hasInventoryCrafting") == 1);
 			this.setInventoryExtended(tags.getByte("hasInventoryExtended") == 1);
 			this.setTODO(tags.getString("todo"));
+			this.setMaxHealth(tags.getInteger("mhealth"));
 		}
 
 		@Override
@@ -114,6 +119,16 @@ public class CapabilityRegistry {
 		@Override
 		public void setTODO(String value) {
 			todo = value;
+		}
+
+		@Override
+		public int getMaxHealth() {
+			return health;
+		}
+
+		@Override
+		public void setMaxHealth(int value) {
+			health = value;
 		}
 	}
 
