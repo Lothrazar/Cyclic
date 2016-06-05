@@ -23,7 +23,6 @@ import com.lothrazar.cyclicmagic.item.ItemFoodCrafting;
 import com.lothrazar.cyclicmagic.item.ItemFoodHeart;
 import com.lothrazar.cyclicmagic.item.ItemFoodHorse;
 import com.lothrazar.cyclicmagic.item.ItemFoodInventory;
-import com.lothrazar.cyclicmagic.item.ItemInventoryStorage;
 import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
 import com.lothrazar.cyclicmagic.item.ItemPotionCustom;
 import com.lothrazar.cyclicmagic.item.ItemSleepingBag;
@@ -93,7 +92,7 @@ public class ItemRegistry {
 		addItem(new ItemToolHarvest(),"tool_harvest");
 		addItem(new ItemToolPush(),"tool_push");
 		addItem(new ItemToolRotate(),"tool_rotate");
-		addItem(new ItemInventoryStorage(),"storage_bag"); 
+//		addItem(new ItemInventoryStorage(),"storage_bag"); 
 		addItem(new ItemChestSack().setHidden(),"chest_sack");
 		addItem(new ItemChestSackEmpty(),"chest_sack_empty");
 		addItem(new ItemProjectileBlaze(),"ender_blaze");

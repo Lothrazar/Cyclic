@@ -162,14 +162,20 @@ public class ModMain {
 
 	}
 	/* 
-	 * FIX SOON
-	 * 
-	 * EventNoclipUpdate : dont use entitydata, because logout login, or a death, you will be stuck?
-	 *
-	 * Disable backpack item OR fix the vertical location/height offscreen issue
+	 * TODO : bugs
 	 * 
 	 * 
-	 * FUTURE FEATURES
+	 * TODO : ideas
+	 * 
+	 * custom villager zombie textures
+	 * 
+	 * ?? EventNoclipUpdate : dont use entitydata, because logout login, or a death, you will be stuck?
+	 *.. it seems to work, for now so..
+	 * 
+	 *  Disable backpack item OR fix the vertical location/height offscreen issue
+	 * .. is disabled: addItem(new ItemInventoryStorage(),"storage_bag")
+	 * 
+	 * revisit flint tool..??
 	 * 
 	 * Take launch spell and try to put it in a block -> corrupted slime block?
 	 * 
@@ -194,9 +200,6 @@ public class ModMain {
 	 * ROTATE: STAIRS: allow switch frop top to bottom
 	 * 
 	 * Trading Tool // gui
-	 * 
-	 * rebalance emerald armor ?? diamond strength + gold ench?
-	 * 
 	 * 
 	 */
 }
