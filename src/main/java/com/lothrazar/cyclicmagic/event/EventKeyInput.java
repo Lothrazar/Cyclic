@@ -41,20 +41,18 @@ public class EventKeyInput{
 
 	@SideOnly(Side.CLIENT)
 	private void detectAndFireKey(int slot) {
-
-		if (ClientProxy.isKeyDown(ClientProxy.keyShiftUp)) {
-			ModMain.network.sendToServer(new PacketMovePlayerColumn(slot, false));
-		}
-		else if (ClientProxy.isKeyDown(ClientProxy.keyShiftDown)) {
-			ModMain.network.sendToServer(new PacketMovePlayerColumn(slot, true));
-		}
-		else if (ClientProxy.isKeyDown(ClientProxy.keyBarUp)) {
+	 
+		if (ClientProxy.keyBarUp.isPressed()) {
 			ModMain.network.sendToServer(new PacketMovePlayerHotbar(false));
 		}
-		else if (ClientProxy.isKeyDown(ClientProxy.keyBarDown)) {
+		else if (ClientProxy.keyBarDown.isPressed()) {
 			ModMain.network.sendToServer(new PacketMovePlayerHotbar(true));
 		}
-		
-		
+		else if (ClientProxy.keyShiftUp.isPressed()) {
+			ModMain.network.sendToServer(new PacketMovePlayerColumn(slot, false));
+		}
+		else if (ClientProxy.keyShiftDown.isPressed()) {
+			ModMain.network.sendToServer(new PacketMovePlayerColumn(slot, true));
+		}
 	}
 }

@@ -164,8 +164,6 @@ public class ModMain {
 	 * 
 	 * SORTING
 	 *  
-	 * heart container-PERSIST ON DEATH
-	 * 
 	 * achievemnets give exp 
 	 * 
 	 * INVESTIGATE   maybe new equipment screen., hotkey to use the matched itemslot

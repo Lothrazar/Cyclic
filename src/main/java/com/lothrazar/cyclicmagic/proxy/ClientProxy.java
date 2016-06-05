@@ -30,7 +30,8 @@ import net.minecraft.item.Item;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World; 
+import net.minecraft.world.World;
+import net.minecraftforge.client.settings.KeyModifier;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -62,16 +63,20 @@ public class ClientProxy extends CommonProxy {
 
 	private void registerKeys() {
 
+		//  public KeyBinding(String description, net.minecraftforge.client.settings.IKeyConflictContext keyConflictContext, net.minecraftforge.client.settings.KeyModifier keyModifier, int keyCode, String category)
+	    
 		keyShiftUp = new KeyBinding("key.columnshiftup", Keyboard.KEY_Y, keyCategoryInventory);
 		ClientRegistry.registerKeyBinding(ClientProxy.keyShiftUp);
 
 		keyShiftDown = new KeyBinding("key.columnshiftdown", Keyboard.KEY_H, keyCategoryInventory);
 		ClientRegistry.registerKeyBinding(ClientProxy.keyShiftDown);
 
-		keyBarUp = new KeyBinding("key.columnbarup", Keyboard.KEY_U, keyCategoryInventory);
+		keyBarUp = new KeyBinding("key.columnbarup", Keyboard.KEY_Y, keyCategoryInventory);
+		keyBarUp.setKeyModifierAndCode(KeyModifier.SHIFT, Keyboard.KEY_Y);
 		ClientRegistry.registerKeyBinding(ClientProxy.keyBarUp);
 
-		keyBarDown = new KeyBinding("key.columnbardown", Keyboard.KEY_J, keyCategoryInventory);
+		keyBarDown = new KeyBinding("key.columnbardown", Keyboard.KEY_H, keyCategoryInventory);
+		keyBarDown.setKeyModifierAndCode(KeyModifier.SHIFT, Keyboard.KEY_H);
 		ClientRegistry.registerKeyBinding(ClientProxy.keyBarDown);
 	}
 
@@ -196,14 +201,14 @@ public class ClientProxy extends CommonProxy {
 		}
 	}
 
-	@SideOnly(Side.CLIENT)
-	public static boolean isKeyDown(KeyBinding keybinding) {
-
-		// inside a GUI , we have to check the keyboard directly
-		// thanks to Inventory tweaks, reminding me of alternate way to check
-		// keydown while in config
-		// https://github.com/Inventory-Tweaks/inventory-tweaks/blob/develop/src/main/java/invtweaks/InvTweaks.java
-
-		return keybinding.isPressed() || Keyboard.isKeyDown(keybinding.getKeyCode());
-	}
+//	@SideOnly(Side.CLIENT)
+//	public static boolean isKeyDown(KeyBinding keybinding) {
+//
+//		// inside a GUI , we have to check the keyboard directly
+//		// thanks to Inventory tweaks, reminding me of alternate way to check
+//		// keydown while in config
+//		// https://github.com/Inventory-Tweaks/inventory-tweaks/blob/develop/src/main/java/invtweaks/InvTweaks.java
+//
+//		return keybinding.isPressed() || Keyboard.isKeyDown(keybinding.getKeyCode());
+//	}
 }
