@@ -29,8 +29,11 @@ public class VillageTradeRegistry {
 		String name;
 
 		//TO TEST: /summon Villager ~ ~ ~ {Profession:5,Career:0}
+		//TODO: make my own zombie textures
 		name = "druid";
-		VillagerProfession druidProfession = new VillagerProfession(Const.MODRES + name, Const.MODRES + "textures/entity/villager/" + name + ".png");
+		VillagerProfession druidProfession = new VillagerProfession(Const.MODRES + name, 
+				Const.MODRES + "textures/entity/villager/" + name + ".png",
+				"minecraft:textures/entity/zombie_villager/zombie_villager.png");
 		VillagerRegistry.instance().register(druidProfession);
 		VillagerCareer druid = new VillagerCareer(druidProfession, name);
 		for(int i = 0; i < druidTrades.length; i++){
@@ -39,7 +42,9 @@ public class VillageTradeRegistry {
 
 		//TO TEST: /summon Villager ~ ~ ~ {Profession:6,Career:0}
 		name = "sage"; 
-		VillagerProfession sageProfession = new VillagerProfession(Const.MODRES + name, Const.MODRES + "textures/entity/villager/" + name + ".png");
+		VillagerProfession sageProfession = new VillagerProfession(Const.MODRES + name, 
+				Const.MODRES + "textures/entity/villager/" + name + ".png",
+				"minecraft:textures/entity/zombie_villager/zombie_villager.png");
 		VillagerRegistry.instance().register(sageProfession);
 		VillagerCareer sage = new VillagerCareer(sageProfession, name);
 		for(int i = 0; i < sageTrades.length; i++){
