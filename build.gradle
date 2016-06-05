@@ -12,12 +12,12 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "1.9-alpha.6"
+version = "1.9.4-alpha.7"
 group= "com.lothrazar.cyclicmagic" 
 archivesBaseName = "Cyclic"
 
 minecraft {
-    version = "1.9.4-12.17.0.1921-1.9.4"
+    version = "1.9.4-12.17.0.1953"
     runDir = "run"
     mappings = "snapshot_20160518"
     makeObfSourceJar = false

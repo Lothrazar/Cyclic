@@ -5,8 +5,8 @@
     "name": "Cyclic",
     "description": "I added everything I wanted the game to have, including powerful items, inventory features, world generation, and more.  Everything is controlled by config.  Balanced around 
 single player survival.",
-    "version": "alpha.6",
-    "mcversion": "1.9",
+    "version": "alpha.7",
+    "mcversion": "1.9.4",
     "url": "http://minecraft.curseforge.com/projects/cyclic",
     "updateUrl": "http://minecraft.curseforge.com/projects/cyclic",
     "authorList": [ "Lothrazar" ],

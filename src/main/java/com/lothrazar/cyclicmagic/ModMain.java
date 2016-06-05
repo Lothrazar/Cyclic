@@ -160,6 +160,13 @@ public class ModMain {
 
 	}
 	/* 
+	 * alpha 8: 
+	 * 
+	 * rebalance emerald armor
+	 * rebalance uncrafting: increase time OR add fuel
+	 * Take launch spell and try to put it in a block -> corrupted slime block?
+	 * block breaker
+	 * 
 	 * TODO LIST
 	 * 
 	 * SORTING
