@@ -110,7 +110,7 @@ public class EventSaplingBlockGrowth implements IHasConfig{
 
 		String category = Const.ConfigCategory.environment;
 		
-		enabled = config.getBoolean("SaplingHomeBiomes", category, true, "Saplings are only allowed to grow into trees in their home biome, otherwise they turn to dead bushes");
+		enabled = config.getBoolean("Sapling Home Biomes", category, true, "Saplings are only allowed to grow into trees in their home biome, otherwise they turn to dead bushes.  (Biome ids listed in config file)");
 	 
 		category = Const.ConfigCategory.modpacks;
 

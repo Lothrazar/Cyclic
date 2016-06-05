@@ -45,9 +45,8 @@ public class EventMobDropsReduced  implements IHasConfig{
 	public void syncConfig(Configuration config) {
 		String category = Const.ConfigCategory.mobs;
 
-		zombieDropsNerfed = config.getBoolean("ZombieDropsNerfed", category, true,
+		zombieDropsNerfed = config.getBoolean("Zombie Drops Nerfed", category, true,
 				"Zombies no longer drops carrots, potatoes, or iron ingots");
 	 
-		
 	}
 }

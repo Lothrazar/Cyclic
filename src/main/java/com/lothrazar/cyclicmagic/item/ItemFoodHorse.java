@@ -33,7 +33,7 @@ public class ItemFoodHorse extends BaseItem implements IHasRecipe {
 	private static double	JUMP_SCALE	= 1.02;	// %age
 	private static double	SPEED_SCALE	= 1.05;	// %age
 
-	public static boolean						horseFoodEnabled;
+//	public static boolean						horseFoodEnabled;
 	private ItemStack recipeItem;
 	
 	public ItemFoodHorse(ItemStack rec) {
@@ -220,13 +220,12 @@ public class ItemFoodHorse extends BaseItem implements IHasRecipe {
 
 	public static void syncConfig(Configuration config) {
 
-		String category = Const.ConfigCategory.items_horseFood; 
+		String category = Const.ConfigCategory.itemsHorsefood; 
 
-		ItemFoodHorse.horseFoodEnabled = config.getBoolean("Enabled", category, true, "To disable all horse upgrade food");
+//		ItemFoodHorse.horseFoodEnabled = config.getBoolean("Enabled", category, true, "To disable all horse upgrade food");
 		ItemFoodHorse.HEARTS_MAX = config.getInt("Max Hearts", category, 20, 1, 100, "Maximum number of upgraded hearts");
 		ItemFoodHorse.JUMP_MAX = config.getInt("Max Jump", category, 6, 1, 20, "Maximum value of jump.  Naturally spawned/bred horses seem to max out at 5.5");
 		ItemFoodHorse.SPEED_MAX = config.getInt("Max Speed", category, 50, 1, 99, "Maximum value of speed (this is NOT blocks/per second or anything like that)");
 
-		
 	}
 }

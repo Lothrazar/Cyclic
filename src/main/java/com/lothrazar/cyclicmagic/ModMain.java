@@ -77,8 +77,10 @@ public class ModMain {
 		config = new Configuration(event.getSuggestedConfigurationFile());
 
 		events = new EventRegistry();
-		ItemRegistry.construct();// MAYBE it should be a constructed, not static
+		//TODO MAYBE it should be a constructed, not static
+		ItemRegistry.construct();
 		BlockRegistry.construct();
+		StackSizeRegistry.construct();
 
 		config.load();
 		syncConfig();

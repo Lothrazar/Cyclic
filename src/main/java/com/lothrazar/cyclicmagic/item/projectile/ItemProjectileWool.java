@@ -18,10 +18,9 @@ public class ItemProjectileWool extends BaseItemProjectile implements IHasRecipe
 
 	@Override
 	public void syncConfig(Configuration config) {
-		String category = Const.ConfigCategory.items_projectiles; 
-
-		EntityShearingBolt.doesKnockback = config.getBoolean("wool.knockback", category, true, "Does appear to damage sheep on contact");
-		EntityShearingBolt.doesShearChild = config.getBoolean("wool.child", category, true, "Does shear child sheep as well.");
+	
+		EntityShearingBolt.doesShearChild = config.getBoolean("Ender Shears Child", Const.ConfigCategory.items, true, "Ender shears work on child sheep");
+//		EntityShearingBolt.doesShearChild = config.getBoolean("wool.child", category, true, "Does shear child sheep as well.");
 	}
 
 	@Override

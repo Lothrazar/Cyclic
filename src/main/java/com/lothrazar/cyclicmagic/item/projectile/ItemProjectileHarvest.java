@@ -17,10 +17,10 @@ public class ItemProjectileHarvest extends BaseItemProjectile implements IHasRec
 
 	@Override
 	public void syncConfig(Configuration config) {
-		String category = Const.ConfigCategory.items_projectiles; 
+		String category = Const.ConfigCategory.items; 
 		
-		EntityHarvestBolt.range_main = config.getInt("harvest.range", category, 6, 1, 32, "Horizontal range on level of hit to harvest");
-		EntityHarvestBolt.range_offset = config.getInt("harvest.rangeOffset", category, 4, 1, 32, "Horizontal range on further heights to harvest");
+		EntityHarvestBolt.range_main = config.getInt("Harvest Projectile Range", category, 6, 1, 32, "Horizontal range on level of hit to harvest");
+		EntityHarvestBolt.range_offset = EntityHarvestBolt.range_main-2;//config.getInt("harvest.rangeOffset", category, 4, 1, 32, "Horizontal range on further heights to harvest");
 		
 		//TODO: since util is shared with other features, need to revisit this
 		//EntityHarvestBolt.doesHarvestStem = config.getBoolean("harvest.does_harvest_stem", category, false, "Does it harvest stems (pumkin/melon)");

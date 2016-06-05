@@ -77,15 +77,15 @@ public class MobSpawningRegistry {
 
 		String category = Const.ConfigCategory.mobspawns;
 		
-		endermanNether = config.getBoolean("EndermanNether", category, true, "Adds random Enderman spawns into the nether");
-		blazeDesertHills = config.getBoolean("BlazeDesertHills", category, true, "Adds random Blaze spawns into Desert Hills");
-		magmaDesert = config.getBoolean("MagmacubeDesert", category, true, "Adds random Magma Cube spawns into Desert");
-		caveSpiderMesaRoofed = config.getBoolean("CSMesaRoofed", category, true, "Adds random Cave Spider spawns into Mesa and Roofed Forests");
-		ghastDeepOcean = config.getBoolean("GhastDeepOcean", category, true, "Adds random Ghast spawns into Deep Oceans");
-		guardianRiver = config.getBoolean("GuardianRiver", category, true, "Adds random Guardian spawns into Rivers");
-		snowmanIcePlainsMount = config.getBoolean("SnowmanIce", category, true, "Adds random Snowman spawns into Ice Plains and Ice Mountains");
-		horseIceExtrhillsOcean = config.getBoolean("HorseIceHills", category, true, "Adds random Horse spawns into Extreme Hills and Ice Plains");
-		ironGolemJungle = config.getBoolean("IGolemJungle", category, true, "Adds random IronGolem spawns into the Jungle");
+		endermanNether = config.getBoolean("Enderman Nether", category, true, "Adds random Enderman spawns into the nether");
+		blazeDesertHills = config.getBoolean("Blaze DesertHills", category, true, "Adds random Blaze spawns into Desert Hills");
+		magmaDesert = config.getBoolean("Magmacube Desert", category, true, "Adds random Magma Cube spawns into Desert");
+		caveSpiderMesaRoofed = config.getBoolean("CaveSpider Mesa&Roofed", category, true, "Adds random Cave Spider spawns into Mesa and Roofed Forests");
+		ghastDeepOcean = config.getBoolean("Ghast DeepOcean", category, true, "Adds random Ghast spawns into Deep Oceans");
+		guardianRiver = config.getBoolean("Guardian River", category, true, "Adds random Guardian spawns into Rivers");
+		snowmanIcePlainsMount = config.getBoolean("Snowman Ice", category, true, "Adds random Snowman spawns into Ice Plains and Ice Mountains");
+		horseIceExtrhillsOcean = config.getBoolean("Horse IceHills", category, true, "Adds random Horse spawns into Extreme Hills and Ice Plains");
+		ironGolemJungle = config.getBoolean("IronGolem Jungle", category, true, "Adds random IronGolem spawns into the Jungle");
 
 	}
 }

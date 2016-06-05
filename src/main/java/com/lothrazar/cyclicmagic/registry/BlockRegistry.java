@@ -40,10 +40,6 @@ public class BlockRegistry {
 	public static BlockDimensionOre			nether_diamond_ore; 
 	public static BlockDimensionOre			end_diamond_ore;
 
-	private static boolean						enabledBucketBlocks; 
-	private static boolean						enableBlockFragile;
-
-
 	private static boolean spawnersUnbreakable;
 //lots of helpers/overrides with defaults
 	private static void registerBlock(Block b, String name) {
@@ -81,16 +77,13 @@ public class BlockRegistry {
 		//??maybe? nah.
 		//Blocks.obsidian.setHardness(Blocks.obsidian.getHarvestLevel(Blocks.obsidian.getDefaultState()) / 2);
 		
-		if(BlockUncrafting.enableBlockUncrafting){
-			registerBlock(uncrafting_block, "uncrafting_block");
-			uncrafting_block.addRecipe();
-		}
+		registerBlock(uncrafting_block, "uncrafting_block");
+		uncrafting_block.addRecipe();
 
-		if (enableBlockFragile) { 
-			registerBlock(block_fragile,new ItemBlockScaffolding(block_fragile), BlockScaffolding.name);
-			block_fragile.addRecipe();
-		}
-
+	
+		registerBlock(block_fragile,new ItemBlockScaffolding(block_fragile), BlockScaffolding.name);
+		block_fragile.addRecipe();
+		
 		if (WorldGenRegistry.netherOreEnabled) {
 
 			nether_gold_ore = new BlockDimensionOre(Items.GOLD_NUGGET, 0, 4);
@@ -137,22 +130,21 @@ public class BlockRegistry {
 			registerBlock(end_diamond_ore, "end_diamond_ore");
 		}
 
-		if (enabledBucketBlocks) {
-			block_storewater = new BlockBucketStorage(Items.WATER_BUCKET);
-			registerBlock(block_storewater, new ItemBlockBucket(block_storewater), "block_storewater", true);
+		block_storewater = new BlockBucketStorage(Items.WATER_BUCKET);
+		registerBlock(block_storewater, new ItemBlockBucket(block_storewater), "block_storewater", true);
 
-			block_storemilk = new BlockBucketStorage(Items.MILK_BUCKET);
-			registerBlock(block_storemilk, new ItemBlockBucket(block_storemilk), "block_storemilk", true);
+		block_storemilk = new BlockBucketStorage(Items.MILK_BUCKET);
+		registerBlock(block_storemilk, new ItemBlockBucket(block_storemilk), "block_storemilk", true);
 
-			block_storelava = new BlockBucketStorage(Items.LAVA_BUCKET);
-			registerBlock(block_storelava, new ItemBlockBucket(block_storelava), "block_storelava", true);
+		block_storelava = new BlockBucketStorage(Items.LAVA_BUCKET);
+		registerBlock(block_storelava, new ItemBlockBucket(block_storelava), "block_storelava", true);
 
-			block_storeempty = new BlockBucketStorage(null);
-			registerBlock(block_storeempty, new ItemBlockBucket(block_storeempty), "block_storeempty", false);
+		block_storeempty = new BlockBucketStorage(null);
+		registerBlock(block_storeempty, new ItemBlockBucket(block_storeempty), "block_storeempty", false);
 
-			// not irecipe so just like this is fine i guess
-			block_storeempty.addRecipe();
-		}
+		// not irecipe so just like this is fine i guess
+		block_storeempty.addRecipe();
+	
 	}
 
 	public static void construct(){
@@ -166,14 +158,14 @@ public class BlockRegistry {
 		String category = Const.ConfigCategory.blockChanges;
 
 		spawnersUnbreakable = config.getBoolean("Spawners Unbreakable", category, true, "Make mob spawners unbreakable");
- 
-		category = Const.ConfigCategory.blocks;
- 
-		config.setCategoryComment(category, "Disable or customize blocks added to the game");
+// 
+//		category = Const.ConfigCategory.blocks;
+// 
+//		config.setCategoryComment(category, "Disable or customize blocks added to the game");
 
-		enableBlockFragile = config.getBoolean("Scaffolding", category, true, "Enable the scaffolding block that breaks by itself");
-
-		enabledBucketBlocks = config.getBoolean("Bucket Blocks", category, true, "Enable Bucket Storage Blocks");
+//		enableBlockFragile = config.getBoolean("Scaffolding", category, true, "Enable the scaffolding block that breaks by itself");
+//
+//		enabledBucketBlocks = config.getBoolean("Bucket Blocks", category, true, "Enable Bucket Storage Blocks");
  
 		uncrafting_block.syncConfig(config);
 	}

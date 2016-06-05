@@ -12,14 +12,10 @@ import net.minecraftforge.common.config.Property;
 
 public class StackSizeRegistry {
 
-	public static boolean enabled=true;
-	public static Map<Item, Integer> stackMap = new HashMap<Item, Integer>();
-	
-	
-	public static void register() {
-		if(enabled == false){
-			return;
-		}
+	private static boolean enabled = true;
+	private static Map<Item, Integer> stackMap = new HashMap<Item, Integer>();
+	private static String all = "";
+	public static void construct(){
 
 		int boat = 16;
 		int MAX = 64;
@@ -45,6 +41,19 @@ public class StackSizeRegistry {
 
 		for (Map.Entry<Item, Integer> entry : stackMap.entrySet()) {
 
+			all += entry.getKey().getUnlocalizedName()+",";
+		}
+		all.replace(all.substring(all.length()-1), "");
+	}
+	
+	
+	public static void register() {
+		if(enabled == false){
+			return;
+		}
+
+		for (Map.Entry<Item, Integer> entry : stackMap.entrySet()) {
+
 			entry.getKey().setMaxStackSize(entry.getValue());
 		}
 	}
@@ -57,7 +66,7 @@ public class StackSizeRegistry {
 		// blocks and items. Bonemeal to undye wool; repeater and dispenser tweaks;
 		// making player skulls out of the four mob heads...");
 
-		Property prop = config.get(category, "StackSizeEnabled", true, "Increase stack size of many vanilla items");
+		Property prop = config.get(category, "Stack Size Enabled", true, "Increase stack size of many vanilla items ("+all+")");
 		prop.setRequiresWorldRestart(true);
 		enabled = prop.getBoolean();
 	}

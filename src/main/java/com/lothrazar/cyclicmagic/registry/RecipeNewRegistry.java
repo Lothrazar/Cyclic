@@ -27,29 +27,29 @@ public class RecipeNewRegistry {
 		String category = Const.ConfigCategory.recipes;	
 		config.setCategoryComment(category, "New and altered recipes");
 		
-		playerSkull = config.get(category, "PlayerSkulls", 
+		playerSkull = config.get(category, "Player Skulls", 
 				true,"Create a player skull by combining wither, skeleton, zombie, and creeper skulls").getBoolean();
 	
-		mushroomBlocks = config.get(category, "MushroomBlocks", 
+		mushroomBlocks = config.get(category, "Mushroom Blocks", 
 				true,"Create mushroom blocks from items").getBoolean();
 
-		bonemealWool = config.get(category, "BonemealWool", 
+		bonemealWool = config.get(category, "Bonemeal Wool", 
 				true,"Bonemeal can be used to dye coloured wool white").getBoolean();
 
-		simpleDispenser = config.get(category, "SimpleDispenser", 
+		simpleDispenser = config.get(category, "Simple Dispenser", 
 				true,"Craft a dispenser with string instead of a bow").getBoolean();
 
-		repeaterSimple = config.get(category, "SimpleRepeater", 
+		repeaterSimple = config.get(category, "Simple Repeater", 
 				true,"Craft repeaters using sticks and redstone in place of redstone torches").getBoolean();
 
-		minecartsSimple = config.get(category, "SimpleMinecarts", 
+		minecartsSimple = config.get(category, "Simple Minecarts", 
 				true,"Craft the minecart combinations using five iron as well as minecarts").getBoolean();
 
-		notchApple = config.get(category, "NotchApple", 
+		notchApple = config.get(category, "Notch Apple", 
 				true,"Craft a notch apple with golden blocks as usual").getBoolean();
 	
 
-		ElytraRepair = config.get(category, "ElytraRepair", 
+		ElytraRepair = config.get(category, "Elytra Repair", 
 				true,"You can mostly repair elytra wings with a wither skull; but it loses all enchants").getBoolean();
 	}
 

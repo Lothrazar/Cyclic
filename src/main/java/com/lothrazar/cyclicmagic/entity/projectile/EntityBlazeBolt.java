@@ -17,8 +17,8 @@ import net.minecraft.world.World;
 
 public class EntityBlazeBolt extends EntityThrowable {
 
-	public static int			fireSeconds;
-	public static boolean	damageEntityOnHit;
+	public static final int			fireSeconds = 3;
+	public static final boolean	damageEntityOnHit = true;
 
 	public EntityBlazeBolt(World worldIn) {
 

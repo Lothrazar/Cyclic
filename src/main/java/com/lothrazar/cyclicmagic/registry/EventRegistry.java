@@ -3,7 +3,7 @@ package com.lothrazar.cyclicmagic.registry;
 import java.util.ArrayList;
 
 import com.lothrazar.cyclicmagic.IHasConfig;
-import com.lothrazar.cyclicmagic.event.EventAnimalDropBuffs;
+import com.lothrazar.cyclicmagic.event.EventMobDropBuffs;
 import com.lothrazar.cyclicmagic.event.EventBucketBlocksBreak;
 import com.lothrazar.cyclicmagic.event.EventConfigChanged;
 import com.lothrazar.cyclicmagic.event.EventEditSign;
@@ -42,7 +42,7 @@ public class EventRegistry {
 	private ArrayList<Object> featureEvents = new ArrayList<Object>();
 	
 	public EventRegistry(){
-		featureEvents.add(new EventAnimalDropBuffs());
+		featureEvents.add(new EventMobDropBuffs());
 		featureEvents.add(new EventBucketBlocksBreak());
 		featureEvents.add(new EventConfigChanged());
 		featureEvents.add(new EventEditSign());

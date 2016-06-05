@@ -25,7 +25,7 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteractSpecific;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventAnimalDropBuffs  implements IHasConfig{
+public class EventMobDropBuffs  implements IHasConfig{
 
 	public static boolean sheepShearBuffed;
 	private boolean zombieVillagerEmeralds;
@@ -91,20 +91,20 @@ public class EventAnimalDropBuffs  implements IHasConfig{
 		
 		String category = Const.ConfigCategory.mobs;
  
-		sheepShearBuffed = config.getBoolean("SheepBonus", category, true,
+		sheepShearBuffed = config.getBoolean("Sheep Shear Bonus", category, true,
 				"Shearing sheep randomly adds bonus wool");
 
-		zombieVillagerEmeralds = config.getBoolean("ZVillagerEmerald", category, true,
+		zombieVillagerEmeralds = config.getBoolean("Zombie Villager Emerald", category, true,
 				"Zombie villagers have a "+this.chanceZombieVillagerEmerald+"% chance to drop an emerald");
 
-		extraLeather = config.getBoolean("LeatherBonus", category, true,
-				"Leather drops randomly increased");
+		extraLeather = config.getBoolean("Leather Bonus", category, true,
+				"Leather drops from cows randomly increased");
 
-		bonusPork = config.getBoolean("PorkBonus", category, true,
+		bonusPork = config.getBoolean("Pork Bonus", category, true,
 				"Pig drops randomly increased");
 
-		bonusGolemIron = config.getBoolean("IronBonus", category, true,
-				"Iron Golem random iron ingot drops increased");
+		bonusGolemIron = config.getBoolean("Iron Bonus", category, true,
+				"Iron Golem drops randomly increased");
 		
 	}
 }

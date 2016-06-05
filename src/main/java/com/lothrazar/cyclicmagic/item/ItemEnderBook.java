@@ -3,11 +3,9 @@ package com.lothrazar.cyclicmagic.item;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler; 
-import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilExperience;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSearchWorld;
@@ -22,12 +20,11 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
+public class ItemEnderBook extends BaseItem implements IHasRecipe{
 	public static String KEY_LOC = "location";
 	public static String KEY_LARGEST = "loc_largest";
 	public static boolean enabled;
@@ -251,15 +248,6 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
 			return Math.round(X) + ", " + Math.round(Y) + ", " + Math.round(Z); // +
 																				// showName
 		}
-	}
-
-	public void syncConfig(Configuration config) {
-		String category;
-
-		category = Const.ConfigCategory.items;
-
-		enabled = config.getBoolean("EnderBook", category, true, "A special book that can store your location as a waypoint, and let you teleport back.  Cost is 1 exp per 10 blocks of horizontal distance");
-		
 	}
 
 	public static int getExpCostPerTeleport(EntityPlayer player,ItemStack book, int slot) {

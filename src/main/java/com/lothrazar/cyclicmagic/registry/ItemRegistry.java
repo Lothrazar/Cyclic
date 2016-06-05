@@ -52,7 +52,6 @@ import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemRegistry {
@@ -156,7 +155,7 @@ public class ItemRegistry {
 		return i;
 	}
 	
-	private static boolean emeraldGearEnabled ; 
+//	private static boolean emeraldGearEnabled ; 
 	public static ToolMaterial		MATERIAL_EMERALD;
 	public static ArmorMaterial		ARMOR_MATERIAL_EMERALD;
 	public final static Item		REPAIR_EMERALD = Items.EMERALD;
@@ -166,7 +165,7 @@ public class ItemRegistry {
 	//private static final int[]	diamondreductionAmounts	= new int[] { 3, 6, 8, 3 };
  
 	public static void syncConfig(Configuration config) {
-		Property prop;
+//		Property prop;
 		Item item;
 		for (String key : itemMap.keySet()) {
 			item = itemMap.get(key);
@@ -174,11 +173,11 @@ public class ItemRegistry {
 				((IHasConfig) item).syncConfig(config);
 			}
 		}
-		
-		String category = Const.ConfigCategory.items;
-		prop = config.get(category, "EmeraldGear", true, "Full set of emerald gear with similar properties as diamond");
-		prop.setRequiresMcRestart(true);
-		emeraldGearEnabled = prop.getBoolean();
+//		
+//		String category = Const.ConfigCategory.items;
+//		prop = config.get(category, "EmeraldGear", true, "Full set of emerald gear with similar properties as diamond");
+//		prop.setRequiresMcRestart(true);
+//		emeraldGearEnabled = prop.getBoolean();
 
 		ItemFoodHorse.syncConfig(config);
 	}
@@ -216,39 +215,29 @@ public class ItemRegistry {
 		// http://bedrockminer.jimdo.com/modding-tutorials/basic-modding-1-7/custom-tools-swords/
 
 		
-		
-		if (emeraldGearEnabled) {
+		 
+ 
+		addItem(new ItemEmeraldSword(), ItemEmeraldSword.name);
+ 
+		addItem(new ItemEmeraldPickaxe(), ItemEmeraldPickaxe.name);
+ 
+		addItem(new ItemEmeraldAxe(), ItemEmeraldAxe.name);
+ 
+		addItem(new ItemEmeraldSpade(), ItemEmeraldSpade.name);
+ 
+		addItem( new ItemEmeraldHoe(), ItemEmeraldHoe.name);
 
-			Item emerald_sword = new ItemEmeraldSword();
-			addItem(emerald_sword, ItemEmeraldSword.name);
+		// ..yeah.. kind of breaks the pattern. i could make one class for each i
+		// guess. 
+		addItem(new ItemEmeraldArmor(EntityEquipmentSlot.HEAD), "emerald_helmet");
+ 
+		addItem(new ItemEmeraldArmor(EntityEquipmentSlot.CHEST), "emerald_chestplate");
+ 
+		addItem( new ItemEmeraldArmor(EntityEquipmentSlot.LEGS), "emerald_leggings");
+ 
+		addItem(new ItemEmeraldArmor(EntityEquipmentSlot.FEET), "emerald_boots");
 
-			Item emerald_pickaxe = new ItemEmeraldPickaxe();
-			addItem(emerald_pickaxe, ItemEmeraldPickaxe.name);
-
-			Item emerald_axe = new ItemEmeraldAxe();
-			addItem(emerald_axe, ItemEmeraldAxe.name);
-
-			Item emerald_spade = new ItemEmeraldSpade();
-			addItem(emerald_spade, ItemEmeraldSpade.name);
-
-			Item emerald_hoe = new ItemEmeraldHoe();
-			addItem(emerald_hoe, ItemEmeraldHoe.name);
-
-			// ..yeah.. kind of breaks the pattern. i could make one class for each i
-			// guess.
-			Item emerald_helmet = new ItemEmeraldArmor(EntityEquipmentSlot.HEAD);
-			addItem(emerald_helmet, "emerald_helmet");
-
-			Item emerald_chestplate = new ItemEmeraldArmor(EntityEquipmentSlot.CHEST);
-			addItem(emerald_chestplate, "emerald_chestplate");
-
-			Item emerald_leggings = new ItemEmeraldArmor(EntityEquipmentSlot.LEGS);
-			addItem(emerald_leggings, "emerald_leggings");
-
-			Item emerald_boots = new ItemEmeraldArmor(EntityEquipmentSlot.FEET);
-			addItem(emerald_boots, "emerald_boots");
-
-		}
+ 
   
   
 		//maybe one day it will be all base items

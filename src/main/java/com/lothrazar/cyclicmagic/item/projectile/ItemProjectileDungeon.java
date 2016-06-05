@@ -27,7 +27,7 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
 	@Override
 	public void syncConfig(Configuration config) {
  
-		DUNGEONRADIUS = config.getInt("dungeon.radius", Const.ConfigCategory.items_projectiles, 64, 8, 128, "Search distance");
+		DUNGEONRADIUS = config.getInt("Ender Dungeon Radius", Const.ConfigCategory.items, 64, 8, 128, "Search radius of dungeonfinder");
 
 	}
 

@@ -23,7 +23,7 @@ public class UtilUncraft {
 	                                                                        // were
 	// null
 
-	public static int							TIMER_FULL;
+	public static final int							TIMER_FULL = 200;
 
 	private ArrayList<ItemStack>	drops;
 	private ItemStack							toUncraft;
