@@ -162,20 +162,22 @@ public class ModMain {
 
 	}
 	/* 
-	 * alpha 8: 
+	 * FIX SOON
 	 * 
-	 * rebalance emerald armor
-	 * rebalance uncrafting: increase time OR add fuel
-	 * Take launch spell and try to put it in a block -> corrupted slime block?
-	 * block breaker
-	 * 
-	 * nerf corrupted chorus fruit from 10 to 5 seconds 
+	 * EventNoclipUpdate : dont use entitydata, because logout login, or a death, you will be stuck?
+	 *
 	 * Disable backpack item OR fix the vertical location/height offscreen issue
 	 * 
 	 * 
-	 * Many more things could be in config but outside of ingame gui
+	 * FUTURE FEATURES
 	 * 
-	 * TODO LIST
+	 * Take launch spell and try to put it in a block -> corrupted slime block?
+	 * 
+	 *????? Many more things could be in config but outside of ingame gui
+	 * 
+	 * rebalance uncrafting: ?? add fuel
+	 * 
+	 * block breaker
 	 * 
 	 * SORTING
 	 *  

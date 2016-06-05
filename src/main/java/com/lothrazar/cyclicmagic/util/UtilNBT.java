@@ -2,15 +2,12 @@ package com.lothrazar.cyclicmagic.util;
 
 import java.util.ArrayList;
 
-import com.lothrazar.cyclicmagic.ModMain;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.potion.Potion;
 import net.minecraft.util.math.BlockPos;
 
 public class UtilNBT {
@@ -47,7 +44,7 @@ public class UtilNBT {
 
 		int prev = player.getEntityData().getInteger(prop);
 		prev += inc;
-		ModMain.logger.warn("WARN: dont use entitydata here");
+
 		player.getEntityData().setInteger(prop, prev);
 	}
 
@@ -165,32 +162,18 @@ public class UtilNBT {
 
 		return held.getTagCompound();
 	}
-
-	public static NBTTagCompound buildPotionSimple(String name) {
-		// REF : http://minecraft.gamepedia.com/Player.dat_format#Potion_Effects
-		//example: minecraft:thick/awkward has no effects
-		NBTTagCompound tags = new NBTTagCompound();
+//
+//	public static NBTTagCompound buildPotionTag(Potion potionIn, int level, int duration, String name) {
+//		// REF : http://minecraft.gamepedia.com/Player.dat_format#Potion_Effects
+//		NBTTagCompound tags = new NBTTagCompound();
+//		tags.setString("Potion", name);
 //		NBTTagCompound inner = new NBTTagCompound();
 //		inner.setInteger("Id", Potion.getIdFromPotion(potionIn));
 //		inner.setInteger("Amplifier", level);
 //		inner.setInteger("Duration", duration);
 //		inner.setBoolean("ShowParticles", true);
 //		tags.setTag("CustomPotionEffects", inner);
-		tags.setString("Potion", name);
-		
-		return tags;
-	}
-	public static NBTTagCompound buildPotionTag(Potion potionIn, int level, int duration, String name) {
-		// REF : http://minecraft.gamepedia.com/Player.dat_format#Potion_Effects
-		NBTTagCompound tags = new NBTTagCompound();
-		tags.setString("Potion", name);
-		NBTTagCompound inner = new NBTTagCompound();
-		inner.setInteger("Id", Potion.getIdFromPotion(potionIn));
-		inner.setInteger("Amplifier", level);
-		inner.setInteger("Duration", duration);
-		inner.setBoolean("ShowParticles", true);
-		tags.setTag("CustomPotionEffects", inner);
-		
-		return tags;
-	}
+//		
+//		return tags;
+//	}
 }

@@ -3,7 +3,6 @@ package com.lothrazar.cyclicmagic.item;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
@@ -14,13 +13,13 @@ public class ItemEmeraldSword extends ItemSword implements IHasRecipe {
 
 	public ItemEmeraldSword() {
 
-		super(ItemRegistry.MATERIAL_EMERALD);
+		super(ItemRegistry.TOOL_MATERIAL_EMERALD);
 	}
 
 	@Override
 	public void addRecipe() {
 
-		GameRegistry.addShapedRecipe(new ItemStack(this), " e ", " e ", " s ", 'e', new ItemStack(Blocks.EMERALD_BLOCK), 's', new ItemStack(Items.STICK));
+		GameRegistry.addShapedRecipe(new ItemStack(this), " e ", " e ", " s ", 'e', new ItemStack(ItemRegistry.REPAIR_EMERALD), 's', new ItemStack(Items.STICK));
 
 	}
 }

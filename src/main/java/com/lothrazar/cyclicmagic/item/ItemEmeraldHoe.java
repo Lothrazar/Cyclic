@@ -2,8 +2,6 @@ package com.lothrazar.cyclicmagic.item;
 
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
-
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
@@ -15,7 +13,7 @@ public class ItemEmeraldHoe extends ItemHoe implements IHasRecipe {
 
 	public ItemEmeraldHoe() {
 
-		super(ItemRegistry.MATERIAL_EMERALD);
+		super(ItemRegistry.TOOL_MATERIAL_EMERALD);
 	}
 
 	@Override
@@ -27,7 +25,7 @@ public class ItemEmeraldHoe extends ItemHoe implements IHasRecipe {
 
 	@Override
 	public void addRecipe() {
-		GameRegistry.addShapedRecipe(new ItemStack(this), "ee ", " s ", " s ", 'e', new ItemStack(Blocks.EMERALD_BLOCK), 's', new ItemStack(Items.STICK));
-		GameRegistry.addShapedRecipe(new ItemStack(this), " ee", " s ", " s ", 'e', new ItemStack(Blocks.EMERALD_BLOCK), 's', new ItemStack(Items.STICK));
+		GameRegistry.addShapedRecipe(new ItemStack(this), "ee ", " s ", " s ", 'e', new ItemStack(ItemRegistry.REPAIR_EMERALD), 's', new ItemStack(Items.STICK));
+		GameRegistry.addShapedRecipe(new ItemStack(this), " ee", " s ", " s ", 'e', new ItemStack(ItemRegistry.REPAIR_EMERALD), 's', new ItemStack(Items.STICK));
 	}
 }

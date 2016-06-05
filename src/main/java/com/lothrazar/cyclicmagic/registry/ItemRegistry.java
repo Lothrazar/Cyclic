@@ -156,7 +156,7 @@ public class ItemRegistry {
 	}
 	
 //	private static boolean emeraldGearEnabled ; 
-	public static ToolMaterial		MATERIAL_EMERALD;
+	public static ToolMaterial		TOOL_MATERIAL_EMERALD;
 	public static ArmorMaterial		ARMOR_MATERIAL_EMERALD;
 	public final static Item		REPAIR_EMERALD = Items.EMERALD;
 
@@ -195,7 +195,18 @@ public class ItemRegistry {
 
 	public static void register() {
 		registerMaterials();
-
+		// thanks for help:
+		// http://bedrockminer.jimdo.com/modding-tutorials/basic-modding-1-7/custom-tools-swords/
+		addItem(new ItemEmeraldSword(), ItemEmeraldSword.name);
+		addItem(new ItemEmeraldPickaxe(), ItemEmeraldPickaxe.name);
+		addItem(new ItemEmeraldAxe(), ItemEmeraldAxe.name);
+		addItem(new ItemEmeraldSpade(), ItemEmeraldSpade.name);
+		addItem( new ItemEmeraldHoe(), ItemEmeraldHoe.name);
+		addItem(new ItemEmeraldArmor(EntityEquipmentSlot.HEAD), "emerald_helmet");
+		addItem(new ItemEmeraldArmor(EntityEquipmentSlot.CHEST), "emerald_chestplate");
+		addItem( new ItemEmeraldArmor(EntityEquipmentSlot.LEGS), "emerald_leggings");
+		addItem(new ItemEmeraldArmor(EntityEquipmentSlot.FEET), "emerald_boots");
+		
 //		addItem(new ItemFlintTool(),"flint_tool");
 
 		potion_ender.addEffect(PotionRegistry.ender, 60*3,PotionRegistry.I);
@@ -208,38 +219,6 @@ public class ItemRegistry {
 		potion_waterwalk_long.addEffect(PotionRegistry.waterwalk, 60*8,PotionRegistry.I);
 		potion_slowfall_long.addEffect(PotionRegistry.slowfall, 60*8,PotionRegistry.I);
 	
-			
-
-
-		// thanks for help:
-		// http://bedrockminer.jimdo.com/modding-tutorials/basic-modding-1-7/custom-tools-swords/
-
-		
-		 
- 
-		addItem(new ItemEmeraldSword(), ItemEmeraldSword.name);
- 
-		addItem(new ItemEmeraldPickaxe(), ItemEmeraldPickaxe.name);
- 
-		addItem(new ItemEmeraldAxe(), ItemEmeraldAxe.name);
- 
-		addItem(new ItemEmeraldSpade(), ItemEmeraldSpade.name);
- 
-		addItem( new ItemEmeraldHoe(), ItemEmeraldHoe.name);
-
-		// ..yeah.. kind of breaks the pattern. i could make one class for each i
-		// guess. 
-		addItem(new ItemEmeraldArmor(EntityEquipmentSlot.HEAD), "emerald_helmet");
- 
-		addItem(new ItemEmeraldArmor(EntityEquipmentSlot.CHEST), "emerald_chestplate");
- 
-		addItem( new ItemEmeraldArmor(EntityEquipmentSlot.LEGS), "emerald_leggings");
- 
-		addItem(new ItemEmeraldArmor(EntityEquipmentSlot.FEET), "emerald_boots");
-
- 
-  
-  
 		//maybe one day it will be all base items
 		Item item;
 		for (String key : itemMap.keySet()) {
@@ -253,38 +232,44 @@ public class ItemRegistry {
 			}
 		}
 
-
 		registerRecipes();
 	}
 
+	//from ArmorMaterial.DIAMOND, second constuctor param
+	//used as a ratio for durability
+	private static final int maxDamageFactorDiamond = 33;
+	private static final String emeraldName = "emerald";
+	/*  as of 1.9.4 : 
+	 * LEATHER("leather", 5, new int[]{1, 2, 3, 1}, 15, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.0F),
+        CHAIN("chainmail", 15, new int[]{1, 4, 5, 2}, 12, SoundEvents.ITEM_ARMOR_EQUIP_CHAIN, 0.0F),
+        IRON("iron", 15, new int[]{2, 5, 6, 2}, 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F),
+        GOLD("gold", 7, new int[]{1, 3, 5, 2}, 25, SoundEvents.ITEM_ARMOR_EQUIP_GOLD, 0.0F),
+        DIAMOND("diamond", 33, new int[]{3, 6, 8, 3}, 10, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2.0F);
+*/
 	private static void registerMaterials() {
 		
 		ARMOR_MATERIAL_EMERALD = 
-				EnumHelper.addArmorMaterial("emerald", Const.MODID + ":emerald",  
-						33,//same as diamond   
-						new int[]{
-							 ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.HEAD)
-							,ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.CHEST)
-							,ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.LEGS)
-							,ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.FEET)
-						}, 
-						ArmorMaterial.DIAMOND.getEnchantability(), 
-						ArmorMaterial.DIAMOND.getSoundEvent(),
-						ArmorMaterial.DIAMOND.getToughness());
+				EnumHelper.addArmorMaterial(emeraldName, Const.MODRES + emeraldName,  
+					maxDamageFactorDiamond - 2,//affects DURABILITY 
+					new int[]{ 
+						 ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.FEET)
+						,ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.LEGS)
+						,ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.CHEST)
+						,ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.HEAD)
+					}, 
+					ArmorMaterial.GOLD.getEnchantability(), 
+					ArmorMaterial.DIAMOND.getSoundEvent(),
+					ArmorMaterial.DIAMOND.getToughness() / 2);
 
-		//enum helper is broken
-		//https://github.com/MinecraftForge/MinecraftForge/issues/2870
-		//https://github.com/MinecraftForge/MinecraftForge/pull/2874
-		// TODO: addToolMat causes a bug/crash, not sure if forge will fix.
-		//	EnumHelper.addToolMaterial("emerald", harvestLevel, maxUses, efficiency, damage, enchantability)
-		//ToolMaterial.DIAMOND;
-		MATERIAL_EMERALD = //ToolMaterial.DIAMOND;
-		
-			EnumHelper.addToolMaterial("emerald", 
-				ToolMaterial.DIAMOND.getHarvestLevel(), ToolMaterial.DIAMOND.getMaxUses(), 
+        //max uses is durability ex The number of uses this material allows.
+		//as of 1.9.4 :  (wood = 59, stone = 131, iron = 250, diamond = 1561, gold = 32)
+		TOOL_MATERIAL_EMERALD = 
+			EnumHelper.addToolMaterial(emeraldName, 
+				ToolMaterial.DIAMOND.getHarvestLevel(), 
+				ToolMaterial.DIAMOND.getMaxUses() - 261, 
 				ToolMaterial.DIAMOND.getEfficiencyOnProperMaterial(), 
-				ToolMaterial.DIAMOND.getDamageVsEntity(), 
-				ToolMaterial.DIAMOND.getEnchantability());
+				ToolMaterial.DIAMOND.getDamageVsEntity() - 0.25F, 
+				ToolMaterial.GOLD.getEnchantability());
 		
 		// EnumHelper.addToolMaterial("emerald", 3, harvestLevel 3 same as diamond
 		// 1600,3.5F, 5+25 );

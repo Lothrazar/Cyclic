@@ -33,7 +33,7 @@ public class ItemFoodCrafting extends ItemFood implements IHasRecipe,IHasConfig{
 
 		final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(player);
 		data.setInventoryCrafting(true);
-		player.getEntityData().setBoolean("X", true);
+		
 		
 		UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT_MAGIC, player.getPosition());
 		UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT_MAGIC, player.getPosition().up());

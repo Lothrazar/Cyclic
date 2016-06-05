@@ -2,8 +2,6 @@ package com.lothrazar.cyclicmagic.item;
 
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
-
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
@@ -19,7 +17,7 @@ public class ItemEmeraldAxe extends ItemAxe implements IHasRecipe {
     */
 	public ItemEmeraldAxe() {
 		// protected ItemAxe(Item.ToolMaterial material, int damage, int speed)
-		super(ItemRegistry.MATERIAL_EMERALD,6,-3);
+		super(ItemRegistry.TOOL_MATERIAL_EMERALD,6,-3);
 	}
 
 	@Override
@@ -31,8 +29,8 @@ public class ItemEmeraldAxe extends ItemAxe implements IHasRecipe {
 
 	@Override
 	public void addRecipe() {
-		GameRegistry.addShapedRecipe(new ItemStack(this), "ee ", "es ", " s ", 'e', new ItemStack(Blocks.EMERALD_BLOCK), 's', new ItemStack(Items.STICK));
+		GameRegistry.addShapedRecipe(new ItemStack(this), "ee ", "es ", " s ", 'e', new ItemStack(ItemRegistry.REPAIR_EMERALD), 's', new ItemStack(Items.STICK));
 
-		GameRegistry.addShapedRecipe(new ItemStack(this), " ee", " se", " s ", 'e', new ItemStack(Blocks.EMERALD_BLOCK), 's', new ItemStack(Items.STICK));
+		GameRegistry.addShapedRecipe(new ItemStack(this), " ee", " se", " s ", 'e', new ItemStack(ItemRegistry.REPAIR_EMERALD), 's', new ItemStack(Items.STICK));
 	}
 }

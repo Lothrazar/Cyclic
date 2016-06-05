@@ -3,7 +3,6 @@ package com.lothrazar.cyclicmagic.item;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 
-import net.minecraft.init.Blocks;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
@@ -21,20 +20,20 @@ public class ItemEmeraldArmor extends ItemArmor implements IHasRecipe {
 
 		switch (this.armorType) {
 		case CHEST:
-			GameRegistry.addShapedRecipe(new ItemStack(this), "e e", "eee", "eee", 'e', new ItemStack(Blocks.EMERALD_BLOCK));
+			GameRegistry.addShapedRecipe(new ItemStack(this), "e e", "eee", "eee", 'e', new ItemStack(ItemRegistry.REPAIR_EMERALD));
 		break;
 		case FEET:
-			GameRegistry.addShapedRecipe(new ItemStack(this), "e e", "e e", "   ", 'e', new ItemStack(Blocks.EMERALD_BLOCK));
-			GameRegistry.addShapedRecipe(new ItemStack(this), "   ", "e e", "e e", 'e', new ItemStack(Blocks.EMERALD_BLOCK));
+			GameRegistry.addShapedRecipe(new ItemStack(this), "e e", "e e", "   ", 'e', new ItemStack(ItemRegistry.REPAIR_EMERALD));
+			GameRegistry.addShapedRecipe(new ItemStack(this), "   ", "e e", "e e", 'e', new ItemStack(ItemRegistry.REPAIR_EMERALD));
 		break;
 		case HEAD:
-			GameRegistry.addShapedRecipe(new ItemStack(this), "eee", "e e", "   ", 'e', new ItemStack(Blocks.EMERALD_BLOCK));
+			GameRegistry.addShapedRecipe(new ItemStack(this), "eee", "e e", "   ", 'e', new ItemStack(ItemRegistry.REPAIR_EMERALD));
 
-			GameRegistry.addShapedRecipe(new ItemStack(this), "   ", "eee", "e e", 'e', new ItemStack(Blocks.EMERALD_BLOCK));
+			GameRegistry.addShapedRecipe(new ItemStack(this), "   ", "eee", "e e", 'e', new ItemStack(ItemRegistry.REPAIR_EMERALD));
 
 		break;
 		case LEGS:
-			GameRegistry.addShapedRecipe(new ItemStack(this), "eee", "e e", "e e", 'e', new ItemStack(Blocks.EMERALD_BLOCK));
+			GameRegistry.addShapedRecipe(new ItemStack(this), "eee", "e e", "e e", 'e', new ItemStack(ItemRegistry.REPAIR_EMERALD));
 		break;
 		case MAINHAND:
 		break;

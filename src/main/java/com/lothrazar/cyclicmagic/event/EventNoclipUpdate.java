@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.event;
 
 import com.lothrazar.cyclicmagic.IHasConfig;
-import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
@@ -25,14 +24,14 @@ public class EventNoclipUpdate implements IHasConfig{
 	private static final String KEY_TIMER = "ghost_timer";
 	private static final String KEY_EATLOC = "ghost_location";
 	private static final String KEY_EATDIM = "ghost_dim";
-	private static final int GHOST_SECONDS = 10;
-	private final static int POTION_SECONDS = 20;
+	public static int GHOST_SECONDS = 5;
+	public static int POTION_SECONDS = 20;
 	
 	public static void setPlayerGhostMode(EntityPlayer player, World par2World) {
 		if (par2World.isRemote == false){
 			player.setGameType(GameType.SPECTATOR);
 
-			ModMain.logger.warn("WARN: dont use entitydata here");
+//			ModMain.logger.warn("WARN: dont use entitydata here");
 			UtilNBT.incrementPlayerIntegerNBT(player, KEY_TIMER, GHOST_SECONDS * Const.TICKS_PER_SEC);
 			player.getEntityData().setBoolean(KEY_BOOLEAN, true);
 			player.getEntityData().setString(KEY_EATLOC, UtilNBT.posToStringCSV(player.getPosition()));
@@ -52,7 +51,7 @@ public class EventNoclipUpdate implements IHasConfig{
 
 		if (player.getEntityData().getBoolean(KEY_BOOLEAN)) {
 			//currently in ghost mode now
-			ModMain.logger.warn("WARN: dont use entitydata here");
+//			ModMain.logger.warn("WARN: dont use entitydata here");
 			int playerGhost = player.getEntityData().getInteger(KEY_TIMER);
 			
 			if (playerGhost > 0) {

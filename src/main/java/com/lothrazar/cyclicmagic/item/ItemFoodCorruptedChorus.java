@@ -3,6 +3,8 @@ package com.lothrazar.cyclicmagic.item;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.event.EventNoclipUpdate;
+import com.lothrazar.cyclicmagic.util.Const;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemFood;
@@ -38,5 +40,13 @@ public class ItemFoodCorruptedChorus extends ItemFood implements IHasRecipe,IHas
 	@Override
 	public void syncConfig(Configuration config) {
 		// TODO SECONDS
+		
+		String category = Const.ConfigCategory.modpackMisc;
+		
+		EventNoclipUpdate.GHOST_SECONDS = config.getInt("CorruptedChorusSeconds", category, 5, 1, 60, "How long you can noclip after eating corrupted chorus");
+
+		EventNoclipUpdate.POTION_SECONDS = config.getInt("CorruptedChorusPotions", category, 10, 1, 60, "How long the negative potion effects last after a corrupted chorus teleports you");
+		
+		
 	} 
 }
