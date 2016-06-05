@@ -2,10 +2,12 @@ package com.lothrazar.cyclicmagic.item;
 
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
+import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
@@ -25,10 +27,12 @@ public class ItemFoodHeart extends ItemFood implements IHasRecipe{
 	@Override
 	protected void onFoodEaten(ItemStack par1ItemStack, World world, EntityPlayer player) {
  
-//		IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(player);
+		IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(player);
 		
 		//one heart is 2 health points (half heart = 1 health)
-		UtilEntity.incrementMaxHealth(player, 2 * numHearts);  
+		int newVal = UtilEntity.incrementMaxHealth(player, 2 * numHearts);  
+		
+		prop.setMaxHealth(newVal);
 	}
 
 	@Override
@@ -40,7 +44,7 @@ public class ItemFoodHeart extends ItemFood implements IHasRecipe{
 				,Items.PUMPKIN_PIE
 				,Items.DIAMOND
 				,Items.CAKE
-				,Items.COOKIE
+				,Blocks.EMERALD_BLOCK
 				,new ItemStack(Items.FISH,1,Const.fish_salmon)
 				,Items.GOLDEN_APPLE
 				,Items.POISONOUS_POTATO
