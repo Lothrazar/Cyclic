@@ -155,7 +155,7 @@ public class BlockRegistry {
 	
 	public static void syncConfig(Configuration config) {
 
-		String category = Const.ConfigCategory.blockChanges;
+		String category = Const.ConfigCategory.blocks;
 
 		spawnersUnbreakable = config.getBoolean("Spawners Unbreakable", category, true, "Make mob spawners unbreakable");
 // 

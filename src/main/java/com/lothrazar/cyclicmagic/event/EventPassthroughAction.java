@@ -99,7 +99,7 @@ public class EventPassthroughAction  implements IHasConfig{
 
 		String category = Const.ConfigCategory.player;
 
-		passThroughClick = config.getBoolean("PassThroughClick", category, true,
+		passThroughClick = config.getBoolean("Pass-Through Click", category, true,
 				"Open chests (and other containers) by passing right through the attached signs, banners, and item frames");
 
 		

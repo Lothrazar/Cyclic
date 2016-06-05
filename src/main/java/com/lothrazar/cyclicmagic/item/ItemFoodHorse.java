@@ -220,12 +220,12 @@ public class ItemFoodHorse extends BaseItem implements IHasRecipe {
 
 	public static void syncConfig(Configuration config) {
 
-		String category = Const.ConfigCategory.itemsHorsefood; 
+		String category = Const.ConfigCategory.modpackMisc; 
 
 //		ItemFoodHorse.horseFoodEnabled = config.getBoolean("Enabled", category, true, "To disable all horse upgrade food");
-		ItemFoodHorse.HEARTS_MAX = config.getInt("Max Hearts", category, 20, 1, 100, "Maximum number of upgraded hearts");
-		ItemFoodHorse.JUMP_MAX = config.getInt("Max Jump", category, 6, 1, 20, "Maximum value of jump.  Naturally spawned/bred horses seem to max out at 5.5");
-		ItemFoodHorse.SPEED_MAX = config.getInt("Max Speed", category, 50, 1, 99, "Maximum value of speed (this is NOT blocks/per second or anything like that)");
+		ItemFoodHorse.HEARTS_MAX = config.getInt("HorseFood Max Hearts", category, 20, 1, 100, "Maximum number of upgraded hearts");
+		ItemFoodHorse.JUMP_MAX = config.getInt("HorseFood Max Jump", category, 6, 1, 20, "Maximum value of jump.  Naturally spawned/bred horses seem to max out at 5.5");
+		ItemFoodHorse.SPEED_MAX = config.getInt("HorseFood Max Speed", category, 50, 1, 99, "Maximum value of speed (this is NOT blocks/per second or anything like that)");
 
 	}
 }

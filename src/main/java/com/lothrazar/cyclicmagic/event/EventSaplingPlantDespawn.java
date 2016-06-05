@@ -51,7 +51,7 @@ public class EventSaplingPlantDespawn  implements IHasConfig{
 	}
 
 	public  void syncConfig(Configuration config) {
-		String category = Const.ConfigCategory.environment;
+		String category = Const.ConfigCategory.blocks;
 		
 		enabled = config.getBoolean("Plant Despawning Saplings", category, true, "Plant saplings (and mushrooms) if they despawn on grass/dirt");
 		

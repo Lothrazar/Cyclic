@@ -12,21 +12,15 @@ public class Const {
 		public static final String mobs = MODCONF + "mobs";
 		public static final String mobspawns = MODCONF + "Mob Spawns";
 		public static final String blocks = MODCONF + "blocks";
-//		public static final String uncrafting = MODCONF + "uncrafting";
-		public static final String blockChanges = MODCONF + "blockchanges";
-		public static final String environment = MODCONF + "environment";
-		public static final String commands = MODCONF + "commands";
 		public static final String inventory = MODCONF + "Inventory";
-	//	public static final String inventoryButtons = inventory + "Buttons";
 		public static final String items = MODCONF + "items";
-		public static final String itemsEnderbook = MODCONF + "enderbook";
-		public static final String itemsHorsefood = MODCONF + "horsefood";
-//		public static final String itemsProjectiles = items + ".projectiles";
 		public static final String recipes = MODCONF + "recipes";
 		public static final String villagers = MODCONF + "villagers";
-		public static final String itemScepters = MODCONF + "BuildScepter";
-		public static final String modpacks = "SaplingGrowthDetail";
-		public static final String inventoryModpack = "TerrariaButtonsModpackGuis";
+		
+		public static final String saplingBiomes = "SaplingGrowthDetail";
+		public static final String inventoryModpack = "terrariaButtonsModpackGuis";
+		public static final String modpackMisc = "modpacks";
+		public static final String commands = "commands";
 	}
 
 

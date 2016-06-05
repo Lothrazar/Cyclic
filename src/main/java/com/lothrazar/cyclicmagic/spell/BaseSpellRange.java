@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 
 public abstract class BaseSpellRange extends BaseSpell {
 
-	public static int maxRange = 64;// TODO: config
+	public static int maxRange = 64;
 
 	@Override
 	public void spawnParticle(World world, EntityPlayer p, BlockPos pos) {

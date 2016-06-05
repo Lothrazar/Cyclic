@@ -20,11 +20,9 @@ public class FuelRegistry {
 
 	public static void syncConfig(Configuration config) {
 
-		String category = Const.ConfigCategory.blockChanges;
+		String category = Const.ConfigCategory.items;
  
-		//config.setCategoryComment(category, msg);
-
-		Property prop = config.get(category, "More Fuel", true, "Tons more wood and plant related items now can burn as fuel");
+		Property prop = config.get(category, "More Furnace Fuel", true, "Tons more wood and plant related items now can burn as fuel");
 
 		enabled = prop.getBoolean();
 

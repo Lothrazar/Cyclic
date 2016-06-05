@@ -81,7 +81,7 @@ public class CommandRegistry {
 		prop.setRequiresMcRestart(true);
 		configToggle.put(name, prop.getBoolean());
 
-		prop = config.get(category, name + ".needs_op", defaultNeedsOp, "If true, only server OPs can run this command (or cheats enabled in single player)");
+		prop = config.get(category, name + ".NeedsOP", defaultNeedsOp, "If true, only server OPs can run this command (or cheats enabled in single player)");
 		prop.setRequiresMcRestart(true);
 		commandNeedsOp.put(name, prop.getBoolean());
 	}

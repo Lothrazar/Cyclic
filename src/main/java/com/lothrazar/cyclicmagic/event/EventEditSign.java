@@ -47,7 +47,10 @@ public class EventEditSign  implements IHasConfig{
 	@Override
 	public void syncConfig(Configuration config) {
 		String category = Const.ConfigCategory.player;
-		// TODO Auto-generated method stub
+
+		//TODO: put all custom categories in some central place?
+		config.addCustomCategoryComment(category, "Player Abilities and interactions");
+		
 		editableSigns = config.getBoolean("Editable Signs", category, true, "Allow editing signs with an empty hand");
 		
 	}

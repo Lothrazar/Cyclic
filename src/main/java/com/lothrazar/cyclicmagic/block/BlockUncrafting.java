@@ -172,7 +172,7 @@ public class BlockUncrafting extends Block implements IHasRecipe,IHasConfig {
 		// way to uncraft them. If this is set to false. then items like flowers and
 		// such will be allowed in, but then spat right back out again.");
 
-		String category = Const.ConfigCategory.modpacks;
+		String category = Const.ConfigCategory.saplingBiomes;
 		
 		UtilUncraft.dictionaryFreedom = config.getBoolean("PickFirstMeta", category, true, "If you change this to true, then the uncrafting will just take the first of many options in any recipe that takes multiple input types.  For example, false means chests cannot be uncrafted, but true means chests will ALWAYS give oak wooden planks.");
 		

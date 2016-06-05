@@ -47,7 +47,10 @@ public class EventFragileTorches  implements IHasConfig{
 
 	@Override
 	public void syncConfig(Configuration config) {
-		String category = Const.ConfigCategory.environment; 
+		String category = Const.ConfigCategory.blocks; 
+
+		//TODO: put all custom categories in some central place?
+		config.addCustomCategoryComment(category, "Tweaks to new and existing blocks");
 		
 		fragileTorches = config.getBoolean("Fragile Torches", category, true,
 				"Torches can get knocked over when passed through by living entities");

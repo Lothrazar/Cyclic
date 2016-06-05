@@ -409,10 +409,10 @@ public class ItemCyclicWand extends Item implements IHasRecipe ,IHasConfig{
 
 	@Override
 	public void syncConfig(Configuration config) {
-		String category = Const.ConfigCategory.itemScepters;
+		String category = Const.ConfigCategory.items;
 
 		SpellRegistry.renderOnLeft = config.getBoolean("Build Scepter HUD", category, true, "True for top left of the screen, false for top right");
-
+		category = Const.ConfigCategory.modpackMisc;
 		BaseSpellRange.maxRange = config.getInt("Build Scepter Max Range", category, 64, 8, 128, "Maximum range for all spells");
 	}
 

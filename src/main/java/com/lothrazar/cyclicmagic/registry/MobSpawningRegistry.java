@@ -76,6 +76,8 @@ public class MobSpawningRegistry {
 	public static void syncConfig(Configuration config) {
 
 		String category = Const.ConfigCategory.mobspawns;
+ 
+		config.addCustomCategoryComment(category, "Add mob spawns in more biomes");
 		
 		endermanNether = config.getBoolean("Enderman Nether", category, true, "Adds random Enderman spawns into the nether");
 		blazeDesertHills = config.getBoolean("Blaze DesertHills", category, true, "Adds random Blaze spawns into Desert Hills");

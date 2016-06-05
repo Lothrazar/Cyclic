@@ -108,13 +108,13 @@ public class EventSaplingBlockGrowth implements IHasConfig{
 	public void syncConfig(Configuration config) {
 		
 
-		String category = Const.ConfigCategory.environment;
+		String category = Const.ConfigCategory.blocks;
 		
 		enabled = config.getBoolean("Sapling Home Biomes", category, true, "Saplings are only allowed to grow into trees in their home biome, otherwise they turn to dead bushes.  (Biome ids listed in config file)");
 	 
-		category = Const.ConfigCategory.modpacks;
+		category = Const.ConfigCategory.saplingBiomes;
 
-		config.addCustomCategoryComment(category, "A list of biome IDs that each sapling is allowed to grow in.  Useful for modpacks that add extra biomes.  ");
+		config.addCustomCategoryComment(category, "Tweak the 'Sapling Home Biomes' feature: A list of biome IDs that each sapling is allowed to grow in.  Useful for modpacks that add extra biomes.  ");
 
 		String oakCSV = config.get(category, "oak", "4, 18, 132, 39, 166, 167, 21, 23, 151, 149, 22, 6, 134, 3, 20, 34, 12, 29, 157").getString();
 		oakBiomes = csvToInt(oakCSV);
