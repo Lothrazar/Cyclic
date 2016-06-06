@@ -6,7 +6,6 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler; 
-import com.lothrazar.cyclicmagic.util.UtilExperience;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSearchWorld;
 import com.lothrazar.cyclicmagic.util.UtilSound; 
@@ -27,7 +26,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemEnderBook extends BaseItem implements IHasRecipe{
 	public static String KEY_LOC = "location";
 	public static String KEY_LARGEST = "loc_largest";
-	public static boolean enabled;
+	
 	public static final String name = "book_ender";
 
 	public static int maximumSaved = 16;
@@ -136,53 +135,41 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe{
 		return  new BlockPos(loc.X, loc.Y, loc.Z);
 	}
 
-	public static void teleport(EntityPlayer player, int slot){
+	public static boolean teleport(EntityPlayer player, int slot){
 		ItemStack book = getPlayersBook(player);
 
 		String csv = book.getTagCompound().getString(ItemEnderBook.KEY_LOC + "_" + slot);
 
 		if (csv == null || csv.isEmpty()) {
-			return;
+			return false;
 		}
 
 		BookLocation loc = getLocation(book, slot);
 		if (player.dimension != loc.dimension) {
-			return;
+			return false;
 		}
 
-		// then drain
-		int cost = (int) getExpCostPerTeleport(player,book,slot);
-		UtilExperience.drainExp(player, cost);
-		// play twice on purpose. at old and new locations
-
-		UtilSound.playSound(player, player.getPosition(), SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT);
+//		UtilSound.playSound(player, player.getPosition(), SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT);
 
 		if (player instanceof EntityPlayerMP) {
 			// thanks so much to
 			// http://www.minecraftforge.net/forum/index.php?topic=18308.0
 			EntityPlayerMP p = ((EntityPlayerMP) player);
-			float f = 0.5F;// center the player on the block. also moving up so
-							// not
-							// stuck in floor
+			float f = 0.5F;// center the player on the block. 
+			//also moving up so  not stuck in floor
 
 
-			//p.playerNetServerHandler
 			p.connection.setPlayerLocation(loc.X - f, loc.Y + 0.9, loc.Z - f, p.rotationYaw,p.rotationPitch);
 			BlockPos dest = new BlockPos(loc.X, loc.Y, loc.Z);
+			
 			// try and force chunk loading
 
-			player.worldObj.getChunkFromBlockCoords(dest).setChunkModified();// .markChunkDirty(dest,
-																				// null);
-			/*
-			 * //player.worldObj.markBlockForUpdate(dest);
-			 * if(MinecraftServer.getServer().worldServers.length > 0) {
-			 * WorldServer s = MinecraftServer.getServer().worldServers[0]; if(s
-			 * != null) { s.theChunkProviderServer.chunkLoadOverride = true;
-			 * s.theChunkProviderServer.loadChunk(dest.getX(),dest.getZ()); } }
-			 */
-		}
+			player.worldObj.getChunkFromBlockCoords(dest).setChunkModified();
+			
 
-		UtilSound.playSound(player, player.getPosition(), SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT);
+			UtilSound.playSound(player, dest, SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT);
+		}
+		return true;
 	}
 
 	public void addRecipe() {

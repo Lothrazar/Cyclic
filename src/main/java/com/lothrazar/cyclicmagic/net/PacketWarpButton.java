@@ -38,11 +38,15 @@ public class PacketWarpButton implements IMessage, IMessageHandler<PacketWarpBut
 
 		int cost = (int) ItemEnderBook.getExpCostPerTeleport(player,ItemEnderBook.getPlayersBook(player),message.slot);
 
-		if (cost != 0 && UtilExperience.getExpTotal(player) < cost) {
+		if(player.isCreative()){
+			ItemEnderBook.teleport(player, message.slot);
+		}
+		else if ( cost > 0 && UtilExperience.getExpTotal(player) < cost) {
 			player.addChatMessage(new TextComponentTranslation(I18n.format("gui.chatexp")));
 		}
-		else {
-			ItemEnderBook.teleport(player, message.slot);
+		else if(ItemEnderBook.teleport(player, message.slot)){
+			//if the teleport worked in non creative, drain it
+			UtilExperience.drainExp(player, cost);
 		}
 
 		return null;

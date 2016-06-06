@@ -162,10 +162,13 @@ public class ModMain {
 
 	}
 	/* 
-	 * TODO : bugs
+	 * TODO : soon
 	 * 
+	 * enderbook: ignore xp cost in creative
 	 * 
-	 * TODO : ideas
+	 * split longrange pushpull into upgraded tool
+	 * 
+	 * TODO : future plans
 	 * 
 	 * custom villager zombie textures
 	 * 
