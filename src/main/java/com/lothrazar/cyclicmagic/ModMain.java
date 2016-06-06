@@ -160,6 +160,22 @@ public class ModMain {
 	/* 
 	 * TODO : soon
 	 * 
+	 * BUG: rotation scepter max stack 1, and recipe output 1 not 8
+	 * 
+	 * change ender bomb recipes
+	 * 
+	 * config to disable corrupted elytra sound
+	 * 
+	 * inventory upgrade: enderchest instead of reg. add diamond/emerald/blaze powder to both?
+	 * 
+	 * SLEEPING MAT: should it take a bed as recipe?
+	 * 
+	 * POTION LEVITATION: REMOVE FEATHER RECIPE
+	 * 
+	 * LEVITATION 8 minutes: missing recipe
+	 * 
+	 * REDSTONE CARROT LANG: c is lowercase
+	 * 
 	 * TODO : future plans
 	 * 
 	 * custom villager zombie textures
