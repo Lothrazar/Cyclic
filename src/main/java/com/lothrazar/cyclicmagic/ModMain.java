@@ -2,28 +2,8 @@ package com.lothrazar.cyclicmagic;
 
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
-import com.lothrazar.cyclicmagic.registry.BlockRegistry;
-import com.lothrazar.cyclicmagic.registry.BrewingRegistry;
-import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
+import com.lothrazar.cyclicmagic.registry.*;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
-import com.lothrazar.cyclicmagic.registry.CommandRegistry;
-import com.lothrazar.cyclicmagic.registry.DispenserBehaviorRegistry;
-import com.lothrazar.cyclicmagic.registry.EventRegistry;
-import com.lothrazar.cyclicmagic.registry.FuelRegistry;
-import com.lothrazar.cyclicmagic.registry.ItemRegistry;
-import com.lothrazar.cyclicmagic.registry.MobSpawningRegistry;
-import com.lothrazar.cyclicmagic.registry.PacketRegistry;
-import com.lothrazar.cyclicmagic.registry.PotionRegistry;
-import com.lothrazar.cyclicmagic.registry.ProjectileRegistry;
-import com.lothrazar.cyclicmagic.registry.RecipeAlterRegistry;
-import com.lothrazar.cyclicmagic.registry.RecipeNewRegistry;
-import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
-import com.lothrazar.cyclicmagic.registry.SoundRegistry;
-import com.lothrazar.cyclicmagic.registry.SpellRegistry;
-import com.lothrazar.cyclicmagic.registry.StackSizeRegistry;
-import com.lothrazar.cyclicmagic.registry.TileEntityRegistry;
-import com.lothrazar.cyclicmagic.registry.VillageTradeRegistry;
-import com.lothrazar.cyclicmagic.registry.WorldGenRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 
 import net.minecraft.creativetab.CreativeTabs;
@@ -107,7 +87,6 @@ public class ModMain {
 
 		PotionRegistry.register();
 		ItemRegistry.register();
-		BrewingRegistry.register();
 		BlockRegistry.register();
 		SpellRegistry.register();
 		MobSpawningRegistry.register();

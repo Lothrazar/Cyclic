@@ -37,6 +37,7 @@ public class PotionRegistry {
 		GameRegistry.register(waterwalk,waterwalk.getIcon());
 		GameRegistry.register(slowfall,slowfall.getIcon());
 		GameRegistry.register(magnet,magnet.getIcon());
+	 
 	}
 
 	public static void addOrMergePotionEffect(EntityLivingBase player, PotionEffect newp) {
