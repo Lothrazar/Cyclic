@@ -164,8 +164,6 @@ public class ModMain {
 	/* 
 	 * TODO : soon
 	 * 
-	 * enderbook: ignore xp cost in creative
-	 * 
 	 * split longrange pushpull into upgraded tool
 	 * 
 	 * TODO : future plans

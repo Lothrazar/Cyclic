@@ -3,9 +3,11 @@ package com.lothrazar.cyclicmagic.item;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.gui.ModGuiHandler; 
+import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSearchWorld;
 import com.lothrazar.cyclicmagic.util.UtilSound; 
@@ -19,18 +21,18 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemEnderBook extends BaseItem implements IHasRecipe{
+public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
 	public static String KEY_LOC = "location";
 	public static String KEY_LARGEST = "loc_largest";
 	
-	public static final String name = "book_ender";
-
 	public static int maximumSaved = 16;
-	public static int btnsPerColumn = 8;
+	public static int expDistRatio = 10;
+	public static final int BTNS_PER_COLUMN = 8;
 
 	public ItemEnderBook() {
 		super();
@@ -78,10 +80,8 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe{
 			empty = 1;
 		} // first index is 1 not zero
 
-		UtilNBT.getTagCompoundNotNull(itemStack).setInteger(KEY_LARGEST, empty + 1);// save
-																					// the
-		// next empty
-		// one
+		UtilNBT.getTagCompoundNotNull(itemStack).setInteger(KEY_LARGEST, empty + 1);
+		
 		return empty;
 	}
 
@@ -106,9 +106,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe{
 
 		ItemStack book = getPlayersBook(player);
 
-		int id = getEmptySlotAndIncrement(book);// int slot =
-												// entityPlayer.inventory.currentItem
-												// + 1;
+		int id = getEmptySlotAndIncrement(book);
 
 		BookLocation loc = new BookLocation(id, player, name);
 
@@ -166,7 +164,6 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe{
 
 			player.worldObj.getChunkFromBlockCoords(dest).setChunkModified();
 			
-
 			UtilSound.playSound(player, dest, SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT);
 		}
 		return true;
@@ -240,6 +237,18 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe{
 	public static int getExpCostPerTeleport(EntityPlayer player,ItemStack book, int slot) {
 		BlockPos toPos = getLocationPos(book,slot);
 		int distance = (int)UtilSearchWorld.distanceBetweenHorizontal(toPos, player.getPosition());
-		return distance/10;
+		return (int)Math.round(distance / expDistRatio);
+	}
+
+	@Override
+	public void syncConfig(Configuration config) {
+
+		maximumSaved = config.getInt("EnderBookMaxSaved", Const.ConfigCategory.modpackMisc, 
+					16, 1, 64, "Maximum number of saved waypoints in the ender book.  It still uses "+BTNS_PER_COLUMN+
+					" per column, and putting too many may send it offscreen");
+
+		expDistRatio = config.getInt("EnderBookExpCostRatio", Const.ConfigCategory.modpackMisc, 
+					10, 1, 100, "The exp cost of teleporting is [the horizontal distance] divided by [this number] rounded to the nearest integer.  For example, if this number is 10, then teleporting 20 blocks costs 2 exp");
+		
 	}
 }

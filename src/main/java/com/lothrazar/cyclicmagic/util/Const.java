@@ -16,11 +16,11 @@ public class Const {
 		public static final String items = MODCONF + "items";
 		public static final String recipes = MODCONF + "recipes";
 		public static final String villagers = MODCONF + "villagers";
-		
-		public static final String saplingBiomes = "SaplingGrowthDetail";
-		public static final String inventoryModpack = "terrariaButtonsModpackGuis";
+
 		public static final String modpackMisc = "modpacks";
-		public static final String commands = "commands";
+		public static final String saplingBiomes = modpackMisc + ".SaplingGrowthDetail";
+		public static final String inventoryModpack = modpackMisc + ".TerrariaButtons";
+		public static final String commands = modpackMisc + ".Commands";
 	}
 
 

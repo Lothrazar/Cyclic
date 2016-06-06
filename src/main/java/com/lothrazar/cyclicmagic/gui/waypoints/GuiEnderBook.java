@@ -89,7 +89,7 @@ public class GuiEnderBook extends GuiScreen {
 			loc = list.get(i);
 			buttonText = (loc.display == null) ? I18n.format("gui.enderbook.go") : loc.display;
 
-			if (i % ItemEnderBook.btnsPerColumn == 0)  // do we start a new row?
+			if (i % ItemEnderBook.BTNS_PER_COLUMN == 0)  // do we start a new row?
 			{
 				x += w + delete_w + rowpad;
 				y = yStart;
