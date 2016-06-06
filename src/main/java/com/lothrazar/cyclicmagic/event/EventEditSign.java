@@ -12,7 +12,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 public class EventEditSign  implements IHasConfig{
 
@@ -26,9 +25,8 @@ public class EventEditSign  implements IHasConfig{
 		BlockPos pos = event.getPos();
 		World worldObj = event.getWorld();
 		if (pos == null) { return; }
-		//if (entityPlayer.isSneaking()) { return; }
-		ItemStack held = event.getItemStack();//entityPlayer.getHeldItem(event.getHand());
-
+	
+		ItemStack held = event.getItemStack();
 
 		TileEntity tile = worldObj.getTileEntity(pos);
 
@@ -36,8 +34,14 @@ public class EventEditSign  implements IHasConfig{
 		if (held == null && tile instanceof TileEntitySign) {
 
 			TileEntitySign sign = (TileEntitySign) tile;
-			// sign.setEditable(true);
-			ReflectionHelper.setPrivateValue(TileEntitySign.class, sign, true, "isEditable", "field_145916_j");
+			sign.setEditable(true);
+			//dont need reflection anymore... it used to be a private value but now we can use the set command
+//			try{
+//				ReflectionHelper.setPrivateValue(TileEntitySign.class, sign, true, "isEditable", "field_145916_j");
+//			}
+//			catch(Exception e){
+//				
+//			}
 			sign.setPlayer(entityPlayer);
 
 			entityPlayer.openEditSign(sign);
@@ -51,7 +55,7 @@ public class EventEditSign  implements IHasConfig{
 		//TODO: put all custom categories in some central place?
 		config.addCustomCategoryComment(category, "Player Abilities and interactions");
 		
-		editableSigns = config.getBoolean("Editable Signs", category, true, "Allow editing signs with an empty hand");
+		editableSigns = config.getBoolean("Editable Signs", category, true, "Allow editing signs with an empty hand by punching it (left click)");
 		
 	}
 }

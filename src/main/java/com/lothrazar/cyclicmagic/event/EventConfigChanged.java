@@ -1,14 +1,12 @@
 package com.lothrazar.cyclicmagic.event;
 
-import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.util.Const;
 
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventConfigChanged implements IHasConfig{
+public class EventConfigChanged{
 
 	@SubscribeEvent
 	public void onConfigChanged(OnConfigChangedEvent event) {
@@ -17,11 +15,5 @@ public class EventConfigChanged implements IHasConfig{
 
 			ModMain.instance.syncConfig();
 		}
-	}
-
-	@Override
-	public void syncConfig(Configuration config) {
-		// TODO Auto-generated method stub
-		
 	}
 }

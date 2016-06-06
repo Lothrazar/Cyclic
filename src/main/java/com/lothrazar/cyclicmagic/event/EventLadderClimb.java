@@ -11,6 +11,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class EventLadderClimb  implements IHasConfig{
 
 	private boolean fastLadderClimb;
+	private static final int ROTATIONLIMIT = -78;
+	private static final double SPEED = 0.60;
 	
 	@SubscribeEvent
 	public void onPlayerTick(LivingUpdateEvent event) {
@@ -23,9 +25,9 @@ public class EventLadderClimb  implements IHasConfig{
 			if(player.isOnLadder() && !player.isSneaking() && player.moveForward == 0){
 				//move up faster without 'w'
 		
-				if( player.rotationPitch < -78){
+				if( player.rotationPitch < ROTATIONLIMIT){
 					//even bigger to counter gravity
-					player.moveEntity(0, +0.4, 0);
+					player.moveEntity(0, SPEED, 0);
 				}
 			}
 		}
@@ -34,10 +36,8 @@ public class EventLadderClimb  implements IHasConfig{
 	@Override
 	public void syncConfig(Configuration config) {
 
-		String category = Const.ConfigCategory.player;
-		fastLadderClimb = config.getBoolean("Faster Ladders", category, true,
+		fastLadderClimb = config.getBoolean("Faster Ladders", Const.ConfigCategory.player, true,
 				"Allows you to quickly climb ladders by looking up instead of moving forward");
 
-		
 	}
 }

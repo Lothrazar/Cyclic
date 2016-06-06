@@ -164,8 +164,6 @@ public class ModMain {
 	/* 
 	 * TODO : soon
 	 * 
-	 * split longrange pushpull into upgraded tool
-	 * 
 	 * TODO : future plans
 	 * 
 	 * custom villager zombie textures
