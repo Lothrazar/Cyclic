@@ -33,6 +33,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -41,6 +42,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
@@ -126,6 +128,7 @@ public class ModMain {
 		//finally, some items have extra forge events to hook into
 
 		MinecraftForge.EVENT_BUS.register(ItemRegistry.corrupted_chorus);
+		MinecraftForge.EVENT_BUS.register(BlockRegistry.block_storeempty);
 		
 	}
 
@@ -142,7 +145,14 @@ public class ModMain {
 		CommandRegistry.register(event);
 	}
 
-	public static Configuration getConfig() {
+	@SubscribeEvent
+	public void onConfigChanged(OnConfigChangedEvent event) {
+		if (event.getModID().equals(Const.MODID)) {
+			ModMain.instance.syncConfig();
+		}
+	}
+	
+	public static Configuration getConfig(){
 		return config;
 	}
 

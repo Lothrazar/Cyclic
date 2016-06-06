@@ -5,6 +5,7 @@ import java.util.Random;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBucketStorage;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 
@@ -30,6 +31,8 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.minecraftforge.event.world.BlockEvent.BreakEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -305,10 +308,33 @@ public class BlockBucketStorage extends Block implements ITileEntityProvider {
 	}
 
 	public void addRecipe() {
+		if(this == BlockRegistry.block_storeempty)
+			GameRegistry.addRecipe(new ItemStack(this), "i i", " o ", "i i", 'o', Blocks.OBSIDIAN, 'i', Blocks.IRON_BLOCK);
+	
+		// the filled ones are not crafted, only obtained when filled and then harvested
+	}
+	
 
-		GameRegistry.addRecipe(new ItemStack(BlockRegistry.block_storeempty), "i i", " o ", "i i", 'o', Blocks.OBSIDIAN, 'i', Blocks.IRON_BLOCK);
+	@SubscribeEvent
+	public void onBreakEvent(BreakEvent event) {
 
-		// the filled ones are not crafted, only obtained when filled and then
-		// harvested
+		World world = event.getWorld();
+		BlockPos pos = event.getPos();
+		IBlockState state = event.getState();
+		TileEntity ent = world.getTileEntity(pos);
+
+		// TODO; check tool/pickaxe? if notHarvestable or whatever, drop the
+		// buckets and the ..glass?
+
+		if (ent != null && ent instanceof TileEntityBucketStorage) {
+			TileEntityBucketStorage t = (TileEntityBucketStorage) ent;
+			ItemStack stack = new ItemStack(state.getBlock());
+
+			UtilNBT.setItemStackNBT(stack, BlockBucketStorage.NBTBUCKETS, t.getBuckets());
+
+			UtilEntity.dropItemStackInWorld(world, pos, stack);
+
+			t.setBuckets(0);
+		}
 	}
 }

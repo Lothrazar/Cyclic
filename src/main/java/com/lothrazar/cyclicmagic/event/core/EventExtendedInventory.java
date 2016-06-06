@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.event;
+package com.lothrazar.cyclicmagic.event.core;
 
 import java.io.File;
 import java.io.IOException;

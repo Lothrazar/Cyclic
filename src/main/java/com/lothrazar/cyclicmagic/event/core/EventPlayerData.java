@@ -1,6 +1,5 @@
-package com.lothrazar.cyclicmagic.event;
+package com.lothrazar.cyclicmagic.event.core;
 
-import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
@@ -13,14 +12,13 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 
-public class EventPlayerData implements IHasConfig{
+public class EventPlayerData{
 	 
 	@SubscribeEvent
     public void onSpawn(PlayerLoggedInEvent event){
@@ -94,10 +92,4 @@ public class EventPlayerData implements IHasConfig{
             }
         });
     }
-
-	@Override
-	public void syncConfig(Configuration config) {
-		// TODO Auto-generated method stub
-		
-	}
 }
