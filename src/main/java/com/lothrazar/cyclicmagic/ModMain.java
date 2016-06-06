@@ -29,6 +29,7 @@ import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.config.Configuration;
@@ -88,6 +89,7 @@ public class ModMain {
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(Const.MODID);
 
 		events.register();
+		MinecraftForge.EVENT_BUS.register(instance);
 
 		CapabilityRegistry.register();
 		// MinecraftForge.EVENT_BUS.register(new EventPlayerData());
@@ -120,6 +122,11 @@ public class ModMain {
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new ModGuiHandler());
 
 		ProjectileRegistry.register(event);
+		
+		//finally, some items have extra forge events to hook into
+
+		MinecraftForge.EVENT_BUS.register(ItemRegistry.corrupted_chorus);
+		
 	}
 
 	@EventHandler

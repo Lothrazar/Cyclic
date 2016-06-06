@@ -23,7 +23,6 @@ import com.lothrazar.cyclicmagic.event.EventMounted;
 import com.lothrazar.cyclicmagic.event.EventMountedPearl;
 import com.lothrazar.cyclicmagic.event.EventNameVillager;
 import com.lothrazar.cyclicmagic.event.EventNametagDeath;
-import com.lothrazar.cyclicmagic.event.EventNoclipUpdate;
 import com.lothrazar.cyclicmagic.event.EventOreMined;
 import com.lothrazar.cyclicmagic.event.EventPassthroughAction;
 import com.lothrazar.cyclicmagic.event.EventPlayerData;
@@ -61,7 +60,6 @@ public class EventRegistry {
 		featureEvents.add(new EventMountedPearl());
 		featureEvents.add(new EventNametagDeath());
 		featureEvents.add(new EventNameVillager());
-		featureEvents.add(new EventNoclipUpdate());
 		featureEvents.add(new EventOreMined());
 		featureEvents.add(new EventPassthroughAction()); 
 		featureEvents.add(new EventPotions());

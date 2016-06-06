@@ -14,8 +14,6 @@ public class EventMountedPearl  implements IHasConfig{
 
 	private boolean mountedPearl;
 
-//	private static final String NBT_RIDING_ENTITY = "ride";
-
 	@SubscribeEvent
 	public void onEnderTeleportEvent(EnderTeleportEvent event) {
 		if(!mountedPearl){return;}
@@ -28,58 +26,16 @@ public class EventMountedPearl  implements IHasConfig{
 			EntityPlayer player = (EntityPlayer) living;
 			Entity horse = player.getRidingEntity();
 
-
-		//	player.setPositionAndUpdate(event.getTargetX(), event.getTargetY(), event.getTargetZ());
-
-			//player.getEntityData().setInteger(NBT_RIDING_ENTITY, horse.getEntityId());
-			//player.getEntityData().setDouble(NBT_RIDING_ENTITY + "timeout", ent.worldObj.getWorldTime() + 500);
-
 			horse.setPositionAndUpdate(event.getTargetX(), event.getTargetY(), event.getTargetZ());
 			player.startRiding(horse, true);
 
 		}
 	}
-/*
-	@SubscribeEvent
-	public void onEntityUpdate(LivingUpdateEvent event) {
-
-		Entity ent = event.getEntity();
-		if (ent instanceof EntityLiving == false) { return; }
-		EntityLivingBase living = (EntityLivingBase) event.getEntity();
-		if (living == null) { return; }
-
-		if (living instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) living;
-			if (player.getEntityData() == null) { return; }
-			int setride = player.getEntityData().getInteger(NBT_RIDING_ENTITY);
-
-			if (setride > 0 && player.getRidingEntity() == null) {
-
-				double timer = player.getEntityData().getDouble(NBT_RIDING_ENTITY + "timeout");
-
-				if (ent.worldObj.getWorldTime() < timer) { return; }
-
-				Entity horse = player.worldObj.getEntityByID(setride);
-
-				if (horse != null) {
-					BlockPos target = player.getPosition();
-					//player.startRiding(horse, true);
-					System.out.println("Cancel Riding");
-					horse.setPositionAndUpdate(target.getX(), target.getY(), target.getZ());
-					player.getEntityData().setInteger(NBT_RIDING_ENTITY, -1);
-				}
-			}
-		}
-	}
-*/
-
 	@Override
 	public void syncConfig(Configuration config) {
 		String category = Const.ConfigCategory.player;
 
 		mountedPearl = config.getBoolean("Pearls On Horseback", category, true,
 				"Enderpearls work on a horse, bringing it with you");
-
-		
 	}
 }

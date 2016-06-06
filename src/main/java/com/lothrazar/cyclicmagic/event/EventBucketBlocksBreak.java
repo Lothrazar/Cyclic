@@ -15,7 +15,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventBucketBlocksBreak implements IHasConfig{
+public class EventBucketBlocksBreak{
 
 	@SubscribeEvent
 	public void onBreakEvent(BreakEvent event) {
@@ -38,11 +38,5 @@ public class EventBucketBlocksBreak implements IHasConfig{
 
 			t.setBuckets(0);
 		}
-	}
-
-	@Override
-	public void syncConfig(Configuration config) {
-		// TODO Auto-generated method stub
-		
 	}
 }

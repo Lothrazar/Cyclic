@@ -1,22 +1,14 @@
 package com.lothrazar.cyclicmagic.event;
 
-import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre;
 
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventOreMined implements IHasConfig{
+public class EventOreMined{
 
-	@SubscribeEvent
-	public void onBreakEvent(BreakEvent event){
-		
-	}
-	
 	@SubscribeEvent
 	public void onHarvestDropsEvent(HarvestDropsEvent event){
 
@@ -31,11 +23,5 @@ public class EventOreMined implements IHasConfig{
 			
 			block.trySpawnTriggeredEntity(world, pos);
 		}
-	}
-
-	@Override
-	public void syncConfig(Configuration config) {
-		// TODO Auto-generated method stub
-		
 	}
 }
