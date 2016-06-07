@@ -19,44 +19,41 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 
 public class EventPlayerData{
-	 
+
+	// send from both events to avoid NULL player; known issue due to threading race conditions
+	// https://github.com/MinecraftForge/MinecraftForge/issues/1583
 	@SubscribeEvent
     public void onSpawn(PlayerLoggedInEvent event){
 		if(event.player instanceof EntityPlayerMP && event.player.worldObj.isRemote == false){
 
 			EntityPlayerMP p = (EntityPlayerMP)event.player;
-			onPlayerJoinServerside(p);
+			if(p != null){
+				CapabilityRegistry.syncServerDataToClient(p);
+			}
 		}
 	}
 	@SubscribeEvent
     public void onSpawn(EntityJoinWorldEvent event){
 		if(event.getEntity() instanceof EntityPlayerMP && event.getEntity().worldObj.isRemote == false){
 			EntityPlayerMP p = (EntityPlayerMP)event.getEntity();
-			
-			onPlayerJoinServerside(p);
+
+			if(p != null){
+				CapabilityRegistry.syncServerDataToClient(p);
+			}
 		}
     }
-	private void onPlayerJoinServerside(EntityPlayerMP p){
-		// send from both events to avoid NULL player; known issue due to threading race conditions
-		// https://github.com/MinecraftForge/MinecraftForge/issues/1583
-		if(p == null){
-			return;
-		}
-		
-		CapabilityRegistry.syncServerDataToClient(p);
-	}
 
     @SubscribeEvent
 	public void onPlayerClone(PlayerEvent.Clone event){
-	 
+    	//TODO: maybe move this to hearts item
 		IPlayerExtendedProperties src = CapabilityRegistry.getPlayerProperties(event.getOriginal());
  
 		IPlayerExtendedProperties dest = CapabilityRegistry.getPlayerProperties(event.getEntityPlayer());
  
 		dest.setDataFromNBT(src.getDataAsNBT());
 		
-		if(event.isWasDeath()){
-			
+		//if health var never used (never eaten a heart) then skip
+		if(event.isWasDeath() && src.getMaxHealth() > 0){
 			UtilEntity.setMaxHealth(event.getEntityPlayer(), src.getMaxHealth());
 		}
 	}

@@ -160,6 +160,10 @@ public class ModMain {
 	/* 
 	 * TODO : alpha.8 bug reports
 	 * 
+	 * SEARCH RECIPE: text should say if shapeless. and maybe output qty?
+	 * 
+	 * sethealth command: use capability data
+	 * 
 	 * change ender bomb recipes
 	 * 
 	 * inventory upgrade: enderchest instead of reg. add diamond/emerald/blaze powder to both?
