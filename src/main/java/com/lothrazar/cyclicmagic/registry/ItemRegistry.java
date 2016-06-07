@@ -87,6 +87,13 @@ public class ItemRegistry {
 	public static final ItemPotionCustom potion_haste_strong = new ItemPotionCustom(false,MobEffects.HASTE, 90, PotionRegistry.II);
 	public static final ItemPotionCustom potion_haste_long = new ItemPotionCustom(false,MobEffects.HASTE, 60*8);
 	public static final ItemFoodHeart heart_food = new ItemFoodHeart();
+
+	public static final ItemProjectileTNT ender_tnt_1 = new ItemProjectileTNT(1);
+	public static final ItemProjectileTNT ender_tnt_2 = new ItemProjectileTNT(2);
+	public static final ItemProjectileTNT ender_tnt_3 = new ItemProjectileTNT(3);
+	public static final ItemProjectileTNT ender_tnt_4 = new ItemProjectileTNT(4);
+	public static final ItemProjectileTNT ender_tnt_5 = new ItemProjectileTNT(5);
+	public static final ItemProjectileTNT ender_tnt_6 = new ItemProjectileTNT(6);
 	
 	public static void construct(){
 		//TODO: maybe constructor. MUST be done before config
@@ -108,10 +115,12 @@ public class ItemRegistry {
 		addItem(new ItemProjectileSnow(),"ender_snow");
 		addItem(new ItemProjectileHarvest(),"ender_harvest");
 		addItem(new ItemProjectileLightning(),"ender_lightning");
-		addItem(new ItemProjectileTNT(1),"ender_tnt_1");
-		addItem(new ItemProjectileTNT(2),"ender_tnt_2");
-		addItem(new ItemProjectileTNT(3),"ender_tnt_4");
-		addItem(new ItemProjectileTNT(4),"ender_tnt_6");
+		addItem(ender_tnt_1,"ender_tnt_1");
+		addItem(ender_tnt_2,"ender_tnt_2");
+		addItem(ender_tnt_3,"ender_tnt_3");
+		addItem(ender_tnt_4,"ender_tnt_4");
+		addItem(ender_tnt_5,"ender_tnt_5");
+		addItem(ender_tnt_6,"ender_tnt_6");
 		addItem(new ItemFoodHorse(new ItemStack(Items.EMERALD)),"horse_upgrade_type");
 		addItem(new ItemFoodHorse(new ItemStack(Items.DYE, 1, Const.dye_lapis)),"horse_upgrade_variant");
 		addItem(new ItemFoodHorse(new ItemStack(Items.DIAMOND)),"horse_upgrade_health");
