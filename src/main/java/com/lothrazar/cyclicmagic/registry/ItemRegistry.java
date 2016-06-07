@@ -86,6 +86,7 @@ public class ItemRegistry {
 	public static final ItemPotionCustom potion_haste = new ItemPotionCustom(false,MobEffects.HASTE, 60*3);
 	public static final ItemPotionCustom potion_haste_strong = new ItemPotionCustom(false,MobEffects.HASTE, 90, PotionRegistry.II);
 	public static final ItemPotionCustom potion_haste_long = new ItemPotionCustom(false,MobEffects.HASTE, 60*8);
+	public static final ItemFoodHeart heart_food = new ItemFoodHeart();
 	
 	public static void construct(){
 		//TODO: maybe constructor. MUST be done before config
@@ -118,7 +119,7 @@ public class ItemRegistry {
 		addItem(new ItemFoodHorse(new ItemStack(Items.ENDER_EYE)),"horse_upgrade_jump");
 		addItem(new ItemEnderBook(),"book_ender"); 
 		addItem(corrupted_chorus,"corrupted_chorus");
-		addItem(new ItemFoodHeart(),"heart_food"); 
+		addItem(heart_food,"heart_food"); 
 		addItem(new ItemFoodCrafting(),"crafting_food");
 		addItem(new ItemFoodInventory(),"inventory_food");
 		addItem(new ItemSleepingBag(),"sleeping_mat");

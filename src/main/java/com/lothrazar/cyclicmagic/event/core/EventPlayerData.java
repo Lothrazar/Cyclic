@@ -4,8 +4,6 @@ import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.util.Const;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
-
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -14,7 +12,6 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 
@@ -42,21 +39,6 @@ public class EventPlayerData{
 			}
 		}
     }
-
-    @SubscribeEvent
-	public void onPlayerClone(PlayerEvent.Clone event){
-    	//TODO: maybe move this to hearts item
-		IPlayerExtendedProperties src = CapabilityRegistry.getPlayerProperties(event.getOriginal());
- 
-		IPlayerExtendedProperties dest = CapabilityRegistry.getPlayerProperties(event.getEntityPlayer());
- 
-		dest.setDataFromNBT(src.getDataAsNBT());
-		
-		//if health var never used (never eaten a heart) then skip
-		if(event.isWasDeath() && src.getMaxHealth() > 0){
-			UtilEntity.setMaxHealth(event.getEntityPlayer(), src.getMaxHealth());
-		}
-	}
 	
     @SubscribeEvent
     public void onEntityConstruct(AttachCapabilitiesEvent evt)

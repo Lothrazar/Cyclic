@@ -14,6 +14,7 @@ public class CommandHeal extends BaseCommand{
 
 	public CommandHeal( boolean op) {
 		super(name, op);
+		this.setUsernameIndex(0);
 	}
 
 	@Override

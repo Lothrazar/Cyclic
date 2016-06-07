@@ -1,10 +1,14 @@
 package com.lothrazar.cyclicmagic.command;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import javax.annotation.Nullable;
 
 import com.lothrazar.cyclicmagic.util.Const;
 
+import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -17,8 +21,9 @@ public class BaseCommand implements ICommand {
 	// https://github.com/PrinceOfAmber/SamsPowerups/tree/master/Commands/src/main/java/com/lothrazar/samscommands/command
 	// CommandSimpleWaypoints removed TP feature -> we have ender book already
 
-	private String						name;
-	private boolean						requiresOP;
+	private String name;
+	private boolean	requiresOP;
+	public int usernameIndex = -1;
 	private final static int	OP	= 2;
 	protected ArrayList<String>	aliases;
 
@@ -32,7 +37,7 @@ public class BaseCommand implements ICommand {
 		aliases = (paliases == null) ? new ArrayList<String>() : paliases;
 		aliases.add(name.toUpperCase());
 	}
-
+	
 	@Override
 	public List<String> getCommandAliases() {
 		return this.aliases;
@@ -67,24 +72,27 @@ public class BaseCommand implements ICommand {
 	}
 
 	@Override
-	public List<String> getTabCompletionOptions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos pos) {
-
-		return new ArrayList<String>();
-	}
-
+    public List<String> getTabCompletionOptions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos pos){
+        if(usernameIndex < 0){
+        	return Collections.<String>emptyList();
+        }
+		return args.length == usernameIndex + 1 ? CommandBase.getListOfStringsMatchingLastWord(args, server.getAllUsernames()) : Collections.<String>emptyList();
+    }
+	
 	@Override
-	public boolean isUsernameIndex(String[] args, int index) {
-		return false;
+	public boolean isUsernameIndex(String[] args, int index){
+		return index == usernameIndex;
 	}
-
 	public EntityPlayerMP getPlayerByUsername(MinecraftServer server, String name) {
 		return server.getPlayerList().getPlayerByUsername(name);
 	}
-
+	
+	public void setUsernameIndex(int i){
+		usernameIndex = i;
+	}
+	
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-
 		System.out.println("Warning: command not implemented " + Const.MODID + " -> " + this.getCommandName());
-
 	}
 }

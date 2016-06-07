@@ -104,11 +104,10 @@ public class ModMain {
 
 		ProjectileRegistry.register(event);
 		
-		//finally, some items have extra forge events to hook into
-
-		MinecraftForge.EVENT_BUS.register(ItemRegistry.corrupted_chorus);
+		//finally, some items have extra forge events to hook into.
 		MinecraftForge.EVENT_BUS.register(BlockRegistry.block_storeempty);
-		
+		MinecraftForge.EVENT_BUS.register(ItemRegistry.corrupted_chorus);
+		MinecraftForge.EVENT_BUS.register(ItemRegistry.heart_food);
 	}
 
 	@EventHandler
@@ -162,12 +161,8 @@ public class ModMain {
 	 * 
 	 * SEARCH RECIPE: text should say if shapeless. and maybe output qty?
 	 * 
-	 * sethealth command: use capability data
-	 * 
 	 * change ender bomb recipes
-	 * 
-	 * inventory upgrade: enderchest instead of reg. add diamond/emerald/blaze powder to both?
-	 * 
+	 
 	 * TODO : future plans
 	 * 
 	 * custom villager zombie textures

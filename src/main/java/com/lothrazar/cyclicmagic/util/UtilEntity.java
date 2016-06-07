@@ -25,9 +25,7 @@ public class UtilEntity {
 		
 		return newVal;
 	}
-	
-
-
+	 
 	public static EnumFacing getPlayerFacing(EntityLivingBase entity) {
 		int yaw = (int) entity.rotationYaw;
 

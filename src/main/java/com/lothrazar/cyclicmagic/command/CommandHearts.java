@@ -1,5 +1,7 @@
 package com.lothrazar.cyclicmagic.command;
 
+import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
+import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 
@@ -15,6 +17,7 @@ public class CommandHearts extends BaseCommand implements ICommand {
 	
 	public CommandHearts( boolean op) {
 		super(name, op);
+		this.setUsernameIndex(0);
 	}
 
 	@Override
@@ -49,6 +52,10 @@ public class CommandHearts extends BaseCommand implements ICommand {
 			hearts = 1;
 		}
 
-		UtilEntity.setMaxHealth(ptarget, hearts * 2);
+		int health = hearts * 2;
+		
+		IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(ptarget); 
+		prop.setMaxHealth(health);
+		UtilEntity.setMaxHealth(ptarget, health);
 	}
 }
