@@ -233,11 +233,11 @@ public class ItemRegistry {
 				new ItemStack(Items.CHORUS_FRUIT),
 				new ItemStack(ItemRegistry.potion_levitation));
 
-		addBrewingRecipe(
-				ItemRegistry.potion_viscous,
-				Items.FEATHER,
-				ItemRegistry.potion_levitation);
-		
+		BrewingRecipeRegistry.addRecipe(
+				new ItemStack(ItemRegistry.potion_levitation),
+				new ItemStack(Items.REDSTONE),
+				new ItemStack(ItemRegistry.potion_levitation_long));
+
 		BrewingRecipeRegistry.addRecipe(
 				new ItemStack(ItemRegistry.potion_viscous),
 				new ItemStack(Items.SLIME_BALL),
