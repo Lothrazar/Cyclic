@@ -38,15 +38,14 @@ public class UtilSpellCaster {
 		//ItemStack wand = getPlayerWandIfHeld(player);
 		if (wand == null) { return false; }
 
-		if (ItemCyclicWand.Timer.isBlockedBySpellTimer(wand)) { return false; }
+//		if (ItemCyclicWand.Timer.isBlockedBySpellTimer(wand)) { return false; }
 
 		if (spell.canPlayerCast(world, player, pos)) {
 
 			if (spell.cast(world, player, wand, pos, side)) {
 
-				castSuccess(spell, world, player, pos);
+//				castSuccess(spell, world, player, pos);
 
-				//TODO: shouldn't this be inside the castSuccess??
 				if(hand != null){
 					player.swingArm(hand);
 				}
@@ -64,16 +63,16 @@ public class UtilSpellCaster {
 		}
 	}
 
-	public static void castSuccess(ISpell spell, World world, EntityPlayer player, BlockPos pos) {
-
-		// succes should do things like: drain resources, play sounds
-		// and particles
-		spell.payCost(world, player, pos);
-
-		ItemCyclicWand.Energy.setCooldownCounter(getPlayerWandIfHeld(player),  world.getTotalWorldTime());
-
-		ItemCyclicWand.Timer.setSpellTimer(getPlayerWandIfHeld(player), spell.getCastCooldown());
-	}
+//	public static void castSuccess(ISpell spell, World world, EntityPlayer player, BlockPos pos) {
+//
+//		// succes should do things like: drain resources, play sounds
+//		// and particles
+////		spell.payCost(world, player, pos);
+////
+////		ItemCyclicWand.Energy.setCooldownCounter(getPlayerWandIfHeld(player),  world.getTotalWorldTime());
+////
+////		ItemCyclicWand.Timer.setSpellTimer(getPlayerWandIfHeld(player), spell.getCastCooldown());
+//	}
 
 	public static void shiftLeft(EntityPlayer player) {
 

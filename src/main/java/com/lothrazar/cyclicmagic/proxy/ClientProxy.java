@@ -12,7 +12,6 @@ import com.lothrazar.cyclicmagic.entity.projectile.EntityShearingBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntitySnowballBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityTorchBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityWaterBolt;
-import com.lothrazar.cyclicmagic.gui.spell.GuiSpellWheel;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
@@ -107,13 +106,6 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityDynamite.class, new RenderSnowball(rm, ItemRegistry.itemMap.get("ender_tnt_1"), ri));
 		RenderingRegistry.registerEntityRenderingHandler(EntityBlazeBolt.class, new RenderSnowball(rm, ItemRegistry.itemMap.get("ender_blaze"), ri));
 
-	}
-
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void displayGuiSpellbook() {
-
-		Minecraft.getMinecraft().displayGuiScreen(new GuiSpellWheel(Minecraft.getMinecraft().thePlayer));
 	}
 
 	@SideOnly(Side.CLIENT)

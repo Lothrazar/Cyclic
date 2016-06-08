@@ -14,10 +14,7 @@ import net.minecraft.world.World;
 public class SpellRangePush extends BaseSpellRange {
 
 	public SpellRangePush(int id, String name) {
-
 		super.init(id, name);
-		this.cost = 30;
-		this.cooldown = 5;
 	}
 
 	@Override

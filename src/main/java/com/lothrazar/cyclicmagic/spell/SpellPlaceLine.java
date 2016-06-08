@@ -12,10 +12,7 @@ import net.minecraft.world.World;
 public class SpellPlaceLine extends BaseSpellPlace {
 
 	public SpellPlaceLine(int id, String name) {
-
 		super.init(id, name);
-		this.cost = 25;
-		this.cooldown = 15;
 	}
 
 	@Override

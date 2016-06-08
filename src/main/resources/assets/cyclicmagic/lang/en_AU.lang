@@ -57,6 +57,7 @@ item.corrupted_chorus.name=Corrupted Chorus
 item.corrupted_elytra.name=Corrupted Elytra
 item.crafting_food.name=Inventory Crafting Table
 item.cyclic_wand_build.name=Cyclic Scepter
+item.cyclic_wand.shifting=Use the mouse wheel while sneaking to rotate
 item.emerald_axe.name=Emerald Axe
 item.emerald_boots.name=Emerald Boots
 item.emerald_chestplate.name=Emerald Chestplate

@@ -20,10 +20,7 @@ public class SpellPotion extends BaseSpell {
 	private int potionAmp;
 	
 	public SpellPotion(int id, String name) {
-
 		super.init(id, name);
-		this.cost = 25;
-		this.cooldown = 40;
 	}
 	
 	public void setPotion(Potion id, int effectDuration, int effectAmplifier) {

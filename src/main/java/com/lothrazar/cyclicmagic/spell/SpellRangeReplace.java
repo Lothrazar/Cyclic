@@ -17,15 +17,11 @@ import net.minecraft.world.World;
 public class SpellRangeReplace extends BaseSpellRange {
 
 	public SpellRangeReplace(int id, String n) {
-
 		super.init(id, n);
-		this.cost = 30;
-		this.cooldown = 10;
 	}
 
 	@Override
 	public boolean cast(World world, EntityPlayer player, ItemStack wand, BlockPos pos, EnumFacing side) {
-
 		if (world.isRemote) {
 			// only client side can call this method. mouseover does not exist
 			// on server
@@ -68,11 +64,26 @@ public class SpellRangeReplace extends BaseSpellRange {
 
 			return;// dont replace cobblestone with cobblestone
 		}
-
-		if (world.destroyBlock(posMouseover, true) && world.setBlockState(posMouseover, placeState)) {
-
+		
+		boolean didRePlace = false;
+		
+		try{
+			didRePlace = world.destroyBlock(posMouseover, true) && world.setBlockState(posMouseover, placeState);
+		}
+		catch(java.util.ConcurrentModificationException e){
+			ModMain.logger.warn(e.getLocalizedMessage());
+			/*java.util.ConcurrentModificationException
+				at java.util.HashMap$HashIterator.nextNode(Unknown Source) ~[?:1.8.0_91]
+				at java.util.HashMap$KeyIterator.next(Unknown Source) ~[?:1.8.0_91]
+				at net.minecraft.entity.EntityTracker.updateTrackedEntities(EntityTracker.java:283) ~[EntityTracker.class:?]
+				at net.minecraft.server.MinecraftServer.updateTimeLightAndEntities(MinecraftServer.java:793) ~[MinecraftServer.class:?]
+				at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:685) ~[MinecraftServer.class:?]
+				at net.minecraft.server.integrated.IntegratedServer.tick(IntegratedServer.java:155) ~[IntegratedServer.class:?]
+				at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:534) [MinecraftServer.class:?]
+			*/
+		}
+		if (didRePlace) {
 			if (player.capabilities.isCreativeMode == false) {
-
 				invv[itemSlot].stackSize--;
 				InventoryWand.writeToNBT(heldWand, invv);
 			}

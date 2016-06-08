@@ -2,15 +2,17 @@ package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
 
+import org.lwjgl.input.Keyboard;
+
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.BaseSpellRange;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -61,7 +63,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe ,IHasConfig{
 	@Override
 	public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn) {
 
-		Energy.rechargeBy(stack, Energy.START);
+		//Energy.rechargeBy(stack, Energy.START);
 
 		Spells.setSpellCurrent(stack, SpellRegistry.getSpellbook(stack).get(0).getID());
 
@@ -72,14 +74,18 @@ public class ItemCyclicWand extends Item implements IHasRecipe ,IHasConfig{
 	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
 
 		ISpell spell = SpellRegistry.getSpellFromID(Spells.getSpellIDCurrent(stack));
-
-		String cost = TextFormatting.DARK_GRAY + "[" + TextFormatting.LIGHT_PURPLE + spell.getCost() + TextFormatting.DARK_GRAY +"] ";
-		tooltip.add(TextFormatting.GREEN + spell.getName()+" "+cost);
- 
-		String regen = "["+Energy.getRegen(playerIn.worldObj, stack) + "/sec]";
 		
-		tooltip.add(TextFormatting.DARK_PURPLE + "" + Energy.getCurrent(stack) + "/" + Energy.getMaximum(stack)
-			+ TextFormatting.DARK_GRAY +" "+ regen);
+
+		if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)){
+			
+			tooltip.add(TextFormatting.GREEN + spell.getName() + " " 
+					 + "[" + UtilChat.lang(BuildType.getName(stack)) +"] ");
+			
+			tooltip.add(TextFormatting.DARK_GRAY + UtilChat.lang("item.cyclic_wand.shifting"));
+		}
+		else{
+			tooltip.add(TextFormatting.DARK_GRAY + UtilChat.lang("item.shift"));
+		}
 		
 		super.addInformation(stack, playerIn, tooltip, advanced);
 	}
@@ -98,8 +104,9 @@ public class ItemCyclicWand extends Item implements IHasRecipe ,IHasConfig{
 		// If onItemUse returns false onItemRightClick will be called.
 		// http://www.minecraftforge.net/forum/index.php?topic=31966.0
 		// so if this casts and succeeds, the right click is cancelled
-		return UtilSpellCaster.tryCastCurrent(worldIn, playerIn, pos, side,stack,hand) ? EnumActionResult.SUCCESS
-				: EnumActionResult.FAIL;
+		boolean success =  UtilSpellCaster.tryCastCurrent(worldIn, playerIn, pos, side,stack,hand);
+				
+		return success ? EnumActionResult.SUCCESS : EnumActionResult.FAIL;
 	}
 
 	@Override
@@ -109,27 +116,24 @@ public class ItemCyclicWand extends Item implements IHasRecipe ,IHasConfig{
 		// fired and casting failed
 		boolean success = UtilSpellCaster.tryCastCurrent(worldIn, playerIn, null, null,itemStackIn,hand);
 
-		if (success) {
-			return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);
-		} else {
-			return new ActionResult<ItemStack>(EnumActionResult.FAIL, itemStackIn);
-		}
+		return success ? new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn)
+		 :  new ActionResult<ItemStack>(EnumActionResult.FAIL, itemStackIn);
 	}
 
-	@Override
-	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-
-		boolean perSecond = (worldIn.getTotalWorldTime() % Const.TICKS_PER_SEC == 0);
-
-		if (worldIn.isRemote == false && perSecond) {
-
-			Energy.rechargeBy(stack, Energy.getRegen(worldIn, stack));
-		}
-
-		ItemCyclicWand.Timer.tickSpellTimer(stack);
-
-		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
-	}
+//	@Override
+//	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+//
+//		boolean perSecond = (worldIn.getTotalWorldTime() % Const.TICKS_PER_SEC == 0);
+//
+//		if (worldIn.isRemote == false && perSecond) {
+//
+//			Energy.rechargeBy(stack, Energy.getRegen(worldIn, stack));
+//		}
+//
+//		ItemCyclicWand.Timer.tickSpellTimer(stack);
+//
+//		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
+//	}
 
 	@Override
 	public int getMaxItemUseDuration(ItemStack stack) {
@@ -137,13 +141,11 @@ public class ItemCyclicWand extends Item implements IHasRecipe ,IHasConfig{
 		return 1; // Without this method, your inventory will NOT work!!!
 	}
 
-	private static NBTTagCompound getNBT(ItemStack stack) {
-
+	private static NBTTagCompound getNBT(ItemStack stack) { 
 		return stack.hasTagCompound() ? stack.getTagCompound() : new NBTTagCompound();
 	}
 
-	public static class Spells {
-
+	public static class Spells { 
 		public static int getSpellIDCurrent(ItemStack stack) {
 			// workaround for default spell being replace. and oncrafting not
 	 
@@ -174,161 +176,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe ,IHasConfig{
 			stack.setTagCompound(tags);
 		}
 	}
-
-	public static class Energy {
-
-		public static final int START = 100; // what you get on crafted
-		public static final int MAX_DEFAULT = 1000;
-		private static final String NBT_MANA = "mana";
-		private static final String NBT_MAX = "energymax";
-		private static final String NBT_LASTUSED = "used";
-
-		public static final int RECHARGE_EXP_COST = 10;
-		public static final int RECHARGE_MANA_AMT = 25;
-		public static final int UPGRADE_EXP_COST = 500;
-
-		public static int getMaximumLargest() {
-			return 1000;// literally exists only to draw manabar
-		}
-
-		public static int getMaximum(ItemStack stack) {
-			int max = getNBT(stack).getInteger(NBT_MAX);
-			if (max <= 0) {
-				max = MAX_DEFAULT;
-			}
-			return max;
-		}
-
-		public static boolean increaseMaximum(ItemStack stack, int by) {
-			int max = getMaximum(stack);
-
-			if (max == getMaximumLargest()) {
-				return false;
-			}
-			int setNew = max + by;
-			if (setNew > getMaximumLargest()) {
-				setNew = getMaximumLargest();
-			}
-			getNBT(stack).setInteger(NBT_MAX, setNew);
-
-			return true;
-		}
-
-		private static int getRegen(World world, ItemStack stack) {
-
-			// 1- a counter since it was last used for a spell (not counting
-			// inventory)
-			// -> set to zero on use.
-			// -> increment by 1 each second (not tick)
-			// 2 a recharge level (rate)
-			// when counter passes certain thresholds, it updates the level
-			// 3 when a recharge event happens, it checks the level and
-			// increments
-			// accordingly
-
-			long lastUsed = Energy.getCooldownCounter(stack);
-
-			long timeSinceLast = (world.getTotalWorldTime() - lastUsed) / Const.TICKS_PER_SEC;
-
-			if (timeSinceLast < 0) {
-				return 20;// because -1 for never used
-			}
-
-			int rate = 0;
-			if (timeSinceLast < 5) {
-				rate = 1;
-			} else if (timeSinceLast < 10) {
-				rate = 3;
-			} else if (timeSinceLast < 15) {
-				rate = 5;
-			} else if (timeSinceLast < 20) {
-				rate = 7;
-			} else if (timeSinceLast < 25) {
-				rate = 10;
-			} else if (timeSinceLast < 30) {
-				rate = 15;
-			} else {
-				rate = 20;
-			}
-			return rate;
-		}
-
-		public static void setCooldownCounter(ItemStack stack, long i) {
-			NBTTagCompound tags = getNBT(stack);
-			tags.setLong(NBT_LASTUSED, i);
-			stack.setTagCompound(tags);
-		}
-
-		public static long getCooldownCounter(ItemStack stack) {
-			NBTTagCompound tags = getNBT(stack);
-			if (!tags.hasKey(NBT_LASTUSED)) {
-				return -1;
-			}
-
-			return tags.getLong(NBT_LASTUSED);
-		}
-
-		public static int getCurrent(ItemStack stack) {
-			return getNBT(stack).getInteger(NBT_MANA);
-		}
-
-		public static void setCurrent(ItemStack stack, int m) {
-			if (m < 0) {
-				m = 0;
-			}
-			int MAX = getMaximum(stack);
-			int filled = (int) Math.min(m, MAX);
-
-			NBTTagCompound tags = getNBT(stack);
-			tags.setInteger(NBT_MANA, filled);
-			stack.setTagCompound(tags);
-		}
-
-		public static void drainBy(ItemStack stack, int m) {
-			Energy.setCurrent(stack, Energy.getCurrent(stack) - m);
-		}
-
-		public static void rechargeBy(ItemStack stack, int m) {
-
-			Energy.setCurrent(stack, Energy.getCurrent(stack) + m);
-		}
-	}
-
-	public static class Timer {
-		private final static String NBT = "casttimeout";
-
-		public static int getSpellTimer(ItemStack wand) {
-
-			NBTTagCompound tags = getNBT(wand);
-
-			return tags.getInteger(NBT);
-		}
-
-		public static void setSpellTimer(ItemStack wand, int current) {
-
-			NBTTagCompound tags = getNBT(wand);
-
-			tags.setInteger(NBT, current);
-			wand.setTagCompound(tags);
-		}
-
-		public static boolean isBlockedBySpellTimer(ItemStack wand) {
-
-			int t = getSpellTimer(wand);
-			return (t > 0);
-		}
-
-		public static void tickSpellTimer(ItemStack wand) {
-
-			int t = getSpellTimer(wand);
-			if (t < 0) {
-				setSpellTimer(wand, 0);
-			} else if (t > 0) {
-				setSpellTimer(wand, t - 1);
-			}
-		}
-	}
-
+	
 	public enum BuildType {
 		FIRST, ROTATE, RANDOM, MATCH;
 

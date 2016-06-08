@@ -44,7 +44,6 @@ public class ItemToolPearlReuse extends BaseTool implements IHasRecipe {
 
 	@Override
 	public void addRecipe() {
-		 
 		GameRegistry.addShapedRecipe(new ItemStack(this), 
 				"ere", 
 				"rsr", 

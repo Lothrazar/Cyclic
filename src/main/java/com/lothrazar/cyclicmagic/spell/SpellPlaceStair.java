@@ -11,10 +11,7 @@ import net.minecraft.world.World;
 public class SpellPlaceStair extends BaseSpellPlace {
 
 	public SpellPlaceStair(int id, String name) {
-
 		super.init(id, name);
-		this.cost = 25;
-		this.cooldown = 20;
 	}
 
 	@Override

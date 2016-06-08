@@ -18,18 +18,14 @@ import net.minecraft.world.World;
 public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer {
 
 	final static int max = 32;// max search range
+	private PlaceType type;
 
 	public static enum PlaceType {
 		PLACE, UP, DOWN,LEFT,RIGHT;
 	}
 
-	private PlaceType type;
-
 	public SpellRangeBuild(int id, String n, PlaceType t) {
-
 		super.init(id, n);
-		this.cost = 30;
-		this.cooldown = 5;
 		this.type = t;
 	}
 
@@ -148,7 +144,7 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
 
 		if (UtilPlaceBlocks.placeStateSafe(p.worldObj, p, posToPlaceAt, state)) {
 
-			UtilSpellCaster.castSuccess(this, p.worldObj, p, posOffset);
+//			UtilSpellCaster.castSuccess(this, p.worldObj, p, posOffset);
 
 			//UtilSound.playSoundPlaceBlock(p, state.getBlock());
 			

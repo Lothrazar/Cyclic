@@ -20,12 +20,6 @@ public interface ISpell {
 
 	public boolean cast(World world, EntityPlayer player, ItemStack wand, BlockPos pos, EnumFacing side);
 
-	public int getCost();
-
-	public int getCastCooldown();
-
-	public void payCost(World world, EntityPlayer player, BlockPos pos);
-
 	public void spawnParticle(World world, EntityPlayer player, BlockPos pos);
 
 	public void playSound(World world, EntityPlayer player, Block block, BlockPos pos);

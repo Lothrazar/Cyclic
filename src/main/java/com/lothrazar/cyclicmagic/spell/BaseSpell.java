@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.spell;
 
-import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -15,21 +14,16 @@ import net.minecraft.world.World;
 
 public abstract class BaseSpell implements ISpell {
 
-	private ResourceLocation		icon;
-	private int									ID;
-	private String							name;
-	protected int								cost;
-	protected int								cooldown;
-	protected ResourceLocation	header				= new ResourceLocation(Const.MODID, "textures/spells/header_on.png");
+	private ResourceLocation icon;
+	private int	ID;
+	private String name;
+	protected ResourceLocation	header			= new ResourceLocation(Const.MODID, "textures/spells/header_on.png");
 	protected ResourceLocation	header_empty	= new ResourceLocation(Const.MODID, "textures/spells/header_off.png");
 
 	protected void init(int id, String n) {
 
 		ID = id;
 		name = n;
-		cost = 5;
-		cooldown = 3;
-
 		icon = new ResourceLocation(Const.MODID, "textures/spells/" + name + ".png");
 	}
 
@@ -49,18 +43,6 @@ public abstract class BaseSpell implements ISpell {
 	}
 
 	@Override
-	public int getCastCooldown() {
-
-		return cooldown;
-	}
-
-	@Override
-	public int getCost() {
-
-		return cost;
-	}
-
-	@Override
 	public void onCastFailure(World world, EntityPlayer player, BlockPos pos) {
 
 		UtilSound.playSound(player,pos, SoundRegistry.buzzp);
@@ -75,15 +57,7 @@ public abstract class BaseSpell implements ISpell {
 	public ResourceLocation getIconDisplayHeaderDisabled() {
 		return header_empty;
 	}
-
-	@Override
-	public void payCost(World world, EntityPlayer player, BlockPos pos) {
-
-		if (player.capabilities.isCreativeMode == false) {
-			ItemCyclicWand.Energy.drainBy(UtilSpellCaster.getPlayerWandIfHeld(player),this.getCost());
-		}
-	}
-
+ 
 	@Override
 	public int getID() {
 		return ID;
@@ -97,12 +71,7 @@ public abstract class BaseSpell implements ISpell {
 		ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
 
 		if (wand == null) { return false; }
-		
-		if(this.getCost() > ItemCyclicWand.Energy.getCurrent(wand)){
-			this.onCastFailure(world, player, pos);
-			return false;
-		}
-		
+	 
 		return true;
 	}
 

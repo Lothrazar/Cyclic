@@ -25,7 +25,6 @@ public class InventoryWand implements IInventory {
 	private EntityPlayer		thePlayer;
 
 	public EntityPlayer getPlayer() {
-
 		return thePlayer;
 	}
 
@@ -40,37 +39,31 @@ public class InventoryWand implements IInventory {
 
 	@Override
 	public String getName() {
-
 		return "Wand Inventory";
 	}
 
 	@Override
 	public boolean hasCustomName() {
-
 		return false;
 	}
 
 	@Override
 	public ITextComponent getDisplayName() {
-
 		return null;
 	}
 
 	@Override
 	public int getSizeInventory() {
-
 		return INV_SIZE;
 	}
 
 	@Override
 	public ItemStack getStackInSlot(int index) {
-
 		return inventory[index];
 	}
 
 	@Override
 	public ItemStack decrStackSize(int slot, int amount) {
-
 		ItemStack stack = getStackInSlot(slot);
 
 		if (stack != null) {
@@ -101,7 +94,6 @@ public class InventoryWand implements IInventory {
 
 	@Override
 	public void setInventorySlotContents(int slot, ItemStack stack) {
-
 		inventory[slot] = stack;
 
 		if (stack != null && stack.stackSize > getInventoryStackLimit()) {
@@ -113,7 +105,6 @@ public class InventoryWand implements IInventory {
 
 	@Override
 	public int getInventoryStackLimit() {
-
 		return 64;
 	}
 

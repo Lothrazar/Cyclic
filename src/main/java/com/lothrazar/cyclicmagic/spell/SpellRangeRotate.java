@@ -15,10 +15,7 @@ import net.minecraft.world.World;
 public class SpellRangeRotate extends BaseSpellRange {
 
 	public SpellRangeRotate(int id, String name) {
-
 		super.init(id, name);
-		this.cost = 35;
-		this.cooldown = 10;
 	}
 
 	@Override

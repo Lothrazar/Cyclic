@@ -15,10 +15,6 @@ public class CommonProxy {
 		return null;
 	}
 
-	public void displayGuiSpellbook() {
-
-	}
-
 	public BlockPos getBlockMouseoverExact(int max) {
 
 		return null;
