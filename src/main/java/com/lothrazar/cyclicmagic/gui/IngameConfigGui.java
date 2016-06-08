@@ -12,7 +12,7 @@ public class IngameConfigGui extends GuiConfig {
 
 	public IngameConfigGui(GuiScreen parent) {
 		super(parent, new ConfigElement(ModMain.getConfig().getCategory(Const.MODID)).getChildElements(), Const.MODID,
-				false, false, "Cyclic");
+				false, false, "Forge Creeper Heal");
 	}
 
 	@Override
@@ -22,13 +22,11 @@ public class IngameConfigGui extends GuiConfig {
 
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 
 	@Override
 	protected void actionPerformed(GuiButton button) {
-
 		super.actionPerformed(button);
 	}
 }

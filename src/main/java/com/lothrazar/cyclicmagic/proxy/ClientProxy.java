@@ -14,7 +14,9 @@ import com.lothrazar.cyclicmagic.entity.projectile.EntityTorchBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityWaterBolt;
 import com.lothrazar.cyclicmagic.gui.spell.GuiSpellWheel;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
+import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.util.Const;
 
 import net.minecraft.block.Block;
@@ -27,6 +29,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.Item;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -200,7 +203,16 @@ public class ClientProxy extends CommonProxy {
 			mesher.register(item, 0, new ModelResourceLocation(name, "inventory"));
 		}
 	}
-
+ 
+	@SideOnly(Side.CLIENT)
+	public void setClientPlayerData(NBTTagCompound tags) {
+ 
+		IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(Minecraft.getMinecraft().thePlayer);
+		if(props != null){
+			props.setDataFromNBT(tags);
+		}
+	} 
+	
 //	@SideOnly(Side.CLIENT)
 //	public static boolean isKeyDown(KeyBinding keybinding) {
 //

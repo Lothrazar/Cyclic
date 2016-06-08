@@ -26,7 +26,13 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
-@Mod(modid = Const.MODID, useMetadata = true, canBeDeactivated = false, updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json", guiFactory = "com.lothrazar." + Const.MODID + ".gui.IngameConfigFactory")
+@Mod(
+		modid = Const.MODID, 
+		useMetadata = true, 
+		canBeDeactivated = false,
+		updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json", 
+		acceptableRemoteVersions = "*",
+		guiFactory = "com.lothrazar." + Const.MODID + ".gui.IngameConfigFactory")
 public class ModMain {
 
 	@Instance(value = Const.MODID)
@@ -157,12 +163,6 @@ public class ModMain {
 
 	}
 	/* 
-	 * TODO : alpha.8 bug reports
-	 * 
-	 * SEARCH RECIPE: text should say if shapeless. and maybe output qty?
-	 * 
-	 * change ender bomb recipes
-	 
 	 * TODO : future plans
 	 * 
 	 * custom villager zombie textures
