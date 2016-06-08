@@ -121,9 +121,9 @@ public class SpellRegistry {
 		spellbookBuild.add(Spells.reachdown);
 		spellbookBuild.add(reachleft);
 		spellbookBuild.add(reachright);
-		spellbookBuild.add(Spells.rotate);
-		spellbookBuild.add(Spells.push);
-		spellbookBuild.add(Spells.pull);
+//		spellbookBuild.add(Spells.rotate);
+//		spellbookBuild.add(Spells.push);
+//		spellbookBuild.add(Spells.pull);
  
 		ItemRegistry.cyclic_wand_build.setSpells(spellbookBuild);
 	}
