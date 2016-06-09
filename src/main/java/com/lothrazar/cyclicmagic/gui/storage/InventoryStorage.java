@@ -12,7 +12,7 @@ import net.minecraftforge.common.util.Constants;
 
 public class InventoryStorage implements IInventory {
 
-	public static final int	INV_SIZE	= 54;		
+	public static final int	INV_SIZE	= 54;	//6*9	
 	private ItemStack[]			inventory	= new ItemStack[INV_SIZE];
 	private final ItemStack	internalWand;
 

@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.item;
 
 import java.util.List;
 
-import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
@@ -16,12 +15,11 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemInventoryStorage extends BaseItem implements IHasRecipe,IHasConfig{
+public class ItemInventoryStorage extends BaseItem implements IHasRecipe{
  
 	public ItemInventoryStorage() {
 		this.setMaxStackSize(1);
@@ -31,11 +29,12 @@ public class ItemInventoryStorage extends BaseItem implements IHasRecipe,IHasCon
 	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
 		return false;
 	}
+	
 	@Override
 	public int getMaxItemUseDuration(ItemStack stack) {
-
 		return 1; // Without this method, your inventory will NOT work!!!
 	}
+	
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
 
@@ -45,6 +44,7 @@ public class ItemInventoryStorage extends BaseItem implements IHasRecipe,IHasCon
 		
 		super.addInformation(stack, playerIn, tooltip, advanced);
 	}
+	
 	public static ItemStack getPlayerItemIfHeld(EntityPlayer player) {
 
 		ItemStack wand = player.getHeldItemMainhand();
@@ -56,9 +56,9 @@ public class ItemInventoryStorage extends BaseItem implements IHasRecipe,IHasCon
 		}
 		return wand;
 	}
+	
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World world, EntityPlayer player, EnumHand hand) {
-
 		if(!world.isRemote){
 			BlockPos pos = player.getPosition();
 			int x = pos.getX(), y = pos.getY(), z = pos.getZ();
@@ -75,11 +75,5 @@ public class ItemInventoryStorage extends BaseItem implements IHasRecipe,IHasCon
 				'r',Items.REDSTONE,
 				'd',Blocks.DIAMOND_BLOCK
 				);
-	}
-
-	@Override
-	public void syncConfig(Configuration config) {
-		// TODO Auto-generated method stub
-		
 	}
 }
