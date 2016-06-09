@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.net;
 
+import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.event.EventGuiTerrariaButtons; 
 import com.lothrazar.cyclicmagic.util.UtilInventorySort;
 
@@ -38,7 +39,7 @@ public class PacketRestockContainerToPlayer implements IMessage, IMessageHandler
 
 		if (p.openContainer == null || p.openContainer.getSlot(0) == null || p.openContainer.getSlot(0).inventory == null) {
 			// TODO: use logger
-			System.out.println("ERROR LOG: null container inventory");
+			ModMain.logger.error("ERROR : null container inventory");
 		}
 		else {
 			// a workaround since player does not reference the inventory, only the
@@ -51,10 +52,8 @@ public class PacketRestockContainerToPlayer implements IMessage, IMessageHandler
 			//TODO: restock leave one should be passed in from event/packet
 			UtilInventorySort.sortFromInventoryToPlayer(p.worldObj, openInventory, p, EventGuiTerrariaButtons.restockLeaveOne);
 
-			UtilInventorySort.updatePlayerContainerClient(p);
 		}
 
 		return null;
 	}
-
 }

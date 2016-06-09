@@ -47,8 +47,6 @@ public class PacketDepositPlayerToNearby implements IMessage, IMessageHandler<Pa
 			IInventory openInventory = p.openContainer.getSlot(0).inventory;
 
 			UtilInventorySort.dumpFromPlayerToIInventory(p.worldObj, openInventory, p);
-
-			UtilInventorySort.updatePlayerContainerClient(p);
 		}
 
 		return null;

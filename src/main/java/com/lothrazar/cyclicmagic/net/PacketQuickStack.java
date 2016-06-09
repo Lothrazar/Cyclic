@@ -45,9 +45,7 @@ public class PacketQuickStack implements IMessage, IMessageHandler<PacketQuickSt
 			// and Container has no get method
 			IInventory openInventory = p.openContainer.getSlot(0).inventory;
 
-			UtilInventorySort.sortFromPlayerToInventory(p.worldObj, openInventory, p);
-
-			UtilInventorySort.updatePlayerContainerClient(p);
+			UtilInventorySort.sortFromPlayerToInventory(p.worldObj, openInventory, p); 
 		}
 
 		return null;

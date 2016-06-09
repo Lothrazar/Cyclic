@@ -32,6 +32,7 @@ public class ButtonTerrariaLootAll extends GuiButton implements ITooltipButton{
 			ModMain.network.sendToServer(new PacketDepositContainerToPlayer(new NBTTagCompound()));
 		}
 
+		
 		return pressed;
 	}
 

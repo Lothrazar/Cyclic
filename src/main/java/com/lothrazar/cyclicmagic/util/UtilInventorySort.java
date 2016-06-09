@@ -2,12 +2,12 @@ package com.lothrazar.cyclicmagic.util;
 
 import java.util.ArrayList;
 
+import com.lothrazar.cyclicmagic.ModMain;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.client.FMLClientHandler;
 
 /**
  * @author Lothrazar at https://github.com/PrinceOfAmber
@@ -57,6 +57,8 @@ public class UtilInventorySort {
 				break;
 			}// close loop on player inventory items
 		}// close loop on chest items
+
+		updatePlayerContainerClient(player);
 	}
 
 	public static void dumpFromIInventoryToPlayer(World world, IInventory inventory, EntityPlayer player) {
@@ -84,6 +86,8 @@ public class UtilInventorySort {
 				break;
 			}// close loop on player inventory items
 		}// close loop on chest items
+
+		updatePlayerContainerClient(player);
 	}
 
 	public static void sortFromPlayerToInventory(World world, IInventory chest, EntityPlayer player) {
@@ -151,6 +155,8 @@ public class UtilInventorySort {
 				}// end if items match
 			}// close loop on player inventory items
 		}// close loop on chest items
+
+		updatePlayerContainerClient(player);
 	}
 
 	public static void sortFromInventoryToPlayer(World world, IInventory chest, EntityPlayer player, boolean restockLeaveOne) {
@@ -223,10 +229,11 @@ public class UtilInventorySort {
 					else {
 						chest.setInventorySlotContents(islotChest, chestItem);
 					}
-
 				}// end if items match
 			}// close loop on player inventory items
 		}// close loop on chest items
+		
+		updatePlayerContainerClient(player);
 	}
 
 	/*
@@ -377,39 +384,6 @@ public class UtilInventorySort {
 		return p.inventory.getSizeInventory() - Const.ARMOR_SIZE;
 	}
 
-	public static void updateNearbyTileEntities(EntityPlayer player) {
-		// this is used ONLY since when a player has an open Gui, an open Container,
-		// or open IInventory
-		// thiere is no reference to the TileEntity in the world
-		// so we hack it by hitting everything nearby
-		World w = player.worldObj;
-		int RADIUS = 5;
-		int xMin = (int) player.posX - RADIUS;
-		int xMax = (int) player.posX + RADIUS;
-
-		int yMin = (int) player.posY - RADIUS;
-		int yMax = (int) player.posY + RADIUS;
-
-		int zMin = (int) player.posZ - RADIUS;
-		int zMax = (int) player.posZ + RADIUS;
-
-		BlockPos pos;
-		for (int xLoop = xMin; xLoop <= xMax; xLoop++) {
-			for (int yLoop = yMin; yLoop <= yMax; yLoop++) {
-				for (int zLoop = zMin; zLoop <= zMax; zLoop++) {
-					pos = new BlockPos(xLoop, yLoop, zLoop);
-
-					if (w.getTileEntity(pos) != null) {
-						// System.out.println("markBlockForUpdate");
-						// state isnt changing but still trigger update
-						w.notifyBlockUpdate(pos, w.getBlockState(pos), w.getBlockState(pos), 3);
-						// w.markBlockForUpdate(pos);
-					}
-				}
-			}
-		}
-	}
-
 	/**
 	 * call this from SERVER SIDE if you are doing stuff to containers/invos/tile
 	 * entities
@@ -418,24 +392,15 @@ public class UtilInventorySort {
 	 * @param p
 	 */
 	public static void updatePlayerContainerClient(EntityPlayer p) {
-		// first: mark player inventory as 'i need to update on client side'
-		// p.inventory.inventoryChanged = true;
-		// p.inventory.markDirty();
+		
+    	// http://www.minecraftforge.net/forum/index.php?topic=15351.0
 
-		// next mark the container as 'i need to update on client side'
-		// UtilInventory.updateNearbyTileEntities(p);
-
-		if (FMLClientHandler.instance().getClient().currentScreen != null) {
-			// http://www.minecraftforge.net/wiki/Tile_Entities#Sending_Tile_Entity_Data_From_Server_to_Client
-			FMLClientHandler.instance().getClient().currentScreen.updateScreen();
+		p.inventory.markDirty();
+		if(p.openContainer == null){
+			ModMain.logger.error("Cannot update null container");
 		}
-
-		// if above didnt work i was doing this before:
-
-		// yeah.. for some reason the above stuff doesnt work 100% of the time. it
-		// works like, rarely?
-		// half the time? no fucking clue why.
-		p.closeScreen();
+		else{
+			p.openContainer.detectAndSendChanges();
+		}
 	}
-
 }
