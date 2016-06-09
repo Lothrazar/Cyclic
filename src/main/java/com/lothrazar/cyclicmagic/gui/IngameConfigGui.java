@@ -12,7 +12,7 @@ public class IngameConfigGui extends GuiConfig {
 
 	public IngameConfigGui(GuiScreen parent) {
 		super(parent, new ConfigElement(ModMain.getConfig().getCategory(Const.MODID)).getChildElements(), Const.MODID,
-				false, false, "Forge Creeper Heal");
+				false, false, "Cyclic");
 	}
 
 	@Override

@@ -167,6 +167,8 @@ public class ModMain {
 	 * 
 	 * Fix sorting : UtilInventorySort.sort(p, openInventory);
 	 * 
+	 * renderCurrentSlot feature in the wand gui
+	 * 
 	 * custom villager zombie textures
 	 * 
 	 * ?? EventNoclipUpdate : dont use entitydata, because logout login, or a death, you will be stuck?
