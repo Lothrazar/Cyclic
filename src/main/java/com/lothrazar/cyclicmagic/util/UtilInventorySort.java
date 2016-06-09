@@ -1,9 +1,11 @@
 package com.lothrazar.cyclicmagic.util;
 
 import java.util.ArrayList;
-
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 import com.lothrazar.cyclicmagic.ModMain;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -13,7 +15,7 @@ import net.minecraft.world.World;
  * @author Lothrazar at https://github.com/PrinceOfAmber
  */
 public class UtilInventorySort {
-	public class SortGroup {
+	public static class SortGroup {
 		public SortGroup(String k) {
 			stacks = new ArrayList<ItemStack>();
 			key = k;
@@ -23,8 +25,8 @@ public class UtilInventorySort {
 			stacks.add(s);
 		}
 
-		public ArrayList<ItemStack>	stacks;
-		public String								key;
+		public ArrayList<ItemStack> stacks;
+		public String key;
 	}
 
 	public static void dumpFromPlayerToIInventory(World world, IInventory inventory, EntityPlayer player) {
@@ -35,28 +37,29 @@ public class UtilInventorySort {
 
 		// we loop on the chest and look for empty slots
 		// once we have an empty slot, we find something to fill it with
-		// inventory and chest has 9 rows by 3 columns, never changes. same as 64
+		// inventory and chest has 9 rows by 3 columns, never changes. same as
+		// 64
 		// max stack size
 		for (int islotInvo = start; islotInvo < inventory.getSizeInventory(); islotInvo++) {
 			chestEmptySlot = inventory.getStackInSlot(islotInvo);
 
 			if (chestEmptySlot != null) {
 				continue;
-			}// slot not empty, skip over it
+			} // slot not empty, skip over it
 
 			for (int islotPlayer = Const.HOTBAR_SIZE; islotPlayer < getInvoEnd(player); islotPlayer++) {
 				playerItem = player.inventory.getStackInSlot(islotPlayer);
 
 				if (playerItem == null) {
 					continue;
-				}// empty inventory slot
+				} // empty inventory slot
 
 				inventory.setInventorySlotContents(islotInvo, playerItem);
 
 				player.inventory.setInventorySlotContents(islotPlayer, null);
 				break;
-			}// close loop on player inventory items
-		}// close loop on chest items
+			} // close loop on player inventory items
+		} // close loop on chest items
 
 		updatePlayerContainerClient(player);
 	}
@@ -70,7 +73,7 @@ public class UtilInventorySort {
 			playerEmptySlot = player.inventory.getStackInSlot(islotPlayer);
 			if (playerEmptySlot != null) {
 				continue;
-			}// slot not empty, skip over it
+			} // slot not empty, skip over it
 
 			// ok we found an empty player slot
 			for (int islotInvo = start; islotInvo < inventory.getSizeInventory(); islotInvo++) {
@@ -78,14 +81,14 @@ public class UtilInventorySort {
 
 				if (chestItem == null) {
 					continue;
-				}// empty inventory slot
+				} // empty inventory slot
 
 				player.inventory.setInventorySlotContents(islotPlayer, chestItem);
 				inventory.setInventorySlotContents(islotInvo, null);
 				start = islotInvo + 1;
 				break;
-			}// close loop on player inventory items
-		}// close loop on chest items
+			} // close loop on player inventory items
+		} // close loop on chest items
 
 		updatePlayerContainerClient(player);
 	}
@@ -105,14 +108,15 @@ public class UtilInventorySort {
 		int START_CHEST = 0;
 		int END_CHEST = chest.getSizeInventory();
 
-		// inventory and chest has 9 rows by 3 columns, never changes. same as 64
+		// inventory and chest has 9 rows by 3 columns, never changes. same as
+		// 64
 		// max stack size
 		for (int islotChest = START_CHEST; islotChest < END_CHEST; islotChest++) {
 			chestItem = chest.getStackInSlot(islotChest);
 
 			if (chestItem == null) {
 				continue;
-			}// empty chest slot
+			} // empty chest slot
 
 			for (int islotInv = Const.HOTBAR_SIZE; islotInv < getInvoEnd(player); islotInv++) {
 
@@ -120,9 +124,10 @@ public class UtilInventorySort {
 
 				if (playerItem == null) {
 					continue;
-				}// empty inventory slot
+				} // empty inventory slot
 
-				if (playerItem.getItem().equals(chestItem.getItem()) && playerItem.getItemDamage() == chestItem.getItemDamage()) {
+				if (playerItem.getItem().equals(chestItem.getItem())
+						&& playerItem.getItemDamage() == chestItem.getItemDamage()) {
 					// same item, including damage (block state)
 
 					chestMax = chestItem.getItem().getItemStackLimit(chestItem);
@@ -141,25 +146,28 @@ public class UtilInventorySort {
 
 					playerItem.stackSize -= toDeposit;
 
-					if (playerItem.stackSize <= 0)// because of calculations above, should
-					                              // not be below zero
+					if (playerItem.stackSize <= 0) // because of calculations
+													// above, should
+													// not be below zero
 					{
-						// item stacks with zero count do not destroy themselves, they show
-						// up and have unexpected behavior in game so set to empty
+						// item stacks with zero count do not destroy
+						// themselves, they show
+						// up and have unexpected behavior in game so set to
+						// empty
 						player.inventory.setInventorySlotContents(islotInv, null);
-					}
-					else {
+					} else {
 						// set to new quantity
 						player.inventory.setInventorySlotContents(islotInv, playerItem);
 					}
-				}// end if items match
-			}// close loop on player inventory items
-		}// close loop on chest items
+				} // end if items match
+			} // close loop on player inventory items
+		} // close loop on chest items
 
 		updatePlayerContainerClient(player);
 	}
 
-	public static void sortFromInventoryToPlayer(World world, IInventory chest, EntityPlayer player, boolean restockLeaveOne) {
+	public static void sortFromInventoryToPlayer(World world, IInventory chest, EntityPlayer player,
+			boolean restockLeaveOne) {
 		// System.out.println("sortFromInventoryToPlayer");
 		// same as sortFromPlayerToInventory but reverse
 		// TODO: find some code sharing
@@ -175,25 +183,27 @@ public class UtilInventorySort {
 		int START_CHEST = 0;
 		int END_CHEST = chest.getSizeInventory();
 
-		// inventory and chest has 9 rows by 3 columns, never changes. same as 64
+		// inventory and chest has 9 rows by 3 columns, never changes. same as
+		// 64
 		// max stack size
 		for (int islotChest = START_CHEST; islotChest < END_CHEST; islotChest++) {
 			chestItem = chest.getStackInSlot(islotChest);
 
 			if (chestItem == null) {
 				continue;
-			}// empty chest slot
-			// System.out.println("chestItem == null");
+			} // empty chest slot
+				// System.out.println("chestItem == null");
 
 			for (int islotInv = Const.HOTBAR_SIZE; islotInv < getInvoEnd(player); islotInv++) {
 				playerItem = player.inventory.getStackInSlot(islotInv);
 
 				if (playerItem == null) {
 					continue;
-				}// empty inventory slot
-				// System.out.println("playerItem == null");
+				} // empty inventory slot
+					// System.out.println("playerItem == null");
 
-				if (playerItem.getItem().equals(chestItem.getItem()) && playerItem.getItemDamage() == chestItem.getItemDamage()) {
+				if (playerItem.getItem().equals(chestItem.getItem())
+						&& playerItem.getItemDamage() == chestItem.getItemDamage()) {
 					// System.out.println("MATCH");
 
 					invMax = playerItem.getItem().getItemStackLimit(playerItem);
@@ -202,7 +212,7 @@ public class UtilInventorySort {
 					if (room <= 0) {
 						continue;
 					} // no room, check the next spot
-					// System.out.println("ROOM");
+						// System.out.println("ROOM");
 
 					toDeposit = Math.min(chestItem.stackSize, room);
 
@@ -213,7 +223,7 @@ public class UtilInventorySort {
 
 						if (toDeposit == 0) {
 							continue;
-						}// dont do nothing
+						} // dont do nothing
 					}
 
 					// add to player
@@ -225,181 +235,136 @@ public class UtilInventorySort {
 
 					if (chestItem.stackSize <= 0) {
 						chest.setInventorySlotContents(islotChest, null);
-					}
-					else {
+					} else {
 						chest.setInventorySlotContents(islotChest, chestItem);
 					}
-				}// end if items match
-			}// close loop on player inventory items
-		}// close loop on chest items
-		
+				} // end if items match
+			} // close loop on player inventory items
+		} // close loop on chest items
+
 		updatePlayerContainerClient(player);
 	}
 
-	/*
-	 * final static String NBT_SORT = "terraria_sort";
-	 * final static int SORT_ALPH = 0;
-	 * final static int SORT_ALPHI = 1;
-	 * 
-	 * private static int getNextSort(EntityPlayer p)
-	 * {
-	 * int prev = p.getEntityData().getInteger(NBT_SORT);
-	 * 
-	 * int n = prev+1;
-	 * 
-	 * if(n>=2)n=0;
-	 * 
-	 * p.getEntityData().setInteger(NBT_SORT,n);
-	 * 
-	 * return n;
-	 * }
-	 * public static void sort(InventoryPlayer invo)
-	 * {
-	 * int sortType = getNextSort(invo.player);
-	 * 
-	 * int iSize = getInvoEnd(invo.player);
-	 * 
-	 * Map<String,SortGroup> unames = new HashMap<String,SortGroup>();
-	 * 
-	 * ItemStack item = null;
-	 * SortGroup temp;
-	 * String key = "";
-	 * 
-	 * for(int i = Const.HOTBAR_SIZE; i < iSize;i++)
-	 * {
-	 * item = invo.getStackInSlot(i);
-	 * if(item == null){continue;}
-	 * 
-	 * if(sortType == SORT_ALPH) //TODO: why do it this way ->
-	 * key = item.getUnlocalizedName() + item.getItemDamage();
-	 * else if(sortType == SORT_ALPHI)
-	 * key = item.getItem().getClass().getName() + item.getUnlocalizedName()+
-	 * item.getItemDamage();
-	 * //else if(sortType == SORT_CLASS)
-	 * // key = item.getItem().getClass().getName()+ item.getItemDamage();
-	 * 
-	 * 
-	 * temp = unames.get(key);
-	 * if(temp == null) {temp = new SortGroup(key);}
-	 * 
-	 * if(temp.stacks.size() > 0)
-	 * {
-	 * //try to merge with top
-	 * ItemStack top = temp.stacks.remove(temp.stacks.size()-1);
-	 * 
-	 * int room = top.getMaxStackSize() - top.stackSize;
-	 * 
-	 * if(room > 0)
-	 * {
-	 * int moveover = Math.min(item.stackSize,room);
-	 * 
-	 * top.stackSize += moveover;
-	 * 
-	 * item.stackSize -= moveover;
-	 * 
-	 * if(item.stackSize == 0)
-	 * {
-	 * item = null;
-	 * invo.setInventorySlotContents(i, item);
-	 * }
-	 * }
-	 * 
-	 * temp.stacks.add(top);
-	 * }
-	 * 
-	 * if(item != null)
-	 * temp.add(item);
-	 * 
-	 * unames.put(key,temp);
-	 * 
-	 * }
-	 * 
-	 * //http://stackoverflow.com/questions/780541/how-to-sort-a-hashmap-in-java
-	 * 
-	 * ArrayList<SortGroup> sorted = new ArrayList<SortGroup>(unames.values());
-	 * Collections.sort(sorted, new Comparator<SortGroup>()
-	 * {
-	 * public int compare(SortGroup o1, SortGroup o2)
-	 * {
-	 * return o1.key.compareTo(o2.key);
-	 * }
-	 * });
-	 * 
-	 * int k = Const.HOTBAR_SIZE;
-	 * for (SortGroup p : sorted)
-	 * {
-	 * //System.out.println(p.key+" "+p.stacks.size());
-	 * 
-	 * for(int i = 0; i < p.stacks.size(); i++)
-	 * {
-	 * invo.setInventorySlotContents(k, null);
-	 * invo.setInventorySlotContents(k, p.stacks.get(i));
-	 * k++;
-	 * }
-	 * }
-	 * 
-	 * for(int j = k; j < iSize; j++)
-	 * {
-	 * invo.setInventorySlotContents(j, null);
-	 * }
-	 * 
-	 * 
-	 * //alternately loop by rows
-	 * //so we start at k again, add Const.ALL_COLS to go down one row
-	 * 
-	 * 
-	 * 
-	 * }
-	 */
+	final static String NBT_SORT = "terraria_sort";
+	final static int SORT_ALPH = 0;
+	final static int SORT_ALPHI = 1;
 
-	/*
-	 * public static void doSort(EntityPlayer p,int sortType)
-	 * {
-	 * InventoryPlayer invo = p.inventory;
-	 * 
-	 * switch(sortType)
-	 * {
-	 * case Const.SORT_LEFT:
-	 * UtilInventory.shiftLeftOne(invo);
-	 * break;
-	 * case Const.SORT_RIGHT:
-	 * UtilInventory.shiftRightOne(invo);
-	 * break;
-	 * case Const.SORT_LEFTALL:
-	 * UtilInventory.shiftLeftAll(invo);
-	 * break;
-	 * case Const.SORT_RIGHTALL:
-	 * UtilInventory.shiftRightAll(invo);
-	 * break;
-	 * case Const.SORT_SMART:
-	 * UtilInventory.sort(invo);
-	 * break;
-	 * }
-	 * 
-	 * return ;
-	 * }
-	 */
+	private static int getNextSort(EntityPlayer p) {
+		int prev = p.getEntityData().getInteger(NBT_SORT);
+
+		int n = prev + 1;
+
+		if (n >= 2)
+			n = 0;
+
+		p.getEntityData().setInteger(NBT_SORT, n);
+
+		return n;
+	}
+
+	public static void sort(EntityPlayer player,IInventory invo) {
+		int sortType = getNextSort(player);
+
+		int iSize = invo.getSizeInventory();
+
+		Map<String, SortGroup> unames = new HashMap<String, SortGroup>();
+
+		ItemStack item = null;
+		SortGroup temp;
+		String key = "";
+
+		for (int i = 0; i < iSize; i++) {
+			item = invo.getStackInSlot(i);
+			if (item == null) {
+				continue;
+			}
+
+			if (sortType == SORT_ALPH) // TODO: why do it this way ->
+				key = item.getUnlocalizedName() + item.getItemDamage();
+			else if (sortType == SORT_ALPHI)
+				key = item.getItem().getClass().getName() + item.getUnlocalizedName() + item.getItemDamage();
+			// else if(sortType == SORT_CLASS)
+			// key = item.getItem().getClass().getName()+ item.getItemDamage();
+
+			temp = unames.get(key);
+			if (temp == null) {
+				temp = new SortGroup(key);
+			}
+
+			if (temp.stacks.size() > 0) {
+				// try to merge with top
+				ItemStack top = temp.stacks.remove(temp.stacks.size() - 1);
+
+				int room = top.getMaxStackSize() - top.stackSize;
+
+				if (room > 0) {
+					int moveover = Math.min(item.stackSize, room);
+
+					top.stackSize += moveover;
+
+					item.stackSize -= moveover;
+
+					if (item.stackSize == 0) {
+						item = null;
+						invo.setInventorySlotContents(i, item);
+					}
+				}
+
+				temp.stacks.add(top);
+			}
+
+			if (item != null)
+				temp.add(item);
+
+			unames.put(key, temp);
+		}
+
+		// http://stackoverflow.com/questions/780541/how-to-sort-a-hashmap-in-java
+
+		ArrayList<SortGroup> sorted = new ArrayList<SortGroup>(unames.values());
+		Collections.sort(sorted, new Comparator<SortGroup>() {
+			public int compare(SortGroup o1, SortGroup o2) {
+				return o1.key.compareTo(o2.key);
+			}
+		});
+
+		for (SortGroup p : sorted) {
+			// System.out.println(p.key+" "+p.stacks.size());
+
+			for (int i = 0; i < p.stacks.size(); i++) {
+				invo.setInventorySlotContents(i, null);
+				invo.setInventorySlotContents(i, p.stacks.get(i));
+			}
+		}
+
+		for (int j = 0; j < iSize; j++) {
+			invo.setInventorySlotContents(j, null);
+		}
+
+		// alternately loop by rows
+		// so we start at k again, add Const.ALL_COLS to go down one row
+
+		updatePlayerContainerClient(player);
+	}
 
 	private static int getInvoEnd(EntityPlayer p) {
 		return p.inventory.getSizeInventory() - Const.ARMOR_SIZE;
 	}
 
 	/**
-	 * call this from SERVER SIDE if you are doing stuff to containers/invos/tile
-	 * entities
-	 * but your client GUI's are not updating
+	 * call this from SERVER SIDE if you are doing stuff to
+	 * containers/invos/tile entities but your client GUI's are not updating
 	 * 
 	 * @param p
 	 */
 	public static void updatePlayerContainerClient(EntityPlayer p) {
-		
-    	// http://www.minecraftforge.net/forum/index.php?topic=15351.0
+
+		// http://www.minecraftforge.net/forum/index.php?topic=15351.0
 
 		p.inventory.markDirty();
-		if(p.openContainer == null){
+		if (p.openContainer == null) {
 			ModMain.logger.error("Cannot update null container");
-		}
-		else{
+		} else {
 			p.openContainer.detectAndSendChanges();
 		}
 	}

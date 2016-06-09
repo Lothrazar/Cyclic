@@ -165,13 +165,12 @@ public class ModMain {
 	/* 
 	 * TODO : future plans
 	 * 
+	 * Fix sorting : UtilInventorySort.sort(p, openInventory);
+	 * 
 	 * custom villager zombie textures
 	 * 
 	 * ?? EventNoclipUpdate : dont use entitydata, because logout login, or a death, you will be stuck?
 	 *.. it seems to work, for now so..
-	 * 
-	 *  Disable backpack item OR fix the vertical location/height offscreen issue
-	 * .. is disabled: addItem(new ItemInventoryStorage(),"storage_bag")
 	 * 
 	 * revisit flint tool..??
 	 * 
@@ -183,8 +182,6 @@ public class ModMain {
 	 * 
 	 * block breaker
 	 * 
-	 * SORTING
-	 *  
 	 * achievemnets give exp 
 	 * 
 	 * INVESTIGATE   maybe new equipment screen., hotkey to use the matched itemslot
