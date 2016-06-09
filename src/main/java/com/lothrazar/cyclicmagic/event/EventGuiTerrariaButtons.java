@@ -28,6 +28,7 @@ public class EventGuiTerrariaButtons implements IHasConfig{
 	public static final String		posLeft		= "topleft";
 	public static final String		posRight	= "topright";
 	public static final	String		posBottom	= "bottomleft"; 
+	public static final int BTNWIDTH = 20;
 	private List<String>		blacklistGuis;
 
 	@SideOnly(Side.CLIENT)
@@ -60,7 +61,7 @@ public class EventGuiTerrariaButtons implements IHasConfig{
 			}
 			else if (position.equalsIgnoreCase(posRight)) {
 
-				x = Minecraft.getMinecraft().displayWidth / 2 - Const.btnWidth - padding;
+				x = Minecraft.getMinecraft().displayWidth / 2 - BTNWIDTH - padding;
 				y = padding;
 				// we are moving top to bottom, so
 				xDelta = 0;
@@ -70,7 +71,7 @@ public class EventGuiTerrariaButtons implements IHasConfig{
 				// test bottom
 				x = padding;
 				y = Minecraft.getMinecraft().displayHeight / 2 - padding - Const.btnHeight;
-				xDelta = Const.btnWidth + padding;
+				xDelta = BTNWIDTH + padding;
 				yDelta = 0;
 			}
 

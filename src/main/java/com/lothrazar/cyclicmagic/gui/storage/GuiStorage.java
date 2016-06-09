@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.gui.storage;
 
 import org.lwjgl.opengl.GL11;
 
+import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
 import com.lothrazar.cyclicmagic.util.Const;
 
 import net.minecraft.client.gui.Gui;
@@ -25,6 +26,17 @@ public class GuiStorage extends GuiContainer {
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		super.drawScreen(mouseX, mouseY, partialTicks);
+		
+		ITooltipButton btn;
+		
+		for (int i = 0; i < buttonList.size(); i++) {
+			if (buttonList.get(i).isMouseOver() && buttonList.get(i) instanceof ITooltipButton) {
+				btn = (ITooltipButton) buttonList.get(i);
+
+				drawHoveringText(btn.getTooltips(), mouseX, mouseY, fontRendererObj);
+				break;// cant hover on 2 at once
+			}
+		}
 	}
 
 	@Override

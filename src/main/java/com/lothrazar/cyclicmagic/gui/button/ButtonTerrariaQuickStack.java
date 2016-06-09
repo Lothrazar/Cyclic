@@ -1,6 +1,10 @@
 package com.lothrazar.cyclicmagic.gui.button;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.event.EventGuiTerrariaButtons;
 import com.lothrazar.cyclicmagic.net.PacketQuickStack;
 import com.lothrazar.cyclicmagic.util.Const;
 
@@ -11,9 +15,12 @@ import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ButtonTerrariaQuickStack extends GuiButton {
+public class ButtonTerrariaQuickStack extends GuiButton implements ITooltipButton {
+	private List<String> tooltip = new ArrayList<String>();
+	
 	public ButtonTerrariaQuickStack(int buttonId, int x, int y) {
-		super(buttonId, x, y, Const.btnWidth, Const.btnHeight, I18n.format("button.terraria.quickstack"));
+		super(buttonId, x, y, EventGuiTerrariaButtons.BTNWIDTH, Const.btnHeight, "Q");
+		tooltip.add(I18n.format("button.terraria.quickstack"));
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -29,5 +36,10 @@ public class ButtonTerrariaQuickStack extends GuiButton {
 		}
 
 		return pressed;
+	}
+
+	@Override
+	public List<String> getTooltips() {
+		return tooltip;
 	}
 }

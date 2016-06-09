@@ -37,7 +37,6 @@ public class Const {
 	public static final int ROWS_VANILLA = 3;
 	public static final int COLS_VANILLA = 9;
 
-	public static final int btnWidth = 60;
 	public static final int btnHeight = 20;
 
 	public static final int skull_skeleton = 0;
