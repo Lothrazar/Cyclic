@@ -7,6 +7,7 @@ import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.item.BaseItem;
 import com.lothrazar.cyclicmagic.item.ItemAppleEmerald;
+import com.lothrazar.cyclicmagic.item.ItemArmorLaunch;
 import com.lothrazar.cyclicmagic.item.ItemChestSack;
 import com.lothrazar.cyclicmagic.item.ItemChestSackEmpty;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
@@ -63,6 +64,7 @@ public class ItemRegistry {
 
 	public static final ItemFoodCorruptedChorus corrupted_chorus = new ItemFoodCorruptedChorus();
 	public static final ItemToolLaunch corrupted_elytra = new ItemToolLaunch();
+	public static final ItemArmorLaunch boots_doublejump = new ItemArmorLaunch();
 	public static final ItemCyclicWand cyclic_wand_build = new ItemCyclicWand();
 	public static final ItemPotionCustom potion_viscous = new ItemPotionCustom(false);
 	public static final ItemPotionCustom potion_levitation = new ItemPotionCustom(true,MobEffects.LEVITATION, 60*3);
@@ -122,6 +124,7 @@ public class ItemRegistry {
 		addItem(ender_tnt_4,"ender_tnt_4");
 		addItem(ender_tnt_5,"ender_tnt_5");
 		addItem(ender_tnt_6,"ender_tnt_6");
+		addItem(boots_doublejump,"boots_doublejump");
 		addItem(new ItemFoodHorse(new ItemStack(Items.EMERALD)),"horse_upgrade_type");
 		addItem(new ItemFoodHorse(new ItemStack(Items.DYE, 1, Const.dye_lapis)),"horse_upgrade_variant");
 		addItem(new ItemFoodHorse(new ItemStack(Items.DIAMOND)),"horse_upgrade_health");

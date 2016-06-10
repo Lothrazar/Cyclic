@@ -111,11 +111,13 @@ public class UtilEntity {
 			
 			// boost power a bit, horses are heavy as F
 			ridingEntity.motionY = 0;
+			ridingEntity.fallDistance = 0;
 			ridingEntity.addVelocity(velX * mountPower, velY * mountPower, velZ * mountPower);
 
 		}
 		else {
 			player.motionY = 0;
+			player.fallDistance = 0;
 			player.addVelocity(velX, velY, velZ);
 		} 
 	} 
