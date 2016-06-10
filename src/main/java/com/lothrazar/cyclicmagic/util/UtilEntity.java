@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.util;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.EntityItem;
@@ -8,6 +9,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class UtilEntity {
@@ -77,5 +79,44 @@ public class UtilEntity {
 		}
 		return jumpHeight;
 	}
+	
+	public static void launch(EntityLivingBase player, float rotationPitch, float power){
+ 
+		float rotationYaw = player.rotationYaw ;
+		float mountPower	= (float) (power - 0.5);
+		
+		double velX = (double) (-MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power);
+		double velZ = (double) (MathHelper.cos(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power);
 
+		double velY = (double) (-MathHelper.sin((rotationPitch) / 180.0F * (float) Math.PI) * power);
+
+		// launch the player up and forward at minimum angle
+		// regardless of look vector
+		if (velY < 0) {
+			velY *= -1;// make it always up never down
+		}
+//		if (velY < 0.4) {
+//			System.out.println("A");
+//			velY = 0.4 + player.jumpMovementFactor;
+//		}
+//		boolean isLookingDown = (player.getLookVec().yCoord < -20);
+//		if(isLookingDown){
+//			System.out.println("B");
+//			velY += 2.5;
+//		}
+		
+		Entity ridingEntity = player.getRidingEntity();
+
+		if (ridingEntity != null) {
+			
+			// boost power a bit, horses are heavy as F
+			ridingEntity.motionY = 0;
+			ridingEntity.addVelocity(velX * mountPower, velY * mountPower, velZ * mountPower);
+
+		}
+		else {
+			player.motionY = 0;
+			player.addVelocity(velX, velY, velZ);
+		} 
+	} 
 }

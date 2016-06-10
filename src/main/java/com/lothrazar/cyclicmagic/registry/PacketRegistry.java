@@ -1,31 +1,6 @@
 package com.lothrazar.cyclicmagic.registry;
 
-import com.lothrazar.cyclicmagic.net.PacketDepositPlayerToNearby;
-import com.lothrazar.cyclicmagic.net.PacketDepositContainerToPlayer;
-import com.lothrazar.cyclicmagic.net.PacketMovePlayerHotbar;
-import com.lothrazar.cyclicmagic.net.PacketSpellShiftLeft;
-import com.lothrazar.cyclicmagic.net.PacketSpellShiftRight; 
-import com.lothrazar.cyclicmagic.net.PacketParticleAtPosition;
-import com.lothrazar.cyclicmagic.net.PacketRechargeWand;
-import com.lothrazar.cyclicmagic.net.PacketMovePlayerColumn;
-import com.lothrazar.cyclicmagic.net.PacketSpellFromServer;
-import com.lothrazar.cyclicmagic.net.PacketSpellPull;
-import com.lothrazar.cyclicmagic.net.PacketSpellPush;
-import com.lothrazar.cyclicmagic.net.PacketReplaceBlock;
-import com.lothrazar.cyclicmagic.net.PacketRotateBlock;
-import com.lothrazar.cyclicmagic.net.PacketSpellBuildType;
-import com.lothrazar.cyclicmagic.net.PacketFakeWorkbench;
-import com.lothrazar.cyclicmagic.net.PacketSpellBuildSize;
-import com.lothrazar.cyclicmagic.net.PacketDeleteWaypoint;
-import com.lothrazar.cyclicmagic.net.PacketNewButton;
-import com.lothrazar.cyclicmagic.net.PacketOpenExtendedInventory;
-import com.lothrazar.cyclicmagic.net.PacketOpenNormalInventory;
-import com.lothrazar.cyclicmagic.net.PacketSyncExtendedInventory;
-import com.lothrazar.cyclicmagic.net.PacketSyncPlayerData;
-import com.lothrazar.cyclicmagic.net.PacketWarpButton;
-import com.lothrazar.cyclicmagic.net.PacketQuickStack;
-import com.lothrazar.cyclicmagic.net.PacketRestockContainerToPlayer;
-
+import com.lothrazar.cyclicmagic.net.*;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 
