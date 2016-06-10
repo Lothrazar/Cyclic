@@ -38,18 +38,6 @@ public class FuelRegistry {
 	
 		Map<Item, Integer> fuelMap = new HashMap<Item, Integer>();
 	
-		/*
-		 * THE PLAN:
-		 * FUEL REGISTRY, make more stuff burn implements IFuelHandler {
-		 * wood doors
-		 * BOATS
-		 * ferns, grass, vines, lillypad
-		 * leaf blocks
-		 * ladder
-		 * dead bush
-		 * sign, painting
-		 * Wheat seeds
-		 */
 		public FuelHandler() {
 	
 			// http://minecraft.gamepedia.com/Smelting
@@ -64,6 +52,12 @@ public class FuelRegistry {
 			fuelMap.put(Items.BIRCH_BOAT, log);
 			fuelMap.put(Items.BOAT, log);//oak
 			fuelMap.put(Items.DARK_OAK_BOAT, log);
+			fuelMap.put(Items.SPRUCE_DOOR, log);
+			fuelMap.put(Items.ACACIA_DOOR, log);
+			fuelMap.put(Items.JUNGLE_DOOR, log);
+			fuelMap.put(Items.BIRCH_DOOR, log); 
+			fuelMap.put(Items.DARK_OAK_DOOR, log);
+			fuelMap.put(Items.OAK_DOOR, log);
 			fuelMap.put(Items.SPRUCE_BOAT, log);
 			fuelMap.put(Item.getItemFromBlock(Blocks.LADDER), log);
 			fuelMap.put(Items.PAINTING, log);
