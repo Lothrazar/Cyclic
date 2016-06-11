@@ -17,6 +17,7 @@ import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -78,10 +79,28 @@ public class BlockRegistry {
 		registerBlock(uncrafting_block, "uncrafting_block");
 		uncrafting_block.addRecipe();
 
-		registerBlock(new BlockLaunch(35F,0.6F,SoundEvents.BLOCK_SLIME_BREAK), "plate_launch_small");
-		registerBlock(new BlockLaunch(50F,0.9F,SoundEvents.BLOCK_SLIME_FALL), "plate_launch_med");
-		registerBlock(new BlockLaunch(75F,1.2F,SoundEvents.BLOCK_SLIME_STEP), "plate_launch_large");
-	
+		BlockLaunch plate_launch_small = new BlockLaunch(35F,0.6F,SoundEvents.BLOCK_SLIME_STEP);
+		BlockLaunch plate_launch_med = new BlockLaunch(50F,0.9F,SoundEvents.BLOCK_SLIME_FALL);
+		BlockLaunch plate_launch_large = new BlockLaunch(75F,1.2F,SoundEvents.BLOCK_SLIME_BREAK);
+		
+		registerBlock(plate_launch_small, "plate_launch_small");
+		registerBlock(plate_launch_med, "plate_launch_med");
+		registerBlock(plate_launch_large, "plate_launch_large");
+		
+		GameRegistry.addRecipe(new ItemStack(plate_launch_med,3), 
+				"sss", "ggg", "iii", 
+				's', Blocks.SLIME_BLOCK, 
+				'g', Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE,
+				'i', Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE);
+		
+		GameRegistry.addShapelessRecipe(new ItemStack(plate_launch_small),
+				new ItemStack(plate_launch_med), 
+				new ItemStack(Items.FEATHER));
+
+		GameRegistry.addShapelessRecipe(new ItemStack(plate_launch_large),
+				new ItemStack(plate_launch_med), 
+				new ItemStack(Items.REDSTONE));
+		
 		registerBlock(block_fragile,new ItemBlockScaffolding(block_fragile), BlockScaffolding.name);
 		block_fragile.addRecipe();
 
