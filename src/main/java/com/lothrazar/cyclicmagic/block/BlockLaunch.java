@@ -25,6 +25,7 @@ public class BlockLaunch extends BlockBasePressurePlate {
 		sound = s;
 	}
 
+	@Override
 	protected void playClickOnSound(World worldIn, BlockPos pos) {
 
 		//SoundEvents.BLOCK_WOOD_PRESSPLATE_CLICK_ON
@@ -32,6 +33,7 @@ public class BlockLaunch extends BlockBasePressurePlate {
 
 	}
 
+	@Override
 	protected void playClickOffSound(World worldIn, BlockPos pos) {
 
 //		worldIn.playSound((EntityPlayer) null, pos, SoundEvents.BLOCK_STONE_PRESSPLATE_CLICK_OFF, SoundCategory.BLOCKS,0.3F, 0.5F);
@@ -57,8 +59,11 @@ public class BlockLaunch extends BlockBasePressurePlate {
 	@Override
 	public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
 
-		if (entity instanceof EntityLivingBase)
+		if (entity instanceof EntityLivingBase){
 			UtilEntity.launch((EntityLivingBase) entity, angle, power);
+			
+			this.playClickOnSound(worldIn, pos);
+		}
 	}
 
 }

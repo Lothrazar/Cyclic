@@ -14,6 +14,7 @@ import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.common.config.Configuration;
@@ -77,9 +78,9 @@ public class BlockRegistry {
 		registerBlock(uncrafting_block, "uncrafting_block");
 		uncrafting_block.addRecipe();
 
-		registerBlock(new BlockLaunch(30F,0.6F,SoundRegistry.byeaa), "plate_launch_small");
-		registerBlock(new BlockLaunch(45F,0.9F,SoundRegistry.bwoaaap), "plate_launch_med");
-		registerBlock(new BlockLaunch(60F,1.2F,SoundRegistry.byeaa), "plate_launch_large");
+		registerBlock(new BlockLaunch(35F,0.6F,SoundEvents.BLOCK_SLIME_BREAK), "plate_launch_small");
+		registerBlock(new BlockLaunch(50F,0.9F,SoundEvents.BLOCK_SLIME_FALL), "plate_launch_med");
+		registerBlock(new BlockLaunch(75F,1.2F,SoundEvents.BLOCK_SLIME_STEP), "plate_launch_large");
 	
 		registerBlock(block_fragile,new ItemBlockScaffolding(block_fragile), BlockScaffolding.name);
 		block_fragile.addRecipe();
