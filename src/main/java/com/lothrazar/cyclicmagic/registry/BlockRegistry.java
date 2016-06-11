@@ -5,6 +5,7 @@ import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.block.BlockBucketStorage;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre.SpawnType;
+import com.lothrazar.cyclicmagic.block.BlockLaunch;
 import com.lothrazar.cyclicmagic.block.BlockScaffolding;
 import com.lothrazar.cyclicmagic.block.BlockUncrafting;
 import com.lothrazar.cyclicmagic.item.itemblock.ItemBlockBucket;
@@ -80,6 +81,10 @@ public class BlockRegistry {
 		registerBlock(uncrafting_block, "uncrafting_block");
 		uncrafting_block.addRecipe();
 
+
+		registerBlock(new BlockLaunch(30F,0.6F), "plate_launch_small");
+		registerBlock(new BlockLaunch(45F,0.9F), "plate_launch_med");
+		registerBlock(new BlockLaunch(60F,1.2F), "plate_launch_large");
 	
 		registerBlock(block_fragile,new ItemBlockScaffolding(block_fragile), BlockScaffolding.name);
 		block_fragile.addRecipe();

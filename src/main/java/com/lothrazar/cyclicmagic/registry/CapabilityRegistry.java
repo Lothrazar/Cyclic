@@ -20,10 +20,10 @@ public class CapabilityRegistry {
 	}
 	 
 	public static IPlayerExtendedProperties getPlayerProperties(EntityPlayer player){
-		if(player == null){
-			ModMain.logger.error("Null player, cannot get properties");
-			return null;
-		}
+//		if(player == null){
+//			ModMain.logger.error("Null player, cannot get properties");
+//			return null;
+//		}
 		return player.getCapability(ModMain.CAPABILITYSTORAGE, null);
 	}
 
@@ -152,13 +152,13 @@ public class CapabilityRegistry {
 	}
 
 	public static void syncServerDataToClient(EntityPlayerMP p) {
+		if(p == null){
+			return;
+		}
 
 		IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(p); 
 		
-		if(props == null){
-			ModMain.logger.warn("Null player data in syncToClient");
-		}
-		else{
+		if(props != null){
 			ModMain.network.sendTo(new PacketSyncPlayerData(props.getDataAsNBT()), p);
 		}
 	}

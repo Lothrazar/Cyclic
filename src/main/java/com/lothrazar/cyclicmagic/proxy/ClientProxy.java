@@ -27,6 +27,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -198,6 +199,12 @@ public class ClientProxy extends CommonProxy {
  
 	@SideOnly(Side.CLIENT)
 	public void setClientPlayerData(NBTTagCompound tags) {
+		EntityPlayer p = Minecraft.getMinecraft().thePlayer;
+		if(p == null){
+			System.out.println("Null player clientside");
+			System.out.println(tags.toString());
+			return;
+		}
  
 		IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(Minecraft.getMinecraft().thePlayer);
 		if(props != null){
