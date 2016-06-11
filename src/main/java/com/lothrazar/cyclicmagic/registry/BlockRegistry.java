@@ -71,23 +71,22 @@ public class BlockRegistry {
 	}
 
 	public static void register() {
-		
-		if(spawnersUnbreakable){
-			Blocks.MOB_SPAWNER.setBlockUnbreakable();
-		}
 		//??maybe? nah.
 		//Blocks.obsidian.setHardness(Blocks.obsidian.getHarvestLevel(Blocks.obsidian.getDefaultState()) / 2);
 		
 		registerBlock(uncrafting_block, "uncrafting_block");
 		uncrafting_block.addRecipe();
 
-
-		registerBlock(new BlockLaunch(30F,0.6F), "plate_launch_small");
-		registerBlock(new BlockLaunch(45F,0.9F), "plate_launch_med");
-		registerBlock(new BlockLaunch(60F,1.2F), "plate_launch_large");
+		registerBlock(new BlockLaunch(30F,0.6F,SoundRegistry.byeaa), "plate_launch_small");
+		registerBlock(new BlockLaunch(45F,0.9F,SoundRegistry.bwoaaap), "plate_launch_med");
+		registerBlock(new BlockLaunch(60F,1.2F,SoundRegistry.byeaa), "plate_launch_large");
 	
 		registerBlock(block_fragile,new ItemBlockScaffolding(block_fragile), BlockScaffolding.name);
 		block_fragile.addRecipe();
+
+		if(spawnersUnbreakable){
+			Blocks.MOB_SPAWNER.setBlockUnbreakable();
+		}
 		
 		if (WorldGenRegistry.netherOreEnabled) {
 
