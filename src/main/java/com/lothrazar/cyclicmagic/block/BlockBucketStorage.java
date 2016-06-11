@@ -330,7 +330,7 @@ public class BlockBucketStorage extends Block implements ITileEntityProvider {
 			TileEntityBucketStorage t = (TileEntityBucketStorage) ent;
 			ItemStack stack = new ItemStack(state.getBlock());
 
-			UtilNBT.setItemStackNBT(stack, BlockBucketStorage.NBTBUCKETS, t.getBuckets());
+			UtilNBT.setItemStackNBTVal(stack, BlockBucketStorage.NBTBUCKETS, t.getBuckets());
 
 			UtilEntity.dropItemStackInWorld(world, pos, stack);
 

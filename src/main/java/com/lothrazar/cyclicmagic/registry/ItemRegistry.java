@@ -64,7 +64,9 @@ public class ItemRegistry {
 
 	public static final ItemFoodCorruptedChorus corrupted_chorus = new ItemFoodCorruptedChorus();
 	public static final ItemToolLaunch corrupted_elytra = new ItemToolLaunch();
-	public static final ItemArmorLaunch boots_doublejump = new ItemArmorLaunch();
+	public static final ItemArmorLaunch boots_extrajump = new ItemArmorLaunch(1);
+	public static final ItemArmorLaunch boots_doublejump = new ItemArmorLaunch(2);
+	public static final ItemArmorLaunch boots_triplejump = new ItemArmorLaunch(3);
 	public static final ItemCyclicWand cyclic_wand_build = new ItemCyclicWand();
 	public static final ItemPotionCustom potion_viscous = new ItemPotionCustom(false);
 	public static final ItemPotionCustom potion_levitation = new ItemPotionCustom(true,MobEffects.LEVITATION, 60*3);
@@ -124,7 +126,9 @@ public class ItemRegistry {
 		addItem(ender_tnt_4,"ender_tnt_4");
 		addItem(ender_tnt_5,"ender_tnt_5");
 		addItem(ender_tnt_6,"ender_tnt_6");
+		addItem(boots_extrajump,"boots_extrajump");
 		addItem(boots_doublejump,"boots_doublejump");
+		addItem(boots_triplejump,"boots_triplejump");
 		addItem(new ItemFoodHorse(new ItemStack(Items.EMERALD)),"horse_upgrade_type");
 		addItem(new ItemFoodHorse(new ItemStack(Items.DYE, 1, Const.dye_lapis)),"horse_upgrade_variant");
 		addItem(new ItemFoodHorse(new ItemStack(Items.DIAMOND)),"horse_upgrade_health");
