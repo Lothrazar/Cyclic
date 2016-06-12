@@ -5,6 +5,8 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class PotionWaterwalk extends PotionCustom{
  
@@ -12,6 +14,16 @@ public class PotionWaterwalk extends PotionCustom{
 		super(name, b, potionColor); 
 	}
 
+	@SubscribeEvent
+	public void onEntityUpdate(LivingUpdateEvent event) {
+ 
+		EntityLivingBase entity = event.getEntityLiving();
+		if (entity == null) { return; }
+ 
+		if (entity.isPotionActive(this)) {
+			this.tick(entity);
+		}
+	}
 	public void tick(EntityLivingBase entityLiving){
 
 		tickLiquidWalk(entityLiving, Blocks.WATER);

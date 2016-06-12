@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.enchantment;
 
-import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilItem;
@@ -72,11 +71,11 @@ public class EnchantLaunch extends Enchantment{
 				&&  p.posY < p.lastTickPosY && p.isAirBorne) {
 			//JUMP IS pressed and you are moving down
 				
-			if(EnchantmentHelper.getEnchantments(feet).containsKey(EnchantRegistry.launch) == false){
+			if(EnchantmentHelper.getEnchantments(feet).containsKey(this) == false){
 				return;
 			}
 			
-			int level = EnchantmentHelper.getEnchantments(feet).get(EnchantRegistry.launch);
+			int level = EnchantmentHelper.getEnchantments(feet).get(this);
 			
 			if(p.getCooldownTracker().hasCooldown(feet.getItem())){
 				return;

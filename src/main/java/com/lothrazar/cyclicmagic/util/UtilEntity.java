@@ -1,13 +1,17 @@
 package com.lothrazar.cyclicmagic.util;
 
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -120,5 +124,29 @@ public class UtilEntity {
 			player.fallDistance = 0;
 			player.addVelocity(velX, velY, velZ);
 		} 
+	}
+	
+	public static int pullEntityItemsTowards(World world,BlockPos pos, float ITEMSPEED, int ITEM_HRADIUS, int ITEM_VRADIUS) {
+		// TODO take in class as parameter? if i ever need ot use it for different entity
+
+		
+		int x = pos.getX(), y = pos.getY(), z = pos.getZ();
+
+		List<EntityItem> found = world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(x - ITEM_HRADIUS, y - ITEM_VRADIUS, z - ITEM_HRADIUS, x + ITEM_HRADIUS, y + ITEM_VRADIUS, z + ITEM_HRADIUS));
+
+		int moved = 0;
+		for (EntityItem eitem : found) {
+			Vector3.setEntityMotionFromVector(eitem, x, y, z, ITEMSPEED);
+			moved++;
+		}
+
+		List<EntityXPOrb> foundExp = world.getEntitiesWithinAABB(EntityXPOrb.class, new AxisAlignedBB(x - ITEM_HRADIUS, y - ITEM_VRADIUS, z - ITEM_HRADIUS, x + ITEM_HRADIUS, y + ITEM_VRADIUS, z + ITEM_HRADIUS));
+
+		for (EntityXPOrb eitem : foundExp) {
+			Vector3.setEntityMotionFromVector(eitem, x, y, z, ITEMSPEED);
+			moved++;
+		}
+		
+		return moved;
 	} 
 }
