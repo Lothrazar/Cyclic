@@ -37,7 +37,7 @@ public class ItemArmorLaunch extends ItemArmor implements IHasRecipe {
 	private final int maxuses;
  
 	public ItemArmorLaunch(int max) {
-		super(ArmorMaterial.LEATHER, 0, EntityEquipmentSlot.FEET);
+		super(ItemRegistry.ARMOR_MATERIAL_EMERALD, 0, EntityEquipmentSlot.FEET);
 		this.setMaxDamage(durability);
 		maxuses = max;
 	}
@@ -56,7 +56,7 @@ public class ItemArmorLaunch extends ItemArmor implements IHasRecipe {
 	@Override
 	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair){
 		//if (mat != null && net.minecraftforge.oredict.OreDictionary.itemMatches(mat, repair, false)) return true;
-        return repair != null && repair.getItem() == Items.DIAMOND;
+        return repair != null && repair.getItem() == Items.EMERALD;
     }
 
 	@SideOnly(Side.CLIENT)
@@ -74,7 +74,6 @@ public class ItemArmorLaunch extends ItemArmor implements IHasRecipe {
 				&&  p.posY < p.lastTickPosY && p.isAirBorne) {
 
 			if(p.getCooldownTracker().hasCooldown(this)){
-				System.out.println("still has cooldown");
 				return;
 			}
 			
@@ -108,13 +107,12 @@ public class ItemArmorLaunch extends ItemArmor implements IHasRecipe {
 	public void addRecipe() {
 		switch(this.maxuses){
 		case 1:
-
 			GameRegistry.addRecipe(new ItemStack(this), 
 					"   ", 
 					"ebe", 
 					"gsg", 
-					'b', Items.LEATHER_BOOTS, 
-					'e', Items.EMERALD, 
+					'b', ItemRegistry.emerald_boots, 
+					'e', Items.DIAMOND, 
 					'g', Items.GHAST_TEAR, 
 					's', Blocks.SLIME_BLOCK);
 			break;
@@ -124,7 +122,7 @@ public class ItemArmorLaunch extends ItemArmor implements IHasRecipe {
 					"ebe", 
 					"gsg", 
 					'b', ItemRegistry.boots_extrajump, 
-					'e', Items.EMERALD, 
+					'e', Items.DIAMOND, 
 					'g', Items.GHAST_TEAR, 
 					's', Blocks.DIAMOND_BLOCK);
 			break;

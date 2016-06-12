@@ -64,9 +64,9 @@ public class ItemRegistry {
 
 	public static final ItemFoodCorruptedChorus corrupted_chorus = new ItemFoodCorruptedChorus();
 	public static final ItemToolLaunch corrupted_elytra = new ItemToolLaunch();
-	public static final ItemArmorLaunch boots_extrajump = new ItemArmorLaunch(1);
-	public static final ItemArmorLaunch boots_doublejump = new ItemArmorLaunch(2);
-	public static final ItemArmorLaunch boots_triplejump = new ItemArmorLaunch(3);
+	public static ItemArmorLaunch boots_extrajump  ;
+	public static ItemArmorLaunch boots_doublejump ;
+	public static ItemArmorLaunch boots_triplejump ;
 	public static final ItemCyclicWand cyclic_wand_build = new ItemCyclicWand();
 	public static final ItemPotionCustom potion_viscous = new ItemPotionCustom(false);
 	public static final ItemPotionCustom potion_levitation = new ItemPotionCustom(true,MobEffects.LEVITATION, 60*3);
@@ -99,7 +99,7 @@ public class ItemRegistry {
 	public static final ItemProjectileTNT ender_tnt_4 = new ItemProjectileTNT(4);
 	public static final ItemProjectileTNT ender_tnt_5 = new ItemProjectileTNT(5);
 	public static final ItemProjectileTNT ender_tnt_6 = new ItemProjectileTNT(6);
-	
+	public static ItemEmeraldArmor emerald_boots;
 	public static void construct(){
 		//TODO: maybe constructor. MUST be done before config
 
@@ -126,9 +126,6 @@ public class ItemRegistry {
 		addItem(ender_tnt_4,"ender_tnt_4");
 		addItem(ender_tnt_5,"ender_tnt_5");
 		addItem(ender_tnt_6,"ender_tnt_6");
-		addItem(boots_extrajump,"boots_extrajump");
-		addItem(boots_doublejump,"boots_doublejump");
-		addItem(boots_triplejump,"boots_triplejump");
 		addItem(new ItemFoodHorse(new ItemStack(Items.EMERALD)),"horse_upgrade_type");
 		addItem(new ItemFoodHorse(new ItemStack(Items.DYE, 1, Const.dye_lapis)),"horse_upgrade_variant");
 		addItem(new ItemFoodHorse(new ItemStack(Items.DIAMOND)),"horse_upgrade_health");
@@ -367,12 +364,19 @@ public class ItemRegistry {
 		addItem(new ItemEmeraldPickaxe(), ItemEmeraldPickaxe.name);
 		addItem(new ItemEmeraldAxe(), ItemEmeraldAxe.name);
 		addItem(new ItemEmeraldSpade(), ItemEmeraldSpade.name);
-		addItem( new ItemEmeraldHoe(), ItemEmeraldHoe.name);
+		addItem(new ItemEmeraldHoe(), ItemEmeraldHoe.name);
 		addItem(new ItemEmeraldArmor(EntityEquipmentSlot.HEAD), "emerald_helmet");
 		addItem(new ItemEmeraldArmor(EntityEquipmentSlot.CHEST), "emerald_chestplate");
-		addItem( new ItemEmeraldArmor(EntityEquipmentSlot.LEGS), "emerald_leggings");
-		addItem(new ItemEmeraldArmor(EntityEquipmentSlot.FEET), "emerald_boots");
-		
+		addItem(new ItemEmeraldArmor(EntityEquipmentSlot.LEGS), "emerald_leggings");
+		emerald_boots = new ItemEmeraldArmor(EntityEquipmentSlot.FEET);
+		addItem(emerald_boots, "emerald_boots");
+		boots_extrajump = new ItemArmorLaunch(1);
+		boots_doublejump = new ItemArmorLaunch(2);
+		boots_triplejump = new ItemArmorLaunch(3);
+		addItem(boots_extrajump, "boots_extrajump");
+		addItem(boots_doublejump, "boots_doublejump");
+		addItem(boots_triplejump, "boots_triplejump");
+				
 //		addItem(new ItemFlintTool(),"flint_tool");
 
 		potion_ender.addEffect(PotionRegistry.ender, 60*3,PotionRegistry.I);

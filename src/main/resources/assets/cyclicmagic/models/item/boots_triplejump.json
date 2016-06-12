@@ -1,6 +1,6 @@
 {
     "parent": "item/handheld",
     "textures": {
-        "layer0": "cyclicmagic:items/boots_doublejump"
+        "layer0": "cyclicmagic:items/boots_triplejump"
     }
 }
