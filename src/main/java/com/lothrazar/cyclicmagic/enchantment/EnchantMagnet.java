@@ -14,8 +14,9 @@ public class EnchantMagnet extends Enchantment{
 
 
 	private static final int	ITEM_HRADIUS = 10;
+	private static final int	HRADIUS_PER_LEVEL = 5;
 	private static final int	ITEM_VRADIUS = 4;
-	private static final float ITEMSPEED	 = 1.2F;
+	private static final float SPEEDPERLEVEL = 0.1F;
 	public EnchantMagnet() {
 		super(Rarity.COMMON, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[]{EntityEquipmentSlot.MAINHAND,EntityEquipmentSlot.OFFHAND});
         this.setName("magnet");
@@ -47,7 +48,7 @@ public class EnchantMagnet extends Enchantment{
 		int level = Math.max(mainLevel, offLevel);
 		
 		if(level > 0){
-			UtilEntity.pullEntityItemsTowards(entity.getEntityWorld(),entity.getPosition(),ITEMSPEED,ITEM_HRADIUS,ITEM_VRADIUS);	
+			UtilEntity.pullEntityItemsTowards(entity.getEntityWorld(),entity.getPosition(),SPEEDPERLEVEL * level,ITEM_HRADIUS + HRADIUS_PER_LEVEL*level,ITEM_VRADIUS);	
 		}
 	}
 }
