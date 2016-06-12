@@ -16,6 +16,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
@@ -38,6 +39,24 @@ public class EnchantLaunch extends Enchantment{
     public int getMaxLevel(){
         return 3;
     }
+	
+
+	@SubscribeEvent
+	public void onEntityUpdate(LivingUpdateEvent event) {
+		if(event.getEntity() instanceof EntityPlayer){
+			EntityPlayer p = (EntityPlayer)event.getEntity();
+			ItemStack feet = p.getItemStackFromSlot(EntityEquipmentSlot.FEET);
+			if(feet == null){
+				return;
+			}
+			//if you are on the ground (or not airborne, should be same thing
+			if((p.isAirBorne == false || p.onGround )&& 
+					UtilNBT.getItemStackNBTVal(feet,NBT_USES) > 0){
+				//you have landed on the ground, dont count previous jumps
+				UtilNBT.setItemStackNBTVal(feet,NBT_USES,0);
+			}
+		}
+	}
 	
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
@@ -64,11 +83,11 @@ public class EnchantLaunch extends Enchantment{
 			}
 			
 			int uses = UtilNBT.getItemStackNBTVal(feet, NBT_USES);
-		
+
+			p.fallDistance = 0;
 			UtilEntity.launch(p,rotationPitch,power);
 			UtilParticle.spawnParticle(p.worldObj, EnumParticleTypes.CRIT_MAGIC, p.getPosition());
 			UtilSound.playSound(p, SoundRegistry.bwoaaap);
-			p.fallDistance = 0;
 			
 			UtilItem.damageItem(p, feet);
 			uses++;
