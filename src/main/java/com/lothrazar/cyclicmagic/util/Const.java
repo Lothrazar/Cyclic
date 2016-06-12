@@ -23,15 +23,6 @@ public class Const {
 		public static final String commands = modpackMisc + ".Commands";
 	}
 
-
-	public static final int					fish_normal	= 0;
-	public static final int					fish_salmon	= 1;
-	public static final int					fish_clown	= 2;
-	public static final int					fish_puffer	= 3;
-
-	public static final int						dye_cocoa	= 3;
-	public static final int						dye_lapis	= 4;
-
 	public static final int SQ = 18;
 	public static final int ARMOR_SIZE = 4;
 	public static final int ROWS_VANILLA = 3;
@@ -39,11 +30,13 @@ public class Const {
 
 	public static final int btnHeight = 20;
 
+	// not a regular propert. : class ItemSkull:  {"skeleton", "wither", "zombie", "char", "creeper", "dragon"};
 	public static final int skull_skeleton = 0;
 	public static final int skull_wither = 1;
 	public static final int skull_zombie = 2;
 	public static final int skull_player = 3;
 	public static final int skull_creeper = 4;
+//	public static final int skull_dragon = 5;
 
 	public static final int NOTIFY = 2;
 
@@ -65,7 +58,5 @@ public class Const {
 		public static final int nether = -1;
 	}
 
-	public static final int dye_bonemeal = 15;
-	public static final int wool_white = 0;
 	public static final int WORLDHEIGHT = 256;
 }// ends class reference

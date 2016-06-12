@@ -123,7 +123,7 @@ public class ItemRegistry {
 		addItem(ender_tnt_5,"ender_tnt_5");
 		addItem(ender_tnt_6,"ender_tnt_6");
 		addItem(new ItemFoodHorse(new ItemStack(Items.EMERALD)),"horse_upgrade_type");
-		addItem(new ItemFoodHorse(new ItemStack(Items.DYE, 1, Const.dye_lapis)),"horse_upgrade_variant");
+		addItem(new ItemFoodHorse(new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage())),"horse_upgrade_variant");
 		addItem(new ItemFoodHorse(new ItemStack(Items.DIAMOND)),"horse_upgrade_health");
 		addItem(new ItemFoodHorse(new ItemStack(Items.REDSTONE)),"horse_upgrade_speed");
 		addItem(new ItemFoodHorse(new ItemStack(Items.ENDER_EYE)),"horse_upgrade_jump");

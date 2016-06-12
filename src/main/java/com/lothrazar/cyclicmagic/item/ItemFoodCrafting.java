@@ -4,7 +4,6 @@ import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
-import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -12,6 +11,7 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
@@ -52,13 +52,13 @@ public class ItemFoodCrafting extends ItemFood implements IHasRecipe{
 
 	@Override
 	public void addRecipe() {
-
+ 
 		GameRegistry.addShapelessRecipe(new ItemStack(this) 
 				,Blocks.CRAFTING_TABLE 
 				,Items.PUMPKIN_PIE 
 				,Items.CAKE
 				,Items.COOKIE
-				,new ItemStack(Items.FISH,1,Const.fish_salmon) 
+				,new ItemStack(Items.FISH,1, ItemFishFood.FishType.SALMON.getMetadata()) 
 				,Items.POISONOUS_POTATO
 				,Items.DIAMOND
 				,Items.EMERALD

@@ -14,16 +14,14 @@ public class RecipeNewRegistry {
 
 	private static boolean playerSkull;
 	private static boolean mushroomBlocks;
-	private static boolean bonemealWool;
 	private static boolean simpleDispenser;
-	private static boolean woolDyeSavings;
 	private static boolean repeaterSimple;
 	private static boolean minecartsSimple;
 	private static boolean notchApple;
 	private static boolean ElytraRepair;
 
 	public static void syncConfig(Configuration config) {
-		// TODO: could config each one by one i guess but this is fine for now
+	
 		String category = Const.ConfigCategory.recipes;	
 		config.setCategoryComment(category, "New and altered recipes");
 		
@@ -32,9 +30,6 @@ public class RecipeNewRegistry {
 	
 		mushroomBlocks = config.get(category, "Mushroom Blocks", 
 				true,"Create mushroom blocks from items").getBoolean();
-
-		bonemealWool = config.get(category, "Bonemeal Wool", 
-				true,"Bonemeal can be used to dye coloured wool white").getBoolean();
 
 		simpleDispenser = config.get(category, "Simple Dispenser", 
 				true,"Craft a dispenser with string instead of a bow").getBoolean();
@@ -47,8 +42,7 @@ public class RecipeNewRegistry {
 
 		notchApple = config.get(category, "Notch Apple", 
 				true,"Craft a notch apple with golden blocks as usual").getBoolean();
-	
-
+		
 		ElytraRepair = config.get(category, "Elytra Repair", 
 				true,"You can mostly repair elytra wings with a wither skull; but it loses all enchants").getBoolean();
 	}
@@ -60,14 +54,8 @@ public class RecipeNewRegistry {
 		if(mushroomBlocks){
 			RecipeNewRegistry.mushroomBlocks();
 		}
-		if(bonemealWool){
-			RecipeNewRegistry.bonemealWool();
-		} 
 		if(simpleDispenser){
 			RecipeNewRegistry.simpleDispenser();
-		}
-		if(woolDyeSavings){
-			RecipeNewRegistry.woolDyeSavings();
 		}
 		if(repeaterSimple){
 			RecipeNewRegistry.repeaterSimple();
@@ -86,8 +74,7 @@ public class RecipeNewRegistry {
 	}
 	
 	private static void elytraRepair() {
-		// TODO Auto-generated method stub
-
+	
 		GameRegistry.addShapelessRecipe(new ItemStack(Items.ELYTRA,1,UtilItem.getMaxDmgFraction(Items.ELYTRA, 10)), 
 				new ItemStack(Items.SKULL, 1, Const.skull_wither),
 				new ItemStack(Items.ELYTRA,1,OreDictionary.WILDCARD_VALUE));
@@ -109,22 +96,10 @@ public class RecipeNewRegistry {
 	}
 
 	private static void mushroomBlocks() {
-
 		GameRegistry.addRecipe(new ItemStack(Blocks.RED_MUSHROOM_BLOCK), 
 				"mm", "mm", 'm', Blocks.RED_MUSHROOM);
 		GameRegistry.addRecipe(new ItemStack(Blocks.BROWN_MUSHROOM_BLOCK), 
 				"mm", "mm", 'm', Blocks.BROWN_MUSHROOM);
-	}
-
-	private static void bonemealWool() {
-
-		// use bonemeal to bleach colored wool back to white
-		// its easy since we knwo white is 15, and other colours are all from zero
-		// up to that
-		// http://minecraft.gamepedia.com/Dye#Data_values
-		// but wool is inverse: wool has zero for white
-		for (int i = 0; i < Const.dye_bonemeal; i++)
-			GameRegistry.addShapelessRecipe(new ItemStack(Blocks.WOOL, 1, Const.wool_white), new ItemStack(Blocks.WOOL, 1, i), new ItemStack(Items.DYE, 1, Const.dye_bonemeal));
 	}
 
 	private static void repeaterSimple() {
@@ -146,20 +121,6 @@ public class RecipeNewRegistry {
 		GameRegistry.addRecipe(new ItemStack(Items.HOPPER_MINECART), "   ", "ici", "iii", 'i', Items.IRON_INGOT, 'c', Blocks.HOPPER);
 
 		GameRegistry.addRecipe(new ItemStack(Items.FURNACE_MINECART), "   ", "ici", "iii", 'i', Items.IRON_INGOT, 'c', Blocks.FURNACE);
-	}
-
-	private static void woolDyeSavings() {
-
-		// so any color that is not white, add the new recipe with all 8 blocks
-		for (int dye = 0; dye < 15; dye++)// only since we know that the dyes are
-		                                  // these numbers
-		{
-			if (dye != Const.dye_bonemeal) {
-				// removeRecipe(new ItemStack(Blocks.wool,1,dye));
-
-				GameRegistry.addRecipe(new ItemStack(Blocks.WOOL, 8, dye), "www", "wdw", "www", 'w', new ItemStack(Blocks.WOOL, 1, Const.dye_bonemeal), 'd', new ItemStack(Items.DYE, 1, dye));
-			}
-		}
 	}
 
 	private static void simpleDispenser() {

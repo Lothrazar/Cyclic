@@ -13,6 +13,7 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -58,7 +59,7 @@ public class ItemFoodHeart extends ItemFood implements IHasRecipe, IHasConfig{
 				,Items.DIAMOND
 				,Items.CAKE
 				,Blocks.EMERALD_BLOCK
-				,new ItemStack(Items.FISH,1,Const.fish_salmon)
+				,new ItemStack(Items.FISH,1, ItemFishFood.FishType.SALMON.getMetadata())
 				,Items.GOLDEN_APPLE
 				,Items.POISONOUS_POTATO
 			);
