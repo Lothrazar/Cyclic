@@ -201,8 +201,8 @@ public class ClientProxy extends CommonProxy {
 	public void setClientPlayerData(NBTTagCompound tags) {
 		EntityPlayer p = Minecraft.getMinecraft().thePlayer;
 		if(p == null){
-			System.out.println("Null player clientside");
-			System.out.println(tags.toString());
+//			System.out.println("Null player clientside");
+//			System.out.println(tags.toString());
 			return;
 		}
  

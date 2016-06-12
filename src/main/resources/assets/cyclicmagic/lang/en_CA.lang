@@ -39,6 +39,7 @@ debug.horsejump=Horse Jump:
 debug.horsespeed=Horse Speed:
 debug.spawn.chunks=Within Spawn Chunk
 debug.spawn.distance=From Spawn :
+enchantment.launch=Launch
 entity.Villager.druid=Druid
 entity.Villager.sage=Sage
 gui.chatexp=Not enough experience

@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.util;
 
 import java.util.ArrayList;
 
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
@@ -182,4 +183,5 @@ public class UtilNBT {
 //		
 //		return tags;
 //	}
+ 
 }
