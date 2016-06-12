@@ -1,0 +1,85 @@
+package com.lothrazar.cyclicmagic.enchantment;
+
+import com.lothrazar.cyclicmagic.registry.EnchantRegistry;
+import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilItem;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
+import com.lothrazar.cyclicmagic.util.UtilParticle;
+import com.lothrazar.cyclicmagic.util.UtilSound;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.EnumEnchantmentType;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+public class EnchantLaunch extends Enchantment{
+
+	private static final float power = 1.05F;
+	private static final int rotationPitch = 75;
+	private static final int cooldown = 35;
+	private static final String NBT_USES = "launchuses";
+	
+	public EnchantLaunch() {
+		super(Rarity.COMMON, EnumEnchantmentType.ARMOR_FEET, new EntityEquipmentSlot[]{EntityEquipmentSlot.FEET});
+        this.setName("launch");
+	}
+	
+	@Override
+    public int getMaxLevel(){
+        return 3;
+    }
+	
+	@SideOnly(Side.CLIENT)
+	@SubscribeEvent
+	public void onKeyInput(KeyInputEvent event) {
+		EntityPlayer p = Minecraft.getMinecraft().thePlayer;
+		ItemStack feet = p.getItemStackFromSlot(EntityEquipmentSlot.FEET);
+
+		if(feet == null){
+			return;
+		}
+
+		if(FMLClientHandler.instance().getClient().gameSettings.keyBindJump.isPressed()
+				&&  p.posY < p.lastTickPosY && p.isAirBorne) {
+			//JUMP IS pressed and you are moving down
+				
+			if(EnchantmentHelper.getEnchantments(feet).containsKey(EnchantRegistry.launch) == false){
+				return;
+			}
+			
+			int level = EnchantmentHelper.getEnchantments(feet).get(EnchantRegistry.launch);
+			
+			if(p.getCooldownTracker().hasCooldown(feet.getItem())){
+				return;
+			}
+			
+			int uses = UtilNBT.getItemStackNBTVal(feet, NBT_USES);
+		
+			UtilEntity.launch(p,rotationPitch,power);
+			UtilParticle.spawnParticle(p.worldObj, EnumParticleTypes.CRIT_MAGIC, p.getPosition());
+			UtilSound.playSound(p, SoundRegistry.bwoaaap);
+			p.fallDistance = 0;
+			
+			UtilItem.damageItem(p, feet);
+			uses++;
+			
+			if(uses >= level){ // level is maxuses
+				//now block useage for a while
+				p.getCooldownTracker().setCooldown(feet.getItem(), cooldown );
+				uses = 0;
+			}
+
+			UtilNBT.setItemStackNBTVal(feet,NBT_USES,uses);
+		}
+	}
+}

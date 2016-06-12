@@ -101,7 +101,8 @@ public class ModMain {
 		StackSizeRegistry.register();
 		RecipeAlterRegistry.register();
 		RecipeNewRegistry.register();
-
+		EnchantRegistry.register();
+		
 		proxy.register();
 
 		TileEntityRegistry.register();
@@ -117,6 +118,7 @@ public class ModMain {
 		MinecraftForge.EVENT_BUS.register(ItemRegistry.boots_extrajump);
 		MinecraftForge.EVENT_BUS.register(ItemRegistry.boots_doublejump);
 		MinecraftForge.EVENT_BUS.register(ItemRegistry.boots_triplejump);
+		MinecraftForge.EVENT_BUS.register(EnchantRegistry.launch);
 	}
 
 	@EventHandler
@@ -147,6 +149,7 @@ public class ModMain {
 		// hit on startup and on change event from
 		// we cant make this a list/loop because the order does matter
 		Configuration c = getConfig();
+		EnchantRegistry.syncConfig(c);
 		WorldGenRegistry.syncConfig(c);
 		PotionRegistry.syncConfig(c);
 		events.syncConfig(c);
