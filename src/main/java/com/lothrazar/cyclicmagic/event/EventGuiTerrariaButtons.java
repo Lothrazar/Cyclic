@@ -18,6 +18,7 @@ import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -28,6 +29,8 @@ public class EventGuiTerrariaButtons implements IHasConfig{
 	public static final String		posLeft		= "topleft";
 	public static final String		posRight	= "topright";
 	public static final	String		posBottom	= "bottomleft"; 
+	public static final	String		posAlign	= "align"; 
+	public static final int padding = 4;
 	public static final int BTNWIDTH = 20;
 	private List<String>		blacklistGuis;
 
@@ -43,7 +46,7 @@ public class EventGuiTerrariaButtons implements IHasConfig{
 		int button_id = 256;
 
 		// config for different locations - left right bottom top
-		int x = 0, y = 0, padding = 6, yDelta = 24, xDelta = 0;
+		int x = 0, y = 0, yDelta = 24, xDelta = 0;
 		 
 		// not GuiContainerCreative
 		 if (gui instanceof GuiContainer &&  
@@ -51,6 +54,7 @@ public class EventGuiTerrariaButtons implements IHasConfig{
 				!(gui instanceof GuiPlayerExtended ) && 
 				blacklistGuis.contains(self) == false) {
 
+			GuiContainer guiInv = (GuiContainer) gui;
 			// align to different area depending on config
 			if (position.equalsIgnoreCase(posLeft)) {
 				x = padding;
@@ -73,6 +77,20 @@ public class EventGuiTerrariaButtons implements IHasConfig{
 				y = Minecraft.getMinecraft().displayHeight / 2 - padding - Const.btnHeight;
 				xDelta = BTNWIDTH + padding;
 				yDelta = 0;
+			}
+			else if(position.equalsIgnoreCase(posAlign) || true){
+//				x = gui.height;
+//				y = gui.width;
+		
+				int guiLeft = ReflectionHelper.getPrivateValue(GuiContainer.class, guiInv,   "i", "field_147003_i", "guiLeft" );
+				int guiTop = ReflectionHelper.getPrivateValue(GuiContainer.class, guiInv, "r", "field_147009_r", "guiTop");
+	
+				x = guiLeft;
+				y = guiTop;
+
+				// we are moving top to bottom, so
+				xDelta = 0;
+				yDelta = Const.btnHeight + padding;
 			}
 
 			event.getButtonList().add(new ButtonTerrariaLootAll(button_id++, x, y));

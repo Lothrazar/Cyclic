@@ -5,6 +5,7 @@ import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.block.BlockBucketStorage;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre.SpawnType;
+import com.lothrazar.cyclicmagic.block.BlockLaunch;
 import com.lothrazar.cyclicmagic.block.BlockScaffolding;
 import com.lothrazar.cyclicmagic.block.BlockUncrafting;
 import com.lothrazar.cyclicmagic.item.itemblock.ItemBlockBucket;
@@ -13,8 +14,10 @@ import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -70,19 +73,40 @@ public class BlockRegistry {
 	}
 
 	public static void register() {
-		
-		if(spawnersUnbreakable){
-			Blocks.MOB_SPAWNER.setBlockUnbreakable();
-		}
 		//??maybe? nah.
 		//Blocks.obsidian.setHardness(Blocks.obsidian.getHarvestLevel(Blocks.obsidian.getDefaultState()) / 2);
 		
 		registerBlock(uncrafting_block, "uncrafting_block");
 		uncrafting_block.addRecipe();
 
-	
+		BlockLaunch plate_launch_small = new BlockLaunch(40F,0.6F,SoundEvents.BLOCK_SLIME_STEP);
+		BlockLaunch plate_launch_med = new BlockLaunch(55F,0.9F,SoundEvents.BLOCK_SLIME_FALL);
+		BlockLaunch plate_launch_large = new BlockLaunch(70F,1.2F,SoundEvents.BLOCK_SLIME_BREAK);
+		
+		registerBlock(plate_launch_small, "plate_launch_small");
+		registerBlock(plate_launch_med, "plate_launch_med");
+		registerBlock(plate_launch_large, "plate_launch_large");
+		
+		GameRegistry.addRecipe(new ItemStack(plate_launch_med,3), 
+				"sss", "ggg", "iii", 
+				's', Blocks.SLIME_BLOCK, 
+				'g', Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE,
+				'i', Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE);
+		
+		GameRegistry.addShapelessRecipe(new ItemStack(plate_launch_small),
+				new ItemStack(plate_launch_med), 
+				new ItemStack(Items.FEATHER));
+
+		GameRegistry.addShapelessRecipe(new ItemStack(plate_launch_large),
+				new ItemStack(plate_launch_med), 
+				new ItemStack(Items.REDSTONE));
+		
 		registerBlock(block_fragile,new ItemBlockScaffolding(block_fragile), BlockScaffolding.name);
 		block_fragile.addRecipe();
+
+		if(spawnersUnbreakable){
+			Blocks.MOB_SPAWNER.setBlockUnbreakable();
+		}
 		
 		if (WorldGenRegistry.netherOreEnabled) {
 

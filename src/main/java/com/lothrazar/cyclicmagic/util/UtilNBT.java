@@ -17,7 +17,7 @@ public class UtilNBT {
 		return position.getX() + "," + position.getY() + "," + position.getZ();
 	}
 
-	public static void setItemStackNBT(ItemStack item, String prop, int value) {
+	public static void setItemStackNBTVal(ItemStack item, String prop, int value) {
 
 		if (item.getTagCompound() == null) {
 			item.setTagCompound(new NBTTagCompound());
@@ -25,6 +25,21 @@ public class UtilNBT {
 		item.getTagCompound().setInteger(prop, value);
 	}
 
+	public static int getItemStackNBTVal(ItemStack held,String prop) {
+
+		NBTTagCompound tags = getItemStackNBT(held);
+		if(!tags.hasKey(prop)){
+			return 0;
+		}
+		return tags.getInteger(prop);
+	}
+	public static NBTTagCompound getItemStackNBT(ItemStack held) {
+
+		if (held.getTagCompound() == null) {
+			held.setTagCompound(new NBTTagCompound());
+		}
+		return held.getTagCompound();
+	}
 	public static BlockPos stringCSVToBlockPos(String csv) {
 
 		String[] spl = csv.split(",");
@@ -152,15 +167,6 @@ public class UtilNBT {
 		skull.getTagCompound().setString(Const.SkullOwner, displayNameString);
 
 		return skull;
-	}
-
-	public static NBTTagCompound getTagCompoundNotNull(ItemStack held) {
-
-		if (held.getTagCompound() == null) {
-			held.setTagCompound(new NBTTagCompound());
-		}
-
-		return held.getTagCompound();
 	}
 //
 //	public static NBTTagCompound buildPotionTag(Potion potionIn, int level, int duration, String name) {

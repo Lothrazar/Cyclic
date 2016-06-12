@@ -161,7 +161,7 @@ public class InventoryStorage implements IInventory {
 
 		if (stack == null) { return inv; }
  
-		NBTTagList items = UtilNBT.getTagCompoundNotNull(stack).getTagList("ItemInventory", Constants.NBT.TAG_COMPOUND);
+		NBTTagList items = UtilNBT.getItemStackNBT(stack).getTagList("ItemInventory", Constants.NBT.TAG_COMPOUND);
  
 		for (int i = 0; i < items.tagCount(); ++i) {
 			// 1.7.2+ change to items.getCompoundTagAt(i)
@@ -179,7 +179,7 @@ public class InventoryStorage implements IInventory {
 
 	public static void writeToNBT(ItemStack item, ItemStack[] theInventory) {
 
-		NBTTagCompound tagcompound = UtilNBT.getTagCompoundNotNull(item);
+		NBTTagCompound tagcompound = UtilNBT.getItemStackNBT(item);
 		// Create a new NBT Tag List to store itemstacks as NBT Tags
 		NBTTagList items = new NBTTagList();
 		ItemStack stack;

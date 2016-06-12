@@ -57,7 +57,7 @@ public class EventSignSkullName  implements IHasConfig{
 			else {
 				firstLine = firstLine.split(" ")[0];
 
-				NBTTagCompound nbt = UtilNBT.getTagCompoundNotNull(held);
+				NBTTagCompound nbt = UtilNBT.getItemStackNBT(held);
 
 				nbt.setString(Const.SkullOwner, firstLine);
 			}

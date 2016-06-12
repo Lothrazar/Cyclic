@@ -47,7 +47,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
 		for (int i = 0; i <= end; i++) {
 			KEY = KEY_LOC + "_" + i;
 
-			String csv = UtilNBT.getTagCompoundNotNull(itemStack).getString(KEY);
+			String csv = UtilNBT.getItemStackNBT(itemStack).getString(KEY);
 
 			if (csv == null || csv.isEmpty()) {
 				continue;
@@ -70,17 +70,17 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
 
 	public static int getLargestSlot(ItemStack itemStack) {
 
-		return UtilNBT.getTagCompoundNotNull(itemStack).getInteger(KEY_LARGEST);
+		return UtilNBT.getItemStackNBT(itemStack).getInteger(KEY_LARGEST);
 	}
 
 	public static int getEmptySlotAndIncrement(ItemStack itemStack) {
-		int empty = UtilNBT.getTagCompoundNotNull(itemStack).getInteger(KEY_LARGEST);
+		int empty = UtilNBT.getItemStackNBT(itemStack).getInteger(KEY_LARGEST);
 
 		if (empty == 0) {
 			empty = 1;
 		} // first index is 1 not zero
 
-		UtilNBT.getTagCompoundNotNull(itemStack).setInteger(KEY_LARGEST, empty + 1);
+		UtilNBT.getItemStackNBT(itemStack).setInteger(KEY_LARGEST, empty + 1);
 		
 		return empty;
 	}
@@ -92,7 +92,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
 			book = player.getHeldItem(EnumHand.OFF_HAND);
 		}
 
-		UtilNBT.getTagCompoundNotNull(book);
+		UtilNBT.getItemStackNBT(book);
 		return book;
 	}
 

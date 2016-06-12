@@ -114,6 +114,9 @@ public class ModMain {
 		MinecraftForge.EVENT_BUS.register(BlockRegistry.block_storeempty);
 		MinecraftForge.EVENT_BUS.register(ItemRegistry.corrupted_chorus);
 		MinecraftForge.EVENT_BUS.register(ItemRegistry.heart_food);
+		MinecraftForge.EVENT_BUS.register(ItemRegistry.boots_extrajump);
+		MinecraftForge.EVENT_BUS.register(ItemRegistry.boots_doublejump);
+		MinecraftForge.EVENT_BUS.register(ItemRegistry.boots_triplejump);
 	}
 
 	@EventHandler
@@ -165,7 +168,13 @@ public class ModMain {
 	/* 
 	 * TODO : future plans
 	 * 
+	 * 
+	 * ??[07:53:45] [Server thread/INFO]: Lothrazar joined the game
+[07:53:45] [Netty Local Client IO #0/ERROR] [cyclicmagic]: Null player, cannot get properties
+	 * 
 	 * Fix sorting : UtilInventorySort.sort(p, openInventory);
+	 * 
+	 * renderCurrentSlot feature in the wand gui
 	 * 
 	 * custom villager zombie textures
 	 * 
