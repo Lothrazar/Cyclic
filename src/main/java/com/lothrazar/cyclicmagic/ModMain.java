@@ -115,9 +115,6 @@ public class ModMain {
 		MinecraftForge.EVENT_BUS.register(BlockRegistry.block_storeempty);
 		MinecraftForge.EVENT_BUS.register(ItemRegistry.corrupted_chorus);
 		MinecraftForge.EVENT_BUS.register(ItemRegistry.heart_food);
-		MinecraftForge.EVENT_BUS.register(ItemRegistry.boots_extrajump);
-		MinecraftForge.EVENT_BUS.register(ItemRegistry.boots_doublejump);
-		MinecraftForge.EVENT_BUS.register(ItemRegistry.boots_triplejump);
 		MinecraftForge.EVENT_BUS.register(EnchantRegistry.launch);
 	}
 

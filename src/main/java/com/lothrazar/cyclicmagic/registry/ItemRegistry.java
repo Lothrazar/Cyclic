@@ -7,7 +7,6 @@ import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.item.BaseItem;
 import com.lothrazar.cyclicmagic.item.ItemAppleEmerald;
-import com.lothrazar.cyclicmagic.item.ItemArmorLaunch;
 import com.lothrazar.cyclicmagic.item.ItemChestSack;
 import com.lothrazar.cyclicmagic.item.ItemChestSackEmpty;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
@@ -64,9 +63,6 @@ public class ItemRegistry {
 
 	public static final ItemFoodCorruptedChorus corrupted_chorus = new ItemFoodCorruptedChorus();
 	public static final ItemToolLaunch corrupted_elytra = new ItemToolLaunch();
-	public static ItemArmorLaunch boots_extrajump  ;
-	public static ItemArmorLaunch boots_doublejump ;
-	public static ItemArmorLaunch boots_triplejump ;
 	public static final ItemCyclicWand cyclic_wand_build = new ItemCyclicWand();
 	public static final ItemPotionCustom potion_viscous = new ItemPotionCustom(false);
 	public static final ItemPotionCustom potion_levitation = new ItemPotionCustom(true,MobEffects.LEVITATION, 60*3);
@@ -370,12 +366,6 @@ public class ItemRegistry {
 		addItem(new ItemEmeraldArmor(EntityEquipmentSlot.LEGS), "emerald_leggings");
 		emerald_boots = new ItemEmeraldArmor(EntityEquipmentSlot.FEET);
 		addItem(emerald_boots, "emerald_boots");
-		boots_extrajump = new ItemArmorLaunch(1);
-		boots_doublejump = new ItemArmorLaunch(2);
-		boots_triplejump = new ItemArmorLaunch(3);
-		addItem(boots_extrajump, "boots_extrajump");
-		addItem(boots_doublejump, "boots_doublejump");
-		addItem(boots_triplejump, "boots_triplejump");
 				
 //		addItem(new ItemFlintTool(),"flint_tool");
 
