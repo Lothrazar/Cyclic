@@ -41,6 +41,7 @@ debug.spawn.chunks=Within Spawn Chunk
 debug.spawn.distance=From Spawn :
 enchantment.launch=Launch
 enchantment.magnet=Magnet
+enchantment.venom=Venom
 entity.Villager.druid=Druid
 entity.Villager.sage=Sage
 gui.chatexp=Not enough experience

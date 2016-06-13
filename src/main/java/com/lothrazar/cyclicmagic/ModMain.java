@@ -117,6 +117,7 @@ public class ModMain {
 		MinecraftForge.EVENT_BUS.register(ItemRegistry.heart_food);
 		MinecraftForge.EVENT_BUS.register(EnchantRegistry.launch);
 		MinecraftForge.EVENT_BUS.register(EnchantRegistry.magnet);
+		MinecraftForge.EVENT_BUS.register(EnchantRegistry.venom);
 		MinecraftForge.EVENT_BUS.register(PotionRegistry.slowfall);
 		MinecraftForge.EVENT_BUS.register(PotionRegistry.magnet);
 		MinecraftForge.EVENT_BUS.register(PotionRegistry.waterwalk); 

@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class EnchantMagnet extends Enchantment{
 
 
-	private static final int	ITEM_HRADIUS = 10;
+	private static final int	ITEM_HRADIUS = 5;
 	private static final int	HRADIUS_PER_LEVEL = 5;
 	private static final int	ITEM_VRADIUS = 4;
 	private static final float SPEEDPERLEVEL = 0.1F;

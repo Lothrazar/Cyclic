@@ -39,7 +39,6 @@ public class EnchantLaunch extends Enchantment{
         return 3;
     }
 	
-
 	@SubscribeEvent
 	public void onEntityUpdate(LivingUpdateEvent event) {
 		if(event.getEntity() instanceof EntityPlayer){
