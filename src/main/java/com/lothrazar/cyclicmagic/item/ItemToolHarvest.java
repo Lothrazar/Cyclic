@@ -20,23 +20,34 @@ public class ItemToolHarvest extends BaseTool implements IHasRecipe, IHasConfig{
 
 	private static final int range = 6;
 	private static final int durability = 1000;
+	private static final HarestCropsConfig conf = new HarestCropsConfig(); 
 	
 	public ItemToolHarvest(){
 		super(durability);
+		conf.doesPumpkinBlocks = false;
+		conf.doesMelonBlocks = false;
+		conf.doesLeaves = true;
+		conf.doesCrops = false;
+		conf.doesFlowers = true;
+		conf.doesHarvestMushroom = true;
+		conf.doesHarvestSapling = false;
+		conf.doesHarvestTallgrass = true;
 	}
 	 
 	@Override
 	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
 
-		HarestCropsConfig conf = new HarestCropsConfig(); 
+		
 		BlockPos offset = pos;
 		if(side != null){
 			offset = pos.offset(side);
 		}
-		
-		UtilHarvestCrops.harvestArea(worldObj, player, offset.down(), range - 2,conf);
-		UtilHarvestCrops.harvestArea(worldObj, player, offset, range,conf);
-		UtilHarvestCrops.harvestArea(worldObj, player, offset.up(), range - 2,conf);
+
+		UtilHarvestCrops.harvestArea(worldObj,  offset.down().down(), range - 2,conf);
+		UtilHarvestCrops.harvestArea(worldObj,  offset.down(), range - 2,conf);
+		UtilHarvestCrops.harvestArea(worldObj,  offset, range,conf);
+		UtilHarvestCrops.harvestArea(worldObj,  offset.up(), range - 2,conf);
+		UtilHarvestCrops.harvestArea(worldObj,  offset.up().up(), range - 2,conf);
 
 		super.onUse(stack, player, worldObj, hand);
 		return super.onItemUse(stack, player, worldObj, offset, hand, side, hitX, hitY, hitZ);

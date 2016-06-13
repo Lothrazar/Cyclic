@@ -38,10 +38,10 @@ public class EntityHarvestBolt extends EntityThrowable// EntitySnowball
 
 			HarestCropsConfig conf = new HarestCropsConfig();
 			// it harvests a horizontal slice each time
-			UtilHarvestCrops.harvestArea(this.worldObj, this.getThrower(), mop.getBlockPos(), range_main,conf);
-			UtilHarvestCrops.harvestArea(this.worldObj, this.getThrower(), offset, range_main,conf);
-			UtilHarvestCrops.harvestArea(this.worldObj, this.getThrower(), offset.up(), range_offset,conf);
-			UtilHarvestCrops.harvestArea(this.worldObj, this.getThrower(), offset.down(), range_offset,conf);
+			UtilHarvestCrops.harvestArea(this.worldObj,  mop.getBlockPos(), range_main,conf);
+			UtilHarvestCrops.harvestArea(this.worldObj,  offset, range_main,conf);
+			UtilHarvestCrops.harvestArea(this.worldObj,  offset.up(), range_offset,conf);
+			UtilHarvestCrops.harvestArea(this.worldObj,  offset.down(), range_offset,conf);
 		}
 
 		this.setDead();

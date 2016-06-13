@@ -39,6 +39,7 @@ debug.horsejump=Horse Jump:
 debug.horsespeed=Horse Speed:
 debug.spawn.chunks=Within Spawn Chunk
 debug.spawn.distance=From Spawn :
+enchantment.harvest=Harvest
 enchantment.launch=Launch
 enchantment.magnet=Magnet
 enchantment.venom=Venom
