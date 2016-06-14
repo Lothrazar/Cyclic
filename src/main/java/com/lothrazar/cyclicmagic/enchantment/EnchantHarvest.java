@@ -10,6 +10,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
@@ -70,9 +71,7 @@ public class EnchantHarvest extends Enchantment{
 	 
 	@Override
     public boolean canApply(ItemStack stack){
-		boolean yes = stack != null && (stack.getItem() instanceof ItemHoe);
-//		System.out.println("harvest canApply: "+yes);
-//		System.out.println(stack);
+		boolean yes = stack.getItem() == Items.BOOK || (stack.getItem() instanceof ItemHoe);
 		return yes;    
     }
 	 

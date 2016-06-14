@@ -12,7 +12,9 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
@@ -38,7 +40,20 @@ public class EnchantLaunch extends Enchantment{
     public int getMaxLevel(){
         return 3;
     }
-	
+	@Override
+    public boolean canApply(ItemStack stack){
+		//anything that goes on your feet
+		boolean yes = stack.getItem() == Items.BOOK || 
+				(stack.getItem() instanceof ItemArmor) 
+				&& ((ItemArmor)stack.getItem()).armorType == EntityEquipmentSlot.FEET;
+		
+		return yes;    
+    }
+	 
+	@Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack) {
+        return this.canApply(stack);
+    }
 	@SubscribeEvent
 	public void onEntityUpdate(LivingUpdateEvent event) {
 		if(event.getEntity() instanceof EntityPlayer){

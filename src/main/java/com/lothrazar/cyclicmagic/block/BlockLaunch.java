@@ -15,12 +15,11 @@ import net.minecraft.util.SoundEvent;
 
 public class BlockLaunch extends BlockBasePressurePlate {
 
-	private float angle;
+	private final static float angle = 90;
 	private float power;
 	private SoundEvent sound;
-	public BlockLaunch(float a, float p, SoundEvent s) {
+	public BlockLaunch(float p, SoundEvent s) {
 		super(Material.WOOD);
-		angle = a;
 		power = p;
 		sound = s;
 	}

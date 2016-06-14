@@ -16,8 +16,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantVenom extends Enchantment{
 
-	//3 seconds
-	final int durationTicksPerLevel = 3 * Const.TICKS_PER_SEC;
+	final int durationTicksPerLevel = 3 * Const.TICKS_PER_SEC;//3 seconds
 	
 	public EnchantVenom() {
 		super(Rarity.COMMON, EnumEnchantmentType.WEAPON, new EntityEquipmentSlot[]{EntityEquipmentSlot.MAINHAND,EntityEquipmentSlot.OFFHAND});
