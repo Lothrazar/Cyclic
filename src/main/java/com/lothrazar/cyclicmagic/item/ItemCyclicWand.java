@@ -41,6 +41,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe ,IHasConfig{
 
 		this.setMaxStackSize(1);
 		this.setFull3D();
+		this.setContainerItem(this);
 	}
 
 	public void setSpells(List<ISpell> spells) {

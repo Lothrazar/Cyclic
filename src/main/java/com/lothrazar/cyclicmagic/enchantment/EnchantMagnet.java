@@ -14,9 +14,9 @@ public class EnchantMagnet extends Enchantment{
 
 
 	private static final int	ITEM_HRADIUS = 5;
-	private static final int	HRADIUS_PER_LEVEL = 5;
+	private static final int	HRADIUS_PER_LEVEL = 4;
 	private static final int	ITEM_VRADIUS = 4;
-	private static final float SPEEDPERLEVEL = 0.1F;
+	private static final float SPEEDPERLEVEL = 0.08F;
 	public EnchantMagnet() {
 		super(Rarity.COMMON, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[]{EntityEquipmentSlot.MAINHAND,EntityEquipmentSlot.OFFHAND});
         this.setName("magnet");
@@ -24,7 +24,7 @@ public class EnchantMagnet extends Enchantment{
 	
 	@Override
     public int getMaxLevel(){
-        return 3;
+        return 5;
     }
 	
 	@SubscribeEvent

@@ -20,62 +20,69 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantHarvest extends Enchantment{
 
-	private static final HarestCropsConfig conf1 = new HarestCropsConfig(); 
-	private static final HarestCropsConfig conf2 = new HarestCropsConfig(); 
-	private static final HarestCropsConfig conf3 = new HarestCropsConfig();
+	private static final HarestCropsConfig confLow = new HarestCropsConfig(); 
+	private static final HarestCropsConfig confMed = new HarestCropsConfig(); 
+	private static final HarestCropsConfig confHi = new HarestCropsConfig();
+	
 	public EnchantHarvest() {
-		super(Rarity.COMMON, EnumEnchantmentType.ALL, new EntityEquipmentSlot[]{EntityEquipmentSlot.MAINHAND,EntityEquipmentSlot.OFFHAND});
+		super(Rarity.COMMON, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[]{EntityEquipmentSlot.MAINHAND,EntityEquipmentSlot.OFFHAND});
         this.setName("harvest");
         
-        //level 1
-		conf1.doesPumpkinBlocks = false;
-		conf1.doesMelonBlocks = false;
-		conf1.doesLeaves = false;
-		conf1.doesCrops = true;
-		conf1.doesFlowers = false;
-		conf1.doesHarvestMushroom = false;
-		conf1.doesHarvestSapling = false;
-		conf1.doesHarvestTallgrass = false;
+        this.initHarvesters();
+	}
+
+	private void initHarvesters() {
+		//level 1
+		confLow.doesPumpkinBlocks = false;
+		confLow.doesMelonBlocks = false;
+		confLow.doesLeaves = false;
+		confLow.doesCrops = true;
+		confLow.doesFlowers = false;
+		confLow.doesHarvestMushroom = false;
+		confLow.doesHarvestSapling = false;
+		confLow.doesHarvestTallgrass = false;
 		
         //level 2
-		conf2.doesPumpkinBlocks = false;
-		conf2.doesMelonBlocks = false;
-		conf2.doesLeaves = false;
-		conf2.doesCrops = true;
-		conf2.doesFlowers = false;
-		conf2.doesHarvestMushroom = true;
-		conf2.doesHarvestSapling = false;
-		conf2.doesHarvestTallgrass = false;
+		confMed.doesPumpkinBlocks = false;
+		confMed.doesMelonBlocks = false;
+		confMed.doesLeaves = false;
+		confMed.doesCrops = true;
+		confMed.doesFlowers = false;
+		confMed.doesHarvestMushroom = true;
+		confMed.doesHarvestSapling = false;
+		confMed.doesHarvestTallgrass = false;
 		
         //level 3
-		conf3.doesPumpkinBlocks = true;
-		conf3.doesMelonBlocks = true;
-		conf3.doesLeaves = false;
-		conf3.doesCrops = true;
-		conf3.doesFlowers = false;
-		conf3.doesHarvestMushroom = false;
-		conf3.doesHarvestSapling = false;
-		conf3.doesHarvestTallgrass = false;
+		confHi.doesPumpkinBlocks = true;
+		confHi.doesMelonBlocks = true;
+		confHi.doesLeaves = false;
+		confHi.doesCrops = true;
+		confHi.doesFlowers = false;
+		confHi.doesHarvestMushroom = false;
+		confHi.doesHarvestSapling = false;
+		confHi.doesHarvestTallgrass = false;
 	}
 	
 	@Override
     public int getMaxLevel(){
-        return 3;
+        return 5;
     }
 	 
 	@Override
     public boolean canApply(ItemStack stack){
-		return stack != null && stack.getItem() instanceof ItemHoe;    //return canApplyAtEnchantingTable(stack);
+		boolean yes = stack != null && (stack.getItem() instanceof ItemHoe);
+//		System.out.println("harvest canApply: "+yes);
+//		System.out.println(stack);
+		return yes;    
     }
 	 
 	@Override
     public boolean canApplyAtEnchantingTable(ItemStack stack) {
-        return canApply(stack); 	//this.type.canEnchantItem(stack.getItem());
+        return this.canApply(stack) ;//|| this.type.canEnchantItem(stack.getItem()); 	
     }
 
 	@SubscribeEvent
-	public void onPlayerFurnace(PlayerInteractEvent event) {
-	
+	public void onPlayerInteract(PlayerInteractEvent event) {
 		EntityPlayer entityPlayer = event.getEntityPlayer();
 
 		BlockPos pos = event.getPos();
@@ -95,14 +102,14 @@ public class EnchantHarvest extends Enchantment{
 				int harvested = 0;
 				
 				if(mainLevel == 1){
-					harvested = UtilHarvestCrops.harvestSingle(world,  pos, conf1) ? 1 : 0;
+					harvested = UtilHarvestCrops.harvestSingle(world,  pos, confLow) ? 1 : 0;
 				}
-				else if(mainLevel == 2){
+				else if(mainLevel == 2 || mainLevel == 3){
 					//radius means it goes both ways from senter
-					harvested = UtilHarvestCrops.harvestArea(world,  pos, mainLevel ,conf2);
+					harvested = UtilHarvestCrops.harvestArea(world,  pos, mainLevel ,confMed);
 				}
-				else if(mainLevel == 3){
-					harvested = UtilHarvestCrops.harvestArea(world,  pos, mainLevel+1 ,conf3);
+				else{// if(mainLevel == 3){
+					harvested = UtilHarvestCrops.harvestArea(world,  pos, mainLevel+1 ,confHi);
 				}
 				
 				if(harvested > 0){

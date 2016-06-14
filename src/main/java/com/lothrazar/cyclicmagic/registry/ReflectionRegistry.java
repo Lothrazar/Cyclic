@@ -26,13 +26,13 @@ public class ReflectionRegistry {
 				// interface net.minecraft.entity.ai.attributes.IAttribute
 
 				// field_76425_a
-				if (f.getName().equals("horseJumpStrength") || f.getName().equals("field_110270_bw") || "interface net.minecraft.entity.ai.attributes.IAttribute".equals(f.getType() + "")) {
+				if (f.getName().equals("horseJumpStrength") || f.getName().equals("JUMP_STRENGTH") || f.getName().equals("field_110270_bw") || "interface net.minecraft.entity.ai.attributes.IAttribute".equals(f.getType() + "")) {
 					f.setAccessible(true);
 					// save pointer to the obj so we can reference it later
 					horseJumpStrength = (IAttribute) f.get(null);
-					// System.err.println("FOUND FOUND FOUND");
 					break;
 				}
+				
 			} catch (Exception e) {
 				System.err.println("Severe error, please report this to the mod author:");
 				System.err.println(e);

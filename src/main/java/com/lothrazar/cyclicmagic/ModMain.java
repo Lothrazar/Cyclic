@@ -5,7 +5,6 @@ import com.lothrazar.cyclicmagic.proxy.CommonProxy;
 import com.lothrazar.cyclicmagic.registry.*;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.util.Const;
-
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -80,12 +79,11 @@ public class ModMain {
 		MinecraftForge.EVENT_BUS.register(instance);
 
 		CapabilityRegistry.register();
-		// MinecraftForge.EVENT_BUS.register(new EventPlayerData());
 
 		ReflectionRegistry.register();
 		PacketRegistry.register(network);
-		VillageTradeRegistry.register();
 		SoundRegistry.register();
+		EnchantRegistry.register();
 	}
 
 	@EventHandler
@@ -101,7 +99,12 @@ public class ModMain {
 		StackSizeRegistry.register();
 		RecipeAlterRegistry.register();
 		RecipeNewRegistry.register();
-		EnchantRegistry.register();
+		VillageTradeRegistry.register();
+		
+
+//		ItemStack stack = UtilNBT.buildEnchantedBook(EnchantRegistry.harvest, (short)1);
+//		GameRegistry.addShapelessRecipe(stack,ItemRegistry.cyclic_wand_build,Items.STICK);
+		 
 		
 		proxy.register();
 

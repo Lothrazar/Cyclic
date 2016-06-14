@@ -149,6 +149,7 @@ public class ItemRegistry {
 		addItem(corrupted_elytra ,"corrupted_elytra");
 		addItem(cyclic_wand_build, "cyclic_wand_build");
 
+		
 		addItem(new ItemAppleEmerald(), "apple_emerald"); 
 	}
 

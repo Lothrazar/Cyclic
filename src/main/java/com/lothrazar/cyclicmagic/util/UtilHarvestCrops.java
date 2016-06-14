@@ -130,7 +130,7 @@ public class UtilHarvestCrops {
 			doBreak = true;
 			doReplant = false;
 		}
-		else if(blockCheck == Blocks.RED_FLOWER || blockCheck == Blocks.YELLOW_FLOWER && conf.doesFlowers){
+		else if((blockCheck == Blocks.RED_FLOWER || blockCheck == Blocks.YELLOW_FLOWER) && conf.doesFlowers){
 			doBreak = true;
 			doReplant = false;
 		}
