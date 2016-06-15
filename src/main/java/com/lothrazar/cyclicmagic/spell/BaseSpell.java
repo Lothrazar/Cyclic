@@ -17,8 +17,6 @@ public abstract class BaseSpell implements ISpell {
 	private ResourceLocation icon;
 	private int	ID;
 	private String name;
-	protected ResourceLocation	header			= new ResourceLocation(Const.MODID, "textures/spells/header_on.png");
-	protected ResourceLocation	header_empty	= new ResourceLocation(Const.MODID, "textures/spells/header_off.png");
 
 	protected void init(int id, String n) {
 
@@ -46,16 +44,6 @@ public abstract class BaseSpell implements ISpell {
 	public void onCastFailure(World world, EntityPlayer player, BlockPos pos) {
 
 		UtilSound.playSound(player,pos, SoundRegistry.buzzp);
-	}
-
-	@Override
-	public ResourceLocation getIconDisplayHeaderEnabled() {
-		return header;
-	}
-
-	@Override
-	public ResourceLocation getIconDisplayHeaderDisabled() {
-		return header_empty;
 	}
  
 	@Override

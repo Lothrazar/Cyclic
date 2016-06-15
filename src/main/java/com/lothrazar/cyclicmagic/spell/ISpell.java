@@ -28,9 +28,5 @@ public interface ISpell {
 
 	public ResourceLocation getIconDisplay();
 
-	public ResourceLocation getIconDisplayHeaderEnabled();
-
-	public ResourceLocation getIconDisplayHeaderDisabled();
-
 	public boolean canPlayerCast(World world, EntityPlayer player, BlockPos pos);
 }
