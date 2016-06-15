@@ -25,29 +25,15 @@ public abstract class BaseSpellRange extends BaseSpell {
 		if(block==null||pos==null){
 			return;
 		}
-		/*
-		System.out.println("BaseSpellRange.PlaySound at"+pos.toString());
-		System.out.println("Block at"+block.getUnlocalizedName());
-		System.out.println("isRemote at"+player.worldObj.isRemote);
 
-		System.out.println("getStepSound at"+ block.getStepSound().toString());
-
-boolean ismp = (player instanceof EntityPlayerMP);
-		System.out.println("ismp"+ ismp);
-		*/
 		if (block != null && block.getSoundType() != null && block.getSoundType().getPlaceSound() != null) {
 			
 			UtilSound.playSound(player, pos, block.getSoundType().getPlaceSound());
 		}
-		/*
-		else {
-			UtilSound.playSound(player, pos, SoundRegistry.crackle);
-		}*/
 	}
 
 	@Override
 	public boolean canPlayerCast(World world, EntityPlayer p, BlockPos pos) {
-
 		return p.capabilities.allowEdit;
 	}
 }

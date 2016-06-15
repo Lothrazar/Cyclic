@@ -39,9 +39,7 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
 			BlockPos offset = ModMain.proxy.getBlockMouseoverOffset(maxRange);
 
 			if (mouseover != null && offset != null) {
-
 				ModMain.network.sendToServer(new PacketSpellFromServer(mouseover, offset, this.getID()));
-
 			}
 		}
 

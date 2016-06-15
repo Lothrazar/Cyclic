@@ -21,9 +21,6 @@ public class SpellInventory extends BaseSpell {
 	public SpellInventory(int id, String n) {
 
 		super.init(id, n);
-	
-		this.header = new ResourceLocation(Const.MODID, "textures/spells/mouseptr.png");
-		this.header_empty = header;
 	}
 
 	@Override
