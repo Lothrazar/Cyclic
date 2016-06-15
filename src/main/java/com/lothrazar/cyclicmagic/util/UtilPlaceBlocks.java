@@ -66,7 +66,7 @@ public class UtilPlaceBlocks {
 		int itemSlot;
 		IBlockState state;
 		for (BlockPos posCurrent : circleList) {
-			itemSlot = InventoryWand.getSlotByBuildType(heldWand, null);
+			itemSlot = InventoryWand.calculateSlotCurrent(heldWand);
 			state = InventoryWand.getToPlaceFromSlot(heldWand, itemSlot);
 
 			if (state == null) { return;	}// then inventory is completely empty
@@ -90,7 +90,7 @@ public class UtilPlaceBlocks {
 		IBlockState state;
 		for (int x = xMin; x <= xMax; x++) {
 			for (int z = zMin; z <= zMax; z++) {
-				itemSlot = InventoryWand.getSlotByBuildType(heldWand, null);
+				itemSlot = InventoryWand.calculateSlotCurrent(heldWand);
 				state = InventoryWand.getToPlaceFromSlot(heldWand, itemSlot);
 
 				if (state == null) { return;	}// then inventory is completely empty
@@ -125,7 +125,7 @@ public class UtilPlaceBlocks {
 		IBlockState state;
 		for (int i = 1; i < want + 1; i++) {
 
-			itemSlot = InventoryWand.getSlotByBuildType(heldWand, null);
+			itemSlot = InventoryWand.calculateSlotCurrent(heldWand);
 			state = InventoryWand.getToPlaceFromSlot(heldWand, itemSlot);
 
 			if (state == null) { return;	}// then inventory is completely empty
@@ -158,7 +158,7 @@ public class UtilPlaceBlocks {
 		for (int i = 1; i < want + 1; i = i + skip) {
 			posCurrent = pos.offset(efacing, i);
 
-			itemSlot = InventoryWand.getSlotByBuildType(heldWand, null);
+			itemSlot = InventoryWand.calculateSlotCurrent(heldWand);
 			state = InventoryWand.getToPlaceFromSlot(heldWand, itemSlot);
 
 			if (state == null) { return;	}// then inventory is completely empty

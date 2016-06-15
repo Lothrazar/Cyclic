@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.spell;
 
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
+import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.net.PacketReplaceBlock;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
@@ -49,8 +50,9 @@ public class SpellRangeReplace extends BaseSpellRange {
  
 		//if (blockHere.getBlockHardness(stateHere, world, posMouseover) == -1) { 
 		if (stateHere.getBlockHardness(world, posMouseover) == -1) {  return;  }
-
-		int itemSlot = InventoryWand.getSlotByBuildType(heldWand, world.getBlockState(posMouseover));
+ 
+		int itemSlot = ItemCyclicWand.BuildType.getSlot(heldWand);
+//		int itemSlot = InventoryWand.getSlotByBuildType(heldWand, world.getBlockState(posMouseover));
 		ItemStack[] invv = InventoryWand.readFromNBT(heldWand);
 		ItemStack toPlace = InventoryWand.getFromSlot(heldWand, itemSlot);
 
@@ -88,10 +90,9 @@ public class SpellRangeReplace extends BaseSpellRange {
 				InventoryWand.writeToNBT(heldWand, invv);
 			}
 
+			ItemCyclicWand.BuildType.setNextSlot(heldWand);
 			this.playSound(world, player,placeState.getBlock(), posMouseover);
 			this.spawnParticle(world, player, posMouseover);
-
-			return;
 		}
 	}
 }

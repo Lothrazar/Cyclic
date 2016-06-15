@@ -79,6 +79,13 @@ public class GuiWandInventory extends GuiContainer {
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 	}
 
+	@Override
+	public void onGuiClosed() {
+	   
+		inventory.closeInventory(inventory.getPlayer());
+		
+		super.onGuiClosed();
+    }
 	protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {
 
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);

@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.spell;
 
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
+import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.net.PacketSpellFromServer;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
@@ -54,12 +55,21 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
 
 		if (heldWand == null) { return; }
 
-		int itemSlot = InventoryWand.getSlotByBuildType(heldWand, world.getBlockState(posMouseover));
+		//InventoryWand.getSlotByBuildType(heldWand, world.getBlockState(posMouseover));
+		int itemSlot = ItemCyclicWand.BuildType.getSlot(heldWand);
 		IBlockState state = InventoryWand.getToPlaceFromSlot(heldWand, itemSlot);
 
 		if (state == null || state.getBlock() == null) { 
-			UtilChat.addChatMessage(p, "wand.inventory.empty");
-			return; 
+			//one last chance to update slot, in case something happened
+			
+			ItemCyclicWand.BuildType.setNextSlot(heldWand);
+			itemSlot = ItemCyclicWand.BuildType.getSlot(heldWand);
+			state = InventoryWand.getToPlaceFromSlot(heldWand, itemSlot);
+
+			if (state == null || state.getBlock() == null) { 
+				UtilChat.addChatMessage(p, "wand.inventory.empty");
+				return; 
+			}
 		}
 
 		BlockPos posToPlaceAt = null;
@@ -142,16 +152,12 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
 
 		if (UtilPlaceBlocks.placeStateSafe(p.worldObj, p, posToPlaceAt, state)) {
 
-//			UtilSpellCaster.castSuccess(this, p.worldObj, p, posOffset);
-
-			//UtilSound.playSoundPlaceBlock(p, state.getBlock());
-			
-
 			if (p.capabilities.isCreativeMode == false) {
 
 				InventoryWand.decrementSlot(heldWand, itemSlot); 
 			}
 
+			ItemCyclicWand.BuildType.setNextSlot(heldWand);
 			// yes im spawning particles on the server side, but the
 			// util handles that
 
