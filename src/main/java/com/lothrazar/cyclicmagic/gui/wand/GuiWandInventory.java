@@ -17,7 +17,6 @@ public class GuiWandInventory extends GuiContainer {
 
 	private final InventoryWand						inventory;
 	
-	@SuppressWarnings("unused")
 	private final ItemStack							internalWand;
 	// 176x156
 	private static final ResourceLocation	BACKGROUND	= new ResourceLocation(Const.MODID, "textures/gui/inventory_wand.png");
@@ -46,20 +45,9 @@ public class GuiWandInventory extends GuiContainer {
 
 		int width = 20;
 
-//		id++;
-//		x += width + padding;
 		width = 50;
 		ButtonBuildToggle btn = new ButtonBuildToggle(inventory.getPlayer(), id, x, y, width);
 		this.buttonList.add(btn);
-
-//		id++;
-//		x += width + padding + 8;
-		// y += 10;
-
-//		int size = ItemCyclicWand.BuildType.getBuildSize(internalWand);
-//		if (size <= 0) {
-//			size = 1;
-//		}
 	}
 
 	@Override
@@ -78,35 +66,25 @@ public class GuiWandInventory extends GuiContainer {
 			}
 		}
 		
-		
-
 		int guiLeft = (this.width - 176) / 2;
 		int guiTop = (this.height - 166) / 2;
 
 		GlStateManager.color(1F, 1F, 1F);
 		GlStateManager.pushMatrix();
-		GlStateManager.disableDepth();
+//		GlStateManager.disableDepth();//this disables transparency too
 		GlStateManager.disableLighting();
 		int active = ItemCyclicWand.BuildType.getSlot(this.internalWand);
 		for(Slot s : this.container.inventorySlots) {
-//				ItemStack stack = s.getStack();
-			
+
 			if(active == s.getSlotIndex()){
-				String test = (s==null||s.getStack()==null)?"null":s.getStack().getUnlocalizedName();
 				
-				
-				
-				System.out.println("wand inventory test "+test);
 			 	Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(Const.MODID,"textures/gui/slot_current.png"));
 				this.drawTexturedModalRect(guiLeft + s.xDisplayPosition, guiTop + s.yDisplayPosition, 0, 0, 16, 16);
 				 
 				break;
-			
 			}
 		}
 		GlStateManager.popMatrix();
-
-		
 	}
 
 	@Override
