@@ -41,7 +41,7 @@ public class EventRegistry {
 		featureEvents.add(new EventSpells());
 		featureEvents.add(new EventPlayerData());
 		featureEvents.add(new EventPlayerSleep());
-		
+		featureEvents.add(new EventAchievement());
 	}
  
 	public void syncConfig(Configuration config) {

@@ -177,30 +177,17 @@ public class ModMain {
 	/* 
 	 * TODO : future plans
 	 * 
-	 * 
-	 * ??[07:53:45] [Server thread/INFO]: Lothrazar joined the game
-[07:53:45] [Netty Local Client IO #0/ERROR] [cyclicmagic]: Null player, cannot get properties
-	 * 
 	 * Fix sorting : UtilInventorySort.sort(p, openInventory);
 	 * 
 	 * renderCurrentSlot feature in the wand gui
 	 * 
 	 * custom villager zombie textures
 	 * 
-	 * ?? EventNoclipUpdate : dont use entitydata, because logout login, or a death, you will be stuck?
-	 *.. it seems to work, for now so..
-	 * 
-	 * revisit flint tool..??
-	 * 
-	 * Take launch spell and try to put it in a block -> corrupted slime block?
-	 * 
 	 *????? Many more things could be in config but outside of ingame gui
 	 * 
 	 * rebalance uncrafting: ?? add fuel
 	 * 
 	 * block breaker
-	 * 
-	 * achievemnets give exp 
 	 * 
 	 * INVESTIGATE   maybe new equipment screen., hotkey to use the matched itemslot
 	 * 
