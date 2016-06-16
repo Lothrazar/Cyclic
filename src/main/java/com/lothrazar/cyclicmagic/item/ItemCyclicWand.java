@@ -12,6 +12,7 @@ import com.lothrazar.cyclicmagic.spell.BaseSpellRange;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -142,21 +143,17 @@ public class ItemCyclicWand extends Item implements IHasRecipe ,IHasConfig{
 
 		return 1; // Without this method, your inventory will NOT work!!!
 	}
-
-	private static NBTTagCompound getNBT(ItemStack stack) { 
-		return stack.hasTagCompound() ? stack.getTagCompound() : new NBTTagCompound();
-	}
-
+ 
 	public static class Spells { 
 		public static int getSpellIDCurrent(ItemStack stack) {
 			// workaround for default spell being replace. and oncrafting not
 	 
-			if (getNBT(stack).hasKey(NBT_SPELLCURRENT) == false) {
+			if (UtilNBT.getItemStackNBT(stack).hasKey(NBT_SPELLCURRENT) == false) {
 				// what is default spell for that then?
 				return SpellRegistry.getSpellbook(stack).get(0).getID();
 			}
 
-			int c = getNBT(stack).getInteger(NBT_SPELLCURRENT);
+			int c = UtilNBT.getItemStackNBT(stack).getInteger(NBT_SPELLCURRENT);
 			return c;
 		}
 
@@ -171,7 +168,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe ,IHasConfig{
 
 		public static void setSpellCurrent(ItemStack stack, int spell_id) {
  
-			NBTTagCompound tags = getNBT(stack);
+			NBTTagCompound tags = UtilNBT.getItemStackNBT(stack);
 
 			tags.setInteger(NBT_SPELLCURRENT, spell_id);
 
@@ -188,7 +185,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe ,IHasConfig{
 
 		public static String getName(ItemStack wand) {
 			try {
-				NBTTagCompound tags = getNBT(wand);
+				NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
 
 				return "button.build." + BuildType.values()[tags.getInteger(NBT)].toString().toLowerCase();
 
@@ -202,14 +199,14 @@ public class ItemCyclicWand extends Item implements IHasRecipe ,IHasConfig{
 			if (wand == null) {
 				return 0;
 			}
-			NBTTagCompound tags = getNBT(wand);
+			NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
 
 			return tags.getInteger(NBT);
 		}
 
 		public static void toggle(ItemStack wand) {
 
-			NBTTagCompound tags = getNBT(wand);
+			NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
 			int type = tags.getInteger(NBT);
 
 			type++;
@@ -230,7 +227,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe ,IHasConfig{
 
 		public static int getBuildSize(ItemStack wand) {
 
-			NBTTagCompound tags = getNBT(wand);
+			NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
 			int s = tags.getInteger(NBT_SIZE);
 
 			return s;
@@ -238,13 +235,13 @@ public class ItemCyclicWand extends Item implements IHasRecipe ,IHasConfig{
 
 		public static void setBuildSize(ItemStack wand, int size) {
 
-			NBTTagCompound tags = getNBT(wand);
+			NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
 			tags.setInteger(NBT_SIZE, size);
 			wand.setTagCompound(tags);
 		}
 
 		public static int getSlot(ItemStack wand){
-			NBTTagCompound tags = getNBT(wand);
+			NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
 			if(!tags.hasKey(NBT_SLOT)){
 				int def = InventoryWand.calculateSlotCurrent(wand);
 				tags.setInteger(NBT_SLOT,def);
@@ -254,7 +251,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe ,IHasConfig{
 		}
 		
 		public static void setNextSlot(ItemStack wand){
-			NBTTagCompound tags = getNBT(wand);
+			NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
 			int prev = getSlot(wand);
 			int next = InventoryWand.calculateSlotCurrent(wand);
 			if(prev != next)

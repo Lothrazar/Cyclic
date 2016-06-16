@@ -30,7 +30,6 @@ import com.lothrazar.cyclicmagic.item.ItemSleepingBag;
 import com.lothrazar.cyclicmagic.item.ItemToolHarvest;
 import com.lothrazar.cyclicmagic.item.ItemToolLaunch;
 import com.lothrazar.cyclicmagic.item.ItemToolPush;
-import com.lothrazar.cyclicmagic.item.ItemToolRotate;
 import com.lothrazar.cyclicmagic.item.projectile.*;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraftforge.common.util.EnumHelper;
@@ -87,14 +86,15 @@ public class ItemRegistry {
 	public static final ItemProjectileTNT ender_tnt_5 = new ItemProjectileTNT(5);
 	public static final ItemProjectileTNT ender_tnt_6 = new ItemProjectileTNT(6);
 	public static ItemEmeraldArmor emerald_boots;
+
+	public static final Item tool_push = new ItemToolPush();
 	public static void construct(){
 		//TODO: maybe constructor. MUST be done before config
 
 		addItem(new ItemToolPearlReuse(),"ender_pearl_reuse"); 
 		addItem(new ItemPaperCarbon(),"carbon_paper"); 
 		addItem(new ItemToolHarvest(),"tool_harvest");
-		addItem(new ItemToolPush(),"tool_push");
-		addItem(new ItemToolRotate(),"tool_rotate");
+		addItem(tool_push ,"tool_push");
 		addItem(new ItemInventoryStorage(),"storage_bag"); 
 		addItem(new ItemChestSack().setHidden(),"chest_sack");
 		addItem(new ItemChestSackEmpty(),"chest_sack_empty");
