@@ -16,11 +16,10 @@ import net.minecraft.util.ResourceLocation;
 public class GuiWandInventory extends GuiContainer {
 
 	private final InventoryWand						inventory;
-	
 	private final ItemStack							internalWand;
 	// 176x156
 	private static final ResourceLocation	BACKGROUND	= new ResourceLocation(Const.MODID, "textures/gui/inventory_wand.png");
- 
+	private static final ResourceLocation SLOT_CURRENT = new ResourceLocation(Const.MODID,"textures/gui/slot_current.png");
 	// TODO: the swap type tooltop, if its on pattern, should show the current
 	// slot number, as i '3/9'
 	int				id				= 777;
@@ -71,14 +70,12 @@ public class GuiWandInventory extends GuiContainer {
 
 		GlStateManager.color(1F, 1F, 1F);
 		GlStateManager.pushMatrix();
-//		GlStateManager.disableDepth();//this disables transparency too
 		GlStateManager.disableLighting();
 		int active = ItemCyclicWand.BuildType.getSlot(this.internalWand);
 		for(Slot s : this.container.inventorySlots) {
 
 			if(active == s.getSlotIndex()){
-				
-			 	Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(Const.MODID,"textures/gui/slot_current.png"));
+			 	Minecraft.getMinecraft().renderEngine.bindTexture(SLOT_CURRENT);
 				this.drawTexturedModalRect(guiLeft + s.xDisplayPosition, guiTop + s.yDisplayPosition, 0, 0, 16, 16);
 				 
 				break;

@@ -179,17 +179,11 @@ public class ModMain {
 	 * 
 	 * Fix sorting : UtilInventorySort.sort(p, openInventory);
 	 * 
-	 * renderCurrentSlot feature in the wand gui
-	 * 
 	 * custom villager zombie textures
 	 * 
-	 *????? Many more things could be in config but outside of ingame gui
+	 * add some of my items to loot tables ? https://github.com/MinecraftForge/MinecraftForge/blob/master/src/test/java/net/minecraftforge/debug/LootTablesDebug.java
 	 * 
-	 * rebalance uncrafting: ?? add fuel
-	 * 
-	 * block breaker
-	 * 
-	 * INVESTIGATE   maybe new equipment screen., hotkey to use the matched itemslot
+	 * block breaker//tree harvester?
 	 * 
 	 * crafting table hotkeys - numpad?
 	 *  
@@ -197,7 +191,7 @@ public class ModMain {
 	 *
 	 * pets live longer and/or respawn
 	 *
-	 * ROTATE: STAIRS: allow switch frop top to bottom
+	 * ROTATE: STAIRS: allow switch from top to bottom
 	 * 
 	 * Trading Tool // gui
 	 * 
