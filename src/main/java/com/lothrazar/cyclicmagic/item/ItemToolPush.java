@@ -3,10 +3,13 @@ package com.lothrazar.cyclicmagic.item;
 import java.util.List;
 
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -34,7 +37,21 @@ public class ItemToolPush  extends BaseTool implements IHasRecipe{
 		PUSH, PULL, ROTATE;
 
 		private final static String NBT = "ActionType";
+		private final static String NBTTIMEOUT = "timeout";
 
+		public static int getTimeout(ItemStack wand) {
+			return UtilNBT.getItemStackNBT(wand).getInteger(NBTTIMEOUT);
+		}
+		public static void setTimeout(ItemStack wand) {
+			UtilNBT.getItemStackNBT(wand).setInteger(NBTTIMEOUT, 15);//less than one tick
+		}
+		public static void tickTimeout(ItemStack wand) {
+			NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
+			int t = tags.getInteger(NBTTIMEOUT);
+			if(t > 0){
+				UtilNBT.getItemStackNBT(wand).setInteger(NBTTIMEOUT, t-1);
+			}
+		}
 		public static int get(ItemStack wand) {
 			if (wand == null) {
 				return 0;
@@ -70,10 +87,21 @@ public class ItemToolPush  extends BaseTool implements IHasRecipe{
 		EntityPlayer entityPlayer = event.getEntityPlayer();
 		ItemStack held = entityPlayer.getHeldItem(event.getHand());
 		
-		if(held != null && held.getItem() == this && !entityPlayer.worldObj.isRemote){
+		if(held != null && held.getItem() == this){
+			if(ActionType.getTimeout(held) > 0){
+				//without a timeout, this fires every tick. so you 'hit once' and get this happening 6 times
+				return;
+			}
 
-			ActionType.toggle(held);
-			UtilChat.addChatMessage(entityPlayer,  UtilChat.lang(ActionType.getName(held)));
+			ActionType.setTimeout(held);
+
+			event.setCanceled(true);
+			UtilSound.playSound(entityPlayer, SoundRegistry.dcoin);
+
+			if(!entityPlayer.worldObj.isRemote){ // server side
+				ActionType.toggle(held);
+				UtilChat.addChatMessage(entityPlayer,  UtilChat.lang(ActionType.getName(held)));
+			}
 		}
 	}
 	
@@ -108,7 +136,13 @@ public class ItemToolPush  extends BaseTool implements IHasRecipe{
 	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
 		tooltip.add(TextFormatting.GREEN +  UtilChat.lang(ActionType.getName(stack)));
 	}
-	
+	@Override
+	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+
+		ActionType.tickTimeout(stack);
+
+		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
+	}
 	@Override
 	public void addRecipe() { 
 		GameRegistry.addRecipe(new ItemStack(this),
