@@ -17,6 +17,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -258,7 +260,7 @@ public class UtilPlaceBlocks {
 	}
 
 	public static ArrayList<Block> ignoreList = new ArrayList<Block>();
-	private static boolean ignoreTileEntities=true;
+//	private static boolean ignoreTileEntities=true;
 
 	private static void translateCSV() {
 
@@ -294,22 +296,46 @@ public class UtilPlaceBlocks {
 			return false;
 		}
 
-
-		if(world.getTileEntity(pos) != null && ignoreTileEntities){
-			return false;
-		}
-		
+		boolean moved = false;
 		if (world.isAirBlock(posMoveToHere) && world.isBlockModifiable(player, pos)) {
 
-			if (world.isRemote == false) {
+			//start of break
+			//moving tile entitys, like chests
+			TileEntity tile = world.getTileEntity(pos);
+            NBTTagCompound tileData = null;
+            
+            if (tile != null) {
+            	tileData = new NBTTagCompound();
+            	tile.writeToNBT(tileData);
+                world.removeTileEntity(pos);
+            }
+		
+			world.setBlockToAir(pos);
+			//end of break
 
-				world.destroyBlock(pos, false);
+			//start move
+			moved =  UtilPlaceBlocks.placeStateSafe(world, player, posMoveToHere, newStateToPlace);
+			
+			if(moved){
+
+                if (tileData != null) {
+                	TileEntity newTile = world.getTileEntity(posMoveToHere);
+                	//thanks for the tip on setting tile entity data from nbt tag: https://github.com/romelo333/notenoughwands1.8.8/blob/master/src/main/java/romelo333/notenoughwands/Items/DisplacementWand.java
+                    if (newTile != null) {
+                    	tileData.setInteger("x", posMoveToHere.getX());
+                    	tileData.setInteger("y", posMoveToHere.getY());
+                    	tileData.setInteger("z", posMoveToHere.getZ());
+                    	newTile.readFromNBT(tileData);
+                    	newTile.markDirty();
+                    	//  world.markBlockForUpdate(posMoveToHere);
+                        world.markChunkDirty(posMoveToHere,newTile);
+                    }
+                }
 			}
-
-			return UtilPlaceBlocks.placeStateSafe(world, player, posMoveToHere, newStateToPlace);
+			//end move
 		}
-		else
-			return false;
+		
+		return moved;
 	}
 
 	/**
