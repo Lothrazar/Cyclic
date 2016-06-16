@@ -3,9 +3,13 @@ package com.lothrazar.cyclicmagic.gui.wand;
 import org.lwjgl.opengl.GL11;
 
 import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
+import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.util.Const;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
@@ -13,7 +17,6 @@ public class GuiWandInventory extends GuiContainer {
 
 	private final InventoryWand						inventory;
 	
-	@SuppressWarnings("unused")
 	private final ItemStack							internalWand;
 	// 176x156
 	private static final ResourceLocation	BACKGROUND	= new ResourceLocation(Const.MODID, "textures/gui/inventory_wand.png");
@@ -22,11 +25,13 @@ public class GuiWandInventory extends GuiContainer {
 	// slot number, as i '3/9'
 	int				id				= 777;
 	final int		padding			= 4;
+	ContainerWand container;
 
 	public GuiWandInventory(ContainerWand containerItem, ItemStack wand) {
 
 		super(containerItem);
 		this.inventory = containerItem.inventory;
+		this.container = containerItem;
 		this.internalWand = wand;
 	}
 
@@ -40,20 +45,9 @@ public class GuiWandInventory extends GuiContainer {
 
 		int width = 20;
 
-//		id++;
-//		x += width + padding;
 		width = 50;
 		ButtonBuildToggle btn = new ButtonBuildToggle(inventory.getPlayer(), id, x, y, width);
 		this.buttonList.add(btn);
-
-//		id++;
-//		x += width + padding + 8;
-		// y += 10;
-
-//		int size = ItemCyclicWand.BuildType.getBuildSize(internalWand);
-//		if (size <= 0) {
-//			size = 1;
-//		}
 	}
 
 	@Override
@@ -71,6 +65,26 @@ public class GuiWandInventory extends GuiContainer {
 				break;// cant hover on 2 at once
 			}
 		}
+		
+		int guiLeft = (this.width - 176) / 2;
+		int guiTop = (this.height - 166) / 2;
+
+		GlStateManager.color(1F, 1F, 1F);
+		GlStateManager.pushMatrix();
+//		GlStateManager.disableDepth();//this disables transparency too
+		GlStateManager.disableLighting();
+		int active = ItemCyclicWand.BuildType.getSlot(this.internalWand);
+		for(Slot s : this.container.inventorySlots) {
+
+			if(active == s.getSlotIndex()){
+				
+			 	Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(Const.MODID,"textures/gui/slot_current.png"));
+				this.drawTexturedModalRect(guiLeft + s.xDisplayPosition, guiTop + s.yDisplayPosition, 0, 0, 16, 16);
+				 
+				break;
+			}
+		}
+		GlStateManager.popMatrix();
 	}
 
 	@Override
@@ -79,6 +93,13 @@ public class GuiWandInventory extends GuiContainer {
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 	}
 
+	@Override
+	public void onGuiClosed() {
+	   
+		inventory.closeInventory(inventory.getPlayer());
+		
+		super.onGuiClosed();
+    }
 	protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {
 
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);

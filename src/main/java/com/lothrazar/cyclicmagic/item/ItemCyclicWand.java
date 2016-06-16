@@ -6,6 +6,7 @@ import org.lwjgl.input.Keyboard;
 
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.BaseSpellRange;
 import com.lothrazar.cyclicmagic.spell.ISpell;
@@ -179,10 +180,11 @@ public class ItemCyclicWand extends Item implements IHasRecipe ,IHasConfig{
 	}
 	
 	public enum BuildType {
-		FIRST, ROTATE, RANDOM, MATCH;
+		FIRST, ROTATE, RANDOM;
 
 		private final static String NBT = "build";
-		private final static String NBTSIZE = "buildsize";
+		private final static String NBT_SLOT = "buildslot";
+		private final static String NBT_SIZE = "buildsize";
 
 		public static String getName(ItemStack wand) {
 			try {
@@ -212,18 +214,24 @@ public class ItemCyclicWand extends Item implements IHasRecipe ,IHasConfig{
 
 			type++;
 
-			if (type > MATCH.ordinal()) {
+			if (type > RANDOM.ordinal()) {
 				type = FIRST.ordinal();
 			}
 
 			tags.setInteger(NBT, type);
 			wand.setTagCompound(tags);
+
+			int slot = getSlot(wand);
+			if(InventoryWand.getFromSlot(wand, slot) == null || InventoryWand.getToPlaceFromSlot(wand, slot) == null){
+				//try to move away from empty slot
+				setNextSlot(wand);
+			}
 		}
 
 		public static int getBuildSize(ItemStack wand) {
 
 			NBTTagCompound tags = getNBT(wand);
-			int s = tags.getInteger(NBTSIZE);
+			int s = tags.getInteger(NBT_SIZE);
 
 			return s;
 		}
@@ -231,28 +239,26 @@ public class ItemCyclicWand extends Item implements IHasRecipe ,IHasConfig{
 		public static void setBuildSize(ItemStack wand, int size) {
 
 			NBTTagCompound tags = getNBT(wand);
-			tags.setInteger(NBTSIZE, size);
+			tags.setInteger(NBT_SIZE, size);
 			wand.setTagCompound(tags);
 		}
-	}
 
-	public static class InventoryRotation {
-
-		private final static String NBT = "rotation";
-
-		public static int get(ItemStack wand) {
-			if (wand == null) {
-				return 0;
+		public static int getSlot(ItemStack wand){
+			NBTTagCompound tags = getNBT(wand);
+			if(!tags.hasKey(NBT_SLOT)){
+				int def = InventoryWand.calculateSlotCurrent(wand);
+				tags.setInteger(NBT_SLOT,def);
+				return def;
 			}
-			NBTTagCompound tags = getNBT(wand);
-
-			return tags.getInteger(NBT);
+			return tags.getInteger(NBT_SLOT);
 		}
-
-		public static void set(ItemStack wand, int rot) {
+		
+		public static void setNextSlot(ItemStack wand){
 			NBTTagCompound tags = getNBT(wand);
-
-			tags.setInteger(NBT, rot);
+			int prev = getSlot(wand);
+			int next = InventoryWand.calculateSlotCurrent(wand);
+			if(prev != next)
+				tags.setInteger(NBT_SLOT,next);
 		}
 	}
 
