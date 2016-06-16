@@ -37,7 +37,6 @@ public class UtilNBT {
 		return tags.getInteger(prop);
 	}
 	public static NBTTagCompound getItemStackNBT(ItemStack held) {
-
 		if (held.getTagCompound() == null) {
 			held.setTagCompound(new NBTTagCompound());
 		}

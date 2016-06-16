@@ -118,6 +118,7 @@ public class ModMain {
 		MinecraftForge.EVENT_BUS.register(BlockRegistry.block_storeempty);
 		MinecraftForge.EVENT_BUS.register(ItemRegistry.corrupted_chorus);
 		MinecraftForge.EVENT_BUS.register(ItemRegistry.heart_food);
+		MinecraftForge.EVENT_BUS.register(ItemRegistry.tool_push);
 		MinecraftForge.EVENT_BUS.register(EnchantRegistry.launch);
 		MinecraftForge.EVENT_BUS.register(EnchantRegistry.magnet);
 		MinecraftForge.EVENT_BUS.register(EnchantRegistry.venom);

@@ -28,9 +28,7 @@ import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
 import com.lothrazar.cyclicmagic.item.ItemPotionCustom;
 import com.lothrazar.cyclicmagic.item.ItemSleepingBag;
 import com.lothrazar.cyclicmagic.item.ItemToolHarvest;
-import com.lothrazar.cyclicmagic.item.ItemToolLaunch;
 import com.lothrazar.cyclicmagic.item.ItemToolPush;
-import com.lothrazar.cyclicmagic.item.ItemToolRotate;
 import com.lothrazar.cyclicmagic.item.projectile.*;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraftforge.common.util.EnumHelper;
@@ -53,7 +51,7 @@ public class ItemRegistry {
 	public static Map<String,Item> itemMap	= new HashMap<String,Item>();
 
 	public static final ItemFoodCorruptedChorus corrupted_chorus = new ItemFoodCorruptedChorus();
-	public static final ItemToolLaunch corrupted_elytra = new ItemToolLaunch();
+//	public static final ItemToolLaunch corrupted_elytra = new ItemToolLaunch();
 	public static final ItemCyclicWand cyclic_wand_build = new ItemCyclicWand();
 	public static final ItemPotionCustom potion_viscous = new ItemPotionCustom(false);
 	public static final ItemPotionCustom potion_levitation = new ItemPotionCustom(true,MobEffects.LEVITATION, 60*3);
@@ -87,14 +85,15 @@ public class ItemRegistry {
 	public static final ItemProjectileTNT ender_tnt_5 = new ItemProjectileTNT(5);
 	public static final ItemProjectileTNT ender_tnt_6 = new ItemProjectileTNT(6);
 	public static ItemEmeraldArmor emerald_boots;
+
+	public static final Item tool_push = new ItemToolPush();
 	public static void construct(){
 		//TODO: maybe constructor. MUST be done before config
 
 		addItem(new ItemToolPearlReuse(),"ender_pearl_reuse"); 
 		addItem(new ItemPaperCarbon(),"carbon_paper"); 
 		addItem(new ItemToolHarvest(),"tool_harvest");
-		addItem(new ItemToolPush(),"tool_push");
-		addItem(new ItemToolRotate(),"tool_rotate");
+		addItem(tool_push ,"tool_push");
 		addItem(new ItemInventoryStorage(),"storage_bag"); 
 		addItem(new ItemChestSack().setHidden(),"chest_sack");
 		addItem(new ItemChestSackEmpty(),"chest_sack_empty");
@@ -146,7 +145,6 @@ public class ItemRegistry {
 		addItem(potion_luck_long, "potion_luck_long");	
 		addItem(potion_levitation, "potion_levitation");
 		addItem(potion_levitation_long, "potion_levitation_long");
-		addItem(corrupted_elytra ,"corrupted_elytra");
 		addItem(cyclic_wand_build, "cyclic_wand_build");
 
 		
