@@ -28,7 +28,6 @@ import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
 import com.lothrazar.cyclicmagic.item.ItemPotionCustom;
 import com.lothrazar.cyclicmagic.item.ItemSleepingBag;
 import com.lothrazar.cyclicmagic.item.ItemToolHarvest;
-import com.lothrazar.cyclicmagic.item.ItemToolLaunch;
 import com.lothrazar.cyclicmagic.item.ItemToolPush;
 import com.lothrazar.cyclicmagic.item.projectile.*;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -52,7 +51,7 @@ public class ItemRegistry {
 	public static Map<String,Item> itemMap	= new HashMap<String,Item>();
 
 	public static final ItemFoodCorruptedChorus corrupted_chorus = new ItemFoodCorruptedChorus();
-	public static final ItemToolLaunch corrupted_elytra = new ItemToolLaunch();
+//	public static final ItemToolLaunch corrupted_elytra = new ItemToolLaunch();
 	public static final ItemCyclicWand cyclic_wand_build = new ItemCyclicWand();
 	public static final ItemPotionCustom potion_viscous = new ItemPotionCustom(false);
 	public static final ItemPotionCustom potion_levitation = new ItemPotionCustom(true,MobEffects.LEVITATION, 60*3);
@@ -146,7 +145,6 @@ public class ItemRegistry {
 		addItem(potion_luck_long, "potion_luck_long");	
 		addItem(potion_levitation, "potion_levitation");
 		addItem(potion_levitation_long, "potion_levitation_long");
-		addItem(corrupted_elytra ,"corrupted_elytra");
 		addItem(cyclic_wand_build, "cyclic_wand_build");
 
 		

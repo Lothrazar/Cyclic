@@ -45,10 +45,10 @@ public class ItemToolPush  extends BaseTool implements IHasRecipe{
 		public static String getName(ItemStack wand) {
 			try {
 				NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
-				return "tool.build." + ActionType.values()[tags.getInteger(NBT)].toString().toLowerCase();
+				return "tool.action." + ActionType.values()[tags.getInteger(NBT)].toString().toLowerCase();
 
 			} catch (Exception e) {
-				return "tool.build." + PUSH.toString().toLowerCase();
+				return "tool.action." + PUSH.toString().toLowerCase();
 			}
 		}
 		public static void toggle(ItemStack wand) {
