@@ -125,9 +125,7 @@ public class ModMain {
 
 	@EventHandler
 	public void onPostInit(FMLPostInitializationEvent event) {
-
-		// registers all plantable crops. the plan is to work with non vanilla
-		// data
+		// registers all plantable crops. 
 		DispenserBehaviorRegistry.register();
 	}
 
@@ -173,23 +171,22 @@ public class ModMain {
 	/* 
 	 * TODO : future plans
 	 * 
-	 * Fix sorting : UtilInventorySort.sort(p, openInventory);
+	 * block breaker//tree harvester?
+	 *  
+	 * BuildMachine instead of building spells: make phantom/ghost/outline/particle blocks
+	 * 
+	 * pets live longer and/or respawn
 	 * 
 	 * custom villager zombie textures
 	 * 
 	 * add some of my items to loot tables ? https://github.com/MinecraftForge/MinecraftForge/blob/master/src/test/java/net/minecraftforge/debug/LootTablesDebug.java
 	 * 
-	 * block breaker//tree harvester?
-	 * 
 	 * crafting table hotkeys - numpad?
-	 *  
-	 * [disabled] building spells: make phantom/ghost/outline/particle blocks
-	 *
-	 * pets live longer and/or respawn
 	 *
 	 * ROTATE: STAIRS: allow switch from top to bottom
 	 * 
 	 * Trading Tool // gui
 	 * 
+	 * Fix sorting : UtilInventorySort.sort(p, openInventory);
 	 */
 }

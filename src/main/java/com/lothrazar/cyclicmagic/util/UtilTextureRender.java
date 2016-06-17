@@ -39,7 +39,7 @@ public class UtilTextureRender {
 
 	@SideOnly(Side.CLIENT)
 	public static void drawTextureSquare(ResourceLocation img, int x, int y, int dim) {
-
+		if(img == null){return;}
 		drawTextureSimple(img, x, y, dim, dim);
 	}
 }
