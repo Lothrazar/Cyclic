@@ -243,9 +243,8 @@ public class ItemCyclicWand extends Item implements IHasRecipe ,IHasConfig{
 		public static int getSlot(ItemStack wand){
 			NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
 			if(!tags.hasKey(NBT_SLOT)){
-				int def = InventoryWand.calculateSlotCurrent(wand);
-				tags.setInteger(NBT_SLOT,def);
-				return def;
+				tags.setInteger(NBT_SLOT,0);
+				return 0;
 			}
 			return tags.getInteger(NBT_SLOT);
 		}

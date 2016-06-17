@@ -101,11 +101,6 @@ public class ModMain {
 		RecipeNewRegistry.register();
 		VillageTradeRegistry.register();
 		
-
-//		ItemStack stack = UtilNBT.buildEnchantedBook(EnchantRegistry.harvest, (short)1);
-//		GameRegistry.addShapelessRecipe(stack,ItemRegistry.cyclic_wand_build,Items.STICK);
-		 
-		
 		proxy.register();
 
 		TileEntityRegistry.register();
