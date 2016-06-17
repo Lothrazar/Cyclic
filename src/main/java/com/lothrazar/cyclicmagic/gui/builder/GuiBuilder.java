@@ -1,5 +1,6 @@
-package com.lothrazar.cyclicmagic.gui.uncrafting;
+package com.lothrazar.cyclicmagic.gui.builder;
 
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBuilder;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityUncrafting;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilUncraft;
@@ -13,15 +14,15 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GuiUncrafting extends GuiContainer {
-	private TileEntityUncrafting tile;
+public class GuiBuilder extends GuiContainer {
+	private TileEntityBuilder tile;
 
-	public GuiUncrafting(InventoryPlayer inventoryPlayer, TileEntityUncrafting tileEntity) {
-		super(new ContainerUncrafting(inventoryPlayer, tileEntity));
+	public GuiBuilder(InventoryPlayer inventoryPlayer, TileEntityBuilder tileEntity) {
+		super(new ContainerBuilder(inventoryPlayer, tileEntity));
 		tile = tileEntity;
 	}
 
-	public GuiUncrafting(Container c) {
+	public GuiBuilder(Container c) {
 		super(c);
 	}
 
@@ -52,7 +53,7 @@ public class GuiUncrafting extends GuiContainer {
 		
 		for(int k = 0; k < this.tile.getSizeInventory(); k++){
 			
-			Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerUncrafting.SLOTX_START - 3 +k*Const.SQ, this.guiTop + ContainerUncrafting.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);	
+			Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerBuilder.SLOTX_START - 3 +k*Const.SQ, this.guiTop + ContainerBuilder.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);	
 		}
 
 		if (tile.getTimer() > 0 && tile.getStackInSlot(0) != null) {

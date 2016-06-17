@@ -25,7 +25,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 
-public class TileEntityUncrafting extends TileEntity implements IInventory, ITickable, ISidedInventory {
+public class TileEntityBuilder extends TileEntity implements IInventory, ITickable, ISidedInventory {
 
 	// http://www.minecraftforge.net/wiki/Containers_and_GUIs
 	// http://greyminecraftcoder.blogspot.com.au/2015/01/tileentity.html
@@ -33,9 +33,9 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 	// http://bedrockminer.jimdo.com/modding-tutorials/advanced-modding/tile-entities/
 	// TODO: http://www.minecraftforge.net/wiki/Tile_Entity_Synchronization
 	// http://www.minecraftforge.net/forum/index.php?topic=18871.0
-	public static final int							TIMER_FULL = 200;
 	private ItemStack[]					inv;
 	private int									timer;
+	public static final int							TIMER_FULL = 400;
  
 	private static final String	NBT_INV					= "Inventory";
 	private static final String	NBT_SLOT				= "Slot";
@@ -43,7 +43,7 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 	//private static final String	NBT_SOUND				= "Sound";
 
 
-	public TileEntityUncrafting() {
+	public TileEntityBuilder() {
 
 		inv = new ItemStack[9];
 		timer = 0;
@@ -246,7 +246,7 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 		// change up the timer on both client and server (it gets synced
 		// eventually but not constantly)
 		this.shiftAllUp();
-		boolean triggerUncraft = false;
+		boolean trigger = false;
 		
 		if(this.worldObj.getStrongPower(this.getPos()) == 0){
 			//it works ONLY if its powered
@@ -270,93 +270,14 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 		timer--;
 		if (timer <= 0) {
 			timer = TIMER_FULL;
-			triggerUncraft = true;
+			trigger = true;
 		}
 
-		if (triggerUncraft) {
+		if (trigger) {
 
-			// detect what direction my block faces)
-			EnumFacing facing = null;
-			// not sure why this happens or if it ever will again, just being
-			// super safe to avoid null ptr -> ticking entity exception
-			if (((BlockUncrafting) this.blockType) == null || this.worldObj.getBlockState(this.pos) == null || ((BlockUncrafting) this.blockType).getFacingFromState(this.worldObj.getBlockState(this.pos)) == null)
-				facing = EnumFacing.UP;
-			else
-				facing = ((BlockUncrafting) this.blockType).getFacingFromState(this.worldObj.getBlockState(this.pos));
-
-			int dx = 0, dz = 0;
-			if (facing == EnumFacing.SOUTH) {
-				dz = -1;
-			}
-			else if (facing == EnumFacing.NORTH) {
-				dz = +1;
-			}
-			else if (facing == EnumFacing.EAST) {
-				dx = -1;
-			}
-			else if (facing == EnumFacing.WEST) {
-				dx = +1;
-			}
- 
-			x += dx; 
-			z += dz;
-			BlockPos posOffsetFacing = new BlockPos(x, y, z);
-			TileEntity attached = this.worldObj.getTileEntity(posOffsetFacing);
-			IInventory attachedInv = null;
-			if (attached != null && attached instanceof IInventory) {				 
-				attachedInv = (IInventory) attached;
-			}
-
-			UtilUncraft uncrafter = new UtilUncraft(stack);
-			if (uncrafter.doUncraft()) {
-				// drop the items
-
-				//if (this.worldObj.isRemote == false) {
-
-					ArrayList<ItemStack> uncrafterOutput = uncrafter.getDrops();
-					ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
- 
-					if (attached != null){
-						toDrop = dumpToIInventory(uncrafterOutput, attachedInv);
-					}
-					else{
-						toDrop = uncrafterOutput;
-					}
- 
-					for (ItemStack s : toDrop){ 
-						UtilEntity.dropItemStackInWorld(worldObj, posOffsetFacing, s); 
-					}
-				//}
-
-				this.decrStackSize(0, uncrafter.getOutsize());
-			 
-				UtilSound.playSound(worldObj, this.getPos(), SoundEvents.ENTITY_ITEM_BREAK,SoundCategory.BLOCKS);
-			}
-			else {
-				//try to dump to inventory first
-
-				if (attached != null){
-					ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
-					toDrop.add(stack);
-					toDrop = dumpToIInventory(toDrop, attachedInv);
-					
-					//it only had one in it. so if theres one left, it didnt work
-					if(toDrop.size() == 1){
-						UtilEntity.dropItemStackInWorld(worldObj, posOffsetFacing, toDrop.get(0));
-					}
-				}
-				else{
-					UtilEntity.dropItemStackInWorld(worldObj, posOffsetFacing, stack);
-				}
-				
-				// drop the source item since the uncraft failed
-//				if (this.worldObj.isRemote == false) {// server side only
-//					this.worldObj.spawnEntityInWorld(new EntityItem(this.worldObj, x, y, z, stack));
-//				}
-				this.decrStackSize(0, stack.stackSize);
- 
-				UtilSound.playSound(worldObj, this.getPos(), SoundEvents.ENTITY_ARROW_SHOOT,SoundCategory.BLOCKS);
-			}
+			System.out.println("TRIRGGERRRR WITH"+stack);
+			
+			
 			
 			this.worldObj.markBlockRangeForRenderUpdate(this.getPos(), this.getPos().up());
 			this.markDirty();
