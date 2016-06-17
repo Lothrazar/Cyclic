@@ -6,8 +6,11 @@ import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.block.BlockUncrafting;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
+import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.util.UtilSound;
-import com.lothrazar.cyclicmagic.util.UtilUncraft; 
+import com.lothrazar.cyclicmagic.util.UtilUncraft;
+
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.IInventory;
@@ -35,7 +38,7 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 	// http://www.minecraftforge.net/forum/index.php?topic=18871.0
 	private ItemStack[]					inv;
 	private int									timer;
-	public static final int							TIMER_FULL = 400;
+	public static final int							TIMER_FULL = 200;
  
 	private static final String	NBT_INV					= "Inventory";
 	private static final String	NBT_SLOT				= "Slot";
@@ -274,10 +277,15 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		}
 
 		if (trigger) {
+			Block stuff = Block.getBlockFromItem(stack.getItem());
+			
+			if(stuff != null){
+				int r = this.worldObj.rand.nextInt(50);
 
-			System.out.println("TRIRGGERRRR WITH"+stack);
-			
-			
+				if(UtilPlaceBlocks.placeStateSafe(this.worldObj, null, this.pos.up(r), stuff.getStateFromMeta(stack.getMetadata()))){
+					this.decrStackSize(0, 1);
+				}
+			}
 			
 			this.worldObj.markBlockRangeForRenderUpdate(this.getPos(), this.getPos().up());
 			this.markDirty();

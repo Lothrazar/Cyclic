@@ -20,6 +20,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -251,8 +252,13 @@ public class UtilPlaceBlocks {
  
 		 if(success){
 				
-			UtilSound.playSoundPlaceBlock(player ,placePos,placeState.getBlock());
-		
+			 if(player != null){
+				 UtilSound.playSoundPlaceBlock(player ,placePos,placeState.getBlock());
+			 }
+			 else{
+				 //, SoundCategory.BLOCKS
+				 UtilSound.playSound(world, placePos, placeState.getBlock().getSoundType().getPlaceSound(), SoundCategory.BLOCKS);
+			 }
 		 }
 	 
 		// either it was air, or it wasnt and we broke it
