@@ -7,21 +7,10 @@ import java.util.Map;
 
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.spell.ISpell;
-import com.lothrazar.cyclicmagic.spell.SpellInventory;
-import com.lothrazar.cyclicmagic.spell.SpellLaunch;
-import com.lothrazar.cyclicmagic.spell.SpellPlaceCircle;
-import com.lothrazar.cyclicmagic.spell.SpellPlaceLine;
-import com.lothrazar.cyclicmagic.spell.SpellPlaceStair;
-import com.lothrazar.cyclicmagic.spell.SpellPotion;
-import com.lothrazar.cyclicmagic.spell.SpellRangeBuild;
-import com.lothrazar.cyclicmagic.spell.SpellRangePull;
-import com.lothrazar.cyclicmagic.spell.SpellRangePush;
-import com.lothrazar.cyclicmagic.spell.SpellRangeReplace;
-import com.lothrazar.cyclicmagic.spell.SpellRangeRotate;
+import com.lothrazar.cyclicmagic.spell.*;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 
@@ -35,18 +24,12 @@ public class SpellRegistry {
 		// on purpose, not all spells are in here. only ones that needed to be
 		// exposed
 		public static SpellRangeRotate	rotate;
-		public static SpellRangePush		push;
-		public static SpellRangePull		pull;
-		public static SpellRangeReplace	replacer;
-		private static SpellInventory		inventory;
-		private static SpellRangeBuild		reachdown;
-		private static SpellLaunch				launch;
-		private static SpellRangeBuild		reachup;
-		private static SpellRangeBuild		reachplace;
-		private static SpellPlaceLine		placeline;
-		private static SpellPlaceCircle	placecircle;
-		private static SpellPlaceStair		placestair;
-		// public static SpellPlaceFloor placefloor;
+		public static SpellRangePush	push;
+		public static SpellRangePull	pull;
+		private static SpellInventory	inventory;
+		private static SpellRangeBuild	reachdown;
+		private static SpellRangeBuild	reachup;
+		private static SpellRangeBuild	reachplace;
 	}
 
 	public static void register() {
@@ -67,9 +50,6 @@ public class SpellRegistry {
 		Spells.pull = new SpellRangePull(++spellId, "pull");
 		registerSpell(Spells.pull);
 
-		Spells.replacer = new SpellRangeReplace(++spellId, "replacer");
-		registerSpell(Spells.replacer);
-
 		Spells.reachup = new SpellRangeBuild(++spellId, "reachup", SpellRangeBuild.PlaceType.UP);
 		registerSpell(Spells.reachup);
 
@@ -85,46 +65,14 @@ public class SpellRegistry {
 		SpellRangeBuild reachright = new SpellRangeBuild(++spellId, "reachright", SpellRangeBuild.PlaceType.RIGHT);
 		registerSpell(reachright); 
 		
-		SpellPotion levitate = new SpellPotion(++spellId, "levitation");
-		levitate.setPotion(MobEffects.LEVITATION, 9, 0);
-		registerSpell(levitate);
-
-		SpellPotion slowfall = new SpellPotion(++spellId, "slowfall");
-		slowfall.setPotion(PotionRegistry.slowfall, 9, 0);
-		registerSpell(slowfall);
-
-		//TODO: currently there is no tool for this
-		// it would not have the BUILD TOGGLE TYPE.. once its working
-		Spells.placeline = new SpellPlaceLine(++spellId, "placeline");
-		registerSpell(Spells.placeline);
-
-		Spells.placecircle = new SpellPlaceCircle(++spellId, "placecircle");
-		registerSpell(Spells.placecircle);
-
-		Spells.placestair = new SpellPlaceStair(++spellId, "placestair");
-		registerSpell(Spells.placestair);
- 
-		Spells.launch = new SpellLaunch(++spellId, "launch");
-		registerSpell(Spells.launch);
-		
-
-		ArrayList<ISpell>		 spellbookFly = new ArrayList<ISpell>();
-		spellbookFly.add(Spells.launch);
-//		spellbookFly.add(slowfall);
-//		spellbookFly.add(levitate);
- 
 		ArrayList<ISpell>	spellbookBuild = new ArrayList<ISpell>();
 		spellbookBuild.add(Spells.inventory);
-		spellbookBuild.add(Spells.replacer);
 		spellbookBuild.add(Spells.reachup);
 		spellbookBuild.add(Spells.reachplace);
 		spellbookBuild.add(Spells.reachdown);
 		spellbookBuild.add(reachleft);
 		spellbookBuild.add(reachright);
-//		spellbookBuild.add(Spells.rotate);
-//		spellbookBuild.add(Spells.push);
-//		spellbookBuild.add(Spells.pull);
- 
+
 		ItemRegistry.cyclic_wand_build.setSpells(spellbookBuild);
 	}
  

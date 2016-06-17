@@ -31,10 +31,6 @@ public class PacketRegistry {
 		network.registerMessage(PacketRotateBlock.class, PacketRotateBlock.class, PacketRotateBlock.ID, Side.SERVER);
 		network.registerMessage(PacketSpellPush.class, PacketSpellPush.class, PacketSpellPush.ID, Side.SERVER);
 		network.registerMessage(PacketSpellPull.class, PacketSpellPull.class, PacketSpellPull.ID, Side.SERVER);
-		network.registerMessage(PacketReplaceBlock.class, PacketReplaceBlock.class, PacketReplaceBlock.ID, Side.SERVER);
-		network.registerMessage(PacketRechargeWand.class, PacketRechargeWand.class, PacketRechargeWand.ID, Side.SERVER);
-		// network.registerMessage(MessageUpgrade.class, MessageUpgrade.class,
-		// MessageUpgrade.ID, Side.SERVER);
 
 		network.registerMessage(PacketMovePlayerColumn.class, PacketMovePlayerColumn.class, PacketMovePlayerColumn.ID, Side.SERVER);
 		network.registerMessage(PacketMovePlayerHotbar.class, PacketMovePlayerHotbar.class, PacketMovePlayerHotbar.ID, Side.SERVER);
