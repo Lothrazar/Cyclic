@@ -48,8 +48,9 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 	public TileEntityBuilder() {
 	}
 	
-	public void setShape(BuildType buildType) {
+	public void setShape() {
 		
+		BuildType buildType = getBuildTypeEnum();
 		//only rebuild shapes if they are different
 //		if(this.currentType != buildType.ordinal()){
 		switch(buildType){
@@ -68,16 +69,8 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		default:
 			break;
 		}
-		this.nextPos = this.shape.get(shapeIndex);
+		this.nextPos = this.shape.get(0);
 		this.shapeIndex = 0;
-		this.currentType = buildType.ordinal();
-//		}
-	}
-	public int getBuildType(){
-		return this.currentType;
-	}
-	public BuildType getBuildTypeEnum(){
-		return BuildType.values()[this.currentType];
 	}
 	@Override
 	public boolean hasCustomName() {
@@ -194,6 +187,15 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		}
 	}
 
+	public int getBuildType(){
+		return this.currentType;
+	}
+	public void setBuildType(int value){
+		this.currentType = value;
+	}
+	public BuildType getBuildTypeEnum(){
+		return BuildType.values()[this.currentType];
+	}
 	@Override
 	public int getFieldCount() {
 
@@ -202,7 +204,7 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 
 	@Override
 	public void clear() {
-
+		//when is this claled? what for?
 	}
 
 	@Override
@@ -421,16 +423,17 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		}
 		
 		if(this.shape == null || this.shape.size() == 0){
-			this.setShape(this.getBuildTypeEnum());
+			this.setShape();
 		}
-
-		int c = shapeIndex+1;
-		
-		if(c < 0 || c > this.shape.size()) {c = 0;}
-		this.nextPos = this.shape.get(c);
-		
-		shapeIndex = c;
-		
+		else{
+			int c = shapeIndex+1;
+			
+			if(c < 0 || c >= this.shape.size()) {c = 0;}
+			
+			this.nextPos = this.shape.get(c);
+			
+			shapeIndex = c;
+		}
 	}
 
 	private int[] hopperInput = { 0, 1, 2,3,4,5,6,7,8 };// all slots for all faces
