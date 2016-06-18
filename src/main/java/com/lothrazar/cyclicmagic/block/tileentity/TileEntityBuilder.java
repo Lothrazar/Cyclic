@@ -58,7 +58,7 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 			this.shape = UtilPlaceBlocks.circle(this.pos, circleRadius*2);
 			break;
 		case FACING:
-			this.shape = UtilPlaceBlocks.line(pos, this.getCurrentFacing(), DIST);
+			this.shape = UtilPlaceBlocks.line(pos, this.getCurrentFacing().getOpposite(), DIST);
 			break;
 		case SQUARE:
 			this.shape = UtilPlaceBlocks.squareHorizontalHollow(this.pos, sqRadius);
