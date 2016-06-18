@@ -1,19 +1,12 @@
 package com.lothrazar.cyclicmagic.block;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBuilder;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityUncrafting;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
-import com.lothrazar.cyclicmagic.util.Const;
-import com.lothrazar.cyclicmagic.util.UtilUncraft;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -24,7 +17,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -35,7 +27,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockBuilder extends Block implements IHasRecipe,IHasConfig {
 	// dont use blockContainer !!
@@ -87,13 +78,31 @@ public class BlockBuilder extends Block implements IHasRecipe,IHasConfig {
  
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-		TileEntity tileEntity = world.getTileEntity(pos);
+		TileEntityBuilder tileEntity = (TileEntityBuilder)world.getTileEntity(pos);
+//		tileEntity.setBuildType(tileEntity.getBuildType());
 
-		if (tileEntity == null || player.isSneaking()) { return false; }
+		if (tileEntity == null || player.isSneaking()) { 
+			return false; 
+		}
+		if (world.isRemote)
+        {
+            return true;
+        }
+//		BlockFurnace f;
+
+//		if(world.isRemote == false){
+//			int o = tileEntity.getBuildType().ordinal();
+//			System.out.println("server guy sinc"+o);
+//			
+//			 world.addBlockEvent(pos, this, 1, o);
+//		}
+		System.out.println("open gui "+tileEntity.getBuildType());
+
+		
 
 		int x = pos.getX(), y = pos.getY(), z = pos.getZ();
 		player.openGui(ModMain.instance, ModGuiHandler.GUI_INDEX_BUILDER, world, x, y, z);
-
+		
 		return true;
 	}
 

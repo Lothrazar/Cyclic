@@ -97,9 +97,12 @@ public class ModGuiHandler implements IGuiHandler {
 				return new GuiEnderBook(player, UtilInventory.getPlayerItemIfHeld(player));
 			case GUI_INDEX_BUILDER:
 
-				TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
-				if (te instanceof TileEntityBuilder) { 
-					return new GuiBuilder(player.inventory, (TileEntityBuilder) te); 
+				TileEntityBuilder te = (TileEntityBuilder)world.getTileEntity(new BlockPos(x, y, z));
+				if (te != null) { 
+//					System.out.println("client gui handler "+te.getBuildType());
+//					System.out.println("tile DATA "+te.getTileData());
+					
+					return new GuiBuilder(player.inventory, te); 
 				} 
 				break;
 			}

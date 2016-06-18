@@ -36,6 +36,7 @@ public class ContainerBuilder extends Container {
 		// commonly used vanilla code that adds the player's inventory
 		bindPlayerInventory(inventoryPlayer);
 
+		this.detectAndSendChanges();
 	}
 
 	protected void bindPlayerInventory(InventoryPlayer inventoryPlayer) {

@@ -1,10 +1,8 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.block.BlockBuilder;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
@@ -32,7 +30,8 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 	private ItemStack[] inv = new ItemStack[9];
 	private int	timer = TIMER_FULL;
 	private int	shapeIndex = 0;
-	private BuildType currentType = BuildType.UP;
+//	private BuildType currentType;
+	private int currentType;
 	private BlockPos nextPos;
 	private List<BlockPos> shape = new ArrayList<BlockPos>();
 	public static final int	TIMER_FULL = 100;
@@ -50,9 +49,9 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 	}
 	
 	public void setBuildType(BuildType buildType) {
-		this.currentType = buildType;
+		this.currentType = buildType.ordinal();
 		
-		switch(this.currentType){
+		switch(buildType){
 		case CIRCLE:
 			this.shape = UtilPlaceBlocks.circle(this.pos, 10);
 			this.nextPos = this.shape.get(0);
@@ -74,10 +73,13 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		}
 		
 		
-		this.markDirty();
+//		this.markDirty();
 	}
-	public BuildType getBuildType(){
+	public int getBuildType(){
 		return this.currentType;
+	}
+	public BuildType getBuildTypeEnum(){
+		return BuildType.values()[this.currentType];
 	}
 	@Override
 	public boolean hasCustomName() {
@@ -229,8 +231,8 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		}
 		
 
-		int bt = tagCompound.getInteger(NBT_BUILDTYPE);
-		this.setBuildType(BuildType.values()[bt]);
+		this.currentType = tagCompound.getInteger(NBT_BUILDTYPE);
+		this.setBuildType(BuildType.values()[this.currentType]);
 	}
 
 	@Override
@@ -268,7 +270,7 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		}
 		tagCompound.setTag(NBT_INV, itemList);
 		
-		tagCompound.setInteger(NBT_BUILDTYPE, this.getBuildType().ordinal());
+		tagCompound.setInteger(NBT_BUILDTYPE, this.getBuildType());
 		
 		return super.writeToNBT(tagCompound);
 	}
@@ -372,7 +374,7 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 			if( h >= MAXRANGE || 
 				v >= MAXRANGE){
 
-				System.out.println("maxrange past");
+				System.out.println("TODO:Y only for line: maxrange past");
 				this.nextPos = this.pos;
 				this.markDirty();
 				return;
@@ -412,8 +414,9 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		if(this.nextPos == null){
 			this.nextPos = this.pos;
 		}
+		System.out.println("increment:"+this.getBuildType());
 
-		switch(this.getBuildType()){
+		switch(this.getBuildTypeEnum()){
 		case FACING:
 			// detect what direction my block faces)
 			EnumFacing facing = null;
@@ -498,4 +501,15 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 			return BuildType.values()[type];
 		}
 	}
+	
+//	@Override
+//    public boolean receiveClientEvent(int id, int type)
+//    {
+//		System.out.println("receiveClientEvent "+id +")"+ type);
+//		this.currentType = BuildType.values()[type];
+//		
+//		
+//		
+//        return super.receiveClientEvent(id, type);
+//    }
 }

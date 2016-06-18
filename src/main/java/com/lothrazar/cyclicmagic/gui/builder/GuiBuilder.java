@@ -1,12 +1,10 @@
 package com.lothrazar.cyclicmagic.gui.builder;
 
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBuilder;
-import com.lothrazar.cyclicmagic.gui.wand.ButtonBuildToggle;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
@@ -15,6 +13,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiBuilder extends GuiContainer {
 	private TileEntityBuilder tile;
+	private ButtonBuilderType btn;
 	public GuiBuilder(InventoryPlayer inventoryPlayer, TileEntityBuilder tileEntity) {
 		super(new ContainerBuilder(inventoryPlayer, tileEntity));
 		tile = tileEntity;
@@ -36,7 +35,8 @@ public class GuiBuilder extends GuiContainer {
 		int width = 20;
 
 		width = 50;
-		this.buttonList.add(new ButtonBuilderType(tile, 2, x, y, width));
+		btn = new ButtonBuilderType(tile, 2, x, y, width);
+		this.buttonList.add(btn);
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -53,6 +53,8 @@ public class GuiBuilder extends GuiContainer {
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
 
+		System.out.println("drawGuiContainerBackgroundLayer :"+this.tile.getBuildType());
+		System.out.println("drawGuiContainerBackgroundLayer tile.getTimer() :"+this.tile.getTimer());
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		this.mc.getTextureManager().bindTexture(table);
 		int thisX = (this.width - this.xSize) / 2;

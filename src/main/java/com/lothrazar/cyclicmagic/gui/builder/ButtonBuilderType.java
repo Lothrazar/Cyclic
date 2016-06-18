@@ -32,7 +32,7 @@ public class ButtonBuilderType extends GuiButton implements ITooltipButton {
 		if (pressed) {
 
 			//set it in client side and server both
-			TileEntityBuilder.BuildType old = container.getBuildType();
+			TileEntityBuilder.BuildType old = container.getBuildTypeEnum();
 			TileEntityBuilder.BuildType next = TileEntityBuilder.BuildType.getNextType(old);
 			container.setBuildType(next);
 			
@@ -47,9 +47,13 @@ public class ButtonBuilderType extends GuiButton implements ITooltipButton {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void drawButton(Minecraft mc, int mouseX, int mouseY) {
-
-		this.displayString = I18n.format(container.getBuildType().toString().toLowerCase()+".name");
-
+	this.displayString = I18n.format("builder."+container.getBuildType()+".name");
+//		
+//		if(container.getBuildType() != null)
+//			this.displayString = I18n.format(container.getBuildType().toString().toLowerCase()+".name");
+//		else{
+//			System.out.println("build type null i guess??");
+//		}
 		super.drawButton(mc, mouseX, mouseY);
 	}
 
@@ -58,8 +62,8 @@ public class ButtonBuilderType extends GuiButton implements ITooltipButton {
 
 		List<String> tooltips = new ArrayList<String>();
 
-		String key = container.getBuildType().toString().toLowerCase() + ".tooltip";
-		tooltips.add(I18n.format(key));
+//		String key = container.getBuildType().toString().toLowerCase() + ".tooltip";
+//		tooltips.add(I18n.format(key));
 //		tooltips.add(TextFormatting.GRAY + I18n.format("button.build.meta"));
 
 		
