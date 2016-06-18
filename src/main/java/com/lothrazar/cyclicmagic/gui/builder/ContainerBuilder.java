@@ -10,25 +10,18 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+@SuppressWarnings("unused")
 public class ContainerBuilder extends Container {
 	// tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
 	
-	public static final int					SLOTX_START				= 10;
-	public static final int					SLOTY				= 28;
-	//public static final int					SLOT				= 0;
-	
+	public static final int					SLOTX_START	= 10;
+	public static final int					SLOTY = 28;
 	public static final int					SQ	= 18;
-//	public static final int					SLOT_SECOND	= 1;
-//	public static final int					SLOT_THIRD	= 2;
 	protected TileEntityBuilder	tileEntity;
 
 	public ContainerBuilder(InventoryPlayer inventoryPlayer, TileEntityBuilder te) {
 		tileEntity = te;
-
-		//addSlotToContainer(new SlotUncraft(tileEntity, SLOT, SLOTX, SLOTY));
-		//addSlotToContainer(new SlotUncraft(tileEntity, SLOT_SECOND, SLOTX, SLOTY + 18));
-		//addSlotToContainer(new SlotUncraft(tileEntity, SLOT_THIRD, SLOTX, SLOTY + 18 + 18));
-
+		
 		for(int i = 0; i < tileEntity.getSizeInventory(); i++){
 
 			addSlotToContainer(new SlotUncraft(tileEntity, i, SLOTX_START + i*SQ, SLOTY));
@@ -86,5 +79,4 @@ public class ContainerBuilder extends Container {
 	public boolean canInteractWith(EntityPlayer playerIn) {
 		return true;
 	}
-
 }

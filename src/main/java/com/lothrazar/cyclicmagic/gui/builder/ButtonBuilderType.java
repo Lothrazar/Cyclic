@@ -10,17 +10,18 @@ import com.lothrazar.cyclicmagic.net.PacketTileBuildType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ButtonBuilderType extends GuiButton implements ITooltipButton {
 
-	final TileEntityBuilder container;
+	final BlockPos container;
 
-	public ButtonBuilderType(TileEntityBuilder current, int buttonId, int x, int y, int width) {
+	public ButtonBuilderType(BlockPos current, int buttonId, int x, int y, int width) {
 
-		super(buttonId, x, y, width, 20, "");
+		super(buttonId, x, y, width, 20, I18n.format("builder.toggle.name"));
 		container = current;
 	}
 
@@ -31,23 +32,10 @@ public class ButtonBuilderType extends GuiButton implements ITooltipButton {
 		boolean pressed = super.mousePressed(mc, mouseX, mouseY);
 
 		if (pressed) {
-
-
-			
-			ModMain.network.sendToServer(new PacketTileBuildType(container.getPos()));
-
-//			container.markDirty();
+			ModMain.network.sendToServer(new PacketTileBuildType(container));
 		}
 
 		return pressed;
-	}
-
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void drawButton(Minecraft mc, int mouseX, int mouseY) {
-	this.displayString = I18n.format("builder.toggle.name");
-
-		super.drawButton(mc, mouseX, mouseY);
 	}
 
 	@Override

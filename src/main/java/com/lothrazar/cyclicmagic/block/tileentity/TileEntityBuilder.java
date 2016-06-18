@@ -27,12 +27,11 @@ import net.minecraft.util.text.ITextComponent;
 public class TileEntityBuilder extends TileEntity implements IInventory, ITickable, ISidedInventory {
 
 	private ItemStack[] inv = new ItemStack[9];
+	private int currentType;
 	private int	timer;
 	private int	shapeIndex = 0;
-//	private BuildType currentType;
-	private int currentType;
 	private BlockPos nextPos;
-	private List<BlockPos> shape = new ArrayList<BlockPos>();
+	private List<BlockPos> shape = null;
 	public static final int	TIMER_FULL = 100;
 	final static int circleRadius = 5;
 	final static int sqRadius = 5;
@@ -49,30 +48,30 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 	public TileEntityBuilder() {
 	}
 	
-	public void setBuildType(BuildType buildType) {
+	public void setShape(BuildType buildType) {
 		
 		//only rebuild shapes if they are different
-		if(this.currentType != buildType.ordinal()){
-			switch(buildType){
-			case CIRCLE:
-				this.shape = UtilPlaceBlocks.circle(this.pos, circleRadius*2);
-				break;
-			case FACING:
-				this.shape = UtilPlaceBlocks.line(pos, this.getCurrentFacing(), DIST);
-				break;
-			case SQUARE:
-				this.shape = UtilPlaceBlocks.squareHorizontalHollow(this.pos, sqRadius);
-				break;
-			case UP:
-				this.shape = UtilPlaceBlocks.line(pos, EnumFacing.UP, DIST);
-				break;
-			default:
-				break;
-			}
-			this.shapeIndex = 0;
-			this.nextPos = this.shape.get(shapeIndex);
+//		if(this.currentType != buildType.ordinal()){
+		switch(buildType){
+		case CIRCLE:
+			this.shape = UtilPlaceBlocks.circle(this.pos, circleRadius*2);
+			break;
+		case FACING:
+			this.shape = UtilPlaceBlocks.line(pos, this.getCurrentFacing(), DIST);
+			break;
+		case SQUARE:
+			this.shape = UtilPlaceBlocks.squareHorizontalHollow(this.pos, sqRadius);
+			break;
+		case UP:
+			this.shape = UtilPlaceBlocks.line(pos, EnumFacing.UP, DIST);
+			break;
+		default:
+			break;
 		}
+		this.nextPos = this.shape.get(shapeIndex);
+		this.shapeIndex = 0;
 		this.currentType = buildType.ordinal();
+//		}
 	}
 	public int getBuildType(){
 		return this.currentType;
@@ -168,6 +167,9 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		return Block.getBlockFromItem(stack.getItem()) != null;
 	}
 
+	public int getTimer() {
+		return timer;
+	}
 	@Override
 	public int getField(int id) {
 
@@ -250,7 +252,6 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 			this.shape = new ArrayList<BlockPos>();
 		}
 		for(BlockPos p : this.shape){
-
 			NBTTagCompound tag = new NBTTagCompound();
 			tag.setString("shapepos", UtilNBT.posToStringCSV(p));
 			sh.appendTag(tag);
@@ -295,13 +296,9 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		super.onDataPacket(net, pkt);
 	}
 
-	public int getTimer() {
-		return timer;
-	}
 	public BlockPos getNextPos() {
 		return this.nextPos;
 	}
- 
  
 	private void shiftAllUp() {
 
@@ -340,12 +337,10 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 			return;
 		}
 
-		//??render
 		if(!this.worldObj.isRemote && this.nextPos != null && this.worldObj.rand.nextDouble() < 0.1 && 
 				this.inv[0] != null){
 			UtilParticle.spawnParticlePacket(EnumParticleTypes.DRAGON_BREATH, nextPos, 5);
 		}
-		
 		
 		//center of the block
 		double x = this.getPos().getX() + 0.5;
@@ -372,8 +367,7 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 			if(stuff != null){
 
 				if(this.worldObj.isRemote == false){
-				
-					ModMain.logger.info("try place "+this.nextPos +" type "+this.getBuildTypeEnum().name());
+					ModMain.logger.info("try place "+this.nextPos +" type "+this.currentType+"_"+this.getBuildTypeEnum().name());
 					
 					if(UtilPlaceBlocks.placeStateSafe(this.worldObj, null, this.nextPos, stuff.getStateFromMeta(stack.getMetadata()))){
 						this.decrStackSize(0, 1);
@@ -383,9 +377,6 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 
 				this.incrementPosition();
 			}
-			
-//			this.worldObj.markBlockRangeForRenderUpdate(this.getPos(), this.getPos().up());
-			
 		}
 		else{
 			//dont trigger an uncraft event, its still processing
@@ -415,36 +406,18 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		if(this.worldObj == null){
 			return;
 		}
-
-		switch(this.getBuildTypeEnum()){
-		case FACING:
-			// detect what direction my block faces)
-			EnumFacing facing = this.getCurrentFacing();
-			// not sure why this happens or if it ever will again, just being
-			// super safe to avoid null ptr -> ticking entity exception
-			
-
-			this.nextPos = this.nextPos.offset(facing);
-			
-			break;
-		case UP:
-			
-			this.nextPos = this.nextPos.up();
-			break;
-		case CIRCLE:
-		case SQUARE:
-			
-			int c = shapeIndex+1;
-			
-			if(c < 0 || c >= this.shape.size()) {c = 0;}
-			this.nextPos = this.shape.get(c);
-			
-			shapeIndex = c;
-			
-			break;
-		default:
-			break;
+		
+		if(this.shape == null || this.shape.size() == 0){
+			this.setShape(this.getBuildTypeEnum());
 		}
+
+		int c = shapeIndex+1;
+		
+		if(c < 0 || c > this.shape.size()) {c = 0;}
+		this.nextPos = this.shape.get(c);
+		
+		shapeIndex = c;
+		
 	}
 
 	private int[] hopperInput = { 0, 1, 2,3,4,5,6,7,8 };// all slots for all faces

@@ -79,26 +79,13 @@ public class BlockBuilder extends Block implements IHasRecipe,IHasConfig {
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
 		TileEntityBuilder tileEntity = (TileEntityBuilder)world.getTileEntity(pos);
-//		tileEntity.setBuildType(tileEntity.getBuildType());
 
 		if (tileEntity == null || player.isSneaking()) { 
 			return false; 
 		}
-		if (world.isRemote)
-        {
+		if (world.isRemote){
             return true;
         }
-//		BlockFurnace f;
-
-//		if(world.isRemote == false){
-//			int o = tileEntity.getBuildType().ordinal();
-//			System.out.println("server guy sinc"+o);
-//			
-//			 world.addBlockEvent(pos, this, 1, o);
-//		}
-		System.out.println("open gui "+tileEntity.getBuildType());
-
-		
 
 		int x = pos.getX(), y = pos.getY(), z = pos.getZ();
 		player.openGui(ModMain.instance, ModGuiHandler.GUI_INDEX_BUILDER, world, x, y, z);

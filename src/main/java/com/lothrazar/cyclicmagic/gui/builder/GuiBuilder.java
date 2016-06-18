@@ -36,7 +36,7 @@ public class GuiBuilder extends GuiContainer {
 		int width = 20;
 
 		width = 50;
-		btn = new ButtonBuilderType(tile, 2, x, y, width);
+		btn = new ButtonBuilderType(tile.getPos(), 2, x, y, width);
 		this.buttonList.add(btn);
 	}
 
@@ -69,9 +69,11 @@ public class GuiBuilder extends GuiContainer {
 		this.mc.getTextureManager().bindTexture(slot);
 		
 		for(int k = 0; k < this.tile.getSizeInventory(); k++){
-			
 			Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerBuilder.SLOTX_START - 3 +k*Const.SQ, this.guiTop + ContainerBuilder.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);	
 		}
+		
+		//TODO: still a mystery why timer updates on clientside and other data doesnt
+		//btn.displayString = tile.getBuildType()+":"+tile.getTimer();
 
 		if (tile.getTimer() > 0 && tile.getStackInSlot(0) != null) {
 			this.mc.getTextureManager().bindTexture(progress);

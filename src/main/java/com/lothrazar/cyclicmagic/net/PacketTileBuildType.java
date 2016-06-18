@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.net;
 
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBuilder;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBuilder.BuildType;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 
 import io.netty.buffer.ByteBuf;
@@ -48,7 +47,6 @@ public class PacketTileBuildType implements IMessage, IMessageHandler<PacketTile
 		ByteBufUtils.writeTag(buf, tags);
 	}
 
-
 	@Override
 	public IMessage onMessage(PacketTileBuildType message, MessageContext ctx) {
 
@@ -60,9 +58,13 @@ public class PacketTileBuildType implements IMessage, IMessageHandler<PacketTile
 
 			TileEntityBuilder.BuildType old = container.getBuildTypeEnum();
 			TileEntityBuilder.BuildType next = TileEntityBuilder.BuildType.getNextType(old);
-			container.setBuildType(next);
+			container.setShape(next);
 
-			container.setBuildType(next);
+			container.markDirty();
+			
+			if(player.openContainer != null){
+				player.openContainer.detectAndSendChanges();
+			}
 			
 			UtilChat.addChatMessage(player, next.name());
 		}
