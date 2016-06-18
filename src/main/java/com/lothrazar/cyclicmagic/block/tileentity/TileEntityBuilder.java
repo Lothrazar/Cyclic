@@ -167,18 +167,31 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		return Block.getBlockFromItem(stack.getItem()) != null;
 	}
 
+	final static int FIELD_TIMER = 0;
+	final static int FIELD_BUILDTYPE = 1;
 	public int getTimer() {
-		return timer;
+		return this.getField(FIELD_TIMER);
 	}
 	@Override
 	public int getField(int id) {
 
+		switch(id){
+		case FIELD_TIMER:
+			return timer;
+		case FIELD_BUILDTYPE:
+			return this.currentType;
+		}
 		return 0;
 	}
 
 	@Override
 	public void setField(int id, int value) {
-
+		switch(id){
+		case FIELD_TIMER:
+			this.timer = value;
+		case FIELD_BUILDTYPE:
+			this.currentType = value;
+		}
 	}
 
 	@Override
