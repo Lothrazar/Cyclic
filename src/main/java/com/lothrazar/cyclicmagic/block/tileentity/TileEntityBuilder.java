@@ -3,6 +3,7 @@ package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.block.BlockBuilder;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
@@ -62,7 +63,7 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 			this.incrementPosition();
 			break;
 		case SQUARE:
-			this.shape = UtilPlaceBlocks.squareHorizontal(this.pos, 5);
+			this.shape = UtilPlaceBlocks.squareHorizontalHollow(this.pos, 5);
 			this.shapeIndex = 0;
 			this.nextPos = this.shape.get(shapeIndex);
 			break;
@@ -234,7 +235,7 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		
 
 		this.currentType = tagCompound.getInteger(NBT_BUILDTYPE);
-		this.setBuildType(BuildType.values()[this.currentType]);
+//		this.setBuildType(BuildType.values()[this.currentType]);
 	}
 
 	@Override
@@ -386,7 +387,7 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 
 				if(this.worldObj.isRemote == false){
 				
-					System.out.println("try place "+this.nextPos +" type "+this.getBuildTypeEnum().name());
+					ModMain.logger.info("try place "+this.nextPos +" type "+this.getBuildTypeEnum().name());
 					
 					if(UtilPlaceBlocks.placeStateSafe(this.worldObj, null, this.nextPos, stuff.getStateFromMeta(stack.getMetadata()))){
 						this.decrStackSize(0, 1);
@@ -418,8 +419,6 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		if(this.worldObj == null){
 			return;
 		}
-//		if(!this.worldObj.isRemote)
-//			System.out.println("increment:"+this.getBuildType());
 
 		switch(this.getBuildTypeEnum()){
 		case FACING:

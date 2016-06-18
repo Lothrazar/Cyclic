@@ -72,7 +72,7 @@ public class UtilPlaceBlocks {
 		return circleList;
 	}
 
-	public static List<BlockPos> squareHorizontal(final BlockPos pos, int radius) {
+	public static List<BlockPos> squareHorizontalHollow(final BlockPos pos, int radius) {
 		List<BlockPos> shape = new ArrayList<BlockPos>();
 		// search in a cube
 		int xMin = pos.getX() - radius;
@@ -81,21 +81,22 @@ public class UtilPlaceBlocks {
 		int zMax = pos.getZ() + radius;
 
 		int y = pos.getY();
-		for (int x = xMin; x <= xMax; x++) {
-			for (int z = zMin; z <= zMax; z++) {
-				shape.add(new BlockPos(x, y, z));
-			}
-		} // end of the outer loop
+		//first, leave x fixed and track along +/- y
+		for(int x = xMin; x <= xMax; x++){
+			shape.add(new BlockPos(x, y, zMin));
+			shape.add(new BlockPos(x, y, zMax));
+		}
+		//corners are done so offset
+		for (int z = zMin+1; z < zMax; z++) {
+			shape.add(new BlockPos(xMin, y, z));
+			shape.add(new BlockPos(xMax, y, z));
+		}
+//		for (int x = xMin; x <= xMax; x++) {
+//			for (int z = zMin; z <= zMax; z++) {
+//				shape.add(new BlockPos(x, y, z));
+//			}
+//		} // end of the outer loop
 		
-		 Collections.sort(shape, new Comparator<BlockPos>() {
-		        @Override
-		        public int compare(final BlockPos object1, final BlockPos object2) {
-		        	
-		            return (int) (UtilSearchWorld.distanceBetweenHorizontal(pos, object2) - 
-		            		UtilSearchWorld.distanceBetweenHorizontal(pos, object1));
-		            
-		        }
-		       } );
 		return shape;
 	}
 
@@ -214,6 +215,8 @@ public class UtilPlaceBlocks {
 			 }
 			 else{
 				 //, SoundCategory.BLOCKS
+				 //isremote seems to always be false here. so playing sounds on server
+			
 				 UtilSound.playSound(world, placePos, placeState.getBlock().getSoundType().getPlaceSound(), SoundCategory.BLOCKS);
 			 }
 		 }
