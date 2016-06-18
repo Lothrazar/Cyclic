@@ -1,31 +1,30 @@
 package com.lothrazar.cyclicmagic.net;
 
-import com.lothrazar.cyclicmagic.registry.SpellRegistry;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBuilder;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBuilder.BuildType;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class PacketRotateBlock implements IMessage, IMessageHandler<PacketRotateBlock, IMessage> {
+public class PacketTileBuildType implements IMessage, IMessageHandler<PacketTileBuildType, IMessage> {
 
-	public static final int	ID	= 18;
+	public static final int ID = 55;
 	private BlockPos			pos;
-	private EnumFacing			side;
+	int newType;
 
-	public PacketRotateBlock() {
+	public PacketTileBuildType() {
 
 	}
 
-	public PacketRotateBlock(BlockPos mouseover, EnumFacing s) {
-
-		pos = mouseover;
-		side = s;
+	public PacketTileBuildType(BlockPos p, BuildType type) {
+		pos = p;
+		newType = type.ordinal();
 	}
 
 	@Override
@@ -36,9 +35,8 @@ public class PacketRotateBlock implements IMessage, IMessageHandler<PacketRotate
 		int x = tags.getInteger("x");
 		int y = tags.getInteger("y");
 		int z = tags.getInteger("z");
+		newType = tags.getInteger("T");
 		pos = new BlockPos(x, y, z);
-
-		side = EnumFacing.values()[tags.getInteger("side")];
 	}
 
 	@Override
@@ -48,25 +46,24 @@ public class PacketRotateBlock implements IMessage, IMessageHandler<PacketRotate
 		tags.setInteger("x", pos.getX());
 		tags.setInteger("y", pos.getY());
 		tags.setInteger("z", pos.getZ());
-
-		tags.setInteger("side", side.ordinal());
+		tags.setInteger("T", newType);
 
 		ByteBufUtils.writeTag(buf, tags);
 	}
 
+
 	@Override
-	public IMessage onMessage(PacketRotateBlock message, MessageContext ctx) {
+	public IMessage onMessage(PacketTileBuildType message, MessageContext ctx) {
 
-		if (ctx.side.isServer() && message != null && message.pos != null) {
+		EntityPlayer player = ctx.getServerHandler().playerEntity;
 
-			EntityPlayer p = ctx.getServerHandler().playerEntity;
-
-			// if(
-			// p.worldObj.getBlockState(message.pos).getBlock().isReplaceable(p.worldObj,
-			// message.pos)){
-
-			SpellRegistry.Spells.rotate.castFromServer(message.pos, message.side, p);
-
+		TileEntityBuilder tile = (TileEntityBuilder)player.getEntityWorld().getTileEntity(message.pos);
+		
+		System.out.println("got a tile build type packet: "+message.newType);
+		
+		if(tile != null){
+			
+			tile.setBuildType(TileEntityBuilder.BuildType.values()[message.newType]);
 		}
 
 		return null;

@@ -1,13 +1,12 @@
 package com.lothrazar.cyclicmagic.gui.builder;
 
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBuilder;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityUncrafting;
+import com.lothrazar.cyclicmagic.gui.wand.ButtonBuildToggle;
 import com.lothrazar.cyclicmagic.util.Const;
-import com.lothrazar.cyclicmagic.util.UtilUncraft;
-
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
@@ -16,7 +15,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiBuilder extends GuiContainer {
 	private TileEntityBuilder tile;
-
 	public GuiBuilder(InventoryPlayer inventoryPlayer, TileEntityBuilder tileEntity) {
 		super(new ContainerBuilder(inventoryPlayer, tileEntity));
 		tile = tileEntity;
@@ -26,6 +24,21 @@ public class GuiBuilder extends GuiContainer {
 		super(c);
 	}
 
+	final int		padding			= 4;
+	@Override
+	public void initGui() {
+
+		super.initGui();
+
+		int y = this.guiTop + padding;
+		int x = this.guiLeft + 5;
+
+		int width = 20;
+
+		width = 50;
+		this.buttonList.add(new ButtonBuilderType(tile, 2, x, y, width));
+	}
+
 	@SideOnly(Side.CLIENT)
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
@@ -33,8 +46,8 @@ public class GuiBuilder extends GuiContainer {
 	}
 
 	private static final String				folder		= "textures/gui/";
-	private static final ResourceLocation	table			= new ResourceLocation(Const.MODID, folder + "table.png");
-	private static final ResourceLocation	slot			= new ResourceLocation(Const.MODID, folder + "inventory_slot.png");
+	private static final ResourceLocation	table		= new ResourceLocation(Const.MODID, folder + "table.png");
+	private static final ResourceLocation	slot		= new ResourceLocation(Const.MODID, folder + "inventory_slot.png");
 	private static final ResourceLocation	progress	= new ResourceLocation(Const.MODID, folder + "progress.png");
 
 	@Override
@@ -59,7 +72,7 @@ public class GuiBuilder extends GuiContainer {
 		if (tile.getTimer() > 0 && tile.getStackInSlot(0) != null) {
 			this.mc.getTextureManager().bindTexture(progress);
 
-			float percent = ((float) tile.getTimer()) / ((float) TileEntityUncrafting.TIMER_FULL);
+			float percent = ((float) tile.getTimer()) / ((float) TileEntityBuilder.TIMER_FULL);
 			// maximum progress bar is 156, since the whole texture is 176 minus
 			// 10 padding on each side
 			int belowSlots = this.guiTop + 9 + 3 * Const.SQ;

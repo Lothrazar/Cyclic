@@ -3,16 +3,15 @@ package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.ArrayList;
 
 import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.block.BlockBuilder;
 import com.lothrazar.cyclicmagic.block.BlockUncrafting;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
-import com.lothrazar.cyclicmagic.util.UtilSound;
-import com.lothrazar.cyclicmagic.util.UtilUncraft;
+import com.lothrazar.cyclicmagic.util.UtilSearchWorld;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -24,34 +23,37 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 
 public class TileEntityBuilder extends TileEntity implements IInventory, ITickable, ISidedInventory {
 
-	// http://www.minecraftforge.net/wiki/Containers_and_GUIs
-	// http://greyminecraftcoder.blogspot.com.au/2015/01/tileentity.html
-	// http://www.minecraftforge.net/forum/index.php?topic=28539.0
-	// http://bedrockminer.jimdo.com/modding-tutorials/advanced-modding/tile-entities/
-	// TODO: http://www.minecraftforge.net/wiki/Tile_Entity_Synchronization
-	// http://www.minecraftforge.net/forum/index.php?topic=18871.0
-	private ItemStack[]					inv;
-	private int									timer;
-	public static final int							TIMER_FULL = 200;
+	private ItemStack[] inv;
+	private int	timer;
+	private BuildType currentType;
+	private BlockPos nextPos;
+	public static final int	TIMER_FULL = 100;
+	public static final int	MAXRANGE = 16;
  
 	private static final String	NBT_INV					= "Inventory";
 	private static final String	NBT_SLOT				= "Slot";
 	private static final String	NBT_TIMER				= "Timer";
-	//private static final String	NBT_SOUND				= "Sound";
-
+	private static final String	NBT_NEXTPOS				= "Pos";
 
 	public TileEntityBuilder() {
 
 		inv = new ItemStack[9];
-		timer = 0;
+		timer = TIMER_FULL;
+		currentType = BuildType.UP;
+		
 	}
-
+	public void setBuildType(BuildType buildType) {
+		this.currentType = buildType;
+		this.markDirty();
+	}
+	public BuildType getBuildType(){
+		return this.currentType;
+	}
 	@Override
 	public boolean hasCustomName() {
 
@@ -112,10 +114,7 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer player) {
 
-		return true; // return worldObj.getTileEntity(xCoord, yCoord, zCoord) ==
-		// this && player.getDistanceSq(xCoord + 0.5, yCoord +
-		// 0.5, zCoord + 0.5) < 64;
-
+		return true; 
 	}
 
 	@Override
@@ -130,9 +129,7 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
-
-		// for this container, same for all slots
-		return true;// SlotUncraft.checkValid(stack);
+		return Block.getBlockFromItem(stack.getItem()) != null;
 	}
 
 	@Override
@@ -163,6 +160,10 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		super.readFromNBT(tagCompound);
 
 		timer = tagCompound.getInteger(NBT_TIMER);
+		nextPos = UtilNBT.stringCSVToBlockPos(tagCompound.getString(NBT_NEXTPOS));// = tagCompound.getInteger(NBT_TIMER);
+		if(nextPos == null || (nextPos.getX() == 0 && nextPos.getY()==0 && nextPos.getZ()==0)){
+			nextPos = this.pos;//fallback if it fails
+		}
  
 		NBTTagList tagList = tagCompound.getTagList(NBT_INV, 10);
 		for (int i = 0; i < tagList.tagCount(); i++) {
@@ -174,11 +175,14 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		}
 	}
 
-	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
-
+	private void buildData(NBTTagCompound tagCompound){
 		tagCompound.setInteger(NBT_TIMER, timer);
- 
+		
+		if(nextPos == null || (nextPos.getX() == 0 && nextPos.getY()==0 && nextPos.getZ()==0)){
+			nextPos = this.pos;//fallback if it fails
+		}
+		tagCompound.setString(NBT_NEXTPOS, UtilNBT.posToStringCSV(this.nextPos));
+		
 		NBTTagList itemList = new NBTTagList();
 		for (int i = 0; i < inv.length; i++) {
 			ItemStack stack = inv[i];
@@ -190,12 +194,19 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 			}
 		}
 		tagCompound.setTag(NBT_INV, itemList);
+	}
+	@Override
+	public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
+
+		this.buildData(tagCompound);
+		
 		return super.writeToNBT(tagCompound);
 	}
  
 	@Override
 	public SPacketUpdateTileEntity getUpdatePacket(){//getDescriptionPacket() {
 
+		System.out.println("getUpdatePacket");
 		// Gathers data into a packet (S35PacketUpdateTileEntity) that is to be
 		// sent to the client. Called on server only.
 		NBTTagCompound syncData = new NBTTagCompound();
@@ -209,15 +220,19 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 
 		// Extracts data from a packet (S35PacketUpdateTileEntity) that was sent
 		// from the server. Called on client only.
+		System.out.println("ondatapacket "+pkt.getNbtCompound().toString());
 		this.readFromNBT(pkt.getNbtCompound());
 
 		super.onDataPacket(net, pkt);
 	}
 
 	public int getTimer() {
-
 		return timer;
 	}
+	public BlockPos getNextPos() {
+		return this.nextPos;
+	}
+ 
  
 	private void shiftAllUp() {
 
@@ -238,24 +253,22 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 	}
 	
 	public boolean isBurning() {
-
 		return this.timer > 0 && this.timer < TIMER_FULL;
 	}
 
 	@Override
 	public void update() {
-
-		// this is from interface IUpdatePlayerListBox
-		// change up the timer on both client and server (it gets synced
-		// eventually but not constantly)
+	
 		this.shiftAllUp();
 		boolean trigger = false;
-		
+		if(nextPos == null || (nextPos.getX() == 0 && nextPos.getY()==0 && nextPos.getZ()==0)){
+			nextPos = this.pos;//fallback if it fails
+		}
+ 
 		if(this.worldObj.getStrongPower(this.getPos()) == 0){
 			//it works ONLY if its powered
 			return;
 		}
-
 
 		//center of the block
 		double x = this.getPos().getX() + 0.5;
@@ -269,7 +282,6 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 			return;
 		}
 
-
 		timer--;
 		if (timer <= 0) {
 			timer = TIMER_FULL;
@@ -277,17 +289,37 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		}
 
 		if (trigger) {
+
+			int h = (int)UtilSearchWorld.distanceBetweenHorizontal(this.pos, this.nextPos);
+			int v = (int)UtilSearchWorld.distanceBetweenVertical(this.pos, this.nextPos);
+			if( h >= MAXRANGE || 
+				v >= MAXRANGE){
+
+				System.out.println("maxrange past");
+				this.nextPos = this.pos;
+				this.markDirty();
+				return;
+			}
+			
 			Block stuff = Block.getBlockFromItem(stack.getItem());
 			
 			if(stuff != null){
-				int r = this.worldObj.rand.nextInt(50);
 
-				if(UtilPlaceBlocks.placeStateSafe(this.worldObj, null, this.pos.up(r), stuff.getStateFromMeta(stack.getMetadata()))){
-					this.decrStackSize(0, 1);
+				if(this.worldObj.isRemote == false){
+				
+					System.out.println("try place "+this.nextPos +" type "+this.getBuildType());
+					
+				
+					if(UtilPlaceBlocks.placeStateSafe(this.worldObj, null, this.nextPos, stuff.getStateFromMeta(stack.getMetadata()))){
+						this.decrStackSize(0, 1);
+					}
 				}
+				///even if it didnt place. move up maybe something was in the way
+
+				this.incrementPosition();
 			}
 			
-			this.worldObj.markBlockRangeForRenderUpdate(this.getPos(), this.getPos().up());
+//			this.worldObj.markBlockRangeForRenderUpdate(this.getPos(), this.getPos().up());
 			this.markDirty();
 		}
 		else{
@@ -297,6 +329,33 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		
 				UtilParticle.spawnParticle(worldObj, EnumParticleTypes.SMOKE_NORMAL, x, y, z); 
 			}
+		}
+		
+		//??render
+	}
+
+	private void incrementPosition() {
+
+		switch(this.getBuildType()){
+		case FACING:
+			// detect what direction my block faces)
+			EnumFacing facing = null;
+			// not sure why this happens or if it ever will again, just being
+			// super safe to avoid null ptr -> ticking entity exception
+			BlockBuilder b = ((BlockBuilder) this.blockType);
+			if (b == null || this.worldObj.getBlockState(this.pos) == null || b.getFacingFromState(this.worldObj.getBlockState(this.pos)) == null)
+				facing = EnumFacing.UP;
+			else
+				facing = b.getFacingFromState(this.worldObj.getBlockState(this.pos));
+
+			this.nextPos = this.nextPos.offset(facing);
+			
+			break;
+		case UP:
+			this.nextPos = this.nextPos.up();
+			break;
+		default:
+			break;
 		}
 	}
 
@@ -392,5 +451,19 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 	public String getName() {
 
 		return null;
+	}
+
+	public enum BuildType{
+		UP,FACING;
+		
+		public static BuildType getNextType(BuildType btype){
+			int type = btype.ordinal();
+			type++;
+			if (type > FACING.ordinal()) {
+				type = UP.ordinal();
+			}
+			
+			return BuildType.values()[type];
+		}
 	}
 }
