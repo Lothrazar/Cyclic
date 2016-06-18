@@ -2,11 +2,8 @@ package com.lothrazar.cyclicmagic.util;
 
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
-
+import java.util.List;
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
-import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStone;
 import net.minecraft.block.BlockStoneBrick;
@@ -16,7 +13,6 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -26,12 +22,8 @@ import net.minecraft.world.World;
 
 public class UtilPlaceBlocks {
 
-	public static void circle(World world, EntityPlayer player, ItemStack heldWand, BlockPos pos) {
-		int diameter = ItemCyclicWand.BuildType.getBuildSize(heldWand);
-		// based on
-		// http://stackoverflow.com/questions/1022178/how-to-make-a-circle-on-a-grid
-		// also http://rosettacode.org/wiki/Bitmap/Midpoint_circle_algorithm
-
+	public static List<BlockPos> circle(BlockPos pos, int diameter) {
+	
 		int centerX = pos.getX();
 		int centerZ = pos.getZ();
 
@@ -43,7 +35,7 @@ public class UtilPlaceBlocks {
 		int x = 0;
 		int d = 2 - (2*radius);//dont use Diameter again, for integer roundoff
 
-		ArrayList<BlockPos> circleList = new ArrayList<BlockPos>();
+		List<BlockPos> circleList = new ArrayList<BlockPos>();
 
 		do {
 			circleList.add(new BlockPos(centerX + x, height, centerZ + z));
@@ -66,19 +58,11 @@ public class UtilPlaceBlocks {
 			x++;
 		} while (x <= z);
 
-		int itemSlot;
-		IBlockState state;
-		for (BlockPos posCurrent : circleList) {
-			itemSlot = InventoryWand.calculateSlotCurrent(heldWand);
-			state = InventoryWand.getToPlaceFromSlot(heldWand, itemSlot);
-
-			if (state == null) { return;	}// then inventory is completely empty
-		
-			placeAndDecrementFromWand(world, player, heldWand, itemSlot, posCurrent, state);
-		}
+		return circleList;
 	}
 
-	public static void square(World world, EntityPlayer player, ItemStack heldWand, BlockPos pos, int radius) {
+	public static List<BlockPos> squareHorizontal(BlockPos pos, int radius) {
+		List<BlockPos> shape = new ArrayList<BlockPos>();
 		// search in a cube
 		int xMin = pos.getX() - radius;
 		int xMax = pos.getX() + radius;
@@ -86,53 +70,21 @@ public class UtilPlaceBlocks {
 		int zMax = pos.getZ() + radius;
 
 		int y = pos.getY();
-
-		BlockPos posCurrent;
-
-		int itemSlot;
-		IBlockState state;
 		for (int x = xMin; x <= xMax; x++) {
 			for (int z = zMin; z <= zMax; z++) {
-				itemSlot = InventoryWand.calculateSlotCurrent(heldWand);
-				state = InventoryWand.getToPlaceFromSlot(heldWand, itemSlot);
-
-				if (state == null) { return;	}// then inventory is completely empty
-			
-				posCurrent = new BlockPos(x, y, z);
-
-				if (world.isAirBlock(posCurrent) == false) {
-					continue;
-				}
-
-				placeAndDecrementFromWand(world, player, heldWand, itemSlot, posCurrent, state);
-
+				shape.add(new BlockPos(x, y, z));
 			}
 		} // end of the outer loop
-
+		return shape;
 	}
 
-	public static void stairway(World world, EntityPlayer player, ItemStack heldWand, BlockPos position) {
-		int want = ItemCyclicWand.BuildType.getBuildSize(heldWand);
-		boolean isLookingUp = (player.getLookVec().yCoord >= 0);// TODO: use this
-		                                                        // somehow? to place
-		                                                        // up/down?
+	public static List<BlockPos> stairway(BlockPos position,EnumFacing pfacing, int want,boolean isLookingUp) {
+		List<BlockPos> shape = new ArrayList<BlockPos>();
+	
+		BlockPos posCurrent = position.down().offset(pfacing);
 
-		boolean goVert = true;
-
-		EnumFacing pfacing = UtilEntity.getPlayerFacing(player);
-
-		// it starts at eye level, so do down and forward one first
-		BlockPos posCurrent = player.getPosition().down().offset(pfacing);
-
-		int itemSlot;
-		IBlockState state;
+		boolean goVert = false;
 		for (int i = 1; i < want + 1; i++) {
-
-			itemSlot = InventoryWand.calculateSlotCurrent(heldWand);
-			state = InventoryWand.getToPlaceFromSlot(heldWand, itemSlot);
-
-			if (state == null) { return;	}// then inventory is completely empty
-		
 
 			if (goVert) {
 				if (isLookingUp)
@@ -143,49 +95,33 @@ public class UtilPlaceBlocks {
 			else {
 				posCurrent = posCurrent.offset(pfacing);
 			}
-			goVert = (i % 2 == 0);// alternate between going forward and going
-			                      // vertical
-
-			placeAndDecrementFromWand(world, player, heldWand, itemSlot, posCurrent, state);
+			shape.add(posCurrent);
+			goVert = (i % 2 == 0);// alternate between going forward vertical
 		}
+		return shape;
 	}
-
-	public static void line(World world, EntityPlayer player, ItemStack heldWand, BlockPos pos, EnumFacing efacing) {
-		int want = ItemCyclicWand.BuildType.getBuildSize(heldWand);
-		int skip = 1;
-
-		BlockPos posCurrent;
-
-		int itemSlot;
-		IBlockState state;
-		for (int i = 1; i < want + 1; i = i + skip) {
-			posCurrent = pos.offset(efacing, i);
-
-			itemSlot = InventoryWand.calculateSlotCurrent(heldWand);
-			state = InventoryWand.getToPlaceFromSlot(heldWand, itemSlot);
-
-			if (state == null) { return;	}// then inventory is completely empty
-		
-
-			placeAndDecrementFromWand(world, player, heldWand, itemSlot, posCurrent, state);
-
-		}
-	}
-
-	// from command place blocks
-	private static boolean placeAndDecrementFromWand(World world, EntityPlayer player, ItemStack heldWand, int itemSlot, BlockPos posCurrent, IBlockState placing) {
-		boolean success = placeStateSafe(world, player, posCurrent, placing);
-
-		if (success) {
-
-			if (player.capabilities.isCreativeMode == false) {
-				// player.inventory.decrStackSize(player.inventory.currentItem, 1);
-				InventoryWand.decrementSlot(heldWand, itemSlot);
-			}
-		}
-
-		return success;
-	}
+//
+//	public static void line(World world, EntityPlayer player, ItemStack heldWand, BlockPos pos, EnumFacing efacing) {
+//		int want = ItemCyclicWand.BuildType.getBuildSize(heldWand);
+//		int skip = 1;
+//
+//		BlockPos posCurrent;
+//
+//		int itemSlot;
+//		IBlockState state;
+//		for (int i = 1; i < want + 1; i = i + skip) {
+//			posCurrent = pos.offset(efacing, i);
+//
+//			itemSlot = InventoryWand.calculateSlotCurrent(heldWand);
+//			state = InventoryWand.getToPlaceFromSlot(heldWand, itemSlot);
+//
+//			if (state == null) { return;	}// then inventory is completely empty
+//		
+//
+//			placeAndDecrementFromWand(world, player, heldWand, itemSlot, posCurrent, state);
+//
+//		}
+//	}
 
 	public static boolean placeStateDetsroy(World world, EntityPlayer player, BlockPos placePos, IBlockState placeState,boolean dropBlock) {
 		

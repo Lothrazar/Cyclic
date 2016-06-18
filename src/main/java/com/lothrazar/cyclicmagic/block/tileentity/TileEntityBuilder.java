@@ -2,10 +2,10 @@ package com.lothrazar.cyclicmagic.block.tileentity;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.block.BlockBuilder;
-import com.lothrazar.cyclicmagic.block.BlockUncrafting;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
@@ -29,10 +29,12 @@ import net.minecraft.util.text.ITextComponent;
 
 public class TileEntityBuilder extends TileEntity implements IInventory, ITickable, ISidedInventory {
 
-	private ItemStack[] inv;
-	private int	timer;
-	private BuildType currentType;
+	private ItemStack[] inv = new ItemStack[9];
+	private int	timer = TIMER_FULL;
+	private int	shapeIndex = 0;
+	private BuildType currentType = BuildType.UP;
 	private BlockPos nextPos;
+	private List<BlockPos> shape = new ArrayList<BlockPos>();
 	public static final int	TIMER_FULL = 100;
 	public static final int	MAXRANGE = 16;
  
@@ -40,16 +42,37 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 	private static final String	NBT_SLOT				= "Slot";
 	private static final String	NBT_TIMER				= "Timer";
 	private static final String	NBT_NEXTPOS				= "Pos";
+	private static final String NBT_SHAPE = "shape";
+	private static final String NBT_SHAPEINDEX = "shapeindex";
 
 	public TileEntityBuilder() {
-
-		inv = new ItemStack[9];
-		timer = TIMER_FULL;
-		currentType = BuildType.UP;
-		
 	}
+	
 	public void setBuildType(BuildType buildType) {
 		this.currentType = buildType;
+		
+		switch(this.currentType){
+		case CIRCLE:
+			this.shape = UtilPlaceBlocks.circle(this.pos, 10);
+			this.nextPos = this.shape.get(0);
+			break;
+		case FACING:
+			this.shape = new ArrayList<BlockPos>();
+			this.incrementPosition();
+			break;
+		case SQUARE:
+			this.shape = UtilPlaceBlocks.squareHorizontal(this.pos, 10);
+			this.nextPos = this.shape.get(0);
+			break;
+		case UP:
+			this.shape = new ArrayList<BlockPos>();
+			this.incrementPosition();
+			break;
+		default:
+			break;
+		}
+		
+		
 		this.markDirty();
 	}
 	public BuildType getBuildType(){
@@ -161,10 +184,29 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		super.readFromNBT(tagCompound);
 
 		timer = tagCompound.getInteger(NBT_TIMER);
+		shapeIndex = tagCompound.getInteger(NBT_SHAPEINDEX);
+		
 		nextPos = UtilNBT.stringCSVToBlockPos(tagCompound.getString(NBT_NEXTPOS));// = tagCompound.getInteger(NBT_TIMER);
 		if(nextPos == null || (nextPos.getX() == 0 && nextPos.getY()==0 && nextPos.getZ()==0)){
 			nextPos = this.pos;//fallback if it fails
 		}
+		
+		this.shape = new ArrayList<BlockPos>();
+		NBTTagList sh = tagCompound.getTagList(NBT_SHAPE, 10);
+		for (int i = 0; i < sh.tagCount(); i++) {
+			NBTTagCompound tag = (NBTTagCompound) sh.getCompoundTagAt(i);
+			BlockPos pos = UtilNBT.stringCSVToBlockPos(tag.getString("shapepos"));
+			this.shape.add(pos);
+		}
+//		for(BlockPos p : this.shape){
+//
+//			NBTTagCompound tag = new NBTTagCompound();
+//			tag.setString("shapepos", UtilNBT.posToStringCSV(p));
+//			sh.appendTag(tag);
+//		}
+//		tagCompound.setTag(NBT_SHAPE, sh);
+		
+		
  
 		NBTTagList tagList = tagCompound.getTagList(NBT_INV, 10);
 		for (int i = 0; i < tagList.tagCount(); i++) {
@@ -176,13 +218,28 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		}
 	}
 
-	private void buildData(NBTTagCompound tagCompound){
+	@Override
+	public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
+
 		tagCompound.setInteger(NBT_TIMER, timer);
+		tagCompound.setInteger(NBT_SHAPEINDEX, this.shapeIndex);
 		
 		if(nextPos == null || (nextPos.getX() == 0 && nextPos.getY()==0 && nextPos.getZ()==0)){
 			nextPos = this.pos;//fallback if it fails
 		}
 		tagCompound.setString(NBT_NEXTPOS, UtilNBT.posToStringCSV(this.nextPos));
+
+		NBTTagList sh = new NBTTagList();
+		if(this.shape == null){
+			this.shape = new ArrayList<BlockPos>();
+		}
+		for(BlockPos p : this.shape){
+
+			NBTTagCompound tag = new NBTTagCompound();
+			tag.setString("shapepos", UtilNBT.posToStringCSV(p));
+			sh.appendTag(tag);
+		}
+		tagCompound.setTag(NBT_SHAPE, sh);
 		
 		NBTTagList itemList = new NBTTagList();
 		for (int i = 0; i < inv.length; i++) {
@@ -195,11 +252,6 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 			}
 		}
 		tagCompound.setTag(NBT_INV, itemList);
-	}
-	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
-
-		this.buildData(tagCompound);
 		
 		return super.writeToNBT(tagCompound);
 	}
@@ -359,66 +411,20 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		case UP:
 			this.nextPos = this.nextPos.up();
 			break;
+		case CIRCLE:
+		case SQUARE:
+			
+			int c = shapeIndex+1;
+			
+			if(c < 0 || c >= this.shape.size()) {c = 0;}
+			this.nextPos = this.shape.get(c);
+			
+			shapeIndex = c;
+			
+			break;
 		default:
 			break;
 		}
-	}
-
-	public static ArrayList<ItemStack> dumpToIInventory(ArrayList<ItemStack> stacks, IInventory inventory) {
-
-		boolean debug = false;
-		//and return the remainder after dumping
-		ArrayList<ItemStack> remaining = new ArrayList<ItemStack>();
-
-		ItemStack chestStack;
-
-		for (ItemStack current : stacks) {
-			if (current == null) {
-				continue;
-			}
-
-			for (int i = 0; i < inventory.getSizeInventory(); i++) {
-
-				if (current == null) {
-					continue;
-				}
-
-				chestStack = inventory.getStackInSlot(i);
-
-				if (chestStack == null) {
-					if (debug){ ModMain.logger.info("DUMP " + i);}
-
-					inventory.setInventorySlotContents(i, current);
-					// and dont add current ot remainder at all ! sweet!
-					current = null;
-				}
-				else if (chestStack.isItemEqual(current)) {
-
-					int space = chestStack.getMaxStackSize() - chestStack.stackSize;
-
-					int toDeposit = Math.min(space, current.stackSize);
-
-					if (toDeposit > 0) {
-
-						if (debug) 	{ ModMain.logger.info("merge " + i + " ; toDeposit =  " + toDeposit);}
-						
-						current.stackSize -= toDeposit;
-						chestStack.stackSize += toDeposit;
-
-						if (current.stackSize == 0) {
-							current = null;
-						}
-					}
-				}
-			}// finished current pass over inventory
-			if (current != null) {
-				if (debug) {ModMain.logger.info("remaining.add : stackSize = " + current.stackSize);}
-				remaining.add(current);
-			}
-		}
-
-		if (debug){	ModMain.logger.info("remaining" + remaining.size());}
-		return remaining;
 	}
 
 	private int[] hopperInput = { 0, 1, 2,3,4,5,6,7,8 };// all slots for all faces
@@ -459,12 +465,12 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 	}
 
 	public enum BuildType{
-		UP,FACING;
+		FACING,UP,SQUARE,CIRCLE;
 		
 		public static BuildType getNextType(BuildType btype){
 			int type = btype.ordinal();
 			type++;
-			if (type > FACING.ordinal()) {
+			if (type > CIRCLE.ordinal()) {
 				type = UP.ordinal();
 			}
 			
