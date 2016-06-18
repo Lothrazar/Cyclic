@@ -8,8 +8,6 @@ import com.lothrazar.cyclicmagic.block.BlockBuilder;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
-import com.lothrazar.cyclicmagic.util.UtilSearchWorld;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -36,7 +34,9 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 	private BlockPos nextPos;
 	private List<BlockPos> shape = new ArrayList<BlockPos>();
 	public static final int	TIMER_FULL = 100;
-	public static final int	MAXRANGE = 16;
+	final static int circleRadius = 5;
+	final static int sqRadius = 5;
+	final static int DIST = 20;
  
 	private static final String	NBT_INV					= "Inventory";
 	private static final String	NBT_SLOT				= "Slot";
@@ -50,33 +50,29 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 	}
 	
 	public void setBuildType(BuildType buildType) {
-		this.currentType = buildType.ordinal();
 		
-		switch(buildType){
-		case CIRCLE:
-			this.shape = UtilPlaceBlocks.circle(this.pos, 10);
+		//only rebuild shapes if they are different
+		if(this.currentType != buildType.ordinal()){
+			switch(buildType){
+			case CIRCLE:
+				this.shape = UtilPlaceBlocks.circle(this.pos, circleRadius*2);
+				break;
+			case FACING:
+				this.shape = UtilPlaceBlocks.line(pos, this.getCurrentFacing(), DIST);
+				break;
+			case SQUARE:
+				this.shape = UtilPlaceBlocks.squareHorizontalHollow(this.pos, sqRadius);
+				break;
+			case UP:
+				this.shape = UtilPlaceBlocks.line(pos, EnumFacing.UP, DIST);
+				break;
+			default:
+				break;
+			}
 			this.shapeIndex = 0;
 			this.nextPos = this.shape.get(shapeIndex);
-			break;
-		case FACING:
-			this.shape = new ArrayList<BlockPos>();
-			this.incrementPosition();
-			break;
-		case SQUARE:
-			this.shape = UtilPlaceBlocks.squareHorizontalHollow(this.pos, 5);
-			this.shapeIndex = 0;
-			this.nextPos = this.shape.get(shapeIndex);
-			break;
-		case UP:
-			this.shape = new ArrayList<BlockPos>();
-			this.incrementPosition();
-			break;
-		default:
-			break;
 		}
-		
-		
-//		this.markDirty();
+		this.currentType = buildType.ordinal();
 	}
 	public int getBuildType(){
 		return this.currentType;
@@ -371,16 +367,6 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 
 		if (trigger) {
 
-			int h = (int)UtilSearchWorld.distanceBetweenHorizontal(this.pos, this.nextPos);
-			int v = (int)UtilSearchWorld.distanceBetweenVertical(this.pos, this.nextPos);
-			if( h >= MAXRANGE || 
-				v >= MAXRANGE){
-
-				System.out.println("TODO:Y only for line: maxrange past");
-				this.nextPos = this.pos;
-				return;
-			}
-			
 			Block stuff = Block.getBlockFromItem(stack.getItem());
 			
 			if(stuff != null){
@@ -411,6 +397,16 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		}
 		this.markDirty();
 	}
+	
+	private EnumFacing getCurrentFacing(){
+		BlockBuilder b = ((BlockBuilder) this.blockType);
+		EnumFacing facing;
+		if (b == null || this.worldObj.getBlockState(this.pos) == null || b.getFacingFromState(this.worldObj.getBlockState(this.pos)) == null)
+			facing = EnumFacing.UP;
+		else
+			facing = b.getFacingFromState(this.worldObj.getBlockState(this.pos));
+		return facing;
+	}
 
 	private void incrementPosition() {
 		if(this.nextPos == null){
@@ -423,14 +419,10 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		switch(this.getBuildTypeEnum()){
 		case FACING:
 			// detect what direction my block faces)
-			EnumFacing facing = null;
+			EnumFacing facing = this.getCurrentFacing();
 			// not sure why this happens or if it ever will again, just being
 			// super safe to avoid null ptr -> ticking entity exception
-			BlockBuilder b = ((BlockBuilder) this.blockType);
-			if (b == null || this.worldObj.getBlockState(this.pos) == null || b.getFacingFromState(this.worldObj.getBlockState(this.pos)) == null)
-				facing = EnumFacing.UP;
-			else
-				facing = b.getFacingFromState(this.worldObj.getBlockState(this.pos));
+			
 
 			this.nextPos = this.nextPos.offset(facing);
 			

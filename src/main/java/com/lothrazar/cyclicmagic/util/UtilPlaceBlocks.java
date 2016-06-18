@@ -122,28 +122,15 @@ public class UtilPlaceBlocks {
 		}
 		return shape;
 	}
-//
-//	public static void line(World world, EntityPlayer player, ItemStack heldWand, BlockPos pos, EnumFacing efacing) {
-//		int want = ItemCyclicWand.BuildType.getBuildSize(heldWand);
-//		int skip = 1;
-//
-//		BlockPos posCurrent;
-//
-//		int itemSlot;
-//		IBlockState state;
-//		for (int i = 1; i < want + 1; i = i + skip) {
-//			posCurrent = pos.offset(efacing, i);
-//
-//			itemSlot = InventoryWand.calculateSlotCurrent(heldWand);
-//			state = InventoryWand.getToPlaceFromSlot(heldWand, itemSlot);
-//
-//			if (state == null) { return;	}// then inventory is completely empty
-//		
-//
-//			placeAndDecrementFromWand(world, player, heldWand, itemSlot, posCurrent, state);
-//
-//		}
-//	}
+
+	public static List<BlockPos> line(BlockPos pos, EnumFacing efacing, int want) {
+		List<BlockPos> shape = new ArrayList<BlockPos>();
+		int skip = 1;
+		for (int i = 1; i < want + 1; i = i + skip) {
+			shape.add(pos.offset(efacing, i));
+		}
+		return shape;
+	}
 
 	public static boolean placeStateDetsroy(World world, EntityPlayer player, BlockPos placePos, IBlockState placeState,boolean dropBlock) {
 		
