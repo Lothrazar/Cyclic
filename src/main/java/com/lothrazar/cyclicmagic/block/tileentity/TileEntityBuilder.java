@@ -42,6 +42,7 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 	private static final String	NBT_SLOT				= "Slot";
 	private static final String	NBT_TIMER				= "Timer";
 	private static final String	NBT_NEXTPOS				= "Pos";
+	private static final String	NBT_BUILDTYPE			= "build";
 	private static final String NBT_SHAPE = "shape";
 	private static final String NBT_SHAPEINDEX = "shapeindex";
 
@@ -83,7 +84,17 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 
 		return false;
 	}
+	
+	@Override
+    public void markDirty(){
+		super.markDirty();
+		
+		if(this.worldObj != null && this.pos != null)
+			this.worldObj.markBlockRangeForRenderUpdate(this.pos, this.pos.up());
+	}
+	
 
+	//
 	@Override
 	public ITextComponent getDisplayName() {
 
@@ -216,6 +227,10 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 				inv[slot] = ItemStack.loadItemStackFromNBT(tag);
 			}
 		}
+		
+
+		int bt = tagCompound.getInteger(NBT_BUILDTYPE);
+		this.setBuildType(BuildType.values()[bt]);
 	}
 
 	@Override
@@ -223,7 +238,7 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 
 		tagCompound.setInteger(NBT_TIMER, timer);
 		tagCompound.setInteger(NBT_SHAPEINDEX, this.shapeIndex);
-		
+
 		if(nextPos == null || (nextPos.getX() == 0 && nextPos.getY()==0 && nextPos.getZ()==0)){
 			nextPos = this.pos;//fallback if it fails
 		}
@@ -252,6 +267,8 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 			}
 		}
 		tagCompound.setTag(NBT_INV, itemList);
+		
+		tagCompound.setInteger(NBT_BUILDTYPE, this.getBuildType().ordinal());
 		
 		return super.writeToNBT(tagCompound);
 	}
@@ -312,12 +329,6 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 	@Override
 	public void update() {
 
-		//??render
-		if(this.worldObj.isRemote && this.nextPos != null && this.worldObj.isAirBlock(this.nextPos)){
-			
-			ModMain.proxy.renderCube(this.nextPos, Color.red);
-		}
-		
 		this.shiftAllUp();
 		boolean trigger = false;
 		if(nextPos == null || (nextPos.getX() == 0 && nextPos.getY()==0 && nextPos.getZ()==0)){
@@ -329,6 +340,13 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 			return;
 		}
 
+		//??render
+		if(!this.worldObj.isRemote && this.nextPos != null && this.worldObj.rand.nextDouble() < 0.1 && 
+				this.inv[0] != null){
+			UtilParticle.spawnParticlePacket(EnumParticleTypes.DRAGON_BREATH, nextPos, 5);
+		}
+		
+		
 		//center of the block
 		double x = this.getPos().getX() + 0.5;
 		double y = this.getPos().getY() + 0.5;
@@ -368,7 +386,6 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 				
 					System.out.println("try place "+this.nextPos +" type "+this.getBuildType());
 					
-				
 					if(UtilPlaceBlocks.placeStateSafe(this.worldObj, null, this.nextPos, stuff.getStateFromMeta(stack.getMetadata()))){
 						this.decrStackSize(0, 1);
 					}
@@ -392,6 +409,9 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 	}
 
 	private void incrementPosition() {
+		if(this.nextPos == null){
+			this.nextPos = this.pos;
+		}
 
 		switch(this.getBuildType()){
 		case FACING:
@@ -409,6 +429,7 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 			
 			break;
 		case UP:
+			
 			this.nextPos = this.nextPos.up();
 			break;
 		case CIRCLE:

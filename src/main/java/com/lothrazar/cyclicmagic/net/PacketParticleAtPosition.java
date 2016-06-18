@@ -62,13 +62,12 @@ public class PacketParticleAtPosition implements IMessage, IMessageHandler<Packe
 	@Override
 	public IMessage onMessage(PacketParticleAtPosition message, MessageContext ctx) {
 
-		if (ctx.side.isClient()) {
+		if (ctx.side.isClient() && Minecraft.getMinecraft().thePlayer != null) {
 			// http://www.minecraftforge.net/forum/index.php?topic=21195.0
 			//yes, this being null happened once
-			if (Minecraft.getMinecraft().thePlayer == null) { return null; }
 			
 			World world = Minecraft.getMinecraft().thePlayer.worldObj;
-			UtilParticle.spawnParticle(world, EnumParticleTypes.getParticleFromId(message.particle), message.x, message.y, message.z, message.count);
+			UtilParticle.spawnParticle(world, EnumParticleTypes.getParticleFromId(message.particle), message.x+0.5, message.y, message.z+0.5, message.count);
 		}
 		return null;
 	}
