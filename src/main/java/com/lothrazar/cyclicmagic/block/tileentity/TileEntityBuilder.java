@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 import com.lothrazar.cyclicmagic.ModMain;
@@ -258,7 +259,13 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 
 	@Override
 	public void update() {
-	
+
+		//??render
+		if(this.worldObj.isRemote && this.nextPos != null && this.worldObj.isAirBlock(this.nextPos)){
+			
+			ModMain.proxy.renderCube(this.nextPos, Color.red);
+		}
+		
 		this.shiftAllUp();
 		boolean trigger = false;
 		if(nextPos == null || (nextPos.getX() == 0 && nextPos.getY()==0 && nextPos.getZ()==0)){
@@ -330,8 +337,6 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 				UtilParticle.spawnParticle(worldObj, EnumParticleTypes.SMOKE_NORMAL, x, y, z); 
 			}
 		}
-		
-		//??render
 	}
 
 	private void incrementPosition() {
