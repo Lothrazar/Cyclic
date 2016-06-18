@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.net;
 
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBuilder;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBuilder.BuildType;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,15 +17,13 @@ public class PacketTileBuildType implements IMessage, IMessageHandler<PacketTile
 
 	public static final int ID = 55;
 	private BlockPos			pos;
-	int newType;
 
 	public PacketTileBuildType() {
 
 	}
 
-	public PacketTileBuildType(BlockPos p, BuildType type) {
+	public PacketTileBuildType(BlockPos p) {
 		pos = p;
-		newType = type.ordinal();
 	}
 
 	@Override
@@ -35,7 +34,6 @@ public class PacketTileBuildType implements IMessage, IMessageHandler<PacketTile
 		int x = tags.getInteger("x");
 		int y = tags.getInteger("y");
 		int z = tags.getInteger("z");
-		newType = tags.getInteger("T");
 		pos = new BlockPos(x, y, z);
 	}
 
@@ -46,7 +44,6 @@ public class PacketTileBuildType implements IMessage, IMessageHandler<PacketTile
 		tags.setInteger("x", pos.getX());
 		tags.setInteger("y", pos.getY());
 		tags.setInteger("z", pos.getZ());
-		tags.setInteger("T", newType);
 
 		ByteBufUtils.writeTag(buf, tags);
 	}
@@ -57,13 +54,17 @@ public class PacketTileBuildType implements IMessage, IMessageHandler<PacketTile
 
 		EntityPlayer player = ctx.getServerHandler().playerEntity;
 
-		TileEntityBuilder tile = (TileEntityBuilder)player.getEntityWorld().getTileEntity(message.pos);
+		TileEntityBuilder container = (TileEntityBuilder)player.getEntityWorld().getTileEntity(message.pos);
 		
-		System.out.println("got a tile build type packet: "+message.newType);
-		
-		if(tile != null){
+		if(container != null){
+
+			TileEntityBuilder.BuildType old = container.getBuildTypeEnum();
+			TileEntityBuilder.BuildType next = TileEntityBuilder.BuildType.getNextType(old);
+			container.setBuildType(next);
+
+			container.setBuildType(next);
 			
-			tile.setBuildType(TileEntityBuilder.BuildType.values()[message.newType]);
+			UtilChat.addChatMessage(player, next.name());
 		}
 
 		return null;

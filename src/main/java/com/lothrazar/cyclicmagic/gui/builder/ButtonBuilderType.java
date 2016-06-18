@@ -10,6 +10,7 @@ import com.lothrazar.cyclicmagic.net.PacketTileBuildType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -31,14 +32,11 @@ public class ButtonBuilderType extends GuiButton implements ITooltipButton {
 
 		if (pressed) {
 
-			//set it in client side and server both
-			TileEntityBuilder.BuildType old = container.getBuildTypeEnum();
-			TileEntityBuilder.BuildType next = TileEntityBuilder.BuildType.getNextType(old);
-			container.setBuildType(next);
-			
-			ModMain.network.sendToServer(new PacketTileBuildType(container.getPos(),next));
 
-			container.markDirty();
+			
+			ModMain.network.sendToServer(new PacketTileBuildType(container.getPos()));
+
+//			container.markDirty();
 		}
 
 		return pressed;
@@ -47,13 +45,8 @@ public class ButtonBuilderType extends GuiButton implements ITooltipButton {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void drawButton(Minecraft mc, int mouseX, int mouseY) {
-	this.displayString = I18n.format("builder."+container.getBuildType()+".name");
-//		
-//		if(container.getBuildType() != null)
-//			this.displayString = I18n.format(container.getBuildType().toString().toLowerCase()+".name");
-//		else{
-//			System.out.println("build type null i guess??");
-//		}
+	this.displayString = I18n.format("builder.toggle.name");
+
 		super.drawButton(mc, mouseX, mouseY);
 	}
 
@@ -62,9 +55,7 @@ public class ButtonBuilderType extends GuiButton implements ITooltipButton {
 
 		List<String> tooltips = new ArrayList<String>();
 
-//		String key = container.getBuildType().toString().toLowerCase() + ".tooltip";
-//		tooltips.add(I18n.format(key));
-//		tooltips.add(TextFormatting.GRAY + I18n.format("button.build.meta"));
+		tooltips.add(TextFormatting.GRAY + I18n.format("button.build.meta"));
 
 		
 		return tooltips;

@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.util;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.ConcurrentModificationException;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModMain;
@@ -57,11 +59,20 @@ public class UtilPlaceBlocks {
 
 			x++;
 		} while (x <= z);
+		
+		 Collections.sort(circleList, new Comparator<BlockPos>() {
+		        @Override
+		        public int compare(final BlockPos object1, final BlockPos object2) {
+		        	
+		            return (int) object1.getX() - object2.getX();
+		            
+		        }
+		       } );
 
 		return circleList;
 	}
 
-	public static List<BlockPos> squareHorizontal(BlockPos pos, int radius) {
+	public static List<BlockPos> squareHorizontal(final BlockPos pos, int radius) {
 		List<BlockPos> shape = new ArrayList<BlockPos>();
 		// search in a cube
 		int xMin = pos.getX() - radius;
@@ -75,6 +86,16 @@ public class UtilPlaceBlocks {
 				shape.add(new BlockPos(x, y, z));
 			}
 		} // end of the outer loop
+		
+		 Collections.sort(shape, new Comparator<BlockPos>() {
+		        @Override
+		        public int compare(final BlockPos object1, final BlockPos object2) {
+		        	
+		            return (int) (UtilSearchWorld.distanceBetweenHorizontal(pos, object2) - 
+		            		UtilSearchWorld.distanceBetweenHorizontal(pos, object1));
+		            
+		        }
+		       } );
 		return shape;
 	}
 

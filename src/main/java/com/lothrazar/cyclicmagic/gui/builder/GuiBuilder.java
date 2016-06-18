@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.gui.builder;
 
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBuilder;
+import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -23,7 +24,7 @@ public class GuiBuilder extends GuiContainer {
 		super(c);
 	}
 
-	final int		padding			= 4;
+	static final int		padding			= 4;
 	@Override
 	public void initGui() {
 
@@ -53,8 +54,9 @@ public class GuiBuilder extends GuiContainer {
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
 
-		System.out.println("drawGuiContainerBackgroundLayer :"+this.tile.getBuildType());
-		System.out.println("drawGuiContainerBackgroundLayer tile.getTimer() :"+this.tile.getTimer());
+		//for some reason, tile is accurate but build type resets to zero everytime we save and reload the world
+//		System.out.println("drawGuiContainerBackgroundLayer :"+this.tile.getBuildType());
+//		System.out.println("drawGuiContainerBackgroundLayer tile.getTimer() :"+this.tile.getTimer());
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		this.mc.getTextureManager().bindTexture(table);
 		int thisX = (this.width - this.xSize) / 2;
@@ -80,6 +82,23 @@ public class GuiBuilder extends GuiContainer {
 			int belowSlots = this.guiTop + 9 + 3 * Const.SQ;
 			// Args: x, y, u, v, width, height, textureWidth, textureHeight
 			Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + 10, belowSlots + 5, u, v, (int) (156 * percent), 7, 156, 7);
+		}
+	}
+	
+	@Override
+	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+
+		super.drawScreen(mouseX, mouseY, partialTicks);
+
+		ITooltipButton btn;
+		
+		for (int i = 0; i < buttonList.size(); i++) {
+			if (buttonList.get(i).isMouseOver() && buttonList.get(i) instanceof ITooltipButton) {
+				btn = (ITooltipButton) buttonList.get(i);
+
+				drawHoveringText(btn.getTooltips(), mouseX, mouseY, fontRendererObj);
+				break;// cant hover on 2 at once
+			}
 		}
 	}
 }

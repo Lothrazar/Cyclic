@@ -28,7 +28,7 @@ import net.minecraft.util.text.ITextComponent;
 public class TileEntityBuilder extends TileEntity implements IInventory, ITickable, ISidedInventory {
 
 	private ItemStack[] inv = new ItemStack[9];
-	private int	timer = TIMER_FULL;
+	private int	timer;
 	private int	shapeIndex = 0;
 //	private BuildType currentType;
 	private int currentType;
@@ -54,15 +54,17 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		switch(buildType){
 		case CIRCLE:
 			this.shape = UtilPlaceBlocks.circle(this.pos, 10);
-			this.nextPos = this.shape.get(0);
+			this.shapeIndex = 0;
+			this.nextPos = this.shape.get(shapeIndex);
 			break;
 		case FACING:
 			this.shape = new ArrayList<BlockPos>();
 			this.incrementPosition();
 			break;
 		case SQUARE:
-			this.shape = UtilPlaceBlocks.squareHorizontal(this.pos, 10);
-			this.nextPos = this.shape.get(0);
+			this.shape = UtilPlaceBlocks.squareHorizontal(this.pos, 5);
+			this.shapeIndex = 0;
+			this.nextPos = this.shape.get(shapeIndex);
 			break;
 		case UP:
 			this.shape = new ArrayList<BlockPos>();
@@ -278,7 +280,6 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 	@Override
 	public SPacketUpdateTileEntity getUpdatePacket(){//getDescriptionPacket() {
 
-		System.out.println("getUpdatePacket");
 		// Gathers data into a packet (S35PacketUpdateTileEntity) that is to be
 		// sent to the client. Called on server only.
 		NBTTagCompound syncData = new NBTTagCompound();
@@ -292,7 +293,6 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 
 		// Extracts data from a packet (S35PacketUpdateTileEntity) that was sent
 		// from the server. Called on client only.
-		System.out.println("ondatapacket "+pkt.getNbtCompound().toString());
 		this.readFromNBT(pkt.getNbtCompound());
 
 		super.onDataPacket(net, pkt);
@@ -330,8 +330,9 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 
 	@Override
 	public void update() {
-
+	
 		this.shiftAllUp();
+
 		boolean trigger = false;
 		if(nextPos == null || (nextPos.getX() == 0 && nextPos.getY()==0 && nextPos.getZ()==0)){
 			nextPos = this.pos;//fallback if it fails
@@ -376,7 +377,6 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 
 				System.out.println("TODO:Y only for line: maxrange past");
 				this.nextPos = this.pos;
-				this.markDirty();
 				return;
 			}
 			
@@ -386,7 +386,7 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 
 				if(this.worldObj.isRemote == false){
 				
-					System.out.println("try place "+this.nextPos +" type "+this.getBuildType());
+					System.out.println("try place "+this.nextPos +" type "+this.getBuildTypeEnum().name());
 					
 					if(UtilPlaceBlocks.placeStateSafe(this.worldObj, null, this.nextPos, stuff.getStateFromMeta(stack.getMetadata()))){
 						this.decrStackSize(0, 1);
@@ -398,7 +398,7 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 			}
 			
 //			this.worldObj.markBlockRangeForRenderUpdate(this.getPos(), this.getPos().up());
-			this.markDirty();
+			
 		}
 		else{
 			//dont trigger an uncraft event, its still processing
@@ -408,13 +408,18 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 				UtilParticle.spawnParticle(worldObj, EnumParticleTypes.SMOKE_NORMAL, x, y, z); 
 			}
 		}
+		this.markDirty();
 	}
 
 	private void incrementPosition() {
 		if(this.nextPos == null){
 			this.nextPos = this.pos;
 		}
-		System.out.println("increment:"+this.getBuildType());
+		if(this.worldObj == null){
+			return;
+		}
+//		if(!this.worldObj.isRemote)
+//			System.out.println("increment:"+this.getBuildType());
 
 		switch(this.getBuildTypeEnum()){
 		case FACING:
@@ -495,7 +500,7 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 			int type = btype.ordinal();
 			type++;
 			if (type > CIRCLE.ordinal()) {
-				type = UP.ordinal();
+				type = FACING.ordinal();
 			}
 			
 			return BuildType.values()[type];
