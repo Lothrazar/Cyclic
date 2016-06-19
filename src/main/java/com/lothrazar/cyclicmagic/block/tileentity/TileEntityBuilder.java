@@ -31,9 +31,11 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 	private int shapeIndex = 0;// current index of shape array
 	private List<BlockPos> shape = null;
 	private BlockPos nextPos;// location of next block to be placed
-	public static final int TIMER_FULL = 50;//maybe 500 for release fast for test
-	public static enum Fields{
-		TIMER,BUILDTYPE,SPEED,SIZE
+	private int maxSpeed = 3;
+	public static int maxSize = 10;
+	public static final int TIMER_FULL = 50;// INCREASE ocne speedupgrades are in
+	public static enum Fields {
+		TIMER, BUILDTYPE, SPEED, SIZE
 	}
 	private static final String NBT_INV = "Inventory";
 	private static final String NBT_SLOT = "Slot";
@@ -127,36 +129,36 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 	}
 	@Override
 	public int getField(int id) {
-		if(id >= 0 && id < this.getFieldCount())
-		switch (Fields.values()[id]) {
-		case TIMER:
-			return timer;
-		case BUILDTYPE:
-			return this.buildType;
-		case SPEED:
-			return this.buildSpeed;
-		case SIZE:
-			return this.buildSize;
-		}
+		if (id >= 0 && id < this.getFieldCount())
+			switch (Fields.values()[id]) {
+			case TIMER:
+				return timer;
+			case BUILDTYPE:
+				return this.buildType;
+			case SPEED:
+				return this.buildSpeed;
+			case SIZE:
+				return this.buildSize;
+			}
 		return -1;
 	}
 	@Override
 	public void setField(int id, int value) {
-		if(id >= 0 && id < this.getFieldCount())
-		switch (Fields.values()[id]) {
-		case TIMER:
-			this.timer = value;
-			break;
-		case BUILDTYPE:
-			this.buildType = value;
-			break;
-		case SPEED:
-			this.buildSpeed = value;
-			break;
-		case SIZE:
-			this.buildSize = value;
-			break;
-		}
+		if (id >= 0 && id < this.getFieldCount())
+			switch (Fields.values()[id]) {
+			case TIMER:
+				this.timer = value;
+				break;
+			case BUILDTYPE:
+				this.buildType = value;
+				break;
+			case SPEED:
+				this.buildSpeed = value;
+				break;
+			case SIZE:
+				this.buildSize = value;
+				break;
+			}
 	}
 	public int getTimer() {
 		return this.getField(Fields.TIMER.ordinal());
@@ -172,7 +174,10 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 	}
 	public void setSpeed(int s) {
 		if (s <= 0) {
-			s = 10;
+			s = 1;
+		}
+		if (s >= maxSpeed  ) {
+			s = maxSpeed;
 		}
 		this.setField(Fields.SPEED.ordinal(), s);
 	}
@@ -187,8 +192,8 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		if (s <= 0) {
 			s = 1;
 		}
-		if (s >= 10) {
-			s = 10;
+		if (s >= maxSize ) {
+			s = maxSize;
 		}
 		this.setField(Fields.SIZE.ordinal(), s);
 	}
@@ -283,8 +288,8 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 	@Override
 	public SPacketUpdateTileEntity getUpdatePacket() {// getDescriptionPacket()
 														// {
-		// Gathers data into a packet (S35PacketUpdateTileEntity) that is to be
-		// sent to the client. Called on server only.
+														// Gathers data into a packet (S35PacketUpdateTileEntity) that is to be
+														// sent to the client. Called on server only.
 		NBTTagCompound syncData = new NBTTagCompound();
 		this.writeToNBT(syncData);
 		return new SPacketUpdateTileEntity(this.pos, 1, syncData);
@@ -434,11 +439,10 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 	}
 	@Override
 	public boolean receiveClientEvent(int id, int value) {
-		if(id >= 0 && id < this.getFieldCount()){
+		if (id >= 0 && id < this.getFieldCount()) {
 			this.setField(id, value);
 			return true;
-		}
-		else
+		} else
 			return super.receiveClientEvent(id, value);
 	}
 }

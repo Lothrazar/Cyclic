@@ -24,6 +24,7 @@ public class GuiBuilder extends GuiContainer {
 	private ButtonBuilderType btn;
 	private int xSizeTextbox;
 	private int ySizeTxtbox;
+	boolean debugLabels = false;
 	public GuiBuilder(InventoryPlayer inventoryPlayer, TileEntityBuilder tileEntity) {
 		super(new ContainerBuilder(inventoryPlayer, tileEntity));
 		tile = tileEntity;
@@ -40,14 +41,13 @@ public class GuiBuilder extends GuiContainer {
 		this.buttonList.add(btn);
 		width = 15;
 		xSizeTextbox = texture_width - 20;
-		ButtonBuildSize b = new ButtonBuildSize(tile.getPos(), id++,this.guiLeft +  xSizeTextbox, this.guiTop + padding, width, true);
+		ButtonBuildSize b = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xSizeTextbox, this.guiTop + padding, width, true);
 		this.buttonList.add(b);
-		b = new ButtonBuildSize(tile.getPos(), id++,this.guiLeft +  xSizeTextbox, this.guiTop + padding + 20, width, false);
+		b = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xSizeTextbox, this.guiTop + padding + 20, width, false);
 		this.buttonList.add(b);
-		xSizeTextbox += width/2-2;
+		xSizeTextbox += width / 2 - 2;
 		ySizeTxtbox = padding + 12;
 	}
-	boolean debugLabels = true;
 	@SideOnly(Side.CLIENT)
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
@@ -59,7 +59,7 @@ public class GuiBuilder extends GuiContainer {
 			this.fontRendererObj.drawString("speed = " + this.tile.getSpeed(), 38, this.ySize - 114, 4210752);
 			this.fontRendererObj.drawString("size = " + this.tile.getSize(), 38, this.ySize - 124, 4210752);
 		}
-		if(this.tile.getSize()>0)
+		if (this.tile.getSize() > 0)
 			this.fontRendererObj.drawString("" + this.tile.getSize(), xSizeTextbox, ySizeTxtbox, 4210752);
 	}
 	@Override
@@ -71,8 +71,8 @@ public class GuiBuilder extends GuiContainer {
 		int u = 0, v = 0;
 		Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, this.xSize, this.ySize, texture_width, texture_height);
 		this.mc.getTextureManager().bindTexture(slot);
-		for (int k = 0; k < this.tile.getSizeInventory(); k++) { // x had - 3  ??
-			Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerBuilder.SLOTX_START-1 + k * Const.SQ, this.guiTop + ContainerBuilder.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+		for (int k = 0; k < this.tile.getSizeInventory(); k++) { // x had - 3 ??
+			Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerBuilder.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerBuilder.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
 		}
 		if (tile.getTimer() > 0 && tile.getStackInSlot(0) != null) {
 			this.mc.getTextureManager().bindTexture(progress);
