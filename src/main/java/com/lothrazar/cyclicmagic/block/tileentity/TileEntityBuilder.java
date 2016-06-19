@@ -1,9 +1,6 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
-
-import java.io.InvalidObjectException;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.block.BlockBuilder;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
@@ -26,86 +23,76 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 
 public class TileEntityBuilder extends TileEntity implements IInventory, ITickable, ISidedInventory {
-
-	private int	timer;
-	private int currentType;
+	private int timer;
+	private int buildType;
+	private int buildSpeed;
+	private int buildSize;
 	private ItemStack[] inv = new ItemStack[9];
-	private int	shapeIndex = 0;
-	private BlockPos nextPos;
+	private int shapeIndex = 0;// current index of shape array
 	private List<BlockPos> shape = null;
-	public static final int	TIMER_FULL = 100;
-	final static int circleRadius = 5;
-	final static int sqRadius = 5;
-	final static int DIST = 20;
- 
-	private static final String	NBT_INV					= "Inventory";
-	private static final String	NBT_SLOT				= "Slot";
-	private static final String	NBT_TIMER				= "Timer";
-	private static final String	NBT_NEXTPOS				= "Pos";
-	private static final String	NBT_BUILDTYPE			= "build";
+	private BlockPos nextPos;// location of next block to be placed
+	public static final int TIMER_FULL = 500;
+	public final static int FIELD_TIMER = 0;
+	public final static int FIELD_BUILDTYPE = 1;
+	public final static int FIELD_SPEED = 2;
+	public final static int FIELD_SIZE = 3;
+	private static final String NBT_INV = "Inventory";
+	private static final String NBT_SLOT = "Slot";
+	private static final String NBT_TIMER = "Timer";
+	private static final String NBT_NEXTPOS = "Pos";
+	private static final String NBT_BUILDTYPE = "build";
 	private static final String NBT_SHAPE = "shape";
+	private static final String NBT_SPEED = "speed";
+	private static final String NBT_SIZE = "size";
 	private static final String NBT_SHAPEINDEX = "shapeindex";
-
 	public TileEntityBuilder() {
 	}
-	
 	public void setShape() {
-		
 		BuildType buildType = getBuildTypeEnum();
-		//only rebuild shapes if they are different
-//		if(this.currentType != buildType.ordinal()){
-		switch(buildType){
+		// only rebuild shapes if they are different
+		switch (buildType) {
 		case CIRCLE:
-			this.shape = UtilPlaceBlocks.circle(this.pos, circleRadius*2);
+			this.shape = UtilPlaceBlocks.circle(this.pos, this.getSize() * 2);
 			break;
 		case FACING:
-			this.shape = UtilPlaceBlocks.line(pos, this.getCurrentFacing().getOpposite(), DIST);
+			this.shape = UtilPlaceBlocks.line(pos, this.getCurrentFacing().getOpposite(), this.getSize());
 			break;
 		case SQUARE:
-			this.shape = UtilPlaceBlocks.squareHorizontalHollow(this.pos, sqRadius);
+			this.shape = UtilPlaceBlocks.squareHorizontalHollow(this.pos, this.getSize());
 			break;
 		case UP:
-			this.shape = UtilPlaceBlocks.line(pos, EnumFacing.UP, DIST);
+			this.shape = UtilPlaceBlocks.line(pos, EnumFacing.UP, this.getSize());
 			break;
 		default:
 			break;
 		}
-		this.nextPos = this.shape.get(0);
 		this.shapeIndex = 0;
+		if (this.shape.size() > 0)
+			this.nextPos = this.shape.get(this.shapeIndex);
 	}
 	@Override
 	public boolean hasCustomName() {
-
 		return false;
 	}
-
 	@Override
 	public ITextComponent getDisplayName() {
-
 		return null;
 	}
-
 	@Override
 	public int getSizeInventory() {
-
 		return inv.length;
 	}
-
 	@Override
 	public ItemStack getStackInSlot(int index) {
-
 		return inv[index];
 	}
-
 	@Override
 	public ItemStack decrStackSize(int index, int count) {
-
 		ItemStack stack = getStackInSlot(index);
 		if (stack != null) {
 			if (stack.stackSize <= count) {
 				setInventorySlotContents(index, null);
-			}
-			else {
+			} else {
 				stack = stack.splitStack(count);
 				if (stack.stackSize == 0) {
 					setInventorySlotContents(index, null);
@@ -114,113 +101,121 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		}
 		return stack;
 	}
-
 	@Override
 	public void setInventorySlotContents(int index, ItemStack stack) {
-
 		inv[index] = stack;
 		if (stack != null && stack.stackSize > getInventoryStackLimit()) {
 			stack.stackSize = getInventoryStackLimit();
 		}
 	}
-
 	@Override
 	public int getInventoryStackLimit() {
-
 		return 64;
 	}
-
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer player) {
-
-		return true; 
+		return true;
 	}
-
 	@Override
 	public void openInventory(EntityPlayer player) {
-
 	}
-
 	@Override
 	public void closeInventory(EntityPlayer player) {
-
 	}
-
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
 		return Block.getBlockFromItem(stack.getItem()) != null;
 	}
-
-	public final static int FIELD_TIMER = 0;
-	public final static int FIELD_BUILDTYPE = 1;
 	@Override
 	public int getField(int id) {
-		switch(id){
+		switch (id) {
 		case FIELD_TIMER:
 			return timer;
 		case FIELD_BUILDTYPE:
-			return this.currentType;
+			return this.buildType;
+		case FIELD_SPEED:
+			return this.buildSpeed;
+		case FIELD_SIZE:
+			return this.buildSize;
 		}
 		return -1;
 	}
-
 	@Override
 	public void setField(int id, int value) {
-		switch(id){
+		switch (id) {
 		case FIELD_TIMER:
 			this.timer = value;
 			break;
 		case FIELD_BUILDTYPE:
-			this.currentType = value;
+			this.buildType = value;
+			break;
+		case FIELD_SPEED:
+			this.buildSpeed = value;
+			break;
+		case FIELD_SIZE:
+			this.buildSize = value;
 			break;
 		}
 	}
 	public int getTimer() {
 		return this.getField(FIELD_TIMER);
 	}
-	public int getBuildType(){
+	public int getBuildType() {
 		return this.getField(FIELD_BUILDTYPE);
 	}
-	public void setBuildType(int value){
-		//FACING,UP,SQUARE,CIRCLE;
-		System.out.println("setBuildType "+value);
-		if(value < BuildType.FACING.ordinal() || value > BuildType.CIRCLE.ordinal()){
-			ModMain.logger.error("Invalid Build Type Tile Entity Builder");
-//			throw new InvalidObjectException();
-		}
-		else
+	public void setBuildType(int value) {
 		this.setField(FIELD_BUILDTYPE, value);
 	}
-	public BuildType getBuildTypeEnum(){
+	public BuildType getBuildTypeEnum() {
 		return BuildType.values()[this.getBuildType()];
+	}
+	public void setSpeed(int s) {
+		if (s <= 0) {
+			s = 10;
+		}
+		this.setField(FIELD_SPEED, s);
+	}
+	public int getSpeed() {
+		int s = this.getField(FIELD_SPEED);
+		if (s <= 0) {
+			s = 1;
+		}
+		return s;
+	}
+	public void setSize(int s) {
+		if (s <= 0) {
+			s = 1;
+		}
+		this.setField(FIELD_SIZE, s);
+	}
+	public int getSize() {
+		int s = this.getField(FIELD_SIZE);
+		if (s <= 0) {
+			s = 10;
+		}
+		return s;
 	}
 	@Override
 	public int getFieldCount() {
 		return 2;
 	}
-
 	@Override
 	public void clear() {
-		//when is this claled? what for?
-		for (int i = 0; i < this.inv.length; ++i)
-        {
-            this.inv[i] = null;
-        }
+		// when is this claled? what for?
+		for (int i = 0; i < this.inv.length; ++i) {
+			this.inv[i] = null;
+		}
 	}
-
 	@Override
 	public void readFromNBT(NBTTagCompound tagCompound) {
-
 		super.readFromNBT(tagCompound);
-
 		timer = tagCompound.getInteger(NBT_TIMER);
 		shapeIndex = tagCompound.getInteger(NBT_SHAPEINDEX);
-		
-		nextPos = UtilNBT.stringCSVToBlockPos(tagCompound.getString(NBT_NEXTPOS));// = tagCompound.getInteger(NBT_TIMER);
-		if(nextPos == null || (nextPos.getX() == 0 && nextPos.getY()==0 && nextPos.getZ()==0)){
-			nextPos = this.pos;//fallback if it fails
+		nextPos = UtilNBT.stringCSVToBlockPos(tagCompound.getString(NBT_NEXTPOS));// =
+																					// tagCompound.getInteger(NBT_TIMER);
+		if (nextPos == null || (nextPos.getX() == 0 && nextPos.getY() == 0 && nextPos.getZ() == 0)) {
+			nextPos = this.pos;// fallback if it fails
 		}
-		
 		this.shape = new ArrayList<BlockPos>();
 		NBTTagList sh = tagCompound.getTagList(NBT_SHAPE, 10);
 		for (int i = 0; i < sh.tagCount(); i++) {
@@ -228,16 +223,13 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 			BlockPos pos = UtilNBT.stringCSVToBlockPos(tag.getString("shapepos"));
 			this.shape.add(pos);
 		}
-//		for(BlockPos p : this.shape){
-//
-//			NBTTagCompound tag = new NBTTagCompound();
-//			tag.setString("shapepos", UtilNBT.posToStringCSV(p));
-//			sh.appendTag(tag);
-//		}
-//		tagCompound.setTag(NBT_SHAPE, sh);
-		
-		
- 
+		// for(BlockPos p : this.shape){
+		//
+		// NBTTagCompound tag = new NBTTagCompound();
+		// tag.setString("shapepos", UtilNBT.posToStringCSV(p));
+		// sh.appendTag(tag);
+		// }
+		// tagCompound.setTag(NBT_SHAPE, sh);
 		NBTTagList tagList = tagCompound.getTagList(NBT_INV, 10);
 		for (int i = 0; i < tagList.tagCount(); i++) {
 			NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
@@ -246,34 +238,28 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 				inv[slot] = ItemStack.loadItemStackFromNBT(tag);
 			}
 		}
-		
-
-		this.currentType = tagCompound.getInteger(NBT_BUILDTYPE);
-//		this.setBuildType(BuildType.values()[this.currentType]);
+		this.buildType = tagCompound.getInteger(NBT_BUILDTYPE);
+		this.buildSpeed = tagCompound.getInteger(NBT_SPEED);
+		this.buildSize = tagCompound.getInteger(NBT_SIZE);
 	}
-
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
-
 		tagCompound.setInteger(NBT_TIMER, timer);
 		tagCompound.setInteger(NBT_SHAPEINDEX, this.shapeIndex);
-
-		if(nextPos == null || (nextPos.getX() == 0 && nextPos.getY()==0 && nextPos.getZ()==0)){
-			nextPos = this.pos;//fallback if it fails
+		if (nextPos == null || (nextPos.getX() == 0 && nextPos.getY() == 0 && nextPos.getZ() == 0)) {
+			nextPos = this.pos;// fallback if it fails
 		}
 		tagCompound.setString(NBT_NEXTPOS, UtilNBT.posToStringCSV(this.nextPos));
-
 		NBTTagList sh = new NBTTagList();
-		if(this.shape == null){
+		if (this.shape == null) {
 			this.shape = new ArrayList<BlockPos>();
 		}
-		for(BlockPos p : this.shape){
+		for (BlockPos p : this.shape) {
 			NBTTagCompound tag = new NBTTagCompound();
 			tag.setString("shapepos", UtilNBT.posToStringCSV(p));
 			sh.appendTag(tag);
 		}
 		tagCompound.setTag(NBT_SHAPE, sh);
-		
 		NBTTagList itemList = new NBTTagList();
 		for (int i = 0; i < inv.length; i++) {
 			ItemStack stack = inv[i];
@@ -285,91 +271,71 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 			}
 		}
 		tagCompound.setTag(NBT_INV, itemList);
-		
 		tagCompound.setInteger(NBT_BUILDTYPE, this.getBuildType());
-		
+		tagCompound.setInteger(NBT_SPEED, this.getSpeed());
+		tagCompound.setInteger(NBT_SIZE, this.getSize());
 		return super.writeToNBT(tagCompound);
 	}
- 
 	@Override
-	public SPacketUpdateTileEntity getUpdatePacket(){//getDescriptionPacket() {
-
+	public SPacketUpdateTileEntity getUpdatePacket() {// getDescriptionPacket()
+														// {
 		// Gathers data into a packet (S35PacketUpdateTileEntity) that is to be
 		// sent to the client. Called on server only.
 		NBTTagCompound syncData = new NBTTagCompound();
 		this.writeToNBT(syncData);
-
 		return new SPacketUpdateTileEntity(this.pos, 1, syncData);
 	}
-
 	@Override
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-
 		// Extracts data from a packet (S35PacketUpdateTileEntity) that was sent
 		// from the server. Called on client only.
 		this.readFromNBT(pkt.getNbtCompound());
-
 		super.onDataPacket(net, pkt);
 	}
-
 	public BlockPos getNextPos() {
 		return this.nextPos;
 	}
- 
 	private void shiftAllUp() {
-
-		for(int i = 0; i < this.getSizeInventory() - 1; i++){
-			shiftPairUp(i, i+1);
+		for (int i = 0; i < this.getSizeInventory() - 1; i++) {
+			shiftPairUp(i, i + 1);
 		}
 	}
-
-	private void shiftPairUp(int low, int high){
+	private void shiftPairUp(int low, int high) {
 		ItemStack main = getStackInSlot(low);
 		ItemStack second = getStackInSlot(high);
-
 		if (main == null && second != null) { // if the one below this is not
 			// empty, move it up
 			this.setInventorySlotContents(high, null);
 			this.setInventorySlotContents(low, second);
 		}
 	}
-	
 	public boolean isBurning() {
 		return this.timer > 0 && this.timer < TIMER_FULL;
 	}
-
 	@Override
 	public void update() {
-	
 		this.shiftAllUp();
-
 		boolean trigger = false;
-		if(nextPos == null || (nextPos.getX() == 0 && nextPos.getY()==0 && nextPos.getZ()==0)){
-			nextPos = this.pos;//fallback if it fails
+		if (nextPos == null || (nextPos.getX() == 0 && nextPos.getY() == 0 && nextPos.getZ() == 0)) {
+			nextPos = this.pos;// fallback if it fails
 		}
- 
-		if(this.worldObj.getStrongPower(this.getPos()) == 0){
-			//it works ONLY if its powered
+		if (this.worldObj.getStrongPower(this.getPos()) == 0) {
+			// it works ONLY if its powered
 			this.markDirty();
 			return;
 		}
-
-		if(!this.worldObj.isRemote && this.nextPos != null && this.worldObj.rand.nextDouble() < 0.1 && 
-				this.inv[0] != null){
+		if (!this.worldObj.isRemote && this.nextPos != null && this.worldObj.rand.nextDouble() < 0.1 && this.inv[0] != null) {
 			UtilParticle.spawnParticlePacket(EnumParticleTypes.DRAGON_BREATH, nextPos, 5);
 		}
-		
-		//center of the block
+		// center of the block
 		double x = this.getPos().getX() + 0.5;
 		double y = this.getPos().getY() + 0.5;
 		double z = this.getPos().getZ() + 0.5;
-
 		ItemStack stack = getStackInSlot(0);
 		if (stack == null) {
 			timer = TIMER_FULL;// reset just like you would in a
 			// furnace
-		}
-		else{
+		} else {
 			timer--;
 			if (timer <= 0) {
 				timer = TIMER_FULL;
@@ -377,35 +343,27 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 			}
 		}
 		if (trigger) {
-
 			Block stuff = Block.getBlockFromItem(stack.getItem());
-			
-			if(stuff != null){
-
-				if(this.worldObj.isRemote == false){
-					ModMain.logger.info("try place "+this.nextPos +" type "+this.currentType+"_"+this.getBuildTypeEnum().name());
-					
-					if(UtilPlaceBlocks.placeStateSafe(this.worldObj, null, this.nextPos, stuff.getStateFromMeta(stack.getMetadata()))){
+			if (stuff != null) {
+				if (this.worldObj.isRemote == false) {
+					ModMain.logger.info("try place " + this.nextPos + " type " + this.buildType + "_" + this.getBuildTypeEnum().name());
+					if (UtilPlaceBlocks.placeStateSafe(this.worldObj, null, this.nextPos, stuff.getStateFromMeta(stack.getMetadata()))) {
 						this.decrStackSize(0, 1);
 					}
 				}
-				///even if it didnt place. move up maybe something was in the way
-
+				/// even if it didnt place. move up maybe something was in the
+				/// way
 				this.incrementPosition();
 			}
-		}
-		else{
-			//dont trigger an uncraft event, its still processing
-
-			if(this.worldObj.isRemote && this.worldObj.rand.nextDouble() < 0.1){
-		
-				UtilParticle.spawnParticle(worldObj, EnumParticleTypes.SMOKE_NORMAL, x, y, z); 
+		} else {
+			// dont trigger an uncraft event, its still processing
+			if (this.worldObj.isRemote && this.worldObj.rand.nextDouble() < 0.1) {
+				UtilParticle.spawnParticle(worldObj, EnumParticleTypes.SMOKE_NORMAL, x, y, z);
 			}
 		}
 		this.markDirty();
 	}
-	
-	private EnumFacing getCurrentFacing(){
+	private EnumFacing getCurrentFacing() {
 		BlockBuilder b = ((BlockBuilder) this.blockType);
 		EnumFacing facing;
 		if (b == null || this.worldObj.getBlockState(this.pos) == null || b.getFacingFromState(this.worldObj.getBlockState(this.pos)) == null)
@@ -414,84 +372,65 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 			facing = b.getFacingFromState(this.worldObj.getBlockState(this.pos));
 		return facing;
 	}
-
 	private void incrementPosition() {
-		if(this.nextPos == null){
+		if (this.nextPos == null) {
 			this.nextPos = this.pos;
 		}
-		if(this.worldObj == null){
+		if (this.worldObj == null) {
 			return;
 		}
-		
-		if(this.shape == null || this.shape.size() == 0){
+		if (this.shape == null || this.shape.size() == 0) {
 			this.setShape();
-		}
-		else{
-			int c = shapeIndex+1;
-			
-			if(c < 0 || c >= this.shape.size()) {c = 0;}
-			
+		} else {
+			int c = shapeIndex + 1;
+			if (c < 0 || c >= this.shape.size()) {
+				c = 0;
+			}
 			this.nextPos = this.shape.get(c);
-			
 			shapeIndex = c;
 		}
 	}
-
-	private int[] hopperInput = { 0, 1, 2,3,4,5,6,7,8 };// all slots for all faces
-
+	private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots for
+																// all faces
 	@Override
 	public int[] getSlotsForFace(EnumFacing side) {
-
 		return hopperInput;
 	}
-
 	@Override
 	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
-
 		return this.isItemValidForSlot(index, itemStackIn);
 	}
-
 	@Override
 	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
-
-		//do not let hoppers pull out of here for any reason
+		// do not let hoppers pull out of here for any reason
 		return false;// direction == EnumFacing.DOWN;
 	}
-
 	@Override
 	public ItemStack removeStackFromSlot(int index) {
-
 		ItemStack stack = getStackInSlot(index);
 		if (stack != null) {
 			setInventorySlotContents(index, null);
 		}
 		return stack;
 	}
-
 	@Override
 	public String getName() {
-
 		return null;
 	}
-
-	public enum BuildType{
-		FACING,UP,SQUARE,CIRCLE;
-		
-		public static BuildType getNextType(BuildType btype){
+	public enum BuildType {
+		FACING, UP, SQUARE, CIRCLE;
+		public static BuildType getNextType(BuildType btype) {
 			int type = btype.ordinal();
 			type++;
 			if (type > CIRCLE.ordinal()) {
 				type = FACING.ordinal();
 			}
-			
 			return BuildType.values()[type];
 		}
 	}
-	
 	@Override
-    public boolean receiveClientEvent(int id, int value) {
+	public boolean receiveClientEvent(int id, int value) {
 		this.setField(id, value);
-		
-        return super.receiveClientEvent(id, value);
-    }
+		return super.receiveClientEvent(id, value);
+	}
 }
