@@ -165,7 +165,6 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 
 	@Override
 	public void setField(int id, int value) {
-		System.out.println(this.worldObj.isRemote +"_setField "+id+"_"+value);
 		switch(id){
 		case FIELD_TIMER:
 			this.timer = value;
@@ -474,16 +473,13 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 			if (type > CIRCLE.ordinal()) {
 				type = FACING.ordinal();
 			}
-			System.out.println("getNextType("+btype+") = "+type);
+			
 			return BuildType.values()[type];
 		}
 	}
 	
 	@Override
-    public boolean receiveClientEvent(int id, int value)
-    {
-		System.out.println("receiveClientEvent "+id +")"+ value);
-		
+    public boolean receiveClientEvent(int id, int value) {
 		this.setField(id, value);
 		
         return super.receiveClientEvent(id, value);

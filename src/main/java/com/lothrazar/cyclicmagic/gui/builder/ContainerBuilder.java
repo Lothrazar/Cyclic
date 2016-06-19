@@ -17,21 +17,21 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SuppressWarnings("unused")
 public class ContainerBuilder extends Container {
 	// tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
-	
-	public static final int					SLOTX_START	= 10;
-	public static final int					SLOTY = 28;
-	public static final int					SQ	= 18;
-	protected TileEntityBuilder	tileEntity;
-	
+
+	public static final int SLOTX_START = 10;
+	public static final int SLOTY = 28;
+	public static final int SQ = 18;
+	protected TileEntityBuilder tileEntity;
+
 	private int tileBuild;
 	private int tileTimer;
 
 	public ContainerBuilder(InventoryPlayer inventoryPlayer, TileEntityBuilder te) {
 		tileEntity = te;
-		
-		for(int i = 0; i < tileEntity.getSizeInventory(); i++){
 
-			addSlotToContainer(new SlotUncraft(tileEntity, i, SLOTX_START + i*SQ, SLOTY));
+		for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
+
+			addSlotToContainer(new SlotUncraft(tileEntity, i, SLOTX_START + i * SQ, SLOTY));
 		}
 		// commonly used vanilla code that adds the player's inventory
 		bindPlayerInventory(inventoryPlayer);
@@ -63,20 +63,25 @@ public class ContainerBuilder extends Container {
 
 			// merges the item into player inventory since its in the tileEntity
 			if (slot < tileEntity.getSizeInventory()) {
-				if (!this.mergeItemStack(stackInSlot, tileEntity.getSizeInventory(), 36 + tileEntity.getSizeInventory(), true)) { return null; }
+				if (!this.mergeItemStack(stackInSlot, tileEntity.getSizeInventory(), 36 + tileEntity.getSizeInventory(), true)) {
+					return null;
+				}
 			}
 			// places it into the tileEntity is possible since its in the player
 			// inventory
-			else if (!this.mergeItemStack(stackInSlot, 0, tileEntity.getSizeInventory(), false)) { return null; }
+			else if (!this.mergeItemStack(stackInSlot, 0, tileEntity.getSizeInventory(), false)) {
+				return null;
+			}
 
 			if (stackInSlot.stackSize == 0) {
 				slotObject.putStack(null);
-			}
-			else {
+			} else {
 				slotObject.onSlotChanged();
 			}
 
-			if (stackInSlot.stackSize == stack.stackSize) { return null; }
+			if (stackInSlot.stackSize == stack.stackSize) {
+				return null;
+			}
 			slotObject.onPickupFromSlot(player, stackInSlot);
 		}
 		return stack;
@@ -88,42 +93,33 @@ public class ContainerBuilder extends Container {
 	}
 
 	@Override
-    public void detectAndSendChanges() {
-    	super.detectAndSendChanges();
-    	for (int i = 0; i < this.listeners.size(); ++i) {
-            IContainerListener icontainerlistener = (IContainerListener)this.listeners.get(i);
-            
-//            icontainerlistener.sendAllWindowProperties(this, this.tileEntity);
-            
+	public void detectAndSendChanges() {
+		super.detectAndSendChanges();
+		for (int i = 0; i < this.listeners.size(); ++i) {
+			IContainerListener icontainerlistener = (IContainerListener) this.listeners.get(i);
 
-            if (this.tileTimer != this.tileEntity.getField(TileEntityBuilder.FIELD_TIMER))
-            {
-                icontainerlistener.sendProgressBarUpdate(this, TileEntityBuilder.FIELD_TIMER, this.tileEntity.getField(TileEntityBuilder.FIELD_TIMER));
-            }
+			if (this.tileTimer != this.tileEntity.getField(TileEntityBuilder.FIELD_TIMER)) {
+				icontainerlistener.sendProgressBarUpdate(this, TileEntityBuilder.FIELD_TIMER, this.tileEntity.getField(TileEntityBuilder.FIELD_TIMER));
+			}
 
+			if (this.tileBuild != this.tileEntity.getField(TileEntityBuilder.FIELD_BUILDTYPE)) {
+				icontainerlistener.sendProgressBarUpdate(this, TileEntityBuilder.FIELD_BUILDTYPE, this.tileEntity.getField(TileEntityBuilder.FIELD_BUILDTYPE));
+			}
+		}
 
-            if (this.tileBuild != this.tileEntity.getField(TileEntityBuilder.FIELD_BUILDTYPE))
-            {
-                icontainerlistener.sendProgressBarUpdate(this, TileEntityBuilder.FIELD_BUILDTYPE, this.tileEntity.getField(TileEntityBuilder.FIELD_BUILDTYPE));
-            }
-
-        }
-
-        this.tileTimer = this.tileEntity.getField(TileEntityBuilder.FIELD_TIMER);
-        this.tileBuild = this.tileEntity.getField(TileEntityBuilder.FIELD_BUILDTYPE);
-    }
+		this.tileTimer = this.tileEntity.getField(TileEntityBuilder.FIELD_TIMER);
+		this.tileBuild = this.tileEntity.getField(TileEntityBuilder.FIELD_BUILDTYPE);
+	}
 
 	@Override
-    @SideOnly(Side.CLIENT)
-    public void updateProgressBar(int id, int data){
-		System.out.println("updateProgressBar "+id +":"+ data);
-        this.tileEntity.setField(id, data);
-    }
+	@SideOnly(Side.CLIENT)
+	public void updateProgressBar(int id, int data) {
+		this.tileEntity.setField(id, data);
+	}
+
 	@Override
-    public void addListener(IContainerListener listener){
-		//runs once when its opened
-//		System.out.println("IContainerListener");
-        super.addListener(listener);
-        listener.sendAllWindowProperties(this, this.tileEntity);
-    }
+	public void addListener(IContainerListener listener) {
+		super.addListener(listener);
+		listener.sendAllWindowProperties(this, this.tileEntity);
+	}
 }
