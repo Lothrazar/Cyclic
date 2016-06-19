@@ -10,13 +10,15 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class PacketTileBuildType implements IMessage, IMessageHandler<PacketTileBuildType, IMessage> {
-	public static final int ID = 56;
+public class PacketTileBuildSize implements IMessage, IMessageHandler<PacketTileBuildSize, IMessage> {
+	public static final int ID = 55;
 	private BlockPos pos;
-	public PacketTileBuildType() {
+	private int size;
+	public PacketTileBuildSize() {
 	}
-	public PacketTileBuildType(BlockPos p) {
+	public PacketTileBuildSize(BlockPos p,int s) {
 		pos = p;
+		size = s;
 	}
 	@Override
 	public void fromBytes(ByteBuf buf) {
@@ -25,6 +27,7 @@ public class PacketTileBuildType implements IMessage, IMessageHandler<PacketTile
 		int y = tags.getInteger("y");
 		int z = tags.getInteger("z");
 		pos = new BlockPos(x, y, z);
+		size = tags.getInteger("size");
 	}
 	@Override
 	public void toBytes(ByteBuf buf) {
@@ -32,26 +35,21 @@ public class PacketTileBuildType implements IMessage, IMessageHandler<PacketTile
 		tags.setInteger("x", pos.getX());
 		tags.setInteger("y", pos.getY());
 		tags.setInteger("z", pos.getZ());
+		tags.setInteger("size", size);
 		ByteBufUtils.writeTag(buf, tags);
 	}
-	private boolean chat = false;
 	@Override
-	public IMessage onMessage(PacketTileBuildType message, MessageContext ctx) {
+	public IMessage onMessage(PacketTileBuildSize message, MessageContext ctx) {
 		EntityPlayerMP player = ctx.getServerHandler().playerEntity;
 		TileEntityBuilder tile = (TileEntityBuilder) player.getEntityWorld().getTileEntity(message.pos);
 		if (tile != null) {
-			TileEntityBuilder.BuildType old = tile.getBuildTypeEnum();
-			TileEntityBuilder.BuildType next = TileEntityBuilder.BuildType.getNextType(old);
-//			System.out.println("old" + old.name() + "__new__" + next.name());
-			tile.setBuildType(next.ordinal());
+			tile.setSize(tile.getSize() + message.size);
 			tile.setShape();
 			tile.markDirty();
 			if (player.openContainer != null) {
 				player.openContainer.detectAndSendChanges();
 				player.sendAllWindowProperties(player.openContainer, tile);
 			}
-			if (chat)
-				UtilChat.addChatMessage(player, UtilChat.lang("buildertype." + next.name().toLowerCase() + ".name"));
 		}
 		return null;
 	}

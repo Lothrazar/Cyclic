@@ -17,6 +17,8 @@ public class GuiBuilder extends GuiContainer {
 	private static final ResourceLocation table = new ResourceLocation(Const.MODID, folder + "table.png");
 	private static final ResourceLocation slot = new ResourceLocation(Const.MODID, folder + "inventory_slot.png");
 	private static final ResourceLocation progress = new ResourceLocation(Const.MODID, folder + "progress.png");
+	private static final int texture_width = 176;
+	private static final int texture_height = 166;
 	private TileEntityBuilder tile;
 	private ButtonBuilderType btn;
 	public GuiBuilder(InventoryPlayer inventoryPlayer, TileEntityBuilder tileEntity) {
@@ -34,8 +36,18 @@ public class GuiBuilder extends GuiContainer {
 		int x = this.guiLeft + 5;
 		int width = 20;
 		width = 50;
-		btn = new ButtonBuilderType(tile.getPos(), 2, x, y, width);
+		int id = 2;
+		btn = new ButtonBuilderType(tile.getPos(), id++, x, y, width);
 		this.buttonList.add(btn);
+		
+		width = 20;
+		x += 50;
+		ButtonBuildSize b = new ButtonBuildSize(tile.getPos(), id++, x, y, width,true);
+		this.buttonList.add(b);
+		
+		y += 30;
+		b = new ButtonBuildSize(tile.getPos(), id++, x, y, width,false);
+		this.buttonList.add(b);
 	}
 	boolean debugLabels = true;
 	@SideOnly(Side.CLIENT)
@@ -44,10 +56,10 @@ public class GuiBuilder extends GuiContainer {
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 		this.btn.displayString = UtilChat.lang("buildertype." + this.tile.getBuildTypeEnum().name().toLowerCase() + ".name");
 		if (debugLabels) {
-			this.fontRendererObj.drawString("t = " + this.tile.getTimer(), 32, this.ySize - 84, 4210752);
-			this.fontRendererObj.drawString("b = " + this.tile.getBuildType(), 38, this.ySize - 74, 4210752);
-			this.fontRendererObj.drawString("speed = " + this.tile.getSpeed(), 38, this.ySize - 64, 4210752);
-			this.fontRendererObj.drawString("size = " + this.tile.getSize(), 38, this.ySize - 54, 4210752);
+			this.fontRendererObj.drawString("t = " + this.tile.getTimer(), 32, this.ySize - 94, 4210752);
+			this.fontRendererObj.drawString("b = " + this.tile.getBuildType(), 38, this.ySize - 104, 4210752);
+			this.fontRendererObj.drawString("speed = " + this.tile.getSpeed(), 38, this.ySize - 114, 4210752);
+			this.fontRendererObj.drawString("size = " + this.tile.getSize(), 38, this.ySize - 124, 4210752);
 		}
 	}
 	@Override
@@ -56,8 +68,6 @@ public class GuiBuilder extends GuiContainer {
 		this.mc.getTextureManager().bindTexture(table);
 		int thisX = (this.width - this.xSize) / 2;
 		int thisY = (this.height - this.ySize) / 2;
-		int texture_width = 176;
-		int texture_height = 166;
 		int u = 0, v = 0;
 		Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, this.xSize, this.ySize, texture_width, texture_height);
 		this.mc.getTextureManager().bindTexture(slot);

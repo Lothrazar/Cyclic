@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
+import com.lothrazar.cyclicmagic.net.PacketTileBuildSize;
 import com.lothrazar.cyclicmagic.net.PacketTileBuildType;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.Minecraft;
@@ -12,20 +13,23 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ButtonBuilderType extends GuiButton implements ITooltipButton {
+public class ButtonBuildSize extends GuiButton implements ITooltipButton {
 	private final BlockPos tilePos;
 	private final List<String> tooltips = new ArrayList<String>();
-	public ButtonBuilderType(BlockPos current, int buttonId, int x, int y, int width) {
-		super(buttonId, x, y, width, 20, "");
+	boolean goUp;
+	public ButtonBuildSize(BlockPos current, int buttonId, int x, int y, int width,boolean up) {
+		super(buttonId, x, y, width, 10, "");
 		tilePos = current;
-		tooltips.add(TextFormatting.GRAY + UtilChat.lang("button.builder.meta"));
+		tooltips.add(TextFormatting.GRAY + UtilChat.lang("button.speed.meta"));
+		goUp = up;
 	}
 	@SideOnly(Side.CLIENT)
 	@Override
 	public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
 		boolean pressed = super.mousePressed(mc, mouseX, mouseY);
 		if (pressed) {
-			ModMain.network.sendToServer(new PacketTileBuildType(tilePos));
+			int size = (goUp) ? 1 : -1;
+			ModMain.network.sendToServer(new PacketTileBuildSize(tilePos,size));
 		}
 		return pressed;
 	}

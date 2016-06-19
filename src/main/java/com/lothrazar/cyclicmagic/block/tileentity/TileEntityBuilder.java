@@ -31,7 +31,7 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 	private int shapeIndex = 0;// current index of shape array
 	private List<BlockPos> shape = null;
 	private BlockPos nextPos;// location of next block to be placed
-	public static final int TIMER_FULL = 500;
+	public static final int TIMER_FULL = 50;//maybe 500 for release fast for test
 	public final static int FIELD_TIMER = 0;
 	public final static int FIELD_BUILDTYPE = 1;
 	public final static int FIELD_SPEED = 2;
