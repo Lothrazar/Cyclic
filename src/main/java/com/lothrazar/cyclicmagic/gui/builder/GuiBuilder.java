@@ -22,6 +22,8 @@ public class GuiBuilder extends GuiContainer {
 	static final int padding = 4;
 	private TileEntityBuilder tile;
 	private ButtonBuilderType btn;
+	private ButtonBuildSize btnSizeUp;
+	private ButtonBuildSize btnSizeDown;
 	private int xSizeTextbox;
 	private int ySizeTxtbox;
 	boolean debugLabels = false;
@@ -41,10 +43,10 @@ public class GuiBuilder extends GuiContainer {
 		this.buttonList.add(btn);
 		width = 15;
 		xSizeTextbox = texture_width - 20;
-		ButtonBuildSize b = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xSizeTextbox, this.guiTop + padding, width, true);
-		this.buttonList.add(b);
-		b = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xSizeTextbox, this.guiTop + padding + 20, width, false);
-		this.buttonList.add(b);
+		btnSizeUp = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xSizeTextbox, this.guiTop + padding, width, true);
+		this.buttonList.add(btnSizeUp);
+		btnSizeDown = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xSizeTextbox, this.guiTop + padding + 20, width, false);
+		this.buttonList.add(btnSizeDown);
 		xSizeTextbox += width / 2 - 2;
 		ySizeTxtbox = padding + 12;
 	}
@@ -59,8 +61,12 @@ public class GuiBuilder extends GuiContainer {
 			this.fontRendererObj.drawString("speed = " + this.tile.getSpeed(), 38, this.ySize - 114, 4210752);
 			this.fontRendererObj.drawString("size = " + this.tile.getSize(), 38, this.ySize - 124, 4210752);
 		}
-		if (this.tile.getSize() > 0)
+		if (this.tile.getSize() > 0){
 			this.fontRendererObj.drawString("" + this.tile.getSize(), xSizeTextbox, ySizeTxtbox, 4210752);
+		}
+		 
+		this.btnSizeDown.enabled = (this.tile.getSize() > 1);
+		this.btnSizeUp.enabled = (this.tile.getSize() < TileEntityBuilder.maxSize);
 	}
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {

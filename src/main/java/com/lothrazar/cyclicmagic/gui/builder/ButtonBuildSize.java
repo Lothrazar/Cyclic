@@ -19,8 +19,8 @@ public class ButtonBuildSize extends GuiButton implements ITooltipButton {
 	public ButtonBuildSize(BlockPos current, int buttonId, int x, int y, int width, boolean up) {
 		super(buttonId, x, y, width, 10, "");
 		tilePos = current;
-		tooltips.add(TextFormatting.GRAY + UtilChat.lang("button.speed.meta"));
 		goUp = up;
+		tooltips.add(TextFormatting.GRAY + UtilChat.lang("button.size." + (goUp?"up":"down")));
 	}
 	@SideOnly(Side.CLIENT)
 	@Override
