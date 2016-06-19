@@ -77,17 +77,7 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 
 		return false;
 	}
-	
-	@Override
-    public void markDirty(){
-		super.markDirty();
-		
-		if(this.worldObj != null && this.pos != null)
-			this.worldObj.markBlockRangeForRenderUpdate(this.pos, this.pos.up());
-	}
-	
 
-	//
 	@Override
 	public ITextComponent getDisplayName() {
 
@@ -160,22 +150,22 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		return Block.getBlockFromItem(stack.getItem()) != null;
 	}
 
-	final static int FIELD_TIMER = 0;
-	final static int FIELD_BUILDTYPE = 1;
+	public final static int FIELD_TIMER = 0;
+	public final static int FIELD_BUILDTYPE = 1;
 	@Override
 	public int getField(int id) {
-
 		switch(id){
 		case FIELD_TIMER:
 			return timer;
 		case FIELD_BUILDTYPE:
 			return this.currentType;
 		}
-		return 0;
+		return -1;
 	}
 
 	@Override
 	public void setField(int id, int value) {
+		System.out.println(this.worldObj.isRemote +"_setField "+id+"_"+value);
 		switch(id){
 		case FIELD_TIMER:
 			this.timer = value;
@@ -193,17 +183,20 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		this.setField(value, FIELD_BUILDTYPE);
 	}
 	public BuildType getBuildTypeEnum(){
-		return BuildType.values()[this.currentType];
+		return BuildType.values()[this.getBuildType()];
 	}
 	@Override
 	public int getFieldCount() {
-
 		return 2;
 	}
 
 	@Override
 	public void clear() {
 		//when is this claled? what for?
+		for (int i = 0; i < this.inv.length; ++i)
+        {
+            this.inv[i] = null;
+        }
 	}
 
 	@Override
@@ -486,14 +479,13 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		}
 	}
 	
-//	@Override
-//    public boolean receiveClientEvent(int id, int type)
-//    {
-//		System.out.println("receiveClientEvent "+id +")"+ type);
-//		this.currentType = BuildType.values()[type];
-//		
-//		
-//		
-//        return super.receiveClientEvent(id, type);
-//    }
+	@Override
+    public boolean receiveClientEvent(int id, int value)
+    {
+		System.out.println("receiveClientEvent "+id +")"+ value);
+		
+		this.setField(id, value);
+		
+        return super.receiveClientEvent(id, value);
+    }
 }

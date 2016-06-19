@@ -11,6 +11,8 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SuppressWarnings("unused")
 public class ContainerBuilder extends Container {
@@ -20,6 +22,9 @@ public class ContainerBuilder extends Container {
 	public static final int					SLOTY = 28;
 	public static final int					SQ	= 18;
 	protected TileEntityBuilder	tileEntity;
+	
+	private int tileBuild;
+	private int tileTimer;
 
 	public ContainerBuilder(InventoryPlayer inventoryPlayer, TileEntityBuilder te) {
 		tileEntity = te;
@@ -88,15 +93,31 @@ public class ContainerBuilder extends Container {
     	for (int i = 0; i < this.listeners.size(); ++i) {
             IContainerListener icontainerlistener = (IContainerListener)this.listeners.get(i);
             
-            icontainerlistener.sendAllWindowProperties(this, this.tileEntity);
-            //yes; the entityplayer is listening
-//            if(icontainerlistener instanceof EntityPlayerMP){
-//
-//        		System.out.println("detectAndSendChanges EntityPlayerMP");
-//            }
+//            icontainerlistener.sendAllWindowProperties(this, this.tileEntity);
+            
+
+            if (this.tileTimer != this.tileEntity.getField(TileEntityBuilder.FIELD_TIMER))
+            {
+                icontainerlistener.sendProgressBarUpdate(this, TileEntityBuilder.FIELD_TIMER, this.tileEntity.getField(TileEntityBuilder.FIELD_TIMER));
+            }
+
+
+            if (this.tileBuild != this.tileEntity.getField(TileEntityBuilder.FIELD_BUILDTYPE))
+            {
+                icontainerlistener.sendProgressBarUpdate(this, TileEntityBuilder.FIELD_BUILDTYPE, this.tileEntity.getField(TileEntityBuilder.FIELD_BUILDTYPE));
+            }
+
         }
+
+        this.tileTimer = this.tileEntity.getField(TileEntityBuilder.FIELD_TIMER);
+        this.tileBuild = this.tileEntity.getField(TileEntityBuilder.FIELD_BUILDTYPE);
     }
 
+	@Override
+    @SideOnly(Side.CLIENT)
+    public void updateProgressBar(int id, int data){
+        this.tileEntity.setField(id, data);
+    }
 	@Override
     public void addListener(IContainerListener listener){
 		//runs once when its opened

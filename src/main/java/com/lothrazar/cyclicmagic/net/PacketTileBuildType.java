@@ -5,6 +5,7 @@ import com.lothrazar.cyclicmagic.util.UtilChat;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -50,21 +51,24 @@ public class PacketTileBuildType implements IMessage, IMessageHandler<PacketTile
 	@Override
 	public IMessage onMessage(PacketTileBuildType message, MessageContext ctx) {
 
-		EntityPlayer player = ctx.getServerHandler().playerEntity;
+		EntityPlayerMP player = ctx.getServerHandler().playerEntity;
 
-		TileEntityBuilder container = (TileEntityBuilder)player.getEntityWorld().getTileEntity(message.pos);
+		TileEntityBuilder tile = (TileEntityBuilder)player.getEntityWorld().getTileEntity(message.pos);
 		
-		if(container != null){
+		if(tile != null){
 
-			TileEntityBuilder.BuildType old = container.getBuildTypeEnum();
+			TileEntityBuilder.BuildType old = tile.getBuildTypeEnum();
 			TileEntityBuilder.BuildType next = TileEntityBuilder.BuildType.getNextType(old);
-			container.setBuildType(next.ordinal());
-			container.setShape();
+			System.out.println("old"+old.name()+"__new__"+next.name());
+			tile.setBuildType(next.ordinal());
+			tile.setShape();
 			
-			container.markDirty();
+			tile.markDirty();
 			
 			if(player.openContainer != null){
 				player.openContainer.detectAndSendChanges();
+				
+				player.sendAllWindowProperties(player.openContainer, tile);
 			}
 			
 			UtilChat.addChatMessage(player, UtilChat.lang("buildertype."+next.name().toLowerCase()+".name"));
