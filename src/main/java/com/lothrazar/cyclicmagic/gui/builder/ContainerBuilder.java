@@ -5,8 +5,10 @@ import com.lothrazar.cyclicmagic.block.tileentity.TileEntityUncrafting;
 import com.lothrazar.cyclicmagic.gui.slot.SlotUncraft;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
@@ -79,4 +81,27 @@ public class ContainerBuilder extends Container {
 	public boolean canInteractWith(EntityPlayer playerIn) {
 		return true;
 	}
+
+	@Override
+    public void detectAndSendChanges() {
+    	super.detectAndSendChanges();
+    	for (int i = 0; i < this.listeners.size(); ++i) {
+            IContainerListener icontainerlistener = (IContainerListener)this.listeners.get(i);
+            
+            icontainerlistener.sendAllWindowProperties(this, this.tileEntity);
+            //yes; the entityplayer is listening
+//            if(icontainerlistener instanceof EntityPlayerMP){
+//
+//        		System.out.println("detectAndSendChanges EntityPlayerMP");
+//            }
+        }
+    }
+
+	@Override
+    public void addListener(IContainerListener listener){
+		//runs once when its opened
+//		System.out.println("IContainerListener");
+        super.addListener(listener);
+        listener.sendAllWindowProperties(this, this.tileEntity);
+    }
 }

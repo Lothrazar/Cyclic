@@ -162,9 +162,6 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 
 	final static int FIELD_TIMER = 0;
 	final static int FIELD_BUILDTYPE = 1;
-	public int getTimer() {
-		return this.getField(FIELD_TIMER);
-	}
 	@Override
 	public int getField(int id) {
 
@@ -186,12 +183,14 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 			this.currentType = value;
 		}
 	}
-
+	public int getTimer() {
+		return this.getField(FIELD_TIMER);
+	}
 	public int getBuildType(){
-		return this.currentType;
+		return this.getField(FIELD_BUILDTYPE);
 	}
 	public void setBuildType(int value){
-		this.currentType = value;
+		this.setField(value, FIELD_BUILDTYPE);
 	}
 	public BuildType getBuildTypeEnum(){
 		return BuildType.values()[this.currentType];
@@ -199,7 +198,7 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 	@Override
 	public int getFieldCount() {
 
-		return 0;
+		return 2;
 	}
 
 	@Override
@@ -349,6 +348,7 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
  
 		if(this.worldObj.getStrongPower(this.getPos()) == 0){
 			//it works ONLY if its powered
+			this.markDirty();
 			return;
 		}
 
@@ -366,15 +366,14 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		if (stack == null) {
 			timer = TIMER_FULL;// reset just like you would in a
 			// furnace
-			return;
 		}
-
-		timer--;
-		if (timer <= 0) {
-			timer = TIMER_FULL;
-			trigger = true;
+		else{
+			timer--;
+			if (timer <= 0) {
+				timer = TIMER_FULL;
+				trigger = true;
+			}
 		}
-
 		if (trigger) {
 
 			Block stuff = Block.getBlockFromItem(stack.getItem());

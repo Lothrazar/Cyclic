@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
@@ -44,6 +45,16 @@ public class GuiBuilder extends GuiContainer {
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+		
+		String test = I18n.format("container.inventory");
+		
+		test += this.tile.getBuildType();
+		
+		
+	     this.fontRendererObj.drawString(test, 8, this.ySize - 96 + 2, 4210752);
+	     
+		
+		
 	}
 
 	private static final String				folder		= "textures/gui/";
@@ -74,6 +85,8 @@ public class GuiBuilder extends GuiContainer {
 		
 		//TODO: still a mystery why timer updates on clientside and other data doesnt
 		//btn.displayString = tile.getBuildType()+":"+tile.getTimer();
+		
+		
 
 		if (tile.getTimer() > 0 && tile.getStackInSlot(0) != null) {
 			this.mc.getTextureManager().bindTexture(progress);
