@@ -16,7 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ContainerBuilder extends Container {
 	// tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
 	public static final int SLOTX_START = 10;
-	public static final int SLOTY = 28;
+	public static final int SLOTY = 38;
 	public static final int SQ = 18;
 	protected TileEntityBuilder tileEntity;
 	private int tileBuild;
@@ -30,7 +30,6 @@ public class ContainerBuilder extends Container {
 		}
 		// commonly used vanilla code that adds the player's inventory
 		bindPlayerInventory(inventoryPlayer);
-		this.detectAndSendChanges();
 	}
 	protected void bindPlayerInventory(InventoryPlayer inventoryPlayer) {
 		for (int i = 0; i < 3; i++) {
@@ -82,23 +81,27 @@ public class ContainerBuilder extends Container {
 		super.detectAndSendChanges();
 		for (int i = 0; i < this.listeners.size(); ++i) {
 			IContainerListener icontainerlistener = (IContainerListener) this.listeners.get(i);
-			if (this.tileTimer != this.tileEntity.getField(TileEntityBuilder.FIELD_TIMER)) {
-				icontainerlistener.sendProgressBarUpdate(this, TileEntityBuilder.FIELD_TIMER, this.tileEntity.getField(TileEntityBuilder.FIELD_TIMER));
+			int idx = TileEntityBuilder.Fields.TIMER.ordinal();
+			if (this.tileTimer != this.tileEntity.getField(idx)) {
+				icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
 			}
-			if (this.tileBuild != this.tileEntity.getField(TileEntityBuilder.FIELD_BUILDTYPE)) {
-				icontainerlistener.sendProgressBarUpdate(this, TileEntityBuilder.FIELD_BUILDTYPE, this.tileEntity.getField(TileEntityBuilder.FIELD_BUILDTYPE));
+			idx = TileEntityBuilder.Fields.BUILDTYPE.ordinal();
+			if (this.tileBuild != this.tileEntity.getField(idx)) {
+				icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
 			}
-			if (this.tileSize != this.tileEntity.getField(TileEntityBuilder.FIELD_SIZE)) {
-				icontainerlistener.sendProgressBarUpdate(this, TileEntityBuilder.FIELD_SIZE, this.tileEntity.getField(TileEntityBuilder.FIELD_SIZE));
+			idx = TileEntityBuilder.Fields.SIZE.ordinal();
+			if (this.tileSize != this.tileEntity.getField(idx)) {
+				icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
 			}
-			if (this.tileSpeed != this.tileEntity.getField(TileEntityBuilder.FIELD_SPEED)) {
-				icontainerlistener.sendProgressBarUpdate(this, TileEntityBuilder.FIELD_SPEED, this.tileEntity.getField(TileEntityBuilder.FIELD_SPEED));
+			idx = TileEntityBuilder.Fields.SPEED.ordinal();
+			if (this.tileSpeed != this.tileEntity.getField(idx)) {
+				icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
 			}
 		}
-		this.tileTimer = this.tileEntity.getField(TileEntityBuilder.FIELD_TIMER);
-		this.tileBuild = this.tileEntity.getField(TileEntityBuilder.FIELD_BUILDTYPE);
-		this.tileSize = this.tileEntity.getField(TileEntityBuilder.FIELD_SIZE);
-		this.tileSpeed = this.tileEntity.getField(TileEntityBuilder.FIELD_SPEED);
+		this.tileTimer = this.tileEntity.getField(TileEntityBuilder.Fields.TIMER.ordinal());
+		this.tileBuild = this.tileEntity.getField(TileEntityBuilder.Fields.BUILDTYPE.ordinal());
+		this.tileSize = this.tileEntity.getField(TileEntityBuilder.Fields.SIZE.ordinal());
+		this.tileSpeed = this.tileEntity.getField(TileEntityBuilder.Fields.SPEED.ordinal());
 	}
 	@Override
 	@SideOnly(Side.CLIENT)

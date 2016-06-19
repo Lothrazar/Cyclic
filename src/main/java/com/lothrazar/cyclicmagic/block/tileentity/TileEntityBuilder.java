@@ -32,10 +32,9 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 	private List<BlockPos> shape = null;
 	private BlockPos nextPos;// location of next block to be placed
 	public static final int TIMER_FULL = 50;//maybe 500 for release fast for test
-	public final static int FIELD_TIMER = 0;
-	public final static int FIELD_BUILDTYPE = 1;
-	public final static int FIELD_SPEED = 2;
-	public final static int FIELD_SIZE = 3;
+	public static enum Fields{
+		TIMER,BUILDTYPE,SPEED,SIZE
+	}
 	private static final String NBT_INV = "Inventory";
 	private static final String NBT_SLOT = "Slot";
 	private static final String NBT_TIMER = "Timer";
@@ -128,43 +127,45 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 	}
 	@Override
 	public int getField(int id) {
-		switch (id) {
-		case FIELD_TIMER:
+		if(id >= 0 && id < this.getFieldCount())
+		switch (Fields.values()[id]) {
+		case TIMER:
 			return timer;
-		case FIELD_BUILDTYPE:
+		case BUILDTYPE:
 			return this.buildType;
-		case FIELD_SPEED:
+		case SPEED:
 			return this.buildSpeed;
-		case FIELD_SIZE:
+		case SIZE:
 			return this.buildSize;
 		}
 		return -1;
 	}
 	@Override
 	public void setField(int id, int value) {
-		switch (id) {
-		case FIELD_TIMER:
+		if(id >= 0 && id < this.getFieldCount())
+		switch (Fields.values()[id]) {
+		case TIMER:
 			this.timer = value;
 			break;
-		case FIELD_BUILDTYPE:
+		case BUILDTYPE:
 			this.buildType = value;
 			break;
-		case FIELD_SPEED:
+		case SPEED:
 			this.buildSpeed = value;
 			break;
-		case FIELD_SIZE:
+		case SIZE:
 			this.buildSize = value;
 			break;
 		}
 	}
 	public int getTimer() {
-		return this.getField(FIELD_TIMER);
+		return this.getField(Fields.TIMER.ordinal());
 	}
 	public int getBuildType() {
-		return this.getField(FIELD_BUILDTYPE);
+		return this.getField(Fields.BUILDTYPE.ordinal());
 	}
 	public void setBuildType(int value) {
-		this.setField(FIELD_BUILDTYPE, value);
+		this.setField(Fields.BUILDTYPE.ordinal(), value);
 	}
 	public BuildType getBuildTypeEnum() {
 		return BuildType.values()[this.getBuildType()];
@@ -173,10 +174,10 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		if (s <= 0) {
 			s = 10;
 		}
-		this.setField(FIELD_SPEED, s);
+		this.setField(Fields.SPEED.ordinal(), s);
 	}
 	public int getSpeed() {
-		int s = this.getField(FIELD_SPEED);
+		int s = this.getField(Fields.SPEED.ordinal());
 		if (s <= 0) {
 			s = 1;
 		}
@@ -186,18 +187,21 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		if (s <= 0) {
 			s = 1;
 		}
-		this.setField(FIELD_SIZE, s);
+		if (s >= 10) {
+			s = 10;
+		}
+		this.setField(Fields.SIZE.ordinal(), s);
 	}
 	public int getSize() {
-		int s = this.getField(FIELD_SIZE);
+		int s = this.getField(Fields.SIZE.ordinal());
 		if (s <= 0) {
-			s = 10;
+			s = 1;
 		}
 		return s;
 	}
 	@Override
 	public int getFieldCount() {
-		return 2;
+		return Fields.values().length;
 	}
 	@Override
 	public void clear() {
@@ -430,7 +434,11 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 	}
 	@Override
 	public boolean receiveClientEvent(int id, int value) {
-		this.setField(id, value);
-		return super.receiveClientEvent(id, value);
+		if(id >= 0 && id < this.getFieldCount()){
+			this.setField(id, value);
+			return true;
+		}
+		else
+			return super.receiveClientEvent(id, value);
 	}
 }

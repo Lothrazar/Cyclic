@@ -52,7 +52,7 @@ public class GuiUncrafting extends GuiContainer {
 		
 		for(int k = 0; k < this.tile.getSizeInventory(); k++){
 			
-			Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerUncrafting.SLOTX_START - 3 +k*Const.SQ, this.guiTop + ContainerUncrafting.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);	
+			Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerUncrafting.SLOTX_START - 1 +k*Const.SQ, this.guiTop + ContainerUncrafting.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);	
 		}
 
 		if (tile.getTimer() > 0 && tile.getStackInSlot(0) != null) {

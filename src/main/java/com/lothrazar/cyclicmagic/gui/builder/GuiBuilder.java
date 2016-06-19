@@ -19,8 +19,11 @@ public class GuiBuilder extends GuiContainer {
 	private static final ResourceLocation progress = new ResourceLocation(Const.MODID, folder + "progress.png");
 	private static final int texture_width = 176;
 	private static final int texture_height = 166;
+	static final int padding = 4;
 	private TileEntityBuilder tile;
 	private ButtonBuilderType btn;
+	private int xSizeTextbox;
+	private int ySizeTxtbox;
 	public GuiBuilder(InventoryPlayer inventoryPlayer, TileEntityBuilder tileEntity) {
 		super(new ContainerBuilder(inventoryPlayer, tileEntity));
 		tile = tileEntity;
@@ -28,26 +31,21 @@ public class GuiBuilder extends GuiContainer {
 	public GuiBuilder(Container c) {
 		super(c);
 	}
-	static final int padding = 4;
 	@Override
 	public void initGui() {
 		super.initGui();
-		int y = this.guiTop + padding;
-		int x = this.guiLeft + 5;
-		int width = 20;
-		width = 50;
+		int width = 50;
 		int id = 2;
-		btn = new ButtonBuilderType(tile.getPos(), id++, x, y, width);
+		btn = new ButtonBuilderType(tile.getPos(), id++, this.guiLeft + padding, this.guiTop + padding, width);
 		this.buttonList.add(btn);
-		
-		width = 20;
-		x += 50;
-		ButtonBuildSize b = new ButtonBuildSize(tile.getPos(), id++, x, y, width,true);
+		width = 15;
+		xSizeTextbox = texture_width - 20;
+		ButtonBuildSize b = new ButtonBuildSize(tile.getPos(), id++,this.guiLeft +  xSizeTextbox, this.guiTop + padding, width, true);
 		this.buttonList.add(b);
-		
-		y += 30;
-		b = new ButtonBuildSize(tile.getPos(), id++, x, y, width,false);
+		b = new ButtonBuildSize(tile.getPos(), id++,this.guiLeft +  xSizeTextbox, this.guiTop + padding + 20, width, false);
 		this.buttonList.add(b);
+		xSizeTextbox += width/2-2;
+		ySizeTxtbox = padding + 12;
 	}
 	boolean debugLabels = true;
 	@SideOnly(Side.CLIENT)
@@ -61,6 +59,8 @@ public class GuiBuilder extends GuiContainer {
 			this.fontRendererObj.drawString("speed = " + this.tile.getSpeed(), 38, this.ySize - 114, 4210752);
 			this.fontRendererObj.drawString("size = " + this.tile.getSize(), 38, this.ySize - 124, 4210752);
 		}
+		if(this.tile.getSize()>0)
+			this.fontRendererObj.drawString("" + this.tile.getSize(), xSizeTextbox, ySizeTxtbox, 4210752);
 	}
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
@@ -71,8 +71,8 @@ public class GuiBuilder extends GuiContainer {
 		int u = 0, v = 0;
 		Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, this.xSize, this.ySize, texture_width, texture_height);
 		this.mc.getTextureManager().bindTexture(slot);
-		for (int k = 0; k < this.tile.getSizeInventory(); k++) {
-			Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerBuilder.SLOTX_START - 3 + k * Const.SQ, this.guiTop + ContainerBuilder.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+		for (int k = 0; k < this.tile.getSizeInventory(); k++) { // x had - 3  ??
+			Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerBuilder.SLOTX_START-1 + k * Const.SQ, this.guiTop + ContainerBuilder.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
 		}
 		if (tile.getTimer() > 0 && tile.getStackInSlot(0) != null) {
 			this.mc.getTextureManager().bindTexture(progress);

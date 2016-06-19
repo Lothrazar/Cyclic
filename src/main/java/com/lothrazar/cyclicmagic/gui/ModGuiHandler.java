@@ -20,6 +20,7 @@ import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -62,7 +63,9 @@ public class ModGuiHandler implements IGuiHandler {
 		case GUI_INDEX_BUILDER:
 			TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
 			if (te instanceof TileEntityBuilder) { 
-				return new ContainerBuilder(player.inventory, (TileEntityBuilder) te);
+				Container c = new ContainerBuilder(player.inventory, (TileEntityBuilder) te);
+				c.detectAndSendChanges();
+				return c;
 			}
 			break;
 		}
