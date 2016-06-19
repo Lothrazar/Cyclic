@@ -180,7 +180,7 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		return this.getField(FIELD_BUILDTYPE);
 	}
 	public void setBuildType(int value){
-		this.setField(value, FIELD_BUILDTYPE);
+		this.setField(FIELD_BUILDTYPE, value);
 	}
 	public BuildType getBuildTypeEnum(){
 		return BuildType.values()[this.getBuildType()];
@@ -474,7 +474,7 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 			if (type > CIRCLE.ordinal()) {
 				type = FACING.ordinal();
 			}
-			
+			System.out.println("getNextType("+btype+") = "+type);
 			return BuildType.values()[type];
 		}
 	}

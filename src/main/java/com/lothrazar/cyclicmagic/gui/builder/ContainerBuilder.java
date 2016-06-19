@@ -116,6 +116,7 @@ public class ContainerBuilder extends Container {
 	@Override
     @SideOnly(Side.CLIENT)
     public void updateProgressBar(int id, int data){
+		System.out.println("updateProgressBar "+id +":"+ data);
         this.tileEntity.setField(id, data);
     }
 	@Override
