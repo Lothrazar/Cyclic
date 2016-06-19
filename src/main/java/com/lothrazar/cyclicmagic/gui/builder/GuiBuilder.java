@@ -46,11 +46,14 @@ public class GuiBuilder extends GuiContainer {
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 		
-		System.out.println("gui build "+this.tile.getBuildType());
-		this.btn.displayString = I18n.format("buildertype."+this.tile.getBuildTypeEnum().name().toLowerCase()+".name");
+//		System.out.println("gui build "+this.tile.getBuildType());
+		
+		this.btn.displayString = I18n.format("buildertype."+this.tile.getBuildType());
+		
+	//	this.btn.displayString = I18n.format("buildertype."+this.tile.getBuildTypeEnum().name().toLowerCase()+".name");
 		
 		//works to render text directly on gui if i need it (str,x,y,color)
-	    //this.fontRendererObj.drawString("test", 8, this.ySize - 96 + 2, 4210752);
+//	    this.fontRendererObj.drawString("t = "+this.tile.getTimer(), 8, this.ySize - 96 + 2, 4210752);
 	}
 
 	private static final String				folder		= "textures/gui/";

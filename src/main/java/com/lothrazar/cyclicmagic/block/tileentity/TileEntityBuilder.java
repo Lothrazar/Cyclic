@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 
+import java.io.InvalidObjectException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,9 +27,9 @@ import net.minecraft.util.text.ITextComponent;
 
 public class TileEntityBuilder extends TileEntity implements IInventory, ITickable, ISidedInventory {
 
-	private ItemStack[] inv = new ItemStack[9];
-	private int currentType;
 	private int	timer;
+	private int currentType;
+	private ItemStack[] inv = new ItemStack[9];
 	private int	shapeIndex = 0;
 	private BlockPos nextPos;
 	private List<BlockPos> shape = null;
@@ -168,8 +169,10 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		switch(id){
 		case FIELD_TIMER:
 			this.timer = value;
+			break;
 		case FIELD_BUILDTYPE:
 			this.currentType = value;
+			break;
 		}
 	}
 	public int getTimer() {
@@ -179,7 +182,13 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		return this.getField(FIELD_BUILDTYPE);
 	}
 	public void setBuildType(int value){
+		//FACING,UP,SQUARE,CIRCLE;
 		System.out.println("setBuildType "+value);
+		if(value < BuildType.FACING.ordinal() || value > BuildType.CIRCLE.ordinal()){
+			ModMain.logger.error("Invalid Build Type Tile Entity Builder");
+//			throw new InvalidObjectException();
+		}
+		else
 		this.setField(FIELD_BUILDTYPE, value);
 	}
 	public BuildType getBuildTypeEnum(){
