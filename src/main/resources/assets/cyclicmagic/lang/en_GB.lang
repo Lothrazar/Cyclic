@@ -183,6 +183,7 @@ tile.block_storeempty.name=Bucket Storage
 tile.block_storelava.name=Lava Storage
 tile.block_storemilk.name=Milk Storage
 tile.block_storewater.name=Water Storage
+tile.builder_block.name=Structure Builder
 tile.end_coal_ore.name=End Coal Ore
 tile.end_diamond_ore.name=End Diamond Ore
 tile.end_emerald_ore.name=End Emerald Ore
