@@ -43,7 +43,7 @@ public class ButtonBuilderType extends GuiButton implements ITooltipButton {
 
 		List<String> tooltips = new ArrayList<String>();
 
-		tooltips.add(TextFormatting.GRAY + I18n.format("button.build.meta"));
+		tooltips.add(TextFormatting.GRAY + I18n.format("button.builder.meta"));
 
 		
 		return tooltips;

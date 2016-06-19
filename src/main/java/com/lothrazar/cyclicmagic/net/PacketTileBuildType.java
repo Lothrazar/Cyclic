@@ -67,7 +67,7 @@ public class PacketTileBuildType implements IMessage, IMessageHandler<PacketTile
 				player.openContainer.detectAndSendChanges();
 			}
 			
-			UtilChat.addChatMessage(player, next.name());
+			UtilChat.addChatMessage(player, UtilChat.lang("buildertype."+next.name().toLowerCase()+".name"));
 		}
 
 		return null;
