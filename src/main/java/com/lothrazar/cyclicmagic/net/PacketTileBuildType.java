@@ -48,6 +48,7 @@ public class PacketTileBuildType implements IMessage, IMessageHandler<PacketTile
 		ByteBufUtils.writeTag(buf, tags);
 	}
 
+	private boolean chat = false;
 	@Override
 	public IMessage onMessage(PacketTileBuildType message, MessageContext ctx) {
 
@@ -71,7 +72,7 @@ public class PacketTileBuildType implements IMessage, IMessageHandler<PacketTile
 				player.sendAllWindowProperties(player.openContainer, tile);
 			}
 			
-			UtilChat.addChatMessage(player, UtilChat.lang("buildertype."+next.name().toLowerCase()+".name"));
+			if(chat)UtilChat.addChatMessage(player, UtilChat.lang("buildertype."+next.name().toLowerCase()+".name"));
 		}
 
 		return null;

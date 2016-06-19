@@ -179,6 +179,7 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		return this.getField(FIELD_BUILDTYPE);
 	}
 	public void setBuildType(int value){
+		System.out.println("setBuildType "+value);
 		this.setField(FIELD_BUILDTYPE, value);
 	}
 	public BuildType getBuildTypeEnum(){

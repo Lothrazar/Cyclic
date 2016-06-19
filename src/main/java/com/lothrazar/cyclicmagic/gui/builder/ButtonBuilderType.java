@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBuilder;
 import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
 import com.lothrazar.cyclicmagic.net.PacketTileBuildType;
 import net.minecraft.client.Minecraft;
@@ -17,12 +16,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ButtonBuilderType extends GuiButton implements ITooltipButton {
 
-	final BlockPos container;
+	final BlockPos tilePos;
 
 	public ButtonBuilderType(BlockPos current, int buttonId, int x, int y, int width) {
 
-		super(buttonId, x, y, width, 20, I18n.format("builder.toggle.name"));
-		container = current;
+		super(buttonId, x, y, width, 20, I18n.format(""));
+		tilePos = current;
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -32,7 +31,7 @@ public class ButtonBuilderType extends GuiButton implements ITooltipButton {
 		boolean pressed = super.mousePressed(mc, mouseX, mouseY);
 
 		if (pressed) {
-			ModMain.network.sendToServer(new PacketTileBuildType(container));
+			ModMain.network.sendToServer(new PacketTileBuildType(tilePos));
 		}
 
 		return pressed;
@@ -45,7 +44,6 @@ public class ButtonBuilderType extends GuiButton implements ITooltipButton {
 
 		tooltips.add(TextFormatting.GRAY + I18n.format("button.builder.meta"));
 
-		
 		return tooltips;
 	}
 }

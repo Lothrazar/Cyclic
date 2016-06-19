@@ -46,15 +46,11 @@ public class GuiBuilder extends GuiContainer {
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 		
-		String test = I18n.format("container.inventory");
+		System.out.println("gui build "+this.tile.getBuildType());
+		this.btn.displayString = I18n.format("buildertype."+this.tile.getBuildTypeEnum().name().toLowerCase()+".name");
 		
-		test += this.tile.getBuildType();
-		
-		
-	     this.fontRendererObj.drawString(test, 8, this.ySize - 96 + 2, 4210752);
-	     
-		
-		
+		//works to render text directly on gui if i need it (str,x,y,color)
+	    //this.fontRendererObj.drawString("test", 8, this.ySize - 96 + 2, 4210752);
 	}
 
 	private static final String				folder		= "textures/gui/";
@@ -65,9 +61,6 @@ public class GuiBuilder extends GuiContainer {
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
 
-		//for some reason, tile is accurate but build type resets to zero everytime we save and reload the world
-//		System.out.println("drawGuiContainerBackgroundLayer :"+this.tile.getBuildType());
-//		System.out.println("drawGuiContainerBackgroundLayer tile.getTimer() :"+this.tile.getTimer());
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		this.mc.getTextureManager().bindTexture(table);
 		int thisX = (this.width - this.xSize) / 2;
@@ -82,12 +75,7 @@ public class GuiBuilder extends GuiContainer {
 		for(int k = 0; k < this.tile.getSizeInventory(); k++){
 			Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerBuilder.SLOTX_START - 3 +k*Const.SQ, this.guiTop + ContainerBuilder.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);	
 		}
-		
-		//TODO: still a mystery why timer updates on clientside and other data doesnt
-		//btn.displayString = tile.getBuildType()+":"+tile.getTimer();
-		
-		
-
+		 
 		if (tile.getTimer() > 0 && tile.getStackInSlot(0) != null) {
 			this.mc.getTextureManager().bindTexture(progress);
 
