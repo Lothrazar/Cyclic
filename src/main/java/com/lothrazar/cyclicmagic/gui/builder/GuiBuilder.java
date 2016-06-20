@@ -62,7 +62,10 @@ public class GuiBuilder extends GuiContainer {
 			this.fontRendererObj.drawString("size = " + this.tile.getSize(), 38, this.ySize - 124, 4210752);
 		}
 		if (this.tile.getSize() > 0){
-			this.fontRendererObj.drawString("" + this.tile.getSize(), xSizeTextbox, ySizeTxtbox, 4210752);
+			String display = "" + this.tile.getSize();
+			//move it over if more than 1 digit
+			int x = (display.length() > 1) ? xSizeTextbox - 3 : xSizeTextbox;
+			this.fontRendererObj.drawString(display, x, ySizeTxtbox, 4210752);
 		}
 		 
 		this.btnSizeDown.enabled = (this.tile.getSize() > 1);
