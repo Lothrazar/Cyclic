@@ -190,15 +190,9 @@ public class BlockRegistry {
 		String category = Const.ConfigCategory.blocks;
 
 		spawnersUnbreakable = config.getBoolean("Spawners Unbreakable", category, true, "Make mob spawners unbreakable");
-// 
-//		category = Const.ConfigCategory.blocks;
-// 
-//		config.setCategoryComment(category, "Disable or customize blocks added to the game");
 
-//		enableBlockFragile = config.getBoolean("Scaffolding", category, true, "Enable the scaffolding block that breaks by itself");
-//
-//		enabledBucketBlocks = config.getBoolean("Bucket Blocks", category, true, "Enable Bucket Storage Blocks");
- 
 		uncrafting_block.syncConfig(config);
+		
+		builder_block.syncConfig(config);
 	}
 }

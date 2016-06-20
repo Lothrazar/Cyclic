@@ -44,7 +44,7 @@ public class PacketTileBuildType implements IMessage, IMessageHandler<PacketTile
 			TileEntityBuilder.BuildType next = TileEntityBuilder.BuildType.getNextType(old);
 //			System.out.println("old" + old.name() + "__new__" + next.name());
 			tile.setBuildType(next.ordinal());
-			tile.setShape();
+			tile.rebuildShape();
 			tile.markDirty();
 			if (player.openContainer != null) {
 				player.openContainer.detectAndSendChanges();

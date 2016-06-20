@@ -27,13 +27,14 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 	private int buildType;
 	private int buildSpeed;
 	private int buildSize;
+	private int buildHeight = 3;
 	private ItemStack[] inv = new ItemStack[9];
 	private int shapeIndex = 0;// current index of shape array
 	private List<BlockPos> shape = null;
 	private BlockPos nextPos;// location of next block to be placed
-	private int maxSpeed = 3;
-	public static int maxSize = 10;
-	public static final int TIMER_FULL = 50;// INCREASE ocne speedupgrades are in
+	private static final int maxSpeed = 1;
+	public static int maxSize;
+	public static final int TIMER_FULL = 25;// INCREASE ocne speedupgrades are in
 	public static enum Fields {
 		TIMER, BUILDTYPE, SPEED, SIZE
 	}
@@ -48,12 +49,15 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 	private static final String NBT_SHAPEINDEX = "shapeindex";
 	public TileEntityBuilder() {
 	}
-	public void setShape() {
+	public void rebuildShape() {
 		BuildType buildType = getBuildTypeEnum();
 		// only rebuild shapes if they are different
 		switch (buildType) {
 		case CIRCLE:
 			this.shape = UtilPlaceBlocks.circle(this.pos, this.getSize() * 2);
+			if(this.buildHeight > 1){
+				this.shape = UtilPlaceBlocks.repeatShapeByHeight(shape, buildHeight-1);
+			}
 			break;
 		case FACING:
 			this.shape = UtilPlaceBlocks.line(pos, this.getCurrentFacing().getOpposite(), this.getSize());
@@ -389,7 +393,7 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 			return;
 		}
 		if (this.shape == null || this.shape.size() == 0) {
-			this.setShape();
+			this.rebuildShape();
 		} else {
 			int c = shapeIndex + 1;
 			if (c < 0 || c >= this.shape.size()) {
