@@ -23,6 +23,7 @@ public class ContainerBuilder extends Container {
 	private int tileTimer;
 	private int tileSpeed;
 	private int tileSize;
+	private int tileHeight;
 	public ContainerBuilder(InventoryPlayer inventoryPlayer, TileEntityBuilder te) {
 		tileEntity = te;
 		for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
@@ -97,11 +98,16 @@ public class ContainerBuilder extends Container {
 			if (this.tileSpeed != this.tileEntity.getField(idx)) {
 				icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
 			}
+			idx = TileEntityBuilder.Fields.HEIGHT.ordinal();
+			if (this.tileHeight != this.tileEntity.getField(idx)) {
+				icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
+			}
 		}
 		this.tileTimer = this.tileEntity.getField(TileEntityBuilder.Fields.TIMER.ordinal());
 		this.tileBuild = this.tileEntity.getField(TileEntityBuilder.Fields.BUILDTYPE.ordinal());
 		this.tileSize = this.tileEntity.getField(TileEntityBuilder.Fields.SIZE.ordinal());
 		this.tileSpeed = this.tileEntity.getField(TileEntityBuilder.Fields.SPEED.ordinal());
+		this.tileHeight = this.tileEntity.getField(TileEntityBuilder.Fields.HEIGHT.ordinal());
 	}
 	@Override
 	@SideOnly(Side.CLIENT)

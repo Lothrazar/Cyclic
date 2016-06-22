@@ -36,7 +36,7 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 	public static int maxSize;
 	public static final int TIMER_FULL = 25;// INCREASE ocne speedupgrades are in
 	public static enum Fields {
-		TIMER, BUILDTYPE, SPEED, SIZE
+		TIMER, BUILDTYPE, SPEED, SIZE, HEIGHT
 	}
 	private static final String NBT_INV = "Inventory";
 	private static final String NBT_SLOT = "Slot";
@@ -55,9 +55,6 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		switch (buildType) {
 		case CIRCLE:
 			this.shape = UtilPlaceBlocks.circle(this.pos, this.getSize() * 2);
-			if(this.buildHeight > 1){
-				this.shape = UtilPlaceBlocks.repeatShapeByHeight(shape, buildHeight-1);
-			}
 			break;
 		case FACING:
 			this.shape = UtilPlaceBlocks.line(pos, this.getCurrentFacing().getOpposite(), this.getSize());
@@ -65,11 +62,11 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		case SQUARE:
 			this.shape = UtilPlaceBlocks.squareHorizontalHollow(this.pos, this.getSize());
 			break;
-		case UP:
-			this.shape = UtilPlaceBlocks.line(pos, EnumFacing.UP, this.getSize());
-			break;
 		default:
 			break;
+		}
+		if(this.buildHeight > 1){ //first layer is already done, add remaining
+			this.shape = UtilPlaceBlocks.repeatShapeByHeight(shape, buildHeight-1);
 		}
 		this.shapeIndex = 0;
 		if (this.shape.size() > 0)
@@ -143,6 +140,8 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 				return this.buildSpeed;
 			case SIZE:
 				return this.buildSize;
+			case HEIGHT:
+				return this.buildHeight;
 			}
 		return -1;
 	}
@@ -162,6 +161,11 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 			case SIZE:
 				this.buildSize = value;
 				break;
+			case HEIGHT:
+				this.buildHeight = value;
+				break;
+			default:
+				break;
 			}
 	}
 	public int getTimer() {
@@ -174,7 +178,8 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		this.setField(Fields.BUILDTYPE.ordinal(), value);
 	}
 	public BuildType getBuildTypeEnum() {
-		return BuildType.values()[this.getBuildType()];
+		int bt = Math.min(this.getBuildType(), BuildType.values().length-1);
+		return BuildType.values()[bt];
 	}
 	public void setSpeed(int s) {
 		if (s <= 0) {
@@ -431,7 +436,7 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		return null;
 	}
 	public enum BuildType {
-		FACING, UP, SQUARE, CIRCLE;
+		FACING, SQUARE, CIRCLE;
 		public static BuildType getNextType(BuildType btype) {
 			int type = btype.ordinal();
 			type++;
