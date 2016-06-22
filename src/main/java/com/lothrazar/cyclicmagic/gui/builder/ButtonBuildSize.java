@@ -16,11 +16,13 @@ public class ButtonBuildSize extends GuiButton implements ITooltipButton {
 	private final BlockPos tilePos;
 	private final List<String> tooltips = new ArrayList<String>();
 	boolean goUp;
-	public ButtonBuildSize(BlockPos current, int buttonId, int x, int y, int width, boolean up) {
+	private String type = "size";
+	public ButtonBuildSize(BlockPos current, int buttonId, int x, int y, int width, boolean up, String strType) {
 		super(buttonId, x, y, width, 10, "");
 		tilePos = current;
 		goUp = up;
-		tooltips.add(TextFormatting.GRAY + UtilChat.lang("button.size." + (goUp?"up":"down")));
+		tooltips.add(TextFormatting.GRAY + UtilChat.lang("button."+type+"." + (goUp?"up":"down")));
+		type = strType;
 	}
 	@SideOnly(Side.CLIENT)
 	@Override
@@ -28,7 +30,7 @@ public class ButtonBuildSize extends GuiButton implements ITooltipButton {
 		boolean pressed = super.mousePressed(mc, mouseX, mouseY);
 		if (pressed) {
 			int size = (goUp) ? 1 : -1;
-			ModMain.network.sendToServer(new PacketTileBuildSize(tilePos, size));
+			ModMain.network.sendToServer(new PacketTileBuildSize(tilePos, size, type));
 		}
 		return pressed;
 	}

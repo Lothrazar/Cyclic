@@ -26,6 +26,8 @@ public class GuiBuilder extends GuiContainer {
 	private ButtonBuildSize btnSizeDown;
 	private int xSizeTextbox;
 	private int ySizeTxtbox;
+	private int xHeightTextbox;
+	private int yHeightTxtbox;
 	boolean debugLabels = false;
 	public GuiBuilder(InventoryPlayer inventoryPlayer, TileEntityBuilder tileEntity) {
 		super(new ContainerBuilder(inventoryPlayer, tileEntity));
@@ -43,12 +45,24 @@ public class GuiBuilder extends GuiContainer {
 		this.buttonList.add(btn);
 		width = 15;
 		xSizeTextbox = texture_width - 20;
-		btnSizeUp = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xSizeTextbox, this.guiTop + padding, width, true);
+		btnSizeUp = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xSizeTextbox, this.guiTop + padding, width, true,"size");
 		this.buttonList.add(btnSizeUp);
-		btnSizeDown = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xSizeTextbox, this.guiTop + padding + 20, width, false);
+		btnSizeDown = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xSizeTextbox, this.guiTop + padding + 20, width, false,"size");
 		this.buttonList.add(btnSizeDown);
 		xSizeTextbox += width / 2 - 2;
 		ySizeTxtbox = padding + 12;
+		
+		
+
+		xHeightTextbox = texture_width - 60;
+		btnSizeUp = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xHeightTextbox, this.guiTop + padding, width, true,"height");
+		this.buttonList.add(btnSizeUp);
+		btnSizeDown = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xHeightTextbox, this.guiTop + padding + 20, width, false,"height");
+		this.buttonList.add(btnSizeDown);
+		xHeightTextbox += width / 2 - 2;
+		yHeightTxtbox = padding + 12;
+		
+		
 	}
 	@SideOnly(Side.CLIENT)
 	@Override
@@ -66,6 +80,12 @@ public class GuiBuilder extends GuiContainer {
 			//move it over if more than 1 digit
 			int x = (display.length() > 1) ? xSizeTextbox - 3 : xSizeTextbox;
 			this.fontRendererObj.drawString(display, x, ySizeTxtbox, 4210752);
+		}
+		if (this.tile.getHeight() > 0){
+			String display = "" + this.tile.getSize();
+			//move it over if more than 1 digit
+			int x = (display.length() > 1) ? xHeightTextbox - 3 : xHeightTextbox;
+			this.fontRendererObj.drawString(display, x, yHeightTxtbox, 4210752);
 		}
 		 
 		this.btnSizeDown.enabled = (this.tile.getSize() > 1);

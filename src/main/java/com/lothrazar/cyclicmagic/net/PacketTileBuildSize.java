@@ -12,12 +12,14 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 public class PacketTileBuildSize implements IMessage, IMessageHandler<PacketTileBuildSize, IMessage> {
 	public static final int ID = 55;
 	private BlockPos pos;
-	private int size;
+	private int value;
+	private String type;
 	public PacketTileBuildSize() {
 	}
-	public PacketTileBuildSize(BlockPos p,int s) {
+	public PacketTileBuildSize(BlockPos p,int s,String spr) {
 		pos = p;
-		size = s;
+		value = s;
+		type = spr;
 	}
 	@Override
 	public void fromBytes(ByteBuf buf) {
@@ -26,7 +28,8 @@ public class PacketTileBuildSize implements IMessage, IMessageHandler<PacketTile
 		int y = tags.getInteger("y");
 		int z = tags.getInteger("z");
 		pos = new BlockPos(x, y, z);
-		size = tags.getInteger("size");
+		value = tags.getInteger("size");
+		type = tags.getString("type");
 	}
 	@Override
 	public void toBytes(ByteBuf buf) {
@@ -34,7 +37,8 @@ public class PacketTileBuildSize implements IMessage, IMessageHandler<PacketTile
 		tags.setInteger("x", pos.getX());
 		tags.setInteger("y", pos.getY());
 		tags.setInteger("z", pos.getZ());
-		tags.setInteger("size", size);
+		tags.setInteger("size", value);
+		tags.setString("type", type);
 		ByteBufUtils.writeTag(buf, tags);
 	}
 	@Override
@@ -42,7 +46,10 @@ public class PacketTileBuildSize implements IMessage, IMessageHandler<PacketTile
 		EntityPlayerMP player = ctx.getServerHandler().playerEntity;
 		TileEntityBuilder tile = (TileEntityBuilder) player.getEntityWorld().getTileEntity(message.pos);
 		if (tile != null) {
-			tile.setSize(tile.getSize() + message.size);
+			if(message.type == "size")
+				tile.setSize(tile.getSize() + message.value);
+			else if(message.type == "height")
+				tile.setHeight(tile.getHeight() + message.value);
 			tile.rebuildShape();
 			tile.markDirty();
 			if (player.openContainer != null) {

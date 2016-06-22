@@ -171,6 +171,12 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 	public int getTimer() {
 		return this.getField(Fields.TIMER.ordinal());
 	}
+	public int getHeight() {
+		return this.getField(Fields.HEIGHT.ordinal());
+	}
+	public void setHeight(int value) {
+		this.setField(Fields.HEIGHT.ordinal(), value);
+	}
 	public int getBuildType() {
 		return this.getField(Fields.BUILDTYPE.ordinal());
 	}
