@@ -19,7 +19,7 @@ public class GuiBuilder extends GuiContainer {
 	private static final ResourceLocation progress = new ResourceLocation(Const.MODID, folder + "progress.png");
 	private static final int texture_width = 176;
 	private static final int texture_height = 166;
-	static final int padding = 4;
+	static final int padding = 8;
 	private TileEntityBuilder tile;
 	private ButtonBuilderType btn;
 	private ButtonBuildSize btnSizeUp;
@@ -48,21 +48,21 @@ public class GuiBuilder extends GuiContainer {
 		this.buttonList.add(btn);
 		width = 15;
 		//size buttons
-		xSizeTextbox = texture_width - 20;
-		btnSizeUp = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xSizeTextbox, this.guiTop + padding, width, true, "size");
+		xSizeTextbox = texture_width - 24;
+		btnSizeUp = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xSizeTextbox, this.guiTop + 4, width, true, "size");
 		this.buttonList.add(btnSizeUp);
-		btnSizeDown = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xSizeTextbox, this.guiTop + padding + 20, width, false, "size");
+		btnSizeDown = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xSizeTextbox, this.guiTop + 24, width, false, "size");
 		this.buttonList.add(btnSizeDown);
 		xSizeTextbox += width / 2 - 2;
-		ySizeTxtbox = padding + 12;
+		ySizeTxtbox = 16;
 		//further to the left we have the height buttons
-		xHeightTextbox = texture_width - 60;
-		btnHeightUp = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xHeightTextbox, this.guiTop + padding, width, true, "height");
+		xHeightTextbox = texture_width - 68;
+		btnHeightUp = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xHeightTextbox, this.guiTop + 4, width, true, "height");
 		this.buttonList.add(btnHeightUp);
-		btnHeightDown = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xHeightTextbox, this.guiTop + padding + 20, width, false, "height");
+		btnHeightDown = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xHeightTextbox, this.guiTop + 24, width, false, "height");
 		this.buttonList.add(btnHeightDown);
 		xHeightTextbox += width / 2 - 2;
-		yHeightTxtbox = padding + 12;
+		yHeightTxtbox = ySizeTxtbox;
 	}
 	@SideOnly(Side.CLIENT)
 	@Override
