@@ -16,13 +16,13 @@ public class ButtonBuildSize extends GuiButton implements ITooltipButton {
 	private final BlockPos tilePos;
 	private final List<String> tooltips = new ArrayList<String>();
 	boolean goUp;
-	private String type = "size";
+	private String type;
 	public ButtonBuildSize(BlockPos current, int buttonId, int x, int y, int width, boolean up, String strType) {
 		super(buttonId, x, y, width, 10, "");
 		tilePos = current;
 		goUp = up;
-		tooltips.add(TextFormatting.GRAY + UtilChat.lang("button."+type+"." + (goUp?"up":"down")));
 		type = strType;
+		tooltips.add(TextFormatting.GRAY + UtilChat.lang("button."+type+"." + (goUp?"up":"down")));
 	}
 	@SideOnly(Side.CLIENT)
 	@Override

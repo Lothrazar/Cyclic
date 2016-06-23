@@ -34,6 +34,7 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 	private BlockPos nextPos;// location of next block to be placed
 	private static final int maxSpeed = 1;
 	public static int maxSize;
+	public static int maxHeight = 10;
 	public static final int TIMER_FULL = 25;// INCREASE ocne speedupgrades are in
 	public static enum Fields {
 		TIMER, BUILDTYPE, SPEED, SIZE, HEIGHT

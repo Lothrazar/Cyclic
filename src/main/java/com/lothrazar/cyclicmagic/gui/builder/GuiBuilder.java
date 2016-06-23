@@ -24,6 +24,8 @@ public class GuiBuilder extends GuiContainer {
 	private ButtonBuilderType btn;
 	private ButtonBuildSize btnSizeUp;
 	private ButtonBuildSize btnSizeDown;
+	private ButtonBuildSize btnHeightUp;
+	private ButtonBuildSize btnHeightDown;
 	private int xSizeTextbox;
 	private int ySizeTxtbox;
 	private int xHeightTextbox;
@@ -39,30 +41,28 @@ public class GuiBuilder extends GuiContainer {
 	@Override
 	public void initGui() {
 		super.initGui();
+		//first the main top left type button
 		int width = 50;
 		int id = 2;
 		btn = new ButtonBuilderType(tile.getPos(), id++, this.guiLeft + padding, this.guiTop + padding, width);
 		this.buttonList.add(btn);
 		width = 15;
+		//size buttons
 		xSizeTextbox = texture_width - 20;
-		btnSizeUp = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xSizeTextbox, this.guiTop + padding, width, true,"size");
+		btnSizeUp = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xSizeTextbox, this.guiTop + padding, width, true, "size");
 		this.buttonList.add(btnSizeUp);
-		btnSizeDown = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xSizeTextbox, this.guiTop + padding + 20, width, false,"size");
+		btnSizeDown = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xSizeTextbox, this.guiTop + padding + 20, width, false, "size");
 		this.buttonList.add(btnSizeDown);
 		xSizeTextbox += width / 2 - 2;
 		ySizeTxtbox = padding + 12;
-		
-		
-
+		//further to the left we have the height buttons
 		xHeightTextbox = texture_width - 60;
-		btnSizeUp = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xHeightTextbox, this.guiTop + padding, width, true,"height");
-		this.buttonList.add(btnSizeUp);
-		btnSizeDown = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xHeightTextbox, this.guiTop + padding + 20, width, false,"height");
-		this.buttonList.add(btnSizeDown);
+		btnHeightUp = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xHeightTextbox, this.guiTop + padding, width, true, "height");
+		this.buttonList.add(btnHeightUp);
+		btnHeightDown = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xHeightTextbox, this.guiTop + padding + 20, width, false, "height");
+		this.buttonList.add(btnHeightDown);
 		xHeightTextbox += width / 2 - 2;
 		yHeightTxtbox = padding + 12;
-		
-		
 	}
 	@SideOnly(Side.CLIENT)
 	@Override
@@ -74,22 +74,24 @@ public class GuiBuilder extends GuiContainer {
 			this.fontRendererObj.drawString("b = " + this.tile.getBuildType(), 38, this.ySize - 104, 4210752);
 			this.fontRendererObj.drawString("speed = " + this.tile.getSpeed(), 38, this.ySize - 114, 4210752);
 			this.fontRendererObj.drawString("size = " + this.tile.getSize(), 38, this.ySize - 124, 4210752);
+			this.fontRendererObj.drawString("h = " + this.tile.getHeight(), 38, this.ySize - 86, 4210752);
 		}
-		if (this.tile.getSize() > 0){
+		if (this.tile.getSize() > 0) {
 			String display = "" + this.tile.getSize();
 			//move it over if more than 1 digit
 			int x = (display.length() > 1) ? xSizeTextbox - 3 : xSizeTextbox;
 			this.fontRendererObj.drawString(display, x, ySizeTxtbox, 4210752);
 		}
-		if (this.tile.getHeight() > 0){
-			String display = "" + this.tile.getSize();
+		if (this.tile.getHeight() > 0) {
+			String display = "" + this.tile.getHeight();
 			//move it over if more than 1 digit
 			int x = (display.length() > 1) ? xHeightTextbox - 3 : xHeightTextbox;
 			this.fontRendererObj.drawString(display, x, yHeightTxtbox, 4210752);
 		}
-		 
 		this.btnSizeDown.enabled = (this.tile.getSize() > 1);
 		this.btnSizeUp.enabled = (this.tile.getSize() < TileEntityBuilder.maxSize);
+		this.btnHeightDown.enabled = (this.tile.getHeight() > 1);
+		this.btnHeightUp.enabled = (this.tile.getHeight() < TileEntityBuilder.maxHeight);
 	}
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {

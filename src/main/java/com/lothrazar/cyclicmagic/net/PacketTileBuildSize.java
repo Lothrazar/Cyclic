@@ -28,7 +28,7 @@ public class PacketTileBuildSize implements IMessage, IMessageHandler<PacketTile
 		int y = tags.getInteger("y");
 		int z = tags.getInteger("z");
 		pos = new BlockPos(x, y, z);
-		value = tags.getInteger("size");
+		value = tags.getInteger("value");
 		type = tags.getString("type");
 	}
 	@Override
@@ -37,7 +37,7 @@ public class PacketTileBuildSize implements IMessage, IMessageHandler<PacketTile
 		tags.setInteger("x", pos.getX());
 		tags.setInteger("y", pos.getY());
 		tags.setInteger("z", pos.getZ());
-		tags.setInteger("size", value);
+		tags.setInteger("value", value);
 		tags.setString("type", type);
 		ByteBufUtils.writeTag(buf, tags);
 	}
@@ -46,10 +46,11 @@ public class PacketTileBuildSize implements IMessage, IMessageHandler<PacketTile
 		EntityPlayerMP player = ctx.getServerHandler().playerEntity;
 		TileEntityBuilder tile = (TileEntityBuilder) player.getEntityWorld().getTileEntity(message.pos);
 		if (tile != null) {
-			if(message.type == "size")
+			if(message.type.equals("size"))
 				tile.setSize(tile.getSize() + message.value);
-			else if(message.type == "height")
+			else if(message.type.equals("height"))
 				tile.setHeight(tile.getHeight() + message.value);
+			
 			tile.rebuildShape();
 			tile.markDirty();
 			if (player.openContainer != null) {
