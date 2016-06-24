@@ -30,6 +30,6 @@ public class CommandPing extends BaseCommand implements ICommand {
       UtilChat.addChatMessage(player, UtilChat.blockPosToString(n));
       return;
     }
-    UtilChat.addChatMessage(player, player.getPosition().toString());
+    UtilChat.addChatMessage(player, UtilChat.blockPosToString(player.getPosition()));
   }
 }

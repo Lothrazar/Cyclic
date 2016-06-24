@@ -4,10 +4,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.translation.I18n;
 import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
-import net.minecraft.client.resources.I18n;
+//import net.minecraft.client.resources.I18n;
 import net.minecraft.world.World;
 
 public class UtilChat {
@@ -24,7 +25,8 @@ public class UtilChat {
     return pos.getX() + ", " + pos.getY() + ", " + pos.getZ();
   }
   public static String lang(String string) {
-    return I18n.format(string);
+    //if we use the clientside one, it literally does not work & crashes on serverside run
+    return I18n.translateToLocal(string);
   }
   public static void addChatMessage(World worldObj, ITextComponent textComponentTranslation) {
     if (worldObj.getMinecraftServer() != null) {
