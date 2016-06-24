@@ -36,6 +36,7 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 	public static int maxSize;
 	public static int maxHeight = 10;
 	public static final int TIMER_FULL = 25;// INCREASE ocne speedupgrades are in
+	private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots
 	public static enum Fields {
 		TIMER, BUILDTYPE, SPEED, SIZE, HEIGHT
 	}
@@ -302,10 +303,10 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 		return super.writeToNBT(tagCompound);
 	}
 	@Override
-	public SPacketUpdateTileEntity getUpdatePacket() {// getDescriptionPacket()
-														// {
-														// Gathers data into a packet (S35PacketUpdateTileEntity) that is to be
-														// sent to the client. Called on server only.
+	public SPacketUpdateTileEntity getUpdatePacket() {
+		// getDescriptionPacket()
+		// Gathers data into a packet (S35PacketUpdateTileEntity) that is to be
+		// sent to the client. Called on server only.
 		NBTTagCompound syncData = new NBTTagCompound();
 		this.writeToNBT(syncData);
 		return new SPacketUpdateTileEntity(this.pos, 1, syncData);
@@ -361,7 +362,7 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 			timer = TIMER_FULL;// reset just like you would in a
 			// furnace
 		} else {
-			timer--;
+			timer -= this.getSpeed();
 			if (timer <= 0) {
 				timer = TIMER_FULL;
 				trigger = true;
@@ -371,17 +372,16 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 			Block stuff = Block.getBlockFromItem(stack.getItem());
 			if (stuff != null) {
 				if (this.worldObj.isRemote == false) {
-					ModMain.logger.info("try place " + this.nextPos + " type " + this.buildType + "_" + this.getBuildTypeEnum().name());
+					//ModMain.logger.info("try place " + this.nextPos + " type " + this.buildType + "_" + this.getBuildTypeEnum().name());
 					if (UtilPlaceBlocks.placeStateSafe(this.worldObj, null, this.nextPos, stuff.getStateFromMeta(stack.getMetadata()))) {
 						this.decrStackSize(0, 1);
 					}
 				}
-				/// even if it didnt place. move up maybe something was in the
-				/// way
-				this.incrementPosition();
+				
+				this.incrementPosition();// even if it didnt place.
 			}
 		} else {
-			// dont trigger an uncraft event, its still processing
+			// dont trigger an event, its still processing
 			if (this.worldObj.isRemote && this.worldObj.rand.nextDouble() < 0.1) {
 				UtilParticle.spawnParticle(worldObj, EnumParticleTypes.SMOKE_NORMAL, x, y, z);
 			}
@@ -415,8 +415,6 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
 			shapeIndex = c;
 		}
 	}
-	private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots for
-																// all faces
 	@Override
 	public int[] getSlotsForFace(EnumFacing side) {
 		return hopperInput;
