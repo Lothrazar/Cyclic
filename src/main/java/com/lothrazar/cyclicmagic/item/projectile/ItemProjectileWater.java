@@ -1,8 +1,6 @@
 package com.lothrazar.cyclicmagic.item.projectile;
-
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityWaterBolt;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -12,17 +10,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemProjectileWater extends BaseItemProjectile implements IHasRecipe {
- 
-	@Override
-	public void addRecipe() {
-
-		GameRegistry.addShapelessRecipe(new ItemStack(this, 4), new ItemStack(Items.BLAZE_ROD), new ItemStack(Items.ENDER_PEARL), new ItemStack(Blocks.ICE));
-		
-	}
-
-	@Override
-	void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
-		this.doThrow(world, player, hand, new EntityWaterBolt(world, player));
-	}
-
+  @Override
+  public void addRecipe() {
+    GameRegistry.addShapelessRecipe(new ItemStack(this, 4), new ItemStack(Items.BLAZE_ROD), new ItemStack(Items.ENDER_PEARL), new ItemStack(Blocks.ICE));
+  }
+  @Override
+  void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
+    this.doThrow(world, player, hand, new EntityWaterBolt(world, player));
+  }
 }
