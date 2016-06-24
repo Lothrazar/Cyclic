@@ -62,7 +62,7 @@ public class UtilParticle {
 		}
 	}
 
-	private static void spawnParticlePacket(EnumParticleTypes particle, BlockPos position, int count) {
+	public static void spawnParticlePacket(EnumParticleTypes particle, BlockPos position, int count) {
 
 		// this. fires only on server side. so send packet for client to spawn
 		// particles and so on

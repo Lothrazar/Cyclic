@@ -142,4 +142,8 @@ public class UtilSearchWorld {
 		// ye olde pythagoras
 		return Math.sqrt(xDistance * xDistance + zDistance * zDistance);
 	}
+	
+	public static double distanceBetweenVertical(BlockPos start, BlockPos end) {
+		return Math.abs(start.getY() - end.getY());
+	}
 }

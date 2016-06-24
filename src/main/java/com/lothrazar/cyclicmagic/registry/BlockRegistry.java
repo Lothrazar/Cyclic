@@ -3,6 +3,7 @@ package com.lothrazar.cyclicmagic.registry;
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.block.BlockBucketStorage;
+import com.lothrazar.cyclicmagic.block.BlockBuilder;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre.SpawnType;
 import com.lothrazar.cyclicmagic.block.BlockLaunch;
@@ -44,6 +45,8 @@ public class BlockRegistry {
 	public static BlockDimensionOre			end_diamond_ore;
 
 	private static boolean spawnersUnbreakable;
+
+	private static BlockBuilder builder_block;
 //lots of helpers/overrides with defaults
 	private static void registerBlock(Block b, String name) {
 		registerBlock(b,name,false);
@@ -78,6 +81,9 @@ public class BlockRegistry {
 		
 		registerBlock(uncrafting_block, "uncrafting_block");
 		uncrafting_block.addRecipe();
+
+		registerBlock(builder_block, "builder_block");
+		
 
 		//they go up 2,4,6 blocks high, approx
 		BlockLaunch plate_launch_small = new BlockLaunch(0.6F,SoundEvents.BLOCK_SLIME_STEP);
@@ -175,6 +181,7 @@ public class BlockRegistry {
 	public static void construct(){
 
 		uncrafting_block = new BlockUncrafting();
+		builder_block = new BlockBuilder();
 		block_fragile = new BlockScaffolding();
 	}
 	
@@ -183,15 +190,9 @@ public class BlockRegistry {
 		String category = Const.ConfigCategory.blocks;
 
 		spawnersUnbreakable = config.getBoolean("Spawners Unbreakable", category, true, "Make mob spawners unbreakable");
-// 
-//		category = Const.ConfigCategory.blocks;
-// 
-//		config.setCategoryComment(category, "Disable or customize blocks added to the game");
 
-//		enableBlockFragile = config.getBoolean("Scaffolding", category, true, "Enable the scaffolding block that breaks by itself");
-//
-//		enabledBucketBlocks = config.getBoolean("Bucket Blocks", category, true, "Enable Bucket Storage Blocks");
- 
 		uncrafting_block.syncConfig(config);
+		
+		builder_block.syncConfig(config);
 	}
 }

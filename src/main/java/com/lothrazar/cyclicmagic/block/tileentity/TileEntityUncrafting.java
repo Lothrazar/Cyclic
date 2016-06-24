@@ -33,6 +33,7 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 	// http://bedrockminer.jimdo.com/modding-tutorials/advanced-modding/tile-entities/
 	// TODO: http://www.minecraftforge.net/wiki/Tile_Entity_Synchronization
 	// http://www.minecraftforge.net/forum/index.php?topic=18871.0
+	public static final int							TIMER_FULL = 200;
 	private ItemStack[]					inv;
 	private int									timer;
  
@@ -235,7 +236,7 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 	
 	public boolean isBurning() {
 
-		return this.timer > 0 && this.timer < UtilUncraft.TIMER_FULL;
+		return this.timer > 0 && this.timer < TIMER_FULL;
 	}
 
 	@Override
@@ -260,7 +261,7 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 
 		ItemStack stack = getStackInSlot(0);
 		if (stack == null) {
-			timer = UtilUncraft.TIMER_FULL;// reset just like you would in a
+			timer = TIMER_FULL;// reset just like you would in a
 			// furnace
 			return;
 		}
@@ -268,7 +269,7 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
 
 		timer--;
 		if (timer <= 0) {
-			timer = UtilUncraft.TIMER_FULL;
+			timer = TIMER_FULL;
 			triggerUncraft = true;
 		}
 

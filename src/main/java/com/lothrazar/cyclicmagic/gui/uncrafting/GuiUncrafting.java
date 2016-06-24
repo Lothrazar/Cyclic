@@ -52,13 +52,13 @@ public class GuiUncrafting extends GuiContainer {
 		
 		for(int k = 0; k < this.tile.getSizeInventory(); k++){
 			
-			Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerUncrafting.SLOTX_START - 3 +k*Const.SQ, this.guiTop + ContainerUncrafting.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);	
+			Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerUncrafting.SLOTX_START - 1 +k*Const.SQ, this.guiTop + ContainerUncrafting.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);	
 		}
 
 		if (tile.getTimer() > 0 && tile.getStackInSlot(0) != null) {
 			this.mc.getTextureManager().bindTexture(progress);
 
-			float percent = ((float) tile.getTimer()) / ((float) UtilUncraft.TIMER_FULL);
+			float percent = ((float) tile.getTimer()) / ((float) TileEntityUncrafting.TIMER_FULL);
 			// maximum progress bar is 156, since the whole texture is 176 minus
 			// 10 padding on each side
 			int belowSlots = this.guiTop + 9 + 3 * Const.SQ;
