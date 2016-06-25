@@ -121,10 +121,16 @@ public class BlockBuilder extends Block implements IHasRecipe, IHasConfig {
   }
   @Override
   public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this), "rsr", "geg", "ooo", 'o', Blocks.OBSIDIAN, 'g', Items.GHAST_TEAR, 's', Blocks.DISPENSER, 'r', Blocks.REDSTONE_BLOCK, 'e', Blocks.EMERALD_BLOCK);
+    GameRegistry.addRecipe(new ItemStack(this), "rsr", "gbg", "ooo", 
+        'o', Blocks.OBSIDIAN, 
+        'g', Items.GHAST_TEAR, 
+        's', Blocks.DISPENSER, 
+        'r', Blocks.REDSTONE_BLOCK, 
+        'b', Blocks.BEACON);
   }
   @Override
   public void syncConfig(Configuration config) {
     TileEntityBuilder.maxSize = config.getInt("builder.maxRange", Const.ConfigCategory.modpackMisc, 10, 3, 32, "Maximum range of the builder block that you can increase it to in the GUI");
-  }
+    TileEntityBuilder.maxHeight = config.getInt("builder.maxHeight", Const.ConfigCategory.modpackMisc, 10, 3, 32, "Maximum height of the builder block that you can increase it to in the GUI");
+ }
 }

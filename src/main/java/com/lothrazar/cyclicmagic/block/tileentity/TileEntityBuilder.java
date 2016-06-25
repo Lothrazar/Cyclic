@@ -34,7 +34,7 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
   private static final int maxSpeed = 1;
   public static int maxSize;
   public static int maxHeight = 10;
-  public static final int TIMER_FULL = 25;// INCREASE ocne speedupgrades are in
+  public static final int TIMER_FULL = 100;//one day i will add fuel AND/OR speed upgrades. till then make very slow
   private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots
   public static enum Fields {
     TIMER, BUILDTYPE, SPEED, SIZE, HEIGHT

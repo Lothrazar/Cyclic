@@ -68,6 +68,7 @@ public class BlockRegistry {
     registerBlock(uncrafting_block, "uncrafting_block");
     uncrafting_block.addRecipe();
     registerBlock(builder_block, "builder_block");
+    builder_block.addRecipe();
     //they go up 2,4,6 blocks high, approx
     BlockLaunch plate_launch_small = new BlockLaunch(0.6F, SoundEvents.BLOCK_SLIME_STEP);
     BlockLaunch plate_launch_med = new BlockLaunch(0.9F, SoundEvents.BLOCK_SLIME_FALL);
