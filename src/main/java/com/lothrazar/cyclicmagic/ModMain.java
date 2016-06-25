@@ -137,7 +137,12 @@ public class ModMain {
     c.save();
   }
   /*
-   * TODO : 
+   *FOR 1.0
+   * 
+   * new Inventory config: completely hide inventory buttons no matter what
+   * 
+   * 
+   * FUTURE PLANS
    * 
    * block breaker//tree harvester?
    * 

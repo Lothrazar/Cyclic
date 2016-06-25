@@ -30,13 +30,14 @@ public class EventGuiTerrariaButtons implements IHasConfig {
   public static final int padding = 4;
   public static final int BTNWIDTH = 20;
   private List<String> blacklistGuis;
+  private boolean isEnabled;
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onGuiPostInit(InitGuiEvent.Post event) {
+    if(!isEnabled){return;}//they fully turned it off
     GuiScreen gui = event.getGui();
     if (gui == null) { return; } // probably doesn't ever happen
-    // all containers by default
-    // but with a blacklist in config
+    // all containers by default but with a blacklist in config
     String self = gui.getClass().getName();
     int button_id = 256;
     // config for different locations - left right bottom top
@@ -96,6 +97,8 @@ public class EventGuiTerrariaButtons implements IHasConfig {
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.inventory;
     config.setCategoryComment(category, "Terraria-inspired inventory helper buttons");
+    isEnabled = config.getBoolean("TerrariaInventoryButtons", category, true, "Adds extra buttons to containers to quickly move items between your inventory (Inspired by terraria)");
+    
     List<String> valid = new ArrayList<String>();
     valid.add(posLeft);
     valid.add(posRight);
