@@ -44,16 +44,16 @@ public class EnchantHarvest extends Enchantment {
     confMed.doesFlowers = false;
     confMed.doesHarvestMushroom = true;
     confMed.doesHarvestSapling = false;
-    confMed.doesHarvestTallgrass = false;
+    confMed.doesHarvestTallgrass = true;
     //level 3
     confHi.doesPumpkinBlocks = true;
     confHi.doesMelonBlocks = true;
     confHi.doesLeaves = false;
     confHi.doesCrops = true;
     confHi.doesFlowers = false;
-    confHi.doesHarvestMushroom = false;
+    confHi.doesHarvestMushroom = true;
     confHi.doesHarvestSapling = false;
-    confHi.doesHarvestTallgrass = false;
+    confHi.doesHarvestTallgrass = true;
   }
   @Override
   public int getMaxLevel() {
