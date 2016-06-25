@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.registry;
-import com.lothrazar.cyclicmagic.enchantment.EnchantHarvest;
 import com.lothrazar.cyclicmagic.enchantment.EnchantLaunch;
 import com.lothrazar.cyclicmagic.enchantment.EnchantMagnet;
 import com.lothrazar.cyclicmagic.enchantment.EnchantVenom;
@@ -12,20 +11,16 @@ public class EnchantRegistry {
   public static EnchantLaunch launch;
   public static EnchantMagnet magnet;
   public static EnchantVenom venom;
-  public static EnchantHarvest harvest;
   public static int launchid;
   public static int magnetid;
   public static int venomid;
-  public static int harvestid = 89;
   public static void register() {
     launch = new EnchantLaunch();
     magnet = new EnchantMagnet();
     venom = new EnchantVenom();
-    harvest = new EnchantHarvest();
     Enchantment.REGISTRY.register(launchid, new ResourceLocation(launch.getName()), launch);
     Enchantment.REGISTRY.register(magnetid, new ResourceLocation(magnet.getName()), magnet);
     Enchantment.REGISTRY.register(venomid, new ResourceLocation(venom.getName()), venom);
-    Enchantment.REGISTRY.register(harvestid, new ResourceLocation(harvest.getName()), harvest);
   }
   public static void syncConfig(Configuration c) {
     launchid = c.getInt("enchant.launch.id", Const.ConfigCategory.modpackMisc,

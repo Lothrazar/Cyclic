@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.util;
-import com.lothrazar.cyclicmagic.ModMain;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockMushroom;
@@ -14,21 +13,18 @@ import net.minecraft.world.World;
 
 public class UtilHarvestCrops {
   public static class HarestCropsConfig {
-    public boolean doesHarvestStem = true;
-    public boolean doesHarvestSapling = true;
-    public boolean doesHarvestMushroom = true;
-    public boolean doesPumpkinBlocks = true;
-    public boolean doesMelonBlocks = true;
-    public boolean doesFlowers = true;
-    public boolean doesLeaves = true;
-    public boolean doesCrops = true;
+    public boolean doesHarvestStem = false;
+    public boolean doesHarvestSapling = false;
+    public boolean doesHarvestMushroom = false;
+    public boolean doesPumpkinBlocks = false;
+    public boolean doesMelonBlocks = false;
+    public boolean doesFlowers = false;
+    public boolean doesLeaves = false;
+    public boolean doesCrops = false;
     // this hits both the short regular grass, and tall grass, and 2 high flowers. split it up
-    public boolean doesHarvestTallgrass = true;
+    public boolean doesHarvestTallgrass = false;
   }
-  public final static boolean dolog = false;
   public static int harvestArea(World world, BlockPos pos, int xRadius, HarestCropsConfig conf) {
-    if (dolog)
-      ModMain.logger.info("buildradius = " + xRadius);
     int x = pos.getX();
     int eventy = pos.getY();
     int z = pos.getZ();
@@ -37,17 +33,11 @@ public class UtilHarvestCrops {
     int xMax = x + xRadius;
     int zMin = z - xRadius;
     int zMax = z + xRadius;
-    if (dolog)
-      ModMain.logger.info("x = " + xMin + ":" + xMax);
-    if (dolog)
-      ModMain.logger.info("z = " + zMin + ":" + zMax);
     BlockPos posCurrent;
     int countHarvested = 0;
     for (int xLoop = xMin; xLoop <= xMax; xLoop++) {
       for (int zLoop = zMin; zLoop <= zMax; zLoop++) {
         posCurrent = new BlockPos(xLoop, eventy, zLoop);
-        if (dolog)
-          ModMain.logger.info("posCurrent = " + posCurrent);
         if (world.isAirBlock(posCurrent)) {
           continue;
         }
@@ -69,65 +59,43 @@ public class UtilHarvestCrops {
     if (blockCheck == null) { return false; }
     IBlockState bsAbove = world.getBlockState(posCurrent.up());
     IBlockState bsBelow = world.getBlockState(posCurrent.down());
-    if (dolog)
-      ModMain.logger.info(" harvestSingleAt " + UtilChat.blockPosToString(posCurrent));
-    if (dolog)
-      ModMain.logger.info("blockCheck = " + blockCheck.getClass().getName() + " -> " + blockCheck.getUnlocalizedName());
     if (blockCheck instanceof IGrowable && conf.doesCrops) {
       IGrowable plant = (IGrowable) blockCheck;
-      if (dolog)
-        ModMain.logger.info(" IGrowable ");
       // only if its full grown
       if (plant.canGrow(world, posCurrent, bs, world.isRemote) == false) {
-        if (dolog)
-          ModMain.logger.info(" fully grown ");
         doBreak = true;
         doReplant = true;
       }
     }
     if ((blockCheck instanceof BlockStem) && conf.doesHarvestStem) {
-      if (dolog)
-        ModMain.logger.info(" stem ");
       doBreak = true;
     }
     else if ((blockCheck instanceof BlockSapling) && conf.doesHarvestSapling) {
-      if (dolog)
-        ModMain.logger.info(" sapling ");
       doBreak = true;
     }
     else if ((blockCheck instanceof BlockTallGrass || blockCheck instanceof BlockDoublePlant)
         && conf.doesHarvestTallgrass) {
       doBreak = true;
       doReplant = false;
-      if (dolog)
-        ModMain.logger.info(posCurrent.toString() + " tallgrass ");
       if (blockCheck instanceof BlockDoublePlant && bsAbove != null && bsAbove.getBlock() instanceof BlockDoublePlant) {
         doBreakAbove = true;
-        if (dolog)
-          ModMain.logger.info("above " + UtilChat.blockPosToString(posCurrent.up()));
       }
       if (bsBelow instanceof BlockDoublePlant && bsBelow != null && bsBelow.getBlock() instanceof BlockDoublePlant) {
         doBreakBelow = true;
-        if (dolog)
-          ModMain.logger.info("above " + UtilChat.blockPosToString(posCurrent.up()));
       }
     }
     else if ((blockCheck instanceof BlockMushroom) && conf.doesHarvestMushroom) {
-      if (dolog)
-        ModMain.logger.info(" BlockMushroom ");
       doBreak = true;
     }
     else if (blockCheck == Blocks.PUMPKIN && conf.doesPumpkinBlocks) {
-      if (dolog)
-        ModMain.logger.info(" pumpkin ");
       doBreak = true;
       doReplant = false;
     }
     else if (blockCheck == Blocks.MELON_BLOCK && conf.doesMelonBlocks) {
-      if (dolog)
-        ModMain.logger.info(" melon_block ");
-      doBreak = true;
+      doBreak = false;//not the standard break - custom rules to mimic silktouch
       doReplant = false;
+      world.destroyBlock(posCurrent, false);
+      UtilEntity.dropItemStackInWorld(world, posCurrent, Blocks.MELON_BLOCK);
     }
     else if ((blockCheck == Blocks.RED_FLOWER || blockCheck == Blocks.YELLOW_FLOWER) && conf.doesFlowers) {
       doBreak = true;
@@ -148,8 +116,6 @@ public class UtilHarvestCrops {
         world.destroyBlock(posCurrent.down(), false);
       }
       if (doReplant) {// plant new seed
-        if (dolog)
-          ModMain.logger.info(" replant ");
         world.setBlockState(posCurrent, blockCheck.getDefaultState());
       }
       return true;

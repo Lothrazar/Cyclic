@@ -83,10 +83,13 @@ public class ItemRegistry {
   public static ItemEmeraldArmor emerald_boots;
   public static final Item tool_push = new ItemToolPush();
   public static void construct() {
-    //TODO: maybe constructor. MUST be done before config
+    
+
     addItem(new ItemToolPearlReuse(), "ender_pearl_reuse");
     addItem(new ItemPaperCarbon(), "carbon_paper");
-    addItem(new ItemToolHarvest(), "tool_harvest");
+    addItem(new ItemToolHarvest(ItemToolHarvest.HarvestType.WEEDS), "tool_harvest_weeds");
+    addItem(new ItemToolHarvest(ItemToolHarvest.HarvestType.CROPS), "tool_harvest_crops");
+    addItem(new ItemToolHarvest(ItemToolHarvest.HarvestType.LEAVES), "tool_harvest_leaves");
     addItem(tool_push, "tool_push");
     addItem(new ItemInventoryStorage(), "storage_bag");
     addItem(new ItemChestSack().setHidden(), "chest_sack");
