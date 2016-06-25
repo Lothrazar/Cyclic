@@ -6,7 +6,7 @@
     "description": "I added everything I wanted the game to have, including powerful items, inventory features, world generation, and more.  Everything is controlled by config.  Balanced around 
 single player survival.",
     "version": "1.0.0",
-    "mcversion": "1.9.4",
+    "mcversion": "1.10",
     "url": "http://minecraft.curseforge.com/projects/cyclic",
     "updateUrl": "http://minecraft.curseforge.com/projects/cyclic",
     "authorList": [ "Lothrazar" ],
