@@ -93,40 +93,39 @@ public class BlockRegistry {
     if (spawnersUnbreakable) {
       Blocks.MOB_SPAWNER.setBlockUnbreakable();
     }
-    if (WorldGenRegistry.netherOreEnabled) {
-      nether_gold_ore = new BlockDimensionOre(Items.GOLD_NUGGET, 0, 4);
-      nether_gold_ore.setSpawnType(SpawnType.SILVERFISH, 1);
-      registerBlock(nether_gold_ore, "nether_gold_ore");
-      nether_coal_ore = new BlockDimensionOre(Items.COAL);
-      nether_coal_ore.setSpawnType(SpawnType.SILVERFISH, 1);
-      registerBlock(nether_coal_ore, "nether_coal_ore");
-      nether_lapis_ore = new BlockDimensionOre(Items.DYE, EnumDyeColor.BLUE.getDyeDamage(), 3);
-      nether_lapis_ore.setSpawnType(SpawnType.SILVERFISH, 2);
-      registerBlock(nether_lapis_ore, "nether_lapis_ore");
-      nether_emerald_ore = new BlockDimensionOre(Items.EMERALD);
-      nether_emerald_ore.setSpawnType(SpawnType.SILVERFISH, 5);
-      registerBlock(nether_emerald_ore, "nether_emerald_ore");
-      nether_diamond_ore = new BlockDimensionOre(Items.DIAMOND);
-      nether_diamond_ore.setSpawnType(SpawnType.SILVERFISH, 8);
-      registerBlock(nether_diamond_ore, "nether_diamond_ore");
-    }
-    if (WorldGenRegistry.endOreEnabled) {
-      end_redstone_ore = new BlockDimensionOre(Items.REDSTONE);
-      end_redstone_ore.setSpawnType(SpawnType.ENDERMITE, 3);
-      registerBlock(end_redstone_ore, "end_redstone_ore");
-      end_coal_ore = new BlockDimensionOre(Items.COAL);
-      end_coal_ore.setSpawnType(SpawnType.ENDERMITE, 1);
-      registerBlock(end_coal_ore, "end_coal_ore");
-      end_lapis_ore = new BlockDimensionOre(Items.DYE, EnumDyeColor.BLUE.getDyeDamage(), 3);
-      end_lapis_ore.setSpawnType(SpawnType.ENDERMITE, 5);
-      registerBlock(end_lapis_ore, "end_lapis_ore");
-      end_emerald_ore = new BlockDimensionOre(Items.EMERALD);
-      end_emerald_ore.setSpawnType(SpawnType.ENDERMITE, 8);
-      registerBlock(end_emerald_ore, "end_emerald_ore");
-      end_diamond_ore = new BlockDimensionOre(Items.DIAMOND);
-      end_diamond_ore.setSpawnType(SpawnType.ENDERMITE, 8);
-      registerBlock(end_diamond_ore, "end_diamond_ore");
-    }
+    //nether ores
+    nether_gold_ore = new BlockDimensionOre(Items.GOLD_NUGGET, 0, 4);
+    nether_gold_ore.setSpawnType(SpawnType.SILVERFISH, 1);
+    registerBlock(nether_gold_ore, "nether_gold_ore");
+    nether_coal_ore = new BlockDimensionOre(Items.COAL);
+    nether_coal_ore.setSpawnType(SpawnType.SILVERFISH, 1);
+    registerBlock(nether_coal_ore, "nether_coal_ore");
+    nether_lapis_ore = new BlockDimensionOre(Items.DYE, EnumDyeColor.BLUE.getDyeDamage(), 3);
+    nether_lapis_ore.setSpawnType(SpawnType.SILVERFISH, 2);
+    registerBlock(nether_lapis_ore, "nether_lapis_ore");
+    nether_emerald_ore = new BlockDimensionOre(Items.EMERALD);
+    nether_emerald_ore.setSpawnType(SpawnType.SILVERFISH, 5);
+    registerBlock(nether_emerald_ore, "nether_emerald_ore");
+    nether_diamond_ore = new BlockDimensionOre(Items.DIAMOND);
+    nether_diamond_ore.setSpawnType(SpawnType.SILVERFISH, 8);
+    registerBlock(nether_diamond_ore, "nether_diamond_ore");
+    //end ores
+    end_redstone_ore = new BlockDimensionOre(Items.REDSTONE);
+    end_redstone_ore.setSpawnType(SpawnType.ENDERMITE, 3);
+    registerBlock(end_redstone_ore, "end_redstone_ore");
+    end_coal_ore = new BlockDimensionOre(Items.COAL);
+    end_coal_ore.setSpawnType(SpawnType.ENDERMITE, 1);
+    registerBlock(end_coal_ore, "end_coal_ore");
+    end_lapis_ore = new BlockDimensionOre(Items.DYE, EnumDyeColor.BLUE.getDyeDamage(), 3);
+    end_lapis_ore.setSpawnType(SpawnType.ENDERMITE, 5);
+    registerBlock(end_lapis_ore, "end_lapis_ore");
+    end_emerald_ore = new BlockDimensionOre(Items.EMERALD);
+    end_emerald_ore.setSpawnType(SpawnType.ENDERMITE, 8);
+    registerBlock(end_emerald_ore, "end_emerald_ore");
+    end_diamond_ore = new BlockDimensionOre(Items.DIAMOND);
+    end_diamond_ore.setSpawnType(SpawnType.ENDERMITE, 8);
+    registerBlock(end_diamond_ore, "end_diamond_ore");
+    //bucket storage
     block_storewater = new BlockBucketStorage(Items.WATER_BUCKET);
     registerBlock(block_storewater, new ItemBlockBucket(block_storewater), "block_storewater", true);
     block_storemilk = new BlockBucketStorage(Items.MILK_BUCKET);
@@ -135,7 +134,6 @@ public class BlockRegistry {
     registerBlock(block_storelava, new ItemBlockBucket(block_storelava), "block_storelava", true);
     block_storeempty = new BlockBucketStorage(null);
     registerBlock(block_storeempty, new ItemBlockBucket(block_storeempty), "block_storeempty", false);
-    // not irecipe so just like this is fine i guess
     block_storeempty.addRecipe();
   }
   public static void construct() {
