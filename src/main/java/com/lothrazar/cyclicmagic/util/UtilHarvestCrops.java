@@ -14,16 +14,16 @@ import net.minecraft.world.World;
 
 public class UtilHarvestCrops {
   public static class HarestCropsConfig {
-    public boolean doesHarvestStem = true;
-    public boolean doesHarvestSapling = true;
-    public boolean doesHarvestMushroom = true;
-    public boolean doesPumpkinBlocks = true;
-    public boolean doesMelonBlocks = true;
-    public boolean doesFlowers = true;
-    public boolean doesLeaves = true;
-    public boolean doesCrops = true;
+    public boolean doesHarvestStem = false;
+    public boolean doesHarvestSapling = false;
+    public boolean doesHarvestMushroom = false;
+    public boolean doesPumpkinBlocks = false;
+    public boolean doesMelonBlocks = false;
+    public boolean doesFlowers = false;
+    public boolean doesLeaves = false;
+    public boolean doesCrops = false;
     // this hits both the short regular grass, and tall grass, and 2 high flowers. split it up
-    public boolean doesHarvestTallgrass = true;
+    public boolean doesHarvestTallgrass = false;
   }
   public final static boolean dolog = false;
   public static int harvestArea(World world, BlockPos pos, int xRadius, HarestCropsConfig conf) {

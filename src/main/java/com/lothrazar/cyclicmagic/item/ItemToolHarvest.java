@@ -17,17 +17,33 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class ItemToolHarvest extends BaseTool implements IHasRecipe, IHasConfig {
   private static final int range = 6;
   private static final int durability = 1000;
-  private static final HarestCropsConfig conf = new HarestCropsConfig();
-  public ItemToolHarvest() {
+  private HarestCropsConfig conf;
+  public enum HarvestType {
+    WEEDS, LEAVES, CROPS;
+  }
+  private HarvestType harvestType;
+  public ItemToolHarvest(HarvestType c) {
     super(durability);
-    conf.doesPumpkinBlocks = false;
-    conf.doesMelonBlocks = false;
-    conf.doesLeaves = true;
-    conf.doesCrops = false;
-    conf.doesFlowers = true;
-    conf.doesHarvestMushroom = true;
-    conf.doesHarvestSapling = false;
-    conf.doesHarvestTallgrass = true;
+    harvestType = c;
+    conf = new HarestCropsConfig();//by default all are set false
+    switch (harvestType) {
+    case CROPS:
+      conf.doesPumpkinBlocks = true;
+      conf.doesMelonBlocks = true;
+      conf.doesCrops = true;
+      break;
+    case LEAVES:
+      conf.doesFlowers = true;
+      conf.doesHarvestMushroom = true;
+      conf.doesHarvestTallgrass = true;
+      conf.doesHarvestSapling = true;
+      break;
+    case WEEDS:
+      conf.doesLeaves = true;
+      break;
+    default:
+      break;
+    }
   }
   @Override
   public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
@@ -49,12 +65,36 @@ public class ItemToolHarvest extends BaseTool implements IHasRecipe, IHasConfig 
   }
   @Override
   public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this),
-        " gs",
-        " bg",
-        "b  ",
-        'b', Items.BLAZE_ROD,
-        'g', Items.GHAST_TEAR,
-        's', Items.SHEARS);
+    switch (harvestType) {
+    case CROPS:
+      GameRegistry.addRecipe(new ItemStack(this),
+          " gs",
+          " bg",
+          "b  ",
+          'b', Items.BLAZE_ROD,
+          'g', Items.QUARTZ,
+          's', Items.IRON_HOE);
+      break;
+    case LEAVES:
+      GameRegistry.addRecipe(new ItemStack(this),
+          " gs",
+          " bg",
+          "b  ",
+          'b', Items.STICK,
+          'g', Items.STRING,
+          's', Items.SHEARS);
+      break;
+    case WEEDS:
+      GameRegistry.addRecipe(new ItemStack(this),
+          " gs",
+          " bg",
+          "b  ",
+          'b', Items.STICK,
+          'g', Items.STRING,
+          's', Items.IRON_HOE);
+      break;
+    default:
+      break;
+    }
   }
 }
