@@ -70,23 +70,24 @@ public class BlockRegistry {
     registerBlock(builder_block, "builder_block");
     builder_block.addRecipe();
     //they go up 2,4,6 blocks high, approx
-    BlockLaunch plate_launch_small = new BlockLaunch(0.6F, SoundEvents.BLOCK_SLIME_STEP);
-    BlockLaunch plate_launch_med = new BlockLaunch(0.9F, SoundEvents.BLOCK_SLIME_FALL);
-    BlockLaunch plate_launch_large = new BlockLaunch(1.2F, SoundEvents.BLOCK_SLIME_BREAK);
+    //old: .6 .9 1.2
+    BlockLaunch plate_launch_small = new BlockLaunch(0.8F, SoundEvents.BLOCK_SLIME_STEP);
+    BlockLaunch plate_launch_med = new BlockLaunch(1.3F, SoundEvents.BLOCK_SLIME_FALL);
+    BlockLaunch plate_launch_large = new BlockLaunch(1.8F, SoundEvents.BLOCK_SLIME_BREAK);
     registerBlock(plate_launch_small, "plate_launch_small");
     registerBlock(plate_launch_med, "plate_launch_med");
     registerBlock(plate_launch_large, "plate_launch_large");
-    GameRegistry.addRecipe(new ItemStack(plate_launch_med, 3),
+    GameRegistry.addRecipe(new ItemStack(plate_launch_small, 6),
         "sss", "ggg", "iii",
         's', Blocks.SLIME_BLOCK,
         'g', Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE,
         'i', Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE);
-    GameRegistry.addShapelessRecipe(new ItemStack(plate_launch_small),
-        new ItemStack(plate_launch_med),
-        new ItemStack(Items.FEATHER));
+    GameRegistry.addShapelessRecipe(new ItemStack(plate_launch_med),
+        new ItemStack(plate_launch_small),
+        new ItemStack(Items.QUARTZ));
     GameRegistry.addShapelessRecipe(new ItemStack(plate_launch_large),
         new ItemStack(plate_launch_med),
-        new ItemStack(Items.REDSTONE));
+        new ItemStack(Blocks.END_STONE));
     registerBlock(block_fragile, new ItemBlockScaffolding(block_fragile), BlockScaffolding.name);
     block_fragile.addRecipe();
     if (spawnersUnbreakable) {

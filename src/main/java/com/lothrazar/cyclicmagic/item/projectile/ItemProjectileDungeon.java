@@ -17,6 +17,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRecipe, IHasConfig {
   private static int DUNGEONRADIUS = 64;
@@ -45,5 +47,9 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
       //fizz sound
       UtilSound.playSound(player, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH);
     }
+  }
+  @SideOnly(Side.CLIENT)
+  public boolean hasEffect(ItemStack stack) {
+    return true;
   }
 }

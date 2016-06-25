@@ -142,12 +142,8 @@ public class ModMain {
    * 
    ****** required for 1.0
    * rotate uncr item model just like strbld
-   * 
-   * structure builder: MISSING RECIPE
-   * scaffld: recipe give multiple
    * harvester doesnt do.. crops? anymore? what?
    * -- add 2 versions: a crop one and a .. weed one?
-   * dungeonfinder: add shimmer
    * BOUNCE PADS:: initial craft the soft ones
    * --pads: increase jump of all three a bit, a bigger difference between them.
    *  hardened: add quartz and then obsidian for 2 other levels
