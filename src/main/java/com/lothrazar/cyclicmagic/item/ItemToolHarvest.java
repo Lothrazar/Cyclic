@@ -32,13 +32,13 @@ public class ItemToolHarvest extends BaseTool implements IHasRecipe, IHasConfig 
       conf.doesMelonBlocks = true;
       conf.doesCrops = true;
       break;
-    case LEAVES:
+    case WEEDS:
       conf.doesFlowers = true;
       conf.doesHarvestMushroom = true;
       conf.doesHarvestTallgrass = true;
       conf.doesHarvestSapling = true;
       break;
-    case WEEDS:
+    case LEAVES:
       conf.doesLeaves = true;
       break;
     default:
@@ -73,7 +73,7 @@ public class ItemToolHarvest extends BaseTool implements IHasRecipe, IHasConfig 
           "b  ",
           'b', Items.BLAZE_ROD,
           'g', Items.QUARTZ,
-          's', Items.IRON_HOE);
+          's', Items.STONE_HOE);
       break;
     case LEAVES:
       GameRegistry.addRecipe(new ItemStack(this),
@@ -82,7 +82,7 @@ public class ItemToolHarvest extends BaseTool implements IHasRecipe, IHasConfig 
           "b  ",
           'b', Items.STICK,
           'g', Items.STRING,
-          's', Items.SHEARS);
+          's', Items.STONE_AXE);
       break;
     case WEEDS:
       GameRegistry.addRecipe(new ItemStack(this),
@@ -91,7 +91,7 @@ public class ItemToolHarvest extends BaseTool implements IHasRecipe, IHasConfig 
           "b  ",
           'b', Items.STICK,
           'g', Items.STRING,
-          's', Items.IRON_HOE);
+          's', Items.STONE_HOE);
       break;
     default:
       break;
