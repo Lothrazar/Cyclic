@@ -130,6 +130,6 @@ public class ItemToolPush extends BaseTool implements IHasRecipe {
         "b  ",
         'b', Items.BLAZE_ROD,
         'g', Items.GHAST_TEAR,
-        'p', Blocks.PISTON);
+        'p', Blocks.STICKY_PISTON);
   }
 }

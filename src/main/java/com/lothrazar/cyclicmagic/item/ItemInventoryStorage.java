@@ -58,6 +58,6 @@ public class ItemInventoryStorage extends BaseItem implements IHasRecipe {
         'l', Items.LEATHER,
         's', Items.STRING,
         'r', Items.REDSTONE,
-        'd', Blocks.DIAMOND_BLOCK);
+        'd', Items.DIAMOND);
   }
 }

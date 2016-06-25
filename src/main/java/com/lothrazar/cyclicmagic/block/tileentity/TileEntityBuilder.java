@@ -36,9 +36,6 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
   public static int maxHeight = 10;
   public static final int TIMER_FULL = 100;//one day i will add fuel AND/OR speed upgrades. till then make very slow
   private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots
-  public static enum Fields {
-    TIMER, BUILDTYPE, SPEED, SIZE, HEIGHT
-  }
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
   private static final String NBT_TIMER = "Timer";
@@ -48,6 +45,20 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
   private static final String NBT_SPEED = "speed";
   private static final String NBT_SIZE = "size";
   private static final String NBT_SHAPEINDEX = "shapeindex";
+  public static enum Fields {
+    TIMER, BUILDTYPE, SPEED, SIZE, HEIGHT
+  }
+  public enum BuildType {
+    FACING, SQUARE, CIRCLE;
+    public static BuildType getNextType(BuildType btype) {
+      int type = btype.ordinal();
+      type++;
+      if (type > CIRCLE.ordinal()) {
+        type = FACING.ordinal();
+      }
+      return BuildType.values()[type];
+    }
+  }
   public TileEntityBuilder() {
   }
   public void rebuildShape() {
@@ -439,17 +450,6 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
   @Override
   public String getName() {
     return null;
-  }
-  public enum BuildType {
-    FACING, SQUARE, CIRCLE;
-    public static BuildType getNextType(BuildType btype) {
-      int type = btype.ordinal();
-      type++;
-      if (type > CIRCLE.ordinal()) {
-        type = FACING.ordinal();
-      }
-      return BuildType.values()[type];
-    }
   }
   @Override
   public boolean receiveClientEvent(int id, int value) {

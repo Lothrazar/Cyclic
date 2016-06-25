@@ -139,11 +139,6 @@ public class ModMain {
   /*
    * TODO : 
    * 
-   ****** required for 1.0
-   * harvest enchant -> items
-   * 
-   ****** future release
-   * 
    * block breaker//tree harvester?
    * 
    * pets live longer and/or respawn
