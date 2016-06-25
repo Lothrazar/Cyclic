@@ -141,7 +141,7 @@ public class ModMain {
    * TODO : 
    * 
    ****** required for 1.0
-   * rotate uncr item model just like strbld
+   * harvest enchant -> items
    * 
    ****** future release
    * 
