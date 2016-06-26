@@ -140,14 +140,9 @@ public class ModMain {
    *FOR 1.0.1
    *
    * GARDEN SCYTHE : make it work on netherrack
-   * From Spawn :2.8  //// text misaligned
    * INV CRAFTING TABS : NOT SAVED ON RELOADING GAME
    * bb..but wait why are hearts saved and this isnt?
-   * UNCRAFTER: client side item stack bugs: goes down by *2 of normal then back up
    *
-   * 
-   * new Inventory config: completely hide inventory buttons no matter what
-   * 
    * 
    * FUTURE PLANS
    * 
