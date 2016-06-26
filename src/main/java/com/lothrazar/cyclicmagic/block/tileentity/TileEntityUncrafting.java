@@ -39,7 +39,7 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
   private static final String NBT_TIMER = "Timer";
   public TileEntityUncrafting() {
     inv = new ItemStack[9];
-    timer = 0;
+    timer = TIMER_FULL;
   }
   @Override
   public boolean hasCustomName() {
@@ -235,38 +235,37 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
       }
       UtilUncraft uncrafter = new UtilUncraft(stack);
       if (uncrafter.doUncraft()) {
-        // drop the items
-        //if (this.worldObj.isRemote == false) {
-        ArrayList<ItemStack> uncrafterOutput = uncrafter.getDrops();
-        ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
-        if (attached != null) {
-          toDrop = dumpToIInventory(uncrafterOutput, attachedInv);
+        if (this.worldObj.isRemote == false) { // drop the items
+          ArrayList<ItemStack> uncrafterOutput = uncrafter.getDrops();
+          ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
+          if (attached != null) {
+            toDrop = dumpToIInventory(uncrafterOutput, attachedInv);
+          }
+          else {
+            toDrop = uncrafterOutput;
+          }
+          for (ItemStack s : toDrop) {
+            UtilEntity.dropItemStackInWorld(worldObj, posOffsetFacing, s);
+          }
+          this.decrStackSize(0, uncrafter.getOutsize());
         }
-        else {
-          toDrop = uncrafterOutput;
-        }
-        for (ItemStack s : toDrop) {
-          UtilEntity.dropItemStackInWorld(worldObj, posOffsetFacing, s);
-        }
-        //}
-        this.decrStackSize(0, uncrafter.getOutsize());
         UtilSound.playSound(worldObj, this.getPos(), SoundEvents.ENTITY_ITEM_BREAK, SoundCategory.BLOCKS);
       }
-      else {
-        //try to dump to inventory first
+      else {//try to dump to inventory first
         if (attached != null) {
           ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
           toDrop.add(stack);
           toDrop = dumpToIInventory(toDrop, attachedInv);
-          //it only had one in it. so if theres one left, it didnt work
-          if (toDrop.size() == 1) {
+          if (toDrop.size() == 1) {//it only had one in it. so if theres one left, it didnt work
             UtilEntity.dropItemStackInWorld(worldObj, posOffsetFacing, toDrop.get(0));
           }
         }
         else {
           UtilEntity.dropItemStackInWorld(worldObj, posOffsetFacing, stack);
         }
-        this.decrStackSize(0, stack.stackSize);
+        if (this.worldObj.isRemote == false) {
+          this.decrStackSize(0, stack.stackSize);
+        }
         UtilSound.playSound(worldObj, this.getPos(), SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.BLOCKS);
       }
       this.worldObj.markBlockRangeForRenderUpdate(this.getPos(), this.getPos().up());
@@ -280,7 +279,6 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
     }
   }
   public static ArrayList<ItemStack> dumpToIInventory(ArrayList<ItemStack> stacks, IInventory inventory) {
-    boolean debug = false;
     //and return the remainder after dumping
     ArrayList<ItemStack> remaining = new ArrayList<ItemStack>();
     ItemStack chestStack;
@@ -294,9 +292,6 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
         }
         chestStack = inventory.getStackInSlot(i);
         if (chestStack == null) {
-          if (debug) {
-            ModMain.logger.info("DUMP " + i);
-          }
           inventory.setInventorySlotContents(i, current);
           // and dont add current ot remainder at all ! sweet!
           current = null;
@@ -305,9 +300,6 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
           int space = chestStack.getMaxStackSize() - chestStack.stackSize;
           int toDeposit = Math.min(space, current.stackSize);
           if (toDeposit > 0) {
-            if (debug) {
-              ModMain.logger.info("merge " + i + " ; toDeposit =  " + toDeposit);
-            }
             current.stackSize -= toDeposit;
             chestStack.stackSize += toDeposit;
             if (current.stackSize == 0) {
@@ -317,14 +309,8 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
         }
       } // finished current pass over inventory
       if (current != null) {
-        if (debug) {
-          ModMain.logger.info("remaining.add : stackSize = " + current.stackSize);
-        }
         remaining.add(current);
       }
-    }
-    if (debug) {
-      ModMain.logger.info("remaining" + remaining.size());
     }
     return remaining;
   }
