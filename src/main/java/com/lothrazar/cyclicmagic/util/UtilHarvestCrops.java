@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.util;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockMushroom;
+import net.minecraft.block.BlockNetherWart;
 import net.minecraft.block.BlockSapling;
 import net.minecraft.block.BlockStem;
 import net.minecraft.block.BlockTallGrass;
@@ -67,6 +68,14 @@ public class UtilHarvestCrops {
         doReplant = true;
       }
     }
+
+    if (blockCheck instanceof BlockNetherWart && conf.doesCrops) {
+      int age = ((Integer)bs.getValue(BlockNetherWart.AGE)).intValue();
+      if(age == 3){//this is hardcoded in base class
+        doBreak = true;
+        doReplant = true;
+      }
+    }
     if ((blockCheck instanceof BlockStem) && conf.doesHarvestStem) {
       doBreak = true;
     }
@@ -119,7 +128,6 @@ public class UtilHarvestCrops {
         world.setBlockState(posCurrent, blockCheck.getDefaultState());
       }
       return true;
-      //			countHarvested++;
     }
     return false;
   }

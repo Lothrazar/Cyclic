@@ -139,7 +139,6 @@ public class ModMain {
   /*
    *FOR 1.0.1
    *
-   * GARDEN SCYTHE : make it work on netherrack
    * INV CRAFTING TABS : NOT SAVED ON RELOADING GAME
    * bb..but wait why are hearts saved and this isnt?
    *
