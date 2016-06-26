@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.proxy;
 import java.awt.Color;
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityBlazeBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDungeonEye;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamite;
@@ -33,6 +32,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.IThreadListener;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -41,6 +41,7 @@ import net.minecraftforge.client.settings.KeyModifier;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -158,16 +159,20 @@ public class ClientProxy extends CommonProxy {
     }
   }
   @SideOnly(Side.CLIENT)
-  public void setClientPlayerData(NBTTagCompound tags) {
-    EntityPlayer p = Minecraft.getMinecraft().thePlayer;
+  public void setClientPlayerData(MessageContext ctx, NBTTagCompound tags) {
+    EntityPlayer p = this.getPlayerEntity(ctx); //Minecraft.getMinecraft().thePlayer;
     if (p == null) {
-      //			System.out.println("Null player clientside");
-      //			System.out.println(tags.toString());
+  	System.out.println("Null player clientside");
+    		System.out.println(tags.toString());
       return;
     }
     IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(Minecraft.getMinecraft().thePlayer);
     if (props != null) {
+      System.out.println("setDataFromNBT");
       props.setDataFromNBT(tags);
+    }
+    else{
+      System.out.println("Null PROPS clientside");
     }
   }
   @Override
@@ -206,5 +211,21 @@ public class ClientProxy extends CommonProxy {
     // 
     //		GL11.glEnable(GL11.GL_TEXTURE_2D);
     //		GL11.glDisable(GL11.GL_BLEND);
+  }
+  //https://github.com/coolAlias/Tutorial-Demo/blob/e8fa9c94949e0b1659dc0a711674074f8752d80e/src/main/java/tutorial/ClientProxy.java
+  @Override
+  public IThreadListener getThreadFromContext(MessageContext ctx) {
+    return (ctx.side.isClient() ? Minecraft.getMinecraft() : super.getThreadFromContext(ctx));
+  }
+  @Override
+  public EntityPlayer getPlayerEntity(MessageContext ctx) {
+    
+    // Note that if you simply return 'Minecraft.getMinecraft().thePlayer',
+    // your packets will not work as expected because you will be getting a
+    // client player even when you are on the server!
+    // Sounds absurd, but it's true.
+//https://github.com/coolAlias/Tutorial-Demo/blob/e8fa9c94949e0b1659dc0a711674074f8752d80e/src/main/java/tutorial/ClientProxy.java
+    // Solution is to double-check side before returning the player:
+    return (ctx.side.isClient() ? Minecraft.getMinecraft().thePlayer : super.getPlayerEntity(ctx));
   }
 }

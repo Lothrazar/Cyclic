@@ -141,7 +141,12 @@ public class ModMain {
    *
    * INV CRAFTING TABS : NOT SAVED ON RELOADING GAME
    * bb..but wait why are hearts saved and this isnt?
+   * -> Null player clientside, but its still a 1
    *
+   *circle sometimes gets duplicate positions, slowing it down
+   *
+   *]: [com.lothrazar.cyclicmagic.util.UtilNBT:stringCSVToBlockPos:45]: invalid string:  
+   *fix and/or remove log
    * 
    * FUTURE PLANS
    * 
