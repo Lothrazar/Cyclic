@@ -39,6 +39,7 @@ public class ItemFoodHeart extends ItemFood implements IHasRecipe, IHasConfig {
     //one heart is 2 health points (half heart = 1 health)
     int newVal = UtilEntity.incrementMaxHealth(player, 2 * numHearts);
     prop.setMaxHealth(newVal);
+    UtilSound.playSound(player, SoundRegistry.fill);
   }
   @Override
   public void addRecipe() {
