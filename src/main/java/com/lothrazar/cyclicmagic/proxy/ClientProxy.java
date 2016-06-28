@@ -1,7 +1,5 @@
 package com.lothrazar.cyclicmagic.proxy;
-import java.awt.Color;
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityBlazeBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDungeonEye;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamite;
@@ -21,10 +19,7 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.ItemModelMesher;
-import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.RenderItem;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderSnowball;
@@ -33,7 +28,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.IThreadListener;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
@@ -41,6 +36,7 @@ import net.minecraftforge.client.settings.KeyModifier;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -158,53 +154,29 @@ public class ClientProxy extends CommonProxy {
     }
   }
   @SideOnly(Side.CLIENT)
-  public void setClientPlayerData(NBTTagCompound tags) {
-    EntityPlayer p = Minecraft.getMinecraft().thePlayer;
-    if (p == null) {
-      //			System.out.println("Null player clientside");
-      //			System.out.println(tags.toString());
-      return;
-    }
-    IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(Minecraft.getMinecraft().thePlayer);
-    if (props != null) {
-      props.setDataFromNBT(tags);
+  public void setClientPlayerData(MessageContext ctx, NBTTagCompound tags) {
+    EntityPlayer p = this.getPlayerEntity(ctx); //Minecraft.getMinecraft().thePlayer;
+    if (p != null) {
+      IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(Minecraft.getMinecraft().thePlayer);
+      if (props != null) {
+        props.setDataFromNBT(tags);
+      }
     }
   }
+  //https://github.com/coolAlias/Tutorial-Demo/blob/e8fa9c94949e0b1659dc0a711674074f8752d80e/src/main/java/tutorial/ClientProxy.java
   @Override
-  public void renderCube(BlockPos pos, Color color) {
-    //		double exp = 0.004;
-    //		
-    //		System.out.println("rendercube "+pos);//up just to test
-    //		GL11.glDisable(GL11.GL_TEXTURE_2D);
-    //		GL11.glEnable(GL11.GL_BLEND);
-    //		GL11.glDepthMask(true);
-    //		GL11.glLineWidth(2.5F);//was 2.5
-    //		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-    //		
-    //		AxisAlignedBB boundingBox = new AxisAlignedBB(pos,pos.east());//.contract(0.005);
-    //		boundingBox.expand(exp,exp,exp);
-    //		boundingBox.offset(  -player.posX, -player.posY, -player.posZ);
-    //        RenderGlobal.drawOutlinedBoundingBox(boundingBox,
-    //        		color.getRed(),color.getBlue(),color.getGreen(), -1);
-    // 
-    //
-    //        color = Color.BLACK;
-    //		boundingBox = new AxisAlignedBB(pos,pos.up());//.contract(0.005);
-    //		boundingBox.contract(exp);
-    //		boundingBox.offset(  -player.posX, -player.posY, -player.posZ);
-    //        RenderGlobal.drawOutlinedBoundingBox(boundingBox,
-    //        		color.getRed(),color.getBlue(),color.getGreen(), -1);
-    //        
-    //
-    //        color = Color.blue;
-    //		boundingBox = new AxisAlignedBB(pos,pos.up());//.contract(0.005);
-    //		boundingBox.contract(exp);
-    //		boundingBox.offset(  player.posX, player.posY, player.posZ);
-    //        RenderGlobal.drawOutlinedBoundingBox(boundingBox,
-    //        		color.getRed(),color.getBlue(),color.getGreen(), -1);
-    //		
-    // 
-    //		GL11.glEnable(GL11.GL_TEXTURE_2D);
-    //		GL11.glDisable(GL11.GL_BLEND);
+  public IThreadListener getThreadFromContext(MessageContext ctx) {
+    return (ctx.side.isClient() ? Minecraft.getMinecraft() : super.getThreadFromContext(ctx));
+  }
+  @Override
+  public EntityPlayer getPlayerEntity(MessageContext ctx) {
+    
+    // Note that if you simply return 'Minecraft.getMinecraft().thePlayer',
+    // your packets will not work as expected because you will be getting a
+    // client player even when you are on the server!
+    // Sounds absurd, but it's true.
+//https://github.com/coolAlias/Tutorial-Demo/blob/e8fa9c94949e0b1659dc0a711674074f8752d80e/src/main/java/tutorial/ClientProxy.java
+    // Solution is to double-check side before returning the player:
+    return (ctx.side.isClient() ? Minecraft.getMinecraft().thePlayer : super.getPlayerEntity(ctx));
   }
 }
