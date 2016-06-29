@@ -19,7 +19,6 @@ public class MobSpawningRegistry {
   private final static int group = 3;
   private final static int min = 1;
   private final static int max = 4;
-  private static boolean endermanNether;
   private static boolean blazeDesertHills;
   private static boolean magmaDesert;
   private static boolean caveSpiderMesaRoofed;
@@ -29,9 +28,6 @@ public class MobSpawningRegistry {
   private static boolean horseIceExtrhillsOcean;
   private static boolean ironGolemJungle;
   public static void register() {
-    if (endermanNether) {
-      EntityRegistry.addSpawn(EntityEnderman.class, group, min, max, EnumCreatureType.MONSTER, new Biome[] { Biomes.HELL });
-    }
     if (blazeDesertHills) {
       EntityRegistry.addSpawn(EntityBlaze.class, group, min, max, EnumCreatureType.MONSTER, new Biome[] { Biomes.DESERT_HILLS });
     }
@@ -63,7 +59,6 @@ public class MobSpawningRegistry {
   public static void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.mobspawns;
     config.addCustomCategoryComment(category, "Add mob spawns in more biomes");
-    endermanNether = config.getBoolean("Enderman Nether", category, true, "Adds random Enderman spawns into the nether");
     blazeDesertHills = config.getBoolean("Blaze DesertHills", category, true, "Adds random Blaze spawns into Desert Hills");
     magmaDesert = config.getBoolean("Magmacube Desert", category, true, "Adds random Magma Cube spawns into Desert");
     caveSpiderMesaRoofed = config.getBoolean("CaveSpider Mesa&Roofed", category, true, "Adds random Cave Spider spawns into Mesa and Roofed Forests");

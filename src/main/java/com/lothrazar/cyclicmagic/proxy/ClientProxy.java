@@ -13,6 +13,7 @@ import com.lothrazar.cyclicmagic.entity.projectile.EntityWaterBolt;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.KeyInventoryShiftRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.Block;
@@ -56,18 +57,20 @@ public class ClientProxy extends CommonProxy {
     registerKeys();
     registerEntities();
   }
+ 
   private void registerKeys() {
-    //  public KeyBinding(String description, net.minecraftforge.client.settings.IKeyConflictContext keyConflictContext, net.minecraftforge.client.settings.KeyModifier keyModifier, int keyCode, String category)
-    keyShiftUp = new KeyBinding("key.columnshiftup", Keyboard.KEY_Y, keyCategoryInventory);
-    ClientRegistry.registerKeyBinding(ClientProxy.keyShiftUp);
-    keyShiftDown = new KeyBinding("key.columnshiftdown", Keyboard.KEY_H, keyCategoryInventory);
-    ClientRegistry.registerKeyBinding(ClientProxy.keyShiftDown);
-    keyBarUp = new KeyBinding("key.columnbarup", Keyboard.KEY_Y, keyCategoryInventory);
-    keyBarUp.setKeyModifierAndCode(KeyModifier.SHIFT, Keyboard.KEY_Y);
-    ClientRegistry.registerKeyBinding(ClientProxy.keyBarUp);
-    keyBarDown = new KeyBinding("key.columnbardown", Keyboard.KEY_H, keyCategoryInventory);
-    keyBarDown.setKeyModifierAndCode(KeyModifier.SHIFT, Keyboard.KEY_H);
-    ClientRegistry.registerKeyBinding(ClientProxy.keyBarDown);
+    if(KeyInventoryShiftRegistry.enableInvoKeys){
+      keyShiftUp = new KeyBinding("key.columnshiftup", Keyboard.KEY_Y, keyCategoryInventory);
+      ClientRegistry.registerKeyBinding(ClientProxy.keyShiftUp);
+      keyShiftDown = new KeyBinding("key.columnshiftdown", Keyboard.KEY_H, keyCategoryInventory);
+      ClientRegistry.registerKeyBinding(ClientProxy.keyShiftDown);
+      keyBarUp = new KeyBinding("key.columnbarup", Keyboard.KEY_Y, keyCategoryInventory);
+      keyBarUp.setKeyModifierAndCode(KeyModifier.SHIFT, Keyboard.KEY_Y);
+      ClientRegistry.registerKeyBinding(ClientProxy.keyBarUp);
+      keyBarDown = new KeyBinding("key.columnbardown", Keyboard.KEY_H, keyCategoryInventory);
+      keyBarDown.setKeyModifierAndCode(KeyModifier.SHIFT, Keyboard.KEY_H);
+      ClientRegistry.registerKeyBinding(ClientProxy.keyBarDown);
+    }
   }
   @SuppressWarnings({ "unchecked", "rawtypes", "deprecation" })
   private void registerEntities() {

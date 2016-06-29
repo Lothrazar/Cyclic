@@ -3,6 +3,7 @@ import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.net.PacketMovePlayerHotbar;
 import com.lothrazar.cyclicmagic.net.PacketMovePlayerColumn;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
+import com.lothrazar.cyclicmagic.util.Const;
 import org.lwjgl.input.Keyboard;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiInventory;
@@ -18,16 +19,16 @@ public class EventKeyInput {
   @SubscribeEvent
   public void onKeyInput(InputEvent.KeyInputEvent event) {
     int slot = Minecraft.getMinecraft().thePlayer.inventory.currentItem;
-    if (ClientProxy.keyBarUp.isPressed()) {
+    if (ClientProxy.keyBarUp != null && ClientProxy.keyBarUp.isPressed()) {
       ModMain.network.sendToServer(new PacketMovePlayerHotbar(false));
     }
-    else if (ClientProxy.keyBarDown.isPressed()) {
+    else if (ClientProxy.keyBarDown != null && ClientProxy.keyBarDown.isPressed()) {
       ModMain.network.sendToServer(new PacketMovePlayerHotbar(true));
     }
-    else if (ClientProxy.keyShiftUp.isPressed()) {
+    else if (ClientProxy.keyShiftUp != null && ClientProxy.keyShiftUp.isPressed()) {
       ModMain.network.sendToServer(new PacketMovePlayerColumn(slot, false));
     }
-    else if (ClientProxy.keyShiftDown.isPressed()) {
+    else if (ClientProxy.keyShiftDown != null && ClientProxy.keyShiftDown.isPressed()) {
       ModMain.network.sendToServer(new PacketMovePlayerColumn(slot, true));
     }
   }
@@ -36,22 +37,22 @@ public class EventKeyInput {
   public void onGuiKeyboardEvent(GuiScreenEvent.KeyboardInputEvent.Pre event) {
     // only for player survival invo
     if (event.getGui() instanceof GuiInventory) {
-      if (isGuiKeyDown(ClientProxy.keyBarUp)) {
+      if (ClientProxy.keyBarUp != null && isGuiKeyDown(ClientProxy.keyBarUp)) {
         ModMain.network.sendToServer(new PacketMovePlayerHotbar(true));
         return;
       }
-      else if (isGuiKeyDown(ClientProxy.keyBarDown)) {
+      else if (ClientProxy.keyBarDown != null && isGuiKeyDown(ClientProxy.keyBarDown)) {
         ModMain.network.sendToServer(new PacketMovePlayerHotbar(false));
         return;
       }
       GuiInventory gui = (GuiInventory) event.getGui();
       if (gui.getSlotUnderMouse() != null) {
         // only becuase it expects actually a column number
-        int slot = gui.getSlotUnderMouse().slotNumber % 9;
-        if (isGuiKeyDown(ClientProxy.keyShiftUp)) {
+        int slot = gui.getSlotUnderMouse().slotNumber % Const.HOTBAR_SIZE;
+        if (ClientProxy.keyShiftUp != null && isGuiKeyDown(ClientProxy.keyShiftUp)) {
           ModMain.network.sendToServer(new PacketMovePlayerColumn(slot, false));
         }
-        else if (isGuiKeyDown(ClientProxy.keyShiftDown)) {
+        else if (ClientProxy.keyShiftDown != null && isGuiKeyDown(ClientProxy.keyShiftDown)) {
           ModMain.network.sendToServer(new PacketMovePlayerColumn(slot, true));
         }
       }

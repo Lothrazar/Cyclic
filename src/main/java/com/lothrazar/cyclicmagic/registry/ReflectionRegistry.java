@@ -25,8 +25,8 @@ public class ReflectionRegistry {
         }
       }
       catch (Exception e) {
-        System.err.println("Severe error, please report this to the mod author:");
-        System.err.println(e);
+        ModMain.logger.error("Severe error, please report this to the mod author:");
+        ModMain.logger.error(e.getStackTrace().toString());
       }
     }
     if (horseJumpStrength == null) {

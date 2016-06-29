@@ -11,6 +11,7 @@
   },
   "1.10":{
   	"1.0.0":"Launch ",
-  	"1.0.1":"Garden Scythe now works with netherwart.   Uncrafting Grinder fix sync issues.  Inventory tabs not saving on reload fixed.  Add custom sound to heart container"
+  	"1.0.1":"Garden Scythe now works with netherwart.   Uncrafting Grinder fix sync issues.  Inventory tabs not saving on reload fixed.  Add custom sound to heart container",
+  	"1.0.2":"Add config to disable inventory shift keybinds.  Remove redundant endermen spawning feature (its in vanilla 1.10 now).  "
   }
 }

@@ -39,11 +39,11 @@ public class UtilNBT {
     // ?? is it from this?
     BlockPos p = null;
     try {
-      if (spl.length == 3 && spl[0] != "")
+      if (spl != null && spl.length == 3 && spl[0] != "")
         p = new BlockPos(Integer.parseInt(spl[0]), Integer.parseInt(spl[1]), Integer.parseInt(spl[2]));
-      else {
-        System.out.println("invalid string: " + csv);
-      }
+//      else {
+//        System.out.println("invalid string: " + csv);
+//      }
     }
     catch (java.lang.ClassCastException e) {
       System.out.println("exc: bad string: " + csv);

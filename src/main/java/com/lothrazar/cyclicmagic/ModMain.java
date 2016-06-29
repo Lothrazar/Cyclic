@@ -52,16 +52,15 @@ public class ModMain {
   public void onPreInit(FMLPreInitializationEvent event) {
     logger = new ModLogger(event.getModLog());
     config = new Configuration(event.getSuggestedConfigurationFile());
+    network = NetworkRegistry.INSTANCE.newSimpleChannel(Const.MODID);
+    MinecraftForge.EVENT_BUS.register(instance);
     events = new EventRegistry();
-    //TODO MAYBE it should be a constructed, not static
-    ItemRegistry.construct();
+    ItemRegistry.construct(); //TODO MAYBE all these should be a constructed, not static
     BlockRegistry.construct();
-    StackSizeRegistry.construct();
     config.load();
     syncConfig();
-    network = NetworkRegistry.INSTANCE.newSimpleChannel(Const.MODID);
     events.register();
-    MinecraftForge.EVENT_BUS.register(instance);
+    StackSizeRegistry.construct();
     CapabilityRegistry.register();
     ReflectionRegistry.register();
     PacketRegistry.register(network);
@@ -134,18 +133,18 @@ public class ModMain {
     SpellRegistry.syncConfig(c);
     CommandRegistry.syncConfig(c);
     VillageTradeRegistry.syncConfig(c);
+    KeyInventoryShiftRegistry.syncConfig(c);
     c.save();
   }
   /*
-   *FOR 1.0.1
+   * FOR 1.0.2
    *
-   * Sound effect on eating heart container
-   * -- if eat when full, re drop on ground, make sure its not wasted -> play fail sound
    *
-   *circle sometimes gets duplicate positions, slowing it down
+   * circle sometimes gets duplicate positions, slowing it down
    *
-   *]: [com.lothrazar.cyclicmagic.util.UtilNBT:stringCSVToBlockPos:45]: invalid string:  
-   *fix and/or remove log
+   * remove endermen in nether spawn feature - redundant with new vanilla
+   *
+   * CONFIG TO REMOVE KEY BINDINGS
    * 
    * FUTURE PLANS
    * 
