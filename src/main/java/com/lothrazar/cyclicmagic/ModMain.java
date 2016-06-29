@@ -142,6 +142,11 @@ public class ModMain {
    *  
    * FUTURE PLANS
    * 
+   * MYSTERY SEED: craft with emerald + seed. drops a random item from list
+   * almost like a gamble. not fully random.
+   * 
+   * FORWARD CRAFTER: like uncrafter but forward. 3x3 inventory, takes hopper input
+   * 
    * circle sometimes gets duplicate positions, slowing it down
    * 
    * block breaker//tree harvester?
