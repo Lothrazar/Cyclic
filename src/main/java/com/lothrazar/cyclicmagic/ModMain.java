@@ -137,18 +137,27 @@ public class ModMain {
     c.save();
   }
   /*
-   * FOR 1.0.2
-   *
-   *
-   * circle sometimes gets duplicate positions, slowing it down
-   *
-   * remove endermen in nether spawn feature - redundant with new vanilla
-   *
-   * CONFIG TO REMOVE KEY BINDINGS
-   * 
+   * IMMEDIATE:
+   *  
+   *  
    * FUTURE PLANS
    * 
+   * circle sometimes gets duplicate positions, slowing it down
+   * 
    * block breaker//tree harvester?
+   * 
+   * Some way to keep certain items after death - runestone? enchantment?
+   * 
+   * lifeleech enchant - like diablo 2 ? maybe only on kill?
+   * 
+   * conveyor belt type item: copy slime pad but make the entity go in a given direction
+   * 
+   * [ Trading Tool // gui]
+   * Upgrade villager gui: either make my own or add buttons/some way to view all trades at once
+   * --inspired by extrautils trading table that is apparently gone after 1710
+   * 
+   * exp bottler: item with a gui/inventory
+   * put bottles in, toggle on/off and it slowly drains your exp into the bottles at a given ratio
    * 
    * pets live longer and/or respawn
    * 
@@ -162,8 +171,7 @@ public class ModMain {
    *
    * ROTATE: STAIRS: allow switch from top to bottom
    * 
-   * Trading Tool // gui
-   * 
    * Fix sorting : UtilInventorySort.sort(p, openInventory);
+   * 
    */
 }

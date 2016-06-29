@@ -30,10 +30,10 @@ public class WorldGenRegistry {
     Property prop = config.get(category, "Classic Oceans", true, "Generate clay, sand, and dirt in the ocean instead of only gravel (like the old days)");
     prop.setRequiresWorldRestart(true);
     oceanEnabled = prop.getBoolean();
-    prop = config.get(category, "Nether Ore", true, "Generate ore in netherrack (lapis, emerald, gold, coal).  The gold gives nuggets when mined");
+    prop = config.get(category, "Nether Ore", true, "Generate ore in netherrack (lapis, emerald, gold, coal, diamond).  The gold gives nuggets when mined");
     prop.setRequiresMcRestart(true);
     netherOreEnabled = prop.getBoolean();
-    prop = config.get(category, "End Ore", true, "Generate ore in the end (lapis, emerald, redstone, coal)");
+    prop = config.get(category, "End Ore", true, "Generate ore in the end (lapis, emerald, redstone, coal, diamond)");
     prop.setRequiresMcRestart(true);
     endOreEnabled = prop.getBoolean();
     prop = config.get(category, "Infested Ores", true, "These dimension ores (nether and end) have a chance to spawn endermites or silverfish");
