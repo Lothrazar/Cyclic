@@ -7,16 +7,19 @@ import com.lothrazar.cyclicmagic.block.BlockDimensionOre;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre.SpawnType;
 import com.lothrazar.cyclicmagic.block.BlockLaunch;
 import com.lothrazar.cyclicmagic.block.BlockScaffolding;
+import com.lothrazar.cyclicmagic.block.BlockSprout;
 import com.lothrazar.cyclicmagic.block.BlockUncrafting;
 import com.lothrazar.cyclicmagic.item.itemblock.ItemBlockBucket;
 import com.lothrazar.cyclicmagic.item.itemblock.ItemBlockScaffolding;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockCrops;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemSeeds;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -63,6 +66,13 @@ public class BlockRegistry {
     blocks.add(b);
   }
   public static void register() {
+    
+    BlockSprout sprout = new BlockSprout();
+    registerBlock(sprout ,"sprout");
+    ItemRegistry.sprout_seed = new ItemSeeds(sprout, Blocks.FARMLAND);
+    ItemRegistry.sprout_seed.setUnlocalizedName("sprout_seed");
+    ItemRegistry.registerItem(ItemRegistry.sprout_seed, "sprout_seed");
+    
     //??maybe? nah.
     //Blocks.obsidian.setHardness(Blocks.obsidian.getHarvestLevel(Blocks.obsidian.getDefaultState()) / 2);
     registerBlock(uncrafting_block, "uncrafting_block");

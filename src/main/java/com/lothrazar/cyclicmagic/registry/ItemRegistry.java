@@ -37,6 +37,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFishFood;
+import net.minecraft.item.ItemSeeds;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
@@ -153,6 +154,7 @@ public class ItemRegistry {
   //	private static boolean emeraldGearEnabled ; 
   public static ToolMaterial TOOL_MATERIAL_EMERALD;
   public static ArmorMaterial ARMOR_MATERIAL_EMERALD;
+  public static ItemSeeds sprout_seed;
   public final static Item REPAIR_EMERALD = Items.EMERALD;
   // only because theyre private, with no getters
   //	private static final int		diamondDurability				= 33;
