@@ -1,0 +1,13 @@
+{
+    "variants": {
+        
+ "age=0": { "model": "cyclicmagic:sprout_stage0" },
+ "age=1": { "model": "cyclicmagic:sprout_stage1" },    
+ "age=2": { "model": "cyclicmagic:sprout_stage2" },     
+ "age=3": { "model": "cyclicmagic:sprout_stage3" },      
+ "age=4": { "model": "cyclicmagic:sprout_stage4" },      
+ "age=5": { "model": "cyclicmagic:sprout_stage5" },    
+ "age=6": { "model": "cyclicmagic:sprout_stage6" },   
+ "age=7": { "model": "cyclicmagic:sprout_stage7" }
+    }
+}

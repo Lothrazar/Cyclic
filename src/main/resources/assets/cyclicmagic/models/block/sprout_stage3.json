@@ -1,0 +1,6 @@
+{
+    "parent": "block/crop",
+    "textures": {
+        "crop": "cyclicmagic:blocks/sprout_stage_3"
+    }
+}

@@ -68,7 +68,7 @@ public class BlockRegistry {
   public static void register() {
     
     BlockSprout sprout = new BlockSprout();
-    registerBlock(sprout ,"sprout");
+    registerBlock(sprout ,"sprout",true);
     ItemRegistry.sprout_seed = new ItemSeeds(sprout, Blocks.FARMLAND);
     ItemRegistry.sprout_seed.setUnlocalizedName("sprout_seed");
     ItemRegistry.registerItem(ItemRegistry.sprout_seed, "sprout_seed");
