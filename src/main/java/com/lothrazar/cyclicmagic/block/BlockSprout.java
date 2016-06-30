@@ -21,27 +21,27 @@ public class BlockSprout extends BlockCrops {
   private Random rand = new Random();
   //IDEA: different arraylists of itemstacks, and each one has a different odds of pulling from it
   private static final Item[] drops = new Item[] {
-    //treasure
-    Items.REDSTONE, Items.GUNPOWDER,Items.GLOWSTONE_DUST, Items.DIAMOND,Items.EMERALD,Items.COAL,
-    Items.GOLD_NUGGET, Items.IRON_INGOT,Items.GOLD_INGOT,
-    //mob drops
-    Items.ENDER_PEARL,Items.ENDER_EYE,Items.SLIME_BALL,
-    Items.BLAZE_POWDER, Items.BLAZE_ROD,Items.LEATHER,
-    Items.ROTTEN_FLESH, Items.BONE, Items.STRING, Items.SPIDER_EYE, 
-    Items.FLINT, Items.GHAST_TEAR,
-    // footstuffs
-    Items.APPLE,  Items.STICK,Items.SUGAR, Items.FISH,Items.COOKED_FISH,
-    Items.CARROT,Items.POTATO,Items.BEETROOT,Items.WHEAT, 
-    Items.BEETROOT_SEEDS,Items.MELON_SEEDS,Items.PUMPKIN_SEEDS,Items.WHEAT_SEEDS,
-    //random crap
-    Items.CAKE,Items.COOKIE,Items.SPECKLED_MELON,Items.SNOWBALL,
-    Items.GLASS_BOTTLE,Items.BOOK,Items.PAPER,Items.CLAY_BALL,Items.BRICK,
-    //plants
-    Items.NETHER_WART,
-    Item.getItemFromBlock(Blocks.RED_FLOWER),Item.getItemFromBlock(Blocks.YELLOW_FLOWER),
-    Item.getItemFromBlock(Blocks.RED_MUSHROOM),Item.getItemFromBlock(Blocks.BROWN_MUSHROOM),
-    Item.getItemFromBlock(Blocks.TALLGRASS),Item.getItemFromBlock(Blocks.REEDS),
-    Item.getItemFromBlock(Blocks.DEADBUSH),Item.getItemFromBlock(Blocks.CACTUS)
+      //treasure
+      Items.REDSTONE, Items.GUNPOWDER, Items.GLOWSTONE_DUST, Items.DIAMOND, Items.EMERALD, Items.COAL,
+      Items.GOLD_NUGGET, Items.IRON_INGOT, Items.GOLD_INGOT,
+      //mob drops
+      Items.ENDER_PEARL, Items.ENDER_EYE, Items.SLIME_BALL,
+      Items.BLAZE_POWDER, Items.BLAZE_ROD, Items.LEATHER,
+      Items.ROTTEN_FLESH, Items.BONE, Items.STRING, Items.SPIDER_EYE,
+      Items.FLINT, Items.GHAST_TEAR,
+      // footstuffs
+      Items.APPLE, Items.STICK, Items.SUGAR, Items.FISH, Items.COOKED_FISH,
+      Items.CARROT, Items.POTATO, Items.BEETROOT, Items.WHEAT,
+      Items.BEETROOT_SEEDS, Items.MELON_SEEDS, Items.PUMPKIN_SEEDS, Items.WHEAT_SEEDS,
+      //random crap
+      Items.CAKE, Items.COOKIE, Items.SPECKLED_MELON, Items.SNOWBALL,
+      Items.GLASS_BOTTLE, Items.BOOK, Items.PAPER, Items.CLAY_BALL, Items.BRICK,
+      //plants
+      Items.NETHER_WART,
+      Item.getItemFromBlock(Blocks.RED_FLOWER), Item.getItemFromBlock(Blocks.YELLOW_FLOWER),
+      Item.getItemFromBlock(Blocks.RED_MUSHROOM), Item.getItemFromBlock(Blocks.BROWN_MUSHROOM),
+      Item.getItemFromBlock(Blocks.TALLGRASS), Item.getItemFromBlock(Blocks.REEDS),
+      Item.getItemFromBlock(Blocks.DEADBUSH), Item.getItemFromBlock(Blocks.CACTUS)
   };
   protected Item getSeed() {
     return ItemRegistry.sprout_seed;
@@ -70,5 +70,13 @@ public class BlockSprout extends BlockCrops {
   @Override
   public int getMaxAge() {
     return MAX_AGE;
+  }
+  @Override
+  protected int getBonemealAgeIncrease(World worldIn) {
+    return 0;
+  }
+  @Override
+  public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+    return true;
   }
 }
