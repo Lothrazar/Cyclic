@@ -66,12 +66,7 @@ public class BlockRegistry {
   }
   public static void register() {
     
-    BlockSprout sprout = new BlockSprout();
-    registerBlock(sprout ,"sprout",true);
-    ItemRegistry.sprout_seed = new ItemSproutSeeds(sprout, Blocks.FARMLAND);
-    ItemRegistry.sprout_seed.setUnlocalizedName("sprout_seed");
-    ItemRegistry.registerItem(ItemRegistry.sprout_seed, "sprout_seed");
-    ItemRegistry.itemMap.put("sprout_seed", ItemRegistry.sprout_seed);
+    registerSprout();
     //??maybe? nah.
     //Blocks.obsidian.setHardness(Blocks.obsidian.getHarvestLevel(Blocks.obsidian.getDefaultState()) / 2);
     registerBlock(uncrafting_block, "uncrafting_block");
@@ -144,6 +139,24 @@ public class BlockRegistry {
     block_storeempty = new BlockBucketStorage(null);
     registerBlock(block_storeempty, new ItemBlockBucket(block_storeempty), "block_storeempty", false);
     block_storeempty.addRecipe();
+  }
+  private static void registerSprout() {
+    BlockSprout sprout = new BlockSprout();
+    registerBlock(sprout ,"sprout",true);
+    ItemRegistry.sprout_seed = new ItemSproutSeeds(sprout, Blocks.FARMLAND);
+    ItemRegistry.sprout_seed.setUnlocalizedName("sprout_seed");
+    ItemRegistry.registerItem(ItemRegistry.sprout_seed, "sprout_seed");
+    ItemRegistry.itemMap.put("sprout_seed", ItemRegistry.sprout_seed);
+    GameRegistry.addRecipe(new ItemStack(ItemRegistry.sprout_seed,0,8), 
+        "waw",
+        "bEc",
+        "wdw",
+        'w',Items.WHEAT_SEEDS,
+        'E',Items.EMERALD,
+        'a',Items.BEETROOT_SEEDS,
+        'b',Items.MELON_SEEDS,
+        'c',Items.PUMPKIN_SEEDS,
+        'd',Items.NETHER_WART );
   }
   public static void construct() {
     uncrafting_block = new BlockUncrafting();
