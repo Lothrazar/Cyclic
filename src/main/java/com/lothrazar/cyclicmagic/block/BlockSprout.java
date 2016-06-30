@@ -5,6 +5,7 @@ import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -18,7 +19,29 @@ public class BlockSprout extends BlockCrops {
   public static final PropertyInteger AGE = PropertyInteger.create("age", 0, MAX_AGE);
   private static final AxisAlignedBB[] AABB = new AxisAlignedBB[] { new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.125D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.1875D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.25D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.3125D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.375D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.4375D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5625D, 1.0D) };
   private Random rand = new Random();
-  private static final Item[] drops = new Item[] { Items.REDSTONE, Items.GUNPOWDER, Items.ENDER_PEARL, Items.BLAZE_POWDER, Items.ROTTEN_FLESH, Items.BONE, Items.STRING, Items.SPIDER_EYE, Items.SUGAR, Items.WHEAT, Items.FLINT, Items.BRICK, Items.CLAY_BALL, Items.COAL, Items.GOLD_NUGGET, Items.APPLE, Items.EMERALD, Items.STICK };
+  //IDEA: different arraylists of itemstacks, and each one has a different odds of pulling from it
+  private static final Item[] drops = new Item[] { 
+      //treasure
+      Items.REDSTONE, Items.GUNPOWDER,Items.GLOWSTONE_DUST, Items.DIAMOND,Items.EMERALD,Items.COAL,
+      Items.GOLD_NUGGET, Items.IRON_INGOT,Items.GOLD_INGOT,
+      //mob drops
+      Items.ENDER_PEARL,Items.ENDER_EYE,Items.SLIME_BALL,
+      Items.BLAZE_POWDER, Items.BLAZE_ROD,Items.LEATHER,
+      Items.ROTTEN_FLESH, Items.BONE, Items.STRING, Items.SPIDER_EYE, 
+      Items.FLINT, Items.GHAST_TEAR,
+      // footstuffs
+      Items.APPLE,  Items.STICK,Items.SUGAR, Items.FISH,Items.COOKED_FISH,
+      Items.CARROT,Items.POTATO,Items.BEETROOT,Items.WHEAT, 
+      Items.BEETROOT_SEEDS,Items.MELON_SEEDS,Items.PUMPKIN_SEEDS,Items.WHEAT_SEEDS,
+      //random crap
+      Items.CAKE,Items.COOKIE,Items.SPECKLED_MELON,Items.SNOWBALL,
+      Items.GLASS_BOTTLE,Items.BOOK,Items.PAPER,Items.CLAY_BALL,Items.BRICK,
+      //plants
+      Item.getItemFromBlock(Blocks.RED_FLOWER),Item.getItemFromBlock(Blocks.YELLOW_FLOWER),
+      Item.getItemFromBlock(Blocks.RED_MUSHROOM),Item.getItemFromBlock(Blocks.BROWN_MUSHROOM),
+      Item.getItemFromBlock(Blocks.TALLGRASS),Item.getItemFromBlock(Blocks.REEDS),
+      Item.getItemFromBlock(Blocks.DEADBUSH),Item.getItemFromBlock(Blocks.CACTUS)
+      };
   protected Item getSeed() {
     return ItemRegistry.sprout_seed;
   }
