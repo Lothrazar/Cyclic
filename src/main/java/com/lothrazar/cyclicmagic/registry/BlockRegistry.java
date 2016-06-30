@@ -72,7 +72,7 @@ public class BlockRegistry {
     ItemRegistry.sprout_seed = new ItemSeeds(sprout, Blocks.FARMLAND);
     ItemRegistry.sprout_seed.setUnlocalizedName("sprout_seed");
     ItemRegistry.registerItem(ItemRegistry.sprout_seed, "sprout_seed");
-    
+    ItemRegistry.itemMap.put("sprout_seed", ItemRegistry.sprout_seed);
     //??maybe? nah.
     //Blocks.obsidian.setHardness(Blocks.obsidian.getHarvestLevel(Blocks.obsidian.getDefaultState()) / 2);
     registerBlock(uncrafting_block, "uncrafting_block");

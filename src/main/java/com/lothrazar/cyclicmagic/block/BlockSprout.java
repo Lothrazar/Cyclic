@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.block;
-import java.util.ArrayList;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import net.minecraft.block.BlockCrops;
