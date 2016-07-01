@@ -49,15 +49,6 @@ public class ItemFoodHorse extends BaseItem implements IHasRecipe {
   }
   public static void onHorseInteract(EntityHorse horse, EntityPlayer player, ItemStack held) {
     boolean success = false;
-    /*
-     * String ownerID = "..untamed.."; if(horse.isTame() &&
-     * horse.getEntityData().hasKey("OwnerUUID")) { ownerID =
-     * horse.getEntityData().getString("OwnerUUID"); }
-     * 
-     * 
-     * //or let it through if no owner exists ("owner = "+ownerID); ("player = "
-     * +player.getUniqueID().toString());
-     */
     //TODO: USE AN EnumType flag passed by constructor, if u dont want to do new classes
     if (held.getItem() == ItemRegistry.itemMap.get("emeraldCarrot")) {
       switch (horse.getType()) {

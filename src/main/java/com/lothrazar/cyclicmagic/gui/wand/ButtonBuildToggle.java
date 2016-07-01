@@ -15,7 +15,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ButtonBuildToggle extends GuiButton implements ITooltipButton {
-  final EntityPlayer thePlayer;// TODO: could store player instead of wand
+  final EntityPlayer thePlayer;
   public ButtonBuildToggle(EntityPlayer player, int buttonId, int x, int y, int width) {
     super(buttonId, x, y, width, 20, "");
     thePlayer = player;

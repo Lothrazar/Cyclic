@@ -3,7 +3,6 @@ import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.entity.monster.EntityCaveSpider;
-import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.monster.EntityGhast;
 import net.minecraft.entity.monster.EntityGuardian;
 import net.minecraft.entity.monster.EntityIronGolem;
@@ -53,8 +52,6 @@ public class MobSpawningRegistry {
     if (ironGolemJungle) {
       EntityRegistry.addSpawn(EntityIronGolem.class, group, min, max, EnumCreatureType.CREATURE, new Biome[] { Biomes.JUNGLE_HILLS, Biomes.JUNGLE });
     }
-    //TODO: wolves and villagers?
-    // WOLVES only spawn naturally in forest, taiga, mega taiga, cold taiga, and cold taiga M
   }
   public static void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.mobspawns;

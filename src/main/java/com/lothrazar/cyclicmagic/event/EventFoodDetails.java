@@ -36,7 +36,6 @@ public class EventFoodDetails implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.items;
-    //TODO: put all custom categories in some central place?
     config.addCustomCategoryComment(category, "Tweaks to new and existing items");
     foodDetails = config.getBoolean("Food Details", category, true, "Add food value and saturation to items info (hold shift)");
     fuelDetails = config.getBoolean("Fuel Details", category, true, "Add fuel burn time to items info (hold shift)");

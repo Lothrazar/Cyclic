@@ -74,8 +74,6 @@ public class ItemFoodCorruptedChorus extends ItemFood implements IHasRecipe, IHa
     EntityPlayer player = (EntityPlayer) event.getEntityLiving();
     World world = player.worldObj;
     if (player.getEntityData().getBoolean(KEY_BOOLEAN)) {
-      //currently in ghost mode now
-      //			ModMain.logger.warn("WARN: dont use entitydata here");
       int playerGhost = player.getEntityData().getInteger(KEY_TIMER);
       if (playerGhost > 0) {
         if (playerGhost % Const.TICKS_PER_SEC == 0) {

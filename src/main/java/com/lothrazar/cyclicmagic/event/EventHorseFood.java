@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.event;
 import java.text.DecimalFormat;
-import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.item.ItemFoodHorse;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.client.Minecraft;
@@ -11,13 +10,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.client.resources.I18n;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EventHorseFood implements IHasConfig {
+public class EventHorseFood {
   @SubscribeEvent
   public void onEntityInteractEvent(EntityInteract event) {
     if (event.getEntity() instanceof EntityPlayer == false) { return; }
@@ -47,9 +45,5 @@ public class EventHorseFood implements IHasConfig {
         event.getLeft().add(I18n.format("debug.horsejump") + "  " + df.format(jumpHeight));
       }
     }
-  }
-  @Override
-  public void syncConfig(Configuration config) {
-    // TODO Auto-generated method stub
   }
 }

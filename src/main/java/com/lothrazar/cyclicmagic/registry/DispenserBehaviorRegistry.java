@@ -11,25 +11,11 @@ public class DispenserBehaviorRegistry {
   private static boolean seedsEnabled;
   public static void register() {
     if (seedsEnabled) {
-      // if I could, i would just make a list of items, and register one single
-      // BehaviorPlantSeed object
-      // to all those items, but it doesnt work that way I guess
-      // NOTE: currently does not support things like:
-      // cocoa beans
-      // chorus flower
-      // reeds
-      // tree saplings
-      // becuase they are not considered 'plantable growing things' in the
-      // normal way
-      // something to TODO look in the future
-      // DOES work with all plants even netherwart
       for (Item item : Item.REGISTRY) { // GameData.getBlockItemMap().entrySet()){
         if (item == null) {
           continue;
         }
         if (item instanceof IPlantable) {
-          // System.out.println("BehaviorPlantSeed :
-          // "+item.getUnlocalizedName());
           BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(item, new BehaviorPlantSeed());
         }
       }

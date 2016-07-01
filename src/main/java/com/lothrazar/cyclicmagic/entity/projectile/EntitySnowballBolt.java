@@ -33,10 +33,6 @@ public class EntitySnowballBolt extends EntityThrowable {
       if (e.isBurning()) {
         e.extinguish();
       }
-      // TODO System.out.println("TODO: potion");
-      // e.addPotionEffect(new PotionEffect(PotionRegistry.frost.id,
-      // secondsFrozenOnHit *
-      // 20,0));
       float damage = 0;
       if (mop.entityHit instanceof EntityBlaze) {
         damage = 1;

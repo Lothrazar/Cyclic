@@ -30,7 +30,7 @@ public class PacketDepositPlayerToNearby implements IMessage, IMessageHandler<Pa
   public IMessage onMessage(PacketDepositPlayerToNearby message, MessageContext ctx) {
     EntityPlayer p = ctx.getServerHandler().playerEntity;
     if (p.openContainer == null || p.openContainer.getSlot(0) == null || p.openContainer.getSlot(0).inventory == null) {
-      // TODO: use logger
+
       ModMain.logger.error("ERROR LOG: null container inventory");
     }
     else {

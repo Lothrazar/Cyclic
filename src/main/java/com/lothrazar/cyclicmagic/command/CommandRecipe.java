@@ -105,14 +105,6 @@ public class CommandRecipe extends BaseCommand implements ICommand {
         addChatShapelessRecipe(player, getRecipeInput(recipe));
         foundSomething = true;
       }
-      else {
-        // TODO: furnace?
-        // TODO: brewing stand?
-        // for example, if its from some special crafting block/furnace from
-        // another mod
-        // Util.addChatMessage(player, "Recipe type not supported, class = " +
-        // recipe.getClass().getName());
-      }
     } // end main recipe loop
     if (foundSomething == false) {
       UtilChat.addChatMessage(player, "command.recipes.notfound");
@@ -120,7 +112,7 @@ public class CommandRecipe extends BaseCommand implements ICommand {
   }
   @SuppressWarnings("unchecked")
   public static ItemStack[] getRecipeInput(IRecipe recipe) {
-    //.out.println("TODO: UtilRecipe");
+
     ItemStack[] recipeItems = null;
     if (recipe instanceof ShapedRecipes) {
       ShapedRecipes r = ((ShapedRecipes) recipe);
@@ -136,7 +128,6 @@ public class CommandRecipe extends BaseCommand implements ICommand {
         }
         if (o instanceof ItemStack) {
           recipeItems[i] = (ItemStack) o;
-          // System.out.println(i+" -- "+recipeItems[i].getDisplayName());
         }
         else {
           List<ItemStack> c = (List<ItemStack>) o;
@@ -202,15 +193,10 @@ public class CommandRecipe extends BaseCommand implements ICommand {
   public static void addChatShapelessRecipe(EntityPlayer player, ItemStack[] recipeItems) {
     for (int i = 0; i < recipeItems.length; i++) {
       ItemStack is = recipeItems[i];
-      // list.add(is.getDisplayName());
       UtilChat.addChatMessage(player, " - " + is.getDisplayName());
     }
-    // TODO: cleanup/make ncer,etc
-    // Util.addChatMessage(player, "SHAPELESS " +String.join(" + ", list));
   }
   public static void addChatShapedRecipe(EntityPlayer player, ItemStack[] recipeItems, boolean isInventory) {
-    // System.out.println("addChatShapedRecipe "+isInventory
-    // +":"+recipeItems.length);
     int size;
     // needed only becuase MC forge stores as a flat array not a 2D
     if (isInventory)
@@ -223,10 +209,7 @@ public class CommandRecipe extends BaseCommand implements ICommand {
     for (int i = 0; i < grid.length; i++) {
       grid[i] = "- ";
     }
-    // System.out.println("size "+size);
-    // System.out.println("recipeItems.len "+recipeItems.length);
-    // now
-    // todo:
+    //looks like
     // 1,2,3 iron
     // 5 boat
     // 4,6 piston
@@ -243,9 +226,6 @@ public class CommandRecipe extends BaseCommand implements ICommand {
         else {
           namenumbers.put(name, "" + i);
         }
-        // j++;
-        // ModCommands.addChatMessage(player, i + " : " +
-        // recipeItems[i].getDisplayName());
         if (i < grid.length)
           grid[i] = i + " ";
       }

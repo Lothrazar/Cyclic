@@ -92,10 +92,7 @@ public class UtilUncraft {
                 else if ((ores.size() > 1) && dictionaryFreedom) {
                   addDrop(ores.get(0));
                 }
-                // else size is > 1 , so its something like
-                // wooden planks
-                // TODO:maybe with a config file or something,
-                // but not for now
+                // else size is > 1 , so its something like wooden planks but not for now
               }
               else if (maybeOres instanceof ItemStack) // <ItemStack>
               {
@@ -123,10 +120,6 @@ public class UtilUncraft {
                 else if ((ores.size() > 1) && dictionaryFreedom) {
                   addDrop(ores.get(0));
                 }
-                // else size is > 1 , so its something like
-                // wooden planks
-                // TODO:maybe with a config file or something,
-                // but not for now
               }
               if (maybeOres instanceof ItemStack) // <ItemStack>
               {
@@ -165,7 +158,7 @@ public class UtilUncraft {
     return (this.drops.size() > 0);
   }
   public boolean canUncraft() {
-    // TODO make this actually different and more efficient?
+    // ?? make this actually different and more efficient?
     // ex we dont need drops and such
     return this.doUncraft();
   }

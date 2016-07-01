@@ -107,7 +107,6 @@ public class EventExtendedInventory implements IHasConfig {
     if (gui instanceof GuiInventory || gui instanceof GuiPlayerExtended
         || gui instanceof GuiCrafting
         || gui instanceof GuiScreenHorseInventory) {
-      // TODO: reflection helper?
       // gui left and top are private, so are the sizes
       // int guiLeft = ;//gui.guiLeft
       // int guiTop = ;//gui.guiTop

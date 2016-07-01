@@ -21,7 +21,7 @@ public class CommandWorldHome extends BaseCommand implements ICommand {
     World world = ic.getCommandSenderEntity().worldObj;
     EntityPlayer player = (EntityPlayer) ic;
     if (player.dimension != 0) {
-      // TODO:"Can only teleport to worldhome in the overworld"
+      // :"Can only teleport to worldhome in the overworld"
       UtilChat.addChatMessage(ic, "command.worldhome.dim");
       return;
     }

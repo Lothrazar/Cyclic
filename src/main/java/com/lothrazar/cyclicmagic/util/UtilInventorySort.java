@@ -131,11 +131,7 @@ public class UtilInventorySort {
     } // close loop on chest items
     updatePlayerContainerClient(player);
   }
-  public static void sortFromInventoryToPlayer(World world, IInventory chest, EntityPlayer player,
-      boolean restockLeaveOne) {
-    // System.out.println("sortFromInventoryToPlayer");
-    // same as sortFromPlayerToInventory but reverse
-    // TODO: find some code sharing
+  public static void sortFromInventoryToPlayer(World world, IInventory chest, EntityPlayer player, boolean restockLeaveOne) {
     ItemStack chestItem;
     ItemStack playerItem;
     int room;
@@ -152,26 +148,21 @@ public class UtilInventorySort {
       if (chestItem == null) {
         continue;
       } // empty chest slot
-      // System.out.println("chestItem == null");
       for (int islotInv = Const.HOTBAR_SIZE; islotInv < getInvoEnd(player); islotInv++) {
         playerItem = player.inventory.getStackInSlot(islotInv);
         if (playerItem == null) {
           continue;
         } // empty inventory slot
-          // System.out.println("playerItem == null");
         if (playerItem.getItem().equals(chestItem.getItem())
             && playerItem.getItemDamage() == chestItem.getItemDamage()) {
-          // System.out.println("MATCH");
           invMax = playerItem.getItem().getItemStackLimit(playerItem);
           room = invMax - playerItem.stackSize;
           if (room <= 0) {
             continue;
           } // no room, check the next spot
-          // System.out.println("ROOM");
           toDeposit = Math.min(chestItem.stackSize, room);
           if (restockLeaveOne && chestItem.stackSize - toDeposit == 0) {
-            // they decided in the config
-            // that leaving one behind is better
+            // they decided in the config that leaving one behind is better
             toDeposit--;
             if (toDeposit == 0) {
               continue;
@@ -216,7 +207,7 @@ public class UtilInventorySort {
       if (item == null) {
         continue;
       }
-      if (sortType == SORT_ALPH) // TODO: why do it this way ->
+      if (sortType == SORT_ALPH) // : why do it this way ->
         key = item.getUnlocalizedName() + item.getItemDamage();
       else if (sortType == SORT_ALPHI)
         key = item.getItem().getClass().getName() + item.getUnlocalizedName() + item.getItemDamage();
@@ -253,7 +244,6 @@ public class UtilInventorySort {
       }
     });
     for (SortGroup p : sorted) {
-      // System.out.println(p.key+" "+p.stacks.size());
       for (int i = 0; i < p.stacks.size(); i++) {
         invo.setInventorySlotContents(i, null);
         invo.setInventorySlotContents(i, p.stacks.get(i));

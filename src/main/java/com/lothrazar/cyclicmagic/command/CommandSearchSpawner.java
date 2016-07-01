@@ -14,12 +14,11 @@ public class CommandSearchSpawner extends BaseCommand implements ICommand {
   public CommandSearchSpawner(boolean op) {
     super(name, op);
   }
-  public static final int MAXRADIUS = 128;// TODO: config file for these?
+  public static final int MAXRADIUS = 128;
   // yes no?
   public static final int DEFAULTRADIUS = 64;
   @Override
   public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-    //		EntityPlayer player = (EntityPlayer) sender;
     int radius = 0;
     if (args.length > 0) {
       radius = Integer.parseInt(args[0]);
@@ -30,12 +29,9 @@ public class CommandSearchSpawner extends BaseCommand implements ICommand {
     if (radius <= 0) {
       radius = DEFAULTRADIUS;
     }
-    // BlockPos found = Util.findClosestBlock(player, Blocks.mob_spawner,
-    // radius);
     ArrayList<BlockPos> founds = UtilSearchWorld.findBlocks(sender.getEntityWorld(),
         sender.getPosition(), Blocks.MOB_SPAWNER, radius);
     if (founds.size() == 0) {
-      // TODO: lang file for this string
       UtilChat.addChatMessage(sender, UtilChat.lang("command.searchspawner.none") + radius);
     }
     else {

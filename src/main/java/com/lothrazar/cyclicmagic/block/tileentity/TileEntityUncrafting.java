@@ -28,7 +28,7 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
   // http://greyminecraftcoder.blogspot.com.au/2015/01/tileentity.html
   // http://www.minecraftforge.net/forum/index.php?topic=28539.0
   // http://bedrockminer.jimdo.com/modding-tutorials/advanced-modding/tile-entities/
-  // TODO: http://www.minecraftforge.net/wiki/Tile_Entity_Synchronization
+  // http://www.minecraftforge.net/wiki/Tile_Entity_Synchronization
   // http://www.minecraftforge.net/forum/index.php?topic=18871.0
   public static final int TIMER_FULL = 200;
   private ItemStack[] inv;

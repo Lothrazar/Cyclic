@@ -216,8 +216,6 @@ public class BlockBucketStorage extends Block implements ITileEntityProvider {
     BlockPos pos = event.getPos();
     IBlockState state = event.getState();
     TileEntity ent = world.getTileEntity(pos);
-    // TODO; check tool/pickaxe? if notHarvestable or whatever, drop the
-    // buckets and the ..glass?
     if (ent != null && ent instanceof TileEntityBucketStorage) {
       TileEntityBucketStorage t = (TileEntityBucketStorage) ent;
       ItemStack stack = new ItemStack(state.getBlock());

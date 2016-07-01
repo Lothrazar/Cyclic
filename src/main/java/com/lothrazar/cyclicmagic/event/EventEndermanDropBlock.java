@@ -25,8 +25,7 @@ public class EventEndermanDropBlock implements IHasConfig {
   }
   @Override
   public void syncConfig(Configuration config) {
-    String category = Const.ConfigCategory.mobs;//.MODCONF + "Mobs";
-    //TODO: put all custom categories in some central place?
+    String category = Const.ConfigCategory.mobs;
     config.addCustomCategoryComment(category, "Changes to vanilla mobs");
     endermanDrop = config.getBoolean("Enderman Block", category, true,
         "Enderman will always drop block they are carrying 100%");

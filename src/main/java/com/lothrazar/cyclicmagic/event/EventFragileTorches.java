@@ -20,8 +20,7 @@ public class EventFragileTorches implements IHasConfig {
     EntityLivingBase living = (EntityLivingBase) event.getEntity();
     if (living == null) { return; }
     if (living.worldObj.getBlockState(living.getPosition()).getBlock() == Blocks.TORCH) {
-      float oddsWillBreak = 0.01F;// TODO: in config or something? or make this
-      // 1/100
+      float oddsWillBreak = 0.01F;
       boolean playerCancelled = false;
       if (living instanceof EntityPlayer) {
         // EntityPlayer p = (EntityPlayer) living;
@@ -40,7 +39,6 @@ public class EventFragileTorches implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.blocks;
-    //TODO: put all custom categories in some central place?
     config.addCustomCategoryComment(category, "Tweaks to new and existing blocks");
     fragileTorches = config.getBoolean("Fragile Torches", category, true,
         "Torches can get knocked over when passed through by living entities");

@@ -24,8 +24,6 @@ public class ButtonTerrariaDepositAll extends GuiButton implements ITooltipButto
   public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
     boolean pressed = super.mousePressed(mc, mouseX, mouseY);
     if (pressed) {
-      // TODO: can we get TE xyz here
-      // Minecraft.getMinecraft().thePlayer.openContainer.
       ModMain.network.sendToServer(new PacketDepositPlayerToNearby(new NBTTagCompound()));
     }
     return pressed;

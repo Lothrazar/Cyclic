@@ -21,8 +21,6 @@ public class CommandGetHome extends BaseCommand implements ICommand {
     }
     BlockPos coords = player.getBedLocation(0);
     if (coords == null) {
-      // has not been sent in a bed
-      // TODO: get the ID for this chat for translation purposes
       UtilChat.addChatMessage(player, "command.gethome.bed");
     }
     else {

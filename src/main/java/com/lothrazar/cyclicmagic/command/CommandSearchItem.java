@@ -73,10 +73,6 @@ public class CommandSearchItem extends BaseCommand implements ICommand {
       foundQtyTotal = UtilSearchWorld.searchTileInventory(searchQuery, inventory);
       if (foundQtyTotal > 0) {
         String totalsStr = foundQtyTotal + " : ";
-        // TODO we COULD have configs for each of these, that is, one config
-        // flag for SEND_CHAT
-        // and one for SEND_PARTICLES
-        // ModCommands.spawnParticlePacketByID(dictionary.get(inventory),EnumParticleTypes.CRIT_MAGIC.getParticleID());
         foundMessages.add(totalsStr + getCoordsOrReduced(dictionary.get(inventory)));
       }
     }

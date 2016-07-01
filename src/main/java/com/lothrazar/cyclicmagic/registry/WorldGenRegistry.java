@@ -69,20 +69,12 @@ public class WorldGenRegistry {
       GameRegistry.registerWorldGenerator(new WorldGenGoldRiver(), weight);
     }
     if (oreSingletons) {
-      //			GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.COAL_ORE, 132), weight);
       GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.IRON_ORE, 68), weight);
       GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.GOLD_ORE, 34), weight);
       GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.LAPIS_ORE, 34), weight);
       GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.REDSTONE_ORE, 16), weight);
       GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.DIAMOND_ORE, 16), weight);
     }
-    /*
-     * * world generate growing plants - random patches of wheat & beetroomt in
-     * certain biomes maybe: wheat - plains beetroot - forest potato - taiga
-     * carrot - extreme hills
-     */
-    //carrot/potato/wheat/beetroot are crops
-    //TODO: i guess take array list
     if (biomeCrops) {
       GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops) Blocks.CARROTS, Arrays.asList(Biomes.EXTREME_HILLS), 15), weight);
       GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops) Blocks.WHEAT, Arrays.asList(Biomes.PLAINS), 8), weight);

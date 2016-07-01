@@ -55,7 +55,7 @@ public class ModMain {
     network = NetworkRegistry.INSTANCE.newSimpleChannel(Const.MODID);
     MinecraftForge.EVENT_BUS.register(instance);
     events = new EventRegistry();
-    ItemRegistry.construct(); //TODO MAYBE all these should be a constructed, not static
+    ItemRegistry.construct(); // MAYBE all these should be a constructed, not static
     BlockRegistry.construct();
     config.load();
     syncConfig();
@@ -136,14 +136,23 @@ public class ModMain {
     KeyInventoryShiftRegistry.syncConfig(c);
     c.save();
   }
+  
   /*
    * IMMEDIATE:
-   *  
-   *  
+   * 
+   *  is there a bug in searchrecipe? or a bug in new repeater rec?
+   * 
    * FUTURE PLANS
+   * 
+   * fragile torches config: float oddsWillBreak = 0.01F;//  : in config or something? or make this
+      
+   * 
+   * frozen/snow effect
    * 
    * MYSTERY SEED: craft with emerald + seed. drops a random item from list
    * almost like a gamble. not fully random.
+   * 
+   * config: command search spawner max distances
    * 
    * FORWARD CRAFTER: like uncrafter but forward. 3x3 inventory, takes hopper input
    * 
@@ -152,6 +161,8 @@ public class ModMain {
    * block breaker//tree harvester?
    * 
    * Some way to keep certain items after death - runestone? enchantment?
+   * 
+   * ButtonBuildToggle-store ptr to wand not player??
    * 
    * lifeleech enchant - like diablo 2 ? maybe only on kill?
    * 
@@ -178,5 +189,20 @@ public class ModMain {
    * 
    * Fix sorting : UtilInventorySort.sort(p, openInventory);
    * 
+   * UtilUncraft.canUncraft : more efficient somehow????
+   * 
+   * DispenserBehavior: maybe look at adding:
+   * 
+              // if I could, i would just make a list of items, and register one single
+              // BehaviorPlantSeed object
+              // to all those items, but it doesnt work that way I guess
+              // NOTE: currently does not support things like:
+              // cocoa beans
+              // chorus flower
+              // reeds
+              // tree saplings
+              // becuase they are not considered 'plantable growing things' in the
+              // normal way
+              // DOES work with all plants even netherwart
    */
 }

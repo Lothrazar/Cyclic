@@ -34,11 +34,7 @@ public class UtilSearchWorld {
   public static int searchTileInventory(String search, IInventory inventory) {
     int foundQty;
     foundQty = 0;
-    for (int slot = 0; slot < inventory.getSizeInventory(); slot++)// a break;
-    // will
-    // cancel
-    // this loop
-    {
+    for (int slot = 0; slot < inventory.getSizeInventory(); slot++)    {
       ItemStack invItem = inventory.getStackInSlot(slot);
       if (invItem == null) {
         continue;
@@ -52,7 +48,6 @@ public class UtilSearchWorld {
     } // end loop on current tile entity
     return foundQty;
   }
-  // TODO: find TileEntities, find IInventories
   public static BlockPos findClosestBlock(EntityPlayer player, Block blockHunt, int RADIUS) {
     BlockPos found = null;
     int xMin = (int) player.posX - RADIUS;

@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.event;
 import java.text.DecimalFormat;
-import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilSearchWorld;
@@ -10,12 +9,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EventSpawnChunks implements IHasConfig {
+public class EventSpawnChunks {
   final static int SPAWN_RADIUS = 8 * Const.CHUNK_SIZE;// 128 is spawn size
   // 1 chunk is 16x16 blocks
   public static int blockToChunk(int blockVal) {
@@ -50,27 +48,6 @@ public class EventSpawnChunks implements IHasConfig {
     Chunk chunkHere = player.worldObj.getChunkFromBlockCoords(here);
     int xCenterOfChunk = chunkToBlock(chunkHere.xPosition) + Const.CHUNK_SIZE / 2;
     int zCenterOfChunk = chunkToBlock(chunkHere.zPosition) + Const.CHUNK_SIZE / 2;
-    /*
-     * //start center
-     * 
-     * String f = "";
-     * 
-     * int away = 2; if( Math.abs(xCenterOfChunk - here.getX()) <= away &&
-     * Math.abs(zCenterOfChunk - here.getZ()) <= away){ f = TextFormatting.GREEN
-     * + ""; } event.getLeft().add(UtilChat.lang("debug.chunk.center")+" : " + f
-     * +xCenterOfChunk +","+zCenterOfChunk); //end center
-     * 
-     * //start border int l = chunkToBlock(chunkHere.xPosition); int r =
-     * chunkToBlock(chunkHere.xPosition) + Const.CHUNK_SIZE;
-     * 
-     * int t = chunkToBlock(chunkHere.zPosition); int b =
-     * chunkToBlock(chunkHere.zPosition) + Const.CHUNK_SIZE;
-     * 
-     * f = ""; if(here.getZ() % Const.CHUNK_SIZE <= away || here.getX() %
-     * Const.CHUNK_SIZE <= away){ f = TextFormatting.GREEN + ""; }
-     * event.getLeft().add(UtilChat.lang("debug.chunk.border")+ f +" ["+
-     * l+","+r+" ["+ t +","+b+"]");
-     */
     //end border
     //start spawnchunk
     //actually its the distance not from ME but from my current chunk.
@@ -83,13 +60,7 @@ public class EventSpawnChunks implements IHasConfig {
     double dist = UtilSearchWorld.distanceBetweenHorizontal(here, spawn);
     event.getLeft().add(UtilChat.lang("debug.spawn.distance") + df.format(dist));
     if (xFromSpawn < SPAWN_RADIUS && zFromSpawn < SPAWN_RADIUS) {
-      //System.out.println("fromspawn ="+xFromSpawn+"__"+zFromSpawn);
       event.getLeft().add(TextFormatting.GREEN + UtilChat.lang("debug.spawn.chunks"));
     }
-    //end spawnchunk
-  }
-  @Override
-  public void syncConfig(Configuration config) {
-    // TODO Auto-generated method stub
   }
 }

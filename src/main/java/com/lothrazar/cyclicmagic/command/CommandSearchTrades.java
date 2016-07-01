@@ -44,7 +44,6 @@ public class CommandSearchTrades extends BaseCommand implements ICommand {
     double X = ic.getPosition().getX();// ic.getPlayerCoordinates().posX;
     double Z = ic.getPosition().getZ();// ic.getPlayerCoordinates().posZ;
     double range = 64;
-    //.out.println("TODO: UtilSearchWorld .entities");
     AxisAlignedBB searchRange = new AxisAlignedBB(X + 0.5D - range, 0.0D, Z + 0.5D - range, X + 0.5D + range, 255.0D, Z + 0.5D + range);
     List<EntityVillager> merchants = ic.getEntityWorld().getEntitiesWithinAABB(EntityVillager.class, searchRange);
     // List merchants =

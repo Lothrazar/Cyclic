@@ -47,7 +47,7 @@ public class VillageTradeRegistry {
     //vanilla example :  new VillagerProfession("minecraft:butcher", "minecraft:textures/entity/villager/butcher.png");
     String name;
     //TO TEST: /summon Villager ~ ~ ~ {Profession:5,Career:0}
-    //TODO: make my own zombie textures
+
     name = "druid";
     VillagerProfession druidProfession = new VillagerProfession(Const.MODRES + name,
         Const.MODRES + "textures/entity/villager/" + name + ".png",

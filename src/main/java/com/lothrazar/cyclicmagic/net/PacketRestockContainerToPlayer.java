@@ -31,7 +31,7 @@ public class PacketRestockContainerToPlayer implements IMessage, IMessageHandler
   public IMessage onMessage(PacketRestockContainerToPlayer message, MessageContext ctx) {
     EntityPlayer p = ctx.getServerHandler().playerEntity;
     if (p.openContainer == null || p.openContainer.getSlot(0) == null || p.openContainer.getSlot(0).inventory == null) {
-      // TODO: use logger
+
       ModMain.logger.error("ERROR : null container inventory");
     }
     else {

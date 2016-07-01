@@ -32,10 +32,8 @@ public class EventMounted implements IHasConfig {
     for (Entity p : getPassengers) {
       //			System.out.println("pasanger hurt its rider?");
       if (p != null && sourceOfDamage instanceof EntityPlayer
-          && (p.getUniqueID() == sourceOfDamage.getUniqueID()
-              || p == sourceOfDamage)) {
+          && (p.getUniqueID() == sourceOfDamage.getUniqueID() || p == sourceOfDamage)) {
         //with arrows/sword/etc
-        //				System.out.println("Cannot hurt your own horse");
         event.setCanceled(true);
       }
     }
@@ -46,11 +44,7 @@ public class EventMounted implements IHasConfig {
     // https://github.com/LothrazarMinecraftMods/OverpoweredInventory/blob/8a7459161837b930c5417f774676504bce970e66/src/main/java/com/lothrazar/powerinventory/EventHandler.java
     if (showHungerMounted) {
       GuiIngameForge.renderFood = true;
-    }
-    //else config is false, so leave it alone
-    //doesnt really work tho...
-    //TODO: if space bar is down, then hide jump bar and show this
-    //			GuiIngameForge.renderExperiance = true;
+    }  //else config is false, so leave it alone
   }
   @Override
   public void syncConfig(Configuration config) {
