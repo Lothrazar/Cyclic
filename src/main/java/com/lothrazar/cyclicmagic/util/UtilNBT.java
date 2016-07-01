@@ -91,7 +91,9 @@ public class UtilNBT {
     return writeInventoryToTag(invo, new NBTTagCompound(), key);
   }
   public static int countItemsFromNBT(NBTTagCompound tags, String key) {
+    if(tags == null){return 0;}
     NBTTagList items = tags.getTagList(key, tags.getId());
+    if(items == null){return 0;}
     return items.tagCount();
   }
   public static ArrayList<ItemStack> readItemsFromNBT(NBTTagCompound tags, String key) {
