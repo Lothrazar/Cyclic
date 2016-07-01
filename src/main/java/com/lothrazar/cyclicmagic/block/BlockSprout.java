@@ -113,10 +113,10 @@ public class BlockSprout extends BlockCrops {
   }
   @Override
   protected int getBonemealAgeIncrease(World worldIn) {
-    return 1;//standard is a rand 2,5 type deal. this slows it down
+    return worldIn.rand.nextDouble() > 0.5 ? 1 : 0;//does nothing at zero
   }
   @Override
   public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
-    return getBonemealAgeIncrease(worldIn) > 0;//no need to hardcode this
+    return true;//getBonemealAgeIncrease(worldIn) > 0;//no need to hardcode this
   }
 }

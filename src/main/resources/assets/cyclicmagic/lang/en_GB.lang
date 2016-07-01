@@ -128,6 +128,7 @@ item.potion_waterwalk_long.name=Potion of Waterwalk
 item.respawn_egg.name=Respawn Egg
 item.shift=Press Shift for more info
 item.sleeping_mat.name=Sleeping Mat
+item.sprout_seed.name=Magic Bean
 item.storage_bag.name=Sack of Storage
 item.tool_harvest_crops.name=Garden Scythe
 item.tool_harvest_leaves.name=Tree Scythe
