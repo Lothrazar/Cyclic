@@ -4,20 +4,21 @@ import org.apache.logging.log4j.Logger;
 
 public class ModLogger {
   private Logger logger;
-  public boolean logInfo = false;// disable this for release
+  public boolean sendLogs = false;// disable this for release
   public ModLogger(Logger l) {
     logger = l;
   }
   public void info(String string) {
-    if (logInfo)
+    if (sendLogs)
       logger.info(string);
   }
   public void warn(String string) {
-    logger.log(Level.WARN, string);
+    if (sendLogs)
+      logger.log(Level.WARN, string);
   }
-  public void fatal(String string) {
-    logger.fatal(string);
-  }
+//  public void fatal(String string) {
+//    logger.fatal(string);
+//  }
   public void error(String string) {
     logger.error(string);
   }

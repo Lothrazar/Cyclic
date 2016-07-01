@@ -71,7 +71,7 @@ public class UtilPlayerInventoryFilestorage {
         }
       }
       catch (Exception e) {
-        ModMain.logger.fatal("Error loading player extended inventory");
+        ModMain.logger.error("Error loading player extended inventory");
         e.printStackTrace();
       }
     }
@@ -110,7 +110,7 @@ public class UtilPlayerInventoryFilestorage {
         }
       }
       catch (Exception exception1) {
-        ModMain.logger.fatal("Error saving baubles inventory");
+        ModMain.logger.error("Error saving baubles inventory");
         exception1.printStackTrace();
       }
     }

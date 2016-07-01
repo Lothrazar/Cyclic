@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.util;
+import com.lothrazar.cyclicmagic.ModMain;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockMushroom;
@@ -24,8 +25,23 @@ public class UtilHarvestCrops {
     public boolean doesCrops = false;
     // this hits both the short regular grass, and tall grass, and 2 high flowers. split it up
     public boolean doesHarvestTallgrass = false;
+    @Override
+    public String toString(){
+      String s = "";
+      s += "doesHarvestStem = "+doesHarvestStem +System.lineSeparator();
+      s += "doesHarvestSapling = "+doesHarvestSapling +System.lineSeparator();
+      s += "doesHarvestMushroom = "+doesHarvestMushroom +System.lineSeparator();
+      s += "doesPumpkinBlocks = "+doesPumpkinBlocks +System.lineSeparator();
+      s += "doesMelonBlocks = "+doesMelonBlocks +System.lineSeparator();
+      s += "doesFlowers = "+doesFlowers +System.lineSeparator();
+      s += "doesCrops = "+doesCrops +System.lineSeparator();
+      s += "doesHarvestTallgrass = "+doesHarvestTallgrass +System.lineSeparator();
+      return s;
+    }
   }
   public static int harvestArea(World world, BlockPos pos, int xRadius, HarestCropsConfig conf) {
+
+    ModMain.logger.info("conf="+conf.toString());
     int x = pos.getX();
     int eventy = pos.getY();
     int z = pos.getZ();
@@ -60,62 +76,97 @@ public class UtilHarvestCrops {
     if (blockCheck == null) { return false; }
     IBlockState bsAbove = world.getBlockState(posCurrent.up());
     IBlockState bsBelow = world.getBlockState(posCurrent.down());
-    if (blockCheck instanceof IGrowable && conf.doesCrops) {
-      IGrowable plant = (IGrowable) blockCheck;
-      // only if its full grown
-      if (plant.canGrow(world, posCurrent, bs, world.isRemote) == false) {
-        doBreak = true;
-        doReplant = true;
-      }
-    }
+    
 
-    if (blockCheck instanceof BlockNetherWart && conf.doesCrops) {
-      int age = ((Integer)bs.getValue(BlockNetherWart.AGE)).intValue();
-      if(age == 3){//this is hardcoded in base class
+    if (blockCheck instanceof BlockNetherWart ) {
+      if(conf.doesCrops){
+        int age = ((Integer)bs.getValue(BlockNetherWart.AGE)).intValue();
+        if(age == 3){//this is hardcoded in base class
+          doBreak = true;
+          doReplant = true;
+        }
+      }
+    }
+    else if (blockCheck instanceof BlockStem ) {
+      if(conf.doesHarvestStem)
         doBreak = true;
-        doReplant = true;
+    }
+    else if (blockCheck instanceof BlockSapling ) {
+      if(conf.doesHarvestSapling)
+        doBreak = true;
+    }
+    else if (blockCheck instanceof BlockTallGrass    ) {
+      if( conf.doesHarvestTallgrass){
+        doBreak = true;
+        doReplant = false;
+        if (blockCheck instanceof BlockTallGrass && bsAbove != null && bsAbove.getBlock() instanceof BlockTallGrass) {
+          doBreakAbove = true;
+        }
+        if (bsBelow instanceof BlockTallGrass && bsBelow != null && bsBelow.getBlock() instanceof BlockTallGrass) {
+          doBreakBelow = true;
+        }
       }
     }
-    if ((blockCheck instanceof BlockStem) && conf.doesHarvestStem) {
-      doBreak = true;
-    }
-    else if ((blockCheck instanceof BlockSapling) && conf.doesHarvestSapling) {
-      doBreak = true;
-    }
-    else if ((blockCheck instanceof BlockTallGrass || blockCheck instanceof BlockDoublePlant)
-        && conf.doesHarvestTallgrass) {
-      doBreak = true;
-      doReplant = false;
-      if (blockCheck instanceof BlockDoublePlant && bsAbove != null && bsAbove.getBlock() instanceof BlockDoublePlant) {
-        doBreakAbove = true;
-      }
-      if (bsBelow instanceof BlockDoublePlant && bsBelow != null && bsBelow.getBlock() instanceof BlockDoublePlant) {
-        doBreakBelow = true;
+    else if (blockCheck instanceof BlockDoublePlant      ) {
+      if( conf.doesHarvestTallgrass){
+        doBreak = true;
+        doReplant = false;
+        if (blockCheck instanceof BlockDoublePlant && bsAbove != null && bsAbove.getBlock() instanceof BlockDoublePlant) {
+          doBreakAbove = true;
+        }
+        if (bsBelow instanceof BlockDoublePlant && bsBelow != null && bsBelow.getBlock() instanceof BlockDoublePlant) {
+          doBreakBelow = true;
+        }
       }
     }
-    else if ((blockCheck instanceof BlockMushroom) && conf.doesHarvestMushroom) {
-      doBreak = true;
+    else if (blockCheck instanceof BlockMushroom) {
+      if( conf.doesHarvestMushroom)
+        doBreak = true;
     }
-    else if (blockCheck == Blocks.PUMPKIN && conf.doesPumpkinBlocks) {
-      doBreak = true;
-      doReplant = false;
+    else if (blockCheck == Blocks.PUMPKIN ) {
+      if(conf.doesPumpkinBlocks){
+        doBreak = true;
+        doReplant = false;
+      }
     }
-    else if (blockCheck == Blocks.MELON_BLOCK && conf.doesMelonBlocks) {
-      doBreak = false;//not the standard break - custom rules to mimic silktouch
-      doReplant = false;
-      world.destroyBlock(posCurrent, false);
-      UtilEntity.dropItemStackInWorld(world, posCurrent, Blocks.MELON_BLOCK);
+    else if (blockCheck == Blocks.MELON_BLOCK) {
+      if(conf.doesMelonBlocks){
+        doBreak = false;//not the standard break - custom rules to mimic silktouch
+        doReplant = false;
+        world.destroyBlock(posCurrent, false);
+        UtilEntity.dropItemStackInWorld(world, posCurrent, Blocks.MELON_BLOCK);
+      }
     }
-    else if ((blockCheck == Blocks.RED_FLOWER || blockCheck == Blocks.YELLOW_FLOWER) && conf.doesFlowers) {
-      doBreak = true;
-      doReplant = false;
+    else if (blockCheck == Blocks.RED_FLOWER || blockCheck == Blocks.YELLOW_FLOWER ) {
+      if(conf.doesFlowers){
+        doBreak = true;
+        doReplant = false;
+      }
     }
-    else if ((blockCheck == Blocks.LEAVES || blockCheck == Blocks.LEAVES2) && conf.doesLeaves) {
-      doBreak = true;
-      doReplant = false;
+    else if (blockCheck == Blocks.LEAVES || blockCheck == Blocks.LEAVES2) {
+      if(conf.doesLeaves){
+        doBreak = true;
+        doReplant = false;
+      }
+    }
+    else if (blockCheck instanceof IGrowable  ) {
+      if(conf.doesCrops){
+        IGrowable plant = (IGrowable) blockCheck;
+        // only if its full grown
+        if (plant.canGrow(world, posCurrent, bs, world.isRemote) == false) {
+          doBreak = true;
+          doReplant = true;
+        }
+      }
     }
     // no , for now is fine, do not do blocks
     if (doBreak) {
+      ModMain.logger.info("posCurrent="+UtilChat.blockPosToString(posCurrent));
+      ModMain.logger.info("h"+blockCheck.getUnlocalizedName());
+      ModMain.logger.info("doBreakAbove="+doBreakAbove);
+      ModMain.logger.info("doBreakBelow="+doBreakBelow);
+      ModMain.logger.info("doReplant="+doReplant);
+      
       world.destroyBlock(posCurrent, true);
       //break above first BECAUSE 2 high tallgrass otherwise will bug out if you break bottom first
       if (doBreakAbove) {
