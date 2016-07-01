@@ -105,7 +105,7 @@ public class BlockConveyor extends BlockBasePressurePlate implements IHasRecipe 
   @SideOnly(Side.CLIENT)
   @Override
   public BlockRenderLayer getBlockLayer() {
-    return BlockRenderLayer.TRANSLUCENT;// ;// EnumWorldBlockLayer.CUTOUT;
+    return BlockRenderLayer.TRANSLUCENT;
   }
   @Override
   public boolean isOpaqueCube(IBlockState state) {
