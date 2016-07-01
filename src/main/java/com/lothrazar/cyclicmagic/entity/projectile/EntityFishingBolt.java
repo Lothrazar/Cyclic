@@ -7,6 +7,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
@@ -54,16 +55,16 @@ public class EntityFishingBolt extends EntityThrowable {
     // below is from MY BlockFishing.java in the unreleased ./FarmingBlocks/
     double diceRoll = rand.nextDouble() * 100;
     if (diceRoll < plainChance) {
-      fishSpawned = new ItemStack(Items.FISH, 1, 0); // plain
+      fishSpawned = new ItemStack(Items.FISH, 1, ItemFishFood.FishType.COD.getMetadata()); // plain
     }
     else if (diceRoll < salmonChance) {
-      fishSpawned = new ItemStack(Items.FISH, 1, 1);// salmon
+      fishSpawned = new ItemStack(Items.FISH, 1, ItemFishFood.FishType.SALMON.getMetadata());// salmon
     }
     else if (diceRoll < clownfishChance) {
-      fishSpawned = new ItemStack(Items.FISH, 1, 2);// clown
+      fishSpawned = new ItemStack(Items.FISH, 1, ItemFishFood.FishType.CLOWNFISH.getMetadata());// clown
     }
     else {
-      fishSpawned = new ItemStack(Items.FISH, 1, 3);// puffer
+      fishSpawned = new ItemStack(Items.FISH, 1, ItemFishFood.FishType.PUFFERFISH.getMetadata());// puffer
     }
     return fishSpawned;
   }

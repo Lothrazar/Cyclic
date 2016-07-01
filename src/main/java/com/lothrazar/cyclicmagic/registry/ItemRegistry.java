@@ -26,6 +26,7 @@ import com.lothrazar.cyclicmagic.item.ItemInventoryStorage;
 import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
 import com.lothrazar.cyclicmagic.item.ItemPotionCustom;
 import com.lothrazar.cyclicmagic.item.ItemSleepingBag;
+import com.lothrazar.cyclicmagic.item.ItemSproutSeeds;
 import com.lothrazar.cyclicmagic.item.ItemToolHarvest;
 import com.lothrazar.cyclicmagic.item.ItemToolPush;
 import com.lothrazar.cyclicmagic.item.projectile.*;
@@ -153,6 +154,7 @@ public class ItemRegistry {
   //	private static boolean emeraldGearEnabled ; 
   public static ToolMaterial TOOL_MATERIAL_EMERALD;
   public static ArmorMaterial ARMOR_MATERIAL_EMERALD;
+  public static ItemSproutSeeds sprout_seed;
   public final static Item REPAIR_EMERALD = Items.EMERALD;
   // only because theyre private, with no getters
   //	private static final int		diamondDurability				= 33;
