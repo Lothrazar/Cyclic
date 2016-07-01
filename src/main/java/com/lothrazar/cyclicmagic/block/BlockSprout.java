@@ -4,12 +4,16 @@ import java.util.List;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import net.minecraft.block.BlockCrops;
+import net.minecraft.block.BlockDoublePlant;
+import net.minecraft.block.BlockFlower;
+import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -32,26 +36,41 @@ public class BlockSprout extends BlockCrops {
         Items.ROTTEN_FLESH, Items.BONE, Items.STRING, Items.SPIDER_EYE,
         Items.FLINT, Items.GHAST_TEAR,
         // footstuffs
-        Items.APPLE, Items.STICK, Items.SUGAR, Items.FISH, Items.COOKED_FISH,
-        Items.CARROT, Items.POTATO, Items.BEETROOT, Items.WHEAT,
+        Items.APPLE, Items.STICK, Items.SUGAR,  Items.COOKED_FISH,
+        Items.CARROT, Items.POTATO, Items.BEETROOT, Items.WHEAT,Items.MELON,
         Items.BEETROOT_SEEDS, Items.MELON_SEEDS, Items.PUMPKIN_SEEDS, Items.WHEAT_SEEDS,
         //random crap
         Items.CAKE, Items.COOKIE, Items.SPECKLED_MELON, Items.SNOWBALL,
         Items.GLASS_BOTTLE, Items.BOOK, Items.PAPER, Items.CLAY_BALL, Items.BRICK,
         //plants
-        Items.NETHER_WART,
-        Item.getItemFromBlock(Blocks.RED_FLOWER), Item.getItemFromBlock(Blocks.YELLOW_FLOWER),
+        Items.NETHER_WART, Item.getItemFromBlock(Blocks.YELLOW_FLOWER),
         Item.getItemFromBlock(Blocks.RED_MUSHROOM), Item.getItemFromBlock(Blocks.BROWN_MUSHROOM),
         Item.getItemFromBlock(Blocks.TALLGRASS), Item.getItemFromBlock(Blocks.REEDS),
-        Item.getItemFromBlock(Blocks.DEADBUSH), Item.getItemFromBlock(Blocks.CACTUS)
+        Item.getItemFromBlock(Blocks.DEADBUSH), Item.getItemFromBlock(Blocks.CACTUS),
+        Item.getItemFromBlock(Blocks.VINE), Item.getItemFromBlock(Blocks.WATERLILY),
+        Item.getItemFromBlock(Blocks.END_ROD),  Item.getItemFromBlock(Blocks.CHORUS_PLANT)
     };
+    //metadata specific blocks
+    myDrops.add(new ItemStack(Items.COAL, 1, 1));//charcoal
+    myDrops.add(new ItemStack(Blocks.PUMPKIN));
     for (Item i : drops) {
       myDrops.add(new ItemStack(i));
     }
-    for (int i = 0; i < EnumDyeColor.values().length; i++) {//all 16 cols
-      myDrops.add(new ItemStack(Items.DYE, 1, i));
+    for (EnumDyeColor  dye : EnumDyeColor.values()) {//all 16 cols
+      myDrops.add(new ItemStack(Items.DYE, 1, dye.getMetadata()));
     }
-    myDrops.add(new ItemStack(Items.COAL, 1, 1));//charcoal
+    for (ItemFishFood.FishType f : ItemFishFood.FishType.values()) {
+      myDrops.add(new ItemStack(Items.FISH, 1, f.getMetadata()));
+    }
+    for (BlockPlanks.EnumType b : BlockPlanks.EnumType.values()) {
+      myDrops.add(new ItemStack(Blocks.SAPLING, 1, b.getMetadata()));
+    }
+    for (BlockFlower.EnumFlowerType b : BlockFlower.EnumFlowerType.values()) {
+      myDrops.add(new ItemStack(Blocks.RED_FLOWER, 1, b.getMeta()));
+    }
+    for (BlockDoublePlant.EnumPlantType b : BlockDoublePlant.EnumPlantType.values()) {
+      myDrops.add(new ItemStack(Blocks.DOUBLE_PLANT, 1, b.getMeta()));
+    }
   }
   protected Item getSeed() {
     return ItemRegistry.sprout_seed;
