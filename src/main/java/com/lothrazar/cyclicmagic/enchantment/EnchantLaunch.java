@@ -33,7 +33,7 @@ public class EnchantLaunch extends Enchantment {
   }
   @Override
   public int getMaxLevel() {
-    return 3;
+    return 5;
   }
   @Override
   public boolean canApply(ItemStack stack) {

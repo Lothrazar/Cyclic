@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.block.BlockBucketStorage;
 import com.lothrazar.cyclicmagic.block.BlockBuilder;
+import com.lothrazar.cyclicmagic.block.BlockConveyor;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre.SpawnType;
 import com.lothrazar.cyclicmagic.block.BlockLaunch;
@@ -66,6 +67,10 @@ public class BlockRegistry {
   }
   public static void register() {
     
+
+    BlockConveyor plate_push = new BlockConveyor(0.8F, SoundEvents.BLOCK_ANVIL_BREAK);
+    registerBlock(plate_push, "plate_push");
+    
     registerSprout();
     //??maybe? nah.
     //Blocks.obsidian.setHardness(Blocks.obsidian.getHarvestLevel(Blocks.obsidian.getDefaultState()) / 2);
@@ -75,23 +80,7 @@ public class BlockRegistry {
     builder_block.addRecipe();
     //they go up 2,4,6 blocks high, approx
     //old: .6 .9 1.2
-    BlockLaunch plate_launch_small = new BlockLaunch(0.8F, SoundEvents.BLOCK_SLIME_STEP);
-    BlockLaunch plate_launch_med = new BlockLaunch(1.3F, SoundEvents.BLOCK_SLIME_FALL);
-    BlockLaunch plate_launch_large = new BlockLaunch(1.8F, SoundEvents.BLOCK_SLIME_BREAK);
-    registerBlock(plate_launch_small, "plate_launch_small");
-    registerBlock(plate_launch_med, "plate_launch_med");
-    registerBlock(plate_launch_large, "plate_launch_large");
-    GameRegistry.addRecipe(new ItemStack(plate_launch_small, 6),
-        "sss", "ggg", "iii",
-        's', Blocks.SLIME_BLOCK,
-        'g', Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE,
-        'i', Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE);
-    GameRegistry.addShapelessRecipe(new ItemStack(plate_launch_med),
-        new ItemStack(plate_launch_small),
-        new ItemStack(Items.QUARTZ));
-    GameRegistry.addShapelessRecipe(new ItemStack(plate_launch_large),
-        new ItemStack(plate_launch_med),
-        new ItemStack(Blocks.END_STONE));
+    registerSlimePads();
     registerBlock(block_fragile, new ItemBlockScaffolding(block_fragile), BlockScaffolding.name);
     block_fragile.addRecipe();
     if (spawnersUnbreakable) {
@@ -139,6 +128,25 @@ public class BlockRegistry {
     block_storeempty = new BlockBucketStorage(null);
     registerBlock(block_storeempty, new ItemBlockBucket(block_storeempty), "block_storeempty", false);
     block_storeempty.addRecipe();
+  }
+  private static void registerSlimePads() {
+    BlockLaunch plate_launch_small = new BlockLaunch(0.8F, SoundEvents.BLOCK_SLIME_STEP);
+    BlockLaunch plate_launch_med = new BlockLaunch(1.3F, SoundEvents.BLOCK_SLIME_FALL);
+    BlockLaunch plate_launch_large = new BlockLaunch(1.8F, SoundEvents.BLOCK_SLIME_BREAK);
+    registerBlock(plate_launch_small, "plate_launch_small");
+    registerBlock(plate_launch_med, "plate_launch_med");
+    registerBlock(plate_launch_large, "plate_launch_large");
+    GameRegistry.addRecipe(new ItemStack(plate_launch_small, 6),
+        "sss", "ggg", "iii",
+        's', Blocks.SLIME_BLOCK,
+        'g', Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE,
+        'i', Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE);
+    GameRegistry.addShapelessRecipe(new ItemStack(plate_launch_med),
+        new ItemStack(plate_launch_small),
+        new ItemStack(Items.QUARTZ));
+    GameRegistry.addShapelessRecipe(new ItemStack(plate_launch_large),
+        new ItemStack(plate_launch_med),
+        new ItemStack(Blocks.END_STONE));
   }
   private static void registerSprout() {
     BlockSprout sprout = new BlockSprout();
