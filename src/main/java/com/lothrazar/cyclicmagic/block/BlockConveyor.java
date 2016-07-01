@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.block;
+import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.block.BlockBasePressurePlate;
 import net.minecraft.block.SoundType;
@@ -11,14 +12,18 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraft.util.SoundEvent;
 
-public class BlockConveyor extends BlockBasePressurePlate {
+public class BlockConveyor extends BlockBasePressurePlate implements IHasRecipe{
   private static final PropertyDirection PROPERTYFACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
   private final static float ANGLE = 1;
   private float power;
@@ -81,5 +86,15 @@ public class BlockConveyor extends BlockBasePressurePlate {
     // find the quadrant the player is facing
     EnumFacing enumfacing = (placer == null) ? EnumFacing.NORTH : EnumFacing.fromAngle(placer.rotationYaw);
     return this.getDefaultState().withProperty(PROPERTYFACING, enumfacing);
+  }
+  @Override
+  public void addRecipe() {
+    GameRegistry.addRecipe(new ItemStack(this,4), 
+        "sbs", 
+        "bsb", 
+        "sbs", 
+        's', new ItemStack(Items.IRON_INGOT),
+        'b', new ItemStack(Items.DYE,1,EnumDyeColor.PURPLE.getDyeDamage()));
+    
   }
 }

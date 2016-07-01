@@ -66,26 +66,36 @@ public class BlockRegistry {
     blocks.add(b);
   }
   public static void register() {
-    
-
+    if (spawnersUnbreakable) {
+      Blocks.MOB_SPAWNER.setBlockUnbreakable();
+    }
     BlockConveyor plate_push = new BlockConveyor(0.4F, SoundEvents.BLOCK_ANVIL_BREAK);
     registerBlock(plate_push, "plate_push");
-    
-    registerSprout();
-    //??maybe? nah.
-    //Blocks.obsidian.setHardness(Blocks.obsidian.getHarvestLevel(Blocks.obsidian.getDefaultState()) / 2);
+    plate_push.addRecipe();
     registerBlock(uncrafting_block, "uncrafting_block");
     uncrafting_block.addRecipe();
     registerBlock(builder_block, "builder_block");
     builder_block.addRecipe();
-    //they go up 2,4,6 blocks high, approx
-    //old: .6 .9 1.2
-    registerSlimePads();
     registerBlock(block_fragile, new ItemBlockScaffolding(block_fragile), BlockScaffolding.name);
     block_fragile.addRecipe();
-    if (spawnersUnbreakable) {
-      Blocks.MOB_SPAWNER.setBlockUnbreakable();
-    }
+    registerSprout();
+    registerSlimePads();
+    registerDimensionOres();
+    registerBucketBlocks();
+  }
+  private static void registerBucketBlocks() {
+    //bucket storage
+    block_storewater = new BlockBucketStorage(Items.WATER_BUCKET);
+    registerBlock(block_storewater, new ItemBlockBucket(block_storewater), "block_storewater", true);
+    block_storemilk = new BlockBucketStorage(Items.MILK_BUCKET);
+    registerBlock(block_storemilk, new ItemBlockBucket(block_storemilk), "block_storemilk", true);
+    block_storelava = new BlockBucketStorage(Items.LAVA_BUCKET);
+    registerBlock(block_storelava, new ItemBlockBucket(block_storelava), "block_storelava", true);
+    block_storeempty = new BlockBucketStorage(null);
+    registerBlock(block_storeempty, new ItemBlockBucket(block_storeempty), "block_storeempty", false);
+    block_storeempty.addRecipe();
+  }
+  private static void registerDimensionOres() {
     //nether ores
     nether_gold_ore = new BlockDimensionOre(Items.GOLD_NUGGET, 0, 4);
     nether_gold_ore.setSpawnType(SpawnType.SILVERFISH, 1);
@@ -118,16 +128,6 @@ public class BlockRegistry {
     end_diamond_ore = new BlockDimensionOre(Items.DIAMOND);
     end_diamond_ore.setSpawnType(SpawnType.ENDERMITE, 8);
     registerBlock(end_diamond_ore, "end_diamond_ore");
-    //bucket storage
-    block_storewater = new BlockBucketStorage(Items.WATER_BUCKET);
-    registerBlock(block_storewater, new ItemBlockBucket(block_storewater), "block_storewater", true);
-    block_storemilk = new BlockBucketStorage(Items.MILK_BUCKET);
-    registerBlock(block_storemilk, new ItemBlockBucket(block_storemilk), "block_storemilk", true);
-    block_storelava = new BlockBucketStorage(Items.LAVA_BUCKET);
-    registerBlock(block_storelava, new ItemBlockBucket(block_storelava), "block_storelava", true);
-    block_storeempty = new BlockBucketStorage(null);
-    registerBlock(block_storeempty, new ItemBlockBucket(block_storeempty), "block_storeempty", false);
-    block_storeempty.addRecipe();
   }
   private static void registerSlimePads() {
     BlockLaunch plate_launch_small = new BlockLaunch(0.8F, SoundEvents.BLOCK_SLIME_STEP);
@@ -150,21 +150,21 @@ public class BlockRegistry {
   }
   private static void registerSprout() {
     BlockSprout sprout = new BlockSprout();
-    registerBlock(sprout ,"sprout",true);
+    registerBlock(sprout, "sprout", true);
     ItemRegistry.sprout_seed = new ItemSproutSeeds(sprout, Blocks.FARMLAND);
     ItemRegistry.sprout_seed.setUnlocalizedName("sprout_seed");
     ItemRegistry.registerItem(ItemRegistry.sprout_seed, "sprout_seed");
     ItemRegistry.itemMap.put("sprout_seed", ItemRegistry.sprout_seed);
-    GameRegistry.addRecipe(new ItemStack(ItemRegistry.sprout_seed,0,8), 
+    GameRegistry.addRecipe(new ItemStack(ItemRegistry.sprout_seed, 0, 8),
         "waw",
         "bEc",
         "wdw",
-        'w',Items.WHEAT_SEEDS,
-        'E',Items.EMERALD,
-        'a',Items.BEETROOT_SEEDS,
-        'b',Items.MELON_SEEDS,
-        'c',Items.PUMPKIN_SEEDS,
-        'd',Items.NETHER_WART );
+        'w', Items.WHEAT_SEEDS,
+        'E', Items.EMERALD,
+        'a', Items.BEETROOT_SEEDS,
+        'b', Items.MELON_SEEDS,
+        'c', Items.PUMPKIN_SEEDS,
+        'd', Items.NETHER_WART);
   }
   public static void construct() {
     uncrafting_block = new BlockUncrafting();
