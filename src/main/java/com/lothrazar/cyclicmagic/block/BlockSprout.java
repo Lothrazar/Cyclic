@@ -28,8 +28,9 @@ public class BlockSprout extends BlockCrops {
   public BlockSprout() {
     Item[] drops = new Item[] {
         //treasure
-        Items.REDSTONE, Items.GUNPOWDER, Items.GLOWSTONE_DUST, Items.DIAMOND, Items.EMERALD, Items.COAL,
-        Items.GOLD_NUGGET, Items.IRON_INGOT, Items.GOLD_INGOT,
+        Items.REDSTONE, Items.GUNPOWDER, Items.GLOWSTONE_DUST, Items.DIAMOND, Items.EMERALD, 
+        Items.COAL,   Items.GOLD_NUGGET, Items.IRON_INGOT, Items.GOLD_INGOT,
+        Items.NETHER_STAR,Items.QUARTZ,Items.LEAD,Items.NAME_TAG,
         //mob drops
         Items.ENDER_PEARL, Items.ENDER_EYE, Items.SLIME_BALL,
         Items.BLAZE_POWDER, Items.BLAZE_ROD, Items.LEATHER,
@@ -39,7 +40,13 @@ public class BlockSprout extends BlockCrops {
         Items.APPLE, Items.STICK, Items.SUGAR,  Items.COOKED_FISH,
         Items.CARROT, Items.POTATO, Items.BEETROOT, Items.WHEAT,Items.MELON,
         Items.BEETROOT_SEEDS, Items.MELON_SEEDS, Items.PUMPKIN_SEEDS, Items.WHEAT_SEEDS,
+        Items.EGG,
         //random crap
+        Items.COMPASS,Items.CLOCK,Items.CAULDRON,Items.COMPARATOR,Items.REPEATER,
+        Items.FIRE_CHARGE,Items.POISONOUS_POTATO,
+        Items.RABBIT_FOOT,Items.RABBIT_HIDE,Items.PUMPKIN_PIE,
+        Items.FERMENTED_SPIDER_EYE,Items.EXPERIENCE_BOTTLE,
+        Items.FLOWER_POT,Items.ITEM_FRAME,Items.PAINTING,
         Items.CAKE, Items.COOKIE, Items.SPECKLED_MELON, Items.SNOWBALL,
         Items.GLASS_BOTTLE, Items.BOOK, Items.PAPER, Items.CLAY_BALL, Items.BRICK,
         //plants
