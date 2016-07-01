@@ -10,8 +10,9 @@
   	"1.0.0":"Launch "
   },
   "1.10":{
-  	"1.0.0":"Launch ",
-  	"1.0.1":"Garden Scythe now works with netherwart.   Uncrafting Grinder fix sync issues.  Inventory tabs not saving on reload fixed.  Add custom sound to heart container",
-  	"1.0.2":"Add config to disable inventory shift keybinds.  Remove redundant endermen spawning feature (its in vanilla 1.10 now).  "
+  	"1.0.0":"Launch "
+  	,"1.0.1":"Garden Scythe now works with netherwart.   Uncrafting Grinder fix sync issues.  Inventory tabs not saving on reload fixed.  Add custom sound to heart container"
+  	,"1.0.2":"Add config to disable inventory shift keybinds.  Remove redundant endermen spawning feature (its in vanilla 1.10 now).  "
+  	,"1.1.0":"Add new Magic Bean plant, gives semi-random item on harvest.  Fix issue #33 crash) and #35 (garden scythe invalid harvest) from issue tracker"
   }
 }
