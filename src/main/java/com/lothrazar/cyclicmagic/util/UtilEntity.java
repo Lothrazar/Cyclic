@@ -76,13 +76,13 @@ public class UtilEntity {
   }
   /**
    * Launch entity in the fixed facing direction given
-   * @param player
+   * @param entity
    * @param rotationPitch
    * @param power
    * @param facing
    */
-  public static void launchDirection(EntityLivingBase player, float rotationPitch, float power,EnumFacing facing) {
-    float rotationYaw = player.rotationYaw;
+  public static void launchDirection(Entity entity, float rotationPitch, float power,EnumFacing facing) {
+    float rotationYaw = entity.rotationYaw;
     float mountPower = (float) (power - 0.5);
     double velX = (double) (-MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power);
     double velZ = (double) (MathHelper.cos(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power);
@@ -113,7 +113,7 @@ public class UtilEntity {
       break;
     }
 
-    Entity ridingEntity = player.getRidingEntity();
+    Entity ridingEntity = entity.getRidingEntity();
     if (ridingEntity != null) {
       // boost power a bit, horses are heavy as F
       ridingEntity.motionY = 0;
@@ -121,19 +121,19 @@ public class UtilEntity {
       ridingEntity.addVelocity(velX * mountPower, velY * mountPower, velZ * mountPower);
     }
     else {
-      player.motionY = 0;
-      player.fallDistance = 0;
-      player.addVelocity(velX, velY, velZ);
+      entity.motionY = 0;
+      entity.fallDistance = 0;
+      entity.addVelocity(velX, velY, velZ);
     }
   }
   /**
    * Launch entity in the direction it is already facing
-   * @param player
+   * @param entity
    * @param rotationPitch
    * @param power
    */
-  public static void launch(EntityLivingBase player, float rotationPitch, float power) {
-    float rotationYaw = player.rotationYaw;
+  public static void launch(Entity entity, float rotationPitch, float power) {
+    float rotationYaw = entity.rotationYaw;
     float mountPower = (float) (power - 0.5);
     double velX = (double) (-MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power);
     double velZ = (double) (MathHelper.cos(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power);
@@ -152,7 +152,7 @@ public class UtilEntity {
     //			System.out.println("B");
     //			velY += 2.5;
     //		}
-    Entity ridingEntity = player.getRidingEntity();
+    Entity ridingEntity = entity.getRidingEntity();
     if (ridingEntity != null) {
       // boost power a bit, horses are heavy as F
       ridingEntity.motionY = 0;
@@ -160,9 +160,9 @@ public class UtilEntity {
       ridingEntity.addVelocity(velX * mountPower, velY * mountPower, velZ * mountPower);
     }
     else {
-      player.motionY = 0;
-      player.fallDistance = 0;
-      player.addVelocity(velX, velY, velZ);
+      entity.motionY = 0;
+      entity.fallDistance = 0;
+      entity.addVelocity(velX, velY, velZ);
     }
   }
   public static int pullEntityItemsTowards(World world, BlockPos pos, float ITEMSPEED, int ITEM_HRADIUS, int ITEM_VRADIUS) {

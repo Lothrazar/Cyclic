@@ -19,14 +19,12 @@ import net.minecraft.world.World;
 import net.minecraft.util.SoundEvent;
 
 public class BlockConveyor extends BlockBasePressurePlate {
-  
   private static final PropertyDirection PROPERTYFACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
-  
   private final static float ANGLE = 1;
   private float power;
   private SoundEvent sound;
   public BlockConveyor(float p, SoundEvent s) {
-    super(Material.CLAY, MapColor.GRASS);//same as BlockSlime
+    super(Material.CLAY, MapColor.GRASS);
     this.setSoundType(SoundType.SLIME);
     power = p;
     sound = s;
@@ -52,12 +50,8 @@ public class BlockConveyor extends BlockBasePressurePlate {
   }
   @Override
   public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
-    
-    EnumFacing face =  getFacingFromState(state);
-    if (entity instanceof EntityLivingBase) {
-      UtilEntity.launchDirection((EntityLivingBase) entity, ANGLE, power,face);
-      this.playClickOnSound(worldIn, pos);
-    }
+    EnumFacing face = getFacingFromState(state);
+    UtilEntity.launchDirection(entity, ANGLE, power, face); //this.playClickOnSound(worldIn, pos);
   }
   //below is all for facing
   @Override

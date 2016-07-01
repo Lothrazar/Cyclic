@@ -68,7 +68,7 @@ public class BlockRegistry {
   public static void register() {
     
 
-    BlockConveyor plate_push = new BlockConveyor(0.8F, SoundEvents.BLOCK_ANVIL_BREAK);
+    BlockConveyor plate_push = new BlockConveyor(0.4F, SoundEvents.BLOCK_ANVIL_BREAK);
     registerBlock(plate_push, "plate_push");
     
     registerSprout();
