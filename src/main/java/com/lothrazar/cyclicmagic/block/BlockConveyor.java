@@ -12,18 +12,22 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.util.SoundEvent;
 
-public class BlockConveyor extends BlockBasePressurePlate implements IHasRecipe{
+public class BlockConveyor extends BlockBasePressurePlate implements IHasRecipe {
   private static final PropertyDirection PROPERTYFACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
   private final static float ANGLE = 1;
   private float power;
@@ -89,12 +93,23 @@ public class BlockConveyor extends BlockBasePressurePlate implements IHasRecipe{
   }
   @Override
   public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this,4), 
-        "sbs", 
-        "bsb", 
-        "sbs", 
+    GameRegistry.addRecipe(new ItemStack(this, 8),
+        "sbs",
+        "bxb",
+        "sbs",
         's', new ItemStack(Items.IRON_INGOT),
-        'b', new ItemStack(Items.DYE,1,EnumDyeColor.PURPLE.getDyeDamage()));
-    
+        'x', new ItemStack(Blocks.SLIME_BLOCK),
+        'b', new ItemStack(Items.DYE, 1, EnumDyeColor.PURPLE.getDyeDamage()));
+  }
+  //for transparency
+  @SideOnly(Side.CLIENT)
+  @Override
+  public BlockRenderLayer getBlockLayer() {
+    return BlockRenderLayer.TRANSLUCENT;// ;// EnumWorldBlockLayer.CUTOUT;
+  }
+  @Override
+  public boolean isOpaqueCube(IBlockState state) {
+    // http://greyminecraftcoder.blogspot.ca/2014/12/transparent-blocks-18.html
+    return false;
   }
 }

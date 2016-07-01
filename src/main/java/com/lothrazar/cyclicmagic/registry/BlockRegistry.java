@@ -69,7 +69,7 @@ public class BlockRegistry {
     if (spawnersUnbreakable) {
       Blocks.MOB_SPAWNER.setBlockUnbreakable();
     }
-    BlockConveyor plate_push = new BlockConveyor(0.4F, SoundEvents.BLOCK_ANVIL_BREAK);
+    BlockConveyor plate_push = new BlockConveyor(0.16F, SoundEvents.BLOCK_ANVIL_BREAK);
     registerBlock(plate_push, "plate_push");
     plate_push.addRecipe();
     registerBlock(uncrafting_block, "uncrafting_block");

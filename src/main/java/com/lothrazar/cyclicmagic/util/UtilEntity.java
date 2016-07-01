@@ -76,49 +76,44 @@ public class UtilEntity {
   }
   /**
    * Launch entity in the fixed facing direction given
+   * 
    * @param entity
    * @param rotationPitch
    * @param power
    * @param facing
    */
-  public static void launchDirection(Entity entity, float rotationPitch, float power,EnumFacing facing) {
-    float rotationYaw = entity.rotationYaw;
-    float mountPower = (float) (power - 0.5);
-    double velX = (double) (-MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power);
-    double velZ = (double) (MathHelper.cos(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power);
-    double velY = (double) (-MathHelper.sin((rotationPitch) / 180.0F * (float) Math.PI) * power);
-
-    //x : +east, -west
-    // z: +south, -north
-    switch(facing){
+  public static void launchDirection(Entity entity, float rotationPitch, float power, EnumFacing facing) {
+    double velX = 0;
+    double velZ = 0;
+    double velY = 0;
+    switch (facing) {
     case EAST:
-      velX = Math.abs(velX);
+      velX = Math.abs(power);
       velZ = 0;
       break;
     case WEST:
-      velX = -1*Math.abs(velX);
+      velX = -1 * Math.abs(power);
       velZ = 0;
       break;
     case NORTH:
       velX = 0;
-      velZ = -1*Math.abs(velZ);
+      velZ = -1 * Math.abs(power);
       break;
     case SOUTH:
       velX = 0;
-      velZ = Math.abs(velZ);
+      velZ = Math.abs(power);
       break;
     case UP:
     case DOWN:
     default:
       break;
     }
-
     Entity ridingEntity = entity.getRidingEntity();
     if (ridingEntity != null) {
       // boost power a bit, horses are heavy as F
       ridingEntity.motionY = 0;
       ridingEntity.fallDistance = 0;
-      ridingEntity.addVelocity(velX * mountPower, velY * mountPower, velZ * mountPower);
+      ridingEntity.addVelocity(velX, velY, velZ);
     }
     else {
       entity.motionY = 0;
@@ -128,6 +123,7 @@ public class UtilEntity {
   }
   /**
    * Launch entity in the direction it is already facing
+   * 
    * @param entity
    * @param rotationPitch
    * @param power
