@@ -21,5 +21,6 @@
   "1.10.2":{
   	"1.0.0":"Launch " 	
   	,"1.1.0":"Add new Magic Bean plant, gives semi-random item on harvest.  Fix issue #33 crash) and #35 (garden scythe invalid harvest) from issue tracker"
+  	,"1.2.0":"Add new Conveyor Belt item.  The Launch enchant can now go up to level V (5).  Slime launch pads now with with non living entities (such as items). "
   }
 }

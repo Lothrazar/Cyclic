@@ -144,13 +144,9 @@ public class ModMain {
    * 
    * FUTURE PLANS
    * 
-   * fragile torches config: float oddsWillBreak = 0.01F;//  : in config or something? or make this
-      
+   * fragile torches config: float oddsWillBreak = 0.01F;//  : in config or something? or make this  
    * 
    * frozen/snow effect
-   * 
-   * MYSTERY SEED: craft with emerald + seed. drops a random item from list
-   * almost like a gamble. not fully random.
    * 
    * config: command search spawner max distances
    * 

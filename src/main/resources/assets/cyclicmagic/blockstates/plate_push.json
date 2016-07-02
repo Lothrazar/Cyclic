@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "cyclicmagic:plate_push_north"},
+        "facing=east":  { "model": "cyclicmagic:plate_push_east"},
+        "facing=south": { "model": "cyclicmagic:plate_push_south"},
+        "facing=west":  { "model": "cyclicmagic:plate_push_west" }
+    }
+}

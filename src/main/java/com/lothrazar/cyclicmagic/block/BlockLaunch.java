@@ -44,9 +44,7 @@ public class BlockLaunch extends BlockBasePressurePlate {
   }
   @Override
   public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
-    if (entity instanceof EntityLivingBase) {
-      UtilEntity.launch((EntityLivingBase) entity, ANGLE, power);
-      this.playClickOnSound(worldIn, pos);
-    }
+    UtilEntity.launch((EntityLivingBase) entity, ANGLE, power);
+    this.playClickOnSound(worldIn, pos);
   }
 }
