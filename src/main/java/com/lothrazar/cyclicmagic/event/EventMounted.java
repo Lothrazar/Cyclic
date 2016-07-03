@@ -30,7 +30,6 @@ public class EventMounted implements IHasConfig {
     if (entity == null) { return; }
     List<Entity> getPassengers = entity.getPassengers();
     for (Entity p : getPassengers) {
-      //			System.out.println("pasanger hurt its rider?");
       if (p != null && sourceOfDamage instanceof EntityPlayer
           && (p.getUniqueID() == sourceOfDamage.getUniqueID() || p == sourceOfDamage)) {
         //with arrows/sword/etc

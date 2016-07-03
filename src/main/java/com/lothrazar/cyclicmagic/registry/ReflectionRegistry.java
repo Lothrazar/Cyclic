@@ -14,7 +14,6 @@ public class ReflectionRegistry {
     for (Field f : EntityHorse.class.getDeclaredFields()) {
       try {
         // if(f.get(null) instanceof IAttribute)
-        // System.out.println("== "+f.getName()+" ** "+f.getType());
         // interface net.minecraft.entity.ai.attributes.IAttribute
         // field_76425_a
         if (f.getName().equals("horseJumpStrength") || f.getName().equals("JUMP_STRENGTH") || f.getName().equals("field_110270_bw") || "interface net.minecraft.entity.ai.attributes.IAttribute".equals(f.getType() + "")) {

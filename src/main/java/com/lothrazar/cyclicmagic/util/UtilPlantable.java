@@ -23,8 +23,6 @@ public class UtilPlantable {
             return stack;
           }
           else {
-            // System.out.println("can sustain plant yes, but not an air block.
-            // so do NOT drop on ground");
             return stack;// ie, dont do super
           }
         }

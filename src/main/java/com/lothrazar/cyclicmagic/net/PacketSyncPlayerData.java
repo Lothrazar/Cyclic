@@ -29,26 +29,22 @@ public class PacketSyncPlayerData implements IMessage, IMessageHandler<PacketSyn
   public IMessage onMessage(PacketSyncPlayerData message, MessageContext ctx) {
     if (ctx.side == Side.CLIENT) {
       //update it through client proxy
-      this.checkThreadAndEnqueue(message, ctx);
+      PacketSyncPlayerData.checkThreadAndEnqueue(message, ctx);
     }
     return null;
   }
   /**
    * 1.8 +: Ensures that the message is being handled on the main thread
-   * https://github.com/coolAlias/Tutorial-Demo/blob/master/src/main/java/tutorial/network/AbstractMessage.java#L118-L131
-     http://www.minecraftforge.net/forum/index.php?topic=31853.0
+   * https://github.com/coolAlias/Tutorial-Demo/blob/master/src/main/java/
+   * tutorial/network/AbstractMessage.java#L118-L131
+   * http://www.minecraftforge.net/forum/index.php?topic=31853.0
    */
   private static final void checkThreadAndEnqueue(final PacketSyncPlayerData message, final MessageContext ctx) {
     IThreadListener thread = ModMain.proxy.getThreadFromContext(ctx);
     // pretty much copied straight from vanilla code, see {@link PacketThreadUtil#checkThreadAndEnqueue}
     thread.addScheduledTask(new Runnable() {
       public void run() {
-       // msg.process(ModMain.proxy.getPlayerEntity(ctx), ctx.side);
-        
-        
-
-        System.out.println("SETPLAYERDATACLIENTSIDE");
-        System.out.println(message.tags);
+        // msg.process(ModMain.proxy.getPlayerEntity(ctx), ctx.side);
         ModMain.proxy.setClientPlayerData(ctx, message.tags);
       }
     });
