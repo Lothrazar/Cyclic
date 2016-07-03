@@ -12,6 +12,7 @@ public class Const {
     public static final String blocks = MODCONF + "blocks";
     public static final String inventory = MODCONF + "Inventory";
     public static final String items = MODCONF + "items";
+    public static final String itemsTack = items+".StackSize";
     public static final String recipes = MODCONF + "recipes";
     public static final String villagers = MODCONF + "villagers";
     public static final String modpackMisc = "modpacks";

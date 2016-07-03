@@ -8,9 +8,10 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
 public class StackSizeRegistry {
-  private static boolean enabled = true;
+ // private static boolean enabled = true;
   private static Map<Item, Integer> stackMap = new HashMap<Item, Integer>();
-  private static String all = "";
+  private static Map<Item, Integer> enabledMap = new HashMap<Item, Integer>();
+
   public static void construct() {
     int boat = 16;
     int MAX = 64;
@@ -32,24 +33,31 @@ public class StackSizeRegistry {
     stackMap.put(Items.SIGN, MAX);
     stackMap.put(Items.BED, MAX);
     stackMap.put(Items.BUCKET, MAX);
-    for (Map.Entry<Item, Integer> entry : stackMap.entrySet()) {
-      all += entry.getKey().getUnlocalizedName() + ",";
-    }
-    all.replace(all.substring(all.length() - 1), "");
+//    for (Map.Entry<Item, Integer> entry : stackMap.entrySet()) {
+//      all += entry.getKey().getUnlocalizedName() + ",";
+//    }
+//    all.replace(all.substring(all.length() - 1), "");
   }
   public static void register() {
-    if (enabled == false) { return; }
+
+
     for (Map.Entry<Item, Integer> entry : stackMap.entrySet()) {
-      entry.getKey().setMaxStackSize(entry.getValue());
+      boolean enabled = (enabledMap.get(entry.getKey()) == 1);
+      if(enabled){
+        entry.getKey().setMaxStackSize(entry.getValue());
+      }
     }
   }
   public static void syncConfig(Configuration config) {
-    String category = Const.ConfigCategory.items;
+    String category = Const.ConfigCategory.itemsTack;
     // config.setCategoryComment(category, "Tons of new recipes for existing
     // blocks and items. Bonemeal to undye wool; repeater and dispenser tweaks;
     // making player skulls out of the four mob heads...");
-    Property prop = config.get(category, "Stack Size Enabled", true, "Increase stack size of many vanilla items (" + all + ")");
-    prop.setRequiresWorldRestart(true);
-    enabled = prop.getBoolean();
+   
+    for (Map.Entry<Item, Integer> entry : stackMap.entrySet()) {
+      String name = entry.getKey().getUnlocalizedName();
+      int enabled = config.getBoolean(name, category, true, "Increase stack size to "+entry.getValue()) ? 1 : 0;
+      enabledMap.put(entry.getKey(), enabled);
+    }
   }
 }

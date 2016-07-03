@@ -58,7 +58,6 @@ public class ModMain {
     ItemRegistry.construct(); // MAYBE all these should be a constructed, not static
     BlockRegistry.construct();
     config.load();
-    syncConfig();
     events.register();
     StackSizeRegistry.construct();
     CapabilityRegistry.register();
@@ -66,6 +65,7 @@ public class ModMain {
     PacketRegistry.register(network);
     SoundRegistry.register();
     EnchantRegistry.register();
+    this.syncConfig();
   }
   @EventHandler
   public void onInit(FMLInitializationEvent event) {
@@ -138,11 +138,21 @@ public class ModMain {
   }
   
   /*
-   * IMMEDIATE:
+   * 1.2.1 or 1.3.0 whatever i call the next one:
+   * 
+   * Stack sizes: blow out config to toggle each item off on its own.  Add ender pearl to list
+   * 
+   * TODO:
+   * 
+   * heart containers do not persist on death..?? do we need a sethealth clientside?
+   * 
+   * enderpearl hotkey feature-just like old overpoweredinventory mod
+   * 
+   * remove 'falling' restriction on doublejump chant.
+   * 
+   * hearts persist death?
    * 
    *  is there a bug in searchrecipe? or a bug in new repeater rec?
-   * 
-   * FUTURE PLANS
    * 
    * fragile torches config: float oddsWillBreak = 0.01F;//  : in config or something? or make this  
    * 
