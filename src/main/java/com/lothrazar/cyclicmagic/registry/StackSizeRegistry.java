@@ -29,8 +29,9 @@ public class StackSizeRegistry {
     stackMap.put(Items.ARMOR_STAND, MAX);
     stackMap.put(Items.SIGN, MAX);
     stackMap.put(Items.BED, MAX);
-    stackMap.put(Items.ENDER_PEARL, MAX);
     stackMap.put(Items.BUCKET, MAX);
+    stackMap.put(Items.ENDER_PEARL, MAX);
+    stackMap.put(Items.EGG, MAX);
   }
   public static void register() {
     for (Map.Entry<Item, Integer> entry : stackMap.entrySet()) {
