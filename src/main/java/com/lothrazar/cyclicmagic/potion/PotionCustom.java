@@ -29,7 +29,8 @@ public class PotionCustom extends Potion {
   @Override
   @SideOnly(Side.CLIENT)
   public void renderHUDEffect(int x, int y, PotionEffect effect, net.minecraft.client.Minecraft mc, float alpha) {
-    UtilTextureRender.drawTextureSquare(getIcon(), x + 4, y + 3, Const.SQ - 2);
+    if(mc.gameSettings.showDebugInfo == false)//dont texture on top of the debug text
+      UtilTextureRender.drawTextureSquare(getIcon(), x + 4, y + 3, Const.SQ - 2);
   }
   public ResourceLocation getIcon() {
     return icon;

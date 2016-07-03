@@ -139,12 +139,6 @@ public class ModMain {
   }
   
   /*
-   * 1.3.0 whatever i call the next one:
-   * 
-   * Stack sizes: blow out config to toggle each item off on its own.  Add ender pearl to list
-   * 
-   * Removed some network packets sending useless data to the logs.
-   * 
    * TODO:
    * 
    * enderpearl hotkey feature-just like old overpoweredinventory mod
