@@ -45,6 +45,7 @@ public class PotionRegistry {
       player.addPotionEffect(newp);
     }
   }
+  
   public static void syncConfig(Configuration config) {
 
   }
