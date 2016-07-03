@@ -21,6 +21,7 @@ public class EnchantRegistry {
     launch = new EnchantLaunch();
     magnet = new EnchantMagnet();
     venom = new EnchantVenom();
+    lifeleech = new EnchantLifeLeech();
     Enchantment.REGISTRY.register(launchid, new ResourceLocation(launch.getName()), launch);
     Enchantment.REGISTRY.register(magnetid, new ResourceLocation(magnet.getName()), magnet);
     Enchantment.REGISTRY.register(venomid, new ResourceLocation(venom.getName()), venom);

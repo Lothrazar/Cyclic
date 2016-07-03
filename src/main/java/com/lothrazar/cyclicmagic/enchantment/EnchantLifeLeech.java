@@ -1,17 +1,13 @@
 package com.lothrazar.cyclicmagic.enchantment;
-import com.lothrazar.cyclicmagic.registry.PotionRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantLifeLeech extends Enchantment {
@@ -42,11 +38,13 @@ public class EnchantLifeLeech extends Enchantment {
       if (level > 0) {
         // we -1  since potion level 1 is Poison II
         //so that means enchantment I giving poison I means this
-
-        int restore = (int)Math.max(Math.ceil(target.getMaxHealth() / 5), 4);
-        
-        attacker.heal(restore);
-
+        int restore = (int) Math.max(Math.ceil(target.getMaxHealth() / 5), 4);
+        int min = 1;//so if restore starts at 4 the rand will be [min,restore]
+        restore = attacker.worldObj.rand.nextInt(restore + 1) + min;
+        if (restore > 0) {
+          attacker.heal(restore);
+          attacker.getFoodStats().setFoodLevel(attacker.getFoodStats().getFoodLevel() + restore);
+        }
       }
     }
   }
