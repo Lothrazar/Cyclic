@@ -142,6 +142,8 @@ public class ModMain {
   /*
    * TODO:
    * 
+   * BUG: deposit/loot/etc buttons move my BOOTS SLOT and uneuqip them!!!
+   * 
    * enderpearl hotkey feature-just like old overpoweredinventory mod
    * here : https://raw.githubusercontent.com/LothrazarMinecraftMods/OverpoweredInventory/8a7459161837b930c5417f774676504bce970e66/src/main/java/com/lothrazar/powerinventory/net/EnderPearlPacket.java
    * 

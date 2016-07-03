@@ -44,6 +44,7 @@ public class UtilInventorySort {
         if (playerItem == null) {
           continue;
         } // empty inventory slot
+        //ModMain.logger.info("try dep :"+islotPlayer + "_"+playerItem.getUnlocalizedName());
         inventory.setInventorySlotContents(islotInvo, playerItem);
         player.inventory.setInventorySlotContents(islotPlayer, null);
         break;
@@ -257,7 +258,7 @@ public class UtilInventorySort {
     updatePlayerContainerClient(player);
   }
   private static int getInvoEnd(EntityPlayer p) {
-    return p.inventory.getSizeInventory() - Const.ARMOR_SIZE;
+    return p.inventory.getSizeInventory() - Const.ARMOR_SIZE - 1 ;//now that we have shield slot, need the offset 1, otherwise boots get included
   }
   /**
    * call this from SERVER SIDE if you are doing stuff to containers/invos/tile
