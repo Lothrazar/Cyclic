@@ -1,7 +1,9 @@
 package com.lothrazar.cyclicmagic.item;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.command.CommandHearts;
+import com.lothrazar.cyclicmagic.net.PacketSyncPlayerHealth;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
@@ -9,6 +11,7 @@ import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemFishFood;
@@ -18,6 +21,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemFoodHeart extends ItemFood implements IHasRecipe, IHasConfig {
@@ -46,14 +50,24 @@ public class ItemFoodHeart extends ItemFood implements IHasRecipe, IHasConfig {
     GameRegistry.addShapelessRecipe(new ItemStack(this), Items.BEETROOT, Items.RABBIT, Items.PUMPKIN_PIE, Items.DIAMOND, Items.CAKE, Blocks.EMERALD_BLOCK, new ItemStack(Items.FISH, 1, ItemFishFood.FishType.SALMON.getMetadata()), Items.GOLDEN_APPLE, Items.POISONOUS_POTATO);
   }
   @SubscribeEvent
+  public void onPlayerWarp(PlayerChangedDimensionEvent event) {
+    IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(event.player);
+    if (props.getMaxHealth() > 0 && event.player instanceof EntityPlayerMP) {
+      //force clientside hearts to visually update
+      ModMain.network.sendTo(new PacketSyncPlayerHealth(props.getMaxHealth()), (EntityPlayerMP) event.player);
+    }
+  }
+  @SubscribeEvent
   public void onPlayerClone(PlayerEvent.Clone event) {
     IPlayerExtendedProperties src = CapabilityRegistry.getPlayerProperties(event.getOriginal());
     IPlayerExtendedProperties dest = CapabilityRegistry.getPlayerProperties(event.getEntityPlayer());
     dest.setDataFromNBT(src.getDataAsNBT());
-    //if health var never used (never eaten a heart) then skip
-    if (event.isWasDeath() && src.getMaxHealth() > 0) {
+    if (src.getMaxHealth() > 0) {
       UtilEntity.setMaxHealth(event.getEntityPlayer(), src.getMaxHealth());
-    }
+    } //event.isWasDeath() && 
+      //event if it wasnt death, we still want to do this. otherwise on going thru portla, the extra hearts
+      //are hidden because mojang
+      //if health var never used (never eaten a heart) then skip
   }
   @Override
   public void syncConfig(Configuration config) {
