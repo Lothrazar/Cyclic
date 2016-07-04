@@ -31,7 +31,5 @@ public class PacketRegistry {
     network.registerMessage(PacketTileBuildType.class, PacketTileBuildType.class, PacketTileBuildType.ID, Side.SERVER);
     network.registerMessage(PacketTileBuildSize.class, PacketTileBuildSize.class, PacketTileBuildSize.ID, Side.SERVER);
     network.registerMessage(PacketSyncPlayerHealth.class, PacketSyncPlayerHealth.class, PacketSyncPlayerHealth.ID, Side.CLIENT);
-    
-    
   }
 }
