@@ -140,6 +140,21 @@ public class ModMain {
   }
   
   /*
+   * POST 1.3.0 launch:
+   * 
+   * launch enchant: hold shift to not doublejump (for trigger elytra)
+   * 
+   * villageinfo command: text not translated
+   * 
+   * TODO : move to lwoer left or maybe config
+   * 
+   * hide tile version of bean from creative?
+   * 
+   * searchitem: add distances / directions back in
+   * 
+   * btns: when in extended invo: hide C
+   * when in extended crafting: hide I
+   * 
    * TODO:
    * 1.3.0
    * BUG:  HEART CONTAINERS GLITCH ON DIMENSION CHANGE: reset them

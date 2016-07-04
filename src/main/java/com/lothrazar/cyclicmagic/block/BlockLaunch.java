@@ -6,7 +6,6 @@ import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
@@ -44,7 +43,7 @@ public class BlockLaunch extends BlockBasePressurePlate {
   }
   @Override
   public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
-    UtilEntity.launch((EntityLivingBase) entity, ANGLE, power);
+    UtilEntity.launch(entity, ANGLE, power);
     this.playClickOnSound(worldIn, pos);
   }
 }
