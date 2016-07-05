@@ -17,11 +17,13 @@ public class GeneratePlant extends WorldGenerator {
     //similar to WolrdGenPumpkin in vanilla code
     //  getAge of fullgrown plant, then randomize it
     int fullGrownMeta = (crop).getMaxAge();//func_185526_g();
-    for (int i = 0; i < 26; ++i) {
-      BlockPos blockpos = pos.add(rand.nextInt(8) - rand.nextInt(8), rand.nextInt(4) - rand.nextInt(4),
+    BlockPos blockpos;
+    IBlockState soil;
+    for (int i = 0; i < 15; ++i) {
+      blockpos = pos.add(rand.nextInt(8) - rand.nextInt(8), rand.nextInt(4) - rand.nextInt(4),
           rand.nextInt(8) - rand.nextInt(8));
       if (worldIn.isAirBlock(blockpos) && (!worldIn.provider.getHasNoSky() || blockpos.getY() < 255)) {
-        IBlockState soil = worldIn.getBlockState(blockpos.down());
+        soil = worldIn.getBlockState(blockpos.down());
         // if(soil.getBlock().canSustainPlant(soil, worldIn, pos.down(),
         // net.minecraft.util.EnumFacing.UP, this)
         if (soil.getBlock() == Blocks.GRASS || soil.getBlock() == Blocks.DIRT) {
