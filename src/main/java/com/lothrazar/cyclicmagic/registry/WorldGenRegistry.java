@@ -24,6 +24,12 @@ public class WorldGenRegistry {
   private static boolean goldRiver;
   private static boolean oreSingletons;
   private static boolean biomeCrops;
+  private final static int spawnsCarrot = 15;
+  private final static int spawnsWheat = 8;
+  private final static int spawnsBeetroot = 18;
+  private final static int spawnsPotatoes = 10;
+  final static int weightOre = 0;
+  final static int weightPlants = 2;
   public static void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.worldGen;
     config.setCategoryComment(category, "Control any blocks that get generated in new chunks & new worlds");
@@ -51,35 +57,34 @@ public class WorldGenRegistry {
     prop.setRequiresMcRestart(true);
     biomeCrops = prop.getBoolean();
   }
-  final static int weight = 0;
   public static void register() {
     if (oceanEnabled) {
-      GameRegistry.registerWorldGenerator(new WorldGenOcean(), weight);
+      GameRegistry.registerWorldGenerator(new WorldGenOcean(), weightOre);
     }
     if (netherOreEnabled) {
-      GameRegistry.registerWorldGenerator(new WorldGenNetherOre(), weight);
+      GameRegistry.registerWorldGenerator(new WorldGenNetherOre(), weightOre);
     }
     if (endOreEnabled) {
-      GameRegistry.registerWorldGenerator(new WorldGenEndOre(), weight);
+      GameRegistry.registerWorldGenerator(new WorldGenEndOre(), weightOre);
     }
     if (emeraldHeight) {
-      GameRegistry.registerWorldGenerator(new WorldGenEmeraldHeight(), weight);
+      GameRegistry.registerWorldGenerator(new WorldGenEmeraldHeight(), weightOre);
     }
     if (goldRiver) {
-      GameRegistry.registerWorldGenerator(new WorldGenGoldRiver(), weight);
+      GameRegistry.registerWorldGenerator(new WorldGenGoldRiver(), weightOre);
     }
     if (oreSingletons) {
-      GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.IRON_ORE, 68), weight);
-      GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.GOLD_ORE, 34), weight);
-      GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.LAPIS_ORE, 34), weight);
-      GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.REDSTONE_ORE, 16), weight);
-      GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.DIAMOND_ORE, 16), weight);
+      GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.IRON_ORE, 68), weightOre);
+      GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.GOLD_ORE, 34), weightOre);
+      GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.LAPIS_ORE, 34), weightOre);
+      GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.REDSTONE_ORE, 16), weightOre);
+      GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.DIAMOND_ORE, 16), weightOre);
     }
     if (biomeCrops) {
-      GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops) Blocks.CARROTS, Arrays.asList(Biomes.EXTREME_HILLS), 15), weight);
-      GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops) Blocks.WHEAT, Arrays.asList(Biomes.PLAINS), 8), weight);
-      GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops) Blocks.BEETROOTS, Arrays.asList(Biomes.FOREST, Biomes.BIRCH_FOREST), 18), weight);
-      GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops) Blocks.POTATOES, Arrays.asList(Biomes.TAIGA), 10), weight);
+      GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops) Blocks.CARROTS, Arrays.asList(Biomes.EXTREME_HILLS), spawnsCarrot), weightPlants);
+      GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops) Blocks.WHEAT, Arrays.asList(Biomes.PLAINS), spawnsWheat), weightPlants);
+      GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops) Blocks.BEETROOTS, Arrays.asList(Biomes.FOREST, Biomes.BIRCH_FOREST), spawnsBeetroot), weightPlants);
+      GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops) Blocks.POTATOES, Arrays.asList(Biomes.TAIGA), spawnsPotatoes), weightPlants);
     }
   }
 }
