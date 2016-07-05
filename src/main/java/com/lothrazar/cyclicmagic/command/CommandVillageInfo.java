@@ -30,18 +30,18 @@ public class CommandVillageInfo extends BaseCommand implements ICommand {
     else {
       int doors = closest.getNumVillageDoors();
       int villagers = closest.getNumVillagers();
-      UtilChat.addChatMessage(sender, UtilChat.lang("command.villageinfo.villagepop") + "  " + String.format("%d", villagers));
-      UtilChat.addChatMessage(sender, UtilChat.lang("command.villageinfo.villagedoors") + "  " + String.format("%d", doors));
+      UtilChat.addChatMessage(sender, UtilChat.lang("command.villageinfo.popul") + "  " + String.format("%d", villagers));
+      UtilChat.addChatMessage(sender, UtilChat.lang("command.villageinfo.doors") + "  " + String.format("%d", doors));
       if (sender instanceof EntityPlayer) {
         // command blocks/server controllers do not have reputation
         EntityPlayer player = (EntityPlayer) sender;
         int rep = closest.getPlayerReputation(player.getName());
-        UtilChat.addChatMessage(sender, player.getName() + " " + UtilChat.lang("command.villageinfo.villagerep") + "  " + String.format("%d", rep));
+        UtilChat.addChatMessage(sender, player.getName() + " " + UtilChat.lang("command.villageinfo.reputation") + "  " + String.format("%d", rep));
       }
       dX = pos.getX() - closest.getCenter().getX();
       dZ = pos.getZ() - closest.getCenter().getZ();
       int dist = MathHelper.floor_double(Math.sqrt(dX * dX + dZ * dZ));
-      UtilChat.addChatMessage(sender, UtilChat.lang("command.villageinfo.villagedistcenter") + "  " + String.format("%d", dist));
+      UtilChat.addChatMessage(sender, UtilChat.lang("command.villageinfo.center") + String.format("%d", dist));
     }
   }
 }

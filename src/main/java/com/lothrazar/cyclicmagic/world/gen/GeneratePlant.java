@@ -22,7 +22,7 @@ public class GeneratePlant extends WorldGenerator {
     for (int i = 0; i < 15; ++i) {
       blockpos = pos.add(rand.nextInt(8) - rand.nextInt(8), rand.nextInt(4) - rand.nextInt(4),
           rand.nextInt(8) - rand.nextInt(8));
-      if (worldIn.isAirBlock(blockpos) && (!worldIn.provider.getHasNoSky() || blockpos.getY() < 255)) {
+      if (worldIn.isAirBlock(blockpos) && blockpos.getY() < 255) {
         soil = worldIn.getBlockState(blockpos.down());
         // if(soil.getBlock().canSustainPlant(soil, worldIn, pos.down(),
         // net.minecraft.util.EnumFacing.UP, this)
