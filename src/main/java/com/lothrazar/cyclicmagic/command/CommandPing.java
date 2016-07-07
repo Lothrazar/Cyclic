@@ -3,9 +3,9 @@ import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.biome.Biome;
 
 public class CommandPing extends BaseCommand implements ICommand {
   public static final String name = "ping";
@@ -18,18 +18,24 @@ public class CommandPing extends BaseCommand implements ICommand {
   }
   @Override
   public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-    if (sender instanceof EntityPlayer == false) { return; }
-    EntityPlayer player = (EntityPlayer) sender;
+  //  if (sender instanceof EntityPlayer == false) { return; }
+   // EntityPlayer player = (EntityPlayer) sender;
+    BlockPos pos;
     if (args.length > 0 && args[0] != null && args[0].equalsIgnoreCase("nether")) {
-      BlockPos p = player.getPosition();
+      BlockPos p = sender.getPosition();
       // force doubles, otherwise int rounding makes it act like _/10
       double netherRatio = 8.0;
       double x = p.getX();
       double z = p.getZ();
-      BlockPos n = new BlockPos(x / netherRatio, p.getY(), z / netherRatio);
-      UtilChat.addChatMessage(player, UtilChat.blockPosToString(n));
-      return;
+      pos = new BlockPos(x / netherRatio, p.getY(), z / netherRatio);
+      //UtilChat.addChatMessage(sender, UtilChat.blockPosToString(n));
+
     }
-    UtilChat.addChatMessage(player, UtilChat.blockPosToString(player.getPosition()));
+    else{
+      pos = sender.getPosition();
+    }
+    
+    Biome biome = sender.getEntityWorld().getBiomeGenForCoords(pos);
+    UtilChat.addChatMessage(sender, UtilChat.blockPosToString(pos) +" ("+biome.getBiomeName()+")");
   }
 }
