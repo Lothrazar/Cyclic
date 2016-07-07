@@ -140,7 +140,14 @@ public class ModMain {
   }
   
   /*
+   * 
    * POST 1.3.0 launch:
+   * 
+   * f3 'from spawn' do not show in nether, etc
+   * 
+   * VERIFY that diamond nether worldgen fires
+   * 
+   *  /ping: show biome
    * 
    * launch enchant: hold shift to not doublejump (for trigger elytra)
    * 

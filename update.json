@@ -26,5 +26,6 @@
   	,"1.3.0":"Add Life Leech weapon enchant.  Stack sizes: blow out config to toggle each item off on its own & add ender pearl.  Fix Ender Aura potion not triggering at all (it prevents thrown pearl damage). Fix potion textures showing on top of F3 screen. Fix deposit button un-equipping your boots. Fix heart containers not syncing when changing dimensions."
   	,"1.3.1":"Fix slime plates crashing the game when hit by exp orb"
   	,"1.3.2":"Optimize Biome Crops feature reducing its memory footprint (This caused lag and memory leak on generating new worlds / chunks).  Fix text for /villageinfo command."
+  	,"1.3.3":"Fix the 'fast stardew furnace' feature glitches where items would dissapear or spew in wrong direction "
   }
 }
