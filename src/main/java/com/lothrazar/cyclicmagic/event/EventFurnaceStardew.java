@@ -26,7 +26,6 @@ public class EventFurnaceStardew implements IHasConfig {
   final static int SLOT_OUTPUT = 2;
   @SubscribeEvent
   public void onPlayerFurnace(PlayerInteractEvent.LeftClickBlock event) {//extends PlayerInteractEvent
-    
     if (!stardewFurnace) { return; }
     EntityPlayer entityPlayer = event.getEntityPlayer();
     // ignore in creative// left clicking just breaks it anyway
@@ -35,72 +34,76 @@ public class EventFurnaceStardew implements IHasConfig {
     World worldObj = event.getWorld();
     if (pos == null) { return; }
     ItemStack held = entityPlayer.getHeldItem(event.getHand());
-    
     int playerSlot = 0;// entityPlayer.inventory.currentItem;
-
     boolean wasMain = event.getHand() == EnumHand.MAIN_HAND;
-    if(wasMain){
+    if (wasMain) {
       playerSlot = entityPlayer.inventory.currentItem;
     }
-    else{
+    else {
       //just dont use offhand, ignore it for now. is easier
       playerSlot = 40;
     }
-    
     TileEntity tile = worldObj.getTileEntity(pos);
     if (tile instanceof TileEntityFurnace) {
       TileEntityFurnace furnace = (TileEntityFurnace) tile;
       if (held == null) {
-        extractFurnaceOutput(furnace,entityPlayer);
+        extractFurnaceOutput(furnace, entityPlayer);
       }
-      else{
-         //holding a non null stack for sure
-        if (isFuel(held)) {
-         // ModMain.logger.info("SLOT_FUEL");
-          tryMergeStackIntoSlot(furnace, entityPlayer, playerSlot, SLOT_FUEL);
-        }
-        else if (canBeSmelted(held)) {
-        //  ModMain.logger.info("SLOT_INPUT");
+      else {
+      //  ModMain.logger.info("held:" + held.getUnlocalizedName());
+        //holding a non null stack for sure
+        if (canBeSmelted(held)) {
+          //  ModMain.logger.info("SLOT_INPUT");
           tryMergeStackIntoSlot(furnace, entityPlayer, playerSlot, SLOT_INPUT);
+        }
+        else  if (isFuel(held)) {
+          // ModMain.logger.info("SLOT_FUEL");
+          tryMergeStackIntoSlot(furnace, entityPlayer, playerSlot, SLOT_FUEL);
         }
       }
     }
   }
   private void tryMergeStackIntoSlot(TileEntityFurnace furnace, EntityPlayer entityPlayer, int playerSlot, int furnaceSlot) {
     ItemStack current = furnace.getStackInSlot(furnaceSlot);
-    ItemStack held = entityPlayer.inventory.removeStackFromSlot(playerSlot);
+    //removeStackFromSlot//why the FFFFFFFFFF was i using this garbage funtion
+    ItemStack held = entityPlayer.inventory.getStackInSlot(playerSlot);
+
+   // ModMain.logger.info("held!!!:" + held.getUnlocalizedName());
     boolean success = false;
     if (current == null) {
       // just done
-
-    // ModMain.logger.info("slot is empty");
-      furnace.setInventorySlotContents(furnaceSlot, held.copy());
-      held = null;
-      entityPlayer.inventory.setInventorySlotContents(playerSlot, null);
-      success = true;
-    }
-    else if(held.isItemEqual(current)){
-    //  ModMain.logger.info("slot is NOT empty and they match");
-      // merging updates the stack size numbers in both furnace and in players
-      // invo
-      success = UtilInventory.mergeItemsBetweenStacks(held, current);
-      // so now we just fix if something is size zero
-      if (held.stackSize == 0) {
+     // ModMain.logger.info("slot is empty");
+      if(entityPlayer.worldObj.isRemote == false){
+        furnace.setInventorySlotContents(furnaceSlot, held.copy());
         held = null;
       }
-      entityPlayer.inventory.setInventorySlotContents(playerSlot, held);
-      
+      success = true;
     }
-    if(success){
-      entityPlayer.inventory.markDirty();
+    else if (held.isItemEqual(current)) {
+      //ModMain.logger.info("slot is NOT empty and they match, current old:" + current.stackSize);
+      // merging updates the stack size numbers in both furnace and in players
+
+      success = true;
+      if(entityPlayer.worldObj.isRemote == false){
+        UtilInventory.mergeItemsBetweenStacks(held, current);
+      }
+    }
+    if (success) {
+    //  ModMain.logger.info("success!!!");
+      if(entityPlayer.worldObj.isRemote == false){
+        if (held != null && held.stackSize == 0) {// so now we just fix if something is size zero
+          held = null;
+        }
+        entityPlayer.inventory.setInventorySlotContents(playerSlot, held);
+        entityPlayer.inventory.markDirty();
+      }
       UtilSound.playSound(entityPlayer, SoundEvents.ENTITY_ITEM_PICKUP);
     }
   }
-  private void extractFurnaceOutput(TileEntityFurnace furnace,EntityPlayer player) {
-   // ModMain.logger.info("extractFurnaceOutput");
+  private void extractFurnaceOutput(TileEntityFurnace furnace, EntityPlayer player) {
+    // ModMain.logger.info("extractFurnaceOutput");
     ItemStack current = furnace.removeStackFromSlot(SLOT_OUTPUT);
     if (current != null) {
-   
       BlockPos pos = player.getPosition();
       if (player.worldObj.isRemote == false) {
         player.dropItemAndGetStack(new EntityItem(player.worldObj, pos.getX(), pos.getY(), pos.getZ(), current));

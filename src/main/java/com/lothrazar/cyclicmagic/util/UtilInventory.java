@@ -13,7 +13,7 @@ public class UtilInventory {
     return wand;
   }
   final static int width = 9;
-  public static boolean mergeItemsBetweenStacks(ItemStack takeFrom, ItemStack moveTo) {
+  public static int mergeItemsBetweenStacks(ItemStack takeFrom, ItemStack moveTo) {
     int room = moveTo.getMaxStackSize() - moveTo.stackSize;
     int moveover = 0;
     if (room > 0) {
@@ -21,7 +21,7 @@ public class UtilInventory {
       moveTo.stackSize += moveover;
       takeFrom.stackSize -= moveover;
     }
-    return moveover > 0;
+    return moveover;
   }
   public static void shiftSlotDown(EntityPlayer player, int currentItem) {
     int topNumber = currentItem + width;
