@@ -1,6 +1,10 @@
 package com.lothrazar.cyclicmagic.util;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import com.lothrazar.cyclicmagic.ModMain;
 import net.minecraft.block.Block;
+import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -8,23 +12,23 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class UtilSearchWorld {
-  public static ArrayList<IInventory> findTileEntityInventories(EntityPlayer player, int RADIUS) {
+  public static Map<IInventory, BlockPos> findTileEntityInventories(ICommandSender player, int RADIUS) {
     // function imported
     // https://github.com/PrinceOfAmber/SamsPowerups/blob/master/Commands/src/main/java/com/lothrazar/samscommands/ModCommands.java#L193
-    ArrayList<IInventory> found = new ArrayList<IInventory>();
-    int xMin = (int) player.posX - RADIUS;
-    int xMax = (int) player.posX + RADIUS;
-    int yMin = (int) player.posY - RADIUS;
-    int yMax = (int) player.posY + RADIUS;
-    int zMin = (int) player.posZ - RADIUS;
-    int zMax = (int) player.posZ + RADIUS;
+    Map<IInventory, BlockPos> found = new HashMap<IInventory, BlockPos>();
+    int xMin = (int) player.getPosition().getX() - RADIUS;
+    int xMax = (int) player.getPosition().getX() + RADIUS;
+    int yMin = (int) player.getPosition().getY() - RADIUS;
+    int yMax = (int) player.getPosition().getY() + RADIUS;
+    int zMin = (int) player.getPosition().getZ() - RADIUS;
+    int zMax = (int) player.getPosition().getZ() + RADIUS;
     BlockPos posCurrent = null;
     for (int xLoop = xMin; xLoop <= xMax; xLoop++) {
       for (int yLoop = yMin; yLoop <= yMax; yLoop++) {
         for (int zLoop = zMin; zLoop <= zMax; zLoop++) {
           posCurrent = new BlockPos(xLoop, yLoop, zLoop);
-          if (player.worldObj.getTileEntity(posCurrent) instanceof IInventory) {
-            found.add((IInventory) player.worldObj.getTileEntity(posCurrent));
+          if (player.getEntityWorld().getTileEntity(posCurrent) instanceof IInventory) {
+            found.put((IInventory) player.getEntityWorld().getTileEntity(posCurrent), posCurrent);
           }
         }
       }
@@ -34,7 +38,7 @@ public class UtilSearchWorld {
   public static int searchTileInventory(String search, IInventory inventory) {
     int foundQty;
     foundQty = 0;
-    for (int slot = 0; slot < inventory.getSizeInventory(); slot++)    {
+    for (int slot = 0; slot < inventory.getSizeInventory(); slot++) {
       ItemStack invItem = inventory.getStackInSlot(slot);
       if (invItem == null) {
         continue;

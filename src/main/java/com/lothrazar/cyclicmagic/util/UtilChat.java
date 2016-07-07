@@ -58,4 +58,40 @@ public class UtilChat {
     // return output.toString();
     return Arrays.asList(output.toString().split("\n"));
   }
+  public static String getDirectionsString(ICommandSender player, BlockPos pos) {
+    //https://github.com/LothrazarMinecraftMods/MinecraftSearchCommands/blob/master/src/main/java/com/lothrazar/searchcommands/command/CommandSearchItem.java
+    int x = pos.getX();
+    int y = pos.getY();
+    int z = pos.getZ();
+    int xDist, yDist, zDist;
+    xDist = (int) player.getPosition().getX() - x;
+    yDist = (int) player.getPosition().getY() - y;
+    zDist = (int) player.getPosition().getZ() - z;
+    //in terms of directon copmass:
+    //North is -z;  south is +z   
+    //east is +x, west is -x
+    //so for Distances: 
+    boolean isNorth = (zDist > 0);
+    boolean isSouth = (zDist < 0);
+    boolean isWest = (xDist > 0);
+    boolean isEast = (xDist < 0);
+    boolean isUp = (yDist < 0);
+    boolean isDown = (zDist > 0);
+    String xStr = "";
+    String yStr = "";
+    String zStr = "";
+    if (isWest)
+      xStr = Math.abs(xDist) + " west ";
+    if (isEast)
+      xStr = Math.abs(xDist) + " east ";
+    if (isNorth)
+      zStr = Math.abs(zDist) + " north ";
+    if (isSouth)
+      zStr = Math.abs(zDist) + " south ";
+    if (isUp)
+      yStr = Math.abs(yDist) + " up ";
+    if (isDown)
+      yStr = Math.abs(yDist) + " down ";
+    return xStr + yStr + zStr;
+  }
 }
