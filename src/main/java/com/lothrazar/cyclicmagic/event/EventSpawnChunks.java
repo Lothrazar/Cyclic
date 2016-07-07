@@ -27,6 +27,10 @@ public class EventSpawnChunks {
   public void addSpawnInfo(RenderGameOverlayEvent.Text event) {
     if (Minecraft.getMinecraft().gameSettings.showDebugInfo == false) { return;//if f3 is not pressed
     }
+    EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+    if(player.dimension != Const.Dimension.overworld){
+      return;
+    }
     /*
      * The spawn chunks usually consist of an area of 16×16 chunks centered as
      * close as possible to the world spawn point. Entities are only active if
@@ -38,12 +42,8 @@ public class EventSpawnChunks {
      * the world spawn is located at the exact center of a chunk, 17 chunks will
      * be loaded along that axis, of which 13 activate entities.
      */
-    EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
     BlockPos spawn = player.worldObj.getSpawnPoint();
-    //Chunk chunkSpawn = player.worldObj.getChunkFromBlockCoords(spawn);
-    //event.getLeft().add(UtilChat.lang("debug.spawn.pos") + " "+UtilChat.blockPosToString(spawn));
-    //if(player.getBedLocation() != null)
-    //	event.getLeft().add(UtilChat.lang("debug.bedspawn.pos") + " "+UtilChat.blockPosToString(player.getBedLocation()));
+    
     BlockPos here = player.getPosition();
     Chunk chunkHere = player.worldObj.getChunkFromBlockCoords(here);
     int xCenterOfChunk = chunkToBlock(chunkHere.xPosition) + Const.CHUNK_SIZE / 2;
@@ -54,8 +54,7 @@ public class EventSpawnChunks {
     //is the center of my chunk within 128 of worldspawn
     int xFromSpawn = Math.abs(xCenterOfChunk - spawn.getX());
     int zFromSpawn = Math.abs(zCenterOfChunk - spawn.getZ());
-    //int xDistance = Math.abs(here.getX() - spawn.getX());
-    //int zDistance = Math.abs(here.getZ() - spawn.getZ());
+
     DecimalFormat df = new DecimalFormat("0.0");
     double dist = UtilSearchWorld.distanceBetweenHorizontal(here, spawn);
     event.getLeft().add(UtilChat.lang("debug.spawn.distance") + df.format(dist));
