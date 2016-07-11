@@ -102,11 +102,7 @@ public class BlockSprout extends BlockCrops {
     int count = quantityDropped(state, fortune, rand);
     for (int i = 0; i < count; i++) {
       ret.add(getItemStackDropped(state, rand).copy()); //copy to make sure we return a new instance
-    }
-    boolean dropSeed = (rand.nextDouble() > 0.5);
-    if (dropSeed && this.getAge(state) == this.getMaxAge()) {
-      ret.add(new ItemStack(getSeed()));
-    }//if its not fully grown, it already has a seed in the drops from super    
+    }  
     return ret;
   }
   @Override
@@ -115,10 +111,10 @@ public class BlockSprout extends BlockCrops {
   }
   @Override
   protected int getBonemealAgeIncrease(World worldIn) {
-    return worldIn.rand.nextDouble() > 0.6 ? 1 : 0;//does nothing at zero
+    return 0;//worldIn.rand.nextDouble() > 0.6 ? 1 : 0;//does nothing at zero
   }
   @Override
   public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
-    return true;//getBonemealAgeIncrease(worldIn) > 0;//no need to hardcode this
+    return getBonemealAgeIncrease(worldIn) > 0;//no need to hardcode this
   }
 }

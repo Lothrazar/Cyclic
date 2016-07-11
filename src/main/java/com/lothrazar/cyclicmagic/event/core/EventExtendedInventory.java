@@ -27,7 +27,7 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EventExtendedInventory implements IHasConfig {
+public class EventExtendedInventory{
   //	public static final boolean dropOnDeath = false;
   static HashSet<Integer> playerEntityIds = new HashSet<Integer>();
   @SubscribeEvent
@@ -104,6 +104,8 @@ public class EventExtendedInventory implements IHasConfig {
   @SubscribeEvent
   public void guiPostInit(GuiScreenEvent.InitGuiEvent.Post event) {
     GuiScreen gui = event.getGui();
+    boolean showInvToggle = false;
+    boolean showCraftToggle = false;
     if (gui instanceof GuiInventory || gui instanceof GuiPlayerExtended
         || gui instanceof GuiCrafting
         || gui instanceof GuiScreenHorseInventory) {
@@ -114,24 +116,20 @@ public class EventExtendedInventory implements IHasConfig {
       int ySize = 166;
       int guiLeft = (gui.width - xSize) / 2;
       int guiTop = (gui.height - ySize) / 2;
-      int x = 30 + guiLeft;
+      int x = 40 + guiLeft;
       int y = guiTop + 2;
       EntityPlayer player = Minecraft.getMinecraft().thePlayer;
       final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(player);
-      if (data.hasInventoryExtended()) {
+      
+      showInvToggle = data.hasInventoryExtended() && !(gui instanceof GuiCrafting);
+      showCraftToggle = data.hasInventoryCrafting() && !(gui instanceof GuiPlayerExtended);
+          
+      if (showInvToggle) {
         event.getButtonList().add(new ButtonTabToggleInventory(gui, x, y));
       }
-      if (data.hasInventoryCrafting()) {
+      if (showCraftToggle) {
         event.getButtonList().add(new ButtonTabToggleCrafting(gui, x - 12, y));
       }
     }
-  }
-  @Override
-  public void syncConfig(Configuration config) {
-    //		String category = Const.ConfigCategory.inventory;  
-    //		extendedCrafting = config.getBoolean("CraftingTab", category, true, "A tab for 3x3 crafting in the survival inventory");
-    //		extendedInventory = config.getBoolean("ExtendedStorageTab", category, true, "A tab for extended item storage in the survival inventory");
-    //		dropOnDeath = config.getBoolean("DropExtendedInventoryOnDeath", category, true,
-    //				"When false, this never drops your extra inventories items on death (for the extended inventory).  If true, this will obey the keepInventory rule");
   }
 }

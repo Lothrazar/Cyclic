@@ -33,6 +33,7 @@ public class RecipeNewRegistry {
         true, "Craft a notch apple with golden blocks as usual").getBoolean();
     ElytraRepair = config.get(category, "Elytra Repair",
         true, "You can mostly repair elytra wings with a wither skull; but it loses all enchants").getBoolean();
+    //TODO: melon blocks into slices
   }
   public static void register() {
     if (playerSkull) {
