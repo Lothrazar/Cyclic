@@ -46,6 +46,7 @@ public class ClientProxy extends CommonProxy {
   public static KeyBinding keyShiftDown;
   public static KeyBinding keyBarUp;
   public static KeyBinding keyBarDown;
+  public static KeyBinding keyExtraInvo;
   static final String keyCategoryInventory = "key.categories.inventorycontrol";
   @Override
   public World getClientWorld() {
@@ -70,6 +71,9 @@ public class ClientProxy extends CommonProxy {
       keyBarDown = new KeyBinding("key.columnbardown", Keyboard.KEY_H, keyCategoryInventory);
       keyBarDown.setKeyModifierAndCode(KeyModifier.SHIFT, Keyboard.KEY_H);
       ClientRegistry.registerKeyBinding(ClientProxy.keyBarDown);
+      keyExtraInvo = new KeyBinding("key.keyExtraInvo", Keyboard.KEY_E, keyCategoryInventory);
+      keyExtraInvo.setKeyModifierAndCode(KeyModifier.SHIFT, Keyboard.KEY_E);
+      ClientRegistry.registerKeyBinding(ClientProxy.keyExtraInvo);
     }
   }
   @SuppressWarnings({ "unchecked", "rawtypes", "deprecation" })

@@ -1,11 +1,16 @@
 package com.lothrazar.cyclicmagic.event.core;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.net.PacketMovePlayerHotbar;
+import com.lothrazar.cyclicmagic.net.PacketOpenExtendedInventory;
 import com.lothrazar.cyclicmagic.net.PacketMovePlayerColumn;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
+import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
+import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import org.lwjgl.input.Keyboard;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.client.event.GuiScreenEvent;
@@ -18,7 +23,8 @@ public class EventKeyInput {
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onKeyInput(InputEvent.KeyInputEvent event) {
-    int slot = Minecraft.getMinecraft().thePlayer.inventory.currentItem;
+    EntityPlayerSP thePlayer = Minecraft.getMinecraft().thePlayer;
+    int slot = thePlayer.inventory.currentItem;
     if (ClientProxy.keyBarUp != null && ClientProxy.keyBarUp.isPressed()) {
       ModMain.network.sendToServer(new PacketMovePlayerHotbar(false));
     }
@@ -31,6 +37,18 @@ public class EventKeyInput {
     else if (ClientProxy.keyShiftDown != null && ClientProxy.keyShiftDown.isPressed()) {
       ModMain.network.sendToServer(new PacketMovePlayerColumn(slot, true));
     }
+    else if (ClientProxy.keyExtraInvo != null && ClientProxy.keyExtraInvo.isPressed()) {
+      final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(thePlayer);
+      if(data.hasInventoryExtended()  == false){
+        //the regular code SHOULD take over -> open invo if E is bound
+       // UtilChat.addChatMessage(thePlayer, "Extended Inventory not yet unlocked");
+        //since we DONT cancel
+      }
+      else{
+        ModMain.network.sendToServer(new PacketOpenExtendedInventory(thePlayer));
+        event.setCanceled(true);
+      }
+    } 
   }
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
