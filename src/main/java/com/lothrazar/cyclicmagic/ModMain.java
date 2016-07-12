@@ -141,37 +141,7 @@ public class ModMain {
   
   /*
    * 
-   * POST 1.3.0 launch:
-   * 
-   * f3 'from spawn' do not show in nether, etc
-   * 
-   * VERIFY that diamond nether worldgen fires
-   * 
-   *  /ping: show biome
-   * 
-   * launch enchant: hold shift to not doublejump (for trigger elytra)
-   * 
-   * villageinfo command: text not translated
-   * 
-   * TODO : move to lwoer left or maybe config
-   * 
-   * hide tile version of bean from creative?
-   * 
-   * searchitem: add distances / directions back in
-   * 
-   * btns: when in extended invo: hide C
-   * when in extended crafting: hide I
-   * 
    * TODO:
-   * 1.3.0
-   * BUG:  HEART CONTAINERS GLITCH ON DIMENSION CHANGE: reset them
-   * 
-   * Ender Book Buttons: if disabled, show wrong dimeniosn, not distance
-   * 
-   * BUG: deposit/loot/etc buttons move my BOOTS SLOT and uneuqip them!!!
-   * FUTURE
-   * enderpearl hotkey feature-just like old overpoweredinventory mod
-   * here : https://raw.githubusercontent.com/LothrazarMinecraftMods/OverpoweredInventory/8a7459161837b930c5417f774676504bce970e66/src/main/java/com/lothrazar/powerinventory/net/EnderPearlPacket.java
    * 
    *  is there a bug in searchrecipe? or a bug in new repeater rec?
    * 
@@ -181,32 +151,23 @@ public class ModMain {
    * 
    * config: command search spawner max distances
    * 
-   * FORWARD CRAFTER: like uncrafter but forward. 3x3 inventory, takes hopper input
-   * 
    * circle sometimes gets duplicate positions, slowing it down
-   * 
-   * block breaker//tree harvester?
    * 
    * Some way to keep certain items after death - runestone? enchantment?
    * 
    * ButtonBuildToggle-store ptr to wand not player??
    * 
-   * lifeleech enchant - like diablo 2 ? maybe only on kill?
-   * 
    * [ Trading Tool // gui]
-   * Upgrade villager gui: either make my own or add buttons/some way to view all trades at once
-   * --inspired by extrautils trading table that is apparently gone after 1710
+   *     Upgrade villager gui: either make my own or add buttons/some way to view all trades at once
+   *    --inspired by extrautils trading table that is apparently gone after 1710
    * 
    * exp bottler: item with a gui/inventory
-   * put bottles in, toggle on/off and it slowly drains your exp into the bottles at a given ratio
+   *      put bottles in, toggle on/off and it slowly drains your exp into the bottles at a given ratio
    * 
    * pets live longer and/or respawn
    * 
-   * custom villager zombie textures
-   * 
    * add some of my items to loot tables ?
-   * https://github.com/MinecraftForge/MinecraftForge/blob/master/src/test/
-   * java/net/minecraftforge/debug/LootTablesDebug.java
+   *        https://github.com/MinecraftForge/MinecraftForge/blob/master/src/test/java/net/minecraftforge/debug/LootTablesDebug.java
    * 
    * crafting table hotkeys - numpad?
    *
@@ -214,20 +175,5 @@ public class ModMain {
    * 
    * Fix sorting : UtilInventorySort.sort(p, openInventory);
    * 
-   * UtilUncraft.canUncraft : more efficient somehow????
-   * 
-   * DispenserBehavior: maybe look at adding:
-   * 
-              // if I could, i would just make a list of items, and register one single
-              // BehaviorPlantSeed object
-              // to all those items, but it doesnt work that way I guess
-              // NOTE: currently does not support things like:
-              // cocoa beans
-              // chorus flower
-              // reeds
-              // tree saplings
-              // becuase they are not considered 'plantable growing things' in the
-              // normal way
-              // DOES work with all plants even netherwart
    */
 }
