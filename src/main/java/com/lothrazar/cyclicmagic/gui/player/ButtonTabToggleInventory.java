@@ -9,10 +9,10 @@ import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ButtonTabToggleInventory extends GuiButton {
+public class ButtonTabToggleInventory extends GuiButton {// implements ITooltipButton
   private GuiScreen gui;
   public ButtonTabToggleInventory(GuiScreen g, int x, int y) {
-    super(51, x, y, 10, 10, "I");
+    super(51, x, y, 15, 5, "I");
     gui = g;
   }
   @SideOnly(Side.CLIENT)

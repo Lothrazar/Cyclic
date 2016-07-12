@@ -126,7 +126,7 @@ public class EventExtendedInventory{
         event.getButtonList().add(new ButtonTabToggleInventory(gui, x, y));
       }
       if (showCraftToggle) {
-        event.getButtonList().add(new ButtonTabToggleCrafting(gui, x - 12, y));
+        event.getButtonList().add(new ButtonTabToggleCrafting(gui, x - 17, y));//the 17 is width + 2
       }
     }
   }
