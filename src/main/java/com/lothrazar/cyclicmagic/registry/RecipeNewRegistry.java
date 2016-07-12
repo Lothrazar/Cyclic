@@ -15,7 +15,8 @@ public class RecipeNewRegistry {
   private static boolean repeaterSimple;
   private static boolean minecartsSimple;
   private static boolean notchApple;
-  private static boolean ElytraRepair;
+  private static boolean elytraRepair;
+  private static boolean melonToSlice;
   public static void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.recipes;
     config.setCategoryComment(category, "New and altered recipes");
@@ -31,9 +32,10 @@ public class RecipeNewRegistry {
         true, "Craft the minecart combinations using five iron as well as minecarts").getBoolean();
     notchApple = config.get(category, "Notch Apple",
         true, "Craft a notch apple with golden blocks as usual").getBoolean();
-    ElytraRepair = config.get(category, "Elytra Repair",
+    elytraRepair = config.get(category, "Elytra Repair",
         true, "You can mostly repair elytra wings with a wither skull; but it loses all enchants").getBoolean();
-    //TODO: melon blocks into slices
+    melonToSlice = config.get(category, "Melon Block Slices",
+        true, "Craft a Melon block into nine slices").getBoolean();
   }
   public static void register() {
     if (playerSkull) {
@@ -54,10 +56,17 @@ public class RecipeNewRegistry {
     if (notchApple) {
       RecipeNewRegistry.notchApple();
     }
-    if (ElytraRepair) {
+    if (elytraRepair) {
       elytraRepair();
     }
+    if(melonToSlice){
+      melonToSlice();
+    }
     // https://github.com/PrinceOfAmber/SamsPowerups/blob/master/Recipes/src/main/java/com/lothrazar/samsrecipes/RecipeRegistry.java
+  }
+  private static void melonToSlice() {
+    GameRegistry.addShapelessRecipe(new ItemStack(Items.MELON,9), 
+         new ItemStack(Blocks.MELON_BLOCK));
   }
   private static void elytraRepair() {
     GameRegistry.addShapelessRecipe(new ItemStack(Items.ELYTRA, 1, UtilItem.getMaxDmgFraction(Items.ELYTRA, 10)),
