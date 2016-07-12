@@ -38,6 +38,7 @@ public class PacketDepositContainerToPlayer implements IMessage, IMessageHandler
       // container
       // and Container has no get method
       IInventory openInventory = p.openContainer.getSlot(0).inventory;
+      UtilInventorySort.sortFromInventoryToPlayer(p.worldObj, openInventory, p, false);
       UtilInventorySort.dumpFromIInventoryToPlayer(p.worldObj, openInventory, p);
     }
     return null;
