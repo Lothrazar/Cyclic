@@ -65,14 +65,14 @@ public class ClientProxy extends CommonProxy {
       ClientRegistry.registerKeyBinding(ClientProxy.keyShiftUp);
       keyShiftDown = new KeyBinding("key.columnshiftdown", Keyboard.KEY_H, keyCategoryInventory);
       ClientRegistry.registerKeyBinding(ClientProxy.keyShiftDown);
-      keyBarUp = new KeyBinding("key.columnbarup", Keyboard.KEY_Y, keyCategoryInventory);
-      keyBarUp.setKeyModifierAndCode(KeyModifier.SHIFT, Keyboard.KEY_Y);
+      keyBarUp = new KeyBinding("key.columnbarup",net.minecraftforge.client.settings.KeyConflictContext.IN_GAME,
+          KeyModifier.SHIFT, Keyboard.KEY_Y, keyCategoryInventory);
       ClientRegistry.registerKeyBinding(ClientProxy.keyBarUp);
-      keyBarDown = new KeyBinding("key.columnbardown", Keyboard.KEY_H, keyCategoryInventory);
-      keyBarDown.setKeyModifierAndCode(KeyModifier.SHIFT, Keyboard.KEY_H);
+      keyBarDown = new KeyBinding("key.columnbardown",net.minecraftforge.client.settings.KeyConflictContext.IN_GAME,
+          KeyModifier.SHIFT,Keyboard.KEY_H, keyCategoryInventory);
       ClientRegistry.registerKeyBinding(ClientProxy.keyBarDown);
-      keyExtraInvo = new KeyBinding("key.keyExtraInvo", Keyboard.KEY_E, keyCategoryInventory);
-      keyExtraInvo.setKeyModifierAndCode(KeyModifier.SHIFT, Keyboard.KEY_E);
+      keyExtraInvo = new KeyBinding("key.keyExtraInvo", net.minecraftforge.client.settings.KeyConflictContext.IN_GAME,
+          KeyModifier.SHIFT,Keyboard.KEY_E, keyCategoryInventory);
       ClientRegistry.registerKeyBinding(ClientProxy.keyExtraInvo);
     }
   }
