@@ -155,7 +155,7 @@ public class BlockRegistry {
     ItemRegistry.sprout_seed.setUnlocalizedName("sprout_seed");
     ItemRegistry.registerItem(ItemRegistry.sprout_seed, "sprout_seed");
     ItemRegistry.itemMap.put("sprout_seed", ItemRegistry.sprout_seed);
-    GameRegistry.addRecipe(new ItemStack(ItemRegistry.sprout_seed, 2,0),
+    GameRegistry.addRecipe(new ItemStack(ItemRegistry.sprout_seed),
         "waw",
         "bEc",
         "wdw",
