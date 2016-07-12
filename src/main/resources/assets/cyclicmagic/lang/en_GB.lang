@@ -141,6 +141,7 @@ key.columnbardown=Row Shift Down
 key.columnbarup=Row Shift Up
 key.columnshiftdown=Item Shift Down
 key.columnshiftup=Item Shift Up
+key.keyExtraInvo=Extended Inventory (if unlocked)
 potion.ender=Ender Aura
 potion.magnet=Magnet
 potion.slowfall=Slowfall

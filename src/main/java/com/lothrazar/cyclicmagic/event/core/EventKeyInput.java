@@ -7,7 +7,6 @@ import com.lothrazar.cyclicmagic.proxy.ClientProxy;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.util.Const;
-import com.lothrazar.cyclicmagic.util.UtilChat;
 import org.lwjgl.input.Keyboard;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -39,16 +38,15 @@ public class EventKeyInput {
     }
     else if (ClientProxy.keyExtraInvo != null && ClientProxy.keyExtraInvo.isPressed()) {
       final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(thePlayer);
-      if(data.hasInventoryExtended()  == false){
-        //the regular code SHOULD take over -> open invo if E is bound
-       // UtilChat.addChatMessage(thePlayer, "Extended Inventory not yet unlocked");
-        //since we DONT cancel
+      if (data.hasInventoryExtended() == false) {
+        //then open the normal inventory
+        Minecraft.getMinecraft().displayGuiScreen(new GuiInventory(thePlayer));
       }
-      else{
+      else {
         ModMain.network.sendToServer(new PacketOpenExtendedInventory(thePlayer));
-        event.setCanceled(true);
+        //event.setCanceled(true);//not allowed java.lang.IllegalArgumentException: Attempted to cancel a non cancellable event
       }
-    } 
+    }
   }
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
