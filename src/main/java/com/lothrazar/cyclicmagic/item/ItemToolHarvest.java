@@ -31,12 +31,14 @@ public class ItemToolHarvest extends BaseTool implements IHasRecipe, IHasConfig 
       conf.doesPumpkinBlocks = true;
       conf.doesMelonBlocks = true;
       conf.doesCrops = true;
+      conf.doesCactus = true;
+      conf.doesReeds = true;
       break;
     case WEEDS:
       conf.doesFlowers = true;
-      conf.doesHarvestMushroom = true;
-      conf.doesHarvestTallgrass = true;
-      conf.doesHarvestSapling = true;
+      conf.doesMushroom = true;
+      conf.doesTallgrass = true;
+      conf.doesSapling = true;
       break;
     case LEAVES:
       conf.doesLeaves = true;

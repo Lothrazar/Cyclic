@@ -15,27 +15,29 @@ import net.minecraft.world.World;
 
 public class UtilHarvestCrops {
   public static class HarestCropsConfig {
-    public boolean doesHarvestStem = false;
-    public boolean doesHarvestSapling = false;
-    public boolean doesHarvestMushroom = false;
+    public boolean doesStem = false;
+    public boolean doesSapling = false;
+    public boolean doesMushroom = false;
     public boolean doesPumpkinBlocks = false;
     public boolean doesMelonBlocks = false;
     public boolean doesFlowers = false;
     public boolean doesLeaves = false;
     public boolean doesCrops = false;
     // this hits both the short regular grass, and tall grass, and 2 high flowers. split it up
-    public boolean doesHarvestTallgrass = false;
+    public boolean doesTallgrass = false;
+    public boolean doesCactus = false;
+    public boolean doesReeds = false;
     @Override
     public String toString(){
       String s = "";
-      s += "doesHarvestStem = "+doesHarvestStem +System.lineSeparator();
-      s += "doesHarvestSapling = "+doesHarvestSapling +System.lineSeparator();
-      s += "doesHarvestMushroom = "+doesHarvestMushroom +System.lineSeparator();
+      s += "doesHarvestStem = "+doesStem +System.lineSeparator();
+      s += "doesHarvestSapling = "+doesSapling +System.lineSeparator();
+      s += "doesHarvestMushroom = "+doesMushroom +System.lineSeparator();
       s += "doesPumpkinBlocks = "+doesPumpkinBlocks +System.lineSeparator();
       s += "doesMelonBlocks = "+doesMelonBlocks +System.lineSeparator();
       s += "doesFlowers = "+doesFlowers +System.lineSeparator();
       s += "doesCrops = "+doesCrops +System.lineSeparator();
-      s += "doesHarvestTallgrass = "+doesHarvestTallgrass +System.lineSeparator();
+      s += "doesHarvestTallgrass = "+doesTallgrass +System.lineSeparator();
       return s;
     }
   }
@@ -77,7 +79,6 @@ public class UtilHarvestCrops {
     IBlockState bsAbove = world.getBlockState(posCurrent.up());
     IBlockState bsBelow = world.getBlockState(posCurrent.down());
     
-
     if (blockCheck instanceof BlockNetherWart ) {
       if(conf.doesCrops){
         int age = ((Integer)bs.getValue(BlockNetherWart.AGE)).intValue();
@@ -88,15 +89,15 @@ public class UtilHarvestCrops {
       }
     }
     else if (blockCheck instanceof BlockStem ) {
-      if(conf.doesHarvestStem)
+      if(conf.doesStem)
         doBreak = true;
     }
     else if (blockCheck instanceof BlockSapling ) {
-      if(conf.doesHarvestSapling)
+      if(conf.doesSapling)
         doBreak = true;
     }
     else if (blockCheck instanceof BlockTallGrass    ) {
-      if( conf.doesHarvestTallgrass){
+      if( conf.doesTallgrass){
         doBreak = true;
         doReplant = false;
         if (blockCheck instanceof BlockTallGrass && bsAbove != null && bsAbove.getBlock() instanceof BlockTallGrass) {
@@ -108,7 +109,7 @@ public class UtilHarvestCrops {
       }
     }
     else if (blockCheck instanceof BlockDoublePlant      ) {
-      if( conf.doesHarvestTallgrass){
+      if( conf.doesTallgrass){
         doBreak = true;
         doReplant = false;
         if (blockCheck instanceof BlockDoublePlant && bsAbove != null && bsAbove.getBlock() instanceof BlockDoublePlant) {
@@ -120,7 +121,7 @@ public class UtilHarvestCrops {
       }
     }
     else if (blockCheck instanceof BlockMushroom) {
-      if( conf.doesHarvestMushroom)
+      if( conf.doesMushroom)
         doBreak = true;
     }
     else if (blockCheck == Blocks.PUMPKIN ) {
@@ -145,6 +146,21 @@ public class UtilHarvestCrops {
     }
     else if (blockCheck == Blocks.LEAVES || blockCheck == Blocks.LEAVES2) {
       if(conf.doesLeaves){
+        doBreak = true;
+        doReplant = false;
+      }
+    }
+    else if (blockCheck == Blocks.CACTUS && bsBelow != null && bsBelow.getBlock() == Blocks.CACTUS) {
+      if(conf.doesCactus){//never breaking the bottom one
+        doBreak = true;
+        doReplant = false;
+        if(bsAbove != null && bsAbove.getBlock() == Blocks.CACTUS){
+          doBreakAbove = true;
+        }
+      }
+    }
+    else if (blockCheck == Blocks.REEDS && bsBelow != null && bsBelow.getBlock() == Blocks.REEDS) {
+      if(conf.doesReeds){//never breaking the bottom one
         doBreak = true;
         doReplant = false;
       }
