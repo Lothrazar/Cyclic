@@ -1,5 +1,7 @@
 package com.lothrazar.cyclicmagic.item;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -34,6 +36,7 @@ public class ItemToolSpawnInspect extends BaseTool implements IHasRecipe {
       return super.onItemUse(stack, player, worldObj, posIn, hand, side, hitX, hitY, hitZ);
     }
 
+    boolean showOdds = player.isSneaking();
     
     if (!worldObj.isRemote) {
       if(worldObj.getChunkProvider() instanceof ChunkProviderServer){
@@ -53,8 +56,16 @@ public class ItemToolSpawnInspect extends BaseTool implements IHasRecipe {
             }
           }
         }
-        for(SpawnDetail detail : names){
-         UtilChat.addChatMessage(player, detail.toString()); 
+        if(names.size() > 0){
+          Collections.sort(names, new Comparator<SpawnDetail>() {
+            @Override
+            public int compare(SpawnDetail o1, SpawnDetail o2) {
+                return o1.getSortBy().compareTo(o2.getSortBy());
+            }
+          });
+          for(SpawnDetail detail : names){
+           UtilChat.addChatMessage(player, detail.toString(showOdds)); 
+          }
         }
       }
     }
@@ -89,18 +100,20 @@ public class ItemToolSpawnInspect extends BaseTool implements IHasRecipe {
       else{
         int reqLight = entry.entityClass == EntityBlaze.class ? Const.LIGHT_MOBSPAWN_BLAZE : Const.LIGHT_MOBSPAWN;
         
-        //
         if( currentLightLevel  <= reqLight){
           lightEnabled = true;
         }
       }
     }
-    @Override
-    public String toString(){
-      //  type.toString() +", "+  monster/ambient/passive/etc
-      //EnumChatFormatting is gone
+    public String getSortBy(){
+      return displayName;
+    }
+    public String toString(boolean showOdds){
       TextFormatting color = (lightEnabled) ? TextFormatting.WHITE : TextFormatting.DARK_GRAY;
-      return  color+ "["+String.format("%03d", entry.itemWeight) +"] " + displayName;
+      if(showOdds)
+        return  color + "["+creatureType.toString() +", "+String.format("%03d", entry.itemWeight) +"] " + displayName;
+      else
+        return  color +  displayName;
     }
   }
 }
