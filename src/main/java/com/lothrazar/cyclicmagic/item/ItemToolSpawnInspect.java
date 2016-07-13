@@ -6,6 +6,7 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
+import net.minecraft.block.BlockStainedGlass;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.monster.EntityBlaze;
@@ -13,6 +14,7 @@ import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
@@ -73,11 +75,12 @@ public class ItemToolSpawnInspect extends BaseTool implements IHasRecipe {
   @Override
   public void addRecipe() {
     GameRegistry.addShapedRecipe(new ItemStack(this),
-        "  g",
-        " b ",
+        " sg",
+        " bs",
         "b  ",
         'b', new ItemStack(Items.BLAZE_ROD),
-        'g', new ItemStack(Blocks.GLASS));
+        's', new ItemStack(Items.FLINT),
+        'g', new ItemStack(Blocks.STAINED_GLASS,1,EnumDyeColor.PURPLE.getMetadata()));
   }
   public static class SpawnDetail {
     private int itemWeight;
