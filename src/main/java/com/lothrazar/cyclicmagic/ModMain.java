@@ -97,6 +97,7 @@ public class ModMain {
     MinecraftForge.EVENT_BUS.register(PotionRegistry.magnet);
     MinecraftForge.EVENT_BUS.register(PotionRegistry.waterwalk);
     MinecraftForge.EVENT_BUS.register(PotionRegistry.ender);
+    MinecraftForge.EVENT_BUS.register(PotionRegistry.snow);
   }
   @EventHandler
   public void onPostInit(FMLPostInitializationEvent event) {

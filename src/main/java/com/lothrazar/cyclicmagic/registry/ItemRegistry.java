@@ -39,6 +39,9 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFishFood;
+import net.minecraft.item.ItemLingeringPotion;
+import net.minecraft.item.ItemPotion;
+import net.minecraft.item.ItemSplashPotion;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
@@ -57,6 +60,7 @@ public class ItemRegistry {
   public static final ItemPotionCustom potion_levitation_long = new ItemPotionCustom(true, MobEffects.LUCK, 60 * 8);
   public static final ItemPotionCustom potion_luck = new ItemPotionCustom(true, MobEffects.LUCK, 60 * 3);
   public static final ItemPotionCustom potion_luck_long = new ItemPotionCustom(true, MobEffects.LEVITATION, 60 * 8);
+  public static final ItemPotionCustom potion_snow = new ItemPotionCustom(true);
   public static final ItemPotionCustom potion_ender = new ItemPotionCustom(true);
   public static final ItemPotionCustom potion_ender_long = new ItemPotionCustom(true);
   public static final ItemPotionCustom potion_magnet = new ItemPotionCustom(false);
@@ -132,8 +136,6 @@ public class ItemRegistry {
     addItem(potion_waterwalk_long, "potion_waterwalk_long");
     addItem(potion_slowfall, "potion_slowfall");
     addItem(potion_slowfall_long, "potion_slowfall_long");
-    //		addItem(potion_glowing, "potion_glowing");
-    //		addItem(potion_glowing_long, "potion_glowing_long");
     addItem(potion_magnet, "potion_magnet");
     addItem(potion_magnet_long, "potion_magnet_long");
     addItem(potion_haste, "potion_haste");
@@ -147,6 +149,7 @@ public class ItemRegistry {
     addItem(potion_levitation_long, "potion_levitation_long");
     addItem(cyclic_wand_build, "cyclic_wand_build");
     addItem(new ItemAppleEmerald(), "apple_emerald");
+    addItem(potion_snow,"potion_snow");
   }
   private static Item addItem(Item i, String key) {
     i.setUnlocalizedName(key);
@@ -170,11 +173,7 @@ public class ItemRegistry {
         ((IHasConfig) item).syncConfig(config);
       }
     }
-    //		
-    //		String category = Const.ConfigCategory.items;
-    //		prop = config.get(category, "EmeraldGear", true, "Full set of emerald gear with similar properties as diamond");
-    //		prop.setRequiresMcRestart(true);
-    //		emeraldGearEnabled = prop.getBoolean();
+ 
     ItemFoodHorse.syncConfig(config);
   }
   private static void registerRecipes() {
@@ -185,30 +184,12 @@ public class ItemRegistry {
         ((IHasRecipe) item).addRecipe();
       }
     }
-    //now the brewing recipes
-    //all potions use the same class, so different from IHasRecipe
-    //thanks for the demos
-    // https://github.com/MinecraftForge/MinecraftForge/blob/1.9/src/test/java/net/minecraftforge/test/BrewingRecipeRegistryTest.java
-    //i guess PotionUtils doesnt work the way I thought
-    //ItemStack mundane = PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.MUNDANE), 
-    //		ItemStack thick = BrewingRecipeRegistry.getOutput(new ItemStack(Items.POTIONITEM), new ItemStack(Items.GLOWSTONE_DUST));
-    //		ItemStack mundane = BrewingRecipeRegistry.getOutput(new ItemStack(Items.POTIONITEM), new ItemStack(Items.REDSTONE));
-    //		;
-    //
-    //		System.out.println("POTIONITEM="+(new ItemStack(Items.POTIONITEM)).getDisplayName());
-    //		System.out.println(" thick="+thick.getDisplayName());
-    //		System.out.println(" awkward="+awkward.getDisplayName());
-    //		System.out.println(" mundane="+mundane.getDisplayName());
-    //the names imply these are correct. HOWEVER!!
-    // there is a BUG: if i add a recipe and specify the input as exactly 'thick' 
-    //then what actually happens is that EVERY SINGLE TYPE OF POTION works as input
-    //so awkward, mundane, even regular potions. so thats messed, like its ignoring NBT values
-    //thats probably becuase items dont use DAMAGE anymre, all are zero so brew reg cant tell
-    //CANT USE input as  APPLES:
-    // Inputs must have a max size of 1 just like water bottles. Brewing Stands override the input with the output when the brewing is done, items that stack would end up getting lost.
-    //todo;:??ItemSplashPotion
+
+    registerBrewing();
+  }
+  private static void registerBrewing() {
     ItemStack awkward = BrewingRecipeRegistry.getOutput(new ItemStack(Items.POTIONITEM), new ItemStack(Items.NETHER_WART));
-    //		
+ 
     BrewingRecipeRegistry.addRecipe(
         awkward,
         new ItemStack(Items.DYE, 1, EnumDyeColor.BROWN.getDyeDamage()),
@@ -281,15 +262,6 @@ public class ItemRegistry {
         ItemRegistry.potion_magnet,
         Items.REDSTONE,
         ItemRegistry.potion_magnet_long);
-    //		BrewingRecipeRegistry.addRecipe(
-    //				new ItemStack(ItemRegistry.potion_viscous),
-    //				new ItemStack(Blocks.REDSTONE_LAMP),
-    //				new ItemStack(ItemRegistry.potion_glowing));
-    //		
-    //		BrewingRecipeRegistry.addRecipe(
-    //				new ItemStack(ItemRegistry.potion_glowing),
-    //				new ItemStack(Items.REDSTONE),
-    //				new ItemStack(ItemRegistry.potion_glowing_long));
     BrewingRecipeRegistry.addRecipe(
         new ItemStack(ItemRegistry.potion_viscous),
         new ItemStack(Items.FISH, 1, ItemFishFood.FishType.CLOWNFISH.getMetadata()),
@@ -320,6 +292,7 @@ public class ItemRegistry {
     emerald_boots = new ItemEmeraldArmor(EntityEquipmentSlot.FEET);
     addItem(emerald_boots, "emerald_boots");
     //		addItem(new ItemFlintTool(),"flint_tool");
+    potion_snow.addEffect(PotionRegistry.snow, 60 * 3, PotionRegistry.I);
     potion_ender.addEffect(PotionRegistry.ender, 60 * 3, PotionRegistry.I);
     potion_magnet.addEffect(PotionRegistry.magnet, 60 * 3, PotionRegistry.I);
     potion_waterwalk.addEffect(PotionRegistry.waterwalk, 60 * 3, PotionRegistry.I);
