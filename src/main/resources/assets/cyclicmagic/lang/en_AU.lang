@@ -135,6 +135,7 @@ item.tool_harvest_crops.name=Garden Scythe
 item.tool_harvest_leaves.name=Tree Scythe
 item.tool_harvest_weeds.name=Brush Scythe
 item.tool_push.name=Piston Scepter
+item.tool_spawn_inspect.name=Spawn Detector
 itemGroup.cyclicmagic=Cyclic
 key.categories.inventorycontrol=Inventory Movement
 key.columnbardown=Row Shift Down
