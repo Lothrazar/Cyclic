@@ -29,6 +29,7 @@ import com.lothrazar.cyclicmagic.item.ItemSleepingBag;
 import com.lothrazar.cyclicmagic.item.ItemSproutSeeds;
 import com.lothrazar.cyclicmagic.item.ItemToolHarvest;
 import com.lothrazar.cyclicmagic.item.ItemToolPush;
+import com.lothrazar.cyclicmagic.item.ItemToolSpawnInspect;
 import com.lothrazar.cyclicmagic.item.projectile.*;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraftforge.common.util.EnumHelper;
@@ -86,6 +87,7 @@ public class ItemRegistry {
   public static void construct() {
     
 
+    addItem(new ItemToolSpawnInspect(), "tool_spawn_inspect");
     addItem(new ItemToolPearlReuse(), "ender_pearl_reuse");
     addItem(new ItemPaperCarbon(), "carbon_paper");
     addItem(new ItemToolHarvest(ItemToolHarvest.HarvestType.WEEDS), "tool_harvest_weeds");
