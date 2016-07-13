@@ -9,6 +9,7 @@ import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.monster.EntityBlaze;
+import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -32,39 +33,35 @@ public class ItemToolSpawnInspect extends BaseTool implements IHasRecipe {
   }
   @Override
   public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World worldObj, BlockPos posIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-    if(side == null || posIn == null){
-      return super.onItemUse(stack, player, worldObj, posIn, hand, side, hitX, hitY, hitZ);
-    }
-
+    if (side == null || posIn == null) { return super.onItemUse(stack, player, worldObj, posIn, hand, side, hitX, hitY, hitZ); }
     boolean showOdds = player.isSneaking();
-    
     if (!worldObj.isRemote) {
-      if(worldObj.getChunkProvider() instanceof ChunkProviderServer){
-        ChunkProviderServer s = (ChunkProviderServer)worldObj.getChunkProvider();
+      if (worldObj.getChunkProvider() instanceof ChunkProviderServer) {
+        ChunkProviderServer s = (ChunkProviderServer) worldObj.getChunkProvider();
         BlockPos pos = posIn.offset(side);
-
         int light = worldObj.getLight(pos);
-        System.out.println("l "+light);
         List<SpawnDetail> names = new ArrayList<SpawnDetail>();
-        for(EnumCreatureType creatureType : EnumCreatureType.values()){
+        for (EnumCreatureType creatureType : EnumCreatureType.values()) {
           List<Biome.SpawnListEntry> list = s.getPossibleCreatures(creatureType, pos);
-          for(Biome.SpawnListEntry entry : list){
-            if(WorldEntitySpawner.canCreatureTypeSpawnAtLocation(EntitySpawnPlacementRegistry.getPlacementForEntity(entry.entityClass),  worldObj,pos     )){
-              
-              names.add(new SpawnDetail(entry, creatureType, light ));
-           
+          for (Biome.SpawnListEntry entry : list) {
+            if (WorldEntitySpawner.canCreatureTypeSpawnAtLocation(EntitySpawnPlacementRegistry.getPlacementForEntity(entry.entityClass), worldObj, pos)) {
+              names.add(new SpawnDetail(entry, creatureType, light));
+              //hack since witherskeleton is not its own class/entry, just a mob modifier like zombietypes or villagertypes
+              if (entry.entityClass.equals(EntitySkeleton.class) && player.dimension == Const.Dimension.nether) {
+                names.add(new SpawnDetail("WitherSkeleton", creatureType, light));
+              }
             }
           }
         }
-        if(names.size() > 0){
+        if (names.size() > 0) {
           Collections.sort(names, new Comparator<SpawnDetail>() {
             @Override
             public int compare(SpawnDetail o1, SpawnDetail o2) {
-                return o1.getSortBy().compareTo(o2.getSortBy());
+              return o1.getSortBy().compareTo(o2.getSortBy());
             }
           });
-          for(SpawnDetail detail : names){
-           UtilChat.addChatMessage(player, detail.toString(showOdds)); 
+          for (SpawnDetail detail : names) {
+            UtilChat.addChatMessage(player, detail.toString(showOdds));
           }
         }
       }
@@ -82,38 +79,44 @@ public class ItemToolSpawnInspect extends BaseTool implements IHasRecipe {
         'b', new ItemStack(Items.BLAZE_ROD),
         'g', new ItemStack(Blocks.GLASS));
   }
-
-  public static class SpawnDetail{
-    private Biome.SpawnListEntry entry;
+  public static class SpawnDetail {
+    private int itemWeight;
     private String displayName;
-    private EnumCreatureType creatureType;
+    private String creatureTypeName;
     private boolean lightEnabled = false;
-    public SpawnDetail(Biome.SpawnListEntry pentry, EnumCreatureType ptype, int currentLightLevel){
-      entry = pentry;
-      creatureType = ptype;
+    public SpawnDetail(Biome.SpawnListEntry entry, EnumCreatureType creatureType, int currentLightLevel) {
+      itemWeight = entry.itemWeight;
+      creatureTypeName = creatureType.name();
       displayName = entry.entityClass.getSimpleName().replace("Entity", "");
       //one caveat: the above canSpawn ignores light level
-      if(creatureType != EnumCreatureType.MONSTER){
+      if (creatureType != EnumCreatureType.MONSTER) {
         //ambient/water/passive, all ignore light
         lightEnabled = true;
       }
-      else{
+      else {
         int reqLight = entry.entityClass == EntityBlaze.class ? Const.LIGHT_MOBSPAWN_BLAZE : Const.LIGHT_MOBSPAWN;
-        
-        if( currentLightLevel  <= reqLight){
+        if (currentLightLevel <= reqLight) {
           lightEnabled = true;
         }
       }
     }
-    public String getSortBy(){
+    public SpawnDetail(String n, EnumCreatureType creatureType, int currentLightLevel) {
+      //special case of JUST witherywither
+      displayName = n;
+      creatureTypeName = creatureType.name();
+      if (currentLightLevel <= Const.LIGHT_MOBSPAWN) {
+        lightEnabled = true;
+      }
+    }
+    public String getSortBy() {
       return displayName;
     }
-    public String toString(boolean showOdds){
+    public String toString(boolean showOdds) {
       TextFormatting color = (lightEnabled) ? TextFormatting.WHITE : TextFormatting.DARK_GRAY;
-      if(showOdds)
-        return  color + "["+creatureType.toString() +", "+String.format("%03d", entry.itemWeight) +"] " + displayName;
+      if (showOdds) // todo; super.tostring here?
+        return color + "[" + creatureTypeName + ", " + String.format("%03d", itemWeight) + "] " + displayName;
       else
-        return  color +  displayName;
+        return color + displayName;
     }
   }
 }
