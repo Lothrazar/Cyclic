@@ -38,6 +38,7 @@ public class EventRegistry {
     featureEvents.add(new EventPlayerSleep());
     featureEvents.add(new EventAchievement());
     featureEvents.add(new EventLightningDamage());
+    featureEvents.add(new EventLootTableLoaded());
   }
   public void syncConfig(Configuration config) {
     for (Object e : featureEvents) {
