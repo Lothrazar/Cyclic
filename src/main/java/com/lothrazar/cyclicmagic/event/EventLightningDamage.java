@@ -21,15 +21,17 @@ public class EventLightningDamage implements IHasConfig {
       if (skel.func_189771_df() == SkeletonType.NORMAL) {
         SkeletonType newType = skel.worldObj.rand.nextDouble() > 0.5 ? SkeletonType.WITHER : SkeletonType.STRAY;
         skel.func_189768_a(newType);
+        skel.heal(skel.getMaxHealth());
       }
     }
     if (zombEnabled && event.getEntity() instanceof EntityZombie &&
         event.getLightning() != null) {
-      EntityZombie skel = (EntityZombie) event.getEntity();
+      EntityZombie zomb = (EntityZombie) event.getEntity();
       //it says  //Do not use, Replacement TBD
       //but , if there is no replacement, why is it deprecated? makes no sense i say!
-      if (skel.func_189777_di() == ZombieType.NORMAL) {
-        skel.func_189778_a(ZombieType.HUSK);
+      if (zomb.func_189777_di() == ZombieType.NORMAL) {
+        zomb.func_189778_a(ZombieType.HUSK);
+        zomb.heal(zomb.getMaxHealth());
       }
     }
   }
