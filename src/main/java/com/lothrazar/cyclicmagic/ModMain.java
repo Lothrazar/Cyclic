@@ -144,6 +144,11 @@ public class ModMain {
    * 
    * TODO:
    * 
+   * 
+   * https://www.reddit.com/r/minecraftsuggestions/comments/4smwb5/if_lightning_strikes_a_skeleton_it_turns_into_a/
+   * 
+   * -- spawn inspector: SKEL/ZOMBIE VARIANTS: stray==winter
+   * 
    *  is there a bug in searchrecipe? or a bug in new repeater rec?
    * 
    * fragile torches config: float oddsWillBreak = 0.01F;//  : in config or something? or make this  
