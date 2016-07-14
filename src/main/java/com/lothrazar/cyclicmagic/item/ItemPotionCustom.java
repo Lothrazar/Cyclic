@@ -29,7 +29,7 @@ public class ItemPotionCustom extends ItemFood {
   private ArrayList<Integer> potionAmplifiers = new ArrayList<Integer>();
   private boolean hasEffect;
   public ItemPotionCustom(boolean shiny) {
-    super(2, false);// is not edible by wolf
+    super(0,0, false);
     this.setAlwaysEdible(); // can eat even if full hunger
     this.setCreativeTab(ModMain.TAB);
     this.setMaxStackSize(1);

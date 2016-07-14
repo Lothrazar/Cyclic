@@ -33,6 +33,7 @@ import com.lothrazar.cyclicmagic.item.ItemToolSpawnInspect;
 import com.lothrazar.cyclicmagic.item.projectile.*;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraftforge.common.util.EnumHelper;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -267,6 +268,10 @@ public class ItemRegistry {
         new ItemStack(ItemRegistry.potion_slowfall),
         new ItemStack(Items.REDSTONE),
         new ItemStack(ItemRegistry.potion_slowfall_long));
+    BrewingRecipeRegistry.addRecipe(
+        new ItemStack(ItemRegistry.potion_viscous),
+        new ItemStack(Blocks.ICE),
+        new ItemStack(ItemRegistry.potion_snow));
   }
   private static void addBrewingRecipe(Item input, Item ingredient, Item output) {
     BrewingRecipeRegistry.addRecipe(
