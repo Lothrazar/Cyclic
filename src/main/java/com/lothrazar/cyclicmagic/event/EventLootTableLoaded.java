@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.event;
 import java.util.HashSet;
 import java.util.Set;
+import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.item.Item;
@@ -35,18 +36,23 @@ public class EventLootTableLoaded {
   @SubscribeEvent
   public void onLootTableLoad(LootTableLoadEvent event) {
     LootPool main = event.getTable().getPool("main");
-    if (main == null) { return; } //TODO: any other types?
+    if (main == null) { 
+      ModMain.logger.warn("Loot table null for :"+event.getName().toString());
+      return; 
+    } //TODO: any other types?
     if (event.getName() == LootTableList.CHESTS_SPAWN_BONUS_CHEST) {//when the world starts
       fillBonusChest(main);
-    }
-    else if (chests.contains(event.getName())) { // every pool except for spawn 
-      fillGenericChest(main);
     }
     else if (event.getName() == LootTableList.CHESTS_IGLOO_CHEST) {//when the world starts
       fillIglooChest(main);
     }
     else if (event.getName() == LootTableList.CHESTS_END_CITY_TREASURE) {//when the world starts
       fillEndCityChest(main);
+    }
+    
+    //no else on this one, its a catch all
+    if (chests.contains(event.getName())) { // every pool except for spawn 
+      fillGenericChest(main);
     }
   }
   private void fillEndCityChest(LootPool main) {
