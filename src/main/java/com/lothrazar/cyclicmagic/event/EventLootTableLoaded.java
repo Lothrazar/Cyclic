@@ -5,7 +5,6 @@ import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
-import com.lothrazar.cyclicmagic.util.UtilReflection;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -88,10 +87,6 @@ public class EventLootTableLoaded implements IHasConfig {
       addLoot(main, Items.IRON_INGOT, 45);
     }
     else if (enableShulkerDiamCryst && event.getName() == LootTableList.ENTITIES_SHULKER) {
-      System.out.println("ENTITIES_SHULKER");
-      System.out.println("ENTITIES_SHULKER");
-      System.out.println("ENTITIES_SHULKER");
-      System.out.println("ENTITIES_SHULKER");
       addLoot(main, Items.DIAMOND, 45);
       addLoot(main, Items.END_CRYSTAL, 25);
     }
