@@ -86,27 +86,51 @@ public class ItemRegistry {
   public static final ItemProjectileTNT ender_tnt_6 = new ItemProjectileTNT(6);
   public static ItemEmeraldArmor emerald_boots;
   public static final Item tool_push = new ItemToolPush();
+  public static final ItemAppleEmerald apple_emerald = new ItemAppleEmerald();
+  public static final ItemToolHarvest tool_harvest_weeds = new ItemToolHarvest(ItemToolHarvest.HarvestType.WEEDS);
+  public static final ItemToolHarvest tool_harvest_crops = new ItemToolHarvest(ItemToolHarvest.HarvestType.CROPS);
+  public static final ItemToolHarvest tool_harvest_leaves = new ItemToolHarvest(ItemToolHarvest.HarvestType.LEAVES);
+  public static final ItemChestSackEmpty chest_sack_empty = new ItemChestSackEmpty();
+  public static final ItemToolSpawnInspect tool_spawn_inspect = new ItemToolSpawnInspect();
+  public static final ItemSleepingBag sleeping_mat = new ItemSleepingBag();
+  public static final ItemToolPearlReuse ender_pearl_reuse = new ItemToolPearlReuse();
+  public static final ItemEnderBook book_ender = new ItemEnderBook();
+  public static final ItemProjectileBlaze ender_blaze = new ItemProjectileBlaze()  ;
+  public static final ItemProjectileDungeon ender_dungeon = new ItemProjectileDungeon();
+  public static final ItemProjectileFishing ender_fishing = new ItemProjectileFishing();
+  public static final ItemProjectileWool ender_wool = new ItemProjectileWool()   ;
+  public static final ItemProjectileTorch ender_torch = new ItemProjectileTorch()  ;
+  public static final ItemProjectileWater ender_water = new ItemProjectileWater()  ;
+  public static final ItemProjectileSnow ender_snow = new ItemProjectileSnow()   ;
+  public static final ItemProjectileLightning ender_lightning = new ItemProjectileLightning()   ;
+  public static final ItemPaperCarbon carbon_paper = new ItemPaperCarbon()   ;
+  public static final ItemInventoryStorage storage_bag = new ItemInventoryStorage()   ;
+  
+  
   public static void construct() {
-    
 
-    addItem(new ItemToolSpawnInspect(), "tool_spawn_inspect");
-    addItem(new ItemToolPearlReuse(), "ender_pearl_reuse");
-    addItem(new ItemPaperCarbon(), "carbon_paper");
-    addItem(new ItemToolHarvest(ItemToolHarvest.HarvestType.WEEDS), "tool_harvest_weeds");
-    addItem(new ItemToolHarvest(ItemToolHarvest.HarvestType.CROPS), "tool_harvest_crops");
-    addItem(new ItemToolHarvest(ItemToolHarvest.HarvestType.LEAVES), "tool_harvest_leaves");
+    addItem(storage_bag, "storage_bag");
+    addItem(carbon_paper, "carbon_paper");
+    addItem(ender_blaze, "ender_blaze");
+    addItem(ender_dungeon, "ender_dungeon");
+    addItem(ender_fishing, "ender_fishing");
+    addItem(ender_wool  , "ender_wool");
+    addItem(ender_torch  , "ender_torch");
+    addItem(ender_water , "ender_water");
+    addItem(ender_snow  , "ender_snow");
+    addItem(ender_lightning, "ender_lightning");
+    addItem(book_ender, "book_ender");
+    addItem(sleeping_mat, "sleeping_mat");
+    addItem(new ItemFoodCrafting(), "crafting_food");
+    addItem(new ItemFoodInventory(), "inventory_food");
+    addItem(tool_spawn_inspect, "tool_spawn_inspect");
+    addItem(ender_pearl_reuse, "ender_pearl_reuse");
+    addItem(tool_harvest_weeds, "tool_harvest_weeds");
+    addItem(tool_harvest_crops, "tool_harvest_crops");
+    addItem(tool_harvest_leaves, "tool_harvest_leaves");
     addItem(tool_push, "tool_push");
-    addItem(new ItemInventoryStorage(), "storage_bag");
     addItem(new ItemChestSack().setHidden(), "chest_sack");
-    addItem(new ItemChestSackEmpty(), "chest_sack_empty");
-    addItem(new ItemProjectileBlaze(), "ender_blaze");
-    addItem(new ItemProjectileDungeon(), "ender_dungeon");
-    addItem(new ItemProjectileFishing(), "ender_fishing");
-    addItem(new ItemProjectileWool(), "ender_wool");
-    addItem(new ItemProjectileTorch(), "ender_torch");
-    addItem(new ItemProjectileWater(), "ender_water");
-    addItem(new ItemProjectileSnow(), "ender_snow");
-    addItem(new ItemProjectileLightning(), "ender_lightning");
+    addItem(chest_sack_empty, "chest_sack_empty");
     addItem(ender_tnt_1, "ender_tnt_1");
     addItem(ender_tnt_2, "ender_tnt_2");
     addItem(ender_tnt_3, "ender_tnt_3");
@@ -118,12 +142,8 @@ public class ItemRegistry {
     addItem(new ItemFoodHorse(new ItemStack(Items.DIAMOND)), "horse_upgrade_health");
     addItem(new ItemFoodHorse(new ItemStack(Items.REDSTONE)), "horse_upgrade_speed");
     addItem(new ItemFoodHorse(new ItemStack(Items.ENDER_EYE)), "horse_upgrade_jump");
-    addItem(new ItemEnderBook(), "book_ender");
     addItem(corrupted_chorus, "corrupted_chorus");
     addItem(heart_food, "heart_food");
-    addItem(new ItemFoodCrafting(), "crafting_food");
-    addItem(new ItemFoodInventory(), "inventory_food");
-    addItem(new ItemSleepingBag(), "sleeping_mat");
     addItem(potion_viscous, "potion_viscous");
     addItem(potion_boost, "potion_boost");
     addItem(potion_boost_long, "potion_boost_long");
@@ -146,7 +166,7 @@ public class ItemRegistry {
     addItem(potion_levitation, "potion_levitation");
     addItem(potion_levitation_long, "potion_levitation_long");
     addItem(cyclic_wand_build, "cyclic_wand_build");
-    addItem(new ItemAppleEmerald(), "apple_emerald");
+    addItem(apple_emerald, "apple_emerald");
     addItem(potion_snow,"potion_snow");
   }
   private static Item addItem(Item i, String key) {
