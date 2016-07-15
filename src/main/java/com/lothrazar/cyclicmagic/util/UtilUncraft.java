@@ -59,8 +59,7 @@ public class UtilUncraft {
     drops.add(stack);
   }
   @SuppressWarnings("unchecked")
-  public boolean doUncraft()// World world, ItemStack toUncraft, BlockPos po
-  {
+  public boolean doUncraft() {
     if (toUncraft == null || toUncraft.getItem() == null) { return false; }
     if (blacklistInput.contains(toUncraft.getItem().getUnlocalizedName())) { return false; }
     int i;
