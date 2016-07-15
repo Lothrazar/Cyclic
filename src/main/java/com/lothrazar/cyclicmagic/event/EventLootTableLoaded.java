@@ -54,7 +54,7 @@ public class EventLootTableLoaded implements IHasConfig {
     LootPool main = event.getTable().getPool(LOOTPOOLNAME);
     if (main == null) {
       //create my own.  EX: mobs that have no drops (bats) also have empty loot table, so i have to inject an entry in the table before I fill it
-      event.getTable().addPool(new LootPool(new LootEntry[0], new LootCondition[0], new RandomValueRange(1F, 4F), new RandomValueRange(2F, 6F), LOOTPOOLNAME));
+      event.getTable().addPool(new LootPool(new LootEntry[0], new LootCondition[0], new RandomValueRange(1F, 2F), new RandomValueRange(1F, 1F), LOOTPOOLNAME));
       main = event.getTable().getPool(LOOTPOOLNAME);
       if (main == null) {
         ModMain.logger.error("could not insert Loot Pool for table :" + event.getName().toString());
@@ -81,8 +81,8 @@ public class EventLootTableLoaded implements IHasConfig {
       addLoot(main, Item.getItemFromBlock(Blocks.PACKED_ICE), 35);
     }
     else if (enableEndermiteEyeCrystal && event.getName() == LootTableList.ENTITIES_ENDERMITE) {
-      addLoot(main, Items.ENDER_EYE, 45);
-      addLoot(main, Items.END_CRYSTAL, 15);
+      addLoot(main, Items.ENDER_EYE, 25);
+      addLoot(main, Items.END_CRYSTAL, 10);
     }
     else if (enableSilverfishIron && event.getName() == LootTableList.ENTITIES_SILVERFISH) {
       addLoot(main, Items.IRON_INGOT, 45);
