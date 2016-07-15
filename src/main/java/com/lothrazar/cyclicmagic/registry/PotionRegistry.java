@@ -3,6 +3,7 @@ import com.lothrazar.cyclicmagic.potion.PotionCustom;
 import com.lothrazar.cyclicmagic.potion.PotionEnder;
 import com.lothrazar.cyclicmagic.potion.PotionMagnet;
 import com.lothrazar.cyclicmagic.potion.PotionSlowfall;
+import com.lothrazar.cyclicmagic.potion.PotionSnow;
 import com.lothrazar.cyclicmagic.potion.PotionWaterwalk;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.PotionEffect;
@@ -15,6 +16,7 @@ public class PotionRegistry {
   public static PotionCustom magnet;
   public static PotionCustom ender;
   public static PotionCustom waterwalk;
+  public static PotionCustom snow;
   public final static int I = 0;
   public final static int II = 1;
   public final static int III = 2;
@@ -27,10 +29,12 @@ public class PotionRegistry {
     PotionRegistry.waterwalk = new PotionWaterwalk("waterwalk", true, 0);
     PotionRegistry.slowfall = new PotionSlowfall("slowfall", true, 0);
     PotionRegistry.magnet = new PotionMagnet("magnet", true, 0);
+    PotionRegistry.snow = new PotionSnow("snow", true, 0);
     GameRegistry.register(ender, ender.getIcon());//was geticon
     GameRegistry.register(waterwalk, waterwalk.getIcon());
     GameRegistry.register(slowfall, slowfall.getIcon());
     GameRegistry.register(magnet, magnet.getIcon());
+    GameRegistry.register(snow, snow.getIcon());
   }
   public static void addOrMergePotionEffect(EntityLivingBase player, PotionEffect newp) {
     // this could be in a utilPotion class i guess...

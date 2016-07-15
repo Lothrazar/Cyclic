@@ -16,9 +16,6 @@ public class ModLogger {
     if (sendLogs)
       logger.log(Level.WARN, string);
   }
-//  public void fatal(String string) {
-//    logger.fatal(string);
-//  }
   public void error(String string) {
     logger.error(string);
   }

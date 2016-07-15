@@ -47,4 +47,9 @@ public class Const {
     public static final int nether = -1;
   }
   public static final int WORLDHEIGHT = 256;
+  
+  //http://minecraft.gamepedia.com/Light#Mobs
+//this or lower
+  public static final int LIGHT_MOBSPAWN = 7;
+  public static final int LIGHT_MOBSPAWN_BLAZE = 11;
 }// ends class reference

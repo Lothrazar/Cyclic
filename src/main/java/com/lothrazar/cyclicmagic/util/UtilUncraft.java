@@ -59,8 +59,7 @@ public class UtilUncraft {
     drops.add(stack);
   }
   @SuppressWarnings("unchecked")
-  public boolean doUncraft()// World world, ItemStack toUncraft, BlockPos po
-  {
+  public boolean doUncraft() {
     if (toUncraft == null || toUncraft.getItem() == null) { return false; }
     if (blacklistInput.contains(toUncraft.getItem().getUnlocalizedName())) { return false; }
     int i;
@@ -72,7 +71,7 @@ public class UtilUncraft {
       // check ore dictionary for some
       if (next instanceof ShapedOreRecipe) {
         ShapedOreRecipe r = (ShapedOreRecipe) next;
-        if (r.getRecipeOutput().isItemEqual(toUncraft)) {
+        if (r != null && r.getRecipeOutput() != null && r.getRecipeOutput().isItemEqual(toUncraft)) {
           outsize = r.getRecipeOutput().stackSize;
           if (toUncraft.stackSize >= outsize) {
             for (i = 0; i < r.getInput().length; i++) {
@@ -105,7 +104,7 @@ public class UtilUncraft {
       }
       else if (next instanceof ShapelessOreRecipe) {
         ShapelessOreRecipe r = (ShapelessOreRecipe) next;
-        if (r.getRecipeOutput().isItemEqual(toUncraft)) {
+        if (r != null && r.getRecipeOutput() != null && r.getRecipeOutput().isItemEqual(toUncraft)) {
           outsize = r.getRecipeOutput().stackSize;
           if (toUncraft.stackSize >= outsize) {
             for (i = 0; i < r.getInput().size(); i++) {
@@ -132,7 +131,7 @@ public class UtilUncraft {
       }
       else if (next instanceof ShapedRecipes) {
         ShapedRecipes r = (ShapedRecipes) next;
-        if (r.getRecipeOutput().isItemEqual(toUncraft)) {
+        if (r != null && r.getRecipeOutput() != null && r.getRecipeOutput().isItemEqual(toUncraft)) {
           outsize = r.getRecipeOutput().stackSize;
           if (toUncraft.stackSize >= outsize) {
             for (i = 0; i < r.recipeItems.length; i++) {
@@ -144,7 +143,7 @@ public class UtilUncraft {
       }
       else if (next instanceof ShapelessRecipes) {
         ShapelessRecipes r = (ShapelessRecipes) next;
-        if (r.getRecipeOutput().isItemEqual(toUncraft)) {
+        if (r != null && r.getRecipeOutput() != null && r.getRecipeOutput().isItemEqual(toUncraft)) {
           outsize = r.getRecipeOutput().stackSize;
           if (toUncraft.stackSize >= outsize) {
             for (i = 0; i < r.recipeItems.size(); i++) {
