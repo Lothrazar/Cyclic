@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.util;
 import java.lang.reflect.Field;
+import java.util.List;
 import net.minecraft.block.Block;
+import net.minecraft.world.storage.loot.LootPool;
 
 public class UtilReflection {
   /**
@@ -23,6 +25,27 @@ public class UtilReflection {
       f.setAccessible(true);
       try {
         if (f.get(obj) instanceof Block) { return (Block) f.get(obj); }
+      }
+      catch (ClassCastException e) {
+        continue;
+      }
+      catch (IllegalArgumentException e) {
+        continue;
+      }
+      catch (IllegalAccessException e) {
+        continue;
+      }
+    }
+    return null;
+  }
+  @SuppressWarnings("unchecked")
+  public static List<LootPool> getLoot(Object obj) {
+    for (Field f : obj.getClass().getDeclaredFields()) {
+      f.setAccessible(true);
+      try {
+        if (f.get(obj) instanceof List<?> && (List<LootPool>) f.get(obj) != null) { 
+          return (List<LootPool>) f.get(obj); 
+        }
       }
       catch (ClassCastException e) {
         continue;
