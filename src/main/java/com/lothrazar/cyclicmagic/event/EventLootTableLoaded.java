@@ -27,11 +27,12 @@ public class EventLootTableLoaded implements IHasConfig {
   private Set<ResourceLocation> chests;
   private boolean enablePolarbears;
   private boolean enableBats;
- // private boolean enableStrayQuarts;
+  // private boolean enableStrayQuarts;
   private boolean enableElderGuardianDiam;
   private boolean enableEndermiteEyeCrystal;
   private boolean enableShulkerDiamCryst;
   private boolean enableSilverfishIron;
+  private boolean enableStrayPackedIce;
   public EventLootTableLoaded() {
     chests = new HashSet<ResourceLocation>();
     //anything but the starter chest
@@ -52,29 +53,14 @@ public class EventLootTableLoaded implements IHasConfig {
   public void onLootTableLoad(LootTableLoadEvent event) {
     LootPool main = event.getTable().getPool(LOOTPOOLNAME);
     if (main == null) {
-      ModMain.logger.warn("remake NULL loot table :" + event.getName().toString());
-     // LootEntry[] lootEntriesIn, LootCondition[] poolConditionsIn, RandomValueRange rollsIn, RandomValueRange bonusRollsIn, String name)
-      
-      System.out.println(event.getTable().toString());
-    event.getTable().addPool(new LootPool(new LootEntry[0] , new LootCondition[0], new RandomValueRange(5F),new RandomValueRange(50F),  LOOTPOOLNAME)
-   );
-      
-      System.out.println( UtilReflection.getLoot(event.getTable()));
+      //create my own.  EX: mobs that have no drops (bats) also have empty loot table, so i have to inject an entry in the table before I fill it
+      event.getTable().addPool(new LootPool(new LootEntry[0], new LootCondition[0], new RandomValueRange(1F, 4F), new RandomValueRange(2F, 6F), LOOTPOOLNAME));
       main = event.getTable().getPool(LOOTPOOLNAME);
-      //doesnt FUCKING work items dont drup. balls.
-//      event.getTable().addPool(new LootPool(new LootEntry[0] , new LootCondition[0], new RandomValueRange(0.1F),new RandomValueRange(0.8F),  "main")
-//      );
-      //main = event.getTable().getPool("main");
-        //  [19:35:44] [Server thread/WARN] [cyclicmagic]: Loot table null for :minecraft:entities/bat
-
-//] [cyclicmagic]: Loot table null for :minecraft:entities/endermite
-//[cyclicmagic]: Loot table null for :minecraft:entities/shulker
-// [cyclicmagic]: Loot table null for :minecraft:entities/wolf
-     ///[cyclicmagic]: Loot table null for :minecraft:entities/ocelot
-     ///[cyclicmagic]: Loot table null for :minecraft:entities/silverfish
-
-    } //TODO: any other types?
-    ModMain.logger.warn("Loot table    :" + event.getName().toString());
+      if (main == null) {
+        ModMain.logger.error("could not insert Loot Pool for table :" + event.getName().toString());
+        return;
+      }
+    }
     if (event.getName() == LootTableList.CHESTS_SPAWN_BONUS_CHEST) {
       fillBonusChest(main);
     }
@@ -91,9 +77,9 @@ public class EventLootTableLoaded implements IHasConfig {
       addLoot(main, Items.LEATHER, 45);
       addLoot(main, Item.getItemFromBlock(Blocks.WOOL), 75);
     }
-//    else if (enableStrayQuarts && event.getName() == LootTableList.field_189968_an) { //STRAY
-//      addLoot(main, Items.QUARTZ, 45);
-//    }
+    else if (enableStrayPackedIce && event.getName() == LootTableList.field_189968_an) { //STRAY
+      addLoot(main, Item.getItemFromBlock(Blocks.PACKED_ICE), 35);
+    }
     else if (enableEndermiteEyeCrystal && event.getName() == LootTableList.ENTITIES_ENDERMITE) {
       addLoot(main, Items.ENDER_EYE, 45);
       addLoot(main, Items.END_CRYSTAL, 15);
@@ -156,5 +142,6 @@ public class EventLootTableLoaded implements IHasConfig {
     enableEndermiteEyeCrystal = config.getBoolean("EndermiteEyeCrystal", Const.ConfigCategory.mobs, true, "Endermites can drop ender eyes, and rarely ender crystals");
     enableShulkerDiamCryst = config.getBoolean("ShulkerLoot", Const.ConfigCategory.mobs, true, "Shulkers now drop loot: Diamonds and rare ender crystals");
     enableSilverfishIron = config.getBoolean("SilverfishIron", Const.ConfigCategory.mobs, true, "Silverfish can drop iron ingots");
+    enableStrayPackedIce = config.getBoolean("StraySkeletonPackedIce", Const.ConfigCategory.mobs, true, "Strays (he new skeleton variants from cold biomes) can drop packed ice");
   }
 }
