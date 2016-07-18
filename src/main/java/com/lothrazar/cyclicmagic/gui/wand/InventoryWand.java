@@ -190,7 +190,15 @@ public class InventoryWand implements IInventory {
     }
     else if (buildType == ItemCyclicWand.BuildType.RANDOM.ordinal()) {
       Random rand = new Random();
-      itemSlot = slotNonEmpty.get(rand.nextInt(slotNonEmpty.size()));
+      //java.lang.IllegalArgumentException: bound must be positive
+      //at java.util.Random.nextInt(Random.java:388) ~[?:1.8.0_91]
+      //in other words, do not call nextInt passing in zero
+      if(slotNonEmpty.size() > 0){
+        int next = rand.nextInt(slotNonEmpty.size());
+        if(next >= 0 && next < slotNonEmpty.size()){
+          itemSlot = slotNonEmpty.get(next);
+        }
+      }
     }
     if (doRotate) {
       int i = 0;

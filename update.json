@@ -29,5 +29,6 @@
   	,"1.3.4":"Fix the 'fast stardew furnace' feature glitches where items would vanish or spew in wrong direction.  Add biome to /ping, and allow calling from non-players.  Hide 'within spawn' and 'from spawn' F3 info if you are in another dimension.  Searchitem command: work with all inventories (even modded) and show distance away. "
   	,"1.3.5":"Inventory upgrade buttons no longer cover the helmet slot, and hide when it makes sense to.  Add keybinding to open extended inventory if unlocked (by request).  Nerf magic beans recipe and harvest output.  Storage bag now only needs gold not diamond.  New recipe: melon block to slices. Garden scythe now harvests reeds and cactus.  "
   	,"1.4.0":"Add Snow Potion.  Add Spawn Detector to detect mob spawns, including wither skeletons and light levels.  New mob feature: skeletons and zombies mutate when hit by lightning.  Mod items can spawn in loot chests.  Add loot tables to mobs that dont have much (enderimtes, shulkers, etc - see in game config).  Fix a reported Uncrafting Grinder bug.  "
+ 	,"1.4.1":"Fixed a bug with Cyclic Scepter and one with Scaffolding blocks."
   }
 }
