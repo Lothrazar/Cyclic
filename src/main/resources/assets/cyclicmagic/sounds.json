@@ -5,7 +5,7 @@
 	"bwewe"   : {"category" : "player", "sounds" : [{"name":"cyclicmagic:bwewe"}]},
 	"bwoaaap" : {"category" : "player", "sounds" : [{"name":"cyclicmagic:bwoaaap"}]},
 	"byeaa"   : {"category" : "player", "sounds" : [{"name":"cyclicmagic:byeaa"}]},
-	"crackle" : {"category" : "player", "sounds" : [{"name":"cyclicmagic:crackle",stream:false}]},
+	"crackle" : {"category" : "player", "sounds" : [{"name":"cyclicmagic:crackle"}]},
 	"dcoin"   : {"category" : "player", "sounds" : [{"name":"cyclicmagic:dcoin"}]},
 	"fill"    : {"category" : "player", "sounds" : [{"name":"cyclicmagic:fill"}]},
 	"pew"     : {"category" : "player", "sounds" : [{"name":"cyclicmagic:pew"}]},

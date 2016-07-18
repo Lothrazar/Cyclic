@@ -54,6 +54,7 @@ public class ModMain {
     config = new Configuration(event.getSuggestedConfigurationFile());
     network = NetworkRegistry.INSTANCE.newSimpleChannel(Const.MODID);
     MinecraftForge.EVENT_BUS.register(instance);
+    SoundRegistry.register();
     events = new EventRegistry();
     ItemRegistry.construct(); // MAYBE all these should be a constructed, not static
     BlockRegistry.construct();
@@ -63,7 +64,6 @@ public class ModMain {
     CapabilityRegistry.register();
     ReflectionRegistry.register();
     PacketRegistry.register(network);
-    SoundRegistry.register();
     EnchantRegistry.register();
     this.syncConfig();
   }
