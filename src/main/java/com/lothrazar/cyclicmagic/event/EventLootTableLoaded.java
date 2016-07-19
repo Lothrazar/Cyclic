@@ -106,7 +106,7 @@ public class EventLootTableLoaded implements IHasConfig {
   private void fillGenericChest(LootPool main) {
     addLoot(main, ItemRegistry.tool_push);
     addLoot(main, ItemRegistry.corrupted_chorus);
-    addLoot(main, ItemRegistry.emerald_boots);
+    //addLoot(main, ItemRegistry.emerald_boots);//TODO: how to modules integrate with loot tables?
     addLoot(main, ItemRegistry.sprout_seed);
     addLoot(main, ItemRegistry.heart_food);
     addLoot(main, ItemRegistry.apple_emerald);

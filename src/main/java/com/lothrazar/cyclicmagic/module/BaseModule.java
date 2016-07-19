@@ -6,11 +6,11 @@ public abstract class BaseModule implements ICyclicModule {
     PREINIT, INIT, POSTINIT, SERVERSTART;
   }
   private ModuleType type;
-  public ICyclicModule setRegisterType(ModuleType t) {
+  public ICyclicModule setType(ModuleType t) {
     type = t;
     return this;
   }
-  public ModuleType getRegisterType() {
+  public ModuleType getType() {
     return type;
   }
   public abstract boolean isEnabled();

@@ -84,7 +84,6 @@ public class ItemRegistry {
   public static final ItemProjectileTNT ender_tnt_4 = new ItemProjectileTNT(4);
   public static final ItemProjectileTNT ender_tnt_5 = new ItemProjectileTNT(5);
   public static final ItemProjectileTNT ender_tnt_6 = new ItemProjectileTNT(6);
-  public static ItemEmeraldArmor emerald_boots;
   public static final Item tool_push = new ItemToolPush();
   public static final ItemAppleEmerald apple_emerald = new ItemAppleEmerald();
   public static final ItemToolHarvest tool_harvest_weeds = new ItemToolHarvest(ItemToolHarvest.HarvestType.WEEDS);
@@ -105,7 +104,8 @@ public class ItemRegistry {
   public static final ItemProjectileLightning ender_lightning = new ItemProjectileLightning()   ;
   public static final ItemPaperCarbon carbon_paper = new ItemPaperCarbon()   ;
   public static final ItemInventoryStorage storage_bag = new ItemInventoryStorage()   ;
-  
+
+  public static ItemSproutSeeds sprout_seed;
   
   public static void construct() {
 
@@ -169,19 +169,11 @@ public class ItemRegistry {
     addItem(apple_emerald, "apple_emerald");
     addItem(potion_snow,"potion_snow");
   }
-  private static Item addItem(Item i, String key) {
+  public static Item addItem(Item i, String key) {
     i.setUnlocalizedName(key);
     itemMap.put(key, i);
     return i;
   }
-  //	private static boolean emeraldGearEnabled ; 
-  public static ToolMaterial TOOL_MATERIAL_EMERALD;
-  public static ArmorMaterial ARMOR_MATERIAL_EMERALD;
-  public static ItemSproutSeeds sprout_seed;
-  public final static Item REPAIR_EMERALD = Items.EMERALD;
-  // only because theyre private, with no getters
-  //	private static final int		diamondDurability				= 33;
-  //private static final int[]	diamondreductionAmounts	= new int[] { 3, 6, 8, 3 };
   public static void syncConfig(Configuration config) {
     //		Property prop;
     Item item;
@@ -299,20 +291,7 @@ public class ItemRegistry {
         new ItemStack(ingredient),
         new ItemStack(output));
   }
-  public static void register() {
-    registerMaterials();
-    // thanks for help:
-    // http://bedrockminer.jimdo.com/modding-tutorials/basic-modding-1-7/custom-tools-swords/
-    addItem(new ItemEmeraldSword(), ItemEmeraldSword.name);
-    addItem(new ItemEmeraldPickaxe(), ItemEmeraldPickaxe.name);
-    addItem(new ItemEmeraldAxe(), ItemEmeraldAxe.name);
-    addItem(new ItemEmeraldSpade(), ItemEmeraldSpade.name);
-    addItem(new ItemEmeraldHoe(), ItemEmeraldHoe.name);
-    addItem(new ItemEmeraldArmor(EntityEquipmentSlot.HEAD), "emerald_helmet");
-    addItem(new ItemEmeraldArmor(EntityEquipmentSlot.CHEST), "emerald_chestplate");
-    addItem(new ItemEmeraldArmor(EntityEquipmentSlot.LEGS), "emerald_leggings");
-    emerald_boots = new ItemEmeraldArmor(EntityEquipmentSlot.FEET);
-    addItem(emerald_boots, "emerald_boots");
+  public static void register() { 
     //		addItem(new ItemFlintTool(),"flint_tool");
     potion_snow.addEffect(PotionRegistry.snow, 60 * 3, PotionRegistry.I);
     potion_ender.addEffect(PotionRegistry.ender, 60 * 3, PotionRegistry.I);
@@ -336,39 +315,7 @@ public class ItemRegistry {
     }
     registerRecipes();
   }
-  //from ArmorMaterial.DIAMOND, second constuctor param
-  //used as a ratio for durability
-  private static final int maxDamageFactorDiamond = 33;
-  private static final String emeraldName = "emerald";
-  /*
-   * as of 1.9.4 : LEATHER("leather", 5, new int[]{1, 2, 3, 1}, 15,
-   * SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.0F), CHAIN("chainmail", 15, new
-   * int[]{1, 4, 5, 2}, 12, SoundEvents.ITEM_ARMOR_EQUIP_CHAIN, 0.0F),
-   * IRON("iron", 15, new int[]{2, 5, 6, 2}, 9,
-   * SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F), GOLD("gold", 7, new int[]{1, 3,
-   * 5, 2}, 25, SoundEvents.ITEM_ARMOR_EQUIP_GOLD, 0.0F), DIAMOND("diamond", 33,
-   * new int[]{3, 6, 8, 3}, 10, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2.0F);
-   */
-  private static void registerMaterials() {
-    ARMOR_MATERIAL_EMERALD = EnumHelper.addArmorMaterial(emeraldName, Const.MODRES + emeraldName,
-        maxDamageFactorDiamond - 2, //affects DURABILITY 
-        new int[] {
-            ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.FEET), ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.LEGS), ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.CHEST), ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.HEAD)
-        },
-        ArmorMaterial.GOLD.getEnchantability(),
-        ArmorMaterial.DIAMOND.getSoundEvent(),
-        ArmorMaterial.DIAMOND.getToughness() / 2);
-    //max uses is durability ex The number of uses this material allows.
-    //as of 1.9.4 :  (wood = 59, stone = 131, iron = 250, diamond = 1561, gold = 32)
-    TOOL_MATERIAL_EMERALD = EnumHelper.addToolMaterial(emeraldName,
-        ToolMaterial.DIAMOND.getHarvestLevel(),
-        ToolMaterial.DIAMOND.getMaxUses() - 261,
-        ToolMaterial.DIAMOND.getEfficiencyOnProperMaterial(),
-        ToolMaterial.DIAMOND.getDamageVsEntity() - 0.25F,
-        ToolMaterial.GOLD.getEnchantability());
-    // EnumHelper.addToolMaterial("emerald", 3, harvestLevel 3 same as diamond
-    // 1600,3.5F, 5+25 );
-  }
+ 
   public static void registerItem(Item item, String name) {
     registerItem(item, name, false);// default is not hidden
   }

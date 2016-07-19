@@ -68,8 +68,8 @@ public class ModMain {
     PacketRegistry.register(network);
     events = new EventRegistry();
     events.register();
-    modules.add(new StackSizeModule().setRegisterType(ModuleType.INIT));
-    //modules.add(new EmeraldArmorModule());
+    modules.add(new StackSizeModule().setType(ModuleType.INIT));
+    modules.add(new EmeraldArmorModule().setType(ModuleType.INIT));
     ItemRegistry.construct(); //modules here
     BlockRegistry.construct();//modules here
    
@@ -125,7 +125,7 @@ public class ModMain {
   }
   private void registerModulesByType(ModuleType type){
     for(ICyclicModule module : modules) 
-      if(module.isEnabled() && module.getRegisterType() == type){
+      if(module.isEnabled() && module.getType() == type){
         module.register();
       }
   }
