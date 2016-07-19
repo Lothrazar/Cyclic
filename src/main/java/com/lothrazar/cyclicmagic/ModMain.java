@@ -1,5 +1,11 @@
 package com.lothrazar.cyclicmagic;
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
+import com.lothrazar.cyclicmagic.module.BaseModule.ModuleType;
+import com.lothrazar.cyclicmagic.module.EmeraldArmorModule;
+import com.lothrazar.cyclicmagic.module.ICyclicModule;
+import com.lothrazar.cyclicmagic.module.StackSizeModule;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
 import com.lothrazar.cyclicmagic.registry.*;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
@@ -26,6 +32,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
 @Mod(modid = Const.MODID, useMetadata = true, canBeDeactivated = false, updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json", acceptableRemoteVersions = "*", guiFactory = "com.lothrazar." + Const.MODID + ".gui.IngameConfigFactory")
 public class ModMain {
+  private List<ICyclicModule> modules = new ArrayList<ICyclicModule>();
   @Instance(value = Const.MODID)
   public static ModMain instance;
   @SidedProxy(clientSide = "com.lothrazar." + Const.MODID + ".proxy.ClientProxy", serverSide = "com.lothrazar." + Const.MODID + ".proxy.CommonProxy")
@@ -52,23 +59,29 @@ public class ModMain {
   public void onPreInit(FMLPreInitializationEvent event) {
     logger = new ModLogger(event.getModLog());
     config = new Configuration(event.getSuggestedConfigurationFile());
+    config.load();
     network = NetworkRegistry.INSTANCE.newSimpleChannel(Const.MODID);
     MinecraftForge.EVENT_BUS.register(instance);
     SoundRegistry.register();
-    events = new EventRegistry();
-    ItemRegistry.construct(); // MAYBE all these should be a constructed, not static
-    BlockRegistry.construct();
-    config.load();
-    events.register();
-    StackSizeRegistry.construct();
     CapabilityRegistry.register();
     ReflectionRegistry.register();
     PacketRegistry.register(network);
-    EnchantRegistry.register();
+    events = new EventRegistry();
+    events.register();
+    modules.add(new StackSizeModule().setRegisterType(ModuleType.INIT));
+    //modules.add(new EmeraldArmorModule());
+    ItemRegistry.construct(); //modules here
+    BlockRegistry.construct();//modules here
+   
+
     this.syncConfig();
+
+    registerModulesByType(ModuleType.PREINIT);
+    EnchantRegistry.register();//modules here
   }
   @EventHandler
   public void onInit(FMLInitializationEvent event) {
+    registerModulesByType(ModuleType.INIT);
     PotionRegistry.register();
     ItemRegistry.register();
     BlockRegistry.register();
@@ -76,7 +89,7 @@ public class ModMain {
     MobSpawningRegistry.register();
     WorldGenRegistry.register();
     FuelRegistry.register();
-    StackSizeRegistry.register();
+   // StackSizeRegistry.register();
     RecipeAlterRegistry.register();
     RecipeNewRegistry.register();
     VillageTradeRegistry.register();
@@ -101,12 +114,20 @@ public class ModMain {
   }
   @EventHandler
   public void onPostInit(FMLPostInitializationEvent event) {
+    registerModulesByType(ModuleType.POSTINIT);
     // registers all plantable crops. 
     DispenserBehaviorRegistry.register();
   }
   @EventHandler
   public void onServerStarting(FMLServerStartingEvent event) {
+    registerModulesByType(ModuleType.SERVERSTART);
     CommandRegistry.register(event);
+  }
+  private void registerModulesByType(ModuleType type){
+    for(ICyclicModule module : modules) 
+      if(module.isEnabled() && module.getRegisterType() == type){
+        module.register();
+      }
   }
   @SubscribeEvent
   public void onConfigChanged(OnConfigChangedEvent event) {
@@ -121,6 +142,9 @@ public class ModMain {
     // hit on startup and on change event from
     // we cant make this a list/loop because the order does matter
     Configuration c = getConfig();
+    for(ICyclicModule module : modules) {
+      module.syncConfig(c);
+    }
     EnchantRegistry.syncConfig(c);
     WorldGenRegistry.syncConfig(c);
     PotionRegistry.syncConfig(c);
@@ -132,7 +156,7 @@ public class ModMain {
     RecipeAlterRegistry.syncConfig(c);
     RecipeNewRegistry.syncConfig(c);
     DispenserBehaviorRegistry.syncConfig(c);
-    StackSizeRegistry.syncConfig(c);
+    //StackSizeRegistry.syncConfig(c);
     SpellRegistry.syncConfig(c);
     CommandRegistry.syncConfig(c);
     VillageTradeRegistry.syncConfig(c);

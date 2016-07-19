@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.registry;
+package com.lothrazar.cyclicmagic.module;
 import java.util.HashMap;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -6,10 +6,10 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
 
-public class StackSizeRegistry {
-  private static Map<Item, Integer> stackMap = new HashMap<Item, Integer>();
-  private static Map<Item, Integer> enabledMap = new HashMap<Item, Integer>();
-  public static void construct() {
+public class StackSizeModule extends BaseModule {
+  private Map<Item, Integer> stackMap = new HashMap<Item, Integer>();
+  private Map<Item, Integer> enabledMap = new HashMap<Item, Integer>();
+  public StackSizeModule() {
     int boat = 16;
     int MAX = 64;
     stackMap.put(Items.BOAT, boat);
@@ -33,7 +33,7 @@ public class StackSizeRegistry {
     stackMap.put(Items.ENDER_PEARL, MAX);
     stackMap.put(Items.EGG, MAX);
   }
-  public static void register() {
+  public void register() {
     for (Map.Entry<Item, Integer> entry : stackMap.entrySet()) {
       boolean enabled = (enabledMap.get(entry.getKey()) == 1);
       if (enabled) {
@@ -41,12 +41,17 @@ public class StackSizeRegistry {
       }
     }
   }
-  public static void syncConfig(Configuration config) {
+  public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.itemsTack;
     for (Map.Entry<Item, Integer> entry : stackMap.entrySet()) {
       String name = entry.getKey().getUnlocalizedName();
       int enabled = config.getBoolean(name, category, true, "Increase stack size to " + entry.getValue()) ? 1 : 0;
       enabledMap.put(entry.getKey(), enabled);
     }
+  }
+  @Override
+  public boolean isEnabled() {
+    // static true because it has individual config toggles
+    return true;
   }
 }
