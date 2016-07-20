@@ -42,7 +42,7 @@ public class ItemRegistry {
   public static Map<String, Item> itemMap = new HashMap<String, Item>();
   public static final ItemFoodCorruptedChorus corrupted_chorus = new ItemFoodCorruptedChorus();
   //	public static final ItemToolLaunch corrupted_elytra = new ItemToolLaunch();
-  public static final ItemCyclicWand cyclic_wand_build = new ItemCyclicWand();
+  public static ItemCyclicWand cyclic_wand_build;
   public static final ItemPotionCustom potion_viscous = new ItemPotionCustom(false);
   public static final ItemPotionCustom potion_levitation = new ItemPotionCustom(true, MobEffects.LEVITATION, 60 * 3);
   public static final ItemPotionCustom potion_levitation_long = new ItemPotionCustom(true, MobEffects.LUCK, 60 * 8);

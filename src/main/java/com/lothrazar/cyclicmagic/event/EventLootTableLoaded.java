@@ -101,7 +101,8 @@ public class EventLootTableLoaded implements IHasConfig {
   }
   private void fillEndCityChest(LootPool main) {
     addLoot(main, ItemRegistry.book_ender, 10);
-    addLoot(main, ItemRegistry.cyclic_wand_build, 15);
+    if (ItemRegistry.cyclic_wand_build != null)
+      addLoot(main, ItemRegistry.cyclic_wand_build, 15);
   }
   private void fillGenericChest(LootPool main) {
     addLoot(main, ItemRegistry.tool_push);

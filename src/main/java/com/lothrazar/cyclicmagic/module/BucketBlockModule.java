@@ -4,6 +4,7 @@ import com.lothrazar.cyclicmagic.item.itemblock.ItemBlockBucket;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Items;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 
 public class BucketBlockModule extends BaseModule {
@@ -18,6 +19,9 @@ public class BucketBlockModule extends BaseModule {
     BlockRegistry.block_storeempty = new BlockBucketStorage(null);
     BlockRegistry.registerBlock(BlockRegistry.block_storeempty, new ItemBlockBucket(BlockRegistry.block_storeempty), "block_storeempty", false);
     BlockRegistry.block_storeempty.addRecipe();
+    
+
+    MinecraftForge.EVENT_BUS.register(BlockRegistry.block_storeempty);
   }
   @Override
   public void syncConfig(Configuration config) {

@@ -51,11 +51,7 @@ public class ModMain {
   public final static CreativeTabs TAB = new CreativeTabs(Const.MODID) {
     @Override
     public Item getTabIconItem() {
-      Item tab = ItemRegistry.cyclic_wand_build;
-      if (tab == null) {
-        tab = Items.DIAMOND;
-      }
-      return tab;
+      return ItemRegistry.cyclic_wand_build == null ? Items.DIAMOND : ItemRegistry.cyclic_wand_build;
     }
   };
   // thank you for the examples forge. player data storage based on API source code example:
@@ -100,7 +96,6 @@ public class ModMain {
     PotionRegistry.register();
     ItemRegistry.register();
     BlockRegistry.register();
-    SpellRegistry.register();
     MobSpawningRegistry.register();
     WorldGenRegistry.register();
     FuelRegistry.register();
@@ -113,7 +108,6 @@ public class ModMain {
     NetworkRegistry.INSTANCE.registerGuiHandler(this, new ModGuiHandler());
     ProjectileRegistry.register(event);
     //finally, some items have extra forge events to hook into.
-    MinecraftForge.EVENT_BUS.register(BlockRegistry.block_storeempty);
     MinecraftForge.EVENT_BUS.register(ItemRegistry.corrupted_chorus);
     MinecraftForge.EVENT_BUS.register(ItemRegistry.heart_food);
     MinecraftForge.EVENT_BUS.register(ItemRegistry.tool_push);
@@ -171,8 +165,6 @@ public class ModMain {
     RecipeAlterRegistry.syncConfig(c);
     RecipeNewRegistry.syncConfig(c);
     DispenserBehaviorRegistry.syncConfig(c);
-    //StackSizeRegistry.syncConfig(c);
-    SpellRegistry.syncConfig(c);
     CommandRegistry.syncConfig(c);
     VillageTradeRegistry.syncConfig(c);
     KeyInventoryShiftRegistry.syncConfig(c);
