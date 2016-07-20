@@ -10,7 +10,6 @@ import com.lothrazar.cyclicmagic.block.BlockScaffolding;
 import com.lothrazar.cyclicmagic.block.BlockSprout;
 import com.lothrazar.cyclicmagic.block.BlockUncrafting;
 import com.lothrazar.cyclicmagic.item.ItemSproutSeeds;
-import com.lothrazar.cyclicmagic.item.itemblock.ItemBlockBucket;
 import com.lothrazar.cyclicmagic.item.itemblock.ItemBlockScaffolding;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.Block;
@@ -53,7 +52,7 @@ public class BlockRegistry {
   private static void registerBlock(Block b, ItemBlock ib, String name) {
     registerBlock(b, ib, name, false);
   }
-  private static void registerBlock(Block b, ItemBlock ib, String name, boolean isHidden) {
+  public static void registerBlock(Block b, ItemBlock ib, String name, boolean isHidden) {
     b.setRegistryName(name);
     b.setUnlocalizedName(name);
     GameRegistry.register(b);
@@ -75,20 +74,8 @@ public class BlockRegistry {
     block_fragile.addRecipe();
     registerSprout();
     registerDimensionOres();
-    registerBucketBlocks();
   }
-  private static void registerBucketBlocks() {
-    //bucket storage
-    block_storewater = new BlockBucketStorage(Items.WATER_BUCKET);
-    registerBlock(block_storewater, new ItemBlockBucket(block_storewater), "block_storewater", true);
-    block_storemilk = new BlockBucketStorage(Items.MILK_BUCKET);
-    registerBlock(block_storemilk, new ItemBlockBucket(block_storemilk), "block_storemilk", true);
-    block_storelava = new BlockBucketStorage(Items.LAVA_BUCKET);
-    registerBlock(block_storelava, new ItemBlockBucket(block_storelava), "block_storelava", true);
-    block_storeempty = new BlockBucketStorage(null);
-    registerBlock(block_storeempty, new ItemBlockBucket(block_storeempty), "block_storeempty", false);
-    block_storeempty.addRecipe();
-  }
+
   private static void registerDimensionOres() {
     //nether ores
     nether_gold_ore = new BlockDimensionOre(Items.GOLD_NUGGET, 0, 4);
