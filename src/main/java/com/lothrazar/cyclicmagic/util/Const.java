@@ -15,6 +15,7 @@ public class Const {
     public static final String itemsTack = items+".StackSize";
     public static final String recipes = MODCONF + "recipes";
     public static final String villagers = MODCONF + "villagers";
+    public static final String content = MODCONF + "content";
     public static final String modpackMisc = "modpacks";
     public static final String saplingBiomes = modpackMisc + ".SaplingGrowthDetail";
     public static final String inventoryModpack = modpackMisc + ".TerrariaButtons";

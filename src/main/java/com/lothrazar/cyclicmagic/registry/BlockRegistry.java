@@ -6,7 +6,6 @@ import com.lothrazar.cyclicmagic.block.BlockBuilder;
 import com.lothrazar.cyclicmagic.block.BlockConveyor;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre.SpawnType;
-import com.lothrazar.cyclicmagic.block.BlockLaunch;
 import com.lothrazar.cyclicmagic.block.BlockScaffolding;
 import com.lothrazar.cyclicmagic.block.BlockSprout;
 import com.lothrazar.cyclicmagic.block.BlockUncrafting;
@@ -27,7 +26,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class BlockRegistry {
   public static ArrayList<Block> blocks = new ArrayList<Block>();
   public static BlockScaffolding block_fragile;
-  static BlockUncrafting uncrafting_block;
+  public static BlockUncrafting uncrafting_block;
   public static BlockBucketStorage block_storelava;
   public static BlockBucketStorage block_storewater;
   public static BlockBucketStorage block_storemilk;
@@ -45,7 +44,7 @@ public class BlockRegistry {
   private static boolean spawnersUnbreakable;
   private static BlockBuilder builder_block;
   //lots of helpers/overrides with defaults
-  private static void registerBlock(Block b, String name) {
+  public static void registerBlock(Block b, String name) {
     registerBlock(b, name, false);
   }
   private static void registerBlock(Block b, String name, boolean isHidden) {
@@ -72,14 +71,11 @@ public class BlockRegistry {
     BlockConveyor plate_push = new BlockConveyor(0.16F, SoundEvents.BLOCK_ANVIL_BREAK);
     registerBlock(plate_push, "plate_push");
     plate_push.addRecipe();
-    registerBlock(uncrafting_block, "uncrafting_block");
-    uncrafting_block.addRecipe();
     registerBlock(builder_block, "builder_block");
     builder_block.addRecipe();
     registerBlock(block_fragile, new ItemBlockScaffolding(block_fragile), BlockScaffolding.name);
     block_fragile.addRecipe();
     registerSprout();
-    registerSlimePads();
     registerDimensionOres();
     registerBucketBlocks();
   }
@@ -129,25 +125,7 @@ public class BlockRegistry {
     end_diamond_ore.setSpawnType(SpawnType.ENDERMITE, 8);
     registerBlock(end_diamond_ore, "end_diamond_ore");
   }
-  private static void registerSlimePads() {
-    BlockLaunch plate_launch_small = new BlockLaunch(0.8F, SoundEvents.BLOCK_SLIME_STEP);
-    BlockLaunch plate_launch_med = new BlockLaunch(1.3F, SoundEvents.BLOCK_SLIME_FALL);
-    BlockLaunch plate_launch_large = new BlockLaunch(1.8F, SoundEvents.BLOCK_SLIME_BREAK);
-    registerBlock(plate_launch_small, "plate_launch_small");
-    registerBlock(plate_launch_med, "plate_launch_med");
-    registerBlock(plate_launch_large, "plate_launch_large");
-    GameRegistry.addRecipe(new ItemStack(plate_launch_small, 6),
-        "sss", "ggg", "iii",
-        's', Blocks.SLIME_BLOCK,
-        'g', Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE,
-        'i', Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE);
-    GameRegistry.addShapelessRecipe(new ItemStack(plate_launch_med),
-        new ItemStack(plate_launch_small),
-        new ItemStack(Items.QUARTZ));
-    GameRegistry.addShapelessRecipe(new ItemStack(plate_launch_large),
-        new ItemStack(plate_launch_med),
-        new ItemStack(Blocks.END_STONE));
-  }
+  
   private static void registerSprout() {
     BlockSprout sprout = new BlockSprout();
     registerBlock(sprout, "sprout", true);
@@ -174,7 +152,7 @@ public class BlockRegistry {
   public static void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.blocks;
     spawnersUnbreakable = config.getBoolean("Spawners Unbreakable", category, true, "Make mob spawners unbreakable");
-    uncrafting_block.syncConfig(config);
+ 
     builder_block.syncConfig(config);
   }
 }

@@ -6,7 +6,6 @@ import com.lothrazar.cyclicmagic.item.ItemEmeraldHoe;
 import com.lothrazar.cyclicmagic.item.ItemEmeraldPickaxe;
 import com.lothrazar.cyclicmagic.item.ItemEmeraldSpade;
 import com.lothrazar.cyclicmagic.item.ItemEmeraldSword;
-import com.lothrazar.cyclicmagic.item.ItemSproutSeeds;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Items;
@@ -19,6 +18,16 @@ import net.minecraftforge.common.util.EnumHelper;
 
 public class EmeraldArmorModule extends BaseModule {
 
+  private boolean moduleEnabled ; 
+
+  public static ItemEmeraldArmor emerald_boots;
+  // thanks for help:
+  // http://bedrockminer.jimdo.com/modding-tutorials/basic-modding-1-7/custom-tools-swords/
+  public static ToolMaterial TOOL_MATERIAL_EMERALD;
+  public static ArmorMaterial ARMOR_MATERIAL_EMERALD;
+  public final static Item REPAIR_EMERALD = Items.EMERALD;
+  private static final int maxDamageFactorDiamond = 33;
+  private static final String emeraldName = "emerald";
   public EmeraldArmorModule(){
     super();
     //materials is kind of a SUB-MODULE
@@ -50,16 +59,6 @@ public class EmeraldArmorModule extends BaseModule {
     // EnumHelper.addToolMaterial("emerald", 3, harvestLevel 3 same as diamond
     // 1600,3.5F, 5+25 );
   }
-  private boolean emeraldGearEnabled ; 
-
-  public static ItemEmeraldArmor emerald_boots;
-  // thanks for help:
-  // http://bedrockminer.jimdo.com/modding-tutorials/basic-modding-1-7/custom-tools-swords/
-  public static ToolMaterial TOOL_MATERIAL_EMERALD;
-  public static ArmorMaterial ARMOR_MATERIAL_EMERALD;
-  public final static Item REPAIR_EMERALD = Items.EMERALD;
-  private static final int maxDamageFactorDiamond = 33;
-  private static final String emeraldName = "emerald";
   @Override
   public void register() {
     
@@ -77,11 +76,11 @@ public class EmeraldArmorModule extends BaseModule {
   }
   @Override
   public void syncConfig(Configuration config) {
-    emeraldGearEnabled = config.getBoolean("Emerald Gear", Const.ConfigCategory.items, true, "Emerald armor and tools that are slightly weaker than diamond.");
+    moduleEnabled = config.getBoolean("Emerald Gear", Const.ConfigCategory.content, true, "Emerald armor and tools that are slightly weaker than diamond.");
   }
 
   @Override
   public boolean isEnabled() {
-    return emeraldGearEnabled;
+    return moduleEnabled;
   }
 }

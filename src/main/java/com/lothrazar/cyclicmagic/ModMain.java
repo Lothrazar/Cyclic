@@ -3,9 +3,12 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.module.BaseModule.ModuleType;
+import com.lothrazar.cyclicmagic.module.CyclicWandModule;
 import com.lothrazar.cyclicmagic.module.EmeraldArmorModule;
 import com.lothrazar.cyclicmagic.module.ICyclicModule;
+import com.lothrazar.cyclicmagic.module.SlimepadModule;
 import com.lothrazar.cyclicmagic.module.StackSizeModule;
+import com.lothrazar.cyclicmagic.module.UncrafterModule;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
 import com.lothrazar.cyclicmagic.registry.*;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
@@ -70,6 +73,9 @@ public class ModMain {
     events.register();
     modules.add(new StackSizeModule().setType(ModuleType.INIT));
     modules.add(new EmeraldArmorModule().setType(ModuleType.INIT));
+    modules.add(new CyclicWandModule().setType(ModuleType.INIT));
+    modules.add(new UncrafterModule().setType(ModuleType.INIT));
+    modules.add(new SlimepadModule().setType(ModuleType.INIT));
     ItemRegistry.construct(); //modules here
     BlockRegistry.construct();//modules here
    
