@@ -42,7 +42,7 @@ public class BlockRegistry {
   public static BlockDimensionOre nether_diamond_ore;
   public static BlockDimensionOre end_diamond_ore;
   private static boolean spawnersUnbreakable;
-  private static BlockBuilder builder_block;
+  public static BlockBuilder builder_block;
   //lots of helpers/overrides with defaults
   public static void registerBlock(Block b, String name) {
     registerBlock(b, name, false);
@@ -71,8 +71,6 @@ public class BlockRegistry {
     BlockConveyor plate_push = new BlockConveyor(0.16F, SoundEvents.BLOCK_ANVIL_BREAK);
     registerBlock(plate_push, "plate_push");
     plate_push.addRecipe();
-    registerBlock(builder_block, "builder_block");
-    builder_block.addRecipe();
     registerBlock(block_fragile, new ItemBlockScaffolding(block_fragile), BlockScaffolding.name);
     block_fragile.addRecipe();
     registerSprout();

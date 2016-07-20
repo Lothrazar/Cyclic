@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.module.BaseModule.ModuleType;
+import com.lothrazar.cyclicmagic.module.BuilderBlockModule;
 import com.lothrazar.cyclicmagic.module.CyclicWandModule;
 import com.lothrazar.cyclicmagic.module.EmeraldArmorModule;
 import com.lothrazar.cyclicmagic.module.ICyclicModule;
@@ -76,6 +77,8 @@ public class ModMain {
     modules.add(new CyclicWandModule().setType(ModuleType.INIT));
     modules.add(new UncrafterModule().setType(ModuleType.INIT));
     modules.add(new SlimepadModule().setType(ModuleType.INIT));
+    modules.add(new BuilderBlockModule().setType(ModuleType.INIT));
+    
     ItemRegistry.construct(); //modules here
     BlockRegistry.construct();//modules here
    
