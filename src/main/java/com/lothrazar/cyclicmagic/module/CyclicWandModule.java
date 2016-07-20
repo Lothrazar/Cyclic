@@ -10,7 +10,7 @@ public class CyclicWandModule extends BaseModule {
   }
   @Override
   public void syncConfig(Configuration config) {
-    moduleEnabled = config.getBoolean("CyclicWand", Const.ConfigCategory.content, true, "Set false to delete this");
+    moduleEnabled = config.getBoolean("CyclicWand", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
   @Override
   public boolean isEnabled() {

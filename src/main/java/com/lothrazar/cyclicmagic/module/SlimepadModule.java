@@ -32,7 +32,7 @@ public class SlimepadModule extends BaseModule {
   }
   @Override
   public void syncConfig(Configuration config) {
-    moduleEnabled = config.getBoolean("SlimePads", Const.ConfigCategory.content, true, "Set false to delete");
+    moduleEnabled = config.getBoolean("SlimePads", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     BlockRegistry.uncrafting_block.syncConfig(config);
   }
   @Override

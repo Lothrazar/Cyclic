@@ -76,7 +76,7 @@ public class EmeraldArmorModule extends BaseModule {
   }
   @Override
   public void syncConfig(Configuration config) {
-    moduleEnabled = config.getBoolean("Emerald Gear", Const.ConfigCategory.content, true, "Emerald armor and tools that are slightly weaker than diamond.");
+    moduleEnabled = config.getBoolean("Emerald Gear", Const.ConfigCategory.content, true, "Emerald armor and tools that are slightly weaker than diamond. "+Const.ConfigCategory.contentDefaultText);
   }
 
   @Override
