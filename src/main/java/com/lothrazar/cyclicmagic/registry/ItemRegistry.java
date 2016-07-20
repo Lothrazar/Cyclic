@@ -43,30 +43,6 @@ public class ItemRegistry {
   public static final ItemFoodCorruptedChorus corrupted_chorus = new ItemFoodCorruptedChorus();
   //	public static final ItemToolLaunch corrupted_elytra = new ItemToolLaunch();
   public static ItemCyclicWand cyclic_wand_build;
-  public static final ItemPotionCustom potion_viscous = new ItemPotionCustom(false);
-  public static final ItemPotionCustom potion_levitation = new ItemPotionCustom(true, MobEffects.LEVITATION, 60 * 3);
-  public static final ItemPotionCustom potion_levitation_long = new ItemPotionCustom(true, MobEffects.LUCK, 60 * 8);
-  public static final ItemPotionCustom potion_luck = new ItemPotionCustom(true, MobEffects.LUCK, 60 * 3);
-  public static final ItemPotionCustom potion_luck_long = new ItemPotionCustom(true, MobEffects.LEVITATION, 60 * 8);
-  public static final ItemPotionCustom potion_snow = new ItemPotionCustom(true);
-  public static final ItemPotionCustom potion_ender = new ItemPotionCustom(true);
-  public static final ItemPotionCustom potion_ender_long = new ItemPotionCustom(true);
-  public static final ItemPotionCustom potion_magnet = new ItemPotionCustom(false);
-  public static final ItemPotionCustom potion_magnet_long = new ItemPotionCustom(false);
-  public static final ItemPotionCustom potion_waterwalk = new ItemPotionCustom(false);
-  public static final ItemPotionCustom potion_waterwalk_long = new ItemPotionCustom(false);
-  public static final ItemPotionCustom potion_slowfall = new ItemPotionCustom(true);
-  public static final ItemPotionCustom potion_slowfall_long = new ItemPotionCustom(true);
-  //	public static final ItemPotionCustom potion_glowing = new ItemPotionCustom(MobEffects.GLOWING, 60*3);
-  //	public static final ItemPotionCustom potion_glowing_long = new ItemPotionCustom(MobEffects.GLOWING, 60*8);
-  public static final ItemPotionCustom potion_resistance = new ItemPotionCustom(true, MobEffects.RESISTANCE, 60 * 3);
-  public static final ItemPotionCustom potion_resistance_strong = new ItemPotionCustom(true, MobEffects.RESISTANCE, 90, PotionRegistry.II);
-  public static final ItemPotionCustom potion_resistance_long = new ItemPotionCustom(true, MobEffects.RESISTANCE, 60 * 8);
-  public static final ItemPotionCustom potion_boost = new ItemPotionCustom(true, MobEffects.HEALTH_BOOST, 60 * 3, PotionRegistry.V);
-  public static final ItemPotionCustom potion_boost_long = new ItemPotionCustom(true, MobEffects.HEALTH_BOOST, 60 * 8, PotionRegistry.V);
-  public static final ItemPotionCustom potion_haste = new ItemPotionCustom(false, MobEffects.HASTE, 60 * 3);
-  public static final ItemPotionCustom potion_haste_strong = new ItemPotionCustom(false, MobEffects.HASTE, 90, PotionRegistry.II);
-  public static final ItemPotionCustom potion_haste_long = new ItemPotionCustom(false, MobEffects.HASTE, 60 * 8);
   public static final ItemFoodHeart heart_food = new ItemFoodHeart();
   public static final ItemProjectileTNT ender_tnt_1 = new ItemProjectileTNT(1);
   public static final ItemProjectileTNT ender_tnt_2 = new ItemProjectileTNT(2);
@@ -134,29 +110,7 @@ public class ItemRegistry {
     addItem(new ItemFoodHorse(new ItemStack(Items.ENDER_EYE)), "horse_upgrade_jump");
     addItem(corrupted_chorus, "corrupted_chorus");
     addItem(heart_food, "heart_food");
-    addItem(potion_viscous, "potion_viscous");
-    addItem(potion_boost, "potion_boost");
-    addItem(potion_boost_long, "potion_boost_long");
-    addItem(potion_resistance, "potion_resistance");
-    addItem(potion_resistance_long, "potion_resistance_long");
-    addItem(potion_resistance_strong, "potion_resistance_strong");
-    addItem(potion_waterwalk, "potion_waterwalk");
-    addItem(potion_waterwalk_long, "potion_waterwalk_long");
-    addItem(potion_slowfall, "potion_slowfall");
-    addItem(potion_slowfall_long, "potion_slowfall_long");
-    addItem(potion_magnet, "potion_magnet");
-    addItem(potion_magnet_long, "potion_magnet_long");
-    addItem(potion_haste, "potion_haste");
-    addItem(potion_haste_long, "potion_haste_long");
-    addItem(potion_haste_strong, "potion_haste_strong");
-    addItem(potion_ender, "potion_ender");
-    addItem(potion_ender_long, "potion_ender_long");
-    addItem(potion_luck, "potion_luck");
-    addItem(potion_luck_long, "potion_luck_long");
-    addItem(potion_levitation, "potion_levitation");
-    addItem(potion_levitation_long, "potion_levitation_long");
     addItem(apple_emerald, "apple_emerald");
-    addItem(potion_snow,"potion_snow");
   }
   public static Item addItem(Item i, String key) {
     i.setUnlocalizedName(key);
@@ -184,113 +138,9 @@ public class ItemRegistry {
       }
     }
 
-    registerBrewing();
-  }
-  private static void registerBrewing() {
-    ItemStack awkward = BrewingRecipeRegistry.getOutput(new ItemStack(Items.POTIONITEM), new ItemStack(Items.NETHER_WART));
- 
-    BrewingRecipeRegistry.addRecipe(
-        awkward,
-        new ItemStack(Items.DYE, 1, EnumDyeColor.BROWN.getDyeDamage()),
-        new ItemStack(ItemRegistry.potion_viscous));
-    BrewingRecipeRegistry.addRecipe(
-        new ItemStack(ItemRegistry.potion_viscous),
-        new ItemStack(Items.CHORUS_FRUIT),
-        new ItemStack(ItemRegistry.potion_levitation));
-    BrewingRecipeRegistry.addRecipe(
-        new ItemStack(ItemRegistry.potion_levitation),
-        new ItemStack(Items.REDSTONE),
-        new ItemStack(ItemRegistry.potion_levitation_long));
-    BrewingRecipeRegistry.addRecipe(
-        new ItemStack(ItemRegistry.potion_viscous),
-        new ItemStack(Items.SLIME_BALL),
-        new ItemStack(ItemRegistry.potion_luck));
-    addBrewingRecipe(
-        ItemRegistry.potion_viscous,
-        Items.ENDER_EYE,
-        ItemRegistry.potion_ender);
-    addBrewingRecipe(
-        ItemRegistry.potion_ender,
-        Items.REDSTONE,
-        ItemRegistry.potion_ender_long);
-    addBrewingRecipe(
-        ItemRegistry.potion_viscous,
-        Items.EMERALD,
-        ItemRegistry.potion_haste);
-    addBrewingRecipe(
-        ItemRegistry.potion_haste,
-        Items.REDSTONE,
-        ItemRegistry.potion_haste_long);
-    addBrewingRecipe(
-        ItemRegistry.potion_haste,
-        Items.GLOWSTONE_DUST,
-        ItemRegistry.potion_haste_strong);
-    addBrewingRecipe(
-        ItemRegistry.potion_viscous,
-        Items.PRISMARINE_CRYSTALS,
-        ItemRegistry.potion_waterwalk);
-    addBrewingRecipe(
-        ItemRegistry.potion_waterwalk,
-        Items.REDSTONE,
-        ItemRegistry.potion_waterwalk_long);
-    addBrewingRecipe(
-        ItemRegistry.potion_viscous,
-        Items.GOLDEN_APPLE,
-        ItemRegistry.potion_boost);
-    addBrewingRecipe(
-        ItemRegistry.potion_boost,
-        Items.REDSTONE,
-        ItemRegistry.potion_boost_long);
-    addBrewingRecipe(
-        ItemRegistry.potion_viscous,
-        Items.DIAMOND,
-        ItemRegistry.potion_resistance);
-    addBrewingRecipe(
-        ItemRegistry.potion_resistance,
-        Items.REDSTONE,
-        ItemRegistry.potion_resistance_long);
-    addBrewingRecipe(
-        ItemRegistry.potion_resistance,
-        Items.GLOWSTONE_DUST,
-        ItemRegistry.potion_resistance_strong);
-    BrewingRecipeRegistry.addRecipe(
-        new ItemStack(ItemRegistry.potion_viscous),
-        new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage()),
-        new ItemStack(ItemRegistry.potion_magnet));
-    addBrewingRecipe(
-        ItemRegistry.potion_magnet,
-        Items.REDSTONE,
-        ItemRegistry.potion_magnet_long);
-    BrewingRecipeRegistry.addRecipe(
-        new ItemStack(ItemRegistry.potion_viscous),
-        new ItemStack(Items.FISH, 1, ItemFishFood.FishType.CLOWNFISH.getMetadata()),
-        new ItemStack(ItemRegistry.potion_slowfall));
-    BrewingRecipeRegistry.addRecipe(
-        new ItemStack(ItemRegistry.potion_slowfall),
-        new ItemStack(Items.REDSTONE),
-        new ItemStack(ItemRegistry.potion_slowfall_long));
-    BrewingRecipeRegistry.addRecipe(
-        new ItemStack(ItemRegistry.potion_viscous),
-        new ItemStack(Blocks.ICE),
-        new ItemStack(ItemRegistry.potion_snow));
-  }
-  private static void addBrewingRecipe(Item input, Item ingredient, Item output) {
-    BrewingRecipeRegistry.addRecipe(
-        new ItemStack(input),
-        new ItemStack(ingredient),
-        new ItemStack(output));
   }
   public static void register() { 
     //		addItem(new ItemFlintTool(),"flint_tool");
-    potion_snow.addEffect(PotionRegistry.snow, 60 * 3, PotionRegistry.I);
-    potion_ender.addEffect(PotionRegistry.ender, 60 * 3, PotionRegistry.I);
-    potion_magnet.addEffect(PotionRegistry.magnet, 60 * 3, PotionRegistry.I);
-    potion_waterwalk.addEffect(PotionRegistry.waterwalk, 60 * 3, PotionRegistry.I);
-    potion_slowfall.addEffect(PotionRegistry.slowfall, 60 * 3, PotionRegistry.I);
-    potion_ender_long.addEffect(PotionRegistry.ender, 60 * 8, PotionRegistry.I);
-    potion_magnet_long.addEffect(PotionRegistry.magnet, 60 * 8, PotionRegistry.I);
-    potion_waterwalk_long.addEffect(PotionRegistry.waterwalk, 60 * 8, PotionRegistry.I);
-    potion_slowfall_long.addEffect(PotionRegistry.slowfall, 60 * 8, PotionRegistry.I);
     //maybe one day it will be all base items
     Item item;
     for (String key : itemMap.keySet()) {

@@ -8,6 +8,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -175,5 +176,19 @@ public class UtilEntity {
       moved++;
     }
     return moved;
+  }
+
+  public static void addOrMergePotionEffect(EntityLivingBase player, PotionEffect newp) {
+    // this could be in a utilPotion class i guess...
+    if (player.isPotionActive(newp.getPotion())) {
+      // do not use built in 'combine' function, just add up duration
+      PotionEffect p = player.getActivePotionEffect(newp.getPotion());
+      int ampMax = Math.max(p.getAmplifier(), newp.getAmplifier());
+      int dur = newp.getDuration() + p.getDuration();
+      player.addPotionEffect(new PotionEffect(newp.getPotion(), dur, ampMax));
+    }
+    else {
+      player.addPotionEffect(newp);
+    }
   }
 }

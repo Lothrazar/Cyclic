@@ -93,7 +93,7 @@ public class ModMain {
   @EventHandler
   public void onInit(FMLInitializationEvent event) {
     registerModulesByType(ModuleType.INIT);
-    PotionRegistry.register();
+  
     ItemRegistry.register();
     BlockRegistry.register();
     MobSpawningRegistry.register();
@@ -115,11 +115,6 @@ public class ModMain {
     MinecraftForge.EVENT_BUS.register(EnchantRegistry.magnet);
     MinecraftForge.EVENT_BUS.register(EnchantRegistry.venom);
     MinecraftForge.EVENT_BUS.register(EnchantRegistry.lifeleech);
-    MinecraftForge.EVENT_BUS.register(PotionRegistry.slowfall);
-    MinecraftForge.EVENT_BUS.register(PotionRegistry.magnet);
-    MinecraftForge.EVENT_BUS.register(PotionRegistry.waterwalk);
-    MinecraftForge.EVENT_BUS.register(PotionRegistry.ender);
-    MinecraftForge.EVENT_BUS.register(PotionRegistry.snow);
   }
   @EventHandler
   public void onPostInit(FMLPostInitializationEvent event) {
@@ -156,7 +151,7 @@ public class ModMain {
     }
     EnchantRegistry.syncConfig(c);
     WorldGenRegistry.syncConfig(c);
-    PotionRegistry.syncConfig(c);
+   
     events.syncConfig(c);
     BlockRegistry.syncConfig(c);
     ItemRegistry.syncConfig(c);

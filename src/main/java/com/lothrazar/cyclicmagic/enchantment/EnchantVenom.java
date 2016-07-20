@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.enchantment;
-import com.lothrazar.cyclicmagic.registry.PotionRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
@@ -41,7 +41,7 @@ public class EnchantVenom extends Enchantment {
     if (level > 0) {
       // we -1  since potion level 1 is Poison II
       //so that means enchantment I giving poison I means this
-      PotionRegistry.addOrMergePotionEffect(target, new PotionEffect(MobEffects.POISON, durationTicksPerLevel * level, level - 1));
+      UtilEntity.addOrMergePotionEffect(target, new PotionEffect(MobEffects.POISON, durationTicksPerLevel * level, level - 1));
     }
   }
 }

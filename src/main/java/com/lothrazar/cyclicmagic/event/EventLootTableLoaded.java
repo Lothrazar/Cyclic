@@ -3,6 +3,7 @@ import java.util.HashSet;
 import java.util.Set;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.module.PotionModule;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Blocks;
@@ -117,7 +118,8 @@ public class EventLootTableLoaded implements IHasConfig {
     addLoot(main, ItemRegistry.ender_pearl_reuse);
   }
   private void fillIglooChest(LootPool main) {
-    addLoot(main, ItemRegistry.potion_snow);
+    if (PotionModule.potion_snow != null)
+      addLoot(main, PotionModule.potion_snow);
     addLoot(main, ItemRegistry.ender_snow, 19);
   }
   private void fillBonusChest(LootPool main) {

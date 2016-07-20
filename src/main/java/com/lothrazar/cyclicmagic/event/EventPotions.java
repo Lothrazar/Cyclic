@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.event;
 import com.lothrazar.cyclicmagic.IHasConfig;
-import com.lothrazar.cyclicmagic.registry.PotionRegistry;
+import com.lothrazar.cyclicmagic.module.PotionModule;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraftforge.client.event.GuiScreenEvent;
@@ -16,14 +16,14 @@ public class EventPotions implements IHasConfig {
   public void onEntityUpdate(LivingUpdateEvent event) {
     EntityLivingBase entity = event.getEntityLiving();
     if (entity == null) { return; }
-    if (entity.isPotionActive(PotionRegistry.slowfall)) {
-      PotionRegistry.slowfall.tick(entity);
+    if (entity.isPotionActive(PotionModule.slowfall)) {
+      PotionModule.slowfall.tick(entity);
     }
-    if (entity.isPotionActive(PotionRegistry.magnet)) {
-      PotionRegistry.magnet.tick(entity);
+    if (entity.isPotionActive(PotionModule.magnet)) {
+      PotionModule.magnet.tick(entity);
     }
-    if (entity.isPotionActive(PotionRegistry.waterwalk)) {
-      PotionRegistry.waterwalk.tick(entity);
+    if (entity.isPotionActive(PotionModule.waterwalk)) {
+      PotionModule.waterwalk.tick(entity);
     }
   }
   @SideOnly(Side.CLIENT)
