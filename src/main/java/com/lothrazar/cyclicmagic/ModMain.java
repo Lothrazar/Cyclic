@@ -5,8 +5,10 @@ import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.module.BaseModule.ModuleType;
 import com.lothrazar.cyclicmagic.module.BucketBlockModule;
 import com.lothrazar.cyclicmagic.module.BuilderBlockModule;
+import com.lothrazar.cyclicmagic.module.ConveyorPlateModule;
 import com.lothrazar.cyclicmagic.module.CyclicWandModule;
 import com.lothrazar.cyclicmagic.module.EmeraldArmorModule;
+import com.lothrazar.cyclicmagic.module.FragileBlockModule;
 import com.lothrazar.cyclicmagic.module.ICyclicModule;
 import com.lothrazar.cyclicmagic.module.SlimepadModule;
 import com.lothrazar.cyclicmagic.module.StackSizeModule;
@@ -80,6 +82,8 @@ public class ModMain {
     modules.add(new SlimepadModule().setType(ModuleType.INIT));
     modules.add(new BuilderBlockModule().setType(ModuleType.INIT));
     modules.add(new BucketBlockModule().setType(ModuleType.INIT));
+    modules.add(new ConveyorPlateModule().setType(ModuleType.INIT));
+    modules.add(new FragileBlockModule().setType(ModuleType.INIT));
     
     ItemRegistry.construct(); //modules here
     BlockRegistry.construct();//modules here

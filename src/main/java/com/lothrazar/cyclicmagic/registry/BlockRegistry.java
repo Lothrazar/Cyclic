@@ -3,19 +3,16 @@ import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.block.BlockBucketStorage;
 import com.lothrazar.cyclicmagic.block.BlockBuilder;
-import com.lothrazar.cyclicmagic.block.BlockConveyor;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre.SpawnType;
 import com.lothrazar.cyclicmagic.block.BlockScaffolding;
 import com.lothrazar.cyclicmagic.block.BlockSprout;
 import com.lothrazar.cyclicmagic.block.BlockUncrafting;
 import com.lothrazar.cyclicmagic.item.ItemSproutSeeds;
-import com.lothrazar.cyclicmagic.item.itemblock.ItemBlockScaffolding;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -42,6 +39,12 @@ public class BlockRegistry {
   public static BlockDimensionOre end_diamond_ore;
   private static boolean spawnersUnbreakable;
   public static BlockBuilder builder_block;
+
+  public static void construct() {
+    uncrafting_block = new BlockUncrafting();
+    builder_block = new BlockBuilder();
+    block_fragile = new BlockScaffolding();
+  }
   //lots of helpers/overrides with defaults
   public static void registerBlock(Block b, String name) {
     registerBlock(b, name, false);
@@ -49,7 +52,7 @@ public class BlockRegistry {
   private static void registerBlock(Block b, String name, boolean isHidden) {
     registerBlock(b, new ItemBlock(b), name, isHidden);
   }
-  private static void registerBlock(Block b, ItemBlock ib, String name) {
+  public static void registerBlock(Block b, ItemBlock ib, String name) {
     registerBlock(b, ib, name, false);
   }
   public static void registerBlock(Block b, ItemBlock ib, String name, boolean isHidden) {
@@ -67,11 +70,7 @@ public class BlockRegistry {
     if (spawnersUnbreakable) {
       Blocks.MOB_SPAWNER.setBlockUnbreakable();
     }
-    BlockConveyor plate_push = new BlockConveyor(0.16F, SoundEvents.BLOCK_ANVIL_BREAK);
-    registerBlock(plate_push, "plate_push");
-    plate_push.addRecipe();
-    registerBlock(block_fragile, new ItemBlockScaffolding(block_fragile), BlockScaffolding.name);
-    block_fragile.addRecipe();
+  
     registerSprout();
     registerDimensionOres();
   }
@@ -128,11 +127,6 @@ public class BlockRegistry {
         'b', Items.MELON_SEEDS,
         'c', Items.PUMPKIN_SEEDS,
         'd', Items.NETHER_WART);
-  }
-  public static void construct() {
-    uncrafting_block = new BlockUncrafting();
-    builder_block = new BlockBuilder();
-    block_fragile = new BlockScaffolding();
   }
   public static void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.blocks;
