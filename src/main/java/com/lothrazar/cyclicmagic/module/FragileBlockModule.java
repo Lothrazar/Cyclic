@@ -9,13 +9,14 @@ public class FragileBlockModule extends BaseModule {
   private boolean moduleEnabled;
   public void register() {
 
+    BlockRegistry.block_fragile = new BlockScaffolding();
     BlockRegistry.registerBlock(BlockRegistry.block_fragile, new ItemBlockScaffolding(BlockRegistry.block_fragile), BlockScaffolding.name);
     BlockRegistry.block_fragile.addRecipe();
   }
   @Override
   public void syncConfig(Configuration config) {
     moduleEnabled = config.getBoolean("ScaffoldingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    BlockRegistry.builder_block.syncConfig(config);
+//    BlockRegistry.block_fragile.syncConfig(config);
   }
   @Override
   public boolean isEnabled() {

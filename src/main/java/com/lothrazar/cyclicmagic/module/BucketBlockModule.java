@@ -1,11 +1,13 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.block.BlockBucketStorage;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBucketStorage;
 import com.lothrazar.cyclicmagic.item.itemblock.ItemBlockBucket;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Items;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BucketBlockModule extends BaseModule {
   private boolean moduleEnabled;
@@ -21,12 +23,13 @@ public class BucketBlockModule extends BaseModule {
     BlockRegistry.block_storeempty.addRecipe();
     
 
+    GameRegistry.registerTileEntity(TileEntityBucketStorage.class, "bucketstorage");
     MinecraftForge.EVENT_BUS.register(BlockRegistry.block_storeempty);
   }
   @Override
   public void syncConfig(Configuration config) {
     moduleEnabled = config.getBoolean("BucketBlocks", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    BlockRegistry.builder_block.syncConfig(config);
+    
   }
   @Override
   public boolean isEnabled() {

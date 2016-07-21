@@ -82,7 +82,6 @@ public class ModMain {
     modules.add(new FragileBlockModule().setType(ModuleType.INIT));
     
     ItemRegistry.construct(); //modules here
-    BlockRegistry.construct();//modules here
    
 
     this.syncConfig();
@@ -104,7 +103,6 @@ public class ModMain {
     RecipeNewRegistry.register();
     VillageTradeRegistry.register();
     proxy.register();
-    TileEntityRegistry.register();
     NetworkRegistry.INSTANCE.registerGuiHandler(this, new ModGuiHandler());
     ProjectileRegistry.register(event);
     //finally, some items have extra forge events to hook into.

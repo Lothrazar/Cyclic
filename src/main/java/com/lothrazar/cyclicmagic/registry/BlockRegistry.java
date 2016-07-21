@@ -37,11 +37,6 @@ public class BlockRegistry {
   private static boolean spawnersUnbreakable;
   public static BlockBuilder builder_block;
 
-  public static void construct() {
-    uncrafting_block = new BlockUncrafting();
-    builder_block = new BlockBuilder();
-    block_fragile = new BlockScaffolding();
-  }
   //lots of helpers/overrides with defaults
   public static void registerBlock(Block b, String name) {
     registerBlock(b, name, false);
