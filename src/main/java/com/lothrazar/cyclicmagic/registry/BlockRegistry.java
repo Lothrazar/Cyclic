@@ -67,7 +67,10 @@ public class BlockRegistry {
   }
   public static void register() {
     if (spawnersUnbreakable) {
-      Blocks.MOB_SPAWNER.setBlockUnbreakable();
+      Blocks.MOB_SPAWNER.setBlockUnbreakable();//just like .setHardness(-1.0F);
+    }
+    else{
+      Blocks.MOB_SPAWNER.setHardness(5.0F);//reset to normal http://minecraft.gamepedia.com/Monster_Spawner
     }
     BlockConveyor plate_push = new BlockConveyor(0.16F, SoundEvents.BLOCK_ANVIL_BREAK);
     registerBlock(plate_push, "plate_push");
