@@ -6,16 +6,13 @@ import com.lothrazar.cyclicmagic.block.BlockBuilder;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre.SpawnType;
 import com.lothrazar.cyclicmagic.block.BlockScaffolding;
-import com.lothrazar.cyclicmagic.block.BlockSprout;
 import com.lothrazar.cyclicmagic.block.BlockUncrafting;
-import com.lothrazar.cyclicmagic.item.ItemSproutSeeds;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -49,7 +46,7 @@ public class BlockRegistry {
   public static void registerBlock(Block b, String name) {
     registerBlock(b, name, false);
   }
-  private static void registerBlock(Block b, String name, boolean isHidden) {
+  public static void registerBlock(Block b, String name, boolean isHidden) {
     registerBlock(b, new ItemBlock(b), name, isHidden);
   }
   public static void registerBlock(Block b, ItemBlock ib, String name) {
@@ -71,7 +68,6 @@ public class BlockRegistry {
       Blocks.MOB_SPAWNER.setBlockUnbreakable();
     }
   
-    registerSprout();
     registerDimensionOres();
   }
 
@@ -109,25 +105,7 @@ public class BlockRegistry {
     end_diamond_ore.setSpawnType(SpawnType.ENDERMITE, 8);
     registerBlock(end_diamond_ore, "end_diamond_ore");
   }
-  
-  private static void registerSprout() {
-    BlockSprout sprout = new BlockSprout();
-    registerBlock(sprout, "sprout", true);
-    ItemRegistry.sprout_seed = new ItemSproutSeeds(sprout, Blocks.FARMLAND);
-    ItemRegistry.sprout_seed.setUnlocalizedName("sprout_seed");
-    ItemRegistry.registerItem(ItemRegistry.sprout_seed, "sprout_seed");
-    ItemRegistry.itemMap.put("sprout_seed", ItemRegistry.sprout_seed);
-    GameRegistry.addRecipe(new ItemStack(ItemRegistry.sprout_seed),
-        "waw",
-        "bEc",
-        "wdw",
-        'w', Items.WHEAT_SEEDS,
-        'E', Items.EMERALD,
-        'a', Items.BEETROOT_SEEDS,
-        'b', Items.MELON_SEEDS,
-        'c', Items.PUMPKIN_SEEDS,
-        'd', Items.NETHER_WART);
-  }
+   
   public static void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.blocks;
     spawnersUnbreakable = config.getBoolean("Spawners Unbreakable", category, true, "Make mob spawners unbreakable");
