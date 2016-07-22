@@ -37,7 +37,7 @@ public class ItemChestSack extends BaseItem implements IHasConfig {
     if (createAndFillChest(playerIn, stack, offset)) {
       playerIn.setHeldItem(hand, null);
       UtilSound.playSound(playerIn, pos, SoundRegistry.thunk);
-      UtilEntity.dropItemStackInWorld(worldIn, playerIn.getPosition(), ItemRegistry.itemMap.get(ItemChestSackEmpty.name));
+      UtilEntity.dropItemStackInWorld(worldIn, playerIn.getPosition(), ItemRegistry.chest_sack_empty);
     }
     return EnumActionResult.SUCCESS;
   }

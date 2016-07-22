@@ -91,6 +91,7 @@ public class ItemRegistry {
   public static final ItemToolHarvest tool_harvest_crops = new ItemToolHarvest(ItemToolHarvest.HarvestType.CROPS);
   public static final ItemToolHarvest tool_harvest_leaves = new ItemToolHarvest(ItemToolHarvest.HarvestType.LEAVES);
   public static final ItemChestSackEmpty chest_sack_empty = new ItemChestSackEmpty();
+  public static final ItemChestSack chest_sack = new ItemChestSack();
   public static final ItemToolSpawnInspect tool_spawn_inspect = new ItemToolSpawnInspect();
   public static final ItemSleepingBag sleeping_mat = new ItemSleepingBag();
   public static final ItemToolPearlReuse ender_pearl_reuse = new ItemToolPearlReuse();
@@ -129,7 +130,8 @@ public class ItemRegistry {
     addItem(tool_harvest_crops, "tool_harvest_crops");
     addItem(tool_harvest_leaves, "tool_harvest_leaves");
     addItem(tool_push, "tool_push");
-    addItem(new ItemChestSack().setHidden(), "chest_sack");
+    chest_sack.setHidden();
+    addItem(chest_sack, "chest_sack");
     addItem(chest_sack_empty, "chest_sack_empty");
     addItem(ender_tnt_1, "ender_tnt_1");
     addItem(ender_tnt_2, "ender_tnt_2");
