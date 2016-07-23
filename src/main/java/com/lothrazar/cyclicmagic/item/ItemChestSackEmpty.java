@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.item;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
@@ -39,7 +40,7 @@ public class ItemChestSackEmpty extends BaseItem implements IHasRecipe {
     }
     IInventory invo = (IInventory) world.getTileEntity(pos);
     NBTTagCompound itemTag = UtilNBT.writeInventoryToNewTag(invo, ItemChestSack.KEY_NBT);
-    ItemStack drop = new ItemStack(this);
+    ItemStack drop = new ItemStack(ItemRegistry.chest_sack);
     drop.setTagCompound(itemTag);
     drop.getTagCompound().setInteger(ItemChestSack.KEY_BLOCK, Block.getIdFromBlock(world.getBlockState(pos).getBlock()));
     entityPlayer.dropItem(drop, false);
