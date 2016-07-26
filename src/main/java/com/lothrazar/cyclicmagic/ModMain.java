@@ -9,8 +9,11 @@ import com.lothrazar.cyclicmagic.module.ConveyorPlateModule;
 import com.lothrazar.cyclicmagic.module.CyclicWandModule;
 import com.lothrazar.cyclicmagic.module.EmeraldArmorModule;
 import com.lothrazar.cyclicmagic.module.FragileBlockModule;
+import com.lothrazar.cyclicmagic.module.HorseFoodModule;
 import com.lothrazar.cyclicmagic.module.ICyclicModule;
+import com.lothrazar.cyclicmagic.module.MagicBeanModule;
 import com.lothrazar.cyclicmagic.module.MobSpawnModule;
+import com.lothrazar.cyclicmagic.module.PotionModule;
 import com.lothrazar.cyclicmagic.module.SlimepadModule;
 import com.lothrazar.cyclicmagic.module.StackSizeModule;
 import com.lothrazar.cyclicmagic.module.UnbreakableSpawnerModule;
@@ -72,17 +75,20 @@ public class ModMain {
     ReflectionRegistry.register();
     PacketRegistry.register(network);
     events = new EventRegistry();
-    modules.add(new StackSizeModule().setType(ModuleType.INIT));
-    modules.add(new EmeraldArmorModule().setType(ModuleType.INIT));
-    modules.add(new CyclicWandModule().setType(ModuleType.INIT));
-    modules.add(new UncrafterModule().setType(ModuleType.INIT));
-    modules.add(new SlimepadModule().setType(ModuleType.INIT));
     modules.add(new BuilderBlockModule().setType(ModuleType.INIT));
     modules.add(new BucketBlockModule().setType(ModuleType.INIT));
     modules.add(new ConveyorPlateModule().setType(ModuleType.INIT));
+    modules.add(new CyclicWandModule().setType(ModuleType.INIT));
+    modules.add(new EmeraldArmorModule().setType(ModuleType.INIT));
     modules.add(new FragileBlockModule().setType(ModuleType.INIT));
-    modules.add(new UnbreakableSpawnerModule().setType(ModuleType.INIT));
+    modules.add(new HorseFoodModule().setType(ModuleType.INIT));
+    modules.add(new MagicBeanModule().setType(ModuleType.INIT));
     modules.add(new MobSpawnModule().setType(ModuleType.INIT));
+    modules.add(new PotionModule().setType(ModuleType.INIT));
+    modules.add(new SlimepadModule().setType(ModuleType.INIT));
+    modules.add(new StackSizeModule().setType(ModuleType.INIT));
+    modules.add(new UnbreakableSpawnerModule().setType(ModuleType.INIT));
+    modules.add(new UncrafterModule().setType(ModuleType.INIT));
     
     ItemRegistry.construct(); //modules here
    
@@ -101,7 +107,7 @@ public class ModMain {
     BlockRegistry.registerDimensionOres();
     WorldGenRegistry.register();
     FuelRegistry.register();
-   // StackSizeRegistry.register();
+    // StackSizeRegistry.register();
     RecipeAlterRegistry.register();
     RecipeNewRegistry.register();
     VillageTradeRegistry.register();

@@ -3,7 +3,6 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
-import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -17,7 +16,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.client.resources.I18n;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -173,12 +171,5 @@ public class ItemFoodHorse extends BaseItem implements IHasRecipe {
     public static final int type_mule = 2;
     public static final int type_zombie = 3;
     public static final int type_skeleton = 4;
-  }
-  public static void syncConfig(Configuration config) {
-    String category = Const.ConfigCategory.modpackMisc;
-    //		ItemFoodHorse.horseFoodEnabled = config.getBoolean("Enabled", category, true, "To disable all horse upgrade food");
-    ItemFoodHorse.HEARTS_MAX = config.getInt("HorseFood Max Hearts", category, 20, 1, 100, "Maximum number of upgraded hearts");
-    ItemFoodHorse.JUMP_MAX = config.getInt("HorseFood Max Jump", category, 6, 1, 20, "Maximum value of jump.  Naturally spawned/bred horses seem to max out at 5.5");
-    ItemFoodHorse.SPEED_MAX = config.getInt("HorseFood Max Speed", category, 50, 1, 99, "Maximum value of speed (this is NOT blocks/per second or anything like that)");
   }
 }

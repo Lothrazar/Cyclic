@@ -33,7 +33,6 @@ public class MagicBeanModule extends BaseModule {
   @Override
   public void syncConfig(Configuration config) {
     moduleEnabled = config.getBoolean("MagicBean", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    //    ItemRegistry.sprout_seed.syncConfig(config);
   }
   @Override
   public boolean isEnabled() {

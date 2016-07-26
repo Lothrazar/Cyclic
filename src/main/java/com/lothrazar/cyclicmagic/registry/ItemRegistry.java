@@ -14,7 +14,6 @@ import com.lothrazar.cyclicmagic.item.ItemToolPearlReuse;
 import com.lothrazar.cyclicmagic.item.ItemFoodCorruptedChorus;
 import com.lothrazar.cyclicmagic.item.ItemFoodCrafting;
 import com.lothrazar.cyclicmagic.item.ItemFoodHeart;
-import com.lothrazar.cyclicmagic.item.ItemFoodHorse;
 import com.lothrazar.cyclicmagic.item.ItemFoodInventory;
 import com.lothrazar.cyclicmagic.item.ItemInventoryStorage;
 import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
@@ -25,10 +24,7 @@ import com.lothrazar.cyclicmagic.item.ItemToolPush;
 import com.lothrazar.cyclicmagic.item.ItemToolSpawnInspect;
 import com.lothrazar.cyclicmagic.item.projectile.*;
 import com.lothrazar.cyclicmagic.util.Const;
-import net.minecraft.init.Items;
-import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -36,7 +32,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class ItemRegistry {
   public static Map<String, Item> itemMap = new HashMap<String, Item>();
   public static final ItemFoodCorruptedChorus corrupted_chorus = new ItemFoodCorruptedChorus();
-  //	public static final ItemToolLaunch corrupted_elytra = new ItemToolLaunch();
+
   public static ItemCyclicWand cyclic_wand_build;
   public static final ItemFoodHeart heart_food = new ItemFoodHeart();
   public static final ItemProjectileTNT ender_tnt_1 = new ItemProjectileTNT(1);
@@ -100,11 +96,6 @@ public class ItemRegistry {
     addItem(ender_tnt_4, "ender_tnt_4");
     addItem(ender_tnt_5, "ender_tnt_5");
     addItem(ender_tnt_6, "ender_tnt_6");
-    addItem(new ItemFoodHorse(new ItemStack(Items.EMERALD)), "horse_upgrade_type");
-    addItem(new ItemFoodHorse(new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage())), "horse_upgrade_variant");
-    addItem(new ItemFoodHorse(new ItemStack(Items.DIAMOND)), "horse_upgrade_health");
-    addItem(new ItemFoodHorse(new ItemStack(Items.REDSTONE)), "horse_upgrade_speed");
-    addItem(new ItemFoodHorse(new ItemStack(Items.ENDER_EYE)), "horse_upgrade_jump");
     addItem(corrupted_chorus, "corrupted_chorus");
     addItem(heart_food, "heart_food");
     addItem(apple_emerald, "apple_emerald");
@@ -123,8 +114,6 @@ public class ItemRegistry {
         ((IHasConfig) item).syncConfig(config);
       }
     }
- 
-    ItemFoodHorse.syncConfig(config);
   }
   private static void registerRecipes() {
     Item item;
@@ -134,7 +123,6 @@ public class ItemRegistry {
         ((IHasRecipe) item).addRecipe();
       }
     }
-
   }
   public static void register() { 
     //		addItem(new ItemFlintTool(),"flint_tool");
