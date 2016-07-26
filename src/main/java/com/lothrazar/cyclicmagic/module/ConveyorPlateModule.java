@@ -15,7 +15,6 @@ public class ConveyorPlateModule extends BaseModule {
   @Override
   public void syncConfig(Configuration config) {
     moduleEnabled = config.getBoolean("ConveyorPlate", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-   
   }
   @Override
   public boolean isEnabled() {

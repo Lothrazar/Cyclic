@@ -108,6 +108,5 @@ public class BlockRegistry {
     String category = Const.ConfigCategory.blocks;
     spawnersUnbreakable = config.getBoolean("Spawners Unbreakable", category, true, "Make mob spawners unbreakable");
  
-    builder_block.syncConfig(config);
   }
 }

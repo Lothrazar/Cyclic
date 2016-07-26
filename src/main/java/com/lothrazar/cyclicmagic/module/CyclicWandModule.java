@@ -16,8 +16,6 @@ public class CyclicWandModule extends BaseModule {
   @Override
   public void syncConfig(Configuration config) {
     moduleEnabled = config.getBoolean("CyclicWand", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-
-    SpellRegistry.syncConfig(config);
   }
   @Override
   public boolean isEnabled() {

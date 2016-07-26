@@ -102,8 +102,7 @@ public class EventLootTableLoaded implements IHasConfig {
   }
   private void fillEndCityChest(LootPool main) {
     addLoot(main, ItemRegistry.book_ender, 10);
-    if (ItemRegistry.cyclic_wand_build != null)
-      addLoot(main, ItemRegistry.cyclic_wand_build, 15);
+    addLoot(main, ItemRegistry.cyclic_wand_build, 15);
   }
   private void fillGenericChest(LootPool main) {
     addLoot(main, ItemRegistry.tool_push);
@@ -118,17 +117,22 @@ public class EventLootTableLoaded implements IHasConfig {
     addLoot(main, ItemRegistry.ender_pearl_reuse);
   }
   private void fillIglooChest(LootPool main) {
-    if (PotionModule.potion_snow != null)
-      addLoot(main, PotionModule.potion_snow);
+    addLoot(main, PotionModule.potion_snow);
     addLoot(main, ItemRegistry.ender_snow, 19);
   }
   private void fillBonusChest(LootPool main) {
     addLoot(main, ItemRegistry.sleeping_mat);
   }
   private void addLoot(LootPool main, Item item) {
+    if(item == null){
+      return;//shortcut fix bc of new module config system that can delete items
+    }
     addLoot(main, item, RANDODEFAULT);
   }
   private void addLoot(LootPool main, Item item, int rando) {
+    if(item == null){
+      return;//shortcut fix bc of new module config system that can delete items
+    }
     main.addEntry(new LootEntryItem(item, rando, 0, new LootFunction[0], new LootCondition[0], Const.MODRES + item.getUnlocalizedName()));
   }
   @Override

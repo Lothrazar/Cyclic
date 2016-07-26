@@ -8,8 +8,11 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BuilderBlockModule extends BaseModule {
   private boolean moduleEnabled;
-  public void register() {
+  public BuilderBlockModule(){
+    super();
     BlockRegistry.builder_block = new BlockBuilder();
+  }
+  public void register() {
     BlockRegistry.registerBlock(BlockRegistry.builder_block, "builder_block");
     BlockRegistry.builder_block.addRecipe();
     GameRegistry.registerTileEntity(TileEntityBuilder.class, "builder_te");
@@ -17,7 +20,8 @@ public class BuilderBlockModule extends BaseModule {
   @Override
   public void syncConfig(Configuration config) {
     moduleEnabled = config.getBoolean("BuilderBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    BlockRegistry.builder_block.syncConfig(config);
+    TileEntityBuilder.maxSize = config.getInt("builder.maxRange", Const.ConfigCategory.modpackMisc, 10, 3, 32, "Maximum range of the builder block that you can increase it to in the GUI");
+    TileEntityBuilder.maxHeight = config.getInt("builder.maxHeight", Const.ConfigCategory.modpackMisc, 10, 3, 32, "Maximum height of the builder block that you can increase it to in the GUI");
   }
   @Override
   public boolean isEnabled() {

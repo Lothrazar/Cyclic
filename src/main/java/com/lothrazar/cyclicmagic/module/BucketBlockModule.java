@@ -21,15 +21,12 @@ public class BucketBlockModule extends BaseModule {
     BlockRegistry.block_storeempty = new BlockBucketStorage(null);
     BlockRegistry.registerBlock(BlockRegistry.block_storeempty, new ItemBlockBucket(BlockRegistry.block_storeempty), "block_storeempty", false);
     BlockRegistry.block_storeempty.addRecipe();
-    
-
     GameRegistry.registerTileEntity(TileEntityBucketStorage.class, "bucketstorage");
     MinecraftForge.EVENT_BUS.register(BlockRegistry.block_storeempty);
   }
   @Override
   public void syncConfig(Configuration config) {
     moduleEnabled = config.getBoolean("BucketBlocks", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    
   }
   @Override
   public boolean isEnabled() {

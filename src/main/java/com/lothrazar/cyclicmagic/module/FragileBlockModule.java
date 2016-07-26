@@ -16,7 +16,6 @@ public class FragileBlockModule extends BaseModule {
   @Override
   public void syncConfig(Configuration config) {
     moduleEnabled = config.getBoolean("ScaffoldingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-//    BlockRegistry.block_fragile.syncConfig(config);
   }
   @Override
   public boolean isEnabled() {
