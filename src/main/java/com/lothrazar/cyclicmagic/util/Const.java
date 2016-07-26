@@ -49,6 +49,13 @@ public class Const {
     public static final int end = 1;
     public static final int nether = -1;
   }
+  public class Potions {
+    public final static int I = 0;
+    public final static int II = 1;
+    public final static int III = 2;
+    public final static int IV = 3;
+    public final static int V = 4;
+  }
   public static final int WORLDHEIGHT = 256;
   
   //http://minecraft.gamepedia.com/Light#Mobs

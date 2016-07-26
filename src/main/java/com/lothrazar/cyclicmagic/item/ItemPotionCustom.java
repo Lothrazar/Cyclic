@@ -1,8 +1,7 @@
 package com.lothrazar.cyclicmagic.item;
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.registry.PotionRegistry;
+import com.lothrazar.cyclicmagic.ModMain; 
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.entity.EntityLivingBase;
@@ -37,7 +36,7 @@ public class ItemPotionCustom extends ItemFood {
     this.hasEffect = shiny;
   }
   public ItemPotionCustom(boolean shiny, Potion potionId, int potionDuration) {
-    this(shiny, potionId, potionDuration, PotionRegistry.I);
+    this(shiny, potionId, potionDuration, Const.Potions.I);
   }
   public ItemPotionCustom(boolean shiny, Potion potionId, int potionDuration, int potionAmplifier) {
     this(shiny);

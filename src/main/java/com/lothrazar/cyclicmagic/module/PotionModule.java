@@ -7,8 +7,9 @@ import com.lothrazar.cyclicmagic.potion.PotionMagnet;
 import com.lothrazar.cyclicmagic.potion.PotionSlowfall;
 import com.lothrazar.cyclicmagic.potion.PotionSnow;
 import com.lothrazar.cyclicmagic.potion.PotionWaterwalk;
-import com.lothrazar.cyclicmagic.registry.ItemRegistry;
-import com.lothrazar.cyclicmagic.registry.PotionRegistry;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry; 
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.Const.Potions;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
@@ -46,12 +47,12 @@ public class PotionModule extends BaseModule {
   //  public static final ItemPotionCustom potion_glowing = new ItemPotionCustom(MobEffects.GLOWING, 60*3);
   //  public static final ItemPotionCustom potion_glowing_long = new ItemPotionCustom(MobEffects.GLOWING, 60*8);
   public static final ItemPotionCustom potion_resistance = new ItemPotionCustom(true, MobEffects.RESISTANCE, 60 * 3);
-  public static final ItemPotionCustom potion_resistance_strong = new ItemPotionCustom(true, MobEffects.RESISTANCE, 90, PotionRegistry.II);
+  public static final ItemPotionCustom potion_resistance_strong = new ItemPotionCustom(true, MobEffects.RESISTANCE, 90, Const.Potions.II);
   public static final ItemPotionCustom potion_resistance_long = new ItemPotionCustom(true, MobEffects.RESISTANCE, 60 * 8);
-  public static final ItemPotionCustom potion_boost = new ItemPotionCustom(true, MobEffects.HEALTH_BOOST, 60 * 3, PotionRegistry.V);
-  public static final ItemPotionCustom potion_boost_long = new ItemPotionCustom(true, MobEffects.HEALTH_BOOST, 60 * 8, PotionRegistry.V);
+  public static final ItemPotionCustom potion_boost = new ItemPotionCustom(true, MobEffects.HEALTH_BOOST, 60 * 3, Const.Potions.V);
+  public static final ItemPotionCustom potion_boost_long = new ItemPotionCustom(true, MobEffects.HEALTH_BOOST, 60 * 8, Const.Potions.V);
   public static final ItemPotionCustom potion_haste = new ItemPotionCustom(false, MobEffects.HASTE, 60 * 3);
-  public static final ItemPotionCustom potion_haste_strong = new ItemPotionCustom(false, MobEffects.HASTE, 90, PotionRegistry.II);
+  public static final ItemPotionCustom potion_haste_strong = new ItemPotionCustom(false, MobEffects.HASTE, 90, Const.Potions.II);
   public static final ItemPotionCustom potion_haste_long = new ItemPotionCustom(false, MobEffects.HASTE, 60 * 8);
  
   private boolean moduleEnabled;
@@ -101,15 +102,15 @@ public class PotionModule extends BaseModule {
     MinecraftForge.EVENT_BUS.register(ender);
     MinecraftForge.EVENT_BUS.register(snow);
     
-    potion_snow.addEffect(snow, 60 * 3, PotionRegistry.I);
-    potion_ender.addEffect(ender, 60 * 3, PotionRegistry.I);
-    potion_magnet.addEffect(magnet, 60 * 3, PotionRegistry.I);
-    potion_waterwalk.addEffect(waterwalk, 60 * 3, PotionRegistry.I);
-    potion_slowfall.addEffect(slowfall, 60 * 3, PotionRegistry.I);
-    potion_ender_long.addEffect(ender, 60 * 8, PotionRegistry.I);
-    potion_magnet_long.addEffect(magnet, 60 * 8, PotionRegistry.I);
-    potion_waterwalk_long.addEffect(waterwalk, 60 * 8, PotionRegistry.I);
-    potion_slowfall_long.addEffect(slowfall, 60 * 8, PotionRegistry.I);
+    potion_snow.addEffect(snow, 60 * 3, Potions.I);
+    potion_ender.addEffect(ender, 60 * 3, Potions.I);
+    potion_magnet.addEffect(magnet, 60 * 3, Potions.I);
+    potion_waterwalk.addEffect(waterwalk, 60 * 3, Potions.I);
+    potion_slowfall.addEffect(slowfall, 60 * 3, Potions.I);
+    potion_ender_long.addEffect(ender, 60 * 8, Potions.I);
+    potion_magnet_long.addEffect(magnet, 60 * 8, Potions.I);
+    potion_waterwalk_long.addEffect(waterwalk, 60 * 8, Potions.I);
+    potion_slowfall_long.addEffect(slowfall, 60 * 8, Potions.I);
     
     registerBrewing();
   }

@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.item;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.registry.PotionRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
@@ -93,6 +92,6 @@ public class ItemAppleEmerald extends ItemFood implements IHasRecipe {
     UtilEntity.addOrMergePotionEffect(player, new PotionEffect(
         MobEffects.SATURATION,
         20 * Const.TICKS_PER_SEC,
-        PotionRegistry.I));
+        Const.Potions.I));
   }
 }

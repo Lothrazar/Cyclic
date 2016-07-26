@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.item;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
-import com.lothrazar.cyclicmagic.registry.PotionRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -24,7 +23,7 @@ public class ItemSleepingBag extends BaseTool implements IHasRecipe, IHasConfig 
   // thank you for the examples forge. player data storage based on API source
   // https://github.com/MinecraftForge/MinecraftForge/blob/1.9/src/test/java/net/minecraftforge/test/NoBedSleepingTest.java
   private static int seconds;
-  private static final int levelBoost = PotionRegistry.I;
+  private static final int levelBoost = Const.Potions.I;
   private static final int durability = 100;
   public ItemSleepingBag() {
     super(durability);
