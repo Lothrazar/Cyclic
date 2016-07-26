@@ -5,6 +5,7 @@ import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.module.BaseModule.ModuleType;
 import com.lothrazar.cyclicmagic.module.BucketBlockModule;
 import com.lothrazar.cyclicmagic.module.BuilderBlockModule;
+import com.lothrazar.cyclicmagic.module.CarbonPaperModule;
 import com.lothrazar.cyclicmagic.module.ConveyorPlateModule;
 import com.lothrazar.cyclicmagic.module.CyclicWandModule;
 import com.lothrazar.cyclicmagic.module.EmeraldArmorModule;
@@ -77,6 +78,7 @@ public class ModMain {
     events = new EventRegistry();
     modules.add(new BuilderBlockModule().setType(ModuleType.INIT));
     modules.add(new BucketBlockModule().setType(ModuleType.INIT));
+    modules.add(new CarbonPaperModule().setType(ModuleType.INIT));
     modules.add(new ConveyorPlateModule().setType(ModuleType.INIT));
     modules.add(new CyclicWandModule().setType(ModuleType.INIT));
     modules.add(new EmeraldArmorModule().setType(ModuleType.INIT));
@@ -92,7 +94,6 @@ public class ModMain {
     
     ItemRegistry.construct(); //modules here
    
-
     events.register();
     this.syncConfig();
 

@@ -34,6 +34,7 @@ public class ItemRegistry {
   public static final ItemFoodCorruptedChorus corrupted_chorus = new ItemFoodCorruptedChorus();
 
   public static ItemCyclicWand cyclic_wand_build;
+  public static ItemPaperCarbon carbon_paper;
   public static final ItemFoodHeart heart_food = new ItemFoodHeart();
   public static final ItemProjectileTNT ender_tnt_1 = new ItemProjectileTNT(1);
   public static final ItemProjectileTNT ender_tnt_2 = new ItemProjectileTNT(2);
@@ -60,7 +61,6 @@ public class ItemRegistry {
   public static final ItemProjectileWater ender_water = new ItemProjectileWater()  ;
   public static final ItemProjectileSnow ender_snow = new ItemProjectileSnow()   ;
   public static final ItemProjectileLightning ender_lightning = new ItemProjectileLightning()   ;
-  public static final ItemPaperCarbon carbon_paper = new ItemPaperCarbon()   ;
   public static final ItemInventoryStorage storage_bag = new ItemInventoryStorage()   ;
 
   public static ItemSproutSeeds sprout_seed;
@@ -68,7 +68,6 @@ public class ItemRegistry {
   public static void construct() {
 
     addItem(storage_bag, "storage_bag");
-    addItem(carbon_paper, "carbon_paper");
     addItem(ender_blaze, "ender_blaze");
     addItem(ender_dungeon, "ender_dungeon");
     addItem(ender_fishing, "ender_fishing");
