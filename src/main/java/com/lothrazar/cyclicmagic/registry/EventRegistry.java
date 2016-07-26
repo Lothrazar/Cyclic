@@ -40,6 +40,9 @@ public class EventRegistry {
     events.add(new EventLightningDamage());
     events.add(new EventLootTableLoaded());
   }
+  public void addEvent(Object e){
+    events.add(e);
+  }
   public void syncConfig(Configuration config) {
     for (Object e : events) {
       if (e instanceof IHasConfig) {
