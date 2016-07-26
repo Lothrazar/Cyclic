@@ -13,6 +13,7 @@ import com.lothrazar.cyclicmagic.module.ICyclicModule;
 import com.lothrazar.cyclicmagic.module.MobSpawnModule;
 import com.lothrazar.cyclicmagic.module.SlimepadModule;
 import com.lothrazar.cyclicmagic.module.StackSizeModule;
+import com.lothrazar.cyclicmagic.module.UnbreakableSpawnerModule;
 import com.lothrazar.cyclicmagic.module.UncrafterModule;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
 import com.lothrazar.cyclicmagic.registry.*;
@@ -80,7 +81,7 @@ public class ModMain {
     modules.add(new BucketBlockModule().setType(ModuleType.INIT));
     modules.add(new ConveyorPlateModule().setType(ModuleType.INIT));
     modules.add(new FragileBlockModule().setType(ModuleType.INIT));
-
+    modules.add(new UnbreakableSpawnerModule().setType(ModuleType.INIT));
     modules.add(new MobSpawnModule().setType(ModuleType.INIT));
     
     ItemRegistry.construct(); //modules here
@@ -97,7 +98,7 @@ public class ModMain {
     registerModulesByType(ModuleType.INIT);
   
     ItemRegistry.register();
-    BlockRegistry.register();
+    BlockRegistry.registerDimensionOres();
     WorldGenRegistry.register();
     FuelRegistry.register();
    // StackSizeRegistry.register();
@@ -152,8 +153,7 @@ public class ModMain {
     EnchantRegistry.syncConfig(c);
     WorldGenRegistry.syncConfig(c);
    
-    events.syncConfig(c);
-    BlockRegistry.syncConfig(c);
+    events.syncConfig(c); 
     ItemRegistry.syncConfig(c);
     FuelRegistry.syncConfig(c);
     RecipeAlterRegistry.syncConfig(c);

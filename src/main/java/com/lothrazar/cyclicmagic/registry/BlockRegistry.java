@@ -7,13 +7,10 @@ import com.lothrazar.cyclicmagic.block.BlockDimensionOre;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre.SpawnType;
 import com.lothrazar.cyclicmagic.block.BlockScaffolding;
 import com.lothrazar.cyclicmagic.block.BlockUncrafting;
-import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemBlock;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockRegistry {
@@ -34,7 +31,6 @@ public class BlockRegistry {
   public static BlockDimensionOre end_emerald_ore;
   public static BlockDimensionOre nether_diamond_ore;
   public static BlockDimensionOre end_diamond_ore;
-  private static boolean spawnersUnbreakable;
   public static BlockBuilder builder_block;
 
   //lots of helpers/overrides with defaults
@@ -58,18 +54,8 @@ public class BlockRegistry {
     }
     blocks.add(b);
   }
-  public static void register() {
-    if (spawnersUnbreakable) {
-      Blocks.MOB_SPAWNER.setBlockUnbreakable();//just like .setHardness(-1.0F);
-    }
-    else{
-      Blocks.MOB_SPAWNER.setHardness(5.0F);//reset to normal http://minecraft.gamepedia.com/Monster_Spawner
-    }
-  
-    registerDimensionOres();
-  }
-
-  private static void registerDimensionOres() {
+ 
+  public static void registerDimensionOres() {
     //nether ores
     nether_gold_ore = new BlockDimensionOre(Items.GOLD_NUGGET, 0, 4);
     nether_gold_ore.setSpawnType(SpawnType.SILVERFISH, 1);
@@ -102,11 +88,5 @@ public class BlockRegistry {
     end_diamond_ore = new BlockDimensionOre(Items.DIAMOND);
     end_diamond_ore.setSpawnType(SpawnType.ENDERMITE, 8);
     registerBlock(end_diamond_ore, "end_diamond_ore");
-  }
-   
-  public static void syncConfig(Configuration config) {
-    String category = Const.ConfigCategory.blocks;
-    spawnersUnbreakable = config.getBoolean("Spawners Unbreakable", category, true, "Make mob spawners unbreakable");
- 
   }
 }
