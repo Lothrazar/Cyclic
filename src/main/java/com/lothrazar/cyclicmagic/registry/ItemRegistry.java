@@ -143,7 +143,6 @@ public class ItemRegistry {
     registerItem(item, name, false);// default is not hidden
   }
   public static void registerItem(Item item, String name, boolean isHidden) {
-    //item.setUnlocalizedName(name);
     GameRegistry.register(item, new ResourceLocation(Const.MODID, name));
     if (isHidden == false) {
       item.setCreativeTab(ModMain.TAB);
