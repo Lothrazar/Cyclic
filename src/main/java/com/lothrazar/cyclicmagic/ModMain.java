@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.module.BaseModule.ModuleType;
 import com.lothrazar.cyclicmagic.module.BucketBlockModule;
 import com.lothrazar.cyclicmagic.module.BuilderBlockModule;
 import com.lothrazar.cyclicmagic.module.CarbonPaperModule;
+import com.lothrazar.cyclicmagic.module.ChestSackModule;
 import com.lothrazar.cyclicmagic.module.ConveyorPlateModule;
 import com.lothrazar.cyclicmagic.module.CyclicWandModule;
 import com.lothrazar.cyclicmagic.module.EmeraldArmorModule;
@@ -81,6 +82,7 @@ public class ModMain {
     modules.add(new BuilderBlockModule().setType(ModuleType.INIT));
     modules.add(new BucketBlockModule().setType(ModuleType.INIT));
     modules.add(new CarbonPaperModule().setType(ModuleType.INIT));
+    modules.add(new ChestSackModule().setType(ModuleType.INIT));
     modules.add(new ConveyorPlateModule().setType(ModuleType.INIT));
     modules.add(new CyclicWandModule().setType(ModuleType.INIT));
     modules.add(new EnderBookModule().setType(ModuleType.INIT));
@@ -102,7 +104,7 @@ public class ModMain {
     this.syncConfig();
 
     registerModulesByType(ModuleType.PREINIT);
-    EnchantRegistry.register();//modules here
+    EnchantRegistry.register();//enchant module will be preinit
   }
   @EventHandler
   public void onInit(FMLInitializationEvent event) {

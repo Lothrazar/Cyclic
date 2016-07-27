@@ -47,8 +47,8 @@ public class ItemRegistry {
   public static final ItemToolHarvest tool_harvest_weeds = new ItemToolHarvest(ItemToolHarvest.HarvestType.WEEDS);
   public static final ItemToolHarvest tool_harvest_crops = new ItemToolHarvest(ItemToolHarvest.HarvestType.CROPS);
   public static final ItemToolHarvest tool_harvest_leaves = new ItemToolHarvest(ItemToolHarvest.HarvestType.LEAVES);
-  public static final ItemChestSackEmpty chest_sack_empty = new ItemChestSackEmpty();
-  public static final ItemChestSack chest_sack = new ItemChestSack();
+  public static ItemChestSackEmpty chest_sack_empty;
+  public static ItemChestSack chest_sack;
   public static final ItemToolSpawnInspect tool_spawn_inspect = new ItemToolSpawnInspect();
   public static final ItemSleepingBag sleeping_mat = new ItemSleepingBag();
   public static final ItemToolPearlReuse ender_pearl_reuse = new ItemToolPearlReuse();
@@ -84,9 +84,6 @@ public class ItemRegistry {
     ItemRegistry.addItem(ItemRegistry.tool_harvest_crops, "tool_harvest_crops");
     ItemRegistry.addItem(ItemRegistry.tool_harvest_leaves, "tool_harvest_leaves");
     ItemRegistry.addItem(ItemRegistry.tool_push, "tool_push");
-    ItemRegistry.chest_sack.setHidden();
-    ItemRegistry.addItem(ItemRegistry.chest_sack, "chest_sack");
-    ItemRegistry.addItem(ItemRegistry.chest_sack_empty, "chest_sack_empty");
     ItemRegistry.addItem(ItemRegistry.ender_tnt_1, "ender_tnt_1");
     ItemRegistry.addItem(ItemRegistry.ender_tnt_2, "ender_tnt_2");
     ItemRegistry.addItem(ItemRegistry.ender_tnt_3, "ender_tnt_3");
