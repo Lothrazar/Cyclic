@@ -6,12 +6,9 @@ import net.minecraftforge.common.config.Configuration;
 
 public class EnderBookModule extends BaseModule {
   private boolean moduleEnabled;
-  public EnderBookModule() {
-    super();
-    ItemRegistry.book_ender = new ItemEnderBook();
-  }
   @Override
   public void register() {
+    ItemRegistry.book_ender = new ItemEnderBook();
     ItemRegistry.addItem(ItemRegistry.book_ender, "book_ender");
   }
   @Override

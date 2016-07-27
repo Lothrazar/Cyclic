@@ -6,11 +6,8 @@ import net.minecraftforge.common.config.Configuration;
 
 public class CarbonPaperModule extends BaseModule {
   private boolean moduleEnabled;
-  public CarbonPaperModule(){
-    super();
-    ItemRegistry.carbon_paper = new ItemPaperCarbon()   ;
-  }
   public void register() {
+    ItemRegistry.carbon_paper = new ItemPaperCarbon();
     ItemRegistry.addItem(ItemRegistry.carbon_paper, "carbon_paper");
   }
   @Override

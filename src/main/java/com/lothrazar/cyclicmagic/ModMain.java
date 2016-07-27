@@ -105,6 +105,8 @@ public class ModMain {
 
     registerModulesByType(ModuleType.PREINIT);
     EnchantRegistry.register();//enchant module will be preinit
+    
+    
   }
   @EventHandler
   public void onInit(FMLInitializationEvent event) {
