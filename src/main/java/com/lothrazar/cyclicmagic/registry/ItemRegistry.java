@@ -43,7 +43,7 @@ public class ItemRegistry {
   public static final ItemProjectileTNT ender_tnt_5 = new ItemProjectileTNT(5);
   public static final ItemProjectileTNT ender_tnt_6 = new ItemProjectileTNT(6);
   public static final Item tool_push = new ItemToolPush();
-  public static final ItemAppleEmerald apple_emerald = new ItemAppleEmerald();
+  public static ItemAppleEmerald apple_emerald;
   public static final ItemToolHarvest tool_harvest_weeds = new ItemToolHarvest(ItemToolHarvest.HarvestType.WEEDS);
   public static final ItemToolHarvest tool_harvest_crops = new ItemToolHarvest(ItemToolHarvest.HarvestType.CROPS);
   public static final ItemToolHarvest tool_harvest_leaves = new ItemToolHarvest(ItemToolHarvest.HarvestType.LEAVES);
@@ -92,7 +92,6 @@ public class ItemRegistry {
     ItemRegistry.addItem(ItemRegistry.ender_tnt_6, "ender_tnt_6");
     ItemRegistry.addItem(ItemRegistry.corrupted_chorus, "corrupted_chorus");
     ItemRegistry.addItem(ItemRegistry.heart_food, "heart_food");
-    ItemRegistry.addItem(ItemRegistry.apple_emerald, "apple_emerald");
   }
   public static Item addItem(Item i, String key) {
     i.setUnlocalizedName(key);
