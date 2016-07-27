@@ -31,37 +31,37 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemRegistry {
   public static Map<String, Item> itemMap = new HashMap<String, Item>();
-  public static final ItemFoodCorruptedChorus corrupted_chorus = new ItemFoodCorruptedChorus();
-
+  
+  public static ItemFoodCorruptedChorus corrupted_chorus = new ItemFoodCorruptedChorus();
   public static ItemCyclicWand cyclic_wand_build;
   public static ItemPaperCarbon carbon_paper;
-  public static final ItemFoodHeart heart_food = new ItemFoodHeart();
-  public static final ItemProjectileTNT ender_tnt_1 = new ItemProjectileTNT(1);
-  public static final ItemProjectileTNT ender_tnt_2 = new ItemProjectileTNT(2);
-  public static final ItemProjectileTNT ender_tnt_3 = new ItemProjectileTNT(3);
-  public static final ItemProjectileTNT ender_tnt_4 = new ItemProjectileTNT(4);
-  public static final ItemProjectileTNT ender_tnt_5 = new ItemProjectileTNT(5);
-  public static final ItemProjectileTNT ender_tnt_6 = new ItemProjectileTNT(6);
-  public static final Item tool_push = new ItemToolPush();
+  public static ItemFoodHeart heart_food = new ItemFoodHeart();
+  public static ItemProjectileTNT ender_tnt_1;
+  public static ItemProjectileTNT ender_tnt_2;
+  public static ItemProjectileTNT ender_tnt_3;
+  public static ItemProjectileTNT ender_tnt_4;
+  public static ItemProjectileTNT ender_tnt_5;
+  public static ItemProjectileTNT ender_tnt_6;
+  public static Item tool_push = new ItemToolPush();
   public static ItemAppleEmerald apple_emerald;
-  public static final ItemToolHarvest tool_harvest_weeds = new ItemToolHarvest(ItemToolHarvest.HarvestType.WEEDS);
-  public static final ItemToolHarvest tool_harvest_crops = new ItemToolHarvest(ItemToolHarvest.HarvestType.CROPS);
-  public static final ItemToolHarvest tool_harvest_leaves = new ItemToolHarvest(ItemToolHarvest.HarvestType.LEAVES);
+  public static ItemToolHarvest tool_harvest_weeds = new ItemToolHarvest(ItemToolHarvest.HarvestType.WEEDS);
+  public static ItemToolHarvest tool_harvest_crops = new ItemToolHarvest(ItemToolHarvest.HarvestType.CROPS);
+  public static ItemToolHarvest tool_harvest_leaves = new ItemToolHarvest(ItemToolHarvest.HarvestType.LEAVES);
   public static ItemChestSackEmpty chest_sack_empty;
   public static ItemChestSack chest_sack;
-  public static final ItemToolSpawnInspect tool_spawn_inspect = new ItemToolSpawnInspect();
-  public static final ItemSleepingBag sleeping_mat = new ItemSleepingBag();
-  public static final ItemToolPearlReuse ender_pearl_reuse = new ItemToolPearlReuse();
   public static ItemEnderBook book_ender;
-  public static final ItemProjectileBlaze ender_blaze = new ItemProjectileBlaze()  ;
-  public static final ItemProjectileDungeon ender_dungeon = new ItemProjectileDungeon();
-  public static final ItemProjectileFishing ender_fishing = new ItemProjectileFishing();
-  public static final ItemProjectileWool ender_wool = new ItemProjectileWool()   ;
-  public static final ItemProjectileTorch ender_torch = new ItemProjectileTorch()  ;
-  public static final ItemProjectileWater ender_water = new ItemProjectileWater()  ;
-  public static final ItemProjectileSnow ender_snow = new ItemProjectileSnow()   ;
-  public static final ItemProjectileLightning ender_lightning = new ItemProjectileLightning()   ;
   public static ItemInventoryStorage storage_bag;
+  public static ItemToolSpawnInspect tool_spawn_inspect = new ItemToolSpawnInspect();
+  public static ItemSleepingBag sleeping_mat = new ItemSleepingBag();
+  public static ItemToolPearlReuse ender_pearl_reuse = new ItemToolPearlReuse();
+  public static ItemProjectileBlaze ender_blaze = new ItemProjectileBlaze();
+  public static ItemProjectileDungeon ender_dungeon = new ItemProjectileDungeon();
+  public static ItemProjectileFishing ender_fishing = new ItemProjectileFishing();
+  public static ItemProjectileWool ender_wool = new ItemProjectileWool();
+  public static ItemProjectileTorch ender_torch = new ItemProjectileTorch();
+  public static ItemProjectileWater ender_water = new ItemProjectileWater();
+  public static ItemProjectileSnow ender_snow = new ItemProjectileSnow();
+  public static ItemProjectileLightning ender_lightning = new ItemProjectileLightning();
 
   public static ItemSproutSeeds sprout_seed;
   
@@ -84,12 +84,6 @@ public class ItemRegistry {
     ItemRegistry.addItem(ItemRegistry.tool_harvest_crops, "tool_harvest_crops");
     ItemRegistry.addItem(ItemRegistry.tool_harvest_leaves, "tool_harvest_leaves");
     ItemRegistry.addItem(ItemRegistry.tool_push, "tool_push");
-    ItemRegistry.addItem(ItemRegistry.ender_tnt_1, "ender_tnt_1");
-    ItemRegistry.addItem(ItemRegistry.ender_tnt_2, "ender_tnt_2");
-    ItemRegistry.addItem(ItemRegistry.ender_tnt_3, "ender_tnt_3");
-    ItemRegistry.addItem(ItemRegistry.ender_tnt_4, "ender_tnt_4");
-    ItemRegistry.addItem(ItemRegistry.ender_tnt_5, "ender_tnt_5");
-    ItemRegistry.addItem(ItemRegistry.ender_tnt_6, "ender_tnt_6");
     ItemRegistry.addItem(ItemRegistry.corrupted_chorus, "corrupted_chorus");
     ItemRegistry.addItem(ItemRegistry.heart_food, "heart_food");
   }
@@ -99,7 +93,6 @@ public class ItemRegistry {
     return i;
   }
   public static void syncConfig(Configuration config) {
-    //		Property prop;
     Item item;
     for (String key : itemMap.keySet()) {
       item = itemMap.get(key);
@@ -118,7 +111,6 @@ public class ItemRegistry {
     }
   }
   public static void register() { 
-    //		addItem(new ItemFlintTool(),"flint_tool");
     //maybe one day it will be all base items
     Item item;
     for (String key : itemMap.keySet()) {
