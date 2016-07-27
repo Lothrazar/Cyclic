@@ -9,6 +9,7 @@ import com.lothrazar.cyclicmagic.module.CarbonPaperModule;
 import com.lothrazar.cyclicmagic.module.ConveyorPlateModule;
 import com.lothrazar.cyclicmagic.module.CyclicWandModule;
 import com.lothrazar.cyclicmagic.module.EmeraldArmorModule;
+import com.lothrazar.cyclicmagic.module.EnderBookModule;
 import com.lothrazar.cyclicmagic.module.FragileBlockModule;
 import com.lothrazar.cyclicmagic.module.HorseFoodModule;
 import com.lothrazar.cyclicmagic.module.ICyclicModule;
@@ -82,6 +83,7 @@ public class ModMain {
     modules.add(new CarbonPaperModule().setType(ModuleType.INIT));
     modules.add(new ConveyorPlateModule().setType(ModuleType.INIT));
     modules.add(new CyclicWandModule().setType(ModuleType.INIT));
+    modules.add(new EnderBookModule().setType(ModuleType.INIT));
     modules.add(new EmeraldArmorModule().setType(ModuleType.INIT));
     modules.add(new FragileBlockModule().setType(ModuleType.INIT));
     modules.add(new HorseFoodModule().setType(ModuleType.INIT));

@@ -52,7 +52,7 @@ public class ItemRegistry {
   public static final ItemToolSpawnInspect tool_spawn_inspect = new ItemToolSpawnInspect();
   public static final ItemSleepingBag sleeping_mat = new ItemSleepingBag();
   public static final ItemToolPearlReuse ender_pearl_reuse = new ItemToolPearlReuse();
-  public static final ItemEnderBook book_ender = new ItemEnderBook();
+  public static ItemEnderBook book_ender;
   public static final ItemProjectileBlaze ender_blaze = new ItemProjectileBlaze()  ;
   public static final ItemProjectileDungeon ender_dungeon = new ItemProjectileDungeon();
   public static final ItemProjectileFishing ender_fishing = new ItemProjectileFishing();
@@ -61,42 +61,41 @@ public class ItemRegistry {
   public static final ItemProjectileWater ender_water = new ItemProjectileWater()  ;
   public static final ItemProjectileSnow ender_snow = new ItemProjectileSnow()   ;
   public static final ItemProjectileLightning ender_lightning = new ItemProjectileLightning()   ;
-  public static ItemInventoryStorage storage_bag = new ItemInventoryStorage()   ;
+  public static ItemInventoryStorage storage_bag;
 
   public static ItemSproutSeeds sprout_seed;
   
   public static void construct() {
 
-    addItem(ender_blaze, "ender_blaze");
-    addItem(ender_dungeon, "ender_dungeon");
-    addItem(ender_fishing, "ender_fishing");
-    addItem(ender_wool  , "ender_wool");
-    addItem(ender_torch  , "ender_torch");
-    addItem(ender_water , "ender_water");
-    addItem(ender_snow  , "ender_snow");
-    addItem(ender_lightning, "ender_lightning");
-    addItem(book_ender, "book_ender");
-    addItem(sleeping_mat, "sleeping_mat");
-    addItem(new ItemFoodCrafting(), "crafting_food");
-    addItem(new ItemFoodInventory(), "inventory_food");
-    addItem(tool_spawn_inspect, "tool_spawn_inspect");
-    addItem(ender_pearl_reuse, "ender_pearl_reuse");
-    addItem(tool_harvest_weeds, "tool_harvest_weeds");
-    addItem(tool_harvest_crops, "tool_harvest_crops");
-    addItem(tool_harvest_leaves, "tool_harvest_leaves");
-    addItem(tool_push, "tool_push");
-    chest_sack.setHidden();
-    addItem(chest_sack, "chest_sack");
-    addItem(chest_sack_empty, "chest_sack_empty");
-    addItem(ender_tnt_1, "ender_tnt_1");
-    addItem(ender_tnt_2, "ender_tnt_2");
-    addItem(ender_tnt_3, "ender_tnt_3");
-    addItem(ender_tnt_4, "ender_tnt_4");
-    addItem(ender_tnt_5, "ender_tnt_5");
-    addItem(ender_tnt_6, "ender_tnt_6");
-    addItem(corrupted_chorus, "corrupted_chorus");
-    addItem(heart_food, "heart_food");
-    addItem(apple_emerald, "apple_emerald");
+    ItemRegistry.addItem(ItemRegistry.ender_blaze, "ender_blaze");
+    ItemRegistry.addItem(ItemRegistry.ender_dungeon, "ender_dungeon");
+    ItemRegistry.addItem(ItemRegistry.ender_fishing, "ender_fishing");
+    ItemRegistry.addItem(ItemRegistry.ender_wool  , "ender_wool");
+    ItemRegistry.addItem(ItemRegistry.ender_torch  , "ender_torch");
+    ItemRegistry.addItem(ItemRegistry.ender_water , "ender_water");
+    ItemRegistry.addItem(ItemRegistry.ender_snow  , "ender_snow");
+    ItemRegistry.addItem(ItemRegistry.ender_lightning, "ender_lightning");
+    ItemRegistry.addItem(ItemRegistry.sleeping_mat, "sleeping_mat");
+    ItemRegistry.addItem(new ItemFoodCrafting(), "crafting_food");
+    ItemRegistry.addItem(new ItemFoodInventory(), "inventory_food");
+    ItemRegistry.addItem(ItemRegistry.tool_spawn_inspect, "tool_spawn_inspect");
+    ItemRegistry.addItem(ItemRegistry.ender_pearl_reuse, "ender_pearl_reuse");
+    ItemRegistry.addItem(ItemRegistry.tool_harvest_weeds, "tool_harvest_weeds");
+    ItemRegistry.addItem(ItemRegistry.tool_harvest_crops, "tool_harvest_crops");
+    ItemRegistry.addItem(ItemRegistry.tool_harvest_leaves, "tool_harvest_leaves");
+    ItemRegistry.addItem(ItemRegistry.tool_push, "tool_push");
+    ItemRegistry.chest_sack.setHidden();
+    ItemRegistry.addItem(ItemRegistry.chest_sack, "chest_sack");
+    ItemRegistry.addItem(ItemRegistry.chest_sack_empty, "chest_sack_empty");
+    ItemRegistry.addItem(ItemRegistry.ender_tnt_1, "ender_tnt_1");
+    ItemRegistry.addItem(ItemRegistry.ender_tnt_2, "ender_tnt_2");
+    ItemRegistry.addItem(ItemRegistry.ender_tnt_3, "ender_tnt_3");
+    ItemRegistry.addItem(ItemRegistry.ender_tnt_4, "ender_tnt_4");
+    ItemRegistry.addItem(ItemRegistry.ender_tnt_5, "ender_tnt_5");
+    ItemRegistry.addItem(ItemRegistry.ender_tnt_6, "ender_tnt_6");
+    ItemRegistry.addItem(ItemRegistry.corrupted_chorus, "corrupted_chorus");
+    ItemRegistry.addItem(ItemRegistry.heart_food, "heart_food");
+    ItemRegistry.addItem(ItemRegistry.apple_emerald, "apple_emerald");
   }
   public static Item addItem(Item i, String key) {
     i.setUnlocalizedName(key);
