@@ -17,6 +17,7 @@ import com.lothrazar.cyclicmagic.module.MobSpawnModule;
 import com.lothrazar.cyclicmagic.module.PotionModule;
 import com.lothrazar.cyclicmagic.module.SlimepadModule;
 import com.lothrazar.cyclicmagic.module.StackSizeModule;
+import com.lothrazar.cyclicmagic.module.StorageBagModule;
 import com.lothrazar.cyclicmagic.module.UnbreakableSpawnerModule;
 import com.lothrazar.cyclicmagic.module.UncrafterModule;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
@@ -89,6 +90,7 @@ public class ModMain {
     modules.add(new PotionModule().setType(ModuleType.INIT));
     modules.add(new SlimepadModule().setType(ModuleType.INIT));
     modules.add(new StackSizeModule().setType(ModuleType.INIT));
+    modules.add(new StorageBagModule().setType(ModuleType.INIT));
     modules.add(new UnbreakableSpawnerModule().setType(ModuleType.INIT));
     modules.add(new UncrafterModule().setType(ModuleType.INIT));
     

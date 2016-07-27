@@ -5,7 +5,7 @@ import net.minecraftforge.common.config.Configuration;
 public interface ICyclicModule {
   public ICyclicModule setType(ModuleType t);
   public ModuleType getType();
-  public abstract boolean isEnabled();
-  public abstract void register();
-  public abstract void syncConfig(Configuration config);
+  public void register();
+  public void syncConfig(Configuration config);
+  public boolean isEnabled();
 }

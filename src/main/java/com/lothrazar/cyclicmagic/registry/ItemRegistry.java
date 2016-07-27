@@ -61,13 +61,12 @@ public class ItemRegistry {
   public static final ItemProjectileWater ender_water = new ItemProjectileWater()  ;
   public static final ItemProjectileSnow ender_snow = new ItemProjectileSnow()   ;
   public static final ItemProjectileLightning ender_lightning = new ItemProjectileLightning()   ;
-  public static final ItemInventoryStorage storage_bag = new ItemInventoryStorage()   ;
+  public static ItemInventoryStorage storage_bag = new ItemInventoryStorage()   ;
 
   public static ItemSproutSeeds sprout_seed;
   
   public static void construct() {
 
-    addItem(storage_bag, "storage_bag");
     addItem(ender_blaze, "ender_blaze");
     addItem(ender_dungeon, "ender_dungeon");
     addItem(ender_fishing, "ender_fishing");

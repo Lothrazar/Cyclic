@@ -14,8 +14,6 @@ public class MagicBeanModule extends BaseModule {
     BlockRegistry.registerBlock(sprout, "sprout", true);
     ItemRegistry.sprout_seed = new ItemSproutSeeds(sprout, Blocks.FARMLAND);
     ItemRegistry.addItem(ItemRegistry.sprout_seed, "sprout_seed");
-//    ItemRegistry.registerItem(ItemRegistry.sprout_seed, "sprout_seed");
-    
   }
   @Override
   public void syncConfig(Configuration config) {
