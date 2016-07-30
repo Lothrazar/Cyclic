@@ -1,8 +1,8 @@
-package com.lothrazar.cyclicmagic.registry;
+package com.lothrazar.cyclicmagic.module;
 import java.util.Arrays;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre.SpawnType;
-import com.lothrazar.cyclicmagic.module.BaseEventModule;
+import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.world.gen.WorldGenEmeraldHeight;
 import com.lothrazar.cyclicmagic.world.gen.WorldGenEndOre;

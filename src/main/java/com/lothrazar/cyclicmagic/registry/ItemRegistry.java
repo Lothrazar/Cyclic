@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.registry;
 import java.util.HashMap;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.IHasConfig;
-import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.item.ItemAppleEmerald;
 import com.lothrazar.cyclicmagic.item.ItemChestSack;
@@ -29,7 +28,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemRegistry {
   public static Map<String, Item> itemMap = new HashMap<String, Item>();
-  
   public static ItemCyclicWand cyclic_wand_build;
   public static ItemPaperCarbon carbon_paper;
   public static ItemProjectileTNT ender_tnt_1;
@@ -59,12 +57,10 @@ public class ItemRegistry {
   public static ItemProjectileSnow ender_snow;
   public static ItemProjectileLightning ender_lightning;
   public static ItemSproutSeeds sprout_seed;
-
-  public static ItemFoodCrafting crafting_food;   
-  public static ItemFoodInventory inventory_food; 
-  public static ItemFoodHeart heart_food;         
-  public static ItemFoodCorruptedChorus corrupted_chorus;          
-  
+  public static ItemFoodCrafting crafting_food;
+  public static ItemFoodInventory inventory_food;
+  public static ItemFoodHeart heart_food;
+  public static ItemFoodCorruptedChorus corrupted_chorus;
   public static Item addItem(Item i, String key) {
     i.setUnlocalizedName(key);
     itemMap.put(key, i);
@@ -79,17 +75,6 @@ public class ItemRegistry {
       }
     }
   }
-  public static void registerRecipes() {
-    Item item;
-    for (String key : itemMap.keySet()) {
-      item = itemMap.get(key);
-      if (item instanceof IHasRecipe) {
-        ((IHasRecipe) item).addRecipe();
-      }
-    }
-  }
-
- 
   public static void registerItem(Item item, String name) {
     registerItem(item, name, false);// default is not hidden
   }

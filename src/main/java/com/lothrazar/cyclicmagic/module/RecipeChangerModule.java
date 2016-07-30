@@ -1,5 +1,4 @@
-package com.lothrazar.cyclicmagic.registry;
-import com.lothrazar.cyclicmagic.module.BaseModule;
+package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilItem;
 import com.lothrazar.cyclicmagic.util.UtilRecipe;

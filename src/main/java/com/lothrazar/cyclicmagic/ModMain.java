@@ -9,7 +9,6 @@ import com.lothrazar.cyclicmagic.module.*;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
 import com.lothrazar.cyclicmagic.registry.*;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
-import com.lothrazar.cyclicmagic.registry.FuelRegistry.FuelHandler;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
@@ -126,6 +125,7 @@ public class ModMain {
     modules.add(new F3InfoModule());
     modules.add(new WorldGenModule());
     modules.add(new RecipeChangerModule());
+    modules.add(new VillagerCreateModule());
     //event modules TODO: make actual modules.?? maybe
     ModMain.instance.events.addEvent(new EventSpells());//so far only used by cyclic wand...
   }
@@ -144,12 +144,13 @@ public class ModMain {
       else {
         ItemRegistry.registerItem(item, key);
       }
+      if (item instanceof IHasRecipe) {
+        ((IHasRecipe) item).addRecipe();
+      }
     }
-    ItemRegistry.registerRecipes();
     if (FuelRegistry.enabled) {
       GameRegistry.registerFuelHandler(new FuelRegistry.FuelHandler());
     }
-    VillageTradeRegistry.register();
     proxy.register();
     NetworkRegistry.INSTANCE.registerGuiHandler(this, new ModGuiHandler());
     //finally, some items have extra forge events to hook into.
@@ -180,7 +181,6 @@ public class ModMain {
     FuelRegistry.syncConfig(c);
     DispenserBehaviorRegistry.syncConfig(c);
     CommandRegistry.syncConfig(c);
-    VillageTradeRegistry.syncConfig(c);
     KeyInventoryShiftRegistry.syncConfig(c);
     c.save();
   }
