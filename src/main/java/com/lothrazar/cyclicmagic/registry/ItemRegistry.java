@@ -20,7 +20,6 @@ import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
 import com.lothrazar.cyclicmagic.item.ItemSleepingBag;
 import com.lothrazar.cyclicmagic.item.ItemSproutSeeds;
 import com.lothrazar.cyclicmagic.item.ItemToolHarvest;
-import com.lothrazar.cyclicmagic.item.ItemToolPush;
 import com.lothrazar.cyclicmagic.item.ItemToolSpawnInspect;
 import com.lothrazar.cyclicmagic.item.projectile.*;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -32,59 +31,43 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class ItemRegistry {
   public static Map<String, Item> itemMap = new HashMap<String, Item>();
   
-  public static ItemFoodCorruptedChorus corrupted_chorus = new ItemFoodCorruptedChorus();
   public static ItemCyclicWand cyclic_wand_build;
   public static ItemPaperCarbon carbon_paper;
-  public static ItemFoodHeart heart_food = new ItemFoodHeart();
   public static ItemProjectileTNT ender_tnt_1;
   public static ItemProjectileTNT ender_tnt_2;
   public static ItemProjectileTNT ender_tnt_3;
   public static ItemProjectileTNT ender_tnt_4;
   public static ItemProjectileTNT ender_tnt_5;
   public static ItemProjectileTNT ender_tnt_6;
-  public static Item tool_push = new ItemToolPush();
+  public static Item tool_push;
   public static ItemAppleEmerald apple_emerald;
-  public static ItemToolHarvest tool_harvest_weeds = new ItemToolHarvest(ItemToolHarvest.HarvestType.WEEDS);
-  public static ItemToolHarvest tool_harvest_crops = new ItemToolHarvest(ItemToolHarvest.HarvestType.CROPS);
-  public static ItemToolHarvest tool_harvest_leaves = new ItemToolHarvest(ItemToolHarvest.HarvestType.LEAVES);
+  public static ItemToolHarvest tool_harvest_weeds;
+  public static ItemToolHarvest tool_harvest_crops;
+  public static ItemToolHarvest tool_harvest_leaves;
   public static ItemChestSackEmpty chest_sack_empty;
   public static ItemChestSack chest_sack;
   public static ItemEnderBook book_ender;
   public static ItemInventoryStorage storage_bag;
-  public static ItemToolSpawnInspect tool_spawn_inspect = new ItemToolSpawnInspect();
-  public static ItemSleepingBag sleeping_mat = new ItemSleepingBag();
-  public static ItemToolPearlReuse ender_pearl_reuse = new ItemToolPearlReuse();
-  public static ItemProjectileBlaze ender_blaze = new ItemProjectileBlaze();
-  public static ItemProjectileDungeon ender_dungeon = new ItemProjectileDungeon();
-  public static ItemProjectileFishing ender_fishing = new ItemProjectileFishing();
-  public static ItemProjectileWool ender_wool = new ItemProjectileWool();
-  public static ItemProjectileTorch ender_torch = new ItemProjectileTorch();
-  public static ItemProjectileWater ender_water = new ItemProjectileWater();
-  public static ItemProjectileSnow ender_snow = new ItemProjectileSnow();
-  public static ItemProjectileLightning ender_lightning = new ItemProjectileLightning();
-
+  public static ItemToolSpawnInspect tool_spawn_inspect;
+  public static ItemSleepingBag sleeping_mat;
+  public static ItemToolPearlReuse ender_pearl_reuse;
+  public static ItemProjectileBlaze ender_blaze;
+  public static ItemProjectileDungeon ender_dungeon;
+  public static ItemProjectileFishing ender_fishing;
+  public static ItemProjectileWool ender_wool;
+  public static ItemProjectileTorch ender_torch;
+  public static ItemProjectileWater ender_water;
+  public static ItemProjectileSnow ender_snow;
+  public static ItemProjectileLightning ender_lightning;
   public static ItemSproutSeeds sprout_seed;
   
+  public static ItemFoodHeart heart_food = new ItemFoodHeart();
+  public static ItemFoodCorruptedChorus corrupted_chorus = new ItemFoodCorruptedChorus();
+  
   public static void construct() {
-
-    ItemRegistry.addItem(ItemRegistry.ender_blaze, "ender_blaze");
-    ItemRegistry.addItem(ItemRegistry.ender_dungeon, "ender_dungeon");
-    ItemRegistry.addItem(ItemRegistry.ender_fishing, "ender_fishing");
-    ItemRegistry.addItem(ItemRegistry.ender_wool  , "ender_wool");
-    ItemRegistry.addItem(ItemRegistry.ender_torch  , "ender_torch");
-    ItemRegistry.addItem(ItemRegistry.ender_water , "ender_water");
-    ItemRegistry.addItem(ItemRegistry.ender_snow  , "ender_snow");
-    ItemRegistry.addItem(ItemRegistry.ender_lightning, "ender_lightning");
-    ItemRegistry.addItem(ItemRegistry.sleeping_mat, "sleeping_mat");
-    ItemRegistry.addItem(new ItemFoodCrafting(), "crafting_food");
+    ItemRegistry.addItem(new ItemFoodCrafting(), "crafting_food");  
     ItemRegistry.addItem(new ItemFoodInventory(), "inventory_food");
-    ItemRegistry.addItem(ItemRegistry.tool_spawn_inspect, "tool_spawn_inspect");
-    ItemRegistry.addItem(ItemRegistry.ender_pearl_reuse, "ender_pearl_reuse");
-    ItemRegistry.addItem(ItemRegistry.tool_harvest_weeds, "tool_harvest_weeds");
-    ItemRegistry.addItem(ItemRegistry.tool_harvest_crops, "tool_harvest_crops");
-    ItemRegistry.addItem(ItemRegistry.tool_harvest_leaves, "tool_harvest_leaves");
-    ItemRegistry.addItem(ItemRegistry.tool_push, "tool_push");
-    ItemRegistry.addItem(ItemRegistry.corrupted_chorus, "corrupted_chorus");
+    ItemRegistry.addItem(ItemRegistry.corrupted_chorus, "corrupted_chorus"); 
     ItemRegistry.addItem(ItemRegistry.heart_food, "heart_food");
   }
   public static Item addItem(Item i, String key) {

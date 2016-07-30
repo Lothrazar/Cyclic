@@ -13,7 +13,9 @@ public abstract class BaseModule implements ICyclicModule {
   public ModuleType getType() {
     return type;
   }
-  public abstract boolean isEnabled();
+  public boolean isEnabled() {
+    return true;
+  }
   public abstract void register();
   public abstract void syncConfig(Configuration config);
 }

@@ -49,9 +49,4 @@ public class StackSizeModule extends BaseModule {
       enabledMap.put(entry.getKey(), enabled);
     }
   }
-  @Override
-  public boolean isEnabled() {
-    // static true because it has individual config toggles
-    return true;
-  }
 }

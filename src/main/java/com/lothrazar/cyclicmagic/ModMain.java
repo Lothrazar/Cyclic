@@ -19,9 +19,11 @@ import com.lothrazar.cyclicmagic.module.ICyclicModule;
 import com.lothrazar.cyclicmagic.module.MagicBeanModule;
 import com.lothrazar.cyclicmagic.module.MobSpawnModule;
 import com.lothrazar.cyclicmagic.module.PotionModule;
+import com.lothrazar.cyclicmagic.module.ProjectileModule;
 import com.lothrazar.cyclicmagic.module.SlimepadModule;
 import com.lothrazar.cyclicmagic.module.StackSizeModule;
 import com.lothrazar.cyclicmagic.module.StorageBagModule;
+import com.lothrazar.cyclicmagic.module.ToolsModule;
 import com.lothrazar.cyclicmagic.module.UnbreakableSpawnerModule;
 import com.lothrazar.cyclicmagic.module.UncrafterModule;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
@@ -96,12 +98,32 @@ public class ModMain {
     modules.add(new MagicBeanModule().setType(ModuleType.INIT));
     modules.add(new MobSpawnModule().setType(ModuleType.INIT));
     modules.add(new PotionModule().setType(ModuleType.INIT));
+    modules.add(new ProjectileModule().setType(ModuleType.INIT));
     modules.add(new SlimepadModule().setType(ModuleType.INIT));
     modules.add(new StackSizeModule().setType(ModuleType.INIT));
+    modules.add(new ToolsModule().setType(ModuleType.INIT)); //new
     modules.add(new StorageBagModule().setType(ModuleType.INIT));
     modules.add(new UnbreakableSpawnerModule().setType(ModuleType.INIT));
     modules.add(new UncrafterModule().setType(ModuleType.INIT));
+    /*invo cakes 2x
+    3x scythes
+    piston wands
+    ender blaze
+    chorus fruit
+    e lightning
+    e snow
+    e torch
+    ender orb
+    e water
+    e fish
+    e shears
+    e dungeon finder
+    spawn detector
+    sleeping mat
     
+    ??? nether ores
+    
+    */
     ItemRegistry.construct(); //modules here
    
     events.register();
