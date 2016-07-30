@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.registry;
 import java.util.HashMap;
 import java.util.Map;
-import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.item.ItemAppleEmerald;
 import com.lothrazar.cyclicmagic.item.ItemChestSack;
@@ -23,7 +22,6 @@ import com.lothrazar.cyclicmagic.item.projectile.*;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemRegistry {
@@ -65,15 +63,6 @@ public class ItemRegistry {
     i.setUnlocalizedName(key);
     itemMap.put(key, i);
     return i;
-  }
-  public static void syncConfig(Configuration config) {
-    Item item;
-    for (String key : itemMap.keySet()) {
-      item = itemMap.get(key);
-      if (item instanceof IHasConfig) {
-        ((IHasConfig) item).syncConfig(config);
-      }
-    }
   }
   public static void registerItem(Item item, String name) {
     registerItem(item, name, false);// default is not hidden

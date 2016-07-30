@@ -63,12 +63,12 @@ public class ToolsModule extends BaseModule {
   }
   @Override
   public void syncConfig(Configuration config) {
-    enableSpawnInspect = config.getBoolean("SpawnInspect", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enablePearlReuse = config.getBoolean("enablePearlReuse", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableHarvestWeeds = config.getBoolean("enableHarvestWeeds", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableToolHarvest = config.getBoolean("enableToolHarvest", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableHarvestLeaves = config.getBoolean("HarvestLeaves", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableToolPush     = config.getBoolean("ToolPush", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableSpawnInspect = config.getBoolean("SpawnDetector", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enablePearlReuse = config.getBoolean("EnderOrb", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableHarvestWeeds = config.getBoolean("BrushScythe", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableToolHarvest = config.getBoolean("HarvestScythe", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableHarvestLeaves = config.getBoolean("TreeScythe", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableToolPush     = config.getBoolean("PistonScepter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableSleepingMat  = config.getBoolean("SleepingMat", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableCyclicWand = config.getBoolean("CyclicWand", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }

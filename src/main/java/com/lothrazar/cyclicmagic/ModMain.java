@@ -157,6 +157,8 @@ public class ModMain {
     //more core module stuff
     proxy.register();
     NetworkRegistry.INSTANCE.registerGuiHandler(this, new ModGuiHandler());
+    //fixes things , stuff was added to items and content that has config
+    this.syncConfig();
   }
   @EventHandler
   public void onPostInit(FMLPostInitializationEvent event) {
@@ -171,13 +173,19 @@ public class ModMain {
     }
   }
   public void syncConfig() {
+    Configuration c = getConfig();
     // hit on startup and on change event from
     // we cant make this a list/loop because the order does matter
-    Configuration c = getConfig();
     for (ICyclicModule module : modules) {
       module.syncConfig(c);
     }
-    ItemRegistry.syncConfig(c);
+    Item item;
+    for (String key : ItemRegistry.itemMap.keySet()) {
+      item = ItemRegistry.itemMap.get(key);
+      if (item instanceof IHasConfig) {
+        ((IHasConfig) item).syncConfig(config);
+      }
+    }
     FuelRegistry.syncConfig(c);
     KeyInventoryShiftRegistry.syncConfig(c);
     c.save();
