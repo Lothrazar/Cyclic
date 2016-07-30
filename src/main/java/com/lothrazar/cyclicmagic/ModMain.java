@@ -136,8 +136,7 @@ public class ModMain {
     ModMain.instance.events.addEvent(new DimensionOreModule());
     modules.add(new PassthroughActionModule());
     ModMain.instance.events.addEvent(new EventPotionModule());
-    ModMain.instance.events.addEvent(new SaplingMutationModule());
-    ModMain.instance.events.addEvent(new SaplingDespawnPlantModule());
+    modules.add(new SaplingMutationModule());
     modules.add(new SkullNameFromSignModule());
     modules.add(new F3InfoModule());
     ModMain.instance.events.addEvent(new EventSpells());//so far only used by cyclic wand...
