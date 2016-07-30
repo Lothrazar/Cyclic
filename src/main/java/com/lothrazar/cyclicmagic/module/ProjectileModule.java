@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityBlazeBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDungeonEye;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamite;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityFishingBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityHomeBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityLightningballBolt;
