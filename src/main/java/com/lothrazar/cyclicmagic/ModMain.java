@@ -126,6 +126,7 @@ public class ModMain {
     modules.add(new WorldGenModule());
     modules.add(new RecipeChangerModule());
     modules.add(new VillagerCreateModule());
+    modules.add(new DispenserBehaviorModule());
     //event modules TODO: make actual modules.?? maybe
     ModMain.instance.events.addEvent(new EventSpells());//so far only used by cyclic wand...
   }
@@ -151,17 +152,15 @@ public class ModMain {
     if (FuelRegistry.enabled) {
       GameRegistry.registerFuelHandler(new FuelRegistry.FuelHandler());
     }
+    //more core module stuff
     proxy.register();
     NetworkRegistry.INSTANCE.registerGuiHandler(this, new ModGuiHandler());
-    //finally, some items have extra forge events to hook into.
   }
   @EventHandler
   public void onPostInit(FMLPostInitializationEvent event) {
     for (ICyclicModule module : modules) {
       module.onPostInit();
     }
-    // registers all plantable crops. 
-    DispenserBehaviorRegistry.register();
   }
   @EventHandler
   public void onServerStarting(FMLServerStartingEvent event) {
@@ -179,7 +178,6 @@ public class ModMain {
     }
     ItemRegistry.syncConfig(c);
     FuelRegistry.syncConfig(c);
-    DispenserBehaviorRegistry.syncConfig(c);
     CommandRegistry.syncConfig(c);
     KeyInventoryShiftRegistry.syncConfig(c);
     c.save();

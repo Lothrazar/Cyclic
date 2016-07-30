@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.registry;
+package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.dispenser.BehaviorPlantSeed;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.BlockDispenser;
@@ -7,21 +7,19 @@ import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
-public class DispenserBehaviorRegistry {
-  private static boolean seedsEnabled;
-  public static void register() {
+public class DispenserBehaviorModule extends BaseModule{
+  private boolean seedsEnabled;
+  @Override
+  public void onPostInit() {
     if (seedsEnabled) {
       for (Item item : Item.REGISTRY) { // GameData.getBlockItemMap().entrySet()){
-        if (item == null) {
-          continue;
-        }
-        if (item instanceof IPlantable) {
+        if (item != null && item instanceof IPlantable) {
           BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(item, new BehaviorPlantSeed());
         }
       }
     }
   }
-  public static void syncConfig(Configuration config) {
+  public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.blocks;
     Property prop = config.get(category, "Dispense Plants", true, "Dispensers can plant growable seeds");
     prop.setRequiresWorldRestart(true);
