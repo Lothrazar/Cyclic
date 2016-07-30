@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.module;
+import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.item.ItemAppleEmerald;
 import com.lothrazar.cyclicmagic.item.ItemFoodCorruptedChorus;
 import com.lothrazar.cyclicmagic.item.ItemFoodCrafting;
@@ -23,6 +24,7 @@ public class ConsumeablesModule extends BaseModule {
     if (enableHeartContainer) {
       ItemRegistry.heart_food = new ItemFoodHeart();
       ItemRegistry.addItem(ItemRegistry.heart_food, "heart_food");
+      ModMain.instance.events.addEvent(ItemRegistry.heart_food);
     }
     if (enableInventoryCrafting) {
       ItemRegistry.crafting_food = new ItemFoodCrafting();
@@ -35,6 +37,7 @@ public class ConsumeablesModule extends BaseModule {
     if (enableCorruptedChorus) {
       ItemRegistry.corrupted_chorus = new ItemFoodCorruptedChorus();
       ItemRegistry.addItem(ItemRegistry.corrupted_chorus, "corrupted_chorus");
+      ModMain.instance.events.addEvent(ItemRegistry.corrupted_chorus);
     }
   }
   @Override

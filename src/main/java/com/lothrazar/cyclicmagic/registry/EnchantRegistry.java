@@ -16,15 +16,15 @@ public class EnchantRegistry {
   public static int launchid;
   public static int magnetid;
   public static int venomid;
-  public static int lifeleechid=89;
+  public static int lifeleechid;
   public static void register() {
     launch = new EnchantLaunch();
-    magnet = new EnchantMagnet();
-    venom = new EnchantVenom();
-    lifeleech = new EnchantLifeLeech();
     Enchantment.REGISTRY.register(launchid, new ResourceLocation(launch.getName()), launch);
+    magnet = new EnchantMagnet();
     Enchantment.REGISTRY.register(magnetid, new ResourceLocation(magnet.getName()), magnet);
+    venom = new EnchantVenom();
     Enchantment.REGISTRY.register(venomid, new ResourceLocation(venom.getName()), venom);
+    lifeleech = new EnchantLifeLeech();
     Enchantment.REGISTRY.register(lifeleechid, new ResourceLocation(lifeleech.getName()), lifeleech);
  }
   public static void syncConfig(Configuration c) {
@@ -34,5 +34,7 @@ public class EnchantRegistry {
         87, 71, 999, "Id of the magnet enchantment.  Change this if you get id conflicts with other mods.");
     venomid = c.getInt("enchant.venom.id", Const.ConfigCategory.modpackMisc,
         88, 71, 999, "Id of the venom enchantment.  Change this if you get id conflicts with other mods.");
+    lifeleechid = c.getInt("enchant.lifeleech.id", Const.ConfigCategory.modpackMisc,
+        89, 71, 999, "Id of the lifeleech enchantment.  Change this if you get id conflicts with other mods.");
   }
 }

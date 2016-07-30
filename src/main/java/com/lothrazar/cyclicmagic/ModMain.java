@@ -132,6 +132,10 @@ public class ModMain {
     //event modules TODO: make actual modules.?? maybe
 
     EnchantRegistry.register();//TODO: enchant module will be preinit
+    ModMain.instance.events.addEvent(EnchantRegistry.launch);
+    ModMain.instance.events.addEvent(EnchantRegistry.magnet);
+    ModMain.instance.events.addEvent(EnchantRegistry.venom);
+    ModMain.instance.events.addEvent(EnchantRegistry.lifeleech);
     
     ModMain.instance.events.addEvent(new EventAchievement());
     ModMain.instance.events.addEvent(new EventEditSign());
@@ -178,13 +182,6 @@ public class ModMain {
     NetworkRegistry.INSTANCE.registerGuiHandler(this, new ModGuiHandler());
     ProjectileRegistry.register(event);
     //finally, some items have extra forge events to hook into.
-    MinecraftForge.EVENT_BUS.register(ItemRegistry.corrupted_chorus);
-    MinecraftForge.EVENT_BUS.register(ItemRegistry.heart_food);
-    MinecraftForge.EVENT_BUS.register(ItemRegistry.tool_push);
-    MinecraftForge.EVENT_BUS.register(EnchantRegistry.launch);
-    MinecraftForge.EVENT_BUS.register(EnchantRegistry.magnet);
-    MinecraftForge.EVENT_BUS.register(EnchantRegistry.venom);
-    MinecraftForge.EVENT_BUS.register(EnchantRegistry.lifeleech);
   }
   @EventHandler
   public void onPostInit(FMLPostInitializationEvent event) {

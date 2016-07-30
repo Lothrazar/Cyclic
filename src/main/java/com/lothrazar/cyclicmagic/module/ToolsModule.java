@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.module;
 
+import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.item.ItemSleepingBag;
 import com.lothrazar.cyclicmagic.item.ItemToolHarvest;
@@ -9,6 +10,7 @@ import com.lothrazar.cyclicmagic.item.ItemToolSpawnInspect;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 
 public class ToolsModule extends BaseModule {
@@ -45,6 +47,7 @@ public class ToolsModule extends BaseModule {
     if(enableToolPush){
       ItemRegistry.tool_push = new ItemToolPush();
       ItemRegistry.addItem(ItemRegistry.tool_push, "tool_push");
+      ModMain.instance.events.addEvent(ItemRegistry.tool_push);
     }
     if(enableSleepingMat){
       ItemRegistry.sleeping_mat = new ItemSleepingBag();
