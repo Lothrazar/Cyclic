@@ -66,12 +66,7 @@ public class BlockRegistry {
     blocks.add(b);
   }
   public static void register() {
-    if (spawnersUnbreakable) {
-      Blocks.MOB_SPAWNER.setBlockUnbreakable();//just like .setHardness(-1.0F);
-    }
-    else{
-      Blocks.MOB_SPAWNER.setHardness(5.0F);//reset to normal http://minecraft.gamepedia.com/Monster_Spawner
-    }
+    updateUnbreakableSpawner();
     BlockConveyor plate_push = new BlockConveyor(0.16F, SoundEvents.BLOCK_ANVIL_BREAK);
     registerBlock(plate_push, "plate_push");
     plate_push.addRecipe();
@@ -85,6 +80,14 @@ public class BlockRegistry {
     registerSlimePads();
     registerDimensionOres();
     registerBucketBlocks();
+  }
+  private static void updateUnbreakableSpawner() {
+    if (spawnersUnbreakable) {
+      Blocks.MOB_SPAWNER.setBlockUnbreakable();//just like .setHardness(-1.0F);
+    }
+    else{
+      Blocks.MOB_SPAWNER.setHardness(5.0F);//reset to normal http://minecraft.gamepedia.com/Monster_Spawner
+    }
   }
   private static void registerBucketBlocks() {
     //bucket storage
@@ -179,5 +182,7 @@ public class BlockRegistry {
     spawnersUnbreakable = config.getBoolean("Spawners Unbreakable", category, true, "Make mob spawners unbreakable");
     uncrafting_block.syncConfig(config);
     builder_block.syncConfig(config);
+    //trigger unbreakable blocks to turn on and off based on a config change
+    updateUnbreakableSpawner();
   }
 }
