@@ -10,7 +10,7 @@ import com.lothrazar.cyclicmagic.event.EventMounted;
 import com.lothrazar.cyclicmagic.event.EventMountedPearl;
 import com.lothrazar.cyclicmagic.event.DropNametagDeathModule;
 import com.lothrazar.cyclicmagic.event.EventPotionModule;
-import com.lothrazar.cyclicmagic.event.EventSignSkullName;
+import com.lothrazar.cyclicmagic.event.SkullNameFromSignModule;
 import com.lothrazar.cyclicmagic.event.EventSpells;
 import com.lothrazar.cyclicmagic.event.core.*;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
@@ -115,8 +115,7 @@ public class ModMain {
   //TODO: world gen / nether ore module
     //event modules TODO: make actual modules.?? maybe
 
-    EnchantRegistry.register();//TODO: enchant module will be preinit
-    
+    modules.add(new EnchantModule());
     modules.add(new AchievementExpModule());
     modules.add(new EventEditSign());
     modules.add(new EnderChestClickopenModule());
@@ -139,7 +138,7 @@ public class ModMain {
     ModMain.instance.events.addEvent(new EventPotionModule());
     ModMain.instance.events.addEvent(new SaplingMutationModule());
     ModMain.instance.events.addEvent(new SaplingDespawnPlantModule());
-    ModMain.instance.events.addEvent(new EventSignSkullName());
+    modules.add(new SkullNameFromSignModule());
     modules.add(new F3InfoModule());
     ModMain.instance.events.addEvent(new EventSpells());//so far only used by cyclic wand...
   }
@@ -186,7 +185,6 @@ public class ModMain {
     for(ICyclicModule module : modules) {
       module.syncConfig(c);
     }
-    EnchantRegistry.syncConfig(c);
     WorldGenRegistry.syncConfig(c);
    
     ItemRegistry.syncConfig(c);
