@@ -1,6 +1,9 @@
 package com.lothrazar.cyclicmagic;
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclicmagic.event.core.EventExtendedInventory;
+import com.lothrazar.cyclicmagic.event.core.EventKeyInput;
+import com.lothrazar.cyclicmagic.event.core.EventPlayerData;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.module.BaseModule.ModuleType;
 import com.lothrazar.cyclicmagic.module.BucketBlockModule;
@@ -103,33 +106,33 @@ public class ModMain {
     modules.add(new ToolsModule().setType(ModuleType.INIT)); //new
     modules.add(new UnbreakableSpawnerModule().setType(ModuleType.INIT));
     modules.add(new UncrafterModule().setType(ModuleType.INIT));
-    /*invo cakes 2x
-    3x scythes
-    piston wands
-    ender blaze
-    chorus fruit
-    e lightning
-    e snow
-    e torch
-    ender orb
-    e water
-    e fish
-    e shears
-    e dungeon finder
-    spawn detector
-    sleeping mat
-    
+    /*
     ??? nether ores
     
     */
- 
-    events.register();
+
+    //important: sync config before setting up modules
     this.syncConfig();
 
     registerModulesByType(ModuleType.PREINIT);
-    EnchantRegistry.register();//enchant module will be preinit
-    
-    
+    EnchantRegistry.register();//TODO: enchant module will be preinit
+
+    //important: register events after modules.
+    //and any modules that are also event based
+
+    //add core events first
+    events.addEvent(new EventExtendedInventory());//CORE event
+    events.addEvent(new EventKeyInput());//CORE event
+    events.addEvent(new EventPlayerData());//CORE event
+    //module events (horsefood was first one)
+    for(ICyclicModule module : modules){
+      if(module.isEnabled() && module.isEvent()){
+        events.addEvent(module);
+      }
+    }
+    //standalone feature events
+    events.addFeatureEvents();
+    events.registerAll();
   }
   @EventHandler
   public void onInit(FMLInitializationEvent event) {

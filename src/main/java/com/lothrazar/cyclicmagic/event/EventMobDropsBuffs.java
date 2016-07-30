@@ -22,7 +22,7 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteractSpecific;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventMobDropBuffs implements IHasConfig {
+public class EventMobDropsBuffs implements IHasConfig {
   public static boolean sheepShearBuffed;
   private boolean zombieVillagerEmeralds;
   private boolean extraLeather;

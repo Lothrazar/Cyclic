@@ -8,4 +8,5 @@ public interface ICyclicModule {
   public void register();
   public void syncConfig(Configuration config);
   public boolean isEnabled();
+  public boolean isEvent();
 }
