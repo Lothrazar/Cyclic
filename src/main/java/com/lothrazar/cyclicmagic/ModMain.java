@@ -2,8 +2,8 @@ package com.lothrazar.cyclicmagic;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.event.EventEditSign;
-import com.lothrazar.cyclicmagic.event.EventFurnaceStardew;
-import com.lothrazar.cyclicmagic.event.EventLightningDamage;
+import com.lothrazar.cyclicmagic.event.FurnaceStardewModule;
+import com.lothrazar.cyclicmagic.event.LightningTransformModule;
 import com.lothrazar.cyclicmagic.event.EventMobDropsBuffs;
 import com.lothrazar.cyclicmagic.event.EventMobDropsReduced;
 import com.lothrazar.cyclicmagic.event.EventMounted;
@@ -22,7 +22,6 @@ import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.config.Configuration;
@@ -118,30 +117,30 @@ public class ModMain {
 
     EnchantRegistry.register();//TODO: enchant module will be preinit
     
-    ModMain.instance.events.addEvent(new AchievementExpModule());
-    ModMain.instance.events.addEvent(new EventEditSign());
-    ModMain.instance.events.addEvent(new EnderChestClickopenModule());
-    ModMain.instance.events.addEvent(new EndermanDropCarryModule());
-    ModMain.instance.events.addEvent(new ItemstackInfoModule());
-    ModMain.instance.events.addEvent(new FragileTorchesModule());
-    ModMain.instance.events.addEvent(new EventFurnaceStardew());
-    ModMain.instance.events.addEvent(new GuiTerrariaButtonsModule());
-    ModMain.instance.events.addEvent(new LadderClimbSpeedModule());
-    ModMain.instance.events.addEvent(new EventLightningDamage());
-    ModMain.instance.events.addEvent(new LootTableModule());
+    modules.add(new AchievementExpModule());
+    modules.add(new EventEditSign());
+    modules.add(new EnderChestClickopenModule());
+    modules.add(new EndermanDropCarryModule());
+    modules.add(new ItemstackInfoModule());
+    modules.add(new FragileTorchesModule());
+    modules.add(new FurnaceStardewModule());
+    modules.add(new GuiTerrariaButtonsModule());
+    modules.add(new LadderClimbSpeedModule());
+    modules.add(new LightningTransformModule());
+    modules.add(new LootTableModule());
     ModMain.instance.events.addEvent(new EventMobDropsBuffs());
     ModMain.instance.events.addEvent(new EventMobDropsReduced());
     ModMain.instance.events.addEvent(new EventMounted());
     ModMain.instance.events.addEvent(new EventMountedPearl());
-    ModMain.instance.events.addEvent(new DropNametagDeathModule());
-    ModMain.instance.events.addEvent(new VillagerNametagModule());
+    modules.add(new DropNametagDeathModule());
+    modules.add(new VillagerNametagModule());
     ModMain.instance.events.addEvent(new DimensionOreModule());
-    ModMain.instance.events.addEvent(new PassthroughActionModule());
+    modules.add(new PassthroughActionModule());
     ModMain.instance.events.addEvent(new EventPotionModule());
     ModMain.instance.events.addEvent(new SaplingMutationModule());
     ModMain.instance.events.addEvent(new SaplingDespawnPlantModule());
     ModMain.instance.events.addEvent(new EventSignSkullName());
-    ModMain.instance.events.addEvent(new F3InfoModule());
+    modules.add(new F3InfoModule());
     ModMain.instance.events.addEvent(new EventSpells());//so far only used by cyclic wand...
   }
   @EventHandler
@@ -190,7 +189,6 @@ public class ModMain {
     EnchantRegistry.syncConfig(c);
     WorldGenRegistry.syncConfig(c);
    
-    events.syncConfig(c); 
     ItemRegistry.syncConfig(c);
     FuelRegistry.syncConfig(c);
     RecipeAlterRegistry.syncConfig(c);

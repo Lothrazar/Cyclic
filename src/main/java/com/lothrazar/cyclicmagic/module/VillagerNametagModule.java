@@ -15,17 +15,18 @@ public class VillagerNametagModule extends BaseEventModule  implements IHasConfi
   private boolean nameVillagerTag;
   @SubscribeEvent
   public void onEntityInteractEvent(EntityInteract event) {
-    if (!nameVillagerTag) { return; }
-    EntityPlayer entityPlayer = event.getEntityPlayer();
-    ItemStack held = entityPlayer.getHeldItem(event.getHand());
-    Entity target = event.getTarget();
-    if (held != null && held.getItem() == Items.NAME_TAG && held.hasDisplayName() && target instanceof EntityVillager) {
-      EntityVillager v = (EntityVillager) target;
-      v.setCustomNameTag(held.getDisplayName());
-      if (entityPlayer.capabilities.isCreativeMode == false) {
-        entityPlayer.inventory.decrStackSize(entityPlayer.inventory.currentItem, 1);
+    if (nameVillagerTag) { 
+      EntityPlayer entityPlayer = event.getEntityPlayer();
+      ItemStack held = entityPlayer.getHeldItem(event.getHand());
+      Entity target = event.getTarget();
+      if (held != null && held.getItem() == Items.NAME_TAG && held.hasDisplayName() && target instanceof EntityVillager) {
+        EntityVillager v = (EntityVillager) target;
+        v.setCustomNameTag(held.getDisplayName());
+        if (entityPlayer.capabilities.isCreativeMode == false) {
+          entityPlayer.inventory.decrStackSize(entityPlayer.inventory.currentItem, 1);
+        }
+        event.setCanceled(true);// stop the GUI inventory opening
       }
-      event.setCanceled(true);// stop the GUI inventory opening
     }
   }
   @Override

@@ -14,25 +14,26 @@ public class FragileTorchesModule extends BaseEventModule  implements IHasConfig
   private boolean fragileTorches;
   @SubscribeEvent
   public void onEntityUpdate(LivingUpdateEvent event) {
-    if (!fragileTorches) { return; }
-    Entity ent = event.getEntity();
-    if (ent instanceof EntityLiving == false) { return; }
-    EntityLivingBase living = (EntityLivingBase) event.getEntity();
-    if (living == null) { return; }
-    if (living.worldObj.getBlockState(living.getPosition()).getBlock() == Blocks.TORCH) {
-      float oddsWillBreak = 0.01F;
-      boolean playerCancelled = false;
-      if (living instanceof EntityPlayer) {
-        // EntityPlayer p = (EntityPlayer) living;
-        // just dont let players break them. only other mobs.
-        // if(p.isSneaking()){
-        playerCancelled = true;// torches are safe from breaking
-        // }
-      }
-      if (playerCancelled == false // if its a player, then the player is not
-          // sneaking
-          && living.worldObj.rand.nextDouble() < oddsWillBreak && living.worldObj.isRemote == false) {
-        living.worldObj.destroyBlock(living.getPosition(), true);
+    if (fragileTorches) { 
+      Entity ent = event.getEntity();
+      if (ent instanceof EntityLiving == false) { return; }
+      EntityLivingBase living = (EntityLivingBase) event.getEntity();
+      if (living == null) { return; }
+      if (living.worldObj.getBlockState(living.getPosition()).getBlock() == Blocks.TORCH) {
+        float oddsWillBreak = 0.01F;
+        boolean playerCancelled = false;
+        if (living instanceof EntityPlayer) {
+          // EntityPlayer p = (EntityPlayer) living;
+          // just dont let players break them. only other mobs.
+          // if(p.isSneaking()){
+          playerCancelled = true;// torches are safe from breaking
+          // }
+        }
+        if (playerCancelled == false // if its a player, then the player is not
+            // sneaking
+            && living.worldObj.rand.nextDouble() < oddsWillBreak && living.worldObj.isRemote == false) {
+          living.worldObj.destroyBlock(living.getPosition(), true);
+        }
       }
     }
   }

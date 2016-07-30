@@ -13,11 +13,12 @@ public class EnderChestClickopenModule  extends BaseEventModule implements IHasC
   private static boolean easyEnderChest;
   @SubscribeEvent
   public void onHit(PlayerInteractEvent.LeftClickBlock event) {
-    if (!easyEnderChest) { return; }
-    EntityPlayer entityPlayer = event.getEntityPlayer();
-    ItemStack held = entityPlayer.getHeldItem(event.getHand());
-    if (held != null && held.getItem() == Item.getItemFromBlock(Blocks.ENDER_CHEST)) {
-      entityPlayer.displayGUIChest(entityPlayer.getInventoryEnderChest());
+    if (easyEnderChest) {  
+      EntityPlayer entityPlayer = event.getEntityPlayer();
+      ItemStack held = entityPlayer.getHeldItem(event.getHand());
+      if (held != null && held.getItem() == Item.getItemFromBlock(Blocks.ENDER_CHEST)) {
+        entityPlayer.displayGUIChest(entityPlayer.getInventoryEnderChest());
+      }
     }
   }
   @Override

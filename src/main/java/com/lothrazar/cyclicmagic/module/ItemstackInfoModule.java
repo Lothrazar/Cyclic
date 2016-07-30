@@ -19,7 +19,7 @@ public class ItemstackInfoModule extends BaseEventModule  implements IHasConfig 
     if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
       // https://www.reddit.com/r/minecraftsuggestions/comments/3brh7v/when_hovering_over_a_food_it_shows_how_many_food/
       ItemStack itemStack = event.getItemStack();
-      if (itemStack != null && itemStack.getItem() instanceof ItemFood && foodDetails) {
+      if (foodDetails && itemStack != null && itemStack.getItem() instanceof ItemFood ) {
         ItemFood food = (ItemFood) itemStack.getItem();
         int hunger = food.getHealAmount(itemStack);
         float satur = food.getSaturationModifier(itemStack);

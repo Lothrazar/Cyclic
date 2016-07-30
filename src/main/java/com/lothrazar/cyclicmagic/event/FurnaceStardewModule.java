@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.event;
 import com.lothrazar.cyclicmagic.IHasConfig;
-import com.lothrazar.cyclicmagic.module.BaseModule;
+import com.lothrazar.cyclicmagic.module.BaseEventModule;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilInventory;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -18,7 +18,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventFurnaceStardew  extends BaseModule implements IHasConfig {
+public class FurnaceStardewModule  extends BaseEventModule implements IHasConfig {
   private static boolean stardewFurnace;
   // inspired by stardew valley
   // http://minecraft.gamepedia.com/Furnace
@@ -27,39 +27,40 @@ public class EventFurnaceStardew  extends BaseModule implements IHasConfig {
   final static int SLOT_OUTPUT = 2;
   @SubscribeEvent
   public void onPlayerFurnace(PlayerInteractEvent.LeftClickBlock event) {//extends PlayerInteractEvent
-    if (!stardewFurnace) { return; }
-    EntityPlayer entityPlayer = event.getEntityPlayer();
-    // ignore in creative// left clicking just breaks it anyway
-    if (entityPlayer.capabilities.isCreativeMode) { return; }
-    BlockPos pos = event.getPos();
-    World worldObj = event.getWorld();
-    if (pos == null) { return; }
-    ItemStack held = entityPlayer.getHeldItem(event.getHand());
-    int playerSlot = 0;// entityPlayer.inventory.currentItem;
-    boolean wasMain = event.getHand() == EnumHand.MAIN_HAND;
-    if (wasMain) {
-      playerSlot = entityPlayer.inventory.currentItem;
-    }
-    else {
-      //just dont use offhand, ignore it for now. is easier
-      playerSlot = 40;
-    }
-    TileEntity tile = worldObj.getTileEntity(pos);
-    if (tile instanceof TileEntityFurnace) {
-      TileEntityFurnace furnace = (TileEntityFurnace) tile;
-      if (held == null) {
-        extractFurnaceOutput(furnace, entityPlayer);
+    if (stardewFurnace) {
+      EntityPlayer entityPlayer = event.getEntityPlayer();
+      // ignore in creative// left clicking just breaks it anyway
+      if (entityPlayer.capabilities.isCreativeMode) { return; }
+      BlockPos pos = event.getPos();
+      World worldObj = event.getWorld();
+      if (pos == null) { return; }
+      ItemStack held = entityPlayer.getHeldItem(event.getHand());
+      int playerSlot = 0;// entityPlayer.inventory.currentItem;
+      boolean wasMain = event.getHand() == EnumHand.MAIN_HAND;
+      if (wasMain) {
+        playerSlot = entityPlayer.inventory.currentItem;
       }
       else {
-      //  ModMain.logger.info("held:" + held.getUnlocalizedName());
-        //holding a non null stack for sure
-        if (canBeSmelted(held)) {
-          //  ModMain.logger.info("SLOT_INPUT");
-          tryMergeStackIntoSlot(furnace, entityPlayer, playerSlot, SLOT_INPUT);
+        //just dont use offhand, ignore it for now. is easier
+        playerSlot = 40;
+      }
+      TileEntity tile = worldObj.getTileEntity(pos);
+      if (tile instanceof TileEntityFurnace) {
+        TileEntityFurnace furnace = (TileEntityFurnace) tile;
+        if (held == null) {
+          extractFurnaceOutput(furnace, entityPlayer);
         }
-        else  if (isFuel(held)) {
-          // ModMain.logger.info("SLOT_FUEL");
-          tryMergeStackIntoSlot(furnace, entityPlayer, playerSlot, SLOT_FUEL);
+        else {
+        //  ModMain.logger.info("held:" + held.getUnlocalizedName());
+          //holding a non null stack for sure
+          if (canBeSmelted(held)) {
+            //  ModMain.logger.info("SLOT_INPUT");
+            tryMergeStackIntoSlot(furnace, entityPlayer, playerSlot, SLOT_INPUT);
+          }
+          else  if (isFuel(held)) {
+            // ModMain.logger.info("SLOT_FUEL");
+            tryMergeStackIntoSlot(furnace, entityPlayer, playerSlot, SLOT_FUEL);
+          }
         }
       }
     }
