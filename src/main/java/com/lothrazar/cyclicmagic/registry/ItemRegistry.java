@@ -60,16 +60,12 @@ public class ItemRegistry {
   public static ItemProjectileSnow ender_snow;
   public static ItemProjectileLightning ender_lightning;
   public static ItemSproutSeeds sprout_seed;
+
+  public static ItemFoodCrafting crafting_food;   
+  public static ItemFoodInventory inventory_food; 
+  public static ItemFoodHeart heart_food;         
+  public static ItemFoodCorruptedChorus corrupted_chorus;          
   
-  public static ItemFoodHeart heart_food = new ItemFoodHeart();
-  public static ItemFoodCorruptedChorus corrupted_chorus = new ItemFoodCorruptedChorus();
-  
-  public static void construct() {
-    ItemRegistry.addItem(new ItemFoodCrafting(), "crafting_food");  
-    ItemRegistry.addItem(new ItemFoodInventory(), "inventory_food");
-    ItemRegistry.addItem(ItemRegistry.corrupted_chorus, "corrupted_chorus"); 
-    ItemRegistry.addItem(ItemRegistry.heart_food, "heart_food");
-  }
   public static Item addItem(Item i, String key) {
     i.setUnlocalizedName(key);
     itemMap.put(key, i);

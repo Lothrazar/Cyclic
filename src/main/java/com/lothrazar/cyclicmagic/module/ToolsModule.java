@@ -1,11 +1,13 @@
 package com.lothrazar.cyclicmagic.module;
 
+import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.item.ItemSleepingBag;
 import com.lothrazar.cyclicmagic.item.ItemToolHarvest;
 import com.lothrazar.cyclicmagic.item.ItemToolPearlReuse;
 import com.lothrazar.cyclicmagic.item.ItemToolPush;
 import com.lothrazar.cyclicmagic.item.ItemToolSpawnInspect;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraftforge.common.config.Configuration;
 
@@ -17,6 +19,7 @@ public class ToolsModule extends BaseModule {
   private boolean enableHarvestWeeds;
   private boolean enablePearlReuse;
   private boolean enableSpawnInspect;
+  private boolean enableCyclicWand;
   @Override
   public void register() {
     if(enableSpawnInspect){
@@ -47,6 +50,12 @@ public class ToolsModule extends BaseModule {
       ItemRegistry.sleeping_mat = new ItemSleepingBag();
       ItemRegistry.addItem(ItemRegistry.sleeping_mat, "sleeping_mat");
     }
+    if(enableCyclicWand){
+      ItemRegistry.cyclic_wand_build = new ItemCyclicWand();
+      ItemRegistry.addItem(ItemRegistry.cyclic_wand_build, "cyclic_wand_build");
+
+      SpellRegistry.register();
+    }
   }
   @Override
   public void syncConfig(Configuration config) {
@@ -57,6 +66,6 @@ public class ToolsModule extends BaseModule {
     enableHarvestLeaves = config.getBoolean("HarvestLeaves", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableToolPush     = config.getBoolean("ToolPush", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableSleepingMat  = config.getBoolean("SleepingMat", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    
+    enableCyclicWand = config.getBoolean("CyclicWand", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 }

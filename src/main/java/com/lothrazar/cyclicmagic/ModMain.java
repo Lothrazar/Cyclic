@@ -8,8 +8,7 @@ import com.lothrazar.cyclicmagic.module.BuilderBlockModule;
 import com.lothrazar.cyclicmagic.module.CarbonPaperModule;
 import com.lothrazar.cyclicmagic.module.ChestSackModule;
 import com.lothrazar.cyclicmagic.module.ConveyorPlateModule;
-import com.lothrazar.cyclicmagic.module.CyclicWandModule;
-import com.lothrazar.cyclicmagic.module.EmeraldAppleModule;
+import com.lothrazar.cyclicmagic.module.ConsumeablesModule;
 import com.lothrazar.cyclicmagic.module.EmeraldArmorModule;
 import com.lothrazar.cyclicmagic.module.EnderBombModule;
 import com.lothrazar.cyclicmagic.module.EnderBookModule;
@@ -87,10 +86,9 @@ public class ModMain {
     modules.add(new BucketBlockModule().setType(ModuleType.INIT));
     modules.add(new CarbonPaperModule().setType(ModuleType.INIT));
     modules.add(new ChestSackModule().setType(ModuleType.INIT));
+    modules.add(new ConsumeablesModule().setType(ModuleType.INIT));
     modules.add(new ConveyorPlateModule().setType(ModuleType.INIT));
-    modules.add(new CyclicWandModule().setType(ModuleType.INIT));
     modules.add(new EnderBookModule().setType(ModuleType.INIT));
-    modules.add(new EmeraldAppleModule().setType(ModuleType.INIT));
     modules.add(new EmeraldArmorModule().setType(ModuleType.INIT));
     modules.add(new EnderBombModule().setType(ModuleType.INIT));
     modules.add(new FragileBlockModule().setType(ModuleType.INIT));
@@ -101,8 +99,8 @@ public class ModMain {
     modules.add(new ProjectileModule().setType(ModuleType.INIT));
     modules.add(new SlimepadModule().setType(ModuleType.INIT));
     modules.add(new StackSizeModule().setType(ModuleType.INIT));
-    modules.add(new ToolsModule().setType(ModuleType.INIT)); //new
     modules.add(new StorageBagModule().setType(ModuleType.INIT));
+    modules.add(new ToolsModule().setType(ModuleType.INIT)); //new
     modules.add(new UnbreakableSpawnerModule().setType(ModuleType.INIT));
     modules.add(new UncrafterModule().setType(ModuleType.INIT));
     /*invo cakes 2x
@@ -124,8 +122,7 @@ public class ModMain {
     ??? nether ores
     
     */
-    ItemRegistry.construct(); //modules here
-   
+ 
     events.register();
     this.syncConfig();
 
