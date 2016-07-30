@@ -1,14 +1,7 @@
 package com.lothrazar.cyclicmagic;
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.event.EventEditSign;
-import com.lothrazar.cyclicmagic.event.FurnaceStardewModule;
-import com.lothrazar.cyclicmagic.event.LightningTransformModule;
-import com.lothrazar.cyclicmagic.event.MobDropChangesModule;
-import com.lothrazar.cyclicmagic.event.MountedTweaksModule;
-import com.lothrazar.cyclicmagic.event.DropNametagDeathModule;
 import com.lothrazar.cyclicmagic.event.EventPotionModule;
-import com.lothrazar.cyclicmagic.event.SkullNameFromSignModule;
 import com.lothrazar.cyclicmagic.event.EventSpells;
 import com.lothrazar.cyclicmagic.event.core.*;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
@@ -115,7 +108,7 @@ public class ModMain {
 
     modules.add(new EnchantModule());
     modules.add(new AchievementExpModule());
-    modules.add(new EventEditSign());
+    modules.add(new EditSignBarehandModule());
     modules.add(new EnderChestClickopenModule());
     modules.add(new EndermanDropCarryModule());
     modules.add(new ItemstackInfoModule());
