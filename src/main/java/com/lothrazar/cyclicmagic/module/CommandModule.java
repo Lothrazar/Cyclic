@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.registry;
+package com.lothrazar.cyclicmagic.module;
 import java.util.HashMap;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.command.CommandEnderChest;
@@ -20,11 +20,11 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
-public class CommandRegistry {
+public class CommandModule extends BaseModule {
   private static Map<String, Boolean> configToggle = new HashMap<String, Boolean>();
   private static Map<String, Boolean> commandNeedsOp = new HashMap<String, Boolean>();
   private static String category;
-  public static void register(FMLServerStartingEvent event) {
+  public void onServerStarting(FMLServerStartingEvent event) {
     if (configToggle.get(CommandEnderChest.name)) {
       event.registerServerCommand(new CommandEnderChest(commandNeedsOp.get(CommandEnderChest.name)));
     }
@@ -68,7 +68,7 @@ public class CommandRegistry {
       event.registerServerCommand(new CommandWorldHome(commandNeedsOp.get(CommandWorldHome.name)));
     }
   }
-  private static void syncCommandConfig(Configuration config, String name, boolean defaultNeedsOp, String comment) {
+  private void syncCommandConfig(Configuration config, String name, boolean defaultNeedsOp, String comment) {
     Property prop = config.get(category, name, true, comment);
     prop.setRequiresMcRestart(true);
     configToggle.put(name, prop.getBoolean());
@@ -76,7 +76,8 @@ public class CommandRegistry {
     prop.setRequiresMcRestart(true);
     commandNeedsOp.put(name, prop.getBoolean());
   }
-  public static void syncConfig(Configuration config) {
+  @Override
+  public void syncConfig(Configuration config) {
     category = Const.ConfigCategory.commands;
     config.setCategoryComment(category, "Disable any command that was added");
     syncCommandConfig(config, CommandEnderChest.name, true, "Opens your ender chest");

@@ -88,6 +88,7 @@ public class ModMain {
     modules.add(new BuilderBlockModule());
     modules.add(new CarbonPaperModule());
     modules.add(new ChestSackModule());
+    modules.add(new CommandModule());
     modules.add(new ConsumeablesModule());
     modules.add(new ConveyorPlateModule());
     modules.add(new DispenserBehaviorModule());
@@ -168,7 +169,6 @@ public class ModMain {
     for (ICyclicModule module : modules) {
       module.onServerStarting();
     }
-    CommandRegistry.register(event);
   }
   public void syncConfig() {
     // hit on startup and on change event from
@@ -179,7 +179,6 @@ public class ModMain {
     }
     ItemRegistry.syncConfig(c);
     FuelRegistry.syncConfig(c);
-    CommandRegistry.syncConfig(c);
     KeyInventoryShiftRegistry.syncConfig(c);
     c.save();
   }
