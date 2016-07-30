@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic;
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.event.EventPotionModule;
 import com.lothrazar.cyclicmagic.event.EventSpells;
 import com.lothrazar.cyclicmagic.event.core.*;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
@@ -124,7 +123,6 @@ public class ModMain {
     modules.add(new VillagerNametagModule());
     ModMain.instance.events.addEvent(new DimensionOreModule());
     modules.add(new PassthroughActionModule());
-    ModMain.instance.events.addEvent(new EventPotionModule());
     modules.add(new SaplingMutationModule());
     modules.add(new SkullNameFromSignModule());
     modules.add(new F3InfoModule());
