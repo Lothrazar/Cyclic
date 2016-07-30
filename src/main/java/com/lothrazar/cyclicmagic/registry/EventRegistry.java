@@ -1,8 +1,6 @@
 package com.lothrazar.cyclicmagic.registry;
 import java.util.ArrayList;
-import com.lothrazar.cyclicmagic.IHasConfig;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Configuration;
 
 public class EventRegistry {
   private ArrayList<Object> events = new ArrayList<Object>();

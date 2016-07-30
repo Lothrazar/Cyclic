@@ -102,9 +102,6 @@ public class ModMain {
     modules.add(new ToolsModule());
     modules.add(new UnbreakableSpawnerModule());
     modules.add(new UncrafterModule());
-  //TODO: world gen / nether ore module
-    //event modules TODO: make actual modules.?? maybe
-
     modules.add(new EnchantModule());
     modules.add(new AchievementExpModule());
     modules.add(new EditSignBarehandModule());
@@ -121,11 +118,12 @@ public class ModMain {
     modules.add(new MountedTweaksModule());
     modules.add(new DropNametagDeathModule());
     modules.add(new VillagerNametagModule());
-    ModMain.instance.events.addEvent(new DimensionOreModule());
     modules.add(new PassthroughActionModule());
     modules.add(new SaplingMutationModule());
     modules.add(new SkullNameFromSignModule());
     modules.add(new F3InfoModule());
+    modules.add(new WorldGenModule());
+    //event modules TODO: make actual modules.?? maybe
     ModMain.instance.events.addEvent(new EventSpells());//so far only used by cyclic wand...
   }
   @EventHandler
@@ -135,8 +133,6 @@ public class ModMain {
     }
   
     ItemRegistry.register();
-    BlockRegistry.registerDimensionOres();
-    WorldGenRegistry.register();
     FuelRegistry.register();
     // StackSizeRegistry.register();
     RecipeAlterRegistry.register();
@@ -171,7 +167,6 @@ public class ModMain {
     for(ICyclicModule module : modules) {
       module.syncConfig(c);
     }
-    WorldGenRegistry.syncConfig(c);
    
     ItemRegistry.syncConfig(c);
     FuelRegistry.syncConfig(c);

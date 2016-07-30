@@ -1,5 +1,8 @@
 package com.lothrazar.cyclicmagic.registry;
 import java.util.Arrays;
+import com.lothrazar.cyclicmagic.block.BlockDimensionOre;
+import com.lothrazar.cyclicmagic.block.BlockDimensionOre.SpawnType;
+import com.lothrazar.cyclicmagic.module.BaseEventModule;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.world.gen.WorldGenEmeraldHeight;
 import com.lothrazar.cyclicmagic.world.gen.WorldGenEndOre;
@@ -11,11 +14,17 @@ import com.lothrazar.cyclicmagic.world.gen.WorldGenPlantBiome;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.EnumDyeColor;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
+import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class WorldGenRegistry {
+public class WorldGenModule extends BaseEventModule {
   public static boolean oceanEnabled;
   public static boolean netherOreEnabled;
   public static boolean endOreEnabled;
@@ -30,7 +39,8 @@ public class WorldGenRegistry {
   private final static int spawnsPotatoes = 10;
   final static int weightOre = 0;
   final static int weightPlants = 2;
-  public static void syncConfig(Configuration config) {
+  @Override
+  public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.worldGen;
     config.setCategoryComment(category, "Control any blocks that get generated in new chunks & new worlds");
     Property prop = config.get(category, "Classic Oceans", true, "Generate clay, sand, and dirt in the ocean instead of only gravel (like the old days)");
@@ -57,9 +67,13 @@ public class WorldGenRegistry {
     prop.setRequiresMcRestart(true);
     biomeCrops = prop.getBoolean();
   }
-  public static void register() {
+  @Override
+  public void onInit() {
     if (oceanEnabled) {
       GameRegistry.registerWorldGenerator(new WorldGenOcean(), weightOre);
+    }
+    if(netherOreEnabled || endOreEnabled){
+      registerDimensionOres();
     }
     if (netherOreEnabled) {
       GameRegistry.registerWorldGenerator(new WorldGenNetherOre(), weightOre);
@@ -86,5 +100,50 @@ public class WorldGenRegistry {
       GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops) Blocks.BEETROOTS, Arrays.asList(Biomes.FOREST, Biomes.BIRCH_FOREST), spawnsBeetroot), weightPlants);
       GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops) Blocks.POTATOES, Arrays.asList(Biomes.TAIGA), spawnsPotatoes), weightPlants);
     }
+  }
+  @SubscribeEvent
+  public void onHarvestDropsEvent(HarvestDropsEvent event) {
+    if (event.getState() != null && event.getState().getBlock() instanceof BlockDimensionOre) {
+      //then try spawning mob
+      //EntityPlayer player = event.getPlayer();
+      BlockPos pos = event.getPos();
+      World world = event.getWorld();
+      BlockDimensionOre block = (BlockDimensionOre) event.getState().getBlock();
+      block.trySpawnTriggeredEntity(world, pos);
+    }
+  }
+  private void registerDimensionOres() {
+    //nether ores
+    BlockRegistry.nether_gold_ore = new BlockDimensionOre(Items.GOLD_NUGGET, 0, 4);
+    BlockRegistry.nether_gold_ore.setSpawnType(SpawnType.SILVERFISH, 1);
+    BlockRegistry.registerBlock(BlockRegistry.nether_gold_ore, "nether_gold_ore");
+    BlockRegistry.nether_coal_ore = new BlockDimensionOre(Items.COAL);
+    BlockRegistry.nether_coal_ore.setSpawnType(SpawnType.SILVERFISH, 1);
+    BlockRegistry.registerBlock(BlockRegistry.nether_coal_ore, "nether_coal_ore");
+    BlockRegistry.nether_lapis_ore = new BlockDimensionOre(Items.DYE, EnumDyeColor.BLUE.getDyeDamage(), 3);
+    BlockRegistry.nether_lapis_ore.setSpawnType(SpawnType.SILVERFISH, 2);
+    BlockRegistry.registerBlock(BlockRegistry.nether_lapis_ore, "nether_lapis_ore");
+    BlockRegistry.nether_emerald_ore = new BlockDimensionOre(Items.EMERALD);
+    BlockRegistry.nether_emerald_ore.setSpawnType(SpawnType.SILVERFISH, 5);
+    BlockRegistry.registerBlock(BlockRegistry.nether_emerald_ore, "nether_emerald_ore");
+    BlockRegistry.nether_diamond_ore = new BlockDimensionOre(Items.DIAMOND);
+    BlockRegistry.nether_diamond_ore.setSpawnType(SpawnType.SILVERFISH, 8);
+    BlockRegistry.registerBlock(BlockRegistry.nether_diamond_ore, "nether_diamond_ore");
+    //end ores
+    BlockRegistry.end_redstone_ore = new BlockDimensionOre(Items.REDSTONE);
+    BlockRegistry.end_redstone_ore.setSpawnType(SpawnType.ENDERMITE, 3);
+    BlockRegistry.registerBlock(BlockRegistry.end_redstone_ore, "end_redstone_ore");
+    BlockRegistry.end_coal_ore = new BlockDimensionOre(Items.COAL);
+    BlockRegistry.end_coal_ore.setSpawnType(SpawnType.ENDERMITE, 1);
+    BlockRegistry.registerBlock(BlockRegistry.end_coal_ore, "end_coal_ore");
+    BlockRegistry.end_lapis_ore = new BlockDimensionOre(Items.DYE, EnumDyeColor.BLUE.getDyeDamage(), 3);
+    BlockRegistry.end_lapis_ore.setSpawnType(SpawnType.ENDERMITE, 5);
+    BlockRegistry.registerBlock(BlockRegistry.end_lapis_ore, "end_lapis_ore");
+    BlockRegistry.end_emerald_ore = new BlockDimensionOre(Items.EMERALD);
+    BlockRegistry.end_emerald_ore.setSpawnType(SpawnType.ENDERMITE, 8);
+    BlockRegistry.registerBlock(BlockRegistry.end_emerald_ore, "end_emerald_ore");
+    BlockRegistry.end_diamond_ore = new BlockDimensionOre(Items.DIAMOND);
+    BlockRegistry.end_diamond_ore.setSpawnType(SpawnType.ENDERMITE, 8);
+    BlockRegistry.registerBlock(BlockRegistry.end_diamond_ore, "end_diamond_ore");
   }
 }

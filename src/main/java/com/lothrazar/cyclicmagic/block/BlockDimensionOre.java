@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.block;
 import java.util.Random;
-import com.lothrazar.cyclicmagic.registry.WorldGenRegistry;
+import com.lothrazar.cyclicmagic.registry.WorldGenModule;
 import net.minecraft.block.BlockOre;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
@@ -40,7 +40,7 @@ public class BlockDimensionOre extends BlockOre {
     this.spawnChance = chance;
   }
   public void trySpawnTriggeredEntity(World world, BlockPos pos) {
-    if (WorldGenRegistry.oreSpawns == false) { return;//config has disabled spawning no matter what
+    if (WorldGenModule.oreSpawns == false) { return;//config has disabled spawning no matter what
     }
     if (this.spawn != null) {
       int rand = world.rand.nextInt(100);
