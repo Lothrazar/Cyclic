@@ -4,6 +4,7 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.event.EventSpells;
 import com.lothrazar.cyclicmagic.event.core.*;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
+import com.lothrazar.cyclicmagic.item.BaseItem;
 import com.lothrazar.cyclicmagic.module.*;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
 import com.lothrazar.cyclicmagic.registry.*;
@@ -132,15 +133,25 @@ public class ModMain {
       module.onInit();
     }
   
-    ItemRegistry.register();
+    //maybe one day it will be all base items
+    Item item;
+    for (String key : ItemRegistry.itemMap.keySet()) {
+      item = ItemRegistry.itemMap.get(key);
+      if (item instanceof BaseItem) {
+        ((BaseItem) item).register(key);
+      }
+      else {
+        ItemRegistry.registerItem(item, key);
+      }
+    }
+    ItemRegistry.registerRecipes();
     FuelRegistry.register();
-    // StackSizeRegistry.register();
     RecipeAlterRegistry.register();
     RecipeNewRegistry.register();
     VillageTradeRegistry.register();
     proxy.register();
     NetworkRegistry.INSTANCE.registerGuiHandler(this, new ModGuiHandler());
-    ProjectileRegistry.register(event);
+
     //finally, some items have extra forge events to hook into.
   }
   @EventHandler

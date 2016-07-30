@@ -4,7 +4,6 @@ import java.util.Map;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.item.BaseItem;
 import com.lothrazar.cyclicmagic.item.ItemAppleEmerald;
 import com.lothrazar.cyclicmagic.item.ItemChestSack;
 import com.lothrazar.cyclicmagic.item.ItemChestSackEmpty;
@@ -80,7 +79,7 @@ public class ItemRegistry {
       }
     }
   }
-  private static void registerRecipes() {
+  public static void registerRecipes() {
     Item item;
     for (String key : itemMap.keySet()) {
       item = itemMap.get(key);
@@ -89,20 +88,7 @@ public class ItemRegistry {
       }
     }
   }
-  public static void register() { 
-    //maybe one day it will be all base items
-    Item item;
-    for (String key : itemMap.keySet()) {
-      item = itemMap.get(key);
-      if (item instanceof BaseItem) {
-        ((BaseItem) item).register(key);
-      }
-      else {
-        registerItem(item, key);
-      }
-    }
-    registerRecipes();
-  }
+
  
   public static void registerItem(Item item, String name) {
     registerItem(item, name, false);// default is not hidden
