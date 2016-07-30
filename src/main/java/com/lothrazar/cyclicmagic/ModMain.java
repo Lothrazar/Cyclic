@@ -29,29 +29,7 @@ import com.lothrazar.cyclicmagic.event.EventSpawnChunks;
 import com.lothrazar.cyclicmagic.event.EventSpells;
 import com.lothrazar.cyclicmagic.event.core.*;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
-import com.lothrazar.cyclicmagic.module.BaseModule.ModuleType;
-import com.lothrazar.cyclicmagic.module.BucketBlockModule;
-import com.lothrazar.cyclicmagic.module.BuilderBlockModule;
-import com.lothrazar.cyclicmagic.module.CarbonPaperModule;
-import com.lothrazar.cyclicmagic.module.ChestSackModule;
-import com.lothrazar.cyclicmagic.module.ConveyorPlateModule;
-import com.lothrazar.cyclicmagic.module.ConsumeablesModule;
-import com.lothrazar.cyclicmagic.module.EmeraldArmorModule;
-import com.lothrazar.cyclicmagic.module.EnderBombModule;
-import com.lothrazar.cyclicmagic.module.EnderBookModule;
-import com.lothrazar.cyclicmagic.module.FragileBlockModule;
-import com.lothrazar.cyclicmagic.module.HorseFoodModule;
-import com.lothrazar.cyclicmagic.module.ICyclicModule;
-import com.lothrazar.cyclicmagic.module.MagicBeanModule;
-import com.lothrazar.cyclicmagic.module.MobSpawnModule;
-import com.lothrazar.cyclicmagic.module.PotionModule;
-import com.lothrazar.cyclicmagic.module.ProjectileModule;
-import com.lothrazar.cyclicmagic.module.SlimepadModule;
-import com.lothrazar.cyclicmagic.module.StackSizeModule;
-import com.lothrazar.cyclicmagic.module.StorageBagModule;
-import com.lothrazar.cyclicmagic.module.ToolsModule;
-import com.lothrazar.cyclicmagic.module.UnbreakableSpawnerModule;
-import com.lothrazar.cyclicmagic.module.UncrafterModule;
+import com.lothrazar.cyclicmagic.module.*;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
 import com.lothrazar.cyclicmagic.registry.*;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
@@ -63,7 +41,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -72,7 +49,6 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
@@ -84,9 +60,12 @@ public class ModMain {
   @SidedProxy(clientSide = "com.lothrazar." + Const.MODID + ".proxy.ClientProxy", serverSide = "com.lothrazar." + Const.MODID + ".proxy.CommonProxy")
   public static CommonProxy proxy;
   public static ModLogger logger;
-  private static Configuration config;
   public EventRegistry events;
   public static SimpleNetworkWrapper network;
+  private static Configuration config;
+  public static Configuration getConfig() {
+    return config;
+  }
   public final static CreativeTabs TAB = new CreativeTabs(Const.MODID) {
     @Override
     public Item getTabIconItem() {
@@ -117,8 +96,10 @@ public class ModMain {
     //important: sync config before doing anything else, now that constructors have all ran
     this.syncConfig();
     //when a module registers, if its enabled, it can add itself or other objets to instance.events
-    registerModulesByType(ModuleType.PREINIT);
 
+    for(ICyclicModule module : modules) {
+      module.onPreInit();
+    }
     //important: register events after modules.
     //since modules can register events too
     //TODO: FIX THIS< if a mod is type init or later, but the events get added in .register, well too late?
@@ -126,27 +107,27 @@ public class ModMain {
     events.registerAll();
   }
   private void createFeatureModules() {
-    modules.add(new BuilderBlockModule().setType(ModuleType.INIT));
-    modules.add(new BucketBlockModule().setType(ModuleType.INIT));
-    modules.add(new CarbonPaperModule().setType(ModuleType.INIT));
-    modules.add(new ChestSackModule().setType(ModuleType.INIT));
-    modules.add(new ConsumeablesModule().setType(ModuleType.INIT));
-    modules.add(new ConveyorPlateModule().setType(ModuleType.INIT));
-    modules.add(new EnderBookModule().setType(ModuleType.INIT));
-    modules.add(new EmeraldArmorModule().setType(ModuleType.INIT));
-    modules.add(new EnderBombModule().setType(ModuleType.INIT));
-    modules.add(new FragileBlockModule().setType(ModuleType.INIT));
-    modules.add(new HorseFoodModule().setType(ModuleType.INIT));
-    modules.add(new MagicBeanModule().setType(ModuleType.INIT));
-    modules.add(new MobSpawnModule().setType(ModuleType.INIT));
-    modules.add(new PotionModule().setType(ModuleType.INIT));
-    modules.add(new ProjectileModule().setType(ModuleType.INIT));
-    modules.add(new SlimepadModule().setType(ModuleType.INIT));
-    modules.add(new StackSizeModule().setType(ModuleType.INIT));
-    modules.add(new StorageBagModule().setType(ModuleType.INIT));
-    modules.add(new ToolsModule().setType(ModuleType.INIT)); //new
-    modules.add(new UnbreakableSpawnerModule().setType(ModuleType.INIT));
-    modules.add(new UncrafterModule().setType(ModuleType.INIT));
+    modules.add(new BuilderBlockModule());
+    modules.add(new BucketBlockModule());
+    modules.add(new CarbonPaperModule());
+    modules.add(new ChestSackModule());
+    modules.add(new ConsumeablesModule());
+    modules.add(new ConveyorPlateModule());
+    modules.add(new EnderBookModule());
+    modules.add(new EmeraldArmorModule());
+    modules.add(new EnderBombModule());
+    modules.add(new FragileBlockModule());
+    modules.add(new HorseFoodModule());
+    modules.add(new MagicBeanModule());
+    modules.add(new MobSpawnModule());
+    modules.add(new PotionModule());
+    modules.add(new ProjectileModule());
+    modules.add(new SlimepadModule());
+    modules.add(new StackSizeModule());
+    modules.add(new StorageBagModule());
+    modules.add(new ToolsModule());
+    modules.add(new UnbreakableSpawnerModule());
+    modules.add(new UncrafterModule());
   //TODO: world gen / nether ore module
     //event modules TODO: make actual modules.?? maybe
 
@@ -181,7 +162,9 @@ public class ModMain {
   }
   @EventHandler
   public void onInit(FMLInitializationEvent event) {
-    registerModulesByType(ModuleType.INIT);
+    for(ICyclicModule module : modules) {
+      module.onInit();
+    }
   
     ItemRegistry.register();
     BlockRegistry.registerDimensionOres();
@@ -205,23 +188,20 @@ public class ModMain {
   }
   @EventHandler
   public void onPostInit(FMLPostInitializationEvent event) {
-    registerModulesByType(ModuleType.POSTINIT);
+    for(ICyclicModule module : modules) {
+      module.onPostInit();
+    }
+  
     // registers all plantable crops. 
     DispenserBehaviorRegistry.register();
   }
   @EventHandler
   public void onServerStarting(FMLServerStartingEvent event) {
-    registerModulesByType(ModuleType.SERVERSTART);
+    for(ICyclicModule module : modules) {
+      module.onServerStarting();
+    }
+  
     CommandRegistry.register(event);
-  }
-  private void registerModulesByType(ModuleType type){
-    for(ICyclicModule module : modules) 
-      if(module.isEnabled() && module.getType() == type){
-        module.register();
-      }
-  }
-  public static Configuration getConfig() {
-    return config;
   }
   public void syncConfig() {
     // hit on startup and on change event from

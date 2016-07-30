@@ -10,7 +10,7 @@ public class UnbreakableSpawnerModule extends BaseModule {
     return true;
   }
   @Override
-  public void register() {
+  public void onInit() {
     updateHardness();
   }
   private void updateHardness() {

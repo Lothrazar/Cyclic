@@ -33,7 +33,7 @@ public class StackSizeModule extends BaseModule {
     stackMap.put(Items.ENDER_PEARL, MAX);
     stackMap.put(Items.EGG, MAX);
   }
-  public void register() {
+  public void onInit() {
     for (Map.Entry<Item, Integer> entry : stackMap.entrySet()) {
       boolean enabled = (enabledMap.get(entry.getKey()) == 1);
       if (enabled) {

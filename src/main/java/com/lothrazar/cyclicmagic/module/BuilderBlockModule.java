@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BuilderBlockModule extends BaseModule {
   private boolean moduleEnabled;
-  public void register() {
+  public void onInit() {
     BlockRegistry.builder_block = new BlockBuilder();
     BlockRegistry.registerBlock(BlockRegistry.builder_block, "builder_block");
     BlockRegistry.builder_block.addRecipe();

@@ -9,7 +9,7 @@ import net.minecraftforge.common.config.Configuration;
 
 public class MagicBeanModule extends BaseModule {
   private boolean moduleEnabled;
-  public void register() {
+  public void onInit() {
     BlockSprout sprout = new BlockSprout();
     BlockRegistry.registerBlock(sprout, "sprout", true);
     ItemRegistry.sprout_seed = new ItemSproutSeeds(sprout, Blocks.FARMLAND);

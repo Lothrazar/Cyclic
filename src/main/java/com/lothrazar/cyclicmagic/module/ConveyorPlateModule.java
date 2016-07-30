@@ -7,7 +7,7 @@ import net.minecraftforge.common.config.Configuration;
 
 public class ConveyorPlateModule extends BaseModule {
   private boolean moduleEnabled;
-  public void register() {
+  public void onInit() {
     BlockConveyor plate_push = new BlockConveyor(0.16F, SoundEvents.BLOCK_ANVIL_BREAK);
     BlockRegistry.registerBlock(plate_push, "plate_push");
     plate_push.addRecipe();

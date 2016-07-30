@@ -7,7 +7,7 @@ import net.minecraftforge.common.config.Configuration;
 public class StorageBagModule extends BaseModule {
   private boolean moduleEnabled;
   @Override
-  public void register() {
+  public void onInit() {
     ItemRegistry.storage_bag = new ItemInventoryStorage();
     ItemRegistry.addItem(ItemRegistry.storage_bag, "storage_bag");
   }

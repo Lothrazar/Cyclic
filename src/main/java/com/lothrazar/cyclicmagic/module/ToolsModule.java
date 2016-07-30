@@ -21,7 +21,7 @@ public class ToolsModule extends BaseModule {
   private boolean enableSpawnInspect;
   private boolean enableCyclicWand;
   @Override
-  public void register() {
+  public void onInit() {
     if(enableSpawnInspect){
       ItemRegistry.tool_spawn_inspect = new ItemToolSpawnInspect();
       ItemRegistry.addItem(ItemRegistry.tool_spawn_inspect, "tool_spawn_inspect");

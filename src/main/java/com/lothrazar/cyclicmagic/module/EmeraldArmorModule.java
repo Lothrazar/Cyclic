@@ -60,7 +60,7 @@ public class EmeraldArmorModule extends BaseModule {
     // 1600,3.5F, 5+25 );
   }
   @Override
-  public void register() {
+  public void onInit() {
     
     ItemRegistry.addItem(new ItemEmeraldArmor(EntityEquipmentSlot.HEAD), "emerald_helmet");
     ItemRegistry.addItem(new ItemEmeraldArmor(EntityEquipmentSlot.CHEST), "emerald_chestplate");

@@ -24,7 +24,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class HorseFoodModule extends BaseModule {
   private boolean moduleEnabled;
   @Override
-  public void register() {
+  public void onInit() {
     ItemRegistry.addItem(new ItemFoodHorse(new ItemStack(Items.EMERALD)), "horse_upgrade_type");
     ItemRegistry.addItem(new ItemFoodHorse(new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage())), "horse_upgrade_variant");
     ItemRegistry.addItem(new ItemFoodHorse(new ItemStack(Items.DIAMOND)), "horse_upgrade_health");

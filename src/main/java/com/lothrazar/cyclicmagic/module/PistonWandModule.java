@@ -9,7 +9,7 @@ public class PistonWandModule extends BaseModule {
     return false;
   }
   @Override
-  public void register() {
+  public void onInit() {
     // TODO Auto-generated method stub
   }
   @Override

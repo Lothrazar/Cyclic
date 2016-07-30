@@ -21,7 +21,7 @@ public class ProjectileModule extends BaseModule {
   private boolean enderWater;
   private boolean enderLightning;
   @Override
-  public void register() {
+  public void onInit() {
     if (enableEnderBlaze) {
       ItemRegistry.ender_blaze = new ItemProjectileBlaze();
       ItemRegistry.addItem(ItemRegistry.ender_blaze, "ender_blaze");

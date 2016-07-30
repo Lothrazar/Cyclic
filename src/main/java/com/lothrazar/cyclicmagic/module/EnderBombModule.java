@@ -8,7 +8,7 @@ import net.minecraftforge.common.config.Configuration;
 public class EnderBombModule extends BaseModule {
   private boolean moduleEnabled;  
   @Override
-  public void register() {
+  public void onInit() {
     ItemRegistry.ender_tnt_1 = new ItemProjectileTNT(1);
     ItemRegistry.ender_tnt_2 = new ItemProjectileTNT(2);
     ItemRegistry.ender_tnt_3 = new ItemProjectileTNT(3);

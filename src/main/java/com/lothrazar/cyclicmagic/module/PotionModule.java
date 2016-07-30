@@ -57,7 +57,7 @@ public class PotionModule extends BaseModule {
  
   private boolean moduleEnabled;
   @Override
-  public void register() {
+  public void onInit() {
     // http://www.minecraftforge.net/forum/index.php?topic=11024.0
     // ??? http://www.minecraftforge.net/forum/index.php?topic=12358.0
     ender = new PotionEnder("ender", true, 0);

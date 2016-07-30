@@ -30,7 +30,7 @@ public class MobSpawnModule extends BaseModule {
   private boolean snowmanIcePlainsMount;
   private boolean horseIceExtrhillsOcean;
   private boolean ironGolemJungle;
-  public void register() {
+  public void onInit() {
     if (blazeDesertHills) {
       EntityRegistry.addSpawn(EntityBlaze.class, group, min, max, EnumCreatureType.MONSTER, new Biome[] { Biomes.DESERT_HILLS });
     }

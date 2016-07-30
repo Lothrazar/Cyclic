@@ -8,7 +8,7 @@ import net.minecraftforge.common.config.Configuration;
 public class ChestSackModule extends BaseModule {
   private boolean moduleEnabled;  
   @Override
-  public void register() {
+  public void onInit() {
     ItemRegistry.chest_sack_empty = new ItemChestSackEmpty();
     ItemRegistry.chest_sack = new ItemChestSack();
     ItemRegistry.chest_sack.setHidden();

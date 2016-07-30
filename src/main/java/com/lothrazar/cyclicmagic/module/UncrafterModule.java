@@ -12,7 +12,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class UncrafterModule extends BaseModule {
   private boolean moduleEnabled;
-  public void register() {
+  public void onInit() {
     BlockRegistry.uncrafting_block = new BlockUncrafting();
     BlockRegistry.registerBlock(BlockRegistry.uncrafting_block, "uncrafting_block");
     BlockRegistry.uncrafting_block.addRecipe();

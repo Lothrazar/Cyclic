@@ -15,7 +15,7 @@ public class ConsumeablesModule extends BaseModule {
   private boolean enableInventoryUpgrade;
   private boolean enableCorruptedChorus;
   @Override
-  public void register() {
+  public void onInit() {
     if (enableEmeraldApple) {
       ItemRegistry.apple_emerald = new ItemAppleEmerald();
       ItemRegistry.addItem(ItemRegistry.apple_emerald, "apple_emerald");
