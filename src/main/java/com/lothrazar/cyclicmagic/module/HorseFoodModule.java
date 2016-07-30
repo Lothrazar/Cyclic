@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.module;
 import java.text.DecimalFormat;
+import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.item.ItemFoodHorse;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -29,6 +30,7 @@ public class HorseFoodModule extends BaseModule {
     ItemRegistry.addItem(new ItemFoodHorse(new ItemStack(Items.DIAMOND)), "horse_upgrade_health");
     ItemRegistry.addItem(new ItemFoodHorse(new ItemStack(Items.REDSTONE)), "horse_upgrade_speed");
     ItemRegistry.addItem(new ItemFoodHorse(new ItemStack(Items.ENDER_EYE)), "horse_upgrade_jump");
+    ModMain.instance.events.addEvent(this);//for SubcribeEvent hooks
   }
   @Override
   public void syncConfig(Configuration config) {

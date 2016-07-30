@@ -17,6 +17,8 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 public class EventPlayerData {
   // send from both events to avoid NULL player; known issue due to threading race conditions
   // https://github.com/MinecraftForge/MinecraftForge/issues/1583
+// player data storage based on API source code example:
+    // https://github.com/MinecraftForge/MinecraftForge/blob/1.9/src/test/java/net/minecraftforge/test/NoBedSleepingTest.java
   @SubscribeEvent
   public void onSpawn(PlayerLoggedInEvent event) {
     if (event.player instanceof EntityPlayerMP && event.player.worldObj.isRemote == false) {

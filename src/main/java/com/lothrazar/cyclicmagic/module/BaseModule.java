@@ -16,9 +16,6 @@ public abstract class BaseModule implements ICyclicModule {
   public boolean isEnabled() {
     return true;
   }
-  public boolean isEvent() {
-    return false;
-  }
   public abstract void register();
   public abstract void syncConfig(Configuration config);
 }

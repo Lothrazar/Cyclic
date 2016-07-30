@@ -1,9 +1,33 @@
 package com.lothrazar.cyclicmagic;
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.event.core.EventExtendedInventory;
-import com.lothrazar.cyclicmagic.event.core.EventKeyInput;
-import com.lothrazar.cyclicmagic.event.core.EventPlayerData;
+import com.lothrazar.cyclicmagic.event.EventAchievement;
+import com.lothrazar.cyclicmagic.event.EventEditSign;
+import com.lothrazar.cyclicmagic.event.EventEnderChest;
+import com.lothrazar.cyclicmagic.event.EventEndermanDropBlock;
+import com.lothrazar.cyclicmagic.event.EventFoodDetails;
+import com.lothrazar.cyclicmagic.event.EventFragileTorches;
+import com.lothrazar.cyclicmagic.event.EventFurnaceStardew;
+import com.lothrazar.cyclicmagic.event.EventGuiTerrariaButtons;
+import com.lothrazar.cyclicmagic.event.EventLadderClimb;
+import com.lothrazar.cyclicmagic.event.EventLightningDamage;
+import com.lothrazar.cyclicmagic.event.EventLootTableLoaded;
+import com.lothrazar.cyclicmagic.event.EventMobDropsBuffs;
+import com.lothrazar.cyclicmagic.event.EventMobDropsReduced;
+import com.lothrazar.cyclicmagic.event.EventMounted;
+import com.lothrazar.cyclicmagic.event.EventMountedPearl;
+import com.lothrazar.cyclicmagic.event.EventNameVillager;
+import com.lothrazar.cyclicmagic.event.EventNametagDeath;
+import com.lothrazar.cyclicmagic.event.EventOreMined;
+import com.lothrazar.cyclicmagic.event.EventPassthroughAction;
+import com.lothrazar.cyclicmagic.event.EventPlayerSleep;
+import com.lothrazar.cyclicmagic.event.EventPotions;
+import com.lothrazar.cyclicmagic.event.EventSaplingBlockGrowth;
+import com.lothrazar.cyclicmagic.event.EventSaplingPlantDespawn;
+import com.lothrazar.cyclicmagic.event.EventSignSkullName;
+import com.lothrazar.cyclicmagic.event.EventSpawnChunks;
+import com.lothrazar.cyclicmagic.event.EventSpells;
+import com.lothrazar.cyclicmagic.event.core.*;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.module.BaseModule.ModuleType;
 import com.lothrazar.cyclicmagic.module.BucketBlockModule;
@@ -61,7 +85,7 @@ public class ModMain {
   public static CommonProxy proxy;
   public static ModLogger logger;
   private static Configuration config;
-  private EventRegistry events;
+  public EventRegistry events;
   public static SimpleNetworkWrapper network;
   public final static CreativeTabs TAB = new CreativeTabs(Const.MODID) {
     @Override
@@ -69,22 +93,39 @@ public class ModMain {
       return ItemRegistry.cyclic_wand_build == null ? Items.DIAMOND : ItemRegistry.cyclic_wand_build;
     }
   };
-  // thank you for the examples forge. player data storage based on API source code example:
-  // https://github.com/MinecraftForge/MinecraftForge/blob/1.9/src/test/java/net/minecraftforge/test/NoBedSleepingTest.java
+  // thank you for the examples forge. 
   @CapabilityInject(IPlayerExtendedProperties.class)
   public static final Capability<IPlayerExtendedProperties> CAPABILITYSTORAGE = null;
   @EventHandler
   public void onPreInit(FMLPreInitializationEvent event) {
+    //CORE modules
     logger = new ModLogger(event.getModLog());
     config = new Configuration(event.getSuggestedConfigurationFile());
     config.load();
     network = NetworkRegistry.INSTANCE.newSimpleChannel(Const.MODID);
-    MinecraftForge.EVENT_BUS.register(instance);
     SoundRegistry.register();
     CapabilityRegistry.register();
     ReflectionRegistry.register();
     PacketRegistry.register(network);
-    events = new EventRegistry();
+    events = new EventRegistry();//core events
+    events.addEvent(new EventConfigChanged());//  MinecraftForge.EVENT_BUS.register(instance);
+    events.addEvent(new EventExtendedInventory());
+    events.addEvent(new EventKeyInput());
+    events.addEvent(new EventPlayerData());
+    //Features modules
+    this.createFeatureModules();
+    //important: sync config before doing anything else, now that constructors have all ran
+    this.syncConfig();
+    //when a module registers, if its enabled, it can add itself or other objets to instance.events
+    registerModulesByType(ModuleType.PREINIT);
+
+    //important: register events after modules.
+    //since modules can register events too
+    //TODO: FIX THIS< if a mod is type init or later, but the events get added in .register, well too late?
+    //now tell all events to register/subscribe
+    events.registerAll();
+  }
+  private void createFeatureModules() {
     modules.add(new BuilderBlockModule().setType(ModuleType.INIT));
     modules.add(new BucketBlockModule().setType(ModuleType.INIT));
     modules.add(new CarbonPaperModule().setType(ModuleType.INIT));
@@ -106,33 +147,37 @@ public class ModMain {
     modules.add(new ToolsModule().setType(ModuleType.INIT)); //new
     modules.add(new UnbreakableSpawnerModule().setType(ModuleType.INIT));
     modules.add(new UncrafterModule().setType(ModuleType.INIT));
-    /*
-    ??? nether ores
-    
-    */
+  //TODO: world gen / nether ore module
+    //event modules TODO: make actual modules.?? maybe
 
-    //important: sync config before setting up modules
-    this.syncConfig();
-
-    registerModulesByType(ModuleType.PREINIT);
     EnchantRegistry.register();//TODO: enchant module will be preinit
-
-    //important: register events after modules.
-    //and any modules that are also event based
-
-    //add core events first
-    events.addEvent(new EventExtendedInventory());//CORE event
-    events.addEvent(new EventKeyInput());//CORE event
-    events.addEvent(new EventPlayerData());//CORE event
-    //module events (horsefood was first one)
-    for(ICyclicModule module : modules){
-      if(module.isEnabled() && module.isEvent()){
-        events.addEvent(module);
-      }
-    }
-    //standalone feature events
-    events.addFeatureEvents();
-    events.registerAll();
+    
+    ModMain.instance.events.addEvent(new EventAchievement());
+    ModMain.instance.events.addEvent(new EventEditSign());
+    ModMain.instance.events.addEvent(new EventEnderChest());
+    ModMain.instance.events.addEvent(new EventEndermanDropBlock());
+    ModMain.instance.events.addEvent(new EventFoodDetails());
+    ModMain.instance.events.addEvent(new EventFragileTorches());
+    ModMain.instance.events.addEvent(new EventFurnaceStardew());
+    ModMain.instance.events.addEvent(new EventGuiTerrariaButtons());
+    ModMain.instance.events.addEvent(new EventLadderClimb());
+    ModMain.instance.events.addEvent(new EventLightningDamage());
+    ModMain.instance.events.addEvent(new EventLootTableLoaded());
+    ModMain.instance.events.addEvent(new EventMobDropsBuffs());
+    ModMain.instance.events.addEvent(new EventMobDropsReduced());
+    ModMain.instance.events.addEvent(new EventMounted());
+    ModMain.instance.events.addEvent(new EventMountedPearl());
+    ModMain.instance.events.addEvent(new EventNametagDeath());
+    ModMain.instance.events.addEvent(new EventNameVillager());
+    ModMain.instance.events.addEvent(new EventOreMined());
+    ModMain.instance.events.addEvent(new EventPassthroughAction());
+    ModMain.instance.events.addEvent(new EventPlayerSleep());
+    ModMain.instance.events.addEvent(new EventPotions());
+    ModMain.instance.events.addEvent(new EventSaplingBlockGrowth());
+    ModMain.instance.events.addEvent(new EventSaplingPlantDespawn());
+    ModMain.instance.events.addEvent(new EventSignSkullName());
+    ModMain.instance.events.addEvent(new EventSpawnChunks());
+    ModMain.instance.events.addEvent(new EventSpells());//so far only used by cyclic wand...
   }
   @EventHandler
   public void onInit(FMLInitializationEvent event) {
@@ -174,12 +219,6 @@ public class ModMain {
       if(module.isEnabled() && module.getType() == type){
         module.register();
       }
-  }
-  @SubscribeEvent
-  public void onConfigChanged(OnConfigChangedEvent event) {
-    if (event.getModID().equals(Const.MODID)) {
-      ModMain.instance.syncConfig();
-    }
   }
   public static Configuration getConfig() {
     return config;
