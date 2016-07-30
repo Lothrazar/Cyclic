@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.event;
+package com.lothrazar.cyclicmagic.module;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -10,7 +10,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventFoodDetails implements IHasConfig {
+public class ItemstackInfoModule extends BaseEventModule  implements IHasConfig {
   private boolean foodDetails;
   private boolean fuelDetails;
   @SubscribeEvent

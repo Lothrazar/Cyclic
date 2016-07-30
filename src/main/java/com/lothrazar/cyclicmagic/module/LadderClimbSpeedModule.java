@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.event;
+package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.player.EntityPlayer;
@@ -6,7 +6,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventLadderClimb implements IHasConfig {
+public class LadderClimbSpeedModule  extends BaseEventModule implements IHasConfig {
   private boolean fastLadderClimb;
   private static final int ROTATIONLIMIT = -78;
   private static final double SPEED = 0.60;

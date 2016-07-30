@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.event;
+package com.lothrazar.cyclicmagic.module;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,7 +20,7 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EventGuiTerrariaButtons implements IHasConfig {
+public class GuiTerrariaButtonsModule extends BaseEventModule  implements IHasConfig {
   private String position;
   public static boolean restockLeaveOne; //referenced by the PacketRestock
   public static final String posLeft = "topleft";

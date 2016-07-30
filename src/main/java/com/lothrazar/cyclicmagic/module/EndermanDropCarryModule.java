@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.event;
+package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
@@ -9,7 +9,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventEndermanDropBlock implements IHasConfig {
+public class EndermanDropCarryModule extends BaseEventModule  implements IHasConfig {
   private boolean endermanDrop;
   @SubscribeEvent
   public void onLivingDeathEvent(LivingDeathEvent event) {

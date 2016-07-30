@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.event;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasConfig;
+import com.lothrazar.cyclicmagic.module.BaseModule;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
@@ -11,7 +12,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventMobDropsReduced implements IHasConfig {
+public class EventMobDropsReduced extends BaseModule  implements IHasConfig {
   private static boolean zombieDropsNerfed;
   @SubscribeEvent
   public void onLivingDropsEvent(LivingDropsEvent event) {

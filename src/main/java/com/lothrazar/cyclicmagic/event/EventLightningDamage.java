@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.event;
 import com.lothrazar.cyclicmagic.IHasConfig;
+import com.lothrazar.cyclicmagic.module.BaseModule;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityZombie;
@@ -9,7 +10,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventLightningDamage implements IHasConfig {
+public class EventLightningDamage extends BaseModule  implements IHasConfig {
   private boolean skelEnabled;
   private boolean zombEnabled;
   @SuppressWarnings("deprecation")

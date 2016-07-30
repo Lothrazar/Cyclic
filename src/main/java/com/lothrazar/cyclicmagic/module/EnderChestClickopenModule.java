@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.event;
+package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,7 +9,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventEnderChest implements IHasConfig {
+public class EnderChestClickopenModule  extends BaseEventModule implements IHasConfig {
   private static boolean easyEnderChest;
   @SubscribeEvent
   public void onHit(PlayerInteractEvent.LeftClickBlock event) {

@@ -1,5 +1,4 @@
-package com.lothrazar.cyclicmagic.event;
-import com.lothrazar.cyclicmagic.IHasConfig;
+package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilExperience;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -9,7 +8,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.AchievementEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventAchievement implements IHasConfig {
+public class AchievementExpModule extends BaseEventModule {
   private boolean isEnabled;
   @SubscribeEvent
   public void onAchievement(AchievementEvent event) {

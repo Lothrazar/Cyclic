@@ -52,6 +52,7 @@ public class ToolsModule extends BaseModule {
     if(enableSleepingMat){
       ItemRegistry.sleeping_mat = new ItemSleepingBag();
       ItemRegistry.addItem(ItemRegistry.sleeping_mat, "sleeping_mat");
+      ModMain.instance.events.addEvent(ItemRegistry.sleeping_mat);
     }
     if(enableCyclicWand){
       ItemRegistry.cyclic_wand_build = new ItemCyclicWand();

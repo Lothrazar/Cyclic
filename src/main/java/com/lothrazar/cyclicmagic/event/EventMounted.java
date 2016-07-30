@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.event;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasConfig;
+import com.lothrazar.cyclicmagic.module.BaseModule;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -14,7 +15,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EventMounted implements IHasConfig {
+public class EventMounted  extends BaseModule implements IHasConfig {
   private boolean disableHurtMount = false;
   private boolean showHungerMounted = true;
   @SubscribeEvent

@@ -1,31 +1,16 @@
 package com.lothrazar.cyclicmagic;
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.event.EventAchievement;
 import com.lothrazar.cyclicmagic.event.EventEditSign;
-import com.lothrazar.cyclicmagic.event.EventEnderChest;
-import com.lothrazar.cyclicmagic.event.EventEndermanDropBlock;
-import com.lothrazar.cyclicmagic.event.EventFoodDetails;
-import com.lothrazar.cyclicmagic.event.EventFragileTorches;
 import com.lothrazar.cyclicmagic.event.EventFurnaceStardew;
-import com.lothrazar.cyclicmagic.event.EventGuiTerrariaButtons;
-import com.lothrazar.cyclicmagic.event.EventLadderClimb;
 import com.lothrazar.cyclicmagic.event.EventLightningDamage;
-import com.lothrazar.cyclicmagic.event.EventLootTableLoaded;
 import com.lothrazar.cyclicmagic.event.EventMobDropsBuffs;
 import com.lothrazar.cyclicmagic.event.EventMobDropsReduced;
 import com.lothrazar.cyclicmagic.event.EventMounted;
 import com.lothrazar.cyclicmagic.event.EventMountedPearl;
-import com.lothrazar.cyclicmagic.event.EventNameVillager;
-import com.lothrazar.cyclicmagic.event.EventNametagDeath;
-import com.lothrazar.cyclicmagic.event.EventOreMined;
-import com.lothrazar.cyclicmagic.event.EventPassthroughAction;
-import com.lothrazar.cyclicmagic.event.EventPlayerSleep;
-import com.lothrazar.cyclicmagic.event.EventPotions;
-import com.lothrazar.cyclicmagic.event.EventSaplingBlockGrowth;
-import com.lothrazar.cyclicmagic.event.EventSaplingPlantDespawn;
+import com.lothrazar.cyclicmagic.event.DropNametagDeathModule;
+import com.lothrazar.cyclicmagic.event.EventPotionModule;
 import com.lothrazar.cyclicmagic.event.EventSignSkullName;
-import com.lothrazar.cyclicmagic.event.EventSpawnChunks;
 import com.lothrazar.cyclicmagic.event.EventSpells;
 import com.lothrazar.cyclicmagic.event.core.*;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
@@ -104,7 +89,7 @@ public class ModMain {
     //since modules can register events too
     //TODO: FIX THIS< if a mod is type init or later, but the events get added in .register, well too late?
     //now tell all events to register/subscribe
-    events.registerAll();
+    this.events.registerAll();
   }
   private void createFeatureModules() {
     modules.add(new BuilderBlockModule());
@@ -132,36 +117,31 @@ public class ModMain {
     //event modules TODO: make actual modules.?? maybe
 
     EnchantRegistry.register();//TODO: enchant module will be preinit
-    ModMain.instance.events.addEvent(EnchantRegistry.launch);
-    ModMain.instance.events.addEvent(EnchantRegistry.magnet);
-    ModMain.instance.events.addEvent(EnchantRegistry.venom);
-    ModMain.instance.events.addEvent(EnchantRegistry.lifeleech);
     
-    ModMain.instance.events.addEvent(new EventAchievement());
+    ModMain.instance.events.addEvent(new AchievementExpModule());
     ModMain.instance.events.addEvent(new EventEditSign());
-    ModMain.instance.events.addEvent(new EventEnderChest());
-    ModMain.instance.events.addEvent(new EventEndermanDropBlock());
-    ModMain.instance.events.addEvent(new EventFoodDetails());
-    ModMain.instance.events.addEvent(new EventFragileTorches());
+    ModMain.instance.events.addEvent(new EnderChestClickopenModule());
+    ModMain.instance.events.addEvent(new EndermanDropCarryModule());
+    ModMain.instance.events.addEvent(new ItemstackInfoModule());
+    ModMain.instance.events.addEvent(new FragileTorchesModule());
     ModMain.instance.events.addEvent(new EventFurnaceStardew());
-    ModMain.instance.events.addEvent(new EventGuiTerrariaButtons());
-    ModMain.instance.events.addEvent(new EventLadderClimb());
+    ModMain.instance.events.addEvent(new GuiTerrariaButtonsModule());
+    ModMain.instance.events.addEvent(new LadderClimbSpeedModule());
     ModMain.instance.events.addEvent(new EventLightningDamage());
-    ModMain.instance.events.addEvent(new EventLootTableLoaded());
+    ModMain.instance.events.addEvent(new LootTableModule());
     ModMain.instance.events.addEvent(new EventMobDropsBuffs());
     ModMain.instance.events.addEvent(new EventMobDropsReduced());
     ModMain.instance.events.addEvent(new EventMounted());
     ModMain.instance.events.addEvent(new EventMountedPearl());
-    ModMain.instance.events.addEvent(new EventNametagDeath());
-    ModMain.instance.events.addEvent(new EventNameVillager());
-    ModMain.instance.events.addEvent(new EventOreMined());
-    ModMain.instance.events.addEvent(new EventPassthroughAction());
-    ModMain.instance.events.addEvent(new EventPlayerSleep());
-    ModMain.instance.events.addEvent(new EventPotions());
-    ModMain.instance.events.addEvent(new EventSaplingBlockGrowth());
-    ModMain.instance.events.addEvent(new EventSaplingPlantDespawn());
+    ModMain.instance.events.addEvent(new DropNametagDeathModule());
+    ModMain.instance.events.addEvent(new VillagerNametagModule());
+    ModMain.instance.events.addEvent(new DimensionOreModule());
+    ModMain.instance.events.addEvent(new PassthroughActionModule());
+    ModMain.instance.events.addEvent(new EventPotionModule());
+    ModMain.instance.events.addEvent(new SaplingMutationModule());
+    ModMain.instance.events.addEvent(new SaplingDespawnPlantModule());
     ModMain.instance.events.addEvent(new EventSignSkullName());
-    ModMain.instance.events.addEvent(new EventSpawnChunks());
+    ModMain.instance.events.addEvent(new F3InfoModule());
     ModMain.instance.events.addEvent(new EventSpells());//so far only used by cyclic wand...
   }
   @EventHandler

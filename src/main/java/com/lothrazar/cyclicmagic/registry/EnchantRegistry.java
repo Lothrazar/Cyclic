@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.registry;
+import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.enchantment.EnchantLaunch;
 import com.lothrazar.cyclicmagic.enchantment.EnchantLifeLeech;
 import com.lothrazar.cyclicmagic.enchantment.EnchantMagnet;
@@ -17,16 +18,32 @@ public class EnchantRegistry {
   public static int magnetid;
   public static int venomid;
   public static int lifeleechid;
+  private static boolean enableLaunch=true;
+  private static boolean enableMagnet=true;
+  private static boolean enableVenom=true;
+  private static boolean enableLifeleech=true;//TODO: confighookup on this module
   public static void register() {
-    launch = new EnchantLaunch();
-    Enchantment.REGISTRY.register(launchid, new ResourceLocation(launch.getName()), launch);
-    magnet = new EnchantMagnet();
-    Enchantment.REGISTRY.register(magnetid, new ResourceLocation(magnet.getName()), magnet);
-    venom = new EnchantVenom();
-    Enchantment.REGISTRY.register(venomid, new ResourceLocation(venom.getName()), venom);
-    lifeleech = new EnchantLifeLeech();
-    Enchantment.REGISTRY.register(lifeleechid, new ResourceLocation(lifeleech.getName()), lifeleech);
- }
+    if (enableLaunch) {
+      launch = new EnchantLaunch();
+      Enchantment.REGISTRY.register(launchid, new ResourceLocation(launch.getName()), launch);
+      ModMain.instance.events.addEvent(EnchantRegistry.launch);
+    }
+    if (enableMagnet) {
+      magnet = new EnchantMagnet();
+      Enchantment.REGISTRY.register(magnetid, new ResourceLocation(magnet.getName()), magnet);
+      ModMain.instance.events.addEvent(EnchantRegistry.magnet);
+    }
+    if (enableVenom) {
+      venom = new EnchantVenom();
+      Enchantment.REGISTRY.register(venomid, new ResourceLocation(venom.getName()), venom);
+      ModMain.instance.events.addEvent(EnchantRegistry.venom);
+    }
+    if (enableLifeleech) {
+      lifeleech = new EnchantLifeLeech();
+      Enchantment.REGISTRY.register(lifeleechid, new ResourceLocation(lifeleech.getName()), lifeleech);
+      ModMain.instance.events.addEvent(EnchantRegistry.lifeleech);
+    }
+  }
   public static void syncConfig(Configuration c) {
     launchid = c.getInt("enchant.launch.id", Const.ConfigCategory.modpackMisc,
         86, 71, 999, "Id of the launch enchantment (double jump on boots).  Change this if you get id conflicts with other mods.");

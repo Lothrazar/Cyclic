@@ -1,9 +1,8 @@
-package com.lothrazar.cyclicmagic.event;
+package com.lothrazar.cyclicmagic.module;
 import java.util.HashSet;
 import java.util.Set;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.module.PotionModule;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Blocks;
@@ -21,7 +20,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventLootTableLoaded implements IHasConfig {
+public class LootTableModule extends BaseEventModule  implements IHasConfig {
   private static final int RANDODEFAULT = 7;
   private static final String LOOTPOOLNAME = "main";
   private Set<ResourceLocation> chests;
@@ -33,7 +32,7 @@ public class EventLootTableLoaded implements IHasConfig {
   private boolean enableShulkerDiamCryst;
   private boolean enableSilverfishIron;
   private boolean enableStrayPackedIce;
-  public EventLootTableLoaded() {
+  public LootTableModule() {
     chests = new HashSet<ResourceLocation>();
     //anything but the starter chest
     chests.add(LootTableList.CHESTS_ABANDONED_MINESHAFT);

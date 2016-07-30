@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.event;
+package com.lothrazar.cyclicmagic.module;
 import java.text.DecimalFormat;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EventSpawnChunks {
+public class F3InfoModule extends BaseEventModule{
   final static int SPAWN_RADIUS = 8 * Const.CHUNK_SIZE;// 128 is spawn size
   // 1 chunk is 16x16 blocks
   public static int blockToChunk(int blockVal) {

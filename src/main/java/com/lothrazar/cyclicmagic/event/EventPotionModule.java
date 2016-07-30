@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EventPotions implements IHasConfig {
+public class EventPotionModule implements IHasConfig {
   public boolean cancelPotionInventoryShift;
   @SubscribeEvent
   public void onEntityUpdate(LivingUpdateEvent event) {

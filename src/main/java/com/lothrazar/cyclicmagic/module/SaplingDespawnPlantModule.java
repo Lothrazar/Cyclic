@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.event;
+package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.Block;
@@ -10,7 +10,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.item.ItemExpireEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventSaplingPlantDespawn implements IHasConfig {
+public class SaplingDespawnPlantModule extends BaseEventModule implements IHasConfig {
   public static boolean enabled = true;
   //from one of my mods https://github.com/LothrazarMinecraftMods/SaplingGrowthControl/blob/master/src/main/java/com/lothrazar/samssaplings/ModConfig.java
   @SubscribeEvent

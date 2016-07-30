@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.event;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasConfig;
+import com.lothrazar.cyclicmagic.module.BaseModule;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.entity.Entity;
@@ -22,7 +23,7 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteractSpecific;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventMobDropsBuffs implements IHasConfig {
+public class EventMobDropsBuffs  extends BaseModule implements IHasConfig {
   public static boolean sheepShearBuffed;
   private boolean zombieVillagerEmeralds;
   private boolean extraLeather;

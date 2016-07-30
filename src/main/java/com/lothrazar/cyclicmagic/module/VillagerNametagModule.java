@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.event;
+package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.Entity;
@@ -11,7 +11,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract
 //import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventNameVillager implements IHasConfig {
+public class VillagerNametagModule extends BaseEventModule  implements IHasConfig {
   private boolean nameVillagerTag;
   @SubscribeEvent
   public void onEntityInteractEvent(EntityInteract event) {

@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.event;
 import com.lothrazar.cyclicmagic.IHasConfig;
+import com.lothrazar.cyclicmagic.module.BaseModule;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilInventory;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -17,7 +18,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventFurnaceStardew implements IHasConfig {
+public class EventFurnaceStardew  extends BaseModule implements IHasConfig {
   private static boolean stardewFurnace;
   // inspired by stardew valley
   // http://minecraft.gamepedia.com/Furnace

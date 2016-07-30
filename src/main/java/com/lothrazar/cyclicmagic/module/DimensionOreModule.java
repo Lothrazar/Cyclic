@@ -1,11 +1,11 @@
-package com.lothrazar.cyclicmagic.event;
+package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventOreMined {
+public class DimensionOreModule {
   @SubscribeEvent
   public void onHarvestDropsEvent(HarvestDropsEvent event) {
     if (event.getState() != null && event.getState().getBlock() instanceof BlockDimensionOre) {

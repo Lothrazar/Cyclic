@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.event;
+package com.lothrazar.cyclicmagic.module;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasConfig;
@@ -16,7 +16,7 @@ import net.minecraftforge.event.terraingen.SaplingGrowTreeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventSaplingBlockGrowth implements IHasConfig {
+public class SaplingMutationModule extends BaseEventModule implements IHasConfig {
   private static final int sapling_oak = 0;
   private static final int sapling_spruce = 1;
   private static final int sapling_birch = 2;

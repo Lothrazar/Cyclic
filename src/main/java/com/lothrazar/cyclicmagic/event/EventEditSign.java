@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.event;
-import com.lothrazar.cyclicmagic.IHasConfig;
+import com.lothrazar.cyclicmagic.module.BaseEventModule;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -11,7 +11,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventEditSign implements IHasConfig {
+public class EventEditSign extends BaseEventModule {
   private boolean editableSigns;
   @SubscribeEvent
   public void onInteract(PlayerInteractEvent.LeftClickBlock event) {
