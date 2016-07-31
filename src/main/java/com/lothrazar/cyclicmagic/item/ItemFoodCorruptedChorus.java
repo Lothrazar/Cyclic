@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.item;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
@@ -58,7 +59,7 @@ public class ItemFoodCorruptedChorus extends ItemFood implements IHasRecipe, IHa
   private static final String KEY_EATDIM = "ghost_dim";
   public static int GHOST_SECONDS = 5;
   public static int POTION_SECONDS = 20;
-  public static void setPlayerGhostMode(EntityPlayer player, World par2World) {
+  private void setPlayerGhostMode(EntityPlayer player, World par2World) {
     if (par2World.isRemote == false) {
       player.setGameType(GameType.SPECTATOR);
       //			ModMain.logger.warn("WARN: dont use entitydata here");

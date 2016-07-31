@@ -75,11 +75,9 @@ public class ModMain {
     for (ICyclicModule module : modules) {
       module.onPreInit();
     }
-    //important: register events after modules.
     //since modules can register events too
     //TODO: FIX THIS< if a mod is type init or later, but the events get added in .register, well too late?
     //now tell all events to register/subscribe
-    this.events.registerAll();
   }
   private void createFeatureModules() {
     // :) http://alphabetizer.flap.tv/
@@ -159,6 +157,8 @@ public class ModMain {
     NetworkRegistry.INSTANCE.registerGuiHandler(this, new ModGuiHandler());
     //fixes things , stuff was added to items and content that has config
     this.syncConfig();
+    //important: register events after modules init.
+    this.events.registerAll();
   }
   @EventHandler
   public void onPostInit(FMLPostInitializationEvent event) {
