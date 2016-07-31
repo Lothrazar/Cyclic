@@ -1,5 +1,11 @@
 package com.lothrazar.cyclicmagic;
+import java.util.ArrayList;
+import java.util.List;
+import com.lothrazar.cyclicmagic.event.EventSpells;
+import com.lothrazar.cyclicmagic.event.core.*;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
+import com.lothrazar.cyclicmagic.item.BaseItem;
+import com.lothrazar.cyclicmagic.module.*;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
 import com.lothrazar.cyclicmagic.registry.*;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
@@ -7,11 +13,9 @@ import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -20,138 +24,186 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @Mod(modid = Const.MODID, useMetadata = true, canBeDeactivated = false, updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json", acceptableRemoteVersions = "*", guiFactory = "com.lothrazar." + Const.MODID + ".gui.IngameConfigFactory")
 public class ModMain {
+  private List<ICyclicModule> modules = new ArrayList<ICyclicModule>();
   @Instance(value = Const.MODID)
   public static ModMain instance;
   @SidedProxy(clientSide = "com.lothrazar." + Const.MODID + ".proxy.ClientProxy", serverSide = "com.lothrazar." + Const.MODID + ".proxy.CommonProxy")
   public static CommonProxy proxy;
   public static ModLogger logger;
-  private static Configuration config;
-  private EventRegistry events;
+  public EventRegistry events;
   public static SimpleNetworkWrapper network;
+  private static Configuration config;
+  public static Configuration getConfig() {
+    return config;
+  }
   public final static CreativeTabs TAB = new CreativeTabs(Const.MODID) {
     @Override
     public Item getTabIconItem() {
-      Item tab = ItemRegistry.cyclic_wand_build;
-      if (tab == null) {
-        tab = Items.DIAMOND;
-      }
-      return tab;
+      return ItemRegistry.cyclic_wand_build == null ? Items.DIAMOND : ItemRegistry.cyclic_wand_build;
     }
   };
-  // thank you for the examples forge. player data storage based on API source code example:
-  // https://github.com/MinecraftForge/MinecraftForge/blob/1.9/src/test/java/net/minecraftforge/test/NoBedSleepingTest.java
+  // thank you for the examples forge. 
   @CapabilityInject(IPlayerExtendedProperties.class)
   public static final Capability<IPlayerExtendedProperties> CAPABILITYSTORAGE = null;
   @EventHandler
   public void onPreInit(FMLPreInitializationEvent event) {
+    //CORE modules
     logger = new ModLogger(event.getModLog());
     config = new Configuration(event.getSuggestedConfigurationFile());
-    network = NetworkRegistry.INSTANCE.newSimpleChannel(Const.MODID);
-    MinecraftForge.EVENT_BUS.register(instance);
-    SoundRegistry.register();
-    events = new EventRegistry();
-    ItemRegistry.construct(); // MAYBE all these should be a constructed, not static
-    BlockRegistry.construct();
     config.load();
-    events.register();
-    StackSizeRegistry.construct();
+    network = NetworkRegistry.INSTANCE.newSimpleChannel(Const.MODID);
+    SoundRegistry.register();
     CapabilityRegistry.register();
     ReflectionRegistry.register();
     PacketRegistry.register(network);
-    EnchantRegistry.register();
+    events = new EventRegistry();//core events
+    events.addEvent(new EventConfigChanged());//  MinecraftForge.EVENT_BUS.register(instance);
+    events.addEvent(new EventExtendedInventory());
+    events.addEvent(new EventKeyInput());
+    events.addEvent(new EventPlayerData());
+    //Features modules
+    this.createFeatureModules();
+    //important: sync config before doing anything else, now that constructors have all ran
     this.syncConfig();
+    //when a module registers, if its enabled, it can add itself or other objets to instance.events
+    for (ICyclicModule module : modules) {
+      module.onPreInit();
+    }
+    //since modules can register events too
+    //TODO: FIX THIS< if a mod is type init or later, but the events get added in .register, well too late?
+    //now tell all events to register/subscribe
+  }
+  private void createFeatureModules() {
+    // :) http://alphabetizer.flap.tv/
+    modules.add(new AchievementExpModule());
+    modules.add(new BucketBlockModule());
+    modules.add(new BuilderBlockModule());
+    modules.add(new CarbonPaperModule());
+    modules.add(new ChestSackModule());
+    modules.add(new CommandModule());
+    modules.add(new ConsumeablesModule());
+    modules.add(new ConveyorPlateModule());
+    modules.add(new DispenserBehaviorModule());
+    modules.add(new DropNametagDeathModule());
+    modules.add(new EditSignBarehandModule());
+    modules.add(new EmeraldArmorModule());
+    modules.add(new EnchantModule());
+    modules.add(new EnderBombModule());
+    modules.add(new EnderBookModule());
+    modules.add(new EnderChestClickopenModule());
+    modules.add(new EndermanDropCarryModule());
+    modules.add(new F3InfoModule());
+    modules.add(new FragileBlockModule());
+    modules.add(new FragileTorchesModule());
+    modules.add(new FurnaceStardewModule());
+    modules.add(new GuiTerrariaButtonsModule());
+    modules.add(new HorseFoodModule());
+    modules.add(new ItemstackInfoModule());
+    modules.add(new LadderClimbSpeedModule());
+    modules.add(new LightningTransformModule());
+    modules.add(new LootTableModule());
+    modules.add(new MagicBeanModule());
+    modules.add(new MobDropChangesModule());
+    modules.add(new MobSpawnModule());
+    modules.add(new MountedTweaksModule());
+    modules.add(new PassthroughActionModule());
+    modules.add(new PotionModule());
+    modules.add(new ProjectileModule());
+    modules.add(new RecipeChangerModule());
+    modules.add(new SaplingMutationModule());
+    modules.add(new SkullNameFromSignModule());
+    modules.add(new SlimepadModule());
+    modules.add(new StackSizeModule());
+    modules.add(new StorageBagModule());
+    modules.add(new ToolsModule());
+    modules.add(new UnbreakableSpawnerModule());
+    modules.add(new UncrafterModule());
+    modules.add(new VillagerCreateModule());
+    modules.add(new VillagerNametagModule());
+    modules.add(new WorldGenModule());
+    //event modules TODO: make actual modules.?? maybe
+    ModMain.instance.events.addEvent(new EventSpells());//so far only used by cyclic wand...
   }
   @EventHandler
   public void onInit(FMLInitializationEvent event) {
-    PotionRegistry.register();
-    ItemRegistry.register();
-    BlockRegistry.register();
-    SpellRegistry.register();
-    MobSpawningRegistry.register();
-    WorldGenRegistry.register();
-    FuelRegistry.register();
-    StackSizeRegistry.register();
-    RecipeAlterRegistry.register();
-    RecipeNewRegistry.register();
-    VillageTradeRegistry.register();
+    for (ICyclicModule module : modules) {
+      module.onInit();
+    }
+    //maybe one day it will be all base items
+    Item item;
+    for (String key : ItemRegistry.itemMap.keySet()) {
+      item = ItemRegistry.itemMap.get(key);
+      if (item instanceof BaseItem) {
+        ((BaseItem) item).register(key);
+      }
+      else {
+        ItemRegistry.registerItem(item, key);
+      }
+      if (item instanceof IHasRecipe) {
+        ((IHasRecipe) item).addRecipe();
+      }
+    }
+    if (FuelRegistry.enabled) {
+      GameRegistry.registerFuelHandler(new FuelRegistry.FuelHandler());
+    }
+    //more core module stuff
     proxy.register();
-    TileEntityRegistry.register();
     NetworkRegistry.INSTANCE.registerGuiHandler(this, new ModGuiHandler());
-    ProjectileRegistry.register(event);
-    //finally, some items have extra forge events to hook into.
-    MinecraftForge.EVENT_BUS.register(BlockRegistry.block_storeempty);
-    MinecraftForge.EVENT_BUS.register(ItemRegistry.corrupted_chorus);
-    MinecraftForge.EVENT_BUS.register(ItemRegistry.heart_food);
-    MinecraftForge.EVENT_BUS.register(ItemRegistry.tool_push);
-    MinecraftForge.EVENT_BUS.register(EnchantRegistry.launch);
-    MinecraftForge.EVENT_BUS.register(EnchantRegistry.magnet);
-    MinecraftForge.EVENT_BUS.register(EnchantRegistry.venom);
-    MinecraftForge.EVENT_BUS.register(EnchantRegistry.lifeleech);
-    MinecraftForge.EVENT_BUS.register(PotionRegistry.slowfall);
-    MinecraftForge.EVENT_BUS.register(PotionRegistry.magnet);
-    MinecraftForge.EVENT_BUS.register(PotionRegistry.waterwalk);
-    MinecraftForge.EVENT_BUS.register(PotionRegistry.ender);
-    MinecraftForge.EVENT_BUS.register(PotionRegistry.snow);
+    //fixes things , stuff was added to items and content that has config
+    this.syncConfig();
+    //important: register events after modules init.
+    this.events.registerAll();
   }
   @EventHandler
   public void onPostInit(FMLPostInitializationEvent event) {
-    // registers all plantable crops. 
-    DispenserBehaviorRegistry.register();
+    for (ICyclicModule module : modules) {
+      module.onPostInit();
+    }
   }
   @EventHandler
   public void onServerStarting(FMLServerStartingEvent event) {
-    CommandRegistry.register(event);
-  }
-  @SubscribeEvent
-  public void onConfigChanged(OnConfigChangedEvent event) {
-    if (event.getModID().equals(Const.MODID)) {
-      ModMain.instance.syncConfig();
+    for (ICyclicModule module : modules) {
+      module.onServerStarting();
     }
   }
-  public static Configuration getConfig() {
-    return config;
-  }
   public void syncConfig() {
+    Configuration c = getConfig();
     // hit on startup and on change event from
     // we cant make this a list/loop because the order does matter
-    Configuration c = getConfig();
-    EnchantRegistry.syncConfig(c);
-    WorldGenRegistry.syncConfig(c);
-    PotionRegistry.syncConfig(c);
-    events.syncConfig(c);
-    BlockRegistry.syncConfig(c);
-    ItemRegistry.syncConfig(c);
+    for (ICyclicModule module : modules) {
+      module.syncConfig(c);
+    }
+    Item item;
+    for (String key : ItemRegistry.itemMap.keySet()) {
+      item = ItemRegistry.itemMap.get(key);
+      if (item instanceof IHasConfig) {
+        ((IHasConfig) item).syncConfig(config);
+      }
+    }
     FuelRegistry.syncConfig(c);
-    MobSpawningRegistry.syncConfig(c);
-    RecipeAlterRegistry.syncConfig(c);
-    RecipeNewRegistry.syncConfig(c);
-    DispenserBehaviorRegistry.syncConfig(c);
-    StackSizeRegistry.syncConfig(c);
-    SpellRegistry.syncConfig(c);
-    CommandRegistry.syncConfig(c);
-    VillageTradeRegistry.syncConfig(c);
     KeyInventoryShiftRegistry.syncConfig(c);
     c.save();
   }
-  
   /*
    * 
    * TODO:
    * 
    * 
-   * https://www.reddit.com/r/minecraftsuggestions/comments/4smwb5/if_lightning_strikes_a_skeleton_it_turns_into_a/
+   * https://www.reddit.com/r/minecraftsuggestions/comments/4smwb5/
+   * if_lightning_strikes_a_skeleton_it_turns_into_a/
    * 
    * -- spawn inspector: SKEL/ZOMBIE VARIANTS: stray==winter
    * 
-   *  is there a bug in searchrecipe? or a bug in new repeater rec?
+   * is there a bug in searchrecipe? or a bug in new repeater rec?
    * 
-   * fragile torches config: float oddsWillBreak = 0.01F;//  : in config or something? or make this  
+   * fragile torches config: float oddsWillBreak = 0.01F;// : in config or
+   * something? or make this
    * 
    * frozen/snow effect
    * 
@@ -163,17 +215,18 @@ public class ModMain {
    * 
    * ButtonBuildToggle-store ptr to wand not player??
    * 
-   * [ Trading Tool // gui]
-   *     Upgrade villager gui: either make my own or add buttons/some way to view all trades at once
-   *    --inspired by extrautils trading table that is apparently gone after 1710
+   * [ Trading Tool // gui] Upgrade villager gui: either make my own or add
+   * buttons/some way to view all trades at once --inspired by extrautils
+   * trading table that is apparently gone after 1710
    * 
-   * exp bottler: item with a gui/inventory
-   *      put bottles in, toggle on/off and it slowly drains your exp into the bottles at a given ratio
+   * exp bottler: item with a gui/inventory put bottles in, toggle on/off and it
+   * slowly drains your exp into the bottles at a given ratio
    * 
    * pets live longer and/or respawn
    * 
    * add some of my items to loot tables ?
-   *        https://github.com/MinecraftForge/MinecraftForge/blob/master/src/test/java/net/minecraftforge/debug/LootTablesDebug.java
+   * https://github.com/MinecraftForge/MinecraftForge/blob/master/src/test/java/
+   * net/minecraftforge/debug/LootTablesDebug.java
    * 
    * crafting table hotkeys - numpad?
    *

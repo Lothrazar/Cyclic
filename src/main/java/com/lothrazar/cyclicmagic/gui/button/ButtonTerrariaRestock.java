@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.gui.button;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.event.EventGuiTerrariaButtons;
+import com.lothrazar.cyclicmagic.module.GuiTerrariaButtonsModule;
 import com.lothrazar.cyclicmagic.net.PacketRestockContainerToPlayer;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.Minecraft;
@@ -15,7 +15,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ButtonTerrariaRestock extends GuiButton implements ITooltipButton {
   private List<String> tooltip = new ArrayList<String>();
   public ButtonTerrariaRestock(int buttonId, int x, int y) {
-    super(buttonId, x, y, EventGuiTerrariaButtons.BTNWIDTH, Const.btnHeight, "R");
+    super(buttonId, x, y, GuiTerrariaButtonsModule.BTNWIDTH, Const.btnHeight, "R");
     tooltip.add(I18n.format("button.terraria.restock"));
   }
   @SideOnly(Side.CLIENT)

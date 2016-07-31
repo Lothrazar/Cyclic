@@ -15,6 +15,9 @@ public class Const {
     public static final String itemsTack = items+".StackSize";
     public static final String recipes = MODCONF + "recipes";
     public static final String villagers = MODCONF + "villagers";
+    public static final String content = MODCONF + "content";
+    public static final String uncrafter = blocks+".uncrafter";
+    public static final String contentDefaultText = "Set false to delete - requires restart";
     public static final String modpackMisc = "modpacks";
     public static final String saplingBiomes = modpackMisc + ".SaplingGrowthDetail";
     public static final String inventoryModpack = modpackMisc + ".TerrariaButtons";
@@ -31,6 +34,13 @@ public class Const {
   public static final int skull_zombie = 2;
   public static final int skull_player = 3;
   public static final int skull_creeper = 4;
+  //saplings
+  public static final int sapling_oak = 0;
+  public static final int sapling_spruce = 1;
+  public static final int sapling_birch = 2;
+  public static final int sapling_jungle = 3;
+  public static final int sapling_acacia = 4;
+  public static final int sapling_darkoak = 5;
   //	public static final int skull_dragon = 5;
   public static final int NOTIFY = 2;
   public static final int TICKS_PER_SEC = 20;
@@ -45,6 +55,13 @@ public class Const {
     public static final int overworld = 0;
     public static final int end = 1;
     public static final int nether = -1;
+  }
+  public class Potions {
+    public final static int I = 0;
+    public final static int II = 1;
+    public final static int III = 2;
+    public final static int IV = 3;
+    public final static int V = 4;
   }
   public static final int WORLDHEIGHT = 256;
   

@@ -1,11 +1,9 @@
 package com.lothrazar.cyclicmagic.block;
 import java.util.Random;
-import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBuilder;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
-import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -27,10 +25,9 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BlockBuilder extends Block implements IHasRecipe, IHasConfig {
+public class BlockBuilder extends Block implements IHasRecipe {
   // dont use blockContainer !!
   // http://www.minecraftforge.net/forum/index.php?topic=31953.0
   private static final PropertyDirection PROPERTYFACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
@@ -128,9 +125,4 @@ public class BlockBuilder extends Block implements IHasRecipe, IHasConfig {
         'r', Blocks.REDSTONE_BLOCK, 
         'b', Blocks.BEACON);
   }
-  @Override
-  public void syncConfig(Configuration config) {
-    TileEntityBuilder.maxSize = config.getInt("builder.maxRange", Const.ConfigCategory.modpackMisc, 10, 3, 32, "Maximum range of the builder block that you can increase it to in the GUI");
-    TileEntityBuilder.maxHeight = config.getInt("builder.maxHeight", Const.ConfigCategory.modpackMisc, 10, 3, 32, "Maximum height of the builder block that you can increase it to in the GUI");
- }
 }

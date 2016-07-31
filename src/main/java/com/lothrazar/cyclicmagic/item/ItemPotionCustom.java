@@ -1,9 +1,9 @@
 package com.lothrazar.cyclicmagic.item;
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.registry.PotionRegistry;
+import com.lothrazar.cyclicmagic.ModMain; 
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -36,15 +36,15 @@ public class ItemPotionCustom extends ItemFood {
     this.hasEffect = shiny;
   }
   public ItemPotionCustom(boolean shiny, Potion potionId, int potionDuration) {
-    this(shiny, potionId, potionDuration, PotionRegistry.I);
+    this(shiny, potionId, potionDuration, Const.Potions.I);
   }
   public ItemPotionCustom(boolean shiny, Potion potionId, int potionDuration, int potionAmplifier) {
     this(shiny);
     this.addEffect(potionId, potionDuration, potionAmplifier);
   }
-  public void addEffect(Potion potionId, int potionDuration, int potionAmplifier) {
+  public void addEffect(Potion potion, int potionDuration, int potionAmplifier) {
     //currently, items pretty much just have one potion. but keeping the arrays in case that changes later
-    potions.add(potionId);
+    potions.add(potion);
     potionDurations.add(potionDuration * Const.TICKS_PER_SEC);
     potionAmplifiers.add(potionAmplifier);
   }
@@ -95,7 +95,7 @@ public class ItemPotionCustom extends ItemFood {
   }
   public void addAllEffects(World world, EntityLivingBase player) {
     for (int i = 0; i < potions.size(); i++) {
-      PotionRegistry.addOrMergePotionEffect(player, new PotionEffect(potions.get(i), potionDurations.get(i), potionAmplifiers.get(i)));
+      UtilEntity.addOrMergePotionEffect(player, new PotionEffect(potions.get(i), potionDurations.get(i), potionAmplifiers.get(i)));
     }
   }
 }

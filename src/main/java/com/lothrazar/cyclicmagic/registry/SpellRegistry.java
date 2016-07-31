@@ -9,7 +9,6 @@ import com.lothrazar.cyclicmagic.spell.*;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.config.Configuration;
 
 public class SpellRegistry {
   public static boolean renderOnLeft;
@@ -65,8 +64,6 @@ public class SpellRegistry {
   public static ISpell getSpellFromID(int id) {
     if (hashbook.containsKey(id)) { return hashbook.get(id); }
     return null;
-  }
-  public static void syncConfig(Configuration config) {
   }
   public static List<ISpell> getSpellbook(ItemStack wand) {
     return ((ItemCyclicWand) wand.getItem()).getSpells();

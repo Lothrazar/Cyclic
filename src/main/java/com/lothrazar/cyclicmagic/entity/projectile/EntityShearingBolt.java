@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.entity.projectile;
-import com.lothrazar.cyclicmagic.event.EventMobDropBuffs;
+import com.lothrazar.cyclicmagic.module.MobDropChangesModule;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.EntityLivingBase;
@@ -42,7 +42,7 @@ public class EntityShearingBolt extends EntityThrowable {
             (EntityShearingBolt.doesShearChild == true && sheep.isChild() == true)) {
           sheep.setSheared(true);
           int i = 1 + sheep.worldObj.rand.nextInt(3);
-          if (EventMobDropBuffs.sheepShearBuffed) {
+          if (MobDropChangesModule.sheepShearBuffed) {
             i += MathHelper.getRandomIntegerInRange(sheep.worldObj.rand, 1, 6);
           }
           for (int j = 0; j < i; ++j) {
