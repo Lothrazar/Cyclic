@@ -42,9 +42,9 @@ public class ItemPotionCustom extends ItemFood {
     this(shiny);
     this.addEffect(potionId, potionDuration, potionAmplifier);
   }
-  public void addEffect(Potion potionId, int potionDuration, int potionAmplifier) {
+  public void addEffect(Potion potion, int potionDuration, int potionAmplifier) {
     //currently, items pretty much just have one potion. but keeping the arrays in case that changes later
-    potions.add(potionId);
+    potions.add(potion);
     potionDurations.add(potionDuration * Const.TICKS_PER_SEC);
     potionAmplifiers.add(potionAmplifier);
   }
