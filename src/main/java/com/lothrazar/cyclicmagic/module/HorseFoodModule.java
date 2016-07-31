@@ -21,16 +21,18 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class HorseFoodModule extends BaseModule {
-  private boolean moduleEnabled;
+public class HorseFoodModule extends BaseEventModule {
+  private boolean enableHorseFoodUpgrades;
   @Override
   public void onInit() {
-    ItemRegistry.addItem(new ItemFoodHorse(new ItemStack(Items.EMERALD)), "horse_upgrade_type");
-    ItemRegistry.addItem(new ItemFoodHorse(new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage())), "horse_upgrade_variant");
-    ItemRegistry.addItem(new ItemFoodHorse(new ItemStack(Items.DIAMOND)), "horse_upgrade_health");
-    ItemRegistry.addItem(new ItemFoodHorse(new ItemStack(Items.REDSTONE)), "horse_upgrade_speed");
-    ItemRegistry.addItem(new ItemFoodHorse(new ItemStack(Items.ENDER_EYE)), "horse_upgrade_jump");
-    ModMain.instance.events.addEvent(this);//for SubcribeEvent hooks
+    if(enableHorseFoodUpgrades){
+      ItemRegistry.addItem(new ItemFoodHorse(new ItemStack(Items.EMERALD)), "horse_upgrade_type");
+      ItemRegistry.addItem(new ItemFoodHorse(new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage())), "horse_upgrade_variant");
+      ItemRegistry.addItem(new ItemFoodHorse(new ItemStack(Items.DIAMOND)), "horse_upgrade_health");
+      ItemRegistry.addItem(new ItemFoodHorse(new ItemStack(Items.REDSTONE)), "horse_upgrade_speed");
+      ItemRegistry.addItem(new ItemFoodHorse(new ItemStack(Items.ENDER_EYE)), "horse_upgrade_jump");
+      ModMain.instance.events.addEvent(this);//for SubcribeEvent hooks
+    }
   }
   @Override
   public void syncConfig(Configuration config) {
@@ -39,13 +41,10 @@ public class HorseFoodModule extends BaseModule {
     ItemFoodHorse.JUMP_MAX = config.getInt("HorseFood Max Jump", category, 6, 1, 20, "Maximum value of jump.  Naturally spawned/bred horses seem to max out at 5.5");
     ItemFoodHorse.SPEED_MAX = config.getInt("HorseFood Max Speed", category, 50, 1, 99, "Maximum value of speed (this is NOT blocks/per second or anything like that)");
     category = Const.ConfigCategory.content;
-    moduleEnabled = config.getBoolean("HorseFood", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableHorseFoodUpgrades = config.getBoolean("HorseFood", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
   public boolean isEnabled() {
-    return moduleEnabled;
-  }
-  public boolean isEvent() {
-    return true;//now our subscribes will work
+    return enableHorseFoodUpgrades;
   }
   @SubscribeEvent
   public void onEntityInteractEvent(EntityInteract event) {
