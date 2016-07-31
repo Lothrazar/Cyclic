@@ -5,18 +5,16 @@ import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraftforge.common.config.Configuration;
 
 public class EnderBookModule extends BaseModule {
-  private boolean moduleEnabled;
+  private boolean enableEnderBook;
   @Override
   public void onInit() {
-    ItemRegistry.book_ender = new ItemEnderBook();
-    ItemRegistry.addItem(ItemRegistry.book_ender, "book_ender");
+    if(enableEnderBook){
+      ItemRegistry.book_ender = new ItemEnderBook();
+      ItemRegistry.addItem(ItemRegistry.book_ender, "book_ender");
+    }
   }
   @Override
   public void syncConfig(Configuration config) {
-    moduleEnabled = config.getBoolean("EnderBook", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-  }
-  @Override
-  public boolean isEnabled() {
-    return moduleEnabled;
+    enableEnderBook = config.getBoolean("EnderBook", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 }

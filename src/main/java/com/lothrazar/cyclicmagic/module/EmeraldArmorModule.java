@@ -61,26 +61,22 @@ public class EmeraldArmorModule extends BaseModule {
   }
   @Override
   public void onInit() {
-    
-    ItemRegistry.addItem(new ItemEmeraldArmor(EntityEquipmentSlot.HEAD), "emerald_helmet");
-    ItemRegistry.addItem(new ItemEmeraldArmor(EntityEquipmentSlot.CHEST), "emerald_chestplate");
-    ItemRegistry.addItem(new ItemEmeraldArmor(EntityEquipmentSlot.LEGS), "emerald_leggings");
-    emerald_boots = new ItemEmeraldArmor(EntityEquipmentSlot.FEET);
-    ItemRegistry.addItem(emerald_boots, "emerald_boots");
-
-    ItemRegistry.addItem(new ItemEmeraldSword(), ItemEmeraldSword.name);
-    ItemRegistry.addItem(new ItemEmeraldPickaxe(), ItemEmeraldPickaxe.name);
-    ItemRegistry.addItem(new ItemEmeraldAxe(), ItemEmeraldAxe.name);
-    ItemRegistry.addItem(new ItemEmeraldSpade(), ItemEmeraldSpade.name);
-    ItemRegistry.addItem(new ItemEmeraldHoe(), ItemEmeraldHoe.name);
+    if(moduleEnabled){
+      ItemRegistry.addItem(new ItemEmeraldArmor(EntityEquipmentSlot.HEAD), "emerald_helmet");
+      ItemRegistry.addItem(new ItemEmeraldArmor(EntityEquipmentSlot.CHEST), "emerald_chestplate");
+      ItemRegistry.addItem(new ItemEmeraldArmor(EntityEquipmentSlot.LEGS), "emerald_leggings");
+      emerald_boots = new ItemEmeraldArmor(EntityEquipmentSlot.FEET);
+      ItemRegistry.addItem(emerald_boots, "emerald_boots");
+  
+      ItemRegistry.addItem(new ItemEmeraldSword(), ItemEmeraldSword.name);
+      ItemRegistry.addItem(new ItemEmeraldPickaxe(), ItemEmeraldPickaxe.name);
+      ItemRegistry.addItem(new ItemEmeraldAxe(), ItemEmeraldAxe.name);
+      ItemRegistry.addItem(new ItemEmeraldSpade(), ItemEmeraldSpade.name);
+      ItemRegistry.addItem(new ItemEmeraldHoe(), ItemEmeraldHoe.name);
+    }
   }
   @Override
   public void syncConfig(Configuration config) {
     moduleEnabled = config.getBoolean("Emerald Gear", Const.ConfigCategory.content, true, "Emerald armor and tools that are slightly weaker than diamond. "+Const.ConfigCategory.contentDefaultText);
-  }
-
-  @Override
-  public boolean isEnabled() {
-    return moduleEnabled;
   }
 }

@@ -7,5 +7,4 @@ public interface ICyclicModule extends IHasConfig{
   public void onPostInit();
   public void onServerStarting();
   public void syncConfig(Configuration config);
-  public boolean isEnabled();
 }

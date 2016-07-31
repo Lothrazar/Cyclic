@@ -8,15 +8,13 @@ public class StorageBagModule extends BaseModule {
   private boolean moduleEnabled;
   @Override
   public void onInit() {
-    ItemRegistry.storage_bag = new ItemInventoryStorage();
-    ItemRegistry.addItem(ItemRegistry.storage_bag, "storage_bag");
+    if(moduleEnabled){
+      ItemRegistry.storage_bag = new ItemInventoryStorage();
+      ItemRegistry.addItem(ItemRegistry.storage_bag, "storage_bag");
+    }
   }
   @Override
   public void syncConfig(Configuration config) {
     moduleEnabled = config.getBoolean("StorageBag", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-  }
-  @Override
-  public boolean isEnabled() {
-    return moduleEnabled;
   }
 }

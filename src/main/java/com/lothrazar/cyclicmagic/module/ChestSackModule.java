@@ -9,18 +9,16 @@ public class ChestSackModule extends BaseModule {
   private boolean moduleEnabled;  
   @Override
   public void onInit() {
-    ItemRegistry.chest_sack_empty = new ItemChestSackEmpty();
-    ItemRegistry.chest_sack = new ItemChestSack();
-    ItemRegistry.chest_sack.setHidden();
-    ItemRegistry.addItem(ItemRegistry.chest_sack, "chest_sack");
-    ItemRegistry.addItem(ItemRegistry.chest_sack_empty, "chest_sack_empty");
+    if(moduleEnabled){
+      ItemRegistry.chest_sack_empty = new ItemChestSackEmpty();
+      ItemRegistry.chest_sack = new ItemChestSack();
+      ItemRegistry.chest_sack.setHidden();
+      ItemRegistry.addItem(ItemRegistry.chest_sack, "chest_sack");
+      ItemRegistry.addItem(ItemRegistry.chest_sack_empty, "chest_sack_empty");
+    }
   }
   @Override
   public void syncConfig(Configuration config) {
     moduleEnabled = config.getBoolean("ChestSack", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-  }
-  @Override
-  public boolean isEnabled() {
-    return moduleEnabled;
   }
 }

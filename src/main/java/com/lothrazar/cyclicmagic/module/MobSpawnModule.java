@@ -15,10 +15,6 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 public class MobSpawnModule extends BaseModule {
-  @Override
-  public boolean isEnabled() {
-    return true;
-  }
   private final static int group = 3;
   private final static int min = 1;
   private final static int max = 4;

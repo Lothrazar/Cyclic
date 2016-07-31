@@ -6,10 +6,6 @@ import net.minecraftforge.common.config.Configuration;
 public class UnbreakableSpawnerModule extends BaseModule {
   private boolean spawnersUnbreakable;
   @Override
-  public boolean isEnabled() {
-    return true;
-  }
-  @Override
   public void onInit() {
     updateHardness();
   }

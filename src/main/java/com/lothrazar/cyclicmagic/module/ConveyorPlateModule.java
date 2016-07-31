@@ -8,16 +8,14 @@ import net.minecraftforge.common.config.Configuration;
 public class ConveyorPlateModule extends BaseModule {
   private boolean moduleEnabled;
   public void onInit() {
-    BlockConveyor plate_push = new BlockConveyor(0.16F, SoundEvents.BLOCK_ANVIL_BREAK);
-    BlockRegistry.registerBlock(plate_push, "plate_push");
-    plate_push.addRecipe();
+    if(moduleEnabled){
+      BlockConveyor plate_push = new BlockConveyor(0.16F, SoundEvents.BLOCK_ANVIL_BREAK);
+      BlockRegistry.registerBlock(plate_push, "plate_push");
+      plate_push.addRecipe();
+    }
   }
   @Override
   public void syncConfig(Configuration config) {
     moduleEnabled = config.getBoolean("ConveyorPlate", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-  }
-  @Override
-  public boolean isEnabled() {
-    return moduleEnabled;
   }
 }

@@ -12,6 +12,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class BucketBlockModule extends BaseModule {
   private boolean moduleEnabled;
   public void onInit() {
+    if(moduleEnabled){
     BlockRegistry.block_storewater = new BlockBucketStorage(Items.WATER_BUCKET);
     BlockRegistry.registerBlock(BlockRegistry.block_storewater, new ItemBlockBucket(BlockRegistry.block_storewater), "block_storewater", true);
     BlockRegistry.block_storemilk = new BlockBucketStorage(Items.MILK_BUCKET);
@@ -23,13 +24,10 @@ public class BucketBlockModule extends BaseModule {
     BlockRegistry.block_storeempty.addRecipe();
     GameRegistry.registerTileEntity(TileEntityBucketStorage.class, "bucketstorage");
     MinecraftForge.EVENT_BUS.register(BlockRegistry.block_storeempty);
+    }
   }
   @Override
   public void syncConfig(Configuration config) {
     moduleEnabled = config.getBoolean("BucketBlocks", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-  }
-  @Override
-  public boolean isEnabled() {
-    return moduleEnabled;
   }
 }

@@ -10,17 +10,15 @@ import net.minecraftforge.common.config.Configuration;
 public class MagicBeanModule extends BaseModule {
   private boolean moduleEnabled;
   public void onInit() {
-    BlockSprout sprout = new BlockSprout();
-    BlockRegistry.registerBlock(sprout, "sprout", true);
-    ItemRegistry.sprout_seed = new ItemSproutSeeds(sprout, Blocks.FARMLAND);
-    ItemRegistry.addItem(ItemRegistry.sprout_seed, "sprout_seed");
+    if(moduleEnabled){
+      BlockSprout sprout = new BlockSprout();
+      BlockRegistry.registerBlock(sprout, "sprout", true);
+      ItemRegistry.sprout_seed = new ItemSproutSeeds(sprout, Blocks.FARMLAND);
+      ItemRegistry.addItem(ItemRegistry.sprout_seed, "sprout_seed");
+    }
   }
   @Override
   public void syncConfig(Configuration config) {
     moduleEnabled = config.getBoolean("MagicBean", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-  }
-  @Override
-  public boolean isEnabled() {
-    return moduleEnabled;
   }
 }
