@@ -169,7 +169,7 @@ public class ModMain {
   @EventHandler
   public void onServerStarting(FMLServerStartingEvent event) {
     for (ICyclicModule module : modules) {
-      module.onServerStarting();
+      module.onServerStarting(event);
     }
   }
   public void syncConfig() {

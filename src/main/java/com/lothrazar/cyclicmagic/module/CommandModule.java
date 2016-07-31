@@ -24,6 +24,7 @@ public class CommandModule extends BaseModule {
   private static Map<String, Boolean> configToggle = new HashMap<String, Boolean>();
   private static Map<String, Boolean> commandNeedsOp = new HashMap<String, Boolean>();
   private static String category;
+  @Override
   public void onServerStarting(FMLServerStartingEvent event) {
     if (configToggle.get(CommandEnderChest.name)) {
       event.registerServerCommand(new CommandEnderChest(commandNeedsOp.get(CommandEnderChest.name)));
