@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.command;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilSearchWorld;

@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.util;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import com.lothrazar.cyclicmagic.ModMain;
 import net.minecraft.block.Block;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;

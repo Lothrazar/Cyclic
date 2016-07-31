@@ -193,9 +193,9 @@ public class InventoryWand implements IInventory {
       //java.lang.IllegalArgumentException: bound must be positive
       //at java.util.Random.nextInt(Random.java:388) ~[?:1.8.0_91]
       //in other words, do not call nextInt passing in zero
-      if(slotNonEmpty.size() > 0){
+      if (slotNonEmpty.size() > 0) {
         int next = rand.nextInt(slotNonEmpty.size());
-        if(next >= 0 && next < slotNonEmpty.size()){
+        if (next >= 0 && next < slotNonEmpty.size()) {
           itemSlot = slotNonEmpty.get(next);
         }
       }
