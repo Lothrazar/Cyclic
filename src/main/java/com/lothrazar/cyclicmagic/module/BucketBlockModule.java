@@ -10,9 +10,9 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BucketBlockModule extends BaseModule {
-  private boolean moduleEnabled;
+  private boolean enableBucketBlocks;
   public void onInit() {
-    if (moduleEnabled) {
+    if (enableBucketBlocks) {
       BlockRegistry.block_storewater = new BlockBucketStorage(Items.WATER_BUCKET);
       BlockRegistry.registerBlock(BlockRegistry.block_storewater, new ItemBlockBucket(BlockRegistry.block_storewater), "block_storewater", true);
       BlockRegistry.block_storemilk = new BlockBucketStorage(Items.MILK_BUCKET);
@@ -28,6 +28,6 @@ public class BucketBlockModule extends BaseModule {
   }
   @Override
   public void syncConfig(Configuration config) {
-    moduleEnabled = config.getBoolean("BucketBlocks", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableBucketBlocks = config.getBoolean("BucketBlocks", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 }

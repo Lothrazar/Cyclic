@@ -97,7 +97,6 @@ public class ModMain {
     modules.add(new EnderBombModule());
     modules.add(new EnderBookModule());
     modules.add(new EnderChestClickopenModule());
-    modules.add(new EndermanDropCarryModule());
     modules.add(new F3InfoModule());
     modules.add(new FragileBlockModule());
     modules.add(new FragileTorchesModule());

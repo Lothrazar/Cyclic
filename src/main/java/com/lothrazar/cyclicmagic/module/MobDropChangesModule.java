@@ -2,8 +2,10 @@ package com.lothrazar.cyclicmagic.module;
 import java.util.List;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityCow;
@@ -30,6 +32,7 @@ public class MobDropChangesModule  extends BaseEventModule {
   private boolean bonusPork;
   private boolean bonusGolemIron;
   private boolean zombieDropsNerfed;
+  private boolean endermanDrop;
   @SubscribeEvent
   public void onEntityInteractSpecific(EntityInteractSpecific event) {
     if (sheepShearBuffed && event.getEntityPlayer() != null && event.getTarget() instanceof EntitySheep) {
@@ -49,6 +52,14 @@ public class MobDropChangesModule  extends BaseEventModule {
     World worldObj = entity.getEntityWorld();
     List<EntityItem> drops = event.getDrops();
     BlockPos pos = entity.getPosition();
+    
+    if (endermanDrop && entity instanceof EntityEnderman) {
+      EntityEnderman mob = (EntityEnderman) entity;
+      IBlockState bs = mob.getHeldBlockState();// mob.func_175489_ck();
+      if (bs != null && bs.getBlock() != null && entity.worldObj.isRemote == false) {
+        UtilEntity.dropItemStackInWorld(entity.worldObj, mob.getPosition(), bs.getBlock());
+      }
+    }
     if (entity instanceof EntityZombie && zombieVillagerEmeralds) {
       EntityZombie z = (EntityZombie) entity;
       if (z.isVillager() && chanceZombieVillagerEmerald > 0 && worldObj.rand.nextInt(100) <= chanceZombieVillagerEmerald) {
@@ -84,6 +95,9 @@ public class MobDropChangesModule  extends BaseEventModule {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.mobs;
+    config.addCustomCategoryComment(category, "Changes to vanilla mobs");
+    endermanDrop = config.getBoolean("Enderman Block", category, true,
+        "Enderman will always drop block they are carrying 100%");
     zombieDropsNerfed = config.getBoolean("Zombie Drops Nerfed", category, true,
         "Zombies no longer drops carrots, potatoes, or iron ingots");
     sheepShearBuffed = config.getBoolean("Sheep Shear Bonus", category, true,

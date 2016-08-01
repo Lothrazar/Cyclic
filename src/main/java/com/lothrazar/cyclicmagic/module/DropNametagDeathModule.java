@@ -14,23 +14,16 @@ public class DropNametagDeathModule extends BaseEventModule implements IHasConfi
   private boolean nameTagDeath;
   @SubscribeEvent
   public void onLivingDropsEvent(LivingDropsEvent event) {
-    if (!nameTagDeath) { return; }
-    Entity entity = event.getEntity();
-    World worldObj = entity.getEntityWorld();
-    if (entity.getCustomNameTag() != null && entity.getCustomNameTag() != "") {
-      // item stack NBT needs the name enchanted onto it
-      if (entity.worldObj.isRemote == false) {
-        ItemStack nameTag = UtilNBT.buildEnchantedNametag(entity.getCustomNameTag());
-        UtilEntity.dropItemStackInWorld(worldObj, entity.getPosition(), nameTag);
+    if (nameTagDeath) {
+      Entity entity = event.getEntity();
+      World worldObj = entity.getEntityWorld();
+      if (entity.getCustomNameTag() != null && entity.getCustomNameTag() != "") {
+        // item stack NBT needs the name enchanted onto it
+        if (entity.worldObj.isRemote == false) {
+          ItemStack nameTag = UtilNBT.buildEnchantedNametag(entity.getCustomNameTag());
+          UtilEntity.dropItemStackInWorld(worldObj, entity.getPosition(), nameTag);
+        }
       }
-      /*
-       * //not sure why isnt working...not critical if(entity instanceof
-       * EntityLivingBase){ // show message as if player, works since
-       * EntityLiving extends EntityLivingBase
-       * 
-       * UtilChat.addChatMessage(worldObj,
-       * (event.getSource().getDeathMessage((EntityLivingBase) entity))); }
-       */
     }
   }
   @Override

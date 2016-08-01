@@ -8,9 +8,9 @@ import net.minecraft.init.Blocks;
 import net.minecraftforge.common.config.Configuration;
 
 public class MagicBeanModule extends BaseModule {
-  private boolean moduleEnabled;
+  private boolean enableBeans;
   public void onInit() {
-    if(moduleEnabled){
+    if(enableBeans){
       BlockSprout sprout = new BlockSprout();
       BlockRegistry.registerBlock(sprout, "sprout", true);
       ItemRegistry.sprout_seed = new ItemSproutSeeds(sprout, Blocks.FARMLAND);
@@ -19,6 +19,6 @@ public class MagicBeanModule extends BaseModule {
   }
   @Override
   public void syncConfig(Configuration config) {
-    moduleEnabled = config.getBoolean("MagicBean", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableBeans = config.getBoolean("MagicBean", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 }

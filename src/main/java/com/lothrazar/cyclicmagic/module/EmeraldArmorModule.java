@@ -18,7 +18,7 @@ import net.minecraftforge.common.util.EnumHelper;
 
 public class EmeraldArmorModule extends BaseModule {
 
-  private boolean moduleEnabled ; 
+  private boolean enableEmeraldGear ; 
 
   public static ItemEmeraldArmor emerald_boots;
   // thanks for help:
@@ -61,7 +61,7 @@ public class EmeraldArmorModule extends BaseModule {
   }
   @Override
   public void onInit() {
-    if(moduleEnabled){
+    if(enableEmeraldGear){
       ItemRegistry.addItem(new ItemEmeraldArmor(EntityEquipmentSlot.HEAD), "emerald_helmet");
       ItemRegistry.addItem(new ItemEmeraldArmor(EntityEquipmentSlot.CHEST), "emerald_chestplate");
       ItemRegistry.addItem(new ItemEmeraldArmor(EntityEquipmentSlot.LEGS), "emerald_leggings");
@@ -77,6 +77,6 @@ public class EmeraldArmorModule extends BaseModule {
   }
   @Override
   public void syncConfig(Configuration config) {
-    moduleEnabled = config.getBoolean("Emerald Gear", Const.ConfigCategory.content, true, "Emerald armor and tools that are slightly weaker than diamond. "+Const.ConfigCategory.contentDefaultText);
+    enableEmeraldGear = config.getBoolean("Emerald Gear", Const.ConfigCategory.content, true, "Emerald armor and tools that are slightly weaker than diamond. "+Const.ConfigCategory.contentDefaultText);
   }
 }

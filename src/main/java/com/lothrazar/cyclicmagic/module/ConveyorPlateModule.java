@@ -6,9 +6,9 @@ import net.minecraft.init.SoundEvents;
 import net.minecraftforge.common.config.Configuration;
 
 public class ConveyorPlateModule extends BaseModule {
-  private boolean moduleEnabled;
+  private boolean enableConveyor;
   public void onInit() {
-    if(moduleEnabled){
+    if(enableConveyor){
       BlockConveyor plate_push = new BlockConveyor(0.16F, SoundEvents.BLOCK_ANVIL_BREAK);
       BlockRegistry.registerBlock(plate_push, "plate_push");
       plate_push.addRecipe();
@@ -16,6 +16,6 @@ public class ConveyorPlateModule extends BaseModule {
   }
   @Override
   public void syncConfig(Configuration config) {
-    moduleEnabled = config.getBoolean("ConveyorPlate", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableConveyor = config.getBoolean("SlimeConveyor", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 }

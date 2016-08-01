@@ -12,13 +12,14 @@ public class AchievementExpModule extends BaseEventModule {
   private boolean isEnabled;
   @SubscribeEvent
   public void onAchievement(AchievementEvent event) {
-    if (!isEnabled) { return; }
-    EntityPlayer p = event.getEntityPlayer();
-    if (event.getAchievement().isAchievement() && p.hasAchievement(event.getAchievement()) == false) {
-      int mult = (event.getAchievement().getSpecial()) ? 100 : 1;
-      int amt = mult * (p.worldObj.rand.nextInt(30) + 20);// between 20,30
-      UtilExperience.setXp(p, (int) UtilExperience.getExpTotal(p) + amt);
-      UtilSound.playSound(p, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP);
+    if (isEnabled) {
+      EntityPlayer p = event.getEntityPlayer();
+      if (event.getAchievement().isAchievement() && p.hasAchievement(event.getAchievement()) == false) {
+        int mult = (event.getAchievement().getSpecial()) ? 100 : 1;
+        int amt = mult * (p.worldObj.rand.nextInt(30) + 20);// between 20,30
+        UtilExperience.setXp(p, (int) UtilExperience.getExpTotal(p) + amt);
+        UtilSound.playSound(p, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP);
+      }
     }
   }
   @Override

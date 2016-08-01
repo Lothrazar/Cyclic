@@ -20,7 +20,7 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GuiTerrariaButtonsModule extends BaseEventModule  implements IHasConfig {
+public class GuiTerrariaButtonsModule extends BaseEventModule implements IHasConfig {
   private String position;
   public static boolean restockLeaveOne; //referenced by the PacketRestock
   public static final String posLeft = "topleft";
@@ -30,11 +30,15 @@ public class GuiTerrariaButtonsModule extends BaseEventModule  implements IHasCo
   public static final int padding = 4;
   public static final int BTNWIDTH = 20;
   private List<String> blacklistGuis;
-  private boolean isEnabled;
+  private boolean enableTerrariaButtons;
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onGuiPostInit(InitGuiEvent.Post event) {
-    if(!isEnabled){return;}//they fully turned it off
+    if (enableTerrariaButtons) {
+      addButtonsToGui(event);
+    }
+  }
+  private void addButtonsToGui(InitGuiEvent.Post event) {
     GuiScreen gui = event.getGui();
     if (gui == null) { return; } // probably doesn't ever happen
     // all containers by default but with a blacklist in config
@@ -97,8 +101,7 @@ public class GuiTerrariaButtonsModule extends BaseEventModule  implements IHasCo
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.inventory;
     config.setCategoryComment(category, "Terraria-inspired inventory helper buttons");
-    isEnabled = config.getBoolean("TerrariaInventoryButtons", category, true, "Adds extra buttons to containers to quickly move items between your inventory (Inspired by terraria)");
-    
+    enableTerrariaButtons = config.getBoolean("TerrariaInventoryButtons", category, true, "Adds extra buttons to containers to quickly move items between your inventory (Inspired by terraria)");
     List<String> valid = new ArrayList<String>();
     valid.add(posLeft);
     valid.add(posRight);
