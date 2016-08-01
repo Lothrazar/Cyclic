@@ -1,9 +1,7 @@
 package com.lothrazar.cyclicmagic.module;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasConfig;
-import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.util.Const;
-import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -67,12 +65,12 @@ public class MountedTweaksModule extends BaseEventModule implements IHasConfig {
     Entity maybePlayer = event.getEntityMounting();
     World world = event.getWorldObj();
     if (maybeHorse == null) { return; }
-    if (event.isMounting() && maybePlayer instanceof EntityPlayer && maybePlayer != null) {
-      ModMain.logger.info("[MountedTweaks] player isMounting an entity");
-    }
+//    if (event.isMounting() && maybePlayer instanceof EntityPlayer && maybePlayer != null) {
+//      ModMain.logger.info("[MountedTweaks] player isMounting an entity");
+//    }
     if (event.isDismounting() && maybePlayer instanceof EntityPlayer && maybePlayer != null) {
       EntityPlayer playerRider = (EntityPlayer) maybePlayer;
-      ModMain.logger.info("[MountedTweaks] player isDismounting an entity");
+     // ModMain.logger.info("[MountedTweaks] player isDismounting an entity");
       // int countCancel = playerRider.getEntityData().getInteger(KEY_LOCKMOUNT);
       //cancel event doesnt work..??
       // if(countCancel > 0){
@@ -84,7 +82,7 @@ public class MountedTweaksModule extends BaseEventModule implements IHasConfig {
         if (eid >= 0) {
           Entity e = world.getEntityByID(eid);
           if (e != null) {
-            ModMain.logger.info("[MountedTweaks] FORCE");
+            //ModMain.logger.info("[MountedTweaks] FORCE");
             playerRider.startRiding(e, true);
             playerRider.getEntityData().setInteger(KEY_MOUNTENTITY, -1);
           }
@@ -104,8 +102,8 @@ public class MountedTweaksModule extends BaseEventModule implements IHasConfig {
         //take the players horse and set its position to the target
         event.getEntity().getRidingEntity().setPositionAndUpdate(event.getTargetX(), event.getTargetY(), event.getTargetZ());
         //playerRider.startRiding(horse, true);
-        ModMain.logger.info("[MountedTweaks] player on ender teleport and i am riding an entity");
-        UtilNBT.incrementPlayerIntegerNBT(playerRider, KEY_LOCKMOUNT, 1);
+        //ModMain.logger.info("[MountedTweaks] player on ender teleport and i am riding an entity");
+  
         playerRider.getEntityData().setInteger(KEY_MOUNTENTITY, event.getEntity().getRidingEntity().getEntityId());
         //step 1: set data flag/counter on player to not dismount
         //this happens before isDismount event
