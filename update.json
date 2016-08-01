@@ -32,6 +32,6 @@
  	,"1.4.1":"Fixed two crash bugs: with Cyclic Scepter and with Scaffolding blocks. "
   	,"1.4.2":"Fix for the spawners hardness. " 	
   	,"1.4.3":"Fix chest sack glitching out and deleting items. "
-  	
+  	,"1.4.4":"Add config category 'content' to remove items and blocks added.  Fix Mounted Pearl feature not keeping the horse attached to you"
  }
 }
