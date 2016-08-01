@@ -60,7 +60,6 @@ public class MountedTweaksModule extends BaseEventModule implements IHasConfig {
   }
   @SubscribeEvent
   public void onEntityMount(EntityMountEvent event) {
-    ModMain.logger.info(event.toString());
     Entity maybeHorse = event.getEntityBeingMounted();//can be null!!
     Entity maybePlayer = event.getEntityMounting(); 
     World world = event.getWorldObj();
@@ -73,6 +72,8 @@ public class MountedTweaksModule extends BaseEventModule implements IHasConfig {
     }
     if(event.isDismounting() && maybePlayer instanceof EntityPlayer && maybePlayer != null){
       ModMain.logger.info("[MountedTweaks] player isDismounting an entity");
+      //this happnes AFTER ender teleport (forge 1.10.2)
+      //step 2: read data flag/counter on player, if > 0 cancel event and consume one
       
     }
   }
@@ -81,13 +82,15 @@ public class MountedTweaksModule extends BaseEventModule implements IHasConfig {
     if (mountedPearl) {
       Entity rider = event.getEntity();
       if (rider != null && rider instanceof EntityPlayer && rider.getRidingEntity() != null ) {
-        EntityPlayer playerRider = (EntityPlayer) rider;
-        Entity horse = playerRider.getRidingEntity();
-        
-        //event.getEntity().getRidingEntity().setPositionAndUpdate(event.getTargetX(), event.getTargetY(), event.getTargetZ());
+        //EntityPlayer playerRider = (EntityPlayer) rider;
+        //Entity horse = playerRider.getRidingEntity();
+        //take the players horse and set its position to the target
+        event.getEntity().getRidingEntity().setPositionAndUpdate(event.getTargetX(), event.getTargetY(), event.getTargetZ());
         //playerRider.startRiding(horse, true);
 
         ModMain.logger.info("[MountedTweaks] player on ender teleport and i am riding an entity");
+        //step 1: set data flag/counter on player to not dismount
+        //this happens before isDismount event
       }
     }
   }
