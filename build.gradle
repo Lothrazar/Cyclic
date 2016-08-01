@@ -20,12 +20,10 @@ group= "com.lothrazar.cyclicmagic"
 archivesBaseName = "Cyclic"
 
 minecraft {
-    version = "1.10.2-12.18.0.2005-1.10.0"
+    version = "1.10.2-12.18.1.2044"
     runDir = "run"
-    
-
     mappings = "snapshot_20160518"
-     makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
+    makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 }
 
 dependencies {
