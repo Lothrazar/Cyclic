@@ -19,9 +19,9 @@ public class BuilderBlockModule extends BaseModule {
       GameRegistry.registerTileEntity(TileEntityBuilder.class, "builder_te");
     }
     if(enableHarvester){
-      BlockRegistry.harveseter_block = new BlockHarvester();
-      BlockRegistry.registerBlock(BlockRegistry.harveseter_block, "harveseter_block");
-      BlockRegistry.harveseter_block.addRecipe();
+      BlockRegistry.harvester_block = new BlockHarvester();
+      BlockRegistry.registerBlock(BlockRegistry.harvester_block, "harvester_block");
+      BlockRegistry.harvester_block.addRecipe();
       GameRegistry.registerTileEntity(TileEntityHarvester.class, "harveseter_te");
     }
   }

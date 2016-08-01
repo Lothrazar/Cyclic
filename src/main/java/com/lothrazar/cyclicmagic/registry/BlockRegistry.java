@@ -30,7 +30,7 @@ public class BlockRegistry {
   public static BlockDimensionOre nether_diamond_ore;
   public static BlockDimensionOre end_diamond_ore;
   public static BlockBuilder builder_block;
-  public static BlockHarvester harveseter_block;
+  public static BlockHarvester harvester_block;
 
   //lots of helpers/overrides with defaults
   public static void registerBlock(Block b, String name) {

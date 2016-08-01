@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "cyclicmagic:harvester_block_north"},
+        "facing=east":  { "model": "cyclicmagic:harvester_block_east"},
+        "facing=south": { "model": "cyclicmagic:harvester_block_south"},
+        "facing=west":  { "model": "cyclicmagic:harvester_block_west" }
+    }
+}

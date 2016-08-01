@@ -201,6 +201,7 @@ tile.end_diamond_ore.name=End Diamond Ore
 tile.end_emerald_ore.name=End Emerald Ore
 tile.end_lapis_ore.name=End Lapis Ore
 tile.end_redstone_ore.name=End Redstone Ore
+tile.harvester_block.name=Harvester
 tile.nether_coal_ore.name=Nether Coal Ore
 tile.nether_diamond_ore.name=Nether Diamond Ore
 tile.nether_emerald_ore.name=Nether Emerald Ore
