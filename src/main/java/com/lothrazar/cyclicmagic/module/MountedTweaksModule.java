@@ -6,9 +6,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
+import net.minecraft.world.World;
 import net.minecraftforge.client.GuiIngameForge;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.event.entity.EntityMountEvent;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -16,6 +18,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class MountedTweaksModule extends BaseEventModule implements IHasConfig {
+  // private static final String KEY_LOCKMOUNT = "LOCKMOUNT";
+  private static final String KEY_MOUNTENTITY = "CYCLIC_ENTITYID";
   private boolean showHungerMounted;
   private boolean disableHurtMount;
   private boolean mountedPearl;
@@ -56,16 +60,53 @@ public class MountedTweaksModule extends BaseEventModule implements IHasConfig {
         "Enderpearls work on a horse, bringing it with you");
   }
   @SubscribeEvent
+  public void onEntityMount(EntityMountEvent event) {
+    Entity maybeHorse = event.getEntityBeingMounted();//can be null!!
+    Entity maybePlayer = event.getEntityMounting();
+    World world = event.getWorldObj();
+    if (maybeHorse == null) { return; }
+//    if (event.isMounting() && maybePlayer instanceof EntityPlayer && maybePlayer != null) {
+//      ModMain.logger.info("[MountedTweaks] player isMounting an entity");
+//    }
+    if (event.isDismounting() && maybePlayer instanceof EntityPlayer && maybePlayer != null) {
+      EntityPlayer playerRider = (EntityPlayer) maybePlayer;
+     // ModMain.logger.info("[MountedTweaks] player isDismounting an entity");
+      // int countCancel = playerRider.getEntityData().getInteger(KEY_LOCKMOUNT);
+      //cancel event doesnt work..??
+      // if(countCancel > 0){
+      // ModMain.logger.info("[MountedTweaks] cancel trigger "+countCancel);
+      //UtilNBT.incrementPlayerIntegerNBT(playerRider, KEY_LOCKMOUNT, -1);
+      //event.setCanceled(true);
+      if (playerRider.getEntityData().hasKey(KEY_MOUNTENTITY)) {
+        int eid = playerRider.getEntityData().getInteger(KEY_MOUNTENTITY);
+        if (eid >= 0) {
+          Entity e = world.getEntityByID(eid);
+          if (e != null) {
+            //ModMain.logger.info("[MountedTweaks] FORCE");
+            playerRider.startRiding(e, true);
+            playerRider.getEntityData().setInteger(KEY_MOUNTENTITY, -1);
+          }
+        }
+      }
+      //this happnes AFTER ender teleport (forge 1.10.2)
+      //step 2: read data flag/counter on player, if > 0 cancel event and consume one
+    }
+  }
+  @SubscribeEvent
   public void onEnderTeleportEvent(EnderTeleportEvent event) {
-    if (mountedPearl) { 
-      Entity ent = event.getEntity();
-      if (ent instanceof EntityLivingBase == false) { return; }
-      EntityLivingBase living = (EntityLivingBase) event.getEntity();
-      if (living.getRidingEntity() != null && living instanceof EntityPlayer) {
-        EntityPlayer player = (EntityPlayer) living;
-        Entity horse = player.getRidingEntity();
-        horse.setPositionAndUpdate(event.getTargetX(), event.getTargetY(), event.getTargetZ());
-        player.startRiding(horse, true);
+    if (mountedPearl) {
+      Entity rider = event.getEntity();
+      if (rider != null && rider instanceof EntityPlayer && rider.getRidingEntity() != null) {
+        EntityPlayer playerRider = (EntityPlayer) rider;
+        //Entity horse = playerRider.getRidingEntity();
+        //take the players horse and set its position to the target
+        event.getEntity().getRidingEntity().setPositionAndUpdate(event.getTargetX(), event.getTargetY(), event.getTargetZ());
+        //playerRider.startRiding(horse, true);
+        //ModMain.logger.info("[MountedTweaks] player on ender teleport and i am riding an entity");
+  
+        playerRider.getEntityData().setInteger(KEY_MOUNTENTITY, event.getEntity().getRidingEntity().getEntityId());
+        //step 1: set data flag/counter on player to not dismount
+        //this happens before isDismount event
       }
     }
   }
