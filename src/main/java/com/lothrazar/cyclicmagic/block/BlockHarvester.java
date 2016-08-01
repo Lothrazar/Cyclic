@@ -71,9 +71,9 @@ public class BlockHarvester extends Block implements IHasRecipe {
     if (tileEntity == null || player.isSneaking()) { return false; }
     if (world.isRemote) { return true; }
     int x = pos.getX(), y = pos.getY(), z = pos.getZ();
-    System.out.println("BlockHarvester gui disabled");
+    System.out.println("BlockHarvester gui start");
   
-   // player.openGui(ModMain.instance, ModGuiHandler.GUI_INDEX_BUILDER, world, x, y, z);
+    player.openGui(ModMain.instance, ModGuiHandler.GUI_INDEX_HARVESTER, world, x, y, z);
     return true;
   }
   @Override
