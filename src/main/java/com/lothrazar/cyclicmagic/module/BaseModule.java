@@ -13,7 +13,6 @@ public abstract class BaseModule implements ICyclicModule {
   @Override
   public void onServerStarting(FMLServerStartingEvent event) {
   }
-  public void syncConfig(Configuration config){
-    
+  public void syncConfig(Configuration config) {
   }
 }

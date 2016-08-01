@@ -77,11 +77,11 @@ public class SaplingMutationModule extends BaseEventModule implements IHasConfig
         UtilEntity.dropItemStackInWorld(world, pos, new ItemStack(Blocks.SAPLING, 1, tree_type));
       }
     }
-  } 
+  }
   //from one of my mods https://github.com/LothrazarMinecraftMods/SaplingGrowthControl/blob/master/src/main/java/com/lothrazar/samssaplings/ModConfig.java
   @SubscribeEvent
   public void onItemExpireEvent(ItemExpireEvent event) {
-    if (saplingDespawnGrow) { 
+    if (saplingDespawnGrow) {
       EntityItem entityItem = event.getEntityItem();
       Entity entity = event.getEntity();
       ItemStack is = entityItem.getEntityItem();
