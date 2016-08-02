@@ -203,17 +203,7 @@ public class TileEntityHarvester extends TileEntity implements IInventory, ITick
       System.out.println("harv trigger :"+buildSize);
       
 
-      HarestCropsConfig conf = new HarestCropsConfig();
-      conf.doesPumpkinBlocks = true;
-      conf.doesMelonBlocks = true;
-      conf.doesCrops = true;
-      conf.doesCactus = true;
-      conf.doesReeds = true;
-      conf.doesFlowers = true;
-      conf.doesMushroom = true;
-      conf.doesTallgrass = true;
-      conf.doesSapling = true;
-      conf.doesLeaves = true;
+      HarestCropsConfig conf = getHarvestConf();
       
       UtilHarvestCrops.harvestArea(this.worldObj, this.getPos(), this.buildSize, conf);
 //      Block stuff = Block.getBlockFromItem(stack.getItem());
@@ -234,6 +224,22 @@ public class TileEntityHarvester extends TileEntity implements IInventory, ITick
       }
     }
     this.markDirty();
+  }
+
+  public HarestCropsConfig getHarvestConf() {
+    //TODO: REAL SAVE
+    HarestCropsConfig conf = new HarestCropsConfig();
+    conf.doesPumpkinBlocks = true;
+    conf.doesMelonBlocks = true;
+    conf.doesCrops = true;
+    conf.doesCactus = true;
+    conf.doesReeds = true;
+    conf.doesFlowers = true;
+    conf.doesMushroom = true;
+    conf.doesTallgrass = true;
+    conf.doesSapling = true;
+    conf.doesLeaves = true;
+    return conf;
   }
   private int getSpeed() {
     return 1;

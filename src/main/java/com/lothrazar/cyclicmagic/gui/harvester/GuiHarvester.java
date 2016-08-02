@@ -4,6 +4,7 @@ import com.lothrazar.cyclicmagic.block.tileentity.TileEntityHarvester;
 import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilHarvestCrops.HarestCropsConfig;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -28,7 +29,7 @@ public class GuiHarvester extends GuiContainer {
   private int ySizeTxtbox;
   private int xHeightTextbox;
   private int yHeightTxtbox;
-  boolean debugLabels = false;
+  boolean debugLabels = true;
   public GuiHarvester(InventoryPlayer inventoryPlayer, TileEntityHarvester te) {
     super(new ContainerHarvester(inventoryPlayer, te));
     tile = te;
@@ -50,13 +51,10 @@ public class GuiHarvester extends GuiContainer {
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 //    this.btn.displayString = UtilChat.lang("buildertype." + this.tile.getBuildTypeEnum().name().toLowerCase() + ".name");
-//    if (debugLabels) {
-//      this.fontRendererObj.drawString("t = " + this.tile.getTimer(), 32, this.ySize - 94, 4210752);
-//      this.fontRendererObj.drawString("b = " + this.tile.getBuildType(), 38, this.ySize - 104, 4210752);
-//      this.fontRendererObj.drawString("speed = " + this.tile.getSpeed(), 38, this.ySize - 114, 4210752);
-//      this.fontRendererObj.drawString("size = " + this.tile.getSize(), 38, this.ySize - 124, 4210752);
-//      this.fontRendererObj.drawString("h = " + this.tile.getHeight(), 38, this.ySize - 86, 4210752);
-//    }
+    if (debugLabels) {
+      HarestCropsConfig conf = this.tile.getHarvestConf();
+      this.fontRendererObj.drawString(conf.toString(), 32, this.ySize - 94, 4210752);
+    }
 //    if (this.tile.getSize() > 0) {
 //      String display = "" + this.tile.getSize();
 //      //move it over if more than 1 digit
