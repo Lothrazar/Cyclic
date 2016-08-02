@@ -38,6 +38,7 @@ public class GuiTerrariaButtonsModule extends BaseEventModule implements IHasCon
       addButtonsToGui(event);
     }
   }
+  @SideOnly(Side.CLIENT)
   private void addButtonsToGui(InitGuiEvent.Post event) {
     GuiScreen gui = event.getGui();
     if (gui == null) { return; } // probably doesn't ever happen

@@ -5,8 +5,8 @@
     "1.9.4-recommended":  "1.2.0",
     "1.10-latest":  "1.1.0",
     "1.10-recommended": "1.1.0",
-    "1.10.2-latest":  "1.4.4",
-    "1.10.2-recommended": "1.4.4"
+    "1.10.2-latest":  "1.4.5",
+    "1.10.2-recommended": "1.4.5"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -33,5 +33,6 @@
   	,"1.4.2":"Fix for the spawners hardness. " 	
   	,"1.4.3":"Fix chest sack glitching out and deleting items. "
   	,"1.4.4":"Add config category 'content' to remove items and blocks added.  Fix Mounted Pearl feature not keeping the horse attached to you"
+	,"1.4.5":"Hot fix not loading on servers (#61).  Hotfix Exp Achievements misfiring on false positives (#60). "
  }
 }
