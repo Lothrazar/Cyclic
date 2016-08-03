@@ -83,7 +83,6 @@ public class ModMain {
     // :) http://alphabetizer.flap.tv/
     modules.add(new AchievementExpModule());
     modules.add(new BucketBlockModule());
-    modules.add(new BuilderBlockModule());
     modules.add(new CarbonPaperModule());
     modules.add(new ChestSackModule());
     modules.add(new CommandModule());
@@ -108,6 +107,7 @@ public class ModMain {
     modules.add(new LightningTransformModule());
     modules.add(new LootTableModule());
     modules.add(new MagicBeanModule());
+    modules.add(new MachineBlockModule());
     modules.add(new MobDropChangesModule());
     modules.add(new MobSpawnModule());
     modules.add(new MountedTweaksModule());
@@ -122,7 +122,6 @@ public class ModMain {
     modules.add(new StorageBagModule());
     modules.add(new ToolsModule());
     modules.add(new UnbreakableSpawnerModule());
-    modules.add(new UncrafterModule());
     modules.add(new VillagerCreateModule());
     modules.add(new VillagerNametagModule());
     modules.add(new WorldGenModule());
