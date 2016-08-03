@@ -123,7 +123,7 @@ public class UtilHarvestCrops {
       if( conf.doesMushroom)
         doBreak = true;
     }
-    else if (blockCheck == Blocks.PUMPKIN ) {
+    else if (blockCheck == Blocks.PUMPKIN) {
       if(conf.doesPumpkinBlocks){
         doBreak = true;
         doReplant = false;
@@ -150,7 +150,7 @@ public class UtilHarvestCrops {
       }
     }
     else if (blockCheck == Blocks.CACTUS && bsBelow != null && bsBelow.getBlock() == Blocks.CACTUS) {
-      if(conf.doesCactus){//never breaking the bottom one
+      if(conf.doesCactus){ //never breaking the bottom one
         doBreak = true;
         doReplant = false;
         if(bsAbove != null && bsAbove.getBlock() == Blocks.CACTUS){
@@ -197,4 +197,5 @@ public class UtilHarvestCrops {
     }
     return false;
   }
+  
 }

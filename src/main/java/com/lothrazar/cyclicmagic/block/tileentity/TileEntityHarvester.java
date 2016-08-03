@@ -27,7 +27,7 @@ public class TileEntityHarvester extends TileEntity implements IInventory, ITick
   private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots
   private HarestCropsConfig conf;
   private static final String NBT_TIMER = "Timer";
-  private static final int HARVEST_RADIUS = 16;
+  private static final int HARVEST_RADIUS = 8;
   public static enum Fields {
     TIMER
   }
@@ -185,6 +185,7 @@ public class TileEntityHarvester extends TileEntity implements IInventory, ITick
         timer = TIMER_FULL;//harvest worked!
       }
       else {
+        UtilParticle.spawnParticle(worldObj, EnumParticleTypes.SMOKE_NORMAL, harvest);
         timer = 5;//harvest didnt work, try again really quick
       }
     }
@@ -196,14 +197,13 @@ public class TileEntityHarvester extends TileEntity implements IInventory, ITick
     }
     this.markDirty();
   }
-  private BlockPos getOutputPos() {
-    BlockPos harvest = this.getPos().offset(this.getCurrentFacing());
-    return harvest;
-  }
+//  private BlockPos getOutputPos() {
+//    BlockPos harvest = this.getPos().offset(this.getCurrentFacing());
+//    return harvest;
+//  }
   private BlockPos getHarvestPos() {
-    //TODO: random location
-    //
-    BlockPos center = getOutputPos();
+    //move center over that much, not including exact horizontal
+    BlockPos center = this.getPos().offset(this.getCurrentFacing(),HARVEST_RADIUS+1);
     return UtilWorld.getRandomPos(this.worldObj.rand, center, HARVEST_RADIUS);
   }
   private int getSpeed() {
