@@ -1,11 +1,8 @@
 package com.lothrazar.cyclicmagic.gui;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBuilder;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityHarvester;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityUncrafting;
 import com.lothrazar.cyclicmagic.gui.builder.ContainerBuilder;
 import com.lothrazar.cyclicmagic.gui.builder.GuiBuilder;
-import com.lothrazar.cyclicmagic.gui.harvester.ContainerHarvester;
-import com.lothrazar.cyclicmagic.gui.harvester.GuiHarvester;
 import com.lothrazar.cyclicmagic.gui.player.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.gui.storage.ContainerStorage;
 import com.lothrazar.cyclicmagic.gui.storage.GuiStorage;
@@ -35,7 +32,6 @@ public class ModGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_STORAGE = 3;
   public static final int GUI_INDEX_WAYPOINT = 4;
   public static final int GUI_INDEX_BUILDER = 5;
-  public static final int GUI_INDEX_HARVESTER = 6;
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
     TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
@@ -58,13 +54,6 @@ public class ModGuiHandler implements IGuiHandler {
     case GUI_INDEX_BUILDER:
       if (te != null && te instanceof TileEntityBuilder) {
         Container c = new ContainerBuilder(player.inventory, (TileEntityBuilder) te);
-        c.detectAndSendChanges();
-        return c;
-      }
-      break;
-    case GUI_INDEX_HARVESTER:
-      if (te != null && te instanceof TileEntityHarvester) {
-        Container c = new ContainerHarvester(player.inventory, (TileEntityHarvester) te);
         c.detectAndSendChanges();
         return c;
       }
@@ -97,11 +86,6 @@ public class ModGuiHandler implements IGuiHandler {
         if (te != null && te instanceof TileEntityBuilder) { 
           return new GuiBuilder(player.inventory, (TileEntityBuilder) te); 
         }
-        break;
-      case GUI_INDEX_HARVESTER:
-        if (te != null && te instanceof TileEntityHarvester) { 
-          return new GuiHarvester(player.inventory, (TileEntityHarvester)te);
-          }
         break;
       }
     }
