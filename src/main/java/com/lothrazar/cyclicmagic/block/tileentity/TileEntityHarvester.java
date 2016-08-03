@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.block.BlockHarvester;
-import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilHarvestCrops;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
@@ -37,6 +36,8 @@ public class TileEntityHarvester extends TileEntity implements IInventory, ITick
     conf = new HarestCropsConfig();
     conf.doesCrops = true;
     conf.doesMushroom = true;
+    conf.doesPumpkinBlocks = true;
+    conf.doesMelonBlocks = true;
   }
   @Override
   public boolean hasCustomName() {
@@ -177,14 +178,14 @@ public class TileEntityHarvester extends TileEntity implements IInventory, ITick
     }
     if (trigger) {
       BlockPos harvest = getHarvestPos();
-      ModMain.logger.info("harv trigger :" + UtilChat.blockPosToString(harvest));
       //TODO:spit drops out the facing side, just like uncrafter
       // -> to this end, add new conf flag
       if (UtilHarvestCrops.harvestSingle(this.worldObj, harvest, conf)) {
-        timer = Const.TICKS_PER_SEC;//could not harvest, try again
+        ModMain.logger.info("harvested :" + UtilChat.blockPosToString(harvest));
+        timer = TIMER_FULL;//harvest worked!
       }
       else {
-        timer = TIMER_FULL;
+        timer = 5;//harvest didnt work, try again really quick
       }
     }
     else {
