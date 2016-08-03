@@ -1,9 +1,7 @@
 package com.lothrazar.cyclicmagic.gui.harvester;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBuilder;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityHarvester;
 import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
 import com.lothrazar.cyclicmagic.util.Const;
-import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilHarvestCrops.HarestCropsConfig;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
@@ -25,10 +23,7 @@ public class GuiHarvester extends GuiContainer {
   static final int padding = 8;
   private TileEntityHarvester tile;
   private GuiButton btn;
-  private int xSizeTextbox;
-  private int ySizeTxtbox;
-  private int xHeightTextbox;
-  private int yHeightTxtbox;
+
   boolean debugLabels = true;
   public GuiHarvester(InventoryPlayer inventoryPlayer, TileEntityHarvester te) {
     super(new ContainerHarvester(inventoryPlayer, te));
@@ -84,9 +79,9 @@ public class GuiHarvester extends GuiContainer {
     for (int k = 0; k < this.tile.getSizeInventory(); k++) { // x had - 3 ??
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerHarvester.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerHarvester.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
-    if (tile.getTimer() > 0 && tile.getStackInSlot(0) != null) {
+    if (tile.getTimer() > 0) {
       this.mc.getTextureManager().bindTexture(progress);
-      float percent = ((float) tile.getTimer()) / ((float) TileEntityBuilder.TIMER_FULL);
+      float percent = ((float) tile.getTimer()) / ((float) TileEntityHarvester.TIMER_FULL);
       // maximum progress bar is 156, since the whole texture is 176 minus
       // 10 padding on each side
       int belowSlots = this.guiTop + 9 + 3 * Const.SQ;

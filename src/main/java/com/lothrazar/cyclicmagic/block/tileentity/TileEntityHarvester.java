@@ -1,11 +1,11 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
-import java.util.ArrayList;
-import java.util.List;
+import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.block.BlockHarvester;
+import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilHarvestCrops;
-import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
-import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
+import com.lothrazar.cyclicmagic.util.UtilWorld;
 import com.lothrazar.cyclicmagic.util.UtilHarvestCrops.HarestCropsConfig;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,7 +13,6 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;// net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -25,22 +24,20 @@ import net.minecraft.util.text.ITextComponent;
 
 public class TileEntityHarvester extends TileEntity implements IInventory, ITickable, ISidedInventory {
   private int timer;
-  private int buildSize;
-  public static int maxSize;
-  public static int maxHeight = 10;
-  public static final int TIMER_FULL = 100;//one day i will add fuel AND/OR speed upgrades. till then make very slow
+  public static final int TIMER_FULL = 80;
   private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots
-
+  private HarestCropsConfig conf;
   private static final String NBT_TIMER = "Timer";
-  private static final String NBT_SIZE = "size";
+  private static final int HARVEST_RADIUS = 16;
   public static enum Fields {
-    TIMER, SIZE
+    TIMER
   }
   public TileEntityHarvester() {
-    this.buildSize = 10;
     this.timer = TIMER_FULL;
+    conf = new HarestCropsConfig();
+    conf.doesCrops = true;
+    conf.doesMushroom = true;
   }
- 
   @Override
   public boolean hasCustomName() {
     return false;
@@ -100,8 +97,8 @@ public class TileEntityHarvester extends TileEntity implements IInventory, ITick
       switch (Fields.values()[id]) {
       case TIMER:
         return timer;
-      case SIZE:
-        return this.buildSize;
+      default:
+        break;
       }
     return -1;
   }
@@ -112,9 +109,6 @@ public class TileEntityHarvester extends TileEntity implements IInventory, ITick
       case TIMER:
         this.timer = value;
         break;
-      case SIZE:
-        this.buildSize = value;
-        break;
       default:
         break;
       }
@@ -122,21 +116,11 @@ public class TileEntityHarvester extends TileEntity implements IInventory, ITick
   public int getTimer() {
     return this.getField(Fields.TIMER.ordinal());
   }
-  public void setSize(int s) {
-    if (s <= 0) {
-      s = 1;
-    }
-    if (s >= maxSize) {
-      s = maxSize;
-    }
-    this.setField(Fields.SIZE.ordinal(), s);
+  public void setHarvestConf(HarestCropsConfig c) {
+    conf = c;
   }
-  public int getSize() {
-    int s = this.getField(Fields.SIZE.ordinal());
-    if (s <= 0) {
-      s = 1;
-    }
-    return s;
+  public HarestCropsConfig getHarvestConf() {
+    return conf;
   }
   @Override
   public int getFieldCount() {
@@ -148,14 +132,11 @@ public class TileEntityHarvester extends TileEntity implements IInventory, ITick
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
-    timer = tagCompound.getInteger(NBT_TIMER); 
-    this.buildSize = tagCompound.getInteger(NBT_SIZE);
+    timer = tagCompound.getInteger(NBT_TIMER);
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
     tagCompound.setInteger(NBT_TIMER, timer);
-
-    tagCompound.setInteger(NBT_SIZE, this.getSize());
     return super.writeToNBT(tagCompound);
   }
   @Override
@@ -174,7 +155,6 @@ public class TileEntityHarvester extends TileEntity implements IInventory, ITick
     this.readFromNBT(pkt.getNbtCompound());
     super.onDataPacket(net, pkt);
   }
-
   public boolean isBurning() {
     return this.timer > 0 && this.timer < TIMER_FULL;
   }
@@ -186,36 +166,26 @@ public class TileEntityHarvester extends TileEntity implements IInventory, ITick
       return;
     }
     boolean trigger = false;
- 
     // center of the block
     double x = this.getPos().getX() + 0.5;
     double y = this.getPos().getY() + 0.5;
     double z = this.getPos().getZ() + 0.5;
-  
     timer -= this.getSpeed();
     if (timer <= 0) {
       timer = TIMER_FULL;
       trigger = true;
     }
-    
     if (trigger) {
-      timer = TIMER_FULL;
-      System.out.println("harv trigger :"+buildSize);
-      
-
-      HarestCropsConfig conf = getHarvestConf();
-      
-      UtilHarvestCrops.harvestArea(this.worldObj, this.getPos(), this.buildSize, conf);
-//      Block stuff = Block.getBlockFromItem(stack.getItem());
-//      if (stuff != null) {
-//        if (this.worldObj.isRemote == false) {
-//          //ModMain.logger.info("try place " + this.nextPos + " type " + this.buildType + "_" + this.getBuildTypeEnum().name());
-//          if (UtilPlaceBlocks.placeStateSafe(this.worldObj, null, this.nextPos, stuff.getStateFromMeta(stack.getMetadata()))) {
-//            this.decrStackSize(0, 1);
-//          }
-//        }
-//        this.incrementPosition();// even if it didnt place.
-//      }
+      BlockPos harvest = getHarvestPos();
+      ModMain.logger.info("harv trigger :" + UtilChat.blockPosToString(harvest));
+      //TODO:spit drops out the facing side, just like uncrafter
+      // -> to this end, add new conf flag
+      if (UtilHarvestCrops.harvestSingle(this.worldObj, harvest, conf)) {
+        timer = Const.TICKS_PER_SEC;//could not harvest, try again
+      }
+      else {
+        timer = TIMER_FULL;
+      }
     }
     else {
       // dont trigger an event, its still processing
@@ -225,36 +195,28 @@ public class TileEntityHarvester extends TileEntity implements IInventory, ITick
     }
     this.markDirty();
   }
-
-  public HarestCropsConfig getHarvestConf() {
-    //TODO: REAL SAVE
-    HarestCropsConfig conf = new HarestCropsConfig();
-    conf.doesPumpkinBlocks = true;
-    conf.doesMelonBlocks = true;
-    conf.doesCrops = true;
-    conf.doesCactus = true;
-    conf.doesReeds = true;
-    conf.doesFlowers = true;
-    conf.doesMushroom = true;
-    conf.doesTallgrass = true;
-    conf.doesSapling = true;
-    conf.doesLeaves = true;
-    return conf;
+  private BlockPos getOutputPos() {
+    BlockPos harvest = this.getPos().offset(this.getCurrentFacing());
+    return harvest;
+  }
+  private BlockPos getHarvestPos() {
+    //TODO: random location
+    //
+    BlockPos center = getOutputPos();
+    return UtilWorld.getRandomPos(this.worldObj.rand, center, HARVEST_RADIUS);
   }
   private int getSpeed() {
     return 1;
   }
-
   private EnumFacing getCurrentFacing() {
     BlockHarvester b = ((BlockHarvester) this.blockType);
     EnumFacing facing;
     if (b == null || this.worldObj.getBlockState(this.pos) == null || b.getFacingFromState(this.worldObj.getBlockState(this.pos)) == null)
       facing = EnumFacing.UP;
     else
-      facing = b.getFacingFromState(this.worldObj.getBlockState(this.pos));
+      facing = b.getFacingFromState(this.worldObj.getBlockState(this.pos)).getOpposite();
     return facing;
   }
-
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
     return hopperInput;

@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.util;
-import com.lothrazar.cyclicmagic.ModMain;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockMushroom;
@@ -27,6 +26,7 @@ public class UtilHarvestCrops {
     public boolean doesTallgrass = false;
     public boolean doesCactus = false;
     public boolean doesReeds = false;
+    public boolean dropInPlace = true;//if false -> then ret
     @Override
     public String toString(){
       String s = "";
@@ -41,17 +41,16 @@ public class UtilHarvestCrops {
       return s;
     }
   }
-  public static int harvestArea(World world, BlockPos pos, int xRadius, HarestCropsConfig conf) {
+  public static int harvestArea(World world, BlockPos pos, int hRadius, HarestCropsConfig conf) {
 
-    ModMain.logger.info("conf="+conf.toString());
     int x = pos.getX();
     int eventy = pos.getY();
     int z = pos.getZ();
     // search in a cube
-    int xMin = x - xRadius;
-    int xMax = x + xRadius;
-    int zMin = z - xRadius;
-    int zMax = z + xRadius;
+    int xMin = x - hRadius;
+    int xMax = x + hRadius;
+    int zMin = z - hRadius;
+    int zMax = z + hRadius;
     BlockPos posCurrent;
     int countHarvested = 0;
     for (int xLoop = xMin; xLoop <= xMax; xLoop++) {
@@ -177,11 +176,11 @@ public class UtilHarvestCrops {
     }
     // no , for now is fine, do not do blocks
     if (doBreak) {
-      ModMain.logger.info("posCurrent="+UtilChat.blockPosToString(posCurrent));
-      ModMain.logger.info("h"+blockCheck.getUnlocalizedName());
-      ModMain.logger.info("doBreakAbove="+doBreakAbove);
-      ModMain.logger.info("doBreakBelow="+doBreakBelow);
-      ModMain.logger.info("doReplant="+doReplant);
+//      ModMain.logger.info("posCurrent="+UtilChat.blockPosToString(posCurrent));
+//      ModMain.logger.info("h"+blockCheck.getUnlocalizedName());
+//      ModMain.logger.info("doBreakAbove="+doBreakAbove);
+//      ModMain.logger.info("doBreakBelow="+doBreakBelow);
+//      ModMain.logger.info("doReplant="+doReplant);
       
       world.destroyBlock(posCurrent, true);
       //break above first BECAUSE 2 high tallgrass otherwise will bug out if you break bottom first
