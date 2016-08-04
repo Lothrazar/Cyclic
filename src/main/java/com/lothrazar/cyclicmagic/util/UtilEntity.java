@@ -178,7 +178,7 @@ public class UtilEntity {
     double hdist;
     for (Entity eitem : all) {
       hdist = Math.max(Math.abs(x - eitem.getPosition().getX()), Math.abs(z - eitem.getPosition().getZ()));
-      if (hdist > 1.1) {
+      if (hdist > 0.9) {
         Vector3.setEntityMotionFromVector(eitem, x, y, z, ITEMSPEED);
         moved++;
       } //else its basically on it, no point
