@@ -4,9 +4,11 @@ import java.util.Arrays;
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.BlockBuilder;
 import com.lothrazar.cyclicmagic.block.BlockHarvester;
+import com.lothrazar.cyclicmagic.block.BlockMagnet;
 import com.lothrazar.cyclicmagic.block.BlockUncrafting;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBuilder;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityHarvester;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityMagnet;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityUncrafting;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -37,6 +39,12 @@ public class MachineBlockModule extends BaseModule {
       BlockRegistry.registerBlock(BlockRegistry.uncrafting_block, "uncrafting_block");
       BlockRegistry.uncrafting_block.addRecipe();
       GameRegistry.registerTileEntity(TileEntityUncrafting.class, "uncrafting_block_te");
+    }
+    if(enableUncrafter){
+      BlockRegistry.magnet_block = new BlockMagnet();
+      BlockRegistry.registerBlock(BlockRegistry.magnet_block, "magnet_block");
+      BlockRegistry.magnet_block.addRecipe();
+      GameRegistry.registerTileEntity(TileEntityMagnet.class, "magnet_block_te");
     }
   }
   @Override
