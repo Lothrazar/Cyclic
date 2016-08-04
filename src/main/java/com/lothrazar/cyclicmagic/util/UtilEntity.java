@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.util;
+import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -164,27 +165,26 @@ public class UtilEntity {
   }
   public static int pullEntityItemsTowards(World world, BlockPos pos, float ITEMSPEED, int ITEM_HRADIUS, int ITEM_VRADIUS) {
     int x = pos.getX(), y = pos.getY(), z = pos.getZ();
-    return pullEntityItemsTowards(world,x,y,z,ITEMSPEED,ITEM_HRADIUS,ITEM_VRADIUS);
+    return pullEntityItemsTowards(world, x, y, z, ITEMSPEED, ITEM_HRADIUS, ITEM_VRADIUS);
   }
   public static int pullEntityItemsTowards(World world, double x, double y, double z, float ITEMSPEED, int ITEM_HRADIUS, int ITEM_VRADIUS) {
-
-    List<EntityItem> found = world.getEntitiesWithinAABB(EntityItem.class, 
-        new AxisAlignedBB(
-            x - ITEM_HRADIUS, y - ITEM_VRADIUS, z - ITEM_HRADIUS, 
-            x + ITEM_HRADIUS, y + ITEM_VRADIUS, z + ITEM_HRADIUS));
+    AxisAlignedBB range = new AxisAlignedBB(
+        x - ITEM_HRADIUS, y - ITEM_VRADIUS, z - ITEM_HRADIUS,
+        x + ITEM_HRADIUS, y + ITEM_VRADIUS, z + ITEM_HRADIUS);
+    List<Entity> all = new ArrayList<Entity>();
+    all.addAll(world.getEntitiesWithinAABB(EntityItem.class, range));
+    all.addAll(world.getEntitiesWithinAABB(EntityXPOrb.class, range));
     int moved = 0;
-    for (EntityItem eitem : found) {
-      Vector3.setEntityMotionFromVector(eitem, x, y, z, ITEMSPEED);
-      moved++;
-    }
-    List<EntityXPOrb> foundExp = world.getEntitiesWithinAABB(EntityXPOrb.class, new AxisAlignedBB(x - ITEM_HRADIUS, y - ITEM_VRADIUS, z - ITEM_HRADIUS, x + ITEM_HRADIUS, y + ITEM_VRADIUS, z + ITEM_HRADIUS));
-    for (EntityXPOrb eitem : foundExp) {
-      Vector3.setEntityMotionFromVector(eitem, x, y, z, ITEMSPEED);
-      moved++;
+    double hdist;
+    for (Entity eitem : all) {
+      hdist = Math.max(Math.abs(x - eitem.getPosition().getX()), Math.abs(z - eitem.getPosition().getZ()));
+      if (hdist > 1) {
+        Vector3.setEntityMotionFromVector(eitem, x, y, z, ITEMSPEED);
+        moved++;
+      } //else its basically on it, no point
     }
     return moved;
   }
-
   public static void addOrMergePotionEffect(EntityLivingBase player, PotionEffect newp) {
     // this could be in a utilPotion class i guess...
     if (player.isPotionActive(newp.getPotion())) {

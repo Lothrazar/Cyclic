@@ -20,7 +20,7 @@ public class TileEntityMagnet extends TileEntity implements IInventory, ITickabl
   public static final int TIMER_FULL = 40;
   private int[] hopperInput = {};
   private static final String NBT_TIMER = "Timer";
-  private final static float ITEMSPEED = 1.1F;
+  private final static float ITEMSPEED = 0.7F;
   private static final int ITEM_VRADIUS = 1;
   private static final int ITEM_HRADIUS = 16;
   public static enum Fields {
