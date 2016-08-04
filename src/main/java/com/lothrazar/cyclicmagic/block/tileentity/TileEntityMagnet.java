@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
-import com.lothrazar.cyclicmagic.block.BlockMagnet;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import net.minecraft.block.Block;
@@ -14,16 +13,15 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 
 public class TileEntityMagnet extends TileEntity implements IInventory, ITickable, ISidedInventory {
   private int timer;
   public static final int TIMER_FULL = 40;
-  private int[] hopperInput = { };
+  private int[] hopperInput = {};
   private static final String NBT_TIMER = "Timer";
-  private final static float ITEMSPEED = 1.05F;
-  private static final int ITEM_VRADIUS = 0;
+  private final static float ITEMSPEED = 1.1F;
+  private static final int ITEM_VRADIUS = 1;
   private static final int ITEM_HRADIUS = 16;
   public static enum Fields {
     TIMER
@@ -153,23 +151,19 @@ public class TileEntityMagnet extends TileEntity implements IInventory, ITickabl
       return;
     }
     boolean trigger = false;
-    // center of the block
-    double x = this.getPos().getX() + 0.5;
-    double y = this.getPos().getY() + 0.5;
-    double z = this.getPos().getZ() + 0.5;
     timer -= this.getSpeed();
     if (timer <= 0) {
       timer = TIMER_FULL;
       trigger = true;
     }
+    // center of the block
+    double x = this.getPos().getX() + 0.5;
+    double y = this.getPos().getY() + 0.5;
+    double z = this.getPos().getZ() + 0.5;
     if (trigger) {
-   
-      System.out.println("magnet trigger");
-      UtilEntity.pullEntityItemsTowards(this.getWorld(), this.getCenterPos()
-          , ITEMSPEED, ITEM_HRADIUS, ITEM_VRADIUS);
-      
-        timer = TIMER_FULL;//harvest worked!
-      
+      //int moved = 
+      UtilEntity.pullEntityItemsTowards(this.getWorld(), x, y, z, ITEMSPEED, ITEM_HRADIUS, ITEM_VRADIUS);
+      timer = TIMER_FULL;//harvest worked!
     }
     else {
       // dont trigger an event, its still processing
@@ -179,24 +173,8 @@ public class TileEntityMagnet extends TileEntity implements IInventory, ITickabl
     }
     this.markDirty();
   }
-//  private BlockPos getOutputPos() {
-//    BlockPos harvest = this.getPos().offset(this.getCurrentFacing());
-//    return harvest;
-//  }
-  private BlockPos getCenterPos() {
-    return this.getPos().offset(this.getCurrentFacing(),1);
-  }
   private int getSpeed() {
     return 1;
-  }
-  private EnumFacing getCurrentFacing() {
-    BlockMagnet b = ((BlockMagnet) this.blockType);
-    EnumFacing facing;
-    if (b == null || this.worldObj.getBlockState(this.pos) == null || b.getFacingFromState(this.worldObj.getBlockState(this.pos)) == null)
-      facing = EnumFacing.UP;
-    else
-      facing = b.getFacingFromState(this.worldObj.getBlockState(this.pos)).getOpposite();
-    return facing;
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {

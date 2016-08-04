@@ -164,7 +164,14 @@ public class UtilEntity {
   }
   public static int pullEntityItemsTowards(World world, BlockPos pos, float ITEMSPEED, int ITEM_HRADIUS, int ITEM_VRADIUS) {
     int x = pos.getX(), y = pos.getY(), z = pos.getZ();
-    List<EntityItem> found = world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(x - ITEM_HRADIUS, y - ITEM_VRADIUS, z - ITEM_HRADIUS, x + ITEM_HRADIUS, y + ITEM_VRADIUS, z + ITEM_HRADIUS));
+    return pullEntityItemsTowards(world,x,y,z,ITEMSPEED,ITEM_HRADIUS,ITEM_VRADIUS);
+  }
+  public static int pullEntityItemsTowards(World world, double x, double y, double z, float ITEMSPEED, int ITEM_HRADIUS, int ITEM_VRADIUS) {
+
+    List<EntityItem> found = world.getEntitiesWithinAABB(EntityItem.class, 
+        new AxisAlignedBB(
+            x - ITEM_HRADIUS, y - ITEM_VRADIUS, z - ITEM_HRADIUS, 
+            x + ITEM_HRADIUS, y + ITEM_VRADIUS, z + ITEM_HRADIUS));
     int moved = 0;
     for (EntityItem eitem : found) {
       Vector3.setEntityMotionFromVector(eitem, x, y, z, ITEMSPEED);
