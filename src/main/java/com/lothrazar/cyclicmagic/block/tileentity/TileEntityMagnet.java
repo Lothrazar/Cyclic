@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
-import com.lothrazar.cyclicmagic.util.UtilParticle;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -11,16 +10,15 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;// net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.text.ITextComponent;
 
 public class TileEntityMagnet extends TileEntity implements IInventory, ITickable, ISidedInventory {
   private int timer;
-  public static final int TIMER_FULL = 40;
+  public static final int TIMER_FULL = 36;
   private int[] hopperInput = {};
   private static final String NBT_TIMER = "Timer";
-  private final static float ITEMSPEED = 0.7F;
+  private final static float ITEMSPEED = 0.4F;
   private static final int ITEM_VRADIUS = 1;
   private static final int ITEM_HRADIUS = 16;
   public static enum Fields {
