@@ -1,32 +1,18 @@
 package com.lothrazar.cyclicmagic.gui.storage;
 import org.lwjgl.opengl.GL11;
-import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiStorage extends GuiContainer {
   private static final ResourceLocation BACKGROUND = new ResourceLocation(Const.MODID, "textures/gui/inventory_storage.png");
-  static final int texture_width = 176;
+  static final int texture_width = 212;// 176;
   static final int texture_height = 212;
-  public GuiStorage(ContainerStorage containerItem, ItemStack wand) {
+  public GuiStorage(ContainerStorage containerItem) {
     super(containerItem);
     this.xSize = texture_width;
     this.ySize = texture_height;
-  }
-  @Override
-  public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-    super.drawScreen(mouseX, mouseY, partialTicks);
-    ITooltipButton btn;
-    for (int i = 0; i < buttonList.size(); i++) {
-      if (buttonList.get(i).isMouseOver() && buttonList.get(i) instanceof ITooltipButton) {
-        btn = (ITooltipButton) buttonList.get(i);
-        drawHoveringText(btn.getTooltips(), mouseX, mouseY, fontRendererObj);
-        break;// cant hover on 2 at once
-      }
-    }
   }
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {

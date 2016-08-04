@@ -78,7 +78,7 @@ public class ModGuiHandler implements IGuiHandler {
         break;
       case GUI_INDEX_STORAGE:
         ItemStack s = ItemInventoryStorage.getPlayerItemIfHeld(player);
-        return new GuiStorage(new ContainerStorage(player, player.inventory, new InventoryStorage(player, s)), s);
+        return new GuiStorage(new ContainerStorage(player, player.inventory, new InventoryStorage(player, s)));
       case GUI_INDEX_WAYPOINT:
         //Minecraft.getMinecraft().displayGuiScreen(new GuiEnderBook(entityPlayer, stack));
         return new GuiEnderBook(player, UtilInventory.getPlayerItemIfHeld(player));

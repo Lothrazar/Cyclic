@@ -10,12 +10,13 @@ import net.minecraft.item.ItemStack;
 
 public class ContainerStorage extends Container {
   final InventoryStorage inventory;
-  final static int INV_START = InventoryStorage.INV_SIZE, INV_END = INV_START + 26, HOTBAR_START = INV_END + 1,
+  final static int INV_START = InventoryStorage.INV_SIZE, INV_END = INV_START + 26, 
+      HOTBAR_START = INV_END + 1,
       HOTBAR_END = HOTBAR_START + 8;
   final static int pad = 8;
   final static int hotbar = 9;
   final static int rows = 6;
-  final static int cols = 9;
+  final static int cols = 11;
   public ContainerStorage(EntityPlayer par1Player, InventoryPlayer playerInventory, InventoryStorage invoWand) {
     this.inventory = invoWand;
     int x, y = pad, k, l, slot;
@@ -24,7 +25,7 @@ public class ContainerStorage extends Container {
       for (k = 0; k < cols; ++k) {
         x = pad + k * Const.SQ;
         y = pad + l * Const.SQ;
-        slot = k + l * hotbar;
+        slot = k + l * cols;
         this.addSlotToContainer(new Slot(invoWand, slot, x, y));
       }
     }
@@ -32,7 +33,7 @@ public class ContainerStorage extends Container {
     // start the players inventory
     for (l = 0; l < 3; ++l) {
       for (k = 0; k < hotbar; ++k) {
-        x = pad + k * Const.SQ;
+        x = pad + (k + 1) * Const.SQ;
         y = l * Const.SQ + yBase;
         slot = k + l * hotbar + hotbar;
         this.addSlotToContainer(new Slot(playerInventory, slot, x, y));
@@ -42,7 +43,7 @@ public class ContainerStorage extends Container {
     int yhotbar = yBase + 3 * Const.SQ + pad / 2;
     for (k = 0; k < hotbar; ++k) {
       slot = k;
-      x = pad + k * Const.SQ;
+      x = pad + (k + 1) * Const.SQ;
       this.addSlotToContainer(new Slot(playerInventory, slot, x, yhotbar));
     }
   }
