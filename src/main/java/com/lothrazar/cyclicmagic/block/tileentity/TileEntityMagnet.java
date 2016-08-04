@@ -145,11 +145,6 @@ public class TileEntityMagnet extends TileEntity implements IInventory, ITickabl
   }
   @Override
   public void update() {
-    if (this.worldObj.getStrongPower(this.getPos()) == 0) {
-      // it works ONLY if its powered
-      this.markDirty();
-      return;
-    }
     boolean trigger = false;
     timer -= this.getSpeed();
     if (timer <= 0) {
