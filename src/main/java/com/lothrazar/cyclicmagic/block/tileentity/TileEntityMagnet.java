@@ -160,13 +160,13 @@ public class TileEntityMagnet extends TileEntity implements IInventory, ITickabl
       UtilEntity.pullEntityItemsTowards(this.getWorld(), x, y, z, ITEMSPEED, ITEM_HRADIUS, ITEM_VRADIUS);
       timer = TIMER_FULL;//harvest worked!
     }
-    else {
-      // dont trigger an event, its still processing
-      if (this.worldObj.isRemote && this.worldObj.rand.nextDouble() < 0.1) {
-        UtilParticle.spawnParticle(worldObj, EnumParticleTypes.SMOKE_NORMAL, x, y, z);
-      }
-    }
-    this.markDirty();
+//    else {
+//      // dont trigger an event, its still processing
+//      if (this.worldObj.isRemote && this.worldObj.rand.nextDouble() < 0.1) {
+//        UtilParticle.spawnParticle(worldObj, EnumParticleTypes.SMOKE_NORMAL, x, y, z);
+//      }
+//    }
+//    this.markDirty();
   }
   private int getSpeed() {
     return 1;
