@@ -162,6 +162,9 @@ public class UtilHarvestCrops {
       if(conf.doesReeds){//never breaking the bottom one
         doBreak = true;
         doReplant = false;
+        if(bsAbove != null && bsAbove.getBlock() == Blocks.REEDS){
+          doBreakAbove = true;
+        }
       }
     }
     else if (blockCheck instanceof IGrowable  ) {

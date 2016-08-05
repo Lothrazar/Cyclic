@@ -34,6 +34,6 @@
   	,"1.4.3":"Fix chest sack glitching out and deleting items. "
   	,"1.4.4":"Add config category 'content' to remove items and blocks added.  Fix Mounted Pearl feature not keeping the horse attached to you"
 	,"1.4.5":"Hot fix not loading on servers (#61).  Hotfix Exp Achievements misfiring on false positives (#60). "
- 	,"1.5.0":"New block: Harvester.  New block: Item Magnet.  Added a config option to disable potion effects from Sleeing Mat"
+ 	,"1.5.0":"New block: Harvester.  New block: Item Magnet.  Added a config option to disable potion effects from Sleeing Mat.  Fix Garden Scythe leaving a floating block (#64)"
  }
 }
