@@ -9,10 +9,10 @@ import net.minecraft.util.text.ITextComponent;
 
 public class TileEntityMagnet extends TileEntity implements ITickable{
   private int timer;
-  public static final int TIMER_FULL = 36;
+  public static final int TIMER_FULL = 140;
   private static final String NBT_TIMER = "Timer";
-  private final static float ITEMSPEED = 0.33F;
-  private static final int ITEM_VRADIUS = 1;
+  private final static float ITEMSPEED = 0.9F;
+  private static final int ITEM_VRADIUS = 2;
   private static final int ITEM_HRADIUS = 16;
 
   public TileEntityMagnet() {
@@ -61,7 +61,7 @@ public class TileEntityMagnet extends TileEntity implements ITickable{
     }
     // center of the block
     double x = this.getPos().getX() + 0.5;
-    double y = this.getPos().getY() + 0.9;
+    double y = this.getPos().getY() + 0.7;
     double z = this.getPos().getZ() + 0.5;
     if (trigger) {
       int moved = 
