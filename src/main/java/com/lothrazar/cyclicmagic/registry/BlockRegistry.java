@@ -4,6 +4,8 @@ import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.block.BlockBucketStorage;
 import com.lothrazar.cyclicmagic.block.BlockBuilder;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre;
+import com.lothrazar.cyclicmagic.block.BlockHarvester;
+import com.lothrazar.cyclicmagic.block.BlockMagnet;
 import com.lothrazar.cyclicmagic.block.BlockScaffolding;
 import com.lothrazar.cyclicmagic.block.BlockUncrafting;
 import net.minecraft.block.Block;
@@ -29,6 +31,8 @@ public class BlockRegistry {
   public static BlockDimensionOre nether_diamond_ore;
   public static BlockDimensionOre end_diamond_ore;
   public static BlockBuilder builder_block;
+  public static BlockHarvester harvester_block;
+  public static BlockMagnet magnet_block;
 
   //lots of helpers/overrides with defaults
   public static void registerBlock(Block b, String name) {

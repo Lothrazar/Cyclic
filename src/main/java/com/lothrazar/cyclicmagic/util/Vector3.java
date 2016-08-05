@@ -276,7 +276,7 @@ public class Vector3 {
    * @param z
    * @param modifier
    */
-  public static void setEntityMotionFromVector(Entity entity, int x, int y, int z, float modifier) {
+  public static void setEntityMotionFromVector(Entity entity, double x, double y, double z, float modifier) {
     Vector3 originalPosVector = new Vector3(x, y, z);
     Vector3 entityVector = Vector3.fromEntity(entity);
     Vector3 finalVector = originalPosVector.copy().subtract(entityVector);
