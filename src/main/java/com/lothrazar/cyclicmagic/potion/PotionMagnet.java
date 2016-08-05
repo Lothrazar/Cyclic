@@ -7,7 +7,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class PotionMagnet extends PotionCustom {
   private final static int ITEM_HRADIUS = 20;
   private final static int ITEM_VRADIUS = 4;
-  private final static float ITEMSPEED = 1.2F;
   public PotionMagnet(String name, boolean b, int potionColor) {
     super(name, b, potionColor);
   }
@@ -19,6 +18,6 @@ public class PotionMagnet extends PotionCustom {
     }
   }
   public void tick(EntityLivingBase entityLiving) {
-    UtilEntity.pullEntityItemsTowards(entityLiving.getEntityWorld(), entityLiving.getPosition(), ITEMSPEED, ITEM_HRADIUS, ITEM_VRADIUS);
+    UtilEntity.pullEntityItemsTowards(entityLiving.getEntityWorld(), entityLiving.getPosition(),  ITEM_HRADIUS, ITEM_VRADIUS);
   }
 }

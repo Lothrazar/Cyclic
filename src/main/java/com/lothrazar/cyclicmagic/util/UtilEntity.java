@@ -164,11 +164,13 @@ public class UtilEntity {
       entity.addVelocity(velX, velY, velZ);
     }
   }
-  public static int pullEntityItemsTowards(World world, BlockPos pos, float ITEMSPEED, int ITEM_HRADIUS, int ITEM_VRADIUS) {
+  private final static float ITEMSPEEDFAR = 0.9F;
+  private final static float ITEMSPEEDCLOSE = 0.3F;
+  public static int pullEntityItemsTowards(World world, BlockPos pos, int ITEM_HRADIUS, int ITEM_VRADIUS) {
     int x = pos.getX(), y = pos.getY(), z = pos.getZ();
-    return pullEntityItemsTowards(world, x, y, z, ITEMSPEED, ITEM_HRADIUS, ITEM_VRADIUS);
+    return pullEntityItemsTowards(world, x, y, z, ITEM_HRADIUS, ITEM_VRADIUS);
   }
-  public static int pullEntityItemsTowards(World world, double x, double y, double z, float ITEMSPEED, int ITEM_HRADIUS, int ITEM_VRADIUS) {
+  public static int pullEntityItemsTowards(World world, double x, double y, double z,  int ITEM_HRADIUS, int ITEM_VRADIUS) {
     AxisAlignedBB range = new AxisAlignedBB(
         x - ITEM_HRADIUS, y - ITEM_VRADIUS, z - ITEM_HRADIUS,
         x + ITEM_HRADIUS, y + ITEM_VRADIUS, z + ITEM_HRADIUS);
@@ -177,10 +179,12 @@ public class UtilEntity {
     all.addAll(world.getEntitiesWithinAABB(EntityXPOrb.class, range));
     int moved = 0;
     double hdist;
+    float speed;
     for (Entity eitem : all) {
       hdist = Math.max(Math.abs(x - eitem.getPosition().getX()), Math.abs(z - eitem.getPosition().getZ()));
       if (hdist > ENTITY_PULL_DIST) {
-        Vector3.setEntityMotionFromVector(eitem, x, y, z, ITEMSPEED);
+        speed = (hdist > 5) ? ITEMSPEEDFAR : ITEMSPEEDCLOSE;
+        Vector3.setEntityMotionFromVector(eitem, x, y, z, speed);
         moved++;
       } //else its basically on it, no point
     }

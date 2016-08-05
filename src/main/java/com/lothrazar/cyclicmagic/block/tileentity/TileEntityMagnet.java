@@ -11,7 +11,6 @@ public class TileEntityMagnet extends TileEntity implements ITickable{
   private int timer;
   public static final int TIMER_FULL = 140;
   private static final String NBT_TIMER = "Timer";
-  private final static float ITEMSPEED = 0.9F;
   private static final int ITEM_VRADIUS = 2;
   private static final int ITEM_HRADIUS = 16;
 
@@ -65,7 +64,7 @@ public class TileEntityMagnet extends TileEntity implements ITickable{
     double z = this.getPos().getZ() + 0.5;
     if (trigger) {
       int moved = 
-      UtilEntity.pullEntityItemsTowards(this.getWorld(), x, y, z, ITEMSPEED, ITEM_HRADIUS, ITEM_VRADIUS);
+      UtilEntity.pullEntityItemsTowards(this.getWorld(), x, y, z,  ITEM_HRADIUS, ITEM_VRADIUS);
       System.out.println("MOVED:"+moved);
       timer = TIMER_FULL;//harvest worked!
     }
