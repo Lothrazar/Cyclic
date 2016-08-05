@@ -30,6 +30,7 @@ public class ItemSleepingBag extends BaseTool implements IHasRecipe, IHasConfig 
   private static int seconds;
   private static final int levelBoost = Const.Potions.I;
   private static final int durability = 100;
+  public static boolean doPotions;
   public ItemSleepingBag() {
     super(durability);
   }
@@ -42,8 +43,10 @@ public class ItemSleepingBag extends BaseTool implements IHasRecipe, IHasConfig 
         final IPlayerExtendedProperties sleep = CapabilityRegistry.getPlayerProperties(player);
         if (sleep != null) {
           sleep.setSleeping(true);
-          player.addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, seconds * Const.TICKS_PER_SEC, levelBoost));
-          player.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, seconds * Const.TICKS_PER_SEC, levelBoost));
+          if (doPotions) {
+            player.addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, seconds * Const.TICKS_PER_SEC, levelBoost));
+            player.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, seconds * Const.TICKS_PER_SEC, levelBoost));
+          }
           this.onUse(stack, player, world, hand);
         }
         else {
@@ -82,5 +85,5 @@ public class ItemSleepingBag extends BaseTool implements IHasRecipe, IHasConfig 
     GameRegistry.addShapelessRecipe(new ItemStack(this),
         new ItemStack(Blocks.WOOL, 1, EnumDyeColor.RED.getMetadata()),
         Items.LEATHER);
-  }  
+  }
 }
