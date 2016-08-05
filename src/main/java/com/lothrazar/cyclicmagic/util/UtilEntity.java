@@ -17,6 +17,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class UtilEntity {
+  private static final double ENTITY_PULL_DIST = 0.7;
   public static void teleportWallSafe(EntityLivingBase player, World world, BlockPos coords) {
     player.setPositionAndUpdate(coords.getX(), coords.getY(), coords.getZ());
     moveEntityWallSafe(player, world);
@@ -178,7 +179,7 @@ public class UtilEntity {
     double hdist;
     for (Entity eitem : all) {
       hdist = Math.max(Math.abs(x - eitem.getPosition().getX()), Math.abs(z - eitem.getPosition().getZ()));
-      if (hdist > 0.9) {
+      if (hdist > ENTITY_PULL_DIST) {
         Vector3.setEntityMotionFromVector(eitem, x, y, z, ITEMSPEED);
         moved++;
       } //else its basically on it, no point
