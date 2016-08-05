@@ -1,7 +1,5 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
-import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.block.BlockHarvester;
-import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilHarvestCrops;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
@@ -181,12 +179,13 @@ public class TileEntityHarvester extends TileEntity implements IInventory, ITick
       //TODO:spit drops out the facing side, just like uncrafter
       // -> to this end, add new conf flag
       if (UtilHarvestCrops.harvestSingle(this.worldObj, harvest, conf)) {
-        ModMain.logger.info("harvested :" + UtilChat.blockPosToString(harvest));
+//        ModMain.logger.info("harvested :" + UtilChat.blockPosToString(harvest));
+        UtilParticle.spawnParticle(worldObj, EnumParticleTypes.DRAGON_BREATH, harvest);
         timer = TIMER_FULL;//harvest worked!
       }
       else {
-        UtilParticle.spawnParticle(worldObj, EnumParticleTypes.SMOKE_NORMAL, harvest);
-        timer = 5;//harvest didnt work, try again really quick
+//        UtilParticle.spawnParticle(worldObj, EnumParticleTypes.SMOKE_NORMAL, harvest);
+        timer = 3;//harvest didnt work, try again really quick
       }
     }
     else {
