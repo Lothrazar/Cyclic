@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.util;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockCocoa;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockMushroom;
 import net.minecraft.block.BlockNetherWart;
@@ -9,6 +10,7 @@ import net.minecraft.block.BlockTallGrass;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -70,7 +72,7 @@ public class UtilHarvestCrops {
     boolean doBreakAbove = false;
     boolean doBreakBelow = false;
     boolean doBreak = false;
-    boolean doReplant = false;
+    IBlockState stateReplant = null;
     IBlockState bs = world.getBlockState(posCurrent);
     if (bs == null) { return false; }
     Block blockCheck = bs.getBlock();
@@ -83,7 +85,17 @@ public class UtilHarvestCrops {
         int age = ((Integer)bs.getValue(BlockNetherWart.AGE)).intValue();
         if(age == 3){//this is hardcoded in base class
           doBreak = true;
-          doReplant = true;
+          stateReplant = blockCheck.getDefaultState();
+        }
+      }
+    }
+    if (blockCheck instanceof BlockCocoa ) {
+      if(conf.doesCrops){
+        int age = ((Integer)bs.getValue(BlockCocoa.AGE)).intValue();
+        if(age == 2){//this is hardcoded in base class
+          doBreak = true;
+          // a new state that copies the property but NOT the age
+          stateReplant = blockCheck.getDefaultState().withProperty(BlockCocoa.FACING, bs.getValue(BlockCocoa.FACING));
         }
       }
     }
@@ -98,7 +110,6 @@ public class UtilHarvestCrops {
     else if (blockCheck instanceof BlockTallGrass    ) {
       if( conf.doesTallgrass){
         doBreak = true;
-        doReplant = false;
         if (blockCheck instanceof BlockTallGrass && bsAbove != null && bsAbove.getBlock() instanceof BlockTallGrass) {
           doBreakAbove = true;
         }
@@ -110,7 +121,6 @@ public class UtilHarvestCrops {
     else if (blockCheck instanceof BlockDoublePlant      ) {
       if( conf.doesTallgrass){
         doBreak = true;
-        doReplant = false;
         if (blockCheck instanceof BlockDoublePlant && bsAbove != null && bsAbove.getBlock() instanceof BlockDoublePlant) {
           doBreakAbove = true;
         }
@@ -126,13 +136,11 @@ public class UtilHarvestCrops {
     else if (blockCheck == Blocks.PUMPKIN) {
       if(conf.doesPumpkinBlocks){
         doBreak = true;
-        doReplant = false;
       }
     }
     else if (blockCheck == Blocks.MELON_BLOCK) {
       if(conf.doesMelonBlocks){
         doBreak = false;//not the standard break - custom rules to mimic silktouch
-        doReplant = false;
         world.destroyBlock(posCurrent, false);
         UtilEntity.dropItemStackInWorld(world, posCurrent, Blocks.MELON_BLOCK);
       }
@@ -140,19 +148,16 @@ public class UtilHarvestCrops {
     else if (blockCheck == Blocks.RED_FLOWER || blockCheck == Blocks.YELLOW_FLOWER ) {
       if(conf.doesFlowers){
         doBreak = true;
-        doReplant = false;
       }
     }
     else if (blockCheck == Blocks.LEAVES || blockCheck == Blocks.LEAVES2) {
       if(conf.doesLeaves){
         doBreak = true;
-        doReplant = false;
       }
     }
     else if (blockCheck == Blocks.CACTUS && bsBelow != null && bsBelow.getBlock() == Blocks.CACTUS) {
       if(conf.doesCactus){ //never breaking the bottom one
         doBreak = true;
-        doReplant = false;
         if(bsAbove != null && bsAbove.getBlock() == Blocks.CACTUS){
           doBreakAbove = true;
         }
@@ -161,7 +166,6 @@ public class UtilHarvestCrops {
     else if (blockCheck == Blocks.REEDS && bsBelow != null && bsBelow.getBlock() == Blocks.REEDS) {
       if(conf.doesReeds){//never breaking the bottom one
         doBreak = true;
-        doReplant = false;
         if(bsAbove != null && bsAbove.getBlock() == Blocks.REEDS){
           doBreakAbove = true;
         }
@@ -173,7 +177,6 @@ public class UtilHarvestCrops {
         // only if its full grown
         if (plant.canGrow(world, posCurrent, bs, world.isRemote) == false) {
           doBreak = true;
-          doReplant = true;
         }
       }
     }
@@ -193,8 +196,8 @@ public class UtilHarvestCrops {
       if (doBreakBelow) {
         world.destroyBlock(posCurrent.down(), false);
       }
-      if (doReplant) {// plant new seed
-        world.setBlockState(posCurrent, blockCheck.getDefaultState());
+      if (stateReplant != null) {// plant new seed
+        world.setBlockState(posCurrent, stateReplant);
       }
       return true;
     }
