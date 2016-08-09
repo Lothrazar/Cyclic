@@ -177,6 +177,7 @@ public class UtilHarvestCrops {
         // only if its full grown
         if (plant.canGrow(world, posCurrent, bs, world.isRemote) == false) {
           doBreak = true;
+          stateReplant = blockCheck.getDefaultState();
         }
       }
     }
