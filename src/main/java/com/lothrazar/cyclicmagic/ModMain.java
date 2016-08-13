@@ -24,7 +24,6 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @Mod(modid = Const.MODID, useMetadata = true, canBeDeactivated = false, updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json", acceptableRemoteVersions = "*", guiFactory = "com.lothrazar." + Const.MODID + ".gui.IngameConfigFactory")
 public class ModMain {
@@ -74,6 +73,32 @@ public class ModMain {
       module.onPreInit();
     }
   }
+  @EventHandler
+  public void onInit(FMLInitializationEvent event) {
+    for (ICyclicModule module : modules) {
+      module.onInit();
+    }
+    ItemRegistry.register();
+    //more core module stuff
+    proxy.register();
+    NetworkRegistry.INSTANCE.registerGuiHandler(this, new ModGuiHandler());
+    //fixes things , stuff was added to items and content that has config
+    this.syncConfig();
+    //important: register events after modules init.
+    this.events.registerAll();
+  }
+  @EventHandler
+  public void onPostInit(FMLPostInitializationEvent event) {
+    for (ICyclicModule module : modules) {
+      module.onPostInit();
+    }
+  }
+  @EventHandler
+  public void onServerStarting(FMLServerStartingEvent event) {
+    for (ICyclicModule module : modules) {
+      module.onServerStarting(event);
+    }
+  }
   private void createFeatureModules() {
     // :) http://alphabetizer.flap.tv/
     modules.add(new AchievementExpModule());
@@ -95,6 +120,7 @@ public class ModMain {
     modules.add(new FragileBlockModule());
     modules.add(new FragileTorchesModule());
     modules.add(new FurnaceStardewModule());
+    modules.add(new FuelAdditionModule());
     modules.add(new GuiTerrariaButtonsModule());
     modules.add(new HorseFoodModule());
     modules.add(new ItemstackInfoModule());
@@ -121,35 +147,6 @@ public class ModMain {
     modules.add(new VillagerNametagModule());
     modules.add(new WorldGenModule());
   }
-  @EventHandler
-  public void onInit(FMLInitializationEvent event) {
-    for (ICyclicModule module : modules) {
-      module.onInit();
-    }
-    ItemRegistry.register();
-    if (FuelRegistry.enabled) {
-      GameRegistry.registerFuelHandler(new FuelRegistry.FuelHandler());
-    }
-    //more core module stuff
-    proxy.register();
-    NetworkRegistry.INSTANCE.registerGuiHandler(this, new ModGuiHandler());
-    //fixes things , stuff was added to items and content that has config
-    this.syncConfig();
-    //important: register events after modules init.
-    this.events.registerAll();
-  }
-  @EventHandler
-  public void onPostInit(FMLPostInitializationEvent event) {
-    for (ICyclicModule module : modules) {
-      module.onPostInit();
-    }
-  }
-  @EventHandler
-  public void onServerStarting(FMLServerStartingEvent event) {
-    for (ICyclicModule module : modules) {
-      module.onServerStarting(event);
-    }
-  }
   public void syncConfig() {
     Configuration c = getConfig();
     // hit on startup and on change event from
@@ -157,6 +154,7 @@ public class ModMain {
     for (ICyclicModule module : modules) {
       module.syncConfig(c);
     }
+    //for any modules that have created an item, those items might have inner configs, so hit it up
     Item item;
     for (String key : ItemRegistry.itemMap.keySet()) {
       item = ItemRegistry.itemMap.get(key);
@@ -164,7 +162,7 @@ public class ModMain {
         ((IHasConfig) item).syncConfig(config);
       }
     }
-    FuelRegistry.syncConfig(c);
+    //TODO: key shift module
     KeyInventoryShiftRegistry.syncConfig(c);
     c.save();
   }

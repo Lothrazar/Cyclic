@@ -1,4 +1,5 @@
-package com.lothrazar.cyclicmagic.registry;
+package com.lothrazar.cyclicmagic.module;
+
 import java.util.HashMap;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -10,16 +11,25 @@ import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.IFuelHandler;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class FuelRegistry {
-  public static boolean enabled;
-  
-  public static void syncConfig(Configuration config) {
+public class FuelAdditionModule extends BaseModule{
+  private boolean enabled;
+  //links existing vanilla items as burnable fuel
+
+  @Override
+  public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.items;
     Property prop = config.get(category, "More Furnace Fuel", true, "Tons more wood and plant related items now can burn as fuel");
     enabled = prop.getBoolean();
   }
-  public static class FuelHandler implements IFuelHandler {
+  @Override
+  public void onInit(){
+    if (enabled) {
+      GameRegistry.registerFuelHandler(new FuelHandler());
+    }
+  }
+  private class FuelHandler implements IFuelHandler {
     Map<Item, Integer> fuelMap = new HashMap<Item, Integer>();
     public FuelHandler() {
       // http://minecraft.gamepedia.com/Smelting
@@ -61,3 +71,4 @@ public class FuelRegistry {
     }
   }
 }
+
