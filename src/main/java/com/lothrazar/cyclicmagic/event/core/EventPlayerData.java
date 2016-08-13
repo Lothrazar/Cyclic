@@ -58,7 +58,6 @@ public class EventPlayerData {
     }
     @Override
     public NBTTagCompound serializeNBT() {
-      //   try {
       NBTBase ret = ModMain.CAPABILITYSTORAGE.getStorage().writeNBT(ModMain.CAPABILITYSTORAGE, inst, null);
       if (ret instanceof NBTTagCompound) { return (NBTTagCompound) ret; }
       return null;

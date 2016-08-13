@@ -67,7 +67,6 @@ public class ModMain {
     events.addEvent(new EventExtendedInventory());
     events.addEvent(new EventKeyInput());
     events.addEvent(new EventPlayerData());
-    //logger.info("DISABLE ONLY EventPlayerData");//C disables ONLY plyaerdata
     //Features modules
     this.createFeatureModules();
     //important: sync config before doing anything else, now that constructors have all ran
