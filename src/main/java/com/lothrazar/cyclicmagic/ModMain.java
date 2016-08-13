@@ -64,9 +64,12 @@ public class ModMain {
     PacketRegistry.register(network);
     events = new EventRegistry();//core events
     events.addEvent(new EventConfigChanged());//  MinecraftForge.EVENT_BUS.register(instance);
-    events.addEvent(new EventExtendedInventory());
-    events.addEvent(new EventKeyInput());
-    events.addEvent(new EventPlayerData());
+//    events.addEvent(new EventExtendedInventory());
+    logger.info("DISABLE EventExtendedInventory");
+//    events.addEvent(new EventKeyInput());
+    logger.info("DISABLE EventKeyInput");
+//    events.addEvent(new EventPlayerData());
+    logger.info("DISABLE EventPlayerData");
     //Features modules
     this.createFeatureModules();
     //important: sync config before doing anything else, now that constructors have all ran
@@ -126,7 +129,8 @@ public class ModMain {
     modules.add(new VillagerNametagModule());
     modules.add(new WorldGenModule());
     //event modules TODO: make actual modules.?? maybe
-    ModMain.instance.events.addEvent(new EventSpells());//so far only used by cyclic wand...
+//    ModMain.instance.events.addEvent(new EventSpells());//so far only used by cyclic wand...
+    logger.info("DISABLE EventSpells");
   }
   @EventHandler
   public void onInit(FMLInitializationEvent event) {
