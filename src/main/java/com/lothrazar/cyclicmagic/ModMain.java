@@ -129,8 +129,8 @@ public class ModMain {
     modules.add(new VillagerNametagModule());
     modules.add(new WorldGenModule());
     //event modules TODO: make actual modules.?? maybe
-//    ModMain.instance.events.addEvent(new EventSpells());//so far only used by cyclic wand...
-    logger.info("DISABLE EventSpells");
+   ModMain.instance.events.addEvent(new EventSpells());//so far only used by cyclic wand...
+   
   }
   @EventHandler
   public void onInit(FMLInitializationEvent event) {
