@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic;
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclicmagic.event.EventScreenTodoCommand;
 import com.lothrazar.cyclicmagic.event.EventSpells;
 import com.lothrazar.cyclicmagic.event.core.*;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
@@ -125,8 +126,9 @@ public class ModMain {
     modules.add(new VillagerCreateModule());
     modules.add(new VillagerNametagModule());
     modules.add(new WorldGenModule());
-    //event modules TODO: make actual modules.?? maybe
-   ModMain.instance.events.addEvent(new EventSpells());//so far only used by cyclic wand...
+   ModMain.instance.events.addEvent(new EventSpells());////TODO: cyclic wand module
+   ModMain.instance.events.addEvent(new EventScreenTodoCommand());//TODO: put this along with the command
+   
    
   }
   @EventHandler

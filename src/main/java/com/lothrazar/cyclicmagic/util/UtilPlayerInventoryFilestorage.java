@@ -67,7 +67,7 @@ public class UtilPlayerInventoryFilestorage {
           inventory.readNBT(data);
           playerItems.put(player.getDisplayNameString(), inventory);
           if (save)
-            savePlayerBaubles(player, file1, file2);
+            savePlayerItems(player, file1, file2);
         }
       }
       catch (Exception e) {
@@ -76,7 +76,7 @@ public class UtilPlayerInventoryFilestorage {
       }
     }
   }
-  public static void savePlayerBaubles(EntityPlayer player, File file1, File file2) {
+  public static void savePlayerItems(EntityPlayer player, File file1, File file2) {
     if (player != null && !player.worldObj.isRemote) {
       try {
         if (file1 != null && file1.exists()) {
@@ -84,7 +84,7 @@ public class UtilPlayerInventoryFilestorage {
             Files.copy(file1, file2);
           }
           catch (Exception e) {
-            ModMain.logger.error("Could not backup old baubles file for player " + player.getDisplayNameString());
+            ModMain.logger.error("Could not backup old file for player " + player.getDisplayNameString());
           }
         }
         try {
@@ -98,7 +98,7 @@ public class UtilPlayerInventoryFilestorage {
           }
         }
         catch (Exception e) {
-          ModMain.logger.error("Could not save baubles file for player " + player.getDisplayNameString());
+          ModMain.logger.error("Could not save file for player " + player.getDisplayNameString());
           e.printStackTrace();
           if (file1.exists()) {
             try {
@@ -110,7 +110,7 @@ public class UtilPlayerInventoryFilestorage {
         }
       }
       catch (Exception exception1) {
-        ModMain.logger.error("Error saving baubles inventory");
+        ModMain.logger.error("Error saving inventory");
         exception1.printStackTrace();
       }
     }

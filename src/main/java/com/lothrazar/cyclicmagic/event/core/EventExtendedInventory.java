@@ -96,7 +96,7 @@ public class EventExtendedInventory{
   }
   @SubscribeEvent
   public void playerSave(PlayerEvent.SaveToFile event) {
-    UtilPlayerInventoryFilestorage.savePlayerBaubles(event.getEntityPlayer(), getPlayerFile(ext, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString()), getPlayerFile(extback, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString()));
+    UtilPlayerInventoryFilestorage.savePlayerItems(event.getEntityPlayer(), getPlayerFile(ext, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString()), getPlayerFile(extback, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString()));
   }
   @SideOnly(value = Side.CLIENT)
   @SubscribeEvent
