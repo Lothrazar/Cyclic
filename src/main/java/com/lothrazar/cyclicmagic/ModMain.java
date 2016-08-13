@@ -68,8 +68,8 @@ public class ModMain {
     logger.info("DISABLE EventExtendedInventory");
 //    events.addEvent(new EventKeyInput());
     logger.info("DISABLE EventKeyInput");
-//    events.addEvent(new EventPlayerData());
-    logger.info("DISABLE EventPlayerData");
+    events.addEvent(new EventPlayerData());
+//    logger.info("DISABLE EventPlayerData");//B put player data back in
     //Features modules
     this.createFeatureModules();
     //important: sync config before doing anything else, now that constructors have all ran
