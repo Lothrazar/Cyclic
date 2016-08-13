@@ -19,53 +19,51 @@ public class EventPlayerData {
   // https://github.com/MinecraftForge/MinecraftForge/issues/1583
 // player data storage based on API source code example:
     // https://github.com/MinecraftForge/MinecraftForge/blob/1.9/src/test/java/net/minecraftforge/test/NoBedSleepingTest.java
-
-  
-  //D DISABLES ONLY THESE EVENTS
-  
-  //  @SubscribeEvent
-//  public void onSpawn(PlayerLoggedInEvent event) {
-//    if (event.player instanceof EntityPlayerMP && event.player.worldObj.isRemote == false) {
-//      EntityPlayerMP p = (EntityPlayerMP) event.player;
-//      if (p != null) {
-//        CapabilityRegistry.syncServerDataToClient(p);
-//      }
-//    }
-//  }
-//  @SubscribeEvent
-//  public void onJoinWorld(EntityJoinWorldEvent event) {
-//    if (event.getEntity() instanceof EntityPlayerMP && event.getEntity().worldObj.isRemote == false) {
-//      EntityPlayerMP p = (EntityPlayerMP) event.getEntity();
-//      if (p != null) {
-//        CapabilityRegistry.syncServerDataToClient(p);
-//      }
-//    }
-//  }
   @SubscribeEvent
-  public void onEntityConstruct(AttachCapabilitiesEvent evt) {
-    evt.addCapability(new ResourceLocation(Const.MODID, "IModdedSleeping"), new ICapabilitySerializable<NBTTagCompound>() {
-      IPlayerExtendedProperties inst = ModMain.CAPABILITYSTORAGE.getDefaultInstance();
-      @Override
-      public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-        return capability == ModMain.CAPABILITYSTORAGE;
+  public void onSpawn(PlayerLoggedInEvent event) {
+    if (event.player instanceof EntityPlayerMP && event.player.worldObj.isRemote == false) {
+      EntityPlayerMP p = (EntityPlayerMP) event.player;
+      if (p != null) {
+        CapabilityRegistry.syncServerDataToClient(p);
       }
-      @Override
-      public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-        return capability == ModMain.CAPABILITYSTORAGE ? ModMain.CAPABILITYSTORAGE.<T> cast(inst) : null;
-      }
-      @Override
-      public NBTTagCompound serializeNBT() {
-        try {
-          return (NBTTagCompound) ModMain.CAPABILITYSTORAGE.getStorage().writeNBT(ModMain.CAPABILITYSTORAGE, inst, null);
-        }
-        catch (java.lang.ClassCastException e) {
-          return new NBTTagCompound();
-        }
-      }
-      @Override
-      public void deserializeNBT(NBTTagCompound nbt) {
-        ModMain.CAPABILITYSTORAGE.getStorage().readNBT(ModMain.CAPABILITYSTORAGE, inst, null, nbt);
-      }
-    });
+    }
   }
+  @SubscribeEvent
+  public void onJoinWorld(EntityJoinWorldEvent event) {
+    if (event.getEntity() instanceof EntityPlayerMP && event.getEntity().worldObj.isRemote == false) {
+      EntityPlayerMP p = (EntityPlayerMP) event.getEntity();
+      if (p != null) {
+        CapabilityRegistry.syncServerDataToClient(p);
+      }
+    }
+  }
+  //STATE E: remove only onEntityConstruct
+//  
+//  @SubscribeEvent
+//  public void onEntityConstruct(AttachCapabilitiesEvent evt) {
+//    evt.addCapability(new ResourceLocation(Const.MODID, "IModdedSleeping"), new ICapabilitySerializable<NBTTagCompound>() {
+//      IPlayerExtendedProperties inst = ModMain.CAPABILITYSTORAGE.getDefaultInstance();
+//      @Override
+//      public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+//        return capability == ModMain.CAPABILITYSTORAGE;
+//      }
+//      @Override
+//      public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+//        return capability == ModMain.CAPABILITYSTORAGE ? ModMain.CAPABILITYSTORAGE.<T> cast(inst) : null;
+//      }
+//      @Override
+//      public NBTTagCompound serializeNBT() {
+//        try {
+//          return (NBTTagCompound) ModMain.CAPABILITYSTORAGE.getStorage().writeNBT(ModMain.CAPABILITYSTORAGE, inst, null);
+//        }
+//        catch (java.lang.ClassCastException e) {
+//          return new NBTTagCompound();
+//        }
+//      }
+//      @Override
+//      public void deserializeNBT(NBTTagCompound nbt) {
+//        ModMain.CAPABILITYSTORAGE.getStorage().readNBT(ModMain.CAPABILITYSTORAGE, inst, null, nbt);
+//      }
+//    });
+//  }
 }
