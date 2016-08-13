@@ -19,24 +19,28 @@ public class EventPlayerData {
   // https://github.com/MinecraftForge/MinecraftForge/issues/1583
 // player data storage based on API source code example:
     // https://github.com/MinecraftForge/MinecraftForge/blob/1.9/src/test/java/net/minecraftforge/test/NoBedSleepingTest.java
-  @SubscribeEvent
-  public void onSpawn(PlayerLoggedInEvent event) {
-    if (event.player instanceof EntityPlayerMP && event.player.worldObj.isRemote == false) {
-      EntityPlayerMP p = (EntityPlayerMP) event.player;
-      if (p != null) {
-        CapabilityRegistry.syncServerDataToClient(p);
-      }
-    }
-  }
-  @SubscribeEvent
-  public void onSpawn(EntityJoinWorldEvent event) {
-    if (event.getEntity() instanceof EntityPlayerMP && event.getEntity().worldObj.isRemote == false) {
-      EntityPlayerMP p = (EntityPlayerMP) event.getEntity();
-      if (p != null) {
-        CapabilityRegistry.syncServerDataToClient(p);
-      }
-    }
-  }
+
+  
+  //D DISABLES ONLY THESE EVENTS
+  
+  //  @SubscribeEvent
+//  public void onSpawn(PlayerLoggedInEvent event) {
+//    if (event.player instanceof EntityPlayerMP && event.player.worldObj.isRemote == false) {
+//      EntityPlayerMP p = (EntityPlayerMP) event.player;
+//      if (p != null) {
+//        CapabilityRegistry.syncServerDataToClient(p);
+//      }
+//    }
+//  }
+//  @SubscribeEvent
+//  public void onJoinWorld(EntityJoinWorldEvent event) {
+//    if (event.getEntity() instanceof EntityPlayerMP && event.getEntity().worldObj.isRemote == false) {
+//      EntityPlayerMP p = (EntityPlayerMP) event.getEntity();
+//      if (p != null) {
+//        CapabilityRegistry.syncServerDataToClient(p);
+//      }
+//    }
+//  }
   @SubscribeEvent
   public void onEntityConstruct(AttachCapabilitiesEvent evt) {
     evt.addCapability(new ResourceLocation(Const.MODID, "IModdedSleeping"), new ICapabilitySerializable<NBTTagCompound>() {
