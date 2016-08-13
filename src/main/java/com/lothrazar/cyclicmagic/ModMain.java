@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.event.*;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
-import com.lothrazar.cyclicmagic.item.BaseItem;
 import com.lothrazar.cyclicmagic.module.*;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
 import com.lothrazar.cyclicmagic.registry.*;
@@ -127,20 +126,7 @@ public class ModMain {
     for (ICyclicModule module : modules) {
       module.onInit();
     }
-    //maybe one day it will be all base items
-    Item item;
-    for (String key : ItemRegistry.itemMap.keySet()) {
-      item = ItemRegistry.itemMap.get(key);
-      if (item instanceof BaseItem) {
-        ((BaseItem) item).register(key);
-      }
-      else {
-        ItemRegistry.registerItem(item, key);
-      }
-      if (item instanceof IHasRecipe) {
-        ((IHasRecipe) item).addRecipe();
-      }
-    }
+    ItemRegistry.register();
     if (FuelRegistry.enabled) {
       GameRegistry.registerFuelHandler(new FuelRegistry.FuelHandler());
     }

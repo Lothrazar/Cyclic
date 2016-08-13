@@ -1,7 +1,9 @@
 package com.lothrazar.cyclicmagic.registry;
 import java.util.HashMap;
 import java.util.Map;
+import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.item.BaseItem;
 import com.lothrazar.cyclicmagic.item.ItemAppleEmerald;
 import com.lothrazar.cyclicmagic.item.ItemChestSack;
 import com.lothrazar.cyclicmagic.item.ItemChestSackEmpty;
@@ -71,6 +73,21 @@ public class ItemRegistry {
     GameRegistry.register(item, new ResourceLocation(Const.MODID, name));
     if (isHidden == false) {
       item.setCreativeTab(ModMain.TAB);
+    }
+  }
+  public static void register() {
+    Item item;
+    for (String key : ItemRegistry.itemMap.keySet()) {
+      item = ItemRegistry.itemMap.get(key);
+      if (item instanceof BaseItem) {
+        ((BaseItem) item).register(key);
+      }
+      else {
+        ItemRegistry.registerItem(item, key);
+      }
+      if (item instanceof IHasRecipe) {
+        ((IHasRecipe) item).addRecipe();
+      }
     }
   }
 }
