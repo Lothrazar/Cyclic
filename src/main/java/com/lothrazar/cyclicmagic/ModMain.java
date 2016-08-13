@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic;
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.event.core.*;
+import com.lothrazar.cyclicmagic.event.*;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.item.BaseItem;
 import com.lothrazar.cyclicmagic.module.*;
@@ -74,9 +74,6 @@ public class ModMain {
     for (ICyclicModule module : modules) {
       module.onPreInit();
     }
-    //since modules can register events too
-    //TODO: FIX THIS< if a mod is type init or later, but the events get added in .register, well too late?
-    //now tell all events to register/subscribe
   }
   private void createFeatureModules() {
     // :) http://alphabetizer.flap.tv/
@@ -124,8 +121,6 @@ public class ModMain {
     modules.add(new VillagerCreateModule());
     modules.add(new VillagerNametagModule());
     modules.add(new WorldGenModule());
-   
-   
   }
   @EventHandler
   public void onInit(FMLInitializationEvent event) {

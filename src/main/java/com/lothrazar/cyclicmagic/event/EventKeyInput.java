@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.event.core;
+package com.lothrazar.cyclicmagic.event;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.net.PacketMovePlayerHotbar;
 import com.lothrazar.cyclicmagic.net.PacketOpenExtendedInventory;
