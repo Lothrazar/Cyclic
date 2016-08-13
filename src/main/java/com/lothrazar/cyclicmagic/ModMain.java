@@ -64,12 +64,11 @@ public class ModMain {
     PacketRegistry.register(network);
     events = new EventRegistry();//core events
     events.addEvent(new EventConfigChanged());//  MinecraftForge.EVENT_BUS.register(instance);
-//    events.addEvent(new EventExtendedInventory());
-    logger.info("DISABLE EventExtendedInventory");
-//    events.addEvent(new EventKeyInput());
-    logger.info("DISABLE EventKeyInput");
-    events.addEvent(new EventPlayerData());
-//    logger.info("DISABLE EventPlayerData");//B put player data back in
+    events.addEvent(new EventExtendedInventory());
+    events.addEvent(new EventKeyInput());
+
+  //  events.addEvent(new EventPlayerData());
+    logger.info("DISABLE ONLY EventPlayerData");//C disables ONLY plyaerdata
     //Features modules
     this.createFeatureModules();
     //important: sync config before doing anything else, now that constructors have all ran
