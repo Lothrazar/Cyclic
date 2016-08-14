@@ -1,10 +1,12 @@
 package com.lothrazar.cyclicmagic.entity.projectile;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityThrowable;
+import net.minecraft.item.Item;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
 public class EntityDynamite extends EntityThrowable {
+  public static Item renderSnowball;
   public static final float EX_CREEPER = 1;
   public static final float EX_CHARGEDCREEPER = 2;
   public static final float EX_TNT = 4;

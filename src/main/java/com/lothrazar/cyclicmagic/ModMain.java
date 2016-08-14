@@ -55,17 +55,17 @@ public class ModMain {
     SoundRegistry.register();
     CapabilityRegistry.register();
     ReflectionRegistry.register();
-    events = new EventRegistry();
-    events.registerCoreEvents();
-    ModuleRegistry.register(modules);//all features are in a module
+    this.events = new EventRegistry();
+    this.events.registerCoreEvents();
+    ModuleRegistry.register(this.modules);//all features are in a module
     this.syncConfig();
-    for (ICyclicModule module : modules) {
+    for (ICyclicModule module : this.modules) {
       module.onPreInit();
     }
   }
   @EventHandler
   public void onInit(FMLInitializationEvent event) {
-    for (ICyclicModule module : modules) {
+    for (ICyclicModule module : this.modules) {
       module.onInit();
     }
     ItemRegistry.register();//now that modules have added their content (items), we can register them
@@ -76,13 +76,13 @@ public class ModMain {
   }
   @EventHandler
   public void onPostInit(FMLPostInitializationEvent event) {
-    for (ICyclicModule module : modules) {
+    for (ICyclicModule module : this.modules) {
       module.onPostInit();
     }
   }
   @EventHandler
   public void onServerStarting(FMLServerStartingEvent event) {
-    for (ICyclicModule module : modules) {
+    for (ICyclicModule module : this.modules) {
       module.onServerStarting(event);
     }
   }
@@ -90,7 +90,7 @@ public class ModMain {
     Configuration c = getConfig();
     // hit on startup and on change event from
     // we cant make this a list/loop because the order does matter
-    for (ICyclicModule module : modules) {
+    for (ICyclicModule module : this.modules) {
       module.syncConfig(c);
     }
     //for any modules that have created an item, those items might have inner configs, so hit it up

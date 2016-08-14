@@ -5,12 +5,14 @@ import net.minecraft.block.BlockTorch;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
 public class EntityTorchBolt extends EntityThrowable {
+  public static Item renderSnowball;
   public EntityTorchBolt(World worldIn) {
     super(worldIn);
   }

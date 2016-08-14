@@ -1,22 +1,7 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityBlazeBolt;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityDungeonEye;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityFishingBolt;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityHomeBolt;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityLightningballBolt;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityShearingBolt;
-import com.lothrazar.cyclicmagic.entity.projectile.EntitySnowballBolt;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityTorchBolt;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityWaterBolt;
-import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileBlaze;
-import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileDungeon;
-import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileFishing;
-import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileLightning;
-import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileSnow;
-import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileTorch;
-import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileWater;
-import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileWool;
+import com.lothrazar.cyclicmagic.entity.projectile.*;
+import com.lothrazar.cyclicmagic.item.projectile.*;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraftforge.common.config.Configuration;
@@ -37,49 +22,62 @@ public class ProjectileModule extends BaseModule {
   @Override
   public void onInit() {
     if (enableEnderBlaze) {
-      ItemRegistry.ender_blaze = new ItemProjectileBlaze();
-      ItemRegistry.addItem(ItemRegistry.ender_blaze, "ender_blaze");
+      ItemProjectileBlaze item = new ItemProjectileBlaze();
+      ItemRegistry.addItem(item, "ender_blaze");
       EntityRegistry.registerModEntity(EntityBlazeBolt.class, "blazebolt", 1008, ModMain.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
+      EntityBlazeBolt.renderSnowball = item;
+      ItemRegistry.ender_blaze = item;
     }
     if (enableEnderDungeonFinder) {
-      ItemRegistry.ender_dungeon = new ItemProjectileDungeon();
-      ItemRegistry.addItem(ItemRegistry.ender_dungeon, "ender_dungeon");
+      ItemProjectileDungeon item = new ItemProjectileDungeon();
+      ItemRegistry.addItem(item, "ender_dungeon");
       EntityRegistry.registerModEntity(EntityDungeonEye.class, "dungeonbolt", 1006, ModMain.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
+      EntityDungeonEye.renderSnowball = item;
+      ItemRegistry.ender_dungeon = item;
     }
     if (enderFishing) {
-      ItemRegistry.ender_fishing = new ItemProjectileFishing();
-      ItemRegistry.addItem(ItemRegistry.ender_fishing, "ender_fishing");
+      ItemProjectileFishing item = new ItemProjectileFishing();
+      ItemRegistry.addItem(item, "ender_fishing");
       EntityRegistry.registerModEntity(EntityFishingBolt.class, "fishingbolt", 1004, ModMain.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
+      EntityFishingBolt.renderSnowball = item;
+      ItemRegistry.ender_fishing = item;
     }
     if (enderWool) {
-      ItemRegistry.ender_wool = new ItemProjectileWool();
-      ItemRegistry.addItem(ItemRegistry.ender_wool, "ender_wool");
+      ItemProjectileWool item = new ItemProjectileWool();
+      ItemRegistry.addItem(item, "ender_wool");
       EntityRegistry.registerModEntity(EntityShearingBolt.class, "woolbolt", 1003, ModMain.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
+      EntityShearingBolt.renderSnowball = item;
+      ItemRegistry.ender_wool = item;
     }
     if (enderTorch) {
-      ItemRegistry.ender_torch = new ItemProjectileTorch();
-      ItemRegistry.addItem(ItemRegistry.ender_torch, "ender_torch");
+      ItemProjectileTorch item = new ItemProjectileTorch();
+      ItemRegistry.addItem(item, "ender_torch");
       EntityRegistry.registerModEntity(EntityTorchBolt.class, "torchbolt", 1002, ModMain.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
+      EntityTorchBolt.renderSnowball = item;
+      ItemRegistry.ender_torch = item;
     }
     if (enderWater) {
-      ItemRegistry.ender_water = new ItemProjectileWater();
-      ItemRegistry.addItem(ItemRegistry.ender_water, "ender_water");
+      ItemProjectileWater item = new ItemProjectileWater();
+      ItemRegistry.addItem(item, "ender_water");
       EntityRegistry.registerModEntity(EntityWaterBolt.class, "waterbolt", 1000, ModMain.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
-      
+      EntityWaterBolt.renderSnowball = item;
+      ItemRegistry.ender_water = item;
     }
     if (enderSnow) {
-      ItemRegistry.ender_snow = new ItemProjectileSnow();
-      ItemRegistry.addItem(ItemRegistry.ender_snow, "ender_snow");
+      ItemProjectileSnow item = new ItemProjectileSnow();
+      ItemRegistry.addItem(item, "ender_snow");
       EntityRegistry.registerModEntity(EntitySnowballBolt.class, "frostbolt", 1001, ModMain.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
+      EntitySnowballBolt.renderSnowball = item;
+      ItemRegistry.ender_snow = item;
     }
     if (enderLightning) {
-      ItemRegistry.ender_lightning = new ItemProjectileLightning();
-      ItemRegistry.addItem(ItemRegistry.ender_lightning, "ender_lightning");
+      ItemProjectileLightning item = new ItemProjectileLightning();
+      ItemRegistry.addItem(item, "ender_lightning");
       EntityRegistry.registerModEntity(EntityLightningballBolt.class, "lightningbolt", 999, ModMain.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
+      EntityLightningballBolt.renderSnowball = item;
+      ItemRegistry.ender_lightning = item;
     }
-    //from a long removed item. keep i guess, it never broke anything
-    EntityRegistry.registerModEntity(EntityHomeBolt.class, "bedbolt", 1005, ModMain.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
-   //TODO: ender bomb module/ registry is sprate?
+    //TODO: ender bomb module/ registry is sprate?
   }
   @Override
   public void syncConfig(Configuration config) {

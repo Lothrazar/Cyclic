@@ -49,29 +49,28 @@ public class ClientProxy extends CommonProxy {
   public static KeyBinding keyExtraInvo;
   static final String keyCategoryInventory = "key.categories.inventorycontrol";
   @Override
-  public World getClientWorld() {
-    return FMLClientHandler.instance().getClient().theWorld;
-  }
-  @Override
   public void register() {
     registerModels();
     registerKeys();
     registerEntities();
   }
- 
+  @Override
+  public World getClientWorld() {
+    return FMLClientHandler.instance().getClient().theWorld;
+  }
   private void registerKeys() {
-    if(KeyInventoryShiftModule.enableInvoKeys){
+    if (KeyInventoryShiftModule.enableInvoKeys) {
       keyShiftUp = new KeyBinding("key.columnshiftup", Keyboard.KEY_Y, keyCategoryInventory);
       ClientRegistry.registerKeyBinding(ClientProxy.keyShiftUp);
       keyShiftDown = new KeyBinding("key.columnshiftdown", Keyboard.KEY_H, keyCategoryInventory);
       ClientRegistry.registerKeyBinding(ClientProxy.keyShiftDown);
-      keyBarUp = new KeyBinding("key.columnbarup",net.minecraftforge.client.settings.KeyConflictContext.IN_GAME,
+      keyBarUp = new KeyBinding("key.columnbarup", net.minecraftforge.client.settings.KeyConflictContext.IN_GAME,
           KeyModifier.SHIFT, Keyboard.KEY_Y, keyCategoryInventory);
       ClientRegistry.registerKeyBinding(ClientProxy.keyBarUp);
-      keyBarDown = new KeyBinding("key.columnbardown",net.minecraftforge.client.settings.KeyConflictContext.IN_GAME,
-          KeyModifier.SHIFT,Keyboard.KEY_H, keyCategoryInventory);
+      keyBarDown = new KeyBinding("key.columnbardown", net.minecraftforge.client.settings.KeyConflictContext.IN_GAME,
+          KeyModifier.SHIFT, Keyboard.KEY_H, keyCategoryInventory);
       ClientRegistry.registerKeyBinding(ClientProxy.keyBarDown);
-      keyExtraInvo = new KeyBinding("key.keyExtraInvo",  Keyboard.KEY_R, keyCategoryInventory);
+      keyExtraInvo = new KeyBinding("key.keyExtraInvo", Keyboard.KEY_R, keyCategoryInventory);
       ClientRegistry.registerKeyBinding(ClientProxy.keyExtraInvo);
     }
   }
@@ -84,17 +83,16 @@ public class ClientProxy extends CommonProxy {
     // new RenderSnowball(Minecraft.getMinecraft().getRenderManager(),
     // ItemRegistry.soulstone,
     // Minecraft.getMinecraft().getRenderItem()));
-    RenderingRegistry.registerEntityRenderingHandler(EntityLightningballBolt.class, new RenderSnowball(rm, ItemRegistry.itemMap.get("ender_lightning"), ri));
-    RenderingRegistry.registerEntityRenderingHandler(EntityHarvestBolt.class, new RenderSnowball(rm, ItemRegistry.itemMap.get("ender_harvest"), ri));
-    RenderingRegistry.registerEntityRenderingHandler(EntityWaterBolt.class, new RenderSnowball(rm, ItemRegistry.itemMap.get("ender_water"), ri));
-    RenderingRegistry.registerEntityRenderingHandler(EntitySnowballBolt.class, new RenderSnowball(rm, ItemRegistry.itemMap.get("ender_snow"), ri));
-    RenderingRegistry.registerEntityRenderingHandler(EntityTorchBolt.class, new RenderSnowball(rm, ItemRegistry.itemMap.get("ender_torch"), ri));
-    RenderingRegistry.registerEntityRenderingHandler(EntityFishingBolt.class, new RenderSnowball(rm, ItemRegistry.itemMap.get("ender_fishing"), ri));
-    RenderingRegistry.registerEntityRenderingHandler(EntityShearingBolt.class, new RenderSnowball(rm, ItemRegistry.itemMap.get("ender_wool"), ri));
-    //RenderingRegistry.registerEntityRenderingHandler(EntityHomeBolt.class, new RenderSnowball(rm, ItemRegistry.ModItems.ender_bed, ri));
-    RenderingRegistry.registerEntityRenderingHandler(EntityDungeonEye.class, new RenderSnowball(rm, ItemRegistry.itemMap.get("ender_dungeon"), ri));
-    RenderingRegistry.registerEntityRenderingHandler(EntityDynamite.class, new RenderSnowball(rm, ItemRegistry.itemMap.get("ender_tnt_1"), ri));
-    RenderingRegistry.registerEntityRenderingHandler(EntityBlazeBolt.class, new RenderSnowball(rm, ItemRegistry.itemMap.get("ender_blaze"), ri));
+    RenderingRegistry.registerEntityRenderingHandler(EntityLightningballBolt.class, new RenderSnowball(rm, EntityLightningballBolt.renderSnowball, ri));
+    RenderingRegistry.registerEntityRenderingHandler(EntityHarvestBolt.class, new RenderSnowball(rm, EntityHarvestBolt.renderSnowball, ri));
+    RenderingRegistry.registerEntityRenderingHandler(EntityWaterBolt.class, new RenderSnowball(rm, EntityWaterBolt.renderSnowball, ri));
+    RenderingRegistry.registerEntityRenderingHandler(EntitySnowballBolt.class, new RenderSnowball(rm, EntitySnowballBolt.renderSnowball, ri));
+    RenderingRegistry.registerEntityRenderingHandler(EntityTorchBolt.class, new RenderSnowball(rm, EntityTorchBolt.renderSnowball, ri));
+    RenderingRegistry.registerEntityRenderingHandler(EntityFishingBolt.class, new RenderSnowball(rm, EntityFishingBolt.renderSnowball, ri));
+    RenderingRegistry.registerEntityRenderingHandler(EntityShearingBolt.class, new RenderSnowball(rm, EntityShearingBolt.renderSnowball, ri));
+    RenderingRegistry.registerEntityRenderingHandler(EntityDungeonEye.class, new RenderSnowball(rm, EntityDungeonEye.renderSnowball, ri));
+    RenderingRegistry.registerEntityRenderingHandler(EntityDynamite.class, new RenderSnowball(rm, EntityDynamite.renderSnowball, ri));
+    RenderingRegistry.registerEntityRenderingHandler(EntityBlazeBolt.class, new RenderSnowball(rm, EntityBlazeBolt.renderSnowball, ri));
   }
   @SideOnly(Side.CLIENT)
   @Override
@@ -103,7 +101,6 @@ public class ClientProxy extends CommonProxy {
     // now get whatever block position we are mousing over if anything
     if (mouseOver != null) {
       // Get the block position and make sure it is a block
-      // World world = player.worldObj;
       return mouseOver.sideHit;
     }
     return null;
@@ -116,7 +113,6 @@ public class ClientProxy extends CommonProxy {
     // now get whatever block position we are mousing over if anything
     if (mouseOver != null) {
       // Get the block position and make sure it is a block
-      // World world = player.worldObj;
       return mouseOver.getBlockPos();
     }
     return null;
@@ -176,12 +172,11 @@ public class ClientProxy extends CommonProxy {
   }
   @Override
   public EntityPlayer getPlayerEntity(MessageContext ctx) {
-    
     // Note that if you simply return 'Minecraft.getMinecraft().thePlayer',
     // your packets will not work as expected because you will be getting a
     // client player even when you are on the server!
     // Sounds absurd, but it's true.
-//https://github.com/coolAlias/Tutorial-Demo/blob/e8fa9c94949e0b1659dc0a711674074f8752d80e/src/main/java/tutorial/ClientProxy.java
+    //https://github.com/coolAlias/Tutorial-Demo/blob/e8fa9c94949e0b1659dc0a711674074f8752d80e/src/main/java/tutorial/ClientProxy.java
     // Solution is to double-check side before returning the player:
     return (ctx.side.isClient() ? Minecraft.getMinecraft().thePlayer : super.getPlayerEntity(ctx));
   }

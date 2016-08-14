@@ -6,6 +6,7 @@ import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
@@ -14,6 +15,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
 public class EntityBlazeBolt extends EntityThrowable {
+  public static Item renderSnowball;
   public static final int fireSeconds = 3;
   public static final boolean damageEntityOnHit = true;
   public EntityBlazeBolt(World worldIn) {

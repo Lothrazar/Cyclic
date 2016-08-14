@@ -3,12 +3,13 @@ import com.lothrazar.cyclicmagic.util.UtilHarvestCrops;
 import com.lothrazar.cyclicmagic.util.UtilHarvestCrops.HarestCropsConfig;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityThrowable;
+import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
-public class EntityHarvestBolt extends EntityThrowable// EntitySnowball
-{
+public class EntityHarvestBolt extends EntityThrowable {
+  public static Item renderSnowball;
   public static int range_main = 6;
   public static int range_offset = 4;
   public EntityHarvestBolt(World worldIn) {
