@@ -1,9 +1,7 @@
 package com.lothrazar.cyclicmagic;
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.event.*;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
-import com.lothrazar.cyclicmagic.module.*;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
 import com.lothrazar.cyclicmagic.registry.*;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
@@ -45,12 +43,10 @@ public class ModMain {
       return ItemRegistry.cyclic_wand_build == null ? Items.DIAMOND : ItemRegistry.cyclic_wand_build;
     }
   };
-  // thank you for the examples forge. 
   @CapabilityInject(IPlayerExtendedProperties.class)
   public static final Capability<IPlayerExtendedProperties> CAPABILITYSTORAGE = null;
   @EventHandler
   public void onPreInit(FMLPreInitializationEvent event) {
-    //CORE modules
     logger = new ModLogger(event.getModLog());
     config = new Configuration(event.getSuggestedConfigurationFile());
     config.load();
@@ -59,13 +55,10 @@ public class ModMain {
     CapabilityRegistry.register();
     ReflectionRegistry.register();
     PacketRegistry.register(network);
-    events = new EventRegistry();//core events
-    events.addEvent(new EventConfigChanged());//  MinecraftForge.EVENT_BUS.register(instance);
-    events.addEvent(new EventExtendedInventory());
-    events.addEvent(new EventKeyInput());
-    events.addEvent(new EventPlayerData());
+    events = new EventRegistry();
+    events.registerCoreEvents();
     //Features modules
-    this.createFeatureModules();
+    ModuleRegistry.register(modules);
     //important: sync config before doing anything else, now that constructors have all ran
     this.syncConfig();
     //when a module registers, if its enabled, it can add itself or other objets to instance.events
@@ -79,12 +72,11 @@ public class ModMain {
       module.onInit();
     }
     ItemRegistry.register();
-    //more core module stuff
     proxy.register();
     NetworkRegistry.INSTANCE.registerGuiHandler(this, new ModGuiHandler());
-    //fixes things , stuff was added to items and content that has config
-    this.syncConfig();
-    //important: register events after modules init.
+   
+    this.syncConfig(); //fixes things , stuff was added to items and content that has config
+    //important: register events AFTER modules onInit, since modules add events in this phase.
     this.events.registerAll();
   }
   @EventHandler
@@ -98,54 +90,6 @@ public class ModMain {
     for (ICyclicModule module : modules) {
       module.onServerStarting(event);
     }
-  }
-  private void createFeatureModules() {
-    // :) http://alphabetizer.flap.tv/
-    modules.add(new AchievementExpModule());
-    modules.add(new BucketBlockModule());
-    modules.add(new CarbonPaperModule());
-    modules.add(new ChestSackModule());
-    modules.add(new CommandModule());
-    modules.add(new ConsumeablesModule());
-    modules.add(new ConveyorPlateModule());
-    modules.add(new DispenserBehaviorModule());
-    modules.add(new DropNametagDeathModule());
-    modules.add(new EditSignBarehandModule());
-    modules.add(new EmeraldArmorModule());
-    modules.add(new EnchantModule());
-    modules.add(new EnderBombModule());
-    modules.add(new EnderBookModule());
-    modules.add(new EnderChestClickopenModule());
-    modules.add(new F3InfoModule());
-    modules.add(new FragileBlockModule());
-    modules.add(new FragileTorchesModule());
-    modules.add(new FurnaceStardewModule());
-    modules.add(new FuelAdditionModule());
-    modules.add(new GuiTerrariaButtonsModule());
-    modules.add(new HorseFoodModule());
-    modules.add(new ItemstackInfoModule());
-    modules.add(new LadderClimbSpeedModule());
-    modules.add(new LightningTransformModule());
-    modules.add(new LootTableModule());
-    modules.add(new MagicBeanModule());
-    modules.add(new MachineBlockModule());
-    modules.add(new MobDropChangesModule());
-    modules.add(new MobSpawnModule());
-    modules.add(new MountedTweaksModule());
-    modules.add(new PassthroughActionModule());
-    modules.add(new PotionModule());
-    modules.add(new ProjectileModule());
-    modules.add(new RecipeChangerModule());
-    modules.add(new SaplingMutationModule());
-    modules.add(new SkullNameFromSignModule());
-    modules.add(new SlimepadModule());
-    modules.add(new StackSizeModule());
-    modules.add(new StorageBagModule());
-    modules.add(new ToolsModule());
-    modules.add(new UnbreakableSpawnerModule());
-    modules.add(new VillagerCreateModule());
-    modules.add(new VillagerNametagModule());
-    modules.add(new WorldGenModule());
   }
   public void syncConfig() {
     Configuration c = getConfig();
