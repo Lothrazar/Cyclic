@@ -33,7 +33,6 @@ public class BlockRegistry {
   public static BlockBuilder builder_block;
   public static BlockHarvester harvester_block;
   public static BlockMagnet magnet_block;
-
   //lots of helpers/overrides with defaults
   public static void registerBlock(Block b, String name) {
     registerBlock(b, name, false);
@@ -55,5 +54,4 @@ public class BlockRegistry {
     }
     blocks.add(b);
   }
- 
 }

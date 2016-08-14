@@ -51,17 +51,14 @@ public class ModMain {
     config = new Configuration(event.getSuggestedConfigurationFile());
     config.load();
     network = NetworkRegistry.INSTANCE.newSimpleChannel(Const.MODID);
+    PacketRegistry.register(network);
     SoundRegistry.register();
     CapabilityRegistry.register();
     ReflectionRegistry.register();
-    PacketRegistry.register(network);
     events = new EventRegistry();
     events.registerCoreEvents();
-    //Features modules
-    ModuleRegistry.register(modules);
-    //important: sync config before doing anything else, now that constructors have all ran
+    ModuleRegistry.register(modules);//all features are in a module
     this.syncConfig();
-    //when a module registers, if its enabled, it can add itself or other objets to instance.events
     for (ICyclicModule module : modules) {
       module.onPreInit();
     }
@@ -71,7 +68,7 @@ public class ModMain {
     for (ICyclicModule module : modules) {
       module.onInit();
     }
-    ItemRegistry.register();
+    ItemRegistry.register();//now that modules have added their content (items), we can register them
     proxy.register();
     NetworkRegistry.INSTANCE.registerGuiHandler(this, new ModGuiHandler());
     this.syncConfig(); //fixes things , stuff was added to items and content that has config
@@ -97,7 +94,7 @@ public class ModMain {
       module.syncConfig(c);
     }
     //for any modules that have created an item, those items might have inner configs, so hit it up
-    Item item;
+    Item item;//its a leftover mapping from before modules
     for (String key : ItemRegistry.itemMap.keySet()) {
       item = ItemRegistry.itemMap.get(key);
       if (item instanceof IHasConfig) {
