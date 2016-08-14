@@ -10,10 +10,10 @@ import com.lothrazar.cyclicmagic.entity.projectile.EntityShearingBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntitySnowballBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityTorchBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityWaterBolt;
+import com.lothrazar.cyclicmagic.module.KeyInventoryShiftModule;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
-import com.lothrazar.cyclicmagic.registry.KeyInventoryShiftRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.Block;
@@ -60,7 +60,7 @@ public class ClientProxy extends CommonProxy {
   }
  
   private void registerKeys() {
-    if(KeyInventoryShiftRegistry.enableInvoKeys){
+    if(KeyInventoryShiftModule.enableInvoKeys){
       keyShiftUp = new KeyBinding("key.columnshiftup", Keyboard.KEY_Y, keyCategoryInventory);
       ClientRegistry.registerKeyBinding(ClientProxy.keyShiftUp);
       keyShiftDown = new KeyBinding("key.columnshiftdown", Keyboard.KEY_H, keyCategoryInventory);

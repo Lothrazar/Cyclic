@@ -25,6 +25,7 @@ import com.lothrazar.cyclicmagic.module.FurnaceStardewModule;
 import com.lothrazar.cyclicmagic.module.GuiTerrariaButtonsModule;
 import com.lothrazar.cyclicmagic.module.HorseFoodModule;
 import com.lothrazar.cyclicmagic.module.ItemstackInfoModule;
+import com.lothrazar.cyclicmagic.module.KeyInventoryShiftModule;
 import com.lothrazar.cyclicmagic.module.LadderClimbSpeedModule;
 import com.lothrazar.cyclicmagic.module.LightningTransformModule;
 import com.lothrazar.cyclicmagic.module.LootTableModule;
@@ -75,6 +76,7 @@ public class ModuleRegistry {
     modules.add(new GuiTerrariaButtonsModule());
     modules.add(new HorseFoodModule());
     modules.add(new ItemstackInfoModule());
+    modules.add(new KeyInventoryShiftModule());
     modules.add(new LadderClimbSpeedModule());
     modules.add(new LightningTransformModule());
     modules.add(new LootTableModule());

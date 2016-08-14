@@ -74,10 +74,8 @@ public class ModMain {
     ItemRegistry.register();
     proxy.register();
     NetworkRegistry.INSTANCE.registerGuiHandler(this, new ModGuiHandler());
-   
     this.syncConfig(); //fixes things , stuff was added to items and content that has config
-    //important: register events AFTER modules onInit, since modules add events in this phase.
-    this.events.registerAll();
+    this.events.registerAll(); //important: register events AFTER modules onInit, since modules add events in this phase.
   }
   @EventHandler
   public void onPostInit(FMLPostInitializationEvent event) {
@@ -106,8 +104,6 @@ public class ModMain {
         ((IHasConfig) item).syncConfig(config);
       }
     }
-    //TODO: key shift module
-    KeyInventoryShiftRegistry.syncConfig(c);
     c.save();
   }
   /*
