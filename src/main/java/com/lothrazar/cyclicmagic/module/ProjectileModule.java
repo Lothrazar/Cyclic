@@ -1,11 +1,10 @@
 package com.lothrazar.cyclicmagic.module;
-import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.entity.projectile.*;
 import com.lothrazar.cyclicmagic.item.projectile.*;
+import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 public class ProjectileModule extends BaseModule {
   private boolean enableEnderBlaze;
@@ -17,64 +16,61 @@ public class ProjectileModule extends BaseModule {
   private boolean enderWater;
   private boolean enderLightning;
   private boolean enderBombsEnabled;
-  int trackingRange = 64;
-  int updateFrequency = 1;
-  boolean sendsVelocityUpdates = true;
   @Override
   public void onInit() {
     if (enableEnderBlaze) {
       ItemProjectileBlaze item = new ItemProjectileBlaze();
       ItemRegistry.addItem(item, "ender_blaze");
-      EntityRegistry.registerModEntity(EntityBlazeBolt.class, "blazebolt", 1008, ModMain.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
+      EntityProjectileRegistry.registerModEntity(EntityBlazeBolt.class, "blazebolt", 1008 );
       EntityBlazeBolt.renderSnowball = item;
       ItemRegistry.ender_blaze = item;
     }
     if (enableEnderDungeonFinder) {
       ItemProjectileDungeon item = new ItemProjectileDungeon();
       ItemRegistry.addItem(item, "ender_dungeon");
-      EntityRegistry.registerModEntity(EntityDungeonEye.class, "dungeonbolt", 1006, ModMain.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
+      EntityProjectileRegistry.registerModEntity(EntityDungeonEye.class, "dungeonbolt", 1006);
       EntityDungeonEye.renderSnowball = item;
       ItemRegistry.ender_dungeon = item;
     }
     if (enderFishing) {
       ItemProjectileFishing item = new ItemProjectileFishing();
       ItemRegistry.addItem(item, "ender_fishing");
-      EntityRegistry.registerModEntity(EntityFishingBolt.class, "fishingbolt", 1004, ModMain.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
+      EntityProjectileRegistry.registerModEntity(EntityFishingBolt.class, "fishingbolt", 1004);
       EntityFishingBolt.renderSnowball = item;
       ItemRegistry.ender_fishing = item;
     }
     if (enderWool) {
       ItemProjectileWool item = new ItemProjectileWool();
       ItemRegistry.addItem(item, "ender_wool");
-      EntityRegistry.registerModEntity(EntityShearingBolt.class, "woolbolt", 1003, ModMain.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
+      EntityProjectileRegistry.registerModEntity(EntityShearingBolt.class, "woolbolt", 1003);
       EntityShearingBolt.renderSnowball = item;
       ItemRegistry.ender_wool = item;
     }
     if (enderTorch) {
       ItemProjectileTorch item = new ItemProjectileTorch();
       ItemRegistry.addItem(item, "ender_torch");
-      EntityRegistry.registerModEntity(EntityTorchBolt.class, "torchbolt", 1002, ModMain.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
+      EntityProjectileRegistry.registerModEntity(EntityTorchBolt.class, "torchbolt", 1002);
       EntityTorchBolt.renderSnowball = item;
       ItemRegistry.ender_torch = item;
     }
     if (enderWater) {
       ItemProjectileWater item = new ItemProjectileWater();
       ItemRegistry.addItem(item, "ender_water");
-      EntityRegistry.registerModEntity(EntityWaterBolt.class, "waterbolt", 1000, ModMain.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
+      EntityProjectileRegistry.registerModEntity(EntityWaterBolt.class, "waterbolt", 1000);
       EntityWaterBolt.renderSnowball = item;
       ItemRegistry.ender_water = item;
     }
     if (enderSnow) {
       ItemProjectileSnow item = new ItemProjectileSnow();
       ItemRegistry.addItem(item, "ender_snow");
-      EntityRegistry.registerModEntity(EntitySnowballBolt.class, "frostbolt", 1001, ModMain.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
+      EntityProjectileRegistry.registerModEntity(EntitySnowballBolt.class, "frostbolt", 1001);
       EntitySnowballBolt.renderSnowball = item;
       ItemRegistry.ender_snow = item;
     }
     if (enderLightning) {
       ItemProjectileLightning item = new ItemProjectileLightning();
       ItemRegistry.addItem(item, "ender_lightning");
-      EntityRegistry.registerModEntity(EntityLightningballBolt.class, "lightningbolt", 999, ModMain.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
+      EntityProjectileRegistry.registerModEntity(EntityLightningballBolt.class, "lightningbolt", 999);
       EntityLightningballBolt.renderSnowball = item;
       ItemRegistry.ender_lightning = item;
     }
@@ -91,7 +87,7 @@ public class ProjectileModule extends BaseModule {
       ItemRegistry.addItem(ItemRegistry.ender_tnt_4, "ender_tnt_4");
       ItemRegistry.addItem(ItemRegistry.ender_tnt_5, "ender_tnt_5");
       ItemRegistry.addItem(ItemRegistry.ender_tnt_6, "ender_tnt_6");
-      EntityRegistry.registerModEntity(EntityDynamite.class, "tntbolt", 1007, ModMain.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
+      EntityProjectileRegistry.registerModEntity(EntityDynamite.class, "tntbolt", 1007);
       EntityDynamite.renderSnowball = ItemRegistry.ender_tnt_1;
     }
   }
