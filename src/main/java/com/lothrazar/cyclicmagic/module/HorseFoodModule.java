@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.module;
 import java.text.DecimalFormat;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.item.ItemHorseUpgrade;
+import com.lothrazar.cyclicmagic.item.ItemHorseUpgrade.HorseUpgradeType;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
@@ -26,11 +27,11 @@ public class HorseFoodModule extends BaseEventModule {
   @Override
   public void onInit() {
     if(enableHorseFoodUpgrades){
-      ItemRegistry.addItem(new ItemHorseUpgrade(new ItemStack(Items.EMERALD)), "horse_upgrade_type");
-      ItemRegistry.addItem(new ItemHorseUpgrade(new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage())), "horse_upgrade_variant");
-      ItemRegistry.addItem(new ItemHorseUpgrade(new ItemStack(Items.DIAMOND)), "horse_upgrade_health");
-      ItemRegistry.addItem(new ItemHorseUpgrade(new ItemStack(Items.REDSTONE)), "horse_upgrade_speed");
-      ItemRegistry.addItem(new ItemHorseUpgrade(new ItemStack(Items.ENDER_EYE)), "horse_upgrade_jump");
+      ItemRegistry.addItem(new ItemHorseUpgrade(HorseUpgradeType.TYPE,new ItemStack(Items.EMERALD)), "horse_upgrade_type");
+      ItemRegistry.addItem(new ItemHorseUpgrade(HorseUpgradeType.VARIANT,new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage())), "horse_upgrade_variant");
+      ItemRegistry.addItem(new ItemHorseUpgrade(HorseUpgradeType.HEALTH,new ItemStack(Items.DIAMOND)), "horse_upgrade_health");
+      ItemRegistry.addItem(new ItemHorseUpgrade(HorseUpgradeType.SPEED,new ItemStack(Items.REDSTONE)), "horse_upgrade_speed");
+      ItemRegistry.addItem(new ItemHorseUpgrade(HorseUpgradeType.JUMP,new ItemStack(Items.ENDER_EYE)), "horse_upgrade_jump");
       ModMain.instance.events.addEvent(this);//for SubcribeEvent hooks
     }
   }
@@ -53,7 +54,7 @@ public class HorseFoodModule extends BaseEventModule {
     ItemStack held = entityPlayer.getHeldItemMainhand();
     if (held != null && held.getItem() instanceof ItemHorseUpgrade) {
       if (event.getTarget() instanceof EntityHorse) {
-        ItemHorseUpgrade.onHorseInteract((EntityHorse) event.getTarget(), entityPlayer, held);
+        ItemHorseUpgrade.onHorseInteract((EntityHorse) event.getTarget(), entityPlayer, (ItemHorseUpgrade)held.getItem());
         event.setCanceled(true);// stop the GUI inventory opening
       }
     }

@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.item;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
 import com.lothrazar.cyclicmagic.util.Const.HorseMeta;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
@@ -28,9 +27,11 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
   private static double JUMP_SCALE = 1.02; // %age
   private static double SPEED_SCALE = 1.05; // %age
   private ItemStack recipeItem;
-  public ItemHorseUpgrade(ItemStack rec) {
+  private HorseUpgradeType upgradeType;
+  public ItemHorseUpgrade(HorseUpgradeType type, ItemStack rec) {
     super();
     recipeItem = rec;
+    upgradeType = type;
   }
   @SuppressWarnings("unchecked")
   @SideOnly(Side.CLIENT)
@@ -43,10 +44,36 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
   public void addRecipe() {
     GameRegistry.addShapelessRecipe(new ItemStack(this), Items.CARROT, recipeItem);
   }
-  public static void onHorseInteract(EntityHorse horse, EntityPlayer player, ItemStack held) {
+  public static void onHorseInteract(EntityHorse horse, EntityPlayer player, ItemHorseUpgrade heldItem) {
     boolean success = false;
-    //TODO: USE AN EnumType flag passed by constructor, if u dont want to do new classes
-    if (held.getItem() == ItemRegistry.itemMap.get("emeraldCarrot")) {
+    switch (heldItem.upgradeType) {
+    case HEALTH:
+      float mh = (float) horse.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).getAttributeValue();
+      if (mh < 2 * HEARTS_MAX) { // 20 hearts == 40 health points
+        horse.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(mh + 2);
+        success = true;
+      }
+      break;
+    case JUMP:
+      if (ReflectionRegistry.horseJumpStrength != null) {
+        double jump = horse.getEntityAttribute(ReflectionRegistry.horseJumpStrength).getAttributeValue();// horse.getHorseJumpStrength()
+        double newjump = jump * JUMP_SCALE;
+        // double jumpHeight = getJumpTranslated(horse.getHorseJumpStrength());
+        if (UtilEntity.getJumpTranslated(newjump) < JUMP_MAX) {
+          horse.getEntityAttribute(ReflectionRegistry.horseJumpStrength).setBaseValue(newjump);
+          success = true;
+        }
+      }
+      break;
+    case SPEED:
+      double speed = horse.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue();
+      double newSpeed = speed * SPEED_SCALE;
+      if (UtilEntity.getSpeedTranslated(newSpeed) < SPEED_MAX) {
+        horse.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(newSpeed);
+        success = true;
+      }
+      break;
+    case TYPE:
       switch (horse.getType()) {
       case HORSE:
         horse.setType(HorseType.ZOMBIE);
@@ -60,16 +87,15 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
         horse.setType(HorseType.HORSE);
         success = true;
         break;
-      // donkey and mule ignored by design
-      case DONKEY:
+      case DONKEY:// donkey and mule ignored by design
         break;
       case MULE:
         break;
       default:
         break;
       }
-    }
-    else if (held.getItem() == ItemRegistry.itemMap.get("lapisCarrot")) {
+      break;
+    case VARIANT:
       int var = horse.getHorseVariant();
       int var_reduced = 0;
       int var_new = 0;
@@ -107,40 +133,9 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
       var_new += var_reduced;
       horse.setHorseVariant(var_new);
       success = true;
-    }
-    else if (held.getItem() == ItemRegistry.itemMap.get("diamondCarrot")) {
-      float mh = (float) horse.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).getAttributeValue();
-      if (mh < 2 * HEARTS_MAX) // 20 hearts == 40 health points
-      {
-        horse.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(mh + 2);
-        success = true;
-      }
-    }
-    else if (held.getItem() == ItemRegistry.itemMap.get("horse_upgrade_jump")) {
-      if (ReflectionRegistry.horseJumpStrength != null) // only happpens if mod
-      // installing preInit
-      // method fails to find it
-      {
-        double jump = horse.getEntityAttribute(ReflectionRegistry.horseJumpStrength).getAttributeValue();// horse.getHorseJumpStrength()
-        // ;
-        double newjump = jump * JUMP_SCALE;
-        // double jumpHeight = getJumpTranslated(horse.getHorseJumpStrength());
-        if (UtilEntity.getJumpTranslated(newjump) < JUMP_MAX) {
-          horse.getEntityAttribute(ReflectionRegistry.horseJumpStrength).setBaseValue(newjump);
-          // System.out.println("newjump = "+newjump);
-          success = true;
-        }
-      }
-    }
-    else if (held.getItem() == ItemRegistry.itemMap.get("horse_upgrade_speed")) {
-      double speed = horse.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue();
-      double newSpeed = speed * SPEED_SCALE;
-      // add ten percent
-      if (UtilEntity.getSpeedTranslated(newSpeed) < SPEED_MAX) {
-        horse.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(newSpeed);
-        // System.out.println("speed = "+newSpeed);
-        success = true;
-      }
+      break;
+    default:
+      break;
     }
     if (success) {
       if (player.capabilities.isCreativeMode == false) {
@@ -155,5 +150,8 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
       UtilSound.playSound(player, horse.getPosition(), SoundEvents.ENTITY_HORSE_EAT, SoundCategory.NEUTRAL);
       horse.setEatingHaystack(true); // makes horse animate and bend down to eat
     }
+  }
+  public static enum HorseUpgradeType {
+    HEALTH, JUMP, SPEED, TYPE, VARIANT
   }
 }
