@@ -25,7 +25,7 @@ public class CommonProxy {
   public void setClientPlayerData(MessageContext ctx, NBTTagCompound tags) {
     //client side only
   }
-//https://github.com/coolAlias/Tutorial-Demo/blob/e8fa9c94949e0b1659dc0a711674074f8752d80e/src/main/java/tutorial/CommonProxy.java
+  //https://github.com/coolAlias/Tutorial-Demo/blob/e8fa9c94949e0b1659dc0a711674074f8752d80e/src/main/java/tutorial/CommonProxy.java
   public IThreadListener getThreadFromContext(MessageContext ctx) {
     return ctx.getServerHandler().playerEntity.getServer();
   }

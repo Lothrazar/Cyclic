@@ -16,11 +16,10 @@ public class PotionSnow extends PotionCustom {
     EntityLivingBase entity = event.getEntityLiving();
     if (entity == null) { return; }
     if (entity.isPotionActive(this)) {
-
       World world = entity.getEntityWorld();
       BlockPos here = entity.getPosition();
       BlockPos below = here.down();
-      if(world.isAirBlock(here) && world.isSideSolid(below, EnumFacing.UP)){
+      if (world.isAirBlock(here) && world.isSideSolid(below, EnumFacing.UP)) {
         world.setBlockState(here, Blocks.SNOW_LAYER.getDefaultState());
       }
     }

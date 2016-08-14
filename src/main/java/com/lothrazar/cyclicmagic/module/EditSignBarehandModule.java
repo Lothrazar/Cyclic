@@ -14,7 +14,7 @@ public class EditSignBarehandModule extends BaseEventModule {
   private boolean editableSigns;
   @SubscribeEvent
   public void onInteract(PlayerInteractEvent.LeftClickBlock event) {
-    if (editableSigns) {  
+    if (editableSigns) {
       EntityPlayer entityPlayer = event.getEntityPlayer();
       BlockPos pos = event.getPos();
       World worldObj = event.getWorld();

@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.module;
-
 import com.lothrazar.cyclicmagic.item.ItemEmeraldArmor;
 import com.lothrazar.cyclicmagic.item.ItemEmeraldAxe;
 import com.lothrazar.cyclicmagic.item.ItemEmeraldHoe;
@@ -17,9 +16,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.EnumHelper;
 
 public class EmeraldArmorModule extends BaseModule {
-
-  private boolean enableEmeraldGear ; 
-
+  private boolean enableEmeraldGear;
   public static ItemEmeraldArmor emerald_boots;
   // thanks for help:
   // http://bedrockminer.jimdo.com/modding-tutorials/basic-modding-1-7/custom-tools-swords/
@@ -28,14 +25,13 @@ public class EmeraldArmorModule extends BaseModule {
   public final static Item REPAIR_EMERALD = Items.EMERALD;
   private static final int maxDamageFactorDiamond = 33;
   private static final String emeraldName = "emerald";
-  public EmeraldArmorModule(){
+  public EmeraldArmorModule() {
     super();
     //materials is kind of a SUB-MODULE
     this.registerMaterials();
   }
   //from ArmorMaterial.DIAMOND, second constuctor param
   //used as a ratio for durability
-
   // only because theyre private, with no getters
   //  private static final int    diamondDurability       = 33;
   //private static final int[]  diamondreductionAmounts = new int[] { 3, 6, 8, 3 };
@@ -61,13 +57,12 @@ public class EmeraldArmorModule extends BaseModule {
   }
   @Override
   public void onInit() {
-    if(enableEmeraldGear){
+    if (enableEmeraldGear) {
       ItemRegistry.addItem(new ItemEmeraldArmor(EntityEquipmentSlot.HEAD), "emerald_helmet");
       ItemRegistry.addItem(new ItemEmeraldArmor(EntityEquipmentSlot.CHEST), "emerald_chestplate");
       ItemRegistry.addItem(new ItemEmeraldArmor(EntityEquipmentSlot.LEGS), "emerald_leggings");
       emerald_boots = new ItemEmeraldArmor(EntityEquipmentSlot.FEET);
       ItemRegistry.addItem(emerald_boots, "emerald_boots");
-  
       ItemRegistry.addItem(new ItemEmeraldSword(), ItemEmeraldSword.name);
       ItemRegistry.addItem(new ItemEmeraldPickaxe(), ItemEmeraldPickaxe.name);
       ItemRegistry.addItem(new ItemEmeraldAxe(), ItemEmeraldAxe.name);
@@ -77,6 +72,6 @@ public class EmeraldArmorModule extends BaseModule {
   }
   @Override
   public void syncConfig(Configuration config) {
-    enableEmeraldGear = config.getBoolean("Emerald Gear", Const.ConfigCategory.content, true, "Emerald armor and tools that are slightly weaker than diamond. "+Const.ConfigCategory.contentDefaultText);
+    enableEmeraldGear = config.getBoolean("Emerald Gear", Const.ConfigCategory.content, true, "Emerald armor and tools that are slightly weaker than diamond. " + Const.ConfigCategory.contentDefaultText);
   }
 }

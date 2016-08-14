@@ -72,7 +72,7 @@ public class WorldGenModule extends BaseEventModule {
     if (oceanEnabled) {
       GameRegistry.registerWorldGenerator(new WorldGenOcean(), weightOre);
     }
-    if(netherOreEnabled || endOreEnabled){
+    if (netherOreEnabled || endOreEnabled) {
       registerDimensionOres();
     }
     if (netherOreEnabled) {

@@ -6,10 +6,10 @@ import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraftforge.common.config.Configuration;
 
 public class ChestSackModule extends BaseModule {
-  private boolean enableChestSack;  
+  private boolean enableChestSack;
   @Override
   public void onInit() {
-    if(enableChestSack){
+    if (enableChestSack) {
       ItemRegistry.chest_sack_empty = new ItemChestSackEmpty();
       ItemRegistry.chest_sack = new ItemChestSack();
       ItemRegistry.chest_sack.setHidden();

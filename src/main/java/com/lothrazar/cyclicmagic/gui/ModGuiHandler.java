@@ -42,9 +42,7 @@ public class ModGuiHandler implements IGuiHandler {
       ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
       return new ContainerWand(player, player.inventory, new InventoryWand(player, wand));
     case GUI_INDEX_UNCRAFTING:
-      if (te != null && te instanceof TileEntityUncrafting) { 
-        return new ContainerUncrafting(player.inventory, (TileEntityUncrafting) te); 
-      }
+      if (te != null && te instanceof TileEntityUncrafting) { return new ContainerUncrafting(player.inventory, (TileEntityUncrafting) te); }
       break;
     case GUI_INDEX_STORAGE:
       ItemStack s = ItemInventoryStorage.getPlayerItemIfHeld(player);
@@ -72,9 +70,7 @@ public class ModGuiHandler implements IGuiHandler {
         ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
         return new GuiWandInventory(new ContainerWand(player, player.inventory, new InventoryWand(player, wand)), wand);
       case GUI_INDEX_UNCRAFTING:
-        if (te instanceof TileEntityUncrafting) { 
-          return new GuiUncrafting(player.inventory, (TileEntityUncrafting) te); 
-        }
+        if (te instanceof TileEntityUncrafting) { return new GuiUncrafting(player.inventory, (TileEntityUncrafting) te); }
         break;
       case GUI_INDEX_STORAGE:
         ItemStack s = ItemInventoryStorage.getPlayerItemIfHeld(player);
@@ -83,9 +79,7 @@ public class ModGuiHandler implements IGuiHandler {
         //Minecraft.getMinecraft().displayGuiScreen(new GuiEnderBook(entityPlayer, stack));
         return new GuiEnderBook(player, UtilInventory.getPlayerItemIfHeld(player));
       case GUI_INDEX_BUILDER:
-        if (te != null && te instanceof TileEntityBuilder) { 
-          return new GuiBuilder(player.inventory, (TileEntityBuilder) te); 
-        }
+        if (te != null && te instanceof TileEntityBuilder) { return new GuiBuilder(player.inventory, (TileEntityBuilder) te); }
         break;
       }
     }

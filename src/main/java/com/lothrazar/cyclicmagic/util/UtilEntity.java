@@ -170,7 +170,7 @@ public class UtilEntity {
     int x = pos.getX(), y = pos.getY(), z = pos.getZ();
     return pullEntityItemsTowards(world, x, y, z, ITEM_HRADIUS, ITEM_VRADIUS);
   }
-  public static int pullEntityItemsTowards(World world, double x, double y, double z,  int ITEM_HRADIUS, int ITEM_VRADIUS) {
+  public static int pullEntityItemsTowards(World world, double x, double y, double z, int ITEM_HRADIUS, int ITEM_VRADIUS) {
     AxisAlignedBB range = new AxisAlignedBB(
         x - ITEM_HRADIUS, y - ITEM_VRADIUS, z - ITEM_HRADIUS,
         x + ITEM_HRADIUS, y + ITEM_VRADIUS, z + ITEM_HRADIUS);

@@ -49,7 +49,7 @@ public class ItemToolSpawnInspect extends BaseTool implements IHasRecipe {
               names.add(new SpawnDetail(entry, creatureType, light));
               //hack since witherskeleton is not its own class/entry, just a mob modifier like zombietypes or villagertypes
               if (entry.entityClass.equals(EntitySkeleton.class) && player.dimension == Const.Dimension.nether) {
-                names.add(new SpawnDetail("WitherSkeleton", creatureType, light,entry.itemWeight));
+                names.add(new SpawnDetail("WitherSkeleton", creatureType, light, entry.itemWeight));
               }
             }
           }
@@ -79,7 +79,7 @@ public class ItemToolSpawnInspect extends BaseTool implements IHasRecipe {
         "b  ",
         'b', new ItemStack(Items.BLAZE_ROD),
         's', new ItemStack(Items.FLINT),
-        'g', new ItemStack(Blocks.STAINED_GLASS,1,EnumDyeColor.PURPLE.getMetadata()));
+        'g', new ItemStack(Blocks.STAINED_GLASS, 1, EnumDyeColor.PURPLE.getMetadata()));
   }
   public static class SpawnDetail {
     private int itemWeight;

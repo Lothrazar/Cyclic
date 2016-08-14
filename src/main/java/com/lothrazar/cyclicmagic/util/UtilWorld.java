@@ -11,11 +11,10 @@ public class UtilWorld {
     int timeOfDay = (int) t % 24000;
     return timeOfDay > 12000;
   }
-
   public static BlockPos convertIposToBlockpos(IPosition here) {
-    return new BlockPos(here.getX(),here.getY(),here.getZ());
+    return new BlockPos(here.getX(), here.getY(), here.getZ());
   }
-  public static BlockPos getRandomPos(Random rand,BlockPos here, int hRadius) {
+  public static BlockPos getRandomPos(Random rand, BlockPos here, int hRadius) {
     int x = here.getX();
     int z = here.getZ();
     // search in a square
@@ -23,10 +22,8 @@ public class UtilWorld {
     int xMax = x + hRadius;
     int zMin = z - hRadius;
     int zMax = z + hRadius;
-
     int posX = MathHelper.getRandomIntegerInRange(rand, xMin, xMax);
     int posZ = MathHelper.getRandomIntegerInRange(rand, zMin, zMax);
-    
-    return new BlockPos(posX,here.getY(),posZ);
+    return new BlockPos(posX, here.getY(), posZ);
   }
 }

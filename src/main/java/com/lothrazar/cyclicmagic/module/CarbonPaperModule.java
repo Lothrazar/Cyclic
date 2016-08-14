@@ -7,7 +7,7 @@ import net.minecraftforge.common.config.Configuration;
 public class CarbonPaperModule extends BaseModule {
   private boolean enableCarbonPaper;
   public void onInit() {
-    if(enableCarbonPaper){
+    if (enableCarbonPaper) {
       ItemRegistry.carbon_paper = new ItemPaperCarbon();
       ItemRegistry.addItem(ItemRegistry.carbon_paper, "carbon_paper");
     }

@@ -17,7 +17,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class FurnaceStardewModule  extends BaseEventModule implements IHasConfig {
+public class FurnaceStardewModule extends BaseEventModule implements IHasConfig {
   private static boolean stardewFurnace;
   // inspired by stardew valley
   // http://minecraft.gamepedia.com/Furnace
@@ -50,13 +50,13 @@ public class FurnaceStardewModule  extends BaseEventModule implements IHasConfig
           extractFurnaceOutput(furnace, entityPlayer);
         }
         else {
-        //  ModMain.logger.info("held:" + held.getUnlocalizedName());
+          //  ModMain.logger.info("held:" + held.getUnlocalizedName());
           //holding a non null stack for sure
           if (canBeSmelted(held)) {
             //  ModMain.logger.info("SLOT_INPUT");
             tryMergeStackIntoSlot(furnace, entityPlayer, playerSlot, SLOT_INPUT);
           }
-          else  if (isFuel(held)) {
+          else if (isFuel(held)) {
             // ModMain.logger.info("SLOT_FUEL");
             tryMergeStackIntoSlot(furnace, entityPlayer, playerSlot, SLOT_FUEL);
           }
@@ -68,13 +68,12 @@ public class FurnaceStardewModule  extends BaseEventModule implements IHasConfig
     ItemStack current = furnace.getStackInSlot(furnaceSlot);
     //removeStackFromSlot//why the FFFFFFFFFF was i using this garbage funtion
     ItemStack held = entityPlayer.inventory.getStackInSlot(playerSlot);
-
-   // ModMain.logger.info("held!!!:" + held.getUnlocalizedName());
+    // ModMain.logger.info("held!!!:" + held.getUnlocalizedName());
     boolean success = false;
     if (current == null) {
       // just done
-     // ModMain.logger.info("slot is empty");
-      if(entityPlayer.worldObj.isRemote == false){
+      // ModMain.logger.info("slot is empty");
+      if (entityPlayer.worldObj.isRemote == false) {
         furnace.setInventorySlotContents(furnaceSlot, held.copy());
         held = null;
       }
@@ -83,15 +82,14 @@ public class FurnaceStardewModule  extends BaseEventModule implements IHasConfig
     else if (held.isItemEqual(current)) {
       //ModMain.logger.info("slot is NOT empty and they match, current old:" + current.stackSize);
       // merging updates the stack size numbers in both furnace and in players
-
       success = true;
-      if(entityPlayer.worldObj.isRemote == false){
+      if (entityPlayer.worldObj.isRemote == false) {
         UtilInventory.mergeItemsBetweenStacks(held, current);
       }
     }
     if (success) {
-    //  ModMain.logger.info("success!!!");
-      if(entityPlayer.worldObj.isRemote == false){
+      //  ModMain.logger.info("success!!!");
+      if (entityPlayer.worldObj.isRemote == false) {
         if (held != null && held.stackSize == 0) {// so now we just fix if something is size zero
           held = null;
         }

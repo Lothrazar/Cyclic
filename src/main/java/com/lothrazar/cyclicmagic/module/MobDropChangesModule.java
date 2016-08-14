@@ -24,7 +24,7 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteractSpecific;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class MobDropChangesModule  extends BaseEventModule {
+public class MobDropChangesModule extends BaseEventModule {
   private static final int chanceZombieVillagerEmerald = 25;
   public static boolean sheepShearBuffed;//used by entity shearing bolt also
   private boolean zombieVillagerEmeralds;
@@ -52,7 +52,6 @@ public class MobDropChangesModule  extends BaseEventModule {
     World worldObj = entity.getEntityWorld();
     List<EntityItem> drops = event.getDrops();
     BlockPos pos = entity.getPosition();
-    
     if (endermanDrop && entity instanceof EntityEnderman) {
       EntityEnderman mob = (EntityEnderman) entity;
       IBlockState bs = mob.getHeldBlockState();// mob.func_175489_ck();
@@ -78,19 +77,18 @@ public class MobDropChangesModule  extends BaseEventModule {
       int rand = MathHelper.getRandomIntegerInRange(worldObj.rand, 1, 18);
       UtilEntity.dropItemStackInWorld(worldObj, pos, new ItemStack(Items.IRON_INGOT, rand));
     }
- 
-      if (zombieDropsNerfed) {
-        if (entity instanceof EntityZombie) {
-          Item item;
-          for (int i = 0; i < drops.size(); i++) {
-            //EntityItem item = ;
-            item = drops.get(i).getEntityItem().getItem();
-            if (item == Items.CARROT || item == Items.POTATO || item == Items.IRON_INGOT) {
-              drops.remove(i);
-            }
+    if (zombieDropsNerfed) {
+      if (entity instanceof EntityZombie) {
+        Item item;
+        for (int i = 0; i < drops.size(); i++) {
+          //EntityItem item = ;
+          item = drops.get(i).getEntityItem().getItem();
+          if (item == Items.CARROT || item == Items.POTATO || item == Items.IRON_INGOT) {
+            drops.remove(i);
           }
         }
       }
+    }
   }
   @Override
   public void syncConfig(Configuration config) {

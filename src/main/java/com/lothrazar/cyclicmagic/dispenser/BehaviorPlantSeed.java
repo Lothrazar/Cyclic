@@ -14,11 +14,9 @@ public class BehaviorPlantSeed extends BehaviorDefaultDispenseItem {
     World world = source.getWorld();
     // we want to place in front of the dispenser 
     //which is based on where its facing
-   
     //changed in 1.10
     BlockPos posForPlant = UtilWorld.convertIposToBlockpos(BlockDispenser.getDispensePosition(source));
-        //source.getBlockPos().offset(BlockDispenser.getFacing(source.getBlockMetadata()));
-    
+    //source.getBlockPos().offset(BlockDispenser.getFacing(source.getBlockMetadata()));
     ItemStack returning = UtilPlantable.tryPlantSeed(world, posForPlant, stack);
     if (returning == null)
       return super.dispenseStack(source, stack);

@@ -11,11 +11,11 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract
 //import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class VillagerNametagModule extends BaseEventModule  implements IHasConfig {
+public class VillagerNametagModule extends BaseEventModule implements IHasConfig {
   private boolean nameVillagerTag;
   @SubscribeEvent
   public void onEntityInteractEvent(EntityInteract event) {
-    if (nameVillagerTag) { 
+    if (nameVillagerTag) {
       EntityPlayer entityPlayer = event.getEntityPlayer();
       ItemStack held = entityPlayer.getHeldItem(event.getHand());
       Entity target = event.getTarget();

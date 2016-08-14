@@ -10,11 +10,11 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class FragileTorchesModule extends BaseEventModule  implements IHasConfig {
+public class FragileTorchesModule extends BaseEventModule implements IHasConfig {
   private boolean fragileTorches;
   @SubscribeEvent
   public void onEntityUpdate(LivingUpdateEvent event) {
-    if (fragileTorches) { 
+    if (fragileTorches) {
       Entity ent = event.getEntity();
       if (ent instanceof EntityLiving == false) { return; }
       EntityLivingBase living = (EntityLivingBase) event.getEntity();

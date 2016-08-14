@@ -118,11 +118,11 @@ public class BlockBuilder extends Block implements IHasRecipe {
   }
   @Override
   public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this), "rsr", "gbg", "ooo", 
-        'o', Blocks.OBSIDIAN, 
-        'g', Items.GHAST_TEAR, 
-        's', Blocks.DISPENSER, 
-        'r', Blocks.REDSTONE_BLOCK, 
+    GameRegistry.addRecipe(new ItemStack(this), "rsr", "gbg", "ooo",
+        'o', Blocks.OBSIDIAN,
+        'g', Items.GHAST_TEAR,
+        's', Blocks.DISPENSER,
+        'r', Blocks.REDSTONE_BLOCK,
         'b', Blocks.BEACON);
   }
 }

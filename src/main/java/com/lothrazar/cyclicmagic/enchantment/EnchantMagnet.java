@@ -36,7 +36,7 @@ public class EnchantMagnet extends Enchantment {
     }
     int level = Math.max(mainLevel, offLevel);
     if (level > 0) {
-      UtilEntity.pullEntityItemsTowards(entity.getEntityWorld(), entity.getPosition(),  ITEM_HRADIUS + HRADIUS_PER_LEVEL * level, ITEM_VRADIUS);
+      UtilEntity.pullEntityItemsTowards(entity.getEntityWorld(), entity.getPosition(), ITEM_HRADIUS + HRADIUS_PER_LEVEL * level, ITEM_VRADIUS);
     }
   }
 }

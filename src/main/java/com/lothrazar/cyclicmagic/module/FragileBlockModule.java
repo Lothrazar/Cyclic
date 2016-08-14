@@ -8,7 +8,7 @@ import net.minecraftforge.common.config.Configuration;
 public class FragileBlockModule extends BaseModule {
   private boolean moduleEnabled;
   public void onInit() {
-    if(moduleEnabled){
+    if (moduleEnabled) {
       BlockRegistry.block_fragile = new BlockScaffolding();
       BlockRegistry.registerBlock(BlockRegistry.block_fragile, new ItemBlockScaffolding(BlockRegistry.block_fragile), BlockScaffolding.name);
       BlockRegistry.block_fragile.addRecipe();

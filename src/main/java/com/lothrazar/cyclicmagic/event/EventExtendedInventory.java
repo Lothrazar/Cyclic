@@ -25,7 +25,7 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EventExtendedInventory{
+public class EventExtendedInventory {
   //	public static final boolean dropOnDeath = false;
   static HashSet<Integer> playerEntityIds = new HashSet<Integer>();
   @SubscribeEvent
@@ -118,10 +118,8 @@ public class EventExtendedInventory{
       int y = guiTop + 2;
       EntityPlayer player = Minecraft.getMinecraft().thePlayer;
       final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(player);
-      
       showInvToggle = data.hasInventoryExtended() && !(gui instanceof GuiCrafting);
       showCraftToggle = data.hasInventoryCrafting() && !(gui instanceof GuiPlayerExtended);
-          
       if (showInvToggle) {
         event.getButtonList().add(new ButtonTabToggleInventory(gui, x, y));
       }

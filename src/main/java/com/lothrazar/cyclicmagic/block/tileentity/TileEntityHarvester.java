@@ -20,7 +20,6 @@ public class TileEntityHarvester extends TileEntity implements ITickable {
   private HarestCropsConfig conf;
   private static final String NBT_TIMER = "Timer";
   private static final int HARVEST_RADIUS = 8;
-
   public TileEntityHarvester() {
     this.timer = TIMER_FULL;
     conf = new HarestCropsConfig();
@@ -90,12 +89,12 @@ public class TileEntityHarvester extends TileEntity implements ITickable {
       //TODO:spit drops out the facing side, just like uncrafter
       // -> to this end, add new conf flag
       if (UtilHarvestCrops.harvestSingle(this.worldObj, harvest, conf)) {
-//        ModMain.logger.info("harvested :" + UtilChat.blockPosToString(harvest));
+        //        ModMain.logger.info("harvested :" + UtilChat.blockPosToString(harvest));
         UtilParticle.spawnParticle(worldObj, EnumParticleTypes.DRAGON_BREATH, harvest);
         timer = TIMER_FULL;//harvest worked!
       }
       else {
-//        UtilParticle.spawnParticle(worldObj, EnumParticleTypes.SMOKE_NORMAL, harvest);
+        //        UtilParticle.spawnParticle(worldObj, EnumParticleTypes.SMOKE_NORMAL, harvest);
         timer = 3;//harvest didnt work, try again really quick
       }
     }
@@ -107,13 +106,13 @@ public class TileEntityHarvester extends TileEntity implements ITickable {
     }
     this.markDirty();
   }
-//  private BlockPos getOutputPos() {
-//    BlockPos harvest = this.getPos().offset(this.getCurrentFacing());
-//    return harvest;
-//  }
+  //  private BlockPos getOutputPos() {
+  //    BlockPos harvest = this.getPos().offset(this.getCurrentFacing());
+  //    return harvest;
+  //  }
   private BlockPos getHarvestPos() {
     //move center over that much, not including exact horizontal
-    BlockPos center = this.getPos().offset(this.getCurrentFacing(),HARVEST_RADIUS+1);
+    BlockPos center = this.getPos().offset(this.getCurrentFacing(), HARVEST_RADIUS + 1);
     return UtilWorld.getRandomPos(this.worldObj.rand, center, HARVEST_RADIUS);
   }
   private int getSpeed() {

@@ -20,7 +20,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class LootTableModule extends BaseEventModule  implements IHasConfig {
+public class LootTableModule extends BaseEventModule implements IHasConfig {
   private static final int RANDODEFAULT = 7;
   private static final String LOOTPOOLNAME = "main";
   private Set<ResourceLocation> chests;
@@ -123,14 +123,12 @@ public class LootTableModule extends BaseEventModule  implements IHasConfig {
     addLoot(main, ItemRegistry.sleeping_mat);
   }
   private void addLoot(LootPool main, Item item) {
-    if(item == null){
-      return;//shortcut fix bc of new module config system that can delete items
+    if (item == null) { return;//shortcut fix bc of new module config system that can delete items
     }
     addLoot(main, item, RANDODEFAULT);
   }
   private void addLoot(LootPool main, Item item, int rando) {
-    if(item == null){
-      return;//shortcut fix bc of new module config system that can delete items
+    if (item == null) { return;//shortcut fix bc of new module config system that can delete items
     }
     main.addEntry(new LootEntryItem(item, rando, 0, new LootFunction[0], new LootCondition[0], Const.MODRES + item.getUnlocalizedName()));
   }

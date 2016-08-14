@@ -38,7 +38,6 @@ public class RecipeChangerModule extends BaseModule {
         true, "You can mostly repair elytra wings with a wither skull; but it loses all enchants").getBoolean();
     melonToSlice = config.get(category, "Melon Block Slices",
         true, "Craft a Melon block into nine slices").getBoolean();
-    
     category = Const.ConfigCategory.recipes;
     difficultEarlygameRecipes = config.get(category, "Altered Stone",
         false,
@@ -68,18 +67,18 @@ public class RecipeChangerModule extends BaseModule {
     if (elytraRepair) {
       elytraRepair();
     }
-    if(melonToSlice){
+    if (melonToSlice) {
       melonToSlice();
-    }  
-    if (difficultEarlygameRecipes){
+    }
+    if (difficultEarlygameRecipes) {
       smoothstoneRequired();
       furnaceNeedsCoal();
     }
     // https://github.com/PrinceOfAmber/SamsPowerups/blob/master/Recipes/src/main/java/com/lothrazar/samsrecipes/RecipeRegistry.java
   }
   private void melonToSlice() {
-    GameRegistry.addShapelessRecipe(new ItemStack(Items.MELON,9), 
-         new ItemStack(Blocks.MELON_BLOCK));
+    GameRegistry.addShapelessRecipe(new ItemStack(Items.MELON, 9),
+        new ItemStack(Blocks.MELON_BLOCK));
   }
   private void elytraRepair() {
     GameRegistry.addShapelessRecipe(new ItemStack(Items.ELYTRA, 1, UtilItem.getMaxDmgFraction(Items.ELYTRA, 10)),
@@ -121,8 +120,6 @@ public class RecipeChangerModule extends BaseModule {
         "ccc", "csc", "crc",
         'c', Blocks.COBBLESTONE, 's', Items.STRING, 'r', Items.REDSTONE);
   }
-
- 
   private void furnaceNeedsCoal() {
     UtilRecipe.removeRecipe(Blocks.FURNACE);
     GameRegistry.addRecipe(new ItemStack(Blocks.FURNACE), "bbb", "bcb", "bbb", 'b', Blocks.COBBLESTONE, 'c', Items.COAL);

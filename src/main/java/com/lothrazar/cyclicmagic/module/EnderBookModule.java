@@ -8,7 +8,7 @@ public class EnderBookModule extends BaseModule {
   private boolean enableEnderBook;
   @Override
   public void onInit() {
-    if(enableEnderBook){
+    if (enableEnderBook) {
       ItemRegistry.book_ender = new ItemEnderBook();
       ItemRegistry.addItem(ItemRegistry.book_ender, "book_ender");
     }

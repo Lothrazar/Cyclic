@@ -52,6 +52,6 @@ public class BlockScaffolding extends Block implements IHasRecipe {
   }
   @Override
   public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this,8), "s s", " s ", "s s", 's', new ItemStack(Items.STICK));
+    GameRegistry.addRecipe(new ItemStack(this, 8), "s s", " s ", "s s", 's', new ItemStack(Items.STICK));
   }
 }

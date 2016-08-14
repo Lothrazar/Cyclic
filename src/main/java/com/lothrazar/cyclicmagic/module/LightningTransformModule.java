@@ -9,7 +9,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class LightningTransformModule extends BaseEventModule  implements IHasConfig {
+public class LightningTransformModule extends BaseEventModule implements IHasConfig {
   private boolean skelEnabled;
   private boolean zombEnabled;
   @SuppressWarnings("deprecation")

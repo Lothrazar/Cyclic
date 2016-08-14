@@ -26,7 +26,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BlockUncrafting extends Block implements IHasRecipe{
+public class BlockUncrafting extends Block implements IHasRecipe {
   // http://www.minecraftforge.net/forum/index.php?topic=31953.0
   private static final PropertyDirection PROPERTYFACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
   public BlockUncrafting() {

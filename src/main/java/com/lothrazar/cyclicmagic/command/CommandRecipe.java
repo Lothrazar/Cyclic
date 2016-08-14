@@ -112,7 +112,6 @@ public class CommandRecipe extends BaseCommand implements ICommand {
   }
   @SuppressWarnings("unchecked")
   public static ItemStack[] getRecipeInput(IRecipe recipe) {
-
     ItemStack[] recipeItems = null;
     if (recipe instanceof ShapedRecipes) {
       ShapedRecipes r = ((ShapedRecipes) recipe);

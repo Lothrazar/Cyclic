@@ -18,8 +18,8 @@ public class CommandPing extends BaseCommand implements ICommand {
   }
   @Override
   public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-  //  if (sender instanceof EntityPlayer == false) { return; }
-   // EntityPlayer player = (EntityPlayer) sender;
+    //  if (sender instanceof EntityPlayer == false) { return; }
+    // EntityPlayer player = (EntityPlayer) sender;
     BlockPos pos;
     if (args.length > 0 && args[0] != null && args[0].equalsIgnoreCase("nether")) {
       BlockPos p = sender.getPosition();
@@ -29,13 +29,11 @@ public class CommandPing extends BaseCommand implements ICommand {
       double z = p.getZ();
       pos = new BlockPos(x / netherRatio, p.getY(), z / netherRatio);
       //UtilChat.addChatMessage(sender, UtilChat.blockPosToString(n));
-
     }
-    else{
+    else {
       pos = sender.getPosition();
     }
-    
     Biome biome = sender.getEntityWorld().getBiomeGenForCoords(pos);
-    UtilChat.addChatMessage(sender, UtilChat.blockPosToString(pos) +" ("+biome.getBiomeName()+")");
+    UtilChat.addChatMessage(sender, UtilChat.blockPosToString(pos) + " (" + biome.getBiomeName() + ")");
   }
 }

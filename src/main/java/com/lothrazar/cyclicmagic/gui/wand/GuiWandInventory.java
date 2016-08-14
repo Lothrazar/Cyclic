@@ -16,7 +16,7 @@ public class GuiWandInventory extends GuiContainer {
   // 176x156
   private static final ResourceLocation BACKGROUND = new ResourceLocation(Const.MODID, "textures/gui/inventory_wand.png");
   private static final ResourceLocation SLOT_CURRENT = new ResourceLocation(Const.MODID, "textures/gui/slot_current.png");
- // slot number, as i '3/9'
+  // slot number, as i '3/9'
   int id = 777;
   final int padding = 4;
   ContainerWand container;

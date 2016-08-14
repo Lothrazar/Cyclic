@@ -8,7 +8,7 @@ public class StorageBagModule extends BaseModule {
   private boolean moduleEnabled;
   @Override
   public void onInit() {
-    if(moduleEnabled){
+    if (moduleEnabled) {
       ItemRegistry.storage_bag = new ItemInventoryStorage();
       ItemRegistry.addItem(ItemRegistry.storage_bag, "storage_bag");
     }

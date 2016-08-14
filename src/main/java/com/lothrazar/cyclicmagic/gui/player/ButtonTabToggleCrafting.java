@@ -10,7 +10,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ButtonTabToggleCrafting extends GuiButton{
+public class ButtonTabToggleCrafting extends GuiButton {
   private GuiScreen gui;
   public ButtonTabToggleCrafting(GuiScreen g, int x, int y) {
     super(256, x, y, 15, 5, "C");

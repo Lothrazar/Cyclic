@@ -14,7 +14,7 @@ public class EventRegistry {
     this.addEvent(new EventKeyInput());
     this.addEvent(new EventPlayerData());
   }
-  public void addEvent(Object e){
+  public void addEvent(Object e) {
     events.add(e);
   }
   public void registerAll() {

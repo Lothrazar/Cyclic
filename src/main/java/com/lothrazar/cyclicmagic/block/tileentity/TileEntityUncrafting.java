@@ -235,10 +235,11 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
       }
       UtilUncraft uncrafter = new UtilUncraft(stack);
       boolean success = false;
-      try{
+      try {
         success = uncrafter.doUncraft();
-      }catch(Exception e){
-        ModMain.logger.error("Unhandled exception in uncrafting "+e.getStackTrace().toString());
+      }
+      catch (Exception e) {
+        ModMain.logger.error("Unhandled exception in uncrafting " + e.getStackTrace().toString());
       }
       if (success) {
         if (this.worldObj.isRemote == false) { // drop the items

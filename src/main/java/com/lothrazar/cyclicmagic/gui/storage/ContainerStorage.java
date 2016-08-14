@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 
 public class ContainerStorage extends Container {
   final InventoryStorage inventory;
-  final static int INV_START = InventoryStorage.INV_SIZE, INV_END = INV_START + 26, 
+  final static int INV_START = InventoryStorage.INV_SIZE, INV_END = INV_START + 26,
       HOTBAR_START = INV_END + 1,
       HOTBAR_END = HOTBAR_START + 8;
   final static int pad = 8;

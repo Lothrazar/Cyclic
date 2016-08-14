@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.module;
-
 import java.util.HashMap;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -13,10 +12,9 @@ import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.IFuelHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class FuelAdditionModule extends BaseModule{
+public class FuelAdditionModule extends BaseModule {
   private boolean enabled;
   //links existing vanilla items as burnable fuel
-
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.items;
@@ -24,7 +22,7 @@ public class FuelAdditionModule extends BaseModule{
     enabled = prop.getBoolean();
   }
   @Override
-  public void onInit(){
+  public void onInit() {
     if (enabled) {
       GameRegistry.registerFuelHandler(new FuelHandler());
     }
@@ -71,4 +69,3 @@ public class FuelAdditionModule extends BaseModule{
     }
   }
 }
-

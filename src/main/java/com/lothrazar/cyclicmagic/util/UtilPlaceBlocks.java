@@ -178,7 +178,6 @@ public class UtilPlaceBlocks {
     return success;
   }
   public static ArrayList<Block> ignoreList = new ArrayList<Block>();
-
   private static void translateCSV() {
     if (ignoreList.size() == 0) {
       ignoreList.add(Blocks.END_PORTAL_FRAME);

@@ -29,21 +29,20 @@ public class UtilHarvestCrops {
     public boolean doesReeds = false;
     public boolean dropInPlace = true;//if false -> then ret
     @Override
-    public String toString(){
+    public String toString() {
       String s = "";
-      s += "doesHarvestStem = "+doesStem +System.lineSeparator();
-      s += "doesHarvestSapling = "+doesSapling +System.lineSeparator();
-      s += "doesHarvestMushroom = "+doesMushroom +System.lineSeparator();
-      s += "doesPumpkinBlocks = "+doesPumpkinBlocks +System.lineSeparator();
-      s += "doesMelonBlocks = "+doesMelonBlocks +System.lineSeparator();
-      s += "doesFlowers = "+doesFlowers +System.lineSeparator();
-      s += "doesCrops = "+doesCrops +System.lineSeparator();
-      s += "doesHarvestTallgrass = "+doesTallgrass +System.lineSeparator();
+      s += "doesHarvestStem = " + doesStem + System.lineSeparator();
+      s += "doesHarvestSapling = " + doesSapling + System.lineSeparator();
+      s += "doesHarvestMushroom = " + doesMushroom + System.lineSeparator();
+      s += "doesPumpkinBlocks = " + doesPumpkinBlocks + System.lineSeparator();
+      s += "doesMelonBlocks = " + doesMelonBlocks + System.lineSeparator();
+      s += "doesFlowers = " + doesFlowers + System.lineSeparator();
+      s += "doesCrops = " + doesCrops + System.lineSeparator();
+      s += "doesHarvestTallgrass = " + doesTallgrass + System.lineSeparator();
       return s;
     }
   }
   public static int harvestArea(World world, BlockPos pos, int hRadius, HarestCropsConfig conf) {
-
     int x = pos.getX();
     int eventy = pos.getY();
     int z = pos.getZ();
@@ -78,36 +77,35 @@ public class UtilHarvestCrops {
     if (blockCheck == null) { return false; }
     IBlockState bsAbove = world.getBlockState(posCurrent.up());
     IBlockState bsBelow = world.getBlockState(posCurrent.down());
-    
-    if (blockCheck instanceof BlockNetherWart ) {
-      if(conf.doesCrops){
-        int age = ((Integer)bs.getValue(BlockNetherWart.AGE)).intValue();
-        if(age == 3){//this is hardcoded in base class
+    if (blockCheck instanceof BlockNetherWart) {
+      if (conf.doesCrops) {
+        int age = ((Integer) bs.getValue(BlockNetherWart.AGE)).intValue();
+        if (age == 3) {//this is hardcoded in base class
           doBreak = true;
           stateReplant = blockCheck.getDefaultState();
         }
       }
     }
-    if (blockCheck instanceof BlockCocoa ) {
-      if(conf.doesCrops){
-        int age = ((Integer)bs.getValue(BlockCocoa.AGE)).intValue();
-        if(age == 2){//this is hardcoded in base class
+    if (blockCheck instanceof BlockCocoa) {
+      if (conf.doesCrops) {
+        int age = ((Integer) bs.getValue(BlockCocoa.AGE)).intValue();
+        if (age == 2) {//this is hardcoded in base class
           doBreak = true;
           // a new state that copies the property but NOT the age
           stateReplant = blockCheck.getDefaultState().withProperty(BlockCocoa.FACING, bs.getValue(BlockCocoa.FACING));
         }
       }
     }
-    else if (blockCheck instanceof BlockStem ) {
-      if(conf.doesStem)
+    else if (blockCheck instanceof BlockStem) {
+      if (conf.doesStem)
         doBreak = true;
     }
-    else if (blockCheck instanceof BlockSapling ) {
-      if(conf.doesSapling)
+    else if (blockCheck instanceof BlockSapling) {
+      if (conf.doesSapling)
         doBreak = true;
     }
-    else if (blockCheck instanceof BlockTallGrass    ) {
-      if( conf.doesTallgrass){
+    else if (blockCheck instanceof BlockTallGrass) {
+      if (conf.doesTallgrass) {
         doBreak = true;
         if (blockCheck instanceof BlockTallGrass && bsAbove != null && bsAbove.getBlock() instanceof BlockTallGrass) {
           doBreakAbove = true;
@@ -117,8 +115,8 @@ public class UtilHarvestCrops {
         }
       }
     }
-    else if (blockCheck instanceof BlockDoublePlant      ) {
-      if( conf.doesTallgrass){
+    else if (blockCheck instanceof BlockDoublePlant) {
+      if (conf.doesTallgrass) {
         doBreak = true;
         if (blockCheck instanceof BlockDoublePlant && bsAbove != null && bsAbove.getBlock() instanceof BlockDoublePlant) {
           doBreakAbove = true;
@@ -129,49 +127,49 @@ public class UtilHarvestCrops {
       }
     }
     else if (blockCheck instanceof BlockMushroom) {
-      if( conf.doesMushroom)
+      if (conf.doesMushroom)
         doBreak = true;
     }
     else if (blockCheck == Blocks.PUMPKIN) {
-      if(conf.doesPumpkinBlocks){
+      if (conf.doesPumpkinBlocks) {
         doBreak = true;
       }
     }
     else if (blockCheck == Blocks.MELON_BLOCK) {
-      if(conf.doesMelonBlocks){
+      if (conf.doesMelonBlocks) {
         doBreak = false;//not the standard break - custom rules to mimic silktouch
         world.destroyBlock(posCurrent, false);
         UtilEntity.dropItemStackInWorld(world, posCurrent, Blocks.MELON_BLOCK);
       }
     }
-    else if (blockCheck == Blocks.RED_FLOWER || blockCheck == Blocks.YELLOW_FLOWER ) {
-      if(conf.doesFlowers){
+    else if (blockCheck == Blocks.RED_FLOWER || blockCheck == Blocks.YELLOW_FLOWER) {
+      if (conf.doesFlowers) {
         doBreak = true;
       }
     }
     else if (blockCheck == Blocks.LEAVES || blockCheck == Blocks.LEAVES2) {
-      if(conf.doesLeaves){
+      if (conf.doesLeaves) {
         doBreak = true;
       }
     }
     else if (blockCheck == Blocks.CACTUS && bsBelow != null && bsBelow.getBlock() == Blocks.CACTUS) {
-      if(conf.doesCactus){ //never breaking the bottom one
+      if (conf.doesCactus) { //never breaking the bottom one
         doBreak = true;
-        if(bsAbove != null && bsAbove.getBlock() == Blocks.CACTUS){
+        if (bsAbove != null && bsAbove.getBlock() == Blocks.CACTUS) {
           doBreakAbove = true;
         }
       }
     }
     else if (blockCheck == Blocks.REEDS && bsBelow != null && bsBelow.getBlock() == Blocks.REEDS) {
-      if(conf.doesReeds){//never breaking the bottom one
+      if (conf.doesReeds) {//never breaking the bottom one
         doBreak = true;
-        if(bsAbove != null && bsAbove.getBlock() == Blocks.REEDS){
+        if (bsAbove != null && bsAbove.getBlock() == Blocks.REEDS) {
           doBreakAbove = true;
         }
       }
     }
-    else if (blockCheck instanceof IGrowable  ) {
-      if(conf.doesCrops){
+    else if (blockCheck instanceof IGrowable) {
+      if (conf.doesCrops) {
         IGrowable plant = (IGrowable) blockCheck;
         // only if its full grown
         if (plant.canGrow(world, posCurrent, bs, world.isRemote) == false) {
@@ -182,12 +180,11 @@ public class UtilHarvestCrops {
     }
     // no , for now is fine, do not do blocks
     if (doBreak) {
-//      ModMain.logger.info("posCurrent="+UtilChat.blockPosToString(posCurrent));
-//      ModMain.logger.info("h"+blockCheck.getUnlocalizedName());
-//      ModMain.logger.info("doBreakAbove="+doBreakAbove);
-//      ModMain.logger.info("doBreakBelow="+doBreakBelow);
-//      ModMain.logger.info("doReplant="+doReplant);
-      
+      //      ModMain.logger.info("posCurrent="+UtilChat.blockPosToString(posCurrent));
+      //      ModMain.logger.info("h"+blockCheck.getUnlocalizedName());
+      //      ModMain.logger.info("doBreakAbove="+doBreakAbove);
+      //      ModMain.logger.info("doBreakBelow="+doBreakBelow);
+      //      ModMain.logger.info("doReplant="+doReplant);
       world.destroyBlock(posCurrent, true);
       //break above first BECAUSE 2 high tallgrass otherwise will bug out if you break bottom first
       if (doBreakAbove) {
@@ -203,5 +200,4 @@ public class UtilHarvestCrops {
     }
     return false;
   }
-  
 }

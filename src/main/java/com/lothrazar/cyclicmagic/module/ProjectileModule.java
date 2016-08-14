@@ -21,7 +21,7 @@ public class ProjectileModule extends BaseModule {
     if (enableEnderBlaze) {
       ItemProjectileBlaze item = new ItemProjectileBlaze();
       ItemRegistry.addItem(item, "ender_blaze");
-      EntityProjectileRegistry.registerModEntity(EntityBlazeBolt.class, "blazebolt", 1008 );
+      EntityProjectileRegistry.registerModEntity(EntityBlazeBolt.class, "blazebolt", 1008);
       EntityBlazeBolt.renderSnowball = item;
       ItemRegistry.ender_blaze = item;
     }

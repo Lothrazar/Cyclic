@@ -41,9 +41,9 @@ public class UtilNBT {
     try {
       if (spl != null && spl.length == 3 && spl[0] != "")
         p = new BlockPos(Integer.parseInt(spl[0]), Integer.parseInt(spl[1]), Integer.parseInt(spl[2]));
-//      else {
-//        System.out.println("invalid string: " + csv);
-//      }
+      //      else {
+      //        System.out.println("invalid string: " + csv);
+      //      }
     }
     catch (java.lang.ClassCastException e) {
       System.out.println("exc: bad string: " + csv);
@@ -91,9 +91,9 @@ public class UtilNBT {
     return writeInventoryToTag(invo, new NBTTagCompound(), key);
   }
   public static int countItemsFromNBT(NBTTagCompound tags, String key) {
-    if(tags == null){return 0;}
+    if (tags == null) { return 0; }
     NBTTagList items = tags.getTagList(key, tags.getId());
-    if(items == null){return 0;}
+    if (items == null) { return 0; }
     return items.tagCount();
   }
   public static ArrayList<ItemStack> readItemsFromNBT(NBTTagCompound tags, String key) {

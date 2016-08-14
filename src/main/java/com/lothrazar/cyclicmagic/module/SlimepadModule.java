@@ -12,7 +12,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class SlimepadModule extends BaseModule {
   private boolean moduleEnabled;
   public void onInit() {
-    if(moduleEnabled){
+    if (moduleEnabled) {
       BlockLaunch plate_launch_small = new BlockLaunch(0.8F, SoundEvents.BLOCK_SLIME_STEP);
       BlockRegistry.registerBlock(plate_launch_small, "plate_launch_small");
       BlockLaunch plate_launch_med = new BlockLaunch(1.3F, SoundEvents.BLOCK_SLIME_FALL);

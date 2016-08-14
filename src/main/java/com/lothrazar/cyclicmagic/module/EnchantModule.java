@@ -46,10 +46,10 @@ public class EnchantModule extends BaseModule {
     }
   }
   public void syncConfig(Configuration c) {
-    enableLaunch = c.getBoolean("EnchantLaunch", Const.ConfigCategory.content, true,  Const.ConfigCategory.contentDefaultText);
-    enableMagnet = c.getBoolean("EnchantMagnet", Const.ConfigCategory.content, true,  Const.ConfigCategory.contentDefaultText);
-    enableVenom = c.getBoolean("EnchantVenom", Const.ConfigCategory.content, true,  Const.ConfigCategory.contentDefaultText);
-    enableLifeleech = c.getBoolean("EnchantLifeLeech", Const.ConfigCategory.content, true,  Const.ConfigCategory.contentDefaultText);
+    enableLaunch = c.getBoolean("EnchantLaunch", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableMagnet = c.getBoolean("EnchantMagnet", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableVenom = c.getBoolean("EnchantVenom", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableLifeleech = c.getBoolean("EnchantLifeLeech", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     launchid = c.getInt("enchant.launch.id", Const.ConfigCategory.modpackMisc,
         86, 71, 999, "Id of the launch enchantment (double jump on boots).  Change this if you get id conflicts with other mods.");
     magnetid = c.getInt("enchant.magnet.id", Const.ConfigCategory.modpackMisc,

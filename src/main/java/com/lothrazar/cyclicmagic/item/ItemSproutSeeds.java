@@ -23,7 +23,7 @@ public class ItemSproutSeeds extends ItemSeeds implements IHasRecipe {
   public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
     net.minecraft.block.state.IBlockState state = worldIn.getBlockState(pos);
     //without this override, it gets planted on grass just like flowers. since we dont fit an EnumPlantType def
-    if (state!=null&&state.getBlock() == this.soilBlockID) {
+    if (state != null && state.getBlock() == this.soilBlockID) {
       return super.onItemUse(stack, playerIn, worldIn, pos, hand, facing, hitX, hitY, hitZ);
     }
     else {
@@ -42,6 +42,5 @@ public class ItemSproutSeeds extends ItemSeeds implements IHasRecipe {
         'b', Items.MELON_SEEDS,
         'c', Items.PUMPKIN_SEEDS,
         'd', Items.NETHER_WART);
-    
   }
 }

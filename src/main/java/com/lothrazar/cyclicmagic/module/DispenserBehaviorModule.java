@@ -7,7 +7,7 @@ import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
-public class DispenserBehaviorModule extends BaseModule{
+public class DispenserBehaviorModule extends BaseModule {
   private boolean seedsEnabled;
   @Override
   public void onPostInit() {

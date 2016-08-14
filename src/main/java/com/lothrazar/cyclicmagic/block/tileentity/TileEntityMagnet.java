@@ -7,13 +7,12 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.text.ITextComponent;
 
-public class TileEntityMagnet extends TileEntity implements ITickable{
+public class TileEntityMagnet extends TileEntity implements ITickable {
   private int timer;
   public static final int TIMER_FULL = 140;
   private static final String NBT_TIMER = "Timer";
   private static final int ITEM_VRADIUS = 2;
   private static final int ITEM_HRADIUS = 16;
-
   public TileEntityMagnet() {
     this.timer = TIMER_FULL;
   }
@@ -63,18 +62,17 @@ public class TileEntityMagnet extends TileEntity implements ITickable{
     double y = this.getPos().getY() + 0.7;
     double z = this.getPos().getZ() + 0.5;
     if (trigger) {
-      int moved = 
-      UtilEntity.pullEntityItemsTowards(this.getWorld(), x, y, z,  ITEM_HRADIUS, ITEM_VRADIUS);
-      System.out.println("MOVED:"+moved);
+      int moved = UtilEntity.pullEntityItemsTowards(this.getWorld(), x, y, z, ITEM_HRADIUS, ITEM_VRADIUS);
+      System.out.println("MOVED:" + moved);
       timer = TIMER_FULL;//harvest worked!
     }
-//    else {
-//      // dont trigger an event, its still processing
-//      if (this.worldObj.isRemote && this.worldObj.rand.nextDouble() < 0.1) {
-//        UtilParticle.spawnParticle(worldObj, EnumParticleTypes.SMOKE_NORMAL, x, y, z);
-//      }
-//    }
-//    this.markDirty();
+    //    else {
+    //      // dont trigger an event, its still processing
+    //      if (this.worldObj.isRemote && this.worldObj.rand.nextDouble() < 0.1) {
+    //        UtilParticle.spawnParticle(worldObj, EnumParticleTypes.SMOKE_NORMAL, x, y, z);
+    //      }
+    //    }
+    //    this.markDirty();
   }
   private int getSpeed() {
     return 1;

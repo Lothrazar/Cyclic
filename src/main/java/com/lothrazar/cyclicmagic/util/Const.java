@@ -12,11 +12,11 @@ public class Const {
     public static final String blocks = MODCONF + "blocks";
     public static final String inventory = MODCONF + "Inventory";
     public static final String items = MODCONF + "items";
-    public static final String itemsTack = items+".StackSize";
+    public static final String itemsTack = items + ".StackSize";
     public static final String recipes = MODCONF + "recipes";
     public static final String villagers = MODCONF + "villagers";
     public static final String content = MODCONF + "content";
-    public static final String uncrafter = blocks+".uncrafter";
+    public static final String uncrafter = blocks + ".uncrafter";
     public static final String contentDefaultText = "Set false to delete - requires restart";
     public static final String modpackMisc = "modpacks";
     public static final String saplingBiomes = modpackMisc + ".SaplingGrowthDetail";
@@ -64,12 +64,10 @@ public class Const {
     public final static int V = 4;
   }
   public static final int WORLDHEIGHT = 256;
-  
   //http://minecraft.gamepedia.com/Light#Mobs
-//this or lower
+  //this or lower
   public static final int LIGHT_MOBSPAWN = 7;
   public static final int LIGHT_MOBSPAWN_BLAZE = 11;
-
   public static class HorseMeta {
     public static final int variant_white = 0;
     public static final int variant_creamy = 1;

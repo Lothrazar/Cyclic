@@ -102,7 +102,7 @@ public class BlockSprout extends BlockCrops {
     int count = quantityDropped(state, fortune, rand);
     for (int i = 0; i < count; i++) {
       ret.add(getItemStackDropped(state, rand).copy()); //copy to make sure we return a new instance
-    }  
+    }
     return ret;
   }
   @Override
