@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.entity.projectile;
-import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.entity.EntityLivingBase;
@@ -34,14 +33,13 @@ public class EntityTorchBolt extends EntityThrowable {
       offset = pos.offset(mop.sideHit);
     }
     if (this.isInWater() == false && offset != null && this.worldObj.isAirBlock(offset)
-        && BlockTorch.FACING.getAllowedValues().contains(mop.sideHit)
-    //&& mop.sideHit != EnumFacing.DOWN //illegal state
+        && BlockTorch.FACING.getAllowedValues().contains(mop.sideHit)//&& mop.sideHit != EnumFacing.DOWN //illegal state
     ) {
       this.worldObj.setBlockState(offset,
           Blocks.TORCH.getDefaultState().withProperty(BlockTorch.FACING, mop.sideHit));
     }
     else {
-      UtilEntity.dropItemStackInWorld(worldObj, this.getPosition(), ItemRegistry.itemMap.get("ender_torch"));
+      UtilEntity.dropItemStackInWorld(worldObj, this.getPosition(), renderSnowball);
     }
     this.setDead();
   }

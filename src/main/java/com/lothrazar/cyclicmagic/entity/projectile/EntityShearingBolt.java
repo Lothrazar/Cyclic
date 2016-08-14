@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.entity.projectile;
 import com.lothrazar.cyclicmagic.module.MobDropChangesModule;
-import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -57,7 +56,6 @@ public class EntityShearingBolt extends EntityThrowable {
           }
           BlockPos pos = sheep.getPosition();
           UtilSound.playSound(sheep.worldObj, pos, SoundEvents.ENTITY_SHEEP_SHEAR, SoundCategory.NEUTRAL);
-          //worldObj.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.entity_sheep_shear, SoundCategory.PLAYERS, 1.0F, 1.0F, false);
         }
         // else we hit a child sheep and config disables that
         this.setDead();
@@ -66,7 +64,7 @@ public class EntityShearingBolt extends EntityThrowable {
     else {
       BlockPos pos = mop.getBlockPos();
       if (pos != null && worldObj.isRemote == false) {
-        worldObj.spawnEntityInWorld(new EntityItem(worldObj, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegistry.itemMap.get("ender_wool"))));
+        worldObj.spawnEntityInWorld(new EntityItem(worldObj, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(renderSnowball)));
         this.setDead();
       }
     }
