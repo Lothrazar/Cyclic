@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.module;
 import java.text.DecimalFormat;
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.item.ItemFoodHorse;
+import com.lothrazar.cyclicmagic.item.ItemHorseUpgrade;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
@@ -26,20 +26,20 @@ public class HorseFoodModule extends BaseEventModule {
   @Override
   public void onInit() {
     if(enableHorseFoodUpgrades){
-      ItemRegistry.addItem(new ItemFoodHorse(new ItemStack(Items.EMERALD)), "horse_upgrade_type");
-      ItemRegistry.addItem(new ItemFoodHorse(new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage())), "horse_upgrade_variant");
-      ItemRegistry.addItem(new ItemFoodHorse(new ItemStack(Items.DIAMOND)), "horse_upgrade_health");
-      ItemRegistry.addItem(new ItemFoodHorse(new ItemStack(Items.REDSTONE)), "horse_upgrade_speed");
-      ItemRegistry.addItem(new ItemFoodHorse(new ItemStack(Items.ENDER_EYE)), "horse_upgrade_jump");
+      ItemRegistry.addItem(new ItemHorseUpgrade(new ItemStack(Items.EMERALD)), "horse_upgrade_type");
+      ItemRegistry.addItem(new ItemHorseUpgrade(new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage())), "horse_upgrade_variant");
+      ItemRegistry.addItem(new ItemHorseUpgrade(new ItemStack(Items.DIAMOND)), "horse_upgrade_health");
+      ItemRegistry.addItem(new ItemHorseUpgrade(new ItemStack(Items.REDSTONE)), "horse_upgrade_speed");
+      ItemRegistry.addItem(new ItemHorseUpgrade(new ItemStack(Items.ENDER_EYE)), "horse_upgrade_jump");
       ModMain.instance.events.addEvent(this);//for SubcribeEvent hooks
     }
   }
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.modpackMisc;
-    ItemFoodHorse.HEARTS_MAX = config.getInt("HorseFood Max Hearts", category, 20, 1, 100, "Maximum number of upgraded hearts");
-    ItemFoodHorse.JUMP_MAX = config.getInt("HorseFood Max Jump", category, 6, 1, 20, "Maximum value of jump.  Naturally spawned/bred horses seem to max out at 5.5");
-    ItemFoodHorse.SPEED_MAX = config.getInt("HorseFood Max Speed", category, 50, 1, 99, "Maximum value of speed (this is NOT blocks/per second or anything like that)");
+    ItemHorseUpgrade.HEARTS_MAX = config.getInt("HorseFood Max Hearts", category, 20, 1, 100, "Maximum number of upgraded hearts");
+    ItemHorseUpgrade.JUMP_MAX = config.getInt("HorseFood Max Jump", category, 6, 1, 20, "Maximum value of jump.  Naturally spawned/bred horses seem to max out at 5.5");
+    ItemHorseUpgrade.SPEED_MAX = config.getInt("HorseFood Max Speed", category, 50, 1, 99, "Maximum value of speed (this is NOT blocks/per second or anything like that)");
     category = Const.ConfigCategory.content;
     enableHorseFoodUpgrades = config.getBoolean("HorseFood", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
@@ -51,9 +51,9 @@ public class HorseFoodModule extends BaseEventModule {
     if (event.getEntity() instanceof EntityPlayer == false) { return; }
     EntityPlayer entityPlayer = (EntityPlayer) event.getEntity();
     ItemStack held = entityPlayer.getHeldItemMainhand();
-    if (held != null && held.getItem() instanceof ItemFoodHorse) {
+    if (held != null && held.getItem() instanceof ItemHorseUpgrade) {
       if (event.getTarget() instanceof EntityHorse) {
-        ItemFoodHorse.onHorseInteract((EntityHorse) event.getTarget(), entityPlayer, held);
+        ItemHorseUpgrade.onHorseInteract((EntityHorse) event.getTarget(), entityPlayer, held);
         event.setCanceled(true);// stop the GUI inventory opening
       }
     }

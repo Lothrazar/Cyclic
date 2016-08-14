@@ -3,6 +3,7 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
+import com.lothrazar.cyclicmagic.util.Const.HorseMeta;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -20,19 +21,16 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemFoodHorse extends BaseItem implements IHasRecipe {
+public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
   public static int HEARTS_MAX;
   public static int SPEED_MAX;
   public static int JUMP_MAX;
   private static double JUMP_SCALE = 1.02; // %age
   private static double SPEED_SCALE = 1.05; // %age
-  //	public static boolean						horseFoodEnabled;
   private ItemStack recipeItem;
-  public ItemFoodHorse(ItemStack rec) {
+  public ItemHorseUpgrade(ItemStack rec) {
     super();
     recipeItem = rec;
-    // this.setMaxStackSize(64);
-    // this.setCreativeTab(ItemRegistry.tabHorseFood);
   }
   @SuppressWarnings("unchecked")
   @SideOnly(Side.CLIENT)
@@ -84,26 +82,26 @@ public class ItemFoodHorse extends BaseItem implements IHasRecipe {
       // easier than
       // doing bitwise ops
       switch (var) {
-      case Horse.variant_black:
-        var_new = Horse.variant_brown;
+      case HorseMeta.variant_black:
+        var_new = HorseMeta.variant_brown;
         break;
-      case Horse.variant_brown:
-        var_new = Horse.variant_brown_dark;
+      case HorseMeta.variant_brown:
+        var_new = HorseMeta.variant_brown_dark;
         break;
-      case Horse.variant_brown_dark:
-        var_new = Horse.variant_chestnut;
+      case HorseMeta.variant_brown_dark:
+        var_new = HorseMeta.variant_chestnut;
         break;
-      case Horse.variant_chestnut:
-        var_new = Horse.variant_creamy;
+      case HorseMeta.variant_chestnut:
+        var_new = HorseMeta.variant_creamy;
         break;
-      case Horse.variant_creamy:
-        var_new = Horse.variant_gray;
+      case HorseMeta.variant_creamy:
+        var_new = HorseMeta.variant_gray;
         break;
-      case Horse.variant_gray:
-        var_new = Horse.variant_white;
+      case HorseMeta.variant_gray:
+        var_new = HorseMeta.variant_white;
         break;
-      case Horse.variant_white:
-        var_new = Horse.variant_black;
+      case HorseMeta.variant_white:
+        var_new = HorseMeta.variant_black;
         break;
       }
       var_new += var_reduced;
@@ -157,19 +155,5 @@ public class ItemFoodHorse extends BaseItem implements IHasRecipe {
       UtilSound.playSound(player, horse.getPosition(), SoundEvents.ENTITY_HORSE_EAT, SoundCategory.NEUTRAL);
       horse.setEatingHaystack(true); // makes horse animate and bend down to eat
     }
-  }
-  public static class Horse {
-    public static final int variant_white = 0;
-    public static final int variant_creamy = 1;
-    public static final int variant_chestnut = 2;
-    public static final int variant_brown = 3;
-    public static final int variant_black = 4;
-    public static final int variant_gray = 5;
-    public static final int variant_brown_dark = 6;
-    public static final int type_standard = 0;
-    public static final int type_donkey = 1;
-    public static final int type_mule = 2;
-    public static final int type_zombie = 3;
-    public static final int type_skeleton = 4;
   }
 }

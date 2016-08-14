@@ -69,4 +69,19 @@ public class Const {
 //this or lower
   public static final int LIGHT_MOBSPAWN = 7;
   public static final int LIGHT_MOBSPAWN_BLAZE = 11;
+
+  public static class HorseMeta {
+    public static final int variant_white = 0;
+    public static final int variant_creamy = 1;
+    public static final int variant_chestnut = 2;
+    public static final int variant_brown = 3;
+    public static final int variant_black = 4;
+    public static final int variant_gray = 5;
+    public static final int variant_brown_dark = 6;
+    public static final int type_standard = 0;
+    public static final int type_donkey = 1;
+    public static final int type_mule = 2;
+    public static final int type_zombie = 3;
+    public static final int type_skeleton = 4;
+  }
 }// ends class reference
