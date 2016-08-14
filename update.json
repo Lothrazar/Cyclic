@@ -5,8 +5,8 @@
     "1.9.4-recommended":  "1.2.0",
     "1.10-latest":  "1.1.0",
     "1.10-recommended": "1.1.0",
-    "1.10.2-latest":  "1.5.1",
-    "1.10.2-recommended": "1.5.1"
+    "1.10.2-latest":  "1.5.2",
+    "1.10.2-recommended": "1.5.2"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -36,5 +36,6 @@
 	,"1.4.5":"Hot fix not loading on servers (#61).  Hotfix Exp Achievements misfiring on false positives (#60). "
  	,"1.5.0":"New block: Harvester.  New block: Item Magnet.  Added a config option to disable potion effects from Sleeing Mat.  Fix Garden Scythe leaving a floating block (#64).  Magnet enchant now only goes to I not V (levels barely had a difference anyway)"
  	,"1.5.1":"Fix Garden Scythe rotating cocoa beans on harvesting (#67)"
+ 	,"1.5.2":"Mod compatibility fixes"
  }
 }
