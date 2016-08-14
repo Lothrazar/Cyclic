@@ -16,6 +16,7 @@ public class ProjectileModule extends BaseModule {
   private boolean enderTorch;
   private boolean enderWater;
   private boolean enderLightning;
+  private boolean enderBombsEnabled;
   int trackingRange = 64;
   int updateFrequency = 1;
   boolean sendsVelocityUpdates = true;
@@ -77,7 +78,22 @@ public class ProjectileModule extends BaseModule {
       EntityLightningballBolt.renderSnowball = item;
       ItemRegistry.ender_lightning = item;
     }
-    //TODO: ender bomb module/ registry is sprate?
+    if (enderBombsEnabled) {
+      ItemRegistry.ender_tnt_1 = new ItemProjectileTNT(1);
+      ItemRegistry.ender_tnt_2 = new ItemProjectileTNT(2);
+      ItemRegistry.ender_tnt_3 = new ItemProjectileTNT(3);
+      ItemRegistry.ender_tnt_4 = new ItemProjectileTNT(4);
+      ItemRegistry.ender_tnt_5 = new ItemProjectileTNT(5);
+      ItemRegistry.ender_tnt_6 = new ItemProjectileTNT(6);
+      ItemRegistry.addItem(ItemRegistry.ender_tnt_1, "ender_tnt_1");
+      ItemRegistry.addItem(ItemRegistry.ender_tnt_2, "ender_tnt_2");
+      ItemRegistry.addItem(ItemRegistry.ender_tnt_3, "ender_tnt_3");
+      ItemRegistry.addItem(ItemRegistry.ender_tnt_4, "ender_tnt_4");
+      ItemRegistry.addItem(ItemRegistry.ender_tnt_5, "ender_tnt_5");
+      ItemRegistry.addItem(ItemRegistry.ender_tnt_6, "ender_tnt_6");
+      EntityRegistry.registerModEntity(EntityDynamite.class, "tntbolt", 1007, ModMain.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
+      EntityDynamite.renderSnowball = ItemRegistry.ender_tnt_1;
+    }
   }
   @Override
   public void syncConfig(Configuration config) {
@@ -89,5 +105,6 @@ public class ProjectileModule extends BaseModule {
     enderTorch = config.getBoolean("EnderTorch", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enderLightning = config.getBoolean("EnderLightning", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enderWater = config.getBoolean("EnderWater", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enderBombsEnabled = config.getBoolean("EnderBombs", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 }

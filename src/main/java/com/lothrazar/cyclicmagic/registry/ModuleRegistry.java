@@ -1,57 +1,10 @@
 package com.lothrazar.cyclicmagic.registry;
-
 import java.util.List;
 import com.lothrazar.cyclicmagic.ICyclicModule;
-import com.lothrazar.cyclicmagic.module.AchievementExpModule;
-import com.lothrazar.cyclicmagic.module.BucketBlockModule;
-import com.lothrazar.cyclicmagic.module.CarbonPaperModule;
-import com.lothrazar.cyclicmagic.module.ChestSackModule;
-import com.lothrazar.cyclicmagic.module.CommandModule;
-import com.lothrazar.cyclicmagic.module.ConsumeablesModule;
-import com.lothrazar.cyclicmagic.module.ConveyorPlateModule;
-import com.lothrazar.cyclicmagic.module.DispenserBehaviorModule;
-import com.lothrazar.cyclicmagic.module.DropNametagDeathModule;
-import com.lothrazar.cyclicmagic.module.EditSignBarehandModule;
-import com.lothrazar.cyclicmagic.module.EmeraldArmorModule;
-import com.lothrazar.cyclicmagic.module.EnchantModule;
-import com.lothrazar.cyclicmagic.module.EnderBombModule;
-import com.lothrazar.cyclicmagic.module.EnderBookModule;
-import com.lothrazar.cyclicmagic.module.EnderChestClickopenModule;
-import com.lothrazar.cyclicmagic.module.F3InfoModule;
-import com.lothrazar.cyclicmagic.module.FragileBlockModule;
-import com.lothrazar.cyclicmagic.module.FragileTorchesModule;
-import com.lothrazar.cyclicmagic.module.FuelAdditionModule;
-import com.lothrazar.cyclicmagic.module.FurnaceStardewModule;
-import com.lothrazar.cyclicmagic.module.GuiTerrariaButtonsModule;
-import com.lothrazar.cyclicmagic.module.HorseFoodModule;
-import com.lothrazar.cyclicmagic.module.ItemstackInfoModule;
-import com.lothrazar.cyclicmagic.module.KeyInventoryShiftModule;
-import com.lothrazar.cyclicmagic.module.LadderClimbSpeedModule;
-import com.lothrazar.cyclicmagic.module.LightningTransformModule;
-import com.lothrazar.cyclicmagic.module.LootTableModule;
-import com.lothrazar.cyclicmagic.module.MachineBlockModule;
-import com.lothrazar.cyclicmagic.module.MagicBeanModule;
-import com.lothrazar.cyclicmagic.module.MobDropChangesModule;
-import com.lothrazar.cyclicmagic.module.MobSpawnModule;
-import com.lothrazar.cyclicmagic.module.MountedTweaksModule;
-import com.lothrazar.cyclicmagic.module.PassthroughActionModule;
-import com.lothrazar.cyclicmagic.module.PotionModule;
-import com.lothrazar.cyclicmagic.module.ProjectileModule;
-import com.lothrazar.cyclicmagic.module.RecipeChangerModule;
-import com.lothrazar.cyclicmagic.module.SaplingMutationModule;
-import com.lothrazar.cyclicmagic.module.SkullNameFromSignModule;
-import com.lothrazar.cyclicmagic.module.SlimepadModule;
-import com.lothrazar.cyclicmagic.module.StackSizeModule;
-import com.lothrazar.cyclicmagic.module.StorageBagModule;
-import com.lothrazar.cyclicmagic.module.ToolsModule;
-import com.lothrazar.cyclicmagic.module.UnbreakableSpawnerModule;
-import com.lothrazar.cyclicmagic.module.VillagerCreateModule;
-import com.lothrazar.cyclicmagic.module.VillagerNametagModule;
-import com.lothrazar.cyclicmagic.module.WorldGenModule;
+import com.lothrazar.cyclicmagic.module.*;
 
 public class ModuleRegistry {
-  public static void register(List<ICyclicModule> modules){
-
+  public static void register(List<ICyclicModule> modules) {
     // :) http://alphabetizer.flap.tv/
     modules.add(new AchievementExpModule());
     modules.add(new BucketBlockModule());
@@ -65,7 +18,6 @@ public class ModuleRegistry {
     modules.add(new EditSignBarehandModule());
     modules.add(new EmeraldArmorModule());
     modules.add(new EnchantModule());
-    modules.add(new EnderBombModule());
     modules.add(new EnderBookModule());
     modules.add(new EnderChestClickopenModule());
     modules.add(new F3InfoModule());
