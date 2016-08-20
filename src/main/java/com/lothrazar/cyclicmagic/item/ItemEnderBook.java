@@ -11,6 +11,7 @@ import com.lothrazar.cyclicmagic.util.UtilSearchWorld;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -117,8 +118,9 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
   }
   public void addRecipe() {
     GameRegistry.addRecipe(new ItemStack(this), "ene", "ebe", "eee",
-        'e', Items.ENDER_PEARL, 'b', Items.BOOK,
-        'n', Items.NETHER_STAR);
+        'e', Items.ENDER_PEARL, 
+        'b', Items.BOOK,
+        'n', Blocks.EMERALD_BLOCK);
     // if you want to clean out the book and start over
     GameRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this));
   }

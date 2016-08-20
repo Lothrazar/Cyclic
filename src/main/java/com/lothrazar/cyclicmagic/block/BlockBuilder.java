@@ -123,6 +123,6 @@ public class BlockBuilder extends Block implements IHasRecipe {
         'g', Items.GHAST_TEAR,
         's', Blocks.DISPENSER,
         'r', Blocks.REDSTONE_BLOCK,
-        'b', Blocks.BEACON);
+        'b', Blocks.DIAMOND_BLOCK);
   }
 }

@@ -32,6 +32,7 @@ public class LootTableModule extends BaseEventModule implements IHasConfig {
   private boolean enableShulkerDiamCryst;
   private boolean enableSilverfishIron;
   private boolean enableStrayPackedIce;
+  private boolean enableChestLoot;
   public LootTableModule() {
     chests = new HashSet<ResourceLocation>();
     //anything but the starter chest
@@ -60,6 +61,12 @@ public class LootTableModule extends BaseEventModule implements IHasConfig {
         return;
       }
     }
+    if (enableChestLoot) {
+      onLootChestTableLoad(main, event);
+    }
+    onLootEntityTableLoad(main, event); //each entity has own table
+  }
+  private void onLootChestTableLoad(LootPool main, LootTableLoadEvent event) {
     if (event.getName() == LootTableList.CHESTS_SPAWN_BONUS_CHEST) {
       fillBonusChest(main);
     }
@@ -69,7 +76,13 @@ public class LootTableModule extends BaseEventModule implements IHasConfig {
     else if (event.getName() == LootTableList.CHESTS_END_CITY_TREASURE) {
       fillEndCityChest(main);
     }
-    else if (enableBats && event.getName() == LootTableList.ENTITIES_BAT) {
+    //no else on this one, its a catch all
+    else if (chests.contains(event.getName())) { // every pool except for spawn 
+      fillGenericChest(main);
+    }
+  }
+  private void onLootEntityTableLoad(LootPool main, LootTableLoadEvent event) {
+    if (enableBats && event.getName() == LootTableList.ENTITIES_BAT) {
       addLoot(main, Items.LEATHER, 90);
     }
     else if (enablePolarbears && event.getName() == LootTableList.field_189969_E) {
@@ -94,10 +107,6 @@ public class LootTableModule extends BaseEventModule implements IHasConfig {
       addLoot(main, Items.DIAMOND, 95);
       addLoot(main, Item.getItemFromBlock(Blocks.DIAMOND_BLOCK), 35);
     }
-    //no else on this one, its a catch all
-    if (chests.contains(event.getName())) { // every pool except for spawn 
-      fillGenericChest(main);
-    }
   }
   private void fillEndCityChest(LootPool main) {
     addLoot(main, ItemRegistry.book_ender, 10);
@@ -114,6 +123,28 @@ public class LootTableModule extends BaseEventModule implements IHasConfig {
     addLoot(main, ItemRegistry.chest_sack_empty);
     addLoot(main, ItemRegistry.tool_spawn_inspect);
     addLoot(main, ItemRegistry.ender_pearl_reuse);
+    addLoot(main, ItemRegistry.carbon_paper);
+    addLoot(main, ItemRegistry.storage_bag);
+    addLoot(main, ItemRegistry.crafting_food, 10);
+    addLoot(main, ItemRegistry.inventory_food, 10);
+    addLoot(main, ItemRegistry.ender_blaze);
+    addLoot(main, ItemRegistry.ender_dungeon);
+    addLoot(main, ItemRegistry.ender_fishing);
+    addLoot(main, ItemRegistry.ender_lightning);
+    addLoot(main, ItemRegistry.ender_tnt_1);
+    addLoot(main, ItemRegistry.ender_tnt_2);
+    addLoot(main, ItemRegistry.ender_torch, 30);
+    addLoot(main, ItemRegistry.ender_wool, 25);
+    addLoot(main, ItemRegistry.ender_water);
+    addLoot(main, ItemRegistry.emerald_axe);
+    addLoot(main, ItemRegistry.emerald_hoe);
+    addLoot(main, ItemRegistry.emerald_pickaxe);
+    addLoot(main, ItemRegistry.emerald_shovel);
+    addLoot(main, ItemRegistry.emerald_sword);
+    addLoot(main, ItemRegistry.emerald_boots);
+    addLoot(main, ItemRegistry.emerald_chest);
+    addLoot(main, ItemRegistry.emerald_head);
+    addLoot(main, ItemRegistry.emerald_legs);
   }
   private void fillIglooChest(LootPool main) {
     addLoot(main, PotionModule.potion_snow);
@@ -123,14 +154,14 @@ public class LootTableModule extends BaseEventModule implements IHasConfig {
     addLoot(main, ItemRegistry.sleeping_mat);
   }
   private void addLoot(LootPool main, Item item) {
-    if (item == null) { return;//shortcut fix bc of new module config system that can delete items
+    if (item != null) { //shortcut fix bc of new module config system that can delete items
+      addLoot(main, item, RANDODEFAULT);
     }
-    addLoot(main, item, RANDODEFAULT);
   }
   private void addLoot(LootPool main, Item item, int rando) {
-    if (item == null) { return;//shortcut fix bc of new module config system that can delete items
+    if (item != null) {//shortcut fix bc of new module config system that can delete items
+      main.addEntry(new LootEntryItem(item, rando, 0, new LootFunction[0], new LootCondition[0], Const.MODRES + item.getUnlocalizedName()));
     }
-    main.addEntry(new LootEntryItem(item, rando, 0, new LootFunction[0], new LootCondition[0], Const.MODRES + item.getUnlocalizedName()));
   }
   @Override
   public void syncConfig(Configuration config) {
@@ -142,5 +173,6 @@ public class LootTableModule extends BaseEventModule implements IHasConfig {
     enableShulkerDiamCryst = config.getBoolean("ShulkerLoot", Const.ConfigCategory.mobs, true, "Shulkers now drop loot: Diamonds and rare ender crystals");
     enableSilverfishIron = config.getBoolean("SilverfishIron", Const.ConfigCategory.mobs, true, "Silverfish can drop iron ingots");
     enableStrayPackedIce = config.getBoolean("StraySkeletonPackedIce", Const.ConfigCategory.mobs, true, "Strays (he new skeleton variants from cold biomes) can drop packed ice");
+    enableChestLoot = config.getBoolean("ChestLoot", Const.ConfigCategory.worldGen, true, "If true, then enabled items and blocks from this mod can appear in loot chests");
   }
 }

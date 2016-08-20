@@ -8,6 +8,7 @@ import com.lothrazar.cyclicmagic.item.ItemAppleEmerald;
 import com.lothrazar.cyclicmagic.item.ItemChestSack;
 import com.lothrazar.cyclicmagic.item.ItemChestSackEmpty;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
+import com.lothrazar.cyclicmagic.item.ItemEmeraldArmor;
 import com.lothrazar.cyclicmagic.item.ItemEnderBook;
 import com.lothrazar.cyclicmagic.item.ItemToolPearlReuse;
 import com.lothrazar.cyclicmagic.item.ItemFoodCorruptedChorus;
@@ -61,6 +62,15 @@ public class ItemRegistry {
   public static ItemFoodInventory inventory_food;
   public static ItemFoodHeart heart_food;
   public static ItemFoodCorruptedChorus corrupted_chorus;
+  public static ItemEmeraldArmor emerald_boots;
+  public static ItemEmeraldArmor emerald_head;
+  public static ItemEmeraldArmor emerald_legs;
+  public static ItemEmeraldArmor emerald_chest;
+  public static Item emerald_sword;
+  public static Item emerald_axe;
+  public static Item emerald_pickaxe;
+  public static Item emerald_shovel;
+  public static Item emerald_hoe;
   public static Item addItem(Item i, String key) {
     i.setUnlocalizedName(key);
     itemMap.put(key, i);

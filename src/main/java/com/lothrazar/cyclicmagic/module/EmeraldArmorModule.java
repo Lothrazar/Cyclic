@@ -17,7 +17,6 @@ import net.minecraftforge.common.util.EnumHelper;
 
 public class EmeraldArmorModule extends BaseModule {
   private boolean enableEmeraldGear;
-  public static ItemEmeraldArmor emerald_boots;
   // thanks for help:
   // http://bedrockminer.jimdo.com/modding-tutorials/basic-modding-1-7/custom-tools-swords/
   public static ToolMaterial TOOL_MATERIAL_EMERALD;
@@ -58,16 +57,24 @@ public class EmeraldArmorModule extends BaseModule {
   @Override
   public void onInit() {
     if (enableEmeraldGear) {
-      ItemRegistry.addItem(new ItemEmeraldArmor(EntityEquipmentSlot.HEAD), "emerald_helmet");
-      ItemRegistry.addItem(new ItemEmeraldArmor(EntityEquipmentSlot.CHEST), "emerald_chestplate");
-      ItemRegistry.addItem(new ItemEmeraldArmor(EntityEquipmentSlot.LEGS), "emerald_leggings");
-      emerald_boots = new ItemEmeraldArmor(EntityEquipmentSlot.FEET);
-      ItemRegistry.addItem(emerald_boots, "emerald_boots");
-      ItemRegistry.addItem(new ItemEmeraldSword(), ItemEmeraldSword.name);
-      ItemRegistry.addItem(new ItemEmeraldPickaxe(), ItemEmeraldPickaxe.name);
-      ItemRegistry.addItem(new ItemEmeraldAxe(), ItemEmeraldAxe.name);
-      ItemRegistry.addItem(new ItemEmeraldSpade(), ItemEmeraldSpade.name);
-      ItemRegistry.addItem(new ItemEmeraldHoe(), ItemEmeraldHoe.name);
+      ItemRegistry.emerald_head = new ItemEmeraldArmor(EntityEquipmentSlot.HEAD);
+      ItemRegistry.addItem(ItemRegistry.emerald_head, "emerald_helmet");
+      ItemRegistry.emerald_chest = new ItemEmeraldArmor(EntityEquipmentSlot.CHEST);
+      ItemRegistry.addItem(ItemRegistry.emerald_chest, "emerald_chestplate");
+      ItemRegistry.emerald_legs = new ItemEmeraldArmor(EntityEquipmentSlot.LEGS);
+      ItemRegistry.addItem(ItemRegistry.emerald_legs, "emerald_leggings");
+      ItemRegistry.emerald_boots = new ItemEmeraldArmor(EntityEquipmentSlot.FEET);
+      ItemRegistry.addItem(ItemRegistry.emerald_boots, "emerald_boots");
+      ItemRegistry.emerald_sword = new ItemEmeraldSword();
+      ItemRegistry.addItem(ItemRegistry.emerald_sword, ItemEmeraldSword.name);
+      ItemRegistry.emerald_pickaxe = new ItemEmeraldPickaxe();
+      ItemRegistry.addItem(ItemRegistry.emerald_pickaxe, ItemEmeraldPickaxe.name);
+      ItemRegistry.emerald_axe = new ItemEmeraldAxe();
+      ItemRegistry.addItem(ItemRegistry.emerald_axe, ItemEmeraldAxe.name);
+      ItemRegistry.emerald_shovel = new ItemEmeraldSpade();
+      ItemRegistry.addItem(ItemRegistry.emerald_shovel, ItemEmeraldSpade.name);
+      ItemRegistry.emerald_hoe = new ItemEmeraldHoe();
+      ItemRegistry.addItem(ItemRegistry.emerald_hoe, ItemEmeraldHoe.name);
     }
   }
   @Override

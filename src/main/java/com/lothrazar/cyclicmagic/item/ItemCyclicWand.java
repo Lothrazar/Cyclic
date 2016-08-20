@@ -206,6 +206,6 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
         'd', new ItemStack(Blocks.DIAMOND_BLOCK),
         'g', Items.GHAST_TEAR,
         'o', Blocks.OBSIDIAN,
-        's', Items.NETHER_STAR);
+        's', Blocks.END_STONE);
   }
 }

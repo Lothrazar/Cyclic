@@ -76,6 +76,6 @@ public class BlockHarvester extends Block implements IHasRecipe {
         'g', Items.GHAST_TEAR,
         's', Blocks.DISPENSER,
         'r', Blocks.EMERALD_BLOCK,
-        'b', Blocks.BEACON);
+        'b', Items.DIAMOND);
   }
 }

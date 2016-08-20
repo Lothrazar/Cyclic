@@ -37,5 +37,6 @@
  	,"1.5.0":"New block: Harvester.  New block: Item Magnet.  Added a config option to disable potion effects from Sleeing Mat.  Fix Garden Scythe leaving a floating block (#64).  Magnet enchant now only goes to I not V (levels barely had a difference anyway)"
  	,"1.5.1":"Fix Garden Scythe rotating cocoa beans on harvesting (#67)"
  	,"1.5.2":"Mod compatibility fixes"
+ 	,"1.5.3":"A few recipes no longer require beacons & nether stars.  Add world config to disable all loot chest insertions.  "
  }
 }
