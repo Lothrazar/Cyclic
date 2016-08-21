@@ -30,7 +30,8 @@ public class ContainerPlayerExtended extends Container {
     inventory = new InventoryPlayerExtended(player);
     inventory.setEventHandler(this);
     if (!player.worldObj.isRemote) {
-      inventory.stackList = UtilPlayerInventoryFilestorage.getPlayerInventory(player).stackList;
+      UtilPlayerInventoryFilestorage.putDataIntoInventory(inventory, player);
+//      inventory.stackList = UtilPlayerInventoryFilestorage.getPlayerInventory(player).stackList;
     }
     for (int k = 0; k < ARMOR.length; k++) {
       final EntityEquipmentSlot slot = ARMOR[k];
