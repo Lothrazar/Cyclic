@@ -11,6 +11,7 @@ import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.item.ItemEmeraldArmor;
 import com.lothrazar.cyclicmagic.item.ItemEnderBook;
 import com.lothrazar.cyclicmagic.item.ItemToolPearlReuse;
+import com.lothrazar.cyclicmagic.item.ItemToolProspector;
 import com.lothrazar.cyclicmagic.item.ItemFoodCorruptedChorus;
 import com.lothrazar.cyclicmagic.item.ItemFoodCrafting;
 import com.lothrazar.cyclicmagic.item.ItemFoodHeart;
@@ -73,6 +74,7 @@ public class ItemRegistry {
   public static Item emerald_shovel;
   public static Item emerald_hoe;
   public static ItemToolSpelunker tool_spelunker;
+  public static ItemToolProspector tool_prospector;
   public static Item addItem(Item i, String key) {
     i.setUnlocalizedName(key);
     itemMap.put(key, i);

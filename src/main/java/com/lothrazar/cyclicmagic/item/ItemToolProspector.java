@@ -2,6 +2,8 @@ package com.lothrazar.cyclicmagic.item;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
+import net.minecraft.block.BlockOre;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,49 +20,38 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class ItemToolSpelunker extends BaseTool implements IHasRecipe {
+public class ItemToolProspector extends BaseTool implements IHasRecipe {
   private static final int durability = 2000;
   private static final int cooldown = 12;
-  private static final int range = 32;
-  public ItemToolSpelunker() {
+  private static final int range = 16;
+  public ItemToolProspector() {
     super(durability);
   }
   @Override
-  public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World worldObj, BlockPos posIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-    if (side == null || posIn == null) { return super.onItemUse(stack, player, worldObj, posIn, hand, side, hitX, hitY, hitZ); }
+  public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    if (side == null || pos == null) { return super.onItemUse(stack, player, worldObj, pos, hand, side, hitX, hitY, hitZ); }
     //    boolean showOdds = player.isSneaking();
     boolean found = false;
     if (!worldObj.isRemote) {
       EnumFacing direction = side.getOpposite();
-      BlockPos pos = posIn.offset(direction);
       BlockPos current = pos;
-      for (int i = 1; i <= range; i++) {
+      IBlockState at = worldObj.getBlockState(current);
+      for (int i = 0; i <= range; i++) {
+        if (at != null && at.getBlock() instanceof BlockOre) {
+          UtilChat.addChatMessage(player, UtilChat.lang("tool_prospector.found") + at.getBlock().getLocalizedName());
+          found = true;
+          break;
+        }
         current = current.offset(direction);
-        if (worldObj.isAirBlock(current)) {
-          UtilChat.addChatMessage(player, UtilChat.lang("tool_spelunker.cave") + i);
-          found = true;
-        }
-        else if (worldObj.getBlockState(current) == Blocks.WATER.getDefaultState()
-            || worldObj.getBlockState(current) == Blocks.FLOWING_WATER.getDefaultState()) {
-          UtilChat.addChatMessage(player, UtilChat.lang("tool_spelunker.water") + i);
-          found = true;
-        }
-        else if (worldObj.getBlockState(current) == Blocks.LAVA.getDefaultState()
-            || worldObj.getBlockState(current) == Blocks.FLOWING_LAVA.getDefaultState()) {
-          UtilChat.addChatMessage(player, UtilChat.lang("tool_spelunker.lava") + i);
-          found = true;
-        }
-        if (found) {
-          break;//stop looping
-        }
+        at = worldObj.getBlockState(current);
       }
       if (found == false) {
-        UtilChat.addChatMessage(player, UtilChat.lang("tool_spelunker.none") + range);
+        UtilChat.addChatMessage(player, UtilChat.lang("tool_prospector.none") + range);
       }
     }
     player.getCooldownTracker().setCooldown(this, cooldown);
     super.onUse(stack, player, worldObj, hand);
-    return super.onItemUse(stack, player, worldObj, posIn, hand, side, hitX, hitY, hitZ);
+    return super.onItemUse(stack, player, worldObj, pos, hand, side, hitX, hitY, hitZ);
   }
   @Override
   public void addRecipe() {
@@ -68,9 +59,9 @@ public class ItemToolSpelunker extends BaseTool implements IHasRecipe {
         " sg",
         " bs",
         "b  ",
-        'b', new ItemStack(Items.STICK),
-        's', new ItemStack(Items.FLINT),
-        'g', new ItemStack(Blocks.STAINED_GLASS, 1, EnumDyeColor.BLUE.getMetadata()));
+        'b', new ItemStack(Items.BLAZE_ROD),
+        's', new ItemStack(Items.DIAMOND),
+        'g', new ItemStack(Blocks.STAINED_GLASS, 1, EnumDyeColor.LIGHT_BLUE.getMetadata()));
   }
   public static class SpawnDetail {
     private int itemWeight;

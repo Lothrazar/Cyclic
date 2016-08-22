@@ -5,6 +5,7 @@ import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.item.ItemSleepingBag;
 import com.lothrazar.cyclicmagic.item.ItemToolHarvest;
 import com.lothrazar.cyclicmagic.item.ItemToolPearlReuse;
+import com.lothrazar.cyclicmagic.item.ItemToolProspector;
 import com.lothrazar.cyclicmagic.item.ItemToolPush;
 import com.lothrazar.cyclicmagic.item.ItemToolSpawnInspect;
 import com.lothrazar.cyclicmagic.item.ItemToolSpelunker;
@@ -46,6 +47,9 @@ public class ToolsModule extends BaseModule {
   private boolean enableCyclicWand;
   @Override
   public void onInit() {
+    
+    ItemRegistry.tool_prospector = new ItemToolProspector();
+    ItemRegistry.addItem(ItemRegistry.tool_prospector, "tool_prospector");
     ItemRegistry.tool_spelunker = new ItemToolSpelunker();
     ItemRegistry.addItem(ItemRegistry.tool_spelunker, "tool_spelunker");
     if (enableSpawnInspect) {
