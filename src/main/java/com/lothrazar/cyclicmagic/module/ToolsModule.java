@@ -45,13 +45,18 @@ public class ToolsModule extends BaseModule {
   private boolean enablePearlReuse;
   private boolean enableSpawnInspect;
   private boolean enableCyclicWand;
+  private boolean enableProspector;
+  private boolean enableCavefinder;
   @Override
   public void onInit() {
-    
-    ItemRegistry.tool_prospector = new ItemToolProspector();
-    ItemRegistry.addItem(ItemRegistry.tool_prospector, "tool_prospector");
-    ItemRegistry.tool_spelunker = new ItemToolSpelunker();
-    ItemRegistry.addItem(ItemRegistry.tool_spelunker, "tool_spelunker");
+    if (enableProspector) {
+      ItemRegistry.tool_prospector = new ItemToolProspector();
+      ItemRegistry.addItem(ItemRegistry.tool_prospector, "tool_prospector");
+    }
+    if (enableCavefinder) {
+      ItemRegistry.tool_spelunker = new ItemToolSpelunker();
+      ItemRegistry.addItem(ItemRegistry.tool_spelunker, "tool_spelunker");
+    }
     if (enableSpawnInspect) {
       ItemRegistry.tool_spawn_inspect = new ItemToolSpawnInspect();
       ItemRegistry.addItem(ItemRegistry.tool_spawn_inspect, "tool_spawn_inspect");
@@ -101,6 +106,8 @@ public class ToolsModule extends BaseModule {
     enableToolPush = config.getBoolean("PistonScepter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableSleepingMat = config.getBoolean("SleepingMat", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableCyclicWand = config.getBoolean("CyclicWand", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableProspector = config.getBoolean("Prospector", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableCavefinder = config.getBoolean("Cavefinder", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
