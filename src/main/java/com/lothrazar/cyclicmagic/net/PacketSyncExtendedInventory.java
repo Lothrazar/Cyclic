@@ -17,25 +17,25 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class PacketSyncExtendedInventory implements IMessage, IMessageHandler<PacketSyncExtendedInventory, IMessage> {
   int slot;
   int playerId;
-  ItemStack bauble = null;
+  ItemStack itemStack = null;
   public PacketSyncExtendedInventory() {
   }
   public PacketSyncExtendedInventory(EntityPlayer player, int slot) {
     this.slot = slot;
-    this.bauble = UtilPlayerInventoryFilestorage.getPlayerInventory(player).getStackInSlot(slot);
+    this.itemStack = UtilPlayerInventoryFilestorage.getPlayerInventoryStack(player, slot);
     this.playerId = player.getEntityId();
   }
   @Override
   public void toBytes(ByteBuf buffer) {
     buffer.writeByte(slot);
     buffer.writeInt(playerId);
-    ByteBufUtils.writeItemStack(buffer, bauble);
+    ByteBufUtils.writeItemStack(buffer, itemStack);
   }
   @Override
   public void fromBytes(ByteBuf buffer) {
     slot = buffer.readByte();
     playerId = buffer.readInt();
-    bauble = ByteBufUtils.readItemStack(buffer);
+    itemStack = ByteBufUtils.readItemStack(buffer);
   }
   @SideOnly(Side.CLIENT)
   @Override
@@ -54,7 +54,9 @@ public class PacketSyncExtendedInventory implements IMessage, IMessageHandler<Pa
       return;
     Entity p = world.getEntityByID(message.playerId);
     if (p != null && p instanceof EntityPlayer) {
-      UtilPlayerInventoryFilestorage.getPlayerInventory((EntityPlayer) p).stackList[message.slot] = message.bauble;
+      EntityPlayer player = (EntityPlayer) p;
+      UtilPlayerInventoryFilestorage.setPlayerInventoryStack(player, slot, message.itemStack);
+//      UtilPlayerInventoryFilestorage.getPlayerInventory(player).stackList[message.slot] = message.itemStack;
     }
     return;
   }
