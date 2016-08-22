@@ -21,6 +21,7 @@ import com.lothrazar.cyclicmagic.item.ItemSleepingBag;
 import com.lothrazar.cyclicmagic.item.ItemSproutSeeds;
 import com.lothrazar.cyclicmagic.item.ItemToolHarvest;
 import com.lothrazar.cyclicmagic.item.ItemToolSpawnInspect;
+import com.lothrazar.cyclicmagic.item.ItemToolSpelunker;
 import com.lothrazar.cyclicmagic.item.projectile.*;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.item.Item;
@@ -71,6 +72,7 @@ public class ItemRegistry {
   public static Item emerald_pickaxe;
   public static Item emerald_shovel;
   public static Item emerald_hoe;
+  public static ItemToolSpelunker tool_spelunker;
   public static Item addItem(Item i, String key) {
     i.setUnlocalizedName(key);
     itemMap.put(key, i);
