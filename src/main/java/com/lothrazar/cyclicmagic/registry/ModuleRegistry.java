@@ -6,7 +6,6 @@ import com.lothrazar.cyclicmagic.module.*;
 public class ModuleRegistry {
   public static void register(List<ICyclicModule> modules) {
     // :) http://alphabetizer.flap.tv/
-    modules.add(new AchievementExpModule());
     modules.add(new BucketBlockModule());
     modules.add(new CarbonPaperModule());
     modules.add(new ChestSackModule());
@@ -41,7 +40,7 @@ public class ModuleRegistry {
     modules.add(new PotionModule());
     modules.add(new ProjectileModule());
     modules.add(new RecipeChangerModule());
-    modules.add(new SaplingMutationModule());
+    modules.add(new SaplingPlantDespawnModule());
     modules.add(new SkullNameFromSignModule());
     modules.add(new SlimepadModule());
     modules.add(new StackSizeModule());
