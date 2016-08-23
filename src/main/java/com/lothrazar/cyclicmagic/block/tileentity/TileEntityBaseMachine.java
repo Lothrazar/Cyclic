@@ -4,6 +4,7 @@ import com.lothrazar.cyclicmagic.block.BlockMiner;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 
+@SuppressWarnings("unused")
 public abstract class TileEntityBaseMachine extends TileEntity {
   protected boolean isPowered() {
     return this.getWorld().isBlockIndirectlyGettingPowered(this.getPos()) > 0;
