@@ -1,8 +1,11 @@
 package com.lothrazar.cyclicmagic.gui;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBuilder;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPlacer;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityUncrafting;
 import com.lothrazar.cyclicmagic.gui.builder.ContainerBuilder;
 import com.lothrazar.cyclicmagic.gui.builder.GuiBuilder;
+import com.lothrazar.cyclicmagic.gui.placer.ContainerPlacer;
+import com.lothrazar.cyclicmagic.gui.placer.GuiPlacer;
 import com.lothrazar.cyclicmagic.gui.player.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.gui.storage.ContainerStorage;
 import com.lothrazar.cyclicmagic.gui.storage.GuiStorage;
@@ -32,6 +35,7 @@ public class ModGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_STORAGE = 3;
   public static final int GUI_INDEX_WAYPOINT = 4;
   public static final int GUI_INDEX_BUILDER = 5;
+  public static final int GUI_INDEX_PLACER = 6;
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
     TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
@@ -52,6 +56,13 @@ public class ModGuiHandler implements IGuiHandler {
     case GUI_INDEX_BUILDER:
       if (te != null && te instanceof TileEntityBuilder) {
         Container c = new ContainerBuilder(player.inventory, (TileEntityBuilder) te);
+        c.detectAndSendChanges();
+        return c;
+      }
+      break;
+    case GUI_INDEX_PLACER:
+      if (te != null && te instanceof TileEntityPlacer) {
+        Container c = new ContainerPlacer(player.inventory, (TileEntityPlacer) te);
         c.detectAndSendChanges();
         return c;
       }
@@ -80,6 +91,10 @@ public class ModGuiHandler implements IGuiHandler {
         return new GuiEnderBook(player, UtilInventory.getPlayerItemIfHeld(player));
       case GUI_INDEX_BUILDER:
         if (te != null && te instanceof TileEntityBuilder) { return new GuiBuilder(player.inventory, (TileEntityBuilder) te); }
+        break;
+      case GUI_INDEX_PLACER:
+        if (te != null && te instanceof TileEntityPlacer) { return new GuiPlacer(player.inventory, (TileEntityPlacer) te); }
+        
         break;
       }
     }

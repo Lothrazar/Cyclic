@@ -6,11 +6,13 @@ import com.lothrazar.cyclicmagic.block.BlockBuilder;
 import com.lothrazar.cyclicmagic.block.BlockHarvester;
 import com.lothrazar.cyclicmagic.block.BlockMagnet;
 import com.lothrazar.cyclicmagic.block.BlockMiner;
+import com.lothrazar.cyclicmagic.block.BlockPlacer;
 import com.lothrazar.cyclicmagic.block.BlockUncrafting;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBuilder;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityHarvester;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityMagnet;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityMiner;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPlacer;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityUncrafting;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -25,6 +27,7 @@ public class MachineBlockModule extends BaseModule {
   private boolean enableMagnet;
   private boolean enableMiner;
   private boolean enableMinerEnhanced;
+  private boolean enablePlacer;
   public void onInit() {
     if (enableBuilderBlock) {
       BlockRegistry.builder_block = new BlockBuilder();
@@ -63,9 +66,16 @@ public class MachineBlockModule extends BaseModule {
     if (enableMiner || enableMinerEnhanced) {
       GameRegistry.registerTileEntity(TileEntityMiner.class, "miner_te");
     }
+    if(enablePlacer){
+      BlockRegistry.placer_block = new BlockPlacer();
+      BlockRegistry.registerBlock(BlockRegistry.placer_block, "placer_block");
+      BlockRegistry.placer_block.addRecipe();
+      GameRegistry.registerTileEntity(TileEntityPlacer.class, "placer_block_te");
+    }
   }
   @Override
   public void syncConfig(Configuration config) {
+    enablePlacer = config.getBoolean("BlockPlacer", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableMiner = config.getBoolean("MinerBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText + ".  This is the one that mines a single block");
     enableMinerEnhanced = config.getBoolean("MinerBlockAdvanced", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText + ".  This is the one that mines a 3x3x3 area");
     enableBuilderBlock = config.getBoolean("BuilderBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

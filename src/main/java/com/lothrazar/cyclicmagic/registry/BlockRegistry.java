@@ -7,6 +7,7 @@ import com.lothrazar.cyclicmagic.block.BlockDimensionOre;
 import com.lothrazar.cyclicmagic.block.BlockHarvester;
 import com.lothrazar.cyclicmagic.block.BlockMagnet;
 import com.lothrazar.cyclicmagic.block.BlockMiner;
+import com.lothrazar.cyclicmagic.block.BlockPlacer;
 import com.lothrazar.cyclicmagic.block.BlockScaffolding;
 import com.lothrazar.cyclicmagic.block.BlockUncrafting;
 import net.minecraft.block.Block;
@@ -36,6 +37,7 @@ public class BlockRegistry {
   public static BlockMagnet magnet_block;
   public static BlockMiner miner_block;
   public static BlockMiner block_miner_tunnel;
+  public static BlockPlacer placer_block;
   //lots of helpers/overrides with defaults
   public static void registerBlock(Block b, String name) {
     registerBlock(b, name, false);
