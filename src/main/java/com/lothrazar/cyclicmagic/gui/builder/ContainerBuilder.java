@@ -16,7 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ContainerBuilder extends Container {
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
   public static final int SLOTX_START = 8;
-  public static final int SLOTY = 40;
+  public static final int SLOTY = 52;
   public static final int SQ = 18;
   protected TileMachineBuilder tileEntity;
   private int tileBuild;

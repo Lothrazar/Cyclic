@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 
 public class PacketSyncPlayerData implements IMessage, IMessageHandler<PacketSyncPlayerData, IMessage> {
-  public static final int ID = 50;
+ 
   NBTTagCompound tags = new NBTTagCompound();
   public PacketSyncPlayerData() {
   }

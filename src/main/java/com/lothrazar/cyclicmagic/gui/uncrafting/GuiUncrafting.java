@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.gui.uncrafting;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -23,6 +24,8 @@ public class GuiUncrafting extends GuiContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+    String s = UtilChat.lang("tile.uncrafting_block.name");
+    this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
   }
   private static final String folder = "textures/gui/";
   private static final ResourceLocation table = new ResourceLocation(Const.MODID, folder + "table.png");
@@ -52,4 +55,5 @@ public class GuiUncrafting extends GuiContainer {
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + 10, belowSlots + 5, u, v, (int) (156 * percent), 7, 156, 7);
     }
   }
+  
 }

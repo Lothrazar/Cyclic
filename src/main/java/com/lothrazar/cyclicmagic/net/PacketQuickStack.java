@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketQuickStack implements IMessage, IMessageHandler<PacketQuickStack, IMessage> {
-  public static final int ID = 31;
+ 
   NBTTagCompound tags = new NBTTagCompound();
   public PacketQuickStack() {
   }

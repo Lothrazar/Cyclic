@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketTileBuildType implements IMessage, IMessageHandler<PacketTileBuildType, IMessage> {
-  public static final int ID = 56;
+ 
   private BlockPos pos;
   public PacketTileBuildType() {
   }

@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketParticleAtPosition implements IMessage, IMessageHandler<PacketParticleAtPosition, IMessage> {
-  public static final int ID = 14;
+ 
   private int x;
   private int y;
   private int z;

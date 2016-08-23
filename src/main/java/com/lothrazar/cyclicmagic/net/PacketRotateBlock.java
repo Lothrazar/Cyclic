@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketRotateBlock implements IMessage, IMessageHandler<PacketRotateBlock, IMessage> {
-  public static final int ID = 18;
+ 
   private BlockPos pos;
   private EnumFacing side;
   public PacketRotateBlock() {

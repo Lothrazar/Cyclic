@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketSpellPull implements IMessage, IMessageHandler<PacketSpellPull, IMessage> {
-  public static final int ID = 20;
+ 
   private BlockPos pos;
   private EnumFacing side;
   public PacketSpellPull() {

@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.gui.placer;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachinePlacer;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -35,6 +36,9 @@ public class GuiPlacer extends GuiContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+    String s = UtilChat.lang("tile.placer_block.name");
+    this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
+  
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
