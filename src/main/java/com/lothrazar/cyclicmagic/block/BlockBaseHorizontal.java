@@ -22,7 +22,7 @@ public abstract class BlockBaseHorizontal extends Block {
     return this.getDefaultState().withProperty(PROPERTYFACING, facing);
   }
   public EnumFacing getFacingFromState(IBlockState state) {
-    return state.getValue(PROPERTYFACING);
+    return state.getValue(PROPERTYFACING).getOpposite();
   }
   @Override
   public int getMetaFromState(IBlockState state) {
