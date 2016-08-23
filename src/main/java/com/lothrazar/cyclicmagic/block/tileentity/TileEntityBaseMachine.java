@@ -9,7 +9,7 @@ public abstract class TileEntityBaseMachine extends TileEntity {
     return this.getWorld().isBlockIndirectlyGettingPowered(this.getPos()) > 0;
   }
   protected EnumFacing getCurrentFacing() {
-    BlockBaseHorizontal b = ((BlockBaseHorizontal) blockType);
+    BlockBaseHorizontal b = ((BlockBaseHorizontal) this.getBlockType());
     EnumFacing facing;
     if (b == null || worldObj.getBlockState(pos) == null || b.getFacingFromState(worldObj.getBlockState(pos)) == null)
       facing = EnumFacing.UP;
