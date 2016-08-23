@@ -11,7 +11,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketDepositContainerToPlayer implements IMessage, IMessageHandler<PacketDepositContainerToPlayer, IMessage> {
- 
   NBTTagCompound tags = new NBTTagCompound();
   public PacketDepositContainerToPlayer() {
   }

@@ -11,7 +11,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketSpellPush implements IMessage, IMessageHandler<PacketSpellPush, IMessage> {
- 
   private BlockPos pos;
   private EnumFacing side;
   public PacketSpellPush() {

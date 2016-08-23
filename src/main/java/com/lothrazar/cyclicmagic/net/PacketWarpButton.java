@@ -11,7 +11,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketWarpButton implements IMessage, IMessageHandler<PacketWarpButton, IMessage> {
-  
   public int slot;
   public PacketWarpButton() {
   }

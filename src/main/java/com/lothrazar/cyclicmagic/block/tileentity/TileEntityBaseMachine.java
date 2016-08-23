@@ -18,8 +18,7 @@ public abstract class TileEntityBaseMachine extends TileEntity {
       facing = b.getFacingFromState(worldObj.getBlockState(this.pos));
     return facing;
   }
-
-//  public EnumFacing getFacingSelf() {
-//    return worldObj.getBlockState(pos).getValue(BlockMiner.PROPERTYFACING).getOpposite();
-//  }
+  //  public EnumFacing getFacingSelf() {
+  //    return worldObj.getBlockState(pos).getValue(BlockMiner.PROPERTYFACING).getOpposite();
+  //  }
 }

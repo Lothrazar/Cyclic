@@ -95,7 +95,6 @@ public class TileMachineMiner extends TileEntityBaseMachine implements ITickable
   private float curBlockDamage;
   private boolean firstTick = true;
   private BlockPos targetPos = null;
-  
   @Override
   public void update() {
     if (!worldObj.isRemote) {
@@ -154,7 +153,6 @@ public class TileMachineMiner extends TileEntityBaseMachine implements ITickable
     }
     EnumFacing facing = this.getCurrentFacing();
     BlockPos center = start.offset(facing);//move one more over so we are in the exact center of a 3x3x3 area
-    
     //else we do a 3x3 
     int rollFull = worldObj.rand.nextInt(9 * 3);
     int rollUpOrDown = rollFull / 9;
@@ -196,7 +194,7 @@ public class TileMachineMiner extends TileEntityBaseMachine implements ITickable
     if (rollUpOrDown == 1) {
       targetPos = targetPos.offset(EnumFacing.UP);
     }
-    else if (rollUpOrDown == 2) { 
+    else if (rollUpOrDown == 2) {
       targetPos = targetPos.offset(EnumFacing.DOWN);
     }
     //0 is center

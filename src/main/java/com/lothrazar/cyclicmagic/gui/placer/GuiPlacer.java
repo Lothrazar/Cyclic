@@ -38,7 +38,6 @@ public class GuiPlacer extends GuiContainer {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     String s = UtilChat.lang("tile.placer_block.name");
     this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
-  
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {

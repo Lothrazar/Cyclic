@@ -19,14 +19,14 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
     this.setSoundType(SoundType.METAL);
     this.setTickRandomly(true);
   }
-//  @Override
-//  public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-//    TileEntity tileEntity = world.getTileEntity(pos);
-//    if (tileEntity == null || player.isSneaking()) { return false; }
-//    int x = pos.getX(), y = pos.getY(), z = pos.getZ();
-//    player.openGui(ModMain.instance, ModGuiHandler.GUI_INDEX_UNCRAFTING, world, x, y, z);
-//    return true;
-//  }
+  //  @Override
+  //  public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+  //    TileEntity tileEntity = world.getTileEntity(pos);
+  //    if (tileEntity == null || player.isSneaking()) { return false; }
+  //    int x = pos.getX(), y = pos.getY(), z = pos.getZ();
+  //    player.openGui(ModMain.instance, ModGuiHandler.GUI_INDEX_UNCRAFTING, world, x, y, z);
+  //    return true;
+  //  }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileMachineUncrafter();
@@ -41,10 +41,10 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
   }
   @Override
   public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this), 
-        " r ", 
-        "fdf", 
-        " o ", 
+    GameRegistry.addRecipe(new ItemStack(this),
+        " r ",
+        "fdf",
+        " o ",
         'o', Blocks.OBSIDIAN, 'f', Blocks.FURNACE, 'r', Blocks.DROPPER, 'd', Blocks.DIAMOND_BLOCK);
   }
 }

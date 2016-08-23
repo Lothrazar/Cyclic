@@ -55,5 +55,4 @@ public class GuiUncrafting extends GuiContainer {
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + 10, belowSlots + 5, u, v, (int) (156 * percent), 7, 156, 7);
     }
   }
-  
 }

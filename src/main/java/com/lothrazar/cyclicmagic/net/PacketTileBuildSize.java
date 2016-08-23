@@ -10,7 +10,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketTileBuildSize implements IMessage, IMessageHandler<PacketTileBuildSize, IMessage> {
- 
   private BlockPos pos;
   private int value;
   private String type;

@@ -11,7 +11,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketFakeWorkbench implements IMessage, IMessageHandler<PacketFakeWorkbench, IMessage> {
- 
   private NBTTagCompound tags = new NBTTagCompound();
   public PacketFakeWorkbench() {
   }

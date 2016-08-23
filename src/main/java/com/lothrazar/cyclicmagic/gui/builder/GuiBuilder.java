@@ -45,14 +45,14 @@ public class GuiBuilder extends GuiContainer {
     //first the main top left type button
     int width = 50;
     int id = 2;
-    btn = new ButtonBuilderType(tile.getPos(), id++, this.guiLeft + padding, this.guiTop + yOffset+3, width);
+    btn = new ButtonBuilderType(tile.getPos(), id++, this.guiLeft + padding, this.guiTop + yOffset + 3, width);
     this.buttonList.add(btn);
     width = 15;
     //size buttons
     xSizeTextbox = texture_width - 24;
     btnSizeUp = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xSizeTextbox, this.guiTop + yOffset, width, true, "size");
     this.buttonList.add(btnSizeUp);
-    btnSizeDown = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xSizeTextbox, this.guiTop + 21+yOffset, width, false, "size");
+    btnSizeDown = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xSizeTextbox, this.guiTop + 21 + yOffset, width, false, "size");
     this.buttonList.add(btnSizeDown);
     xSizeTextbox += width / 2 - 2;
     ySizeTxtbox = 16;
@@ -60,7 +60,7 @@ public class GuiBuilder extends GuiContainer {
     xHeightTextbox = texture_width - 68;
     btnHeightUp = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xHeightTextbox, this.guiTop + yOffset, width, true, "height");
     this.buttonList.add(btnHeightUp);
-    btnHeightDown = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xHeightTextbox, this.guiTop + 21+yOffset, width, false, "height");
+    btnHeightDown = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xHeightTextbox, this.guiTop + 21 + yOffset, width, false, "height");
     this.buttonList.add(btnHeightDown);
     xHeightTextbox += width / 2 - 2;
     yHeightTxtbox = ySizeTxtbox;
@@ -71,7 +71,6 @@ public class GuiBuilder extends GuiContainer {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     String s = UtilChat.lang("tile.builder_block.name");
     this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
-  
     this.btn.displayString = UtilChat.lang("buildertype." + this.tile.getBuildTypeEnum().name().toLowerCase() + ".name");
     if (debugLabels) {
       this.fontRendererObj.drawString("t = " + this.tile.getTimer(), 32, this.ySize - 94, 4210752);
@@ -84,13 +83,13 @@ public class GuiBuilder extends GuiContainer {
       String display = "" + this.tile.getSize();
       //move it over if more than 1 digit
       int x = (display.length() > 1) ? xSizeTextbox - 3 : xSizeTextbox;
-      this.fontRendererObj.drawString(display, x, ySizeTxtbox + yOffset-4, 4210752);
+      this.fontRendererObj.drawString(display, x, ySizeTxtbox + yOffset - 4, 4210752);
     }
     if (this.tile.getHeight() > 0) {
       String display = "" + this.tile.getHeight();
       //move it over if more than 1 digit
       int x = (display.length() > 1) ? xHeightTextbox - 3 : xHeightTextbox;
-      this.fontRendererObj.drawString(display, x, yHeightTxtbox + yOffset-4, 4210752);
+      this.fontRendererObj.drawString(display, x, yHeightTxtbox + yOffset - 4, 4210752);
     }
     this.btnSizeDown.enabled = (this.tile.getSize() > 1);
     this.btnSizeUp.enabled = (this.tile.getSize() < TileMachineBuilder.maxSize);

@@ -9,7 +9,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketMovePlayerColumn implements IMessage, IMessageHandler<PacketMovePlayerColumn, IMessage> {
-
   public PacketMovePlayerColumn() {
   }
   private int slot;

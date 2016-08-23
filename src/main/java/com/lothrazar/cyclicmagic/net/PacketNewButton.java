@@ -9,7 +9,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketNewButton implements IMessage, IMessageHandler<PacketNewButton, IMessage> {
-  
   public PacketNewButton() {
   }
   private String name;

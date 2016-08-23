@@ -205,7 +205,6 @@ public class TileMachineUncrafter extends TileEntityBaseMachine implements IInve
     if (triggerUncraft) {
       // detect what direction my block faces)
       EnumFacing facing = this.getCurrentFacing();
-     
       int dx = 0, dz = 0;
       if (facing == EnumFacing.SOUTH) {
         dz = -1;

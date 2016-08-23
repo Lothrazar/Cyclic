@@ -94,7 +94,6 @@ public class ModGuiHandler implements IGuiHandler {
         break;
       case GUI_INDEX_PLACER:
         if (te != null && te instanceof TileMachinePlacer) { return new GuiPlacer(player.inventory, (TileMachinePlacer) te); }
-        
         break;
       }
     }

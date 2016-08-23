@@ -66,7 +66,7 @@ public class MachineBlockModule extends BaseModule {
     if (enableMiner || enableMinerEnhanced) {
       GameRegistry.registerTileEntity(TileMachineMiner.class, "miner_te");
     }
-    if(enablePlacer){
+    if (enablePlacer) {
       BlockRegistry.placer_block = new BlockPlacer();
       BlockRegistry.registerBlock(BlockRegistry.placer_block, "placer_block");
       BlockRegistry.placer_block.addRecipe();

@@ -9,7 +9,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketSpellBuildType implements IMessage, IMessageHandler<PacketSpellBuildType, IMessage> {
- 
   public PacketSpellBuildType() {
   }
   @Override

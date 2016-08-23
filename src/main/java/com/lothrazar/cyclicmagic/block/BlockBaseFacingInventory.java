@@ -22,8 +22,8 @@ public abstract class BlockBaseFacingInventory extends BlockBaseFacing {
   }
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-//    TileMachineBuilder tileEntity = (TileMachineBuilder) world.getTileEntity(pos);
-    if (player.isSneaking()) { return false; }// tileEntity == null || 
+    //    TileMachineBuilder tileEntity = (TileMachineBuilder) world.getTileEntity(pos);
+    if (player.isSneaking()) { return false; } // tileEntity == null || 
     if (world.isRemote) { return true; }
     int x = pos.getX(), y = pos.getY(), z = pos.getZ();
     player.openGui(ModMain.instance, this.guiID, world, x, y, z);

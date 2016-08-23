@@ -12,7 +12,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketRestockContainerToPlayer implements IMessage, IMessageHandler<PacketRestockContainerToPlayer, IMessage> {
- 
   NBTTagCompound tags = new NBTTagCompound();
   public PacketRestockContainerToPlayer() {
   }

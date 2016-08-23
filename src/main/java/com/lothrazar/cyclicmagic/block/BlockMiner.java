@@ -47,22 +47,22 @@ public class BlockMiner extends BlockBaseFacing implements IHasRecipe {
   }
   @Override
   public void addRecipe() {
-    switch(minerType){
+    switch (minerType) {
     case SINGLE:
-        GameRegistry.addRecipe(new ItemStack(this), 
-            "rsr", 
-            "gbg", 
-            "ooo",
-            'o', Blocks.MOSSY_COBBLESTONE,
-            'g', Items.IRON_PICKAXE, // new ItemStack(Items.DIAMOND_PICKAXE,1,OreDictionary.WILDCARD_VALUE),
-            's', Blocks.DISPENSER,
-            'r', Items.QUARTZ,
-            'b', Items.BLAZE_POWDER);
+      GameRegistry.addRecipe(new ItemStack(this),
+          "rsr",
+          "gbg",
+          "ooo",
+          'o', Blocks.MOSSY_COBBLESTONE,
+          'g', Items.IRON_PICKAXE, // new ItemStack(Items.DIAMOND_PICKAXE,1,OreDictionary.WILDCARD_VALUE),
+          's', Blocks.DISPENSER,
+          'r', Items.QUARTZ,
+          'b', Items.BLAZE_POWDER);
       break;
     case TUNNEL:
-      GameRegistry.addRecipe(new ItemStack(this), 
-          "rsr", 
-          "gbg", 
+      GameRegistry.addRecipe(new ItemStack(this),
+          "rsr",
+          "gbg",
           "ooo",
           'o', Blocks.OBSIDIAN,
           'g', Items.DIAMOND_PICKAXE, // new ItemStack(Items.DIAMOND_PICKAXE,1,OreDictionary.WILDCARD_VALUE),
@@ -72,7 +72,6 @@ public class BlockMiner extends BlockBaseFacing implements IHasRecipe {
       break;
     default:
       break;
-    
     }
   }
 }

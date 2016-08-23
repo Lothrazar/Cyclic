@@ -30,7 +30,7 @@ public class PacketRegistry {
     network.registerMessage(PacketSpellBuildSize.class, PacketSpellBuildSize.class, packetID++, Side.SERVER);
     network.registerMessage(PacketSyncPlayerData.class, PacketSyncPlayerData.class, packetID++, Side.CLIENT);
     network.registerMessage(PacketTileBuildType.class, PacketTileBuildType.class, packetID++, Side.SERVER);
-    network.registerMessage(PacketTileBuildSize.class, PacketTileBuildSize.class,packetID++, Side.SERVER);
+    network.registerMessage(PacketTileBuildSize.class, PacketTileBuildSize.class, packetID++, Side.SERVER);
     network.registerMessage(PacketSyncPlayerHealth.class, PacketSyncPlayerHealth.class, packetID++, Side.CLIENT);
   }
 }

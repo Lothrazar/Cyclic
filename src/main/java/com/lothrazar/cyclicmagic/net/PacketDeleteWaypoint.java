@@ -11,7 +11,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketDeleteWaypoint implements IMessage, IMessageHandler<PacketDeleteWaypoint, IMessage> {
- 
   public int slot;
   public PacketDeleteWaypoint() {
   }
