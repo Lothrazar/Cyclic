@@ -11,7 +11,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BlockHarvester extends BlockBaseHorizontal implements IHasRecipe {
+public class BlockHarvester extends BlockBaseFacing implements IHasRecipe {
   // dont use blockContainer !!
   // http://www.minecraftforge.net/forum/index.php?topic=31953.0
   public BlockHarvester() {

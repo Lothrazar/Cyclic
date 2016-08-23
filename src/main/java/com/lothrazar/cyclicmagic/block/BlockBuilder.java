@@ -21,7 +21,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BlockBuilder extends BlockBaseHorizontal implements IHasRecipe {
+public class BlockBuilder extends BlockBaseFacing implements IHasRecipe {
   // dont use blockContainer !!
   // http://www.minecraftforge.net/forum/index.php?topic=31953.0
   public BlockBuilder() {

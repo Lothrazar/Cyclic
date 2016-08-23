@@ -20,7 +20,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BlockUncrafting extends BlockBaseHorizontal implements IHasRecipe {
+public class BlockUncrafting extends BlockBaseFacing implements IHasRecipe {
   // http://www.minecraftforge.net/forum/index.php?topic=31953.0
   public BlockUncrafting() {
     super(Material.IRON);

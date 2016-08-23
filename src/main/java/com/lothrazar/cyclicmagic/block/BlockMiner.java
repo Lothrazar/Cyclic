@@ -13,8 +13,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BlockMiner extends BlockBaseHorizontal implements IHasRecipe {
-  public static final PropertyDirection PROPERTYFACING = BlockBaseHorizontal.PROPERTYFACING;
+public class BlockMiner extends BlockBaseFacing implements IHasRecipe {
+  public static final PropertyDirection PROPERTYFACING = BlockBaseFacing.PROPERTYFACING;
   public static enum MinerType {
     SINGLE, TUNNEL
   }
