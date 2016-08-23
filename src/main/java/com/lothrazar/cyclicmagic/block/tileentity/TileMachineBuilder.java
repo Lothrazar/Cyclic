@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclicmagic.block.BlockBaseHorizontal;
 import com.lothrazar.cyclicmagic.block.BlockBuilder;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
@@ -21,7 +22,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 
-public class TileEntityBuilder extends TileEntity implements IInventory, ITickable, ISidedInventory {
+public class TileMachineBuilder extends TileEntityBaseMachine implements IInventory, ITickable, ISidedInventory {
   private int timer;
   private int buildType;
   private int buildSpeed;
@@ -67,7 +68,7 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
       this.shape = UtilPlaceBlocks.circle(this.pos, this.getSize() * 2);
       break;
     case FACING:
-      this.shape = UtilPlaceBlocks.line(pos, this.getCurrentFacing().getOpposite(), this.getSize());
+      this.shape = UtilPlaceBlocks.line(pos, this.getCurrentFacing(), this.getSize());
       break;
     case SQUARE:
       this.shape = UtilPlaceBlocks.squareHorizontalHollow(this.pos, this.getSize());
@@ -354,7 +355,7 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
     if (nextPos == null || (nextPos.getX() == 0 && nextPos.getY() == 0 && nextPos.getZ() == 0)) {
       nextPos = pos;// fallback if it fails
     }
-    if (this.worldObj.getStrongPower(this.getPos()) == 0) {
+    if (this.isPowered() == false) {
       // it works ONLY if its powered
       markDirty();
       return;
@@ -397,15 +398,6 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
       }
     }
     this.markDirty();
-  }
-  private EnumFacing getCurrentFacing() {
-    BlockBuilder b = ((BlockBuilder) blockType);
-    EnumFacing facing;
-    if (b == null || worldObj.getBlockState(pos) == null || b.getFacingFromState(worldObj.getBlockState(pos)) == null)
-      facing = EnumFacing.UP;
-    else
-      facing = b.getFacingFromState(worldObj.getBlockState(this.pos));
-    return facing;
   }
   private void incrementPosition() {
     if (this.nextPos == null) {

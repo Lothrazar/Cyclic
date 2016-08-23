@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.block;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityHarvester;
+import com.lothrazar.cyclicmagic.block.tileentity.TileMachineHarvester;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -11,7 +11,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BlockHarvester extends BlockFacingHorizontal implements IHasRecipe {
+public class BlockHarvester extends BlockBaseHorizontal implements IHasRecipe {
   // dont use blockContainer !!
   // http://www.minecraftforge.net/forum/index.php?topic=31953.0
   public BlockHarvester() {
@@ -22,7 +22,7 @@ public class BlockHarvester extends BlockFacingHorizontal implements IHasRecipe 
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
-    return new TileEntityHarvester();
+    return new TileMachineHarvester();
   }
   @Override
   public boolean hasTileEntity() {

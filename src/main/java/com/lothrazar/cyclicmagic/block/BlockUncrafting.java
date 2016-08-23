@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.block;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityUncrafting;
+import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -20,7 +20,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BlockUncrafting extends BlockFacingHorizontal implements IHasRecipe {
+public class BlockUncrafting extends BlockBaseHorizontal implements IHasRecipe {
   // http://www.minecraftforge.net/forum/index.php?topic=31953.0
   public BlockUncrafting() {
     super(Material.IRON);
@@ -68,7 +68,7 @@ public class BlockUncrafting extends BlockFacingHorizontal implements IHasRecipe
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
-    return new TileEntityUncrafting();
+    return new TileMachineUncrafter();
   }
   @Override
   public boolean hasTileEntity() {

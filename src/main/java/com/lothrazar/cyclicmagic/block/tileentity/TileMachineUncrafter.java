@@ -23,7 +23,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 
-public class TileEntityUncrafting extends TileEntity implements IInventory, ITickable, ISidedInventory {
+public class TileMachineUncrafter extends TileEntityBaseMachine implements IInventory, ITickable, ISidedInventory {
   // http://www.minecraftforge.net/wiki/Containers_and_GUIs
   // http://greyminecraftcoder.blogspot.com.au/2015/01/tileentity.html
   // http://www.minecraftforge.net/forum/index.php?topic=28539.0
@@ -37,7 +37,7 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
   private static final String NBT_TIMER = "Timer";
-  public TileEntityUncrafting() {
+  public TileMachineUncrafter() {
     inv = new ItemStack[9];
     timer = TIMER_FULL;
   }
@@ -184,7 +184,7 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
     // eventually but not constantly)
     this.shiftAllUp();
     boolean triggerUncraft = false;
-    if (this.worldObj.getStrongPower(this.getPos()) == 0) {
+    if (this.isPowered() == false) {
       //it works ONLY if its powered
       return;
     }
@@ -205,13 +205,8 @@ public class TileEntityUncrafting extends TileEntity implements IInventory, ITic
     }
     if (triggerUncraft) {
       // detect what direction my block faces)
-      EnumFacing facing = null;
-      // not sure why this happens or if it ever will again, just being
-      // super safe to avoid null ptr -> ticking entity exception
-      if (((BlockUncrafting) this.blockType) == null || this.worldObj.getBlockState(this.pos) == null || ((BlockUncrafting) this.blockType).getFacingFromState(this.worldObj.getBlockState(this.pos)) == null)
-        facing = EnumFacing.UP;
-      else
-        facing = ((BlockUncrafting) this.blockType).getFacingFromState(this.worldObj.getBlockState(this.pos));
+      EnumFacing facing = this.getCurrentFacing();
+     
       int dx = 0, dz = 0;
       if (facing == EnumFacing.SOUTH) {
         dz = -1;

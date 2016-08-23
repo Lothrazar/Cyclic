@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.gui.placer;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPlacer;
+import com.lothrazar.cyclicmagic.block.tileentity.TileMachinePlacer;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -18,9 +18,9 @@ public class GuiPlacer extends GuiContainer {
   private static final int texture_width = 176;
   private static final int texture_height = 166;
   static final int padding = 8;
-  private TileEntityPlacer tile;
+  private TileMachinePlacer tile;
   boolean debugLabels = false;
-  public GuiPlacer(InventoryPlayer inventoryPlayer, TileEntityPlacer tileEntity) {
+  public GuiPlacer(InventoryPlayer inventoryPlayer, TileMachinePlacer tileEntity) {
     super(new ContainerPlacer(inventoryPlayer, tileEntity));
     tile = tileEntity;
   }
@@ -50,7 +50,7 @@ public class GuiPlacer extends GuiContainer {
     }
     if (tile.getTimer() > 0 && tile.getStackInSlot(0) != null) {
       this.mc.getTextureManager().bindTexture(progress);
-      float percent = ((float) tile.getTimer()) / ((float) TileEntityPlacer.TIMER_FULL);
+      float percent = ((float) tile.getTimer()) / ((float) TileMachinePlacer.TIMER_FULL);
       // maximum progress bar is 156, since the whole texture is 176 minus
       // 10 padding on each side
       int belowSlots = this.guiTop + 9 + 3 * Const.SQ;

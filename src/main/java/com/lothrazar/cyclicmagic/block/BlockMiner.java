@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.block;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityMiner;
+import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMiner;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
@@ -13,8 +13,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BlockMiner extends BlockFacingHorizontal implements IHasRecipe {
-  public static final PropertyDirection PROPERTYFACING = BlockFacingHorizontal.PROPERTYFACING;
+public class BlockMiner extends BlockBaseHorizontal implements IHasRecipe {
+  public static final PropertyDirection PROPERTYFACING = BlockBaseHorizontal.PROPERTYFACING;
   public static enum MinerType {
     SINGLE, TUNNEL
   }
@@ -30,7 +30,7 @@ public class BlockMiner extends BlockFacingHorizontal implements IHasRecipe {
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
-    return new TileEntityMiner();
+    return new TileMachineMiner();
   }
   @Override
   public boolean hasTileEntity() {
@@ -42,7 +42,7 @@ public class BlockMiner extends BlockFacingHorizontal implements IHasRecipe {
   }
   @Override
   public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-    ((TileEntityMiner) worldIn.getTileEntity(pos)).breakBlock(worldIn, pos, state);
+    ((TileMachineMiner) worldIn.getTileEntity(pos)).breakBlock(worldIn, pos, state);
     super.breakBlock(worldIn, pos, state);
   }
   @Override

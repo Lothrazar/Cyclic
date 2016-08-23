@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.gui;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBuilder;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPlacer;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityUncrafting;
+import com.lothrazar.cyclicmagic.block.tileentity.TileMachineBuilder;
+import com.lothrazar.cyclicmagic.block.tileentity.TileMachinePlacer;
+import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter;
 import com.lothrazar.cyclicmagic.gui.builder.ContainerBuilder;
 import com.lothrazar.cyclicmagic.gui.builder.GuiBuilder;
 import com.lothrazar.cyclicmagic.gui.placer.ContainerPlacer;
@@ -46,7 +46,7 @@ public class ModGuiHandler implements IGuiHandler {
       ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
       return new ContainerWand(player, player.inventory, new InventoryWand(player, wand));
     case GUI_INDEX_UNCRAFTING:
-      if (te != null && te instanceof TileEntityUncrafting) { return new ContainerUncrafting(player.inventory, (TileEntityUncrafting) te); }
+      if (te != null && te instanceof TileMachineUncrafter) { return new ContainerUncrafting(player.inventory, (TileMachineUncrafter) te); }
       break;
     case GUI_INDEX_STORAGE:
       ItemStack s = ItemInventoryStorage.getPlayerItemIfHeld(player);
@@ -54,15 +54,15 @@ public class ModGuiHandler implements IGuiHandler {
     case GUI_INDEX_WAYPOINT:
       return null;
     case GUI_INDEX_BUILDER:
-      if (te != null && te instanceof TileEntityBuilder) {
-        Container c = new ContainerBuilder(player.inventory, (TileEntityBuilder) te);
+      if (te != null && te instanceof TileMachineBuilder) {
+        Container c = new ContainerBuilder(player.inventory, (TileMachineBuilder) te);
         c.detectAndSendChanges();
         return c;
       }
       break;
     case GUI_INDEX_PLACER:
-      if (te != null && te instanceof TileEntityPlacer) {
-        Container c = new ContainerPlacer(player.inventory, (TileEntityPlacer) te);
+      if (te != null && te instanceof TileMachinePlacer) {
+        Container c = new ContainerPlacer(player.inventory, (TileMachinePlacer) te);
         c.detectAndSendChanges();
         return c;
       }
@@ -81,7 +81,7 @@ public class ModGuiHandler implements IGuiHandler {
         ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
         return new GuiWandInventory(new ContainerWand(player, player.inventory, new InventoryWand(player, wand)), wand);
       case GUI_INDEX_UNCRAFTING:
-        if (te instanceof TileEntityUncrafting) { return new GuiUncrafting(player.inventory, (TileEntityUncrafting) te); }
+        if (te instanceof TileMachineUncrafter) { return new GuiUncrafting(player.inventory, (TileMachineUncrafter) te); }
         break;
       case GUI_INDEX_STORAGE:
         ItemStack s = ItemInventoryStorage.getPlayerItemIfHeld(player);
@@ -90,10 +90,10 @@ public class ModGuiHandler implements IGuiHandler {
         //Minecraft.getMinecraft().displayGuiScreen(new GuiEnderBook(entityPlayer, stack));
         return new GuiEnderBook(player, UtilInventory.getPlayerItemIfHeld(player));
       case GUI_INDEX_BUILDER:
-        if (te != null && te instanceof TileEntityBuilder) { return new GuiBuilder(player.inventory, (TileEntityBuilder) te); }
+        if (te != null && te instanceof TileMachineBuilder) { return new GuiBuilder(player.inventory, (TileMachineBuilder) te); }
         break;
       case GUI_INDEX_PLACER:
-        if (te != null && te instanceof TileEntityPlacer) { return new GuiPlacer(player.inventory, (TileEntityPlacer) te); }
+        if (te != null && te instanceof TileMachinePlacer) { return new GuiPlacer(player.inventory, (TileMachinePlacer) te); }
         
         break;
       }

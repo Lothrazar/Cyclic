@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.block;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBuilder;
+import com.lothrazar.cyclicmagic.block.tileentity.TileMachineBuilder;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -21,7 +21,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BlockBuilder extends BlockFacingHorizontal implements IHasRecipe {
+public class BlockBuilder extends BlockBaseHorizontal implements IHasRecipe {
   // dont use blockContainer !!
   // http://www.minecraftforge.net/forum/index.php?topic=31953.0
   public BlockBuilder() {
@@ -32,7 +32,7 @@ public class BlockBuilder extends BlockFacingHorizontal implements IHasRecipe {
   }
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-    TileEntityBuilder tileEntity = (TileEntityBuilder) world.getTileEntity(pos);
+    TileMachineBuilder tileEntity = (TileMachineBuilder) world.getTileEntity(pos);
     if (tileEntity == null || player.isSneaking()) { return false; }
     if (world.isRemote) { return true; }
     int x = pos.getX(), y = pos.getY(), z = pos.getZ();
@@ -71,7 +71,7 @@ public class BlockBuilder extends BlockFacingHorizontal implements IHasRecipe {
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
-    return new TileEntityBuilder();
+    return new TileMachineBuilder();
   }
   @Override
   public boolean hasTileEntity() {

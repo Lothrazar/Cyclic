@@ -17,7 +17,7 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.text.ITextComponent;
 
-public class TileEntityPlacer extends TileEntity implements IInventory, ITickable, ISidedInventory {
+public class TileMachinePlacer extends TileEntityBaseMachine implements IInventory, ITickable, ISidedInventory {
   private int timer;
   private static final int buildSpeed = 1;
   private ItemStack[] inv = new ItemStack[9];
@@ -183,7 +183,7 @@ public class TileEntityPlacer extends TileEntity implements IInventory, ITickabl
   public void update() {
     shiftAllUp();
     boolean trigger = false;
-    if (this.worldObj.getStrongPower(this.getPos()) == 0) {
+    if (this.isPowered() == false) {
       // it works ONLY if its powered
       markDirty();
       return;
@@ -206,9 +206,8 @@ public class TileEntityPlacer extends TileEntity implements IInventory, ITickabl
     }
     if (trigger) {
       Block stuff = Block.getBlockFromItem(stack.getItem());
-      EnumFacing facing = ((BlockPlacer) this.blockType).getFacingFromState(this.worldObj.getBlockState(this.pos));
-      if (stuff != null && facing != null && worldObj.isRemote == false) {
-        if (UtilPlaceBlocks.placeStateSafe(worldObj, null, pos.offset(facing.getOpposite()), stuff.getStateFromMeta(stack.getMetadata()))) {
+      if (stuff != null && worldObj.isRemote == false) {
+        if (UtilPlaceBlocks.placeStateSafe(worldObj, null, pos.offset(this.getCurrentFacing()), stuff.getStateFromMeta(stack.getMetadata()))) {
           this.decrStackSize(0, 1);
         }
       }

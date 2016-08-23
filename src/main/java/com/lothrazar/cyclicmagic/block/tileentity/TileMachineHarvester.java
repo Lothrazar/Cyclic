@@ -14,13 +14,13 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 
-public class TileEntityHarvester extends TileEntity implements ITickable {
+public class TileMachineHarvester extends TileEntityBaseMachine implements ITickable {
   private int timer;
   public static final int TIMER_FULL = 80;
   private HarestCropsConfig conf;
   private static final String NBT_TIMER = "Timer";
   private static final int HARVEST_RADIUS = 8;
-  public TileEntityHarvester() {
+  public TileMachineHarvester() {
     this.timer = TIMER_FULL;
     conf = new HarestCropsConfig();
     conf.doesCrops = true;
@@ -69,7 +69,7 @@ public class TileEntityHarvester extends TileEntity implements ITickable {
   }
   @Override
   public void update() {
-    if (this.worldObj.getStrongPower(this.getPos()) == 0) {
+    if (this.isPowered() == false) {
       // it works ONLY if its powered
       this.markDirty();
       return;
@@ -106,10 +106,6 @@ public class TileEntityHarvester extends TileEntity implements ITickable {
     }
     this.markDirty();
   }
-  //  private BlockPos getOutputPos() {
-  //    BlockPos harvest = this.getPos().offset(this.getCurrentFacing());
-  //    return harvest;
-  //  }
   private BlockPos getHarvestPos() {
     //move center over that much, not including exact horizontal
     BlockPos center = this.getPos().offset(this.getCurrentFacing(), HARVEST_RADIUS + 1);
@@ -117,14 +113,5 @@ public class TileEntityHarvester extends TileEntity implements ITickable {
   }
   private int getSpeed() {
     return 1;
-  }
-  private EnumFacing getCurrentFacing() {
-    BlockHarvester b = ((BlockHarvester) this.blockType);
-    EnumFacing facing;
-    if (b == null || this.worldObj.getBlockState(this.pos) == null || b.getFacingFromState(this.worldObj.getBlockState(this.pos)) == null)
-      facing = EnumFacing.UP;
-    else
-      facing = b.getFacingFromState(this.worldObj.getBlockState(this.pos)).getOpposite();
-    return facing;
   }
 }

@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.block;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPlacer;
+import com.lothrazar.cyclicmagic.block.tileentity.TileMachinePlacer;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -21,7 +21,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BlockPlacer extends BlockFacingHorizontal implements IHasRecipe {
+public class BlockPlacer extends BlockBaseHorizontal implements IHasRecipe {
   public BlockPlacer() {
     super(Material.IRON);
     this.setHardness(3.0F).setResistance(5.0F);
@@ -30,7 +30,7 @@ public class BlockPlacer extends BlockFacingHorizontal implements IHasRecipe {
   }
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-    TileEntityPlacer tileEntity = (TileEntityPlacer) world.getTileEntity(pos);
+    TileMachinePlacer tileEntity = (TileMachinePlacer) world.getTileEntity(pos);
     if (tileEntity == null || player.isSneaking()) { return false; }
     if (world.isRemote) { return true; }
     int x = pos.getX(), y = pos.getY(), z = pos.getZ();
@@ -69,7 +69,7 @@ public class BlockPlacer extends BlockFacingHorizontal implements IHasRecipe {
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
-    return new TileEntityPlacer();
+    return new TileMachinePlacer();
   }
   @Override
   public boolean hasTileEntity() {

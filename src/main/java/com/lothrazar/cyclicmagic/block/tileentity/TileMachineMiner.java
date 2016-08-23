@@ -85,20 +85,18 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
  *         making a 3x3 version
  * 
  */
-public class TileEntityMiner extends TileEntity implements ITickable {
+public class TileMachineMiner extends TileEntityBaseMachine implements ITickable {
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
   // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
   public static final GameProfile breakerProfile = new GameProfile(UUID.nameUUIDFromBytes("CyclicFakePlayer".getBytes(Charsets.UTF_8)), "CyclicFakePlayer");
-  UUID uuid;
-  boolean isCurrentlyMining;
-  WeakReference<FakePlayer> fakePlayer;
-  float curBlockDamage;
-  boolean firstTick = true;
-  BlockPos targetPos = null;
-  public EnumFacing getFacingSelf() {
-    return worldObj.getBlockState(pos).getValue(BlockMiner.PROPERTYFACING).getOpposite();
-  }
+  private UUID uuid;
+  private boolean isCurrentlyMining;
+  private WeakReference<FakePlayer> fakePlayer;
+  private float curBlockDamage;
+  private boolean firstTick = true;
+  private BlockPos targetPos = null;
+  
   @Override
   public void update() {
     if (!worldObj.isRemote) {
@@ -107,12 +105,12 @@ public class TileEntityMiner extends TileEntity implements ITickable {
         initFakePlayer();
       }
       BlockMiner.MinerType minerType = ((BlockMiner) worldObj.getBlockState(pos).getBlock()).getMinerType();
-      BlockPos start = pos.offset(getFacingSelf());
+      BlockPos start = pos.offset(this.getCurrentFacing());
       if (targetPos == null) {
         targetPos = start; //not sure if this is needed
       }
-      boolean hasPower = (worldObj.isBlockIndirectlyGettingPowered(this.getPos()) > 0);
-      if (hasPower) {
+      //boolean hasPower = (worldObj.isBlockIndirectlyGettingPowered(this.getPos()) > 0);
+      if (this.isPowered()) {
         if (isCurrentlyMining == false) { //we can mine but are not currently
           this.updateTargetPos(start, minerType);
           if (!worldObj.isAirBlock(targetPos)) { //we have a valid target
@@ -155,7 +153,7 @@ public class TileEntityMiner extends TileEntity implements ITickable {
     if (minerType == MinerType.SINGLE) {// stay on target
       return;
     }
-    EnumFacing facing = getFacingSelf();
+    EnumFacing facing = this.getCurrentFacing();
     BlockPos center = start.offset(facing);//move one more over so we are in the exact center of a 3x3x3 area
     
     //else we do a 3x3 

@@ -11,9 +11,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public abstract class BlockFacingHorizontal extends Block {
+public abstract class BlockBaseHorizontal extends Block {
   public static final PropertyDirection PROPERTYFACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
-  public BlockFacingHorizontal(Material materialIn) {
+  public BlockBaseHorizontal(Material materialIn) {
     super(materialIn);
   }
   @Override
@@ -22,7 +22,7 @@ public abstract class BlockFacingHorizontal extends Block {
     return this.getDefaultState().withProperty(PROPERTYFACING, facing);
   }
   public EnumFacing getFacingFromState(IBlockState state) {
-    return (EnumFacing) state.getValue(PROPERTYFACING);
+    return state.getValue(PROPERTYFACING);
   }
   @Override
   public int getMetaFromState(IBlockState state) {

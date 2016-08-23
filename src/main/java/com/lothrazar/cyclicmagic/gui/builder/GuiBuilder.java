@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.gui.builder;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBuilder;
+import com.lothrazar.cyclicmagic.block.tileentity.TileMachineBuilder;
 import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -20,7 +20,7 @@ public class GuiBuilder extends GuiContainer {
   private static final int texture_width = 176;
   private static final int texture_height = 166;
   static final int padding = 8;
-  private TileEntityBuilder tile;
+  private TileMachineBuilder tile;
   private ButtonBuilderType btn;
   private ButtonBuildSize btnSizeUp;
   private ButtonBuildSize btnSizeDown;
@@ -31,7 +31,7 @@ public class GuiBuilder extends GuiContainer {
   private int xHeightTextbox;
   private int yHeightTxtbox;
   boolean debugLabels = false;
-  public GuiBuilder(InventoryPlayer inventoryPlayer, TileEntityBuilder tileEntity) {
+  public GuiBuilder(InventoryPlayer inventoryPlayer, TileMachineBuilder tileEntity) {
     super(new ContainerBuilder(inventoryPlayer, tileEntity));
     tile = tileEntity;
   }
@@ -89,9 +89,9 @@ public class GuiBuilder extends GuiContainer {
       this.fontRendererObj.drawString(display, x, yHeightTxtbox, 4210752);
     }
     this.btnSizeDown.enabled = (this.tile.getSize() > 1);
-    this.btnSizeUp.enabled = (this.tile.getSize() < TileEntityBuilder.maxSize);
+    this.btnSizeUp.enabled = (this.tile.getSize() < TileMachineBuilder.maxSize);
     this.btnHeightDown.enabled = (this.tile.getHeight() > 1);
-    this.btnHeightUp.enabled = (this.tile.getHeight() < TileEntityBuilder.maxHeight);
+    this.btnHeightUp.enabled = (this.tile.getHeight() < TileMachineBuilder.maxHeight);
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
@@ -107,7 +107,7 @@ public class GuiBuilder extends GuiContainer {
     }
     if (tile.getTimer() > 0 && tile.getStackInSlot(0) != null) {
       this.mc.getTextureManager().bindTexture(progress);
-      float percent = ((float) tile.getTimer()) / ((float) TileEntityBuilder.TIMER_FULL);
+      float percent = ((float) tile.getTimer()) / ((float) TileMachineBuilder.TIMER_FULL);
       // maximum progress bar is 156, since the whole texture is 176 minus
       // 10 padding on each side
       int belowSlots = this.guiTop + 9 + 3 * Const.SQ;
