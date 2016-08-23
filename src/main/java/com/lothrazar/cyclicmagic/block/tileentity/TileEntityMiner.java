@@ -18,7 +18,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
@@ -78,13 +77,12 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
  *         DIFFERENCES FROM ORIGINAL that I added:
  *
  *         - this can only face horizontally, not up and down (defined in block)
- *         - different recipe - different texture/model 
- *         - can be disabled in the config system just like other parts of this mod 
- *         - only works when redstone powers it on
- *         - Slower mining speed
- *         - I will be making multiple versions: for axe/pick/shovel (use axe tool instead of diamond pick)
- *          and ill pass those in as enum flags
- *          - possibly also making a 3x3 version
+ *         - different recipe - different texture/model - can be disabled in the
+ *         config system just like other parts of this mod - only works when
+ *         redstone powers it on - Slower mining speed - I will be making
+ *         multiple versions: for axe/pick/shovel (use axe tool instead of
+ *         diamond pick) and ill pass those in as enum flags - possibly also
+ *         making a 3x3 version
  * 
  */
 public class TileEntityMiner extends TileEntity implements ITickable {
@@ -97,6 +95,7 @@ public class TileEntityMiner extends TileEntity implements ITickable {
   WeakReference<FakePlayer> fakePlayer;
   float curBlockDamage;
   boolean firstTick = true;
+  BlockPos targetPos = null;
   @Override
   public void update() {
     if (!worldObj.isRemote) {
@@ -104,8 +103,10 @@ public class TileEntityMiner extends TileEntity implements ITickable {
         firstTick = false;
         initFakePlayer();
       }
-      BlockPos targetPos = pos.offset( worldObj.getBlockState(pos).getValue(BlockMiner.PROPERTYFACING));
-
+      BlockPos center = pos.offset(worldObj.getBlockState(pos).getValue(BlockMiner.PROPERTYFACING));
+      if (targetPos == null) {
+        targetPos = center; //not sure if this is needed
+      }
       boolean hasPower = (worldObj.isBlockIndirectlyGettingPowered(this.getPos()) > 0);
       if (hasPower) {
         if (isCurrentlyMining == false) { //we can mine but are not currently
@@ -113,36 +114,33 @@ public class TileEntityMiner extends TileEntity implements ITickable {
           // 1 2 3
           // 4 - 5
           // 6 7 8
-          System.out.println("rollDice "+rollDice);
-          switch(rollDice){
+          switch (rollDice) {
           // case zero: stay on target
           case 1:
-            targetPos = targetPos.offset(EnumFacing.UP).offset(EnumFacing.WEST);
+            targetPos = center.offset(EnumFacing.UP).offset(EnumFacing.WEST);
             break;
           case 2:
-            targetPos = targetPos.offset(EnumFacing.UP);
+            targetPos = center.offset(EnumFacing.UP);
             break;
           case 3:
-            targetPos = targetPos.offset(EnumFacing.UP).offset(EnumFacing.EAST);
+            targetPos = center.offset(EnumFacing.UP).offset(EnumFacing.EAST);
             break;
-          case 4: 
-            targetPos = targetPos.offset(EnumFacing.WEST);
+          case 4:
+            targetPos = center.offset(EnumFacing.WEST);
             break;
           case 5:
-            targetPos = targetPos.offset(EnumFacing.EAST);
+            targetPos = center.offset(EnumFacing.EAST);
             break;
           case 6:
-            targetPos = targetPos.offset(EnumFacing.DOWN).offset(EnumFacing.WEST);
+            targetPos = center.offset(EnumFacing.DOWN).offset(EnumFacing.WEST);
             break;
           case 7:
-            targetPos = targetPos.offset(EnumFacing.DOWN);
+            targetPos = center.offset(EnumFacing.DOWN);
             break;
           case 8:
-            targetPos = targetPos.offset(EnumFacing.DOWN).offset(EnumFacing.EAST);
+            targetPos = center.offset(EnumFacing.DOWN).offset(EnumFacing.EAST);
             break;
           }
-          
-          
           if (!worldObj.isAirBlock(targetPos)) { //we have a valid target
             isCurrentlyMining = true;
             curBlockDamage = 0;
@@ -153,8 +151,6 @@ public class TileEntityMiner extends TileEntity implements ITickable {
           }
         }
         // else    we can mine ANd we are already mining, dont change anything eh
-       
-       
       }
       else { // we do not have power
         if (isCurrentlyMining) {
@@ -163,7 +159,6 @@ public class TileEntityMiner extends TileEntity implements ITickable {
         }
       }
       if (isCurrentlyMining) {
- 
         IBlockState targetState = worldObj.getBlockState(targetPos);
         curBlockDamage += targetState.getBlock().getPlayerRelativeBlockHardness(targetState, fakePlayer.get(), worldObj, targetPos);
         if (curBlockDamage >= 1.0f) {
@@ -171,8 +166,8 @@ public class TileEntityMiner extends TileEntity implements ITickable {
           resetProgress(targetPos);
           if (fakePlayer.get() != null) {
             boolean didBreak = fakePlayer.get().interactionManager.tryHarvestBlock(targetPos);
-            if(didBreak == false)
-              System.out.println("tried to break but failed "+UtilChat.blockPosToString(targetPos) +"_"+targetState.getBlock().getUnlocalizedName());
+//            if (didBreak == false)
+//              System.out.println("tried to break but failed " + UtilChat.blockPosToString(targetPos) + "_" + targetState.getBlock().getUnlocalizedName());
           }
         }
         else {
@@ -203,10 +198,14 @@ public class TileEntityMiner extends TileEntity implements ITickable {
   private static final String NBTMINING = "mining";
   private static final String NBTDAMAGE = "curBlockDamage";
   private static final String NBTPLAYERID = "uuid";
+  private static final String NBTTARGET = "target";
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     if (uuid != null) {
       compound.setString(NBTPLAYERID, uuid.toString());
+    }
+    if (targetPos != null) {
+      compound.setIntArray(NBTTARGET, new int[] { targetPos.getX(), targetPos.getY(), targetPos.getZ() });
     }
     compound.setBoolean(NBTMINING, isCurrentlyMining);
     compound.setFloat(NBTDAMAGE, curBlockDamage);
@@ -216,6 +215,12 @@ public class TileEntityMiner extends TileEntity implements ITickable {
   public void readFromNBT(NBTTagCompound compound) {
     if (compound.hasKey(NBTPLAYERID)) {
       uuid = UUID.fromString(compound.getString(NBTPLAYERID));
+    }
+    if (compound.hasKey(NBTTARGET)) {
+      int[] coords = compound.getIntArray(NBTTARGET);
+      if (coords.length >= 3) {
+        targetPos = new BlockPos(coords[0], coords[1], coords[2]);
+      }
     }
     isCurrentlyMining = compound.getBoolean(NBTMINING);
     curBlockDamage = compound.getFloat(NBTDAMAGE);

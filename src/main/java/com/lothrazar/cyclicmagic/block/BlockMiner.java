@@ -67,8 +67,7 @@ public class BlockMiner extends Block implements IHasRecipe {
     return hasTileEntity();
   }
   @Override
-  public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
-  {
+  public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
     ((TileEntityMiner) worldIn.getTileEntity(pos)).breakBlock(worldIn, pos, state);
     super.breakBlock(worldIn, pos, state);
   }
