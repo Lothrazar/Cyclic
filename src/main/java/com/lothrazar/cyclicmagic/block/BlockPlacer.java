@@ -81,11 +81,14 @@ public class BlockPlacer extends BlockFacingHorizontal implements IHasRecipe {
   }
   @Override
   public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this), "rsr", "gbg", "ooo",
-        'o', Blocks.OBSIDIAN,
-        'g', Items.GHAST_TEAR,
+    GameRegistry.addRecipe(new ItemStack(this), 
+        "rsr", 
+        "gbg", 
+        "ooo",
+        'o', Blocks.COBBLESTONE,
+        'g', Items.IRON_INGOT,
         's', Blocks.DISPENSER,
-        'r', Blocks.ICE,
-        'b', Blocks.DIAMOND_BLOCK);
+        'r', Blocks.STONE,
+        'b', Items.REDSTONE);
   }
 }

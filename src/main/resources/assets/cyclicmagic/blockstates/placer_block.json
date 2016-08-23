@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "cyclicmagic:placer_block_north"},
+        "facing=east":  { "model": "cyclicmagic:placer_block_east"},
+        "facing=south": { "model": "cyclicmagic:placer_block_south"},
+        "facing=west":  { "model": "cyclicmagic:placer_block_west" }
+    }
+}

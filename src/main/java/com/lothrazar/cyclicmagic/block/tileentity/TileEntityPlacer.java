@@ -29,7 +29,6 @@ public class TileEntityPlacer extends TileEntity implements IInventory, ITickabl
   public static enum Fields {
     TIMER
   }
-
   @Override
   public boolean hasCustomName() {
     return false;
@@ -107,7 +106,6 @@ public class TileEntityPlacer extends TileEntity implements IInventory, ITickabl
   public int getTimer() {
     return this.getField(Fields.TIMER.ordinal());
   }
-
   @Override
   public int getFieldCount() {
     return Fields.values().length;
@@ -164,7 +162,6 @@ public class TileEntityPlacer extends TileEntity implements IInventory, ITickabl
     this.readFromNBT(pkt.getNbtCompound());
     super.onDataPacket(net, pkt);
   }
-
   private void shiftAllUp() {
     for (int i = 0; i < this.getSizeInventory() - 1; i++) {
       shiftPairUp(i, i + 1);
@@ -186,13 +183,11 @@ public class TileEntityPlacer extends TileEntity implements IInventory, ITickabl
   public void update() {
     shiftAllUp();
     boolean trigger = false;
-  
     if (this.worldObj.getStrongPower(this.getPos()) == 0) {
       // it works ONLY if its powered
       markDirty();
       return;
     }
-   
     // center of the block
     double x = this.getPos().getX() + 0.5;
     double y = this.getPos().getY() + 0.5;
@@ -211,13 +206,10 @@ public class TileEntityPlacer extends TileEntity implements IInventory, ITickabl
     }
     if (trigger) {
       Block stuff = Block.getBlockFromItem(stack.getItem());
-      EnumFacing   facing = ((BlockPlacer) this.blockType).getFacingFromState(this.worldObj.getBlockState(this.pos));
-      if (stuff != null && facing != null) {
-        if (worldObj.isRemote == false) {
-          //ModMain.logger.info("try place " + this.nextPos + " type " + this.buildType + "_" + this.getBuildTypeEnum().name());
-          if (UtilPlaceBlocks.placeStateSafe(worldObj, null, pos.offset(facing), stuff.getStateFromMeta(stack.getMetadata()))) {
-            this.decrStackSize(0, 1);
-          }
+      EnumFacing facing = ((BlockPlacer) this.blockType).getFacingFromState(this.worldObj.getBlockState(this.pos));
+      if (stuff != null && facing != null && worldObj.isRemote == false) {
+        if (UtilPlaceBlocks.placeStateSafe(worldObj, null, pos.offset(facing.getOpposite()), stuff.getStateFromMeta(stack.getMetadata()))) {
+          this.decrStackSize(0, 1);
         }
       }
     }
@@ -229,7 +221,6 @@ public class TileEntityPlacer extends TileEntity implements IInventory, ITickabl
     }
     this.markDirty();
   }
-
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
     return hopperInput;

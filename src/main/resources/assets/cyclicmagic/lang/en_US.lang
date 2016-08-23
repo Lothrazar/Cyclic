@@ -1,3 +1,4 @@
+tile.placer_block.name=Block Placer
 builder.toggle.name=Toggle
 buildertype.circle.name=Circle
 buildertype.facing.name=Facing
