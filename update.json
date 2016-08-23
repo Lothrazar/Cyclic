@@ -38,6 +38,6 @@
  	,"1.5.1":"Fix Garden Scythe rotating cocoa beans on harvesting (#67)"
  	,"1.5.2":"Mod compatibility fixes"
  	,"1.5.3":"A few recipes no longer require beacons & nether stars.  Add world config to disable all loot chest insertions.  "
- 	,"?new?":"Added Cavefinder and Prospector.  Removed feature events to restrict sapling growth and give EXP for achievements (they never worked perfectly anyway)"
+ 	,"?new?":"Added Cavefinder and Prospector.  Removed feature events to restrict sapling growth and give EXP for achievements (they never worked perfectly anyway).  Harvester recipe is now cheaper.  Added two types of auto mining blocks"
  }
 }

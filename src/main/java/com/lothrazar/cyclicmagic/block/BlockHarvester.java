@@ -73,9 +73,9 @@ public class BlockHarvester extends Block implements IHasRecipe {
   public void addRecipe() {
     GameRegistry.addRecipe(new ItemStack(this), "rsr", "gbg", "ooo",
         'o', Blocks.OBSIDIAN,
-        'g', Items.GHAST_TEAR,
+        'g', Items.QUARTZ,
         's', Blocks.DISPENSER,
-        'r', Blocks.EMERALD_BLOCK,
+        'r', Items.EMERALD,
         'b', Items.DIAMOND);
   }
 }

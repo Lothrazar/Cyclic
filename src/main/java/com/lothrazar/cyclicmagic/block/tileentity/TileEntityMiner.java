@@ -97,7 +97,7 @@ public class TileEntityMiner extends TileEntity implements ITickable {
   boolean firstTick = true;
   BlockPos targetPos = null;
   public EnumFacing getFacingSelf() {
-    return worldObj.getBlockState(pos).getValue(BlockMiner.PROPERTYFACING);
+    return worldObj.getBlockState(pos).getValue(BlockMiner.PROPERTYFACING).getOpposite();
   }
   @Override
   public void update() {
