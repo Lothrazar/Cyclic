@@ -1,18 +1,33 @@
 package com.lothrazar.cyclicmagic.block;
 import java.util.Random;
+import com.lothrazar.cyclicmagic.ModMain;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public abstract class BlockBaseFacingInventory extends BlockBaseFacing {
-  public BlockBaseFacingInventory(Material materialIn) {
+  private int guiID;
+  public BlockBaseFacingInventory(Material materialIn, int pguiIndex) {
     super(materialIn);
+    guiID = pguiIndex;
+  }
+  @Override
+  public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+//    TileMachineBuilder tileEntity = (TileMachineBuilder) world.getTileEntity(pos);
+    if (player.isSneaking()) { return false; }// tileEntity == null || 
+    if (world.isRemote) { return true; }
+    int x = pos.getX(), y = pos.getY(), z = pos.getZ();
+    player.openGui(ModMain.instance, this.guiID, world, x, y, z);
+    return true;
   }
   @Override
   public void breakBlock(World world, BlockPos pos, IBlockState state) {
