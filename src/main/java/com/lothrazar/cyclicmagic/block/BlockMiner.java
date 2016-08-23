@@ -67,7 +67,7 @@ public class BlockMiner extends BlockFacingHorizontal implements IHasRecipe {
           'o', Blocks.OBSIDIAN,
           'g', Items.DIAMOND_PICKAXE, // new ItemStack(Items.DIAMOND_PICKAXE,1,OreDictionary.WILDCARD_VALUE),
           's', Blocks.DISPENSER,
-          'r', Items.BLAZE_POWDER,
+          'r', Items.QUARTZ,
           'b', Blocks.field_189877_df);// MAGMA BLOCK is field_189877_df in 1.10.2 apparently
       break;
     default:
