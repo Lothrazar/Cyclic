@@ -20,12 +20,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockMiner extends Block implements IHasRecipe {
-  private static final PropertyDirection PROPERTYFACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
+  public static final PropertyDirection PROPERTYFACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
   public BlockMiner() {
     super(Material.IRON);
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);
-    this.setTickRandomly(true);
   }
   @Override
   public IBlockState getStateFromMeta(int meta) {
@@ -56,10 +55,6 @@ public class BlockMiner extends Block implements IHasRecipe {
     return this.getDefaultState().withProperty(PROPERTYFACING, enumfacing);
   }
   @Override
-  public void breakBlock(World world, BlockPos pos, IBlockState state) {
-    super.breakBlock(world, pos, state);
-  }
-  @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityMiner();
   }
@@ -70,6 +65,12 @@ public class BlockMiner extends Block implements IHasRecipe {
   @Override
   public boolean hasTileEntity(IBlockState state) {
     return hasTileEntity();
+  }
+  @Override
+  public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+  {
+    ((TileEntityMiner) worldIn.getTileEntity(pos)).breakBlock(worldIn, pos, state);
+    super.breakBlock(worldIn, pos, state);
   }
   @Override
   public void addRecipe() {
