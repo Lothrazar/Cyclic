@@ -3,6 +3,7 @@ import java.lang.ref.WeakReference;
 import java.util.UUID;
 import com.google.common.base.Charsets;
 import com.lothrazar.cyclicmagic.block.BlockMiner;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;
@@ -13,6 +14,7 @@ import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
@@ -102,33 +104,62 @@ public class TileEntityMiner extends TileEntity implements ITickable {
         firstTick = false;
         initFakePlayer();
       }
-      IBlockState state = worldObj.getBlockState(pos);
-      BlockPos targetPos = pos.offset(state.getValue(BlockMiner.PROPERTYFACING));
-//      int rollDice = worldObj.rand.nextInt(9); //TODO: dont have it switch while mining and get this working
-//      switch(rollDice){
-//      case 1:
-//      case 2:
-//      case 3:
-//      case 4: 
-//      case 5:
-//      }
+      BlockPos targetPos = pos.offset( worldObj.getBlockState(pos).getValue(BlockMiner.PROPERTYFACING));
+
       boolean hasPower = (worldObj.isBlockIndirectlyGettingPowered(this.getPos()) > 0);
       if (hasPower) {
-        if (isCurrentlyMining == false) { //if we can mine ANd we are already mining, dont change anything eh
-          if (!worldObj.isAirBlock(targetPos)) {
+        if (isCurrentlyMining == false) { //we can mine but are not currently
+          int rollDice = worldObj.rand.nextInt(9); //TODO: dont have it switch while mining and get this working
+          // 1 2 3
+          // 4 - 5
+          // 6 7 8
+          System.out.println("rollDice "+rollDice);
+          switch(rollDice){
+          // case zero: stay on target
+          case 1:
+            targetPos = targetPos.offset(EnumFacing.UP).offset(EnumFacing.WEST);
+            break;
+          case 2:
+            targetPos = targetPos.offset(EnumFacing.UP);
+            break;
+          case 3:
+            targetPos = targetPos.offset(EnumFacing.UP).offset(EnumFacing.EAST);
+            break;
+          case 4: 
+            targetPos = targetPos.offset(EnumFacing.WEST);
+            break;
+          case 5:
+            targetPos = targetPos.offset(EnumFacing.EAST);
+            break;
+          case 6:
+            targetPos = targetPos.offset(EnumFacing.DOWN).offset(EnumFacing.WEST);
+            break;
+          case 7:
+            targetPos = targetPos.offset(EnumFacing.DOWN);
+            break;
+          case 8:
+            targetPos = targetPos.offset(EnumFacing.DOWN).offset(EnumFacing.EAST);
+            break;
+          }
+          
+          
+          if (!worldObj.isAirBlock(targetPos)) { //we have a valid target
             isCurrentlyMining = true;
             curBlockDamage = 0;
           }
-          else {
+          else { // no valid target, back out
             isCurrentlyMining = false;
-            resetProgress(worldObj.getBlockState(pos));
+            resetProgress(targetPos);
           }
         }
+        // else    we can mine ANd we are already mining, dont change anything eh
+       
+       
       }
-      else {
+      else { // we do not have power
         if (isCurrentlyMining) {
           isCurrentlyMining = false;
-          resetProgress(worldObj.getBlockState(pos));
+          resetProgress(targetPos);
         }
       }
       if (isCurrentlyMining) {
@@ -137,9 +168,11 @@ public class TileEntityMiner extends TileEntity implements ITickable {
         curBlockDamage += targetState.getBlock().getPlayerRelativeBlockHardness(targetState, fakePlayer.get(), worldObj, targetPos);
         if (curBlockDamage >= 1.0f) {
           isCurrentlyMining = false;
-          resetProgress(worldObj.getBlockState(pos));
+          resetProgress(targetPos);
           if (fakePlayer.get() != null) {
-            fakePlayer.get().interactionManager.tryHarvestBlock(targetPos);
+            boolean didBreak = fakePlayer.get().interactionManager.tryHarvestBlock(targetPos);
+            if(didBreak == false)
+              System.out.println("tried to break but failed "+UtilChat.blockPosToString(targetPos) +"_"+targetState.getBlock().getUnlocalizedName());
           }
         }
         else {
@@ -167,31 +200,34 @@ public class TileEntityMiner extends TileEntity implements ITickable {
       }
     };
   }
+  private static final String NBTMINING = "mining";
+  private static final String NBTDAMAGE = "curBlockDamage";
+  private static final String NBTPLAYERID = "uuid";
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     if (uuid != null) {
-      compound.setString("uuid", uuid.toString());
+      compound.setString(NBTPLAYERID, uuid.toString());
     }
-    compound.setBoolean("mining", isCurrentlyMining);
-    compound.setFloat("curBlockDamage", curBlockDamage);
+    compound.setBoolean(NBTMINING, isCurrentlyMining);
+    compound.setFloat(NBTDAMAGE, curBlockDamage);
     return compound;
   }
   @Override
   public void readFromNBT(NBTTagCompound compound) {
-    if (compound.hasKey("uuid")) {
-      uuid = UUID.fromString(compound.getString("uuid"));
+    if (compound.hasKey(NBTPLAYERID)) {
+      uuid = UUID.fromString(compound.getString(NBTPLAYERID));
     }
-    isCurrentlyMining = compound.getBoolean("mining");
-    curBlockDamage = compound.getFloat("curBlockDamage");
+    isCurrentlyMining = compound.getBoolean(NBTMINING);
+    curBlockDamage = compound.getFloat(NBTDAMAGE);
   }
   public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
     if (isCurrentlyMining && uuid != null) {
-      resetProgress(state);
+      resetProgress(pos);
     }
   }
-  private void resetProgress(IBlockState state) {
+  private void resetProgress(BlockPos targetPos) {
     if (uuid != null) {
-      BlockPos targetPos = pos.offset(state.getValue(BlockMiner.PROPERTYFACING));
+      //BlockPos targetPos = pos.offset(state.getValue(BlockMiner.PROPERTYFACING));
       worldObj.sendBlockBreakProgress(uuid.hashCode(), targetPos, -1);
       curBlockDamage = 0;
     }
