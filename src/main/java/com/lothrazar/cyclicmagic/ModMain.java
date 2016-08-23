@@ -107,13 +107,10 @@ public class ModMain {
    * 
    * TODO:
    * 
-   * 
-   * https://www.reddit.com/r/minecraftsuggestions/comments/4smwb5/
-   * if_lightning_strikes_a_skeleton_it_turns_into_a/
-   * 
-   * -- spawn inspector: SKEL/ZOMBIE VARIANTS: stray==winter
-   * 
-   * is there a bug in searchrecipe? or a bug in new repeater rec?
+   * idea: achievement for crafting?
+   *  http://jabelarminecraft.blogspot.ca/p/minecraft-forge-creating-custom.html 
+   *  along with   public void onItemCraftedEvent(PlayerEvent.ItemCraftedEvent event) {
+   *  
    * 
    * fragile torches config: float oddsWillBreak = 0.01F;// : in config or
    * something? or make this
@@ -128,7 +125,7 @@ public class ModMain {
    * 
    * ButtonBuildToggle-store ptr to wand not player??
    * 
-   * [ Trading Tool // gui] Upgrade villager gui: either make my own or add
+   * [ Trading Tool // gui ] Upgrade villager gui: either make my own or add
    * buttons/some way to view all trades at once --inspired by extrautils
    * trading table that is apparently gone after 1710
    * 

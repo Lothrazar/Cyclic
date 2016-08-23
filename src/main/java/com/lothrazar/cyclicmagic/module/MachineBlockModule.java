@@ -2,15 +2,18 @@ package com.lothrazar.cyclicmagic.module;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.block.BlockBuilder;
 import com.lothrazar.cyclicmagic.block.BlockHarvester;
 import com.lothrazar.cyclicmagic.block.BlockMagnet;
 import com.lothrazar.cyclicmagic.block.BlockMiner;
+import com.lothrazar.cyclicmagic.block.BlockPassword;
 import com.lothrazar.cyclicmagic.block.BlockPlacer;
 import com.lothrazar.cyclicmagic.block.BlockUncrafting;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineBuilder;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineHarvester;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityMagnet;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMiner;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachinePlacer;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter;
@@ -72,6 +75,11 @@ public class MachineBlockModule extends BaseModule {
       BlockRegistry.placer_block.addRecipe();
       GameRegistry.registerTileEntity(TileMachinePlacer.class, "placer_block_te");
     }
+    BlockRegistry.password_block = new BlockPassword();
+    BlockRegistry.registerBlock(BlockRegistry.password_block, "password_block");
+    //    BlockRegistry.password_block.addRecipe();
+    GameRegistry.registerTileEntity(TileEntityPassword.class, "password_block_te");
+    ModMain.instance.events.addEvent(BlockRegistry.password_block);
   }
   @Override
   public void syncConfig(Configuration config) {
