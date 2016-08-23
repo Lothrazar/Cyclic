@@ -9,22 +9,26 @@ import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockMiner extends Block implements IHasRecipe {
   public static final PropertyDirection PROPERTYFACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
-  public BlockMiner() {
+  public static enum MinerType {
+    SINGLE, TUNNEL
+  }
+  private MinerType minerType;
+  public BlockMiner(MinerType t) {
     super(Material.IRON);
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);
+    minerType = t;
+  }
+  public MinerType getMinerType() {
+    return minerType;
   }
   @Override
   public IBlockState getStateFromMeta(int meta) {
@@ -73,11 +77,11 @@ public class BlockMiner extends Block implements IHasRecipe {
   }
   @Override
   public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this), "rsr", "gbg", "ooo",
-        'o', Blocks.OBSIDIAN,
-        'g', Items.APPLE,
-        's', Blocks.DISPENSER,
-        'r', Blocks.REDSTONE_BLOCK,
-        'b', Blocks.DIAMOND_BLOCK);
+    //    GameRegistry.addRecipe(new ItemStack(this), "rsr", "gbg", "ooo",
+    //        'o', Blocks.OBSIDIAN,
+    //        'g', Items.APPLE,
+    //        's', Blocks.DISPENSER,
+    //        'r', Blocks.REDSTONE_BLOCK,
+    //        'b', Blocks.DIAMOND_BLOCK);
   }
 }

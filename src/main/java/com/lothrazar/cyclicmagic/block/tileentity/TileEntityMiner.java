@@ -3,7 +3,7 @@ import java.lang.ref.WeakReference;
 import java.util.UUID;
 import com.google.common.base.Charsets;
 import com.lothrazar.cyclicmagic.block.BlockMiner;
-import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.block.BlockMiner.MinerType;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;
@@ -96,6 +96,9 @@ public class TileEntityMiner extends TileEntity implements ITickable {
   float curBlockDamage;
   boolean firstTick = true;
   BlockPos targetPos = null;
+  public EnumFacing getFacingSelf() {
+    return worldObj.getBlockState(pos).getValue(BlockMiner.PROPERTYFACING);
+  }
   @Override
   public void update() {
     if (!worldObj.isRemote) {
@@ -103,44 +106,15 @@ public class TileEntityMiner extends TileEntity implements ITickable {
         firstTick = false;
         initFakePlayer();
       }
-      BlockPos center = pos.offset(worldObj.getBlockState(pos).getValue(BlockMiner.PROPERTYFACING));
+      BlockMiner.MinerType minerType = ((BlockMiner) worldObj.getBlockState(pos).getBlock()).getMinerType();
+      BlockPos center = pos.offset(getFacingSelf());
       if (targetPos == null) {
         targetPos = center; //not sure if this is needed
       }
       boolean hasPower = (worldObj.isBlockIndirectlyGettingPowered(this.getPos()) > 0);
       if (hasPower) {
         if (isCurrentlyMining == false) { //we can mine but are not currently
-          int rollDice = worldObj.rand.nextInt(9); //TODO: dont have it switch while mining and get this working
-          // 1 2 3
-          // 4 - 5
-          // 6 7 8
-          switch (rollDice) {
-          // case zero: stay on target
-          case 1:
-            targetPos = center.offset(EnumFacing.UP).offset(EnumFacing.WEST);
-            break;
-          case 2:
-            targetPos = center.offset(EnumFacing.UP);
-            break;
-          case 3:
-            targetPos = center.offset(EnumFacing.UP).offset(EnumFacing.EAST);
-            break;
-          case 4:
-            targetPos = center.offset(EnumFacing.WEST);
-            break;
-          case 5:
-            targetPos = center.offset(EnumFacing.EAST);
-            break;
-          case 6:
-            targetPos = center.offset(EnumFacing.DOWN).offset(EnumFacing.WEST);
-            break;
-          case 7:
-            targetPos = center.offset(EnumFacing.DOWN);
-            break;
-          case 8:
-            targetPos = center.offset(EnumFacing.DOWN).offset(EnumFacing.EAST);
-            break;
-          }
+          this.updateTargetPos(center, minerType);
           if (!worldObj.isAirBlock(targetPos)) { //we have a valid target
             isCurrentlyMining = true;
             curBlockDamage = 0;
@@ -165,9 +139,9 @@ public class TileEntityMiner extends TileEntity implements ITickable {
           isCurrentlyMining = false;
           resetProgress(targetPos);
           if (fakePlayer.get() != null) {
-            boolean didBreak = fakePlayer.get().interactionManager.tryHarvestBlock(targetPos);
-//            if (didBreak == false)
-//              System.out.println("tried to break but failed " + UtilChat.blockPosToString(targetPos) + "_" + targetState.getBlock().getUnlocalizedName());
+            fakePlayer.get().interactionManager.tryHarvestBlock(targetPos);
+            //            if (didBreak == false)
+            //              System.out.println("tried to break but failed " + UtilChat.blockPosToString(targetPos) + "_" + targetState.getBlock().getUnlocalizedName());
           }
         }
         else {
@@ -175,6 +149,55 @@ public class TileEntityMiner extends TileEntity implements ITickable {
         }
       }
     }
+  }
+  private void updateTargetPos(BlockPos center, MinerType minerType) {
+    if (minerType == MinerType.SINGLE) {
+      targetPos = center; // stay on target
+      return;
+    }
+    targetPos = center;//always restart here so we dont offset out of bounds
+    //else we do a 3x3 
+    int rollFull = worldObj.rand.nextInt(9 * 3);
+    int rollDist = rollFull / 9;
+    int rollDice = rollFull % 9;//worldObj.rand.nextInt(9); //TODO: dont have it switch while mining and get this working
+    
+    //then do the area
+    // 1 2 3
+    // 4 - 5
+    // 6 7 8
+    switch (rollDice) {
+    case 0:
+      targetPos = center;
+      break;
+    case 1:
+      targetPos = center.offset(EnumFacing.UP).offset(EnumFacing.WEST);
+      break;
+    case 2:
+      targetPos = center.offset(EnumFacing.UP);
+      break;
+    case 3:
+      targetPos = center.offset(EnumFacing.UP).offset(EnumFacing.EAST);
+      break;
+    case 4:
+      targetPos = center.offset(EnumFacing.WEST);
+      break;
+    case 5:
+      targetPos = center.offset(EnumFacing.EAST);
+      break;
+    case 6:
+      targetPos = center.offset(EnumFacing.DOWN).offset(EnumFacing.WEST);
+      break;
+    case 7:
+      targetPos = center.offset(EnumFacing.DOWN);
+      break;
+    case 8:
+      targetPos = center.offset(EnumFacing.DOWN).offset(EnumFacing.EAST);
+      break;
+    }
+    if (rollDist > 0) { //finally, offset the distance away
+      targetPos = targetPos.offset(getFacingSelf(), rollDist);
+    }
+    return;
   }
   private void initFakePlayer() {
     if (uuid == null) {

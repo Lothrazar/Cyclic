@@ -35,6 +35,7 @@ public class BlockRegistry {
   public static BlockHarvester harvester_block;
   public static BlockMagnet magnet_block;
   public static BlockMiner miner_block;
+  public static BlockMiner block_miner_tunnel;
   //lots of helpers/overrides with defaults
   public static void registerBlock(Block b, String name) {
     registerBlock(b, name, false);

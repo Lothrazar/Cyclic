@@ -23,7 +23,8 @@ public class MachineBlockModule extends BaseModule {
   private boolean enableBuilderBlock;
   private boolean enableHarvester;
   private boolean enableMagnet;
-  private boolean enableMiner = true;
+  private boolean enableMiner;
+  private boolean enableMinerEnhanced;
   public void onInit() {
     if (enableBuilderBlock) {
       BlockRegistry.builder_block = new BlockBuilder();
@@ -50,14 +51,23 @@ public class MachineBlockModule extends BaseModule {
       GameRegistry.registerTileEntity(TileEntityMagnet.class, "magnet_block_te");
     }
     if (enableMiner) {
-      BlockRegistry.miner_block = new BlockMiner();
+      BlockRegistry.miner_block = new BlockMiner(BlockMiner.MinerType.SINGLE);
       BlockRegistry.registerBlock(BlockRegistry.miner_block, "block_miner");
       BlockRegistry.miner_block.addRecipe();
+    }
+    if (enableMinerEnhanced) {
+      BlockRegistry.block_miner_tunnel = new BlockMiner(BlockMiner.MinerType.TUNNEL);
+      BlockRegistry.registerBlock(BlockRegistry.block_miner_tunnel, "block_miner_tunnel");
+      BlockRegistry.block_miner_tunnel.addRecipe();
+    }
+    if (enableMiner || enableMinerEnhanced) {
       GameRegistry.registerTileEntity(TileEntityMiner.class, "miner_te");
     }
   }
   @Override
   public void syncConfig(Configuration config) {
+    enableMiner = config.getBoolean("MinerBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableMinerEnhanced = config.getBoolean("MinerBlockAdvanced", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableBuilderBlock = config.getBoolean("BuilderBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     TileEntityBuilder.maxSize = config.getInt("builder.maxRange", Const.ConfigCategory.modpackMisc, 10, 3, 32, "Maximum range of the builder block that you can increase it to in the GUI");
     TileEntityBuilder.maxHeight = config.getInt("builder.maxHeight", Const.ConfigCategory.modpackMisc, 10, 3, 32, "Maximum height of the builder block that you can increase it to in the GUI");
