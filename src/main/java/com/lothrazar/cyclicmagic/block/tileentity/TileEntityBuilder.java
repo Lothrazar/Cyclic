@@ -59,8 +59,6 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
       return BuildType.values()[type];
     }
   }
-  public TileEntityBuilder() {
-  }
   public void rebuildShape() {
     BuildType buildType = getBuildTypeEnum();
     // only rebuild shapes if they are different
@@ -351,17 +349,17 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
   }
   @Override
   public void update() {
-    this.shiftAllUp();
+    shiftAllUp();
     boolean trigger = false;
     if (nextPos == null || (nextPos.getX() == 0 && nextPos.getY() == 0 && nextPos.getZ() == 0)) {
-      nextPos = this.pos;// fallback if it fails
+      nextPos = pos;// fallback if it fails
     }
     if (this.worldObj.getStrongPower(this.getPos()) == 0) {
       // it works ONLY if its powered
-      this.markDirty();
+      markDirty();
       return;
     }
-    if (!this.worldObj.isRemote && this.nextPos != null && this.worldObj.rand.nextDouble() < 0.1 && this.inv[0] != null) {
+    if (!worldObj.isRemote && nextPos != null && worldObj.rand.nextDouble() < 0.1 && inv[0] != null) {
       UtilParticle.spawnParticlePacket(EnumParticleTypes.DRAGON_BREATH, nextPos, 5);
     }
     // center of the block
@@ -383,9 +381,9 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
     if (trigger) {
       Block stuff = Block.getBlockFromItem(stack.getItem());
       if (stuff != null) {
-        if (this.worldObj.isRemote == false) {
+        if (worldObj.isRemote == false) {
           //ModMain.logger.info("try place " + this.nextPos + " type " + this.buildType + "_" + this.getBuildTypeEnum().name());
-          if (UtilPlaceBlocks.placeStateSafe(this.worldObj, null, this.nextPos, stuff.getStateFromMeta(stack.getMetadata()))) {
+          if (UtilPlaceBlocks.placeStateSafe(worldObj, null, nextPos, stuff.getStateFromMeta(stack.getMetadata()))) {
             this.decrStackSize(0, 1);
           }
         }
@@ -394,19 +392,19 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
     }
     else {
       // dont trigger an event, its still processing
-      if (this.worldObj.isRemote && this.worldObj.rand.nextDouble() < 0.1) {
+      if (worldObj.isRemote && worldObj.rand.nextDouble() < 0.1) {
         UtilParticle.spawnParticle(worldObj, EnumParticleTypes.SMOKE_NORMAL, x, y, z);
       }
     }
     this.markDirty();
   }
   private EnumFacing getCurrentFacing() {
-    BlockBuilder b = ((BlockBuilder) this.blockType);
+    BlockBuilder b = ((BlockBuilder) blockType);
     EnumFacing facing;
-    if (b == null || this.worldObj.getBlockState(this.pos) == null || b.getFacingFromState(this.worldObj.getBlockState(this.pos)) == null)
+    if (b == null || worldObj.getBlockState(pos) == null || b.getFacingFromState(worldObj.getBlockState(pos)) == null)
       facing = EnumFacing.UP;
     else
-      facing = b.getFacingFromState(this.worldObj.getBlockState(this.pos));
+      facing = b.getFacingFromState(worldObj.getBlockState(this.pos));
     return facing;
   }
   private void incrementPosition() {

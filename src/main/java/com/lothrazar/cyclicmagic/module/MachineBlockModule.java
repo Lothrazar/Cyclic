@@ -5,10 +5,12 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.block.BlockBuilder;
 import com.lothrazar.cyclicmagic.block.BlockHarvester;
 import com.lothrazar.cyclicmagic.block.BlockMagnet;
+import com.lothrazar.cyclicmagic.block.BlockMiner;
 import com.lothrazar.cyclicmagic.block.BlockUncrafting;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBuilder;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityHarvester;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityMagnet;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityMiner;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityUncrafting;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -21,6 +23,7 @@ public class MachineBlockModule extends BaseModule {
   private boolean enableBuilderBlock;
   private boolean enableHarvester;
   private boolean enableMagnet;
+  private boolean enableMiner = true;
   public void onInit() {
     if (enableBuilderBlock) {
       BlockRegistry.builder_block = new BlockBuilder();
@@ -45,6 +48,12 @@ public class MachineBlockModule extends BaseModule {
       BlockRegistry.registerBlock(BlockRegistry.magnet_block, "magnet_block");
       BlockRegistry.magnet_block.addRecipe();
       GameRegistry.registerTileEntity(TileEntityMagnet.class, "magnet_block_te");
+    }
+    if (enableMiner) {
+      BlockRegistry.miner_block = new BlockMiner();
+      BlockRegistry.registerBlock(BlockRegistry.miner_block, "block_miner");
+      BlockRegistry.miner_block.addRecipe();
+      GameRegistry.registerTileEntity(TileEntityMiner.class, "miner_te");
     }
   }
   @Override
