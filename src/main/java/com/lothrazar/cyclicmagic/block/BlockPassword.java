@@ -1,4 +1,9 @@
 package com.lothrazar.cyclicmagic.block;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -57,25 +62,34 @@ public class BlockPassword extends Block {
   }
   @SubscribeEvent
   public void chatEvent(ServerChatEvent event) {//forge event
-    for (TileEntityPassword current : TileEntityPassword.listeningBlocks) {
+    World world = event.getPlayer().getEntityWorld();
+    //for each loop hits a // oops : java.util.ConcurrentModificationException, so we need iterator
+    Iterator<TileEntityPassword> iterator = TileEntityPassword.listeningBlocks.iterator();
+    Map<BlockPos, Boolean> updates = new HashMap<BlockPos, Boolean>();
+    List<TileEntityPassword> toRemove = new ArrayList<TileEntityPassword>();
+    //TileEntityPassword current;
+    while (iterator.hasNext()) {
+      TileEntityPassword current = iterator.next();
       if (current.isInvalid() == false) {
         if (event.getMessage().equals(current.getMyPassword())) {
-          System.out.println("password activated by " + event.getUsername());
-          
           IBlockState blockState = current.getWorld().getBlockState(current.getPos());
           boolean hasPowerHere = this.getStrongPower(blockState, current.getWorld(), current.getPos(), EnumFacing.UP) > 0;
-
-// oops : java.util.ConcurrentModificationException
-          System.out.println("password activated by " + event.getUsername() +" hasPowerHere = "+hasPowerHere);
-          
-          
-          current.getWorld().setBlockState(current.getPos(), this.getDefaultState().withProperty(BlockPassword.POWERED, !hasPowerHere));
+          System.out.println("password activated by " + event.getUsername() + " hasPowerHere = " + hasPowerHere);
+          updates.put(current.getPos(), !hasPowerHere);
+          //current.getWorld().setBlockState(current.getPos(), this.getDefaultState().withProperty(BlockPassword.POWERED, !hasPowerHere));
         }
         //else password was wrong
       }
       else {
-        // current.remove(); ?? deleted or unloaded chunk?
+        toRemove.add(current);///is invalid
       }
+    }
+    //even with iterator we were getting ConcurrentModificationException on the iterator.next() line
+    for (TileEntityPassword rm : toRemove) {
+      TileEntityPassword.listeningBlocks.remove(rm);
+    }
+    for (Map.Entry<BlockPos, Boolean> entry : updates.entrySet()) {
+      world.setBlockState(entry.getKey(), this.getDefaultState().withProperty(BlockPassword.POWERED, entry.getValue()));
     }
   }
 }
