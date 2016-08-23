@@ -7,7 +7,7 @@ import net.minecraft.util.EnumFacing;
 @SuppressWarnings("unused")
 public abstract class TileEntityBaseMachine extends TileEntity {
   protected boolean isPowered() {
-    return this.getWorld().isBlockIndirectlyGettingPowered(this.getPos()) > 0;
+    return this.getWorld().isBlockPowered(this.getPos());//this.getWorld().isBlockIndirectlyGettingPowered(this.getPos()) > 0;
   }
   protected EnumFacing getCurrentFacing() {
     BlockBaseHorizontal b = ((BlockBaseHorizontal) this.getBlockType());
