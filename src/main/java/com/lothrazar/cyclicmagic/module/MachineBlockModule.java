@@ -66,8 +66,8 @@ public class MachineBlockModule extends BaseModule {
   }
   @Override
   public void syncConfig(Configuration config) {
-    enableMiner = config.getBoolean("MinerBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableMinerEnhanced = config.getBoolean("MinerBlockAdvanced", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableMiner = config.getBoolean("MinerBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText + ".  This is the one that mines a single block");
+    enableMinerEnhanced = config.getBoolean("MinerBlockAdvanced", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText + ".  This is the one that mines a 3x3x3 area");
     enableBuilderBlock = config.getBoolean("BuilderBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     TileEntityBuilder.maxSize = config.getInt("builder.maxRange", Const.ConfigCategory.modpackMisc, 10, 3, 32, "Maximum range of the builder block that you can increase it to in the GUI");
     TileEntityBuilder.maxHeight = config.getInt("builder.maxHeight", Const.ConfigCategory.modpackMisc, 10, 3, 32, "Maximum height of the builder block that you can increase it to in the GUI");

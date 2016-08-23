@@ -160,7 +160,6 @@ public class TileEntityMiner extends TileEntity implements ITickable {
     int rollFull = worldObj.rand.nextInt(9 * 3);
     int rollDist = rollFull / 9;
     int rollDice = rollFull % 9;//worldObj.rand.nextInt(9); //TODO: dont have it switch while mining and get this working
-    
     //then do the area
     // 1 2 3
     // 4 - 5

@@ -9,11 +9,15 @@ import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockMiner extends Block implements IHasRecipe {
   public static final PropertyDirection PROPERTYFACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
@@ -77,11 +81,32 @@ public class BlockMiner extends Block implements IHasRecipe {
   }
   @Override
   public void addRecipe() {
-    //    GameRegistry.addRecipe(new ItemStack(this), "rsr", "gbg", "ooo",
-    //        'o', Blocks.OBSIDIAN,
-    //        'g', Items.APPLE,
-    //        's', Blocks.DISPENSER,
-    //        'r', Blocks.REDSTONE_BLOCK,
-    //        'b', Blocks.DIAMOND_BLOCK);
+    switch(minerType){
+    case SINGLE:
+        GameRegistry.addRecipe(new ItemStack(this), 
+            "rsr", 
+            "gbg", 
+            "ooo",
+            'o', Blocks.MOSSY_COBBLESTONE,
+            'g', Items.IRON_PICKAXE, // new ItemStack(Items.DIAMOND_PICKAXE,1,OreDictionary.WILDCARD_VALUE),
+            's', Blocks.DISPENSER,
+            'r', Items.QUARTZ,
+            'b', Items.BLAZE_POWDER);
+      break;
+    case TUNNEL:
+      GameRegistry.addRecipe(new ItemStack(this), 
+          "rsr", 
+          "gbg", 
+          "ooo",
+          'o', Blocks.OBSIDIAN,
+          'g', Items.DIAMOND_PICKAXE, // new ItemStack(Items.DIAMOND_PICKAXE,1,OreDictionary.WILDCARD_VALUE),
+          's', Blocks.DISPENSER,
+          'r', Items.BLAZE_POWDER,
+          'b', Blocks.field_189877_df);// MAGMA BLOCK is field_189877_df in 1.10.2 apparently
+      break;
+    default:
+      break;
+    
+    }
   }
 }
