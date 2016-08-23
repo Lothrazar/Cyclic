@@ -107,14 +107,14 @@ public class TileEntityMiner extends TileEntity implements ITickable {
         initFakePlayer();
       }
       BlockMiner.MinerType minerType = ((BlockMiner) worldObj.getBlockState(pos).getBlock()).getMinerType();
-      BlockPos center = pos.offset(getFacingSelf());
+      BlockPos start = pos.offset(getFacingSelf());
       if (targetPos == null) {
-        targetPos = center; //not sure if this is needed
+        targetPos = start; //not sure if this is needed
       }
       boolean hasPower = (worldObj.isBlockIndirectlyGettingPowered(this.getPos()) > 0);
       if (hasPower) {
         if (isCurrentlyMining == false) { //we can mine but are not currently
-          this.updateTargetPos(center, minerType);
+          this.updateTargetPos(start, minerType);
           if (!worldObj.isAirBlock(targetPos)) { //we have a valid target
             isCurrentlyMining = true;
             curBlockDamage = 0;
@@ -150,15 +150,17 @@ public class TileEntityMiner extends TileEntity implements ITickable {
       }
     }
   }
-  private void updateTargetPos(BlockPos center, MinerType minerType) {
-    if (minerType == MinerType.SINGLE) {
-      targetPos = center; // stay on target
+  private void updateTargetPos(BlockPos start, MinerType minerType) {
+    targetPos = start;//always restart here so we dont offset out of bounds
+    if (minerType == MinerType.SINGLE) {// stay on target
       return;
     }
-    targetPos = center;//always restart here so we dont offset out of bounds
+    EnumFacing facing = getFacingSelf();
+    BlockPos center = start.offset(facing);//move one more over so we are in the exact center of a 3x3x3 area
+    
     //else we do a 3x3 
     int rollFull = worldObj.rand.nextInt(9 * 3);
-    int rollDist = rollFull / 9;
+    int rollUpOrDown = rollFull / 9;
     int rollDice = rollFull % 9;//worldObj.rand.nextInt(9); //TODO: dont have it switch while mining and get this working
     //then do the area
     // 1 2 3
@@ -169,13 +171,13 @@ public class TileEntityMiner extends TileEntity implements ITickable {
       targetPos = center;
       break;
     case 1:
-      targetPos = center.offset(EnumFacing.UP).offset(EnumFacing.WEST);
+      targetPos = center.offset(EnumFacing.NORTH).offset(EnumFacing.WEST);
       break;
     case 2:
-      targetPos = center.offset(EnumFacing.UP);
+      targetPos = center.offset(EnumFacing.NORTH);
       break;
     case 3:
-      targetPos = center.offset(EnumFacing.UP).offset(EnumFacing.EAST);
+      targetPos = center.offset(EnumFacing.NORTH).offset(EnumFacing.EAST);
       break;
     case 4:
       targetPos = center.offset(EnumFacing.WEST);
@@ -184,18 +186,23 @@ public class TileEntityMiner extends TileEntity implements ITickable {
       targetPos = center.offset(EnumFacing.EAST);
       break;
     case 6:
-      targetPos = center.offset(EnumFacing.DOWN).offset(EnumFacing.WEST);
+      targetPos = center.offset(EnumFacing.SOUTH).offset(EnumFacing.WEST);
       break;
     case 7:
-      targetPos = center.offset(EnumFacing.DOWN);
+      targetPos = center.offset(EnumFacing.SOUTH);
       break;
     case 8:
-      targetPos = center.offset(EnumFacing.DOWN).offset(EnumFacing.EAST);
+      targetPos = center.offset(EnumFacing.SOUTH).offset(EnumFacing.EAST);
       break;
     }
-    if (rollDist > 0) { //finally, offset the distance away
-      targetPos = targetPos.offset(getFacingSelf(), rollDist);
+    //now do the vertical
+    if (rollUpOrDown == 1) {
+      targetPos = targetPos.offset(EnumFacing.UP);
     }
+    else if (rollUpOrDown == 2) { 
+      targetPos = targetPos.offset(EnumFacing.DOWN);
+    }
+    //0 is center
     return;
   }
   private void initFakePlayer() {
