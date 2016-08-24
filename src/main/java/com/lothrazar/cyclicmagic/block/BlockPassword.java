@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
@@ -14,6 +15,8 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -23,8 +26,9 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BlockPassword extends Block {
+public class BlockPassword extends Block implements IHasRecipe {
   public static final PropertyBool POWERED = PropertyBool.create("powered");
   public BlockPassword() {
     super(Material.ROCK);
@@ -74,7 +78,7 @@ public class BlockPassword extends Block {
     return blockState.getValue(POWERED) ? 15 : 0;
   }
   @SubscribeEvent
-  public void chatEvent(ServerChatEvent event) {//forge event
+  public void chatEvent(ServerChatEvent event) {
     World world = event.getPlayer().getEntityWorld();
     //for each loop hits a // oops : java.util.ConcurrentModificationException, so we need iterator
     Iterator<TileEntityPassword> iterator = TileEntityPassword.listeningBlocks.iterator();
@@ -87,10 +91,9 @@ public class BlockPassword extends Block {
         if (current.getMyPassword() != null && current.getMyPassword().length()>0 && event.getMessage().equals(current.getMyPassword())) {
           IBlockState blockState = current.getWorld().getBlockState(current.getPos());
           boolean hasPowerHere = this.getStrongPower(blockState, current.getWorld(), current.getPos(), EnumFacing.UP) > 0;
-//          System.out.println(event.getMessage()+" activated by " + event.getUsername() + " hasPowerHere = " + hasPowerHere);
+    
           updates.put(current.getPos(), !hasPowerHere);
-          //current.getWorld().setBlockState(current.getPos(), this.getDefaultState().withProperty(BlockPassword.POWERED, !hasPowerHere));
-           
+     
         }
         //else password was wrong
       }
@@ -109,5 +112,17 @@ public class BlockPassword extends Block {
       //nope not needed anymore, fix in tile entity
 //      ((TileEntityPassword)world.getTileEntity(entry.getKey())).setMyPassword(event.getMessage());
     }
+  }
+  @Override
+  public void addRecipe() {
+
+    GameRegistry.addRecipe(new ItemStack(this),
+        "sss",
+        "trt",
+        "sss",
+        's',Blocks.STONE_SLAB,
+        't',Blocks.TRIPWIRE_HOOK, 
+        'r',Items.COMPARATOR);
+     
   }
 }

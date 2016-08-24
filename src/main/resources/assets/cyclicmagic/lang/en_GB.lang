@@ -218,6 +218,7 @@ tile.nether_diamond_ore.name=Nether Diamond Ore
 tile.nether_emerald_ore.name=Nether Emerald Ore
 tile.nether_gold_ore.name=Nether Gold Ore
 tile.nether_lapis_ore.name=Nether Lapis Ore
+tile.password_block.name=Password Trigger
 tile.placer_block.name=Block Placer
 tile.plate_launch_large.name=Hardened Slime Plate
 tile.plate_launch_med.name=Slime Plate

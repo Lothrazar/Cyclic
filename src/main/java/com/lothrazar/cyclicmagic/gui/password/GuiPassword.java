@@ -10,7 +10,6 @@ import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -23,13 +22,13 @@ public class GuiPassword extends GuiContainer {
     super(new ContainerPassword(inventoryPlayer, tileEntity));
     tile = tileEntity;
     this.ySize = 79;//texture size in pixels
-    this.height = this.ySize;
+//    this.height = this.ySize;
   }
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-    String s = UtilChat.lang("tile.block_password.name");
+    String s = UtilChat.lang("tile.password_block.name");
     this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
     if (txtPassword != null) {
       txtPassword.drawTextBox();
@@ -46,12 +45,12 @@ public class GuiPassword extends GuiContainer {
     txtPassword.setText(tile.getMyPassword());
     txtPassword.setFocused(true);
   }
-  @Override
-  public void onGuiClosed() {
-    super.onGuiClosed();
-   this.tile.setMyPassword(txtPassword.getText());
-    ModMain.network.sendToServer(new PacketTilePassword(txtPassword.getText(), tile.getPos()));
-  }
+//  @Override
+//  public void onGuiClosed() {
+//    super.onGuiClosed();
+//   this.tile.setMyPassword(txtPassword.getText());
+//    ModMain.network.sendToServer(new PacketTilePassword(txtPassword.getText(), tile.getPos()));
+//  }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -79,6 +78,8 @@ public class GuiPassword extends GuiContainer {
     super.keyTyped(par1, par2);
     if (txtPassword != null && txtPassword.isFocused()) {
       txtPassword.textboxKeyTyped(par1, par2);
+      
+      ModMain.network.sendToServer(new PacketTilePassword(txtPassword.getText(), tile.getPos()));
     }
   }
   @Override

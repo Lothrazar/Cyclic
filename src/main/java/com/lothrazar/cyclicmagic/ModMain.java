@@ -107,6 +107,8 @@ public class ModMain {
    * 
    * TODO:
    * 
+   * ITEM MAGNET: add pulse length and pulse RANGE to config. also add particle when it fires?
+   * 
    * idea: achievement for crafting?
    *  http://jabelarminecraft.blogspot.ca/p/minecraft-forge-creating-custom.html 
    *  along with   public void onItemCraftedEvent(PlayerEvent.ItemCraftedEvent event) {

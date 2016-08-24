@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -18,6 +19,7 @@ public class TileEntityPassword extends TileEntity {
       listeningBlocks.add(this);
     }
     this.validate();
+    System.out.println("construct "+this.getMyPassword()+"::"+UtilChat.blockPosToString(this.getPos()));
   }
   @Override
   public void onChunkUnload() {
@@ -37,7 +39,7 @@ public class TileEntityPassword extends TileEntity {
     return myPassword;
   }
   public void setMyPassword(String myPassword) {
-    //    System.out.println("set password, old => new " + this.myPassword + "=>" + myPassword);
+  System.out.println("set password, old => new " + this.myPassword + "=>" + myPassword);
     this.myPassword = myPassword;
   }
   public void saveChanges() {
@@ -59,6 +61,7 @@ public class TileEntityPassword extends TileEntity {
     readFromNBT(packet.getNbtCompound());
     IBlockState state = this.getWorld().getBlockState(this.getPos());
     this.getWorld().notifyBlockUpdate(this.getPos(), state, state, 3);
+    super.onDataPacket(net, packet);
   }
   @Override
   public SPacketUpdateTileEntity getUpdatePacket() {

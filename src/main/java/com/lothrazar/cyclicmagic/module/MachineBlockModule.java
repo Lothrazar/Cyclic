@@ -31,6 +31,7 @@ public class MachineBlockModule extends BaseModule {
   private boolean enableMiner;
   private boolean enableMinerEnhanced;
   private boolean enablePlacer;
+  private boolean enablePassword;
   public void onInit() {
     if (enableBuilderBlock) {
       BlockRegistry.builder_block = new BlockBuilder();
@@ -75,14 +76,18 @@ public class MachineBlockModule extends BaseModule {
       BlockRegistry.placer_block.addRecipe();
       GameRegistry.registerTileEntity(TileMachinePlacer.class, "placer_block_te");
     }
-    BlockRegistry.password_block = new BlockPassword();
-    BlockRegistry.registerBlock(BlockRegistry.password_block, "password_block");
-    //    BlockRegistry.password_block.addRecipe();
-    GameRegistry.registerTileEntity(TileEntityPassword.class, "password_block_te");
-    ModMain.instance.events.addEvent(BlockRegistry.password_block);
+    if(enablePassword){
+      BlockRegistry.password_block = new BlockPassword();
+      BlockRegistry.registerBlock(BlockRegistry.password_block, "password_block");
+      BlockRegistry.password_block.addRecipe();
+      GameRegistry.registerTileEntity(TileEntityPassword.class, "password_block_te");
+      ModMain.instance.events.addEvent(BlockRegistry.password_block);
+    }
   }
   @Override
   public void syncConfig(Configuration config) {
+    enablePassword = config.getBoolean("PasswordTrigger", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    
     enablePlacer = config.getBoolean("BlockPlacer", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableMiner = config.getBoolean("MinerBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText + ".  This is the one that mines a single block");
     enableMinerEnhanced = config.getBoolean("MinerBlockAdvanced", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText + ".  This is the one that mines a 3x3x3 area");
