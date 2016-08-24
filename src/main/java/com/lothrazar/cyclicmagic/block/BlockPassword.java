@@ -4,15 +4,20 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
+import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -32,7 +37,15 @@ public class BlockPassword extends Block {
   public boolean hasTileEntity() {
     return true;
   }
-  // TODO:  onBlockActivated open gui to change the password saved
+  @Override
+  public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+
+    if (player.isSneaking()) { return false; } 
+    if (world.isRemote) { return true; }
+    int x = pos.getX(), y = pos.getY(), z = pos.getZ();
+    player.openGui(ModMain.instance, ModGuiHandler.GUI_INDEX_PASSWORD, world, x, y, z);
+    return true;
+  }
   @Override
   public boolean hasTileEntity(IBlockState state) {
     return hasTileEntity();

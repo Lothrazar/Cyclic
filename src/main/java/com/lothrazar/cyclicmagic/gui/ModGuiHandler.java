@@ -1,9 +1,12 @@
 package com.lothrazar.cyclicmagic.gui;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineBuilder;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachinePlacer;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter;
 import com.lothrazar.cyclicmagic.gui.builder.ContainerBuilder;
 import com.lothrazar.cyclicmagic.gui.builder.GuiBuilder;
+import com.lothrazar.cyclicmagic.gui.password.ContainerPassword;
+import com.lothrazar.cyclicmagic.gui.password.GuiPassword;
 import com.lothrazar.cyclicmagic.gui.placer.ContainerPlacer;
 import com.lothrazar.cyclicmagic.gui.placer.GuiPlacer;
 import com.lothrazar.cyclicmagic.gui.player.GuiPlayerExtended;
@@ -36,6 +39,7 @@ public class ModGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_WAYPOINT = 4;
   public static final int GUI_INDEX_BUILDER = 5;
   public static final int GUI_INDEX_PLACER = 6;
+  public static final int GUI_INDEX_PASSWORD = 7;
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
     TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
@@ -67,6 +71,12 @@ public class ModGuiHandler implements IGuiHandler {
         return c;
       }
       break;
+    case GUI_INDEX_PASSWORD:
+      if (te != null && te instanceof TileEntityPassword) {
+        Container c = new ContainerPassword(player.inventory, (TileEntityPassword) te);
+        return c;
+      }
+      break;
     }
     return null;
   }
@@ -94,6 +104,9 @@ public class ModGuiHandler implements IGuiHandler {
         break;
       case GUI_INDEX_PLACER:
         if (te != null && te instanceof TileMachinePlacer) { return new GuiPlacer(player.inventory, (TileMachinePlacer) te); }
+        break;
+      case GUI_INDEX_PASSWORD:
+        if (te != null && te instanceof TileEntityPassword) { return new GuiPassword(player.inventory, (TileEntityPassword) te); }
         break;
       }
     }

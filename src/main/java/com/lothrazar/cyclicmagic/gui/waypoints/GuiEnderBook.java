@@ -128,6 +128,7 @@ public class GuiEnderBook extends GuiScreen {
   public boolean doesGuiPauseGame() {
     return false;
   }
+  //TODO: Base gui class for hasTextbox
   // http://www.minecraftforge.net/forum/index.php?topic=22378.0
   // below is all the stuff that makes the text box NOT broken
   @Override
