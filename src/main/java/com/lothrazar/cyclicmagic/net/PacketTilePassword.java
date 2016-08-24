@@ -2,10 +2,12 @@ package com.lothrazar.cyclicmagic.net;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IThreadListener;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -51,11 +53,17 @@ public class PacketTilePassword implements IMessage, IMessageHandler<PacketTileP
     thread.addScheduledTask(new Runnable() {
       public void run() {
         EntityPlayerMP player = ctx.getServerHandler().playerEntity;
-        TileEntityPassword tile = (TileEntityPassword) player.getEntityWorld().getTileEntity(message.pos);
+        World world = player.getEntityWorld();
+        TileEntityPassword tile = (TileEntityPassword)world.getTileEntity(message.pos);
         if (tile != null) {
           System.out.println("write from thread yay:"+message.password);
           tile.setMyPassword(message.password);
           tile.markDirty();
+          
+          player.getEntityWorld().markChunkDirty(message.pos, tile);
+          final IBlockState oldState = world.getBlockState(message.pos);
+          //http://www.minecraftforge.net/forum/index.php?topic=38710.0
+          world.notifyBlockUpdate(message.pos, oldState, oldState, 3);
         }
       }
     });
