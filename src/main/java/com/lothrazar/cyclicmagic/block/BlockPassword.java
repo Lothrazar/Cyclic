@@ -9,6 +9,7 @@ import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockStoneSlab;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
@@ -120,7 +121,7 @@ public class BlockPassword extends Block implements IHasRecipe {
         "sss",
         "trt",
         "sss",
-        's', Blocks.STONE_SLAB,
+        's', new ItemStack(Blocks.STONE_SLAB,1,BlockStoneSlab.EnumType.STONE.getMetadata()),
         't', Blocks.TRIPWIRE_HOOK,
         'r', Items.COMPARATOR);
   }
