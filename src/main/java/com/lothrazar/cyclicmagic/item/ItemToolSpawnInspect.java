@@ -27,10 +27,10 @@ import net.minecraft.world.gen.ChunkProviderServer;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemToolSpawnInspect extends BaseTool implements IHasRecipe {
-  private static final int durability = 2000;
-  private static final int cooldown = 10;
+  private static final int DURABILITY = 2000;
+  private static final int COOLDOWN = 10;
   public ItemToolSpawnInspect() {
-    super(durability);
+    super(DURABILITY);
   }
   @Override
   public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World worldObj, BlockPos posIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
@@ -67,7 +67,7 @@ public class ItemToolSpawnInspect extends BaseTool implements IHasRecipe {
         }
       }
     }
-    player.getCooldownTracker().setCooldown(this, cooldown);
+    player.getCooldownTracker().setCooldown(this, COOLDOWN);
     super.onUse(stack, player, worldObj, hand);
     return super.onItemUse(stack, player, worldObj, posIn, hand, side, hitX, hitY, hitZ);
   }
