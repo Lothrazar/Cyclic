@@ -12,42 +12,43 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
 public class TileEntityPassword extends TileEntity {
+  private static final String NBT_PASSWORD = "myPass";
   public static List<TileEntityPassword> listeningBlocks = new ArrayList<TileEntityPassword>();
   private String myPassword = "";
   public TileEntityPassword() {
     if (FMLCommonHandler.instance().getEffectiveSide().isServer()) {
       listeningBlocks.add(this);
     }
-    this.validate();
-    System.out.println("construct "+this.getMyPassword()+"::"+UtilChat.blockPosToString(this.getPos()));
+//    this.validate();
   }
   @Override
   public void onChunkUnload() {
-    super.onChunkUnload();
     this.invalidate();
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
-    tags.setString("myPassword", getMyPassword());
-    return tags;
+    tags.setString(NBT_PASSWORD, getMyPassword());
+    return super.writeToNBT(tags);
   }
   @Override
   public void readFromNBT(NBTTagCompound tags) {
-    myPassword = tags.getString("myPassword");
+    myPassword = tags.getString(NBT_PASSWORD);
+    super.readFromNBT(tags);
   }
   public String getMyPassword() {
     return myPassword;
   }
   public void setMyPassword(String myPassword) {
-  System.out.println("set password, old => new " + this.myPassword + "=>" + myPassword);
+    boolean isRemote = this.getWorld().isRemote;
+    System.out.println(isRemote+".set password, old => new " + this.myPassword + "=>" + myPassword);
     this.myPassword = myPassword;
   }
-  public void saveChanges() {
-    //save changes
-    IBlockState state = this.getWorld().getBlockState(this.getPos());
-    this.getWorld().notifyBlockUpdate(this.getPos(), state, state, 3);
-    this.markDirty();
-  }
+//  public void saveChanges() {
+//    //save changes
+//    IBlockState state = this.getWorld().getBlockState(this.getPos());
+//    this.getWorld().notifyBlockUpdate(this.getPos(), state, state, 3);
+//    this.markDirty();
+//  }
   @Override
   public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
     //setting the block state seems to also run the constructor of the tile entity, which wipes out the data (thank you eclipse breakpoints)
@@ -58,9 +59,7 @@ public class TileEntityPassword extends TileEntity {
   @Override
   public final void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
     //for keeping client/server in sync
-    readFromNBT(packet.getNbtCompound());
-    IBlockState state = this.getWorld().getBlockState(this.getPos());
-    this.getWorld().notifyBlockUpdate(this.getPos(), state, state, 3);
+    this.readFromNBT(packet.getNbtCompound());
     super.onDataPacket(net, packet);
   }
   @Override

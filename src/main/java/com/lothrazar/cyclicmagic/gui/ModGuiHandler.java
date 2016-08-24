@@ -73,7 +73,7 @@ public class ModGuiHandler implements IGuiHandler {
       break;
     case GUI_INDEX_PASSWORD:
       if (te != null && te instanceof TileEntityPassword) {
-        Container c = new ContainerPassword(player.inventory, (TileEntityPassword) te);
+        Container c = new ContainerPassword();
         return c;
       }
       break;
@@ -106,7 +106,7 @@ public class ModGuiHandler implements IGuiHandler {
         if (te != null && te instanceof TileMachinePlacer) { return new GuiPlacer(player.inventory, (TileMachinePlacer) te); }
         break;
       case GUI_INDEX_PASSWORD:
-        if (te != null && te instanceof TileEntityPassword) { return new GuiPassword(player.inventory, (TileEntityPassword) te); }
+        if (te != null && te instanceof TileEntityPassword) { return new GuiPassword( (TileEntityPassword) te); }
         break;
       }
     }

@@ -9,7 +9,6 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -18,8 +17,8 @@ public class GuiPassword extends GuiContainer {
   private static final ResourceLocation table = new ResourceLocation(Const.MODID, "textures/gui/password.png");
   private TileEntityPassword tile;
   private GuiTextField txtPassword;
-  public GuiPassword(InventoryPlayer inventoryPlayer, TileEntityPassword tileEntity) {
-    super(new ContainerPassword(inventoryPlayer, tileEntity));
+  public GuiPassword(TileEntityPassword tileEntity) {
+    super(new ContainerPassword());
     tile = tileEntity;
     this.ySize = 79;//texture size in pixels
 //    this.height = this.ySize;
@@ -58,7 +57,7 @@ public class GuiPassword extends GuiContainer {
     int thisX = (this.width - this.xSize) / 2;
     int thisY = (this.height - this.ySize) / 2;
     int texture_width = 176;
-    int texture_height = 166;
+    int texture_height = 79;
     int u = 0, v = 0;
     Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, this.xSize, this.ySize, texture_width, texture_height);
   }
@@ -78,7 +77,7 @@ public class GuiPassword extends GuiContainer {
     super.keyTyped(par1, par2);
     if (txtPassword != null && txtPassword.isFocused()) {
       txtPassword.textboxKeyTyped(par1, par2);
-      
+//      this.tile.setMyPassword(txtPassword.getText());
       ModMain.network.sendToServer(new PacketTilePassword(txtPassword.getText(), tile.getPos()));
     }
   }

@@ -1,9 +1,12 @@
 package com.lothrazar.cyclicmagic.net;
+import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.IThreadListener;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -38,12 +41,23 @@ public class PacketTilePassword implements IMessage, IMessageHandler<PacketTileP
   }
   @Override
   public IMessage onMessage(PacketTilePassword message, MessageContext ctx) {
-    EntityPlayerMP player = ctx.getServerHandler().playerEntity;
-    TileEntityPassword tile = (TileEntityPassword) player.getEntityWorld().getTileEntity(message.pos);
-    if (tile != null) {
-      tile.setMyPassword(message.password);
-      tile.saveChanges();
-    }
+    PacketTilePassword.checkThreadAndEnqueue(message, ctx);
     return null;
+  }
+  private static void checkThreadAndEnqueue(final PacketTilePassword message, final MessageContext ctx) {
+    //copied in from my PacketSyncPlayerData
+    IThreadListener thread = ModMain.proxy.getThreadFromContext(ctx);
+    // pretty much copied straight from vanilla code, see {@link PacketThreadUtil#checkThreadAndEnqueue}
+    thread.addScheduledTask(new Runnable() {
+      public void run() {
+        EntityPlayerMP player = ctx.getServerHandler().playerEntity;
+        TileEntityPassword tile = (TileEntityPassword) player.getEntityWorld().getTileEntity(message.pos);
+        if (tile != null) {
+          System.out.println("write from thread yay:"+message.password);
+          tile.setMyPassword(message.password);
+          tile.markDirty();
+        }
+      }
+    });
   }
 }
