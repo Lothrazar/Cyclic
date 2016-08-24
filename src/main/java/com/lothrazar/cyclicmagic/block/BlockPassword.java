@@ -84,12 +84,13 @@ public class BlockPassword extends Block {
     while (iterator.hasNext()) {
       TileEntityPassword current = iterator.next();
       if (current.isInvalid() == false) {
-        if (event.getMessage().equals(current.getMyPassword())) {
+        if (current.getMyPassword() != null && current.getMyPassword().length()>0 && event.getMessage().equals(current.getMyPassword())) {
           IBlockState blockState = current.getWorld().getBlockState(current.getPos());
           boolean hasPowerHere = this.getStrongPower(blockState, current.getWorld(), current.getPos(), EnumFacing.UP) > 0;
-          System.out.println("password activated by " + event.getUsername() + " hasPowerHere = " + hasPowerHere);
+//          System.out.println(event.getMessage()+" activated by " + event.getUsername() + " hasPowerHere = " + hasPowerHere);
           updates.put(current.getPos(), !hasPowerHere);
           //current.getWorld().setBlockState(current.getPos(), this.getDefaultState().withProperty(BlockPassword.POWERED, !hasPowerHere));
+           
         }
         //else password was wrong
       }
@@ -103,6 +104,10 @@ public class BlockPassword extends Block {
     }
     for (Map.Entry<BlockPos, Boolean> entry : updates.entrySet()) {
       world.setBlockState(entry.getKey(), this.getDefaultState().withProperty(BlockPassword.POWERED, entry.getValue()));
+      //setting the block state seems to also run the constructor of the tile entity, which wipes out the data
+      //so we need to do a manual reset here. but then its not in gui
+      //nope not needed anymore, fix in tile entity
+//      ((TileEntityPassword)world.getTileEntity(entry.getKey())).setMyPassword(event.getMessage());
     }
   }
 }
