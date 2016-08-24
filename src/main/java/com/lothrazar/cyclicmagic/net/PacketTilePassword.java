@@ -8,7 +8,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IThreadListener;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -54,12 +53,10 @@ public class PacketTilePassword implements IMessage, IMessageHandler<PacketTileP
       public void run() {
         EntityPlayerMP player = ctx.getServerHandler().playerEntity;
         World world = player.getEntityWorld();
-        TileEntityPassword tile = (TileEntityPassword)world.getTileEntity(message.pos);
+        TileEntityPassword tile = (TileEntityPassword) world.getTileEntity(message.pos);
         if (tile != null) {
-          System.out.println("write from thread yay:"+message.password);
           tile.setMyPassword(message.password);
           tile.markDirty();
-          
           player.getEntityWorld().markChunkDirty(message.pos, tile);
           final IBlockState oldState = world.getBlockState(message.pos);
           //http://www.minecraftforge.net/forum/index.php?topic=38710.0

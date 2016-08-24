@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -21,7 +20,7 @@ public class TileEntityPassword extends TileEntity {
     if (FMLCommonHandler.instance().getEffectiveSide().isServer()) {
       listeningBlocks.add(this);
     }
-//    this.validate();
+    //    this.validate();
   }
   @Override
   public void onChunkUnload() {
@@ -41,16 +40,8 @@ public class TileEntityPassword extends TileEntity {
     return myPassword;
   }
   public void setMyPassword(String myPassword) {
-    boolean isRemote = this.getWorld().isRemote;
-    System.out.println(isRemote+".set password, old => new " + this.myPassword + "=>" + myPassword);
     this.myPassword = myPassword;
   }
-//  public void saveChanges() {
-//    //save changes
-//    IBlockState state = this.getWorld().getBlockState(this.getPos());
-//    this.getWorld().notifyBlockUpdate(this.getPos(), state, state, 3);
-//    this.markDirty();
-//  }
   @Override
   public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
     //setting the block state seems to also run the constructor of the tile entity, which wipes out the data (thank you eclipse breakpoints)
@@ -72,14 +63,11 @@ public class TileEntityPassword extends TileEntity {
     return new SPacketUpdateTileEntity(this.getPos(), 1, tags);
   }
   @Override
-  public NBTTagCompound getUpdateTag()
-  {
+  public NBTTagCompound getUpdateTag() {
+    //this is needed. otherwise on world reload, the server has accurate data but client does not. which means its not in gui
     // http://www.minecraftforge.net/forum/index.php?topic=39162.0
-    System.out.println("getUpdateTag");
     NBTTagCompound compound = super.getUpdateTag();
- 
     this.writeToNBT(compound);
-
     return compound;
   }
 }

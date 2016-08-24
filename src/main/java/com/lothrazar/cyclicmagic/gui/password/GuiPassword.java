@@ -21,9 +21,7 @@ public class GuiPassword extends GuiContainer {
   public GuiPassword(TileEntityPassword tileEntity) {
     super(new ContainerPassword(tileEntity));
     ctr = (ContainerPassword)this.inventorySlots;
-//    tile = tileEntity;
     this.ySize = 79;//texture size in pixels
-//    this.height = this.ySize;
   }
   @SideOnly(Side.CLIENT)
   @Override
@@ -39,11 +37,10 @@ public class GuiPassword extends GuiContainer {
   public void initGui() {
     super.initGui();
     int width = 120, height = 20;
-    txtPassword = new GuiTextField(0, this.fontRendererObj, (xSize / 2 - width / 2) + 5, 20 + (height / 2), 127, height); // -
+    txtPassword = new GuiTextField(0, this.fontRendererObj, (xSize / 2 - width / 2) , 20 + (height / 2), 127, height);
     // new GuiTextField(1, this.fontRendererObj, this.width / 2 - w,20, w, h);
     txtPassword.setMaxStringLength(40);
     
-    System.out.println("SET GUI TEXT "+ctr.tile.getMyPassword());
     txtPassword.setText(ctr.tile.getMyPassword());
  
     txtPassword.setFocused(true);

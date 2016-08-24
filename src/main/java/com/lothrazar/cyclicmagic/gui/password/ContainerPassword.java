@@ -8,7 +8,6 @@ public class ContainerPassword extends Container {
   public ContainerPassword(TileEntityPassword te) {
     super();
     tile = te;
-    System.out.println("CONTAINER HAS " + te.getMyPassword());
   }
   @Override
   public boolean canInteractWith(EntityPlayer playerIn) {
