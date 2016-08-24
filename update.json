@@ -38,5 +38,6 @@
  	,"1.5.1":"Fix Garden Scythe rotating cocoa beans on harvesting (#67)"
  	,"1.5.2":"Mod compatibility fixes"
  	,"1.5.3":"A few recipes no longer require beacons & nether stars.  Add world config to disable all loot chest insertions.  "
+ 	,"1.6.0":"Added machine blocks Miner, Miner Advanced, and Placer.  Added Cavefinder and Prospector items.  Removed feature events to restrict sapling growth and give EXP for achievements (they never worked perfectly anyway).  Harvester recipe is now cheaper.  All machines (uncrafter, etc) activate on any redstone power, not just strong power."
  }
 }

@@ -118,7 +118,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
   }
   public void addRecipe() {
     GameRegistry.addRecipe(new ItemStack(this), "ene", "ebe", "eee",
-        'e', Items.ENDER_PEARL, 
+        'e', Items.ENDER_PEARL,
         'b', Items.BOOK,
         'n', Blocks.EMERALD_BLOCK);
     // if you want to clean out the book and start over

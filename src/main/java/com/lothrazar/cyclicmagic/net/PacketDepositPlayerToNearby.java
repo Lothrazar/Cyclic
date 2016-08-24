@@ -11,7 +11,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketDepositPlayerToNearby implements IMessage, IMessageHandler<PacketDepositPlayerToNearby, IMessage> {
-  public static final int ID = 29;
   NBTTagCompound tags = new NBTTagCompound();
   public PacketDepositPlayerToNearby() {
   }

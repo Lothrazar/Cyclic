@@ -213,7 +213,9 @@ public class UtilPlaceBlocks {
         tile.writeToNBT(tileData);
         world.removeTileEntity(pos);
       }
+      world.destroyBlock(posMoveToHere, false);
       world.setBlockToAir(pos);
+      world.markChunkDirty(pos, null);//dont forget to update the old pos as well as the new position for server sync
       //end of break
       //start move
       moved = UtilPlaceBlocks.placeStateSafe(world, player, posMoveToHere, newStateToPlace);

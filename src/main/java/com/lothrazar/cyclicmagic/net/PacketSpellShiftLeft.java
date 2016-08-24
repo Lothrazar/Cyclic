@@ -8,7 +8,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketSpellShiftLeft implements IMessage, IMessageHandler<PacketSpellShiftLeft, IMessage> {
-  public static final int ID = 12;
   public PacketSpellShiftLeft() {
   }
   @Override

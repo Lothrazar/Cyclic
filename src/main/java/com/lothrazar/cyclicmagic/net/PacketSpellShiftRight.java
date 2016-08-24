@@ -9,7 +9,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketSpellShiftRight implements IMessage, IMessageHandler<PacketSpellShiftRight, IMessage> {
-  public static final int ID = 13;
   public PacketSpellShiftRight() {
   }
   public PacketSpellShiftRight(BlockPos pm) {

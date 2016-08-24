@@ -13,7 +13,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketSpellFromServer implements IMessage, IMessageHandler<PacketSpellFromServer, IMessage> {
-  public static final int ID = 16;
   private BlockPos pos;
   private BlockPos posOffset;
   private int spellID;

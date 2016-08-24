@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.net;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBuilder;
+import com.lothrazar.cyclicmagic.block.tileentity.TileMachineBuilder;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -10,7 +10,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketTileBuildSize implements IMessage, IMessageHandler<PacketTileBuildSize, IMessage> {
-  public static final int ID = 55;
   private BlockPos pos;
   private int value;
   private String type;
@@ -44,7 +43,7 @@ public class PacketTileBuildSize implements IMessage, IMessageHandler<PacketTile
   @Override
   public IMessage onMessage(PacketTileBuildSize message, MessageContext ctx) {
     EntityPlayerMP player = ctx.getServerHandler().playerEntity;
-    TileEntityBuilder tile = (TileEntityBuilder) player.getEntityWorld().getTileEntity(message.pos);
+    TileMachineBuilder tile = (TileMachineBuilder) player.getEntityWorld().getTileEntity(message.pos);
     if (tile != null) {
       if (message.type.equals("size"))
         tile.setSize(tile.getSize() + message.value);

@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.gui.builder;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBuilder;
+import com.lothrazar.cyclicmagic.block.tileentity.TileMachineBuilder;
 import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -20,7 +20,7 @@ public class GuiBuilder extends GuiContainer {
   private static final int texture_width = 176;
   private static final int texture_height = 166;
   static final int padding = 8;
-  private TileEntityBuilder tile;
+  private TileMachineBuilder tile;
   private ButtonBuilderType btn;
   private ButtonBuildSize btnSizeUp;
   private ButtonBuildSize btnSizeDown;
@@ -30,8 +30,9 @@ public class GuiBuilder extends GuiContainer {
   private int ySizeTxtbox;
   private int xHeightTextbox;
   private int yHeightTxtbox;
+  private int yOffset = 10 + padding;
   boolean debugLabels = false;
-  public GuiBuilder(InventoryPlayer inventoryPlayer, TileEntityBuilder tileEntity) {
+  public GuiBuilder(InventoryPlayer inventoryPlayer, TileMachineBuilder tileEntity) {
     super(new ContainerBuilder(inventoryPlayer, tileEntity));
     tile = tileEntity;
   }
@@ -44,22 +45,22 @@ public class GuiBuilder extends GuiContainer {
     //first the main top left type button
     int width = 50;
     int id = 2;
-    btn = new ButtonBuilderType(tile.getPos(), id++, this.guiLeft + padding, this.guiTop + padding, width);
+    btn = new ButtonBuilderType(tile.getPos(), id++, this.guiLeft + padding, this.guiTop + yOffset + 3, width);
     this.buttonList.add(btn);
     width = 15;
     //size buttons
     xSizeTextbox = texture_width - 24;
-    btnSizeUp = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xSizeTextbox, this.guiTop + 4, width, true, "size");
+    btnSizeUp = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xSizeTextbox, this.guiTop + yOffset, width, true, "size");
     this.buttonList.add(btnSizeUp);
-    btnSizeDown = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xSizeTextbox, this.guiTop + 24, width, false, "size");
+    btnSizeDown = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xSizeTextbox, this.guiTop + 21 + yOffset, width, false, "size");
     this.buttonList.add(btnSizeDown);
     xSizeTextbox += width / 2 - 2;
     ySizeTxtbox = 16;
     //further to the left we have the height buttons
     xHeightTextbox = texture_width - 68;
-    btnHeightUp = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xHeightTextbox, this.guiTop + 4, width, true, "height");
+    btnHeightUp = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xHeightTextbox, this.guiTop + yOffset, width, true, "height");
     this.buttonList.add(btnHeightUp);
-    btnHeightDown = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xHeightTextbox, this.guiTop + 24, width, false, "height");
+    btnHeightDown = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xHeightTextbox, this.guiTop + 21 + yOffset, width, false, "height");
     this.buttonList.add(btnHeightDown);
     xHeightTextbox += width / 2 - 2;
     yHeightTxtbox = ySizeTxtbox;
@@ -68,6 +69,8 @@ public class GuiBuilder extends GuiContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+    String s = UtilChat.lang("tile.builder_block.name");
+    this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
     this.btn.displayString = UtilChat.lang("buildertype." + this.tile.getBuildTypeEnum().name().toLowerCase() + ".name");
     if (debugLabels) {
       this.fontRendererObj.drawString("t = " + this.tile.getTimer(), 32, this.ySize - 94, 4210752);
@@ -80,18 +83,18 @@ public class GuiBuilder extends GuiContainer {
       String display = "" + this.tile.getSize();
       //move it over if more than 1 digit
       int x = (display.length() > 1) ? xSizeTextbox - 3 : xSizeTextbox;
-      this.fontRendererObj.drawString(display, x, ySizeTxtbox, 4210752);
+      this.fontRendererObj.drawString(display, x, ySizeTxtbox + yOffset - 4, 4210752);
     }
     if (this.tile.getHeight() > 0) {
       String display = "" + this.tile.getHeight();
       //move it over if more than 1 digit
       int x = (display.length() > 1) ? xHeightTextbox - 3 : xHeightTextbox;
-      this.fontRendererObj.drawString(display, x, yHeightTxtbox, 4210752);
+      this.fontRendererObj.drawString(display, x, yHeightTxtbox + yOffset - 4, 4210752);
     }
     this.btnSizeDown.enabled = (this.tile.getSize() > 1);
-    this.btnSizeUp.enabled = (this.tile.getSize() < TileEntityBuilder.maxSize);
+    this.btnSizeUp.enabled = (this.tile.getSize() < TileMachineBuilder.maxSize);
     this.btnHeightDown.enabled = (this.tile.getHeight() > 1);
-    this.btnHeightUp.enabled = (this.tile.getHeight() < TileEntityBuilder.maxHeight);
+    this.btnHeightUp.enabled = (this.tile.getHeight() < TileMachineBuilder.maxHeight);
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
@@ -107,12 +110,12 @@ public class GuiBuilder extends GuiContainer {
     }
     if (tile.getTimer() > 0 && tile.getStackInSlot(0) != null) {
       this.mc.getTextureManager().bindTexture(progress);
-      float percent = ((float) tile.getTimer()) / ((float) TileEntityBuilder.TIMER_FULL);
+      float percent = ((float) tile.getTimer()) / ((float) TileMachineBuilder.TIMER_FULL);
       // maximum progress bar is 156, since the whole texture is 176 minus
       // 10 padding on each side
       int belowSlots = this.guiTop + 9 + 3 * Const.SQ;
       // Args: x, y, u, v, width, height, textureWidth, textureHeight
-      Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + 10, belowSlots + 5, u, v, (int) (156 * percent), 7, 156, 7);
+      Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + 10, belowSlots + 10, u, v, (int) (156 * percent), 7, 156, 7);
     }
   }
   @Override

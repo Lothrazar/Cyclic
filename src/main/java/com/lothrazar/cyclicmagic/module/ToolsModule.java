@@ -5,8 +5,10 @@ import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.item.ItemSleepingBag;
 import com.lothrazar.cyclicmagic.item.ItemToolHarvest;
 import com.lothrazar.cyclicmagic.item.ItemToolPearlReuse;
+import com.lothrazar.cyclicmagic.item.ItemToolProspector;
 import com.lothrazar.cyclicmagic.item.ItemToolPush;
 import com.lothrazar.cyclicmagic.item.ItemToolSpawnInspect;
+import com.lothrazar.cyclicmagic.item.ItemToolSpelunker;
 import com.lothrazar.cyclicmagic.net.PacketSpellShiftLeft;
 import com.lothrazar.cyclicmagic.net.PacketSpellShiftRight;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
@@ -43,8 +45,18 @@ public class ToolsModule extends BaseModule {
   private boolean enablePearlReuse;
   private boolean enableSpawnInspect;
   private boolean enableCyclicWand;
+  private boolean enableProspector;
+  private boolean enableCavefinder;
   @Override
   public void onInit() {
+    if (enableProspector) {
+      ItemRegistry.tool_prospector = new ItemToolProspector();
+      ItemRegistry.addItem(ItemRegistry.tool_prospector, "tool_prospector");
+    }
+    if (enableCavefinder) {
+      ItemRegistry.tool_spelunker = new ItemToolSpelunker();
+      ItemRegistry.addItem(ItemRegistry.tool_spelunker, "tool_spelunker");
+    }
     if (enableSpawnInspect) {
       ItemRegistry.tool_spawn_inspect = new ItemToolSpawnInspect();
       ItemRegistry.addItem(ItemRegistry.tool_spawn_inspect, "tool_spawn_inspect");
@@ -94,6 +106,8 @@ public class ToolsModule extends BaseModule {
     enableToolPush = config.getBoolean("PistonScepter", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableSleepingMat = config.getBoolean("SleepingMat", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableCyclicWand = config.getBoolean("CyclicWand", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableProspector = config.getBoolean("Prospector", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableCavefinder = config.getBoolean("Cavefinder", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
   @SideOnly(Side.CLIENT)
   @SubscribeEvent

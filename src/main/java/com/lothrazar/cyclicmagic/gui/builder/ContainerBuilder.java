@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.gui.builder;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBuilder;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityUncrafting;
+import com.lothrazar.cyclicmagic.block.tileentity.TileMachineBuilder;
+import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter;
 import com.lothrazar.cyclicmagic.gui.slot.SlotUncraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -16,15 +16,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ContainerBuilder extends Container {
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
   public static final int SLOTX_START = 8;
-  public static final int SLOTY = 40;
+  public static final int SLOTY = 52;
   public static final int SQ = 18;
-  protected TileEntityBuilder tileEntity;
+  protected TileMachineBuilder tileEntity;
   private int tileBuild;
   private int tileTimer;
   private int tileSpeed;
   private int tileSize;
   private int tileHeight;
-  public ContainerBuilder(InventoryPlayer inventoryPlayer, TileEntityBuilder te) {
+  public ContainerBuilder(InventoryPlayer inventoryPlayer, TileMachineBuilder te) {
     tileEntity = te;
     for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
       addSlotToContainer(new SlotUncraft(tileEntity, i, SLOTX_START + i * SQ, SLOTY));
@@ -77,32 +77,32 @@ public class ContainerBuilder extends Container {
     super.detectAndSendChanges();
     for (int i = 0; i < this.listeners.size(); ++i) {
       IContainerListener icontainerlistener = (IContainerListener) this.listeners.get(i);
-      int idx = TileEntityBuilder.Fields.TIMER.ordinal();
+      int idx = TileMachineBuilder.Fields.TIMER.ordinal();
       if (this.tileTimer != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
-      idx = TileEntityBuilder.Fields.BUILDTYPE.ordinal();
+      idx = TileMachineBuilder.Fields.BUILDTYPE.ordinal();
       if (this.tileBuild != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
-      idx = TileEntityBuilder.Fields.SIZE.ordinal();
+      idx = TileMachineBuilder.Fields.SIZE.ordinal();
       if (this.tileSize != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
-      idx = TileEntityBuilder.Fields.SPEED.ordinal();
+      idx = TileMachineBuilder.Fields.SPEED.ordinal();
       if (this.tileSpeed != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
-      idx = TileEntityBuilder.Fields.HEIGHT.ordinal();
+      idx = TileMachineBuilder.Fields.HEIGHT.ordinal();
       if (this.tileHeight != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
     }
-    this.tileTimer = this.tileEntity.getField(TileEntityBuilder.Fields.TIMER.ordinal());
-    this.tileBuild = this.tileEntity.getField(TileEntityBuilder.Fields.BUILDTYPE.ordinal());
-    this.tileSize = this.tileEntity.getField(TileEntityBuilder.Fields.SIZE.ordinal());
-    this.tileSpeed = this.tileEntity.getField(TileEntityBuilder.Fields.SPEED.ordinal());
-    this.tileHeight = this.tileEntity.getField(TileEntityBuilder.Fields.HEIGHT.ordinal());
+    this.tileTimer = this.tileEntity.getField(TileMachineBuilder.Fields.TIMER.ordinal());
+    this.tileBuild = this.tileEntity.getField(TileMachineBuilder.Fields.BUILDTYPE.ordinal());
+    this.tileSize = this.tileEntity.getField(TileMachineBuilder.Fields.SIZE.ordinal());
+    this.tileSpeed = this.tileEntity.getField(TileMachineBuilder.Fields.SPEED.ordinal());
+    this.tileHeight = this.tileEntity.getField(TileMachineBuilder.Fields.HEIGHT.ordinal());
   }
   @Override
   @SideOnly(Side.CLIENT)

@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.gui.uncrafting;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityUncrafting;
+import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -11,8 +12,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiUncrafting extends GuiContainer {
-  private TileEntityUncrafting tile;
-  public GuiUncrafting(InventoryPlayer inventoryPlayer, TileEntityUncrafting tileEntity) {
+  private TileMachineUncrafter tile;
+  public GuiUncrafting(InventoryPlayer inventoryPlayer, TileMachineUncrafter tileEntity) {
     super(new ContainerUncrafting(inventoryPlayer, tileEntity));
     tile = tileEntity;
   }
@@ -23,6 +24,8 @@ public class GuiUncrafting extends GuiContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+    String s = UtilChat.lang("tile.uncrafting_block.name");
+    this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
   }
   private static final String folder = "textures/gui/";
   private static final ResourceLocation table = new ResourceLocation(Const.MODID, folder + "table.png");
@@ -44,7 +47,7 @@ public class GuiUncrafting extends GuiContainer {
     }
     if (tile.getTimer() > 0 && tile.getStackInSlot(0) != null) {
       this.mc.getTextureManager().bindTexture(progress);
-      float percent = ((float) tile.getTimer()) / ((float) TileEntityUncrafting.TIMER_FULL);
+      float percent = ((float) tile.getTimer()) / ((float) TileMachineUncrafter.TIMER_FULL);
       // maximum progress bar is 156, since the whole texture is 176 minus
       // 10 padding on each side
       int belowSlots = this.guiTop + 9 + 3 * Const.SQ;

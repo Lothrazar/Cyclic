@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.block.BlockBuilder;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
@@ -14,14 +13,13 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;// net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 
-public class TileEntityBuilder extends TileEntity implements IInventory, ITickable, ISidedInventory {
+public class TileMachineBuilder extends TileEntityBaseMachine implements IInventory, ITickable, ISidedInventory {
   private int timer;
   private int buildType;
   private int buildSpeed;
@@ -59,8 +57,6 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
       return BuildType.values()[type];
     }
   }
-  public TileEntityBuilder() {
-  }
   public void rebuildShape() {
     BuildType buildType = getBuildTypeEnum();
     // only rebuild shapes if they are different
@@ -69,7 +65,7 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
       this.shape = UtilPlaceBlocks.circle(this.pos, this.getSize() * 2);
       break;
     case FACING:
-      this.shape = UtilPlaceBlocks.line(pos, this.getCurrentFacing().getOpposite(), this.getSize());
+      this.shape = UtilPlaceBlocks.line(pos, this.getCurrentFacing(), this.getSize());
       break;
     case SQUARE:
       this.shape = UtilPlaceBlocks.squareHorizontalHollow(this.pos, this.getSize());
@@ -351,17 +347,17 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
   }
   @Override
   public void update() {
-    this.shiftAllUp();
+    shiftAllUp();
     boolean trigger = false;
     if (nextPos == null || (nextPos.getX() == 0 && nextPos.getY() == 0 && nextPos.getZ() == 0)) {
-      nextPos = this.pos;// fallback if it fails
+      nextPos = pos;// fallback if it fails
     }
-    if (this.worldObj.getStrongPower(this.getPos()) == 0) {
+    if (this.isPowered() == false) {
       // it works ONLY if its powered
-      this.markDirty();
+      markDirty();
       return;
     }
-    if (!this.worldObj.isRemote && this.nextPos != null && this.worldObj.rand.nextDouble() < 0.1 && this.inv[0] != null) {
+    if (!worldObj.isRemote && nextPos != null && worldObj.rand.nextDouble() < 0.1 && inv[0] != null) {
       UtilParticle.spawnParticlePacket(EnumParticleTypes.DRAGON_BREATH, nextPos, 5);
     }
     // center of the block
@@ -383,9 +379,9 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
     if (trigger) {
       Block stuff = Block.getBlockFromItem(stack.getItem());
       if (stuff != null) {
-        if (this.worldObj.isRemote == false) {
+        if (worldObj.isRemote == false) {
           //ModMain.logger.info("try place " + this.nextPos + " type " + this.buildType + "_" + this.getBuildTypeEnum().name());
-          if (UtilPlaceBlocks.placeStateSafe(this.worldObj, null, this.nextPos, stuff.getStateFromMeta(stack.getMetadata()))) {
+          if (UtilPlaceBlocks.placeStateSafe(worldObj, null, nextPos, stuff.getStateFromMeta(stack.getMetadata()))) {
             this.decrStackSize(0, 1);
           }
         }
@@ -394,20 +390,11 @@ public class TileEntityBuilder extends TileEntity implements IInventory, ITickab
     }
     else {
       // dont trigger an event, its still processing
-      if (this.worldObj.isRemote && this.worldObj.rand.nextDouble() < 0.1) {
+      if (worldObj.isRemote && worldObj.rand.nextDouble() < 0.1) {
         UtilParticle.spawnParticle(worldObj, EnumParticleTypes.SMOKE_NORMAL, x, y, z);
       }
     }
     this.markDirty();
-  }
-  private EnumFacing getCurrentFacing() {
-    BlockBuilder b = ((BlockBuilder) this.blockType);
-    EnumFacing facing;
-    if (b == null || this.worldObj.getBlockState(this.pos) == null || b.getFacingFromState(this.worldObj.getBlockState(this.pos)) == null)
-      facing = EnumFacing.UP;
-    else
-      facing = b.getFacingFromState(this.worldObj.getBlockState(this.pos));
-    return facing;
   }
   private void incrementPosition() {
     if (this.nextPos == null) {
