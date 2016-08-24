@@ -15,11 +15,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiPassword extends GuiContainer {
   private static final ResourceLocation table = new ResourceLocation(Const.MODID, "textures/gui/password.png");
-  private TileEntityPassword tile;
+//  private TileEntityPassword tile;
   private GuiTextField txtPassword;
+  private ContainerPassword ctr;
   public GuiPassword(TileEntityPassword tileEntity) {
-    super(new ContainerPassword());
-    tile = tileEntity;
+    super(new ContainerPassword(tileEntity));
+    ctr = (ContainerPassword)this.inventorySlots;
+//    tile = tileEntity;
     this.ySize = 79;//texture size in pixels
 //    this.height = this.ySize;
   }
@@ -40,8 +42,10 @@ public class GuiPassword extends GuiContainer {
     txtPassword = new GuiTextField(0, this.fontRendererObj, (xSize / 2 - width / 2) + 5, 20 + (height / 2), 127, height); // -
     // new GuiTextField(1, this.fontRendererObj, this.width / 2 - w,20, w, h);
     txtPassword.setMaxStringLength(40);
-    System.out.println("SET GUI TEXT "+tile.getMyPassword());
-    txtPassword.setText(tile.getMyPassword());
+    
+    System.out.println("SET GUI TEXT "+ctr.tile.getMyPassword());
+    txtPassword.setText(ctr.tile.getMyPassword());
+ 
     txtPassword.setFocused(true);
   }
 //  @Override
@@ -78,7 +82,7 @@ public class GuiPassword extends GuiContainer {
     if (txtPassword != null && txtPassword.isFocused()) {
       txtPassword.textboxKeyTyped(par1, par2);
 //      this.tile.setMyPassword(txtPassword.getText());
-      ModMain.network.sendToServer(new PacketTilePassword(txtPassword.getText(), tile.getPos()));
+      ModMain.network.sendToServer(new PacketTilePassword(txtPassword.getText(), ctr.tile.getPos()));
     }
   }
   @Override
@@ -89,5 +93,6 @@ public class GuiPassword extends GuiContainer {
       txtPassword.setFocused(true);
     }
   }
+
   // ok end of textbox fixing stuff
 }

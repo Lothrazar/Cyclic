@@ -16,6 +16,8 @@ public class TileEntityPassword extends TileEntity {
   public static List<TileEntityPassword> listeningBlocks = new ArrayList<TileEntityPassword>();
   private String myPassword = "";
   public TileEntityPassword() {
+    //it does save to server. on world save and reload, it DOes save. problem is, 
+    //clientside does not KNOW about it
     if (FMLCommonHandler.instance().getEffectiveSide().isServer()) {
       listeningBlocks.add(this);
     }
@@ -68,5 +70,16 @@ public class TileEntityPassword extends TileEntity {
     NBTTagCompound tags = new NBTTagCompound();
     this.writeToNBT(tags);
     return new SPacketUpdateTileEntity(this.getPos(), 1, tags);
+  }
+  @Override
+  public NBTTagCompound getUpdateTag()
+  {
+    // http://www.minecraftforge.net/forum/index.php?topic=39162.0
+    System.out.println("getUpdateTag");
+    NBTTagCompound compound = super.getUpdateTag();
+ 
+    this.writeToNBT(compound);
+
+    return compound;
   }
 }

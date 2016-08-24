@@ -43,11 +43,14 @@ public class BlockPassword extends Block implements IHasRecipe {
   }
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-
-    if (player.isSneaking()) { return false; } 
+    if (player.isSneaking()) { return false; }
     if (world.isRemote) { return true; }
     int x = pos.getX(), y = pos.getY(), z = pos.getZ();
-    player.openGui(ModMain.instance, ModGuiHandler.GUI_INDEX_PASSWORD, world, x, y, z);
+    //it does save to server. on world save and reload, it DOes save. problem is, 
+    //clientside does not KNOW about it
+    if (!world.isRemote) {
+      player.openGui(ModMain.instance, ModGuiHandler.GUI_INDEX_PASSWORD, world, x, y, z);
+    }
     return true;
   }
   @Override
@@ -88,12 +91,10 @@ public class BlockPassword extends Block implements IHasRecipe {
     while (iterator.hasNext()) {
       TileEntityPassword current = iterator.next();
       if (current.isInvalid() == false) {
-        if (current.getMyPassword() != null && current.getMyPassword().length()>0 && event.getMessage().equals(current.getMyPassword())) {
+        if (current.getMyPassword() != null && current.getMyPassword().length() > 0 && event.getMessage().equals(current.getMyPassword())) {
           IBlockState blockState = current.getWorld().getBlockState(current.getPos());
           boolean hasPowerHere = this.getStrongPower(blockState, current.getWorld(), current.getPos(), EnumFacing.UP) > 0;
-    
           updates.put(current.getPos(), !hasPowerHere);
-     
         }
         //else password was wrong
       }
@@ -110,19 +111,17 @@ public class BlockPassword extends Block implements IHasRecipe {
       //setting the block state seems to also run the constructor of the tile entity, which wipes out the data
       //so we need to do a manual reset here. but then its not in gui
       //nope not needed anymore, fix in tile entity
-//      ((TileEntityPassword)world.getTileEntity(entry.getKey())).setMyPassword(event.getMessage());
+      //      ((TileEntityPassword)world.getTileEntity(entry.getKey())).setMyPassword(event.getMessage());
     }
   }
   @Override
   public void addRecipe() {
-
     GameRegistry.addRecipe(new ItemStack(this),
         "sss",
         "trt",
         "sss",
-        's',Blocks.STONE_SLAB,
-        't',Blocks.TRIPWIRE_HOOK, 
-        'r',Items.COMPARATOR);
-     
+        's', Blocks.STONE_SLAB,
+        't', Blocks.TRIPWIRE_HOOK,
+        'r', Items.COMPARATOR);
   }
 }

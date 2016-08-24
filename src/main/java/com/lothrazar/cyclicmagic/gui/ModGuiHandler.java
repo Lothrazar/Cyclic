@@ -73,7 +73,7 @@ public class ModGuiHandler implements IGuiHandler {
       break;
     case GUI_INDEX_PASSWORD:
       if (te != null && te instanceof TileEntityPassword) {
-        Container c = new ContainerPassword();
+        Container c = new ContainerPassword((TileEntityPassword) te);
         return c;
       }
       break;
