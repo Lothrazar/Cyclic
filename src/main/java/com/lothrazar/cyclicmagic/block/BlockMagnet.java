@@ -1,7 +1,9 @@
 package com.lothrazar.cyclicmagic.block;
 import javax.annotation.Nullable;
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityMagnet;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -15,11 +17,12 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockMagnet extends Block implements IHasRecipe {
+public class BlockMagnet extends Block implements IHasRecipe , IHasConfig{
   protected static final AxisAlignedBB BOUNDS = new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 0.9375D, 0.03125D, 0.9375D);
   public BlockMagnet() {
     super(Material.IRON);
@@ -82,5 +85,13 @@ public class BlockMagnet extends Block implements IHasRecipe {
         's', new ItemStack(Items.IRON_INGOT),
         'b', new ItemStack(Items.COAL),
         'x', new ItemStack(Items.DYE, 1, EnumDyeColor.PURPLE.getDyeDamage()));
+  }
+  @Override
+  public void syncConfig(Configuration config) {
+    //old default was 140
+    TileEntityMagnet.TIMER_FULL = config.getInt("MagnetBlockTimer", Const.ConfigCategory.modpackMisc, 100, 5, 5000, "How fast it pulses.  Smaller numbers are faster");
+    TileEntityMagnet.ITEM_HRADIUS = config.getInt("MagnetBlockDistance", Const.ConfigCategory.modpackMisc, 16, 2, 128, "Distance it pulls items from.");
+    TileEntityMagnet.ITEM_VRADIUS = config.getInt("MagnetBlockHeight", Const.ConfigCategory.modpackMisc, 2, 1, 128, "Height it pulls at items");
+ 
   }
 }
