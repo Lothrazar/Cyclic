@@ -32,7 +32,7 @@ public class SpellRangeRotate extends BaseSpellRange {
     IBlockState clicked = worldObj.getBlockState(pos);
     if (clicked.getBlock() == null) { return; }
     Block clickedBlock = clicked.getBlock();
-    boolean isDone = UtilPlaceBlocks.rotateBlockValidState(pos, worldObj, side, p);
+    boolean isDone = UtilPlaceBlocks.rotateBlockValidState(worldObj, p, pos, side);
     if (isDone) {
       this.playSound(worldObj, p, clickedBlock, pos);
       this.spawnParticle(worldObj, p, pos);

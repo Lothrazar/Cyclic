@@ -12,7 +12,6 @@ import net.minecraft.block.BlockStone.EnumType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
@@ -273,8 +272,9 @@ public class UtilPlaceBlocks {
       return null;
     }
   }
+  //(worldObj, player, message.pos, message.side);
   @SuppressWarnings({ "rawtypes", "unchecked" })
-  public static boolean rotateBlockValidState(BlockPos pos, World worldObj, EnumFacing side, EntityPlayer p) {
+  public static boolean rotateBlockValidState(World worldObj, EntityPlayer p, BlockPos pos,EnumFacing side) {
     if (pos == null || worldObj.getBlockState(pos) == null || side == null) { return false; }
     IBlockState clicked = worldObj.getBlockState(pos);
     if (clicked.getBlock() == null) { return false; }

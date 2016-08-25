@@ -1,10 +1,5 @@
 package com.lothrazar.cyclicmagic.net;
-import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.item.ItemToolPush;
-import com.lothrazar.cyclicmagic.item.ItemToolPush.ActionType;
-import com.lothrazar.cyclicmagic.registry.SpellRegistry;
-import com.lothrazar.cyclicmagic.spell.ISpell;
-import com.lothrazar.cyclicmagic.spell.ISpellFromServer;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,7 +12,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class PacketMoveBlock  implements IMessage, IMessageHandler<PacketMoveBlock, IMessage> {
+public class PacketMoveBlock implements IMessage, IMessageHandler<PacketMoveBlock, IMessage> {
   private BlockPos pos;
   private ItemToolPush.ActionType type;
   private EnumFacing side;
@@ -55,21 +50,16 @@ public class PacketMoveBlock  implements IMessage, IMessageHandler<PacketMoveBlo
     if (ctx.side.isServer() && message != null && message.pos != null) {
       EntityPlayer player = ctx.getServerHandler().playerEntity;
       World worldObj = player.worldObj;
-
       BlockPos resultPosition = null;
-
-      boolean success = false;
       switch (message.type) {
       case PULL:
         resultPosition = UtilPlaceBlocks.pullBlock(worldObj, player, message.pos, message.side);
-        success = resultPosition != null;
         break;
       case PUSH:
         resultPosition = UtilPlaceBlocks.pushBlock(worldObj, player, message.pos, message.side);
-        success = resultPosition != null;
         break;
       case ROTATE:
-        success = UtilPlaceBlocks.rotateBlockValidState(pos, worldObj, message.side, player);
+        UtilPlaceBlocks.rotateBlockValidState(worldObj, player, message.pos, message.side);
         resultPosition = pos;
         break;
       default:
