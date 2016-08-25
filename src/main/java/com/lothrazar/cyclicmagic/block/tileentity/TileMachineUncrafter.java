@@ -204,23 +204,23 @@ public class TileMachineUncrafter extends TileEntityBaseMachine implements IInve
     }
     if (triggerUncraft) {
       // detect what direction my block faces)
-      EnumFacing facing = this.getCurrentFacing();
-      int dx = 0, dz = 0;
-      if (facing == EnumFacing.SOUTH) {
-        dz = -1;
-      }
-      else if (facing == EnumFacing.NORTH) {
-        dz = +1;
-      }
-      else if (facing == EnumFacing.EAST) {
-        dx = -1;
-      }
-      else if (facing == EnumFacing.WEST) {
-        dx = +1;
-      }
-      x += dx;
-      z += dz;
-      BlockPos posOffsetFacing = new BlockPos(x, y, z);
+//      EnumFacing facing = this.getCurrentFacing();
+//      int dx = 0, dz = 0;
+//      if (facing == EnumFacing.SOUTH) {
+//        dz = -1;
+//      }
+//      else if (facing == EnumFacing.NORTH) {
+//        dz = +1;
+//      }
+//      else if (facing == EnumFacing.EAST) {
+//        dx = -1;
+//      }
+//      else if (facing == EnumFacing.WEST) {
+//        dx = +1;
+//      }
+//      x += dx;
+//      z += dz;
+      BlockPos posOffsetFacing = this.getCurrentFacingPos();//new BlockPos(x, y, z);
       TileEntity attached = this.worldObj.getTileEntity(posOffsetFacing);
       IInventory attachedInv = null;
       if (attached != null && attached instanceof IInventory) {
