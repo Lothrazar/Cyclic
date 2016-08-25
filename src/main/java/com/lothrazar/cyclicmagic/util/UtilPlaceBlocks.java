@@ -158,7 +158,7 @@ public class UtilPlaceBlocks {
       // as soon as i added the try catch, it started never (rarely) happening
       // we used to pass a flag as third argument, such as '2'
       // default is '3'
-      UtilChat.addChatMessage(player, "!!placeStateSafe; isRemote = "+world.isRemote); 
+     // UtilChat.addChatMessage(player, "!!placeStateSafe; isRemote = "+world.isRemote); 
       if(!world.isRemote){
         success = world.setBlockState(placePos, placeState, 3);
       }
