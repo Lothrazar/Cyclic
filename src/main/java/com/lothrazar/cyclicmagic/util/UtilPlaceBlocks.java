@@ -155,7 +155,7 @@ public class UtilPlaceBlocks {
       // as soon as i added the try catch, it started never (rarely) happening
       // we used to pass a flag as third argument, such as '2'
       // default is '3'
-      success = world.setBlockState(placePos, placeState);
+      success = world.setBlockState(placePos, placeState, 3);
       // world.markBlockForUpdate(posMoveToHere);
     }
     catch (ConcurrentModificationException e) {

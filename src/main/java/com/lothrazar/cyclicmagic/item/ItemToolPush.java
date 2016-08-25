@@ -109,8 +109,9 @@ public class ItemToolPush extends BaseTool implements IHasRecipe {
     default:
       break;
     }
-    if (success)
+    if (success){
       onUse(stack, player, worldObj, hand);
+    }
     return super.onItemUse(stack, player, worldObj, resultPosition, hand, side, hitX, hitY, hitZ);// EnumActionResult.PASS;
   }
   @SideOnly(Side.CLIENT)
