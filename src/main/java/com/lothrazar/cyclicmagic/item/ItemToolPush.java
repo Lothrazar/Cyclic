@@ -1,11 +1,14 @@
 package com.lothrazar.cyclicmagic.item;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.net.PacketMoveBlock;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.util.UtilSound;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -15,6 +18,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -73,8 +77,8 @@ public class ItemToolPush extends BaseTool implements IHasRecipe {
   }
   @SubscribeEvent
   public void onHit(PlayerInteractEvent.LeftClickBlock event) {
-    EntityPlayer entityPlayer = event.getEntityPlayer();
-    ItemStack held = entityPlayer.getHeldItem(event.getHand());
+    EntityPlayer player = event.getEntityPlayer();
+    ItemStack held = player.getHeldItem(event.getHand());
     if (held != null && held.getItem() == this) {
       if (ActionType.getTimeout(held) > 0) {
         //without a timeout, this fires every tick. so you 'hit once' and get this happening 6 times
@@ -82,36 +86,27 @@ public class ItemToolPush extends BaseTool implements IHasRecipe {
       }
       ActionType.setTimeout(held);
       event.setCanceled(true);
-      UtilSound.playSound(entityPlayer, SoundRegistry.dcoin);
-      if (!entityPlayer.worldObj.isRemote) { // server side
+      UtilSound.playSound(player, player.getPosition(), SoundRegistry.dcoin, SoundCategory.PLAYERS);
+      if (!player.worldObj.isRemote) { // server side
         ActionType.toggle(held);
-        UtilChat.addChatMessage(entityPlayer, UtilChat.lang(ActionType.getName(held)));
+        UtilChat.addChatMessage(player, UtilChat.lang(ActionType.getName(held)));
       }
     }
   }
   @Override
   public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     BlockPos resultPosition = null;
-    boolean success = false;
-    switch (ActionType.values()[ActionType.get(stack)]) {
-    case PULL:
-      resultPosition = UtilPlaceBlocks.pullBlock(worldObj, player, pos, side);
-      success = resultPosition != null;
-      break;
-    case PUSH:
-      resultPosition = UtilPlaceBlocks.pushBlock(worldObj, player, pos, side);
-      success = resultPosition != null;
-      break;
-    case ROTATE:
-      success = UtilPlaceBlocks.rotateBlockValidState(pos, worldObj, side, player);
-      resultPosition = pos;
-      break;
-    default:
-      break;
+    //if we only run this on server, clients dont get the udpate
+    //so run it only on client, let packet run the server
+    if (worldObj.isRemote) {
+      ModMain.network.sendToServer(new PacketMoveBlock(pos, ActionType.values()[ActionType.get(stack)], side));
     }
-    if (success){
-      onUse(stack, player, worldObj, hand);
+    //hack the sound back in
+    IBlockState placeState = worldObj.getBlockState(pos);
+    if (placeState.getBlock() != null) {
+      UtilSound.playSoundPlaceBlock(player, pos, placeState.getBlock());
     }
+    onUse(stack, player, worldObj, hand);
     return super.onItemUse(stack, player, worldObj, resultPosition, hand, side, hitX, hitY, hitZ);// EnumActionResult.PASS;
   }
   @SideOnly(Side.CLIENT)

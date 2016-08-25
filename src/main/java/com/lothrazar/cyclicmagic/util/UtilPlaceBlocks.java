@@ -12,6 +12,7 @@ import net.minecraft.block.BlockStone.EnumType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
@@ -146,7 +147,9 @@ public class UtilPlaceBlocks {
         //blockHere.getMaterial(stateHere)
         if (stateHere.getMaterial() != Material.WATER && stateHere.getMaterial() != Material.LAVA) {
           boolean dropBlock = true;
-          world.destroyBlock(placePos, dropBlock);
+          if(!world.isRemote){
+            world.destroyBlock(placePos, dropBlock);
+          }
         }
       }
     }
@@ -155,8 +158,14 @@ public class UtilPlaceBlocks {
       // as soon as i added the try catch, it started never (rarely) happening
       // we used to pass a flag as third argument, such as '2'
       // default is '3'
-      success = world.setBlockState(placePos, placeState, 3);
-      // world.markBlockForUpdate(posMoveToHere);
+      UtilChat.addChatMessage(player, "!!placeStateSafe; isRemote = "+world.isRemote); 
+      if(!world.isRemote){
+        success = world.setBlockState(placePos, placeState, 3);
+      }
+      world.markBlockRangeForRenderUpdate(placePos, placePos.up());
+      world.markChunkDirty(placePos, null);
+      //Minecraft.getMinecraft().renderGlobal.markBlockRangeForRenderUpdate(x1, y1, z1, x2, y2, z2);
+      success = true;//to play sound clientside
     }
     catch (ConcurrentModificationException e) {
       ModMain.logger.warn("ConcurrentModificationException");
