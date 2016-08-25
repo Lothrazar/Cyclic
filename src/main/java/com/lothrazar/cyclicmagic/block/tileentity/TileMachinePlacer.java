@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
-import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,7 +10,6 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;// net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.text.ITextComponent;
 
@@ -186,10 +184,6 @@ public class TileMachinePlacer extends TileEntityBaseMachine implements IInvento
       markDirty();
       return;
     }
-    // center of the block
-    double x = this.getPos().getX() + 0.5;
-    double y = this.getPos().getY() + 0.5;
-    double z = this.getPos().getZ() + 0.5;
     ItemStack stack = getStackInSlot(0);
     if (stack == null) {
       timer = TIMER_FULL;// reset just like you would in a
@@ -211,10 +205,7 @@ public class TileMachinePlacer extends TileEntityBaseMachine implements IInvento
       }
     }
     else {
-      // dont trigger an event, its still processing
-      if (worldObj.isRemote && worldObj.rand.nextDouble() < 0.1) {
-        UtilParticle.spawnParticle(worldObj, EnumParticleTypes.SMOKE_NORMAL, x, y, z);
-      }
+      this.spawnParticlesAbove();// its still processing
     }
     this.markDirty();
   }

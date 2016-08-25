@@ -52,7 +52,7 @@ public class TileMachineHarvester extends TileEntityBaseMachine implements ITick
     // sent to the client. Called on server only.
     NBTTagCompound syncData = new NBTTagCompound();
     this.writeToNBT(syncData);
-    return new SPacketUpdateTileEntity(this.pos, 1, syncData);
+    return new SPacketUpdateTileEntity(this.getPos(), 1, syncData);
   }
   @Override
   public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
@@ -73,9 +73,6 @@ public class TileMachineHarvester extends TileEntityBaseMachine implements ITick
     }
     boolean trigger = false;
     // center of the block
-    double x = this.getPos().getX() + 0.5;
-    double y = this.getPos().getY() + 0.5;
-    double z = this.getPos().getZ() + 0.5;
     timer -= this.getSpeed();
     if (timer <= 0) {
       timer = TIMER_FULL;
@@ -96,10 +93,7 @@ public class TileMachineHarvester extends TileEntityBaseMachine implements ITick
       }
     }
     else {
-      // dont trigger an event, its still processing
-      if (this.worldObj.isRemote && this.worldObj.rand.nextDouble() < 0.1) {
-        UtilParticle.spawnParticle(worldObj, EnumParticleTypes.SMOKE_NORMAL, x, y, z);
-      }
+      this.spawnParticlesAbove();
     }
     this.markDirty();
   }

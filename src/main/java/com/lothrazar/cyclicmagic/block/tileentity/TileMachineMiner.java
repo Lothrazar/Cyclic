@@ -4,7 +4,6 @@ import java.util.UUID;
 import com.google.common.base.Charsets;
 import com.lothrazar.cyclicmagic.block.BlockMiner;
 import com.lothrazar.cyclicmagic.block.BlockMiner.MinerType;
-import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;
@@ -16,7 +15,6 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -99,12 +97,8 @@ public class TileMachineMiner extends TileEntityBaseMachine implements ITickable
   private BlockPos targetPos = null;
   @Override
   public void update() {
-    if (this.isPowered() && worldObj.isRemote && worldObj.rand.nextDouble() < 0.1) {
-      //client side yo
-      double x = this.getPos().getX() + 0.5;
-      double y = this.getPos().getY() + 0.5;
-      double z = this.getPos().getZ() + 0.5;
-      UtilParticle.spawnParticle(worldObj, EnumParticleTypes.SMOKE_NORMAL, x, y, z);
+    if (this.isPowered()) {
+      this.spawnParticlesAbove();
     }
     if (!worldObj.isRemote) {
       if (firstTick || fakePlayer == null) {

@@ -360,10 +360,6 @@ public class TileMachineBuilder extends TileEntityBaseMachine implements IInvent
     if (!worldObj.isRemote && nextPos != null && worldObj.rand.nextDouble() < 0.1 && inv[0] != null) {
       UtilParticle.spawnParticlePacket(EnumParticleTypes.DRAGON_BREATH, nextPos, 5);
     }
-    // center of the block
-    double x = this.getPos().getX() + 0.5;
-    double y = this.getPos().getY() + 0.5;
-    double z = this.getPos().getZ() + 0.5;
     ItemStack stack = getStackInSlot(0);
     if (stack == null) {
       timer = TIMER_FULL;// reset just like you would in a
@@ -389,10 +385,7 @@ public class TileMachineBuilder extends TileEntityBaseMachine implements IInvent
       }
     }
     else {
-      // dont trigger an event, its still processing
-      if (worldObj.isRemote && worldObj.rand.nextDouble() < 0.1) {
-        UtilParticle.spawnParticle(worldObj, EnumParticleTypes.SMOKE_NORMAL, x, y, z);
-      }
+      this.spawnParticlesAbove();
     }
     this.markDirty();
   }

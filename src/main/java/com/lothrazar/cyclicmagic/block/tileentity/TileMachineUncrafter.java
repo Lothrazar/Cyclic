@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
-import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilUncraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,7 +15,6 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;// net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
@@ -187,10 +185,6 @@ public class TileMachineUncrafter extends TileEntityBaseMachine implements IInve
       //it works ONLY if its powered
       return;
     }
-    //center of the block
-    double x = this.getPos().getX() + 0.5;
-    double y = this.getPos().getY() + 0.5;
-    double z = this.getPos().getZ() + 0.5;
     ItemStack stack = getStackInSlot(0);
     if (stack == null) {
       timer = TIMER_FULL;// reset just like you would in a
@@ -203,23 +197,6 @@ public class TileMachineUncrafter extends TileEntityBaseMachine implements IInve
       triggerUncraft = true;
     }
     if (triggerUncraft) {
-      // detect what direction my block faces)
-//      EnumFacing facing = this.getCurrentFacing();
-//      int dx = 0, dz = 0;
-//      if (facing == EnumFacing.SOUTH) {
-//        dz = -1;
-//      }
-//      else if (facing == EnumFacing.NORTH) {
-//        dz = +1;
-//      }
-//      else if (facing == EnumFacing.EAST) {
-//        dx = -1;
-//      }
-//      else if (facing == EnumFacing.WEST) {
-//        dx = +1;
-//      }
-//      x += dx;
-//      z += dz;
       BlockPos posOffsetFacing = this.getCurrentFacingPos();//new BlockPos(x, y, z);
       TileEntity attached = this.worldObj.getTileEntity(posOffsetFacing);
       IInventory attachedInv = null;
@@ -272,10 +249,7 @@ public class TileMachineUncrafter extends TileEntityBaseMachine implements IInve
       this.markDirty();
     }
     else {
-      //dont trigger an uncraft event, its still processing
-      if (this.worldObj.isRemote && this.worldObj.rand.nextDouble() < 0.1) {
-        UtilParticle.spawnParticle(worldObj, EnumParticleTypes.SMOKE_NORMAL, x, y, z);
-      }
+      this.spawnParticlesAbove();// its still processing
     }
   }
   public static ArrayList<ItemStack> dumpToIInventory(ArrayList<ItemStack> stacks, IInventory inventory) {
