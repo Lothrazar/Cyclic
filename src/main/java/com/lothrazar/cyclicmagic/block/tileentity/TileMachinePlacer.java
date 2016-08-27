@@ -13,7 +13,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.text.ITextComponent;
 
-public class TileMachinePlacer extends TileEntityBaseMachine implements IInventory, ITickable, ISidedInventory {
+public class TileMachinePlacer extends TileEntityBaseMachine implements IInventory, ISidedInventory {
   private int timer;
   private static final int buildSpeed = 1;
   private ItemStack[] inv = new ItemStack[9];

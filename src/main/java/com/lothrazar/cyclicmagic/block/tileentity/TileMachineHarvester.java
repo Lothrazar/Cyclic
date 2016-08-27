@@ -11,7 +11,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 
-public class TileMachineHarvester extends TileEntityBaseMachine implements ITickable {
+public class TileMachineHarvester extends TileEntityBaseMachine {
   private int timer;
   public static final int TIMER_FULL = 80;
   private HarestCropsConfig conf;

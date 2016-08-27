@@ -19,7 +19,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 
-public class TileMachineBuilder extends TileEntityBaseMachine implements IInventory, ITickable, ISidedInventory {
+public class TileMachineBuilder extends TileEntityBaseMachine implements IInventory, ISidedInventory {
   private int timer;
   private int buildType;
   private int buildSpeed;

@@ -20,7 +20,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 
-public class TileMachineUncrafter extends TileEntityBaseMachine implements IInventory, ITickable, ISidedInventory {
+public class TileMachineUncrafter extends TileEntityBaseMachine implements IInventory, ISidedInventory {
   // http://www.minecraftforge.net/wiki/Containers_and_GUIs
   // http://greyminecraftcoder.blogspot.com.au/2015/01/tileentity.html
   // http://www.minecraftforge.net/forum/index.php?topic=28539.0
