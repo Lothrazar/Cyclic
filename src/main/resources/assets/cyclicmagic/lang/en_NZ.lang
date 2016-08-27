@@ -151,6 +151,7 @@ item.tool_harvest_weeds.tooltip=Chop areas of weeds and flowers
 item.tool_prospector.name=Prospector
 item.tool_push.name=Piston Scepter
 item.tool_spawn_inspect.name=Spawn Detector
+item.tool_spawn_inspect.up=Click on the top side of a block
 item.tool_spawn_inspect.tooltip=Detects what mobs can spawn on the current block
 item.tool_spawn_inspect.empty=Nothing can spawn here
 item.tool_spelunker.name=Cavefinder
