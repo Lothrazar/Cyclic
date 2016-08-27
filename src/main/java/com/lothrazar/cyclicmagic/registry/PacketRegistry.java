@@ -13,7 +13,7 @@ public class PacketRegistry {
     network.registerMessage(PacketSpellShiftRight.class, PacketSpellShiftRight.class, packetID++, Side.SERVER);
     network.registerMessage(PacketParticleAtPosition.class, PacketParticleAtPosition.class, packetID++, Side.CLIENT);
     network.registerMessage(PacketSpellFromServer.class, PacketSpellFromServer.class, packetID++, Side.SERVER);
-    network.registerMessage(PacketSpellBuildType.class, PacketSpellBuildType.class, packetID++, Side.SERVER);
+    network.registerMessage(PacketWandGui.class, PacketWandGui.class, packetID++, Side.SERVER);
     network.registerMessage(PacketRotateBlock.class, PacketRotateBlock.class, packetID++, Side.SERVER);
     network.registerMessage(PacketSpellPush.class, PacketSpellPush.class, packetID++, Side.SERVER);
     network.registerMessage(PacketSpellPull.class, PacketSpellPull.class, packetID++, Side.SERVER);

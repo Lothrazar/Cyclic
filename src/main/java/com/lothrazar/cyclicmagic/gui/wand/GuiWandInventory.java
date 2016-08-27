@@ -3,27 +3,28 @@ import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiWandInventory extends GuiBaseContainer {
   private final InventoryWand inventory;
-  private final ItemStack internalWand;
-  // 176x156
-  private static final ResourceLocation BACKGROUND = new ResourceLocation(Const.MODID, "textures/gui/inventory_wand.png");
+  private static final ResourceLocation BACKGROUND = new ResourceLocation(Const.MODID, "textures/gui/inventory_wand.png");  // 176x156
   private static final ResourceLocation SLOT_CURRENT = new ResourceLocation(Const.MODID, "textures/gui/slot_current.png");
   // slot number, as i '3/9'
   int id = 777;
   final int padding = 4;
   ContainerWand container;
+  private EntityPlayer player;
   public GuiWandInventory(ContainerWand containerItem, ItemStack wand) {
     super(containerItem);
     this.inventory = containerItem.inventory;
     this.container = containerItem;
-    this.internalWand = wand;
+    this.player = inventory.getPlayer();
   }
   @Override
   public void initGui() {
@@ -32,8 +33,15 @@ public class GuiWandInventory extends GuiBaseContainer {
     int x = this.guiLeft + 5;
     int width = 20;
     width = 50;
-    ButtonBuildToggle btn = new ButtonBuildToggle(inventory.getPlayer(), id, x, y, width);
+    ButtonBuildToggle btn = new ButtonBuildToggle(player, id, x, y, width);
     this.buttonList.add(btn);
+    x += width + padding;
+    ButtonWandReset b = new ButtonWandReset(player, id, x, y, width);
+    if(ItemCyclicWand.BuildType.getSlot(UtilSpellCaster.getPlayerWandIfHeld(player)) == 0) {
+      b.enabled = false;
+    }
+    this.buttonList.add(b);
+    
   }
   @Override
   public void drawScreen(int mouseX, int mouseY, float partialTicks) {
@@ -43,7 +51,7 @@ public class GuiWandInventory extends GuiBaseContainer {
     GlStateManager.color(1F, 1F, 1F);
     GlStateManager.pushMatrix();
     GlStateManager.disableLighting();
-    int active = ItemCyclicWand.BuildType.getSlot(this.internalWand);
+    int active = ItemCyclicWand.BuildType.getSlot(UtilSpellCaster.getPlayerWandIfHeld(player));
     for (Slot s : this.container.inventorySlots) {
       if (active == s.getSlotIndex()) {
         Minecraft.getMinecraft().renderEngine.bindTexture(SLOT_CURRENT);

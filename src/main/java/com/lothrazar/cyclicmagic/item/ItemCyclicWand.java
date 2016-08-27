@@ -177,10 +177,14 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
     public static int getSlot(ItemStack wand) {
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       if (!tags.hasKey(NBT_SLOT)) {
-        tags.setInteger(NBT_SLOT, 0);
+        resetSlot(wand);
         return 0;
       }
       return tags.getInteger(NBT_SLOT);
+    }
+    public static void resetSlot(ItemStack wand) {
+      NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
+      tags.setInteger(NBT_SLOT, 0);
     }
     public static void setNextSlot(ItemStack wand) {
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
