@@ -4,6 +4,7 @@ import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.gui.storage.InventoryStorage;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -31,7 +32,7 @@ public class ItemInventoryStorage extends BaseItem implements IHasRecipe {
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
     int size = InventoryStorage.countNonEmpty(stack);
-    tooltip.add("" + size);
+    tooltip.add(UtilChat.lang("item.storage_bag.tooltip") + size);
     super.addInformation(stack, playerIn, tooltip, advanced);
   }
   public static ItemStack getPlayerItemIfHeld(EntityPlayer player) {

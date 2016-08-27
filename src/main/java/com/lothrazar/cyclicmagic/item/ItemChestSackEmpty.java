@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.item;
+import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
@@ -17,6 +18,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemChestSackEmpty extends BaseItem implements IHasRecipe {
   public static final String name = "chest_sack_empty";
@@ -58,5 +61,10 @@ public class ItemChestSackEmpty extends BaseItem implements IHasRecipe {
         'l', new ItemStack(Items.LEATHER),
         'b', new ItemStack(Items.SLIME_BALL),
         's', new ItemStack(Items.STRING));
+  }
+  @SideOnly(Side.CLIENT)
+  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+    String s = UtilChat.lang("item.chest_sack_empty.tooltip");
+    tooltip.add(s);
   }
 }

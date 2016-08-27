@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.item;
+import java.util.List;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
@@ -23,6 +24,8 @@ import net.minecraftforge.event.entity.player.SleepingLocationCheckEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemSleepingBag extends BaseTool implements IHasRecipe, IHasConfig {
   // thank you for the examples forge. player data storage based on API source

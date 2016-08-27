@@ -1,16 +1,21 @@
 package com.lothrazar.cyclicmagic.block;
+import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineBuilder;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockBuilder extends BlockBaseFacingInventory implements IHasRecipe {
   // dont use blockContainer !!
@@ -41,5 +46,10 @@ public class BlockBuilder extends BlockBaseFacingInventory implements IHasRecipe
         's', Blocks.DISPENSER,
         'r', Blocks.REDSTONE_BLOCK,
         'b', Blocks.DIAMOND_BLOCK);
+  }
+  @SideOnly(Side.CLIENT)
+  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+    String s = UtilChat.lang("tile.builder_block.tooltip");
+    tooltip.add(s);
   }
 }
