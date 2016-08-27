@@ -40,6 +40,7 @@ public class ModGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_BUILDER = 5;
   public static final int GUI_INDEX_PLACER = 6;
   public static final int GUI_INDEX_PASSWORD = 7;
+  public static final int GUI_INDEX_MINER = 8;
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
     TileEntity te = world.getTileEntity(new BlockPos(x, y, z));

@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.block;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMiner;
+import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
@@ -13,14 +14,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BlockMiner extends BlockBaseFacing implements IHasRecipe {
+public class BlockMiner extends BlockBaseFacingInventory implements IHasRecipe {
   public static final PropertyDirection PROPERTYFACING = BlockBaseFacing.PROPERTYFACING;
   public static enum MinerType {
     SINGLE, TUNNEL
   }
   private MinerType minerType;
   public BlockMiner(MinerType t) {
-    super(Material.IRON);
+    super(Material.IRON, ModGuiHandler.GUI_INDEX_MINER);
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);
     minerType = t;

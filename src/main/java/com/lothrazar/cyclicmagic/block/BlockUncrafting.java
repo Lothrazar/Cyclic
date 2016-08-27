@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRecipe , IHasConfig{
+public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRecipe, IHasConfig {
   // http://www.minecraftforge.net/forum/index.php?topic=31953.0
   public BlockUncrafting() {
     super(Material.IRON, ModGuiHandler.GUI_INDEX_UNCRAFTING);
@@ -26,7 +26,6 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
     this.setSoundType(SoundType.METAL);
     this.setTickRandomly(true);
   }
- 
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileMachineUncrafter();
@@ -49,7 +48,6 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
   }
   @Override
   public void syncConfig(Configuration config) {
-
     String category = Const.ConfigCategory.uncrafter;
     UtilUncraft.dictionaryFreedom = config.getBoolean("PickFirstMeta", category, true, "If you change this to true, then the uncrafting will just take the first of many options in any recipe that takes multiple input types.  For example, false means chests cannot be uncrafted, but true means chests will ALWAYS give oak wooden planks.");
     config.addCustomCategoryComment(category, "Here you can blacklist any thing, vanilla or modded.  Mostly for creating modpacks.  Input means you cannot uncraft it at all.  Output means it will not come out of a recipe.");
@@ -67,6 +65,5 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
     if (UtilUncraft.blacklistOutput == null) {
       UtilUncraft.blacklistOutput = new ArrayList<String>();
     }
-    
   }
 }
