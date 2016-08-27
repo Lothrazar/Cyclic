@@ -62,6 +62,8 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
     if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
       tooltip.add(TextFormatting.GREEN + spell.getName() + " "
           + "[" + UtilChat.lang(BuildType.getName(stack)) + "] ");
+
+      tooltip.add(TextFormatting.DARK_GRAY + UtilChat.lang("item.cyclic_wand.tooltiprange") + BaseSpellRange.maxRange);
       tooltip.add(TextFormatting.DARK_GRAY + UtilChat.lang("item.cyclic_wand.shifting"));
     }
     else {
@@ -91,20 +93,6 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
     return success ? new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn)
         : new ActionResult<ItemStack>(EnumActionResult.FAIL, itemStackIn);
   }
-  //	@Override
-  //	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-  //
-  //		boolean perSecond = (worldIn.getTotalWorldTime() % Const.TICKS_PER_SEC == 0);
-  //
-  //		if (worldIn.isRemote == false && perSecond) {
-  //
-  //			Energy.rechargeBy(stack, Energy.getRegen(worldIn, stack));
-  //		}
-  //
-  //		ItemCyclicWand.Timer.tickSpellTimer(stack);
-  //
-  //		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
-  //	}
   @Override
   public int getMaxItemUseDuration(ItemStack stack) {
     return 1; // Without this method, your inventory will NOT work!!!
