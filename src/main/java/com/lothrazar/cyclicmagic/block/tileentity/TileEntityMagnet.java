@@ -10,7 +10,7 @@ import net.minecraft.util.text.ITextComponent;
 public class TileEntityMagnet extends TileEntity implements ITickable {
   private int timer;
   private static final String NBT_TIMER = "Timer";
-  public static int TIMER_FULL = 140;
+  public static int TIMER_FULL = 100;
   public static int ITEM_VRADIUS = 2;
   public static int ITEM_HRADIUS = 16;
   public TileEntityMagnet() {

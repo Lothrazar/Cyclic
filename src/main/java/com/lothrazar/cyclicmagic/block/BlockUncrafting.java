@@ -7,16 +7,20 @@ import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilUncraft;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRecipe, IHasConfig {
   // http://www.minecraftforge.net/forum/index.php?topic=31953.0
@@ -65,5 +69,10 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
     if (UtilUncraft.blacklistOutput == null) {
       UtilUncraft.blacklistOutput = new ArrayList<String>();
     }
+  }
+  @SideOnly(Side.CLIENT)
+  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+    String s = UtilChat.lang("tile.uncrafting_block.tooltip");
+    tooltip.add(s);
   }
 }

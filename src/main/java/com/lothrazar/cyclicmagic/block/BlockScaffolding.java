@@ -1,11 +1,14 @@
 package com.lothrazar.cyclicmagic.block;
+import java.util.List;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;// EnumWorldBlockLayer;
@@ -53,5 +56,10 @@ public class BlockScaffolding extends Block implements IHasRecipe {
   @Override
   public void addRecipe() {
     GameRegistry.addRecipe(new ItemStack(this, 8), "s s", " s ", "s s", 's', new ItemStack(Items.STICK));
+  }
+  @SideOnly(Side.CLIENT)
+  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+    String s = UtilChat.lang("tile.block_fragile.tooltip");
+    tooltip.add(s);
   }
 }

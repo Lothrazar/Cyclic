@@ -65,6 +65,9 @@ public class ItemToolSpawnInspect extends BaseTool implements IHasRecipe {
             UtilChat.addChatMessage(player, detail.toString(showOdds));
           }
         }
+        else{
+          UtilChat.addChatMessage(player, "item.tool_spawn_inspect.empty");
+        }
       }
     }
     player.getCooldownTracker().setCooldown(this, COOLDOWN);
