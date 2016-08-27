@@ -1,14 +1,14 @@
 package com.lothrazar.cyclicmagic.gui.wand;
-import com.lothrazar.cyclicmagic.gui.slot.SlotOnlyBlocks;
+import com.lothrazar.cyclicmagic.gui.ContainerBase;
+import com.lothrazar.cyclicmagic.gui.SlotOnlyBlocks;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ClickType;
-import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class ContainerWand extends Container {
+public class ContainerWand extends ContainerBase {
   final InventoryWand inventory;
   final int SQ = 18;
   final int pad = 8;

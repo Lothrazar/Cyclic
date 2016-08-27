@@ -3,7 +3,7 @@ import com.lothrazar.cyclicmagic.block.tileentity.TileMachineBuilder;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachinePlacer;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter;
 import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
-import com.lothrazar.cyclicmagic.gui.slot.SlotOnlyBlocks;
+import com.lothrazar.cyclicmagic.gui.SlotOnlyBlocks;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;

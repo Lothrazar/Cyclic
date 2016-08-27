@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.gui.button;
+package com.lothrazar.cyclicmagic.gui;
 import java.util.List;
 
 public interface ITooltipButton {

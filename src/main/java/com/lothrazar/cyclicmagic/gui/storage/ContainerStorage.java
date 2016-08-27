@@ -1,14 +1,14 @@
 package com.lothrazar.cyclicmagic.gui.storage;
+import com.lothrazar.cyclicmagic.gui.ContainerBase;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilInventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ClickType;
-import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class ContainerStorage extends Container {
+public class ContainerStorage extends ContainerBase {
   final InventoryStorage inventory;
   final static int INV_START = InventoryStorage.INV_SIZE, INV_END = INV_START + 26,
       HOTBAR_START = INV_END + 1,

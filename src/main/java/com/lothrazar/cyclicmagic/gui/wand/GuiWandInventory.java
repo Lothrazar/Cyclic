@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.gui.wand;
 import org.lwjgl.opengl.GL11;
-import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
+import com.lothrazar.cyclicmagic.gui.ITooltipButton;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.Minecraft;

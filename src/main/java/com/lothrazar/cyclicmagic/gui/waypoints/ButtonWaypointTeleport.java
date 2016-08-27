@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.gui.waypoints;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
+import com.lothrazar.cyclicmagic.gui.ITooltipButton;
 import com.lothrazar.cyclicmagic.net.PacketWarpButton;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;

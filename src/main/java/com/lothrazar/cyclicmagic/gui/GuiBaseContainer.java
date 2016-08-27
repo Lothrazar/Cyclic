@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.gui;
-import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;

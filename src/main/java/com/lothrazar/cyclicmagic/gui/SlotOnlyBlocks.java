@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.gui.slot;
+package com.lothrazar.cyclicmagic.gui;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;

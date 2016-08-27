@@ -1,8 +1,8 @@
 package com.lothrazar.cyclicmagic.gui.player;
+import com.lothrazar.cyclicmagic.gui.ContainerBase;
 import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemArmor;
@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ContainerPlayerExtended extends Container {
+public class ContainerPlayerExtended extends ContainerBase {
   public InventoryPlayerExtended inventory;
   /**
    * Determines if inventory manipulation should be handled.
@@ -89,10 +89,6 @@ public class ContainerPlayerExtended extends Container {
     if (!player.worldObj.isRemote) {
       UtilPlayerInventoryFilestorage.setPlayerInventory(player, inventory);
     }
-  }
-  @Override
-  public boolean canInteractWith(EntityPlayer par1EntityPlayer) {
-    return true;
   }
   /**
    * Called when a player shift-clicks on a slot. You must override this or you
