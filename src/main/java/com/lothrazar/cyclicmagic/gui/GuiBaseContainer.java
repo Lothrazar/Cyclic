@@ -21,8 +21,10 @@ public abstract class GuiBaseContainer extends GuiContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-    String s = UtilChat.lang(getTitle());// "tile.placer_block.name"
-    this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
+    if(getTitle() != null){
+      String s = UtilChat.lang(getTitle());// "tile.placer_block.name"
+      this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
+    }
   }
   private static final int texture_width = 176;
   private static final int texture_height = 166;

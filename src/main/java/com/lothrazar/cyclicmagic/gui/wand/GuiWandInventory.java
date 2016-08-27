@@ -1,16 +1,15 @@
 package com.lothrazar.cyclicmagic.gui.wand;
 import org.lwjgl.opengl.GL11;
-import com.lothrazar.cyclicmagic.gui.ITooltipButton;
+import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-public class GuiWandInventory extends GuiContainer {
+public class GuiWandInventory extends GuiBaseContainer {
   private final InventoryWand inventory;
   private final ItemStack internalWand;
   // 176x156
@@ -39,14 +38,6 @@ public class GuiWandInventory extends GuiContainer {
   @Override
   public void drawScreen(int mouseX, int mouseY, float partialTicks) {
     super.drawScreen(mouseX, mouseY, partialTicks);
-    ITooltipButton btn;
-    for (int i = 0; i < buttonList.size(); i++) {
-      if (buttonList.get(i).isMouseOver() && buttonList.get(i) instanceof ITooltipButton) {
-        btn = (ITooltipButton) buttonList.get(i);
-        drawHoveringText(btn.getTooltips(), mouseX, mouseY, fontRendererObj);
-        break;// cant hover on 2 at once
-      }
-    }
     int guiLeft = (this.width - 176) / 2;
     int guiTop = (this.height - 166) / 2;
     GlStateManager.color(1F, 1F, 1F);
@@ -63,17 +54,20 @@ public class GuiWandInventory extends GuiContainer {
     GlStateManager.popMatrix();
   }
   @Override
-  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-  }
-  @Override
   public void onGuiClosed() {
     inventory.closeInventory(inventory.getPlayer());
     super.onGuiClosed();
   }
   protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {
     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-    this.mc.getTextureManager().bindTexture(BACKGROUND);
+    this.mc.getTextureManager().bindTexture(getBackground());
     this.drawTexturedModalRect((this.width - this.xSize) / 2, (this.height - this.ySize) / 2, 0, 0, this.xSize, this.ySize);
+  }
+  @Override
+  public String getTitle() {
+    return null;
+  }
+  public ResourceLocation getBackground(){
+    return BACKGROUND;
   }
 }
