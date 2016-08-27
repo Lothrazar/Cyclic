@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.gui;
+import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
@@ -35,5 +36,17 @@ public abstract class GuiBaseContainer extends GuiContainer {
     int thisY = (this.height - this.ySize) / 2;
     int u = 0, v = 0;
     Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, this.xSize, this.ySize, texture_width, texture_height);
+  }
+  @Override
+  public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+    super.drawScreen(mouseX, mouseY, partialTicks);
+    ITooltipButton btn;
+    for (int i = 0; i < buttonList.size(); i++) {
+      if (buttonList.get(i).isMouseOver() && buttonList.get(i) instanceof ITooltipButton) {
+        btn = (ITooltipButton) buttonList.get(i);
+        drawHoveringText(btn.getTooltips(), mouseX, mouseY, fontRendererObj);
+        break;// cant hover on 2 at once
+      }
+    }
   }
 }
