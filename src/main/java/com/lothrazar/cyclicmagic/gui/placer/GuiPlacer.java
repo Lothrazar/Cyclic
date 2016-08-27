@@ -1,17 +1,13 @@
 package com.lothrazar.cyclicmagic.gui.placer;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachinePlacer;
+import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.Const;
-import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GuiPlacer extends GuiContainer {
+public class GuiPlacer extends GuiBaseContainer {
   private static final String folder = "textures/gui/";
   private static final ResourceLocation table = new ResourceLocation(Const.MODID, folder + "table.png");
   private static final ResourceLocation slot = new ResourceLocation(Const.MODID, folder + "inventory_slot.png");
@@ -28,19 +24,9 @@ public class GuiPlacer extends GuiContainer {
     super(new ContainerPlacer(inventoryPlayer, tileEntity));
     tile = tileEntity;
   }
-  public GuiPlacer(Container c) {
-    super(c);
-  }
   @Override
-  public void initGui() {
-    super.initGui();
-  }
-  @SideOnly(Side.CLIENT)
-  @Override
-  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-    String s = UtilChat.lang("tile.placer_block.name");
-    this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
+  public String getTitle() {
+    return "tile.placer_block.name";
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {

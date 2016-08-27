@@ -1,10 +1,10 @@
 package com.lothrazar.cyclicmagic.gui.builder;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineBuilder;
+import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -12,7 +12,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GuiBuilder extends GuiContainer {
+public class GuiBuilder extends GuiBaseContainer {
   private static final String folder = "textures/gui/";
   private static final ResourceLocation table = new ResourceLocation(Const.MODID, folder + "table.png");
   private static final ResourceLocation slot = new ResourceLocation(Const.MODID, folder + "inventory_slot.png");
@@ -34,7 +34,7 @@ public class GuiBuilder extends GuiContainer {
   private int xHeightTextbox;
   private int yHeightTxtbox;
   private int yOffset = 10 + padding;
-  boolean debugLabels = false;
+//  boolean debugLabels = false;
   public GuiBuilder(InventoryPlayer inventoryPlayer, TileMachineBuilder tileEntity) {
     super(new ContainerBuilder(inventoryPlayer, tileEntity));
     tile = tileEntity;
@@ -68,20 +68,21 @@ public class GuiBuilder extends GuiContainer {
     xHeightTextbox += width / 2 - 2;
     yHeightTxtbox = ySizeTxtbox;
   }
+  public String getTitle(){
+    return "tile.builder_block.name";
+  }
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-    String s = UtilChat.lang("tile.builder_block.name");
-    this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
     this.btn.displayString = UtilChat.lang("buildertype." + this.tile.getBuildTypeEnum().name().toLowerCase() + ".name");
-    if (debugLabels) {
-      this.fontRendererObj.drawString("t = " + this.tile.getTimer(), 32, this.ySize - 94, 4210752);
-      this.fontRendererObj.drawString("b = " + this.tile.getBuildType(), 38, this.ySize - 104, 4210752);
-      this.fontRendererObj.drawString("speed = " + this.tile.getSpeed(), 38, this.ySize - 114, 4210752);
-      this.fontRendererObj.drawString("size = " + this.tile.getSize(), 38, this.ySize - 124, 4210752);
-      this.fontRendererObj.drawString("h = " + this.tile.getHeight(), 38, this.ySize - 86, 4210752);
-    }
+//    if (debugLabels) {
+//      this.fontRendererObj.drawString("t = " + this.tile.getTimer(), 32, this.ySize - 94, 4210752);
+//      this.fontRendererObj.drawString("b = " + this.tile.getBuildType(), 38, this.ySize - 104, 4210752);
+//      this.fontRendererObj.drawString("speed = " + this.tile.getSpeed(), 38, this.ySize - 114, 4210752);
+//      this.fontRendererObj.drawString("size = " + this.tile.getSize(), 38, this.ySize - 124, 4210752);
+//      this.fontRendererObj.drawString("h = " + this.tile.getHeight(), 38, this.ySize - 86, 4210752);
+//    }
     if (this.tile.getSize() > 0) {
       String display = "" + this.tile.getSize();
       //move it over if more than 1 digit
