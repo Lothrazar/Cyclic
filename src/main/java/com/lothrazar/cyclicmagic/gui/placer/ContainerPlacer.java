@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.gui.placer;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineBuilder;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachinePlacer;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter;
-import com.lothrazar.cyclicmagic.gui.slot.SlotUncraft;
+import com.lothrazar.cyclicmagic.gui.slot.SlotOnlyBlocks;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -28,7 +28,7 @@ public class ContainerPlacer extends Container {
   public ContainerPlacer(InventoryPlayer inventoryPlayer, TileMachinePlacer te) {
     tileEntity = te;
     for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
-      addSlotToContainer(new SlotUncraft(tileEntity, i, SLOTX_START + i * SQ, SLOTY));
+      addSlotToContainer(new SlotOnlyBlocks(tileEntity, i, SLOTX_START + i * SQ, SLOTY));
     }
     // commonly used vanilla code that adds the player's inventory
     bindPlayerInventory(inventoryPlayer);

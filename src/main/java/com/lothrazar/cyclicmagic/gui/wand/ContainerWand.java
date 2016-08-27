@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.gui.wand;
-import com.lothrazar.cyclicmagic.gui.slot.SlotWand;
+import com.lothrazar.cyclicmagic.gui.slot.SlotOnlyBlocks;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -22,7 +22,7 @@ public class ContainerWand extends Container {
         // x = pad;
         y += SQ;
       }
-      this.addSlotToContainer(new SlotWand(invoWand, j, x, y));
+      this.addSlotToContainer(new SlotOnlyBlocks(invoWand, j, x, y));
     }
     y += 21;
     for (int l = 0; l < 3; ++l) {

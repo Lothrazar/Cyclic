@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.gui.uncrafting;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter;
-import com.lothrazar.cyclicmagic.gui.slot.SlotUncraft;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -22,7 +22,7 @@ public class ContainerUncrafting extends Container {
     //addSlotToContainer(new SlotUncraft(tileEntity, SLOT_SECOND, SLOTX, SLOTY + 18));
     //addSlotToContainer(new SlotUncraft(tileEntity, SLOT_THIRD, SLOTX, SLOTY + 18 + 18));
     for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
-      addSlotToContainer(new SlotUncraft(tileEntity, i, SLOTX_START + i * SQ, SLOTY));
+      addSlotToContainer(new Slot(tileEntity, i, SLOTX_START + i * SQ, SLOTY));
     }
     // commonly used vanilla code that adds the player's inventory
     bindPlayerInventory(inventoryPlayer);
