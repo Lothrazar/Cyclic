@@ -107,11 +107,12 @@ public class ModMain {
    * 
    * TODO:
    * 
+   * HARVESTER: add range into config
+   * 
    * NEW filtered miner, maybe even config range like builder
    * 
    * Existing miner: still add gui, but the only feature is progress bar and btn
    * to switch between shovel / axe / pickaxe
-   * 
    * 
    * idea: achievement for crafting?
    * http://jabelarminecraft.blogspot.ca/p/minecraft-forge-creating-custom.html
@@ -125,8 +126,6 @@ public class ModMain {
    * 
    * exp bottler: item with a gui/inventory put bottles in, toggle on/off and it
    * slowly drains your exp into the bottles at a given ratio
-   * 
-   * pets live longer and/or respawn
    * 
    * add some of my items to loot tables ?
    * https://github.com/MinecraftForge/MinecraftForge/blob/master/src/test/java/
