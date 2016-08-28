@@ -22,7 +22,7 @@ public class GuiBuilder extends GuiBaseContanerProgress {
   private int xHeightTextbox;
   private int yHeightTxtbox;
   private int yOffset = 10 + padding;
-//  boolean debugLabels = false;
+  //  boolean debugLabels = false;
   public GuiBuilder(InventoryPlayer inventoryPlayer, TileMachineStructureBuilder tileEntity) {
     super(new ContainerBuilder(inventoryPlayer, tileEntity));
     tile = tileEntity;
@@ -56,7 +56,7 @@ public class GuiBuilder extends GuiBaseContanerProgress {
     xHeightTextbox += width / 2 - 2;
     yHeightTxtbox = ySizeTxtbox;
   }
-  public String getTitle(){
+  public String getTitle() {
     return "tile.builder_block.name";
   }
   @SideOnly(Side.CLIENT)
@@ -64,7 +64,6 @@ public class GuiBuilder extends GuiBaseContanerProgress {
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     this.btn.displayString = UtilChat.lang("buildertype." + this.tile.getBuildTypeEnum().name().toLowerCase() + ".name");
-
     if (this.tile.getSize() > 0) {
       String display = "" + this.tile.getSize();
       //move it over if more than 1 digit
@@ -86,7 +85,6 @@ public class GuiBuilder extends GuiBaseContanerProgress {
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0;
-
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     for (int k = 0; k < this.tile.getSizeInventory(); k++) { // x had - 3 ??
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerBuilder.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerBuilder.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);

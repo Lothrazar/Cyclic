@@ -26,8 +26,8 @@ public abstract class TileEntityBaseMachine extends TileEntity implements ITicka
     return this.getPos().offset(this.getCurrentFacing());
   }
   protected void spawnParticlesAbove() {
-    if(this.getWorld().isRemote && this.getWorld().rand.nextDouble() < 0.1){
-      double x = this.getPos().getX() + 0.5;  //center of the block;
+    if (this.getWorld().isRemote && this.getWorld().rand.nextDouble() < 0.1) {
+      double x = this.getPos().getX() + 0.5; //center of the block;
       double y = this.getPos().getY() + 0.5;
       double z = this.getPos().getZ() + 0.5;
       UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.SMOKE_NORMAL, x, y, z);

@@ -11,11 +11,9 @@ public class ContainerUncrafting extends ContainerBaseMachine {
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
   public static final int SLOTX_START = 10;
   public static final int SLOTY = 28;
-
   protected TileMachineUncrafter tileEntity;
   public ContainerUncrafting(InventoryPlayer inventoryPlayer, TileMachineUncrafter te) {
     tileEntity = te;
-
     for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
       addSlotToContainer(new Slot(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY));
     }

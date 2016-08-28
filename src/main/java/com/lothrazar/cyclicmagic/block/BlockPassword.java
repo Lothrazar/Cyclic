@@ -124,7 +124,7 @@ public class BlockPassword extends Block implements IHasRecipe {
         "sss",
         "trt",
         "sss",
-        's', new ItemStack(Blocks.STONE_SLAB,1,BlockStoneSlab.EnumType.STONE.getMetadata()),
+        's', new ItemStack(Blocks.STONE_SLAB, 1, BlockStoneSlab.EnumType.STONE.getMetadata()),
         't', Blocks.TRIPWIRE_HOOK,
         'r', Items.COMPARATOR);
   }

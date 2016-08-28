@@ -146,7 +146,7 @@ public class UtilPlaceBlocks {
         //blockHere.getMaterial(stateHere)
         if (stateHere.getMaterial() != Material.WATER && stateHere.getMaterial() != Material.LAVA) {
           boolean dropBlock = true;
-          if(!world.isRemote){
+          if (!world.isRemote) {
             world.destroyBlock(placePos, dropBlock);
           }
         }
@@ -157,8 +157,8 @@ public class UtilPlaceBlocks {
       // as soon as i added the try catch, it started never (rarely) happening
       // we used to pass a flag as third argument, such as '2'
       // default is '3'
-     // UtilChat.addChatMessage(player, "!!placeStateSafe; isRemote = "+world.isRemote); 
-      if(!world.isRemote){
+      // UtilChat.addChatMessage(player, "!!placeStateSafe; isRemote = "+world.isRemote); 
+      if (!world.isRemote) {
         success = world.setBlockState(placePos, placeState, 3);
       }
       world.markBlockRangeForRenderUpdate(placePos, placePos.up());
@@ -274,7 +274,7 @@ public class UtilPlaceBlocks {
   }
   //(worldObj, player, message.pos, message.side);
   @SuppressWarnings({ "rawtypes", "unchecked" })
-  public static boolean rotateBlockValidState(World worldObj, EntityPlayer p, BlockPos pos,EnumFacing side) {
+  public static boolean rotateBlockValidState(World worldObj, EntityPlayer p, BlockPos pos, EnumFacing side) {
     if (pos == null || worldObj.getBlockState(pos) == null || side == null) { return false; }
     IBlockState clicked = worldObj.getBlockState(pos);
     if (clicked.getBlock() == null) { return false; }

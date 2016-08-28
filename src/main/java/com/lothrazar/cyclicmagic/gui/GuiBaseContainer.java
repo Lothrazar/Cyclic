@@ -14,14 +14,14 @@ public abstract class GuiBaseContainer extends GuiContainer {
     super(inventorySlotsIn);
   }
   public abstract String getTitle();
-  public ResourceLocation getBackground(){
+  public ResourceLocation getBackground() {
     return Const.Res.TABLEDEFAULT;//can override
   }
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-    if(getTitle() != null){
+    if (getTitle() != null) {
       String s = UtilChat.lang(getTitle());// "tile.placer_block.name"
       this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
     }

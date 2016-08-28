@@ -107,7 +107,7 @@ public class ModGuiHandler implements IGuiHandler {
         if (te != null && te instanceof TileMachinePlacer) { return new GuiPlacer(player.inventory, (TileMachinePlacer) te); }
         break;
       case GUI_INDEX_PASSWORD:
-        if (te != null && te instanceof TileEntityPassword) { return new GuiPassword( (TileEntityPassword) te); }
+        if (te != null && te instanceof TileEntityPassword) { return new GuiPassword((TileEntityPassword) te); }
         break;
       }
     }

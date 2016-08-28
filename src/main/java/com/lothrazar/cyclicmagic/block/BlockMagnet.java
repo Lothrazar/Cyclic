@@ -25,7 +25,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockMagnet extends Block implements IHasRecipe , IHasConfig{
+public class BlockMagnet extends Block implements IHasRecipe, IHasConfig {
   protected static final AxisAlignedBB BOUNDS = new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 0.9375D, 0.03125D, 0.9375D);
   public BlockMagnet() {
     super(Material.IRON);
@@ -95,11 +95,10 @@ public class BlockMagnet extends Block implements IHasRecipe , IHasConfig{
     TileEntityMagnet.TIMER_FULL = config.getInt("MagnetBlockTimer", Const.ConfigCategory.modpackMisc, 100, 5, 5000, "How fast it pulses.  Smaller numbers are faster");
     TileEntityMagnet.ITEM_HRADIUS = config.getInt("MagnetBlockDistance", Const.ConfigCategory.modpackMisc, 16, 2, 128, "Distance it pulls items from.");
     TileEntityMagnet.ITEM_VRADIUS = config.getInt("MagnetBlockHeight", Const.ConfigCategory.modpackMisc, 2, 1, 128, "Height it pulls at items");
- 
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
-    String s = UtilChat.lang("tile.magnet_block.tooltip").replace("$t$", TileEntityMagnet.TIMER_FULL+"");
+    String s = UtilChat.lang("tile.magnet_block.tooltip").replace("$t$", TileEntityMagnet.TIMER_FULL + "");
     tooltip.add(s);
   }
 }

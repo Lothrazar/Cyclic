@@ -13,7 +13,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class GuiWandInventory extends GuiBaseContainer {
   private final InventoryWand inventory;
-  private static final ResourceLocation BACKGROUND = new ResourceLocation(Const.MODID, "textures/gui/inventory_wand.png");  // 176x156
+  private static final ResourceLocation BACKGROUND = new ResourceLocation(Const.MODID, "textures/gui/inventory_wand.png"); // 176x156
   private static final ResourceLocation SLOT_CURRENT = new ResourceLocation(Const.MODID, "textures/gui/slot_current.png");
   // slot number, as i '3/9'
   int id = 777;
@@ -37,11 +37,10 @@ public class GuiWandInventory extends GuiBaseContainer {
     this.buttonList.add(btn);
     x += width + padding;
     ButtonWandReset b = new ButtonWandReset(player, id, x, y, width);
-    if(ItemCyclicWand.BuildType.getSlot(UtilSpellCaster.getPlayerWandIfHeld(player)) == 0) {
+    if (ItemCyclicWand.BuildType.getSlot(UtilSpellCaster.getPlayerWandIfHeld(player)) == 0) {
       b.enabled = false;
     }
     this.buttonList.add(b);
-    
   }
   @Override
   public void drawScreen(int mouseX, int mouseY, float partialTicks) {
@@ -75,7 +74,7 @@ public class GuiWandInventory extends GuiBaseContainer {
   public String getTitle() {
     return null;
   }
-  public ResourceLocation getBackground(){
+  public ResourceLocation getBackground() {
     return BACKGROUND;
   }
 }

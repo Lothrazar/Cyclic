@@ -204,11 +204,11 @@ public class BlockBucketStorage extends Block implements ITileEntityProvider {
     UtilEntity.dropItemStackInWorld(world, entityPlayer.getPosition(), new ItemStack(bucketItem));
   }
   public void addRecipe() {
-    if (this == BlockRegistry.block_storeempty){
-      GameRegistry.addRecipe(new ItemStack(this), 
-          "i i", 
-          " o ", 
-          "i i", 
+    if (this == BlockRegistry.block_storeempty) {
+      GameRegistry.addRecipe(new ItemStack(this),
+          "i i",
+          " o ",
+          "i i",
           'o', Blocks.OBSIDIAN, 'i', Items.IRON_INGOT);
     }
     // the filled ones are not crafted, only obtained when filled and then harvested

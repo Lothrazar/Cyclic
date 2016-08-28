@@ -15,7 +15,7 @@ public class GuiUncrafting extends GuiBaseContanerProgress {
   public GuiUncrafting(Container c) {
     super(c);
   }
-  public String getTitle(){
+  public String getTitle() {
     return "tile.uncrafting_block.name";
   }
   @Override

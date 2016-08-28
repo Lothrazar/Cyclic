@@ -41,9 +41,9 @@ public class ItemPotionCustom extends ItemFood {
     this(shiny, potionId, potionDuration, Const.Potions.I);
   }
   public ItemPotionCustom(boolean shiny, Potion potionId, int potionDuration, int potionAmplifier) {
-    this(shiny,potionId, potionDuration, potionAmplifier, null);
+    this(shiny, potionId, potionDuration, potionAmplifier, null);
   }
-  public ItemPotionCustom(boolean shiny, Potion potionId, int potionDuration, int potionAmplifier,String t) {
+  public ItemPotionCustom(boolean shiny, Potion potionId, int potionDuration, int potionAmplifier, String t) {
     this(shiny);
     this.addEffect(potionId, potionDuration, potionAmplifier);
     this.tooltip = t;
@@ -103,7 +103,7 @@ public class ItemPotionCustom extends ItemFood {
       n += " (" + StringUtils.ticksToElapsedTime(potionDurations.get(i)) + ")";
       list.add(n);
     }
-    if(this.tooltip != null){
+    if (this.tooltip != null) {
       list.add(UtilChat.lang(tooltip));
     }
   }

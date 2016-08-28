@@ -48,7 +48,6 @@ public class ItemToolSpawnInspect extends BaseTool implements IHasRecipe {
       BlockPos pos = posIn.offset(side);
       Chunk chunk = worldObj.getChunkFromBlockCoords(pos);
       if (worldObj.getChunkProvider() instanceof ChunkProviderServer) {
-
         List<SpawnDetail> names = new ArrayList<SpawnDetail>();
         for (EnumCreatureType creatureType : EnumCreatureType.values()) {
           List<Biome.SpawnListEntry> list = s.getPossibleCreatures(creatureType, pos);
@@ -64,7 +63,6 @@ public class ItemToolSpawnInspect extends BaseTool implements IHasRecipe {
         }
         if (names.size() > 0) {
           String strLight = "Light: " + chunk.getLightSubtracted(pos, 0) + " (" + chunk.getLightFor(EnumSkyBlock.SKY, pos) + " sky, " + chunk.getLightFor(EnumSkyBlock.BLOCK, pos) + " block)";
-          
           UtilChat.addChatMessage(player, strLight);
           Collections.sort(names, new Comparator<SpawnDetail>() {
             @Override
@@ -101,37 +99,37 @@ public class ItemToolSpawnInspect extends BaseTool implements IHasRecipe {
     private int itemWeight;
     private String displayName;
     private String creatureTypeName;
-//    private boolean lightEnabled = true;
+    //    private boolean lightEnabled = true;
     public SpawnDetail(Biome.SpawnListEntry entry, EnumCreatureType creatureType) {
       itemWeight = entry.itemWeight;
       creatureTypeName = creatureType.name();
       displayName = entry.entityClass.getSimpleName().replace("Entity", "");
       //one caveat: the above canSpawn ignores light level
-//      if (creatureType != EnumCreatureType.MONSTER) {
-//        //ambient/water/passive, all ignore light
-//        lightEnabled = true;
-//      }
-//      else {
-//        int reqLight = entry.entityClass == EntityBlaze.class ? Const.LIGHT_MOBSPAWN_BLAZE : Const.LIGHT_MOBSPAWN;
-//        if (currentLightLevel <= reqLight) {
-//          lightEnabled = true;
-//        }
-//      }
+      //      if (creatureType != EnumCreatureType.MONSTER) {
+      //        //ambient/water/passive, all ignore light
+      //        lightEnabled = true;
+      //      }
+      //      else {
+      //        int reqLight = entry.entityClass == EntityBlaze.class ? Const.LIGHT_MOBSPAWN_BLAZE : Const.LIGHT_MOBSPAWN;
+      //        if (currentLightLevel <= reqLight) {
+      //          lightEnabled = true;
+      //        }
+      //      }
     }
     public SpawnDetail(String n, EnumCreatureType creatureType, int odds) {
       //special case of JUST witherywither
       itemWeight = odds;
       displayName = n;
       creatureTypeName = creatureType.name();
-//      if (currentLightLevel <= Const.LIGHT_MOBSPAWN) {
-//        lightEnabled = true;
-//      }
+      //      if (currentLightLevel <= Const.LIGHT_MOBSPAWN) {
+      //        lightEnabled = true;
+      //      }
     }
     public String getSortBy() {
       return displayName;
     }
     public String toString(boolean showOdds) {
-//      TextFormatting color = (lightEnabled) ? TextFormatting.WHITE : TextFormatting.DARK_GRAY;
+      //      TextFormatting color = (lightEnabled) ? TextFormatting.WHITE : TextFormatting.DARK_GRAY;
       if (showOdds) // todo; super.tostring here?
         return "[" + creatureTypeName + ", " + String.format("%03d", itemWeight) + "] " + displayName;
       else

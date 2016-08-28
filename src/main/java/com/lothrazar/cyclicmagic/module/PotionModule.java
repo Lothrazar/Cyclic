@@ -77,8 +77,7 @@ public class PotionModule extends BaseEventModule {
   final static int LONG = 60 * 8;
   private ArrayList<PotionBase> potionEffects = new ArrayList<PotionBase>();
   private ItemPotionCustom potion_snow_long;
-  private void registerPotionEffect(PotionBase effect){
-
+  private void registerPotionEffect(PotionBase effect) {
     GameRegistry.register(effect, effect.getIcon());
     potionEffects.add(effect);
   }
@@ -97,12 +96,10 @@ public class PotionModule extends BaseEventModule {
     if (enableEnder) {
       enderEffect = new PotionEnder("ender", true, 0);
       registerPotionEffect(enderEffect);
-      potion_ender = new ItemPotionCustom(true,enderEffect, NORMAL, Potions.I,"item.potion_ender.tooltip");
+      potion_ender = new ItemPotionCustom(true, enderEffect, NORMAL, Potions.I, "item.potion_ender.tooltip");
       ItemRegistry.addItem(potion_ender, "potion_ender");
-   
-      potion_ender_long = new ItemPotionCustom(true,enderEffect, LONG, Potions.I,"item.potion_ender.tooltip");
+      potion_ender_long = new ItemPotionCustom(true, enderEffect, LONG, Potions.I, "item.potion_ender.tooltip");
       ItemRegistry.addItem(potion_ender_long, "potion_ender_long");
-       
       addBrewingRecipe(
           potion_viscous,
           Items.ENDER_PEARL,
@@ -115,8 +112,8 @@ public class PotionModule extends BaseEventModule {
     if (enableMagnet) {
       magnetEffect = new PotionMagnet("magnet", true, 0);
       registerPotionEffect(magnetEffect);
-      potion_magnet = new ItemPotionCustom(false,magnetEffect, NORMAL, Potions.I);
-      potion_magnet_long = new ItemPotionCustom(false,magnetEffect, LONG, Potions.I);
+      potion_magnet = new ItemPotionCustom(false, magnetEffect, NORMAL, Potions.I);
+      potion_magnet_long = new ItemPotionCustom(false, magnetEffect, LONG, Potions.I);
       ItemRegistry.addItem(potion_magnet, "potion_magnet");
       ItemRegistry.addItem(potion_magnet_long, "potion_magnet_long");
       BrewingRecipeRegistry.addRecipe(
@@ -131,8 +128,8 @@ public class PotionModule extends BaseEventModule {
     if (enableWaterwalk) {
       waterwalkEffect = new PotionWaterwalk("waterwalk", true, 0);
       registerPotionEffect(waterwalkEffect);
-      potion_waterwalk = new ItemPotionCustom(false,waterwalkEffect, NORMAL, Potions.I);
-      potion_waterwalk_long = new ItemPotionCustom(false,waterwalkEffect, LONG, Potions.I);
+      potion_waterwalk = new ItemPotionCustom(false, waterwalkEffect, NORMAL, Potions.I);
+      potion_waterwalk_long = new ItemPotionCustom(false, waterwalkEffect, LONG, Potions.I);
       ItemRegistry.addItem(potion_waterwalk, "potion_waterwalk");
       ItemRegistry.addItem(potion_waterwalk_long, "potion_waterwalk_long");
       addBrewingRecipe(
@@ -151,8 +148,8 @@ public class PotionModule extends BaseEventModule {
     if (enableSlowfall) {
       slowfallEffect = new PotionSlowfall("slowfall", true, 0);
       registerPotionEffect(slowfallEffect);
-      potion_slowfall = new ItemPotionCustom(true,slowfallEffect, NORMAL, Potions.I);
-      potion_slowfall_long = new ItemPotionCustom(true,slowfallEffect, LONG, Potions.I);
+      potion_slowfall = new ItemPotionCustom(true, slowfallEffect, NORMAL, Potions.I);
+      potion_slowfall_long = new ItemPotionCustom(true, slowfallEffect, LONG, Potions.I);
       ItemRegistry.addItem(potion_slowfall, "potion_slowfall");
       ItemRegistry.addItem(potion_slowfall_long, "potion_slowfall_long");
       BrewingRecipeRegistry.addRecipe(
@@ -185,7 +182,7 @@ public class PotionModule extends BaseEventModule {
           new ItemStack(potion_snow_long));
     }
     if (enableHBoost) {
-      potion_boost = new ItemPotionCustom(true, MobEffects.HEALTH_BOOST,NORMAL, Const.Potions.V);
+      potion_boost = new ItemPotionCustom(true, MobEffects.HEALTH_BOOST, NORMAL, Const.Potions.V);
       potion_boost_long = new ItemPotionCustom(true, MobEffects.HEALTH_BOOST, LONG, Const.Potions.V);
       ItemRegistry.addItem(potion_boost, "potion_boost");
       ItemRegistry.addItem(potion_boost_long, "potion_boost_long");
@@ -253,7 +250,7 @@ public class PotionModule extends BaseEventModule {
           potion_luck_long);
     }
     if (enableLevit) {
-      potion_levitation = new ItemPotionCustom(true, MobEffects.LEVITATION,NORMAL);
+      potion_levitation = new ItemPotionCustom(true, MobEffects.LEVITATION, NORMAL);
       potion_levitation_long = new ItemPotionCustom(true, MobEffects.LEVITATION, LONG);
       ItemRegistry.addItem(potion_levitation, "potion_levitation");
       ItemRegistry.addItem(potion_levitation_long, "potion_levitation_long");
@@ -277,7 +274,7 @@ public class PotionModule extends BaseEventModule {
   public void onEntityUpdate(LivingUpdateEvent event) {
     EntityLivingBase entity = event.getEntityLiving();
     if (entity == null) { return; }
-    for(PotionBase effect : this.potionEffects){
+    for (PotionBase effect : this.potionEffects) {
       if (effect != null && entity.isPotionActive(effect)) {
         effect.tick(entity);
       }

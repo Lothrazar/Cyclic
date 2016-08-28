@@ -336,22 +336,22 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
       UtilParticle.spawnParticlePacket(EnumParticleTypes.DRAGON_BREATH, nextPos, 5);
     }
     ItemStack stack = getStackInSlot(0);
-//    if (stack == null) {
-//      timer = TIMER_FULL;// reset just like you would in a
-//      // furnace
-//    }
-    if(stack != null) {
+    //    if (stack == null) {
+    //      timer = TIMER_FULL;// reset just like you would in a
+    //      // furnace
+    //    }
+    if (stack != null) {
       timer -= this.getSpeed();
       if (timer <= 0) {
         timer = TIMER_FULL;
         trigger = true;
       }
-      else{
+      else {
         //timer is still moving, dont trigger. trigger stays false
         //but while im here, check if this spot is even valid
-        if(worldObj.isAirBlock(nextPos) == false){
+        if (worldObj.isAirBlock(nextPos) == false) {
           //but dont move instantly, slow it down to show some particles to show movement
-          if(worldObj.rand.nextDouble() < 0.75){
+          if (worldObj.rand.nextDouble() < 0.75) {
             this.incrementPosition();
           }
         }

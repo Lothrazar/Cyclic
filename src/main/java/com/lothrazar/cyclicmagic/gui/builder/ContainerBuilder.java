@@ -33,7 +33,6 @@ public class ContainerBuilder extends ContainerBaseMachine {
     // commonly used vanilla code that adds the player's inventory
     bindPlayerInventory(inventoryPlayer);
   }
-
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = null;

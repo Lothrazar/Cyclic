@@ -12,10 +12,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ButtonWandReset extends GuiButton implements ITooltipButton {
-//  private final EntityPlayer thePlayer;
+  //  private final EntityPlayer thePlayer;
   public ButtonWandReset(EntityPlayer p, int buttonId, int x, int y, int width) {
     super(buttonId, x, y, width, 20, UtilChat.lang("button.reset.name"));
-//    thePlayer = p;
+    //    thePlayer = p;
   }
   @SideOnly(Side.CLIENT)
   @Override

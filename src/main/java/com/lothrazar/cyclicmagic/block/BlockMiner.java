@@ -81,9 +81,9 @@ public class BlockMiner extends BlockBaseFacing implements IHasRecipe {
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
-    if(this.minerType == MinerType.SINGLE) //TODO: would be smarter to get my instance name. meh.
+    if (this.minerType == MinerType.SINGLE) //TODO: would be smarter to get my instance name. meh.
       tooltip.add(UtilChat.lang("tile.block_miner.tooltip"));
-    else if(this.minerType == MinerType.TUNNEL)
+    else if (this.minerType == MinerType.TUNNEL)
       tooltip.add(UtilChat.lang("tile.block_miner_tunnel.tooltip"));
   }
 }

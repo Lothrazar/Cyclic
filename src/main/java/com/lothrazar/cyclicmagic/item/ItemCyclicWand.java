@@ -62,7 +62,6 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
     if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
       tooltip.add(TextFormatting.GREEN + spell.getName() + " "
           + "[" + UtilChat.lang(BuildType.getName(stack)) + "] ");
-
       tooltip.add(TextFormatting.DARK_GRAY + UtilChat.lang("item.cyclic_wand.tooltiprange") + BaseSpellRange.maxRange);
       tooltip.add(TextFormatting.DARK_GRAY + UtilChat.lang("item.cyclic_wand.shifting"));
     }

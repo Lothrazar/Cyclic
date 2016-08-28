@@ -108,14 +108,16 @@ public class ModMain {
    * TODO:
    * 
    * NEW filtered miner, maybe even config range like builder
-
-Existing miner: still add gui, but the only feature is progress bar and btn to switch between shovel / axe / pickaxe
-
-
+   * 
+   * Existing miner: still add gui, but the only feature is progress bar and btn
+   * to switch between shovel / axe / pickaxe
+   * 
+   * 
    * idea: achievement for crafting?
-   *  http://jabelarminecraft.blogspot.ca/p/minecraft-forge-creating-custom.html 
-   *  along with   public void onItemCraftedEvent(PlayerEvent.ItemCraftedEvent event) {
-   *  
+   * http://jabelarminecraft.blogspot.ca/p/minecraft-forge-creating-custom.html
+   * along with public void onItemCraftedEvent(PlayerEvent.ItemCraftedEvent
+   * event) {
+   * 
    * 
    * [ Trading Tool // gui ] Upgrade villager gui: either make my own or add
    * buttons/some way to view all trades at once --inspired by extrautils

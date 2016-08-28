@@ -1,15 +1,13 @@
 package com.lothrazar.cyclicmagic.util;
-
 import net.minecraft.util.ResourceLocation;
 
 public class Const {
-  public static class Res{
+  public static class Res {
     public static final String folder = "textures/gui/";
     public static final ResourceLocation SLOT = new ResourceLocation(Const.MODID, folder + "inventory_slot.png");
     public static final ResourceLocation PROGRESS = new ResourceLocation(Const.MODID, folder + "progress.png");
     public static final ResourceLocation PROGRESSCTR = new ResourceLocation(Const.MODID, folder + "progress_ctr.png");
     public static final ResourceLocation TABLEDEFAULT = new ResourceLocation(Const.MODID, folder + "table.png");
-    
   }
   public static final String MODID = "cyclicmagic";
   public static final String MODRES = Const.MODID + ":";
