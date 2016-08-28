@@ -1,9 +1,7 @@
 package com.lothrazar.cyclicmagic.block;
-import java.util.List;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBucketStorage;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
-import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
@@ -225,11 +223,5 @@ public class BlockBucketStorage extends Block implements ITileEntityProvider {
       UtilEntity.dropItemStackInWorld(world, pos, stack);
       t.setBuckets(0);
     }
-  }
-  @SideOnly(Side.CLIENT)
-  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
-    if (this == BlockRegistry.block_storeempty)
-      tooltip.add(UtilChat.lang("tile.block_storeempty.tooltip"));
-    super.addInformation(stack, playerIn, tooltip, advanced);
   }
 }
