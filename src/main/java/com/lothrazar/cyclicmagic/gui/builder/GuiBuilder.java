@@ -1,27 +1,15 @@
 package com.lothrazar.cyclicmagic.gui.builder;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineBuilder;
-import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
+import com.lothrazar.cyclicmagic.gui.GuiBaseContanerProgress;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GuiBuilder extends GuiContainer {
-  private static final String folder = "textures/gui/";
-  private static final ResourceLocation table = new ResourceLocation(Const.MODID, folder + "table.png");
-  private static final ResourceLocation slot = new ResourceLocation(Const.MODID, folder + "inventory_slot.png");
-  private static final ResourceLocation progress = new ResourceLocation(Const.MODID, folder + "progress.png");
-  private static final ResourceLocation progressCtr = new ResourceLocation(Const.MODID, folder + "progress_ctr.png");
-  private static final int progressWidth = 156;
-  private static final int progressH = 7;
-  private static final int texture_width = 176;
-  private static final int texture_height = 166;
+public class GuiBuilder extends GuiBaseContanerProgress {
   static final int padding = 8;
   private TileMachineBuilder tile;
   private ButtonBuilderType btn;
@@ -34,7 +22,7 @@ public class GuiBuilder extends GuiContainer {
   private int xHeightTextbox;
   private int yHeightTxtbox;
   private int yOffset = 10 + padding;
-  boolean debugLabels = false;
+//  boolean debugLabels = false;
   public GuiBuilder(InventoryPlayer inventoryPlayer, TileMachineBuilder tileEntity) {
     super(new ContainerBuilder(inventoryPlayer, tileEntity));
     tile = tileEntity;
@@ -52,7 +40,7 @@ public class GuiBuilder extends GuiContainer {
     this.buttonList.add(btn);
     width = 15;
     //size buttons
-    xSizeTextbox = texture_width - 24;
+    xSizeTextbox = 176 - 24;
     btnSizeUp = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xSizeTextbox, this.guiTop + yOffset, width, true, "size");
     this.buttonList.add(btnSizeUp);
     btnSizeDown = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xSizeTextbox, this.guiTop + 21 + yOffset, width, false, "size");
@@ -60,7 +48,7 @@ public class GuiBuilder extends GuiContainer {
     xSizeTextbox += width / 2 - 2;
     ySizeTxtbox = 16;
     //further to the left we have the height buttons
-    xHeightTextbox = texture_width - 68;
+    xHeightTextbox = 176 - 68;
     btnHeightUp = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xHeightTextbox, this.guiTop + yOffset, width, true, "height");
     this.buttonList.add(btnHeightUp);
     btnHeightDown = new ButtonBuildSize(tile.getPos(), id++, this.guiLeft + xHeightTextbox, this.guiTop + 21 + yOffset, width, false, "height");
@@ -68,20 +56,15 @@ public class GuiBuilder extends GuiContainer {
     xHeightTextbox += width / 2 - 2;
     yHeightTxtbox = ySizeTxtbox;
   }
+  public String getTitle(){
+    return "tile.builder_block.name";
+  }
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-    String s = UtilChat.lang("tile.builder_block.name");
-    this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
     this.btn.displayString = UtilChat.lang("buildertype." + this.tile.getBuildTypeEnum().name().toLowerCase() + ".name");
-    if (debugLabels) {
-      this.fontRendererObj.drawString("t = " + this.tile.getTimer(), 32, this.ySize - 94, 4210752);
-      this.fontRendererObj.drawString("b = " + this.tile.getBuildType(), 38, this.ySize - 104, 4210752);
-      this.fontRendererObj.drawString("speed = " + this.tile.getSpeed(), 38, this.ySize - 114, 4210752);
-      this.fontRendererObj.drawString("size = " + this.tile.getSize(), 38, this.ySize - 124, 4210752);
-      this.fontRendererObj.drawString("h = " + this.tile.getHeight(), 38, this.ySize - 86, 4210752);
-    }
+
     if (this.tile.getSize() > 0) {
       String display = "" + this.tile.getSize();
       //move it over if more than 1 digit
@@ -101,35 +84,24 @@ public class GuiBuilder extends GuiContainer {
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-    GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-    this.mc.getTextureManager().bindTexture(table);
-    int thisX = (this.width - this.xSize) / 2;
-    int thisY = (this.height - this.ySize) / 2;
+    super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0;
-    Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, this.xSize, this.ySize, texture_width, texture_height);
-    this.mc.getTextureManager().bindTexture(slot);
+
+    this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     for (int k = 0; k < this.tile.getSizeInventory(); k++) { // x had - 3 ??
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerBuilder.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerBuilder.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
-    int belowSlots = this.guiTop + 9 + 3 * Const.SQ + 10;
-    this.mc.getTextureManager().bindTexture(progressCtr);
-    Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + 10, belowSlots, u, v, (int) progressWidth, progressH, progressWidth, progressH);
-    if (tile.getTimer() > 0 && tile.getStackInSlot(0) != null) {
-      this.mc.getTextureManager().bindTexture(progress);
-      float percent = ((float) tile.getTimer()) / ((float) TileMachineBuilder.TIMER_FULL);
-      Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + 10, belowSlots, u, v, (int) (progressWidth * percent), progressH, progressWidth, progressH);
-    }
   }
-  @Override
-  public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-    super.drawScreen(mouseX, mouseY, partialTicks);
-    ITooltipButton btn;
-    for (int i = 0; i < buttonList.size(); i++) {
-      if (buttonList.get(i).isMouseOver() && buttonList.get(i) instanceof ITooltipButton) {
-        btn = (ITooltipButton) buttonList.get(i);
-        drawHoveringText(btn.getTooltips(), mouseX, mouseY, fontRendererObj);
-        break;// cant hover on 2 at once
-      }
-    }
+  public int getProgressX() {
+    return this.guiLeft + 10;
+  }
+  public int getProgressY() {
+    return this.guiTop + 9 + 3 * Const.SQ + 10;
+  }
+  public int getProgressCurrent() {
+    return tile.getTimer();
+  }
+  public int getProgressMax() {
+    return TileMachineBuilder.TIMER_FULL;
   }
 }

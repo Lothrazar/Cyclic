@@ -1,5 +1,7 @@
 package com.lothrazar.cyclicmagic.block;
+import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.block.BlockBasePressurePlate;
 import net.minecraft.block.SoundType;
@@ -111,5 +113,9 @@ public class BlockConveyor extends BlockBasePressurePlate implements IHasRecipe 
   public boolean isOpaqueCube(IBlockState state) {
     // http://greyminecraftcoder.blogspot.ca/2014/12/transparent-blocks-18.html
     return false;
+  }
+  @SideOnly(Side.CLIENT)
+  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+    tooltip.add(UtilChat.lang("tile.plate_push.tooltip"));
   }
 }

@@ -1,41 +1,26 @@
 package com.lothrazar.cyclicmagic.gui.uncrafting;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter;
-import com.lothrazar.cyclicmagic.gui.slot.SlotUncraft;
+import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class ContainerUncrafting extends Container {
+public class ContainerUncrafting extends ContainerBaseMachine {
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
   public static final int SLOTX_START = 10;
   public static final int SLOTY = 28;
-  //public static final int					SLOT				= 0;
-  public static final int SQ = 18;
-  //	public static final int					SLOT_SECOND	= 1;
-  //	public static final int					SLOT_THIRD	= 2;
+
   protected TileMachineUncrafter tileEntity;
   public ContainerUncrafting(InventoryPlayer inventoryPlayer, TileMachineUncrafter te) {
     tileEntity = te;
-    //addSlotToContainer(new SlotUncraft(tileEntity, SLOT, SLOTX, SLOTY));
-    //addSlotToContainer(new SlotUncraft(tileEntity, SLOT_SECOND, SLOTX, SLOTY + 18));
-    //addSlotToContainer(new SlotUncraft(tileEntity, SLOT_THIRD, SLOTX, SLOTY + 18 + 18));
+
     for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
-      addSlotToContainer(new SlotUncraft(tileEntity, i, SLOTX_START + i * SQ, SLOTY));
+      addSlotToContainer(new Slot(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY));
     }
     // commonly used vanilla code that adds the player's inventory
     bindPlayerInventory(inventoryPlayer);
-  }
-  protected void bindPlayerInventory(InventoryPlayer inventoryPlayer) {
-    for (int i = 0; i < 3; i++) {
-      for (int j = 0; j < 9; j++) {
-        addSlotToContainer(new Slot(inventoryPlayer, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
-      }
-    }
-    for (int i = 0; i < 9; i++) {
-      addSlotToContainer(new Slot(inventoryPlayer, i, 8 + i * 18, 142));
-    }
   }
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
@@ -62,9 +47,5 @@ public class ContainerUncrafting extends Container {
       slotObject.onPickupFromSlot(player, stackInSlot);
     }
     return stack;
-  }
-  @Override
-  public boolean canInteractWith(EntityPlayer playerIn) {
-    return true;
   }
 }

@@ -24,8 +24,14 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemFoodCorruptedChorus extends ItemFood implements IHasRecipe, IHasConfig {
+  //revived from https://github.com/PrinceOfAmber/Cyclic/blob/d2f91d1f97b9cfba47786a30b427fbfdcd714212/src/main/java/com/lothrazar/cyclicmagic/spell/SpellGhost.java
+  private static final String KEY_BOOLEAN = "ghost_on";
+  private static final String KEY_TIMER = "ghost_timer";
+  private static final String KEY_EATLOC = "ghost_location";
+  private static final String KEY_EATDIM = "ghost_dim";
+  public static int GHOST_SECONDS = 5;
+  public static int POTION_SECONDS = 20;
   private static final int numFood = 2;
-  private static final String tooltip = "Lets you phase through walls for a few seconds";
   public ItemFoodCorruptedChorus() {
     super(numFood, false);
     this.setAlwaysEdible();
@@ -36,7 +42,7 @@ public class ItemFoodCorruptedChorus extends ItemFood implements IHasRecipe, IHa
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltips, boolean advanced) {
-    tooltips.add(tooltip);
+    tooltips.add(UtilChat.lang("item.corrupted_chorus.tooltip"));
   }
   @Override
   public void addRecipe() {
@@ -51,13 +57,6 @@ public class ItemFoodCorruptedChorus extends ItemFood implements IHasRecipe, IHa
     GHOST_SECONDS = config.getInt("CorruptedChorusSeconds", category, 5, 1, 60, "How long you can noclip after eating corrupted chorus");
     POTION_SECONDS = config.getInt("CorruptedChorusPotions", category, 10, 1, 60, "How long the negative potion effects last after a corrupted chorus teleports you");
   }
-  //revived from https://github.com/PrinceOfAmber/Cyclic/blob/d2f91d1f97b9cfba47786a30b427fbfdcd714212/src/main/java/com/lothrazar/cyclicmagic/spell/SpellGhost.java
-  private static final String KEY_BOOLEAN = "ghost_on";
-  private static final String KEY_TIMER = "ghost_timer";
-  private static final String KEY_EATLOC = "ghost_location";
-  private static final String KEY_EATDIM = "ghost_dim";
-  public static int GHOST_SECONDS = 5;
-  public static int POTION_SECONDS = 20;
   private void setPlayerGhostMode(EntityPlayer player, World par2World) {
     if (par2World.isRemote == false) {
       player.setGameType(GameType.SPECTATOR);

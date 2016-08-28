@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.item;
+import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -12,6 +14,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemSproutSeeds extends ItemSeeds implements IHasRecipe {
   private final Block soilBlockID;
@@ -42,5 +46,9 @@ public class ItemSproutSeeds extends ItemSeeds implements IHasRecipe {
         'b', Items.MELON_SEEDS,
         'c', Items.PUMPKIN_SEEDS,
         'd', Items.NETHER_WART);
+  }
+  @SideOnly(Side.CLIENT)
+  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+    tooltip.add(UtilChat.lang("item.sprout_seed.tooltip"));
   }
 }

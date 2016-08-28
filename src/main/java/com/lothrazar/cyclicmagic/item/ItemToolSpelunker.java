@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.item;
+import java.util.List;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -15,6 +16,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemToolSpelunker extends BaseTool implements IHasRecipe, IHasConfig {
   private static final int DURABILITY = 2000;
@@ -73,5 +76,9 @@ public class ItemToolSpelunker extends BaseTool implements IHasRecipe, IHasConfi
   @Override
   public void syncConfig(Configuration config) {
     range = config.getInt("CavefinderRange", Const.ConfigCategory.modpackMisc, 32, 2, 256, "Block Range it will search onclick");
+  }
+  @SideOnly(Side.CLIENT)
+  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltips, boolean advanced) {
+    tooltips.add(UtilChat.lang("item.tool_spelunker.tooltip"));
   }
 }

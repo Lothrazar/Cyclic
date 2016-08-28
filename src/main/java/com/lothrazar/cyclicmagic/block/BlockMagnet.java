@@ -1,13 +1,16 @@
 package com.lothrazar.cyclicmagic.block;
+import java.util.List;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityMagnet;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
@@ -93,5 +96,10 @@ public class BlockMagnet extends Block implements IHasRecipe , IHasConfig{
     TileEntityMagnet.ITEM_HRADIUS = config.getInt("MagnetBlockDistance", Const.ConfigCategory.modpackMisc, 16, 2, 128, "Distance it pulls items from.");
     TileEntityMagnet.ITEM_VRADIUS = config.getInt("MagnetBlockHeight", Const.ConfigCategory.modpackMisc, 2, 1, 128, "Height it pulls at items");
  
+  }
+  @SideOnly(Side.CLIENT)
+  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+    String s = UtilChat.lang("tile.magnet_block.tooltip").replace("$t$", TileEntityMagnet.TIMER_FULL+"");
+    tooltip.add(s);
   }
 }

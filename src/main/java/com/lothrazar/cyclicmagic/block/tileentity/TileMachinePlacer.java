@@ -1,19 +1,14 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;// net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ITickable;
-import net.minecraft.util.text.ITextComponent;
 
-public class TileMachinePlacer extends TileEntityBaseMachine implements IInventory, ITickable, ISidedInventory {
+public class TileMachinePlacer extends TileEntityBaseMachineInvo {
   private int timer;
   private static final int buildSpeed = 1;
   private ItemStack[] inv = new ItemStack[9];
@@ -24,14 +19,6 @@ public class TileMachinePlacer extends TileEntityBaseMachine implements IInvento
   private static final String NBT_TIMER = "Timer";
   public static enum Fields {
     TIMER
-  }
-  @Override
-  public boolean hasCustomName() {
-    return false;
-  }
-  @Override
-  public ITextComponent getDisplayName() {
-    return null;
   }
   @Override
   public int getSizeInventory() {
@@ -63,20 +50,6 @@ public class TileMachinePlacer extends TileEntityBaseMachine implements IInvento
     if (stack != null && stack.stackSize > getInventoryStackLimit()) {
       stack.stackSize = getInventoryStackLimit();
     }
-  }
-  @Override
-  public int getInventoryStackLimit() {
-    return 64;
-  }
-  @Override
-  public boolean isUseableByPlayer(EntityPlayer player) {
-    return true;
-  }
-  @Override
-  public void openInventory(EntityPlayer player) {
-  }
-  @Override
-  public void closeInventory(EntityPlayer player) {
   }
   @Override
   public boolean isItemValidForSlot(int index, ItemStack stack) {
@@ -214,25 +187,12 @@ public class TileMachinePlacer extends TileEntityBaseMachine implements IInvento
     return hopperInput;
   }
   @Override
-  public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
-    return this.isItemValidForSlot(index, itemStackIn);
-  }
-  @Override
-  public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
-    // do not let hoppers pull out of here for any reason
-    return false;// direction == EnumFacing.DOWN;
-  }
-  @Override
   public ItemStack removeStackFromSlot(int index) {
     ItemStack stack = getStackInSlot(index);
     if (stack != null) {
       setInventorySlotContents(index, null);
     }
     return stack;
-  }
-  @Override
-  public String getName() {
-    return null;
   }
   @Override
   public boolean receiveClientEvent(int id, int value) {

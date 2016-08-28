@@ -1,4 +1,6 @@
 package com.lothrazar.cyclicmagic.block;
+import java.util.List;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.block.BlockBasePressurePlate;
 import net.minecraft.block.SoundType;
@@ -7,9 +9,12 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.util.SoundEvent;
 
 public class BlockLaunch extends BlockBasePressurePlate {
@@ -45,5 +50,10 @@ public class BlockLaunch extends BlockBasePressurePlate {
   public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
     UtilEntity.launch(entity, ANGLE, power);
     this.playClickOnSound(worldIn, pos);
+  }
+  @SideOnly(Side.CLIENT)
+  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+    int fakePower = (int)Math.round(this.power*10); //  String.format("%.1f", this.power))
+    tooltip.add(UtilChat.lang("tile.plate_launch.tooltip") + fakePower);
   }
 }

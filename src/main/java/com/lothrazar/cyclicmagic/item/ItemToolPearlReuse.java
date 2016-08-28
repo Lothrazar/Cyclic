@@ -1,5 +1,7 @@
 package com.lothrazar.cyclicmagic.item;
+import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.entity.item.EntityEnderPearl;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -48,5 +50,9 @@ public class ItemToolPearlReuse extends BaseTool implements IHasRecipe {
   @SideOnly(Side.CLIENT)
   public boolean hasEffect(ItemStack stack) {
     return true;
+  }
+  @SideOnly(Side.CLIENT)
+  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+    tooltip.add(UtilChat.lang("item.ender_pearl_reuse.tooltip"));
   }
 }

@@ -4,6 +4,7 @@ import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.gui.storage.InventoryStorage;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -16,8 +17,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemInventoryStorage extends BaseItem implements IHasRecipe {
-  public ItemInventoryStorage() {
+public class ItemStorageBag extends BaseItem implements IHasRecipe {
+  public ItemStorageBag() {
     this.setMaxStackSize(1);
   }
   @Override
@@ -31,15 +32,15 @@ public class ItemInventoryStorage extends BaseItem implements IHasRecipe {
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
     int size = InventoryStorage.countNonEmpty(stack);
-    tooltip.add("" + size);
+    tooltip.add(UtilChat.lang("item.storage_bag.tooltip") + size);
     super.addInformation(stack, playerIn, tooltip, advanced);
   }
   public static ItemStack getPlayerItemIfHeld(EntityPlayer player) {
     ItemStack wand = player.getHeldItemMainhand();
-    if (wand == null || wand.getItem() instanceof ItemInventoryStorage == false) {
+    if (wand == null || wand.getItem() instanceof ItemStorageBag == false) {
       wand = player.getHeldItemOffhand();
     }
-    if (wand == null || wand.getItem() instanceof ItemInventoryStorage == false) { return null; }
+    if (wand == null || wand.getItem() instanceof ItemStorageBag == false) { return null; }
     return wand;
   }
   @Override

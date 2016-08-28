@@ -4,7 +4,6 @@ import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilUncraft;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
@@ -15,12 +14,10 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;// net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
 
-public class TileMachineUncrafter extends TileEntityBaseMachine implements IInventory, ITickable, ISidedInventory {
+public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements IInventory, ISidedInventory {
   // http://www.minecraftforge.net/wiki/Containers_and_GUIs
   // http://greyminecraftcoder.blogspot.com.au/2015/01/tileentity.html
   // http://www.minecraftforge.net/forum/index.php?topic=28539.0
@@ -37,14 +34,6 @@ public class TileMachineUncrafter extends TileEntityBaseMachine implements IInve
   public TileMachineUncrafter() {
     inv = new ItemStack[9];
     timer = TIMER_FULL;
-  }
-  @Override
-  public boolean hasCustomName() {
-    return false;
-  }
-  @Override
-  public ITextComponent getDisplayName() {
-    return null;
   }
   @Override
   public int getSizeInventory() {
@@ -76,39 +65,6 @@ public class TileMachineUncrafter extends TileEntityBaseMachine implements IInve
     if (stack != null && stack.stackSize > getInventoryStackLimit()) {
       stack.stackSize = getInventoryStackLimit();
     }
-  }
-  @Override
-  public int getInventoryStackLimit() {
-    return 64;
-  }
-  @Override
-  public boolean isUseableByPlayer(EntityPlayer player) {
-    return true;
-  }
-  @Override
-  public void openInventory(EntityPlayer player) {
-  }
-  @Override
-  public void closeInventory(EntityPlayer player) {
-  }
-  @Override
-  public boolean isItemValidForSlot(int index, ItemStack stack) {
-    // for this container, same for all slots
-    return true;// SlotUncraft.checkValid(stack);
-  }
-  @Override
-  public int getField(int id) {
-    return 0;
-  }
-  @Override
-  public void setField(int id, int value) {
-  }
-  @Override
-  public int getFieldCount() {
-    return 0;
-  }
-  @Override
-  public void clear() {
   }
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
@@ -297,20 +253,11 @@ public class TileMachineUncrafter extends TileEntityBaseMachine implements IInve
     return this.isItemValidForSlot(index, itemStackIn);
   }
   @Override
-  public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
-    //do not let hoppers pull out of here for any reason
-    return false;// direction == EnumFacing.DOWN;
-  }
-  @Override
   public ItemStack removeStackFromSlot(int index) {
     ItemStack stack = getStackInSlot(index);
     if (stack != null) {
       setInventorySlotContents(index, null);
     }
     return stack;
-  }
-  @Override
-  public String getName() {
-    return null;
   }
 }

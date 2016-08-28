@@ -1,8 +1,8 @@
 package com.lothrazar.cyclicmagic.item;
 import java.util.List;
-import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -15,9 +15,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.config.Configuration;
 
-public class ItemChestSack extends BaseItem implements IHasConfig {
+public class ItemChestSack extends BaseItem {
   public static final String name = "chest_sack";
   public static final String KEY_NBT = "itemtags";
   public static final String KEY_BLOCK = "block";
@@ -43,7 +42,7 @@ public class ItemChestSack extends BaseItem implements IHasConfig {
   }
   private boolean createAndFillChest(EntityPlayer entityPlayer, ItemStack heldChestSack, BlockPos pos) {
     Block block = Block.getBlockById(heldChestSack.getTagCompound().getInteger(KEY_BLOCK));
-    if (Block.getBlockById(heldChestSack.getTagCompound().getInteger(KEY_BLOCK)) == null) {
+    if (block == null) {
       // ModMain.logger.log(Level.WARN, "Null block from id: " +
       // heldChestSack.getTagCompound().getInteger(KEY_BLOCK));
       return false;
@@ -63,14 +62,11 @@ public class ItemChestSack extends BaseItem implements IHasConfig {
   @Override
   public void addInformation(ItemStack itemStack, EntityPlayer player, List<String> list, boolean advanced) {
     int count = UtilNBT.countItemsFromNBT(itemStack.getTagCompound(), ItemChestSack.KEY_NBT);
-    list.add("" + count);
-  }
-  @Override
-  public void syncConfig(Configuration config) {
-    //		Property prop = config.get(Const.ConfigCategory.items, "ChestSack", true,
-    //"A bag that transports chests along with its contents");
-    //		prop.setRequiresMcRestart(true);
-    //
-    //		ItemRegistry.setConfigMap(this,prop.getBoolean());
+
+    Block block = Block.getBlockById(itemStack.getTagCompound().getInteger(KEY_BLOCK));
+    if (block != null) {
+      list.add(block.getLocalizedName());
+    }
+    list.add(UtilChat.lang("item.chest_sack.tooltip") + count);
   }
 }

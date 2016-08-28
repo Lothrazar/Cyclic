@@ -8,6 +8,7 @@ import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStoneSlab;
 import net.minecraft.block.material.Material;
@@ -28,6 +29,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockPassword extends Block implements IHasRecipe {
   public static final PropertyBool POWERED = PropertyBool.create("powered");
@@ -124,5 +127,9 @@ public class BlockPassword extends Block implements IHasRecipe {
         's', new ItemStack(Blocks.STONE_SLAB,1,BlockStoneSlab.EnumType.STONE.getMetadata()),
         't', Blocks.TRIPWIRE_HOOK,
         'r', Items.COMPARATOR);
+  }
+  @SideOnly(Side.CLIENT)
+  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+    tooltip.add(UtilChat.lang("tile.password_block.tooltip"));
   }
 }

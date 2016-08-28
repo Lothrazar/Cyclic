@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.gui.builder;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
+import com.lothrazar.cyclicmagic.gui.ITooltipButton;
 import com.lothrazar.cyclicmagic.net.PacketTileBuildSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.Minecraft;

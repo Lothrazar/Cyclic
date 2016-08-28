@@ -3,6 +3,7 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
 import com.lothrazar.cyclicmagic.util.Const.HorseMeta;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -15,7 +16,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -33,13 +33,12 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
     recipeItem = rec;
     upgradeType = type;
   }
-  @SuppressWarnings("unchecked")
   @SideOnly(Side.CLIENT)
   @Override
-  public void addInformation(ItemStack stack, EntityPlayer playerIn, @SuppressWarnings("rawtypes") List tooltip, boolean advanced) {
+  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
     if (stack == null || stack.getItem() == null) { return; } // just being safe
     Item carrot = stack.getItem();
-    tooltip.add(I18n.format(carrot.getUnlocalizedName(stack) + ".effect"));
+    tooltip.add(UtilChat.lang(carrot.getUnlocalizedName(stack) + ".effect"));
   }
   public void addRecipe() {
     GameRegistry.addShapelessRecipe(new ItemStack(this), Items.CARROT, recipeItem);

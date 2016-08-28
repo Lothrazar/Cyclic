@@ -2,48 +2,43 @@ package com.lothrazar.cyclicmagic.gui.wand;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.gui.button.ITooltipButton;
+import com.lothrazar.cyclicmagic.gui.ITooltipButton;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
-import com.lothrazar.cyclicmagic.net.PacketSpellBuildType;
+import com.lothrazar.cyclicmagic.net.PacketWandGui;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ButtonBuildToggle extends GuiButton implements ITooltipButton {
-  final EntityPlayer thePlayer;
-  public ButtonBuildToggle(EntityPlayer player, int buttonId, int x, int y, int width) {
+  private final EntityPlayer thePlayer;
+  public ButtonBuildToggle(EntityPlayer p, int buttonId, int x, int y, int width) {
     super(buttonId, x, y, width, 20, "");
-    thePlayer = player;
+    thePlayer = p;
   }
   @SideOnly(Side.CLIENT)
   @Override
   public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
     boolean pressed = super.mousePressed(mc, mouseX, mouseY);
     if (pressed) {
-      ModMain.network.sendToServer(new PacketSpellBuildType());
+      ModMain.network.sendToServer(new PacketWandGui(PacketWandGui.WandAction.BUILDTYPE));
     }
     return pressed;
   }
   @SideOnly(Side.CLIENT)
   @Override
   public void drawButton(Minecraft mc, int mouseX, int mouseY) {
-    ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(thePlayer);
-    this.displayString = I18n.format(ItemCyclicWand.BuildType.getName(wand));
+    this.displayString = I18n.format(ItemCyclicWand.BuildType.getName(UtilSpellCaster.getPlayerWandIfHeld(thePlayer)));
     super.drawButton(mc, mouseX, mouseY);
   }
   @Override
   public List<String> getTooltips() {
     List<String> tooltips = new ArrayList<String>();
-    // tooltips.add(I18n.format("button.build.tooltip"));
-    ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(thePlayer);
-    String key = ItemCyclicWand.BuildType.getName(wand) + ".tooltip";
+    String key = ItemCyclicWand.BuildType.getName(UtilSpellCaster.getPlayerWandIfHeld(thePlayer)) + ".tooltip";
     tooltips.add(I18n.format(key));
-    //		tooltips.add(TextFormatting.GRAY + I18n.format("button.build.meta"));
     return tooltips;
   }
 }

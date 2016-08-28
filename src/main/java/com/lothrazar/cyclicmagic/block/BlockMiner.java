@@ -1,10 +1,13 @@
 package com.lothrazar.cyclicmagic.block;
+import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMiner;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -12,6 +15,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockMiner extends BlockBaseFacing implements IHasRecipe {
   public static final PropertyDirection PROPERTYFACING = BlockBaseFacing.PROPERTYFACING;
@@ -73,5 +78,12 @@ public class BlockMiner extends BlockBaseFacing implements IHasRecipe {
     default:
       break;
     }
+  }
+  @SideOnly(Side.CLIENT)
+  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+    if(this.minerType == MinerType.SINGLE) //TODO: would be smarter to get my instance name. meh.
+      tooltip.add(UtilChat.lang("tile.block_miner.tooltip"));
+    else if(this.minerType == MinerType.TUNNEL)
+      tooltip.add(UtilChat.lang("tile.block_miner_tunnel.tooltip"));
   }
 }

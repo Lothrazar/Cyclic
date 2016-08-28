@@ -24,28 +24,25 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class ItemSleepingBag extends BaseTool implements IHasRecipe, IHasConfig {
+public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig {
   // thank you for the examples forge. player data storage based on API source
   // https://github.com/MinecraftForge/MinecraftForge/blob/1.9/src/test/java/net/minecraftforge/test/NoBedSleepingTest.java
   private static int seconds;
-  private static final int levelBoost = Const.Potions.I;
-  private static final int durability = 100;
   public static boolean doPotions;
-  public ItemSleepingBag() {
-    super(durability);
+  public ItemSleepingMat() {
+    super(100);
   }
   @Override
   public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
     if (!world.isRemote) {
       final EntityPlayer.SleepResult result = player.trySleep(player.getPosition());
-      //			if(UtilWorld.isNight(world) == false){
       if (result == EntityPlayer.SleepResult.OK) {
         final IPlayerExtendedProperties sleep = CapabilityRegistry.getPlayerProperties(player);
         if (sleep != null) {
           sleep.setSleeping(true);
           if (doPotions) {
-            player.addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, seconds * Const.TICKS_PER_SEC, levelBoost));
-            player.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, seconds * Const.TICKS_PER_SEC, levelBoost));
+            player.addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, seconds * Const.TICKS_PER_SEC, Const.Potions.I));
+            player.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, seconds * Const.TICKS_PER_SEC, Const.Potions.I));
           }
           this.onUse(stack, player, world, hand);
         }

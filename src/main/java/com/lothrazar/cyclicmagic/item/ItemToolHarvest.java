@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.item;
-import com.lothrazar.cyclicmagic.IHasConfig;
+import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilHarvestCrops;
 import com.lothrazar.cyclicmagic.util.UtilHarvestCrops.HarestCropsConfig;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,10 +12,11 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemToolHarvest extends BaseTool implements IHasRecipe, IHasConfig {
+public class ItemToolHarvest extends BaseTool implements IHasRecipe {
   private static final int range = 6;
   private static final int durability = 1000;
   private HarestCropsConfig conf;
@@ -61,10 +63,6 @@ public class ItemToolHarvest extends BaseTool implements IHasRecipe, IHasConfig 
     super.onUse(stack, player, worldObj, hand);
     return super.onItemUse(stack, player, worldObj, offset, hand, side, hitX, hitY, hitZ);
   }
-  //"Tool that harvests grass, flowers, and fully grown crops from the nearby area");
-  @Override
-  public void syncConfig(Configuration config) {
-  }
   @Override
   public void addRecipe() {
     switch (harvestType) {
@@ -96,6 +94,20 @@ public class ItemToolHarvest extends BaseTool implements IHasRecipe, IHasConfig 
           's', Items.STONE_HOE);
       break;
     default:
+      break;
+    }
+  }
+  @SideOnly(Side.CLIENT)
+  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltips, boolean advanced) {
+    switch (harvestType) {
+    case CROPS:
+      tooltips.add(UtilChat.lang("item.tool_harvest_crops.tooltip"));
+      break;
+    case LEAVES:
+      tooltips.add(UtilChat.lang("item.tool_harvest_leaves.tooltip"));
+      break;
+    case WEEDS:
+      tooltips.add(UtilChat.lang("item.tool_harvest_weeds.tooltip"));
       break;
     }
   }

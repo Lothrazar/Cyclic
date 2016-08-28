@@ -40,5 +40,6 @@
  	,"1.5.3":"A few recipes no longer require beacons & nether stars.  Add world config to disable all loot chest insertions.  "
  	,"1.6.0":"Added Password Trigger, Miner, Miner Advanced, Placer, Cavefinder and Prospector.  Harvester recipe is now cheaper.  Added several item and block properties to config.  All machines (uncrafter, etc) activate on any redstone power, not just strong power.  Removed feature events to restrict sapling growth and give EXP for achievements (they never worked perfectly anyway).  "
  	,"1.6.1":"Fix uncrafting grinder shooting backwards.  Fix Piston wand block updates not syncing to clients when playing on a server.  "
- }
+  	,"1.6.2":"Tooltips added to many items.  Reset button added to cyclic wand gui.  Builder and Placer machines now don't let in items that aren't placeable as blocks .  Machines now let hoppers pull contents from below."
+  }
 }
