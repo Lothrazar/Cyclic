@@ -61,12 +61,15 @@ public class ItemChestSack extends BaseItem {
   }
   @Override
   public void addInformation(ItemStack itemStack, EntityPlayer player, List<String> list, boolean advanced) {
-    int count = UtilNBT.countItemsFromNBT(itemStack.getTagCompound(), ItemChestSack.KEY_NBT);
-
-    Block block = Block.getBlockById(itemStack.getTagCompound().getInteger(KEY_BLOCK));
-    if (block != null) {
-      list.add(block.getLocalizedName());
+    if (itemStack.getTagCompound() != null) {
+      int count = UtilNBT.countItemsFromNBT(itemStack.getTagCompound(), ItemChestSack.KEY_NBT);
+      if (count > 0) {
+        Block block = Block.getBlockById(itemStack.getTagCompound().getInteger(KEY_BLOCK));
+        if (block != null) {
+          list.add(block.getLocalizedName());
+        }
+        list.add(UtilChat.lang("item.chest_sack.tooltip") + count);
+      }
     }
-    list.add(UtilChat.lang("item.chest_sack.tooltip") + count);
   }
 }
