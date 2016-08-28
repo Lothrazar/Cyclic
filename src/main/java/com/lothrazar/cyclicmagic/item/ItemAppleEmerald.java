@@ -29,12 +29,9 @@ public class ItemAppleEmerald extends ItemFood implements IHasRecipe {
   }
   @Override
   public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this),
-        "lll",
-        "lal",
-        "lll",
-        'l', Items.EMERALD,
-        'a', Items.GOLDEN_APPLE);
+    GameRegistry.addShapelessRecipe(new ItemStack(this),
+         Items.EMERALD,
+         Items.GOLDEN_APPLE);
   }
   @Override
   @SideOnly(Side.CLIENT)

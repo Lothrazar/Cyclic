@@ -61,6 +61,13 @@ public class ItemChestSackEmpty extends BaseItem implements IHasRecipe {
         'l', new ItemStack(Items.LEATHER),
         'b', new ItemStack(Items.SLIME_BALL),
         's', new ItemStack(Items.STRING));
+    GameRegistry.addShapedRecipe(new ItemStack(this),
+        " s ",
+        "lbl",
+        "lll",
+        'l', new ItemStack(Items.LEATHER),
+        'b', new ItemStack(Items.APPLE),
+        's', new ItemStack(Items.STRING));
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
