@@ -105,7 +105,7 @@ public class PotionModule extends BaseEventModule {
        
       addBrewingRecipe(
           potion_viscous,
-          Items.ENDER_EYE,
+          Items.ENDER_PEARL,
           potion_ender);
       addBrewingRecipe(
           potion_ender,
@@ -137,7 +137,11 @@ public class PotionModule extends BaseEventModule {
       ItemRegistry.addItem(potion_waterwalk_long, "potion_waterwalk_long");
       addBrewingRecipe(
           potion_viscous,
-          Items.PRISMARINE_CRYSTALS,
+          Items.PRISMARINE_SHARD,
+          potion_waterwalk);
+      addBrewingRecipe(
+          potion_viscous,
+          Items.BLAZE_POWDER,
           potion_waterwalk);
       addBrewingRecipe(
           potion_waterwalk,
@@ -154,6 +158,10 @@ public class PotionModule extends BaseEventModule {
       BrewingRecipeRegistry.addRecipe(
           new ItemStack(potion_viscous),
           new ItemStack(Items.FISH, 1, ItemFishFood.FishType.CLOWNFISH.getMetadata()),
+          new ItemStack(potion_slowfall));
+      BrewingRecipeRegistry.addRecipe(
+          new ItemStack(potion_viscous),
+          new ItemStack(Items.FISH, 1, ItemFishFood.FishType.SALMON.getMetadata()),
           new ItemStack(potion_slowfall));
       BrewingRecipeRegistry.addRecipe(
           new ItemStack(potion_slowfall),

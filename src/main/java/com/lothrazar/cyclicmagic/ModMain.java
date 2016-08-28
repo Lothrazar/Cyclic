@@ -111,33 +111,13 @@ public class ModMain {
 
 Existing miner: still add gui, but the only feature is progress bar and btn to switch between shovel / axe / pickaxe
 
-bucket block recipe reduced: rm iron ingots add glass panes
-
-LUCK- LONG recipe missing???
-
-ENDER POTION: add tooltip
-
-WATER WALK POTION: add alternate recipe, one that does not need pris
-
-SLOWFALL: also allow salmon 
-
 block miner advanced: nerf to iron pickaxes
 
-SNOW POTION: add long version with redstone
-snow potion also tooltip 
 
-   * 
-   * ITEM MAGNET: add pulse length and pulse RANGE to config. also add particle when it fires?
-   * 
    * idea: achievement for crafting?
    *  http://jabelarminecraft.blogspot.ca/p/minecraft-forge-creating-custom.html 
    *  along with   public void onItemCraftedEvent(PlayerEvent.ItemCraftedEvent event) {
    *  
-   * 
-   * fragile torches config: float oddsWillBreak = 0.01F;// : in config or
-   * something? or make this
-   * 
-   * frozen/snow effect
    * 
    * config: command search spawner max distances
    * 
