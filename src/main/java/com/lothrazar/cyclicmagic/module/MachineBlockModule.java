@@ -99,5 +99,8 @@ public class MachineBlockModule extends BaseModule {
     if (BlockRegistry.uncrafting_block != null) {
       BlockRegistry.uncrafting_block.syncConfig(config);
     }
+    
+    TileMachineHarvester.HARVEST_RADIUS = config.getInt("HarvesterBlockRadius", Const.ConfigCategory.modpackMisc, 16, 4, 128, "Maximum radius of harvester area (remember its not centered on the block, it harvests in front)");
+ 
   }
 }
