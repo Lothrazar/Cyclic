@@ -107,25 +107,15 @@ public class ModMain {
    * 
    * TODO:
    * 
-   * ITEM MAGNET: add pulse length and pulse RANGE to config. also add particle when it fires?
-   * 
+   * NEW filtered miner, maybe even config range like builder
+
+Existing miner: still add gui, but the only feature is progress bar and btn to switch between shovel / axe / pickaxe
+
+
    * idea: achievement for crafting?
    *  http://jabelarminecraft.blogspot.ca/p/minecraft-forge-creating-custom.html 
    *  along with   public void onItemCraftedEvent(PlayerEvent.ItemCraftedEvent event) {
    *  
-   * 
-   * fragile torches config: float oddsWillBreak = 0.01F;// : in config or
-   * something? or make this
-   * 
-   * frozen/snow effect
-   * 
-   * config: command search spawner max distances
-   * 
-   * circle sometimes gets duplicate positions, slowing it down
-   * 
-   * Some way to keep certain items after death - runestone? enchantment?
-   * 
-   * ButtonBuildToggle-store ptr to wand not player??
    * 
    * [ Trading Tool // gui ] Upgrade villager gui: either make my own or add
    * buttons/some way to view all trades at once --inspired by extrautils
@@ -140,11 +130,9 @@ public class ModMain {
    * https://github.com/MinecraftForge/MinecraftForge/blob/master/src/test/java/
    * net/minecraftforge/debug/LootTablesDebug.java
    * 
-   * crafting table hotkeys - numpad?
    *
    * ROTATE: STAIRS: allow switch from top to bottom
    * 
-   * Fix sorting : UtilInventorySort.sort(p, openInventory);
    * 
    */
 }

@@ -4,7 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class PotionSlowfall extends PotionCustom {
+public class PotionSlowfall extends PotionBase {
   public static final float slowfallSpeed = 0.41F;
   public PotionSlowfall(String name, boolean b, int potionColor) {
     super(name, b, potionColor);

@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.gui.placer;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineBuilder;
+import com.lothrazar.cyclicmagic.block.tileentity.TileMachineStructureBuilder;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachinePlacer;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter;
 import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
@@ -64,32 +64,32 @@ public class ContainerPlacer extends ContainerBaseMachine {
     super.detectAndSendChanges();
     for (int i = 0; i < this.listeners.size(); ++i) {
       IContainerListener icontainerlistener = (IContainerListener) this.listeners.get(i);
-      int idx = TileMachineBuilder.Fields.TIMER.ordinal();
+      int idx = TileMachineStructureBuilder.Fields.TIMER.ordinal();
       if (this.tileTimer != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
-      idx = TileMachineBuilder.Fields.BUILDTYPE.ordinal();
+      idx = TileMachineStructureBuilder.Fields.BUILDTYPE.ordinal();
       if (this.tileBuild != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
-      idx = TileMachineBuilder.Fields.SIZE.ordinal();
+      idx = TileMachineStructureBuilder.Fields.SIZE.ordinal();
       if (this.tileSize != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
-      idx = TileMachineBuilder.Fields.SPEED.ordinal();
+      idx = TileMachineStructureBuilder.Fields.SPEED.ordinal();
       if (this.tileSpeed != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
-      idx = TileMachineBuilder.Fields.HEIGHT.ordinal();
+      idx = TileMachineStructureBuilder.Fields.HEIGHT.ordinal();
       if (this.tileHeight != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
     }
-    this.tileTimer = this.tileEntity.getField(TileMachineBuilder.Fields.TIMER.ordinal());
-    this.tileBuild = this.tileEntity.getField(TileMachineBuilder.Fields.BUILDTYPE.ordinal());
-    this.tileSize = this.tileEntity.getField(TileMachineBuilder.Fields.SIZE.ordinal());
-    this.tileSpeed = this.tileEntity.getField(TileMachineBuilder.Fields.SPEED.ordinal());
-    this.tileHeight = this.tileEntity.getField(TileMachineBuilder.Fields.HEIGHT.ordinal());
+    this.tileTimer = this.tileEntity.getField(TileMachineStructureBuilder.Fields.TIMER.ordinal());
+    this.tileBuild = this.tileEntity.getField(TileMachineStructureBuilder.Fields.BUILDTYPE.ordinal());
+    this.tileSize = this.tileEntity.getField(TileMachineStructureBuilder.Fields.SIZE.ordinal());
+    this.tileSpeed = this.tileEntity.getField(TileMachineStructureBuilder.Fields.SPEED.ordinal());
+    this.tileHeight = this.tileEntity.getField(TileMachineStructureBuilder.Fields.HEIGHT.ordinal());
   }
   @Override
   @SideOnly(Side.CLIENT)

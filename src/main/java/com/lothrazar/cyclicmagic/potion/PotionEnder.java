@@ -4,7 +4,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class PotionEnder extends PotionCustom {
+public class PotionEnder extends PotionBase {
   public PotionEnder(String name, boolean b, int potionColor) {
     super(name, b, potionColor);
   }
@@ -16,5 +16,10 @@ public class PotionEnder extends PotionCustom {
     if (living.isPotionActive(this)) {
       event.setAttackDamage(0);
     }
+  }
+  @Override
+  public void tick(EntityLivingBase entity) {
+
+    
   }
 }

@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,6 +29,7 @@ public class ItemPotionCustom extends ItemFood {
   private ArrayList<Integer> potionDurations = new ArrayList<Integer>();
   private ArrayList<Integer> potionAmplifiers = new ArrayList<Integer>();
   private boolean hasEffect;
+  private String tooltip;
   public ItemPotionCustom(boolean shiny) {
     super(0, 0, false);
     this.setAlwaysEdible(); // can eat even if full hunger
@@ -39,8 +41,12 @@ public class ItemPotionCustom extends ItemFood {
     this(shiny, potionId, potionDuration, Const.Potions.I);
   }
   public ItemPotionCustom(boolean shiny, Potion potionId, int potionDuration, int potionAmplifier) {
+    this(shiny,potionId, potionDuration, potionAmplifier, null);
+  }
+  public ItemPotionCustom(boolean shiny, Potion potionId, int potionDuration, int potionAmplifier,String t) {
     this(shiny);
     this.addEffect(potionId, potionDuration, potionAmplifier);
+    this.tooltip = t;
   }
   public void addEffect(Potion potion, int potionDuration, int potionAmplifier) {
     //currently, items pretty much just have one potion. but keeping the arrays in case that changes later
@@ -51,6 +57,11 @@ public class ItemPotionCustom extends ItemFood {
   @Override
   protected void onFoodEaten(ItemStack par1ItemStack, World world, EntityPlayer player) {
     addAllEffects(world, player);
+  }
+  public void addAllEffects(World world, EntityLivingBase player) {
+    for (int i = 0; i < potions.size(); i++) {
+      UtilEntity.addOrMergePotionEffect(player, new PotionEffect(potions.get(i), potionDurations.get(i), potionAmplifiers.get(i)));
+    }
   }
   @Override
   public EnumAction getItemUseAction(ItemStack stack) {
@@ -92,10 +103,8 @@ public class ItemPotionCustom extends ItemFood {
       n += " (" + StringUtils.ticksToElapsedTime(potionDurations.get(i)) + ")";
       list.add(n);
     }
-  }
-  public void addAllEffects(World world, EntityLivingBase player) {
-    for (int i = 0; i < potions.size(); i++) {
-      UtilEntity.addOrMergePotionEffect(player, new PotionEffect(potions.get(i), potionDurations.get(i), potionAmplifiers.get(i)));
+    if(this.tooltip != null){
+      list.add(UtilChat.lang(tooltip));
     }
   }
 }

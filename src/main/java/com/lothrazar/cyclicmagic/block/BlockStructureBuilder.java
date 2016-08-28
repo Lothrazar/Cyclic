@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.block;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineBuilder;
+import com.lothrazar.cyclicmagic.block.tileentity.TileMachineStructureBuilder;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.SoundType;
@@ -17,10 +17,10 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockBuilder extends BlockBaseFacingInventory implements IHasRecipe {
+public class BlockStructureBuilder extends BlockBaseFacingInventory implements IHasRecipe {
   // dont use blockContainer !!
   // http://www.minecraftforge.net/forum/index.php?topic=31953.0
-  public BlockBuilder() {
+  public BlockStructureBuilder() {
     super(Material.IRON, ModGuiHandler.GUI_INDEX_BUILDER);
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);
@@ -28,7 +28,7 @@ public class BlockBuilder extends BlockBaseFacingInventory implements IHasRecipe
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
-    return new TileMachineBuilder();
+    return new TileMachineStructureBuilder();
   }
   @Override
   public boolean hasTileEntity() {
@@ -49,7 +49,6 @@ public class BlockBuilder extends BlockBaseFacingInventory implements IHasRecipe
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
-    String s = UtilChat.lang("tile.builder_block.tooltip");
-    tooltip.add(s);
+    tooltip.add(UtilChat.lang("tile.builder_block.tooltip"));
   }
 }

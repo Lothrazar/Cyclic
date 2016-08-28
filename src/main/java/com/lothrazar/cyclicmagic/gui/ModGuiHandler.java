@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.gui;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineBuilder;
+import com.lothrazar.cyclicmagic.block.tileentity.TileMachineStructureBuilder;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachinePlacer;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter;
 import com.lothrazar.cyclicmagic.gui.builder.ContainerBuilder;
@@ -59,8 +59,8 @@ public class ModGuiHandler implements IGuiHandler {
     case GUI_INDEX_WAYPOINT:
       return null;
     case GUI_INDEX_BUILDER:
-      if (te != null && te instanceof TileMachineBuilder) {
-        Container c = new ContainerBuilder(player.inventory, (TileMachineBuilder) te);
+      if (te != null && te instanceof TileMachineStructureBuilder) {
+        Container c = new ContainerBuilder(player.inventory, (TileMachineStructureBuilder) te);
         c.detectAndSendChanges();
         return c;
       }
@@ -101,7 +101,7 @@ public class ModGuiHandler implements IGuiHandler {
         //Minecraft.getMinecraft().displayGuiScreen(new GuiEnderBook(entityPlayer, stack));
         return new GuiEnderBook(player, UtilInventory.getPlayerItemIfHeld(player));
       case GUI_INDEX_BUILDER:
-        if (te != null && te instanceof TileMachineBuilder) { return new GuiBuilder(player.inventory, (TileMachineBuilder) te); }
+        if (te != null && te instanceof TileMachineStructureBuilder) { return new GuiBuilder(player.inventory, (TileMachineStructureBuilder) te); }
         break;
       case GUI_INDEX_PLACER:
         if (te != null && te instanceof TileMachinePlacer) { return new GuiPlacer(player.inventory, (TileMachinePlacer) te); }

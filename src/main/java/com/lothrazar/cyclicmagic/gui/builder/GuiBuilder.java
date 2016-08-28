@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.gui.builder;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineBuilder;
+import com.lothrazar.cyclicmagic.block.tileentity.TileMachineStructureBuilder;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContanerProgress;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -11,7 +11,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiBuilder extends GuiBaseContanerProgress {
   static final int padding = 8;
-  private TileMachineBuilder tile;
+  private TileMachineStructureBuilder tile;
   private ButtonBuilderType btn;
   private ButtonBuildSize btnSizeUp;
   private ButtonBuildSize btnSizeDown;
@@ -23,7 +23,7 @@ public class GuiBuilder extends GuiBaseContanerProgress {
   private int yHeightTxtbox;
   private int yOffset = 10 + padding;
 //  boolean debugLabels = false;
-  public GuiBuilder(InventoryPlayer inventoryPlayer, TileMachineBuilder tileEntity) {
+  public GuiBuilder(InventoryPlayer inventoryPlayer, TileMachineStructureBuilder tileEntity) {
     super(new ContainerBuilder(inventoryPlayer, tileEntity));
     tile = tileEntity;
   }
@@ -78,9 +78,9 @@ public class GuiBuilder extends GuiBaseContanerProgress {
       this.fontRendererObj.drawString(display, x, yHeightTxtbox + yOffset - 4, 4210752);
     }
     this.btnSizeDown.enabled = (this.tile.getSize() > 1);
-    this.btnSizeUp.enabled = (this.tile.getSize() < TileMachineBuilder.maxSize);
+    this.btnSizeUp.enabled = (this.tile.getSize() < TileMachineStructureBuilder.maxSize);
     this.btnHeightDown.enabled = (this.tile.getHeight() > 1);
-    this.btnHeightUp.enabled = (this.tile.getHeight() < TileMachineBuilder.maxHeight);
+    this.btnHeightUp.enabled = (this.tile.getHeight() < TileMachineStructureBuilder.maxHeight);
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
@@ -102,6 +102,6 @@ public class GuiBuilder extends GuiBaseContanerProgress {
     return tile.getTimer();
   }
   public int getProgressMax() {
-    return TileMachineBuilder.TIMER_FULL;
+    return TileMachineStructureBuilder.TIMER_FULL;
   }
 }

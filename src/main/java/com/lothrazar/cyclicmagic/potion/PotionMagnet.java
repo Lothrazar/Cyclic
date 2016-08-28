@@ -4,7 +4,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class PotionMagnet extends PotionCustom {
+public class PotionMagnet extends PotionBase {
   private final static int ITEM_HRADIUS = 20;
   private final static int ITEM_VRADIUS = 4;
   public PotionMagnet(String name, boolean b, int potionColor) {

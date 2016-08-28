@@ -8,10 +8,10 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class PotionCustom extends Potion {
+public abstract class PotionBase extends Potion {
   private ResourceLocation icon;
   private boolean beneficial;
-  public PotionCustom(String name, boolean b, int potionColor) {
+  public PotionBase(String name, boolean b, int potionColor) {
     super(false, potionColor);
     this.beneficial = b;
     this.setIcon(new ResourceLocation(Const.MODID, "textures/potions/" + name + ".png"));
@@ -38,6 +38,5 @@ public class PotionCustom extends Potion {
   public void setIcon(ResourceLocation icon) {
     this.icon = icon;
   }
-  public void tick(EntityLivingBase entity) {
-  }
+  public abstract void tick(EntityLivingBase entity);
 }
