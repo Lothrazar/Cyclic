@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class PotionWaterwalk extends PotionCustom {
+public class PotionWaterwalk extends PotionBase {
   public PotionWaterwalk(String name, boolean b, int potionColor) {
     super(name, b, potionColor);
   }

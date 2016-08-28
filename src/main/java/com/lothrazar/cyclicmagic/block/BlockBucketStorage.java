@@ -94,7 +94,6 @@ public class BlockBucketStorage extends Block implements ITileEntityProvider {
   @Override
   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
     return null;
-    // return Item.getItemFromBlock(BlockRegistry.block_storeempty);
   }
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer entityPlayer, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
     // if(world.isRemote == false){System.out.println("Server.Right");}
@@ -131,7 +130,6 @@ public class BlockBucketStorage extends Block implements ITileEntityProvider {
   @Override
   public void onBlockClicked(World world, BlockPos pos, EntityPlayer entityPlayer) {
     // only left click
-    // if(world.isRemote == false){System.out.println("Server.Left");}
     EnumHand hand = entityPlayer.getActiveHand();
     if (hand == null) {
       hand = EnumHand.MAIN_HAND;
@@ -206,8 +204,13 @@ public class BlockBucketStorage extends Block implements ITileEntityProvider {
     UtilEntity.dropItemStackInWorld(world, entityPlayer.getPosition(), new ItemStack(bucketItem));
   }
   public void addRecipe() {
-    if (this == BlockRegistry.block_storeempty)
-      GameRegistry.addRecipe(new ItemStack(this), "i i", " o ", "i i", 'o', Blocks.OBSIDIAN, 'i', Blocks.IRON_BLOCK);
+    if (this == BlockRegistry.block_storeempty){
+      GameRegistry.addRecipe(new ItemStack(this), 
+          "i i", 
+          " o ", 
+          "i i", 
+          'o', Blocks.OBSIDIAN, 'i', Items.IRON_INGOT);
+    }
     // the filled ones are not crafted, only obtained when filled and then harvested
   }
   @SubscribeEvent
