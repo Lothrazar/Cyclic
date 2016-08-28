@@ -76,6 +76,7 @@ public class PotionModule extends BaseEventModule {
   final static int NORMAL = 60 * 3;
   final static int LONG = 60 * 8;
   private ArrayList<PotionBase> potionEffects = new ArrayList<PotionBase>();
+  private ItemPotionCustom potion_snow_long;
   private void registerPotionEffect(PotionBase effect){
 
     GameRegistry.register(effect, effect.getIcon());
@@ -96,10 +97,10 @@ public class PotionModule extends BaseEventModule {
     if (enableEnder) {
       enderEffect = new PotionEnder("ender", true, 0);
       registerPotionEffect(enderEffect);
-      potion_ender = new ItemPotionCustom(true,enderEffect, NORMAL, Potions.I);
+      potion_ender = new ItemPotionCustom(true,enderEffect, NORMAL, Potions.I,"item.potion_ender.tooltip");
       ItemRegistry.addItem(potion_ender, "potion_ender");
    
-      potion_ender_long = new ItemPotionCustom(true,enderEffect, LONG, Potions.I);
+      potion_ender_long = new ItemPotionCustom(true,enderEffect, LONG, Potions.I,"item.potion_ender.tooltip");
       ItemRegistry.addItem(potion_ender_long, "potion_ender_long");
        
       addBrewingRecipe(
@@ -162,12 +163,18 @@ public class PotionModule extends BaseEventModule {
     if (enableSnow) {
       snowEffect = new PotionSnow("snow", true, 0);
       registerPotionEffect(snowEffect);
-      potion_snow = new ItemPotionCustom(true, snowEffect, NORMAL, Potions.I);
+      potion_snow = new ItemPotionCustom(true, snowEffect, NORMAL, Potions.I, "item.potion_snow.tooltip");
       ItemRegistry.addItem(potion_snow, "potion_snow");
       BrewingRecipeRegistry.addRecipe(
           new ItemStack(potion_viscous),
           new ItemStack(Blocks.ICE),
           new ItemStack(potion_snow));
+      potion_snow_long = new ItemPotionCustom(true, snowEffect, LONG, Potions.I, "item.potion_snow.tooltip");
+      ItemRegistry.addItem(potion_snow_long, "potion_snow_long");
+      BrewingRecipeRegistry.addRecipe(
+          new ItemStack(potion_snow),
+          new ItemStack(Items.REDSTONE),
+          new ItemStack(potion_snow_long));
     }
     if (enableHBoost) {
       potion_boost = new ItemPotionCustom(true, MobEffects.HEALTH_BOOST,NORMAL, Const.Potions.V);
