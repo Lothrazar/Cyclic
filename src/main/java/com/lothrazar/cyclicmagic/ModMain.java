@@ -111,14 +111,11 @@ public class ModMain {
 
 Existing miner: still add gui, but the only feature is progress bar and btn to switch between shovel / axe / pickaxe
 
-block miner advanced: nerf to iron pickaxes
-
 
    * idea: achievement for crafting?
    *  http://jabelarminecraft.blogspot.ca/p/minecraft-forge-creating-custom.html 
    *  along with   public void onItemCraftedEvent(PlayerEvent.ItemCraftedEvent event) {
    *  
-   * circle sometimes gets duplicate positions, slowing it down
    * 
    * [ Trading Tool // gui ] Upgrade villager gui: either make my own or add
    * buttons/some way to view all trades at once --inspired by extrautils
