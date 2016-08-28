@@ -17,8 +17,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemInventoryStorage extends BaseItem implements IHasRecipe {
-  public ItemInventoryStorage() {
+public class ItemStorageBag extends BaseItem implements IHasRecipe {
+  public ItemStorageBag() {
     this.setMaxStackSize(1);
   }
   @Override
@@ -37,10 +37,10 @@ public class ItemInventoryStorage extends BaseItem implements IHasRecipe {
   }
   public static ItemStack getPlayerItemIfHeld(EntityPlayer player) {
     ItemStack wand = player.getHeldItemMainhand();
-    if (wand == null || wand.getItem() instanceof ItemInventoryStorage == false) {
+    if (wand == null || wand.getItem() instanceof ItemStorageBag == false) {
       wand = player.getHeldItemOffhand();
     }
-    if (wand == null || wand.getItem() instanceof ItemInventoryStorage == false) { return null; }
+    if (wand == null || wand.getItem() instanceof ItemStorageBag == false) { return null; }
     return wand;
   }
   @Override

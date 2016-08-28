@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.module;
-import com.lothrazar.cyclicmagic.item.ItemInventoryStorage;
+import com.lothrazar.cyclicmagic.item.ItemStorageBag;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraftforge.common.config.Configuration;
@@ -9,7 +9,7 @@ public class StorageBagModule extends BaseModule {
   @Override
   public void onInit() {
     if (moduleEnabled) {
-      ItemRegistry.storage_bag = new ItemInventoryStorage();
+      ItemRegistry.storage_bag = new ItemStorageBag();
       ItemRegistry.addItem(ItemRegistry.storage_bag, "storage_bag");
     }
   }

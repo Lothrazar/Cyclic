@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
 import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
-import com.lothrazar.cyclicmagic.item.ItemSleepingBag;
+import com.lothrazar.cyclicmagic.item.ItemSleepingMat;
 import com.lothrazar.cyclicmagic.item.ItemToolHarvest;
 import com.lothrazar.cyclicmagic.item.ItemToolPearlReuse;
 import com.lothrazar.cyclicmagic.item.ItemToolProspector;
@@ -83,7 +83,7 @@ public class ToolsModule extends BaseModule {
       ModMain.instance.events.addEvent(ItemRegistry.tool_push);
     }
     if (enableSleepingMat) {
-      ItemRegistry.sleeping_mat = new ItemSleepingBag();
+      ItemRegistry.sleeping_mat = new ItemSleepingMat();
       ItemRegistry.addItem(ItemRegistry.sleeping_mat, "sleeping_mat");
       ModMain.instance.events.addEvent(ItemRegistry.sleeping_mat);
     }
@@ -97,7 +97,7 @@ public class ToolsModule extends BaseModule {
   }
   @Override
   public void syncConfig(Configuration config) {
-    ItemSleepingBag.doPotions = config.getBoolean("SleepingMatPotions", Const.ConfigCategory.items, true, "False will disable the potion effects given by the Sleeping Mat");
+    ItemSleepingMat.doPotions = config.getBoolean("SleepingMatPotions", Const.ConfigCategory.items, true, "False will disable the potion effects given by the Sleeping Mat");
     enableSpawnInspect = config.getBoolean("SpawnDetector", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablePearlReuse = config.getBoolean("EnderOrb", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableHarvestWeeds = config.getBoolean("BrushScythe", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
