@@ -53,6 +53,7 @@ public class BlockLaunch extends BlockBasePressurePlate {
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
-    tooltip.add(UtilChat.lang("tile.plate_launch.tooltip") + String.format("%.1f", this.power));
+    int fakePower = (int)Math.round(this.power*10); //  String.format("%.1f", this.power))
+    tooltip.add(UtilChat.lang("tile.plate_launch.tooltip") + fakePower);
   }
 }
