@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.registry;
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.block.BlockBucketStorage;
-import com.lothrazar.cyclicmagic.block.BlockBuilder;
+import com.lothrazar.cyclicmagic.block.BlockStructureBuilder;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre;
 import com.lothrazar.cyclicmagic.block.BlockHarvester;
 import com.lothrazar.cyclicmagic.block.BlockMagnet;
@@ -33,7 +33,7 @@ public class BlockRegistry {
   public static BlockDimensionOre end_emerald_ore;
   public static BlockDimensionOre nether_diamond_ore;
   public static BlockDimensionOre end_diamond_ore;
-  public static BlockBuilder builder_block;
+  public static BlockStructureBuilder builder_block;
   public static BlockHarvester harvester_block;
   public static BlockMagnet magnet_block;
   public static BlockMiner miner_block;

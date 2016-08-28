@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.net;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineBuilder;
+import com.lothrazar.cyclicmagic.block.tileentity.TileMachineStructureBuilder;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -37,10 +37,10 @@ public class PacketTileBuildType implements IMessage, IMessageHandler<PacketTile
   @Override
   public IMessage onMessage(PacketTileBuildType message, MessageContext ctx) {
     EntityPlayerMP player = ctx.getServerHandler().playerEntity;
-    TileMachineBuilder tile = (TileMachineBuilder) player.getEntityWorld().getTileEntity(message.pos);
+    TileMachineStructureBuilder tile = (TileMachineStructureBuilder) player.getEntityWorld().getTileEntity(message.pos);
     if (tile != null) {
-      TileMachineBuilder.BuildType old = tile.getBuildTypeEnum();
-      TileMachineBuilder.BuildType next = TileMachineBuilder.BuildType.getNextType(old);
+      TileMachineStructureBuilder.BuildType old = tile.getBuildTypeEnum();
+      TileMachineStructureBuilder.BuildType next = TileMachineStructureBuilder.BuildType.getNextType(old);
       tile.setBuildType(next.ordinal());
       tile.rebuildShape();
       tile.markDirty();

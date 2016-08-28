@@ -16,7 +16,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 
-public class TileMachineBuilder extends TileEntityBaseMachineInvo implements IInventory, ISidedInventory {
+public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo implements IInventory, ISidedInventory {
   private int timer;
   private int buildType;
   private int buildSpeed;

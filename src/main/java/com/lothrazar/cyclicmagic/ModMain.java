@@ -118,14 +118,7 @@ block miner advanced: nerf to iron pickaxes
    *  http://jabelarminecraft.blogspot.ca/p/minecraft-forge-creating-custom.html 
    *  along with   public void onItemCraftedEvent(PlayerEvent.ItemCraftedEvent event) {
    *  
-   * 
-   * config: command search spawner max distances
-   * 
    * circle sometimes gets duplicate positions, slowing it down
-   * 
-   * Some way to keep certain items after death - runestone? enchantment?
-   * 
-   * ButtonBuildToggle-store ptr to wand not player??
    * 
    * [ Trading Tool // gui ] Upgrade villager gui: either make my own or add
    * buttons/some way to view all trades at once --inspired by extrautils
@@ -140,11 +133,9 @@ block miner advanced: nerf to iron pickaxes
    * https://github.com/MinecraftForge/MinecraftForge/blob/master/src/test/java/
    * net/minecraftforge/debug/LootTablesDebug.java
    * 
-   * crafting table hotkeys - numpad?
    *
    * ROTATE: STAIRS: allow switch from top to bottom
    * 
-   * Fix sorting : UtilInventorySort.sort(p, openInventory);
    * 
    */
 }

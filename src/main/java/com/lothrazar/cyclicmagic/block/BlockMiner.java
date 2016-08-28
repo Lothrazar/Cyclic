@@ -70,7 +70,7 @@ public class BlockMiner extends BlockBaseFacing implements IHasRecipe {
           "gbg",
           "ooo",
           'o', Blocks.OBSIDIAN,
-          'g', Items.DIAMOND_PICKAXE, // new ItemStack(Items.DIAMOND_PICKAXE,1,OreDictionary.WILDCARD_VALUE),
+          'g', Items.IRON_PICKAXE, // new ItemStack(Items.DIAMOND_PICKAXE,1,OreDictionary.WILDCARD_VALUE),
           's', Blocks.DISPENSER,
           'r', Items.QUARTZ,
           'b', Blocks.field_189877_df);// MAGMA BLOCK is field_189877_df in 1.10.2 apparently
