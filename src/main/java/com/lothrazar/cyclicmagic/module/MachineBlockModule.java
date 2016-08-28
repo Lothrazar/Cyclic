@@ -4,6 +4,7 @@ import com.lothrazar.cyclicmagic.block.BlockStructureBuilder;
 import com.lothrazar.cyclicmagic.block.BlockHarvester;
 import com.lothrazar.cyclicmagic.block.BlockMagnet;
 import com.lothrazar.cyclicmagic.block.BlockMiner;
+import com.lothrazar.cyclicmagic.block.BlockMinerSmart;
 import com.lothrazar.cyclicmagic.block.BlockPassword;
 import com.lothrazar.cyclicmagic.block.BlockPlacer;
 import com.lothrazar.cyclicmagic.block.BlockUncrafting;
@@ -28,6 +29,7 @@ public class MachineBlockModule extends BaseModule {
   private boolean enableMinerEnhanced;
   private boolean enablePlacer;
   private boolean enablePassword;
+  private boolean enableMinerSmart;
   public void onInit() {
     if (enableBuilderBlock) {
       BlockRegistry.builder_block = new BlockStructureBuilder();
@@ -66,6 +68,13 @@ public class MachineBlockModule extends BaseModule {
     if (enableMiner || enableMinerEnhanced) {
       GameRegistry.registerTileEntity(TileMachineMiner.class, "miner_te");
     }
+    if(enableMinerSmart ){
+
+      BlockRegistry.block_miner_smart = new BlockMinerSmart();
+      BlockRegistry.registerBlock(BlockRegistry.block_miner_smart, "block_miner_smart");
+      BlockRegistry.block_miner_smart.addRecipe();
+      GameRegistry.registerTileEntity(TileMachineMiner.class, "miner_smart_te");
+    }
     if (enablePlacer) {
       BlockRegistry.placer_block = new BlockPlacer();
       BlockRegistry.registerBlock(BlockRegistry.placer_block, "placer_block");
@@ -92,6 +101,9 @@ public class MachineBlockModule extends BaseModule {
     enableHarvester = config.getBoolean("HarvesterBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableMagnet = config.getBoolean("MagnetBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableUncrafter = config.getBoolean("UncraftingGrinder", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    
+    enableMinerSmart = config.getBoolean("MinerBlockSmart", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    
     //TODO: LOOP/LIST of blocks so we can hit their recipes AND configs in the loop just like items
     if (BlockRegistry.magnet_block != null) {
       BlockRegistry.magnet_block.syncConfig(config);
