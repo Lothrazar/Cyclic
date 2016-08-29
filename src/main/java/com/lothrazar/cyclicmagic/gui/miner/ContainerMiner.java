@@ -1,35 +1,31 @@
-package com.lothrazar.cyclicmagic.gui.builder;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineStructureBuilder;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter;
+package com.lothrazar.cyclicmagic.gui.miner;
+import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMinerSmart;
 import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
-import com.lothrazar.cyclicmagic.gui.SlotOnlyBlocks;
+import com.lothrazar.cyclicmagic.gui.SlotSingleStack;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@SuppressWarnings("unused")
-public class ContainerBuilder extends ContainerBaseMachine {
+public class ContainerMiner extends ContainerBaseMachine {
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
-  public static final int SLOTX_START = 8;
-  public static final int SLOTY = 52;
-  public static final int SQ = 18;
-  protected TileMachineStructureBuilder tileEntity;
-  private int tileBuild;
-  private int tileTimer;
-  private int tileSpeed;
-  private int tileSize;
+  public static final int SLOTX_START = 10;
+  public static final int SLOTY = 42;
+  public static final int SLOTID_EQUIP = 4;
+  public static final int SLOTEQUIP_X = SLOTX_START + (SLOTID_EQUIP + 2) * Const.SQ - 10;
+  public static final int SLOTEQUIP_Y = SLOTY;
+  protected TileMachineMinerSmart tileEntity;
   private int tileHeight;
-  public ContainerBuilder(InventoryPlayer inventoryPlayer, TileMachineStructureBuilder te) {
+  public ContainerMiner(InventoryPlayer inventoryPlayer, TileMachineMinerSmart te) {
     tileEntity = te;
-    for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
-      addSlotToContainer(new SlotOnlyBlocks(tileEntity, i, SLOTX_START + i * SQ, SLOTY));
+    for (int i = 0; i < tileEntity.getSizeInventory() - 1; i++) {
+      addSlotToContainer(new SlotSingleStack(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY));
     }
+    addSlotToContainer(new SlotSingleStack(tileEntity, SLOTID_EQUIP, SLOTEQUIP_X, SLOTEQUIP_Y));
     // commonly used vanilla code that adds the player's inventory
     bindPlayerInventory(inventoryPlayer);
   }
@@ -64,32 +60,12 @@ public class ContainerBuilder extends ContainerBaseMachine {
     super.detectAndSendChanges();
     for (int i = 0; i < this.listeners.size(); ++i) {
       IContainerListener icontainerlistener = (IContainerListener) this.listeners.get(i);
-      int idx = TileMachineStructureBuilder.Fields.TIMER.ordinal();
-      if (this.tileTimer != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-      }
-      idx = TileMachineStructureBuilder.Fields.BUILDTYPE.ordinal();
-      if (this.tileBuild != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-      }
-      idx = TileMachineStructureBuilder.Fields.SIZE.ordinal();
-      if (this.tileSize != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-      }
-      idx = TileMachineStructureBuilder.Fields.SPEED.ordinal();
-      if (this.tileSpeed != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-      }
-      idx = TileMachineStructureBuilder.Fields.HEIGHT.ordinal();
+      int idx = TileMachineMinerSmart.Fields.HEIGHT.ordinal();
       if (this.tileHeight != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
     }
-    this.tileTimer = this.tileEntity.getField(TileMachineStructureBuilder.Fields.TIMER.ordinal());
-    this.tileBuild = this.tileEntity.getField(TileMachineStructureBuilder.Fields.BUILDTYPE.ordinal());
-    this.tileSize = this.tileEntity.getField(TileMachineStructureBuilder.Fields.SIZE.ordinal());
-    this.tileSpeed = this.tileEntity.getField(TileMachineStructureBuilder.Fields.SPEED.ordinal());
-    this.tileHeight = this.tileEntity.getField(TileMachineStructureBuilder.Fields.HEIGHT.ordinal());
+    this.tileHeight = this.tileEntity.getField(TileMachineMinerSmart.Fields.HEIGHT.ordinal());
   }
   //TODO: these two in base class?
   @Override

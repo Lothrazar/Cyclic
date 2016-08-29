@@ -34,5 +34,6 @@ public class PacketRegistry {
     network.registerMessage(PacketSyncPlayerHealth.class, PacketSyncPlayerHealth.class, packetID++, Side.CLIENT);
     network.registerMessage(PacketTilePassword.class, PacketTilePassword.class, packetID++, Side.SERVER);
     network.registerMessage(PacketMoveBlock.class, PacketMoveBlock.class, packetID++, Side.SERVER);
+    network.registerMessage(PacketTileMineHeight.class, PacketTileMineHeight.class, packetID++, Side.SERVER);
   }
 }

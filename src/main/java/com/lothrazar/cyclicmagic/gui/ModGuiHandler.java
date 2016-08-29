@@ -1,10 +1,13 @@
 package com.lothrazar.cyclicmagic.gui;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
+import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMinerSmart;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineStructureBuilder;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachinePlacer;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter;
 import com.lothrazar.cyclicmagic.gui.builder.ContainerBuilder;
 import com.lothrazar.cyclicmagic.gui.builder.GuiBuilder;
+import com.lothrazar.cyclicmagic.gui.miner.ContainerMiner;
+import com.lothrazar.cyclicmagic.gui.miner.GuiMiner;
 import com.lothrazar.cyclicmagic.gui.password.ContainerPassword;
 import com.lothrazar.cyclicmagic.gui.password.GuiPassword;
 import com.lothrazar.cyclicmagic.gui.placer.ContainerPlacer;
@@ -78,6 +81,12 @@ public class ModGuiHandler implements IGuiHandler {
         return c;
       }
       break;
+    case GUI_INDEX_MINER:
+      if (te != null && te instanceof TileMachineMinerSmart) {
+        Container c = new ContainerMiner(player.inventory, (TileMachineMinerSmart) te);
+        return c;
+      }
+      break;
     }
     return null;
   }
@@ -108,6 +117,9 @@ public class ModGuiHandler implements IGuiHandler {
         break;
       case GUI_INDEX_PASSWORD:
         if (te != null && te instanceof TileEntityPassword) { return new GuiPassword((TileEntityPassword) te); }
+        break;
+      case GUI_INDEX_MINER:
+        if (te != null && te instanceof TileMachineMinerSmart) { return new GuiMiner(player.inventory, (TileMachineMinerSmart) te); }
         break;
       }
     }

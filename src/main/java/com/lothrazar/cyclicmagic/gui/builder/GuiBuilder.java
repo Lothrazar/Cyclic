@@ -76,6 +76,9 @@ public class GuiBuilder extends GuiBaseContanerProgress {
       int x = (display.length() > 1) ? xHeightTextbox - 3 : xHeightTextbox;
       this.fontRendererObj.drawString(display, x, yHeightTxtbox + yOffset - 4, 4210752);
     }
+    updateDisabledButtons();
+  }
+  private void updateDisabledButtons() {
     this.btnSizeDown.enabled = (this.tile.getSize() > 1);
     this.btnSizeUp.enabled = (this.tile.getSize() < TileMachineStructureBuilder.maxSize);
     this.btnHeightDown.enabled = (this.tile.getHeight() > 1);

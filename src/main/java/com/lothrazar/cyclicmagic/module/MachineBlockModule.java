@@ -4,6 +4,7 @@ import com.lothrazar.cyclicmagic.block.BlockStructureBuilder;
 import com.lothrazar.cyclicmagic.block.BlockHarvester;
 import com.lothrazar.cyclicmagic.block.BlockMagnet;
 import com.lothrazar.cyclicmagic.block.BlockMiner;
+import com.lothrazar.cyclicmagic.block.BlockMinerSmart;
 import com.lothrazar.cyclicmagic.block.BlockPassword;
 import com.lothrazar.cyclicmagic.block.BlockPlacer;
 import com.lothrazar.cyclicmagic.block.BlockUncrafting;
@@ -12,6 +13,7 @@ import com.lothrazar.cyclicmagic.block.tileentity.TileMachineHarvester;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityMagnet;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMiner;
+import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMinerSmart;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachinePlacer;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
@@ -28,6 +30,7 @@ public class MachineBlockModule extends BaseModule {
   private boolean enableMinerEnhanced;
   private boolean enablePlacer;
   private boolean enablePassword;
+  private boolean enableMinerSmart;
   public void onInit() {
     if (enableBuilderBlock) {
       BlockRegistry.builder_block = new BlockStructureBuilder();
@@ -66,6 +69,12 @@ public class MachineBlockModule extends BaseModule {
     if (enableMiner || enableMinerEnhanced) {
       GameRegistry.registerTileEntity(TileMachineMiner.class, "miner_te");
     }
+    if (enableMinerSmart) {
+      BlockRegistry.block_miner_smart = new BlockMinerSmart();
+      BlockRegistry.registerBlock(BlockRegistry.block_miner_smart, "block_miner_smart");
+      BlockRegistry.block_miner_smart.addRecipe();
+      GameRegistry.registerTileEntity(TileMachineMinerSmart.class, Const.MODID+"miner_smart_te");
+    }
     if (enablePlacer) {
       BlockRegistry.placer_block = new BlockPlacer();
       BlockRegistry.registerBlock(BlockRegistry.placer_block, "placer_block");
@@ -87,11 +96,12 @@ public class MachineBlockModule extends BaseModule {
     enableMiner = config.getBoolean("MinerBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText + ".  This is the one that mines a single block");
     enableMinerEnhanced = config.getBoolean("MinerBlockAdvanced", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText + ".  This is the one that mines a 3x3x3 area");
     enableBuilderBlock = config.getBoolean("BuilderBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    TileMachineStructureBuilder.maxSize = config.getInt("builder.maxRange", Const.ConfigCategory.modpackMisc, 16, 3, 64, "Maximum range of the builder block that you can increase it to in the GUI");
-    TileMachineStructureBuilder.maxHeight = config.getInt("builder.maxHeight", Const.ConfigCategory.modpackMisc, 16, 3, 64, "Maximum height of the builder block that you can increase it to in the GUI");
+    TileMachineStructureBuilder.maxSize = config.getInt("builder.maxRange", Const.ConfigCategory.modpackMisc, 64, 3, 64, "Maximum range of the builder block that you can increase it to in the GUI");
+    TileMachineStructureBuilder.maxHeight = config.getInt("builder.maxHeight", Const.ConfigCategory.modpackMisc, 64, 3, 64, "Maximum height of the builder block that you can increase it to in the GUI");
     enableHarvester = config.getBoolean("HarvesterBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableMagnet = config.getBoolean("MagnetBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableUncrafter = config.getBoolean("UncraftingGrinder", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableMinerSmart = config.getBoolean("ControlledMiner", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     //TODO: LOOP/LIST of blocks so we can hit their recipes AND configs in the loop just like items
     if (BlockRegistry.magnet_block != null) {
       BlockRegistry.magnet_block.syncConfig(config);
@@ -99,5 +109,8 @@ public class MachineBlockModule extends BaseModule {
     if (BlockRegistry.uncrafting_block != null) {
       BlockRegistry.uncrafting_block.syncConfig(config);
     }
+    TileMachineHarvester.HARVEST_RADIUS = config.getInt("HarvesterBlockRadius", Const.ConfigCategory.modpackMisc, 16, 4, 128, "Maximum radius of harvester area (remember its not centered on the block, it harvests in front)");
+    TileMachineMinerSmart.maxHeight = config.getInt("ControlledMiner.maxHeight", Const.ConfigCategory.modpackMisc, 32, 3, 128, "Maximum height of the controlled miner block that you can increase it to in the GUI");
+    
   }
 }

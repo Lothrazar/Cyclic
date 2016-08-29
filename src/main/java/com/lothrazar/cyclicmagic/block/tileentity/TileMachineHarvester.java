@@ -7,7 +7,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;// net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 
@@ -16,7 +15,7 @@ public class TileMachineHarvester extends TileEntityBaseMachine {
   public static final int TIMER_FULL = 80;
   private HarestCropsConfig conf;
   private static final String NBT_TIMER = "Timer";
-  private static final int HARVEST_RADIUS = 8;
+  public static int HARVEST_RADIUS = 16;
   public TileMachineHarvester() {
     this.timer = TIMER_FULL;
     conf = new HarestCropsConfig();
