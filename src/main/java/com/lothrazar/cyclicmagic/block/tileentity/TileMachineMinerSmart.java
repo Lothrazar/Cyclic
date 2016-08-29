@@ -3,8 +3,10 @@ import java.lang.ref.WeakReference;
 import java.util.UUID;
 import com.google.common.base.Charsets;
 import com.mojang.authlib.GameProfile;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -60,10 +62,10 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
       }
 
       if (this.isPowered()) {
-        System.out.println("smart miner is working");
         if (isCurrentlyMining == false) { //we can mine but are not currently
           this.updateTargetPos(start);
-          if (!worldObj.isAirBlock(targetPos)) { //we have a valid target
+          
+          if (isTargetValid()) { //we have a valid target
             isCurrentlyMining = true;
             curBlockDamage = 0;
           }
@@ -97,6 +99,28 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
         }
       }
     }
+  }
+  private boolean isTargetValid(){
+    if(worldObj.isAirBlock(targetPos) || worldObj.getBlockState(targetPos) == null) {
+      return true;
+    }
+ 
+    IBlockState targetState = worldObj.getBlockState(targetPos);
+    
+    Block target = targetState.getBlock();
+     
+    //else check blacklist
+    for(ItemStack item : inv){
+      if(item == null){
+        continue;
+      }
+ 
+      if(item.getItem() == Item.getItemFromBlock(target)){
+        return false;
+      }
+    }
+    
+    return true;
   }
   private void updateTargetPos(BlockPos start) {
     targetPos = start;//always restart here so we dont offset out of bounds
