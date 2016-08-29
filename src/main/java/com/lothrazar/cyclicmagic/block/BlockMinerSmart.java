@@ -46,12 +46,13 @@ public class BlockMinerSmart extends BlockBaseFacingInventory implements IHasRec
   public void addRecipe() {
     GameRegistry.addRecipe(new ItemStack(this),
         "rsr",
-        "gbg",
+        "gbx",
         "ooo",
         'o', Blocks.OBSIDIAN,
         'g', Items.DIAMOND_PICKAXE,
+        'g', Items.DIAMOND_AXE,
         's', Blocks.DISPENSER,
-        'r', Blocks.QUARTZ_BLOCK,
+        'r', Blocks.LAPIS_BLOCK,
         'b', Blocks.field_189877_df);// MAGMA BLOCK is field_189877_df in 1.10.2 apparently
   }
   @SideOnly(Side.CLIENT)
