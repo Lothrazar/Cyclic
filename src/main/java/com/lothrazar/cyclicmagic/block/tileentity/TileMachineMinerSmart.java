@@ -74,13 +74,12 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
           fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, maybeTool);
         }
       }
-      BlockPos start = pos.offset(this.getCurrentFacing());
       if (targetPos == null) {
-        targetPos = start; //not sure if this is needed
+        targetPos = pos.offset(this.getCurrentFacing()); //not sure if this is needed
       }
       if (this.isPowered()) {
         if (isCurrentlyMining == false) { //we can mine but are not currently
-          this.updateTargetPos(start);
+          this.updateTargetPos();
           if (isTargetValid()) { //we have a valid target
             isCurrentlyMining = true;
             curBlockDamage = 0;
@@ -129,52 +128,43 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
     }
     return true;
   }
-  private void updateTargetPos(BlockPos start) {
-    targetPos = start;//always restart here so we dont offset out of bounds
+  final int RADIUS = 4;//center plus 4 in each direction = 9x9
+  private void updateTargetPos() {
+    //lets make it a AxA?
+    //always restart here so we dont offset out of bounds
     EnumFacing facing = this.getCurrentFacing();
-    BlockPos center = start.offset(facing);//move one more over so we are in the exact center of a 3x3x3 area
-    //else we do a 3x3 
+    BlockPos center = pos.offset(facing, 5);//move one more over so we are in the exact center of a 3x3x3 area
+    //so the rand range is basically [0,8], then we left shift into [-4,+4]
+    targetPos = center;
+    //HEIGHT
     if (height == 0) {
       height = 6;
     } //should be in first time init. it needs a default
     int rollHeight = worldObj.rand.nextInt(height);
-    int rollDice = worldObj.rand.nextInt(9);
-    //then do the area
-    // 1 2 3
-    // 4 - 5
-    // 6 7 8
-    switch (rollDice) {
-    case 0:
-      targetPos = center;
-      break;
-    case 1:
-      targetPos = center.offset(EnumFacing.NORTH).offset(EnumFacing.WEST);
-      break;
-    case 2:
-      targetPos = center.offset(EnumFacing.NORTH);
-      break;
-    case 3:
-      targetPos = center.offset(EnumFacing.NORTH).offset(EnumFacing.EAST);
-      break;
-    case 4:
-      targetPos = center.offset(EnumFacing.WEST);
-      break;
-    case 5:
-      targetPos = center.offset(EnumFacing.EAST);
-      break;
-    case 6:
-      targetPos = center.offset(EnumFacing.SOUTH).offset(EnumFacing.WEST);
-      break;
-    case 7:
-      targetPos = center.offset(EnumFacing.SOUTH);
-      break;
-    case 8:
-      targetPos = center.offset(EnumFacing.SOUTH).offset(EnumFacing.EAST);
-      break;
-    }
     //now do the vertical
     if (rollHeight > 0) {
       targetPos = targetPos.offset(EnumFacing.UP, rollHeight);
+    }
+    //negative doesnt work ,but lets not. quarries already exist
+    //    else if(rollHeight < 0){
+    //      targetPos = targetPos.offset(EnumFacing.DOWN, -1*rollHeight);
+    //    }
+    //HORIZONTAL
+    int randNS = worldObj.rand.nextInt(RADIUS * 2 + 1) - RADIUS;
+    int randEW = worldObj.rand.nextInt(RADIUS * 2 + 1) - RADIUS;
+    //  System.out.println(" H, NS, EW : "+ rollHeight +":"+ randNS +":"+ randEW);
+    //both can be zero
+    if (randNS > 0) {
+      targetPos = targetPos.offset(EnumFacing.NORTH, randNS);
+    }
+    else if (randNS < 0) {
+      targetPos = targetPos.offset(EnumFacing.SOUTH, -1 * randNS);
+    }
+    if (randEW > 0) {
+      targetPos = targetPos.offset(EnumFacing.EAST, randEW);
+    }
+    else if (randEW < 0) {
+      targetPos = targetPos.offset(EnumFacing.WEST, -1 * randEW);
     }
     return;
   }
@@ -316,7 +306,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
     case HEIGHT:
-      if(value > maxHeight){
+      if (value > maxHeight) {
         value = maxHeight;
       }
       setHeight(value);
