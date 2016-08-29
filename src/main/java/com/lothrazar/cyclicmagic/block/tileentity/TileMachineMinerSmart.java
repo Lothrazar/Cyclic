@@ -5,7 +5,6 @@ import com.google.common.base.Charsets;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,6 +13,7 @@ import net.minecraft.network.EnumPacketDirection;
 import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -43,7 +43,11 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
   private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots for all faces
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
-  public TileMachineMinerSmart(){
+  int height = 6;//TODO: gui field
+  public static enum Fields {
+    HEIGHT
+  }
+  public TileMachineMinerSmart() {
     inv = new ItemStack[3];
   }
   @Override
@@ -58,27 +62,24 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
         initFakePlayer();
       }
       ItemStack maybeTool = inv[toolSlot];
-      
-      if(maybeTool == null){
+      if (maybeTool == null) {
         fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, null);
       }
-      else{
-         if(maybeTool.equals(fakePlayer.get().getHeldItem(EnumHand.MAIN_HAND))){
-           //already equipped
-         }
-         else{
-           fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, maybeTool);
-         }
+      else {
+        if (maybeTool.equals(fakePlayer.get().getHeldItem(EnumHand.MAIN_HAND))) {
+          //already equipped
+        }
+        else {
+          fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, maybeTool);
+        }
       }
       BlockPos start = pos.offset(this.getCurrentFacing());
       if (targetPos == null) {
         targetPos = start; //not sure if this is needed
       }
-
       if (this.isPowered()) {
         if (isCurrentlyMining == false) { //we can mine but are not currently
           this.updateTargetPos(start);
-          
           if (isTargetValid()) { //we have a valid target
             isCurrentlyMining = true;
             curBlockDamage = 0;
@@ -108,44 +109,33 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
             //              System.out.println("tried to break but failed " + UtilChat.blockPosToString(targetPos) + "_" + targetState.getBlock().getUnlocalizedName());
           }
         }
-        else { 
-          
+        else {
           worldObj.sendBlockBreakProgress(uuid.hashCode(), targetPos, (int) (curBlockDamage * 10.0F) - 1);
         }
       }
     }
   }
-  private boolean isTargetValid(){
-    if(worldObj.isAirBlock(targetPos) || worldObj.getBlockState(targetPos) == null) {
-      return true;
-    }
- 
+  private boolean isTargetValid() {
+    if (worldObj.isAirBlock(targetPos) || worldObj.getBlockState(targetPos) == null) { return true; }
     IBlockState targetState = worldObj.getBlockState(targetPos);
-    
     Block target = targetState.getBlock();
-     
     //else check blacklist
     ItemStack item;
-    for(int i = 0; i < inv.length - 1; i++){//minus 1 because of TOOL
-      if(inv[i] == null){
+    for (int i = 0; i < inv.length - 1; i++) {//minus 1 because of TOOL
+      if (inv[i] == null) {
         continue;
       }
       item = inv[i];
- 
-      if(item.getItem() == Item.getItemFromBlock(target)){
-        return false;
-      }
+      if (item.getItem() == Item.getItemFromBlock(target)) { return false; }
     }
-    
     return true;
   }
-  final int height = 6;//TODO: gui field
   private void updateTargetPos(BlockPos start) {
     targetPos = start;//always restart here so we dont offset out of bounds
-
     EnumFacing facing = this.getCurrentFacing();
     BlockPos center = start.offset(facing);//move one more over so we are in the exact center of a 3x3x3 area
     //else we do a 3x3 
+    if(height == 0){height = 6;}//should be in first time init. it needs a default
     int rollHeight = worldObj.rand.nextInt(height);
     int rollDice = worldObj.rand.nextInt(9);
     //then do the area
@@ -195,9 +185,9 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
       worldObj.notifyBlockUpdate(pos, state, state, 3);
     }
     fakePlayer = new WeakReference<FakePlayer>(FakePlayerFactory.get((WorldServer) worldObj, breakerProfile));
-//    ItemStack unbreakingIronPickaxe = new ItemStack(Items.DIAMOND_PICKAXE, 1);
-//    unbreakingIronPickaxe.setTagCompound(new NBTTagCompound());
-//    unbreakingIronPickaxe.getTagCompound().setBoolean("Unbreakable", true);
+    //    ItemStack unbreakingIronPickaxe = new ItemStack(Items.DIAMOND_PICKAXE, 1);
+    //    unbreakingIronPickaxe.setTagCompound(new NBTTagCompound());
+    //    unbreakingIronPickaxe.getTagCompound().setBoolean("Unbreakable", true);
     fakePlayer.get().onGround = true;
     fakePlayer.get().connection = new NetHandlerPlayServer(FMLCommonHandler.instance().getMinecraftServerInstance(), new NetworkManager(EnumPacketDirection.SERVERBOUND), fakePlayer.get()) {
       @SuppressWarnings("rawtypes")
@@ -220,6 +210,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
     }
     compound.setBoolean(NBTMINING, isCurrentlyMining);
     compound.setFloat(NBTDAMAGE, curBlockDamage);
+    compound.setInteger("h", height);
     //invo stuff
     NBTTagList itemList = new NBTTagList();
     for (int i = 0; i < inv.length; i++) {
@@ -248,6 +239,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
     }
     isCurrentlyMining = compound.getBoolean(NBTMINING);
     curBlockDamage = compound.getFloat(NBTDAMAGE);
+    height = compound.getInteger("h");
     //invo stuff
     NBTTagList tagList = compound.getTagList(NBT_INV, 10);
     for (int i = 0; i < tagList.tagCount(); i++) {
@@ -280,7 +272,6 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
   }
   @Override
   public ItemStack decrStackSize(int index, int count) {
-
     ItemStack stack = getStackInSlot(index);
     if (stack != null) {
       if (stack.stackSize <= count) {
@@ -313,5 +304,50 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
     return hopperInput;
+  }
+  @Override
+  public int getField(int id) {
+    switch (Fields.values()[id]) {
+    case HEIGHT:
+      return getHeight();
+    default:
+      break;
+    }
+    return 0;
+  }
+  @Override
+  public void setField(int id, int value) {
+    switch (Fields.values()[id]) {
+    case HEIGHT:
+      setHeight(value);
+    default:
+      break;
+    }
+  }
+  public int getHeight() {
+    return this.height;//this.getField(Fields.HEIGHT.ordinal());
+  }
+  public void setHeight(int val){
+    this.height = val;
+  }
+  @Override
+  public boolean receiveClientEvent(int id, int value) {
+    if (id >= 0 && id < this.getFieldCount()) {
+      this.setField(id, value);
+      return true;
+    }
+    else
+      return super.receiveClientEvent(id, value);
+  }
+  @Override
+  public int getFieldCount() {
+    return Fields.values().length;
+  }
+  @Override
+  public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+    // Extracts data from a packet (S35PacketUpdateTileEntity) that was sent
+    // from the server. Called on client only.
+    this.readFromNBT(pkt.getNbtCompound());
+    super.onDataPacket(net, pkt);
   }
 }

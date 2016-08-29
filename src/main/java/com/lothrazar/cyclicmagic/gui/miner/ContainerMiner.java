@@ -5,8 +5,11 @@ import com.lothrazar.cyclicmagic.gui.SlotSingleStack;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerMiner extends ContainerBaseMachine {
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
@@ -16,6 +19,7 @@ public class ContainerMiner extends ContainerBaseMachine {
   public static final int SLOTEQUIP_X = SLOTX_START + (SLOTID_EQUIP + 2) * Const.SQ;
   public static final int SLOTEQUIP_Y = SLOTY;
   protected TileMachineMinerSmart tileEntity;
+  private int tileHeight;
   public ContainerMiner(InventoryPlayer inventoryPlayer, TileMachineMinerSmart te) {
     tileEntity = te;
     for (int i = 0; i < tileEntity.getSizeInventory() - 1; i++) {
@@ -50,5 +54,28 @@ public class ContainerMiner extends ContainerBaseMachine {
       slotObject.onPickupFromSlot(player, stackInSlot);
     }
     return stack;
+  }
+  @Override
+  public void detectAndSendChanges() {
+    super.detectAndSendChanges();
+    for (int i = 0; i < this.listeners.size(); ++i) {
+      IContainerListener icontainerlistener = (IContainerListener) this.listeners.get(i);
+      int idx = TileMachineMinerSmart.Fields.HEIGHT.ordinal();
+      if (this.tileHeight != this.tileEntity.getField(idx)) {
+        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
+      }
+    }
+    this.tileHeight = this.tileEntity.getField(TileMachineMinerSmart.Fields.HEIGHT.ordinal());
+  }
+  //TODO: these two in base class?
+  @Override
+  @SideOnly(Side.CLIENT)
+  public void updateProgressBar(int id, int data) {
+    this.tileEntity.setField(id, data);
+  }
+  @Override
+  public void addListener(IContainerListener listener) {
+    super.addListener(listener);
+    listener.sendAllWindowProperties(this, this.tileEntity);
   }
 }

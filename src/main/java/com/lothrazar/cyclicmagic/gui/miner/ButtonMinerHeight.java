@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.gui.builder;
+package com.lothrazar.cyclicmagic.gui.miner;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModMain;
@@ -12,12 +12,12 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ButtonBuildSize extends GuiButton implements ITooltipButton {
+public class ButtonMinerHeight extends GuiButton implements ITooltipButton {
   private final BlockPos tilePos;
   private final List<String> tooltips = new ArrayList<String>();
   boolean goUp;
   private String type;
-  public ButtonBuildSize(BlockPos current, int buttonId, int x, int y, int width, boolean up, String strType) {
+  public ButtonMinerHeight(BlockPos current, int buttonId, int x, int y, boolean up, String strType) {
     super(buttonId, x, y, 15, 10, "");
     tilePos = current;
     goUp = up;
