@@ -41,6 +41,6 @@
  	,"1.6.0":"Added Password Trigger, Miner, Miner Advanced, Placer, Cavefinder and Prospector.  Harvester recipe is now cheaper.  Added several item and block properties to config.  All machines (uncrafter, etc) activate on any redstone power, not just strong power.  Removed feature events to restrict sapling growth and give EXP for achievements (they never worked perfectly anyway).  "
  	,"1.6.1":"Fix uncrafting grinder shooting backwards.  Fix Piston wand block updates not syncing to clients when playing on a server.  "
 	,"1.6.2":"Structure Builder moves faster when skipping over blocked areas.  Tooltips added to many items.  Reset button added to cyclic wand gui.  Builder and Placer machines now don't let in items that aren't placeable as blocks.  Machines now let hoppers pull contents from below.  Tweak costs of a few recipes.  Add long 8:00 version of snow potion.  "
-	,"1.6.3":"New Controlled Miner added; it auto mines a 9x9 area, control the height, tool used, and blacklist.  Block Miner Advanced now starts at the level of the block instead of one below.  "
+	,"1.6.3":"New Controlled Miner added; it auto mines a 9x9 area, control the height, tool used, and blacklist.  Harvester range added to config, and increased default to 16.  Block Miner Advanced now starts at the level of the block instead of one below.  "
   }
 }
