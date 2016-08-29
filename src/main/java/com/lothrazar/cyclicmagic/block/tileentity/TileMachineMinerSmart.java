@@ -34,6 +34,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
   // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
   public static final GameProfile breakerProfile = new GameProfile(UUID.nameUUIDFromBytes("CyclicFakePlayer2".getBytes(Charsets.UTF_8)), "CyclicFakePlayer2");
   private UUID uuid;
+  public static int maxHeight = 10;
   private boolean isCurrentlyMining;
   private WeakReference<FakePlayer> fakePlayer;
   private float curBlockDamage;
@@ -105,8 +106,6 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
           resetProgress(targetPos);
           if (fakePlayer.get() != null) {
             fakePlayer.get().interactionManager.tryHarvestBlock(targetPos);
-            //            if (didBreak == false)
-            //              System.out.println("tried to break but failed " + UtilChat.blockPosToString(targetPos) + "_" + targetState.getBlock().getUnlocalizedName());
           }
         }
         else {
@@ -135,7 +134,9 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
     EnumFacing facing = this.getCurrentFacing();
     BlockPos center = start.offset(facing);//move one more over so we are in the exact center of a 3x3x3 area
     //else we do a 3x3 
-    if(height == 0){height = 6;}//should be in first time init. it needs a default
+    if (height == 0) {
+      height = 6;
+    } //should be in first time init. it needs a default
     int rollHeight = worldObj.rand.nextInt(height);
     int rollDice = worldObj.rand.nextInt(9);
     //then do the area
@@ -175,7 +176,6 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
     if (rollHeight > 0) {
       targetPos = targetPos.offset(EnumFacing.UP, rollHeight);
     }
-    //0 is center
     return;
   }
   private void initFakePlayer() {
@@ -185,9 +185,6 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
       worldObj.notifyBlockUpdate(pos, state, state, 3);
     }
     fakePlayer = new WeakReference<FakePlayer>(FakePlayerFactory.get((WorldServer) worldObj, breakerProfile));
-    //    ItemStack unbreakingIronPickaxe = new ItemStack(Items.DIAMOND_PICKAXE, 1);
-    //    unbreakingIronPickaxe.setTagCompound(new NBTTagCompound());
-    //    unbreakingIronPickaxe.getTagCompound().setBoolean("Unbreakable", true);
     fakePlayer.get().onGround = true;
     fakePlayer.get().connection = new NetHandlerPlayServer(FMLCommonHandler.instance().getMinecraftServerInstance(), new NetworkManager(EnumPacketDirection.SERVERBOUND), fakePlayer.get()) {
       @SuppressWarnings("rawtypes")
@@ -319,6 +316,9 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
     case HEIGHT:
+      if(value > maxHeight){
+        value = maxHeight;
+      }
       setHeight(value);
     default:
       break;
@@ -327,7 +327,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
   public int getHeight() {
     return this.height;//this.getField(Fields.HEIGHT.ordinal());
   }
-  public void setHeight(int val){
+  public void setHeight(int val) {
     this.height = val;
   }
   @Override

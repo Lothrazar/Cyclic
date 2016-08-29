@@ -14,8 +14,8 @@ public class GuiMiner extends GuiBaseContainer {
   private TileMachineMinerSmart tile;
   private int xHeightTextbox = 176 - 26;
   private int yHeightTxtbox = 38;
-  private ButtonMinerHeight btnUp;
-  private ButtonMinerHeight btnDown;
+  private ButtonMinerHeight btnHeightDown;
+  private ButtonMinerHeight btnHeightUp;
   public GuiMiner(InventoryPlayer inventoryPlayer, TileMachineMinerSmart tileEntity) {
     super(new ContainerMiner(inventoryPlayer, tileEntity));
     tile = tileEntity;
@@ -32,10 +32,14 @@ public class GuiMiner extends GuiBaseContainer {
     //first the main top left type button
     int id = 2;
     int yOffset = 18;
-    btnUp = new ButtonMinerHeight(tile.getPos(), id++, this.guiLeft + xHeightTextbox, this.guiTop + yHeightTxtbox + yOffset,  true, "height");
-    this.buttonList.add(btnUp);
-    btnDown = new ButtonMinerHeight(tile.getPos(), id++, this.guiLeft + xHeightTextbox, this.guiTop + yHeightTxtbox - yOffset,  false, "height");
-    this.buttonList.add(btnDown);
+    btnHeightDown = new ButtonMinerHeight(tile.getPos(), id++, this.guiLeft + xHeightTextbox, this.guiTop + yHeightTxtbox + yOffset, false, "height");
+    this.buttonList.add(btnHeightDown);
+    btnHeightUp = new ButtonMinerHeight(tile.getPos(), id++, this.guiLeft + xHeightTextbox, this.guiTop + yHeightTxtbox - yOffset, true, "height");
+    this.buttonList.add(btnHeightUp);
+  }
+  private void updateDisabledButtons() {
+    this.btnHeightDown.enabled = (this.tile.getHeight() > 1);
+    this.btnHeightUp.enabled = (this.tile.getHeight() < TileMachineMinerSmart.maxHeight);
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
@@ -60,6 +64,10 @@ public class GuiMiner extends GuiBaseContainer {
     s = UtilChat.lang("tile.block_miner_smart.tool");
     this.fontRendererObj.drawString(s, x, y, 4210752);
     String display = "" + this.tile.getHeight();
-    this.fontRendererObj.drawString(display, xHeightTextbox, yHeightTxtbox, 4210752);
+
+    //move it over if more than 1 digit
+    x = (display.length() > 1) ? xHeightTextbox + 2 : xHeightTextbox+3;
+    this.fontRendererObj.drawString(display, x, yHeightTxtbox, 4210752);
+    updateDisabledButtons();
   }
 }

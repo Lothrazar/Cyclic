@@ -146,6 +146,9 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
         this.buildSize = value;
         break;
       case HEIGHT:
+        if(value > maxHeight){
+          value = maxHeight;
+        }
         this.buildHeight = value;
         break;
       default:
