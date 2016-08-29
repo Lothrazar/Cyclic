@@ -139,15 +139,15 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
     
     return true;
   }
+  final int height = 6;//TODO: gui field
   private void updateTargetPos(BlockPos start) {
     targetPos = start;//always restart here so we dont offset out of bounds
 
     EnumFacing facing = this.getCurrentFacing();
     BlockPos center = start.offset(facing);//move one more over so we are in the exact center of a 3x3x3 area
     //else we do a 3x3 
-    int rollFull = worldObj.rand.nextInt(9 * 3);
-    int rollUpOrDown = rollFull / 9;
-    int rollDice = rollFull % 9;//worldObj.rand.nextInt(9); //TODO: dont have it switch while mining and get this working
+    int rollHeight = worldObj.rand.nextInt(height);
+    int rollDice = worldObj.rand.nextInt(9);
     //then do the area
     // 1 2 3
     // 4 - 5
@@ -182,11 +182,8 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
       break;
     }
     //now do the vertical
-    if (rollUpOrDown == 1) {
-      targetPos = targetPos.offset(EnumFacing.UP);
-    }
-    else if (rollUpOrDown == 2) {
-      targetPos = targetPos.offset(EnumFacing.DOWN);
+    if (rollHeight > 0) {
+      targetPos = targetPos.offset(EnumFacing.UP, rollHeight);
     }
     //0 is center
     return;

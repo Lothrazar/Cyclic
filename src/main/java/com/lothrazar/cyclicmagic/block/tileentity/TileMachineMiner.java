@@ -157,7 +157,7 @@ public class TileMachineMiner extends TileEntityBaseMachine {
     BlockPos center = start.offset(facing);//move one more over so we are in the exact center of a 3x3x3 area
     //else we do a 3x3 
     int rollFull = worldObj.rand.nextInt(9 * 3);
-    int rollUpOrDown = rollFull / 9;
+    int rollHeight = rollFull / 9;
     int rollDice = rollFull % 9;//worldObj.rand.nextInt(9); //TODO: dont have it switch while mining and get this working
     //then do the area
     // 1 2 3
@@ -193,12 +193,16 @@ public class TileMachineMiner extends TileEntityBaseMachine {
       break;
     }
     //now do the vertical
-    if (rollUpOrDown == 1) {
-      targetPos = targetPos.offset(EnumFacing.UP);
+
+    if (rollHeight > 0) {
+      targetPos = targetPos.offset(EnumFacing.UP, rollHeight);
     }
-    else if (rollUpOrDown == 2) {
-      targetPos = targetPos.offset(EnumFacing.DOWN);
-    }
+//    if (rollUpOrDown == 1) {
+//      targetPos = targetPos.offset(EnumFacing.UP);
+//    }
+//    else if (rollUpOrDown == 2) {
+//      targetPos = targetPos.offset(EnumFacing.DOWN);
+//    }
     //0 is center
     return;
   }
