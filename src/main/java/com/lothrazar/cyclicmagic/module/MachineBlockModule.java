@@ -13,6 +13,7 @@ import com.lothrazar.cyclicmagic.block.tileentity.TileMachineHarvester;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityMagnet;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMiner;
+import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMinerSmart;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachinePlacer;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
@@ -72,7 +73,7 @@ public class MachineBlockModule extends BaseModule {
       BlockRegistry.block_miner_smart = new BlockMinerSmart();
       BlockRegistry.registerBlock(BlockRegistry.block_miner_smart, "block_miner_smart");
       BlockRegistry.block_miner_smart.addRecipe();
-      GameRegistry.registerTileEntity(TileMachineMiner.class, "miner_smart_te");
+      GameRegistry.registerTileEntity(TileMachineMinerSmart.class, Const.MODID+"miner_smart_te");
     }
     if (enablePlacer) {
       BlockRegistry.placer_block = new BlockPlacer();

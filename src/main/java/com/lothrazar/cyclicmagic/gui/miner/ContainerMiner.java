@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.gui.miner;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMinerSmart;
 import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
+import com.lothrazar.cyclicmagic.gui.SlotSingleStack;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -11,12 +12,16 @@ public class ContainerMiner extends ContainerBaseMachine {
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
   public static final int SLOTX_START = 10;
   public static final int SLOTY = 28;
+  public static final int SLOTID_EQUIP = 2;
+  public static final int SLOTEQUIP_X = SLOTX_START + (SLOTID_EQUIP + 1) * Const.SQ;
+  public static final int SLOTEQUIP_Y = SLOTY;
   protected TileMachineMinerSmart tileEntity;
   public ContainerMiner(InventoryPlayer inventoryPlayer, TileMachineMinerSmart te) {
     tileEntity = te;
-    for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
-      addSlotToContainer(new Slot(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY));
+    for (int i = 0; i < tileEntity.getSizeInventory() - 1; i++) {
+      addSlotToContainer(new SlotSingleStack(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY));
     }
+    addSlotToContainer(new SlotSingleStack(tileEntity, SLOTID_EQUIP, SLOTEQUIP_X, SLOTEQUIP_Y));
     // commonly used vanilla code that adds the player's inventory
     bindPlayerInventory(inventoryPlayer);
   }

@@ -44,7 +44,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
   public TileMachineMinerSmart(){
-    inv = new ItemStack[9];
+    inv = new ItemStack[3];
   }
   @Override
   public void update() {
@@ -235,7 +235,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
       }
     }
     compound.setTag(NBT_INV, itemList);
-    return compound;// super.writeToNBT(compound);
+    return super.writeToNBT(compound);
   }
   @Override
   public void readFromNBT(NBTTagCompound compound) {

@@ -28,8 +28,11 @@ public class GuiMiner extends GuiBaseContainer {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
-    for (int k = 0; k < this.tile.getSizeInventory(); k++) {
+    for (int k = 0; k < ContainerMiner.SLOTID_EQUIP; k++) {
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerMiner.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerMiner.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
+//    int s = ContainerMiner.SLOTID_EQUIP;
+    Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerMiner.SLOTEQUIP_X, this.guiTop + ContainerMiner.SLOTEQUIP_Y, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    
   }
 }
