@@ -48,6 +48,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
   }
   @Override
   public void update() {
+    int toolSlot = inv.length - 1;
     if (this.isPowered()) {
       this.spawnParticlesAbove();
     }
@@ -55,6 +56,19 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
       if (firstTick || fakePlayer == null) {
         firstTick = false;
         initFakePlayer();
+      }
+      ItemStack maybeTool = inv[toolSlot];
+      
+      if(maybeTool == null){
+        fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, null);
+      }
+      else{
+         if(maybeTool.equals(fakePlayer.get().getHeldItem(EnumHand.MAIN_HAND))){
+           //already equipped
+         }
+         else{
+           fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, maybeTool);
+         }
       }
       BlockPos start = pos.offset(this.getCurrentFacing());
       if (targetPos == null) {
@@ -94,7 +108,8 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
             //              System.out.println("tried to break but failed " + UtilChat.blockPosToString(targetPos) + "_" + targetState.getBlock().getUnlocalizedName());
           }
         }
-        else {
+        else { 
+          
           worldObj.sendBlockBreakProgress(uuid.hashCode(), targetPos, (int) (curBlockDamage * 10.0F) - 1);
         }
       }
@@ -110,10 +125,12 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
     Block target = targetState.getBlock();
      
     //else check blacklist
-    for(ItemStack item : inv){
-      if(item == null){
+    ItemStack item;
+    for(int i = 0; i < inv.length - 1; i++){//minus 1 because of TOOL
+      if(inv[i] == null){
         continue;
       }
+      item = inv[i];
  
       if(item.getItem() == Item.getItemFromBlock(target)){
         return false;
@@ -181,10 +198,9 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
       worldObj.notifyBlockUpdate(pos, state, state, 3);
     }
     fakePlayer = new WeakReference<FakePlayer>(FakePlayerFactory.get((WorldServer) worldObj, breakerProfile));
-    ItemStack unbreakingIronPickaxe = new ItemStack(Items.DIAMOND_PICKAXE, 1);
-    unbreakingIronPickaxe.setTagCompound(new NBTTagCompound());
-    unbreakingIronPickaxe.getTagCompound().setBoolean("Unbreakable", true);
-    fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, unbreakingIronPickaxe);
+//    ItemStack unbreakingIronPickaxe = new ItemStack(Items.DIAMOND_PICKAXE, 1);
+//    unbreakingIronPickaxe.setTagCompound(new NBTTagCompound());
+//    unbreakingIronPickaxe.getTagCompound().setBoolean("Unbreakable", true);
     fakePlayer.get().onGround = true;
     fakePlayer.get().connection = new NetHandlerPlayServer(FMLCommonHandler.instance().getMinecraftServerInstance(), new NetworkManager(EnumPacketDirection.SERVERBOUND), fakePlayer.get()) {
       @SuppressWarnings("rawtypes")

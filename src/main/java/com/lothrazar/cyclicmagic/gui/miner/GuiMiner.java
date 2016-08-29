@@ -18,6 +18,11 @@ public class GuiMiner extends GuiBaseContainer {
   public String getTitle() {
     return "tile.block_miner_smart.name";
   }
+
+  @Override
+  public void initGui() {
+    super.initGui();
+  }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
