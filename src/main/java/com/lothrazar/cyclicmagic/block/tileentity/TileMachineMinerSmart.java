@@ -195,7 +195,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
       }
     }
     compound.setTag(NBT_INV, itemList);
-    return super.writeToNBT(compound);
+    return compound;// super.writeToNBT(compound);
   }
   @Override
   public void readFromNBT(NBTTagCompound compound) {

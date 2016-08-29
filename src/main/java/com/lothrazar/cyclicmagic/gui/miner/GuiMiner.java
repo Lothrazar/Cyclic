@@ -16,7 +16,7 @@ public class GuiMiner extends GuiBaseContainer {
     super(c);
   }
   public String getTitle() {
-    return "tile.uncrafting_block.name";
+    return "tile.block_miner_smart.name";
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {

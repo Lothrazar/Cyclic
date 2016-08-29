@@ -68,8 +68,7 @@ public class MachineBlockModule extends BaseModule {
     if (enableMiner || enableMinerEnhanced) {
       GameRegistry.registerTileEntity(TileMachineMiner.class, "miner_te");
     }
-    if(enableMinerSmart ){
-
+    if (enableMinerSmart) {
       BlockRegistry.block_miner_smart = new BlockMinerSmart();
       BlockRegistry.registerBlock(BlockRegistry.block_miner_smart, "block_miner_smart");
       BlockRegistry.block_miner_smart.addRecipe();
@@ -101,9 +100,7 @@ public class MachineBlockModule extends BaseModule {
     enableHarvester = config.getBoolean("HarvesterBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableMagnet = config.getBoolean("MagnetBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableUncrafter = config.getBoolean("UncraftingGrinder", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    
     enableMinerSmart = config.getBoolean("MinerBlockSmart", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    
     //TODO: LOOP/LIST of blocks so we can hit their recipes AND configs in the loop just like items
     if (BlockRegistry.magnet_block != null) {
       BlockRegistry.magnet_block.syncConfig(config);
@@ -111,8 +108,6 @@ public class MachineBlockModule extends BaseModule {
     if (BlockRegistry.uncrafting_block != null) {
       BlockRegistry.uncrafting_block.syncConfig(config);
     }
-    
     TileMachineHarvester.HARVEST_RADIUS = config.getInt("HarvesterBlockRadius", Const.ConfigCategory.modpackMisc, 16, 4, 128, "Maximum radius of harvester area (remember its not centered on the block, it harvests in front)");
- 
   }
 }
