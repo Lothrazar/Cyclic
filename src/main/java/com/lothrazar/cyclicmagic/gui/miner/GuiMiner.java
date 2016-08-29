@@ -49,7 +49,6 @@ public class GuiMiner extends GuiBaseContainer {
     for (int k = 0; k < ContainerMiner.SLOTID_EQUIP; k++) {
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerMiner.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerMiner.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
-    //    int s = ContainerMiner.SLOTID_EQUIP;
     Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerMiner.SLOTEQUIP_X - 1, this.guiTop + ContainerMiner.SLOTEQUIP_Y - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
   }
   @SideOnly(Side.CLIENT)

@@ -49,7 +49,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
     HEIGHT
   }
   public TileMachineMinerSmart() {
-    inv = new ItemStack[3];
+    inv = new ItemStack[5];
   }
   @Override
   public void update() {
