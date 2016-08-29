@@ -22,7 +22,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     if (getTitle() != null) {
-      String s = UtilChat.lang(getTitle());// "tile.placer_block.name"
+      String s = UtilChat.lang(getTitle());
       this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
     }
   }

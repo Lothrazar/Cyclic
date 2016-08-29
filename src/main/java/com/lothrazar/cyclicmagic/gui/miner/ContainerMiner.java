@@ -11,9 +11,9 @@ import net.minecraft.item.ItemStack;
 public class ContainerMiner extends ContainerBaseMachine {
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
   public static final int SLOTX_START = 10;
-  public static final int SLOTY = 28;
+  public static final int SLOTY = 42;
   public static final int SLOTID_EQUIP = 2;
-  public static final int SLOTEQUIP_X = SLOTX_START + (SLOTID_EQUIP + 1) * Const.SQ;
+  public static final int SLOTEQUIP_X = SLOTX_START + (SLOTID_EQUIP + 2) * Const.SQ;
   public static final int SLOTEQUIP_Y = SLOTY;
   protected TileMachineMinerSmart tileEntity;
   public ContainerMiner(InventoryPlayer inventoryPlayer, TileMachineMinerSmart te) {
