@@ -17,7 +17,10 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class UtilEntity {
-  private static final double ENTITY_PULL_DIST = 0.7;
+  private static final double ENTITY_PULL_DIST = 0.4;//closer than this and nothing happens
+  private static final double ENTITY_PULL_SPEED_CUTOFF = 3;//closer than this and it slows down
+  private final static float ITEMSPEEDFAR = 0.9F;
+  private final static float ITEMSPEEDCLOSE = 0.2F;
   public static void teleportWallSafe(EntityLivingBase player, World world, BlockPos coords) {
     player.setPositionAndUpdate(coords.getX(), coords.getY(), coords.getZ());
     moveEntityWallSafe(player, world);
@@ -155,8 +158,6 @@ public class UtilEntity {
       entity.addVelocity(velX, velY, velZ);
     }
   }
-  private final static float ITEMSPEEDFAR = 0.9F;
-  private final static float ITEMSPEEDCLOSE = 0.3F;
   public static int pullEntityItemsTowards(World world, BlockPos pos, int ITEM_HRADIUS, int ITEM_VRADIUS) {
     int x = pos.getX(), y = pos.getY(), z = pos.getZ();
     return pullEntityItemsTowards(world, x, y, z, ITEM_HRADIUS, ITEM_VRADIUS);
@@ -169,12 +170,15 @@ public class UtilEntity {
     all.addAll(world.getEntitiesWithinAABB(EntityItem.class, range));
     all.addAll(world.getEntitiesWithinAABB(EntityXPOrb.class, range));
     int moved = 0;
-    double hdist;
+    double hdist,xDist,zDist;
     float speed;
     for (Entity eitem : all) {
-      hdist = Math.max(Math.abs(x - eitem.getPosition().getX()), Math.abs(z - eitem.getPosition().getZ()));
+      xDist = Math.abs(x - eitem.getPosition().getX());
+      zDist = Math.abs(z - eitem.getPosition().getZ());
+      hdist = Math.sqrt(xDist*xDist + zDist * zDist);
       if (hdist > ENTITY_PULL_DIST) {
-        speed = (hdist > 5) ? ITEMSPEEDFAR : ITEMSPEEDCLOSE;
+        speed = (hdist > ENTITY_PULL_SPEED_CUTOFF) ? ITEMSPEEDFAR : ITEMSPEEDCLOSE;
+      
         Vector3.setEntityMotionFromVector(eitem, x, y, z, speed);
         moved++;
       } //else its basically on it, no point
