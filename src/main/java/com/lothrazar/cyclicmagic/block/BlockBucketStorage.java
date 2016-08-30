@@ -96,17 +96,13 @@ public class BlockBucketStorage extends Block implements ITileEntityProvider {
     return null;
   }
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer entityPlayer, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-
     ItemStack held = entityPlayer.getHeldItem(hand);
     Block blockClicked = state.getBlock();
     if ((blockClicked instanceof BlockBucketStorage) == false) { return false; }
     BlockBucketStorage block = (BlockBucketStorage) blockClicked;
     TileEntityBucketStorage container = (TileEntityBucketStorage) world.getTileEntity(pos);
     long timeSince = world.getTotalWorldTime() - container.getTimeLast();
-    if (timeSince < TileEntityBucketStorage.TIMEOUT) {
-
-      return false;
-    }
+    if (timeSince < TileEntityBucketStorage.TIMEOUT) { return false; }
     if (held == null && block.bucketItem != null && block.bucketItem == this.bucketItem) {
       if (world.isRemote == false) {
         // server only

@@ -42,7 +42,6 @@ public class UtilNBT {
     try {
       if (spl != null && spl.length == 3 && spl[0] != "")
         p = new BlockPos(Integer.parseInt(spl[0]), Integer.parseInt(spl[1]), Integer.parseInt(spl[2]));
-    
     }
     catch (java.lang.ClassCastException e) {
       ModMain.logger.info("exc: bad string: " + csv);
@@ -115,7 +114,6 @@ public class UtilNBT {
     //NOT THIS: if you are putting it on a normal stack (sword/weapon) yeah then that way
     //		stack.addEnchantment(ench, level);
     Items.ENCHANTED_BOOK.addEnchantment(stack, new EnchantmentData(ench, level));
-   
     //just to test it
     return stack;
   }

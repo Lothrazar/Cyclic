@@ -48,7 +48,6 @@ public class PacketTileMineHeight implements IMessage, IMessageHandler<PacketTil
       //currently the ONLY type
       if (message.type.equals("height"))
         tile.setHeight(tile.getHeight() + message.value);
-      
       tile.markDirty();
       if (player.openContainer != null) {
         player.openContainer.detectAndSendChanges();

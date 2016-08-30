@@ -63,9 +63,8 @@ public class GuiMiner extends GuiBaseContainer {
     s = UtilChat.lang("tile.block_miner_smart.tool");
     this.fontRendererObj.drawString(s, x, y, 4210752);
     String display = "" + this.tile.getHeight();
-
     //move it over if more than 1 digit
-    x = (display.length() > 1) ? xHeightTextbox + 2 : xHeightTextbox+3;
+    x = (display.length() > 1) ? xHeightTextbox + 2 : xHeightTextbox + 3;
     this.fontRendererObj.drawString(display, x, yHeightTxtbox, 4210752);
     updateDisabledButtons();
   }

@@ -39,7 +39,6 @@ public class InventoryPlayerExtended implements IInventory {
   }
   @Override
   public ItemStack getStackInSlot(int s) {
-    
     return s >= this.getSizeInventory() ? null : this.stackList[s];
   }
   @Override
@@ -60,7 +59,6 @@ public class InventoryPlayerExtended implements IInventory {
    */
   @Override
   public ItemStack removeStackFromSlot(int s) {
- 
     if (this.stackList[s] != null) {
       ItemStack itemstack = this.stackList[s];
       this.stackList[s] = null;
@@ -107,7 +105,6 @@ public class InventoryPlayerExtended implements IInventory {
    */
   @Override
   public void setInventorySlotContents(int idx, ItemStack stack) {
-   
     this.stackList[idx] = stack;
     syncSlotToClients(idx);
   }

@@ -73,7 +73,7 @@ public class MachineBlockModule extends BaseModule {
       BlockRegistry.block_miner_smart = new BlockMinerSmart();
       BlockRegistry.registerBlock(BlockRegistry.block_miner_smart, "block_miner_smart");
       BlockRegistry.block_miner_smart.addRecipe();
-      GameRegistry.registerTileEntity(TileMachineMinerSmart.class, Const.MODID+"miner_smart_te");
+      GameRegistry.registerTileEntity(TileMachineMinerSmart.class, Const.MODID + "miner_smart_te");
     }
     if (enablePlacer) {
       BlockRegistry.placer_block = new BlockPlacer();
@@ -111,6 +111,5 @@ public class MachineBlockModule extends BaseModule {
     }
     TileMachineHarvester.HARVEST_RADIUS = config.getInt("HarvesterBlockRadius", Const.ConfigCategory.modpackMisc, 16, 4, 128, "Maximum radius of harvester area (remember its not centered on the block, it harvests in front)");
     TileMachineMinerSmart.maxHeight = config.getInt("ControlledMiner.maxHeight", Const.ConfigCategory.modpackMisc, 32, 3, 128, "Maximum height of the controlled miner block that you can increase it to in the GUI");
-    
   }
 }

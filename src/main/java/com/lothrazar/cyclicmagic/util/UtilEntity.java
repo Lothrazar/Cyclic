@@ -142,7 +142,6 @@ public class UtilEntity {
     if (velY < 0) {
       velY *= -1;// make it always up never down
     }
-
     Entity ridingEntity = entity.getRidingEntity();
     if (ridingEntity != null) {
       // boost power a bit, horses are heavy as F
