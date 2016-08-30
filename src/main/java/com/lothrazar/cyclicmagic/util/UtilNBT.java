@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.util;
 import java.util.ArrayList;
+import com.lothrazar.cyclicmagic.ModMain;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.entity.player.EntityPlayer;
@@ -44,7 +45,7 @@ public class UtilNBT {
     
     }
     catch (java.lang.ClassCastException e) {
-      System.out.println("exc: bad string: " + csv);
+      ModMain.logger.info("exc: bad string: " + csv);
     }
     return p;
   }

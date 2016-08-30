@@ -98,7 +98,7 @@ public class ContainerPlayerExtended extends ContainerBase {
   public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int iSlot) {
     ItemStack itemstack = null;
     Slot slot = (Slot) this.inventorySlots.get(iSlot);
-    //	System.out.println("Transfer "+iSlot);
+
     int playerStart = 36, playerEnd = 63, topStart = 4, topEnd = 36, hotbarStart = 63, hotbarEnd = 72, armorStart = 0, armorEnd = 4;
     //36 to 62 is lower
     //4 to 40 is bottom

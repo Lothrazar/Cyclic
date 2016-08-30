@@ -152,7 +152,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
     //HORIZONTAL
     int randNS = worldObj.rand.nextInt(RADIUS * 2 + 1) - RADIUS;
     int randEW = worldObj.rand.nextInt(RADIUS * 2 + 1) - RADIUS;
-    //  System.out.println(" H, NS, EW : "+ rollHeight +":"+ randNS +":"+ randEW);
+    //(" H, NS, EW : "+ rollHeight +":"+ randNS +":"+ randEW);
     //both can be zero
     if (randNS > 0) {
       targetPos = targetPos.offset(EnumFacing.NORTH, randNS);
