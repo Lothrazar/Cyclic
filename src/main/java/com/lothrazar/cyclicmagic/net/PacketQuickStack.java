@@ -28,7 +28,7 @@ public class PacketQuickStack implements IMessage, IMessageHandler<PacketQuickSt
   public IMessage onMessage(PacketQuickStack message, MessageContext ctx) {
     EntityPlayer p = ctx.getServerHandler().playerEntity;
     if (p.openContainer == null || p.openContainer.getSlot(0) == null || p.openContainer.getSlot(0).inventory == null) {
-      //System.out.println("ERROR LOG: null container inventory");
+
     }
     else {
       // a workaround since player does not reference the inventory, only the container and Container has no get method

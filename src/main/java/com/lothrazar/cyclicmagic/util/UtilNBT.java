@@ -41,9 +41,7 @@ public class UtilNBT {
     try {
       if (spl != null && spl.length == 3 && spl[0] != "")
         p = new BlockPos(Integer.parseInt(spl[0]), Integer.parseInt(spl[1]), Integer.parseInt(spl[2]));
-      //      else {
-      //        System.out.println("invalid string: " + csv);
-      //      }
+    
     }
     catch (java.lang.ClassCastException e) {
       System.out.println("exc: bad string: " + csv);
@@ -116,7 +114,7 @@ public class UtilNBT {
     //NOT THIS: if you are putting it on a normal stack (sword/weapon) yeah then that way
     //		stack.addEnchantment(ench, level);
     Items.ENCHANTED_BOOK.addEnchantment(stack, new EnchantmentData(ench, level));
-    //		System.out.println(stack.getEnchantmentTagList());
+   
     //just to test it
     return stack;
   }
@@ -143,18 +141,4 @@ public class UtilNBT {
     skull.getTagCompound().setString(Const.SkullOwner, displayNameString);
     return skull;
   }
-  //
-  //	public static NBTTagCompound buildPotionTag(Potion potionIn, int level, int duration, String name) {
-  //		// REF : http://minecraft.gamepedia.com/Player.dat_format#Potion_Effects
-  //		NBTTagCompound tags = new NBTTagCompound();
-  //		tags.setString("Potion", name);
-  //		NBTTagCompound inner = new NBTTagCompound();
-  //		inner.setInteger("Id", Potion.getIdFromPotion(potionIn));
-  //		inner.setInteger("Amplifier", level);
-  //		inner.setInteger("Duration", duration);
-  //		inner.setBoolean("ShowParticles", true);
-  //		tags.setTag("CustomPotionEffects", inner);
-  //		
-  //		return tags;
-  //	}
 }

@@ -66,6 +66,6 @@ public class BaseCommand implements ICommand {
   }
   @Override
   public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-    //System.out.println("Warning: command not implemented " + Const.MODID + " -> " + this.getCommandName());
+    //S ("Warning: command not implemented " + Const.MODID + " -> " + this.getCommandName());
   }
 }

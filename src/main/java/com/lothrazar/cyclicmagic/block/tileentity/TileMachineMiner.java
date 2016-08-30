@@ -138,8 +138,6 @@ public class TileMachineMiner extends TileEntityBaseMachine {
           resetProgress(targetPos);
           if (fakePlayer.get() != null) {
             fakePlayer.get().interactionManager.tryHarvestBlock(targetPos);
-            //            if (didBreak == false)
-            //              System.out.println("tried to break but failed " + UtilChat.blockPosToString(targetPos) + "_" + targetState.getBlock().getUnlocalizedName());
           }
         }
         else {
@@ -193,16 +191,15 @@ public class TileMachineMiner extends TileEntityBaseMachine {
       break;
     }
     //now do the vertical
-
     if (rollHeight > 0) {
       targetPos = targetPos.offset(EnumFacing.UP, rollHeight);
     }
-//    if (rollUpOrDown == 1) {
-//      targetPos = targetPos.offset(EnumFacing.UP);
-//    }
-//    else if (rollUpOrDown == 2) {
-//      targetPos = targetPos.offset(EnumFacing.DOWN);
-//    }
+    //    if (rollUpOrDown == 1) {
+    //      targetPos = targetPos.offset(EnumFacing.UP);
+    //    }
+    //    else if (rollUpOrDown == 2) {
+    //      targetPos = targetPos.offset(EnumFacing.DOWN);
+    //    }
     //0 is center
     return;
   }

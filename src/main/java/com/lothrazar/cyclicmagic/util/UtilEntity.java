@@ -142,15 +142,7 @@ public class UtilEntity {
     if (velY < 0) {
       velY *= -1;// make it always up never down
     }
-    //		if (velY < 0.4) {
-    //			System.out.println("A");
-    //			velY = 0.4 + player.jumpMovementFactor;
-    //		}
-    //		boolean isLookingDown = (player.getLookVec().yCoord < -20);
-    //		if(isLookingDown){
-    //			System.out.println("B");
-    //			velY += 2.5;
-    //		}
+
     Entity ridingEntity = entity.getRidingEntity();
     if (ridingEntity != null) {
       // boost power a bit, horses are heavy as F

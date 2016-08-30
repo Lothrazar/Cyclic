@@ -60,8 +60,7 @@ public class CommandRecipe extends BaseCommand implements ICommand {
       if (recipe instanceof ShapedRecipes) {
         ShapedRecipes r = ((ShapedRecipes) recipe);
         boolean isInventory = (r.recipeHeight < 3 || r.recipeWidth < 3);
-        // System.out.println(isInventory+"isInventory is from :
-        // "+r.recipeHeight+" "+r.recipeWidth);
+
         UtilChat.addChatMessage(player, "command.recipes.found");
         addChatShapedRecipe(player, getRecipeInput(recipe), isInventory);
         foundSomething = true;
@@ -132,7 +131,7 @@ public class CommandRecipe extends BaseCommand implements ICommand {
           List<ItemStack> c = (List<ItemStack>) o;
           if (c != null && c.size() > 0) {
             recipeItems[i] = c.get(0);
-            // System.out.println(i+" -- "+recipeItems[i].getDisplayName());
+         
           }
         }
       }
@@ -140,7 +139,7 @@ public class CommandRecipe extends BaseCommand implements ICommand {
       boolean doorShape = r.getInput().length == 6;// is a 2x3, with right hand
       // column missing
       if (doorShape) {
-        // System.out.println("doorShape:: length "+recipeItems.length);
+     
         ItemStack[] backup = recipeItems;
         recipeItems = new ItemStack[9];
         int iold;
