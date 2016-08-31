@@ -9,6 +9,7 @@ import com.lothrazar.cyclicmagic.item.ItemToolProspector;
 import com.lothrazar.cyclicmagic.item.ItemToolPush;
 import com.lothrazar.cyclicmagic.item.ItemToolSpawnInspect;
 import com.lothrazar.cyclicmagic.item.ItemToolSpelunker;
+import com.lothrazar.cyclicmagic.item.ItemToolWarp;
 import com.lothrazar.cyclicmagic.net.PacketSpellShiftLeft;
 import com.lothrazar.cyclicmagic.net.PacketSpellShiftRight;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
@@ -47,6 +48,9 @@ public class ToolsModule extends BaseModule {
   private boolean enableCyclicWand;
   private boolean enableProspector;
   private boolean enableCavefinder;
+  private boolean enableHom;
+  private boolean enableWarpTool;
+  private boolean enableWarpSpawnTool;
   @Override
   public void onInit() {
     if (enableProspector) {
@@ -94,10 +98,24 @@ public class ToolsModule extends BaseModule {
       spellHud = new SpellHud();
       ModMain.instance.events.addEvent(this);
     }
+    if(enableWarpTool){
+      ItemRegistry.tool_warp_home = new ItemToolWarp(ItemToolWarp.WarpType.BED);
+      ItemRegistry.addItem(ItemRegistry.tool_warp_home, "tool_warp_home");
+     
+    }
+    if(enableWarpSpawnTool){
+      ItemRegistry.tool_warp_spawn = new ItemToolWarp(ItemToolWarp.WarpType.SPAWN);
+      ItemRegistry.addItem(ItemRegistry.tool_warp_spawn, "tool_warp_spawn");
+    
+    }
   }
   @Override
   public void syncConfig(Configuration config) {
+    //TODO: this config should be INSIDE the item mat
     ItemSleepingMat.doPotions = config.getBoolean("SleepingMatPotions", Const.ConfigCategory.items, true, "False will disable the potion effects given by the Sleeping Mat");
+    enableWarpTool = config.getBoolean("AmuletHome", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableWarpSpawnTool = config.getBoolean("AmuletSpawn", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    
     enableSpawnInspect = config.getBoolean("SpawnDetector", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablePearlReuse = config.getBoolean("EnderOrb", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableHarvestWeeds = config.getBoolean("BrushScythe", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
