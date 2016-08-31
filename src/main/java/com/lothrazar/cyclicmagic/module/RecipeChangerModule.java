@@ -19,6 +19,8 @@ public class RecipeChangerModule extends BaseModule {
   private boolean elytraRepair;
   private boolean melonToSlice;
   private boolean difficultEarlygameRecipes;
+  private boolean snowBlocksToBalls;
+  private boolean quartzBlocksToItem;
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.recipes;
     config.setCategoryComment(category, "New and altered recipes");
@@ -43,9 +45,19 @@ public class RecipeChangerModule extends BaseModule {
         false,
         "WARNING: this removes vanilla recipes:  True will mean that the furnace recipe requires coal in the middle, and stone tools require smoothstone.")
         .getBoolean();
+    snowBlocksToBalls = config.get(category, "SnowBlockBalls",
+        true, "Craft Snow blocks back into snowballs").getBoolean();
+    quartzBlocksToItem = config.get(category, "QuartzBlockToItem",
+        true, "Craft Quartz blocks back to the items").getBoolean();
   }
   @Override
   public void onInit() {
+    if (quartzBlocksToItem) {
+      quartzBlocksItem();
+    }
+    if (snowBlocksToBalls) {
+      snowBlocksBalls();
+    }
     if (playerSkull) {
       playerSkull();
     }
@@ -75,6 +87,14 @@ public class RecipeChangerModule extends BaseModule {
       furnaceNeedsCoal();
     }
     // https://github.com/PrinceOfAmber/SamsPowerups/blob/master/Recipes/src/main/java/com/lothrazar/samsrecipes/RecipeRegistry.java
+  }
+  private void snowBlocksBalls() {
+    GameRegistry.addShapelessRecipe(new ItemStack(Items.SNOWBALL, 4),
+        new ItemStack(Blocks.SNOW));
+  }
+  private void quartzBlocksItem() {
+    GameRegistry.addShapelessRecipe(new ItemStack(Items.QUARTZ, 4),
+        new ItemStack(Blocks.QUARTZ_BLOCK));
   }
   private void melonToSlice() {
     GameRegistry.addShapelessRecipe(new ItemStack(Items.MELON, 9),

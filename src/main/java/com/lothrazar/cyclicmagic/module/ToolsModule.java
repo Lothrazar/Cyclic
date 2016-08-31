@@ -48,7 +48,6 @@ public class ToolsModule extends BaseModule {
   private boolean enableCyclicWand;
   private boolean enableProspector;
   private boolean enableCavefinder;
-  private boolean enableHom;
   private boolean enableWarpTool;
   private boolean enableWarpSpawnTool;
   @Override
