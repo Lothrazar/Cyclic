@@ -39,8 +39,8 @@ public class BlockScaffolding extends Block implements IHasRecipe {
   }
   @Override
   public boolean isOpaqueCube(IBlockState state) {
-    // http://greyminecraftcoder.blogspot.ca/2014/12/transparent-blocks-18.html
-    return false;
+
+    return false;    // http://greyminecraftcoder.blogspot.ca/2014/12/transparent-blocks-18.html
   }
   @SideOnly(Side.CLIENT)
   public BlockRenderLayer getBlockLayer() {
