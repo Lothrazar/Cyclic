@@ -76,16 +76,19 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
         System.out.println(itemstack.getDisplayName());
         UtilParticle.spawnParticle(worldObj, EnumParticleTypes.WATER_WAKE, pos.up());
         inv[toolSlot].attemptDamageItem(1, worldObj.rand);
-        if( inv[toolSlot].getItemDamage() <= 0){
+        System.out.println("FISH DAAMGE"+ inv[toolSlot].getItemDamage());
+        if( inv[toolSlot].getItemDamage() >= inv[toolSlot].getMaxDamage()){
           inv[toolSlot] = null;
         }
          
         for (int i = RODSLOT; i <= FISHSLOTS; i++) {
-          if(itemstack != null && itemstack.stackSize == 0)
+          if(itemstack != null && itemstack.stackSize != 0){
           itemstack = tryMergeStackIntoSlot(itemstack, i);
+          }
         }
-        if (itemstack != null && itemstack.stackSize == 0) {
+        if (itemstack != null && itemstack.stackSize != 0) {
           //FULL
+          System.out.println("DROP IN WORLD"+ itemstack.getDisplayName());
           UtilEntity.dropItemStackInWorld(worldObj, this.pos.down(), itemstack);
           
           
