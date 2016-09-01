@@ -39,17 +39,20 @@ public class BlockFishing extends Block {
   }
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-    if(player.isSneaking()){
+    if(player.isSneaking()) {
       
-        TileEntityFishing tile = (TileEntityFishing) world.getTileEntity(pos);
-        if (world.isRemote && tile != null) {
-          if (tile.isValidPlacement()) {
-            UtilChat.addChatMessage(player, "tile.block_fishing.valid");
-          }
-          else {
-            UtilChat.addChatMessage(player, "tile.block_fishing.invalid");
-          }
+      TileEntityFishing tile = (TileEntityFishing) world.getTileEntity(pos);
+      if (world.isRemote && tile != null) {
+        if (tile.isValidPosition() == false) {
+          UtilChat.addChatMessage(player, "tile.block_fishing.invalidpos");
         }
+        else if (tile.isEquipmentValid() == false) {
+          UtilChat.addChatMessage(player, "tile.block_fishing.invalidequip");
+        }
+        else {
+          UtilChat.addChatMessage(player, "tile.block_fishing.valid");
+        }
+      }
     }
     else{
 

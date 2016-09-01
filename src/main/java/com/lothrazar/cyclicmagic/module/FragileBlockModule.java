@@ -1,12 +1,15 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.block.BlockFishing;
 import com.lothrazar.cyclicmagic.block.BlockScaffolding;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFishing;
+import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMinerSmart;
 import com.lothrazar.cyclicmagic.item.itemblock.ItemBlockScaffolding;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class FragileBlockModule extends BaseModule {
   private boolean fragileEnabled;
@@ -22,9 +25,7 @@ public class FragileBlockModule extends BaseModule {
       BlockRegistry.block_fishing = new BlockFishing();
       BlockRegistry.registerBlock(BlockRegistry.block_fishing, "block_fishing");
       BlockRegistry.block_fishing.addRecipe();
-      Item fishing_bait = new Item();
-      ItemRegistry.addItem(fishing_bait, "fishing_bait");
-      ItemRegistry.fishing_bait = fishing_bait;
+      GameRegistry.registerTileEntity(TileEntityFishing.class, Const.MODID + "block_fishing_te");
       
     }
   }
@@ -32,6 +33,6 @@ public class FragileBlockModule extends BaseModule {
   public void syncConfig(Configuration config) {
     fragileEnabled = config.getBoolean("ScaffoldingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     fishingBlock = config.getBoolean("FishingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    
+
   }
 }

@@ -7,6 +7,7 @@ import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
@@ -19,11 +20,11 @@ public class ContainerFisher extends ContainerBaseMachine {
   protected TileEntityFishing tileEntity;
   public ContainerFisher(InventoryPlayer inventoryPlayer, TileEntityFishing te) {
     tileEntity = te;
-    for (int i = 0; i < TileEntityFishing.BAITSLOTS; i++) {
-      addSlotToContainer(new SlotItemRestricted(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY,ItemRegistry.fishing_bait));
+    for (int i = 0; i < TileEntityFishing.RODSLOT; i++) {
+      addSlotToContainer(new SlotItemRestricted(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY, Items.FISHING_ROD));
     }
      
-    int s = TileEntityFishing.BAITSLOTS;
+    int s = TileEntityFishing.RODSLOT;
     int row = 0, col = 0;
     for (int i = 0; i < TileEntityFishing.FISHSLOTS; i++) { //so going from 0-9
       row = i / 3;// /3 will go 000, 111, 222

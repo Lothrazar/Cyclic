@@ -81,7 +81,6 @@ public class ItemRegistry {
   public static ItemToolProspector tool_prospector;
   public static ItemToolWarp tool_warp_home;
   public static ItemToolWarp tool_warp_spawn;
-  public static Item fishing_bait;
   public static ItemSandstonePickaxe sandstone_pickaxe;
   public static ItemSandstoneAxe sandstone_axe;
   public static ItemSandstoneSpade sandstone_spade;
