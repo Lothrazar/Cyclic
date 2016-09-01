@@ -23,8 +23,14 @@ public class GuiFisher extends GuiBaseContainer {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
-    for (int k = 0; k < this.tile.getSizeInventory(); k++) {
+    for (int k = 0; k < TileEntityFishing.BAITSLOTS; k++) {
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerFisher.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerFisher.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    }
+    int row = 0, col = 0;
+    for (int i = 0; i <   TileEntityFishing.FISHSLOTS; i++) {
+      row = i / 3;// /3 will go 000, 111, 222
+      col = i % 3;  // and %3 will go 012 012 012
+      Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerFisher.SLOTX_FISH - 1 + row * Const.SQ, this.guiTop + ContainerFisher.SLOTY_FISH - 1+col * Const.SQ, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
   }
 

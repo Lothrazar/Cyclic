@@ -15,10 +15,15 @@ import net.minecraft.util.ITickable;
 public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITickable {
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
+  public static final int BAITSLOTS = 4;
+  public static final int FISHSLOTS = 9;
+  
+  
   public ArrayList<Block> waterBoth = new ArrayList<Block>();
   private ItemStack[] inv;
+  
   public TileEntityFishing() {
-    inv = new ItemStack[9];
+    inv = new ItemStack[BAITSLOTS+FISHSLOTS];
 
     waterBoth.add(Blocks.FLOWING_WATER);
     waterBoth.add(Blocks.WATER);
