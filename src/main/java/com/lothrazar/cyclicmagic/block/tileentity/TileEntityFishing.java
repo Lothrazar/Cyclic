@@ -21,7 +21,7 @@ import net.minecraft.world.storage.loot.LootTableList;
 public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITickable {
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
-  final static float SPEED = 0.1F;//0.001F // bigger == faster
+  final static float SPEED = 0.001F;//// bigger == faster
   public static final int RODSLOT = 1;
   public static final int FISHSLOTS = 15;
   private int toolSlot = 0;
@@ -35,81 +35,59 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   public boolean isValidPosition() {
     return waterBoth.contains(worldObj.getBlockState(pos.down()).getBlock()) &&
         waterBoth.contains(worldObj.getBlockState(pos.down(2)).getBlock()) &&
-        //  waterBoth.contains(worldObj.getBlockState(pos.down(3)).getBlock()   ) &&
         waterBoth.contains(worldObj.getBlockState(pos.north()).getBlock()) &&
         waterBoth.contains(worldObj.getBlockState(pos.east()).getBlock()) &&
         waterBoth.contains(worldObj.getBlockState(pos.west()).getBlock()) &&
         waterBoth.contains(worldObj.getBlockState(pos.south()).getBlock());
   }
   public boolean isEquipmentValid() {
-    return inv[toolSlot] != null;//fakePlayer != null && fakePlayer.get().getHeldItem(EnumHand.MAIN_HAND) != null;
+    return inv[toolSlot] != null;
   }
   @Override
   public void update() {
     Random rand = worldObj.rand;
-
     //make sure surrounded by water
     if (rand.nextDouble() < SPEED &&
         isValidPosition() && isEquipmentValid() &&
         this.worldObj instanceof WorldServer) {
-     
-      //      UtilEntity.dropItemStackInWorld(worldObj, pos, fishSpawned);
-      // sound of cast
-      //   worldIn.playSound((EntityPlayer)null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_BOBBER_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
-      //OOOoo. we can use the fake player method of equipped fishing rods
-      //even looking at the LUCK  == luck potion
-      //but also from luck of sea effect getMaxEnchantmentLevel(Enchantments.LUCK_OF_THE_SEA, player);
       LootContext.Builder lootcontext$builder = new LootContext.Builder((WorldServer) this.worldObj);
       float luck = (float) EnchantmentHelper.getEnchantmentLevel(Enchantments.LUCK_OF_THE_SEA, this.inv[0]);
       lootcontext$builder.withLuck(luck);
       for (ItemStack itemstack : this.worldObj.getLootTableManager().getLootTableFromLocation(LootTableList.GAMEPLAY_FISHING).generateLootForPools(this.worldObj.rand, lootcontext$builder.build())) {
-        //WATER_BUBBLE
-      //  System.out.println(itemstack.getDisplayName());
         UtilParticle.spawnParticle(worldObj, EnumParticleTypes.WATER_WAKE, pos.up());
         inv[toolSlot].attemptDamageItem(1, worldObj.rand);
-       // System.out.println("FISH DAAMGE"+ inv[toolSlot].getItemDamage());
-        if( inv[toolSlot].getItemDamage() >= inv[toolSlot].getMaxDamage()){
+        if (inv[toolSlot].getItemDamage() >= inv[toolSlot].getMaxDamage()) {
           inv[toolSlot] = null;
         }
-         
         for (int i = RODSLOT; i <= FISHSLOTS; i++) {
-          if(itemstack != null && itemstack.stackSize != 0){
-          itemstack = tryMergeStackIntoSlot(itemstack, i);
+          if (itemstack != null && itemstack.stackSize != 0) {
+            itemstack = tryMergeStackIntoSlot(itemstack, i);
           }
         }
         if (itemstack != null && itemstack.stackSize != 0) {
           //FULL
-         // System.out.println("DROP IN WORLD"+ itemstack.getDisplayName());
           UtilEntity.dropItemStackInWorld(worldObj, this.pos.down(), itemstack);
-          
-          
         }
       }
     }
   }
   private ItemStack tryMergeStackIntoSlot(ItemStack held, int furnaceSlot) {
-  //  System.out.println("Try merge into slot "+furnaceSlot);
     ItemStack current = this.getStackInSlot(furnaceSlot);
     boolean success = false;
     if (current == null) {
-     // System.out.println("current= null so insert  ");
       this.setInventorySlotContents(furnaceSlot, held);
       held = null;
       success = true;
     }
     else if (held.isItemEqual(current)) {
-     // System.out.println("current match so MERGE  ");
       success = true;
       UtilInventory.mergeItemsBetweenStacks(held, current);
     }
-  //  else
-   //   System.out.println("cannot merge, skip "+furnaceSlot);
     if (success) {
       if (held != null && held.stackSize == 0) {// so now we just fix if something is size zero
         held = null;
       }
       this.markDirty();
-      //      UtilSound.playSound(entityPlayer, SoundEvents.ENTITY_ITEM_PICKUP);
     }
     return held;
   }
@@ -147,27 +125,19 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   }
   @Override
   public void setInventorySlotContents(int index, ItemStack stack) {
-    
     inv[index] = stack;
     if (stack != null && stack.stackSize > getInventoryStackLimit()) {
       stack.stackSize = getInventoryStackLimit();
     }
-//    if(stack != null){
-//
-//      System.out.println("setInventorySlotContents"+stack.getDisplayName());
-//    }
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
-    if(side == EnumFacing.UP){
-      return new int[]{0};
-    }
+    if (side == EnumFacing.UP) { return new int[] { 0 }; }
     return new int[0];
   }
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
-    //    timer = tagCompound.getInteger(NBT_TIMER);
     NBTTagList tagList = tagCompound.getTagList(NBT_INV, 10);
     for (int i = 0; i < tagList.tagCount(); i++) {
       NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
@@ -179,7 +149,6 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
-    //    tagCompound.setInteger(NBT_TIMER, timer);
     NBTTagList itemList = new NBTTagList();
     for (int i = 0; i < inv.length; i++) {
       ItemStack stack = inv[i];
