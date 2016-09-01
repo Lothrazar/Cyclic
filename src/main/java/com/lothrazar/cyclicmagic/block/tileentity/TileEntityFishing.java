@@ -1,38 +1,29 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilInventory;
-import com.lothrazar.cyclicmagic.util.UtilItem;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
-import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootTableList;
-import net.minecraftforge.common.util.FakePlayer;
 
 public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITickable {
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
   final static float SPEED = 0.1F;//0.001F // bigger == faster
   public static final int RODSLOT = 1;
-  public static final int FISHSLOTS = 9;
+  public static final int FISHSLOTS = 12;
   private int toolSlot = 0;
   public ArrayList<Block> waterBoth = new ArrayList<Block>();
   private ItemStack[] inv;
@@ -73,10 +64,10 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
       lootcontext$builder.withLuck(luck);
       for (ItemStack itemstack : this.worldObj.getLootTableManager().getLootTableFromLocation(LootTableList.GAMEPLAY_FISHING).generateLootForPools(this.worldObj.rand, lootcontext$builder.build())) {
         //WATER_BUBBLE
-        System.out.println(itemstack.getDisplayName());
+      //  System.out.println(itemstack.getDisplayName());
         UtilParticle.spawnParticle(worldObj, EnumParticleTypes.WATER_WAKE, pos.up());
         inv[toolSlot].attemptDamageItem(1, worldObj.rand);
-        System.out.println("FISH DAAMGE"+ inv[toolSlot].getItemDamage());
+       // System.out.println("FISH DAAMGE"+ inv[toolSlot].getItemDamage());
         if( inv[toolSlot].getItemDamage() >= inv[toolSlot].getMaxDamage()){
           inv[toolSlot] = null;
         }
@@ -88,7 +79,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
         }
         if (itemstack != null && itemstack.stackSize != 0) {
           //FULL
-          System.out.println("DROP IN WORLD"+ itemstack.getDisplayName());
+         // System.out.println("DROP IN WORLD"+ itemstack.getDisplayName());
           UtilEntity.dropItemStackInWorld(worldObj, this.pos.down(), itemstack);
           
           
@@ -97,22 +88,22 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     }
   }
   private ItemStack tryMergeStackIntoSlot(ItemStack held, int furnaceSlot) {
-    System.out.println("Try merge into slot "+furnaceSlot);
+  //  System.out.println("Try merge into slot "+furnaceSlot);
     ItemStack current = this.getStackInSlot(furnaceSlot);
     boolean success = false;
     if (current == null) {
-      System.out.println("current= null so insert  ");
+     // System.out.println("current= null so insert  ");
       this.setInventorySlotContents(furnaceSlot, held);
       held = null;
       success = true;
     }
     else if (held.isItemEqual(current)) {
-      System.out.println("current match so MERGE  ");
+     // System.out.println("current match so MERGE  ");
       success = true;
       UtilInventory.mergeItemsBetweenStacks(held, current);
     }
-    else
-      System.out.println("cannot merge, skip "+furnaceSlot);
+  //  else
+   //   System.out.println("cannot merge, skip "+furnaceSlot);
     if (success) {
       if (held != null && held.stackSize == 0) {// so now we just fix if something is size zero
         held = null;
@@ -156,15 +147,22 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   }
   @Override
   public void setInventorySlotContents(int index, ItemStack stack) {
+    
     inv[index] = stack;
     if (stack != null && stack.stackSize > getInventoryStackLimit()) {
       stack.stackSize = getInventoryStackLimit();
     }
+//    if(stack != null){
+//
+//      System.out.println("setInventorySlotContents"+stack.getDisplayName());
+//    }
   }
-  private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots for all faces
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
-    return hopperInput;
+    if(side == EnumFacing.UP){
+      return new int[]{0};
+    }
+    return new int[0];
   }
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
