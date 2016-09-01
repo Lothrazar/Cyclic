@@ -49,9 +49,9 @@ public class BlockFishing extends Block {
         else if (tile.isEquipmentValid() == false) {
           UtilChat.addChatMessage(player, "tile.block_fishing.invalidequip");
         }
-        else {
-          UtilChat.addChatMessage(player, "tile.block_fishing.valid");
-        }
+//        else {
+//          UtilChat.addChatMessage(player, "tile.block_fishing.valid");
+//        }
       }
     }
     else{

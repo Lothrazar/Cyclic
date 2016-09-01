@@ -2,23 +2,45 @@ package com.lothrazar.cyclicmagic.gui.fisher;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFishing;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiFisher extends GuiBaseContainer {
   public static final ResourceLocation SLOTFISH = new ResourceLocation(Const.MODID,"textures/gui/inventory_slot_fish.png");
+  private TileEntityFishing tile;
 
   public GuiFisher(InventoryPlayer inventoryPlayer, TileEntityFishing tileEntity) {
     super(new ContainerFisher(inventoryPlayer, tileEntity));
-   // tile = tileEntity;
+    tile = tileEntity;
   }
   public GuiFisher(Container c) {
     super(c);
   }
   public String getTitle() {
     return "tile.block_fishing.name";
+  }
+  @SideOnly(Side.CLIENT)
+  @Override
+  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+   super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+    if (tile.isEquipmentValid() && tile.isValidPosition() == false) {
+      String s = UtilChat.lang("tile.block_fishing.invalidpos.gui1");
+      int x = 12+this.xSize / 3 - this.fontRendererObj.getStringWidth(s);
+      int y = 42;
+      this.fontRendererObj.drawString(s, x, y, 4210752);
+      y += 14;
+      s = UtilChat.lang("tile.block_fishing.invalidpos.gui2");
+      this.fontRendererObj.drawString(s, x, y, 4210752);
+      y += 14;
+      s = UtilChat.lang("tile.block_fishing.invalidpos.gui3");
+      this.fontRendererObj.drawString(s, x, y, 4210752);
+    }
+ 
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
