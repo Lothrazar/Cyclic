@@ -3,7 +3,9 @@ import com.lothrazar.cyclicmagic.block.BlockFishing;
 import com.lothrazar.cyclicmagic.block.BlockScaffolding;
 import com.lothrazar.cyclicmagic.item.itemblock.ItemBlockScaffolding;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
+import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
 
 public class FragileBlockModule extends BaseModule {
@@ -20,6 +22,9 @@ public class FragileBlockModule extends BaseModule {
       BlockRegistry.block_fishing = new BlockFishing();
       BlockRegistry.registerBlock(BlockRegistry.block_fishing, "block_fishing");
       BlockRegistry.block_fishing.addRecipe();
+      Item fishing_bait = new Item();
+      ItemRegistry.addItem(fishing_bait, "fishing_bait");
+      ItemRegistry.fishing_bait = fishing_bait;
       
     }
   }

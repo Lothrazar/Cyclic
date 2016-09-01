@@ -78,12 +78,13 @@ public class ItemRegistry {
   public static ItemToolProspector tool_prospector;
   public static ItemToolWarp tool_warp_home;
   public static ItemToolWarp tool_warp_spawn;
+  public static Item fishing_bait;
   public static Item addItem(Item i, String key) {
     i.setUnlocalizedName(key);
     itemMap.put(key, i);
     return i;
   }
-  public static void registerItem(Item item, String name) {
+  private static void registerItem(Item item, String name) {
     registerItem(item, name, false);// default is not hidden
   }
   public static void registerItem(Item item, String name, boolean isHidden) {

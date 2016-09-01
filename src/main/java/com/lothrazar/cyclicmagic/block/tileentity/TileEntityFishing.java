@@ -15,7 +15,7 @@ import net.minecraft.util.ITickable;
 public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITickable {
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
-  public static final int BAITSLOTS = 4;
+  public static final int BAITSLOTS = 1;
   public static final int FISHSLOTS = 9;
   
   
