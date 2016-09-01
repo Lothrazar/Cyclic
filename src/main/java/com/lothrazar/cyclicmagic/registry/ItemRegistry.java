@@ -18,6 +18,9 @@ import com.lothrazar.cyclicmagic.item.ItemFoodHeart;
 import com.lothrazar.cyclicmagic.item.ItemFoodInventory;
 import com.lothrazar.cyclicmagic.item.ItemStorageBag;
 import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
+import com.lothrazar.cyclicmagic.item.ItemSandstoneAxe;
+import com.lothrazar.cyclicmagic.item.ItemSandstonePickaxe;
+import com.lothrazar.cyclicmagic.item.ItemSandstoneSpade;
 import com.lothrazar.cyclicmagic.item.ItemSleepingMat;
 import com.lothrazar.cyclicmagic.item.ItemSproutSeeds;
 import com.lothrazar.cyclicmagic.item.ItemToolHarvest;
@@ -79,6 +82,10 @@ public class ItemRegistry {
   public static ItemToolWarp tool_warp_home;
   public static ItemToolWarp tool_warp_spawn;
   public static Item fishing_bait;
+  public static ItemSandstonePickaxe sandstone_pickaxe;
+  public static ItemSandstoneAxe sandstone_axe;
+  public static ItemSandstoneSpade sandstone_spade;
+  public static Item sandstone_hoe;
   public static Item addItem(Item i, String key) {
     i.setUnlocalizedName(key);
     itemMap.put(key, i);

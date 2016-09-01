@@ -19,9 +19,9 @@ public class EmeraldArmorModule extends BaseModule {
   private boolean enableEmeraldGear;
   // thanks for help:
   // http://bedrockminer.jimdo.com/modding-tutorials/basic-modding-1-7/custom-tools-swords/
-  public static ToolMaterial TOOL_MATERIAL_EMERALD;
-  public static ArmorMaterial ARMOR_MATERIAL_EMERALD;
-  public final static Item REPAIR_EMERALD = Items.EMERALD;
+  public static ToolMaterial TOOL_MATERIAL;
+  public static ArmorMaterial ARMOR_MATERIAL;
+  public final static Item REPAIR = Items.EMERALD;
   private static final int maxDamageFactorDiamond = 33;
   private static final String emeraldName = "emerald";
   public EmeraldArmorModule() {
@@ -35,7 +35,7 @@ public class EmeraldArmorModule extends BaseModule {
   //  private static final int    diamondDurability       = 33;
   //private static final int[]  diamondreductionAmounts = new int[] { 3, 6, 8, 3 };
   private void registerMaterials() {
-    ARMOR_MATERIAL_EMERALD = EnumHelper.addArmorMaterial(emeraldName, Const.MODRES + emeraldName,
+    ARMOR_MATERIAL = EnumHelper.addArmorMaterial(emeraldName, Const.MODRES + emeraldName,
         maxDamageFactorDiamond - 2, //affects DURABILITY 
         new int[] {
             ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.FEET), ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.LEGS), ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.CHEST), ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.HEAD)
@@ -45,7 +45,7 @@ public class EmeraldArmorModule extends BaseModule {
         ArmorMaterial.DIAMOND.getToughness() / 2);
     //max uses is durability ex The number of uses this material allows.
     //as of 1.9.4 :  (wood = 59, stone = 131, iron = 250, diamond = 1561, gold = 32)
-    TOOL_MATERIAL_EMERALD = EnumHelper.addToolMaterial(emeraldName,
+    TOOL_MATERIAL = EnumHelper.addToolMaterial(emeraldName,
         ToolMaterial.DIAMOND.getHarvestLevel(),
         ToolMaterial.DIAMOND.getMaxUses() - 261,
         ToolMaterial.DIAMOND.getEfficiencyOnProperMaterial(),

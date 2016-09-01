@@ -40,6 +40,7 @@ public class ModuleRegistry {
     modules.add(new PotionModule());
     modules.add(new ProjectileModule());
     modules.add(new RecipeChangerModule());
+    modules.add(new SandstoneToolsModule());
     modules.add(new SaplingPlantDespawnModule());
     modules.add(new SkullNameFromSignModule());
     modules.add(new SlimepadModule());

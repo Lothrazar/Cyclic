@@ -9,15 +9,15 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class ItemEmeraldPickaxe extends ItemPickaxe implements IHasRecipe {
   public static final String name = "emerald_pickaxe";
   public ItemEmeraldPickaxe() {
-    super(EmeraldArmorModule.TOOL_MATERIAL_EMERALD);
+    super(EmeraldArmorModule.TOOL_MATERIAL);
   }
   @Override
   public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-    if (net.minecraftforge.oredict.OreDictionary.itemMatches(new ItemStack(EmeraldArmorModule.REPAIR_EMERALD), repair, false)) { return true; }
+    if (net.minecraftforge.oredict.OreDictionary.itemMatches(new ItemStack(EmeraldArmorModule.REPAIR), repair, false)) { return true; }
     return super.getIsRepairable(toRepair, repair);
   }
   @Override
   public void addRecipe() {
-    GameRegistry.addShapedRecipe(new ItemStack(this), "eee", " s ", " s ", 'e', new ItemStack(EmeraldArmorModule.REPAIR_EMERALD), 's', new ItemStack(Items.STICK));
+    GameRegistry.addShapedRecipe(new ItemStack(this), "eee", " s ", " s ", 'e', new ItemStack(EmeraldArmorModule.REPAIR), 's', new ItemStack(Items.STICK));
   }
 }

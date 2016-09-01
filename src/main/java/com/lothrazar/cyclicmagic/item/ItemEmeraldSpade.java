@@ -9,10 +9,10 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class ItemEmeraldSpade extends ItemSpade implements IHasRecipe {
   public static final String name = "emerald_spade";
   public ItemEmeraldSpade() {
-    super(EmeraldArmorModule.TOOL_MATERIAL_EMERALD);
+    super(EmeraldArmorModule.TOOL_MATERIAL);
   }
   @Override
   public void addRecipe() {
-    GameRegistry.addShapedRecipe(new ItemStack(this), " e ", " s ", " s ", 'e', new ItemStack(EmeraldArmorModule.REPAIR_EMERALD), 's', new ItemStack(Items.STICK));
+    GameRegistry.addShapedRecipe(new ItemStack(this), " e ", " s ", " s ", 'e', new ItemStack(EmeraldArmorModule.REPAIR), 's', new ItemStack(Items.STICK));
   }
 }
