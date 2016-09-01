@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.gui;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFishing;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMinerSmart;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineStructureBuilder;
@@ -6,6 +7,8 @@ import com.lothrazar.cyclicmagic.block.tileentity.TileMachinePlacer;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter;
 import com.lothrazar.cyclicmagic.gui.builder.ContainerBuilder;
 import com.lothrazar.cyclicmagic.gui.builder.GuiBuilder;
+import com.lothrazar.cyclicmagic.gui.fisher.ContainerFisher;
+import com.lothrazar.cyclicmagic.gui.fisher.GuiFisher;
 import com.lothrazar.cyclicmagic.gui.miner.ContainerMiner;
 import com.lothrazar.cyclicmagic.gui.miner.GuiMiner;
 import com.lothrazar.cyclicmagic.gui.password.ContainerPassword;
@@ -44,6 +47,7 @@ public class ModGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_PLACER = 6;
   public static final int GUI_INDEX_PASSWORD = 7;
   public static final int GUI_INDEX_MINER = 8;
+  public static final int GUI_INDEX_FISHER = 9;
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
     TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
@@ -87,6 +91,9 @@ public class ModGuiHandler implements IGuiHandler {
         return c;
       }
       break;
+    case GUI_INDEX_FISHER:
+      if (te != null && te instanceof TileEntityFishing) { return new ContainerFisher(player.inventory, (TileEntityFishing) te); }
+      break;
     }
     return null;
   }
@@ -107,7 +114,6 @@ public class ModGuiHandler implements IGuiHandler {
         ItemStack s = ItemStorageBag.getPlayerItemIfHeld(player);
         return new GuiStorage(new ContainerStorage(player, player.inventory, new InventoryStorage(player, s)));
       case GUI_INDEX_WAYPOINT:
-        //Minecraft.getMinecraft().displayGuiScreen(new GuiEnderBook(entityPlayer, stack));
         return new GuiEnderBook(player, UtilInventory.getPlayerItemIfHeld(player));
       case GUI_INDEX_BUILDER:
         if (te != null && te instanceof TileMachineStructureBuilder) { return new GuiBuilder(player.inventory, (TileMachineStructureBuilder) te); }
@@ -120,6 +126,9 @@ public class ModGuiHandler implements IGuiHandler {
         break;
       case GUI_INDEX_MINER:
         if (te != null && te instanceof TileMachineMinerSmart) { return new GuiMiner(player.inventory, (TileMachineMinerSmart) te); }
+        break;
+      case GUI_INDEX_FISHER:
+        if (te != null && te instanceof TileEntityFishing) { return new GuiFisher(player.inventory, (TileEntityFishing) te); }
         break;
       }
     }
