@@ -10,7 +10,7 @@ public class ItemSandstoneAxe extends ItemAxe implements IHasRecipe {
   public static final String name = "sandstone_axe";
   public ItemSandstoneAxe() {
     // protected ItemAxe(Item.ToolMaterial material, int damage, int speed)
-    super(SandstoneToolsModule.TOOL_MATERIAL, 6, -3);
+    super(SandstoneToolsModule.TOOL_MATERIAL, 6, -3.2F);
   }
   @Override
   public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
