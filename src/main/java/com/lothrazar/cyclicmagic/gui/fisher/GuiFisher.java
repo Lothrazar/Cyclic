@@ -5,9 +5,11 @@ import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.util.ResourceLocation;
 
 public class GuiFisher extends GuiBaseContainer {
- // private TileEntityFishing tile;
+  public static final ResourceLocation SLOTFISH = new ResourceLocation(Const.MODID,"textures/gui/inventory_slot_fish.png");
+
   public GuiFisher(InventoryPlayer inventoryPlayer, TileEntityFishing tileEntity) {
     super(new ContainerFisher(inventoryPlayer, tileEntity));
    // tile = tileEntity;
@@ -22,10 +24,11 @@ public class GuiFisher extends GuiBaseContainer {
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0;
-    this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
+    this.mc.getTextureManager().bindTexture(SLOTFISH);
     for (int k = 0; k < TileEntityFishing.RODSLOT; k++) {
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerFisher.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerFisher.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
+    this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     int row = 0, col = 0;
     for (int i = 0; i <   TileEntityFishing.FISHSLOTS; i++) {
       row = i / 3;// /3 will go 000, 111, 222
