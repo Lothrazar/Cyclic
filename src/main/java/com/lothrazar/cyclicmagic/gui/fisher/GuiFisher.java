@@ -7,10 +7,10 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 
 public class GuiFisher extends GuiBaseContainer {
-  private TileEntityFishing tile;
+ // private TileEntityFishing tile;
   public GuiFisher(InventoryPlayer inventoryPlayer, TileEntityFishing tileEntity) {
     super(new ContainerFisher(inventoryPlayer, tileEntity));
-    tile = tileEntity;
+   // tile = tileEntity;
   }
   public GuiFisher(Container c) {
     super(c);

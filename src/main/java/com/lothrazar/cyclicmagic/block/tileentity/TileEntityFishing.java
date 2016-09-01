@@ -23,7 +23,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   private static final String NBT_SLOT = "Slot";
   final static float SPEED = 0.1F;//0.001F // bigger == faster
   public static final int RODSLOT = 1;
-  public static final int FISHSLOTS = 12;
+  public static final int FISHSLOTS = 15;
   private int toolSlot = 0;
   public ArrayList<Block> waterBoth = new ArrayList<Block>();
   private ItemStack[] inv;

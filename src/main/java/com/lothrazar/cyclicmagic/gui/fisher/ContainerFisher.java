@@ -3,7 +3,6 @@ import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFishing;
 import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.SlotItemRestricted;
 import com.lothrazar.cyclicmagic.gui.SlotOutputOnly;
-import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -14,8 +13,8 @@ import net.minecraft.item.ItemStack;
 public class ContainerFisher extends ContainerBaseMachine {
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
   public static final int SLOTX_START = 30;
-  public static final int SLOTY = 28;
-  public static final int SLOTX_FISH = 99;
+  public static final int SLOTY = 38;
+  public static final int SLOTX_FISH = 80;
   public static final int SLOTY_FISH = 20;
   protected TileEntityFishing tileEntity;
   public ContainerFisher(InventoryPlayer inventoryPlayer, TileEntityFishing te) {

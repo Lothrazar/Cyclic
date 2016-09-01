@@ -2,12 +2,9 @@ package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.block.BlockFishing;
 import com.lothrazar.cyclicmagic.block.BlockScaffolding;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFishing;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMinerSmart;
 import com.lothrazar.cyclicmagic.item.itemblock.ItemBlockScaffolding;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
-import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
-import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
