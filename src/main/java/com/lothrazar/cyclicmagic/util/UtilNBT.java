@@ -17,12 +17,14 @@ public class UtilNBT {
     return position.getX() + "," + position.getY() + "," + position.getZ();
   }
   public static void setItemStackNBTVal(ItemStack item, String prop, int value) {
+    if(item == null){return;}
     if (item.getTagCompound() == null) {
       item.setTagCompound(new NBTTagCompound());
     }
     item.getTagCompound().setInteger(prop, value);
   }
   public static int getItemStackNBTVal(ItemStack held, String prop) {
+    if(held == null){return 0;}
     NBTTagCompound tags = getItemStackNBT(held);
     if (!tags.hasKey(prop)) { return 0; }
     return tags.getInteger(prop);

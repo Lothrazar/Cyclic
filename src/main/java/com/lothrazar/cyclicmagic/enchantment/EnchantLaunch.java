@@ -82,7 +82,9 @@ public class EnchantLaunch extends Enchantment {
       uses++;
       if (uses >= level) { // level is maxuses
         //now block useage for a while
-        p.getCooldownTracker().setCooldown(feet.getItem(), cooldown);
+        if (feet != null) {
+          p.getCooldownTracker().setCooldown(feet.getItem(), cooldown);
+        }
         uses = 0;
       }
       UtilNBT.setItemStackNBTVal(feet, NBT_USES, uses);

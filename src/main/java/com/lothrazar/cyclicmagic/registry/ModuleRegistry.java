@@ -12,6 +12,7 @@ public class ModuleRegistry {
     modules.add(new CommandModule());
     modules.add(new ConsumeablesModule());
     modules.add(new ConveyorPlateModule());
+    modules.add(new CharmModule());
     modules.add(new DispenserBehaviorModule());
     modules.add(new DropNametagDeathModule());
     modules.add(new EditSignBarehandModule());
