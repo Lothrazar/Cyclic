@@ -7,11 +7,7 @@ import com.lothrazar.cyclicmagic.item.BaseItem;
 import com.lothrazar.cyclicmagic.item.ItemAppleEmerald;
 import com.lothrazar.cyclicmagic.item.ItemChestSack;
 import com.lothrazar.cyclicmagic.item.ItemChestSackEmpty;
-import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
-import com.lothrazar.cyclicmagic.item.ItemEmeraldArmor;
 import com.lothrazar.cyclicmagic.item.ItemEnderBook;
-import com.lothrazar.cyclicmagic.item.ItemToolPearlReuse;
-import com.lothrazar.cyclicmagic.item.ItemToolProspector;
 import com.lothrazar.cyclicmagic.item.ItemFoodCorruptedChorus;
 import com.lothrazar.cyclicmagic.item.ItemFoodCrafting;
 import com.lothrazar.cyclicmagic.item.ItemFoodHeart;
@@ -20,10 +16,18 @@ import com.lothrazar.cyclicmagic.item.ItemStorageBag;
 import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
 import com.lothrazar.cyclicmagic.item.ItemSleepingMat;
 import com.lothrazar.cyclicmagic.item.ItemSproutSeeds;
-import com.lothrazar.cyclicmagic.item.ItemToolHarvest;
-import com.lothrazar.cyclicmagic.item.ItemToolSpawnInspect;
-import com.lothrazar.cyclicmagic.item.ItemToolSpelunker;
+import com.lothrazar.cyclicmagic.item.gear.ItemEmeraldArmor;
+import com.lothrazar.cyclicmagic.item.gear.ItemSandstoneAxe;
+import com.lothrazar.cyclicmagic.item.gear.ItemSandstonePickaxe;
+import com.lothrazar.cyclicmagic.item.gear.ItemSandstoneSpade;
 import com.lothrazar.cyclicmagic.item.projectile.*;
+import com.lothrazar.cyclicmagic.item.tool.ItemCyclicWand;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolHarvest;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolPearlReuse;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolProspector;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolSpawnInspect;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolSpelunker;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolWarp;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -75,12 +79,18 @@ public class ItemRegistry {
   public static Item emerald_hoe;
   public static ItemToolSpelunker tool_spelunker;
   public static ItemToolProspector tool_prospector;
+  public static ItemToolWarp tool_warp_home;
+  public static ItemToolWarp tool_warp_spawn;
+  public static ItemSandstonePickaxe sandstone_pickaxe;
+  public static ItemSandstoneAxe sandstone_axe;
+  public static ItemSandstoneSpade sandstone_spade;
+  public static Item sandstone_hoe;
   public static Item addItem(Item i, String key) {
     i.setUnlocalizedName(key);
     itemMap.put(key, i);
     return i;
   }
-  public static void registerItem(Item item, String name) {
+  private static void registerItem(Item item, String name) {
     registerItem(item, name, false);// default is not hidden
   }
   public static void registerItem(Item item, String name, boolean isHidden) {

@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.spell;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
-import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
+import com.lothrazar.cyclicmagic.item.tool.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.net.PacketSpellFromServer;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;

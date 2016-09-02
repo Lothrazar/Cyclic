@@ -3,6 +3,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
@@ -67,5 +68,13 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     // from the server. Called on client only.
     this.readFromNBT(pkt.getNbtCompound());
     super.onDataPacket(net, pkt);
+  }
+  @Override
+  public SPacketUpdateTileEntity getUpdatePacket() {//getDescriptionPacket() {
+    // Gathers data into a packet (S35PacketUpdateTileEntity) that is to be
+    // sent to the client. Called on server only.
+    NBTTagCompound syncData = new NBTTagCompound();
+    this.writeToNBT(syncData);
+    return new SPacketUpdateTileEntity(this.pos, 1, syncData);
   }
 }

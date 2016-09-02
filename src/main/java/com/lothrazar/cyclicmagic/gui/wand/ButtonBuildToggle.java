@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
-import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
+import com.lothrazar.cyclicmagic.item.tool.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.net.PacketWandGui;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.client.Minecraft;

@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.gui.wand;
 import java.util.ArrayList;
 import java.util.Random;
-import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
+import com.lothrazar.cyclicmagic.item.tool.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;

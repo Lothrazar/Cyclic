@@ -4,6 +4,7 @@ import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.block.BlockBucketStorage;
 import com.lothrazar.cyclicmagic.block.BlockStructureBuilder;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre;
+import com.lothrazar.cyclicmagic.block.BlockFishing;
 import com.lothrazar.cyclicmagic.block.BlockHarvester;
 import com.lothrazar.cyclicmagic.block.BlockMagnet;
 import com.lothrazar.cyclicmagic.block.BlockMiner;
@@ -42,6 +43,7 @@ public class BlockRegistry {
   public static BlockPlacer placer_block;
   public static BlockPassword password_block;
   public static BlockMinerSmart block_miner_smart;
+  public static BlockFishing block_fishing;
   //lots of helpers/overrides with defaults
   public static void registerBlock(Block b, String name) {
     registerBlock(b, name, false);

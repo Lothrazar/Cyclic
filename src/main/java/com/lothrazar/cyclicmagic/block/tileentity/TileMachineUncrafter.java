@@ -95,21 +95,6 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
     tagCompound.setTag(NBT_INV, itemList);
     return super.writeToNBT(tagCompound);
   }
-  @Override
-  public SPacketUpdateTileEntity getUpdatePacket() {//getDescriptionPacket() {
-    // Gathers data into a packet (S35PacketUpdateTileEntity) that is to be
-    // sent to the client. Called on server only.
-    NBTTagCompound syncData = new NBTTagCompound();
-    this.writeToNBT(syncData);
-    return new SPacketUpdateTileEntity(this.pos, 1, syncData);
-  }
-  @Override
-  public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-    // Extracts data from a packet (S35PacketUpdateTileEntity) that was sent
-    // from the server. Called on client only.
-    this.readFromNBT(pkt.getNbtCompound());
-    super.onDataPacket(net, pkt);
-  }
   public int getTimer() {
     return timer;
   }

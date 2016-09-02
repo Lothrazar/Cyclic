@@ -1,42 +1,30 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
-import java.lang.ref.WeakReference;
 import java.util.UUID;
-import com.google.common.base.Charsets;
-import com.mojang.authlib.GameProfile;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.EnumPacketDirection;
-import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
-import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.common.util.FakePlayerFactory;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 
 /**
  * 
  * SEE TileMachineMiner
  * 
  */
-public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
+public class TileMachineMinerSmart extends TileEntityBaseMachineInvoPlayer {
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
   // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
-  public static final GameProfile breakerProfile = new GameProfile(UUID.nameUUIDFromBytes("CyclicFakePlayer2".getBytes(Charsets.UTF_8)), "CyclicFakePlayer2");
-  private UUID uuid;
+ 
   public static int maxHeight = 10;
   private boolean isCurrentlyMining;
-  private WeakReference<FakePlayer> fakePlayer;
   private float curBlockDamage;
   private boolean firstTick = true;
   private BlockPos targetPos = null;
@@ -167,21 +155,6 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
       targetPos = targetPos.offset(EnumFacing.WEST, -1 * randEW);
     }
     return;
-  }
-  private void initFakePlayer() {
-    if (uuid == null) {
-      uuid = UUID.randomUUID();
-      IBlockState state = worldObj.getBlockState(this.pos);
-      worldObj.notifyBlockUpdate(pos, state, state, 3);
-    }
-    fakePlayer = new WeakReference<FakePlayer>(FakePlayerFactory.get((WorldServer) worldObj, breakerProfile));
-    fakePlayer.get().onGround = true;
-    fakePlayer.get().connection = new NetHandlerPlayServer(FMLCommonHandler.instance().getMinecraftServerInstance(), new NetworkManager(EnumPacketDirection.SERVERBOUND), fakePlayer.get()) {
-      @SuppressWarnings("rawtypes")
-      @Override
-      public void sendPacket(Packet packetIn) {
-      }
-    };
   }
   private static final String NBTMINING = "mining";
   private static final String NBTDAMAGE = "curBlockDamage";

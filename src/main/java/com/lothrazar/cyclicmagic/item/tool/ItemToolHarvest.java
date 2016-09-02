@@ -1,6 +1,7 @@
-package com.lothrazar.cyclicmagic.item;
+package com.lothrazar.cyclicmagic.item.tool;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.item.BaseTool;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilHarvestCrops;
 import com.lothrazar.cyclicmagic.util.UtilHarvestCrops.HarestCropsConfig;

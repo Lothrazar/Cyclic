@@ -1,9 +1,10 @@
-package com.lothrazar.cyclicmagic.item;
+package com.lothrazar.cyclicmagic.item.tool;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.item.BaseTool;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;

@@ -1,8 +1,12 @@
 package com.lothrazar.cyclicmagic.item;
+import java.util.List;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.util.UtilChat;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
-public class BaseItem extends Item {
+public abstract class BaseItem extends Item {
   private boolean hideFromCreativeTab = false;
   public BaseItem setHidden() {
     this.hideFromCreativeTab = true;
@@ -10,5 +14,14 @@ public class BaseItem extends Item {
   }
   public void register(String name) {
     ItemRegistry.registerItem(this, name, this.hideFromCreativeTab);
+  }
+  public String getTooltip(){
+    return null;
+  }
+  @Override
+  public void addInformation(ItemStack held, EntityPlayer player, List<String> list, boolean par4) {
+    if(getTooltip() != null){
+      list.add(UtilChat.lang(getTooltip()));
+    }
   }
 }

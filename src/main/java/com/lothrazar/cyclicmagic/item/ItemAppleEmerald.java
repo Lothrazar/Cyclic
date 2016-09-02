@@ -4,7 +4,6 @@ import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityVillager;
@@ -80,9 +79,8 @@ public class ItemAppleEmerald extends ItemFood implements IHasRecipe {
     }
     return super.itemInteractionForEntity(itemstack, player, entity, hand);
   }
-  @Override
   public void addInformation(ItemStack held, EntityPlayer player, List<String> list, boolean par4) {
-    list.add(I18n.format("item.apple_emerald.text"));
+    list.add(UtilChat.lang("item.apple_emerald.text"));
   }
   @Override
   protected void onFoodEaten(ItemStack par1ItemStack, World world, EntityPlayer player) {
