@@ -1,7 +1,5 @@
 package com.lothrazar.cyclicmagic.module;
-import com.lothrazar.cyclicmagic.item.ItemCharmBoat;
-import com.lothrazar.cyclicmagic.item.ItemCharmFire;
-import com.lothrazar.cyclicmagic.item.ItemCharmVoid;
+import com.lothrazar.cyclicmagic.item.charm.*;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraftforge.common.config.Configuration;

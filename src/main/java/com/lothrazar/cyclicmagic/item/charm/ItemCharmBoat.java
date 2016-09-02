@@ -1,21 +1,18 @@
-package com.lothrazar.cyclicmagic.item;
+package com.lothrazar.cyclicmagic.item.charm;
 
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.item.BaseCharm;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityBoat;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.init.MobEffects;
-import net.minecraft.init.PotionTypes;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionUtils;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemCharmBoat extends BaseCharm implements IHasRecipe{
   private static final int durability = 2000;
   
-
   public ItemCharmBoat() {
     super(durability);
   }
@@ -54,8 +51,7 @@ public class ItemCharmBoat extends BaseCharm implements IHasRecipe{
 
   @Override
   public void addRecipe() {
-    ItemStack pot = new ItemStack(Items.POTIONITEM);
-    PotionUtils.addPotionToItemStack(pot, PotionTypes.WATER_BREATHING);
-    GameRegistry.addShapelessRecipe(new ItemStack(this), Items.BOAT,pot);
+    GameRegistry.addShapelessRecipe(new ItemStack(this), 
+        Items.BOAT,Items.FISH,Items.NETHER_WART,Items.REDSTONE,Items.GLOWSTONE_DUST,Items.GUNPOWDER);
   }
 }

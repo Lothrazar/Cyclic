@@ -1,14 +1,14 @@
-package com.lothrazar.cyclicmagic.item;
+package com.lothrazar.cyclicmagic.item.gear;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.module.EmeraldArmorModule;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemHoe;
+import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class ItemEmeraldHoe extends ItemHoe implements IHasRecipe {
-  public static final String name = "emerald_hoe";
-  public ItemEmeraldHoe() {
+public class ItemEmeraldPickaxe extends ItemPickaxe implements IHasRecipe {
+  public static final String name = "emerald_pickaxe";
+  public ItemEmeraldPickaxe() {
     super(EmeraldArmorModule.TOOL_MATERIAL);
   }
   @Override
@@ -18,7 +18,6 @@ public class ItemEmeraldHoe extends ItemHoe implements IHasRecipe {
   }
   @Override
   public void addRecipe() {
-    GameRegistry.addShapedRecipe(new ItemStack(this), "ee ", " s ", " s ", 'e', new ItemStack(EmeraldArmorModule.REPAIR), 's', new ItemStack(Items.STICK));
-    GameRegistry.addShapedRecipe(new ItemStack(this), " ee", " s ", " s ", 'e', new ItemStack(EmeraldArmorModule.REPAIR), 's', new ItemStack(Items.STICK));
+    GameRegistry.addShapedRecipe(new ItemStack(this), "eee", " s ", " s ", 'e', new ItemStack(EmeraldArmorModule.REPAIR), 's', new ItemStack(Items.STICK));
   }
 }

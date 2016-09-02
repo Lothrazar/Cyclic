@@ -1,15 +1,8 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
-import com.lothrazar.cyclicmagic.item.ItemCyclicWand;
+import com.lothrazar.cyclicmagic.item.tool.*;
 import com.lothrazar.cyclicmagic.item.ItemSleepingMat;
-import com.lothrazar.cyclicmagic.item.ItemToolHarvest;
-import com.lothrazar.cyclicmagic.item.ItemToolPearlReuse;
-import com.lothrazar.cyclicmagic.item.ItemToolProspector;
-import com.lothrazar.cyclicmagic.item.ItemToolPush;
-import com.lothrazar.cyclicmagic.item.ItemToolSpawnInspect;
-import com.lothrazar.cyclicmagic.item.ItemToolSpelunker;
-import com.lothrazar.cyclicmagic.item.ItemToolWarp;
 import com.lothrazar.cyclicmagic.net.PacketSpellShiftLeft;
 import com.lothrazar.cyclicmagic.net.PacketSpellShiftRight;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;

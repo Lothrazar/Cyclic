@@ -1,10 +1,10 @@
 package com.lothrazar.cyclicmagic.module;
-import com.lothrazar.cyclicmagic.item.ItemEmeraldArmor;
-import com.lothrazar.cyclicmagic.item.ItemEmeraldAxe;
-import com.lothrazar.cyclicmagic.item.ItemEmeraldHoe;
-import com.lothrazar.cyclicmagic.item.ItemEmeraldPickaxe;
-import com.lothrazar.cyclicmagic.item.ItemEmeraldSpade;
-import com.lothrazar.cyclicmagic.item.ItemEmeraldSword;
+import com.lothrazar.cyclicmagic.item.gear.ItemEmeraldArmor;
+import com.lothrazar.cyclicmagic.item.gear.ItemEmeraldAxe;
+import com.lothrazar.cyclicmagic.item.gear.ItemEmeraldHoe;
+import com.lothrazar.cyclicmagic.item.gear.ItemEmeraldPickaxe;
+import com.lothrazar.cyclicmagic.item.gear.ItemEmeraldSpade;
+import com.lothrazar.cyclicmagic.item.gear.ItemEmeraldSword;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Items;

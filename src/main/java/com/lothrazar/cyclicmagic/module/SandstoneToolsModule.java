@@ -1,8 +1,8 @@
 package com.lothrazar.cyclicmagic.module;
-import com.lothrazar.cyclicmagic.item.ItemSandstoneAxe;
-import com.lothrazar.cyclicmagic.item.ItemSandstoneHoe;
-import com.lothrazar.cyclicmagic.item.ItemSandstonePickaxe;
-import com.lothrazar.cyclicmagic.item.ItemSandstoneSpade;
+import com.lothrazar.cyclicmagic.item.gear.ItemSandstoneAxe;
+import com.lothrazar.cyclicmagic.item.gear.ItemSandstoneHoe;
+import com.lothrazar.cyclicmagic.item.gear.ItemSandstonePickaxe;
+import com.lothrazar.cyclicmagic.item.gear.ItemSandstoneSpade;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Blocks;

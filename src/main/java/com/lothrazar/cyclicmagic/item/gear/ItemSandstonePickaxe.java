@@ -1,14 +1,14 @@
-package com.lothrazar.cyclicmagic.item;
+package com.lothrazar.cyclicmagic.item.gear;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.module.SandstoneToolsModule;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemHoe;
+import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class ItemSandstoneHoe extends ItemHoe implements IHasRecipe {
-  public static final String name = "sandstone_hoe";
-  public ItemSandstoneHoe() {
+public class ItemSandstonePickaxe extends ItemPickaxe implements IHasRecipe {
+  public static final String name = "sandstone_pickaxe";
+  public ItemSandstonePickaxe() {
     super(SandstoneToolsModule.TOOL_MATERIAL);
   }
   @Override
@@ -18,7 +18,6 @@ public class ItemSandstoneHoe extends ItemHoe implements IHasRecipe {
   }
   @Override
   public void addRecipe() {
-    GameRegistry.addShapedRecipe(new ItemStack(this), "ee ", " s ", " s ", 'e', new ItemStack(SandstoneToolsModule.REPAIR), 's', new ItemStack(Items.STICK));
-    GameRegistry.addShapedRecipe(new ItemStack(this), " ee", " s ", " s ", 'e', new ItemStack(SandstoneToolsModule.REPAIR), 's', new ItemStack(Items.STICK));
+    GameRegistry.addShapedRecipe(new ItemStack(this), "eee", " s ", " s ", 'e', new ItemStack(SandstoneToolsModule.REPAIR), 's', new ItemStack(Items.STICK));
   }
 }
