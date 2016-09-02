@@ -21,7 +21,7 @@ import net.minecraft.world.storage.loot.LootTableList;
 public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITickable {
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
-  final static float SPEED = 0.001F;//// bigger == faster
+  final static float SPEED = 0.007F;//// bigger == faster
   public static final int RODSLOT = 1;
   public static final int FISHSLOTS = 15;
   private int toolSlot = 0;

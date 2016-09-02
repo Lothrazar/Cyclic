@@ -40,7 +40,13 @@ public class GuiFisher extends GuiBaseContainer {
       s = UtilChat.lang("tile.block_fishing.invalidpos.gui3");
       this.fontRendererObj.drawString(s, x, y, 4210752);
     }
- 
+    if (tile.isEquipmentValid() && tile.isValidPosition()) {
+
+      String s = UtilChat.lang("tile.block_fishing.progress");
+      int x = 4+this.xSize / 3 - this.fontRendererObj.getStringWidth(s);
+      int y = 50;
+      this.fontRendererObj.drawString(s, x, y, 4210752);
+    }
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {

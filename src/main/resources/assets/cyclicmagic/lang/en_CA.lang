@@ -237,6 +237,7 @@ tile.block_fishing.invalidpos.gui1=Needs water
 tile.block_fishing.invalidpos.gui2=every side
 tile.block_fishing.invalidpos.gui3=two below
 tile.block_fragile.name=Scaffolding
+tile.block_fishing.progress=Fishing...
 tile.block_fragile.tooltip=Breaks itself over time
 tile.block_miner.name=Block Miner
 tile.block_miner.tooltip=Single block auto-miner

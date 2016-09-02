@@ -105,13 +105,16 @@ public class ModMain {
   }
   /*
    * 
+   * 
+   * VOID CHARM
+   * 
+   * OBSIDIAN CHARM
+   * 
+   * SEA CHARM
+   * 
    * TODO: ideas/plans/features
    * 
    * Block user: takes a tool/item and uses fakePlayer to RIGHT CLICK
-   * 
-   * item / food / potion to warp back to world spawn
-   * 
-   * item with durability to return to your bed spawn point (if set)
    * 
    * Some sort of automatic potion drinker, similar to my old runestone system. a potion belt?
    *   item with its own internal inventory that only takes in potions
@@ -125,15 +128,10 @@ public class ModMain {
    *    
    *    a custom TNT that does not destroy any items or blocks -> for clearing area but not destroying stuff
    * 
-   * FISHING NET: In my really old MC 1.4.5 mod i had a fishing net block, texture was just cobweb combined with oak.  
-   *    Try to find that and revive it eh
-   *    aha its right here https://github.com/PrinceOfAmber/SamsPowerups/blob/06142623bb5da81af702e473d20f0da4273d222d/FarmingBlocks/src/main/java/com/lothrazar/samsfarmblocks/BlockFishing.java
-   * 
    * FARM BLOCK: give it a slot for shears, and a bunch of slots for buckets
    * then on collide with entity, it can do the milk/shear for you
    *   my old code that does the sheep part -> no inventory 
    *     https://github.com/PrinceOfAmber/SamsPowerups/blob/06142623bb5da81af702e473d20f0da4273d222d/FarmingBlocks/src/main/java/com/lothrazar/samsfarmblocks/BlockShearWool.java
-   *     
    *     
    * 
    * tool that detects light/brightness (same way that the spawn detector checks light) and auto places torch. uses durability instead of real torch
