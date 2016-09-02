@@ -51,7 +51,7 @@ public class ItemCharmBoat extends BaseCharm implements IHasRecipe{
 
   @Override
   public void addRecipe() {
-    GameRegistry.addShapelessRecipe(new ItemStack(this), 
-        Items.BOAT,Items.FISH,Items.NETHER_WART,Items.REDSTONE,Items.GLOWSTONE_DUST,Items.GUNPOWDER);
+//    GameRegistry.addShapelessRecipe(new ItemStack(this), 
+//        Items.BOAT,Items.FISH,Items.NETHER_WART,Items.REDSTONE,Items.GLOWSTONE_DUST,Items.GUNPOWDER);
   }
 }

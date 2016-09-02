@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.item.charm;
+import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.BaseCharm;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
@@ -11,7 +12,7 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ItemCharmVoid extends BaseCharm {
+public class ItemCharmVoid extends BaseCharm implements IHasRecipe {
   private static final int durability = 16;
   public ItemCharmVoid() {
     super(durability);
@@ -33,5 +34,10 @@ public class ItemCharmVoid extends BaseCharm {
        
       }
     }
+  }
+
+  @Override
+  public void addRecipe() { 
+    
   }
 }

@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.item.charm;
+import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.BaseCharm;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
@@ -12,7 +13,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 
-public class ItemCharmFire extends BaseCharm {
+public class ItemCharmFire extends BaseCharm implements IHasRecipe{
   private static final int durability = 16;
   private static final int seconds = 10;
   public ItemCharmFire() {
@@ -34,5 +35,10 @@ public class ItemCharmFire extends BaseCharm {
         UtilParticle.spawnParticle(worldIn, EnumParticleTypes.WATER_WAKE, living.getPosition().up());
       }
     }
+  }
+  @Override
+  public void addRecipe() {
+    // TODO Auto-generated method stub
+    
   }
 }
