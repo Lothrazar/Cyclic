@@ -5,8 +5,8 @@
     "1.9.4-recommended":  "1.2.0",
     "1.10-latest":  "1.1.0",
     "1.10-recommended": "1.1.0",
-    "1.10.2-latest":  "1.6.4",
-    "1.10.2-recommended": "1.6.4"
+    "1.10.2-latest":  "1.7.0",
+    "1.10.2-recommended": "1.7.0"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -43,6 +43,6 @@
 	,"1.6.2":"Structure Builder moves faster when skipping over blocked areas.  Tooltips added to many items.  Reset button added to cyclic wand gui.  Builder and Placer machines now don't let in items that aren't placeable as blocks.  Machines now let hoppers pull contents from below.  Tweak costs of a few recipes.  Add long 8:00 version of snow potion.  "
 	,"1.6.3":"New Controlled Miner added; it auto mines a 9x9 area, control the height, tool used, and blacklist.  Harvester range added to config, and increased default to 16.  Block Miner Advanced now starts at the level of the block instead of one below.  "
   	,"1.6.4":"Fix Item Magnet not pulling up off farmland to the hopper, and fix it not pulling items when they are 1 block away."
-  	,"1.7.0":"New Content: Automatic Fishing Net, Ender Wing, Ender Wing Prime, Fire Charm, Sailor Charm, Void Charm, Water Charm, Sanstone Tools.  Add reverse recipes for quartz block and snow block.  "
+  	,"1.7.0":"New Content: Automatic Fishing Net, Ender Wing, Ender Wing Prime, Fire Charm, Sailor Charm, Void Charm, Water Charm, Sandstone Tools.  Add reverse recipes for quartz block and snow block.  "
   }
 }
