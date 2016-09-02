@@ -48,7 +48,10 @@ public class ItemCharmBoat extends BaseCharm implements IHasRecipe{
       }
     }
   }
-
+  @Override
+  public String getTooltip(){
+    return "item.charm_boat.tooltip";
+  }
   @Override
   public void addRecipe() {
 //    GameRegistry.addShapelessRecipe(new ItemStack(this), 

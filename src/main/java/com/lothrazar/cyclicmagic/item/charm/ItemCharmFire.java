@@ -41,4 +41,8 @@ public class ItemCharmFire extends BaseCharm implements IHasRecipe{
     // TODO Auto-generated method stub
     
   }
+  @Override
+  public String getTooltip(){
+    return "item.charm_fire.tooltip";
+  }
 }

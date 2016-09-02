@@ -39,4 +39,8 @@ public class ItemCharmWater extends BaseCharm implements IHasRecipe {
   public void addRecipe() {
     // TODO Auto-generated method stub
   }
+  @Override
+  public String getTooltip(){
+    return "item.charm_water.tooltip";
+  }
 }

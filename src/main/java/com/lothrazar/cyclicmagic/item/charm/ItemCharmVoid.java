@@ -40,4 +40,8 @@ public class ItemCharmVoid extends BaseCharm implements IHasRecipe {
   public void addRecipe() { 
     
   }
+  @Override
+  public String getTooltip(){
+    return "item.charm_void.tooltip";
+  }
 }
