@@ -31,7 +31,7 @@ public class CharmModule extends BaseModule {
   @Override
   public void syncConfig(Configuration config) {
     enableFire = config.getBoolean("FireCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableSea = config.getBoolean("SeaCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableSea = config.getBoolean("SailorCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableVoid = config.getBoolean("VoidCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableWater = config.getBoolean("WaterCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }

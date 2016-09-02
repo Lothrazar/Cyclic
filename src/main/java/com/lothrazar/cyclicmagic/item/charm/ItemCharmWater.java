@@ -6,16 +6,19 @@ import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemCharmWater extends BaseCharm implements IHasRecipe {
   private static final int durability = 32;
-  private static final int seconds = 10;
+  private static final int seconds = 60;
   public ItemCharmWater() {
     super(durability);
   }
@@ -37,7 +40,14 @@ public class ItemCharmWater extends BaseCharm implements IHasRecipe {
   }
   @Override
   public void addRecipe() {
-    // TODO Auto-generated method stub
+    GameRegistry.addRecipe(new ItemStack(this), 
+        "r n", 
+        "ic ", 
+        "iir",
+        'c', new ItemStack(Items.FISH, 1, ItemFishFood.FishType.SALMON.getMetadata()),
+        'n', Items.NETHER_WART,
+        'r', Items.REDSTONE,
+        'i', Items.IRON_INGOT);
   }
   @Override
   public String getTooltip(){

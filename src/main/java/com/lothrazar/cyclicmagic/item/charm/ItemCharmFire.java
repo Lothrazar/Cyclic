@@ -6,12 +6,14 @@ import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemCharmFire extends BaseCharm implements IHasRecipe{
   private static final int durability = 16;
@@ -38,8 +40,14 @@ public class ItemCharmFire extends BaseCharm implements IHasRecipe{
   }
   @Override
   public void addRecipe() {
-    // TODO Auto-generated method stub
-    
+    GameRegistry.addRecipe(new ItemStack(this), 
+        "r n", 
+        "ic ", 
+        "iir",
+        'c', Items.BLAZE_ROD,
+        'n', Items.NETHER_WART,
+        'r', Items.REDSTONE,
+        'i', Items.IRON_INGOT);
   }
   @Override
   public String getTooltip(){
