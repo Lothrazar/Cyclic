@@ -22,12 +22,11 @@ public class ContainerFisher extends ContainerBaseMachine {
     for (int i = 0; i < TileEntityFishing.RODSLOT; i++) {
       addSlotToContainer(new SlotItemRestricted(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY, Items.FISHING_ROD));
     }
-     
     int s = TileEntityFishing.RODSLOT;
     int row = 0, col = 0;
     for (int i = 0; i < TileEntityFishing.FISHSLOTS; i++) { //so going from 0-9
       row = i / 3;// /3 will go 000, 111, 222
-      col = i % 3;  // and %3 will go 012 012 012
+      col = i % 3; // and %3 will go 012 012 012
       addSlotToContainer(new SlotOutputOnly(tileEntity, s, SLOTX_FISH + row * Const.SQ, SLOTY_FISH + col * Const.SQ));
       s++;
     }

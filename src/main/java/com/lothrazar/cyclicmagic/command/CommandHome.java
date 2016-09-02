@@ -16,7 +16,6 @@ public class CommandHome extends BaseCommand implements ICommand {
     if (ic instanceof EntityPlayer == false) { return; }
     EntityPlayer player = (EntityPlayer) ic;
     World world = player.worldObj;
-   
     UtilWorld.tryTpPlayerToBed(world, player);
   }
 }

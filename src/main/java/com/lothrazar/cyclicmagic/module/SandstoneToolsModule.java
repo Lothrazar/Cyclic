@@ -16,7 +16,6 @@ public class SandstoneToolsModule extends BaseModule {
   // thanks for help:
   // http://bedrockminer.jimdo.com/modding-tutorials/basic-modding-1-7/custom-tools-swords/
   public static ToolMaterial TOOL_MATERIAL;
-
   public final static Item REPAIR = Item.getItemFromBlock(Blocks.SANDSTONE);
   public SandstoneToolsModule() {
     super();
@@ -29,14 +28,13 @@ public class SandstoneToolsModule extends BaseModule {
   //  private static final int    diamondDurability       = 33;
   //private static final int[]  diamondreductionAmounts = new int[] { 3, 6, 8, 3 };
   private void registerMaterials() {
-
     //max uses is durability ex The number of uses this material allows.
     //as of 1.9.4 :  (wood = 59, stone = 131, iron = 250, diamond = 1561, gold = 32)
     TOOL_MATERIAL = EnumHelper.addToolMaterial("sandstone",
         ToolMaterial.STONE.getHarvestLevel(),
-        (ToolMaterial.STONE.getMaxUses() +  ToolMaterial.WOOD.getMaxUses())/2,
+        (ToolMaterial.STONE.getMaxUses() + ToolMaterial.WOOD.getMaxUses()) / 2,
         ToolMaterial.STONE.getEfficiencyOnProperMaterial(),
-        (ToolMaterial.STONE.getDamageVsEntity()+ToolMaterial.WOOD.getDamageVsEntity() )/2,
+        (ToolMaterial.STONE.getDamageVsEntity() + ToolMaterial.WOOD.getDamageVsEntity()) / 2,
         ToolMaterial.STONE.getEnchantability());
     // EnumHelper.addToolMaterial("emerald", 3, harvestLevel 3 same as diamond
     // 1600,3.5F, 5+25 );
@@ -44,7 +42,6 @@ public class SandstoneToolsModule extends BaseModule {
   @Override
   public void onInit() {
     if (enableSandstoneTools) {
-
       ItemRegistry.sandstone_pickaxe = new ItemSandstonePickaxe();
       ItemRegistry.addItem(ItemRegistry.sandstone_pickaxe, ItemSandstonePickaxe.name);
       ItemRegistry.sandstone_axe = new ItemSandstoneAxe();

@@ -21,7 +21,6 @@ public class ItemCharmBoat extends BaseCharm implements IHasRecipe {
   public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
     if (entityIn instanceof EntityPlayer) {
       EntityPlayer living = (EntityPlayer) entityIn;
-
       if (entityIn.getRidingEntity() instanceof EntityBoat) {
         EntityBoat boat = (EntityBoat) entityIn.getRidingEntity();
         if (living.moveForward > 0) {
@@ -42,9 +41,9 @@ public class ItemCharmBoat extends BaseCharm implements IHasRecipe {
   }
   @Override
   public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this), 
-        "r n", 
-        "ic ", 
+    GameRegistry.addRecipe(new ItemStack(this),
+        "r n",
+        "ic ",
         "iir",
         'c', Items.ARMOR_STAND,
         'n', Items.GUNPOWDER,

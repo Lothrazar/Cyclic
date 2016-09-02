@@ -109,36 +109,43 @@ public class ModMain {
    * 
    * Block user: takes a tool/item and uses fakePlayer to RIGHT CLICK
    *
-   *    a custom TNT that does not destroy any items or blocks -> for clearing area but not destroying stuff
+   * a custom TNT that does not destroy any items or blocks -> for clearing area
+   * but not destroying stuff
    * 
    * FARM BLOCK: give it a slot for shears, and a bunch of slots for buckets
-   * then on collide with entity, it can do the milk/shear for you
-   *   my old code that does the sheep part -> no inventory 
-   *     https://github.com/PrinceOfAmber/SamsPowerups/blob/06142623bb5da81af702e473d20f0da4273d222d/FarmingBlocks/src/main/java/com/lothrazar/samsfarmblocks/BlockShearWool.java
-   *     
-   * tool that detects light/brightness (same way that the spawn detector checks light) and auto places torch. uses durability instead of real torch
-   *    right click tool to enable on/off state, and it just runs while in invo (not just hotbar)
-   *  
-   *Full achievement system: 
-       *- achieve registry
-       *- modules add their own achieves based on their items. for either craft or get item.
-       * http://jabelarminecraft.blogspot.ca/p/minecraft-forge-creating-custom.html
-       * along with public void onItemCraftedEvent(PlayerEvent.ItemCraftedEvent
-       * event) {
-       * 
+   * then on collide with entity, it can do the milk/shear for you my old code
+   * that does the sheep part -> no inventory
+   * https://github.com/PrinceOfAmber/SamsPowerups/blob/
+   * 06142623bb5da81af702e473d20f0da4273d222d/FarmingBlocks/src/main/java/com/
+   * lothrazar/samsfarmblocks/BlockShearWool.java
+   * 
+   * tool that detects light/brightness (same way that the spawn detector checks
+   * light) and auto places torch. uses durability instead of real torch right
+   * click tool to enable on/off state, and it just runs while in invo (not just
+   * hotbar)
+   * 
+   * Full achievement system: - achieve registry - modules add their own
+   * achieves based on their items. for either craft or get item.
+   * http://jabelarminecraft.blogspot.ca/p/minecraft-forge-creating-custom.html
+   * along with public void onItemCraftedEvent(PlayerEvent.ItemCraftedEvent
+   * event) {
+   * 
    * 
    * [ Trading Tool // gui ] Upgrade villager gui: either make my own or add
-       * buttons/some way to view all trades at once --inspired by extrautils
-       * trading table that is apparently gone after 1710
+   * buttons/some way to view all trades at once --inspired by extrautils
+   * trading table that is apparently gone after 1710
    * 
    * exp bottler: item with a gui/inventory put bottles in, toggle on/off and it
-   *         drains your exp into the bottles at a given ratio // a really good one exists in SuperCraftingFrame -> so not needed..
+   * drains your exp into the bottles at a given ratio // a really good one
+   * exists in SuperCraftingFrame -> so not needed..
    * 
-   * CYCLIC: toggle to tell how many times to rotate an item after placing (ex: stairs to be put upside down)
+   * CYCLIC: toggle to tell how many times to rotate an item after placing (ex:
+   * stairs to be put upside down)
    * 
-   * Block placers and structure builder:  add same rotator
+   * Block placers and structure builder: add same rotator
    * 
-   * Block placers and structure builder: import the existing random/pattern feature from cyclic wand
+   * Block placers and structure builder: import the existing random/pattern
+   * feature from cyclic wand
    * 
    * piston wand - ROTATE: STAIRS: allow switch from top to bottom
    * 

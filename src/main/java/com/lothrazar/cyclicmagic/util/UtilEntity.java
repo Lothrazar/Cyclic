@@ -170,15 +170,14 @@ public class UtilEntity {
     all.addAll(world.getEntitiesWithinAABB(EntityItem.class, range));
     all.addAll(world.getEntitiesWithinAABB(EntityXPOrb.class, range));
     int moved = 0;
-    double hdist,xDist,zDist;
+    double hdist, xDist, zDist;
     float speed;
     for (Entity eitem : all) {
       xDist = Math.abs(x - eitem.getPosition().getX());
       zDist = Math.abs(z - eitem.getPosition().getZ());
-      hdist = Math.sqrt(xDist*xDist + zDist * zDist);
+      hdist = Math.sqrt(xDist * xDist + zDist * zDist);
       if (hdist > ENTITY_PULL_DIST) {
         speed = (hdist > ENTITY_PULL_SPEED_CUTOFF) ? ITEMSPEEDFAR : ITEMSPEEDCLOSE;
-      
         Vector3.setEntityMotionFromVector(eitem, x, y, z, speed);
         moved++;
       } //else its basically on it, no point

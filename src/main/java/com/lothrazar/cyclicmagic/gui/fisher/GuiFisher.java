@@ -11,9 +11,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiFisher extends GuiBaseContainer {
-  public static final ResourceLocation SLOTFISH = new ResourceLocation(Const.MODID,"textures/gui/inventory_slot_fish.png");
+  public static final ResourceLocation SLOTFISH = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_fish.png");
   private TileEntityFishing tile;
-
   public GuiFisher(InventoryPlayer inventoryPlayer, TileEntityFishing tileEntity) {
     super(new ContainerFisher(inventoryPlayer, tileEntity));
     tile = tileEntity;
@@ -27,10 +26,10 @@ public class GuiFisher extends GuiBaseContainer {
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-   super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+    super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     if (tile.isEquipmentValid() && tile.isValidPosition() == false) {
       String s = UtilChat.lang("tile.block_fishing.invalidpos.gui1");
-      int x = 12+this.xSize / 3 - this.fontRendererObj.getStringWidth(s);
+      int x = 12 + this.xSize / 3 - this.fontRendererObj.getStringWidth(s);
       int y = 42;
       this.fontRendererObj.drawString(s, x, y, 4210752);
       y += 14;
@@ -41,9 +40,8 @@ public class GuiFisher extends GuiBaseContainer {
       this.fontRendererObj.drawString(s, x, y, 4210752);
     }
     if (tile.isEquipmentValid() && tile.isValidPosition()) {
-
       String s = UtilChat.lang("tile.block_fishing.progress");
-      int x = 4+this.xSize / 3 - this.fontRendererObj.getStringWidth(s);
+      int x = 4 + this.xSize / 3 - this.fontRendererObj.getStringWidth(s);
       int y = 50;
       this.fontRendererObj.drawString(s, x, y, 4210752);
     }
@@ -58,11 +56,10 @@ public class GuiFisher extends GuiBaseContainer {
     }
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     int row = 0, col = 0;
-    for (int i = 0; i <   TileEntityFishing.FISHSLOTS; i++) {
+    for (int i = 0; i < TileEntityFishing.FISHSLOTS; i++) {
       row = i / 3;// /3 will go 000, 111, 222
-      col = i % 3;  // and %3 will go 012 012 012
-      Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerFisher.SLOTX_FISH - 1 + row * Const.SQ, this.guiTop + ContainerFisher.SLOTY_FISH - 1+col * Const.SQ, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+      col = i % 3; // and %3 will go 012 012 012
+      Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerFisher.SLOTX_FISH - 1 + row * Const.SQ, this.guiTop + ContainerFisher.SLOTY_FISH - 1 + col * Const.SQ, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
   }
-
 }

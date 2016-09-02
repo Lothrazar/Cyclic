@@ -40,9 +40,9 @@ public class ItemCharmWater extends BaseCharm implements IHasRecipe {
   }
   @Override
   public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this), 
-        "r n", 
-        "ic ", 
+    GameRegistry.addRecipe(new ItemStack(this),
+        "r n",
+        "ic ",
         "iir",
         'c', new ItemStack(Items.FISH, 1, ItemFishFood.FishType.SALMON.getMetadata()),
         'n', Items.NETHER_WART,
@@ -50,7 +50,7 @@ public class ItemCharmWater extends BaseCharm implements IHasRecipe {
         'i', Items.IRON_INGOT);
   }
   @Override
-  public String getTooltip(){
+  public String getTooltip() {
     return "item.charm_water.tooltip";
   }
 }

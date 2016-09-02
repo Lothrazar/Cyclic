@@ -17,19 +17,16 @@ public class FragileBlockModule extends BaseModule {
       BlockRegistry.registerBlock(BlockRegistry.block_fragile, new ItemBlockScaffolding(BlockRegistry.block_fragile), BlockScaffolding.name);
       BlockRegistry.block_fragile.addRecipe();
     }
-    if(fishingBlock){
-
+    if (fishingBlock) {
       BlockRegistry.block_fishing = new BlockFishing();
       BlockRegistry.registerBlock(BlockRegistry.block_fishing, "block_fishing");
       BlockRegistry.block_fishing.addRecipe();
       GameRegistry.registerTileEntity(TileEntityFishing.class, Const.MODID + "block_fishing_te");
-      
     }
   }
   @Override
   public void syncConfig(Configuration config) {
     fragileEnabled = config.getBoolean("ScaffoldingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     fishingBlock = config.getBoolean("FishingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-
   }
 }

@@ -15,7 +15,7 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class ItemCharmFire extends BaseCharm implements IHasRecipe{
+public class ItemCharmFire extends BaseCharm implements IHasRecipe {
   private static final int durability = 16;
   private static final int seconds = 10;
   public ItemCharmFire() {
@@ -30,7 +30,6 @@ public class ItemCharmFire extends BaseCharm implements IHasRecipe{
       EntityPlayer living = (EntityPlayer) entityIn;
       if (living.isBurning() && !living.isPotionActive(MobEffects.FIRE_RESISTANCE)) { // do nothing if you already have
         living.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, seconds * Const.TICKS_PER_SEC, Const.Potions.I));
-
         super.damageCharm(living, stack, itemSlot);
         UtilSound.playSound(living, living.getPosition(), SoundEvents.BLOCK_FIRE_EXTINGUISH, living.getSoundCategory());
         UtilParticle.spawnParticle(worldIn, EnumParticleTypes.WATER_WAKE, living.getPosition());
@@ -40,9 +39,9 @@ public class ItemCharmFire extends BaseCharm implements IHasRecipe{
   }
   @Override
   public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this), 
-        "r n", 
-        "ic ", 
+    GameRegistry.addRecipe(new ItemStack(this),
+        "r n",
+        "ic ",
         "iir",
         'c', Items.BLAZE_ROD,
         'n', Items.NETHER_WART,
@@ -50,7 +49,7 @@ public class ItemCharmFire extends BaseCharm implements IHasRecipe{
         'i', Items.IRON_INGOT);
   }
   @Override
-  public String getTooltip(){
+  public String getTooltip() {
     return "item.charm_fire.tooltip";
   }
 }

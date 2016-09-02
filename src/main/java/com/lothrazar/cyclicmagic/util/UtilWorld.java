@@ -30,10 +30,8 @@ public class UtilWorld {
     int posZ = MathHelper.getRandomIntegerInRange(rand, zMin, zMax);
     return new BlockPos(posX, here.getY(), posZ);
   }
-  
-  
-  public static boolean tryTpPlayerToBed( World world, EntityPlayer player){
-    if(world.isRemote){return false;}
+  public static boolean tryTpPlayerToBed(World world, EntityPlayer player) {
+    if (world.isRemote) { return false; }
     if (player.dimension != 0) {
       UtilChat.addChatMessage(player, "command.home.overworld");
       return false;
@@ -58,7 +56,6 @@ public class UtilWorld {
     }
     UtilEntity.teleportWallSafe(player, world, pos);
     UtilSound.playSound(player, pos, SoundEvents.ENTITY_ENDERMEN_TELEPORT);
- 
     return true;
   }
 }
