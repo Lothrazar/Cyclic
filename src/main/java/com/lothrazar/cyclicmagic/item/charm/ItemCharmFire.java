@@ -32,7 +32,7 @@ public class ItemCharmFire extends BaseCharm implements IHasRecipe{
         living.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, seconds * Const.TICKS_PER_SEC, Const.Potions.I));
 
         super.damageCharm(living, stack, itemSlot);
-        UtilSound.playSound(living, worldIn.getSpawnPoint(), SoundEvents.BLOCK_FIRE_EXTINGUISH, living.getSoundCategory());
+        UtilSound.playSound(living, living.getPosition(), SoundEvents.BLOCK_FIRE_EXTINGUISH, living.getSoundCategory());
         UtilParticle.spawnParticle(worldIn, EnumParticleTypes.WATER_WAKE, living.getPosition());
         UtilParticle.spawnParticle(worldIn, EnumParticleTypes.WATER_WAKE, living.getPosition().up());
       }

@@ -31,7 +31,7 @@ public class ItemCharmVoid extends BaseCharm implements IHasRecipe {
         UtilEntity.teleportWallSafe(living, worldIn, new BlockPos(living.getPosition().getX(), 255, living.getPosition().getZ()));
         super.damageCharm(living,stack,itemSlot);
       
-        UtilSound.playSound(living, worldIn.getSpawnPoint(), SoundEvents.ENTITY_ENDERMEN_TELEPORT, living.getSoundCategory());
+        UtilSound.playSound(living,living.getPosition(), SoundEvents.ENTITY_ENDERMEN_TELEPORT, living.getSoundCategory());
         UtilParticle.spawnParticle(worldIn, EnumParticleTypes.PORTAL, living.getPosition());
        
       }

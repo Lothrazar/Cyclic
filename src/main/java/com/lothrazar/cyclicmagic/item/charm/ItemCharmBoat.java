@@ -21,7 +21,7 @@ public class ItemCharmBoat extends BaseCharm implements IHasRecipe {
   public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
     if (entityIn instanceof EntityPlayer) {
       EntityPlayer living = (EntityPlayer) entityIn;
-      //
+
       if (entityIn.getRidingEntity() instanceof EntityBoat) {
         EntityBoat boat = (EntityBoat) entityIn.getRidingEntity();
         if (living.moveForward > 0) {
