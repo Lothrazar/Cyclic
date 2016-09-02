@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.item;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityBoat;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
@@ -19,5 +21,21 @@ public class ItemCharmBoat extends BaseCharm {
   {
     //TODO 1: stop drowning
     //TODO 2: boat speed if possible
+
+    if (entityIn instanceof EntityPlayer) {
+      EntityPlayer living = (EntityPlayer) entityIn;
+      
+      if(entityIn.getRidingEntity() instanceof EntityBoat){
+
+        EntityBoat boat = (EntityBoat)entityIn.getRidingEntity();
+
+        if (living.moveForward > 0.0F) {
+          System.out.println("Boat Power!!!");
+          //pulled from private EntityBoat.controlBoat() fn
+          boat.motionX += net.minecraft.util.math.MathHelper.sin(-boat.rotationYaw * 0.017453292F);
+          boat.motionZ += net.minecraft.util.math.MathHelper.cos(boat.rotationYaw * 0.017453292F);
+        }
+      }
+    }
   }
 }

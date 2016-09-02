@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.item;
 import com.lothrazar.cyclicmagic.util.Const;
-import com.lothrazar.cyclicmagic.util.UtilItem;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.Entity;
@@ -13,8 +12,8 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 
 public class ItemCharmFire extends BaseCharm {
-  private static final int durability = 6;
-  private static final int seconds = 6;
+  private static final int durability = 16;
+  private static final int seconds = 10;
   public ItemCharmFire() {
     super(durability);
   }
@@ -27,7 +26,8 @@ public class ItemCharmFire extends BaseCharm {
       EntityPlayer living = (EntityPlayer) entityIn;
       if (living.isBurning() && !living.isPotionActive(MobEffects.FIRE_RESISTANCE)) { // do nothing if you already have
         living.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, seconds * Const.TICKS_PER_SEC, Const.Potions.I));
-        UtilItem.damageItem(living, stack);
+
+        super.damageCharm(living, stack, itemSlot);
         UtilSound.playSound(living, worldIn.getSpawnPoint(), SoundEvents.BLOCK_FIRE_EXTINGUISH, living.getSoundCategory());
         UtilParticle.spawnParticle(worldIn, EnumParticleTypes.WATER_WAKE, living.getPosition());
         UtilParticle.spawnParticle(worldIn, EnumParticleTypes.WATER_WAKE, living.getPosition().up());

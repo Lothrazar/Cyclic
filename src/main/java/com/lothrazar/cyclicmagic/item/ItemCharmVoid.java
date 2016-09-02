@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.item;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
-import com.lothrazar.cyclicmagic.util.UtilItem;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.Entity;
@@ -12,8 +11,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class ItemCharmVoid extends BaseCharm {
+  private static final int durability = 16;
   public ItemCharmVoid() {
-    super(64);
+    super(durability);
   }
 
   /**
@@ -25,7 +25,8 @@ public class ItemCharmVoid extends BaseCharm {
       EntityPlayer living = (EntityPlayer) entityIn;
       if (living.getPosition().getY() < -30) {
         UtilEntity.teleportWallSafe(living, worldIn, new BlockPos(living.getPosition().getX(), 255, living.getPosition().getZ()));
-        UtilItem.damageItem(living, stack);
+        super.damageCharm(living,stack,itemSlot);
+      
         UtilSound.playSound(living, worldIn.getSpawnPoint(), SoundEvents.ENTITY_ENDERMEN_TELEPORT, living.getSoundCategory());
         UtilParticle.spawnParticle(worldIn, EnumParticleTypes.PORTAL, living.getPosition());
        

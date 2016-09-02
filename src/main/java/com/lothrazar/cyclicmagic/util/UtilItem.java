@@ -20,9 +20,6 @@ public class UtilItem {
   public static void damageItem(EntityPlayer p, ItemStack s) {
     if (p.capabilities.isCreativeMode == false) {
       s.damageItem(1, p);
-      if(s.stackSize == 0){
-        s = null;
-      }
     }
   }
   public static String getRawName(Item item) {
