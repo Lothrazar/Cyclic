@@ -5,7 +5,6 @@ import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -17,7 +16,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemToolWarp extends BaseTool implements IHasRecipe {
-  private static final int cooldown = 300;//ticks not seconds
+  private static final int cooldown = 600;//ticks not seconds
   private static final int durability = 16;
   public static enum WarpType {
     BED, SPAWN
@@ -26,6 +25,10 @@ public class ItemToolWarp extends BaseTool implements IHasRecipe {
   public ItemToolWarp(WarpType type) {
     super(durability);
     warpType = type;
+  }
+  @SideOnly(Side.CLIENT)
+  public boolean hasEffect(ItemStack stack) {
+    return true;
   }
   @Override
   public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World world, EntityPlayer player, EnumHand hand) {
@@ -66,13 +69,30 @@ public class ItemToolWarp extends BaseTool implements IHasRecipe {
   }
   @Override
   public void addRecipe() {
-    GameRegistry.addShapedRecipe(new ItemStack(this),
-        "ere",
-        "rsr",
-        "ere",
-        'e', new ItemStack(Items.ENDER_EYE),
-        'r', new ItemStack(Blocks.LAPIS_BLOCK),
-        's', new ItemStack(Blocks.EMERALD_BLOCK));
-  
+    switch (warpType) {
+    case BED:
+      //goes to your BED (which can be anywhere)
+      GameRegistry.addShapedRecipe(new ItemStack(this),
+          " ft",
+          "ggf",
+          "dg ",
+          't', new ItemStack(Items.GHAST_TEAR),
+          'f', new ItemStack(Items.FEATHER),
+          'g', new ItemStack(Items.GOLD_INGOT),
+          'd', new ItemStack(Items.ENDER_EYE));
+      break;
+    case SPAWN:
+      //this one needs diamond but is cheaper. goes to worldspawn
+      GameRegistry.addShapedRecipe(new ItemStack(this),
+          " ff",
+          "ggf",
+          "dg ",
+          'f', new ItemStack(Items.FEATHER),
+          'g', new ItemStack(Items.GOLD_NUGGET),
+          'd', new ItemStack(Items.DIAMOND));
+      break;
+    default:
+      break;
+    }
   }
 }

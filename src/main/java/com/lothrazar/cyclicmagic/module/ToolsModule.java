@@ -48,7 +48,7 @@ public class ToolsModule extends BaseModule {
   private boolean enableCyclicWand;
   private boolean enableProspector;
   private boolean enableCavefinder;
-  private boolean enableWarpTool;
+  private boolean enableWarpHomeTool;
   private boolean enableWarpSpawnTool;
   @Override
   public void onInit() {
@@ -97,24 +97,21 @@ public class ToolsModule extends BaseModule {
       spellHud = new SpellHud();
       ModMain.instance.events.addEvent(this);
     }
-    if(enableWarpTool){
+    if (enableWarpHomeTool) {
       ItemRegistry.tool_warp_home = new ItemToolWarp(ItemToolWarp.WarpType.BED);
       ItemRegistry.addItem(ItemRegistry.tool_warp_home, "tool_warp_home");
-     
     }
-    if(enableWarpSpawnTool){
+    if (enableWarpSpawnTool) {
       ItemRegistry.tool_warp_spawn = new ItemToolWarp(ItemToolWarp.WarpType.SPAWN);
       ItemRegistry.addItem(ItemRegistry.tool_warp_spawn, "tool_warp_spawn");
-    
     }
   }
   @Override
   public void syncConfig(Configuration config) {
     //TODO: this config should be INSIDE the item mat
     ItemSleepingMat.doPotions = config.getBoolean("SleepingMatPotions", Const.ConfigCategory.items, true, "False will disable the potion effects given by the Sleeping Mat");
-    enableWarpTool = config.getBoolean("AmuletHome", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableWarpSpawnTool = config.getBoolean("AmuletSpawn", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    
+    enableWarpHomeTool = config.getBoolean("EnderWingPrime", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableWarpSpawnTool = config.getBoolean("EnderWing", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableSpawnInspect = config.getBoolean("SpawnDetector", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablePearlReuse = config.getBoolean("EnderOrb", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableHarvestWeeds = config.getBoolean("BrushScythe", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
