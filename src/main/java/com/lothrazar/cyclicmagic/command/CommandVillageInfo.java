@@ -30,13 +30,13 @@ public class CommandVillageInfo extends BaseCommand implements ICommand {
     else {
       int doors = closest.getNumVillageDoors();
       int villagers = closest.getNumVillagers();
-      UtilChat.addChatMessage(sender, UtilChat.lang("command.villageinfo.popul") + "  " + String.format("%d", villagers));
-      UtilChat.addChatMessage(sender, UtilChat.lang("command.villageinfo.doors") + "  " + String.format("%d", doors));
+      UtilChat.addChatMessage(sender, UtilChat.lang("command.villageinfo.popul") + String.format("%d", villagers));
+      UtilChat.addChatMessage(sender, UtilChat.lang("command.villageinfo.doors") + String.format("%d", doors));
       if (sender instanceof EntityPlayer) {
         // command blocks/server controllers do not have reputation
         EntityPlayer player = (EntityPlayer) sender;
         int rep = closest.getPlayerReputation(player.getName());
-        UtilChat.addChatMessage(sender, player.getName() + " " + UtilChat.lang("command.villageinfo.reputation") + "  " + String.format("%d", rep));
+        UtilChat.addChatMessage(sender, player.getName() + " " + UtilChat.lang("command.villageinfo.reputation") + String.format("%d", rep));
       }
       dX = pos.getX() - closest.getCenter().getX();
       dZ = pos.getZ() - closest.getCenter().getZ();
