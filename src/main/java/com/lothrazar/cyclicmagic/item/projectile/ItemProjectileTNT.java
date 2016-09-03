@@ -24,7 +24,7 @@ public class ItemProjectileTNT extends BaseItemProjectile implements IHasRecipe 
   public void addRecipe() {
     switch (this.strength) {
     case 1:
-      GameRegistry.addShapelessRecipe(new ItemStack(this, 9), new ItemStack(Blocks.TNT), new ItemStack(Items.PAPER), new ItemStack(Items.CLAY_BALL), new ItemStack(Items.ENDER_PEARL));
+      GameRegistry.addShapelessRecipe(new ItemStack(this, 12), new ItemStack(Blocks.TNT), new ItemStack(Items.PAPER), new ItemStack(Items.CLAY_BALL), new ItemStack(Items.ENDER_PEARL));
       break;
     case 2:
       GameRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(ItemRegistry.ender_tnt_1), new ItemStack(ItemRegistry.ender_tnt_1), new ItemStack(Items.CLAY_BALL));
