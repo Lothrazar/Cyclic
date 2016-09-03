@@ -1,7 +1,7 @@
 {
     "parent": "builtin/generated",
     "textures": {
-        "layer0": "cyclicmagic:items/ender_tnt"
+        "layer0": "cyclicmagic:items/ender_tnt_2"
     },
     "display": {
         "thirdperson": {
