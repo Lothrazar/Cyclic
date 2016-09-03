@@ -54,13 +54,16 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvoPlayer {
         fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, null);
       }
       else {
-        if (maybeTool.equals(fakePlayer.get().getHeldItem(EnumHand.MAIN_HAND))) {
-          //already equipped
+        if(maybeTool.stackSize == 0){
+          inv[toolSlot] = null;
         }
-        else {
+       
+        if (!maybeTool.equals(fakePlayer.get().getHeldItem(EnumHand.MAIN_HAND))) {
           fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, maybeTool);
         }
+        //else already equipped
       }
+      
       if (targetPos == null) {
         targetPos = pos.offset(this.getCurrentFacing()); //not sure if this is needed
       }

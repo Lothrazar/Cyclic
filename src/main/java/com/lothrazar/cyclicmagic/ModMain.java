@@ -105,6 +105,18 @@ public class ModMain {
   }
   /*
    * 
+   * 
+   * villageinfo: text issues/spacing
+   * 
+   * CONFIG BUGS:: corrupted chorus doesnt listen to the mAND/OR they are backwards??
+   * 
+   *    # How long the negative potion effects last after a corrupted chorus teleports you [range: 1 ~ 60, default: 10]
+    I:CorruptedChorusPotions=10
+
+    # How long you can noclip after eating corrupted chorus [range: 1 ~ 60, default: 5]
+    I:CorruptedChorusSeconds=5
+
+   * 
    * TODO: ideas/plans/features
    * 
    * Block user: takes a tool/item and uses fakePlayer to RIGHT CLICK
