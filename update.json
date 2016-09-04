@@ -45,5 +45,6 @@
   	,"1.6.4":"Fix Item Magnet not pulling up off farmland to the hopper, and fix it not pulling items when they are 1 block away."
   	,"1.7.0":"New Content: Automatic Fishing Net, Ender Wing, Ender Wing Prime, Fire Charm, Sailor Charm, Void Charm, Water Charm, Sandstone Tools.  Add reverse recipes for quartz block and snow block.  "
   	,"1.7.1":"Make sure broken tools get cleared from Auto Fisher and Controlled Harvester.  Fix text output from /villageinfo command.  Ender Bombs: different texture for each level, and more recipe options.  "
+  	,"1.7.2":"Fix fatal crash in Structure Builder.  Fix equip animation on storage sack.  "
   }
 }

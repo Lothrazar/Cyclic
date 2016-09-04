@@ -22,10 +22,6 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
     this.setMaxStackSize(1);
   }
   @Override
-  public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
-    return false;
-  }
-  @Override
   public int getMaxItemUseDuration(ItemStack stack) {
     return 1; // Without this method, your inventory will NOT work!!!
   }
