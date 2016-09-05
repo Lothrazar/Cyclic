@@ -21,6 +21,7 @@ public class RecipeChangerModule extends BaseModule {
   private boolean difficultEarlygameRecipes;
   private boolean snowBlocksToBalls;
   private boolean quartzBlocksToItem;
+  private boolean glowstoneBlockToDust;
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.recipes;
     config.setCategoryComment(category, "New and altered recipes");
@@ -49,9 +50,14 @@ public class RecipeChangerModule extends BaseModule {
         true, "Craft Snow blocks back into snowballs").getBoolean();
     quartzBlocksToItem = config.get(category, "QuartzBlockToItem",
         true, "Craft Quartz blocks back to the items").getBoolean();
+    glowstoneBlockToDust = config.get(category, "GlowstoneBlockToDust",
+        true, "Craft Glowstone blocks back to dust").getBoolean();
   }
   @Override
   public void onInit() {
+    if(glowstoneBlockToDust){
+      glowstoneBlockToDust();
+    }
     if (quartzBlocksToItem) {
       quartzBlocksItem();
     }
@@ -87,6 +93,10 @@ public class RecipeChangerModule extends BaseModule {
       furnaceNeedsCoal();
     }
     // https://github.com/PrinceOfAmber/SamsPowerups/blob/master/Recipes/src/main/java/com/lothrazar/samsrecipes/RecipeRegistry.java
+  }
+  private void glowstoneBlockToDust() {
+    GameRegistry.addShapelessRecipe(new ItemStack(Items.GLOWSTONE_DUST, 4),
+        new ItemStack(Blocks.GLOWSTONE));
   }
   private void snowBlocksBalls() {
     GameRegistry.addShapelessRecipe(new ItemStack(Items.SNOWBALL, 4),
