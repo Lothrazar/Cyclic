@@ -109,7 +109,7 @@ public class ModMain {
    * TODO: ideas/plans/features
    * recipe glowstone block to dust (4)
    * Launch enchant should remove/reduce fall distance. at least when the jump is pressed
-   * Launch enchant: disable when holding shift
+   * Launch enchant: disable when holding shift & DISABLE while swimming/in water
    * Trading: raw fish as well as cooked? other fish types?
    * Block user: takes a tool/item and uses fakePlayer to RIGHT CLICK
    *
