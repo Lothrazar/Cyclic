@@ -68,7 +68,7 @@ public class EnchantLaunch extends Enchantment {
     ItemStack feet = p.getItemStackFromSlot(EntityEquipmentSlot.FEET);
     if (feet == null) { return; }
     if (FMLClientHandler.instance().getClient().gameSettings.keyBindJump.isPressed()
-        && p.posY < p.lastTickPosY && p.isAirBorne) {
+        && p.posY < p.lastTickPosY && p.isAirBorne && p.isInWater() == false) {
       //JUMP IS pressed and you are moving down
       if (EnchantmentHelper.getEnchantments(feet).containsKey(this) == false) { return; }
       int level = EnchantmentHelper.getEnchantments(feet).get(this);
