@@ -42,6 +42,7 @@ public class EmeraldArmorModule extends BaseModule {
         ArmorMaterial.GOLD.getEnchantability(),
         ArmorMaterial.DIAMOND.getSoundEvent(),
         ArmorMaterial.DIAMOND.getToughness() / 2);
+    ARMOR_MATERIAL.customCraftingMaterial = Items.EMERALD;
     //max uses is durability ex The number of uses this material allows.
     //as of 1.9.4 :  (wood = 59, stone = 131, iron = 250, diamond = 1561, gold = 32)
     TOOL_MATERIAL = EnumHelper.addToolMaterial(emeraldName,

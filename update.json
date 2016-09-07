@@ -47,5 +47,6 @@
   	,"1.7.1":"Make sure broken tools get cleared from Auto Fisher and Controlled Harvester.  Fix text output from /villageinfo command.  Ender Bombs: different texture for each level, and more recipe options.  "
   	,"1.7.2":"Fix fatal crash in Structure Builder.  Fix equip animation on storage sack.  "
   	,"1.7.3":"Fix launch enchant firing while swimming.  Add Raw fish trade to druid villager.  Add glowstone reverse recipe.  "
+  	,"1.7.4":"Fix tool and armor repair material not set correctly.  Caused crashes and incompatibility with botania and possibly other mods."
   }
 }
