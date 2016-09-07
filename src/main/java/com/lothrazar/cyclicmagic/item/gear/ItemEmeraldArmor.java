@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.item.gear;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.module.EmeraldArmorModule;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
@@ -14,18 +15,18 @@ public class ItemEmeraldArmor extends ItemArmor implements IHasRecipe {
   public void addRecipe() {
     switch (this.armorType) {
     case CHEST:
-      GameRegistry.addShapedRecipe(new ItemStack(this), "e e", "eee", "eee", 'e', new ItemStack(EmeraldArmorModule.REPAIR));
+      GameRegistry.addShapedRecipe(new ItemStack(this), "e e", "eee", "eee", 'e', new ItemStack(Items.EMERALD));
       break;
     case FEET:
-      GameRegistry.addShapedRecipe(new ItemStack(this), "e e", "e e", "   ", 'e', new ItemStack(EmeraldArmorModule.REPAIR));
-      GameRegistry.addShapedRecipe(new ItemStack(this), "   ", "e e", "e e", 'e', new ItemStack(EmeraldArmorModule.REPAIR));
+      GameRegistry.addShapedRecipe(new ItemStack(this), "e e", "e e", "   ", 'e', new ItemStack(Items.EMERALD));
+      GameRegistry.addShapedRecipe(new ItemStack(this), "   ", "e e", "e e", 'e', new ItemStack(Items.EMERALD));
       break;
     case HEAD:
-      GameRegistry.addShapedRecipe(new ItemStack(this), "eee", "e e", "   ", 'e', new ItemStack(EmeraldArmorModule.REPAIR));
-      GameRegistry.addShapedRecipe(new ItemStack(this), "   ", "eee", "e e", 'e', new ItemStack(EmeraldArmorModule.REPAIR));
+      GameRegistry.addShapedRecipe(new ItemStack(this), "eee", "e e", "   ", 'e', new ItemStack(Items.EMERALD));
+      GameRegistry.addShapedRecipe(new ItemStack(this), "   ", "eee", "e e", 'e', new ItemStack(Items.EMERALD));
       break;
     case LEGS:
-      GameRegistry.addShapedRecipe(new ItemStack(this), "eee", "e e", "e e", 'e', new ItemStack(EmeraldArmorModule.REPAIR));
+      GameRegistry.addShapedRecipe(new ItemStack(this), "eee", "e e", "e e", 'e', new ItemStack(Items.EMERALD));
       break;
     case MAINHAND:
       break;

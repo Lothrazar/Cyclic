@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.item.gear;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.module.SandstoneToolsModule;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
@@ -13,6 +14,6 @@ public class ItemSandstoneSpade extends ItemSpade implements IHasRecipe {
   }
   @Override
   public void addRecipe() {
-    GameRegistry.addShapedRecipe(new ItemStack(this), " e ", " s ", " s ", 'e', new ItemStack(SandstoneToolsModule.REPAIR), 's', new ItemStack(Items.STICK));
+    GameRegistry.addShapedRecipe(new ItemStack(this), " e ", " s ", " s ", 'e', new ItemStack(Blocks.SANDSTONE), 's', new ItemStack(Items.STICK));
   }
 }

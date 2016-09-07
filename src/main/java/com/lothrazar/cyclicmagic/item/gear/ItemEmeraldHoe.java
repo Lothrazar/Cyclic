@@ -12,13 +12,8 @@ public class ItemEmeraldHoe extends ItemHoe implements IHasRecipe {
     super(EmeraldArmorModule.TOOL_MATERIAL);
   }
   @Override
-  public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-    if (net.minecraftforge.oredict.OreDictionary.itemMatches(new ItemStack(EmeraldArmorModule.REPAIR), repair, false)) { return true; }
-    return super.getIsRepairable(toRepair, repair);
-  }
-  @Override
   public void addRecipe() {
-    GameRegistry.addShapedRecipe(new ItemStack(this), "ee ", " s ", " s ", 'e', new ItemStack(EmeraldArmorModule.REPAIR), 's', new ItemStack(Items.STICK));
-    GameRegistry.addShapedRecipe(new ItemStack(this), " ee", " s ", " s ", 'e', new ItemStack(EmeraldArmorModule.REPAIR), 's', new ItemStack(Items.STICK));
+    GameRegistry.addShapedRecipe(new ItemStack(this), "ee ", " s ", " s ", 'e', new ItemStack(Items.EMERALD), 's', new ItemStack(Items.STICK));
+    GameRegistry.addShapedRecipe(new ItemStack(this), " ee", " s ", " s ", 'e', new ItemStack(Items.EMERALD), 's', new ItemStack(Items.STICK));
   }
 }

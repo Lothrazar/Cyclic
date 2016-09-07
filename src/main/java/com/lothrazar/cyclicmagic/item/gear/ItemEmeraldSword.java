@@ -13,6 +13,6 @@ public class ItemEmeraldSword extends ItemSword implements IHasRecipe {
   }
   @Override
   public void addRecipe() {
-    GameRegistry.addShapedRecipe(new ItemStack(this), " e ", " e ", " s ", 'e', new ItemStack(EmeraldArmorModule.REPAIR), 's', new ItemStack(Items.STICK));
+    GameRegistry.addShapedRecipe(new ItemStack(this), " e ", " e ", " s ", 'e', new ItemStack(Items.EMERALD), 's', new ItemStack(Items.STICK));
   }
 }

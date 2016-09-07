@@ -9,9 +9,9 @@ import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.EnumHelper;
 
@@ -21,7 +21,6 @@ public class EmeraldArmorModule extends BaseModule {
   // http://bedrockminer.jimdo.com/modding-tutorials/basic-modding-1-7/custom-tools-swords/
   public static ToolMaterial TOOL_MATERIAL;
   public static ArmorMaterial ARMOR_MATERIAL;
-  public final static Item REPAIR = Items.EMERALD;
   private static final int maxDamageFactorDiamond = 33;
   private static final String emeraldName = "emerald";
   public EmeraldArmorModule() {
@@ -51,6 +50,7 @@ public class EmeraldArmorModule extends BaseModule {
         ToolMaterial.DIAMOND.getEfficiencyOnProperMaterial(),
         ToolMaterial.DIAMOND.getDamageVsEntity() - 0.25F,
         ToolMaterial.GOLD.getEnchantability());
+    TOOL_MATERIAL.setRepairItem(new ItemStack(Items.EMERALD));
     // EnumHelper.addToolMaterial("emerald", 3, harvestLevel 3 same as diamond
     // 1600,3.5F, 5+25 );
   }
