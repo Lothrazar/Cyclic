@@ -105,6 +105,20 @@ public class ModMain {
   }
   /*
    * 
+   IF smoothstone tools is enabled, enforce metadata zero
+   
+   LAUNCH SOUND: add config to disable sound. also reduce volume by at least half regardless
+   
+   DISABLE the forward vector component of launch enchat, if we are standing still (if no current horiz)
+   craft saplings into sticks
+   revive my old idea of the flint tool to chop wood, and the idea to disable punching trees?
+   antidote charm
+   speed charm -> make sur it works on horses to
+   
+   Reinforced scaffolding - like wood one, still breaks in one hit. disable auto break. climbable like a ladder
+   
+   xp bottler
+   disenchanter
    * 
    * TODO: ideas/plans/features
    * recipe glowstone block to dust (4)
