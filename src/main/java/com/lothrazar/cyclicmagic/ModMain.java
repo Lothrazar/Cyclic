@@ -105,7 +105,15 @@ public class ModMain {
   }
   /*
    * 
+   * 
+   *  Add Splash and Lingering potions for all new effects enhancement 
+   * 
    IF smoothstone tools is enabled, enforce metadata zero
+   -- SPLIT OUT smoothstone tools and coal furnace into different config entries
+   
+   add tinkers construct whitelists to terr btns for https://github.com/PrinceOfAmber/Cyclic/issues/89
+   
+   netherwart crafting being reverseable. because wtf why isnt that in the game
    
    LAUNCH SOUND: add config to disable sound. also reduce volume by at least half regardless
    
