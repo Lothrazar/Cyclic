@@ -43,15 +43,32 @@ public class GuiTerrariaButtonsModule extends BaseEventModule implements IHasCon
     GuiScreen gui = event.getGui();
     if (gui == null) { return; } // probably doesn't ever happen
     // all containers by default but with a blacklist in config
-    String self = gui.getClass().getName();
-    int button_id = 256;
-    // config for different locations - left right bottom top
-    int x = 0, y = 0, yDelta = 24, xDelta = 0;
-    // not GuiContainerCreative
+    
     if (gui instanceof GuiContainer &&
         !(gui instanceof GuiInventory) &&
-        !(gui instanceof GuiPlayerExtended) &&
-        blacklistGuis.contains(self) == false) {
+        !(gui instanceof GuiPlayerExtended)) {
+      
+
+      String self = gui.getClass().getName();
+     // &&  blacklistGuis.contains(self) ==
+      boolean isInBlacklist = false;
+      for(String s : blacklistGuis){
+        if(s.equalsIgnoreCase(self)){
+          isInBlacklist = true;
+          break;
+        }
+      }
+      if(isInBlacklist){
+        //found in blacklist, cancel");
+        return;
+      }
+      
+     //" =>NOT in blacklist, ADD THE BUTTONS NOW :: "+position);
+      int button_id = 256;
+      // config for different locations - left right bottom top
+      int x = 0, y = 0, yDelta = 24, xDelta = 0;
+      // not GuiContainerCreative
+      
       GuiContainer guiInv = (GuiContainer) gui;
       // align to different area depending on config
       if (position.equalsIgnoreCase(posLeft)) {
@@ -123,6 +140,16 @@ public class GuiTerrariaButtonsModule extends BaseEventModule implements IHasCon
         + "net.minecraft.client.gui.inventory.GuiCrafting,"
         + "net.minecraft.client.gui.inventory.GuiFurnace,"
         + "net.minecraft.client.gui.inventory.GuiScreenHorseInventory,"
+        + "slimeknights.tconstruct.tools.client.GuiCraftingStation,"
+        + "slimeknights.tconstruct.tools.client.GuiPartBuilder,"
+        + "slimeknights.tconstruct.tools.client.GuiPatternChest,"
+        + "slimeknights.tconstruct.tools.client.GuiScalingChest,"
+        + "slimeknights.tconstruct.tools.client.GuiStencilTable,"
+        + "slimeknights.tconstruct.tools.client.GuiToolForge,"
+        + "slimeknights.tconstruct.tools.client.module.GuiButtonsStencilTable,"
+        + "slimeknights.tconstruct.tools.client.module.GuiButtonsToolStation,"
+        + "slimeknights.tconstruct.tools.client.module.GuiInfoPanel,"
+        + "slimeknights.tconstruct.tools.client.module.GuiTinkerTabs,"
         + "net.minecraft.client.gui.inventory.GuiContainerCreative";
     String csv = config.getString("Blacklist Container CSV", category, blacklistDefault, "FOR MODPACK DEVS: These containers are blocked from getting the buttons.  By default, anything that extends 'GuiContainer' will get the buttons.  ");
     // blacklistGuis = new ArrayList<String>();
