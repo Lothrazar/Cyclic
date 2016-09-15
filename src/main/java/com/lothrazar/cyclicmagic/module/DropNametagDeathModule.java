@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
-import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
@@ -13,10 +12,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class DropNametagDeathModule extends BaseEventModule implements IHasConfig {
   private boolean nameTagDeath;
-  @Override
-  public void onInit() {
-    ModMain.instance.events.addEvent(this);//for SubcribeEvent hooks
-  }
   @SubscribeEvent
   public void onLivingDropsEvent(LivingDropsEvent event) {
     if (nameTagDeath) {
