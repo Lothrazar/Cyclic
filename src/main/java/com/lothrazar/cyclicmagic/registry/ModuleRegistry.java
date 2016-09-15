@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.module.*;
 public class ModuleRegistry {
   public static void register(List<ICyclicModule> modules) {
     // :) http://alphabetizer.flap.tv/
+    modules.add(new ArmorStandSwapModule());
     modules.add(new BucketBlockModule());
     modules.add(new CarbonPaperModule());
     modules.add(new ChestSackModule());
