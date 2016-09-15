@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
+import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -17,6 +18,11 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class PassthroughActionModule extends BaseEventModule implements IHasConfig {
   private static boolean passThroughClick;
+
+  @Override
+  public void onInit() {
+    ModMain.instance.events.addEvent(this);//for SubcribeEvent hooks
+  }
   //TODO: why does the chest not animate? or only sometimes?
   @SubscribeEvent
   public void onEntityInteractEvent(EntityInteract event) {

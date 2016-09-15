@@ -48,5 +48,6 @@
   	,"1.7.2":"Fix fatal crash in Structure Builder.  Fix equip animation on storage sack.  "
   	,"1.7.3":"Fix launch enchant firing while swimming.  Add Raw fish trade to druid villager.  Add glowstone reverse recipe.  "
   	,"1.7.4":"Fix tool and armor repair material not set correctly.  Caused crashes and incompatibility with botania and possibly other mods."
+  	,"1.7.5":"Tree scythe now works with more leaves from other mods - rubber ic2, biomes o plenty, and more.  Fix the 'Pass-Through Click' not working.  Added some config file defaults for mod compatibility with tinkers construct guis.  "
   }
 }
