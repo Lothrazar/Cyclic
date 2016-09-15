@@ -23,6 +23,7 @@ public class RecipeChangerModule extends BaseModule {
   private boolean snowBlocksToBalls;
   private boolean quartzBlocksToItem;
   private boolean glowstoneBlockToDust;
+  private boolean netherwartBlockReverse;
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.recipes;
     config.setCategoryComment(category, "New and altered recipes");
@@ -53,6 +54,8 @@ public class RecipeChangerModule extends BaseModule {
         true, "Craft Quartz blocks back to the items").getBoolean();
     glowstoneBlockToDust = config.get(category, "GlowstoneBlockToDust",
         true, "Craft Glowstone blocks back to dust").getBoolean();
+    netherwartBlockReverse = config.get(category, "NetherwartBlockReverse",
+        true, "Craft Netherwart blocks back to item").getBoolean();
   }
   @Override
   public void onInit() {
@@ -93,7 +96,14 @@ public class RecipeChangerModule extends BaseModule {
       smoothstoneRequired();
       furnaceNeedsCoal();
     }
+    if(netherwartBlockReverse){
+      netherwartBlockReverse();
+    }
     // https://github.com/PrinceOfAmber/SamsPowerups/blob/master/Recipes/src/main/java/com/lothrazar/samsrecipes/RecipeRegistry.java
+  }
+  private void netherwartBlockReverse() {
+    GameRegistry.addShapelessRecipe(new ItemStack(Items.NETHER_WART, 9),
+        new ItemStack(Blocks.NETHER_WART));
   }
   private void glowstoneBlockToDust() {
     GameRegistry.addShapelessRecipe(new ItemStack(Items.GLOWSTONE_DUST, 4),

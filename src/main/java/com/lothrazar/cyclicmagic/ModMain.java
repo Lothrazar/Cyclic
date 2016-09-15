@@ -108,8 +108,6 @@ public class ModMain {
    * 
    *  Add Splash and Lingering potions for all new effects enhancement 
    * 
-   netherwart crafting being reverseable. because wtf why isnt that in the game
-   
    LAUNCH SOUND: add config to disable sound. also reduce volume by at least half regardless
    
    DISABLE the forward vector component of launch enchat, if we are standing still (if no current horiz)
