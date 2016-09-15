@@ -74,8 +74,13 @@ public class MobDropChangesModule extends BaseEventModule {
       UtilEntity.dropItemStackInWorld(worldObj, pos, new ItemStack(Items.PORKCHOP, rand));
     }
     if (bonusGolemIron && entity instanceof EntityIronGolem) {
+      //vanilla drops 3-5 ingots
       int rand = MathHelper.getRandomIntegerInRange(worldObj.rand, 1, 18);
       UtilEntity.dropItemStackInWorld(worldObj, pos, new ItemStack(Items.IRON_INGOT, rand));
+      if(worldObj.rand.nextDouble() < 0.10){
+        //10% chance for extra iron block
+        UtilEntity.dropItemStackInWorld(worldObj, pos, new ItemStack(Blocks.IRON_BLOCK, 1));
+      }
     }
     if (zombieDropsNerfed) {
       if (entity instanceof EntityZombie) {
@@ -107,6 +112,6 @@ public class MobDropChangesModule extends BaseEventModule {
     bonusPork = config.getBoolean("Pork Bonus", category, true,
         "Pig drops randomly increased");
     bonusGolemIron = config.getBoolean("Iron Bonus", category, true,
-        "Iron Golem drops randomly increased");
+        "Iron Golem drops randomly increased by a few ingots, and a low chance to drop an iron block");
   }
 }
