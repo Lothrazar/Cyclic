@@ -107,7 +107,6 @@ public class ModMain {
    *  
    * TODO: ideas/plans/features
    * 
-   *  Add Splash and Lingering potions for all new effects enhancement 
    * 
    LAUNCH SOUND: add config to disable sound. also reduce volume by at least half regardless
    
@@ -123,6 +122,7 @@ public class ModMain {
    disenchanter
    * 
    * 
+   *  Add Splash and Lingering potions for all new effects enhancement 
    * 
    * Trading: raw fish as well as cooked? other fish types?
    * Block user: takes a tool/item and uses fakePlayer to RIGHT CLICK
