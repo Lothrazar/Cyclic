@@ -11,7 +11,7 @@ public class Const {
   }
   public static final String MODID = "cyclicmagic";
   public static final String MODRES = Const.MODID + ":";
-  private static final String MODCONF = Const.MODID + ".";
+  public static final String MODCONF = Const.MODID + ".";
   public class ConfigCategory {
     //to store categories. basically an enum/lookup table
     public static final String player = MODCONF + "player";

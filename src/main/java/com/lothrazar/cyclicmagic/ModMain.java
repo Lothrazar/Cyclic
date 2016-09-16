@@ -105,6 +105,7 @@ public class ModMain {
   }
   /*
    *  
+   * TODO: ideas/plans/features
    * 
    *  Add Splash and Lingering potions for all new effects enhancement 
    * 
@@ -122,23 +123,7 @@ public class ModMain {
    disenchanter
    * 
    * 
-   * FORGE WARNINGS
-[23:51:36] [Client thread/TRACE] [FML/cyclicmagic]: Automatically registered mod cyclicmagic entity blazebolt as cyclicmagic.blazebolt
-[23:51:36] [Client thread/TRACE] [FML/cyclicmagic]: Automatically registered mod cyclicmagic entity dungeonbolt as cyclicmagic.dungeonbolt
-[23:51:36] [Client thread/TRACE] [FML/cyclicmagic]: Automatically registered mod cyclicmagic entity fishingbolt as cyclicmagic.fishingbolt
-[23:51:36] [Client thread/TRACE] [FML/cyclicmagic]: Automatically registered mod cyclicmagic entity woolbolt as cyclicmagic.woolbolt
-[23:51:36] [Client thread/TRACE] [FML/cyclicmagic]: Automatically registered mod cyclicmagic entity torchbolt as cyclicmagic.torchbolt
-[23:51:36] [Client thread/TRACE] [FML/cyclicmagic]: Automatically registered mod cyclicmagic entity waterbolt as cyclicmagic.waterbolt
-[23:51:36] [Client thread/TRACE] [FML/cyclicmagic]: Automatically registered mod cyclicmagic entity frostbolt as cyclicmagic.frostbolt
-[23:51:36] [Client thread/TRACE] [FML/cyclicmagic]: Automatically registered mod cyclicmagic entity lightningbolt as cyclicmagic.lightningbolt
-[23:51:36] [Client thread/TRACE] [FML/cyclicmagic]: Automatically registered mod cyclicmagic entity tntbolt as cyclicmagic.tntbolt
-
    * 
-   * 
-   * TODO: ideas/plans/features
-   * recipe glowstone block to dust (4)
-   * Launch enchant should remove/reduce fall distance. at least when the jump is pressed
-   * Launch enchant: disable when holding shift & DISABLE while swimming/in water
    * Trading: raw fish as well as cooked? other fish types?
    * Block user: takes a tool/item and uses fakePlayer to RIGHT CLICK
    *
