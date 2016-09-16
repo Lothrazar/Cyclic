@@ -9,6 +9,7 @@ public class CharmModule extends BaseModule {
   private boolean enableSea;
   private boolean enableVoid;
   private boolean enableWater;
+  private boolean antidoteCharm;
   @Override
   public void onInit() {
     if (enableFire) {
@@ -27,6 +28,10 @@ public class CharmModule extends BaseModule {
       ItemCharmWater charm_water = new ItemCharmWater();
       ItemRegistry.addItem(charm_water, "charm_water");
     }
+    if (antidoteCharm) {
+      ItemCharmAntidote charm_antidote = new ItemCharmAntidote();
+      ItemRegistry.addItem(charm_antidote, "charm_antidote");
+    }
   }
   @Override
   public void syncConfig(Configuration config) {
@@ -34,5 +39,6 @@ public class CharmModule extends BaseModule {
     enableSea = config.getBoolean("SailorCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableVoid = config.getBoolean("VoidCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableWater = config.getBoolean("WaterCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    antidoteCharm = config.getBoolean("AntidoteCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 }
