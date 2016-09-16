@@ -34,7 +34,7 @@ public class ItemCharmAntidote extends BaseCharm implements IHasRecipe {
         "in ",
         "iir",
         'n', Items.FERMENTED_SPIDER_EYE,
-        'r', Items.EMERALD,
+        'r', Items.DIAMOND,
         'i', Items.IRON_INGOT);
   }
   @Override
