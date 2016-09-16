@@ -96,14 +96,14 @@ public class RecipeChangerModule extends BaseModule {
       smoothstoneRequired();
       furnaceNeedsCoal();
     }
-    if(netherwartBlockReverse){
-      netherwartBlockReverse();
+    if(netherwartBlockReverse) {
+      netherwartBlockReverse();//bone block reverse is already in game, why not this
     }
     // https://github.com/PrinceOfAmber/SamsPowerups/blob/master/Recipes/src/main/java/com/lothrazar/samsrecipes/RecipeRegistry.java
   }
   private void netherwartBlockReverse() {
     GameRegistry.addShapelessRecipe(new ItemStack(Items.NETHER_WART, 9),
-        new ItemStack(Blocks.NETHER_WART));
+        new ItemStack(Blocks.field_189878_dg)); // nether_wart_block
   }
   private void glowstoneBlockToDust() {
     GameRegistry.addShapelessRecipe(new ItemStack(Items.GLOWSTONE_DUST, 4),
