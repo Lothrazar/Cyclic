@@ -5,8 +5,6 @@ import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDungeonEye;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
-import com.lothrazar.cyclicmagic.util.UtilInventory;
 import com.lothrazar.cyclicmagic.util.UtilSearchWorld;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
@@ -37,17 +35,12 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
     BlockPos blockpos = UtilSearchWorld.findClosestBlock(player, Blocks.MOB_SPAWNER, DUNGEONRADIUS);
     if (blockpos != null) {
       EntityDungeonEye entityendereye = new EntityDungeonEye(world, player);
-      doThrow(world, player, hand, entityendereye);
+      doThrow(world, player, hand, entityendereye, 0.5F);
       entityendereye.moveTowards(blockpos);
     }
     else {
-      // not found, so play sounds to alert player
-      // also drop it on ground to signal a failed throw
-      BlockPos pos = player.getPosition();
-      UtilInventory.decrStackSize(player, player.inventory.currentItem);
-      UtilEntity.dropItemStackInWorld(world, pos, new ItemStack(this));
-      //fizz sound
-      UtilSound.playSound(player, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH);
+      // not found, so play different sound
+      UtilSound.playSound(player, player.getPosition(), SoundEvents.BLOCK_FIRE_EXTINGUISH);
     }
   }
   @SideOnly(Side.CLIENT)

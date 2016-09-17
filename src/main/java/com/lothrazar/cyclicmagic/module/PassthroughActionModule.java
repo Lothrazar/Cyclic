@@ -17,7 +17,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class PassthroughActionModule extends BaseEventModule implements IHasConfig {
   private static boolean passThroughClick;
-  //TODO: why does the chest not animate? or only sometimes?
   @SubscribeEvent
   public void onEntityInteractEvent(EntityInteract event) {
     EntityPlayer entityPlayer = event.getEntityPlayer();

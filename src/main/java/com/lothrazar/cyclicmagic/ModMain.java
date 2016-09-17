@@ -104,27 +104,27 @@ public class ModMain {
     c.save();
   }
   /*
+   *  
+   * TODO: ideas/plans/features
    * 
-   IF smoothstone tools is enabled, enforce metadata zero
-   
-   LAUNCH SOUND: add config to disable sound. also reduce volume by at least half regardless
-   
+   * 
    DISABLE the forward vector component of launch enchat, if we are standing still (if no current horiz)
+   
    craft saplings into sticks
+   
    revive my old idea of the flint tool to chop wood, and the idea to disable punching trees?
-   antidote charm
+ 
    speed charm -> make sur it works on horses to
    
    Reinforced scaffolding - like wood one, still breaks in one hit. disable auto break. climbable like a ladder
    
-   xp bottler
    disenchanter
    * 
-   * TODO: ideas/plans/features
-   * recipe glowstone block to dust (4)
-   * Launch enchant should remove/reduce fall distance. at least when the jump is pressed
-   * Launch enchant: disable when holding shift & DISABLE while swimming/in water
+   * 
+   *  Add Splash and Lingering potions for all new effects enhancement 
+   * 
    * Trading: raw fish as well as cooked? other fish types?
+   * 
    * Block user: takes a tool/item and uses fakePlayer to RIGHT CLICK
    *
    * a custom TNT that does not destroy any items or blocks -> for clearing area
@@ -147,7 +147,6 @@ public class ModMain {
    * http://jabelarminecraft.blogspot.ca/p/minecraft-forge-creating-custom.html
    * along with public void onItemCraftedEvent(PlayerEvent.ItemCraftedEvent
    * event) {
-   * 
    * 
    * [ Trading Tool // gui ] Upgrade villager gui: either make my own or add
    * buttons/some way to view all trades at once --inspired by extrautils

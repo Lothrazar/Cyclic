@@ -15,6 +15,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.SoundCategory;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -77,7 +78,7 @@ public class EnchantLaunch extends Enchantment {
       p.fallDistance = 0;
       UtilEntity.launch(p, rotationPitch, power);
       UtilParticle.spawnParticle(p.worldObj, EnumParticleTypes.CRIT_MAGIC, p.getPosition());
-      UtilSound.playSound(p, SoundRegistry.bwoaaap);
+      UtilSound.playSound(p,p.getPosition(), SoundRegistry.bwoaaap,SoundCategory.PLAYERS ,UtilSound.VOLUME / 8);
       UtilItem.damageItem(p, feet);
       uses++;
       if (uses >= level) { // level is maxuses

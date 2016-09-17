@@ -11,7 +11,7 @@ public class Const {
   }
   public static final String MODID = "cyclicmagic";
   public static final String MODRES = Const.MODID + ":";
-  private static final String MODCONF = Const.MODID + ".";
+  public static final String MODCONF = Const.MODID + ".";
   public class ConfigCategory {
     //to store categories. basically an enum/lookup table
     public static final String player = MODCONF + "player";
@@ -29,8 +29,9 @@ public class Const {
     public static final String contentDefaultText = "Set false to delete - requires restart";
     public static final String modpackMisc = "modpacks";
     public static final String saplingBiomes = modpackMisc + ".SaplingGrowthDetail";
-    public static final String inventoryModpack = modpackMisc + ".TerrariaButtons";
+    public static final String InventoryButtonsModpack = modpackMisc + ".TerrariaButtons";
     public static final String commands = modpackMisc + ".Commands";
+    public static final String worldGenOceans = worldGen + ".ocean";
   }
   public static final int SQ = 18;
   public static final int ARMOR_SIZE = 4;

@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.util;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCocoa;
 import net.minecraft.block.BlockDoublePlant;
+import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockMushroom;
 import net.minecraft.block.BlockNetherWart;
 import net.minecraft.block.BlockSapling;
@@ -77,6 +78,7 @@ public class UtilHarvestCrops {
     if (blockCheck == null) { return false; }
     IBlockState bsAbove = world.getBlockState(posCurrent.up());
     IBlockState bsBelow = world.getBlockState(posCurrent.down());
+
     if (blockCheck instanceof BlockNetherWart) {
       if (conf.doesCrops) {
         int age = ((Integer) bs.getValue(BlockNetherWart.AGE)).intValue();
@@ -147,7 +149,7 @@ public class UtilHarvestCrops {
         doBreak = true;
       }
     }
-    else if (blockCheck == Blocks.LEAVES || blockCheck == Blocks.LEAVES2) {
+    else if (blockCheck instanceof BlockLeaves) { //  || blockCheck == Blocks.LEAVES || blockCheck == Blocks.LEAVES2
       if (conf.doesLeaves) {
         doBreak = true;
       }
