@@ -43,6 +43,13 @@ public class EntityDungeonEye extends EntityThrowable {
         d2 *= 0.8D;
         // this.motionY *= 0.8D;//disabling gravity
       }
+      else if(distLine > 30){ //if its far far away, slightly increase HSPEED
+
+        //test increasing hspeed
+        d2 *= 1.3;
+      }
+      //so overall its kind of asymptotic-ish to the right angle going out from the player, then vertical to the spawner
+      
       this.motionX = Math.cos((double) f2) * d2;
       this.motionZ = Math.sin((double) f2) * d2;
       // the vertical speed gets faster, the closer you are to it horizontally

@@ -37,7 +37,7 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
     BlockPos blockpos = UtilSearchWorld.findClosestBlock(player, Blocks.MOB_SPAWNER, DUNGEONRADIUS);
     if (blockpos != null) {
       EntityDungeonEye entityendereye = new EntityDungeonEye(world, player);
-      doThrow(world, player, hand, entityendereye);
+      doThrow(world, player, hand, entityendereye, 0.5F);
       entityendereye.moveTowards(blockpos);
     }
     else {

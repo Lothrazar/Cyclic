@@ -19,10 +19,14 @@ public abstract class BaseItemProjectile extends BaseItem {
     return new ActionResult<ItemStack>(EnumActionResult.PASS, itemStackIn);
   }
   abstract void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand);
-  protected void doThrow(World world, EntityPlayer player, EnumHand hand, EntityThrowable thing) {
+  private static final float VELOCITY_DEFAULT = 1.5F;
+  private static final float INACCURACY_DEFAULT = 1.0F;
+  private static final float PITCHOFFSET = 0.0F;
+  protected void doThrow(World world, EntityPlayer player, EnumHand hand, EntityThrowable thing, float velocity) {
     if (!world.isRemote) {
       // func_184538_a
-      thing.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
+      //zero pitch offset, meaning match the players existing. 1.0 at end ins inn
+      thing.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, PITCHOFFSET, velocity, INACCURACY_DEFAULT);
       world.spawnEntityInWorld(thing);
     }
     player.swingArm(hand);
@@ -31,6 +35,9 @@ public abstract class BaseItemProjectile extends BaseItem {
     if (player.capabilities.isCreativeMode == false) {
       player.inventory.decrStackSize(player.inventory.currentItem, 1);
     }
+  }
+  protected void doThrow(World world, EntityPlayer player, EnumHand hand, EntityThrowable thing) {
+    this.doThrow(world, player, hand, thing, VELOCITY_DEFAULT);
   }
   // backup in case function is renamed or removed -> ItemEnderPearl
   /*
