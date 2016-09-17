@@ -66,6 +66,7 @@ public class WorldGenModule extends BaseEventModule {
     prop = config.get(category, "Biome Crops", true, "Crops spawn randomly with nature.  Carrots in extreme hills, wheat in plains, beetroot in forests, potatoes in taiga.");
     prop.setRequiresMcRestart(true);
     biomeCrops = prop.getBoolean();
+    WorldGenOcean.syncConfig(config);
   }
   @Override
   public void onInit() {

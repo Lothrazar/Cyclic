@@ -31,6 +31,7 @@ public class Const {
     public static final String saplingBiomes = modpackMisc + ".SaplingGrowthDetail";
     public static final String inventoryModpack = modpackMisc + ".TerrariaButtons";
     public static final String commands = modpackMisc + ".Commands";
+    public static final String worldGenOceans = worldGen + ".ocean";
   }
   public static final int SQ = 18;
   public static final int ARMOR_SIZE = 4;
