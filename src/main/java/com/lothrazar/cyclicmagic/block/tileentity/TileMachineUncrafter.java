@@ -10,8 +10,6 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;// net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
@@ -24,7 +22,7 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
   // http://bedrockminer.jimdo.com/modding-tutorials/advanced-modding/tile-entities/
   // http://www.minecraftforge.net/wiki/Tile_Entity_Synchronization
   // http://www.minecraftforge.net/forum/index.php?topic=18871.0
-  public static final int TIMER_FULL = 200;
+  public static int TIMER_FULL;
   private ItemStack[] inv;
   private int timer;
   private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots for all faces

@@ -69,6 +69,7 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
     if (UtilUncraft.blacklistOutput == null) {
       UtilUncraft.blacklistOutput = new ArrayList<String>();
     }
+    TileMachineUncrafter.TIMER_FULL = config.getInt("GrindngTime", category, 200, 10, 9999, "Number of ticks it takes to uncraft one time, so lower is faster");
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
