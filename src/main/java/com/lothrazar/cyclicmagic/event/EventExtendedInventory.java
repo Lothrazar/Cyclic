@@ -1,10 +1,8 @@
 package com.lothrazar.cyclicmagic.event;
-import java.io.File;
-import java.io.IOException;
-import com.google.common.io.Files;
-import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.World;
+import net.minecraftforge.event.entity.player.PlayerDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -12,6 +10,7 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
 public class EventExtendedInventory {
+  public static boolean keepOnDeath;
   @SubscribeEvent
   public void playerLoggedInEvent(PlayerLoggedInEvent event) {
     Side side = FMLCommonHandler.instance().getEffectiveSide();
@@ -38,17 +37,14 @@ public class EventExtendedInventory {
   public void playerSave(PlayerEvent.SaveToFile event) {
     UtilPlayerInventoryFilestorage.savePlayerItems(event.getEntityPlayer(), UtilPlayerInventoryFilestorage.getPlayerFile(UtilPlayerInventoryFilestorage.ext, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString()), UtilPlayerInventoryFilestorage.getPlayerFile(UtilPlayerInventoryFilestorage.extback, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString()));
   }
-  //  @SubscribeEvent
-  //  public void playerDeath(PlayerDropsEvent event) {
-  //    if(dropOnDeath == false){
-  //      return;
-  //    }
-  //    //else drop on death is true, so do it
-  //    Entity entity = event.getEntity();
-  //    World world = entity.getEntityWorld();
-  //    
-  //    if (entity instanceof EntityPlayer && !world.isRemote && !world.getGameRules().getBoolean("keepInventory")) {
-  //      UtilPlayerInventoryFilestorage.getPlayerInventory(event.getEntityPlayer()).dropItemsAt(event.getDrops(), event.getEntityPlayer());
-  //    }
-  //  }
+  @SubscribeEvent
+  public void playerDeath(PlayerDropsEvent event) {
+    if (keepOnDeath == false) {
+      World world = event.getEntityPlayer().getEntityWorld();
+      if (!world.isRemote && world.getGameRules().getBoolean("keepInventory") == false) {
+        //so config says dont keep it on death. AND the gamerule says dont keep as well
+        UtilPlayerInventoryFilestorage.getPlayerInventory(event.getEntityPlayer()).dropItems(event.getDrops(), event.getEntityPlayer().getPosition());
+      }
+    }
+  }
 }

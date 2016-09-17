@@ -129,7 +129,7 @@ public class GuiTerrariaButtonsModule extends BaseEventModule implements IHasCon
     if (valid.contains(position) == false) {
       position = posRight;// default
     }
-    category = Const.ConfigCategory.inventoryModpack;
+    category = Const.ConfigCategory.InventoryButtonsModpack;
     config.addCustomCategoryComment(category, "Here you can blacklist any "
         + "container, vanilla or modded. Mostly for creating modpacks, if some "
         + "containers shouldnt have these buttons showing up.");
