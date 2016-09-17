@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.item.projectile;
 import com.lothrazar.cyclicmagic.item.BaseItem;
+import com.lothrazar.cyclicmagic.util.UtilInventory;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
@@ -32,9 +33,7 @@ public abstract class BaseItemProjectile extends BaseItem {
     player.swingArm(hand);
     BlockPos pos = player.getPosition();
     UtilSound.playSound(player, pos, SoundEvents.ENTITY_EGG_THROW, SoundCategory.PLAYERS);
-    if (player.capabilities.isCreativeMode == false) {
-      player.inventory.decrStackSize(player.inventory.currentItem, 1);
-    }
+    UtilInventory.decrStackSize(player, player.inventory.currentItem);
   }
   protected void doThrow(World world, EntityPlayer player, EnumHand hand, EntityThrowable thing) {
     this.doThrow(world, player, hand, thing, VELOCITY_DEFAULT);
