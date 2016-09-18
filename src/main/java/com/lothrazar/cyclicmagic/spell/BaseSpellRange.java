@@ -15,10 +15,7 @@ public abstract class BaseSpellRange extends BaseSpell {
   }
   @Override
   public void playSound(World world, EntityPlayer player, Block block, BlockPos pos) {
-    if (block == null || pos == null) { return; }
-    if (block != null && block.getSoundType() != null && block.getSoundType().getPlaceSound() != null) {
-      UtilSound.playSound(player, pos, block.getSoundType().getPlaceSound());
-    }
+    UtilSound.playSoundPlaceBlock(player, pos, block);
   }
   @Override
   public boolean canPlayerCast(World world, EntityPlayer p, BlockPos pos) {

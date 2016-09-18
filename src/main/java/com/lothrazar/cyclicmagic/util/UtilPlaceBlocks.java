@@ -8,6 +8,7 @@ import com.lothrazar.cyclicmagic.ModMain;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStone;
 import net.minecraft.block.BlockStoneBrick;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.BlockStone.EnumType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -179,7 +180,11 @@ public class UtilPlaceBlocks {
       else {
         //, SoundCategory.BLOCKS
         //isremote seems to always be false here. so playing sounds on server
-        UtilSound.playSound(world, placePos, placeState.getBlock().getSoundType().getPlaceSound(), SoundCategory.BLOCKS);
+        SoundType type = placeState.getBlock().getSoundType(placeState, world, placePos, player);
+        if (type != null && type.getPlaceSound() != null) {
+          UtilSound.playSound(player, placePos, type.getPlaceSound(), SoundCategory.BLOCKS);
+        }
+        //        UtilSound.playSound(world, placePos, placeState.getBlock().getSoundType().getPlaceSound(), SoundCategory.BLOCKS);
       }
     }
     // either it was air, or it wasnt and we broke it
