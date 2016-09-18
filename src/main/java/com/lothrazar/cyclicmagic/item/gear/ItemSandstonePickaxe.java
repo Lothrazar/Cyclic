@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.item.gear;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.module.SandstoneToolsModule;
+import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemPickaxe;
@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class ItemSandstonePickaxe extends ItemPickaxe implements IHasRecipe {
   public static final String name = "sandstone_pickaxe";
   public ItemSandstonePickaxe() {
-    super(SandstoneToolsModule.TOOL_MATERIAL);
+    super(MaterialRegistry.sandstoneToolMaterial);
   }
   @Override
   public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {

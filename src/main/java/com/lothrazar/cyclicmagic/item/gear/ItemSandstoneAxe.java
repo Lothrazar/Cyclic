@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.item.gear;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.module.SandstoneToolsModule;
+import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemAxe;
@@ -11,7 +11,7 @@ public class ItemSandstoneAxe extends ItemAxe implements IHasRecipe {
   public static final String name = "sandstone_axe";
   public ItemSandstoneAxe() {
     // protected ItemAxe(Item.ToolMaterial material, int damage, int speed)
-    super(SandstoneToolsModule.TOOL_MATERIAL, 6, -3.2F);
+    super(MaterialRegistry.sandstoneToolMaterial, 6, -3.2F);
   }
   @Override
   public void addRecipe() {

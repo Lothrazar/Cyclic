@@ -17,7 +17,7 @@ public class ModuleRegistry {
     modules.add(new DispenserBehaviorModule());
     modules.add(new DropNametagDeathModule());
     modules.add(new EditSignBarehandModule());
-    modules.add(new EmeraldArmorModule());
+    modules.add(new EmeraldGearModule());
     modules.add(new EnchantModule());
     modules.add(new EnderBookModule());
     modules.add(new EnderChestClickopenModule());

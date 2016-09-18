@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.item.gear.ItemEmeraldPickaxe;
 import com.lothrazar.cyclicmagic.item.gear.ItemEmeraldSpade;
 import com.lothrazar.cyclicmagic.item.gear.ItemEmeraldSword;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -15,26 +16,19 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.EnumHelper;
 
-public class EmeraldArmorModule extends BaseModule {
+public class EmeraldGearModule extends BaseModule {
   private boolean enableEmeraldGear;
   // thanks for help:
   // http://bedrockminer.jimdo.com/modding-tutorials/basic-modding-1-7/custom-tools-swords/
-  public static ToolMaterial TOOL_MATERIAL;
-  public static ArmorMaterial ARMOR_MATERIAL;
   private static final int maxDamageFactorDiamond = 33;
   private static final String emeraldName = "emerald";
-  public EmeraldArmorModule() {
-    super();
-    //materials is kind of a SUB-MODULE
-    this.registerMaterials();
-  }
   //from ArmorMaterial.DIAMOND, second constuctor param
   //used as a ratio for durability
   // only because theyre private, with no getters
   //  private static final int    diamondDurability       = 33;
   //private static final int[]  diamondreductionAmounts = new int[] { 3, 6, 8, 3 };
-  private void registerMaterials() {
-    ARMOR_MATERIAL = EnumHelper.addArmorMaterial(emeraldName, Const.MODRES + emeraldName,
+  private void registerEmeraldMaterial() {
+    MaterialRegistry.emeraldArmorMaterial = EnumHelper.addArmorMaterial(emeraldName, Const.MODRES + emeraldName,
         maxDamageFactorDiamond - 2, //affects DURABILITY 
         new int[] {
             ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.FEET), ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.LEGS), ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.CHEST), ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.HEAD)
@@ -42,22 +36,23 @@ public class EmeraldArmorModule extends BaseModule {
         ArmorMaterial.GOLD.getEnchantability(),
         ArmorMaterial.DIAMOND.getSoundEvent(),
         ArmorMaterial.DIAMOND.getToughness() / 2);
-    ARMOR_MATERIAL.customCraftingMaterial = Items.EMERALD;
+    MaterialRegistry.emeraldArmorMaterial.customCraftingMaterial = Items.EMERALD;
     //max uses is durability ex The number of uses this material allows.
     //as of 1.9.4 :  (wood = 59, stone = 131, iron = 250, diamond = 1561, gold = 32)
-    TOOL_MATERIAL = EnumHelper.addToolMaterial(emeraldName,
+    MaterialRegistry.emeraldToolMaterial = EnumHelper.addToolMaterial(emeraldName,
         ToolMaterial.DIAMOND.getHarvestLevel(),
         ToolMaterial.DIAMOND.getMaxUses() - 261,
         ToolMaterial.DIAMOND.getEfficiencyOnProperMaterial(),
         ToolMaterial.DIAMOND.getDamageVsEntity() - 0.25F,
         ToolMaterial.GOLD.getEnchantability());
-    TOOL_MATERIAL.setRepairItem(new ItemStack(Items.EMERALD));
+    MaterialRegistry.emeraldToolMaterial.setRepairItem(new ItemStack(Items.EMERALD));
     // EnumHelper.addToolMaterial("emerald", 3, harvestLevel 3 same as diamond
     // 1600,3.5F, 5+25 );
   }
   @Override
   public void onInit() {
     if (enableEmeraldGear) {
+      this.registerEmeraldMaterial();
       ItemRegistry.emerald_head = new ItemEmeraldArmor(EntityEquipmentSlot.HEAD);
       ItemRegistry.addItem(ItemRegistry.emerald_head, "emerald_helmet");
       ItemRegistry.emerald_chest = new ItemEmeraldArmor(EntityEquipmentSlot.CHEST);
