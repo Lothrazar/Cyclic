@@ -108,6 +108,11 @@ public class ModMain {
    *  
    * TODO: ideas/plans/features
    * 
+   * ender charm: same effect as ender potion but without the potion effect.
+   * 
+   * OWN custom texture for waterwalk effect (shouldnt ust just vanilla prismarine item)
+   * 
+   * 
    * 
    DISABLE the forward vector component of launch enchat, if we are standing still (if no current horiz)
    
