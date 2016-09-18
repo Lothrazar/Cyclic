@@ -33,7 +33,7 @@ public class CharmModule extends BaseModule {
       ItemCharmAntidote charm_antidote = new ItemCharmAntidote();
       ItemRegistry.addItem(charm_antidote, "charm_antidote");
     }
-    if(slowfallCharm){
+    if (slowfallCharm) {
       ItemCharmSlowfall charm_slowfall = new ItemCharmSlowfall();
       ItemRegistry.addItem(charm_slowfall, "charm_slowfall");
     }
