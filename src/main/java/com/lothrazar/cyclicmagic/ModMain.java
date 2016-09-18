@@ -65,6 +65,7 @@ public class ModMain {
   }
   @EventHandler
   public void onInit(FMLInitializationEvent event) {
+    PotionEffectRegistry.register();
     for (ICyclicModule module : this.modules) {
       module.onInit();
     }

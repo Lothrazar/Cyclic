@@ -1,10 +1,6 @@
 package com.lothrazar.cyclicmagic.registry;
 import java.util.ArrayList;
-import com.lothrazar.cyclicmagic.event.EventConfigChanged;
-import com.lothrazar.cyclicmagic.event.EventExtendedInventory;
-import com.lothrazar.cyclicmagic.event.EventGuiInvoButtons;
-import com.lothrazar.cyclicmagic.event.EventKeyInput;
-import com.lothrazar.cyclicmagic.event.EventPlayerData;
+import com.lothrazar.cyclicmagic.event.*;
 import net.minecraftforge.common.MinecraftForge;
 
 public class EventRegistry {
@@ -15,6 +11,7 @@ public class EventRegistry {
     this.addEvent(new EventKeyInput());
     this.addEvent(new EventPlayerData());
     this.addEvent(new EventGuiInvoButtons());
+    this.addEvent(new EventPotionTick());
   }
   public void addEvent(Object e) {
     events.add(e);
