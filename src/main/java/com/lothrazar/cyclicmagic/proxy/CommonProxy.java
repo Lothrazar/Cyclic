@@ -32,4 +32,8 @@ public class CommonProxy {
   public EntityPlayer getPlayerEntity(MessageContext ctx) {
     return ctx.getServerHandler().playerEntity;
   }
+public BlockPos getBlockMouseoverSingle() {
+	// TODO Auto-generated method stub
+	return null;
+}
 }

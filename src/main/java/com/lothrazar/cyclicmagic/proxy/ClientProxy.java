@@ -107,6 +107,13 @@ public class ClientProxy extends CommonProxy {
   }
   @SideOnly(Side.CLIENT)
   @Override
+  public BlockPos getBlockMouseoverSingle() {
+	  RayTraceResult mouseOver = Minecraft.getMinecraft().objectMouseOver;
+	  if(mouseOver == null){return null;}
+	  return mouseOver.getBlockPos();
+  }
+  @SideOnly(Side.CLIENT)
+  @Override
   public BlockPos getBlockMouseoverExact(int max) {
     // Get the player and their held item
     RayTraceResult mouseOver = Minecraft.getMinecraft().getRenderViewEntity().rayTrace(max, 1f);

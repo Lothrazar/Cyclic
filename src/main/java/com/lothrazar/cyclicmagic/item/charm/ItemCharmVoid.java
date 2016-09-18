@@ -16,6 +16,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemCharmVoid extends BaseCharm implements IHasRecipe {
   private static final int durability = 16;
+  private static final int yLowest = -30;
+  private static final int yDest = 255;
   public ItemCharmVoid() {
     super(durability);
   }
@@ -26,8 +28,8 @@ public class ItemCharmVoid extends BaseCharm implements IHasRecipe {
   public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
     if (entityIn instanceof EntityPlayer) {
       EntityPlayer living = (EntityPlayer) entityIn;
-      if (living.getPosition().getY() < -30) {
-        UtilEntity.teleportWallSafe(living, worldIn, new BlockPos(living.getPosition().getX(), 255, living.getPosition().getZ()));
+      if (living.getPosition().getY() < yLowest) {
+        UtilEntity.teleportWallSafe(living, worldIn, new BlockPos(living.getPosition().getX(), yDest, living.getPosition().getZ()));
         super.damageCharm(living, stack, itemSlot);
         UtilSound.playSound(living, living.getPosition(), SoundEvents.ENTITY_ENDERMEN_TELEPORT, living.getSoundCategory());
         UtilParticle.spawnParticle(worldIn, EnumParticleTypes.PORTAL, living.getPosition());

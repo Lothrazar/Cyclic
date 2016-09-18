@@ -98,6 +98,9 @@ public class ToolsModule extends BaseModule {
       ItemRegistry.tool_warp_spawn = new ItemToolWarp(ItemToolWarp.WarpType.SPAWN);
       ItemRegistry.addItem(ItemRegistry.tool_warp_spawn, "tool_warp_spawn");
     }
+    ItemToolSwap tool_swap = new ItemToolSwap();
+    ItemRegistry.addItem(tool_swap, "tool_swap");
+    ModMain.instance.events.addEvent(tool_swap);
   }
   @Override
   public void syncConfig(Configuration config) {
