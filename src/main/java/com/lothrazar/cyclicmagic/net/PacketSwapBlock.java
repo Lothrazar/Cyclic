@@ -124,11 +124,18 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
       for (BlockPos p : places) {
         int slot = UtilInventory.getFirstSlotWithBlock(player);
         if (slot < 0) {
-          continue;
+          continue;//you have no materials left
+        }
+        if (worldObj.getTileEntity(p) != null) {
+          continue;//ignore tile entities IE do not break chests / etc
         }
         replaced = worldObj.getBlockState(p);
+        if (worldObj.isAirBlock(p) || replaced != null) {
+          //dont build in air
+          continue;
+        }
         newToPlace = UtilInventory.getBlockstateFromSlot(player, slot);
-        if(replaced.getBlock().getBlockHardness(replaced, player.worldObj, p) < 0){
+        if (replaced.getBlock().getBlockHardness(replaced, worldObj, p) < 0) {
           //is unbreakable ie bedrock
           continue;
         }
@@ -138,9 +145,7 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
           continue;
         }
         //break it and drop the whatever
-        if (replaced != null && worldObj.isAirBlock(p) == false) {
-          worldObj.destroyBlock(p, true);
-        }
+        worldObj.destroyBlock(p, true);
         //set the new swap
         worldObj.setBlockState(p, newToPlace);
         UtilInventory.decrStackSize(player, slot);
