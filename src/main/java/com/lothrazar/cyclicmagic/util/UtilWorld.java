@@ -1,4 +1,6 @@
 package com.lothrazar.cyclicmagic.util;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -17,6 +19,23 @@ public class UtilWorld {
   }
   public static BlockPos convertIposToBlockpos(IPosition here) {
     return new BlockPos(here.getX(), here.getY(), here.getZ());
+  }
+  public static List<BlockPos> getPositionsInRange(BlockPos center,
+      int xMin ,
+      int xMax ,
+      int yMin ,
+      int yMax ,
+      int zMin ,
+      int zMax ) {
+    List<BlockPos> found = new ArrayList<BlockPos> ();
+
+    for(int x = xMin; x <= xMax; x++)
+      for(int y = yMin; y <= yMax; y++)
+        for(int z = zMin; z <= zMax; z++){
+          found.add(new BlockPos(x,y,z));
+        }
+    
+    return found;
   }
   public static BlockPos getRandomPos(Random rand, BlockPos here, int hRadius) {
     int x = here.getX();
