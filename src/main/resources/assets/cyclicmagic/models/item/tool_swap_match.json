@@ -1,7 +1,7 @@
 {
     "textures": {
-        "0": "blocks/anvil_base",
-        "1": "blocks/quartz_block_bottom"
+        "0": "blocks/lapis_block",
+        "1": "blocks/emerald_block"
     },
     "elements": [
         {
