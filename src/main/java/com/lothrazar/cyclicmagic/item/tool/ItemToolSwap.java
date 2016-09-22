@@ -8,8 +8,6 @@ import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -23,7 +21,6 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -102,7 +99,6 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
   }
   @Override
   public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-
     //if we only run this on server, clients dont get the udpate
     //so run it only on client, let packet run the server
     if (worldObj.isRemote) {
@@ -115,18 +111,6 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
     tooltip.add(TextFormatting.GREEN + UtilChat.lang(ActionType.getName(stack)));
   }
-  @SideOnly(Side.CLIENT)
-  @SubscribeEvent
-  public void onRenderWorldLastEvent(RenderWorldLastEvent evt) {
-    //EntityPlayer p = ModMain.proxy.getClientWorld();
-    EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
-    BlockPos hover = ModMain.proxy.getBlockMouseoverSingle();
-    if (hover != null) {
-      // System.out.println("Found a hover block"+hover);
-      //TODO: find out how to render lines eh
-      //how to render lines http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/modification-development/1433242-solved-forge-rendering-lines-in-the-world
-    }
-  }
   @Override
   public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
     ActionType.tickTimeout(stack);
@@ -134,12 +118,25 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
   }
   @Override
   public void addRecipe() {
-//    GameRegistry.addRecipe(new ItemStack(this),
-//        " gp",
-//        " bg",
-//        "b  ",
-//        'b', Items.APPLE,
-//        'g', Items.GHAST_TEAR,
-//        'p', Blocks.STICKY_PISTON);
+    switch (this.wandType) {
+    case MATCH:
+      GameRegistry.addRecipe(new ItemStack(this),
+          " gp",
+          " ig",
+          "i  ",
+          'i', Blocks.LAPIS_BLOCK,
+          'g', Items.BLAZE_POWDER,
+          'p', Blocks.EMERALD_BLOCK);
+      break;
+    case NORMAL:
+      GameRegistry.addRecipe(new ItemStack(this),
+          " gp",
+          " ig",
+          "i  ",
+          'i', Blocks.IRON_BLOCK,
+          'g', Items.BLAZE_POWDER,
+          'p', Blocks.QUARTZ_BLOCK);
+      break;
+    }
   }
 }

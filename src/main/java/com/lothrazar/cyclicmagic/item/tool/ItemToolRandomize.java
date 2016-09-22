@@ -10,6 +10,8 @@ import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumActionResult;
@@ -21,6 +23,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -100,7 +103,7 @@ public class ItemToolRandomize extends BaseTool implements IHasRecipe {
     }
     player.getCooldownTracker().setCooldown(this, cooldown);
     this.onUse(stack, player, worldObj, hand);
-    return super.onItemUse(stack, player, worldObj, pos, hand, side, hitX, hitY, hitZ);// EnumActionResult.PASS;
+    return super.onItemUse(stack, player, worldObj, pos, hand, side, hitX, hitY, hitZ);
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
@@ -113,12 +116,12 @@ public class ItemToolRandomize extends BaseTool implements IHasRecipe {
   }
   @Override
   public void addRecipe() {
-    //    GameRegistry.addRecipe(new ItemStack(this),
-    //        " gp",
-    //        " bg",
-    //        "b  ",
-    //        'b', Items.APPLE,
-    //        'g', Items.GHAST_TEAR,
-    //        'p', Blocks.STICKY_PISTON);
+    GameRegistry.addRecipe(new ItemStack(this),
+        " gp",
+        " ig",
+        "i  ",
+        'i', Blocks.IRON_BLOCK,
+        'g', Items.BLAZE_POWDER,
+        'p', Blocks.QUARTZ_BLOCK);
   }
 }
