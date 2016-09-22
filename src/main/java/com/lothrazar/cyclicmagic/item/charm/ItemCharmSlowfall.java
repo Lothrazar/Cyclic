@@ -43,4 +43,8 @@ public class ItemCharmSlowfall extends BaseCharm implements IHasRecipe {
         'r', Items.DIAMOND,
         'i', Items.IRON_INGOT);
   }
+  @Override
+  public String getTooltip() {
+    return "item.charm_wing.tooltip";
+  }
 }

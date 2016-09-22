@@ -34,13 +34,13 @@ public class CharmModule extends BaseModule {
       ItemRegistry.addItem(charm_antidote, "charm_antidote");
     }
     if (slowfallCharm) {
-      ItemCharmSlowfall charm_slowfall = new ItemCharmSlowfall();
-      ItemRegistry.addItem(charm_slowfall, "charm_slowfall");
+      ItemCharmSlowfall charm_wing = new ItemCharmSlowfall();
+      ItemRegistry.addItem(charm_wing, "charm_wing");
     }
   }
   @Override
   public void syncConfig(Configuration config) {
-    slowfallCharm = config.getBoolean("SlowfallCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    slowfallCharm = config.getBoolean("WingCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableFire = config.getBoolean("FireCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableSea = config.getBoolean("SailorCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableVoid = config.getBoolean("VoidCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
