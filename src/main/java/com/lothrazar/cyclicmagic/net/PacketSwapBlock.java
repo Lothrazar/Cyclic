@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.net;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap;
-import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilInventory;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
@@ -57,10 +56,6 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
       EntityPlayer player = ctx.getServerHandler().playerEntity;
       World worldObj = player.worldObj;
       List<BlockPos> places = new ArrayList<BlockPos>();
-      //      EnumFacing.Axis axis = message.side.getAxis();
-      //       System.out.println("axis is "+axis.getName());
-      //stuff for anything not single
-      //       UtilWorld.getPositionsInBounds.//amybe refactor into this
       int xMin = message.pos.getX();
       int yMin = message.pos.getY();
       int zMin = message.pos.getZ();
@@ -123,7 +118,6 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
       //TODO: maybe dont randomly take blocks from inventory. maybe do a pick block.. or an inventory..i dont know
       //seems ok, and also different enough to be fine
       for (BlockPos p : places) {
-        System.out.println("examine: "+UtilChat.blockPosToString(p));
         int slot = UtilInventory.getFirstSlotWithBlock(player);
         if (slot < 0) {
           continue;//you have no materials left

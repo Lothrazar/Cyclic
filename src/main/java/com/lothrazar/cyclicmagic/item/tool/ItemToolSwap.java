@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.item.tool;
-import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
@@ -9,8 +8,6 @@ import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
-
-import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
@@ -35,15 +32,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemToolSwap extends BaseTool implements IHasRecipe {
   private static final int durability = 5000;
-  private static ArrayList<Block> blacklist ;
   public ItemToolSwap() {
     super(durability);
-    blacklist = new ArrayList<Block>();//TODO: from config
-    blacklist.add(Blocks.BEDROCK);
   }
   public enum ActionType {
-    SINGLE,X3,X5,X7,X9;
-	  
+    SINGLE, X3, X5, X7, X9;
     private final static String NBT = "ActionType";
     private final static String NBTTIMEOUT = "timeout";
     public static int getTimeout(ItemStack wand) {
@@ -110,11 +103,6 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
     if (worldObj.isRemote) {
       ModMain.network.sendToServer(new PacketSwapBlock(pos, ActionType.values()[ActionType.get(stack)], side));
     }
-//    //hack the sound back in
-//    IBlockState placeState = worldObj.getBlockState(pos);
-//    if (placeState.getBlock() != null) {
-//      UtilSound.playSoundPlaceBlock(player, pos, placeState.getBlock());
-//    }
     this.onUse(stack, player, worldObj, hand);
     return super.onItemUse(stack, player, worldObj, resultPosition, hand, side, hitX, hitY, hitZ);// EnumActionResult.PASS;
   }
@@ -125,16 +113,14 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onRenderWorldLastEvent(RenderWorldLastEvent evt) {
-	  //EntityPlayer p = ModMain.proxy.getClientWorld();
-	  EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
-	 BlockPos hover = ModMain.proxy.getBlockMouseoverSingle();
-	 if(hover != null){
-		// System.out.println("Found a hover block"+hover);
-		 //TODO: find out how to render lines eh
-		  //how to render lines http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/modification-development/1433242-solved-forge-rendering-lines-in-the-world
-			
-	 }
-	 
+    //EntityPlayer p = ModMain.proxy.getClientWorld();
+    EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
+    BlockPos hover = ModMain.proxy.getBlockMouseoverSingle();
+    if (hover != null) {
+      // System.out.println("Found a hover block"+hover);
+      //TODO: find out how to render lines eh
+      //how to render lines http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/modification-development/1433242-solved-forge-rendering-lines-in-the-world
+    }
   }
   @Override
   public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
