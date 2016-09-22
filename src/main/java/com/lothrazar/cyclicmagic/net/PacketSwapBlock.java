@@ -4,6 +4,8 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilInventory;
+import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
+import com.lothrazar.cyclicmagic.util.UtilSearchWorld;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.state.IBlockState;
@@ -148,7 +150,9 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
         //break it and drop the whatever
         worldObj.destroyBlock(p, true);
         //set the new swap
-        worldObj.setBlockState(p, newToPlace);
+        //of course my own wrapper to stop java.util.ConcurrentModificationException
+        UtilPlaceBlocks.placeStateSafe(worldObj, player, p, newToPlace);
+//        worldObj.setBlockState(p, newToPlace);
         UtilInventory.decrStackSize(player, slot);
       }
     }
