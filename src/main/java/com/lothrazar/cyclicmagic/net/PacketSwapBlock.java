@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.net;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilInventory;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import io.netty.buffer.ByteBuf;
@@ -10,7 +11,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -122,6 +122,7 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
       //TODO: maybe dont randomly take blocks from inventory. maybe do a pick block.. or an inventory..i dont know
       //seems ok, and also different enough to be fine
       for (BlockPos p : places) {
+        System.out.println("examine: "+UtilChat.blockPosToString(p));
         int slot = UtilInventory.getFirstSlotWithBlock(player);
         if (slot < 0) {
           continue;//you have no materials left
@@ -130,7 +131,7 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
           continue;//ignore tile entities IE do not break chests / etc
         }
         replaced = worldObj.getBlockState(p);
-        if (worldObj.isAirBlock(p) || replaced != null) {
+        if (worldObj.isAirBlock(p) || replaced == null) {
           //dont build in air
           continue;
         }
