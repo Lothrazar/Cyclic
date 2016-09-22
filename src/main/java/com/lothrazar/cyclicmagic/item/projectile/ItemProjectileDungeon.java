@@ -5,7 +5,7 @@ import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDungeonEye;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilSearchWorld;
+import com.lothrazar.cyclicmagic.util.UtilWorld;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -32,7 +32,7 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
   }
   @Override
   void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
-    BlockPos blockpos = UtilSearchWorld.findClosestBlock(player, Blocks.MOB_SPAWNER, DUNGEONRADIUS);
+    BlockPos blockpos = UtilWorld.findClosestBlock(player, Blocks.MOB_SPAWNER, DUNGEONRADIUS);
     if (blockpos != null) {
       EntityDungeonEye entityendereye = new EntityDungeonEye(world, player);
       doThrow(world, player, hand, entityendereye, 0.5F);

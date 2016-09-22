@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.module;
 import java.text.DecimalFormat;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilSearchWorld;
+import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.util.math.BlockPos;
@@ -52,7 +52,7 @@ public class F3InfoModule extends BaseEventModule {
     int xFromSpawn = Math.abs(xCenterOfChunk - spawn.getX());
     int zFromSpawn = Math.abs(zCenterOfChunk - spawn.getZ());
     DecimalFormat df = new DecimalFormat("0.0");
-    double dist = UtilSearchWorld.distanceBetweenHorizontal(here, spawn);
+    double dist = UtilWorld.distanceBetweenHorizontal(here, spawn);
     event.getLeft().add(UtilChat.lang("debug.spawn.distance") + df.format(dist));
     if (xFromSpawn < SPAWN_RADIUS && zFromSpawn < SPAWN_RADIUS) {
       event.getLeft().add(TextFormatting.GREEN + UtilChat.lang("debug.spawn.chunks"));

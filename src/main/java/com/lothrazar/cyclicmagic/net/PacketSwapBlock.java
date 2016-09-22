@@ -5,7 +5,6 @@ import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilInventory;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
-import com.lothrazar.cyclicmagic.util.UtilSearchWorld;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.state.IBlockState;

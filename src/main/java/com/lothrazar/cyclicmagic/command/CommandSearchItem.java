@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilSearchWorld;
+import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.inventory.IInventory;
@@ -30,12 +30,12 @@ public class CommandSearchItem extends BaseCommand implements ICommand {
     if (searchQuery.length() == 0) {
       UtilChat.addChatMessage(sender, getCommandUsage(sender));
     }
-    Map<IInventory, BlockPos> tilesToSearch = UtilSearchWorld.findTileEntityInventories(sender, radius);
+    Map<IInventory, BlockPos> tilesToSearch = UtilWorld.findTileEntityInventories(sender, radius);
     int foundQtyTotal;
     ArrayList<String> foundMessages = new ArrayList<String>();
     for (Map.Entry<IInventory, BlockPos> entry : tilesToSearch.entrySet()) {
       foundQtyTotal = 0;
-      foundQtyTotal = UtilSearchWorld.searchTileInventory(searchQuery, entry.getKey());
+      foundQtyTotal = UtilWorld.searchTileInventory(searchQuery, entry.getKey());
       if (foundQtyTotal > 0) {
         String totalsStr = foundQtyTotal + " : ";
         foundMessages.add(totalsStr + getCoordsOrReduced(sender, entry.getValue()));

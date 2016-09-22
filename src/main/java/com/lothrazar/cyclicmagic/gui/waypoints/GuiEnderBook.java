@@ -7,7 +7,7 @@ import com.lothrazar.cyclicmagic.item.ItemEnderBook;
 import com.lothrazar.cyclicmagic.item.ItemEnderBook.BookLocation;
 import com.lothrazar.cyclicmagic.net.PacketDeleteWaypoint;
 import com.lothrazar.cyclicmagic.net.PacketNewButton;
-import com.lothrazar.cyclicmagic.util.UtilSearchWorld;
+import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;// http://www.minecraftforge.net/forum/index.php?topic=22378.0
@@ -81,7 +81,7 @@ public class GuiEnderBook extends GuiScreen {
       }
       btn = new ButtonWaypointTeleport(buttonID++, x, y, w, h, buttonText, loc.id);
       BlockPos toPos = list.get(i).toBlockPos();
-      int distance = (int) UtilSearchWorld.distanceBetweenHorizontal(toPos, entityPlayer.getPosition());
+      int distance = (int) UtilWorld.distanceBetweenHorizontal(toPos, entityPlayer.getPosition());
       int cost = ItemEnderBook.getExpCostPerTeleport(entityPlayer, bookStack, loc.id);
       btn.addTooltipLine(list.get(i).coordsDisplay());
       btn.addTooltipLine(I18n.format("button.waypoint.distance") + " " + distance);
