@@ -17,9 +17,9 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemCharmSlowfall extends BaseCharm implements IHasRecipe {
   private final static int seconds = 30;
-  private final static int fallDistanceLimit = 8;
+  private final static int fallDistanceLimit = 6;
   public ItemCharmSlowfall() {
-    super(128);
+    super(256);
   }
   public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
     if (entityIn instanceof EntityPlayer) {
