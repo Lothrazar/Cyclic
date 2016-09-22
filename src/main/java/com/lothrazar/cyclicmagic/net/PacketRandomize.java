@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import com.lothrazar.cyclicmagic.item.tool.ItemToolRandomize;
-import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import io.netty.buffer.ByteBuf;
@@ -122,7 +121,6 @@ public class PacketRandomize implements IMessage, IMessageHandler<PacketRandomiz
       for (int i = 0; i < rpos.size(); i++) {
         swapPos = rpos.get(i);
         swapState = rstates.get(i);
-        System.out.println("place at " + UtilChat.blockPosToString(swapPos) + "__" + swapState.getBlock().getLocalizedName());
         worldObj.destroyBlock(swapPos, false);
         UtilPlaceBlocks.placeStateSafe(worldObj, player, swapPos, swapState);
       }

@@ -26,6 +26,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemToolRandomize extends BaseTool implements IHasRecipe {
   private static final int durability = 5000;
+  private static final int cooldown = 15;
   public ItemToolRandomize() {
     super(durability);
   }
@@ -91,14 +92,15 @@ public class ItemToolRandomize extends BaseTool implements IHasRecipe {
   }
   @Override
   public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-    BlockPos resultPosition = null;
+    if (player.getCooldownTracker().hasCooldown(stack.getItem())) { return super.onItemUse(stack, player, worldObj, pos, hand, side, hitX, hitY, hitZ); }
     //if we only run this on server, clients dont get the udpate
     //so run it only on client, let packet run the server
     if (worldObj.isRemote) {
       ModMain.network.sendToServer(new PacketRandomize(pos, side, ActionType.values()[ActionType.get(stack)]));
     }
+    player.getCooldownTracker().setCooldown(this, cooldown);
     this.onUse(stack, player, worldObj, hand);
-    return super.onItemUse(stack, player, worldObj, resultPosition, hand, side, hitX, hitY, hitZ);// EnumActionResult.PASS;
+    return super.onItemUse(stack, player, worldObj, pos, hand, side, hitX, hitY, hitZ);// EnumActionResult.PASS;
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
@@ -111,12 +113,12 @@ public class ItemToolRandomize extends BaseTool implements IHasRecipe {
   }
   @Override
   public void addRecipe() {
-//    GameRegistry.addRecipe(new ItemStack(this),
-//        " gp",
-//        " bg",
-//        "b  ",
-//        'b', Items.APPLE,
-//        'g', Items.GHAST_TEAR,
-//        'p', Blocks.STICKY_PISTON);
+    //    GameRegistry.addRecipe(new ItemStack(this),
+    //        " gp",
+    //        " bg",
+    //        "b  ",
+    //        'b', Items.APPLE,
+    //        'g', Items.GHAST_TEAR,
+    //        'p', Blocks.STICKY_PISTON);
   }
 }

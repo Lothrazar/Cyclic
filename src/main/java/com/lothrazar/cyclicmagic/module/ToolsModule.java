@@ -108,6 +108,7 @@ public class ToolsModule extends BaseModule {
     
     ItemToolRandomize tool_randomize = new ItemToolRandomize();
     ItemRegistry.addItem(tool_randomize, "tool_randomize");
+    ModMain.instance.events.addEvent(tool_randomize);
   }
   @Override
   public void syncConfig(Configuration config) {
