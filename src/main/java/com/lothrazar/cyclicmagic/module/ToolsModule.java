@@ -44,6 +44,8 @@ public class ToolsModule extends BaseModule {
   private boolean enableCavefinder;
   private boolean enableWarpHomeTool;
   private boolean enableWarpSpawnTool;
+  private boolean enableSwappers;
+  private boolean enableRando;
   @Override
   public void onInit() {
     if (enableProspector) {
@@ -99,16 +101,19 @@ public class ToolsModule extends BaseModule {
       ItemRegistry.tool_warp_spawn = new ItemToolWarp(ItemToolWarp.WarpType.SPAWN);
       ItemRegistry.addItem(ItemRegistry.tool_warp_spawn, "tool_warp_spawn");
     }
-    ItemToolSwap tool_swap = new ItemToolSwap(WandType.NORMAL);
-    ItemRegistry.addItem(tool_swap, "tool_swap");
-    ModMain.instance.events.addEvent(tool_swap);
-    ItemToolSwap tool_swap_match = new ItemToolSwap(WandType.MATCH);
-    ItemRegistry.addItem(tool_swap_match, "tool_swap_match");
-    ModMain.instance.events.addEvent(tool_swap_match);
-    
-    ItemToolRandomize tool_randomize = new ItemToolRandomize();
-    ItemRegistry.addItem(tool_randomize, "tool_randomize");
-    ModMain.instance.events.addEvent(tool_randomize);
+    if (enableSwappers) {
+      ItemToolSwap tool_swap = new ItemToolSwap(WandType.NORMAL);
+      ItemRegistry.addItem(tool_swap, "tool_swap");
+      ModMain.instance.events.addEvent(tool_swap);
+      ItemToolSwap tool_swap_match = new ItemToolSwap(WandType.MATCH);
+      ItemRegistry.addItem(tool_swap_match, "tool_swap_match");
+      ModMain.instance.events.addEvent(tool_swap_match);
+    }
+    if (enableRando) {
+      ItemToolRandomize tool_randomize = new ItemToolRandomize();
+      ItemRegistry.addItem(tool_randomize, "tool_randomize");
+      ModMain.instance.events.addEvent(tool_randomize);
+    }
   }
   @Override
   public void syncConfig(Configuration config) {
@@ -126,6 +131,8 @@ public class ToolsModule extends BaseModule {
     enableCyclicWand = config.getBoolean("CyclicWand", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableProspector = config.getBoolean("Prospector", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableCavefinder = config.getBoolean("Cavefinder", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableSwappers = config.getBoolean("ExchangeScepters", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableRando = config.getBoolean("BlockRandomizer", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
