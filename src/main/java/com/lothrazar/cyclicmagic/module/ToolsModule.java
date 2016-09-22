@@ -105,6 +105,9 @@ public class ToolsModule extends BaseModule {
     ItemToolSwap tool_swap_match = new ItemToolSwap(WandType.MATCH);
     ItemRegistry.addItem(tool_swap_match, "tool_swap_match");
     ModMain.instance.events.addEvent(tool_swap_match);
+    
+    ItemToolRandomize tool_randomize = new ItemToolRandomize();
+    ItemRegistry.addItem(tool_randomize, "tool_randomize");
   }
   @Override
   public void syncConfig(Configuration config) {
