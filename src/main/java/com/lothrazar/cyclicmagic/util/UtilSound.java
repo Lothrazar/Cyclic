@@ -16,7 +16,6 @@ public class UtilSound {
   public static void playSoundPlaceBlock(EntityPlayer player, BlockPos pos, Block block) {
     BlockPos here = (pos == null) ? player.getPosition() : pos;
     if (block == null) { return; }
-    UtilSound.playSoundPlaceBlock(player, here, block);
     SoundType type = block.getSoundType(block.getDefaultState(), player.getEntityWorld(), here, player);
     if (type != null && type.getPlaceSound() != null) {
       UtilSound.playSound(player, here, type.getPlaceSound());
