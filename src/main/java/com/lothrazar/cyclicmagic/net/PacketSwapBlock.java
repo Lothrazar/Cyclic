@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.net;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.WandType;
 import com.lothrazar.cyclicmagic.util.UtilInventory;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
@@ -19,13 +20,15 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBlock, IMessage> {
   private BlockPos pos;
-  private ItemToolSwap.ActionType type;
+  private ItemToolSwap.ActionType actionType;
+  private ItemToolSwap.WandType wandType;
   private EnumFacing side;
   public PacketSwapBlock() {
   }
-  public PacketSwapBlock(BlockPos mouseover, ItemToolSwap.ActionType t, EnumFacing s) {
+  public PacketSwapBlock(BlockPos mouseover, EnumFacing s, ItemToolSwap.ActionType t,ItemToolSwap.WandType w) {
     pos = mouseover;
-    type = t;
+    actionType = t;
+    wandType = w;
     side = s;
   }
   @Override
@@ -35,10 +38,12 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
     int y = tags.getInteger("y");
     int z = tags.getInteger("z");
     pos = new BlockPos(x, y, z);
-    int t = tags.getInteger("t");
-    type = ItemToolSwap.ActionType.values()[t];
     int s = tags.getInteger("s");
     side = EnumFacing.values()[s];
+    int t = tags.getInteger("t");
+    actionType = ItemToolSwap.ActionType.values()[t];
+    int w = tags.getInteger("w");
+    wandType = ItemToolSwap.WandType.values()[w];
   }
   @Override
   public void toBytes(ByteBuf buf) {
@@ -46,7 +51,8 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
     tags.setInteger("x", pos.getX());
     tags.setInteger("y", pos.getY());
     tags.setInteger("z", pos.getZ());
-    tags.setInteger("t", type.ordinal());
+    tags.setInteger("t", actionType.ordinal());
+    tags.setInteger("w", wandType.ordinal());
     tags.setInteger("s", side.ordinal());
     ByteBufUtils.writeTag(buf, tags);
   }
@@ -64,7 +70,7 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
       int zMax = message.pos.getZ();
       boolean isVertical = (message.side == EnumFacing.UP || message.side == EnumFacing.DOWN);
       int offsetRadius = 0;
-      switch (message.type) {
+      switch (message.actionType) {
       case SINGLE:
         places.add(message.pos);
         offsetRadius = 0;
@@ -111,10 +117,15 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
         }
         places = UtilWorld.getPositionsInRange(message.pos, xMin, xMax, yMin, yMax, zMin, zMax);
       }
+      
       //we already have center, now go around
       //      message.pos.offset(message.side.rotateAround(axis))
       IBlockState replaced;
       IBlockState newToPlace;
+      IBlockState matched = null;
+      if(message.wandType == WandType.MATCH){
+        matched = worldObj.getBlockState(message.pos);
+      }
       //TODO: maybe dont randomly take blocks from inventory. maybe do a pick block.. or an inventory..i dont know
       //seems ok, and also different enough to be fine
       for (BlockPos p : places) {
@@ -136,8 +147,12 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
           continue;
         }
         //wait, do they match? are they the same? do not replace myself
-        if (replaced.getBlock() == newToPlace.getBlock() &&
-            replaced.getBlock().getMetaFromState(replaced) == newToPlace.getBlock().getMetaFromState(newToPlace)) {
+        if (UtilWorld.doBlockStatesMatch(replaced, newToPlace)) {
+          continue;
+        }
+        if(message.wandType == WandType.MATCH && matched != null && 
+            !UtilWorld.doBlockStatesMatch(matched, replaced)){
+          //we have saved the one we clicked on so only that gets replaced
           continue;
         }
         //break it and drop the whatever

@@ -32,8 +32,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemToolSwap extends BaseTool implements IHasRecipe {
   private static final int durability = 5000;
-  public ItemToolSwap() {
+  private WandType wandType;
+  public ItemToolSwap(WandType t) {
     super(durability);
+    wandType = t;
+  }
+  public enum WandType{
+    NORMAL,MATCH;
   }
   public enum ActionType {
     SINGLE, X3, X5, X7, X9;
@@ -101,7 +106,7 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
     //if we only run this on server, clients dont get the udpate
     //so run it only on client, let packet run the server
     if (worldObj.isRemote) {
-      ModMain.network.sendToServer(new PacketSwapBlock(pos, ActionType.values()[ActionType.get(stack)], side));
+      ModMain.network.sendToServer(new PacketSwapBlock(pos, side, ActionType.values()[ActionType.get(stack)],this.wandType));
     }
     this.onUse(stack, player, worldObj, hand);
     return super.onItemUse(stack, player, worldObj, resultPosition, hand, side, hitX, hitY, hitZ);// EnumActionResult.PASS;

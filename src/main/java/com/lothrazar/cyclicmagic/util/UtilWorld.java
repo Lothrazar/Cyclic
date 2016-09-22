@@ -176,4 +176,8 @@ public class UtilWorld {
   public static double distanceBetweenVertical(BlockPos start, BlockPos end) {
     return Math.abs(start.getY() - end.getY());
   }
+  public static boolean doBlockStatesMatch(IBlockState replaced, IBlockState newToPlace) {
+    return replaced.getBlock() == newToPlace.getBlock() &&
+        replaced.getBlock().getMetaFromState(replaced) == newToPlace.getBlock().getMetaFromState(newToPlace);
+  }
 }

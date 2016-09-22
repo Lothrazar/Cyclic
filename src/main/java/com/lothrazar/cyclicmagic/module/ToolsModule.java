@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
 import com.lothrazar.cyclicmagic.item.tool.*;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.WandType;
 import com.lothrazar.cyclicmagic.item.ItemSleepingMat;
 import com.lothrazar.cyclicmagic.net.PacketSpellShiftLeft;
 import com.lothrazar.cyclicmagic.net.PacketSpellShiftRight;
@@ -98,9 +99,12 @@ public class ToolsModule extends BaseModule {
       ItemRegistry.tool_warp_spawn = new ItemToolWarp(ItemToolWarp.WarpType.SPAWN);
       ItemRegistry.addItem(ItemRegistry.tool_warp_spawn, "tool_warp_spawn");
     }
-    ItemToolSwap tool_swap = new ItemToolSwap();
+    ItemToolSwap tool_swap = new ItemToolSwap(WandType.NORMAL);
     ItemRegistry.addItem(tool_swap, "tool_swap");
     ModMain.instance.events.addEvent(tool_swap);
+    ItemToolSwap tool_swap_match = new ItemToolSwap(WandType.MATCH);
+    ItemRegistry.addItem(tool_swap_match, "tool_swap_match");
+    ModMain.instance.events.addEvent(tool_swap_match);
   }
   @Override
   public void syncConfig(Configuration config) {
