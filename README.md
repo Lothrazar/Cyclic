@@ -1,4 +1,7 @@
-# CyclicMagic
+<iframe src="https://widget.mcf.li/mc-mods/minecraft/239286-cyclic" width="100%" style="border: none;"></iframe>
+
+
+# Cyclic
 Minecraft mod written in Java using the Minecraft Forge API.  MIT License.
 
 
