@@ -12,6 +12,7 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -41,13 +42,24 @@ public class ItemChestSackEmpty extends BaseItem implements IHasRecipe {
       }
       return EnumActionResult.FAIL;
     }
-    IInventory invo = (IInventory) world.getTileEntity(pos);
-    NBTTagCompound itemTag = UtilNBT.writeInventoryToNewTag(invo, ItemChestSack.KEY_NBT);
+    TileEntity tile = world.getTileEntity(pos);
+    IInventory invo = (IInventory) tile;
+//    NBTTagCompound itemTag = UtilNBT.writeInventoryToNewTag(invo, ItemChestSack.KEY_NBT);
+
+   NBTTagCompound tileData = new NBTTagCompound();  //thanks for the tip on setting tile entity data from nbt tag: https://github.com/romelo333/notenoughwands1.8.8/blob/master/src/main/java/romelo333/notenoughwands/Items/DisplacementWand.java
+   //TODO: push to NBT util... this is  copied from /UtilPlaceBlocks.java
+
+   //TODO 1: stop it from dropping the contents
+   //TODO 2: add custom nbt data for item display only thats ignored when writing the tag to the tile
+   //TODO 3: download enderio and test
+   tile.writeToNBT(tileData);
+    
     ItemStack drop = new ItemStack(ItemRegistry.chest_sack);
-    drop.setTagCompound(itemTag);
+    drop.setTagCompound(tileData);
     drop.getTagCompound().setInteger(ItemChestSack.KEY_BLOCK, Block.getIdFromBlock(world.getBlockState(pos).getBlock()));
     entityPlayer.dropItem(drop, false);
-    world.setBlockToAir(pos);
+//    world.setBlockToAir(pos);
+    world.destroyBlock(pos, false);
     stack.stackSize--;
     UtilSound.playSound(entityPlayer, pos, SoundRegistry.thunk);
     return EnumActionResult.SUCCESS;

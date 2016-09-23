@@ -10,6 +10,8 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -48,13 +50,23 @@ public class ItemChestSack extends BaseItem {
       return false;
     }
     entityPlayer.worldObj.setBlockState(pos, block.getDefaultState());
-    IInventory invo = (IInventory) entityPlayer.worldObj.getTileEntity(pos);
+    TileEntity tile = entityPlayer.worldObj.getTileEntity(pos);
+    if(tile != null){
+      NBTTagCompound tileData = heldChestSack.getTagCompound();
+      tileData.setInteger("x", pos.getX());
+      tileData.setInteger("y", pos.getY());
+      tileData.setInteger("z", pos.getZ());
+      tile.readFromNBT(tileData);
+      tile.markDirty();
+      entityPlayer.worldObj.markChunkDirty(pos, tile);
+    }
+    IInventory invo = (IInventory) tile;
     if (invo == null) {
       // ModMain.logger.log(Level.WARN,
       // "Null tile entity inventory, cannot fill from item stack");
       return false;
     }
-    UtilNBT.writeTagsToInventory(invo, heldChestSack.getTagCompound(), ItemChestSack.KEY_NBT);
+//    UtilNBT.writeTagsToInventory(invo, heldChestSack.getTagCompound(), ItemChestSack.KEY_NBT);
     heldChestSack.stackSize = 0;
     heldChestSack.setTagCompound(null);
     return true;
