@@ -114,7 +114,6 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
         ItemStack stack = player.inventory.getStackInSlot(slot);
         if (stack != null)
           ModMain.proxy.renderItemOnScreen(stack, xoffset, ymain);
-        
       }
     }
   }

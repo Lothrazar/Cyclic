@@ -11,6 +11,7 @@ public class CharmModule extends BaseModule {
   private boolean enableWater;
   private boolean antidoteCharm;
   private boolean slowfallCharm;
+  private boolean autoTorch;
   @Override
   public void onInit() {
     if (enableFire) {
@@ -37,6 +38,10 @@ public class CharmModule extends BaseModule {
       ItemCharmSlowfall charm_wing = new ItemCharmSlowfall();
       ItemRegistry.addItem(charm_wing, "charm_wing");
     }
+    if (autoTorch) {
+      ItemCharmAutoTorch tool_auto_torch = new ItemCharmAutoTorch();
+      ItemRegistry.addItem(tool_auto_torch, "tool_auto_torch");
+    }
   }
   @Override
   public void syncConfig(Configuration config) {
@@ -46,5 +51,6 @@ public class CharmModule extends BaseModule {
     enableVoid = config.getBoolean("VoidCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableWater = config.getBoolean("WaterCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     antidoteCharm = config.getBoolean("AntidoteCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    autoTorch = config.getBoolean("AutomaticTorch", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 }
