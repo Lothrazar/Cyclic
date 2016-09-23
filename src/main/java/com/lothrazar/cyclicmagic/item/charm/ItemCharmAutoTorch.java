@@ -14,7 +14,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemCharmAutoTorch extends BaseCharm implements IHasRecipe {
-  private static final int durability = 128;
+  private static final int durability = 256;
+  private static final float lightLimit = 7.0F;
   private static final int cooldown = 60;//ticks not seconds
   public ItemCharmAutoTorch() {
     super(durability);
@@ -24,7 +25,7 @@ public class ItemCharmAutoTorch extends BaseCharm implements IHasRecipe {
       EntityPlayer living = (EntityPlayer) entityIn;
       if (living.getCooldownTracker().hasCooldown(stack.getItem())) { return; } //cancel if on cooldown
       BlockPos pos = living.getPosition();
-      if (world.getLight(pos, true) < 7.0F && world.isSideSolid(pos.down(), EnumFacing.UP)) {
+      if (world.getLight(pos, true) < lightLimit && world.isSideSolid(pos.down(), EnumFacing.UP)) {
         if (UtilPlaceBlocks.placeStateSafe(world, living, pos, Blocks.TORCH.getDefaultState())) {
           super.damageCharm(living, stack, itemSlot);
           living.getCooldownTracker().setCooldown(this, cooldown);
@@ -35,9 +36,9 @@ public class ItemCharmAutoTorch extends BaseCharm implements IHasRecipe {
   @Override
   public void addRecipe() {
     GameRegistry.addRecipe(new ItemStack(this),
-        "ccc",
+        "cic",
         " i ",
-        " i ",
+        "cic",
         'c', Blocks.COAL_BLOCK,
         'i', Blocks.IRON_BARS);
   }
