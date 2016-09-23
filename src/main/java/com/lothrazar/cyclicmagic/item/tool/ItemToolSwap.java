@@ -6,8 +6,10 @@ import com.lothrazar.cyclicmagic.item.BaseTool;
 import com.lothrazar.cyclicmagic.net.PacketSwapBlock;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilInventory;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -21,7 +23,9 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -94,6 +98,23 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
       if (!player.worldObj.isRemote) { // server side
         ActionType.toggle(held);
         UtilChat.addChatMessage(player, UtilChat.lang(ActionType.getName(held)));
+      }
+    }
+  }
+  @SideOnly(Side.CLIENT)
+  @SubscribeEvent(priority = EventPriority.LOWEST)
+  public void onRender(RenderGameOverlayEvent.Post event) {
+    EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+    ItemStack held = player.getHeldItem(EnumHand.MAIN_HAND);
+    if (held != null && held.getItem() == this) {
+      int xoffset = 6;//was 30 if manabar is showing
+      int ymain = 6;
+      int slot = UtilInventory.getFirstSlotWithBlock(player);
+      if (slot >= 0) {
+        ItemStack stack = player.inventory.getStackInSlot(slot);
+        if (stack != null)
+          ModMain.proxy.renderItemOnScreen(stack, xoffset, ymain);
+        
       }
     }
   }

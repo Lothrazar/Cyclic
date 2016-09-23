@@ -19,7 +19,9 @@ import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.ItemModelMesher;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -27,6 +29,7 @@ import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IThreadListener;
@@ -186,5 +189,16 @@ public class ClientProxy extends CommonProxy {
     //https://github.com/coolAlias/Tutorial-Demo/blob/e8fa9c94949e0b1659dc0a711674074f8752d80e/src/main/java/tutorial/ClientProxy.java
     // Solution is to double-check side before returning the player:
     return (ctx.side.isClient() ? Minecraft.getMinecraft().thePlayer : super.getPlayerEntity(ctx));
+  }
+  @Override
+  @SideOnly(Side.CLIENT)
+  public void renderItemOnScreen(ItemStack current, int x, int y) {
+    if (current == null) { return; }
+    RenderItem itemRender = Minecraft.getMinecraft().getRenderItem();
+    GlStateManager.color(1, 1, 1, 1);
+    RenderHelper.enableStandardItemLighting();
+    RenderHelper.enableGUIStandardItemLighting();
+    itemRender.renderItemAndEffectIntoGUI(current, x, y);
+    RenderHelper.disableStandardItemLighting();
   }
 }

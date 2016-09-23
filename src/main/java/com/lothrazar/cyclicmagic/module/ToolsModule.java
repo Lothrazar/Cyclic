@@ -170,17 +170,20 @@ public class ToolsModule extends BaseModule {
     EntityPlayer effectivePlayer = Minecraft.getMinecraft().thePlayer;
     ItemStack heldWand = UtilSpellCaster.getPlayerWandIfHeld(effectivePlayer);
     if (heldWand == null) { return; }
-    RenderItem itemRender = Minecraft.getMinecraft().getRenderItem();
-    GlStateManager.color(1, 1, 1, 1);
-    RenderHelper.enableStandardItemLighting();
-    RenderHelper.enableGUIStandardItemLighting();
     int itemSlot = ItemCyclicWand.BuildType.getSlot(heldWand);
     ItemStack current = InventoryWand.getFromSlot(heldWand, itemSlot);
     if (current != null) {
-      itemRender.renderItemAndEffectIntoGUI(current,
-          SpellHud.xoffset - 1, SpellHud.ymain + SpellHud.spellSize * 2);
+      ModMain.proxy.renderItemOnScreen(current, SpellHud.xoffset - 1, SpellHud.ymain + SpellHud.spellSize * 2);
     }
-    RenderHelper.disableStandardItemLighting();
+    //    RenderItem itemRender = Minecraft.getMinecraft().getRenderItem();
+    //    GlStateManager.color(1, 1, 1, 1);
+    //    RenderHelper.enableStandardItemLighting();
+    //    RenderHelper.enableGUIStandardItemLighting();
+    //    if (current != null) {
+    //      itemRender.renderItemAndEffectIntoGUI(current,
+    //          SpellHud.xoffset - 1, SpellHud.ymain + SpellHud.spellSize * 2);
+    //    }
+    //    RenderHelper.disableStandardItemLighting();
   }
   private class SpellHud {
     private static final int xoffset = 14;//was 30 if manabar is showing
