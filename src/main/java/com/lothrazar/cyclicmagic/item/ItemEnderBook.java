@@ -8,7 +8,7 @@ import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
-import com.lothrazar.cyclicmagic.util.UtilSearchWorld;
+import com.lothrazar.cyclicmagic.util.UtilWorld;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -172,7 +172,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
   }
   public static int getExpCostPerTeleport(EntityPlayer player, ItemStack book, int slot) {
     BlockPos toPos = getLocationPos(book, slot);
-    int distance = (int) UtilSearchWorld.distanceBetweenHorizontal(toPos, player.getPosition());
+    int distance = (int) UtilWorld.distanceBetweenHorizontal(toPos, player.getPosition());
     return (int) Math.round(distance / expDistRatio);
   }
   @Override

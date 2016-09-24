@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.item.gear;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.module.EmeraldArmorModule;
+import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
@@ -10,7 +10,7 @@ public class ItemEmeraldAxe extends ItemAxe implements IHasRecipe {
   public static final String name = "emerald_axe";
   public ItemEmeraldAxe() {
     // protected ItemAxe(Item.ToolMaterial material, int damage, int speed)
-    super(EmeraldArmorModule.TOOL_MATERIAL, 6, -3);
+    super(MaterialRegistry.emeraldToolMaterial, 6, -3);
   }
   @Override
   public void addRecipe() {

@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.command;
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilSearchWorld;
+import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -29,7 +29,7 @@ public class CommandSearchSpawner extends BaseCommand implements ICommand {
     if (radius <= 0) {
       radius = DEFAULTRADIUS;
     }
-    ArrayList<BlockPos> founds = UtilSearchWorld.findBlocks(sender.getEntityWorld(),
+    ArrayList<BlockPos> founds = UtilWorld.findBlocks(sender.getEntityWorld(),
         sender.getPosition(), Blocks.MOB_SPAWNER, radius);
     if (founds.size() == 0) {
       UtilChat.addChatMessage(sender, UtilChat.lang("command.searchspawner.none") + radius);

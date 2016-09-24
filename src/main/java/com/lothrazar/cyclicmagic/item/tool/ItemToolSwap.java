@@ -3,12 +3,13 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.item.BaseTool;
-import com.lothrazar.cyclicmagic.net.PacketMoveBlock;
+import com.lothrazar.cyclicmagic.net.PacketSwapBlock;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilInventory;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -22,19 +23,26 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemToolPush extends BaseTool implements IHasRecipe {
+public class ItemToolSwap extends BaseTool implements IHasRecipe {
   private static final int durability = 5000;
-  public ItemToolPush() {
+  private WandType wandType;
+  public ItemToolSwap(WandType t) {
     super(durability);
+    wandType = t;
+  }
+  public enum WandType {
+    NORMAL, MATCH;
   }
   public enum ActionType {
-    PUSH, PULL, ROTATE;
+    SINGLE, X3, X5, X7, X9;
     private final static String NBT = "ActionType";
     private final static String NBTTIMEOUT = "timeout";
     public static int getTimeout(ItemStack wand) {
@@ -61,15 +69,15 @@ public class ItemToolPush extends BaseTool implements IHasRecipe {
         return "tool.action." + ActionType.values()[tags.getInteger(NBT)].toString().toLowerCase();
       }
       catch (Exception e) {
-        return "tool.action." + PUSH.toString().toLowerCase();
+        return "tool.action." + SINGLE.toString().toLowerCase();
       }
     }
     public static void toggle(ItemStack wand) {
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       int type = tags.getInteger(NBT);
       type++;
-      if (type > ROTATE.ordinal()) {
-        type = PUSH.ordinal();
+      if (type > X9.ordinal()) {
+        type = SINGLE.ordinal();
       }
       tags.setInteger(NBT, type);
       wand.setTagCompound(tags);
@@ -93,20 +101,30 @@ public class ItemToolPush extends BaseTool implements IHasRecipe {
       }
     }
   }
+  @SideOnly(Side.CLIENT)
+  @SubscribeEvent(priority = EventPriority.LOWEST)
+  public void onRender(RenderGameOverlayEvent.Post event) {
+    EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+    ItemStack held = player.getHeldItem(EnumHand.MAIN_HAND);
+    if (held != null && held.getItem() == this) {
+      int xoffset = 6;//was 30 if manabar is showing
+      int ymain = 6;
+      int slot = UtilInventory.getFirstSlotWithBlock(player);
+      if (slot >= 0) {
+        ItemStack stack = player.inventory.getStackInSlot(slot);
+        if (stack != null)
+          ModMain.proxy.renderItemOnScreen(stack, xoffset, ymain);
+      }
+    }
+  }
   @Override
   public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-
     //if we only run this on server, clients dont get the udpate
     //so run it only on client, let packet run the server
     if (worldObj.isRemote) {
-      ModMain.network.sendToServer(new PacketMoveBlock(pos, ActionType.values()[ActionType.get(stack)], side));
+      ModMain.network.sendToServer(new PacketSwapBlock(pos, side, ActionType.values()[ActionType.get(stack)], this.wandType));
     }
-    //hack the sound back in
-    IBlockState placeState = worldObj.getBlockState(pos);
-    if (placeState.getBlock() != null) {
-      UtilSound.playSoundPlaceBlock(player, pos, placeState.getBlock());
-    }
-    onUse(stack, player, worldObj, hand);
+    this.onUse(stack, player, worldObj, hand);
     return super.onItemUse(stack, player, worldObj, pos, hand, side, hitX, hitY, hitZ);// EnumActionResult.PASS;
   }
   @SideOnly(Side.CLIENT)
@@ -120,12 +138,25 @@ public class ItemToolPush extends BaseTool implements IHasRecipe {
   }
   @Override
   public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this),
-        " gp",
-        " bg",
-        "b  ",
-        'b', Items.BLAZE_ROD,
-        'g', Items.GHAST_TEAR,
-        'p', Blocks.STICKY_PISTON);
+    switch (this.wandType) {
+    case MATCH:
+      GameRegistry.addRecipe(new ItemStack(this),
+          " gp",
+          " ig",
+          "i  ",
+          'i', Blocks.LAPIS_BLOCK,
+          'g', Items.BLAZE_POWDER,
+          'p', Blocks.EMERALD_BLOCK);
+      break;
+    case NORMAL:
+      GameRegistry.addRecipe(new ItemStack(this),
+          " gp",
+          " ig",
+          "i  ",
+          'i', Blocks.IRON_BLOCK,
+          'g', Items.BLAZE_POWDER,
+          'p', Blocks.QUARTZ_BLOCK);
+      break;
+    }
   }
 }

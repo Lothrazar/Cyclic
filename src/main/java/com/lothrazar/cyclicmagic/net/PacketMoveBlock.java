@@ -45,6 +45,7 @@ public class PacketMoveBlock implements IMessage, IMessageHandler<PacketMoveBloc
     tags.setInteger("s", side.ordinal());
     ByteBufUtils.writeTag(buf, tags);
   }
+  @SuppressWarnings("unused")
   @Override
   public IMessage onMessage(PacketMoveBlock message, MessageContext ctx) {
     if (ctx.side.isServer() && message != null && message.pos != null) {

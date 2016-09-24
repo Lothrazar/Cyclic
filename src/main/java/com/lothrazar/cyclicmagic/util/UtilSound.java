@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.util;
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.SoundCategory;
@@ -14,8 +15,10 @@ public class UtilSound {
   public static final boolean distanceDelay = false;
   public static void playSoundPlaceBlock(EntityPlayer player, BlockPos pos, Block block) {
     BlockPos here = (pos == null) ? player.getPosition() : pos;
-    if (block != null && block.getSoundType() != null) {
-      playSound(player, here, block.getSoundType().getPlaceSound(), SoundCategory.BLOCKS);
+    if (block == null) { return; }
+    SoundType type = block.getSoundType(block.getDefaultState(), player.getEntityWorld(), here, player);
+    if (type != null && type.getPlaceSound() != null) {
+      UtilSound.playSound(player, here, type.getPlaceSound());
     }
   }
   public static void playSound(EntityPlayer player, SoundEvent thunk) {

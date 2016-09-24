@@ -1,16 +1,9 @@
 package com.lothrazar.cyclicmagic.module;
-import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.item.ItemPotionCustom;
-import com.lothrazar.cyclicmagic.potion.PotionBase;
-import com.lothrazar.cyclicmagic.potion.PotionEnder;
-import com.lothrazar.cyclicmagic.potion.PotionMagnet;
-import com.lothrazar.cyclicmagic.potion.PotionSlowfall;
-import com.lothrazar.cyclicmagic.potion.PotionSnow;
-import com.lothrazar.cyclicmagic.potion.PotionWaterwalk;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.Potions;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
@@ -19,24 +12,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.GuiScreenEvent;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PotionModule extends BaseEventModule {
-  public static enum PotionType {
-    NORMAL, POWERED, LONG//, SPLASH, LINGER // todo: these last two
-  }
-  public static PotionBase slowfallEffect;
-  public static PotionBase magnetEffect;
-  public static PotionBase enderEffect;
-  public static PotionBase waterwalkEffect;
-  public static PotionBase snowEffect;
   public static final ItemPotionCustom potion_viscous = new ItemPotionCustom(false);
   public static ItemPotionCustom potion_snow;
   public static ItemPotionCustom potion_ender;
@@ -61,6 +43,7 @@ public class PotionModule extends BaseEventModule {
   public static ItemPotionCustom potion_haste;
   public static ItemPotionCustom potion_haste_strong;
   public static ItemPotionCustom potion_haste_long;
+  private ItemPotionCustom potion_snow_long;
   public boolean cancelPotionInventoryShift;
   private boolean enableMagnet;
   private boolean enableWaterwalk;
@@ -75,15 +58,9 @@ public class PotionModule extends BaseEventModule {
   final static int SHORT = 60 + 30;
   final static int NORMAL = 60 * 3;
   final static int LONG = 60 * 8;
-  private ArrayList<PotionBase> potionEffects = new ArrayList<PotionBase>();
-  private ItemPotionCustom potion_snow_long;
-  private void registerPotionEffect(PotionBase effect) {
-    GameRegistry.register(effect, effect.getIcon());
-    potionEffects.add(effect);
-  }
   @Override
   public void onInit() {
-    MinecraftForge.EVENT_BUS.register(this);
+    //the actual effects need to be in regardless. ex: some items/charms use these even if the potion item isdisabled
     // http://www.minecraftforge.net/forum/index.php?topic=11024.0
     // ??? http://www.minecraftforge.net/forum/index.php?topic=12358.0
     //CORE/BASE POTION
@@ -94,11 +71,9 @@ public class PotionModule extends BaseEventModule {
         new ItemStack(Items.DYE, 1, EnumDyeColor.BROWN.getDyeDamage()),
         new ItemStack(potion_viscous));
     if (enableEnder) {
-      enderEffect = new PotionEnder("ender", true, 0);
-      registerPotionEffect(enderEffect);
-      potion_ender = new ItemPotionCustom(true, enderEffect, NORMAL, Potions.I, "item.potion_ender.tooltip");
+      potion_ender = new ItemPotionCustom(true, PotionEffectRegistry.enderEffect, NORMAL, Potions.I, "item.potion_ender.tooltip");
       ItemRegistry.addItem(potion_ender, "potion_ender");
-      potion_ender_long = new ItemPotionCustom(true, enderEffect, LONG, Potions.I, "item.potion_ender.tooltip");
+      potion_ender_long = new ItemPotionCustom(true, PotionEffectRegistry.enderEffect, LONG, Potions.I, "item.potion_ender.tooltip");
       ItemRegistry.addItem(potion_ender_long, "potion_ender_long");
       addBrewingRecipe(
           potion_viscous,
@@ -110,10 +85,8 @@ public class PotionModule extends BaseEventModule {
           potion_ender_long);
     }
     if (enableMagnet) {
-      magnetEffect = new PotionMagnet("magnet", true, 0);
-      registerPotionEffect(magnetEffect);
-      potion_magnet = new ItemPotionCustom(false, magnetEffect, NORMAL, Potions.I);
-      potion_magnet_long = new ItemPotionCustom(false, magnetEffect, LONG, Potions.I);
+      potion_magnet = new ItemPotionCustom(false, PotionEffectRegistry.magnetEffect, NORMAL, Potions.I);
+      potion_magnet_long = new ItemPotionCustom(false, PotionEffectRegistry.magnetEffect, LONG, Potions.I);
       ItemRegistry.addItem(potion_magnet, "potion_magnet");
       ItemRegistry.addItem(potion_magnet_long, "potion_magnet_long");
       BrewingRecipeRegistry.addRecipe(
@@ -126,10 +99,8 @@ public class PotionModule extends BaseEventModule {
           potion_magnet_long);
     }
     if (enableWaterwalk) {
-      waterwalkEffect = new PotionWaterwalk("waterwalk", true, 0);
-      registerPotionEffect(waterwalkEffect);
-      potion_waterwalk = new ItemPotionCustom(false, waterwalkEffect, NORMAL, Potions.I);
-      potion_waterwalk_long = new ItemPotionCustom(false, waterwalkEffect, LONG, Potions.I);
+      potion_waterwalk = new ItemPotionCustom(false, PotionEffectRegistry.waterwalkEffect, NORMAL, Potions.I);
+      potion_waterwalk_long = new ItemPotionCustom(false, PotionEffectRegistry.waterwalkEffect, LONG, Potions.I);
       ItemRegistry.addItem(potion_waterwalk, "potion_waterwalk");
       ItemRegistry.addItem(potion_waterwalk_long, "potion_waterwalk_long");
       addBrewingRecipe(
@@ -146,10 +117,8 @@ public class PotionModule extends BaseEventModule {
           potion_waterwalk_long);
     }
     if (enableSlowfall) {
-      slowfallEffect = new PotionSlowfall("slowfall", true, 0);
-      registerPotionEffect(slowfallEffect);
-      potion_slowfall = new ItemPotionCustom(true, slowfallEffect, NORMAL, Potions.I);
-      potion_slowfall_long = new ItemPotionCustom(true, slowfallEffect, LONG, Potions.I);
+      potion_slowfall = new ItemPotionCustom(true, PotionEffectRegistry.slowfallEffect, NORMAL, Potions.I);
+      potion_slowfall_long = new ItemPotionCustom(true, PotionEffectRegistry.slowfallEffect, LONG, Potions.I);
       ItemRegistry.addItem(potion_slowfall, "potion_slowfall");
       ItemRegistry.addItem(potion_slowfall_long, "potion_slowfall_long");
       BrewingRecipeRegistry.addRecipe(
@@ -166,15 +135,13 @@ public class PotionModule extends BaseEventModule {
           new ItemStack(potion_slowfall_long));
     }
     if (enableSnow) {
-      snowEffect = new PotionSnow("snow", true, 0);
-      registerPotionEffect(snowEffect);
-      potion_snow = new ItemPotionCustom(true, snowEffect, NORMAL, Potions.I, "item.potion_snow.tooltip");
+      potion_snow = new ItemPotionCustom(true, PotionEffectRegistry.snowEffect, NORMAL, Potions.I, "item.potion_snow.tooltip");
       ItemRegistry.addItem(potion_snow, "potion_snow");
       BrewingRecipeRegistry.addRecipe(
           new ItemStack(potion_viscous),
           new ItemStack(Blocks.ICE),
           new ItemStack(potion_snow));
-      potion_snow_long = new ItemPotionCustom(true, snowEffect, LONG, Potions.I, "item.potion_snow.tooltip");
+      potion_snow_long = new ItemPotionCustom(true, PotionEffectRegistry.snowEffect, LONG, Potions.I, "item.potion_snow.tooltip");
       ItemRegistry.addItem(potion_snow_long, "potion_snow_long");
       BrewingRecipeRegistry.addRecipe(
           new ItemStack(potion_snow),
@@ -269,16 +236,6 @@ public class PotionModule extends BaseEventModule {
         new ItemStack(input),
         new ItemStack(ingredient),
         new ItemStack(output));
-  }
-  @SubscribeEvent
-  public void onEntityUpdate(LivingUpdateEvent event) {
-    EntityLivingBase entity = event.getEntityLiving();
-    if (entity == null) { return; }
-    for (PotionBase effect : this.potionEffects) {
-      if (effect != null && entity.isPotionActive(effect)) {
-        effect.tick(entity);
-      }
-    }
   }
   @SideOnly(Side.CLIENT)
   @SubscribeEvent

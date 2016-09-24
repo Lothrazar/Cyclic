@@ -1,4 +1,6 @@
 package com.lothrazar.cyclicmagic.util;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -140,5 +142,29 @@ public class UtilInventory {
     if (entityPlayer.capabilities.isCreativeMode == false) {
       entityPlayer.inventory.decrStackSize(currentItem, 1);
     }
+  }
+  public static IBlockState getBlockstateFromSlot(EntityPlayer player, int slot){
+    ItemStack stack = player.inventory.getStackInSlot(slot);
+    if(stack != null && 
+        stack.getItem() != null  && 
+        Block.getBlockFromItem(stack.getItem() ) != null ){
+      return  Block.getBlockFromItem(stack.getItem() ).getStateFromMeta(stack.getMetadata());
+      
+    }
+    return null;
+  }
+  public static int getFirstSlotWithBlock(EntityPlayer player){
+	  int ret = -1;
+    ItemStack stack;
+	  for(int i = 9; i < 27; i++){
+	    stack = player.inventory.getStackInSlot(i);
+		  if(stack != null && 
+		      stack.getItem() != null && 
+				  Block.getBlockFromItem(stack.getItem() ) != null){
+			  return i;
+		  }
+	  }
+	  
+	  return ret;
   }
 }

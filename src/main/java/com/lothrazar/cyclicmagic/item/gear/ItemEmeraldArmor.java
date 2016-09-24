@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.item.gear;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.module.EmeraldArmorModule;
+import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemEmeraldArmor extends ItemArmor implements IHasRecipe {
   public ItemEmeraldArmor(EntityEquipmentSlot armorType) {
-    super(EmeraldArmorModule.ARMOR_MATERIAL, 0, armorType);
+    super(MaterialRegistry.emeraldArmorMaterial, 0, armorType);
   }
   @Override
   public void addRecipe() {

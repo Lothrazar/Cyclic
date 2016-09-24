@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.proxy;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IThreadListener;
@@ -31,5 +32,11 @@ public class CommonProxy {
   }
   public EntityPlayer getPlayerEntity(MessageContext ctx) {
     return ctx.getServerHandler().playerEntity;
+  }
+  public BlockPos getBlockMouseoverSingle() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  public void renderItemOnScreen(ItemStack current, int x, int y) {
   }
 }

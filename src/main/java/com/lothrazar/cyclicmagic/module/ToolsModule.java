@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
 import com.lothrazar.cyclicmagic.item.tool.*;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.WandType;
 import com.lothrazar.cyclicmagic.item.ItemSleepingMat;
 import com.lothrazar.cyclicmagic.net.PacketSpellShiftLeft;
 import com.lothrazar.cyclicmagic.net.PacketSpellShiftRight;
@@ -15,9 +16,6 @@ import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import com.lothrazar.cyclicmagic.util.UtilTextureRender;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.MouseEvent;
@@ -43,6 +41,8 @@ public class ToolsModule extends BaseModule {
   private boolean enableCavefinder;
   private boolean enableWarpHomeTool;
   private boolean enableWarpSpawnTool;
+  private boolean enableSwappers;
+  private boolean enableRando;
   @Override
   public void onInit() {
     if (enableProspector) {
@@ -98,6 +98,19 @@ public class ToolsModule extends BaseModule {
       ItemRegistry.tool_warp_spawn = new ItemToolWarp(ItemToolWarp.WarpType.SPAWN);
       ItemRegistry.addItem(ItemRegistry.tool_warp_spawn, "tool_warp_spawn");
     }
+    if (enableSwappers) {
+      ItemToolSwap tool_swap = new ItemToolSwap(WandType.NORMAL);
+      ItemRegistry.addItem(tool_swap, "tool_swap");
+      ModMain.instance.events.addEvent(tool_swap);
+      ItemToolSwap tool_swap_match = new ItemToolSwap(WandType.MATCH);
+      ItemRegistry.addItem(tool_swap_match, "tool_swap_match");
+      ModMain.instance.events.addEvent(tool_swap_match);
+    }
+    if (enableRando) {
+      ItemToolRandomize tool_randomize = new ItemToolRandomize();
+      ItemRegistry.addItem(tool_randomize, "tool_randomize");
+      ModMain.instance.events.addEvent(tool_randomize);
+    }
   }
   @Override
   public void syncConfig(Configuration config) {
@@ -115,6 +128,8 @@ public class ToolsModule extends BaseModule {
     enableCyclicWand = config.getBoolean("CyclicWand", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableProspector = config.getBoolean("Prospector", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableCavefinder = config.getBoolean("Cavefinder", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableSwappers = config.getBoolean("ExchangeScepters", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableRando = config.getBoolean("BlockRandomizer", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
@@ -152,17 +167,20 @@ public class ToolsModule extends BaseModule {
     EntityPlayer effectivePlayer = Minecraft.getMinecraft().thePlayer;
     ItemStack heldWand = UtilSpellCaster.getPlayerWandIfHeld(effectivePlayer);
     if (heldWand == null) { return; }
-    RenderItem itemRender = Minecraft.getMinecraft().getRenderItem();
-    GlStateManager.color(1, 1, 1, 1);
-    RenderHelper.enableStandardItemLighting();
-    RenderHelper.enableGUIStandardItemLighting();
     int itemSlot = ItemCyclicWand.BuildType.getSlot(heldWand);
     ItemStack current = InventoryWand.getFromSlot(heldWand, itemSlot);
     if (current != null) {
-      itemRender.renderItemAndEffectIntoGUI(current,
-          SpellHud.xoffset - 1, SpellHud.ymain + SpellHud.spellSize * 2);
+      ModMain.proxy.renderItemOnScreen(current, SpellHud.xoffset - 1, SpellHud.ymain + SpellHud.spellSize * 2);
     }
-    RenderHelper.disableStandardItemLighting();
+    //    RenderItem itemRender = Minecraft.getMinecraft().getRenderItem();
+    //    GlStateManager.color(1, 1, 1, 1);
+    //    RenderHelper.enableStandardItemLighting();
+    //    RenderHelper.enableGUIStandardItemLighting();
+    //    if (current != null) {
+    //      itemRender.renderItemAndEffectIntoGUI(current,
+    //          SpellHud.xoffset - 1, SpellHud.ymain + SpellHud.spellSize * 2);
+    //    }
+    //    RenderHelper.disableStandardItemLighting();
   }
   private class SpellHud {
     private static final int xoffset = 14;//was 30 if manabar is showing

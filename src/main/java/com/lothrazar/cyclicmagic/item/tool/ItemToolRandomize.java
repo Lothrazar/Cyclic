@@ -3,12 +3,11 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.item.BaseTool;
-import com.lothrazar.cyclicmagic.net.PacketMoveBlock;
+import com.lothrazar.cyclicmagic.net.PacketRandomize;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -28,13 +27,14 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemToolPush extends BaseTool implements IHasRecipe {
+public class ItemToolRandomize extends BaseTool implements IHasRecipe {
   private static final int durability = 5000;
-  public ItemToolPush() {
+  private static final int cooldown = 15;
+  public ItemToolRandomize() {
     super(durability);
   }
   public enum ActionType {
-    PUSH, PULL, ROTATE;
+    X3, X5, X7, X9;
     private final static String NBT = "ActionType";
     private final static String NBTTIMEOUT = "timeout";
     public static int getTimeout(ItemStack wand) {
@@ -61,15 +61,15 @@ public class ItemToolPush extends BaseTool implements IHasRecipe {
         return "tool.action." + ActionType.values()[tags.getInteger(NBT)].toString().toLowerCase();
       }
       catch (Exception e) {
-        return "tool.action." + PUSH.toString().toLowerCase();
+        return "tool.action." + X3.toString().toLowerCase();
       }
     }
     public static void toggle(ItemStack wand) {
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       int type = tags.getInteger(NBT);
       type++;
-      if (type > ROTATE.ordinal()) {
-        type = PUSH.ordinal();
+      if (type > X9.ordinal()) {
+        type = X3.ordinal();
       }
       tags.setInteger(NBT, type);
       wand.setTagCompound(tags);
@@ -95,19 +95,15 @@ public class ItemToolPush extends BaseTool implements IHasRecipe {
   }
   @Override
   public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-
+    if (player.getCooldownTracker().hasCooldown(stack.getItem())) { return super.onItemUse(stack, player, worldObj, pos, hand, side, hitX, hitY, hitZ); }
     //if we only run this on server, clients dont get the udpate
     //so run it only on client, let packet run the server
     if (worldObj.isRemote) {
-      ModMain.network.sendToServer(new PacketMoveBlock(pos, ActionType.values()[ActionType.get(stack)], side));
+      ModMain.network.sendToServer(new PacketRandomize(pos, side, ActionType.values()[ActionType.get(stack)]));
     }
-    //hack the sound back in
-    IBlockState placeState = worldObj.getBlockState(pos);
-    if (placeState.getBlock() != null) {
-      UtilSound.playSoundPlaceBlock(player, pos, placeState.getBlock());
-    }
-    onUse(stack, player, worldObj, hand);
-    return super.onItemUse(stack, player, worldObj, pos, hand, side, hitX, hitY, hitZ);// EnumActionResult.PASS;
+    player.getCooldownTracker().setCooldown(this, cooldown);
+    this.onUse(stack, player, worldObj, hand);
+    return super.onItemUse(stack, player, worldObj, pos, hand, side, hitX, hitY, hitZ);
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
@@ -122,10 +118,10 @@ public class ItemToolPush extends BaseTool implements IHasRecipe {
   public void addRecipe() {
     GameRegistry.addRecipe(new ItemStack(this),
         " gp",
-        " bg",
-        "b  ",
-        'b', Items.BLAZE_ROD,
-        'g', Items.GHAST_TEAR,
-        'p', Blocks.STICKY_PISTON);
+        " ig",
+        "i  ",
+        'i', Blocks.IRON_BLOCK,
+        'g', Items.BLAZE_POWDER,
+        'p', Blocks.QUARTZ_BLOCK);
   }
 }

@@ -7,11 +7,13 @@ import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -35,19 +37,26 @@ public class ItemChestSackEmpty extends BaseItem implements IHasRecipe {
   @Override
   public EnumActionResult onItemUse(ItemStack stack, EntityPlayer entityPlayer, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     if (pos == null) { return EnumActionResult.FAIL; }
-    if (world.getTileEntity(pos) instanceof IInventory == false) {
+    TileEntity tile = world.getTileEntity(pos);
+    IBlockState state = world.getBlockState(pos);
+    if (state == null || tile == null || tile instanceof IInventory == false) {
       if (world.isRemote) {
         UtilChat.addChatMessage(entityPlayer, "item.chest_sack_empty.inventory");
       }
       return EnumActionResult.FAIL;
     }
-    IInventory invo = (IInventory) world.getTileEntity(pos);
-    NBTTagCompound itemTag = UtilNBT.writeInventoryToNewTag(invo, ItemChestSack.KEY_NBT);
+    NBTTagCompound tileData = new NBTTagCompound(); //thanks for the tip on setting tile entity data from nbt tag: https://github.com/romelo333/notenoughwands1.8.8/blob/master/src/main/java/romelo333/notenoughwands/Items/DisplacementWand.java
+    tile.writeToNBT(tileData);
+    NBTTagCompound itemData = new NBTTagCompound();
+    itemData.setString(ItemChestSack.KEY_BLOCKNAME, state.getBlock().getUnlocalizedName());
+    itemData.setTag("tile", tileData);
     ItemStack drop = new ItemStack(ItemRegistry.chest_sack);
-    drop.setTagCompound(itemTag);
-    drop.getTagCompound().setInteger(ItemChestSack.KEY_BLOCK, Block.getIdFromBlock(world.getBlockState(pos).getBlock()));
+    drop.setTagCompound(itemData);
+    drop.getTagCompound().setInteger(ItemChestSack.KEY_BLOCKID, Block.getIdFromBlock(state.getBlock()));
     entityPlayer.dropItem(drop, false);
-    world.setBlockToAir(pos);
+    //now erase the data so it doesnt drop items/etc
+    tile.readFromNBT(new NBTTagCompound());
+    world.destroyBlock(pos, false);
     stack.stackSize--;
     UtilSound.playSound(entityPlayer, pos, SoundRegistry.thunk);
     return EnumActionResult.SUCCESS;

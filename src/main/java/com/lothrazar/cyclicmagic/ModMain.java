@@ -65,6 +65,7 @@ public class ModMain {
   }
   @EventHandler
   public void onInit(FMLInitializationEvent event) {
+    PotionEffectRegistry.register();
     for (ICyclicModule module : this.modules) {
       module.onInit();
     }
@@ -107,6 +108,11 @@ public class ModMain {
    *  
    * TODO: ideas/plans/features
    * 
+   * ender charm: same effect as ender potion but without the potion effect.
+   * 
+   * OWN custom texture for waterwalk effect (shouldnt ust just vanilla prismarine item)
+   * 
+   * 
    * 
    DISABLE the forward vector component of launch enchat, if we are standing still (if no current horiz)
    
@@ -119,6 +125,13 @@ public class ModMain {
    Reinforced scaffolding - like wood one, still breaks in one hit. disable auto break. climbable like a ladder
    
    disenchanter
+   
+   swap tool - just use block on right to keep it simple. use size modes
+   
+   
+   
+   randomizer tool- 3 or 5, just mix up block sin whatever area. ignore tile entities
+   
    * 
    * 
    *  Add Splash and Lingering potions for all new effects enhancement 
@@ -156,7 +169,8 @@ public class ModMain {
    * drains your exp into the bottles at a given ratio // a really good one
    * exists in SuperCraftingFrame -> so not needed..
    * 
-   * CYCLIC: toggle to tell how many times to rotate an item after placing (ex:
+   * CYCLIC: 
+   * -  ? toggle to tell how many times to rotate an item after placing (ex:
    * stairs to be put upside down)
    * 
    * Block placers and structure builder: add same rotator
