@@ -126,6 +126,6 @@ public class ItemCharmAutoTorch extends BaseCharm implements IHasRecipe {
   }
   @SideOnly(Side.CLIENT)
   public boolean hasEffect(ItemStack stack) {
-    return false;
+    return !ActionType.isOff(stack);
   }
 }
