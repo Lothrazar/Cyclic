@@ -4,11 +4,9 @@ import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
-import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -20,8 +18,9 @@ import net.minecraft.world.World;
 
 public class ItemChestSack extends BaseItem {
   public static final String name = "chest_sack";
-  public static final String KEY_NBT = "itemtags";
-  public static final String KEY_BLOCK = "block";
+  //  public static final String KEY_NBT = "itemtags";
+  public static final String KEY_BLOCKID = "block";
+  public static final String KEY_BLOCKNAME = "blockname";
   public ItemChestSack() {
     super();
     this.setMaxStackSize(1);
@@ -43,16 +42,17 @@ public class ItemChestSack extends BaseItem {
     return EnumActionResult.SUCCESS;
   }
   private boolean createAndFillChest(EntityPlayer entityPlayer, ItemStack heldChestSack, BlockPos pos) {
-    Block block = Block.getBlockById(heldChestSack.getTagCompound().getInteger(KEY_BLOCK));
+    Block block = Block.getBlockById(heldChestSack.getTagCompound().getInteger(KEY_BLOCKID));
     if (block == null) {
-      // ModMain.logger.log(Level.WARN, "Null block from id: " +
-      // heldChestSack.getTagCompound().getInteger(KEY_BLOCK));
+      heldChestSack.stackSize = 0;
+      UtilChat.addChatMessage(entityPlayer, "Invalid block id " + heldChestSack.getTagCompound().getInteger(KEY_BLOCKID));
       return false;
     }
     entityPlayer.worldObj.setBlockState(pos, block.getDefaultState());
     TileEntity tile = entityPlayer.worldObj.getTileEntity(pos);
-    if(tile != null){
-      NBTTagCompound tileData = heldChestSack.getTagCompound();
+    if (tile != null) {
+      NBTTagCompound itemData = heldChestSack.getTagCompound();
+      NBTTagCompound tileData = (NBTTagCompound) itemData.getCompoundTag("tile");
       tileData.setInteger("x", pos.getX());
       tileData.setInteger("y", pos.getY());
       tileData.setInteger("z", pos.getZ());
@@ -60,13 +60,6 @@ public class ItemChestSack extends BaseItem {
       tile.markDirty();
       entityPlayer.worldObj.markChunkDirty(pos, tile);
     }
-    IInventory invo = (IInventory) tile;
-    if (invo == null) {
-      // ModMain.logger.log(Level.WARN,
-      // "Null tile entity inventory, cannot fill from item stack");
-      return false;
-    }
-//    UtilNBT.writeTagsToInventory(invo, heldChestSack.getTagCompound(), ItemChestSack.KEY_NBT);
     heldChestSack.stackSize = 0;
     heldChestSack.setTagCompound(null);
     return true;
@@ -74,13 +67,13 @@ public class ItemChestSack extends BaseItem {
   @Override
   public void addInformation(ItemStack itemStack, EntityPlayer player, List<String> list, boolean advanced) {
     if (itemStack.getTagCompound() != null) {
-      int count = UtilNBT.countItemsFromNBT(itemStack.getTagCompound(), ItemChestSack.KEY_NBT);
-      if (count > 0) {
-        Block block = Block.getBlockById(itemStack.getTagCompound().getInteger(KEY_BLOCK));
-        if (block != null) {
-          list.add(block.getLocalizedName());
-        }
-        list.add(UtilChat.lang("item.chest_sack.tooltip") + count);
+      try {
+        String blockname = itemStack.getTagCompound().getString(KEY_BLOCKNAME);
+        if (blockname != null && blockname.length() > 0)
+          list.add(UtilChat.lang(blockname));
+      }
+      catch (Exception e) {
+        //wont happen anymore
       }
     }
   }
