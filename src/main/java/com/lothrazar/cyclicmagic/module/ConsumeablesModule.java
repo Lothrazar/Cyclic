@@ -40,7 +40,6 @@ public class ConsumeablesModule extends BaseModule {
       ModMain.instance.events.addEvent(ItemRegistry.corrupted_chorus);
     }
   }
- 
   @Override
   public void syncConfig(Configuration config) {
     enableEmeraldApple = config.getBoolean("EmeraldApple", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

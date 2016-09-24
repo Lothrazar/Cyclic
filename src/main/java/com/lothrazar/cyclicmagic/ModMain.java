@@ -105,36 +105,41 @@ public class ModMain {
     c.save();
   }
   /*
-   *  
+   * 
    * TODO: ideas/plans/features
    * 
    * ender charm: same effect as ender potion but without the potion effect.
    * 
-   * OWN custom texture for waterwalk effect (shouldnt ust just vanilla prismarine item)
+   * OWN custom texture for waterwalk effect (shouldnt ust just vanilla
+   * prismarine item)
    * 
    * 
    * 
-   DISABLE the forward vector component of launch enchat, if we are standing still (if no current horiz)
-   
-   craft saplings into sticks
-   
-   revive my old idea of the flint tool to chop wood, and the idea to disable punching trees?
- 
-   speed charm -> make sur it works on horses to
-   
-   Reinforced scaffolding - like wood one, still breaks in one hit. disable auto break. climbable like a ladder
-   
-   disenchanter
-   
-   swap tool - just use block on right to keep it simple. use size modes
-   
-   
-   
-   randomizer tool- 3 or 5, just mix up block sin whatever area. ignore tile entities
-   
+   * DISABLE the forward vector component of launch enchat, if we are standing
+   * still (if no current horiz)
+   * 
+   * craft saplings into sticks
+   * 
+   * revive my old idea of the flint tool to chop wood, and the idea to disable
+   * punching trees?
+   * 
+   * speed charm -> make sur it works on horses to
+   * 
+   * Reinforced scaffolding - like wood one, still breaks in one hit. disable
+   * auto break. climbable like a ladder
+   * 
+   * disenchanter
+   * 
+   * swap tool - just use block on right to keep it simple. use size modes
    * 
    * 
-   *  Add Splash and Lingering potions for all new effects enhancement 
+   * 
+   * randomizer tool- 3 or 5, just mix up block sin whatever area. ignore tile
+   * entities
+   * 
+   * 
+   * 
+   * Add Splash and Lingering potions for all new effects enhancement
    * 
    * Trading: raw fish as well as cooked? other fish types?
    * 
@@ -169,9 +174,8 @@ public class ModMain {
    * drains your exp into the bottles at a given ratio // a really good one
    * exists in SuperCraftingFrame -> so not needed..
    * 
-   * CYCLIC: 
-   * -  ? toggle to tell how many times to rotate an item after placing (ex:
-   * stairs to be put upside down)
+   * CYCLIC: - ? toggle to tell how many times to rotate an item after placing
+   * (ex: stairs to be put upside down)
    * 
    * Block placers and structure builder: add same rotator
    * 

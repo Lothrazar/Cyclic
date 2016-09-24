@@ -93,32 +93,12 @@ public class ProjectileModule extends BaseModule {
       EntityProjectileRegistry.registerModEntity(EntityDynamite.class, "tntbolt", 1007);
       EntityDynamite.renderSnowball = ItemRegistry.ender_tnt_1;
       //default recipes are added already insice the IRecipe
-      GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.ender_tnt_3)
-          , new ItemStack(ItemRegistry.ender_tnt_1)
-          , new ItemStack(ItemRegistry.ender_tnt_1)  
-          , new ItemStack(ItemRegistry.ender_tnt_1)
-          , new ItemStack(ItemRegistry.ender_tnt_1)
-          , new ItemStack(Items.CLAY_BALL));
+      GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.ender_tnt_3), new ItemStack(ItemRegistry.ender_tnt_1), new ItemStack(ItemRegistry.ender_tnt_1), new ItemStack(ItemRegistry.ender_tnt_1), new ItemStack(ItemRegistry.ender_tnt_1), new ItemStack(Items.CLAY_BALL));
       //two 3s is four 2s
-      GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.ender_tnt_4)
-          , new ItemStack(ItemRegistry.ender_tnt_2)
-          , new ItemStack(ItemRegistry.ender_tnt_2)  
-          , new ItemStack(ItemRegistry.ender_tnt_2)
-          , new ItemStack(ItemRegistry.ender_tnt_2)
-          , new ItemStack(Items.CLAY_BALL));
+      GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.ender_tnt_4), new ItemStack(ItemRegistry.ender_tnt_2), new ItemStack(ItemRegistry.ender_tnt_2), new ItemStack(ItemRegistry.ender_tnt_2), new ItemStack(ItemRegistry.ender_tnt_2), new ItemStack(Items.CLAY_BALL));
       //four 3s is two 4s is one 5
-      GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.ender_tnt_5)
-          , new ItemStack(ItemRegistry.ender_tnt_3)
-          , new ItemStack(ItemRegistry.ender_tnt_3)  
-          , new ItemStack(ItemRegistry.ender_tnt_3)
-          , new ItemStack(ItemRegistry.ender_tnt_3)
-          , new ItemStack(Items.CLAY_BALL));
-      GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.ender_tnt_6)
-          , new ItemStack(ItemRegistry.ender_tnt_4)
-          , new ItemStack(ItemRegistry.ender_tnt_4)  
-          , new ItemStack(ItemRegistry.ender_tnt_4)
-          , new ItemStack(ItemRegistry.ender_tnt_4)
-          , new ItemStack(Items.CLAY_BALL));
+      GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.ender_tnt_5), new ItemStack(ItemRegistry.ender_tnt_3), new ItemStack(ItemRegistry.ender_tnt_3), new ItemStack(ItemRegistry.ender_tnt_3), new ItemStack(ItemRegistry.ender_tnt_3), new ItemStack(Items.CLAY_BALL));
+      GameRegistry.addShapelessRecipe(new ItemStack(ItemRegistry.ender_tnt_6), new ItemStack(ItemRegistry.ender_tnt_4), new ItemStack(ItemRegistry.ender_tnt_4), new ItemStack(ItemRegistry.ender_tnt_4), new ItemStack(ItemRegistry.ender_tnt_4), new ItemStack(Items.CLAY_BALL));
     }
   }
   @Override

@@ -17,11 +17,11 @@ public class ArmorStandSwapModule extends BaseEventModule implements IHasConfig 
   @SubscribeEvent
   public void onEntityInteractSpecific(PlayerInteractEvent.EntityInteractSpecific event) {
     if (!enabled) { return; }
-    if(event.getWorld().isRemote){ return; }//server side only
+    if (event.getWorld().isRemote) { return; } //server side only
     if (event.getTarget() == null || event.getTarget() instanceof EntityArmorStand == false) { return; }
     EntityArmorStand entityStand = (EntityArmorStand) event.getTarget();
     EntityPlayer player = event.getEntityPlayer();
-    if(player.isSneaking() == false){ return; }//bc when not sneaking, we do the normal single item version
+    if (player.isSneaking() == false) { return; } //bc when not sneaking, we do the normal single item version
     event.setCanceled(true);//which means we need to now cancel that normal version and do our own
     for (EntityEquipmentSlot slot : armorStandEquipment) {
       ItemStack itemPlayer = player.getItemStackFromSlot(slot);

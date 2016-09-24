@@ -25,7 +25,7 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
   private EnumFacing side;
   public PacketSwapBlock() {
   }
-  public PacketSwapBlock(BlockPos mouseover, EnumFacing s, ItemToolSwap.ActionType t,ItemToolSwap.WandType w) {
+  public PacketSwapBlock(BlockPos mouseover, EnumFacing s, ItemToolSwap.ActionType t, ItemToolSwap.WandType w) {
     pos = mouseover;
     actionType = t;
     wandType = w;
@@ -117,13 +117,12 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
         }
         places = UtilWorld.getPositionsInRange(message.pos, xMin, xMax, yMin, yMax, zMin, zMax);
       }
-      
       //we already have center, now go around
       //      message.pos.offset(message.side.rotateAround(axis))
       IBlockState replaced;
       IBlockState newToPlace;
       IBlockState matched = null;
-      if(message.wandType == WandType.MATCH){
+      if (message.wandType == WandType.MATCH) {
         matched = worldObj.getBlockState(message.pos);
       }
       //TODO: maybe dont randomly take blocks from inventory. maybe do a pick block.. or an inventory..i dont know
@@ -150,8 +149,8 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
         if (UtilWorld.doBlockStatesMatch(replaced, newToPlace)) {
           continue;
         }
-        if(message.wandType == WandType.MATCH && matched != null && 
-            !UtilWorld.doBlockStatesMatch(matched, replaced)){
+        if (message.wandType == WandType.MATCH && matched != null &&
+            !UtilWorld.doBlockStatesMatch(matched, replaced)) {
           //we have saved the one we clicked on so only that gets replaced
           continue;
         }
@@ -160,7 +159,7 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
         //set the new swap
         //of course my own wrapper to stop java.util.ConcurrentModificationException
         UtilPlaceBlocks.placeStateSafe(worldObj, player, p, newToPlace);
-//        worldObj.setBlockState(p, newToPlace);
+        //        worldObj.setBlockState(p, newToPlace);
         UtilInventory.decrStackSize(player, slot);
       }
     }

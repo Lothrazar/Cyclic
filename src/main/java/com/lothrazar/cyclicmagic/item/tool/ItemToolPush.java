@@ -95,7 +95,6 @@ public class ItemToolPush extends BaseTool implements IHasRecipe {
   }
   @Override
   public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-
     //if we only run this on server, clients dont get the udpate
     //so run it only on client, let packet run the server
     if (worldObj.isRemote) {

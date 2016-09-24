@@ -78,7 +78,6 @@ public class UtilHarvestCrops {
     if (blockCheck == null) { return false; }
     IBlockState bsAbove = world.getBlockState(posCurrent.up());
     IBlockState bsBelow = world.getBlockState(posCurrent.down());
-
     if (blockCheck instanceof BlockNetherWart) {
       if (conf.doesCrops) {
         int age = ((Integer) bs.getValue(BlockNetherWart.AGE)).intValue();

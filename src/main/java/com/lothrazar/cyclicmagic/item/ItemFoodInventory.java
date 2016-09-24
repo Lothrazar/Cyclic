@@ -23,7 +23,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemFoodInventory extends ItemFood implements IHasRecipe , IHasConfig{
+public class ItemFoodInventory extends ItemFood implements IHasRecipe, IHasConfig {
   private static final int numFood = 10;
   public ItemFoodInventory() {
     super(numFood, false);

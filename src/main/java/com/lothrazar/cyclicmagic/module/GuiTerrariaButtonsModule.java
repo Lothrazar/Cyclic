@@ -43,32 +43,27 @@ public class GuiTerrariaButtonsModule extends BaseEventModule implements IHasCon
     GuiScreen gui = event.getGui();
     if (gui == null) { return; } // probably doesn't ever happen
     // all containers by default but with a blacklist in config
-    
     if (gui instanceof GuiContainer &&
         !(gui instanceof GuiInventory) &&
         !(gui instanceof GuiPlayerExtended)) {
-      
-
       String self = gui.getClass().getName();
-     // &&  blacklistGuis.contains(self) ==
+      // &&  blacklistGuis.contains(self) ==
       boolean isInBlacklist = false;
-      for(String s : blacklistGuis){
-        if(s.equalsIgnoreCase(self)){
+      for (String s : blacklistGuis) {
+        if (s.equalsIgnoreCase(self)) {
           isInBlacklist = true;
           break;
         }
       }
-      if(isInBlacklist){
+      if (isInBlacklist) {
         //found in blacklist, cancel");
         return;
       }
-      
-     //" =>NOT in blacklist, ADD THE BUTTONS NOW :: "+position);
+      //" =>NOT in blacklist, ADD THE BUTTONS NOW :: "+position);
       int button_id = 256;
       // config for different locations - left right bottom top
       int x = 0, y = 0, yDelta = 24, xDelta = 0;
       // not GuiContainerCreative
-      
       GuiContainer guiInv = (GuiContainer) gui;
       // align to different area depending on config
       if (position.equalsIgnoreCase(posLeft)) {

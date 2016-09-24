@@ -77,7 +77,7 @@ public class MobDropChangesModule extends BaseEventModule {
       //vanilla drops 3-5 ingots
       int rand = MathHelper.getRandomIntegerInRange(worldObj.rand, 1, 18);
       UtilEntity.dropItemStackInWorld(worldObj, pos, new ItemStack(Items.IRON_INGOT, rand));
-      if(worldObj.rand.nextDouble() < 0.10){
+      if (worldObj.rand.nextDouble() < 0.10) {
         //10% chance for extra iron block
         UtilEntity.dropItemStackInWorld(worldObj, pos, new ItemStack(Blocks.IRON_BLOCK, 1));
       }

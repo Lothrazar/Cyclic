@@ -27,10 +27,10 @@ public class VillagerCreateModule extends BaseModule {
         },
         { new EmeraldForItems(Items.BEEF, new PriceInfo(14, 17)), new EmeraldForItems(Items.RABBIT, new PriceInfo(14, 17)), new EmeraldForItems(Items.CHICKEN, new PriceInfo(14, 17))
         },
-        { new EmeraldForItems(Items.POISONOUS_POTATO, new PriceInfo(1, 3)),  new EmeraldForItems(Items.WRITTEN_BOOK, new PriceInfo(1, 1))
+        { new EmeraldForItems(Items.POISONOUS_POTATO, new PriceInfo(1, 3)), new EmeraldForItems(Items.WRITTEN_BOOK, new PriceInfo(1, 1))
         },
-        { 
-          new EmeraldForItems(Items.FISH, new PriceInfo(9, 12)), new EmeraldForItems(Items.SPIDER_EYE, new PriceInfo(3, 6)),
+        {
+            new EmeraldForItems(Items.FISH, new PriceInfo(9, 12)), new EmeraldForItems(Items.SPIDER_EYE, new PriceInfo(3, 6)),
         }
     };
     name = "druid";

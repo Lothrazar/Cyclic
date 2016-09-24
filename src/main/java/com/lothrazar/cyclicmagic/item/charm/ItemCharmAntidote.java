@@ -15,16 +15,16 @@ public class ItemCharmAntidote extends BaseCharm implements IHasRecipe {
     super(durability);
   }
   public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-    if(entityIn instanceof EntityPlayer){
+    if (entityIn instanceof EntityPlayer) {
       EntityPlayer living = (EntityPlayer) entityIn;
-     if(living.isPotionActive(MobEffects.POISON)){
-       living.removeActivePotionEffect(MobEffects.POISON);
-       super.damageCharm(living, stack, itemSlot);
-     }
-     if(living.isPotionActive(MobEffects.WITHER)){
-       living.removeActivePotionEffect(MobEffects.WITHER);
-       super.damageCharm(living, stack, itemSlot);
-     }
+      if (living.isPotionActive(MobEffects.POISON)) {
+        living.removeActivePotionEffect(MobEffects.POISON);
+        super.damageCharm(living, stack, itemSlot);
+      }
+      if (living.isPotionActive(MobEffects.WITHER)) {
+        living.removeActivePotionEffect(MobEffects.WITHER);
+        super.damageCharm(living, stack, itemSlot);
+      }
     }
   }
   @Override

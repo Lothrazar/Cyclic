@@ -198,22 +198,22 @@ public class InventoryPlayerExtended implements IInventory {
       }
     }
   }
-//  public void dropItemsAt(List<EntityItem> drops, Entity e) {
-//    for (int i = 0; i < this.getSizeInventory(); ++i) {
-//      if (this.stackList[i] != null) {
-//        EntityItem ei = new EntityItem(e.worldObj, e.posX, e.posY + e.getEyeHeight(), e.posZ, this.stackList[i].copy());
-//        ei.setPickupDelay(40);
-//        float f1 = e.worldObj.rand.nextFloat() * 0.5F;
-//        float f2 = e.worldObj.rand.nextFloat() * (float) Math.PI * 2.0F;
-//        ei.motionX = (double) (-MathHelper.sin(f2) * f1);
-//        ei.motionZ = (double) (MathHelper.cos(f2) * f1);
-//        ei.motionY = 0.20000000298023224D;
-//        drops.add(ei);
-//        this.stackList[i] = null;
-//        syncSlotToClients(i);
-//      }
-//    }
-//  }
+  //  public void dropItemsAt(List<EntityItem> drops, Entity e) {
+  //    for (int i = 0; i < this.getSizeInventory(); ++i) {
+  //      if (this.stackList[i] != null) {
+  //        EntityItem ei = new EntityItem(e.worldObj, e.posX, e.posY + e.getEyeHeight(), e.posZ, this.stackList[i].copy());
+  //        ei.setPickupDelay(40);
+  //        float f1 = e.worldObj.rand.nextFloat() * 0.5F;
+  //        float f2 = e.worldObj.rand.nextFloat() * (float) Math.PI * 2.0F;
+  //        ei.motionX = (double) (-MathHelper.sin(f2) * f1);
+  //        ei.motionZ = (double) (MathHelper.cos(f2) * f1);
+  //        ei.motionY = 0.20000000298023224D;
+  //        drops.add(ei);
+  //        this.stackList[i] = null;
+  //        syncSlotToClients(i);
+  //      }
+  //    }
+  //  }
   public void syncSlotToClients(int slot) {
     try {
       if (ModMain.proxy.getClientWorld() == null) {

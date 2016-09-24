@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.registry;
-
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 
@@ -9,4 +8,3 @@ public class MaterialRegistry {
   public static ToolMaterial emeraldToolMaterial;
   public static ArmorMaterial emeraldArmorMaterial;
 }
-

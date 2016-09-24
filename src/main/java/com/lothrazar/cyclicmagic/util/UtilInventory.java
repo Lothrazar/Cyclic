@@ -143,28 +143,22 @@ public class UtilInventory {
       entityPlayer.inventory.decrStackSize(currentItem, 1);
     }
   }
-  public static IBlockState getBlockstateFromSlot(EntityPlayer player, int slot){
+  public static IBlockState getBlockstateFromSlot(EntityPlayer player, int slot) {
     ItemStack stack = player.inventory.getStackInSlot(slot);
-    if(stack != null && 
-        stack.getItem() != null  && 
-        Block.getBlockFromItem(stack.getItem() ) != null ){
-      return  Block.getBlockFromItem(stack.getItem() ).getStateFromMeta(stack.getMetadata());
-      
-    }
+    if (stack != null &&
+        stack.getItem() != null &&
+        Block.getBlockFromItem(stack.getItem()) != null) { return Block.getBlockFromItem(stack.getItem()).getStateFromMeta(stack.getMetadata()); }
     return null;
   }
-  public static int getFirstSlotWithBlock(EntityPlayer player){
-	  int ret = -1;
+  public static int getFirstSlotWithBlock(EntityPlayer player) {
+    int ret = -1;
     ItemStack stack;
-	  for(int i = 9; i < 27; i++){
-	    stack = player.inventory.getStackInSlot(i);
-		  if(stack != null && 
-		      stack.getItem() != null && 
-				  Block.getBlockFromItem(stack.getItem() ) != null){
-			  return i;
-		  }
-	  }
-	  
-	  return ret;
+    for (int i = 9; i < 27; i++) {
+      stack = player.inventory.getStackInSlot(i);
+      if (stack != null &&
+          stack.getItem() != null &&
+          Block.getBlockFromItem(stack.getItem()) != null) { return i; }
+    }
+    return ret;
   }
 }

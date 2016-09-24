@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.event;
-
 import com.lothrazar.cyclicmagic.potion.PotionBase;
 import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
 import net.minecraft.entity.EntityLivingBase;
