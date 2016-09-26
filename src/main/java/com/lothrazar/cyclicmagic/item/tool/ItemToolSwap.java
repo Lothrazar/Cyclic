@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.item.tool;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
@@ -34,6 +35,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemToolSwap extends BaseTool implements IHasRecipe {
   private static final int durability = 5000;
+  private static final int COOLDOWN = 8;
   private WandType wandType;
   public ItemToolSwap(WandType t) {
     super(durability);
@@ -123,10 +125,18 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
   public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     //if we only run this on server, clients dont get the udpate
     //so run it only on client, let packet run the server
-    if (worldObj.isRemote) {
-      ModMain.network.sendToServer(new PacketSwapBlock(pos, side, ActionType.values()[ActionType.get(stack)], this.wandType));
+    try {
+      if (worldObj.isRemote) {
+        ModMain.network.sendToServer(new PacketSwapBlock(pos, side, ActionType.values()[ActionType.get(stack)], this.wandType));
+      }
+      this.onUse(stack, player, worldObj, hand);
+      player.getCooldownTracker().setCooldown(this, COOLDOWN);
     }
-    this.onUse(stack, player, worldObj, hand);
+    catch (ConcurrentModificationException e) {
+      ModMain.logger.warn("ConcurrentModificationException");
+      ModMain.logger.warn(e.getMessage());// message is null??
+      ModMain.logger.warn(e.getStackTrace().toString());
+    }
     return super.onItemUse(stack, player, worldObj, pos, hand, side, hitX, hitY, hitZ);// EnumActionResult.PASS;
   }
   @SideOnly(Side.CLIENT)

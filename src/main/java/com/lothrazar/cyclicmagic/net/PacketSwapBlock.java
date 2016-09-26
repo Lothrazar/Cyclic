@@ -1,7 +1,9 @@
 package com.lothrazar.cyclicmagic.net;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap;
 import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.WandType;
@@ -127,12 +129,24 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
       if (message.wandType == WandType.MATCH) {
         matched = worldObj.getBlockState(message.pos);
       }
+      Map<BlockPos,Integer> processed = new HashMap<BlockPos,Integer>();
       //TODO: maybe dont randomly take blocks from inventory. maybe do a pick block.. or an inventory..i dont know
       //seems ok, and also different enough to be fine
       for (BlockPos p : places) {
+        if(processed.containsKey(p) == false){
+          processed.put(p, 0);
+        }
+        if(processed.get(p) > 0){
+          System.out.println("dont process the same location more than once per click");
+          continue; //dont process the same location more than once per click
+        }
+        processed.put(p, processed.get(p)+1);// ++
         int slot = UtilInventory.getFirstSlotWithBlock(player);
         if (slot < 0) {
           continue;//you have no materials left
+        }
+        if (worldObj.isSideSolid(p, side) == false) { //trying to avoid the TickNextTick list out of synch
+          continue;//dont  do nonsolid blocks ex: water/plants
         }
         if (worldObj.getTileEntity(p) != null) {
           continue;//ignore tile entities IE do not break chests / etc
