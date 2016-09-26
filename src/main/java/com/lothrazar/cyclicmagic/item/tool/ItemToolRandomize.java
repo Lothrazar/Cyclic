@@ -120,8 +120,8 @@ public class ItemToolRandomize extends BaseTool implements IHasRecipe {
         " gp",
         " ig",
         "i  ",
-        'i', Blocks.IRON_BLOCK,
+        'i', Blocks.OBSIDIAN,
         'g', Items.BLAZE_POWDER,
-        'p', Blocks.QUARTZ_BLOCK);
+        'p', Blocks.REDSTONE_BLOCK);
   }
 }

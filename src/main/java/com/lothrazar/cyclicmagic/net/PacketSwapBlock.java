@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.net;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
+import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap;
 import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.WandType;
 import com.lothrazar.cyclicmagic.util.UtilInventory;
@@ -154,13 +156,19 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
           //we have saved the one we clicked on so only that gets replaced
           continue;
         }
-        //break it and drop the whatever
-        worldObj.destroyBlock(p, true);
-        //set the new swap
-        //of course my own wrapper to stop java.util.ConcurrentModificationException
-        UtilPlaceBlocks.placeStateSafe(worldObj, player, p, newToPlace);
-        //        worldObj.setBlockState(p, newToPlace);
-        UtilInventory.decrStackSize(player, slot);
+        try {
+          //break it and drop the whatever
+          if (worldObj.destroyBlock(p, true)) {
+            if (UtilPlaceBlocks.placeStateSafe(worldObj, player, p, newToPlace)) {
+              UtilInventory.decrStackSize(player, slot);
+            }
+          }
+        }
+        catch (ConcurrentModificationException e) {
+          ModMain.logger.warn("ConcurrentModificationException");
+          ModMain.logger.warn(e.getMessage());// message is null??
+          ModMain.logger.warn(e.getStackTrace().toString());
+        }
       }
     }
     return null;
