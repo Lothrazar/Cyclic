@@ -47,6 +47,7 @@ public class GuiTerrariaButtonsModule extends BaseEventModule implements IHasCon
         !(gui instanceof GuiInventory) &&
         !(gui instanceof GuiPlayerExtended)) {
       String self = gui.getClass().getName();
+      System.out.println("self = "+self);
       // &&  blacklistGuis.contains(self) ==
       boolean isInBlacklist = false;
       for (String s : blacklistGuis) {
@@ -56,7 +57,7 @@ public class GuiTerrariaButtonsModule extends BaseEventModule implements IHasCon
         }
       }
       if (isInBlacklist) {
-        //found in blacklist, cancel");
+        System.out.println("found in blacklist, cancel");
         return;
       }
       //" =>NOT in blacklist, ADD THE BUTTONS NOW :: "+position);
@@ -135,6 +136,17 @@ public class GuiTerrariaButtonsModule extends BaseEventModule implements IHasCon
         + "net.minecraft.client.gui.inventory.GuiCrafting,"
         + "net.minecraft.client.gui.inventory.GuiFurnace,"
         + "net.minecraft.client.gui.inventory.GuiScreenHorseInventory,"
+        + "net.minecraft.client.gui.inventory.GuiScreenHorseInventory,"
+        + "slimeknights.tconstruct.tools.common.client.GuiCraftingStation,"
+        + "slimeknights.tconstruct.tools.common.client.GuiPartBuilder,"
+        + "slimeknights.tconstruct.tools.common.client.GuiPatternChest,"
+        + "slimeknights.tconstruct.tools.common.client.GuiScalingChest,"
+        + "slimeknights.tconstruct.tools.common.client.GuiStencilTable,"
+        + "slimeknights.tconstruct.tools.common.client.GuiToolForge,"
+        + "slimeknights.tconstruct.tools.common.client.module.GuiButtonsStencilTable,"
+        + "slimeknights.tconstruct.tools.common.client.module.GuiButtonsToolStation,"
+        + "slimeknights.tconstruct.tools.common.client.module.GuiInfoPanel,"
+        + "slimeknights.tconstruct.tools.common.client.module.GuiTinkerTabs,"
         + "slimeknights.tconstruct.tools.client.GuiCraftingStation,"
         + "slimeknights.tconstruct.tools.client.GuiPartBuilder,"
         + "slimeknights.tconstruct.tools.client.GuiPatternChest,"
