@@ -69,6 +69,10 @@ public class BlockDimensionOre extends BlockOre {
     return droppedMeta;
   }
   @Override
+  public int quantityDroppedWithBonus(int fortune, Random random){
+    return super.quantityDroppedWithBonus(fortune, random);
+  }
+  @Override
   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
     return dropped;
   }
