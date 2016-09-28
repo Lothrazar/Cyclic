@@ -24,9 +24,10 @@ public class BlockSprout extends BlockCrops {
   public static final int MAX_AGE = 7;
   public static final PropertyInteger AGE = PropertyInteger.create("age", 0, MAX_AGE);
   private static final AxisAlignedBB[] AABB = new AxisAlignedBB[] { new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.125D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.1875D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.25D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.3125D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.375D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.4375D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5625D, 1.0D) };
-  private static final List<ItemStack> myDrops = new ArrayList<ItemStack>();
+  private List<ItemStack> myDrops = new ArrayList<ItemStack>();
+  private Item[] drops;
   public BlockSprout() {
-    Item[] drops = new Item[] {
+    drops = new Item[] {
         //treasure
         Items.REDSTONE, Items.GUNPOWDER, Items.GLOWSTONE_DUST, Items.DIAMOND, Items.EMERALD,
         Items.COAL, Items.GOLD_NUGGET, Items.IRON_INGOT, Items.GOLD_INGOT,
@@ -79,18 +80,25 @@ public class BlockSprout extends BlockCrops {
       myDrops.add(new ItemStack(Blocks.DOUBLE_PLANT, 1, b.getMeta()));
     }
   }
+  @Override
   protected Item getSeed() {
     return ItemRegistry.sprout_seed;
   }
+  @Override
   protected Item getCrop() {
-    return ItemRegistry.sprout_seed;///not used anymore. keep not null just in case
+    Random rand = new Random();
+    if(drops == null){
+      return ItemRegistry.sprout_seed;//shouldnt ever happen
+    }
+    return drops[rand.nextInt(drops.length)];
   }
-  protected ItemStack getCropStack(Random rand) {
+  private ItemStack getCropStack(Random rand) {
     return myDrops.get(rand.nextInt(myDrops.size()));
   }
-  public ItemStack getItemStackDropped(IBlockState state, Random rand) {
+  private ItemStack getItemStackDropped(IBlockState state, Random rand) {
     return this.isMaxAge(state) ? this.getCropStack(rand) : new ItemStack(this.getSeed());
   }
+  @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
     return AABB[((Integer) state.getValue(this.getAgeProperty())).intValue()];
   }

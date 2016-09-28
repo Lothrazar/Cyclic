@@ -137,7 +137,6 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
           processed.put(p, 0);
         }
         if(processed.get(p) > 0){
-          System.out.println("dont process the same location more than once per click");
           continue; //dont process the same location more than once per click
         }
         processed.put(p, processed.get(p)+1);// ++
