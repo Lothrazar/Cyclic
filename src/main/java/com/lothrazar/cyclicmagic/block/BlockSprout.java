@@ -79,18 +79,21 @@ public class BlockSprout extends BlockCrops {
       myDrops.add(new ItemStack(Blocks.DOUBLE_PLANT, 1, b.getMeta()));
     }
   }
+  @Override
   protected Item getSeed() {
     return ItemRegistry.sprout_seed;
   }
+  @Override
   protected Item getCrop() {
     return ItemRegistry.sprout_seed;///not used anymore. keep not null just in case
   }
-  protected ItemStack getCropStack(Random rand) {
+  private ItemStack getCropStack(Random rand) {
     return myDrops.get(rand.nextInt(myDrops.size()));
   }
-  public ItemStack getItemStackDropped(IBlockState state, Random rand) {
+  private ItemStack getItemStackDropped(IBlockState state, Random rand) {
     return this.isMaxAge(state) ? this.getCropStack(rand) : new ItemStack(this.getSeed());
   }
+  @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
     return AABB[((Integer) state.getValue(this.getAgeProperty())).intValue()];
   }

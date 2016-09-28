@@ -47,7 +47,6 @@ public class GuiTerrariaButtonsModule extends BaseEventModule implements IHasCon
         !(gui instanceof GuiInventory) &&
         !(gui instanceof GuiPlayerExtended)) {
       String self = gui.getClass().getName();
-      System.out.println("self = "+self);
       // &&  blacklistGuis.contains(self) ==
       boolean isInBlacklist = false;
       for (String s : blacklistGuis) {
@@ -56,10 +55,7 @@ public class GuiTerrariaButtonsModule extends BaseEventModule implements IHasCon
           break;
         }
       }
-      if (isInBlacklist) {
-        System.out.println("found in blacklist, cancel");
-        return;
-      }
+      if (isInBlacklist) { return; }
       //" =>NOT in blacklist, ADD THE BUTTONS NOW :: "+position);
       int button_id = 256;
       // config for different locations - left right bottom top
