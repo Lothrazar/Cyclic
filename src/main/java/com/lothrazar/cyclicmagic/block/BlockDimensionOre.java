@@ -60,8 +60,9 @@ public class BlockDimensionOre extends BlockOre {
           e = null;
           break;
         }
-        if (e != null)
+        if (e != null) {
           world.spawnEntityInWorld(e);
+        }
       }
     }
   }
@@ -69,7 +70,7 @@ public class BlockDimensionOre extends BlockOre {
     return droppedMeta;
   }
   @Override
-  public int quantityDroppedWithBonus(int fortune, Random random){
+  public int quantityDroppedWithBonus(int fortune, Random random) {
     return super.quantityDroppedWithBonus(fortune, random);
   }
   @Override
