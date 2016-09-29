@@ -5,8 +5,8 @@
     "1.9.4-recommended":  "1.2.0",
     "1.10-latest":  "1.1.0",
     "1.10-recommended": "1.1.0",
-    "1.10.2-latest":  "1.7.8",
-    "1.10.2-recommended": "1.7.8"
+    "1.10.2-latest":  "1.7.9",
+    "1.10.2-recommended": "1.7.9"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -52,5 +52,6 @@
  	,"1.7.6":"New items: Wing Charm, Block Randomizer, Automatic Torch, Exchange Scepters.  Fix a game crash if certain potions were disabled by config.  Fix Sack of Holding not compatible with tile entities from some mods (such as EnderIO Buffers).  Fix Bucket Storage block dropping items when broken in creative.  Fix tools being held the wrong way, they now render like swords instead of items when in hand (also some textures got flipped). "	
   	,"1.7.7":"Addressed a crash with the new Exchange scepters on falling blocks like gravel.  Fix visual glitches with new tools affecting the food/armor bar graphics.  Added missing recipe for Block Randomizer.  A few compatibility tweaks for Tinkers Construct (for gui issues, in bottom of config file you may have to reset 'Blacklist Container CSV' to default if there are any issues)."
  	,"1.7.8":"Fix storage sack crashing the game when you use number hotkeys to put it inside itself.  Fix typo in a config description.  Fix spammy messages in fml-client-latest.log.  "
+  	,"1.7.9":"Fix the Block Placer crashing on trying to play a sound.  Fix bag of holding not copying block metadata - such as copper chests from ironchests mod."
   }
 }
