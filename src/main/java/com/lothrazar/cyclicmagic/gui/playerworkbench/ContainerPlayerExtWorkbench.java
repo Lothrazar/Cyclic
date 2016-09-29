@@ -21,10 +21,10 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
   public static final int VCOL = 9;
   public static final int HOTBAR_SIZE = 9;
   final int pad = 8;
-  public ContainerPlayerExtWorkbench(InventoryPlayer playerInv, EntityPlayer player) {
+  public ContainerPlayerExtWorkbench(InventoryPlayer playerInv, InventoryPlayerExtWorkbench einvo,EntityPlayer player) {
 
     this.thePlayer = player;
-    inventory = new InventoryPlayerExtWorkbench(player);
+    inventory = einvo;//;
     inventory.setEventHandler(this);
     if (!player.worldObj.isRemote) {
      // UtilPlayerInventoryFilestorage.putDataIntoInventory(inventory, player);

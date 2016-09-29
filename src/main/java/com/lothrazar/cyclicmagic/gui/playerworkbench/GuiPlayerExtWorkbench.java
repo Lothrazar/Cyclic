@@ -6,13 +6,12 @@ import net.minecraft.client.gui.achievement.GuiAchievements;
 import net.minecraft.client.gui.achievement.GuiStats;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.InventoryEffectRenderer;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiPlayerExtWorkbench extends InventoryEffectRenderer {
   public static final ResourceLocation background = new ResourceLocation(Const.MODID, "textures/gui/inventory.png");
-  public GuiPlayerExtWorkbench(EntityPlayer player) {
-    super(new ContainerPlayerExtWorkbench(player.inventory, player));
+  public GuiPlayerExtWorkbench(ContainerPlayerExtWorkbench ctr) {
+    super(ctr);
     this.allowUserInput = true;
   }
   @Override
