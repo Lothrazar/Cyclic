@@ -1,4 +1,6 @@
 package com.lothrazar.cyclicmagic.net;
+import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.gui.player.ContainerFakeWorkbench;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
@@ -27,14 +29,19 @@ public class PacketFakeWorkbench implements IMessage, IMessageHandler<PacketFake
   }
   @Override
   public IMessage onMessage(PacketFakeWorkbench message, MessageContext ctx) {
-    EntityPlayer p = ctx.getServerHandler().playerEntity;
-    EntityPlayerMP player = (EntityPlayerMP) p;
-    player.getNextWindowId();
-    //playerNetServerHandler
-    player.connection.sendPacket(new SPacketOpenWindow(player.currentWindowId, "minecraft:crafting_table", p.getDisplayName(), 0, player.getEntityId()));
-    player.openContainer = new ContainerFakeWorkbench(player.inventory, player.worldObj);
-    player.openContainer.windowId = player.currentWindowId;
-    //player.openContainer.onCraftGuiOpened(player);
+    
+    ctx.getServerHandler().playerEntity.openGui(ModMain.instance, ModGuiHandler.GUI_INDEX_PWORKBENCH, ctx.getServerHandler().playerEntity.worldObj, (int) ctx.getServerHandler().playerEntity.posX, (int) ctx.getServerHandler().playerEntity.posY, (int) ctx.getServerHandler().playerEntity.posZ);
+    
+    
+    //below is traditional, above is newness
+//    EntityPlayer p = ctx.getServerHandler().playerEntity;
+//    EntityPlayerMP player = (EntityPlayerMP) p;
+//    player.getNextWindowId();
+//    //playerNetServerHandler
+//    player.connection.sendPacket(new SPacketOpenWindow(player.currentWindowId, "minecraft:crafting_table", p.getDisplayName(), 0, player.getEntityId()));
+//    player.openContainer = new ContainerFakeWorkbench(player.inventory, player.worldObj);
+//    player.openContainer.windowId = player.currentWindowId;
+//    //player.openContainer.onCraftGuiOpened(player);
     return null;
   }
 }
