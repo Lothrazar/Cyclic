@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.ConcurrentModificationException;
 import java.util.List;
+import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModMain;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStone;
@@ -129,7 +130,7 @@ public class UtilPlaceBlocks {
     return false;
   }
   // from spell range build
-  public static boolean placeStateSafe(World world, EntityPlayer player, BlockPos placePos, IBlockState placeState) {
+  public static boolean placeStateSafe(World world, @Nullable EntityPlayer player, BlockPos placePos, IBlockState placeState) {
     if (placePos == null) { return false; }
     IBlockState stateHere = null;
     if (world.isAirBlock(placePos) == false) {
@@ -178,13 +179,10 @@ public class UtilPlaceBlocks {
         UtilSound.playSoundPlaceBlock(player, placePos, placeState.getBlock());
       }
       else {
-        //, SoundCategory.BLOCKS
-        //isremote seems to always be false here. so playing sounds on server
         SoundType type = placeState.getBlock().getSoundType(placeState, world, placePos, player);
         if (type != null && type.getPlaceSound() != null) {
-          UtilSound.playSound(player, placePos, type.getPlaceSound(), SoundCategory.BLOCKS);
+          UtilSound.playSound(world, placePos, type.getPlaceSound(), SoundCategory.BLOCKS);
         }
-        //        UtilSound.playSound(world, placePos, placeState.getBlock().getSoundType().getPlaceSound(), SoundCategory.BLOCKS);
       }
     }
     // either it was air, or it wasnt and we broke it
