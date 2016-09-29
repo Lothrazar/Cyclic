@@ -23,7 +23,7 @@ public class InventoryPlayerExtWorkbench implements IInventory {
   public static final int IROW = 3;
   public static final int ICOL = 3;
   public InventoryPlayerExtWorkbench(EntityPlayer player) {
-    this.stackList = new ItemStack[IROW * ICOL+20];
+    this.stackList = new ItemStack[IROW * ICOL + 4];//plus armor slots
     this.player = new WeakReference<EntityPlayer>(player);
   }
   public Container getEventHandler() {
