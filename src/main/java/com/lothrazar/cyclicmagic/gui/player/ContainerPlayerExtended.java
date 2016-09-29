@@ -12,10 +12,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerPlayerExtended extends ContainerBase {
   public InventoryPlayerExtended inventory;
-  /**
-   * Determines if inventory manipulation should be handled.
-   */
-  public boolean isLocalWorld;
+
   private final EntityPlayer thePlayer;
   private static final EntityEquipmentSlot[] ARMOR = new EntityEquipmentSlot[] { EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET };
   public static final int SLOT_SHIELD = 40;
@@ -24,8 +21,8 @@ public class ContainerPlayerExtended extends ContainerBase {
   public static final int VCOL = 9;
   public static final int HOTBAR_SIZE = 9;
   final int pad = 8;
-  public ContainerPlayerExtended(InventoryPlayer playerInv, boolean par2, EntityPlayer player) {
-    this.isLocalWorld = par2;
+  public ContainerPlayerExtended(InventoryPlayer playerInv,  EntityPlayer player) {
+
     this.thePlayer = player;
     inventory = new InventoryPlayerExtended(player);
     inventory.setEventHandler(this);

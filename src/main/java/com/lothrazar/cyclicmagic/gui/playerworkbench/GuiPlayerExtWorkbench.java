@@ -12,7 +12,7 @@ import net.minecraft.util.ResourceLocation;
 public class GuiPlayerExtWorkbench extends InventoryEffectRenderer {
   public static final ResourceLocation background = new ResourceLocation(Const.MODID, "textures/gui/inventory.png");
   public GuiPlayerExtWorkbench(EntityPlayer player) {
-    super(new ContainerPlayerExtWorkbench(player.inventory, !player.worldObj.isRemote, player));
+    super(new ContainerPlayerExtWorkbench(player.inventory, player));
     this.allowUserInput = true;
   }
   @Override
