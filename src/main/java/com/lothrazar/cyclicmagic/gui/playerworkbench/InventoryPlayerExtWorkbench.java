@@ -18,22 +18,19 @@ import net.minecraft.util.text.ITextComponent;
 
 public class InventoryPlayerExtWorkbench extends InventoryCrafting {
   public ItemStack[] stackList;
-  private Container eventHandler;
+  private ContainerPlayerExtWorkbench eventHandler;
   public WeakReference<EntityPlayer> player;
-  public boolean blockEvents = false;
+//  public boolean blockEvents = false;
   public static final int IROW = 3;
   public static final int ICOL = 3;
   public InventoryPlayerExtWorkbench(ContainerPlayerExtWorkbench containerPlayerExtWorkbench, EntityPlayer player) {
     super(containerPlayerExtWorkbench,3,3);
-    this.stackList = new ItemStack[IROW * ICOL];
+    this.eventHandler = containerPlayerExtWorkbench;
+    //slot 10 was being used when crafting is done.
+    this.stackList = new ItemStack[IROW * ICOL ];//WHY isnt 10 enough? 1 for output, and a 3x3? huH
     this.player = new WeakReference<EntityPlayer>(player);
   }
-  public Container getEventHandler() {
-    return eventHandler;
-  }
-  public void setEventHandler(Container eventHandler) {
-    this.eventHandler = eventHandler;
-  }
+
   @Override
   public int getSizeInventory() {
     return this.stackList.length;
@@ -74,25 +71,26 @@ public class InventoryPlayerExtWorkbench extends InventoryCrafting {
    * arg) of items and returns them in a new stack.
    */
   @Override
-  public ItemStack decrStackSize(int par1, int par2) {
-    if (this.stackList[par1] != null) {
+  public ItemStack decrStackSize(int index, int count) {
+//    return super.decrStackSize(index, count);
+    if (this.stackList[index] != null) {
       ItemStack itemstack;
-      if (this.stackList[par1].stackSize <= par2) {
-        itemstack = this.stackList[par1];
-        this.stackList[par1] = null;
-        if (eventHandler != null)
+      if (this.stackList[index].stackSize <= count) {
+        itemstack = this.stackList[index];
+        this.stackList[index] = null;
+         
           this.eventHandler.onCraftMatrixChanged(this);
-        syncSlotToClients(par1);
+       
         return itemstack;
       }
       else {
-        itemstack = this.stackList[par1].splitStack(par2);
-        if (this.stackList[par1].stackSize == 0) {
-          this.stackList[par1] = null;
+        itemstack = this.stackList[index].splitStack(count);
+        if (this.stackList[index].stackSize == 0) {
+          this.stackList[index] = null;
         }
-        if (eventHandler != null)
+
           this.eventHandler.onCraftMatrixChanged(this);
-        syncSlotToClients(par1);
+      
         return itemstack;
       }
     }
@@ -106,8 +104,9 @@ public class InventoryPlayerExtWorkbench extends InventoryCrafting {
    */
   @Override
   public void setInventorySlotContents(int idx, ItemStack stack) {
+    System.out.println("InvoCrafting setStack into "+idx);
     this.stackList[idx] = stack;
-    syncSlotToClients(idx);
+    this.eventHandler.onCraftMatrixChanged(this);
   }
   @Override
   public int getInventoryStackLimit() {
@@ -115,6 +114,7 @@ public class InventoryPlayerExtWorkbench extends InventoryCrafting {
   }
   @Override
   public void markDirty() {
+    super.markDirty();
     try {
       player.get().inventory.markDirty();
     }
@@ -184,22 +184,22 @@ public class InventoryPlayerExtWorkbench extends InventoryCrafting {
       }
     }
   }
-  public void dropItems(List<EntityItem> drops, BlockPos pos) {
-    for (int i = 0; i < this.getSizeInventory(); ++i) {
-      if (this.stackList[i] != null) {
-        EntityItem ei = new EntityItem(player.get().worldObj, pos.getX(), pos.getY(), pos.getZ(), this.stackList[i].copy());
-        ei.setPickupDelay(40);
-        float f1 = player.get().worldObj.rand.nextFloat() * 0.5F;
-        float f2 = player.get().worldObj.rand.nextFloat() * (float) Math.PI * 2.0F;
-        ei.motionX = (double) (-MathHelper.sin(f2) * f1);
-        ei.motionZ = (double) (MathHelper.cos(f2) * f1);
-        ei.motionY = 0.20000000298023224D;
-        drops.add(ei);
-        this.stackList[i] = null;
-        syncSlotToClients(i);
-      }
-    }
-  }
+//  public void dropItems(List<EntityItem> drops, BlockPos pos) {
+//    for (int i = 0; i < this.getSizeInventory(); ++i) {
+//      if (this.stackList[i] != null) {
+//        EntityItem ei = new EntityItem(player.get().worldObj, pos.getX(), pos.getY(), pos.getZ(), this.stackList[i].copy());
+//        ei.setPickupDelay(40);
+//        float f1 = player.get().worldObj.rand.nextFloat() * 0.5F;
+//        float f2 = player.get().worldObj.rand.nextFloat() * (float) Math.PI * 2.0F;
+//        ei.motionX = (double) (-MathHelper.sin(f2) * f1);
+//        ei.motionZ = (double) (MathHelper.cos(f2) * f1);
+//        ei.motionY = 0.20000000298023224D;
+//        drops.add(ei);
+//        this.stackList[i] = null;
+//        syncSlotToClients(i);
+//      }
+//    }
+//  }
   //  public void dropItemsAt(List<EntityItem> drops, Entity e) {
   //    for (int i = 0; i < this.getSizeInventory(); ++i) {
   //      if (this.stackList[i] != null) {
@@ -216,14 +216,5 @@ public class InventoryPlayerExtWorkbench extends InventoryCrafting {
   //      }
   //    }
   //  }
-  public void syncSlotToClients(int slot) {
-    try {
-      if (ModMain.proxy.getClientWorld() == null) {
-        ModMain.network.sendToAll(new PacketSyncExtendedInventory(player.get(), slot));
-      }
-    }
-    catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
+ 
 }

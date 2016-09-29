@@ -16,11 +16,11 @@ public class GuiPlayerExtWorkbench extends InventoryEffectRenderer {
   }
   @Override
   public void updateScreen() {
-    try {
-      ((ContainerPlayerExtended) inventorySlots).inventory.blockEvents = false;
-    }
-    catch (Exception e) {
-    }
+//    try {
+//      ((ContainerPlayerExtended) inventorySlots).inventory.blockEvents = false;
+//    }
+//    catch (Exception e) {
+//    }
     this.updateActivePotionEffects();
   }
   @Override
