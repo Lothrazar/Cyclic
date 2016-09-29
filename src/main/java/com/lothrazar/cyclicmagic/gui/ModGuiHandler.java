@@ -61,7 +61,7 @@ public class ModGuiHandler implements IGuiHandler {
     case GUI_INDEX_EXTENDED:
       return new ContainerPlayerExtended(player.inventory, new InventoryPlayerExtended(player),player);
     case GUI_INDEX_PWORKBENCH:   
-      return new ContainerPlayerExtWorkbench(player.inventory, new InventoryPlayerExtWorkbench(player), player);
+      return new ContainerPlayerExtWorkbench(player.inventory, player);
     
     case GUI_INDEX_WAND:
       ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
@@ -114,7 +114,7 @@ public class ModGuiHandler implements IGuiHandler {
       case GUI_INDEX_EXTENDED:
         return new GuiPlayerExtended(new ContainerPlayerExtended(player.inventory, new InventoryPlayerExtended(player),player));
       case GUI_INDEX_PWORKBENCH:   
-        return new GuiPlayerExtWorkbench(new ContainerPlayerExtWorkbench(player.inventory, new InventoryPlayerExtWorkbench(player), player));
+        return new GuiPlayerExtWorkbench(new ContainerPlayerExtWorkbench(player.inventory, player));
       case GUI_INDEX_WAND:
         ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
         return new GuiWandInventory(new ContainerWand(player, player.inventory, new InventoryWand(player, wand)), wand);

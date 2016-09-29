@@ -14,45 +14,45 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
   public InventoryPlayerExtWorkbench inventory;
 
   private final EntityPlayer thePlayer;
-  private static final EntityEquipmentSlot[] ARMOR = new EntityEquipmentSlot[] { EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET };
+//  private static final EntityEquipmentSlot[] ARMOR = new EntityEquipmentSlot[] { EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET };
   public static final int SLOT_SHIELD = 40;
   public static final int SQ = 18;
   public static final int VROW = 3;
   public static final int VCOL = 9;
   public static final int HOTBAR_SIZE = 9;
   final int pad = 8;
-  public ContainerPlayerExtWorkbench(InventoryPlayer playerInv, InventoryPlayerExtWorkbench einvo,EntityPlayer player) {
+  public ContainerPlayerExtWorkbench(InventoryPlayer playerInv, EntityPlayer player) {
 
     this.thePlayer = player;
-    inventory = einvo;//;
+    inventory = new InventoryPlayerExtWorkbench(this, player);
     inventory.setEventHandler(this);
     if (!player.worldObj.isRemote) {
      // UtilPlayerInventoryFilestorage.putDataIntoInventory(inventory, player);
       //      inventory.stackList = UtilPlayerInventoryFilestorage.getPlayerInventory(player).stackList;
     }
-    for (int k = 0; k < ARMOR.length; k++) {
-      final EntityEquipmentSlot slot = ARMOR[k];
-      this.addSlotToContainer(new Slot(playerInv, 4 * VCOL + (VROW - k), pad, pad + k * SQ) {
-        @Override
-        public int getSlotStackLimit() {
-          return 1;
-        }
-        @Override
-        public boolean isItemValid(ItemStack stack) {
-          if (stack == null) {
-            return false;
-          }
-          else {
-            return stack.getItem().isValidArmor(stack, slot, thePlayer);
-          }
-        }
-        @Override
-        @SideOnly(Side.CLIENT)
-        public String getSlotTexture() {
-          return ItemArmor.EMPTY_SLOT_NAMES[slot.getIndex()];
-        }
-      });
-    }
+//    for (int k = 0; k < ARMOR.length; k++) {
+//      final EntityEquipmentSlot slot = ARMOR[k];
+//      this.addSlotToContainer(new Slot(playerInv, 4 * VCOL + (VROW - k), pad, pad + k * SQ) {
+//        @Override
+//        public int getSlotStackLimit() {
+//          return 1;
+//        }
+//        @Override
+//        public boolean isItemValid(ItemStack stack) {
+//          if (stack == null) {
+//            return false;
+//          }
+//          else {
+//            return stack.getItem().isValidArmor(stack, slot, thePlayer);
+//          }
+//        }
+//        @Override
+//        @SideOnly(Side.CLIENT)
+//        public String getSlotTexture() {
+//          return ItemArmor.EMPTY_SLOT_NAMES[slot.getIndex()];
+//        }
+//      });
+//    }
     int xPos, yPos, sl;
     for (int i = 0; i < InventoryPlayerExtWorkbench.IROW; ++i) {
       for (int j = 0; j < InventoryPlayerExtWorkbench.ICOL; ++j) {

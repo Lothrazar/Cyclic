@@ -8,6 +8,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -15,15 +16,16 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 
-public class InventoryPlayerExtWorkbench implements IInventory {
+public class InventoryPlayerExtWorkbench extends InventoryCrafting {
   public ItemStack[] stackList;
   private Container eventHandler;
   public WeakReference<EntityPlayer> player;
   public boolean blockEvents = false;
   public static final int IROW = 3;
   public static final int ICOL = 3;
-  public InventoryPlayerExtWorkbench(EntityPlayer player) {
-    this.stackList = new ItemStack[IROW * ICOL + 4];//plus armor slots
+  public InventoryPlayerExtWorkbench(ContainerPlayerExtWorkbench containerPlayerExtWorkbench, EntityPlayer player) {
+    super(containerPlayerExtWorkbench,3,3);
+    this.stackList = new ItemStack[IROW * ICOL];
     this.player = new WeakReference<EntityPlayer>(player);
   }
   public Container getEventHandler() {
