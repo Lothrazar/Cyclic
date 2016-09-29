@@ -49,10 +49,13 @@ public class ItemChestSackEmpty extends BaseItem implements IHasRecipe {
     tile.writeToNBT(tileData);
     NBTTagCompound itemData = new NBTTagCompound();
     itemData.setString(ItemChestSack.KEY_BLOCKNAME, state.getBlock().getUnlocalizedName());
-    itemData.setTag("tile", tileData);
+    itemData.setTag(ItemChestSack.KEY_BLOCKTILE, tileData);
+    itemData.setInteger(ItemChestSack.KEY_BLOCKID, Block.getIdFromBlock(state.getBlock()));
+    itemData.setInteger(ItemChestSack.KEY_BLOCKSTATE, state.getBlock().getMetaFromState(state));
+    
     ItemStack drop = new ItemStack(ItemRegistry.chest_sack);
     drop.setTagCompound(itemData);
-    drop.getTagCompound().setInteger(ItemChestSack.KEY_BLOCKID, Block.getIdFromBlock(state.getBlock()));
+    
     entityPlayer.dropItem(drop, false);
     //now erase the data so it doesnt drop items/etc
     tile.readFromNBT(new NBTTagCompound());

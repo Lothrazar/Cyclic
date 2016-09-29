@@ -4,8 +4,10 @@ import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -20,7 +22,9 @@ public class ItemChestSack extends BaseItem {
   public static final String name = "chest_sack";
   //  public static final String KEY_NBT = "itemtags";
   public static final String KEY_BLOCKID = "block";
+  public static final String KEY_BLOCKTILE = "tile";
   public static final String KEY_BLOCKNAME = "blockname";
+  public static final String KEY_BLOCKSTATE = "blockstate";
   public ItemChestSack() {
     super();
     this.setMaxStackSize(1);
@@ -42,17 +46,25 @@ public class ItemChestSack extends BaseItem {
     return EnumActionResult.SUCCESS;
   }
   private boolean createAndFillChest(EntityPlayer entityPlayer, ItemStack heldChestSack, BlockPos pos) {
-    Block block = Block.getBlockById(heldChestSack.getTagCompound().getInteger(KEY_BLOCKID));
+    NBTTagCompound itemData = UtilNBT.getItemStackNBT(heldChestSack);
+    Block block = Block.getBlockById(itemData.getInteger(KEY_BLOCKID));
     if (block == null) {
       heldChestSack.stackSize = 0;
-      UtilChat.addChatMessage(entityPlayer, "Invalid block id " + heldChestSack.getTagCompound().getInteger(KEY_BLOCKID));
+      UtilChat.addChatMessage(entityPlayer, "Invalid block id " + itemData.getInteger(KEY_BLOCKID));
       return false;
     }
-    entityPlayer.worldObj.setBlockState(pos, block.getDefaultState());
+    IBlockState toPlace;
+    if(itemData.hasKey(KEY_BLOCKSTATE)){
+      //in builds 1.7.8 prior this data tag did not exist, so make sure we support itemstacks created back then
+      toPlace = block.getStateFromMeta(itemData.getInteger(KEY_BLOCKSTATE));
+    }
+    else{
+      toPlace = block.getDefaultState();
+    }
+    entityPlayer.worldObj.setBlockState(pos, toPlace);
     TileEntity tile = entityPlayer.worldObj.getTileEntity(pos);
     if (tile != null) {
-      NBTTagCompound itemData = heldChestSack.getTagCompound();
-      NBTTagCompound tileData = (NBTTagCompound) itemData.getCompoundTag("tile");
+      NBTTagCompound tileData = (NBTTagCompound) itemData.getCompoundTag(ItemChestSack.KEY_BLOCKTILE);
       tileData.setInteger("x", pos.getX());
       tileData.setInteger("y", pos.getY());
       tileData.setInteger("z", pos.getZ());
