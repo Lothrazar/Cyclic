@@ -21,10 +21,10 @@ public class ContainerPlayerExtended extends ContainerBase {
   public static final int VCOL = 9;
   public static final int HOTBAR_SIZE = 9;
   final int pad = 8;
-  public ContainerPlayerExtended(InventoryPlayer playerInv,  EntityPlayer player) {
+  public ContainerPlayerExtended(InventoryPlayer playerInv, InventoryPlayerExtended eInvo, EntityPlayer player) {
 
     this.thePlayer = player;
-    inventory = new InventoryPlayerExtended(player);
+    inventory = eInvo;//new InventoryPlayerExtended(player);
     inventory.setEventHandler(this);
     if (!player.worldObj.isRemote) {
       UtilPlayerInventoryFilestorage.putDataIntoInventory(inventory, player);

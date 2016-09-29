@@ -10,8 +10,8 @@ import net.minecraft.util.ResourceLocation;
 
 public class GuiPlayerExtended extends InventoryEffectRenderer {
   public static final ResourceLocation background = new ResourceLocation(Const.MODID, "textures/gui/inventory.png");
-  public GuiPlayerExtended(EntityPlayer player) {
-    super(new ContainerPlayerExtended(player.inventory, player));
+  public GuiPlayerExtended(ContainerPlayerExtended ctr) {
+    super(ctr);
     this.allowUserInput = true;
   }
   @Override

@@ -17,6 +17,7 @@ import com.lothrazar.cyclicmagic.gui.placer.ContainerPlacer;
 import com.lothrazar.cyclicmagic.gui.placer.GuiPlacer;
 import com.lothrazar.cyclicmagic.gui.player.ContainerPlayerExtended;
 import com.lothrazar.cyclicmagic.gui.player.GuiPlayerExtended;
+import com.lothrazar.cyclicmagic.gui.player.InventoryPlayerExtended;
 import com.lothrazar.cyclicmagic.gui.playerworkbench.ContainerPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.gui.playerworkbench.GuiPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.gui.storage.ContainerStorage;
@@ -57,7 +58,7 @@ public class ModGuiHandler implements IGuiHandler {
     TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
     switch (ID) {
     case GUI_INDEX_EXTENDED:
-      return new ContainerPlayerExtended(player.inventory, player);
+      return new ContainerPlayerExtended(player.inventory, new InventoryPlayerExtended(player),player);
     case GUI_INDEX_PWORKBENCH:   
       return new ContainerPlayerExtWorkbench(player.inventory, player);
     
@@ -110,7 +111,7 @@ public class ModGuiHandler implements IGuiHandler {
       TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
       switch (ID) {
       case GUI_INDEX_EXTENDED:
-        return new GuiPlayerExtended(player);
+        return new GuiPlayerExtended(new ContainerPlayerExtended(player.inventory, new InventoryPlayerExtended(player),player));
       case GUI_INDEX_PWORKBENCH:   
         return new GuiPlayerExtWorkbench(player);
       case GUI_INDEX_WAND:
