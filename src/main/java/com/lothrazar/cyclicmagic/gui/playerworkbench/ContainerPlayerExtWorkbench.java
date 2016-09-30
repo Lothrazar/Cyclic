@@ -88,13 +88,13 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
   /**
    * Called when the container is closed.
    */
-  @Override
-  public void onContainerClosed(EntityPlayer player) {
-    super.onContainerClosed(player);
-    if (!player.worldObj.isRemote) {
-      //      UtilPlayerInventoryFilestorage.setPlayerInventory(player, inventory);
-    }
-  }
+//  @Override
+//  public void onContainerClosed(EntityPlayer player) {
+//    super.onContainerClosed(player);
+//    if (!player.worldObj.isRemote) {
+//      //      UtilPlayerInventoryFilestorage.setPlayerInventory(player, inventory);
+//    }
+//  }
   /**
    * Called when a player shift-clicks on a slot. You must override this or you
    * will crash when someone does that.

@@ -20,13 +20,11 @@ public class InventoryPlayerExtWorkbench extends InventoryCrafting {
   public ItemStack[] stackList;
   private ContainerPlayerExtWorkbench eventHandler;
   public WeakReference<EntityPlayer> player;
-//  public boolean blockEvents = false;
   public static final int IROW = 3;
   public static final int ICOL = 3;
   public InventoryPlayerExtWorkbench(ContainerPlayerExtWorkbench containerPlayerExtWorkbench, EntityPlayer player) {
     super(containerPlayerExtWorkbench,3,3);
     this.eventHandler = containerPlayerExtWorkbench;
-    //slot 10 was being used when crafting is done.
     this.stackList = new ItemStack[IROW * ICOL + 4];//4 armor + 3x3
     this.player = new WeakReference<EntityPlayer>(player);
   }
@@ -38,18 +36,6 @@ public class InventoryPlayerExtWorkbench extends InventoryCrafting {
   @Override
   public ItemStack getStackInSlot(int s) {
     return s >= this.getSizeInventory() ? null : this.stackList[s];
-  }
-  @Override
-  public String getName() {
-    return "";
-  }
-  @Override
-  public boolean hasCustomName() {
-    return false;
-  }
-  @Override
-  public ITextComponent getDisplayName() {
-    return null;
   }
   /**
    * When some containers are closed they call this on each slot, then drop
@@ -129,27 +115,6 @@ public class InventoryPlayerExtWorkbench extends InventoryCrafting {
     return true;
   }
   @Override
-  public void openInventory(EntityPlayer player) {
-  }
-  @Override
-  public void closeInventory(EntityPlayer player) {
-  }
-  @Override
-  public boolean isItemValidForSlot(int i, ItemStack stack) {
-    return true;
-  }
-  @Override
-  public int getField(int id) {
-    return 0;
-  }
-  @Override
-  public void setField(int id, int value) {
-  }
-  @Override
-  public int getFieldCount() {
-    return 0;
-  }
-  @Override
   public void clear() {
     for (int i = 0; i < stackList.length; i++) {
       stackList[i] = null;
@@ -187,37 +152,4 @@ public class InventoryPlayerExtWorkbench extends InventoryCrafting {
       }
     }
   }
-//  public void dropItems(List<EntityItem> drops, BlockPos pos) {
-//    for (int i = 0; i < this.getSizeInventory(); ++i) {
-//      if (this.stackList[i] != null) {
-//        EntityItem ei = new EntityItem(player.get().worldObj, pos.getX(), pos.getY(), pos.getZ(), this.stackList[i].copy());
-//        ei.setPickupDelay(40);
-//        float f1 = player.get().worldObj.rand.nextFloat() * 0.5F;
-//        float f2 = player.get().worldObj.rand.nextFloat() * (float) Math.PI * 2.0F;
-//        ei.motionX = (double) (-MathHelper.sin(f2) * f1);
-//        ei.motionZ = (double) (MathHelper.cos(f2) * f1);
-//        ei.motionY = 0.20000000298023224D;
-//        drops.add(ei);
-//        this.stackList[i] = null;
-//        syncSlotToClients(i);
-//      }
-//    }
-//  }
-  //  public void dropItemsAt(List<EntityItem> drops, Entity e) {
-  //    for (int i = 0; i < this.getSizeInventory(); ++i) {
-  //      if (this.stackList[i] != null) {
-  //        EntityItem ei = new EntityItem(e.worldObj, e.posX, e.posY + e.getEyeHeight(), e.posZ, this.stackList[i].copy());
-  //        ei.setPickupDelay(40);
-  //        float f1 = e.worldObj.rand.nextFloat() * 0.5F;
-  //        float f2 = e.worldObj.rand.nextFloat() * (float) Math.PI * 2.0F;
-  //        ei.motionX = (double) (-MathHelper.sin(f2) * f1);
-  //        ei.motionZ = (double) (MathHelper.cos(f2) * f1);
-  //        ei.motionY = 0.20000000298023224D;
-  //        drops.add(ei);
-  //        this.stackList[i] = null;
-  //        syncSlotToClients(i);
-  //      }
-  //    }
-  //  }
- 
 }

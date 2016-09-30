@@ -15,11 +15,6 @@ public class GuiPlayerExtWorkbench extends InventoryEffectRenderer {
   }
   @Override
   public void updateScreen() {
-//    try {
-//      ((ContainerPlayerExtended) inventorySlots).inventory.blockEvents = false;
-//    }
-//    catch (Exception e) {
-//    }
     this.updateActivePotionEffects();
   }
   @Override
@@ -28,7 +23,8 @@ public class GuiPlayerExtWorkbench extends InventoryEffectRenderer {
     super.initGui();
   }
   @Override
-  protected void drawGuiContainerForegroundLayer(int x, int y) {
+  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+    super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     // this.fontRendererObj.drawString(I18n.format("container.crafting", new
     // Object[0]), 97, 8, 4210752);
   }
