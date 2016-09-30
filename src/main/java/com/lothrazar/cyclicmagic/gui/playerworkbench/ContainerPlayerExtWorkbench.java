@@ -56,8 +56,8 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
         }
       });
     }
-    /*
-    this.addSlotToContainer(new Slot(playerInventory, 40, 77, 62)
+    slotId++;
+    this.addSlotToContainer(new Slot(playerInv, 40, 77, 62)
     { 
         public boolean isItemValid(@Nullable ItemStack stack)
         {
@@ -70,7 +70,7 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
             return "minecraft:items/empty_armor_slot_shield";
         }
     });
-    */
+    
     //the 3x3
     int xPos, yPos;
     for (int i = 0; i < InventoryPlayerExtWorkbench.IROW; ++i) {
@@ -119,8 +119,9 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
   public ItemStack transferStackInSlot(EntityPlayer entityPlayer, int slotIndex) {
     ItemStack itemStack = null;
     Slot fromSlot = (Slot) this.inventorySlots.get(slotIndex);
-    //ystem.out.println("  transferStackInSlot" + slotIndex);
-    int craftOutpt = 0, playerStart = 15, playerEnd = 40 + 9, craftStart = 5, craftEnd = 13, armorStart = 1, armorEnd = 4;
+    System.out.println("  transferStackInSlot" + slotIndex);
+    //shield is slot 5 now
+    int craftOutpt = 0, playerStart = 15, playerEnd = 50, craftStart = 6, craftEnd = 14, armorStart = 1, armorEnd = 5;
     if (fromSlot != null && fromSlot.getHasStack()) {
       ItemStack itemStack1 = fromSlot.getStack();
       itemStack = itemStack1.copy();
