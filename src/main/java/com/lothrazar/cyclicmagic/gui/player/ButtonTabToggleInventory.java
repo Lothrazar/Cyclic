@@ -12,7 +12,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ButtonTabToggleInventory extends GuiButton {// implements ITooltipButton
   private GuiScreen gui;
   public ButtonTabToggleInventory(GuiScreen g, int x, int y) {
-    super(51, x, y, 15, 5, "I");
+    super(51, x, y, 15, 10, "I");
     gui = g;
   }
   @SideOnly(Side.CLIENT)

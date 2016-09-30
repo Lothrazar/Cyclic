@@ -30,8 +30,8 @@ public class EventGuiInvoButtons {
       int ySize = 166;
       int guiLeft = (gui.width - xSize) / 2;
       int guiTop = (gui.height - ySize) / 2;
-      int x = 40 + guiLeft;
-      int y = guiTop + 2;
+      int x = 44 + guiLeft;
+      int y = guiTop;
       EntityPlayer player = Minecraft.getMinecraft().thePlayer;
       final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(player);
       showInvToggle = data.hasInventoryExtended() && !(gui instanceof GuiPlayerExtWorkbench);

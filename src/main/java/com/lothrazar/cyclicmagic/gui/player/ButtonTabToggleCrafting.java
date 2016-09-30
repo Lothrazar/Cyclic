@@ -13,7 +13,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ButtonTabToggleCrafting extends GuiButton {
   private GuiScreen gui;
   public ButtonTabToggleCrafting(GuiScreen g, int x, int y) {
-    super(256, x, y, 15, 5, "C");
+    super(256, x, y, 15, 10, "C");
     gui = g;
   }
   @SideOnly(Side.CLIENT)
