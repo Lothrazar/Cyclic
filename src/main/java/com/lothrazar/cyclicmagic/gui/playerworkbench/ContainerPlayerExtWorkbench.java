@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.gui.playerworkbench;
+import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.gui.ContainerBase;
 import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
 import net.minecraft.entity.player.EntityPlayer;
@@ -29,7 +30,7 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
     this.thePlayer = player;
     craftMatrix = new InventoryPlayerExtWorkbench(this, player);
     int slotId = 0;
-    int xResult = 153, yResult = 42;
+    int xResult = 155, yResult = 22;
     this.addSlotToContainer(new SlotCrafting(player, craftMatrix, craftResult, slotId, xResult, yResult));
     for (int k = 0; k < ARMOR.length; k++) {
       final EntityEquipmentSlot slot = ARMOR[k];
@@ -55,12 +56,27 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
         }
       });
     }
-    //the output
+    /*
+    this.addSlotToContainer(new Slot(playerInventory, 40, 77, 62)
+    { 
+        public boolean isItemValid(@Nullable ItemStack stack)
+        {
+            return super.isItemValid(stack);
+        }
+        @Nullable
+        @SideOnly(Side.CLIENT)
+        public String getSlotTexture()
+        {
+            return "minecraft:items/empty_armor_slot_shield";
+        }
+    });
+    */
+    //the 3x3
     int xPos, yPos;
     for (int i = 0; i < InventoryPlayerExtWorkbench.IROW; ++i) {
       for (int j = 0; j < InventoryPlayerExtWorkbench.ICOL; ++j) {
-        xPos = pad + (j + 1) * SQ + 55;
-        yPos = pad + i * SQ + 18;
+        xPos = (j + 1) * SQ + 65;
+        yPos = i * SQ + 6;
         slotId = j + (i) * InventoryPlayerExtWorkbench.ICOL;
         this.addSlotToContainer(new Slot(craftMatrix, slotId, xPos, yPos));
       }
