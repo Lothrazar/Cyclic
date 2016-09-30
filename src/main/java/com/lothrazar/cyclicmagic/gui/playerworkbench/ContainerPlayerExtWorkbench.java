@@ -141,7 +141,7 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
           return null;
         }
       }
-      else if (slotIndex >= playerStart && slotIndex < playerEnd) {
+      else if (slotIndex >= playerStart && slotIndex <= playerEnd) {
         if (!this.mergeItemStack(itemStack1, craftStart, craftEnd + 1, false)) { return null; }
       }
       if (itemStack1.stackSize == 0) {
