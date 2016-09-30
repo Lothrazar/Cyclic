@@ -14,7 +14,19 @@ public class JEIPlugin extends BlankModPlugin {
     //and of course readme on https://github.com/mezz/JustEnoughItems
 
       // setup [+] feature
-      registry.getRecipeTransferRegistry().addRecipeTransferHandler(ContainerPlayerExtWorkbench.class, VanillaRecipeCategoryUid.CRAFTING, 1, 9, 10, 36);
+    //copied from source:
+
+    /**
+     * Basic method for adding a recipe transfer handler.
+     *
+     * @param containerClass     the class of the container that this recipe transfer handler is for
+     * @param recipeCategoryUid  the recipe categories that this container can use 
+     * @param recipeSlotStart    the first slot for recipe inputs // skip over the 1 output and the 4 armor slots
+     * @param recipeSlotCount    the number of slots for recipe inputs //3x3
+     * @param inventorySlotStart the first slot of the available inventory (usually player inventory) //top left
+     * @param inventorySlotCount the number of slots of the available inventory //top right including hotbar
+     */
+      registry.getRecipeTransferRegistry().addRecipeTransferHandler(ContainerPlayerExtWorkbench.class, VanillaRecipeCategoryUid.CRAFTING, 5, 9, 14, 36);
 
   }
 }

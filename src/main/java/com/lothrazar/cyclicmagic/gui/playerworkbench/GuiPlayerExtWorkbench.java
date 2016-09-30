@@ -3,12 +3,15 @@ import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.achievement.GuiAchievements;
 import net.minecraft.client.gui.achievement.GuiStats;
+import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.InventoryEffectRenderer;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiPlayerExtWorkbench extends InventoryEffectRenderer {
   public static final ResourceLocation background = new ResourceLocation(Const.MODID, "textures/gui/inventorycraft.png");
+  private float oldMouseX;
+  private float oldMouseY;
   public GuiPlayerExtWorkbench(ContainerPlayerExtWorkbench ctr) {
     super(ctr);
     this.allowUserInput = true;
@@ -29,16 +32,23 @@ public class GuiPlayerExtWorkbench extends InventoryEffectRenderer {
     // Object[0]), 97, 8, 4210752);
   }
   @Override
-  public void drawScreen(int par1, int par2, float par3) {
-    super.drawScreen(par1, par2, par3);
+  public void drawScreen(int mouseX, int mouseY, float partialTicks){
+    super.drawScreen(mouseX, mouseY, partialTicks);
+    this.oldMouseX = (float)mouseX;
+    this.oldMouseY = (float)mouseY;
   }
   @Override
-  protected void drawGuiContainerBackgroundLayer(float p_146976_1_, int p_146976_2_, int p_146976_3_) {
+  protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
     this.mc.getTextureManager().bindTexture(background);
-    int k = this.guiLeft;
-    int l = this.guiTop;
-    this.drawTexturedModalRect(k, l, 0, 0, this.xSize, this.ySize);
+    int i = this.guiLeft;
+    int j = this.guiTop;
+    this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
+    
+    
+    //COPIED FROM GuiInventory
+    GuiInventory.drawEntityOnScreen(i + 51, j + 75, 30, (float)(i + 51) - this.oldMouseX, (float)(j + 75 - 50) - this.oldMouseY, this.mc.thePlayer);
+
   }
   @Override
   protected void actionPerformed(GuiButton button) {
