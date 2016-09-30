@@ -61,14 +61,15 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
 //    }
     //the output
 //    this.addSlotToContainer(new Slot(player, craftingMatrix, craftingResult, 0, 136, 35));
-    this.addSlotToContainer(new SlotCrafting(player,craftMatrix,craftResult, 0,136,35));
+    int xResult = 153, yResult = 42;
+    this.addSlotToContainer(new SlotCrafting(player,craftMatrix,craftResult, 0,xResult,yResult));
 
     
     int xPos, yPos, sl;
     for (int i = 0; i < InventoryPlayerExtWorkbench.IROW; ++i) {
       for (int j = 0; j < InventoryPlayerExtWorkbench.ICOL; ++j) {
-        xPos = pad + (j + 1) * SQ;
-        yPos = pad + i * SQ;
+        xPos = pad + (j + 1) * SQ + 55;
+        yPos = pad + i * SQ + 18;
         sl = j + (i ) * InventoryPlayerExtWorkbench.ICOL;
         this.addSlotToContainer(new Slot(craftMatrix, sl, xPos, yPos));
       }

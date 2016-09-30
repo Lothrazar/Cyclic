@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.gui.playerworkbench;
-import com.lothrazar.cyclicmagic.gui.player.ContainerPlayerExtended;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.achievement.GuiAchievements;
@@ -9,7 +8,7 @@ import net.minecraft.client.renderer.InventoryEffectRenderer;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiPlayerExtWorkbench extends InventoryEffectRenderer {
-  public static final ResourceLocation background = new ResourceLocation(Const.MODID, "textures/gui/inventory.png");
+  public static final ResourceLocation background = new ResourceLocation(Const.MODID, "textures/gui/inventorycraft.png");
   public GuiPlayerExtWorkbench(ContainerPlayerExtWorkbench ctr) {
     super(ctr);
     this.allowUserInput = true;
@@ -29,7 +28,7 @@ public class GuiPlayerExtWorkbench extends InventoryEffectRenderer {
     super.initGui();
   }
   @Override
-  protected void drawGuiContainerForegroundLayer(int p_146979_1_, int p_146979_2_) {
+  protected void drawGuiContainerForegroundLayer(int x, int y) {
     // this.fontRendererObj.drawString(I18n.format("container.crafting", new
     // Object[0]), 97, 8, 4210752);
   }
