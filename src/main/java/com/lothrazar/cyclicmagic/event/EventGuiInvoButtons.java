@@ -34,8 +34,8 @@ public class EventGuiInvoButtons {
       int y = guiTop;
       EntityPlayer player = Minecraft.getMinecraft().thePlayer;
       final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(player);
-      showInvToggle = data.hasInventoryExtended() && !(gui instanceof GuiPlayerExtWorkbench);
-      showCraftToggle = data.hasInventoryCrafting() && !(gui instanceof GuiPlayerExtended);
+      showInvToggle = data.hasInventoryExtended();// && !(gui instanceof GuiPlayerExtWorkbench);
+      showCraftToggle = data.hasInventoryCrafting();// && !(gui instanceof GuiPlayerExtended);
       if (showInvToggle) {
         event.getButtonList().add(new ButtonTabToggleInventory(gui, x, y));
       }

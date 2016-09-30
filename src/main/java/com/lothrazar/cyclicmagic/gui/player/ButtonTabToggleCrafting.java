@@ -20,7 +20,7 @@ public class ButtonTabToggleCrafting extends GuiButton {
   public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
     boolean pressed = super.mousePressed(mc, mouseX, mouseY);
     if (pressed) {
-      if (this.gui instanceof GuiInventory) {
+      if (this.gui instanceof GuiInventory || this.gui instanceof GuiPlayerExtended) {
         ModMain.network.sendToServer(new PacketFakeWorkbench());
       }
       else {//if (this.gui instanceof GuiPlayerExtended || this.gui instanceof GuiCrafting) {
