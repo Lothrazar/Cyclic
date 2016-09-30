@@ -27,7 +27,7 @@ public class InventoryPlayerExtWorkbench extends InventoryCrafting {
     super(containerPlayerExtWorkbench,3,3);
     this.eventHandler = containerPlayerExtWorkbench;
     //slot 10 was being used when crafting is done.
-    this.stackList = new ItemStack[IROW * ICOL ];//WHY isnt 10 enough? 1 for output, and a 3x3? huH
+    this.stackList = new ItemStack[IROW * ICOL + 4];//4 armor + 3x3
     this.player = new WeakReference<EntityPlayer>(player);
   }
 
@@ -104,7 +104,10 @@ public class InventoryPlayerExtWorkbench extends InventoryCrafting {
    */
   @Override
   public void setInventorySlotContents(int idx, ItemStack stack) {
-    System.out.println("InvoCrafting setStack into "+idx);
+    if(idx>=this.stackList.length){
+     //ystem.out.println("OOB CRASH"+idx);
+      return;
+    }
     this.stackList[idx] = stack;
     this.eventHandler.onCraftMatrixChanged(this);
   }
