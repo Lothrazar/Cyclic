@@ -57,20 +57,16 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
       });
     }
     slotId++;
-    this.addSlotToContainer(new Slot(playerInv, 40, 77, 62)
-    { 
-        public boolean isItemValid(@Nullable ItemStack stack)
-        {
-            return super.isItemValid(stack);
-        }
-        @Nullable
-        @SideOnly(Side.CLIENT)
-        public String getSlotTexture()
-        {
-            return "minecraft:items/empty_armor_slot_shield";
-        }
+    this.addSlotToContainer(new Slot(playerInv, 40, 77, 62) {
+      public boolean isItemValid(@Nullable ItemStack stack) {
+        return super.isItemValid(stack);
+      }
+      @Nullable
+      @SideOnly(Side.CLIENT)
+      public String getSlotTexture() {
+        return "minecraft:items/empty_armor_slot_shield";
+      }
     });
-    
     //the 3x3
     int xPos, yPos;
     for (int i = 0; i < InventoryPlayerExtWorkbench.IROW; ++i) {
@@ -101,16 +97,26 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
   public void onCraftMatrixChanged(IInventory inventory) {
     craftResult.setInventorySlotContents(0, CraftingManager.getInstance().findMatchingRecipe(craftMatrix, this.thePlayer.worldObj));
   }
-  /**
-   * Called when the container is closed.
-   */
-//  @Override
-//  public void onContainerClosed(EntityPlayer player) {
-//    super.onContainerClosed(player);
-//    if (!player.worldObj.isRemote) {
-//      //      UtilPlayerInventoryFilestorage.setPlayerInventory(player, inventory);
-//    }
-//  }
+  @Override
+  public void onContainerClosed(EntityPlayer playerIn) {
+    super.onContainerClosed(playerIn);
+    //size of 9, but it starts after the five equip slots
+    for (int i = 0; i < 9; ++i) {
+      ItemStack itemstack = this.craftMatrix.removeStackFromSlot(i);
+      if (itemstack != null) {
+        //System.out.println("DROP "+i);
+        playerIn.dropItem(itemstack, false);
+      }
+    }
+    this.craftResult.setInventorySlotContents(0, (ItemStack) null);
+  }
+  //  @Override
+  //  public void onContainerClosed(EntityPlayer player) {
+  //    super.onContainerClosed(player);
+  //    if (!player.worldObj.isRemote) {
+  //      //      UtilPlayerInventoryFilestorage.setPlayerInventory(player, inventory);
+  //    }
+  //  }
   /**
    * Called when a player shift-clicks on a slot. You must override this or you
    * will crash when someone does that.
@@ -119,7 +125,7 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
   public ItemStack transferStackInSlot(EntityPlayer entityPlayer, int slotIndex) {
     ItemStack itemStack = null;
     Slot fromSlot = (Slot) this.inventorySlots.get(slotIndex);
-    System.out.println("  transferStackInSlot" + slotIndex);
+    //ystem.out.println("  transferStackInSlot" + slotIndex);
     //shield is slot 5 now
     int craftOutpt = 0, playerStart = 15, playerEnd = 50, craftStart = 6, craftEnd = 14, armorStart = 1, armorEnd = 5;
     if (fromSlot != null && fromSlot.getHasStack()) {

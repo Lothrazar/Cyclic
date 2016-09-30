@@ -25,7 +25,7 @@ public class InventoryPlayerExtWorkbench extends InventoryCrafting {
   public InventoryPlayerExtWorkbench(ContainerPlayerExtWorkbench containerPlayerExtWorkbench, EntityPlayer player) {
     super(containerPlayerExtWorkbench,3,3);
     this.eventHandler = containerPlayerExtWorkbench;
-    this.stackList = new ItemStack[IROW * ICOL + 4];//4 armor + 3x3
+    this.stackList = new ItemStack[IROW * ICOL + 5];//5 armor + 3x3
     this.player = new WeakReference<EntityPlayer>(player);
   }
 
