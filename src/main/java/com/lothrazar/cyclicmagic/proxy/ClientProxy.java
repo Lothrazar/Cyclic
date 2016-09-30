@@ -50,6 +50,7 @@ public class ClientProxy extends CommonProxy {
   public static KeyBinding keyBarUp;
   public static KeyBinding keyBarDown;
   public static KeyBinding keyExtraInvo;
+  public static KeyBinding keyExtraCraftin;
   static final String keyCategoryInventory = "key.categories.inventorycontrol";
   @Override
   public void register() {
@@ -75,6 +76,9 @@ public class ClientProxy extends CommonProxy {
       ClientRegistry.registerKeyBinding(ClientProxy.keyBarDown);
       keyExtraInvo = new KeyBinding("key.keyExtraInvo", Keyboard.KEY_R, keyCategoryInventory);
       ClientRegistry.registerKeyBinding(ClientProxy.keyExtraInvo);
+      keyExtraCraftin = new KeyBinding("key.keyExtraCraftin",net.minecraftforge.client.settings.KeyConflictContext.IN_GAME,
+            KeyModifier.SHIFT, Keyboard.KEY_R, keyCategoryInventory);
+      ClientRegistry.registerKeyBinding(ClientProxy.keyExtraCraftin);
     }
   }
   @SuppressWarnings({ "unchecked", "rawtypes", "deprecation" })

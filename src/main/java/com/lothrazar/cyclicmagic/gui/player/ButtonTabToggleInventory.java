@@ -21,7 +21,7 @@ public class ButtonTabToggleInventory extends GuiButton {// implements ITooltipB
     boolean pressed = super.mousePressed(mc, mouseX, mouseY);
     if (pressed) {
       if (this.gui instanceof GuiInventory) {
-        ModMain.network.sendToServer(new PacketOpenExtendedInventory(this.gui.mc.thePlayer));
+        ModMain.network.sendToServer(new PacketOpenExtendedInventory());
       }
       else {//if (this.gui instanceof GuiPlayerExtended || this.gui instanceof GuiCrafting) {
         this.gui.mc.displayGuiScreen(new GuiInventory(gui.mc.thePlayer));

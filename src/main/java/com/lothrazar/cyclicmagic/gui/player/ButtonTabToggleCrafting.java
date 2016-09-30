@@ -6,7 +6,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiInventory;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -22,7 +21,7 @@ public class ButtonTabToggleCrafting extends GuiButton {
     boolean pressed = super.mousePressed(mc, mouseX, mouseY);
     if (pressed) {
       if (this.gui instanceof GuiInventory) {
-        ModMain.network.sendToServer(new PacketFakeWorkbench(new NBTTagCompound()));
+        ModMain.network.sendToServer(new PacketFakeWorkbench());
       }
       else {//if (this.gui instanceof GuiPlayerExtended || this.gui instanceof GuiCrafting) {
         this.gui.mc.displayGuiScreen(new GuiInventory(gui.mc.thePlayer));
