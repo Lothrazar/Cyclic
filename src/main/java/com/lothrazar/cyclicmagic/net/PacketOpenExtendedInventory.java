@@ -10,8 +10,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 public class PacketOpenExtendedInventory implements IMessage, IMessageHandler<PacketOpenExtendedInventory, IMessage> {
   public PacketOpenExtendedInventory() {
   }
-  public PacketOpenExtendedInventory(EntityPlayer player) {
-  }
   @Override
   public void toBytes(ByteBuf buffer) {
   }

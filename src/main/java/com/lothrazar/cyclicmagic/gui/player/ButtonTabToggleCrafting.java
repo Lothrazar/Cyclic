@@ -6,14 +6,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiInventory;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ButtonTabToggleCrafting extends GuiButton {
   private GuiScreen gui;
   public ButtonTabToggleCrafting(GuiScreen g, int x, int y) {
-    super(256, x, y, 15, 5, "C");
+    super(256, x, y, 15, 10, "C");
     gui = g;
   }
   @SideOnly(Side.CLIENT)
@@ -21,8 +20,8 @@ public class ButtonTabToggleCrafting extends GuiButton {
   public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
     boolean pressed = super.mousePressed(mc, mouseX, mouseY);
     if (pressed) {
-      if (this.gui instanceof GuiInventory) {
-        ModMain.network.sendToServer(new PacketFakeWorkbench(new NBTTagCompound()));
+      if (this.gui instanceof GuiInventory || this.gui instanceof GuiPlayerExtended) {
+        ModMain.network.sendToServer(new PacketFakeWorkbench());
       }
       else {//if (this.gui instanceof GuiPlayerExtended || this.gui instanceof GuiCrafting) {
         this.gui.mc.displayGuiScreen(new GuiInventory(gui.mc.thePlayer));

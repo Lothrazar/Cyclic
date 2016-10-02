@@ -8,6 +8,7 @@ import com.lothrazar.cyclicmagic.gui.button.ButtonTerrariaLootAll;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTerrariaQuickStack;
 import com.lothrazar.cyclicmagic.gui.button.ButtonTerrariaRestock;
 import com.lothrazar.cyclicmagic.gui.player.GuiPlayerExtended;
+import com.lothrazar.cyclicmagic.gui.playerworkbench.GuiPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
@@ -45,7 +46,8 @@ public class GuiTerrariaButtonsModule extends BaseEventModule implements IHasCon
     // all containers by default but with a blacklist in config
     if (gui instanceof GuiContainer &&
         !(gui instanceof GuiInventory) &&
-        !(gui instanceof GuiPlayerExtended)) {
+        !(gui instanceof GuiPlayerExtended) && 
+        !(gui instanceof GuiPlayerExtWorkbench)) {
       String self = gui.getClass().getName();
       // &&  blacklistGuis.contains(self) ==
       boolean isInBlacklist = false;

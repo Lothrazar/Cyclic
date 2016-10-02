@@ -203,6 +203,7 @@ key.columnbardown=Row Shift Down
 key.columnbarup=Row Shift Up
 key.columnshiftdown=Item Shift Down
 key.columnshiftup=Item Shift Up
+key.keyExtraCraftin=Inventory Crafting (if unlocked)
 key.keyExtraInvo=Extended Inventory (if unlocked)
 potion.ender=Ender Aura
 potion.magnet=Magnet

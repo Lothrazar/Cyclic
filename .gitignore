@@ -1,6 +1,7 @@
 bin/assets/
 run/
 bin/
+libs/
 build/
 eclipse/
 logs/

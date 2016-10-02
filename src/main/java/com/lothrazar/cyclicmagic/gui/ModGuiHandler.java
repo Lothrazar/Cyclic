@@ -15,7 +15,12 @@ import com.lothrazar.cyclicmagic.gui.password.ContainerPassword;
 import com.lothrazar.cyclicmagic.gui.password.GuiPassword;
 import com.lothrazar.cyclicmagic.gui.placer.ContainerPlacer;
 import com.lothrazar.cyclicmagic.gui.placer.GuiPlacer;
+import com.lothrazar.cyclicmagic.gui.player.ContainerPlayerExtended;
 import com.lothrazar.cyclicmagic.gui.player.GuiPlayerExtended;
+import com.lothrazar.cyclicmagic.gui.player.InventoryPlayerExtended;
+import com.lothrazar.cyclicmagic.gui.playerworkbench.ContainerPlayerExtWorkbench;
+import com.lothrazar.cyclicmagic.gui.playerworkbench.GuiPlayerExtWorkbench;
+import com.lothrazar.cyclicmagic.gui.playerworkbench.InventoryPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.gui.storage.ContainerStorage;
 import com.lothrazar.cyclicmagic.gui.storage.GuiStorage;
 import com.lothrazar.cyclicmagic.gui.storage.InventoryStorage;
@@ -48,12 +53,16 @@ public class ModGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_PASSWORD = 7;
   public static final int GUI_INDEX_MINER = 8;
   public static final int GUI_INDEX_FISHER = 9;
+  public static final int GUI_INDEX_PWORKBENCH = 10;
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
     TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
     switch (ID) {
     case GUI_INDEX_EXTENDED:
-      return new com.lothrazar.cyclicmagic.gui.player.ContainerPlayerExtended(player.inventory, !world.isRemote, player);
+      return new ContainerPlayerExtended(player.inventory, new InventoryPlayerExtended(player),player);
+    case GUI_INDEX_PWORKBENCH:   
+      return new ContainerPlayerExtWorkbench(player.inventory, player);
+    
     case GUI_INDEX_WAND:
       ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
       return new ContainerWand(player, player.inventory, new InventoryWand(player, wand));
@@ -103,7 +112,9 @@ public class ModGuiHandler implements IGuiHandler {
       TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
       switch (ID) {
       case GUI_INDEX_EXTENDED:
-        return new GuiPlayerExtended(player);
+        return new GuiPlayerExtended(new ContainerPlayerExtended(player.inventory, new InventoryPlayerExtended(player),player));
+      case GUI_INDEX_PWORKBENCH:   
+        return new GuiPlayerExtWorkbench(new ContainerPlayerExtWorkbench(player.inventory, player));
       case GUI_INDEX_WAND:
         ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
         return new GuiWandInventory(new ContainerWand(player, player.inventory, new InventoryWand(player, wand)), wand);

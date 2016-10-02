@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.event;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.net.PacketMovePlayerHotbar;
 import com.lothrazar.cyclicmagic.net.PacketOpenExtendedInventory;
+import com.lothrazar.cyclicmagic.net.PacketFakeWorkbench;
 import com.lothrazar.cyclicmagic.net.PacketMovePlayerColumn;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
@@ -43,8 +44,17 @@ public class EventKeyInput {
         Minecraft.getMinecraft().displayGuiScreen(new GuiInventory(thePlayer));
       }
       else {
-        ModMain.network.sendToServer(new PacketOpenExtendedInventory(thePlayer));
-        //event.setCanceled(true);//not allowed java.lang.IllegalArgumentException: Attempted to cancel a non cancellable event
+        ModMain.network.sendToServer(new PacketOpenExtendedInventory());
+      }
+    }
+    else if (ClientProxy.keyExtraCraftin != null && ClientProxy.keyExtraCraftin.isPressed()) {
+      final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(thePlayer);
+      if (data.hasInventoryCrafting() == false) {
+        //then open the normal inventory
+        Minecraft.getMinecraft().displayGuiScreen(new GuiInventory(thePlayer));
+      }
+      else {
+        ModMain.network.sendToServer(new PacketFakeWorkbench());
       }
     }
   }

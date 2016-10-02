@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.gui.player;
 import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.gui.playerworkbench.GuiPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.net.PacketOpenExtendedInventory;
 import com.lothrazar.cyclicmagic.net.PacketOpenNormalInventory;
 import net.minecraft.client.Minecraft;
@@ -12,7 +13,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ButtonTabToggleInventory extends GuiButton {// implements ITooltipButton
   private GuiScreen gui;
   public ButtonTabToggleInventory(GuiScreen g, int x, int y) {
-    super(51, x, y, 15, 5, "I");
+    super(51, x, y, 15, 10, "I");
     gui = g;
   }
   @SideOnly(Side.CLIENT)
@@ -20,8 +21,8 @@ public class ButtonTabToggleInventory extends GuiButton {// implements ITooltipB
   public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
     boolean pressed = super.mousePressed(mc, mouseX, mouseY);
     if (pressed) {
-      if (this.gui instanceof GuiInventory) {
-        ModMain.network.sendToServer(new PacketOpenExtendedInventory(this.gui.mc.thePlayer));
+      if (this.gui instanceof GuiInventory || this.gui instanceof GuiPlayerExtWorkbench) {
+        ModMain.network.sendToServer(new PacketOpenExtendedInventory());
       }
       else {//if (this.gui instanceof GuiPlayerExtended || this.gui instanceof GuiCrafting) {
         this.gui.mc.displayGuiScreen(new GuiInventory(gui.mc.thePlayer));
