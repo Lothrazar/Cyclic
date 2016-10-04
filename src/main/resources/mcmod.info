@@ -5,7 +5,7 @@
     "name": "Cyclic",
     "description": "See curseforge for latest features, and report issues to https://github.com/PrinceOfAmber/Cyclic/issues.  I added everything I wanted the game to have, including powerful items, inventory features, world generation, and more. See config for more controls.  Balanced around 
 single player survival.",
-    "version": "1.7.10",
+    "version": "1.7.12",
     "mcversion": "1.10.2",
     "url": "http://minecraft.curseforge.com/projects/cyclic",
     "updateUrl": "http://minecraft.curseforge.com/projects/cyclic",

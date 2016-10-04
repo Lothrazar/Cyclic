@@ -5,8 +5,8 @@
     "1.9.4-recommended":  "1.2.0",
     "1.10-latest":  "1.1.0",
     "1.10-recommended": "1.1.0",
-    "1.10.2-latest":  "1.7.10",
-    "1.10.2-recommended": "1.7.10"
+    "1.10.2-latest":  "1.7.12",
+    "1.10.2-recommended": "1.7.12"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -54,5 +54,6 @@
  	,"1.7.8":"Fix storage sack crashing the game when you use number hotkeys to put it inside itself.  Fix typo in a config description.  Fix spammy messages in fml-client-latest.log.  "
   	,"1.7.9":"Fix the Block Placer crashing on trying to play a sound.  Fix bag of holding not copying block metadata - such as copper chests from ironchests mod."
   	,"1.7.10":"Re-designed the inventory crafting screen (unlock by eating Inventory Crafting item).  It mirrors player inventory more closely with armor slots; has its own keybinding to open it; is now compatible with FTB Utilities; and has full JEI support.  Fixed the Druid villager missing texture (was using the vanilla green villager)"
+  	,"1.7.12":"Fix block miners crashing when used in multiplayer on sponge servers (attempting mod compatibility with spongeforge-1.10.2-2092-5.0.0-BETA-1770).  Fix rare exceptions from exchange scepters (ConcurrentModification)."
   }
 }

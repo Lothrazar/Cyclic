@@ -2,15 +2,18 @@ package com.lothrazar.cyclicmagic.net;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap;
 import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.WandType;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilInventory;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -129,59 +132,69 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
       if (message.wandType == WandType.MATCH) {
         matched = worldObj.getBlockState(message.pos);
       }
-      Map<BlockPos,Integer> processed = new HashMap<BlockPos,Integer>();
+      Map<BlockPos, Integer> processed = new HashMap<BlockPos, Integer>();
       //TODO: maybe dont randomly take blocks from inventory. maybe do a pick block.. or an inventory..i dont know
       //seems ok, and also different enough to be fine
-      for (BlockPos p : places) {
-        if(processed.containsKey(p) == false){
-          processed.put(p, 0);
-        }
-        if(processed.get(p) > 0){
-          continue; //dont process the same location more than once per click
-        }
-        processed.put(p, processed.get(p)+1);// ++
-        int slot = UtilInventory.getFirstSlotWithBlock(player);
-        if (slot < 0) {
-          continue;//you have no materials left
-        }
-        if (worldObj.isSideSolid(p, side) == false) { //trying to avoid the TickNextTick list out of synch
-          continue;//dont  do nonsolid blocks ex: water/plants
-        }
-        if (worldObj.getTileEntity(p) != null) {
-          continue;//ignore tile entities IE do not break chests / etc
-        }
-        replaced = worldObj.getBlockState(p);
-        if (worldObj.isAirBlock(p) || replaced == null) {
-          //dont build in air
-          continue;
-        }
-        newToPlace = UtilInventory.getBlockstateFromSlot(player, slot);
-        if (replaced.getBlock().getBlockHardness(replaced, worldObj, p) < 0) {
-          //is unbreakable ie bedrock
-          continue;
-        }
-        //wait, do they match? are they the same? do not replace myself
-        if (UtilWorld.doBlockStatesMatch(replaced, newToPlace)) {
-          continue;
-        }
-        if (message.wandType == WandType.MATCH && matched != null &&
-            !UtilWorld.doBlockStatesMatch(matched, replaced)) {
-          //we have saved the one we clicked on so only that gets replaced
-          continue;
-        }
-        try {
-          //break it and drop the whatever
-          if (worldObj.destroyBlock(p, true)) {
-            if (UtilPlaceBlocks.placeStateSafe(worldObj, player, p, newToPlace)) {
-              UtilInventory.decrStackSize(player, slot);
+      BlockPos curPos;
+      try {
+        synchronized (places) {
+          for (Iterator<BlockPos> i = places.iterator(); i.hasNext();) {
+            curPos = i.next();
+            // for (BlockPos curPos : places) {
+            if (processed.containsKey(curPos) == false) {
+              processed.put(curPos, 0);
             }
-          }
+            if (processed.get(curPos) > 0) {
+              continue; //dont process the same location more than once per click
+            }
+            processed.put(curPos, processed.get(curPos) + 1);// ++
+            int slot = UtilInventory.getFirstSlotWithBlock(player);
+            if (slot < 0) {
+              continue;//you have no materials left
+            }
+            //        if (worldObj.isSideSolid(curPos, side) == false) { //trying to avoid the TickNextTick list out of synch
+            //          continue;//dont  do nonsolid blocks ex: water/plants
+            //        }
+            if (worldObj.getTileEntity(curPos) != null) {
+              continue;//ignore tile entities IE do not break chests / etc
+            }
+            replaced = worldObj.getBlockState(curPos);
+            if (worldObj.isAirBlock(curPos) || replaced == null) {
+              //dont build in air
+              continue;
+            }
+            newToPlace = UtilInventory.getBlockstateFromSlot(player, slot);
+            if (replaced.getBlock().getBlockHardness(replaced, worldObj, curPos) < 0) {
+              //is unbreakable ie bedrock
+              continue;
+            }
+            //wait, do they match? are they the same? do not replace myself
+            if (UtilWorld.doBlockStatesMatch(replaced, newToPlace)) {
+              continue;
+            }
+            if (message.wandType == WandType.MATCH && matched != null &&
+                !UtilWorld.doBlockStatesMatch(matched, replaced)) {
+              //we have saved the one we clicked on so only that gets replaced
+              continue;
+            }
+            //break it and drop the whatever
+            //the destroy then set was causing exceptions, changed to setAir // https://github.com/PrinceOfAmber/Cyclic/issues/114
+            Block block = replaced.getBlock();
+            // if (worldObj.destroyBlock(curPos, true)) {
+            if (worldObj.setBlockToAir(curPos)) {
+              if (UtilPlaceBlocks.placeStateSafe(worldObj, player, curPos, newToPlace)) {
+                UtilInventory.decrStackSize(player, slot);
+                block.dropBlockAsItem(worldObj, curPos, replaced, 0);//zero is fortune level
+              }
+            }
+          } // close off the for loop   
         }
-        catch (ConcurrentModificationException e) {
-          ModMain.logger.warn("ConcurrentModificationException");
-          ModMain.logger.warn(e.getMessage());// message is null??
-          ModMain.logger.warn(e.getStackTrace().toString());
-        }
+      }
+      catch (ConcurrentModificationException e) {
+        //possible reason why i cant do a trycatch // http://stackoverflow.com/questions/18752320/trycatch-concurrentmodificationexception-catching-30-of-the-time
+        ModMain.logger.warn("ConcurrentModificationException");
+        ModMain.logger.warn(e.getMessage());// message is null??
+        ModMain.logger.warn(e.getStackTrace().toString());
       }
     }
     return null;

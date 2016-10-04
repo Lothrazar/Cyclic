@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.block.tileentity;
 import java.lang.ref.WeakReference;
 import java.util.UUID;
 import com.google.common.base.Charsets;
+import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.block.BlockMiner;
 import com.lothrazar.cyclicmagic.block.BlockMiner.MinerType;
 import com.mojang.authlib.GameProfile;
@@ -92,17 +93,16 @@ public class TileMachineMiner extends TileEntityBaseMachine {
   private boolean isCurrentlyMining;
   private WeakReference<FakePlayer> fakePlayer;
   private float curBlockDamage;
-  private boolean firstTick = true;
+  //  private boolean firstTick = true;
   private BlockPos targetPos = null;
   @Override
   public void update() {
     if (this.isPowered()) {
       this.spawnParticlesAbove();
     }
-    if (!worldObj.isRemote) {
-      if (firstTick || fakePlayer == null) {
-        firstTick = false;
-        initFakePlayer();
+    if (worldObj.isRemote == false && worldObj instanceof WorldServer && (WorldServer) worldObj != null) {
+      if (fakePlayer == null) {
+        initFakePlayer((WorldServer) worldObj);
       }
       BlockMiner.MinerType minerType = ((BlockMiner) worldObj.getBlockState(pos).getBlock()).getMinerType();
       BlockPos start = pos.offset(this.getCurrentFacing());
@@ -136,7 +136,7 @@ public class TileMachineMiner extends TileEntityBaseMachine {
         if (curBlockDamage >= 1.0f) {
           isCurrentlyMining = false;
           resetProgress(targetPos);
-          if (fakePlayer.get() != null) {
+          if (fakePlayer != null && fakePlayer.get() != null) {
             fakePlayer.get().interactionManager.tryHarvestBlock(targetPos);
           }
         }
@@ -194,22 +194,31 @@ public class TileMachineMiner extends TileEntityBaseMachine {
     if (rollHeight > 0) {
       targetPos = targetPos.offset(EnumFacing.UP, rollHeight);
     }
-    //    if (rollUpOrDown == 1) {
-    //      targetPos = targetPos.offset(EnumFacing.UP);
-    //    }
-    //    else if (rollUpOrDown == 2) {
-    //      targetPos = targetPos.offset(EnumFacing.DOWN);
-    //    }
-    //0 is center
     return;
   }
-  private void initFakePlayer() {
+  private void initFakePlayer(WorldServer ws) {
+    try {
+      fakePlayer = new WeakReference<FakePlayer>(FakePlayerFactory.get(ws, breakerProfile));
+    }
+    catch (Exception e) {
+      ModMain.logger.error("Exception thrown trying to create fake player : " + e.getMessage());
+      if (breakerProfile == null) {
+        ModMain.logger.info("breakerProfile is null");
+      }
+      else {
+        ModMain.logger.info("breakerProfile : " + breakerProfile.getName() + ":" + breakerProfile.getId().toString());
+      }
+      fakePlayer = null;
+    }
+    if (fakePlayer == null || fakePlayer.get() == null) {
+      fakePlayer = null;
+      return; // trying to get around https://github.com/PrinceOfAmber/Cyclic/issues/113
+    }
     if (uuid == null) {
       uuid = UUID.randomUUID();
       IBlockState state = worldObj.getBlockState(this.pos);
       worldObj.notifyBlockUpdate(pos, state, state, 3);
     }
-    fakePlayer = new WeakReference<FakePlayer>(FakePlayerFactory.get((WorldServer) worldObj, breakerProfile));
     ItemStack unbreakingIronPickaxe = new ItemStack(Items.DIAMOND_PICKAXE, 1);
     unbreakingIronPickaxe.setTagCompound(new NBTTagCompound());
     unbreakingIronPickaxe.getTagCompound().setBoolean("Unbreakable", true);
@@ -259,7 +268,6 @@ public class TileMachineMiner extends TileEntityBaseMachine {
   }
   private void resetProgress(BlockPos targetPos) {
     if (uuid != null) {
-      //BlockPos targetPos = pos.offset(state.getValue(BlockMiner.PROPERTYFACING));
       worldObj.sendBlockBreakProgress(uuid.hashCode(), targetPos, -1);
       curBlockDamage = 0;
     }
