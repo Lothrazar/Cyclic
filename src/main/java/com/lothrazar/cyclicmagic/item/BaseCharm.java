@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.item;
 import com.lothrazar.cyclicmagic.util.UtilItem;
-import com.lothrazar.cyclicmagic.util.UtilSound;
-import baubles.api.BaubleType;
+import com.lothrazar.cyclicmagic.util.UtilSound; 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -22,7 +21,8 @@ public abstract class BaseCharm extends BaseItem {
   }
   public void damageCharm(EntityPlayer living, ItemStack stack) {
     UtilItem.damageItem(living, stack);
-    if (stack == null || stack.getItemDamage() == stack.getMaxDamage()) {
+    if (stack == null || stack.getItemDamage() == stack.getMaxDamage() || stack.stackSize == 0) {
+      stack.stackSize = 0;
       stack = null;
       //      living.inventory.setInventorySlotContents(itemSlot, null);
       UtilSound.playSound(living, living.getPosition(), SoundEvents.ENTITY_ITEM_BREAK, living.getSoundCategory());
@@ -30,6 +30,7 @@ public abstract class BaseCharm extends BaseItem {
   }
   /**
    * Fires while in inventory OR while in bauble slot
+   * 
    * @param arg0
    * @param arg1
    */
@@ -43,8 +44,8 @@ public abstract class BaseCharm extends BaseItem {
     return true;
   }
   @Optional.Method(modid = "Baubles")
-  public BaubleType getBaubleType(ItemStack arg0) {
-    return BaubleType.RING;
+  public baubles.api.BaubleType getBaubleType(ItemStack arg0) {
+    return baubles.api.BaubleType.RING;
   }
   @Optional.Method(modid = "Baubles")
   public void onEquipped(ItemStack arg0, EntityLivingBase arg1) {
@@ -54,7 +55,7 @@ public abstract class BaseCharm extends BaseItem {
   }
   @Optional.Method(modid = "Baubles")
   public void onWornTick(ItemStack arg0, EntityLivingBase arg1) {
-    if (arg1 instanceof EntityPlayer) {
+    if (arg1 instanceof EntityPlayer && arg0 != null && arg0.stackSize > 0) {
       this.onTick(arg0, (EntityPlayer) arg1);
     }
   }
