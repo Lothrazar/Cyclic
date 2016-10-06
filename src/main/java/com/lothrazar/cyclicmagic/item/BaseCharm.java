@@ -22,8 +22,10 @@ public abstract class BaseCharm extends BaseItem {
   public void damageCharm(EntityPlayer living, ItemStack stack) {
     UtilItem.damageItem(living, stack);
     if (stack == null || stack.getItemDamage() == stack.getMaxDamage() || stack.stackSize == 0) {
-      stack.stackSize = 0;
-      stack = null;
+   
+      if(stack != null && stack.stackSize == 0) {
+        stack.stackSize = 1;//avoid that red zero if baulbes doesnt make it gone
+      }
       //      living.inventory.setInventorySlotContents(itemSlot, null);
       UtilSound.playSound(living, living.getPosition(), SoundEvents.ENTITY_ITEM_BREAK, living.getSoundCategory());
     }

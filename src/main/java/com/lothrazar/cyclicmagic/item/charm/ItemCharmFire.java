@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemCharmFire extends BaseCharm implements IHasRecipe, baubles.api.IBauble {
-  private static final int durability = 3;
+  private static final int durability = 16;
   private static final int seconds = 10;
   public ItemCharmFire() {
     super(durability);
