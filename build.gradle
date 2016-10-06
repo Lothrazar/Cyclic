@@ -15,7 +15,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle.forge'
 
 
-version = "1.10.2-1.7.12"
+version = "1.10.2-1.DEV"
 group= "com.lothrazar.cyclicmagic" 
 archivesBaseName = "Cyclic"
 
@@ -43,6 +43,8 @@ dependencies {
   // at runtime, use the full JEI jar
   runtime "mezz.jei:jei_${mc_version}:${jei_version}"
 
+
+  compile files("lib/Baubles-${mc_version}-${baubles_version}-deobf.jar")
 }
 
 processResources
