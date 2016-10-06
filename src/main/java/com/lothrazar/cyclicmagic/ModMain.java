@@ -114,9 +114,7 @@ public class ModMain {
    * Structure builder: add preview (ghost blocks or sparkls)
    * 
    * ender orb upgrade: but mounted version
-   * 
-   * jump plates: show block numbers not other
-   * 
+   *  
    * project table (invo plus 3x3)
    * 
    * ??multi furnace / multi dispenser / multi brewing stand
