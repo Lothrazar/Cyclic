@@ -24,12 +24,16 @@ public class ItemCharmSlowfall extends BaseCharm implements IHasRecipe {
   public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
     if (entityIn instanceof EntityPlayer) {
       EntityPlayer living = (EntityPlayer) entityIn;
-      if (living.fallDistance >= fallDistanceLimit && !living.isPotionActive(PotionEffectRegistry.slowfallEffect)) {
-        living.addPotionEffect(new PotionEffect(PotionEffectRegistry.slowfallEffect, seconds * Const.TICKS_PER_SEC, Const.Potions.I));
-        super.damageCharm(living, stack, itemSlot);
-        UtilSound.playSound(living, living.getPosition(), SoundEvents.ITEM_ELYTRA_FLYING, living.getSoundCategory());
-        UtilParticle.spawnParticle(worldIn, EnumParticleTypes.SUSPENDED, living.getPosition());
-      }
+      onTick(stack, living);
+    }
+  }
+  @Override
+  public void onTick(ItemStack stack, EntityPlayer living) {
+    if (living.fallDistance >= fallDistanceLimit && !living.isPotionActive(PotionEffectRegistry.slowfallEffect)) {
+      living.addPotionEffect(new PotionEffect(PotionEffectRegistry.slowfallEffect, seconds * Const.TICKS_PER_SEC, Const.Potions.I));
+      super.damageCharm(living, stack);
+      UtilSound.playSound(living, living.getPosition(), SoundEvents.ITEM_ELYTRA_FLYING, living.getSoundCategory());
+      UtilParticle.spawnParticle(living.getEntityWorld(), EnumParticleTypes.SUSPENDED, living.getPosition());
     }
   }
   @Override

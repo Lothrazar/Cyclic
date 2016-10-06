@@ -30,7 +30,7 @@ public class ItemCharmVoid extends BaseCharm implements IHasRecipe {
       EntityPlayer living = (EntityPlayer) entityIn;
       if (living.getPosition().getY() < yLowest) {
         UtilEntity.teleportWallSafe(living, worldIn, new BlockPos(living.getPosition().getX(), yDest, living.getPosition().getZ()));
-        super.damageCharm(living, stack, itemSlot);
+        super.damageCharm(living, stack);
         UtilSound.playSound(living, living.getPosition(), SoundEvents.ENTITY_ENDERMEN_TELEPORT, living.getSoundCategory());
         UtilParticle.spawnParticle(worldIn, EnumParticleTypes.PORTAL, living.getPosition());
       }
@@ -50,5 +50,10 @@ public class ItemCharmVoid extends BaseCharm implements IHasRecipe {
   @Override
   public String getTooltip() {
     return "item.charm_void.tooltip";
+  }
+  @Override
+  public void onTick(ItemStack arg0, EntityPlayer arg1) {
+    // TODO Auto-generated method stub
+    
   }
 }

@@ -2,14 +2,17 @@ package com.lothrazar.cyclicmagic.item.charm;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.BaseCharm;
+import com.lothrazar.cyclicmagic.item.BaseItem;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilItem;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -23,12 +26,14 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemCharmAutoTorch extends BaseCharm implements IHasRecipe {
+public class ItemCharmAutoTorch extends BaseItem implements IHasRecipe {
   private static final int durability = 256;
   private static final float lightLimit = 7.0F;
   private static final int cooldown = 60;//ticks not seconds
   public ItemCharmAutoTorch() {
-    super(durability);
+ //   super(durability);
+    this.setMaxStackSize(1);
+    this.setMaxDamage(durability);
   }
   public enum ActionType {
     OFF, ON;
@@ -83,7 +88,14 @@ public class ItemCharmAutoTorch extends BaseCharm implements IHasRecipe {
       BlockPos pos = living.getPosition();
       if (world.getLight(pos, true) < lightLimit && world.isSideSolid(pos.down(), EnumFacing.UP)) {
         if (UtilPlaceBlocks.placeStateSafe(world, living, pos, Blocks.TORCH.getDefaultState())) {
-          super.damageCharm(living, stack, itemSlot);
+
+          UtilItem.damageItem(living, stack);
+          if (stack == null || stack.getItemDamage() == stack.getMaxDamage()) {
+            stack = null;
+         living.inventory.setInventorySlotContents(itemSlot, null);
+            UtilSound.playSound(living, living.getPosition(), SoundEvents.ENTITY_ITEM_BREAK, living.getSoundCategory());
+          }
+          
           living.getCooldownTracker().setCooldown(this, cooldown);
         }
       }

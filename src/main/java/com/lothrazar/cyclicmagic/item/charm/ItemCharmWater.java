@@ -32,7 +32,7 @@ public class ItemCharmWater extends BaseCharm implements IHasRecipe {
       EntityPlayer living = (EntityPlayer) entityIn;
       if (living.getAir() < breath && !living.isPotionActive(MobEffects.WATER_BREATHING)) {
         living.addPotionEffect(new PotionEffect(MobEffects.WATER_BREATHING, seconds * Const.TICKS_PER_SEC, Const.Potions.I));
-        super.damageCharm(living, stack, itemSlot);
+        super.damageCharm(living, stack);
         UtilSound.playSound(living, living.getPosition(), SoundEvents.ENTITY_PLAYER_SPLASH, living.getSoundCategory());
         UtilParticle.spawnParticle(worldIn, EnumParticleTypes.WATER_BUBBLE, living.getPosition());
         UtilParticle.spawnParticle(worldIn, EnumParticleTypes.WATER_BUBBLE, living.getPosition().up());
@@ -53,5 +53,10 @@ public class ItemCharmWater extends BaseCharm implements IHasRecipe {
   @Override
   public String getTooltip() {
     return "item.charm_water.tooltip";
+  }
+  @Override
+  public void onTick(ItemStack arg0, EntityPlayer arg1) {
+    // TODO Auto-generated method stub
+    
   }
 }

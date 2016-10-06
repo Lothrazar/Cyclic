@@ -21,16 +21,20 @@ public class ItemCharmBoat extends BaseCharm implements IHasRecipe {
   public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
     if (entityIn instanceof EntityPlayer) {
       EntityPlayer living = (EntityPlayer) entityIn;
-      if (entityIn.getRidingEntity() instanceof EntityBoat) {
-        EntityBoat boat = (EntityBoat) entityIn.getRidingEntity();
-        if (living.moveForward > 0) {
-          float reduce = 0.08F;
-          //pulled from private EntityBoat.controlBoat() fn
-          boat.motionX += net.minecraft.util.math.MathHelper.sin(-boat.rotationYaw * 0.017453292F) * reduce;
-          boat.motionZ += net.minecraft.util.math.MathHelper.cos(boat.rotationYaw * 0.017453292F) * reduce;
-          if (worldIn.rand.nextDouble() < 0.1) {
-            super.damageCharm(living, stack, itemSlot);
-          }
+      onTick(stack, living);
+    }
+  }
+  @Override
+  public void onTick(ItemStack stack,  EntityPlayer entityIn) {
+    if (entityIn.getRidingEntity() instanceof EntityBoat) {
+      EntityBoat boat = (EntityBoat) entityIn.getRidingEntity();
+      if (entityIn.moveForward > 0) {
+        float reduce = 0.08F;
+        //pulled from private EntityBoat.controlBoat() fn
+        boat.motionX += net.minecraft.util.math.MathHelper.sin(-boat.rotationYaw * 0.017453292F) * reduce;
+        boat.motionZ += net.minecraft.util.math.MathHelper.cos(boat.rotationYaw * 0.017453292F) * reduce;
+        if (entityIn.getEntityWorld().rand.nextDouble() < 0.1) {
+          super.damageCharm(entityIn, stack);
         }
       }
     }
