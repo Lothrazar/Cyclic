@@ -109,12 +109,34 @@ public class ModMain {
    * 
    * TODO: ideas/plans/features
    * 
+   * BAUBLES API: optional DEP , fire off all charms from it
+   * 
+   * Structure builder: add preview (ghost blocks or sparkls)
+   * 
+   * ender orb upgrade: but mounted version
+   * 
+   * jump plates: show block numbers not other
+   * 
+   * project table (invo plus 3x3)
+   * 
+   * ??multi furnace / multi dispenser / multi brewing stand
+   * 
+   * magnet: a way to preview/show range
+   * 
+   * directional magnet
+   * 
+   * tesr: animate machines when active
+   * 
+   * harvester: preview area/range/size
+   * 
+   * harvester:? gui to change size?
+   * 
+   * machine to spam bonemeal, with input slot
+   * 
    * ender charm: same effect as ender potion but without the potion effect.
    * 
    * OWN custom texture for waterwalk effect (shouldnt ust just vanilla
    * prismarine item)
-   * 
-   * 
    * 
    * DISABLE the forward vector component of launch enchat, if we are standing
    * still (if no current horiz)
@@ -129,16 +151,7 @@ public class ModMain {
    * Reinforced scaffolding - like wood one, still breaks in one hit. disable
    * auto break. climbable like a ladder
    * 
-   * disenchanter
-   * 
-   * swap tool - just use block on right to keep it simple. use size modes
-   * 
-   * 
-   * 
-   * randomizer tool- 3 or 5, just mix up block sin whatever area. ignore tile
-   * entities
-   * 
-   * 
+   * disenchanter-> only on books?
    * 
    * Add Splash and Lingering potions for all new effects enhancement
    * 
@@ -155,11 +168,6 @@ public class ModMain {
    * https://github.com/PrinceOfAmber/SamsPowerups/blob/
    * 06142623bb5da81af702e473d20f0da4273d222d/FarmingBlocks/src/main/java/com/
    * lothrazar/samsfarmblocks/BlockShearWool.java
-   * 
-   * tool that detects light/brightness (same way that the spawn detector checks
-   * light) and auto places torch. uses durability instead of real torch right
-   * click tool to enable on/off state, and it just runs while in invo (not just
-   * hotbar)
    * 
    * Full achievement system: - achieve registry - modules add their own
    * achieves based on their items. for either craft or get item.
