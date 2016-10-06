@@ -13,8 +13,7 @@ public class ModLogger {
       logger.info(string);
   }
   public void warn(String string) {
-    if (sendLogs)
-      logger.log(Level.WARN, string);
+    logger.log(Level.WARN, string);
   }
   public void error(String string) {
     logger.error(string);
