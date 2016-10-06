@@ -16,8 +16,7 @@ public class ItemCharmAntidote extends BaseCharm implements IHasRecipe {
   }
   public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
     if (entityIn instanceof EntityPlayer) {
-      EntityPlayer living = (EntityPlayer) entityIn;
-      onTick(stack,  living);
+      onTick(stack,   (EntityPlayer) entityIn);
     }
   }
   public void onTick(ItemStack stack, EntityPlayer living) {

@@ -29,14 +29,7 @@ public class ItemCharmWater extends BaseCharm implements IHasRecipe {
    */
   public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
     if (entityIn instanceof EntityPlayer) {
-      EntityPlayer living = (EntityPlayer) entityIn;
-      if (living.getAir() < breath && !living.isPotionActive(MobEffects.WATER_BREATHING)) {
-        living.addPotionEffect(new PotionEffect(MobEffects.WATER_BREATHING, seconds * Const.TICKS_PER_SEC, Const.Potions.I));
-        super.damageCharm(living, stack);
-        UtilSound.playSound(living, living.getPosition(), SoundEvents.ENTITY_PLAYER_SPLASH, living.getSoundCategory());
-        UtilParticle.spawnParticle(worldIn, EnumParticleTypes.WATER_BUBBLE, living.getPosition());
-        UtilParticle.spawnParticle(worldIn, EnumParticleTypes.WATER_BUBBLE, living.getPosition().up());
-      }
+      this.onTick(stack, (EntityPlayer) entityIn);
     }
   }
   @Override
@@ -55,8 +48,14 @@ public class ItemCharmWater extends BaseCharm implements IHasRecipe {
     return "item.charm_water.tooltip";
   }
   @Override
-  public void onTick(ItemStack arg0, EntityPlayer arg1) {
-    // TODO Auto-generated method stub
-    
+  public void onTick(ItemStack stack, EntityPlayer living) {
+    World worldIn = living.getEntityWorld();
+    if (living.getAir() < breath && !living.isPotionActive(MobEffects.WATER_BREATHING)) {
+      living.addPotionEffect(new PotionEffect(MobEffects.WATER_BREATHING, seconds * Const.TICKS_PER_SEC, Const.Potions.I));
+      super.damageCharm(living, stack);
+      UtilSound.playSound(living, living.getPosition(), SoundEvents.ENTITY_PLAYER_SPLASH, living.getSoundCategory());
+      UtilParticle.spawnParticle(worldIn, EnumParticleTypes.WATER_BUBBLE, living.getPosition());
+      UtilParticle.spawnParticle(worldIn, EnumParticleTypes.WATER_BUBBLE, living.getPosition().up());
+    }
   }
 }

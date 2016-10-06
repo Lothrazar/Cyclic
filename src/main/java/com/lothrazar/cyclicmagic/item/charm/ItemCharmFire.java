@@ -4,10 +4,7 @@ import com.lothrazar.cyclicmagic.item.BaseCharm;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
-import baubles.api.BaubleType;
-import net.minecraftforge.fml.common.Optional;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
@@ -31,8 +28,7 @@ public class ItemCharmFire extends BaseCharm implements IHasRecipe, baubles.api.
   @Override
   public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
     if (entityIn instanceof EntityPlayer) {
-      EntityPlayer living = (EntityPlayer) entityIn;
-      onTick(stack,   living);
+      onTick(stack,   (EntityPlayer) entityIn);
     }
   }
   @Override

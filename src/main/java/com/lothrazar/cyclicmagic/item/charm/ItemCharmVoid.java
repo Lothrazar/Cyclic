@@ -27,13 +27,8 @@ public class ItemCharmVoid extends BaseCharm implements IHasRecipe {
    */
   public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
     if (entityIn instanceof EntityPlayer) {
-      EntityPlayer living = (EntityPlayer) entityIn;
-      if (living.getPosition().getY() < yLowest) {
-        UtilEntity.teleportWallSafe(living, worldIn, new BlockPos(living.getPosition().getX(), yDest, living.getPosition().getZ()));
-        super.damageCharm(living, stack);
-        UtilSound.playSound(living, living.getPosition(), SoundEvents.ENTITY_ENDERMEN_TELEPORT, living.getSoundCategory());
-        UtilParticle.spawnParticle(worldIn, EnumParticleTypes.PORTAL, living.getPosition());
-      }
+      this.onTick(stack,(EntityPlayer) entityIn);
+      
     }
   }
   @Override
@@ -52,8 +47,13 @@ public class ItemCharmVoid extends BaseCharm implements IHasRecipe {
     return "item.charm_void.tooltip";
   }
   @Override
-  public void onTick(ItemStack arg0, EntityPlayer arg1) {
-    // TODO Auto-generated method stub
-    
+  public void onTick(ItemStack stack, EntityPlayer living) {
+    World worldIn = living.getEntityWorld();
+    if (living.getPosition().getY() < yLowest) {
+      UtilEntity.teleportWallSafe(living, worldIn, new BlockPos(living.getPosition().getX(), yDest, living.getPosition().getZ()));
+      super.damageCharm(living, stack);
+      UtilSound.playSound(living, living.getPosition(), SoundEvents.ENTITY_ENDERMEN_TELEPORT, living.getSoundCategory());
+      UtilParticle.spawnParticle(worldIn, EnumParticleTypes.PORTAL, living.getPosition());
+    }
   }
 }
