@@ -4,6 +4,7 @@ import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilItem;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
@@ -56,7 +57,7 @@ public class ItemChestSack extends BaseItem {
     IBlockState toPlace;
     if(itemData.hasKey(KEY_BLOCKSTATE)){
       //in builds 1.7.8 prior this data tag did not exist, so make sure we support itemstacks created back then
-      toPlace = block.getStateFromMeta(itemData.getInteger(KEY_BLOCKSTATE));
+      toPlace = UtilItem.getStateFromMeta(block,itemData.getInteger(KEY_BLOCKSTATE));
     }
     else{
       toPlace = block.getDefaultState();

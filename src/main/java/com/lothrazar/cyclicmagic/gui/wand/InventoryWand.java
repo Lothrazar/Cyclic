@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.gui.wand;
 import java.util.ArrayList;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.item.tool.ItemCyclicWand;
+import com.lothrazar.cyclicmagic.util.UtilItem;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -164,7 +165,9 @@ public class InventoryWand implements IInventory {
   }
   public static IBlockState getToPlaceFromSlot(ItemStack wand, int i) {
     ItemStack toPlace = getFromSlot(wand, i);
-    if (toPlace != null && toPlace.getItem() != null && Block.getBlockFromItem(toPlace.getItem()) != null) { return Block.getBlockFromItem(toPlace.getItem()).getStateFromMeta(toPlace.getMetadata()); }
+    if (toPlace != null && toPlace.getItem() != null && Block.getBlockFromItem(toPlace.getItem()) != null) {
+      Block b = Block.getBlockFromItem(toPlace.getItem());
+      return UtilItem.getStateFromMeta(b, toPlace.getMetadata()); }
     return null;
   }
   public static int calculateSlotCurrent(ItemStack wand) {

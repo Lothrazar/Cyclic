@@ -1,4 +1,6 @@
 package com.lothrazar.cyclicmagic.util;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -24,5 +26,16 @@ public class UtilItem {
   }
   public static String getRawName(Item item) {
     return item.getUnlocalizedName().replaceAll("item.", "");
+  }
+  /**
+   * Created becuase getStateFromMeta is deprecated, and its used everywhere so tons of warnings, 
+   * and i have no idea how simple/complex the solution will be
+   * @param b
+   * @param meta
+   * @return
+   */
+  @SuppressWarnings("deprecation")
+  public static IBlockState getStateFromMeta(Block b, int meta){
+    return b.getStateFromMeta(meta);
   }
 }

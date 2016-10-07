@@ -147,7 +147,10 @@ public class UtilInventory {
     ItemStack stack = player.inventory.getStackInSlot(slot);
     if (stack != null &&
         stack.getItem() != null &&
-        Block.getBlockFromItem(stack.getItem()) != null) { return Block.getBlockFromItem(stack.getItem()).getStateFromMeta(stack.getMetadata()); }
+        Block.getBlockFromItem(stack.getItem()) != null) {
+      Block b = Block.getBlockFromItem(stack.getItem());
+      return UtilItem.getStateFromMeta(b,stack.getMetadata()); 
+      }
     return null;
   }
   public static int getFirstSlotWithBlock(EntityPlayer player) {

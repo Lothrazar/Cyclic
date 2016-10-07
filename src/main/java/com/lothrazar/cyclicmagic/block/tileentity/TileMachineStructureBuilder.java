@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclicmagic.util.UtilItem;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
@@ -366,7 +367,8 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
       if (stuff != null) {
         if (worldObj.isRemote == false) {
           //ModMain.logger.info("try place " + this.nextPos + " type " + this.buildType + "_" + this.getBuildTypeEnum().name());
-          if (UtilPlaceBlocks.placeStateSafe(worldObj, null, nextPos, stuff.getStateFromMeta(stack.getMetadata()))) {
+          if (UtilPlaceBlocks.placeStateSafe(worldObj, null, nextPos, 
+              UtilItem.getStateFromMeta(stuff,stack.getMetadata())  )) {
             this.decrStackSize(0, 1);
           }
         }
