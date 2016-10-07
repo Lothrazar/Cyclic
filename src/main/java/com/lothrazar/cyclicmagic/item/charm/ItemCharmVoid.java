@@ -12,7 +12,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemCharmVoid extends BaseCharm implements IHasRecipe {
   private static final int durability = 16;
@@ -33,14 +32,7 @@ public class ItemCharmVoid extends BaseCharm implements IHasRecipe {
   }
   @Override
   public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this),
-        "r n",
-        "ic ",
-        "iir",
-        'c', Items.ENDER_EYE,
-        'n', Items.NETHER_WART,
-        'r', Items.REDSTONE,
-        'i', Items.IRON_INGOT);
+    super.addRecipeAndRepair(Items.ENDER_EYE);
   }
   @Override
   public String getTooltip() {

@@ -14,7 +14,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemCharmWater extends BaseCharm implements IHasRecipe {
   private static final int breath = 6;
@@ -34,14 +33,7 @@ public class ItemCharmWater extends BaseCharm implements IHasRecipe {
   }
   @Override
   public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this),
-        "r n",
-        "ic ",
-        "iir",
-        'c', new ItemStack(Items.FISH, 1, ItemFishFood.FishType.SALMON.getMetadata()),
-        'n', Items.NETHER_WART,
-        'r', Items.REDSTONE,
-        'i', Items.IRON_INGOT);
+    super.addRecipeAndRepair(new ItemStack(Items.FISH, 1, ItemFishFood.FishType.SALMON.getMetadata()));
   }
   @Override
   public String getTooltip() {

@@ -7,10 +7,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemCharmBoat extends BaseCharm implements IHasRecipe {
-  private static final int durability = 2000;
+  private static final int durability = 1024;
   public ItemCharmBoat() {
     super(durability);
   }
@@ -20,12 +19,12 @@ public class ItemCharmBoat extends BaseCharm implements IHasRecipe {
    */
   public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
     if (entityIn instanceof EntityPlayer) {
-      onTick(stack,  (EntityPlayer) entityIn);
+      onTick(stack, (EntityPlayer) entityIn);
     }
   }
   @Override
-  public void onTick(ItemStack stack,  EntityPlayer entityIn) {
-    if(!this.canTick(stack)){return;}
+  public void onTick(ItemStack stack, EntityPlayer entityIn) {
+    if (!this.canTick(stack)) { return; }
     if (entityIn.getRidingEntity() instanceof EntityBoat) {
       EntityBoat boat = (EntityBoat) entityIn.getRidingEntity();
       if (entityIn.moveForward > 0) {
@@ -45,13 +44,6 @@ public class ItemCharmBoat extends BaseCharm implements IHasRecipe {
   }
   @Override
   public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this),
-        "r n",
-        "ic ",
-        "iir",
-        'c', Items.ARMOR_STAND,
-        'n', Items.GUNPOWDER,
-        'r', Items.REDSTONE,
-        'i', Items.IRON_INGOT);
+    super.addRecipeAndRepair(Items.ARMOR_STAND);
   }
 }

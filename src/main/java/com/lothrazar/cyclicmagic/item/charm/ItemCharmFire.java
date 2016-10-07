@@ -13,7 +13,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemCharmFire extends BaseCharm implements IHasRecipe, baubles.api.IBauble {
   private static final int durability = 16;
@@ -28,12 +27,12 @@ public class ItemCharmFire extends BaseCharm implements IHasRecipe, baubles.api.
   @Override
   public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
     if (entityIn instanceof EntityPlayer) {
-      onTick(stack,   (EntityPlayer) entityIn);
+      onTick(stack, (EntityPlayer) entityIn);
     }
   }
   @Override
   public void onTick(ItemStack stack, EntityPlayer living) {
-    if(!this.canTick(stack)){return;}
+    if (!this.canTick(stack)) { return; }
     if (living.isBurning() && !living.isPotionActive(MobEffects.FIRE_RESISTANCE)) { // do nothing if you already have
       World worldIn = living.getEntityWorld();
       living.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, seconds * Const.TICKS_PER_SEC, Const.Potions.I));
@@ -45,19 +44,10 @@ public class ItemCharmFire extends BaseCharm implements IHasRecipe, baubles.api.
   }
   @Override
   public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this),
-        "r n",
-        "ic ",
-        "iir",
-        'c', Items.BLAZE_ROD,
-        'n', Items.NETHER_WART,
-        'r', Items.REDSTONE,
-        'i', Items.IRON_INGOT);
+    super.addRecipeAndRepair(Items.BLAZE_ROD);
   }
   @Override
   public String getTooltip() {
     return "item.charm_fire.tooltip";
   }
-  
-
 }

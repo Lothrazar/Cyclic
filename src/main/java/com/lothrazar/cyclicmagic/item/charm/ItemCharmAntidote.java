@@ -7,10 +7,9 @@ import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemCharmAntidote extends BaseCharm implements IHasRecipe {
-  private static final int durability = 128;
+  private static final int durability = 32;
   public ItemCharmAntidote() {
     super(durability);
   }
@@ -32,13 +31,7 @@ public class ItemCharmAntidote extends BaseCharm implements IHasRecipe {
   }
   @Override
   public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this),
-        "r n",
-        "in ",
-        "iir",
-        'n', Items.FERMENTED_SPIDER_EYE,
-        'r', Items.DIAMOND,
-        'i', Items.IRON_INGOT);
+    super.addRecipeAndRepair(Items.FERMENTED_SPIDER_EYE);
   }
   @Override
   public String getTooltip() {
