@@ -5,6 +5,7 @@ import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.block.BlockMiner;
 import com.lothrazar.cyclicmagic.block.BlockMiner.MinerType;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
+import com.lothrazar.cyclicmagic.util.UtilItem;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -135,7 +136,7 @@ public class TileMachineMiner extends TileEntityBaseMachine {
       }
       if (isCurrentlyMining) {
         IBlockState targetState = worldObj.getBlockState(targetPos);
-        curBlockDamage += targetState.getBlock().getPlayerRelativeBlockHardness(targetState, fakePlayer.get(), worldObj, targetPos);
+        curBlockDamage += UtilItem.getPlayerRelativeBlockHardness(targetState.getBlock(),targetState, fakePlayer.get(), worldObj, targetPos);
         if (curBlockDamage >= 1.0f) {
           isCurrentlyMining = false;
           resetProgress(targetPos);

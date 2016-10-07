@@ -8,8 +8,8 @@ import java.util.Map;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap;
 import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.WandType;
-import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilInventory;
+import com.lothrazar.cyclicmagic.util.UtilItem;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import io.netty.buffer.ByteBuf;
@@ -164,7 +164,7 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
               continue;
             }
             newToPlace = UtilInventory.getBlockstateFromSlot(player, slot);
-            if (replaced.getBlock().getBlockHardness(replaced, worldObj, curPos) < 0) {
+            if ( UtilItem.getPlayerRelativeBlockHardness(replaced.getBlock(),replaced,player, worldObj, curPos) < 0) {
               //is unbreakable ie bedrock
               continue;
             }
