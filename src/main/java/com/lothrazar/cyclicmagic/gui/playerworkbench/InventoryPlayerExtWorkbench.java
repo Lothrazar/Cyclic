@@ -1,20 +1,11 @@
 package com.lothrazar.cyclicmagic.gui.playerworkbench;
 import java.lang.ref.WeakReference;
-import java.util.List;
-import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.net.PacketSyncExtendedInventory;
 import com.lothrazar.cyclicmagic.util.Const;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
 
 public class InventoryPlayerExtWorkbench extends InventoryCrafting {
   public ItemStack[] stackList;
@@ -23,12 +14,11 @@ public class InventoryPlayerExtWorkbench extends InventoryCrafting {
   public static final int IROW = 3;
   public static final int ICOL = 3;
   public InventoryPlayerExtWorkbench(ContainerPlayerExtWorkbench containerPlayerExtWorkbench, EntityPlayer player) {
-    super(containerPlayerExtWorkbench,3,3);
+    super(containerPlayerExtWorkbench, 3, 3);
     this.eventHandler = containerPlayerExtWorkbench;
     this.stackList = new ItemStack[IROW * ICOL + 5];//5 armor + 3x3
     this.player = new WeakReference<EntityPlayer>(player);
   }
-
   @Override
   public int getSizeInventory() {
     return this.stackList.length;
@@ -58,15 +48,13 @@ public class InventoryPlayerExtWorkbench extends InventoryCrafting {
    */
   @Override
   public ItemStack decrStackSize(int index, int count) {
-//    return super.decrStackSize(index, count);
+    //    return super.decrStackSize(index, count);
     if (this.stackList[index] != null) {
       ItemStack itemstack;
       if (this.stackList[index].stackSize <= count) {
         itemstack = this.stackList[index];
         this.stackList[index] = null;
-         
-          this.eventHandler.onCraftMatrixChanged(this);
-       
+        this.eventHandler.onCraftMatrixChanged(this);
         return itemstack;
       }
       else {
@@ -74,9 +62,7 @@ public class InventoryPlayerExtWorkbench extends InventoryCrafting {
         if (this.stackList[index].stackSize == 0) {
           this.stackList[index] = null;
         }
-
-          this.eventHandler.onCraftMatrixChanged(this);
-      
+        this.eventHandler.onCraftMatrixChanged(this);
         return itemstack;
       }
     }
@@ -90,8 +76,7 @@ public class InventoryPlayerExtWorkbench extends InventoryCrafting {
    */
   @Override
   public void setInventorySlotContents(int idx, ItemStack stack) {
-    if(idx>=this.stackList.length){
-     //ystem.out.println("OOB CRASH"+idx);
+    if (idx >= this.stackList.length) {
       return;
     }
     this.stackList[idx] = stack;
