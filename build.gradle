@@ -14,27 +14,23 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-
-version = "1.10.2-1.DEV"
-group= "com.lothrazar.cyclicmagic" 
+version = "${mc_version}-1.DEV"
+group = "com.lothrazar.cyclicmagic" 
 archivesBaseName = "Cyclic"
 
 minecraft {
     version = "${mc_version}-${forge_version}"
+    mappings = "${mappings}"
     runDir = "run"
-    mappings = "snapshot_20160518"
     makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 
-  useDepAts = true
+    useDepAts = true
 }
 //Defines basic patterns for pulling various dependencies.
 repositories {
-
     maven {
-
         url "http://dvs1.progwml6.com/files/maven"
     }
- 
 }
 
 dependencies {
@@ -43,12 +39,10 @@ dependencies {
   // at runtime, use the full JEI jar
   runtime "mezz.jei:jei_${mc_version}:${jei_version}"
 
-
   compile files("lib/Baubles-${mc_version}-${baubles_version}-deobf.jar")
 }
 
-processResources
-{
+processResources {
     // this will ensure that this task is redone when the versions change.
     inputs.property "version", project.version
     inputs.property "mcversion", project.minecraft.version
