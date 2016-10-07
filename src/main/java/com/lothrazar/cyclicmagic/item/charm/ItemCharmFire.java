@@ -14,7 +14,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 
-public class ItemCharmFire extends BaseCharm implements IHasRecipe, baubles.api.IBauble {
+public class ItemCharmFire extends BaseCharm implements IHasRecipe {
   private static final int durability = 16;
   private static final int seconds = 10;
   public ItemCharmFire() {
