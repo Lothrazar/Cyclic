@@ -28,6 +28,7 @@ public class ItemCharmSlowfall extends BaseCharm implements IHasRecipe {
   }
   @Override
   public void onTick(ItemStack stack, EntityPlayer living) {
+    if(!this.canTick(stack)){return;}
     if (living.fallDistance >= fallDistanceLimit && !living.isPotionActive(PotionEffectRegistry.slowfallEffect)) {
       living.addPotionEffect(new PotionEffect(PotionEffectRegistry.slowfallEffect, seconds * Const.TICKS_PER_SEC, Const.Potions.I));
       super.damageCharm(living, stack);

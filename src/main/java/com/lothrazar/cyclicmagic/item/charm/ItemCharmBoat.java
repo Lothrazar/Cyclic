@@ -25,6 +25,7 @@ public class ItemCharmBoat extends BaseCharm implements IHasRecipe {
   }
   @Override
   public void onTick(ItemStack stack,  EntityPlayer entityIn) {
+    if(!this.canTick(stack)){return;}
     if (entityIn.getRidingEntity() instanceof EntityBoat) {
       EntityBoat boat = (EntityBoat) entityIn.getRidingEntity();
       if (entityIn.moveForward > 0) {

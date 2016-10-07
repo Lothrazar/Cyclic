@@ -17,7 +17,11 @@ public abstract class BaseCharm extends BaseItem {
   }
   @SideOnly(Side.CLIENT)
   public boolean hasEffect(ItemStack stack) {
-    return true;
+    return canTick(stack);
+  }
+  public boolean canTick(ItemStack stack){
+    
+    return stack.getItemDamage() < stack.getMaxDamage();
   }
   public void damageCharm(EntityPlayer living, ItemStack stack) {
     UtilItem.damageItem(living, stack);
@@ -56,9 +60,10 @@ public abstract class BaseCharm extends BaseItem {
   public void onUnequipped(ItemStack arg0, EntityLivingBase arg1) {
   }
   @Optional.Method(modid = "Baubles")
-  public void onWornTick(ItemStack arg0, EntityLivingBase arg1) {
-    if (arg1 instanceof EntityPlayer && arg0 != null && arg0.stackSize > 0) {
-      this.onTick(arg0, (EntityPlayer) arg1);
+  public void onWornTick(ItemStack stack, EntityLivingBase arg1) {
+    if(!this.canTick(stack)){return;}
+    if (arg1 instanceof EntityPlayer && stack != null && stack.stackSize > 0) {
+      this.onTick(stack, (EntityPlayer) arg1);
     }
   }
 }

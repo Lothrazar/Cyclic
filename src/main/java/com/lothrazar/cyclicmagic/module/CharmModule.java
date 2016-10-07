@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.item.ItemAutoTorch;
 import com.lothrazar.cyclicmagic.item.charm.*;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -40,7 +41,7 @@ public class CharmModule extends BaseModule {
       ItemRegistry.addItem(charm_wing, "charm_wing");
     }
     if (autoTorch) {
-      ItemCharmAutoTorch tool_auto_torch = new ItemCharmAutoTorch();
+      ItemAutoTorch tool_auto_torch = new ItemAutoTorch();
       ItemRegistry.addItem(tool_auto_torch, "tool_auto_torch");
       ModMain.instance.events.addEvent(tool_auto_torch);
     }

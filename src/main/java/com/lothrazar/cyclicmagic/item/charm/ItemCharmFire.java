@@ -33,6 +33,7 @@ public class ItemCharmFire extends BaseCharm implements IHasRecipe, baubles.api.
   }
   @Override
   public void onTick(ItemStack stack, EntityPlayer living) {
+    if(!this.canTick(stack)){return;}
     if (living.isBurning() && !living.isPotionActive(MobEffects.FIRE_RESISTANCE)) { // do nothing if you already have
       World worldIn = living.getEntityWorld();
       living.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, seconds * Const.TICKS_PER_SEC, Const.Potions.I));
