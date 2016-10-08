@@ -14,7 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 @Optional.Interface(iface = "baubles.api.IBauble", modid = "Baubles", striprefs = true)
-public abstract class BaseCharm extends BaseItem {
+public abstract class BaseCharm extends BaseItem implements baubles.api.IBauble {
   public BaseCharm(int durability) {
     this.setMaxStackSize(1);
     this.setMaxDamage(durability);
