@@ -85,6 +85,7 @@ public class ItemRegistry {
   public static ItemSandstoneAxe sandstone_axe;
   public static ItemSandstoneSpade sandstone_spade;
   public static Item sandstone_hoe;
+  public static Item ender_pearl_mounted;
   public static Item addItem(Item i, String key) {
     i.setUnlocalizedName(key);
     itemMap.put(key, i);

@@ -43,6 +43,7 @@ public class ToolsModule extends BaseModule {
   private boolean enableWarpSpawnTool;
   private boolean enableSwappers;
   private boolean enableRando;
+  private boolean enablePearlReuseMounted;
   @Override
   public void onInit() {
     if (enableProspector) {
@@ -58,8 +59,12 @@ public class ToolsModule extends BaseModule {
       ItemRegistry.addItem(ItemRegistry.tool_spawn_inspect, "tool_spawn_inspect");
     }
     if (enablePearlReuse) {
-      ItemRegistry.ender_pearl_reuse = new ItemToolPearlReuse();
+      ItemRegistry.ender_pearl_reuse = new ItemToolPearlReuse(ItemToolPearlReuse.OrbType.NORMAL);
       ItemRegistry.addItem(ItemRegistry.ender_pearl_reuse, "ender_pearl_reuse");
+    }
+    if (enablePearlReuseMounted) {
+      ItemRegistry.ender_pearl_mounted = new ItemToolPearlReuse(ItemToolPearlReuse.OrbType.MOUNTED);
+      ItemRegistry.addItem(ItemRegistry.ender_pearl_mounted, "ender_pearl_mounted");
     }
     if (enableHarvestWeeds) {
       ItemRegistry.tool_harvest_weeds = new ItemToolHarvest(ItemToolHarvest.HarvestType.WEEDS);
@@ -130,6 +135,7 @@ public class ToolsModule extends BaseModule {
     enableCavefinder = config.getBoolean("Cavefinder", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableSwappers = config.getBoolean("ExchangeScepters", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableRando = config.getBoolean("BlockRandomizer", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enablePearlReuseMounted = config.getBoolean("EnderOrbMounted", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
