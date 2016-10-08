@@ -14,6 +14,7 @@ public class CharmModule extends BaseModule {
   private boolean antidoteCharm;
   private boolean slowfallCharm;
   private boolean autoTorch;
+  private boolean enableSpeed;
   @Override
   public void onInit() {
     if (enableFire) {
@@ -45,9 +46,14 @@ public class CharmModule extends BaseModule {
       ItemRegistry.addItem(tool_auto_torch, "tool_auto_torch");
       ModMain.instance.events.addEvent(tool_auto_torch);
     }
+    if (enableSpeed) {
+      ItemCharmSpeed charm_speed = new ItemCharmSpeed();
+      ItemRegistry.addItem(charm_speed, "charm_speed");
+    }
   }
   @Override
   public void syncConfig(Configuration config) {
+    enableSpeed = config.getBoolean("SpeedCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     slowfallCharm = config.getBoolean("WingCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableFire = config.getBoolean("FireCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableSea = config.getBoolean("SailorCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

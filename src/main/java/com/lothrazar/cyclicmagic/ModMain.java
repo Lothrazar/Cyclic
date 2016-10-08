@@ -109,8 +109,6 @@ public class ModMain {
    * 
    * TODO: ideas/plans/features
    * 
-   * BAUBLES API: optional DEP , fire off all charms from it
-   * 
    * Structure builder: add preview (ghost blocks or sparkls)
    * 
    * ender orb upgrade: but mounted version
