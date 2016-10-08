@@ -22,60 +22,52 @@ public class ProjectileModule extends BaseModule {
   @Override
   public void onInit() {
     if (enableEnderBlaze) {
-      ItemProjectileBlaze item = new ItemProjectileBlaze();
-      ItemRegistry.addItem(item, "ender_blaze");
+      ItemProjectileBlaze ender_blaze = new ItemProjectileBlaze();
+      ItemRegistry.addItem(ender_blaze, "ender_blaze");
       EntityProjectileRegistry.registerModEntity(EntityBlazeBolt.class, "blazebolt", 1008);
-      EntityBlazeBolt.renderSnowball = item;
-      ItemRegistry.ender_blaze = item;
+      EntityBlazeBolt.renderSnowball = ender_blaze;
     }
     if (enableEnderDungeonFinder) {
-      ItemProjectileDungeon item = new ItemProjectileDungeon();
-      ItemRegistry.addItem(item, "ender_dungeon");
+      ItemProjectileDungeon ender_dungeon = new ItemProjectileDungeon();
+      ItemRegistry.addItem(ender_dungeon, "ender_dungeon");
       EntityProjectileRegistry.registerModEntity(EntityDungeonEye.class, "dungeonbolt", 1006);
-      EntityDungeonEye.renderSnowball = item;
-      ItemRegistry.ender_dungeon = item;
+      EntityDungeonEye.renderSnowball = ender_dungeon;
     }
     if (enderFishing) {
-      ItemProjectileFishing item = new ItemProjectileFishing();
-      ItemRegistry.addItem(item, "ender_fishing");
+      ItemProjectileFishing ender_fishing = new ItemProjectileFishing();
+      ItemRegistry.addItem(ender_fishing, "ender_fishing");
       EntityProjectileRegistry.registerModEntity(EntityFishingBolt.class, "fishingbolt", 1004);
-      EntityFishingBolt.renderSnowball = item;
-      ItemRegistry.ender_fishing = item;
+      EntityFishingBolt.renderSnowball = ender_fishing;
     }
     if (enderWool) {
-      ItemProjectileWool item = new ItemProjectileWool();
-      ItemRegistry.addItem(item, "ender_wool");
+      ItemProjectileWool ender_wool = new ItemProjectileWool();
+      ItemRegistry.addItem(ender_wool, "ender_wool");
       EntityProjectileRegistry.registerModEntity(EntityShearingBolt.class, "woolbolt", 1003);
-      EntityShearingBolt.renderSnowball = item;
-      ItemRegistry.ender_wool = item;
+      EntityShearingBolt.renderSnowball = ender_wool;
     }
     if (enderTorch) {
-      ItemProjectileTorch item = new ItemProjectileTorch();
-      ItemRegistry.addItem(item, "ender_torch");
+      ItemProjectileTorch ender_torch = new ItemProjectileTorch();
+      ItemRegistry.addItem(ender_torch, "ender_torch");
       EntityProjectileRegistry.registerModEntity(EntityTorchBolt.class, "torchbolt", 1002);
-      EntityTorchBolt.renderSnowball = item;
-      ItemRegistry.ender_torch = item;
+      EntityTorchBolt.renderSnowball = ender_torch;
     }
     if (enderWater) {
-      ItemProjectileWater item = new ItemProjectileWater();
-      ItemRegistry.addItem(item, "ender_water");
+      ItemProjectileWater ender_water = new ItemProjectileWater();
+      ItemRegistry.addItem(ender_water, "ender_water");
       EntityProjectileRegistry.registerModEntity(EntityWaterBolt.class, "waterbolt", 1000);
-      EntityWaterBolt.renderSnowball = item;
-      ItemRegistry.ender_water = item;
+      EntityWaterBolt.renderSnowball = ender_water;
     }
     if (enderSnow) {
-      ItemProjectileSnow item = new ItemProjectileSnow();
-      ItemRegistry.addItem(item, "ender_snow");
+      ItemProjectileSnow ender_snow = new ItemProjectileSnow();
+      ItemRegistry.addItem(ender_snow, "ender_snow");
       EntityProjectileRegistry.registerModEntity(EntitySnowballBolt.class, "frostbolt", 1001);
-      EntitySnowballBolt.renderSnowball = item;
-      ItemRegistry.ender_snow = item;
+      EntitySnowballBolt.renderSnowball = ender_snow;
     }
     if (enderLightning) {
-      ItemProjectileLightning item = new ItemProjectileLightning();
-      ItemRegistry.addItem(item, "ender_lightning");
+      ItemProjectileLightning ender_lightning = new ItemProjectileLightning();
+      ItemRegistry.addItem(ender_lightning, "ender_lightning");
       EntityProjectileRegistry.registerModEntity(EntityLightningballBolt.class, "lightningbolt", 999);
-      EntityLightningballBolt.renderSnowball = item;
-      ItemRegistry.ender_lightning = item;
+      EntityLightningballBolt.renderSnowball = ender_lightning;
     }
     if (enderBombsEnabled) {
       ItemRegistry.ender_tnt_1 = new ItemProjectileTNT(1);

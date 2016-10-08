@@ -7,8 +7,10 @@ import com.lothrazar.cyclicmagic.item.ItemSleepingMat;
 import com.lothrazar.cyclicmagic.net.PacketSpellShiftLeft;
 import com.lothrazar.cyclicmagic.net.PacketSpellShiftRight;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -47,46 +49,51 @@ public class ToolsModule extends BaseModule {
   @Override
   public void onInit() {
     if (enableProspector) {
-      ItemRegistry.tool_prospector = new ItemToolProspector();
-      ItemRegistry.addItem(ItemRegistry.tool_prospector, "tool_prospector");
+      ItemToolProspector tool_prospector = new ItemToolProspector();
+      ItemRegistry.addItem(tool_prospector, "tool_prospector");
+      LootTableRegistry.registerLoot(tool_prospector);
     }
     if (enableCavefinder) {
-      ItemRegistry.tool_spelunker = new ItemToolSpelunker();
-      ItemRegistry.addItem(ItemRegistry.tool_spelunker, "tool_spelunker");
+      ItemToolSpelunker tool_spelunker = new ItemToolSpelunker();
+      ItemRegistry.addItem(tool_spelunker, "tool_spelunker");
     }
     if (enableSpawnInspect) {
-      ItemRegistry.tool_spawn_inspect = new ItemToolSpawnInspect();
-      ItemRegistry.addItem(ItemRegistry.tool_spawn_inspect, "tool_spawn_inspect");
+      ItemToolSpawnInspect tool_spawn_inspect = new ItemToolSpawnInspect();
+      ItemRegistry.addItem(tool_spawn_inspect, "tool_spawn_inspect");
     }
     if (enablePearlReuse) {
-      ItemRegistry.ender_pearl_reuse = new ItemToolPearlReuse(ItemToolPearlReuse.OrbType.NORMAL);
-      ItemRegistry.addItem(ItemRegistry.ender_pearl_reuse, "ender_pearl_reuse");
+      ItemToolPearlReuse ender_pearl_reuse = new ItemToolPearlReuse(ItemToolPearlReuse.OrbType.NORMAL);
+      ItemRegistry.addItem(ender_pearl_reuse, "ender_pearl_reuse");
+      LootTableRegistry.registerLoot(ender_pearl_reuse);
     }
     if (enablePearlReuseMounted) {
-      ItemRegistry.ender_pearl_mounted = new ItemToolPearlReuse(ItemToolPearlReuse.OrbType.MOUNTED);
-      ItemRegistry.addItem(ItemRegistry.ender_pearl_mounted, "ender_pearl_mounted");
+      ItemToolPearlReuse ender_pearl_mounted = new ItemToolPearlReuse(ItemToolPearlReuse.OrbType.MOUNTED);
+      ItemRegistry.addItem(ender_pearl_mounted, "ender_pearl_mounted");
+      LootTableRegistry.registerLoot(ender_pearl_mounted);
     }
     if (enableHarvestWeeds) {
-      ItemRegistry.tool_harvest_weeds = new ItemToolHarvest(ItemToolHarvest.HarvestType.WEEDS);
-      ItemRegistry.addItem(ItemRegistry.tool_harvest_weeds, "tool_harvest_weeds");
+      ItemToolHarvest tool_harvest_weeds = new ItemToolHarvest(ItemToolHarvest.HarvestType.WEEDS);
+      ItemRegistry.addItem(tool_harvest_weeds, "tool_harvest_weeds");
     }
     if (enableToolHarvest) {
-      ItemRegistry.tool_harvest_crops = new ItemToolHarvest(ItemToolHarvest.HarvestType.CROPS);
-      ItemRegistry.addItem(ItemRegistry.tool_harvest_crops, "tool_harvest_crops");
+      ItemToolHarvest tool_harvest_crops = new ItemToolHarvest(ItemToolHarvest.HarvestType.CROPS);
+      ItemRegistry.addItem(tool_harvest_crops, "tool_harvest_crops");
     }
     if (enableHarvestLeaves) {
-      ItemRegistry.tool_harvest_leaves = new ItemToolHarvest(ItemToolHarvest.HarvestType.LEAVES);
-      ItemRegistry.addItem(ItemRegistry.tool_harvest_leaves, "tool_harvest_leaves");
+      ItemToolHarvest tool_harvest_leaves = new ItemToolHarvest(ItemToolHarvest.HarvestType.LEAVES);
+      ItemRegistry.addItem(tool_harvest_leaves, "tool_harvest_leaves");
     }
     if (enableToolPush) {
-      ItemRegistry.tool_push = new ItemToolPush();
-      ItemRegistry.addItem(ItemRegistry.tool_push, "tool_push");
-      ModMain.instance.events.addEvent(ItemRegistry.tool_push);
+      ItemToolPush tool_push = new ItemToolPush();
+      ItemRegistry.addItem(tool_push, "tool_push");
+      ModMain.instance.events.addEvent(tool_push);
+      LootTableRegistry.registerLoot(tool_push, 12);
     }
     if (enableSleepingMat) {
-      ItemRegistry.sleeping_mat = new ItemSleepingMat();
-      ItemRegistry.addItem(ItemRegistry.sleeping_mat, "sleeping_mat");
-      ModMain.instance.events.addEvent(ItemRegistry.sleeping_mat);
+      ItemSleepingMat sleeping_mat = new ItemSleepingMat();
+      ItemRegistry.addItem(sleeping_mat, "sleeping_mat");
+      ModMain.instance.events.addEvent(sleeping_mat);
+      LootTableRegistry.registerLoot(sleeping_mat, ChestType.BONUS);
     }
     if (enableCyclicWand) {
       ItemRegistry.cyclic_wand_build = new ItemCyclicWand();
@@ -94,6 +101,8 @@ public class ToolsModule extends BaseModule {
       SpellRegistry.register();
       spellHud = new SpellHud();
       ModMain.instance.events.addEvent(this);
+      LootTableRegistry.registerLoot(ItemRegistry.cyclic_wand_build, ChestType.ENDCITY, 15);
+      LootTableRegistry.registerLoot(ItemRegistry.cyclic_wand_build, ChestType.GENERIC, 1);
     }
     if (enableWarpHomeTool) {
       ItemRegistry.tool_warp_home = new ItemToolWarp(ItemToolWarp.WarpType.BED);

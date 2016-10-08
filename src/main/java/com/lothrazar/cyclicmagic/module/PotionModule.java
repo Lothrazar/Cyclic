@@ -1,7 +1,9 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.item.ItemPotionCustom;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.Potions;
 import net.minecraft.init.Blocks;
@@ -147,6 +149,8 @@ public class PotionModule extends BaseEventModule {
           new ItemStack(potion_snow),
           new ItemStack(Items.REDSTONE),
           new ItemStack(potion_snow_long));
+      LootTableRegistry.registerLoot(potion_snow, ChestType.IGLOO);
+      LootTableRegistry.registerLoot(potion_snow_long, ChestType.IGLOO);
     }
     if (enableHBoost) {
       potion_boost = new ItemPotionCustom(true, MobEffects.HEALTH_BOOST, NORMAL, Const.Potions.V);

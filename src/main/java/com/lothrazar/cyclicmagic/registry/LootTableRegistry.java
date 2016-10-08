@@ -15,6 +15,9 @@ public class LootTableRegistry {
   public static void registerLoot(Item i) {
     registerLoot(i, ChestType.GENERIC, RANDODEFAULT);
   }
+  public static void registerLoot(Item i, int random) {
+    registerLoot(i, ChestType.GENERIC, random);
+  }
   public static void registerLoot(Item i, ChestType type) {
     registerLoot(i, type, RANDODEFAULT);
   }

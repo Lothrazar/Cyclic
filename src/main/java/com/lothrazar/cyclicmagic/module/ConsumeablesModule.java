@@ -6,6 +6,8 @@ import com.lothrazar.cyclicmagic.item.ItemFoodCrafting;
 import com.lothrazar.cyclicmagic.item.ItemFoodHeart;
 import com.lothrazar.cyclicmagic.item.ItemFoodInventory;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraftforge.common.config.Configuration;
 
@@ -18,26 +20,33 @@ public class ConsumeablesModule extends BaseModule {
   @Override
   public void onInit() {
     if (enableEmeraldApple) {
-      ItemRegistry.apple_emerald = new ItemAppleEmerald();
-      ItemRegistry.addItem(ItemRegistry.apple_emerald, "apple_emerald");
+      ItemAppleEmerald apple_emerald = new ItemAppleEmerald();
+      ItemRegistry.addItem(apple_emerald, "apple_emerald");
+      LootTableRegistry.registerLoot(apple_emerald);
     }
     if (enableHeartContainer) {
-      ItemRegistry.heart_food = new ItemFoodHeart();
-      ItemRegistry.addItem(ItemRegistry.heart_food, "heart_food");
-      ModMain.instance.events.addEvent(ItemRegistry.heart_food);
+      ItemFoodHeart heart_food = new ItemFoodHeart();
+      ItemRegistry.addItem(heart_food, "heart_food");
+      ModMain.instance.events.addEvent(heart_food);
+      LootTableRegistry.registerLoot(heart_food,ChestType.GENERIC, 3);
+      LootTableRegistry.registerLoot(heart_food,ChestType.ENDCITY, 4);
     }
     if (enableInventoryCrafting) {
-      ItemRegistry.crafting_food = new ItemFoodCrafting();
-      ItemRegistry.addItem(ItemRegistry.crafting_food, "crafting_food");
+      ItemFoodCrafting crafting_food = new ItemFoodCrafting();
+      ItemRegistry.addItem(crafting_food, "crafting_food");
+      LootTableRegistry.registerLoot(crafting_food,ChestType.GENERIC, 3);
     }
     if (enableInventoryUpgrade) {
-      ItemRegistry.inventory_food = new ItemFoodInventory();
-      ItemRegistry.addItem(ItemRegistry.inventory_food, "inventory_food");
+      ItemFoodInventory inventory_food = new ItemFoodInventory();
+      ItemRegistry.addItem(inventory_food, "inventory_food");
+      LootTableRegistry.registerLoot(inventory_food,ChestType.GENERIC, 3);
     }
     if (enableCorruptedChorus) {
-      ItemRegistry.corrupted_chorus = new ItemFoodCorruptedChorus();
-      ItemRegistry.addItem(ItemRegistry.corrupted_chorus, "corrupted_chorus");
-      ModMain.instance.events.addEvent(ItemRegistry.corrupted_chorus);
+      ItemFoodCorruptedChorus corrupted_chorus = new ItemFoodCorruptedChorus();
+      ItemRegistry.addItem(corrupted_chorus, "corrupted_chorus");
+      ModMain.instance.events.addEvent(corrupted_chorus);
+      LootTableRegistry.registerLoot(corrupted_chorus, ChestType.GENERIC, 10);
+      LootTableRegistry.registerLoot(corrupted_chorus, ChestType.ENDCITY, 5);
     }
   }
   @Override

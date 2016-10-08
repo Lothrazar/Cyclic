@@ -36,7 +36,7 @@ public class ItemSproutSeeds extends ItemSeeds implements IHasRecipe {
   }
   @Override
   public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(ItemRegistry.sprout_seed, 2),
+    GameRegistry.addRecipe(new ItemStack(this, 2),
         "waw",
         "bEc",
         "wdw",

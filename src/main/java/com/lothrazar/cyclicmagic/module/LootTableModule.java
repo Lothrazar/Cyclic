@@ -39,10 +39,8 @@ public class LootTableModule extends BaseEventModule implements IHasConfig {
     //anything but the starter chest
     chests.add(LootTableList.CHESTS_ABANDONED_MINESHAFT);
     chests.add(LootTableList.CHESTS_DESERT_PYRAMID);
-    chests.add(LootTableList.CHESTS_END_CITY_TREASURE);
-    chests.add(LootTableList.CHESTS_IGLOO_CHEST);
     chests.add(LootTableList.CHESTS_JUNGLE_TEMPLE);
-    chests.add(LootTableList.CHESTS_JUNGLE_TEMPLE_DISPENSER);
+    //    chests.add(LootTableList.CHESTS_JUNGLE_TEMPLE_DISPENSER);
     chests.add(LootTableList.CHESTS_NETHER_BRIDGE);
     chests.add(LootTableList.CHESTS_SIMPLE_DUNGEON);
     chests.add(LootTableList.CHESTS_STRONGHOLD_CORRIDOR);
@@ -77,8 +75,7 @@ public class LootTableModule extends BaseEventModule implements IHasConfig {
     else if (event.getName() == LootTableList.CHESTS_END_CITY_TREASURE) {
       fillEndCityChest(main);
     }
-    //no else on this one, its a catch all
-    else if (chests.contains(event.getName())) { // every pool except for spawn 
+    else if (chests.contains(event.getName())) { // every other pool 
       fillGenericChest(main);
     }
   }
@@ -110,44 +107,25 @@ public class LootTableModule extends BaseEventModule implements IHasConfig {
     }
   }
   private void fillEndCityChest(LootPool main) {
-    //    addLoot(main, ItemRegistry.book_ender, 10);
-    addLoot(main, ItemRegistry.cyclic_wand_build, 15);
     fillPoolFromMap(main, LootTableRegistry.endCityChest);
   }
   private void fillPoolFromMap(LootPool main, Map<Item, Integer> map) {
     synchronized (map) {
       for (Map.Entry<Item, Integer> entry : map.entrySet()) {
-        Item key = entry.getKey();
-        int value = entry.getValue();
-        addLoot(main, key, value);
+        addLoot(main, entry.getKey(), entry.getValue());
       }
     }
   }
   private void fillGenericChest(LootPool main) {
     fillPoolFromMap(main, LootTableRegistry.genericChest);
-    addLoot(main, ItemRegistry.tool_push);
-    addLoot(main, ItemRegistry.corrupted_chorus);
-    //addLoot(main, ItemRegistry.emerald_boots);//TODO: how to modules integrate with loot tables?
-    addLoot(main, ItemRegistry.sprout_seed);
-    addLoot(main, ItemRegistry.heart_food);
-    addLoot(main, ItemRegistry.apple_emerald);
     addLoot(main, ItemRegistry.tool_harvest_crops);
-    addLoot(main, ItemRegistry.chest_sack_empty);
     addLoot(main, ItemRegistry.tool_spawn_inspect);
     addLoot(main, ItemRegistry.ender_pearl_reuse);
-    addLoot(main, ItemRegistry.carbon_paper);
     addLoot(main, ItemRegistry.storage_bag);
-    addLoot(main, ItemRegistry.crafting_food, 10);
-    addLoot(main, ItemRegistry.inventory_food, 10);
-    addLoot(main, ItemRegistry.ender_blaze);
     addLoot(main, ItemRegistry.ender_dungeon);
-    addLoot(main, ItemRegistry.ender_fishing);
     addLoot(main, ItemRegistry.ender_lightning);
     addLoot(main, ItemRegistry.ender_tnt_1);
     addLoot(main, ItemRegistry.ender_tnt_2);
-    addLoot(main, ItemRegistry.ender_torch, 30);
-    addLoot(main, ItemRegistry.ender_wool, 25);
-    addLoot(main, ItemRegistry.ender_water);
     addLoot(main, ItemRegistry.emerald_axe);
     addLoot(main, ItemRegistry.emerald_hoe);
     addLoot(main, ItemRegistry.emerald_pickaxe);
@@ -160,17 +138,12 @@ public class LootTableModule extends BaseEventModule implements IHasConfig {
   }
   private void fillIglooChest(LootPool main) {
     fillPoolFromMap(main, LootTableRegistry.iglooChest);
-    addLoot(main, PotionModule.potion_snow);
-    addLoot(main, ItemRegistry.ender_snow, 19);
   }
   private void fillBonusChest(LootPool main) {
     fillPoolFromMap(main, LootTableRegistry.bonusChest);
-    addLoot(main, ItemRegistry.sleeping_mat);
   }
   private void addLoot(LootPool main, Item item) {
-    if (item != null) { //shortcut fix bc of new module config system that can delete items
-      addLoot(main, item, LootTableRegistry.RANDODEFAULT);
-    }
+    addLoot(main, item, LootTableRegistry.RANDODEFAULT);
   }
   private void addLoot(LootPool main, Item item, int rando) {
     if (item != null) {//shortcut fix bc of new module config system that can delete items
