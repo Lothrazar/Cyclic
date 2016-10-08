@@ -110,9 +110,7 @@ public class ModMain {
    * TODO: ideas/plans/features
    * 
    * Structure builder: add preview (ghost blocks or sparkls)
-   * 
-   * ender orb upgrade: but mounted version
-   *  
+   *   
    * project table (invo plus 3x3)
    * 
    * ??multi furnace / multi dispenser / multi brewing stand
@@ -129,15 +127,11 @@ public class ModMain {
    * 
    * machine to spam bonemeal, with input slot
    * 
-   * ender charm: same effect as ender potion but without the potion effect.
-   * 
    * DISABLE the forward vector component of launch enchat, if we are standing
    * still (if no current horiz)
    * 
    * revive my old idea of the flint tool to chop wood, and the idea to disable
    * punching trees?
-   * 
-   * speed charm -> make sur it works on horses to
    * 
    * Reinforced scaffolding - like wood one, still breaks in one hit. disable
    * auto break. climbable like a ladder
