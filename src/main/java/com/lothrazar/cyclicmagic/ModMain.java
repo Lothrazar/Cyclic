@@ -23,8 +23,7 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
-@Mod(modid = Const.MODID, useMetadata = true, 
-dependencies="after:JEI;after:Baubles",canBeDeactivated = false, updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json", acceptableRemoteVersions = "*", guiFactory = "com.lothrazar." + Const.MODID + ".gui.IngameConfigFactory")
+@Mod(modid = Const.MODID, useMetadata = true, dependencies = "after:JEI;after:Baubles", canBeDeactivated = false, updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json", acceptableRemoteVersions = "*", guiFactory = "com.lothrazar." + Const.MODID + ".gui.IngameConfigFactory")
 public class ModMain {
   private List<ICyclicModule> modules = new ArrayList<ICyclicModule>();
   @Instance(value = Const.MODID)
@@ -110,7 +109,7 @@ public class ModMain {
    * TODO: ideas/plans/features
    * 
    * Structure builder: add preview (ghost blocks or sparkls)
-   *   
+   * 
    * project table (invo plus 3x3)
    * 
    * ??multi furnace / multi dispenser / multi brewing stand

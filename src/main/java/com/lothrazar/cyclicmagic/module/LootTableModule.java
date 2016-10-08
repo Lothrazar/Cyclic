@@ -1,9 +1,11 @@
 package com.lothrazar.cyclicmagic.module;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -21,7 +23,6 @@ import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class LootTableModule extends BaseEventModule implements IHasConfig {
-  private static final int RANDODEFAULT = 7;
   private static final String LOOTPOOLNAME = "main";
   private Set<ResourceLocation> chests;
   private boolean enablePolarbears;
@@ -109,10 +110,21 @@ public class LootTableModule extends BaseEventModule implements IHasConfig {
     }
   }
   private void fillEndCityChest(LootPool main) {
-    addLoot(main, ItemRegistry.book_ender, 10);
+    //    addLoot(main, ItemRegistry.book_ender, 10);
     addLoot(main, ItemRegistry.cyclic_wand_build, 15);
+    fillPoolFromMap(main, LootTableRegistry.endCityChest);
+  }
+  private void fillPoolFromMap(LootPool main, Map<Item, Integer> map) {
+    synchronized (map) {
+      for (Map.Entry<Item, Integer> entry : map.entrySet()) {
+        Item key = entry.getKey();
+        int value = entry.getValue();
+        addLoot(main, key, value);
+      }
+    }
   }
   private void fillGenericChest(LootPool main) {
+    fillPoolFromMap(main, LootTableRegistry.genericChest);
     addLoot(main, ItemRegistry.tool_push);
     addLoot(main, ItemRegistry.corrupted_chorus);
     //addLoot(main, ItemRegistry.emerald_boots);//TODO: how to modules integrate with loot tables?
@@ -147,15 +159,17 @@ public class LootTableModule extends BaseEventModule implements IHasConfig {
     addLoot(main, ItemRegistry.emerald_legs);
   }
   private void fillIglooChest(LootPool main) {
+    fillPoolFromMap(main, LootTableRegistry.iglooChest);
     addLoot(main, PotionModule.potion_snow);
     addLoot(main, ItemRegistry.ender_snow, 19);
   }
   private void fillBonusChest(LootPool main) {
+    fillPoolFromMap(main, LootTableRegistry.bonusChest);
     addLoot(main, ItemRegistry.sleeping_mat);
   }
   private void addLoot(LootPool main, Item item) {
     if (item != null) { //shortcut fix bc of new module config system that can delete items
-      addLoot(main, item, RANDODEFAULT);
+      addLoot(main, item, LootTableRegistry.RANDODEFAULT);
     }
   }
   private void addLoot(LootPool main, Item item, int rando) {

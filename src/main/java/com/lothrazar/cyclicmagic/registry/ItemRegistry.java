@@ -50,7 +50,6 @@ public class ItemRegistry {
   public static ItemToolHarvest tool_harvest_leaves;
   public static ItemChestSackEmpty chest_sack_empty;
   public static ItemChestSack chest_sack;
-  public static ItemEnderBook book_ender;
   public static ItemStorageBag storage_bag;
   public static ItemToolSpawnInspect tool_spawn_inspect;
   public static ItemSleepingMat sleeping_mat;
