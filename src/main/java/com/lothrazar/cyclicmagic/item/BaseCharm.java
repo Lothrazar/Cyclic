@@ -67,7 +67,7 @@ public abstract class BaseCharm extends BaseItem {
   }
   @Optional.Method(modid = "Baubles")
   public baubles.api.BaubleType getBaubleType(ItemStack arg0) {
-    return baubles.api.BaubleType.RING;
+    return baubles.api.BaubleType.TRINKET;
   }
   @Optional.Method(modid = "Baubles")
   public void onEquipped(ItemStack arg0, EntityLivingBase arg1) {

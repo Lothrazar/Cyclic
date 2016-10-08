@@ -20,7 +20,7 @@ archivesBaseName = "Cyclic"
 
 minecraft {
     version = "${mc_version}-${forge_version}"
-    mappings = "${mappings}"
+    mappings = "snapshot_20160518"
     runDir = "run"
     makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 
