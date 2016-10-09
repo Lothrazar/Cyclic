@@ -45,10 +45,11 @@ public class MachineBlockModule extends BaseModule {
       GameRegistry.registerTileEntity(TileMachineHarvester.class, "harveseter_te");
     }
     if (enableUncrafter) {
-      BlockRegistry.uncrafting_block = new BlockUncrafting();
-      BlockRegistry.registerBlock(BlockRegistry.uncrafting_block, "uncrafting_block");
-      BlockRegistry.uncrafting_block.addRecipe();
+      BlockUncrafting uncrafting_block = new BlockUncrafting();
+      BlockRegistry.registerBlock(uncrafting_block, "uncrafting_block");
+      uncrafting_block.addRecipe();
       GameRegistry.registerTileEntity(TileMachineUncrafter.class, "uncrafting_block_te");
+      BlockRegistry.uncrafting_block = uncrafting_block;//TODO:MAKE ARRAY
     }
     if (enableMagnet) {
       BlockRegistry.magnet_block = new BlockMagnet();

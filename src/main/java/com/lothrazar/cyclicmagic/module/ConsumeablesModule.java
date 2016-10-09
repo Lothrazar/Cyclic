@@ -5,6 +5,7 @@ import com.lothrazar.cyclicmagic.item.ItemFoodCorruptedChorus;
 import com.lothrazar.cyclicmagic.item.ItemFoodCrafting;
 import com.lothrazar.cyclicmagic.item.ItemFoodHeart;
 import com.lothrazar.cyclicmagic.item.ItemFoodInventory;
+import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
@@ -30,6 +31,7 @@ public class ConsumeablesModule extends BaseModule {
       ModMain.instance.events.addEvent(heart_food);
       LootTableRegistry.registerLoot(heart_food, ChestType.GENERIC, 3);
       LootTableRegistry.registerLoot(heart_food, ChestType.ENDCITY, 4);
+      AchievementRegistry.registerItemAchievement(heart_food);
     }
     if (enableInventoryCrafting) {
       ItemFoodCrafting crafting_food = new ItemFoodCrafting();

@@ -80,6 +80,7 @@ public class ModMain {
     for (ICyclicModule module : this.modules) {
       module.onPostInit();
     }
+    AchievementRegistry.registerPage();
   }
   @EventHandler
   public void onServerStarting(FMLServerStartingEvent event) {
