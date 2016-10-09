@@ -4,7 +4,6 @@ import java.util.Map;
 import java.util.Set;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Blocks;
@@ -118,23 +117,6 @@ public class LootTableModule extends BaseEventModule implements IHasConfig {
   }
   private void fillGenericChest(LootPool main) {
     fillPoolFromMap(main, LootTableRegistry.genericChest);
-    addLoot(main, ItemRegistry.tool_harvest_crops);
-    addLoot(main, ItemRegistry.tool_spawn_inspect);
-    addLoot(main, ItemRegistry.ender_pearl_reuse);
-    addLoot(main, ItemRegistry.storage_bag);
-    addLoot(main, ItemRegistry.ender_dungeon);
-    addLoot(main, ItemRegistry.ender_lightning);
-    addLoot(main, ItemRegistry.ender_tnt_1);
-    addLoot(main, ItemRegistry.ender_tnt_2);
-    addLoot(main, ItemRegistry.emerald_axe);
-    addLoot(main, ItemRegistry.emerald_hoe);
-    addLoot(main, ItemRegistry.emerald_pickaxe);
-    addLoot(main, ItemRegistry.emerald_shovel);
-    addLoot(main, ItemRegistry.emerald_sword);
-    addLoot(main, ItemRegistry.emerald_boots);
-    addLoot(main, ItemRegistry.emerald_chest);
-    addLoot(main, ItemRegistry.emerald_head);
-    addLoot(main, ItemRegistry.emerald_legs);
   }
   private void fillIglooChest(LootPool main) {
     fillPoolFromMap(main, LootTableRegistry.iglooChest);
@@ -142,6 +124,7 @@ public class LootTableModule extends BaseEventModule implements IHasConfig {
   private void fillBonusChest(LootPool main) {
     fillPoolFromMap(main, LootTableRegistry.bonusChest);
   }
+  @SuppressWarnings("unused")
   private void addLoot(LootPool main, Item item) {
     addLoot(main, item, LootTableRegistry.RANDODEFAULT);
   }

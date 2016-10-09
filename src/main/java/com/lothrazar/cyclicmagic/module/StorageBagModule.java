@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.item.ItemStorageBag;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraftforge.common.config.Configuration;
 
@@ -11,6 +12,7 @@ public class StorageBagModule extends BaseModule {
     if (moduleEnabled) {
       ItemRegistry.storage_bag = new ItemStorageBag();
       ItemRegistry.addItem(ItemRegistry.storage_bag, "storage_bag");
+      LootTableRegistry.registerLoot(ItemRegistry.storage_bag);
     }
   }
   @Override

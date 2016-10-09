@@ -78,6 +78,7 @@ public class ToolsModule extends BaseModule {
     if (enableToolHarvest) {
       ItemToolHarvest tool_harvest_crops = new ItemToolHarvest(ItemToolHarvest.HarvestType.CROPS);
       ItemRegistry.addItem(tool_harvest_crops, "tool_harvest_crops");
+      LootTableRegistry.registerLoot(tool_harvest_crops);
     }
     if (enableHarvestLeaves) {
       ItemToolHarvest tool_harvest_leaves = new ItemToolHarvest(ItemToolHarvest.HarvestType.LEAVES);
@@ -105,12 +106,14 @@ public class ToolsModule extends BaseModule {
       LootTableRegistry.registerLoot(ItemRegistry.cyclic_wand_build, ChestType.GENERIC, 1);
     }
     if (enableWarpHomeTool) {
-      ItemRegistry.tool_warp_home = new ItemToolWarp(ItemToolWarp.WarpType.BED);
-      ItemRegistry.addItem(ItemRegistry.tool_warp_home, "tool_warp_home");
+      ItemToolWarp tool_warp_home = new ItemToolWarp(ItemToolWarp.WarpType.BED);
+      ItemRegistry.addItem(tool_warp_home, "tool_warp_home");
+      LootTableRegistry.registerLoot(tool_warp_home);
     }
     if (enableWarpSpawnTool) {
-      ItemRegistry.tool_warp_spawn = new ItemToolWarp(ItemToolWarp.WarpType.SPAWN);
-      ItemRegistry.addItem(ItemRegistry.tool_warp_spawn, "tool_warp_spawn");
+      ItemToolWarp tool_warp_spawn = new ItemToolWarp(ItemToolWarp.WarpType.SPAWN);
+      ItemRegistry.addItem(tool_warp_spawn, "tool_warp_spawn");
+      LootTableRegistry.registerLoot(tool_warp_spawn);
     }
     if (enableSwappers) {
       ItemToolSwap tool_swap = new ItemToolSwap(WandType.NORMAL);

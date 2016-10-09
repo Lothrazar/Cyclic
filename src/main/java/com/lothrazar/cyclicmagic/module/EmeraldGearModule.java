@@ -6,10 +6,12 @@ import com.lothrazar.cyclicmagic.item.gear.ItemEmeraldPickaxe;
 import com.lothrazar.cyclicmagic.item.gear.ItemEmeraldSpade;
 import com.lothrazar.cyclicmagic.item.gear.ItemEmeraldSword;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
@@ -53,24 +55,33 @@ public class EmeraldGearModule extends BaseModule {
   public void onInit() {
     if (enableEmeraldGear) {
       this.registerEmeraldMaterial();
-      ItemRegistry.emerald_head = new ItemEmeraldArmor(EntityEquipmentSlot.HEAD);
-      ItemRegistry.addItem(ItemRegistry.emerald_head, "emerald_helmet");
-      ItemRegistry.emerald_chest = new ItemEmeraldArmor(EntityEquipmentSlot.CHEST);
-      ItemRegistry.addItem(ItemRegistry.emerald_chest, "emerald_chestplate");
-      ItemRegistry.emerald_legs = new ItemEmeraldArmor(EntityEquipmentSlot.LEGS);
-      ItemRegistry.addItem(ItemRegistry.emerald_legs, "emerald_leggings");
-      ItemRegistry.emerald_boots = new ItemEmeraldArmor(EntityEquipmentSlot.FEET);
-      ItemRegistry.addItem(ItemRegistry.emerald_boots, "emerald_boots");
-      ItemRegistry.emerald_sword = new ItemEmeraldSword();
-      ItemRegistry.addItem(ItemRegistry.emerald_sword, ItemEmeraldSword.name);
-      ItemRegistry.emerald_pickaxe = new ItemEmeraldPickaxe();
-      ItemRegistry.addItem(ItemRegistry.emerald_pickaxe, ItemEmeraldPickaxe.name);
-      ItemRegistry.emerald_axe = new ItemEmeraldAxe();
-      ItemRegistry.addItem(ItemRegistry.emerald_axe, ItemEmeraldAxe.name);
-      ItemRegistry.emerald_shovel = new ItemEmeraldSpade();
-      ItemRegistry.addItem(ItemRegistry.emerald_shovel, ItemEmeraldSpade.name);
-      ItemRegistry.emerald_hoe = new ItemEmeraldHoe();
-      ItemRegistry.addItem(ItemRegistry.emerald_hoe, ItemEmeraldHoe.name);
+      Item emerald_head = new ItemEmeraldArmor(EntityEquipmentSlot.HEAD);
+      ItemRegistry.addItem(emerald_head, "emerald_helmet");
+      Item emerald_chest = new ItemEmeraldArmor(EntityEquipmentSlot.CHEST);
+      ItemRegistry.addItem(emerald_chest, "emerald_chestplate");
+      Item emerald_legs = new ItemEmeraldArmor(EntityEquipmentSlot.LEGS);
+      ItemRegistry.addItem(emerald_legs, "emerald_leggings");
+      Item emerald_boots = new ItemEmeraldArmor(EntityEquipmentSlot.FEET);
+      ItemRegistry.addItem(emerald_boots, "emerald_boots");
+      Item emerald_sword = new ItemEmeraldSword();
+      ItemRegistry.addItem(emerald_sword, ItemEmeraldSword.name);
+      Item emerald_pickaxe = new ItemEmeraldPickaxe();
+      ItemRegistry.addItem(emerald_pickaxe, ItemEmeraldPickaxe.name);
+      Item emerald_axe = new ItemEmeraldAxe();
+      ItemRegistry.addItem(emerald_axe, ItemEmeraldAxe.name);
+      Item emerald_shovel = new ItemEmeraldSpade();
+      ItemRegistry.addItem(emerald_shovel, ItemEmeraldSpade.name);
+      Item emerald_hoe = new ItemEmeraldHoe();
+      ItemRegistry.addItem(emerald_hoe, ItemEmeraldHoe.name);
+      LootTableRegistry.registerLoot(emerald_axe, 1);
+      LootTableRegistry.registerLoot(emerald_hoe, 1);
+      LootTableRegistry.registerLoot(emerald_pickaxe, 1);
+      LootTableRegistry.registerLoot(emerald_shovel, 1);
+      LootTableRegistry.registerLoot(emerald_sword, 1);
+      LootTableRegistry.registerLoot(emerald_boots, 1);
+      LootTableRegistry.registerLoot(emerald_chest, 1);
+      LootTableRegistry.registerLoot(emerald_head, 1);
+      LootTableRegistry.registerLoot(emerald_legs, 1);
     }
   }
   @Override
