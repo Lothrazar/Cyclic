@@ -36,10 +36,10 @@ public class ItemCharmSpeed extends BaseCharm implements IHasRecipe {
       living.addPotionEffect(new PotionEffect(MobEffects.SPEED, seconds * Const.TICKS_PER_SEC, Const.Potions.II));
       super.damageCharm(living, stack);
       UtilSound.playSound(living, living.getPosition(), SoundEvents.ENTITY_GENERIC_DRINK, living.getSoundCategory());
-      if (living.getRidingEntity() != null && living.getRidingEntity() instanceof EntityLivingBase) {
-        EntityLivingBase maybeHorse = (EntityLivingBase) living.getRidingEntity();
-        maybeHorse.addPotionEffect(new PotionEffect(MobEffects.SPEED, seconds * Const.TICKS_PER_SEC, Const.Potions.II));
-      }
+    }
+    if (living.getRidingEntity() != null && living.getRidingEntity() instanceof EntityLivingBase) {
+      EntityLivingBase maybeHorse = (EntityLivingBase) living.getRidingEntity();
+      maybeHorse.addPotionEffect(new PotionEffect(MobEffects.SPEED, seconds * Const.TICKS_PER_SEC, Const.Potions.II));
     }
   }
   @Override
