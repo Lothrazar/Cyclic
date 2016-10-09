@@ -134,9 +134,8 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
     }
     if (isValid) {
       UtilParticle.spawnParticle(world, EnumParticleTypes.PORTAL, pos.getX(), pos.getY(), pos.getZ());
-      if (consumeItem) // on paste, we consume the item
-      {
-        UtilInventory.decrStackSize(entityPlayer, entityPlayer.inventory.currentItem);
+      if (consumeItem) {
+        UtilInventory.decrStackSize(entityPlayer, hand); // on paste, we consume the item
       }
       UtilSound.playSound(entityPlayer, pos, SoundRegistry.buzzp);
     }

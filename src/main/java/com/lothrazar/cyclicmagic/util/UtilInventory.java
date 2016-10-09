@@ -4,6 +4,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
 public class UtilInventory {
@@ -141,6 +142,11 @@ public class UtilInventory {
   public static void decrStackSize(EntityPlayer entityPlayer, int currentItem) {
     if (entityPlayer.capabilities.isCreativeMode == false) {
       entityPlayer.inventory.decrStackSize(currentItem, 1);
+    }
+  }
+  public static void decrStackSize(EntityPlayer entityPlayer, EnumHand hand) {
+    if (entityPlayer.capabilities.isCreativeMode == false) {
+      entityPlayer.getHeldItem(hand).stackSize--;
     }
   }
   public static IBlockState getBlockstateFromSlot(EntityPlayer player, int slot) {

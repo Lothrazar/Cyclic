@@ -57,7 +57,9 @@ public class ItemChestSackEmpty extends BaseItem implements IHasRecipe {
     //now erase the data so it doesnt drop items/etc
     tile.readFromNBT(new NBTTagCompound());
     world.destroyBlock(pos, false);
-    stack.stackSize--;
+    if (entityPlayer.capabilities.isCreativeMode == false) {
+      stack.stackSize--;
+    }
     UtilSound.playSound(entityPlayer, pos, SoundRegistry.thunk);
     return EnumActionResult.SUCCESS;
   }
