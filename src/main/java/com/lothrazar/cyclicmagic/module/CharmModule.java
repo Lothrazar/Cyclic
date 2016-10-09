@@ -4,6 +4,7 @@ import com.lothrazar.cyclicmagic.item.ItemAutoTorch;
 import com.lothrazar.cyclicmagic.item.charm.*;
 import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraftforge.common.config.Configuration;
 
@@ -22,40 +23,48 @@ public class CharmModule extends BaseModule {
       ItemCharmFire charm_fire = new ItemCharmFire();
       ItemRegistry.addItem(charm_fire, "charm_fire");
       AchievementRegistry.registerItemAchievement(charm_fire);
+      LootTableRegistry.registerLoot(charm_fire);
     }
     if (enableSea) {
       ItemCharmBoat charm_boat = new ItemCharmBoat();
       ItemRegistry.addItem(charm_boat, "charm_boat");
       AchievementRegistry.registerItemAchievement(charm_boat);
+      LootTableRegistry.registerLoot(charm_boat);
     }
     if (enableVoid) {
       ItemCharmVoid charm_void = new ItemCharmVoid();
       ItemRegistry.addItem(charm_void, "charm_void");
       AchievementRegistry.registerItemAchievement(charm_void);
+      LootTableRegistry.registerLoot(charm_void);
     }
     if (enableWater) {
       ItemCharmWater charm_water = new ItemCharmWater();
       ItemRegistry.addItem(charm_water, "charm_water");
       AchievementRegistry.registerItemAchievement(charm_water);
+      LootTableRegistry.registerLoot(charm_water);
     }
     if (antidoteCharm) {
       ItemCharmAntidote charm_antidote = new ItemCharmAntidote();
       ItemRegistry.addItem(charm_antidote, "charm_antidote");
       AchievementRegistry.registerItemAchievement(charm_antidote);
+      LootTableRegistry.registerLoot(charm_antidote);
     }
     if (slowfallCharm) {
       ItemCharmSlowfall charm_wing = new ItemCharmSlowfall();
       ItemRegistry.addItem(charm_wing, "charm_wing");
       AchievementRegistry.registerItemAchievement(charm_wing);
+      LootTableRegistry.registerLoot(charm_wing);
     }
     if (autoTorch) {
       ItemAutoTorch tool_auto_torch = new ItemAutoTorch();
       ItemRegistry.addItem(tool_auto_torch, "tool_auto_torch");
       ModMain.instance.events.addEvent(tool_auto_torch);
+      LootTableRegistry.registerLoot(tool_auto_torch);
     }
     if (enableSpeed) {
       ItemCharmSpeed charm_speed = new ItemCharmSpeed();
       ItemRegistry.addItem(charm_speed, "charm_speed");
+      LootTableRegistry.registerLoot(charm_speed);
     }
   }
   @Override

@@ -118,11 +118,13 @@ public class PacketRandomize implements IMessage, IMessageHandler<PacketRandomiz
       Collections.shuffle(rpos, worldObj.rand);
       BlockPos swapPos;
       IBlockState swapState;
-      for (int i = 0; i < rpos.size(); i++) {
-        swapPos = rpos.get(i);
-        swapState = rstates.get(i);
-        worldObj.destroyBlock(swapPos, false);
-        UtilPlaceBlocks.placeStateSafe(worldObj, player, swapPos, swapState);
+      synchronized (rpos) {//just in case
+        for (int i = 0; i < rpos.size(); i++) {
+          swapPos = rpos.get(i);
+          swapState = rstates.get(i);
+          worldObj.destroyBlock(swapPos, false);
+          UtilPlaceBlocks.placeStateSafe(worldObj, player, swapPos, swapState);
+        }
       }
     }
     return null;

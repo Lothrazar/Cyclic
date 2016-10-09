@@ -2,6 +2,8 @@ package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.block.BlockConveyor;
 import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;

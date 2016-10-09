@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.WandType;
 import com.lothrazar.cyclicmagic.item.ItemSleepingMat;
 import com.lothrazar.cyclicmagic.net.PacketSpellShiftLeft;
 import com.lothrazar.cyclicmagic.net.PacketSpellShiftRight;
+import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
@@ -79,6 +80,7 @@ public class ToolsModule extends BaseModule {
       ItemToolHarvest tool_harvest_crops = new ItemToolHarvest(ItemToolHarvest.HarvestType.CROPS);
       ItemRegistry.addItem(tool_harvest_crops, "tool_harvest_crops");
       LootTableRegistry.registerLoot(tool_harvest_crops);
+      AchievementRegistry.registerItemAchievement(tool_harvest_crops);
     }
     if (enableHarvestLeaves) {
       ItemToolHarvest tool_harvest_leaves = new ItemToolHarvest(ItemToolHarvest.HarvestType.LEAVES);
@@ -88,7 +90,8 @@ public class ToolsModule extends BaseModule {
       ItemToolPush tool_push = new ItemToolPush();
       ItemRegistry.addItem(tool_push, "tool_push");
       ModMain.instance.events.addEvent(tool_push);
-      LootTableRegistry.registerLoot(tool_push, 12);
+      LootTableRegistry.registerLoot(tool_push, 16);
+      AchievementRegistry.registerItemAchievement(tool_push);
     }
     if (enableSleepingMat) {
       ItemSleepingMat sleeping_mat = new ItemSleepingMat();

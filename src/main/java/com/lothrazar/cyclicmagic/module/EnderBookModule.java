@@ -14,6 +14,7 @@ public class EnderBookModule extends BaseModule {
       ItemEnderBook book_ender = new ItemEnderBook();
       ItemRegistry.addItem(book_ender, "book_ender");
       LootTableRegistry.registerLoot(book_ender, ChestType.ENDCITY, 10);
+      LootTableRegistry.registerLoot(book_ender, ChestType.GENERIC, 1);
     }
   }
   @Override

@@ -167,6 +167,7 @@ public class PotionModule extends BaseEventModule {
           potion_boost,
           Items.REDSTONE,
           potion_boost_long);
+      LootTableRegistry.registerLoot(potion_boost_long);
     }
     if (enableResist) {
       potion_resistance = new ItemPotionCustom(true, MobEffects.RESISTANCE, NORMAL);
@@ -187,6 +188,7 @@ public class PotionModule extends BaseEventModule {
           potion_resistance,
           Items.GLOWSTONE_DUST,
           potion_resistance_strong);
+      LootTableRegistry.registerLoot(potion_resistance_long);
     }
     if (enableHaste) {
       potion_haste = new ItemPotionCustom(false, MobEffects.HASTE, 60 * 3);
@@ -207,6 +209,7 @@ public class PotionModule extends BaseEventModule {
           potion_haste,
           Items.GLOWSTONE_DUST,
           potion_haste_strong);
+      LootTableRegistry.registerLoot(potion_haste_strong);
     }
     if (enableLuck) {
       potion_luck = new ItemPotionCustom(true, MobEffects.LUCK, NORMAL);
