@@ -24,6 +24,7 @@ public class ConsumeablesModule extends BaseModule {
       ItemAppleEmerald apple_emerald = new ItemAppleEmerald();
       ItemRegistry.addItem(apple_emerald, "apple_emerald");
       LootTableRegistry.registerLoot(apple_emerald);
+      AchievementRegistry.registerItemAchievement(apple_emerald);
     }
     if (enableHeartContainer) {
       ItemFoodHeart heart_food = new ItemFoodHeart();
@@ -37,11 +38,13 @@ public class ConsumeablesModule extends BaseModule {
       ItemFoodCrafting crafting_food = new ItemFoodCrafting();
       ItemRegistry.addItem(crafting_food, "crafting_food");
       LootTableRegistry.registerLoot(crafting_food, ChestType.GENERIC, 3);
+      AchievementRegistry.registerItemAchievement(crafting_food);
     }
     if (enableInventoryUpgrade) {
       ItemFoodInventory inventory_food = new ItemFoodInventory();
       ItemRegistry.addItem(inventory_food, "inventory_food");
       LootTableRegistry.registerLoot(inventory_food, ChestType.GENERIC, 3);
+      AchievementRegistry.registerItemAchievement(inventory_food);
     }
     if (enableCorruptedChorus) {
       ItemFoodCorruptedChorus corrupted_chorus = new ItemFoodCorruptedChorus();
@@ -49,6 +52,7 @@ public class ConsumeablesModule extends BaseModule {
       ModMain.instance.events.addEvent(corrupted_chorus);
       LootTableRegistry.registerLoot(corrupted_chorus, ChestType.GENERIC, 10);
       LootTableRegistry.registerLoot(corrupted_chorus, ChestType.ENDCITY, 5);
+      AchievementRegistry.registerItemAchievement(corrupted_chorus);
     }
   }
   @Override

@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.item.ItemAutoTorch;
 import com.lothrazar.cyclicmagic.item.charm.*;
+import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraftforge.common.config.Configuration;
@@ -20,26 +21,32 @@ public class CharmModule extends BaseModule {
     if (enableFire) {
       ItemCharmFire charm_fire = new ItemCharmFire();
       ItemRegistry.addItem(charm_fire, "charm_fire");
+      AchievementRegistry.registerItemAchievement(charm_fire);
     }
     if (enableSea) {
       ItemCharmBoat charm_boat = new ItemCharmBoat();
       ItemRegistry.addItem(charm_boat, "charm_boat");
+      AchievementRegistry.registerItemAchievement(charm_boat);
     }
     if (enableVoid) {
       ItemCharmVoid charm_void = new ItemCharmVoid();
       ItemRegistry.addItem(charm_void, "charm_void");
+      AchievementRegistry.registerItemAchievement(charm_void);
     }
     if (enableWater) {
       ItemCharmWater charm_water = new ItemCharmWater();
       ItemRegistry.addItem(charm_water, "charm_water");
+      AchievementRegistry.registerItemAchievement(charm_water);
     }
     if (antidoteCharm) {
       ItemCharmAntidote charm_antidote = new ItemCharmAntidote();
       ItemRegistry.addItem(charm_antidote, "charm_antidote");
+      AchievementRegistry.registerItemAchievement(charm_antidote);
     }
     if (slowfallCharm) {
       ItemCharmSlowfall charm_wing = new ItemCharmSlowfall();
       ItemRegistry.addItem(charm_wing, "charm_wing");
+      AchievementRegistry.registerItemAchievement(charm_wing);
     }
     if (autoTorch) {
       ItemAutoTorch tool_auto_torch = new ItemAutoTorch();

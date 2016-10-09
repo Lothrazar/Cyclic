@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.item.ItemPotionCustom;
+import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
@@ -68,6 +69,7 @@ public class PotionModule extends BaseEventModule {
     //CORE/BASE POTION
     ItemStack awkward = BrewingRecipeRegistry.getOutput(new ItemStack(Items.POTIONITEM), new ItemStack(Items.NETHER_WART));
     ItemRegistry.addItem(potion_viscous, "potion_viscous");
+    AchievementRegistry.registerItemAchievement(potion_viscous);
     BrewingRecipeRegistry.addRecipe(
         awkward,
         new ItemStack(Items.DYE, 1, EnumDyeColor.BROWN.getDyeDamage()),

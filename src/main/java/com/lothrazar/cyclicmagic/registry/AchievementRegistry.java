@@ -13,8 +13,9 @@ public class AchievementRegistry {
   //thanks to http://jabelarminecraft.blogspot.ca/p/minecraft-forge-creating-custom.html
   public static Map<Item, Achievement> map = new HashMap<Item, Achievement>();
   public static List<Achievement> list = new ArrayList<Achievement>();
-  private static final int padding = 8;
-  private static int xCur = padding;
+  private static final int spacing = 2;
+  private static final int limit = 12;
+  private static int xCur = spacing;
   private static int yCur = 0;
   public static void registerItemAchievement(Item icon) {
     String lang = icon.getUnlocalizedName();
@@ -22,10 +23,10 @@ public class AchievementRegistry {
     list.add(ach);
     map.put(icon, ach);
     ach.registerStat();
-    xCur += 16 + padding;
-    if (xCur > 50) {
-      yCur += 16 + padding;
-      xCur = padding;
+    xCur += spacing;
+    if (xCur > limit) {
+      xCur = spacing;
+      yCur += spacing;
     }
   }
   public static void registerPage() {
