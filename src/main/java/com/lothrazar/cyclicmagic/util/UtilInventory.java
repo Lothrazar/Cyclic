@@ -149,8 +149,8 @@ public class UtilInventory {
         stack.getItem() != null &&
         Block.getBlockFromItem(stack.getItem()) != null) {
       Block b = Block.getBlockFromItem(stack.getItem());
-      return UtilItem.getStateFromMeta(b,stack.getMetadata()); 
-      }
+      return UtilItem.getStateFromMeta(b, stack.getMetadata());
+    }
     return null;
   }
   public static int getFirstSlotWithBlock(EntityPlayer player) {

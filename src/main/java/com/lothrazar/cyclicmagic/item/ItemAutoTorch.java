@@ -29,7 +29,7 @@ public class ItemAutoTorch extends BaseItem implements IHasRecipe {
   private static final float lightLimit = 7.0F;
   private static final int cooldown = 60;//ticks not seconds
   public ItemAutoTorch() {
- //   super(durability);
+    //   super(durability);
     this.setMaxStackSize(1);
     this.setMaxDamage(durability);
   }
@@ -86,14 +86,12 @@ public class ItemAutoTorch extends BaseItem implements IHasRecipe {
       BlockPos pos = living.getPosition();
       if (world.getLight(pos, true) < lightLimit && world.isSideSolid(pos.down(), EnumFacing.UP)) {
         if (UtilPlaceBlocks.placeStateSafe(world, living, pos, Blocks.TORCH.getDefaultState())) {
-
           UtilItem.damageItem(living, stack);
           if (stack == null || stack.getItemDamage() == stack.getMaxDamage()) {
             stack = null;
-         living.inventory.setInventorySlotContents(itemSlot, null);
+            living.inventory.setInventorySlotContents(itemSlot, null);
             UtilSound.playSound(living, living.getPosition(), SoundEvents.ENTITY_ITEM_BREAK, living.getSoundCategory());
           }
-          
           living.getCooldownTracker().setCooldown(this, cooldown);
         }
       }

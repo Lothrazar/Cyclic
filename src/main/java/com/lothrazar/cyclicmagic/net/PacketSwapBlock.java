@@ -164,7 +164,7 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
               continue;
             }
             newToPlace = UtilInventory.getBlockstateFromSlot(player, slot);
-            if ( UtilItem.getPlayerRelativeBlockHardness(replaced.getBlock(),replaced,player, worldObj, curPos) < 0) {
+            if (UtilItem.getPlayerRelativeBlockHardness(replaced.getBlock(), replaced, player, worldObj, curPos) < 0) {
               //is unbreakable ie bedrock
               continue;
             }

@@ -54,7 +54,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
     if (worldObj instanceof WorldServer) {
       if (fakePlayer == null) {
         fakePlayer = UtilFakePlayer.initFakePlayer((WorldServer) worldObj);
-        if(fakePlayer == null){
+        if (fakePlayer == null) {
           ModMain.logger.warn("Warning: Fake player failed to init ");
           return;
         }
@@ -102,7 +102,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
       }
       if (isCurrentlyMining) {
         IBlockState targetState = worldObj.getBlockState(targetPos);
-        curBlockDamage +=  UtilItem.getPlayerRelativeBlockHardness(targetState.getBlock(),targetState, fakePlayer.get(), worldObj, targetPos);
+        curBlockDamage += UtilItem.getPlayerRelativeBlockHardness(targetState.getBlock(), targetState, fakePlayer.get(), worldObj, targetPos);
         if (curBlockDamage >= 1.0f) {
           isCurrentlyMining = false;
           resetProgress(targetPos);

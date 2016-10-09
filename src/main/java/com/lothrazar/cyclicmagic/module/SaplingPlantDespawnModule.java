@@ -83,7 +83,7 @@ public class SaplingPlantDespawnModule extends BaseEventModule implements IHasCo
         // plant the sapling, replacing the air and on top of dirt/plantable
         //BlockSapling.TYPE
         if (Block.getBlockFromItem(is.getItem()) == Blocks.SAPLING)
-          entity.worldObj.setBlockState(entityItem.getPosition(), UtilItem.getStateFromMeta(Blocks.SAPLING,is.getItemDamage()));
+          entity.worldObj.setBlockState(entityItem.getPosition(), UtilItem.getStateFromMeta(Blocks.SAPLING, is.getItemDamage()));
         else if (Block.getBlockFromItem(is.getItem()) == Blocks.RED_MUSHROOM)
           entity.worldObj.setBlockState(entityItem.getPosition(), Blocks.RED_MUSHROOM.getDefaultState());
         else if (Block.getBlockFromItem(is.getItem()) == Blocks.BROWN_MUSHROOM)

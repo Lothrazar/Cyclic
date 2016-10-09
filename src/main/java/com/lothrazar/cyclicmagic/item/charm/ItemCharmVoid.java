@@ -26,8 +26,7 @@ public class ItemCharmVoid extends BaseCharm implements IHasRecipe {
    */
   public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
     if (entityIn instanceof EntityPlayer) {
-      this.onTick(stack,(EntityPlayer) entityIn);
-      
+      this.onTick(stack, (EntityPlayer) entityIn);
     }
   }
   @Override
@@ -40,7 +39,7 @@ public class ItemCharmVoid extends BaseCharm implements IHasRecipe {
   }
   @Override
   public void onTick(ItemStack stack, EntityPlayer living) {
-    if(!this.canTick(stack)){return;}
+    if (!this.canTick(stack)) { return; }
     World worldIn = living.getEntityWorld();
     if (living.getPosition().getY() < yLowest) {
       UtilEntity.teleportWallSafe(living, worldIn, new BlockPos(living.getPosition().getX(), yDest, living.getPosition().getZ()));

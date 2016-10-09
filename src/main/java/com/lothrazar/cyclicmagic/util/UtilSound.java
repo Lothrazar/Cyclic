@@ -15,7 +15,7 @@ public class UtilSound {
   public static final float PITCH = 1.0F;
   public static final boolean distanceDelay = false;
   public static void playSoundPlaceBlock(EntityPlayer player, BlockPos pos, Block block) {
-    if(player == null){
+    if (player == null) {
       ModMain.logger.warn("Null player object attempting to play sound [1]");
       return;
     }
@@ -34,7 +34,7 @@ public class UtilSound {
     playSound(player, here, thunk, player.getSoundCategory());
   }
   public static void playSound(EntityPlayer player, BlockPos pos, SoundEvent soundIn, SoundCategory cat) {
-    if(player == null){
+    if (player == null) {
       ModMain.logger.warn("Null player object attempting to play sound [2]");
       return;
     }
@@ -42,7 +42,7 @@ public class UtilSound {
     player.worldObj.playSound(player, here, soundIn, cat, VOLUME, PITCH);
   }
   public static void playSound(EntityPlayer player, BlockPos pos, SoundEvent soundIn, SoundCategory cat, float volume) {
-    if(player == null){
+    if (player == null) {
       ModMain.logger.warn("Null player object attempting to play sound [3]");
       return;
     }

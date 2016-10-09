@@ -167,7 +167,8 @@ public class InventoryWand implements IInventory {
     ItemStack toPlace = getFromSlot(wand, i);
     if (toPlace != null && toPlace.getItem() != null && Block.getBlockFromItem(toPlace.getItem()) != null) {
       Block b = Block.getBlockFromItem(toPlace.getItem());
-      return UtilItem.getStateFromMeta(b, toPlace.getMetadata()); }
+      return UtilItem.getStateFromMeta(b, toPlace.getMetadata());
+    }
     return null;
   }
   public static int calculateSlotCurrent(ItemStack wand) {

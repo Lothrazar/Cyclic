@@ -55,11 +55,11 @@ public class ItemChestSack extends BaseItem {
       return false;
     }
     IBlockState toPlace;
-    if(itemData.hasKey(KEY_BLOCKSTATE)){
+    if (itemData.hasKey(KEY_BLOCKSTATE)) {
       //in builds 1.7.8 prior this data tag did not exist, so make sure we support itemstacks created back then
-      toPlace = UtilItem.getStateFromMeta(block,itemData.getInteger(KEY_BLOCKSTATE));
+      toPlace = UtilItem.getStateFromMeta(block, itemData.getInteger(KEY_BLOCKSTATE));
     }
-    else{
+    else {
       toPlace = block.getDefaultState();
     }
     entityPlayer.worldObj.setBlockState(pos, toPlace);

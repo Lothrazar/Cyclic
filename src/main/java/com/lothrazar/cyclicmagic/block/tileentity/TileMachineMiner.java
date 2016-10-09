@@ -136,7 +136,7 @@ public class TileMachineMiner extends TileEntityBaseMachine {
       }
       if (isCurrentlyMining) {
         IBlockState targetState = worldObj.getBlockState(targetPos);
-        curBlockDamage += UtilItem.getPlayerRelativeBlockHardness(targetState.getBlock(),targetState, fakePlayer.get(), worldObj, targetPos);
+        curBlockDamage += UtilItem.getPlayerRelativeBlockHardness(targetState.getBlock(), targetState, fakePlayer.get(), worldObj, targetPos);
         if (curBlockDamage >= 1.0f) {
           isCurrentlyMining = false;
           resetProgress(targetPos);

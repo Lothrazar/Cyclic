@@ -28,18 +28,18 @@ public class ConsumeablesModule extends BaseModule {
       ItemFoodHeart heart_food = new ItemFoodHeart();
       ItemRegistry.addItem(heart_food, "heart_food");
       ModMain.instance.events.addEvent(heart_food);
-      LootTableRegistry.registerLoot(heart_food,ChestType.GENERIC, 3);
-      LootTableRegistry.registerLoot(heart_food,ChestType.ENDCITY, 4);
+      LootTableRegistry.registerLoot(heart_food, ChestType.GENERIC, 3);
+      LootTableRegistry.registerLoot(heart_food, ChestType.ENDCITY, 4);
     }
     if (enableInventoryCrafting) {
       ItemFoodCrafting crafting_food = new ItemFoodCrafting();
       ItemRegistry.addItem(crafting_food, "crafting_food");
-      LootTableRegistry.registerLoot(crafting_food,ChestType.GENERIC, 3);
+      LootTableRegistry.registerLoot(crafting_food, ChestType.GENERIC, 3);
     }
     if (enableInventoryUpgrade) {
       ItemFoodInventory inventory_food = new ItemFoodInventory();
       ItemRegistry.addItem(inventory_food, "inventory_food");
-      LootTableRegistry.registerLoot(inventory_food,ChestType.GENERIC, 3);
+      LootTableRegistry.registerLoot(inventory_food, ChestType.GENERIC, 3);
     }
     if (enableCorruptedChorus) {
       ItemFoodCorruptedChorus corrupted_chorus = new ItemFoodCorruptedChorus();

@@ -367,8 +367,8 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
       if (stuff != null) {
         if (worldObj.isRemote == false) {
           //ModMain.logger.info("try place " + this.nextPos + " type " + this.buildType + "_" + this.getBuildTypeEnum().name());
-          if (UtilPlaceBlocks.placeStateSafe(worldObj, null, nextPos, 
-              UtilItem.getStateFromMeta(stuff,stack.getMetadata())  )) {
+          if (UtilPlaceBlocks.placeStateSafe(worldObj, null, nextPos,
+              UtilItem.getStateFromMeta(stuff, stack.getMetadata()))) {
             this.decrStackSize(0, 1);
           }
         }

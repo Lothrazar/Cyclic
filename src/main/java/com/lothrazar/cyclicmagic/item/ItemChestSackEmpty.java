@@ -51,10 +51,8 @@ public class ItemChestSackEmpty extends BaseItem implements IHasRecipe {
     itemData.setTag(ItemChestSack.KEY_BLOCKTILE, tileData);
     itemData.setInteger(ItemChestSack.KEY_BLOCKID, Block.getIdFromBlock(state.getBlock()));
     itemData.setInteger(ItemChestSack.KEY_BLOCKSTATE, state.getBlock().getMetaFromState(state));
-    
     ItemStack drop = new ItemStack(ItemRegistry.chest_sack);
     drop.setTagCompound(itemData);
-    
     entityPlayer.dropItem(drop, false);
     //now erase the data so it doesnt drop items/etc
     tile.readFromNBT(new NBTTagCompound());

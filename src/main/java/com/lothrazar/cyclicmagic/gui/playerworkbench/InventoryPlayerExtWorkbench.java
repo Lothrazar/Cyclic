@@ -76,9 +76,7 @@ public class InventoryPlayerExtWorkbench extends InventoryCrafting {
    */
   @Override
   public void setInventorySlotContents(int idx, ItemStack stack) {
-    if (idx >= this.stackList.length) {
-      return;
-    }
+    if (idx >= this.stackList.length) { return; }
     this.stackList[idx] = stack;
     this.eventHandler.onCraftMatrixChanged(this);
   }
