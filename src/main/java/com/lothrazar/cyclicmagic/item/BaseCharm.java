@@ -67,7 +67,17 @@ public abstract class BaseCharm extends BaseItem implements baubles.api.IBauble 
   }
   @Optional.Method(modid = "Baubles")
   public baubles.api.BaubleType getBaubleType(ItemStack arg0) {
-    return baubles.api.BaubleType.TRINKET;
+    try {
+      if (baubles.api.BaubleType.values().length >= 4) { //length is 4 if trinket exists
+        return baubles.api.BaubleType.TRINKET;
+      }
+      else {
+        return baubles.api.BaubleType.RING;
+      }
+    }
+    catch (Exception e) {
+      return baubles.api.BaubleType.RING;
+    }
   }
   @Optional.Method(modid = "Baubles")
   public void onEquipped(ItemStack arg0, EntityLivingBase arg1) {
