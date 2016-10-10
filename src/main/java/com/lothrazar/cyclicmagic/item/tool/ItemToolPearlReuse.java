@@ -19,34 +19,56 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemToolPearlReuse extends BaseTool implements IHasRecipe {
-  public static final String name = "ender_pearl_reuse";
   private static final int durability = 2000;
   private static final int cooldown = 10;
-  public ItemToolPearlReuse() {
+  public static enum OrbType {
+    NORMAL, MOUNTED;
+  }
+  private OrbType orbType;
+  public ItemToolPearlReuse(OrbType o) {
     super(durability);
+    orbType = o;
   }
   @Override
   public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
     worldIn.playSound((EntityPlayer) null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_ENDERPEARL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
     playerIn.getCooldownTracker().setCooldown(this, cooldown);
     if (!worldIn.isRemote) {
-      EntityEnderPearl entityenderpearl = new EntityEnderPearl(worldIn, playerIn);
-      //func_184538_a
+      EntityEnderPearl entityenderpearl = new EntityEnderPearl(worldIn, playerIn); //func_184538_a
       entityenderpearl.setHeadingFromThrower(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
       worldIn.spawnEntityInWorld(entityenderpearl);
+      if (orbType == OrbType.MOUNTED) {
+        playerIn.dismountRidingEntity();
+        playerIn.startRiding(entityenderpearl);
+      }
     }
     super.onUse(itemStackIn, playerIn, worldIn, hand);
     return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);
   }
   @Override
   public void addRecipe() {
-    GameRegistry.addShapedRecipe(new ItemStack(this),
-        "ere",
-        "rsr",
-        "ere",
-        'e', new ItemStack(Items.ENDER_EYE),
-        'r', new ItemStack(Blocks.REDSTONE_BLOCK),
-        's', new ItemStack(Blocks.EMERALD_BLOCK));
+    switch (orbType) {
+    case MOUNTED:
+      GameRegistry.addShapedRecipe(new ItemStack(this),
+          "ere",
+          "rsr",
+          "ere",
+          'e', new ItemStack(Items.ENDER_EYE),
+          'r', new ItemStack(Blocks.LAPIS_BLOCK),
+          's', new ItemStack(Blocks.EMERALD_BLOCK));
+      break;
+    case NORMAL:
+      GameRegistry.addShapedRecipe(new ItemStack(this),
+          "ere",
+          "rsr",
+          "ere",
+          'e', new ItemStack(Items.ENDER_EYE),
+          'r', new ItemStack(Blocks.REDSTONE_BLOCK),
+          's', new ItemStack(Blocks.EMERALD_BLOCK));
+      break;
+    default:
+      break;
+    }
   }
   @SideOnly(Side.CLIENT)
   public boolean hasEffect(ItemStack stack) {
@@ -54,6 +76,16 @@ public class ItemToolPearlReuse extends BaseTool implements IHasRecipe {
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
-    tooltip.add(UtilChat.lang("item.ender_pearl_reuse.tooltip"));
+    //TODO: we should probably just get the name ad add tooltip on. oh well
+    switch (orbType) {
+    case MOUNTED:
+      tooltip.add(UtilChat.lang("item.ender_pearl_mounted.tooltip"));
+      break;
+    case NORMAL:
+      tooltip.add(UtilChat.lang("item.ender_pearl_reuse.tooltip"));
+      break;
+    default:
+      break;
+    }
   }
 }

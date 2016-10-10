@@ -46,7 +46,7 @@ public class GuiTerrariaButtonsModule extends BaseEventModule implements IHasCon
     // all containers by default but with a blacklist in config
     if (gui instanceof GuiContainer &&
         !(gui instanceof GuiInventory) &&
-        !(gui instanceof GuiPlayerExtended) && 
+        !(gui instanceof GuiPlayerExtended) &&
         !(gui instanceof GuiPlayerExtWorkbench)) {
       String self = gui.getClass().getName();
       // &&  blacklistGuis.contains(self) ==

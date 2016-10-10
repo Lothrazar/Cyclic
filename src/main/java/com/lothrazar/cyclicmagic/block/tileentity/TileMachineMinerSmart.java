@@ -1,5 +1,9 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
+import java.lang.ref.WeakReference;
 import java.util.UUID;
+import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
+import com.lothrazar.cyclicmagic.util.UtilItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
@@ -12,26 +16,29 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.util.FakePlayer;
 
 /**
  * 
  * SEE TileMachineMiner
  * 
  */
-public class TileMachineMinerSmart extends TileEntityBaseMachineInvoPlayer {
+public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
   // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
   public static int maxHeight = 10;
   private boolean isCurrentlyMining;
   private float curBlockDamage;
-  private boolean firstTick = true;
   private BlockPos targetPos = null;
   private ItemStack[] inv;
   private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots for all faces
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
   int height = 6;//TODO: gui field
+  private WeakReference<FakePlayer> fakePlayer;
+  private UUID uuid;
   public static enum Fields {
     HEIGHT
   }
@@ -44,10 +51,18 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvoPlayer {
     if (this.isPowered()) {
       this.spawnParticlesAbove();
     }
-    if (!worldObj.isRemote) {
-      if (firstTick || fakePlayer == null) {
-        firstTick = false;
-        initFakePlayer();
+    if (worldObj instanceof WorldServer) {
+      if (fakePlayer == null) {
+        fakePlayer = UtilFakePlayer.initFakePlayer((WorldServer) worldObj);
+        if (fakePlayer == null) {
+          ModMain.logger.warn("Warning: Fake player failed to init ");
+          return;
+        }
+      }
+      if (uuid == null) {
+        uuid = UUID.randomUUID();
+        IBlockState state = worldObj.getBlockState(this.pos);
+        worldObj.notifyBlockUpdate(pos, state, state, 3);
       }
       ItemStack maybeTool = inv[toolSlot];
       if (maybeTool == null) {
@@ -87,7 +102,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvoPlayer {
       }
       if (isCurrentlyMining) {
         IBlockState targetState = worldObj.getBlockState(targetPos);
-        curBlockDamage += targetState.getBlock().getPlayerRelativeBlockHardness(targetState, fakePlayer.get(), worldObj, targetPos);
+        curBlockDamage += UtilItem.getPlayerRelativeBlockHardness(targetState.getBlock(), targetState, fakePlayer.get(), worldObj, targetPos);
         if (curBlockDamage >= 1.0f) {
           isCurrentlyMining = false;
           resetProgress(targetPos);

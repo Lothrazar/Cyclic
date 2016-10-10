@@ -3,7 +3,9 @@ import java.text.DecimalFormat;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.item.ItemHorseUpgrade;
 import com.lothrazar.cyclicmagic.item.ItemHorseUpgrade.HorseUpgradeType;
+import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.client.Minecraft;
@@ -14,6 +16,7 @@ import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.config.Configuration;
@@ -27,12 +30,19 @@ public class HorseFoodModule extends BaseEventModule {
   @Override
   public void onInit() {
     if (enableHorseFoodUpgrades) {
-      ItemRegistry.addItem(new ItemHorseUpgrade(HorseUpgradeType.TYPE, new ItemStack(Items.EMERALD)), "horse_upgrade_type");
-      ItemRegistry.addItem(new ItemHorseUpgrade(HorseUpgradeType.VARIANT, new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage())), "horse_upgrade_variant");
-      ItemRegistry.addItem(new ItemHorseUpgrade(HorseUpgradeType.HEALTH, new ItemStack(Items.DIAMOND)), "horse_upgrade_health");
-      ItemRegistry.addItem(new ItemHorseUpgrade(HorseUpgradeType.SPEED, new ItemStack(Items.REDSTONE)), "horse_upgrade_speed");
-      ItemRegistry.addItem(new ItemHorseUpgrade(HorseUpgradeType.JUMP, new ItemStack(Items.ENDER_EYE)), "horse_upgrade_jump");
+      Item emerald_carrot = new ItemHorseUpgrade(HorseUpgradeType.TYPE, new ItemStack(Items.EMERALD));
+      Item lapis_carrot = new ItemHorseUpgrade(HorseUpgradeType.VARIANT, new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage()));
+      Item diamond_carrot = new ItemHorseUpgrade(HorseUpgradeType.HEALTH, new ItemStack(Items.DIAMOND));
+      Item redstone_carrot = new ItemHorseUpgrade(HorseUpgradeType.SPEED, new ItemStack(Items.REDSTONE));
+      Item ender_carrot = new ItemHorseUpgrade(HorseUpgradeType.JUMP, new ItemStack(Items.ENDER_EYE));
+      ItemRegistry.addItem(emerald_carrot, "horse_upgrade_type");
+      ItemRegistry.addItem(lapis_carrot, "horse_upgrade_variant");
+      ItemRegistry.addItem(diamond_carrot, "horse_upgrade_health");
+      ItemRegistry.addItem(redstone_carrot, "horse_upgrade_speed");
+      ItemRegistry.addItem(ender_carrot, "horse_upgrade_jump");
       ModMain.instance.events.addEvent(this);//for SubcribeEvent hooks
+      LootTableRegistry.registerLoot(diamond_carrot, 1);
+      AchievementRegistry.registerItemAchievement(diamond_carrot);
     }
   }
   @Override

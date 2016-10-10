@@ -326,7 +326,7 @@ public class UtilPlaceBlocks {
     else if (clickedBlock == Blocks.STONEBRICK) {
       //basically we rotate variant, buut not all of them. and smoothstone is a different block
       if (Blocks.STONEBRICK.getMetaFromState(clicked) == BlockStoneBrick.DEFAULT_META) {
-        placeState = Blocks.STONEBRICK.getStateFromMeta(BlockStoneBrick.CHISELED_META);
+        placeState = UtilItem.getStateFromMeta(Blocks.STONEBRICK, BlockStoneBrick.CHISELED_META);
       }
       else if (Blocks.STONEBRICK.getMetaFromState(clicked) == BlockStoneBrick.CHISELED_META) {
         placeState = Blocks.STONE.getDefaultState();

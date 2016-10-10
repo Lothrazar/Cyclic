@@ -12,7 +12,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerPlayerExtended extends ContainerBase {
   public InventoryPlayerExtended inventory;
-
   private final EntityPlayer thePlayer;
   private static final EntityEquipmentSlot[] ARMOR = new EntityEquipmentSlot[] { EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET };
   public static final int SLOT_SHIELD = 40;
@@ -22,7 +21,6 @@ public class ContainerPlayerExtended extends ContainerBase {
   public static final int HOTBAR_SIZE = 9;
   final int pad = 8;
   public ContainerPlayerExtended(InventoryPlayer playerInv, InventoryPlayerExtended eInvo, EntityPlayer player) {
-
     this.thePlayer = player;
     inventory = eInvo;//new InventoryPlayerExtended(player);
     inventory.setEventHandler(this);

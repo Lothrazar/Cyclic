@@ -8,8 +8,7 @@ public class CarbonPaperModule extends BaseModule {
   private boolean enableCarbonPaper;
   public void onInit() {
     if (enableCarbonPaper) {
-      ItemRegistry.carbon_paper = new ItemPaperCarbon();
-      ItemRegistry.addItem(ItemRegistry.carbon_paper, "carbon_paper");
+      ItemRegistry.addItem(new ItemPaperCarbon(), "carbon_paper");
     }
   }
   @Override

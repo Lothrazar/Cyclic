@@ -14,7 +14,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemCharmWater extends BaseCharm implements IHasRecipe {
   private static final int breath = 6;
@@ -29,29 +28,27 @@ public class ItemCharmWater extends BaseCharm implements IHasRecipe {
    */
   public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
     if (entityIn instanceof EntityPlayer) {
-      EntityPlayer living = (EntityPlayer) entityIn;
-      if (living.getAir() < breath && !living.isPotionActive(MobEffects.WATER_BREATHING)) {
-        living.addPotionEffect(new PotionEffect(MobEffects.WATER_BREATHING, seconds * Const.TICKS_PER_SEC, Const.Potions.I));
-        super.damageCharm(living, stack, itemSlot);
-        UtilSound.playSound(living, living.getPosition(), SoundEvents.ENTITY_PLAYER_SPLASH, living.getSoundCategory());
-        UtilParticle.spawnParticle(worldIn, EnumParticleTypes.WATER_BUBBLE, living.getPosition());
-        UtilParticle.spawnParticle(worldIn, EnumParticleTypes.WATER_BUBBLE, living.getPosition().up());
-      }
+      this.onTick(stack, (EntityPlayer) entityIn);
     }
   }
   @Override
   public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this),
-        "r n",
-        "ic ",
-        "iir",
-        'c', new ItemStack(Items.FISH, 1, ItemFishFood.FishType.SALMON.getMetadata()),
-        'n', Items.NETHER_WART,
-        'r', Items.REDSTONE,
-        'i', Items.IRON_INGOT);
+    super.addRecipeAndRepair(new ItemStack(Items.FISH, 1, ItemFishFood.FishType.SALMON.getMetadata()));
   }
   @Override
   public String getTooltip() {
     return "item.charm_water.tooltip";
+  }
+  @Override
+  public void onTick(ItemStack stack, EntityPlayer living) {
+    if (!this.canTick(stack)) { return; }
+    World worldIn = living.getEntityWorld();
+    if (living.getAir() < breath && !living.isPotionActive(MobEffects.WATER_BREATHING)) {
+      living.addPotionEffect(new PotionEffect(MobEffects.WATER_BREATHING, seconds * Const.TICKS_PER_SEC, Const.Potions.I));
+      super.damageCharm(living, stack);
+      UtilSound.playSound(living, living.getPosition(), SoundEvents.ENTITY_PLAYER_SPLASH, living.getSoundCategory());
+      UtilParticle.spawnParticle(worldIn, EnumParticleTypes.WATER_BUBBLE, living.getPosition());
+      UtilParticle.spawnParticle(worldIn, EnumParticleTypes.WATER_BUBBLE, living.getPosition().up());
+    }
   }
 }

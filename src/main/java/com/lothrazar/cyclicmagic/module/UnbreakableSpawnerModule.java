@@ -20,7 +20,7 @@ public class UnbreakableSpawnerModule extends BaseModule {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.blocks;
-    spawnersUnbreakable = config.getBoolean("Spawners Unbreakable", category, true, "Make mob spawners unbreakable");
+    spawnersUnbreakable = config.getBoolean("Spawners Unbreakable", category, false, "Make mob spawners unbreakable");
     updateHardness();
   }
 }

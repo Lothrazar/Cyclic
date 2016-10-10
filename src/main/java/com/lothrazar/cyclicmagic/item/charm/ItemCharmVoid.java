@@ -12,7 +12,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemCharmVoid extends BaseCharm implements IHasRecipe {
   private static final int durability = 16;
@@ -27,28 +26,26 @@ public class ItemCharmVoid extends BaseCharm implements IHasRecipe {
    */
   public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
     if (entityIn instanceof EntityPlayer) {
-      EntityPlayer living = (EntityPlayer) entityIn;
-      if (living.getPosition().getY() < yLowest) {
-        UtilEntity.teleportWallSafe(living, worldIn, new BlockPos(living.getPosition().getX(), yDest, living.getPosition().getZ()));
-        super.damageCharm(living, stack, itemSlot);
-        UtilSound.playSound(living, living.getPosition(), SoundEvents.ENTITY_ENDERMEN_TELEPORT, living.getSoundCategory());
-        UtilParticle.spawnParticle(worldIn, EnumParticleTypes.PORTAL, living.getPosition());
-      }
+      this.onTick(stack, (EntityPlayer) entityIn);
     }
   }
   @Override
   public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this),
-        "r n",
-        "ic ",
-        "iir",
-        'c', Items.ENDER_EYE,
-        'n', Items.NETHER_WART,
-        'r', Items.REDSTONE,
-        'i', Items.IRON_INGOT);
+    super.addRecipeAndRepair(Items.ENDER_EYE);
   }
   @Override
   public String getTooltip() {
     return "item.charm_void.tooltip";
+  }
+  @Override
+  public void onTick(ItemStack stack, EntityPlayer living) {
+    if (!this.canTick(stack)) { return; }
+    World worldIn = living.getEntityWorld();
+    if (living.getPosition().getY() < yLowest) {
+      UtilEntity.teleportWallSafe(living, worldIn, new BlockPos(living.getPosition().getX(), yDest, living.getPosition().getZ()));
+      super.damageCharm(living, stack);
+      UtilSound.playSound(living, living.getPosition(), SoundEvents.ENTITY_ENDERMEN_TELEPORT, living.getSoundCategory());
+      UtilParticle.spawnParticle(worldIn, EnumParticleTypes.PORTAL, living.getPosition());
+    }
   }
 }

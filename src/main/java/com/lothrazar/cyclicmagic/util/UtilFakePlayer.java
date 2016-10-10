@@ -1,9 +1,9 @@
-package com.lothrazar.cyclicmagic.block.tileentity;
+package com.lothrazar.cyclicmagic.util;
 import java.lang.ref.WeakReference;
 import java.util.UUID;
 import com.google.common.base.Charsets;
+import com.lothrazar.cyclicmagic.ModMain;
 import com.mojang.authlib.GameProfile;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.network.EnumPacketDirection;
 import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.network.NetworkManager;
@@ -13,17 +13,21 @@ import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
-public abstract class TileEntityBaseMachineInvoPlayer extends TileEntityBaseMachineInvo {
-  public static final GameProfile breakerProfile = new GameProfile(UUID.nameUUIDFromBytes("CyclicFakePlayer2".getBytes(Charsets.UTF_8)), "CyclicFakePlayer2");
-  protected WeakReference<FakePlayer> fakePlayer;
-  protected UUID uuid;
-  protected void initFakePlayer() {
-    if (uuid == null) {
-      uuid = UUID.randomUUID();
-      IBlockState state = worldObj.getBlockState(this.pos);
-      worldObj.notifyBlockUpdate(pos, state, state, 3);
+public class UtilFakePlayer {
+  public static final GameProfile breakerProfile = new GameProfile(UUID.nameUUIDFromBytes("CyclicFakePlayer".getBytes(Charsets.UTF_8)), "CyclicFakePlayer");
+  public static WeakReference<FakePlayer> initFakePlayer(WorldServer ws) {
+    WeakReference<FakePlayer> fakePlayer;
+    try {
+      fakePlayer = new WeakReference<FakePlayer>(FakePlayerFactory.get(ws, breakerProfile));
     }
-    fakePlayer = new WeakReference<FakePlayer>(FakePlayerFactory.get((WorldServer) worldObj, breakerProfile));
+    catch (Exception e) {
+      ModMain.logger.error("Exception thrown trying to create fake player : " + e.getMessage());
+      fakePlayer = null;
+    }
+    if (fakePlayer == null || fakePlayer.get() == null) {
+      fakePlayer = null;
+      return null; // trying to get around https://github.com/PrinceOfAmber/Cyclic/issues/113
+    }
     fakePlayer.get().onGround = true;
     fakePlayer.get().connection = new NetHandlerPlayServer(FMLCommonHandler.instance().getMinecraftServerInstance(), new NetworkManager(EnumPacketDirection.SERVERBOUND), fakePlayer.get()) {
       @SuppressWarnings("rawtypes")
@@ -31,5 +35,6 @@ public abstract class TileEntityBaseMachineInvoPlayer extends TileEntityBaseMach
       public void sendPacket(Packet packetIn) {
       }
     };
+    return fakePlayer;
   }
 }

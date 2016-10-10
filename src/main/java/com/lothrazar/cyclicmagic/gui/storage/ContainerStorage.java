@@ -28,7 +28,7 @@ public class ContainerStorage extends ContainerBase {
         x = pad + k * Const.SQ;
         y = pad + l * Const.SQ;
         slot = k + l * cols;
-        this.addSlotToContainer(new SlotItemRestrictedInverse(invoWand, slot, x, y,ItemRegistry.storage_bag));
+        this.addSlotToContainer(new SlotItemRestrictedInverse(invoWand, slot, x, y, ItemRegistry.storage_bag));
       }
     }
     int yBase = pad + rows * Const.SQ + 14;

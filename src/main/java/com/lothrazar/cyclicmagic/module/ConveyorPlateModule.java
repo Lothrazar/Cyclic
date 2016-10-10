@@ -1,8 +1,10 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.block.BlockConveyor;
+import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
 
 public class ConveyorPlateModule extends BaseModule {
@@ -12,6 +14,7 @@ public class ConveyorPlateModule extends BaseModule {
       BlockConveyor plate_push = new BlockConveyor(0.16F, SoundEvents.BLOCK_ANVIL_BREAK);
       BlockRegistry.registerBlock(plate_push, "plate_push");
       plate_push.addRecipe();
+      AchievementRegistry.registerItemAchievement(Item.getItemFromBlock(plate_push));
     }
   }
   @Override

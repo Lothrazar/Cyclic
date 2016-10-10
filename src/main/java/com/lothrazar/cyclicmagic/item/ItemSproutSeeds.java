@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.item;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -36,7 +35,7 @@ public class ItemSproutSeeds extends ItemSeeds implements IHasRecipe {
   }
   @Override
   public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(ItemRegistry.sprout_seed, 2),
+    GameRegistry.addRecipe(new ItemStack(this, 2),
         "waw",
         "bEc",
         "wdw",

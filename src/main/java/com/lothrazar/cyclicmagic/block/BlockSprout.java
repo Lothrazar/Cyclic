@@ -87,8 +87,7 @@ public class BlockSprout extends BlockCrops {
   @Override
   protected Item getCrop() {
     Random rand = new Random();
-    if(drops == null){
-      return ItemRegistry.sprout_seed;//shouldnt ever happen
+    if (drops == null) { return ItemRegistry.sprout_seed;//shouldnt ever happen
     }
     return drops[rand.nextInt(drops.length)];
   }

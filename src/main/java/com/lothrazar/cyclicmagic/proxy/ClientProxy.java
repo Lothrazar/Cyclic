@@ -76,8 +76,8 @@ public class ClientProxy extends CommonProxy {
       ClientRegistry.registerKeyBinding(ClientProxy.keyBarDown);
       keyExtraInvo = new KeyBinding("key.keyExtraInvo", Keyboard.KEY_R, keyCategoryInventory);
       ClientRegistry.registerKeyBinding(ClientProxy.keyExtraInvo);
-      keyExtraCraftin = new KeyBinding("key.keyExtraCraftin",net.minecraftforge.client.settings.KeyConflictContext.IN_GAME,
-            KeyModifier.SHIFT, Keyboard.KEY_R, keyCategoryInventory);
+      keyExtraCraftin = new KeyBinding("key.keyExtraCraftin", net.minecraftforge.client.settings.KeyConflictContext.IN_GAME,
+          KeyModifier.SHIFT, Keyboard.KEY_R, keyCategoryInventory);
       ClientRegistry.registerKeyBinding(ClientProxy.keyExtraCraftin);
     }
   }

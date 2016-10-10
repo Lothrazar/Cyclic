@@ -1,7 +1,10 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.item.ItemPotionCustom;
+import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.Potions;
 import net.minecraft.init.Blocks;
@@ -66,6 +69,7 @@ public class PotionModule extends BaseEventModule {
     //CORE/BASE POTION
     ItemStack awkward = BrewingRecipeRegistry.getOutput(new ItemStack(Items.POTIONITEM), new ItemStack(Items.NETHER_WART));
     ItemRegistry.addItem(potion_viscous, "potion_viscous");
+    AchievementRegistry.registerItemAchievement(potion_viscous);
     BrewingRecipeRegistry.addRecipe(
         awkward,
         new ItemStack(Items.DYE, 1, EnumDyeColor.BROWN.getDyeDamage()),
@@ -147,6 +151,8 @@ public class PotionModule extends BaseEventModule {
           new ItemStack(potion_snow),
           new ItemStack(Items.REDSTONE),
           new ItemStack(potion_snow_long));
+      LootTableRegistry.registerLoot(potion_snow, ChestType.IGLOO);
+      LootTableRegistry.registerLoot(potion_snow_long, ChestType.IGLOO);
     }
     if (enableHBoost) {
       potion_boost = new ItemPotionCustom(true, MobEffects.HEALTH_BOOST, NORMAL, Const.Potions.V);
@@ -161,6 +167,7 @@ public class PotionModule extends BaseEventModule {
           potion_boost,
           Items.REDSTONE,
           potion_boost_long);
+      LootTableRegistry.registerLoot(potion_boost_long);
     }
     if (enableResist) {
       potion_resistance = new ItemPotionCustom(true, MobEffects.RESISTANCE, NORMAL);
@@ -181,6 +188,7 @@ public class PotionModule extends BaseEventModule {
           potion_resistance,
           Items.GLOWSTONE_DUST,
           potion_resistance_strong);
+      LootTableRegistry.registerLoot(potion_resistance_long);
     }
     if (enableHaste) {
       potion_haste = new ItemPotionCustom(false, MobEffects.HASTE, 60 * 3);
@@ -201,6 +209,7 @@ public class PotionModule extends BaseEventModule {
           potion_haste,
           Items.GLOWSTONE_DUST,
           potion_haste_strong);
+      LootTableRegistry.registerLoot(potion_haste_strong);
     }
     if (enableLuck) {
       potion_luck = new ItemPotionCustom(true, MobEffects.LUCK, NORMAL);

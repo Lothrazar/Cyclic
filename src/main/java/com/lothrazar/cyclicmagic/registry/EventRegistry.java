@@ -6,6 +6,7 @@ import net.minecraftforge.common.MinecraftForge;
 public class EventRegistry {
   private ArrayList<Object> events = new ArrayList<Object>();
   public void registerCoreEvents() {
+    this.addEvent(new EventAchievement());
     this.addEvent(new EventConfigChanged());
     this.addEvent(new EventExtendedInventory());
     this.addEvent(new EventKeyInput());

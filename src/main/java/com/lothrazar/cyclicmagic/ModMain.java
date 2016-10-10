@@ -23,8 +23,7 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
-@Mod(modid = Const.MODID, useMetadata = true, 
-dependencies="after:JEI;",canBeDeactivated = false, updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json", acceptableRemoteVersions = "*", guiFactory = "com.lothrazar." + Const.MODID + ".gui.IngameConfigFactory")
+@Mod(modid = Const.MODID, useMetadata = true, dependencies = "after:JEI;after:Baubles", canBeDeactivated = false, updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json", acceptableRemoteVersions = "*", guiFactory = "com.lothrazar." + Const.MODID + ".gui.IngameConfigFactory")
 public class ModMain {
   private List<ICyclicModule> modules = new ArrayList<ICyclicModule>();
   @Instance(value = Const.MODID)
@@ -81,6 +80,7 @@ public class ModMain {
     for (ICyclicModule module : this.modules) {
       module.onPostInit();
     }
+    AchievementRegistry.registerPage();
   }
   @EventHandler
   public void onServerStarting(FMLServerStartingEvent event) {
@@ -109,13 +109,7 @@ public class ModMain {
    * 
    * TODO: ideas/plans/features
    * 
-   * BAUBLES API: optional DEP , fire off all charms from it
-   * 
    * Structure builder: add preview (ghost blocks or sparkls)
-   * 
-   * ender orb upgrade: but mounted version
-   * 
-   * jump plates: show block numbers not other
    * 
    * project table (invo plus 3x3)
    * 
@@ -133,20 +127,11 @@ public class ModMain {
    * 
    * machine to spam bonemeal, with input slot
    * 
-   * ender charm: same effect as ender potion but without the potion effect.
-   * 
-   * OWN custom texture for waterwalk effect (shouldnt ust just vanilla
-   * prismarine item)
-   * 
    * DISABLE the forward vector component of launch enchat, if we are standing
    * still (if no current horiz)
    * 
-   * craft saplings into sticks
-   * 
    * revive my old idea of the flint tool to chop wood, and the idea to disable
    * punching trees?
-   * 
-   * speed charm -> make sur it works on horses to
    * 
    * Reinforced scaffolding - like wood one, still breaks in one hit. disable
    * auto break. climbable like a ladder
