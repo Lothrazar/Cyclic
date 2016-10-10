@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.block.BlockSprout;
 import com.lothrazar.cyclicmagic.item.ItemSproutSeeds;
+import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
@@ -18,6 +19,7 @@ public class MagicBeanModule extends BaseModule {
       ItemRegistry.addItem(sprout_seed, "sprout_seed");
       LootTableRegistry.registerLoot(sprout_seed);
       ItemRegistry.sprout_seed = sprout_seed;
+      AchievementRegistry.registerItemAchievement(sprout_seed);
     }
   }
   @Override

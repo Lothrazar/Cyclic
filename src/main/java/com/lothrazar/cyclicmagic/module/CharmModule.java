@@ -22,31 +22,26 @@ public class CharmModule extends BaseModule {
     if (enableFire) {
       ItemCharmFire charm_fire = new ItemCharmFire();
       ItemRegistry.addItem(charm_fire, "charm_fire");
-      AchievementRegistry.registerItemAchievement(charm_fire);
       LootTableRegistry.registerLoot(charm_fire);
     }
     if (enableSea) {
       ItemCharmBoat charm_boat = new ItemCharmBoat();
       ItemRegistry.addItem(charm_boat, "charm_boat");
-      AchievementRegistry.registerItemAchievement(charm_boat);
       LootTableRegistry.registerLoot(charm_boat);
     }
     if (enableVoid) {
       ItemCharmVoid charm_void = new ItemCharmVoid();
       ItemRegistry.addItem(charm_void, "charm_void");
-      AchievementRegistry.registerItemAchievement(charm_void);
       LootTableRegistry.registerLoot(charm_void);
     }
     if (enableWater) {
       ItemCharmWater charm_water = new ItemCharmWater();
       ItemRegistry.addItem(charm_water, "charm_water");
-      AchievementRegistry.registerItemAchievement(charm_water);
       LootTableRegistry.registerLoot(charm_water);
     }
     if (antidoteCharm) {
       ItemCharmAntidote charm_antidote = new ItemCharmAntidote();
       ItemRegistry.addItem(charm_antidote, "charm_antidote");
-      AchievementRegistry.registerItemAchievement(charm_antidote);
       LootTableRegistry.registerLoot(charm_antidote);
     }
     if (slowfallCharm) {

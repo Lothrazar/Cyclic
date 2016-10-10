@@ -24,7 +24,6 @@ public class ConsumeablesModule extends BaseModule {
       ItemAppleEmerald apple_emerald = new ItemAppleEmerald();
       ItemRegistry.addItem(apple_emerald, "apple_emerald");
       LootTableRegistry.registerLoot(apple_emerald);
-      AchievementRegistry.registerItemAchievement(apple_emerald);
     }
     if (enableHeartContainer) {
       ItemFoodHeart heart_food = new ItemFoodHeart();

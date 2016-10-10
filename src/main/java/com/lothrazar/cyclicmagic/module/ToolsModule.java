@@ -71,6 +71,7 @@ public class ToolsModule extends BaseModule {
       ItemToolPearlReuse ender_pearl_mounted = new ItemToolPearlReuse(ItemToolPearlReuse.OrbType.MOUNTED);
       ItemRegistry.addItem(ender_pearl_mounted, "ender_pearl_mounted");
       LootTableRegistry.registerLoot(ender_pearl_mounted);
+      AchievementRegistry.registerItemAchievement(ender_pearl_mounted);
     }
     if (enableHarvestWeeds) {
       ItemToolHarvest tool_harvest_weeds = new ItemToolHarvest(ItemToolHarvest.HarvestType.WEEDS);
@@ -107,11 +108,13 @@ public class ToolsModule extends BaseModule {
       ModMain.instance.events.addEvent(this);
       LootTableRegistry.registerLoot(ItemRegistry.cyclic_wand_build, ChestType.ENDCITY, 15);
       LootTableRegistry.registerLoot(ItemRegistry.cyclic_wand_build, ChestType.GENERIC, 1);
+      AchievementRegistry.registerItemAchievement(ItemRegistry.cyclic_wand_build);
     }
     if (enableWarpHomeTool) {
       ItemToolWarp tool_warp_home = new ItemToolWarp(ItemToolWarp.WarpType.BED);
       ItemRegistry.addItem(tool_warp_home, "tool_warp_home");
       LootTableRegistry.registerLoot(tool_warp_home);
+      AchievementRegistry.registerItemAchievement(tool_warp_home);
     }
     if (enableWarpSpawnTool) {
       ItemToolWarp tool_warp_spawn = new ItemToolWarp(ItemToolWarp.WarpType.SPAWN);
