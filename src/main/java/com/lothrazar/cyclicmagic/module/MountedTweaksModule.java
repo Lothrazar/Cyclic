@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.client.GuiIngameForge;
@@ -60,13 +61,13 @@ public class MountedTweaksModule extends BaseEventModule implements IHasConfig {
     Entity maybeHorse = event.getEntityBeingMounted();//can be null!!
     Entity maybePlayer = event.getEntityMounting();
     World world = event.getWorldObj();
-    if (maybeHorse != null && event.isDismounting() && maybePlayer instanceof EntityPlayer && maybePlayer != null) {
+    if (maybeHorse != null && maybeHorse instanceof EntityLivingBase && event.isDismounting() && maybePlayer instanceof EntityPlayer && maybePlayer != null) {
       EntityPlayer playerRider = (EntityPlayer) maybePlayer;
       if (playerRider.getEntityData().hasKey(KEY_MOUNTENTITY)) {
         int eid = playerRider.getEntityData().getInteger(KEY_MOUNTENTITY);
         if (eid >= 0) {
           Entity e = world.getEntityByID(eid);
-          if (e != null) {
+          if (e != null && e instanceof EntityLivingBase) {//compat with riding ender pearl
             //if we were dismounted from an ender pearl, get and consume this entity id, wiping it out for next time
             playerRider.startRiding(e, true);
             playerRider.getEntityData().setInteger(KEY_MOUNTENTITY, -1);

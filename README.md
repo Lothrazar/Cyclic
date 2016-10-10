@@ -15,5 +15,5 @@ Me: https://twitter.com/lothrazar
 # APIs
 
 Download jei_1.10.2-3.9.5.255.jar in /libs
-Download Baubles-1.10.2-1.3.BETA6-deobf.jar in /libs
+Download Baubles-1.10.2-1.3.BETA7.jar in /libs
 follow these steps for both apis http://www.minecraftforum.net/forums/mapping-and-modding/mapping-and-modding-tutorials/1571434-tutorial-modding-with-apis

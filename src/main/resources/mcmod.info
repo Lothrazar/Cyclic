@@ -3,8 +3,7 @@
   "modList": [{
     "modid": "cyclicmagic",
     "name": "Cyclic",
-    "description": "See curseforge for latest features, and report issues to https://github.com/PrinceOfAmber/Cyclic/issues.  I added everything I wanted the game to have, including powerful items, inventory features, world generation, and more. See config for more controls.  Balanced around 
-single player survival.",
+    "description": "Random things that are useful and fun, including powerful items, inventory features, world generation, a few machines, gameplay tweaks, and more. See config to disable absolutely anything.  Report issues to https://github.com/PrinceOfAmber/Cyclic/issues ",
     "version": "1.7.13",
     "mcversion": "1.10.2",
     "url": "http://minecraft.curseforge.com/projects/cyclic",
