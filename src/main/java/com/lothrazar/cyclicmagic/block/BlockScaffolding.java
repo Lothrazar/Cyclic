@@ -47,14 +47,14 @@ public class BlockScaffolding extends Block implements IHasRecipe {
   }
   @Override
   public void updateTick(World worldObj, BlockPos pos, IBlockState state, Random rand) {
-    worldObj.destroyBlock(pos, false);
+    worldObj.destroyBlock(pos, true);
   }
   public int tickRate(World worldIn) {
     return 200;
   }
   @Override
   public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this, 8), "s s", " s ", "s s", 's', new ItemStack(Items.STICK));
+    GameRegistry.addRecipe(new ItemStack(this, 12), "s s", " s ", "s s", 's', new ItemStack(Items.STICK));
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
