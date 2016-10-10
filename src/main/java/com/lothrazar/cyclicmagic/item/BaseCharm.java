@@ -1,10 +1,8 @@
 package com.lothrazar.cyclicmagic.item;
 import com.lothrazar.cyclicmagic.util.UtilItem;
-import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Optional;
@@ -28,13 +26,6 @@ public abstract class BaseCharm extends BaseItem implements baubles.api.IBauble 
   }
   public void damageCharm(EntityPlayer living, ItemStack stack) {
     UtilItem.damageItem(living, stack);
-    if (stack == null || stack.getItemDamage() == stack.getMaxDamage() || stack.stackSize == 0) {
-      if (stack != null && stack.stackSize == 0) {
-        stack.stackSize = 1;//avoid that red zero if baulbes doesnt make it gone
-      }
-      //      living.inventory.setInventorySlotContents(itemSlot, null);
-      UtilSound.playSound(living, living.getPosition(), SoundEvents.ENTITY_ITEM_BREAK, living.getSoundCategory());
-    }
   }
   public void addRecipeAndRepair(Item craftItem) {
     this.addRecipeAndRepair(new ItemStack(craftItem));

@@ -27,7 +27,7 @@ public class BaseCommand implements ICommand {
     name = n;
     requiresOP = op;
     aliases = (paliases == null) ? new ArrayList<String>() : paliases;
-    aliases.add(name.toUpperCase());
+//    aliases.add(name.toUpperCase());
   }
   @Override
   public List<String> getCommandAliases() {
