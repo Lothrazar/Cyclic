@@ -35,7 +35,7 @@ public class EntityShearingBolt extends EntityThrowable {
       try {
         EntitySheep sheep = (EntitySheep) mop.entityHit;
         // imported from MY unreleased/abandoned BlockShearWool.java in./FarmingBlocks/
-        if (sheep != null && sheep.getSheared() == false && sheep.getFleeceColor() != null) {
+        if (sheep != null && sheep.getSheared() == false && sheep.getFleeceColor() != null) { // fleece colour might be null? maybe causing bug #120
           // either an adult, or child that passes config
           if (sheep.isChild() == false || (EntityShearingBolt.doesShearChild == true && sheep.isChild() == true)) {
             if (worldObj.isRemote == false) {
@@ -58,7 +58,7 @@ public class EntityShearingBolt extends EntityThrowable {
         }
       }
       catch (Exception e) {
-        //NullPointerException https://github.com/PrinceOfAmber/Cyclic/issues/120
+        // https://github.com/PrinceOfAmber/Cyclic/issues/120
         ModMain.logger.error(e.getMessage());
       }
     }
