@@ -5,8 +5,8 @@
     "1.9.4-recommended":  "1.2.0",
     "1.10-latest":  "1.1.0",
     "1.10-recommended": "1.1.0",
-    "1.10.2-latest":  "1.7.13",
-    "1.10.2-recommended": "1.7.13"
+    "1.10.2-latest":  "1.7.14",
+    "1.10.2-recommended": "1.7.14"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -56,5 +56,6 @@
   	,"1.7.10":"Re-designed the inventory crafting screen (unlock by eating Inventory Crafting item).  It mirrors player inventory more closely with armor slots; has its own keybinding to open it; is now compatible with FTB Utilities; and has full JEI support.  Fixed the Druid villager missing texture (was using the vanilla green villager)"
   	,"1.7.12":"Fix block miners crashing when used in multiplayer on sponge servers (attempting mod compatibility with spongeforge-1.10.2-2092-5.0.0-BETA-1770).  Fix rare exceptions from exchange scepters (ConcurrentModification)."
   	,"1.7.13":"Charms have new recipes, they no longer break on empty durability, instead they are repairable.  Charms and have optional Baubles API support.  New items: Speed Charm, Ender Orb Translocator.  Fix Jump plates to show accurate number of blocks in tooltip.  Spawners Unbreakable now defaults to false in config.  Rebalanced how mod items are distributed in loot tables (some cheaper less valuable items removed such as ender torch, other odds rebalanced).  Fix some items not consumed when thrown using offhand (ender bomb and others).  Added achievement page.  Fix some typos and conflicts in some of the commands useage info and aliases.  Fix scaffolding not dropping as an item when breaking, and increase recipe output slightly."
+	,"1.7.14":"Fix Sack of Holding leaving behind ghost blocks or invisible chests when used to pick up half of a double chest.  Sack of holding now always drops the full sack on the player going both ways (instead of sometimes where the chest was, and sometimes where the player is).  Add error handing to Ender Shears to avoid ticking entity crashes, and make sure Ender Shears drops as an item when it hits a block, or a sheep that has already been sheared, or any non-sheep entity.  "
   }
 }
