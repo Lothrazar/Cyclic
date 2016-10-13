@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.entity.projectile;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.module.MobDropChangesModule;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -30,31 +31,32 @@ public class EntityShearingBolt extends EntityThrowable {
   }
   @Override
   protected void onImpact(RayTraceResult mop) {
-    boolean success = false;
     if (mop.entityHit != null && mop.entityHit instanceof EntitySheep) {
       try {
         EntitySheep sheep = (EntitySheep) mop.entityHit;
-        // imported from MY unreleased/abandoned BlockShearWool.java in./FarmingBlocks/
-        if (sheep != null && sheep.getSheared() == false && sheep.getFleeceColor() != null) { // fleece colour might be null? maybe causing bug #120
-          // either an adult, or child that passes config
-          if (sheep.isChild() == false || (EntityShearingBolt.doesShearChild == true && sheep.isChild() == true)) {
-            if (worldObj.isRemote == false) {
-              sheep.setSheared(true);
-              int i = 1 + worldObj.rand.nextInt(3);
-              if (MobDropChangesModule.sheepShearBuffed) {
-                i += MathHelper.getRandomIntegerInRange(worldObj.rand, 1, 6);
-              }
-              for (int j = 0; j < i; ++j) {
-                EntityItem entityitem = sheep.entityDropItem(new ItemStack(Blocks.WOOL, 1, sheep.getFleeceColor().getMetadata()), 1.0F);
-                entityitem.motionY += (double) (worldObj.rand.nextFloat() * 0.05F);
-                entityitem.motionX += (double) ((worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.1F);
-                entityitem.motionZ += (double) ((worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.1F);
-              }
+        // imported from MY unreleased/abandoned BlockShearWool.java in./FarmingBlocks/// fleece colour might be null? maybe causing bug #120
+        //if this sheep is not sheared, AND ->  either an adult, or child that passes config
+        if (sheep.getSheared() == false && sheep.getFleeceColor() != null &&
+            (sheep.isChild() == false || (EntityShearingBolt.doesShearChild == true && sheep.isChild() == true))) {
+          if (worldObj.isRemote == false) {
+            sheep.setSheared(true);
+            int i = 1 + worldObj.rand.nextInt(3);
+            if (MobDropChangesModule.sheepShearBuffed) {
+              i += MathHelper.getRandomIntegerInRange(worldObj.rand, 1, 6);
             }
-            UtilSound.playSound(worldObj, sheep.getPosition(), SoundEvents.ENTITY_SHEEP_SHEAR, SoundCategory.NEUTRAL);
+            for (int j = 0; j < i; ++j) {
+              EntityItem entityitem = sheep.entityDropItem(new ItemStack(Blocks.WOOL, 1, sheep.getFleeceColor().getMetadata()), 1.0F);
+              entityitem.motionY += (double) (worldObj.rand.nextFloat() * 0.05F);
+              entityitem.motionX += (double) ((worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.1F);
+              entityitem.motionZ += (double) ((worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.1F);
+            }
           }
-          // else we hit a child sheep and config disables that
-          success = true;
+          UtilSound.playSound(worldObj, sheep.getPosition(), SoundEvents.ENTITY_SHEEP_SHEAR, SoundCategory.NEUTRAL);
+        }
+        else {
+          BlockPos posToDrop = getPosToDrop(mop);
+          if (posToDrop != null)
+            UtilEntity.dropItemStackInWorld(worldObj, posToDrop, renderSnowball);
         }
       }
       catch (Exception e) {
@@ -62,10 +64,18 @@ public class EntityShearingBolt extends EntityThrowable {
         ModMain.logger.error(e.getMessage());
       }
     }
-    if (success && worldObj.isRemote == false && mop.getBlockPos() != null) {
-      BlockPos pos = mop.getBlockPos();
-      worldObj.spawnEntityInWorld(new EntityItem(worldObj, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(renderSnowball)));
+    else {
+      BlockPos posToDrop = getPosToDrop(mop);
+      if (posToDrop != null)
+        UtilEntity.dropItemStackInWorld(worldObj, posToDrop, renderSnowball);
     }
     this.setDead();
+  }
+  private BlockPos getPosToDrop(RayTraceResult mop) {
+    BlockPos pos = mop.getBlockPos();
+    if (pos == null && mop.entityHit != null) {
+      pos = mop.entityHit.getPosition();
+    }
+    return pos;
   }
 }
