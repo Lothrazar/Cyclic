@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Random;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockFlower;
@@ -87,10 +86,14 @@ public class BlockSprout extends BlockCrops {
       myDrops.add(new ItemStack(Blocks.DOUBLE_PLANT, 1, b.getMeta()));
     }
   }
+  @Override
+  protected PropertyInteger getAgeProperty() {
+    return AGE;
+  }
   @Nullable
   @Override
   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-    return this.isMaxAge(state) ? null : this.getSeed();//the null tells harvestcraft hey: dont remove my drops
+    return this.isMaxAge(state) ? this.getSeed() : this.getSeed();//the null tells harvestcraft hey: dont remove my drops
   }
   @Override
   protected Item getSeed() {
@@ -98,7 +101,7 @@ public class BlockSprout extends BlockCrops {
   }
   @Override
   protected Item getCrop() {
-    return ItemRegistry.sprout_seed;
+    return null;//ItemRegistry.sprout_seed;
   }
   private ItemStack getCropStack(Random rand) {
     return myDrops.get(rand.nextInt(myDrops.size()));
@@ -107,37 +110,42 @@ public class BlockSprout extends BlockCrops {
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
     return AABB[((Integer) state.getValue(this.getAgeProperty())).intValue()];
   }
-  @Override
-  public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune) {
-    // if block was broken normal way (not with some gentle harvest ex harvestcraft), then tack on a seed at the end
-    for (ItemStack s : this.getDrops(worldIn, pos, state, fortune)) {
-      Block.spawnAsEntity(worldIn, pos, s);
-    }
-    Block.spawnAsEntity(worldIn, pos, new ItemStack(getSeed()));
-  }
+  //  @Override
+  //  public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune) {
+  //    // if block was broken normal way (not with some gentle harvest ex harvestcraft), then tack on a seed at the end
+  //    for (ItemStack s : this.getDrops(worldIn, pos, state, fortune)) {
+  //      Block.spawnAsEntity(worldIn, pos, s);
+  //    }
+  //    boolean isGrown = this.isMaxAge(state);
+  //    System.out.println("!!isGrown" + isGrown);
+  //    if (!isGrown) {
+  //      Block.spawnAsEntity(worldIn, pos, new ItemStack(getSeed()));
+  //    }
+  //  }
   @Override
   public int quantityDropped(Random random) {
-    return 1;
+    return super.quantityDropped(random) + 1;
   }
-  @Override
-  public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-    this.dropBlockAsItemWithChance(worldIn, pos, state, 1, 0);
-  }
+  //  @Override
+  //  public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+  //    this.dropBlockAsItemWithChance(worldIn, pos, state, 1, 0);
+  //  }
   @Override
   public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-
     // Used by regular 'block break' and also by other harvesting features
     java.util.List<ItemStack> ret = new ArrayList<ItemStack>();
-    if (this.isMaxAge(state)) {
+    boolean isGrown = this.isMaxAge(state);
+    // System.out.println("isGrown" + isGrown);
+    if (isGrown) {
       Random rand = world instanceof World ? ((World) world).rand : new Random();
       int count = quantityDropped(state, fortune, rand);
       for (int i = 0; i < count; i++) {
         ret.add(getCropStack(rand).copy()); //copy to make sure we return a new instance
       }
     }
-//    else{
-//      ret.add(new ItemStack(getSeed()));
-//    }
+    //else{
+    ret.add(new ItemStack(getSeed()));
+    //}
     return ret;
   }
   @Override
@@ -146,7 +154,7 @@ public class BlockSprout extends BlockCrops {
   }
   @Override
   protected int getBonemealAgeIncrease(World worldIn) {
-    return 0;
+    return 9;
   }
   @Override
   public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
