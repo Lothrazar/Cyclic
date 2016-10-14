@@ -25,6 +25,7 @@ public class UtilInventorySort {
     public ArrayList<ItemStack> stacks;
     public String key;
   }
+
   public static void dumpFromPlayerToIInventory(World world, IInventory inventory, EntityPlayer player) {
     ItemStack chestEmptySlot;
     ItemStack playerItem;
@@ -74,6 +75,63 @@ public class UtilInventorySort {
       } // close loop on player inventory items
     } // close loop on chest items
     updatePlayerContainerClient(player);
+  }
+  public static ItemStack[] sortFromListToInventory(World world, IInventory chest, ItemStack[] stacks) {
+    // source:
+    // https://github.com/PrinceOfAmber/SamsPowerups/blob/master/Spells/src/main/java/com/lothrazar/samsmagic/spell/SpellChestDeposit.java#L84
+    ItemStack chestItem;
+    ItemStack playerItem;
+    int room;
+    int toDeposit;
+    int chestMax;
+    // player inventory and the small chest have the same dimensions
+    int START_CHEST = 0;
+    int END_CHEST = chest.getSizeInventory();
+    // inventory and chest has 9 rows by 3 columns, never changes. same as
+    // 64
+    // max stack size
+    for (int islotChest = START_CHEST; islotChest < END_CHEST; islotChest++) {
+      chestItem = chest.getStackInSlot(islotChest);
+      if (chestItem == null) {
+        continue;
+      } // empty chest slot
+      for (int islotInv = 0; islotInv < stacks.length; islotInv++) {
+        playerItem = stacks[islotInv];
+        if (playerItem == null) {
+          continue;
+        } // empty inventory slot
+        if (playerItem.getItem().equals(chestItem.getItem())
+            && playerItem.getItemDamage() == chestItem.getItemDamage()) {
+          // same item, including damage (block state)
+          chestMax = chestItem.getItem().getItemStackLimit(chestItem);
+          room = chestMax - chestItem.stackSize;
+          if (room <= 0) {
+            continue;
+          } // no room, check the next spot
+          // so if i have 30 room, and 28 items, i deposit 28.
+          // or if i have 30 room and 38 items, i deposit 30
+          toDeposit = Math.min(playerItem.stackSize, room);
+          chestItem.stackSize += toDeposit;
+          chest.setInventorySlotContents(islotChest, chestItem);
+          playerItem.stackSize -= toDeposit;
+          if (playerItem.stackSize <= 0) // because of calculations
+          // above, should
+          // not be below zero
+          {
+            // item stacks with zero count do not destroy
+            // themselves, they show
+            // up and have unexpected behavior in game so set to
+            // empty
+            stacks[islotInv] = null;
+          }
+          else {
+            // set to new quantity
+            stacks[islotInv] = playerItem;
+          }
+        } // end if items match
+      } // close loop on player inventory items
+    } // close loop on chest items
+return stacks;
   }
   public static void sortFromPlayerToInventory(World world, IInventory chest, EntityPlayer player) {
     // source:

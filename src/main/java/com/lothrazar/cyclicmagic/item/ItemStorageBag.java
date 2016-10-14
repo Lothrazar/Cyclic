@@ -4,12 +4,18 @@ import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.gui.storage.InventoryStorage;
+import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilInventorySort;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -47,7 +53,27 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
       player.openGui(ModMain.instance, ModGuiHandler.GUI_INDEX_STORAGE, world, x, y, z);
     }
     return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);
-  }
+  } 
+  @Override
+  public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+  {
+    TileEntity tile = worldIn.getTileEntity(pos);
+    if(tile != null && tile instanceof IInventory){
+      ItemStack[] inv = InventoryStorage.readFromNBT(stack);
+      
+      
+      ItemStack[] result = UtilInventorySort.sortFromListToInventory(worldIn, (IInventory)tile, inv);
+      
+      InventoryStorage.writeToNBT(stack, result);
+      
+      UtilSound.playSound(playerIn, SoundRegistry.thunk);
+      
+    }
+    return EnumActionResult.FAIL;
+}
+  
+  
+  
   @Override
   public void addRecipe() {
     GameRegistry.addRecipe(new ItemStack(this), "lsl", "ldl", "lrl",
