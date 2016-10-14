@@ -2,7 +2,9 @@ package com.lothrazar.cyclicmagic.block;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockFlower;
@@ -25,9 +27,9 @@ public class BlockSprout extends BlockCrops {
   public static final PropertyInteger AGE = PropertyInteger.create("age", 0, MAX_AGE);
   private static final AxisAlignedBB[] AABB = new AxisAlignedBB[] { new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.125D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.1875D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.25D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.3125D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.375D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.4375D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5625D, 1.0D) };
   private List<ItemStack> myDrops = new ArrayList<ItemStack>();
-  private Item[] drops;
+  //  private Item[] drops;
   public BlockSprout() {
-    drops = new Item[] {
+    Item[] drops = new Item[] {
         //treasure
         Items.REDSTONE, Items.GUNPOWDER, Items.GLOWSTONE_DUST, Items.DIAMOND, Items.EMERALD,
         Items.COAL, Items.GOLD_NUGGET, Items.IRON_INGOT, Items.GOLD_INGOT,
@@ -80,36 +82,58 @@ public class BlockSprout extends BlockCrops {
       myDrops.add(new ItemStack(Blocks.DOUBLE_PLANT, 1, b.getMeta()));
     }
   }
+  @Nullable
+  @Override
+  public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+    System.out.println("getItemDropped");
+    return this.isMaxAge(state) ? null : this.getSeed();//the null tells harvestcraft hey: dont remove my drops
+  }
   @Override
   protected Item getSeed() {
     return ItemRegistry.sprout_seed;
   }
   @Override
   protected Item getCrop() {
-    Random rand = new Random();
-    if (drops == null) { return ItemRegistry.sprout_seed;//shouldnt ever happen
-    }
-    return drops[rand.nextInt(drops.length)];
+    return ItemRegistry.sprout_seed;
   }
   private ItemStack getCropStack(Random rand) {
     return myDrops.get(rand.nextInt(myDrops.size()));
-  }
-  private ItemStack getItemStackDropped(IBlockState state, Random rand) {
-    return this.isMaxAge(state) ? this.getCropStack(rand) : new ItemStack(this.getSeed());
   }
   @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
     return AABB[((Integer) state.getValue(this.getAgeProperty())).intValue()];
   }
   @Override
-  public java.util.List<ItemStack> getDrops(net.minecraft.world.IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+  public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune) {
+    //    super.dropBlockAsItemWithChance(worldIn, pos, state, 1.0F, fortune);
+    for (ItemStack s : this.getDrops(worldIn, pos, state, fortune)){
+      Block.spawnAsEntity(worldIn, pos, s );
+    }
+
+    Block.spawnAsEntity(worldIn, pos, new ItemStack(getSeed()) );
+  }
+  @Override
+  public int quantityDropped(Random random) {
+    return 1;
+  }
+  @Override
+  public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+    this.dropBlockAsItemWithChance(worldIn, pos, state, 1, 0);
+  }
+  @Override
+  public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
     //override getdrops so it never drops seeds IF its fully grown.
     java.util.List<ItemStack> ret = new ArrayList<ItemStack>();//super.getDrops(world, pos, state, fortune);
-    Random rand = world instanceof World ? ((World) world).rand : new Random();
-    int count = quantityDropped(state, fortune, rand);
-    for (int i = 0; i < count; i++) {
-      ret.add(getItemStackDropped(state, rand).copy()); //copy to make sure we return a new instance
+    if (this.isMaxAge(state)) {
+      Random rand = world instanceof World ? ((World) world).rand : new Random();
+      int count = quantityDropped(state, fortune, rand);
+      for (int i = 0; i < count; i++) {
+        ret.add(getCropStack(rand).copy()); //copy to make sure we return a new instance
+      }
     }
+    //    else {
+   // ret.add(new ItemStack(getSeed()));//if broken when not fully grown
+    //    }
     return ret;
   }
   @Override
@@ -118,7 +142,7 @@ public class BlockSprout extends BlockCrops {
   }
   @Override
   protected int getBonemealAgeIncrease(World worldIn) {
-    return 0;//worldIn.rand.nextDouble() > 0.6 ? 1 : 0;//does nothing at zero
+    return 9;//worldIn.rand.nextDouble() > 0.6 ? 1 : 0;//does nothing at zero
   }
   @Override
   public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
