@@ -125,6 +125,7 @@ public class BlockSprout extends BlockCrops {
   }
   @Override
   public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+
     // Used by regular 'block break' and also by other harvesting features
     java.util.List<ItemStack> ret = new ArrayList<ItemStack>();
     if (this.isMaxAge(state)) {
@@ -134,6 +135,9 @@ public class BlockSprout extends BlockCrops {
         ret.add(getCropStack(rand).copy()); //copy to make sure we return a new instance
       }
     }
+//    else{
+//      ret.add(new ItemStack(getSeed()));
+//    }
     return ret;
   }
   @Override
@@ -142,7 +146,7 @@ public class BlockSprout extends BlockCrops {
   }
   @Override
   protected int getBonemealAgeIncrease(World worldIn) {
-    return 9;
+    return 0;
   }
   @Override
   public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
