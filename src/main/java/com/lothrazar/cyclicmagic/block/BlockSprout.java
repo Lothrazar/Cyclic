@@ -126,7 +126,9 @@ public class BlockSprout extends BlockCrops {
         ret.add(getCropStack(rand).copy()); //copy to make sure we return a new instance
       }
     }
-    ret.add(new ItemStack(getSeed()));//always a seed, grown or not
+    else {
+      ret.add(new ItemStack(getSeed()));//always a seed, grown or not
+    }
     return ret;
   }
   @Override
