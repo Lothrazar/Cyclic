@@ -110,32 +110,15 @@ public class BlockSprout extends BlockCrops {
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
     return AABB[((Integer) state.getValue(this.getAgeProperty())).intValue()];
   }
-  //  @Override
-  //  public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune) {
-  //    // if block was broken normal way (not with some gentle harvest ex harvestcraft), then tack on a seed at the end
-  //    for (ItemStack s : this.getDrops(worldIn, pos, state, fortune)) {
-  //      Block.spawnAsEntity(worldIn, pos, s);
-  //    }
-  //    boolean isGrown = this.isMaxAge(state);
-  //    System.out.println("!!isGrown" + isGrown);
-  //    if (!isGrown) {
-  //      Block.spawnAsEntity(worldIn, pos, new ItemStack(getSeed()));
-  //    }
-  //  }
   @Override
   public int quantityDropped(Random random) {
     return super.quantityDropped(random) + 1;
   }
-  //  @Override
-  //  public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-  //    this.dropBlockAsItemWithChance(worldIn, pos, state, 1, 0);
-  //  }
   @Override
   public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
     // Used by regular 'block break' and also by other harvesting features
     java.util.List<ItemStack> ret = new ArrayList<ItemStack>();
     boolean isGrown = this.isMaxAge(state);
-    // System.out.println("isGrown" + isGrown);
     if (isGrown) {
       Random rand = world instanceof World ? ((World) world).rand : new Random();
       int count = quantityDropped(state, fortune, rand);
@@ -143,9 +126,7 @@ public class BlockSprout extends BlockCrops {
         ret.add(getCropStack(rand).copy()); //copy to make sure we return a new instance
       }
     }
-    //else{
-    ret.add(new ItemStack(getSeed()));
-    //}
+    ret.add(new ItemStack(getSeed()));//always a seed, grown or not
     return ret;
   }
   @Override
@@ -154,7 +135,7 @@ public class BlockSprout extends BlockCrops {
   }
   @Override
   protected int getBonemealAgeIncrease(World worldIn) {
-    return 9;
+    return 0;
   }
   @Override
   public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
