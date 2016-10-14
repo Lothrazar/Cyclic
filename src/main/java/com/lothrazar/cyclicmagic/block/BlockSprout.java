@@ -5,7 +5,6 @@ import java.util.Random;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockColored;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockFlower;
@@ -143,10 +142,10 @@ public class BlockSprout extends BlockCrops {
   }
   @Override
   protected int getBonemealAgeIncrease(World worldIn) {
-    return 9;//worldIn.rand.nextDouble() > 0.6 ? 1 : 0;//does nothing at zero
+    return 0;
   }
   @Override
   public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
-    return getBonemealAgeIncrease(worldIn) > 0;//no need to hardcode this
+    return getBonemealAgeIncrease(worldIn) > 0;
   }
 }
