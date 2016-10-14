@@ -5,6 +5,7 @@ import java.util.Random;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockColored;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockFlower;
@@ -27,7 +28,6 @@ public class BlockSprout extends BlockCrops {
   public static final PropertyInteger AGE = PropertyInteger.create("age", 0, MAX_AGE);
   private static final AxisAlignedBB[] AABB = new AxisAlignedBB[] { new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.125D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.1875D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.25D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.3125D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.375D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.4375D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5625D, 1.0D) };
   private List<ItemStack> myDrops = new ArrayList<ItemStack>();
-  //  private Item[] drops;
   public BlockSprout() {
     Item[] drops = new Item[] {
         //treasure
@@ -63,11 +63,17 @@ public class BlockSprout extends BlockCrops {
     //metadata specific blocks
     myDrops.add(new ItemStack(Items.COAL, 1, 1));//charcoal
     myDrops.add(new ItemStack(Blocks.PUMPKIN));
+    myDrops.add(new ItemStack(Blocks.LIT_PUMPKIN));
+    myDrops.add(new ItemStack(Blocks.REDSTONE_LAMP));
     for (Item i : drops) {
       myDrops.add(new ItemStack(i));
     }
     for (EnumDyeColor dye : EnumDyeColor.values()) {//all 16 cols
       myDrops.add(new ItemStack(Items.DYE, 1, dye.getMetadata()));
+      myDrops.add(new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, dye.getMetadata()));//these ones are new
+      myDrops.add(new ItemStack(Blocks.WOOL, 1, dye.getMetadata()));
+      myDrops.add(new ItemStack(Blocks.STAINED_GLASS, 1, dye.getMetadata()));
+      myDrops.add(new ItemStack(Blocks.STAINED_GLASS_PANE, 1, dye.getMetadata()));
     }
     for (ItemFishFood.FishType f : ItemFishFood.FishType.values()) {
       myDrops.add(new ItemStack(Items.FISH, 1, f.getMetadata()));
@@ -85,7 +91,6 @@ public class BlockSprout extends BlockCrops {
   @Nullable
   @Override
   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-    System.out.println("getItemDropped");
     return this.isMaxAge(state) ? null : this.getSeed();//the null tells harvestcraft hey: dont remove my drops
   }
   @Override
@@ -105,12 +110,11 @@ public class BlockSprout extends BlockCrops {
   }
   @Override
   public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune) {
-    //    super.dropBlockAsItemWithChance(worldIn, pos, state, 1.0F, fortune);
-    for (ItemStack s : this.getDrops(worldIn, pos, state, fortune)){
-      Block.spawnAsEntity(worldIn, pos, s );
+    // if block was broken normal way (not with some gentle harvest ex harvestcraft), then tack on a seed at the end
+    for (ItemStack s : this.getDrops(worldIn, pos, state, fortune)) {
+      Block.spawnAsEntity(worldIn, pos, s);
     }
-
-    Block.spawnAsEntity(worldIn, pos, new ItemStack(getSeed()) );
+    Block.spawnAsEntity(worldIn, pos, new ItemStack(getSeed()));
   }
   @Override
   public int quantityDropped(Random random) {
@@ -122,8 +126,8 @@ public class BlockSprout extends BlockCrops {
   }
   @Override
   public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-    //override getdrops so it never drops seeds IF its fully grown.
-    java.util.List<ItemStack> ret = new ArrayList<ItemStack>();//super.getDrops(world, pos, state, fortune);
+    // Used by regular 'block break' and also by other harvesting features
+    java.util.List<ItemStack> ret = new ArrayList<ItemStack>();
     if (this.isMaxAge(state)) {
       Random rand = world instanceof World ? ((World) world).rand : new Random();
       int count = quantityDropped(state, fortune, rand);
@@ -131,9 +135,6 @@ public class BlockSprout extends BlockCrops {
         ret.add(getCropStack(rand).copy()); //copy to make sure we return a new instance
       }
     }
-    //    else {
-   // ret.add(new ItemStack(getSeed()));//if broken when not fully grown
-    //    }
     return ret;
   }
   @Override
