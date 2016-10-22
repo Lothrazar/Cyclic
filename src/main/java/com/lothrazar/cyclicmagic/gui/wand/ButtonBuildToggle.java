@@ -5,11 +5,11 @@ import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
 import com.lothrazar.cyclicmagic.item.tool.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.net.PacketWandGui;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -31,14 +31,14 @@ public class ButtonBuildToggle extends GuiButton implements ITooltipButton {
   @SideOnly(Side.CLIENT)
   @Override
   public void drawButton(Minecraft mc, int mouseX, int mouseY) {
-    this.displayString = I18n.format(ItemCyclicWand.BuildType.getName(UtilSpellCaster.getPlayerWandIfHeld(thePlayer)));
+    this.displayString = UtilChat.lang(ItemCyclicWand.BuildType.getName(UtilSpellCaster.getPlayerWandIfHeld(thePlayer)));
     super.drawButton(mc, mouseX, mouseY);
   }
   @Override
   public List<String> getTooltips() {
     List<String> tooltips = new ArrayList<String>();
     String key = ItemCyclicWand.BuildType.getName(UtilSpellCaster.getPlayerWandIfHeld(thePlayer)) + ".tooltip";
-    tooltips.add(I18n.format(key));
+    tooltips.add(UtilChat.lang(key));
     return tooltips;
   }
 }

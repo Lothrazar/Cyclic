@@ -7,6 +7,7 @@ import com.lothrazar.cyclicmagic.item.ItemEnderBook;
 import com.lothrazar.cyclicmagic.item.ItemEnderBook.BookLocation;
 import com.lothrazar.cyclicmagic.net.PacketDeleteWaypoint;
 import com.lothrazar.cyclicmagic.net.PacketNewButton;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -15,7 +16,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -70,7 +70,7 @@ public class GuiEnderBook extends GuiScreen {
     int y = yStart;
     for (int i = 0; i < list.size(); i++) {
       loc = list.get(i);
-      buttonText = (loc.display == null) ? I18n.format("gui.enderbook.go") : loc.display;
+      buttonText = (loc.display == null) ? UtilChat.lang("gui.enderbook.go") : loc.display;
       if (i % ItemEnderBook.BTNS_PER_COLUMN == 0) // do we start a new row?
       {
         x += w + delete_w + rowpad;
@@ -84,8 +84,8 @@ public class GuiEnderBook extends GuiScreen {
       int distance = (int) UtilWorld.distanceBetweenHorizontal(toPos, entityPlayer.getPosition());
       int cost = ItemEnderBook.getExpCostPerTeleport(entityPlayer, bookStack, loc.id);
       btn.addTooltipLine(list.get(i).coordsDisplay());
-      btn.addTooltipLine(I18n.format("button.waypoint.distance") + " " + distance);
-      btn.addTooltipLine(I18n.format("button.waypoint.cost") + " " + cost);
+      btn.addTooltipLine(UtilChat.lang("button.waypoint.distance") + " " + distance);
+      btn.addTooltipLine(UtilChat.lang("button.waypoint.cost") + " " + cost);
       btn.enabled = (loc.dimension == this.entityPlayer.dimension);
       buttonList.add(btn);
       del = new ButtonWaypointDelete(buttonID++, x - delete_w - 2, y, delete_w, h, "X", loc.id);
@@ -95,7 +95,7 @@ public class GuiEnderBook extends GuiScreen {
   @Override
   public void drawScreen(int x, int y, float par3) {
     drawDefaultBackground();
-    drawCenteredString(fontRendererObj, I18n.format("gui.enderbook.title"), width / 2, 6, 16777215);
+    drawCenteredString(fontRendererObj, UtilChat.lang("gui.enderbook.title"), width / 2, 6, 16777215);
     // http://www.minecraftforge.net/forum/index.php?topic=22378.0
     // no idea why this is sometimes randomly null and only on world start if i
     // open it too quick??

@@ -1,13 +1,13 @@
 package com.lothrazar.cyclicmagic.spell;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.world.World;
 
 public abstract class BaseSpell implements ISpell {
@@ -20,13 +20,13 @@ public abstract class BaseSpell implements ISpell {
     icon = new ResourceLocation(Const.MODID, "textures/spells/" + name + ".png");
   }
   public String getName() {
-    return I18n.format("spell." + name + ".name");
+    return UtilChat.lang("spell." + name + ".name");
   }
   public String getUnlocalizedName() {
     return name;
   }
   public String getInfo() {
-    return I18n.format("spell." + name + ".info");
+    return UtilChat.lang("spell." + name + ".info");
   }
   @Override
   public void onCastFailure(World world, EntityPlayer player, BlockPos pos) {
