@@ -56,10 +56,10 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
     public static String getName(ItemStack wand) {
       try {
         NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
-        return "item.storage." + StorageActionType.values()[tags.getInteger(NBT)].toString().toLowerCase();
+        return "item.storage_bag." + StorageActionType.values()[tags.getInteger(NBT)].toString().toLowerCase();
       }
       catch (Exception e) {
-        return "item.storage." + NOTHING.toString().toLowerCase();
+        return "item.storage_bag." + NOTHING.toString().toLowerCase();
       }
     }
     public static void toggle(ItemStack wand) {
@@ -102,7 +102,9 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
       if (tile != null && tile instanceof IInventory) {
         int depositType = StorageActionType.get(held);
         if (depositType == StorageActionType.NOTHING.ordinal()) {
-          UtilChat.addChatMessage(player, UtilChat.lang("item.storage_bag.disabled"));
+          if (world.isRemote) {
+            UtilChat.addChatMessage(player, UtilChat.lang("item.storage_bag.disabled"));
+          }
           return;
         }
         else {
@@ -114,7 +116,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
             moved += ret.moved;
           }
           InventoryStorage.writeToNBT(held, ret.stacks);
-          if (world.isRemote) {
+          if (world.isRemote && moved > 0) {
             UtilChat.addChatMessage(player, UtilChat.lang("item.storage_bag.success") + moved);
           }
           UtilSound.playSound(player, SoundRegistry.thunk);
