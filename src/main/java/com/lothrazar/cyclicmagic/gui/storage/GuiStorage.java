@@ -1,32 +1,19 @@
 package com.lothrazar.cyclicmagic.gui.storage;
 import org.lwjgl.opengl.GL11;
-import com.lothrazar.cyclicmagic.gui.wand.ButtonBuildToggle;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiStorage extends GuiContainer {
   private static final ResourceLocation BACKGROUND = new ResourceLocation(Const.MODID, "textures/gui/inventory_storage.png");
   static final int texture_width = 212;// 176;
   static final int texture_height = 212;
-//  private EntityPlayer thePlayer;
   public GuiStorage(ContainerStorage containerItem) {
     super(containerItem);
     this.xSize = texture_width;
     this.ySize = texture_height;
-//    thePlayer = containerItem.inventory.getPlayer();
   }
-//  @Override
-//  public void initGui() {
-//    super.initGui();
-//    int width = 20;
-//    int y = this.guiTop +8;
-//    int x = this.guiLeft - width-2;
-////    ButtonStorageToggle b = new ButtonStorageToggle(thePlayer, 1, x, y, width);
-////    this.buttonList.add(b);
-//  }
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);

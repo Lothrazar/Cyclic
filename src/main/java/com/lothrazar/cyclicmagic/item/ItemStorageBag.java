@@ -19,7 +19,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
@@ -154,11 +153,6 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
     }
     return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);
   }
-  //  @Override
-  //  public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-  //
-  //    return EnumActionResult.FAIL;
-  //  }
   public static ItemStack getPlayerBagIfHeld(EntityPlayer player) {
     ItemStack wand = player.getHeldItemMainhand();
     if (wand != null && wand.getItem() instanceof ItemStorageBag) { return wand; }
