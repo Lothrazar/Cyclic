@@ -131,7 +131,7 @@ public class UtilInventorySort {
         } // end if items match
       } // close loop on player inventory items
     } // close loop on chest items
-return stacks;
+    return stacks;
   }
   public static void sortFromPlayerToInventory(World world, IInventory chest, EntityPlayer player) {
     // source:

@@ -1,5 +1,7 @@
 package com.lothrazar.cyclicmagic.module;
+import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.item.ItemStorageBag;
+import com.lothrazar.cyclicmagic.registry.EventRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
@@ -13,6 +15,7 @@ public class StorageBagModule extends BaseModule {
     if (moduleEnabled) {
       ItemRegistry.storage_bag = new ItemStorageBag();
       ItemRegistry.addItem(ItemRegistry.storage_bag, "storage_bag");
+      ModMain.instance.events.addEvent(ItemRegistry.storage_bag);
       LootTableRegistry.registerLoot(ItemRegistry.storage_bag);
       LootTableRegistry.registerLoot(ItemRegistry.storage_bag, ChestType.BONUS, 25);
     }
