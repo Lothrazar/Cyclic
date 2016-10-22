@@ -132,6 +132,7 @@ item.ender_bed.name=Ender Ruby
 item.ender_blaze.name=Ender Blaze
 item.ender_blaze.tooltip=Throwable fireballs
 item.ender_dungeon.name=Ender Dungeonfinder
+item.ender_dungeon.notfound=No spawners in range
 item.ender_dungeon.tooltip=Searches out the nearest spawner
 item.ender_fishing.name=Ender Fishhook
 item.ender_fishing.tooltip=Longrange Speed Fishing

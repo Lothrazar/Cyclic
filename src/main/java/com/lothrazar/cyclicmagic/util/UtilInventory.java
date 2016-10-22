@@ -2,10 +2,8 @@ package com.lothrazar.cyclicmagic.util;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
-import net.minecraft.world.World;
 
 public class UtilInventory {
   public static ItemStack getPlayerItemIfHeld(EntityPlayer player) {
