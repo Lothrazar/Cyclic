@@ -41,8 +41,10 @@ public class PotionModule extends BaseEventModule {
   
   @Override
   public void onInit() {
-    final Item UPG_LENGTH = Items.APPLE;//long fails
-    final Item UPG_STRONG = Items.GOLD_NUGGET;//strong works?
+    final Item UPG_LENGTH = Items.DYE;//long fails
+    final Item UPG_STRONG = Items.GOLD_INGOT;//strong works?
+    // https://github.com/MinecraftForge/MinecraftForge/issues/3323
+    // https://github.com/PrinceOfAmber/Cyclic/issues/124
     //the actual effects need to be in regardless. ex: some items/charms use these even if the potion item isdisabled
     // http://www.minecraftforge.net/forum/index.php?topic=11024.0
     // ??? http://www.minecraftforge.net/forum/index.php?topic=12358.0
@@ -195,19 +197,15 @@ public class PotionModule extends BaseEventModule {
       //addBrewingRecipe(new ItemStack(Items.DIAMOND_SWORD), new ItemStack(Items.REDSTONE), new ItemStack(Items.DIAMOND_HOE));
 
  
-      
-      BrewingRecipeRegistry.addRecipe(new ItemStack(Items.DIAMOND_SWORD), new ItemStack(Items.REDSTONE), new ItemStack(Items.DIAMOND_HOE));
-
-     // And then run the unit test
-
-
-      ItemStack output0 = BrewingRecipeRegistry.getOutput(new ItemStack(Items.DIAMOND_SWORD), new ItemStack(Items.REDSTONE));
-          if(output0.getItem() == Items.DIAMOND_HOE)
-            System.out.println("Recipe succefully registered and working: HOE");
-          else
-            System.out.println("Recipe FAILED : output0 =  "+output0.getUnlocalizedName());
-          
-      
+//      
+//      BrewingRecipeRegistry.addRecipe(new ItemStack(Items.DIAMOND_SWORD), new ItemStack(Items.REDSTONE), new ItemStack(Items.DIAMOND_HOE));
+//      ItemStack output0 = BrewingRecipeRegistry.getOutput(new ItemStack(Items.DIAMOND_SWORD), new ItemStack(Items.REDSTONE));
+//      if(output0.getItem() == Items.DIAMOND_HOE)
+//        System.out.println("Recipe succefully registered and working: HOE");
+//      else
+//        System.out.println("Recipe FAILED : output0 =  "+output0.getUnlocalizedName());
+//          
+//      
     }
     if (enableLuck) {
       ItemPotionCustom potion_luck = new ItemPotionCustom(true, MobEffects.LUCK, NORMAL);
