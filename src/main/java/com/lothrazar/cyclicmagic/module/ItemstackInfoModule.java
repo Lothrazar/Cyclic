@@ -23,7 +23,9 @@ public class ItemstackInfoModule extends BaseEventModule implements IHasConfig {
         ItemFood food = (ItemFood) itemStack.getItem();
         int hunger = food.getHealAmount(itemStack);
         float satur = food.getSaturationModifier(itemStack);
-        event.getToolTip().add(hunger + " (" + satur + ")");
+        if (hunger > 0 || satur > 0) {
+          event.getToolTip().add(hunger + " (" + satur + ")");
+        }
       }
       if (fuelDetails) {
         int burnTime = TileEntityFurnace.getItemBurnTime(itemStack);
