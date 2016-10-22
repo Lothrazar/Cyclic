@@ -76,32 +76,53 @@ public class UtilInventorySort {
     } // close loop on chest items
     updatePlayerContainerClient(player);
   }
+  
+
+  public static  ItemStack[]  dumpFromListToIInventory(World world, IInventory inventory, ItemStack[] stacks) {
+    ItemStack chestEmptySlot;
+    ItemStack bagItem;
+
+    // we loop on the chest and look for empty slots
+    // once we have an empty slot, we find something to fill it with
+  
+    for (int islotInvo = 0; islotInvo < inventory.getSizeInventory(); islotInvo++) {
+      chestEmptySlot = inventory.getStackInSlot(islotInvo);
+      if (chestEmptySlot != null) {
+        continue;
+      } // slot not empty, skip over it
+      for (int islotPlayer = 0; islotPlayer < stacks.length; islotPlayer++) {
+        bagItem = stacks[islotPlayer];
+        if (bagItem == null) {
+          continue;
+        } // empty inventory slot
+        //ModMain.logger.info("try dep :"+islotPlayer + "_"+playerItem.getUnlocalizedName());
+        inventory.setInventorySlotContents(islotInvo, bagItem);
+        stacks[islotPlayer] = null;
+        break;
+      } // close loop on player inventory items
+    } // close loop on chest items
+//    updatePlayerContainerClient(player);
+    return stacks;
+  }
   public static ItemStack[] sortFromListToInventory(World world, IInventory chest, ItemStack[] stacks) {
-    // source:
-    // https://github.com/PrinceOfAmber/SamsPowerups/blob/master/Spells/src/main/java/com/lothrazar/samsmagic/spell/SpellChestDeposit.java#L84
     ItemStack chestItem;
-    ItemStack playerItem;
+    ItemStack bagItem;
     int room;
     int toDeposit;
     int chestMax;
-    // player inventory and the small chest have the same dimensions
-    int START_CHEST = 0;
-    int END_CHEST = chest.getSizeInventory();
-    // inventory and chest has 9 rows by 3 columns, never changes. same as
-    // 64
-    // max stack size
-    for (int islotChest = START_CHEST; islotChest < END_CHEST; islotChest++) {
+
+    for (int islotChest = 0; islotChest < chest.getSizeInventory(); islotChest++) {
       chestItem = chest.getStackInSlot(islotChest);
       if (chestItem == null) {
         continue;
       } // empty chest slot
       for (int islotInv = 0; islotInv < stacks.length; islotInv++) {
-        playerItem = stacks[islotInv];
-        if (playerItem == null) {
+        bagItem = stacks[islotInv];
+        if (bagItem == null) {
           continue;
         } // empty inventory slot
-        if (playerItem.getItem().equals(chestItem.getItem())
-            && playerItem.getItemDamage() == chestItem.getItemDamage()) {
+        if (bagItem.getItem().equals(chestItem.getItem())
+            && bagItem.getItemDamage() == chestItem.getItemDamage()) {
           // same item, including damage (block state)
           chestMax = chestItem.getItem().getItemStackLimit(chestItem);
           room = chestMax - chestItem.stackSize;
@@ -110,14 +131,11 @@ public class UtilInventorySort {
           } // no room, check the next spot
           // so if i have 30 room, and 28 items, i deposit 28.
           // or if i have 30 room and 38 items, i deposit 30
-          toDeposit = Math.min(playerItem.stackSize, room);
+          toDeposit = Math.min(bagItem.stackSize, room);
           chestItem.stackSize += toDeposit;
           chest.setInventorySlotContents(islotChest, chestItem);
-          playerItem.stackSize -= toDeposit;
-          if (playerItem.stackSize <= 0) // because of calculations
-          // above, should
-          // not be below zero
-          {
+          bagItem.stackSize -= toDeposit;
+          if (bagItem.stackSize <= 0) {
             // item stacks with zero count do not destroy
             // themselves, they show
             // up and have unexpected behavior in game so set to
@@ -126,7 +144,7 @@ public class UtilInventorySort {
           }
           else {
             // set to new quantity
-            stacks[islotInv] = playerItem;
+            stacks[islotInv] = bagItem;
           }
         } // end if items match
       } // close loop on player inventory items

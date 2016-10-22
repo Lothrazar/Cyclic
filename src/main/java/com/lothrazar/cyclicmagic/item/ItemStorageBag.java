@@ -101,18 +101,20 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
       if (tile != null && tile instanceof IInventory) {
         int depositType = StorageActionType.get(held);
         if (depositType == StorageActionType.NOTHING.ordinal()) {
-          System.out.println("skip:" + depositType);
           return;
         }
         else {
-          System.out.println("depositType:" + depositType);
           ItemStack[] inv = InventoryStorage.readFromNBT(held);
-          ItemStack[] result = UtilInventorySort.sortFromListToInventory(world, (IInventory) tile, inv);
+          ItemStack[] result;
+          result = UtilInventorySort.sortFromListToInventory(world, (IInventory) tile, inv);
+          if (depositType == StorageActionType.DEPOSIT.ordinal()) {
+            result = UtilInventorySort.dumpFromListToIInventory(world, (IInventory) tile, inv);
+          }
           InventoryStorage.writeToNBT(held, result);
           UtilSound.playSound(player, SoundRegistry.thunk);
         }
       }
-      else {  //hit something not an invenotry
+      else { //hit something not an invenotry
         if (StorageActionType.getTimeout(held) > 0) {
           //without a timeout, this fires every tick. so you 'hit once' and get this happening 6 times
           return;
