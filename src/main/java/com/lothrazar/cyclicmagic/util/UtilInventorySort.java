@@ -14,6 +14,14 @@ import net.minecraft.world.World;
  * @author Lothrazar at https://github.com/PrinceOfAmber
  */
 public class UtilInventorySort {
+  public static class BagDepositReturn{
+    public BagDepositReturn(int m, ItemStack[] s){
+      moved = m;
+      stacks = s;
+    }
+    public int moved;
+    public ItemStack[] stacks;
+  }
   public static class SortGroup {
     public SortGroup(String k) {
       stacks = new ArrayList<ItemStack>();
@@ -78,9 +86,11 @@ public class UtilInventorySort {
   }
   
 
-  public static  ItemStack[]  dumpFromListToIInventory(World world, IInventory inventory, ItemStack[] stacks) {
+  public static  BagDepositReturn  dumpFromListToIInventory(World world, IInventory inventory, ItemStack[] stacks) {
+  
     ItemStack chestEmptySlot;
     ItemStack bagItem;
+    int itemsMoved = 0;
 
     // we loop on the chest and look for empty slots
     // once we have an empty slot, we find something to fill it with
@@ -95,21 +105,22 @@ public class UtilInventorySort {
         if (bagItem == null) {
           continue;
         } // empty inventory slot
-        //ModMain.logger.info("try dep :"+islotPlayer + "_"+playerItem.getUnlocalizedName());
         inventory.setInventorySlotContents(islotInvo, bagItem);
         stacks[islotPlayer] = null;
+        itemsMoved += bagItem.stackSize;
         break;
       } // close loop on player inventory items
     } // close loop on chest items
 //    updatePlayerContainerClient(player);
-    return stacks;
+    return new BagDepositReturn(itemsMoved,stacks);
   }
-  public static ItemStack[] sortFromListToInventory(World world, IInventory chest, ItemStack[] stacks) {
+  public static BagDepositReturn sortFromListToInventory(World world, IInventory chest, ItemStack[] stacks) {
     ItemStack chestItem;
     ItemStack bagItem;
     int room;
     int toDeposit;
     int chestMax;
+    int itemsMoved = 0;
 
     for (int islotChest = 0; islotChest < chest.getSizeInventory(); islotChest++) {
       chestItem = chest.getStackInSlot(islotChest);
@@ -135,6 +146,7 @@ public class UtilInventorySort {
           chestItem.stackSize += toDeposit;
           chest.setInventorySlotContents(islotChest, chestItem);
           bagItem.stackSize -= toDeposit;
+          itemsMoved += toDeposit;
           if (bagItem.stackSize <= 0) {
             // item stacks with zero count do not destroy
             // themselves, they show
@@ -149,7 +161,7 @@ public class UtilInventorySort {
         } // end if items match
       } // close loop on player inventory items
     } // close loop on chest items
-    return stacks;
+    return new BagDepositReturn(itemsMoved,stacks);
   }
   public static void sortFromPlayerToInventory(World world, IInventory chest, EntityPlayer player) {
     // source:

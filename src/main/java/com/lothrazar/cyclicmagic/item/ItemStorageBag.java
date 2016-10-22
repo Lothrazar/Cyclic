@@ -7,6 +7,7 @@ import com.lothrazar.cyclicmagic.gui.storage.InventoryStorage;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilInventorySort;
+import com.lothrazar.cyclicmagic.util.UtilInventorySort.BagDepositReturn;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.Entity;
@@ -83,7 +84,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
     int size = InventoryStorage.countNonEmpty(stack);
     tooltip.add(UtilChat.lang("item.storage_bag.tooltip") + size);
-    tooltip.add(UtilChat.lang(StorageActionType.getName(stack)));
+    tooltip.add(UtilChat.lang("item.storage_bag.tooltip2") + UtilChat.lang(StorageActionType.getName(stack)));
     super.addInformation(stack, playerIn, tooltip, advanced);
   }
   @Override
@@ -101,16 +102,21 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
       if (tile != null && tile instanceof IInventory) {
         int depositType = StorageActionType.get(held);
         if (depositType == StorageActionType.NOTHING.ordinal()) {
+          UtilChat.addChatMessage(player, UtilChat.lang("item.storage_bag.disabled"));
           return;
         }
         else {
           ItemStack[] inv = InventoryStorage.readFromNBT(held);
-          ItemStack[] result;
-          result = UtilInventorySort.sortFromListToInventory(world, (IInventory) tile, inv);
+          BagDepositReturn ret = UtilInventorySort.sortFromListToInventory(world, (IInventory) tile, inv);
+          int moved = ret.moved;
           if (depositType == StorageActionType.DEPOSIT.ordinal()) {
-            result = UtilInventorySort.dumpFromListToIInventory(world, (IInventory) tile, inv);
+            ret = UtilInventorySort.dumpFromListToIInventory(world, (IInventory) tile, ret.stacks);
+            moved += ret.moved;
           }
-          InventoryStorage.writeToNBT(held, result);
+          InventoryStorage.writeToNBT(held, ret.stacks);
+          if (world.isRemote) {
+            UtilChat.addChatMessage(player, UtilChat.lang("item.storage_bag.success") + moved);
+          }
           UtilSound.playSound(player, SoundRegistry.thunk);
         }
       }
