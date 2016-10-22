@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.module;
+import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.item.ItemPotionCustom;
 import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
@@ -23,30 +24,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PotionModule extends BaseEventModule {
   public static final ItemPotionCustom potion_viscous = new ItemPotionCustom(false);
-  public static ItemPotionCustom potion_snow;
-  public static ItemPotionCustom potion_ender;
-  public static ItemPotionCustom potion_ender_long;
-  public static ItemPotionCustom potion_magnet;
-  public static ItemPotionCustom potion_magnet_long;
-  public static ItemPotionCustom potion_waterwalk;
-  public static ItemPotionCustom potion_waterwalk_long;
-  public static ItemPotionCustom potion_slowfall;
-  public static ItemPotionCustom potion_slowfall_long;
-  public static ItemPotionCustom potion_levitation;
-  public static ItemPotionCustom potion_levitation_long;
-  public static ItemPotionCustom potion_luck;
-  public static ItemPotionCustom potion_luck_long;
-  //  public static final ItemPotionCustom potion_glowing = new ItemPotionCustom(MobEffects.GLOWING, 60*3);
-  //  public static final ItemPotionCustom potion_glowing_long = new ItemPotionCustom(MobEffects.GLOWING, 60*8);
-  public static ItemPotionCustom potion_resistance;
-  public static ItemPotionCustom potion_resistance_strong;
-  public static ItemPotionCustom potion_resistance_long;
-  public static ItemPotionCustom potion_boost;
-  public static ItemPotionCustom potion_boost_long;
-  public static ItemPotionCustom potion_haste;
-  public static ItemPotionCustom potion_haste_strong;
-  public static ItemPotionCustom potion_haste_long;
-  private ItemPotionCustom potion_snow_long;
   public boolean cancelPotionInventoryShift;
   private boolean enableMagnet;
   private boolean enableWaterwalk;
@@ -70,14 +47,14 @@ public class PotionModule extends BaseEventModule {
     ItemStack awkward = BrewingRecipeRegistry.getOutput(new ItemStack(Items.POTIONITEM), new ItemStack(Items.NETHER_WART));
     ItemRegistry.addItem(potion_viscous, "potion_viscous");
     AchievementRegistry.registerItemAchievement(potion_viscous);
-    BrewingRecipeRegistry.addRecipe(
+    addBrewingRecipe(
         awkward,
         new ItemStack(Items.DYE, 1, EnumDyeColor.BROWN.getDyeDamage()),
         new ItemStack(potion_viscous));
     if (enableEnder) {
-      potion_ender = new ItemPotionCustom(true, PotionEffectRegistry.enderEffect, NORMAL, Potions.I, "item.potion_ender.tooltip");
+      ItemPotionCustom potion_ender = new ItemPotionCustom(true, PotionEffectRegistry.enderEffect, NORMAL, Potions.I, "item.potion_ender.tooltip");
       ItemRegistry.addItem(potion_ender, "potion_ender");
-      potion_ender_long = new ItemPotionCustom(true, PotionEffectRegistry.enderEffect, LONG, Potions.I, "item.potion_ender.tooltip");
+      ItemPotionCustom potion_ender_long = new ItemPotionCustom(true, PotionEffectRegistry.enderEffect, LONG, Potions.I, "item.potion_ender.tooltip");
       ItemRegistry.addItem(potion_ender_long, "potion_ender_long");
       addBrewingRecipe(
           potion_viscous,
@@ -89,11 +66,11 @@ public class PotionModule extends BaseEventModule {
           potion_ender_long);
     }
     if (enableMagnet) {
-      potion_magnet = new ItemPotionCustom(false, PotionEffectRegistry.magnetEffect, NORMAL, Potions.I);
-      potion_magnet_long = new ItemPotionCustom(false, PotionEffectRegistry.magnetEffect, LONG, Potions.I);
+      ItemPotionCustom potion_magnet = new ItemPotionCustom(false, PotionEffectRegistry.magnetEffect, NORMAL, Potions.I);
+      ItemPotionCustom potion_magnet_long = new ItemPotionCustom(false, PotionEffectRegistry.magnetEffect, LONG, Potions.I);
       ItemRegistry.addItem(potion_magnet, "potion_magnet");
       ItemRegistry.addItem(potion_magnet_long, "potion_magnet_long");
-      BrewingRecipeRegistry.addRecipe(
+      addBrewingRecipe(
           new ItemStack(potion_viscous),
           new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage()),
           new ItemStack(potion_magnet));
@@ -103,8 +80,8 @@ public class PotionModule extends BaseEventModule {
           potion_magnet_long);
     }
     if (enableWaterwalk) {
-      potion_waterwalk = new ItemPotionCustom(false, PotionEffectRegistry.waterwalkEffect, NORMAL, Potions.I);
-      potion_waterwalk_long = new ItemPotionCustom(false, PotionEffectRegistry.waterwalkEffect, LONG, Potions.I);
+      ItemPotionCustom potion_waterwalk = new ItemPotionCustom(false, PotionEffectRegistry.waterwalkEffect, NORMAL, Potions.I);
+      ItemPotionCustom potion_waterwalk_long = new ItemPotionCustom(false, PotionEffectRegistry.waterwalkEffect, LONG, Potions.I);
       ItemRegistry.addItem(potion_waterwalk, "potion_waterwalk");
       ItemRegistry.addItem(potion_waterwalk_long, "potion_waterwalk_long");
       addBrewingRecipe(
@@ -121,33 +98,33 @@ public class PotionModule extends BaseEventModule {
           potion_waterwalk_long);
     }
     if (enableSlowfall) {
-      potion_slowfall = new ItemPotionCustom(true, PotionEffectRegistry.slowfallEffect, NORMAL, Potions.I);
-      potion_slowfall_long = new ItemPotionCustom(true, PotionEffectRegistry.slowfallEffect, LONG, Potions.I);
+      ItemPotionCustom potion_slowfall = new ItemPotionCustom(true, PotionEffectRegistry.slowfallEffect, NORMAL, Potions.I);
+      ItemPotionCustom potion_slowfall_long = new ItemPotionCustom(true, PotionEffectRegistry.slowfallEffect, LONG, Potions.I);
       ItemRegistry.addItem(potion_slowfall, "potion_slowfall");
       ItemRegistry.addItem(potion_slowfall_long, "potion_slowfall_long");
-      BrewingRecipeRegistry.addRecipe(
+      addBrewingRecipe(
           new ItemStack(potion_viscous),
           new ItemStack(Items.FISH, 1, ItemFishFood.FishType.CLOWNFISH.getMetadata()),
           new ItemStack(potion_slowfall));
-      BrewingRecipeRegistry.addRecipe(
+      addBrewingRecipe(
           new ItemStack(potion_viscous),
           new ItemStack(Items.FISH, 1, ItemFishFood.FishType.SALMON.getMetadata()),
           new ItemStack(potion_slowfall));
-      BrewingRecipeRegistry.addRecipe(
+      addBrewingRecipe(
           new ItemStack(potion_slowfall),
           new ItemStack(Items.REDSTONE),
           new ItemStack(potion_slowfall_long));
     }
     if (enableSnow) {
-      potion_snow = new ItemPotionCustom(true, PotionEffectRegistry.snowEffect, NORMAL, Potions.I, "item.potion_snow.tooltip");
+      ItemPotionCustom potion_snow = new ItemPotionCustom(true, PotionEffectRegistry.snowEffect, NORMAL, Potions.I, "item.potion_snow.tooltip");
       ItemRegistry.addItem(potion_snow, "potion_snow");
-      BrewingRecipeRegistry.addRecipe(
+      addBrewingRecipe(
           new ItemStack(potion_viscous),
           new ItemStack(Blocks.ICE),
           new ItemStack(potion_snow));
-      potion_snow_long = new ItemPotionCustom(true, PotionEffectRegistry.snowEffect, LONG, Potions.I, "item.potion_snow.tooltip");
+      ItemPotionCustom potion_snow_long = new ItemPotionCustom(true, PotionEffectRegistry.snowEffect, LONG, Potions.I, "item.potion_snow.tooltip");
       ItemRegistry.addItem(potion_snow_long, "potion_snow_long");
-      BrewingRecipeRegistry.addRecipe(
+      addBrewingRecipe(
           new ItemStack(potion_snow),
           new ItemStack(Items.REDSTONE),
           new ItemStack(potion_snow_long));
@@ -155,8 +132,8 @@ public class PotionModule extends BaseEventModule {
       LootTableRegistry.registerLoot(potion_snow_long, ChestType.IGLOO);
     }
     if (enableHBoost) {
-      potion_boost = new ItemPotionCustom(true, MobEffects.HEALTH_BOOST, NORMAL, Const.Potions.V);
-      potion_boost_long = new ItemPotionCustom(true, MobEffects.HEALTH_BOOST, LONG, Const.Potions.V);
+      ItemPotionCustom potion_boost = new ItemPotionCustom(true, MobEffects.HEALTH_BOOST, NORMAL, Const.Potions.V);
+      ItemPotionCustom potion_boost_long = new ItemPotionCustom(true, MobEffects.HEALTH_BOOST, LONG, Const.Potions.V);
       ItemRegistry.addItem(potion_boost, "potion_boost");
       ItemRegistry.addItem(potion_boost_long, "potion_boost_long");
       addBrewingRecipe(
@@ -170,9 +147,9 @@ public class PotionModule extends BaseEventModule {
       LootTableRegistry.registerLoot(potion_boost_long);
     }
     if (enableResist) {
-      potion_resistance = new ItemPotionCustom(true, MobEffects.RESISTANCE, NORMAL);
-      potion_resistance_strong = new ItemPotionCustom(true, MobEffects.RESISTANCE, SHORT, Const.Potions.II);
-      potion_resistance_long = new ItemPotionCustom(true, MobEffects.RESISTANCE, LONG);
+      ItemPotionCustom potion_resistance = new ItemPotionCustom(true, MobEffects.RESISTANCE, NORMAL);
+      ItemPotionCustom potion_resistance_strong = new ItemPotionCustom(true, MobEffects.RESISTANCE, SHORT, Const.Potions.II);
+      ItemPotionCustom potion_resistance_long = new ItemPotionCustom(true, MobEffects.RESISTANCE, LONG);
       ItemRegistry.addItem(potion_resistance, "potion_resistance");
       ItemRegistry.addItem(potion_resistance_long, "potion_resistance_long");
       ItemRegistry.addItem(potion_resistance_strong, "potion_resistance_strong");
@@ -191,32 +168,49 @@ public class PotionModule extends BaseEventModule {
       LootTableRegistry.registerLoot(potion_resistance_long);
     }
     if (enableHaste) {
-      potion_haste = new ItemPotionCustom(false, MobEffects.HASTE, 60 * 3);
-      potion_haste_strong = new ItemPotionCustom(false, MobEffects.HASTE, 90, Const.Potions.II);
-      potion_haste_long = new ItemPotionCustom(false, MobEffects.HASTE, LONG);
+      ItemPotionCustom potion_haste = new ItemPotionCustom(false, MobEffects.HASTE, 60 * 3);
+      ItemPotionCustom potion_haste_strong = new ItemPotionCustom(false, MobEffects.HASTE, 90, Const.Potions.II);
+      ItemPotionCustom potion_haste_long = new ItemPotionCustom(false, MobEffects.HASTE, LONG);
       ItemRegistry.addItem(potion_haste, "potion_haste");
       ItemRegistry.addItem(potion_haste_long, "potion_haste_long");
       ItemRegistry.addItem(potion_haste_strong, "potion_haste_strong");
       addBrewingRecipe(
-          potion_viscous,
-          Items.EMERALD,
-          potion_haste);
+          new ItemStack(potion_viscous),
+          new ItemStack(Items.EMERALD),
+          new ItemStack(potion_haste));
       addBrewingRecipe(
-          potion_haste,
-          Items.REDSTONE,
-          potion_haste_long);
+          new ItemStack(potion_haste),
+          new ItemStack(Items.REDSTONE),
+          new ItemStack(potion_haste_long));
       addBrewingRecipe(
-          potion_haste,
-          Items.GLOWSTONE_DUST,
-          potion_haste_strong);
+          new ItemStack(potion_haste),
+          new ItemStack(Items.GLOWSTONE_DUST),
+          new ItemStack(potion_haste_strong));
       LootTableRegistry.registerLoot(potion_haste_strong);
+//      System.out.println("testPotionStrong= "+testPotionStrong);
+//      ItemStack output1 = BrewingRecipeRegistry.getOutput(new ItemStack(potion_haste), new ItemStack(Items.GLOWSTONE_DUST));
+//      if (output1.getItem() == potion_haste_strong)
+//        System.out.println("RECIPE succefully registered and working. potion_haste_strong obtained.");
+//      else {
+//        System.out.println("RECIPE FAILED potion_haste_strong : "+output1.getUnlocalizedName());
+//      }
+//      if (output1.getItem() == potion_haste)
+//        System.out.println("RECIPE output matches input? WHY.");
+      
+//      RECIPE FAILED potion_haste_strong : item.potion_haste
+//     RECIPE output matches input? WHY.
+      
+      //https://github.com/MinecraftForge/MinecraftForge/blob/f08f3c11053d414b57d03192dd72fcbfaef100f7/src/test/java/net/minecraftforge/test/BrewingRecipeRegistryTest.java
+      addBrewingRecipe(new ItemStack(Items.DIAMOND_SWORD), new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.DIAMOND_HOE));
+
+ 
     }
     if (enableLuck) {
-      potion_luck = new ItemPotionCustom(true, MobEffects.LUCK, NORMAL);
-      potion_luck_long = new ItemPotionCustom(true, MobEffects.LUCK, LONG);
+      ItemPotionCustom potion_luck = new ItemPotionCustom(true, MobEffects.LUCK, NORMAL);
+      ItemPotionCustom potion_luck_long = new ItemPotionCustom(true, MobEffects.LUCK, LONG);
       ItemRegistry.addItem(potion_luck, "potion_luck");
       ItemRegistry.addItem(potion_luck_long, "potion_luck_long");
-      BrewingRecipeRegistry.addRecipe(
+      addBrewingRecipe(
           new ItemStack(potion_viscous),
           new ItemStack(Items.SLIME_BALL),
           new ItemStack(potion_luck));
@@ -226,25 +220,37 @@ public class PotionModule extends BaseEventModule {
           potion_luck_long);
     }
     if (enableLevit) {
-      potion_levitation = new ItemPotionCustom(true, MobEffects.LEVITATION, NORMAL);
-      potion_levitation_long = new ItemPotionCustom(true, MobEffects.LEVITATION, LONG);
+      ItemPotionCustom potion_levitation = new ItemPotionCustom(true, MobEffects.LEVITATION, NORMAL);
+      ItemPotionCustom potion_levitation_long = new ItemPotionCustom(true, MobEffects.LEVITATION, LONG);
       ItemRegistry.addItem(potion_levitation, "potion_levitation");
       ItemRegistry.addItem(potion_levitation_long, "potion_levitation_long");
-      BrewingRecipeRegistry.addRecipe(
+      addBrewingRecipe(
           new ItemStack(potion_viscous),
           new ItemStack(Items.CHORUS_FRUIT),
           new ItemStack(potion_levitation));
-      BrewingRecipeRegistry.addRecipe(
+      addBrewingRecipe(
           new ItemStack(potion_levitation),
           new ItemStack(Items.REDSTONE),
           new ItemStack(potion_levitation_long));
     }
   }
   private static void addBrewingRecipe(Item input, Item ingredient, Item output) {
-    BrewingRecipeRegistry.addRecipe(
+    addBrewingRecipe(
         new ItemStack(input),
         new ItemStack(ingredient),
         new ItemStack(output));
+  }
+  private static void addBrewingRecipe(ItemStack input, ItemStack ingredient, ItemStack output) {
+    BrewingRecipeRegistry.addRecipe(
+        input,
+        ingredient,
+        output);
+    ItemStack output0 = BrewingRecipeRegistry.getOutput(input, ingredient);
+    if(output0.getItem() == output.getItem())
+        ModMain.logger.info("Recipe succefully registered and working: "+output.getUnlocalizedName());
+    else{
+      ModMain.logger.info("Recipe FAILED"+output.getUnlocalizedName());
+    }
   }
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
