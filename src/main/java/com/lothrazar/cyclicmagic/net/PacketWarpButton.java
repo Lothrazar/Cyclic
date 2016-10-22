@@ -1,11 +1,10 @@
 package com.lothrazar.cyclicmagic.net;
 import com.lothrazar.cyclicmagic.item.ItemEnderBook;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilExperience;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.NetHandlerPlayServer;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -33,7 +32,7 @@ public class PacketWarpButton implements IMessage, IMessageHandler<PacketWarpBut
       ItemEnderBook.teleport(player, message.slot);
     }
     else if (cost > 0 && UtilExperience.getExpTotal(player) < cost) {
-      player.addChatMessage(new TextComponentTranslation(I18n.format("gui.chatexp")));
+      UtilChat.addChatMessage(player,"gui.chatexp");
     }
     else if (ItemEnderBook.teleport(player, message.slot)) {
       //if the teleport worked in non creative, drain it
