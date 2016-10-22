@@ -38,8 +38,11 @@ public class PotionModule extends BaseEventModule {
   final static int SHORT = 60 + 30;
   final static int NORMAL = 60 * 3;
   final static int LONG = 60 * 8;
+  
   @Override
   public void onInit() {
+    final Item UPG_LENGTH = Items.APPLE;//long fails
+    final Item UPG_STRONG = Items.GOLD_NUGGET;//strong works?
     //the actual effects need to be in regardless. ex: some items/charms use these even if the potion item isdisabled
     // http://www.minecraftforge.net/forum/index.php?topic=11024.0
     // ??? http://www.minecraftforge.net/forum/index.php?topic=12358.0
@@ -62,7 +65,7 @@ public class PotionModule extends BaseEventModule {
           potion_ender);
       addBrewingRecipe(
           potion_ender,
-          Items.REDSTONE,
+          UPG_LENGTH,
           potion_ender_long);
     }
     if (enableMagnet) {
@@ -76,7 +79,7 @@ public class PotionModule extends BaseEventModule {
           new ItemStack(potion_magnet));
       addBrewingRecipe(
           potion_magnet,
-          Items.REDSTONE,
+          UPG_LENGTH,
           potion_magnet_long);
     }
     if (enableWaterwalk) {
@@ -90,11 +93,11 @@ public class PotionModule extends BaseEventModule {
           potion_waterwalk);
       addBrewingRecipe(
           potion_viscous,
-          Items.BLAZE_POWDER,
+          Items.BLAZE_ROD,
           potion_waterwalk);
       addBrewingRecipe(
           potion_waterwalk,
-          Items.REDSTONE,
+          UPG_LENGTH,
           potion_waterwalk_long);
     }
     if (enableSlowfall) {
@@ -112,7 +115,7 @@ public class PotionModule extends BaseEventModule {
           new ItemStack(potion_slowfall));
       addBrewingRecipe(
           new ItemStack(potion_slowfall),
-          new ItemStack(Items.REDSTONE),
+          new ItemStack(UPG_LENGTH),
           new ItemStack(potion_slowfall_long));
     }
     if (enableSnow) {
@@ -126,7 +129,7 @@ public class PotionModule extends BaseEventModule {
       ItemRegistry.addItem(potion_snow_long, "potion_snow_long");
       addBrewingRecipe(
           new ItemStack(potion_snow),
-          new ItemStack(Items.REDSTONE),
+          new ItemStack(UPG_LENGTH),
           new ItemStack(potion_snow_long));
       LootTableRegistry.registerLoot(potion_snow, ChestType.IGLOO);
       LootTableRegistry.registerLoot(potion_snow_long, ChestType.IGLOO);
@@ -142,7 +145,7 @@ public class PotionModule extends BaseEventModule {
           potion_boost);
       addBrewingRecipe(
           potion_boost,
-          Items.REDSTONE,
+          UPG_LENGTH,
           potion_boost_long);
       LootTableRegistry.registerLoot(potion_boost_long);
     }
@@ -159,11 +162,11 @@ public class PotionModule extends BaseEventModule {
           potion_resistance);
       addBrewingRecipe(
           potion_resistance,
-          Items.REDSTONE,
+          UPG_LENGTH,
           potion_resistance_long);
       addBrewingRecipe(
           potion_resistance,
-          Items.GLOWSTONE_DUST,
+          UPG_STRONG,
           potion_resistance_strong);
       LootTableRegistry.registerLoot(potion_resistance_long);
     }
@@ -180,30 +183,31 @@ public class PotionModule extends BaseEventModule {
           new ItemStack(potion_haste));
       addBrewingRecipe(
           new ItemStack(potion_haste),
-          new ItemStack(Items.REDSTONE),
+          new ItemStack(UPG_LENGTH),
           new ItemStack(potion_haste_long));
       addBrewingRecipe(
           new ItemStack(potion_haste),
-          new ItemStack(Items.GLOWSTONE_DUST),
+          new ItemStack(UPG_STRONG),
           new ItemStack(potion_haste_strong));
       LootTableRegistry.registerLoot(potion_haste_strong);
-//      System.out.println("testPotionStrong= "+testPotionStrong);
-//      ItemStack output1 = BrewingRecipeRegistry.getOutput(new ItemStack(potion_haste), new ItemStack(Items.GLOWSTONE_DUST));
-//      if (output1.getItem() == potion_haste_strong)
-//        System.out.println("RECIPE succefully registered and working. potion_haste_strong obtained.");
-//      else {
-//        System.out.println("RECIPE FAILED potion_haste_strong : "+output1.getUnlocalizedName());
-//      }
-//      if (output1.getItem() == potion_haste)
-//        System.out.println("RECIPE output matches input? WHY.");
-      
-//      RECIPE FAILED potion_haste_strong : item.potion_haste
-//     RECIPE output matches input? WHY.
-      
+
       //https://github.com/MinecraftForge/MinecraftForge/blob/f08f3c11053d414b57d03192dd72fcbfaef100f7/src/test/java/net/minecraftforge/test/BrewingRecipeRegistryTest.java
-      addBrewingRecipe(new ItemStack(Items.DIAMOND_SWORD), new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.DIAMOND_HOE));
+      //addBrewingRecipe(new ItemStack(Items.DIAMOND_SWORD), new ItemStack(Items.REDSTONE), new ItemStack(Items.DIAMOND_HOE));
 
  
+      
+      BrewingRecipeRegistry.addRecipe(new ItemStack(Items.DIAMOND_SWORD), new ItemStack(Items.REDSTONE), new ItemStack(Items.DIAMOND_HOE));
+
+     // And then run the unit test
+
+
+      ItemStack output0 = BrewingRecipeRegistry.getOutput(new ItemStack(Items.DIAMOND_SWORD), new ItemStack(Items.REDSTONE));
+          if(output0.getItem() == Items.DIAMOND_HOE)
+            System.out.println("Recipe succefully registered and working: HOE");
+          else
+            System.out.println("Recipe FAILED : output0 =  "+output0.getUnlocalizedName());
+          
+      
     }
     if (enableLuck) {
       ItemPotionCustom potion_luck = new ItemPotionCustom(true, MobEffects.LUCK, NORMAL);
@@ -216,7 +220,7 @@ public class PotionModule extends BaseEventModule {
           new ItemStack(potion_luck));
       addBrewingRecipe(
           potion_luck,
-          Items.REDSTONE,
+          UPG_LENGTH,
           potion_luck_long);
     }
     if (enableLevit) {
@@ -230,7 +234,7 @@ public class PotionModule extends BaseEventModule {
           new ItemStack(potion_levitation));
       addBrewingRecipe(
           new ItemStack(potion_levitation),
-          new ItemStack(Items.REDSTONE),
+          new ItemStack(UPG_LENGTH),
           new ItemStack(potion_levitation_long));
     }
   }
