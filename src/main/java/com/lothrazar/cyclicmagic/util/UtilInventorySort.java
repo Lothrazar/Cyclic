@@ -14,8 +14,8 @@ import net.minecraft.world.World;
  * @author Lothrazar at https://github.com/PrinceOfAmber
  */
 public class UtilInventorySort {
-  public static class BagDepositReturn{
-    public BagDepositReturn(int m, ItemStack[] s){
+  public static class BagDepositReturn {
+    public BagDepositReturn(int m, ItemStack[] s) {
       moved = m;
       stacks = s;
     }
@@ -33,7 +33,6 @@ public class UtilInventorySort {
     public ArrayList<ItemStack> stacks;
     public String key;
   }
-
   public static void dumpFromPlayerToIInventory(World world, IInventory inventory, EntityPlayer player) {
     ItemStack chestEmptySlot;
     ItemStack playerItem;
@@ -84,17 +83,12 @@ public class UtilInventorySort {
     } // close loop on chest items
     updatePlayerContainerClient(player);
   }
-  
-
-  public static  BagDepositReturn  dumpFromListToIInventory(World world, IInventory inventory, ItemStack[] stacks) {
-  
+  public static BagDepositReturn dumpFromListToIInventory(World world, IInventory inventory, ItemStack[] stacks) {
     ItemStack chestEmptySlot;
     ItemStack bagItem;
     int itemsMoved = 0;
-
     // we loop on the chest and look for empty slots
     // once we have an empty slot, we find something to fill it with
-  
     for (int islotInvo = 0; islotInvo < inventory.getSizeInventory(); islotInvo++) {
       chestEmptySlot = inventory.getStackInSlot(islotInvo);
       if (chestEmptySlot != null) {
@@ -105,14 +99,16 @@ public class UtilInventorySort {
         if (bagItem == null) {
           continue;
         } // empty inventory slot
-        inventory.setInventorySlotContents(islotInvo, bagItem);
-        stacks[islotPlayer] = null;
-        itemsMoved += bagItem.stackSize;
-        break;
+        if (inventory.isItemValidForSlot(islotInvo, bagItem)) {
+          inventory.setInventorySlotContents(islotInvo, bagItem);
+          stacks[islotPlayer] = null;
+          itemsMoved += bagItem.stackSize;
+          break;
+        }
       } // close loop on player inventory items
     } // close loop on chest items
-//    updatePlayerContainerClient(player);
-    return new BagDepositReturn(itemsMoved,stacks);
+    //    updatePlayerContainerClient(player);
+    return new BagDepositReturn(itemsMoved, stacks);
   }
   public static BagDepositReturn sortFromListToInventory(World world, IInventory chest, ItemStack[] stacks) {
     ItemStack chestItem;
@@ -121,7 +117,6 @@ public class UtilInventorySort {
     int toDeposit;
     int chestMax;
     int itemsMoved = 0;
-
     for (int islotChest = 0; islotChest < chest.getSizeInventory(); islotChest++) {
       chestItem = chest.getStackInSlot(islotChest);
       if (chestItem == null) {
@@ -161,7 +156,7 @@ public class UtilInventorySort {
         } // end if items match
       } // close loop on player inventory items
     } // close loop on chest items
-    return new BagDepositReturn(itemsMoved,stacks);
+    return new BagDepositReturn(itemsMoved, stacks);
   }
   public static void sortFromPlayerToInventory(World world, IInventory chest, EntityPlayer player) {
     // source:
