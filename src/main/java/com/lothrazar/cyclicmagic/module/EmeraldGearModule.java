@@ -74,7 +74,7 @@ public class EmeraldGearModule extends BaseModule {
       Item emerald_hoe = new ItemEmeraldHoe();
       ItemRegistry.addItem(emerald_hoe, ItemEmeraldHoe.name);
       LootTableRegistry.registerLoot(emerald_axe, 1);
-//      LootTableRegistry.registerLoot(emerald_hoe, 1);
+      //      LootTableRegistry.registerLoot(emerald_hoe, 1);
       LootTableRegistry.registerLoot(emerald_pickaxe, 1);
       LootTableRegistry.registerLoot(emerald_shovel, 1);
       LootTableRegistry.registerLoot(emerald_sword, 1);

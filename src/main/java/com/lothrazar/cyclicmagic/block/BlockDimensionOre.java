@@ -42,10 +42,10 @@ public class BlockDimensionOre extends BlockOre {
     this.spawn = t;
     this.spawnChance = chance;
   }
-  public void registerSmeltingOutput(Item out){
+  public void registerSmeltingOutput(Item out) {
     this.registerSmeltingOutput(new ItemStack(out));
   }
-  public void registerSmeltingOutput(ItemStack out){
+  public void registerSmeltingOutput(ItemStack out) {
     GameRegistry.addSmelting(this, out, 1);
   }
   public void trySpawnTriggeredEntity(World world, BlockPos pos) {

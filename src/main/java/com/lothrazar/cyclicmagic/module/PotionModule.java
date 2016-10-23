@@ -38,7 +38,6 @@ public class PotionModule extends BaseEventModule {
   final static int SHORT = 60 + 30;
   final static int NORMAL = 60 * 3;
   final static int LONG = 60 * 8;
-  
   @Override
   public void onInit() {
     final Item UPG_LENGTH = Items.DYE;//long fails
@@ -192,20 +191,17 @@ public class PotionModule extends BaseEventModule {
           new ItemStack(UPG_STRONG),
           new ItemStack(potion_haste_strong));
       LootTableRegistry.registerLoot(potion_haste_strong);
-
       //https://github.com/MinecraftForge/MinecraftForge/blob/f08f3c11053d414b57d03192dd72fcbfaef100f7/src/test/java/net/minecraftforge/test/BrewingRecipeRegistryTest.java
       //addBrewingRecipe(new ItemStack(Items.DIAMOND_SWORD), new ItemStack(Items.REDSTONE), new ItemStack(Items.DIAMOND_HOE));
-
- 
-//      
-//      BrewingRecipeRegistry.addRecipe(new ItemStack(Items.DIAMOND_SWORD), new ItemStack(Items.REDSTONE), new ItemStack(Items.DIAMOND_HOE));
-//      ItemStack output0 = BrewingRecipeRegistry.getOutput(new ItemStack(Items.DIAMOND_SWORD), new ItemStack(Items.REDSTONE));
-//      if(output0.getItem() == Items.DIAMOND_HOE)
-//        System.out.println("Recipe succefully registered and working: HOE");
-//      else
-//        System.out.println("Recipe FAILED : output0 =  "+output0.getUnlocalizedName());
-//          
-//      
+      //      
+      //      BrewingRecipeRegistry.addRecipe(new ItemStack(Items.DIAMOND_SWORD), new ItemStack(Items.REDSTONE), new ItemStack(Items.DIAMOND_HOE));
+      //      ItemStack output0 = BrewingRecipeRegistry.getOutput(new ItemStack(Items.DIAMOND_SWORD), new ItemStack(Items.REDSTONE));
+      //      if(output0.getItem() == Items.DIAMOND_HOE)
+      //        System.out.println("Recipe succefully registered and working: HOE");
+      //      else
+      //        System.out.println("Recipe FAILED : output0 =  "+output0.getUnlocalizedName());
+      //          
+      //      
     }
     if (enableLuck) {
       ItemPotionCustom potion_luck = new ItemPotionCustom(true, MobEffects.LUCK, NORMAL);
@@ -248,10 +244,10 @@ public class PotionModule extends BaseEventModule {
         ingredient,
         output);
     ItemStack output0 = BrewingRecipeRegistry.getOutput(input, ingredient);
-    if(output0.getItem() == output.getItem())
-        ModMain.logger.info("Recipe succefully registered and working: "+output.getUnlocalizedName());
-    else{
-      ModMain.logger.info("Recipe FAILED"+output.getUnlocalizedName());
+    if (output0.getItem() == output.getItem())
+      ModMain.logger.info("Recipe succefully registered and working: " + output.getUnlocalizedName());
+    else {
+      ModMain.logger.info("Recipe FAILED" + output.getUnlocalizedName());
     }
   }
   @SideOnly(Side.CLIENT)

@@ -58,7 +58,6 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
     // so when uncrafting cake, you do not get milk buckets back
     String def = "";
     String csv = config.getString("BlacklistInput", category, def, "Items that cannot be uncrafted; not allowed in the slots.  EXAMPLE : 'item.stick,tile.hayBlock,tile.chest'  ");
-    // [item.stick, tile.cloth]
     UtilUncraft.blacklistInput = (List<String>) Arrays.asList(csv.split(","));
     if (UtilUncraft.blacklistInput == null) {
       UtilUncraft.blacklistInput = new ArrayList<String>();
