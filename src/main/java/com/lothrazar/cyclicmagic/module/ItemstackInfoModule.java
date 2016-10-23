@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.module;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.util.Const;
-import net.minecraft.client.resources.I18n;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
@@ -23,12 +23,14 @@ public class ItemstackInfoModule extends BaseEventModule implements IHasConfig {
         ItemFood food = (ItemFood) itemStack.getItem();
         int hunger = food.getHealAmount(itemStack);
         float satur = food.getSaturationModifier(itemStack);
-        event.getToolTip().add(hunger + " (" + satur + ")");
+        if (hunger > 0 || satur > 0) {
+          event.getToolTip().add(hunger + " (" + satur + ")");
+        }
       }
       if (fuelDetails) {
         int burnTime = TileEntityFurnace.getItemBurnTime(itemStack);
         if (burnTime > 0) {
-          event.getToolTip().add(I18n.format("tooltip.burntime") + burnTime);
+          event.getToolTip().add(UtilChat.lang("tooltip.burntime") + burnTime);
         }
       }
     }

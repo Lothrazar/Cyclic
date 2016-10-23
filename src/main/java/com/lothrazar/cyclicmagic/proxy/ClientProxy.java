@@ -36,7 +36,6 @@ import net.minecraft.util.IThreadListener;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-import net.minecraftforge.client.settings.KeyModifier;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -68,16 +67,13 @@ public class ClientProxy extends CommonProxy {
       ClientRegistry.registerKeyBinding(ClientProxy.keyShiftUp);
       keyShiftDown = new KeyBinding("key.columnshiftdown", Keyboard.KEY_H, keyCategoryInventory);
       ClientRegistry.registerKeyBinding(ClientProxy.keyShiftDown);
-      keyBarUp = new KeyBinding("key.columnbarup", net.minecraftforge.client.settings.KeyConflictContext.IN_GAME,
-          KeyModifier.SHIFT, Keyboard.KEY_Y, keyCategoryInventory);
+      keyBarUp = new KeyBinding("key.columnbarup", Keyboard.KEY_LBRACKET, keyCategoryInventory);
       ClientRegistry.registerKeyBinding(ClientProxy.keyBarUp);
-      keyBarDown = new KeyBinding("key.columnbardown", net.minecraftforge.client.settings.KeyConflictContext.IN_GAME,
-          KeyModifier.SHIFT, Keyboard.KEY_H, keyCategoryInventory);
+      keyBarDown = new KeyBinding("key.columnbardown", Keyboard.KEY_RBRACKET, keyCategoryInventory);
       ClientRegistry.registerKeyBinding(ClientProxy.keyBarDown);
       keyExtraInvo = new KeyBinding("key.keyExtraInvo", Keyboard.KEY_R, keyCategoryInventory);
       ClientRegistry.registerKeyBinding(ClientProxy.keyExtraInvo);
-      keyExtraCraftin = new KeyBinding("key.keyExtraCraftin", net.minecraftforge.client.settings.KeyConflictContext.IN_GAME,
-          KeyModifier.SHIFT, Keyboard.KEY_R, keyCategoryInventory);
+      keyExtraCraftin = new KeyBinding("key.keyExtraCraftin", Keyboard.KEY_O, keyCategoryInventory);
       ClientRegistry.registerKeyBinding(ClientProxy.keyExtraCraftin);
     }
   }

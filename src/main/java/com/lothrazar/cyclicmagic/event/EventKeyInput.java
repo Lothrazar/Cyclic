@@ -1,5 +1,7 @@
 package com.lothrazar.cyclicmagic.event;
 import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.gui.player.GuiPlayerExtended;
+import com.lothrazar.cyclicmagic.gui.playerworkbench.GuiPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.net.PacketMovePlayerHotbar;
 import com.lothrazar.cyclicmagic.net.PacketOpenExtendedInventory;
 import com.lothrazar.cyclicmagic.net.PacketFakeWorkbench;
@@ -82,6 +84,14 @@ public class EventKeyInput {
           ModMain.network.sendToServer(new PacketMovePlayerColumn(slot, true));
         }
       }
+    }
+    if (ClientProxy.keyExtraInvo != null && isGuiKeyDown(ClientProxy.keyExtraInvo) && event.getGui() instanceof GuiPlayerExtended) {
+      EntityPlayerSP thePlayer = Minecraft.getMinecraft().thePlayer;
+      thePlayer.closeScreen();
+    }
+    else if (ClientProxy.keyExtraCraftin != null && isGuiKeyDown(ClientProxy.keyExtraCraftin) && event.getGui() instanceof GuiPlayerExtWorkbench) {
+      EntityPlayerSP thePlayer = Minecraft.getMinecraft().thePlayer;
+      thePlayer.closeScreen();
     }
   }
   @SideOnly(Side.CLIENT)

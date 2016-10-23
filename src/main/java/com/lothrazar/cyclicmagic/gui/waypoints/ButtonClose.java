@@ -1,13 +1,13 @@
 package com.lothrazar.cyclicmagic.gui.waypoints;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ButtonClose extends GuiButton {
   public ButtonClose(int id, int x, int y) {
-    super(id, x, y, 30, 20, I18n.format("button.close"));
+    super(id, x, y, 30, 20, UtilChat.lang("button.close"));
   }
   @SideOnly(Side.CLIENT)
   @Override

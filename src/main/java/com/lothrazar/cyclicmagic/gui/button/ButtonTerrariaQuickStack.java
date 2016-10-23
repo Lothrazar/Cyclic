@@ -6,10 +6,10 @@ import com.lothrazar.cyclicmagic.gui.ITooltipButton;
 import com.lothrazar.cyclicmagic.module.GuiTerrariaButtonsModule;
 import com.lothrazar.cyclicmagic.net.PacketQuickStack;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -17,7 +17,7 @@ public class ButtonTerrariaQuickStack extends GuiButton implements ITooltipButto
   private List<String> tooltip = new ArrayList<String>();
   public ButtonTerrariaQuickStack(int buttonId, int x, int y) {
     super(buttonId, x, y, GuiTerrariaButtonsModule.BTNWIDTH, Const.btnHeight, "Q");
-    tooltip.add(I18n.format("button.terraria.quickstack"));
+    tooltip.add(UtilChat.lang("button.terraria.quickstack"));
   }
   @SideOnly(Side.CLIENT)
   @Override

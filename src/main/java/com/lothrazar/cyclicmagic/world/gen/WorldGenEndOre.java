@@ -15,14 +15,14 @@ import net.minecraftforge.fml.common.IWorldGenerator;
 public class WorldGenEndOre implements IWorldGenerator {
   private final int MIN_HEIGHT = 5;
   private final int MAX_HEIGHT = 128;
-  private WorldGenerator genGold;
+  private WorldGenerator genRedstone;
   private WorldGenerator genCoal;
   private WorldGenerator genEmerald;
   private WorldGenerator genLapis;
   private WorldGenerator genDiamond;
   public WorldGenEndOre() {
     int blockCount = 8;
-    this.genGold = new WorldGenMinable(BlockRegistry.end_redstone_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.END_STONE));
+    this.genRedstone = new WorldGenMinable(BlockRegistry.end_redstone_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.END_STONE));
     blockCount = 8;
     this.genCoal = new WorldGenMinable(BlockRegistry.end_coal_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.END_STONE));
     blockCount = 4;
@@ -37,7 +37,7 @@ public class WorldGenEndOre implements IWorldGenerator {
     int chance;
     if (world.provider.getDimension() == Const.Dimension.end) {
       chance = 45;
-      this.run(this.genGold, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, chance, MIN_HEIGHT, MAX_HEIGHT);
+      this.run(this.genRedstone, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, chance, MIN_HEIGHT, MAX_HEIGHT);
       chance = 25;
       this.run(this.genCoal, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, chance, MIN_HEIGHT, MAX_HEIGHT);
       chance = 10;

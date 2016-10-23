@@ -7,10 +7,10 @@ import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.player.EntityPlayer;
@@ -81,9 +81,9 @@ public class HorseFoodModule extends BaseEventModule {
         // convert from scale factor to blocks
         double jumpHeight = UtilEntity.getJumpTranslated(horse.getHorseJumpStrength());
         DecimalFormat df = new DecimalFormat("0.00");
-        event.getLeft().add(I18n.format("debug.horsespeed") + "  " + df.format(speed));
+        event.getLeft().add(UtilChat.lang("debug.horsespeed") + "  " + df.format(speed));
         df = new DecimalFormat("0.0");
-        event.getLeft().add(I18n.format("debug.horsejump") + "  " + df.format(jumpHeight));
+        event.getLeft().add(UtilChat.lang("debug.horsejump") + "  " + df.format(jumpHeight));
       }
     }
   }

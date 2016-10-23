@@ -41,6 +41,9 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
     else {
       // not found, so play different sound
       UtilSound.playSound(player, player.getPosition(), SoundEvents.BLOCK_FIRE_EXTINGUISH);
+      if(world.isRemote){
+        UtilChat.addChatMessage(player, "item.ender_dungeon.notfound");
+      }
     }
   }
   @SideOnly(Side.CLIENT)

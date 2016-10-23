@@ -6,10 +6,10 @@ import com.lothrazar.cyclicmagic.gui.ITooltipButton;
 import com.lothrazar.cyclicmagic.module.GuiTerrariaButtonsModule;
 import com.lothrazar.cyclicmagic.net.PacketDepositContainerToPlayer;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -17,7 +17,7 @@ public class ButtonTerrariaLootAll extends GuiButton implements ITooltipButton {
   private List<String> tooltip = new ArrayList<String>();
   public ButtonTerrariaLootAll(int buttonId, int x, int y) {
     super(buttonId, x, y, GuiTerrariaButtonsModule.BTNWIDTH, Const.btnHeight, "L");
-    tooltip.add(I18n.format("button.terraria.lootall"));
+    tooltip.add(UtilChat.lang("button.terraria.lootall"));
   }
   @SideOnly(Side.CLIENT)
   @Override

@@ -14,6 +14,14 @@ import net.minecraft.world.World;
  * @author Lothrazar at https://github.com/PrinceOfAmber
  */
 public class UtilInventorySort {
+  public static class BagDepositReturn {
+    public BagDepositReturn(int m, ItemStack[] s) {
+      moved = m;
+      stacks = s;
+    }
+    public int moved;
+    public ItemStack[] stacks;
+  }
   public static class SortGroup {
     public SortGroup(String k) {
       stacks = new ArrayList<ItemStack>();
@@ -74,6 +82,81 @@ public class UtilInventorySort {
       } // close loop on player inventory items
     } // close loop on chest items
     updatePlayerContainerClient(player);
+  }
+  public static BagDepositReturn dumpFromListToIInventory(World world, IInventory inventory, ItemStack[] stacks) {
+    ItemStack chestEmptySlot;
+    ItemStack bagItem;
+    int itemsMoved = 0;
+    // we loop on the chest and look for empty slots
+    // once we have an empty slot, we find something to fill it with
+    for (int islotInvo = 0; islotInvo < inventory.getSizeInventory(); islotInvo++) {
+      chestEmptySlot = inventory.getStackInSlot(islotInvo);
+      if (chestEmptySlot != null) {
+        continue;
+      } // slot not empty, skip over it
+      for (int islotPlayer = 0; islotPlayer < stacks.length; islotPlayer++) {
+        bagItem = stacks[islotPlayer];
+        if (bagItem == null) {
+          continue;
+        } // empty inventory slot
+        if (inventory.isItemValidForSlot(islotInvo, bagItem)) {
+          inventory.setInventorySlotContents(islotInvo, bagItem);
+          stacks[islotPlayer] = null;
+          itemsMoved += bagItem.stackSize;
+          break;
+        }
+      } // close loop on player inventory items
+    } // close loop on chest items
+    //    updatePlayerContainerClient(player);
+    return new BagDepositReturn(itemsMoved, stacks);
+  }
+  public static BagDepositReturn sortFromListToInventory(World world, IInventory chest, ItemStack[] stacks) {
+    ItemStack chestItem;
+    ItemStack bagItem;
+    int room;
+    int toDeposit;
+    int chestMax;
+    int itemsMoved = 0;
+    for (int islotChest = 0; islotChest < chest.getSizeInventory(); islotChest++) {
+      chestItem = chest.getStackInSlot(islotChest);
+      if (chestItem == null) {
+        continue;
+      } // empty chest slot
+      for (int islotInv = 0; islotInv < stacks.length; islotInv++) {
+        bagItem = stacks[islotInv];
+        if (bagItem == null) {
+          continue;
+        } // empty inventory slot
+        if (bagItem.getItem().equals(chestItem.getItem())
+            && bagItem.getItemDamage() == chestItem.getItemDamage()) {
+          // same item, including damage (block state)
+          chestMax = chestItem.getItem().getItemStackLimit(chestItem);
+          room = chestMax - chestItem.stackSize;
+          if (room <= 0) {
+            continue;
+          } // no room, check the next spot
+          // so if i have 30 room, and 28 items, i deposit 28.
+          // or if i have 30 room and 38 items, i deposit 30
+          toDeposit = Math.min(bagItem.stackSize, room);
+          chestItem.stackSize += toDeposit;
+          chest.setInventorySlotContents(islotChest, chestItem);
+          bagItem.stackSize -= toDeposit;
+          itemsMoved += toDeposit;
+          if (bagItem.stackSize <= 0) {
+            // item stacks with zero count do not destroy
+            // themselves, they show
+            // up and have unexpected behavior in game so set to
+            // empty
+            stacks[islotInv] = null;
+          }
+          else {
+            // set to new quantity
+            stacks[islotInv] = bagItem;
+          }
+        } // end if items match
+      } // close loop on player inventory items
+    } // close loop on chest items
+    return new BagDepositReturn(itemsMoved, stacks);
   }
   public static void sortFromPlayerToInventory(World world, IInventory chest, EntityPlayer player) {
     // source:

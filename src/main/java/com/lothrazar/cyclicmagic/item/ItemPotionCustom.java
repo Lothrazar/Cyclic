@@ -21,7 +21,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.StringUtils;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.world.World;
 
 public class ItemPotionCustom extends ItemFood {
@@ -99,7 +98,7 @@ public class ItemPotionCustom extends ItemFood {
   public void addInformation(ItemStack held, EntityPlayer player, List<String> list, boolean par4) {
     String n;
     for (int i = 0; i < potions.size(); i++) {
-      n = TextFormatting.BLUE + I18n.format(potions.get(i).getName());
+      n = TextFormatting.BLUE + UtilChat.lang(potions.get(i).getName());
       n += " (" + StringUtils.ticksToElapsedTime(potionDurations.get(i)) + ")";
       list.add(n);
     }

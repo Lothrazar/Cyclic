@@ -7,10 +7,13 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityEndermite;
 import net.minecraft.entity.monster.EntitySilverfish;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockDimensionOre extends BlockOre {
   private Item dropped;
@@ -38,6 +41,12 @@ public class BlockDimensionOre extends BlockOre {
   public void setSpawnType(SpawnType t, int chance) {
     this.spawn = t;
     this.spawnChance = chance;
+  }
+  public void registerSmeltingOutput(Item out){
+    this.registerSmeltingOutput(new ItemStack(out));
+  }
+  public void registerSmeltingOutput(ItemStack out){
+    GameRegistry.addSmelting(this, out, 1);
   }
   public void trySpawnTriggeredEntity(World world, BlockPos pos) {
     if (WorldGenModule.oreSpawns == false) { return;//config has disabled spawning no matter what
@@ -85,5 +94,9 @@ public class BlockDimensionOre extends BlockOre {
   public int getExpDrop(IBlockState state, net.minecraft.world.IBlockAccess world, BlockPos pos, int fortune) {
     Random rand = world instanceof World ? ((World) world).rand : new Random();
     return MathHelper.getRandomIntegerInRange(rand, 2, 5);
+  }
+  @Override
+  public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+    return true;
   }
 }
