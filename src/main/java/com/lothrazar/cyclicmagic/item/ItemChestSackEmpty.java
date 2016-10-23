@@ -58,6 +58,8 @@ public class ItemChestSackEmpty extends BaseItem implements IHasRecipe {
     UtilEntity.dropItemStackInWorld(world, entityPlayer.getPosition(), drop);
     //now erase the data so it doesnt drop items/etc
     tile.readFromNBT(new NBTTagCompound());
+    world.removeTileEntity(pos);
+    world.setBlockToAir(pos);
     world.destroyBlock(pos, false);
     tryUpdateNeighbour(world, pos.north());
     tryUpdateNeighbour(world, pos.south());
