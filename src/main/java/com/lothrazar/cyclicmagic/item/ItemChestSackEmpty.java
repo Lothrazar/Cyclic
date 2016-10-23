@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.item;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.net.PacketStorageSack;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -46,21 +48,25 @@ public class ItemChestSackEmpty extends BaseItem implements IHasRecipe {
       }
       return EnumActionResult.FAIL;
     }
-    NBTTagCompound tileData = new NBTTagCompound(); //thanks for the tip on setting tile entity data from nbt tag: https://github.com/romelo333/notenoughwands1.8.8/blob/master/src/main/java/romelo333/notenoughwands/Items/DisplacementWand.java
-    tile.writeToNBT(tileData);
-    NBTTagCompound itemData = new NBTTagCompound();
-    itemData.setString(ItemChestSack.KEY_BLOCKNAME, state.getBlock().getUnlocalizedName());
-    itemData.setTag(ItemChestSack.KEY_BLOCKTILE, tileData);
-    itemData.setInteger(ItemChestSack.KEY_BLOCKID, Block.getIdFromBlock(state.getBlock()));
-    itemData.setInteger(ItemChestSack.KEY_BLOCKSTATE, state.getBlock().getMetaFromState(state));
-    ItemStack drop = new ItemStack(ItemRegistry.chest_sack);
-    drop.setTagCompound(itemData);
-    //    entityPlayer.dropItem(drop, false);
-    //now erase the data so it doesnt drop items/etc
-    if(world.isRemote == false){
-      UtilEntity.dropItemStackInWorld(world, entityPlayer.getPosition(), drop);
-      UtilPlaceBlocks.destroyBlock(world, pos); 
+    
+    if(world.isRemote){
+    ModMain.network.sendToServer(new PacketStorageSack(pos));
     }
+//    NBTTagCompound tileData = new NBTTagCompound(); //thanks for the tip on setting tile entity data from nbt tag: https://github.com/romelo333/notenoughwands1.8.8/blob/master/src/main/java/romelo333/notenoughwands/Items/DisplacementWand.java
+//    tile.writeToNBT(tileData);
+//    NBTTagCompound itemData = new NBTTagCompound();
+//    itemData.setString(ItemChestSack.KEY_BLOCKNAME, state.getBlock().getUnlocalizedName());
+//    itemData.setTag(ItemChestSack.KEY_BLOCKTILE, tileData);
+//    itemData.setInteger(ItemChestSack.KEY_BLOCKID, Block.getIdFromBlock(state.getBlock()));
+//    itemData.setInteger(ItemChestSack.KEY_BLOCKSTATE, state.getBlock().getMetaFromState(state));
+//    ItemStack drop = new ItemStack(ItemRegistry.chest_sack);
+//    drop.setTagCompound(itemData);
+//    //    entityPlayer.dropItem(drop, false);
+//    //now erase the data so it doesnt drop items/etc
+//    if(world.isRemote == false){
+//      UtilEntity.dropItemStackInWorld(world, entityPlayer.getPosition(), drop);
+//      UtilPlaceBlocks.destroyBlock(world, pos); 
+//    }
 //    tile.readFromNBT(new NBTTagCompound());
 //    world.removeTileEntity(pos);
 //    world.setBlockToAir(pos); // https://github.com/PrinceOfAmber/Cyclic/issues/131

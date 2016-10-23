@@ -37,6 +37,6 @@ public class PacketRegistry {
     network.registerMessage(PacketTileMineHeight.class, PacketTileMineHeight.class, packetID++, Side.SERVER);
     network.registerMessage(PacketSwapBlock.class, PacketSwapBlock.class, packetID++, Side.SERVER);
     network.registerMessage(PacketRandomize.class, PacketRandomize.class, packetID++, Side.SERVER);
-    //    network.registerMessage(PacketStorageGui.class, PacketStorageGui.class, packetID++, Side.SERVER);
+    network.registerMessage(PacketStorageSack.class, PacketStorageSack.class, packetID++, Side.SERVER);
   }
 }
