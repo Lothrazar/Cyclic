@@ -5,6 +5,7 @@ import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -55,30 +56,20 @@ public class ItemChestSackEmpty extends BaseItem implements IHasRecipe {
     ItemStack drop = new ItemStack(ItemRegistry.chest_sack);
     drop.setTagCompound(itemData);
     //    entityPlayer.dropItem(drop, false);
-    UtilEntity.dropItemStackInWorld(world, entityPlayer.getPosition(), drop);
     //now erase the data so it doesnt drop items/etc
-    tile.readFromNBT(new NBTTagCompound());
-    world.removeTileEntity(pos);
-    world.setBlockToAir(pos); // https://github.com/PrinceOfAmber/Cyclic/issues/131
+    if(world.isRemote == false){
+      UtilEntity.dropItemStackInWorld(world, entityPlayer.getPosition(), drop);
+      UtilPlaceBlocks.destroyBlock(world, pos); 
+    }
+//    tile.readFromNBT(new NBTTagCompound());
+//    world.removeTileEntity(pos);
+//    world.setBlockToAir(pos); // https://github.com/PrinceOfAmber/Cyclic/issues/131
 //    world.destroyBlock(pos, false);
-    tryUpdateNeighbour(world, pos.north());
-    tryUpdateNeighbour(world, pos.south());
-    tryUpdateNeighbour(world, pos.east());
-    tryUpdateNeighbour(world, pos.west());
     if (entityPlayer.capabilities.isCreativeMode == false) {
       stack.stackSize--;
     }
     UtilSound.playSound(entityPlayer, pos, SoundRegistry.thunk);
     return EnumActionResult.SUCCESS;
-  }
-  private void tryUpdateNeighbour(World world, BlockPos pos) {
-    // https://github.com/PrinceOfAmber/Cyclic/issues/119
-    //in case its a linked tile entity // double chest, make sure we pass updates along
-    TileEntity tile = world.getTileEntity(pos);
-    if (tile != null) {
-      tile.updateContainingBlockInfo();
-      tile.markDirty();
-    }
   }
   @Override
   public void addRecipe() {
