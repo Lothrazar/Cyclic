@@ -5,6 +5,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -22,8 +23,7 @@ public abstract class BlockBaseFacingInventory extends BlockBaseFacing {
   }
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-    //    TileMachineBuilder tileEntity = (TileMachineBuilder) world.getTileEntity(pos);
-    if (player.isSneaking()) { return false; } // tileEntity == null || 
+    if (player.isSneaking()) { return false; }
     if (world.isRemote) { return true; }
     int x = pos.getX(), y = pos.getY(), z = pos.getZ();
     player.openGui(ModMain.instance, this.guiID, world, x, y, z);
@@ -58,5 +58,11 @@ public abstract class BlockBaseFacingInventory extends BlockBaseFacing {
         item.stackSize = 0;
       }
     }
+  }
+  public boolean hasComparatorInputOverride(IBlockState state) {
+    return true;
+  }
+  public int getComparatorInputOverride(IBlockState blockState, World worldIn, BlockPos pos) {
+    return Container.calcRedstone(worldIn.getTileEntity(pos));
   }
 }
