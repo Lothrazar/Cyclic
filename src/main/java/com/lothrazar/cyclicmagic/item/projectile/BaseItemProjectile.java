@@ -33,7 +33,6 @@ public abstract class BaseItemProjectile extends BaseItem {
     player.swingArm(hand);
     BlockPos pos = player.getPosition();
     UtilSound.playSound(player, pos, SoundEvents.ENTITY_EGG_THROW, SoundCategory.PLAYERS);
-
     UtilInventory.decrStackSize(player, hand);
   }
   protected void doThrow(World world, EntityPlayer player, EnumHand hand, EntityThrowable thing) {

@@ -32,7 +32,7 @@ public class PacketWarpButton implements IMessage, IMessageHandler<PacketWarpBut
       ItemEnderBook.teleport(player, message.slot);
     }
     else if (cost > 0 && UtilExperience.getExpTotal(player) < cost) {
-      UtilChat.addChatMessage(player,"gui.chatexp");
+      UtilChat.addChatMessage(player, "gui.chatexp");
     }
     else if (ItemEnderBook.teleport(player, message.slot)) {
       //if the teleport worked in non creative, drain it
