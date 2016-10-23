@@ -215,19 +215,15 @@ public class UtilPlaceBlocks {
     if (newStateToPlace.getBlockHardness(world, posMoveToHere) == -1) { return false; }
     boolean moved = false;
     if (world.isAirBlock(posMoveToHere) && world.isBlockModifiable(player, pos)) {
-      //start of break
-      //moving tile entitys, like chests
+      //copy tile if exists
       TileEntity tile = world.getTileEntity(pos);
       NBTTagCompound tileData = null;
       if (tile != null) {
         tileData = new NBTTagCompound();
         tile.writeToNBT(tileData);
-        world.removeTileEntity(pos);
       }
-      world.destroyBlock(posMoveToHere, false);
-      world.setBlockToAir(pos);
-      world.markChunkDirty(pos, null);//dont forget to update the old pos as well as the new position for server sync
-      //end of break
+      //break current location
+      destroyBlock(world, pos);
       //start move
       moved = UtilPlaceBlocks.placeStateSafe(world, player, posMoveToHere, newStateToPlace);
       if (moved) {
@@ -248,6 +244,27 @@ public class UtilPlaceBlocks {
       //end move
     }
     return moved;
+  }
+  public static void destroyBlock(World world, BlockPos pos) {
+    if (world.getTileEntity(pos) != null) {
+      world.removeTileEntity(pos);
+    }
+    world.setBlockToAir(pos);
+    world.markChunkDirty(pos, null);//dont forget to update the old pos as well as the new position for server sync
+    // IN CASE OF DOUBLE CHESTS
+    tryUpdateNeighbour(world, pos.north());
+    tryUpdateNeighbour(world, pos.south());
+    tryUpdateNeighbour(world, pos.east());
+    tryUpdateNeighbour(world, pos.west());
+  }
+  public static void tryUpdateNeighbour(World world, BlockPos pos) {
+    // https://github.com/PrinceOfAmber/Cyclic/issues/119
+    //in case its a linked tile entity // double chest, make sure we pass updates along
+    TileEntity tile = world.getTileEntity(pos);
+    if (tile != null) {
+      tile.updateContainingBlockInfo();
+      tile.markDirty();
+    }
   }
   /**
    * wrap moveBlockTo but detect the destination based on the side hit

@@ -2,10 +2,22 @@ package com.lothrazar.cyclicmagic.util;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 
 public class UtilInventory {
+  public static boolean hasValidOpenContainer(EntityPlayer p) {
+    return p != null && p.openContainer != null && p.openContainer.inventorySlots.size() > 0 &&
+        p.openContainer.getSlot(0) != null &&
+        p.openContainer.getSlot(0).inventory == null;
+  }
+  public static IInventory getOpenContainerInventory(EntityPlayer p) {
+    // a workaround since player does not reference the inventory, only the
+    // container
+    // and Container has no get method
+    return p.openContainer.getSlot(0).inventory;
+  }
   public static ItemStack getPlayerItemIfHeld(EntityPlayer player) {
     ItemStack wand = player.getHeldItemMainhand();
     if (wand == null) {
