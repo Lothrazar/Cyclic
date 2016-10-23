@@ -59,8 +59,8 @@ public class ItemChestSackEmpty extends BaseItem implements IHasRecipe {
     //now erase the data so it doesnt drop items/etc
     tile.readFromNBT(new NBTTagCompound());
     world.removeTileEntity(pos);
-    world.setBlockToAir(pos);
-    world.destroyBlock(pos, false);
+    world.setBlockToAir(pos); // https://github.com/PrinceOfAmber/Cyclic/issues/131
+//    world.destroyBlock(pos, false);
     tryUpdateNeighbour(world, pos.north());
     tryUpdateNeighbour(world, pos.south());
     tryUpdateNeighbour(world, pos.east());
