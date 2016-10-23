@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.net;
 import com.lothrazar.cyclicmagic.item.ItemChestSack;
-import com.lothrazar.cyclicmagic.item.tool.ItemToolPush;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
@@ -11,7 +10,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -48,10 +46,8 @@ public class PacketStorageSack implements IMessage, IMessageHandler<PacketStorag
       BlockPos position = message.pos;
       EntityPlayer player = ctx.getServerHandler().playerEntity;
       World world = player.worldObj;
-
       TileEntity tile = world.getTileEntity(position);
       IBlockState state = world.getBlockState(position);
- 
       NBTTagCompound tileData = new NBTTagCompound(); //thanks for the tip on setting tile entity data from nbt tag: https://github.com/romelo333/notenoughwands1.8.8/blob/master/src/main/java/romelo333/notenoughwands/Items/DisplacementWand.java
       tile.writeToNBT(tileData);
       NBTTagCompound itemData = new NBTTagCompound();
@@ -63,11 +59,8 @@ public class PacketStorageSack implements IMessage, IMessageHandler<PacketStorag
       drop.setTagCompound(itemData);
       //    entityPlayer.dropItem(drop, false);
       //now erase the data so it doesnt drop items/etc
-    
-        UtilEntity.dropItemStackInWorld(world, player.getPosition(), drop);
-        UtilPlaceBlocks.destroyBlock(world, position); 
-      
-    
+      UtilEntity.dropItemStackInWorld(world, player.getPosition(), drop);
+      UtilPlaceBlocks.destroyBlock(world, position);
     }
     return null;
   }

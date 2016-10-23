@@ -28,7 +28,6 @@ public class PacketDepositContainerToPlayer implements IMessage, IMessageHandler
   @Override
   public IMessage onMessage(PacketDepositContainerToPlayer message, MessageContext ctx) {
     EntityPlayer p = ctx.getServerHandler().playerEntity;
-
     if (UtilInventory.hasValidOpenContainer(p)) {
       IInventory openInventory = UtilInventory.getOpenContainerInventory(p);
       UtilInventorySort.sortFromInventoryToPlayer(p.worldObj, openInventory, p, false);
