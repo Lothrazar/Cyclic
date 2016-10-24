@@ -11,6 +11,7 @@ import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStoneSlab;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
@@ -36,6 +37,10 @@ public class BlockPassword extends Block implements IHasRecipe {
   public static final PropertyBool POWERED = PropertyBool.create("powered");
   public BlockPassword() {
     super(Material.ROCK);
+    this.setHardness(4F);
+    this.setResistance(4F);
+    this.setSoundType(SoundType.STONE);
+    this.setHarvestLevel("pickaxe", 0);
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {

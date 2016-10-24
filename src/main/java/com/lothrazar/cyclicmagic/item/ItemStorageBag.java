@@ -6,7 +6,6 @@ import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.gui.storage.InventoryStorage;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilInventorySort;
 import com.lothrazar.cyclicmagic.util.UtilInventorySort.BagDepositReturn;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -107,18 +106,21 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
           return;
         }
         else {
-          ItemStack[] inv = InventoryStorage.readFromNBT(held);
-          BagDepositReturn ret = UtilInventorySort.sortFromListToInventory(world, (IInventory) tile, inv);
-          int moved = ret.moved;
-          if (depositType == StorageActionType.DEPOSIT.ordinal()) {
-            ret = UtilInventorySort.dumpFromListToIInventory(world, (IInventory) tile, ret.stacks);
-            moved += ret.moved;
+          if (world.isRemote == false) {
+            ItemStack[] inv = InventoryStorage.readFromNBT(held);
+            BagDepositReturn ret = null;
+            if (depositType == StorageActionType.DEPOSIT.ordinal()) {
+              ret = dumpFromListToIInventory(world, (IInventory) tile, inv, false);
+            }
+            else if (depositType == StorageActionType.MERGE.ordinal()) {
+              ret = dumpFromListToIInventory(world, (IInventory) tile, inv, true);
+            }
+            if (ret != null && ret.moved > 0) {
+              InventoryStorage.writeToNBT(held, ret.stacks);
+              UtilChat.addChatMessage(player, UtilChat.lang("item.storage_bag.success") + ret.moved); //   // TODO: fix the count, make sure its accuarte
+            }
           }
-          InventoryStorage.writeToNBT(held, ret.stacks);
-          if (world.isRemote && moved > 0) {
-            UtilChat.addChatMessage(player, UtilChat.lang("item.storage_bag.success") + moved);
-          }
-          UtilSound.playSound(player, SoundRegistry.thunk);
+          UtilSound.playSound(player, SoundRegistry.basey);
         }
       }
       else { //hit something not an invenotry
@@ -167,5 +169,107 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
         's', Items.STRING,
         'r', Items.REDSTONE,
         'd', Items.GOLD_INGOT);
+  }
+  //  public static BagDepositReturn dumpFromListToIInventory(World world, IInventory inventory, ItemStack[] stacks, boolean onlyMatchingItems) {
+  //    ItemStack chestEmptySlot;
+  //    ItemStack bagItem;
+  //    int itemsMoved = 0;
+  //    // we loop on the chest and look for empty slots
+  //    // once we have an empty slot, we find something to fill it with
+  //    for (int islotInvo = 0; islotInvo < inventory.getSizeInventory(); islotInvo++) {
+  //      chestEmptySlot = inventory.getStackInSlot(islotInvo);
+  //      if (chestEmptySlot != null) {
+  //        continue;
+  //      } // slot not empty, skip over it
+  //      for (int slotStacks = 0; slotStacks < stacks.length; slotStacks++) {
+  //        bagItem = stacks[slotStacks];
+  //        if (bagItem == null) {
+  //          continue;
+  //        } // empty inventory slot
+  //        if (inventory.isItemValidForSlot(islotInvo, bagItem)) {
+  //          inventory.setInventorySlotContents(islotInvo, bagItem);
+  //          stacks[slotStacks] = null;
+  //          itemsMoved += bagItem.stackSize;
+  //          break;
+  //        }
+  //      } // close loop on player inventory items
+  //    } // close loop on chest items
+  //    //    updatePlayerContainerClient(player);
+  //    return new BagDepositReturn(itemsMoved, stacks);
+  //  }
+  public static BagDepositReturn dumpFromListToIInventory(World world, IInventory chest, ItemStack[] stacks, boolean onlyMatchingItems) {
+    ItemStack chestItem;
+    ItemStack bagItem;
+    int room;
+    int toDeposit;
+    int chestMax;
+    int itemsMoved = 0;
+    for (int islotStacks = 0; islotStacks < stacks.length; islotStacks++) {
+      bagItem = stacks[islotStacks];
+      if (bagItem == null || bagItem.stackSize == 0) {
+        continue;
+      }
+     // System.out.println(bagItem.stackSize + "_" + bagItem.getDisplayName());
+      for (int islotChest = 0; islotChest < chest.getSizeInventory(); islotChest++) {
+        chestItem = chest.getStackInSlot(islotChest);
+        //we have a space in the inventory thats empty. are we allowed
+        if (chestItem == null && onlyMatchingItems == false) {
+          //then yeah we are allowed to use the empty space
+          if (chest.isItemValidForSlot(islotStacks, bagItem)) {
+           // System.out.println("dump at " + islotChest);
+            itemsMoved += bagItem.stackSize;
+            chest.setInventorySlotContents(islotChest, bagItem);
+            stacks[islotStacks] = null;
+            bagItem = null;
+            break;//move to next bag item, we're done here
+          }
+          else{
+            //cant dump here. but also cant merge so move to next slot
+            continue;
+          }
+        }
+        if (chestItem == null) {
+          //chest item is null, and were trying to merge (check is probably redundant here)
+          continue;//go to next chest item
+        }
+        //ok so chestItem is not nulll
+        if (bagItem == null || bagItem.stackSize == 0) {
+          break;//stop lookin in the chest, get a new bag item
+        }
+        bagItem = stacks[islotStacks];
+        if (bagItem.getItem().equals(chestItem.getItem())
+            && bagItem.getItemDamage() == chestItem.getItemDamage()) {
+          // same item, including damage (block state)
+          chestMax = chestItem.getItem().getItemStackLimit(chestItem);
+          room = chestMax - chestItem.stackSize;
+          if (room <= 0) {
+            continue;//no room on this chest slot, so move to next slot
+          } // no room, check the next spot
+          //System.out.println("merge at " + islotChest);
+          // so if i have 30 room, and 28 items, i deposit 28.
+          // or if i have 30 room and 38 items, i deposit 30
+          toDeposit = Math.min(bagItem.stackSize, room);
+          chestItem.stackSize += toDeposit;
+          chest.setInventorySlotContents(islotChest, chestItem);
+          bagItem.stackSize -= toDeposit;
+          itemsMoved += toDeposit;
+          if (bagItem.stackSize <= 0) {
+            // item stacks with zero count do not destroy
+            // themselves, they show
+            // up and have unexpected behavior in game so set to
+            // empty
+            stacks[islotStacks] = null;
+          }
+          else {
+            // set to new quantity
+            stacks[islotStacks] = bagItem;
+          }
+        } // end if items match
+        if (bagItem == null || bagItem.stackSize == 0) {
+          break;//stop lookin in the chest, get a new bag item
+        }
+      } // close loop on player inventory items
+    } // close loop on chest items
+    return new BagDepositReturn(itemsMoved, stacks);
   }
 }
