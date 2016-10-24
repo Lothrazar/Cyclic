@@ -209,14 +209,14 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
       if (bagItem == null || bagItem.stackSize == 0) {
         continue;
       }
-      System.out.println(bagItem.stackSize + "_" + bagItem.getDisplayName());
+     // System.out.println(bagItem.stackSize + "_" + bagItem.getDisplayName());
       for (int islotChest = 0; islotChest < chest.getSizeInventory(); islotChest++) {
         chestItem = chest.getStackInSlot(islotChest);
         //we have a space in the inventory thats empty. are we allowed
         if (chestItem == null && onlyMatchingItems == false) {
           //then yeah we are allowed to use the empty space
           if (chest.isItemValidForSlot(islotStacks, bagItem)) {
-            System.out.println("dump at " + islotChest);
+           // System.out.println("dump at " + islotChest);
             itemsMoved += bagItem.stackSize;
             chest.setInventorySlotContents(islotChest, bagItem);
             stacks[islotStacks] = null;
@@ -245,7 +245,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
           if (room <= 0) {
             continue;//no room on this chest slot, so move to next slot
           } // no room, check the next spot
-          System.out.println("merge at " + islotChest);
+          //System.out.println("merge at " + islotChest);
           // so if i have 30 room, and 28 items, i deposit 28.
           // or if i have 30 room and 38 items, i deposit 30
           toDeposit = Math.min(bagItem.stackSize, room);
