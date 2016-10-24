@@ -43,13 +43,10 @@ public class ItemChestSackEmpty extends BaseItem implements IHasRecipe {
       }
       return EnumActionResult.FAIL;
     }
+    UtilSound.playSound(entityPlayer, pos, SoundRegistry.thunk);
     if (world.isRemote) {
       ModMain.network.sendToServer(new PacketStorageSack(pos));// https://github.com/PrinceOfAmber/Cyclic/issues/131
     }
-    if (entityPlayer.capabilities.isCreativeMode == false) {
-      stack.stackSize--;
-    }
-    UtilSound.playSound(entityPlayer, pos, SoundRegistry.thunk);
     return EnumActionResult.SUCCESS;
   }
   @Override

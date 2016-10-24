@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.net;
 import com.lothrazar.cyclicmagic.item.ItemChestSack;
+import com.lothrazar.cyclicmagic.item.ItemChestSackEmpty;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
@@ -10,6 +11,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -57,8 +59,13 @@ public class PacketStorageSack implements IMessage, IMessageHandler<PacketStorag
       itemData.setInteger(ItemChestSack.KEY_BLOCKSTATE, state.getBlock().getMetaFromState(state));
       ItemStack drop = new ItemStack(ItemRegistry.chest_sack);
       drop.setTagCompound(itemData);
-      //    entityPlayer.dropItem(drop, false);
-      //now erase the data so it doesnt drop items/etc
+      ItemStack held = player.getHeldItem(EnumHand.MAIN_HAND);
+      if (held == null || held.getItem() instanceof ItemChestSackEmpty == false) {
+        held = player.getHeldItem(EnumHand.OFF_HAND);
+      }
+      if (held != null && player.capabilities.isCreativeMode == false) {
+        held.stackSize--;
+      }
       UtilEntity.dropItemStackInWorld(world, player.getPosition(), drop);
       UtilPlaceBlocks.destroyBlock(world, position);
     }
