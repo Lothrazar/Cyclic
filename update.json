@@ -5,8 +5,8 @@
     "1.9.4-recommended":  "1.2.0",
     "1.10-latest":  "1.1.0",
     "1.10-recommended": "1.1.0",
-    "1.10.2-latest":  "1.7.18",
-    "1.10.2-recommended": "1.7.18"
+    "1.10.2-latest":  "1.7.19",
+    "1.10.2-recommended": "1.7.19"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -61,5 +61,6 @@
   	,"1.7.16":"Fix potion upgrade recipes not working (ingredients changed to changed to gold & ink sacs instead of redstone/glowstone as workaround for known& reported bug in forge).  Added Hit Deposit mode to storage sack: Hit on a block to change modes, and hit on a container to deposit (if you have enabled it).  Add smelting recipes for End & Nether ores by request in case you silk touch them.  Removed key modifiers from default keybindings, (since in current forge version, the modifier cannot be removed: if you rebind to a single key, and restart,  the modifier from the default gets put back on your new key).  Fix keybindings for Extended Inventory and Inventory Crafting not closing the screens when open.  Add chat message to ender dungeon finder if no spawners are in range.  Fix Ender Book crashing servers when players used it and didn't have enough experience points."
   	,"1.7.17":"Machines with inventory now output comparator signals based on contents just like chests (affects Uncrafting Grinder, Controlled Miner, Block Placer, Structure Builder)"
   	,"1.7.18":"Fix helper buttons crashing when trying to deposit on invalid containers (such as Password Trigger).  Fix duplication bug with some some blocks (such as Quantum Storage Unit) when using Sack of Holding.  "
+  	,"1.7.19":"Fix duplication bug on Storage Sack with Quantum Storage blocks again (update to build 1.7.18)"
   }
 }
