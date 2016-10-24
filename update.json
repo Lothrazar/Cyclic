@@ -62,6 +62,6 @@
   	,"1.7.17":"Machines with inventory now output comparator signals based on contents just like chests (affects Uncrafting Grinder, Controlled Miner, Block Placer, Structure Builder)"
   	,"1.7.18":"Fix helper buttons crashing when trying to deposit on invalid containers (such as Password Trigger).  Fix duplication bug with some some blocks (such as Quantum Storage Unit) when using Sack of Holding.  "
   	,"1.7.19":"Fix duplication bug on Storage Sack with Quantum Storage blocks again (update to build 1.7.18)"
-  	,"1.7.20":"Fix Stack of Storage displaying the Items Deposited: message even when no items were moved.  Make sure identical item stacks get merged if possible when using Dump mode"
+  	,"1.7.20":"Fix Stack of Storage displaying the Items Deposited: message even when no items were moved.  Make sure identical item stacks get merged if possible when using Dump mode.  Fix Password Trigger block so it is not instamane (has hardness) and is harvestable by a pickaxe.  "
   }
 }
