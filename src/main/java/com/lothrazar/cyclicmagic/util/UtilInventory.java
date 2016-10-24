@@ -10,7 +10,7 @@ public class UtilInventory {
   public static boolean hasValidOpenContainer(EntityPlayer p) {
     return p != null && p.openContainer != null && p.openContainer.inventorySlots.size() > 0 &&
         p.openContainer.getSlot(0) != null &&
-        p.openContainer.getSlot(0).inventory == null;
+        p.openContainer.getSlot(0).inventory != null;
   }
   public static IInventory getOpenContainerInventory(EntityPlayer p) {
     // a workaround since player does not reference the inventory, only the
