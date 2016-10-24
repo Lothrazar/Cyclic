@@ -1,10 +1,12 @@
 package com.lothrazar.cyclicmagic.item;
 import java.util.List;
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.gui.storage.InventoryStorage;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilInventorySort;
 import com.lothrazar.cyclicmagic.util.UtilInventorySort.BagDepositReturn;
@@ -23,13 +25,14 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemStorageBag extends BaseItem implements IHasRecipe {
+public class ItemStorageBag extends BaseItem implements IHasRecipe, IHasConfig {
   public static enum StorageActionType {
     NOTHING, DEPOSIT, MERGE;
     private final static String NBT = "build";
@@ -72,6 +75,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
       wand.setTagCompound(tags);
     }
   }
+  private boolean enableAutoDeposit;
   public ItemStorageBag() {
     this.setMaxStackSize(1);
   }
@@ -83,7 +87,9 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
     int size = InventoryStorage.countNonEmpty(stack);
     tooltip.add(UtilChat.lang("item.storage_bag.tooltip") + size);
+    if(enableAutoDeposit){
     tooltip.add(UtilChat.lang("item.storage_bag.tooltip2") + UtilChat.lang(StorageActionType.getName(stack)));
+    }
     super.addInformation(stack, playerIn, tooltip, advanced);
   }
   @Override
@@ -93,6 +99,9 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
   }
   @SubscribeEvent
   public void onHit(PlayerInteractEvent.LeftClickBlock event) {
+    if(enableAutoDeposit == false){
+      return;
+    }
     EntityPlayer player = event.getEntityPlayer();
     ItemStack held = player.getHeldItem(event.getHand());
     if (held != null && held.getItem() == this) {
@@ -167,5 +176,10 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
         's', Items.STRING,
         'r', Items.REDSTONE,
         'd', Items.GOLD_INGOT);
+  }
+  @Override
+  public void syncConfig(Configuration config) {
+    enableAutoDeposit = config.getBoolean("StorageSackAutoDeposit", Const.ConfigCategory.items, false, "Enable auto deposit feature on storage bag (hit to toggle modes and deposit into containers for you) [Feature still in beta]");
+    
   }
 }
