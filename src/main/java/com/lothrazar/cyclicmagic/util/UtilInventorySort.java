@@ -94,14 +94,14 @@ public class UtilInventorySort {
       if (chestEmptySlot != null) {
         continue;
       } // slot not empty, skip over it
-      for (int islotPlayer = 0; islotPlayer < stacks.length; islotPlayer++) {
-        bagItem = stacks[islotPlayer];
+      for (int slotStacks = 0; slotStacks < stacks.length; slotStacks++) {
+        bagItem = stacks[slotStacks];
         if (bagItem == null) {
           continue;
         } // empty inventory slot
         if (inventory.isItemValidForSlot(islotInvo, bagItem)) {
           inventory.setInventorySlotContents(islotInvo, bagItem);
-          stacks[islotPlayer] = null;
+          stacks[slotStacks] = null;
           itemsMoved += bagItem.stackSize;
           break;
         }

@@ -1,12 +1,10 @@
 package com.lothrazar.cyclicmagic.item;
 import java.util.List;
-import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.gui.storage.InventoryStorage;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
-import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilInventorySort;
 import com.lothrazar.cyclicmagic.util.UtilInventorySort.BagDepositReturn;
@@ -25,14 +23,13 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemStorageBag extends BaseItem implements IHasRecipe, IHasConfig {
+public class ItemStorageBag extends BaseItem implements IHasRecipe {
   public static enum StorageActionType {
     NOTHING, DEPOSIT, MERGE;
     private final static String NBT = "build";
@@ -87,8 +84,8 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe, IHasConfig {
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
     int size = InventoryStorage.countNonEmpty(stack);
     tooltip.add(UtilChat.lang("item.storage_bag.tooltip") + size);
-    if(enableAutoDeposit){
-    tooltip.add(UtilChat.lang("item.storage_bag.tooltip2") + UtilChat.lang(StorageActionType.getName(stack)));
+    if (enableAutoDeposit) {
+      tooltip.add(UtilChat.lang("item.storage_bag.tooltip2") + UtilChat.lang(StorageActionType.getName(stack)));
     }
     super.addInformation(stack, playerIn, tooltip, advanced);
   }
@@ -99,9 +96,6 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe, IHasConfig {
   }
   @SubscribeEvent
   public void onHit(PlayerInteractEvent.LeftClickBlock event) {
-    if(enableAutoDeposit == false){
-      return;
-    }
     EntityPlayer player = event.getEntityPlayer();
     ItemStack held = player.getHeldItem(event.getHand());
     if (held != null && held.getItem() == this) {
@@ -116,16 +110,18 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe, IHasConfig {
           return;
         }
         else {
-          ItemStack[] inv = InventoryStorage.readFromNBT(held);
-          BagDepositReturn ret = UtilInventorySort.sortFromListToInventory(world, (IInventory) tile, inv);
-          int moved = ret.moved;
-          if (depositType == StorageActionType.DEPOSIT.ordinal()) {
-            ret = UtilInventorySort.dumpFromListToIInventory(world, (IInventory) tile, ret.stacks);
-            moved += ret.moved;
-          }
-          InventoryStorage.writeToNBT(held, ret.stacks);
-          if (world.isRemote && moved > 0) {
-            UtilChat.addChatMessage(player, UtilChat.lang("item.storage_bag.success")); //  + moved // TODO: fix the count, make sure its accuarte
+          if (world.isRemote == false) {
+            ItemStack[] inv = InventoryStorage.readFromNBT(held);
+            BagDepositReturn ret = UtilInventorySort.sortFromListToInventory(world, (IInventory) tile, inv);
+            int moved = ret.moved;
+            if (depositType == StorageActionType.DEPOSIT.ordinal()) {
+              ret = UtilInventorySort.dumpFromListToIInventory(world, (IInventory) tile, ret.stacks);
+              moved += ret.moved;
+            }
+            if (moved > 0) {
+              InventoryStorage.writeToNBT(held, ret.stacks);
+              UtilChat.addChatMessage(player, UtilChat.lang("item.storage_bag.success") + moved); //   // TODO: fix the count, make sure its accuarte
+            }
           }
           UtilSound.playSound(player, SoundRegistry.thunk);
         }
@@ -176,10 +172,5 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe, IHasConfig {
         's', Items.STRING,
         'r', Items.REDSTONE,
         'd', Items.GOLD_INGOT);
-  }
-  @Override
-  public void syncConfig(Configuration config) {
-    enableAutoDeposit = config.getBoolean("StorageSackAutoDeposit", Const.ConfigCategory.items, false, "Enable auto deposit feature on storage bag (hit to toggle modes and deposit into containers for you) [Feature still in beta]");
-    
   }
 }
