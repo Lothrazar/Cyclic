@@ -77,4 +77,18 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     this.writeToNBT(syncData);
     return new SPacketUpdateTileEntity(this.pos, 1, syncData);
   }
+  protected void shiftAllUp() {
+    for (int i = 0; i < this.getSizeInventory() - 1; i++) {
+      shiftPairUp(i, i + 1);
+    }
+  }
+  protected void shiftPairUp(int low, int high) {
+    ItemStack main = getStackInSlot(low);
+    ItemStack second = getStackInSlot(high);
+    if (main == null && second != null) { // if the one below this is not
+      // empty, move it up
+      this.setInventorySlotContents(high, null);
+      this.setInventorySlotContents(low, second);
+    }
+  }
 }

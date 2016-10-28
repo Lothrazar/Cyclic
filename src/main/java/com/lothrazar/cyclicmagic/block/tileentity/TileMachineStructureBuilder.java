@@ -307,20 +307,6 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
   public BlockPos getNextPos() {
     return this.nextPos;
   }
-  private void shiftAllUp() {
-    for (int i = 0; i < this.getSizeInventory() - 1; i++) {
-      shiftPairUp(i, i + 1);
-    }
-  }
-  private void shiftPairUp(int low, int high) {
-    ItemStack main = getStackInSlot(low);
-    ItemStack second = getStackInSlot(high);
-    if (main == null && second != null) { // if the one below this is not
-      // empty, move it up
-      this.setInventorySlotContents(high, null);
-      this.setInventorySlotContents(low, second);
-    }
-  }
   public boolean isBurning() {
     return this.timer > 0 && this.timer < TIMER_FULL;
   }

@@ -5,8 +5,8 @@
     "1.9.4-recommended":  "1.2.0",
     "1.10-latest":  "1.1.0",
     "1.10-recommended": "1.1.0",
-    "1.10.2-latest":  "1.7.20",
-    "1.10.2-recommended": "1.7.20"
+    "1.10.2-latest":  "1.7.21",
+    "1.10.2-recommended": "1.7.21"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -63,5 +63,6 @@
   	,"1.7.18":"Fix helper buttons crashing when trying to deposit on invalid containers (such as Password Trigger).  Fix duplication bug with some some blocks (such as Quantum Storage Unit) when using Sack of Holding.  "
   	,"1.7.19":"Fix duplication bug on Storage Sack with Quantum Storage blocks again (update to build 1.7.18)"
   	,"1.7.20":"Fix Stack of Storage displaying the Items Deposited: message even when no items were moved.  Make sure identical item stacks get merged if possible when using Dump mode.  Fix Password Trigger block so it is not instamane (has hardness) and is harvestable by a pickaxe.  Ender Torch recipe now produces 32, up from 8.  "
+  	,"1.7.21":"New Machine: Automated User (automated item use / right click).  Tweak tooltips on a few other machines.  "
   }
 }

@@ -5,6 +5,7 @@ import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMinerSmart;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineStructureBuilder;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachinePlacer;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter;
+import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUser;
 import com.lothrazar.cyclicmagic.gui.builder.ContainerBuilder;
 import com.lothrazar.cyclicmagic.gui.builder.GuiBuilder;
 import com.lothrazar.cyclicmagic.gui.fisher.ContainerFisher;
@@ -25,6 +26,8 @@ import com.lothrazar.cyclicmagic.gui.storage.GuiStorage;
 import com.lothrazar.cyclicmagic.gui.storage.InventoryStorage;
 import com.lothrazar.cyclicmagic.gui.uncrafting.ContainerUncrafting;
 import com.lothrazar.cyclicmagic.gui.uncrafting.GuiUncrafting;
+import com.lothrazar.cyclicmagic.gui.user.ContainerUser;
+import com.lothrazar.cyclicmagic.gui.user.GuiUser;
 import com.lothrazar.cyclicmagic.gui.wand.ContainerWand;
 import com.lothrazar.cyclicmagic.gui.wand.GuiWandInventory;
 import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
@@ -53,6 +56,7 @@ public class ModGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_MINER = 8;
   public static final int GUI_INDEX_FISHER = 9;
   public static final int GUI_INDEX_PWORKBENCH = 10;
+  public static final int GUI_INDEX_USER = 11;
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
     TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
@@ -101,6 +105,10 @@ public class ModGuiHandler implements IGuiHandler {
     case GUI_INDEX_FISHER:
       if (te != null && te instanceof TileEntityFishing) { return new ContainerFisher(player.inventory, (TileEntityFishing) te); }
       break;
+    case GUI_INDEX_USER:
+
+      if (te != null && te instanceof TileMachineUser) { return new ContainerUser(player.inventory, (TileMachineUser) te); }
+      break;
     }
     return null;
   }
@@ -138,6 +146,10 @@ public class ModGuiHandler implements IGuiHandler {
         break;
       case GUI_INDEX_FISHER:
         if (te != null && te instanceof TileEntityFishing) { return new GuiFisher(player.inventory, (TileEntityFishing) te); }
+        break;
+      case GUI_INDEX_USER:
+
+        if (te != null && te instanceof TileMachineUser) { return new GuiUser(player.inventory, (TileMachineUser) te); }
         break;
       }
     }

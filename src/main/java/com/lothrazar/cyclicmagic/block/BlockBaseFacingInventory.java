@@ -35,31 +35,6 @@ public abstract class BlockBaseFacingInventory extends BlockBaseFacing {
     }
     super.breakBlock(worldIn, pos, state);
   }
-  //  protected void dropItems(World world, BlockPos pos, IBlockState state) {
-  //    Random rand = world.rand;
-  //    TileEntity tile = world.getTileEntity(pos);
-  //    if (tile instanceof IInventory == false) { return; }
-  //    int x = pos.getX(), y = pos.getY(), z = pos.getZ();
-  //    IInventory inventory = (IInventory) tile;
-  //    for (int i = 0; i < inventory.getSizeInventory(); i++) {
-  //      ItemStack item = inventory.getStackInSlot(i);
-  //      if (item != null && item.stackSize > 0) {
-  //        float rx = rand.nextFloat() * 0.8F + 0.1F;
-  //        float ry = rand.nextFloat() * 0.8F + 0.1F;
-  //        float rz = rand.nextFloat() * 0.8F + 0.1F;
-  //        EntityItem entityItem = new EntityItem(world, x + rx, y + ry, z + rz, new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()));
-  //        if (item.hasTagCompound()) {
-  //          entityItem.getEntityItem().setTagCompound((NBTTagCompound) item.getTagCompound().copy());
-  //        }
-  //        float f = 0.05F;
-  //        entityItem.motionX = rand.nextGaussian() * f;
-  //        entityItem.motionY = rand.nextGaussian() * f + 0.2F;
-  //        entityItem.motionZ = rand.nextGaussian() * f;
-  //        world.spawnEntityInWorld(entityItem);
-  //        item.stackSize = 0;
-  //      }
-  //    }
-  //  }
   public boolean hasComparatorInputOverride(IBlockState state) {
     return true;
   }
