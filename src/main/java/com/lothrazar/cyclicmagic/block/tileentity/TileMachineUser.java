@@ -20,19 +20,23 @@ public class TileMachineUser extends TileEntityBaseMachineInvo {
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
   // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
   public static int maxHeight = 10;
+  public static int TIMER_FULL = 200;
   private BlockPos targetPos = null;
   private ItemStack[] inv;
   private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots for all faces
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
+  private static final String NBT_TIMER = "Timer";
   int height = 6;//TODO: gui field
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
+  private int timer;
   public static enum Fields {
-    HEIGHT
+    TIMER, HEIGHT
   }
   public TileMachineUser() {
     inv = new ItemStack[9];
+    timer = TIMER_FULL;
   }
   @Override
   public void update() {
@@ -70,39 +74,29 @@ public class TileMachineUser extends TileEntityBaseMachineInvo {
       if (targetPos == null) {
         targetPos = pos.offset(this.getCurrentFacing()); //not sure if this is needed
       }
+      ItemStack stack = getStackInSlot(0);
+      if (stack == null) {
+        timer = TIMER_FULL;// reset just like you would in a
+        // furnace
+        return;
+      }
       if (this.isPowered()) {
-        //TODO: cooldown
-        fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), worldObj, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
-       
+        timer--;
+        if (timer <= 0) {
+          timer = TIMER_FULL;
+        }
+        if (timer == TIMER_FULL) {
+          fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), worldObj, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
+        }
       }
-      else { // we do not have power
-//        if (isCurrentlyMining) {
-//          isCurrentlyMining = false;
-//          resetProgress(targetPos);
-//        }
-      }
-//      if (isCurrentlyMining) {
-//        IBlockState targetState = worldObj.getBlockState(targetPos);
-//        curBlockDamage += UtilItem.getPlayerRelativeBlockHardness(targetState.getBlock(), targetState, fakePlayer.get(), worldObj, targetPos);
-//        if (curBlockDamage >= 1.0f) {
-//          isCurrentlyMining = false;
-//          resetProgress(targetPos);
-//          if (fakePlayer.get() != null) {
-//            fakePlayer.get().interactionManager.tryHarvestBlock(targetPos);
-//          }
-//        }
-//        else {
-//          worldObj.sendBlockBreakProgress(uuid.hashCode(), targetPos, (int) (curBlockDamage * 10.0F) - 1);
-//        }
-//      }
     }
   }
   final int RADIUS = 4;//center plus 4 in each direction = 9x9
-
   private static final String NBTPLAYERID = "uuid";
   private static final String NBTTARGET = "target";
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+    compound.setInteger(NBT_TIMER, timer);
     if (uuid != null) {
       compound.setString(NBTPLAYERID, uuid.toString());
     }
@@ -127,6 +121,7 @@ public class TileMachineUser extends TileEntityBaseMachineInvo {
   @Override
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
+    timer = compound.getInteger(NBT_TIMER);
     if (compound.hasKey(NBTPLAYERID)) {
       uuid = UUID.fromString(compound.getString(NBTPLAYERID));
     }
@@ -147,8 +142,6 @@ public class TileMachineUser extends TileEntityBaseMachineInvo {
       }
     }
   }
-
-
   @Override
   public int getSizeInventory() {
     return inv.length;
@@ -197,6 +190,8 @@ public class TileMachineUser extends TileEntityBaseMachineInvo {
     switch (Fields.values()[id]) {
     case HEIGHT:
       return getHeight();
+    case TIMER:
+      return getTimer();
     default:
       break;
     }
@@ -210,6 +205,15 @@ public class TileMachineUser extends TileEntityBaseMachineInvo {
         value = maxHeight;
       }
       setHeight(value);
+    case TIMER:
+      timer = value;
+      if(timer > TIMER_FULL){
+        timer = TIMER_FULL;
+      }
+      if(timer < 0){
+        timer = 0;
+      }
+      break;
     default:
       break;
     }
@@ -239,5 +243,8 @@ public class TileMachineUser extends TileEntityBaseMachineInvo {
     // from the server. Called on client only.
     this.readFromNBT(pkt.getNbtCompound());
     super.onDataPacket(net, pkt);
+  }
+  public int getTimer() {
+    return timer;
   }
 }
