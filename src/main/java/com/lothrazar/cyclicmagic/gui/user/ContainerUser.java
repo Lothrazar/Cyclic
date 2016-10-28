@@ -17,6 +17,7 @@ public class ContainerUser extends ContainerBaseMachine {
 //  public static final int SLOTID_EQUIP = 9;
   protected TileMachineUser tileEntity;
   private int tileHeight;
+  private int timer;
   public ContainerUser(InventoryPlayer inventoryPlayer, TileMachineUser te) {
     tileEntity = te;
     for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
@@ -60,8 +61,13 @@ public class ContainerUser extends ContainerBaseMachine {
       if (this.tileHeight != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
+      idx = TileMachineUser.Fields.TIMER.ordinal();
+      if (this.timer != this.tileEntity.getField(idx)) {
+        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
+      }
     }
     this.tileHeight = this.tileEntity.getField(TileMachineUser.Fields.HEIGHT.ordinal());
+    this.timer = this.tileEntity.getField(TileMachineUser.Fields.TIMER.ordinal());
   }
   //TODO: these two in base class?
   @Override
