@@ -2,11 +2,15 @@ package com.lothrazar.cyclicmagic.gui.user;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUser;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUser.Fields;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContanerProgress;
+import com.lothrazar.cyclicmagic.gui.miner.ContainerMiner;
 import com.lothrazar.cyclicmagic.gui.user.ContainerUser;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiUser extends GuiBaseContanerProgress {
   private TileMachineUser tile;
@@ -28,6 +32,17 @@ public class GuiUser extends GuiBaseContanerProgress {
     for (int k = 0; k < tile.getSizeInventory(); k++) {
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerUser.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerUser.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
+  }
+  @SideOnly(Side.CLIENT)
+  @Override
+  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+    super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+
+    //yes this works, it renders the speed. Not yet used, its always 1
+//    int x = ContainerMiner.SLOTX_START +40, y = 30;
+//    this.fontRendererObj.drawString(tile.getSpeed()+"", x, y, 4210752);
+    
+//    updateDisabledButtons();
   }
   public int getProgressX() {
     return this.guiLeft + 10;

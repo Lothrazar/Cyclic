@@ -16,7 +16,7 @@ public class ContainerUser extends ContainerBaseMachine {
   public static final int SLOTY = 42;
 //  public static final int SLOTID_EQUIP = 9;
   protected TileMachineUser tileEntity;
-  private int tileHeight;
+  private int tileSpeed;
   private int timer;
   public ContainerUser(InventoryPlayer inventoryPlayer, TileMachineUser te) {
     tileEntity = te;
@@ -57,8 +57,8 @@ public class ContainerUser extends ContainerBaseMachine {
     super.detectAndSendChanges();
     for (int i = 0; i < this.listeners.size(); ++i) {
       IContainerListener icontainerlistener = (IContainerListener) this.listeners.get(i);
-      int idx = TileMachineUser.Fields.HEIGHT.ordinal();
-      if (this.tileHeight != this.tileEntity.getField(idx)) {
+      int idx = TileMachineUser.Fields.SPEED.ordinal();
+      if (this.tileSpeed != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
       idx = TileMachineUser.Fields.TIMER.ordinal();
@@ -66,7 +66,7 @@ public class ContainerUser extends ContainerBaseMachine {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
     }
-    this.tileHeight = this.tileEntity.getField(TileMachineUser.Fields.HEIGHT.ordinal());
+    this.tileSpeed = this.tileEntity.getField(TileMachineUser.Fields.SPEED.ordinal());
     this.timer = this.tileEntity.getField(TileMachineUser.Fields.TIMER.ordinal());
   }
   //TODO: these two in base class?

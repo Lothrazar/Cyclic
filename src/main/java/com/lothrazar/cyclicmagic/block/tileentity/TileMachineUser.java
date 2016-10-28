@@ -20,23 +20,23 @@ public class TileMachineUser extends TileEntityBaseMachineInvo {
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
   // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
   public static int maxHeight = 10;
-  public static int TIMER_FULL = 200;
-  private BlockPos targetPos = null;
+  public static int TIMER_FULL = 80;
   private ItemStack[] inv;
   private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots for all faces
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
   private static final String NBT_TIMER = "Timer";
-  int height = 6;//TODO: gui field
+  private int speed = 1;
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
   private int timer;
   public static enum Fields {
-    TIMER, HEIGHT
+    TIMER, SPEED
   }
   public TileMachineUser() {
     inv = new ItemStack[9];
     timer = TIMER_FULL;
+    speed = 1;
   }
   @Override
   public void update() {
@@ -71,10 +71,8 @@ public class TileMachineUser extends TileEntityBaseMachineInvo {
         }
         //else already equipped
       }
-      if (targetPos == null) {
-        targetPos = pos.offset(this.getCurrentFacing()); //not sure if this is needed
-      }
-      if(worldObj.isAirBlock(targetPos)){
+      BlockPos targetPos = pos.offset(this.getCurrentFacing()); //not sure if this is needed
+      if (worldObj.isAirBlock(targetPos)) {
         targetPos = targetPos.down();
       }
       ItemStack stack = getStackInSlot(0);
@@ -84,29 +82,34 @@ public class TileMachineUser extends TileEntityBaseMachineInvo {
         return;
       }
       if (this.isPowered()) {
-        timer--;
+        timer -= this.getSpeed();
         if (timer <= 0) {
+          timer = 0;
+        }
+        if (timer == 0) {
+//          System.out.println("GOOO" + fakePlayer.get().getHeldItemMainhand());
+          fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), worldObj, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
           timer = TIMER_FULL;
         }
-        if (timer == TIMER_FULL) {
-          fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), worldObj, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
-        }
+      }
+      else {
+        timer = 0;
       }
     }
   }
   final int RADIUS = 4;//center plus 4 in each direction = 9x9
   private static final String NBTPLAYERID = "uuid";
-  private static final String NBTTARGET = "target";
+  //  private static final String NBTTARGET = "target";
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     compound.setInteger(NBT_TIMER, timer);
     if (uuid != null) {
       compound.setString(NBTPLAYERID, uuid.toString());
     }
-    if (targetPos != null) {
-      compound.setIntArray(NBTTARGET, new int[] { targetPos.getX(), targetPos.getY(), targetPos.getZ() });
-    }
-    compound.setInteger("h", height);
+    //    if (targetPos != null) {
+    //      compound.setIntArray(NBTTARGET, new int[] { targetPos.getX(), targetPos.getY(), targetPos.getZ() });
+    //    }
+    compound.setInteger("h", speed);
     //invo stuff
     NBTTagList itemList = new NBTTagList();
     for (int i = 0; i < inv.length; i++) {
@@ -128,13 +131,13 @@ public class TileMachineUser extends TileEntityBaseMachineInvo {
     if (compound.hasKey(NBTPLAYERID)) {
       uuid = UUID.fromString(compound.getString(NBTPLAYERID));
     }
-    if (compound.hasKey(NBTTARGET)) {
-      int[] coords = compound.getIntArray(NBTTARGET);
-      if (coords.length >= 3) {
-        targetPos = new BlockPos(coords[0], coords[1], coords[2]);
-      }
-    }
-    height = compound.getInteger("h");
+    //    if (compound.hasKey(NBTTARGET)) {
+    //      int[] coords = compound.getIntArray(NBTTARGET);
+    //      if (coords.length >= 3) {
+    //        targetPos = new BlockPos(coords[0], coords[1], coords[2]);
+    //      }
+    //    }
+    speed = compound.getInteger("h");
     //invo stuff
     NBTTagList tagList = compound.getTagList(NBT_INV, 10);
     for (int i = 0; i < tagList.tagCount(); i++) {
@@ -191,8 +194,8 @@ public class TileMachineUser extends TileEntityBaseMachineInvo {
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
-    case HEIGHT:
-      return getHeight();
+    case SPEED:
+      return getSpeed();
     case TIMER:
       return getTimer();
     default:
@@ -203,18 +206,18 @@ public class TileMachineUser extends TileEntityBaseMachineInvo {
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
-    case HEIGHT:
+    case SPEED:
       if (value > maxHeight) {
         value = maxHeight;
       }
-      setHeight(value);
+      setSpeed(value);
       break;
     case TIMER:
       timer = value;
-      if(timer > TIMER_FULL){
+      if (timer > TIMER_FULL) {
         timer = TIMER_FULL;
       }
-      if(timer < 0){
+      if (timer < 0) {
         timer = 0;
       }
       break;
@@ -222,11 +225,11 @@ public class TileMachineUser extends TileEntityBaseMachineInvo {
       break;
     }
   }
-  public int getHeight() {
-    return this.height;//this.getField(Fields.HEIGHT.ordinal());
+  public int getSpeed() {
+    return this.speed;//this.getField(Fields.HEIGHT.ordinal());
   }
-  public void setHeight(int val) {
-    this.height = val;
+  public void setSpeed(int val) {
+    this.speed = val;
   }
   @Override
   public boolean receiveClientEvent(int id, int value) {
