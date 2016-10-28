@@ -8,6 +8,7 @@ import com.lothrazar.cyclicmagic.block.BlockMinerSmart;
 import com.lothrazar.cyclicmagic.block.BlockPassword;
 import com.lothrazar.cyclicmagic.block.BlockPlacer;
 import com.lothrazar.cyclicmagic.block.BlockUncrafting;
+import com.lothrazar.cyclicmagic.block.BlockUser;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineStructureBuilder;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineHarvester;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityMagnet;
@@ -16,6 +17,7 @@ import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMiner;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMinerSmart;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachinePlacer;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter;
+import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUser;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraftforge.common.config.Configuration;
@@ -89,6 +91,10 @@ public class MachineBlockModule extends BaseModule {
       GameRegistry.registerTileEntity(TileEntityPassword.class, "password_block_te");
       ModMain.instance.events.addEvent(BlockRegistry.password_block);
     }
+    BlockRegistry.block_user = new BlockUser();
+    BlockRegistry.registerBlock(BlockRegistry.block_user, "block_user");
+    BlockRegistry.block_user.addRecipe();
+    GameRegistry.registerTileEntity(TileMachineUser.class, Const.MODID + "block_user_te");
   }
   @Override
   public void syncConfig(Configuration config) {

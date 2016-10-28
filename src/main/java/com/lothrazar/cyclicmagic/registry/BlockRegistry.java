@@ -13,6 +13,7 @@ import com.lothrazar.cyclicmagic.block.BlockPassword;
 import com.lothrazar.cyclicmagic.block.BlockPlacer;
 import com.lothrazar.cyclicmagic.block.BlockScaffolding;
 import com.lothrazar.cyclicmagic.block.BlockUncrafting;
+import com.lothrazar.cyclicmagic.block.BlockUser;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -44,6 +45,7 @@ public class BlockRegistry {
   public static BlockPassword password_block;
   public static BlockMinerSmart block_miner_smart;
   public static BlockFishing block_fishing;
+  public static BlockUser block_user;
   //lots of helpers/overrides with defaults
   public static void registerBlock(Block b, String name) {
     registerBlock(b, name, false);

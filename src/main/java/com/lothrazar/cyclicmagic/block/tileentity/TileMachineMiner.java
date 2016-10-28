@@ -99,15 +99,15 @@ public class TileMachineMiner extends TileEntityBaseMachine {
           ModMain.logger.warn("Warning: Fake player failed to init ");
           return;
         }
-        ItemStack unbreakingPickaxe = new ItemStack(Items.DIAMOND_PICKAXE, 1);
-        unbreakingPickaxe.setTagCompound(new NBTTagCompound());
-        unbreakingPickaxe.getTagCompound().setBoolean("Unbreakable", true);
-        fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, unbreakingPickaxe);
+        equipItem();
       }
       if (uuid == null) {
         uuid = UUID.randomUUID();
         IBlockState state = worldObj.getBlockState(this.pos);
         worldObj.notifyBlockUpdate(pos, state, state, 3);
+      }
+      if(fakePlayer.get().getHeldItemMainhand() == null){
+        equipItem();
       }
       BlockMiner.MinerType minerType = ((BlockMiner) worldObj.getBlockState(pos).getBlock()).getMinerType();
       BlockPos start = pos.offset(this.getCurrentFacing());
@@ -149,6 +149,12 @@ public class TileMachineMiner extends TileEntityBaseMachine {
         }
       }
     }
+  }
+  private void equipItem() {
+    ItemStack unbreakingPickaxe = new ItemStack(Items.DIAMOND_SHOVEL, 1);
+    unbreakingPickaxe.setTagCompound(new NBTTagCompound());
+    unbreakingPickaxe.getTagCompound().setBoolean("Unbreakable", true);
+    fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, unbreakingPickaxe);
   }
   private void updateTargetPos(BlockPos start, MinerType minerType) {
     targetPos = start;//always restart here so we dont offset out of bounds
