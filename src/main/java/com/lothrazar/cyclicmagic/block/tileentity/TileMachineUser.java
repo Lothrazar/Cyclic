@@ -74,6 +74,9 @@ public class TileMachineUser extends TileEntityBaseMachineInvo {
       if (targetPos == null) {
         targetPos = pos.offset(this.getCurrentFacing()); //not sure if this is needed
       }
+      if(worldObj.isAirBlock(targetPos)){
+        targetPos = targetPos.down();
+      }
       ItemStack stack = getStackInSlot(0);
       if (stack == null) {
         timer = TIMER_FULL;// reset just like you would in a
