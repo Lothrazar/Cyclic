@@ -3,10 +3,7 @@ import java.lang.ref.WeakReference;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
-import com.lothrazar.cyclicmagic.util.UtilItem;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -15,15 +12,9 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
 
-/**
- * 
- * SEE TileMachineMiner
- * 
- */
 public class TileMachineUser extends TileEntityBaseMachineInvo {
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
@@ -41,11 +32,12 @@ public class TileMachineUser extends TileEntityBaseMachineInvo {
     HEIGHT
   }
   public TileMachineUser() {
-    inv = new ItemStack[5];
+    inv = new ItemStack[9];
   }
   @Override
   public void update() {
-    int toolSlot = inv.length - 1;
+    this.shiftAllUp();
+    int toolSlot = 0;
     if (this.isPowered()) {
       this.spawnParticlesAbove();
     }
