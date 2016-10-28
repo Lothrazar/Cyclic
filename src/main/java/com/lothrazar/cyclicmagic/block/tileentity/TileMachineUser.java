@@ -205,6 +205,7 @@ public class TileMachineUser extends TileEntityBaseMachineInvo {
         value = maxHeight;
       }
       setHeight(value);
+      break;
     case TIMER:
       timer = value;
       if(timer > TIMER_FULL){
