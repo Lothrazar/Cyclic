@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.gui.user;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUser;
 import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
+import com.lothrazar.cyclicmagic.gui.SlotOnlyItems;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -14,14 +15,13 @@ public class ContainerUser extends ContainerBaseMachine {
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
   public static final int SLOTX_START = 8;
   public static final int SLOTY = 42;
-//  public static final int SLOTID_EQUIP = 9;
   protected TileMachineUser tileEntity;
   private int tileSpeed;
   private int timer;
   public ContainerUser(InventoryPlayer inventoryPlayer, TileMachineUser te) {
     tileEntity = te;
     for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
-      addSlotToContainer(new Slot(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY));
+      addSlotToContainer(new SlotOnlyItems(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY));
     }
     // commonly used vanilla code that adds the player's inventory
     bindPlayerInventory(inventoryPlayer);

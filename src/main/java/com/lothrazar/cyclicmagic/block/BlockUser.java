@@ -37,22 +37,12 @@ public class BlockUser extends BlockBaseFacingInventory implements IHasRecipe {
   public boolean hasTileEntity(IBlockState state) {
     return hasTileEntity();
   }
-  //  @Override
-  //  public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-  ////    ((TileMachineMinerSmart) worldIn.getTileEntity(pos)).breakBlock(worldIn, pos, state);
-  //    super.breakBlock(worldIn, pos, state);
-  //  }
   @Override
   public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this),
-        "rsr",
-        "gbx",
-        "ooo",
-        'o', Blocks.QUARTZ_BLOCK,
-        'g', Items.DIAMOND_PICKAXE,
-        'x', Items.DIAMOND_AXE,
+    GameRegistry.addRecipe(new ItemStack(this), "rsr", " b ", "ooo",
+        'o', Blocks.OBSIDIAN,
         's', Blocks.DISPENSER,
-        'r', Blocks.LAPIS_BLOCK,
+        'r', Items.GOLD_INGOT,
         'b', Blocks.field_189877_df);// MAGMA BLOCK is field_189877_df in 1.10.2 apparently
   }
   @SideOnly(Side.CLIENT)
