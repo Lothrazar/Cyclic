@@ -35,7 +35,6 @@ import com.lothrazar.cyclicmagic.gui.waypoints.GuiEnderBook;
 import com.lothrazar.cyclicmagic.item.ItemStorageBag;
 import com.lothrazar.cyclicmagic.util.UtilInventory;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
-import net.minecraft.block.material.MapColor;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
