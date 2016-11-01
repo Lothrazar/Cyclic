@@ -18,6 +18,9 @@ version = "${mc_version}-1.7.22"
 group = "com.lothrazar.cyclicmagic" 
 archivesBaseName = "Cyclic"
 
+srcCompat = JavaVersion.VERSION_1_8
+targetCompat = JavaVersion.VERSION_1_8
+
 minecraft {
     version = "${mc_version}-${forge_version}"
     mappings = "snapshot_20160518"
