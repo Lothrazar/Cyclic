@@ -66,7 +66,7 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
     ByteBufUtils.writeTag(buf, tags);
   }
   @Override
-  public IMessage onMessage(PacketSwapBlock message, MessageContext ctx) {
+  public IMessage onMessage(final PacketSwapBlock message,final MessageContext ctx) {
     if (ctx.side.isServer() && message != null && message.pos != null) {
       MinecraftServer s = FMLCommonHandler.instance().getMinecraftServerInstance();
       // MinecraftServer.getServer().//doesnt exist anymore

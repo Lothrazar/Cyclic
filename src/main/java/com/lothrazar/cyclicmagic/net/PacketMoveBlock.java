@@ -48,7 +48,7 @@ public class PacketMoveBlock implements IMessage, IMessageHandler<PacketMoveBloc
     ByteBufUtils.writeTag(buf, tags);
   }
   @Override
-  public IMessage onMessage(PacketMoveBlock message, MessageContext ctx) {
+  public IMessage onMessage(final PacketMoveBlock message, final MessageContext ctx) {
     MinecraftServer s = FMLCommonHandler.instance().getMinecraftServerInstance();
     if (s == null) {//this is never happening. ill keep it just in case
       handle(message, ctx);

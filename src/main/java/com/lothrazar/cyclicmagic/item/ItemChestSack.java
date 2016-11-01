@@ -42,7 +42,9 @@ public class ItemChestSack extends BaseItem {
     if (createAndFillChest(playerIn, stack, offset)) {
       playerIn.setHeldItem(hand, null);
       UtilSound.playSound(playerIn, pos, SoundRegistry.thunk);
-      UtilEntity.dropItemStackInWorld(worldIn, playerIn.getPosition(), ItemRegistry.chest_sack_empty);
+      if (playerIn.capabilities.isCreativeMode == false) {
+        UtilEntity.dropItemStackInWorld(worldIn, playerIn.getPosition(), ItemRegistry.chest_sack_empty);
+      }
     }
     return EnumActionResult.SUCCESS;
   }
