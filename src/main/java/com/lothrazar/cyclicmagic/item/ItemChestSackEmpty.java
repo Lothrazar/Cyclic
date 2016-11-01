@@ -9,7 +9,6 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumActionResult;
@@ -29,15 +28,12 @@ public class ItemChestSackEmpty extends BaseItem implements IHasRecipe {
     // imported from my old mod
     // https://github.com/PrinceOfAmber/SamsPowerups/blob/b02f6b4243993eb301f4aa2b39984838adf482c1/src/main/java/com/lothrazar/samscontent/item/ItemChestSack.java
   }
-  /**
-   * Called when a Block is right-clicked with this Item
-   */
   @Override
   public EnumActionResult onItemUse(ItemStack stack, EntityPlayer entityPlayer, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     if (pos == null) { return EnumActionResult.FAIL; }
     TileEntity tile = world.getTileEntity(pos);
     IBlockState state = world.getBlockState(pos);
-    if (state == null || tile == null || tile instanceof IInventory == false) {
+    if (state == null || tile == null) {//so it works on EXU2 machines  || tile instanceof IInventory == false
       if (world.isRemote) {
         UtilChat.addChatMessage(entityPlayer, "item.chest_sack_empty.inventory");
       }

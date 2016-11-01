@@ -87,7 +87,7 @@ public class TileMachineUser extends TileEntityBaseMachineInvo {
           timer = 0;
         }
         if (timer == 0) {
-//          System.out.println("GOOO" + fakePlayer.get().getHeldItemMainhand());
+          //          System.out.println("GOOO" + fakePlayer.get().getHeldItemMainhand());
           fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), worldObj, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
           timer = TIMER_FULL;
         }

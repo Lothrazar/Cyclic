@@ -113,7 +113,7 @@ public class GuiTerrariaButtonsModule extends BaseEventModule implements IHasCon
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.inventory;
     config.setCategoryComment(category, "Terraria-inspired inventory helper buttons");
-    enableTerrariaButtons = config.getBoolean("TerrariaInventoryButtons", category, true, "Adds extra buttons to containers to quickly move items between your inventory (Inspired by terraria)");
+    enableTerrariaButtons = config.getBoolean("TerrariaInventoryButtons", category, false, "Adds extra buttons to containers to quickly move items between your inventory (Inspired by terraria)");
     List<String> valid = new ArrayList<String>();
     valid.add(posLeft);
     valid.add(posRight);

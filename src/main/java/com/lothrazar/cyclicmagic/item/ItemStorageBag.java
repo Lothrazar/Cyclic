@@ -209,21 +209,21 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
       if (bagItem == null || bagItem.stackSize == 0) {
         continue;
       }
-     // System.out.println(bagItem.stackSize + "_" + bagItem.getDisplayName());
+      // System.out.println(bagItem.stackSize + "_" + bagItem.getDisplayName());
       for (int islotChest = 0; islotChest < chest.getSizeInventory(); islotChest++) {
         chestItem = chest.getStackInSlot(islotChest);
         //we have a space in the inventory thats empty. are we allowed
         if (chestItem == null && onlyMatchingItems == false) {
           //then yeah we are allowed to use the empty space
           if (chest.isItemValidForSlot(islotStacks, bagItem)) {
-           // System.out.println("dump at " + islotChest);
+            // System.out.println("dump at " + islotChest);
             itemsMoved += bagItem.stackSize;
             chest.setInventorySlotContents(islotChest, bagItem);
             stacks[islotStacks] = null;
             bagItem = null;
             break;//move to next bag item, we're done here
           }
-          else{
+          else {
             //cant dump here. but also cant merge so move to next slot
             continue;
           }

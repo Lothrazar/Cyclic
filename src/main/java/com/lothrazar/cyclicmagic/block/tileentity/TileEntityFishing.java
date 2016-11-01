@@ -16,7 +16,9 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.loot.LootContext;
+import net.minecraft.world.storage.loot.LootTable;
 import net.minecraft.world.storage.loot.LootTableList;
+import net.minecraft.world.storage.loot.LootTableManager;
 
 public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITickable {
   private static final String NBT_INV = "Inventory";
@@ -49,11 +51,18 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     //make sure surrounded by water
     if (rand.nextDouble() < SPEED &&
         isValidPosition() && isEquipmentValid() &&
-        this.worldObj instanceof WorldServer) {
+        this.worldObj instanceof WorldServer && this.worldObj != null) {
       LootContext.Builder lootcontext$builder = new LootContext.Builder((WorldServer) this.worldObj);
       float luck = (float) EnchantmentHelper.getEnchantmentLevel(Enchantments.LUCK_OF_THE_SEA, this.inv[0]);
       lootcontext$builder.withLuck(luck);
-      for (ItemStack itemstack : this.worldObj.getLootTableManager().getLootTableFromLocation(LootTableList.GAMEPLAY_FISHING).generateLootForPools(this.worldObj.rand, lootcontext$builder.build())) {
+      //      java.lang.NullPointerException: Ticking block entity    at com.lothrazar.cyclicmagic.block.tileentity.TileEntityFishing.func_73660_a(TileEntityFishing.java:58)
+      LootTableManager loot = this.worldObj.getLootTableManager();
+      if (loot == null) { return; }
+      LootTable table = loot.getLootTableFromLocation(LootTableList.GAMEPLAY_FISHING);
+      if (table == null) { return; }
+      LootContext context = lootcontext$builder.build();
+      if (context == null) { return; }
+      for (ItemStack itemstack : table.generateLootForPools(this.worldObj.rand, context)) {
         UtilParticle.spawnParticle(worldObj, EnumParticleTypes.WATER_WAKE, pos.up());
         inv[toolSlot].attemptDamageItem(1, worldObj.rand);
         if (inv[toolSlot].getItemDamage() >= inv[toolSlot].getMaxDamage()) {
@@ -64,8 +73,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
             itemstack = tryMergeStackIntoSlot(itemstack, i);
           }
         }
-        if (itemstack != null && itemstack.stackSize != 0) {
-          //FULL
+        if (itemstack != null && itemstack.stackSize != 0) { //FULL
           UtilEntity.dropItemStackInWorld(worldObj, this.pos.down(), itemstack);
         }
       }

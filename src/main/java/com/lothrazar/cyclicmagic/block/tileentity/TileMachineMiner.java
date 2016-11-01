@@ -106,7 +106,7 @@ public class TileMachineMiner extends TileEntityBaseMachine {
         IBlockState state = worldObj.getBlockState(this.pos);
         worldObj.notifyBlockUpdate(pos, state, state, 3);
       }
-      if(fakePlayer.get().getHeldItemMainhand() == null){
+      if (fakePlayer.get().getHeldItemMainhand() == null) {
         equipItem();
       }
       BlockMiner.MinerType minerType = ((BlockMiner) worldObj.getBlockState(pos).getBlock()).getMinerType();

@@ -35,12 +35,10 @@ public class GuiUser extends GuiBaseContanerProgress {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-
     //yes this works, it renders the speed. Not yet used, its always 1
-//    int x = ContainerMiner.SLOTX_START +40, y = 30;
-//    this.fontRendererObj.drawString(tile.getSpeed()+"", x, y, 4210752);
-    
-//    updateDisabledButtons();
+    //    int x = ContainerMiner.SLOTX_START +40, y = 30;
+    //    this.fontRendererObj.drawString(tile.getSpeed()+"", x, y, 4210752);
+    //    updateDisabledButtons();
   }
   public int getProgressX() {
     return this.guiLeft + 10;

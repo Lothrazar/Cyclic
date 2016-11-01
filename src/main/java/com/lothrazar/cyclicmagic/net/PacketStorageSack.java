@@ -66,6 +66,9 @@ public class PacketStorageSack implements IMessage, IMessageHandler<PacketStorag
       if (held != null && player.capabilities.isCreativeMode == false) {
         held.stackSize--;
       }
+      //      if (held != null && held.stackSize > 0) {
+      //        player.getCooldownTracker().setCooldown(held.getItem(), 1);
+      //      }
       UtilEntity.dropItemStackInWorld(world, player.getPosition(), drop);
       UtilPlaceBlocks.destroyBlock(world, position);
     }
