@@ -74,7 +74,15 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
         handle(message,ctx);
       }
       else{
-        s.addScheduledTask(() -> handle(message, ctx));
+        //ONLY JAVA 8
+       // s.addScheduledTask(() -> handle(message, ctx));
+        s.addScheduledTask(new Runnable()
+        {
+          public void run()
+          {
+              handle(message,ctx);
+          }
+        });
       }
       
     }
