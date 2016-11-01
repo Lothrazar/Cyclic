@@ -106,7 +106,6 @@ public class ModGuiHandler implements IGuiHandler {
       if (te != null && te instanceof TileEntityFishing) { return new ContainerFisher(player.inventory, (TileEntityFishing) te); }
       break;
     case GUI_INDEX_USER:
-
       if (te != null && te instanceof TileMachineUser) { return new ContainerUser(player.inventory, (TileMachineUser) te); }
       break;
     }
@@ -148,7 +147,6 @@ public class ModGuiHandler implements IGuiHandler {
         if (te != null && te instanceof TileEntityFishing) { return new GuiFisher(player.inventory, (TileEntityFishing) te); }
         break;
       case GUI_INDEX_USER:
-
         if (te != null && te instanceof TileMachineUser) { return new GuiUser(player.inventory, (TileMachineUser) te); }
         break;
       }

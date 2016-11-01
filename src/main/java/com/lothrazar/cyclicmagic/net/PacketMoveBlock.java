@@ -56,11 +56,9 @@ public class PacketMoveBlock implements IMessage, IMessageHandler<PacketMoveBloc
     else {
       //only java 8
       //s.addScheduledTask(() -> handle(message, ctx));
-      s.addScheduledTask(new Runnable()
-      {
-        public void run()
-        {
-            handle(message,ctx);
+      s.addScheduledTask(new Runnable() {
+        public void run() {
+          handle(message, ctx);
         }
       });
     }

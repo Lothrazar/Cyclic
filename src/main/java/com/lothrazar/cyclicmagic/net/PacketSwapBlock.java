@@ -66,30 +66,26 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
     ByteBufUtils.writeTag(buf, tags);
   }
   @Override
-  public IMessage onMessage(final PacketSwapBlock message,final MessageContext ctx) {
+  public IMessage onMessage(final PacketSwapBlock message, final MessageContext ctx) {
     if (ctx.side.isServer() && message != null && message.pos != null) {
       MinecraftServer s = FMLCommonHandler.instance().getMinecraftServerInstance();
       // MinecraftServer.getServer().//doesnt exist anymore
-      if(s == null){//this is never happening. ill keep it just in case
-        handle(message,ctx);
+      if (s == null) {//this is never happening. ill keep it just in case
+        handle(message, ctx);
       }
-      else{
+      else {
         //ONLY JAVA 8
-       // s.addScheduledTask(() -> handle(message, ctx));
-        s.addScheduledTask(new Runnable()
-        {
-          public void run()
-          {
-              handle(message,ctx);
+        // s.addScheduledTask(() -> handle(message, ctx));
+        s.addScheduledTask(new Runnable() {
+          public void run() {
+            handle(message, ctx);
           }
         });
       }
-      
     }
     return null;
   }
   private void handle(PacketSwapBlock message, MessageContext ctx) {
-
     EntityPlayer player = ctx.getServerHandler().playerEntity;
     World worldObj = player.worldObj;
     List<BlockPos> places = new ArrayList<BlockPos>();
@@ -205,7 +201,6 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
           //the destroy then set was causing exceptions, changed to setAir // https://github.com/PrinceOfAmber/Cyclic/issues/114
           Block block = replaced.getBlock();
           // if (worldObj.destroyBlock(curPos, true)) {
-   
           if (UtilPlaceBlocks.placeStateOverwrite(worldObj, player, curPos, newToPlace)) {
             UtilInventory.decrStackSize(player, slot);
             block.dropBlockAsItem(worldObj, curPos, replaced, 0);//zero is fortune level
@@ -220,5 +215,4 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
       ModMain.logger.warn(e.getStackTrace().toString());
     }
   }
-
 }

@@ -126,7 +126,7 @@ public class UtilPlaceBlocks {
     return false;
   }
   /*
-   * TODO: SHOULD every call to this be in a scheduled task? 
+   * TODO: SHOULD every call to this be in a scheduled task?
    * https://github.com/PrinceOfAmber/Cyclic/issues/143
    */
   public static boolean placeStateOverwrite(World world, EntityPlayer player, BlockPos placePos, IBlockState placeState) {
