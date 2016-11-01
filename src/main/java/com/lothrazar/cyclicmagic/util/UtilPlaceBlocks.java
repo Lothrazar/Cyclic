@@ -125,6 +125,10 @@ public class UtilPlaceBlocks {
     if (world.destroyBlock(placePos, dropBlock)) { return placeStateSafe(world, player, placePos, placeState); }
     return false;
   }
+  /*
+   * TODO: SHOULD every call to this be in a scheduled task? 
+   * https://github.com/PrinceOfAmber/Cyclic/issues/143
+   */
   public static boolean placeStateOverwrite(World world, EntityPlayer player, BlockPos placePos, IBlockState placeState) {
     if (world.setBlockToAir(placePos)) { return placeStateSafe(world, player, placePos, placeState); }
     return false;
