@@ -35,7 +35,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemToolSwap extends BaseTool implements IHasRecipe {
   private static final int durability = 5000;
-  private static final int COOLDOWN = 20;
+  private static final int COOLDOWN = 10;
   private WandType wandType;
   public ItemToolSwap(WandType t) {
     super(durability);

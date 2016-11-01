@@ -68,11 +68,9 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
   @Override
   public IMessage onMessage(PacketSwapBlock message, MessageContext ctx) {
     if (ctx.side.isServer() && message != null && message.pos != null) {
-      MinecraftServer s = FMLCommonHandler.instance().getMinecraftServerInstance();//ctx.getServerHandler().getNetworkManager().get
-   
+      MinecraftServer s = FMLCommonHandler.instance().getMinecraftServerInstance();
       // MinecraftServer.getServer().//doesnt exist anymore
-      if(s == null){
-        System.out.println("server is null?");
+      if(s == null){//this is never happening. ill keep it just in case
         handle(message,ctx);
       }
       else{
