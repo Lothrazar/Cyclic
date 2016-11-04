@@ -15,7 +15,7 @@ public class UtilUncraft {
   public static List<Item> blacklistInput = new ArrayList<Item>();
   public static List<Item> blacklistOutput = new ArrayList<Item>();
   public static List<String> blacklistMod = new ArrayList<String>();
-//  public static List<Item> blacklistIfContainsOut = new ArrayList<Item>();
+  //  public static List<Item> blacklistIfContainsOut = new ArrayList<Item>();
   public static enum BlacklistType {
     INPUT, OUTPUT, MODNAME;//, CONTAINS;
   }
@@ -45,9 +45,9 @@ public class UtilUncraft {
       case OUTPUT:
         blacklistOutput.add(item);
         break;
-//      case CONTAINS:
-//        blacklistIfContainsOut.add(item);
-//        break;
+      //      case CONTAINS:
+      //        blacklistIfContainsOut.add(item);
+      //        break;
       }
     }
   }
@@ -101,7 +101,7 @@ public class UtilUncraft {
   public int getOutsize() {
     return outsize;
   }
-  private void addDrop(ItemStack stackInput) {
+  private void tryAddTrop(ItemStack stackInput) {
     // this fn is null safe, it gets nulls all the time
     if (stackInput == null || stackInput.getItem() == null) { return; }
     //    if(isRemovedSinceContainerItem(stackInput)){
@@ -121,6 +121,28 @@ public class UtilUncraft {
     }
     drops.add(stack);
   }
+  private boolean doesRecipeMatch(ShapedOreRecipe r) {
+    return r != null && r.getRecipeOutput() != null && doesRecipeInputMatch(r.getRecipeOutput());
+  }
+  private boolean doesRecipeMatch(ShapelessOreRecipe r) {
+    return r != null && r.getRecipeOutput() != null && doesRecipeInputMatch(r.getRecipeOutput());
+  }
+  private boolean doesRecipeMatch(ShapedRecipes r) {
+    return r != null && r.getRecipeOutput() != null && doesRecipeInputMatch(r.getRecipeOutput());
+  }
+  private boolean doesRecipeMatch(ShapelessRecipes r) {
+    return r != null && r.getRecipeOutput() != null && doesRecipeInputMatch(r.getRecipeOutput());
+  }
+  private boolean doesRecipeInputMatch(ItemStack recipeOutput) {
+    boolean itemEqual = recipeOutput.isItemEqual(toUncraft);
+    if(itemEqual == false){
+      return false;//items dont match
+    }
+    boolean enchantingMatches = recipeOutput.isItemEnchanted() == toUncraft.isItemEnchanted();
+ 
+    return enchantingMatches;// either they are both ench, or both not ench
+  }
+
   @SuppressWarnings("unchecked")
   public boolean doUncraft() {
     if (toUncraft == null || toUncraft.getItem() == null) { return false; }
@@ -130,13 +152,14 @@ public class UtilUncraft {
     int i;
     Object maybeOres;
     outsize = 0;
+    //  ArrayList<ItemStack> recipeItems;
     // outsize is 3 means the recipe makes three items total. so MINUS three
     // from the toUncraft for EACH LOOP
     for (Object next : CraftingManager.getInstance().getRecipeList()) {
       // check ore dictionary for some
       if (next instanceof ShapedOreRecipe) {
         ShapedOreRecipe r = (ShapedOreRecipe) next;
-        if (r != null && r.getRecipeOutput() != null && r.getRecipeOutput().isItemEqual(toUncraft)) {
+        if (doesRecipeMatch(r)) {
           outsize = r.getRecipeOutput().stackSize;
           if (toUncraft.stackSize >= outsize) {
             for (i = 0; i < r.getInput().length; i++) {
@@ -145,21 +168,19 @@ public class UtilUncraft {
                 continue;
               }
               // thanks  http://stackoverflow.com/questions/20462819/java-util-collectionsunmodifiablerandomaccesslist-to-collections-singletonlist
-              if (maybeOres instanceof List<?> && (List<ItemStack>) maybeOres != null) // <ItemStack>
-              {
+              if (maybeOres instanceof List<?> && (List<ItemStack>) maybeOres != null) {
                 List<ItemStack> ores = (List<ItemStack>) maybeOres;
                 if (ores.size() == 1) {
                   // sticks,iron,and so on
-                  addDrop(ores.get(0));
+                  tryAddTrop(ores.get(0));
                 }
                 else if ((ores.size() > 1) && dictionaryFreedom) {
-                  addDrop(ores.get(0));
+                  tryAddTrop(ores.get(0));
                 }
                 // else size is > 1 , so its something like wooden planks but not for now
               }
-              else if (maybeOres instanceof ItemStack) // <ItemStack>
-              {
-                addDrop((ItemStack) maybeOres);
+              else if (maybeOres instanceof ItemStack) {
+                tryAddTrop((ItemStack) maybeOres);
               }
             }
           }
@@ -168,7 +189,7 @@ public class UtilUncraft {
       }
       else if (next instanceof ShapelessOreRecipe) {
         ShapelessOreRecipe r = (ShapelessOreRecipe) next;
-        if (r != null && r.getRecipeOutput() != null && r.getRecipeOutput().isItemEqual(toUncraft)) {
+        if (doesRecipeMatch(r)) {
           outsize = r.getRecipeOutput().stackSize;
           if (toUncraft.stackSize >= outsize) {
             for (i = 0; i < r.getInput().size(); i++) {
@@ -177,16 +198,16 @@ public class UtilUncraft {
               {
                 List<ItemStack> ores = (List<ItemStack>) maybeOres;
                 if (ores.size() == 1) {
-                  addDrop(ores.get(0));
+                  tryAddTrop(ores.get(0));
                   // sticks,iron,and so on
                 }
                 else if ((ores.size() > 1) && dictionaryFreedom) {
-                  addDrop(ores.get(0));
+                  tryAddTrop(ores.get(0));
                 }
               }
               if (maybeOres instanceof ItemStack) // <ItemStack>
               {
-                addDrop((ItemStack) maybeOres);
+                tryAddTrop((ItemStack) maybeOres);
               }
             }
           }
@@ -195,11 +216,11 @@ public class UtilUncraft {
       }
       else if (next instanceof ShapedRecipes) {
         ShapedRecipes r = (ShapedRecipes) next;
-        if (r != null && r.getRecipeOutput() != null && r.getRecipeOutput().isItemEqual(toUncraft)) {
+        if (doesRecipeMatch(r)) {
           outsize = r.getRecipeOutput().stackSize;
           if (toUncraft.stackSize >= outsize) {
             for (i = 0; i < r.recipeItems.length; i++) {
-              addDrop(r.recipeItems[i]);
+              tryAddTrop(r.recipeItems[i]);
             }
           }
           break;
@@ -207,27 +228,25 @@ public class UtilUncraft {
       }
       else if (next instanceof ShapelessRecipes) {
         ShapelessRecipes r = (ShapelessRecipes) next;
-        if (r != null && r.getRecipeOutput() != null && r.getRecipeOutput().isItemEqual(toUncraft)) {
+        if (doesRecipeMatch(r)) {
           outsize = r.getRecipeOutput().stackSize;
           if (toUncraft.stackSize >= outsize) {
             for (i = 0; i < r.recipeItems.size(); i++) {
-              addDrop((ItemStack) r.recipeItems.get(i));
+              tryAddTrop((ItemStack) r.recipeItems.get(i));
             }
           }
           break;
         }
       }
-      
-      
     }
-//    //last check
-//    for (ItemStack drop : this.drops) {
-//      if (isItemInBlacklist(drop, BlacklistType.CONTAINS)) {
-//        System.out.println("CONTAINS BLACKLIST: "+ drop.getUnlocalizedName());
-//        this.drops = new ArrayList<ItemStack>();
-//        return false;
-//      }
-//    }
+    //    //last check
+    //    for (ItemStack drop : this.drops) {
+    //      if (isItemInBlacklist(drop, BlacklistType.CONTAINS)) {
+    //        System.out.println("CONTAINS BLACKLIST: "+ drop.getUnlocalizedName());
+    //        this.drops = new ArrayList<ItemStack>();
+    //        return false;
+    //      }
+    //    }
     return (this.drops.size() > 0);
   }
   public boolean canUncraft() {
