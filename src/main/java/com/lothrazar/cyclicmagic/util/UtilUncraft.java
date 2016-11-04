@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.util;
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclicmagic.ModMain;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.ShapedRecipes;
@@ -11,10 +13,46 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 public class UtilUncraft {
   // static boolean blockIfCannotDoit;
   public static boolean dictionaryFreedom;
-  public static List<String> blacklistInput = new ArrayList<String>();
+  public static List<Item> blacklistInput = new ArrayList<Item>();
   // also, when crafting cake you get the empty bucket back.
   // so dont refund full buckets or else thats free infinite iron
-  public static List<String> blacklistOutput = new ArrayList<String>();// They
+  public static List<Item> blacklistOutput = new ArrayList<Item>();// They
+  public static enum BlacklistType {
+    INPUT, OUTPUT;
+  }
+  public static void setBlacklist(String[] list, BlacklistType type) {
+    if (list == null || list.length == 0) { return; }
+    Item item = null;
+    for (String iname : list) {
+      item = Item.getByNameOrId(iname);
+      if (item == null) {
+        ModMain.logger.warn("Uncrafting Grinder Blacklist: Item or block not found " + iname);
+      }
+      else {
+        ModMain.logger.info("Uncrafting Grinder Blacklist: VALID" + iname);
+        switch (type) {
+        case INPUT:
+          blacklistInput.add(item);
+          break;
+        case OUTPUT:
+          blacklistOutput.add(item);
+          break;
+        }
+      }
+    }
+  }
+  private boolean isItemInBlacklist(Item item, BlacklistType type) {
+    if (item == null) { return true; }
+    boolean blacklist = false;
+    switch (type) {
+    case INPUT:
+      blacklist = blacklistInput.contains(item);
+    case OUTPUT:
+      blacklist = blacklistOutput.contains(item);
+    }
+    ModMain.logger.info("Uncrafting: is it in blacklist?" + type + ":" + blacklist + "__" + item.getUnlocalizedName());
+    return blacklist;
+  }
   // were
   // null
   private ArrayList<ItemStack> drops;
@@ -31,24 +69,13 @@ public class UtilUncraft {
   public int getOutsize() {
     return outsize;
   }
-  private void addDrop(ItemStack s) {
+  private void addDrop(ItemStack stackInput) {
     // this fn is null safe, it gets nulls all the time
-    if (s == null || s.getItem() == null) { return; }
-    if (blacklistOutput.contains(s.getItem().getUnlocalizedName())) { return; }
-    ItemStack stack = s.copy();
+    if (stackInput == null || stackInput.getItem() == null) { return; }
+    if (isItemInBlacklist(stackInput.getItem(), BlacklistType.OUTPUT)) { return; }
+    ItemStack stack = stackInput.copy();
     stack.stackSize = 1;
     if (stack.getItemDamage() == 32767) {
-      // this STILL HAPPENS!! WHAT
-      // THIS probably doesnt ever happen anymore, but leaving it just in
-      // case
-      // bugged out wooden planks from something like a note block or
-      // chest
-      // where , there are a whole bunch of wooden plank types it COULD be
-      // but no way to know for sure
-      // by default (if checking Only number) this blocks all oak/quartz
-      /*
-       * if("tile.wood.oak".equals( stack.getUnlocalizedName())) { return; }
-       */
       if (dictionaryFreedom) {
         stack.setItemDamage(0);// do not make invalid quartz
       }
@@ -61,7 +88,8 @@ public class UtilUncraft {
   @SuppressWarnings("unchecked")
   public boolean doUncraft() {
     if (toUncraft == null || toUncraft.getItem() == null) { return false; }
-    if (blacklistInput.contains(toUncraft.getItem().getUnlocalizedName())) { return false; }
+    if (isItemInBlacklist(toUncraft.getItem(), BlacklistType.INPUT)) { return false; }
+    //if (blacklistInput.contains(toUncraft.getItem().getUnlocalizedName())) { return false; }
     int i;
     Object maybeOres;
     outsize = 0;
@@ -79,8 +107,7 @@ public class UtilUncraft {
               if (maybeOres == null) {
                 continue;
               }
-              // thanks
-              // http://stackoverflow.com/questions/20462819/java-util-collectionsunmodifiablerandomaccesslist-to-collections-singletonlist
+              // thanks  http://stackoverflow.com/questions/20462819/java-util-collectionsunmodifiablerandomaccesslist-to-collections-singletonlist
               if (maybeOres instanceof List<?> && (List<ItemStack>) maybeOres != null) // <ItemStack>
               {
                 List<ItemStack> ores = (List<ItemStack>) maybeOres;
