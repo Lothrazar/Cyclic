@@ -120,7 +120,9 @@ public class MachineBlockModule extends BaseModule {
     if (BlockRegistry.uncrafting_block != null) {
       BlockRegistry.uncrafting_block.syncConfig(config);
     }
-    TileMachineHarvester.HARVEST_RADIUS = config.getInt("HarvesterBlockRadius", Const.ConfigCategory.modpackMisc, 16, 4, 128, "Maximum radius of harvester area (remember its not centered on the block, it harvests in front)");
+    if (BlockRegistry.harvester_block != null) {
+      BlockRegistry.harvester_block.syncConfig(config);
+    }
     TileMachineMinerSmart.maxHeight = config.getInt("ControlledMiner.maxHeight", Const.ConfigCategory.modpackMisc, 32, 3, 128, "Maximum height of the controlled miner block that you can increase it to in the GUI");
   }
 }
