@@ -33,6 +33,11 @@ public class Const {
     public static final String commands = modpackMisc + ".Commands";
     public static final String worldGenOceans = worldGen + ".ocean";
   }
+  public class ToolStrings {
+    public static final String pickaxe = "pickaxe";
+    public static final String shovel = "shovel";
+    public static final String axe = "axe";
+  }
   public static final int SQ = 18;
   public static final int ARMOR_SIZE = 4;
   public static final int ROWS_VANILLA = 3;

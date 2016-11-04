@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.block;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.module.WorldGenModule;
+import com.lothrazar.cyclicmagic.util.Const;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockOre;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
@@ -8,6 +10,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityEndermite;
 import net.minecraft.entity.monster.EntitySilverfish;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -36,7 +39,14 @@ public class BlockDimensionOre extends BlockOre {
     droppedMeta = dmg;
     randomMax = max;
     this.setSoundType(SoundType.STONE);
-    this.setHardness(3.0F).setResistance(5.0F);
+    this.setHardness(3.0F).setResistance(5.0F);//wtf so in Block.class, we see all ores have same????
+   // this.setHarvestLevel(Const.ToolStrings.pickaxe,2);
+    this.setHarvestLevel(Const.ToolStrings.axe,0);
+    this.setHarvestLevel(Const.ToolStrings.shovel,0);
+  }
+  public BlockDimensionOre setPickaxeHarvestLevel(int h){
+    this.setHarvestLevel(Const.ToolStrings.pickaxe, 1);
+    return this;
   }
   public void setSpawnType(SpawnType t, int chance) {
     this.spawn = t;
