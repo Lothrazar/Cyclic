@@ -11,44 +11,67 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class UtilUncraft {
-  // static boolean blockIfCannotDoit;
   public static boolean dictionaryFreedom;
   public static List<Item> blacklistInput = new ArrayList<Item>();
-  // also, when crafting cake you get the empty bucket back.
-  // so dont refund full buckets or else thats free infinite iron
-  public static List<Item> blacklistOutput = new ArrayList<Item>();// They
+  public static List<Item> blacklistOutput = new ArrayList<Item>();
+  public static List<String> blacklistMod = new ArrayList<String>();
+  public static List<Item> blacklistIfContainsOut = new ArrayList<Item>();
   public static enum BlacklistType {
-    INPUT, OUTPUT;
+    INPUT, OUTPUT, MODNAME, CONTAINS;
   }
+  public static void resetBlacklists() {
+    blacklistInput = new ArrayList<Item>();
+    blacklistOutput = new ArrayList<Item>();
+    blacklistMod = new ArrayList<String>();
+    blacklistIfContainsOut = new ArrayList<Item>();
+  }
+  @SuppressWarnings("incomplete-switch")
   public static void setBlacklist(String[] list, BlacklistType type) {
     if (list == null || list.length == 0) { return; }
     Item item = null;
     for (String iname : list) {
+      if (type == BlacklistType.MODNAME) {
+        blacklistMod.add(iname);
+        continue;
+      }
       item = Item.getByNameOrId(iname);
       if (item == null) {
         ModMain.logger.warn("Uncrafting Grinder Blacklist: Item or block not found " + iname);
+        continue;
       }
-      else {
-        // ModMain.logger.info("Uncrafting Grinder Blacklist: VALID" + iname);
-        switch (type) {
-        case INPUT:
-          blacklistInput.add(item);
-          break;
-        case OUTPUT:
-          blacklistOutput.add(item);
-          break;
-        }
+      switch (type) {
+      case INPUT:
+        blacklistInput.add(item);
+        break;
+      case OUTPUT:
+        blacklistOutput.add(item);
+        break;
+      case CONTAINS:
+        blacklistIfContainsOut.add(item);
+        break;
       }
     }
   }
+  private boolean isItemInBlacklist(ItemStack drop, BlacklistType type) {
+    if (drop == null || drop.getItem() == null) { return true; }
+    return isItemInBlacklist(drop.getItem(), type);
+  }
   private boolean isItemInBlacklist(Item item, BlacklistType type) {
-    if (item == null) { return true; }
     boolean blacklist = false;
     switch (type) {
     case INPUT:
       blacklist = blacklistInput.contains(item);
     case OUTPUT:
       blacklist = blacklistOutput.contains(item);
+    case CONTAINS:
+      break;
+    case MODNAME:
+      String modId = item.getRegistryName().getResourceDomain();// the minecraft part of minecraft:wool (without colon)
+      blacklist = blacklistMod.contains(modId);
+      //      System.out.println(item.getRegistryName().getResourcePath());// ex: wool part of minecraft:wool
+      break;
+    default:
+      break;
     }
     ModMain.logger.info("Uncrafting: is it in blacklist?" + type + ":" + blacklist + "__" + item.getUnlocalizedName());
     return blacklist;
@@ -105,6 +128,7 @@ public class UtilUncraft {
   public boolean doUncraft() {
     if (toUncraft == null || toUncraft.getItem() == null) { return false; }
     if (isItemInBlacklist(toUncraft.getItem(), BlacklistType.INPUT)) { return false; }
+    if (isItemInBlacklist(toUncraft.getItem(), BlacklistType.MODNAME)) { return false; }
     //if (blacklistInput.contains(toUncraft.getItem().getUnlocalizedName())) { return false; }
     int i;
     Object maybeOres;
@@ -195,6 +219,14 @@ public class UtilUncraft {
           }
           break;
         }
+      }
+    }
+    //last check
+    for (ItemStack drop : this.drops) {
+      if (isItemInBlacklist(drop, BlacklistType.CONTAINS)) {
+        System.out.println("CONTAINS BLACKLIST: "+ drop.getUnlocalizedName());
+        this.drops = new ArrayList<ItemStack>();
+        return false;
       }
     }
     return (this.drops.size() > 0);

@@ -52,15 +52,27 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.uncrafter;
-    UtilUncraft.dictionaryFreedom = config.getBoolean("PickFirstMeta", category, true, "If you change this to true, then the uncrafting will just take the first of many options in any recipe that takes multiple input types.  For example, false means chests cannot be uncrafted, but true means chests will ALWAYS give oak wooden planks.");
-   // UtilUncraft.dictionaryFreedom = config.getBoolean("PickFirstMeta", category, true, "If you change this to true, then the uncrafting will just take the first of many options in any recipe that takes multiple input types.  For example, false means chests cannot be uncrafted, but true means chests will ALWAYS give oak wooden planks.");
-    
-    config.addCustomCategoryComment(category, "Here you can blacklist any thing, vanilla or modded.  Mostly for creating modpacks.  Input means you cannot uncraft it at all.  Output means it will not come out of a recipe.");
-    String[] blacklistInput = config.getStringList("BlacklistInput", category, new String[0], "Items that cannot be uncrafted; not allowed in the slots.  EXAMPLE : '[minecraft:stick,minecraft:dirt]'  ");
-    UtilUncraft.setBlacklist(blacklistInput, BlacklistType.INPUT);
-    String[] blacklistOutput = config.getStringList("BlacklistOutput", category, new String[] { "minecraft:milk_bucket", "minecraft:water_bucket", "minecraft:water_bucket" }, "Items that cannot come out of crafting recipes.  For example, if milk is in here, then cake is uncrafted you get all items except the milk buckets.  ");
-    UtilUncraft.setBlacklist(blacklistOutput, BlacklistType.OUTPUT);
     TileMachineUncrafter.TIMER_FULL = config.getInt("GrindngTime", category, 200, 10, 9999, "Number of ticks it takes to uncraft one time, so lower is faster");
+    UtilUncraft.dictionaryFreedom = config.getBoolean("PickFirstMeta", category, true, "If you change this to true, then the uncrafting will just take the first of many options in any recipe that takes multiple input types.  For example, false means chests cannot be uncrafted, but true means chests will ALWAYS give oak wooden planks.");
+    UtilUncraft.resetBlacklists();
+    config.addCustomCategoryComment(category, "Here you can blacklist any thing, vanilla or modded.  Mostly for creating modpacks.  Input means you cannot uncraft it at all.  Output means it will not come out of a recipe.");
+    //INPUT
+    String[] deflist = new String[] { "minecraft:end_crystal", "minecraft:magma" };
+    String[] blacklist = config.getStringList("BlacklistInput", category, deflist, "Items that cannot be uncrafted; not allowed in the slots.  EXAMPLE : '[minecraft:stick,minecraft:dirt]'  ");
+    UtilUncraft.setBlacklist(blacklist, BlacklistType.INPUT);
+    //OUTPUT
+    deflist = new String[] { "minecraft:milk_bucket", "minecraft:water_bucket", "minecraft:water_bucket",
+        "harvestcraft:juicerItem", "harvestcraft:mixingbowlItem", "harvestcraft:mortarandpestleItem", "harvestcraft:bakewareItem", "harvestcraft:saucepanItemskilletItem", "harvestcraft:potItem", "harvestcraft:cuttingboardItem", "mysticalagriculture:infusion_crystal", "mysticalagriculture:master_infusion_crystal" };
+    blacklist = config.getStringList("BlacklistOutput", category, deflist, "Items that cannot come out of crafting recipes.  For example, if milk is in here, then cake is uncrafted you get all items except the milk buckets.  ");
+    UtilUncraft.setBlacklist(blacklist, BlacklistType.OUTPUT);
+    //MODNAME
+    deflist = new String[] { "" };
+    blacklist = config.getStringList("BlacklistMod", category, deflist, "Blacklist the uncrafting of any item from this mod.  (Use F3+H to see mod ids)");
+    UtilUncraft.setBlacklist(blacklist, BlacklistType.MODNAME);
+    //CONTAINS
+    deflist = new String[] { "botania:manaTablet","projecte:pe_philosophers_stone" };//bot mana tablet
+    blacklist = config.getStringList("BlacklistIfIngredient", category, deflist, "If something contains one of these items as output, uncrafting will be blocked.  For example, if you put 'minecraft:iron_ingot' here, you will not be able to uncraft pistons or iron swords or anything that uses iron at all.");
+    UtilUncraft.setBlacklist(blacklist, BlacklistType.CONTAINS);
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
