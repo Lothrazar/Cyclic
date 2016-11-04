@@ -15,15 +15,14 @@ public class UtilUncraft {
   public static List<Item> blacklistInput = new ArrayList<Item>();
   public static List<Item> blacklistOutput = new ArrayList<Item>();
   public static List<String> blacklistMod = new ArrayList<String>();
-  public static List<Item> blacklistIfContainsOut = new ArrayList<Item>();
+//  public static List<Item> blacklistIfContainsOut = new ArrayList<Item>();
   public static enum BlacklistType {
-    INPUT, OUTPUT, MODNAME, CONTAINS;
+    INPUT, OUTPUT, MODNAME;//, CONTAINS;
   }
   public static void resetBlacklists() {
     blacklistInput = new ArrayList<Item>();
     blacklistOutput = new ArrayList<Item>();
     blacklistMod = new ArrayList<String>();
-    blacklistIfContainsOut = new ArrayList<Item>();
   }
   @SuppressWarnings("incomplete-switch")
   public static void setBlacklist(String[] list, BlacklistType type) {
@@ -46,9 +45,9 @@ public class UtilUncraft {
       case OUTPUT:
         blacklistOutput.add(item);
         break;
-      case CONTAINS:
-        blacklistIfContainsOut.add(item);
-        break;
+//      case CONTAINS:
+//        blacklistIfContainsOut.add(item);
+//        break;
       }
     }
   }
@@ -63,8 +62,6 @@ public class UtilUncraft {
       blacklist = blacklistInput.contains(item);
     case OUTPUT:
       blacklist = blacklistOutput.contains(item);
-    case CONTAINS:
-      break;
     case MODNAME:
       String modId = item.getRegistryName().getResourceDomain();// the minecraft part of minecraft:wool (without colon)
       blacklist = blacklistMod.contains(modId);
@@ -111,7 +108,7 @@ public class UtilUncraft {
     //      ModMain.logger.info("Removed because it has a container item"+stackInput.getUnlocalizedName());
     //      return;
     //    }
-    if (isItemInBlacklist(stackInput.getItem(), BlacklistType.OUTPUT)) { return; }
+    if (isItemInBlacklist(stackInput, BlacklistType.OUTPUT)) { return; }
     ItemStack stack = stackInput.copy();
     stack.stackSize = 1;
     if (stack.getItemDamage() == 32767) {
@@ -127,8 +124,8 @@ public class UtilUncraft {
   @SuppressWarnings("unchecked")
   public boolean doUncraft() {
     if (toUncraft == null || toUncraft.getItem() == null) { return false; }
-    if (isItemInBlacklist(toUncraft.getItem(), BlacklistType.INPUT)) { return false; }
-    if (isItemInBlacklist(toUncraft.getItem(), BlacklistType.MODNAME)) { return false; }
+    if (isItemInBlacklist(toUncraft, BlacklistType.INPUT)) { return false; }
+    if (isItemInBlacklist(toUncraft, BlacklistType.MODNAME)) { return false; }
     //if (blacklistInput.contains(toUncraft.getItem().getUnlocalizedName())) { return false; }
     int i;
     Object maybeOres;
@@ -220,15 +217,17 @@ public class UtilUncraft {
           break;
         }
       }
+      
+      
     }
-    //last check
-    for (ItemStack drop : this.drops) {
-      if (isItemInBlacklist(drop, BlacklistType.CONTAINS)) {
-        System.out.println("CONTAINS BLACKLIST: "+ drop.getUnlocalizedName());
-        this.drops = new ArrayList<ItemStack>();
-        return false;
-      }
-    }
+//    //last check
+//    for (ItemStack drop : this.drops) {
+//      if (isItemInBlacklist(drop, BlacklistType.CONTAINS)) {
+//        System.out.println("CONTAINS BLACKLIST: "+ drop.getUnlocalizedName());
+//        this.drops = new ArrayList<ItemStack>();
+//        return false;
+//      }
+//    }
     return (this.drops.size() > 0);
   }
   public boolean canUncraft() {
