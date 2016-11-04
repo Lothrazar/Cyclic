@@ -186,6 +186,13 @@ public class UtilHarvestCrops {
       //      ModMain.logger.info("doBreakAbove="+doBreakAbove);
       //      ModMain.logger.info("doBreakBelow="+doBreakBelow);
       //      ModMain.logger.info("doReplant="+doReplant);
+      //to bad they made the damn thing private:  ((BlockCrops)blockCheck).getSeed();/
+      
+      // we basically want to do this
+      //https://github.com/MatrexsVigil/harvestcraft/blob/22d1c1738d1fd8ac3e43f7144c552a456832dc76/java/com/pam/harvestcraft/addons/RightClickHarvesting.java#L61
+      //but jsut pop off end of list (where seed should be) and ONLY if drops >= 2
+      
+      
       world.destroyBlock(posCurrent, true);
       //break above first BECAUSE 2 high tallgrass otherwise will bug out if you break bottom first
       if (doBreakAbove) {

@@ -12,7 +12,7 @@ import net.minecraft.util.text.ITextComponent;
 
 public class TileMachineHarvester extends TileEntityBaseMachine {
   private int timer;
-  public static final int TIMER_FULL = 80;
+  public static int TIMER_FULL = 80;
   private HarestCropsConfig conf;
   private static final String NBT_TIMER = "Timer";
   public static int HARVEST_RADIUS = 16;
