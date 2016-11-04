@@ -139,7 +139,9 @@ public class UtilUncraft {
       return false;//items dont match
     }
     boolean enchantingMatches = recipeOutput.isItemEnchanted() == toUncraft.isItemEnchanted();
- 
+    if(!enchantingMatches){
+      ModMain.logger.info("enchanting mismatch");
+    }
     return enchantingMatches;// either they are both ench, or both not ench
   }
 
