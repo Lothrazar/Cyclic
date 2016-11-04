@@ -29,7 +29,7 @@ public class UtilUncraft {
         ModMain.logger.warn("Uncrafting Grinder Blacklist: Item or block not found " + iname);
       }
       else {
-        ModMain.logger.info("Uncrafting Grinder Blacklist: VALID" + iname);
+        // ModMain.logger.info("Uncrafting Grinder Blacklist: VALID" + iname);
         switch (type) {
         case INPUT:
           blacklistInput.add(item);
@@ -53,6 +53,18 @@ public class UtilUncraft {
     ModMain.logger.info("Uncrafting: is it in blacklist?" + type + ":" + blacklist + "__" + item.getUnlocalizedName());
     return blacklist;
   }
+  /**
+   * It works but we dont want to use it right now
+   * 
+   * @param istack
+   * @return
+   */
+  @SuppressWarnings("unused")
+  private boolean isRemovedSinceContainerItem(ItemStack istack) {
+    boolean hasContainerItem = istack.getItem().getContainerItem(istack) != null;
+    //EXAMPLE: milk_bucket has containerItem == milk
+    return hasContainerItem;
+  }
   // were
   // null
   private ArrayList<ItemStack> drops;
@@ -72,6 +84,10 @@ public class UtilUncraft {
   private void addDrop(ItemStack stackInput) {
     // this fn is null safe, it gets nulls all the time
     if (stackInput == null || stackInput.getItem() == null) { return; }
+    //    if(isRemovedSinceContainerItem(stackInput)){
+    //      ModMain.logger.info("Removed because it has a container item"+stackInput.getUnlocalizedName());
+    //      return;
+    //    }
     if (isItemInBlacklist(stackInput.getItem(), BlacklistType.OUTPUT)) { return; }
     ItemStack stack = stackInput.copy();
     stack.stackSize = 1;

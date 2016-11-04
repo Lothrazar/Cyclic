@@ -53,6 +53,8 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.uncrafter;
     UtilUncraft.dictionaryFreedom = config.getBoolean("PickFirstMeta", category, true, "If you change this to true, then the uncrafting will just take the first of many options in any recipe that takes multiple input types.  For example, false means chests cannot be uncrafted, but true means chests will ALWAYS give oak wooden planks.");
+   // UtilUncraft.dictionaryFreedom = config.getBoolean("PickFirstMeta", category, true, "If you change this to true, then the uncrafting will just take the first of many options in any recipe that takes multiple input types.  For example, false means chests cannot be uncrafted, but true means chests will ALWAYS give oak wooden planks.");
+    
     config.addCustomCategoryComment(category, "Here you can blacklist any thing, vanilla or modded.  Mostly for creating modpacks.  Input means you cannot uncraft it at all.  Output means it will not come out of a recipe.");
     String[] blacklistInput = config.getStringList("BlacklistInput", category, new String[0], "Items that cannot be uncrafted; not allowed in the slots.  EXAMPLE : '[minecraft:stick,minecraft:dirt]'  ");
     UtilUncraft.setBlacklist(blacklistInput, BlacklistType.INPUT);
