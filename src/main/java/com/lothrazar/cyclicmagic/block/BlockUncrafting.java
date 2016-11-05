@@ -13,7 +13,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -45,12 +44,11 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
   @Override
   public void addRecipe() {
     GameRegistry.addRecipe(new ItemStack(this),
-        "ded",
+        " d ",
         "fdf",
         "ooo",
         'o', Blocks.OBSIDIAN, 'f', Blocks.FURNACE, 'r', Blocks.DROPPER, 
-        'd', Items.DIAMOND,
-        'e',Items.ENDER_PEARL);
+        'd', Blocks.DIAMOND_BLOCK);
   }
   @Override
   public void syncConfig(Configuration config) {
@@ -67,7 +65,9 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
     deflist = new String[] { "minecraft:milk_bucket", "minecraft:water_bucket", "minecraft:lava_bucket","botania:manaTablet",
         "harvestcraft:juicerItem", "harvestcraft:mixingbowlItem", "harvestcraft:mortarandpestleItem", 
         "harvestcraft:bakewareItem", "harvestcraft:saucepanItemskilletItem", "harvestcraft:potItem", "harvestcraft:cuttingboardItem", 
-        "mysticalagriculture:infusion_crystal", "mysticalagriculture:master_infusion_crystal" };
+        "mysticalagriculture:infusion_crystal", "mysticalagriculture:master_infusion_crystal" 
+        
+    };
     blacklist = config.getStringList("BlacklistOutput", category, deflist, "Items that cannot come out of crafting recipes.  For example, if milk is in here, then cake can be uncrafted, but you get all items except the milk buckets.  ");
     UtilUncraft.setBlacklist(blacklist, BlacklistType.OUTPUT);
     //MODNAME
