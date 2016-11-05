@@ -25,13 +25,18 @@ public class Const {
     public static final String recipes = MODCONF + "recipes";
     public static final String villagers = MODCONF + "villagers";
     public static final String content = MODCONF + "content";
-    public static final String uncrafter = blocks + ".uncrafter";
     public static final String contentDefaultText = "Set false to delete - requires restart";
     public static final String modpackMisc = "modpacks";
+    public static final String uncrafter = modpackMisc + ".uncrafter";
     public static final String saplingBiomes = modpackMisc + ".SaplingGrowthDetail";
     public static final String InventoryButtonsModpack = modpackMisc + ".TerrariaButtons";
     public static final String commands = modpackMisc + ".Commands";
     public static final String worldGenOceans = worldGen + ".ocean";
+  }
+  public class ToolStrings {
+    public static final String pickaxe = "pickaxe";
+    public static final String shovel = "shovel";
+    public static final String axe = "axe";
   }
   public static final int SQ = 18;
   public static final int ARMOR_SIZE = 4;

@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.block;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.module.WorldGenModule;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.BlockOre;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
@@ -37,6 +38,12 @@ public class BlockDimensionOre extends BlockOre {
     randomMax = max;
     this.setSoundType(SoundType.STONE);
     this.setHardness(3.0F).setResistance(5.0F);
+    this.setHarvestLevel(Const.ToolStrings.axe,0);
+    this.setHarvestLevel(Const.ToolStrings.shovel,0);
+  }
+  public BlockDimensionOre setPickaxeHarvestLevel(int h){
+    this.setHarvestLevel(Const.ToolStrings.pickaxe, h);
+    return this;
   }
   public void setSpawnType(SpawnType t, int chance) {
     this.spawn = t;

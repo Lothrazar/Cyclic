@@ -116,45 +116,69 @@ public class WorldGenModule extends BaseEventModule {
   }
   private void registerDimensionOres() {
     //nether ores
+
+    /*ForgeHooks.class
+     * 
+          Blocks.IRON_ORE.setHarvestLevel("pickaxe", 1);
+          Blocks.IRON_BLOCK.setHarvestLevel("pickaxe", 1);
+          Blocks.LAPIS_ORE.setHarvestLevel("pickaxe", 1);
+          Blocks.LAPIS_BLOCK.setHarvestLevel("pickaxe", 1);
+          Blocks.QUARTZ_ORE.setHarvestLevel("pickaxe", 0);*/
+      //ALL BELOW ARE 2
+      /*        Block[] oreBlocks = new Block[] {
+                  Blocks.EMERALD_ORE, Blocks.EMERALD_BLOCK, Blocks.DIAMOND_ORE, Blocks.DIAMOND_BLOCK,
+                  Blocks.GOLD_ORE, Blocks.GOLD_BLOCK, Blocks.REDSTONE_ORE, Blocks.LIT_REDSTONE_ORE
+          };
+          for (Block block : oreBlocks)
+          {
+              block.setHarvestLevel("pickaxe", 2);
+          }*/
+    int coalHarvest = 0;
+    int ironHarvest = 1;
+    int lapisHarvest = ironHarvest;
+    int emeraldHarvest = 2;
+    int diamondHarvest = emeraldHarvest;
+    int goldHarvest = emeraldHarvest;
+    int redstoneHarvest = emeraldHarvest;
     BlockRegistry.nether_gold_ore = new BlockDimensionOre(Items.GOLD_NUGGET, 0, 4);
-    BlockRegistry.nether_gold_ore.setSpawnType(SpawnType.SILVERFISH, 1);
+    BlockRegistry.nether_gold_ore.setPickaxeHarvestLevel(goldHarvest).setSpawnType(SpawnType.SILVERFISH, 1);
     BlockRegistry.registerBlock(BlockRegistry.nether_gold_ore, "nether_gold_ore");
     BlockRegistry.nether_gold_ore.registerSmeltingOutput(Items.GOLD_INGOT);
     BlockRegistry.nether_coal_ore = new BlockDimensionOre(Items.COAL);
-    BlockRegistry.nether_coal_ore.setSpawnType(SpawnType.SILVERFISH, 1);
+    BlockRegistry.nether_coal_ore.setPickaxeHarvestLevel(coalHarvest).setSpawnType(SpawnType.SILVERFISH, 1);
     BlockRegistry.registerBlock(BlockRegistry.nether_coal_ore, "nether_coal_ore");
     BlockRegistry.nether_coal_ore.registerSmeltingOutput(Items.COAL);
     BlockRegistry.nether_lapis_ore = new BlockDimensionOre(Items.DYE, EnumDyeColor.BLUE.getDyeDamage(), 3);
-    BlockRegistry.nether_lapis_ore.setSpawnType(SpawnType.SILVERFISH, 2);
+    BlockRegistry.nether_lapis_ore.setPickaxeHarvestLevel(lapisHarvest).setSpawnType(SpawnType.SILVERFISH, 2);
     BlockRegistry.registerBlock(BlockRegistry.nether_lapis_ore, "nether_lapis_ore");
     BlockRegistry.nether_lapis_ore.registerSmeltingOutput(new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage()));
     BlockRegistry.nether_emerald_ore = new BlockDimensionOre(Items.EMERALD);
-    BlockRegistry.nether_emerald_ore.setSpawnType(SpawnType.SILVERFISH, 5);
+    BlockRegistry.nether_emerald_ore.setPickaxeHarvestLevel(emeraldHarvest).setSpawnType(SpawnType.SILVERFISH, 5);
     BlockRegistry.registerBlock(BlockRegistry.nether_emerald_ore, "nether_emerald_ore");
     BlockRegistry.nether_emerald_ore.registerSmeltingOutput(Items.EMERALD);
     BlockRegistry.nether_diamond_ore = new BlockDimensionOre(Items.DIAMOND);
-    BlockRegistry.nether_diamond_ore.setSpawnType(SpawnType.SILVERFISH, 8);
+    BlockRegistry.nether_diamond_ore.setPickaxeHarvestLevel(diamondHarvest).setSpawnType(SpawnType.SILVERFISH, 8);
     BlockRegistry.registerBlock(BlockRegistry.nether_diamond_ore, "nether_diamond_ore");
     BlockRegistry.nether_diamond_ore.registerSmeltingOutput(Items.DIAMOND);
     //end ores
     BlockRegistry.end_redstone_ore = new BlockDimensionOre(Items.REDSTONE);
-    BlockRegistry.end_redstone_ore.setSpawnType(SpawnType.ENDERMITE, 3);
+    BlockRegistry.end_redstone_ore.setPickaxeHarvestLevel(redstoneHarvest).setSpawnType(SpawnType.ENDERMITE, 3);
     BlockRegistry.registerBlock(BlockRegistry.end_redstone_ore, "end_redstone_ore");
     BlockRegistry.end_redstone_ore.registerSmeltingOutput(Items.REDSTONE);
     BlockRegistry.end_coal_ore = new BlockDimensionOre(Items.COAL);
-    BlockRegistry.end_coal_ore.setSpawnType(SpawnType.ENDERMITE, 1);
+    BlockRegistry.end_coal_ore.setPickaxeHarvestLevel(coalHarvest).setSpawnType(SpawnType.ENDERMITE, 1);
     BlockRegistry.registerBlock(BlockRegistry.end_coal_ore, "end_coal_ore");
     BlockRegistry.end_coal_ore.registerSmeltingOutput(Items.COAL);
     BlockRegistry.end_lapis_ore = new BlockDimensionOre(Items.DYE, EnumDyeColor.BLUE.getDyeDamage(), 3);
-    BlockRegistry.end_lapis_ore.setSpawnType(SpawnType.ENDERMITE, 5);
+    BlockRegistry.end_lapis_ore.setPickaxeHarvestLevel(lapisHarvest).setSpawnType(SpawnType.ENDERMITE, 5);
     BlockRegistry.registerBlock(BlockRegistry.end_lapis_ore, "end_lapis_ore");
     BlockRegistry.end_lapis_ore.registerSmeltingOutput(new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage()));
     BlockRegistry.end_emerald_ore = new BlockDimensionOre(Items.EMERALD);
-    BlockRegistry.end_emerald_ore.setSpawnType(SpawnType.ENDERMITE, 8);
+    BlockRegistry.end_emerald_ore.setPickaxeHarvestLevel(emeraldHarvest).setSpawnType(SpawnType.ENDERMITE, 8);
     BlockRegistry.registerBlock(BlockRegistry.end_emerald_ore, "end_emerald_ore");
     BlockRegistry.end_emerald_ore.registerSmeltingOutput(Items.EMERALD);
     BlockRegistry.end_diamond_ore = new BlockDimensionOre(Items.DIAMOND);
-    BlockRegistry.end_diamond_ore.setSpawnType(SpawnType.ENDERMITE, 8);
+    BlockRegistry.end_diamond_ore.setPickaxeHarvestLevel(diamondHarvest).setSpawnType(SpawnType.ENDERMITE, 8);
     BlockRegistry.registerBlock(BlockRegistry.end_diamond_ore, "end_diamond_ore");
     BlockRegistry.end_diamond_ore.registerSmeltingOutput(Items.DIAMOND);
   }

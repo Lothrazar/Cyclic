@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.ArrayList;
 import java.util.Random;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilInventory;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
@@ -23,7 +24,7 @@ import net.minecraft.world.storage.loot.LootTableManager;
 public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITickable {
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
-  final static float SPEED = 0.007F;//// bigger == faster
+  public static float SPEED = 0.007F;//// bigger == faster
   public static final int RODSLOT = 1;
   public static final int FISHSLOTS = 15;
   private int toolSlot = 0;
@@ -34,7 +35,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     waterBoth.add(Blocks.FLOWING_WATER);
     waterBoth.add(Blocks.WATER);
   }
-  public boolean isValidPosition() {
+  public boolean isValidPosition() { //make sure surrounded by water
     return waterBoth.contains(worldObj.getBlockState(pos.down()).getBlock()) &&
         waterBoth.contains(worldObj.getBlockState(pos.down(2)).getBlock()) &&
         waterBoth.contains(worldObj.getBlockState(pos.north()).getBlock()) &&
@@ -48,13 +49,13 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   @Override
   public void update() {
     Random rand = worldObj.rand;
-    //make sure surrounded by water
     if (rand.nextDouble() < SPEED &&
         isValidPosition() && isEquipmentValid() &&
-        this.worldObj instanceof WorldServer && this.worldObj != null) {
+        this.worldObj instanceof WorldServer && this.worldObj != null && 
+        this.worldObj.getWorldTime() % Const.TICKS_PER_SEC == 0) {
       LootContext.Builder lootcontext$builder = new LootContext.Builder((WorldServer) this.worldObj);
-      float luck = (float) EnchantmentHelper.getEnchantmentLevel(Enchantments.LUCK_OF_THE_SEA, this.inv[0]);
-      lootcontext$builder.withLuck(luck);
+      int luck = EnchantmentHelper.getEnchantmentLevel(Enchantments.LUCK_OF_THE_SEA, this.inv[toolSlot]);
+      lootcontext$builder.withLuck((float)luck);
       //      java.lang.NullPointerException: Ticking block entity    at com.lothrazar.cyclicmagic.block.tileentity.TileEntityFishing.func_73660_a(TileEntityFishing.java:58)
       LootTableManager loot = this.worldObj.getLootTableManager();
       if (loot == null) { return; }
@@ -64,10 +65,21 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
       if (context == null) { return; }
       for (ItemStack itemstack : table.generateLootForPools(this.worldObj.rand, context)) {
         UtilParticle.spawnParticle(worldObj, EnumParticleTypes.WATER_WAKE, pos.up());
-        inv[toolSlot].attemptDamageItem(1, worldObj.rand);
-        if (inv[toolSlot].getItemDamage() >= inv[toolSlot].getMaxDamage()) {
-          inv[toolSlot] = null;
+        //damage phase.
+        int mending =  EnchantmentHelper.getEnchantmentLevel(Enchantments.MENDING, this.inv[toolSlot]);
+        if (mending == 0) {
+          damageTool();
         }
+        else {
+          if (rand.nextDouble() < 0.25) {//25% chance damage
+            damageTool();
+          }
+          else if (rand.nextDouble() < 0.60) {//60-25 = 40 chance repair
+            attemptRepairTool();
+          }
+          //else do nothing, leave it flat. mimics getting damaged and repaired right away
+        }
+        //loot phase
         for (int i = RODSLOT; i <= FISHSLOTS; i++) {
           if (itemstack != null && itemstack.stackSize != 0) {
             itemstack = tryMergeStackIntoSlot(itemstack, i);
@@ -76,7 +88,19 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
         if (itemstack != null && itemstack.stackSize != 0) { //FULL
           UtilEntity.dropItemStackInWorld(worldObj, this.pos.down(), itemstack);
         }
+        //end of loot phase
       }
+    }
+  }
+  private void attemptRepairTool() {
+    if (inv[toolSlot].getItemDamage() > 0) {//if it has zero damage, its fully repaired already
+      inv[toolSlot].setItemDamage(inv[toolSlot].getItemDamage() - 1);//repair by one point
+    }
+  }
+  private void damageTool() {
+    inv[toolSlot].attemptDamageItem(1, worldObj.rand);//does respect unbreaking
+    if (inv[toolSlot].getItemDamage() >= inv[toolSlot].getMaxDamage()) {
+      inv[toolSlot] = null;
     }
   }
   private ItemStack tryMergeStackIntoSlot(ItemStack held, int furnaceSlot) {
