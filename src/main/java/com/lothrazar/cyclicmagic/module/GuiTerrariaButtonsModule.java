@@ -155,7 +155,8 @@ public class GuiTerrariaButtonsModule extends BaseEventModule implements IHasCon
         + "slimeknights.tconstruct.tools.client.module.GuiButtonsToolStation,"
         + "slimeknights.tconstruct.tools.client.module.GuiInfoPanel,"
         + "slimeknights.tconstruct.tools.client.module.GuiTinkerTabs,"
-        + "net.minecraft.client.gui.inventory.GuiContainerCreative";
+        + "net.minecraft.client.gui.inventory.GuiContainerCreative,"
+        + "p455w0rd.p455w0rdsthings.client.gui.GuiDankNull";
     String csv = config.getString("Blacklist Container CSV", category, blacklistDefault, "FOR MODPACK DEVS: These containers are blocked from getting the buttons.  By default, anything that extends 'GuiContainer' will get the buttons.  ");
     // blacklistGuis = new ArrayList<String>();
     blacklistGuis = (List<String>) Arrays.asList(csv.split(","));
