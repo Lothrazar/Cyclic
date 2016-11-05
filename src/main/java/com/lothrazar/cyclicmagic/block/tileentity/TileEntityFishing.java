@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.ArrayList;
 import java.util.Random;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilInventory;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
@@ -23,7 +24,7 @@ import net.minecraft.world.storage.loot.LootTableManager;
 public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITickable {
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
-  final static float SPEED = 0.007F;//// bigger == faster
+  public static float SPEED = 0.007F;//// bigger == faster
   public static final int RODSLOT = 1;
   public static final int FISHSLOTS = 15;
   private int toolSlot = 0;
@@ -34,7 +35,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     waterBoth.add(Blocks.FLOWING_WATER);
     waterBoth.add(Blocks.WATER);
   }
-  public boolean isValidPosition() {
+  public boolean isValidPosition() { //make sure surrounded by water
     return waterBoth.contains(worldObj.getBlockState(pos.down()).getBlock()) &&
         waterBoth.contains(worldObj.getBlockState(pos.down(2)).getBlock()) &&
         waterBoth.contains(worldObj.getBlockState(pos.north()).getBlock()) &&
@@ -48,10 +49,10 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   @Override
   public void update() {
     Random rand = worldObj.rand;
-    //make sure surrounded by water
     if (rand.nextDouble() < SPEED &&
         isValidPosition() && isEquipmentValid() &&
-        this.worldObj instanceof WorldServer && this.worldObj != null) {
+        this.worldObj instanceof WorldServer && this.worldObj != null && 
+        this.worldObj.getWorldTime() % Const.TICKS_PER_SEC == 0) {
       LootContext.Builder lootcontext$builder = new LootContext.Builder((WorldServer) this.worldObj);
       int luck = EnchantmentHelper.getEnchantmentLevel(Enchantments.LUCK_OF_THE_SEA, this.inv[toolSlot]);
       lootcontext$builder.withLuck((float)luck);

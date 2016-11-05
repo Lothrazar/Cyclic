@@ -28,5 +28,6 @@ public class FragileBlockModule extends BaseModule {
   public void syncConfig(Configuration config) {
     fragileEnabled = config.getBoolean("ScaffoldingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     fishingBlock = config.getBoolean("FishingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    TileEntityFishing.SPEED = config.getFloat("AutoFisherSpeed", Const.ConfigCategory.modpackMisc, 0.07F, 0.01F, 0.99F, "Speed of the Auto fisher, bigger is faster.  0.07 is 7% chance.");
   }
 }
