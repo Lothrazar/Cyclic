@@ -39,13 +39,12 @@ public class BlockDimensionOre extends BlockOre {
     droppedMeta = dmg;
     randomMax = max;
     this.setSoundType(SoundType.STONE);
-    this.setHardness(3.0F).setResistance(5.0F);//wtf so in Block.class, we see all ores have same????
-   // this.setHarvestLevel(Const.ToolStrings.pickaxe,2);
+    this.setHardness(3.0F).setResistance(5.0F);
     this.setHarvestLevel(Const.ToolStrings.axe,0);
     this.setHarvestLevel(Const.ToolStrings.shovel,0);
   }
   public BlockDimensionOre setPickaxeHarvestLevel(int h){
-    this.setHarvestLevel(Const.ToolStrings.pickaxe, 1);
+    this.setHarvestLevel(Const.ToolStrings.pickaxe, h);
     return this;
   }
   public void setSpawnType(SpawnType t, int chance) {
