@@ -64,7 +64,7 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
     //OUTPUT
     deflist = new String[] { "minecraft:milk_bucket", "minecraft:water_bucket", "minecraft:lava_bucket","botania:manaTablet",
         "harvestcraft:juicerItem", "harvestcraft:mixingbowlItem", "harvestcraft:mortarandpestleItem", 
-        "harvestcraft:bakewareItem", "harvestcraft:saucepanItemskilletItem", "harvestcraft:potItem", "harvestcraft:cuttingboardItem", 
+        "harvestcraft:bakewareItem", "harvestcraft:saucepanItem","harvestcraft:skilletItem", "harvestcraft:potItem", "harvestcraft:cuttingboardItem", 
         "mysticalagriculture:infusion_crystal", "mysticalagriculture:master_infusion_crystal" 
         
     };
