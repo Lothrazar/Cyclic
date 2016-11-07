@@ -184,9 +184,10 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.items;
-    SpellRegistry.renderOnLeft = config.getBoolean("Build Scepter HUD", category, true, "True for top left of the screen, false for top right");
+    SpellRegistry.renderOnLeft = config.getBoolean("Build Scepter HUD", category, true, "Cyclic Scepter: True for top left of the screen, false for top right");
+    SpellRegistry.doParticles = config.getBoolean("Build Scepter Particles", category, true, "Cyclic Scepter: Set to false to disable particles");
     category = Const.ConfigCategory.modpackMisc;
-    BaseSpellRange.maxRange = config.getInt("Build Scepter Max Range", category, 64, 8, 128, "Maximum range for all spells");
+    BaseSpellRange.maxRange = config.getInt("Build Scepter Max Range", category, 64, 8, 128, "Cyclic Scepter: Maximum range for all spells");
   }
   @Override
   public void addRecipe() {

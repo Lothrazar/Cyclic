@@ -13,6 +13,7 @@ import net.minecraft.item.ItemStack;
 public class SpellRegistry {
   public static boolean renderOnLeft;
   private static Map<Integer, ISpell> hashbook;
+  public static boolean doParticles;
   public static class Spells {
     // on purpose, not all spells are in here. only ones that needed to be
     // exposed
