@@ -24,8 +24,8 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
   public static int HEARTS_MAX;
   public static int SPEED_MAX;
   public static int JUMP_MAX;
-  private static double JUMP_SCALE = 1.02; // %age
-  private static double SPEED_SCALE = 1.05; // %age
+  private static double JUMP_SCALE = 1.01; // %age
+  private static double SPEED_SCALE = 1.01; // %age
   private ItemStack recipeItem;
   private HorseUpgradeType upgradeType;
   public ItemHorseUpgrade(HorseUpgradeType type, ItemStack rec) {
