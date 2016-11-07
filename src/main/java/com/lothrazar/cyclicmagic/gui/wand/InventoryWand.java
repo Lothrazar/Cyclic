@@ -171,26 +171,54 @@ public class InventoryWand implements IInventory {
     }
     return null;
   }
+  private static boolean isSlotEmpty(ItemStack[] inv, int i) {
+    return inv[i] == null || inv[i].getItem() == null || Block.getBlockFromItem(inv[i].getItem()) == null;
+  }
   public static int calculateSlotCurrent(ItemStack wand) {
     int itemSlot = ItemCyclicWand.BuildType.getSlot(wand);
     int buildType = ItemCyclicWand.BuildType.get(wand);
     ItemStack[] inv = InventoryWand.readFromNBT(wand);
     ArrayList<Integer> slotNonEmpty = new ArrayList<Integer>();
     for (int i = 0; i < inv.length; i++) {
-      if (inv[i] != null && inv[i].getItem() != null && Block.getBlockFromItem(inv[i].getItem()) != null) {
+      if (!isSlotEmpty(inv, i)) {
         slotNonEmpty.add(i);
       }
     }
-    boolean doRotate = false;
+    //    boolean doRotate = false;
     // brute forcing it. there is surely a more elegant way in each branch
     if (buildType == ItemCyclicWand.BuildType.FIRST.ordinal()) {
       //special rules: if my current slot is not empty; DONT MOVE
       if (inv[itemSlot] == null) {
-        doRotate = true;
+        //test every empty slot, and jump up to the next nonempty one. 
+        // used for mode rotate always, and mode normal IF current is empty
+        for (int trySlot : slotNonEmpty) {
+          if (inv[trySlot] != null) {
+            itemSlot = trySlot;
+            break;
+          }
+        }
       }
     }
     else if (buildType == ItemCyclicWand.BuildType.ROTATE.ordinal()) {
-      doRotate = true;
+      //first we start itemSlot and go up
+      boolean found = false;
+      for (int i = itemSlot + 1; i < inv.length; i++) {
+        if (!isSlotEmpty(inv, i)) {
+          itemSlot = i;
+          found = true;
+          break;
+        }
+      }
+      if (!found) {
+        //go from start up to spot to loop around
+        for (int i = 0; i < itemSlot; i++) {
+          if (!isSlotEmpty(inv, i)) {
+            itemSlot = i;
+            found = true;
+            break;
+          }
+        }
+      }
     }
     else if (buildType == ItemCyclicWand.BuildType.RANDOM.ordinal()) {
       Random rand = new Random();
@@ -204,41 +232,6 @@ public class InventoryWand implements IInventory {
         }
       }
     }
-    if (doRotate) {
-      int i = 0;
-      int trySlot = itemSlot + 1;//start at the current slot; move up; then loop around
-      while (i < slotNonEmpty.size() + 1) {
-        if (trySlot >= slotNonEmpty.size()) {
-          trySlot = 0;
-        }
-        if (inv[trySlot] != null) {
-          itemSlot = trySlot;
-          break;
-        }
-        i++;
-      }
-    }
-    //		else if (buildType == ItemCyclicWand.BuildType.MATCH.ordinal() && placeState != null) {
-    //
-    //			// damage dropped meaning what it really is , not item version
-    //			int meta = placeState.getBlock().damageDropped(placeState);
-    //
-    //			ItemStack compareStack = new ItemStack(placeState.getBlock(), 1, meta);
-    //			ItemStack curr;
-    //
-    //			// for (int i = 0; i < player.inventory.getSizeInventory(); ++i) {
-    //			for (int i : slotNonEmpty) {
-    //				curr = inv[i];// player.inventory.getStackInSlot(i);
-    //
-    //				if (curr != null && curr.isItemEqual(compareStack)) {
-    //
-    //					itemSlot = i;
-    //					break;
-    //				}
-    //			}
-    //
-    //			// could be null in this one
-    //		}
     return itemSlot;
   }
   /******** required unmodified ****/
