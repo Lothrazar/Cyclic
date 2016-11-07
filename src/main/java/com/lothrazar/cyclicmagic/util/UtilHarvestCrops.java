@@ -204,7 +204,7 @@ public class UtilHarvestCrops {
             final ItemStack drop = iterator.next();
             if (drop.getItem() == seedItem) { // Remove exactly one seed (consume for replanting
               iterator.remove();
-              System.out.println("yay remove seed "+drop.getDisplayName());
+              //ModMain.logger.info("yay remove seed "+drop.getDisplayName());
               break;
             }
           }
