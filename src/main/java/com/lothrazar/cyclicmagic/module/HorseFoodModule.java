@@ -81,9 +81,9 @@ public class HorseFoodModule extends BaseEventModule {
         // convert from scale factor to blocks
         double jumpHeight = UtilEntity.getJumpTranslated(horse.getHorseJumpStrength());
         DecimalFormat df = new DecimalFormat("0.00");
-        event.getLeft().add(UtilChat.lang("debug.horsespeed") + "  " + df.format(speed));
+        event.getLeft().add(UtilChat.lang("debug.horsespeed") + df.format(speed));
         df = new DecimalFormat("0.0");
-        event.getLeft().add(UtilChat.lang("debug.horsejump") + "  " + df.format(jumpHeight));
+        event.getLeft().add(UtilChat.lang("debug.horsejump") + df.format(jumpHeight));
       }
     }
   }

@@ -1,4 +1,6 @@
 package com.lothrazar.cyclicmagic.util;
+import java.util.Iterator;
+import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCocoa;
 import net.minecraft.block.BlockDoublePlant;
@@ -11,6 +13,8 @@ import net.minecraft.block.BlockTallGrass;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -72,15 +76,15 @@ public class UtilHarvestCrops {
     boolean doBreakBelow = false;
     boolean doBreak = false;
     IBlockState stateReplant = null;
-    IBlockState bs = world.getBlockState(posCurrent);
-    if (bs == null) { return false; }
-    Block blockCheck = bs.getBlock();
+    IBlockState blockState = world.getBlockState(posCurrent);
+    if (blockState == null) { return false; }
+    Block blockCheck = blockState.getBlock();
     if (blockCheck == null) { return false; }
     IBlockState bsAbove = world.getBlockState(posCurrent.up());
     IBlockState bsBelow = world.getBlockState(posCurrent.down());
     if (blockCheck instanceof BlockNetherWart) {
       if (conf.doesCrops) {
-        int age = ((Integer) bs.getValue(BlockNetherWart.AGE)).intValue();
+        int age = ((Integer) blockState.getValue(BlockNetherWart.AGE)).intValue();
         if (age == 3) {//this is hardcoded in base class
           doBreak = true;
           stateReplant = blockCheck.getDefaultState();
@@ -89,11 +93,11 @@ public class UtilHarvestCrops {
     }
     if (blockCheck instanceof BlockCocoa) {
       if (conf.doesCrops) {
-        int age = ((Integer) bs.getValue(BlockCocoa.AGE)).intValue();
+        int age = ((Integer) blockState.getValue(BlockCocoa.AGE)).intValue();
         if (age == 2) {//this is hardcoded in base class
           doBreak = true;
           // a new state that copies the property but NOT the age
-          stateReplant = blockCheck.getDefaultState().withProperty(BlockCocoa.FACING, bs.getValue(BlockCocoa.FACING));
+          stateReplant = blockCheck.getDefaultState().withProperty(BlockCocoa.FACING, blockState.getValue(BlockCocoa.FACING));
         }
       }
     }
@@ -173,7 +177,7 @@ public class UtilHarvestCrops {
       if (conf.doesCrops) {
         IGrowable plant = (IGrowable) blockCheck;
         // only if its full grown
-        if (plant.canGrow(world, posCurrent, bs, world.isRemote) == false) {
+        if (plant.canGrow(world, posCurrent, blockState, world.isRemote) == false) {
           doBreak = true;
           stateReplant = blockCheck.getDefaultState();
         }
@@ -181,19 +185,8 @@ public class UtilHarvestCrops {
     }
     // no , for now is fine, do not do blocks
     if (doBreak) {
-      //      ModMain.logger.info("posCurrent="+UtilChat.blockPosToString(posCurrent));
-      //      ModMain.logger.info("h"+blockCheck.getUnlocalizedName());
-      //      ModMain.logger.info("doBreakAbove="+doBreakAbove);
-      //      ModMain.logger.info("doBreakBelow="+doBreakBelow);
-      //      ModMain.logger.info("doReplant="+doReplant);
-      //to bad they made the damn thing private:  ((BlockCrops)blockCheck).getSeed();/
-      
-      // we basically want to do this
-      //https://github.com/MatrexsVigil/harvestcraft/blob/22d1c1738d1fd8ac3e43f7144c552a456832dc76/java/com/pam/harvestcraft/addons/RightClickHarvesting.java#L61
-      //but jsut pop off end of list (where seed should be) and ONLY if drops >= 2
-      
-      
-      world.destroyBlock(posCurrent, true);
+      // get the Actual drops
+      final List<ItemStack> drops = blockCheck.getDrops(world, posCurrent, blockState, 0);
       //break above first BECAUSE 2 high tallgrass otherwise will bug out if you break bottom first
       if (doBreakAbove) {
         world.destroyBlock(posCurrent.up(), false);
@@ -203,6 +196,26 @@ public class UtilHarvestCrops {
       }
       if (stateReplant != null) {// plant new seed
         world.setBlockState(posCurrent, stateReplant);
+        //whateveer it drops if it wasnt full grown, yeah thats the seed
+        final Item seedItem = blockCheck.getItemDropped(blockCheck.getDefaultState(), world.rand, 0);
+        if (drops.size() > 1 && seedItem != null) {
+          //  if it dropped more than one ( seed and a thing)
+          for (Iterator<ItemStack> iterator = drops.iterator(); iterator.hasNext();) {
+            final ItemStack drop = iterator.next();
+            if (drop.getItem() == seedItem) { // Remove exactly one seed (consume for replanting
+              iterator.remove();
+              //ModMain.logger.info("yay remove seed "+drop.getDisplayName());
+              break;
+            }
+          }
+        }
+        world.destroyBlock(posCurrent, false);//false means no drops yo! -> this is basically just to  play the sound
+        world.setBlockState(posCurrent, blockCheck.getDefaultState());
+        //now we can upgrade this to also drop in front wooo!
+        for (ItemStack drop : drops) {
+          UtilEntity.dropItemStackInWorld(world, posCurrent, drop);
+          //           dropItem(drop, world, blockPos);
+        }
       }
       return true;
     }

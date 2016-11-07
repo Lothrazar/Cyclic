@@ -12,6 +12,22 @@ public class StackSizeModule extends BaseModule {
   public StackSizeModule() {
     int boat = 16;
     int MAX = 64;
+    stackMap.put(Items.SADDLE, boat);
+    stackMap.put(Items.DIAMOND_HORSE_ARMOR, boat);
+    stackMap.put(Items.GOLDEN_HORSE_ARMOR, boat);
+    stackMap.put(Items.IRON_HORSE_ARMOR, boat);
+    stackMap.put(Items.RECORD_11, boat);
+    stackMap.put(Items.RECORD_13, boat);
+    stackMap.put(Items.RECORD_BLOCKS, boat);
+    stackMap.put(Items.RECORD_CAT, boat);
+    stackMap.put(Items.RECORD_CHIRP, boat);
+    stackMap.put(Items.RECORD_FAR, boat);
+    stackMap.put(Items.RECORD_MALL, boat);
+    stackMap.put(Items.RECORD_MELLOHI, boat);
+    stackMap.put(Items.RECORD_STAL, boat);
+    stackMap.put(Items.RECORD_STRAD, boat);
+    stackMap.put(Items.RECORD_WAIT, boat);
+    stackMap.put(Items.RECORD_WARD, boat);
     stackMap.put(Items.BOAT, boat);
     stackMap.put(Items.ACACIA_BOAT, boat);
     stackMap.put(Items.BIRCH_BOAT, boat);
