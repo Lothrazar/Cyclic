@@ -12,42 +12,31 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class UtilUncraft {
   public static boolean dictionaryFreedom;
-  public static List<Item> blacklistInput = new ArrayList<Item>();
-  public static List<Item> blacklistOutput = new ArrayList<Item>();
+  public static List<String> blacklistInput = new ArrayList<String>();
+  public static List<String> blacklistOutput = new ArrayList<String>();
   public static List<String> blacklistMod = new ArrayList<String>();
   //  public static List<Item> blacklistIfContainsOut = new ArrayList<Item>();
   public static enum BlacklistType {
     INPUT, OUTPUT, MODNAME;//, CONTAINS;
   }
   public static void resetBlacklists() {
-    blacklistInput = new ArrayList<Item>();
-    blacklistOutput = new ArrayList<Item>();
+    blacklistInput = new ArrayList<String>();
+    blacklistOutput = new ArrayList<String>();
     blacklistMod = new ArrayList<String>();
   }
-  @SuppressWarnings("incomplete-switch")
   public static void setBlacklist(String[] list, BlacklistType type) {
     if (list == null || list.length == 0) { return; }
-    Item item = null;
     for (String iname : list) {
-      if (type == BlacklistType.MODNAME) {
-        blacklistMod.add(iname);
-        continue;
-      }
-      item = Item.getByNameOrId(iname);
-      if (item == null) {
-        ModMain.logger.warn("Uncrafting Grinder Blacklist: Item or block not found " + iname);
-        continue;
-      }
       switch (type) {
+      case MODNAME:
+        blacklistMod.add(iname);
+        break;
       case INPUT:
-        blacklistInput.add(item);
+        blacklistInput.add(iname);
         break;
       case OUTPUT:
-        blacklistOutput.add(item);
+        blacklistOutput.add(iname);
         break;
-      //      case CONTAINS:
-      //        blacklistIfContainsOut.add(item);
-      //        break;
       }
     }
   }
@@ -55,24 +44,40 @@ public class UtilUncraft {
     if (drop == null || drop.getItem() == null) { return true; }
     return isItemInBlacklist(drop.getItem(), type);
   }
+  private String getStringForItem(Item item) {
+    return item.getRegistryName().getResourceDomain() + ":" + item.getRegistryName().getResourcePath();
+  }
   private boolean isItemInBlacklist(Item item, BlacklistType type) {
-    boolean blacklist = false;
+    String itemName;
     switch (type) {
     case INPUT:
-      blacklist = blacklistInput.contains(item);
+      itemName = getStringForItem(item);
+      for(String s : blacklistInput){//dont use .contains on the list. must use .equals on string
+        if(s != null && s.equals(itemName)){
+          return true;
+        }
+      }
     case OUTPUT:
-      blacklist = blacklistOutput.contains(item);
+      itemName = getStringForItem(item);
+      for(String s : blacklistOutput){//dont use .contains on the list. must use .equals on string
+        if(s != null && s.equals(itemName)){
+          return true;
+        }
+      }
     case MODNAME:
       String modId = item.getRegistryName().getResourceDomain();// the minecraft part of minecraft:wool (without colon)
-      blacklist = blacklistMod.contains(modId);
-      //      System.out.println(item.getRegistryName().getResourcePath());// ex: wool part of minecraft:wool
+      for(String s : blacklistMod){//dont use .contains on the list. must use .equals on string
+        if(s != null && s.equals(modId)){
+          return true;
+        }
+      }
       break;
     default:
       break;
     }
-    ModMain.logger.info("Uncrafting: is it in blacklist?" + type + ":" + blacklist + "__" + item.getUnlocalizedName());
-    return blacklist;
+    return false;
   }
+ 
   /**
    * It works but we dont want to use it right now
    * 
@@ -135,16 +140,14 @@ public class UtilUncraft {
   }
   private boolean doesRecipeInputMatch(ItemStack recipeOutput) {
     boolean itemEqual = recipeOutput.isItemEqual(toUncraft);
-    if(itemEqual == false){
-      return false;//items dont match
+    if (itemEqual == false) { return false;//items dont match
     }
     boolean enchantingMatches = recipeOutput.isItemEnchanted() == toUncraft.isItemEnchanted();
-    if(!enchantingMatches){
+    if (!enchantingMatches) {
       ModMain.logger.info("enchanting mismatch");
     }
     return enchantingMatches;// either they are both ench, or both not ench
   }
-
   @SuppressWarnings("unchecked")
   public boolean doUncraft() {
     if (toUncraft == null || toUncraft.getItem() == null) { return false; }
@@ -241,14 +244,6 @@ public class UtilUncraft {
         }
       }
     }
-    //    //last check
-    //    for (ItemStack drop : this.drops) {
-    //      if (isItemInBlacklist(drop, BlacklistType.CONTAINS)) {
-    //        System.out.println("CONTAINS BLACKLIST: "+ drop.getUnlocalizedName());
-    //        this.drops = new ArrayList<ItemStack>();
-    //        return false;
-    //      }
-    //    }
     return (this.drops.size() > 0);
   }
   public boolean canUncraft() {

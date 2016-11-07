@@ -1,11 +1,12 @@
 package com.lothrazar.cyclicmagic.item.tool;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.BaseTool;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
-import net.minecraft.block.BlockOre;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -32,26 +33,30 @@ public class ItemToolProspector extends BaseTool implements IHasRecipe, IHasConf
   @Override
   public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     if (side == null || pos == null) { return super.onItemUse(stack, player, worldObj, pos, hand, side, hitX, hitY, hitZ); }
-    //    boolean showOdds = player.isSneaking();
-    boolean found = false;
+    Map<String, Integer> mapList = new HashMap<String, Integer>();
+    String name;
     if (!worldObj.isRemote) {
       EnumFacing direction = side.getOpposite();
       BlockPos current = pos;
       IBlockState at = worldObj.getBlockState(current);
       for (int i = 0; i <= range; i++) {
-        if (at != null && at.getBlock() != null && at.getBlock() instanceof BlockOre) {
-          UtilChat.addChatMessage(player, UtilChat.lang("tool_prospector.found") + at.getBlock().getLocalizedName());
-          found = true;
-          break;
+        if (at != null && at.getBlock() != null) {// && at.getBlock() instanceof BlockOre) {
+          name = at.getBlock().getLocalizedName();
+          if (mapList.containsKey(name)) {
+            mapList.put(name, mapList.get(name) + 1);
+          }
+          else {
+            mapList.put(name, 1);
+          }
         }
         current = current.offset(direction);
         at = worldObj.getBlockState(current);
       }
-      if (found == false) {
-        UtilChat.addChatMessage(player, UtilChat.lang("tool_prospector.none") + range);
-      }
     }
     player.getCooldownTracker().setCooldown(this, COOLDOWN);
+    for (Map.Entry<String, Integer> entry : mapList.entrySet()) {
+      UtilChat.addChatMessage(player, UtilChat.lang("tool_prospector.found") + entry.getKey() + " " + entry.getValue());
+    }
     super.onUse(stack, player, worldObj, hand);
     return super.onItemUse(stack, player, worldObj, pos, hand, side, hitX, hitY, hitZ);
   }
