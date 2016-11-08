@@ -25,10 +25,9 @@ public class GuiUncrafting extends GuiBaseContanerProgress {
   @Override
   public void initGui() {
     super.initGui();
-    int needsRedstone = tile.getField(Fields.REDSTONE.ordinal());
-    System.out.println("needsRedstone"+needsRedstone);
     redstoneBtn = new GuiButtonUncraftingRedstone(0,this.guiLeft,this.guiTop,
-        "textures/gui/buttons.png","tile.uncrafting.toggle"+needsRedstone,this.tile.getPos());
+        "textures/gui/buttons.png","tile.uncrafting.toggle",this.tile.getPos());
+    redstoneBtn.setTextureIndex(tile.getField(Fields.REDSTONE.ordinal()));
     this.buttonList.add(redstoneBtn);
   }
   @Override
@@ -45,7 +44,8 @@ public class GuiUncrafting extends GuiBaseContanerProgress {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
  
-    redstoneBtn.displayString = ""+   this.tile.getField(Fields.REDSTONE.ordinal());
+    //redstoneBtn.displayString = ""+   this.tile.getField(Fields.REDSTONE.ordinal());
+    redstoneBtn.setTextureIndex(tile.getField(Fields.REDSTONE.ordinal()));
   }
   public int getProgressX() {
     return this.guiLeft + 10;
