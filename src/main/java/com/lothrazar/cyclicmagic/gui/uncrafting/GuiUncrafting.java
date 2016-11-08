@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.gui.uncrafting;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContanerProgress;
+import com.lothrazar.cyclicmagic.gui.GuiButtonTexture;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -19,6 +20,13 @@ public class GuiUncrafting extends GuiBaseContanerProgress {
     return "tile.uncrafting_block.name";
   }
   @Override
+  public void initGui() {
+    super.initGui();
+    System.out.println("btn it yup");
+    GuiButtonTexture btn = new GuiButtonTexture(0,this.guiLeft,this.guiTop,16,16,"test");
+    this.buttonList.add(btn);
+  }
+  @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0;
@@ -26,6 +34,7 @@ public class GuiUncrafting extends GuiBaseContanerProgress {
     for (int k = 0; k < this.tile.getSizeInventory(); k++) {
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerUncrafting.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerUncrafting.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
+    
   }
   public int getProgressX() {
     return this.guiLeft + 10;
