@@ -404,4 +404,5 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
     else
       return super.receiveClientEvent(id, value);
   }
+  
 }
