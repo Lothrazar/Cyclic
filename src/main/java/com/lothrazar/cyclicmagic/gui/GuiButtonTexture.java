@@ -1,15 +1,20 @@
 package com.lothrazar.cyclicmagic.gui;
+import java.util.ArrayList;
+import java.util.List;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 
-public class GuiButtonTexture extends GuiButton {
-  public static ResourceLocation icon;
-  public GuiButtonTexture(int buttonId, int x, int y, String texture) {
+public class GuiButtonTexture extends GuiButton implements ITooltipButton{
+  private ResourceLocation icon;
+  private List<String> tooltip = new ArrayList<String>();
+  public GuiButtonTexture(int buttonId, int x, int y, String texture, String ttip) {
     super(buttonId, x, y, 16, 20, "");
     icon = new ResourceLocation(Const.MODID, texture);
+    tooltip.add(UtilChat.lang(ttip));
   }
   @Override
   public void drawButton(Minecraft mc, int mouseX, int mouseY) {
@@ -26,5 +31,9 @@ public class GuiButtonTexture extends GuiButton {
           16, 16);
       this.mouseDragged(mc, mouseX, mouseY);
     }
+  }
+  @Override
+  public List<String> getTooltips() {
+    return tooltip;
   }
 }
