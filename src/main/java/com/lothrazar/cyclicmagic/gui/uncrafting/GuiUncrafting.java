@@ -22,8 +22,7 @@ public class GuiUncrafting extends GuiBaseContanerProgress {
   @Override
   public void initGui() {
     super.initGui();
-    System.out.println("btn it yup");
-    GuiButtonTexture btn = new GuiButtonTexture(0,this.guiLeft,this.guiTop,16,16,"test");
+    GuiButtonTexture btn = new GuiButtonTexture(0,this.guiLeft,this.guiTop, "textures/gui/buttons.png");
     this.buttonList.add(btn);
   }
   @Override
