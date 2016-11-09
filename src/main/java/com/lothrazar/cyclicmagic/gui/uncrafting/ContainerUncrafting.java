@@ -15,6 +15,8 @@ public class ContainerUncrafting extends ContainerBaseMachine {
   public static final int SLOTX_START = 8;
   public static final int SLOTY = 40;
   protected TileMachineUncrafter tileEntity;
+  private int tileRedstone;
+  private int tileTimer;
   public ContainerUncrafting(InventoryPlayer inventoryPlayer, TileMachineUncrafter te) {
     tileEntity = te;
     for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
@@ -49,8 +51,6 @@ public class ContainerUncrafting extends ContainerBaseMachine {
     }
     return stack;
   }
-  private int tileRedstone;
-  private int tileTimer;
   @Override
   public void detectAndSendChanges() {
     super.detectAndSendChanges();

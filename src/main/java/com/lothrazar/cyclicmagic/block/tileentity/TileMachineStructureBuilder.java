@@ -6,8 +6,6 @@ import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import net.minecraft.block.Block;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -17,7 +15,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 
-public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo implements IInventory, ISidedInventory, ITileRedstoneToggle {
+public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo implements ITileRedstoneToggle {
   private int timer;
   private int buildType;
   private int buildSpeed;

@@ -1,10 +1,8 @@
 package com.lothrazar.cyclicmagic.gui.uncrafting;
-import java.util.Arrays;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter.Fields;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContanerProgress;
 import com.lothrazar.cyclicmagic.util.Const;
-import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -13,6 +11,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiUncrafting extends GuiBaseContanerProgress {
   private TileMachineUncrafter tile;
+  private GuiButtonUncraftingRedstone redstoneBtn;
   public GuiUncrafting(InventoryPlayer inventoryPlayer, TileMachineUncrafter tileEntity) {
     super(new ContainerUncrafting(inventoryPlayer, tileEntity));
     tile = tileEntity;
@@ -23,7 +22,6 @@ public class GuiUncrafting extends GuiBaseContanerProgress {
   public String getTitle() {
     return "tile.uncrafting_block.name";
   }
-  GuiButtonUncraftingRedstone redstoneBtn;
   @Override
   public void initGui() {
     super.initGui();
@@ -45,8 +43,7 @@ public class GuiUncrafting extends GuiBaseContanerProgress {
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    int needsRed = tile.getField(Fields.REDSTONE.ordinal());
-    redstoneBtn.setState(needsRed);
+    redstoneBtn.setState(tile.getField(Fields.REDSTONE.ordinal()));
 //    redstoneBtn.setTextureIndex(needsRed);
 //    redstoneBtn.setTooltips(Arrays.asList(UtilChat.lang("tile.redstone.button" + needsRed)));
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);

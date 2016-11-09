@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.gui.builder;
-import java.util.Arrays;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineStructureBuilder;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContanerProgress;
 import com.lothrazar.cyclicmagic.gui.uncrafting.GuiButtonUncraftingRedstone;
@@ -25,7 +24,6 @@ public class GuiBuilder extends GuiBaseContanerProgress {
   private int yHeightTxtbox;
   private int yOffset = 10 + padding;
   private GuiButtonUncraftingRedstone redstoneBtn;
-  //  boolean debugLabels = false;
   public GuiBuilder(InventoryPlayer inventoryPlayer, TileMachineStructureBuilder tileEntity) {
     super(new ContainerBuilder(inventoryPlayer, tileEntity));
     tile = tileEntity;

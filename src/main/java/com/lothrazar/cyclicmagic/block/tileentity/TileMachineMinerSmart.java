@@ -24,7 +24,7 @@ import net.minecraftforge.common.util.FakePlayer;
  * SEE TileMachineMiner
  * 
  */
-public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
+public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements ITileRedstoneToggle {
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
   // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
@@ -36,11 +36,11 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
   private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots for all faces
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
-  int height = 6;//TODO: gui field
+  int height = 6;
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
   public static enum Fields {
-    HEIGHT
+    HEIGHT, REDSTONE
   }
   public TileMachineMinerSmart() {
     inv = new ItemStack[5];
@@ -48,7 +48,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
   @Override
   public void update() {
     int toolSlot = inv.length - 1;
-    if (this.isPowered()) {
+    if (!(this.onlyRunIfPowered() && this.isPowered() == false)) {
       this.spawnParticlesAbove();
     }
     if (worldObj instanceof WorldServer) {
@@ -80,7 +80,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
       if (targetPos == null) {
         targetPos = pos.offset(this.getCurrentFacing()); //not sure if this is needed
       }
-      if (this.isPowered()) {
+      if (!(this.onlyRunIfPowered() && this.isPowered() == false)) {
         if (isCurrentlyMining == false) { //we can mine but are not currently
           this.updateTargetPos();
           if (isTargetValid()) { //we have a valid target
@@ -132,6 +132,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
     return true;
   }
   final int RADIUS = 4;//center plus 4 in each direction = 9x9
+  private int needsRedstone = 1;
   private void updateTargetPos() {
     //lets make it a AxA?
     //always restart here so we dont offset out of bounds
@@ -285,8 +286,8 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
     switch (Fields.values()[id]) {
     case HEIGHT:
       return getHeight();
-    default:
-      break;
+    case REDSTONE:
+      return this.needsRedstone;
     }
     return 0;
   }
@@ -298,7 +299,8 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
         value = maxHeight;
       }
       setHeight(value);
-    default:
+    case REDSTONE:
+      needsRedstone = value;
       break;
     }
   }
@@ -327,5 +329,16 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
     // from the server. Called on client only.
     this.readFromNBT(pkt.getNbtCompound());
     super.onDataPacket(net, pkt);
+  }
+  @Override
+  public void toggleNeedsRedstone() {
+    int val = this.needsRedstone + 1;
+    if (val > 1) {
+      val = 0;//hacky lazy way
+    }
+    this.setField(Fields.REDSTONE.ordinal(), val);
+  }
+  private boolean onlyRunIfPowered() {
+    return this.needsRedstone == 1;
   }
 }

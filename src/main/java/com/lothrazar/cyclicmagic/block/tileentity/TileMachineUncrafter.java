@@ -6,7 +6,6 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilUncraft;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -15,7 +14,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 
-public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements IInventory, ISidedInventory, ITileRedstoneToggle {
+public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements  ITileRedstoneToggle {
   // http://www.minecraftforge.net/wiki/Containers_and_GUIs
   // http://greyminecraftcoder.blogspot.com.au/2015/01/tileentity.html
   // http://www.minecraftforge.net/forum/index.php?topic=28539.0
