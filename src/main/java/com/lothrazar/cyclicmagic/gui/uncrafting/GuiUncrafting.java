@@ -44,8 +44,6 @@ public class GuiUncrafting extends GuiBaseContanerProgress {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     redstoneBtn.setState(tile.getField(Fields.REDSTONE.ordinal()));
-//    redstoneBtn.setTextureIndex(needsRed);
-//    redstoneBtn.setTooltips(Arrays.asList(UtilChat.lang("tile.redstone.button" + needsRed)));
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
   public int getProgressX() {
