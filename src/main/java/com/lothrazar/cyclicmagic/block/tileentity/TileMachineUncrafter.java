@@ -114,14 +114,15 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
     // eventually but not constantly)
     this.shiftAllUp();
     boolean triggerUncraft = false;
-    if (this.isPowered() == false) {
+    if (this.onlyRunIfPowered() && this.isPowered() == false) {
       //it works ONLY if its powered
       return;
     }
+    //else: its powered, OR it doesnt need power so its ok
     ItemStack stack = getStackInSlot(0);
     if (stack == null) {
-      timer = TIMER_FULL;// reset just like you would in a
-      // furnace
+//      timer = TIMER_FULL;// reset just like you would in a furnace
+      //NAH: dont reset on empty anymore
       return;
     }
     timer--;
@@ -280,5 +281,8 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
     }
     this.setField(Fields.REDSTONE.ordinal(),val);
     System.out.println("tile uncrafting NEWVAL"+needsRedstone);
+  }
+  private boolean onlyRunIfPowered(){
+    return this.needsRedstone == 1;
   }
 }
