@@ -40,18 +40,6 @@ public class PacketTileRedstoneToggle implements IMessage, IMessageHandler<Packe
     if (tile != null && tile instanceof ITileRedstoneToggle) {
       ITileRedstoneToggle te = ((ITileRedstoneToggle) tile);
       te.toggleNeedsRedstone();
-      System.out.println("redstone toggle packet win!!!");
-      //      TileMachineStructureBuilder.BuildType old = tile.getBuildTypeEnum();
-      //      TileMachineStructureBuilder.BuildType next = TileMachineStructureBuilder.BuildType.getNextType(old);
-      //      tile.setBuildType(next.ordinal());
-      //      tile.rebuildShape();
-      //      tile.markDirty();
-      //      if (player.openContainer != null) {
-      //        player.openContainer.detectAndSendChanges();
-      //        player.sendAllWindowProperties(player.openContainer, tile);
-      //      }
-      //      if (chat)
-      //        UtilChat.addChatMessage(player, UtilChat.lang("buildertype." + next.name().toLowerCase() + ".name"));
     }
     return null;
   }

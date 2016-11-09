@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.ModMain;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineStructureBuilder.Fields;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilUncraft;
@@ -121,7 +120,7 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
     //else: its powered, OR it doesnt need power so its ok
     ItemStack stack = getStackInSlot(0);
     if (stack == null) {
-//      timer = TIMER_FULL;// reset just like you would in a furnace
+      //      timer = TIMER_FULL;// reset just like you would in a furnace
       //NAH: dont reset on empty anymore
       return;
     }
@@ -273,16 +272,13 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
   }
   @Override
   public void toggleNeedsRedstone() {
-    System.out.println("toggleNeedsRedstone START"+needsRedstone);
-    
-    int val = this.needsRedstone+1;
+    int val = this.needsRedstone + 1;
     if (val > 1) {
-     val = 0;//hacky lazy way
+      val = 0;//hacky lazy way
     }
-    this.setField(Fields.REDSTONE.ordinal(),val);
-    System.out.println("tile uncrafting NEWVAL"+needsRedstone);
+    this.setField(Fields.REDSTONE.ordinal(), val);
   }
-  private boolean onlyRunIfPowered(){
+  private boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
 }

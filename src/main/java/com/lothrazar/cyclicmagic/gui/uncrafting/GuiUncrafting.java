@@ -1,8 +1,10 @@
 package com.lothrazar.cyclicmagic.gui.uncrafting;
+import java.util.Arrays;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter.Fields;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContanerProgress;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -25,8 +27,7 @@ public class GuiUncrafting extends GuiBaseContanerProgress {
   @Override
   public void initGui() {
     super.initGui();
-    redstoneBtn = new GuiButtonUncraftingRedstone(0,this.guiLeft,this.guiTop,
-        "textures/gui/buttons.png","tile.uncrafting.toggle",this.tile.getPos());
+    redstoneBtn = new GuiButtonUncraftingRedstone(0, this.guiLeft, this.guiTop, this.tile.getPos());
     redstoneBtn.setTextureIndex(tile.getField(Fields.REDSTONE.ordinal()));
     this.buttonList.add(redstoneBtn);
   }
@@ -39,13 +40,12 @@ public class GuiUncrafting extends GuiBaseContanerProgress {
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerUncrafting.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerUncrafting.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
   }
-
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
- 
-    //redstoneBtn.displayString = ""+   this.tile.getField(Fields.REDSTONE.ordinal());
-    redstoneBtn.setTextureIndex(tile.getField(Fields.REDSTONE.ordinal()));
+    int needsRed = tile.getField(Fields.REDSTONE.ordinal());
+    redstoneBtn.setTextureIndex(needsRed);
+    redstoneBtn.setTooltips(Arrays.asList(UtilChat.lang("tile.redstone.button" + needsRed)));
   }
   public int getProgressX() {
     return this.guiLeft + 10;
