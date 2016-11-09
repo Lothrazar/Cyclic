@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.gui.builder;
+import java.util.Arrays;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineStructureBuilder;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContanerProgress;
+import com.lothrazar.cyclicmagic.gui.uncrafting.GuiButtonUncraftingRedstone;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
@@ -22,6 +24,7 @@ public class GuiBuilder extends GuiBaseContanerProgress {
   private int xHeightTextbox;
   private int yHeightTxtbox;
   private int yOffset = 10 + padding;
+  private GuiButtonUncraftingRedstone redstoneBtn;
   //  boolean debugLabels = false;
   public GuiBuilder(InventoryPlayer inventoryPlayer, TileMachineStructureBuilder tileEntity) {
     super(new ContainerBuilder(inventoryPlayer, tileEntity));
@@ -33,10 +36,15 @@ public class GuiBuilder extends GuiBaseContanerProgress {
   @Override
   public void initGui() {
     super.initGui();
+    redstoneBtn = new GuiButtonUncraftingRedstone(0,
+        this.guiLeft + 8,
+        this.guiTop + 8, this.tile.getPos());
+    redstoneBtn.setTextureIndex(tile.getField(TileMachineStructureBuilder.Fields.REDSTONE.ordinal()));
+    this.buttonList.add(redstoneBtn);
     //first the main top left type button
     int width = 50;
     int id = 2;
-    btn = new ButtonBuilderType(tile.getPos(), id++, this.guiLeft + padding, this.guiTop + yOffset + 3, width);
+    btn = new ButtonBuilderType(tile.getPos(), id++, this.guiLeft + padding, this.guiTop + yOffset + 12, width);
     this.buttonList.add(btn);
     width = 15;
     //size buttons
@@ -76,6 +84,14 @@ public class GuiBuilder extends GuiBaseContanerProgress {
       int x = (display.length() > 1) ? xHeightTextbox - 3 : xHeightTextbox;
       this.fontRendererObj.drawString(display, x, yHeightTxtbox + yOffset - 4, 4210752);
     }
+
+      int needsRed = tile.getField(TileMachineStructureBuilder.Fields.REDSTONE.ordinal());
+
+      redstoneBtn.setState(needsRed);
+//      redstoneBtn.setTextureIndex(needsRed);
+//      redstoneBtn.setTooltips(Arrays.asList(UtilChat.lang("tile.redstone.button" + needsRed)));
+      super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+    
     updateDisabledButtons();
   }
   private void updateDisabledButtons() {

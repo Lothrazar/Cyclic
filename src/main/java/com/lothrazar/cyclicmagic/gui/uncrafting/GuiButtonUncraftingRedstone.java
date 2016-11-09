@@ -1,7 +1,9 @@
 package com.lothrazar.cyclicmagic.gui.uncrafting;
+import java.util.Arrays;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.GuiButtonTexture;
 import com.lothrazar.cyclicmagic.net.PacketTileRedstoneToggle;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
@@ -21,5 +23,9 @@ public class GuiButtonUncraftingRedstone extends GuiButtonTexture {
       ModMain.network.sendToServer(new PacketTileRedstoneToggle(tilePos));
     }
     return pressed;
+  }
+  public void setState(int state) {
+    this.setTextureIndex(state);
+    this.setTooltips(Arrays.asList(UtilChat.lang("tile.redstone.button" + state)));
   }
 }

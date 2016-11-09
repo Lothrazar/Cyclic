@@ -120,8 +120,6 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
     //else: its powered, OR it doesnt need power so its ok
     ItemStack stack = getStackInSlot(0);
     if (stack == null) {
-      //      timer = TIMER_FULL;// reset just like you would in a furnace
-      //NAH: dont reset on empty anymore
       return;
     }
     timer--;

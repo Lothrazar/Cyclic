@@ -84,12 +84,17 @@ public class ContainerBuilder extends ContainerBaseMachine {
       if (this.tileHeight != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
+      idx = TileMachineStructureBuilder.Fields.REDSTONE.ordinal();
+      if (this.tileHeight != this.tileEntity.getField(idx)) {
+        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
+      }
     }
     this.tileTimer = this.tileEntity.getField(TileMachineStructureBuilder.Fields.TIMER.ordinal());
     this.tileBuild = this.tileEntity.getField(TileMachineStructureBuilder.Fields.BUILDTYPE.ordinal());
     this.tileSize = this.tileEntity.getField(TileMachineStructureBuilder.Fields.SIZE.ordinal());
     this.tileSpeed = this.tileEntity.getField(TileMachineStructureBuilder.Fields.SPEED.ordinal());
     this.tileHeight = this.tileEntity.getField(TileMachineStructureBuilder.Fields.HEIGHT.ordinal());
+    this.tileHeight = this.tileEntity.getField(TileMachineStructureBuilder.Fields.REDSTONE.ordinal());
   }
   //TODO: these two in base class?
   @Override
