@@ -90,9 +90,6 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements  ITile
           timer = TIMER_FULL;
         }
       }
-      else {
-        timer = 0;
-      }
     }
   }
   final int RADIUS = 4;//center plus 4 in each direction = 9x9
