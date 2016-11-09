@@ -27,7 +27,9 @@ public class GuiUncrafting extends GuiBaseContanerProgress {
   @Override
   public void initGui() {
     super.initGui();
-    redstoneBtn = new GuiButtonUncraftingRedstone(0, this.guiLeft, this.guiTop, this.tile.getPos());
+    redstoneBtn = new GuiButtonUncraftingRedstone(0, 
+        this.guiLeft+8, 
+        this.guiTop+8, this.tile.getPos());
     redstoneBtn.setTextureIndex(tile.getField(Fields.REDSTONE.ordinal()));
     this.buttonList.add(redstoneBtn);
   }
@@ -46,6 +48,7 @@ public class GuiUncrafting extends GuiBaseContanerProgress {
     int needsRed = tile.getField(Fields.REDSTONE.ordinal());
     redstoneBtn.setTextureIndex(needsRed);
     redstoneBtn.setTooltips(Arrays.asList(UtilChat.lang("tile.redstone.button" + needsRed)));
+    super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
   public int getProgressX() {
     return this.guiLeft + 10;

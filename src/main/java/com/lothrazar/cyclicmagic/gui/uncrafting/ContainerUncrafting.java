@@ -12,8 +12,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerUncrafting extends ContainerBaseMachine {
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
-  public static final int SLOTX_START = 10;
-  public static final int SLOTY = 28;
+  public static final int SLOTX_START = 8;
+  public static final int SLOTY = 40;
   protected TileMachineUncrafter tileEntity;
   public ContainerUncrafting(InventoryPlayer inventoryPlayer, TileMachineUncrafter te) {
     tileEntity = te;
