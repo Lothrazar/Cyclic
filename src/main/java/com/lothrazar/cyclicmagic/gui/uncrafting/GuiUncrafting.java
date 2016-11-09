@@ -1,14 +1,17 @@
 package com.lothrazar.cyclicmagic.gui.uncrafting;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter;
+import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter.Fields;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContanerProgress;
-import com.lothrazar.cyclicmagic.gui.GuiButtonTexture;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiUncrafting extends GuiBaseContanerProgress {
   private TileMachineUncrafter tile;
+  private GuiButtonUncraftingRedstone redstoneBtn;
   public GuiUncrafting(InventoryPlayer inventoryPlayer, TileMachineUncrafter tileEntity) {
     super(new ContainerUncrafting(inventoryPlayer, tileEntity));
     tile = tileEntity;
@@ -22,8 +25,11 @@ public class GuiUncrafting extends GuiBaseContanerProgress {
   @Override
   public void initGui() {
     super.initGui();
-    GuiButtonTexture btn = new GuiButtonTexture(0,this.guiLeft,this.guiTop, "textures/gui/buttons.png","tile.uncrafting.toggle");
-    this.buttonList.add(btn);
+    redstoneBtn = new GuiButtonUncraftingRedstone(0,
+        this.guiLeft + 8,
+        this.guiTop + 8, this.tile.getPos());
+    redstoneBtn.setTextureIndex(tile.getField(Fields.REDSTONE.ordinal()));
+    this.buttonList.add(redstoneBtn);
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
@@ -33,7 +39,12 @@ public class GuiUncrafting extends GuiBaseContanerProgress {
     for (int k = 0; k < this.tile.getSizeInventory(); k++) {
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerUncrafting.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerUncrafting.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
-    
+  }
+  @SideOnly(Side.CLIENT)
+  @Override
+  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+    redstoneBtn.setState(tile.getField(Fields.REDSTONE.ordinal()));
+    super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
   public int getProgressX() {
     return this.guiLeft + 10;

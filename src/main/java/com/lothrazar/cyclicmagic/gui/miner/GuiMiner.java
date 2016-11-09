@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.gui.miner;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMinerSmart;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.miner.ButtonMinerHeight;
+import com.lothrazar.cyclicmagic.gui.uncrafting.GuiButtonUncraftingRedstone;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
@@ -16,6 +17,7 @@ public class GuiMiner extends GuiBaseContainer {
   private int yHeightTxtbox = 38;
   private ButtonMinerHeight btnHeightDown;
   private ButtonMinerHeight btnHeightUp;
+  private GuiButtonUncraftingRedstone redstoneBtn;
   public GuiMiner(InventoryPlayer inventoryPlayer, TileMachineMinerSmart tileEntity) {
     super(new ContainerMiner(inventoryPlayer, tileEntity));
     tile = tileEntity;
@@ -29,6 +31,11 @@ public class GuiMiner extends GuiBaseContainer {
   @Override
   public void initGui() {
     super.initGui();
+    redstoneBtn = new GuiButtonUncraftingRedstone(0,
+        this.guiLeft + 8,
+        this.guiTop + 8, this.tile.getPos());
+    redstoneBtn.setTextureIndex(tile.getField(TileMachineMinerSmart.Fields.REDSTONE.ordinal()));
+    this.buttonList.add(redstoneBtn);
     //first the main top left type button
     int id = 2;
     int yOffset = 18;
@@ -54,7 +61,12 @@ public class GuiMiner extends GuiBaseContainer {
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+    redstoneBtn.setState(tile.getField(TileMachineMinerSmart.Fields.REDSTONE.ordinal()));
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+    
+    
+    
+    
     String s = UtilChat.lang("tile.block_miner_smart.blacklist");
     //      int x = this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, y = 18;
     int x = ContainerMiner.SLOTX_START - 2, y = 30;

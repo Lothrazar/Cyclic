@@ -6,7 +6,6 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilUncraft;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -15,7 +14,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 
-public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements IInventory, ISidedInventory {
+public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements  ITileRedstoneToggle {
   // http://www.minecraftforge.net/wiki/Containers_and_GUIs
   // http://greyminecraftcoder.blogspot.com.au/2015/01/tileentity.html
   // http://www.minecraftforge.net/forum/index.php?topic=28539.0
@@ -25,10 +24,15 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
   public static int TIMER_FULL;
   private ItemStack[] inv;
   private int timer;
+  private int needsRedstone = 1;
   private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots for all faces
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
   private static final String NBT_TIMER = "Timer";
+  private static final String NBT_REDST = "redstone";
+  public static enum Fields {
+    TIMER, REDSTONE
+  }
   public TileMachineUncrafter() {
     inv = new ItemStack[9];
     timer = TIMER_FULL;
@@ -68,6 +72,7 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
     timer = tagCompound.getInteger(NBT_TIMER);
+    this.needsRedstone = tagCompound.getInteger(NBT_REDST);
     NBTTagList tagList = tagCompound.getTagList(NBT_INV, 10);
     for (int i = 0; i < tagList.tagCount(); i++) {
       NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
@@ -80,6 +85,7 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
     tagCompound.setInteger(NBT_TIMER, timer);
+    tagCompound.setInteger(NBT_REDST, this.needsRedstone);
     NBTTagList itemList = new NBTTagList();
     for (int i = 0; i < inv.length; i++) {
       ItemStack stack = inv[i];
@@ -106,14 +112,13 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
     // eventually but not constantly)
     this.shiftAllUp();
     boolean triggerUncraft = false;
-    if (this.isPowered() == false) {
+    if (this.onlyRunIfPowered() && this.isPowered() == false) {
       //it works ONLY if its powered
       return;
     }
+    //else: its powered, OR it doesnt need power so its ok
     ItemStack stack = getStackInSlot(0);
     if (stack == null) {
-      timer = TIMER_FULL;// reset just like you would in a
-      // furnace
       return;
     }
     timer--;
@@ -228,5 +233,49 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
       setInventorySlotContents(index, null);
     }
     return stack;
+  }
+  @Override
+  public int getField(int id) {
+    if (id >= 0 && id < this.getFieldCount())
+      switch (Fields.values()[id]) {
+      case TIMER:
+        return timer;
+      case REDSTONE:
+        if (needsRedstone != 1 && needsRedstone != 0) {
+          needsRedstone = 0;
+        }
+        return this.needsRedstone;
+      }
+    return -7;
+  }
+  @Override
+  public void setField(int id, int value) {
+    if (id >= 0 && id < this.getFieldCount())
+      switch (Fields.values()[id]) {
+      case TIMER:
+        this.timer = value;
+        break;
+      case REDSTONE:
+        if (value != 1 && value != 0) {
+          value = 0;
+        }
+        this.needsRedstone = value;
+        break;
+      }
+  }
+  @Override
+  public int getFieldCount() {
+    return Fields.values().length;
+  }
+  @Override
+  public void toggleNeedsRedstone() {
+    int val = this.needsRedstone + 1;
+    if (val > 1) {
+      val = 0;//hacky lazy way
+    }
+    this.setField(Fields.REDSTONE.ordinal(), val);
+  }
+  private boolean onlyRunIfPowered() {
+    return this.needsRedstone == 1;
   }
 }

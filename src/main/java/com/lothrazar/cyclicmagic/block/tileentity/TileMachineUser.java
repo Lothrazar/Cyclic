@@ -15,7 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
 
-public class TileMachineUser extends TileEntityBaseMachineInvo {
+public class TileMachineUser extends TileEntityBaseMachineInvo implements  ITileRedstoneToggle {
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
   // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
@@ -30,8 +30,9 @@ public class TileMachineUser extends TileEntityBaseMachineInvo {
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
   private int timer;
+  private int needsRedstone = 1;
   public static enum Fields {
-    TIMER, SPEED
+    TIMER, SPEED, REDSTONE
   }
   public TileMachineUser() {
     inv = new ItemStack[9];
@@ -42,7 +43,7 @@ public class TileMachineUser extends TileEntityBaseMachineInvo {
   public void update() {
     this.shiftAllUp();
     int toolSlot = 0;
-    if (this.isPowered()) {
+    if (!(this.onlyRunIfPowered() && this.isPowered() == false)) {
       this.spawnParticlesAbove();
     }
     if (worldObj instanceof WorldServer) {
@@ -77,23 +78,17 @@ public class TileMachineUser extends TileEntityBaseMachineInvo {
       }
       ItemStack stack = getStackInSlot(0);
       if (stack == null) {
-        timer = TIMER_FULL;// reset just like you would in a
-        // furnace
         return;
       }
-      if (this.isPowered()) {
+      if (!(this.onlyRunIfPowered() && this.isPowered() == false)) {
         timer -= this.getSpeed();
         if (timer <= 0) {
           timer = 0;
         }
         if (timer == 0) {
-          //          System.out.println("GOOO" + fakePlayer.get().getHeldItemMainhand());
           fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), worldObj, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
           timer = TIMER_FULL;
         }
-      }
-      else {
-        timer = 0;
       }
     }
   }
@@ -198,6 +193,8 @@ public class TileMachineUser extends TileEntityBaseMachineInvo {
       return getSpeed();
     case TIMER:
       return getTimer();
+    case REDSTONE:
+      return this.needsRedstone;
     default:
       break;
     }
@@ -221,7 +218,8 @@ public class TileMachineUser extends TileEntityBaseMachineInvo {
         timer = 0;
       }
       break;
-    default:
+    case REDSTONE:
+      this.needsRedstone = value;
       break;
     }
   }
@@ -253,5 +251,16 @@ public class TileMachineUser extends TileEntityBaseMachineInvo {
   }
   public int getTimer() {
     return timer;
+  }
+  @Override
+  public void toggleNeedsRedstone() {
+    int val = this.needsRedstone + 1;
+    if (val > 1) {
+      val = 0;//hacky lazy way
+    }
+    this.setField(Fields.REDSTONE.ordinal(), val);
+  }
+  private boolean onlyRunIfPowered() {
+    return this.needsRedstone == 1;
   }
 }

@@ -6,8 +6,6 @@ import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import net.minecraft.block.Block;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -17,12 +15,13 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 
-public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo implements IInventory, ISidedInventory {
+public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo implements ITileRedstoneToggle {
   private int timer;
   private int buildType;
   private int buildSpeed;
   private int buildSize;
   private int buildHeight = 3;
+  private int needsRedstone = 1;
   private ItemStack[] inv = new ItemStack[9];
   private int shapeIndex = 0;// current index of shape array
   private List<BlockPos> shape = null;
@@ -42,7 +41,7 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
   private static final String NBT_SIZE = "size";
   private static final String NBT_SHAPEINDEX = "shapeindex";
   public static enum Fields {
-    TIMER, BUILDTYPE, SPEED, SIZE, HEIGHT
+    TIMER, BUILDTYPE, SPEED, SIZE, HEIGHT, REDSTONE
   }
   public enum BuildType {
     FACING, SQUARE, CIRCLE;
@@ -127,6 +126,8 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
         return this.buildSize;
       case HEIGHT:
         return this.buildHeight;
+      case REDSTONE:
+        return this.needsRedstone;
       }
     return -1;
   }
@@ -152,9 +153,15 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
         }
         this.buildHeight = value;
         break;
+      case REDSTONE:
+        this.needsRedstone = value;
+        break;
       default:
         break;
       }
+  }
+  private boolean onlyRunIfPowered() {
+    return this.needsRedstone == 1;
   }
   public int getTimer() {
     return this.getField(Fields.TIMER.ordinal());
@@ -317,7 +324,7 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
     if (nextPos == null || (nextPos.getX() == 0 && nextPos.getY() == 0 && nextPos.getZ() == 0)) {
       nextPos = pos;// fallback if it fails
     }
-    if (this.isPowered() == false) {
+    if (this.onlyRunIfPowered() && this.isPowered() == false) {
       // it works ONLY if its powered
       markDirty();
       return;
@@ -326,10 +333,7 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
       UtilParticle.spawnParticlePacket(EnumParticleTypes.DRAGON_BREATH, nextPos, 5);
     }
     ItemStack stack = getStackInSlot(0);
-    //    if (stack == null) {
-    //      timer = TIMER_FULL;// reset just like you would in a
-    //      // furnace
-    //    }
+
     if (stack != null) {
       timer -= this.getSpeed();
       if (timer <= 0) {
@@ -403,5 +407,13 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
     }
     else
       return super.receiveClientEvent(id, value);
+  }
+  @Override
+  public void toggleNeedsRedstone() {
+    int val = this.needsRedstone + 1;
+    if (val > 1) {
+      val = 0;//hacky lazy way
+    }
+    this.setField(Fields.REDSTONE.ordinal(), val);
   }
 }

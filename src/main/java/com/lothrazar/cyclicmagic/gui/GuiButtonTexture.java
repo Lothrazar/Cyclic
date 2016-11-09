@@ -1,20 +1,19 @@
 package com.lothrazar.cyclicmagic.gui;
-import java.util.ArrayList;
-import java.util.List;
 import com.lothrazar.cyclicmagic.util.Const;
-import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 
-public class GuiButtonTexture extends GuiButton implements ITooltipButton{
+public class GuiButtonTexture extends GuiButtonTooltip {
   private ResourceLocation icon;
-  private List<String> tooltip = new ArrayList<String>();
-  public GuiButtonTexture(int buttonId, int x, int y, String texture, String ttip) {
+  private int textureIndex = 0;
+  private int textureSize = 16;
+  public GuiButtonTexture(int buttonId, int x, int y, String texture) {
     super(buttonId, x, y, 16, 20, "");
     icon = new ResourceLocation(Const.MODID, texture);
-    tooltip.add(UtilChat.lang(ttip));
+  }
+  public void setTextureIndex(int i) {
+    textureIndex = i;
   }
   @Override
   public void drawButton(Minecraft mc, int mouseX, int mouseY) {
@@ -27,13 +26,9 @@ public class GuiButtonTexture extends GuiButton implements ITooltipButton{
       GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
       this.drawTexturedModalRect(this.xPosition, // + this.width / 2, 
           this.yPosition,
-          0, 0,
-          16, 16);
+          textureIndex * textureSize, 0,
+          textureSize, textureSize);
       this.mouseDragged(mc, mouseX, mouseY);
     }
-  }
-  @Override
-  public List<String> getTooltips() {
-    return tooltip;
   }
 }
