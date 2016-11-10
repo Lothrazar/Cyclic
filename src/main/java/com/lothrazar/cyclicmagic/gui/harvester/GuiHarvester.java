@@ -14,7 +14,7 @@ public class GuiHarvester extends GuiBaseContanerProgress {
   boolean debugLabels = false;
   private GuiButtonUncraftingRedstone redstoneBtn;
   public GuiHarvester(InventoryPlayer inventoryPlayer, TileMachineHarvester tileEntity) {
-    super(new ContainerHarvester(inventoryPlayer, tileEntity),tileEntity);
+    super(new ContainerHarvester(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
   }
   @Override
@@ -38,9 +38,7 @@ public class GuiHarvester extends GuiBaseContanerProgress {
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-
     int needsRed = tile.getField(TileMachineHarvester.Fields.REDSTONE.ordinal());
-
     redstoneBtn.setState(needsRed);
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }

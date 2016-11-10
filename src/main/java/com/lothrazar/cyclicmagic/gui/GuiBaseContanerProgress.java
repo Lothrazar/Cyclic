@@ -5,7 +5,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.inventory.Container;
 
 public abstract class GuiBaseContanerProgress extends GuiBaseContainer {
-  public GuiBaseContanerProgress(Container inventorySlotsIn,TileEntityBaseMachineInvo tile) {
+  public GuiBaseContanerProgress(Container inventorySlotsIn, TileEntityBaseMachineInvo tile) {
     super(inventorySlotsIn, tile);
   }
   public abstract int getProgressX();

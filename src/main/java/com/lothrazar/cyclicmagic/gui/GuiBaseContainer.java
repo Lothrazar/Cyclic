@@ -12,7 +12,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class GuiBaseContainer extends GuiContainer {
   private TileEntityBaseMachineInvo tile;
-  public GuiBaseContainer(Container inventorySlotsIn,TileEntityBaseMachineInvo tile) {
+  public GuiBaseContainer(Container inventorySlotsIn, TileEntityBaseMachineInvo tile) {
     super(inventorySlotsIn);
     this.tile = tile;
   }

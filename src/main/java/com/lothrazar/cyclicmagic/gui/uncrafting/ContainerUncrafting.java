@@ -64,7 +64,6 @@ public class ContainerUncrafting extends ContainerBaseMachine {
       if (this.tileRedstone != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
-     
     }
     this.tileTimer = this.tileEntity.getField(TileMachineUncrafter.Fields.TIMER.ordinal());
     this.tileRedstone = this.tileEntity.getField(TileMachineUncrafter.Fields.REDSTONE.ordinal());

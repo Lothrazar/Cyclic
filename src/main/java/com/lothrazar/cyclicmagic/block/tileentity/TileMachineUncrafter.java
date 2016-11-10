@@ -14,7 +14,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 
-public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements  ITileRedstoneToggle {
+public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements ITileRedstoneToggle {
   // http://www.minecraftforge.net/wiki/Containers_and_GUIs
   // http://greyminecraftcoder.blogspot.com.au/2015/01/tileentity.html
   // http://www.minecraftforge.net/forum/index.php?topic=28539.0
@@ -119,9 +119,7 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements  
     }
     //else: its powered, OR it doesnt need power so its ok
     ItemStack stack = getStackInSlot(0);
-    if (stack == null) {
-      return;
-    }
+    if (stack == null) { return; }
     timer--;
     if (timer <= 0) {
       timer = TIMER_FULL;

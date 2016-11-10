@@ -37,7 +37,6 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
   private static final String NBT_REDST = "redstone";
-
   final int RADIUS = 4;//center plus 4 in each direction = 9x9
   private int needsRedstone = 1;
   int height = 6;
@@ -182,7 +181,6 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
     tagCompound.setInteger(NBT_REDST, this.needsRedstone);
-    
     if (uuid != null) {
       tagCompound.setString(NBTPLAYERID, uuid.toString());
     }
@@ -210,7 +208,6 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
     this.needsRedstone = tagCompound.getInteger(NBT_REDST);
-    
     if (tagCompound.hasKey(NBTPLAYERID)) {
       uuid = UUID.fromString(tagCompound.getString(NBTPLAYERID));
     }

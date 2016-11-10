@@ -36,8 +36,8 @@ public abstract class TileEntityBaseMachine extends TileEntity implements ITicka
     }
   }
   /**
-   * Block the data being lost when block stat e changes
-   * THANKS TO http://www.minecraftforge.net/forum/index.php?topic=29544.0
+   * Block the data being lost when block stat e changes THANKS TO
+   * http://www.minecraftforge.net/forum/index.php?topic=29544.0
    */
   @Override
   public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {

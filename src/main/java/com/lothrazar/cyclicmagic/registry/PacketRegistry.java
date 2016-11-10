@@ -39,6 +39,5 @@ public class PacketRegistry {
     network.registerMessage(PacketRandomize.class, PacketRandomize.class, packetID++, Side.SERVER);
     network.registerMessage(PacketStorageSack.class, PacketStorageSack.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTileRedstoneToggle.class, PacketTileRedstoneToggle.class, packetID++, Side.SERVER);
-    
   }
 }

@@ -79,7 +79,7 @@ import net.minecraftforge.common.util.FakePlayer;
  *         making a 3x3 version
  * 
  */
-public class TileMachineBlockMiner extends TileEntityBaseMachineInvo implements ITileRedstoneToggle  {
+public class TileMachineBlockMiner extends TileEntityBaseMachineInvo implements ITileRedstoneToggle {
   public TileMachineBlockMiner(String n) {
     super(n);
   }
@@ -231,7 +231,6 @@ public class TileMachineBlockMiner extends TileEntityBaseMachineInvo implements 
     }
     tagCompound.setBoolean(NBTMINING, isCurrentlyMining);
     tagCompound.setFloat(NBTDAMAGE, curBlockDamage);
-
     return super.writeToNBT(tagCompound);
   }
   @Override
@@ -284,7 +283,6 @@ public class TileMachineBlockMiner extends TileEntityBaseMachineInvo implements 
   @Override
   public void setInventorySlotContents(int index, ItemStack stack) {
     // TODO Auto-generated method stub
-    
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {

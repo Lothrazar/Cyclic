@@ -15,13 +15,13 @@ public class GuiBlockMiner extends GuiBaseContainer {
   boolean debugLabels = false;
   private GuiButtonUncraftingRedstone redstoneBtn;
   public GuiBlockMiner(InventoryPlayer inventoryPlayer, TileMachineBlockMiner tileEntity) {
-    super(new ContainerBlockMiner(inventoryPlayer, tileEntity),tileEntity);
+    super(new ContainerBlockMiner(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
   }
-//  @Override
-//  public String getTitle() {
-//    return "tile.block_miner.name";
-//  }
+  //  @Override
+  //  public String getTitle() {
+  //    return "tile.block_miner.name";
+  //  }
   @Override
   public void initGui() {
     super.initGui();
@@ -43,9 +43,7 @@ public class GuiBlockMiner extends GuiBaseContainer {
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-
     int needsRed = tile.getField(TileMachineBlockMiner.Fields.REDSTONE.ordinal());
-
     redstoneBtn.setState(needsRed);
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }

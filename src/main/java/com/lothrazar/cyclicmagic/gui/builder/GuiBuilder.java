@@ -24,7 +24,7 @@ public class GuiBuilder extends GuiBaseContanerProgress {
   private int yOffset = 10 + padding;
   private GuiButtonUncraftingRedstone redstoneBtn;
   public GuiBuilder(InventoryPlayer inventoryPlayer, TileMachineStructureBuilder tileEntity) {
-    super(new ContainerBuilder(inventoryPlayer, tileEntity),tileEntity);
+    super(new ContainerBuilder(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
   }
   @Override
@@ -78,14 +78,11 @@ public class GuiBuilder extends GuiBaseContanerProgress {
       int x = (display.length() > 1) ? xHeightTextbox - 3 : xHeightTextbox;
       this.fontRendererObj.drawString(display, x, yHeightTxtbox + yOffset - 4, 4210752);
     }
-
-      int needsRed = tile.getField(TileMachineStructureBuilder.Fields.REDSTONE.ordinal());
-
-      redstoneBtn.setState(needsRed);
-//      redstoneBtn.setTextureIndex(needsRed);
-//      redstoneBtn.setTooltips(Arrays.asList(UtilChat.lang("tile.redstone.button" + needsRed)));
-      super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-    
+    int needsRed = tile.getField(TileMachineStructureBuilder.Fields.REDSTONE.ordinal());
+    redstoneBtn.setState(needsRed);
+    //      redstoneBtn.setTextureIndex(needsRed);
+    //      redstoneBtn.setTooltips(Arrays.asList(UtilChat.lang("tile.redstone.button" + needsRed)));
+    super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     updateDisabledButtons();
   }
   private void updateDisabledButtons() {

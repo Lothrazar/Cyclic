@@ -14,7 +14,7 @@ public class GuiPlacer extends GuiBaseContanerProgress {
   boolean debugLabels = false;
   private GuiButtonUncraftingRedstone redstoneBtn;
   public GuiPlacer(InventoryPlayer inventoryPlayer, TileMachinePlacer tileEntity) {
-    super(new ContainerPlacer(inventoryPlayer, tileEntity),tileEntity);
+    super(new ContainerPlacer(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
   }
   @Override
@@ -38,9 +38,7 @@ public class GuiPlacer extends GuiBaseContanerProgress {
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-
     int needsRed = tile.getField(TileMachinePlacer.Fields.REDSTONE.ordinal());
-
     redstoneBtn.setState(needsRed);
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }

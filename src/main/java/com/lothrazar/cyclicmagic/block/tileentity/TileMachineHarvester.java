@@ -47,7 +47,6 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
     tagCompound.setInteger(NBT_REDST, this.needsRedstone);
     return super.writeToNBT(tagCompound);
   }
-
   public boolean isBurning() {
     return this.timer > 0 && this.timer < TIMER_FULL;
   }

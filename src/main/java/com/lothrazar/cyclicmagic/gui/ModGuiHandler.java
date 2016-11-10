@@ -81,11 +81,9 @@ public class ModGuiHandler implements IGuiHandler {
       break;
     case GUI_INDEX_HARVESTER:
       if (te != null && te instanceof TileMachineHarvester) { return new ContainerHarvester(player.inventory, (TileMachineHarvester) te); }
-      
       break;
     case GUI_INDEX_BLOCKMINER:
       if (te != null && te instanceof TileMachineBlockMiner) { return new ContainerBlockMiner(player.inventory, (TileMachineBlockMiner) te); }
-      
       break;
     case GUI_INDEX_STORAGE:
       ItemStack s = ItemStorageBag.getPlayerItemIfHeld(player);

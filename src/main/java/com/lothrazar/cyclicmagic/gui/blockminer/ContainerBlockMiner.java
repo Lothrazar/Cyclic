@@ -17,35 +17,35 @@ public class ContainerBlockMiner extends ContainerBaseMachine {
   private int tileRedstone;
   public ContainerBlockMiner(InventoryPlayer inventoryPlayer, TileMachineBlockMiner te) {
     tileEntity = te;
-//    for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
-//      addSlotToContainer(new SlotOnlyBlocks(tileEntity, i, SLOTX_START + i * SQ, SLOTY));
-//    }
+    //    for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
+    //      addSlotToContainer(new SlotOnlyBlocks(tileEntity, i, SLOTX_START + i * SQ, SLOTY));
+    //    }
     bindPlayerInventory(inventoryPlayer);
   }
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     ItemStack stack = null;
-//    Slot slotObject = (Slot) inventorySlots.get(slot);
-//    // null checks and checks if the item can be stacked (maxStackSize > 1)
-////    if (slotObject != null && slotObject.getHasStack()) {
-//      ItemStack stackInSlot = slotObject.getStack();
-//      stack = stackInSlot.copy();
-//      // merges the item into player inventory since its in the tileEntity
-//      if (slot < tileEntity.getSizeInventory()) {
-//        if (!this.mergeItemStack(stackInSlot, tileEntity.getSizeInventory(), 36 + tileEntity.getSizeInventory(), true)) { return null; }
-//      }
-//      // places it into the tileEntity is possible since its in the player
-//      // inventory
-//      else if (!this.mergeItemStack(stackInSlot, 0, tileEntity.getSizeInventory(), false)) { return null; }
-//      if (stackInSlot.stackSize == 0) {
-//        slotObject.putStack(null);
-//      }
-//      else {
-//        slotObject.onSlotChanged();
-//      }
-//      if (stackInSlot.stackSize == stack.stackSize) { return null; }
-//      slotObject.onPickupFromSlot(player, stackInSlot);
-//    }
+    //    Slot slotObject = (Slot) inventorySlots.get(slot);
+    //    // null checks and checks if the item can be stacked (maxStackSize > 1)
+    ////    if (slotObject != null && slotObject.getHasStack()) {
+    //      ItemStack stackInSlot = slotObject.getStack();
+    //      stack = stackInSlot.copy();
+    //      // merges the item into player inventory since its in the tileEntity
+    //      if (slot < tileEntity.getSizeInventory()) {
+    //        if (!this.mergeItemStack(stackInSlot, tileEntity.getSizeInventory(), 36 + tileEntity.getSizeInventory(), true)) { return null; }
+    //      }
+    //      // places it into the tileEntity is possible since its in the player
+    //      // inventory
+    //      else if (!this.mergeItemStack(stackInSlot, 0, tileEntity.getSizeInventory(), false)) { return null; }
+    //      if (stackInSlot.stackSize == 0) {
+    //        slotObject.putStack(null);
+    //      }
+    //      else {
+    //        slotObject.onSlotChanged();
+    //      }
+    //      if (stackInSlot.stackSize == stack.stackSize) { return null; }
+    //      slotObject.onPickupFromSlot(player, stackInSlot);
+    //    }
     return stack;
   }
   @Override

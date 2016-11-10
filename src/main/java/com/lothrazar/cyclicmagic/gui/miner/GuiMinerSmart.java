@@ -18,7 +18,7 @@ public class GuiMinerSmart extends GuiBaseContainer {
   private ButtonMinerHeight btnHeightUp;
   private GuiButtonUncraftingRedstone redstoneBtn;
   public GuiMinerSmart(InventoryPlayer inventoryPlayer, TileMachineMinerSmart tileEntity) {
-    super(new ContainerMinerSmart(inventoryPlayer, tileEntity),tileEntity);
+    super(new ContainerMinerSmart(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
   }
   public String getTitle() {
@@ -59,10 +59,6 @@ public class GuiMinerSmart extends GuiBaseContainer {
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     redstoneBtn.setState(tile.getField(TileMachineMinerSmart.Fields.REDSTONE.ordinal()));
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-    
-    
-    
-    
     String s = UtilChat.lang("tile.block_miner_smart.blacklist");
     //      int x = this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, y = 18;
     int x = ContainerMinerSmart.SLOTX_START - 2, y = 30;

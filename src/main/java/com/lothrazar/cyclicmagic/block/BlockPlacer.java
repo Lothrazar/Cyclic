@@ -19,7 +19,6 @@ public class BlockPlacer extends BlockBaseFacingInventory implements IHasRecipe 
     this.setSoundType(SoundType.METAL);
     this.setTickRandomly(true);
   }
-
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileMachinePlacer("tile.placer_block.name");
@@ -44,8 +43,8 @@ public class BlockPlacer extends BlockBaseFacingInventory implements IHasRecipe 
         'r', Blocks.STONE,
         'b', Items.REDSTONE);
   }
-//  @SideOnly(Side.CLIENT)
-//  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
-//    tooltip.add(UtilChat.lang("tile.placer_block.tooltip"));
-//  }
+  //  @SideOnly(Side.CLIENT)
+  //  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+  //    tooltip.add(UtilChat.lang("tile.placer_block.tooltip"));
+  //  }
 }

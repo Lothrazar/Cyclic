@@ -231,7 +231,6 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
     this.needsRedstone = tagCompound.getInteger(NBT_REDST);
-    
     timer = tagCompound.getInteger(NBT_TIMER);
     shapeIndex = tagCompound.getInteger(NBT_SHAPEINDEX);
     nextPos = UtilNBT.stringCSVToBlockPos(tagCompound.getString(NBT_NEXTPOS));// =
@@ -269,7 +268,6 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
     tagCompound.setInteger(NBT_TIMER, timer);
     tagCompound.setInteger(NBT_REDST, this.needsRedstone);
-    
     tagCompound.setInteger(NBT_SHAPEINDEX, this.shapeIndex);
     if (nextPos == null || (nextPos.getX() == 0 && nextPos.getY() == 0 && nextPos.getZ() == 0)) {
       nextPos = this.pos;// fallback if it fails
@@ -301,7 +299,6 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
     tagCompound.setInteger(NBT_SIZE, this.getSize());
     return super.writeToNBT(tagCompound);
   }
-
   public BlockPos getNextPos() {
     return this.nextPos;
   }
@@ -324,7 +321,6 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
       UtilParticle.spawnParticlePacket(EnumParticleTypes.DRAGON_BREATH, nextPos, 5);
     }
     ItemStack stack = getStackInSlot(0);
-
     if (stack != null) {
       timer -= this.getSpeed();
       if (timer <= 0) {

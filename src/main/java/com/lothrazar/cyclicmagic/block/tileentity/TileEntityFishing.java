@@ -52,11 +52,11 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     Random rand = worldObj.rand;
     if (rand.nextDouble() < SPEED &&
         isValidPosition() && isEquipmentValid() &&
-        this.worldObj instanceof WorldServer && this.worldObj != null && 
+        this.worldObj instanceof WorldServer && this.worldObj != null &&
         this.worldObj.getWorldTime() % Const.TICKS_PER_SEC == 0) {
       LootContext.Builder lootcontext$builder = new LootContext.Builder((WorldServer) this.worldObj);
       int luck = EnchantmentHelper.getEnchantmentLevel(Enchantments.LUCK_OF_THE_SEA, this.inv[toolSlot]);
-      lootcontext$builder.withLuck((float)luck);
+      lootcontext$builder.withLuck((float) luck);
       //      java.lang.NullPointerException: Ticking block entity    at com.lothrazar.cyclicmagic.block.tileentity.TileEntityFishing.func_73660_a(TileEntityFishing.java:58)
       LootTableManager loot = this.worldObj.getLootTableManager();
       if (loot == null) { return; }
@@ -67,7 +67,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
       for (ItemStack itemstack : table.generateLootForPools(this.worldObj.rand, context)) {
         UtilParticle.spawnParticle(worldObj, EnumParticleTypes.WATER_WAKE, pos.up());
         //damage phase.
-        int mending =  EnchantmentHelper.getEnchantmentLevel(Enchantments.MENDING, this.inv[toolSlot]);
+        int mending = EnchantmentHelper.getEnchantmentLevel(Enchantments.MENDING, this.inv[toolSlot]);
         if (mending == 0) {
           damageTool();
         }
