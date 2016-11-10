@@ -2,11 +2,14 @@ package com.lothrazar.cyclicmagic.gui;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFishing;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineHarvester;
+import com.lothrazar.cyclicmagic.block.tileentity.TileMachineBlockMiner;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMinerSmart;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineStructureBuilder;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachinePlacer;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUser;
+import com.lothrazar.cyclicmagic.gui.blockminer.ContainerBlockMiner;
+import com.lothrazar.cyclicmagic.gui.blockminer.GuiBlockMiner;
 import com.lothrazar.cyclicmagic.gui.builder.ContainerBuilder;
 import com.lothrazar.cyclicmagic.gui.builder.GuiBuilder;
 import com.lothrazar.cyclicmagic.gui.fisher.ContainerFisher;
@@ -56,11 +59,12 @@ public class ModGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_BUILDER = 5;
   public static final int GUI_INDEX_PLACER = 6;
   public static final int GUI_INDEX_PASSWORD = 7;
-  public static final int GUI_INDEX_MINER = 8;
+  public static final int GUI_INDEX_SMARTMINER = 8;
   public static final int GUI_INDEX_FISHER = 9;
   public static final int GUI_INDEX_PWORKBENCH = 10;
   public static final int GUI_INDEX_USER = 11;
   public static final int GUI_INDEX_HARVESTER = 12;
+  public static final int GUI_INDEX_BLOCKMINER = 13;
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
     TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
@@ -77,6 +81,10 @@ public class ModGuiHandler implements IGuiHandler {
       break;
     case GUI_INDEX_HARVESTER:
       if (te != null && te instanceof TileMachineHarvester) { return new ContainerHarvester(player.inventory, (TileMachineHarvester) te); }
+      
+      break;
+    case GUI_INDEX_BLOCKMINER:
+      if (te != null && te instanceof TileMachineBlockMiner) { return new ContainerBlockMiner(player.inventory, (TileMachineBlockMiner) te); }
       
       break;
     case GUI_INDEX_STORAGE:
@@ -104,7 +112,7 @@ public class ModGuiHandler implements IGuiHandler {
         return c;
       }
       break;
-    case GUI_INDEX_MINER:
+    case GUI_INDEX_SMARTMINER:
       if (te != null && te instanceof TileMachineMinerSmart) {
         Container c = new ContainerMinerSmart(player.inventory, (TileMachineMinerSmart) te);
         return c;
@@ -137,6 +145,9 @@ public class ModGuiHandler implements IGuiHandler {
       case GUI_INDEX_HARVESTER:
         if (te instanceof TileMachineHarvester) { return new GuiHarvester(player.inventory, (TileMachineHarvester) te); }
         break;
+      case GUI_INDEX_BLOCKMINER:
+        if (te instanceof TileMachineBlockMiner) { return new GuiBlockMiner(player.inventory, (TileMachineBlockMiner) te); }
+        break;
       case GUI_INDEX_STORAGE:
         ItemStack s = ItemStorageBag.getPlayerItemIfHeld(player);
         return new GuiStorage(new ContainerStorage(player, player.inventory, new InventoryStorage(player, s)));
@@ -151,7 +162,7 @@ public class ModGuiHandler implements IGuiHandler {
       case GUI_INDEX_PASSWORD:
         if (te != null && te instanceof TileEntityPassword) { return new GuiPassword((TileEntityPassword) te); }
         break;
-      case GUI_INDEX_MINER:
+      case GUI_INDEX_SMARTMINER:
         if (te != null && te instanceof TileMachineMinerSmart) { return new GuiMinerSmart(player.inventory, (TileMachineMinerSmart) te); }
         break;
       case GUI_INDEX_FISHER:

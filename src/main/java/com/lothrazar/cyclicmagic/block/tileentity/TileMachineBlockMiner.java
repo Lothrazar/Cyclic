@@ -7,6 +7,7 @@ import com.lothrazar.cyclicmagic.block.BlockMiner.MinerType;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
 import com.lothrazar.cyclicmagic.util.UtilItem;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -78,7 +79,7 @@ import net.minecraftforge.common.util.FakePlayer;
  *         making a 3x3 version
  * 
  */
-public class TileMachineMiner extends TileEntityBaseMachine {
+public class TileMachineBlockMiner extends TileEntityBaseMachineInvo implements ITileRedstoneToggle  {
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
   // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
@@ -86,10 +87,14 @@ public class TileMachineMiner extends TileEntityBaseMachine {
   private boolean isCurrentlyMining;
   private WeakReference<FakePlayer> fakePlayer;
   private float curBlockDamage;
+  private int needsRedstone;
   private BlockPos targetPos = null;
+  public static enum Fields {
+    REDSTONE
+  }
   @Override
   public void update() {
-    if (this.isPowered()) {
+    if (!(this.onlyRunIfPowered() && this.isPowered() == false)) {
       this.spawnParticlesAbove();
     }
     if (worldObj.isRemote == false && worldObj instanceof WorldServer && (WorldServer) worldObj != null) {
@@ -114,7 +119,7 @@ public class TileMachineMiner extends TileEntityBaseMachine {
       if (targetPos == null) {
         targetPos = start; //not sure if this is needed
       }
-      if (this.isPowered()) {
+      if (!(this.onlyRunIfPowered() && this.isPowered() == false)) {
         if (isCurrentlyMining == false) { //we can mine but are not currently
           this.updateTargetPos(start, minerType);
           if (!worldObj.isAirBlock(targetPos)) { //we have a valid target
@@ -151,7 +156,8 @@ public class TileMachineMiner extends TileEntityBaseMachine {
     }
   }
   private void equipItem() {
-    ItemStack unbreakingPickaxe = new ItemStack(Items.DIAMOND_SHOVEL, 1);
+    ItemStack unbreakingPickaxe = new ItemStack(Items.DIAMOND_PICKAXE, 1);
+    unbreakingPickaxe.addEnchantment(Enchantments.EFFICIENCY, 3);
     unbreakingPickaxe.setTagCompound(new NBTTagCompound());
     unbreakingPickaxe.getTagCompound().setBoolean("Unbreakable", true);
     fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, unbreakingPickaxe);
@@ -246,5 +252,68 @@ public class TileMachineMiner extends TileEntityBaseMachine {
       worldObj.sendBlockBreakProgress(uuid.hashCode(), targetPos, -1);
       curBlockDamage = 0;
     }
+  }
+  @Override
+  public int getSizeInventory() {
+    // TODO Auto-generated method stub
+    return 0;
+  }
+  @Override
+  public ItemStack getStackInSlot(int index) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  @Override
+  public ItemStack decrStackSize(int index, int count) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  @Override
+  public ItemStack removeStackFromSlot(int index) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  @Override
+  public void setInventorySlotContents(int index, ItemStack stack) {
+    // TODO Auto-generated method stub
+    
+  }
+  @Override
+  public int[] getSlotsForFace(EnumFacing side) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  @Override
+  public int getField(int id) {
+    if (id >= 0 && id < this.getFieldCount())
+      switch (Fields.values()[id]) {
+      case REDSTONE:
+        return this.needsRedstone;
+      }
+    return -1;
+  }
+  @Override
+  public void setField(int id, int value) {
+    if (id >= 0 && id < this.getFieldCount())
+      switch (Fields.values()[id]) {
+      case REDSTONE:
+        this.needsRedstone = value;
+        break;
+      }
+  }
+  @Override
+  public int getFieldCount() {
+    return Fields.values().length;
+  }
+  @Override
+  public void toggleNeedsRedstone() {
+    int val = this.needsRedstone + 1;
+    if (val > 1) {
+      val = 0;//hacky lazy way
+    }
+    this.setField(Fields.REDSTONE.ordinal(), val);
+  }
+  private boolean onlyRunIfPowered() {
+    return this.needsRedstone == 1;
   }
 }

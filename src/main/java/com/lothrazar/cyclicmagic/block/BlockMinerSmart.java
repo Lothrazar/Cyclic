@@ -21,7 +21,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockMinerSmart extends BlockBaseFacingInventory implements IHasRecipe {
   public static final PropertyDirection PROPERTYFACING = BlockBaseFacing.PROPERTYFACING;
   public BlockMinerSmart() {
-    super(Material.IRON, ModGuiHandler.GUI_INDEX_MINER);
+    super(Material.IRON, ModGuiHandler.GUI_INDEX_SMARTMINER);
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);
   }
