@@ -9,9 +9,10 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;// net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
 
-public class TileMachinePlacer extends TileEntityBaseMachineInvo {
+public class TileMachinePlacer extends TileEntityBaseMachineInvo implements ITileRedstoneToggle {
   private int timer;
   private static final int buildSpeed = 1;
+  private int needsRedstone = 1;
   private ItemStack[] inv = new ItemStack[9];
   public static final int TIMER_FULL = 75;//one day i will add fuel AND/OR speed upgrades. till then make very slow
   private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots
@@ -19,7 +20,7 @@ public class TileMachinePlacer extends TileEntityBaseMachineInvo {
   private static final String NBT_SLOT = "Slot";
   private static final String NBT_TIMER = "Timer";
   public static enum Fields {
-    TIMER
+    TIMER, REDSTONE
   }
   @Override
   public int getSizeInventory() {
@@ -62,6 +63,8 @@ public class TileMachinePlacer extends TileEntityBaseMachineInvo {
       switch (Fields.values()[id]) {
       case TIMER:
         return timer;
+      case REDSTONE:
+        return this.needsRedstone;
       }
     return -1;
   }
@@ -71,6 +74,10 @@ public class TileMachinePlacer extends TileEntityBaseMachineInvo {
       switch (Fields.values()[id]) {
       case TIMER:
         this.timer = value;
+        break;
+      case REDSTONE:
+        this.needsRedstone = value;
+        break;
       }
   }
   public int getTimer() {
@@ -139,7 +146,7 @@ public class TileMachinePlacer extends TileEntityBaseMachineInvo {
   public void update() {
     shiftAllUp();
     boolean trigger = false;
-    if (this.isPowered() == false) {
+    if (this.onlyRunIfPowered() && this.isPowered() == false) {
       // it works ONLY if its powered
       markDirty();
       return;
@@ -190,5 +197,16 @@ public class TileMachinePlacer extends TileEntityBaseMachineInvo {
     }
     else
       return super.receiveClientEvent(id, value);
+  }
+  @Override
+  public void toggleNeedsRedstone() {
+    int val = this.needsRedstone + 1;
+    if (val > 1) {
+      val = 0;//hacky lazy way
+    }
+    this.setField(Fields.REDSTONE.ordinal(), val);
+  }
+  private boolean onlyRunIfPowered() {
+    return this.needsRedstone == 1;
   }
 }

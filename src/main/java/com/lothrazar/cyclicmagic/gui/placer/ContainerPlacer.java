@@ -1,31 +1,23 @@
 package com.lothrazar.cyclicmagic.gui.placer;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineStructureBuilder;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachinePlacer;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter;
 import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.SlotOnlyBlocks;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@SuppressWarnings("unused")
 public class ContainerPlacer extends ContainerBaseMachine {
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
   public static final int SLOTX_START = 8;
   public static final int SLOTY = 40;
   public static final int SQ = 18;
   protected TileMachinePlacer tileEntity;
-  private int tileBuild;
+  private int tileRedstone;
   private int tileTimer;
-  private int tileSpeed;
-  private int tileSize;
-  private int tileHeight;
   public ContainerPlacer(InventoryPlayer inventoryPlayer, TileMachinePlacer te) {
     tileEntity = te;
     for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
@@ -64,32 +56,17 @@ public class ContainerPlacer extends ContainerBaseMachine {
     super.detectAndSendChanges();
     for (int i = 0; i < this.listeners.size(); ++i) {
       IContainerListener icontainerlistener = (IContainerListener) this.listeners.get(i);
-      int idx = TileMachineStructureBuilder.Fields.TIMER.ordinal();
+      int idx = TileMachinePlacer.Fields.TIMER.ordinal();
       if (this.tileTimer != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
-      idx = TileMachineStructureBuilder.Fields.BUILDTYPE.ordinal();
-      if (this.tileBuild != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-      }
-      idx = TileMachineStructureBuilder.Fields.SIZE.ordinal();
-      if (this.tileSize != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-      }
-      idx = TileMachineStructureBuilder.Fields.SPEED.ordinal();
-      if (this.tileSpeed != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-      }
-      idx = TileMachineStructureBuilder.Fields.HEIGHT.ordinal();
-      if (this.tileHeight != this.tileEntity.getField(idx)) {
+      idx = TileMachinePlacer.Fields.REDSTONE.ordinal();
+      if (this.tileRedstone != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
     }
-    this.tileTimer = this.tileEntity.getField(TileMachineStructureBuilder.Fields.TIMER.ordinal());
-    this.tileBuild = this.tileEntity.getField(TileMachineStructureBuilder.Fields.BUILDTYPE.ordinal());
-    this.tileSize = this.tileEntity.getField(TileMachineStructureBuilder.Fields.SIZE.ordinal());
-    this.tileSpeed = this.tileEntity.getField(TileMachineStructureBuilder.Fields.SPEED.ordinal());
-    this.tileHeight = this.tileEntity.getField(TileMachineStructureBuilder.Fields.HEIGHT.ordinal());
+    this.tileTimer = this.tileEntity.getField(TileMachinePlacer.Fields.TIMER.ordinal());
+    this.tileRedstone = this.tileEntity.getField(TileMachinePlacer.Fields.REDSTONE.ordinal());
   }
   @Override
   @SideOnly(Side.CLIENT)
