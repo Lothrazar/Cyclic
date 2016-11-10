@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ContainerMiner extends ContainerBaseMachine {
+public class ContainerMinerSmart extends ContainerBaseMachine {
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
   public static final int SLOTX_START = 10;
   public static final int SLOTY = 42;
@@ -21,7 +21,7 @@ public class ContainerMiner extends ContainerBaseMachine {
   protected TileMachineMinerSmart tileEntity;
   private int tileHeight;
   private int tileRedstone;
-  public ContainerMiner(InventoryPlayer inventoryPlayer, TileMachineMinerSmart te) {
+  public ContainerMinerSmart(InventoryPlayer inventoryPlayer, TileMachineMinerSmart te) {
     tileEntity = te;
     for (int i = 0; i < tileEntity.getSizeInventory() - 1; i++) {
       addSlotToContainer(new SlotSingleStack(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY));

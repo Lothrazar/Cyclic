@@ -11,18 +11,18 @@ import net.minecraft.inventory.Container;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GuiMiner extends GuiBaseContainer {
+public class GuiMinerSmart extends GuiBaseContainer {
   private TileMachineMinerSmart tile;
   private int xHeightTextbox = 176 - 26;
   private int yHeightTxtbox = 38;
   private ButtonMinerHeight btnHeightDown;
   private ButtonMinerHeight btnHeightUp;
   private GuiButtonUncraftingRedstone redstoneBtn;
-  public GuiMiner(InventoryPlayer inventoryPlayer, TileMachineMinerSmart tileEntity) {
-    super(new ContainerMiner(inventoryPlayer, tileEntity));
+  public GuiMinerSmart(InventoryPlayer inventoryPlayer, TileMachineMinerSmart tileEntity) {
+    super(new ContainerMinerSmart(inventoryPlayer, tileEntity));
     tile = tileEntity;
   }
-  public GuiMiner(Container c) {
+  public GuiMinerSmart(Container c) {
     super(c);
   }
   public String getTitle() {
@@ -53,10 +53,10 @@ public class GuiMiner extends GuiBaseContainer {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
-    for (int k = 0; k < ContainerMiner.SLOTID_EQUIP; k++) {
-      Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerMiner.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerMiner.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    for (int k = 0; k < ContainerMinerSmart.SLOTID_EQUIP; k++) {
+      Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerMinerSmart.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerMinerSmart.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
-    Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerMiner.SLOTEQUIP_X - 1, this.guiTop + ContainerMiner.SLOTEQUIP_Y - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerMinerSmart.SLOTEQUIP_X - 1, this.guiTop + ContainerMinerSmart.SLOTEQUIP_Y - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
   }
   @SideOnly(Side.CLIENT)
   @Override
@@ -69,9 +69,9 @@ public class GuiMiner extends GuiBaseContainer {
     
     String s = UtilChat.lang("tile.block_miner_smart.blacklist");
     //      int x = this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, y = 18;
-    int x = ContainerMiner.SLOTX_START - 2, y = 30;
+    int x = ContainerMinerSmart.SLOTX_START - 2, y = 30;
     this.fontRendererObj.drawString(s, x, y, 4210752);
-    x = ContainerMiner.SLOTEQUIP_X - 3;
+    x = ContainerMinerSmart.SLOTEQUIP_X - 3;
     s = UtilChat.lang("tile.block_miner_smart.tool");
     this.fontRendererObj.drawString(s, x, y, 4210752);
     String display = "" + this.tile.getHeight();
