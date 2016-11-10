@@ -124,7 +124,7 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
     if (tagCompound.hasKey(NBTPLAYERID)) {
       uuid = UUID.fromString(tagCompound.getString(NBTPLAYERID));
     }
-    tagCompound.setInteger(NBT_REDST, this.needsRedstone);
+    this.needsRedstone = tagCompound.getInteger(NBT_REDST);
     speed = tagCompound.getInteger(NBT_SPEED);
     //invo stuff
     NBTTagList tagList = tagCompound.getTagList(NBT_INV, 10);
