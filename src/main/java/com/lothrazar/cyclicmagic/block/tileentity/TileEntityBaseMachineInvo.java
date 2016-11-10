@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
@@ -10,6 +11,10 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.text.ITextComponent;
 
 public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements IInventory, ISidedInventory {
+  private String name;
+  public TileEntityBaseMachineInvo(String n) {
+    name = n;
+  }
   @Override
   public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
     return this.isItemValidForSlot(index, itemStackIn);
@@ -41,6 +46,9 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   public boolean hasCustomName() {
     return false;
   }
+  public String getName() {
+    return name;
+  }
   @Override
   public ITextComponent getDisplayName() {
     return null;
@@ -54,10 +62,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   }
   @Override
   public void closeInventory(EntityPlayer player) {
-  }
-  @Override
-  public String getName() {
-    return null;
   }
   @Override
   public void clear() {

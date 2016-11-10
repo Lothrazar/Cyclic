@@ -14,12 +14,8 @@ public class GuiPlacer extends GuiBaseContanerProgress {
   boolean debugLabels = false;
   private GuiButtonUncraftingRedstone redstoneBtn;
   public GuiPlacer(InventoryPlayer inventoryPlayer, TileMachinePlacer tileEntity) {
-    super(new ContainerPlacer(inventoryPlayer, tileEntity));
+    super(new ContainerPlacer(inventoryPlayer, tileEntity),tileEntity);
     tile = tileEntity;
-  }
-  @Override
-  public String getTitle() {
-    return "tile.placer_block.name";
   }
   @Override
   public void initGui() {

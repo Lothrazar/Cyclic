@@ -15,13 +15,13 @@ public class GuiBlockMiner extends GuiBaseContainer {
   boolean debugLabels = false;
   private GuiButtonUncraftingRedstone redstoneBtn;
   public GuiBlockMiner(InventoryPlayer inventoryPlayer, TileMachineBlockMiner tileEntity) {
-    super(new ContainerBlockMiner(inventoryPlayer, tileEntity));
+    super(new ContainerBlockMiner(inventoryPlayer, tileEntity),tileEntity);
     tile = tileEntity;
   }
-  @Override
-  public String getTitle() {
-    return "tile.harvester_block.name";
-  }
+//  @Override
+//  public String getTitle() {
+//    return "tile.block_miner.name";
+//  }
   @Override
   public void initGui() {
     super.initGui();

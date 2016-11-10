@@ -46,7 +46,8 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
   public static enum Fields {
     HEIGHT, REDSTONE
   }
-  public TileMachineMinerSmart() {
+  public TileMachineMinerSmart(String n) {
+    super(n);
     inv = new ItemStack[5];
   }
   @Override

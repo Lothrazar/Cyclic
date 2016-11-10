@@ -1,16 +1,21 @@
 package com.lothrazar.cyclicmagic.block;
+import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachinePlacer;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockPlacer extends BlockBaseFacingInventory implements IHasRecipe {
   public BlockPlacer() {
@@ -19,18 +24,10 @@ public class BlockPlacer extends BlockBaseFacingInventory implements IHasRecipe 
     this.setSoundType(SoundType.METAL);
     this.setTickRandomly(true);
   }
-  //  @Override
-  //  public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-  //    TileMachinePlacer tileEntity = (TileMachinePlacer) world.getTileEntity(pos);
-  //    if (tileEntity == null || player.isSneaking()) { return false; }
-  //    if (world.isRemote) { return true; }
-  //    int x = pos.getX(), y = pos.getY(), z = pos.getZ();
-  //    player.openGui(ModMain.instance, ModGuiHandler.GUI_INDEX_PLACER, world, x, y, z);
-  //    return true;
-  //  }
+
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
-    return new TileMachinePlacer();
+    return new TileMachinePlacer("tile.placer_block.name");
   }
   @Override
   public boolean hasTileEntity() {
@@ -51,5 +48,9 @@ public class BlockPlacer extends BlockBaseFacingInventory implements IHasRecipe 
         's', Blocks.DISPENSER,
         'r', Blocks.STONE,
         'b', Items.REDSTONE);
+  }
+  @SideOnly(Side.CLIENT)
+  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+    tooltip.add(UtilChat.lang("tile.placer_block.tooltip"));
   }
 }

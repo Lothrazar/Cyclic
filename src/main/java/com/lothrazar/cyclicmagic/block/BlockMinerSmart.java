@@ -27,7 +27,7 @@ public class BlockMinerSmart extends BlockBaseFacingInventory implements IHasRec
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
-    return new TileMachineMinerSmart();
+    return new TileMachineMinerSmart("tile.block_miner_smart.name");
   }
   @Override
   public boolean hasTileEntity() {
@@ -37,11 +37,6 @@ public class BlockMinerSmart extends BlockBaseFacingInventory implements IHasRec
   public boolean hasTileEntity(IBlockState state) {
     return hasTileEntity();
   }
-  //  @Override
-  //  public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-  ////    ((TileMachineMinerSmart) worldIn.getTileEntity(pos)).breakBlock(worldIn, pos, state);
-  //    super.breakBlock(worldIn, pos, state);
-  //  }
   @Override
   public void addRecipe() {
     GameRegistry.addRecipe(new ItemStack(this),

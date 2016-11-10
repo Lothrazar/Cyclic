@@ -14,12 +14,8 @@ public class GuiHarvester extends GuiBaseContanerProgress {
   boolean debugLabels = false;
   private GuiButtonUncraftingRedstone redstoneBtn;
   public GuiHarvester(InventoryPlayer inventoryPlayer, TileMachineHarvester tileEntity) {
-    super(new ContainerHarvester(inventoryPlayer, tileEntity));
+    super(new ContainerHarvester(inventoryPlayer, tileEntity),tileEntity);
     tile = tileEntity;
-  }
-  @Override
-  public String getTitle() {
-    return "tile.harvester_block.name";
   }
   @Override
   public void initGui() {

@@ -8,7 +8,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
 
 public class TileMachineHarvester extends TileEntityBaseMachineInvo implements ITileRedstoneToggle {
   private int timer;
@@ -21,17 +20,14 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
   public static enum Fields {
     TIMER, REDSTONE
   }
-  public TileMachineHarvester() {
+  public TileMachineHarvester(String n) {
+    super(n);
     this.timer = TIMER_FULL;
     conf = new HarestCropsConfig();
     conf.doesCrops = true;
     conf.doesMushroom = true;
     conf.doesPumpkinBlocks = true;
     conf.doesMelonBlocks = true;
-  }
-  @Override
-  public ITextComponent getDisplayName() {
-    return null;
   }
   public void setHarvestConf(HarestCropsConfig c) {
     conf = c;

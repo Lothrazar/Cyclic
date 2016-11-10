@@ -36,7 +36,8 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
   public static enum Fields {
     TIMER, SPEED, REDSTONE
   }
-  public TileMachineUser() {
+  public TileMachineUser(String n) {
+    super(n);
     inv = new ItemStack[9];
     timer = TIMER_FULL;
     speed = 1;

@@ -14,12 +14,12 @@ public class GuiFisher extends GuiBaseContainer {
   public static final ResourceLocation SLOTFISH = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_fish.png");
   private TileEntityFishing tile;
   public GuiFisher(InventoryPlayer inventoryPlayer, TileEntityFishing tileEntity) {
-    super(new ContainerFisher(inventoryPlayer, tileEntity));
+    super(new ContainerFisher(inventoryPlayer, tileEntity),tileEntity);
     tile = tileEntity;
   }
-  public GuiFisher(Container c) {
-    super(c);
-  }
+//  public GuiFisher(Container c) {
+//    super(c);
+//  }
   public String getTitle() {
     return "tile.block_fishing.name";
   }

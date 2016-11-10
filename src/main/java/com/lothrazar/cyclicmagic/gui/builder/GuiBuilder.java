@@ -25,12 +25,12 @@ public class GuiBuilder extends GuiBaseContanerProgress {
   private int yOffset = 10 + padding;
   private GuiButtonUncraftingRedstone redstoneBtn;
   public GuiBuilder(InventoryPlayer inventoryPlayer, TileMachineStructureBuilder tileEntity) {
-    super(new ContainerBuilder(inventoryPlayer, tileEntity));
+    super(new ContainerBuilder(inventoryPlayer, tileEntity),tileEntity);
     tile = tileEntity;
   }
-  public GuiBuilder(Container c) {
-    super(c);
-  }
+//  public GuiBuilder(Container c, TileMachineStructureBuilder tileEntity) {
+//    super(c,tileEntity);
+//  }
   @Override
   public void initGui() {
     super.initGui();

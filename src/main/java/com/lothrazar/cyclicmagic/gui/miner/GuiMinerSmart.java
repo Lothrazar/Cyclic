@@ -19,12 +19,12 @@ public class GuiMinerSmart extends GuiBaseContainer {
   private ButtonMinerHeight btnHeightUp;
   private GuiButtonUncraftingRedstone redstoneBtn;
   public GuiMinerSmart(InventoryPlayer inventoryPlayer, TileMachineMinerSmart tileEntity) {
-    super(new ContainerMinerSmart(inventoryPlayer, tileEntity));
+    super(new ContainerMinerSmart(inventoryPlayer, tileEntity),tileEntity);
     tile = tileEntity;
   }
-  public GuiMinerSmart(Container c) {
-    super(c);
-  }
+//  public GuiMinerSmart(Container c) {
+//    super(c);
+//  }
   public String getTitle() {
     return "tile.block_miner_smart.name";
   }

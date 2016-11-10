@@ -27,7 +27,7 @@ public class BlockUser extends BlockBaseFacingInventory implements IHasRecipe {
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
-    return new TileMachineUser();
+    return new TileMachineUser("tile.block_user.name");
   }
   @Override
   public boolean hasTileEntity() {

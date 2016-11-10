@@ -15,12 +15,12 @@ public class GuiUser extends GuiBaseContanerProgress {
   private TileMachineUser tile;
   private GuiButtonUncraftingRedstone redstoneBtn;
   public GuiUser(InventoryPlayer inventoryPlayer, TileMachineUser tileEntity) {
-    super(new ContainerUser(inventoryPlayer, tileEntity));
+    super(new ContainerUser(inventoryPlayer, tileEntity),tileEntity);
     tile = tileEntity;
   }
-  public GuiUser(Container c) {
-    super(c);
-  }
+//  public GuiUser(Container c) {
+//    super(c);
+//  }
   public String getTitle() {
     return "tile.block_user.name";
   }

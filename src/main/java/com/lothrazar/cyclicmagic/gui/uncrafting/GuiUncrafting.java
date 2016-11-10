@@ -13,12 +13,12 @@ public class GuiUncrafting extends GuiBaseContanerProgress {
   private TileMachineUncrafter tile;
   private GuiButtonUncraftingRedstone redstoneBtn;
   public GuiUncrafting(InventoryPlayer inventoryPlayer, TileMachineUncrafter tileEntity) {
-    super(new ContainerUncrafting(inventoryPlayer, tileEntity));
+    super(new ContainerUncrafting(inventoryPlayer, tileEntity),tileEntity);
     tile = tileEntity;
   }
-  public GuiUncrafting(Container c) {
-    super(c);
-  }
+//  public GuiUncrafting(Container c) {
+//    super(c);
+//  }
   public String getTitle() {
     return "tile.uncrafting_block.name";
   }

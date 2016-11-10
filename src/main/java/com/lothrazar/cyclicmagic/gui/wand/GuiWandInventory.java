@@ -70,10 +70,6 @@ public class GuiWandInventory extends GuiBaseContainer {
     this.mc.getTextureManager().bindTexture(getBackground());
     this.drawTexturedModalRect((this.width - this.xSize) / 2, (this.height - this.ySize) / 2, 0, 0, this.xSize, this.ySize);
   }
-  @Override
-  public String getTitle() {
-    return null;
-  }
   public ResourceLocation getBackground() {
     return BACKGROUND;
   }
