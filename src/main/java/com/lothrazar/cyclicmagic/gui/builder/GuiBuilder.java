@@ -6,7 +6,6 @@ import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -28,9 +27,6 @@ public class GuiBuilder extends GuiBaseContanerProgress {
     super(new ContainerBuilder(inventoryPlayer, tileEntity),tileEntity);
     tile = tileEntity;
   }
-//  public GuiBuilder(Container c, TileMachineStructureBuilder tileEntity) {
-//    super(c,tileEntity);
-//  }
   @Override
   public void initGui() {
     super.initGui();

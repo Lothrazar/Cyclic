@@ -6,7 +6,6 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.inventory.Container;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -19,7 +18,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
   }
   public GuiBaseContainer(Container inventorySlotsIn) {
     super(inventorySlotsIn);
-    this.tile = null;
+    this.tile = null;//wand 
   }
   public ResourceLocation getBackground() {
     return Const.Res.TABLEDEFAULT;//can override

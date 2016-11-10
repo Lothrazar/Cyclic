@@ -5,7 +5,6 @@ import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -17,9 +16,6 @@ public class GuiFisher extends GuiBaseContainer {
     super(new ContainerFisher(inventoryPlayer, tileEntity),tileEntity);
     tile = tileEntity;
   }
-//  public GuiFisher(Container c) {
-//    super(c);
-//  }
   public String getTitle() {
     return "tile.block_fishing.name";
   }

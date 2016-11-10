@@ -5,7 +5,6 @@ import com.lothrazar.cyclicmagic.gui.GuiBaseContanerProgress;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -16,9 +15,6 @@ public class GuiUncrafting extends GuiBaseContanerProgress {
     super(new ContainerUncrafting(inventoryPlayer, tileEntity),tileEntity);
     tile = tileEntity;
   }
-//  public GuiUncrafting(Container c) {
-//    super(c);
-//  }
   public String getTitle() {
     return "tile.uncrafting_block.name";
   }

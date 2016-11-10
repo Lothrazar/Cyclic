@@ -7,7 +7,6 @@ import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -22,9 +21,6 @@ public class GuiMinerSmart extends GuiBaseContainer {
     super(new ContainerMinerSmart(inventoryPlayer, tileEntity),tileEntity);
     tile = tileEntity;
   }
-//  public GuiMinerSmart(Container c) {
-//    super(c);
-//  }
   public String getTitle() {
     return "tile.block_miner_smart.name";
   }
