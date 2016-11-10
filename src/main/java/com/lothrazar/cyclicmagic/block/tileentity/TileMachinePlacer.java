@@ -80,12 +80,12 @@ public class TileMachinePlacer extends TileEntityBaseMachineInvo implements ITil
         break;
       }
   }
-  public int getTimer() {
-    return this.getField(Fields.TIMER.ordinal());
-  }
   @Override
   public int getFieldCount() {
     return Fields.values().length;
+  }
+  public int getTimer() {
+    return this.getField(Fields.TIMER.ordinal());
   }
   @Override
   public void clear() {

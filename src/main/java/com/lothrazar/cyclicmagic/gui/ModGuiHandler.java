@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.gui;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFishing;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
+import com.lothrazar.cyclicmagic.block.tileentity.TileMachineHarvester;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMinerSmart;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineStructureBuilder;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachinePlacer;
@@ -14,6 +15,8 @@ import com.lothrazar.cyclicmagic.gui.miner.ContainerMiner;
 import com.lothrazar.cyclicmagic.gui.miner.GuiMiner;
 import com.lothrazar.cyclicmagic.gui.password.ContainerPassword;
 import com.lothrazar.cyclicmagic.gui.password.GuiPassword;
+import com.lothrazar.cyclicmagic.gui.harvester.ContainerHarvester;
+import com.lothrazar.cyclicmagic.gui.harvester.GuiHarvester;
 import com.lothrazar.cyclicmagic.gui.placer.ContainerPlacer;
 import com.lothrazar.cyclicmagic.gui.placer.GuiPlacer;
 import com.lothrazar.cyclicmagic.gui.player.ContainerPlayerExtended;
@@ -57,6 +60,7 @@ public class ModGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_FISHER = 9;
   public static final int GUI_INDEX_PWORKBENCH = 10;
   public static final int GUI_INDEX_USER = 11;
+  public static final int GUI_INDEX_HARVESTER = 12;
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
     TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
@@ -70,6 +74,10 @@ public class ModGuiHandler implements IGuiHandler {
       return new ContainerWand(player, player.inventory, new InventoryWand(player, wand));
     case GUI_INDEX_UNCRAFTING:
       if (te != null && te instanceof TileMachineUncrafter) { return new ContainerUncrafting(player.inventory, (TileMachineUncrafter) te); }
+      break;
+    case GUI_INDEX_HARVESTER:
+      if (te != null && te instanceof TileMachineHarvester) { return new ContainerHarvester(player.inventory, (TileMachineHarvester) te); }
+      
       break;
     case GUI_INDEX_STORAGE:
       ItemStack s = ItemStorageBag.getPlayerItemIfHeld(player);
@@ -125,6 +133,9 @@ public class ModGuiHandler implements IGuiHandler {
         return new GuiWandInventory(new ContainerWand(player, player.inventory, new InventoryWand(player, wand)), wand);
       case GUI_INDEX_UNCRAFTING:
         if (te instanceof TileMachineUncrafter) { return new GuiUncrafting(player.inventory, (TileMachineUncrafter) te); }
+        break;
+      case GUI_INDEX_HARVESTER:
+        if (te instanceof TileMachineHarvester) { return new GuiHarvester(player.inventory, (TileMachineHarvester) te); }
         break;
       case GUI_INDEX_STORAGE:
         ItemStack s = ItemStorageBag.getPlayerItemIfHeld(player);
