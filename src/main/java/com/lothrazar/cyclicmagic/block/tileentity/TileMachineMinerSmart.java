@@ -36,6 +36,10 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
   private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots for all faces
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
+  private static final String NBT_REDST = "redstone";
+
+  final int RADIUS = 4;//center plus 4 in each direction = 9x9
+  private int needsRedstone = 1;
   int height = 6;
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
@@ -131,8 +135,6 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
     }
     return true;
   }
-  final int RADIUS = 4;//center plus 4 in each direction = 9x9
-  private int needsRedstone = 1;
   private void updateTargetPos() {
     //lets make it a AxA?
     //always restart here so we dont offset out of bounds
@@ -177,16 +179,18 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
   private static final String NBTPLAYERID = "uuid";
   private static final String NBTTARGET = "target";
   @Override
-  public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+  public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
+    tagCompound.setInteger(NBT_REDST, this.needsRedstone);
+    
     if (uuid != null) {
-      compound.setString(NBTPLAYERID, uuid.toString());
+      tagCompound.setString(NBTPLAYERID, uuid.toString());
     }
     if (targetPos != null) {
-      compound.setIntArray(NBTTARGET, new int[] { targetPos.getX(), targetPos.getY(), targetPos.getZ() });
+      tagCompound.setIntArray(NBTTARGET, new int[] { targetPos.getX(), targetPos.getY(), targetPos.getZ() });
     }
-    compound.setBoolean(NBTMINING, isCurrentlyMining);
-    compound.setFloat(NBTDAMAGE, curBlockDamage);
-    compound.setInteger("h", height);
+    tagCompound.setBoolean(NBTMINING, isCurrentlyMining);
+    tagCompound.setFloat(NBTDAMAGE, curBlockDamage);
+    tagCompound.setInteger("h", height);
     //invo stuff
     NBTTagList itemList = new NBTTagList();
     for (int i = 0; i < inv.length; i++) {
@@ -198,26 +202,28 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
         itemList.appendTag(tag);
       }
     }
-    compound.setTag(NBT_INV, itemList);
-    return super.writeToNBT(compound);
+    tagCompound.setTag(NBT_INV, itemList);
+    return super.writeToNBT(tagCompound);
   }
   @Override
-  public void readFromNBT(NBTTagCompound compound) {
-    super.readFromNBT(compound);
-    if (compound.hasKey(NBTPLAYERID)) {
-      uuid = UUID.fromString(compound.getString(NBTPLAYERID));
+  public void readFromNBT(NBTTagCompound tagCompound) {
+    super.readFromNBT(tagCompound);
+    this.needsRedstone = tagCompound.getInteger(NBT_REDST);
+    
+    if (tagCompound.hasKey(NBTPLAYERID)) {
+      uuid = UUID.fromString(tagCompound.getString(NBTPLAYERID));
     }
-    if (compound.hasKey(NBTTARGET)) {
-      int[] coords = compound.getIntArray(NBTTARGET);
+    if (tagCompound.hasKey(NBTTARGET)) {
+      int[] coords = tagCompound.getIntArray(NBTTARGET);
       if (coords.length >= 3) {
         targetPos = new BlockPos(coords[0], coords[1], coords[2]);
       }
     }
-    isCurrentlyMining = compound.getBoolean(NBTMINING);
-    curBlockDamage = compound.getFloat(NBTDAMAGE);
-    height = compound.getInteger("h");
+    isCurrentlyMining = tagCompound.getBoolean(NBTMINING);
+    curBlockDamage = tagCompound.getFloat(NBTDAMAGE);
+    height = tagCompound.getInteger("h");
     //invo stuff
-    NBTTagList tagList = compound.getTagList(NBT_INV, 10);
+    NBTTagList tagList = tagCompound.getTagList(NBT_INV, 10);
     for (int i = 0; i < tagList.tagCount(); i++) {
       NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
       byte slot = tag.getByte(NBT_SLOT);

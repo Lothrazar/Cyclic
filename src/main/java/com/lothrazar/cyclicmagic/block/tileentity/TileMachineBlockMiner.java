@@ -87,8 +87,9 @@ public class TileMachineBlockMiner extends TileEntityBaseMachineInvo implements 
   private boolean isCurrentlyMining;
   private WeakReference<FakePlayer> fakePlayer;
   private float curBlockDamage;
-  private int needsRedstone;
+  private int needsRedstone = 1;
   private BlockPos targetPos = null;
+  private static final String NBT_REDST = "redstone";
   public static enum Fields {
     REDSTONE
   }
@@ -217,30 +218,34 @@ public class TileMachineBlockMiner extends TileEntityBaseMachineInvo implements 
   private static final String NBTPLAYERID = "uuid";
   private static final String NBTTARGET = "target";
   @Override
-  public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+  public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
+    tagCompound.setInteger(NBT_REDST, this.needsRedstone);
     if (uuid != null) {
-      compound.setString(NBTPLAYERID, uuid.toString());
+      tagCompound.setString(NBTPLAYERID, uuid.toString());
     }
     if (targetPos != null) {
-      compound.setIntArray(NBTTARGET, new int[] { targetPos.getX(), targetPos.getY(), targetPos.getZ() });
+      tagCompound.setIntArray(NBTTARGET, new int[] { targetPos.getX(), targetPos.getY(), targetPos.getZ() });
     }
-    compound.setBoolean(NBTMINING, isCurrentlyMining);
-    compound.setFloat(NBTDAMAGE, curBlockDamage);
-    return compound;
+    tagCompound.setBoolean(NBTMINING, isCurrentlyMining);
+    tagCompound.setFloat(NBTDAMAGE, curBlockDamage);
+
+    return super.writeToNBT(tagCompound);
   }
   @Override
-  public void readFromNBT(NBTTagCompound compound) {
-    if (compound.hasKey(NBTPLAYERID)) {
-      uuid = UUID.fromString(compound.getString(NBTPLAYERID));
+  public void readFromNBT(NBTTagCompound tagCompound) {
+    super.readFromNBT(tagCompound);
+    this.needsRedstone = tagCompound.getInteger(NBT_REDST);
+    if (tagCompound.hasKey(NBTPLAYERID)) {
+      uuid = UUID.fromString(tagCompound.getString(NBTPLAYERID));
     }
-    if (compound.hasKey(NBTTARGET)) {
-      int[] coords = compound.getIntArray(NBTTARGET);
+    if (tagCompound.hasKey(NBTTARGET)) {
+      int[] coords = tagCompound.getIntArray(NBTTARGET);
       if (coords.length >= 3) {
         targetPos = new BlockPos(coords[0], coords[1], coords[2]);
       }
     }
-    isCurrentlyMining = compound.getBoolean(NBTMINING);
-    curBlockDamage = compound.getFloat(NBTDAMAGE);
+    isCurrentlyMining = tagCompound.getBoolean(NBTMINING);
+    curBlockDamage = tagCompound.getFloat(NBTDAMAGE);
   }
   public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
     if (isCurrentlyMining && uuid != null) {

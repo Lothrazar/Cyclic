@@ -15,7 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
 
-public class TileMachineUser extends TileEntityBaseMachineInvo implements  ITileRedstoneToggle {
+public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileRedstoneToggle {
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
   // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
@@ -26,6 +26,8 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements  ITile
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
   private static final String NBT_TIMER = "Timer";
+  private static final String NBT_REDST = "redstone";
+  private static final String NBT_SPEED = "h";//WTF why did i name it this
   private int speed = 1;
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
@@ -77,9 +79,7 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements  ITile
         targetPos = targetPos.down();
       }
       ItemStack stack = getStackInSlot(0);
-      if (stack == null) {
-        return;
-      }
+      if (stack == null) { return; }
       if (!(this.onlyRunIfPowered() && this.isPowered() == false)) {
         timer -= this.getSpeed();
         if (timer <= 0) {
@@ -96,15 +96,13 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements  ITile
   private static final String NBTPLAYERID = "uuid";
   //  private static final String NBTTARGET = "target";
   @Override
-  public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-    compound.setInteger(NBT_TIMER, timer);
+  public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
+    tagCompound.setInteger(NBT_TIMER, timer);
     if (uuid != null) {
-      compound.setString(NBTPLAYERID, uuid.toString());
+      tagCompound.setString(NBTPLAYERID, uuid.toString());
     }
-    //    if (targetPos != null) {
-    //      compound.setIntArray(NBTTARGET, new int[] { targetPos.getX(), targetPos.getY(), targetPos.getZ() });
-    //    }
-    compound.setInteger("h", speed);
+    tagCompound.setInteger(NBT_REDST, this.needsRedstone);
+    tagCompound.setInteger(NBT_SPEED, speed);
     //invo stuff
     NBTTagList itemList = new NBTTagList();
     for (int i = 0; i < inv.length; i++) {
@@ -116,25 +114,20 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements  ITile
         itemList.appendTag(tag);
       }
     }
-    compound.setTag(NBT_INV, itemList);
-    return super.writeToNBT(compound);
+    tagCompound.setTag(NBT_INV, itemList);
+    return super.writeToNBT(tagCompound);
   }
   @Override
-  public void readFromNBT(NBTTagCompound compound) {
-    super.readFromNBT(compound);
-    timer = compound.getInteger(NBT_TIMER);
-    if (compound.hasKey(NBTPLAYERID)) {
-      uuid = UUID.fromString(compound.getString(NBTPLAYERID));
+  public void readFromNBT(NBTTagCompound tagCompound) {
+    super.readFromNBT(tagCompound);
+    timer = tagCompound.getInteger(NBT_TIMER);
+    if (tagCompound.hasKey(NBTPLAYERID)) {
+      uuid = UUID.fromString(tagCompound.getString(NBTPLAYERID));
     }
-    //    if (compound.hasKey(NBTTARGET)) {
-    //      int[] coords = compound.getIntArray(NBTTARGET);
-    //      if (coords.length >= 3) {
-    //        targetPos = new BlockPos(coords[0], coords[1], coords[2]);
-    //      }
-    //    }
-    speed = compound.getInteger("h");
+    tagCompound.setInteger(NBT_REDST, this.needsRedstone);
+    speed = tagCompound.getInteger(NBT_SPEED);
     //invo stuff
-    NBTTagList tagList = compound.getTagList(NBT_INV, 10);
+    NBTTagList tagList = tagCompound.getTagList(NBT_INV, 10);
     for (int i = 0; i < tagList.tagCount(); i++) {
       NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
       byte slot = tag.getByte(NBT_SLOT);

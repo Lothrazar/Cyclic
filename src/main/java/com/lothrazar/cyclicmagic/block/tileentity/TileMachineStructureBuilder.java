@@ -9,8 +9,6 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;// net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
@@ -39,6 +37,7 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
   private static final String NBT_SHAPE = "shape";
   private static final String NBT_SPEED = "speed";
   private static final String NBT_SIZE = "size";
+  private static final String NBT_REDST = "redstone";
   private static final String NBT_SHAPEINDEX = "shapeindex";
   public static enum Fields {
     TIMER, BUILDTYPE, SPEED, SIZE, HEIGHT, REDSTONE
@@ -228,6 +227,8 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
+    this.needsRedstone = tagCompound.getInteger(NBT_REDST);
+    
     timer = tagCompound.getInteger(NBT_TIMER);
     shapeIndex = tagCompound.getInteger(NBT_SHAPEINDEX);
     nextPos = UtilNBT.stringCSVToBlockPos(tagCompound.getString(NBT_NEXTPOS));// =
@@ -264,6 +265,8 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
     tagCompound.setInteger(NBT_TIMER, timer);
+    tagCompound.setInteger(NBT_REDST, this.needsRedstone);
+    
     tagCompound.setInteger(NBT_SHAPEINDEX, this.shapeIndex);
     if (nextPos == null || (nextPos.getX() == 0 && nextPos.getY() == 0 && nextPos.getZ() == 0)) {
       nextPos = this.pos;// fallback if it fails
@@ -295,22 +298,7 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
     tagCompound.setInteger(NBT_SIZE, this.getSize());
     return super.writeToNBT(tagCompound);
   }
-  @Override
-  public SPacketUpdateTileEntity getUpdatePacket() {
-    // getDescriptionPacket()
-    // Gathers data into a packet (S35PacketUpdateTileEntity) that is to be
-    // sent to the client. Called on server only.
-    NBTTagCompound syncData = new NBTTagCompound();
-    this.writeToNBT(syncData);
-    return new SPacketUpdateTileEntity(this.pos, 1, syncData);
-  }
-  @Override
-  public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-    // Extracts data from a packet (S35PacketUpdateTileEntity) that was sent
-    // from the server. Called on client only.
-    this.readFromNBT(pkt.getNbtCompound());
-    super.onDataPacket(net, pkt);
-  }
+
   public BlockPos getNextPos() {
     return this.nextPos;
   }

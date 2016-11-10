@@ -71,8 +71,8 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements  
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
-    timer = tagCompound.getInteger(NBT_TIMER);
     this.needsRedstone = tagCompound.getInteger(NBT_REDST);
+    timer = tagCompound.getInteger(NBT_TIMER);
     NBTTagList tagList = tagCompound.getTagList(NBT_INV, 10);
     for (int i = 0; i < tagList.tagCount(); i++) {
       NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
