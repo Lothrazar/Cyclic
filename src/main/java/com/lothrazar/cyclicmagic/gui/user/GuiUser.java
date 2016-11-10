@@ -2,25 +2,32 @@ package com.lothrazar.cyclicmagic.gui.user;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUser;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUser.Fields;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContanerProgress;
+import com.lothrazar.cyclicmagic.gui.uncrafting.GuiButtonUncraftingRedstone;
 import com.lothrazar.cyclicmagic.gui.user.ContainerUser;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiUser extends GuiBaseContanerProgress {
   private TileMachineUser tile;
+  private GuiButtonUncraftingRedstone redstoneBtn;
   public GuiUser(InventoryPlayer inventoryPlayer, TileMachineUser tileEntity) {
-    super(new ContainerUser(inventoryPlayer, tileEntity));
+    super(new ContainerUser(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
-  }
-  public GuiUser(Container c) {
-    super(c);
   }
   public String getTitle() {
     return "tile.block_user.name";
+  }
+  @Override
+  public void initGui() {
+    super.initGui();
+    redstoneBtn = new GuiButtonUncraftingRedstone(0,
+        this.guiLeft + 8,
+        this.guiTop + 8, this.tile.getPos());
+    redstoneBtn.setTextureIndex(tile.getField(Fields.REDSTONE.ordinal()));
+    this.buttonList.add(redstoneBtn);
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
@@ -34,11 +41,8 @@ public class GuiUser extends GuiBaseContanerProgress {
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+    redstoneBtn.setState(tile.getField(Fields.REDSTONE.ordinal()));
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-    //yes this works, it renders the speed. Not yet used, its always 1
-    //    int x = ContainerMiner.SLOTX_START +40, y = 30;
-    //    this.fontRendererObj.drawString(tile.getSpeed()+"", x, y, 4210752);
-    //    updateDisabledButtons();
   }
   public int getProgressX() {
     return this.guiLeft + 10;

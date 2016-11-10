@@ -24,7 +24,7 @@ import net.minecraftforge.common.util.FakePlayer;
  * SEE TileMachineMiner
  * 
  */
-public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
+public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements ITileRedstoneToggle {
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
   // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
@@ -36,11 +36,14 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
   private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots for all faces
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
-  int height = 6;//TODO: gui field
+  private static final String NBT_REDST = "redstone";
+  final int RADIUS = 4;//center plus 4 in each direction = 9x9
+  private int needsRedstone = 1;
+  int height = 6;
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
   public static enum Fields {
-    HEIGHT
+    HEIGHT, REDSTONE
   }
   public TileMachineMinerSmart() {
     inv = new ItemStack[5];
@@ -48,7 +51,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
   @Override
   public void update() {
     int toolSlot = inv.length - 1;
-    if (this.isPowered()) {
+    if (!(this.onlyRunIfPowered() && this.isPowered() == false)) {
       this.spawnParticlesAbove();
     }
     if (worldObj instanceof WorldServer) {
@@ -80,7 +83,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
       if (targetPos == null) {
         targetPos = pos.offset(this.getCurrentFacing()); //not sure if this is needed
       }
-      if (this.isPowered()) {
+      if (!(this.onlyRunIfPowered() && this.isPowered() == false)) {
         if (isCurrentlyMining == false) { //we can mine but are not currently
           this.updateTargetPos();
           if (isTargetValid()) { //we have a valid target
@@ -131,7 +134,6 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
     }
     return true;
   }
-  final int RADIUS = 4;//center plus 4 in each direction = 9x9
   private void updateTargetPos() {
     //lets make it a AxA?
     //always restart here so we dont offset out of bounds
@@ -176,16 +178,17 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
   private static final String NBTPLAYERID = "uuid";
   private static final String NBTTARGET = "target";
   @Override
-  public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+  public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
+    tagCompound.setInteger(NBT_REDST, this.needsRedstone);
     if (uuid != null) {
-      compound.setString(NBTPLAYERID, uuid.toString());
+      tagCompound.setString(NBTPLAYERID, uuid.toString());
     }
     if (targetPos != null) {
-      compound.setIntArray(NBTTARGET, new int[] { targetPos.getX(), targetPos.getY(), targetPos.getZ() });
+      tagCompound.setIntArray(NBTTARGET, new int[] { targetPos.getX(), targetPos.getY(), targetPos.getZ() });
     }
-    compound.setBoolean(NBTMINING, isCurrentlyMining);
-    compound.setFloat(NBTDAMAGE, curBlockDamage);
-    compound.setInteger("h", height);
+    tagCompound.setBoolean(NBTMINING, isCurrentlyMining);
+    tagCompound.setFloat(NBTDAMAGE, curBlockDamage);
+    tagCompound.setInteger("h", height);
     //invo stuff
     NBTTagList itemList = new NBTTagList();
     for (int i = 0; i < inv.length; i++) {
@@ -197,26 +200,27 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
         itemList.appendTag(tag);
       }
     }
-    compound.setTag(NBT_INV, itemList);
-    return super.writeToNBT(compound);
+    tagCompound.setTag(NBT_INV, itemList);
+    return super.writeToNBT(tagCompound);
   }
   @Override
-  public void readFromNBT(NBTTagCompound compound) {
-    super.readFromNBT(compound);
-    if (compound.hasKey(NBTPLAYERID)) {
-      uuid = UUID.fromString(compound.getString(NBTPLAYERID));
+  public void readFromNBT(NBTTagCompound tagCompound) {
+    super.readFromNBT(tagCompound);
+    this.needsRedstone = tagCompound.getInteger(NBT_REDST);
+    if (tagCompound.hasKey(NBTPLAYERID)) {
+      uuid = UUID.fromString(tagCompound.getString(NBTPLAYERID));
     }
-    if (compound.hasKey(NBTTARGET)) {
-      int[] coords = compound.getIntArray(NBTTARGET);
+    if (tagCompound.hasKey(NBTTARGET)) {
+      int[] coords = tagCompound.getIntArray(NBTTARGET);
       if (coords.length >= 3) {
         targetPos = new BlockPos(coords[0], coords[1], coords[2]);
       }
     }
-    isCurrentlyMining = compound.getBoolean(NBTMINING);
-    curBlockDamage = compound.getFloat(NBTDAMAGE);
-    height = compound.getInteger("h");
+    isCurrentlyMining = tagCompound.getBoolean(NBTMINING);
+    curBlockDamage = tagCompound.getFloat(NBTDAMAGE);
+    height = tagCompound.getInteger("h");
     //invo stuff
-    NBTTagList tagList = compound.getTagList(NBT_INV, 10);
+    NBTTagList tagList = tagCompound.getTagList(NBT_INV, 10);
     for (int i = 0; i < tagList.tagCount(); i++) {
       NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
       byte slot = tag.getByte(NBT_SLOT);
@@ -285,8 +289,8 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
     switch (Fields.values()[id]) {
     case HEIGHT:
       return getHeight();
-    default:
-      break;
+    case REDSTONE:
+      return this.needsRedstone;
     }
     return 0;
   }
@@ -298,7 +302,8 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
         value = maxHeight;
       }
       setHeight(value);
-    default:
+    case REDSTONE:
+      needsRedstone = value;
       break;
     }
   }
@@ -327,5 +332,16 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo {
     // from the server. Called on client only.
     this.readFromNBT(pkt.getNbtCompound());
     super.onDataPacket(net, pkt);
+  }
+  @Override
+  public void toggleNeedsRedstone() {
+    int val = this.needsRedstone + 1;
+    if (val > 1) {
+      val = 0;//hacky lazy way
+    }
+    this.setField(Fields.REDSTONE.ordinal(), val);
+  }
+  private boolean onlyRunIfPowered() {
+    return this.needsRedstone == 1;
   }
 }

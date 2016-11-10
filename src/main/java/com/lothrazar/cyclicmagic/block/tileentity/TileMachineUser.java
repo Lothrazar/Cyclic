@@ -15,7 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
 
-public class TileMachineUser extends TileEntityBaseMachineInvo {
+public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileRedstoneToggle {
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
   // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
@@ -26,12 +26,15 @@ public class TileMachineUser extends TileEntityBaseMachineInvo {
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
   private static final String NBT_TIMER = "Timer";
+  private static final String NBT_REDST = "redstone";
+  private static final String NBT_SPEED = "h";//WTF why did i name it this
   private int speed = 1;
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
   private int timer;
+  private int needsRedstone = 1;
   public static enum Fields {
-    TIMER, SPEED
+    TIMER, SPEED, REDSTONE
   }
   public TileMachineUser() {
     inv = new ItemStack[9];
@@ -42,7 +45,7 @@ public class TileMachineUser extends TileEntityBaseMachineInvo {
   public void update() {
     this.shiftAllUp();
     int toolSlot = 0;
-    if (this.isPowered()) {
+    if (!(this.onlyRunIfPowered() && this.isPowered() == false)) {
       this.spawnParticlesAbove();
     }
     if (worldObj instanceof WorldServer) {
@@ -76,24 +79,16 @@ public class TileMachineUser extends TileEntityBaseMachineInvo {
         targetPos = targetPos.down();
       }
       ItemStack stack = getStackInSlot(0);
-      if (stack == null) {
-        timer = TIMER_FULL;// reset just like you would in a
-        // furnace
-        return;
-      }
-      if (this.isPowered()) {
+      if (stack == null) { return; }
+      if (!(this.onlyRunIfPowered() && this.isPowered() == false)) {
         timer -= this.getSpeed();
         if (timer <= 0) {
           timer = 0;
         }
         if (timer == 0) {
-          //          System.out.println("GOOO" + fakePlayer.get().getHeldItemMainhand());
           fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), worldObj, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
           timer = TIMER_FULL;
         }
-      }
-      else {
-        timer = 0;
       }
     }
   }
@@ -101,15 +96,13 @@ public class TileMachineUser extends TileEntityBaseMachineInvo {
   private static final String NBTPLAYERID = "uuid";
   //  private static final String NBTTARGET = "target";
   @Override
-  public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-    compound.setInteger(NBT_TIMER, timer);
+  public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
+    tagCompound.setInteger(NBT_TIMER, timer);
     if (uuid != null) {
-      compound.setString(NBTPLAYERID, uuid.toString());
+      tagCompound.setString(NBTPLAYERID, uuid.toString());
     }
-    //    if (targetPos != null) {
-    //      compound.setIntArray(NBTTARGET, new int[] { targetPos.getX(), targetPos.getY(), targetPos.getZ() });
-    //    }
-    compound.setInteger("h", speed);
+    tagCompound.setInteger(NBT_REDST, this.needsRedstone);
+    tagCompound.setInteger(NBT_SPEED, speed);
     //invo stuff
     NBTTagList itemList = new NBTTagList();
     for (int i = 0; i < inv.length; i++) {
@@ -121,25 +114,20 @@ public class TileMachineUser extends TileEntityBaseMachineInvo {
         itemList.appendTag(tag);
       }
     }
-    compound.setTag(NBT_INV, itemList);
-    return super.writeToNBT(compound);
+    tagCompound.setTag(NBT_INV, itemList);
+    return super.writeToNBT(tagCompound);
   }
   @Override
-  public void readFromNBT(NBTTagCompound compound) {
-    super.readFromNBT(compound);
-    timer = compound.getInteger(NBT_TIMER);
-    if (compound.hasKey(NBTPLAYERID)) {
-      uuid = UUID.fromString(compound.getString(NBTPLAYERID));
+  public void readFromNBT(NBTTagCompound tagCompound) {
+    super.readFromNBT(tagCompound);
+    timer = tagCompound.getInteger(NBT_TIMER);
+    if (tagCompound.hasKey(NBTPLAYERID)) {
+      uuid = UUID.fromString(tagCompound.getString(NBTPLAYERID));
     }
-    //    if (compound.hasKey(NBTTARGET)) {
-    //      int[] coords = compound.getIntArray(NBTTARGET);
-    //      if (coords.length >= 3) {
-    //        targetPos = new BlockPos(coords[0], coords[1], coords[2]);
-    //      }
-    //    }
-    speed = compound.getInteger("h");
+    this.needsRedstone = tagCompound.getInteger(NBT_REDST);
+    speed = tagCompound.getInteger(NBT_SPEED);
     //invo stuff
-    NBTTagList tagList = compound.getTagList(NBT_INV, 10);
+    NBTTagList tagList = tagCompound.getTagList(NBT_INV, 10);
     for (int i = 0; i < tagList.tagCount(); i++) {
       NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
       byte slot = tag.getByte(NBT_SLOT);
@@ -198,6 +186,8 @@ public class TileMachineUser extends TileEntityBaseMachineInvo {
       return getSpeed();
     case TIMER:
       return getTimer();
+    case REDSTONE:
+      return this.needsRedstone;
     default:
       break;
     }
@@ -221,7 +211,8 @@ public class TileMachineUser extends TileEntityBaseMachineInvo {
         timer = 0;
       }
       break;
-    default:
+    case REDSTONE:
+      this.needsRedstone = value;
       break;
     }
   }
@@ -253,5 +244,16 @@ public class TileMachineUser extends TileEntityBaseMachineInvo {
   }
   public int getTimer() {
     return timer;
+  }
+  @Override
+  public void toggleNeedsRedstone() {
+    int val = this.needsRedstone + 1;
+    if (val > 1) {
+      val = 0;//hacky lazy way
+    }
+    this.setField(Fields.REDSTONE.ordinal(), val);
+  }
+  private boolean onlyRunIfPowered() {
+    return this.needsRedstone == 1;
   }
 }

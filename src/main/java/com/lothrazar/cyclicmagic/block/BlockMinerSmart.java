@@ -21,13 +21,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockMinerSmart extends BlockBaseFacingInventory implements IHasRecipe {
   public static final PropertyDirection PROPERTYFACING = BlockBaseFacing.PROPERTYFACING;
   public BlockMinerSmart() {
-    super(Material.IRON, ModGuiHandler.GUI_INDEX_MINER);
+    super(Material.IRON, ModGuiHandler.GUI_INDEX_SMARTMINER);
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
-    return new TileMachineMinerSmart();
+    return new TileMachineMinerSmart();//"tile.block_miner_smart.name"
   }
   @Override
   public boolean hasTileEntity() {
@@ -37,11 +37,6 @@ public class BlockMinerSmart extends BlockBaseFacingInventory implements IHasRec
   public boolean hasTileEntity(IBlockState state) {
     return hasTileEntity();
   }
-  //  @Override
-  //  public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-  ////    ((TileMachineMinerSmart) worldIn.getTileEntity(pos)).breakBlock(worldIn, pos, state);
-  //    super.breakBlock(worldIn, pos, state);
-  //  }
   @Override
   public void addRecipe() {
     GameRegistry.addRecipe(new ItemStack(this),

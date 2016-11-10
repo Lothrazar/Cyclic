@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
+import com.lothrazar.cyclicmagic.ModMain;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
@@ -13,6 +14,14 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   @Override
   public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
     return this.isItemValidForSlot(index, itemStackIn);
+  }
+  @Override
+  public String getName() {
+    if (this.getBlockType() == null) {
+      ModMain.logger.error(" null blockType:" + this.getClass().getName());
+      return "";
+    }
+    return this.getBlockType().getUnlocalizedName() + ".name";
   }
   @Override
   public boolean isItemValidForSlot(int index, ItemStack stack) {
@@ -54,10 +63,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   }
   @Override
   public void closeInventory(EntityPlayer player) {
-  }
-  @Override
-  public String getName() {
-    return null;
   }
   @Override
   public void clear() {

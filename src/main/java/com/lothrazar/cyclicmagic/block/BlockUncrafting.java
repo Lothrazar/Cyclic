@@ -47,7 +47,7 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
         " d ",
         "fdf",
         "ooo",
-        'o', Blocks.OBSIDIAN, 'f', Blocks.FURNACE, 'r', Blocks.DROPPER, 
+        'o', Blocks.OBSIDIAN, 'f', Blocks.FURNACE, 'r', Blocks.DROPPER,
         'd', Blocks.DIAMOND_BLOCK);
   }
   @Override
@@ -62,12 +62,10 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
     String[] blacklist = config.getStringList("BlacklistInput", category, deflist, "Items that cannot be uncrafted.  EXAMPLE : '[minecraft:stick,minecraft:dirt]'  ");
     UtilUncraft.setBlacklist(blacklist, BlacklistType.INPUT);
     //OUTPUT
-    deflist = new String[] { "minecraft:milk_bucket", "minecraft:water_bucket", "minecraft:lava_bucket","botania:manaTablet",
-        "harvestcraft:juicerItem", "harvestcraft:mixingbowlItem", "harvestcraft:mortarandpestleItem", 
-        "harvestcraft:bakewareItem", "harvestcraft:saucepanItem","harvestcraft:skilletItem", "harvestcraft:potItem", "harvestcraft:cuttingboardItem", 
-        "mysticalagriculture:infusion_crystal", "mysticalagriculture:master_infusion_crystal" 
-        
-    };
+    deflist = new String[] { "minecraft:milk_bucket", "minecraft:water_bucket", "minecraft:lava_bucket", "botania:manaTablet",
+        "harvestcraft:juicerItem", "harvestcraft:mixingbowlItem", "harvestcraft:mortarandpestleItem",
+        "harvestcraft:bakewareItem", "harvestcraft:saucepanItem", "harvestcraft:skilletItem", "harvestcraft:potItem", "harvestcraft:cuttingboardItem",
+        "mysticalagriculture:infusion_crystal", "mysticalagriculture:master_infusion_crystal" };
     blacklist = config.getStringList("BlacklistOutput", category, deflist, "Items that cannot come out of crafting recipes.  For example, if milk is in here, then cake can be uncrafted, but you get all items except the milk buckets.  ");
     UtilUncraft.setBlacklist(blacklist, BlacklistType.OUTPUT);
     //MODNAME
@@ -75,9 +73,9 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
     blacklist = config.getStringList("BlacklistMod", category, deflist, "If a mod id is in this list, then nothing from that mod will be uncrafted ");
     UtilUncraft.setBlacklist(blacklist, BlacklistType.MODNAME);
     //CONTAINS
-//    deflist = new String[] { "botania:manaTablet","projecte:pe_philosophers_stone" };//bot mana tablet
-//    blacklist = config.getStringList("BlacklistIfIngredient", category, deflist, "If something contains one of these items as output, uncrafting will be blocked.  For example, if you put 'minecraft:iron_ingot' here, you will not be able to uncraft pistons or iron swords or anything that uses iron at all.");
-//    UtilUncraft.setBlacklist(blacklist, BlacklistType.CONTAINS);
+    //    deflist = new String[] { "botania:manaTablet","projecte:pe_philosophers_stone" };//bot mana tablet
+    //    blacklist = config.getStringList("BlacklistIfIngredient", category, deflist, "If something contains one of these items as output, uncrafting will be blocked.  For example, if you put 'minecraft:iron_ingot' here, you will not be able to uncraft pistons or iron swords or anything that uses iron at all.");
+    //    UtilUncraft.setBlacklist(blacklist, BlacklistType.CONTAINS);
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {

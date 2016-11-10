@@ -38,10 +38,10 @@ public class BlockDimensionOre extends BlockOre {
     randomMax = max;
     this.setSoundType(SoundType.STONE);
     this.setHardness(3.0F).setResistance(5.0F);
-    this.setHarvestLevel(Const.ToolStrings.axe,0);
-    this.setHarvestLevel(Const.ToolStrings.shovel,0);
+    this.setHarvestLevel(Const.ToolStrings.axe, 0);
+    this.setHarvestLevel(Const.ToolStrings.shovel, 0);
   }
-  public BlockDimensionOre setPickaxeHarvestLevel(int h){
+  public BlockDimensionOre setPickaxeHarvestLevel(int h) {
     this.setHarvestLevel(Const.ToolStrings.pickaxe, h);
     return this;
   }

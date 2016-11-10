@@ -52,24 +52,18 @@ public class UtilUncraft {
     switch (type) {
     case INPUT:
       itemName = getStringForItem(item);
-      for(String s : blacklistInput){//dont use .contains on the list. must use .equals on string
-        if(s != null && s.equals(itemName)){
-          return true;
-        }
+      for (String s : blacklistInput) {//dont use .contains on the list. must use .equals on string
+        if (s != null && s.equals(itemName)) { return true; }
       }
     case OUTPUT:
       itemName = getStringForItem(item);
-      for(String s : blacklistOutput){//dont use .contains on the list. must use .equals on string
-        if(s != null && s.equals(itemName)){
-          return true;
-        }
+      for (String s : blacklistOutput) {//dont use .contains on the list. must use .equals on string
+        if (s != null && s.equals(itemName)) { return true; }
       }
     case MODNAME:
       String modId = item.getRegistryName().getResourceDomain();// the minecraft part of minecraft:wool (without colon)
-      for(String s : blacklistMod){//dont use .contains on the list. must use .equals on string
-        if(s != null && s.equals(modId)){
-          return true;
-        }
+      for (String s : blacklistMod) {//dont use .contains on the list. must use .equals on string
+        if (s != null && s.equals(modId)) { return true; }
       }
       break;
     default:
@@ -77,7 +71,6 @@ public class UtilUncraft {
     }
     return false;
   }
- 
   /**
    * It works but we dont want to use it right now
    * 

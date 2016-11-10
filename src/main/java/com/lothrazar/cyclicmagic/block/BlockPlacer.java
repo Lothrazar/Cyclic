@@ -19,18 +19,9 @@ public class BlockPlacer extends BlockBaseFacingInventory implements IHasRecipe 
     this.setSoundType(SoundType.METAL);
     this.setTickRandomly(true);
   }
-  //  @Override
-  //  public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-  //    TileMachinePlacer tileEntity = (TileMachinePlacer) world.getTileEntity(pos);
-  //    if (tileEntity == null || player.isSneaking()) { return false; }
-  //    if (world.isRemote) { return true; }
-  //    int x = pos.getX(), y = pos.getY(), z = pos.getZ();
-  //    player.openGui(ModMain.instance, ModGuiHandler.GUI_INDEX_PLACER, world, x, y, z);
-  //    return true;
-  //  }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
-    return new TileMachinePlacer();
+    return new TileMachinePlacer();//"tile.placer_block.name"
   }
   @Override
   public boolean hasTileEntity() {
@@ -52,4 +43,8 @@ public class BlockPlacer extends BlockBaseFacingInventory implements IHasRecipe 
         'r', Blocks.STONE,
         'b', Items.REDSTONE);
   }
+  //  @SideOnly(Side.CLIENT)
+  //  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+  //    tooltip.add(UtilChat.lang("tile.placer_block.tooltip"));
+  //  }
 }

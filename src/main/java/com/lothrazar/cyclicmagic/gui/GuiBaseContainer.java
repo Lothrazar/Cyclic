@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.gui;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
@@ -10,10 +11,15 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class GuiBaseContainer extends GuiContainer {
+  private TileEntityBaseMachineInvo tile;
+  public GuiBaseContainer(Container inventorySlotsIn, TileEntityBaseMachineInvo tile) {
+    super(inventorySlotsIn);
+    this.tile = tile;
+  }
   public GuiBaseContainer(Container inventorySlotsIn) {
     super(inventorySlotsIn);
+    this.tile = null;//wand 
   }
-  public abstract String getTitle();
   public ResourceLocation getBackground() {
     return Const.Res.TABLEDEFAULT;//can override
   }
@@ -21,8 +27,8 @@ public abstract class GuiBaseContainer extends GuiContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-    if (getTitle() != null) {
-      String s = UtilChat.lang(getTitle());
+    if (tile != null) {
+      String s = UtilChat.lang(tile.getName());
       this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
     }
   }

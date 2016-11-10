@@ -32,7 +32,7 @@ public class BlockFishing extends Block {
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
-    return new TileEntityFishing();
+    return new TileEntityFishing();//"tile.block_fishing.name"
   }
   @Override
   public boolean hasTileEntity() {

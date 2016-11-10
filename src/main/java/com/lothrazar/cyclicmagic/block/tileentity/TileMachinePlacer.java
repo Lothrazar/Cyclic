@@ -5,21 +5,21 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;// net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
 
-public class TileMachinePlacer extends TileEntityBaseMachineInvo {
+public class TileMachinePlacer extends TileEntityBaseMachineInvo implements ITileRedstoneToggle {
   private int timer;
   private static final int buildSpeed = 1;
+  private int needsRedstone = 1;
   private ItemStack[] inv = new ItemStack[9];
   public static final int TIMER_FULL = 75;//one day i will add fuel AND/OR speed upgrades. till then make very slow
   private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
   private static final String NBT_TIMER = "Timer";
+  private static final String NBT_REDST = "redstone";
   public static enum Fields {
-    TIMER
+    TIMER, REDSTONE
   }
   @Override
   public int getSizeInventory() {
@@ -62,6 +62,8 @@ public class TileMachinePlacer extends TileEntityBaseMachineInvo {
       switch (Fields.values()[id]) {
       case TIMER:
         return timer;
+      case REDSTONE:
+        return this.needsRedstone;
       }
     return -1;
   }
@@ -71,14 +73,18 @@ public class TileMachinePlacer extends TileEntityBaseMachineInvo {
       switch (Fields.values()[id]) {
       case TIMER:
         this.timer = value;
+        break;
+      case REDSTONE:
+        this.needsRedstone = value;
+        break;
       }
-  }
-  public int getTimer() {
-    return this.getField(Fields.TIMER.ordinal());
   }
   @Override
   public int getFieldCount() {
     return Fields.values().length;
+  }
+  public int getTimer() {
+    return this.getField(Fields.TIMER.ordinal());
   }
   @Override
   public void clear() {
@@ -90,6 +96,7 @@ public class TileMachinePlacer extends TileEntityBaseMachineInvo {
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
+    this.needsRedstone = tagCompound.getInteger(NBT_REDST);
     timer = tagCompound.getInteger(NBT_TIMER);
     NBTTagList tagList = tagCompound.getTagList(NBT_INV, 10);
     for (int i = 0; i < tagList.tagCount(); i++) {
@@ -102,6 +109,7 @@ public class TileMachinePlacer extends TileEntityBaseMachineInvo {
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
+    tagCompound.setInteger(NBT_REDST, this.needsRedstone);
     tagCompound.setInteger(NBT_TIMER, timer);
     NBTTagList itemList = new NBTTagList();
     for (int i = 0; i < inv.length; i++) {
@@ -116,22 +124,6 @@ public class TileMachinePlacer extends TileEntityBaseMachineInvo {
     tagCompound.setTag(NBT_INV, itemList);
     return super.writeToNBT(tagCompound);
   }
-  @Override
-  public SPacketUpdateTileEntity getUpdatePacket() {
-    // getDescriptionPacket()
-    // Gathers data into a packet (S35PacketUpdateTileEntity) that is to be
-    // sent to the client. Called on server only.
-    NBTTagCompound syncData = new NBTTagCompound();
-    this.writeToNBT(syncData);
-    return new SPacketUpdateTileEntity(this.pos, 1, syncData);
-  }
-  @Override
-  public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-    // Extracts data from a packet (S35PacketUpdateTileEntity) that was sent
-    // from the server. Called on client only.
-    this.readFromNBT(pkt.getNbtCompound());
-    super.onDataPacket(net, pkt);
-  }
   public boolean isBurning() {
     return this.timer > 0 && this.timer < TIMER_FULL;
   }
@@ -139,7 +131,7 @@ public class TileMachinePlacer extends TileEntityBaseMachineInvo {
   public void update() {
     shiftAllUp();
     boolean trigger = false;
-    if (this.isPowered() == false) {
+    if (this.onlyRunIfPowered() && this.isPowered() == false) {
       // it works ONLY if its powered
       markDirty();
       return;
@@ -190,5 +182,16 @@ public class TileMachinePlacer extends TileEntityBaseMachineInvo {
     }
     else
       return super.receiveClientEvent(id, value);
+  }
+  @Override
+  public void toggleNeedsRedstone() {
+    int val = this.needsRedstone + 1;
+    if (val > 1) {
+      val = 0;//hacky lazy way
+    }
+    this.setField(Fields.REDSTONE.ordinal(), val);
+  }
+  private boolean onlyRunIfPowered() {
+    return this.needsRedstone == 1;
   }
 }

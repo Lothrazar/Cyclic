@@ -1,11 +1,12 @@
 package com.lothrazar.cyclicmagic.gui;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.inventory.Container;
 
 public abstract class GuiBaseContanerProgress extends GuiBaseContainer {
-  public GuiBaseContanerProgress(Container inventorySlotsIn) {
-    super(inventorySlotsIn);
+  public GuiBaseContanerProgress(Container inventorySlotsIn, TileEntityBaseMachineInvo tile) {
+    super(inventorySlotsIn, tile);
   }
   public abstract int getProgressX();
   public abstract int getProgressY();

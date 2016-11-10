@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ContainerMiner extends ContainerBaseMachine {
+public class ContainerMinerSmart extends ContainerBaseMachine {
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
   public static final int SLOTX_START = 10;
   public static final int SLOTY = 42;
@@ -20,7 +20,8 @@ public class ContainerMiner extends ContainerBaseMachine {
   public static final int SLOTEQUIP_Y = SLOTY;
   protected TileMachineMinerSmart tileEntity;
   private int tileHeight;
-  public ContainerMiner(InventoryPlayer inventoryPlayer, TileMachineMinerSmart te) {
+  private int tileRedstone;
+  public ContainerMinerSmart(InventoryPlayer inventoryPlayer, TileMachineMinerSmart te) {
     tileEntity = te;
     for (int i = 0; i < tileEntity.getSizeInventory() - 1; i++) {
       addSlotToContainer(new SlotSingleStack(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY));
@@ -64,8 +65,13 @@ public class ContainerMiner extends ContainerBaseMachine {
       if (this.tileHeight != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
+      idx = TileMachineMinerSmart.Fields.REDSTONE.ordinal();
+      if (this.tileRedstone != this.tileEntity.getField(idx)) {
+        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
+      }
     }
     this.tileHeight = this.tileEntity.getField(TileMachineMinerSmart.Fields.HEIGHT.ordinal());
+    this.tileRedstone = this.tileEntity.getField(TileMachineMinerSmart.Fields.REDSTONE.ordinal());
   }
   //TODO: these two in base class?
   @Override

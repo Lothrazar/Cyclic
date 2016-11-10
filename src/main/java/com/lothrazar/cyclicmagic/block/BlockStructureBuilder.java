@@ -28,7 +28,7 @@ public class BlockStructureBuilder extends BlockBaseFacingInventory implements I
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
-    return new TileMachineStructureBuilder();
+    return new TileMachineStructureBuilder();//"tile.builder_block.name"
   }
   @Override
   public boolean hasTileEntity() {

@@ -116,23 +116,23 @@ public class WorldGenModule extends BaseEventModule {
   }
   private void registerDimensionOres() {
     //nether ores
-
-    /*ForgeHooks.class
+    /*
+     * ForgeHooks.class
      * 
-          Blocks.IRON_ORE.setHarvestLevel("pickaxe", 1);
-          Blocks.IRON_BLOCK.setHarvestLevel("pickaxe", 1);
-          Blocks.LAPIS_ORE.setHarvestLevel("pickaxe", 1);
-          Blocks.LAPIS_BLOCK.setHarvestLevel("pickaxe", 1);
-          Blocks.QUARTZ_ORE.setHarvestLevel("pickaxe", 0);*/
-      //ALL BELOW ARE 2
-      /*        Block[] oreBlocks = new Block[] {
-                  Blocks.EMERALD_ORE, Blocks.EMERALD_BLOCK, Blocks.DIAMOND_ORE, Blocks.DIAMOND_BLOCK,
-                  Blocks.GOLD_ORE, Blocks.GOLD_BLOCK, Blocks.REDSTONE_ORE, Blocks.LIT_REDSTONE_ORE
-          };
-          for (Block block : oreBlocks)
-          {
-              block.setHarvestLevel("pickaxe", 2);
-          }*/
+     * Blocks.IRON_ORE.setHarvestLevel("pickaxe", 1);
+     * Blocks.IRON_BLOCK.setHarvestLevel("pickaxe", 1);
+     * Blocks.LAPIS_ORE.setHarvestLevel("pickaxe", 1);
+     * Blocks.LAPIS_BLOCK.setHarvestLevel("pickaxe", 1);
+     * Blocks.QUARTZ_ORE.setHarvestLevel("pickaxe", 0);
+     */
+    //ALL BELOW ARE 2
+    /*
+     * Block[] oreBlocks = new Block[] { Blocks.EMERALD_ORE,
+     * Blocks.EMERALD_BLOCK, Blocks.DIAMOND_ORE, Blocks.DIAMOND_BLOCK,
+     * Blocks.GOLD_ORE, Blocks.GOLD_BLOCK, Blocks.REDSTONE_ORE,
+     * Blocks.LIT_REDSTONE_ORE }; for (Block block : oreBlocks) {
+     * block.setHarvestLevel("pickaxe", 2); }
+     */
     int coalHarvest = 0;
     int ironHarvest = 1;
     int lapisHarvest = ironHarvest;

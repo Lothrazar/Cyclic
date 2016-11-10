@@ -18,6 +18,7 @@ public class ContainerUser extends ContainerBaseMachine {
   protected TileMachineUser tileEntity;
   private int tileSpeed;
   private int timer;
+  private int redstone;
   public ContainerUser(InventoryPlayer inventoryPlayer, TileMachineUser te) {
     tileEntity = te;
     for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
@@ -65,9 +66,14 @@ public class ContainerUser extends ContainerBaseMachine {
       if (this.timer != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
+      idx = TileMachineUser.Fields.REDSTONE.ordinal();
+      if (this.redstone != this.tileEntity.getField(idx)) {
+        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
+      }
     }
     this.tileSpeed = this.tileEntity.getField(TileMachineUser.Fields.SPEED.ordinal());
     this.timer = this.tileEntity.getField(TileMachineUser.Fields.TIMER.ordinal());
+    this.redstone = this.tileEntity.getField(TileMachineUser.Fields.REDSTONE.ordinal());
   }
   //TODO: these two in base class?
   @Override
