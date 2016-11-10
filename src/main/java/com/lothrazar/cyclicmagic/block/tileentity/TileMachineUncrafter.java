@@ -33,8 +33,7 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
   public static enum Fields {
     TIMER, REDSTONE
   }
-  public TileMachineUncrafter(String n) {
-    super(n);
+  public TileMachineUncrafter() {
     inv = new ItemStack[9];
     timer = TIMER_FULL;
   }

@@ -36,7 +36,7 @@ public class BlockMiner extends BlockBaseFacingInventory implements IHasRecipe {
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
-    return new TileMachineBlockMiner(getTileName());
+    return new TileMachineBlockMiner();
   }
   @Override
   public boolean hasTileEntity() {
@@ -79,13 +79,6 @@ public class BlockMiner extends BlockBaseFacingInventory implements IHasRecipe {
     default:
       break;
     }
-  }
-  private String getTileName() {
-    //hack for using the same block and tile entity for 2 diff thingys
-    if (this.minerType == MinerType.SINGLE)
-      return "tile.block_miner.name";
-    else //if (this.minerType == MinerType.TUNNEL)
-      return "tile.block_miner_tunnel.name";
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {

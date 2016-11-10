@@ -31,7 +31,7 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
-    return new TileMachineUncrafter("tile.uncrafting_block.name");
+    return new TileMachineUncrafter();
   }
   @Override
   public boolean hasTileEntity() {

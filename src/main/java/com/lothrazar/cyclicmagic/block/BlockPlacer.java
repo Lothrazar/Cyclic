@@ -21,7 +21,7 @@ public class BlockPlacer extends BlockBaseFacingInventory implements IHasRecipe 
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
-    return new TileMachinePlacer("tile.placer_block.name");
+    return new TileMachinePlacer();//"tile.placer_block.name"
   }
   @Override
   public boolean hasTileEntity() {

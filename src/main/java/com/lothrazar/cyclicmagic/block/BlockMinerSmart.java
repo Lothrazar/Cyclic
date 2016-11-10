@@ -27,7 +27,7 @@ public class BlockMinerSmart extends BlockBaseFacingInventory implements IHasRec
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
-    return new TileMachineMinerSmart("tile.block_miner_smart.name");
+    return new TileMachineMinerSmart();//"tile.block_miner_smart.name"
   }
   @Override
   public boolean hasTileEntity() {

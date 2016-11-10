@@ -32,7 +32,7 @@ public class BlockFishing extends Block {
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
-    return new TileEntityFishing("tile.block_fishing.name");//TODO: merge this with the Module registry init?
+    return new TileEntityFishing();//"tile.block_fishing.name"
   }
   @Override
   public boolean hasTileEntity() {

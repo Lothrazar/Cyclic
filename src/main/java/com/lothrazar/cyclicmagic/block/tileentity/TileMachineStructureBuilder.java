@@ -14,9 +14,6 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 
 public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo implements ITileRedstoneToggle {
-  public TileMachineStructureBuilder(String n) {
-    super(n);
-  }
   private int timer;
   private int buildType;
   private int buildSpeed;

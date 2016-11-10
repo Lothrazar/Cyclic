@@ -20,8 +20,7 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
   public static enum Fields {
     TIMER, REDSTONE
   }
-  public TileMachineHarvester(String n) {
-    super(n);
+  public TileMachineHarvester() {
     this.timer = TIMER_FULL;
     conf = new HarestCropsConfig();
     conf.doesCrops = true;

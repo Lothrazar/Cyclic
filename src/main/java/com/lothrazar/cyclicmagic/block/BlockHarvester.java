@@ -31,7 +31,7 @@ public class BlockHarvester extends BlockBaseFacingInventory implements IHasReci
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
-    return new TileMachineHarvester("tile.harvester_block.name");
+    return new TileMachineHarvester();
   }
   @Override
   public boolean hasTileEntity() {

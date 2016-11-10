@@ -8,9 +8,6 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 
 public class TileMachinePlacer extends TileEntityBaseMachineInvo implements ITileRedstoneToggle {
-  public TileMachinePlacer(String n) {
-    super(n);
-  }
   private int timer;
   private static final int buildSpeed = 1;
   private int needsRedstone = 1;

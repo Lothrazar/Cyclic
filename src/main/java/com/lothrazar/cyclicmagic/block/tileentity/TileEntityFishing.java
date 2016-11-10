@@ -30,8 +30,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   private int toolSlot = 0;
   public ArrayList<Block> waterBoth = new ArrayList<Block>();
   private ItemStack[] inv;
-  public TileEntityFishing(String n) {
-    super(n);
+  public TileEntityFishing() {
     inv = new ItemStack[RODSLOT + FISHSLOTS];
     waterBoth.add(Blocks.FLOWING_WATER);
     waterBoth.add(Blocks.WATER);
