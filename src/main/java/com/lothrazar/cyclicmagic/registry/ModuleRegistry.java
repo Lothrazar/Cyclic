@@ -17,7 +17,6 @@ public class ModuleRegistry {
     modules.add(new EditSignBarehandModule());
     modules.add(new EmeraldGearModule());
     modules.add(new EnchantModule());
-    modules.add(new EnderBookModule());
     modules.add(new EnderChestClickopenModule());
     modules.add(new F3InfoModule());
     modules.add(new FragileBlockModule());

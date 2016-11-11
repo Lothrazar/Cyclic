@@ -3,6 +3,7 @@ import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
 import com.lothrazar.cyclicmagic.item.tool.*;
 import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.WandType;
+import com.lothrazar.cyclicmagic.item.ItemEnderBook;
 import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
 import com.lothrazar.cyclicmagic.item.ItemSleepingMat;
 import com.lothrazar.cyclicmagic.item.ItemStorageBag;
@@ -51,8 +52,15 @@ public class ToolsModule extends BaseModule {
   private boolean enablePearlReuseMounted;
   private boolean enableCarbonPaper;
   private boolean storageBagEnabled;
+  private boolean enableEnderBook;
   @Override
   public void onInit() {
+    if (enableEnderBook) {
+      ItemEnderBook book_ender = new ItemEnderBook();
+      ItemRegistry.addItem(book_ender, "book_ender");
+      LootTableRegistry.registerLoot(book_ender, ChestType.ENDCITY, 10);
+      LootTableRegistry.registerLoot(book_ender, ChestType.GENERIC, 1);
+    }
     if (storageBagEnabled) {
       ItemRegistry.storage_bag = new ItemStorageBag();
       ItemRegistry.addItem(ItemRegistry.storage_bag, "storage_bag");
@@ -152,6 +160,7 @@ public class ToolsModule extends BaseModule {
   @Override
   public void syncConfig(Configuration config) {
     storageBagEnabled = config.getBoolean("StorageBag", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableEnderBook = config.getBoolean("EnderBook", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     
     //TODO: this config should be INSIDE the item mat
     ItemSleepingMat.doPotions = config.getBoolean("SleepingMatPotions", Const.ConfigCategory.items, true, "False will disable the potion effects given by the Sleeping Mat");
