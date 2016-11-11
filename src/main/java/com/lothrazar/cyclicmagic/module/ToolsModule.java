@@ -3,6 +3,8 @@ import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
 import com.lothrazar.cyclicmagic.item.tool.*;
 import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.WandType;
+import com.lothrazar.cyclicmagic.item.ItemChestSack;
+import com.lothrazar.cyclicmagic.item.ItemChestSackEmpty;
 import com.lothrazar.cyclicmagic.item.ItemEnderBook;
 import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
 import com.lothrazar.cyclicmagic.item.ItemSleepingMat;
@@ -53,8 +55,16 @@ public class ToolsModule extends BaseModule {
   private boolean enableCarbonPaper;
   private boolean storageBagEnabled;
   private boolean enableEnderBook;
+  private boolean enableChestSack;
   @Override
   public void onInit() {
+    if (enableChestSack) {
+      ItemRegistry.chest_sack_empty = new ItemChestSackEmpty();
+      ItemRegistry.chest_sack = new ItemChestSack();
+      ItemRegistry.chest_sack.setHidden();
+      ItemRegistry.addItem(ItemRegistry.chest_sack, "chest_sack");
+      ItemRegistry.addItem(ItemRegistry.chest_sack_empty, "chest_sack_empty");
+    }
     if (enableEnderBook) {
       ItemEnderBook book_ender = new ItemEnderBook();
       ItemRegistry.addItem(book_ender, "book_ender");
@@ -180,6 +190,8 @@ public class ToolsModule extends BaseModule {
     enableRando = config.getBoolean("BlockRandomizer", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablePearlReuseMounted = config.getBoolean("EnderOrbMounted", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableCarbonPaper = config.getBoolean("CarbonPaper", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableChestSack = config.getBoolean("ChestSack", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    
   }
   @SideOnly(Side.CLIENT)
   @SubscribeEvent

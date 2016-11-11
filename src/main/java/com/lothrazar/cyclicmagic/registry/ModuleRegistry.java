@@ -6,7 +6,9 @@ import com.lothrazar.cyclicmagic.module.*;
 public class ModuleRegistry {
   public static void register(List<ICyclicModule> modules) {
     // :) http://alphabetizer.flap.tv/
-    modules.add(new ChestSackModule());
+    modules.add(new BlockMachineModule());
+    modules.add(new BlockPlateModule());
+    modules.add(new BlockUtilityModule());
     modules.add(new CommandModule());
     modules.add(new ConsumeablesModule());
     modules.add(new CharmModule());
@@ -15,7 +17,6 @@ public class ModuleRegistry {
     modules.add(new EnchantModule());
     modules.add(new PlayerAbilitiesModule());
     modules.add(new F3InfoModule());
-    modules.add(new BlockUtilityModule());
     modules.add(new FragileTorchesModule());
     modules.add(new FurnaceStardewModule());
     modules.add(new FuelAdditionModule());
@@ -26,7 +27,6 @@ public class ModuleRegistry {
     modules.add(new LightningTransformModule());
     modules.add(new LootTableModule());
     modules.add(new MagicBeanModule());
-    modules.add(new BlockMachineModule());
     modules.add(new MobDropChangesModule());
     modules.add(new MobSpawnModule());
     modules.add(new MountedTweaksModule());
@@ -35,7 +35,6 @@ public class ModuleRegistry {
     modules.add(new RecipeChangerModule());
     modules.add(new SandstoneToolsModule());
     modules.add(new SaplingPlantDespawnModule());
-    modules.add(new BlockPlateModule());
     modules.add(new StackSizeModule());
     modules.add(new ToolsModule());
     modules.add(new UnbreakableSpawnerModule());
