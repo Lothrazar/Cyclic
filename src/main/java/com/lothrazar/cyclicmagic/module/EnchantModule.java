@@ -27,22 +27,22 @@ public class EnchantModule extends BaseModule {
     if (enableLaunch) {
       launch = new EnchantLaunch();
       Enchantment.REGISTRY.register(launchid, new ResourceLocation(launch.getName()), launch);
-      ModMain.instance.events.addEvent(EnchantModule.launch);
+      ModMain.instance.events.register(EnchantModule.launch);
     }
     if (enableMagnet) {
       magnet = new EnchantMagnet();
       Enchantment.REGISTRY.register(magnetid, new ResourceLocation(magnet.getName()), magnet);
-      ModMain.instance.events.addEvent(EnchantModule.magnet);
+      ModMain.instance.events.register(EnchantModule.magnet);
     }
     if (enableVenom) {
       venom = new EnchantVenom();
       Enchantment.REGISTRY.register(venomid, new ResourceLocation(venom.getName()), venom);
-      ModMain.instance.events.addEvent(EnchantModule.venom);
+      ModMain.instance.events.register(EnchantModule.venom);
     }
     if (enableLifeleech) {
       lifeleech = new EnchantLifeLeech();
       Enchantment.REGISTRY.register(lifeleechid, new ResourceLocation(lifeleech.getName()), lifeleech);
-      ModMain.instance.events.addEvent(EnchantModule.lifeleech);
+      ModMain.instance.events.register(EnchantModule.lifeleech);
     }
   }
   public void syncConfig(Configuration c) {

@@ -20,9 +20,8 @@ public class BlockPlateModule extends BaseModule {
   private boolean enableMagnet;
   public void onInit() {
     if (enableMagnet) {
-      BlockRegistry.magnet_block = new BlockMagnet();
-      BlockRegistry.registerBlock(BlockRegistry.magnet_block, "magnet_block");
-      BlockRegistry.magnet_block.addRecipe();
+      BlockMagnet magnet_block = new BlockMagnet();
+      BlockRegistry.registerBlock(magnet_block, "magnet_block");
       GameRegistry.registerTileEntity(TileEntityMagnet.class, "magnet_block_te");
     }
     if (launchPads) {
@@ -48,7 +47,6 @@ public class BlockPlateModule extends BaseModule {
     if (enableConveyor) {
       BlockConveyor plate_push = new BlockConveyor(0.16F, SoundEvents.BLOCK_ANVIL_BREAK);
       BlockRegistry.registerBlock(plate_push, "plate_push");
-      plate_push.addRecipe();
       AchievementRegistry.registerItemAchievement(Item.getItemFromBlock(plate_push));
     }
   }

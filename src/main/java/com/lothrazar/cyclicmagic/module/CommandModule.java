@@ -35,7 +35,7 @@ public class CommandModule extends BaseModule {
   @Override
   public void onPreInit() {
     if (configToggle.get(CommandTodoList.name)) {
-      ModMain.instance.events.addEvent(this);
+      ModMain.instance.events.register(this);
     }
   }
   @Override

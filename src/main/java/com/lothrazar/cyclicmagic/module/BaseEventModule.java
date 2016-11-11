@@ -3,6 +3,6 @@ import com.lothrazar.cyclicmagic.ModMain;
 
 public abstract class BaseEventModule extends BaseModule {
   public void onPreInit() {
-    ModMain.instance.events.addEvent(this);
+    ModMain.instance.events.register(this);
   }
 }

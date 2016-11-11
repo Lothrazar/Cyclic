@@ -77,7 +77,7 @@ public class ToolsModule extends BaseModule {
     if (storageBagEnabled) {
       storage_bag = new ItemStorageBag();
       ItemRegistry.addItem(storage_bag, "storage_bag");
-      ModMain.instance.events.addEvent(storage_bag);
+      ModMain.instance.events.register(storage_bag);
       LootTableRegistry.registerLoot(storage_bag);
       LootTableRegistry.registerLoot(storage_bag, ChestType.BONUS, 25);
     }
@@ -125,14 +125,14 @@ public class ToolsModule extends BaseModule {
     if (enableToolPush) {
       ItemToolPush tool_push = new ItemToolPush();
       ItemRegistry.addItem(tool_push, "tool_push");
-      ModMain.instance.events.addEvent(tool_push);
+      ModMain.instance.events.register(tool_push);
       LootTableRegistry.registerLoot(tool_push, 16);
       AchievementRegistry.registerItemAchievement(tool_push);
     }
     if (enableSleepingMat) {
       ItemSleepingMat sleeping_mat = new ItemSleepingMat();
       ItemRegistry.addItem(sleeping_mat, "sleeping_mat");
-      ModMain.instance.events.addEvent(sleeping_mat);
+      ModMain.instance.events.register(sleeping_mat);
       LootTableRegistry.registerLoot(sleeping_mat, ChestType.BONUS);
     }
     if (enableCyclicWand) {
@@ -140,7 +140,7 @@ public class ToolsModule extends BaseModule {
       ItemRegistry.addItem(cyclic_wand_build, "cyclic_wand_build");
       SpellRegistry.register(cyclic_wand_build);
       spellHud = new SpellHud();
-      ModMain.instance.events.addEvent(this);
+      ModMain.instance.events.register(this);
       LootTableRegistry.registerLoot(cyclic_wand_build, ChestType.ENDCITY, 15);
       LootTableRegistry.registerLoot(cyclic_wand_build, ChestType.GENERIC, 1);
       AchievementRegistry.registerItemAchievement(cyclic_wand_build);
@@ -160,15 +160,15 @@ public class ToolsModule extends BaseModule {
     if (enableSwappers) {
       ItemToolSwap tool_swap = new ItemToolSwap(WandType.NORMAL);
       ItemRegistry.addItem(tool_swap, "tool_swap");
-      ModMain.instance.events.addEvent(tool_swap);
+      ModMain.instance.events.register(tool_swap);
       ItemToolSwap tool_swap_match = new ItemToolSwap(WandType.MATCH);
       ItemRegistry.addItem(tool_swap_match, "tool_swap_match");
-      ModMain.instance.events.addEvent(tool_swap_match);
+      ModMain.instance.events.register(tool_swap_match);
     }
     if (enableRando) {
       ItemToolRandomize tool_randomize = new ItemToolRandomize();
       ItemRegistry.addItem(tool_randomize, "tool_randomize");
-      ModMain.instance.events.addEvent(tool_randomize);
+      ModMain.instance.events.register(tool_randomize);
     }
   }
   @Override

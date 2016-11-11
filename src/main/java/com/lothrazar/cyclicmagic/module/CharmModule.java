@@ -53,7 +53,7 @@ public class CharmModule extends BaseModule {
     if (autoTorch) {
       ItemAutoTorch tool_auto_torch = new ItemAutoTorch();
       ItemRegistry.addItem(tool_auto_torch, "tool_auto_torch");
-      ModMain.instance.events.addEvent(tool_auto_torch);
+      ModMain.instance.events.register(tool_auto_torch);
       LootTableRegistry.registerLoot(tool_auto_torch);
     }
     if (enableSpeed) {

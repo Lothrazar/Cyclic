@@ -19,14 +19,12 @@ public class BlockUtilityModule extends BaseModule {
   private boolean enableBucketBlocks;
   public void onInit() {
     if (fragileEnabled) {
-      BlockRegistry.block_fragile = new BlockScaffolding();
-      BlockRegistry.registerBlock(BlockRegistry.block_fragile, new ItemBlockScaffolding(BlockRegistry.block_fragile), BlockScaffolding.name);
-      BlockRegistry.block_fragile.addRecipe();
+      BlockScaffolding block_fragile = new BlockScaffolding();
+      BlockRegistry.registerBlock(block_fragile, new ItemBlockScaffolding(block_fragile), BlockScaffolding.name);
     }
     if (fishingBlock) {
-      BlockRegistry.block_fishing = new BlockFishing();
-      BlockRegistry.registerBlock(BlockRegistry.block_fishing, "block_fishing");
-      BlockRegistry.block_fishing.addRecipe();
+      BlockFishing block_fishing = new BlockFishing();
+      BlockRegistry.registerBlock(block_fishing, "block_fishing");
       GameRegistry.registerTileEntity(TileEntityFishing.class, Const.MODID + "block_fishing_te");
     }
     if (enableBucketBlocks) {
@@ -46,7 +44,6 @@ public class BlockUtilityModule extends BaseModule {
   @Override
   public void syncConfig(Configuration config) {
     enableBucketBlocks = config.getBoolean("BucketBlocks", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-
     fragileEnabled = config.getBoolean("ScaffoldingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     fishingBlock = config.getBoolean("FishingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     TileEntityFishing.SPEED = config.getFloat("AutoFisherSpeed", Const.ConfigCategory.modpackMisc, 0.07F, 0.01F, 0.99F, "Speed of the Auto fisher, bigger is faster.  0.07 is 7% chance.");

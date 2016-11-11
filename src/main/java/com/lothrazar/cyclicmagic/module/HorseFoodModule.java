@@ -40,7 +40,7 @@ public class HorseFoodModule extends BaseEventModule {
       ItemRegistry.addItem(diamond_carrot, "horse_upgrade_health");
       ItemRegistry.addItem(redstone_carrot, "horse_upgrade_speed");
       ItemRegistry.addItem(ender_carrot, "horse_upgrade_jump");
-      ModMain.instance.events.addEvent(this);//for SubcribeEvent hooks
+      ModMain.instance.events.register(this);//for SubcribeEvent hooks
       LootTableRegistry.registerLoot(diamond_carrot, 1);
       AchievementRegistry.registerItemAchievement(diamond_carrot);
     }

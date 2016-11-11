@@ -34,61 +34,51 @@ public class BlockMachineModule extends BaseModule {
   private boolean enableUser;
   public void onInit() {
     if (enableBuilderBlock) {
-      BlockRegistry.builder_block = new BlockStructureBuilder();
-      BlockRegistry.registerBlock(BlockRegistry.builder_block, "builder_block");
-      BlockRegistry.builder_block.addRecipe();
+      BlockStructureBuilder builder_block = new BlockStructureBuilder();
+      BlockRegistry.registerBlock(builder_block, "builder_block");
       GameRegistry.registerTileEntity(TileMachineStructureBuilder.class, "builder_te");
     }
     if (enableHarvester) {
-      BlockRegistry.harvester_block = new BlockHarvester();
-      BlockRegistry.registerBlock(BlockRegistry.harvester_block, "harvester_block");
-      BlockRegistry.harvester_block.addRecipe();
+      BlockHarvester harvester_block = new BlockHarvester();
+      BlockRegistry.registerBlock(harvester_block, "harvester_block");
       GameRegistry.registerTileEntity(TileMachineHarvester.class, "harveseter_te");
+      ConfigRegistry.register(harvester_block);
     }
     if (enableUncrafter) {
       BlockUncrafting uncrafting_block = new BlockUncrafting();
       BlockRegistry.registerBlock(uncrafting_block, "uncrafting_block");
-      uncrafting_block.addRecipe();
       GameRegistry.registerTileEntity(TileMachineUncrafter.class, "uncrafting_block_te");
-      ConfigRegistry.register(uncrafting_block);
-//      BlockRegistry.uncrafting_block = uncrafting_block;//TODO:MAKE ARRAY
     }
     if (enableMiner) {
-      BlockRegistry.miner_block = new BlockMiner(BlockMiner.MinerType.SINGLE);
-      BlockRegistry.registerBlock(BlockRegistry.miner_block, "block_miner");
-      BlockRegistry.miner_block.addRecipe();
+      BlockMiner miner_block = new BlockMiner(BlockMiner.MinerType.SINGLE);
+      BlockRegistry.registerBlock(miner_block, "block_miner");
     }
     if (enableMinerEnhanced) {
-      BlockRegistry.block_miner_tunnel = new BlockMiner(BlockMiner.MinerType.TUNNEL);
-      BlockRegistry.registerBlock(BlockRegistry.block_miner_tunnel, "block_miner_tunnel");
-      BlockRegistry.block_miner_tunnel.addRecipe();
+      BlockMiner block_miner_tunnel = new BlockMiner(BlockMiner.MinerType.TUNNEL);
+      BlockRegistry.registerBlock(block_miner_tunnel, "block_miner_tunnel");
     }
     if (enableMiner || enableMinerEnhanced) {
       GameRegistry.registerTileEntity(TileMachineBlockMiner.class, "miner_te");
     }
     if (enableMinerSmart) {
-      BlockRegistry.block_miner_smart = new BlockMinerSmart();
-      BlockRegistry.registerBlock(BlockRegistry.block_miner_smart, "block_miner_smart");
-      BlockRegistry.block_miner_smart.addRecipe();
+      BlockMinerSmart block_miner_smart = new BlockMinerSmart();
+      BlockRegistry.registerBlock(block_miner_smart, "block_miner_smart");
       GameRegistry.registerTileEntity(TileMachineMinerSmart.class, Const.MODID + "miner_smart_te");
     }
     if (enablePlacer) {
-      BlockRegistry.placer_block = new BlockPlacer();
-      BlockRegistry.registerBlock(BlockRegistry.placer_block, "placer_block");
-      BlockRegistry.placer_block.addRecipe();
+      BlockPlacer placer_block = new BlockPlacer();
+      BlockRegistry.registerBlock(placer_block, "placer_block");
       GameRegistry.registerTileEntity(TileMachinePlacer.class, "placer_block_te");
     }
     if (enablePassword) {
-      BlockRegistry.password_block = new BlockPassword();
-      BlockRegistry.registerBlock(BlockRegistry.password_block, "password_block");
-      BlockRegistry.password_block.addRecipe();
+      BlockPassword password_block = new BlockPassword();
+      BlockRegistry.registerBlock(password_block, "password_block");
       GameRegistry.registerTileEntity(TileEntityPassword.class, "password_block_te");
-      ModMain.instance.events.addEvent(BlockRegistry.password_block);
+      ModMain.instance.events.register(password_block);
     }
     if (enableUser) {
-      BlockRegistry.block_user = new BlockUser();
-      BlockRegistry.registerBlock(BlockRegistry.block_user, "block_user");
-      BlockRegistry.block_user.addRecipe();
+      BlockUser block_user = new BlockUser();
+      BlockRegistry.registerBlock(block_user, "block_user");
       GameRegistry.registerTileEntity(TileMachineUser.class, Const.MODID + "block_user_te");
     }
   }
@@ -105,16 +95,8 @@ public class BlockMachineModule extends BaseModule {
     enableHarvester = config.getBoolean("HarvesterBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableUncrafter = config.getBoolean("UncraftingGrinder", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableMinerSmart = config.getBoolean("ControlledMiner", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    //TODO: LOOP/LIST of blocks so we can hit their recipes AND configs in the loop just like items
-    if (BlockRegistry.magnet_block != null) {
-      BlockRegistry.magnet_block.syncConfig(config);
-    }
-//    if (BlockRegistry.uncrafting_block != null) {
-//      BlockRegistry.uncrafting_block.syncConfig(config);
-//    }
-    if (BlockRegistry.harvester_block != null) {
-      BlockRegistry.harvester_block.syncConfig(config);
-    }
+
+
     TileMachineMinerSmart.maxHeight = config.getInt("ControlledMiner.maxHeight", Const.ConfigCategory.modpackMisc, 32, 3, 128, "Maximum height of the controlled miner block that you can increase it to in the GUI");
   }
 }

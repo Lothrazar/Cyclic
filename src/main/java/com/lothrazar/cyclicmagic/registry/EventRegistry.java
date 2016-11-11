@@ -6,15 +6,15 @@ import net.minecraftforge.common.MinecraftForge;
 public class EventRegistry {
   private ArrayList<Object> events = new ArrayList<Object>();
   public void registerCoreEvents() {
-    this.addEvent(new EventAchievement());
-    this.addEvent(new EventConfigChanged());
-    this.addEvent(new EventExtendedInventory());
-    this.addEvent(new EventKeyInput());
-    this.addEvent(new EventPlayerData());
-    this.addEvent(new EventGuiInvoButtons());
-    this.addEvent(new EventPotionTick());
+    this.register(new EventAchievement());
+    this.register(new EventConfigChanged());
+    this.register(new EventExtendedInventory());
+    this.register(new EventKeyInput());
+    this.register(new EventPlayerData());
+    this.register(new EventGuiInvoButtons());
+    this.register(new EventPotionTick());
   }
-  public void addEvent(Object e) {
+  public void register(Object e) {
     events.add(e);
   }
   public void registerAll() {

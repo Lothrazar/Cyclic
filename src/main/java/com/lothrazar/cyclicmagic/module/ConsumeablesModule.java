@@ -28,7 +28,7 @@ public class ConsumeablesModule extends BaseModule {
     if (enableHeartContainer) {
       ItemFoodHeart heart_food = new ItemFoodHeart();
       ItemRegistry.addItem(heart_food, "heart_food");
-      ModMain.instance.events.addEvent(heart_food);
+      ModMain.instance.events.register(heart_food);
       LootTableRegistry.registerLoot(heart_food, ChestType.GENERIC, 3);
       LootTableRegistry.registerLoot(heart_food, ChestType.ENDCITY, 4);
       AchievementRegistry.registerItemAchievement(heart_food);
@@ -48,7 +48,7 @@ public class ConsumeablesModule extends BaseModule {
     if (enableCorruptedChorus) {
       ItemFoodCorruptedChorus corrupted_chorus = new ItemFoodCorruptedChorus();
       ItemRegistry.addItem(corrupted_chorus, "corrupted_chorus");
-      ModMain.instance.events.addEvent(corrupted_chorus);
+      ModMain.instance.events.register(corrupted_chorus);
       LootTableRegistry.registerLoot(corrupted_chorus, ChestType.GENERIC, 10);
       LootTableRegistry.registerLoot(corrupted_chorus, ChestType.ENDCITY, 5);
       AchievementRegistry.registerItemAchievement(corrupted_chorus);
