@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.net;
-import com.lothrazar.cyclicmagic.block.tileentity.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineHarvester;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -13,6 +12,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketTileHarvester implements IMessage, IMessageHandler<PacketTileHarvester, IMessage> {
   private BlockPos pos;
+  private int type;
   public PacketTileHarvester() {
   }
   public PacketTileHarvester(BlockPos p) {
@@ -25,6 +25,7 @@ public class PacketTileHarvester implements IMessage, IMessageHandler<PacketTile
     int y = tags.getInteger("y");
     int z = tags.getInteger("z");
     pos = new BlockPos(x, y, z);
+    type = tags.getInteger("t");
   }
   @Override
   public void toBytes(ByteBuf buf) {
@@ -32,6 +33,7 @@ public class PacketTileHarvester implements IMessage, IMessageHandler<PacketTile
     tags.setInteger("x", pos.getX());
     tags.setInteger("y", pos.getY());
     tags.setInteger("z", pos.getZ());
+    tags.setInteger("t", type);
     ByteBufUtils.writeTag(buf, tags);
   }
   @Override
@@ -41,6 +43,7 @@ public class PacketTileHarvester implements IMessage, IMessageHandler<PacketTile
     if (tile != null && tile instanceof TileMachineHarvester) {
       TileMachineHarvester te = ((TileMachineHarvester) tile);
       te.toggleSize();
+      te.displayPreview();
     }
     return null;
   }

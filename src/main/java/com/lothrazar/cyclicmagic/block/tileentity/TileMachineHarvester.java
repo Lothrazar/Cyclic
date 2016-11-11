@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
+import java.util.List;
 import com.lothrazar.cyclicmagic.util.UtilHarvestCrops;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
+import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import com.lothrazar.cyclicmagic.util.UtilHarvestCrops.HarestCropsConfig;
 import net.minecraft.item.ItemStack;
@@ -17,6 +19,7 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
   private int size = 3;
   private static final String NBT_TIMER = "Timer";
   private static final String NBT_REDST = "redstone";
+  private static final int MAX_SIZE = 7;//radius 7 translates to 15x15 area (center block + 7 each side)
   public static enum Fields {
     TIMER, REDSTONE, SIZE
   }
@@ -82,10 +85,20 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
     }
     this.markDirty();
   }
-  private BlockPos getHarvestPos() {
+  private BlockPos getHarvestCenter() {
     //move center over that much, not including exact horizontal
-    BlockPos center = this.getPos().offset(this.getCurrentFacing(), this.size +1);
-    return UtilWorld.getRandomPos(this.worldObj.rand, center, this.size);
+    return this.getPos().offset(this.getCurrentFacing(), this.size + 1);
+  }
+  private BlockPos getHarvestPos() {
+    return UtilWorld.getRandomPos(this.worldObj.rand, getHarvestCenter(), this.size);
+  }
+  public void displayPreview() {
+    List<BlockPos> allPos = UtilPlaceBlocks.squareHorizontalHollow(getHarvestCenter(), this.size);
+    
+    for(BlockPos pos : allPos){
+
+      UtilParticle.spawnParticle(worldObj, EnumParticleTypes.DRAGON_BREATH, pos);
+    }
   }
   private int getSpeed() {
     return 1;
@@ -116,7 +129,7 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
         this.needsRedstone = value;
         break;
       case SIZE:
-        this.size=value;
+        this.size = value;
         break;
       default:
         break;
@@ -157,10 +170,9 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
   }
   public void toggleSize() {
     this.size++;
-    if(this.size > 4){
+    if (this.size > MAX_SIZE) {
       this.size = 1;
     }
-    System.out.println("new size after toggle"+this.size);
   }
   @Override
   public void toggleNeedsRedstone() {

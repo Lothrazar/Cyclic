@@ -9,9 +9,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiButtonHarvester extends GuiButtonTooltip {
   private BlockPos tilePos;
-  public GuiButtonHarvester(int buttonId, int x, int y, int widthIn, int heightIn, String buttonText
+  public GuiButtonHarvester(int buttonId, int x, int y,  String buttonText
       , BlockPos p) {
-    super(buttonId, x, y, widthIn, heightIn, buttonText);
+    super(buttonId, x, y, 40, 20, buttonText);
     this.tilePos = p;
   }  @SideOnly(Side.CLIENT)
   @Override

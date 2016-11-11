@@ -2,18 +2,19 @@ package com.lothrazar.cyclicmagic.gui.harvester;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineHarvester;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContanerProgress;
 import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
+import com.lothrazar.cyclicmagic.net.PacketTileHarvester;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiHarvester extends GuiBaseContanerProgress {
-  static final int padding = 8;
   private TileMachineHarvester tile;
   boolean debugLabels = false;
   private GuiButtonMachineRedstone redstoneBtn;
-  private  GuiButtonHarvester btnSize ;
+  private GuiButtonHarvester btnSize;
   public GuiHarvester(InventoryPlayer inventoryPlayer, TileMachineHarvester tileEntity) {
     super(new ContainerHarvester(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -21,19 +22,21 @@ public class GuiHarvester extends GuiBaseContanerProgress {
   @Override
   public void initGui() {
     super.initGui();
-    redstoneBtn = new GuiButtonMachineRedstone(0,
-        this.guiLeft + 8,
-        this.guiTop + 8, this.tile.getPos());
+    int btnId = 0;
+    redstoneBtn = new GuiButtonMachineRedstone(btnId++,
+        this.guiLeft + Const.padding,
+        this.guiTop + Const.padding, this.tile.getPos());
     redstoneBtn.setTextureIndex(tile.getField(TileMachineHarvester.Fields.REDSTONE.ordinal()));
     this.buttonList.add(redstoneBtn);
-    
-    btnSize = new GuiButtonHarvester(1,
-        this.guiLeft + 8,
-        this.guiTop + 28, 40,20,"change size",this.tile.getPos());
+    btnSize = new GuiButtonHarvester(btnId++,
+        this.guiLeft + Const.padding,
+        this.guiTop + Const.padding*2+20, "", this.tile.getPos());
     this.buttonList.add(btnSize);
-    
-    
-//    redstoneBtn.setTextureIndex(tile.getField(TileMachineHarvester.Fields.REDSTONE.ordinal()));
+//    GuiButtonHarvester btnPreview = new GuiButtonHarvester(btnId++,
+//        this.guiLeft + Const.padding + 80 + Const.padding,
+//        this.guiTop + Const.padding+10, UtilChat.lang("button.harvester.preview"), this.tile.getPos(),
+//        PacketTileHarvester.ActionType.PREVIEW);
+//    this.buttonList.add(btnPreview);
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
@@ -48,7 +51,7 @@ public class GuiHarvester extends GuiBaseContanerProgress {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     redstoneBtn.setState(tile.getField(TileMachineHarvester.Fields.REDSTONE.ordinal()));
-    btnSize.displayString = "button.harvester.size" +  tile.getField(TileMachineHarvester.Fields.SIZE.ordinal());
+    btnSize.displayString = UtilChat.lang("button.harvester.size" + tile.getField(TileMachineHarvester.Fields.SIZE.ordinal()));
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
   public int getProgressX() {
