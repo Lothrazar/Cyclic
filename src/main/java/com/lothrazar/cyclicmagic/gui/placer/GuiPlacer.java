@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.gui.placer;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachinePlacer;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContanerProgress;
-import com.lothrazar.cyclicmagic.gui.uncrafting.GuiButtonUncraftingRedstone;
+import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -12,7 +12,7 @@ public class GuiPlacer extends GuiBaseContanerProgress {
   static final int padding = 8;
   private TileMachinePlacer tile;
   boolean debugLabels = false;
-  private GuiButtonUncraftingRedstone redstoneBtn;
+  private GuiButtonMachineRedstone redstoneBtn;
   public GuiPlacer(InventoryPlayer inventoryPlayer, TileMachinePlacer tileEntity) {
     super(new ContainerPlacer(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -20,7 +20,7 @@ public class GuiPlacer extends GuiBaseContanerProgress {
   @Override
   public void initGui() {
     super.initGui();
-    redstoneBtn = new GuiButtonUncraftingRedstone(0,
+    redstoneBtn = new GuiButtonMachineRedstone(0,
         this.guiLeft + 8,
         this.guiTop + 8, this.tile.getPos());
     redstoneBtn.setTextureIndex(tile.getField(TileMachinePlacer.Fields.REDSTONE.ordinal()));

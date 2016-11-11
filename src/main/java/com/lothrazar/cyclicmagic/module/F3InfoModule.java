@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class F3InfoModule extends BaseEventModule {
+public class F3InfoModule extends BaseEventModule {//TODO: no f3? eh?  implements IHasConfig
   final static int SPAWN_RADIUS = 8 * Const.CHUNK_SIZE;// 128 is spawn size
   // 1 chunk is 16x16 blocks
   public static int blockToChunk(int blockVal) {

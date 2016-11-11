@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.util;
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
@@ -137,7 +137,7 @@ public class UtilUncraft {
     }
     boolean enchantingMatches = recipeOutput.isItemEnchanted() == toUncraft.isItemEnchanted();
     if (!enchantingMatches) {
-      ModMain.logger.info("enchanting mismatch");
+      ModCyclic.logger.info("enchanting mismatch");
     }
     return enchantingMatches;// either they are both ench, or both not ench
   }

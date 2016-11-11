@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.gui.password;
 import java.io.IOException;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
 import com.lothrazar.cyclicmagic.net.PacketTilePassword;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -68,7 +68,7 @@ public class GuiPassword extends GuiContainer {
     super.keyTyped(par1, par2);
     if (txtPassword != null && txtPassword.isFocused()) {
       txtPassword.textboxKeyTyped(par1, par2);
-      ModMain.network.sendToServer(new PacketTilePassword(txtPassword.getText(), ctr.tile.getPos()));
+      ModCyclic.network.sendToServer(new PacketTilePassword(txtPassword.getText(), ctr.tile.getPos()));
     }
   }
   @Override

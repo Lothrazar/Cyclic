@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.registry;
 import java.lang.reflect.Field;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.passive.EntityHorse;
@@ -24,12 +24,12 @@ public class ReflectionRegistry {
         }
       }
       catch (Exception e) {
-        ModMain.logger.error("Severe error, please report this to the mod author:");
-        ModMain.logger.error(e.getStackTrace().toString());
+        ModCyclic.logger.error("Severe error, please report this to the mod author:");
+        ModCyclic.logger.error(e.getStackTrace().toString());
       }
     }
     if (horseJumpStrength == null) {
-      ModMain.logger.error(Const.MODID + ":horseJumpStrength: Error - field not found using reflection");
+      ModCyclic.logger.error(Const.MODID + ":horseJumpStrength: Error - field not found using reflection");
     }
   }
 }

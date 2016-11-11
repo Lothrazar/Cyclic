@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.gui.player;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.net.PacketFakeWorkbench;
 import com.lothrazar.cyclicmagic.net.PacketOpenNormalInventory;
 import net.minecraft.client.Minecraft;
@@ -21,11 +21,11 @@ public class ButtonTabToggleCrafting extends GuiButton {
     boolean pressed = super.mousePressed(mc, mouseX, mouseY);
     if (pressed) {
       if (this.gui instanceof GuiInventory || this.gui instanceof GuiPlayerExtended) {
-        ModMain.network.sendToServer(new PacketFakeWorkbench());
+        ModCyclic.network.sendToServer(new PacketFakeWorkbench());
       }
       else {//if (this.gui instanceof GuiPlayerExtended || this.gui instanceof GuiCrafting) {
         this.gui.mc.displayGuiScreen(new GuiInventory(gui.mc.thePlayer));
-        ModMain.network.sendToServer(new PacketOpenNormalInventory(this.gui.mc.thePlayer));
+        ModCyclic.network.sendToServer(new PacketOpenNormalInventory(this.gui.mc.thePlayer));
       }
     }
     return pressed;

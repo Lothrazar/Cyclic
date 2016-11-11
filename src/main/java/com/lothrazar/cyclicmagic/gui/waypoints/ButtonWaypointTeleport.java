@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.gui.waypoints;
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
 import com.lothrazar.cyclicmagic.net.PacketWarpButton;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
@@ -45,7 +45,7 @@ public class ButtonWaypointTeleport extends GuiButton implements ITooltipButton 
       UtilParticle.spawnParticle(world, EnumParticleTypes.PORTAL, player.getPosition().up());
       // but even if they dont, send packet anyway. server side has the real
       // source of truth
-      ModMain.network.sendToServer(new PacketWarpButton(bookSlot));
+      ModCyclic.network.sendToServer(new PacketWarpButton(bookSlot));
       // we would have to wait until tp finishes and then sendToClient in a new
       // 'particle packet' for this
       // particleAtPlayer(world,mc.thePlayer);

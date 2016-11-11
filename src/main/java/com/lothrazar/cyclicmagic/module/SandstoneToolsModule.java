@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.module;
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.item.gear.ItemSandstoneAxe;
 import com.lothrazar.cyclicmagic.item.gear.ItemSandstoneHoe;
 import com.lothrazar.cyclicmagic.item.gear.ItemSandstonePickaxe;
@@ -15,7 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.EnumHelper;
 
-public class SandstoneToolsModule extends BaseModule {
+public class SandstoneToolsModule extends BaseModule  implements IHasConfig{
   private boolean enableSandstoneTools;
   private void registerMaterials() {
     MaterialRegistry.sandstoneToolMaterial = EnumHelper.addToolMaterial("sandstone",

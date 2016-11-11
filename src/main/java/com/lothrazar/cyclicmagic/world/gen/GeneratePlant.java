@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.world.gen;
 import java.util.Random;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -41,7 +41,7 @@ public class GeneratePlant extends WorldGenerator {
        * ChunkProviderServer.java:153) at
        * net.minecraft.world.World.getChunkFromChunkCoords(World.java:349)
        */
-      ModMain.logger.error(e.getStackTrace().toString());
+      ModCyclic.logger.error(e.getStackTrace().toString());
     }
     return true;
   }

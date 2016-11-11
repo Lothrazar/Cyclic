@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.util;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.net.PacketParticleAtPosition;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.EnumParticleTypes;
@@ -28,7 +28,7 @@ public class UtilParticle {
   }
   public static void spawnParticle(World world, EnumParticleTypes sparkle, BlockPos pos) {
     if (pos == null) {
-      ModMain.logger.warn("Particle at position null");
+      ModCyclic.logger.warn("Particle at position null");
       return;
     }
     spawnParticle(world, sparkle, pos.getX(), pos.getY(), pos.getZ());
@@ -50,6 +50,6 @@ public class UtilParticle {
   public static void spawnParticlePacket(EnumParticleTypes particle, BlockPos position, int count) {
     // this. fires only on server side. so send packet for client to spawn
     // particles and so on
-    ModMain.network.sendToAll(new PacketParticleAtPosition(position, particle.getParticleID(), count));
+    ModCyclic.network.sendToAll(new PacketParticleAtPosition(position, particle.getParticleID(), count));
   }
 }

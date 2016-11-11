@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -278,7 +278,7 @@ public class UtilInventorySort {
     // http://www.minecraftforge.net/forum/index.php?topic=15351.0
     p.inventory.markDirty();
     if (p.openContainer == null) {
-      ModMain.logger.error("Cannot update null container");
+      ModCyclic.logger.error("Cannot update null container");
     }
     else {
       p.openContainer.detectAndSendChanges();

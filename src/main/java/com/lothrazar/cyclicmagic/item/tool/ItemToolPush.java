@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.item.tool;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.BaseTool;
 import com.lothrazar.cyclicmagic.net.PacketMoveBlock;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
@@ -98,7 +98,7 @@ public class ItemToolPush extends BaseTool implements IHasRecipe {
     //if we only run this on server, clients dont get the udpate
     //so run it only on client, let packet run the server
     if (worldObj.isRemote) {
-      ModMain.network.sendToServer(new PacketMoveBlock(pos, ActionType.values()[ActionType.get(stack)], side));
+      ModCyclic.network.sendToServer(new PacketMoveBlock(pos, ActionType.values()[ActionType.get(stack)], side));
     }
     //hack the sound back in
     IBlockState placeState = worldObj.getBlockState(pos);

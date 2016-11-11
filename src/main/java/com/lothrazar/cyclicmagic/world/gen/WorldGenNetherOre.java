@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.world.gen;
 import java.util.Random;
-import com.lothrazar.cyclicmagic.registry.BlockRegistry;
+import com.lothrazar.cyclicmagic.module.WorldGenModule;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.init.Blocks;
@@ -22,15 +22,15 @@ public class WorldGenNetherOre implements IWorldGenerator {
   private WorldGenerator genDiamond;
   public WorldGenNetherOre() {
     int blockCount = 8;
-    this.genGold = new WorldGenMinable(BlockRegistry.nether_gold_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.NETHERRACK));
+    this.genGold = new WorldGenMinable(WorldGenModule.nether_gold_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.NETHERRACK));
     blockCount = 8;
-    this.genCoal = new WorldGenMinable(BlockRegistry.nether_coal_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.NETHERRACK));
+    this.genCoal = new WorldGenMinable(WorldGenModule.nether_coal_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.NETHERRACK));
     blockCount = 4;
-    this.genEmerald = new WorldGenMinable(BlockRegistry.nether_emerald_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.NETHERRACK));
+    this.genEmerald = new WorldGenMinable(WorldGenModule.nether_emerald_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.NETHERRACK));
     blockCount = 8;
-    this.genLapis = new WorldGenMinable(BlockRegistry.nether_lapis_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.NETHERRACK));
+    this.genLapis = new WorldGenMinable(WorldGenModule.nether_lapis_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.NETHERRACK));
     blockCount = 4;
-    this.genDiamond = new WorldGenMinable(BlockRegistry.nether_diamond_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.NETHERRACK));
+    this.genDiamond = new WorldGenMinable(WorldGenModule.nether_diamond_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.NETHERRACK));
   }
   @Override
   public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {

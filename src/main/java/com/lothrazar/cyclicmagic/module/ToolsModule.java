@@ -1,9 +1,15 @@
 package com.lothrazar.cyclicmagic.module;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.IHasConfig;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
 import com.lothrazar.cyclicmagic.item.tool.*;
 import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.WandType;
+import com.lothrazar.cyclicmagic.item.ItemChestSack;
+import com.lothrazar.cyclicmagic.item.ItemChestSackEmpty;
+import com.lothrazar.cyclicmagic.item.ItemEnderBook;
+import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
 import com.lothrazar.cyclicmagic.item.ItemSleepingMat;
+import com.lothrazar.cyclicmagic.item.ItemStorageBag;
 import com.lothrazar.cyclicmagic.net.PacketSpellShiftLeft;
 import com.lothrazar.cyclicmagic.net.PacketSpellShiftRight;
 import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
@@ -30,7 +36,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ToolsModule extends BaseModule {
+public class ToolsModule extends BaseModule  implements IHasConfig{
   private static SpellHud spellHud;
   private boolean enableSleepingMat;
   private boolean enableToolPush;
@@ -47,8 +53,38 @@ public class ToolsModule extends BaseModule {
   private boolean enableSwappers;
   private boolean enableRando;
   private boolean enablePearlReuseMounted;
+  private boolean enableCarbonPaper;
+  private boolean storageBagEnabled;
+  private boolean enableEnderBook;
+  private boolean enableChestSack;
+  public static ItemStorageBag storage_bag;//ref by ContainerStorage
   @Override
   public void onInit() {
+    if (enableChestSack) {
+      ItemChestSackEmpty chest_sack_empty = new ItemChestSackEmpty();
+      ItemChestSack chest_sack = new ItemChestSack();
+      chest_sack.setHidden();
+      chest_sack.setEmptySack(chest_sack_empty);
+      chest_sack_empty.setFullSack(chest_sack);
+      ItemRegistry.addItem(chest_sack, "chest_sack");
+      ItemRegistry.addItem(chest_sack_empty, "chest_sack_empty");
+    }
+    if (enableEnderBook) {
+      ItemEnderBook book_ender = new ItemEnderBook();
+      ItemRegistry.addItem(book_ender, "book_ender");
+      LootTableRegistry.registerLoot(book_ender, ChestType.ENDCITY, 10);
+      LootTableRegistry.registerLoot(book_ender, ChestType.GENERIC, 1);
+    }
+    if (storageBagEnabled) {
+      storage_bag = new ItemStorageBag();
+      ItemRegistry.addItem(storage_bag, "storage_bag");
+      ModCyclic.instance.events.register(storage_bag);
+      LootTableRegistry.registerLoot(storage_bag);
+      LootTableRegistry.registerLoot(storage_bag, ChestType.BONUS, 25);
+    }
+    if (enableCarbonPaper) {
+      ItemRegistry.addItem(new ItemPaperCarbon(), "carbon_paper");
+    }
     if (enableProspector) {
       ItemToolProspector tool_prospector = new ItemToolProspector();
       ItemRegistry.addItem(tool_prospector, "tool_prospector");
@@ -90,25 +126,26 @@ public class ToolsModule extends BaseModule {
     if (enableToolPush) {
       ItemToolPush tool_push = new ItemToolPush();
       ItemRegistry.addItem(tool_push, "tool_push");
-      ModMain.instance.events.addEvent(tool_push);
+      ModCyclic.instance.events.register(tool_push);
       LootTableRegistry.registerLoot(tool_push, 16);
       AchievementRegistry.registerItemAchievement(tool_push);
     }
     if (enableSleepingMat) {
       ItemSleepingMat sleeping_mat = new ItemSleepingMat();
       ItemRegistry.addItem(sleeping_mat, "sleeping_mat");
-      ModMain.instance.events.addEvent(sleeping_mat);
+      ModCyclic.instance.events.register(sleeping_mat);
       LootTableRegistry.registerLoot(sleeping_mat, ChestType.BONUS);
     }
     if (enableCyclicWand) {
-      ItemRegistry.cyclic_wand_build = new ItemCyclicWand();
-      ItemRegistry.addItem(ItemRegistry.cyclic_wand_build, "cyclic_wand_build");
-      SpellRegistry.register();
+      ItemCyclicWand cyclic_wand_build = new ItemCyclicWand();
+      ItemRegistry.addItem(cyclic_wand_build, "cyclic_wand_build");
+      SpellRegistry.register(cyclic_wand_build);
       spellHud = new SpellHud();
-      ModMain.instance.events.addEvent(this);
-      LootTableRegistry.registerLoot(ItemRegistry.cyclic_wand_build, ChestType.ENDCITY, 15);
-      LootTableRegistry.registerLoot(ItemRegistry.cyclic_wand_build, ChestType.GENERIC, 1);
-      AchievementRegistry.registerItemAchievement(ItemRegistry.cyclic_wand_build);
+      ModCyclic.instance.events.register(this);
+      LootTableRegistry.registerLoot(cyclic_wand_build, ChestType.ENDCITY, 15);
+      LootTableRegistry.registerLoot(cyclic_wand_build, ChestType.GENERIC, 1);
+      AchievementRegistry.registerItemAchievement(cyclic_wand_build);
+      ModCyclic.instance.setTabItemIfNull(cyclic_wand_build);
     }
     if (enableWarpHomeTool) {
       ItemToolWarp tool_warp_home = new ItemToolWarp(ItemToolWarp.WarpType.BED);
@@ -124,19 +161,21 @@ public class ToolsModule extends BaseModule {
     if (enableSwappers) {
       ItemToolSwap tool_swap = new ItemToolSwap(WandType.NORMAL);
       ItemRegistry.addItem(tool_swap, "tool_swap");
-      ModMain.instance.events.addEvent(tool_swap);
+      ModCyclic.instance.events.register(tool_swap);
       ItemToolSwap tool_swap_match = new ItemToolSwap(WandType.MATCH);
       ItemRegistry.addItem(tool_swap_match, "tool_swap_match");
-      ModMain.instance.events.addEvent(tool_swap_match);
+      ModCyclic.instance.events.register(tool_swap_match);
     }
     if (enableRando) {
       ItemToolRandomize tool_randomize = new ItemToolRandomize();
       ItemRegistry.addItem(tool_randomize, "tool_randomize");
-      ModMain.instance.events.addEvent(tool_randomize);
+      ModCyclic.instance.events.register(tool_randomize);
     }
   }
   @Override
   public void syncConfig(Configuration config) {
+    storageBagEnabled = config.getBoolean("StorageBag", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableEnderBook = config.getBoolean("EnderBook", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     //TODO: this config should be INSIDE the item mat
     ItemSleepingMat.doPotions = config.getBoolean("SleepingMatPotions", Const.ConfigCategory.items, true, "False will disable the potion effects given by the Sleeping Mat");
     enableWarpHomeTool = config.getBoolean("EnderWingPrime", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
@@ -154,6 +193,8 @@ public class ToolsModule extends BaseModule {
     enableSwappers = config.getBoolean("ExchangeScepters", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableRando = config.getBoolean("BlockRandomizer", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablePearlReuseMounted = config.getBoolean("EnderOrbMounted", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableCarbonPaper = config.getBoolean("CarbonPaper", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableChestSack = config.getBoolean("ChestSack", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
@@ -165,12 +206,12 @@ public class ToolsModule extends BaseModule {
     //if theres only one spell, do nothing
     if (SpellRegistry.getSpellbook(wand) == null || SpellRegistry.getSpellbook(wand).size() <= 1) { return; }
     if (event.getDwheel() < 0) {
-      ModMain.network.sendToServer(new PacketSpellShiftRight());
+      ModCyclic.network.sendToServer(new PacketSpellShiftRight());
       event.setCanceled(true);
       UtilSound.playSound(player, player.getPosition(), SoundRegistry.bip);
     }
     else if (event.getDwheel() > 0) {
-      ModMain.network.sendToServer(new PacketSpellShiftLeft());
+      ModCyclic.network.sendToServer(new PacketSpellShiftLeft());
       event.setCanceled(true);
       UtilSound.playSound(player, player.getPosition(), SoundRegistry.bip);
     }
@@ -194,7 +235,7 @@ public class ToolsModule extends BaseModule {
     int itemSlot = ItemCyclicWand.BuildType.getSlot(heldWand);
     ItemStack current = InventoryWand.getFromSlot(heldWand, itemSlot);
     if (current != null) {
-      ModMain.proxy.renderItemOnScreen(current, SpellHud.xoffset - 1, SpellHud.ymain + SpellHud.spellSize * 2);
+      ModCyclic.proxy.renderItemOnScreen(current, SpellHud.xoffset - 1, SpellHud.ymain + SpellHud.spellSize * 2);
     }
     //    RenderItem itemRender = Minecraft.getMinecraft().getRenderItem();
     //    GlStateManager.color(1, 1, 1, 1);

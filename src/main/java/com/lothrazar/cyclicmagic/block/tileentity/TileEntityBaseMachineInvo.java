@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
@@ -18,7 +18,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   @Override
   public String getName() {
     if (this.getBlockType() == null) {
-      ModMain.logger.error(" null blockType:" + this.getClass().getName());
+      ModCyclic.logger.error(" null blockType:" + this.getClass().getName());
       return "";
     }
     return this.getBlockType().getUnlocalizedName() + ".name";

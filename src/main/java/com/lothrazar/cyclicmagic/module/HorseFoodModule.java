@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.module;
 import java.text.DecimalFormat;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.IHasConfig;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.ItemHorseUpgrade;
 import com.lothrazar.cyclicmagic.item.ItemHorseUpgrade.HorseUpgradeType;
 import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
@@ -25,7 +26,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class HorseFoodModule extends BaseEventModule {
+public class HorseFoodModule extends BaseEventModule  implements IHasConfig {
   private boolean enableHorseFoodUpgrades;
   @Override
   public void onInit() {
@@ -40,7 +41,7 @@ public class HorseFoodModule extends BaseEventModule {
       ItemRegistry.addItem(diamond_carrot, "horse_upgrade_health");
       ItemRegistry.addItem(redstone_carrot, "horse_upgrade_speed");
       ItemRegistry.addItem(ender_carrot, "horse_upgrade_jump");
-      ModMain.instance.events.addEvent(this);//for SubcribeEvent hooks
+      ModCyclic.instance.events.register(this);//for SubcribeEvent hooks
       LootTableRegistry.registerLoot(diamond_carrot, 1);
       AchievementRegistry.registerItemAchievement(diamond_carrot);
     }

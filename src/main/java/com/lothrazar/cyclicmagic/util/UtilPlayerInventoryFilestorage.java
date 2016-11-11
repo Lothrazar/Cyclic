@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import com.google.common.io.Files;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.player.InventoryPlayerExtended;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -34,7 +34,7 @@ public class UtilPlayerInventoryFilestorage {
       if (fileNew.exists()) {
         try {
           Files.copy(fileNew, playerFile);
-          ModMain.logger.info("Using and converting UUID savefile for " + player.getDisplayNameString());
+          ModCyclic.logger.info("Using and converting UUID savefile for " + player.getDisplayNameString());
           fileNew.delete();
           File fb = event.getPlayerFile(extback);
           if (fb.exists())
@@ -83,7 +83,7 @@ public class UtilPlayerInventoryFilestorage {
           }
         }
         if (file1 == null || !file1.exists() || data == null || data.hasNoTags()) {
-          ModMain.logger.warn("Data not found for " + player.getDisplayNameString() + ". Trying to load backup data.");
+          ModCyclic.logger.warn("Data not found for " + player.getDisplayNameString() + ". Trying to load backup data.");
           if (file2 != null && file2.exists()) {
             try {
               FileInputStream fileinputstream = new FileInputStream(file2);
@@ -105,7 +105,7 @@ public class UtilPlayerInventoryFilestorage {
         }
       }
       catch (Exception e) {
-        ModMain.logger.error("Error loading player extended inventory");
+        ModCyclic.logger.error("Error loading player extended inventory");
         e.printStackTrace();
       }
     }
@@ -118,7 +118,7 @@ public class UtilPlayerInventoryFilestorage {
             Files.copy(file1, file2);
           }
           catch (Exception e) {
-            ModMain.logger.error("Could not backup old file for player " + player.getDisplayNameString());
+            ModCyclic.logger.error("Could not backup old file for player " + player.getDisplayNameString());
           }
         }
         try {
@@ -132,7 +132,7 @@ public class UtilPlayerInventoryFilestorage {
           }
         }
         catch (Exception e) {
-          ModMain.logger.error("Could not save file for player " + player.getDisplayNameString());
+          ModCyclic.logger.error("Could not save file for player " + player.getDisplayNameString());
           e.printStackTrace();
           if (file1.exists()) {
             try {
@@ -144,7 +144,7 @@ public class UtilPlayerInventoryFilestorage {
         }
       }
       catch (Exception exception1) {
-        ModMain.logger.error("Error saving inventory");
+        ModCyclic.logger.error("Error saving inventory");
         exception1.printStackTrace();
       }
     }

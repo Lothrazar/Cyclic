@@ -1,9 +1,10 @@
 package com.lothrazar.cyclicmagic.module;
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.common.config.Configuration;
 
-public class UnbreakableSpawnerModule extends BaseModule {
+public class UnbreakableSpawnerModule extends BaseModule  implements IHasConfig{
   private boolean spawnersUnbreakable;
   @Override
   public void onInit() {

@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.util;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.entity.EntityLivingBase;
@@ -16,7 +16,7 @@ public class UtilSound {
   public static final boolean distanceDelay = false;
   public static void playSoundPlaceBlock(EntityPlayer player, BlockPos pos, Block block) {
     if (player == null) {
-      ModMain.logger.warn("Null player object attempting to play sound [1]");
+      ModCyclic.logger.warn("Null player object attempting to play sound [1]");
       return;
     }
     BlockPos here = (pos == null) ? player.getPosition() : pos;
@@ -35,7 +35,7 @@ public class UtilSound {
   }
   public static void playSound(EntityPlayer player, BlockPos pos, SoundEvent soundIn, SoundCategory cat) {
     if (player == null) {
-      ModMain.logger.warn("Null player object attempting to play sound [2]");
+      ModCyclic.logger.warn("Null player object attempting to play sound [2]");
       return;
     }
     BlockPos here = (pos == null) ? player.getPosition() : pos;
@@ -43,7 +43,7 @@ public class UtilSound {
   }
   public static void playSound(EntityPlayer player, BlockPos pos, SoundEvent soundIn, SoundCategory cat, float volume) {
     if (player == null) {
-      ModMain.logger.warn("Null player object attempting to play sound [3]");
+      ModCyclic.logger.warn("Null player object attempting to play sound [3]");
       return;
     }
     player.worldObj.playSound(player, pos, soundIn, cat, volume, PITCH);

@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.gui.builder;
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
 import com.lothrazar.cyclicmagic.net.PacketTileBuildType;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -25,7 +25,7 @@ public class ButtonBuilderType extends GuiButton implements ITooltipButton {
   public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
     boolean pressed = super.mousePressed(mc, mouseX, mouseY);
     if (pressed) {
-      ModMain.network.sendToServer(new PacketTileBuildType(tilePos));
+      ModCyclic.network.sendToServer(new PacketTileBuildType(tilePos));
     }
     return pressed;
   }

@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.net;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.UtilPlayerInventoryFilestorage;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
@@ -49,7 +49,7 @@ public class PacketSyncExtendedInventory implements IMessage, IMessageHandler<Pa
   }
   @SideOnly(Side.CLIENT)
   void processMessage(PacketSyncExtendedInventory message) {
-    World world = ModMain.proxy.getClientWorld();
+    World world = ModCyclic.proxy.getClientWorld();
     if (world == null)
       return;
     Entity p = world.getEntityByID(message.playerId);

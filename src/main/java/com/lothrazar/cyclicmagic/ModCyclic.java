@@ -1,6 +1,4 @@
 package com.lothrazar.cyclicmagic;
-import java.util.ArrayList;
-import java.util.List;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
 import com.lothrazar.cyclicmagic.registry.*;
@@ -24,23 +22,23 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
 @Mod(modid = Const.MODID, useMetadata = true, dependencies = "after:JEI;after:Baubles", canBeDeactivated = false, updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json", acceptableRemoteVersions = "*", guiFactory = "com.lothrazar." + Const.MODID + ".gui.IngameConfigFactory")
-public class ModMain {
-  private List<ICyclicModule> modules = new ArrayList<ICyclicModule>();
+public class ModCyclic {
   @Instance(value = Const.MODID)
-  public static ModMain instance;
+  public static ModCyclic instance;
   @SidedProxy(clientSide = "com.lothrazar." + Const.MODID + ".proxy.ClientProxy", serverSide = "com.lothrazar." + Const.MODID + ".proxy.CommonProxy")
   public static CommonProxy proxy;
   public static ModLogger logger;
   public EventRegistry events;
   public static SimpleNetworkWrapper network;
-  private static Configuration config;
-  public static Configuration getConfig() {
-    return config;
+  private Item tabItem = null;
+  public void setTabItemIfNull(Item i) {
+    if (tabItem == null)
+      tabItem = i;
   }
   public final static CreativeTabs TAB = new CreativeTabs(Const.MODID) {
     @Override
     public Item getTabIconItem() {
-      return ItemRegistry.cyclic_wand_build == null ? Items.DIAMOND : ItemRegistry.cyclic_wand_build;
+      return ModCyclic.instance.tabItem == null ? Items.DIAMOND : ModCyclic.instance.tabItem;
     }
   };
   @CapabilityInject(IPlayerExtendedProperties.class)
@@ -48,8 +46,7 @@ public class ModMain {
   @EventHandler
   public void onPreInit(FMLPreInitializationEvent event) {
     logger = new ModLogger(event.getModLog());
-    config = new Configuration(event.getSuggestedConfigurationFile());
-    config.load();
+    ConfigRegistry.init(new Configuration(event.getSuggestedConfigurationFile()));
     network = NetworkRegistry.INSTANCE.newSimpleChannel(Const.MODID);
     PacketRegistry.register(network);
     SoundRegistry.register();
@@ -57,57 +54,49 @@ public class ModMain {
     ReflectionRegistry.register();
     this.events = new EventRegistry();
     this.events.registerCoreEvents();
-    ModuleRegistry.register(this.modules);//all features are in a module
-    this.syncConfig();
-    for (ICyclicModule module : this.modules) {
+    ModuleRegistry.init();
+    ModuleRegistry.registerAll();//create new instance of every module
+    ConfigRegistry.syncAllConfig();
+    for (ICyclicModule module : ModuleRegistry.modules) {
       module.onPreInit();
     }
   }
   @EventHandler
   public void onInit(FMLInitializationEvent event) {
     PotionEffectRegistry.register();
-    for (ICyclicModule module : this.modules) {
+    for (ICyclicModule module : ModuleRegistry.modules) {
       module.onInit();
     }
     ItemRegistry.register();//now that modules have added their content (items), we can register them
     proxy.register();
     NetworkRegistry.INSTANCE.registerGuiHandler(this, new ModGuiHandler());
-    this.syncConfig(); //fixes things , stuff was added to items and content that has config
+    ConfigRegistry.syncAllConfig(); //fixes things , stuff was added to items and content that has config
     this.events.registerAll(); //important: register events AFTER modules onInit, since modules add events in this phase.
   }
   @EventHandler
   public void onPostInit(FMLPostInitializationEvent event) {
-    for (ICyclicModule module : this.modules) {
+    for (ICyclicModule module : ModuleRegistry.modules) {
       module.onPostInit();
     }
     AchievementRegistry.registerPage();
   }
   @EventHandler
   public void onServerStarting(FMLServerStartingEvent event) {
-    for (ICyclicModule module : this.modules) {
+    for (ICyclicModule module : ModuleRegistry.modules) {
       module.onServerStarting(event);
     }
-  }
-  public void syncConfig() {
-    Configuration c = getConfig();
-    // hit on startup and on change event from
-    // we cant make this a list/loop because the order does matter
-    for (ICyclicModule module : this.modules) {
-      module.syncConfig(c);
-    }
-    //for any modules that have created an item, those items might have inner configs, so hit it up
-    Item item;//its a leftover mapping from before modules
-    for (String key : ItemRegistry.itemMap.keySet()) {
-      item = ItemRegistry.itemMap.get(key);
-      if (item instanceof IHasConfig) {
-        ((IHasConfig) item).syncConfig(config);
-      }
-    }
-    c.save();
   }
   /*
    * 
    * TODO: ideas/plans/features
+   * 
+   * harvester: preview area/range/size
+   * 
+   * harvester:? gui to change size?
+   * 
+   * F3InfoModule CONFIG
+   * 
+   * LADDER CLIMB: remove the && player.moveForward == 0 restriction?
    * 
    * Structure builder: add preview (ghost blocks or sparkls)
    * 
@@ -120,10 +109,6 @@ public class ModMain {
    * directional magnet
    * 
    * tesr: animate machines when active
-   * 
-   * harvester: preview area/range/size
-   * 
-   * harvester:? gui to change size?
    * 
    * machine to spam bonemeal, with input slot
    * 

@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap;
 import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.WandType;
 import com.lothrazar.cyclicmagic.util.UtilInventory;
@@ -210,9 +210,9 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
     }
     catch (ConcurrentModificationException e) {
       //possible reason why i cant do a trycatch // http://stackoverflow.com/questions/18752320/trycatch-concurrentmodificationexception-catching-30-of-the-time
-      ModMain.logger.warn("ConcurrentModificationException");
-      ModMain.logger.warn(e.getMessage());// message is null??
-      ModMain.logger.warn(e.getStackTrace().toString());
+      ModCyclic.logger.warn("ConcurrentModificationException");
+      ModCyclic.logger.warn(e.getMessage());// message is null??
+      ModCyclic.logger.warn(e.getStackTrace().toString());
     }
   }
 }

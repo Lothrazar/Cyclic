@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import java.lang.ref.WeakReference;
 import java.util.UUID;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
 import com.lothrazar.cyclicmagic.util.UtilItem;
 import net.minecraft.block.Block;
@@ -58,7 +58,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
       if (fakePlayer == null) {
         fakePlayer = UtilFakePlayer.initFakePlayer((WorldServer) worldObj);
         if (fakePlayer == null) {
-          ModMain.logger.warn("Warning: Fake player failed to init ");
+          ModCyclic.logger.warn("Warning: Fake player failed to init ");
           return;
         }
       }

@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -130,7 +130,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
       EnumHand hand) {
     if (stack == null || stack.getItem() == null) { return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack); }
     //Minecraft.getMinecraft().displayGuiScreen(new GuiEnderBook(entityPlayer, stack));
-    entityPlayer.openGui(ModMain.instance, ModGuiHandler.GUI_INDEX_WAYPOINT, world, 0, 0, 0);
+    entityPlayer.openGui(ModCyclic.instance, ModGuiHandler.GUI_INDEX_WAYPOINT, world, 0, 0, 0);
     return super.onItemRightClick(stack, world, entityPlayer, hand);
   }
   public static class BookLocation {

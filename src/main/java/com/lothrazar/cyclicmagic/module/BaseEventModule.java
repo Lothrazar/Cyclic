@@ -1,8 +1,8 @@
 package com.lothrazar.cyclicmagic.module;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 
 public abstract class BaseEventModule extends BaseModule {
   public void onPreInit() {
-    ModMain.instance.events.addEvent(this);
+    ModCyclic.instance.events.register(this);
   }
 }

@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.gui.wand;
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
 import com.lothrazar.cyclicmagic.net.PacketWandGui;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -22,7 +22,7 @@ public class ButtonWandReset extends GuiButton implements ITooltipButton {
   public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
     boolean pressed = super.mousePressed(mc, mouseX, mouseY);
     if (pressed) {
-      ModMain.network.sendToServer(new PacketWandGui(PacketWandGui.WandAction.RESET));
+      ModCyclic.network.sendToServer(new PacketWandGui(PacketWandGui.WandAction.RESET));
     }
     return pressed;
   }

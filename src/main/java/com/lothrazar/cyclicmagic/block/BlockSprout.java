@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.item.ItemSproutSeeds;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockFlower;
@@ -95,9 +95,13 @@ public class BlockSprout extends BlockCrops {
   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
     return this.isMaxAge(state) ? this.getSeed() : this.getSeed();//the null tells harvestcraft hey: dont remove my drops
   }
+  private ItemSproutSeeds seed;
   @Override
   protected Item getSeed() {
-    return ItemRegistry.sprout_seed;
+    return seed;
+  }
+  public void setSeed(ItemSproutSeeds item) {
+    seed = item;
   }
   @Override
   protected Item getCrop() {

@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.entity.projectile;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.module.MobDropChangesModule;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -61,7 +61,7 @@ public class EntityShearingBolt extends EntityThrowable {
       }
       catch (Exception e) {
         // https://github.com/PrinceOfAmber/Cyclic/issues/120
-        ModMain.logger.error(e.getMessage());
+        ModCyclic.logger.error(e.getMessage());
       }
     }
     else {

@@ -1,13 +1,13 @@
 package com.lothrazar.cyclicmagic.net;
 import com.lothrazar.cyclicmagic.item.ItemChestSack;
 import com.lothrazar.cyclicmagic.item.ItemChestSackEmpty;
-import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -57,20 +57,27 @@ public class PacketStorageSack implements IMessage, IMessageHandler<PacketStorag
       itemData.setTag(ItemChestSack.KEY_BLOCKTILE, tileData);
       itemData.setInteger(ItemChestSack.KEY_BLOCKID, Block.getIdFromBlock(state.getBlock()));
       itemData.setInteger(ItemChestSack.KEY_BLOCKSTATE, state.getBlock().getMetaFromState(state));
-      ItemStack drop = new ItemStack(ItemRegistry.chest_sack);
-      drop.setTagCompound(itemData);
       ItemStack held = player.getHeldItem(EnumHand.MAIN_HAND);
       if (held == null || held.getItem() instanceof ItemChestSackEmpty == false) {
         held = player.getHeldItem(EnumHand.OFF_HAND);
       }
-      if (held != null && player.capabilities.isCreativeMode == false) {
-        held.stackSize--;
+      if (held != null) {
+        if (held.getItem() instanceof ItemChestSackEmpty) {
+          Item chest_sack = ((ItemChestSackEmpty) held.getItem()).getFullSack();
+          if (chest_sack != null) {
+            ItemStack drop = new ItemStack(chest_sack);
+            drop.setTagCompound(itemData);
+            UtilEntity.dropItemStackInWorld(world, player.getPosition(), drop);
+            UtilPlaceBlocks.destroyBlock(world, position);
+            if (player.capabilities.isCreativeMode == false) {
+              held.stackSize--;
+            }
+          }
+        }
       }
       //      if (held != null && held.stackSize > 0) {
       //        player.getCooldownTracker().setCooldown(held.getItem(), 1);
       //      }
-      UtilEntity.dropItemStackInWorld(world, player.getPosition(), drop);
-      UtilPlaceBlocks.destroyBlock(world, position);
     }
     return null;
   }
