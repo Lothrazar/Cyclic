@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.block;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -24,7 +24,7 @@ public abstract class BlockBaseFacingInventory extends BlockBaseFacing {
     if (player.isSneaking()) { return false; }
     if (world.isRemote) { return true; }
     int x = pos.getX(), y = pos.getY(), z = pos.getZ();
-    player.openGui(ModMain.instance, this.guiID, world, x, y, z);
+    player.openGui(ModCyclic.instance, this.guiID, world, x, y, z);
     return true;
   }
   public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {

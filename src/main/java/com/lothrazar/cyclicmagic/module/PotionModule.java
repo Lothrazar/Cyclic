@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.ItemPotionCustom;
 import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
@@ -246,9 +246,9 @@ public class PotionModule extends BaseEventModule  implements IHasConfig{
         output);
     ItemStack output0 = BrewingRecipeRegistry.getOutput(input, ingredient);
     if (output0.getItem() == output.getItem())
-      ModMain.logger.info("Recipe succefully registered and working: " + output.getUnlocalizedName());
+      ModCyclic.logger.info("Recipe succefully registered and working: " + output.getUnlocalizedName());
     else {
-      ModMain.logger.info("Recipe FAILED" + output.getUnlocalizedName());
+      ModCyclic.logger.info("Recipe FAILED" + output.getUnlocalizedName());
     }
   }
   @SideOnly(Side.CLIENT)

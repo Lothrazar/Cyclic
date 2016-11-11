@@ -5,7 +5,7 @@ import java.util.Comparator;
 import java.util.ConcurrentModificationException;
 import java.util.List;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStone;
 import net.minecraft.block.BlockStoneBrick;
@@ -173,9 +173,9 @@ public class UtilPlaceBlocks {
       success = true;//to play sound clientside
     }
     catch (ConcurrentModificationException e) {
-      ModMain.logger.warn("ConcurrentModificationException");
-      ModMain.logger.warn(e.getMessage());// message is null??
-      ModMain.logger.warn(e.getStackTrace().toString());
+      ModCyclic.logger.warn("ConcurrentModificationException");
+      ModCyclic.logger.warn(e.getMessage());// message is null??
+      ModCyclic.logger.warn(e.getStackTrace().toString());
       success = false;
     }
     if (success) {

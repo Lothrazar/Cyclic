@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.registry;
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockBucketStorage;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
@@ -31,7 +31,7 @@ public class BlockRegistry {
     ib.setRegistryName(b.getRegistryName());
     GameRegistry.register(ib);
     if (isHidden == false) {
-      b.setCreativeTab(ModMain.TAB);
+      b.setCreativeTab(ModCyclic.TAB);
     }
     if (b instanceof IHasRecipe) {
       ((IHasRecipe) b).addRecipe();

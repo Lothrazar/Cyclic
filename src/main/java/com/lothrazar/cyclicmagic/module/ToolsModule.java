@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
 import com.lothrazar.cyclicmagic.item.tool.*;
 import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.WandType;
@@ -78,7 +78,7 @@ public class ToolsModule extends BaseModule  implements IHasConfig{
     if (storageBagEnabled) {
       storage_bag = new ItemStorageBag();
       ItemRegistry.addItem(storage_bag, "storage_bag");
-      ModMain.instance.events.register(storage_bag);
+      ModCyclic.instance.events.register(storage_bag);
       LootTableRegistry.registerLoot(storage_bag);
       LootTableRegistry.registerLoot(storage_bag, ChestType.BONUS, 25);
     }
@@ -126,14 +126,14 @@ public class ToolsModule extends BaseModule  implements IHasConfig{
     if (enableToolPush) {
       ItemToolPush tool_push = new ItemToolPush();
       ItemRegistry.addItem(tool_push, "tool_push");
-      ModMain.instance.events.register(tool_push);
+      ModCyclic.instance.events.register(tool_push);
       LootTableRegistry.registerLoot(tool_push, 16);
       AchievementRegistry.registerItemAchievement(tool_push);
     }
     if (enableSleepingMat) {
       ItemSleepingMat sleeping_mat = new ItemSleepingMat();
       ItemRegistry.addItem(sleeping_mat, "sleeping_mat");
-      ModMain.instance.events.register(sleeping_mat);
+      ModCyclic.instance.events.register(sleeping_mat);
       LootTableRegistry.registerLoot(sleeping_mat, ChestType.BONUS);
     }
     if (enableCyclicWand) {
@@ -141,11 +141,11 @@ public class ToolsModule extends BaseModule  implements IHasConfig{
       ItemRegistry.addItem(cyclic_wand_build, "cyclic_wand_build");
       SpellRegistry.register(cyclic_wand_build);
       spellHud = new SpellHud();
-      ModMain.instance.events.register(this);
+      ModCyclic.instance.events.register(this);
       LootTableRegistry.registerLoot(cyclic_wand_build, ChestType.ENDCITY, 15);
       LootTableRegistry.registerLoot(cyclic_wand_build, ChestType.GENERIC, 1);
       AchievementRegistry.registerItemAchievement(cyclic_wand_build);
-      ModMain.instance.setTabItemIfNull(cyclic_wand_build);
+      ModCyclic.instance.setTabItemIfNull(cyclic_wand_build);
     }
     if (enableWarpHomeTool) {
       ItemToolWarp tool_warp_home = new ItemToolWarp(ItemToolWarp.WarpType.BED);
@@ -161,15 +161,15 @@ public class ToolsModule extends BaseModule  implements IHasConfig{
     if (enableSwappers) {
       ItemToolSwap tool_swap = new ItemToolSwap(WandType.NORMAL);
       ItemRegistry.addItem(tool_swap, "tool_swap");
-      ModMain.instance.events.register(tool_swap);
+      ModCyclic.instance.events.register(tool_swap);
       ItemToolSwap tool_swap_match = new ItemToolSwap(WandType.MATCH);
       ItemRegistry.addItem(tool_swap_match, "tool_swap_match");
-      ModMain.instance.events.register(tool_swap_match);
+      ModCyclic.instance.events.register(tool_swap_match);
     }
     if (enableRando) {
       ItemToolRandomize tool_randomize = new ItemToolRandomize();
       ItemRegistry.addItem(tool_randomize, "tool_randomize");
-      ModMain.instance.events.register(tool_randomize);
+      ModCyclic.instance.events.register(tool_randomize);
     }
   }
   @Override
@@ -206,12 +206,12 @@ public class ToolsModule extends BaseModule  implements IHasConfig{
     //if theres only one spell, do nothing
     if (SpellRegistry.getSpellbook(wand) == null || SpellRegistry.getSpellbook(wand).size() <= 1) { return; }
     if (event.getDwheel() < 0) {
-      ModMain.network.sendToServer(new PacketSpellShiftRight());
+      ModCyclic.network.sendToServer(new PacketSpellShiftRight());
       event.setCanceled(true);
       UtilSound.playSound(player, player.getPosition(), SoundRegistry.bip);
     }
     else if (event.getDwheel() > 0) {
-      ModMain.network.sendToServer(new PacketSpellShiftLeft());
+      ModCyclic.network.sendToServer(new PacketSpellShiftLeft());
       event.setCanceled(true);
       UtilSound.playSound(player, player.getPosition(), SoundRegistry.bip);
     }
@@ -235,7 +235,7 @@ public class ToolsModule extends BaseModule  implements IHasConfig{
     int itemSlot = ItemCyclicWand.BuildType.getSlot(heldWand);
     ItemStack current = InventoryWand.getFromSlot(heldWand, itemSlot);
     if (current != null) {
-      ModMain.proxy.renderItemOnScreen(current, SpellHud.xoffset - 1, SpellHud.ymain + SpellHud.spellSize * 2);
+      ModCyclic.proxy.renderItemOnScreen(current, SpellHud.xoffset - 1, SpellHud.ymain + SpellHud.spellSize * 2);
     }
     //    RenderItem itemRender = Minecraft.getMinecraft().getRenderItem();
     //    GlStateManager.color(1, 1, 1, 1);

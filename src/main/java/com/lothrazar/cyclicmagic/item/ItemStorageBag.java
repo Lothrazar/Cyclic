@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.item;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.gui.storage.InventoryStorage;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
@@ -151,7 +151,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
     if (!world.isRemote) {
       BlockPos pos = player.getPosition();
       int x = pos.getX(), y = pos.getY(), z = pos.getZ();
-      player.openGui(ModMain.instance, ModGuiHandler.GUI_INDEX_STORAGE, world, x, y, z);
+      player.openGui(ModCyclic.instance, ModGuiHandler.GUI_INDEX_STORAGE, world, x, y, z);
     }
     return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);
   }

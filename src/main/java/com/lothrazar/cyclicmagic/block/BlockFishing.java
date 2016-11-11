@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.block;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFishing;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -55,7 +55,7 @@ public class BlockFishing extends Block  implements IHasRecipe {
     else {
       if (world.isRemote) { return true; }
       int x = pos.getX(), y = pos.getY(), z = pos.getZ();
-      player.openGui(ModMain.instance, ModGuiHandler.GUI_INDEX_FISHER, world, x, y, z);
+      player.openGui(ModCyclic.instance, ModGuiHandler.GUI_INDEX_FISHER, world, x, y, z);
       return true;
     }
     return false;

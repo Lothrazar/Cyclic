@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockStructureBuilder;
 import com.lothrazar.cyclicmagic.block.BlockHarvester;
 import com.lothrazar.cyclicmagic.block.BlockMiner;
@@ -75,7 +75,7 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
       BlockPassword password_block = new BlockPassword();
       BlockRegistry.registerBlock(password_block, "password_block");
       GameRegistry.registerTileEntity(TileEntityPassword.class, "password_block_te");
-      ModMain.instance.events.register(password_block);
+      ModCyclic.instance.events.register(password_block);
     }
     if (enableUser) {
       BlockUser block_user = new BlockUser();

@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.ArrayList;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilUncraft;
@@ -137,7 +137,7 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
         success = uncrafter.doUncraft();
       }
       catch (Exception e) {
-        ModMain.logger.error("Unhandled exception in uncrafting " + e.getStackTrace().toString());
+        ModCyclic.logger.error("Unhandled exception in uncrafting " + e.getStackTrace().toString());
       }
       if (success) {
         if (this.worldObj.isRemote == false) { // drop the items

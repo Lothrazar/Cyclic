@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.ItemAutoTorch;
 import com.lothrazar.cyclicmagic.item.charm.*;
 import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
@@ -54,7 +54,7 @@ public class CharmModule extends BaseModule  implements IHasConfig{
     if (autoTorch) {
       ItemAutoTorch tool_auto_torch = new ItemAutoTorch();
       ItemRegistry.addItem(tool_auto_torch, "tool_auto_torch");
-      ModMain.instance.events.register(tool_auto_torch);
+      ModCyclic.instance.events.register(tool_auto_torch);
       LootTableRegistry.registerLoot(tool_auto_torch);
     }
     if (enableSpeed) {

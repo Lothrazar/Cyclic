@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.item;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.net.PacketStorageSack;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -42,7 +42,7 @@ public class ItemChestSackEmpty extends BaseItem implements IHasRecipe {
     }
     UtilSound.playSound(entityPlayer, pos, SoundRegistry.thunk);
     if (world.isRemote) {
-      ModMain.network.sendToServer(new PacketStorageSack(pos));// https://github.com/PrinceOfAmber/Cyclic/issues/131
+      ModCyclic.network.sendToServer(new PacketStorageSack(pos));// https://github.com/PrinceOfAmber/Cyclic/issues/131
     }
     return EnumActionResult.SUCCESS;
   }

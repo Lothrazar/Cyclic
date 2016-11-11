@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.module;
 import java.util.HashMap;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.IHasConfig;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.command.CommandEnderChest;
 import com.lothrazar.cyclicmagic.command.CommandGetHome;
 import com.lothrazar.cyclicmagic.command.CommandHeal;
@@ -36,7 +36,7 @@ public class CommandModule extends BaseModule  implements IHasConfig{
   @Override
   public void onPreInit() {
     if (configToggle.get(CommandTodoList.name)) {
-      ModMain.instance.events.register(this);
+      ModCyclic.instance.events.register(this);
     }
   }
   @Override

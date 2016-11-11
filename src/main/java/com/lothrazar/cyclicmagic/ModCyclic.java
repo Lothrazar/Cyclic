@@ -22,9 +22,9 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
 @Mod(modid = Const.MODID, useMetadata = true, dependencies = "after:JEI;after:Baubles", canBeDeactivated = false, updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json", acceptableRemoteVersions = "*", guiFactory = "com.lothrazar." + Const.MODID + ".gui.IngameConfigFactory")
-public class ModMain {
+public class ModCyclic {
   @Instance(value = Const.MODID)
-  public static ModMain instance;
+  public static ModCyclic instance;
   @SidedProxy(clientSide = "com.lothrazar." + Const.MODID + ".proxy.ClientProxy", serverSide = "com.lothrazar." + Const.MODID + ".proxy.CommonProxy")
   public static CommonProxy proxy;
   public static ModLogger logger;
@@ -38,7 +38,7 @@ public class ModMain {
   public final static CreativeTabs TAB = new CreativeTabs(Const.MODID) {
     @Override
     public Item getTabIconItem() {
-      return ModMain.instance.tabItem == null ? Items.DIAMOND : ModMain.instance.tabItem;
+      return ModCyclic.instance.tabItem == null ? Items.DIAMOND : ModCyclic.instance.tabItem;
     }
   };
   @CapabilityInject(IPlayerExtendedProperties.class)

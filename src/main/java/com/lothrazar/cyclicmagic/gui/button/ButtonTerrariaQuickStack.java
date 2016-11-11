@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.gui.button;
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
 import com.lothrazar.cyclicmagic.module.GuiTerrariaButtonsModule;
 import com.lothrazar.cyclicmagic.net.PacketQuickStack;
@@ -26,7 +26,7 @@ public class ButtonTerrariaQuickStack extends GuiButton implements ITooltipButto
     if (pressed) {
       // playerIn.displayGui(new BlockWorkbench.InterfaceCraftingTable(worldIn,
       // pos));
-      ModMain.network.sendToServer(new PacketQuickStack(new NBTTagCompound()));
+      ModCyclic.network.sendToServer(new PacketQuickStack(new NBTTagCompound()));
     }
     return pressed;
   }

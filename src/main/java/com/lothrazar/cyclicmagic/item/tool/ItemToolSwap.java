@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.item.tool;
 import java.util.ConcurrentModificationException;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.BaseTool;
 import com.lothrazar.cyclicmagic.net.PacketSwapBlock;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
@@ -117,7 +117,7 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
       if (slot >= 0) {
         ItemStack stack = player.inventory.getStackInSlot(slot);
         if (stack != null)
-          ModMain.proxy.renderItemOnScreen(stack, xoffset, ymain);
+          ModCyclic.proxy.renderItemOnScreen(stack, xoffset, ymain);
       }
     }
   }
@@ -127,15 +127,15 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
     //so run it only on client, let packet run the server
     try {
       if (worldObj.isRemote) {
-        ModMain.network.sendToServer(new PacketSwapBlock(pos, side, ActionType.values()[ActionType.get(stack)], this.wandType));
+        ModCyclic.network.sendToServer(new PacketSwapBlock(pos, side, ActionType.values()[ActionType.get(stack)], this.wandType));
       }
       this.onUse(stack, player, worldObj, hand);
       player.getCooldownTracker().setCooldown(this, COOLDOWN);
     }
     catch (ConcurrentModificationException e) {
-      ModMain.logger.warn("ConcurrentModificationException");
-      ModMain.logger.warn(e.getMessage());// message is null??
-      ModMain.logger.warn(e.getStackTrace().toString());
+      ModCyclic.logger.warn("ConcurrentModificationException");
+      ModCyclic.logger.warn(e.getMessage());// message is null??
+      ModCyclic.logger.warn(e.getStackTrace().toString());
     }
     return super.onItemUse(stack, player, worldObj, pos, hand, side, hitX, hitY, hitZ);// EnumActionResult.PASS;
   }

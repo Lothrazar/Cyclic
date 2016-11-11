@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.item;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -61,14 +61,14 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig 
   }
   @SubscribeEvent
   public void onBedCheck(SleepingLocationCheckEvent evt) {
-    final IPlayerExtendedProperties sleep = evt.getEntityPlayer().getCapability(ModMain.CAPABILITYSTORAGE, null);
+    final IPlayerExtendedProperties sleep = evt.getEntityPlayer().getCapability(ModCyclic.CAPABILITYSTORAGE, null);
     if (sleep != null && sleep.isSleeping()) {
       evt.setResult(Result.ALLOW);
     }
   }
   @SubscribeEvent
   public void onWakeUp(PlayerWakeUpEvent evt) {
-    final IPlayerExtendedProperties sleep = evt.getEntityPlayer().getCapability(ModMain.CAPABILITYSTORAGE, null);
+    final IPlayerExtendedProperties sleep = evt.getEntityPlayer().getCapability(ModCyclic.CAPABILITYSTORAGE, null);
     if (sleep != null) {
       sleep.setSleeping(false);
     }

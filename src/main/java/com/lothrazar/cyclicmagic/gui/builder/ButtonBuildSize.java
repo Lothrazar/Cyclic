@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.gui.builder;
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
 import com.lothrazar.cyclicmagic.net.PacketTileBuildSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -30,7 +30,7 @@ public class ButtonBuildSize extends GuiButton implements ITooltipButton {
     boolean pressed = super.mousePressed(mc, mouseX, mouseY);
     if (pressed) {
       int size = (goUp) ? 1 : -1;
-      ModMain.network.sendToServer(new PacketTileBuildSize(tilePos, size, type));
+      ModCyclic.network.sendToServer(new PacketTileBuildSize(tilePos, size, type));
     }
     return pressed;
   }

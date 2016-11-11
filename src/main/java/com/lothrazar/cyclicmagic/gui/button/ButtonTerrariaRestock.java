@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.gui.button;
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
 import com.lothrazar.cyclicmagic.module.GuiTerrariaButtonsModule;
 import com.lothrazar.cyclicmagic.net.PacketRestockContainerToPlayer;
@@ -24,7 +24,7 @@ public class ButtonTerrariaRestock extends GuiButton implements ITooltipButton {
   public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
     boolean pressed = super.mousePressed(mc, mouseX, mouseY);
     if (pressed) {
-      ModMain.network.sendToServer(new PacketRestockContainerToPlayer(new NBTTagCompound()));
+      ModCyclic.network.sendToServer(new PacketRestockContainerToPlayer(new NBTTagCompound()));
     }
     return pressed;
   }

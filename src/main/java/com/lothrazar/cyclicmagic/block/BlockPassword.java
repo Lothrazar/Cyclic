@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -58,7 +58,7 @@ public class BlockPassword extends Block implements IHasRecipe {
     //it does save to server. on world save and reload, it DOes save. problem is, 
     //clientside does not KNOW about it
     if (!world.isRemote) {
-      player.openGui(ModMain.instance, ModGuiHandler.GUI_INDEX_PASSWORD, world, x, y, z);
+      player.openGui(ModCyclic.instance, ModGuiHandler.GUI_INDEX_PASSWORD, world, x, y, z);
     }
     return true;
   }

@@ -3,7 +3,7 @@ import java.util.HashMap;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.BaseItem;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.item.Item;
@@ -23,7 +23,7 @@ public class ItemRegistry {
   public static void registerItem(Item item, String name, boolean isHidden) {
     GameRegistry.register(item, new ResourceLocation(Const.MODID, name));
     if (isHidden == false) {
-      item.setCreativeTab(ModMain.TAB);
+      item.setCreativeTab(ModCyclic.TAB);
     }
   }
   public static void register() {

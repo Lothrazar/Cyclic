@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.net;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.state.IBlockState;
@@ -47,7 +47,7 @@ public class PacketTilePassword implements IMessage, IMessageHandler<PacketTileP
   }
   private static void checkThreadAndEnqueue(final PacketTilePassword message, final MessageContext ctx) {
     //copied in from my PacketSyncPlayerData
-    IThreadListener thread = ModMain.proxy.getThreadFromContext(ctx);
+    IThreadListener thread = ModCyclic.proxy.getThreadFromContext(ctx);
     // pretty much copied straight from vanilla code, see {@link PacketThreadUtil#checkThreadAndEnqueue}
     thread.addScheduledTask(new Runnable() {
       public void run() {

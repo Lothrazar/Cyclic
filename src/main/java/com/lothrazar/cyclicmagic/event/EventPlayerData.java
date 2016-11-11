@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.event;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -47,24 +47,24 @@ public class EventPlayerData {
     }
   }
   class PlayerCapInstance implements ICapabilitySerializable<NBTTagCompound> {
-    IPlayerExtendedProperties inst = ModMain.CAPABILITYSTORAGE.getDefaultInstance();
+    IPlayerExtendedProperties inst = ModCyclic.CAPABILITYSTORAGE.getDefaultInstance();
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-      return capability == ModMain.CAPABILITYSTORAGE;
+      return capability == ModCyclic.CAPABILITYSTORAGE;
     }
     @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-      return capability == ModMain.CAPABILITYSTORAGE ? ModMain.CAPABILITYSTORAGE.<T> cast(inst) : null;
+      return capability == ModCyclic.CAPABILITYSTORAGE ? ModCyclic.CAPABILITYSTORAGE.<T> cast(inst) : null;
     }
     @Override
     public NBTTagCompound serializeNBT() {
-      NBTBase ret = ModMain.CAPABILITYSTORAGE.getStorage().writeNBT(ModMain.CAPABILITYSTORAGE, inst, null);
+      NBTBase ret = ModCyclic.CAPABILITYSTORAGE.getStorage().writeNBT(ModCyclic.CAPABILITYSTORAGE, inst, null);
       if (ret instanceof NBTTagCompound) { return (NBTTagCompound) ret; }
       return null;
     }
     @Override
     public void deserializeNBT(NBTTagCompound nbt) {
-      ModMain.CAPABILITYSTORAGE.getStorage().readNBT(ModMain.CAPABILITYSTORAGE, inst, null, nbt);
+      ModCyclic.CAPABILITYSTORAGE.getStorage().readNBT(ModCyclic.CAPABILITYSTORAGE, inst, null, nbt);
     }
   }
 }

@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.item.tool;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.BaseTool;
 import com.lothrazar.cyclicmagic.net.PacketRandomize;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
@@ -99,7 +99,7 @@ public class ItemToolRandomize extends BaseTool implements IHasRecipe {
     //if we only run this on server, clients dont get the udpate
     //so run it only on client, let packet run the server
     if (worldObj.isRemote) {
-      ModMain.network.sendToServer(new PacketRandomize(pos, side, ActionType.values()[ActionType.get(stack)]));
+      ModCyclic.network.sendToServer(new PacketRandomize(pos, side, ActionType.values()[ActionType.get(stack)]));
     }
     player.getCooldownTracker().setCooldown(this, cooldown);
     this.onUse(stack, player, worldObj, hand);

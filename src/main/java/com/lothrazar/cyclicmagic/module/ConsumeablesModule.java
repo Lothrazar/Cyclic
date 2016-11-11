@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.ItemAppleEmerald;
 import com.lothrazar.cyclicmagic.item.ItemFoodCorruptedChorus;
 import com.lothrazar.cyclicmagic.item.ItemFoodCrafting;
@@ -29,7 +29,7 @@ public class ConsumeablesModule extends BaseModule  implements IHasConfig{
     if (enableHeartContainer) {
       ItemFoodHeart heart_food = new ItemFoodHeart();
       ItemRegistry.addItem(heart_food, "heart_food");
-      ModMain.instance.events.register(heart_food);
+      ModCyclic.instance.events.register(heart_food);
       LootTableRegistry.registerLoot(heart_food, ChestType.GENERIC, 3);
       LootTableRegistry.registerLoot(heart_food, ChestType.ENDCITY, 4);
       AchievementRegistry.registerItemAchievement(heart_food);
@@ -49,7 +49,7 @@ public class ConsumeablesModule extends BaseModule  implements IHasConfig{
     if (enableCorruptedChorus) {
       ItemFoodCorruptedChorus corrupted_chorus = new ItemFoodCorruptedChorus();
       ItemRegistry.addItem(corrupted_chorus, "corrupted_chorus");
-      ModMain.instance.events.register(corrupted_chorus);
+      ModCyclic.instance.events.register(corrupted_chorus);
       LootTableRegistry.registerLoot(corrupted_chorus, ChestType.GENERIC, 10);
       LootTableRegistry.registerLoot(corrupted_chorus, ChestType.ENDCITY, 5);
       AchievementRegistry.registerItemAchievement(corrupted_chorus);

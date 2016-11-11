@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.gui.uncrafting;
 import java.util.Arrays;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.GuiButtonTexture;
 import com.lothrazar.cyclicmagic.net.PacketTileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -20,7 +20,7 @@ public class GuiButtonUncraftingRedstone extends GuiButtonTexture {
   public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
     boolean pressed = super.mousePressed(mc, mouseX, mouseY);
     if (pressed) {
-      ModMain.network.sendToServer(new PacketTileRedstoneToggle(tilePos));
+      ModCyclic.network.sendToServer(new PacketTileRedstoneToggle(tilePos));
     }
     return pressed;
   }

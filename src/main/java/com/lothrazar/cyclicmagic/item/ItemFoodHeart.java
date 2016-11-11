@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.item;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.command.CommandHearts;
 import com.lothrazar.cyclicmagic.net.PacketSyncPlayerHealth;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
@@ -58,7 +58,7 @@ public class ItemFoodHeart extends ItemFood implements IHasRecipe, IHasConfig {
     IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(event.player);
     if (props.getMaxHealth() > 0 && event.player instanceof EntityPlayerMP) {
       //force clientside hearts to visually update
-      ModMain.network.sendTo(new PacketSyncPlayerHealth(props.getMaxHealth()), (EntityPlayerMP) event.player);
+      ModCyclic.network.sendTo(new PacketSyncPlayerHealth(props.getMaxHealth()), (EntityPlayerMP) event.player);
     }
   }
   @SubscribeEvent
