@@ -93,14 +93,16 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     }
   }
   private void attemptRepairTool() {
-    if (inv[toolSlot].getItemDamage() > 0) {//if it has zero damage, its fully repaired already
+    if (inv[toolSlot] != null && inv[toolSlot].getItemDamage() > 0) {//if it has zero damage, its fully repaired already
       inv[toolSlot].setItemDamage(inv[toolSlot].getItemDamage() - 1);//repair by one point
     }
   }
   private void damageTool() {
-    inv[toolSlot].attemptDamageItem(1, worldObj.rand);//does respect unbreaking
-    if (inv[toolSlot].getItemDamage() >= inv[toolSlot].getMaxDamage()) {
-      inv[toolSlot] = null;
+    if (inv[toolSlot] != null) {
+      inv[toolSlot].attemptDamageItem(1, worldObj.rand);//does respect unbreaking
+      if (inv[toolSlot].getItemDamage() >= inv[toolSlot].getMaxDamage()) {
+        inv[toolSlot] = null;
+      }
     }
   }
   private ItemStack tryMergeStackIntoSlot(ItemStack held, int furnaceSlot) {
