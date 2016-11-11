@@ -13,10 +13,14 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 public class PacketTileHarvester implements IMessage, IMessageHandler<PacketTileHarvester, IMessage> {
   private BlockPos pos;
   private int type;
+  public static enum ActionType {
+    SIZE, PREVIEW;
+  }
   public PacketTileHarvester() {
   }
-  public PacketTileHarvester(BlockPos p) {
+  public PacketTileHarvester(BlockPos p, ActionType t) {
     pos = p;
+    type = t.ordinal();
   }
   @Override
   public void fromBytes(ByteBuf buf) {
@@ -42,7 +46,9 @@ public class PacketTileHarvester implements IMessage, IMessageHandler<PacketTile
     TileEntity tile = player.getEntityWorld().getTileEntity(message.pos);
     if (tile != null && tile instanceof TileMachineHarvester) {
       TileMachineHarvester te = ((TileMachineHarvester) tile);
-      te.toggleSize();
+      if (message.type == ActionType.SIZE.ordinal()) {
+        te.toggleSize();
+      }
       te.displayPreview();
     }
     return null;

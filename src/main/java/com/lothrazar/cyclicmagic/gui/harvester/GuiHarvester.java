@@ -28,15 +28,17 @@ public class GuiHarvester extends GuiBaseContanerProgress {
         this.guiTop + Const.padding, this.tile.getPos());
     redstoneBtn.setTextureIndex(tile.getField(TileMachineHarvester.Fields.REDSTONE.ordinal()));
     this.buttonList.add(redstoneBtn);
+    int y = this.guiTop + Const.padding * 2 + 20;
     btnSize = new GuiButtonHarvester(btnId++,
         this.guiLeft + Const.padding,
-        this.guiTop + Const.padding*2+20, "", this.tile.getPos());
+        y, "", this.tile.getPos(),
+        PacketTileHarvester.ActionType.SIZE);
     this.buttonList.add(btnSize);
-//    GuiButtonHarvester btnPreview = new GuiButtonHarvester(btnId++,
-//        this.guiLeft + Const.padding + 80 + Const.padding,
-//        this.guiTop + Const.padding+10, UtilChat.lang("button.harvester.preview"), this.tile.getPos(),
-//        PacketTileHarvester.ActionType.PREVIEW);
-//    this.buttonList.add(btnPreview);
+    GuiButtonHarvester btnPreview = new GuiButtonHarvester(btnId++,
+        this.guiLeft + Const.padding*2+40,
+        y, UtilChat.lang("button.harvester.preview"), this.tile.getPos(),
+        PacketTileHarvester.ActionType.PREVIEW);
+    this.buttonList.add(btnPreview);
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
