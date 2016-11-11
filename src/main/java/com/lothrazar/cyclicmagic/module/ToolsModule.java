@@ -3,6 +3,7 @@ import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
 import com.lothrazar.cyclicmagic.item.tool.*;
 import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.WandType;
+import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
 import com.lothrazar.cyclicmagic.item.ItemSleepingMat;
 import com.lothrazar.cyclicmagic.net.PacketSpellShiftLeft;
 import com.lothrazar.cyclicmagic.net.PacketSpellShiftRight;
@@ -47,8 +48,12 @@ public class ToolsModule extends BaseModule {
   private boolean enableSwappers;
   private boolean enableRando;
   private boolean enablePearlReuseMounted;
+  private boolean enableCarbonPaper;
   @Override
   public void onInit() {
+    if (enableCarbonPaper) {
+      ItemRegistry.addItem(new ItemPaperCarbon(), "carbon_paper");
+    }
     if (enableProspector) {
       ItemToolProspector tool_prospector = new ItemToolProspector();
       ItemRegistry.addItem(tool_prospector, "tool_prospector");
@@ -154,6 +159,7 @@ public class ToolsModule extends BaseModule {
     enableSwappers = config.getBoolean("ExchangeScepters", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableRando = config.getBoolean("BlockRandomizer", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablePearlReuseMounted = config.getBoolean("EnderOrbMounted", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableCarbonPaper = config.getBoolean("CarbonPaper", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
   @SideOnly(Side.CLIENT)
   @SubscribeEvent

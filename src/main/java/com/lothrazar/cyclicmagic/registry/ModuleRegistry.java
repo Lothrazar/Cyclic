@@ -8,7 +8,6 @@ public class ModuleRegistry {
     // :) http://alphabetizer.flap.tv/
     modules.add(new ArmorStandSwapModule());
     modules.add(new BucketBlockModule());
-    modules.add(new CarbonPaperModule());
     modules.add(new ChestSackModule());
     modules.add(new CommandModule());
     modules.add(new ConsumeablesModule());
