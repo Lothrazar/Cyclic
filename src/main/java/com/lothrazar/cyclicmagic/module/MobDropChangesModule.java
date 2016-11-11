@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.module;
 import java.util.List;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
@@ -33,6 +34,7 @@ public class MobDropChangesModule extends BaseEventModule {
   private boolean bonusGolemIron;
   private boolean zombieDropsNerfed;
   private boolean endermanDrop;
+  private boolean nameTagDeath;
   @SubscribeEvent
   public void onEntityInteractSpecific(EntityInteractSpecific event) {
     if (sheepShearBuffed && event.getEntityPlayer() != null && event.getTarget() instanceof EntitySheep) {
@@ -52,6 +54,15 @@ public class MobDropChangesModule extends BaseEventModule {
     World worldObj = entity.getEntityWorld();
     List<EntityItem> drops = event.getDrops();
     BlockPos pos = entity.getPosition();
+    if (nameTagDeath) {
+      if (entity.getCustomNameTag() != null && entity.getCustomNameTag() != "") {
+        // item stack NBT needs the name enchanted onto it
+        if (entity.worldObj.isRemote == false) {
+          ItemStack nameTag = UtilNBT.buildEnchantedNametag(entity.getCustomNameTag());
+          UtilEntity.dropItemStackInWorld(worldObj, entity.getPosition(), nameTag);
+        }
+      }
+    }
     if (endermanDrop && entity instanceof EntityEnderman) {
       EntityEnderman mob = (EntityEnderman) entity;
       IBlockState bs = mob.getHeldBlockState();// mob.func_175489_ck();
@@ -99,6 +110,9 @@ public class MobDropChangesModule extends BaseEventModule {
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.mobs;
     config.addCustomCategoryComment(category, "Changes to vanilla mobs");
+    //    String category = Const.ConfigCategory.mobs;
+    nameTagDeath = config.getBoolean("Name Tag Death", category, true,
+        "When an entity dies that is named with a tag, it drops the nametag");
     endermanDrop = config.getBoolean("Enderman Block", category, true,
         "Enderman will always drop block they are carrying 100%");
     zombieDropsNerfed = config.getBoolean("Zombie Drops Nerfed", category, true,

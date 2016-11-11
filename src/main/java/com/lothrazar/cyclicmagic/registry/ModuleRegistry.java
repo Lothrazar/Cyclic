@@ -13,7 +13,6 @@ public class ModuleRegistry {
     modules.add(new ConsumeablesModule());
     modules.add(new CharmModule());
     modules.add(new DispenserBehaviorModule());
-    modules.add(new DropNametagDeathModule());
     modules.add(new EditSignBarehandModule());
     modules.add(new EmeraldGearModule());
     modules.add(new EnchantModule());
