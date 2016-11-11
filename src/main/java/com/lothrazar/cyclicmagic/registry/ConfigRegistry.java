@@ -5,16 +5,22 @@ import net.minecraftforge.common.config.Configuration;
 
 public class ConfigRegistry {
   public static ArrayList<IHasConfig> configHandlers;
-  public static void init() {
+  private static Configuration config;
+  public static Configuration getConfig() {
+    return config;
+  }
+  public static void init(Configuration c) {
+    config = c;
+    config.load();
     configHandlers = new ArrayList<IHasConfig>();
   }
   public static void register(IHasConfig c) {
     configHandlers.add(c);
   }
-  public static void syncAllConfig(Configuration c) {
+  public static void syncAllConfig() {
     for (IHasConfig conf : ConfigRegistry.configHandlers) {
-      conf.syncConfig(c);
+      conf.syncConfig(config);
     }
-    c.save();
+    config.save();
   }
 }

@@ -31,10 +31,6 @@ public class ModMain {
   public EventRegistry events;
   public static SimpleNetworkWrapper network;
   private Item tabItem = null;
-  private static Configuration config;
-  public static Configuration getConfig() {
-    return config;
-  }
   public void setTabItemIfNull(Item i) {
     if (tabItem == null)
       tabItem = i;
@@ -50,9 +46,7 @@ public class ModMain {
   @EventHandler
   public void onPreInit(FMLPreInitializationEvent event) {
     logger = new ModLogger(event.getModLog());
-    config = new Configuration(event.getSuggestedConfigurationFile());
-    config.load();
-    ConfigRegistry.init();
+    ConfigRegistry.init(new Configuration(event.getSuggestedConfigurationFile()));
     network = NetworkRegistry.INSTANCE.newSimpleChannel(Const.MODID);
     PacketRegistry.register(network);
     SoundRegistry.register();
@@ -62,7 +56,7 @@ public class ModMain {
     this.events.registerCoreEvents();
     ModuleRegistry.init();
     ModuleRegistry.registerAll();//create new instance of every module
-    this.syncConfig();
+    ConfigRegistry.syncAllConfig();
     for (ICyclicModule module : ModuleRegistry.modules) {
       module.onPreInit();
     }
@@ -76,7 +70,7 @@ public class ModMain {
     ItemRegistry.register();//now that modules have added their content (items), we can register them
     proxy.register();
     NetworkRegistry.INSTANCE.registerGuiHandler(this, new ModGuiHandler());
-    this.syncConfig(); //fixes things , stuff was added to items and content that has config
+    ConfigRegistry.syncAllConfig(); //fixes things , stuff was added to items and content that has config
     this.events.registerAll(); //important: register events AFTER modules onInit, since modules add events in this phase.
   }
   @EventHandler
@@ -91,9 +85,6 @@ public class ModMain {
     for (ICyclicModule module : ModuleRegistry.modules) {
       module.onServerStarting(event);
     }
-  }
-  public void syncConfig() {
-    ConfigRegistry.syncAllConfig(getConfig());
   }
   /*
    * 
