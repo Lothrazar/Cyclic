@@ -15,5 +15,6 @@ public class ConfigRegistry {
     for (IHasConfig conf : ConfigRegistry.configHandlers) {
       conf.syncConfig(c);
     }
+    c.save();
   }
 }

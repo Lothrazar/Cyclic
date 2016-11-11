@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.registry;
 import java.util.HashMap;
 import java.util.Map;
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.item.BaseItem;
@@ -34,6 +35,9 @@ public class ItemRegistry {
       }
       else {
         ItemRegistry.registerItem(item, key);
+      }
+      if (item instanceof IHasConfig) {
+        ConfigRegistry.register((IHasConfig)item);
       }
       if (item instanceof IHasRecipe) {
         ((IHasRecipe) item).addRecipe();

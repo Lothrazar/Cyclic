@@ -93,18 +93,7 @@ public class ModMain {
     }
   }
   public void syncConfig() {
-    Configuration c = getConfig();
-    ConfigRegistry.syncAllConfig(c);
-   //TODO: fix this stuff
-    //for any modules that have created an item, those items might have inner configs, so hit it up
-    Item item;//its a leftover mapping from before modules
-    for (String key : ItemRegistry.itemMap.keySet()) {
-      item = ItemRegistry.itemMap.get(key);
-      if (item instanceof IHasConfig) {
-        ((IHasConfig) item).syncConfig(c);
-      }
-    }
-    c.save();
+    ConfigRegistry.syncAllConfig(getConfig());
   }
   /*
    * 
