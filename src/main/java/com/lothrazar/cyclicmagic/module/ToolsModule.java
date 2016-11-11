@@ -5,6 +5,7 @@ import com.lothrazar.cyclicmagic.item.tool.*;
 import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.WandType;
 import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
 import com.lothrazar.cyclicmagic.item.ItemSleepingMat;
+import com.lothrazar.cyclicmagic.item.ItemStorageBag;
 import com.lothrazar.cyclicmagic.net.PacketSpellShiftLeft;
 import com.lothrazar.cyclicmagic.net.PacketSpellShiftRight;
 import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
@@ -49,8 +50,16 @@ public class ToolsModule extends BaseModule {
   private boolean enableRando;
   private boolean enablePearlReuseMounted;
   private boolean enableCarbonPaper;
+  private boolean storageBagEnabled;
   @Override
   public void onInit() {
+    if (storageBagEnabled) {
+      ItemRegistry.storage_bag = new ItemStorageBag();
+      ItemRegistry.addItem(ItemRegistry.storage_bag, "storage_bag");
+      ModMain.instance.events.addEvent(ItemRegistry.storage_bag);
+      LootTableRegistry.registerLoot(ItemRegistry.storage_bag);
+      LootTableRegistry.registerLoot(ItemRegistry.storage_bag, ChestType.BONUS, 25);
+    }
     if (enableCarbonPaper) {
       ItemRegistry.addItem(new ItemPaperCarbon(), "carbon_paper");
     }
@@ -142,6 +151,8 @@ public class ToolsModule extends BaseModule {
   }
   @Override
   public void syncConfig(Configuration config) {
+    storageBagEnabled = config.getBoolean("StorageBag", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    
     //TODO: this config should be INSIDE the item mat
     ItemSleepingMat.doPotions = config.getBoolean("SleepingMatPotions", Const.ConfigCategory.items, true, "False will disable the potion effects given by the Sleeping Mat");
     enableWarpHomeTool = config.getBoolean("EnderWingPrime", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

@@ -45,7 +45,6 @@ public class ModuleRegistry {
     modules.add(new SkullNameFromSignModule());
     modules.add(new SlimepadModule());
     modules.add(new StackSizeModule());
-    modules.add(new StorageBagModule());
     modules.add(new ToolsModule());
     modules.add(new UnbreakableSpawnerModule());
     modules.add(new VillagerCreateModule());
