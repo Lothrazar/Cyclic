@@ -14,7 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class SlimepadModule extends BaseModule {
+public class BlockPlateModule extends BaseModule {
   private boolean enableConveyor;
   private boolean launchPads;
   private boolean enableMagnet;

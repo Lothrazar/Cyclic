@@ -21,7 +21,7 @@ import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class MachineBlockModule extends BaseModule {
+public class BlockMachineModule extends BaseModule {
   private boolean enableUncrafter;
   private boolean enableBuilderBlock;
   private boolean enableHarvester;
