@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.item;
 import java.util.List;
-import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
@@ -10,6 +9,7 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -21,7 +21,6 @@ import net.minecraft.world.World;
 
 public class ItemChestSack extends BaseItem {
   public static final String name = "chest_sack";
-  //  public static final String KEY_NBT = "itemtags";
   public static final String KEY_BLOCKID = "block";
   public static final String KEY_BLOCKTILE = "tile";
   public static final String KEY_BLOCKNAME = "blockname";
@@ -42,8 +41,8 @@ public class ItemChestSack extends BaseItem {
     if (createAndFillChest(playerIn, stack, offset)) {
       playerIn.setHeldItem(hand, null);
       UtilSound.playSound(playerIn, pos, SoundRegistry.thunk);
-      if (playerIn.capabilities.isCreativeMode == false) {
-        UtilEntity.dropItemStackInWorld(worldIn, playerIn.getPosition(), ItemRegistry.chest_sack_empty);
+      if (playerIn.capabilities.isCreativeMode == false && emptySack!=null) {//its never really null tho
+        UtilEntity.dropItemStackInWorld(worldIn, playerIn.getPosition(), emptySack);
       }
     }
     return EnumActionResult.SUCCESS;
@@ -91,5 +90,9 @@ public class ItemChestSack extends BaseItem {
         //wont happen anymore
       }
     }
+  }
+  private Item emptySack;
+  public void setEmptySack(ItemChestSackEmpty item) {
+    emptySack = item;
   }
 }

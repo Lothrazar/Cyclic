@@ -59,11 +59,13 @@ public class ToolsModule extends BaseModule {
   @Override
   public void onInit() {
     if (enableChestSack) {
-      ItemRegistry.chest_sack_empty = new ItemChestSackEmpty();
-      ItemRegistry.chest_sack = new ItemChestSack();
-      ItemRegistry.chest_sack.setHidden();
-      ItemRegistry.addItem(ItemRegistry.chest_sack, "chest_sack");
-      ItemRegistry.addItem(ItemRegistry.chest_sack_empty, "chest_sack_empty");
+      ItemChestSackEmpty chest_sack_empty = new ItemChestSackEmpty();
+      ItemChestSack chest_sack = new ItemChestSack();
+      chest_sack.setHidden();
+      chest_sack.setEmptySack(chest_sack_empty);
+      chest_sack_empty.setFullSack(chest_sack);
+      ItemRegistry.addItem(chest_sack, "chest_sack");
+      ItemRegistry.addItem(chest_sack_empty, "chest_sack_empty");
     }
     if (enableEnderBook) {
       ItemEnderBook book_ender = new ItemEnderBook();
@@ -171,7 +173,6 @@ public class ToolsModule extends BaseModule {
   public void syncConfig(Configuration config) {
     storageBagEnabled = config.getBoolean("StorageBag", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableEnderBook = config.getBoolean("EnderBook", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    
     //TODO: this config should be INSIDE the item mat
     ItemSleepingMat.doPotions = config.getBoolean("SleepingMatPotions", Const.ConfigCategory.items, true, "False will disable the potion effects given by the Sleeping Mat");
     enableWarpHomeTool = config.getBoolean("EnderWingPrime", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
@@ -191,7 +192,6 @@ public class ToolsModule extends BaseModule {
     enablePearlReuseMounted = config.getBoolean("EnderOrbMounted", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableCarbonPaper = config.getBoolean("CarbonPaper", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableChestSack = config.getBoolean("ChestSack", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    
   }
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
