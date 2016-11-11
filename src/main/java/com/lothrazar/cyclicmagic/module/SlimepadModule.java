@@ -1,5 +1,8 @@
 package com.lothrazar.cyclicmagic.module;
+import com.lothrazar.cyclicmagic.block.BlockConveyor;
 import com.lothrazar.cyclicmagic.block.BlockLaunch;
+import com.lothrazar.cyclicmagic.block.BlockMagnet;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityMagnet;
 import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -12,9 +15,17 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class SlimepadModule extends BaseModule {
-  private boolean moduleEnabled;
+  private boolean enableConveyor;
+  private boolean launchPads;
+  private boolean enableMagnet;
   public void onInit() {
-    if (moduleEnabled) {
+    if (enableMagnet) {
+      BlockRegistry.magnet_block = new BlockMagnet();
+      BlockRegistry.registerBlock(BlockRegistry.magnet_block, "magnet_block");
+      BlockRegistry.magnet_block.addRecipe();
+      GameRegistry.registerTileEntity(TileEntityMagnet.class, "magnet_block_te");
+    }
+    if (launchPads) {
       BlockLaunch plate_launch_small = new BlockLaunch(0.8F, SoundEvents.BLOCK_SLIME_STEP);
       BlockRegistry.registerBlock(plate_launch_small, "plate_launch_small");
       BlockLaunch plate_launch_med = new BlockLaunch(1.3F, SoundEvents.BLOCK_SLIME_FALL);
@@ -34,9 +45,17 @@ public class SlimepadModule extends BaseModule {
           new ItemStack(Blocks.END_STONE));
       AchievementRegistry.registerItemAchievement(Item.getItemFromBlock(plate_launch_large));
     }
+    if (enableConveyor) {
+      BlockConveyor plate_push = new BlockConveyor(0.16F, SoundEvents.BLOCK_ANVIL_BREAK);
+      BlockRegistry.registerBlock(plate_push, "plate_push");
+      plate_push.addRecipe();
+      AchievementRegistry.registerItemAchievement(Item.getItemFromBlock(plate_push));
+    }
   }
   @Override
   public void syncConfig(Configuration config) {
-    moduleEnabled = config.getBoolean("SlimePads", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableConveyor = config.getBoolean("SlimeConveyor", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableMagnet = config.getBoolean("MagnetBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    launchPads = config.getBoolean("SlimePads", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
 }

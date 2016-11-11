@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.block.BlockStructureBuilder;
 import com.lothrazar.cyclicmagic.block.BlockHarvester;
-import com.lothrazar.cyclicmagic.block.BlockMagnet;
 import com.lothrazar.cyclicmagic.block.BlockMiner;
 import com.lothrazar.cyclicmagic.block.BlockMinerSmart;
 import com.lothrazar.cyclicmagic.block.BlockPassword;
@@ -11,7 +10,6 @@ import com.lothrazar.cyclicmagic.block.BlockUncrafting;
 import com.lothrazar.cyclicmagic.block.BlockUser;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineStructureBuilder;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineHarvester;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityMagnet;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineBlockMiner;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMinerSmart;
@@ -27,7 +25,6 @@ public class MachineBlockModule extends BaseModule {
   private boolean enableUncrafter;
   private boolean enableBuilderBlock;
   private boolean enableHarvester;
-  private boolean enableMagnet;
   private boolean enableMiner;
   private boolean enableMinerEnhanced;
   private boolean enablePlacer;
@@ -53,12 +50,6 @@ public class MachineBlockModule extends BaseModule {
       uncrafting_block.addRecipe();
       GameRegistry.registerTileEntity(TileMachineUncrafter.class, "uncrafting_block_te");
       BlockRegistry.uncrafting_block = uncrafting_block;//TODO:MAKE ARRAY
-    }
-    if (enableMagnet) {
-      BlockRegistry.magnet_block = new BlockMagnet();
-      BlockRegistry.registerBlock(BlockRegistry.magnet_block, "magnet_block");
-      BlockRegistry.magnet_block.addRecipe();
-      GameRegistry.registerTileEntity(TileEntityMagnet.class, "magnet_block_te");
     }
     if (enableMiner) {
       BlockRegistry.miner_block = new BlockMiner(BlockMiner.MinerType.SINGLE);
@@ -110,7 +101,6 @@ public class MachineBlockModule extends BaseModule {
     TileMachineStructureBuilder.maxSize = config.getInt("builder.maxRange", Const.ConfigCategory.modpackMisc, 64, 3, 64, "Maximum range of the builder block that you can increase it to in the GUI");
     TileMachineStructureBuilder.maxHeight = config.getInt("builder.maxHeight", Const.ConfigCategory.modpackMisc, 64, 3, 64, "Maximum height of the builder block that you can increase it to in the GUI");
     enableHarvester = config.getBoolean("HarvesterBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableMagnet = config.getBoolean("MagnetBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableUncrafter = config.getBoolean("UncraftingGrinder", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableMinerSmart = config.getBoolean("ControlledMiner", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     //TODO: LOOP/LIST of blocks so we can hit their recipes AND configs in the loop just like items
