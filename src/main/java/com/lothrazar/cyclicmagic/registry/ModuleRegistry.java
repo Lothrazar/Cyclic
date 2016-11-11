@@ -6,16 +6,14 @@ import com.lothrazar.cyclicmagic.module.*;
 public class ModuleRegistry {
   public static void register(List<ICyclicModule> modules) {
     // :) http://alphabetizer.flap.tv/
-    modules.add(new ArmorStandSwapModule());
     modules.add(new ChestSackModule());
     modules.add(new CommandModule());
     modules.add(new ConsumeablesModule());
     modules.add(new CharmModule());
     modules.add(new DispenserBehaviorModule());
-    modules.add(new EditSignBarehandModule());
     modules.add(new EmeraldGearModule());
     modules.add(new EnchantModule());
-    modules.add(new EnderChestClickopenModule());
+    modules.add(new PlayerAbilitiesModule());
     modules.add(new F3InfoModule());
     modules.add(new BlockUtilityModule());
     modules.add(new FragileTorchesModule());
@@ -25,7 +23,6 @@ public class ModuleRegistry {
     modules.add(new HorseFoodModule());
     modules.add(new ItemstackInfoModule());
     modules.add(new KeyInventoryShiftModule());
-    modules.add(new LadderClimbSpeedModule());
     modules.add(new LightningTransformModule());
     modules.add(new LootTableModule());
     modules.add(new MagicBeanModule());
@@ -33,13 +30,11 @@ public class ModuleRegistry {
     modules.add(new MobDropChangesModule());
     modules.add(new MobSpawnModule());
     modules.add(new MountedTweaksModule());
-    modules.add(new PassthroughActionModule());
     modules.add(new PotionModule());
     modules.add(new ProjectileModule());
     modules.add(new RecipeChangerModule());
     modules.add(new SandstoneToolsModule());
     modules.add(new SaplingPlantDespawnModule());
-    modules.add(new SkullNameFromSignModule());
     modules.add(new BlockPlateModule());
     modules.add(new StackSizeModule());
     modules.add(new ToolsModule());

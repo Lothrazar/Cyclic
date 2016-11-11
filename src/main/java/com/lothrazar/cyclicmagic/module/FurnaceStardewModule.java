@@ -18,9 +18,9 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class FurnaceStardewModule extends BaseEventModule implements IHasConfig {
-  private static boolean stardewFurnace;
   // inspired by stardew valley
   // http://minecraft.gamepedia.com/Furnace
+  private static boolean stardewFurnace;
   final static int SLOT_INPUT = 0;
   final static int SLOT_FUEL = 1;
   final static int SLOT_OUTPUT = 2;

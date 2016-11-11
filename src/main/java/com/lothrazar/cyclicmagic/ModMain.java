@@ -109,6 +109,8 @@ public class ModMain {
    * 
    * TODO: ideas/plans/features
    * 
+   * LADDER CLIMB: remove the  && player.moveForward == 0 restriction?
+   * 
    * Structure builder: add preview (ghost blocks or sparkls)
    * 
    * project table (invo plus 3x3)
