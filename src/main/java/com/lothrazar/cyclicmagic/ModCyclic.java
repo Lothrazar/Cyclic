@@ -90,6 +90,10 @@ public class ModCyclic {
    * 
    * TODO: ideas/plans/features
    * 
+   * harvester: preview area/range/size
+   * 
+   * harvester:? gui to change size?
+   * 
    * F3InfoModule CONFIG
    * 
    * LADDER CLIMB: remove the && player.moveForward == 0 restriction?
@@ -105,10 +109,6 @@ public class ModCyclic {
    * directional magnet
    * 
    * tesr: animate machines when active
-   * 
-   * harvester: preview area/range/size
-   * 
-   * harvester:? gui to change size?
    * 
    * machine to spam bonemeal, with input slot
    * 

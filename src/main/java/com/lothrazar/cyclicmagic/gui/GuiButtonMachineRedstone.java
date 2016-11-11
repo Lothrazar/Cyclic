@@ -1,7 +1,6 @@
-package com.lothrazar.cyclicmagic.gui.uncrafting;
+package com.lothrazar.cyclicmagic.gui;
 import java.util.Arrays;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.gui.GuiButtonTexture;
 import com.lothrazar.cyclicmagic.net.PacketTileRedstoneToggle;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.Minecraft;
@@ -9,9 +8,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GuiButtonUncraftingRedstone extends GuiButtonTexture {
+public class GuiButtonMachineRedstone extends GuiButtonTexture {
   private BlockPos tilePos;
-  public GuiButtonUncraftingRedstone(int buttonId, int x, int y, BlockPos p) {
+  public GuiButtonMachineRedstone(int buttonId, int x, int y, BlockPos p) {
     super(buttonId, x, y, "textures/gui/buttons.png");
     this.tilePos = p;
   }

@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.gui.harvester;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineHarvester;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContanerProgress;
-import com.lothrazar.cyclicmagic.gui.uncrafting.GuiButtonUncraftingRedstone;
+import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -12,7 +12,8 @@ public class GuiHarvester extends GuiBaseContanerProgress {
   static final int padding = 8;
   private TileMachineHarvester tile;
   boolean debugLabels = false;
-  private GuiButtonUncraftingRedstone redstoneBtn;
+  private GuiButtonMachineRedstone redstoneBtn;
+  private  GuiButtonHarvester btnSize ;
   public GuiHarvester(InventoryPlayer inventoryPlayer, TileMachineHarvester tileEntity) {
     super(new ContainerHarvester(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -20,11 +21,19 @@ public class GuiHarvester extends GuiBaseContanerProgress {
   @Override
   public void initGui() {
     super.initGui();
-    redstoneBtn = new GuiButtonUncraftingRedstone(0,
+    redstoneBtn = new GuiButtonMachineRedstone(0,
         this.guiLeft + 8,
         this.guiTop + 8, this.tile.getPos());
     redstoneBtn.setTextureIndex(tile.getField(TileMachineHarvester.Fields.REDSTONE.ordinal()));
     this.buttonList.add(redstoneBtn);
+    
+    btnSize = new GuiButtonHarvester(1,
+        this.guiLeft + 8,
+        this.guiTop + 28, 40,20,"change size",this.tile.getPos());
+    this.buttonList.add(btnSize);
+    
+    
+//    redstoneBtn.setTextureIndex(tile.getField(TileMachineHarvester.Fields.REDSTONE.ordinal()));
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
@@ -38,8 +47,8 @@ public class GuiHarvester extends GuiBaseContanerProgress {
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    int needsRed = tile.getField(TileMachineHarvester.Fields.REDSTONE.ordinal());
-    redstoneBtn.setState(needsRed);
+    redstoneBtn.setState(tile.getField(TileMachineHarvester.Fields.REDSTONE.ordinal()));
+    btnSize.displayString = "button.harvester.size" +  tile.getField(TileMachineHarvester.Fields.SIZE.ordinal());
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
   public int getProgressX() {

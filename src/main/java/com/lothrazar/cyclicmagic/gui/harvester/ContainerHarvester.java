@@ -16,6 +16,7 @@ public class ContainerHarvester extends ContainerBaseMachine {
   protected TileMachineHarvester tileEntity;
   private int tileRedstone;
   private int tileTimer;
+  private int tileSize;
   public ContainerHarvester(InventoryPlayer inventoryPlayer, TileMachineHarvester te) {
     tileEntity = te;
   
@@ -38,9 +39,14 @@ public class ContainerHarvester extends ContainerBaseMachine {
       if (this.tileRedstone != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
+      idx = TileMachineHarvester.Fields.SIZE.ordinal();
+      if (this.tileSize != this.tileEntity.getField(idx)) {
+        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
+      }
     }
     this.tileTimer = this.tileEntity.getField(TileMachineHarvester.Fields.TIMER.ordinal());
     this.tileRedstone = this.tileEntity.getField(TileMachineHarvester.Fields.REDSTONE.ordinal());
+    this.tileSize = this.tileEntity.getField(TileMachineHarvester.Fields.SIZE.ordinal());
   }
   @Override
   @SideOnly(Side.CLIENT)

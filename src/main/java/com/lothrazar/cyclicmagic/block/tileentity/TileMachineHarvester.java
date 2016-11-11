@@ -14,11 +14,11 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
   public static int TIMER_FULL = 80;
   private HarestCropsConfig conf;
   private int needsRedstone = 1;
+  private int size = 3;
   private static final String NBT_TIMER = "Timer";
-  public static int HARVEST_RADIUS = 16;
   private static final String NBT_REDST = "redstone";
   public static enum Fields {
-    TIMER, REDSTONE
+    TIMER, REDSTONE, SIZE
   }
   public TileMachineHarvester() {
     this.timer = TIMER_FULL;
@@ -74,7 +74,6 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
         timer = TIMER_FULL;//harvest worked!
       }
       else {
-        //        UtilParticle.spawnParticle(worldObj, EnumParticleTypes.SMOKE_NORMAL, harvest);
         timer = 1;//harvest didnt work, try again really quick
       }
     }
@@ -85,8 +84,8 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
   }
   private BlockPos getHarvestPos() {
     //move center over that much, not including exact horizontal
-    BlockPos center = this.getPos().offset(this.getCurrentFacing(), HARVEST_RADIUS + 1);
-    return UtilWorld.getRandomPos(this.worldObj.rand, center, HARVEST_RADIUS);
+    BlockPos center = this.getPos().offset(this.getCurrentFacing(), this.size +1);
+    return UtilWorld.getRandomPos(this.worldObj.rand, center, this.size);
   }
   private int getSpeed() {
     return 1;
@@ -99,6 +98,10 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
         return timer;
       case REDSTONE:
         return this.needsRedstone;
+      case SIZE:
+        return this.size;
+      default:
+        break;
       }
     return -1;
   }
@@ -111,6 +114,11 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
         break;
       case REDSTONE:
         this.needsRedstone = value;
+        break;
+      case SIZE:
+        this.size=value;
+        break;
+      default:
         break;
       }
   }
@@ -146,6 +154,13 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
   public int[] getSlotsForFace(EnumFacing side) {
     // TODO Auto-generated method stub
     return null;
+  }
+  public void toggleSize() {
+    this.size++;
+    if(this.size > 4){
+      this.size = 1;
+    }
+    System.out.println("new size after toggle"+this.size);
   }
   @Override
   public void toggleNeedsRedstone() {
