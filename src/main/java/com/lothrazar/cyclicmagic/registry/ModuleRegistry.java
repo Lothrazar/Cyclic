@@ -2,52 +2,56 @@ package com.lothrazar.cyclicmagic.registry;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ICyclicModule;
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.module.*;
 
 public class ModuleRegistry {
   public static List<ICyclicModule> modules = new ArrayList<ICyclicModule>();
-  public static void init(){
+  public static void init() {
     modules = new ArrayList<ICyclicModule>();
   }
-  public static void register(ICyclicModule m){
-    
+  public static void register(ICyclicModule m) {
+    modules.add(m);
+    if (m instanceof IHasConfig) {
+      ConfigRegistry.register((IHasConfig) m);
+    }
   }
   public static void registerAll() {
     // :) http://alphabetizer.flap.tv/
-    modules.add(new BlockMachineModule());
-    modules.add(new BlockPlateModule());
-    modules.add(new BlockUtilityModule());
-    modules.add(new CommandModule());
-    modules.add(new ConsumeablesModule());
-    modules.add(new CharmModule());
-    modules.add(new DispenserBehaviorModule());
-    modules.add(new EmeraldGearModule());
-    modules.add(new EnchantModule());
-    modules.add(new PlayerAbilitiesModule());
-    modules.add(new F3InfoModule());
-    modules.add(new FragileTorchesModule());
-    modules.add(new FurnaceStardewModule());
-    modules.add(new FuelAdditionModule());
-    modules.add(new GuiTerrariaButtonsModule());
-    modules.add(new HorseFoodModule());
-    modules.add(new ItemstackInfoModule());
-    modules.add(new KeyInventoryShiftModule());
-    modules.add(new LightningTransformModule());
-    modules.add(new LootTableModule());
-    modules.add(new MagicBeanModule());
-    modules.add(new MobDropChangesModule());
-    modules.add(new MobSpawnModule());
-    modules.add(new MountedTweaksModule());
-    modules.add(new PotionModule());
-    modules.add(new ProjectileModule());
-    modules.add(new RecipeChangerModule());
-    modules.add(new SandstoneToolsModule());
-    modules.add(new SaplingPlantDespawnModule());
-    modules.add(new StackSizeModule());
-    modules.add(new ToolsModule());
-    modules.add(new UnbreakableSpawnerModule());
-    modules.add(new VillagerCreateModule());
-    modules.add(new VillagerNametagModule());
-    modules.add(new WorldGenModule());
+    register(new BlockMachineModule());
+    register(new BlockPlateModule());
+    register(new BlockUtilityModule());
+    register(new CommandModule());
+    register(new ConsumeablesModule());
+    register(new CharmModule());
+    register(new DispenserBehaviorModule());
+    register(new EmeraldGearModule());
+    register(new EnchantModule());
+    register(new PlayerAbilitiesModule());
+    register(new F3InfoModule());
+    register(new FragileTorchesModule());
+    register(new FurnaceStardewModule());
+    register(new FuelAdditionModule());
+    register(new GuiTerrariaButtonsModule());
+    register(new HorseFoodModule());
+    register(new ItemstackInfoModule());
+    register(new KeyInventoryShiftModule());
+    register(new LightningTransformModule());
+    register(new LootTableModule());
+    register(new MagicBeanModule());
+    register(new MobDropChangesModule());
+    register(new MobSpawnModule());
+    register(new MountedTweaksModule());
+    register(new PotionModule());
+    register(new ProjectileModule());
+    register(new RecipeChangerModule());
+    register(new SandstoneToolsModule());
+    register(new SaplingPlantDespawnModule());
+    register(new StackSizeModule());
+    register(new ToolsModule());
+    register(new UnbreakableSpawnerModule());
+    register(new VillagerCreateModule());
+    register(new VillagerNametagModule());
+    register(new WorldGenModule());
   }
 }

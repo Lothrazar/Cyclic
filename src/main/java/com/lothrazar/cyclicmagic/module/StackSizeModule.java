@@ -1,12 +1,13 @@
 package com.lothrazar.cyclicmagic.module;
 import java.util.HashMap;
 import java.util.Map;
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
 
-public class StackSizeModule extends BaseModule {
+public class StackSizeModule extends BaseModule  implements IHasConfig{
   private Map<Item, Integer> stackMap = new HashMap<Item, Integer>();
   private Map<Item, Integer> enabledMap = new HashMap<Item, Integer>();
   public StackSizeModule() {
@@ -16,18 +17,8 @@ public class StackSizeModule extends BaseModule {
     stackMap.put(Items.DIAMOND_HORSE_ARMOR, boat);
     stackMap.put(Items.GOLDEN_HORSE_ARMOR, boat);
     stackMap.put(Items.IRON_HORSE_ARMOR, boat);
-//    stackMap.put(Items.RECORD_11, boat);
-//    stackMap.put(Items.RECORD_13, boat);
-//    stackMap.put(Items.RECORD_BLOCKS, boat);
-//    stackMap.put(Items.RECORD_CAT, boat);
-//    stackMap.put(Items.RECORD_CHIRP, boat);
-//    stackMap.put(Items.RECORD_FAR, boat);
-//    stackMap.put(Items.RECORD_MALL, boat);
-//    stackMap.put(Items.RECORD_MELLOHI, boat);
-//    stackMap.put(Items.RECORD_STAL, boat);
-//    stackMap.put(Items.RECORD_STRAD, boat);
-//    stackMap.put(Items.RECORD_WAIT, boat);
-//    stackMap.put(Items.RECORD_WARD, boat);
+
+    //DO NOT DO RECORDS until we confirm that vanilla juke boxes dont DUPE them
     stackMap.put(Items.BOAT, boat);
     stackMap.put(Items.ACACIA_BOAT, boat);
     stackMap.put(Items.BIRCH_BOAT, boat);

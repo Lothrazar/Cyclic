@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.module;
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.block.BlockStructureBuilder;
 import com.lothrazar.cyclicmagic.block.BlockHarvester;
@@ -22,7 +23,7 @@ import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BlockMachineModule extends BaseModule {
+public class BlockMachineModule extends BaseModule implements IHasConfig {
   private boolean enableUncrafter;
   private boolean enableBuilderBlock;
   private boolean enableHarvester;

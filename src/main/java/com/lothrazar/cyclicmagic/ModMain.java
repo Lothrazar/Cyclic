@@ -94,20 +94,14 @@ public class ModMain {
   }
   public void syncConfig() {
     Configuration c = getConfig();
-    // hit on startup and on change event from
-    // we cant make this a list/loop because the order does matter
-    for (ICyclicModule module : ModuleRegistry.modules) {
-      module.syncConfig(c);
-    }
-    for (IHasConfig conf : ConfigRegistry.configHandlers) {
-      conf.syncConfig(c);
-    }
+    ConfigRegistry.syncAllConfig(c);
+   //TODO: fix this stuff
     //for any modules that have created an item, those items might have inner configs, so hit it up
     Item item;//its a leftover mapping from before modules
     for (String key : ItemRegistry.itemMap.keySet()) {
       item = ItemRegistry.itemMap.get(key);
       if (item instanceof IHasConfig) {
-        ((IHasConfig) item).syncConfig(config);
+        ((IHasConfig) item).syncConfig(c);
       }
     }
     c.save();
@@ -115,6 +109,8 @@ public class ModMain {
   /*
    * 
    * TODO: ideas/plans/features
+   * 
+   * F3InfoModule CONFIG
    * 
    * LADDER CLIMB: remove the && player.moveForward == 0 restriction?
    * 

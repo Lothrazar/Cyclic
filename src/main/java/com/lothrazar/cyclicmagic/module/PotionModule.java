@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.module;
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.item.ItemPotionCustom;
 import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
@@ -22,7 +23,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class PotionModule extends BaseEventModule {
+public class PotionModule extends BaseEventModule  implements IHasConfig{
   public static final ItemPotionCustom potion_viscous = new ItemPotionCustom(false);
   public boolean cancelPotionInventoryShift;
   private boolean enableMagnet;

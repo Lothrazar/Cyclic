@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.module;
 import java.util.Arrays;
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre.SpawnType;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
@@ -25,7 +26,7 @@ import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class WorldGenModule extends BaseEventModule {
+public class WorldGenModule extends BaseEventModule  implements IHasConfig{
   public static boolean oceanEnabled;
   public static boolean netherOreEnabled;
   public static boolean endOreEnabled;

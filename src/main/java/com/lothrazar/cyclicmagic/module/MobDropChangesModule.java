@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.module;
 import java.util.List;
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
@@ -25,7 +26,7 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteractSpecific;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class MobDropChangesModule extends BaseEventModule {
+public class MobDropChangesModule extends BaseEventModule  implements IHasConfig{
   private static final int chanceZombieVillagerEmerald = 25;
   public static boolean sheepShearBuffed;//used by entity shearing bolt also
   private boolean zombieVillagerEmeralds;

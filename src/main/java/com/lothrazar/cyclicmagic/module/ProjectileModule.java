@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.module;
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.entity.projectile.*;
 import com.lothrazar.cyclicmagic.item.projectile.*;
 import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
@@ -11,7 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class ProjectileModule extends BaseModule {
+public class ProjectileModule extends BaseModule  implements IHasConfig {
   private boolean enableEnderBlaze;
   private boolean enableEnderDungeonFinder;
   private boolean enderFishing;
