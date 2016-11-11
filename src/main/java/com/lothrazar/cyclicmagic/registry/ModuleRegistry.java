@@ -1,10 +1,18 @@
 package com.lothrazar.cyclicmagic.registry;
+import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ICyclicModule;
 import com.lothrazar.cyclicmagic.module.*;
 
 public class ModuleRegistry {
-  public static void register(List<ICyclicModule> modules) {
+  public static List<ICyclicModule> modules = new ArrayList<ICyclicModule>();
+  public static void init(){
+    modules = new ArrayList<ICyclicModule>();
+  }
+  public static void register(ICyclicModule m){
+    
+  }
+  public static void registerAll() {
     // :) http://alphabetizer.flap.tv/
     modules.add(new BlockMachineModule());
     modules.add(new BlockPlateModule());

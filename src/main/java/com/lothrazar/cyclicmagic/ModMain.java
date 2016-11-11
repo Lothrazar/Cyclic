@@ -1,6 +1,4 @@
 package com.lothrazar.cyclicmagic;
-import java.util.ArrayList;
-import java.util.List;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
 import com.lothrazar.cyclicmagic.registry.*;
@@ -25,7 +23,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
 @Mod(modid = Const.MODID, useMetadata = true, dependencies = "after:JEI;after:Baubles", canBeDeactivated = false, updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json", acceptableRemoteVersions = "*", guiFactory = "com.lothrazar." + Const.MODID + ".gui.IngameConfigFactory")
 public class ModMain {
-  private List<ICyclicModule> modules = new ArrayList<ICyclicModule>();
   @Instance(value = Const.MODID)
   public static ModMain instance;
   @SidedProxy(clientSide = "com.lothrazar." + Const.MODID + ".proxy.ClientProxy", serverSide = "com.lothrazar." + Const.MODID + ".proxy.CommonProxy")
@@ -55,6 +52,7 @@ public class ModMain {
     logger = new ModLogger(event.getModLog());
     config = new Configuration(event.getSuggestedConfigurationFile());
     config.load();
+    ConfigRegistry.init();
     network = NetworkRegistry.INSTANCE.newSimpleChannel(Const.MODID);
     PacketRegistry.register(network);
     SoundRegistry.register();
@@ -62,16 +60,17 @@ public class ModMain {
     ReflectionRegistry.register();
     this.events = new EventRegistry();
     this.events.registerCoreEvents();
-    ModuleRegistry.register(this.modules);//all features are in a module
+    ModuleRegistry.init();
+    ModuleRegistry.registerAll();//create new instance of every module
     this.syncConfig();
-    for (ICyclicModule module : this.modules) {
+    for (ICyclicModule module : ModuleRegistry.modules) {
       module.onPreInit();
     }
   }
   @EventHandler
   public void onInit(FMLInitializationEvent event) {
     PotionEffectRegistry.register();
-    for (ICyclicModule module : this.modules) {
+    for (ICyclicModule module : ModuleRegistry.modules) {
       module.onInit();
     }
     ItemRegistry.register();//now that modules have added their content (items), we can register them
@@ -82,14 +81,14 @@ public class ModMain {
   }
   @EventHandler
   public void onPostInit(FMLPostInitializationEvent event) {
-    for (ICyclicModule module : this.modules) {
+    for (ICyclicModule module : ModuleRegistry.modules) {
       module.onPostInit();
     }
     AchievementRegistry.registerPage();
   }
   @EventHandler
   public void onServerStarting(FMLServerStartingEvent event) {
-    for (ICyclicModule module : this.modules) {
+    for (ICyclicModule module : ModuleRegistry.modules) {
       module.onServerStarting(event);
     }
   }
@@ -97,8 +96,11 @@ public class ModMain {
     Configuration c = getConfig();
     // hit on startup and on change event from
     // we cant make this a list/loop because the order does matter
-    for (ICyclicModule module : this.modules) {
+    for (ICyclicModule module : ModuleRegistry.modules) {
       module.syncConfig(c);
+    }
+    for (IHasConfig conf : ConfigRegistry.configHandlers) {
+      conf.syncConfig(c);
     }
     //for any modules that have created an item, those items might have inner configs, so hit it up
     Item item;//its a leftover mapping from before modules

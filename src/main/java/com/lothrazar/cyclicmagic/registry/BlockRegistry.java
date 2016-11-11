@@ -21,7 +21,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class BlockRegistry {
   public static ArrayList<Block> blocks = new ArrayList<Block>();
   public static BlockScaffolding block_fragile;
-  public static BlockUncrafting uncrafting_block;
+//  public static BlockUncrafting uncrafting_block;
   public static BlockBucketStorage block_storelava;
   public static BlockBucketStorage block_storewater;
   public static BlockBucketStorage block_storemilk;

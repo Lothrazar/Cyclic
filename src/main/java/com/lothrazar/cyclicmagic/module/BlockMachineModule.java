@@ -17,6 +17,7 @@ import com.lothrazar.cyclicmagic.block.tileentity.TileMachinePlacer;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUser;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
+import com.lothrazar.cyclicmagic.registry.ConfigRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -49,7 +50,8 @@ public class BlockMachineModule extends BaseModule {
       BlockRegistry.registerBlock(uncrafting_block, "uncrafting_block");
       uncrafting_block.addRecipe();
       GameRegistry.registerTileEntity(TileMachineUncrafter.class, "uncrafting_block_te");
-      BlockRegistry.uncrafting_block = uncrafting_block;//TODO:MAKE ARRAY
+      ConfigRegistry.register(uncrafting_block);
+//      BlockRegistry.uncrafting_block = uncrafting_block;//TODO:MAKE ARRAY
     }
     if (enableMiner) {
       BlockRegistry.miner_block = new BlockMiner(BlockMiner.MinerType.SINGLE);
@@ -107,9 +109,9 @@ public class BlockMachineModule extends BaseModule {
     if (BlockRegistry.magnet_block != null) {
       BlockRegistry.magnet_block.syncConfig(config);
     }
-    if (BlockRegistry.uncrafting_block != null) {
-      BlockRegistry.uncrafting_block.syncConfig(config);
-    }
+//    if (BlockRegistry.uncrafting_block != null) {
+//      BlockRegistry.uncrafting_block.syncConfig(config);
+//    }
     if (BlockRegistry.harvester_block != null) {
       BlockRegistry.harvester_block.syncConfig(config);
     }
