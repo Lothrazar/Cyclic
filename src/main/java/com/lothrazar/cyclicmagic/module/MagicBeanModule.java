@@ -18,7 +18,7 @@ public class MagicBeanModule extends BaseModule {
       ItemSproutSeeds sprout_seed = new ItemSproutSeeds(sprout, Blocks.FARMLAND);
       ItemRegistry.addItem(sprout_seed, "sprout_seed");
       LootTableRegistry.registerLoot(sprout_seed);
-      ItemRegistry.sprout_seed = sprout_seed;
+      sprout.setSeed(sprout_seed);
       AchievementRegistry.registerItemAchievement(sprout_seed);
     }
   }

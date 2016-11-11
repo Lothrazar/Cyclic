@@ -56,6 +56,7 @@ public class ToolsModule extends BaseModule {
   private boolean storageBagEnabled;
   private boolean enableEnderBook;
   private boolean enableChestSack;
+  public static ItemStorageBag storage_bag;//ref by ContainerStorage
   @Override
   public void onInit() {
     if (enableChestSack) {
@@ -74,11 +75,11 @@ public class ToolsModule extends BaseModule {
       LootTableRegistry.registerLoot(book_ender, ChestType.GENERIC, 1);
     }
     if (storageBagEnabled) {
-      ItemRegistry.storage_bag = new ItemStorageBag();
-      ItemRegistry.addItem(ItemRegistry.storage_bag, "storage_bag");
-      ModMain.instance.events.addEvent(ItemRegistry.storage_bag);
-      LootTableRegistry.registerLoot(ItemRegistry.storage_bag);
-      LootTableRegistry.registerLoot(ItemRegistry.storage_bag, ChestType.BONUS, 25);
+      storage_bag = new ItemStorageBag();
+      ItemRegistry.addItem(storage_bag, "storage_bag");
+      ModMain.instance.events.addEvent(storage_bag);
+      LootTableRegistry.registerLoot(storage_bag);
+      LootTableRegistry.registerLoot(storage_bag, ChestType.BONUS, 25);
     }
     if (enableCarbonPaper) {
       ItemRegistry.addItem(new ItemPaperCarbon(), "carbon_paper");
@@ -135,14 +136,15 @@ public class ToolsModule extends BaseModule {
       LootTableRegistry.registerLoot(sleeping_mat, ChestType.BONUS);
     }
     if (enableCyclicWand) {
-      ItemRegistry.cyclic_wand_build = new ItemCyclicWand();
-      ItemRegistry.addItem(ItemRegistry.cyclic_wand_build, "cyclic_wand_build");
-      SpellRegistry.register();
+      ItemCyclicWand cyclic_wand_build = new ItemCyclicWand();
+      ItemRegistry.addItem(cyclic_wand_build, "cyclic_wand_build");
+      SpellRegistry.register(cyclic_wand_build);
       spellHud = new SpellHud();
       ModMain.instance.events.addEvent(this);
-      LootTableRegistry.registerLoot(ItemRegistry.cyclic_wand_build, ChestType.ENDCITY, 15);
-      LootTableRegistry.registerLoot(ItemRegistry.cyclic_wand_build, ChestType.GENERIC, 1);
-      AchievementRegistry.registerItemAchievement(ItemRegistry.cyclic_wand_build);
+      LootTableRegistry.registerLoot(cyclic_wand_build, ChestType.ENDCITY, 15);
+      LootTableRegistry.registerLoot(cyclic_wand_build, ChestType.GENERIC, 1);
+      AchievementRegistry.registerItemAchievement(cyclic_wand_build);
+      ModMain.instance.setTabItemIfNull(cyclic_wand_build);
     }
     if (enableWarpHomeTool) {
       ItemToolWarp tool_warp_home = new ItemToolWarp(ItemToolWarp.WarpType.BED);

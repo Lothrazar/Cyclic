@@ -4,9 +4,6 @@ import java.util.Map;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModMain;
 import com.lothrazar.cyclicmagic.item.BaseItem;
-import com.lothrazar.cyclicmagic.item.ItemStorageBag;
-import com.lothrazar.cyclicmagic.item.ItemSproutSeeds;
-import com.lothrazar.cyclicmagic.item.tool.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -14,9 +11,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemRegistry {
   public static Map<String, Item> itemMap = new HashMap<String, Item>();
-  public static ItemCyclicWand cyclic_wand_build;
-  public static ItemStorageBag storage_bag;
-  public static ItemSproutSeeds sprout_seed;
   public static Item addItem(Item i, String key) {
     i.setUnlocalizedName(key);
     itemMap.put(key, i);

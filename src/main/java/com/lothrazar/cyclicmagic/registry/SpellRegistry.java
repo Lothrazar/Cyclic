@@ -25,7 +25,7 @@ public class SpellRegistry {
     private static SpellRangeBuild reachup;
     private static SpellRangeBuild reachplace;
   }
-  public static void register() {
+  public static void register(ItemCyclicWand wand) {
     hashbook = new HashMap<Integer, ISpell>();
     int spellId = -1;// the smallest spell gets id zero
     Spells.inventory = new SpellInventory(++spellId, "inventory");
@@ -53,7 +53,7 @@ public class SpellRegistry {
     spellbookBuild.add(Spells.reachdown);
     spellbookBuild.add(reachleft);
     spellbookBuild.add(reachright);
-    ItemRegistry.cyclic_wand_build.setSpells(spellbookBuild);
+    wand.setSpells(spellbookBuild);
   }
   private static void registerSpell(ISpell spell) {
     hashbook.put(spell.getID(), spell);

@@ -33,14 +33,19 @@ public class ModMain {
   public static ModLogger logger;
   public EventRegistry events;
   public static SimpleNetworkWrapper network;
+  private Item tabItem = null;
   private static Configuration config;
   public static Configuration getConfig() {
     return config;
   }
+  public void setTabItemIfNull(Item i) {
+    if (tabItem == null)
+      tabItem = i;
+  }
   public final static CreativeTabs TAB = new CreativeTabs(Const.MODID) {
     @Override
     public Item getTabIconItem() {
-      return ItemRegistry.cyclic_wand_build == null ? Items.DIAMOND : ItemRegistry.cyclic_wand_build;
+      return ModMain.instance.tabItem == null ? Items.DIAMOND : ModMain.instance.tabItem;
     }
   };
   @CapabilityInject(IPlayerExtendedProperties.class)
@@ -109,7 +114,7 @@ public class ModMain {
    * 
    * TODO: ideas/plans/features
    * 
-   * LADDER CLIMB: remove the  && player.moveForward == 0 restriction?
+   * LADDER CLIMB: remove the && player.moveForward == 0 restriction?
    * 
    * Structure builder: add preview (ghost blocks or sparkls)
    * 
