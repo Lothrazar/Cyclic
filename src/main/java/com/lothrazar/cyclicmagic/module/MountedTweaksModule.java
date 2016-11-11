@@ -57,7 +57,9 @@ public class MountedTweaksModule extends BaseEventModule implements IHasConfig {
         "Enderpearls work on a horse, bringing it with you");
   }
   @SubscribeEvent
-  public void onEntityMount(EntityMountEvent event) {
+  public void onEntityMount(EntityMountEvent event) { 
+    //has to always be on regardless of mountedPearl flag, in case it gets changed mid use.. this is just second half
+
     Entity maybeHorse = event.getEntityBeingMounted();//can be null!!
     Entity maybePlayer = event.getEntityMounting();
     World world = event.getWorldObj();
