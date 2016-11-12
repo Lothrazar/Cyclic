@@ -37,7 +37,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ToolsModule extends BaseModule implements IHasConfig {
+public class ItemToolsModule extends BaseModule implements IHasConfig {
   private static SpellHud spellHud;
   private boolean enableSleepingMat;
   private boolean enableToolPush;

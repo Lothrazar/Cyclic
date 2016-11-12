@@ -19,7 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.EnumHelper;
 
-public class EmeraldGearModule extends BaseModule  implements IHasConfig{
+public class GearEmeraldModule extends BaseModule  implements IHasConfig{
   private boolean enableEmeraldGear;
   // thanks for help:
   // http://bedrockminer.jimdo.com/modding-tutorials/basic-modding-1-7/custom-tools-swords/

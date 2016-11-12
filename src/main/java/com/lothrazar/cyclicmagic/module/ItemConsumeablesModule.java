@@ -13,7 +13,7 @@ import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraftforge.common.config.Configuration;
 
-public class ConsumeablesModule extends BaseModule  implements IHasConfig{
+public class ItemConsumeablesModule extends BaseModule  implements IHasConfig{
   private boolean enableEmeraldApple;
   private boolean enableHeartContainer;
   private boolean enableInventoryCrafting;

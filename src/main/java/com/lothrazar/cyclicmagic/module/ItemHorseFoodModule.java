@@ -26,7 +26,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class HorseFoodModule extends BaseEventModule  implements IHasConfig {
+public class ItemHorseFoodModule extends BaseEventModule  implements IHasConfig {
   private boolean enableHorseFoodUpgrades;
   @Override
   public void onInit() {

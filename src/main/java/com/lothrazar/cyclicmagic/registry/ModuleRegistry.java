@@ -22,10 +22,10 @@ public class ModuleRegistry {
     register(new BlockPlateModule());
     register(new BlockUtilityModule());
     register(new CommandModule());
-    register(new ConsumeablesModule());
-    register(new CharmModule());
+    register(new ItemConsumeablesModule());
+    register(new ItemCharmModule());
     register(new DispenserBehaviorModule());
-    register(new EmeraldGearModule());
+    register(new GearEmeraldModule());
     register(new EnchantModule());
     register(new PlayerAbilitiesModule());
     register(new F3InfoModule());
@@ -33,7 +33,7 @@ public class ModuleRegistry {
     register(new FurnaceStardewModule());
     register(new FuelAdditionModule());
     register(new GuiTerrariaButtonsModule());
-    register(new HorseFoodModule());
+    register(new ItemHorseFoodModule());
     register(new ItemstackInfoModule());
     register(new KeyInventoryShiftModule());
     register(new LightningTransformModule());
@@ -45,10 +45,10 @@ public class ModuleRegistry {
     register(new PotionModule());
     register(new ProjectileModule());
     register(new RecipeChangerModule());
-    register(new SandstoneToolsModule());
+    register(new GearSandstoneModule());
     register(new SaplingPlantDespawnModule());
     register(new StackSizeModule());
-    register(new ToolsModule());
+    register(new ItemToolsModule());
     register(new UnbreakableSpawnerModule());
     register(new VillagerCreateModule());
     register(new VillagerNametagModule());
