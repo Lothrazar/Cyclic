@@ -12,7 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class ProjectileModule extends BaseModule  implements IHasConfig {
+public class ItemProjectileModule extends BaseModule  implements IHasConfig {
   private boolean enableEnderBlaze;
   private boolean enableEnderDungeonFinder;
   private boolean enderFishing;

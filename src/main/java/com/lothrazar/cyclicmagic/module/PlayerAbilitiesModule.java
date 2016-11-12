@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilFurnace;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -14,8 +15,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
@@ -33,6 +36,7 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
   private boolean editableSigns;
   private boolean passThroughClick;
   private boolean armorStandSwap;
+  private static boolean stardewFurnace; // inspired by stardew valley
   @SubscribeEvent
   public void onInteract(PlayerInteractEvent.RightClickBlock event) {
     if (passThroughClick) {
@@ -140,6 +144,36 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
     World worldObj = event.getWorld();
     //    ItemStack held = entityPlayer.getHeldItem(event.getHand());
     ItemStack held = event.getItemStack();
+    if (stardewFurnace) {
+      // ignore in creative// left clicking just breaks it anyway
+      if (entityPlayer.capabilities.isCreativeMode) { return; }
+      if (pos == null) { return; }
+      int playerSlot = 0;// entityPlayer.inventory.currentItem;
+      boolean wasMain = event.getHand() == EnumHand.MAIN_HAND;
+      if (wasMain) {
+        playerSlot = entityPlayer.inventory.currentItem;
+      }
+      else {
+        //just dont use offhand, ignore it for now. is easier
+        playerSlot = 40;
+      }
+      TileEntity tile = worldObj.getTileEntity(pos);
+      if (tile instanceof TileEntityFurnace) {
+        TileEntityFurnace furnace = (TileEntityFurnace) tile;
+        if (held == null) {
+          UtilFurnace.extractFurnaceOutput(furnace, entityPlayer);
+        }
+        else {
+          //holding a non null stack for sure
+          if (UtilFurnace.canBeSmelted(held)) {
+            UtilFurnace.tryMergeStackIntoSlot(furnace, entityPlayer, playerSlot, UtilFurnace.SLOT_INPUT);
+          }
+          else if (UtilFurnace.isFuel(held)) {
+            UtilFurnace.tryMergeStackIntoSlot(furnace, entityPlayer, playerSlot, UtilFurnace.SLOT_FUEL);
+          }
+        }
+      }
+    }
     if (easyEnderChest) {
       if (held != null && held.getItem() == Item.getItemFromBlock(Blocks.ENDER_CHEST)) {
         entityPlayer.displayGUIChest(entityPlayer.getInventoryEnderChest());
@@ -187,6 +221,8 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.player;
+    stardewFurnace = config.getBoolean("Furnace Speed", category, true,
+        "Stardew Furnaces: Quickly fill a furnace by hitting it with fuel or an item, or interact with an empty hand to pull out the results [Inspired by Stardew Valley.  Left click only]");
     passThroughClick = config.getBoolean("Pass-Through Click", category, true,
         "Open chests (and other containers) by passing right through the attached signs, banners, and item frames");
     easyEnderChest = config.getBoolean("Easy Enderchest", category, true,
