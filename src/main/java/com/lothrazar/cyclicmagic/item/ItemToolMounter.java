@@ -5,8 +5,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 
 public class ItemToolMounter extends BaseTool {
-  public ItemToolMounter(int durability) {
-    super(durability);
+  public ItemToolMounter() {
+    super(100);
   }
   /**
    * Returns true if the item can be used on the given entity, e.g. shears on
@@ -15,8 +15,9 @@ public class ItemToolMounter extends BaseTool {
   @Override
   public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
     if (entity.worldObj.isRemote) { return false; }
-//   System.out.println( entity.getClass().getName());
-//   System.out.println( entity.getClass().getSimpleName());
+    //TODO: possible blacklist?
+    //   System.out.println( entity.getClass().getName());
+    //   System.out.println( entity.getClass().getSimpleName());
     player.startRiding(entity, true);
     super.onUse(stack, player, player.worldObj, hand);
     return true;

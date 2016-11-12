@@ -37,7 +37,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ToolsModule extends BaseModule  implements IHasConfig{
+public class ToolsModule extends BaseModule implements IHasConfig {
   private static SpellHud spellHud;
   private boolean enableSleepingMat;
   private boolean enableToolPush;
@@ -58,12 +58,14 @@ public class ToolsModule extends BaseModule  implements IHasConfig{
   private boolean storageBagEnabled;
   private boolean enableEnderBook;
   private boolean enableChestSack;
+  private boolean enableStirrups;
   public static ItemStorageBag storage_bag;//ref by ContainerStorage
   @Override
   public void onInit() {
-    ItemToolMounter tool_mount = new ItemToolMounter(100);
-    ItemRegistry.addItem(tool_mount, "tool_mount");
-    
+    if (enableStirrups) {
+      ItemToolMounter tool_mount = new ItemToolMounter();
+      ItemRegistry.addItem(tool_mount, "tool_mount");
+    }
     if (enableChestSack) {
       ItemChestSackEmpty chest_sack_empty = new ItemChestSackEmpty();
       ItemChestSack chest_sack = new ItemChestSack();
@@ -199,6 +201,7 @@ public class ToolsModule extends BaseModule  implements IHasConfig{
     enablePearlReuseMounted = config.getBoolean("EnderOrbMounted", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableCarbonPaper = config.getBoolean("CarbonPaper", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableChestSack = config.getBoolean("ChestSack", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableStirrups = config.getBoolean("Stirrups", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
