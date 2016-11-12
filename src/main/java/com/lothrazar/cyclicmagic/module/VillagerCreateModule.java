@@ -5,10 +5,10 @@ import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.BlockSand;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.passive.EntityVillager.EmeraldForItems;
-import net.minecraft.entity.passive.EntityVillager.ListItemForEmeralds;
 import net.minecraft.entity.passive.EntityVillager.PriceInfo;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemStack;
@@ -29,8 +29,6 @@ public class VillagerCreateModule extends BaseModule implements IHasConfig {
         {
             new EmeraldForItems(Items.COOKED_FISH, new PriceInfo(9, 12)), // GROUP 1
             new EmeraldForItems(Items.APPLE, new PriceInfo(3, 6)),
-            //TODO FIX IT IGNORING MY 33 quantity of stack, its hardcoded to stacksize 1
-            new ListItemForEmeraldsFixed(new ItemStack(Blocks.SAND,33, BlockSand.EnumType.RED_SAND.ordinal()), new PriceInfo(2, 3)),//HACK
             new EmeraldForItems(Items.BEETROOT, new PriceInfo(8, 12))
         },
         {
@@ -53,9 +51,14 @@ public class VillagerCreateModule extends BaseModule implements IHasConfig {
             new EmeraldForItems(Items.SPIDER_EYE, new PriceInfo(3, 6))
         },
         {
-          new ListItemForEmeralds(new ItemStack(Blocks.GRASS,32), new PriceInfo(1, 1)), //GROUP 6
-          new ListItemForEmeralds(new ItemStack(Blocks.GRASS_PATH,32), new PriceInfo(1, 1)),
-          new ListItemForEmeralds(new ItemStack(Blocks.MYCELIUM,1), new PriceInfo(1, 3)),
+          new ListItemForEmeraldsFixed(new ItemStack(Blocks.GRASS,32), new PriceInfo(1, 1)), //GROUP 6
+          new ListItemForEmeraldsFixed(new ItemStack(Blocks.GRASS_PATH,32), new PriceInfo(1, 1)),
+          new ListItemForEmeraldsFixed(new ItemStack(Blocks.MYCELIUM,1), new PriceInfo(12, 16)),
+          new ListItemForEmeraldsFixed(new ItemStack(Blocks.WATERLILY,64), new PriceInfo(1, 1)),
+          new ListItemForEmeraldsFixed(new ItemStack(Blocks.SAND,32, BlockSand.EnumType.RED_SAND.ordinal()), new PriceInfo(1, 3))    ,
+
+          new ListItemForEmeraldsFixed(new ItemStack(Items.DYE,16,   EnumDyeColor.PURPLE.getDyeDamage()), new PriceInfo(1, 3))   
+        
         }
     };
     name = "druid";
@@ -92,10 +95,11 @@ public class VillagerCreateModule extends BaseModule implements IHasConfig {
             new EmeraldForItems(Items.ENDER_PEARL, new PriceInfo(12, 16))
         },
         { //ListItemForEmeralds MEANS price for a SINGLE ITEM.. hwo to sell multiple?
-            new ListItemForEmeralds(Items.EXPERIENCE_BOTTLE, new PriceInfo(1, 4)),
-            new ListItemForEmeralds(new ItemStack(Blocks.OBSIDIAN,16), new PriceInfo(2, 4)),//GROUP 6
-            new ListItemForEmeralds(new ItemStack(Blocks.CLAY,16), new PriceInfo(1, 1)),
-            new ListItemForEmeralds(new ItemStack(Items.FISH, 4, ItemFishFood.FishType.PUFFERFISH.getMetadata()), new PriceInfo(1, 2)),
+            new ListItemForEmeraldsFixed(new ItemStack(Items.EXPERIENCE_BOTTLE,8), new PriceInfo(1, 4)),
+            new ListItemForEmeraldsFixed(new ItemStack(Blocks.OBSIDIAN,16), new PriceInfo(2, 4)),//GROUP 6
+            new ListItemForEmeraldsFixed(new ItemStack(Blocks.CLAY,16), new PriceInfo(1, 1)),
+            new ListItemForEmeraldsFixed(new ItemStack(Items.QUARTZ,16), new PriceInfo(2, 4)),
+            new ListItemForEmeraldsFixed(new ItemStack(Items.FISH, 4, ItemFishFood.FishType.PUFFERFISH.getMetadata()), new PriceInfo(1, 2)),
         }
     };
     //TO TEST: /summon Villager ~ ~ ~ {Profession:5,Career:0}
@@ -119,9 +123,15 @@ public class VillagerCreateModule extends BaseModule implements IHasConfig {
   public void syncConfig(Configuration c) {
     String category = Const.ConfigCategory.villagers;
     c.addCustomCategoryComment(category, "Two new villagers with more trades");
-    extraVillagersEnabled = c.getBoolean("More Trades", category, true, "Adds more  villager types (professions) with more trades such as gunpowder, blaze rods, beef, spider eyes, and more.  Spawn naturally and from mob eggs. ");
+    extraVillagersEnabled = c.getBoolean("More Trades", category, true, "Adds more  villager types (Sage and Druid) with more trades such as gunpowder, blaze rods, beef, spider eyes, and more.  Spawn naturally and from mob eggs. ");
   }
-  public static class ListItemForEmeraldsFixed extends ListItemForEmeralds implements EntityVillager.ITradeList
+  /**
+   * replace  ListItemForEmeralds, instead of extending it
+   * just like  vanilla/forge version BUT we do not ignore stackSize
+   * @author Sam
+   *
+   */
+  public static class ListItemForEmeraldsFixed implements EntityVillager.ITradeList
   {
       /** The item that is being bought for emeralds */
       public ItemStack itemToBuy;
@@ -133,14 +143,19 @@ public class VillagerCreateModule extends BaseModule implements IHasConfig {
 
       public ListItemForEmeraldsFixed(Item par1Item, EntityVillager.PriceInfo priceInfo)
       {
-        super(par1Item,priceInfo);
+       // super(par1Item,priceInfo);
           this.itemToBuy = new ItemStack(par1Item);
           this.priceInfo = priceInfo;
       }
 
+      /**
+       * 
+       * @param stack
+       * @param priceInfo
+       */
       public ListItemForEmeraldsFixed(ItemStack stack, EntityVillager.PriceInfo priceInfo)
       {
-        super(stack,priceInfo);
+      //  super(stack,priceInfo);
           this.itemToBuy = stack;
           this.priceInfo = priceInfo;
       }
