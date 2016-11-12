@@ -45,10 +45,9 @@ public class ModuleRegistry {
     register(new ItemProjectileModule());
     register(new RecipeChangerModule());
     register(new GearSandstoneModule());
-    register(new SaplingPlantDespawnModule());
+    register(new EnvironmentTweaksModule());
     register(new StackSizeModule());
     register(new ItemToolsModule());
-    register(new UnbreakableSpawnerModule());
     register(new VillagerCreateModule());
     register(new WorldGenModule());
   }
