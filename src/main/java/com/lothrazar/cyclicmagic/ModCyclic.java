@@ -90,10 +90,6 @@ public class ModCyclic {
    * 
    * TODO: ideas/plans/features
    * 
-   * harvester: preview area/range/size
-   * 
-   * harvester:? gui to change size?
-   * 
    * F3InfoModule CONFIG
    * 
    * LADDER CLIMB: remove the && player.moveForward == 0 restriction?
@@ -138,12 +134,6 @@ public class ModCyclic {
    * https://github.com/PrinceOfAmber/SamsPowerups/blob/
    * 06142623bb5da81af702e473d20f0da4273d222d/FarmingBlocks/src/main/java/com/
    * lothrazar/samsfarmblocks/BlockShearWool.java
-   * 
-   * Full achievement system: - achieve registry - modules add their own
-   * achieves based on their items. for either craft or get item.
-   * http://jabelarminecraft.blogspot.ca/p/minecraft-forge-creating-custom.html
-   * along with public void onItemCraftedEvent(PlayerEvent.ItemCraftedEvent
-   * event) {
    * 
    * [ Trading Tool // gui ] Upgrade villager gui: either make my own or add
    * buttons/some way to view all trades at once --inspired by extrautils
