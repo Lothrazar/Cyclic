@@ -25,12 +25,11 @@ public class ModuleRegistry {
     register(new ItemConsumeablesModule());
     register(new ItemCharmModule());
     register(new ItemPotionModule());
-    register(new ItemstackInfoModule());
     register(new DispenserBehaviorModule());
     register(new GearEmeraldModule());
     register(new EnchantModule());
     register(new PlayerAbilitiesModule());
-    register(new F3InfoModule());
+    register(new TextInfoModule());
     register(new FragileTorchesModule());
     register(new FuelAdditionModule());
     register(new GuiTerrariaButtonsModule());

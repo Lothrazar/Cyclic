@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.module;
 import java.text.DecimalFormat;
+import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -9,18 +10,46 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityHorse;
+import net.minecraft.item.ItemFood;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class F3InfoModule extends BaseEventModule implements IHasConfig {//TODO: no f3? eh?  
+public class TextInfoModule extends BaseEventModule implements IHasConfig {//TODO: no f3? eh?  
   private boolean spawnDistanceEnabled;
   private boolean horseInfoEnabled;
+  private boolean foodDetails;
+  private boolean fuelDetails;
+  @SubscribeEvent
+  public void onItemTooltipEvent(ItemTooltipEvent event) {
+    if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
+      // https://www.reddit.com/r/minecraftsuggestions/comments/3brh7v/when_hovering_over_a_food_it_shows_how_many_food/
+      ItemStack itemStack = event.getItemStack();
+      if (itemStack == null || itemStack.getItem() == null) { return; }
+      if (foodDetails && itemStack.getItem() instanceof ItemFood) {
+        ItemFood food = (ItemFood) itemStack.getItem();
+        int hunger = food.getHealAmount(itemStack);
+        float satur = food.getSaturationModifier(itemStack);
+        if (hunger > 0 || satur > 0) {
+          event.getToolTip().add(hunger + " (" + satur + ")");
+        }
+      }
+      if (fuelDetails) {
+        int burnTime = TileEntityFurnace.getItemBurnTime(itemStack);
+        if (burnTime > 0) {
+          event.getToolTip().add(UtilChat.lang("tooltip.burntime") + burnTime);
+        }
+      }
+    }
+  }
   @SubscribeEvent
   @SideOnly(Side.CLIENT)
   public void onTextOverlay(RenderGameOverlayEvent.Text event) {
@@ -82,5 +111,9 @@ public class F3InfoModule extends BaseEventModule implements IHasConfig {//TODO:
   public void syncConfig(Configuration config) {
     spawnDistanceEnabled = config.getBoolean("F3SpawnChunkInfo", Const.ConfigCategory.player, true, "Show Within Spawn Chunks or Distance from Spawn in F3 screen.");
     horseInfoEnabled = config.getBoolean("F3HorseInfo", Const.ConfigCategory.player, true, "Show Speed and jump height of any horse you are riding in F3.");
+    String category = Const.ConfigCategory.items;
+    config.addCustomCategoryComment(category, "Tweaks to new and existing items");
+    foodDetails = config.getBoolean("Food Details", category, true, "Add food value and saturation to items info (hold shift)");
+    fuelDetails = config.getBoolean("Fuel Details", category, true, "Add fuel burn time to items info (hold shift)");
   }
 }
