@@ -228,6 +228,7 @@ item.tool_harvest_leaves.name=Tree Scythe
 item.tool_harvest_leaves.tooltip=Mass leaf removal
 item.tool_harvest_weeds.name=Brush Scythe
 item.tool_harvest_weeds.tooltip=Chop areas of weeds and flowers
+item.tool_mount.name=Stirrups
 item.tool_prospector.name=Prospector
 item.tool_prospector.tooltip=Detects ores in a straight line
 item.tool_push.name=Piston Scepter

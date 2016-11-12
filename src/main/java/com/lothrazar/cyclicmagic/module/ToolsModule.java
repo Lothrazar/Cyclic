@@ -10,6 +10,7 @@ import com.lothrazar.cyclicmagic.item.ItemEnderBook;
 import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
 import com.lothrazar.cyclicmagic.item.ItemSleepingMat;
 import com.lothrazar.cyclicmagic.item.ItemStorageBag;
+import com.lothrazar.cyclicmagic.item.ItemToolMounter;
 import com.lothrazar.cyclicmagic.net.PacketSpellShiftLeft;
 import com.lothrazar.cyclicmagic.net.PacketSpellShiftRight;
 import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
@@ -60,6 +61,9 @@ public class ToolsModule extends BaseModule  implements IHasConfig{
   public static ItemStorageBag storage_bag;//ref by ContainerStorage
   @Override
   public void onInit() {
+    ItemToolMounter tool_mount = new ItemToolMounter(100);
+    ItemRegistry.addItem(tool_mount, "tool_mount");
+    
     if (enableChestSack) {
       ItemChestSackEmpty chest_sack_empty = new ItemChestSackEmpty();
       ItemChestSack chest_sack = new ItemChestSack();
