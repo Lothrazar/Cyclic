@@ -16,10 +16,10 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
   public static int TIMER_FULL = 80;
   private HarestCropsConfig conf;
   private int needsRedstone = 1;
-  private int size = 3;
   private static final String NBT_TIMER = "Timer";
   private static final String NBT_REDST = "redstone";
   private static final int MAX_SIZE = 7;//radius 7 translates to 15x15 area (center block + 7 each side)
+  private int size = MAX_SIZE;//default to the old fixed size, backwards compat
   public static enum Fields {
     TIMER, REDSTONE, SIZE
   }
