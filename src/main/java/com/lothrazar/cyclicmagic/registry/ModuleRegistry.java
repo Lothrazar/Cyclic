@@ -42,7 +42,7 @@ public class ModuleRegistry {
     register(new MobDropChangesModule());
     register(new MobSpawnModule());
     register(new MountedTweaksModule());
-    register(new PotionModule());
+    register(new ItemPotionModule());
     register(new ProjectileModule());
     register(new RecipeChangerModule());
     register(new GearSandstoneModule());

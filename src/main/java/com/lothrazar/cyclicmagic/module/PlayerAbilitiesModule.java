@@ -64,7 +64,7 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
   }
   @SubscribeEvent
   public void onEntityInteractEvent(EntityInteract event) {
-    if (passThroughClick) {//1.8.4: bugfix: config wasnt turnign this off
+    if (passThroughClick) {
       EntityPlayer entityPlayer = event.getEntityPlayer();
       ItemStack held = entityPlayer.getHeldItem(event.getHand());
       Entity target = event.getTarget();

@@ -23,7 +23,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class PotionModule extends BaseEventModule  implements IHasConfig{
+public class ItemPotionModule extends BaseEventModule  implements IHasConfig{
   public static final ItemPotionCustom potion_viscous = new ItemPotionCustom(false);
   public boolean cancelPotionInventoryShift;
   private boolean enableMagnet;
