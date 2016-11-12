@@ -90,8 +90,6 @@ public class ModCyclic {
    * 
    * TODO: ideas/plans/features
    * 
-   * F3InfoModule CONFIG
-   * 
    * LADDER CLIMB: remove the && player.moveForward == 0 restriction?
    * 
    * Structure builder: add preview (ghost blocks or sparkls)
@@ -123,8 +121,6 @@ public class ModCyclic {
    * 
    * Trading: raw fish as well as cooked? other fish types?
    * 
-   * Block user: takes a tool/item and uses fakePlayer to RIGHT CLICK
-   *
    * a custom TNT that does not destroy any items or blocks -> for clearing area
    * but not destroying stuff
    * 
@@ -143,7 +139,7 @@ public class ModCyclic {
    * drains your exp into the bottles at a given ratio // a really good one
    * exists in SuperCraftingFrame -> so not needed..
    * 
-   * CYCLIC: - ? toggle to tell how many times to rotate an item after placing
+   * CYCLICSCEPTER: - ? toggle to tell how many times to rotate an item after placing
    * (ex: stairs to be put upside down)
    * 
    * Block placers and structure builder: add same rotator
