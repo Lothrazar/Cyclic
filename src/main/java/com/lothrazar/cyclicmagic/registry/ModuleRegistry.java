@@ -36,7 +36,6 @@ public class ModuleRegistry {
     register(new FuelAdditionModule());
     register(new GuiTerrariaButtonsModule());
     register(new KeyInventoryShiftModule());
-    register(new LightningTransformModule());
     register(new LootTableModule());
     register(new MagicBeanModule());
     register(new MobDropChangesModule());
