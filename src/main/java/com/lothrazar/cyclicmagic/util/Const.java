@@ -78,6 +78,7 @@ public class Const {
     public final static int IV = 3;
     public final static int V = 4;
   }
+  public final static int SPAWN_RADIUS = 8 * Const.CHUNK_SIZE;// 128 is spawn size
   public static final int WORLDHEIGHT = 256;
   //http://minecraft.gamepedia.com/Light#Mobs
   //this or lower

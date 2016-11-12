@@ -19,6 +19,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class EnvironmentTweaksModule extends BaseEventModule implements IHasConfig {
   private boolean saplingDespawnGrow;
   private boolean spawnersUnbreakable;
+  private boolean skelLightning;
+  private boolean zombLightning;
   @Override
   public void onInit() {
     updateHardness();
@@ -52,8 +54,6 @@ public class EnvironmentTweaksModule extends BaseEventModule implements IHasConf
       }
     }
   }
-  private boolean skelLightning;
-  private boolean zombLightning;
   @SuppressWarnings("deprecation")
   @SubscribeEvent
   public void onEntityStruckByLightning(EntityStruckByLightningEvent event) {

@@ -25,7 +25,6 @@ public class ModuleRegistry {
     register(new ItemConsumeablesModule());
     register(new ItemCharmModule());
     register(new ItemPotionModule());
-    register(new ItemHorseFoodModule());
     register(new ItemstackInfoModule());
     register(new DispenserBehaviorModule());
     register(new GearEmeraldModule());
@@ -37,7 +36,7 @@ public class ModuleRegistry {
     register(new GuiTerrariaButtonsModule());
     register(new KeyInventoryShiftModule());
     register(new LootTableModule());
-    register(new MagicBeanModule());
+    register(new PlantsModule());
     register(new MobDropChangesModule());
     register(new MobSpawnModule());
     register(new MountedTweaksModule());

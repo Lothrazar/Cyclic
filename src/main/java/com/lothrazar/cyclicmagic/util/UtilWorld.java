@@ -17,6 +17,13 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class UtilWorld {
+  // 1 chunk is 16x16 blocks
+  public static int blockToChunk(int blockVal) {
+    return blockVal >> 4; // ">>4" == "/16"
+  }
+  public static int chunkToBlock(int chunkVal) {
+    return chunkVal << 4; // "<<4" == "*16"
+  }
   public static boolean isNight(World world) {
     long t = world.getWorldTime();
     int timeOfDay = (int) t % 24000;
