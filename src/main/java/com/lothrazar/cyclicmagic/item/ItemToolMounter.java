@@ -21,4 +21,8 @@ public class ItemToolMounter extends BaseTool {
     super.onUse(stack, player, player.worldObj, hand);
     return true;
   }
+  @Override
+  public String getTooltip() {
+    return "item.tool_mount.tooltip";
+  }
 }
