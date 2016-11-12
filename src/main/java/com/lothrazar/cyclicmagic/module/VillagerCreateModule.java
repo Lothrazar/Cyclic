@@ -22,11 +22,8 @@ import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerProfessio
 
 public class VillagerCreateModule extends BaseModule implements IHasConfig {
   private boolean extraVillagersEnabled;
-  private void initDruid() {
-    //vanilla example :  new VillagerProfession("minecraft:butcher", "minecraft:textures/entity/villager/butcher.png");
-    String name;
-    //TO TEST: /summon Villager ~ ~ ~ {Profession:6,Career:0}
-    EntityVillager.ITradeList[][] druidTrades = {
+  private EntityVillager.ITradeList[][] buildDruidTrades() {
+    return new EntityVillager.ITradeList[][] {
         {
             new EmeraldForItems(Items.COOKED_FISH, new PriceInfo(9, 12)), // GROUP 1
             new EmeraldForItems(Items.APPLE, new PriceInfo(3, 6)),
@@ -57,18 +54,9 @@ public class VillagerCreateModule extends BaseModule implements IHasConfig {
             new ListItemForEmeraldsFixed(new ItemStack(Blocks.SAND, 32, BlockSand.EnumType.RED_SAND.ordinal()), new PriceInfo(1, 3)),
             new ListItemForEmeraldsFixed(new ItemStack(Items.DYE, 16, EnumDyeColor.BLACK.getDyeDamage()), new PriceInfo(1, 3)) }
     };
-    name = "druid";
-    VillagerProfession druidProfession = new VillagerProfession(Const.MODRES + name,
-        Const.MODRES + "textures/entity/villager/" + name + ".png",
-        "minecraft:textures/entity/zombie_villager/zombie_villager.png");
-    VillagerRegistry.instance().register(druidProfession);
-    VillagerCareer druid = new VillagerCareer(druidProfession, name);
-    for (int i = 0; i < druidTrades.length; i++) {
-      druid.addTrade(i + 1, druidTrades[i]);
-    }
   }
-  private void initSage() {
-    EntityVillager.ITradeList[][] sageTrades = {
+  private EntityVillager.ITradeList[][] buildSageTrades() {
+    return new EntityVillager.ITradeList[][] {
         {
             new EmeraldForItems(Items.GUNPOWDER, new PriceInfo(5, 8)), //GROUP 1
             new EmeraldForItems(Items.NETHER_WART, new PriceInfo(12, 16))
@@ -94,22 +82,23 @@ public class VillagerCreateModule extends BaseModule implements IHasConfig {
             new ListItemForEmeraldsFixed(new ItemStack(Items.FISH, 4, ItemFishFood.FishType.PUFFERFISH.getMetadata()), new PriceInfo(1, 2)),
         }
     };
-    //TO TEST: /summon Villager ~ ~ ~ {Profession:5,Career:0}
-    String name = "sage";
-    VillagerProfession sageProfession = new VillagerProfession(Const.MODRES + name,
+  }
+  private void addVillager(String name, EntityVillager.ITradeList[][] trades) {
+    VillagerProfession prof = new VillagerProfession(Const.MODRES + name,
         Const.MODRES + "textures/entity/villager/" + name + ".png",
         "minecraft:textures/entity/zombie_villager/zombie_villager.png");
-    VillagerRegistry.instance().register(sageProfession);
-    VillagerCareer sage = new VillagerCareer(sageProfession, name);
-    for (int i = 0; i < sageTrades.length; i++) {
-      sage.addTrade(i + 1, sageTrades[i]);
+    VillagerRegistry.instance().register(prof);
+    VillagerCareer villager = new VillagerCareer(prof, name);
+    for (int i = 0; i < trades.length; i++) {
+      villager.addTrade(i + 1, trades[i]);
     }
   }
   @Override
   public void onInit() {
+    //TO TEST: /summon Villager ~ ~ ~ {Profession:5,Career:0}
     if (extraVillagersEnabled) {
-      initSage();
-      initDruid();
+      addVillager("sage", buildSageTrades());
+      addVillager("druid", buildDruidTrades());
     }
   }
   public void syncConfig(Configuration c) {
