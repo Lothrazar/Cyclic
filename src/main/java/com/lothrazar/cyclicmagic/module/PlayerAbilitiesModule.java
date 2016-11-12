@@ -168,7 +168,7 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
       EntityEquipmentSlot.OFFHAND, EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET };
   @SubscribeEvent
   public void onEntityInteractSpecific(PlayerInteractEvent.EntityInteractSpecific event) {
-    if (!armorStandSwap) {
+    if (armorStandSwap) {
       //added for https://www.twitch.tv/darkphan
       if (event.getWorld().isRemote) { return; } //server side only
       if (event.getTarget() == null || event.getTarget() instanceof EntityArmorStand == false) { return; }
