@@ -7,6 +7,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.entity.item.EntityItemFrame;
+import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -34,6 +35,7 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
   private boolean easyEnderChest;
   private boolean fastLadderClimb;
   private boolean editableSigns;
+  private boolean nameVillagerTag;
   private boolean passThroughClick;
   private boolean armorStandSwap;
   private static boolean stardewFurnace; // inspired by stardew valley
@@ -68,6 +70,19 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
   }
   @SubscribeEvent
   public void onEntityInteractEvent(EntityInteract event) {
+    if (nameVillagerTag) {
+      EntityPlayer entityPlayer = event.getEntityPlayer();
+      ItemStack held = entityPlayer.getHeldItem(event.getHand());
+      Entity target = event.getTarget();
+      if (held != null && held.getItem() == Items.NAME_TAG && held.hasDisplayName() && target instanceof EntityVillager) {
+        EntityVillager v = (EntityVillager) target;
+        v.setCustomNameTag(held.getDisplayName());
+        if (entityPlayer.capabilities.isCreativeMode == false) {
+          entityPlayer.inventory.decrStackSize(entityPlayer.inventory.currentItem, 1);
+        }
+        event.setCanceled(true);// stop the GUI inventory opening
+      }
+    }
     if (passThroughClick) {
       EntityPlayer entityPlayer = event.getEntityPlayer();
       ItemStack held = entityPlayer.getHeldItem(event.getHand());
@@ -221,6 +236,8 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.player;
+    nameVillagerTag = config.getBoolean("Villager Nametag", category, true,
+        "Let players name villagers with nametags");
     stardewFurnace = config.getBoolean("Furnace Speed", category, true,
         "Stardew Furnaces: Quickly fill a furnace by hitting it with fuel or an item, or interact with an empty hand to pull out the results [Inspired by Stardew Valley.  Left click only]");
     passThroughClick = config.getBoolean("Pass-Through Click", category, true,

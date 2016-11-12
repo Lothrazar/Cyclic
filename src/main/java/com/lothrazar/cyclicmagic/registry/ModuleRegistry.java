@@ -50,7 +50,6 @@ public class ModuleRegistry {
     register(new ItemToolsModule());
     register(new UnbreakableSpawnerModule());
     register(new VillagerCreateModule());
-    register(new VillagerNametagModule());
     register(new WorldGenModule());
   }
 }
