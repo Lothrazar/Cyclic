@@ -10,7 +10,6 @@ import com.lothrazar.cyclicmagic.item.ItemEnderBook;
 import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
 import com.lothrazar.cyclicmagic.item.ItemSleepingMat;
 import com.lothrazar.cyclicmagic.item.ItemStorageBag;
-import com.lothrazar.cyclicmagic.item.ItemToolMounter;
 import com.lothrazar.cyclicmagic.net.PacketSpellShiftLeft;
 import com.lothrazar.cyclicmagic.net.PacketSpellShiftRight;
 import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
@@ -63,7 +62,7 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
   @Override
   public void onInit() {
     if (enableStirrups) {
-      ItemToolMounter tool_mount = new ItemToolMounter();
+      ItemToolStirrups tool_mount = new ItemToolStirrups();
       ItemRegistry.addItem(tool_mount, "tool_mount");
     }
     if (enableChestSack) {
