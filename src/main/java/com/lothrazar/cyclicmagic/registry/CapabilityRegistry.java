@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.registry;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.net.PacketSyncPlayerData;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -20,7 +20,7 @@ public class CapabilityRegistry {
     //			ModMain.logger.error("Null player, cannot get properties");
     //			return null;
     //		}
-    return player.getCapability(ModMain.CAPABILITYSTORAGE, null);
+    return player.getCapability(ModCyclic.CAPABILITYSTORAGE, null);
   }
   public interface IPlayerExtendedProperties {
     boolean isSleeping();
@@ -119,8 +119,8 @@ public class CapabilityRegistry {
         instance.setDataFromNBT((NBTTagCompound) nbt);
       }
       catch (Exception e) {
-        ModMain.logger.error("Invalid NBT compound: " + e.getMessage());
-        ModMain.logger.error(e.getStackTrace().toString());
+        ModCyclic.logger.error("Invalid NBT compound: " + e.getMessage());
+        ModCyclic.logger.error(e.getStackTrace().toString());
       }
     }
   }
@@ -128,7 +128,7 @@ public class CapabilityRegistry {
     if (p == null) { return; }
     IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(p);
     if (props != null) {
-      ModMain.network.sendTo(new PacketSyncPlayerData(props.getDataAsNBT()), p);
+      ModCyclic.network.sendTo(new PacketSyncPlayerData(props.getDataAsNBT()), p);
     }
   }
 }

@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.gui.player;
 import java.lang.ref.WeakReference;
 import java.util.List;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.net.PacketSyncExtendedInventory;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.item.EntityItem;
@@ -216,8 +216,8 @@ public class InventoryPlayerExtended implements IInventory {
   //  }
   public void syncSlotToClients(int slot) {
     try {
-      if (ModMain.proxy.getClientWorld() == null) {
-        ModMain.network.sendToAll(new PacketSyncExtendedInventory(player.get(), slot));
+      if (ModCyclic.proxy.getClientWorld() == null) {
+        ModCyclic.network.sendToAll(new PacketSyncExtendedInventory(player.get(), slot));
       }
     }
     catch (Exception e) {

@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.module;
 import java.util.HashMap;
 import java.util.Map;
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -12,7 +13,7 @@ import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.IFuelHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class FuelAdditionModule extends BaseModule {
+public class FuelAdditionModule extends BaseModule  implements IHasConfig{
   private boolean enabled;
   //links existing vanilla items as burnable fuel
   @Override

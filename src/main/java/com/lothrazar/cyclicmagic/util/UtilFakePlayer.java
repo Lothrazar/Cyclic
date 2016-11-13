@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.util;
 import java.lang.ref.WeakReference;
 import java.util.UUID;
 import com.google.common.base.Charsets;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.network.EnumPacketDirection;
 import net.minecraft.network.NetHandlerPlayServer;
@@ -21,7 +21,7 @@ public class UtilFakePlayer {
       fakePlayer = new WeakReference<FakePlayer>(FakePlayerFactory.get(ws, breakerProfile));
     }
     catch (Exception e) {
-      ModMain.logger.error("Exception thrown trying to create fake player : " + e.getMessage());
+      ModCyclic.logger.error("Exception thrown trying to create fake player : " + e.getMessage());
       fakePlayer = null;
     }
     if (fakePlayer == null || fakePlayer.get() == null) {

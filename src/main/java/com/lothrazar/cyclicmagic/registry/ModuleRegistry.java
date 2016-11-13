@@ -1,57 +1,51 @@
 package com.lothrazar.cyclicmagic.registry;
+import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ICyclicModule;
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.module.*;
 
 public class ModuleRegistry {
-  public static void register(List<ICyclicModule> modules) {
+  public static List<ICyclicModule> modules = new ArrayList<ICyclicModule>();
+  public static void init() {
+    modules = new ArrayList<ICyclicModule>();
+  }
+  public static void register(ICyclicModule m) {
+    modules.add(m);
+    if (m instanceof IHasConfig) {
+      ConfigRegistry.register((IHasConfig) m);
+    }
+  }
+  public static void registerAll() {
     // :) http://alphabetizer.flap.tv/
-    modules.add(new ArmorStandSwapModule());
-    modules.add(new BucketBlockModule());
-    modules.add(new CarbonPaperModule());
-    modules.add(new ChestSackModule());
-    modules.add(new CommandModule());
-    modules.add(new ConsumeablesModule());
-    modules.add(new ConveyorPlateModule());
-    modules.add(new CharmModule());
-    modules.add(new DispenserBehaviorModule());
-    modules.add(new DropNametagDeathModule());
-    modules.add(new EditSignBarehandModule());
-    modules.add(new EmeraldGearModule());
-    modules.add(new EnchantModule());
-    modules.add(new EnderBookModule());
-    modules.add(new EnderChestClickopenModule());
-    modules.add(new F3InfoModule());
-    modules.add(new FragileBlockModule());
-    modules.add(new FragileTorchesModule());
-    modules.add(new FurnaceStardewModule());
-    modules.add(new FuelAdditionModule());
-    modules.add(new GuiTerrariaButtonsModule());
-    modules.add(new HorseFoodModule());
-    modules.add(new ItemstackInfoModule());
-    modules.add(new KeyInventoryShiftModule());
-    modules.add(new LadderClimbSpeedModule());
-    modules.add(new LightningTransformModule());
-    modules.add(new LootTableModule());
-    modules.add(new MagicBeanModule());
-    modules.add(new MachineBlockModule());
-    modules.add(new MobDropChangesModule());
-    modules.add(new MobSpawnModule());
-    modules.add(new MountedTweaksModule());
-    modules.add(new PassthroughActionModule());
-    modules.add(new PotionModule());
-    modules.add(new ProjectileModule());
-    modules.add(new RecipeChangerModule());
-    modules.add(new SandstoneToolsModule());
-    modules.add(new SaplingPlantDespawnModule());
-    modules.add(new SkullNameFromSignModule());
-    modules.add(new SlimepadModule());
-    modules.add(new StackSizeModule());
-    modules.add(new StorageBagModule());
-    modules.add(new ToolsModule());
-    modules.add(new UnbreakableSpawnerModule());
-    modules.add(new VillagerCreateModule());
-    modules.add(new VillagerNametagModule());
-    modules.add(new WorldGenModule());
+    register(new BlockMachineModule());
+    register(new BlockPlateModule());
+    register(new BlockUtilityModule());
+    register(new CommandModule());
+    register(new ItemConsumeablesModule());
+    register(new ItemCharmModule());
+    register(new ItemPotionModule());
+    register(new DispenserBehaviorModule());
+    register(new GearEmeraldModule());
+    register(new EnchantModule());
+    register(new PlayerAbilitiesModule());
+    register(new TextInfoModule());
+    register(new FragileTorchesModule());
+    register(new FuelAdditionModule());
+    register(new GuiTerrariaButtonsModule());
+    register(new KeyInventoryShiftModule());
+    register(new LootTableModule());
+    register(new PlantsModule());
+    register(new MobDropChangesModule());
+    register(new MobSpawnModule());
+    register(new MountedTweaksModule());
+    register(new ItemProjectileModule());
+    register(new RecipeChangerModule());
+    register(new GearSandstoneModule());
+    register(new EnvironmentTweaksModule());
+    register(new StackSizeModule());
+    register(new ItemToolsModule());
+    register(new VillagerCreateModule());
+    register(new WorldGenModule());
   }
 }

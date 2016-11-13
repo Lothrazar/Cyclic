@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.block;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFishing;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -22,7 +23,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockFishing extends Block {
+public class BlockFishing extends Block  implements IHasRecipe {
   public BlockFishing() {
     super(Material.WOOD);
     this.setHardness(3F);
@@ -54,7 +55,7 @@ public class BlockFishing extends Block {
     else {
       if (world.isRemote) { return true; }
       int x = pos.getX(), y = pos.getY(), z = pos.getZ();
-      player.openGui(ModMain.instance, ModGuiHandler.GUI_INDEX_FISHER, world, x, y, z);
+      player.openGui(ModCyclic.instance, ModGuiHandler.GUI_INDEX_FISHER, world, x, y, z);
       return true;
     }
     return false;
@@ -63,6 +64,7 @@ public class BlockFishing extends Block {
   public boolean hasTileEntity(IBlockState state) {
     return hasTileEntity();
   }
+  @Override
   public void addRecipe() {
     GameRegistry.addRecipe(new ItemStack(this),
         "pwp",

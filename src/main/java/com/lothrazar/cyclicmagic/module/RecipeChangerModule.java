@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.module;
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilItem;
 import com.lothrazar.cyclicmagic.util.UtilRecipe;
@@ -10,7 +11,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class RecipeChangerModule extends BaseModule {
+public class RecipeChangerModule extends BaseModule  implements IHasConfig {
   private boolean playerSkull;
   private boolean mushroomBlocks;
   private boolean simpleDispenser;

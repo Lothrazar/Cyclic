@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.world.gen;
 import java.util.Random;
-import com.lothrazar.cyclicmagic.registry.BlockRegistry;
+import com.lothrazar.cyclicmagic.module.WorldGenModule;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.init.Blocks;
@@ -22,15 +22,15 @@ public class WorldGenEndOre implements IWorldGenerator {
   private WorldGenerator genDiamond;
   public WorldGenEndOre() {
     int blockCount = 8;
-    this.genRedstone = new WorldGenMinable(BlockRegistry.end_redstone_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.END_STONE));
+    this.genRedstone = new WorldGenMinable(WorldGenModule.end_redstone_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.END_STONE));
     blockCount = 8;
-    this.genCoal = new WorldGenMinable(BlockRegistry.end_coal_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.END_STONE));
+    this.genCoal = new WorldGenMinable(WorldGenModule.end_coal_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.END_STONE));
     blockCount = 4;
-    this.genEmerald = new WorldGenMinable(BlockRegistry.end_emerald_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.END_STONE));
+    this.genEmerald = new WorldGenMinable(WorldGenModule.end_emerald_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.END_STONE));
     blockCount = 8;
-    this.genLapis = new WorldGenMinable(BlockRegistry.end_lapis_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.END_STONE));
+    this.genLapis = new WorldGenMinable(WorldGenModule.end_lapis_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.END_STONE));
     blockCount = 2;
-    this.genDiamond = new WorldGenMinable(BlockRegistry.end_diamond_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.END_STONE));
+    this.genDiamond = new WorldGenMinable(WorldGenModule.end_diamond_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.END_STONE));
   }
   @Override
   public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {

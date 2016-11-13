@@ -16,38 +16,15 @@ public class ContainerHarvester extends ContainerBaseMachine {
   protected TileMachineHarvester tileEntity;
   private int tileRedstone;
   private int tileTimer;
+  private int tileSize;
   public ContainerHarvester(InventoryPlayer inventoryPlayer, TileMachineHarvester te) {
     tileEntity = te;
-    //    for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
-    //      addSlotToContainer(new SlotOnlyBlocks(tileEntity, i, SLOTX_START + i * SQ, SLOTY));
-    //    }
+  
     bindPlayerInventory(inventoryPlayer);
   }
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
-    ItemStack stack = null;
-    //    Slot slotObject = (Slot) inventorySlots.get(slot);
-    //    // null checks and checks if the item can be stacked (maxStackSize > 1)
-    ////    if (slotObject != null && slotObject.getHasStack()) {
-    //      ItemStack stackInSlot = slotObject.getStack();
-    //      stack = stackInSlot.copy();
-    //      // merges the item into player inventory since its in the tileEntity
-    //      if (slot < tileEntity.getSizeInventory()) {
-    //        if (!this.mergeItemStack(stackInSlot, tileEntity.getSizeInventory(), 36 + tileEntity.getSizeInventory(), true)) { return null; }
-    //      }
-    //      // places it into the tileEntity is possible since its in the player
-    //      // inventory
-    //      else if (!this.mergeItemStack(stackInSlot, 0, tileEntity.getSizeInventory(), false)) { return null; }
-    //      if (stackInSlot.stackSize == 0) {
-    //        slotObject.putStack(null);
-    //      }
-    //      else {
-    //        slotObject.onSlotChanged();
-    //      }
-    //      if (stackInSlot.stackSize == stack.stackSize) { return null; }
-    //      slotObject.onPickupFromSlot(player, stackInSlot);
-    //    }
-    return stack;
+    return null;
   }
   @Override
   public void detectAndSendChanges() {
@@ -62,9 +39,14 @@ public class ContainerHarvester extends ContainerBaseMachine {
       if (this.tileRedstone != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
+      idx = TileMachineHarvester.Fields.SIZE.ordinal();
+      if (this.tileSize != this.tileEntity.getField(idx)) {
+        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
+      }
     }
     this.tileTimer = this.tileEntity.getField(TileMachineHarvester.Fields.TIMER.ordinal());
     this.tileRedstone = this.tileEntity.getField(TileMachineHarvester.Fields.REDSTONE.ordinal());
+    this.tileSize = this.tileEntity.getField(TileMachineHarvester.Fields.SIZE.ordinal());
   }
   @Override
   @SideOnly(Side.CLIENT)

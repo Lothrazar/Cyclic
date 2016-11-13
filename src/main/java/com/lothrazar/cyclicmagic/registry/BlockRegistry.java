@@ -1,51 +1,19 @@
 package com.lothrazar.cyclicmagic.registry;
 import java.util.ArrayList;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.IHasConfig;
+import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockBucketStorage;
-import com.lothrazar.cyclicmagic.block.BlockStructureBuilder;
-import com.lothrazar.cyclicmagic.block.BlockDimensionOre;
-import com.lothrazar.cyclicmagic.block.BlockFishing;
-import com.lothrazar.cyclicmagic.block.BlockHarvester;
-import com.lothrazar.cyclicmagic.block.BlockMagnet;
-import com.lothrazar.cyclicmagic.block.BlockMiner;
-import com.lothrazar.cyclicmagic.block.BlockMinerSmart;
-import com.lothrazar.cyclicmagic.block.BlockPassword;
-import com.lothrazar.cyclicmagic.block.BlockPlacer;
-import com.lothrazar.cyclicmagic.block.BlockScaffolding;
-import com.lothrazar.cyclicmagic.block.BlockUncrafting;
-import com.lothrazar.cyclicmagic.block.BlockUser;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockRegistry {
   public static ArrayList<Block> blocks = new ArrayList<Block>();
-  public static BlockScaffolding block_fragile;
-  public static BlockUncrafting uncrafting_block;
-  public static BlockBucketStorage block_storelava;
+  public static BlockBucketStorage block_storelava;//TODO: FIX THIS ENTIRE THING.. maybe even fliud registry eh
   public static BlockBucketStorage block_storewater;
   public static BlockBucketStorage block_storemilk;
   public static BlockBucketStorage block_storeempty;
-  public static BlockDimensionOre nether_gold_ore;
-  public static BlockDimensionOre nether_coal_ore;
-  public static BlockDimensionOre nether_lapis_ore;
-  public static BlockDimensionOre nether_emerald_ore;
-  public static BlockDimensionOre end_redstone_ore;
-  public static BlockDimensionOre end_coal_ore;
-  public static BlockDimensionOre end_lapis_ore;
-  public static BlockDimensionOre end_emerald_ore;
-  public static BlockDimensionOre nether_diamond_ore;
-  public static BlockDimensionOre end_diamond_ore;
-  public static BlockStructureBuilder builder_block;
-  public static BlockHarvester harvester_block;
-  public static BlockMagnet magnet_block;
-  public static BlockMiner miner_block;
-  public static BlockMiner block_miner_tunnel;
-  public static BlockPlacer placer_block;
-  public static BlockPassword password_block;
-  public static BlockMinerSmart block_miner_smart;
-  public static BlockFishing block_fishing;
-  public static BlockUser block_user;
   //lots of helpers/overrides with defaults
   public static void registerBlock(Block b, String name) {
     registerBlock(b, name, false);
@@ -63,7 +31,13 @@ public class BlockRegistry {
     ib.setRegistryName(b.getRegistryName());
     GameRegistry.register(ib);
     if (isHidden == false) {
-      b.setCreativeTab(ModMain.TAB);
+      b.setCreativeTab(ModCyclic.TAB);
+    }
+    if (b instanceof IHasRecipe) {
+      ((IHasRecipe) b).addRecipe();
+    }
+    if (b instanceof IHasConfig) {
+      ConfigRegistry.register((IHasConfig) b);
     }
     blocks.add(b);
   }

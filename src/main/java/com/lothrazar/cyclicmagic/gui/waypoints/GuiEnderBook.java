@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.gui.waypoints;
 import java.io.IOException;
 import java.util.ArrayList;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
 import com.lothrazar.cyclicmagic.item.ItemEnderBook;
 import com.lothrazar.cyclicmagic.item.ItemEnderBook.BookLocation;
@@ -113,10 +113,10 @@ public class GuiEnderBook extends GuiScreen {
   @Override
   protected void actionPerformed(GuiButton btn) {
     if (btn.id == buttonIdNew) {
-      ModMain.network.sendToServer(new PacketNewButton(txtNew.getText()));
+      ModCyclic.network.sendToServer(new PacketNewButton(txtNew.getText()));
     }
     else if (btn instanceof ButtonWaypointDelete) {
-      ModMain.network.sendToServer(new PacketDeleteWaypoint(((ButtonWaypointDelete) btn).getSlot()));
+      ModCyclic.network.sendToServer(new PacketDeleteWaypoint(((ButtonWaypointDelete) btn).getSlot()));
     }
     else if (btn instanceof ButtonWaypointTeleport) {
       // moved to btn class

@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.item;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.gui.storage.InventoryStorage;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
@@ -151,7 +151,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
     if (!world.isRemote) {
       BlockPos pos = player.getPosition();
       int x = pos.getX(), y = pos.getY(), z = pos.getZ();
-      player.openGui(ModMain.instance, ModGuiHandler.GUI_INDEX_STORAGE, world, x, y, z);
+      player.openGui(ModCyclic.instance, ModGuiHandler.GUI_INDEX_STORAGE, world, x, y, z);
     }
     return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);
   }
@@ -170,33 +170,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
         'r', Items.REDSTONE,
         'd', Items.GOLD_INGOT);
   }
-  //  public static BagDepositReturn dumpFromListToIInventory(World world, IInventory inventory, ItemStack[] stacks, boolean onlyMatchingItems) {
-  //    ItemStack chestEmptySlot;
-  //    ItemStack bagItem;
-  //    int itemsMoved = 0;
-  //    // we loop on the chest and look for empty slots
-  //    // once we have an empty slot, we find something to fill it with
-  //    for (int islotInvo = 0; islotInvo < inventory.getSizeInventory(); islotInvo++) {
-  //      chestEmptySlot = inventory.getStackInSlot(islotInvo);
-  //      if (chestEmptySlot != null) {
-  //        continue;
-  //      } // slot not empty, skip over it
-  //      for (int slotStacks = 0; slotStacks < stacks.length; slotStacks++) {
-  //        bagItem = stacks[slotStacks];
-  //        if (bagItem == null) {
-  //          continue;
-  //        } // empty inventory slot
-  //        if (inventory.isItemValidForSlot(islotInvo, bagItem)) {
-  //          inventory.setInventorySlotContents(islotInvo, bagItem);
-  //          stacks[slotStacks] = null;
-  //          itemsMoved += bagItem.stackSize;
-  //          break;
-  //        }
-  //      } // close loop on player inventory items
-  //    } // close loop on chest items
-  //    //    updatePlayerContainerClient(player);
-  //    return new BagDepositReturn(itemsMoved, stacks);
-  //  }
+ 
   public static BagDepositReturn dumpFromListToIInventory(World world, IInventory chest, ItemStack[] stacks, boolean onlyMatchingItems) {
     ItemStack chestItem;
     ItemStack bagItem;
@@ -237,9 +211,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
           break;//stop lookin in the chest, get a new bag item
         }
         bagItem = stacks[islotStacks];
-        if (bagItem.getItem().equals(chestItem.getItem())
-            && bagItem.getItemDamage() == chestItem.getItemDamage()) {
-          // same item, including damage (block state)
+        if (canMerge(bagItem,chestItem)) {
           chestMax = chestItem.getItem().getItemStackLimit(chestItem);
           room = chestMax - chestItem.stackSize;
           if (room <= 0) {
@@ -271,5 +243,17 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
       } // close loop on player inventory items
     } // close loop on chest items
     return new BagDepositReturn(itemsMoved, stacks);
+  }
+  /**
+   * match item, damage, and NBT
+   * @param chestItem
+   * @param bagItem
+   * @return
+   */
+  public static boolean canMerge(ItemStack chestItem, ItemStack bagItem) {
+    if (chestItem == null || bagItem == null) { return false; }
+    return (bagItem.getItem().equals(chestItem.getItem())
+        && bagItem.getItemDamage() == chestItem.getItemDamage()
+        && ItemStack.areItemStackTagsEqual(bagItem, chestItem));
   }
 }

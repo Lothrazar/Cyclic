@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.spell;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
 import com.lothrazar.cyclicmagic.item.tool.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.net.PacketSpellFromServer;
@@ -29,10 +29,10 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
     if (world.isRemote) {
       // only client side can call this method. mouseover does not exist
       // on server
-      BlockPos mouseover = ModMain.proxy.getBlockMouseoverExact(maxRange);
-      BlockPos offset = ModMain.proxy.getBlockMouseoverOffset(maxRange);
+      BlockPos mouseover = ModCyclic.proxy.getBlockMouseoverExact(maxRange);
+      BlockPos offset = ModCyclic.proxy.getBlockMouseoverOffset(maxRange);
       if (mouseover != null && offset != null) {
-        ModMain.network.sendToServer(new PacketSpellFromServer(mouseover, offset, this.getID()));
+        ModCyclic.network.sendToServer(new PacketSpellFromServer(mouseover, offset, this.getID()));
       }
     }
     return true;

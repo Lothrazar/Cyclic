@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.net;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IThreadListener;
@@ -39,12 +39,12 @@ public class PacketSyncPlayerData implements IMessage, IMessageHandler<PacketSyn
    * http://www.minecraftforge.net/forum/index.php?topic=31853.0
    */
   private static final void checkThreadAndEnqueue(final PacketSyncPlayerData message, final MessageContext ctx) {
-    IThreadListener thread = ModMain.proxy.getThreadFromContext(ctx);
+    IThreadListener thread = ModCyclic.proxy.getThreadFromContext(ctx);
     // pretty much copied straight from vanilla code, see {@link PacketThreadUtil#checkThreadAndEnqueue}
     thread.addScheduledTask(new Runnable() {
       public void run() {
         // msg.process(ModMain.proxy.getPlayerEntity(ctx), ctx.side);
-        ModMain.proxy.setClientPlayerData(ctx, message.tags);
+        ModCyclic.proxy.setClientPlayerData(ctx, message.tags);
       }
     });
   }

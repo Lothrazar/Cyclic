@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.net;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -19,7 +19,7 @@ public class PacketFakeWorkbench implements IMessage, IMessageHandler<PacketFake
   }
   @Override
   public IMessage onMessage(PacketFakeWorkbench message, MessageContext ctx) {
-    ctx.getServerHandler().playerEntity.openGui(ModMain.instance, ModGuiHandler.GUI_INDEX_PWORKBENCH, ctx.getServerHandler().playerEntity.worldObj, (int) ctx.getServerHandler().playerEntity.posX, (int) ctx.getServerHandler().playerEntity.posY, (int) ctx.getServerHandler().playerEntity.posZ);
+    ctx.getServerHandler().playerEntity.openGui(ModCyclic.instance, ModGuiHandler.GUI_INDEX_PWORKBENCH, ctx.getServerHandler().playerEntity.worldObj, (int) ctx.getServerHandler().playerEntity.posX, (int) ctx.getServerHandler().playerEntity.posY, (int) ctx.getServerHandler().playerEntity.posZ);
     //below is traditional, above is newness
     //    EntityPlayer p = ctx.getServerHandler().playerEntity;
     //    EntityPlayerMP player = (EntityPlayerMP) p;

@@ -34,6 +34,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
   }
   private static final int texture_width = 176;
   private static final int texture_height = 166;
+ 
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     //    super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);// abstract

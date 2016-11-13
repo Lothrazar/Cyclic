@@ -78,11 +78,13 @@ public class Const {
     public final static int IV = 3;
     public final static int V = 4;
   }
+  public final static int SPAWN_RADIUS = 8 * Const.CHUNK_SIZE;// 128 is spawn size
   public static final int WORLDHEIGHT = 256;
   //http://minecraft.gamepedia.com/Light#Mobs
   //this or lower
   public static final int LIGHT_MOBSPAWN = 7;
   public static final int LIGHT_MOBSPAWN_BLAZE = 11;
+  public static final int padding = 8;
   public static class HorseMeta {
     public static final int variant_white = 0;
     public static final int variant_creamy = 1;

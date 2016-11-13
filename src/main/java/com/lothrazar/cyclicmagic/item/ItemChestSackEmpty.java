@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.item;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.net.PacketStorageSack;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -9,6 +9,7 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumActionResult;
@@ -41,7 +42,7 @@ public class ItemChestSackEmpty extends BaseItem implements IHasRecipe {
     }
     UtilSound.playSound(entityPlayer, pos, SoundRegistry.thunk);
     if (world.isRemote) {
-      ModMain.network.sendToServer(new PacketStorageSack(pos));// https://github.com/PrinceOfAmber/Cyclic/issues/131
+      ModCyclic.network.sendToServer(new PacketStorageSack(pos));// https://github.com/PrinceOfAmber/Cyclic/issues/131
     }
     return EnumActionResult.SUCCESS;
   }
@@ -66,5 +67,12 @@ public class ItemChestSackEmpty extends BaseItem implements IHasRecipe {
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
     String s = UtilChat.lang("item.chest_sack_empty.tooltip");
     tooltip.add(s);
+  }
+  private Item fullSack;
+  public void setFullSack(Item item) {
+    fullSack = item;
+  }
+  public Item getFullSack() {
+    return fullSack;
   }
 }

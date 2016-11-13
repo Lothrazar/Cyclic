@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.net;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.spell.ISpellFromServer;
@@ -60,7 +60,7 @@ public class PacketSpellFromServer implements IMessage, IMessageHandler<PacketSp
         ((ISpellFromServer) spell).castFromServer(message.pos, message.posOffset, p);
       }
       else {
-        ModMain.logger.warn("WARNING: Message from server: spell not found" + message.spellID);
+        ModCyclic.logger.warn("WARNING: Message from server: spell not found" + message.spellID);
       }
     }
     return null;

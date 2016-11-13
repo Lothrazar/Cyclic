@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.net;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -17,7 +17,7 @@ public class PacketOpenExtendedInventory implements IMessage, IMessageHandler<Pa
   }
   @Override
   public IMessage onMessage(PacketOpenExtendedInventory message, MessageContext ctx) {
-    ctx.getServerHandler().playerEntity.openGui(ModMain.instance, ModGuiHandler.GUI_INDEX_EXTENDED, ctx.getServerHandler().playerEntity.worldObj, (int) ctx.getServerHandler().playerEntity.posX, (int) ctx.getServerHandler().playerEntity.posY, (int) ctx.getServerHandler().playerEntity.posZ);
+    ctx.getServerHandler().playerEntity.openGui(ModCyclic.instance, ModGuiHandler.GUI_INDEX_EXTENDED, ctx.getServerHandler().playerEntity.worldObj, (int) ctx.getServerHandler().playerEntity.posX, (int) ctx.getServerHandler().playerEntity.posY, (int) ctx.getServerHandler().playerEntity.posZ);
     return null;
   }
 }

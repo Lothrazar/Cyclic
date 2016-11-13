@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.item;
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
@@ -32,7 +32,7 @@ public class ItemPotionCustom extends ItemFood {
   public ItemPotionCustom(boolean shiny) {
     super(0, 0, false);
     this.setAlwaysEdible(); // can eat even if full hunger
-    this.setCreativeTab(ModMain.TAB);
+    this.setCreativeTab(ModCyclic.TAB);
     this.setMaxStackSize(1);
     this.hasEffect = shiny;
   }

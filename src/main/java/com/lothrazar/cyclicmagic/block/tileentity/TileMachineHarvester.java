@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
+import java.util.List;
 import com.lothrazar.cyclicmagic.util.UtilHarvestCrops;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
+import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import com.lothrazar.cyclicmagic.util.UtilHarvestCrops.HarestCropsConfig;
 import net.minecraft.item.ItemStack;
@@ -15,10 +17,11 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
   private HarestCropsConfig conf;
   private int needsRedstone = 1;
   private static final String NBT_TIMER = "Timer";
-  public static int HARVEST_RADIUS = 16;
   private static final String NBT_REDST = "redstone";
+  private static final int MAX_SIZE = 7;//radius 7 translates to 15x15 area (center block + 7 each side)
+  private int size = MAX_SIZE;//default to the old fixed size, backwards compat
   public static enum Fields {
-    TIMER, REDSTONE
+    TIMER, REDSTONE, SIZE
   }
   public TileMachineHarvester() {
     this.timer = TIMER_FULL;
@@ -74,7 +77,6 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
         timer = TIMER_FULL;//harvest worked!
       }
       else {
-        //        UtilParticle.spawnParticle(worldObj, EnumParticleTypes.SMOKE_NORMAL, harvest);
         timer = 1;//harvest didnt work, try again really quick
       }
     }
@@ -83,10 +85,20 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
     }
     this.markDirty();
   }
-  private BlockPos getHarvestPos() {
+  private BlockPos getHarvestCenter() {
     //move center over that much, not including exact horizontal
-    BlockPos center = this.getPos().offset(this.getCurrentFacing(), HARVEST_RADIUS + 1);
-    return UtilWorld.getRandomPos(this.worldObj.rand, center, HARVEST_RADIUS);
+    return this.getPos().offset(this.getCurrentFacing(), this.size + 1);
+  }
+  private BlockPos getHarvestPos() {
+    return UtilWorld.getRandomPos(this.worldObj.rand, getHarvestCenter(), this.size);
+  }
+  public void displayPreview() {
+    List<BlockPos> allPos = UtilPlaceBlocks.squareHorizontalHollow(getHarvestCenter(), this.size);
+    
+    for(BlockPos pos : allPos){
+
+      UtilParticle.spawnParticle(worldObj, EnumParticleTypes.DRAGON_BREATH, pos);
+    }
   }
   private int getSpeed() {
     return 1;
@@ -99,6 +111,10 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
         return timer;
       case REDSTONE:
         return this.needsRedstone;
+      case SIZE:
+        return this.size;
+      default:
+        break;
       }
     return -1;
   }
@@ -111,6 +127,11 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
         break;
       case REDSTONE:
         this.needsRedstone = value;
+        break;
+      case SIZE:
+        this.size = value;
+        break;
+      default:
         break;
       }
   }
@@ -146,6 +167,12 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
   public int[] getSlotsForFace(EnumFacing side) {
     // TODO Auto-generated method stub
     return null;
+  }
+  public void toggleSize() {
+    this.size++;
+    if (this.size > MAX_SIZE) {
+      this.size = 1;
+    }
   }
   @Override
   public void toggleNeedsRedstone() {

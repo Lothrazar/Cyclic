@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.spell;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.net.PacketSpellPull;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import net.minecraft.block.Block;
@@ -16,9 +16,9 @@ public class SpellRangePull extends BaseSpellRange {
   @Override
   public boolean cast(World world, EntityPlayer p, ItemStack wand, BlockPos pos, EnumFacing side) {
     if (world.isRemote) {
-      BlockPos mouseover = ModMain.proxy.getBlockMouseoverExact(maxRange);
+      BlockPos mouseover = ModCyclic.proxy.getBlockMouseoverExact(maxRange);
       if (mouseover != null) {
-        ModMain.network.sendToServer(new PacketSpellPull(mouseover, ModMain.proxy.getSideMouseover(maxRange)));
+        ModCyclic.network.sendToServer(new PacketSpellPull(mouseover, ModCyclic.proxy.getSideMouseover(maxRange)));
       }
     }
     return true;

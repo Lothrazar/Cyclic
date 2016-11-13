@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.spell;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.net.PacketRotateBlock;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import net.minecraft.block.Block;
@@ -19,9 +19,9 @@ public class SpellRangeRotate extends BaseSpellRange {
     if (world.isRemote) {
       // only client side can call this method. mouseover does not exist
       // on server
-      BlockPos mouseover = ModMain.proxy.getBlockMouseoverExact(maxRange);
+      BlockPos mouseover = ModCyclic.proxy.getBlockMouseoverExact(maxRange);
       if (mouseover != null) {
-        ModMain.network.sendToServer(new PacketRotateBlock(mouseover, ModMain.proxy.getSideMouseover(maxRange)));
+        ModCyclic.network.sendToServer(new PacketRotateBlock(mouseover, ModCyclic.proxy.getSideMouseover(maxRange)));
       }
     }
     return true;

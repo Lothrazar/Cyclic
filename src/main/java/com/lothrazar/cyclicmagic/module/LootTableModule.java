@@ -3,7 +3,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import com.lothrazar.cyclicmagic.IHasConfig;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Blocks;
@@ -55,7 +55,7 @@ public class LootTableModule extends BaseEventModule implements IHasConfig {
       event.getTable().addPool(new LootPool(new LootEntry[0], new LootCondition[0], new RandomValueRange(1F, 2F), new RandomValueRange(1F, 1F), LOOTPOOLNAME));
       main = event.getTable().getPool(LOOTPOOLNAME);
       if (main == null) {
-        ModMain.logger.error("could not insert Loot Pool for table :" + event.getName().toString());
+        ModCyclic.logger.error("could not insert Loot Pool for table :" + event.getName().toString());
         return;
       }
     }

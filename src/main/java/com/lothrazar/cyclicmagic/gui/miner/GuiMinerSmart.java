@@ -1,8 +1,8 @@
 package com.lothrazar.cyclicmagic.gui.miner;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMinerSmart;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
 import com.lothrazar.cyclicmagic.gui.miner.ButtonMinerHeight;
-import com.lothrazar.cyclicmagic.gui.uncrafting.GuiButtonUncraftingRedstone;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
@@ -16,7 +16,7 @@ public class GuiMinerSmart extends GuiBaseContainer {
   private int yHeightTxtbox = 38;
   private ButtonMinerHeight btnHeightDown;
   private ButtonMinerHeight btnHeightUp;
-  private GuiButtonUncraftingRedstone redstoneBtn;
+  private GuiButtonMachineRedstone redstoneBtn;
   public GuiMinerSmart(InventoryPlayer inventoryPlayer, TileMachineMinerSmart tileEntity) {
     super(new ContainerMinerSmart(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -27,7 +27,7 @@ public class GuiMinerSmart extends GuiBaseContainer {
   @Override
   public void initGui() {
     super.initGui();
-    redstoneBtn = new GuiButtonUncraftingRedstone(0,
+    redstoneBtn = new GuiButtonMachineRedstone(0,
         this.guiLeft + 8,
         this.guiTop + 8, this.tile.getPos());
     redstoneBtn.setTextureIndex(tile.getField(TileMachineMinerSmart.Fields.REDSTONE.ordinal()));

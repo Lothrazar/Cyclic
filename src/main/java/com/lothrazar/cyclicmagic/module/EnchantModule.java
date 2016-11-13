@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.module;
-import com.lothrazar.cyclicmagic.ModMain;
+import com.lothrazar.cyclicmagic.IHasConfig;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.enchantment.EnchantLaunch;
 import com.lothrazar.cyclicmagic.enchantment.EnchantLifeLeech;
 import com.lothrazar.cyclicmagic.enchantment.EnchantMagnet;
@@ -9,7 +10,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 
-public class EnchantModule extends BaseModule {
+public class EnchantModule extends BaseModule  implements IHasConfig{
   public static EnchantLaunch launch;
   public static EnchantMagnet magnet;
   public static EnchantVenom venom;
@@ -27,24 +28,25 @@ public class EnchantModule extends BaseModule {
     if (enableLaunch) {
       launch = new EnchantLaunch();
       Enchantment.REGISTRY.register(launchid, new ResourceLocation(launch.getName()), launch);
-      ModMain.instance.events.addEvent(EnchantModule.launch);
+      ModCyclic.instance.events.register(EnchantModule.launch);
     }
     if (enableMagnet) {
       magnet = new EnchantMagnet();
       Enchantment.REGISTRY.register(magnetid, new ResourceLocation(magnet.getName()), magnet);
-      ModMain.instance.events.addEvent(EnchantModule.magnet);
+      ModCyclic.instance.events.register(EnchantModule.magnet);
     }
     if (enableVenom) {
       venom = new EnchantVenom();
       Enchantment.REGISTRY.register(venomid, new ResourceLocation(venom.getName()), venom);
-      ModMain.instance.events.addEvent(EnchantModule.venom);
+      ModCyclic.instance.events.register(EnchantModule.venom);
     }
     if (enableLifeleech) {
       lifeleech = new EnchantLifeLeech();
       Enchantment.REGISTRY.register(lifeleechid, new ResourceLocation(lifeleech.getName()), lifeleech);
-      ModMain.instance.events.addEvent(EnchantModule.lifeleech);
+      ModCyclic.instance.events.register(EnchantModule.lifeleech);
     }
   }
+  @Override
   public void syncConfig(Configuration c) {
     enableLaunch = c.getBoolean("EnchantLaunch", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableMagnet = c.getBoolean("EnchantMagnet", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

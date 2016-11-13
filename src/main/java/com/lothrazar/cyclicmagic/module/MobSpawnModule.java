@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.module;
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.monster.EntityBlaze;
@@ -14,7 +15,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
-public class MobSpawnModule extends BaseModule {
+public class MobSpawnModule extends BaseModule  implements IHasConfig {
   private final static int group = 3;
   private final static int min = 1;
   private final static int max = 4;
@@ -53,6 +54,7 @@ public class MobSpawnModule extends BaseModule {
       EntityRegistry.addSpawn(EntityIronGolem.class, group, min, max, EnumCreatureType.CREATURE, new Biome[] { Biomes.JUNGLE_HILLS, Biomes.JUNGLE });
     }
   }
+  @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.mobspawns;
     config.addCustomCategoryComment(category, "Add mob spawns in more biomes");
