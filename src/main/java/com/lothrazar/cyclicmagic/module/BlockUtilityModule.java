@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.block.BlockBucketStorage;
+import com.lothrazar.cyclicmagic.block.BlockFarming;
 import com.lothrazar.cyclicmagic.block.BlockFishing;
 import com.lothrazar.cyclicmagic.block.BlockScaffolding;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBucketStorage;
@@ -19,6 +20,9 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   private boolean fishingBlock;
   private boolean enableBucketBlocks;
   public void onInit() {
+    BlockFarming block_farming = new BlockFarming();
+    BlockRegistry.registerBlock(block_farming, "block_farming");
+    
     if (fragileEnabled) {
       BlockScaffolding block_fragile = new BlockScaffolding();
       BlockRegistry.registerBlock(block_fragile, new ItemBlockScaffolding(block_fragile), BlockScaffolding.name);
