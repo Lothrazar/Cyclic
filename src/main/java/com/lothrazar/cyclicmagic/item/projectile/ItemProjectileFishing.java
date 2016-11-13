@@ -15,7 +15,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemProjectileFishing extends BaseItemProjectile implements IHasRecipe {
   @Override
   public void addRecipe() {
-    GameRegistry.addShapelessRecipe(new ItemStack(this, 8), new ItemStack(Items.ENDER_PEARL), new ItemStack(Items.GUNPOWDER), new ItemStack(Items.STRING));
+    GameRegistry.addShapelessRecipe(new ItemStack(this, 32), new ItemStack(Items.ENDER_PEARL), new ItemStack(Items.GUNPOWDER), new ItemStack(Items.STRING));
   }
   @Override
   void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {

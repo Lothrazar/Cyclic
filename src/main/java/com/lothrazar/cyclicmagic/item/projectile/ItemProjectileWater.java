@@ -16,7 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemProjectileWater extends BaseItemProjectile implements IHasRecipe {
   @Override
   public void addRecipe() {
-    GameRegistry.addShapelessRecipe(new ItemStack(this, 4), new ItemStack(Items.BLAZE_ROD), new ItemStack(Items.ENDER_PEARL), new ItemStack(Blocks.ICE));
+    GameRegistry.addShapelessRecipe(new ItemStack(this, 16), new ItemStack(Items.BLAZE_ROD), new ItemStack(Items.ENDER_PEARL), new ItemStack(Blocks.ICE));
   }
   @Override
   void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {

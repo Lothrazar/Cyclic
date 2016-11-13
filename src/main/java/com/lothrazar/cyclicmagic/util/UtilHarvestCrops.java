@@ -195,7 +195,9 @@ public class UtilHarvestCrops {
         world.destroyBlock(posCurrent.down(), false);
       }
       if (stateReplant != null) {// plant new seed
-        world.setBlockState(posCurrent, stateReplant);
+        //world.setBlockState(posCurrent, blockCheck.getDefaultState());// OLD WAY
+        world.destroyBlock(posCurrent, false);//false == no drops. literally just for the sound
+        world.setBlockState(posCurrent, stateReplant);// new way
         //whateveer it drops if it wasnt full grown, yeah thats the seed
         final Item seedItem = blockCheck.getItemDropped(blockCheck.getDefaultState(), world.rand, 0);
         if (drops.size() > 1 && seedItem != null) {
@@ -209,13 +211,15 @@ public class UtilHarvestCrops {
             }
           }
         }
-        world.destroyBlock(posCurrent, false);//false means no drops yo! -> this is basically just to  play the sound
-        world.setBlockState(posCurrent, blockCheck.getDefaultState());
         //now we can upgrade this to also drop in front wooo!
         for (ItemStack drop : drops) {
           UtilEntity.dropItemStackInWorld(world, posCurrent, drop);
           //           dropItem(drop, world, blockPos);
         }
+      }
+      else{
+        //dont replant, but still doBreak. for non farming stuff like grass/leaves
+        world.destroyBlock(posCurrent, true);
       }
       return true;
     }

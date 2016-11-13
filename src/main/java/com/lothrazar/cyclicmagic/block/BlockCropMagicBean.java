@@ -21,12 +21,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockSprout extends BlockCrops {
+public class BlockCropMagicBean extends BlockCrops {
   public static final int MAX_AGE = 7;
   public static final PropertyInteger AGE = PropertyInteger.create("age", 0, MAX_AGE);
   private static final AxisAlignedBB[] AABB = new AxisAlignedBB[] { new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.125D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.1875D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.25D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.3125D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.375D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.4375D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5625D, 1.0D) };
   private List<ItemStack> myDrops = new ArrayList<ItemStack>();
-  public BlockSprout() {
+  public BlockCropMagicBean() {
     Item[] drops = new Item[] {
         //treasure
         Items.REDSTONE, Items.GUNPOWDER, Items.GLOWSTONE_DUST, Items.DIAMOND, Items.EMERALD,
@@ -130,9 +130,7 @@ public class BlockSprout extends BlockCrops {
         ret.add(getCropStack(rand).copy()); //copy to make sure we return a new instance
       }
     }
-    else {
-      ret.add(new ItemStack(getSeed()));//always a seed, grown or not
-    }
+    ret.add(new ItemStack(getSeed()));//always a seed, grown or not
     return ret;
   }
   @Override

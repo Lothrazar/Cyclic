@@ -15,7 +15,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemProjectileLightning extends BaseItemProjectile implements IHasRecipe {
   @Override
   public void addRecipe() {
-    GameRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(Items.ENDER_PEARL), new ItemStack(Items.QUARTZ), new ItemStack(Items.GHAST_TEAR));
+    GameRegistry.addShapelessRecipe(new ItemStack(this,4), 
+        new ItemStack(Items.ENDER_PEARL), 
+        new ItemStack(Items.QUARTZ), 
+        new ItemStack(Items.GHAST_TEAR));
   }
   @Override
   void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
