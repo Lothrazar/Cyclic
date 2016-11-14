@@ -21,6 +21,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class BlockShears extends Block implements IHasRecipe {
+  protected static final AxisAlignedBB CACTUS_AABB = new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 0.9375D, 0.9375D, 0.9375D);
+  final static int FORTUNE = 10;// f yeah why not
   // https://github.com/PrinceOfAmber/SamsPowerups/blob/master/FarmingBlocks/src/main/java/com/lothrazar/samsfarmblocks/BlockShearWool.java
   public BlockShears() {
     super(Material.PISTON);
@@ -36,7 +38,6 @@ public class BlockShears extends Block implements IHasRecipe {
         's', new ItemStack(Items.SHEARS, 1, OreDictionary.WILDCARD_VALUE),
         'o', Blocks.OBSIDIAN);
   }
-  final static int FORTUNE = 10;// f yeah why not
   @Override
   public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
     if (entity instanceof IShearable) {
@@ -52,10 +53,7 @@ public class BlockShears extends Block implements IHasRecipe {
   }
   @Override
   public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos) {
-    //if we dont make the box biger than 1x1x1, the 'Collided' event will Never fire
-    //float f = 0.0625F; //same as cactus.
-    float f = 0.1F;
-    return new AxisAlignedBB((double) ((float) pos.getX() + f), (double) pos.getY(), (double) ((float) pos.getZ() + f), (double) ((float) (pos.getX() + 1) - f), (double) ((float) (pos.getY() + 1) - f), (double) ((float) (pos.getZ() + 1) - f));
+    return CACTUS_AABB;
   }
   @Override
   public boolean isOpaqueCube(IBlockState state) {
