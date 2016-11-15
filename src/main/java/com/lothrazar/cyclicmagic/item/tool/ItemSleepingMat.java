@@ -76,6 +76,7 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig 
   }
   @Override
   public void syncConfig(Configuration config) {
+    doPotions = config.getBoolean("SleepingMatPotions", Const.ConfigCategory.items, true, "False will disable the potion effects given by the Sleeping Mat");
     seconds = config.getInt("SleepingMatPotion", Const.ConfigCategory.modpackMisc, 20, 0, 600, "Seconds of potion effect caused by using the sleeping mat");
   }
   @Override

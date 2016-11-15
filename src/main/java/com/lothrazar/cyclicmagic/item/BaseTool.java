@@ -11,8 +11,8 @@ public class BaseTool extends BaseItem {
     this.setMaxStackSize(1);
     this.setMaxDamage(durability);
   }
-  public void onUse(ItemStack stack, EntityPlayer playerIn, World worldIn, EnumHand hand) {
-    playerIn.swingArm(hand);
-    UtilItem.damageItem(playerIn, stack);
+  public void onUse(ItemStack stack, EntityPlayer player, World world, EnumHand hand) {
+    player.swingArm(hand);
+    UtilItem.damageItem(player, stack);
   }
 }

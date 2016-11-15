@@ -1,0 +1,6 @@
+{
+ 	"parent": "cyclicmagic:parent/wand_simple",
+    "textures": {
+        "0": "blocks/gold_block"
+    }
+}

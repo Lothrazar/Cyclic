@@ -57,9 +57,14 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
   private boolean enableEnderBook;
   private boolean enableChestSack;
   private boolean enableStirrups;
+  private boolean enableTorchLauncher;
   public static ItemStorageBag storage_bag;//ref by ContainerStorage
   @Override
   public void onInit() {
+    if (enableTorchLauncher) {
+      ItemToolThrowTorch tool_torch_launcher = new ItemToolThrowTorch();
+      ItemRegistry.addItem(tool_torch_launcher, "tool_torch_launcher");
+    }
     if (enableStirrups) {
       ItemToolStirrups tool_mount = new ItemToolStirrups();
       ItemRegistry.addItem(tool_mount, "tool_mount");
@@ -178,10 +183,9 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
   }
   @Override
   public void syncConfig(Configuration config) {
+    enableTorchLauncher = config.getBoolean("TorchLauncher", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     storageBagEnabled = config.getBoolean("StorageBag", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableEnderBook = config.getBoolean("EnderBook", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    //TODO: this config should be INSIDE the item mat
-    ItemSleepingMat.doPotions = config.getBoolean("SleepingMatPotions", Const.ConfigCategory.items, true, "False will disable the potion effects given by the Sleeping Mat");
     enableWarpHomeTool = config.getBoolean("EnderWingPrime", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableWarpSpawnTool = config.getBoolean("EnderWing", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableSpawnInspect = config.getBoolean("SpawnDetector", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
