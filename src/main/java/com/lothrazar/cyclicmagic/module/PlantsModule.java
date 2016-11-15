@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.block.BlockCropMagicBean;
-import com.lothrazar.cyclicmagic.item.ItemSproutSeeds;
+import com.lothrazar.cyclicmagic.item.ItemMagicBean;
 import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
@@ -16,7 +16,7 @@ public class PlantsModule extends BaseModule  implements IHasConfig{
     if (enableBeans) {
       BlockCropMagicBean sprout = new BlockCropMagicBean();
       BlockRegistry.registerBlock(sprout, "sprout", true);
-      ItemSproutSeeds sprout_seed = new ItemSproutSeeds(sprout, Blocks.FARMLAND);
+      ItemMagicBean sprout_seed = new ItemMagicBean(sprout, Blocks.FARMLAND);
       ItemRegistry.addItem(sprout_seed, "sprout_seed");
       LootTableRegistry.registerLoot(sprout_seed);
       sprout.setSeed(sprout_seed);

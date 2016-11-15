@@ -16,9 +16,9 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemSproutSeeds extends ItemSeeds implements IHasRecipe {
+public class ItemMagicBean extends ItemSeeds implements IHasRecipe {
   private final Block soilBlockID;
-  public ItemSproutSeeds(Block crops, Block soil) {
+  public ItemMagicBean(Block crops, Block soil) {
     super(crops, soil);
     soilBlockID = soil;
   }

@@ -1,6 +1,7 @@
-package com.lothrazar.cyclicmagic.item;
+package com.lothrazar.cyclicmagic.item.tool;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.item.BaseItem;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilItem;
@@ -24,12 +25,11 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemAutoTorch extends BaseItem implements IHasRecipe {
+public class ItemAutoTorch extends BaseItem implements IHasRecipe { 
   private static final int durability = 256;
   private static final float lightLimit = 7.0F;
   private static final int cooldown = 60;//ticks not seconds
   public ItemAutoTorch() {
-    //   super(durability);
     this.setMaxStackSize(1);
     this.setMaxDamage(durability);
   }
