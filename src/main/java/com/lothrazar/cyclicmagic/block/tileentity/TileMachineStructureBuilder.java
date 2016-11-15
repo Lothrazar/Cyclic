@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -332,21 +333,20 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
           if (worldObj.rand.nextDouble() < 0.75) {
             this.incrementPosition();
           }
-        }
-        //else its not air.. may or may not be valid so ignore
+        } //else its not air.. may or may not be valid so ignore
       }
     }
     if (trigger) {
       Block stuff = Block.getBlockFromItem(stack.getItem());
       if (stuff != null) {
-        if (worldObj.isRemote == false) {
-          //ModMain.logger.info("try place " + this.nextPos + " type " + this.buildType + "_" + this.getBuildTypeEnum().name());
-          if (UtilPlaceBlocks.placeStateSafe(worldObj, null, nextPos,
-              UtilItem.getStateFromMeta(stuff, stack.getMetadata()))) {
+        IBlockState placeState = UtilItem.getStateFromMeta(stuff, stack.getMetadata());
+        //ModMain.logger.info("try place " + this.nextPos + " type " + this.buildType + "_" + this.getBuildTypeEnum().name());
+        if (UtilPlaceBlocks.placeStateSafe(worldObj, null, nextPos, placeState)) {
+          if (worldObj.isRemote == false) {//consume item on server
             this.decrStackSize(0, 1);
           }
         }
-        this.incrementPosition();// even if it didnt place.
+        this.incrementPosition();// even if it didnt place; move along
       }
     }
     else {
