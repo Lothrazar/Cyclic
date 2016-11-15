@@ -18,6 +18,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemChestSack extends BaseItem {
   public static final String name = "chest_sack";
@@ -25,6 +27,7 @@ public class ItemChestSack extends BaseItem {
   public static final String KEY_BLOCKTILE = "tile";
   public static final String KEY_BLOCKNAME = "blockname";
   public static final String KEY_BLOCKSTATE = "blockstate";
+  private Item emptySack;
   public ItemChestSack() {
     super();
     this.setMaxStackSize(1);
@@ -91,7 +94,10 @@ public class ItemChestSack extends BaseItem {
       }
     }
   }
-  private Item emptySack;
+  @SideOnly(Side.CLIENT)
+  public boolean hasEffect(ItemStack stack) {
+    return true;
+  }
   public void setEmptySack(ItemChestSackEmpty item) {
     emptySack = item;
   }
