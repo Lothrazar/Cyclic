@@ -15,7 +15,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
-public class MobSpawnModule extends BaseModule  implements IHasConfig {
+public class MobSpawnModule extends BaseModule implements IHasConfig {
   private final static int group = 3;
   private final static int min = 1;
   private final static int max = 4;

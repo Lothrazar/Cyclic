@@ -15,6 +15,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumActionResult;
@@ -150,25 +151,21 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
   }
   @Override
   public void addRecipe() {
+    ItemStack ingredient = null;
     switch (this.wandType) {
     case MATCH:
-      GameRegistry.addRecipe(new ItemStack(this),
-          " gp",
-          " ig",
-          "i  ",
-          'i', Blocks.LAPIS_BLOCK,
-          'g', Items.BLAZE_POWDER,
-          'p', Blocks.EMERALD_BLOCK);
+      ingredient = new ItemStack(Items.EMERALD);
       break;
     case NORMAL:
-      GameRegistry.addRecipe(new ItemStack(this),
-          " gp",
-          " ig",
-          "i  ",
-          'i', Blocks.IRON_BLOCK,
-          'g', Items.BLAZE_POWDER,
-          'p', Blocks.QUARTZ_BLOCK);
+      ingredient = new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage());
       break;
     }
+    GameRegistry.addRecipe(new ItemStack(this),
+        " gi",
+        " ig",
+        "o  ",
+        'i', Items.IRON_INGOT,
+        'g', ingredient,
+        'o', Blocks.OBSIDIAN);
   }
 }

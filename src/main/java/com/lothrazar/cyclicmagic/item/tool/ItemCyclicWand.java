@@ -13,7 +13,6 @@ import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -196,7 +195,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
         " o ",
         "gog",
         'd', new ItemStack(Blocks.DIAMOND_BLOCK),
-        'g', Items.GHAST_TEAR,
+        'g', Blocks.QUARTZ_BLOCK,
         'o', Blocks.OBSIDIAN,
         's', Blocks.END_STONE);
   }

@@ -117,11 +117,11 @@ public class ItemToolRandomize extends BaseTool implements IHasRecipe {
   @Override
   public void addRecipe() {
     GameRegistry.addRecipe(new ItemStack(this),
-        " gp",
+        " gi",
         " ig",
-        "i  ",
-        'i', Blocks.OBSIDIAN,
-        'g', Items.BLAZE_POWDER,
-        'p', Blocks.REDSTONE_BLOCK);
+        "o  ",
+        'i', Items.IRON_INGOT,
+        'g', Items.REDSTONE,
+        'o', Blocks.OBSIDIAN);
   }
 }

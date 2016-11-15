@@ -13,7 +13,7 @@ import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.IFuelHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class FuelAdditionModule extends BaseModule  implements IHasConfig{
+public class FuelAdditionModule extends BaseModule implements IHasConfig {
   private boolean enabled;
   //links existing vanilla items as burnable fuel
   @Override

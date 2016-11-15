@@ -26,6 +26,13 @@ public class UtilSound {
       UtilSound.playSound(player, here, type.getPlaceSound());
     }
   }
+  public static void playSoundPlaceBlock(World world, BlockPos pos, Block block) {
+    if (block == null) { return; }
+    SoundType type = block.getSoundType(block.getDefaultState(), world, pos, null);
+    if (type != null && type.getPlaceSound() != null) {
+      UtilSound.playSound(world, pos, type.getPlaceSound(), SoundCategory.BLOCKS);
+    }
+  }
   public static void playSound(EntityPlayer player, SoundEvent thunk) {
     playSound(player, player.getPosition(), thunk);
   }

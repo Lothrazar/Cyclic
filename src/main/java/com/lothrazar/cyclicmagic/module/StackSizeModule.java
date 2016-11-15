@@ -7,7 +7,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
 
-public class StackSizeModule extends BaseModule  implements IHasConfig{
+public class StackSizeModule extends BaseModule implements IHasConfig {
   private Map<Item, Integer> stackMap = new HashMap<Item, Integer>();
   private Map<Item, Integer> enabledMap = new HashMap<Item, Integer>();
   public StackSizeModule() {
@@ -17,7 +17,6 @@ public class StackSizeModule extends BaseModule  implements IHasConfig{
     stackMap.put(Items.DIAMOND_HORSE_ARMOR, boat);
     stackMap.put(Items.GOLDEN_HORSE_ARMOR, boat);
     stackMap.put(Items.IRON_HORSE_ARMOR, boat);
-
     //DO NOT DO RECORDS until we confirm that vanilla juke boxes dont DUPE them
     stackMap.put(Items.BOAT, boat);
     stackMap.put(Items.ACACIA_BOAT, boat);

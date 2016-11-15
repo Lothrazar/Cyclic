@@ -1,6 +1,7 @@
-package com.lothrazar.cyclicmagic.item;
+package com.lothrazar.cyclicmagic.item.tool;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.item.BaseItem;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilItem;
@@ -29,7 +30,6 @@ public class ItemAutoTorch extends BaseItem implements IHasRecipe {
   private static final float lightLimit = 7.0F;
   private static final int cooldown = 60;//ticks not seconds
   public ItemAutoTorch() {
-    //   super(durability);
     this.setMaxStackSize(1);
     this.setMaxDamage(durability);
   }
@@ -84,7 +84,9 @@ public class ItemAutoTorch extends BaseItem implements IHasRecipe {
       EntityPlayer living = (EntityPlayer) entityIn;
       if (living.getCooldownTracker().hasCooldown(stack.getItem())) { return; } //cancel if on cooldown
       BlockPos pos = living.getPosition();
-      if (world.getLight(pos, true) < lightLimit && world.isSideSolid(pos.down(), EnumFacing.UP)) {
+      if (world.getLight(pos, true) < lightLimit
+          && world.isSideSolid(pos.down(), EnumFacing.UP)
+          && world.isAirBlock(pos)) { // dont overwrite liquids 
         if (UtilPlaceBlocks.placeStateSafe(world, living, pos, Blocks.TORCH.getDefaultState())) {
           UtilItem.damageItem(living, stack);
           if (stack == null || stack.getItemDamage() == stack.getMaxDamage()) {

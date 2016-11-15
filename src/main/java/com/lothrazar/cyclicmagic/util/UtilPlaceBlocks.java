@@ -7,9 +7,9 @@ import java.util.List;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockStone;
 import net.minecraft.block.BlockStoneBrick;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.BlockStone.EnumType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -19,7 +19,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -163,14 +162,17 @@ public class UtilPlaceBlocks {
       // as soon as i added the try catch, it started never (rarely) happening
       // we used to pass a flag as third argument, such as '2'
       // default is '3'
-      // UtilChat.addChatMessage(player, "!!placeStateSafe; isRemote = "+world.isRemote); 
       if (!world.isRemote) {
+        if (placeState.getBlock() instanceof BlockLeaves) {//dont let them decay
+          placeState = placeState.withProperty(BlockLeaves.DECAYABLE, false);
+        }
         success = world.setBlockState(placePos, placeState, 3);
+      }
+      else {//this often gets called from only serverside, but not always (structurebuilder)
+        UtilSound.playSoundPlaceBlock(world, placePos, placeState.getBlock());
       }
       world.markBlockRangeForRenderUpdate(placePos, placePos.up());
       world.markChunkDirty(placePos, null);
-      //Minecraft.getMinecraft().renderGlobal.markBlockRangeForRenderUpdate(x1, y1, z1, x2, y2, z2);
-      success = true;//to play sound clientside
     }
     catch (ConcurrentModificationException e) {
       ModCyclic.logger.warn("ConcurrentModificationException");
@@ -178,18 +180,6 @@ public class UtilPlaceBlocks {
       ModCyclic.logger.warn(e.getStackTrace().toString());
       success = false;
     }
-    if (success) {
-      if (player != null) {
-        UtilSound.playSoundPlaceBlock(player, placePos, placeState.getBlock());
-      }
-      else {
-        SoundType type = placeState.getBlock().getSoundType(placeState, world, placePos, player);
-        if (type != null && type.getPlaceSound() != null) {
-          UtilSound.playSound(world, placePos, type.getPlaceSound(), SoundCategory.BLOCKS);
-        }
-      }
-    }
-    // either it was air, or it wasnt and we broke it
     return success;
   }
   public static ArrayList<Block> ignoreList = new ArrayList<Block>();

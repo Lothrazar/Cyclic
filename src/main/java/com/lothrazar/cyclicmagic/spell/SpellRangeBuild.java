@@ -5,6 +5,7 @@ import com.lothrazar.cyclicmagic.item.tool.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.net.PacketSpellFromServer;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -34,6 +35,12 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
       if (mouseover != null && offset != null) {
         ModCyclic.network.sendToServer(new PacketSpellFromServer(mouseover, offset, this.getID()));
       }
+      ItemStack heldWand = UtilSpellCaster.getPlayerWandIfHeld(p);
+      if (heldWand != null) {
+        int itemSlot = ItemCyclicWand.BuildType.getSlot(heldWand);
+        IBlockState state = InventoryWand.getToPlaceFromSlot(heldWand, itemSlot);
+        UtilSound.playSoundPlaceBlock(world, offset, state.getBlock());
+      }
     }
     return true;
   }
@@ -41,7 +48,6 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
     World world = p.worldObj;
     ItemStack heldWand = UtilSpellCaster.getPlayerWandIfHeld(p);
     if (heldWand == null) { return; }
-    //InventoryWand.getSlotByBuildType(heldWand, world.getBlockState(posMouseover));
     int itemSlot = ItemCyclicWand.BuildType.getSlot(heldWand);
     IBlockState state = InventoryWand.getToPlaceFromSlot(heldWand, itemSlot);
     if (state == null || state.getBlock() == null) {

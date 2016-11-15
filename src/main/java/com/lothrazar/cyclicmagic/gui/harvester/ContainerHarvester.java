@@ -19,7 +19,6 @@ public class ContainerHarvester extends ContainerBaseMachine {
   private int tileSize;
   public ContainerHarvester(InventoryPlayer inventoryPlayer, TileMachineHarvester te) {
     tileEntity = te;
-  
     bindPlayerInventory(inventoryPlayer);
   }
   @Override

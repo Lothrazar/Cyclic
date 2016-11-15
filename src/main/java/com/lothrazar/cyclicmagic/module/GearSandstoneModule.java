@@ -16,7 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.EnumHelper;
 
-public class GearSandstoneModule extends BaseModule  implements IHasConfig{
+public class GearSandstoneModule extends BaseModule implements IHasConfig {
   private boolean enableSandstoneTools;
   private void registerMaterials() {
     MaterialRegistry.sandstoneToolMaterial = EnumHelper.addToolMaterial("sandstone",

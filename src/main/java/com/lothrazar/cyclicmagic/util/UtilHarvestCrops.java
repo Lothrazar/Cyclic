@@ -217,7 +217,7 @@ public class UtilHarvestCrops {
           //           dropItem(drop, world, blockPos);
         }
       }
-      else{
+      else {
         //dont replant, but still doBreak. for non farming stuff like grass/leaves
         world.destroyBlock(posCurrent, true);
       }

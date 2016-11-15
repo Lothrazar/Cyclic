@@ -170,7 +170,6 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
         'r', Items.REDSTONE,
         'd', Items.GOLD_INGOT);
   }
- 
   public static BagDepositReturn dumpFromListToIInventory(World world, IInventory chest, ItemStack[] stacks, boolean onlyMatchingItems) {
     ItemStack chestItem;
     ItemStack bagItem;
@@ -211,7 +210,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
           break;//stop lookin in the chest, get a new bag item
         }
         bagItem = stacks[islotStacks];
-        if (canMerge(bagItem,chestItem)) {
+        if (canMerge(bagItem, chestItem)) {
           chestMax = chestItem.getItem().getItemStackLimit(chestItem);
           room = chestMax - chestItem.stackSize;
           if (room <= 0) {
@@ -246,6 +245,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
   }
   /**
    * match item, damage, and NBT
+   * 
    * @param chestItem
    * @param bagItem
    * @return

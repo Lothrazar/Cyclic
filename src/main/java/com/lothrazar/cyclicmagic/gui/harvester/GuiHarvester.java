@@ -35,7 +35,7 @@ public class GuiHarvester extends GuiBaseContanerProgress {
         PacketTileHarvester.ActionType.SIZE);
     this.buttonList.add(btnSize);
     GuiButtonHarvester btnPreview = new GuiButtonHarvester(btnId++,
-        this.guiLeft + Const.padding*2+40,
+        this.guiLeft + Const.padding * 2 + 40,
         y, UtilChat.lang("button.harvester.preview"), this.tile.getPos(),
         PacketTileHarvester.ActionType.PREVIEW);
     this.buttonList.add(btnPreview);
@@ -45,7 +45,7 @@ public class GuiHarvester extends GuiBaseContanerProgress {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
-    for (int k = 0; k < this.tile.getSizeInventory(); k++) { 
+    for (int k = 0; k < this.tile.getSizeInventory(); k++) {
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerHarvester.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerHarvester.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
   }

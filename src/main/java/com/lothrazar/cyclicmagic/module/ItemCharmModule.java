@@ -1,15 +1,15 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.item.ItemAutoTorch;
 import com.lothrazar.cyclicmagic.item.charm.*;
+import com.lothrazar.cyclicmagic.item.tool.ItemAutoTorch;
 import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraftforge.common.config.Configuration;
 
-public class ItemCharmModule extends BaseModule  implements IHasConfig{
+public class ItemCharmModule extends BaseModule implements IHasConfig {
   private boolean enableFire;
   private boolean enableSea;
   private boolean enableVoid;
