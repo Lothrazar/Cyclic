@@ -139,8 +139,8 @@ public class ModCyclic {
    * drains your exp into the bottles at a given ratio // a really good one
    * exists in SuperCraftingFrame -> so not needed..
    * 
-   * CYCLICSCEPTER: - ? toggle to tell how many times to rotate an item after placing
-   * (ex: stairs to be put upside down)
+   * CYCLICSCEPTER: - ? toggle to tell how many times to rotate an item after
+   * placing (ex: stairs to be put upside down)
    * 
    * Block placers and structure builder: add same rotator
    * 

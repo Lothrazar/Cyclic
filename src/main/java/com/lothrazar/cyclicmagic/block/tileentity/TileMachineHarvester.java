@@ -94,9 +94,7 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
   }
   public void displayPreview() {
     List<BlockPos> allPos = UtilPlaceBlocks.squareHorizontalHollow(getHarvestCenter(), this.size);
-    
-    for(BlockPos pos : allPos){
-
+    for (BlockPos pos : allPos) {
       UtilParticle.spawnParticle(worldObj, EnumParticleTypes.DRAGON_BREATH, pos);
     }
   }

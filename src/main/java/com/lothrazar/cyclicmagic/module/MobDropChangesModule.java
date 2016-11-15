@@ -26,7 +26,7 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteractSpecific;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class MobDropChangesModule extends BaseEventModule  implements IHasConfig{
+public class MobDropChangesModule extends BaseEventModule implements IHasConfig {
   private static final int chanceZombieVillagerEmerald = 25;
   public static boolean sheepShearBuffed;//used by entity shearing bolt also
   private boolean zombieVillagerEmeralds;

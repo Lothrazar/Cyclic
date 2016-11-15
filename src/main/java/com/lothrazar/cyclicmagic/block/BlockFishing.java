@@ -23,7 +23,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockFishing extends Block  implements IHasRecipe {
+public class BlockFishing extends Block implements IHasRecipe {
   public BlockFishing() {
     super(Material.WOOD);
     this.setHardness(3F);

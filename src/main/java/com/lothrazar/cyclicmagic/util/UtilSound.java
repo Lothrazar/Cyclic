@@ -27,11 +27,10 @@ public class UtilSound {
     }
   }
   public static void playSoundPlaceBlock(World world, BlockPos pos, Block block) {
-  
     if (block == null) { return; }
     SoundType type = block.getSoundType(block.getDefaultState(), world, pos, null);
     if (type != null && type.getPlaceSound() != null) {
-      UtilSound.playSound(world, pos, type.getPlaceSound(),SoundCategory.BLOCKS);
+      UtilSound.playSound(world, pos, type.getPlaceSound(), SoundCategory.BLOCKS);
     }
   }
   public static void playSound(EntityPlayer player, SoundEvent thunk) {

@@ -22,7 +22,6 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   public void onInit() {
     BlockShears block_shears = new BlockShears();
     BlockRegistry.registerBlock(block_shears, "block_shears");
-    
     if (fragileEnabled) {
       BlockScaffolding block_fragile = new BlockScaffolding();
       BlockRegistry.registerBlock(block_fragile, new ItemBlockScaffolding(block_fragile), BlockScaffolding.name);

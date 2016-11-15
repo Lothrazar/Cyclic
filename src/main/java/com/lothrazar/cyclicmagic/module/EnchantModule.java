@@ -10,7 +10,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 
-public class EnchantModule extends BaseModule  implements IHasConfig{
+public class EnchantModule extends BaseModule implements IHasConfig {
   public static EnchantLaunch launch;
   public static EnchantMagnet magnet;
   public static EnchantVenom venom;

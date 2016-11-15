@@ -26,7 +26,7 @@ import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class WorldGenModule extends BaseEventModule  implements IHasConfig{
+public class WorldGenModule extends BaseEventModule implements IHasConfig {
   public static boolean oceanEnabled;
   public static boolean netherOreEnabled;
   public static boolean endOreEnabled;

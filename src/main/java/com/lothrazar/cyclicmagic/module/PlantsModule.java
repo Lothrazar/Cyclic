@@ -10,7 +10,7 @@ import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.common.config.Configuration;
 
-public class PlantsModule extends BaseModule  implements IHasConfig{
+public class PlantsModule extends BaseModule implements IHasConfig {
   private boolean enableBeans;
   public void onInit() {
     if (enableBeans) {

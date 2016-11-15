@@ -11,7 +11,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class RecipeChangerModule extends BaseModule  implements IHasConfig {
+public class RecipeChangerModule extends BaseModule implements IHasConfig {
   private boolean playerSkull;
   private boolean mushroomBlocks;
   private boolean simpleDispenser;

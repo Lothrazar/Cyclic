@@ -37,7 +37,7 @@ public class ItemRegistry {
         ItemRegistry.registerItem(item, key);
       }
       if (item instanceof IHasConfig) {
-        ConfigRegistry.register((IHasConfig)item);
+        ConfigRegistry.register((IHasConfig) item);
       }
       if (item instanceof IHasRecipe) {
         ((IHasRecipe) item).addRecipe();

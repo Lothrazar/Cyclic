@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.util;
-
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
