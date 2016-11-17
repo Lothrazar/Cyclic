@@ -10,6 +10,19 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class UtilItem {
+  /**
+   * match item, damage, and NBT
+   * 
+   * @param chestItem
+   * @param bagItem
+   * @return
+   */
+  public static boolean canMerge(ItemStack chestItem, ItemStack bagItem) {
+    if (chestItem == null || bagItem == null) { return false; }
+    return (bagItem.getItem().equals(chestItem.getItem())
+        && bagItem.getItemDamage() == chestItem.getItemDamage()
+        && ItemStack.areItemStackTagsEqual(bagItem, chestItem));
+  }
   public static int getMaxDmgFraction(Item tool, int d) {
     return tool.getMaxDamage() - (int) MathHelper.floor_double(tool.getMaxDamage() / d);
   }

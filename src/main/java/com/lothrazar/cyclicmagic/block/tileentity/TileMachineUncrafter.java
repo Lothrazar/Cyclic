@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilInventory;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilUncraft;
 import net.minecraft.init.SoundEvents;
@@ -111,7 +112,6 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
     // change up the timer on both client and server (it gets synced
     // eventually but not constantly)
     this.shiftAllUp();
-    boolean triggerUncraft = false;
     if (this.onlyRunIfPowered() && this.isPowered() == false) {
       //it works ONLY if its powered
       return;
@@ -119,102 +119,58 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
     //else: its powered, OR it doesnt need power so its ok
     ItemStack stack = getStackInSlot(0);
     if (stack == null) { return; }
+    this.spawnParticlesAbove();// its processing
     timer--;
     if (timer <= 0) {
-      timer = TIMER_FULL;
-      triggerUncraft = true;
-    }
-    if (triggerUncraft) {
-      BlockPos posOffsetFacing = this.getCurrentFacingPos();//new BlockPos(x, y, z);
-      TileEntity attached = this.worldObj.getTileEntity(posOffsetFacing);
-      IInventory attachedInv = null;
-      if (attached != null && attached instanceof IInventory) {
-        attachedInv = (IInventory) attached;
-      }
+      timer = TIMER_FULL; //reset the timer and do the thing
       UtilUncraft uncrafter = new UtilUncraft(stack);
       boolean success = false;
       try {
         success = uncrafter.doUncraft();
+        if (success) {
+          if (this.getWorld().isRemote == false) { // drop the items
+            ArrayList<ItemStack> uncrafterOutput = uncrafter.getDrops();
+            sendToInventoryOrWorld(uncrafterOutput);
+            this.decrStackSize(0, uncrafter.getOutsize());
+          }
+          UtilSound.playSound(getWorld(), this.getPos(), SoundEvents.ENTITY_ITEM_BREAK, SoundCategory.BLOCKS);
+        }
+        else {//success = false, so try to dump to inventory first
+          ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
+          toDrop.add(stack);
+          sendToInventoryOrWorld(toDrop);
+          if (this.getWorld().isRemote == false) {
+            this.decrStackSize(0, stack.stackSize);
+          }
+          UtilSound.playSound(this.getWorld(), this.getPos(), SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.BLOCKS);
+        }
+        this.getWorld().markBlockRangeForRenderUpdate(this.getPos(), this.getPos().up());
+        this.markDirty();
       }
       catch (Exception e) {
         ModCyclic.logger.error("Unhandled exception in uncrafting " + e.getStackTrace().toString());
       }
-      if (success) {
-        if (this.worldObj.isRemote == false) { // drop the items
-          ArrayList<ItemStack> uncrafterOutput = uncrafter.getDrops();
-          ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
-          if (attached != null) {
-            toDrop = dumpToIInventory(uncrafterOutput, attachedInv);
-          }
-          else {
-            toDrop = uncrafterOutput;
-          }
-          for (ItemStack s : toDrop) {
-            UtilEntity.dropItemStackInWorld(worldObj, posOffsetFacing, s);
-          }
-          this.decrStackSize(0, uncrafter.getOutsize());
-        }
-        UtilSound.playSound(worldObj, this.getPos(), SoundEvents.ENTITY_ITEM_BREAK, SoundCategory.BLOCKS);
-      }
-      else {//try to dump to inventory first
-        if (attached != null) {
-          ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
-          toDrop.add(stack);
-          toDrop = dumpToIInventory(toDrop, attachedInv);
-          if (toDrop.size() == 1) {//it only had one in it. so if theres one left, it didnt work
-            UtilEntity.dropItemStackInWorld(worldObj, posOffsetFacing, toDrop.get(0));
-          }
-        }
-        else {
-          UtilEntity.dropItemStackInWorld(worldObj, posOffsetFacing, stack);
-        }
-        if (this.worldObj.isRemote == false) {
-          this.decrStackSize(0, stack.stackSize);
-        }
-        UtilSound.playSound(worldObj, this.getPos(), SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.BLOCKS);
-      }
-      this.worldObj.markBlockRangeForRenderUpdate(this.getPos(), this.getPos().up());
-      this.markDirty();
+    } //end of timer go
+  }
+  private void sendToInventoryOrWorld(ArrayList<ItemStack> output) {
+    BlockPos posOffsetFacing = this.getCurrentFacingPos();//new BlockPos(x, y, z);
+    TileEntity attached = this.getWorld().getTileEntity(posOffsetFacing);
+    //ISidedInventory extends IInventory already
+    IInventory attachedInv = null;
+    if (attached != null && attached instanceof IInventory) {
+      attachedInv = (IInventory) attached;
+    }
+    ArrayList<ItemStack> toDrop = null;
+    if (attachedInv != null) {
+      toDrop = UtilInventory.dumpToIInventory(output, attachedInv);
     }
     else {
-      this.spawnParticlesAbove();// its still processing
+      toDrop = output;
     }
-  }
-  public static ArrayList<ItemStack> dumpToIInventory(ArrayList<ItemStack> stacks, IInventory inventory) {
-    //and return the remainder after dumping
-    ArrayList<ItemStack> remaining = new ArrayList<ItemStack>();
-    ItemStack chestStack;
-    for (ItemStack current : stacks) {
-      if (current == null) {
-        continue;
+    if (toDrop != null)
+      for (ItemStack s : toDrop) {
+        UtilEntity.dropItemStackInWorld(this.getWorld(), posOffsetFacing, s);
       }
-      for (int i = 0; i < inventory.getSizeInventory(); i++) {
-        if (current == null) {
-          continue;
-        }
-        chestStack = inventory.getStackInSlot(i);
-        if (chestStack == null) {
-          inventory.setInventorySlotContents(i, current);
-          // and dont add current ot remainder at all ! sweet!
-          current = null;
-        }
-        else if (chestStack.isItemEqual(current)) {
-          int space = chestStack.getMaxStackSize() - chestStack.stackSize;
-          int toDeposit = Math.min(space, current.stackSize);
-          if (toDeposit > 0) {
-            current.stackSize -= toDeposit;
-            chestStack.stackSize += toDeposit;
-            if (current.stackSize == 0) {
-              current = null;
-            }
-          }
-        }
-      } // finished current pass over inventory
-      if (current != null) {
-        remaining.add(current);
-      }
-    }
-    return remaining;
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
