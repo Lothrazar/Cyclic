@@ -67,8 +67,8 @@ public class MobDropChangesModule extends BaseEventModule implements IHasConfig 
     if (endermanDrop && entity instanceof EntityEnderman) {
       EntityEnderman mob = (EntityEnderman) entity;
       IBlockState bs = mob.getHeldBlockState();// mob.func_175489_ck();
-      if (bs != null && bs.getBlock() != null && entity.worldObj.isRemote == false) {
-        UtilItemStack.dropItemStackInWorld(entity.worldObj, mob.getPosition(), bs.getBlock());
+      if (bs != null && bs.getBlock() != null && worldObj.isRemote == false) {
+        UtilItemStack.dropItemStackInWorld(worldObj, mob.getPosition(), bs.getBlock());
       }
     }
     if (entity instanceof EntityZombie && zombieVillagerEmeralds) {

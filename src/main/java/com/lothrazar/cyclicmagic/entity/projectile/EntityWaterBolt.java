@@ -38,11 +38,12 @@ public class EntityWaterBolt extends EntityThrowable {
     if (pos == null) {
       pos = this.getPosition();
     }
+    World world = getEntityWorld();
     if (pos != null) {
       // UtilParticle.spawnParticle(this.worldObj,
       // EnumParticleTypes.WATER_SPLASH, pos);
       if (this.getThrower() instanceof EntityPlayer && mop.sideHit != null && this.getEntityWorld().isRemote == false) {
-        this.worldObj.extinguishFire((EntityPlayer) this.getThrower(), pos, mop.sideHit);
+        world.extinguishFire((EntityPlayer) this.getThrower(), pos, mop.sideHit);
       }
     }
     if (this.dimension != nether) {

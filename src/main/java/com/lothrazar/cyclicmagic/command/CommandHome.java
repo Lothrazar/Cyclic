@@ -15,7 +15,7 @@ public class CommandHome extends BaseCommand implements ICommand {
   public void execute(MinecraftServer server, ICommandSender ic, String[] args) {
     if (ic instanceof EntityPlayer == false) { return; }
     EntityPlayer player = (EntityPlayer) ic;
-    World world = player.worldObj;
+    World world = player.getEntityWorld() ;
     UtilWorld.tryTpPlayerToBed(world, player);
   }
 }

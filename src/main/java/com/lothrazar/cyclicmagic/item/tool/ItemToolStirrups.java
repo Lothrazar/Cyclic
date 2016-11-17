@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemToolStirrups extends BaseTool implements IHasRecipe {
@@ -14,10 +15,11 @@ public class ItemToolStirrups extends BaseTool implements IHasRecipe {
   }
   @Override
   public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
-    if (entity.worldObj.isRemote) { return false; }
+    World world = entity.getEntityWorld();
+    if (world.isRemote) { return false; }
     //TODO: possible blacklist?
     player.startRiding(entity, true);
-    super.onUse(stack, player, player.worldObj, hand);
+    super.onUse(stack, player, world, hand);
     return true;
   }
   @Override

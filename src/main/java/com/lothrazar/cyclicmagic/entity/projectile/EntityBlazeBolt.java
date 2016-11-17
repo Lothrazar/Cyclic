@@ -48,8 +48,9 @@ public class EntityBlazeBolt extends EntityThrowable {
     ArrayList<Block> waterBoth = new ArrayList<Block>();
     waterBoth.add(Blocks.FLOWING_WATER);
     waterBoth.add(Blocks.WATER);
+    World world = this.getEntityWorld();
     if (mop.sideHit != null && this.getThrower() instanceof EntityPlayer) {
-      this.worldObj.extinguishFire((EntityPlayer) this.getThrower(), pos, mop.sideHit);
+      world.extinguishFire((EntityPlayer) this.getThrower(), pos, mop.sideHit);
       offset = mop.getBlockPos().offset(mop.sideHit);
     }
     // Block hitBlock = this.worldObj.getBlockState(pos).getBlock();
@@ -57,47 +58,47 @@ public class EntityBlazeBolt extends EntityThrowable {
       offset = pos.offset(mop.sideHit);
     ArrayList<BlockPos> toSetFire = new ArrayList<BlockPos>();
     if (this.isInWater() == false) {
-      if (this.worldObj.isAirBlock(pos)) {
+      if (world.isAirBlock(pos)) {
         toSetFire.add(pos);
         // turn flowing water into solid
-        this.worldObj.setBlockState(pos, Blocks.FIRE.getDefaultState());
+        world.setBlockState(pos, Blocks.FIRE.getDefaultState());
       }
-      if (this.worldObj.isAirBlock(pos.offset(EnumFacing.EAST))) {
+      if (world.isAirBlock(pos.offset(EnumFacing.EAST))) {
         toSetFire.add(pos.offset(EnumFacing.EAST));
       }
-      if (this.worldObj.isAirBlock(pos.offset(EnumFacing.NORTH))) {
+      if (world.isAirBlock(pos.offset(EnumFacing.NORTH))) {
         toSetFire.add(pos.offset(EnumFacing.NORTH));
       }
-      if (this.worldObj.isAirBlock(pos.offset(EnumFacing.SOUTH))) {
+      if (world.isAirBlock(pos.offset(EnumFacing.SOUTH))) {
         toSetFire.add(pos.offset(EnumFacing.SOUTH));
       }
-      if (this.worldObj.isAirBlock(pos.offset(EnumFacing.WEST))) {
+      if (world.isAirBlock(pos.offset(EnumFacing.WEST))) {
         toSetFire.add(pos.offset(EnumFacing.WEST));
       }
-      if (this.worldObj.isAirBlock(pos.offset(EnumFacing.UP))) {
+      if (world.isAirBlock(pos.offset(EnumFacing.UP))) {
         toSetFire.add(pos.offset(EnumFacing.UP));
       }
-      if (offset != null && this.worldObj.isAirBlock(offset)) {
+      if (offset != null && world.isAirBlock(offset)) {
         toSetFire.add(offset);
-        if (this.worldObj.isAirBlock(offset.offset(EnumFacing.EAST))) {
+        if (world.isAirBlock(offset.offset(EnumFacing.EAST))) {
           toSetFire.add(offset.offset(EnumFacing.EAST));
         }
-        if (this.worldObj.isAirBlock(offset.offset(EnumFacing.NORTH))) {
+        if (world.isAirBlock(offset.offset(EnumFacing.NORTH))) {
           toSetFire.add(offset.offset(EnumFacing.NORTH));
         }
-        if (this.worldObj.isAirBlock(offset.offset(EnumFacing.SOUTH))) {
+        if (world.isAirBlock(offset.offset(EnumFacing.SOUTH))) {
           toSetFire.add(offset.offset(EnumFacing.SOUTH));
         }
-        if (this.worldObj.isAirBlock(offset.offset(EnumFacing.WEST))) {
+        if (world.isAirBlock(offset.offset(EnumFacing.WEST))) {
           toSetFire.add(offset.offset(EnumFacing.WEST));
         }
-        if (this.worldObj.isAirBlock(offset.offset(EnumFacing.UP))) {
+        if (world.isAirBlock(offset.offset(EnumFacing.UP))) {
           toSetFire.add(offset.offset(EnumFacing.UP));
         }
       }
       for (BlockPos p : toSetFire) {
-        this.worldObj.setBlockState(p, Blocks.FIRE.getDefaultState());
-        this.worldObj.spawnParticle(EnumParticleTypes.FLAME, p.up().getX(), p.up().getY(), p.up().getZ(), 0, 0, 0);
+        world.setBlockState(p, Blocks.FIRE.getDefaultState());
+        world.spawnParticle(EnumParticleTypes.FLAME, p.up().getX(), p.up().getY(), p.up().getZ(), 0, 0, 0);
       }
     }
     this.setDead();

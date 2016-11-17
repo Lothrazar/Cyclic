@@ -150,8 +150,8 @@ public class TileMachinePlacer extends TileEntityBaseMachineInvo implements ITil
     }
     if (trigger) {
       Block stuff = Block.getBlockFromItem(stack.getItem());
-      if (stuff != null && worldObj.isRemote == false) {
-        if (UtilPlaceBlocks.placeStateSafe(worldObj, null, pos.offset(this.getCurrentFacing()),
+      if (stuff != null && getWorld().isRemote == false) {
+        if (UtilPlaceBlocks.placeStateSafe(getWorld(), null, pos.offset(this.getCurrentFacing()),
             UtilItemStack.getStateFromMeta(stuff, stack.getMetadata()))) {// stuff.getStateFromMeta(stack.getMetadata()))) {
           this.decrStackSize(0, 1);
         }

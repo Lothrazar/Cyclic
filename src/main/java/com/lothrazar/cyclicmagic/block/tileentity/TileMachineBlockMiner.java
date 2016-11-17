@@ -98,9 +98,10 @@ public class TileMachineBlockMiner extends TileEntityBaseMachineInvo implements 
     if (!(this.onlyRunIfPowered() && this.isPowered() == false)) {
       this.spawnParticlesAbove();
     }
-    if (worldObj.isRemote == false && worldObj instanceof WorldServer && (WorldServer) worldObj != null) {
+    World world = this.getWorld();
+    if (world.isRemote == false && world instanceof WorldServer && (WorldServer) world != null) {
       if (fakePlayer == null) {
-        fakePlayer = UtilFakePlayer.initFakePlayer((WorldServer) worldObj);
+        fakePlayer = UtilFakePlayer.initFakePlayer((WorldServer) world);
         if (fakePlayer == null) {
           ModCyclic.logger.warn("Warning: Fake player failed to init ");
           return;
@@ -109,13 +110,13 @@ public class TileMachineBlockMiner extends TileEntityBaseMachineInvo implements 
       }
       if (uuid == null) {
         uuid = UUID.randomUUID();
-        IBlockState state = worldObj.getBlockState(this.pos);
-        worldObj.notifyBlockUpdate(pos, state, state, 3);
+        IBlockState state = world.getBlockState(this.pos);
+        world.notifyBlockUpdate(pos, state, state, 3);
       }
       if (fakePlayer.get().getHeldItemMainhand() == null) {
         equipItem();
       }
-      BlockMiner.MinerType minerType = ((BlockMiner) worldObj.getBlockState(pos).getBlock()).getMinerType();
+      BlockMiner.MinerType minerType = ((BlockMiner) world.getBlockState(pos).getBlock()).getMinerType();
       BlockPos start = pos.offset(this.getCurrentFacing());
       if (targetPos == null) {
         targetPos = start; //not sure if this is needed
@@ -123,7 +124,7 @@ public class TileMachineBlockMiner extends TileEntityBaseMachineInvo implements 
       if (!(this.onlyRunIfPowered() && this.isPowered() == false)) {
         if (isCurrentlyMining == false) { //we can mine but are not currently
           this.updateTargetPos(start, minerType);
-          if (!worldObj.isAirBlock(targetPos)) { //we have a valid target
+          if (!world.isAirBlock(targetPos)) { //we have a valid target
             isCurrentlyMining = true;
             curBlockDamage = 0;
           }
@@ -141,8 +142,8 @@ public class TileMachineBlockMiner extends TileEntityBaseMachineInvo implements 
         }
       }
       if (isCurrentlyMining) {
-        IBlockState targetState = worldObj.getBlockState(targetPos);
-        curBlockDamage += UtilItemStack.getPlayerRelativeBlockHardness(targetState.getBlock(), targetState, fakePlayer.get(), worldObj, targetPos);
+        IBlockState targetState = world.getBlockState(targetPos);
+        curBlockDamage += UtilItemStack.getPlayerRelativeBlockHardness(targetState.getBlock(), targetState, fakePlayer.get(), world, targetPos);
         if (curBlockDamage >= 1.0f) {
           isCurrentlyMining = false;
           resetProgress(targetPos);
@@ -151,7 +152,7 @@ public class TileMachineBlockMiner extends TileEntityBaseMachineInvo implements 
           }
         }
         else {
-          worldObj.sendBlockBreakProgress(uuid.hashCode(), targetPos, (int) (curBlockDamage * 10.0F) - 1);
+          world.sendBlockBreakProgress(uuid.hashCode(), targetPos, (int) (curBlockDamage * 10.0F) - 1);
         }
       }
     }
@@ -171,7 +172,7 @@ public class TileMachineBlockMiner extends TileEntityBaseMachineInvo implements 
     EnumFacing facing = this.getCurrentFacing();
     BlockPos center = start.offset(facing);//move one more over so we are in the exact center of a 3x3x3 area
     //else we do a 3x3 
-    int rollFull = worldObj.rand.nextInt(9 * 3);
+    int rollFull = getWorld().rand.nextInt(9 * 3);
     int rollHeight = rollFull / 9;
     int rollDice = rollFull % 9;//worldObj.rand.nextInt(9); //TODO: dont have it switch while mining and get this working
     //then do the area
@@ -253,7 +254,7 @@ public class TileMachineBlockMiner extends TileEntityBaseMachineInvo implements 
   }
   private void resetProgress(BlockPos targetPos) {
     if (uuid != null) {
-      worldObj.sendBlockBreakProgress(uuid.hashCode(), targetPos, -1);
+      getWorld().sendBlockBreakProgress(uuid.hashCode(), targetPos, -1);
       curBlockDamage = 0;
     }
   }

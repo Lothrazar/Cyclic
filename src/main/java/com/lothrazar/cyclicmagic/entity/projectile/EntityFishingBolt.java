@@ -35,18 +35,19 @@ public class EntityFishingBolt extends EntityThrowable {
   protected void onImpact(RayTraceResult mop) {
     BlockPos pos = mop.getBlockPos();
     if (pos == null) { return; }
+    World world = getEntityWorld();
     if (this.isInWater()) {
       UtilParticle.spawnParticle(this.worldObj, EnumParticleTypes.WATER_BUBBLE, pos);
-      EntityItem ei = new EntityItem(worldObj, pos.getX(), pos.getY(), pos.getZ(), getRandomFish());
-      if (worldObj.isRemote == false) {
-        worldObj.spawnEntityInWorld(ei);
+      EntityItem ei = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), getRandomFish());
+      if (world.isRemote == false) {
+        world.spawnEntityInWorld(ei);
       }
-      UtilSound.playSound(worldObj, pos, SoundEvents.ENTITY_PLAYER_SPLASH, SoundCategory.BLOCKS);
+      UtilSound.playSound(world, pos, SoundEvents.ENTITY_PLAYER_SPLASH, SoundCategory.BLOCKS);
       this.setDead();
     }
     else {
-      if (worldObj.isRemote == false) {
-        worldObj.spawnEntityInWorld(new EntityItem(worldObj, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(renderSnowball)));
+      if (world.isRemote == false) {
+        world.spawnEntityInWorld(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(renderSnowball)));
         this.setDead();
       }
     }

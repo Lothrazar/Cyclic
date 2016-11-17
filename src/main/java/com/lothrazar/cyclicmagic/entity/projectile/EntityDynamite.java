@@ -29,7 +29,7 @@ public class EntityDynamite extends EntityThrowable {
   }
   @Override
   protected void onImpact(RayTraceResult mop) {
-    this.worldObj.createExplosion(this, this.posX, this.posY + (double) (this.height / 2.0F), this.posZ, explosionLevel, true);
+    this.getEntityWorld().createExplosion(this, this.posX, this.posY + (double) (this.height / 2.0F), this.posZ, explosionLevel, true);
     this.setDead();
   }
 }
