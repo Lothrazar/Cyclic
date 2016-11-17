@@ -11,6 +11,7 @@ import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProp
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -41,7 +42,7 @@ public class ItemFoodHeart extends ItemFood implements IHasRecipe, IHasConfig {
     IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(player);
     if (UtilEntity.getMaxHealth(player) / 2 >= maxHearts) {
       UtilSound.playSound(player, SoundRegistry.buzzp);
-      UtilEntity.dropItemStackInWorld(world, player.getPosition(), this);
+      UtilItemStack.dropItemStackInWorld(world, player.getPosition(), this);
       return;
     }
     //one heart is 2 health points (half heart = 1 health)

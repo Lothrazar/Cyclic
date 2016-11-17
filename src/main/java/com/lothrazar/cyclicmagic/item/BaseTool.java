@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.item;
-import com.lothrazar.cyclicmagic.util.UtilItem;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
@@ -13,6 +13,6 @@ public class BaseTool extends BaseItem {
   }
   public void onUse(ItemStack stack, EntityPlayer player, World world, EnumHand hand) {
     player.swingArm(hand);
-    UtilItem.damageItem(player, stack);
+    UtilItemStack.damageItem(player, stack);
   }
 }

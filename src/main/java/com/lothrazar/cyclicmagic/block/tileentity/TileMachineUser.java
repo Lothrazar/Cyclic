@@ -12,6 +12,7 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
 
@@ -48,9 +49,10 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
     if (!(this.onlyRunIfPowered() && this.isPowered() == false)) {
       this.spawnParticlesAbove();
     }
-    if (worldObj instanceof WorldServer) {
+    World world = getWorld();
+    if (world instanceof WorldServer) {
       if (fakePlayer == null) {
-        fakePlayer = UtilFakePlayer.initFakePlayer((WorldServer) worldObj);
+        fakePlayer = UtilFakePlayer.initFakePlayer((WorldServer) world);
         if (fakePlayer == null) {
           ModCyclic.logger.warn("Warning: Fake player failed to init ");
           return;
@@ -58,8 +60,8 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
       }
       if (uuid == null) {
         uuid = UUID.randomUUID();
-        IBlockState state = worldObj.getBlockState(this.pos);
-        worldObj.notifyBlockUpdate(pos, state, state, 3);
+        IBlockState state = world.getBlockState(this.pos);
+        world.notifyBlockUpdate(pos, state, state, 3);
       }
       ItemStack maybeTool = inv[toolSlot];
       if (maybeTool == null) {
@@ -75,7 +77,7 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
         //else already equipped
       }
       BlockPos targetPos = pos.offset(this.getCurrentFacing()); //not sure if this is needed
-      if (worldObj.isAirBlock(targetPos)) {
+      if (world.isAirBlock(targetPos)) {
         targetPos = targetPos.down();
       }
       ItemStack stack = getStackInSlot(0);
@@ -86,7 +88,7 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
           timer = 0;
         }
         if (timer == 0) {
-          fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), worldObj, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
+          fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
           timer = TIMER_FULL;
         }
       }

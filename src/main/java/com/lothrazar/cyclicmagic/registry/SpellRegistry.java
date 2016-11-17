@@ -15,47 +15,51 @@ public class SpellRegistry {
   private static Map<Integer, ISpell> hashbook;
   public static boolean doParticles;
   public static class Spells {
-    // on purpose, not all spells are in here. only ones that needed to be
-    // exposed
-    public static SpellRangeRotate rotate;
-    public static SpellRangePush push;
-    public static SpellRangePull pull;
+
     private static SpellInventory inventory;
     private static SpellRangeBuild reachdown;
     private static SpellRangeBuild reachup;
     private static SpellRangeBuild reachplace;
+    private static SpellRangeBuild reachleft ;
+    private static  SpellRangeBuild reachright ;
   }
   public static void register(ItemCyclicWand wand) {
     hashbook = new HashMap<Integer, ISpell>();
-    int spellId = -1;// the smallest spell gets id zero
-    Spells.inventory = new SpellInventory(++spellId, "inventory");
+ 
+    /*
+ SPELL REG 0 Inventory
+ SPELL REG 1 Rotation
+ SPELL REG 2 Push Block
+ SPELL REG 3 Pull Block
+ SPELL REG 4 Build Up
+ SPELL REG 5 Place Block
+ SPELL REG 6 Build Down
+ SPELL REG 7 Build Left
+ SPELL REG 8 Build Right*/
+    Spells.inventory = new SpellInventory(0, "inventory");
     registerSpell(Spells.inventory);
-    Spells.rotate = new SpellRangeRotate(++spellId, "rotate");
-    registerSpell(Spells.rotate);
-    Spells.push = new SpellRangePush(++spellId, "push");
-    registerSpell(Spells.push);
-    Spells.pull = new SpellRangePull(++spellId, "pull");
-    registerSpell(Spells.pull);
-    Spells.reachup = new SpellRangeBuild(++spellId, "reachup", SpellRangeBuild.PlaceType.UP);
+
+    Spells.reachup = new SpellRangeBuild(4, "reachup", SpellRangeBuild.PlaceType.UP);
     registerSpell(Spells.reachup);
-    Spells.reachplace = new SpellRangeBuild(++spellId, "reachplace", SpellRangeBuild.PlaceType.PLACE);
+    Spells.reachplace = new SpellRangeBuild(5, "reachplace", SpellRangeBuild.PlaceType.PLACE);
     registerSpell(Spells.reachplace);
-    Spells.reachdown = new SpellRangeBuild(++spellId, "reachdown", SpellRangeBuild.PlaceType.DOWN);
+    Spells.reachdown = new SpellRangeBuild(6, "reachdown", SpellRangeBuild.PlaceType.DOWN);
     registerSpell(Spells.reachdown);
-    SpellRangeBuild reachleft = new SpellRangeBuild(++spellId, "reachleft", SpellRangeBuild.PlaceType.LEFT);
-    registerSpell(reachleft);
-    SpellRangeBuild reachright = new SpellRangeBuild(++spellId, "reachright", SpellRangeBuild.PlaceType.RIGHT);
-    registerSpell(reachright);
+    Spells.reachleft = new SpellRangeBuild(7, "reachleft", SpellRangeBuild.PlaceType.LEFT);
+    registerSpell(Spells.reachleft);
+    Spells.reachright = new SpellRangeBuild(8, "reachright", SpellRangeBuild.PlaceType.RIGHT);
+    registerSpell(Spells.reachright);
     ArrayList<ISpell> spellbookBuild = new ArrayList<ISpell>();
     spellbookBuild.add(Spells.inventory);
     spellbookBuild.add(Spells.reachup);
     spellbookBuild.add(Spells.reachplace);
     spellbookBuild.add(Spells.reachdown);
-    spellbookBuild.add(reachleft);
-    spellbookBuild.add(reachright);
+    spellbookBuild.add(Spells.reachleft);
+    spellbookBuild.add(Spells.reachright);
     wand.setSpells(spellbookBuild);
   }
   private static void registerSpell(ISpell spell) {
+    System.out.println("SPELL REG "+spell.getID()+" "+spell.getName());
     hashbook.put(spell.getID(), spell);
   }
   public static boolean spellsEnabled(EntityPlayer player) {

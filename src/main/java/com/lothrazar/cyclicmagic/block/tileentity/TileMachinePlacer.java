@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
-import com.lothrazar.cyclicmagic.util.UtilItem;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
@@ -150,9 +150,9 @@ public class TileMachinePlacer extends TileEntityBaseMachineInvo implements ITil
     }
     if (trigger) {
       Block stuff = Block.getBlockFromItem(stack.getItem());
-      if (stuff != null && worldObj.isRemote == false) {
-        if (UtilPlaceBlocks.placeStateSafe(worldObj, null, pos.offset(this.getCurrentFacing()),
-            UtilItem.getStateFromMeta(stuff, stack.getMetadata()))) {// stuff.getStateFromMeta(stack.getMetadata()))) {
+      if (stuff != null && getWorld().isRemote == false) {
+        if (UtilPlaceBlocks.placeStateSafe(getWorld(), null, pos.offset(this.getCurrentFacing()),
+            UtilItemStack.getStateFromMeta(stuff, stack.getMetadata()))) {// stuff.getStateFromMeta(stack.getMetadata()))) {
           this.decrStackSize(0, 1);
         }
       }

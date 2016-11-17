@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.entity.projectile;
 import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityThrowable;
@@ -25,9 +25,7 @@ public class EntityTorchBolt extends EntityThrowable {
   }
   @Override
   protected void onImpact(RayTraceResult mop) {
-    if(this.isDead){
-      return;
-    }
+    if (this.isDead) { return; }
     if (mop.entityHit != null) {
       //zero damage means just knockback
       mop.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 0);
@@ -38,23 +36,21 @@ public class EntityTorchBolt extends EntityThrowable {
     if (sideHit != null) {
       offset = pos.offset(sideHit);
     }
-    if(offset == null ){return;}
+    if (offset == null) { return; }
     World world = this.getEntityWorld();
     boolean isSideSolid = world.isSideSolid(mop.getBlockPos(), sideHit);
     boolean isValidBlockstate = BlockTorch.FACING.getAllowedValues().contains(sideHit);
-    boolean isValidLocation = 
-            world.isAirBlock(offset) || 
-            world.getBlockState(offset) == null || 
-            world.getBlockState(offset).getBlock() == null || 
-            world.getBlockState(offset).getBlock().isReplaceable(world, offset);
-    
+    boolean isValidLocation = world.isAirBlock(offset) ||
+        world.getBlockState(offset) == null ||
+        world.getBlockState(offset).getBlock() == null ||
+        world.getBlockState(offset).getBlock().isReplaceable(world, offset);
     if (isValidLocation && isValidBlockstate && isSideSolid) {
-      System.out.println("SET TORCH AT POS "+UtilChat.blockPosToString(offset));
+      System.out.println("SET TORCH AT POS " + UtilChat.blockPosToString(offset));
       world.setBlockState(offset,
           Blocks.TORCH.getDefaultState().withProperty(BlockTorch.FACING, sideHit));
     }
     else {
-      UtilEntity.dropItemStackInWorld(world, this.getPosition(), renderSnowball);
+      UtilItemStack.dropItemStackInWorld(world, this.getPosition(), renderSnowball);
     }
     this.setDead();
   }

@@ -144,7 +144,7 @@ public class UtilHarvestCrops {
       if (conf.doesMelonBlocks) {
         doBreak = false;//not the standard break - custom rules to mimic silktouch
         world.destroyBlock(posCurrent, false);
-        UtilEntity.dropItemStackInWorld(world, posCurrent, Blocks.MELON_BLOCK);
+        UtilItemStack.dropItemStackInWorld(world, posCurrent, Blocks.MELON_BLOCK);
       }
     }
     else if (blockCheck == Blocks.RED_FLOWER || blockCheck == Blocks.YELLOW_FLOWER) {
@@ -213,7 +213,7 @@ public class UtilHarvestCrops {
         }
         //now we can upgrade this to also drop in front wooo!
         for (ItemStack drop : drops) {
-          UtilEntity.dropItemStackInWorld(world, posCurrent, drop);
+          UtilItemStack.dropItemStackInWorld(world, posCurrent, drop);
           //           dropItem(drop, world, blockPos);
         }
       }

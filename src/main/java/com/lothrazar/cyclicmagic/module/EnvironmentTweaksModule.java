@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.util.Const;
-import com.lothrazar.cyclicmagic.util.UtilItem;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
@@ -11,6 +11,7 @@ import net.minecraft.entity.monster.SkeletonType;
 import net.minecraft.entity.monster.ZombieType;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.item.ItemExpireEvent;
@@ -39,6 +40,7 @@ public class EnvironmentTweaksModule extends BaseEventModule implements IHasConf
       EntityItem entityItem = event.getEntityItem();
       Entity entity = event.getEntity();
       ItemStack is = entityItem.getEntityItem();
+      World world = entity.getEntityWorld();
       if (is == null) { return; } // has not happened in the wild, yet
       Block blockhere = entity.worldObj.getBlockState(entityItem.getPosition()).getBlock();
       Block blockdown = entity.worldObj.getBlockState(entityItem.getPosition().down()).getBlock();
@@ -46,11 +48,11 @@ public class EnvironmentTweaksModule extends BaseEventModule implements IHasConf
         // plant the sapling, replacing the air and on top of dirt/plantable
         //BlockSapling.TYPE
         if (Block.getBlockFromItem(is.getItem()) == Blocks.SAPLING)
-          entity.worldObj.setBlockState(entityItem.getPosition(), UtilItem.getStateFromMeta(Blocks.SAPLING, is.getItemDamage()));
+          world.setBlockState(entityItem.getPosition(), UtilItemStack.getStateFromMeta(Blocks.SAPLING, is.getItemDamage()));
         else if (Block.getBlockFromItem(is.getItem()) == Blocks.RED_MUSHROOM)
-          entity.worldObj.setBlockState(entityItem.getPosition(), Blocks.RED_MUSHROOM.getDefaultState());
+          world.setBlockState(entityItem.getPosition(), Blocks.RED_MUSHROOM.getDefaultState());
         else if (Block.getBlockFromItem(is.getItem()) == Blocks.BROWN_MUSHROOM)
-          entity.worldObj.setBlockState(entityItem.getPosition(), Blocks.BROWN_MUSHROOM.getDefaultState());
+          world.setBlockState(entityItem.getPosition(), Blocks.BROWN_MUSHROOM.getDefaultState());
       }
     }
   }

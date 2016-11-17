@@ -31,7 +31,7 @@ public class EntityDungeonEye extends EntityThrowable {
   @Override
   public void onUpdate() {
     super.onUpdate();
-    if (!this.worldObj.isRemote) {
+    if (!this.getEntityWorld().isRemote) {
       float mHoriz = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
       double distX = this.targetX - this.posX;
       double distY = this.targetY - this.posY;
@@ -69,7 +69,7 @@ public class EntityDungeonEye extends EntityThrowable {
     }
     float f3 = 0.25F;
     for (int i = 0; i < particleCount; ++i) {
-      this.worldObj.spawnParticle(EnumParticleTypes.PORTAL, this.posX - this.motionX * (double) f3 + this.rand.nextDouble() * 0.6D - 0.3D, this.posY - this.motionY * (double) f3 - 0.5D, this.posZ - this.motionZ * (double) f3 + this.rand.nextDouble() * 0.6D - 0.3D, this.motionX, this.motionY, this.motionZ, new int[0]);
+      this.getEntityWorld().spawnParticle(EnumParticleTypes.PORTAL, this.posX - this.motionX * (double) f3 + this.rand.nextDouble() * 0.6D - 0.3D, this.posY - this.motionY * (double) f3 - 0.5D, this.posZ - this.motionZ * (double) f3 + this.rand.nextDouble() * 0.6D - 0.3D, this.motionX, this.motionY, this.motionZ, new int[0]);
     }
   }
   private final static int particleCount = 22;

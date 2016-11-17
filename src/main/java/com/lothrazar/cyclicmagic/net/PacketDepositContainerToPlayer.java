@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.net;
-import com.lothrazar.cyclicmagic.util.UtilInventory;
-import com.lothrazar.cyclicmagic.util.UtilInventorySort;
+import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer;
+import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -28,10 +28,10 @@ public class PacketDepositContainerToPlayer implements IMessage, IMessageHandler
   @Override
   public IMessage onMessage(PacketDepositContainerToPlayer message, MessageContext ctx) {
     EntityPlayer p = ctx.getServerHandler().playerEntity;
-    if (UtilInventory.hasValidOpenContainer(p)) {
-      IInventory openInventory = UtilInventory.getOpenContainerInventory(p);
-      UtilInventorySort.sortFromInventoryToPlayer(p.worldObj, openInventory, p, false);
-      UtilInventorySort.dumpFromIInventoryToPlayer(p.worldObj, openInventory, p);
+    if (UtilPlayer.hasValidOpenContainer(p)) {
+      IInventory openInventory = UtilPlayer.getOpenContainerInventory(p);
+      UtilInventoryTransfer.sortFromInventoryToPlayer(p.worldObj, openInventory, p, false);
+      UtilInventoryTransfer.dumpFromIInventoryToPlayer(p.worldObj, openInventory, p);
     }
     return null;
   }

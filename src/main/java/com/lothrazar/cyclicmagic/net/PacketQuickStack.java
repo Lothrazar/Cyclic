@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.net;
-import com.lothrazar.cyclicmagic.util.UtilInventory;
-import com.lothrazar.cyclicmagic.util.UtilInventorySort;
+import com.lothrazar.cyclicmagic.util.UtilPlayer;
+import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -28,9 +28,9 @@ public class PacketQuickStack implements IMessage, IMessageHandler<PacketQuickSt
   @Override
   public IMessage onMessage(PacketQuickStack message, MessageContext ctx) {
     EntityPlayer p = ctx.getServerHandler().playerEntity;
-    if (UtilInventory.hasValidOpenContainer(p)) {
-      IInventory openInventory = UtilInventory.getOpenContainerInventory(p);
-      UtilInventorySort.sortFromPlayerToInventory(p.worldObj, openInventory, p);
+    if (UtilPlayer.hasValidOpenContainer(p)) {
+      IInventory openInventory = UtilPlayer.getOpenContainerInventory(p);
+      UtilInventoryTransfer.sortFromPlayerToInventory(p.worldObj, openInventory, p);
     }
     return null;
   }

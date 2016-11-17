@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.enchantment;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
-import com.lothrazar.cyclicmagic.util.UtilItem;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -79,7 +79,7 @@ public class EnchantLaunch extends Enchantment {
       UtilEntity.launch(p, rotationPitch, power);
       UtilParticle.spawnParticle(p.worldObj, EnumParticleTypes.CRIT_MAGIC, p.getPosition());
       UtilSound.playSound(p, p.getPosition(), SoundRegistry.bwoaaap, SoundCategory.PLAYERS, UtilSound.VOLUME / 8);
-      UtilItem.damageItem(p, feet);
+      UtilItemStack.damageItem(p, feet);
       uses++;
       if (uses >= level) { // level is maxuses
         //now block useage for a while

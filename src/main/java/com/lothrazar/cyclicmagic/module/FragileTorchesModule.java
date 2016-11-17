@@ -6,6 +6,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -16,10 +17,11 @@ public class FragileTorchesModule extends BaseEventModule implements IHasConfig 
   public void onEntityUpdate(LivingUpdateEvent event) {
     if (fragileTorches) {
       Entity ent = event.getEntity();
+      World world = ent.getEntityWorld();
       if (ent instanceof EntityLiving == false) { return; }
       EntityLivingBase living = (EntityLivingBase) event.getEntity();
       if (living == null) { return; }
-      if (living.worldObj.getBlockState(living.getPosition()).getBlock() == Blocks.TORCH) {
+      if (world.getBlockState(living.getPosition()).getBlock() == Blocks.TORCH) {
         float oddsWillBreak = 0.01F;
         boolean playerCancelled = false;
         if (living instanceof EntityPlayer) {
@@ -31,8 +33,8 @@ public class FragileTorchesModule extends BaseEventModule implements IHasConfig 
         }
         if (playerCancelled == false // if its a player, then the player is not
             // sneaking
-            && living.worldObj.rand.nextDouble() < oddsWillBreak && living.worldObj.isRemote == false) {
-          living.worldObj.destroyBlock(living.getPosition(), true);
+            && world.rand.nextDouble() < oddsWillBreak && world.isRemote == false) {
+          world.destroyBlock(living.getPosition(), true);
         }
       }
     }

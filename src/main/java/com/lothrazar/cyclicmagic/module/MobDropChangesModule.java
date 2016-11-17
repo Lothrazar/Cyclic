@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.module;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.util.Const;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -45,7 +45,7 @@ public class MobDropChangesModule extends BaseEventModule implements IHasConfig 
           p.getHeldItem(event.getHand()).getItem() == Items.SHEARS) {
         int meta = s.getFleeceColor().getMetadata();
         int rand = MathHelper.getRandomIntegerInRange(event.getWorld().rand, 1, 6);
-        UtilEntity.dropItemStackInWorld(event.getWorld(), event.getPos(), new ItemStack(Blocks.WOOL, rand, meta));
+        UtilItemStack.dropItemStackInWorld(event.getWorld(), event.getPos(), new ItemStack(Blocks.WOOL, rand, meta));
       }
     }
   }
@@ -60,15 +60,15 @@ public class MobDropChangesModule extends BaseEventModule implements IHasConfig 
         // item stack NBT needs the name enchanted onto it
         if (entity.worldObj.isRemote == false) {
           ItemStack nameTag = UtilNBT.buildEnchantedNametag(entity.getCustomNameTag());
-          UtilEntity.dropItemStackInWorld(worldObj, entity.getPosition(), nameTag);
+          UtilItemStack.dropItemStackInWorld(worldObj, entity.getPosition(), nameTag);
         }
       }
     }
     if (endermanDrop && entity instanceof EntityEnderman) {
       EntityEnderman mob = (EntityEnderman) entity;
       IBlockState bs = mob.getHeldBlockState();// mob.func_175489_ck();
-      if (bs != null && bs.getBlock() != null && entity.worldObj.isRemote == false) {
-        UtilEntity.dropItemStackInWorld(entity.worldObj, mob.getPosition(), bs.getBlock());
+      if (bs != null && bs.getBlock() != null && worldObj.isRemote == false) {
+        UtilItemStack.dropItemStackInWorld(worldObj, mob.getPosition(), bs.getBlock());
       }
     }
     if (entity instanceof EntityZombie && zombieVillagerEmeralds) {
@@ -79,19 +79,19 @@ public class MobDropChangesModule extends BaseEventModule implements IHasConfig 
     }
     if (extraLeather && entity instanceof EntityCow) {
       int rand = MathHelper.getRandomIntegerInRange(worldObj.rand, 1, 8);
-      UtilEntity.dropItemStackInWorld(worldObj, pos, new ItemStack(Items.LEATHER, rand));
+      UtilItemStack.dropItemStackInWorld(worldObj, pos, new ItemStack(Items.LEATHER, rand));
     }
     if (bonusPork && entity instanceof EntityPig) {
       int rand = MathHelper.getRandomIntegerInRange(worldObj.rand, 1, 8);
-      UtilEntity.dropItemStackInWorld(worldObj, pos, new ItemStack(Items.PORKCHOP, rand));
+      UtilItemStack.dropItemStackInWorld(worldObj, pos, new ItemStack(Items.PORKCHOP, rand));
     }
     if (bonusGolemIron && entity instanceof EntityIronGolem) {
       //vanilla drops 3-5 ingots
       int rand = MathHelper.getRandomIntegerInRange(worldObj.rand, 1, 18);
-      UtilEntity.dropItemStackInWorld(worldObj, pos, new ItemStack(Items.IRON_INGOT, rand));
+      UtilItemStack.dropItemStackInWorld(worldObj, pos, new ItemStack(Items.IRON_INGOT, rand));
       if (worldObj.rand.nextDouble() < 0.10) {
         //10% chance for extra iron block
-        UtilEntity.dropItemStackInWorld(worldObj, pos, new ItemStack(Blocks.IRON_BLOCK, 1));
+        UtilItemStack.dropItemStackInWorld(worldObj, pos, new ItemStack(Blocks.IRON_BLOCK, 1));
       }
     }
     if (zombieDropsNerfed) {

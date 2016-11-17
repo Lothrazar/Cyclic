@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.entity.projectile;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.module.MobDropChangesModule;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -31,6 +31,7 @@ public class EntityShearingBolt extends EntityThrowable {
   }
   @Override
   protected void onImpact(RayTraceResult mop) {
+    World world = getEntityWorld();
     if (mop.entityHit != null && mop.entityHit instanceof EntitySheep) {
       try {
         EntitySheep sheep = (EntitySheep) mop.entityHit;
@@ -38,25 +39,25 @@ public class EntityShearingBolt extends EntityThrowable {
         //if this sheep is not sheared, AND ->  either an adult, or child that passes config
         if (sheep.getSheared() == false && sheep.getFleeceColor() != null &&
             (sheep.isChild() == false || (EntityShearingBolt.doesShearChild == true && sheep.isChild() == true))) {
-          if (worldObj.isRemote == false) {
+          if (world.isRemote == false) {
             sheep.setSheared(true);
-            int i = 1 + worldObj.rand.nextInt(3);
+            int i = 1 + world.rand.nextInt(3);
             if (MobDropChangesModule.sheepShearBuffed) {
-              i += MathHelper.getRandomIntegerInRange(worldObj.rand, 1, 6);
+              i += MathHelper.getRandomIntegerInRange(world.rand, 1, 6);
             }
             for (int j = 0; j < i; ++j) {
               EntityItem entityitem = sheep.entityDropItem(new ItemStack(Blocks.WOOL, 1, sheep.getFleeceColor().getMetadata()), 1.0F);
-              entityitem.motionY += (double) (worldObj.rand.nextFloat() * 0.05F);
-              entityitem.motionX += (double) ((worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.1F);
-              entityitem.motionZ += (double) ((worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.1F);
+              entityitem.motionY += (double) (world.rand.nextFloat() * 0.05F);
+              entityitem.motionX += (double) ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.1F);
+              entityitem.motionZ += (double) ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.1F);
             }
           }
-          UtilSound.playSound(worldObj, sheep.getPosition(), SoundEvents.ENTITY_SHEEP_SHEAR, SoundCategory.NEUTRAL);
+          UtilSound.playSound(world, sheep.getPosition(), SoundEvents.ENTITY_SHEEP_SHEAR, SoundCategory.NEUTRAL);
         }
         else {
           BlockPos posToDrop = getPosToDrop(mop);
           if (posToDrop != null)
-            UtilEntity.dropItemStackInWorld(worldObj, posToDrop, renderSnowball);
+            UtilItemStack.dropItemStackInWorld(world, posToDrop, renderSnowball);
         }
       }
       catch (Exception e) {
@@ -67,7 +68,7 @@ public class EntityShearingBolt extends EntityThrowable {
     else {
       BlockPos posToDrop = getPosToDrop(mop);
       if (posToDrop != null)
-        UtilEntity.dropItemStackInWorld(worldObj, posToDrop, renderSnowball);
+        UtilItemStack.dropItemStackInWorld(world, posToDrop, renderSnowball);
     }
     this.setDead();
   }

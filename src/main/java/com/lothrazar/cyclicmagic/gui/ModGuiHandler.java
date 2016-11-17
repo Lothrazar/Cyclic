@@ -39,7 +39,7 @@ import com.lothrazar.cyclicmagic.gui.wand.GuiWandInventory;
 import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
 import com.lothrazar.cyclicmagic.gui.waypoints.GuiEnderBook;
 import com.lothrazar.cyclicmagic.item.ItemStorageBag;
-import com.lothrazar.cyclicmagic.util.UtilInventory;
+import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.player.EntityPlayer;
@@ -150,7 +150,7 @@ public class ModGuiHandler implements IGuiHandler {
         ItemStack s = ItemStorageBag.getPlayerItemIfHeld(player);
         return new GuiStorage(new ContainerStorage(player, player.inventory, new InventoryStorage(player, s)));
       case GUI_INDEX_WAYPOINT:
-        return new GuiEnderBook(player, UtilInventory.getPlayerItemIfHeld(player));
+        return new GuiEnderBook(player, UtilPlayer.getPlayerItemIfHeld(player));
       case GUI_INDEX_BUILDER:
         if (te != null && te instanceof TileMachineStructureBuilder) { return new GuiBuilder(player.inventory, (TileMachineStructureBuilder) te); }
         break;

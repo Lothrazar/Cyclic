@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.List;
 import com.lothrazar.cyclicmagic.util.UtilHarvestCrops;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
-import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
+import com.lothrazar.cyclicmagic.util.UtilShape;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import com.lothrazar.cyclicmagic.util.UtilHarvestCrops.HarestCropsConfig;
 import net.minecraft.item.ItemStack;
@@ -71,9 +71,9 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
       BlockPos harvest = getHarvestPos();
       //TODO:spit drops out the facing side, just like uncrafter
       // -> to this end, add new conf flag
-      if (UtilHarvestCrops.harvestSingle(this.worldObj, harvest, conf)) {
+      if (UtilHarvestCrops.harvestSingle(getWorld(), harvest, conf)) {
         //        ModMain.logger.info("harvested :" + UtilChat.blockPosToString(harvest));
-        UtilParticle.spawnParticle(worldObj, EnumParticleTypes.DRAGON_BREATH, harvest);
+        UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, harvest);
         timer = TIMER_FULL;//harvest worked!
       }
       else {
@@ -90,12 +90,12 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
     return this.getPos().offset(this.getCurrentFacing(), this.size + 1);
   }
   private BlockPos getHarvestPos() {
-    return UtilWorld.getRandomPos(this.worldObj.rand, getHarvestCenter(), this.size);
+    return UtilWorld.getRandomPos(getWorld().rand, getHarvestCenter(), this.size);
   }
   public void displayPreview() {
-    List<BlockPos> allPos = UtilPlaceBlocks.squareHorizontalHollow(getHarvestCenter(), this.size);
+    List<BlockPos> allPos = UtilShape.squareHorizontalHollow(getHarvestCenter(), this.size);
     for (BlockPos pos : allPos) {
-      UtilParticle.spawnParticle(worldObj, EnumParticleTypes.DRAGON_BREATH, pos);
+      UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, pos);
     }
   }
   private int getSpeed() {
@@ -139,31 +139,25 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
   }
   @Override
   public int getSizeInventory() {
-    // TODO Auto-generated method stub
     return 0;
   }
   @Override
   public ItemStack getStackInSlot(int index) {
-    // TODO Auto-generated method stub
     return null;
   }
   @Override
   public ItemStack decrStackSize(int index, int count) {
-    // TODO Auto-generated method stub
     return null;
   }
   @Override
   public ItemStack removeStackFromSlot(int index) {
-    // TODO Auto-generated method stub
     return null;
   }
   @Override
   public void setInventorySlotContents(int index, ItemStack stack) {
-    // TODO Auto-generated method stub
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
-    // TODO Auto-generated method stub
     return null;
   }
   public void toggleSize() {
