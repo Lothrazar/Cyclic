@@ -89,8 +89,8 @@ public class UtilInventoryTransfer {
         if (playerItem == null) {
           continue;
         } // empty inventory slot
-        if (playerItem.getItem().equals(chestItem.getItem())
-            && playerItem.getItemDamage() == chestItem.getItemDamage()) {
+   
+        if (UtilItemStack.canMerge(playerItem, chestItem)) {
           // same item, including damage (block state)
           chestMax = chestItem.getItem().getItemStackLimit(chestItem);
           room = chestMax - chestItem.stackSize;
@@ -144,8 +144,7 @@ public class UtilInventoryTransfer {
         if (playerItem == null) {
           continue;
         } // empty inventory slot
-        if (playerItem.getItem().equals(chestItem.getItem())
-            && playerItem.getItemDamage() == chestItem.getItemDamage()) {
+        if (UtilItemStack.canMerge(playerItem, chestItem)) {
           invMax = playerItem.getItem().getItemStackLimit(playerItem);
           room = invMax - playerItem.stackSize;
           if (room <= 0) {
