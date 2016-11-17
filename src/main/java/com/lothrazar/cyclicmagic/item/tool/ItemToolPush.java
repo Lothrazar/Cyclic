@@ -98,6 +98,7 @@ public class ItemToolPush extends BaseTool implements IHasRecipe {
     //if we only run this on server, clients dont get the udpate
     //so run it only on client, let packet run the server
     if (worldObj.isRemote) {
+      
       ModCyclic.network.sendToServer(new PacketMoveBlock(pos, ActionType.values()[ActionType.get(stack)], side));
     }
     //hack the sound back in

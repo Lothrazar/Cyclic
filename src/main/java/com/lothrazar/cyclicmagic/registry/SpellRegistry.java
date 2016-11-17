@@ -15,11 +15,7 @@ public class SpellRegistry {
   private static Map<Integer, ISpell> hashbook;
   public static boolean doParticles;
   public static class Spells {
-    // on purpose, not all spells are in here. only ones that needed to be
-    // exposed
-    public static SpellRangeRotate rotate;
-    public static SpellRangePush push;
-    public static SpellRangePull pull;
+
     private static SpellInventory inventory;
     private static SpellRangeBuild reachdown;
     private static SpellRangeBuild reachup;
@@ -42,12 +38,7 @@ public class SpellRegistry {
  SPELL REG 8 Build Right*/
     Spells.inventory = new SpellInventory(0, "inventory");
     registerSpell(Spells.inventory);
-    Spells.rotate = new SpellRangeRotate(1, "rotate");
-    registerSpell(Spells.rotate);
-    Spells.push = new SpellRangePush(2, "push");
-    registerSpell(Spells.push);
-    Spells.pull = new SpellRangePull(3, "pull");
-    registerSpell(Spells.pull);
+
     Spells.reachup = new SpellRangeBuild(4, "reachup", SpellRangeBuild.PlaceType.UP);
     registerSpell(Spells.reachup);
     Spells.reachplace = new SpellRangeBuild(5, "reachplace", SpellRangeBuild.PlaceType.PLACE);
