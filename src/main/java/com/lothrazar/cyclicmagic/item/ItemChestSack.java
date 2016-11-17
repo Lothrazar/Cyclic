@@ -2,8 +2,7 @@ package com.lothrazar.cyclicmagic.item;
 import java.util.List;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
-import com.lothrazar.cyclicmagic.util.UtilItem;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.Block;
@@ -45,7 +44,7 @@ public class ItemChestSack extends BaseItem {
       playerIn.setHeldItem(hand, null);
       UtilSound.playSound(playerIn, pos, SoundRegistry.thunk);
       if (playerIn.capabilities.isCreativeMode == false && emptySack != null) {//its never really null tho
-        UtilEntity.dropItemStackInWorld(worldIn, playerIn.getPosition(), emptySack);
+        UtilItemStack.dropItemStackInWorld(worldIn, playerIn.getPosition(), emptySack);
       }
     }
     return EnumActionResult.SUCCESS;
@@ -61,7 +60,7 @@ public class ItemChestSack extends BaseItem {
     IBlockState toPlace;
     if (itemData.hasKey(KEY_BLOCKSTATE)) {
       //in builds 1.7.8 prior this data tag did not exist, so make sure we support itemstacks created back then
-      toPlace = UtilItem.getStateFromMeta(block, itemData.getInteger(KEY_BLOCKSTATE));
+      toPlace = UtilItemStack.getStateFromMeta(block, itemData.getInteger(KEY_BLOCKSTATE));
     }
     else {
       toPlace = block.getDefaultState();

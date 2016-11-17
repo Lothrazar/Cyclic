@@ -4,7 +4,7 @@ import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.BaseItem;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilItem;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -88,7 +88,7 @@ public class ItemAutoTorch extends BaseItem implements IHasRecipe {
           && world.isSideSolid(pos.down(), EnumFacing.UP)
           && world.isAirBlock(pos)) { // dont overwrite liquids 
         if (UtilPlaceBlocks.placeStateSafe(world, living, pos, Blocks.TORCH.getDefaultState())) {
-          UtilItem.damageItem(living, stack);
+          UtilItemStack.damageItem(living, stack);
           if (stack == null || stack.getItemDamage() == stack.getMaxDamage()) {
             stack = null;
             living.inventory.setInventorySlotContents(itemSlot, null);

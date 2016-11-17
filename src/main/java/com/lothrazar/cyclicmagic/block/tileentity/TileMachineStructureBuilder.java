@@ -1,10 +1,11 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.util.UtilItem;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
+import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
@@ -59,19 +60,19 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
     // only rebuild shapes if they are different
     switch (buildType) {
     case CIRCLE:
-      this.shape = UtilPlaceBlocks.circle(this.pos, this.getSize() * 2);
+      this.shape = UtilShape.circle(this.pos, this.getSize() * 2);
       break;
     case FACING:
-      this.shape = UtilPlaceBlocks.line(pos, this.getCurrentFacing(), this.getSize());
+      this.shape = UtilShape.line(pos, this.getCurrentFacing(), this.getSize());
       break;
     case SQUARE:
-      this.shape = UtilPlaceBlocks.squareHorizontalHollow(this.pos, this.getSize());
+      this.shape = UtilShape.squareHorizontalHollow(this.pos, this.getSize());
       break;
     default:
       break;
     }
     if (this.buildHeight > 1) { //first layer is already done, add remaining
-      this.shape = UtilPlaceBlocks.repeatShapeByHeight(shape, buildHeight - 1);
+      this.shape = UtilShape.repeatShapeByHeight(shape, buildHeight - 1);
     }
     this.shapeIndex = 0;
     if (this.shape.size() > 0)
@@ -339,7 +340,7 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
     if (trigger) {
       Block stuff = Block.getBlockFromItem(stack.getItem());
       if (stuff != null) {
-        IBlockState placeState = UtilItem.getStateFromMeta(stuff, stack.getMetadata());
+        IBlockState placeState = UtilItemStack.getStateFromMeta(stuff, stack.getMetadata());
         //ModMain.logger.info("try place " + this.nextPos + " type " + this.buildType + "_" + this.getBuildTypeEnum().name());
         if (UtilPlaceBlocks.placeStateSafe(worldObj, null, nextPos, placeState)) {
           if (worldObj.isRemote == false) {//consume item on server

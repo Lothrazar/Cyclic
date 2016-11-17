@@ -4,6 +4,7 @@ import com.lothrazar.cyclicmagic.gui.SlotItemRestrictedInverse;
 import com.lothrazar.cyclicmagic.module.ItemToolsModule;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilInventory;
+import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ClickType;
@@ -51,7 +52,7 @@ public class ContainerStorage extends ContainerBase {
   }
   @Override
   public ItemStack slotClick(int slot, int dragType, ClickType clickTypeIn, EntityPlayer player) {
-    ItemStack wand = UtilInventory.getPlayerItemIfHeld(player);
+    ItemStack wand = UtilPlayer.getPlayerItemIfHeld(player);
     // this will prevent the player from interacting with the item that
     // opened the inventory:
     if (slot >= 0 && getSlot(slot) != null && getSlot(slot).getStack() == wand) { return null; }

@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.List;
 import com.lothrazar.cyclicmagic.util.UtilHarvestCrops;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
-import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
+import com.lothrazar.cyclicmagic.util.UtilShape;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import com.lothrazar.cyclicmagic.util.UtilHarvestCrops.HarestCropsConfig;
 import net.minecraft.item.ItemStack;
@@ -93,7 +93,7 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
     return UtilWorld.getRandomPos(this.worldObj.rand, getHarvestCenter(), this.size);
   }
   public void displayPreview() {
-    List<BlockPos> allPos = UtilPlaceBlocks.squareHorizontalHollow(getHarvestCenter(), this.size);
+    List<BlockPos> allPos = UtilShape.squareHorizontalHollow(getHarvestCenter(), this.size);
     for (BlockPos pos : allPos) {
       UtilParticle.spawnParticle(worldObj, EnumParticleTypes.DRAGON_BREATH, pos);
     }

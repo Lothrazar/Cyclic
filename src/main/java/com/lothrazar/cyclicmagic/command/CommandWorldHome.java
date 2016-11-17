@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.command;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilSound;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilEntityLiving;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
@@ -29,7 +29,7 @@ public class CommandWorldHome extends BaseCommand implements ICommand {
     // not
     // so we need to safely push the player up out of any blocks they are in
     UtilSound.playSound(player, player.getPosition(), SoundEvents.ENTITY_ENDERMEN_TELEPORT, player.getSoundCategory());
-    UtilEntity.teleportWallSafe(player, world, world.getSpawnPoint());
+    UtilEntityLiving.teleportWallSafe(player, world, world.getSpawnPoint());
     UtilSound.playSound(player, world.getSpawnPoint(), SoundEvents.ENTITY_ENDERMEN_TELEPORT, player.getSoundCategory());
   }
 }

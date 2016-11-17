@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.util.Const;
-import com.lothrazar.cyclicmagic.util.UtilItem;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilRecipe;
 import net.minecraft.block.BlockStone;
 import net.minecraft.init.Blocks;
@@ -123,7 +123,7 @@ public class RecipeChangerModule extends BaseModule implements IHasConfig {
         new ItemStack(Blocks.MELON_BLOCK));
   }
   private void elytraRepair() {
-    GameRegistry.addShapelessRecipe(new ItemStack(Items.ELYTRA, 1, UtilItem.getMaxDmgFraction(Items.ELYTRA, 10)),
+    GameRegistry.addShapelessRecipe(new ItemStack(Items.ELYTRA, 1, UtilItemStack.getMaxDmgFraction(Items.ELYTRA, 10)),
         new ItemStack(Items.SKULL, 1, Const.skull_wither),
         new ItemStack(Items.ELYTRA, 1, OreDictionary.WILDCARD_VALUE));
   }

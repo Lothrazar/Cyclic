@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.entity.projectile;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.module.MobDropChangesModule;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -56,7 +56,7 @@ public class EntityShearingBolt extends EntityThrowable {
         else {
           BlockPos posToDrop = getPosToDrop(mop);
           if (posToDrop != null)
-            UtilEntity.dropItemStackInWorld(worldObj, posToDrop, renderSnowball);
+            UtilItemStack.dropItemStackInWorld(worldObj, posToDrop, renderSnowball);
         }
       }
       catch (Exception e) {
@@ -67,7 +67,7 @@ public class EntityShearingBolt extends EntityThrowable {
     else {
       BlockPos posToDrop = getPosToDrop(mop);
       if (posToDrop != null)
-        UtilEntity.dropItemStackInWorld(worldObj, posToDrop, renderSnowball);
+        UtilItemStack.dropItemStackInWorld(worldObj, posToDrop, renderSnowball);
     }
     this.setDead();
   }

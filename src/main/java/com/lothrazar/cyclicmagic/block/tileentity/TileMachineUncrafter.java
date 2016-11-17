@@ -1,8 +1,8 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilInventory;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilUncraft;
 import net.minecraft.init.SoundEvents;
@@ -169,7 +169,7 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
     }
     if (toDrop != null)
       for (ItemStack s : toDrop) {
-        UtilEntity.dropItemStackInWorld(this.getWorld(), posOffsetFacing, s);
+        UtilItemStack.dropItemStackInWorld(this.getWorld(), posOffsetFacing, s);
       }
   }
   @Override

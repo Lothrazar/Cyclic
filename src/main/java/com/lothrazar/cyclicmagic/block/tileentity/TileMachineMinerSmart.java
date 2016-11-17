@@ -3,7 +3,7 @@ import java.lang.ref.WeakReference;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
-import com.lothrazar.cyclicmagic.util.UtilItem;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
@@ -105,7 +105,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
       }
       if (isCurrentlyMining) {
         IBlockState targetState = worldObj.getBlockState(targetPos);
-        curBlockDamage += UtilItem.getPlayerRelativeBlockHardness(targetState.getBlock(), targetState, fakePlayer.get(), worldObj, targetPos);
+        curBlockDamage += UtilItemStack.getPlayerRelativeBlockHardness(targetState.getBlock(), targetState, fakePlayer.get(), worldObj, targetPos);
         if (curBlockDamage >= 1.0f) {
           isCurrentlyMining = false;
           resetProgress(targetPos);

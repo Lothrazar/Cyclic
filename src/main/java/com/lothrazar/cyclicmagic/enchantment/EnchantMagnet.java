@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.enchantment;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilEntityLiving;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
@@ -36,7 +36,7 @@ public class EnchantMagnet extends Enchantment {
     }
     int level = Math.max(mainLevel, offLevel);
     if (level > 0) {
-      UtilEntity.pullEntityItemsTowards(entity.getEntityWorld(), entity.getPosition(), ITEM_HRADIUS + HRADIUS_PER_LEVEL * level, ITEM_VRADIUS);
+      UtilEntityLiving.pullEntityItemsTowards(entity.getEntityWorld(), entity.getPosition(), ITEM_HRADIUS + HRADIUS_PER_LEVEL * level, ITEM_VRADIUS);
     }
   }
 }

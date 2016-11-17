@@ -32,7 +32,7 @@ public class UtilFurnace {
       // merging updates the stack size numbers in both furnace and in players
       success = true;
       if (entityPlayer.worldObj.isRemote == false) {
-        UtilInventory.mergeItemsBetweenStacks(held, current);
+        UtilItemStack.mergeItemsBetweenStacks(held, current);
       }
     }
     if (success) {

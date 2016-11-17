@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.net;
-import com.lothrazar.cyclicmagic.util.UtilInventory;
+import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -34,10 +34,10 @@ public class PacketMovePlayerColumn implements IMessage, IMessageHandler<PacketM
   public IMessage onMessage(PacketMovePlayerColumn message, MessageContext ctx) {
     EntityPlayer player = ctx.getServerHandler().playerEntity;
     if (message.isDown) {
-      UtilInventory.shiftSlotUp(player, message.slot);
+      UtilPlayer.shiftSlotUp(player, message.slot);
     }
     else {
-      UtilInventory.shiftSlotDown(player, message.slot);
+      UtilPlayer.shiftSlotDown(player, message.slot);
     }
     return null;
   }

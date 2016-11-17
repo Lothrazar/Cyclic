@@ -1,14 +1,11 @@
 package com.lothrazar.cyclicmagic.util;
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -16,7 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class UtilEntity {
+public class UtilEntityLiving {
   private static final double ENTITY_PULL_DIST = 0.4;//closer than this and nothing happens
   private static final double ENTITY_PULL_SPEED_CUTOFF = 3;//closer than this and it slows down
   private final static float ITEMSPEEDFAR = 0.9F;
@@ -41,7 +38,7 @@ public class UtilEntity {
     setMaxHealth(living, newVal);
     return newVal;
   }
-  public static EnumFacing getPlayerFacing(EntityLivingBase entity) {
+  public static EnumFacing getFacing(EntityLivingBase entity) {
     int yaw = (int) entity.rotationYaw;
     if (yaw < 0) // due to the yaw running a -360 to positive 360
       yaw += 360; // not sure why it's that way
@@ -51,20 +48,7 @@ public class UtilEntity {
     int facing = yaw / 45; // 360degrees divided by 45 == 8 zones
     return EnumFacing.getHorizontal(facing / 2);
   }
-  public static EntityItem dropItemStackInWorld(World worldObj, BlockPos pos, Block block) {
-    return dropItemStackInWorld(worldObj, pos, new ItemStack(block));
-  }
-  public static EntityItem dropItemStackInWorld(World worldObj, BlockPos pos, Item item) {
-    return dropItemStackInWorld(worldObj, pos, new ItemStack(item));
-  }
-  public static EntityItem dropItemStackInWorld(World worldObj, BlockPos pos, ItemStack stack) {
-    EntityItem entityItem = new EntityItem(worldObj, pos.getX(), pos.getY(), pos.getZ(), stack);
-    if (worldObj.isRemote == false) {
-      // do not spawn a second 'ghost' one onclient side
-      worldObj.spawnEntityInWorld(entityItem);
-    }
-    return entityItem;
-  }
+
   public static double getSpeedTranslated(double speed) {
     return speed * 100;
   }

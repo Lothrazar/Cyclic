@@ -3,7 +3,7 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilEntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityVillager;
@@ -44,7 +44,7 @@ public class ItemAppleEmerald extends ItemFood implements IHasRecipe {
       //this is what we WANT to do, but the method is protected. we have to fake it by faking the interact event
       // ((EntityZombie)entity).startConversion(1200);
       if (zombie.isVillager()) {
-        UtilEntity.addOrMergePotionEffect(entity, new PotionEffect(MobEffects.WEAKNESS, 10, 0));
+        UtilEntityLiving.addOrMergePotionEffect(entity, new PotionEffect(MobEffects.WEAKNESS, 10, 0));
         if (zombie.processInteract(player, hand, new ItemStack(Items.GOLDEN_APPLE))) {
           itemstack.stackSize--;
           if (itemstack.stackSize == 0) {
@@ -84,7 +84,7 @@ public class ItemAppleEmerald extends ItemFood implements IHasRecipe {
   }
   @Override
   protected void onFoodEaten(ItemStack par1ItemStack, World world, EntityPlayer player) {
-    UtilEntity.addOrMergePotionEffect(player, new PotionEffect(
+    UtilEntityLiving.addOrMergePotionEffect(player, new PotionEffect(
         MobEffects.SATURATION,
         20 * Const.TICKS_PER_SEC,
         Const.Potions.I));

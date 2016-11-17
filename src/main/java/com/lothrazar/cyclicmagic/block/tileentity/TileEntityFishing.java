@@ -2,8 +2,7 @@ package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.ArrayList;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.util.Const;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
-import com.lothrazar.cyclicmagic.util.UtilInventory;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -86,7 +85,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
           }
         }
         if (itemstack != null && itemstack.stackSize != 0) { //FULL
-          UtilEntity.dropItemStackInWorld(worldObj, this.pos.down(), itemstack);
+          UtilItemStack.dropItemStackInWorld(worldObj, this.pos.down(), itemstack);
         }
         //end of loot phase
       }
@@ -115,7 +114,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     }
     else if (held.isItemEqual(current)) {
       success = true;
-      UtilInventory.mergeItemsBetweenStacks(held, current);
+      UtilItemStack.mergeItemsBetweenStacks(held, current);
     }
     if (success) {
       if (held != null && held.stackSize == 0) {// so now we just fix if something is size zero

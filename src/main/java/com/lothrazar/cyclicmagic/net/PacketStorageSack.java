@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.net;
 import com.lothrazar.cyclicmagic.item.ItemChestSack;
 import com.lothrazar.cyclicmagic.item.ItemChestSackEmpty;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.Block;
@@ -67,7 +67,7 @@ public class PacketStorageSack implements IMessage, IMessageHandler<PacketStorag
           if (chest_sack != null) {
             ItemStack drop = new ItemStack(chest_sack);
             drop.setTagCompound(itemData);
-            UtilEntity.dropItemStackInWorld(world, player.getPosition(), drop);
+            UtilItemStack.dropItemStackInWorld(world, player.getPosition(), drop);
             UtilPlaceBlocks.destroyBlock(world, position);
             if (player.capabilities.isCreativeMode == false) {
               held.stackSize--;

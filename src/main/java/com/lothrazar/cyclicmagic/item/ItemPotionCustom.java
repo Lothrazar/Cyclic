@@ -4,7 +4,7 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilEntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -59,7 +59,7 @@ public class ItemPotionCustom extends ItemFood {
   }
   public void addAllEffects(World world, EntityLivingBase player) {
     for (int i = 0; i < potions.size(); i++) {
-      UtilEntity.addOrMergePotionEffect(player, new PotionEffect(potions.get(i), potionDurations.get(i), potionAmplifiers.get(i)));
+      UtilEntityLiving.addOrMergePotionEffect(player, new PotionEffect(potions.get(i), potionDurations.get(i), potionAmplifiers.get(i)));
     }
   }
   @Override

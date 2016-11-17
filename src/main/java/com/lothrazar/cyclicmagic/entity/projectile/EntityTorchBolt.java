@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.entity.projectile;
 import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityThrowable;
@@ -54,7 +54,7 @@ public class EntityTorchBolt extends EntityThrowable {
           Blocks.TORCH.getDefaultState().withProperty(BlockTorch.FACING, sideHit));
     }
     else {
-      UtilEntity.dropItemStackInWorld(world, this.getPosition(), renderSnowball);
+      UtilItemStack.dropItemStackInWorld(world, this.getPosition(), renderSnowball);
     }
     this.setDead();
   }

@@ -7,7 +7,7 @@ import com.lothrazar.cyclicmagic.gui.storage.InventoryStorage;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilInventorySort.BagDepositReturn;
-import com.lothrazar.cyclicmagic.util.UtilItem;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.Entity;
@@ -211,7 +211,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
           break;//stop lookin in the chest, get a new bag item
         }
         bagItem = stacks[islotStacks];
-        if (UtilItem.canMerge(bagItem, chestItem)) {
+        if (UtilItemStack.canMerge(bagItem, chestItem)) {
           chestMax = chestItem.getItem().getItemStackLimit(chestItem);
           room = chestMax - chestItem.stackSize;
           if (room <= 0) {

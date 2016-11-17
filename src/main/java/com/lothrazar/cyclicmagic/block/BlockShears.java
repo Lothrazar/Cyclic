@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.block;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -44,10 +44,8 @@ public class BlockShears extends Block implements IHasRecipe {
       IShearable sheep = (IShearable) entity;
       ItemStack fake = new ItemStack(Items.SHEARS);
       if (sheep.isShearable(fake, world, pos)) {
-        List<ItemStack> drops = sheep.onSheared(fake, world, pos, 5);//since iShearable doesnt do drops, but DOES do sound/make sheep naked
-        for (ItemStack s : drops) {
-          UtilEntity.dropItemStackInWorld(world, pos, s);
-        }
+        List<ItemStack> drops = sheep.onSheared(fake, world, pos, FORTUNE);//since iShearable doesnt do drops, but DOES do sound/make sheep naked
+        UtilItemStack.dropItemStacksInWorld(world, pos, drops);
       }
     }
   }

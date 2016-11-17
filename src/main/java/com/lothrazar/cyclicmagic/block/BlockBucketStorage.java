@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.block;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBucketStorage;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -197,7 +197,7 @@ public class BlockBucketStorage extends Block implements ITileEntityProvider {
   }
   private void removeBucket(EntityPlayer entityPlayer, World world, TileEntityBucketStorage storage, Item bucketItem) {
     storage.removeBucket();
-    UtilEntity.dropItemStackInWorld(world, entityPlayer.getPosition(), new ItemStack(bucketItem));
+    UtilItemStack.dropItemStackInWorld(world, entityPlayer.getPosition(), new ItemStack(bucketItem));
   }
   public void addRecipe() {
     if (this == BlockRegistry.block_storeempty) {
@@ -221,7 +221,7 @@ public class BlockBucketStorage extends Block implements ITileEntityProvider {
       TileEntityBucketStorage t = (TileEntityBucketStorage) ent;
       ItemStack stack = new ItemStack(state.getBlock());
       UtilNBT.setItemStackNBTVal(stack, BlockBucketStorage.NBTBUCKETS, t.getBuckets());
-      UtilEntity.dropItemStackInWorld(world, pos, stack);
+      UtilItemStack.dropItemStackInWorld(world, pos, stack);
       t.setBuckets(0);
     }
   }

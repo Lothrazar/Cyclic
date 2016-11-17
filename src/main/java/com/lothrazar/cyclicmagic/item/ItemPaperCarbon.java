@@ -2,8 +2,8 @@ package com.lothrazar.cyclicmagic.item;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
-import com.lothrazar.cyclicmagic.util.UtilInventory;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
+import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -135,7 +135,7 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
     if (isValid) {
       UtilParticle.spawnParticle(world, EnumParticleTypes.PORTAL, pos.getX(), pos.getY(), pos.getZ());
       if (consumeItem) {
-        UtilInventory.decrStackSize(entityPlayer, hand); // on paste, we consume the item
+        UtilPlayer.decrStackSize(entityPlayer, hand); // on paste, we consume the item
       }
       UtilSound.playSound(entityPlayer, pos, SoundRegistry.buzzp);
     }

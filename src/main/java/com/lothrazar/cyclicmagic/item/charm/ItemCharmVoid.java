@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.item.charm;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.BaseCharm;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilEntityLiving;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.Entity;
@@ -42,7 +42,7 @@ public class ItemCharmVoid extends BaseCharm implements IHasRecipe {
     if (!this.canTick(stack)) { return; }
     World worldIn = living.getEntityWorld();
     if (living.getPosition().getY() < yLowest) {
-      UtilEntity.teleportWallSafe(living, worldIn, new BlockPos(living.getPosition().getX(), yDest, living.getPosition().getZ()));
+      UtilEntityLiving.teleportWallSafe(living, worldIn, new BlockPos(living.getPosition().getX(), yDest, living.getPosition().getZ()));
       super.damageCharm(living, stack);
       UtilSound.playSound(living, living.getPosition(), SoundEvents.ENTITY_ENDERMEN_TELEPORT, living.getSoundCategory());
       UtilParticle.spawnParticle(worldIn, EnumParticleTypes.PORTAL, living.getPosition());

@@ -78,7 +78,7 @@ public class UtilWorld {
       UtilChat.addChatMessage(player, "command.gethome.bed");
       return false;
     }
-    UtilEntity.teleportWallSafe(player, world, pos);
+    UtilEntityLiving.teleportWallSafe(player, world, pos);
     UtilSound.playSound(player, pos, SoundEvents.ENTITY_ENDERMEN_TELEPORT);
     return true;
   }

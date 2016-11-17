@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.command;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilEntityLiving;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -47,6 +47,6 @@ public class CommandHearts extends BaseCommand implements ICommand {
     int health = hearts * 2;
     IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(ptarget);
     prop.setMaxHealth(health);
-    UtilEntity.setMaxHealth(ptarget, health);
+    UtilEntityLiving.setMaxHealth(ptarget, health);
   }
 }
