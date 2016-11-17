@@ -15,6 +15,7 @@ public class UtilInventoryTransfer {
     public int moved;
     public ItemStack[] stacks;
   }
+  //TODO: this whole class is a big mess, lots of code repetition; needs work.
   public static void dumpFromPlayerToIInventory(World world, IInventory inventory, EntityPlayer player) {
     ItemStack chestEmptySlot;
     ItemStack playerItem;
