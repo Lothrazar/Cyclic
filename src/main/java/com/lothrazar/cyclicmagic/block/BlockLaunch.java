@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.block;
 import java.util.List;
 import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilEntityLiving;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.block.BlockBasePressurePlate;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
@@ -48,7 +48,7 @@ public class BlockLaunch extends BlockBasePressurePlate {
   }
   @Override
   public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
-    UtilEntityLiving.launch(entity, ANGLE, power);
+    UtilEntity.launch(entity, ANGLE, power);
     this.playClickOnSound(worldIn, pos);
   }
   @SideOnly(Side.CLIENT)

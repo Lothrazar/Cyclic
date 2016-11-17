@@ -4,7 +4,7 @@ import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilEntityLiving;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -103,7 +103,7 @@ public class ItemFoodCorruptedChorus extends ItemFood implements IHasRecipe, IHa
           }
           else {
             //teleport back home	
-            UtilEntityLiving.teleportWallSafe(player, world, sourcePos);
+            UtilEntity.teleportWallSafe(player, world, sourcePos);
             //player.setPositionAndUpdate(Double.parseDouble(p[0]), Double.parseDouble(p[1]), Double.parseDouble(p[2]));
           }
           player.fallDistance = 0.0F;

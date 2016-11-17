@@ -78,7 +78,7 @@ public class UtilWorld {
       UtilChat.addChatMessage(player, "command.gethome.bed");
       return false;
     }
-    UtilEntityLiving.teleportWallSafe(player, world, pos);
+    UtilEntity.teleportWallSafe(player, world, pos);
     UtilSound.playSound(player, pos, SoundEvents.ENTITY_ENDERMEN_TELEPORT);
     return true;
   }
@@ -193,7 +193,7 @@ public class UtilWorld {
     waterBoth.add(Blocks.FLOWING_WATER);
     waterBoth.add(Blocks.WATER);
     if (pos == null) { return false; }
-    return world.isAirBlock(pos) || world.getBlockState(pos).getBlock().getUnlocalizedName().equalsIgnoreCase("tile.water") || (world.getBlockState(pos) != null 
+    return world.isAirBlock(pos) || world.getBlockState(pos).getBlock().getUnlocalizedName().equalsIgnoreCase("tile.water") || (world.getBlockState(pos) != null
         && waterBoth.contains(world.getBlockState(pos).getBlock()));
   }
 }

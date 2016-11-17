@@ -5,7 +5,7 @@ import com.lothrazar.cyclicmagic.item.BaseItem;
 import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
 import com.lothrazar.cyclicmagic.util.Const.HorseMeta;
 import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilEntityLiving;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityHorse;
@@ -59,7 +59,7 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
         double jump = horse.getEntityAttribute(ReflectionRegistry.horseJumpStrength).getAttributeValue();// horse.getHorseJumpStrength()
         double newjump = jump * JUMP_SCALE;
         // double jumpHeight = getJumpTranslated(horse.getHorseJumpStrength());
-        if (UtilEntityLiving.getJumpTranslated(newjump) < JUMP_MAX) {
+        if (UtilEntity.getJumpTranslated(newjump) < JUMP_MAX) {
           horse.getEntityAttribute(ReflectionRegistry.horseJumpStrength).setBaseValue(newjump);
           success = true;
         }
@@ -68,7 +68,7 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
     case SPEED:
       double speed = horse.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue();
       double newSpeed = speed * SPEED_SCALE;
-      if (UtilEntityLiving.getSpeedTranslated(newSpeed) < SPEED_MAX) {
+      if (UtilEntity.getSpeedTranslated(newSpeed) < SPEED_MAX) {
         horse.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(newSpeed);
         success = true;
       }

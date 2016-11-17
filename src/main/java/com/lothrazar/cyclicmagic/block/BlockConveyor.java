@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.block;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilEntityLiving;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.block.BlockBasePressurePlate;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
@@ -62,7 +62,7 @@ public class BlockConveyor extends BlockBasePressurePlate implements IHasRecipe 
   @Override
   public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
     EnumFacing face = getFacingFromState(state);
-    UtilEntityLiving.launchDirection(entity, ANGLE, power, face); //this.playClickOnSound(worldIn, pos);
+    UtilEntity.launchDirection(entity, ANGLE, power, face); //this.playClickOnSound(worldIn, pos);
   }
   //below is all for facing
   @Override

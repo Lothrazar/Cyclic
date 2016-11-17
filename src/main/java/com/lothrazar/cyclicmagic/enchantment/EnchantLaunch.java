@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.enchantment;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
-import com.lothrazar.cyclicmagic.util.UtilEntityLiving;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
@@ -76,7 +76,7 @@ public class EnchantLaunch extends Enchantment {
       if (p.getCooldownTracker().hasCooldown(feet.getItem())) { return; }
       int uses = UtilNBT.getItemStackNBTVal(feet, NBT_USES);
       p.fallDistance = 0;
-      UtilEntityLiving.launch(p, rotationPitch, power);
+      UtilEntity.launch(p, rotationPitch, power);
       UtilParticle.spawnParticle(p.worldObj, EnumParticleTypes.CRIT_MAGIC, p.getPosition());
       UtilSound.playSound(p, p.getPosition(), SoundRegistry.bwoaaap, SoundCategory.PLAYERS, UtilSound.VOLUME / 8);
       UtilItemStack.damageItem(p, feet);

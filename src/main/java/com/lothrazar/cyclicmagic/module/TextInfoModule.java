@@ -4,7 +4,7 @@ import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilEntityLiving;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -66,10 +66,10 @@ public class TextInfoModule extends BaseEventModule implements IHasConfig {//TOD
     EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
     if (player.getRidingEntity() != null && player.getRidingEntity() instanceof EntityHorse) {
       EntityHorse horse = (EntityHorse) player.getRidingEntity();
-      double speed = UtilEntityLiving.getSpeedTranslated(horse.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue());
+      double speed = UtilEntity.getSpeedTranslated(horse.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue());
       // double jump = horse.getHorseJumpStrength() ;
       // convert from scale factor to blocks
-      double jumpHeight = UtilEntityLiving.getJumpTranslated(horse.getHorseJumpStrength());
+      double jumpHeight = UtilEntity.getJumpTranslated(horse.getHorseJumpStrength());
       DecimalFormat df = new DecimalFormat("0.00");
       event.getLeft().add(UtilChat.lang("debug.horsespeed") + df.format(speed));
       df = new DecimalFormat("0.0");

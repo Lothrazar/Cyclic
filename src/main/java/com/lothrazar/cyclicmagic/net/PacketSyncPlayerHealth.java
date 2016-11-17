@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.net;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.util.UtilEntityLiving;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -34,7 +34,7 @@ public class PacketSyncPlayerHealth implements IMessage, IMessageHandler<PacketS
       EntityPlayer p = ModCyclic.proxy.getPlayerEntity(ctx);
       if (p != null) {
         //force clientside hearts to update and match real value
-        UtilEntityLiving.setMaxHealth(p, message.health);
+        UtilEntity.setMaxHealth(p, message.health);
       }
     }
     return null;

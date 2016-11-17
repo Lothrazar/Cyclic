@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
-import com.lothrazar.cyclicmagic.util.UtilEntityLiving;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;// net.minecraft.network.play.server.S35PacketUpdateTileEntity;
@@ -62,7 +62,7 @@ public class TileEntityMagnet extends TileEntity implements ITickable {
     double y = this.getPos().getY() + 0.7;
     double z = this.getPos().getZ() + 0.5;
     if (trigger) {
-      UtilEntityLiving.pullEntityItemsTowards(this.getWorld(), x, y, z, ITEM_HRADIUS, ITEM_VRADIUS);
+      UtilEntity.pullEntityItemsTowards(this.getWorld(), x, y, z, ITEM_HRADIUS, ITEM_VRADIUS);
       timer = TIMER_FULL;//harvest worked!
     }
     //    else {

@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.potion;
-import com.lothrazar.cyclicmagic.util.UtilEntityLiving;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -18,6 +18,6 @@ public class PotionMagnet extends PotionBase {
     }
   }
   public void tick(EntityLivingBase entityLiving) {
-    UtilEntityLiving.pullEntityItemsTowards(entityLiving.getEntityWorld(), entityLiving.getPosition(), ITEM_HRADIUS, ITEM_VRADIUS);
+    UtilEntity.pullEntityItemsTowards(entityLiving.getEntityWorld(), entityLiving.getPosition(), ITEM_HRADIUS, ITEM_VRADIUS);
   }
 }

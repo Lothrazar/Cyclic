@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.util;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,7 +14,7 @@ public class UtilPlayer {
       wand = player.getHeldItemOffhand();
     }
     return wand;
-  } 
+  }
   public static IBlockState getBlockstateFromSlot(EntityPlayer player, int slot) {
     ItemStack stack = player.inventory.getStackInSlot(slot);
     if (stack != null &&
@@ -119,5 +120,21 @@ public class UtilPlayer {
     return p != null && p.openContainer != null && p.openContainer.inventorySlots.size() > 0 &&
         p.openContainer.getSlot(0) != null &&
         p.openContainer.getSlot(0).inventory != null;
+  }
+  /**
+   * call this from SERVER SIDE if you are doing stuff to containers/invos/tile
+   * entities but your client GUI's are not updating
+   * 
+   * @param p
+   */
+  public static void updatePlayerContainerClient(EntityPlayer p) {
+    // http://www.minecraftforge.net/forum/index.php?topic=15351.0
+    p.inventory.markDirty();
+    if (p.openContainer == null) {
+      ModCyclic.logger.error("Cannot update null container");
+    }
+    else {
+      p.openContainer.detectAndSendChanges();
+    }
   }
 }

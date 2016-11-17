@@ -10,7 +10,7 @@ import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilEntityLiving;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
@@ -40,13 +40,13 @@ public class ItemFoodHeart extends ItemFood implements IHasRecipe, IHasConfig {
   @Override
   protected void onFoodEaten(ItemStack par1ItemStack, World world, EntityPlayer player) {
     IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(player);
-    if (UtilEntityLiving.getMaxHealth(player) / 2 >= maxHearts) {
+    if (UtilEntity.getMaxHealth(player) / 2 >= maxHearts) {
       UtilSound.playSound(player, SoundRegistry.buzzp);
       UtilItemStack.dropItemStackInWorld(world, player.getPosition(), this);
       return;
     }
     //one heart is 2 health points (half heart = 1 health)
-    int newVal = UtilEntityLiving.incrementMaxHealth(player, 2 * numHearts);
+    int newVal = UtilEntity.incrementMaxHealth(player, 2 * numHearts);
     prop.setMaxHealth(newVal);
     UtilSound.playSound(player, SoundRegistry.fill);
   }
@@ -68,7 +68,7 @@ public class ItemFoodHeart extends ItemFood implements IHasRecipe, IHasConfig {
     IPlayerExtendedProperties dest = CapabilityRegistry.getPlayerProperties(event.getEntityPlayer());
     dest.setDataFromNBT(src.getDataAsNBT());
     if (src.getMaxHealth() > 0) {
-      UtilEntityLiving.setMaxHealth(event.getEntityPlayer(), src.getMaxHealth());
+      UtilEntity.setMaxHealth(event.getEntityPlayer(), src.getMaxHealth());
     } //event.isWasDeath() && 
       //event if it wasnt death, we still want to do this. otherwise on going thru portla, the extra hearts
       //are hidden because mojang

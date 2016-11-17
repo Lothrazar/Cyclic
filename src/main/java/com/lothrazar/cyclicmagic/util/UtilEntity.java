@@ -13,7 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class UtilEntityLiving {
+public class UtilEntity {
   private static final double ENTITY_PULL_DIST = 0.4;//closer than this and nothing happens
   private static final double ENTITY_PULL_SPEED_CUTOFF = 3;//closer than this and it slows down
   private final static float ITEMSPEEDFAR = 0.9F;
@@ -48,7 +48,6 @@ public class UtilEntityLiving {
     int facing = yaw / 45; // 360degrees divided by 45 == 8 zones
     return EnumFacing.getHorizontal(facing / 2);
   }
-
   public static double getSpeedTranslated(double speed) {
     return speed * 100;
   }

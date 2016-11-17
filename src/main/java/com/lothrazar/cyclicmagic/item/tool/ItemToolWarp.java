@@ -3,7 +3,7 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.BaseTool;
 import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilEntityLiving;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -43,7 +43,7 @@ public class ItemToolWarp extends BaseTool implements IHasRecipe {
       success = UtilWorld.tryTpPlayerToBed(world, player);
       break;
     case SPAWN:
-      UtilEntityLiving.teleportWallSafe(player, world, world.getSpawnPoint());
+      UtilEntity.teleportWallSafe(player, world, world.getSpawnPoint());
       success = true;
       break;
     default:

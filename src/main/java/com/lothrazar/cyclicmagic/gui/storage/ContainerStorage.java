@@ -3,7 +3,6 @@ import com.lothrazar.cyclicmagic.gui.ContainerBase;
 import com.lothrazar.cyclicmagic.gui.SlotItemRestrictedInverse;
 import com.lothrazar.cyclicmagic.module.ItemToolsModule;
 import com.lothrazar.cyclicmagic.util.Const;
-import com.lothrazar.cyclicmagic.util.UtilInventory;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
