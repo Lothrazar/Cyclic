@@ -39,7 +39,7 @@ public class ItemToolProspector extends BaseTool implements IHasRecipe, IHasConf
       EnumFacing direction = side.getOpposite();
       BlockPos current = pos;
       IBlockState at = worldObj.getBlockState(current);
-      for (int i = 0; i <= range; i++) {
+      for (int i = 0; i < range; i++) {
         if (at != null && at.getBlock() != null) {
           name = at.getBlock().getLocalizedName();
           if(name == "tile.air.name"){

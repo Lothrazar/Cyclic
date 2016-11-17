@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.entity.projectile;
-import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.util.UtilSound;
-import net.minecraft.block.Block;
+import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
@@ -42,34 +41,27 @@ public class EntityWaterBolt extends EntityThrowable {
     if (pos != null) {
       // UtilParticle.spawnParticle(this.worldObj,
       // EnumParticleTypes.WATER_SPLASH, pos);
-      if (this.getThrower() instanceof EntityPlayer && mop.sideHit != null && this.worldObj.isRemote == false) {
+      if (this.getThrower() instanceof EntityPlayer && mop.sideHit != null && this.getEntityWorld().isRemote == false) {
         this.worldObj.extinguishFire((EntityPlayer) this.getThrower(), pos, mop.sideHit);
       }
     }
     if (this.dimension != nether) {
-      UtilSound.playSound(worldObj, pos, SoundEvents.ENTITY_PLAYER_SPLASH, SoundCategory.PLAYERS);
+      UtilSound.playSound(this.getEntityWorld(), pos, SoundEvents.ENTITY_PLAYER_SPLASH, SoundCategory.PLAYERS);
       // so far its both client and server
-      if (this.worldObj.isRemote == false) {
+      if (this.getEntityWorld().isRemote == false) {
         if (pos != null) {
-          if (this.isAirOrWater(pos)) {
-            this.worldObj.setBlockState(pos, Blocks.FLOWING_WATER.getDefaultState(), 3);
+          if (UtilWorld.isAirOrWater(this.getEntityWorld(), pos)) {
+            this.getEntityWorld().setBlockState(pos, Blocks.FLOWING_WATER.getDefaultState(), 3);
           }
           if (mop.sideHit != null) {
             BlockPos offset = pos.offset(mop.sideHit);
-            if (offset != null && this.isAirOrWater(offset)) {
-              this.worldObj.setBlockState(offset, Blocks.FLOWING_WATER.getDefaultState(), 3);
+            if (offset != null && UtilWorld.isAirOrWater(this.getEntityWorld(), offset)) {
+              this.getEntityWorld().setBlockState(offset, Blocks.FLOWING_WATER.getDefaultState(), 3);
             }
           }
         }
       }
     }
     this.setDead();
-  }
-  private boolean isAirOrWater(BlockPos pos) {
-    ArrayList<Block> waterBoth = new ArrayList<Block>();
-    waterBoth.add(Blocks.FLOWING_WATER);
-    waterBoth.add(Blocks.WATER);
-    if (pos == null) { return false; }
-    return this.worldObj.isAirBlock(pos) || this.worldObj.getBlockState(pos).getBlock().getUnlocalizedName().equalsIgnoreCase("tile.water") || (this.worldObj.getBlockState(pos) != null && waterBoth.contains(this.worldObj.getBlockState(pos).getBlock()));
   }
 }
