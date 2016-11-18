@@ -9,6 +9,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.dispenser.IPosition;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -186,5 +187,13 @@ public class UtilWorld {
   public static boolean doBlockStatesMatch(IBlockState replaced, IBlockState newToPlace) {
     return replaced.getBlock() == newToPlace.getBlock() &&
         replaced.getBlock().getMetaFromState(replaced) == newToPlace.getBlock().getMetaFromState(newToPlace);
+  }
+  public static boolean isAirOrWater(World world, BlockPos pos) {
+    ArrayList<Block> waterBoth = new ArrayList<Block>();
+    waterBoth.add(Blocks.FLOWING_WATER);
+    waterBoth.add(Blocks.WATER);
+    if (pos == null) { return false; }
+    return world.isAirBlock(pos) || world.getBlockState(pos).getBlock().getUnlocalizedName().equalsIgnoreCase("tile.water") || (world.getBlockState(pos) != null 
+        && waterBoth.contains(world.getBlockState(pos).getBlock()));
   }
 }

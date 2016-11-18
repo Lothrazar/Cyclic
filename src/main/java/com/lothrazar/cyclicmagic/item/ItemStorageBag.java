@@ -7,6 +7,7 @@ import com.lothrazar.cyclicmagic.gui.storage.InventoryStorage;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilInventorySort.BagDepositReturn;
+import com.lothrazar.cyclicmagic.util.UtilItem;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.Entity;
@@ -210,7 +211,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
           break;//stop lookin in the chest, get a new bag item
         }
         bagItem = stacks[islotStacks];
-        if (canMerge(bagItem, chestItem)) {
+        if (UtilItem.canMerge(bagItem, chestItem)) {
           chestMax = chestItem.getItem().getItemStackLimit(chestItem);
           room = chestMax - chestItem.stackSize;
           if (room <= 0) {
@@ -242,18 +243,5 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
       } // close loop on player inventory items
     } // close loop on chest items
     return new BagDepositReturn(itemsMoved, stacks);
-  }
-  /**
-   * match item, damage, and NBT
-   * 
-   * @param chestItem
-   * @param bagItem
-   * @return
-   */
-  public static boolean canMerge(ItemStack chestItem, ItemStack bagItem) {
-    if (chestItem == null || bagItem == null) { return false; }
-    return (bagItem.getItem().equals(chestItem.getItem())
-        && bagItem.getItemDamage() == chestItem.getItemDamage()
-        && ItemStack.areItemStackTagsEqual(bagItem, chestItem));
   }
 }

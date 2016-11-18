@@ -5,8 +5,8 @@
     "1.9.4-recommended":  "1.2.0",
     "1.10-latest":  "1.1.0",
     "1.10-recommended": "1.1.0",
-    "1.10.2-latest":  "1.8.7",
-    "1.10.2-recommended": "1.8.7"
+    "1.10.2-latest":  "1.8.8",
+    "1.10.2-recommended": "1.8.8"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -73,5 +73,6 @@
   	,"1.8.5":"Harvester GUI now has two new buttons: You can change the harvest area as well as preview it.  The Harvester size is no longer in the config file.  All machine block models face the same direction in your inventory now.  New Item: Stirrups.  Add missing config for existing feature: 'F3SpawnChunkInfo' for Within Spawn or Distance from spawn chunk text on F3 menu.  Add missing config for existing feature 'F3HorseInfo'.  Fix Sack of Storage merging items with different NBT data.  Added zh_CN.lang.  Rebalanced some early game trades on Sage and Druid villagers, and added new trades at the end (new spawns not existing). "
   	,"1.8.6":"Fix Tree Scythe and Brush Scythe not working.  Fix Magic Bean not dropping its seed when at full growth.  Increased recipe output of many of the Ender projectiles.  "
   	,"1.8.7":"Added shearing block.  Added torch launcher.  Cyclic Building Scepter given a more descriptive name.   Some tool recipes changed to use quartz instead of ghast tears: Piston Scepter, Cyclic Building Scepter.  Fix Structure Builder placing leaves that decay right away.  Structure Builder and Cyclic Build Scepter now play the block place sounds as they build.  Fix Auto Torch attempting to place in liquids.  Tweaked & cleaned up a few item textures.  New Recipe and JSON Models for the Randomizer and the Exchange Scepters."
+  	,"1.8.8":"Fix Uncrafting grinder bug when trying to insert into Refined Storage Interface block.  Fix Uncrafting Grinder sometimes merging items with different NBT data.  ProspectorRange now has default config value of 32 instead of 16 (doesn't affect existing config files).  Stop the thrown torches (from Ender Torch or Torch Launcher) land on non-solid surfaces (such as on leaves or flowers).  Add missing sound effect to torch launcher.  "
   }
 }

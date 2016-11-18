@@ -39,9 +39,12 @@ public class ItemToolProspector extends BaseTool implements IHasRecipe, IHasConf
       EnumFacing direction = side.getOpposite();
       BlockPos current = pos;
       IBlockState at = worldObj.getBlockState(current);
-      for (int i = 0; i <= range; i++) {
-        if (at != null && at.getBlock() != null) {// && at.getBlock() instanceof BlockOre) {
+      for (int i = 0; i < range; i++) {
+        if (at != null && at.getBlock() != null) {
           name = at.getBlock().getLocalizedName();
+          if(name == "tile.air.name"){
+            name = "Air";//workaround for no lang entry
+          }
           if (mapList.containsKey(name)) {
             mapList.put(name, mapList.get(name) + 1);
           }
@@ -72,7 +75,7 @@ public class ItemToolProspector extends BaseTool implements IHasRecipe, IHasConf
   }
   @Override
   public void syncConfig(Configuration config) {
-    ItemToolProspector.range = config.getInt("ProspectorRange", Const.ConfigCategory.modpackMisc, 16, 2, 256, "Block Range it will search onclick");
+    ItemToolProspector.range = config.getInt("ProspectorRange", Const.ConfigCategory.modpackMisc, 32, 2, 256, "Block Range it will search onclick");
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {

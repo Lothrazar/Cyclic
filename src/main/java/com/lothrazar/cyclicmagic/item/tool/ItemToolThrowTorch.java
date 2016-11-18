@@ -2,13 +2,16 @@ package com.lothrazar.cyclicmagic.item.tool;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityTorchBolt;
 import com.lothrazar.cyclicmagic.item.BaseTool;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -27,6 +30,7 @@ public class ItemToolThrowTorch extends BaseTool implements IHasRecipe {
       thing.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, PITCHOFFSET, VELOCITY_DEFAULT, INACCURACY_DEFAULT);
       world.spawnEntityInWorld(thing);
     }
+    UtilSound.playSound(player, player.getPosition(), SoundEvents.ENTITY_EGG_THROW, SoundCategory.PLAYERS);
     player.getCooldownTracker().setCooldown(this, COOLDOWN);
     super.onUse(stack, player, world, hand);
     return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
