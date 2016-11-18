@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
 import com.lothrazar.cyclicmagic.util.Const.HorseMeta;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityHorse;
@@ -25,8 +26,8 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
   public static int HEARTS_MAX;
   public static int SPEED_MAX;
   public static int JUMP_MAX;
-  private static double JUMP_SCALE = 1.01; // %age
-  private static double SPEED_SCALE = 1.01; // %age
+  private static final double SPEED_AMT = 0.004;
+  private static final double JUMP_AMT = 0.008;
   private ItemStack recipeItem;
   private HorseUpgradeType upgradeType;
   public ItemHorseUpgrade(HorseUpgradeType type, ItemStack rec) {
@@ -44,7 +45,7 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
   public void addRecipe() {
     GameRegistry.addShapelessRecipe(new ItemStack(this), Items.CARROT, recipeItem);
   }
-  public static void onHorseInteract(EntityHorse horse, EntityPlayer player, ItemHorseUpgrade heldItem) {
+  public static void onHorseInteract(EntityHorse horse, EntityPlayer player,ItemStack held, ItemHorseUpgrade heldItem) {
     boolean success = false;
     switch (heldItem.upgradeType) {
     case HEALTH:
@@ -57,8 +58,7 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
     case JUMP:
       if (ReflectionRegistry.horseJumpStrength != null) {
         double jump = horse.getEntityAttribute(ReflectionRegistry.horseJumpStrength).getAttributeValue();// horse.getHorseJumpStrength()
-        double newjump = jump * JUMP_SCALE;
-        // double jumpHeight = getJumpTranslated(horse.getHorseJumpStrength());
+        double newjump = jump + JUMP_AMT;
         if (UtilEntity.getJumpTranslated(newjump) < JUMP_MAX) {
           horse.getEntityAttribute(ReflectionRegistry.horseJumpStrength).setBaseValue(newjump);
           success = true;
@@ -67,7 +67,7 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
       break;
     case SPEED:
       double speed = horse.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue();
-      double newSpeed = speed * SPEED_SCALE;
+      double newSpeed = speed + SPEED_AMT;
       if (UtilEntity.getSpeedTranslated(newSpeed) < SPEED_MAX) {
         horse.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(newSpeed);
         success = true;
@@ -97,10 +97,10 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
       break;
     case VARIANT:
       int var = horse.getHorseVariant();
-      int var_reduced = 0;
-      int var_new = 0;
+      int varReduced = 0;
+      int varNew = 0;
       while (var - 256 > 0) {
-        var_reduced += 256;// this could be done with modulo % arithmetic too,
+        varReduced += 256;// this could be done with modulo % arithmetic too,
         // but meh
         // doesnt matter either way
         var -= 256;
@@ -109,29 +109,29 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
       // doing bitwise ops
       switch (var) {
       case HorseMeta.variant_black:
-        var_new = HorseMeta.variant_brown;
+        varNew = HorseMeta.variant_brown;
         break;
       case HorseMeta.variant_brown:
-        var_new = HorseMeta.variant_brown_dark;
+        varNew = HorseMeta.variant_brown_dark;
         break;
       case HorseMeta.variant_brown_dark:
-        var_new = HorseMeta.variant_chestnut;
+        varNew = HorseMeta.variant_chestnut;
         break;
       case HorseMeta.variant_chestnut:
-        var_new = HorseMeta.variant_creamy;
+        varNew = HorseMeta.variant_creamy;
         break;
       case HorseMeta.variant_creamy:
-        var_new = HorseMeta.variant_gray;
+        varNew = HorseMeta.variant_gray;
         break;
       case HorseMeta.variant_gray:
-        var_new = HorseMeta.variant_white;
+        varNew = HorseMeta.variant_white;
         break;
       case HorseMeta.variant_white:
-        var_new = HorseMeta.variant_black;
+        varNew = HorseMeta.variant_black;
         break;
       }
-      var_new += var_reduced;
-      horse.setHorseVariant(var_new);
+      varNew += varReduced;
+      horse.setHorseVariant(varNew);
       success = true;
       break;
     default:
@@ -139,14 +139,10 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
     }
     if (success) {
       if (player.capabilities.isCreativeMode == false) {
-        player.inventory.decrStackSize(player.inventory.currentItem, 1);
+        held.stackSize--;
       }
-      double x = horse.getPosition().getX();
-      double y = horse.getPosition().getY();
-      double z = horse.getPosition().getZ();
-      for (int countparticles = 0; countparticles <= 10; ++countparticles) {
-        horse.worldObj.spawnParticle(EnumParticleTypes.SMOKE_LARGE, x + (horse.worldObj.rand.nextDouble() - 0.5D) * (double) 0.8, y + horse.worldObj.rand.nextDouble() * (double) 1.5 - (double) 0.1, z + (horse.worldObj.rand.nextDouble() - 0.5D) * (double) 0.8, 0.0D, 0.0D, 0.0D);
-      }
+      UtilParticle.spawnParticle(horse.getEntityWorld(), EnumParticleTypes.SMOKE_LARGE,  horse.getPosition());
+
       UtilSound.playSound(player, horse.getPosition(), SoundEvents.ENTITY_HORSE_EAT, SoundCategory.NEUTRAL);
       horse.setEatingHaystack(true); // makes horse animate and bend down to eat
     }
