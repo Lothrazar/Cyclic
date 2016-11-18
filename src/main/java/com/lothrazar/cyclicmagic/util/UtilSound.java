@@ -46,14 +46,14 @@ public class UtilSound {
       return;
     }
     BlockPos here = (pos == null) ? player.getPosition() : pos;
-    player.worldObj.playSound(player, here, soundIn, cat, VOLUME, PITCH);
+    player.getEntityWorld().playSound(player, here, soundIn, cat, VOLUME, PITCH);
   }
   public static void playSound(EntityPlayer player, BlockPos pos, SoundEvent soundIn, SoundCategory cat, float volume) {
     if (player == null) {
       ModCyclic.logger.warn("Null player object attempting to play sound [3]");
       return;
     }
-    player.worldObj.playSound(player, pos, soundIn, cat, volume, PITCH);
+    player.getEntityWorld().playSound(player, pos, soundIn, cat, volume, PITCH);
   }
   public static void playSound(World worldObj, BlockPos pos, SoundEvent soundIn, SoundCategory category) {
     worldObj.playSound(pos.getX(), pos.getY(), pos.getZ(), soundIn, category, VOLUME, PITCH, distanceDelay);

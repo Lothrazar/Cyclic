@@ -23,8 +23,9 @@ public class EntityLightningballBolt extends EntityThrowable {
     // thats great but, isremote=true means client, so how to make entity show
     // in clident side.
     // (World worldIn, double x, double y, double z, boolean effectOnlyIn)
-    EntityLightningBolt ball = new EntityLightningBolt(this.worldObj, this.getPosition().getX(), this.getPosition().getY(), this.getPosition().getZ(), false);
-    this.worldObj.spawnEntityInWorld(ball);
+    World world = getEntityWorld();
+    EntityLightningBolt ball = new EntityLightningBolt(world, this.getPosition().getX(), this.getPosition().getY(), this.getPosition().getZ(), false);
+    world.spawnEntityInWorld(ball);
     this.setDead();
   }
 }

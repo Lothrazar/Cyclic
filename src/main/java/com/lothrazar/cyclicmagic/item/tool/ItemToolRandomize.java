@@ -87,7 +87,7 @@ public class ItemToolRandomize extends BaseTool implements IHasRecipe {
       ActionType.setTimeout(held);
       event.setCanceled(true);
       UtilSound.playSound(player, player.getPosition(), SoundRegistry.dcoin, SoundCategory.PLAYERS);
-      if (!player.worldObj.isRemote) { // server side
+      if (!player.getEntityWorld().isRemote) { // server side
         ActionType.toggle(held);
         UtilChat.addChatMessage(player, UtilChat.lang(ActionType.getName(held)));
       }

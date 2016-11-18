@@ -2,8 +2,7 @@ package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.ArrayList;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.util.Const;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
-import com.lothrazar.cyclicmagic.util.UtilInventory;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -15,6 +14,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootTable;
@@ -36,35 +36,37 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     waterBoth.add(Blocks.WATER);
   }
   public boolean isValidPosition() { //make sure surrounded by water
-    return waterBoth.contains(worldObj.getBlockState(pos.down()).getBlock()) &&
-        waterBoth.contains(worldObj.getBlockState(pos.down(2)).getBlock()) &&
-        waterBoth.contains(worldObj.getBlockState(pos.north()).getBlock()) &&
-        waterBoth.contains(worldObj.getBlockState(pos.east()).getBlock()) &&
-        waterBoth.contains(worldObj.getBlockState(pos.west()).getBlock()) &&
-        waterBoth.contains(worldObj.getBlockState(pos.south()).getBlock());
+    World world = this.getWorld();
+    return waterBoth.contains(world.getBlockState(pos.down()).getBlock()) &&
+        waterBoth.contains(world.getBlockState(pos.down(2)).getBlock()) &&
+        waterBoth.contains(world.getBlockState(pos.north()).getBlock()) &&
+        waterBoth.contains(world.getBlockState(pos.east()).getBlock()) &&
+        waterBoth.contains(world.getBlockState(pos.west()).getBlock()) &&
+        waterBoth.contains(world.getBlockState(pos.south()).getBlock());
   }
   public boolean isEquipmentValid() {
     return inv[toolSlot] != null;
   }
   @Override
   public void update() {
-    Random rand = worldObj.rand;
+    World world = this.getWorld();
+    Random rand = world.rand;
     if (rand.nextDouble() < SPEED &&
         isValidPosition() && isEquipmentValid() &&
-        this.worldObj instanceof WorldServer && this.worldObj != null &&
-        this.worldObj.getWorldTime() % Const.TICKS_PER_SEC == 0) {
-      LootContext.Builder lootcontext$builder = new LootContext.Builder((WorldServer) this.worldObj);
+        world instanceof WorldServer && world != null &&
+        world.getWorldTime() % Const.TICKS_PER_SEC == 0) {
+      LootContext.Builder lootcontext$builder = new LootContext.Builder((WorldServer) world);
       int luck = EnchantmentHelper.getEnchantmentLevel(Enchantments.LUCK_OF_THE_SEA, this.inv[toolSlot]);
       lootcontext$builder.withLuck((float) luck);
       //      java.lang.NullPointerException: Ticking block entity    at com.lothrazar.cyclicmagic.block.tileentity.TileEntityFishing.func_73660_a(TileEntityFishing.java:58)
-      LootTableManager loot = this.worldObj.getLootTableManager();
+      LootTableManager loot = world.getLootTableManager();
       if (loot == null) { return; }
       LootTable table = loot.getLootTableFromLocation(LootTableList.GAMEPLAY_FISHING);
       if (table == null) { return; }
       LootContext context = lootcontext$builder.build();
       if (context == null) { return; }
-      for (ItemStack itemstack : table.generateLootForPools(this.worldObj.rand, context)) {
-        UtilParticle.spawnParticle(worldObj, EnumParticleTypes.WATER_WAKE, pos.up());
+      for (ItemStack itemstack : table.generateLootForPools(rand, context)) {
+        UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_WAKE, pos.up());
         //damage phase.
         int mending = EnchantmentHelper.getEnchantmentLevel(Enchantments.MENDING, this.inv[toolSlot]);
         if (mending == 0) {
@@ -86,7 +88,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
           }
         }
         if (itemstack != null && itemstack.stackSize != 0) { //FULL
-          UtilEntity.dropItemStackInWorld(worldObj, this.pos.down(), itemstack);
+          UtilItemStack.dropItemStackInWorld(world, this.pos.down(), itemstack);
         }
         //end of loot phase
       }
@@ -99,7 +101,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   }
   private void damageTool() {
     if (inv[toolSlot] != null) {
-      inv[toolSlot].attemptDamageItem(1, worldObj.rand);//does respect unbreaking
+      inv[toolSlot].attemptDamageItem(1, getWorld().rand);//does respect unbreaking
       if (inv[toolSlot].getItemDamage() >= inv[toolSlot].getMaxDamage()) {
         inv[toolSlot] = null;
       }
@@ -115,7 +117,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     }
     else if (held.isItemEqual(current)) {
       success = true;
-      UtilInventory.mergeItemsBetweenStacks(held, current);
+      UtilItemStack.mergeItemsBetweenStacks(held, current);
     }
     if (success) {
       if (held != null && held.stackSize == 0) {// so now we just fix if something is size zero

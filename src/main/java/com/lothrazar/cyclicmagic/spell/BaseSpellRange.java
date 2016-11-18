@@ -13,7 +13,7 @@ public abstract class BaseSpellRange extends BaseSpell {
   @Override
   public void spawnParticle(World world, EntityPlayer p, BlockPos pos) {
     if (SpellRegistry.doParticles) {
-      UtilParticle.spawnParticleBeam(p.worldObj, EnumParticleTypes.SPELL_WITCH, p.getPosition(), pos, 2);
+      UtilParticle.spawnParticleBeam(p.getEntityWorld(), EnumParticleTypes.SPELL_WITCH, p.getPosition(), pos, 2);
     }
   }
   @Override

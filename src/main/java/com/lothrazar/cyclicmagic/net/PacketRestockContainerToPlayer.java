@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.net;
 import com.lothrazar.cyclicmagic.module.GuiTerrariaButtonsModule;
-import com.lothrazar.cyclicmagic.util.UtilInventory;
-import com.lothrazar.cyclicmagic.util.UtilInventorySort;
+import com.lothrazar.cyclicmagic.util.UtilPlayer;
+import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -29,9 +29,9 @@ public class PacketRestockContainerToPlayer implements IMessage, IMessageHandler
   @Override
   public IMessage onMessage(PacketRestockContainerToPlayer message, MessageContext ctx) {
     EntityPlayer p = ctx.getServerHandler().playerEntity;
-    if (UtilInventory.hasValidOpenContainer(p)) {
-      IInventory openInventory = UtilInventory.getOpenContainerInventory(p);
-      UtilInventorySort.sortFromInventoryToPlayer(p.worldObj, openInventory, p, GuiTerrariaButtonsModule.restockLeaveOne);
+    if (UtilPlayer.hasValidOpenContainer(p)) {
+      IInventory openInventory = UtilPlayer.getOpenContainerInventory(p);
+      UtilInventoryTransfer.sortFromInventoryToPlayer(p.getEntityWorld(), openInventory, p, GuiTerrariaButtonsModule.restockLeaveOne);
     }
     return null;
   }

@@ -23,7 +23,7 @@ public class PotionWaterwalk extends PotionBase {
     tickLiquidWalk(entityLiving, Blocks.WATER);
   }
   private void tickLiquidWalk(EntityLivingBase entityLiving, Block liquid) {
-    World world = entityLiving.worldObj;
+    World world = entityLiving.getEntityWorld();
     if (world.getBlockState(entityLiving.getPosition().down()).getBlock() == liquid && world.isAirBlock(entityLiving.getPosition()) && entityLiving.motionY < 0) {
       if (entityLiving instanceof EntityPlayer) {
         EntityPlayer p = (EntityPlayer) entityLiving;

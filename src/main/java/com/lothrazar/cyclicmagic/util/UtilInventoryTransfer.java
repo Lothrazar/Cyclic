@@ -1,19 +1,12 @@
 package com.lothrazar.cyclicmagic.util;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-/**
- * @author Lothrazar at https://github.com/PrinceOfAmber
- */
-public class UtilInventorySort {
+
+public class UtilInventoryTransfer {
   public static class BagDepositReturn {
     public BagDepositReturn(int m, ItemStack[] s) {
       moved = m;
@@ -22,17 +15,7 @@ public class UtilInventorySort {
     public int moved;
     public ItemStack[] stacks;
   }
-  public static class SortGroup {
-    public SortGroup(String k) {
-      stacks = new ArrayList<ItemStack>();
-      key = k;
-    }
-    public void add(ItemStack s) {
-      stacks.add(s);
-    }
-    public ArrayList<ItemStack> stacks;
-    public String key;
-  }
+  //TODO: this whole class is a big mess, lots of code repetition; needs work.
   public static void dumpFromPlayerToIInventory(World world, IInventory inventory, EntityPlayer player) {
     ItemStack chestEmptySlot;
     ItemStack playerItem;
@@ -58,7 +41,7 @@ public class UtilInventorySort {
         break;
       } // close loop on player inventory items
     } // close loop on chest items
-    updatePlayerContainerClient(player);
+    UtilPlayer.updatePlayerContainerClient(player);
   }
   public static void dumpFromIInventoryToPlayer(World world, IInventory inventory, EntityPlayer player) {
     ItemStack playerEmptySlot;
@@ -81,7 +64,7 @@ public class UtilInventorySort {
         break;
       } // close loop on player inventory items
     } // close loop on chest items
-    updatePlayerContainerClient(player);
+    UtilPlayer.updatePlayerContainerClient(player);
   }
   public static void sortFromPlayerToInventory(World world, IInventory chest, EntityPlayer player) {
     // source:
@@ -107,8 +90,8 @@ public class UtilInventorySort {
         if (playerItem == null) {
           continue;
         } // empty inventory slot
-        if (playerItem.getItem().equals(chestItem.getItem())
-            && playerItem.getItemDamage() == chestItem.getItemDamage()) {
+   
+        if (UtilItemStack.canMerge(playerItem, chestItem)) {
           // same item, including damage (block state)
           chestMax = chestItem.getItem().getItemStackLimit(chestItem);
           room = chestMax - chestItem.stackSize;
@@ -138,7 +121,7 @@ public class UtilInventorySort {
         } // end if items match
       } // close loop on player inventory items
     } // close loop on chest items
-    updatePlayerContainerClient(player);
+    UtilPlayer.updatePlayerContainerClient(player);
   }
   public static void sortFromInventoryToPlayer(World world, IInventory chest, EntityPlayer player, boolean restockLeaveOne) {
     ItemStack chestItem;
@@ -162,8 +145,7 @@ public class UtilInventorySort {
         if (playerItem == null) {
           continue;
         } // empty inventory slot
-        if (playerItem.getItem().equals(chestItem.getItem())
-            && playerItem.getItemDamage() == chestItem.getItemDamage()) {
+        if (UtilItemStack.canMerge(playerItem, chestItem)) {
           invMax = playerItem.getItem().getItemStackLimit(playerItem);
           room = invMax - playerItem.stackSize;
           if (room <= 0) {
@@ -191,97 +173,118 @@ public class UtilInventorySort {
         } // end if items match
       } // close loop on player inventory items
     } // close loop on chest items
-    updatePlayerContainerClient(player);
-  }
-  final static String NBT_SORT = "terraria_sort";
-  final static int SORT_ALPH = 0;
-  final static int SORT_ALPHI = 1;
-  private static int getNextSort(EntityPlayer p) {
-    int prev = p.getEntityData().getInteger(NBT_SORT);
-    int n = prev + 1;
-    if (n >= 2)
-      n = 0;
-    p.getEntityData().setInteger(NBT_SORT, n);
-    return n;
-  }
-  public static void sort(EntityPlayer player, IInventory invo) {
-    int sortType = getNextSort(player);
-    int iSize = invo.getSizeInventory();
-    Map<String, SortGroup> unames = new HashMap<String, SortGroup>();
-    ItemStack item = null;
-    SortGroup temp;
-    String key = "";
-    for (int i = 0; i < iSize; i++) {
-      item = invo.getStackInSlot(i);
-      if (item == null) {
-        continue;
-      }
-      if (sortType == SORT_ALPH) // : why do it this way ->
-        key = item.getUnlocalizedName() + item.getItemDamage();
-      else if (sortType == SORT_ALPHI)
-        key = item.getItem().getClass().getName() + item.getUnlocalizedName() + item.getItemDamage();
-      // else if(sortType == SORT_CLASS)
-      // key = item.getItem().getClass().getName()+ item.getItemDamage();
-      temp = unames.get(key);
-      if (temp == null) {
-        temp = new SortGroup(key);
-      }
-      if (temp.stacks.size() > 0) {
-        // try to merge with top
-        ItemStack top = temp.stacks.remove(temp.stacks.size() - 1);
-        int room = top.getMaxStackSize() - top.stackSize;
-        if (room > 0) {
-          int moveover = Math.min(item.stackSize, room);
-          top.stackSize += moveover;
-          item.stackSize -= moveover;
-          if (item.stackSize == 0) {
-            item = null;
-            invo.setInventorySlotContents(i, item);
-          }
-        }
-        temp.stacks.add(top);
-      }
-      if (item != null)
-        temp.add(item);
-      unames.put(key, temp);
-    }
-    // http://stackoverflow.com/questions/780541/how-to-sort-a-hashmap-in-java
-    ArrayList<SortGroup> sorted = new ArrayList<SortGroup>(unames.values());
-    Collections.sort(sorted, new Comparator<SortGroup>() {
-      public int compare(SortGroup o1, SortGroup o2) {
-        return o1.key.compareTo(o2.key);
-      }
-    });
-    for (SortGroup p : sorted) {
-      for (int i = 0; i < p.stacks.size(); i++) {
-        invo.setInventorySlotContents(i, null);
-        invo.setInventorySlotContents(i, p.stacks.get(i));
-      }
-    }
-    for (int j = 0; j < iSize; j++) {
-      invo.setInventorySlotContents(j, null);
-    }
-    // alternately loop by rows
-    // so we start at k again, add Const.ALL_COLS to go down one row
-    updatePlayerContainerClient(player);
+    UtilPlayer.updatePlayerContainerClient(player);
   }
   private static int getInvoEnd(EntityPlayer p) {
     return p.inventory.getSizeInventory() - Const.ARMOR_SIZE - 1;//now that we have shield slot, need the offset 1, otherwise boots get included
   }
-  /**
-   * call this from SERVER SIDE if you are doing stuff to containers/invos/tile
-   * entities but your client GUI's are not updating
-   * 
-   * @param p
-   */
-  public static void updatePlayerContainerClient(EntityPlayer p) {
-    // http://www.minecraftforge.net/forum/index.php?topic=15351.0
-    p.inventory.markDirty();
-    if (p.openContainer == null) {
-      ModCyclic.logger.error("Cannot update null container");
+  public static ArrayList<ItemStack> dumpToIInventory(ArrayList<ItemStack> stacks, IInventory inventory) {
+    //and return the remainder after dumping
+    ArrayList<ItemStack> remaining = new ArrayList<ItemStack>();
+    ItemStack chestStack;
+    for (ItemStack current : stacks) {
+      if (current == null) {
+        continue;
+      }
+      for (int i = 0; i < inventory.getSizeInventory(); i++) {
+        if (current == null) {
+          continue;
+        }
+        chestStack = inventory.getStackInSlot(i);
+        if (chestStack == null) {
+          inventory.setInventorySlotContents(i, current);
+          // and dont add current ot remainder at all ! sweet!
+          current = null;
+        }
+        else if (UtilItemStack.canMerge(chestStack, current)) {
+          int space = chestStack.getMaxStackSize() - chestStack.stackSize;
+          int toDeposit = Math.min(space, current.stackSize);
+          if (toDeposit > 0) {
+            current.stackSize -= toDeposit;
+            chestStack.stackSize += toDeposit;
+            if (current.stackSize == 0) {
+              current = null;
+            }
+          }
+        }
+      } // finished current pass over inventory
+      if (current != null) {
+        remaining.add(current);
+      }
     }
-    else {
-      p.openContainer.detectAndSendChanges();
-    }
+    return remaining;
+  }
+  public static BagDepositReturn dumpFromListToIInventory(World world, IInventory chest, ItemStack[] stacks, boolean onlyMatchingItems) {
+    ItemStack chestItem;
+    ItemStack bagItem;
+    int room;
+    int toDeposit;
+    int chestMax;
+    int itemsMoved = 0;
+    for (int islotStacks = 0; islotStacks < stacks.length; islotStacks++) {
+      bagItem = stacks[islotStacks];
+      if (bagItem == null || bagItem.stackSize == 0) {
+        continue;
+      }
+      // System.out.println(bagItem.stackSize + "_" + bagItem.getDisplayName());
+      for (int islotChest = 0; islotChest < chest.getSizeInventory(); islotChest++) {
+        chestItem = chest.getStackInSlot(islotChest);
+        //we have a space in the inventory thats empty. are we allowed
+        if (chestItem == null && onlyMatchingItems == false) {
+          //then yeah we are allowed to use the empty space
+          if (chest.isItemValidForSlot(islotStacks, bagItem)) {
+            // System.out.println("dump at " + islotChest);
+            itemsMoved += bagItem.stackSize;
+            chest.setInventorySlotContents(islotChest, bagItem);
+            stacks[islotStacks] = null;
+            bagItem = null;
+            break;//move to next bag item, we're done here
+          }
+          else {
+            //cant dump here. but also cant merge so move to next slot
+            continue;
+          }
+        }
+        if (chestItem == null) {
+          //chest item is null, and were trying to merge (check is probably redundant here)
+          continue;//go to next chest item
+        }
+        //ok so chestItem is not nulll
+        if (bagItem == null || bagItem.stackSize == 0) {
+          break;//stop lookin in the chest, get a new bag item
+        }
+        bagItem = stacks[islotStacks];
+        if (UtilItemStack.canMerge(bagItem, chestItem)) {
+          chestMax = chestItem.getItem().getItemStackLimit(chestItem);
+          room = chestMax - chestItem.stackSize;
+          if (room <= 0) {
+            continue;//no room on this chest slot, so move to next slot
+          } // no room, check the next spot
+          //System.out.println("merge at " + islotChest);
+          // so if i have 30 room, and 28 items, i deposit 28.
+          // or if i have 30 room and 38 items, i deposit 30
+          toDeposit = Math.min(bagItem.stackSize, room);
+          chestItem.stackSize += toDeposit;
+          chest.setInventorySlotContents(islotChest, chestItem);
+          bagItem.stackSize -= toDeposit;
+          itemsMoved += toDeposit;
+          if (bagItem.stackSize <= 0) {
+            // item stacks with zero count do not destroy
+            // themselves, they show
+            // up and have unexpected behavior in game so set to
+            // empty
+            stacks[islotStacks] = null;
+          }
+          else {
+            // set to new quantity
+            stacks[islotStacks] = bagItem;
+          }
+        } // end if items match
+        if (bagItem == null || bagItem.stackSize == 0) {
+          break;//stop lookin in the chest, get a new bag item
+        }
+      } // close loop on player inventory items
+    } // close loop on chest items
+    return new BagDepositReturn(itemsMoved, stacks);
   }
 }

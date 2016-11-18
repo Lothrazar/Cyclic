@@ -38,8 +38,8 @@ public class BaseCommand implements ICommand {
     return name;
   }
   @Override
-  public int compareTo(ICommand arg0) {
-    return this.equals(arg0) ? 1 : 0;
+  public int compareTo(ICommand arg) {
+    return this.getCommandName().compareTo(arg.getCommandName());
   }
   @Override
   public String getCommandUsage(ICommandSender sender) {

@@ -61,7 +61,7 @@ public class ItemAppleEmerald extends ItemFood implements IHasRecipe {
       for (MerchantRecipe merchantrecipe : villager.getRecipes(player)) {
         if (merchantrecipe.isRecipeDisabled()) {
           //vanilla code as of 1.9.4 odes this (2d6+2) 
-          merchantrecipe.increaseMaxTradeUses(villager.worldObj.rand.nextInt(6) + villager.worldObj.rand.nextInt(6) + 2);
+          merchantrecipe.increaseMaxTradeUses(villager.getEntityWorld().rand.nextInt(6) + villager.getEntityWorld().rand.nextInt(6) + 2);
           count++;
         }
       }

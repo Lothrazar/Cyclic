@@ -87,7 +87,7 @@ public class ItemToolPush extends BaseTool implements IHasRecipe {
       ActionType.setTimeout(held);
       event.setCanceled(true);
       UtilSound.playSound(player, player.getPosition(), SoundRegistry.dcoin, SoundCategory.PLAYERS);
-      if (!player.worldObj.isRemote) { // server side
+      if (!player.getEntityWorld().isRemote) { // server side
         ActionType.toggle(held);
         UtilChat.addChatMessage(player, UtilChat.lang(ActionType.getName(held)));
       }
@@ -98,6 +98,7 @@ public class ItemToolPush extends BaseTool implements IHasRecipe {
     //if we only run this on server, clients dont get the udpate
     //so run it only on client, let packet run the server
     if (worldObj.isRemote) {
+      
       ModCyclic.network.sendToServer(new PacketMoveBlock(pos, ActionType.values()[ActionType.get(stack)], side));
     }
     //hack the sound back in

@@ -30,6 +30,7 @@ public class EntitySnowballBolt extends EntityThrowable {
   }
   @Override
   protected void onImpact(RayTraceResult mop) {
+    World world = getEntityWorld();
     if (mop.entityHit != null && mop.entityHit instanceof EntityLivingBase) {
       EntityLivingBase e = (EntityLivingBase) mop.entityHit;
       if (e.isBurning()) {
@@ -45,24 +46,24 @@ public class EntitySnowballBolt extends EntityThrowable {
     BlockPos pos = mop.getBlockPos();
     if (pos == null) { return; } // hasn't happened yet, but..
     //		UtilParticle.spawnParticle(this.worldObj, EnumParticleTypes.SNOWBALL, pos);
-    UtilParticle.spawnParticle(this.worldObj, EnumParticleTypes.SNOW_SHOVEL, pos);
+    UtilParticle.spawnParticle(world, EnumParticleTypes.SNOW_SHOVEL, pos);
     if (mop.sideHit != null && this.getThrower() instanceof EntityPlayer) {
-      this.worldObj.extinguishFire((EntityPlayer) this.getThrower(), pos, mop.sideHit);
+      world.extinguishFire((EntityPlayer) this.getThrower(), pos, mop.sideHit);
     }
     if (this.isInWater()) {
       BlockPos posWater = this.getPosition();
-      if (this.worldObj.getBlockState(posWater) != Blocks.WATER.getDefaultState()) {
+      if (world.getBlockState(posWater) != Blocks.WATER.getDefaultState()) {
         posWater = null;// look for the closest water source, sometimes it was
         // air and we
         // got ice right above the water if we dont do this check
-        if (this.worldObj.getBlockState(mop.getBlockPos()) == Blocks.WATER.getDefaultState())
+        if (world.getBlockState(mop.getBlockPos()) == Blocks.WATER.getDefaultState())
           posWater = mop.getBlockPos();
-        else if (this.worldObj.getBlockState(mop.getBlockPos().offset(mop.sideHit)) == Blocks.WATER.getDefaultState())
+        else if (world.getBlockState(mop.getBlockPos().offset(mop.sideHit)) == Blocks.WATER.getDefaultState())
           posWater = mop.getBlockPos().offset(mop.sideHit);
       }
       if (posWater != null) // rarely happens but it does
       {
-        this.worldObj.setBlockState(posWater, Blocks.ICE.getDefaultState());
+        world.setBlockState(posWater, Blocks.ICE.getDefaultState());
       }
     }
     else {
@@ -70,35 +71,35 @@ public class EntitySnowballBolt extends EntityThrowable {
       BlockPos hit = pos;
       BlockPos hitDown = hit.down();
       BlockPos hitUp = hit.up();
-      IBlockState hitState = this.worldObj.getBlockState(hit);
+      IBlockState hitState = world.getBlockState(hit);
       if (hitState.getBlock() == Blocks.SNOW_LAYER) {
-        setMoreSnow(this.worldObj, hit);
+        setMoreSnow(world, hit);
       } // these other cases do not really fire, i think. unless the entity goes
       // inside a
       // block before despawning
-      else if (this.worldObj.getBlockState(hitDown).getBlock() == Blocks.SNOW_LAYER) {
-        setMoreSnow(this.worldObj, hitDown);
+      else if (world.getBlockState(hitDown).getBlock() == Blocks.SNOW_LAYER) {
+        setMoreSnow(world, hitDown);
       }
-      else if (this.worldObj.getBlockState(hitUp).getBlock() == Blocks.SNOW_LAYER) {
-        setMoreSnow(this.worldObj, hitUp);
+      else if (world.getBlockState(hitUp).getBlock() == Blocks.SNOW_LAYER) {
+        setMoreSnow(world, hitUp);
       }
-      else if (this.worldObj.isAirBlock(hit) == false // one below us cannot be
+      else if (world.isAirBlock(hit) == false // one below us cannot be
           // air
           && // and we landed at air or replaceable
-          this.worldObj.isAirBlock(hitUp) == true)
+          world.isAirBlock(hitUp) == true)
       // this.worldObj.getBlockState(this.getPosition()).getBlock().isReplaceable(this.worldObj,
       // this.getPosition()))
       {
-        setNewSnow(this.worldObj, hitUp);
+        setNewSnow(world, hitUp);
       }
-      else if (this.worldObj.isAirBlock(hit) == false // one below us cannot be
+      else if (world.isAirBlock(hit) == false // one below us cannot be
           // air
           && // and we landed at air or replaceable
-          this.worldObj.isAirBlock(hitUp) == true)
+          world.isAirBlock(hitUp) == true)
       // this.worldObj.getBlockState(this.getPosition()).getBlock().isReplaceable(this.worldObj,
       // this.getPosition()))
       {
-        setNewSnow(this.worldObj, hitUp);
+        setNewSnow(world, hitUp);
       }
     }
     this.setDead();

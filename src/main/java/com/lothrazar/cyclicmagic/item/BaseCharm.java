@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.item;
-import com.lothrazar.cyclicmagic.util.UtilItem;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -25,7 +25,7 @@ public abstract class BaseCharm extends BaseItem implements baubles.api.IBauble 
     return stack.getItemDamage() < stack.getMaxDamage();
   }
   public void damageCharm(EntityPlayer living, ItemStack stack) {
-    UtilItem.damageItem(living, stack);
+    UtilItemStack.damageItem(living, stack);
   }
   public void addRecipeAndRepair(Item craftItem) {
     this.addRecipeAndRepair(new ItemStack(craftItem));

@@ -136,7 +136,7 @@ public class UtilWorld {
       for (int yLoop = yMin; yLoop <= yMax; yLoop++) {
         for (int zLoop = zMin; zLoop <= zMax; zLoop++) {
           posCurrent = new BlockPos(xLoop, yLoop, zLoop);
-          if (player.worldObj.getBlockState(posCurrent).getBlock().equals(blockHunt)) {
+          if (player.getEntityWorld().getBlockState(posCurrent).getBlock().equals(blockHunt)) {
             // find closest?
             if (found == null) {
               found = posCurrent;
@@ -193,7 +193,7 @@ public class UtilWorld {
     waterBoth.add(Blocks.FLOWING_WATER);
     waterBoth.add(Blocks.WATER);
     if (pos == null) { return false; }
-    return world.isAirBlock(pos) || world.getBlockState(pos).getBlock().getUnlocalizedName().equalsIgnoreCase("tile.water") || (world.getBlockState(pos) != null 
+    return world.isAirBlock(pos) || world.getBlockState(pos).getBlock().getUnlocalizedName().equalsIgnoreCase("tile.water") || (world.getBlockState(pos) != null
         && waterBoth.contains(world.getBlockState(pos).getBlock()));
   }
 }

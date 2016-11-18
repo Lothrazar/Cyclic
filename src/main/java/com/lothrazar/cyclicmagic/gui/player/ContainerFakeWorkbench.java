@@ -9,19 +9,19 @@ import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.world.World;
 
 public class ContainerFakeWorkbench extends ContainerWorkbench {
-  private World worldObj;
+  private World world;
   public ContainerFakeWorkbench(InventoryPlayer par1InventoryPlayer, World par2World) {
     super(par1InventoryPlayer, par2World, par1InventoryPlayer.player.getPosition());
-    worldObj = par2World;
+    world = par2World;
   }
   @Override
   public void onCraftMatrixChanged(IInventory par1IInventory) {
-    craftResult.setInventorySlotContents(0, CraftingManager.getInstance().findMatchingRecipe(craftMatrix, worldObj));
+    craftResult.setInventorySlotContents(0, CraftingManager.getInstance().findMatchingRecipe(craftMatrix, world));
   }
   @Override
   public void onContainerClosed(EntityPlayer par1EntityPlayer) {
     super.onContainerClosed(par1EntityPlayer);
-    if (!worldObj.isRemote) {
+    if (!world.isRemote) {
       for (int var2 = 0; var2 < 9; ++var2) {
         ItemStack var3 = craftMatrix.getStackInSlot(var2);
         if (var3 != null) {

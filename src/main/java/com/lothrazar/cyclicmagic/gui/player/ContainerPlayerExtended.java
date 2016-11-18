@@ -24,7 +24,7 @@ public class ContainerPlayerExtended extends ContainerBase {
     this.thePlayer = player;
     inventory = eInvo;//new InventoryPlayerExtended(player);
     inventory.setEventHandler(this);
-    if (!player.worldObj.isRemote) {
+    if (!player.getEntityWorld().isRemote) {
       UtilPlayerInventoryFilestorage.putDataIntoInventory(inventory, player);
       //      inventory.stackList = UtilPlayerInventoryFilestorage.getPlayerInventory(player).stackList;
     }
@@ -81,7 +81,7 @@ public class ContainerPlayerExtended extends ContainerBase {
   @Override
   public void onContainerClosed(EntityPlayer player) {
     super.onContainerClosed(player);
-    if (!player.worldObj.isRemote) {
+    if (!player.getEntityWorld().isRemote) {
       UtilPlayerInventoryFilestorage.setPlayerInventory(player, inventory);
     }
   }

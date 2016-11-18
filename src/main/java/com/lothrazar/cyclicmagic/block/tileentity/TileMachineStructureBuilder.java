@@ -1,10 +1,11 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.util.UtilItem;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
+import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
@@ -13,6 +14,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo implements ITileRedstoneToggle {
   private int timer;
@@ -59,19 +61,19 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
     // only rebuild shapes if they are different
     switch (buildType) {
     case CIRCLE:
-      this.shape = UtilPlaceBlocks.circle(this.pos, this.getSize() * 2);
+      this.shape = UtilShape.circle(this.pos, this.getSize() * 2);
       break;
     case FACING:
-      this.shape = UtilPlaceBlocks.line(pos, this.getCurrentFacing(), this.getSize());
+      this.shape = UtilShape.line(pos, this.getCurrentFacing(), this.getSize());
       break;
     case SQUARE:
-      this.shape = UtilPlaceBlocks.squareHorizontalHollow(this.pos, this.getSize());
+      this.shape = UtilShape.squareHorizontalHollow(this.pos, this.getSize());
       break;
     default:
       break;
     }
     if (this.buildHeight > 1) { //first layer is already done, add remaining
-      this.shape = UtilPlaceBlocks.repeatShapeByHeight(shape, buildHeight - 1);
+      this.shape = UtilShape.repeatShapeByHeight(shape, buildHeight - 1);
     }
     this.shapeIndex = 0;
     if (this.shape.size() > 0)
@@ -315,7 +317,8 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
       markDirty();
       return;
     }
-    if (!worldObj.isRemote && nextPos != null && worldObj.rand.nextDouble() < 0.1 && inv[0] != null) {
+    World world = getWorld();
+    if (!world.isRemote && nextPos != null && world.rand.nextDouble() < 0.1 && inv[0] != null) {
       UtilParticle.spawnParticlePacket(EnumParticleTypes.DRAGON_BREATH, nextPos, 5);
     }
     ItemStack stack = getStackInSlot(0);
@@ -328,9 +331,9 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
       else {
         //timer is still moving, dont trigger. trigger stays false
         //but while im here, check if this spot is even valid
-        if (worldObj.isAirBlock(nextPos) == false) {
+        if (world.isAirBlock(nextPos) == false) {
           //but dont move instantly, slow it down to show some particles to show movement
-          if (worldObj.rand.nextDouble() < 0.75) {
+          if (world.rand.nextDouble() < 0.75) {
             this.incrementPosition();
           }
         } //else its not air.. may or may not be valid so ignore
@@ -339,10 +342,10 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
     if (trigger) {
       Block stuff = Block.getBlockFromItem(stack.getItem());
       if (stuff != null) {
-        IBlockState placeState = UtilItem.getStateFromMeta(stuff, stack.getMetadata());
+        IBlockState placeState = UtilItemStack.getStateFromMeta(stuff, stack.getMetadata());
         //ModMain.logger.info("try place " + this.nextPos + " type " + this.buildType + "_" + this.getBuildTypeEnum().name());
-        if (UtilPlaceBlocks.placeStateSafe(worldObj, null, nextPos, placeState)) {
-          if (worldObj.isRemote == false) {//consume item on server
+        if (UtilPlaceBlocks.placeStateSafe(world, null, nextPos, placeState)) {
+          if (world.isRemote == false) {//consume item on server
             this.decrStackSize(0, 1);
           }
         }
@@ -358,7 +361,7 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
     if (this.nextPos == null) {
       this.nextPos = this.pos;
     }
-    if (this.worldObj == null) { return; }
+    if (this.getWorld() == null) { return; }
     if (this.shape == null || this.shape.size() == 0) {
       this.rebuildShape();
     }

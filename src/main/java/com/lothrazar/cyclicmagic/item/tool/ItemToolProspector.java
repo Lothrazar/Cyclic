@@ -42,7 +42,7 @@ public class ItemToolProspector extends BaseTool implements IHasRecipe, IHasConf
       for (int i = 0; i < range; i++) {
         if (at != null && at.getBlock() != null) {
           name = at.getBlock().getLocalizedName();
-          if(name == "tile.air.name"){
+          if (name == "tile.air.name") {
             name = "Air";//workaround for no lang entry
           }
           if (mapList.containsKey(name)) {

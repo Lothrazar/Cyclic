@@ -7,8 +7,8 @@ import com.lothrazar.cyclicmagic.item.BaseTool;
 import com.lothrazar.cyclicmagic.net.PacketSwapBlock;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilInventory;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
+import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -99,7 +99,7 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
       ActionType.setTimeout(held);
       event.setCanceled(true);
       UtilSound.playSound(player, player.getPosition(), SoundRegistry.dcoin, SoundCategory.PLAYERS);
-      if (!player.worldObj.isRemote) { // server side
+      if (!player.getEntityWorld().isRemote) { // server side
         ActionType.toggle(held);
         UtilChat.addChatMessage(player, UtilChat.lang(ActionType.getName(held)));
       }
@@ -114,7 +114,7 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
     if (held != null && held.getItem() == this) {
       int xoffset = 6;//was 30 if manabar is showing
       int ymain = 6;
-      int slot = UtilInventory.getFirstSlotWithBlock(player);
+      int slot = UtilPlayer.getFirstSlotWithBlock(player);
       if (slot >= 0) {
         ItemStack stack = player.inventory.getStackInSlot(slot);
         if (stack != null)

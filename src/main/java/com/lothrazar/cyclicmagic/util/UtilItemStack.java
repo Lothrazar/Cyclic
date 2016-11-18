@@ -1,7 +1,9 @@
 package com.lothrazar.cyclicmagic.util;
+import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -9,7 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class UtilItem {
+public class UtilItemStack {
   /**
    * match item, damage, and NBT
    * 
@@ -22,6 +24,16 @@ public class UtilItem {
     return (bagItem.getItem().equals(chestItem.getItem())
         && bagItem.getItemDamage() == chestItem.getItemDamage()
         && ItemStack.areItemStackTagsEqual(bagItem, chestItem));
+  }
+  public static int mergeItemsBetweenStacks(ItemStack takeFrom, ItemStack moveTo) {
+    int room = moveTo.getMaxStackSize() - moveTo.stackSize;
+    int moveover = 0;
+    if (room > 0) {
+      moveover = Math.min(takeFrom.stackSize, room);
+      moveTo.stackSize += moveover;
+      takeFrom.stackSize -= moveover;
+    }
+    return moveover;
   }
   public static int getMaxDmgFraction(Item tool, int d) {
     return tool.getMaxDamage() - (int) MathHelper.floor_double(tool.getMaxDamage() / d);
@@ -68,5 +80,24 @@ public class UtilItem {
   @SuppressWarnings("deprecation")
   public static float getPlayerRelativeBlockHardness(Block b, IBlockState state, EntityPlayer player, World worldIn, BlockPos pos) {
     return b.getPlayerRelativeBlockHardness(state, player, worldIn, pos);
+  }
+  public static EntityItem dropItemStackInWorld(World worldObj, BlockPos pos, Block block) {
+    return dropItemStackInWorld(worldObj, pos, new ItemStack(block));
+  }
+  public static EntityItem dropItemStackInWorld(World worldObj, BlockPos pos, Item item) {
+    return dropItemStackInWorld(worldObj, pos, new ItemStack(item));
+  }
+  public static EntityItem dropItemStackInWorld(World worldObj, BlockPos pos, ItemStack stack) {
+    EntityItem entityItem = new EntityItem(worldObj, pos.getX(), pos.getY(), pos.getZ(), stack);
+    if (worldObj.isRemote == false) {
+      // do not spawn a second 'ghost' one onclient side
+      worldObj.spawnEntityInWorld(entityItem);
+    }
+    return entityItem;
+  }
+  public static void dropItemStacksInWorld(World world, BlockPos pos, List<ItemStack> stacks) {
+    for (ItemStack s : stacks) {
+      UtilItemStack.dropItemStackInWorld(world, pos, s);
+    }
   }
 }

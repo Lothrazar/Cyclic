@@ -27,10 +27,11 @@ public class EntityHarvestBolt extends EntityThrowable {
       BlockPos offset = mop.getBlockPos().offset(mop.sideHit);
       HarestCropsConfig conf = new HarestCropsConfig();
       // it harvests a horizontal slice each time
-      UtilHarvestCrops.harvestArea(this.worldObj, mop.getBlockPos(), range_main, conf);
-      UtilHarvestCrops.harvestArea(this.worldObj, offset, range_main, conf);
-      UtilHarvestCrops.harvestArea(this.worldObj, offset.up(), range_offset, conf);
-      UtilHarvestCrops.harvestArea(this.worldObj, offset.down(), range_offset, conf);
+      World world = getEntityWorld();
+      UtilHarvestCrops.harvestArea(world, mop.getBlockPos(), range_main, conf);
+      UtilHarvestCrops.harvestArea(world, offset, range_main, conf);
+      UtilHarvestCrops.harvestArea(world, offset.up(), range_offset, conf);
+      UtilHarvestCrops.harvestArea(world, offset.down(), range_offset, conf);
     }
     this.setDead();
   }

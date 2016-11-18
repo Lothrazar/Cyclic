@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.util;
-import java.util.ArrayList;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -7,18 +7,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 
-public class UtilInventory {
-  public static boolean hasValidOpenContainer(EntityPlayer p) {
-    return p != null && p.openContainer != null && p.openContainer.inventorySlots.size() > 0 &&
-        p.openContainer.getSlot(0) != null &&
-        p.openContainer.getSlot(0).inventory != null;
-  }
-  public static IInventory getOpenContainerInventory(EntityPlayer p) {
-    // a workaround since player does not reference the inventory, only the
-    // container
-    // and Container has no get method
-    return p.openContainer.getSlot(0).inventory;
-  }
+public class UtilPlayer {
   public static ItemStack getPlayerItemIfHeld(EntityPlayer player) {
     ItemStack wand = player.getHeldItemMainhand();
     if (wand == null) {
@@ -26,17 +15,28 @@ public class UtilInventory {
     }
     return wand;
   }
-  final static int width = 9;
-  public static int mergeItemsBetweenStacks(ItemStack takeFrom, ItemStack moveTo) {
-    int room = moveTo.getMaxStackSize() - moveTo.stackSize;
-    int moveover = 0;
-    if (room > 0) {
-      moveover = Math.min(takeFrom.stackSize, room);
-      moveTo.stackSize += moveover;
-      takeFrom.stackSize -= moveover;
+  public static IBlockState getBlockstateFromSlot(EntityPlayer player, int slot) {
+    ItemStack stack = player.inventory.getStackInSlot(slot);
+    if (stack != null &&
+        stack.getItem() != null &&
+        Block.getBlockFromItem(stack.getItem()) != null) {
+      Block b = Block.getBlockFromItem(stack.getItem());
+      return UtilItemStack.getStateFromMeta(b, stack.getMetadata());
     }
-    return moveover;
+    return null;
   }
+  public static int getFirstSlotWithBlock(EntityPlayer player) {
+    int ret = -1;
+    ItemStack stack;
+    for (int i = 9; i < 27; i++) {
+      stack = player.inventory.getStackInSlot(i);
+      if (stack != null &&
+          stack.getItem() != null &&
+          Block.getBlockFromItem(stack.getItem()) != null) { return i; }
+    }
+    return ret;
+  }
+  final static int width = 9;
   public static void shiftSlotDown(EntityPlayer player, int currentItem) {
     int topNumber = currentItem + width;
     int midNumber = topNumber + width;
@@ -100,6 +100,12 @@ public class UtilInventory {
     shiftSlotUp(player, 7);
     shiftSlotUp(player, 8);
   }
+  public static IInventory getOpenContainerInventory(EntityPlayer p) {
+    // a workaround since player does not reference the inventory, only the
+    // container
+    // and Container has no get method
+    return p.openContainer.getSlot(0).inventory;
+  }
   public static void decrStackSize(EntityPlayer entityPlayer, int currentItem) {
     if (entityPlayer.capabilities.isCreativeMode == false) {
       entityPlayer.inventory.decrStackSize(currentItem, 1);
@@ -110,61 +116,25 @@ public class UtilInventory {
       entityPlayer.getHeldItem(hand).stackSize--;
     }
   }
-  public static IBlockState getBlockstateFromSlot(EntityPlayer player, int slot) {
-    ItemStack stack = player.inventory.getStackInSlot(slot);
-    if (stack != null &&
-        stack.getItem() != null &&
-        Block.getBlockFromItem(stack.getItem()) != null) {
-      Block b = Block.getBlockFromItem(stack.getItem());
-      return UtilItem.getStateFromMeta(b, stack.getMetadata());
-    }
-    return null;
+  public static boolean hasValidOpenContainer(EntityPlayer p) {
+    return p != null && p.openContainer != null && p.openContainer.inventorySlots.size() > 0 &&
+        p.openContainer.getSlot(0) != null &&
+        p.openContainer.getSlot(0).inventory != null;
   }
-  public static int getFirstSlotWithBlock(EntityPlayer player) {
-    int ret = -1;
-    ItemStack stack;
-    for (int i = 9; i < 27; i++) {
-      stack = player.inventory.getStackInSlot(i);
-      if (stack != null &&
-          stack.getItem() != null &&
-          Block.getBlockFromItem(stack.getItem()) != null) { return i; }
+  /**
+   * call this from SERVER SIDE if you are doing stuff to containers/invos/tile
+   * entities but your client GUI's are not updating
+   * 
+   * @param p
+   */
+  public static void updatePlayerContainerClient(EntityPlayer p) {
+    // http://www.minecraftforge.net/forum/index.php?topic=15351.0
+    p.inventory.markDirty();
+    if (p.openContainer == null) {
+      ModCyclic.logger.error("Cannot update null container");
     }
-    return ret;
-  }
-  public static ArrayList<ItemStack> dumpToIInventory(ArrayList<ItemStack> stacks, IInventory inventory) {
-    //and return the remainder after dumping
-    ArrayList<ItemStack> remaining = new ArrayList<ItemStack>();
-    ItemStack chestStack;
-    for (ItemStack current : stacks) {
-      if (current == null) {
-        continue;
-      }
-      for (int i = 0; i < inventory.getSizeInventory(); i++) {
-        if (current == null) {
-          continue;
-        }
-        chestStack = inventory.getStackInSlot(i);
-        if (chestStack == null) {
-          inventory.setInventorySlotContents(i, current);
-          // and dont add current ot remainder at all ! sweet!
-          current = null;
-        }
-        else if (UtilItem.canMerge(chestStack, current)) {
-          int space = chestStack.getMaxStackSize() - chestStack.stackSize;
-          int toDeposit = Math.min(space, current.stackSize);
-          if (toDeposit > 0) {
-            current.stackSize -= toDeposit;
-            chestStack.stackSize += toDeposit;
-            if (current.stackSize == 0) {
-              current = null;
-            }
-          }
-        }
-      } // finished current pass over inventory
-      if (current != null) {
-        remaining.add(current);
-      }
+    else {
+      p.openContainer.detectAndSendChanges();
     }
-    return remaining;
   }
 }

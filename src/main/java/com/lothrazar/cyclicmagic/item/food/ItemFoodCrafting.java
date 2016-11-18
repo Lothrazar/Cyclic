@@ -37,7 +37,7 @@ public class ItemFoodCrafting extends ItemFood implements IHasRecipe {
     UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT_MAGIC, player.getPosition());
     UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT_MAGIC, player.getPosition().up());
     UtilSound.playSound(player, SoundRegistry.bwewe);
-    if (player.worldObj.isRemote) {
+    if (player.getEntityWorld().isRemote) {
       UtilChat.addChatMessage(player, "unlocks.crafting");
     }
   }

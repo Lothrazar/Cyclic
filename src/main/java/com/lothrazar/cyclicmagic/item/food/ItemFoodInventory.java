@@ -41,7 +41,7 @@ public class ItemFoodInventory extends ItemFood implements IHasRecipe, IHasConfi
     UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT_MAGIC, player.getPosition());
     UtilParticle.spawnParticle(world, EnumParticleTypes.CRIT_MAGIC, player.getPosition().up());
     UtilSound.playSound(player, SoundRegistry.bwewe);
-    if (player.worldObj.isRemote) {
+    if (player.getEntityWorld().isRemote) {
       UtilChat.addChatMessage(player, "unlocks.extended");
     }
   }

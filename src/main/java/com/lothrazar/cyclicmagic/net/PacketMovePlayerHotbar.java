@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.net;
-import com.lothrazar.cyclicmagic.util.UtilInventory;
+import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -30,10 +30,10 @@ public class PacketMovePlayerHotbar implements IMessage, IMessageHandler<PacketM
   public IMessage onMessage(PacketMovePlayerHotbar message, MessageContext ctx) {
     EntityPlayer player = ctx.getServerHandler().playerEntity;
     if (message.isDown) {
-      UtilInventory.shiftBarDown(player);
+      UtilPlayer.shiftBarDown(player);
     }
     else {
-      UtilInventory.shiftBarUp(player);
+      UtilPlayer.shiftBarUp(player);
     }
     return null;
   }

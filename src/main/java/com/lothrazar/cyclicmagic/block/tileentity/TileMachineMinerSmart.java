@@ -3,7 +3,7 @@ import java.lang.ref.WeakReference;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
-import com.lothrazar.cyclicmagic.util.UtilItem;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
@@ -54,9 +54,10 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
     if (!(this.onlyRunIfPowered() && this.isPowered() == false)) {
       this.spawnParticlesAbove();
     }
-    if (worldObj instanceof WorldServer) {
+    World world = getWorld();
+    if (world instanceof WorldServer) {
       if (fakePlayer == null) {
-        fakePlayer = UtilFakePlayer.initFakePlayer((WorldServer) worldObj);
+        fakePlayer = UtilFakePlayer.initFakePlayer((WorldServer) world);
         if (fakePlayer == null) {
           ModCyclic.logger.warn("Warning: Fake player failed to init ");
           return;
@@ -64,8 +65,8 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
       }
       if (uuid == null) {
         uuid = UUID.randomUUID();
-        IBlockState state = worldObj.getBlockState(this.pos);
-        worldObj.notifyBlockUpdate(pos, state, state, 3);
+        IBlockState state = world.getBlockState(this.pos);
+        world.notifyBlockUpdate(pos, state, state, 3);
       }
       ItemStack maybeTool = inv[toolSlot];
       if (maybeTool == null) {
@@ -104,8 +105,8 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
         }
       }
       if (isCurrentlyMining) {
-        IBlockState targetState = worldObj.getBlockState(targetPos);
-        curBlockDamage += UtilItem.getPlayerRelativeBlockHardness(targetState.getBlock(), targetState, fakePlayer.get(), worldObj, targetPos);
+        IBlockState targetState = world.getBlockState(targetPos);
+        curBlockDamage += UtilItemStack.getPlayerRelativeBlockHardness(targetState.getBlock(), targetState, fakePlayer.get(), world, targetPos);
         if (curBlockDamage >= 1.0f) {
           isCurrentlyMining = false;
           resetProgress(targetPos);
@@ -114,14 +115,15 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
           }
         }
         else {
-          worldObj.sendBlockBreakProgress(uuid.hashCode(), targetPos, (int) (curBlockDamage * 10.0F) - 1);
+          world.sendBlockBreakProgress(uuid.hashCode(), targetPos, (int) (curBlockDamage * 10.0F) - 1);
         }
       }
     }
   }
   private boolean isTargetValid() {
-    if (worldObj.isAirBlock(targetPos) || worldObj.getBlockState(targetPos) == null) { return true; }
-    IBlockState targetState = worldObj.getBlockState(targetPos);
+    World world = getWorld();
+    if (world.isAirBlock(targetPos) || world.getBlockState(targetPos) == null) { return true; }
+    IBlockState targetState = world.getBlockState(targetPos);
     Block target = targetState.getBlock();
     //else check blacklist
     ItemStack item;
@@ -145,7 +147,8 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
     if (height == 0) {
       height = 6;
     } //should be in first time init. it needs a default
-    int rollHeight = worldObj.rand.nextInt(height);
+    World world = getWorld();
+    int rollHeight = world.rand.nextInt(height);
     //now do the vertical
     if (rollHeight > 0) {
       targetPos = targetPos.offset(EnumFacing.UP, rollHeight);
@@ -155,8 +158,8 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
     //      targetPos = targetPos.offset(EnumFacing.DOWN, -1*rollHeight);
     //    }
     //HORIZONTAL
-    int randNS = worldObj.rand.nextInt(RADIUS * 2 + 1) - RADIUS;
-    int randEW = worldObj.rand.nextInt(RADIUS * 2 + 1) - RADIUS;
+    int randNS = world.rand.nextInt(RADIUS * 2 + 1) - RADIUS;
+    int randEW = world.rand.nextInt(RADIUS * 2 + 1) - RADIUS;
     //(" H, NS, EW : "+ rollHeight +":"+ randNS +":"+ randEW);
     //both can be zero
     if (randNS > 0) {
@@ -177,6 +180,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
   private static final String NBTDAMAGE = "curBlockDamage";
   private static final String NBTPLAYERID = "uuid";
   private static final String NBTTARGET = "target";
+  private static final String NBTHEIGHT = "h";
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
     tagCompound.setInteger(NBT_REDST, this.needsRedstone);
@@ -188,7 +192,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
     }
     tagCompound.setBoolean(NBTMINING, isCurrentlyMining);
     tagCompound.setFloat(NBTDAMAGE, curBlockDamage);
-    tagCompound.setInteger("h", height);
+    tagCompound.setInteger(NBTHEIGHT, height);
     //invo stuff
     NBTTagList itemList = new NBTTagList();
     for (int i = 0; i < inv.length; i++) {
@@ -218,7 +222,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
     }
     isCurrentlyMining = tagCompound.getBoolean(NBTMINING);
     curBlockDamage = tagCompound.getFloat(NBTDAMAGE);
-    height = tagCompound.getInteger("h");
+    height = tagCompound.getInteger(NBTHEIGHT);
     //invo stuff
     NBTTagList tagList = tagCompound.getTagList(NBT_INV, 10);
     for (int i = 0; i < tagList.tagCount(); i++) {
@@ -237,7 +241,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
   private void resetProgress(BlockPos targetPos) {
     if (uuid != null) {
       //BlockPos targetPos = pos.offset(state.getValue(BlockMiner.PROPERTYFACING));
-      worldObj.sendBlockBreakProgress(uuid.hashCode(), targetPos, -1);
+      getWorld().sendBlockBreakProgress(uuid.hashCode(), targetPos, -1);
       curBlockDamage = 0;
     }
   }

@@ -8,9 +8,9 @@ import java.util.Map;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap;
 import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.WandType;
-import com.lothrazar.cyclicmagic.util.UtilInventory;
-import com.lothrazar.cyclicmagic.util.UtilItem;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
+import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.Block;
@@ -87,7 +87,7 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
   }
   private void handle(PacketSwapBlock message, MessageContext ctx) {
     EntityPlayer player = ctx.getServerHandler().playerEntity;
-    World worldObj = player.worldObj;
+    World worldObj = player.getEntityWorld();
     List<BlockPos> places = new ArrayList<BlockPos>();
     int xMin = message.pos.getX();
     int yMin = message.pos.getY();
@@ -168,7 +168,7 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
             continue; //dont process the same location more than once per click
           }
           processed.put(curPos, processed.get(curPos) + 1);// ++
-          int slot = UtilInventory.getFirstSlotWithBlock(player);
+          int slot = UtilPlayer.getFirstSlotWithBlock(player);
           if (slot < 0) {
             continue;//you have no materials left
           }
@@ -183,8 +183,8 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
             //dont build in air
             continue;
           }
-          newToPlace = UtilInventory.getBlockstateFromSlot(player, slot);
-          if (UtilItem.getPlayerRelativeBlockHardness(replaced.getBlock(), replaced, player, worldObj, curPos) < 0) {
+          newToPlace = UtilPlayer.getBlockstateFromSlot(player, slot);
+          if (UtilItemStack.getPlayerRelativeBlockHardness(replaced.getBlock(), replaced, player, worldObj, curPos) < 0) {
             //is unbreakable ie bedrock
             continue;
           }
@@ -202,7 +202,7 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
           Block block = replaced.getBlock();
           // if (worldObj.destroyBlock(curPos, true)) {
           if (UtilPlaceBlocks.placeStateOverwrite(worldObj, player, curPos, newToPlace)) {
-            UtilInventory.decrStackSize(player, slot);
+            UtilPlayer.decrStackSize(player, slot);
             block.dropBlockAsItem(worldObj, curPos, replaced, 0);//zero is fortune level
           }
         } // close off the for loop   

@@ -40,7 +40,7 @@ public class EnchantLifeLeech extends Enchantment {
         //so that means enchantment I giving poison I means this
         int restore = (int) Math.max(Math.ceil(target.getMaxHealth() / 5), 4);
         int min = 1;//so if restore starts at 4 the rand will be [min,restore]
-        restore = attacker.worldObj.rand.nextInt(restore + 1) + min;
+        restore = attacker.getEntityWorld().rand.nextInt(restore + 1) + min;
         if (restore > 0) {
           attacker.heal(restore);
           attacker.getFoodStats().setFoodLevel(attacker.getFoodStats().getFoodLevel() + restore);
