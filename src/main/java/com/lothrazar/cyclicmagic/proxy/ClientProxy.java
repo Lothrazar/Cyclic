@@ -139,8 +139,8 @@ public class ClientProxy extends CommonProxy {
       // Get the block position and make sure it is a block
       // World world = player.worldObj;
       BlockPos blockPos = mouseOver.getBlockPos();
-      if (blockPos != null && player.worldObj.getBlockState(blockPos) != null
-          && player.worldObj.isAirBlock(blockPos) == false) { return blockPos.offset(mouseOver.sideHit); }
+      if (blockPos != null && player.getEntityWorld().getBlockState(blockPos) != null
+          && player.getEntityWorld().isAirBlock(blockPos) == false) { return blockPos.offset(mouseOver.sideHit); }
     }
     return null;
   }

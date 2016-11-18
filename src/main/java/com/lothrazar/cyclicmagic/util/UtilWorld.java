@@ -136,7 +136,7 @@ public class UtilWorld {
       for (int yLoop = yMin; yLoop <= yMax; yLoop++) {
         for (int zLoop = zMin; zLoop <= zMax; zLoop++) {
           posCurrent = new BlockPos(xLoop, yLoop, zLoop);
-          if (player.worldObj.getBlockState(posCurrent).getBlock().equals(blockHunt)) {
+          if (player.getEntityWorld().getBlockState(posCurrent).getBlock().equals(blockHunt)) {
             // find closest?
             if (found == null) {
               found = posCurrent;

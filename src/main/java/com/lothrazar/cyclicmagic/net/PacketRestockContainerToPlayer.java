@@ -31,7 +31,7 @@ public class PacketRestockContainerToPlayer implements IMessage, IMessageHandler
     EntityPlayer p = ctx.getServerHandler().playerEntity;
     if (UtilPlayer.hasValidOpenContainer(p)) {
       IInventory openInventory = UtilPlayer.getOpenContainerInventory(p);
-      UtilInventoryTransfer.sortFromInventoryToPlayer(p.worldObj, openInventory, p, GuiTerrariaButtonsModule.restockLeaveOne);
+      UtilInventoryTransfer.sortFromInventoryToPlayer(p.getEntityWorld(), openInventory, p, GuiTerrariaButtonsModule.restockLeaveOne);
     }
     return null;
   }

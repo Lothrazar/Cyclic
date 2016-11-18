@@ -71,7 +71,7 @@ public class ItemFoodCorruptedChorus extends ItemFood implements IHasRecipe, IHa
   public void onPlayerUpdate(LivingUpdateEvent event) {
     if (event.getEntityLiving() instanceof EntityPlayer == false) { return; }
     EntityPlayer player = (EntityPlayer) event.getEntityLiving();
-    World world = player.worldObj;
+    World world = player.getEntityWorld();
     if (player.getEntityData().getBoolean(KEY_BOOLEAN)) {
       int playerGhost = player.getEntityData().getInteger(KEY_TIMER);
       if (playerGhost > 0) {

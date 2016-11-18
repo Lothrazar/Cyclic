@@ -68,7 +68,7 @@ public class UtilPlayerInventoryFilestorage {
     playerItems.put(player.getDisplayNameString(), inventory);
   }
   public static void loadPlayerInventory(EntityPlayer player, File file1, File file2) {
-    if (player != null && !player.worldObj.isRemote) {
+    if (player != null && !player.getEntityWorld().isRemote) {
       try {
         NBTTagCompound data = null;
         boolean save = false;
@@ -111,7 +111,7 @@ public class UtilPlayerInventoryFilestorage {
     }
   }
   public static void savePlayerItems(EntityPlayer player, File file1, File file2) {
-    if (player != null && !player.worldObj.isRemote) {
+    if (player != null && !player.getEntityWorld().isRemote) {
       try {
         if (file1 != null && file1.exists()) {
           try {

@@ -54,8 +54,8 @@ public class UtilFurnace {
     ItemStack current = furnace.removeStackFromSlot(SLOT_OUTPUT);
     if (current != null) {
       BlockPos pos = player.getPosition();
-      if (player.worldObj.isRemote == false) {
-        player.dropItemAndGetStack(new EntityItem(player.worldObj, pos.getX(), pos.getY(), pos.getZ(), current));
+      if (player.getEntityWorld().isRemote == false) {
+        player.dropItemAndGetStack(new EntityItem(player.getEntityWorld(), pos.getX(), pos.getY(), pos.getZ(), current));
       }
       UtilSound.playSound(player, SoundEvents.ENTITY_ITEM_PICKUP);
       //UtilEntity.dropItemStackInWorld(furnace.getWorld(), furnace.getPos(), current);

@@ -42,8 +42,8 @@ public class EnvironmentTweaksModule extends BaseEventModule implements IHasConf
       ItemStack is = entityItem.getEntityItem();
       World world = entity.getEntityWorld();
       if (is == null) { return; } // has not happened in the wild, yet
-      Block blockhere = entity.worldObj.getBlockState(entityItem.getPosition()).getBlock();
-      Block blockdown = entity.worldObj.getBlockState(entityItem.getPosition().down()).getBlock();
+      Block blockhere = entity.getEntityWorld().getBlockState(entityItem.getPosition()).getBlock();
+      Block blockdown = entity.getEntityWorld().getBlockState(entityItem.getPosition().down()).getBlock();
       if (blockhere == Blocks.AIR && blockdown == Blocks.DIRT || blockdown == Blocks.GRASS) {
         // plant the sapling, replacing the air and on top of dirt/plantable
         //BlockSapling.TYPE
@@ -63,7 +63,7 @@ public class EnvironmentTweaksModule extends BaseEventModule implements IHasConf
         event.getLightning() != null) {
       EntitySkeleton skel = (EntitySkeleton) event.getEntity();
       if (skel.func_189771_df() == SkeletonType.NORMAL) {
-        SkeletonType newType = skel.worldObj.rand.nextDouble() > 0.5 ? SkeletonType.WITHER : SkeletonType.STRAY;
+        SkeletonType newType = skel.getEntityWorld().rand.nextDouble() > 0.5 ? SkeletonType.WITHER : SkeletonType.STRAY;
         skel.func_189768_a(newType);
         skel.heal(skel.getMaxHealth());
       }

@@ -65,8 +65,9 @@ public class ItemChestSack extends BaseItem {
     else {
       toPlace = block.getDefaultState();
     }
-    entityPlayer.worldObj.setBlockState(pos, toPlace);
-    TileEntity tile = entityPlayer.worldObj.getTileEntity(pos);
+    World world = entityPlayer.getEntityWorld();
+    world.setBlockState(pos, toPlace);
+    TileEntity tile = world.getTileEntity(pos);
     if (tile != null) {
       NBTTagCompound tileData = (NBTTagCompound) itemData.getCompoundTag(ItemChestSack.KEY_BLOCKTILE);
       tileData.setInteger("x", pos.getX());
@@ -74,7 +75,7 @@ public class ItemChestSack extends BaseItem {
       tileData.setInteger("z", pos.getZ());
       tile.readFromNBT(tileData);
       tile.markDirty();
-      entityPlayer.worldObj.markChunkDirty(pos, tile);
+      world.markChunkDirty(pos, tile);
     }
     heldChestSack.stackSize = 0;
     heldChestSack.setTagCompound(null);

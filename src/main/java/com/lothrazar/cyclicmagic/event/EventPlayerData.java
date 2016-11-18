@@ -23,7 +23,7 @@ public class EventPlayerData {
   // https://github.com/MinecraftForge/MinecraftForge/blob/1.9/src/test/java/net/minecraftforge/test/NoBedSleepingTest.java
   @SubscribeEvent
   public void onSpawn(PlayerLoggedInEvent event) {
-    if (event.player instanceof EntityPlayerMP && event.player.worldObj.isRemote == false) {
+    if (event.player instanceof EntityPlayerMP && event.player.getEntityWorld().isRemote == false) {
       EntityPlayerMP p = (EntityPlayerMP) event.player;
       if (p != null) {
         CapabilityRegistry.syncServerDataToClient(p);
@@ -32,7 +32,7 @@ public class EventPlayerData {
   }
   @SubscribeEvent
   public void onJoinWorld(EntityJoinWorldEvent event) {
-    if (event.getEntity() instanceof EntityPlayerMP && event.getEntity().worldObj.isRemote == false) {
+    if (event.getEntity() instanceof EntityPlayerMP && event.getEntity().getEntityWorld().isRemote == false) {
       EntityPlayerMP p = (EntityPlayerMP) event.getEntity();
       if (p != null) {
         CapabilityRegistry.syncServerDataToClient(p);

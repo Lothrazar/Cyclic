@@ -45,7 +45,7 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
     return true;
   }
   public void castFromServer(BlockPos posMouseover, BlockPos posOffset, EntityPlayer p) {
-    World world = p.worldObj;
+    World world = p.getEntityWorld();
     ItemStack heldWand = UtilSpellCaster.getPlayerWandIfHeld(p);
     if (heldWand == null) { return; }
     int itemSlot = ItemCyclicWand.BuildType.getSlot(heldWand);
@@ -134,18 +134,18 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
         }
       }
     }
-    if (UtilPlaceBlocks.placeStateSafe(p.worldObj, p, posToPlaceAt, state)) {
+    if (UtilPlaceBlocks.placeStateSafe(world, p, posToPlaceAt, state)) {
       if (p.capabilities.isCreativeMode == false) {
         InventoryWand.decrementSlot(heldWand, itemSlot);
       }
       ItemCyclicWand.BuildType.setNextSlot(heldWand);
       // yes im spawning particles on the server side, but the
       // util handles that
-      this.spawnParticle(p.worldObj, p, posMouseover);
+      this.spawnParticle(world, p, posMouseover);
       Block newSpot = null;
-      if (p.worldObj.getBlockState(posToPlaceAt) != null) {
-        newSpot = p.worldObj.getBlockState(posToPlaceAt).getBlock();
-        this.playSound(p.worldObj, p, newSpot, posToPlaceAt);
+      if (world.getBlockState(posToPlaceAt) != null) {
+        newSpot = world.getBlockState(posToPlaceAt).getBlock();
+        this.playSound(world, p, newSpot, posToPlaceAt);
       }
     }
   }

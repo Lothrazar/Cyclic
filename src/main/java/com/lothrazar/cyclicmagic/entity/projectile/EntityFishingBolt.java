@@ -37,7 +37,7 @@ public class EntityFishingBolt extends EntityThrowable {
     if (pos == null) { return; }
     World world = getEntityWorld();
     if (this.isInWater()) {
-      UtilParticle.spawnParticle(this.worldObj, EnumParticleTypes.WATER_BUBBLE, pos);
+      UtilParticle.spawnParticle(this.getEntityWorld(), EnumParticleTypes.WATER_BUBBLE, pos);
       EntityItem ei = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), getRandomFish());
       if (world.isRemote == false) {
         world.spawnEntityInWorld(ei);

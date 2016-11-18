@@ -77,7 +77,7 @@ public class EnchantLaunch extends Enchantment {
       int uses = UtilNBT.getItemStackNBTVal(feet, NBT_USES);
       p.fallDistance = 0;
       UtilEntity.launch(p, rotationPitch, power);
-      UtilParticle.spawnParticle(p.worldObj, EnumParticleTypes.CRIT_MAGIC, p.getPosition());
+      UtilParticle.spawnParticle(p.getEntityWorld(), EnumParticleTypes.CRIT_MAGIC, p.getPosition());
       UtilSound.playSound(p, p.getPosition(), SoundRegistry.bwoaaap, SoundCategory.PLAYERS, UtilSound.VOLUME / 8);
       UtilItemStack.damageItem(p, feet);
       uses++;

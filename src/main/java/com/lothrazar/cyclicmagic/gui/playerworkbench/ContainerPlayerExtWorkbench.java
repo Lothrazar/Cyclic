@@ -94,7 +94,7 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
   }
   @Override
   public void onCraftMatrixChanged(IInventory inventory) {
-    craftResult.setInventorySlotContents(0, CraftingManager.getInstance().findMatchingRecipe(craftMatrix, this.thePlayer.worldObj));
+    craftResult.setInventorySlotContents(0, CraftingManager.getInstance().findMatchingRecipe(craftMatrix, this.thePlayer.getEntityWorld()));
   }
   @Override
   public void onContainerClosed(EntityPlayer playerIn) {

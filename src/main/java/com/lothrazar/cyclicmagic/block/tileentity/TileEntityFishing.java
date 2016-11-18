@@ -59,7 +59,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
       int luck = EnchantmentHelper.getEnchantmentLevel(Enchantments.LUCK_OF_THE_SEA, this.inv[toolSlot]);
       lootcontext$builder.withLuck((float) luck);
       //      java.lang.NullPointerException: Ticking block entity    at com.lothrazar.cyclicmagic.block.tileentity.TileEntityFishing.func_73660_a(TileEntityFishing.java:58)
-      LootTableManager loot = this.worldObj.getLootTableManager();
+      LootTableManager loot = world.getLootTableManager();
       if (loot == null) { return; }
       LootTable table = loot.getLootTableFromLocation(LootTableList.GAMEPLAY_FISHING);
       if (table == null) { return; }

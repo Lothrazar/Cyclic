@@ -89,9 +89,9 @@ public class TextInfoModule extends BaseEventModule implements IHasConfig {//TOD
      * the world spawn is located at the exact center of a chunk, 17 chunks will
      * be loaded along that axis, of which 13 activate entities.
      */
-    BlockPos spawn = player.worldObj.getSpawnPoint();
+    BlockPos spawn = player.getEntityWorld().getSpawnPoint();
     BlockPos here = player.getPosition();
-    Chunk chunkHere = player.worldObj.getChunkFromBlockCoords(here);
+    Chunk chunkHere = player.getEntityWorld().getChunkFromBlockCoords(here);
     int xCenterOfChunk = UtilWorld.chunkToBlock(chunkHere.xPosition) + Const.CHUNK_SIZE / 2;
     int zCenterOfChunk = UtilWorld.chunkToBlock(chunkHere.zPosition) + Const.CHUNK_SIZE / 2;
     //end border

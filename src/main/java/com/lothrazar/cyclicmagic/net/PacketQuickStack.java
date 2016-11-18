@@ -30,7 +30,7 @@ public class PacketQuickStack implements IMessage, IMessageHandler<PacketQuickSt
     EntityPlayer p = ctx.getServerHandler().playerEntity;
     if (UtilPlayer.hasValidOpenContainer(p)) {
       IInventory openInventory = UtilPlayer.getOpenContainerInventory(p);
-      UtilInventoryTransfer.sortFromPlayerToInventory(p.worldObj, openInventory, p);
+      UtilInventoryTransfer.sortFromPlayerToInventory(p.getEntityWorld(), openInventory, p);
     }
     return null;
   }

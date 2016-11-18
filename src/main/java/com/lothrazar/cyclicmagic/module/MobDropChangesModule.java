@@ -52,46 +52,46 @@ public class MobDropChangesModule extends BaseEventModule implements IHasConfig 
   @SubscribeEvent
   public void onLivingDropsEvent(LivingDropsEvent event) {
     Entity entity = event.getEntity();
-    World worldObj = entity.getEntityWorld();
+    World world = entity.getEntityWorld();
     List<EntityItem> drops = event.getDrops();
     BlockPos pos = entity.getPosition();
     if (nameTagDeath) {
       if (entity.getCustomNameTag() != null && entity.getCustomNameTag() != "") {
         // item stack NBT needs the name enchanted onto it
-        if (entity.worldObj.isRemote == false) {
+        if (world.isRemote == false) {
           ItemStack nameTag = UtilNBT.buildEnchantedNametag(entity.getCustomNameTag());
-          UtilItemStack.dropItemStackInWorld(worldObj, entity.getPosition(), nameTag);
+          UtilItemStack.dropItemStackInWorld(world, entity.getPosition(), nameTag);
         }
       }
     }
     if (endermanDrop && entity instanceof EntityEnderman) {
       EntityEnderman mob = (EntityEnderman) entity;
       IBlockState bs = mob.getHeldBlockState();// mob.func_175489_ck();
-      if (bs != null && bs.getBlock() != null && worldObj.isRemote == false) {
-        UtilItemStack.dropItemStackInWorld(worldObj, mob.getPosition(), bs.getBlock());
+      if (bs != null && bs.getBlock() != null && world.isRemote == false) {
+        UtilItemStack.dropItemStackInWorld(world, mob.getPosition(), bs.getBlock());
       }
     }
     if (entity instanceof EntityZombie && zombieVillagerEmeralds) {
       EntityZombie z = (EntityZombie) entity;
-      if (z.isVillager() && chanceZombieVillagerEmerald > 0 && worldObj.rand.nextInt(100) <= chanceZombieVillagerEmerald) {
-        drops.add(new EntityItem(worldObj, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Items.EMERALD)));
+      if (z.isVillager() && chanceZombieVillagerEmerald > 0 && world.rand.nextInt(100) <= chanceZombieVillagerEmerald) {
+        drops.add(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Items.EMERALD)));
       }
     }
     if (extraLeather && entity instanceof EntityCow) {
-      int rand = MathHelper.getRandomIntegerInRange(worldObj.rand, 1, 8);
-      UtilItemStack.dropItemStackInWorld(worldObj, pos, new ItemStack(Items.LEATHER, rand));
+      int rand = MathHelper.getRandomIntegerInRange(world.rand, 1, 8);
+      UtilItemStack.dropItemStackInWorld(world, pos, new ItemStack(Items.LEATHER, rand));
     }
     if (bonusPork && entity instanceof EntityPig) {
-      int rand = MathHelper.getRandomIntegerInRange(worldObj.rand, 1, 8);
-      UtilItemStack.dropItemStackInWorld(worldObj, pos, new ItemStack(Items.PORKCHOP, rand));
+      int rand = MathHelper.getRandomIntegerInRange(world.rand, 1, 8);
+      UtilItemStack.dropItemStackInWorld(world, pos, new ItemStack(Items.PORKCHOP, rand));
     }
     if (bonusGolemIron && entity instanceof EntityIronGolem) {
       //vanilla drops 3-5 ingots
-      int rand = MathHelper.getRandomIntegerInRange(worldObj.rand, 1, 18);
-      UtilItemStack.dropItemStackInWorld(worldObj, pos, new ItemStack(Items.IRON_INGOT, rand));
-      if (worldObj.rand.nextDouble() < 0.10) {
+      int rand = MathHelper.getRandomIntegerInRange(world.rand, 1, 18);
+      UtilItemStack.dropItemStackInWorld(world, pos, new ItemStack(Items.IRON_INGOT, rand));
+      if (world.rand.nextDouble() < 0.10) {
         //10% chance for extra iron block
-        UtilItemStack.dropItemStackInWorld(worldObj, pos, new ItemStack(Blocks.IRON_BLOCK, 1));
+        UtilItemStack.dropItemStackInWorld(world, pos, new ItemStack(Blocks.IRON_BLOCK, 1));
       }
     }
     if (zombieDropsNerfed) {

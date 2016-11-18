@@ -30,8 +30,8 @@ public class PacketDepositContainerToPlayer implements IMessage, IMessageHandler
     EntityPlayer p = ctx.getServerHandler().playerEntity;
     if (UtilPlayer.hasValidOpenContainer(p)) {
       IInventory openInventory = UtilPlayer.getOpenContainerInventory(p);
-      UtilInventoryTransfer.sortFromInventoryToPlayer(p.worldObj, openInventory, p, false);
-      UtilInventoryTransfer.dumpFromIInventoryToPlayer(p.worldObj, openInventory, p);
+      UtilInventoryTransfer.sortFromInventoryToPlayer(p.getEntityWorld(), openInventory, p, false);
+      UtilInventoryTransfer.dumpFromIInventoryToPlayer(p.getEntityWorld(), openInventory, p);
     }
     return null;
   }

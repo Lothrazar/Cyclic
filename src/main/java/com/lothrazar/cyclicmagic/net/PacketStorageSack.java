@@ -47,7 +47,7 @@ public class PacketStorageSack implements IMessage, IMessageHandler<PacketStorag
     if (ctx.side.isServer() && message != null && message.pos != null) {
       BlockPos position = message.pos;
       EntityPlayer player = ctx.getServerHandler().playerEntity;
-      World world = player.worldObj;
+      World world = player.getEntityWorld();
       TileEntity tile = world.getTileEntity(position);
       IBlockState state = world.getBlockState(position);
       NBTTagCompound tileData = new NBTTagCompound(); //thanks for the tip on setting tile entity data from nbt tag: https://github.com/romelo333/notenoughwands1.8.8/blob/master/src/main/java/romelo333/notenoughwands/Items/DisplacementWand.java

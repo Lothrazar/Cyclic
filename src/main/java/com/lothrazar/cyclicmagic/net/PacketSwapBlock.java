@@ -87,7 +87,7 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
   }
   private void handle(PacketSwapBlock message, MessageContext ctx) {
     EntityPlayer player = ctx.getServerHandler().playerEntity;
-    World worldObj = player.worldObj;
+    World worldObj = player.getEntityWorld();
     List<BlockPos> places = new ArrayList<BlockPos>();
     int xMin = message.pos.getX();
     int yMin = message.pos.getY();
