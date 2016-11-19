@@ -6,6 +6,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -141,6 +142,30 @@ public class UtilEntity {
       entity.addVelocity(velX, velY, velZ);
     }
   }
+  /*ANTI MAGNET
+   * 
+*/
+//  public static void repelEntitiesInAABBFromPoint(World world, BlockPos pos, int ITEM_HRADIUS, int ITEM_VRADIUS)
+//  {
+//    int x = pos.getX(), y = pos.getY(), z = pos.getZ();
+//    AxisAlignedBB range = new AxisAlignedBB(
+//        x - ITEM_HRADIUS, y - ITEM_VRADIUS, z - ITEM_HRADIUS,
+//        x + ITEM_HRADIUS, y + ITEM_VRADIUS, z + ITEM_HRADIUS);
+//    List<Entity> list = new ArrayList<Entity>();
+//    list.addAll(world.getEntitiesWithinAABB(EntityLivingBase.class, range));
+//
+//    for (Entity ent : list)
+//    {
+//        if (ent instanceof EntityPlayer == false)
+//        {
+//
+//          //somehow flip and reverse it
+//           
+//      }
+//    }
+//  }
+//
+  //wo no wait jsut ma
   public static int pullEntityItemsTowards(World world, BlockPos pos, int ITEM_HRADIUS, int ITEM_VRADIUS) {
     int x = pos.getX(), y = pos.getY(), z = pos.getZ();
     return pullEntityItemsTowards(world, x, y, z, ITEM_HRADIUS, ITEM_VRADIUS);
@@ -161,7 +186,7 @@ public class UtilEntity {
       hdist = Math.sqrt(xDist * xDist + zDist * zDist);
       if (hdist > ENTITY_PULL_DIST) {
         speed = (hdist > ENTITY_PULL_SPEED_CUTOFF) ? ITEMSPEEDFAR : ITEMSPEEDCLOSE;
-        Vector3.setEntityMotionFromVector(eitem, x, y, z, speed);
+        Vector3.setEntityMotionFromVector(eitem, x, y, z, -1*speed);
         moved++;
       } //else its basically on it, no point
     }
