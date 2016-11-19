@@ -28,8 +28,7 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
   @Override
   public boolean cast(World world, EntityPlayer p, ItemStack wand, BlockPos pos, EnumFacing side) {
     if (world.isRemote) {
-      // only client side can call this method. mouseover does not exist
-      // on server
+      // only client side can call this method. mouseover does not exist on server
       BlockPos mouseover = ModCyclic.proxy.getBlockMouseoverExact(maxRange);
       BlockPos offset = ModCyclic.proxy.getBlockMouseoverOffset(maxRange);
       if (mouseover != null && offset != null) {
@@ -39,7 +38,9 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
       if (heldWand != null) {
         int itemSlot = ItemCyclicWand.BuildType.getSlot(heldWand);
         IBlockState state = InventoryWand.getToPlaceFromSlot(heldWand, itemSlot);
-        UtilSound.playSoundPlaceBlock(world, offset, state.getBlock());
+        if (state != null && state.getBlock() != null && offset != null) {
+          UtilSound.playSoundPlaceBlock(world, offset, state.getBlock());
+        }
       }
     }
     return true;

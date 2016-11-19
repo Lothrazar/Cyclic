@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.util;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.entity.EntityLivingBase;
@@ -16,7 +15,6 @@ public class UtilSound {
   public static final boolean distanceDelay = false;
   public static void playSoundPlaceBlock(EntityPlayer player, BlockPos pos, Block block) {
     if (player == null) {
-      ModCyclic.logger.warn("Null player object attempting to play sound [1]");
       return;
     }
     BlockPos here = (pos == null) ? player.getPosition() : pos;
@@ -42,7 +40,6 @@ public class UtilSound {
   }
   public static void playSound(EntityPlayer player, BlockPos pos, SoundEvent soundIn, SoundCategory cat) {
     if (player == null) {
-      ModCyclic.logger.warn("Null player object attempting to play sound [2]");
       return;
     }
     BlockPos here = (pos == null) ? player.getPosition() : pos;
@@ -50,13 +47,13 @@ public class UtilSound {
   }
   public static void playSound(EntityPlayer player, BlockPos pos, SoundEvent soundIn, SoundCategory cat, float volume) {
     if (player == null) {
-      ModCyclic.logger.warn("Null player object attempting to play sound [3]");
       return;
     }
     player.getEntityWorld().playSound(player, pos, soundIn, cat, volume, PITCH);
   }
   public static void playSound(World worldObj, BlockPos pos, SoundEvent soundIn, SoundCategory category) {
-    worldObj.playSound(pos.getX(), pos.getY(), pos.getZ(), soundIn, category, VOLUME, PITCH, distanceDelay);
+    if (pos != null && soundIn != null && category != null)// https://github.com/PrinceOfAmber/Cyclic/issues/173
+      worldObj.playSound(pos.getX(), pos.getY(), pos.getZ(), soundIn, category, VOLUME, PITCH, distanceDelay);
   }
   public static void playSound(EntityLivingBase villager, BlockPos position, SoundEvent sound) {
     villager.playSound(sound, VOLUME, PITCH);
