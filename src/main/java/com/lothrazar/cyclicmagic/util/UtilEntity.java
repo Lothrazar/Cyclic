@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
@@ -162,7 +163,7 @@ public class UtilEntity {
     List<EntityLivingBase> all = world.getEntitiesWithinAABB(EntityLivingBase.class, range);
     List<EntityLivingBase> nonPlayer = new ArrayList<EntityLivingBase>();
     for (EntityLivingBase ent : all) {
-      if (ent instanceof EntityPlayer == false) {
+      if (ent instanceof EntityPlayer == false && ent.isCreatureType(EnumCreatureType.MONSTER, false)) {//players are not monsters so, redundant?
         nonPlayer.add(ent);
       }
     }
