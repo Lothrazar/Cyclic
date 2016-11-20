@@ -126,7 +126,7 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
       UtilUncraft uncrafter = new UtilUncraft(stack);
       boolean success = false;
       try {
-        success = uncrafter.doUncraft();
+        success = uncrafter.doUncraftStart();
         if (success) {
           if (this.getWorld().isRemote == false) { // drop the items
             ArrayList<ItemStack> uncrafterOutput = uncrafter.getDrops();

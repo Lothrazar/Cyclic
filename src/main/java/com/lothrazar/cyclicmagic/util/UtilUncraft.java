@@ -5,6 +5,7 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -15,7 +16,14 @@ public class UtilUncraft {
   public static List<String> blacklistInput = new ArrayList<String>();
   public static List<String> blacklistOutput = new ArrayList<String>();
   public static List<String> blacklistMod = new ArrayList<String>();
-  //  public static List<Item> blacklistIfContainsOut = new ArrayList<Item>();
+  private ArrayList<ItemStack> drops;
+  private ItemStack toUncraft;
+  private int outsize;
+  public UtilUncraft(ItemStack stuff) {
+    this.drops = new ArrayList<ItemStack>();
+    this.toUncraft = stuff;
+    this.outsize = 0;
+  }
   public static enum BlacklistType {
     INPUT, OUTPUT, MODNAME;//, CONTAINS;
   }
@@ -83,22 +91,37 @@ public class UtilUncraft {
     //EXAMPLE: milk_bucket has containerItem == milk
     return hasContainerItem;
   }
-  // were
-  // null
-  private ArrayList<ItemStack> drops;
-  private ItemStack toUncraft;
-  private int outsize;
-  public UtilUncraft(ItemStack stuff) {
-    this.drops = new ArrayList<ItemStack>();
-    this.toUncraft = stuff;
-    this.outsize = 0;
-  }
   public ArrayList<ItemStack> getDrops() {
     return drops;
   }
   public int getOutsize() {
     return outsize;
   }
+  /**
+   * try to add an entry that is either a stack, or a list of possibilities from
+   * ore dictionary
+   * 
+   * @param maybeOres
+   */
+  private void tryAddOreDictionaryDrop(Object maybeOres) {
+    // thanks  http://stackoverflow.com/questions/20462819/java-util-collectionsunmodifiablerandomaccesslist-to-collections-singletonlist
+    if (maybeOres instanceof List<?> && (List<ItemStack>) maybeOres != null) {
+      // so if there is silver or tin added by multiple ores for example. also affects wooden planks
+      List<ItemStack> ores = (List<ItemStack>) maybeOres;
+      if (ores.size() == 1) {
+        tryAddTrop(ores.get(0));
+      }
+      else if ((ores.size() > 1) && dictionaryFreedom) {
+        tryAddTrop(ores.get(0));
+      }
+      // else size is > 1 , so its something like wooden planks but not for now
+    }
+  }
+  /**
+   * add drop after checking blacklists
+   * 
+   * @param stackInput
+   */
   private void tryAddTrop(ItemStack stackInput) {
     // this fn is null safe, it gets nulls all the time
     if (stackInput == null || stackInput.getItem() == null) { return; }
@@ -141,107 +164,93 @@ public class UtilUncraft {
     }
     return enchantingMatches;// either they are both ench, or both not ench
   }
-  @SuppressWarnings("unchecked")
-  public boolean doUncraft() {
+  public boolean doUncraftStart() {
     if (toUncraft == null || toUncraft.getItem() == null) { return false; }
     if (isItemInBlacklist(toUncraft, BlacklistType.INPUT)) { return false; }
     if (isItemInBlacklist(toUncraft, BlacklistType.MODNAME)) { return false; }
-    //if (blacklistInput.contains(toUncraft.getItem().getUnlocalizedName())) { return false; }
-    int i;
-    Object maybeOres;
     outsize = 0;
-    //  ArrayList<ItemStack> recipeItems;
     // outsize is 3 means the recipe makes three items total. so MINUS three
     // from the toUncraft for EACH LOOP
-    for (Object next : CraftingManager.getInstance().getRecipeList()) {
+    List<IRecipe> recipeList = CraftingManager.getInstance().getRecipeList();
+    for (IRecipe next : recipeList) {
+      outsize = next.getRecipeOutput().stackSize;
+      if (toUncraft.stackSize < outsize) {//we dont have enough to satisfy
+        continue;
+      }
       // check ore dictionary for some
       if (next instanceof ShapedOreRecipe) {
         ShapedOreRecipe r = (ShapedOreRecipe) next;
         if (doesRecipeMatch(r)) {
-          outsize = r.getRecipeOutput().stackSize;
-          if (toUncraft.stackSize >= outsize) {
-            for (i = 0; i < r.getInput().length; i++) {
-              maybeOres = r.getInput()[i];
-              if (maybeOres == null) {
-                continue;
-              }
-              // thanks  http://stackoverflow.com/questions/20462819/java-util-collectionsunmodifiablerandomaccesslist-to-collections-singletonlist
-              if (maybeOres instanceof List<?> && (List<ItemStack>) maybeOres != null) {
-                List<ItemStack> ores = (List<ItemStack>) maybeOres;
-                if (ores.size() == 1) {
-                  // sticks,iron,and so on
-                  tryAddTrop(ores.get(0));
-                }
-                else if ((ores.size() > 1) && dictionaryFreedom) {
-                  tryAddTrop(ores.get(0));
-                }
-                // else size is > 1 , so its something like wooden planks but not for now
-              }
-              else if (maybeOres instanceof ItemStack) {
-                tryAddTrop((ItemStack) maybeOres);
-              }
-            }
-          }
+          doUncraftShapedOreRecipe(r);
           break;
         }
       }
       else if (next instanceof ShapelessOreRecipe) {
         ShapelessOreRecipe r = (ShapelessOreRecipe) next;
         if (doesRecipeMatch(r)) {
-          outsize = r.getRecipeOutput().stackSize;
-          if (toUncraft.stackSize >= outsize) {
-            for (i = 0; i < r.getInput().size(); i++) {
-              maybeOres = r.getInput().get(i);
-              if (maybeOres instanceof List<?> && (List<ItemStack>) maybeOres != null) // <ItemStack>
-              {
-                List<ItemStack> ores = (List<ItemStack>) maybeOres;
-                if (ores.size() == 1) {
-                  tryAddTrop(ores.get(0));
-                  // sticks,iron,and so on
-                }
-                else if ((ores.size() > 1) && dictionaryFreedom) {
-                  tryAddTrop(ores.get(0));
-                }
-              }
-              if (maybeOres instanceof ItemStack) // <ItemStack>
-              {
-                tryAddTrop((ItemStack) maybeOres);
-              }
-            }
-          }
+          doUncraftShapelessOreRecipe(r);
           break;
         }
       }
       else if (next instanceof ShapedRecipes) {
         ShapedRecipes r = (ShapedRecipes) next;
         if (doesRecipeMatch(r)) {
-          outsize = r.getRecipeOutput().stackSize;
-          if (toUncraft.stackSize >= outsize) {
-            for (i = 0; i < r.recipeItems.length; i++) {
-              tryAddTrop(r.recipeItems[i]);
-            }
-          }
+          doUncraftShapedRecipes(r);
           break;
         }
       }
       else if (next instanceof ShapelessRecipes) {
         ShapelessRecipes r = (ShapelessRecipes) next;
         if (doesRecipeMatch(r)) {
-          outsize = r.getRecipeOutput().stackSize;
-          if (toUncraft.stackSize >= outsize) {
-            for (i = 0; i < r.recipeItems.size(); i++) {
-              tryAddTrop((ItemStack) r.recipeItems.get(i));
-            }
-          }
+          doUncraftShapelessRecipes(r);
           break;
         }
       }
     }
     return (this.drops.size() > 0);
   }
+  private void doUncraftShapelessRecipes(ShapelessRecipes r) {
+    for (int i = 0; i < r.recipeItems.size(); i++) {
+      tryAddTrop((ItemStack) r.recipeItems.get(i));
+    }
+  }
+  private void doUncraftShapedRecipes(ShapedRecipes r) {
+    for (int i = 0; i < r.recipeItems.length; i++) {
+      tryAddTrop(r.recipeItems[i]);
+    }
+  }
+  private void doUncraftShapelessOreRecipe(ShapelessOreRecipe r) {
+    ArrayList<Object> input = r.getInput();
+    Object maybeOres;
+    for (int i = 0; i < input.size(); i++) {
+      maybeOres = input.get(i);
+      if (maybeOres instanceof ItemStack) {
+        tryAddTrop((ItemStack) maybeOres);
+      }
+      else {
+        tryAddOreDictionaryDrop(maybeOres);
+      }
+    }
+  }
+  private void doUncraftShapedOreRecipe(ShapedOreRecipe r) {
+    Object[] input = r.getInput();
+    Object maybeOres;
+    for (int i = 0; i < input.length; i++) {
+      maybeOres = input[i];
+      if (maybeOres == null) {
+        continue;
+      }
+      if (maybeOres instanceof ItemStack) {
+        tryAddTrop((ItemStack) maybeOres);
+      }
+      else {
+        tryAddOreDictionaryDrop(maybeOres);
+      }
+    }
+  }
   public boolean canUncraft() {
     // ?? make this actually different and more efficient?
     // ex we dont need drops and such
-    return this.doUncraft();
+    return this.doUncraftStart();
   }
 }
