@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.item.tool.*;
 import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.WandType;
 import com.lothrazar.cyclicmagic.item.ItemChestSack;
 import com.lothrazar.cyclicmagic.item.ItemChestSackEmpty;
+import com.lothrazar.cyclicmagic.item.ItemEnderBag;
 import com.lothrazar.cyclicmagic.item.ItemEnderBook;
 import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
 import com.lothrazar.cyclicmagic.item.ItemStorageBag;
@@ -58,9 +59,14 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
   private boolean enableChestSack;
   private boolean enableStirrups;
   private boolean enableTorchLauncher;
+  private boolean enderSack;
   public static ItemStorageBag storage_bag;//ref by ContainerStorage
   @Override
   public void onInit() {
+    if (enderSack) {
+      ItemEnderBag sack_ender = new ItemEnderBag();
+      ItemRegistry.addItem(sack_ender, "sack_ender");
+    }
     if (enableTorchLauncher) {
       ItemToolThrowTorch tool_torch_launcher = new ItemToolThrowTorch();
       ItemRegistry.addItem(tool_torch_launcher, "tool_torch_launcher");
@@ -183,6 +189,7 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
   }
   @Override
   public void syncConfig(Configuration config) {
+    enderSack = config.getBoolean("EnderSack", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableTorchLauncher = config.getBoolean("TorchLauncher", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     storageBagEnabled = config.getBoolean("StorageBag", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableEnderBook = config.getBoolean("EnderBook", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

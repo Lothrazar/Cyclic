@@ -200,7 +200,6 @@ public class InventoryPlayerExtended implements IInventory {
       }
     }
   }
-
   public void syncSlotToClients(int slot) {
     try {
       if (ModCyclic.proxy.getClientWorld() == null) {

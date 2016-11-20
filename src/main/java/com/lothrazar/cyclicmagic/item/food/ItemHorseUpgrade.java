@@ -45,7 +45,7 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
   public void addRecipe() {
     GameRegistry.addShapelessRecipe(new ItemStack(this), Items.CARROT, recipeItem);
   }
-  public static void onHorseInteract(EntityHorse horse, EntityPlayer player,ItemStack held, ItemHorseUpgrade heldItem) {
+  public static void onHorseInteract(EntityHorse horse, EntityPlayer player, ItemStack held, ItemHorseUpgrade heldItem) {
     boolean success = false;
     switch (heldItem.upgradeType) {
     case HEALTH:
@@ -141,8 +141,7 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
       if (player.capabilities.isCreativeMode == false) {
         held.stackSize--;
       }
-      UtilParticle.spawnParticle(horse.getEntityWorld(), EnumParticleTypes.SMOKE_LARGE,  horse.getPosition());
-
+      UtilParticle.spawnParticle(horse.getEntityWorld(), EnumParticleTypes.SMOKE_LARGE, horse.getPosition());
       UtilSound.playSound(player, horse.getPosition(), SoundEvents.ENTITY_HORSE_EAT, SoundCategory.NEUTRAL);
       horse.setEatingHaystack(true); // makes horse animate and bend down to eat
     }
