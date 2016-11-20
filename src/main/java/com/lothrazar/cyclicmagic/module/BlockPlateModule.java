@@ -3,7 +3,9 @@ import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.block.BlockConveyor;
 import com.lothrazar.cyclicmagic.block.BlockLaunch;
 import com.lothrazar.cyclicmagic.block.BlockMagnet;
+import com.lothrazar.cyclicmagic.block.BlockMagnetAnti;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityMagnet;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityMagnetAnti;
 import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -20,6 +22,10 @@ public class BlockPlateModule extends BaseModule implements IHasConfig {
   private boolean launchPads;
   private boolean enableMagnet;
   public void onInit() {
+
+    BlockMagnetAnti magnet_anti_block = new BlockMagnetAnti();
+    BlockRegistry.registerBlock(magnet_anti_block, "magnet_anti_block");
+    GameRegistry.registerTileEntity(TileEntityMagnetAnti.class, "magnet_anti_block_te");
     if (enableMagnet) {
       BlockMagnet magnet_block = new BlockMagnet();
       BlockRegistry.registerBlock(magnet_block, "magnet_block");

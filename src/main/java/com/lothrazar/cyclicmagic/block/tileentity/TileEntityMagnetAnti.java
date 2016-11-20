@@ -7,13 +7,13 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.text.ITextComponent;
 
-public class TileEntityMagnet extends TileEntity implements ITickable {
+public class TileEntityMagnetAnti extends TileEntity implements ITickable {
   private int timer;
   private static final String NBT_TIMER = "Timer";
-  public static int TIMER_FULL = 100;
-  public static int ITEM_VRADIUS = 2;
-  public static int ITEM_HRADIUS = 16;
-  public TileEntityMagnet() {
+  public final static int TIMER_FULL = 20;
+  public final static int ITEM_VRADIUS = 3;
+  public final static int ITEM_HRADIUS = 32;
+  public TileEntityMagnetAnti() {
     this.timer = TIMER_FULL;
   }
   @Override
@@ -62,7 +62,7 @@ public class TileEntityMagnet extends TileEntity implements ITickable {
     double y = this.getPos().getY() + 0.7;
     double z = this.getPos().getZ() + 0.5;
     if (trigger) {
-      UtilEntity.moveEntityItemsInRegion(this.getWorld(), x, y, z, ITEM_HRADIUS, ITEM_VRADIUS,true);
+      UtilEntity.moveEntityLivingNonplayers(this.getWorld(), x, y, z, ITEM_HRADIUS, ITEM_VRADIUS,false);
       timer = TIMER_FULL;//harvest worked!
     }
   }

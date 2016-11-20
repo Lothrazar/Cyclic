@@ -142,51 +142,49 @@ public class UtilEntity {
       entity.addVelocity(velX, velY, velZ);
     }
   }
-  /*ANTI MAGNET
-   * 
-*/
-//  public static void repelEntitiesInAABBFromPoint(World world, BlockPos pos, int ITEM_HRADIUS, int ITEM_VRADIUS)
-//  {
-//    int x = pos.getX(), y = pos.getY(), z = pos.getZ();
-//    AxisAlignedBB range = new AxisAlignedBB(
-//        x - ITEM_HRADIUS, y - ITEM_VRADIUS, z - ITEM_HRADIUS,
-//        x + ITEM_HRADIUS, y + ITEM_VRADIUS, z + ITEM_HRADIUS);
-//    List<Entity> list = new ArrayList<Entity>();
-//    list.addAll(world.getEntitiesWithinAABB(EntityLivingBase.class, range));
-//
-//    for (Entity ent : list)
-//    {
-//        if (ent instanceof EntityPlayer == false)
-//        {
-//
-//          //somehow flip and reverse it
-//           
-//      }
-//    }
-//  }
-//
-  //wo no wait jsut ma
-  public static int pullEntityItemsTowards(World world, BlockPos pos, int ITEM_HRADIUS, int ITEM_VRADIUS) {
-    int x = pos.getX(), y = pos.getY(), z = pos.getZ();
-    return pullEntityItemsTowards(world, x, y, z, ITEM_HRADIUS, ITEM_VRADIUS);
-  }
-  public static int pullEntityItemsTowards(World world, double x, double y, double z, int ITEM_HRADIUS, int ITEM_VRADIUS) {
-    AxisAlignedBB range = new AxisAlignedBB(
+  public static AxisAlignedBB makeBoundingBox(double x, double y, double z, int ITEM_HRADIUS, int ITEM_VRADIUS) {
+    return new AxisAlignedBB(
         x - ITEM_HRADIUS, y - ITEM_VRADIUS, z - ITEM_HRADIUS,
         x + ITEM_HRADIUS, y + ITEM_VRADIUS, z + ITEM_HRADIUS);
+  }
+  public static int moveEntityItemsInRegion(World world, BlockPos pos, int ITEM_HRADIUS, int ITEM_VRADIUS) {
+    return moveEntityItemsInRegion(world, pos.getX(), pos.getY(), pos.getZ(), ITEM_HRADIUS, ITEM_VRADIUS, true);
+  }
+  public static int moveEntityItemsInRegion(World world, double x, double y, double z, int ITEM_HRADIUS, int ITEM_VRADIUS, boolean towardsPos) {
+    AxisAlignedBB range = makeBoundingBox(x, y, z, ITEM_HRADIUS, ITEM_VRADIUS);
     List<Entity> all = new ArrayList<Entity>();
     all.addAll(world.getEntitiesWithinAABB(EntityItem.class, range));
     all.addAll(world.getEntitiesWithinAABB(EntityXPOrb.class, range));
+    return pullEntityList(x, y, z, towardsPos, all);
+  }
+  public static int moveEntityLivingNonplayers(World world, double x, double y, double z, int ITEM_HRADIUS, int ITEM_VRADIUS, boolean towardsPos) {
+    AxisAlignedBB range = makeBoundingBox(x, y, z, ITEM_HRADIUS, ITEM_VRADIUS);
+    List<EntityLivingBase> all = world.getEntitiesWithinAABB(EntityLivingBase.class, range);
+    List<EntityLivingBase> nonPlayer = new ArrayList<EntityLivingBase>();
+    for (EntityLivingBase ent : all) {
+      if (ent instanceof EntityPlayer == false) {
+        nonPlayer.add(ent);
+      }
+    }
+    return pullEntityList(x, y, z, towardsPos, nonPlayer);
+  }
+  private static int pullEntityList(double x, double y, double z, boolean towardsPos, List<? extends Entity> all) {
     int moved = 0;
     double hdist, xDist, zDist;
     float speed;
-    for (Entity eitem : all) {
-      xDist = Math.abs(x - eitem.getPosition().getX());
-      zDist = Math.abs(z - eitem.getPosition().getZ());
+    int direction = (towardsPos) ? 1 : -1;//negative to flip the vector and push it away
+    Entity entity;
+    for (Object e : all) {
+      entity = (Entity) e;
+      if (entity == null) {
+        continue;
+      } //being paranoid
+      xDist = Math.abs(x - entity.getPosition().getX());
+      zDist = Math.abs(z - entity.getPosition().getZ());
       hdist = Math.sqrt(xDist * xDist + zDist * zDist);
       if (hdist > ENTITY_PULL_DIST) {
         speed = (hdist > ENTITY_PULL_SPEED_CUTOFF) ? ITEMSPEEDFAR : ITEMSPEEDCLOSE;
-        Vector3.setEntityMotionFromVector(eitem, x, y, z, -1*speed);
+        Vector3.setEntityMotionFromVector(entity, x, y, z, direction * speed);
         moved++;
       } //else its basically on it, no point
     }
