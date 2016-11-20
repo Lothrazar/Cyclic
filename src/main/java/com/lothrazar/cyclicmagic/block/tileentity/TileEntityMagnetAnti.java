@@ -64,7 +64,7 @@ public class TileEntityMagnetAnti extends TileEntity implements ITickable {
     double y = this.getPos().getY() + 0.7;
     double z = this.getPos().getZ() + 0.5;
     if (trigger) {
-      UtilEntity.moveEntityLivingNonplayers(this.getWorld(), x, y, z, ITEM_HRADIUS, ITEM_VRADIUS,false);
+      UtilEntity.moveEntityLivingNonplayers(this.getWorld(), x, y, z, ITEM_HRADIUS, ITEM_VRADIUS, false);
       timer = TIMER_FULL;//harvest worked!
       spawnParticles();
     }
@@ -75,9 +75,9 @@ public class TileEntityMagnetAnti extends TileEntity implements ITickable {
       double y = this.getPos().getY() + 0.5;
       double z = this.getPos().getZ() + 0.5;
       UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, x, y, z);
-      UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, x, y+1, z);
-      UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, x, y+2, z);
-      UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, x, y+3, z);
+      UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, x, y + 1, z);
+      UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, x, y + 2, z);
+      UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, x, y + 3, z);
     }
   }
   private int getSpeed() {

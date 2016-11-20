@@ -15,30 +15,22 @@ public class SpellRegistry {
   private static Map<Integer, ISpell> hashbook;
   public static boolean doParticles;
   public static class Spells {
-
     private static SpellInventory inventory;
     private static SpellRangeBuild reachdown;
     private static SpellRangeBuild reachup;
     private static SpellRangeBuild reachplace;
-    private static SpellRangeBuild reachleft ;
-    private static  SpellRangeBuild reachright ;
+    private static SpellRangeBuild reachleft;
+    private static SpellRangeBuild reachright;
   }
   public static void register(ItemCyclicWand wand) {
     hashbook = new HashMap<Integer, ISpell>();
- 
     /*
- SPELL REG 0 Inventory
- SPELL REG 1 Rotation
- SPELL REG 2 Push Block
- SPELL REG 3 Pull Block
- SPELL REG 4 Build Up
- SPELL REG 5 Place Block
- SPELL REG 6 Build Down
- SPELL REG 7 Build Left
- SPELL REG 8 Build Right*/
+     * SPELL REG 0 Inventory SPELL REG 1 Rotation SPELL REG 2 Push Block SPELL
+     * REG 3 Pull Block SPELL REG 4 Build Up SPELL REG 5 Place Block SPELL REG 6
+     * Build Down SPELL REG 7 Build Left SPELL REG 8 Build Right
+     */
     Spells.inventory = new SpellInventory(0, "inventory");
     registerSpell(Spells.inventory);
-
     Spells.reachup = new SpellRangeBuild(4, "reachup", SpellRangeBuild.PlaceType.UP);
     registerSpell(Spells.reachup);
     Spells.reachplace = new SpellRangeBuild(5, "reachplace", SpellRangeBuild.PlaceType.PLACE);
@@ -59,7 +51,7 @@ public class SpellRegistry {
     wand.setSpells(spellbookBuild);
   }
   private static void registerSpell(ISpell spell) {
-    System.out.println("SPELL REG "+spell.getID()+" "+spell.getName());
+    System.out.println("SPELL REG " + spell.getID() + " " + spell.getName());
     hashbook.put(spell.getID(), spell);
   }
   public static boolean spellsEnabled(EntityPlayer player) {

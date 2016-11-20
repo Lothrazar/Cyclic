@@ -17,7 +17,7 @@ public class PotionMagnet extends PotionBase {
       this.tick(entity);
     }
   }
-  public void tick(EntityLivingBase entityLiving) { 
-    UtilEntity.moveEntityItemsInRegion(entityLiving.getEntityWorld(), entityLiving.getPosition(), ITEM_HRADIUS , ITEM_VRADIUS);
+  public void tick(EntityLivingBase entityLiving) {
+    UtilEntity.moveEntityItemsInRegion(entityLiving.getEntityWorld(), entityLiving.getPosition(), ITEM_HRADIUS, ITEM_VRADIUS);
   }
 }

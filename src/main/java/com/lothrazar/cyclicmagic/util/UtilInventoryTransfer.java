@@ -5,7 +5,6 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-
 public class UtilInventoryTransfer {
   public static class BagDepositReturn {
     public BagDepositReturn(int m, ItemStack[] s) {
@@ -90,7 +89,6 @@ public class UtilInventoryTransfer {
         if (playerItem == null) {
           continue;
         } // empty inventory slot
-   
         if (UtilItemStack.canMerge(playerItem, chestItem)) {
           // same item, including damage (block state)
           chestMax = chestItem.getItem().getItemStackLimit(chestItem);

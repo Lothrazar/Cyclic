@@ -62,7 +62,7 @@ public class TileEntityMagnet extends TileEntity implements ITickable {
     double y = this.getPos().getY() + 0.7;
     double z = this.getPos().getZ() + 0.5;
     if (trigger) {
-      UtilEntity.moveEntityItemsInRegion(this.getWorld(), x, y, z, ITEM_HRADIUS, ITEM_VRADIUS,true);
+      UtilEntity.moveEntityItemsInRegion(this.getWorld(), x, y, z, ITEM_HRADIUS, ITEM_VRADIUS, true);
       timer = TIMER_FULL;//harvest worked!
     }
   }
