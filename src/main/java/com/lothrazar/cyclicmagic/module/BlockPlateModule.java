@@ -21,11 +21,14 @@ public class BlockPlateModule extends BaseModule implements IHasConfig {
   private boolean enableConveyor;
   private boolean launchPads;
   private boolean enableMagnet;
+  private boolean enableInterdict;
   public void onInit() {
 
+    if(enableInterdict){
     BlockMagnetAnti magnet_anti_block = new BlockMagnetAnti();
     BlockRegistry.registerBlock(magnet_anti_block, "magnet_anti_block");
     GameRegistry.registerTileEntity(TileEntityMagnetAnti.class, "magnet_anti_block_te");
+    }
     if (enableMagnet) {
       BlockMagnet magnet_block = new BlockMagnet();
       BlockRegistry.registerBlock(magnet_block, "magnet_block");
@@ -59,6 +62,7 @@ public class BlockPlateModule extends BaseModule implements IHasConfig {
   }
   @Override
   public void syncConfig(Configuration config) {
+    enableInterdict = config.getBoolean("InterdictionPlate", Const.ConfigCategory.content, true,  Const.ConfigCategory.contentDefaultText);
     enableConveyor = config.getBoolean("SlimeConveyor", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableMagnet = config.getBoolean("MagnetBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     launchPads = config.getBoolean("SlimePads", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
