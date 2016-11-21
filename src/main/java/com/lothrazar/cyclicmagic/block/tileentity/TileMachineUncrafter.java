@@ -5,6 +5,7 @@ import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilUncraft;
+import com.lothrazar.cyclicmagic.util.UtilUncraft.UncraftResultType;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -126,7 +127,7 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
       UtilUncraft.Uncrafter uncrafter = new UtilUncraft.Uncrafter();
       boolean success = false;
       //try {
-        success = uncrafter.process(stack);
+        success = uncrafter.process(stack) == UncraftResultType.SUCCESS;
         if (success) {
           if (this.getWorld().isRemote == false) { // drop the items
             ArrayList<ItemStack> uncrafterOutput = uncrafter.getDrops();

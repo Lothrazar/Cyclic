@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.util;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
@@ -10,7 +10,6 @@ import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
-import scala.actors.threadpool.Arrays;
 
 public class UtilUncraft {
   public static boolean dictionaryFreedom;
@@ -19,6 +18,9 @@ public class UtilUncraft {
   public static List<String> blacklistMod = new ArrayList<String>();
   public static enum BlacklistType {
     INPUT, OUTPUT, MODNAME;//, CONTAINS;
+  }
+  public static enum UncraftResultType {
+    BLACKLIST, NORECIPE, NOTENOUGHITEMS, SUCCESS;
   }
   public static void resetBlacklists() {
     blacklistInput = new ArrayList<String>();
@@ -152,13 +154,13 @@ public class UtilUncraft {
       boolean enchantingMatches = recipeOutput.isItemEnchanted() == toUncraft.isItemEnchanted();
       return enchantingMatches;// either they are both ench, or both not ench
     }
-    public boolean process(ItemStack stuff) {
+    public UncraftResultType process(ItemStack stuff) {
       this.toUncraft = stuff;
       this.drops = new ArrayList<ItemStack>();
       this.outsize = 0;
-      if (toUncraft == null || toUncraft.getItem() == null) { return false; }
-      if (isItemInBlacklist(toUncraft, BlacklistType.INPUT)) { return false; }
-      if (isItemInBlacklist(toUncraft, BlacklistType.MODNAME)) { return false; }
+      if (toUncraft == null || toUncraft.getItem() == null) { return UncraftResultType.NORECIPE; }
+      if (isItemInBlacklist(toUncraft, BlacklistType.INPUT)) { return UncraftResultType.BLACKLIST; }
+      if (isItemInBlacklist(toUncraft, BlacklistType.MODNAME)) { return UncraftResultType.BLACKLIST; }
       outsize = 0;
       // outsize is 3 means the recipe makes three items total. so MINUS three
       // from the toUncraft for EACH LOOP
@@ -181,7 +183,12 @@ public class UtilUncraft {
           break;//since we are finished doing a recipe that matches, break the MAIN list
         }
       }
-      return (this.drops.size() > 0);
+      if (this.drops.size() > 0) {
+        return UncraftResultType.SUCCESS;
+      }
+      else {
+        return UncraftResultType.NORECIPE;
+      }
     }
     //TODO: get display output/simple output
     //  private List<ItemStack> getRecipeInputFlattenOreDict(IRecipe next) {
@@ -204,7 +211,6 @@ public class UtilUncraft {
      * @param next
      * @return
      */
-    @SuppressWarnings("unchecked")
     private List<? extends Object> getRecipeInput(IRecipe next) {
       if (next instanceof ShapedOreRecipe) {
         ShapedOreRecipe r = (ShapedOreRecipe) next;
