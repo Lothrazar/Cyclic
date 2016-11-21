@@ -169,11 +169,11 @@ public class UtilUncraft {
         if (next == null || next.getRecipeOutput() == null) {
           continue;//be careful
         }
-        if (toUncraft.stackSize < next.getRecipeOutput().stackSize) {
-          result = UncraftResultType.NOTENOUGHITEMS;//we found a matching recipe but we dont have enough to satisfy
-          continue;//keep looking but save the result type
-        }
         if (doesRecipeMatch(next)) {
+          if (toUncraft.stackSize < next.getRecipeOutput().stackSize) {
+            result = UncraftResultType.NOTENOUGHITEMS;//we found a matching recipe but we dont have enough to satisfy
+            continue;//keep looking but save the result type
+          }
           outsize = next.getRecipeOutput().stackSize;
           List<? extends Object> input = getRecipeInput(next);
           for (Object maybeOres : input) {
