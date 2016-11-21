@@ -58,7 +58,7 @@ public class GuiUncrafting extends GuiBaseContanerProgress {
     return this.guiLeft + 10;
   }
   public int getProgressY() {
-    return this.guiTop + 9 + 3 * Const.SQ + 5;
+    return this.guiTop + 9 + 3 * Const.SQ + 9;
   }
   public int getProgressCurrent() {
     return tile.getTimer();

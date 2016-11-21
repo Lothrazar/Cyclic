@@ -27,8 +27,9 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
   private ItemStack[] inv;
   private int timer;
   private int needsRedstone = 1;
-  private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots for all faces
-//  private int uncraftResult = UtilUncraft.UncraftResultType.EMPTY.ordinal();
+  private int[] hopperInput = { 0 };
+  private int[] hopperOutput;
+  //  private int uncraftResult = UtilUncraft.UncraftResultType.EMPTY.ordinal();
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
   private static final String NBT_TIMER = "Timer";
@@ -40,8 +41,12 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
     TIMER, REDSTONE;//, UNCRAFTRESULT;
   }
   public TileMachineUncrafter() {
-    inv = new ItemStack[SLOT_ROWS*SLOT_COLS+1];
+    inv = new ItemStack[SLOT_ROWS * SLOT_COLS + 1];
     timer = TIMER_FULL;
+    hopperOutput = new int[SLOT_ROWS * SLOT_COLS];
+    for (int i = 1; i <= SLOT_ROWS * SLOT_COLS; i++) {
+      hopperOutput[i - 1] = i;
+    }
   }
   @Override
   public int getSizeInventory() {
@@ -116,7 +121,7 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
     // this is from interface IUpdatePlayerListBox
     // change up the timer on both client and server (it gets synced
     // eventually but not constantly)
-//    this.shiftAllUp();
+    //    this.shiftAllUp();
     if (this.onlyRunIfPowered() && this.isPowered() == false) {
       //it works ONLY if its powered
       return;
@@ -160,28 +165,31 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
     } //end of timer go
   }
   private void sendToInventoryOrWorld(ArrayList<ItemStack> output) {
-    BlockPos posOffsetFacing = this.getCurrentFacingPos();//new BlockPos(x, y, z);
-    TileEntity attached = this.getWorld().getTileEntity(posOffsetFacing);
-    //ISidedInventory extends IInventory already
-    IInventory attachedInv = null;
-    if (attached != null && attached instanceof IInventory) {
-      attachedInv = (IInventory) attached;
-    }
+//    BlockPos posOffsetFacing = this.getCurrentFacingPos();//new BlockPos(x, y, z);
+    //    TileEntity attached = this.getWorld().getTileEntity(posOffsetFacing);
+    //    //ISidedInventory extends IInventory already
+    //    IInventory attachedInv = null;
+    //    if (attached != null && attached instanceof IInventory) {
+    //      attachedInv = (IInventory) attached;
+    //    }
     ArrayList<ItemStack> toDrop = null;
-    if (attachedInv != null) {
-      toDrop = UtilInventoryTransfer.dumpToIInventory(output, attachedInv);
-    }
-    else {
-      toDrop = output;
-    }
+    //    if (attachedInv != null) {
+    toDrop = UtilInventoryTransfer.dumpToIInventory(output, this, SLOT_UNCRAFTME + 1);
+    //    }
+    //    else {
+    //      toDrop = output;
+    //    }
     if (toDrop != null)
       for (ItemStack s : toDrop) {
-        UtilItemStack.dropItemStackInWorld(this.getWorld(), posOffsetFacing, s);
+        UtilItemStack.dropItemStackInWorld(this.getWorld(), this.getPos().up(), s);
       }
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
-    return hopperInput;
+    if (side == EnumFacing.UP)
+      return hopperInput;//input through top side
+    else
+      return hopperOutput;
   }
   @Override
   public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
@@ -206,8 +214,8 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
           needsRedstone = 0;
         }
         return this.needsRedstone;
-//      case UNCRAFTRESULT:
-//        return this.uncraftResult ;
+      //      case UNCRAFTRESULT:
+      //        return this.uncraftResult ;
       default:
         break;
       }
@@ -226,9 +234,9 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
         }
         this.needsRedstone = value;
         break;
-//      case UNCRAFTRESULT:
-//        this.uncraftResult = value;
-//        break;
+      //      case UNCRAFTRESULT:
+      //        this.uncraftResult = value;
+      //        break;
       default:
         break;
       }
