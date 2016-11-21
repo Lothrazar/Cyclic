@@ -123,10 +123,10 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
     timer--;
     if (timer <= 0) {
       timer = TIMER_FULL; //reset the timer and do the thing
-      UtilUncraft uncrafter = new UtilUncraft(stack);
+      UtilUncraft.Uncrafter uncrafter = new UtilUncraft.Uncrafter();
       boolean success = false;
       //try {
-        success = uncrafter.doUncraftStart();
+        success = uncrafter.process(stack);
         if (success) {
           if (this.getWorld().isRemote == false) { // drop the items
             ArrayList<ItemStack> uncrafterOutput = uncrafter.getDrops();

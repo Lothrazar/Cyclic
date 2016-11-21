@@ -17,14 +17,6 @@ public class UtilUncraft {
   public static List<String> blacklistInput = new ArrayList<String>();
   public static List<String> blacklistOutput = new ArrayList<String>();
   public static List<String> blacklistMod = new ArrayList<String>();
-  private ArrayList<ItemStack> drops;
-  private ItemStack toUncraft;
-  private int outsize;
-  public UtilUncraft(ItemStack stuff) {
-    this.drops = new ArrayList<ItemStack>();
-    this.toUncraft = stuff;
-    this.outsize = 0;
-  }
   public static enum BlacklistType {
     INPUT, OUTPUT, MODNAME;//, CONTAINS;
   }
@@ -49,14 +41,14 @@ public class UtilUncraft {
       }
     }
   }
-  private boolean isItemInBlacklist(ItemStack drop, BlacklistType type) {
+  private static boolean isItemInBlacklist(ItemStack drop, BlacklistType type) {
     if (drop == null || drop.getItem() == null) { return true; }
     return isItemInBlacklist(drop.getItem(), type);
   }
-  private String getStringForItem(Item item) {
+  private static String getStringForItem(Item item) {
     return item.getRegistryName().getResourceDomain() + ":" + item.getRegistryName().getResourcePath();
   }
-  private boolean isItemInBlacklist(Item item, BlacklistType type) {
+  private static boolean isItemInBlacklist(Item item, BlacklistType type) {
     String itemName;
     switch (type) {
     case INPUT:
@@ -80,154 +72,158 @@ public class UtilUncraft {
     }
     return false;
   }
-  /**
-   * It works but we dont want to use it right now
-   * 
-   * @param istack
-   * @return
-   */
-  @SuppressWarnings("unused")
-  private boolean isRemovedSinceContainerItem(ItemStack istack) {
-    boolean hasContainerItem = istack.getItem().getContainerItem(istack) != null;
-    //EXAMPLE: milk_bucket has containerItem == milk
-    return hasContainerItem;
-  }
-  public ArrayList<ItemStack> getDrops() {
-    return drops;
-  }
-  public int getOutsize() {
-    return outsize;
-  }
-  /**
-   * try to add an entry that is either a stack, or a list of possibilities from
-   * ore dictionary
-   * 
-   * @param maybeOres
-   */
-  @SuppressWarnings("unchecked")
-  private void tryAddOreDictionaryDrop(Object maybeOres) {
-    // thanks  http://stackoverflow.com/questions/20462819/java-util-collectionsunmodifiablerandomaccesslist-to-collections-singletonlist
-    if (maybeOres instanceof List<?> && (List<ItemStack>) maybeOres != null) {
-      // so if there is silver or tin added by multiple ores for example. also affects wooden planks
-      List<ItemStack> ores = (List<ItemStack>) maybeOres;
-      if (ores.size() == 1) {
-        tryAddTrop(ores.get(0));
-      }
-      else if ((ores.size() > 1) && dictionaryFreedom) {
-        tryAddTrop(ores.get(0));
-      }
-      // else size is > 1 , so its something like wooden planks but not for now
+  public static class Uncrafter {
+    private ArrayList<ItemStack> drops;
+    private ItemStack toUncraft;
+    private int outsize;
+    public Uncrafter() {
     }
-  }
-  /**
-   * add drop after checking blacklists
-   * 
-   * @param stackInput
-   */
-  private void tryAddTrop(ItemStack stackInput) {
-    // this fn is null safe, it gets nulls all the time
-    if (stackInput == null || stackInput.getItem() == null) { return; }
-    //    if(isRemovedSinceContainerItem(stackInput)){
-    //      ModMain.logger.info("Removed because it has a container item"+stackInput.getUnlocalizedName());
-    //      return;
-    //    }
-    if (isItemInBlacklist(stackInput, BlacklistType.OUTPUT)) { return; }
-    ItemStack stack = stackInput.copy();
-    stack.stackSize = 1;
-    if (stack.getItemDamage() == 32767) {
-      if (dictionaryFreedom) {
-        stack.setItemDamage(0);// do not make invalid quartz
-      }
-      else {
-        return;
-      }
+    /**
+     * It works but we dont want to use it right now
+     * 
+     * @param istack
+     * @return
+     */
+    @SuppressWarnings("unused")
+    private boolean isRemovedSinceContainerItem(ItemStack istack) {
+      boolean hasContainerItem = istack.getItem().getContainerItem(istack) != null;
+      //EXAMPLE: milk_bucket has containerItem == milk
+      return hasContainerItem;
     }
-    drops.add(stack);
-  }
-  private boolean doesRecipeMatch(IRecipe r) {
-    return r != null && r.getRecipeOutput() != null && doesRecipeInputMatch(r.getRecipeOutput());
-  }
-  private boolean doesRecipeInputMatch(ItemStack recipeOutput) {
-    boolean itemEqual = recipeOutput.isItemEqual(toUncraft);
-    if (itemEqual == false) { return false;//items dont match
+    public ArrayList<ItemStack> getDrops() {
+      return drops;
     }
-    boolean enchantingMatches = recipeOutput.isItemEnchanted() == toUncraft.isItemEnchanted();
- 
-    return enchantingMatches;// either they are both ench, or both not ench
-  }
-  public boolean doUncraftStart() {
-    if (toUncraft == null || toUncraft.getItem() == null) { return false; }
-    if (isItemInBlacklist(toUncraft, BlacklistType.INPUT)) { return false; }
-    if (isItemInBlacklist(toUncraft, BlacklistType.MODNAME)) { return false; }
-    outsize = 0;
-    // outsize is 3 means the recipe makes three items total. so MINUS three
-    // from the toUncraft for EACH LOOP
-    List<IRecipe> recipeList = CraftingManager.getInstance().getRecipeList();
-    for (IRecipe next : recipeList) {
-      if (next == null || next.getRecipeOutput() == null || toUncraft.stackSize <  next.getRecipeOutput().stackSize) {//we dont have enough to satisfy
-        continue;
-      }
-      if (doesRecipeMatch(next)) {
-        outsize = next.getRecipeOutput().stackSize;
-        List<? extends Object> input = getRecipeInput(next);
-        for (Object maybeOres : input) {
-          if (maybeOres instanceof ItemStack) {
-            tryAddTrop((ItemStack) maybeOres);
-          }
-          else {
-            tryAddOreDictionaryDrop(maybeOres);
-          }
+    public int getOutsize() {
+      return outsize;
+    }
+    /**
+     * try to add an entry that is either a stack, or a list of possibilities
+     * from ore dictionary
+     * 
+     * @param maybeOres
+     */
+    @SuppressWarnings("unchecked")
+    private void tryAddOreDictionaryDrop(Object maybeOres) {
+      // thanks  http://stackoverflow.com/questions/20462819/java-util-collectionsunmodifiablerandomaccesslist-to-collections-singletonlist
+      if (maybeOres instanceof List<?> && (List<ItemStack>) maybeOres != null) {
+        // so if there is silver or tin added by multiple ores for example. also affects wooden planks
+        List<ItemStack> ores = (List<ItemStack>) maybeOres;
+        if (ores.size() == 1) {
+          tryAddTrop(ores.get(0));
         }
-        break;//since we are finished doing a recipe that matches, break the MAIN list
+        else if ((ores.size() > 1) && dictionaryFreedom) {
+          tryAddTrop(ores.get(0));
+        }
+        // else size is > 1 , so its something like wooden planks but not for now
       }
     }
-    return (this.drops.size() > 0);
-  }
-  //TODO: get display output/simple output
-//  private List<ItemStack> getRecipeInputFlattenOreDict(IRecipe next) {
-//    List<ItemStack> ret;
-//    List<? extends Object> input = getRecipeInput(next);
-//    for (Object maybeOres : input) {
-//      if (maybeOres instanceof ItemStack) {
-//        tryAddTrop((ItemStack) maybeOres);
-//      }
-//      else {
-//        tryAddOreDictionaryDrop(maybeOres);
-//      }
-//    }
-//    return null;
-//  }
-  /**
-   * could be a list of ItemStacks, or a list of Objects which are ore
-   * dictionary entries
-   * 
-   * @param next
-   * @return
-   */
-  @SuppressWarnings("unchecked")
-  private List<? extends Object> getRecipeInput(IRecipe next) {
-    if (next instanceof ShapedOreRecipe) {
-      ShapedOreRecipe r = (ShapedOreRecipe) next;
-      return new ArrayList<Object>(Arrays.asList(r.getInput()));
+    /**
+     * add drop after checking blacklists
+     * 
+     * @param stackInput
+     */
+    private void tryAddTrop(ItemStack stackInput) {
+      // this fn is null safe, it gets nulls all the time
+      if (stackInput == null || stackInput.getItem() == null) { return; }
+      //    if(isRemovedSinceContainerItem(stackInput)){
+      //      ModMain.logger.info("Removed because it has a container item"+stackInput.getUnlocalizedName());
+      //      return;
+      //    }
+      if (isItemInBlacklist(stackInput, BlacklistType.OUTPUT)) { return; }
+      ItemStack stack = stackInput.copy();
+      stack.stackSize = 1;
+      if (stack.getItemDamage() == 32767) {
+        if (dictionaryFreedom) {
+          stack.setItemDamage(0);// do not make invalid quartz
+        }
+        else {
+          return;
+        }
+      }
+      drops.add(stack);
     }
-    else if (next instanceof ShapelessOreRecipe) {
-      ShapelessOreRecipe r = (ShapelessOreRecipe) next;
-      return r.getInput();
+    private boolean doesRecipeMatch(IRecipe r) {
+      return r != null && r.getRecipeOutput() != null && doesRecipeInputMatch(r.getRecipeOutput());
     }
-    else if (next instanceof ShapedRecipes) {
-      ShapedRecipes r = (ShapedRecipes) next;
-      return new ArrayList<ItemStack>(Arrays.asList(r.recipeItems));
+    private boolean doesRecipeInputMatch(ItemStack recipeOutput) {
+      boolean itemEqual = recipeOutput.isItemEqual(toUncraft);
+      if (itemEqual == false) { return false;//items dont match
+      }
+      boolean enchantingMatches = recipeOutput.isItemEnchanted() == toUncraft.isItemEnchanted();
+      return enchantingMatches;// either they are both ench, or both not ench
     }
-    else if (next instanceof ShapelessRecipes) {
-      ShapelessRecipes r = (ShapelessRecipes) next;
-      return r.recipeItems;
+    public boolean process(ItemStack stuff) {
+      this.toUncraft = stuff;
+      this.drops = new ArrayList<ItemStack>();
+      this.outsize = 0;
+      if (toUncraft == null || toUncraft.getItem() == null) { return false; }
+      if (isItemInBlacklist(toUncraft, BlacklistType.INPUT)) { return false; }
+      if (isItemInBlacklist(toUncraft, BlacklistType.MODNAME)) { return false; }
+      outsize = 0;
+      // outsize is 3 means the recipe makes three items total. so MINUS three
+      // from the toUncraft for EACH LOOP
+      List<IRecipe> recipeList = CraftingManager.getInstance().getRecipeList();
+      for (IRecipe next : recipeList) {
+        if (next == null || next.getRecipeOutput() == null || toUncraft.stackSize < next.getRecipeOutput().stackSize) {//we dont have enough to satisfy
+          continue;
+        }
+        if (doesRecipeMatch(next)) {
+          outsize = next.getRecipeOutput().stackSize;
+          List<? extends Object> input = getRecipeInput(next);
+          for (Object maybeOres : input) {
+            if (maybeOres instanceof ItemStack) {
+              tryAddTrop((ItemStack) maybeOres);
+            }
+            else {
+              tryAddOreDictionaryDrop(maybeOres);
+            }
+          }
+          break;//since we are finished doing a recipe that matches, break the MAIN list
+        }
+      }
+      return (this.drops.size() > 0);
     }
-    //else it could be anything from a custom mod ex: solderer
-    return null;
-  }
-  public boolean canUncraft() {
-    // ?? make this actually different and more efficient?
-    // ex we dont need drops and such
-    return this.doUncraftStart();
+    //TODO: get display output/simple output
+    //  private List<ItemStack> getRecipeInputFlattenOreDict(IRecipe next) {
+    //    List<ItemStack> ret;
+    //    List<? extends Object> input = getRecipeInput(next);
+    //    for (Object maybeOres : input) {
+    //      if (maybeOres instanceof ItemStack) {
+    //        tryAddTrop((ItemStack) maybeOres);
+    //      }
+    //      else {
+    //        tryAddOreDictionaryDrop(maybeOres);
+    //      }
+    //    }
+    //    return null;
+    //  }
+    /**
+     * could be a list of ItemStacks, or a list of Objects which are ore
+     * dictionary entries
+     * 
+     * @param next
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    private List<? extends Object> getRecipeInput(IRecipe next) {
+      if (next instanceof ShapedOreRecipe) {
+        ShapedOreRecipe r = (ShapedOreRecipe) next;
+        return new ArrayList<Object>(Arrays.asList(r.getInput()));
+      }
+      else if (next instanceof ShapelessOreRecipe) {
+        ShapelessOreRecipe r = (ShapelessOreRecipe) next;
+        return r.getInput();
+      }
+      else if (next instanceof ShapedRecipes) {
+        ShapedRecipes r = (ShapedRecipes) next;
+        return new ArrayList<ItemStack>(Arrays.asList(r.recipeItems));
+      }
+      else if (next instanceof ShapelessRecipes) {
+        ShapelessRecipes r = (ShapelessRecipes) next;
+        return r.recipeItems;
+      }
+      //else it could be anything from a custom mod ex: solderer
+      return null;
+    }
   }
 }
