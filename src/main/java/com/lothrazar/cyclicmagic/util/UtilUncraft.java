@@ -154,25 +154,24 @@ public class UtilUncraft {
       boolean enchantingMatches = recipeOutput.isItemEnchanted() == toUncraft.isItemEnchanted();
       return enchantingMatches;// either they are both ench, or both not ench
     }
-
-    public UncraftResultType testUncraft(ItemStack stuff) {
-      
-      return UncraftResultType.NORECIPE;//TODO: 
-    }
     public UncraftResultType process(ItemStack stuff) {
       this.toUncraft = stuff;
       this.drops = new ArrayList<ItemStack>();
       this.outsize = 0;
-      if (toUncraft == null || toUncraft.getItem() == null) { return UncraftResultType.NORECIPE; }
+      if (toUncraft == null || toUncraft.getItem() == null) { return UncraftResultType.EMPTY; }
       if (isItemInBlacklist(toUncraft, BlacklistType.INPUT)) { return UncraftResultType.BLACKLIST; }
       if (isItemInBlacklist(toUncraft, BlacklistType.MODNAME)) { return UncraftResultType.BLACKLIST; }
       outsize = 0;
-      // outsize is 3 means the recipe makes three items total. so MINUS three
-      // from the toUncraft for EACH LOOP
+      // outsize is 3 means the recipe makes three items total. so MINUS three from the toUncraft for EACH LOOP
+      UncraftResultType result = UncraftResultType.NORECIPE;//assumption
       List<IRecipe> recipeList = CraftingManager.getInstance().getRecipeList();
       for (IRecipe next : recipeList) {
-        if (next == null || next.getRecipeOutput() == null || toUncraft.stackSize < next.getRecipeOutput().stackSize) {//we dont have enough to satisfy
-          continue;
+        if (next == null || next.getRecipeOutput() == null) {
+          continue;//be careful
+        }
+        if (toUncraft.stackSize < next.getRecipeOutput().stackSize) {
+          result = UncraftResultType.NOTENOUGHITEMS;//we found a matching recipe but we dont have enough to satisfy
+          continue;//keep looking but save the result type
         }
         if (doesRecipeMatch(next)) {
           outsize = next.getRecipeOutput().stackSize;
@@ -192,7 +191,7 @@ public class UtilUncraft {
         return UncraftResultType.SUCCESS;
       }
       else {
-        return UncraftResultType.NORECIPE;
+        return result;//either norecipe or notenough items
       }
     }
     //TODO: get display output/simple output

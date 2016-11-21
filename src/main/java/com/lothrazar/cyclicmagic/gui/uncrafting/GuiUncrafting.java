@@ -1,11 +1,18 @@
 package com.lothrazar.cyclicmagic.gui.uncrafting;
+import java.io.IOException;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter.Fields;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContanerProgress;
 import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilUncraft;
+import com.lothrazar.cyclicmagic.util.UtilUncraft.UncraftResultType;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -27,6 +34,21 @@ public class GuiUncrafting extends GuiBaseContanerProgress {
         this.guiTop + Const.padding, this.tile.getPos());
     redstoneBtn.setTextureIndex(tile.getField(Fields.REDSTONE.ordinal()));
     this.buttonList.add(redstoneBtn);
+    //int buttonId, int x, int y, String buttonText)
+    GuiButton helpBtn = new GuiButton(1,
+        this.guiLeft + Const.SQ + Const.padding+2,
+        this.guiTop + 4 * Const.padding + 6, 12, 20, "?");
+    this.buttonList.add(helpBtn);
+  }
+  @SideOnly(Side.CLIENT)
+  @Override
+  protected void actionPerformed(GuiButton button) throws IOException {
+    if (button.id == 1) {
+      ItemStack stack = this.tile.getStackInSlot(0);
+      UtilUncraft.Uncrafter uncrafter = new UtilUncraft.Uncrafter();
+      UncraftResultType result = uncrafter.process(stack);
+      UtilChat.addChatMessage(ModCyclic.proxy.getClientPlayer(), "tile.uncrafting." + result.name().toLowerCase());
+    }
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
