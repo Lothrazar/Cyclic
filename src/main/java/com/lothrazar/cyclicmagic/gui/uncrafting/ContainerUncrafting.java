@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.gui.uncrafting;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter;
 import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
+import com.lothrazar.cyclicmagic.gui.SlotOutputOnly;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -20,23 +21,13 @@ public class ContainerUncrafting extends ContainerBaseMachine {
   public ContainerUncrafting(InventoryPlayer inventoryPlayer, TileMachineUncrafter te) {
     tileEntity = te;
     addSlotToContainer(new Slot(tileEntity,TileMachineUncrafter.SLOT_UNCRAFTME, SLOTX_START , SLOTY));
-//    for (int i = TileMachineUncrafter.SLOT_OUTSTART; i < tileEntity.getSizeInventory()-1; i++) {
-//      addSlotToContainer(new Slot(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY));
-//    }
-//    int x, y = 35;
-//    for (int j = 1; j < tileEntity.getSizeInventory(); j++) {
-//      x = Const.padding + j  * Const.SQ;
-//  
-//        y  =35+ (j/3) *Const.SQ;
-//    
-//      this.addSlotToContainer(new Slot(tileEntity, j, x, y));
-//    }
+
     int slot = 1;
     int xPrefix = 2*Const.SQ+Const.padding;
     int yPrefix = 16;
     for (int i = 0; i < TileMachineUncrafter.SLOT_ROWS; i++) {
       for (int j = 0; j < TileMachineUncrafter.SLOT_COLS; j++) {
-        addSlotToContainer(new Slot(tileEntity, slot,
+        addSlotToContainer(new SlotOutputOnly(tileEntity, slot,
             xPrefix + j * Const.SQ,/// X
             yPrefix + i * Const.SQ// Y
             ));
