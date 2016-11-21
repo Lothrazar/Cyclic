@@ -33,9 +33,20 @@ public class GuiUncrafting extends GuiBaseContanerProgress {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
-    for (int k = 0; k < this.tile.getSizeInventory(); k++) {
-      Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerUncrafting.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerUncrafting.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    //first draw the zero slot
+    Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerUncrafting.SLOTX_START - 1 , this.guiTop + ContainerUncrafting.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+
+    int xPrefix = 2*Const.SQ+Const.padding;
+    int yPrefix = 16;
+    for (int i = 0; i < TileMachineUncrafter.SLOT_ROWS; i++) {
+      for (int j = 0; j < TileMachineUncrafter.SLOT_COLS; j++) {
+        Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + xPrefix - 1 + j* Const.SQ, this.guiTop + yPrefix - 1+i* Const.SQ, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+        
+      }
     }
+//    for (int k = 0; k < this.tile.getSizeInventory(); k++) {
+//      Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerUncrafting.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerUncrafting.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+//    }
   }
   @SideOnly(Side.CLIENT)
   @Override

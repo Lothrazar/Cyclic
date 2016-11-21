@@ -20,7 +20,7 @@ public class UtilUncraft {
     INPUT, OUTPUT, MODNAME;//, CONTAINS;
   }
   public static enum UncraftResultType {
-    BLACKLIST, NORECIPE, NOTENOUGHITEMS, SUCCESS;
+    BLACKLIST, NORECIPE, NOTENOUGHITEMS, SUCCESS, EMPTY;
   }
   public static void resetBlacklists() {
     blacklistInput = new ArrayList<String>();
@@ -153,6 +153,11 @@ public class UtilUncraft {
       }
       boolean enchantingMatches = recipeOutput.isItemEnchanted() == toUncraft.isItemEnchanted();
       return enchantingMatches;// either they are both ench, or both not ench
+    }
+
+    public UncraftResultType testUncraft(ItemStack stuff) {
+      
+      return UncraftResultType.NORECIPE;//TODO: 
     }
     public UncraftResultType process(ItemStack stuff) {
       this.toUncraft = stuff;

@@ -19,8 +19,29 @@ public class ContainerUncrafting extends ContainerBaseMachine {
   private int tileTimer;
   public ContainerUncrafting(InventoryPlayer inventoryPlayer, TileMachineUncrafter te) {
     tileEntity = te;
-    for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
-      addSlotToContainer(new Slot(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY));
+    addSlotToContainer(new Slot(tileEntity,TileMachineUncrafter.SLOT_UNCRAFTME, SLOTX_START , SLOTY));
+//    for (int i = TileMachineUncrafter.SLOT_OUTSTART; i < tileEntity.getSizeInventory()-1; i++) {
+//      addSlotToContainer(new Slot(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY));
+//    }
+//    int x, y = 35;
+//    for (int j = 1; j < tileEntity.getSizeInventory(); j++) {
+//      x = Const.padding + j  * Const.SQ;
+//  
+//        y  =35+ (j/3) *Const.SQ;
+//    
+//      this.addSlotToContainer(new Slot(tileEntity, j, x, y));
+//    }
+    int slot = 1;
+    int xPrefix = 2*Const.SQ+Const.padding;
+    int yPrefix = 16;
+    for (int i = 0; i < TileMachineUncrafter.SLOT_ROWS; i++) {
+      for (int j = 0; j < TileMachineUncrafter.SLOT_COLS; j++) {
+        addSlotToContainer(new Slot(tileEntity, slot,
+            xPrefix + j * Const.SQ,/// X
+            yPrefix + i * Const.SQ// Y
+            ));
+        slot++;
+      }
     }
     // commonly used vanilla code that adds the player's inventory
     bindPlayerInventory(inventoryPlayer);
