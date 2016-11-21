@@ -125,12 +125,13 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
       timer = TIMER_FULL; //reset the timer and do the thing
       UtilUncraft uncrafter = new UtilUncraft(stack);
       boolean success = false;
-      try {
+      //try {
         success = uncrafter.doUncraftStart();
         if (success) {
           if (this.getWorld().isRemote == false) { // drop the items
             ArrayList<ItemStack> uncrafterOutput = uncrafter.getDrops();
             sendToInventoryOrWorld(uncrafterOutput);
+            
             this.decrStackSize(0, uncrafter.getOutsize());
           }
           UtilSound.playSound(getWorld(), this.getPos(), SoundEvents.ENTITY_ITEM_BREAK, SoundCategory.BLOCKS);
@@ -146,10 +147,11 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
         }
         this.getWorld().markBlockRangeForRenderUpdate(this.getPos(), this.getPos().up());
         this.markDirty();
-      }
-      catch (Exception e) {
-        ModCyclic.logger.error("Unhandled exception in uncrafting " + e.getStackTrace().toString());
-      }
+     // }
+//      catch (Exception e) {
+//        ModCyclic.logger.error("Unhandled exception in uncrafting " );
+//        ModCyclic.logger.error( e.getMessage());
+//      }
     } //end of timer go
   }
   private void sendToInventoryOrWorld(ArrayList<ItemStack> output) {
