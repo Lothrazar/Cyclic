@@ -61,6 +61,10 @@ public class ClientProxy extends CommonProxy {
   public World getClientWorld() {
     return FMLClientHandler.instance().getClient().theWorld;
   }
+  @Override
+  public EntityPlayer getClientPlayer() {
+    return Minecraft.getMinecraft().thePlayer;
+  }
   private void registerKeys() {
     if (KeyInventoryShiftModule.enableInvoKeys) {
       keyShiftUp = new KeyBinding("key.columnshiftup", Keyboard.KEY_Y, keyCategoryInventory);
@@ -131,7 +135,7 @@ public class ClientProxy extends CommonProxy {
   @Override
   public BlockPos getBlockMouseoverOffset(int max) {
     // Get the player and their held item
-    EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+    EntityPlayerSP player = (EntityPlayerSP) getClientPlayer();
     // int max = 50;
     RayTraceResult mouseOver = Minecraft.getMinecraft().getRenderViewEntity().rayTrace(max, 1f);
     // now get whatever block position we are mousing over if anything
@@ -139,7 +143,7 @@ public class ClientProxy extends CommonProxy {
       // Get the block position and make sure it is a block
       // World world = player.worldObj;
       BlockPos blockPos = mouseOver.getBlockPos();
-      if (blockPos != null && player.getEntityWorld().getBlockState(blockPos) != null
+      if (blockPos != null && player != null && player.getEntityWorld().getBlockState(blockPos) != null
           && player.getEntityWorld().isAirBlock(blockPos) == false) { return blockPos.offset(mouseOver.sideHit); }
     }
     return null;
@@ -169,7 +173,7 @@ public class ClientProxy extends CommonProxy {
   public void setClientPlayerData(MessageContext ctx, NBTTagCompound tags) {
     EntityPlayer p = this.getPlayerEntity(ctx); //Minecraft.getMinecraft().thePlayer;
     if (p != null) {
-      IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(Minecraft.getMinecraft().thePlayer);
+      IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(getClientPlayer());
       if (props != null) {
         props.setDataFromNBT(tags);
       }
@@ -188,7 +192,7 @@ public class ClientProxy extends CommonProxy {
     // Sounds absurd, but it's true.
     //https://github.com/coolAlias/Tutorial-Demo/blob/e8fa9c94949e0b1659dc0a711674074f8752d80e/src/main/java/tutorial/ClientProxy.java
     // Solution is to double-check side before returning the player:
-    return (ctx.side.isClient() ? Minecraft.getMinecraft().thePlayer : super.getPlayerEntity(ctx));
+    return (ctx.side.isClient() ? getClientPlayer() : super.getPlayerEntity(ctx));
   }
   @Override
   @SideOnly(Side.CLIENT)

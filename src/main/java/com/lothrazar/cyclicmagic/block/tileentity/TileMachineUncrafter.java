@@ -5,15 +5,13 @@ import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilUncraft;
+import com.lothrazar.cyclicmagic.util.UtilUncraft.UncraftResultType;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
 
 public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements ITileRedstoneToggle {
   // http://www.minecraftforge.net/wiki/Containers_and_GUIs
@@ -26,17 +24,26 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
   private ItemStack[] inv;
   private int timer;
   private int needsRedstone = 1;
-  private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots for all faces
+  private int[] hopperInput = { 0 };
+  private int[] hopperOutput;
+  //  private int uncraftResult = UtilUncraft.UncraftResultType.EMPTY.ordinal();
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
   private static final String NBT_TIMER = "Timer";
   private static final String NBT_REDST = "redstone";
+  public static final int SLOT_UNCRAFTME = 0;
+  public static final int SLOT_ROWS = 3;
+  public static final int SLOT_COLS = 7;
   public static enum Fields {
-    TIMER, REDSTONE
+    TIMER, REDSTONE;//, UNCRAFTRESULT;
   }
   public TileMachineUncrafter() {
-    inv = new ItemStack[9];
+    inv = new ItemStack[SLOT_ROWS * SLOT_COLS + 1];
     timer = TIMER_FULL;
+    hopperOutput = new int[SLOT_ROWS * SLOT_COLS];
+    for (int i = 1; i <= SLOT_ROWS * SLOT_COLS; i++) {
+      hopperOutput[i - 1] = i;
+    }
   }
   @Override
   public int getSizeInventory() {
@@ -108,29 +115,25 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
   }
   @Override
   public void update() {
-    // this is from interface IUpdatePlayerListBox
-    // change up the timer on both client and server (it gets synced
-    // eventually but not constantly)
-    this.shiftAllUp();
     if (this.onlyRunIfPowered() && this.isPowered() == false) {
       //it works ONLY if its powered
       return;
     }
     //else: its powered, OR it doesnt need power so its ok
-    ItemStack stack = getStackInSlot(0);
+    ItemStack stack = getStackInSlot(SLOT_UNCRAFTME);
     if (stack == null) { return; }
     this.spawnParticlesAbove();// its processing
     timer--;
     if (timer <= 0) {
       timer = TIMER_FULL; //reset the timer and do the thing
-      UtilUncraft uncrafter = new UtilUncraft(stack);
+      UtilUncraft.Uncrafter uncrafter = new UtilUncraft.Uncrafter();
       boolean success = false;
       try {
-        success = uncrafter.doUncraft();
+        success = uncrafter.process(stack) == UncraftResultType.SUCCESS;
         if (success) {
           if (this.getWorld().isRemote == false) { // drop the items
             ArrayList<ItemStack> uncrafterOutput = uncrafter.getDrops();
-            sendToInventoryOrWorld(uncrafterOutput);
+            setOutputItems(uncrafterOutput);
             this.decrStackSize(0, uncrafter.getOutsize());
           }
           UtilSound.playSound(getWorld(), this.getPos(), SoundEvents.ENTITY_ITEM_BREAK, SoundCategory.BLOCKS);
@@ -138,7 +141,7 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
         else {//success = false, so try to dump to inventory first
           ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
           toDrop.add(stack);
-          sendToInventoryOrWorld(toDrop);
+          setOutputItems(toDrop);
           if (this.getWorld().isRemote == false) {
             this.decrStackSize(0, stack.stackSize);
           }
@@ -148,33 +151,25 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
         this.markDirty();
       }
       catch (Exception e) {
-        ModCyclic.logger.error("Unhandled exception in uncrafting " + e.getStackTrace().toString());
+        ModCyclic.logger.error("Unhandled exception in uncrafting ");
+        ModCyclic.logger.error(e.getMessage());
+        e.printStackTrace();
       }
     } //end of timer go
   }
-  private void sendToInventoryOrWorld(ArrayList<ItemStack> output) {
-    BlockPos posOffsetFacing = this.getCurrentFacingPos();//new BlockPos(x, y, z);
-    TileEntity attached = this.getWorld().getTileEntity(posOffsetFacing);
-    //ISidedInventory extends IInventory already
-    IInventory attachedInv = null;
-    if (attached != null && attached instanceof IInventory) {
-      attachedInv = (IInventory) attached;
-    }
-    ArrayList<ItemStack> toDrop = null;
-    if (attachedInv != null) {
-      toDrop = UtilInventoryTransfer.dumpToIInventory(output, attachedInv);
-    }
-    else {
-      toDrop = output;
-    }
+  private void setOutputItems(ArrayList<ItemStack> output) {
+    ArrayList<ItemStack> toDrop = UtilInventoryTransfer.dumpToIInventory(output, this, SLOT_UNCRAFTME + 1);
     if (toDrop != null)
       for (ItemStack s : toDrop) {
-        UtilItemStack.dropItemStackInWorld(this.getWorld(), posOffsetFacing, s);
+        UtilItemStack.dropItemStackInWorld(this.getWorld(), this.getPos().up(), s);
       }
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
-    return hopperInput;
+    if (side == EnumFacing.UP)
+      return hopperInput;//input through top side
+    else
+      return hopperOutput;
   }
   @Override
   public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
@@ -199,6 +194,10 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
           needsRedstone = 0;
         }
         return this.needsRedstone;
+      //      case UNCRAFTRESULT:
+      //        return this.uncraftResult ;
+      default:
+        break;
       }
     return -7;
   }
@@ -214,6 +213,11 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
           value = 0;
         }
         this.needsRedstone = value;
+        break;
+      //      case UNCRAFTRESULT:
+      //        this.uncraftResult = value;
+      //        break;
+      default:
         break;
       }
   }

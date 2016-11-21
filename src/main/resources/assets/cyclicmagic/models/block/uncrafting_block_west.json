@@ -3,7 +3,7 @@
     "textures": {
         "0": "blocks/furnace_top",
         "1": "blocks/cauldron_inner",
-        "2": "blocks/dispenser_front_vertical",
+        "2": "blocks/furnace_top",
         "3": "blocks/obsidian",
         "4": "blocks/diamond_block",
         "particle": "blocks/iron_block"

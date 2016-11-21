@@ -1,7 +1,7 @@
 { 
  	"parent": "cyclicmagic:parent/machine_south",
     "textures": {
-        "0": "blocks/dispenser_front_vertical",
+        "0": "blocks/furnace_top",
         "1": "blocks/furnace_top",
         "2": "blocks/cauldron_inner",
         "3": "blocks/obsidian",

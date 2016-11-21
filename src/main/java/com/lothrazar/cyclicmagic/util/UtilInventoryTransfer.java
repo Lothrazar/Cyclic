@@ -176,7 +176,7 @@ public class UtilInventoryTransfer {
   private static int getInvoEnd(EntityPlayer p) {
     return p.inventory.getSizeInventory() - Const.ARMOR_SIZE - 1;//now that we have shield slot, need the offset 1, otherwise boots get included
   }
-  public static ArrayList<ItemStack> dumpToIInventory(ArrayList<ItemStack> stacks, IInventory inventory) {
+  public static ArrayList<ItemStack> dumpToIInventory(ArrayList<ItemStack> stacks, IInventory inventory, int startingSlot) {
     //and return the remainder after dumping
     ArrayList<ItemStack> remaining = new ArrayList<ItemStack>();
     ItemStack chestStack;
@@ -184,7 +184,7 @@ public class UtilInventoryTransfer {
       if (current == null) {
         continue;
       }
-      for (int i = 0; i < inventory.getSizeInventory(); i++) {
+      for (int i =startingSlot; i < inventory.getSizeInventory(); i++) {
         if (current == null) {
           continue;
         }
