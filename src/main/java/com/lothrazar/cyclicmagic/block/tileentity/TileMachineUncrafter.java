@@ -7,14 +7,11 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilUncraft;
 import com.lothrazar.cyclicmagic.util.UtilUncraft.UncraftResultType;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
 
 public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements ITileRedstoneToggle {
   // http://www.minecraftforge.net/wiki/Containers_and_GUIs
@@ -118,10 +115,6 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
   }
   @Override
   public void update() {
-    // this is from interface IUpdatePlayerListBox
-    // change up the timer on both client and server (it gets synced
-    // eventually but not constantly)
-    //    this.shiftAllUp();
     if (this.onlyRunIfPowered() && this.isPowered() == false) {
       //it works ONLY if its powered
       return;
@@ -140,7 +133,7 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
         if (success) {
           if (this.getWorld().isRemote == false) { // drop the items
             ArrayList<ItemStack> uncrafterOutput = uncrafter.getDrops();
-            sendToInventoryOrWorld(uncrafterOutput);
+            setOutputItems(uncrafterOutput);
             this.decrStackSize(0, uncrafter.getOutsize());
           }
           UtilSound.playSound(getWorld(), this.getPos(), SoundEvents.ENTITY_ITEM_BREAK, SoundCategory.BLOCKS);
@@ -148,7 +141,7 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
         else {//success = false, so try to dump to inventory first
           ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
           toDrop.add(stack);
-          sendToInventoryOrWorld(toDrop);
+          setOutputItems(toDrop);
           if (this.getWorld().isRemote == false) {
             this.decrStackSize(0, stack.stackSize);
           }
@@ -164,21 +157,8 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
       }
     } //end of timer go
   }
-  private void sendToInventoryOrWorld(ArrayList<ItemStack> output) {
-//    BlockPos posOffsetFacing = this.getCurrentFacingPos();//new BlockPos(x, y, z);
-    //    TileEntity attached = this.getWorld().getTileEntity(posOffsetFacing);
-    //    //ISidedInventory extends IInventory already
-    //    IInventory attachedInv = null;
-    //    if (attached != null && attached instanceof IInventory) {
-    //      attachedInv = (IInventory) attached;
-    //    }
-    ArrayList<ItemStack> toDrop = null;
-    //    if (attachedInv != null) {
-    toDrop = UtilInventoryTransfer.dumpToIInventory(output, this, SLOT_UNCRAFTME + 1);
-    //    }
-    //    else {
-    //      toDrop = output;
-    //    }
+  private void setOutputItems(ArrayList<ItemStack> output) {
+    ArrayList<ItemStack> toDrop = UtilInventoryTransfer.dumpToIInventory(output, this, SLOT_UNCRAFTME + 1);
     if (toDrop != null)
       for (ItemStack s : toDrop) {
         UtilItemStack.dropItemStackInWorld(this.getWorld(), this.getPos().up(), s);
