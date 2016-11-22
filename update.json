@@ -77,6 +77,6 @@
   	,"1.8.9":"Fix compatibility with commands and HelperFixer (compareTo issues from server logs & possible crashes running /help).  Horse upgrade carrots for speed and jump now increase at a constant rate and not a percentage; this also fix incorrect upgrading while the horse is under jump or speed potions.  "
  	,"1.8.10":"Fix the Cyclic scepter crashing the client when trying to place a block on empty space at max range and failing to play a sound effect"
   	,"1.8.11":"New Item: Ender Sack.  New Block: Interdiction Plate.  "
-  	,"1.8.12":"Uncrafting Grinder GUI overhaul.  Fix timeout & delay errors in Bucket storage.  "
+  	,"1.8.12":"Uncrafting Grinder GUI overhaul: New help button to identify if an item can be uncrafted, and if not it gives a reason.  It no longer tries to deposit items into containers (was incompatible with some containers, and occasionally had issues), instead has its own inventory of recipe output, which can be extracted by hoppers and pipes.  Fix timeout & delay errors in Bucket storage.  "
   }
 }
