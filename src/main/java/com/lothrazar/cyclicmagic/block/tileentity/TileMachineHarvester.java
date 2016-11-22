@@ -69,10 +69,7 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
     }
     if (trigger) {
       BlockPos harvest = getHarvestPos();
-      //TODO:spit drops out the facing side, just like uncrafter
-      // -> to this end, add new conf flag
       if (UtilHarvestCrops.harvestSingle(getWorld(), harvest, conf)) {
-        //        ModMain.logger.info("harvested :" + UtilChat.blockPosToString(harvest));
         UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, harvest);
         timer = TIMER_FULL;//harvest worked!
       }

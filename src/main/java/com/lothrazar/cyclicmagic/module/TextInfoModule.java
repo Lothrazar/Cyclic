@@ -23,7 +23,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TextInfoModule extends BaseEventModule implements IHasConfig {//TODO: no f3? eh?  
+public class TextInfoModule extends BaseEventModule implements IHasConfig {  
   private boolean spawnDistanceEnabled;
   private boolean horseInfoEnabled;
   private boolean foodDetails;

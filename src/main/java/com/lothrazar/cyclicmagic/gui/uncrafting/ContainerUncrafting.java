@@ -80,7 +80,6 @@ public class ContainerUncrafting extends ContainerBaseMachine {
     this.tileTimer = this.tileEntity.getField(TileMachineUncrafter.Fields.TIMER.ordinal());
     this.tileRedstone = this.tileEntity.getField(TileMachineUncrafter.Fields.REDSTONE.ordinal());
   }
-  //TODO: these two in base class?
   @Override
   @SideOnly(Side.CLIENT)
   public void updateProgressBar(int id, int data) {

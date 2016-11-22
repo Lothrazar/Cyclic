@@ -48,15 +48,7 @@ public class CommandRecipe extends BaseCommand implements ICommand {
       if (held.getMetadata() != recipeResult.getMetadata()) {
         continue;
       }
-      // TODO seperator btw recipes: one item can have multiple.
-      // for each recipe, we need an array/list of the input, then we pass it
-      // off to get printed
-      // recipe is either shaped or shapeless
-      // on top of that, some use Forge ore dictionary, and some dont
-      // so 4 cases total
-      // TODO: refactor and use ItemStack[] ingred =
-      // Util.getRecipeInput(recipe);
-      // to save reuse
+ 
       if (recipe instanceof ShapedRecipes) {
         ShapedRecipes r = ((ShapedRecipes) recipe);
         boolean isInventory = (r.recipeHeight < 3 || r.recipeWidth < 3);

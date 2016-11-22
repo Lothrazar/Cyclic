@@ -9,6 +9,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class CommonProxy {
+  //https://github.com/coolAlias/Tutorial-Demo/blob/e8fa9c94949e0b1659dc0a711674074f8752d80e/src/main/java/tutorial/CommonProxy.java
   public void register() {
   }
   public World getClientWorld() {
@@ -27,9 +28,7 @@ public class CommonProxy {
     return null;
   }
   public void setClientPlayerData(MessageContext ctx, NBTTagCompound tags) {
-    //client side only
   }
-  //https://github.com/coolAlias/Tutorial-Demo/blob/e8fa9c94949e0b1659dc0a711674074f8752d80e/src/main/java/tutorial/CommonProxy.java
   public IThreadListener getThreadFromContext(MessageContext ctx) {
     return ctx.getServerHandler().playerEntity.getServer();
   }
@@ -37,7 +36,6 @@ public class CommonProxy {
     return ctx.getServerHandler().playerEntity;
   }
   public BlockPos getBlockMouseoverSingle() {
-    // TODO Auto-generated method stub
     return null;
   }
   public void renderItemOnScreen(ItemStack current, int x, int y) {

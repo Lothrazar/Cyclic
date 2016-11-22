@@ -88,7 +88,7 @@ public class ModCyclic {
   }
   /*
    * 
-   * TODO: ideas/plans/features
+   *  ideas/plans/features
    * 
    * LADDER CLIMB: remove the && player.moveForward == 0 restriction?
    * 

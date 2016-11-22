@@ -194,20 +194,6 @@ public class UtilUncraft {
         return result;//either norecipe or notenough items
       }
     }
-    //TODO: get display output/simple output
-    //  private List<ItemStack> getRecipeInputFlattenOreDict(IRecipe next) {
-    //    List<ItemStack> ret;
-    //    List<? extends Object> input = getRecipeInput(next);
-    //    for (Object maybeOres : input) {
-    //      if (maybeOres instanceof ItemStack) {
-    //        tryAddTrop((ItemStack) maybeOres);
-    //      }
-    //      else {
-    //        tryAddOreDictionaryDrop(maybeOres);
-    //      }
-    //    }
-    //    return null;
-    //  }
     /**
      * could be a list of ItemStacks, or a list of Objects which are ore
      * dictionary entries
