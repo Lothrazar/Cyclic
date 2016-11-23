@@ -51,7 +51,6 @@ public class SpellRegistry {
     wand.setSpells(spellbookBuild);
   }
   private static void registerSpell(ISpell spell) {
-    System.out.println("SPELL REG " + spell.getID() + " " + spell.getName());
     hashbook.put(spell.getID(), spell);
   }
   public static boolean spellsEnabled(EntityPlayer player) {
