@@ -61,7 +61,7 @@ public class ItemToolWaterIce extends BaseTool implements IHasRecipe {
     }
     boolean success = count > 0;
     if (success) {//particles are on each location, sound is just once
-      //  player.getCooldownTracker().setCooldown(this, COOLDOWN);
+      //player.getCooldownTracker().setCooldown(this, COOLDOWN);
       UtilSound.playSound(world, posCenter, SoundEvents.ENTITY_PLAYER_SPLASH, SoundCategory.BLOCKS);
     }
     return success;
