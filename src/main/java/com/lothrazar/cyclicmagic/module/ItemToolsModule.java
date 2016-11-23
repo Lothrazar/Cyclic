@@ -63,6 +63,9 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
   public static ItemStorageBag storage_bag;//ref by ContainerStorage
   @Override
   public void onInit() {
+    ItemToolWaterSpreader water_spreader = new ItemToolWaterSpreader();
+    ItemRegistry.addItem(water_spreader, "water_spreader");
+    
     if (enderSack) {
       ItemEnderBag sack_ender = new ItemEnderBag();
       ItemRegistry.addItem(sack_ender, "sack_ender");
