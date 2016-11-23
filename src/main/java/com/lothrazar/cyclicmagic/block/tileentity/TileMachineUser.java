@@ -3,6 +3,7 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
 import net.minecraft.block.state.IBlockState;
@@ -96,7 +97,16 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
           if (world.isAirBlock(targetPos)) {
             targetPos = targetPos.down();
           }
+          String tool = (maybeTool==null)?"empty":maybeTool.getUnlocalizedName();
+          
+          System.out.println("auto user on "+UtilChat.blockPosToString(targetPos)+tool);
+          
           fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
+         
+          this.getWorld().markChunkDirty(this.getPos(), this);
+          this.getWorld().markChunkDirty(targetPos, this);
+      this.getWorld().markBlockRangeForRenderUpdate(this.getPos(), targetPos);
+          
           //act on entity
           int hRange = 2;
           int vRange = 1;
@@ -111,6 +121,9 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
             fakePlayer.get().interact(ent, maybeTool, EnumHand.MAIN_HAND);
           }
         }
+      }
+      else{
+        timer = 1;//allows it to run on a pulse
       }
     }
   }

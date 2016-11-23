@@ -66,6 +66,8 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
     ItemToolWaterSpreader water_spreader = new ItemToolWaterSpreader();
     ItemRegistry.addItem(water_spreader, "water_spreader");
     
+    ItemToolWaterIce water_freezer = new ItemToolWaterIce();
+    ItemRegistry.addItem(water_freezer, "water_freezer");
     if (enderSack) {
       ItemEnderBag sack_ender = new ItemEnderBag();
       ItemRegistry.addItem(sack_ender, "sack_ender");
