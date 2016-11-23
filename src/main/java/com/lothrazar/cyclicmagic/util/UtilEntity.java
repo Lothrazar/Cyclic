@@ -143,6 +143,14 @@ public class UtilEntity {
       entity.addVelocity(velX, velY, velZ);
     }
   }
+  public static AxisAlignedBB makeBoundingBox(BlockPos center, int ITEM_HRADIUS, int ITEM_VRADIUS) {
+    double x = center.getX();
+    double y = center.getY();
+    double z = center.getZ();
+    return new AxisAlignedBB(
+        x - ITEM_HRADIUS, y - ITEM_VRADIUS, z - ITEM_HRADIUS,
+        x + ITEM_HRADIUS, y + ITEM_VRADIUS, z + ITEM_HRADIUS);
+  }
   public static AxisAlignedBB makeBoundingBox(double x, double y, double z, int ITEM_HRADIUS, int ITEM_VRADIUS) {
     return new AxisAlignedBB(
         x - ITEM_HRADIUS, y - ITEM_VRADIUS, z - ITEM_HRADIUS,
@@ -159,7 +167,7 @@ public class UtilEntity {
     return pullEntityList(x, y, z, towardsPos, all);
   }
   public static int moveEntityLivingNonplayers(World world, double x, double y, double z, int ITEM_HRADIUS, int ITEM_VRADIUS, boolean towardsPos) {
-    AxisAlignedBB range = makeBoundingBox(x, y, z, ITEM_HRADIUS, ITEM_VRADIUS);
+    AxisAlignedBB range = UtilEntity.makeBoundingBox(x, y, z, ITEM_HRADIUS, ITEM_VRADIUS);
     List<EntityLivingBase> all = world.getEntitiesWithinAABB(EntityLivingBase.class, range);
     List<EntityLivingBase> nonPlayer = new ArrayList<EntityLivingBase>();
     for (EntityLivingBase ent : all) {

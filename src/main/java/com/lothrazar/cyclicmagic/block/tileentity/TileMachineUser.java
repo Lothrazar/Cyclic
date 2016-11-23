@@ -1,16 +1,24 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -63,33 +71,41 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
         IBlockState state = world.getBlockState(this.pos);
         world.notifyBlockUpdate(pos, state, state, 3);
       }
-      ItemStack maybeTool = inv[toolSlot];
+      ItemStack maybeTool = getStackInSlot(toolSlot);
       if (maybeTool == null) {
         fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, null);
       }
       else {
         if (maybeTool.stackSize == 0) {
+          maybeTool = null;
           inv[toolSlot] = null;
+          fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, null);
         }
         if (!maybeTool.equals(fakePlayer.get().getHeldItem(EnumHand.MAIN_HAND))) {
           fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, maybeTool);
         }
         //else already equipped
       }
-      BlockPos targetPos = pos.offset(this.getCurrentFacing()); //not sure if this is needed
-      if (world.isAirBlock(targetPos)) {
-        targetPos = targetPos.down();
-      }
-      ItemStack stack = getStackInSlot(0);
-      if (stack == null) { return; }
       if (!(this.onlyRunIfPowered() && this.isPowered() == false)) {
         timer -= this.getSpeed();
         if (timer <= 0) {
           timer = 0;
         }
         if (timer == 0) {
-          fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
           timer = TIMER_FULL;
+          //act on block
+          BlockPos targetPos = this.getCurrentFacingPos();//pos.offset(this.getCurrentFacing()); //not sure if this is needed
+          if (world.isAirBlock(targetPos)) {
+            targetPos = targetPos.down();
+          }
+          fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
+          //act on entity
+          AxisAlignedBB range = UtilEntity.makeBoundingBox(this.getCurrentFacingPos(), 2, 1);
+          List<EntityLivingBase> all = world.getEntitiesWithinAABB(EntityLivingBase.class, range);
+          for (EntityLivingBase ent : all) {
+            System.out.println("interact with entity");
+            fakePlayer.get().interact(ent, maybeTool, EnumHand.MAIN_HAND);
+          }
         }
       }
     }
