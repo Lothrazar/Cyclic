@@ -66,8 +66,8 @@ public class ItemToolExtinguish extends BaseTool implements IHasRecipe {
         "wdw",
         "iwi",
         " o ",
-        'w', new ItemStack(Items.LAVA_BUCKET),
-        'd', new ItemStack(Items.DIAMOND),
+        'w', new ItemStack(Items.WATER_BUCKET),
+        'd', new ItemStack(Blocks.field_189877_df),//magma block
         'o', new ItemStack(Blocks.OBSIDIAN),
         'i', new ItemStack(Blocks.ICE));
   }

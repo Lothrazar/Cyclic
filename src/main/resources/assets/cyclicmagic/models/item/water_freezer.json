@@ -1,6 +1,7 @@
 {
  	"parent": "cyclicmagic:parent/wand_simple",
     "textures": {
-        "0": "blocks/ice"
+        "0": "blocks/nether_brick",
+		"2": "blocks/ice"
     }
 }

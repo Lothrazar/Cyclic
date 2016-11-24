@@ -73,7 +73,7 @@ public class ItemToolWaterIce extends BaseTool implements IHasRecipe {
         "iwi",
         " o ",
         'w', new ItemStack(Items.WATER_BUCKET),
-        'd', new ItemStack(Items.REDSTONE),
+        'd', new ItemStack(Items.NETHERBRICK),
         'o', new ItemStack(Blocks.OBSIDIAN),
         'i', new ItemStack(Blocks.ICE));
   }
