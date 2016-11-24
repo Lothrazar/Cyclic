@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.net;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.ItemChestSack;
 import com.lothrazar.cyclicmagic.item.ItemChestSackEmpty;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -12,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.IThreadListener;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -44,41 +46,50 @@ public class PacketStorageSack implements IMessage, IMessageHandler<PacketStorag
   }
   @Override
   public IMessage onMessage(PacketStorageSack message, MessageContext ctx) {
+    PacketStorageSack.checkThreadAndEnqueue(message, ctx);
+    return null;
+  }
+  private static void checkThreadAndEnqueue(final PacketStorageSack message, final MessageContext ctx) {
     if (ctx.side.isServer() && message != null && message.pos != null) {
-      BlockPos position = message.pos;
-      EntityPlayer player = ctx.getServerHandler().playerEntity;
-      World world = player.getEntityWorld();
-      TileEntity tile = world.getTileEntity(position);
-      IBlockState state = world.getBlockState(position);
-      NBTTagCompound tileData = new NBTTagCompound(); //thanks for the tip on setting tile entity data from nbt tag: https://github.com/romelo333/notenoughwands1.8.8/blob/master/src/main/java/romelo333/notenoughwands/Items/DisplacementWand.java
-      tile.writeToNBT(tileData);
-      NBTTagCompound itemData = new NBTTagCompound();
-      itemData.setString(ItemChestSack.KEY_BLOCKNAME, state.getBlock().getUnlocalizedName());
-      itemData.setTag(ItemChestSack.KEY_BLOCKTILE, tileData);
-      itemData.setInteger(ItemChestSack.KEY_BLOCKID, Block.getIdFromBlock(state.getBlock()));
-      itemData.setInteger(ItemChestSack.KEY_BLOCKSTATE, state.getBlock().getMetaFromState(state));
-      ItemStack held = player.getHeldItem(EnumHand.MAIN_HAND);
-      if (held == null || held.getItem() instanceof ItemChestSackEmpty == false) {
-        held = player.getHeldItem(EnumHand.OFF_HAND);
-      }
-      if (held != null) {
-        if (held.getItem() instanceof ItemChestSackEmpty) {
-          Item chest_sack = ((ItemChestSackEmpty) held.getItem()).getFullSack();
-          if (chest_sack != null) {
-            ItemStack drop = new ItemStack(chest_sack);
-            drop.setTagCompound(itemData);
-            UtilItemStack.dropItemStackInWorld(world, player.getPosition(), drop);
-            UtilPlaceBlocks.destroyBlock(world, position);
-            if (player.capabilities.isCreativeMode == false) {
-              held.stackSize--;
+      IThreadListener thread = ModCyclic.proxy.getThreadFromContext(ctx);
+      // pretty much copied straight from vanilla code, see {@link PacketThreadUtil#checkThreadAndEnqueue}
+      thread.addScheduledTask(new Runnable() {
+        public void run() {
+          BlockPos position = message.pos;
+          EntityPlayer player = ctx.getServerHandler().playerEntity;
+          World world = player.getEntityWorld();
+          TileEntity tile = world.getTileEntity(position);
+          IBlockState state = world.getBlockState(position);
+          NBTTagCompound tileData = new NBTTagCompound(); //thanks for the tip on setting tile entity data from nbt tag: https://github.com/romelo333/notenoughwands1.8.8/blob/master/src/main/java/romelo333/notenoughwands/Items/DisplacementWand.java
+          tile.writeToNBT(tileData);
+          NBTTagCompound itemData = new NBTTagCompound();
+          itemData.setString(ItemChestSack.KEY_BLOCKNAME, state.getBlock().getUnlocalizedName());
+          itemData.setTag(ItemChestSack.KEY_BLOCKTILE, tileData);
+          itemData.setInteger(ItemChestSack.KEY_BLOCKID, Block.getIdFromBlock(state.getBlock()));
+          itemData.setInteger(ItemChestSack.KEY_BLOCKSTATE, state.getBlock().getMetaFromState(state));
+          ItemStack held = player.getHeldItem(EnumHand.MAIN_HAND);
+          if (held == null || held.getItem() instanceof ItemChestSackEmpty == false) {
+            held = player.getHeldItem(EnumHand.OFF_HAND);
+          }
+          if (held != null && held.stackSize > 0) { //https://github.com/PrinceOfAmber/Cyclic/issues/181
+            if (held.getItem() instanceof ItemChestSackEmpty) {
+              Item chest_sack = ((ItemChestSackEmpty) held.getItem()).getFullSack();
+              if (chest_sack != null) {
+                ItemStack drop = new ItemStack(chest_sack);
+                drop.setTagCompound(itemData);
+                UtilItemStack.dropItemStackInWorld(world, player.getPosition(), drop);
+                UtilPlaceBlocks.destroyBlock(world, position);
+                if (player.capabilities.isCreativeMode == false && held.stackSize > 0) {
+                  held.stackSize--;
+                  if (held.stackSize == 0) {
+                    held = null;
+                  }
+                }
+              }
             }
           }
         }
-      }
-      //      if (held != null && held.stackSize > 0) {
-      //        player.getCooldownTracker().setCooldown(held.getItem(), 1);
-      //      }
+      });
     }
-    return null;
   }
 }
