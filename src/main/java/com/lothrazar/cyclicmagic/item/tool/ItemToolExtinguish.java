@@ -16,18 +16,17 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemToolWaterIce extends BaseTool implements IHasRecipe {
+public class ItemToolExtinguish extends BaseTool implements IHasRecipe {
   private static final int DURABILITY = 256;
-//  private static final int COOLDOWN = 10;
-  private static final int RADIUS = 2;
-  public ItemToolWaterIce() {
+  private static final int COOLDOWN = 10;
+  private static final int RADIUS = 4;
+  public ItemToolExtinguish() {
     super(DURABILITY);
   }
   @Override
@@ -36,33 +35,28 @@ public class ItemToolWaterIce extends BaseTool implements IHasRecipe {
     if (side != null) {
       pos = pos.offset(side);
     }
-    if (spreadWaterFromCenter(world, pos.offset(side))) {
+    if (spreadWaterFromCenter(world, player, pos))
       super.onUse(stack, player, world, hand);
-    }
     return super.onItemUse(stack, player, world, pos, hand, side, hitX, hitY, hitZ);
   }
   @Override
   public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
-    if (spreadWaterFromCenter(world, player.getPosition().offset(player.getHorizontalFacing()))) {
-      super.onUse(stack, player, world, hand); //player.getCooldownTracker().setCooldown(this, COOLDOWN);
-      
-    }
+    if (spreadWaterFromCenter(world, player, player.getPosition()))
+      super.onUse(stack, player, world, hand);
     return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
   }
-  private boolean spreadWaterFromCenter(World world, BlockPos posCenter) {
+  private boolean spreadWaterFromCenter(World world, EntityPlayer player, BlockPos posCenter) {
     int count = 0;
-    List<BlockPos> water = UtilWorld.findBlocks(world, posCenter, Blocks.WATER, RADIUS);
-    water.addAll(UtilWorld.findBlocks(world, posCenter, Blocks.FLOWING_WATER, RADIUS));
-    for (BlockPos pos : water) {
-      world.setBlockState(pos, Blocks.ICE.getDefaultState(), 3);
-      //       world.markChunkDirty(pos, null);
+    for (BlockPos pos : UtilWorld.findBlocks(world, posCenter, Blocks.FIRE, RADIUS)) {
+      world.setBlockToAir(pos);
       UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_SPLASH, pos);
       UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_SPLASH, pos.up());
       count++;
     }
     boolean success = count > 0;
     if (success) {//particles are on each location, sound is just once
-      UtilSound.playSound(world, posCenter, SoundEvents.ENTITY_PLAYER_SPLASH, SoundCategory.BLOCKS);
+      player.getCooldownTracker().setCooldown(this, COOLDOWN);
+      UtilSound.playSound(player, SoundEvents.BLOCK_FIRE_EXTINGUISH);
     }
     return success;
   }
@@ -72,13 +66,13 @@ public class ItemToolWaterIce extends BaseTool implements IHasRecipe {
         "wdw",
         "iwi",
         " o ",
-        'w', new ItemStack(Items.WATER_BUCKET),
-        'd', new ItemStack(Items.REDSTONE),
+        'w', new ItemStack(Items.LAVA_BUCKET),
+        'd', new ItemStack(Items.DIAMOND),
         'o', new ItemStack(Blocks.OBSIDIAN),
         'i', new ItemStack(Blocks.ICE));
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
-    tooltip.add(UtilChat.lang("item.water_freezer.tooltip"));
+    tooltip.add(UtilChat.lang("item.fire_killer.tooltip"));
   }
 }

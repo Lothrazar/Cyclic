@@ -87,7 +87,10 @@ public class ModCyclic {
     }
   }
   /*
-   * 
+
+MISSING CONFIG: shears block, water tool, icemaker, CHECK all modules
+
+
    * FAN: works like a magnet but full block, pushes or pull sall entities horizontal (including player, items, anything)
    * 
    * SENSORS: works like magnets but when it finds an entity it just outputs redstone

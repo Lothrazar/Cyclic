@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.entity.projectile;
-import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.entity.EntityLivingBase;
@@ -45,7 +44,6 @@ public class EntityTorchBolt extends EntityThrowable {
         world.getBlockState(offset).getBlock() == null ||
         world.getBlockState(offset).getBlock().isReplaceable(world, offset);
     if (isValidLocation && isValidBlockstate && isSideSolid) {
-      System.out.println("SET TORCH AT POS " + UtilChat.blockPosToString(offset));
       world.setBlockState(offset,
           Blocks.TORCH.getDefaultState().withProperty(BlockTorch.FACING, sideHit));
     }
