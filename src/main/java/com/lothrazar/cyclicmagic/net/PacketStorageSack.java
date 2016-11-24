@@ -67,9 +67,11 @@ public class PacketStorageSack implements IMessage, IMessageHandler<PacketStorag
           itemData.setTag(ItemChestSack.KEY_BLOCKTILE, tileData);
           itemData.setInteger(ItemChestSack.KEY_BLOCKID, Block.getIdFromBlock(state.getBlock()));
           itemData.setInteger(ItemChestSack.KEY_BLOCKSTATE, state.getBlock().getMetaFromState(state));
-          ItemStack held = player.getHeldItem(EnumHand.MAIN_HAND);
+          EnumHand hand = EnumHand.MAIN_HAND;
+          ItemStack held = player.getHeldItem(hand);
           if (held == null || held.getItem() instanceof ItemChestSackEmpty == false) {
-            held = player.getHeldItem(EnumHand.OFF_HAND);
+           hand = EnumHand.OFF_HAND;
+            held = player.getHeldItem(hand);
           }
           if (held != null && held.stackSize > 0) { //https://github.com/PrinceOfAmber/Cyclic/issues/181
             if (held.getItem() instanceof ItemChestSackEmpty) {
@@ -83,6 +85,7 @@ public class PacketStorageSack implements IMessage, IMessageHandler<PacketStorag
                   held.stackSize--;
                   if (held.stackSize == 0) {
                     held = null;
+                    player.setHeldItem(hand, null);
                   }
                 }
               }
