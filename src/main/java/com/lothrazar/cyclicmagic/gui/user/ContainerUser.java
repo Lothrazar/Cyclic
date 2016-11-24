@@ -75,7 +75,6 @@ public class ContainerUser extends ContainerBaseMachine {
     this.timer = this.tileEntity.getField(TileMachineUser.Fields.TIMER.ordinal());
     this.redstone = this.tileEntity.getField(TileMachineUser.Fields.REDSTONE.ordinal());
   }
-  //TODO: these two in base class?
   @Override
   @SideOnly(Side.CLIENT)
   public void updateProgressBar(int id, int data) {

@@ -153,14 +153,13 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
       matched = worldObj.getBlockState(message.pos);
     }
     Map<BlockPos, Integer> processed = new HashMap<BlockPos, Integer>();
-    //TODO: maybe dont randomly take blocks from inventory. maybe do a pick block.. or an inventory..i dont know
+    // maybe dont randomly take blocks from inventory. maybe do a pick block.. or an inventory..i dont know
     //seems ok, and also different enough to be fine
     BlockPos curPos;
     try {
       synchronized (places) {
         for (Iterator<BlockPos> i = places.iterator(); i.hasNext();) {
           curPos = i.next();
-          // for (BlockPos curPos : places) {
           if (processed.containsKey(curPos) == false) {
             processed.put(curPos, 0);
           }
@@ -172,9 +171,7 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
           if (slot < 0) {
             continue;//you have no materials left
           }
-          //        if (worldObj.isSideSolid(curPos, side) == false) { //trying to avoid the TickNextTick list out of synch
-          //          continue;//dont  do nonsolid blocks ex: water/plants
-          //        }
+ 
           if (worldObj.getTileEntity(curPos) != null) {
             continue;//ignore tile entities IE do not break chests / etc
           }

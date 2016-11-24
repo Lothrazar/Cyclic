@@ -17,7 +17,6 @@ public class ItemToolStirrups extends BaseTool implements IHasRecipe {
   public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
     World world = entity.getEntityWorld();
     if (world.isRemote) { return false; }
-    //TODO: possible blacklist?
     player.startRiding(entity, true);
     super.onUse(stack, player, world, hand);
     return true;

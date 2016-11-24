@@ -97,7 +97,6 @@ public class ContainerBuilder extends ContainerBaseMachine {
     this.tileHeight = this.tileEntity.getField(TileMachineStructureBuilder.Fields.HEIGHT.ordinal());
     this.tileRedstone = this.tileEntity.getField(TileMachineStructureBuilder.Fields.REDSTONE.ordinal());
   }
-  //TODO: these two in base class?
   @Override
   @SideOnly(Side.CLIENT)
   public void updateProgressBar(int id, int data) {

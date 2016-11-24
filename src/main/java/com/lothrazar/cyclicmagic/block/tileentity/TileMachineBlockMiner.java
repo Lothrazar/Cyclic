@@ -260,31 +260,25 @@ public class TileMachineBlockMiner extends TileEntityBaseMachineInvo implements 
   }
   @Override
   public int getSizeInventory() {
-    // TODO Auto-generated method stub
     return 0;
   }
   @Override
   public ItemStack getStackInSlot(int index) {
-    // TODO Auto-generated method stub
     return null;
   }
   @Override
   public ItemStack decrStackSize(int index, int count) {
-    // TODO Auto-generated method stub
     return null;
   }
   @Override
   public ItemStack removeStackFromSlot(int index) {
-    // TODO Auto-generated method stub
     return null;
   }
   @Override
   public void setInventorySlotContents(int index, ItemStack stack) {
-    // TODO Auto-generated method stub
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
-    // TODO Auto-generated method stub
     return null;
   }
   @Override

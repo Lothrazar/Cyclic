@@ -60,9 +60,24 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
   private boolean enableStirrups;
   private boolean enableTorchLauncher;
   private boolean enderSack;
+  private boolean enablewaterSpread;
+  private boolean enableFreezer;
+  private boolean enableFireKiller;
   public static ItemStorageBag storage_bag;//ref by ContainerStorage
   @Override
   public void onInit() {
+    if (enablewaterSpread) {
+      ItemToolWaterSpreader water_spreader = new ItemToolWaterSpreader();
+      ItemRegistry.addItem(water_spreader, "water_spreader");
+    }
+    if (enableFreezer) {
+      ItemToolWaterIce water_freezer = new ItemToolWaterIce();
+      ItemRegistry.addItem(water_freezer, "water_freezer");
+    }
+    if (enableFireKiller) {
+      ItemToolExtinguish fire_killer = new ItemToolExtinguish();
+      ItemRegistry.addItem(fire_killer, "fire_killer");
+    }
     if (enderSack) {
       ItemEnderBag sack_ender = new ItemEnderBag();
       ItemRegistry.addItem(sack_ender, "sack_ender");
@@ -189,6 +204,9 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
   }
   @Override
   public void syncConfig(Configuration config) {
+    enablewaterSpread = config.getBoolean("WaterSpreader", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableFreezer = config.getBoolean("WaterFroster", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    enableFireKiller = config.getBoolean("WaterSplasher", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enderSack = config.getBoolean("EnderSack", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableTorchLauncher = config.getBoolean("TorchLauncher", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     storageBagEnabled = config.getBoolean("StorageBag", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

@@ -19,9 +19,12 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   private boolean fragileEnabled;
   private boolean fishingBlock;
   private boolean enableBucketBlocks;
+  private boolean enableShearingBlock;
   public void onInit() {
-    BlockShears block_shears = new BlockShears();
-    BlockRegistry.registerBlock(block_shears, "block_shears");
+    if (enableShearingBlock) {
+      BlockShears block_shears = new BlockShears();
+      BlockRegistry.registerBlock(block_shears, "block_shears");
+    }
     if (fragileEnabled) {
       BlockScaffolding block_fragile = new BlockScaffolding();
       BlockRegistry.registerBlock(block_fragile, new ItemBlockScaffolding(block_fragile), BlockScaffolding.name);
@@ -47,6 +50,7 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   }
   @Override
   public void syncConfig(Configuration config) {
+    enableShearingBlock = config.getBoolean("ShearingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableBucketBlocks = config.getBoolean("BucketBlocks", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     fragileEnabled = config.getBoolean("ScaffoldingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     fishingBlock = config.getBoolean("FishingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

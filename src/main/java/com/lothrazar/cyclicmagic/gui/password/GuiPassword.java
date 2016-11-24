@@ -52,10 +52,8 @@ public class GuiPassword extends GuiContainer {
     int u = 0, v = 0;
     Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, this.xSize, this.ySize, texture_width, texture_height);
   }
-  //TODO: Base gui class for hasTextbox
   // http://www.minecraftforge.net/forum/index.php?topic=22378.0
   // below is all the stuff that makes the text box NOT broken
-  //TODO: array list of text boxes??
   @Override
   public void updateScreen() {
     super.updateScreen();

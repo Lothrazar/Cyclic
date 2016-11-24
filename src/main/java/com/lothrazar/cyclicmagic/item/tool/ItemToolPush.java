@@ -106,7 +106,9 @@ public class ItemToolPush extends BaseTool implements IHasRecipe {
       UtilSound.playSoundPlaceBlock(player, pos, placeState.getBlock());
     }
     onUse(stack, player, worldObj, hand);
-    return super.onItemUse(stack, player, worldObj, pos, hand, side, hitX, hitY, hitZ);// EnumActionResult.PASS;
+    return EnumActionResult.SUCCESS;
+    //lock as success for https://github.com/PrinceOfAmber/Cyclic/issues/180
+//    return super.onItemUse(stack, player, worldObj, pos, hand, side, hitX, hitY, hitZ);// EnumActionResult.PASS;
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {

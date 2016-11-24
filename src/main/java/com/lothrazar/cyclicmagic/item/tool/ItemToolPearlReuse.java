@@ -76,7 +76,6 @@ public class ItemToolPearlReuse extends BaseTool implements IHasRecipe {
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
-    //TODO: we should probably just get the name ad add tooltip on. oh well
     switch (orbType) {
     case MOUNTED:
       tooltip.add(UtilChat.lang("item.ender_pearl_mounted.tooltip"));

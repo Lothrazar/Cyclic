@@ -118,7 +118,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
             }
             if (ret != null && ret.moved > 0) {
               InventoryStorage.writeToNBT(held, ret.stacks);
-              UtilChat.addChatMessage(player, UtilChat.lang("item.storage_bag.success") + ret.moved); //   // TODO: fix the count, make sure its accuarte
+              UtilChat.addChatMessage(player, UtilChat.lang("item.storage_bag.success") + ret.moved); 
             }
           }
           UtilSound.playSound(player, SoundRegistry.basey);
