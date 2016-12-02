@@ -3,7 +3,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import javax.annotation.Nullable;
+import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.item.ItemMagicBean;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockFlower;
@@ -20,8 +22,9 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 
-public class BlockCropMagicBean extends BlockCrops {
+public class BlockCropMagicBean extends BlockCrops implements IHasConfig {
   public static final int MAX_AGE = 7;
   public static final PropertyInteger AGE = PropertyInteger.create("age", 0, MAX_AGE);
   private static final AxisAlignedBB[] AABB = new AxisAlignedBB[] { new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.125D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.1875D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.25D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.3125D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.375D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.4375D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5625D, 1.0D) };
@@ -96,6 +99,8 @@ public class BlockCropMagicBean extends BlockCrops {
     return this.isMaxAge(state) ? this.getSeed() : this.getSeed();//the null tells harvestcraft hey: dont remove my drops
   }
   private ItemMagicBean seed;
+  private boolean allowBonemeal;
+  private boolean dropSeedOnHarvest;
   @Override
   protected Item getSeed() {
     return seed;
@@ -130,7 +135,9 @@ public class BlockCropMagicBean extends BlockCrops {
         ret.add(getCropStack(rand).copy()); //copy to make sure we return a new instance
       }
     }
+    if(!isGrown || dropSeedOnHarvest){//either its !grown, so drop seed, OR it is grown, but config says drop on full grown
     ret.add(new ItemStack(getSeed()));//always a seed, grown or not
+    }
     return ret;
   }
   @Override
@@ -139,10 +146,17 @@ public class BlockCropMagicBean extends BlockCrops {
   }
   @Override
   protected int getBonemealAgeIncrease(World worldIn) {
-    return 1;
+    return allowBonemeal ? 1 : 0;
   }
   @Override
   public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
     return getBonemealAgeIncrease(worldIn) > 0;
+  }
+  @Override
+  public void syncConfig(Configuration config) {
+    String category =  Const.ConfigCategory.blocks + ".magicbean";
+    allowBonemeal = config.getBoolean("MagicBeanBonemeal",category, true, "Allow bonemeal on magic bean");
+    dropSeedOnHarvest = config.getBoolean("MagicBeanGrownDropSeed", category, true, "Allow dropping the seed item if fully grown.  (if its not grown it will still drop when broken)");
+    
   }
 }
