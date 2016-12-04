@@ -69,6 +69,7 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
     if (enablewaterSpread) {
       ItemToolWaterSpreader water_spreader = new ItemToolWaterSpreader();
       ItemRegistry.addItem(water_spreader, "water_spreader");
+      LootTableRegistry.registerLoot(water_spreader);
     }
     if (enableFreezer) {
       ItemToolWaterIce water_freezer = new ItemToolWaterIce();
@@ -81,6 +82,7 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
     if (enderSack) {
       ItemEnderBag sack_ender = new ItemEnderBag();
       ItemRegistry.addItem(sack_ender, "sack_ender");
+      LootTableRegistry.registerLoot(sack_ender);
     }
     if (enableTorchLauncher) {
       ItemToolThrowTorch tool_torch_launcher = new ItemToolThrowTorch();
@@ -102,15 +104,15 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
     if (enableEnderBook) {
       ItemEnderBook book_ender = new ItemEnderBook();
       ItemRegistry.addItem(book_ender, "book_ender");
-      LootTableRegistry.registerLoot(book_ender, ChestType.ENDCITY, 10);
-      LootTableRegistry.registerLoot(book_ender, ChestType.GENERIC, 1);
+      LootTableRegistry.registerLoot(book_ender, ChestType.ENDCITY);
+      LootTableRegistry.registerLoot(book_ender);
     }
     if (storageBagEnabled) {
       storage_bag = new ItemStorageBag();
       ItemRegistry.addItem(storage_bag, "storage_bag");
       ModCyclic.instance.events.register(storage_bag);
       LootTableRegistry.registerLoot(storage_bag);
-      LootTableRegistry.registerLoot(storage_bag, ChestType.BONUS, 25);
+      LootTableRegistry.registerLoot(storage_bag, ChestType.BONUS);
     }
     if (enableCarbonPaper) {
       ItemRegistry.addItem(new ItemPaperCarbon(), "carbon_paper");
@@ -142,6 +144,7 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
     if (enableHarvestWeeds) {
       ItemToolHarvest tool_harvest_weeds = new ItemToolHarvest(ItemToolHarvest.HarvestType.WEEDS);
       ItemRegistry.addItem(tool_harvest_weeds, "tool_harvest_weeds");
+      LootTableRegistry.registerLoot(tool_harvest_weeds, ChestType.BONUS);
     }
     if (enableToolHarvest) {
       ItemToolHarvest tool_harvest_crops = new ItemToolHarvest(ItemToolHarvest.HarvestType.CROPS);
@@ -152,12 +155,13 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
     if (enableHarvestLeaves) {
       ItemToolHarvest tool_harvest_leaves = new ItemToolHarvest(ItemToolHarvest.HarvestType.LEAVES);
       ItemRegistry.addItem(tool_harvest_leaves, "tool_harvest_leaves");
+      LootTableRegistry.registerLoot(tool_harvest_leaves, ChestType.BONUS);
     }
     if (enableToolPush) {
       ItemToolPush tool_push = new ItemToolPush();
       ItemRegistry.addItem(tool_push, "tool_push");
       ModCyclic.instance.events.register(tool_push);
-      LootTableRegistry.registerLoot(tool_push, 16);
+      LootTableRegistry.registerLoot(tool_push);
       AchievementRegistry.registerItemAchievement(tool_push);
     }
     if (enableSleepingMat) {

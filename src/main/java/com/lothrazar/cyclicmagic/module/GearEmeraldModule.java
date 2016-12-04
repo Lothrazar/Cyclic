@@ -74,15 +74,12 @@ public class GearEmeraldModule extends BaseModule implements IHasConfig {
       ItemRegistry.addItem(emerald_shovel, ItemEmeraldSpade.name);
       Item emerald_hoe = new ItemEmeraldHoe();
       ItemRegistry.addItem(emerald_hoe, ItemEmeraldHoe.name);
-      LootTableRegistry.registerLoot(emerald_axe, 1);
-      //      LootTableRegistry.registerLoot(emerald_hoe, 1);
-      LootTableRegistry.registerLoot(emerald_pickaxe, 1);
-      LootTableRegistry.registerLoot(emerald_shovel, 1);
-      LootTableRegistry.registerLoot(emerald_sword, 1);
-      LootTableRegistry.registerLoot(emerald_boots, 1);
-      LootTableRegistry.registerLoot(emerald_chest, 1);
-      LootTableRegistry.registerLoot(emerald_head, 1);
-      LootTableRegistry.registerLoot(emerald_legs, 1);
+      LootTableRegistry.registerLoot(emerald_pickaxe);
+      LootTableRegistry.registerLoot(emerald_sword);
+      LootTableRegistry.registerLoot(emerald_boots);
+      LootTableRegistry.registerLoot(emerald_chest);
+      LootTableRegistry.registerLoot(emerald_head);
+      LootTableRegistry.registerLoot(emerald_legs);
     }
   }
   @Override

@@ -44,7 +44,7 @@ public class ItemConsumeablesModule extends BaseEventModule implements IHasConfi
       ItemRegistry.addItem(redstone_carrot, "horse_upgrade_speed");
       ItemRegistry.addItem(ender_carrot, "horse_upgrade_jump");
       ModCyclic.instance.events.register(this);//for SubcribeEvent hooks
-      LootTableRegistry.registerLoot(diamond_carrot, 1);
+      LootTableRegistry.registerLoot(diamond_carrot);
       AchievementRegistry.registerItemAchievement(diamond_carrot);
     }
     if (enableEmeraldApple) {
@@ -56,28 +56,28 @@ public class ItemConsumeablesModule extends BaseEventModule implements IHasConfi
       ItemFoodHeart heart_food = new ItemFoodHeart();
       ItemRegistry.addItem(heart_food, "heart_food");
       ModCyclic.instance.events.register(heart_food);
-      LootTableRegistry.registerLoot(heart_food, ChestType.GENERIC, 3);
-      LootTableRegistry.registerLoot(heart_food, ChestType.ENDCITY, 4);
+      LootTableRegistry.registerLoot(heart_food);
+      LootTableRegistry.registerLoot(heart_food, ChestType.ENDCITY);
       AchievementRegistry.registerItemAchievement(heart_food);
     }
     if (enableInventoryCrafting) {
       ItemFoodCrafting crafting_food = new ItemFoodCrafting();
       ItemRegistry.addItem(crafting_food, "crafting_food");
-      LootTableRegistry.registerLoot(crafting_food, ChestType.GENERIC, 3);
+      LootTableRegistry.registerLoot(crafting_food);
       AchievementRegistry.registerItemAchievement(crafting_food);
     }
     if (enableInventoryUpgrade) {
       ItemFoodInventory inventory_food = new ItemFoodInventory();
       ItemRegistry.addItem(inventory_food, "inventory_food");
-      LootTableRegistry.registerLoot(inventory_food, ChestType.GENERIC, 3);
+      LootTableRegistry.registerLoot(inventory_food);
       AchievementRegistry.registerItemAchievement(inventory_food);
     }
     if (enableCorruptedChorus) {
       ItemFoodCorruptedChorus corrupted_chorus = new ItemFoodCorruptedChorus();
       ItemRegistry.addItem(corrupted_chorus, "corrupted_chorus");
       ModCyclic.instance.events.register(corrupted_chorus);
-      LootTableRegistry.registerLoot(corrupted_chorus, ChestType.GENERIC, 10);
-      LootTableRegistry.registerLoot(corrupted_chorus, ChestType.ENDCITY, 5);
+      LootTableRegistry.registerLoot(corrupted_chorus);
+      LootTableRegistry.registerLoot(corrupted_chorus, ChestType.ENDCITY);
       AchievementRegistry.registerItemAchievement(corrupted_chorus);
     }
   }
