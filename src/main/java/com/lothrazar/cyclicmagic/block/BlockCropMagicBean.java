@@ -32,6 +32,10 @@ public class BlockCropMagicBean extends BlockCrops implements IHasConfig {
   public static final PropertyInteger AGE = PropertyInteger.create("age", 0, MAX_AGE);
   private static final AxisAlignedBB[] AABB = new AxisAlignedBB[] { new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.125D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.1875D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.25D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.3125D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.375D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.4375D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5625D, 1.0D) };
   private List<ItemStack> myDrops = new ArrayList<ItemStack>();
+  private ItemMagicBean seed;
+  private boolean allowBonemeal;
+  private boolean dropSeedOnHarvest;
+  private ArrayList<String> myDropStrings;
   public BlockCropMagicBean() {
     Item[] drops = new Item[] {
         //treasure
@@ -101,10 +105,6 @@ public class BlockCropMagicBean extends BlockCrops implements IHasConfig {
   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
     return this.isMaxAge(state) ? this.getSeed() : this.getSeed();//the null tells harvestcraft hey: dont remove my drops
   }
-  private ItemMagicBean seed;
-  private boolean allowBonemeal;
-  private boolean dropSeedOnHarvest;
-  private ArrayList<String> myDropStrings;
   @Override
   protected Item getSeed() {
     return seed;
