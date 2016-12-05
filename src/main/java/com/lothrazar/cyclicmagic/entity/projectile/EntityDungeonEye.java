@@ -8,7 +8,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
-public class EntityDungeonEye extends EntityThrowable {
+public class EntityDungeonEye extends EntityThrowableDispensable {
   public static Item renderSnowball;
   private double targetX;
   private double targetY;

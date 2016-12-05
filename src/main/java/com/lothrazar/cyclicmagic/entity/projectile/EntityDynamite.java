@@ -5,7 +5,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
-public class EntityDynamite extends EntityThrowable {
+public class EntityDynamite extends EntityThrowableDispensable {
   public static Item renderSnowball;
   public static final float EX_CREEPER = 1;
   public static final float EX_CHARGEDCREEPER = 2;
@@ -20,12 +20,13 @@ public class EntityDynamite extends EntityThrowable {
     super(worldIn);
     this.explosionLevel = explos;
   }
-  public EntityDynamite(World worldIn, EntityLivingBase ent, int explos) {
+  public EntityDynamite(World worldIn, EntityLivingBase ent, int strength) {
     super(worldIn, ent);
-    this.explosionLevel = explos;
+    this.explosionLevel = strength;
   }
-  public EntityDynamite(World worldIn, double x, double y, double z) {
+  public EntityDynamite(World worldIn, int strength, double x, double y, double z) {
     super(worldIn, x, y, z);
+    this.explosionLevel = strength;
   }
   @Override
   protected void onImpact(RayTraceResult mop) {
