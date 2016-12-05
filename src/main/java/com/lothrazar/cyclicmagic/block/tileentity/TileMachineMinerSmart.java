@@ -365,7 +365,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
     return this.needsRedstone == 1;
   }
   @Override
-  public void toggleSize() {
+  public void toggleSizeShape() {
     this.size++;
     if (this.size > MAX_SIZE) {
       this.size = 0;//size zero means a 1x1 area

@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.gui.miner;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMinerSmart;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
+import com.lothrazar.cyclicmagic.gui.GuiButtonSizePreview;
 import com.lothrazar.cyclicmagic.gui.miner.ButtonMinerHeight;
 import com.lothrazar.cyclicmagic.net.PacketTileSizeToggle;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -18,7 +19,7 @@ public class GuiMinerSmart extends GuiBaseContainer {
   private ButtonMinerHeight btnHeightDown;
   private ButtonMinerHeight btnHeightUp;
   private GuiButtonMachineRedstone redstoneBtn;
-  private GuiButtonMiner btnSize;
+  private GuiButtonSizePreview btnSize;
   public GuiMinerSmart(InventoryPlayer inventoryPlayer, TileMachineMinerSmart tileEntity) {
     super(new ContainerMinerSmart(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -44,12 +45,12 @@ public class GuiMinerSmart extends GuiBaseContainer {
     
     
     int y = this.guiTop + Const.padding * 2 + 44;
-    btnSize = new GuiButtonMiner(id++,
+    btnSize = new GuiButtonSizePreview(id++,
         this.guiLeft + Const.padding,
         y, "", this.tile.getPos(),
         PacketTileSizeToggle.ActionType.SIZE);
     this.buttonList.add(btnSize);
-    GuiButtonMiner btnPreview = new GuiButtonMiner(id++,
+    GuiButtonSizePreview btnPreview = new GuiButtonSizePreview(id++,
         this.guiLeft + Const.padding * 2 + 40,
         y, UtilChat.lang("button.harvester.preview"), this.tile.getPos(),
         PacketTileSizeToggle.ActionType.PREVIEW);

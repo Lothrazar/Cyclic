@@ -16,20 +16,20 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo implements ITileRedstoneToggle {
+public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle {
   private int timer;
   private int buildType;
   private int buildSpeed;
-  private int buildSize;
+  private int buildSize = 3;
   private int buildHeight = 3;
   private int needsRedstone = 1;
   private ItemStack[] inv = new ItemStack[9];
   private int shapeIndex = 0;// current index of shape array
   private List<BlockPos> shape = null;
   private BlockPos nextPos;// location of next block to be placed
-  private static final int maxSpeed = 1;
   public static int maxSize;
   public static int maxHeight = 10;
+  private static final int maxSpeed = 1;
   public static final int TIMER_FULL = 100;//one day i will add fuel AND/OR speed upgrades. till then make very slow
   private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots
   private static final String NBT_INV = "Inventory";
@@ -402,5 +402,21 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
       val = 0;//hacky lazy way
     }
     this.setField(Fields.REDSTONE.ordinal(), val);
+  }
+  @Override
+  public void toggleSizeShape() {
+    TileMachineStructureBuilder.BuildType old = this.getBuildTypeEnum();
+    TileMachineStructureBuilder.BuildType next = TileMachineStructureBuilder.BuildType.getNextType(old);
+    this.setBuildType(next.ordinal());
+    this.rebuildShape();
+  }
+  @Override
+  public void displayPreview() {
+    if(this.shape == null || this.shape.size() == 0){
+      this.rebuildShape();
+    }
+    for (BlockPos pos : this.shape) {
+      UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, pos);
+    }
   }
 }

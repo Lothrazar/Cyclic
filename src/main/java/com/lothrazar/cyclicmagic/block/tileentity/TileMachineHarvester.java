@@ -157,7 +157,7 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
   public int[] getSlotsForFace(EnumFacing side) {
     return null;
   }
-  public void toggleSize() {
+  public void toggleSizeShape() {
     this.size++;
     if (this.size > MAX_SIZE) {
       this.size = 0;

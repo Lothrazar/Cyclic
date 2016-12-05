@@ -47,7 +47,7 @@ public class PacketTileSizeToggle implements IMessage, IMessageHandler<PacketTil
     if (tile != null && tile instanceof ITileSizeToggle) {
       ITileSizeToggle te = ((ITileSizeToggle) tile);
       if (message.type == ActionType.SIZE.ordinal()) {
-        te.toggleSize();
+        te.toggleSizeShape();
       }
       te.displayPreview();
     }

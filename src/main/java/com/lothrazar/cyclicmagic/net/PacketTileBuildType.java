@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.net;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineStructureBuilder;
-import com.lothrazar.cyclicmagic.util.UtilChat;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -33,23 +32,24 @@ public class PacketTileBuildType implements IMessage, IMessageHandler<PacketTile
     tags.setInteger("z", pos.getZ());
     ByteBufUtils.writeTag(buf, tags);
   }
-  private boolean chat = false;
+//  private boolean chat = false;
   @Override
   public IMessage onMessage(PacketTileBuildType message, MessageContext ctx) {
     EntityPlayerMP player = ctx.getServerHandler().playerEntity;
     TileMachineStructureBuilder tile = (TileMachineStructureBuilder) player.getEntityWorld().getTileEntity(message.pos);
     if (tile != null) {
-      TileMachineStructureBuilder.BuildType old = tile.getBuildTypeEnum();
-      TileMachineStructureBuilder.BuildType next = TileMachineStructureBuilder.BuildType.getNextType(old);
-      tile.setBuildType(next.ordinal());
-      tile.rebuildShape();
+      tile.toggleSizeShape();
+//      TileMachineStructureBuilder.BuildType old = tile.getBuildTypeEnum();
+//      TileMachineStructureBuilder.BuildType next = TileMachineStructureBuilder.BuildType.getNextType(old);
+//      tile.setBuildType(next.ordinal());
+//      tile.rebuildShape();
       tile.markDirty();
       if (player.openContainer != null) {
         player.openContainer.detectAndSendChanges();
         player.sendAllWindowProperties(player.openContainer, tile);
       }
-      if (chat)
-        UtilChat.addChatMessage(player, UtilChat.lang("buildertype." + next.name().toLowerCase() + ".name"));
+//      if (chat)
+//        UtilChat.addChatMessage(player, UtilChat.lang("buildertype." + next.name().toLowerCase() + ".name"));
     }
     return null;
   }
