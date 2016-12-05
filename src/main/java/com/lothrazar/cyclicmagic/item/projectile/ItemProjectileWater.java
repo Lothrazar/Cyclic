@@ -16,8 +16,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemProjectileWater extends BaseItemProjectile implements IHasRecipe {
   public EntityThrowableDispensable getThrownEntity(World world, double x, double y, double z) {
-  return new EntityWaterBolt(world, x,y,z);
-}
+    return new EntityWaterBolt(world, x, y, z);
+  }
   @Override
   public void addRecipe() {
     GameRegistry.addShapelessRecipe(new ItemStack(this, 16), new ItemStack(Items.BLAZE_ROD), new ItemStack(Items.ENDER_PEARL), new ItemStack(Blocks.ICE));

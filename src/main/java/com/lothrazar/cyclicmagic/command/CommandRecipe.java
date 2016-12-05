@@ -48,7 +48,6 @@ public class CommandRecipe extends BaseCommand implements ICommand {
       if (held.getMetadata() != recipeResult.getMetadata()) {
         continue;
       }
- 
       if (recipe instanceof ShapedRecipes) {
         ShapedRecipes r = ((ShapedRecipes) recipe);
         boolean isInventory = (r.recipeHeight < 3 || r.recipeWidth < 3);

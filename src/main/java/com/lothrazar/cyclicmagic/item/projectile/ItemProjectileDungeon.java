@@ -25,7 +25,7 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
   private static int DUNGEONRADIUS = 64;
   @Override
   public EntityThrowableDispensable getThrownEntity(World world, double x, double y, double z) {
-    return new EntityDungeonEye(world, x,y,z);
+    return new EntityDungeonEye(world, x, y, z);
   }
   @Override
   public void syncConfig(Configuration config) {

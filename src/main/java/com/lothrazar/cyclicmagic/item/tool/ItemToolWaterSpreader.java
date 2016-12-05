@@ -22,7 +22,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemToolWaterSpreader extends BaseTool implements IHasRecipe{
+public class ItemToolWaterSpreader extends BaseTool implements IHasRecipe {
   private static final int DURABILITY = 256;
   private static final int COOLDOWN = 10;
   private static final int RADIUS = 1;
@@ -31,8 +31,10 @@ public class ItemToolWaterSpreader extends BaseTool implements IHasRecipe{
   }
   @Override
   public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-    if ( pos == null) { return super.onItemUse(stack, player, world, pos, hand, side, hitX, hitY, hitZ); }
-   if(side != null) {pos=pos.offset(side);}
+    if (pos == null) { return super.onItemUse(stack, player, world, pos, hand, side, hitX, hitY, hitZ); }
+    if (side != null) {
+      pos = pos.offset(side);
+    }
     if (spreadWaterFromCenter(world, player, pos))
       super.onUse(stack, player, world, hand);
     return super.onItemUse(stack, player, world, pos, hand, side, hitX, hitY, hitZ);
@@ -60,16 +62,15 @@ public class ItemToolWaterSpreader extends BaseTool implements IHasRecipe{
   }
   @Override
   public void addRecipe() {
-        GameRegistry.addShapedRecipe(new ItemStack(this),
-            "wdw",
-            "iwi",
-            " o ",
-            'w', new ItemStack(Items.WATER_BUCKET),
-            'd', new ItemStack(Items.DIAMOND),
-            'o',new ItemStack(Blocks.OBSIDIAN),
-            'i',new ItemStack(Blocks.ICE));
+    GameRegistry.addShapedRecipe(new ItemStack(this),
+        "wdw",
+        "iwi",
+        " o ",
+        'w', new ItemStack(Items.WATER_BUCKET),
+        'd', new ItemStack(Items.DIAMOND),
+        'o', new ItemStack(Blocks.OBSIDIAN),
+        'i', new ItemStack(Blocks.ICE));
   }
-
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
     tooltip.add(UtilChat.lang("item.water_spreader.tooltip"));

@@ -19,8 +19,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemProjectileWool extends BaseItemProjectile implements IHasRecipe, IHasConfig {
   public EntityThrowableDispensable getThrownEntity(World world, double x, double y, double z) {
-  return new EntityShearingBolt(world, x,y,z);
-}
+    return new EntityShearingBolt(world, x, y, z);
+  }
   @Override
   public void syncConfig(Configuration config) {
     EntityShearingBolt.doesShearChild = config.getBoolean("Ender Shears Child", Const.ConfigCategory.items, true, "Ender shears work on child sheep");

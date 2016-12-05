@@ -184,7 +184,7 @@ public class UtilInventoryTransfer {
       if (current == null) {
         continue;
       }
-      for (int i =startingSlot; i < inventory.getSizeInventory(); i++) {
+      for (int i = startingSlot; i < inventory.getSizeInventory(); i++) {
         if (current == null) {
           continue;
         }

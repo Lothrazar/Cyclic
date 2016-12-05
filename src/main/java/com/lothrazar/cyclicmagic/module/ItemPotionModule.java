@@ -234,8 +234,8 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
           new ItemStack(potion_levitation),
           new ItemStack(UPG_LENGTH),
           new ItemStack(potion_levitation_long));
-      LootTableRegistry.registerLoot(potion_levitation,ChestType.ENDCITY);
-      LootTableRegistry.registerLoot(potion_levitation_long,ChestType.ENDCITY);
+      LootTableRegistry.registerLoot(potion_levitation, ChestType.ENDCITY);
+      LootTableRegistry.registerLoot(potion_levitation_long, ChestType.ENDCITY);
     }
   }
   private static void addBrewingRecipe(Item input, Item ingredient, Item output) {

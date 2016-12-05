@@ -16,7 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemProjectileBlaze extends BaseItemProjectile implements IHasRecipe {
   @Override
   public EntityThrowableDispensable getThrownEntity(World world, double x, double y, double z) {
-    return new EntityBlazeBolt(world, x,y,z);
+    return new EntityBlazeBolt(world, x, y, z);
   }
   @Override
   public void addRecipe() {

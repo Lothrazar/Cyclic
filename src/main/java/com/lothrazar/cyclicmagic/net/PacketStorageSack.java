@@ -70,7 +70,7 @@ public class PacketStorageSack implements IMessage, IMessageHandler<PacketStorag
           EnumHand hand = EnumHand.MAIN_HAND;
           ItemStack held = player.getHeldItem(hand);
           if (held == null || held.getItem() instanceof ItemChestSackEmpty == false) {
-           hand = EnumHand.OFF_HAND;
+            hand = EnumHand.OFF_HAND;
             held = player.getHeldItem(hand);
           }
           if (held != null && held.stackSize > 0) { //https://github.com/PrinceOfAmber/Cyclic/issues/181

@@ -142,8 +142,7 @@ public class LootTableModule extends BaseEventModule implements IHasConfig {
     enableSilverfishIron = config.getBoolean("SilverfishIron", Const.ConfigCategory.mobs, true, "Silverfish can drop iron ingots");
     enableStrayPackedIce = config.getBoolean("StraySkeletonPackedIce", Const.ConfigCategory.mobs, true, "Strays (he new skeleton variants from cold biomes) can drop packed ice");
     enableChestLoot = config.getBoolean("ChestLoot", Const.ConfigCategory.worldGen, true, "If true, then enabled items and blocks from this mod can appear in loot chests");
-    LootTableRegistry.lootChanceDefault = config.getInt("ChestLootChance", Const.ConfigCategory.worldGen, 4,1,99, "If ChestLoot is true, this is the default chance a cyclic item will show up as treasure.");
-    
+    LootTableRegistry.lootChanceDefault = config.getInt("ChestLootChance", Const.ConfigCategory.worldGen, 4, 1, 99, "If ChestLoot is true, this is the default chance a cyclic item will show up as treasure.");
     String category = Const.ConfigCategory.mobs + ".mobloottable";
     String comment = "Customize mob loot table percentage.  Only works if the respective config is true";
     int minValue = 1, maxValue = 99;

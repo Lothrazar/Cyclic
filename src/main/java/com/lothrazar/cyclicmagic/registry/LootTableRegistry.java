@@ -21,7 +21,7 @@ public class LootTableRegistry {
   public static void registerLoot(Item i, ChestType type, int random) {
     switch (type) {
     case BONUS:
-      bonusChest.put(i, random*2);//nobody uses this anyway, so just for fun we x2
+      bonusChest.put(i, random * 2);//nobody uses this anyway, so just for fun we x2
       break;
     case ENDCITY:
       endCityChest.put(i, random);

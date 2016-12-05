@@ -42,8 +42,6 @@ public class GuiMinerSmart extends GuiBaseContainer {
     this.buttonList.add(btnHeightDown);
     btnHeightUp = new ButtonMinerHeight(tile.getPos(), id++, this.guiLeft + xHeightTextbox, this.guiTop + yHeightTxtbox - yOffset, true, "height");
     this.buttonList.add(btnHeightUp);
-    
-    
     int y = this.guiTop + Const.padding * 2 + 44;
     btnSize = new GuiButtonSizePreview(id++,
         this.guiLeft + Const.padding,
@@ -55,8 +53,6 @@ public class GuiMinerSmart extends GuiBaseContainer {
         y, UtilChat.lang("button.harvester.preview"), this.tile.getPos(),
         PacketTileSizeToggle.ActionType.PREVIEW);
     this.buttonList.add(btnPreview);
-    
-    
   }
   private void updateDisabledButtons() {
     this.btnHeightDown.enabled = (this.tile.getHeight() > 1);
@@ -77,7 +73,6 @@ public class GuiMinerSmart extends GuiBaseContainer {
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     redstoneBtn.setState(tile.getField(TileMachineMinerSmart.Fields.REDSTONE.ordinal()));
     btnSize.displayString = UtilChat.lang("button.harvester.size" + tile.getField(TileMachineMinerSmart.Fields.SIZE.ordinal()));
-    
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     String s = UtilChat.lang("tile.block_miner_smart.blacklist");
     //      int x = this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, y = 18;

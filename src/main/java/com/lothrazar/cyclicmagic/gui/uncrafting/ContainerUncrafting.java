@@ -20,17 +20,16 @@ public class ContainerUncrafting extends ContainerBaseMachine {
   private int tileTimer;
   public ContainerUncrafting(InventoryPlayer inventoryPlayer, TileMachineUncrafter te) {
     tileEntity = te;
-    addSlotToContainer(new Slot(tileEntity,TileMachineUncrafter.SLOT_UNCRAFTME, SLOTX_START , SLOTY));
-
+    addSlotToContainer(new Slot(tileEntity, TileMachineUncrafter.SLOT_UNCRAFTME, SLOTX_START, SLOTY));
     int slot = 1;
-    int xPrefix = 2*Const.SQ+Const.padding;
+    int xPrefix = 2 * Const.SQ + Const.padding;
     int yPrefix = 16;
     for (int i = 0; i < TileMachineUncrafter.SLOT_ROWS; i++) {
       for (int j = 0; j < TileMachineUncrafter.SLOT_COLS; j++) {
         addSlotToContainer(new SlotOutputOnly(tileEntity, slot,
-            xPrefix + j * Const.SQ,/// X
+            xPrefix + j * Const.SQ, /// X
             yPrefix + i * Const.SQ// Y
-            ));
+        ));
         slot++;
       }
     }

@@ -41,19 +41,15 @@ public class GuiBuilder extends GuiBaseContanerProgress {
     int width = 50;
     int id = 2;
     int y = this.guiTop + yOffset + 12;
-    btn = new ButtonBuilderType(tile.getPos(), id++, 
-        this.guiLeft + padding, 
-        y , width);
+    btn = new ButtonBuilderType(tile.getPos(), id++,
+        this.guiLeft + padding,
+        y, width);
     this.buttonList.add(btn);
-    
-    
     GuiButtonSizePreview btnPreview = new GuiButtonSizePreview(id++,
         this.guiLeft + Const.padding * 2 + 46,
         y, UtilChat.lang("button.harvester.preview"), this.tile.getPos(),
         PacketTileSizeToggle.ActionType.PREVIEW);
     this.buttonList.add(btnPreview);
-    
-    
     width = 15;
     //size buttons
     xSizeTextbox = 176 - 24;

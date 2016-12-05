@@ -345,8 +345,7 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
         IBlockState placeState = UtilItemStack.getStateFromMeta(stuff, stack.getMetadata());
         //ModMain.logger.info("try place " + this.nextPos + " type " + this.buildType + "_" + this.getBuildTypeEnum().name());
         if (UtilPlaceBlocks.placeStateSafe(world, null, nextPos, placeState)) {
-         // UtilSound.playSoundPlaceBlock(world, nextPos, placeState.getBlock());
-         
+          // UtilSound.playSoundPlaceBlock(world, nextPos, placeState.getBlock());
           if (world.isRemote == false) {//consume item on server
             this.decrStackSize(0, 1);
           }
@@ -411,7 +410,7 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
   }
   @Override
   public void displayPreview() {
-    if(this.shape == null || this.shape.size() == 0){
+    if (this.shape == null || this.shape.size() == 0) {
       this.rebuildShape();
     }
     for (BlockPos pos : this.shape) {

@@ -15,8 +15,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemProjectileTorch extends BaseItemProjectile implements IHasRecipe {
   public EntityThrowableDispensable getThrownEntity(World world, double x, double y, double z) {
-  return new EntityTorchBolt(world, x,y,z);
-}
+    return new EntityTorchBolt(world, x, y, z);
+  }
   @Override
   public void addRecipe() {
     GameRegistry.addShapelessRecipe(new ItemStack(this, 32), new ItemStack(Items.ENDER_PEARL), new ItemStack(Items.STICK), new ItemStack(Items.COAL));

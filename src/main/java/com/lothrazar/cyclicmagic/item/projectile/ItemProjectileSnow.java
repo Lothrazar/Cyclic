@@ -16,8 +16,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemProjectileSnow extends BaseItemProjectile implements IHasRecipe {
   public EntityThrowableDispensable getThrownEntity(World world, double x, double y, double z) {
-  return new EntitySnowballBolt(world, x,y,z);
-}
+    return new EntitySnowballBolt(world, x, y, z);
+  }
   @Override
   public void addRecipe() {
     GameRegistry.addShapelessRecipe(new ItemStack(this, 32), new ItemStack(Items.ENDER_PEARL), new ItemStack(Blocks.ICE), new ItemStack(Items.SNOWBALL));

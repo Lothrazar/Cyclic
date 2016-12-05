@@ -13,10 +13,10 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemProjectileLightning extends BaseItemProjectile implements IHasRecipe { 
+public class ItemProjectileLightning extends BaseItemProjectile implements IHasRecipe {
   public EntityThrowableDispensable getThrownEntity(World world, double x, double y, double z) {
-  return new EntityLightningballBolt(world, x,y,z);
-}
+    return new EntityLightningballBolt(world, x, y, z);
+  }
   @Override
   public void addRecipe() {
     GameRegistry.addShapelessRecipe(new ItemStack(this, 4),

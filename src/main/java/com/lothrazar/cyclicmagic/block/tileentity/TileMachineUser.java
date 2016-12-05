@@ -96,23 +96,19 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
           if (world.isAirBlock(targetPos)) {
             targetPos = targetPos.down();
           }
-         // String tool = (maybeTool==null)?"empty":maybeTool.getUnlocalizedName();
-          
-          
+          // String tool = (maybeTool==null)?"empty":maybeTool.getUnlocalizedName();
           fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
-         
           //this.getWorld().markChunkDirty(this.getPos(), this);
           this.getWorld().markChunkDirty(targetPos, this);
-    //  this.getWorld().markBlockRangeForRenderUpdate(this.getPos(), targetPos);
-          
+          //  this.getWorld().markBlockRangeForRenderUpdate(this.getPos(), targetPos);
           //act on entity
           int hRange = 2;
           int vRange = 1;
           //so in a radius 2 area starting one block away
-          BlockPos entityCenter = this.getPos().offset(this.getCurrentFacing(),hRange);
-//          boolean particle = true;
-//          if (particle)
-//            UtilParticle.spawnParticle(this.worldObj, EnumParticleTypes.DRAGON_BREATH, entityCenter);
+          BlockPos entityCenter = this.getPos().offset(this.getCurrentFacing(), hRange);
+          //          boolean particle = true;
+          //          if (particle)
+          //            UtilParticle.spawnParticle(this.worldObj, EnumParticleTypes.DRAGON_BREATH, entityCenter);
           AxisAlignedBB range = UtilEntity.makeBoundingBox(entityCenter, hRange, vRange);
           List<EntityLivingBase> all = world.getEntitiesWithinAABB(EntityLivingBase.class, range);
           for (EntityLivingBase ent : all) {
@@ -120,7 +116,7 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
           }
         }
       }
-      else{
+      else {
         timer = 1;//allows it to run on a pulse
       }
     }

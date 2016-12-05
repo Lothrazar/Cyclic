@@ -25,7 +25,6 @@ public abstract class BaseItemProjectile extends BaseItem {
   private static final float VELOCITY_DEFAULT = 1.5F;
   private static final float INACCURACY_DEFAULT = 1.0F;
   private static final float PITCHOFFSET = 0.0F;
-
   protected void doThrow(World world, EntityPlayer player, EnumHand hand, EntityThrowable thing, float velocity) {
     if (!world.isRemote) {
       // func_184538_a

@@ -8,8 +8,8 @@ import net.minecraft.world.World;
 
 public class ItemProjectileTNT extends BaseItemProjectile {
   public EntityThrowableDispensable getThrownEntity(World world, double x, double y, double z) {
-  return new EntityDynamite(world, this.strength, x,y,z);
-}
+    return new EntityDynamite(world, this.strength, x, y, z);
+  }
   private int strength;
   public ItemProjectileTNT(int str) {
     super();
