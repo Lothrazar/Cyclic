@@ -11,7 +11,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 
-public class TileMachineHarvester extends TileEntityBaseMachineInvo implements ITileRedstoneToggle {
+public class TileMachineHarvester extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle {
   private int timer;
   public static int TIMER_FULL = 80;
   private HarestCropsConfig conf;
@@ -82,15 +82,15 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
     }
     this.markDirty();
   }
-  private BlockPos getHarvestCenter() {
+  public BlockPos getTargetCenter() {
     //move center over that much, not including exact horizontal
     return this.getPos().offset(this.getCurrentFacing(), this.size + 1);
   }
   private BlockPos getHarvestPos() {
-    return UtilWorld.getRandomPos(getWorld().rand, getHarvestCenter(), this.size);
+    return UtilWorld.getRandomPos(getWorld().rand, getTargetCenter(), this.size);
   }
   public void displayPreview() {
-    List<BlockPos> allPos = UtilShape.squareHorizontalHollow(getHarvestCenter(), this.size);
+    List<BlockPos> allPos = UtilShape.squareHorizontalHollow(getTargetCenter(), this.size);
     for (BlockPos pos : allPos) {
       UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, pos);
     }
@@ -160,7 +160,7 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
   public void toggleSize() {
     this.size++;
     if (this.size > MAX_SIZE) {
-      this.size = 1;
+      this.size = 0;
     }
   }
   @Override

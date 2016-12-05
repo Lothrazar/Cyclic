@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.net;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineHarvester;
+import com.lothrazar.cyclicmagic.block.tileentity.ITileSizeToggle;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -10,15 +10,15 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class PacketTileHarvester implements IMessage, IMessageHandler<PacketTileHarvester, IMessage> {
+public class PacketTileSizeToggle implements IMessage, IMessageHandler<PacketTileSizeToggle, IMessage> {
   private BlockPos pos;
   private int type;
   public static enum ActionType {
     SIZE, PREVIEW;
   }
-  public PacketTileHarvester() {
+  public PacketTileSizeToggle() {
   }
-  public PacketTileHarvester(BlockPos p, ActionType t) {
+  public PacketTileSizeToggle(BlockPos p, ActionType t) {
     pos = p;
     type = t.ordinal();
   }
@@ -41,11 +41,11 @@ public class PacketTileHarvester implements IMessage, IMessageHandler<PacketTile
     ByteBufUtils.writeTag(buf, tags);
   }
   @Override
-  public IMessage onMessage(PacketTileHarvester message, MessageContext ctx) {
+  public IMessage onMessage(PacketTileSizeToggle message, MessageContext ctx) {
     EntityPlayerMP player = ctx.getServerHandler().playerEntity;
     TileEntity tile = player.getEntityWorld().getTileEntity(message.pos);
-    if (tile != null && tile instanceof TileMachineHarvester) {
-      TileMachineHarvester te = ((TileMachineHarvester) tile);
+    if (tile != null && tile instanceof ITileSizeToggle) {
+      ITileSizeToggle te = ((ITileSizeToggle) tile);
       if (message.type == ActionType.SIZE.ordinal()) {
         te.toggleSize();
       }

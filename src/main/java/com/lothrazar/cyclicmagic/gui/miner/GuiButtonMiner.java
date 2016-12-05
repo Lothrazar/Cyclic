@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.gui.harvester;
+package com.lothrazar.cyclicmagic.gui.miner;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.GuiButtonTooltip;
 import com.lothrazar.cyclicmagic.net.PacketTileSizeToggle;
@@ -8,10 +8,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GuiButtonHarvester extends GuiButtonTooltip {
+public class GuiButtonMiner extends GuiButtonTooltip {
   private BlockPos tilePos;
   private ActionType type;
-  public GuiButtonHarvester(int buttonId, int x, int y, String buttonText, BlockPos p, PacketTileSizeToggle.ActionType t) {
+  public GuiButtonMiner(int buttonId, int x, int y, String buttonText, BlockPos p, PacketTileSizeToggle.ActionType t) {
     super(buttonId, x, y, 40, 20, buttonText);
     this.tilePos = p;
     this.type = t;

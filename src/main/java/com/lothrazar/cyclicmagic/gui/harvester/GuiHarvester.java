@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.gui.harvester;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineHarvester;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContanerProgress;
 import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
-import com.lothrazar.cyclicmagic.net.PacketTileHarvester;
+import com.lothrazar.cyclicmagic.net.PacketTileSizeToggle;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
@@ -32,12 +32,12 @@ public class GuiHarvester extends GuiBaseContanerProgress {
     btnSize = new GuiButtonHarvester(btnId++,
         this.guiLeft + Const.padding,
         y, "", this.tile.getPos(),
-        PacketTileHarvester.ActionType.SIZE);
+        PacketTileSizeToggle.ActionType.SIZE);
     this.buttonList.add(btnSize);
     GuiButtonHarvester btnPreview = new GuiButtonHarvester(btnId++,
         this.guiLeft + Const.padding * 2 + 40,
         y, UtilChat.lang("button.harvester.preview"), this.tile.getPos(),
-        PacketTileHarvester.ActionType.PREVIEW);
+        PacketTileSizeToggle.ActionType.PREVIEW);
     this.buttonList.add(btnPreview);
   }
   @Override

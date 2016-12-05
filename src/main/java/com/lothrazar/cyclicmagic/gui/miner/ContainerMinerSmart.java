@@ -21,6 +21,7 @@ public class ContainerMinerSmart extends ContainerBaseMachine {
   protected TileMachineMinerSmart tileEntity;
   private int tileHeight;
   private int tileRedstone;
+  private int tileSize;
   public ContainerMinerSmart(InventoryPlayer inventoryPlayer, TileMachineMinerSmart te) {
     tileEntity = te;
     for (int i = 0; i < tileEntity.getSizeInventory() - 1; i++) {
@@ -69,10 +70,15 @@ public class ContainerMinerSmart extends ContainerBaseMachine {
       if (this.tileRedstone != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
+      idx = TileMachineMinerSmart.Fields.SIZE.ordinal();
+      if (this.tileSize != this.tileEntity.getField(idx)) {
+        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
+      }
     }
     this.tileHeight = this.tileEntity.getField(TileMachineMinerSmart.Fields.HEIGHT.ordinal());
     this.tileRedstone = this.tileEntity.getField(TileMachineMinerSmart.Fields.REDSTONE.ordinal());
-  }
+    this.tileSize = this.tileEntity.getField(TileMachineMinerSmart.Fields.SIZE.ordinal());
+    }
   @Override
   @SideOnly(Side.CLIENT)
   public void updateProgressBar(int id, int data) {

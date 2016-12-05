@@ -1,9 +1,12 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import java.lang.ref.WeakReference;
+import java.util.List;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.util.UtilParticle;
+import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
@@ -14,6 +17,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -24,7 +28,7 @@ import net.minecraftforge.common.util.FakePlayer;
  * SEE TileMachineMiner
  * 
  */
-public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements ITileRedstoneToggle {
+public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle {
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
   // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
@@ -37,13 +41,13 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
   private static final String NBT_REDST = "redstone";
-  final int RADIUS = 4;//center plus 4 in each direction = 9x9
+  private int size = 4;//center plus 4 in each direction = 9x9
   private int needsRedstone = 1;
   int height = 6;
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
   public static enum Fields {
-    HEIGHT, REDSTONE
+    HEIGHT, REDSTONE, SIZE
   }
   public TileMachineMinerSmart() {
     inv = new ItemStack[5];
@@ -136,12 +140,15 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
     }
     return true;
   }
+  public BlockPos getTargetCenter() {
+    //move center over that much, not including exact horizontal
+    //so the rand range is basically [0,8], then we left shift into [-4,+4]
+    return getPos().offset(this.getCurrentFacing(), size + 1);
+  }
   private void updateTargetPos() {
     //lets make it a AxA?
     //always restart here so we dont offset out of bounds
-    EnumFacing facing = this.getCurrentFacing();
-    BlockPos center = pos.offset(facing, 5);//move one more over so we are in the exact center of a 3x3x3 area
-    //so the rand range is basically [0,8], then we left shift into [-4,+4]
+    BlockPos center = getTargetCenter();
     targetPos = center;
     //HEIGHT
     if (height == 0) {
@@ -158,8 +165,8 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
     //      targetPos = targetPos.offset(EnumFacing.DOWN, -1*rollHeight);
     //    }
     //HORIZONTAL
-    int randNS = world.rand.nextInt(RADIUS * 2 + 1) - RADIUS;
-    int randEW = world.rand.nextInt(RADIUS * 2 + 1) - RADIUS;
+    int randNS = world.rand.nextInt(size * 2 + 1) - size;
+    int randEW = world.rand.nextInt(size * 2 + 1) - size;
     //(" H, NS, EW : "+ rollHeight +":"+ randNS +":"+ randEW);
     //both can be zero
     if (randNS > 0) {
@@ -181,6 +188,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
   private static final String NBTPLAYERID = "uuid";
   private static final String NBTTARGET = "target";
   private static final String NBTHEIGHT = "h";
+  private static final int MAX_SIZE = 7;//7 means 15x15
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
     tagCompound.setInteger(NBT_REDST, this.needsRedstone);
@@ -295,6 +303,8 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
       return getHeight();
     case REDSTONE:
       return this.needsRedstone;
+    case SIZE:
+      return this.size;
     }
     return 0;
   }
@@ -308,6 +318,9 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
       setHeight(value);
     case REDSTONE:
       needsRedstone = value;
+      break;
+    case SIZE:
+      size = value;
       break;
     }
   }
@@ -347,5 +360,21 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
   }
   private boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
+  }
+  @Override
+  public void toggleSize() {
+    this.size++;
+    if (this.size > MAX_SIZE) {
+      this.size = 0;//size zero means a 1x1 area
+    }
+  }
+  @Override
+  public void displayPreview() {
+    for (int i = 0; i < this.getHeight(); i++) {
+      List<BlockPos> allPos = UtilShape.squareHorizontalHollow(getTargetCenter().up(i), size);
+      for (BlockPos pos : allPos) {
+        UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, pos);
+      }
+    }
   }
 }
