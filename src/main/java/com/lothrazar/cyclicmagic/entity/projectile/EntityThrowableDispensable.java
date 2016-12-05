@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.entity.projectile;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityThrowable;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public abstract class EntityThrowableDispensable extends EntityThrowable {
