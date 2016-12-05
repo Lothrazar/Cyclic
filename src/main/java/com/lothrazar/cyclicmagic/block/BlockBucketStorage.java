@@ -96,16 +96,16 @@ public class BlockBucketStorage extends Block implements ITileEntityProvider {
     return null;
   }
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer entityPlayer, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-    if(hand != EnumHand.MAIN_HAND){return false;}
+    if (hand != EnumHand.MAIN_HAND) { return false; }
     ItemStack held = entityPlayer.getHeldItem(EnumHand.MAIN_HAND);
-    if(held != null){return false;}
+    if (held != null) { return false; }
     Block blockClicked = state.getBlock();
     if ((blockClicked instanceof BlockBucketStorage) == false) { return false; }
     BlockBucketStorage block = (BlockBucketStorage) blockClicked;
     TileEntityBucketStorage container = (TileEntityBucketStorage) world.getTileEntity(pos);
-//    long timeSince = world.getTotalWorldTime() - container.getTimeLast();
-//    if (timeSince < TileEntityBucketStorage.TIMEOUT) { return false; }
-    if ( block.bucketItem != null && block.bucketItem == this.bucketItem) {
+    //    long timeSince = world.getTotalWorldTime() - container.getTimeLast();
+    //    if (timeSince < TileEntityBucketStorage.TIMEOUT) { return false; }
+    if (block.bucketItem != null && block.bucketItem == this.bucketItem) {
       if (world.isRemote == false) {
         // server only
         if (container.getBuckets() > 0) {
@@ -199,7 +199,7 @@ public class BlockBucketStorage extends Block implements ITileEntityProvider {
   private void removeBucket(EntityPlayer entityPlayer, World world, TileEntityBucketStorage storage, Item bucketItem) {
     storage.removeBucket();
     entityPlayer.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(bucketItem));
-//    UtilItemStack.dropItemStackInWorld(world, entityPlayer.getPosition(), );
+    //    UtilItemStack.dropItemStackInWorld(world, entityPlayer.getPosition(), );
   }
   public void addRecipe() {
     if (this == BlockRegistry.block_storeempty) {

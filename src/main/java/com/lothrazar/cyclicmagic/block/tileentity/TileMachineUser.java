@@ -6,12 +6,16 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EnumCreatureAttribute;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -28,18 +32,22 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
   public static int TIMER_FULL = 80;
   private ItemStack[] inv;
   private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots for all faces
+  final int RADIUS = 4;//center plus 4 in each direction = 9x9
+  private static final String NBTPLAYERID = "uuid";
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
   private static final String NBT_TIMER = "Timer";
   private static final String NBT_REDST = "redstone";
   private static final String NBT_SPEED = "h";//WTF why did i name it this
+  private static final String NBT_LR = "lr";
   private int speed = 1;
+  private int rightClickIfZero = 0;
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
   private int timer;
   private int needsRedstone = 1;
   public static enum Fields {
-    TIMER, SPEED, REDSTONE
+    TIMER, SPEED, REDSTONE, LEFTRIGHT
   }
   public TileMachineUser() {
     inv = new ItemStack[9];
@@ -74,15 +82,16 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
           maybeTool = null;
         }
       }
+      fakePlayer.get().onUpdate();//trigger   ++this.ticksSinceLastSwing; among other things
       if (maybeTool == null) {//null for any reason
         fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, null);
         inv[toolSlot] = null;
       }
       else {
         //so its not null
-        if (!maybeTool.equals(fakePlayer.get().getHeldItem(EnumHand.MAIN_HAND))) {
-          fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, maybeTool);
-        }
+        // if (!maybeTool.equals(fakePlayer.get().getHeldItem(EnumHand.MAIN_HAND))) {
+        fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, maybeTool);
+        //}
       }
       if (!(this.onlyRunIfPowered() && this.isPowered() == false)) {
         timer -= this.getSpeed();
@@ -96,37 +105,51 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
           if (world.isAirBlock(targetPos)) {
             targetPos = targetPos.down();
           }
-         // String tool = (maybeTool==null)?"empty":maybeTool.getUnlocalizedName();
-          
-          
-          fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
-         
-          //this.getWorld().markChunkDirty(this.getPos(), this);
-          this.getWorld().markChunkDirty(targetPos, this);
-    //  this.getWorld().markBlockRangeForRenderUpdate(this.getPos(), targetPos);
-          
-          //act on entity
           int hRange = 2;
           int vRange = 1;
           //so in a radius 2 area starting one block away
-          BlockPos entityCenter = this.getPos().offset(this.getCurrentFacing(),hRange);
-//          boolean particle = true;
-//          if (particle)
-//            UtilParticle.spawnParticle(this.worldObj, EnumParticleTypes.DRAGON_BREATH, entityCenter);
-          AxisAlignedBB range = UtilEntity.makeBoundingBox(entityCenter, hRange, vRange);
-          List<EntityLivingBase> all = world.getEntitiesWithinAABB(EntityLivingBase.class, range);
-          for (EntityLivingBase ent : all) {
-            fakePlayer.get().interact(ent, maybeTool, EnumHand.MAIN_HAND);
+          BlockPos entityCenter = this.getPos().offset(this.getCurrentFacing(), hRange);
+          if (rightClickIfZero == 0) {
+            // String tool = (maybeTool==null)?"empty":maybeTool.getUnlocalizedName();
+            fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
+            //this.getWorld().markChunkDirty(this.getPos(), this);
+            this.getWorld().markChunkDirty(targetPos, this);
+            AxisAlignedBB range = UtilEntity.makeBoundingBox(entityCenter, hRange, vRange);
+            List<EntityLivingBase> all = world.getEntitiesWithinAABB(EntityLivingBase.class, range);
+            for (EntityLivingBase ent : all) {
+              fakePlayer.get().interact(ent, maybeTool, EnumHand.MAIN_HAND);
+            }
+          }
+          else {
+            AxisAlignedBB range = UtilEntity.makeBoundingBox(entityCenter, 1, 1);
+            List<EntityLivingBase> all = world.getEntitiesWithinAABB(EntityLivingBase.class, range);
+            for (EntityLivingBase ent : all) {
+              System.out.println("main hand is: " + fakePlayer.get().getHeldItemMainhand());
+              float f = (float) fakePlayer.get().getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue();
+              fakePlayer.get().attackTargetEntityWithCurrentItem(ent);
+              //above one works and does enchants but is buggy since fakeplayer seems to not work with the 
+              //attackcooldowns added (the new swordplay delay), is always weakest like 10%
+              //so now force it as full dmg to mimic actually working
+              float f1;
+              if (ent instanceof EntityLivingBase) {
+                f1 = EnchantmentHelper.getModifierForCreature(fakePlayer.get().getHeldItemMainhand(), ((EntityLivingBase) ent).getCreatureAttribute());
+              }
+              else {
+                f1 = EnchantmentHelper.getModifierForCreature(fakePlayer.get().getHeldItemMainhand(), EnumCreatureAttribute.UNDEFINED);
+              }
+              f *= 1.75F;
+              f = f + f1;//APPLY CREATURE/WEAPON/SHARPNESS COMBO
+              System.out.println("FULLDMG" + f);
+              ent.attackEntityFrom(DamageSource.causePlayerDamage(fakePlayer.get()), f);
+            }
           }
         }
       }
-      else{
+      else {
         timer = 1;//allows it to run on a pulse
       }
     }
   }
-  final int RADIUS = 4;//center plus 4 in each direction = 9x9
-  private static final String NBTPLAYERID = "uuid";
   //  private static final String NBTTARGET = "target";
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
@@ -136,6 +159,7 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
     }
     tagCompound.setInteger(NBT_REDST, this.needsRedstone);
     tagCompound.setInteger(NBT_SPEED, speed);
+    tagCompound.setInteger(NBT_LR, rightClickIfZero);
     //invo stuff
     NBTTagList itemList = new NBTTagList();
     for (int i = 0; i < inv.length; i++) {
@@ -158,6 +182,7 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
       uuid = UUID.fromString(tagCompound.getString(NBTPLAYERID));
     }
     this.needsRedstone = tagCompound.getInteger(NBT_REDST);
+    rightClickIfZero = tagCompound.getInteger(NBT_LR);
     speed = tagCompound.getInteger(NBT_SPEED);
     //invo stuff
     NBTTagList tagList = tagCompound.getTagList(NBT_INV, 10);
@@ -223,6 +248,8 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
       return this.needsRedstone;
     default:
       break;
+    case LEFTRIGHT:
+      return this.rightClickIfZero;
     }
     return 0;
   }
@@ -246,6 +273,9 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
       break;
     case REDSTONE:
       this.needsRedstone = value;
+      break;
+    case LEFTRIGHT:
+      this.rightClickIfZero = value;
       break;
     }
   }
@@ -280,11 +310,13 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
   }
   @Override
   public void toggleNeedsRedstone() {
-    int val = this.needsRedstone + 1;
-    if (val > 1) {
-      val = 0;//hacky lazy way
-    }
+    int val = (this.needsRedstone == 1) ? 0 : 1;
     this.setField(Fields.REDSTONE.ordinal(), val);
+  }
+  public void toggleLeftRight() {
+    int val = (this.rightClickIfZero == 1) ? 0 : 1;
+    System.out.println("toggleLeftRight" + val);
+    this.setField(Fields.LEFTRIGHT.ordinal(), val);
   }
   private boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;

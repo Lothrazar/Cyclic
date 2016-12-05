@@ -2,7 +2,8 @@ package com.lothrazar.cyclicmagic.gui.harvester;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineHarvester;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContanerProgress;
 import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
-import com.lothrazar.cyclicmagic.net.PacketTileHarvester;
+import com.lothrazar.cyclicmagic.gui.GuiButtonSizePreview;
+import com.lothrazar.cyclicmagic.net.PacketTileSizeToggle;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
@@ -14,7 +15,7 @@ public class GuiHarvester extends GuiBaseContanerProgress {
   private TileMachineHarvester tile;
   boolean debugLabels = false;
   private GuiButtonMachineRedstone redstoneBtn;
-  private GuiButtonHarvester btnSize;
+  private GuiButtonSizePreview btnSize;
   public GuiHarvester(InventoryPlayer inventoryPlayer, TileMachineHarvester tileEntity) {
     super(new ContainerHarvester(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -29,15 +30,15 @@ public class GuiHarvester extends GuiBaseContanerProgress {
     redstoneBtn.setTextureIndex(tile.getField(TileMachineHarvester.Fields.REDSTONE.ordinal()));
     this.buttonList.add(redstoneBtn);
     int y = this.guiTop + Const.padding * 2 + 20;
-    btnSize = new GuiButtonHarvester(btnId++,
+    btnSize = new GuiButtonSizePreview(btnId++,
         this.guiLeft + Const.padding,
         y, "", this.tile.getPos(),
-        PacketTileHarvester.ActionType.SIZE);
+        PacketTileSizeToggle.ActionType.SIZE);
     this.buttonList.add(btnSize);
-    GuiButtonHarvester btnPreview = new GuiButtonHarvester(btnId++,
+    GuiButtonSizePreview btnPreview = new GuiButtonSizePreview(btnId++,
         this.guiLeft + Const.padding * 2 + 40,
         y, UtilChat.lang("button.harvester.preview"), this.tile.getPos(),
-        PacketTileHarvester.ActionType.PREVIEW);
+        PacketTileSizeToggle.ActionType.PREVIEW);
     this.buttonList.add(btnPreview);
   }
   @Override

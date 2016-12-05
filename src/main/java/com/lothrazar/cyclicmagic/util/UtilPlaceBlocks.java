@@ -62,15 +62,17 @@ public class UtilPlaceBlocks {
       // as soon as i added the try catch, it started never (rarely) happening
       // we used to pass a flag as third argument, such as '2'
       // default is '3'
-      if (!world.isRemote) {
-        if (placeState.getBlock() instanceof BlockLeaves) {//dont let them decay
-          placeState = placeState.withProperty(BlockLeaves.DECAYABLE, false);
-        }
-        success = world.setBlockState(placePos, placeState, 3);
+      // if (!world.isRemote) {
+      if (placeState.getBlock() instanceof BlockLeaves) {//dont let them decay
+        placeState = placeState.withProperty(BlockLeaves.DECAYABLE, false);
       }
-      else {//this often gets called from only serverside, but not always (structurebuilder)
+      success = world.setBlockState(placePos, placeState, 3);
+      // }
+      // else {//this often gets called from only serverside, but not always (structurebuilder)
+      if (success) {
         UtilSound.playSoundPlaceBlock(world, placePos, placeState.getBlock());
       }
+      // }
       world.markBlockRangeForRenderUpdate(placePos, placePos.up());
       world.markChunkDirty(placePos, null);
     }

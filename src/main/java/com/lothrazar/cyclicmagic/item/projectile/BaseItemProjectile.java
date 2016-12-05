@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.item.projectile;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.item.BaseItem;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -20,6 +21,7 @@ public abstract class BaseItemProjectile extends BaseItem {
     return new ActionResult<ItemStack>(EnumActionResult.PASS, itemStackIn);
   }
   abstract void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand);
+  public abstract EntityThrowableDispensable getThrownEntity(World world, double x, double y, double z);//, double accelX, double accelY, double accelZ
   private static final float VELOCITY_DEFAULT = 1.5F;
   private static final float INACCURACY_DEFAULT = 1.0F;
   private static final float PITCHOFFSET = 0.0F;

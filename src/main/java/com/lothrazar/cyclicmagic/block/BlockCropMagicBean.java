@@ -1,9 +1,14 @@
 package com.lothrazar.cyclicmagic.block;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.regex.Pattern;
 import javax.annotation.Nullable;
+import com.lothrazar.cyclicmagic.IHasConfig;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.ItemMagicBean;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockFlower;
@@ -20,12 +25,17 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 
-public class BlockCropMagicBean extends BlockCrops {
+public class BlockCropMagicBean extends BlockCrops implements IHasConfig {
   public static final int MAX_AGE = 7;
   public static final PropertyInteger AGE = PropertyInteger.create("age", 0, MAX_AGE);
   private static final AxisAlignedBB[] AABB = new AxisAlignedBB[] { new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.125D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.1875D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.25D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.3125D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.375D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.4375D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5625D, 1.0D) };
   private List<ItemStack> myDrops = new ArrayList<ItemStack>();
+  private ItemMagicBean seed;
+  private boolean allowBonemeal;
+  private boolean dropSeedOnHarvest;
+  private ArrayList<String> myDropStrings;
   public BlockCropMagicBean() {
     Item[] drops = new Item[] {
         //treasure
@@ -95,7 +105,6 @@ public class BlockCropMagicBean extends BlockCrops {
   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
     return this.isMaxAge(state) ? this.getSeed() : this.getSeed();//the null tells harvestcraft hey: dont remove my drops
   }
-  private ItemMagicBean seed;
   @Override
   protected Item getSeed() {
     return seed;
@@ -108,7 +117,26 @@ public class BlockCropMagicBean extends BlockCrops {
     return null;//ItemRegistry.sprout_seed;
   }
   private ItemStack getCropStack(Random rand) {
-    return myDrops.get(rand.nextInt(myDrops.size()));
+    String res = this.myDropStrings.get(rand.nextInt(myDropStrings.size()));
+    try {
+      String[] ares = res.split(Pattern.quote("*"));
+      Item item = Item.getByNameOrId(ares[0]);
+      if (item == null) {
+        ModCyclic.logger.error("Magic Bean config: loot item not found " + res);
+        this.myDropStrings.remove(res);
+        return getCropStack(rand);
+      }
+      String meta = (ares.length > 1) ? ares[1] : "0";
+      int imeta = Integer.parseInt(meta);
+      ItemStack stack = new ItemStack(item, 1, imeta);
+      return stack;
+    }
+    catch (Exception e) {
+      ModCyclic.logger.error("Magic Bean config: loot item not found " + res);
+      ModCyclic.logger.error(e.getMessage());
+      return new ItemStack(Blocks.DIRT);
+    }
+    //    return myDrops.get(rand.nextInt(myDrops.size()));
   }
   @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
@@ -130,7 +158,9 @@ public class BlockCropMagicBean extends BlockCrops {
         ret.add(getCropStack(rand).copy()); //copy to make sure we return a new instance
       }
     }
-    ret.add(new ItemStack(getSeed()));//always a seed, grown or not
+    if (!isGrown || dropSeedOnHarvest) {//either its !grown, so drop seed, OR it is grown, but config says drop on full grown
+      ret.add(new ItemStack(getSeed()));//always a seed, grown or not
+    }
     return ret;
   }
   @Override
@@ -139,10 +169,33 @@ public class BlockCropMagicBean extends BlockCrops {
   }
   @Override
   protected int getBonemealAgeIncrease(World worldIn) {
-    return 1;
+    return allowBonemeal ? 1 : 0;
   }
   @Override
   public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
     return getBonemealAgeIncrease(worldIn) > 0;
+  }
+  @Override
+  public void syncConfig(Configuration config) {
+    String category = Const.ConfigCategory.blocks + ".magicbean";
+    allowBonemeal = config.getBoolean("MagicBeanBonemeal", category, true, "Allow bonemeal on magic bean");
+    dropSeedOnHarvest = config.getBoolean("MagicBeanGrownDropSeed", category, true, "Allow dropping the seed item if fully grown.  (if its not grown it will still drop when broken)");
+    ArrayList<String> deft = new ArrayList<String>();
+    for (ItemStack drop : myDrops) {
+      if (drop == null || drop.getItem() == null) {
+        continue;
+      }
+      String resource = drop.getItem().getRegistryName().getResourceDomain() + ":" + drop.getItem().getRegistryName().getResourcePath();
+      if (drop.getMetadata() > 0) {
+        resource += "*" + drop.getMetadata();
+      }
+      System.out.println(resource);
+      deft.add(resource);
+    }
+    myDropStrings = new ArrayList<String>(Arrays.asList(config.getStringList("MagicBeanDropList", category, deft.toArray(new String[0]), "Drop list")));
+    if (myDropStrings.size() == 0) {
+      //do not let it be empty! avoid infloop
+      myDropStrings.add("minecraft:dirt");
+    }
   }
 }

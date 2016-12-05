@@ -136,6 +136,7 @@ public class TileMachinePlacer extends TileEntityBaseMachineInvo implements ITil
       markDirty();
       return;
     }
+    this.spawnParticlesAbove();// its still processing
     ItemStack stack = getStackInSlot(0);
     if (stack == null) {
       timer = TIMER_FULL;// reset just like you would in a
@@ -156,9 +157,6 @@ public class TileMachinePlacer extends TileEntityBaseMachineInvo implements ITil
           this.decrStackSize(0, 1);
         }
       }
-    }
-    else {
-      this.spawnParticlesAbove();// its still processing
     }
     this.markDirty();
   }

@@ -3,6 +3,7 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDungeonEye;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
@@ -22,6 +23,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRecipe, IHasConfig {
   private static int DUNGEONRADIUS = 64;
+  @Override
+  public EntityThrowableDispensable getThrownEntity(World world, double x, double y, double z) {
+    return new EntityDungeonEye(world, x, y, z);
+  }
   @Override
   public void syncConfig(Configuration config) {
     DUNGEONRADIUS = config.getInt("Ender Dungeon Radius", Const.ConfigCategory.items, 128, 8, 128, "Search radius of dungeonfinder");

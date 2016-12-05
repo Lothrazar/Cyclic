@@ -171,7 +171,6 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
           if (slot < 0) {
             continue;//you have no materials left
           }
- 
           if (worldObj.getTileEntity(curPos) != null) {
             continue;//ignore tile entities IE do not break chests / etc
           }

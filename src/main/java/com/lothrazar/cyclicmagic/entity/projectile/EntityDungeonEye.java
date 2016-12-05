@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.entity.projectile;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
@@ -8,7 +7,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
-public class EntityDungeonEye extends EntityThrowable {
+public class EntityDungeonEye extends EntityThrowableDispensable {
   public static Item renderSnowball;
   private double targetX;
   private double targetY;

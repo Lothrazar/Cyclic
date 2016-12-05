@@ -2,7 +2,9 @@ package com.lothrazar.cyclicmagic.gui.miner;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMinerSmart;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
+import com.lothrazar.cyclicmagic.gui.GuiButtonSizePreview;
 import com.lothrazar.cyclicmagic.gui.miner.ButtonMinerHeight;
+import com.lothrazar.cyclicmagic.net.PacketTileSizeToggle;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
@@ -17,6 +19,7 @@ public class GuiMinerSmart extends GuiBaseContainer {
   private ButtonMinerHeight btnHeightDown;
   private ButtonMinerHeight btnHeightUp;
   private GuiButtonMachineRedstone redstoneBtn;
+  private GuiButtonSizePreview btnSize;
   public GuiMinerSmart(InventoryPlayer inventoryPlayer, TileMachineMinerSmart tileEntity) {
     super(new ContainerMinerSmart(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -39,6 +42,17 @@ public class GuiMinerSmart extends GuiBaseContainer {
     this.buttonList.add(btnHeightDown);
     btnHeightUp = new ButtonMinerHeight(tile.getPos(), id++, this.guiLeft + xHeightTextbox, this.guiTop + yHeightTxtbox - yOffset, true, "height");
     this.buttonList.add(btnHeightUp);
+    int y = this.guiTop + Const.padding * 2 + 44;
+    btnSize = new GuiButtonSizePreview(id++,
+        this.guiLeft + Const.padding,
+        y, "", this.tile.getPos(),
+        PacketTileSizeToggle.ActionType.SIZE);
+    this.buttonList.add(btnSize);
+    GuiButtonSizePreview btnPreview = new GuiButtonSizePreview(id++,
+        this.guiLeft + Const.padding * 2 + 40,
+        y, UtilChat.lang("button.harvester.preview"), this.tile.getPos(),
+        PacketTileSizeToggle.ActionType.PREVIEW);
+    this.buttonList.add(btnPreview);
   }
   private void updateDisabledButtons() {
     this.btnHeightDown.enabled = (this.tile.getHeight() > 1);
@@ -58,6 +72,7 @@ public class GuiMinerSmart extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     redstoneBtn.setState(tile.getField(TileMachineMinerSmart.Fields.REDSTONE.ordinal()));
+    btnSize.displayString = UtilChat.lang("button.harvester.size" + tile.getField(TileMachineMinerSmart.Fields.SIZE.ordinal()));
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     String s = UtilChat.lang("tile.block_miner_smart.blacklist");
     //      int x = this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, y = 18;

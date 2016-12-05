@@ -36,7 +36,7 @@ public class GuiUncrafting extends GuiBaseContanerProgress {
     this.buttonList.add(redstoneBtn);
     //int buttonId, int x, int y, String buttonText)
     GuiButton helpBtn = new GuiButton(1,
-        this.guiLeft + Const.SQ + Const.padding+2,
+        this.guiLeft + Const.SQ + Const.padding + 2,
         this.guiTop + 4 * Const.padding + 6, 12, 20, "?");
     this.buttonList.add(helpBtn);
   }

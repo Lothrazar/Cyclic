@@ -5,10 +5,10 @@ import net.minecraft.world.World;
 
 public class TileEntityBucketStorage extends TileEntity {
   public static final String NBT_ID = "buckets";
-//  public static final String NBT_TIME = "time";
-//  public static final long TIMEOUT = 15;
+  //  public static final String NBT_TIME = "time";
+  //  public static final long TIMEOUT = 15;
   private int buckets = 0;
-//  private long timeLastRemoved = 0;
+  //  private long timeLastRemoved = 0;
   public TileEntityBucketStorage() {
     super();
   }
@@ -23,7 +23,6 @@ public class TileEntityBucketStorage extends TileEntity {
   public void addBucket() {
     buckets++;
   }
-
   public int getBuckets() {
     return buckets;
   }

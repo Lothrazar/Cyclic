@@ -87,41 +87,46 @@ public class ModCyclic {
     }
   }
   /*
-
-MISSING CONFIG: shears block, water tool, icemaker, CHECK all modules
-
-
-   * FAN: works like a magnet but full block, pushes or pull sall entities horizontal (including player, items, anything)
    * 
-   * SENSORS: works like magnets but when it finds an entity it just outputs redstone
+   * MISSING CONFIG: shears block, water tool, icemaker, CHECK all modules
    * 
-   *  ideas/plans/features
-   *  
-   *  water fountain//particle maker: has gui. pick the particle you want (vanilla only if we have to) and 
-   *  whenver its on it spawns particles above or wherever
-   *  
-   *  MAYBE sound maker oto?
-   *  
-   *    obsidian maker : takes liquid and outputs blocks
-   *    
-   *    ice maker: freezes water blocks above and/or around it
-   *    
-   *    item that extinquishes fire all around
-   *    
-   *    ubertorch? glowstone torch? lights up larger area maybe 32/64 blocks
-   *    
-   *    block similar to magma block how it does damage, but only on redstone?
-   *    
-   *    block that puts fire above on redstone signal?
-   *    
-   *    water redstone spawner? just like a dispenser with bucket, can place remove water
-   *  
-   *  item for my todo list command: simple notepad
-   *  
-   *  Water Spreader: Turns flowing water into source water
-   *  
-   *  item for my /ping command: gps item, shows coords on item. toggle on/off showing on screen
-   *  can send to chat. maybe control over more f3 stuff like biome/datetime
+   * 
+   * FAN: works like a magnet but full block, pushes or pull sall entities
+   * horizontal (including player, items, anything)
+   * 
+   * SENSORS: works like magnets but when it finds an entity it just outputs
+   * redstone
+   * 
+   * ideas/plans/features
+   * 
+   * water fountain//particle maker: has gui. pick the particle you want
+   * (vanilla only if we have to) and whenver its on it spawns particles above
+   * or wherever
+   * 
+   * MAYBE sound maker oto?
+   * 
+   * obsidian maker : takes liquid and outputs blocks
+   * 
+   * ice maker: freezes water blocks above and/or around it
+   * 
+   * item that extinquishes fire all around
+   * 
+   * ubertorch? glowstone torch? lights up larger area maybe 32/64 blocks
+   * 
+   * block similar to magma block how it does damage, but only on redstone?
+   * 
+   * block that puts fire above on redstone signal?
+   * 
+   * water redstone spawner? just like a dispenser with bucket, can place remove
+   * water
+   * 
+   * item for my todo list command: simple notepad
+   * 
+   * Water Spreader: Turns flowing water into source water
+   * 
+   * item for my /ping command: gps item, shows coords on item. toggle on/off
+   * showing on screen can send to chat. maybe control over more f3 stuff like
+   * biome/datetime
    * 
    * LADDER CLIMB: remove the && player.moveForward == 0 restriction?
    * 

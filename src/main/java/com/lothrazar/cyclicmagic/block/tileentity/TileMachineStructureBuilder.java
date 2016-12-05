@@ -16,20 +16,20 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo implements ITileRedstoneToggle {
+public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle {
   private int timer;
   private int buildType;
   private int buildSpeed;
-  private int buildSize;
+  private int buildSize = 3;
   private int buildHeight = 3;
   private int needsRedstone = 1;
   private ItemStack[] inv = new ItemStack[9];
   private int shapeIndex = 0;// current index of shape array
   private List<BlockPos> shape = null;
   private BlockPos nextPos;// location of next block to be placed
-  private static final int maxSpeed = 1;
   public static int maxSize;
   public static int maxHeight = 10;
+  private static final int maxSpeed = 1;
   public static final int TIMER_FULL = 100;//one day i will add fuel AND/OR speed upgrades. till then make very slow
   private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots
   private static final String NBT_INV = "Inventory";
@@ -314,12 +314,12 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
     }
     if (this.onlyRunIfPowered() && this.isPowered() == false) {
       // it works ONLY if its powered
-      markDirty();
       return;
     }
+    this.spawnParticlesAbove();
     World world = getWorld();
     if (!world.isRemote && nextPos != null && world.rand.nextDouble() < 0.1 && inv[0] != null) {
-      UtilParticle.spawnParticlePacket(EnumParticleTypes.DRAGON_BREATH, nextPos, 5);
+      UtilParticle.spawnParticlePacket(EnumParticleTypes.DRAGON_BREATH, nextPos);
     }
     ItemStack stack = getStackInSlot(0);
     if (stack != null) {
@@ -345,6 +345,7 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
         IBlockState placeState = UtilItemStack.getStateFromMeta(stuff, stack.getMetadata());
         //ModMain.logger.info("try place " + this.nextPos + " type " + this.buildType + "_" + this.getBuildTypeEnum().name());
         if (UtilPlaceBlocks.placeStateSafe(world, null, nextPos, placeState)) {
+          // UtilSound.playSoundPlaceBlock(world, nextPos, placeState.getBlock());
           if (world.isRemote == false) {//consume item on server
             this.decrStackSize(0, 1);
           }
@@ -352,10 +353,6 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
         this.incrementPosition();// even if it didnt place; move along
       }
     }
-    else {
-      this.spawnParticlesAbove();
-    }
-    this.markDirty();
   }
   private void incrementPosition() {
     if (this.nextPos == null) {
@@ -373,6 +370,7 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
       this.nextPos = this.shape.get(c);
       shapeIndex = c;
     }
+    this.markDirty();
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
@@ -402,5 +400,21 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
       val = 0;//hacky lazy way
     }
     this.setField(Fields.REDSTONE.ordinal(), val);
+  }
+  @Override
+  public void toggleSizeShape() {
+    TileMachineStructureBuilder.BuildType old = this.getBuildTypeEnum();
+    TileMachineStructureBuilder.BuildType next = TileMachineStructureBuilder.BuildType.getNextType(old);
+    this.setBuildType(next.ordinal());
+    this.rebuildShape();
+  }
+  @Override
+  public void displayPreview() {
+    if (this.shape == null || this.shape.size() == 0) {
+      this.rebuildShape();
+    }
+    for (BlockPos pos : this.shape) {
+      UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, pos);
+    }
   }
 }

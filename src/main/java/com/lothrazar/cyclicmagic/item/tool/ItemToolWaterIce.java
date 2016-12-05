@@ -25,7 +25,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemToolWaterIce extends BaseTool implements IHasRecipe {
   private static final int DURABILITY = 256;
-//  private static final int COOLDOWN = 10;
+  //  private static final int COOLDOWN = 10;
   private static final int RADIUS = 2;
   public ItemToolWaterIce() {
     super(DURABILITY);
@@ -45,7 +45,6 @@ public class ItemToolWaterIce extends BaseTool implements IHasRecipe {
   public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
     if (spreadWaterFromCenter(world, player.getPosition().offset(player.getHorizontalFacing()))) {
       super.onUse(stack, player, world, hand); //player.getCooldownTracker().setCooldown(this, COOLDOWN);
-      
     }
     return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
   }
