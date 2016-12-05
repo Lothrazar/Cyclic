@@ -17,7 +17,7 @@ public class UtilParticle {
       }
     }
     else {
-      spawnParticlePacket(sparkle, new BlockPos(x, y, z), count);
+      spawnParticlePacket(sparkle, new BlockPos(x, y, z));
     }
   }
   public static void spawnParticle(World world, EnumParticleTypes sparkle, double x, double y, double z) {
@@ -47,7 +47,7 @@ public class UtilParticle {
       UtilParticle.spawnParticle(world, sparkle, x, y, z, count);
     }
   }
-  public static void spawnParticlePacket(EnumParticleTypes particle, BlockPos position, int count) {
+  public static void spawnParticlePacket(EnumParticleTypes particle, BlockPos position) {
     // this. fires only on server side. so send packet for client to spawn
     // particles and so on
     ModCyclic.network.sendToAll(new PacketParticleAtPosition(position, particle.getParticleID(), count));

@@ -314,12 +314,12 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
     }
     if (this.onlyRunIfPowered() && this.isPowered() == false) {
       // it works ONLY if its powered
-      markDirty();
       return;
     }
+    this.spawnParticlesAbove();
     World world = getWorld();
     if (!world.isRemote && nextPos != null && world.rand.nextDouble() < 0.1 && inv[0] != null) {
-      UtilParticle.spawnParticlePacket(EnumParticleTypes.DRAGON_BREATH, nextPos, 5);
+      UtilParticle.spawnParticlePacket(EnumParticleTypes.DRAGON_BREATH, nextPos);
     }
     ItemStack stack = getStackInSlot(0);
     if (stack != null) {
@@ -345,6 +345,7 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
         IBlockState placeState = UtilItemStack.getStateFromMeta(stuff, stack.getMetadata());
         //ModMain.logger.info("try place " + this.nextPos + " type " + this.buildType + "_" + this.getBuildTypeEnum().name());
         if (UtilPlaceBlocks.placeStateSafe(world, null, nextPos, placeState)) {
+         // UtilSound.playSoundPlaceBlock(world, nextPos, placeState.getBlock());
           if (world.isRemote == false) {//consume item on server
             this.decrStackSize(0, 1);
           }
@@ -352,10 +353,6 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
         this.incrementPosition();// even if it didnt place; move along
       }
     }
-    else {
-      this.spawnParticlesAbove();
-    }
-    this.markDirty();
   }
   private void incrementPosition() {
     if (this.nextPos == null) {
@@ -373,6 +370,7 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
       this.nextPos = this.shape.get(c);
       shapeIndex = c;
     }
+    this.markDirty();
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
