@@ -48,7 +48,7 @@ public class GuiUser extends GuiBaseContanerProgress {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     redstoneBtn.setState(tile.getField(Fields.REDSTONE.ordinal()));
-    actionBtn.displayString = UtilChat.lang("button.block_user.action" + tile.getField(Fields.LEFTRIGHT.ordinal()));
+    actionBtn.displayString = UtilChat.lang("tile.block_user.action" + tile.getField(Fields.LEFTRIGHT.ordinal()));
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
   public int getProgressX() {

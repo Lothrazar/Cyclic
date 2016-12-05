@@ -6,12 +6,16 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EnumCreatureAttribute;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -78,15 +82,16 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
           maybeTool = null;
         }
       }
+      fakePlayer.get().onUpdate();//trigger   ++this.ticksSinceLastSwing; among other things
       if (maybeTool == null) {//null for any reason
         fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, null);
         inv[toolSlot] = null;
       }
       else {
         //so its not null
-        if (!maybeTool.equals(fakePlayer.get().getHeldItem(EnumHand.MAIN_HAND))) {
-          fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, maybeTool);
-        }
+        // if (!maybeTool.equals(fakePlayer.get().getHeldItem(EnumHand.MAIN_HAND))) {
+        fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, maybeTool);
+        //}
       }
       if (!(this.onlyRunIfPowered() && this.isPowered() == false)) {
         timer -= this.getSpeed();
@@ -109,11 +114,6 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
             fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
             //this.getWorld().markChunkDirty(this.getPos(), this);
             this.getWorld().markChunkDirty(targetPos, this);
-            //  this.getWorld().markBlockRangeForRenderUpdate(this.getPos(), targetPos);
-            //act on entity
-            //          boolean particle = true;
-            //          if (particle)
-            //            UtilParticle.spawnParticle(this.worldObj, EnumParticleTypes.DRAGON_BREATH, entityCenter);
             AxisAlignedBB range = UtilEntity.makeBoundingBox(entityCenter, hRange, vRange);
             List<EntityLivingBase> all = world.getEntitiesWithinAABB(EntityLivingBase.class, range);
             for (EntityLivingBase ent : all) {
@@ -124,8 +124,23 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
             AxisAlignedBB range = UtilEntity.makeBoundingBox(entityCenter, 1, 1);
             List<EntityLivingBase> all = world.getEntitiesWithinAABB(EntityLivingBase.class, range);
             for (EntityLivingBase ent : all) {
+              System.out.println("main hand is: " + fakePlayer.get().getHeldItemMainhand());
+              float f = (float) fakePlayer.get().getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue();
               fakePlayer.get().attackTargetEntityWithCurrentItem(ent);
-              // fakePlayer.get().interact(ent, maybeTool, EnumHand.MAIN_HAND);
+              //above one works and does enchants but is buggy since fakeplayer seems to not work with the 
+              //attackcooldowns added (the new swordplay delay), is always weakest like 10%
+              //so now force it as full dmg to mimic actually working
+              float f1;
+              if (ent instanceof EntityLivingBase) {
+                f1 = EnchantmentHelper.getModifierForCreature(fakePlayer.get().getHeldItemMainhand(), ((EntityLivingBase) ent).getCreatureAttribute());
+              }
+              else {
+                f1 = EnchantmentHelper.getModifierForCreature(fakePlayer.get().getHeldItemMainhand(), EnumCreatureAttribute.UNDEFINED);
+              }
+              f *= 1.75F;
+              f = f + f1;//APPLY CREATURE/WEAPON/SHARPNESS COMBO
+              System.out.println("FULLDMG" + f);
+              ent.attackEntityFrom(DamageSource.causePlayerDamage(fakePlayer.get()), f);
             }
           }
         }
@@ -295,13 +310,12 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
   }
   @Override
   public void toggleNeedsRedstone() {
-    int val = (this.needsRedstone == 1) ? 0 : 1;  
+    int val = (this.needsRedstone == 1) ? 0 : 1;
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
   public void toggleLeftRight() {
-    int val = (this.rightClickIfZero == 1) ? 0 : 1;  
-    System.out.println("toggleLeftRight"+val);
-    
+    int val = (this.rightClickIfZero == 1) ? 0 : 1;
+    System.out.println("toggleLeftRight" + val);
     this.setField(Fields.LEFTRIGHT.ordinal(), val);
   }
   private boolean onlyRunIfPowered() {
