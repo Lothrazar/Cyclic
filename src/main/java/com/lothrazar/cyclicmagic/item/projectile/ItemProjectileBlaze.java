@@ -2,8 +2,11 @@ package com.lothrazar.cyclicmagic.item.projectile;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityBlazeBolt;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityDungeonEye;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
@@ -13,6 +16,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemProjectileBlaze extends BaseItemProjectile implements IHasRecipe {
+  @Override
+  public EntityThrowableDispensable getThrownEntity(World world, double x, double y, double z) {
+    return new EntityBlazeBolt(world, x,y,z);
+  }
   @Override
   public void addRecipe() {
     GameRegistry.addShapelessRecipe(new ItemStack(this, 16), new ItemStack(Items.ENDER_PEARL), new ItemStack(Items.BLAZE_POWDER), new ItemStack(Items.FLINT));

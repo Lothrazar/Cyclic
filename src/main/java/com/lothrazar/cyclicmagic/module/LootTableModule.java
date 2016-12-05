@@ -26,7 +26,6 @@ public class LootTableModule extends BaseEventModule implements IHasConfig {
   private Set<ResourceLocation> chests;
   private boolean enablePolarbears;
   private boolean enableBats;
-  // private boolean enableStrayQuarts;
   private boolean enableElderGuardianDiam;
   private boolean enableEndermiteEyeCrystal;
   private boolean enableShulkerDiamCryst;
@@ -80,29 +79,29 @@ public class LootTableModule extends BaseEventModule implements IHasConfig {
   }
   private void onLootEntityTableLoad(LootPool main, LootTableLoadEvent event) {
     if (enableBats && event.getName() == LootTableList.ENTITIES_BAT) {
-      addLoot(main, Items.LEATHER, 90);
+      addLoot(main, Items.LEATHER, ConfigLootTable.BatLeather);
     }
     else if (enablePolarbears && event.getName() == LootTableList.field_189969_E) {
-      addLoot(main, Items.LEATHER, 45);
-      addLoot(main, Item.getItemFromBlock(Blocks.WOOL), 75);
+      addLoot(main, Items.LEATHER, ConfigLootTable.PolarbearLeather);
+      addLoot(main, Item.getItemFromBlock(Blocks.WOOL), ConfigLootTable.PolarbearWool);
     }
     else if (enableStrayPackedIce && event.getName() == LootTableList.field_189968_an) { //STRAY
-      addLoot(main, Item.getItemFromBlock(Blocks.PACKED_ICE), 35);
+      addLoot(main, Item.getItemFromBlock(Blocks.PACKED_ICE), ConfigLootTable.StrayPackedIce);
     }
     else if (enableEndermiteEyeCrystal && event.getName() == LootTableList.ENTITIES_ENDERMITE) {
-      addLoot(main, Items.ENDER_EYE, 25);
-      addLoot(main, Items.END_CRYSTAL, 10);
+      addLoot(main, Items.ENDER_EYE, ConfigLootTable.EndermiteEnderEye);
+      addLoot(main, Items.END_CRYSTAL, ConfigLootTable.EndermiteCrystal);
     }
     else if (enableSilverfishIron && event.getName() == LootTableList.ENTITIES_SILVERFISH) {
-      addLoot(main, Items.IRON_INGOT, 45);
+      addLoot(main, Items.IRON_INGOT, ConfigLootTable.SilverfishIron);
     }
     else if (enableShulkerDiamCryst && event.getName() == LootTableList.ENTITIES_SHULKER) {
-      addLoot(main, Items.DIAMOND, 45);
-      addLoot(main, Items.END_CRYSTAL, 25);
+      addLoot(main, Items.DIAMOND, ConfigLootTable.ShulkerDiam);
+      addLoot(main, Items.END_CRYSTAL, ConfigLootTable.ShulkerCrystal);
     }
     else if (enableElderGuardianDiam && event.getName() == LootTableList.ENTITIES_ELDER_GUARDIAN) {
-      addLoot(main, Items.DIAMOND, 95);
-      addLoot(main, Item.getItemFromBlock(Blocks.DIAMOND_BLOCK), 35);
+      addLoot(main, Items.DIAMOND, ConfigLootTable.ElderGuardianDiam);
+      addLoot(main, Item.getItemFromBlock(Blocks.DIAMOND_BLOCK), ConfigLootTable.ElderGuardianDiamBlock);
     }
   }
   private void fillEndCityChest(LootPool main) {
@@ -126,7 +125,7 @@ public class LootTableModule extends BaseEventModule implements IHasConfig {
   }
   @SuppressWarnings("unused")
   private void addLoot(LootPool main, Item item) {
-    addLoot(main, item, LootTableRegistry.RANDODEFAULT);
+    addLoot(main, item, LootTableRegistry.lootChanceDefault);
   }
   private void addLoot(LootPool main, Item item, int rando) {
     if (item != null) {//shortcut fix bc of new module config system that can delete items
@@ -137,12 +136,41 @@ public class LootTableModule extends BaseEventModule implements IHasConfig {
   public void syncConfig(Configuration config) {
     enablePolarbears = config.getBoolean("PolarBearLoot", Const.ConfigCategory.mobs, true, "Polar Bears also drop wool and leather");
     enableBats = config.getBoolean("BatsLeather", Const.ConfigCategory.mobs, true, "Bats can drop leather");
-    //private boolean enableStrayQuarts;
     enableElderGuardianDiam = config.getBoolean("ElderGuardianDiamonds", Const.ConfigCategory.mobs, true, "Elder Guardians (the boss ones) can drop diamonds.");
     enableEndermiteEyeCrystal = config.getBoolean("EndermiteEyeCrystal", Const.ConfigCategory.mobs, true, "Endermites can drop ender eyes, and rarely ender crystals");
     enableShulkerDiamCryst = config.getBoolean("ShulkerLoot", Const.ConfigCategory.mobs, true, "Shulkers now drop loot: Diamonds and rare ender crystals");
     enableSilverfishIron = config.getBoolean("SilverfishIron", Const.ConfigCategory.mobs, true, "Silverfish can drop iron ingots");
     enableStrayPackedIce = config.getBoolean("StraySkeletonPackedIce", Const.ConfigCategory.mobs, true, "Strays (he new skeleton variants from cold biomes) can drop packed ice");
     enableChestLoot = config.getBoolean("ChestLoot", Const.ConfigCategory.worldGen, true, "If true, then enabled items and blocks from this mod can appear in loot chests");
+    LootTableRegistry.lootChanceDefault = config.getInt("ChestLootChance", Const.ConfigCategory.worldGen, 4,1,99, "If ChestLoot is true, this is the default chance a cyclic item will show up as treasure.");
+    
+    String category = Const.ConfigCategory.mobs + ".mobloottable";
+    String comment = "Customize mob loot table percentage.  Only works if the respective config is true";
+    int minValue = 1, maxValue = 99;
+    ConfigLootTable.BatLeather = config.getInt("BatLeather", category, 90, minValue, maxValue, comment);
+    ConfigLootTable.PolarbearWool = config.getInt("PolarbearWool", category, 75, minValue, maxValue, comment);
+    ConfigLootTable.PolarbearLeather = config.getInt("PolarbearLeather", category, 95, minValue, maxValue, comment);
+    ConfigLootTable.StrayPackedIce = config.getInt("StrayPackedIce", category, 35, minValue, maxValue, comment);
+    ConfigLootTable.EndermiteCrystal = config.getInt("EndermiteCrystal", category, 10, minValue, maxValue, comment);
+    ConfigLootTable.EndermiteEnderEye = config.getInt("EndermiteEnderEye", category, 25, minValue, maxValue, comment);
+    ConfigLootTable.SilverfishIron = config.getInt("SilverfishIron", category, 25, minValue, maxValue, comment);
+    ConfigLootTable.ShulkerCrystal = config.getInt("ShulkerCrystal", category, 5, minValue, maxValue, comment);
+    ConfigLootTable.ShulkerDiam = config.getInt("ShulkerDiamond", category, 45, minValue, maxValue, comment);
+    ConfigLootTable.ElderGuardianDiamBlock = config.getInt("ElderGuardianDiamBlock", category, 35, minValue, maxValue, comment);
+    ConfigLootTable.ElderGuardianDiam = config.getInt("ElderGuardianDiam", category, 95, minValue, maxValue, comment);
+    //TODO: ZOMIBE VILL EMERALD
+  }
+  public static class ConfigLootTable {
+    public static int BatLeather;
+    public static int PolarbearWool;
+    public static int PolarbearLeather;
+    public static int StrayPackedIce;
+    public static int EndermiteCrystal;
+    public static int EndermiteEnderEye;
+    public static int SilverfishIron;
+    public static int ShulkerCrystal;
+    public static int ShulkerDiam;
+    public static int ElderGuardianDiamBlock;
+    public static int ElderGuardianDiam;
   }
 }

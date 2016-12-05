@@ -8,7 +8,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
-public class EntityHarvestBolt extends EntityThrowable {
+public class EntityHarvestBolt extends EntityThrowableDispensable {
   public static Item renderSnowball;
   public static int range_main = 6;
   public static int range_offset = 4;

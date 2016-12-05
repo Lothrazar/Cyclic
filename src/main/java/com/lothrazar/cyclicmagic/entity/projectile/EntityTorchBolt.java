@@ -11,7 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
-public class EntityTorchBolt extends EntityThrowable {
+public class EntityTorchBolt extends EntityThrowableDispensable {
   public static Item renderSnowball;
   public EntityTorchBolt(World worldIn) {
     super(worldIn);

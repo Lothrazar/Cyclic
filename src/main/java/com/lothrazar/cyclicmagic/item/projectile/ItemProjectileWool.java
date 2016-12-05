@@ -3,6 +3,7 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityShearingBolt;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,6 +18,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemProjectileWool extends BaseItemProjectile implements IHasRecipe, IHasConfig {
+  public EntityThrowableDispensable getThrownEntity(World world, double x, double y, double z) {
+  return new EntityShearingBolt(world, x,y,z);
+}
   @Override
   public void syncConfig(Configuration config) {
     EntityShearingBolt.doesShearChild = config.getBoolean("Ender Shears Child", Const.ConfigCategory.items, true, "Ender shears work on child sheep");

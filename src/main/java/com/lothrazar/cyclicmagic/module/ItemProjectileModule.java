@@ -1,13 +1,18 @@
 package com.lothrazar.cyclicmagic.module;
+import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.IHasConfig;
+import com.lothrazar.cyclicmagic.dispenser.BehaviorPlantSeed;
+import com.lothrazar.cyclicmagic.dispenser.BehaviorProjectileThrowable;
 import com.lothrazar.cyclicmagic.entity.projectile.*;
 import com.lothrazar.cyclicmagic.item.projectile.*;
 import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
+import net.minecraft.block.BlockDispenser;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -22,6 +27,7 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
   private boolean enderWater;
   private boolean enderLightning;
   private boolean enderBombsEnabled;
+  ArrayList<BaseItemProjectile> projectiles = new ArrayList<BaseItemProjectile>();
   @Override
   public void onInit() {
     if (enableEnderBlaze) {
@@ -29,6 +35,7 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       ItemRegistry.addItem(ender_blaze, "ender_blaze");
       EntityProjectileRegistry.registerModEntity(EntityBlazeBolt.class, "blazebolt", 1008);
       EntityBlazeBolt.renderSnowball = ender_blaze;
+      projectiles.add(ender_blaze);
     }
     if (enableEnderDungeonFinder) {
       ItemProjectileDungeon ender_dungeon = new ItemProjectileDungeon();
@@ -36,36 +43,42 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       EntityProjectileRegistry.registerModEntity(EntityDungeonEye.class, "dungeonbolt", 1006);
       EntityDungeonEye.renderSnowball = ender_dungeon;
       LootTableRegistry.registerLoot(ender_dungeon);
+      projectiles.add(ender_dungeon);
     }
     if (enderFishing) {
       ItemProjectileFishing ender_fishing = new ItemProjectileFishing();
       ItemRegistry.addItem(ender_fishing, "ender_fishing");
       EntityProjectileRegistry.registerModEntity(EntityFishingBolt.class, "fishingbolt", 1004);
       EntityFishingBolt.renderSnowball = ender_fishing;
+      projectiles.add(ender_fishing);
     }
     if (enderWool) {
       ItemProjectileWool ender_wool = new ItemProjectileWool();
       ItemRegistry.addItem(ender_wool, "ender_wool");
       EntityProjectileRegistry.registerModEntity(EntityShearingBolt.class, "woolbolt", 1003);
       EntityShearingBolt.renderSnowball = ender_wool;
+      projectiles.add(ender_wool);
     }
     if (enderTorch) {
       ItemProjectileTorch ender_torch = new ItemProjectileTorch();
       ItemRegistry.addItem(ender_torch, "ender_torch");
       EntityProjectileRegistry.registerModEntity(EntityTorchBolt.class, "torchbolt", 1002);
       EntityTorchBolt.renderSnowball = ender_torch;
+      projectiles.add(ender_torch);
     }
     if (enderWater) {
       ItemProjectileWater ender_water = new ItemProjectileWater();
       ItemRegistry.addItem(ender_water, "ender_water");
       EntityProjectileRegistry.registerModEntity(EntityWaterBolt.class, "waterbolt", 1000);
       EntityWaterBolt.renderSnowball = ender_water;
+      projectiles.add(ender_water);
     }
     if (enderSnow) {
       ItemProjectileSnow ender_snow = new ItemProjectileSnow();
       ItemRegistry.addItem(ender_snow, "ender_snow");
       EntityProjectileRegistry.registerModEntity(EntitySnowballBolt.class, "frostbolt", 1001);
       EntitySnowballBolt.renderSnowball = ender_snow;
+      projectiles.add(ender_snow);
     }
     if (enderLightning) {
       ItemProjectileLightning ender_lightning = new ItemProjectileLightning();
@@ -73,6 +86,7 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       EntityProjectileRegistry.registerModEntity(EntityLightningballBolt.class, "lightningbolt", 999);
       EntityLightningballBolt.renderSnowball = ender_lightning;
       LootTableRegistry.registerLoot(ender_lightning);
+      projectiles.add(ender_lightning);
     }
     if (enderBombsEnabled) {
       ItemProjectileTNT ender_tnt_1 = new ItemProjectileTNT(1);
@@ -89,6 +103,12 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       ItemRegistry.addItem(ender_tnt_6, "ender_tnt_6");
       EntityProjectileRegistry.registerModEntity(EntityDynamite.class, "tntbolt", 1007);
       EntityDynamite.renderSnowball = ender_tnt_1;
+      projectiles.add(ender_tnt_1);
+      projectiles.add(ender_tnt_2);
+      projectiles.add(ender_tnt_3);
+      projectiles.add(ender_tnt_4);
+      projectiles.add(ender_tnt_5);
+      projectiles.add(ender_tnt_6);
       //first the basic recipes
       GameRegistry.addShapelessRecipe(new ItemStack(ender_tnt_1, 12), new ItemStack(Blocks.TNT), new ItemStack(Items.PAPER), new ItemStack(Items.CLAY_BALL), new ItemStack(Items.ENDER_PEARL));
       GameRegistry.addShapelessRecipe(new ItemStack(ender_tnt_2), new ItemStack(ender_tnt_1), new ItemStack(ender_tnt_1), new ItemStack(Items.CLAY_BALL));
@@ -104,6 +124,12 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       GameRegistry.addShapelessRecipe(new ItemStack(ender_tnt_5), new ItemStack(ender_tnt_3), new ItemStack(ender_tnt_3), new ItemStack(ender_tnt_3), new ItemStack(ender_tnt_3), new ItemStack(Items.CLAY_BALL));
       GameRegistry.addShapelessRecipe(new ItemStack(ender_tnt_6), new ItemStack(ender_tnt_4), new ItemStack(ender_tnt_4), new ItemStack(ender_tnt_4), new ItemStack(ender_tnt_4), new ItemStack(Items.CLAY_BALL));
       LootTableRegistry.registerLoot(ender_tnt_6);
+    }
+  }
+  @Override
+  public void onPostInit() {
+    for (BaseItemProjectile item : projectiles) {
+      BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(item, new BehaviorProjectileThrowable(item));
     }
   }
   @Override

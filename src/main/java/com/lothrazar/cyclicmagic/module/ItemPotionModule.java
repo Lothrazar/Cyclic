@@ -149,6 +149,7 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
           potion_boost,
           UPG_LENGTH,
           potion_boost_long);
+      LootTableRegistry.registerLoot(potion_boost);
       LootTableRegistry.registerLoot(potion_boost_long);
     }
     if (enableResist) {
@@ -170,6 +171,7 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
           potion_resistance,
           UPG_STRONG,
           potion_resistance_strong);
+      LootTableRegistry.registerLoot(potion_resistance);
       LootTableRegistry.registerLoot(potion_resistance_long);
     }
     if (enableHaste) {
@@ -191,6 +193,7 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
           new ItemStack(potion_haste),
           new ItemStack(UPG_STRONG),
           new ItemStack(potion_haste_strong));
+      LootTableRegistry.registerLoot(potion_haste);
       LootTableRegistry.registerLoot(potion_haste_strong);
       //https://github.com/MinecraftForge/MinecraftForge/blob/f08f3c11053d414b57d03192dd72fcbfaef100f7/src/test/java/net/minecraftforge/test/BrewingRecipeRegistryTest.java
       //addBrewingRecipe(new ItemStack(Items.DIAMOND_SWORD), new ItemStack(Items.REDSTONE), new ItemStack(Items.DIAMOND_HOE));
@@ -231,6 +234,8 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
           new ItemStack(potion_levitation),
           new ItemStack(UPG_LENGTH),
           new ItemStack(potion_levitation_long));
+      LootTableRegistry.registerLoot(potion_levitation,ChestType.ENDCITY);
+      LootTableRegistry.registerLoot(potion_levitation_long,ChestType.ENDCITY);
     }
   }
   private static void addBrewingRecipe(Item input, Item ingredient, Item output) {
@@ -246,9 +251,9 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
         output);
     ItemStack output0 = BrewingRecipeRegistry.getOutput(input, ingredient);
     if (output0.getItem() == output.getItem())
-      ModCyclic.logger.info("Recipe succefully registered and working: " + output.getUnlocalizedName());
+      ModCyclic.logger.info("Brewing Recipe succefully registered and working: " + output.getUnlocalizedName());
     else {
-      ModCyclic.logger.info("Recipe FAILED" + output.getUnlocalizedName());
+      ModCyclic.logger.error("Brewing Recipe FAILED to register" + output.getUnlocalizedName());
     }
   }
   @SideOnly(Side.CLIENT)
