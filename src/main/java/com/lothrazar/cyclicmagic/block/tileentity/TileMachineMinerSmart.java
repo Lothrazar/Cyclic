@@ -41,6 +41,13 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
   private static final String NBT_REDST = "redstone";
+  private static final String NBTMINING = "mining";
+  private static final String NBTDAMAGE = "curBlockDamage";
+  private static final String NBTPLAYERID = "uuid";
+  private static final String NBTTARGET = "target";
+  private static final String NBTHEIGHT = "h";
+  private static final String NBT_SIZE = "size";
+  private static final int MAX_SIZE = 7;//7 means 15x15
   private int size = 4;//center plus 4 in each direction = 9x9
   private int needsRedstone = 1;
   int height = 6;
@@ -183,12 +190,6 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
     }
     return;
   }
-  private static final String NBTMINING = "mining";
-  private static final String NBTDAMAGE = "curBlockDamage";
-  private static final String NBTPLAYERID = "uuid";
-  private static final String NBTTARGET = "target";
-  private static final String NBTHEIGHT = "h";
-  private static final int MAX_SIZE = 7;//7 means 15x15
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
     tagCompound.setInteger(NBT_REDST, this.needsRedstone);
@@ -201,6 +202,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
     tagCompound.setBoolean(NBTMINING, isCurrentlyMining);
     tagCompound.setFloat(NBTDAMAGE, curBlockDamage);
     tagCompound.setInteger(NBTHEIGHT, height);
+    tagCompound.setInteger(NBT_SIZE, size);
     //invo stuff
     NBTTagList itemList = new NBTTagList();
     for (int i = 0; i < inv.length; i++) {
@@ -219,6 +221,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
     this.needsRedstone = tagCompound.getInteger(NBT_REDST);
+    this.size = tagCompound.getInteger(NBT_SIZE);
     if (tagCompound.hasKey(NBTPLAYERID)) {
       uuid = UUID.fromString(tagCompound.getString(NBTPLAYERID));
     }
