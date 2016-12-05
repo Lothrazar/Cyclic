@@ -70,7 +70,6 @@ public class UtilPlaceBlocks {
       // }
       // else {//this often gets called from only serverside, but not always (structurebuilder)
       if (success) {
-        System.out.println("placeblock sound go!" + world.isRemote);
         UtilSound.playSoundPlaceBlock(world, placePos, placeState.getBlock());
       }
       // }

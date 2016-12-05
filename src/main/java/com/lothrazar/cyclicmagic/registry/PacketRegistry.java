@@ -40,5 +40,8 @@ public class PacketRegistry {
     network.registerMessage(PacketStorageSack.class, PacketStorageSack.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTileRedstoneToggle.class, PacketTileRedstoneToggle.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTileSizeToggle.class, PacketTileSizeToggle.class, packetID++, Side.SERVER);
+    network.registerMessage(PacketTileUser.class, PacketTileUser.class, packetID++, Side.SERVER);
+    
+    
   }
 }
