@@ -346,6 +346,7 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
         //ModMain.logger.info("try place " + this.nextPos + " type " + this.buildType + "_" + this.getBuildTypeEnum().name());
         if (UtilPlaceBlocks.placeStateSafe(world, null, nextPos, placeState)) {
          // UtilSound.playSoundPlaceBlock(world, nextPos, placeState.getBlock());
+         
           if (world.isRemote == false) {//consume item on server
             this.decrStackSize(0, 1);
           }
