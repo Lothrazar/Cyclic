@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.block;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
@@ -25,7 +26,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import scala.actors.threadpool.Arrays;
 
 public class BlockCropMagicBean extends BlockCrops implements IHasConfig {
   public static final int MAX_AGE = 7;
@@ -175,7 +175,6 @@ public class BlockCropMagicBean extends BlockCrops implements IHasConfig {
   public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
     return getBonemealAgeIncrease(worldIn) > 0;
   }
-  @SuppressWarnings("unchecked")
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.blocks + ".magicbean";
