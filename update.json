@@ -5,8 +5,8 @@
     "1.9.4-recommended":  "1.2.0",
     "1.10-latest":  "1.1.0",
     "1.10-recommended": "1.1.0",
-    "1.10.2-latest":  "1.8.14",
-    "1.10.2-recommended": "1.8.14"
+    "1.10.2-latest":  "1.8.15",
+    "1.10.2-recommended": "1.8.15"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -80,5 +80,6 @@
   	,"1.8.12":"Uncrafting Grinder GUI overhaul: New help button to identify if an item can be uncrafted, and if not it gives a reason.  It no longer tries to deposit items into containers (was incompatible with some containers, and occasionally had issues), instead has its own inventory of recipe output, which can be extracted by hoppers and pipes.  Fix timeout & delay errors in Bucket storage.  "
   	,"1.8.13":"Automated User now works on entities.  New Items: Water Froster, Water Spreader, Water Splasher.  Fix sack of holding incompatibility with storage drawers, where you would sometimes get ConcurrentModification exceptions and have the emtpy sack go to negative stack sizes.  Fix Piston Scepter letting the offhand action trigger at the same time.   "
  	,"1.8.14":"Magic Bean: Now has config file entries to disable bonemeal, and disable dropping a bean (seed item) when fully grown.  Magic Bean loot table is now entirely in the config file (so you can remove items or add modded items).  New category mobs -> mobloottable so you can tweak the bonus item drop percentage on top of just the true/false.  The chance for cyclic items to spawn in dungeon chests is now in config as ChestLootChance and defaults to 4 (it used to be hardcoded as 7; still can be disabled by ChestLoot config as normal).  Removed Emerald Shovel and Axe from dungeon loot.  All Ender Projectiles now work out of a dispenser (Snow, Bombs, Blaze, Dungeon Finder, Fishing, Lightning, Torch, Water, Shears).  Updated some tooltips.  Controlled Miner is no longer fixed at 9x9, you can change the area that it mines.  Controlled Miner and Structure Builder now both have preview buttons.  Fixed the machines smoking when not running after chunk/world is reloaded.  Automated User can now toggle between two modes: Use and Attack.  "
+	,"1.8.15":"Automatic Fishing Net: fixed a bug where it wasn't dropping contents when you break it.  Automatic Fishing Net now uses wood break/place sounds instead of stone.  "
   }
 }

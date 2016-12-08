@@ -54,7 +54,8 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     if (rand.nextDouble() < SPEED &&
         isValidPosition() && isEquipmentValid() &&
         world instanceof WorldServer && world != null &&
-        world.getWorldTime() % Const.TICKS_PER_SEC == 0) {
+        world.getWorldTime() % Const.TICKS_PER_SEC == 0
+        ) {
       LootContext.Builder lootcontext$builder = new LootContext.Builder((WorldServer) world);
       int luck = EnchantmentHelper.getEnchantmentLevel(Enchantments.LUCK_OF_THE_SEA, this.inv[toolSlot]);
       lootcontext$builder.withLuck((float) luck);
