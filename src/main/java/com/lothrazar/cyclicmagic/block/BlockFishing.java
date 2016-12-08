@@ -6,11 +6,14 @@ import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFishing;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -28,7 +31,7 @@ public class BlockFishing extends Block implements IHasRecipe {
     super(Material.WOOD);
     this.setHardness(3F);
     this.setResistance(5F);
-    //    this.setStepSound(soundTypeWood);
+    this.setSoundType(SoundType.WOOD);
     this.setTickRandomly(true);
   }
   @Override
@@ -63,6 +66,14 @@ public class BlockFishing extends Block implements IHasRecipe {
   @Override
   public boolean hasTileEntity(IBlockState state) {
     return hasTileEntity();
+  }
+  public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+    TileEntity tileentity = worldIn.getTileEntity(pos);
+    if (tileentity instanceof IInventory) {
+      InventoryHelper.dropInventoryItems(worldIn, pos, (IInventory) tileentity);
+      worldIn.updateComparatorOutputLevel(pos, this);
+    }
+    super.breakBlock(worldIn, pos, state);
   }
   @Override
   public void addRecipe() {
