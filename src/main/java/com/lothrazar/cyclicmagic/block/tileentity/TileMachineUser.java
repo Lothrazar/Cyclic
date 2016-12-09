@@ -124,7 +124,7 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
             AxisAlignedBB range = UtilEntity.makeBoundingBox(entityCenter, 1, 1);
             List<EntityLivingBase> all = world.getEntitiesWithinAABB(EntityLivingBase.class, range);
             for (EntityLivingBase ent : all) {
-              System.out.println("main hand is: " + fakePlayer.get().getHeldItemMainhand());
+           
               float f = (float) fakePlayer.get().getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue();
               fakePlayer.get().attackTargetEntityWithCurrentItem(ent);
               //above one works and does enchants but is buggy since fakeplayer seems to not work with the 
@@ -139,7 +139,7 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
               }
               f *= 1.75F;
               f = f + f1;//APPLY CREATURE/WEAPON/SHARPNESS COMBO
-              System.out.println("FULLDMG" + f);
+       
               ent.attackEntityFrom(DamageSource.causePlayerDamage(fakePlayer.get()), f);
             }
           }
@@ -315,7 +315,6 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
   }
   public void toggleLeftRight() {
     int val = (this.rightClickIfZero == 1) ? 0 : 1;
-    System.out.println("toggleLeftRight" + val);
     this.setField(Fields.LEFTRIGHT.ordinal(), val);
   }
   private boolean onlyRunIfPowered() {
