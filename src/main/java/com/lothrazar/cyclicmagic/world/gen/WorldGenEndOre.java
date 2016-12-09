@@ -25,20 +25,20 @@ public class WorldGenEndOre implements IWorldGenerator {
     this.genRedstone = new WorldGenMinable(WorldGenModule.end_redstone_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.END_STONE));
     blockCount = 8;
     this.genCoal = new WorldGenMinable(WorldGenModule.end_coal_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.END_STONE));
-    blockCount = 4;
+    blockCount = 8;
     this.genEmerald = new WorldGenMinable(WorldGenModule.end_emerald_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.END_STONE));
     blockCount = 8;
     this.genLapis = new WorldGenMinable(WorldGenModule.end_lapis_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.END_STONE));
-    blockCount = 2;
+    blockCount = 8;
     this.genDiamond = new WorldGenMinable(WorldGenModule.end_diamond_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.END_STONE));
   }
   @Override
   public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
     int chance;
     if (world.provider.getDimension() == Const.Dimension.end) {
-      chance = 45;
+      chance = 18;
       this.run(this.genRedstone, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, chance, MIN_HEIGHT, MAX_HEIGHT);
-      chance = 25;
+      chance = 20;
       this.run(this.genCoal, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, chance, MIN_HEIGHT, MAX_HEIGHT);
       chance = 10;
       this.run(this.genEmerald, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, chance, MIN_HEIGHT, MAX_HEIGHT);
