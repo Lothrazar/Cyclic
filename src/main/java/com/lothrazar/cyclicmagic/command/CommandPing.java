@@ -33,7 +33,7 @@ public class CommandPing extends BaseCommand implements ICommand {
     else {
       pos = sender.getPosition();
     }
-    Biome biome = sender.getEntityWorld().getBiomeGenForCoords(pos);
+    Biome biome = sender.getEntityWorld().getBiome(pos);
     UtilChat.addChatMessage(sender, UtilChat.blockPosToString(pos) + " (" + biome.getBiomeName() + ")");
   }
 }

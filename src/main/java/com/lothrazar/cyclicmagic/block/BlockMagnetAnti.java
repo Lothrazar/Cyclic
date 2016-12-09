@@ -77,7 +77,7 @@ public class BlockMagnetAnti extends Block implements IHasRecipe {
         "bxb",
         "sbs",
         's', new ItemStack(Blocks.DIAMOND_BLOCK),
-        'b', new ItemStack(Blocks.field_189878_dg), //netherwart block
+        'b', new ItemStack(Blocks.NETHER_WART_BLOCK), //netherwart block
         'x', new ItemStack(Blocks.BEACON));
   }
   @SideOnly(Side.CLIENT)

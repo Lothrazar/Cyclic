@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.registry.PermissionRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockStone;
@@ -36,6 +37,7 @@ public class UtilPlaceBlocks {
   public static boolean placeStateSafe(World world, @Nullable EntityPlayer player, BlockPos placePos, IBlockState placeState) {
     if (placePos == null) { return false; }
     IBlockState stateHere = null;
+    if (player != null && PermissionRegistry.hasPermissionHere(player, placePos) == false) { return false; }
     if (world.isAirBlock(placePos) == false) {
       // if there is a block here, we might have to stop
       stateHere = world.getBlockState(placePos);

@@ -62,9 +62,10 @@ public class EnvironmentTweaksModule extends BaseEventModule implements IHasConf
     if (skelLightning && event.getEntity() instanceof EntitySkeleton &&
         event.getLightning() != null) {
       EntitySkeleton skel = (EntitySkeleton) event.getEntity();
-      if (skel.func_189771_df() == SkeletonType.NORMAL) {
+   
+      if (skel.getSkeletonType() == SkeletonType.NORMAL) {
         SkeletonType newType = skel.getEntityWorld().rand.nextDouble() > 0.5 ? SkeletonType.WITHER : SkeletonType.STRAY;
-        skel.func_189768_a(newType);
+        skel.setSkeletonType(newType);
         skel.heal(skel.getMaxHealth());
       }
     }
@@ -73,8 +74,8 @@ public class EnvironmentTweaksModule extends BaseEventModule implements IHasConf
       EntityZombie zomb = (EntityZombie) event.getEntity();
       //it says  //Do not use, Replacement TBD
       //but , if there is no replacement, why is it deprecated? makes no sense i say!
-      if (zomb.func_189777_di() == ZombieType.NORMAL) {
-        zomb.func_189778_a(ZombieType.HUSK);
+      if (zomb.getZombieType() == ZombieType.NORMAL) {
+        zomb.setZombieType(ZombieType.HUSK);
         zomb.heal(zomb.getMaxHealth());
       }
     }

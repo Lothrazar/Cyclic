@@ -32,25 +32,24 @@ public class GearEmeraldModule extends BaseModule implements IHasConfig {
   //private static final int[]  diamondreductionAmounts = new int[] { 3, 6, 8, 3 };
   private void registerEmeraldMaterial() {
     MaterialRegistry.emeraldArmorMaterial = EnumHelper.addArmorMaterial(emeraldName, Const.MODRES + emeraldName,
-        maxDamageFactorDiamond - 2, //affects DURABILITY 
+        maxDamageFactorDiamond, //was -2 affects DURABILITY 
         new int[] {
             ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.FEET), ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.LEGS), ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.CHEST), ArmorMaterial.DIAMOND.getDamageReductionAmount(EntityEquipmentSlot.HEAD)
         },
         ArmorMaterial.GOLD.getEnchantability(),
         ArmorMaterial.DIAMOND.getSoundEvent(),
-        ArmorMaterial.DIAMOND.getToughness() / 2);
+        ArmorMaterial.DIAMOND.getToughness());//was  / 2
     MaterialRegistry.emeraldArmorMaterial.customCraftingMaterial = Items.EMERALD;
     //max uses is durability ex The number of uses this material allows.
     //as of 1.9.4 :  (wood = 59, stone = 131, iron = 250, diamond = 1561, gold = 32)
     MaterialRegistry.emeraldToolMaterial = EnumHelper.addToolMaterial(emeraldName,
         ToolMaterial.DIAMOND.getHarvestLevel(),
-        ToolMaterial.DIAMOND.getMaxUses() - 261,
+        ToolMaterial.DIAMOND.getMaxUses(),//was  - 261
         ToolMaterial.DIAMOND.getEfficiencyOnProperMaterial(),
-        ToolMaterial.DIAMOND.getDamageVsEntity() - 0.25F,
+        ToolMaterial.DIAMOND.getDamageVsEntity(), //was  - 0.25F
         ToolMaterial.GOLD.getEnchantability());
-    MaterialRegistry.emeraldToolMaterial.setRepairItem(new ItemStack(Items.EMERALD));
-    // EnumHelper.addToolMaterial("emerald", 3, harvestLevel 3 same as diamond
-    // 1600,3.5F, 5+25 );
+    MaterialRegistry.emeraldToolMaterial.setRepairItem(new ItemStack(MaterialRegistry.emeraldArmorMaterial.customCraftingMaterial));
+
   }
   @Override
   public void onInit() {

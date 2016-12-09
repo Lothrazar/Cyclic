@@ -9,8 +9,9 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class ItemEmeraldAxe extends ItemAxe implements IHasRecipe {
   public static final String name = "emerald_axe";
   public ItemEmeraldAxe() {
+    
     // protected ItemAxe(Item.ToolMaterial material, int damage, int speed)
-    super(MaterialRegistry.emeraldToolMaterial, 6, -3);
+    super(MaterialRegistry.emeraldToolMaterial, 8, -3);
   }
   @Override
   public void addRecipe() {

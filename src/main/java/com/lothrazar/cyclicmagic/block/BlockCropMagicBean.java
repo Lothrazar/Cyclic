@@ -189,7 +189,6 @@ public class BlockCropMagicBean extends BlockCrops implements IHasConfig {
       if (drop.getMetadata() > 0) {
         resource += "*" + drop.getMetadata();
       }
-      System.out.println(resource);
       deft.add(resource);
     }
     myDropStrings = new ArrayList<String>(Arrays.asList(config.getStringList("MagicBeanDropList", category, deft.toArray(new String[0]), "Drop list")));

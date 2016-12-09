@@ -39,7 +39,7 @@ public class WorldGenGoldRiver implements IWorldGenerator {
       int y = minHeight + rand.nextInt(heightDiff);
       int z = chunk_Z + rand.nextInt(Const.CHUNK_SIZE);
       pos = new BlockPos(x, y, z);
-      biome = world.getBiomeGenForCoords(pos);
+      biome = world.getBiome(pos);
       if (biome == Biomes.RIVER || biome == Biomes.FROZEN_RIVER) {
         generator.generate(world, rand, pos);
       }

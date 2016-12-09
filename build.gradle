@@ -14,7 +14,7 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "${mc_version}-1.8.15"
+version = "${mc_version}-1.9.0"
 group = "com.lothrazar.cyclicmagic" 
 archivesBaseName = "Cyclic"
 
@@ -23,7 +23,7 @@ archivesBaseName = "Cyclic"
 
 minecraft {
     version = "${mc_version}-${forge_version}"
-    mappings = "snapshot_20160518"
+    mappings = "snapshot_20161111"
     runDir = "run"
     makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 

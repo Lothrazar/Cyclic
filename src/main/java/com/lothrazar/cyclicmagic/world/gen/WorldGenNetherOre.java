@@ -25,11 +25,11 @@ public class WorldGenNetherOre implements IWorldGenerator {
     this.genGold = new WorldGenMinable(WorldGenModule.nether_gold_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.NETHERRACK));
     blockCount = 8;
     this.genCoal = new WorldGenMinable(WorldGenModule.nether_coal_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.NETHERRACK));
-    blockCount = 4;
+    blockCount = 8;
     this.genEmerald = new WorldGenMinable(WorldGenModule.nether_emerald_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.NETHERRACK));
     blockCount = 8;
     this.genLapis = new WorldGenMinable(WorldGenModule.nether_lapis_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.NETHERRACK));
-    blockCount = 4;
+    blockCount = 8;
     this.genDiamond = new WorldGenMinable(WorldGenModule.nether_diamond_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.NETHERRACK));
   }
   @Override
@@ -40,11 +40,11 @@ public class WorldGenNetherOre implements IWorldGenerator {
       this.run(this.genGold, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, chance, MIN_HEIGHT, MAX_HEIGHT);
       chance = 25;
       this.run(this.genCoal, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, chance, MIN_HEIGHT, MAX_HEIGHT);
-      chance = 10;
+      chance = 5;
       this.run(this.genEmerald, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, chance, MIN_HEIGHT, MAX_HEIGHT);
-      chance = 15;
+      chance = 10;
       this.run(this.genLapis, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, chance, MIN_HEIGHT, MAX_HEIGHT);
-      chance = 12;
+      chance = 6;
       this.run(this.genDiamond, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, chance, MIN_HEIGHT, MAX_HEIGHT);
     }
   }

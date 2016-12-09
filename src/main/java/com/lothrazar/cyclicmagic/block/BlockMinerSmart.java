@@ -48,7 +48,7 @@ public class BlockMinerSmart extends BlockBaseFacingInventory implements IHasRec
         'x', Items.DIAMOND_AXE,
         's', Blocks.DISPENSER,
         'r', Blocks.LAPIS_BLOCK,
-        'b', Blocks.field_189877_df);// MAGMA BLOCK is field_189877_df in 1.10.2 apparently
+        'b', Blocks.MAGMA);// MAGMA BLOCK is field_189877_df in 1.10.2 apparently
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {

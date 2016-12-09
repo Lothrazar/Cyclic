@@ -72,7 +72,8 @@ public class ModCyclic {
     NetworkRegistry.INSTANCE.registerGuiHandler(this, new ModGuiHandler());
     ConfigRegistry.syncAllConfig(); //fixes things , stuff was added to items and content that has config
     this.events.registerAll(); //important: register events AFTER modules onInit, since modules add events in this phase.
-  }
+    PermissionRegistry.register();
+   }
   @EventHandler
   public void onPostInit(FMLPostInitializationEvent event) {
     for (ICyclicModule module : ModuleRegistry.modules) {

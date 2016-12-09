@@ -32,7 +32,7 @@ public class GuiUser extends GuiBaseContanerProgress {
     this.buttonList.add(redstoneBtn);
     actionBtn = new ButtonUserAction(1,
         this.guiLeft + 8 + 50,
-        this.guiTop + 8, this.tile.getPos());
+        this.guiTop + 8 + 8, this.tile.getPos());
     this.buttonList.add(actionBtn);
   }
   @Override

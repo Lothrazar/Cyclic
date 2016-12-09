@@ -40,7 +40,7 @@ public class WorldGenPlantBiome implements IWorldGenerator {
       int y = minHeight + rand.nextInt(heightDiff);
       int z = chunk_Z + rand.nextInt(Const.CHUNK_SIZE);
       pos = new BlockPos(x, y, z);
-      b = world.getBiomeGenForCoords(pos);
+      b = world.getBiome(pos);
       if (biomes.contains(b)) {
         generator.generate(world, rand, pos);
       }

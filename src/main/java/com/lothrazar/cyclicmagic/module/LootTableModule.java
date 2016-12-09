@@ -81,11 +81,11 @@ public class LootTableModule extends BaseEventModule implements IHasConfig {
     if (enableBats && event.getName() == LootTableList.ENTITIES_BAT) {
       addLoot(main, Items.LEATHER, ConfigLootTable.BatLeather);
     }
-    else if (enablePolarbears && event.getName() == LootTableList.field_189969_E) {
+    else if (enablePolarbears && event.getName() == LootTableList.ENTITIES_POLAR_BEAR) {
       addLoot(main, Items.LEATHER, ConfigLootTable.PolarbearLeather);
       addLoot(main, Item.getItemFromBlock(Blocks.WOOL), ConfigLootTable.PolarbearWool);
     }
-    else if (enableStrayPackedIce && event.getName() == LootTableList.field_189968_an) { //STRAY
+    else if (enableStrayPackedIce && event.getName() == LootTableList.ENTITIES_STRAY) { //STRAY
       addLoot(main, Item.getItemFromBlock(Blocks.PACKED_ICE), ConfigLootTable.StrayPackedIce);
     }
     else if (enableEndermiteEyeCrystal && event.getName() == LootTableList.ENTITIES_ENDERMITE) {
