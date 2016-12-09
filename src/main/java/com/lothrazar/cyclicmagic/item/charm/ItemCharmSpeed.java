@@ -1,21 +1,15 @@
 package com.lothrazar.cyclicmagic.item.charm;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.BaseCharm;
-import com.lothrazar.cyclicmagic.util.Const;
-import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.init.MobEffects;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
 public class ItemCharmSpeed extends BaseCharm implements IHasRecipe {
   private static final int durability = 32;
-  private static final int seconds = 60;
   public ItemCharmSpeed() {
     super(durability);
   }
@@ -30,17 +24,24 @@ public class ItemCharmSpeed extends BaseCharm implements IHasRecipe {
     }
   }
   @Override
-  public void onTick(ItemStack stack, EntityPlayer living) {
+  public void onTick(ItemStack stack, EntityPlayer player) {
     if (!this.canTick(stack)) { return; }
-    if (living.onGround && !living.isPotionActive(MobEffects.SPEED)) { // do nothing if you already have
-      living.addPotionEffect(new PotionEffect(MobEffects.SPEED, seconds * Const.TICKS_PER_SEC, Const.Potions.II));
-      super.damageCharm(living, stack);
-      UtilSound.playSound(living, living.getPosition(), SoundEvents.ENTITY_GENERIC_DRINK, living.getSoundCategory());
+    if (player.moveForward > 0) {
+      if (player.getRidingEntity() != null && player.getRidingEntity() instanceof EntityLivingBase) {
+        applyToEntity(stack, (EntityLivingBase) player.getRidingEntity());
+      }
+      else {
+        applyToEntity(stack, player);
+      }
+      if (player.getEntityWorld().rand.nextDouble() < 0.1) {
+        super.damageCharm(player, stack);
+      }
     }
-    if (living.getRidingEntity() != null && living.getRidingEntity() instanceof EntityLivingBase) {
-      EntityLivingBase maybeHorse = (EntityLivingBase) living.getRidingEntity();
-      maybeHorse.addPotionEffect(new PotionEffect(MobEffects.SPEED, seconds * Const.TICKS_PER_SEC, Const.Potions.II));
-    }
+  }
+  private void applyToEntity(ItemStack stack, EntityLivingBase player) {
+    float reduce = 0.08F;
+    player.motionX += net.minecraft.util.math.MathHelper.sin(-player.rotationYaw * 0.017453292F) * reduce;
+    player.motionZ += net.minecraft.util.math.MathHelper.cos(player.rotationYaw * 0.017453292F) * reduce;
   }
   @Override
   public void addRecipe() {
