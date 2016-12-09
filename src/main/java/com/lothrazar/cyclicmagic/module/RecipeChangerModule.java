@@ -104,7 +104,7 @@ public class RecipeChangerModule extends BaseModule implements IHasConfig {
   }
   private void netherwartBlockReverse() {
     GameRegistry.addShapelessRecipe(new ItemStack(Items.NETHER_WART, 9),
-        new ItemStack(Blocks.field_189878_dg)); // nether_wart_block
+        new ItemStack(Blocks.NETHER_WART_BLOCK)); // nether_wart_block
   }
   private void glowstoneBlockToDust() {
     GameRegistry.addShapelessRecipe(new ItemStack(Items.GLOWSTONE_DUST, 4),

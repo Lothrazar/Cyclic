@@ -58,7 +58,7 @@ public class GuiEnderBook extends GuiScreen {
     txtNew = new GuiTextField(buttonID++, this.fontRendererObj, buttonNew.xPosition + buttonNew.width + 20, buttonNew.yPosition, w, h);
     txtNew.setMaxStringLength(maxNameLen);
     // default to the current biome
-    txtNew.setText(entityPlayer.getEntityWorld().getBiomeGenForCoords(entityPlayer.getPosition()).getBiomeName());
+    txtNew.setText(entityPlayer.getEntityWorld().getBiome(entityPlayer.getPosition()).getBiomeName());
     txtNew.setFocused(true);
     ButtonWaypointTeleport btn;
     GuiButton del;

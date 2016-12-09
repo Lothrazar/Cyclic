@@ -43,7 +43,7 @@ public class BlockUser extends BlockBaseFacingInventory implements IHasRecipe {
         'o', Blocks.OBSIDIAN,
         's', Blocks.DISPENSER,
         'r', Items.GOLD_INGOT,
-        'b', Blocks.field_189877_df);// MAGMA BLOCK is field_189877_df in 1.10.2 apparently
+        'b', Blocks.MAGMA);// MAGMA BLOCK is field_189877_df in 1.10.2 apparently
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {

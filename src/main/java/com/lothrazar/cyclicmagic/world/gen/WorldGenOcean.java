@@ -57,7 +57,7 @@ public class WorldGenOcean implements IWorldGenerator {
       int y = minHeight + rand.nextInt(heightDiff);
       int z = chunk_Z + rand.nextInt(Const.CHUNK_SIZE);
       pos = new BlockPos(x, y, z);
-      biome = world.getBiomeGenForCoords(pos);
+      biome = world.getBiome(pos);
       if (biome == Biomes.OCEAN || biome == Biomes.DEEP_OCEAN || biome == Biomes.FROZEN_OCEAN) {
         generator.generate(world, rand, pos);
       }
