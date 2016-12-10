@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.spell;
+import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
 import com.lothrazar.cyclicmagic.item.tool.ItemCyclicWand;
@@ -11,6 +12,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -31,8 +33,9 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
       // only client side can call this method. mouseover does not exist on server
       BlockPos mouseover = ModCyclic.proxy.getBlockMouseoverExact(maxRange);
       BlockPos offset = ModCyclic.proxy.getBlockMouseoverOffset(maxRange);
+      EnumFacing sideMouseover = ModCyclic.proxy.getSideMouseover(maxRange);
       if (mouseover != null && offset != null) {
-        ModCyclic.network.sendToServer(new PacketSpellFromServer(mouseover, offset, this.getID()));
+        ModCyclic.network.sendToServer(new PacketSpellFromServer(mouseover, offset, sideMouseover, this.getID()));
       }
       ItemStack heldWand = UtilSpellCaster.getPlayerWandIfHeld(p);
       if (heldWand != null) {
@@ -45,7 +48,7 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
     }
     return true;
   }
-  public void castFromServer(BlockPos posMouseover, BlockPos posOffset, EntityPlayer p) {
+  public void castFromServer(BlockPos posMouseover, BlockPos posOffset, @Nullable EnumFacing sideMouseover, EntityPlayer p) {
     World world = p.getEntityWorld();
     ItemStack heldWand = UtilSpellCaster.getPlayerWandIfHeld(p);
     if (heldWand == null) { return; }
@@ -135,7 +138,12 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
         }
       }
     }
-    if (UtilPlaceBlocks.placeStateSafe(world, p, posToPlaceAt, state)) {
+    //    if (UtilPlaceBlocks.placeStateSafe(world, p, posToPlaceAt, state)) {
+    ItemStack cur = InventoryWand.getFromSlot(heldWand, itemSlot);
+    if (sideMouseover == null) {
+      sideMouseover = p.getHorizontalFacing();
+    }
+    if (posToPlaceAt != null && cur.onItemUse(p, world, posToPlaceAt, p.getActiveHand(), sideMouseover, 0.5F, 0.5F, 0.5F) == EnumActionResult.SUCCESS) {
       if (p.capabilities.isCreativeMode == false) {
         InventoryWand.decrementSlot(heldWand, itemSlot);
       }
