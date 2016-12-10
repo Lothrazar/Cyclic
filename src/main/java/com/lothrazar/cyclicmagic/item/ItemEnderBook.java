@@ -171,6 +171,9 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
     }
   }
   public static int getExpCostPerTeleport(EntityPlayer player, ItemStack book, int slot) {
+    if(expDistRatio <= 0){
+      return 0;
+    }
     BlockPos toPos = getLocationPos(book, slot);
     int distance = (int) UtilWorld.distanceBetweenHorizontal(toPos, player.getPosition());
     return (int) Math.round(distance / expDistRatio);
@@ -181,6 +184,6 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
         16, 1, 64, "Maximum number of saved waypoints in the ender book.  It still uses " + BTNS_PER_COLUMN +
             " per column, and putting too many may send it offscreen");
     expDistRatio = config.getInt("EnderBookExpCostRatio", Const.ConfigCategory.modpackMisc,
-        10, 1, 100, "The exp cost of teleporting is [the horizontal distance] divided by [this number] rounded to the nearest integer.  For example, if this number is 10, then teleporting 20 blocks costs 2 exp");
+        10, 0, 100, "The exp cost of teleporting is [the horizontal distance] divided by [this number] rounded to the nearest integer.  For example, if this number is 10, then teleporting 20 blocks costs 2 exp");
   }
 }
