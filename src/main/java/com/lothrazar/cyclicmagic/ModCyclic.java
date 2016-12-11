@@ -88,9 +88,8 @@ public class ModCyclic {
     }
   }
   /*
-   * 
-   * MISSING CONFIG: shears block, water tool, icemaker, CHECK all modules
-   * 
+   * multi use bucket: like a lava jug. fill it from a fluid in world or a tank, but it has multiple bucket-units of liquid
+   * using it multiple times places multiple liquid source blocks.
    * 
    * FAN: works like a magnet but full block, pushes or pull sall entities
    * horizontal (including player, items, anything)
@@ -104,7 +103,7 @@ public class ModCyclic {
    * (vanilla only if we have to) and whenver its on it spawns particles above
    * or wherever
    * 
-   * MAYBE sound maker oto?
+   * MAYBE sound maker too?
    * 
    * obsidian maker : takes liquid and outputs blocks
    * 
@@ -123,15 +122,11 @@ public class ModCyclic {
    * 
    * item for my todo list command: simple notepad
    * 
-   * Water Spreader: Turns flowing water into source water
-   * 
    * item for my /ping command: gps item, shows coords on item. toggle on/off
    * showing on screen can send to chat. maybe control over more f3 stuff like
    * biome/datetime
    * 
    * LADDER CLIMB: remove the && player.moveForward == 0 restriction?
-   * 
-   * Structure builder: add preview (ghost blocks or sparkls)
    * 
    * project table (invo plus 3x3)
    * 
@@ -142,8 +137,6 @@ public class ModCyclic {
    * directional magnet
    * 
    * tesr: animate machines when active
-   * 
-   * machine to spam bonemeal, with input slot
    * 
    * DISABLE the forward vector component of launch enchat, if we are standing
    * still (if no current horiz)
