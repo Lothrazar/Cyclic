@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.block;
+import java.util.List;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -99,5 +100,9 @@ public class BlockFishing extends Block implements IHasRecipe {
   @SideOnly(Side.CLIENT)
   public BlockRenderLayer getBlockLayer() {
     return BlockRenderLayer.TRANSLUCENT;
+  }
+  @SideOnly(Side.CLIENT)
+  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+    tooltip.add(UtilChat.lang("tile.block_fishing.tooltip"));
   }
 }
