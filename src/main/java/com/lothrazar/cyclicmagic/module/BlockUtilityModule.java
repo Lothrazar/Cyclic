@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.block.BlockBucketStorage;
+import com.lothrazar.cyclicmagic.block.BlockFan;
 import com.lothrazar.cyclicmagic.block.BlockShears;
 import com.lothrazar.cyclicmagic.block.BlockFishing;
 import com.lothrazar.cyclicmagic.block.BlockScaffolding;
@@ -10,8 +11,6 @@ import com.lothrazar.cyclicmagic.item.itemblock.ItemBlockBucket;
 import com.lothrazar.cyclicmagic.item.itemblock.ItemBlockScaffolding;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.init.Items;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
@@ -23,8 +22,7 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   private boolean enableBucketBlocks;
   private boolean enableShearingBlock;
   public void onInit() {
-    Block fan = new Block(Material.PISTON);
-  
+    BlockFan fan = new BlockFan();
     BlockRegistry.registerBlock(fan, "fan");
     
     if (enableShearingBlock) {
