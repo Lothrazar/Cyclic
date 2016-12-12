@@ -143,6 +143,11 @@ public class UtilEntity {
       entity.addVelocity(velX, velY, velZ);
     }
   }
+  public static AxisAlignedBB makeBoundingBoxLine(BlockPos start,BlockPos end) {
+    return new AxisAlignedBB(
+        start.getX(), start.getY(),start.getZ(),
+        end.getX(), end.getY(),end.getZ());
+  }
   public static AxisAlignedBB makeBoundingBox(BlockPos center, int ITEM_HRADIUS, int ITEM_VRADIUS) {
     double x = center.getX();
     double y = center.getY();
@@ -161,13 +166,21 @@ public class UtilEntity {
   }
   public static int moveEntityItemsInRegion(World world, double x, double y, double z, int ITEM_HRADIUS, int ITEM_VRADIUS, boolean towardsPos) {
     AxisAlignedBB range = makeBoundingBox(x, y, z, ITEM_HRADIUS, ITEM_VRADIUS);
+    List<Entity> all = getItemExp(world, range);
+    return pullEntityList(x, y, z, towardsPos, all);
+  }
+  public static List<Entity> getItemExp(World world, AxisAlignedBB range) {
     List<Entity> all = new ArrayList<Entity>();
     all.addAll(world.getEntitiesWithinAABB(EntityItem.class, range));
     all.addAll(world.getEntitiesWithinAABB(EntityXPOrb.class, range));
-    return pullEntityList(x, y, z, towardsPos, all);
+    return all;
   }
   public static int moveEntityLivingNonplayers(World world, double x, double y, double z, int ITEM_HRADIUS, int ITEM_VRADIUS, boolean towardsPos) {
     AxisAlignedBB range = UtilEntity.makeBoundingBox(x, y, z, ITEM_HRADIUS, ITEM_VRADIUS);
+    List<EntityLivingBase> nonPlayer = getLivingHostile(world, range);
+    return pullEntityList(x, y, z, towardsPos, nonPlayer);
+  }
+  public static List<EntityLivingBase> getLivingHostile(World world, AxisAlignedBB range) {
     List<EntityLivingBase> all = world.getEntitiesWithinAABB(EntityLivingBase.class, range);
     List<EntityLivingBase> nonPlayer = new ArrayList<EntityLivingBase>();
     for (EntityLivingBase ent : all) {
@@ -175,9 +188,9 @@ public class UtilEntity {
         nonPlayer.add(ent);
       }
     }
-    return pullEntityList(x, y, z, towardsPos, nonPlayer);
+    return nonPlayer;
   }
-  private static int pullEntityList(double x, double y, double z, boolean towardsPos, List<? extends Entity> all) {
+  public static int pullEntityList(double x, double y, double z, boolean towardsPos, List<? extends Entity> all) {
     int moved = 0;
     double hdist, xDist, zDist;
     float speed;
