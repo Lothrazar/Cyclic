@@ -1,9 +1,11 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.List;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
-import net.minecraft.entity.EntityLivingBase;
+import com.lothrazar.cyclicmagic.util.UtilParticle;
+import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -23,18 +25,18 @@ public class TileEntityFan extends TileEntityBaseMachine implements ITickable {
       if (this.timer == 0) {
         this.timer = TIMER_FULL;
        //rm this its ugly, keep in case i add a custom particle
-//          doParticles(rangeFixed);
+        doParticles(rangeFixed);
       }
       else {
         this.timer--;
       }
-      pushEntities(facing, rangeFixed);
+      pushEntities(facing, rangeFixed);//int pushed = 
     }
     else {
       this.timer = 0;
     }
   }
-  private void pushEntities(EnumFacing facing, int rangeFixed) {
+  private int pushEntities(EnumFacing facing, int rangeFixed) {
     BlockPos start = this.getPos();
     BlockPos end = this.getCurrentFacingPos().offset(facing, rangeFixed).up();//.up()
     //without this hotfix, fan works only on the flatedge of the band, not the 1x1 area
@@ -51,19 +53,20 @@ public class TileEntityFan extends TileEntityBaseMachine implements ITickable {
       break;
     }
     AxisAlignedBB region = new AxisAlignedBB(start, end);
-    List<EntityLivingBase> nonPlayer = this.getWorld().getEntitiesWithinAABB(EntityLivingBase.class, region);//UtilEntity.getLivingHostile(, region);
+    List<Entity> nonPlayer = this.getWorld().getEntitiesWithinAABB(Entity.class, region);//UtilEntity.getLivingHostile(, region);
     // center of the block
     double x = this.getPos().getX() + 0.5;
     double y = this.getPos().getY() + 0.7;
     double z = this.getPos().getZ() + 0.5;
     UtilEntity.pullEntityList(x, y, z, false, nonPlayer, SPEED, SPEED);
+    return nonPlayer.size();
   }
-//  private void doParticles(int rangeFixed) {
-//    EnumFacing facing = getCurrentFacing();
-//    for (int i = 1; i <= rangeFixed; i++) {
-//      UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CLOUD, this.getPos().offset(facing, i), 1);
-//    }
-//  }
+  private void doParticles(int rangeFixed) {
+    EnumFacing facing = getCurrentFacing();
+    for (int i = 1; i <= rangeFixed; i++) {
+      UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CLOUD, this.getPos().offset(facing, i), 1);
+    }
+  }
   private int getCurrentRange() {
     EnumFacing facing = getCurrentFacing();
     BlockPos tester;
