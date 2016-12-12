@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "normal": { "model": "cyclicmagic:fan" },
+        "powered=true":  { "model": "cyclicmagic:fan" },
+        "powered=false": { "model": "cyclicmagic:fan" }
+    }
+}
