@@ -143,11 +143,6 @@ public class UtilEntity {
       entity.addVelocity(velX, velY, velZ);
     }
   }
-  public static AxisAlignedBB makeBoundingBoxLine(BlockPos start,BlockPos end) {
-    return new AxisAlignedBB(
-        start.getX(), start.getY(),start.getZ(),
-        end.getX(), end.getY(),end.getZ());
-  }
   public static AxisAlignedBB makeBoundingBox(BlockPos center, int ITEM_HRADIUS, int ITEM_VRADIUS) {
     double x = center.getX();
     double y = center.getY();
@@ -191,6 +186,9 @@ public class UtilEntity {
     return nonPlayer;
   }
   public static int pullEntityList(double x, double y, double z, boolean towardsPos, List<? extends Entity> all) {
+    return pullEntityList(x,y,z,towardsPos,all,ITEMSPEEDCLOSE,ITEMSPEEDFAR);
+  }
+  public static int pullEntityList(double x, double y, double z, boolean towardsPos, List<? extends Entity> all,float speedClose, float speedFar) {
     int moved = 0;
     double hdist, xDist, zDist;
     float speed;
@@ -205,7 +203,7 @@ public class UtilEntity {
       zDist = Math.abs(z - entity.getPosition().getZ());
       hdist = Math.sqrt(xDist * xDist + zDist * zDist);
       if (hdist > ENTITY_PULL_DIST) {
-        speed = (hdist > ENTITY_PULL_SPEED_CUTOFF) ? ITEMSPEEDFAR : ITEMSPEEDCLOSE;
+        speed = (hdist > ENTITY_PULL_SPEED_CUTOFF) ? speedFar : speedClose;
         Vector3.setEntityMotionFromVector(entity, x, y, z, direction * speed);
         moved++;
       } //else its basically on it, no point
