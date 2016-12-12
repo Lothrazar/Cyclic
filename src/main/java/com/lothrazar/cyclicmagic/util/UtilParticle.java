@@ -33,6 +33,9 @@ public class UtilParticle {
     }
     spawnParticle(world, sparkle, pos.getX(), pos.getY(), pos.getZ());
   }
+  public static void spawnParticle(World world, EnumParticleTypes sparkle, BlockPos pos, int c) {
+    spawnParticle(world, sparkle, pos.getX(), pos.getY(), pos.getZ(), c);
+  }
   public static void spawnParticleBeam(World world, EnumParticleTypes sparkle, BlockPos start, BlockPos end, int count) {
     // thanks to http://www.minecraftforge.net/forum/index.php?topic=30567.0
     // and http://mathforum.org/library/drmath/view/65721.html

@@ -1,10 +1,12 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.block.BlockBucketStorage;
+import com.lothrazar.cyclicmagic.block.BlockFan;
 import com.lothrazar.cyclicmagic.block.BlockShears;
 import com.lothrazar.cyclicmagic.block.BlockFishing;
 import com.lothrazar.cyclicmagic.block.BlockScaffolding;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBucketStorage;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFan;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFishing;
 import com.lothrazar.cyclicmagic.item.itemblock.ItemBlockBucket;
 import com.lothrazar.cyclicmagic.item.itemblock.ItemBlockScaffolding;
@@ -20,7 +22,13 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   private boolean fishingBlock;
   private boolean enableBucketBlocks;
   private boolean enableShearingBlock;
+  private boolean enableFan;
   public void onInit() {
+    if (enableFan) {
+      BlockFan fan = new BlockFan();
+      BlockRegistry.registerBlock(fan, "fan");
+      GameRegistry.registerTileEntity(TileEntityFan.class, Const.MODID + "fan_te");
+    }
     if (enableShearingBlock) {
       BlockShears block_shears = new BlockShears();
       BlockRegistry.registerBlock(block_shears, "block_shears");
@@ -50,7 +58,9 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   }
   @Override
   public void syncConfig(Configuration config) {
-    enableShearingBlock = config.getBoolean("ShearingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    String category = Const.ConfigCategory.content;
+    enableFan = config.getBoolean("Fan", category, true, Const.ConfigCategory.contentDefaultText);
+    enableShearingBlock = config.getBoolean("ShearingBlock", category, true, Const.ConfigCategory.contentDefaultText);
     enableBucketBlocks = config.getBoolean("BucketBlocks", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     fragileEnabled = config.getBoolean("ScaffoldingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     fishingBlock = config.getBoolean("FishingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
