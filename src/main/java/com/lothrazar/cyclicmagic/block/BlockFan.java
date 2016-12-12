@@ -1,11 +1,17 @@
 package com.lothrazar.cyclicmagic.block;
-
+import java.util.List;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFan;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -38,5 +44,13 @@ public class BlockFan extends BlockBaseFacing {
   @Override
   public boolean hasTileEntity(IBlockState state) {
     return hasTileEntity();
+  }
+  @SideOnly(Side.CLIENT)
+  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+    tooltip.add(UtilChat.lang("tile.fan.tooltip"));
+  }
+  @Override
+  public boolean isSideSolid(IBlockState base_state, IBlockAccess world, BlockPos pos, EnumFacing side) {
+    return side == EnumFacing.DOWN;
   }
 }

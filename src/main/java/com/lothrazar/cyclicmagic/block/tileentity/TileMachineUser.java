@@ -150,7 +150,7 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
       }
     }
   }
-  //  private static final String NBTTARGET = "target";
+  
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
     tagCompound.setInteger(NBT_TIMER, timer);
