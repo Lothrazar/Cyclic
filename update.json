@@ -83,6 +83,6 @@
 	,"1.8.15":"Automatic Fishing Net: fixed a bug where it wasn't dropping contents when you break it.  Automatic Fishing Net now uses wood break/place sounds instead of stone.  "
   	,"1.9.0":"Updated to forge 12.18.3.2185.  Speed charm no longer gives the speed potion effect, it directly increases your speed without effects (so no particles, and it can stack with potions).  Implement PermissionAPI for compatibility with FTBUtilities.  Emerald gear is now on par with diamond instead of being weaker (still has enchantability of gold).   Nether Lapis spawn rate reduced by 1/3rd.  End and Nether ores can spawn veins as big as 8.  Nether Diamond and Emerald spawn rates reduced by 50%.  Slightly reduced spawn rate of End coal and End redstone ore.  Fix Button/text overlap in Automated User.  Removed several test messages that were spamming logs.  "
   	,"1.9.1":"Fix a crash that can happen when unbinding keys.  Ender Book experience cost config now allows value zero.  Cyclic Building Scepter is now compatible with blocks from Chisel and Bits blocks.  "
-  	,"1.9.2":"New block: Fan.  "
+  	,"1.9.2":"New block: Fan.  Auto Fisher: Fixed not outputting items to things like hoppers.  Added a tooltip for Autofisher.  Fix tooltip on exchange scepter.  "
   }
 }
