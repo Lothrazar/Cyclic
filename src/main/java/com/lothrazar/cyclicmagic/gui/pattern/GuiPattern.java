@@ -12,17 +12,46 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiPattern extends GuiBaseContainer {
   public static final ResourceLocation SLOTFISH = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_fish.png");
   private TileEntityPatternBuilder tile;
+  private int xSizeTextbox;
+  private int ySizeTxtbox;
+  private int yOffset = 10 + Const.padding;
   public GuiPattern(InventoryPlayer inventoryPlayer, TileEntityPatternBuilder tileEntity) {
     super(new ContainerPattern(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
   }
   public String getTitle() {
-    return "tile.block_fishing.name";
+    return "tile..name";
+  }
+  @Override
+  public void initGui() {
+
+    super.initGui();
+    xSizeTextbox = 176 - 122;
+    ySizeTxtbox = 16;
   }
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+    
+
+    String display = "" + this.tile.getField(TileEntityPatternBuilder.Fields.OFFX.ordinal());
+    //move it over if more than 1 digit
+    int x = (display.length() > 1) ? xSizeTextbox - 3 : xSizeTextbox;
+    int y = ySizeTxtbox + yOffset - 4;
+    this.fontRendererObj.drawString(display, x, y, 4210752);
+    
+    display = "" + this.tile.getField(TileEntityPatternBuilder.Fields.OFFY.ordinal());
+    //move it over if more than 1 digit
+    x = (display.length() > 1) ? xSizeTextbox - 3 : xSizeTextbox;
+    y+=8;
+    this.fontRendererObj.drawString(display, x, y, 4210752);
+    
+    display = "" + this.tile.getField(TileEntityPatternBuilder.Fields.OFFZ.ordinal());
+    //move it over if more than 1 digit
+    x = (display.length() > 1) ? xSizeTextbox - 3 : xSizeTextbox;
+    y+=8;
+    this.fontRendererObj.drawString(display, x, y, 4210752);
 //    if (tile.isEquipmentValid() && tile.isValidPosition() == false) {
 //      String s = UtilChat.lang("tile.block_fishing.invalidpos.gui1");
 //      int x = 12 + this.xSize / 3 - this.fontRendererObj.getStringWidth(s);

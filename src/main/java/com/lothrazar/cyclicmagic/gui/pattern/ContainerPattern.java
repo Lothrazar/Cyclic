@@ -1,14 +1,14 @@
 package com.lothrazar.cyclicmagic.gui.pattern;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPatternBuilder;
 import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
-import com.lothrazar.cyclicmagic.gui.SlotItemRestricted;
-import com.lothrazar.cyclicmagic.gui.SlotOutputOnly;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.init.Items;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerPattern extends ContainerBaseMachine {
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
@@ -17,10 +17,13 @@ public class ContainerPattern extends ContainerBaseMachine {
   public static final int SLOTX_FISH = 80;
   public static final int SLOTY_FISH = 20;
   protected TileEntityPatternBuilder tileEntity;
+  private int tileOX;
+  private int tileOY;
+  private int tileOZ;
+  private int tileSIZER;
   public ContainerPattern(InventoryPlayer inventoryPlayer, TileEntityPatternBuilder te) {
     tileEntity = te;
-    
-    int s =0;
+    int s = 0;
     int row = 0, col = 0;
     for (int i = 0; i < tileEntity.getSizeInventory(); i++) { //so going from 0-9
       row = i / 3;// /3 will go 000, 111, 222
@@ -56,5 +59,42 @@ public class ContainerPattern extends ContainerBaseMachine {
       slotObject.onPickupFromSlot(player, stackInSlot);
     }
     return stack;
+  }
+  @Override
+  public void detectAndSendChanges() {
+    super.detectAndSendChanges();
+    for (int i = 0; i < this.listeners.size(); ++i) {
+      IContainerListener icontainerlistener = (IContainerListener) this.listeners.get(i);
+      int idx = TileEntityPatternBuilder.Fields.OFFX.ordinal();
+      if (this.tileOX != this.tileEntity.getField(idx)) {
+        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
+      }
+      idx = TileEntityPatternBuilder.Fields.OFFY.ordinal();
+      if (this.tileOY != this.tileEntity.getField(idx)) {
+        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
+      }
+      idx = TileEntityPatternBuilder.Fields.OFFZ.ordinal();
+      if (this.tileOZ != this.tileEntity.getField(idx)) {
+        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
+      }
+      idx = TileEntityPatternBuilder.Fields.SIZER.ordinal();
+      if (this.tileSIZER != this.tileEntity.getField(idx)) {
+        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
+      }
+    }
+    this.tileOX = this.tileEntity.getField(TileEntityPatternBuilder.Fields.OFFX.ordinal());
+    this.tileOY = this.tileEntity.getField(TileEntityPatternBuilder.Fields.OFFY.ordinal());
+    this.tileOZ = this.tileEntity.getField(TileEntityPatternBuilder.Fields.OFFZ.ordinal());
+    this.tileSIZER = this.tileEntity.getField(TileEntityPatternBuilder.Fields.SIZER.ordinal());
+  }
+  @Override
+  @SideOnly(Side.CLIENT)
+  public void updateProgressBar(int id, int data) {
+    this.tileEntity.setField(id, data);
+  }
+  @Override
+  public void addListener(IContainerListener listener) {
+    super.addListener(listener);
+    listener.sendAllWindowProperties(this, this.tileEntity);
   }
 }
