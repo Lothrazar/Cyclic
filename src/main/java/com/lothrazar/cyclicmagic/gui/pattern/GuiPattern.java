@@ -52,6 +52,11 @@ public class GuiPattern extends GuiBaseContainer {
     x = (display.length() > 1) ? xSizeTextbox - 3 : xSizeTextbox;
     y+=8;
     this.fontRendererObj.drawString(display, x, y, 4210752);
+    display = "" + this.tile.getField(TileEntityPatternBuilder.Fields.SIZER.ordinal());
+    //move it over if more than 1 digit
+    x = (display.length() > 1) ? xSizeTextbox - 3 : xSizeTextbox;
+    y+=12;
+    this.fontRendererObj.drawString(display, x, y, 4210752);
 //    if (tile.isEquipmentValid() && tile.isValidPosition() == false) {
 //      String s = UtilChat.lang("tile.block_fishing.invalidpos.gui1");
 //      int x = 12 + this.xSize / 3 - this.fontRendererObj.getStringWidth(s);

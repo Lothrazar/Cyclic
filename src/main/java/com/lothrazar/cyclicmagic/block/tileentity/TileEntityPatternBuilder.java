@@ -1,26 +1,15 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
-import java.util.ArrayList;
-import java.util.Random;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMinerSmart.Fields;
-import com.lothrazar.cyclicmagic.util.Const;
-import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import java.util.List;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
-import net.minecraft.block.Block;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Enchantments;
+import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
-import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.LootTable;
-import net.minecraft.world.storage.loot.LootTableList;
-import net.minecraft.world.storage.loot.LootTableManager;
 
 public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implements ITickable {
   private static final String NBT_INV = "Inventory";
@@ -38,7 +27,13 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   }
   @Override
   public void update() {
-    World world = this.getWorld();
+    BlockPos center = this.getPos().add(offsetX, offsetY, offsetZ);
+    List<BlockPos> shape = UtilShape.cube(center, this.sizeRadius);
+    if (this.getWorld().rand.nextDouble() < 0.1) {
+      for (BlockPos p : shape) {
+        UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CLOUD, p);
+      }
+    }
   }
   @Override
   public int getSizeInventory() {

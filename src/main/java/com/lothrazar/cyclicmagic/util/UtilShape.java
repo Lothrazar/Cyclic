@@ -52,6 +52,48 @@ public class UtilShape {
     });
     return circleList;
   }
+  /**
+   * TODO: alter/make version that is cubic top/bottom faces but dyn height
+   * @param posCenter
+   * @param radius
+   * @return
+   */
+  public static List<BlockPos> cube(final BlockPos posCenter, int radius) {
+    BlockPos topCenter = posCenter.add(0, radius, 0);
+    BlockPos botCenter = posCenter.add(0, -1 * radius, 0);
+    List<BlockPos> cube = squareHorizontalHollow(topCenter, radius);
+    cube.addAll(squareHorizontalHollow(botCenter, radius));
+    //four walls
+    BlockPos b1 = botCenter.add(radius, 1, radius);
+    BlockPos b2 = botCenter.add(radius, 1, -1 * radius);
+    BlockPos b3 = botCenter.add(-1 * radius, 1, -1 * radius);
+    BlockPos b4 = botCenter.add(-1 * radius, 1, radius);
+    cube.addAll(line(b1, EnumFacing.UP, radius));
+    cube.addAll(line(b2, EnumFacing.UP, radius));
+    cube.addAll(line(b3, EnumFacing.UP, radius));
+    cube.addAll(line(b4, EnumFacing.UP, radius));
+    return cube;
+  }
+  public static List<BlockPos> squareVerticalHollow(final BlockPos pos, int radius) {
+    List<BlockPos> shape = new ArrayList<BlockPos>();
+    // search in a cube
+    int xMin = pos.getX() - radius;
+    int xMax = pos.getX() + radius;
+    int yMin = pos.getY() - radius;
+    int yMax = pos.getY() + radius;
+    int z = pos.getZ();
+    //first, leave x fixed and track along +/- y
+    for (int x = xMin; x <= xMax; x++) {
+      shape.add(new BlockPos(x, yMin, z));
+      shape.add(new BlockPos(x, yMax, z));
+    }
+    //corners are done so offset
+    for (int y = yMin + 1; y < yMax; y++) {
+      shape.add(new BlockPos(xMin, y, z));
+      shape.add(new BlockPos(xMax, y, z));
+    }
+    return shape;
+  }
   public static List<BlockPos> squareHorizontalHollow(final BlockPos pos, int radius) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
     // search in a cube
@@ -70,11 +112,6 @@ public class UtilShape {
       shape.add(new BlockPos(xMin, y, z));
       shape.add(new BlockPos(xMax, y, z));
     }
-    //    for (int x = xMin; x <= xMax; x++) {
-    //      for (int z = zMin; z <= zMax; z++) {
-    //        shape.add(new BlockPos(x, y, z));
-    //      }
-    //    } // end of the outer loop
     return shape;
   }
   public static List<BlockPos> stairway(BlockPos position, EnumFacing pfacing, int want, boolean isLookingUp) {
