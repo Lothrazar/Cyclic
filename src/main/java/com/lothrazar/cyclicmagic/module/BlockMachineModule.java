@@ -6,12 +6,14 @@ import com.lothrazar.cyclicmagic.block.BlockHarvester;
 import com.lothrazar.cyclicmagic.block.BlockMiner;
 import com.lothrazar.cyclicmagic.block.BlockMinerSmart;
 import com.lothrazar.cyclicmagic.block.BlockPassword;
+import com.lothrazar.cyclicmagic.block.BlockPatternBuilder;
 import com.lothrazar.cyclicmagic.block.BlockPlacer;
 import com.lothrazar.cyclicmagic.block.BlockUncrafting;
 import com.lothrazar.cyclicmagic.block.BlockUser;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineStructureBuilder;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineHarvester;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPatternBuilder;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineBlockMiner;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMinerSmart;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachinePlacer;
@@ -34,6 +36,9 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
   private boolean enableMinerSmart;
   private boolean enableUser;
   public void onInit() {
+    BlockPatternBuilder builder_pattern = new BlockPatternBuilder();
+    BlockRegistry.registerBlock(builder_pattern, "builder_pattern");
+    GameRegistry.registerTileEntity(TileEntityPatternBuilder.class, "builder_pattern_te");
     if (enableBuilderBlock) {
       BlockStructureBuilder builder_block = new BlockStructureBuilder();
       BlockRegistry.registerBlock(builder_block, "builder_block");

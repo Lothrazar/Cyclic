@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.gui;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFishing;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPatternBuilder;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineHarvester;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineBlockMiner;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMinerSmart;
@@ -18,6 +19,8 @@ import com.lothrazar.cyclicmagic.gui.miner.ContainerMinerSmart;
 import com.lothrazar.cyclicmagic.gui.miner.GuiMinerSmart;
 import com.lothrazar.cyclicmagic.gui.password.ContainerPassword;
 import com.lothrazar.cyclicmagic.gui.password.GuiPassword;
+import com.lothrazar.cyclicmagic.gui.pattern.ContainerPattern;
+import com.lothrazar.cyclicmagic.gui.pattern.GuiPattern;
 import com.lothrazar.cyclicmagic.gui.harvester.ContainerHarvester;
 import com.lothrazar.cyclicmagic.gui.harvester.GuiHarvester;
 import com.lothrazar.cyclicmagic.gui.placer.ContainerPlacer;
@@ -65,6 +68,7 @@ public class ModGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_USER = 11;
   public static final int GUI_INDEX_HARVESTER = 12;
   public static final int GUI_INDEX_BLOCKMINER = 13;
+  public static final int GUI_INDEX_PATTERN = 14;
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
     TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
@@ -122,6 +126,10 @@ public class ModGuiHandler implements IGuiHandler {
     case GUI_INDEX_USER:
       if (te != null && te instanceof TileMachineUser) { return new ContainerUser(player.inventory, (TileMachineUser) te); }
       break;
+    case GUI_INDEX_PATTERN:
+
+      if (te != null && te instanceof TileEntityPatternBuilder) { return new ContainerPattern(player.inventory, (TileEntityPatternBuilder) te); }
+      break;
     }
     return null;
   }
@@ -168,6 +176,11 @@ public class ModGuiHandler implements IGuiHandler {
         break;
       case GUI_INDEX_USER:
         if (te != null && te instanceof TileMachineUser) { return new GuiUser(player.inventory, (TileMachineUser) te); }
+        break;
+      case GUI_INDEX_PATTERN:
+
+        if (te != null && te instanceof TileEntityPatternBuilder) { return new GuiPattern(player.inventory, (TileEntityPatternBuilder) te); }
+       
         break;
       }
     }
