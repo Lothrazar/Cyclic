@@ -1,9 +1,7 @@
 package com.lothrazar.cyclicmagic.gui.pattern;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPatternBuilder;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.gui.miner.ButtonMinerHeight;
 import com.lothrazar.cyclicmagic.util.Const;
-import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -20,23 +18,23 @@ public class GuiPattern extends GuiBaseContainer {
     tile = tileEntity;
   }
   public String getTitle() {
-    return "tile..name";
+    return "tile.builder_pattern.name";
   }
   @Override
   public void initGui() {
     super.initGui();
-    xTextbox = 176 - 122;
+    xTextbox = 176 - 144;
     int id = 2;
     int xOffset = 18;
     int yOffset = 12;
     yRows[0] = 30;
     ButtonPattern btn = new ButtonPattern(tile.getPos(), id++,
         this.guiLeft + xTextbox + xOffset,
-        this.guiTop + yRows[0], false, TileEntityPatternBuilder.Fields.SIZER);
+        this.guiTop + yRows[0], true, TileEntityPatternBuilder.Fields.SIZER);
     this.buttonList.add(btn);
     btn = new ButtonPattern(tile.getPos(), id++,
-        this.guiLeft + xTextbox - xOffset,
-        this.guiTop + yRows[0], true, TileEntityPatternBuilder.Fields.SIZER);
+        this.guiLeft + xTextbox - xOffset-4,
+        this.guiTop + yRows[0], false, TileEntityPatternBuilder.Fields.SIZER);
     this.buttonList.add(btn);
     yRows[1] = yRows[0] + yOffset;
     btn = new ButtonPattern(tile.getPos(), id++,
@@ -44,7 +42,7 @@ public class GuiPattern extends GuiBaseContainer {
         this.guiTop + yRows[1], true, TileEntityPatternBuilder.Fields.OFFX);
     this.buttonList.add(btn);
     btn = new ButtonPattern(tile.getPos(), id++,
-        this.guiLeft + xTextbox - xOffset,
+        this.guiLeft + xTextbox - xOffset-4,
         this.guiTop + yRows[1], false, TileEntityPatternBuilder.Fields.OFFX);
     this.buttonList.add(btn);
     yRows[2] = yRows[1] + yOffset;
@@ -53,7 +51,7 @@ public class GuiPattern extends GuiBaseContainer {
         this.guiTop + yRows[2], true, TileEntityPatternBuilder.Fields.OFFY);
     this.buttonList.add(btn);
     btn = new ButtonPattern(tile.getPos(), id++,
-        this.guiLeft + xTextbox - xOffset,
+        this.guiLeft + xTextbox - xOffset-4,
         this.guiTop + yRows[2], false, TileEntityPatternBuilder.Fields.OFFY);
     this.buttonList.add(btn);
     yRows[3] = yRows[2] + yOffset;
@@ -62,7 +60,7 @@ public class GuiPattern extends GuiBaseContainer {
         this.guiTop + yRows[3], true, TileEntityPatternBuilder.Fields.OFFZ);
     this.buttonList.add(btn);
     btn = new ButtonPattern(tile.getPos(), id++,
-        this.guiLeft + xTextbox - xOffset,
+        this.guiLeft + xTextbox - xOffset-4,
         this.guiTop + yRows[3], false, TileEntityPatternBuilder.Fields.OFFZ);
     this.buttonList.add(btn);
   }
@@ -90,24 +88,7 @@ public class GuiPattern extends GuiBaseContainer {
     x = (display.length() > 1) ? xTextbox - 3 : xTextbox;
     y = yRows[3];
     this.fontRendererObj.drawString(display, x, y, 4210752);
-    //    if (tile.isEquipmentValid() && tile.isValidPosition() == false) {
-    //      String s = UtilChat.lang("tile.block_fishing.invalidpos.gui1");
-    //      int x = 12 + this.xSize / 3 - this.fontRendererObj.getStringWidth(s);
-    //      int y = 42;
-    //      this.fontRendererObj.drawString(s, x, y, 4210752);
-    //      y += 14;
-    //      s = UtilChat.lang("tile.block_fishing.invalidpos.gui2");
-    //      this.fontRendererObj.drawString(s, x, y, 4210752);
-    //      y += 14;
-    //      s = UtilChat.lang("tile.block_fishing.invalidpos.gui3");
-    //      this.fontRendererObj.drawString(s, x, y, 4210752);
-    //    }
-    //    if (tile.isEquipmentValid() && tile.isValidPosition()) {
-    //      String s = UtilChat.lang("tile.block_fishing.progress");
-    //      int x = 4 + this.xSize / 3 - this.fontRendererObj.getStringWidth(s);
-    //      int y = 50;
-    //      this.fontRendererObj.drawString(s, x, y, 4210752);
-    //    }
+ 
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {

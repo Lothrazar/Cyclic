@@ -45,17 +45,8 @@ public class PacketTilePatternBuilder implements IMessage, IMessageHandler<Packe
     EntityPlayerMP player = ctx.getServerHandler().playerEntity;
     TileEntityPatternBuilder tile = (TileEntityPatternBuilder) player.getEntityWorld().getTileEntity(message.pos);
     if (tile != null) {
-      System.out.println("TileEntityPatternBuilder packet"+message.type.ordinal()+"_"+message.direction);
       int field = message.type.ordinal();
       tile.setField(field, tile.getField(field) + message.direction);
-      //currently the ONLY type
-      //      if (message.type.equals("height"))
-      //        tile.setHeight(tile.getHeight() + message.value);
-      //      tile.markDirty();
-      //      if (player.openContainer != null) {
-      //        player.openContainer.detectAndSendChanges();
-      //        player.sendAllWindowProperties(player.openContainer, tile);
-      //      }
     }
     return null;
   }

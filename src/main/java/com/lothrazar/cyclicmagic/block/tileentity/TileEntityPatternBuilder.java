@@ -9,7 +9,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implements ITickable {
   private static final String NBT_INV = "Inventory";

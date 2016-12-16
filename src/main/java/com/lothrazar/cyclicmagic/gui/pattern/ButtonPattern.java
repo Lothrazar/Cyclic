@@ -5,11 +5,9 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPatternBuilder;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
 import com.lothrazar.cyclicmagic.net.PacketTilePatternBuilder;
-import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -23,7 +21,8 @@ public class ButtonPattern extends GuiButton implements ITooltipButton {
     tilePos = current;
     type = t;
     goUp = up;
-    tooltips.add("tile.patern."+t.name());
+    String ud = (up) ? "up" : "down";
+    tooltips.add("tile.patern." + t.name().toLowerCase() + ud);
   }
   @SideOnly(Side.CLIENT)
   @Override
