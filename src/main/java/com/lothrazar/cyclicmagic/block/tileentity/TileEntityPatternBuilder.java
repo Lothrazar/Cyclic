@@ -13,24 +13,36 @@ import net.minecraft.util.math.BlockPos;
 public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implements ITickable {
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
-  private int offsetX = 0;
-  private int offsetY = 0;
-  private int offsetZ = 1;
+  private int offsetTargetX = -4;
+  private int offsetTargetY = 0;
+  private int offsetTargetZ = 1;
+  private int offsetSourceX = 4;
+  private int offsetSourceY = 0;
+  private int offsetSourceZ = 1;
   private int sizeRadius = 3;
   private ItemStack[] inv;
   public static enum Fields {
-    OFFX, OFFY, OFFZ, SIZER
+    OFFTARGX, OFFTARGY, OFFTARGZ, SIZER, OFFSRCX, OFFSRCY, OFFSRCZ
   }
   public TileEntityPatternBuilder() {
     inv = new ItemStack[15];
   }
   @Override
   public void update() {
-    BlockPos center = this.getPos().add(offsetX, offsetY, offsetZ);
+    //targ
+    BlockPos center = this.getPos().add(offsetTargetX, offsetTargetY, offsetTargetZ);
     List<BlockPos> shape = UtilShape.cube(center, this.sizeRadius);
     if (this.getWorld().rand.nextDouble() < 0.1) {
       for (BlockPos p : shape) {
         UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CLOUD, p);
+      }
+    }
+    //src
+    BlockPos centerSrc = this.getPos().add(offsetSourceX, offsetSourceY, offsetSourceZ);
+    List<BlockPos> shapeSrc = UtilShape.cube(centerSrc, this.sizeRadius);
+    if (this.getWorld().rand.nextDouble() < 0.1) {
+      for (BlockPos p : shapeSrc) {
+        UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.DRAGON_BREATH, p);
       }
     }
   }
@@ -81,9 +93,9 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
-    this.offsetX = tagCompound.getInteger("ox");
-    this.offsetY = tagCompound.getInteger("oy");
-    this.offsetZ = tagCompound.getInteger("oz");
+    this.offsetTargetX = tagCompound.getInteger("ox");
+    this.offsetTargetY = tagCompound.getInteger("oy");
+    this.offsetTargetZ = tagCompound.getInteger("oz");
     this.sizeRadius = tagCompound.getInteger("r");
     NBTTagList tagList = tagCompound.getTagList(NBT_INV, 10);
     for (int i = 0; i < tagList.tagCount(); i++) {
@@ -96,9 +108,9 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
-    tagCompound.setInteger("ox", offsetX);
-    tagCompound.setInteger("oy", offsetY);
-    tagCompound.setInteger("oz", offsetZ);
+    tagCompound.setInteger("ox", offsetTargetX);
+    tagCompound.setInteger("oy", offsetTargetY);
+    tagCompound.setInteger("oz", offsetTargetZ);
     tagCompound.setInteger("r", sizeRadius);
     NBTTagList itemList = new NBTTagList();
     for (int i = 0; i < inv.length; i++) {
@@ -116,31 +128,48 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
-    case OFFX:
-      return this.offsetX;
-    case OFFY:
-      return this.offsetY;
-    case OFFZ:
-      return this.offsetZ;
+    case OFFTARGX:
+      return this.offsetTargetX;
+    case OFFTARGY:
+      return this.offsetTargetY;
+    case OFFTARGZ:
+      return this.offsetTargetZ;
     case SIZER:
       return this.sizeRadius;
+    case OFFSRCX:
+      return this.offsetSourceX;
+    case OFFSRCY:
+      return this.offsetSourceY;
+    case OFFSRCZ:
+      return this.offsetSourceZ;
+    default:
+      break;
     }
     return 0;
   }
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
-    case OFFX:
-      this.offsetX = value;
+    case OFFTARGX:
+      this.offsetTargetX = value;
       break;
-    case OFFY:
-      this.offsetY = value;
+    case OFFTARGY:
+      this.offsetTargetY = value;
       break;
-    case OFFZ:
-      this.offsetZ = value;
+    case OFFTARGZ:
+      this.offsetTargetZ = value;
       break;
     case SIZER:
       this.sizeRadius = value;
+      break;
+    case OFFSRCX:
+      this.offsetSourceX = value;
+      break;
+    case OFFSRCY:
+      this.offsetSourceY = value;
+      break;
+    case OFFSRCZ:
+      this.offsetSourceZ = value;
       break;
     default:
       break;

@@ -39,30 +39,31 @@ public class GuiPattern extends GuiBaseContainer {
     yRows[1] = yRows[0] + yOffset;
     btn = new ButtonPattern(tile.getPos(), id++,
         this.guiLeft + xTextbox + xOffset,
-        this.guiTop + yRows[1], true, TileEntityPatternBuilder.Fields.OFFX);
+        this.guiTop + yRows[1], true, TileEntityPatternBuilder.Fields.OFFTARGX);
     this.buttonList.add(btn);
     btn = new ButtonPattern(tile.getPos(), id++,
         this.guiLeft + xTextbox - xOffset-4,
-        this.guiTop + yRows[1], false, TileEntityPatternBuilder.Fields.OFFX);
+        this.guiTop + yRows[1], false, TileEntityPatternBuilder.Fields.OFFTARGX);
     this.buttonList.add(btn);
     yRows[2] = yRows[1] + yOffset;
     btn = new ButtonPattern(tile.getPos(), id++,
         this.guiLeft + xTextbox + xOffset,
-        this.guiTop + yRows[2], true, TileEntityPatternBuilder.Fields.OFFY);
+        this.guiTop + yRows[2], true, TileEntityPatternBuilder.Fields.OFFTARGY);
     this.buttonList.add(btn);
     btn = new ButtonPattern(tile.getPos(), id++,
         this.guiLeft + xTextbox - xOffset-4,
-        this.guiTop + yRows[2], false, TileEntityPatternBuilder.Fields.OFFY);
+        this.guiTop + yRows[2], false, TileEntityPatternBuilder.Fields.OFFTARGY);
     this.buttonList.add(btn);
     yRows[3] = yRows[2] + yOffset;
     btn = new ButtonPattern(tile.getPos(), id++,
         this.guiLeft + xTextbox + xOffset,
-        this.guiTop + yRows[3], true, TileEntityPatternBuilder.Fields.OFFZ);
+        this.guiTop + yRows[3], true, TileEntityPatternBuilder.Fields.OFFTARGZ);
     this.buttonList.add(btn);
     btn = new ButtonPattern(tile.getPos(), id++,
         this.guiLeft + xTextbox - xOffset-4,
-        this.guiTop + yRows[3], false, TileEntityPatternBuilder.Fields.OFFZ);
+        this.guiTop + yRows[3], false, TileEntityPatternBuilder.Fields.OFFTARGZ);
     this.buttonList.add(btn);
+    //TODO: buttons for SRC versions
   }
   @SideOnly(Side.CLIENT)
   @Override
@@ -73,22 +74,42 @@ public class GuiPattern extends GuiBaseContainer {
     int x = (display.length() > 1) ? xTextbox - 3 : xTextbox;
     int y = yRows[0];
     this.fontRendererObj.drawString(display, x, y, 4210752);
-    display = "" + this.tile.getField(TileEntityPatternBuilder.Fields.OFFX.ordinal());
+    display = "" + this.tile.getField(TileEntityPatternBuilder.Fields.OFFTARGX.ordinal());
     //move it over if more than 1 digit
     x = (display.length() > 1) ? xTextbox - 3 : xTextbox;
     y = yRows[1];
     this.fontRendererObj.drawString(display, x, y, 4210752);
-    display = "" + this.tile.getField(TileEntityPatternBuilder.Fields.OFFY.ordinal());
+    display = "" + this.tile.getField(TileEntityPatternBuilder.Fields.OFFTARGY.ordinal());
     //move it over if more than 1 digit
     x = (display.length() > 1) ? xTextbox - 3 : xTextbox;
     y = yRows[2];
     this.fontRendererObj.drawString(display, x, y, 4210752);
-    display = "" + this.tile.getField(TileEntityPatternBuilder.Fields.OFFZ.ordinal());
+    display = "" + this.tile.getField(TileEntityPatternBuilder.Fields.OFFTARGZ.ordinal());
     //move it over if more than 1 digit
     x = (display.length() > 1) ? xTextbox - 3 : xTextbox;
     y = yRows[3];
     this.fontRendererObj.drawString(display, x, y, 4210752);
- 
+    
+    int xOtherbox = xTextbox + 36;
+    
+     x = (display.length() > 1) ? xOtherbox - 3 : xOtherbox;
+     y = yRows[0];
+    display = "" + this.tile.getField(TileEntityPatternBuilder.Fields.OFFSRCX.ordinal());
+    //move it over if more than 1 digit
+    x = (display.length() > 1) ? xOtherbox - 3 : xOtherbox;
+    y = yRows[1];
+    this.fontRendererObj.drawString(display, x, y, 4210752);
+    display = "" + this.tile.getField(TileEntityPatternBuilder.Fields.OFFSRCY.ordinal());
+    //move it over if more than 1 digit
+    x = (display.length() > 1) ? xOtherbox - 3 : xOtherbox;
+    y = yRows[2];
+    this.fontRendererObj.drawString(display, x, y, 4210752);
+    display = "" + this.tile.getField(TileEntityPatternBuilder.Fields.OFFSRCZ.ordinal());
+    //move it over if more than 1 digit
+    x = (display.length() > 1) ? xOtherbox - 3 : xOtherbox;
+    y = yRows[3];
+    this.fontRendererObj.drawString(display, x, y, 4210752);
+
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {

@@ -20,6 +20,9 @@ public class ContainerPattern extends ContainerBaseMachine {
   private int tileOX;
   private int tileOY;
   private int tileOZ;
+  private int tileSOX;
+  private int tileSOY;
+  private int tileSOZ;
   private int tileSIZER;
   public ContainerPattern(InventoryPlayer inventoryPlayer, TileEntityPatternBuilder te) {
     tileEntity = te;
@@ -65,16 +68,28 @@ public class ContainerPattern extends ContainerBaseMachine {
     super.detectAndSendChanges();
     for (int i = 0; i < this.listeners.size(); ++i) {
       IContainerListener icontainerlistener = (IContainerListener) this.listeners.get(i);
-      int idx = TileEntityPatternBuilder.Fields.OFFX.ordinal();
+      int idx = TileEntityPatternBuilder.Fields.OFFTARGX.ordinal();
       if (this.tileOX != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
-      idx = TileEntityPatternBuilder.Fields.OFFY.ordinal();
+      idx = TileEntityPatternBuilder.Fields.OFFTARGY.ordinal();
       if (this.tileOY != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
-      idx = TileEntityPatternBuilder.Fields.OFFZ.ordinal();
+      idx = TileEntityPatternBuilder.Fields.OFFTARGZ.ordinal();
       if (this.tileOZ != this.tileEntity.getField(idx)) {
+        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
+      }
+      idx = TileEntityPatternBuilder.Fields.OFFSRCZ.ordinal();
+      if (this.tileSOX != this.tileEntity.getField(idx)) {
+        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
+      }
+      idx = TileEntityPatternBuilder.Fields.OFFSRCZ.ordinal();
+      if (this.tileSOY != this.tileEntity.getField(idx)) {
+        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
+      }
+      idx = TileEntityPatternBuilder.Fields.OFFSRCZ.ordinal();
+      if (this.tileSOZ != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
       idx = TileEntityPatternBuilder.Fields.SIZER.ordinal();
@@ -82,9 +97,12 @@ public class ContainerPattern extends ContainerBaseMachine {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
     }
-    this.tileOX = this.tileEntity.getField(TileEntityPatternBuilder.Fields.OFFX.ordinal());
-    this.tileOY = this.tileEntity.getField(TileEntityPatternBuilder.Fields.OFFY.ordinal());
-    this.tileOZ = this.tileEntity.getField(TileEntityPatternBuilder.Fields.OFFZ.ordinal());
+    this.tileOX = this.tileEntity.getField(TileEntityPatternBuilder.Fields.OFFTARGX.ordinal());
+    this.tileOY = this.tileEntity.getField(TileEntityPatternBuilder.Fields.OFFTARGY.ordinal());
+    this.tileOZ = this.tileEntity.getField(TileEntityPatternBuilder.Fields.OFFTARGZ.ordinal());
+    this.tileSOX = this.tileEntity.getField(TileEntityPatternBuilder.Fields.OFFSRCX.ordinal());
+    this.tileSOY = this.tileEntity.getField(TileEntityPatternBuilder.Fields.OFFSRCY.ordinal());
+    this.tileSOZ = this.tileEntity.getField(TileEntityPatternBuilder.Fields.OFFSRCZ.ordinal());
     this.tileSIZER = this.tileEntity.getField(TileEntityPatternBuilder.Fields.SIZER.ordinal());
   }
   @Override
