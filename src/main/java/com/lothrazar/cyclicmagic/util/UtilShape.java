@@ -68,10 +68,11 @@ public class UtilShape {
     BlockPos b2 = botCenter.add(radius, 1, -1 * radius);
     BlockPos b3 = botCenter.add(-1 * radius, 1, -1 * radius);
     BlockPos b4 = botCenter.add(-1 * radius, 1, radius);
-    cube.addAll(line(b1, EnumFacing.UP, radius));
-    cube.addAll(line(b2, EnumFacing.UP, radius));
-    cube.addAll(line(b3, EnumFacing.UP, radius));
-    cube.addAll(line(b4, EnumFacing.UP, radius));
+    int sideLen = radius*2-1;
+    cube.addAll(line(b1, EnumFacing.UP, sideLen));
+    cube.addAll(line(b2, EnumFacing.UP, sideLen));
+    cube.addAll(line(b3, EnumFacing.UP, sideLen));
+    cube.addAll(line(b4, EnumFacing.UP, sideLen));
     return cube;
   }
   public static List<BlockPos> squareVerticalHollow(final BlockPos pos, int radius) {
