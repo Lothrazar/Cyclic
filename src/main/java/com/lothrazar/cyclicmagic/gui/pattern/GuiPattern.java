@@ -76,7 +76,25 @@ public class GuiPattern extends GuiBaseContainer {
         this.guiLeft + xTextbox - xOffset - 4,
         this.guiTop + yRows[3], false, TileEntityPatternBuilder.Fields.OFFTARGZ);
     this.buttonList.add(btn);
+    
+    
+    
+    
+    
+    
     int moreX = 69;
+    
+
+    yRows[0] = 30;
+     btn = new ButtonPattern(tile.getPos(), id++,
+        this.guiLeft + xTextbox + xOffset+ moreX,
+        this.guiTop + yRows[0], true, TileEntityPatternBuilder.Fields.HEIGHT);
+    this.buttonList.add(btn);
+    btn = new ButtonPattern(tile.getPos(), id++,
+        this.guiLeft + xTextbox - xOffset - 4+ moreX,
+        this.guiTop + yRows[0], false, TileEntityPatternBuilder.Fields.HEIGHT);
+    this.buttonList.add(btn);
+    
     //S x
     yRows[1] = yRows[0] + yOffset;
     btn = new ButtonPattern(tile.getPos(), id++,
@@ -134,8 +152,19 @@ public class GuiPattern extends GuiBaseContainer {
     this.fontRendererObj.drawString(display, x, y, 4210752);
     int moreX = 68;
     int xOtherbox = xTextbox + moreX;
+    
+    
+    
     //x = (display.length() > 1) ? xOtherbox - 3 : xOtherbox;
     //y = yRows[0];
+     display = "" + this.tile.getField(TileEntityPatternBuilder.Fields.HEIGHT.ordinal());
+     x = (display.length() > 1) ? xOtherbox - 3 : xOtherbox;
+    //move it over if more than 1 digit
+   y = yRows[0];
+    this.fontRendererObj.drawString(display, x, y, 4210752);
+    
+    
+    
     display = "" + this.tile.getField(TileEntityPatternBuilder.Fields.OFFSRCX.ordinal());
     //move it over if more than 1 digit
     x = (display.length() > 1) ? xOtherbox - 3 : xOtherbox;

@@ -13,6 +13,7 @@ import net.minecraft.util.math.BlockPos;
 public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implements ITickable {
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
+  private int height = 7;
   private int offsetTargetX = -4;
   private int offsetTargetY = 0;
   private int offsetTargetZ = 1;
@@ -22,7 +23,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   private int sizeRadius = 3;
   private ItemStack[] inv;
   public static enum Fields {
-    OFFTARGX, OFFTARGY, OFFTARGZ, SIZER, OFFSRCX, OFFSRCY, OFFSRCZ
+    OFFTARGX, OFFTARGY, OFFTARGZ, SIZER, OFFSRCX, OFFSRCY, OFFSRCZ, HEIGHT
   }
   public TileEntityPatternBuilder() {
     inv = new ItemStack[18];
@@ -33,9 +34,17 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   }
   @Override
   public void update() {
+    this.renderBoundingBoxes();
+    
+    if(this.isPowered()){
+      //try build one block
+      
+    }
+  }
+  private void renderBoundingBoxes() {
     //targ
     BlockPos center = this.getPos().add(offsetTargetX, offsetTargetY, offsetTargetZ);
-    List<BlockPos> shape = UtilShape.cube(center, this.sizeRadius);
+    List<BlockPos> shape = UtilShape.cube(center, this.sizeRadius, this.height);
     if (this.getWorld().rand.nextDouble() < 0.1) {
       for (BlockPos p : shape) {
         UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CLOUD, p);
@@ -43,7 +52,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     }
     //src
     BlockPos centerSrc = this.getPos().add(offsetSourceX, offsetSourceY, offsetSourceZ);
-    List<BlockPos> shapeSrc = UtilShape.cube(centerSrc, this.sizeRadius);
+    List<BlockPos> shapeSrc = UtilShape.cube(centerSrc, this.sizeRadius, this.height);
     if (this.getWorld().rand.nextDouble() < 0.1) {
       for (BlockPos p : shapeSrc) {
         UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.DRAGON_BREATH, p);
@@ -91,8 +100,8 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
-    if (side == EnumFacing.UP) { return new int[] { 0 }; }
-    return new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };//for outputting stuff
+//    if (side == EnumFacing.UP) { return new int[] { 0 }; }
+    return new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,15,16,17};
   }
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
@@ -104,6 +113,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     this.offsetSourceY = tagCompound.getInteger("sy");
     this.offsetSourceZ = tagCompound.getInteger("sz");
     this.sizeRadius = tagCompound.getInteger("r");
+    this.height = tagCompound.getInteger("height");
     NBTTagList tagList = tagCompound.getTagList(NBT_INV, 10);
     for (int i = 0; i < tagList.tagCount(); i++) {
       NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
@@ -122,6 +132,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     tagCompound.setInteger("sy", offsetSourceY);
     tagCompound.setInteger("sz", offsetSourceZ);
     tagCompound.setInteger("r", sizeRadius);
+    tagCompound.setInteger("height", height);
     NBTTagList itemList = new NBTTagList();
     for (int i = 0; i < inv.length; i++) {
       ItemStack stack = inv[i];
@@ -151,6 +162,8 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       return this.offsetSourceY;
     case OFFSRCZ:
       return this.offsetSourceZ;
+    case HEIGHT:
+      return this.height;
     default:
       break;
     }
@@ -178,6 +191,9 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       break;
     case OFFSRCZ:
       this.offsetSourceZ = value;
+      break;
+    case HEIGHT:
+      this.height = value;
       break;
     default:
       break;

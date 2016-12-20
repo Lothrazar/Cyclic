@@ -54,13 +54,14 @@ public class UtilShape {
   }
   /**
    * TODO: alter/make version that is cubic top/bottom faces but dyn height
+   * 
    * @param posCenter
    * @param radius
    * @return
    */
-  public static List<BlockPos> cube(final BlockPos posCenter, int radius) {
-    BlockPos topCenter = posCenter.add(0, radius, 0);
-    BlockPos botCenter = posCenter.add(0, -1 * radius, 0);
+  public static List<BlockPos> cube(final BlockPos posCenter, int radius, int height) {
+    BlockPos botCenter = posCenter;//.add(0, -1 * radius, 0);
+    BlockPos topCenter = posCenter.add(0, height, 0);
     List<BlockPos> cube = squareHorizontalHollow(topCenter, radius);
     cube.addAll(squareHorizontalHollow(botCenter, radius));
     //four walls
@@ -68,7 +69,7 @@ public class UtilShape {
     BlockPos b2 = botCenter.add(radius, 1, -1 * radius);
     BlockPos b3 = botCenter.add(-1 * radius, 1, -1 * radius);
     BlockPos b4 = botCenter.add(-1 * radius, 1, radius);
-    int sideLen = radius*2-1;
+    int sideLen = height-2;// * 2 - 1;
     cube.addAll(line(b1, EnumFacing.UP, sideLen));
     cube.addAll(line(b2, EnumFacing.UP, sideLen));
     cube.addAll(line(b3, EnumFacing.UP, sideLen));

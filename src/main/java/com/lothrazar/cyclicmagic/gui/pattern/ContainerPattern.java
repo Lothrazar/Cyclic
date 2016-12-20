@@ -23,6 +23,7 @@ public class ContainerPattern extends ContainerBaseMachine {
   private int tileSOY;
   private int tileSOZ;
   private int tileSIZER;
+  private int tileHEIGHT;
   public ContainerPattern(InventoryPlayer inventoryPlayer, TileEntityPatternBuilder te) {
     this.playerOffsetY = 130;
     tileEntity = te;
@@ -49,8 +50,7 @@ public class ContainerPattern extends ContainerBaseMachine {
       if (slot < tileEntity.getSizeInventory()) {
         if (!this.mergeItemStack(stackInSlot, tileEntity.getSizeInventory(), 36 + tileEntity.getSizeInventory(), true)) { return null; }
       }
-      // places it into the tileEntity is possible since its in the player
-      // inventory
+      // places it into the tileEntity is possible since its in the player inventory
       else if (!this.mergeItemStack(stackInSlot, 0, tileEntity.getSizeInventory(), false)) { return null; }
       if (stackInSlot.stackSize == 0) {
         slotObject.putStack(null);
@@ -96,6 +96,10 @@ public class ContainerPattern extends ContainerBaseMachine {
       if (this.tileSIZER != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
+      idx = TileEntityPatternBuilder.Fields.HEIGHT.ordinal();
+      if (this.tileHEIGHT != this.tileEntity.getField(idx)) {
+        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
+      }
     }
     this.tileOX = this.tileEntity.getField(TileEntityPatternBuilder.Fields.OFFTARGX);
     this.tileOY = this.tileEntity.getField(TileEntityPatternBuilder.Fields.OFFTARGY);
@@ -104,6 +108,7 @@ public class ContainerPattern extends ContainerBaseMachine {
     this.tileSOY = this.tileEntity.getField(TileEntityPatternBuilder.Fields.OFFSRCY);
     this.tileSOZ = this.tileEntity.getField(TileEntityPatternBuilder.Fields.OFFSRCZ);
     this.tileSIZER = this.tileEntity.getField(TileEntityPatternBuilder.Fields.SIZER);
+    this.tileHEIGHT = this.tileEntity.getField(TileEntityPatternBuilder.Fields.HEIGHT);
   }
   @Override
   @SideOnly(Side.CLIENT)
