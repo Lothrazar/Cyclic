@@ -1,7 +1,11 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.List;
+import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilShape;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -9,6 +13,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implements ITickable {
   private static final String NBT_INV = "Inventory";
@@ -35,22 +40,56 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   @Override
   public void update() {
     this.renderBoundingBoxes();
-    
-    if(this.isPowered()){
+    if (this.isPowered()) {
       //try build one block
-
       BlockPos centerTarget = this.getPos().add(offsetTargetX, offsetTargetY, offsetTargetZ);
-      List<BlockPos> shapeTarget = UtilShape.cubeFrame(centerTarget, this.sizeRadius, this.height);
+      //List<BlockPos> shapeTarget = UtilShape.cubeFrame(centerTarget, this.sizeRadius, this.height);
       BlockPos centerSrc = this.getPos().add(offsetSourceX, offsetSourceY, offsetSourceZ);
       List<BlockPos> shapeSrc = UtilShape.cubeFrame(centerSrc, this.sizeRadius, this.height);
+      World world = this.getWorld();
+      BlockPos posTarget;
+      int xOffset, yOffset, zOffset;
+      int slot = 0;//TODO: loop/search this
+      ItemStack is = this.getStackInSlot(0);
+      if (UtilItemStack.isEmpty(is)) { return; }
+      IBlockState stateToMatch;
+      Block block;
+      ModCyclic.logger.info("??shapeSrc.SIZE " + shapeSrc.size());
+      int iloop = 0;
+      for (BlockPos posSrc : shapeSrc) {
+        iloop++;
+        if (world.isAirBlock(posSrc)) {
+          continue;
+        }
+        stateToMatch = world.getBlockState(posSrc);
+        ModCyclic.logger.info("??posSrc " + posSrc+"+"+ stateToMatch.getBlock().getLocalizedName());
+        //source has a thing
+        if (Block.getBlockFromItem(is.getItem()) == stateToMatch.getBlock()) {
+          block = Block.getBlockFromItem(is.getItem());
+          ModCyclic.logger.info("block match" + block.getUnlocalizedName());
+          xOffset = this.offsetSourceX - this.offsetSourceX;
+          yOffset = this.offsetSourceY - this.offsetSourceY;
+          zOffset = this.offsetSourceZ - this.offsetSourceZ;
+          posTarget = centerTarget.add(xOffset, yOffset, zOffset);
+          //now we want target to be air
+          ModCyclic.logger.info("??posTarget " + posTarget);
+          if (world.isAirBlock(posTarget)) {
+            ModCyclic.logger.info("Place Block " + posTarget);
+            world.setBlockState(posTarget, UtilItemStack.getStateFromMeta(block, is.getMetadata()));
+            this.decrStackSize(slot, 1);
+            break;//until next tick
+          }
+        }
+        ModCyclic.logger.info("end loop, try new"+iloop);
+      }
     }
   }
   private void renderBoundingBoxes() {
     //targ
-    BlockPos center = this.getPos().add(offsetTargetX, offsetTargetY, offsetTargetZ);
-    List<BlockPos> shape = UtilShape.cubeFrame(center, this.sizeRadius, this.height);
+    BlockPos centerTarget = this.getPos().add(offsetTargetX, offsetTargetY, offsetTargetZ);
+    List<BlockPos> shapeTarget = UtilShape.cubeFrame(centerTarget, this.sizeRadius, this.height);
     if (this.getWorld().rand.nextDouble() < 0.1) {
-      for (BlockPos p : shape) {
+      for (BlockPos p : shapeTarget) {
         UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CLOUD, p);
       }
     }
@@ -104,8 +143,8 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
-//    if (side == EnumFacing.UP) { return new int[] { 0 }; }
-    return new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,15,16,17};
+    //    if (side == EnumFacing.UP) { return new int[] { 0 }; }
+    return new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 };
   }
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
