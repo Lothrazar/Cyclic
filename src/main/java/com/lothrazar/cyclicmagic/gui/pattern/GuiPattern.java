@@ -13,6 +13,7 @@ public class GuiPattern extends GuiBaseContainer {
   public static final ResourceLocation GUI = new ResourceLocation(Const.MODID, Const.Res.folder + "pattern.png");
   static final int texture_width = 176;
   static final int texture_height = 212;
+  static final int GUI_ROWS = 5;
   private TileEntityPatternBuilder tile;
   private int xTextbox;
   private int[] yRows = new int[4];
@@ -133,9 +134,9 @@ public class GuiPattern extends GuiBaseContainer {
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     int row = 0, col = 0;
     for (int i = 0; i < tile.getSizeInventory(); i++) {
-      row = i / 3;// /3 will go 000, 111, 222
-      col = i % 3; // and %3 will go 012 012 012
-      Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerPattern.SLOTX_FISH - 1 + row * Const.SQ, this.guiTop + ContainerPattern.SLOTY_FISH - 1 + col * Const.SQ, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+      row = i / GUI_ROWS;// /3 will go 000, 111, 222
+      col = i % GUI_ROWS; // and %3 will go 012 012 012
+      Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerPattern.SLOTX_START - 1 + row * Const.SQ, this.guiTop + ContainerPattern.SLOTY_START - 1 + col * Const.SQ, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
   }
 }

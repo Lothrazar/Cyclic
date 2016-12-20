@@ -13,10 +13,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ContainerPattern extends ContainerBaseMachine {
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
   
-  public static final int SLOTX_START = 30;
-  public static final int SLOTY = 20;
-  public static final int SLOTX_FISH = 80;
-  public static final int SLOTY_FISH = 20;
+  public static final int SLOTX_START = 116;
+  public static final int SLOTY_START = 20;
   protected TileEntityPatternBuilder tileEntity;
   private int tileOX;
   private int tileOY;
@@ -31,9 +29,9 @@ public class ContainerPattern extends ContainerBaseMachine {
     int s = 0;
     int row = 0, col = 0;
     for (int i = 0; i < tileEntity.getSizeInventory(); i++) { //so going from 0-9
-      row = i / 3;// /3 will go 000, 111, 222
-      col = i % 3; // and %3 will go 012 012 012
-      addSlotToContainer(new Slot(tileEntity, s, SLOTX_FISH + row * Const.SQ, SLOTY_FISH + col * Const.SQ));
+      row = i / GuiPattern.GUI_ROWS;// /3 will go 000, 111, 222
+      col = i % GuiPattern.GUI_ROWS; // and %3 will go 012 012 012
+      addSlotToContainer(new Slot(tileEntity, s, SLOTX_START + row * Const.SQ, SLOTY_START + col * Const.SQ));
       s++;
     }
     // commonly used vanilla code that adds the player's inventory
