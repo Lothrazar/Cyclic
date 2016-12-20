@@ -5,6 +5,7 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPatternBuilder;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
 import com.lothrazar.cyclicmagic.net.PacketTilePatternBuilder;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.math.BlockPos;
@@ -22,15 +23,13 @@ public class ButtonPattern extends GuiButton implements ITooltipButton {
     type = t;
     goUp = up;
     String ud = (up) ? "up" : "down";
-    tooltips.add("tile.patern." + t.name().toLowerCase() + ud);
+    tooltips.add(UtilChat.lang("tile.builder_pattern." + t.name().toLowerCase() + ud));
   }
   @SideOnly(Side.CLIENT)
   @Override
   public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
     boolean pressed = super.mousePressed(mc, mouseX, mouseY);
     if (pressed) {
-      
-     ModCyclic.logger.info("Go this way "+goUp + "_"+type.name());
       ModCyclic.network.sendToServer(new PacketTilePatternBuilder(tilePos, goUp, type));
     }
     return pressed;
