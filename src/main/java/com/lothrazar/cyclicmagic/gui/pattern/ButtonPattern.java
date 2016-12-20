@@ -29,6 +29,8 @@ public class ButtonPattern extends GuiButton implements ITooltipButton {
   public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
     boolean pressed = super.mousePressed(mc, mouseX, mouseY);
     if (pressed) {
+      
+     ModCyclic.logger.info("Go this way "+goUp + "_"+type.name());
       ModCyclic.network.sendToServer(new PacketTilePatternBuilder(tilePos, goUp, type));
     }
     return pressed;

@@ -12,7 +12,7 @@ import net.minecraft.util.math.BlockPos;
 
 public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implements ITickable {
   private static final String NBT_INV = "Inventory";
-  private static final String NBT_SLOT = "Slot";  
+  private static final String NBT_SLOT = "Slot";
   private int offsetTargetX = -4;
   private int offsetTargetY = 0;
   private int offsetTargetZ = 1;
@@ -25,7 +25,11 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     OFFTARGX, OFFTARGY, OFFTARGZ, SIZER, OFFSRCX, OFFSRCY, OFFSRCZ
   }
   public TileEntityPatternBuilder() {
-    inv = new ItemStack[15];
+    inv = new ItemStack[18];
+  }
+  @Override
+  public int getFieldCount() {
+    return Fields.values().length;
   }
   @Override
   public void update() {
@@ -96,6 +100,9 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     this.offsetTargetX = tagCompound.getInteger("ox");
     this.offsetTargetY = tagCompound.getInteger("oy");
     this.offsetTargetZ = tagCompound.getInteger("oz");
+    this.offsetSourceX = tagCompound.getInteger("sx");
+    this.offsetSourceY = tagCompound.getInteger("sy");
+    this.offsetSourceZ = tagCompound.getInteger("sz");
     this.sizeRadius = tagCompound.getInteger("r");
     NBTTagList tagList = tagCompound.getTagList(NBT_INV, 10);
     for (int i = 0; i < tagList.tagCount(); i++) {
@@ -111,6 +118,9 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     tagCompound.setInteger("ox", offsetTargetX);
     tagCompound.setInteger("oy", offsetTargetY);
     tagCompound.setInteger("oz", offsetTargetZ);
+    tagCompound.setInteger("sx", offsetSourceX);
+    tagCompound.setInteger("sy", offsetSourceY);
+    tagCompound.setInteger("sz", offsetSourceZ);
     tagCompound.setInteger("r", sizeRadius);
     NBTTagList itemList = new NBTTagList();
     for (int i = 0; i < inv.length; i++) {
@@ -125,9 +135,8 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     tagCompound.setTag(NBT_INV, itemList);
     return super.writeToNBT(tagCompound);
   }
-  @Override
-  public int getField(int id) {
-    switch (Fields.values()[id]) {
+  public int getField(Fields f) {
+    switch (f) {
     case OFFTARGX:
       return this.offsetTargetX;
     case OFFTARGY:
@@ -147,9 +156,8 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     }
     return 0;
   }
-  @Override
-  public void setField(int id, int value) {
-    switch (Fields.values()[id]) {
+  public void setField(Fields f, int value) {
+    switch (f) {
     case OFFTARGX:
       this.offsetTargetX = value;
       break;
@@ -174,5 +182,13 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     default:
       break;
     }
+  }
+  @Override
+  public int getField(int id) {
+    return getField(Fields.values()[id]);
+  }
+  @Override
+  public void setField(int id, int value) {
+    setField(Fields.values()[id], value);
   }
 }

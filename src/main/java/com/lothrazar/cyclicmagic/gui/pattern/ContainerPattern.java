@@ -13,8 +13,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ContainerPattern extends ContainerBaseMachine {
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
   
-  public static final int SLOTX_START = 116;
-  public static final int SLOTY_START = 20;
+  public static final int SLOTX_START = 8;
+  public static final int SLOTY_START = 90;
   protected TileEntityPatternBuilder tileEntity;
   private int tileOX;
   private int tileOY;
@@ -97,13 +97,13 @@ public class ContainerPattern extends ContainerBaseMachine {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
     }
-    this.tileOX = this.tileEntity.getField(TileEntityPatternBuilder.Fields.OFFTARGX.ordinal());
-    this.tileOY = this.tileEntity.getField(TileEntityPatternBuilder.Fields.OFFTARGY.ordinal());
-    this.tileOZ = this.tileEntity.getField(TileEntityPatternBuilder.Fields.OFFTARGZ.ordinal());
-    this.tileSOX = this.tileEntity.getField(TileEntityPatternBuilder.Fields.OFFSRCX.ordinal());
-    this.tileSOY = this.tileEntity.getField(TileEntityPatternBuilder.Fields.OFFSRCY.ordinal());
-    this.tileSOZ = this.tileEntity.getField(TileEntityPatternBuilder.Fields.OFFSRCZ.ordinal());
-    this.tileSIZER = this.tileEntity.getField(TileEntityPatternBuilder.Fields.SIZER.ordinal());
+    this.tileOX = this.tileEntity.getField(TileEntityPatternBuilder.Fields.OFFTARGX);
+    this.tileOY = this.tileEntity.getField(TileEntityPatternBuilder.Fields.OFFTARGY);
+    this.tileOZ = this.tileEntity.getField(TileEntityPatternBuilder.Fields.OFFTARGZ);
+    this.tileSOX = this.tileEntity.getField(TileEntityPatternBuilder.Fields.OFFSRCX);
+    this.tileSOY = this.tileEntity.getField(TileEntityPatternBuilder.Fields.OFFSRCY);
+    this.tileSOZ = this.tileEntity.getField(TileEntityPatternBuilder.Fields.OFFSRCZ);
+    this.tileSIZER = this.tileEntity.getField(TileEntityPatternBuilder.Fields.SIZER);
   }
   @Override
   @SideOnly(Side.CLIENT)

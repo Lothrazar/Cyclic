@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.net;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPatternBuilder;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -45,8 +46,8 @@ public class PacketTilePatternBuilder implements IMessage, IMessageHandler<Packe
     EntityPlayerMP player = ctx.getServerHandler().playerEntity;
     TileEntityPatternBuilder tile = (TileEntityPatternBuilder) player.getEntityWorld().getTileEntity(message.pos);
     if (tile != null) {
-      int field = message.type.ordinal();
-      tile.setField(field, tile.getField(field) + message.direction);
+      ModCyclic.logger.info("!!Go this way "+message.direction + "_"+message.type.name());
+      tile.setField( message.type, tile.getField( message.type) + message.direction);
     }
     return null;
   }

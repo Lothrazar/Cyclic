@@ -13,7 +13,7 @@ public class GuiPattern extends GuiBaseContainer {
   public static final ResourceLocation GUI = new ResourceLocation(Const.MODID, Const.Res.folder + "pattern.png");
   static final int texture_width = 176;
   static final int texture_height = 212;
-  static final int GUI_ROWS = 5;
+  static final int GUI_ROWS = 2;
   private TileEntityPatternBuilder tile;
   private int xTextbox;
   private int[] yRows = new int[4];
@@ -43,37 +43,70 @@ public class GuiPattern extends GuiBaseContainer {
         this.guiTop + yRows[0], true, TileEntityPatternBuilder.Fields.SIZER);
     this.buttonList.add(btn);
     btn = new ButtonPattern(tile.getPos(), id++,
-        this.guiLeft + xTextbox - xOffset-4,
+        this.guiLeft + xTextbox - xOffset - 4,
         this.guiTop + yRows[0], false, TileEntityPatternBuilder.Fields.SIZER);
     this.buttonList.add(btn);
+    //offset x
     yRows[1] = yRows[0] + yOffset;
     btn = new ButtonPattern(tile.getPos(), id++,
         this.guiLeft + xTextbox + xOffset,
         this.guiTop + yRows[1], true, TileEntityPatternBuilder.Fields.OFFTARGX);
     this.buttonList.add(btn);
     btn = new ButtonPattern(tile.getPos(), id++,
-        this.guiLeft + xTextbox - xOffset-4,
+        this.guiLeft + xTextbox - xOffset - 4,
         this.guiTop + yRows[1], false, TileEntityPatternBuilder.Fields.OFFTARGX);
     this.buttonList.add(btn);
+    //offset y
     yRows[2] = yRows[1] + yOffset;
     btn = new ButtonPattern(tile.getPos(), id++,
         this.guiLeft + xTextbox + xOffset,
         this.guiTop + yRows[2], true, TileEntityPatternBuilder.Fields.OFFTARGY);
     this.buttonList.add(btn);
     btn = new ButtonPattern(tile.getPos(), id++,
-        this.guiLeft + xTextbox - xOffset-4,
+        this.guiLeft + xTextbox - xOffset - 4,
         this.guiTop + yRows[2], false, TileEntityPatternBuilder.Fields.OFFTARGY);
     this.buttonList.add(btn);
+    //offset z
     yRows[3] = yRows[2] + yOffset;
     btn = new ButtonPattern(tile.getPos(), id++,
         this.guiLeft + xTextbox + xOffset,
         this.guiTop + yRows[3], true, TileEntityPatternBuilder.Fields.OFFTARGZ);
     this.buttonList.add(btn);
     btn = new ButtonPattern(tile.getPos(), id++,
-        this.guiLeft + xTextbox - xOffset-4,
+        this.guiLeft + xTextbox - xOffset - 4,
         this.guiTop + yRows[3], false, TileEntityPatternBuilder.Fields.OFFTARGZ);
     this.buttonList.add(btn);
-    //TODO: buttons for SRC versions
+    int moreX = 69;
+    //S x
+    yRows[1] = yRows[0] + yOffset;
+    btn = new ButtonPattern(tile.getPos(), id++,
+        this.guiLeft + xTextbox + xOffset + moreX,
+        this.guiTop + yRows[1], true, TileEntityPatternBuilder.Fields.OFFSRCX);
+    this.buttonList.add(btn);
+    btn = new ButtonPattern(tile.getPos(), id++,
+        this.guiLeft + xTextbox - xOffset - 4 + moreX,
+        this.guiTop + yRows[1], false, TileEntityPatternBuilder.Fields.OFFSRCX);
+    this.buttonList.add(btn);
+    //S y
+    yRows[2] = yRows[1] + yOffset;
+    btn = new ButtonPattern(tile.getPos(), id++,
+        this.guiLeft + xTextbox + xOffset + moreX,
+        this.guiTop + yRows[2], true, TileEntityPatternBuilder.Fields.OFFSRCY);
+    this.buttonList.add(btn);
+    btn = new ButtonPattern(tile.getPos(), id++,
+        this.guiLeft + xTextbox - xOffset - 4 + moreX,
+        this.guiTop + yRows[2], false, TileEntityPatternBuilder.Fields.OFFSRCY);
+    this.buttonList.add(btn);
+    //S z
+    yRows[3] = yRows[2] + yOffset;
+    btn = new ButtonPattern(tile.getPos(), id++,
+        this.guiLeft + xTextbox + xOffset + moreX,
+        this.guiTop + yRows[3], true, TileEntityPatternBuilder.Fields.OFFSRCZ);
+    this.buttonList.add(btn);
+    btn = new ButtonPattern(tile.getPos(), id++,
+        this.guiLeft + xTextbox - xOffset - 4 + moreX,
+        this.guiTop + yRows[3], false, TileEntityPatternBuilder.Fields.OFFSRCZ);
+    this.buttonList.add(btn);
   }
   @SideOnly(Side.CLIENT)
   @Override
@@ -99,11 +132,10 @@ public class GuiPattern extends GuiBaseContainer {
     x = (display.length() > 1) ? xTextbox - 3 : xTextbox;
     y = yRows[3];
     this.fontRendererObj.drawString(display, x, y, 4210752);
-    
-    int xOtherbox = xTextbox + 36;
-    
-     x = (display.length() > 1) ? xOtherbox - 3 : xOtherbox;
-     y = yRows[0];
+    int moreX = 68;
+    int xOtherbox = xTextbox + moreX;
+    //x = (display.length() > 1) ? xOtherbox - 3 : xOtherbox;
+    //y = yRows[0];
     display = "" + this.tile.getField(TileEntityPatternBuilder.Fields.OFFSRCX.ordinal());
     //move it over if more than 1 digit
     x = (display.length() > 1) ? xOtherbox - 3 : xOtherbox;
@@ -119,18 +151,15 @@ public class GuiPattern extends GuiBaseContainer {
     x = (display.length() > 1) ? xOtherbox - 3 : xOtherbox;
     y = yRows[3];
     this.fontRendererObj.drawString(display, x, y, 4210752);
-
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-
     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
     this.mc.getTextureManager().bindTexture(getBackground());
     int thisX = (this.width - this.xSize) / 2;
     int thisY = (this.height - this.ySize) / 2;
     int u = 0, v = 0;
     Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, texture_width, texture_height, texture_width, texture_height);
-
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     int row = 0, col = 0;
     for (int i = 0; i < tile.getSizeInventory(); i++) {
