@@ -12,6 +12,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerPattern extends ContainerBaseMachine {
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
+  
   public static final int SLOTX_START = 30;
   public static final int SLOTY = 20;
   public static final int SLOTX_FISH = 80;
@@ -25,6 +26,7 @@ public class ContainerPattern extends ContainerBaseMachine {
   private int tileSOZ;
   private int tileSIZER;
   public ContainerPattern(InventoryPlayer inventoryPlayer, TileEntityPatternBuilder te) {
+    this.playerOffsetY = 130;
     tileEntity = te;
     int s = 0;
     int row = 0, col = 0;

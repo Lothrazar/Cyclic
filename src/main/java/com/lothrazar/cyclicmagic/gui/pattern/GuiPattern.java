@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.gui.pattern;
+import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPatternBuilder;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -9,16 +10,24 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiPattern extends GuiBaseContainer {
-  public static final ResourceLocation SLOTFISH = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_fish.png");
+  public static final ResourceLocation GUI = new ResourceLocation(Const.MODID, Const.Res.folder + "pattern.png");
+  static final int texture_width = 176;
+  static final int texture_height = 212;
   private TileEntityPatternBuilder tile;
   private int xTextbox;
   private int[] yRows = new int[4];
   public GuiPattern(InventoryPlayer inventoryPlayer, TileEntityPatternBuilder tileEntity) {
     super(new ContainerPattern(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
+    this.xSize = texture_width;
+    this.ySize = texture_height;
   }
   public String getTitle() {
     return "tile.builder_pattern.name";
+  }
+  @Override
+  public ResourceLocation getBackground() {
+    return GUI;
   }
   @Override
   public void initGui() {
@@ -113,8 +122,14 @@ public class GuiPattern extends GuiBaseContainer {
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-    super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
+
+    GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+    this.mc.getTextureManager().bindTexture(getBackground());
+    int thisX = (this.width - this.xSize) / 2;
+    int thisY = (this.height - this.ySize) / 2;
     int u = 0, v = 0;
+    Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, texture_width, texture_height, texture_width, texture_height);
+
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     int row = 0, col = 0;
     for (int i = 0; i < tile.getSizeInventory(); i++) {

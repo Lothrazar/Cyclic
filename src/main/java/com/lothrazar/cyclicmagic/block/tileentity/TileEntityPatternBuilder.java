@@ -12,7 +12,7 @@ import net.minecraft.util.math.BlockPos;
 
 public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implements ITickable {
   private static final String NBT_INV = "Inventory";
-  private static final String NBT_SLOT = "Slot";
+  private static final String NBT_SLOT = "Slot";  
   private int offsetTargetX = -4;
   private int offsetTargetY = 0;
   private int offsetTargetZ = 1;
