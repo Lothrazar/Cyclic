@@ -80,11 +80,11 @@ public class ContainerPattern extends ContainerBaseMachine {
       if (this.tileOZ != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
-      idx = TileEntityPatternBuilder.Fields.OFFSRCZ.ordinal();
+      idx = TileEntityPatternBuilder.Fields.OFFSRCX.ordinal();
       if (this.tileSOX != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
-      idx = TileEntityPatternBuilder.Fields.OFFSRCZ.ordinal();
+      idx = TileEntityPatternBuilder.Fields.OFFSRCY.ordinal();
       if (this.tileSOY != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
