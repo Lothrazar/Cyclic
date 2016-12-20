@@ -52,14 +52,7 @@ public class UtilShape {
     });
     return circleList;
   }
-  /**
-   * TODO: alter/make version that is cubic top/bottom faces but dyn height
-   * 
-   * @param posCenter
-   * @param radius
-   * @return
-   */
-  public static List<BlockPos> cube(final BlockPos posCenter, int radius, int height) {
+  public static List<BlockPos> cubeFrame(final BlockPos posCenter, int radius, int height) {
     BlockPos botCenter = posCenter;//.add(0, -1 * radius, 0);
     BlockPos topCenter = posCenter.add(0, height, 0);
     List<BlockPos> cube = squareHorizontalHollow(topCenter, radius);
@@ -69,11 +62,21 @@ public class UtilShape {
     BlockPos b2 = botCenter.add(radius, 1, -1 * radius);
     BlockPos b3 = botCenter.add(-1 * radius, 1, -1 * radius);
     BlockPos b4 = botCenter.add(-1 * radius, 1, radius);
-    int sideLen = height-2;// * 2 - 1;
+    int sideLen = height - 2;// * 2 - 1;
     cube.addAll(line(b1, EnumFacing.UP, sideLen));
     cube.addAll(line(b2, EnumFacing.UP, sideLen));
     cube.addAll(line(b3, EnumFacing.UP, sideLen));
     cube.addAll(line(b4, EnumFacing.UP, sideLen));
+    return cube;
+  }
+  public static List<BlockPos> cubeFilled(final BlockPos posCenter, int radius, int height) {
+    BlockPos botCenter = posCenter;
+    List<BlockPos> cube = squareHorizontalFull(botCenter, radius);
+    BlockPos botCurrent;
+    for (int i = 1; i <= height; i++) {
+      botCurrent = botCenter.add(0, i, 0);
+      cube.addAll(squareHorizontalFull(botCurrent, radius));
+    }
     return cube;
   }
   public static List<BlockPos> squareVerticalHollow(final BlockPos pos, int radius) {
@@ -96,6 +99,23 @@ public class UtilShape {
     }
     return shape;
   }
+  public static List<BlockPos> squareHorizontalFull(final BlockPos pos, int radius) {
+    List<BlockPos> shape = new ArrayList<BlockPos>();
+    // search in a cube
+    int xMin = pos.getX() - radius;
+    int xMax = pos.getX() + radius;
+    int zMin = pos.getZ() - radius;
+    int zMax = pos.getZ() + radius;
+    int y = pos.getY();
+    for (int x = xMin; x <= xMax; x++) {
+      for (int z = zMin; z < zMax; z++) {
+        shape.add(new BlockPos(x, y, z));
+        shape.add(new BlockPos(x, y, z));
+      }
+    }
+    //corners are done so offset
+    return shape;
+  }
   public static List<BlockPos> squareHorizontalHollow(final BlockPos pos, int radius) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
     // search in a cube
@@ -104,7 +124,6 @@ public class UtilShape {
     int zMin = pos.getZ() - radius;
     int zMax = pos.getZ() + radius;
     int y = pos.getY();
-    //first, leave x fixed and track along +/- y
     for (int x = xMin; x <= xMax; x++) {
       shape.add(new BlockPos(x, y, zMin));
       shape.add(new BlockPos(x, y, zMax));

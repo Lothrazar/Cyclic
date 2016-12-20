@@ -38,13 +38,17 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     
     if(this.isPowered()){
       //try build one block
-      
+
+      BlockPos centerTarget = this.getPos().add(offsetTargetX, offsetTargetY, offsetTargetZ);
+      List<BlockPos> shapeTarget = UtilShape.cubeFrame(centerTarget, this.sizeRadius, this.height);
+      BlockPos centerSrc = this.getPos().add(offsetSourceX, offsetSourceY, offsetSourceZ);
+      List<BlockPos> shapeSrc = UtilShape.cubeFrame(centerSrc, this.sizeRadius, this.height);
     }
   }
   private void renderBoundingBoxes() {
     //targ
     BlockPos center = this.getPos().add(offsetTargetX, offsetTargetY, offsetTargetZ);
-    List<BlockPos> shape = UtilShape.cube(center, this.sizeRadius, this.height);
+    List<BlockPos> shape = UtilShape.cubeFrame(center, this.sizeRadius, this.height);
     if (this.getWorld().rand.nextDouble() < 0.1) {
       for (BlockPos p : shape) {
         UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CLOUD, p);
@@ -52,7 +56,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     }
     //src
     BlockPos centerSrc = this.getPos().add(offsetSourceX, offsetSourceY, offsetSourceZ);
-    List<BlockPos> shapeSrc = UtilShape.cube(centerSrc, this.sizeRadius, this.height);
+    List<BlockPos> shapeSrc = UtilShape.cubeFrame(centerSrc, this.sizeRadius, this.height);
     if (this.getWorld().rand.nextDouble() < 0.1) {
       for (BlockPos p : shapeSrc) {
         UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.DRAGON_BREATH, p);
