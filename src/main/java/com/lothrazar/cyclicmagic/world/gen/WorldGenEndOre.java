@@ -13,8 +13,8 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
 
 public class WorldGenEndOre implements IWorldGenerator {
-  private final int MIN_HEIGHT = 5;
-  private final int MAX_HEIGHT = 128;
+  private static final int MIN_HEIGHT = 5;
+  private static final int MAX_HEIGHT = 128;
   private WorldGenerator genRedstone;
   private WorldGenerator genCoal;
   private WorldGenerator genEmerald;
