@@ -85,6 +85,6 @@
   	,"1.9.1":"Fix a crash that can happen when unbinding keys.  Ender Book experience cost config now allows value zero.  Cyclic Building Scepter is now compatible with blocks from Chisel and Bits blocks.  "
   	,"1.9.2":"New block: Fan.  Auto Fisher: Fixed not outputting items to things like hoppers.  Added a tooltip for Autofisher.  Fix tooltip on exchange scepter.  "
   	,"1.9.3":"Added recipe for Fan.  "
-  	,"1.9.4":"Fix crash caused by certain types of modded armor in the Uncrafting grinder (such as bronze armor from IC2).  Auto fisher will now refuse to fish if a non-fishing rod item ends up in that slot.  "
+  	,"1.9.4":"Fix crash caused by certain types of modded armor in the Uncrafting grinder (such as bronze armor from IC2).  Auto fisher will now refuse to fish if a non-fishing rod item ends up in that slot.  Vein size and spawn chances of Nether ore and End ore now in config; tweak or disable each individually.  "
   }
 }
