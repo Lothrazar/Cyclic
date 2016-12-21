@@ -8,6 +8,7 @@ import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
+import net.minecraft.item.ItemFishingRod;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -45,7 +46,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
         waterBoth.contains(world.getBlockState(pos.south()).getBlock());
   }
   public boolean isEquipmentValid() {
-    return inv[toolSlot] != null;
+    return inv[toolSlot] != null && inv[toolSlot].getItem() instanceof ItemFishingRod;
   }
   @Override
   public void update() {
