@@ -13,39 +13,50 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
 
 public class WorldGenNetherOre implements IWorldGenerator {
-  private final int MIN_HEIGHT = 5;
-  private final int MAX_HEIGHT = 128;
+  private static final int MIN_HEIGHT = 5;
+  private static final int MAX_HEIGHT = 128;
   private WorldGenerator genGold;
   private WorldGenerator genCoal;
   private WorldGenerator genEmerald;
   private WorldGenerator genLapis;
   private WorldGenerator genDiamond;
+  public static class Configs {
+    public static int blockCountCoal = 8;
+    public static int blockCountDiamond = 8;
+    public static int blockCountEmerald = 8;
+    public static int blockCountLapis = 8;
+    public static int blockCountGold = 8;
+    public static int spawnChanceCoal = 25;
+    public static int spawnChanceDiamond = 6;
+    public static int spawnChanceEmerald = 5;
+    public static int spawnChanceGold = 45;
+    public static int spawnChanceLapis = 10;
+  }
   public WorldGenNetherOre() {
-    int blockCount = 8;
-    this.genGold = new WorldGenMinable(WorldGenModule.nether_gold_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.NETHERRACK));
-    blockCount = 8;
-    this.genCoal = new WorldGenMinable(WorldGenModule.nether_coal_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.NETHERRACK));
-    blockCount = 8;
-    this.genEmerald = new WorldGenMinable(WorldGenModule.nether_emerald_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.NETHERRACK));
-    blockCount = 8;
-    this.genLapis = new WorldGenMinable(WorldGenModule.nether_lapis_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.NETHERRACK));
-    blockCount = 8;
-    this.genDiamond = new WorldGenMinable(WorldGenModule.nether_diamond_ore.getDefaultState(), blockCount, BlockMatcher.forBlock(Blocks.NETHERRACK));
+    if (Configs.blockCountGold > 0)
+      this.genGold = new WorldGenMinable(WorldGenModule.nether_gold_ore.getDefaultState(), Configs.blockCountGold, BlockMatcher.forBlock(Blocks.NETHERRACK));
+    if (Configs.blockCountCoal > 0)
+      this.genCoal = new WorldGenMinable(WorldGenModule.nether_coal_ore.getDefaultState(), Configs.blockCountCoal, BlockMatcher.forBlock(Blocks.NETHERRACK));
+    if (Configs.blockCountEmerald > 0)
+      this.genEmerald = new WorldGenMinable(WorldGenModule.nether_emerald_ore.getDefaultState(), Configs.blockCountEmerald, BlockMatcher.forBlock(Blocks.NETHERRACK));
+    if (Configs.blockCountLapis > 0)
+      this.genLapis = new WorldGenMinable(WorldGenModule.nether_lapis_ore.getDefaultState(), Configs.blockCountLapis, BlockMatcher.forBlock(Blocks.NETHERRACK));
+    if (Configs.blockCountDiamond > 0)
+      this.genDiamond = new WorldGenMinable(WorldGenModule.nether_diamond_ore.getDefaultState(), Configs.blockCountDiamond, BlockMatcher.forBlock(Blocks.NETHERRACK));
   }
   @Override
   public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
-    int chance;
     if (world.provider.getDimension() == Const.Dimension.nether) {
-      chance = 45;
-      this.run(this.genGold, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, chance, MIN_HEIGHT, MAX_HEIGHT);
-      chance = 25;
-      this.run(this.genCoal, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, chance, MIN_HEIGHT, MAX_HEIGHT);
-      chance = 5;
-      this.run(this.genEmerald, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, chance, MIN_HEIGHT, MAX_HEIGHT);
-      chance = 10;
-      this.run(this.genLapis, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, chance, MIN_HEIGHT, MAX_HEIGHT);
-      chance = 6;
-      this.run(this.genDiamond, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, chance, MIN_HEIGHT, MAX_HEIGHT);
+      if (this.genGold != null && Configs.spawnChanceGold > 0)
+        this.run(this.genGold, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, Configs.spawnChanceGold, MIN_HEIGHT, MAX_HEIGHT);
+      if (this.genCoal != null && Configs.spawnChanceCoal > 0)
+        this.run(this.genCoal, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, Configs.spawnChanceCoal, MIN_HEIGHT, MAX_HEIGHT);
+      if (this.genEmerald != null && Configs.spawnChanceEmerald > 0)
+        this.run(this.genEmerald, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, Configs.spawnChanceEmerald, MIN_HEIGHT, MAX_HEIGHT);
+      if (this.genLapis != null && Configs.spawnChanceLapis > 0)
+        this.run(this.genLapis, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, Configs.spawnChanceLapis, MIN_HEIGHT, MAX_HEIGHT);
+      if (this.genDiamond != null && Configs.spawnChanceDiamond > 0)
+        this.run(this.genDiamond, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, Configs.spawnChanceDiamond, MIN_HEIGHT, MAX_HEIGHT);
     }
   }
   private void run(WorldGenerator generator, World world, Random rand, int chunk_X, int chunk_Z, int chancesToSpawn, int minHeight, int maxHeight) {
@@ -60,7 +71,7 @@ public class WorldGenNetherOre implements IWorldGenerator {
       int z = chunk_Z + rand.nextInt(Const.CHUNK_SIZE);
       pos = new BlockPos(x, y, z);
       // biome = world.getBiomeGenForCoords(pos);
-      // if(biome == Biomes.hell){
+      // if(biome == Biomes.hell){// no longer do this, in case some mod adds biomes to nether
       generator.generate(world, rand, pos);
       // }
     }
