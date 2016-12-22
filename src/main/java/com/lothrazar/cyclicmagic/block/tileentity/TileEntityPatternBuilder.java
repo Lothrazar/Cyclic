@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -39,6 +40,34 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   public int getFieldCount() {
     return Fields.values().length;
   }
+  private BlockPos getCenterTarget() {
+    return this.getPos().add(offsetTargetX, offsetTargetY, offsetTargetZ);
+  }
+  private BlockPos getCenterSrc() {
+    return this.getPos().add(offsetSourceX, offsetSourceY, offsetSourceZ);
+  }
+  private int findSlotForMatch(IBlockState stateToMatch) {
+    int slot = -1;
+    if (stateToMatch == null || stateToMatch.getBlock() == null) { return slot; }
+    ItemStack is;
+    Item itemFromState;
+    for (int i = 0; i < this.getSizeInventory(); i++) {
+      is = this.getStackInSlot(i);
+      if (UtilItemStack.isEmpty(is)) {
+        continue;
+      }
+      //      blockFromStack = Block.getBlockFromItem(is.getItem());
+      //      int stateMeta=  stateToMatch.getBlock().getMetaFromState(stateToMatch);
+//      int stateMeta = stateToMatch.getBlock().damageDropped(stateToMatch);
+//      int stackMeta = is.getMetadata();
+      itemFromState = Item.getItemFromBlock(stateToMatch.getBlock());
+      if (itemFromState == is.getItem()) {
+        slot = i;//yep it matches
+        break;
+      }
+    }
+    return slot;
+  }
   @Override
   public void update() {
     this.renderBoundingBoxes();
@@ -47,54 +76,40 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       if (timer <= 0) {
         timer = TIMER_FULL;
         //try build one block
-        BlockPos centerTarget = this.getPos().add(offsetTargetX, offsetTargetY, offsetTargetZ);
         //List<BlockPos> shapeTarget = UtilShape.cubeFrame(centerTarget, this.sizeRadius, this.height);
-        BlockPos centerSrc = this.getPos().add(offsetSourceX, offsetSourceY, offsetSourceZ);
+        BlockPos centerSrc = this.getCenterSrc();
         List<BlockPos> shapeSrc = UtilShape.cubeFilled(centerSrc, this.sizeRadius, this.height);
+        if (shapeSrc.size() <= 0) { return; }
         World world = this.getWorld();
-        BlockPos posTarget;
-        int xOffset, yOffset, zOffset;
-        int slot = 0;//TODO: loop/search this
-        ItemStack is = this.getStackInSlot(0);
-        if (UtilItemStack.isEmpty(is)) { return; }
-        IBlockState stateToMatch;
-        Block block;
-        
         int pTarget = world.rand.nextInt(shapeSrc.size());
         BlockPos posSrc = shapeSrc.get(pTarget);
-
-
+        int xOffset, yOffset, zOffset;
         xOffset = posSrc.getX() - centerSrc.getX();
         yOffset = posSrc.getY() - centerSrc.getY();
         zOffset = posSrc.getZ() - centerSrc.getZ();
-        posTarget = centerTarget.add(xOffset, yOffset, zOffset);
-
+        BlockPos centerTarget = this.getCenterTarget();
+        BlockPos posTarget = centerTarget.add(xOffset, yOffset, zOffset);
         //TODO: barrier are not part of final product. just to help me see/debug where the two targerts are
         UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, posSrc);
         UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, posTarget);
-        //  for (BlockPos posSrc : shapeSrc) {
-
+        IBlockState stateToMatch;
+        int slot;
         if (!world.isAirBlock(posSrc)) {
           stateToMatch = world.getBlockState(posSrc);
-      
-          //source has a thing
-          if (Block.getBlockFromItem(is.getItem()) == stateToMatch.getBlock()) {
-            block = Block.getBlockFromItem(is.getItem());
-           
-            //now we want target to be air
-       
-            if (world.isAirBlock(posTarget)) {
-              //TODO: make sure this plays sound
-              world.setBlockState(posTarget, UtilItemStack.getStateFromMeta(block, is.getMetadata()));
-              this.decrStackSize(slot, 1);
-            }
+          slot = this.findSlotForMatch(stateToMatch);
+          if (slot < 0) { return; } //EMPTY
+          //now we want target to be air
+          if (world.isAirBlock(posTarget)) {
+            //TODO: make sure this plays sound
+            world.setBlockState(posTarget, stateToMatch);
+            this.decrStackSize(slot, 1);
           }
-          else{
+          else {
             //does NOT MATCH, so skip ahead
             timer = 10;
           }
         }
-        else{
+        else {
           //src IS air, so skip ahead
           timer = 10;
         }
