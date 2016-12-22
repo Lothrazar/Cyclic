@@ -26,9 +26,11 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   private int offsetSourceY = 0;
   private int offsetSourceZ = 1;
   private int sizeRadius = 3;
+  private int timer = 1;
+  private static final int TIMER_FULL = 100;
   private ItemStack[] inv;
   public static enum Fields {
-    OFFTARGX, OFFTARGY, OFFTARGZ, SIZER, OFFSRCX, OFFSRCY, OFFSRCZ, HEIGHT
+    OFFTARGX, OFFTARGY, OFFTARGZ, SIZER, OFFSRCX, OFFSRCY, OFFSRCZ, HEIGHT, TIMER
   }
   public TileEntityPatternBuilder() {
     inv = new ItemStack[18];
@@ -41,46 +43,61 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   public void update() {
     this.renderBoundingBoxes();
     if (this.isPowered()) {
-      //try build one block
-      BlockPos centerTarget = this.getPos().add(offsetTargetX, offsetTargetY, offsetTargetZ);
-      //List<BlockPos> shapeTarget = UtilShape.cubeFrame(centerTarget, this.sizeRadius, this.height);
-      BlockPos centerSrc = this.getPos().add(offsetSourceX, offsetSourceY, offsetSourceZ);
-      List<BlockPos> shapeSrc = UtilShape.cubeFrame(centerSrc, this.sizeRadius, this.height);
-      World world = this.getWorld();
-      BlockPos posTarget;
-      int xOffset, yOffset, zOffset;
-      int slot = 0;//TODO: loop/search this
-      ItemStack is = this.getStackInSlot(0);
-      if (UtilItemStack.isEmpty(is)) { return; }
-      IBlockState stateToMatch;
-      Block block;
-      ModCyclic.logger.info("??shapeSrc.SIZE " + shapeSrc.size());
-      int iloop = 0;
-      for (BlockPos posSrc : shapeSrc) {
-        iloop++;
-        if (world.isAirBlock(posSrc)) {
-          continue;
-        }
-        stateToMatch = world.getBlockState(posSrc);
-        ModCyclic.logger.info("??posSrc " + posSrc+"+"+ stateToMatch.getBlock().getLocalizedName());
-        //source has a thing
-        if (Block.getBlockFromItem(is.getItem()) == stateToMatch.getBlock()) {
-          block = Block.getBlockFromItem(is.getItem());
-          ModCyclic.logger.info("block match" + block.getUnlocalizedName());
-          xOffset = this.offsetSourceX - this.offsetSourceX;
-          yOffset = this.offsetSourceY - this.offsetSourceY;
-          zOffset = this.offsetSourceZ - this.offsetSourceZ;
-          posTarget = centerTarget.add(xOffset, yOffset, zOffset);
-          //now we want target to be air
-          ModCyclic.logger.info("??posTarget " + posTarget);
-          if (world.isAirBlock(posTarget)) {
-            ModCyclic.logger.info("Place Block " + posTarget);
-            world.setBlockState(posTarget, UtilItemStack.getStateFromMeta(block, is.getMetadata()));
-            this.decrStackSize(slot, 1);
-            break;//until next tick
+      timer -= 1;
+      if (timer <= 0) {
+        timer = TIMER_FULL;
+        //try build one block
+        BlockPos centerTarget = this.getPos().add(offsetTargetX, offsetTargetY, offsetTargetZ);
+        //List<BlockPos> shapeTarget = UtilShape.cubeFrame(centerTarget, this.sizeRadius, this.height);
+        BlockPos centerSrc = this.getPos().add(offsetSourceX, offsetSourceY, offsetSourceZ);
+        List<BlockPos> shapeSrc = UtilShape.cubeFilled(centerSrc, this.sizeRadius, this.height);
+        World world = this.getWorld();
+        BlockPos posTarget;
+        int xOffset, yOffset, zOffset;
+        int slot = 0;//TODO: loop/search this
+        ItemStack is = this.getStackInSlot(0);
+        if (UtilItemStack.isEmpty(is)) { return; }
+        IBlockState stateToMatch;
+        Block block;
+        
+        int pTarget = world.rand.nextInt(shapeSrc.size());
+        BlockPos posSrc = shapeSrc.get(pTarget);
+
+
+        xOffset = posSrc.getX() - centerSrc.getX();
+        yOffset = posSrc.getY() - centerSrc.getY();
+        zOffset = posSrc.getZ() - centerSrc.getZ();
+        posTarget = centerTarget.add(xOffset, yOffset, zOffset);
+
+        //TODO: barrier are not part of final product. just to help me see/debug where the two targerts are
+        UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.BARRIER, posSrc);
+        UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.BARRIER, posTarget);
+        //  for (BlockPos posSrc : shapeSrc) {
+
+        if (!world.isAirBlock(posSrc)) {
+          stateToMatch = world.getBlockState(posSrc);
+      
+          //source has a thing
+          if (Block.getBlockFromItem(is.getItem()) == stateToMatch.getBlock()) {
+            block = Block.getBlockFromItem(is.getItem());
+           
+            //now we want target to be air
+       
+            if (world.isAirBlock(posTarget)) {
+              //TODO: make sure this plays sound
+              world.setBlockState(posTarget, UtilItemStack.getStateFromMeta(block, is.getMetadata()));
+              this.decrStackSize(slot, 1);
+            }
+          }
+          else{
+            //does NOT MATCH, so skip ahead
+            timer = 10;
           }
         }
-        ModCyclic.logger.info("end loop, try new"+iloop);
+        else{
+          //src IS air, so skip ahead
+          timer = 10;
+        }
       }
     }
   }
@@ -157,6 +174,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     this.offsetSourceZ = tagCompound.getInteger("sz");
     this.sizeRadius = tagCompound.getInteger("r");
     this.height = tagCompound.getInteger("height");
+    this.timer = tagCompound.getInteger("timer");
     NBTTagList tagList = tagCompound.getTagList(NBT_INV, 10);
     for (int i = 0; i < tagList.tagCount(); i++) {
       NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
@@ -176,6 +194,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     tagCompound.setInteger("sz", offsetSourceZ);
     tagCompound.setInteger("r", sizeRadius);
     tagCompound.setInteger("height", height);
+    tagCompound.setInteger("timer", timer);
     NBTTagList itemList = new NBTTagList();
     for (int i = 0; i < inv.length; i++) {
       ItemStack stack = inv[i];
@@ -207,6 +226,8 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       return this.offsetSourceZ;
     case HEIGHT:
       return this.height;
+    case TIMER:
+      return this.timer;
     default:
       break;
     }
@@ -237,6 +258,9 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       break;
     case HEIGHT:
       this.height = value;
+      break;
+    case TIMER:
+      this.timer = value;
       break;
     default:
       break;
