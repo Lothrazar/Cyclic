@@ -107,7 +107,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     List<BlockPos> shapeTarget = UtilShape.cubeFrame(centerTarget, this.sizeRadius, this.height);
     if (this.getWorld().rand.nextDouble() < 0.1) {
       for (BlockPos p : shapeTarget) {
-        UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CLOUD, p);
+        UtilParticle.spawnParticleNarrow(this.getWorld(), EnumParticleTypes.CLOUD, p);
       }
     }
     //src
@@ -115,7 +115,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     List<BlockPos> shapeSrc = UtilShape.cubeFrame(centerSrc, this.sizeRadius, this.height);
     if (this.getWorld().rand.nextDouble() < 0.1) {
       for (BlockPos p : shapeSrc) {
-        UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.DRAGON_BREATH, p);
+        UtilParticle.spawnParticleNarrow(this.getWorld(), EnumParticleTypes.DRAGON_BREATH, p);
       }
     }
   }
