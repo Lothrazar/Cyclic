@@ -15,6 +15,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -29,6 +30,14 @@ public class BlockPatternBuilder extends Block implements IHasRecipe {
     this.setResistance(5F);
     this.setSoundType(SoundType.WOOD);
     this.setTickRandomly(true);
+  }
+  @Override
+  public boolean isOpaqueCube(IBlockState state) {
+    return false; // http://greyminecraftcoder.blogspot.ca/2014/12/transparent-blocks-18.html
+  }
+  @SideOnly(Side.CLIENT)
+  public BlockRenderLayer getBlockLayer() {
+    return BlockRenderLayer.TRANSLUCENT;
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {

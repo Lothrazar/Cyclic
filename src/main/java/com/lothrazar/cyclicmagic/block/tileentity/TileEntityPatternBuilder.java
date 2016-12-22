@@ -70,8 +70,8 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
         posTarget = centerTarget.add(xOffset, yOffset, zOffset);
 
         //TODO: barrier are not part of final product. just to help me see/debug where the two targerts are
-        UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.BARRIER, posSrc);
-        UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.BARRIER, posTarget);
+        UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, posSrc);
+        UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, posTarget);
         //  for (BlockPos posSrc : shapeSrc) {
 
         if (!world.isAirBlock(posSrc)) {
