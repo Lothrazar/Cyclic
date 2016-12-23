@@ -22,6 +22,8 @@ public class GuiPattern extends GuiBaseContainer {
   private int rightColX;
   private int sizeY;
   private GuiButtonMachineRedstone redstoneBtn;
+  private int sizeColX;
+  private int heightColX;
   public GuiPattern(InventoryPlayer inventoryPlayer, TileEntityPatternBuilder tileEntity) {
     super(new ContainerPattern(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -40,23 +42,37 @@ public class GuiPattern extends GuiBaseContainer {
     super.initGui();
     leftColX = 176 - 148;
     int id = 1;
+    /////redstone button
     redstoneBtn = new GuiButtonMachineRedstone(id++,
         this.guiLeft + Const.padding,
         this.guiTop + Const.padding, this.tile.getPos());
     redstoneBtn.setTextureIndex(tile.getField(TileMachineHarvester.Fields.REDSTONE.ordinal()));
     this.buttonList.add(redstoneBtn);
-    int xOffset = 18;
-    int yOffset = 12;
-    sizeY = 20;
+    ///////SIZE
+    sizeY = 46;//save now as reuse for textbox
+    int vButtonSpacing = 12;
+    sizeColX = leftColX + 42;
     ButtonPattern btn = new ButtonPattern(tile.getPos(), id++,
-        this.guiLeft + leftColX + xOffset,
-        this.guiTop + sizeY, true, TileEntityPatternBuilder.Fields.SIZER);
+        this.guiLeft + sizeColX,
+        this.guiTop + sizeY - vButtonSpacing, true, TileEntityPatternBuilder.Fields.SIZER);
     this.buttonList.add(btn);
     btn = new ButtonPattern(tile.getPos(), id++,
-        this.guiLeft + leftColX - xOffset - 4,
-        this.guiTop + sizeY, false, TileEntityPatternBuilder.Fields.SIZER);
+        this.guiLeft + sizeColX,
+        this.guiTop + sizeY + vButtonSpacing, false, TileEntityPatternBuilder.Fields.SIZER);
     this.buttonList.add(btn);
-    //offset x
+    ////////HEIGHT
+    heightColX =  leftColX + 62;
+    btn = new ButtonPattern(tile.getPos(), id++,
+        this.guiLeft +heightColX,
+        this.guiTop + sizeY - vButtonSpacing, true, TileEntityPatternBuilder.Fields.HEIGHT);
+    this.buttonList.add(btn);
+    btn = new ButtonPattern(tile.getPos(), id++,
+        this.guiLeft + heightColX,
+        this.guiTop + sizeY +vButtonSpacing, false, TileEntityPatternBuilder.Fields.HEIGHT);
+    this.buttonList.add(btn);
+    //start OFFSET buttons
+    int xOffset = 18;
+    int yOffset = 12;
     yRows[0] = 40 + yOffset;
     btn = new ButtonPattern(tile.getPos(), id++,
         this.guiLeft + leftColX + xOffset,
@@ -86,28 +102,8 @@ public class GuiPattern extends GuiBaseContainer {
         this.guiLeft + leftColX - xOffset - 4,
         this.guiTop + yRows[2], false, TileEntityPatternBuilder.Fields.OFFTARGZ);
     this.buttonList.add(btn);
-    
-    
-    
-    
-    
-    
     rightColX = 108;
-    
-    
-
-  //  yRows[0] = 30;
-     btn = new ButtonPattern(tile.getPos(), id++,
-        this.guiLeft + leftColX + xOffset+ rightColX,
-        this.guiTop + sizeY, true, TileEntityPatternBuilder.Fields.HEIGHT);
-    this.buttonList.add(btn);
-    btn = new ButtonPattern(tile.getPos(), id++,
-        this.guiLeft + leftColX - xOffset - 4+ rightColX,
-        this.guiTop + sizeY, false, TileEntityPatternBuilder.Fields.HEIGHT);
-    this.buttonList.add(btn);
-    
-    //S x
-   // yRows[1] = yRows[0] + yOffset;
+    //start SRC buttons
     btn = new ButtonPattern(tile.getPos(), id++,
         this.guiLeft + leftColX + xOffset + rightColX,
         this.guiTop + yRows[0], true, TileEntityPatternBuilder.Fields.OFFSRCX);
@@ -116,8 +112,6 @@ public class GuiPattern extends GuiBaseContainer {
         this.guiLeft + leftColX - xOffset - 4 + rightColX,
         this.guiTop + yRows[0], false, TileEntityPatternBuilder.Fields.OFFSRCX);
     this.buttonList.add(btn);
-    //S y
-   // yRows[2] = yRows[1] + yOffset;
     btn = new ButtonPattern(tile.getPos(), id++,
         this.guiLeft + leftColX + xOffset + rightColX,
         this.guiTop + yRows[1], true, TileEntityPatternBuilder.Fields.OFFSRCY);
@@ -126,8 +120,6 @@ public class GuiPattern extends GuiBaseContainer {
         this.guiLeft + leftColX - xOffset - 4 + rightColX,
         this.guiTop + yRows[1], false, TileEntityPatternBuilder.Fields.OFFSRCY);
     this.buttonList.add(btn);
-    //S z
-   // yRows[3] = yRows[2] + yOffset;
     btn = new ButtonPattern(tile.getPos(), id++,
         this.guiLeft + leftColX + xOffset + rightColX,
         this.guiTop + yRows[2], true, TileEntityPatternBuilder.Fields.OFFSRCZ);
@@ -143,7 +135,7 @@ public class GuiPattern extends GuiBaseContainer {
     redstoneBtn.setState(tile.getField(TileEntityPatternBuilder.Fields.REDSTONE.ordinal()));
     String display = "" + this.tile.getField(TileEntityPatternBuilder.Fields.SIZER.ordinal());
     //move it over if more than 1 digit
-    int x = (display.length() > 1) ? leftColX - 3 : leftColX;
+    int x = (display.length() > 1) ? sizeColX - 3 : sizeColX;
     int y = sizeY;
     this.fontRendererObj.drawString(display, x, y, 4210752);
     display = "" + this.tile.getField(TileEntityPatternBuilder.Fields.OFFTARGX.ordinal());
@@ -163,19 +155,13 @@ public class GuiPattern extends GuiBaseContainer {
     this.fontRendererObj.drawString(display, x, y, 4210752);
     int moreX = rightColX + 5;
     int xOtherbox = leftColX + moreX;
-    
-    
-    
     //x = (display.length() > 1) ? xOtherbox - 3 : xOtherbox;
     //y = yRows[0];
-     display = "" + this.tile.getField(TileEntityPatternBuilder.Fields.HEIGHT.ordinal());
-     x = (display.length() > 1) ? xOtherbox - 3 : xOtherbox;
+    display = "" + this.tile.getField(TileEntityPatternBuilder.Fields.HEIGHT.ordinal());
+    x = (display.length() > 1) ? heightColX - 3 : heightColX;
     //move it over if more than 1 digit
-   y = sizeY;
+    y = sizeY;
     this.fontRendererObj.drawString(display, x, y, 4210752);
-    
-    
-    
     display = "" + this.tile.getField(TileEntityPatternBuilder.Fields.OFFSRCX.ordinal());
     //move it over if more than 1 digit
     x = (display.length() > 1) ? xOtherbox - 3 : xOtherbox;
