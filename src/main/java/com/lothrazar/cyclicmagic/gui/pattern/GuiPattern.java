@@ -84,7 +84,7 @@ public class GuiPattern extends GuiBaseContainer {
     
     
     
-    rightColX = 100;
+    rightColX = 108;
     
     
 

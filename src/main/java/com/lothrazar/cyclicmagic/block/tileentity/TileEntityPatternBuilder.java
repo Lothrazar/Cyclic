@@ -15,9 +15,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implements ITickable {
+  private static final EnumParticleTypes PARTICLE_TARGET = EnumParticleTypes.CLOUD;
+  private static final EnumParticleTypes PARTICLE_SRC = EnumParticleTypes.DRAGON_BREATH;
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
-  private int height = 7;
+  private int height = 5;
   private int offsetTargetX = -4;
   private int offsetTargetY = 0;
   private int offsetTargetZ = 1;
@@ -26,7 +28,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   private int offsetSourceZ = 1;
   private int sizeRadius = 3;
   private int timer = 1;
-  private static final int TIMER_FULL = 100;
+  private static final int TIMER_FULL = 120;
   private ItemStack[] inv;
   public static enum Fields {
     OFFTARGX, OFFTARGY, OFFTARGZ, SIZER, OFFSRCX, OFFSRCY, OFFSRCZ, HEIGHT, TIMER
@@ -116,7 +118,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     List<BlockPos> shapeTarget = UtilShape.cubeFrame(centerTarget, this.sizeRadius, this.height);
     if (this.getWorld().rand.nextDouble() < 0.1) {
       for (BlockPos p : shapeTarget) {
-        UtilParticle.spawnParticleNarrow(this.getWorld(), EnumParticleTypes.CLOUD, p);
+        UtilParticle.spawnParticleNarrow(this.getWorld(), PARTICLE_TARGET, p);
       }
     }
     //src
@@ -124,7 +126,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     List<BlockPos> shapeSrc = UtilShape.cubeFrame(centerSrc, this.sizeRadius, this.height);
     if (this.getWorld().rand.nextDouble() < 0.1) {
       for (BlockPos p : shapeSrc) {
-        UtilParticle.spawnParticleNarrow(this.getWorld(), EnumParticleTypes.DRAGON_BREATH, p);
+        UtilParticle.spawnParticleNarrow(this.getWorld(), PARTICLE_SRC, p);
       }
     }
   }
