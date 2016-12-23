@@ -14,9 +14,10 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implements ITickable {
+public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
   private static final EnumParticleTypes PARTICLE_TARGET = EnumParticleTypes.CLOUD;
   private static final EnumParticleTypes PARTICLE_SRC = EnumParticleTypes.DRAGON_BREATH;
+  private static final String NBT_REDST = "redstone";
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
   private int height = 5;
@@ -30,8 +31,9 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   private int timer = 1;
   private static final int TIMER_FULL = 120;
   private ItemStack[] inv;
+  private int needsRedstone;
   public static enum Fields {
-    OFFTARGX, OFFTARGY, OFFTARGZ, SIZER, OFFSRCX, OFFSRCY, OFFSRCZ, HEIGHT, TIMER
+    OFFTARGX, OFFTARGY, OFFTARGZ, SIZER, OFFSRCX, OFFSRCY, OFFSRCZ, HEIGHT, TIMER, REDSTONE
   }
   public TileEntityPatternBuilder() {
     inv = new ItemStack[18];
@@ -64,51 +66,56 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     }
     return slot;
   }
+  private boolean onlyRunIfPowered() {
+    return this.needsRedstone == 1;
+  }
   @Override
   public void update() {
+    if (this.onlyRunIfPowered() && this.isPowered() == false) {
+      // it works ONLY if its powered
+      return;
+    }
     this.renderBoundingBoxes();
-    if (this.isPowered()) {
-      timer -= 1;
-      if (timer <= 0) {
-        timer = TIMER_FULL;
-        //try build one block
-        //List<BlockPos> shapeTarget = UtilShape.cubeFrame(centerTarget, this.sizeRadius, this.height);
-        BlockPos centerSrc = this.getCenterSrc();
-        List<BlockPos> shapeSrc = UtilShape.cubeFilled(centerSrc, this.sizeRadius, this.height);
-        if (shapeSrc.size() <= 0) { return; }
-        World world = this.getWorld();
-        int pTarget = world.rand.nextInt(shapeSrc.size());
-        BlockPos posSrc = shapeSrc.get(pTarget);
-        int xOffset, yOffset, zOffset;
-        xOffset = posSrc.getX() - centerSrc.getX();
-        yOffset = posSrc.getY() - centerSrc.getY();
-        zOffset = posSrc.getZ() - centerSrc.getZ();
-        BlockPos centerTarget = this.getCenterTarget();
-        BlockPos posTarget = centerTarget.add(xOffset, yOffset, zOffset);
-        //TODO: barrier are not part of final product. just to help me see/debug where the two targerts are
-        UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, posSrc);
-        UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, posTarget);
-        IBlockState stateToMatch;
-        int slot;
-        if (!world.isAirBlock(posSrc)) {
-          stateToMatch = world.getBlockState(posSrc);
-          slot = this.findSlotForMatch(stateToMatch);
-          if (slot < 0) { return; } //EMPTY
-          //now we want target to be air
-          if (world.isAirBlock(posTarget)) {
-            //TODO: make sure this plays sound
-            world.setBlockState(posTarget, stateToMatch);
-            this.decrStackSize(slot, 1);
-          }
-          else {
-            //does NOT MATCH, so skip ahead
-            timer = 10;
-          }
+    timer -= 1;
+    if (timer <= 0) {
+      timer = TIMER_FULL;
+      //try build one block
+      //List<BlockPos> shapeTarget = UtilShape.cubeFrame(centerTarget, this.sizeRadius, this.height);
+      BlockPos centerSrc = this.getCenterSrc();
+      List<BlockPos> shapeSrc = UtilShape.cubeFilled(centerSrc, this.sizeRadius, this.height);
+      if (shapeSrc.size() <= 0) { return; }
+      World world = this.getWorld();
+      int pTarget = world.rand.nextInt(shapeSrc.size());
+      BlockPos posSrc = shapeSrc.get(pTarget);
+      int xOffset, yOffset, zOffset;
+      xOffset = posSrc.getX() - centerSrc.getX();
+      yOffset = posSrc.getY() - centerSrc.getY();
+      zOffset = posSrc.getZ() - centerSrc.getZ();
+      BlockPos centerTarget = this.getCenterTarget();
+      BlockPos posTarget = centerTarget.add(xOffset, yOffset, zOffset);
+      //TODO: barrier are not part of final product. just to help me see/debug where the two targerts are
+      UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, posSrc);
+      UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, posTarget);
+      IBlockState stateToMatch;
+      int slot;
+      if (!world.isAirBlock(posSrc)) {
+        stateToMatch = world.getBlockState(posSrc);
+        slot = this.findSlotForMatch(stateToMatch);
+        if (slot < 0) { return; } //EMPTY
+        //now we want target to be air
+        if (world.isAirBlock(posTarget)) {
+          //TODO: make sure this plays sound
+          world.setBlockState(posTarget, stateToMatch);
+          this.decrStackSize(slot, 1);
         }
         else {
-          //src IS air, so skip ahead
+          //does NOT MATCH, so skip ahead
           timer = 10;
         }
+      }
+      else {
+        //src IS air, so skip ahead
+        timer = 10;
       }
     }
   }
@@ -185,6 +192,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     this.sizeRadius = tagCompound.getInteger("r");
     this.height = tagCompound.getInteger("height");
     this.timer = tagCompound.getInteger("timer");
+    this.needsRedstone = tagCompound.getInteger(NBT_REDST);
     NBTTagList tagList = tagCompound.getTagList(NBT_INV, 10);
     for (int i = 0; i < tagList.tagCount(); i++) {
       NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
@@ -205,6 +213,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     tagCompound.setInteger("r", sizeRadius);
     tagCompound.setInteger("height", height);
     tagCompound.setInteger("timer", timer);
+    tagCompound.setInteger(NBT_REDST, this.needsRedstone);
     NBTTagList itemList = new NBTTagList();
     for (int i = 0; i < inv.length; i++) {
       ItemStack stack = inv[i];
@@ -238,12 +247,15 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       return this.height;
     case TIMER:
       return this.timer;
+    case REDSTONE:
+      return this.needsRedstone;
     default:
       break;
     }
     return 0;
   }
   public void setField(Fields f, int value) {
+    this.renderBoundingBoxes();
     switch (f) {
     case OFFTARGX:
       this.offsetTargetX = value;
@@ -272,6 +284,9 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     case TIMER:
       this.timer = value;
       break;
+    case REDSTONE:
+      this.needsRedstone = value;
+      break;
     default:
       break;
     }
@@ -283,5 +298,13 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   @Override
   public void setField(int id, int value) {
     setField(Fields.values()[id], value);
+  }
+  @Override
+  public void toggleNeedsRedstone() {
+    int val = this.needsRedstone + 1;
+    if (val > 1) {
+      val = 0;//hacky lazy way
+    }
+    this.setField(Fields.REDSTONE.ordinal(), val);
   }
 }

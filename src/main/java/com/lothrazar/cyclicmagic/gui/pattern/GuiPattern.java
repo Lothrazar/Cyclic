@@ -1,7 +1,9 @@
 package com.lothrazar.cyclicmagic.gui.pattern;
 import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPatternBuilder;
+import com.lothrazar.cyclicmagic.block.tileentity.TileMachineHarvester;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -19,6 +21,7 @@ public class GuiPattern extends GuiBaseContainer {
   private int[] yRows = new int[3];
   private int rightColX;
   private int sizeY;
+  private GuiButtonMachineRedstone redstoneBtn;
   public GuiPattern(InventoryPlayer inventoryPlayer, TileEntityPatternBuilder tileEntity) {
     super(new ContainerPattern(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -36,7 +39,12 @@ public class GuiPattern extends GuiBaseContainer {
   public void initGui() {
     super.initGui();
     leftColX = 176 - 148;
-    int id = 2;
+    int id = 1;
+    redstoneBtn = new GuiButtonMachineRedstone(id++,
+        this.guiLeft + Const.padding,
+        this.guiTop + Const.padding, this.tile.getPos());
+    redstoneBtn.setTextureIndex(tile.getField(TileMachineHarvester.Fields.REDSTONE.ordinal()));
+    this.buttonList.add(redstoneBtn);
     int xOffset = 18;
     int yOffset = 12;
     sizeY = 20;
@@ -132,7 +140,7 @@ public class GuiPattern extends GuiBaseContainer {
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+    redstoneBtn.setState(tile.getField(TileEntityPatternBuilder.Fields.REDSTONE.ordinal()));
     String display = "" + this.tile.getField(TileEntityPatternBuilder.Fields.SIZER.ordinal());
     //move it over if more than 1 digit
     int x = (display.length() > 1) ? leftColX - 3 : leftColX;
@@ -183,6 +191,7 @@ public class GuiPattern extends GuiBaseContainer {
     x = (display.length() > 1) ? xOtherbox - 3 : xOtherbox;
     y = yRows[2];
     this.fontRendererObj.drawString(display, x, y, 4210752);
+    super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
