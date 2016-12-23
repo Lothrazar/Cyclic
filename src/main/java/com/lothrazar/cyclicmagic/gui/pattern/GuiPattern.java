@@ -52,81 +52,105 @@ public class GuiPattern extends GuiBaseContainer {
     sizeY = 46;//save now as reuse for textbox
     int vButtonSpacing = 12;
     sizeColX = leftColX + 42;
-    ButtonPattern btn = new ButtonPattern(tile.getPos(), id++,
-        this.guiLeft + sizeColX,
-        this.guiTop + sizeY - vButtonSpacing, true, TileEntityPatternBuilder.Fields.SIZER);
-    this.buttonList.add(btn);
-    btn = new ButtonPattern(tile.getPos(), id++,
-        this.guiLeft + sizeColX,
-        this.guiTop + sizeY + vButtonSpacing, false, TileEntityPatternBuilder.Fields.SIZER);
-    this.buttonList.add(btn);
+//    ButtonPattern btn = new ButtonPattern(tile.getPos(), id++,
+//        this.guiLeft + sizeColX,
+//        this.guiTop + sizeY - vButtonSpacing, true, TileEntityPatternBuilder.Fields.SIZER);
+//    this.buttonList.add(btn);
+    addPatternButtonAt(id++, sizeColX,sizeY - vButtonSpacing,true, TileEntityPatternBuilder.Fields.SIZER);
+//    btn = new ButtonPattern(tile.getPos(), id++,
+//        this.guiLeft + sizeColX,
+//        this.guiTop + sizeY + vButtonSpacing, false, TileEntityPatternBuilder.Fields.SIZER);
+//    this.buttonList.add(btn);
+    addPatternButtonAt(id++, sizeColX,sizeY + vButtonSpacing,false, TileEntityPatternBuilder.Fields.SIZER);
     ////////HEIGHT
     heightColX = leftColX + 62;
-    btn = new ButtonPattern(tile.getPos(), id++,
-        this.guiLeft + heightColX,
-        this.guiTop + sizeY - vButtonSpacing, true, TileEntityPatternBuilder.Fields.HEIGHT);
-    this.buttonList.add(btn);
-    btn = new ButtonPattern(tile.getPos(), id++,
-        this.guiLeft + heightColX,
-        this.guiTop + sizeY + vButtonSpacing, false, TileEntityPatternBuilder.Fields.HEIGHT);
-    this.buttonList.add(btn);
+//    btn = new ButtonPattern(tile.getPos(), id++,
+//        this.guiLeft + heightColX,
+//        this.guiTop + sizeY - vButtonSpacing, true, TileEntityPatternBuilder.Fields.HEIGHT);
+//    this.buttonList.add(btn);
+    addPatternButtonAt(id++, heightColX, sizeY - vButtonSpacing,true, TileEntityPatternBuilder.Fields.HEIGHT);
+//    btn = new ButtonPattern(tile.getPos(), id++,
+//        this.guiLeft + heightColX,
+//        this.guiTop + sizeY + vButtonSpacing, false, TileEntityPatternBuilder.Fields.HEIGHT);
+//    this.buttonList.add(btn);
+    addPatternButtonAt(id++, heightColX,sizeY + vButtonSpacing,false, TileEntityPatternBuilder.Fields.HEIGHT);
     //start OFFSET buttons
     int xOffset = 18;
     int yOffset = 12;
     yRows[0] = 40 + yOffset;
-    btn = new ButtonPattern(tile.getPos(), id++,
-        this.guiLeft + leftColX + xOffset,
-        this.guiTop + yRows[0], true, TileEntityPatternBuilder.Fields.OFFTARGX);
-    this.buttonList.add(btn);
-    btn = new ButtonPattern(tile.getPos(), id++,
-        this.guiLeft + leftColX - xOffset - 4,
-        this.guiTop + yRows[0], false, TileEntityPatternBuilder.Fields.OFFTARGX);
-    this.buttonList.add(btn);
+//    btn = new ButtonPattern(tile.getPos(), id++,
+//        this.guiLeft + leftColX + xOffset,
+//        this.guiTop + yRows[0], true, TileEntityPatternBuilder.Fields.OFFTARGX);
+//    this.buttonList.add(btn);
+    addPatternButtonAt(id++, leftColX + xOffset, yRows[0],true, TileEntityPatternBuilder.Fields.OFFTARGX);
+//    btn = new ButtonPattern(tile.getPos(), id++,
+//        this.guiLeft + leftColX - xOffset - 4,
+//        this.guiTop + yRows[0], false, TileEntityPatternBuilder.Fields.OFFTARGX);
+//    this.buttonList.add(btn);
+    addPatternButtonAt(id++,  leftColX - xOffset - 4, yRows[0],false, TileEntityPatternBuilder.Fields.OFFTARGX);
     //offset y
     yRows[1] = yRows[0] + yOffset;
-    btn = new ButtonPattern(tile.getPos(), id++,
-        this.guiLeft + leftColX + xOffset,
-        this.guiTop + yRows[1], true, TileEntityPatternBuilder.Fields.OFFTARGY);
-    this.buttonList.add(btn);
-    btn = new ButtonPattern(tile.getPos(), id++,
-        this.guiLeft + leftColX - xOffset - 4,
-        this.guiTop + yRows[1], false, TileEntityPatternBuilder.Fields.OFFTARGY);
-    this.buttonList.add(btn);
+//    btn = new ButtonPattern(tile.getPos(), id++,
+//        this.guiLeft + leftColX + xOffset,
+//        this.guiTop + yRows[1], true, TileEntityPatternBuilder.Fields.OFFTARGY);
+//    this.buttonList.add(btn);
+    addPatternButtonAt(id++, leftColX + xOffset, yRows[1],true, TileEntityPatternBuilder.Fields.OFFTARGY);
+//    btn = new ButtonPattern(tile.getPos(), id++,
+//        this.guiLeft + leftColX - xOffset - 4,
+//        this.guiTop + yRows[1], false, TileEntityPatternBuilder.Fields.OFFTARGY);
+//    this.buttonList.add(btn);
+    addPatternButtonAt(id++,  leftColX - xOffset - 4, yRows[1],false, TileEntityPatternBuilder.Fields.OFFTARGY);
     //offset z
     yRows[2] = yRows[1] + yOffset;
-    btn = new ButtonPattern(tile.getPos(), id++,
-        this.guiLeft + leftColX + xOffset,
-        this.guiTop + yRows[2], true, TileEntityPatternBuilder.Fields.OFFTARGZ);
-    this.buttonList.add(btn);
-    btn = new ButtonPattern(tile.getPos(), id++,
-        this.guiLeft + leftColX - xOffset - 4,
-        this.guiTop + yRows[2], false, TileEntityPatternBuilder.Fields.OFFTARGZ);
-    this.buttonList.add(btn);
+//    btn = new ButtonPattern(tile.getPos(), id++,
+//        this.guiLeft + leftColX + xOffset,
+//        this.guiTop + yRows[2], true, TileEntityPatternBuilder.Fields.OFFTARGZ);
+//    this.buttonList.add(btn);
+    addPatternButtonAt(id++, leftColX + xOffset, yRows[2],true, TileEntityPatternBuilder.Fields.OFFTARGZ);
+//    btn = new ButtonPattern(tile.getPos(), id++,
+//        this.guiLeft + leftColX - xOffset - 4,
+//        this.guiTop + yRows[2], false, TileEntityPatternBuilder.Fields.OFFTARGZ);
+//    this.buttonList.add(btn);
+    addPatternButtonAt(id++,  leftColX - xOffset - 4, yRows[2],false, TileEntityPatternBuilder.Fields.OFFTARGZ);
     rightColX = 108;
     //start SRC buttons
-    btn = new ButtonPattern(tile.getPos(), id++,
-        this.guiLeft + leftColX + xOffset + rightColX,
-        this.guiTop + yRows[0], true, TileEntityPatternBuilder.Fields.OFFSRCX);
-    this.buttonList.add(btn);
-    btn = new ButtonPattern(tile.getPos(), id++,
-        this.guiLeft + leftColX - xOffset - 4 + rightColX,
-        this.guiTop + yRows[0], false, TileEntityPatternBuilder.Fields.OFFSRCX);
-    this.buttonList.add(btn);
-    btn = new ButtonPattern(tile.getPos(), id++,
-        this.guiLeft + leftColX + xOffset + rightColX,
-        this.guiTop + yRows[1], true, TileEntityPatternBuilder.Fields.OFFSRCY);
-    this.buttonList.add(btn);
-    btn = new ButtonPattern(tile.getPos(), id++,
-        this.guiLeft + leftColX - xOffset - 4 + rightColX,
-        this.guiTop + yRows[1], false, TileEntityPatternBuilder.Fields.OFFSRCY);
-    this.buttonList.add(btn);
-    btn = new ButtonPattern(tile.getPos(), id++,
-        this.guiLeft + leftColX + xOffset + rightColX,
-        this.guiTop + yRows[2], true, TileEntityPatternBuilder.Fields.OFFSRCZ);
-    this.buttonList.add(btn);
-    btn = new ButtonPattern(tile.getPos(), id++,
-        this.guiLeft + leftColX - xOffset - 4 + rightColX,
-        this.guiTop + yRows[2], false, TileEntityPatternBuilder.Fields.OFFSRCZ);
+//    btn = new ButtonPattern(tile.getPos(), id++,
+//        this.guiLeft + leftColX + xOffset + rightColX,
+//        this.guiTop + yRows[0], true, TileEntityPatternBuilder.Fields.OFFSRCX);
+//    this.buttonList.add(btn);
+    addPatternButtonAt(id++, leftColX + xOffset + rightColX, yRows[0],true, TileEntityPatternBuilder.Fields.OFFSRCX);
+//    btn = new ButtonPattern(tile.getPos(), id++,
+//        this.guiLeft + leftColX - xOffset - 4 + rightColX,
+//        this.guiTop + yRows[0], false, TileEntityPatternBuilder.Fields.OFFSRCX);
+//    this.buttonList.add(btn);
+    addPatternButtonAt(id++, leftColX - xOffset - 4 + rightColX, yRows[0],false, TileEntityPatternBuilder.Fields.OFFSRCX);
+//    btn = new ButtonPattern(tile.getPos(), id++,
+//        this.guiLeft + leftColX + xOffset + rightColX,
+//        this.guiTop + yRows[1], true, TileEntityPatternBuilder.Fields.OFFSRCY);
+//    this.buttonList.add(btn);
+    addPatternButtonAt(id++, leftColX + xOffset + rightColX, yRows[1],true, TileEntityPatternBuilder.Fields.OFFSRCY);
+//    btn = new ButtonPattern(tile.getPos(), id++,
+//        this.guiLeft + leftColX - xOffset - 4 + rightColX,
+//        this.guiTop + yRows[1], false, TileEntityPatternBuilder.Fields.OFFSRCY);
+//    this.buttonList.add(btn);
+    addPatternButtonAt(id++, leftColX - xOffset - 4 + rightColX, yRows[1],false, TileEntityPatternBuilder.Fields.OFFSRCY);
+    
+//    btn = new ButtonPattern(tile.getPos(), id++,
+//        this.guiLeft + leftColX + xOffset + rightColX,
+//        this.guiTop + yRows[2], true, TileEntityPatternBuilder.Fields.OFFSRCZ);
+//    this.buttonList.add(btn);
+    addPatternButtonAt(id++,  leftColX + xOffset + rightColX, yRows[2],true, TileEntityPatternBuilder.Fields.OFFSRCZ);
+//    btn = new ButtonPattern(tile.getPos(), id++,
+//        this.guiLeft + leftColX - xOffset - 4 + rightColX,
+//        this.guiTop + yRows[2], false, TileEntityPatternBuilder.Fields.OFFSRCZ);
+//    this.buttonList.add(btn);
+    addPatternButtonAt(id++, leftColX - xOffset - 4 + rightColX, yRows[2],false, TileEntityPatternBuilder.Fields.OFFSRCZ);
+  }
+  private void addPatternButtonAt(int id,int x, int y, boolean isUp, TileEntityPatternBuilder.Fields f){
+    ButtonPattern  btn = new ButtonPattern(tile.getPos(), id,
+        this.guiLeft + x,
+        this.guiTop + y, 
+        isUp, f);
     this.buttonList.add(btn);
   }
   private void drawFieldAt(int x, int y, TileEntityPatternBuilder.Fields f) {
