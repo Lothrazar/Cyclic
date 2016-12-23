@@ -61,14 +61,14 @@ public class GuiPattern extends GuiBaseContainer {
         this.guiTop + sizeY + vButtonSpacing, false, TileEntityPatternBuilder.Fields.SIZER);
     this.buttonList.add(btn);
     ////////HEIGHT
-    heightColX =  leftColX + 62;
+    heightColX = leftColX + 62;
     btn = new ButtonPattern(tile.getPos(), id++,
-        this.guiLeft +heightColX,
+        this.guiLeft + heightColX,
         this.guiTop + sizeY - vButtonSpacing, true, TileEntityPatternBuilder.Fields.HEIGHT);
     this.buttonList.add(btn);
     btn = new ButtonPattern(tile.getPos(), id++,
         this.guiLeft + heightColX,
-        this.guiTop + sizeY +vButtonSpacing, false, TileEntityPatternBuilder.Fields.HEIGHT);
+        this.guiTop + sizeY + vButtonSpacing, false, TileEntityPatternBuilder.Fields.HEIGHT);
     this.buttonList.add(btn);
     //start OFFSET buttons
     int xOffset = 18;
@@ -129,54 +129,25 @@ public class GuiPattern extends GuiBaseContainer {
         this.guiTop + yRows[2], false, TileEntityPatternBuilder.Fields.OFFSRCZ);
     this.buttonList.add(btn);
   }
+  private void drawFieldAt(int x, int y, TileEntityPatternBuilder.Fields f) {
+    String display = "" + this.tile.getField(f.ordinal());
+    x = (display.length() > 1) ? x - 3 : x;
+    this.fontRendererObj.drawString(display, x, y, 4210752);
+  }
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     redstoneBtn.setState(tile.getField(TileEntityPatternBuilder.Fields.REDSTONE.ordinal()));
-    String display = "" + this.tile.getField(TileEntityPatternBuilder.Fields.SIZER.ordinal());
-    //move it over if more than 1 digit
-    int x = (display.length() > 1) ? sizeColX - 3 : sizeColX;
-    int y = sizeY;
-    this.fontRendererObj.drawString(display, x, y, 4210752);
-    display = "" + this.tile.getField(TileEntityPatternBuilder.Fields.OFFTARGX.ordinal());
-    //move it over if more than 1 digit
-    x = (display.length() > 1) ? leftColX - 3 : leftColX;
-    y = yRows[0];
-    this.fontRendererObj.drawString(display, x, y, 4210752);
-    display = "" + this.tile.getField(TileEntityPatternBuilder.Fields.OFFTARGY.ordinal());
-    //move it over if more than 1 digit
-    x = (display.length() > 1) ? leftColX - 3 : leftColX;
-    y = yRows[1];
-    this.fontRendererObj.drawString(display, x, y, 4210752);
-    display = "" + this.tile.getField(TileEntityPatternBuilder.Fields.OFFTARGZ.ordinal());
-    //move it over if more than 1 digit
-    x = (display.length() > 1) ? leftColX - 3 : leftColX;
-    y = yRows[2];
-    this.fontRendererObj.drawString(display, x, y, 4210752);
-    int moreX = rightColX + 5;
-    int xOtherbox = leftColX + moreX;
-    //x = (display.length() > 1) ? xOtherbox - 3 : xOtherbox;
-    //y = yRows[0];
-    display = "" + this.tile.getField(TileEntityPatternBuilder.Fields.HEIGHT.ordinal());
-    x = (display.length() > 1) ? heightColX - 3 : heightColX;
-    //move it over if more than 1 digit
-    y = sizeY;
-    this.fontRendererObj.drawString(display, x, y, 4210752);
-    display = "" + this.tile.getField(TileEntityPatternBuilder.Fields.OFFSRCX.ordinal());
-    //move it over if more than 1 digit
-    x = (display.length() > 1) ? xOtherbox - 3 : xOtherbox;
-    y = yRows[0];
-    this.fontRendererObj.drawString(display, x, y, 4210752);
-    display = "" + this.tile.getField(TileEntityPatternBuilder.Fields.OFFSRCY.ordinal());
-    //move it over if more than 1 digit
-    x = (display.length() > 1) ? xOtherbox - 3 : xOtherbox;
-    y = yRows[1];
-    this.fontRendererObj.drawString(display, x, y, 4210752);
-    display = "" + this.tile.getField(TileEntityPatternBuilder.Fields.OFFSRCZ.ordinal());
-    //move it over if more than 1 digit
-    x = (display.length() > 1) ? xOtherbox - 3 : xOtherbox;
-    y = yRows[2];
-    this.fontRendererObj.drawString(display, x, y, 4210752);
+    //draw all text fields
+    drawFieldAt(sizeColX + 3, sizeY, TileEntityPatternBuilder.Fields.SIZER);
+    drawFieldAt(leftColX, yRows[0], TileEntityPatternBuilder.Fields.OFFTARGX);
+    drawFieldAt(leftColX, yRows[1], TileEntityPatternBuilder.Fields.OFFTARGY);
+    drawFieldAt(leftColX, yRows[2], TileEntityPatternBuilder.Fields.OFFTARGZ);
+    drawFieldAt(heightColX + 3, sizeY, TileEntityPatternBuilder.Fields.HEIGHT);
+    int xOtherbox = leftColX + rightColX + 5;
+    drawFieldAt(xOtherbox, yRows[0], TileEntityPatternBuilder.Fields.OFFSRCX);
+    drawFieldAt(xOtherbox, yRows[1], TileEntityPatternBuilder.Fields.OFFSRCY);
+    drawFieldAt(xOtherbox, yRows[2], TileEntityPatternBuilder.Fields.OFFSRCZ);
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
   @Override
