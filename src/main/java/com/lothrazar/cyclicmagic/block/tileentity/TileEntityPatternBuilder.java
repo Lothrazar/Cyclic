@@ -1,10 +1,8 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.List;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilShape;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -56,10 +54,6 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       if (UtilItemStack.isEmpty(is)) {
         continue;
       }
-      //      blockFromStack = Block.getBlockFromItem(is.getItem());
-      //      int stateMeta=  stateToMatch.getBlock().getMetaFromState(stateToMatch);
-//      int stateMeta = stateToMatch.getBlock().damageDropped(stateToMatch);
-//      int stackMeta = is.getMetadata();
       itemFromState = Item.getItemFromBlock(stateToMatch.getBlock());
       if (itemFromState == is.getItem()) {
         slot = i;//yep it matches
@@ -175,7 +169,6 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
-    //    if (side == EnumFacing.UP) { return new int[] { 0 }; }
     return new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 };
   }
   @Override

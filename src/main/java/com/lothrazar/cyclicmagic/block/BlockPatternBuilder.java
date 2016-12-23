@@ -11,6 +11,7 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
@@ -20,6 +21,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -70,20 +72,14 @@ public class BlockPatternBuilder extends Block implements IHasRecipe {
   }
   @Override
   public void addRecipe() {
-//    GameRegistry.addRecipe(new ItemStack(this),
-//        "pwp",
-//        "wfw",
-//        "pwp",
-//        'w', Blocks.WEB,
-//        'f', new ItemStack(Items.FISH, 1, ItemFishFood.FishType.PUFFERFISH.getMetadata()),
-//        'p', Blocks.TRAPPED_CHEST);
-//    GameRegistry.addRecipe(new ItemStack(this),
-//        "pwp",
-//        "wfw",
-//        "pwp",
-//        'w', Blocks.WEB,
-//        'f', new ItemStack(Items.FISH, 1, ItemFishFood.FishType.CLOWNFISH.getMetadata()),
-//        'p', Blocks.TRAPPED_CHEST);
+    GameRegistry.addRecipe(new ItemStack(this),
+        "pwp",
+        "wfw",
+        "pwp",
+        'w', Blocks.MAGMA,
+        'f', Blocks.STONE,
+        'p', Blocks.REDSTONE_BLOCK);
+
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
