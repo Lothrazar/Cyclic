@@ -78,9 +78,16 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   public SPacketUpdateTileEntity getUpdatePacket() {//getDescriptionPacket() {
     // Gathers data into a packet (S35PacketUpdateTileEntity) that is to be
     // sent to the client. Called on server only.
-    NBTTagCompound syncData = new NBTTagCompound();
-    this.writeToNBT(syncData);
+    NBTTagCompound syncData =  getUpdateTag();
+//    this.writeToNBT(syncData);
     return new SPacketUpdateTileEntity(this.pos, 1, syncData);
+  }
+  @Override
+  public NBTTagCompound getUpdateTag() {
+    //thanks http://www.minecraftforge.net/forum/index.php?topic=39162.0
+    NBTTagCompound syncData = new NBTTagCompound();
+    this.writeToNBT(syncData);//this calls writeInternal
+    return syncData;
   }
   protected void shiftAllUp() {
     for (int i = 0; i < this.getSizeInventory() - 1; i++) {
