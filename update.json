@@ -86,6 +86,6 @@
   	,"1.9.2":"New block: Fan.  Auto Fisher: Fixed not outputting items to things like hoppers.  Added a tooltip for Autofisher.  Fix tooltip on exchange scepter.  "
   	,"1.9.3":"Added recipe for Fan.  "
   	,"1.9.4":"Fix crash caused by certain types of modded armor in the Uncrafting grinder (such as bronze armor from IC2).  Auto fisher will now refuse to fish if a non-fishing rod item ends up in that slot.  Vein size and spawn chances of Nether ore and End ore now in config; tweak or disable each individually.  "
-  	,"1.9.5":"New Block: Pattern Replicator.  Add config for disabling Viscous potion.  Fix speed charm exploit bug.  Speed charm now has more durability, but takes damage a bit faster, and costs emerald blocks instead of emerald items to craft and repair.  "
+  	,"1.9.5":"New Block: Pattern Replicator.  Add config for disabling Viscous potion.  Fix speed charm exploit bug.  Speed charm now has more durability, but takes damage a bit faster, and costs emerald blocks instead of emerald items to craft and repair.  Added new mob spawn config to allow pigmen to spawn naturally in Mesa biomes (off by default).  "
   }
 }
