@@ -35,10 +35,13 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
   private boolean enablePassword;
   private boolean enableMinerSmart;
   private boolean enableUser;
+  private boolean enablePattern;
   public void onInit() {
-    BlockPatternBuilder builder_pattern = new BlockPatternBuilder();
-    BlockRegistry.registerBlock(builder_pattern, "builder_pattern");
-    GameRegistry.registerTileEntity(TileEntityPatternBuilder.class, "builder_pattern_te");
+    if (enablePattern) {
+      BlockPatternBuilder builder_pattern = new BlockPatternBuilder();
+      BlockRegistry.registerBlock(builder_pattern, "builder_pattern");
+      GameRegistry.registerTileEntity(TileEntityPatternBuilder.class, "builder_pattern_te");
+    }
     if (enableBuilderBlock) {
       BlockStructureBuilder builder_block = new BlockStructureBuilder();
       BlockRegistry.registerBlock(builder_block, "builder_block");
@@ -90,6 +93,7 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
   }
   @Override
   public void syncConfig(Configuration config) {
+    enablePattern = config.getBoolean("PatternReplicator", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableUser = config.getBoolean("AutomatedUser", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablePassword = config.getBoolean("PasswordTrigger", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablePlacer = config.getBoolean("BlockPlacer", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

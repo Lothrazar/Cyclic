@@ -73,11 +73,12 @@ public class BlockPatternBuilder extends Block implements IHasRecipe {
   @Override
   public void addRecipe() {
     GameRegistry.addRecipe(new ItemStack(this),
-        "pwp",
+        "pop",
         "wfw",
-        "pwp",
-        'w', Blocks.MAGMA,
+        "pop",
+        'w', Blocks.DIAMOND_BLOCK,
         'f', Blocks.STONE,
+        'o', Blocks.OBSIDIAN,
         'p', Blocks.REDSTONE_BLOCK);
 
   }
