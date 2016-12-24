@@ -14,9 +14,6 @@ public class PacketRegistry {
     network.registerMessage(PacketParticleAtPosition.class, PacketParticleAtPosition.class, packetID++, Side.CLIENT);
     network.registerMessage(PacketSpellFromServer.class, PacketSpellFromServer.class, packetID++, Side.SERVER);
     network.registerMessage(PacketWandGui.class, PacketWandGui.class, packetID++, Side.SERVER);
-    //    network.registerMessage(PacketRotateBlock.class, PacketRotateBlock.class, packetID++, Side.SERVER);
-    //    network.registerMessage(PacketSpellPush.class, PacketSpellPush.class, packetID++, Side.SERVER);
-    //    network.registerMessage(PacketSpellPull.class, PacketSpellPull.class, packetID++, Side.SERVER);
     network.registerMessage(PacketMovePlayerColumn.class, PacketMovePlayerColumn.class, packetID++, Side.SERVER);
     network.registerMessage(PacketMovePlayerHotbar.class, PacketMovePlayerHotbar.class, packetID++, Side.SERVER);
     network.registerMessage(PacketWarpButton.class, PacketWarpButton.class, packetID++, Side.SERVER);
@@ -41,5 +38,7 @@ public class PacketRegistry {
     network.registerMessage(PacketTileRedstoneToggle.class, PacketTileRedstoneToggle.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTileSizeToggle.class, PacketTileSizeToggle.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTileUser.class, PacketTileUser.class, packetID++, Side.SERVER);
+    network.registerMessage(PacketTilePatternBuilder.class, PacketTilePatternBuilder.class, packetID++, Side.SERVER);
+    network.registerMessage(PacketTilePatternSwap.class, PacketTilePatternSwap.class, packetID++, Side.SERVER);
   }
 }

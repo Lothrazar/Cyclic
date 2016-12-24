@@ -44,12 +44,11 @@ public class GearEmeraldModule extends BaseModule implements IHasConfig {
     //as of 1.9.4 :  (wood = 59, stone = 131, iron = 250, diamond = 1561, gold = 32)
     MaterialRegistry.emeraldToolMaterial = EnumHelper.addToolMaterial(emeraldName,
         ToolMaterial.DIAMOND.getHarvestLevel(),
-        ToolMaterial.DIAMOND.getMaxUses(),//was  - 261
+        ToolMaterial.DIAMOND.getMaxUses(), //was  - 261
         ToolMaterial.DIAMOND.getEfficiencyOnProperMaterial(),
         ToolMaterial.DIAMOND.getDamageVsEntity(), //was  - 0.25F
         ToolMaterial.GOLD.getEnchantability());
     MaterialRegistry.emeraldToolMaterial.setRepairItem(new ItemStack(MaterialRegistry.emeraldArmorMaterial.customCraftingMaterial));
-
   }
   @Override
   public void onInit() {

@@ -4,5 +4,5 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 
 public interface ISpellFromServer {
-  public void castFromServer(BlockPos posMouseover, BlockPos posOffset, EnumFacing sideMouseover,EntityPlayer p);
+  public void castFromServer(BlockPos posMouseover, BlockPos posOffset, EnumFacing sideMouseover, EntityPlayer p);
 }

@@ -8,17 +8,42 @@ import net.minecraft.world.World;
 
 public class UtilParticle {
   private static final int count = 12;//if you just spawn one, its basically invisible. unless its over time like potions
+  private static final double RANDOM_HORIZ = 0.8;
+  private static final double RANDOM_VERT = 1.5;
+  public static void spawnParticle(World world, EnumParticleTypes sparkle, BlockPos pos, int c) {
+    spawnParticle(world, sparkle, pos.getX(), pos.getY(), pos.getZ(), c);
+  }
+  public static void spawnParticleNarrow(World world, EnumParticleTypes sparkle, BlockPos pos) {
+    int x = pos.getX(), y = pos.getY(), z = pos.getZ();
+    for (int countparticles = 0; countparticles <= count; ++countparticles) {
+      world.spawnParticle(sparkle,
+          x + getHorizRandom(world, RANDOM_HORIZ / 4),
+          y + getVertRandom(world, RANDOM_VERT / 3),
+          z + getHorizRandom(world, RANDOM_HORIZ / 4),
+          0.0D, 0.0D, 0.0D);
+    }
+  }
   public static void spawnParticle(World world, EnumParticleTypes sparkle, double x, double y, double z, int count) {
     if (world.isRemote) {
       // client side
       // http://www.minecraftforge.net/forum/index.php?topic=9744.0
       for (int countparticles = 0; countparticles <= count; ++countparticles) {
-        world.spawnParticle(sparkle, x + (world.rand.nextDouble() - 0.5D) * (double) 0.8, y + world.rand.nextDouble() * (double) 1.5 - (double) 0.1, z + (world.rand.nextDouble() - 0.5D) * (double) 0.8, 0.0D, 0.0D, 0.0D);
+        world.spawnParticle(sparkle,
+            x + getHorizRandom(world, RANDOM_HORIZ),
+            y + getVertRandom(world, RANDOM_VERT),
+            z + getHorizRandom(world, RANDOM_HORIZ),
+            0.0D, 0.0D, 0.0D);
       }
     }
     else {
       spawnParticlePacket(sparkle, new BlockPos(x, y, z));
     }
+  }
+  private static double getVertRandom(World world, double rando) {
+    return world.rand.nextDouble() * (double) rando - (double) 0.1;
+  }
+  private static double getHorizRandom(World world, double rando) {
+    return (world.rand.nextDouble() - 0.5D) * (double) rando;
   }
   public static void spawnParticle(World world, EnumParticleTypes sparkle, double x, double y, double z) {
     spawnParticle(world, sparkle, x, y, z, count);
@@ -32,9 +57,6 @@ public class UtilParticle {
       return;
     }
     spawnParticle(world, sparkle, pos.getX(), pos.getY(), pos.getZ());
-  }
-  public static void spawnParticle(World world, EnumParticleTypes sparkle, BlockPos pos, int c) {
-    spawnParticle(world, sparkle, pos.getX(), pos.getY(), pos.getZ(), c);
   }
   public static void spawnParticleBeam(World world, EnumParticleTypes sparkle, BlockPos start, BlockPos end, int count) {
     // thanks to http://www.minecraftforge.net/forum/index.php?topic=30567.0

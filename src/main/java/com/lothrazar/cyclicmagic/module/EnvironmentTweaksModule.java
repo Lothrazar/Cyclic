@@ -62,7 +62,6 @@ public class EnvironmentTweaksModule extends BaseEventModule implements IHasConf
     if (skelLightning && event.getEntity() instanceof EntitySkeleton &&
         event.getLightning() != null) {
       EntitySkeleton skel = (EntitySkeleton) event.getEntity();
-   
       if (skel.getSkeletonType() == SkeletonType.NORMAL) {
         SkeletonType newType = skel.getEntityWorld().rand.nextDouble() > 0.5 ? SkeletonType.WITHER : SkeletonType.STRAY;
         skel.setSkeletonType(newType);

@@ -171,9 +171,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
     }
   }
   public static int getExpCostPerTeleport(EntityPlayer player, ItemStack book, int slot) {
-    if(expDistRatio <= 0){
-      return 0;
-    }
+    if (expDistRatio <= 0) { return 0; }
     BlockPos toPos = getLocationPos(book, slot);
     int distance = (int) UtilWorld.distanceBetweenHorizontal(toPos, player.getPosition());
     return (int) Math.round(distance / expDistRatio);

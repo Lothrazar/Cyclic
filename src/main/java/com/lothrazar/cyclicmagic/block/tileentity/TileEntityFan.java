@@ -21,10 +21,10 @@ public class TileEntityFan extends TileEntityBaseMachine implements ITickable {
     if (this.isPowered()) {
       EnumFacing facing = getCurrentFacing();
       int rangeFixed = getCurrentRange(); //can go up to max range unless hits a solid
-     // System.out.println("rangeFixed"+rangeFixed);
+      // System.out.println("rangeFixed"+rangeFixed);
       if (this.timer == 0) {
         this.timer = TIMER_FULL;
-       //rm this its ugly, keep in case i add a custom particle
+        //rm this its ugly, keep in case i add a custom particle
         doParticles(rangeFixed);
       }
       else {
@@ -71,7 +71,7 @@ public class TileEntityFan extends TileEntityBaseMachine implements ITickable {
     EnumFacing facing = getCurrentFacing();
     BlockPos tester;
     for (int i = 1; i <= MAX_RANGE; i++) {//if we start at fan, we hit MYSELF (the fan)
-      tester= this.getPos().offset(facing, i);
+      tester = this.getPos().offset(facing, i);
       if (canBlowThrough(tester) == false) {
         //cant pass thru
         //System.out.println("Cant pass thru"+tester.toString() +this.getWorld().getBlockState(tester).getBlock().toString());

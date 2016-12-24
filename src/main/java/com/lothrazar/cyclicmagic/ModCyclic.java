@@ -73,7 +73,7 @@ public class ModCyclic {
     ConfigRegistry.syncAllConfig(); //fixes things , stuff was added to items and content that has config
     this.events.registerAll(); //important: register events AFTER modules onInit, since modules add events in this phase.
     PermissionRegistry.register();
-   }
+  }
   @EventHandler
   public void onPostInit(FMLPostInitializationEvent event) {
     for (ICyclicModule module : ModuleRegistry.modules) {
@@ -88,8 +88,9 @@ public class ModCyclic {
     }
   }
   /*
-   * multi use bucket: like a lava jug. fill it from a fluid in world or a tank, but it has multiple bucket-units of liquid
-   * using it multiple times places multiple liquid source blocks.
+   * multi use bucket: like a lava jug. fill it from a fluid in world or a tank,
+   * but it has multiple bucket-units of liquid using it multiple times places
+   * multiple liquid source blocks.
    * 
    * FAN: works like a magnet but full block, pushes or pull sall entities
    * horizontal (including player, items, anything)
