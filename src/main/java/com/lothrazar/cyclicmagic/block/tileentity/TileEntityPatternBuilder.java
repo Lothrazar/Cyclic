@@ -257,7 +257,12 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     }
     return 0;
   }
+  private final static int MAXIMUM = 32;
   public void setField(Fields f, int value) {
+    //max applies to all fields
+    if(value > MAXIMUM){
+      value = MAXIMUM;
+    }
     switch (f) {
     case OFFTARGX:
       this.offsetTargetX = value;

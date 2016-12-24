@@ -50,7 +50,7 @@ public class GuiPattern extends GuiBaseContainer {
     sizeY = 46;//save now as reuse for textbox
     int vButtonSpacing = 12;
     leftColX = 176 - 148;
-    sizeColX = leftColX + 42;
+    sizeColX = leftColX + 40;
     addPatternButtonAt(id++, sizeColX, sizeY - vButtonSpacing, true, TileEntityPatternBuilder.Fields.SIZER);
     addPatternButtonAt(id++, sizeColX, sizeY + vButtonSpacing, false, TileEntityPatternBuilder.Fields.SIZER);
     heightColX = leftColX + 62;
