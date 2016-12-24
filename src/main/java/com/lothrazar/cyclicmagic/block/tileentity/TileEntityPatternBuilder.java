@@ -3,6 +3,7 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilShape;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -78,10 +79,8 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     }
     this.renderBoundingBoxes();
     timer -= 1;
-    if (timer <= 0) {
+    if (timer <= 0) { //try build one block
       timer = TIMER_FULL;
-      //try build one block
-      //List<BlockPos> shapeTarget = UtilShape.cubeFrame(centerTarget, this.sizeRadius, this.height);
       BlockPos centerSrc = this.getCenterSrc();
       List<BlockPos> shapeSrc = UtilShape.cubeFilled(centerSrc, this.sizeRadius, this.height);
       if (shapeSrc.size() <= 0) { return; }
@@ -94,7 +93,6 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       zOffset = posSrc.getZ() - centerSrc.getZ();
       BlockPos centerTarget = this.getCenterTarget();
       BlockPos posTarget = centerTarget.add(xOffset, yOffset, zOffset);
-      //TODO: barrier are not part of final product. just to help me see/debug where the two targerts are
       UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, posSrc);
       UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, posTarget);
       IBlockState stateToMatch;
@@ -103,19 +101,16 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
         stateToMatch = world.getBlockState(posSrc);
         slot = this.findSlotForMatch(stateToMatch);
         if (slot < 0) { return; } //EMPTY
-        //now we want target to be air
-        if (world.isAirBlock(posTarget)) {
-          //TODO: make sure this plays sound
+        if (world.isAirBlock(posTarget)) { //now we want target to be air
           world.setBlockState(posTarget, stateToMatch);
           this.decrStackSize(slot, 1);
+          UtilSound.playSoundPlaceBlock(world, posTarget, stateToMatch.getBlock());
         }
-        else {
-          //does NOT MATCH, so skip ahead
+        else { //does NOT MATCH, so skip ahead
           timer = TIMER_SKIP;
         }
       }
-      else {
-        //src IS air, so skip ahead
+      else { //src IS air, so skip ahead
         timer = TIMER_SKIP;
       }
     }
