@@ -39,5 +39,7 @@ public class PacketRegistry {
     network.registerMessage(PacketTileSizeToggle.class, PacketTileSizeToggle.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTileUser.class, PacketTileUser.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTilePatternBuilder.class, PacketTilePatternBuilder.class, packetID++, Side.SERVER);
+    network.registerMessage(PacketTilePatternSwap.class, PacketTilePatternSwap.class, packetID++, Side.SERVER);
+    
   }
 }

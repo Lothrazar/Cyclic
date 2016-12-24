@@ -38,7 +38,7 @@ public class GuiPattern extends GuiBaseContainer {
     return GUI;
   }
   @Override
-  public void initGui() {
+  public void initGui() { //BUTTON TO SWAP SOURCE AND DEST
     super.initGui();
     int id = 1;
     /////redstone button
@@ -74,6 +74,12 @@ public class GuiPattern extends GuiBaseContainer {
     addPatternButtonAt(id++, leftColX - xOffset - 4 + rightColX, yRows[1], false, TileEntityPatternBuilder.Fields.OFFSRCY);
     addPatternButtonAt(id++, leftColX + xOffset + rightColX, yRows[2], true, TileEntityPatternBuilder.Fields.OFFSRCZ);
     addPatternButtonAt(id++, leftColX - xOffset - 4 + rightColX, yRows[2], false, TileEntityPatternBuilder.Fields.OFFSRCZ);
+    //flip button in bottom center
+
+    ButtonFlipRegions bt = new ButtonFlipRegions(id++,
+        this.guiLeft + 176/2-10,
+        this.guiTop + yRows[2], this.tile.getPos());
+    this.buttonList.add(bt);
   }
   private void addPatternButtonAt(int id, int x, int y, boolean isUp, TileEntityPatternBuilder.Fields f) {
     ButtonPattern btn = new ButtonPattern(tile.getPos(), id,

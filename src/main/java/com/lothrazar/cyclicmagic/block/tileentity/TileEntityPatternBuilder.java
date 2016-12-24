@@ -29,7 +29,8 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   private int offsetSourceZ = 1;
   private int sizeRadius = 3;
   private int timer = 1;
-  private static final int TIMER_FULL = 120;
+  private static final int TIMER_FULL = 40;
+  private static final int TIMER_SKIP = 6;
   private ItemStack[] inv;
   private int needsRedstone;
   public static enum Fields {
@@ -110,12 +111,12 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
         }
         else {
           //does NOT MATCH, so skip ahead
-          timer = 10;
+          timer = TIMER_SKIP;
         }
       }
       else {
         //src IS air, so skip ahead
-        timer = 10;
+        timer = TIMER_SKIP;
       }
     }
   }
@@ -306,5 +307,16 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       val = 0;//hacky lazy way
     }
     this.setField(Fields.REDSTONE.ordinal(), val);
+  }
+  public void swapTargetSource() {
+    int srcX = this.offsetSourceX;
+    int srcY = this.offsetSourceY;
+    int srcZ = this.offsetSourceZ;
+    this.offsetSourceX = this.offsetTargetX;
+    this.offsetSourceY = this.offsetTargetY;
+    this.offsetSourceZ = this.offsetTargetZ;
+    this.offsetTargetX = srcX;
+    this.offsetTargetY = srcY;
+    this.offsetTargetZ = srcZ;
   }
 }
