@@ -30,7 +30,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   private int sizeRadius = 3;
   private int timer = 1;
   private static final int TIMER_FULL = 40;
-  private static final int TIMER_SKIP = 6;
+  private static final int TIMER_SKIP = 2;
   private ItemStack[] inv;
   private int needsRedstone;
   public static enum Fields {
