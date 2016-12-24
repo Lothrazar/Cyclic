@@ -8,6 +8,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -169,6 +170,21 @@ public class UtilEntity {
     all.addAll(world.getEntitiesWithinAABB(EntityItem.class, range));
     all.addAll(world.getEntitiesWithinAABB(EntityXPOrb.class, range));
     return all;
+  }
+  public static void speedupEntityIfMoving(ItemStack stack, EntityLivingBase entity) {
+    if (entity.moveForward > 0) {
+      if (entity.getRidingEntity() != null && entity.getRidingEntity() instanceof EntityLivingBase) {
+        speedupEntity(stack, (EntityLivingBase) entity.getRidingEntity());
+      }
+      else {
+        speedupEntity(stack, entity);
+      }
+    }
+  }
+  public static void speedupEntity(ItemStack stack, EntityLivingBase entity) {
+    float reduce = 0.08F;
+    entity.motionX += net.minecraft.util.math.MathHelper.sin(-entity.rotationYaw * 0.017453292F) * reduce;
+    entity.motionZ += net.minecraft.util.math.MathHelper.cos(entity.rotationYaw * 0.017453292F) * reduce;
   }
   public static int moveEntityLivingNonplayers(World world, double x, double y, double z, int ITEM_HRADIUS, int ITEM_VRADIUS, boolean towardsPos) {
     AxisAlignedBB range = UtilEntity.makeBoundingBox(x, y, z, ITEM_HRADIUS, ITEM_VRADIUS);
