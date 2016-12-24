@@ -30,10 +30,10 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   private int offsetSourceZ = 1;
   private int sizeRadius = 3;
   private int timer = 1;
+  private int needsRedstone = 1;
   private static final int TIMER_FULL = 20;
   private static final int TIMER_SKIP = 1;
   private ItemStack[] inv;
-  private int needsRedstone;
   public static enum Fields {
     OFFTARGX, OFFTARGY, OFFTARGZ, SIZER, OFFSRCX, OFFSRCY, OFFSRCZ, HEIGHT, TIMER, REDSTONE
   }
