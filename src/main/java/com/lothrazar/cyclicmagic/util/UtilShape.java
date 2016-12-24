@@ -53,16 +53,17 @@ public class UtilShape {
     return circleList;
   }
   public static List<BlockPos> cubeFrame(final BlockPos posCenter, int radius, int height) {
-    BlockPos botCenter = posCenter;//.add(0, -1 * radius, 0);
+    BlockPos botCenter = posCenter;
     BlockPos topCenter = posCenter.add(0, height, 0);
     List<BlockPos> cube = squareHorizontalHollow(topCenter, radius);
     cube.addAll(squareHorizontalHollow(botCenter, radius));
     //four walls
-    BlockPos b1 = botCenter.add(radius, 1, radius);
-    BlockPos b2 = botCenter.add(radius, 1, -1 * radius);
-    BlockPos b3 = botCenter.add(-1 * radius, 1, -1 * radius);
-    BlockPos b4 = botCenter.add(-1 * radius, 1, radius);
-    int sideLen = height - 2;// * 2 - 1;
+    BlockPos b1 = botCenter.add(radius, 0, radius);
+    BlockPos b2 = botCenter.add(radius, 0, -1 * radius);
+    BlockPos b3 = botCenter.add(-1 * radius, 0, -1 * radius);
+    BlockPos b4 = botCenter.add(-1 * radius, 0, radius);
+    //pillars
+    int sideLen = height - 1;
     cube.addAll(line(b1, EnumFacing.UP, sideLen));
     cube.addAll(line(b2, EnumFacing.UP, sideLen));
     cube.addAll(line(b3, EnumFacing.UP, sideLen));
