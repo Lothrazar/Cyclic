@@ -31,11 +31,12 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   private int sizeRadius = 3;
   private int timer = 1;
   private int needsRedstone = 1;
+  private int renderParticles = 1;
   private static final int TIMER_FULL = 20;
   private static final int TIMER_SKIP = 1;
   private ItemStack[] inv;
   public static enum Fields {
-    OFFTARGX, OFFTARGY, OFFTARGZ, SIZER, OFFSRCX, OFFSRCY, OFFSRCZ, HEIGHT, TIMER, REDSTONE
+    OFFTARGX, OFFTARGY, OFFTARGZ, SIZER, OFFSRCX, OFFSRCY, OFFSRCZ, HEIGHT, TIMER, REDSTONE, RENDERPARTICLES;
   }
   public TileEntityPatternBuilder() {
     inv = new ItemStack[18];
@@ -73,11 +74,13 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   }
   @Override
   public void update() {
+    if (this.renderParticles == 1) {
+      this.renderBoundingBoxes();
+    }
     if (this.onlyRunIfPowered() && this.isPowered() == false) {
       // it works ONLY if its powered
       return;
     }
-    this.renderBoundingBoxes();
     timer -= 1;
     if (timer <= 0) { //try build one block
       timer = TIMER_FULL;
@@ -188,6 +191,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     this.sizeRadius = tagCompound.getInteger("r");
     this.height = tagCompound.getInteger("height");
     this.timer = tagCompound.getInteger("timer");
+    this.renderParticles = tagCompound.getInteger("render");
     this.needsRedstone = tagCompound.getInteger(NBT_REDST);
     NBTTagList tagList = tagCompound.getTagList(NBT_INV, 10);
     for (int i = 0; i < tagList.tagCount(); i++) {
@@ -209,6 +213,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     tagCompound.setInteger("r", sizeRadius);
     tagCompound.setInteger("height", height);
     tagCompound.setInteger("timer", timer);
+    tagCompound.setInteger("render", renderParticles);
     tagCompound.setInteger(NBT_REDST, this.needsRedstone);
     NBTTagList itemList = new NBTTagList();
     for (int i = 0; i < inv.length; i++) {
@@ -245,13 +250,14 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       return this.timer;
     case REDSTONE:
       return this.needsRedstone;
+    case RENDERPARTICLES:
+      return this.renderParticles;
     default:
       break;
     }
     return 0;
   }
   public void setField(Fields f, int value) {
-    this.renderBoundingBoxes();
     switch (f) {
     case OFFTARGX:
       this.offsetTargetX = value;
@@ -283,6 +289,9 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     case REDSTONE:
       this.needsRedstone = value;
       break;
+    case RENDERPARTICLES:
+      this.renderParticles = value;
+      break;
     default:
       break;
     }
@@ -295,14 +304,6 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   public void setField(int id, int value) {
     setField(Fields.values()[id], value);
   }
-  @Override
-  public void toggleNeedsRedstone() {
-    int val = this.needsRedstone + 1;
-    if (val > 1) {
-      val = 0;//hacky lazy way
-    }
-    this.setField(Fields.REDSTONE.ordinal(), val);
-  }
   public void swapTargetSource() {
     int srcX = this.offsetSourceX;
     int srcY = this.offsetSourceY;
@@ -314,5 +315,20 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     this.offsetTargetY = srcY;
     this.offsetTargetZ = srcZ;
     this.renderBoundingBoxes();
+  }
+  @Override
+  public void toggleNeedsRedstone() {
+    int val = this.needsRedstone + 1;
+    if (val > 1) {
+      val = 0;//hacky lazy way
+    }
+    this.setField(Fields.REDSTONE.ordinal(), val);
+  }
+  public void swapShowRender() {
+    int val = this.renderParticles + 1;
+    if (val > 1) {
+      val = 0;//hacky lazy way
+    }
+    this.setField(Fields.RENDERPARTICLES.ordinal(), val);
   }
 }

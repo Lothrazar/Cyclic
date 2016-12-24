@@ -75,11 +75,15 @@ public class GuiPattern extends GuiBaseContainer {
     addPatternButtonAt(id++, leftColX + xOffset + rightColX, yRows[2], true, TileEntityPatternBuilder.Fields.OFFSRCZ);
     addPatternButtonAt(id++, leftColX - xOffset - 4 + rightColX, yRows[2], false, TileEntityPatternBuilder.Fields.OFFSRCZ);
     //flip button in bottom center
-
     ButtonFlipRegions bt = new ButtonFlipRegions(id++,
-        this.guiLeft + 176/2-10,
+        this.guiLeft + 176 / 2 - 10,
         this.guiTop + yRows[2], this.tile.getPos());
     this.buttonList.add(bt);
+    // ButtonToggleRender
+    ButtonToggleRender btn = new ButtonToggleRender(id++,
+        this.guiLeft + 176 - 20 - Const.padding,
+        this.guiTop + Const.padding, this.tile.getPos());
+    this.buttonList.add(btn);
   }
   private void addPatternButtonAt(int id, int x, int y, boolean isUp, TileEntityPatternBuilder.Fields f) {
     ButtonPattern btn = new ButtonPattern(tile.getPos(), id,

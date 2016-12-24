@@ -11,10 +11,15 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketTilePatternSwap implements IMessage, IMessageHandler<PacketTilePatternSwap, IMessage> {
   private BlockPos pos;
+  private int type;
+  public static enum SwapType {
+    POSITION, RENDER;
+  }
   public PacketTilePatternSwap() {
   }
-  public PacketTilePatternSwap(BlockPos p) {
+  public PacketTilePatternSwap(BlockPos p, SwapType t) {
     pos = p;
+    type = t.ordinal();
   }
   @Override
   public void fromBytes(ByteBuf buf) {
@@ -23,6 +28,7 @@ public class PacketTilePatternSwap implements IMessage, IMessageHandler<PacketTi
     int y = tags.getInteger("y");
     int z = tags.getInteger("z");
     pos = new BlockPos(x, y, z);
+    type = tags.getInteger("t");
   }
   @Override
   public void toBytes(ByteBuf buf) {
@@ -30,6 +36,7 @@ public class PacketTilePatternSwap implements IMessage, IMessageHandler<PacketTi
     tags.setInteger("x", pos.getX());
     tags.setInteger("y", pos.getY());
     tags.setInteger("z", pos.getZ());
+    tags.setInteger("t", type);
     ByteBufUtils.writeTag(buf, tags);
   }
   @Override
@@ -37,7 +44,10 @@ public class PacketTilePatternSwap implements IMessage, IMessageHandler<PacketTi
     EntityPlayerMP player = ctx.getServerHandler().playerEntity;
     TileEntityPatternBuilder tile = (TileEntityPatternBuilder) player.getEntityWorld().getTileEntity(message.pos);
     if (tile != null) {
-      tile.swapTargetSource();
+      if (message.type == SwapType.POSITION.ordinal())
+        tile.swapTargetSource();
+      else if (message.type == SwapType.RENDER.ordinal())
+        tile.swapShowRender();
     }
     return null;
   }

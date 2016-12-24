@@ -25,6 +25,7 @@ public class ContainerPattern extends ContainerBaseMachine {
   private int tileSIZER;
   private int tileHEIGHT;
   private int tileREDSTONE;
+  private int tileRENDERPARTICLES;
   public ContainerPattern(InventoryPlayer inventoryPlayer, TileEntityPatternBuilder te) {
     this.playerOffsetY = 130;
     tileEntity = te;
@@ -105,6 +106,10 @@ public class ContainerPattern extends ContainerBaseMachine {
       if (this.tileREDSTONE != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
+      idx = TileEntityPatternBuilder.Fields.RENDERPARTICLES.ordinal();
+      if (this.tileRENDERPARTICLES != this.tileEntity.getField(idx)) {
+        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
+      }
     }
     this.tileOX = this.tileEntity.getField(TileEntityPatternBuilder.Fields.OFFTARGX);
     this.tileOY = this.tileEntity.getField(TileEntityPatternBuilder.Fields.OFFTARGY);
@@ -115,6 +120,7 @@ public class ContainerPattern extends ContainerBaseMachine {
     this.tileSIZER = this.tileEntity.getField(TileEntityPatternBuilder.Fields.SIZER);
     this.tileHEIGHT = this.tileEntity.getField(TileEntityPatternBuilder.Fields.HEIGHT);
     this.tileREDSTONE = this.tileEntity.getField(TileEntityPatternBuilder.Fields.REDSTONE);
+    this.tileRENDERPARTICLES = this.tileEntity.getField(TileEntityPatternBuilder.Fields.RENDERPARTICLES);
   }
   @Override
   @SideOnly(Side.CLIENT)

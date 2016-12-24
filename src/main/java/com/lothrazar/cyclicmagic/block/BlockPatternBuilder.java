@@ -51,12 +51,10 @@ public class BlockPatternBuilder extends Block implements IHasRecipe {
   }
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-
     if (world.isRemote) { return true; }
     int x = pos.getX(), y = pos.getY(), z = pos.getZ();
     player.openGui(ModCyclic.instance, ModGuiHandler.GUI_INDEX_PATTERN, world, x, y, z);
     return true;
- 
   }
   @Override
   public boolean hasTileEntity(IBlockState state) {
@@ -81,7 +79,6 @@ public class BlockPatternBuilder extends Block implements IHasRecipe {
         'i', Blocks.ICE,
         'm', Blocks.MAGMA,
         'r', Blocks.REDSTONE_BLOCK);
-
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
