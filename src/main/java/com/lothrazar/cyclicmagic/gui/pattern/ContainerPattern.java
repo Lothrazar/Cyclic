@@ -12,7 +12,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerPattern extends ContainerBaseMachine {
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
-  
   public static final int SLOTX_START = 8;
   public static final int SLOTY_START = 90;
   protected TileEntityPatternBuilder tileEntity;

@@ -127,7 +127,6 @@ public class ModGuiHandler implements IGuiHandler {
       if (te != null && te instanceof TileMachineUser) { return new ContainerUser(player.inventory, (TileMachineUser) te); }
       break;
     case GUI_INDEX_PATTERN:
-
       if (te != null && te instanceof TileEntityPatternBuilder) { return new ContainerPattern(player.inventory, (TileEntityPatternBuilder) te); }
       break;
     }
@@ -178,9 +177,7 @@ public class ModGuiHandler implements IGuiHandler {
         if (te != null && te instanceof TileMachineUser) { return new GuiUser(player.inventory, (TileMachineUser) te); }
         break;
       case GUI_INDEX_PATTERN:
-
         if (te != null && te instanceof TileEntityPatternBuilder) { return new GuiPattern(player.inventory, (TileEntityPatternBuilder) te); }
-       
         break;
       }
     }

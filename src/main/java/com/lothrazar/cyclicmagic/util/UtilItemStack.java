@@ -101,6 +101,6 @@ public class UtilItemStack {
     }
   }
   public static boolean isEmpty(ItemStack is) {
-    return is == null || is.stackSize==0;
+    return is == null || is.stackSize == 0;
   }
 }

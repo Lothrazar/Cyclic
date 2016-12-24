@@ -15,7 +15,7 @@ public class PacketTilePatternBuilder implements IMessage, IMessageHandler<Packe
   private int direction;
   public PacketTilePatternBuilder() {
   }
-  public PacketTilePatternBuilder(BlockPos p,boolean up, TileEntityPatternBuilder.Fields t) {
+  public PacketTilePatternBuilder(BlockPos p, boolean up, TileEntityPatternBuilder.Fields t) {
     pos = p;
     type = t;
     direction = (up) ? 1 : -1;
@@ -45,7 +45,7 @@ public class PacketTilePatternBuilder implements IMessage, IMessageHandler<Packe
     EntityPlayerMP player = ctx.getServerHandler().playerEntity;
     TileEntityPatternBuilder tile = (TileEntityPatternBuilder) player.getEntityWorld().getTileEntity(message.pos);
     if (tile != null) {
-      tile.setField( message.type, tile.getField( message.type) + message.direction);
+      tile.setField(message.type, tile.getField(message.type) + message.direction);
     }
     return null;
   }

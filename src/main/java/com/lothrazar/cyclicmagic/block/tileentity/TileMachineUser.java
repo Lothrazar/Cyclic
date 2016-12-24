@@ -124,7 +124,6 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
             AxisAlignedBB range = UtilEntity.makeBoundingBox(entityCenter, 1, 1);
             List<EntityLivingBase> all = world.getEntitiesWithinAABB(EntityLivingBase.class, range);
             for (EntityLivingBase ent : all) {
-           
               float f = (float) fakePlayer.get().getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue();
               fakePlayer.get().attackTargetEntityWithCurrentItem(ent);
               //above one works and does enchants but is buggy since fakeplayer seems to not work with the 
@@ -139,7 +138,6 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
               }
               f *= 1.75F;
               f = f + f1;//APPLY CREATURE/WEAPON/SHARPNESS COMBO
-       
               ent.attackEntityFrom(DamageSource.causePlayerDamage(fakePlayer.get()), f);
             }
           }
@@ -150,7 +148,6 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
       }
     }
   }
-  
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
     tagCompound.setInteger(NBT_TIMER, timer);

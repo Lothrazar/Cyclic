@@ -176,7 +176,9 @@ public class UtilUncraft {
           }
           outsize = next.getRecipeOutput().stackSize;
           List<? extends Object> input = getRecipeInput(next);
-          if(input == null){continue;}//getRecipeInput can be null
+          if (input == null) {
+            continue;
+          } //getRecipeInput can be null
           for (Object maybeOres : input) {
             if (maybeOres instanceof ItemStack) {
               tryAddTrop((ItemStack) maybeOres);

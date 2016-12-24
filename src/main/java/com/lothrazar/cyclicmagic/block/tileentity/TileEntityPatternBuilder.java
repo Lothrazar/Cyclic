@@ -260,7 +260,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   private final static int MAXIMUM = 32;
   public void setField(Fields f, int value) {
     //max applies to all fields
-    if(value > MAXIMUM){
+    if (value > MAXIMUM) {
       value = MAXIMUM;
     }
     switch (f) {

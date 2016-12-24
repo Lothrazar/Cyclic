@@ -31,7 +31,7 @@ public class MobSpawnModule extends BaseModule implements IHasConfig {
   private boolean pigmenMesa;
   public void onInit() {
     if (pigmenMesa) {
-      EntityRegistry.addSpawn(EntityPigZombie.class, group, min, max, EnumCreatureType.MONSTER, new Biome[] { Biomes.MESA ,Biomes.MESA_CLEAR_ROCK,Biomes.MESA_ROCK});
+      EntityRegistry.addSpawn(EntityPigZombie.class, group, min, max, EnumCreatureType.MONSTER, new Biome[] { Biomes.MESA, Biomes.MESA_CLEAR_ROCK, Biomes.MESA_ROCK });
     }
     if (blazeDesertHills) {
       EntityRegistry.addSpawn(EntityBlaze.class, group, min, max, EnumCreatureType.MONSTER, new Biome[] { Biomes.DESERT_HILLS });
@@ -40,7 +40,7 @@ public class MobSpawnModule extends BaseModule implements IHasConfig {
       EntityRegistry.addSpawn(EntityMagmaCube.class, group, min, max, EnumCreatureType.MONSTER, new Biome[] { Biomes.DESERT_HILLS, Biomes.DESERT });
     }
     if (caveSpiderMesaRoofed) {
-      EntityRegistry.addSpawn(EntityCaveSpider.class, group, min, max, EnumCreatureType.MONSTER, new Biome[] { Biomes.MESA ,Biomes.MESA_CLEAR_ROCK,Biomes.MESA_ROCK, Biomes.ROOFED_FOREST ,Biomes.MUTATED_ROOFED_FOREST});
+      EntityRegistry.addSpawn(EntityCaveSpider.class, group, min, max, EnumCreatureType.MONSTER, new Biome[] { Biomes.MESA, Biomes.MESA_CLEAR_ROCK, Biomes.MESA_ROCK, Biomes.ROOFED_FOREST, Biomes.MUTATED_ROOFED_FOREST });
     }
     if (ghastDeepOcean) {
       EntityRegistry.addSpawn(EntityGhast.class, group, min, max, EnumCreatureType.MONSTER, new Biome[] { Biomes.DEEP_OCEAN });
@@ -56,7 +56,7 @@ public class MobSpawnModule extends BaseModule implements IHasConfig {
       EntityRegistry.addSpawn(EntityHorse.class, group, min, max, EnumCreatureType.CREATURE, new Biome[] { Biomes.EXTREME_HILLS, Biomes.ICE_PLAINS });
     }
     if (ironGolemJungle) {
-      EntityRegistry.addSpawn(EntityIronGolem.class, group, min, max, EnumCreatureType.CREATURE, new Biome[] { Biomes.JUNGLE_HILLS, Biomes.JUNGLE,Biomes.MUTATED_JUNGLE,Biomes.MUTATED_JUNGLE_EDGE});
+      EntityRegistry.addSpawn(EntityIronGolem.class, group, min, max, EnumCreatureType.CREATURE, new Biome[] { Biomes.JUNGLE_HILLS, Biomes.JUNGLE, Biomes.MUTATED_JUNGLE, Biomes.MUTATED_JUNGLE_EDGE });
     }
   }
   @Override

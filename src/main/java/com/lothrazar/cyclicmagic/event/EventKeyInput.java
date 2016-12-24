@@ -96,7 +96,7 @@ public class EventKeyInput {
   }
   @SideOnly(Side.CLIENT)
   private boolean isGuiKeyDown(KeyBinding keybinding) {
-    if (keybinding == null) { return false; }//i think this fixes the bug? : // https://github.com/PrinceOfAmber/Cyclic/issues/198
+    if (keybinding == null) { return false; } //i think this fixes the bug? : // https://github.com/PrinceOfAmber/Cyclic/issues/198
     // inside a GUI , we have to check the keyboard directly
     // thanks to Inventory tweaks, reminding me of alternate way to check
     // keydown while in config
@@ -106,7 +106,7 @@ public class EventKeyInput {
       boolean isKeyDown = Keyboard.isKeyDown(keybinding.getKeyCode());
       boolean validKeyModifier = (keybinding.getKeyModifier() == null ||
           keybinding.getKeyModifier().isActive());
-      return bindingPressed ||//either keybinding object knows its presed, ir the keyboard knows its pressed with the mod
+      return bindingPressed || //either keybinding object knows its presed, ir the keyboard knows its pressed with the mod
           (isKeyDown && validKeyModifier);
     }
     catch (Exception e) {

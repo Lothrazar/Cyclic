@@ -21,7 +21,7 @@ public class PacketSpellFromServer implements IMessage, IMessageHandler<PacketSp
   private int spellID;
   public PacketSpellFromServer() {
   }
-  public PacketSpellFromServer(BlockPos mouseover, BlockPos offset, @Nullable  EnumFacing sideMouseover,int spellid) {
+  public PacketSpellFromServer(BlockPos mouseover, BlockPos offset, @Nullable EnumFacing sideMouseover, int spellid) {
     pos = mouseover;
     posOffset = offset;
     spellID = spellid;
@@ -39,7 +39,7 @@ public class PacketSpellFromServer implements IMessage, IMessageHandler<PacketSp
     z = tags.getInteger("oz");
     posOffset = new BlockPos(x, y, z);
     spellID = tags.getInteger("spell");
-    if(tags.hasKey("face"))
+    if (tags.hasKey("face"))
       face = EnumFacing.values()[tags.getInteger("face")];
   }
   @Override
@@ -52,7 +52,7 @@ public class PacketSpellFromServer implements IMessage, IMessageHandler<PacketSp
     tags.setInteger("oy", posOffset.getY());
     tags.setInteger("oz", posOffset.getZ());
     tags.setInteger("spell", spellID);
-    if(face != null)
+    if (face != null)
       tags.setInteger("face", face.ordinal());
     ByteBufUtils.writeTag(buf, tags);
   }
@@ -65,7 +65,7 @@ public class PacketSpellFromServer implements IMessage, IMessageHandler<PacketSp
       // message.pos)){
       ISpell spell = SpellRegistry.getSpellFromID(message.spellID);
       if (spell != null && spell instanceof ISpellFromServer) {
-        ((ISpellFromServer) spell).castFromServer(message.pos, message.posOffset, message.face,p);
+        ((ISpellFromServer) spell).castFromServer(message.pos, message.posOffset, message.face, p);
       }
       else {
         ModCyclic.logger.warn("WARNING: Message from server: spell not found" + message.spellID);

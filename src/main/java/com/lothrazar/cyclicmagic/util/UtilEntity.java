@@ -202,9 +202,9 @@ public class UtilEntity {
     return nonPlayer;
   }
   public static int pullEntityList(double x, double y, double z, boolean towardsPos, List<? extends Entity> all) {
-    return pullEntityList(x,y,z,towardsPos,all,ITEMSPEEDCLOSE,ITEMSPEEDFAR);
+    return pullEntityList(x, y, z, towardsPos, all, ITEMSPEEDCLOSE, ITEMSPEEDFAR);
   }
-  public static int pullEntityList(double x, double y, double z, boolean towardsPos, List<? extends Entity> all,float speedClose, float speedFar) {
+  public static int pullEntityList(double x, double y, double z, boolean towardsPos, List<? extends Entity> all, float speedClose, float speedFar) {
     int moved = 0;
     double hdist, xDist, zDist;
     float speed;

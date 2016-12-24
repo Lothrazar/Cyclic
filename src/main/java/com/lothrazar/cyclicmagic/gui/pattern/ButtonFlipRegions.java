@@ -15,7 +15,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ButtonFlipRegions extends GuiButton implements ITooltipButton {
   private final BlockPos tilePos;
   private final List<String> tooltips = new ArrayList<String>();
-  public ButtonFlipRegions( int buttonId, int x, int y,BlockPos current) {
+  public ButtonFlipRegions(int buttonId, int x, int y, BlockPos current) {
     super(buttonId, x, y, 20, 10, "");
     tilePos = current;
     tooltips.add(UtilChat.lang("tile.builder_pattern.flip"));
@@ -25,7 +25,7 @@ public class ButtonFlipRegions extends GuiButton implements ITooltipButton {
   public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
     boolean pressed = super.mousePressed(mc, mouseX, mouseY);
     if (pressed) {
-      ModCyclic.network.sendToServer(new PacketTilePatternSwap(tilePos,SwapType.POSITION));
+      ModCyclic.network.sendToServer(new PacketTilePatternSwap(tilePos, SwapType.POSITION));
     }
     return pressed;
   }

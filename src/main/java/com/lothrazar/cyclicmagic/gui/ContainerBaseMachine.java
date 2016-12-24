@@ -16,7 +16,7 @@ public class ContainerBaseMachine extends ContainerBase {
       }
     }
     for (int i = 0; i < 9; i++) {
-      addSlotToContainer(new Slot(inventoryPlayer, i, 8 + i * Const.SQ, playerOffsetY + 4 + 3*Const.SQ));
+      addSlotToContainer(new Slot(inventoryPlayer, i, 8 + i * Const.SQ, playerOffsetY + 4 + 3 * Const.SQ));
     }
   }
 }
