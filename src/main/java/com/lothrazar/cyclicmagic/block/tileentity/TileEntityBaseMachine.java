@@ -8,11 +8,10 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public abstract class TileEntityBaseMachine extends TileEntity implements ITickable {
+public abstract class TileEntityBaseMachine extends TileEntity {
   protected boolean isPowered() {
     return this.getWorld().isBlockPowered(this.getPos());
   }
@@ -55,7 +54,6 @@ public abstract class TileEntityBaseMachine extends TileEntity implements ITicka
     // Gathers data into a packet (S35PacketUpdateTileEntity) that is to be
     // sent to the client. Called on server only.
     NBTTagCompound syncData = getUpdateTag();
-    //    this.writeToNBT(syncData);
     return new SPacketUpdateTileEntity(this.pos, 1, syncData);
   }
   @Override
