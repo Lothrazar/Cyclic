@@ -14,7 +14,7 @@ public abstract class BlockBase extends Block {
   public BlockBase(Material materialIn) {
     super(materialIn);
   }
-  protected boolean isTransp = true;
+  protected boolean isTransp = false;
   protected String myTooltip = null;
   protected void setTranslucent() {
     this.isTransp = true;
