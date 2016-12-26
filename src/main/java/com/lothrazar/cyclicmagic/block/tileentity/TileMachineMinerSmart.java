@@ -37,7 +37,6 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
   private float curBlockDamage;
   private BlockPos targetPos = null;
   private ItemStack[] inv;
-  private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots for all faces
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
   private static final String NBT_REDST = "redstone";
@@ -48,6 +47,8 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
   private static final String NBTHEIGHT = "h";
   private static final String NBT_SIZE = "size";
   private static final int MAX_SIZE = 7;//7 means 15x15
+  private static final int INVENTORY_SIZE = 5;
+  private static final int TOOLSLOT_INDEX = INVENTORY_SIZE - 1;
   private int size = 4;//center plus 4 in each direction = 9x9
   private int needsRedstone = 1;
   int height = 6;
@@ -57,7 +58,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
     HEIGHT, REDSTONE, SIZE
   }
   public TileMachineMinerSmart() {
-    inv = new ItemStack[5];
+    inv = new ItemStack[INVENTORY_SIZE];
   }
   @Override
   public void update() {
@@ -297,7 +298,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
-    return hopperInput;
+    return new int[] { TOOLSLOT_INDEX };// tell it to only use the tool slot
   }
   @Override
   public int getField(int id) {
