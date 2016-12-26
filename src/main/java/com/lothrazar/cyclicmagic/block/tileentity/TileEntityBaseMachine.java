@@ -12,7 +12,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public abstract class TileEntityBaseMachine extends TileEntity {
-  protected boolean isPowered() {
+  public boolean isPowered() {
     return this.getWorld().isBlockPowered(this.getPos());
   }
   protected EnumFacing getCurrentFacing() {
