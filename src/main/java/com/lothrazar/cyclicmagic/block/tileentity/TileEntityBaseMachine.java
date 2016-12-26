@@ -1,17 +1,17 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import com.lothrazar.cyclicmagic.block.BlockBaseFacing;
-import com.lothrazar.cyclicmagic.block.BlockMiner;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-@SuppressWarnings("unused")
-public abstract class TileEntityBaseMachine extends TileEntity implements ITickable {
+public abstract class TileEntityBaseMachine extends TileEntity {
   protected boolean isPowered() {
     return this.getWorld().isBlockPowered(this.getPos());
   }
@@ -41,5 +41,26 @@ public abstract class TileEntityBaseMachine extends TileEntity implements ITicka
   @Override
   public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
     return (oldState.getBlock() != newSate.getBlock());// : oldState != newSate;
+  }
+  @Override
+  public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+    // Extracts data from a packet (S35PacketUpdateTileEntity) that was sent
+    // from the server. Called on client only.
+    this.readFromNBT(pkt.getNbtCompound());
+    super.onDataPacket(net, pkt);
+  }
+  @Override
+  public SPacketUpdateTileEntity getUpdatePacket() {//getDescriptionPacket() {
+    // Gathers data into a packet (S35PacketUpdateTileEntity) that is to be
+    // sent to the client. Called on server only.
+    NBTTagCompound syncData = getUpdateTag();
+    return new SPacketUpdateTileEntity(this.pos, 1, syncData);
+  }
+  @Override
+  public NBTTagCompound getUpdateTag() {
+    //thanks http://www.minecraftforge.net/forum/index.php?topic=39162.0
+    NBTTagCompound syncData = new NBTTagCompound();
+    this.writeToNBT(syncData);//this calls writeInternal
+    return syncData;
   }
 }

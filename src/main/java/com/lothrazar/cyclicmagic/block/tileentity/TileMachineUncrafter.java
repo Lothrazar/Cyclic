@@ -11,9 +11,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 
-public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements ITileRedstoneToggle {
+public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable  {
   // http://www.minecraftforge.net/wiki/Containers_and_GUIs
   // http://greyminecraftcoder.blogspot.com.au/2015/01/tileentity.html
   // http://www.minecraftforge.net/forum/index.php?topic=28539.0

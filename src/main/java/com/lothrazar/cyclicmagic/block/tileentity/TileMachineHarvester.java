@@ -9,9 +9,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 
-public class TileMachineHarvester extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle {
+public class TileMachineHarvester extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle , ITickable {
   private int timer;
   public static int TIMER_FULL = 80;
   private HarestCropsConfig conf;
