@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.block;
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
@@ -11,7 +10,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public abstract class BlockBaseFacing extends Block {
+public abstract class BlockBaseFacing extends BlockBaseHasTile {
   public static final PropertyDirection PROPERTYFACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
   public BlockBaseFacing(Material materialIn) {
     super(materialIn);

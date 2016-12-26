@@ -39,14 +39,6 @@ public class BlockMiner extends BlockBaseFacingInventory implements IHasRecipe {
     return new TileMachineBlockMiner();
   }
   @Override
-  public boolean hasTileEntity() {
-    return true;
-  }
-  @Override
-  public boolean hasTileEntity(IBlockState state) {
-    return hasTileEntity();
-  }
-  @Override
   public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
     ((TileMachineBlockMiner) worldIn.getTileEntity(pos)).breakBlock(worldIn, pos, state);
     super.breakBlock(worldIn, pos, state);

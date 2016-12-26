@@ -18,6 +18,7 @@ public class BlockPlacer extends BlockBaseFacingInventory implements IHasRecipe 
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);
     this.setTickRandomly(true);
+    this.setTooltip("tile.placer_block.tooltip");
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
@@ -45,6 +46,6 @@ public class BlockPlacer extends BlockBaseFacingInventory implements IHasRecipe 
   }
   //  @SideOnly(Side.CLIENT)
   //  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
-  //    tooltip.add(UtilChat.lang("tile.placer_block.tooltip"));
+  //    tooltip.add(UtilChat.lang());
   //  }
 }
