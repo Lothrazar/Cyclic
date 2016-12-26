@@ -4,9 +4,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.text.ITextComponent;
 
@@ -66,28 +63,6 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   }
   @Override
   public void clear() {
-  }
-  @Override
-  public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-    // Extracts data from a packet (S35PacketUpdateTileEntity) that was sent
-    // from the server. Called on client only.
-    this.readFromNBT(pkt.getNbtCompound());
-    super.onDataPacket(net, pkt);
-  }
-  @Override
-  public SPacketUpdateTileEntity getUpdatePacket() {//getDescriptionPacket() {
-    // Gathers data into a packet (S35PacketUpdateTileEntity) that is to be
-    // sent to the client. Called on server only.
-    NBTTagCompound syncData = getUpdateTag();
-    //    this.writeToNBT(syncData);
-    return new SPacketUpdateTileEntity(this.pos, 1, syncData);
-  }
-  @Override
-  public NBTTagCompound getUpdateTag() {
-    //thanks http://www.minecraftforge.net/forum/index.php?topic=39162.0
-    NBTTagCompound syncData = new NBTTagCompound();
-    this.writeToNBT(syncData);//this calls writeInternal
-    return syncData;
   }
   protected void shiftAllUp() {
     for (int i = 0; i < this.getSizeInventory() - 1; i++) {
