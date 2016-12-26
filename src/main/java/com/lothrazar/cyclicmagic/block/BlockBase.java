@@ -14,10 +14,10 @@ public abstract class BlockBase extends Block {
   public BlockBase(Material materialIn) {
     super(materialIn);
   }
-  protected boolean isTranslucent = true;
+  protected boolean isTransp = true;
   protected String myTooltip = null;
   protected void setTranslucent() {
-    this.isTranslucent = true;
+    this.isTransp = true;
   }
   protected void setTooltip(String t) {
     this.myTooltip = t;
@@ -29,11 +29,11 @@ public abstract class BlockBase extends Block {
   }
   @Override
   public boolean isOpaqueCube(IBlockState state) {
-    return !this.isTranslucent; // http://greyminecraftcoder.blogspot.ca/2014/12/transparent-blocks-18.html
+    return !this.isTransp; // http://greyminecraftcoder.blogspot.ca/2014/12/transparent-blocks-18.html
   }
   @SideOnly(Side.CLIENT)
   public BlockRenderLayer getBlockLayer() {
-    if (this.isTranslucent)
+    if (this.isTransp)
       return BlockRenderLayer.TRANSLUCENT;
     else
       return super.getBlockLayer(); // SOLID

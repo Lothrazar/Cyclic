@@ -19,18 +19,11 @@ public class BlockPlacer extends BlockBaseFacingInventory implements IHasRecipe 
     this.setSoundType(SoundType.METAL);
     this.setTickRandomly(true);
     this.setTooltip("tile.placer_block.tooltip");
+    this.setTranslucent();
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileMachinePlacer();//"tile.placer_block.name"
-  }
-  @Override
-  public boolean hasTileEntity() {
-    return true;
-  }
-  @Override
-  public boolean hasTileEntity(IBlockState state) {
-    return hasTileEntity();
   }
   @Override
   public void addRecipe() {
