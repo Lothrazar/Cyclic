@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.gui.detector;
 import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityDetector;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityDetector.Fields;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -16,11 +17,9 @@ public class GuiDetector extends GuiBaseContainer {
   static final int GUI_ROWS = 2;
   private TileEntityDetector tile;
   private int leftColX;
-  private int[] yRows = new int[3];
-  private int rightColX;
   private int sizeY;
   private int sizeColX;
-  private int heightColX;
+  private int[] yRows = new int[3];
   public GuiDetector(InventoryPlayer inventoryPlayer, TileEntityDetector tileEntity) {
     super(new ContainerDetector(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -42,24 +41,24 @@ public class GuiDetector extends GuiBaseContainer {
 //        this.guiTop + Const.padding, this.tile.getPos());
 //    redstoneBtn.setTextureIndex(tile.getField(TileMachineHarvester.Fields.REDSTONE.ordinal()));
 //    this.buttonList.add(redstoneBtn);
-//    sizeY = 46;//save now as reuse for textbox
+    sizeY = 46;//save now as reuse for textbox
 //    int vButtonSpacing = 12;
-//    leftColX = 176 - 148;
-//    sizeColX = leftColX + 40;
+    leftColX = 176 - 148;
+    sizeColX = leftColX + 40;
 //    addPatternButtonAt(id++, sizeColX, sizeY - vButtonSpacing, true, TileEntityPatternBuilder.Fields.SIZER);
 //    addPatternButtonAt(id++, sizeColX, sizeY + vButtonSpacing, false, TileEntityPatternBuilder.Fields.SIZER);
 //    heightColX = leftColX + 62;
 //    addPatternButtonAt(id++, heightColX, sizeY - vButtonSpacing, true, TileEntityPatternBuilder.Fields.HEIGHT);
 //    addPatternButtonAt(id++, heightColX, sizeY + vButtonSpacing, false, TileEntityPatternBuilder.Fields.HEIGHT);
 //    int xOffset = 18;
-//    int yOffset = 12;
-//    yRows[0] = 40 + yOffset;
+    int yOffset = 12;
+    yRows[0] = 30 + yOffset;
 //    addPatternButtonAt(id++, leftColX + xOffset, yRows[0], true, TileEntityPatternBuilder.Fields.OFFTARGX);
 //    addPatternButtonAt(id++, leftColX - xOffset - 4, yRows[0], false, TileEntityPatternBuilder.Fields.OFFTARGX);
-//    yRows[1] = yRows[0] + yOffset;
+    yRows[1] = yRows[0] + yOffset;
 //    addPatternButtonAt(id++, leftColX + xOffset, yRows[1], true, TileEntityPatternBuilder.Fields.OFFTARGY);
 //    addPatternButtonAt(id++, leftColX - xOffset - 4, yRows[1], false, TileEntityPatternBuilder.Fields.OFFTARGY);
-//    yRows[2] = yRows[1] + yOffset;
+    yRows[2] = yRows[1] + yOffset;
 //    addPatternButtonAt(id++, leftColX + xOffset, yRows[2], true, TileEntityPatternBuilder.Fields.OFFTARGZ);
 //    addPatternButtonAt(id++, leftColX - xOffset - 4, yRows[2], false, TileEntityPatternBuilder.Fields.OFFTARGZ);
 //    rightColX = 108;
@@ -87,27 +86,22 @@ public class GuiDetector extends GuiBaseContainer {
 //        isUp, f);
 //    this.buttonList.add(btn);
 //  }
-//  private void drawFieldAt(int x, int y, TileEntityPatternBuilder.Fields f) {
-//    String display = "" + this.tile.getField(f.ordinal());
-//    x = (display.length() > 1) ? x - 3 : x;
-//    this.fontRendererObj.drawString(display, x, y, 4210752);
-//  }
-//  @SideOnly(Side.CLIENT)
-//  @Override
-//  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-//    redstoneBtn.setState(tile.getField(TileEntityPatternBuilder.Fields.REDSTONE.ordinal()));
-//    //draw all text fields
-//    drawFieldAt(sizeColX + 3, sizeY, TileEntityPatternBuilder.Fields.SIZER);
-//    drawFieldAt(leftColX, yRows[0], TileEntityPatternBuilder.Fields.OFFTARGX);
-//    drawFieldAt(leftColX, yRows[1], TileEntityPatternBuilder.Fields.OFFTARGY);
-//    drawFieldAt(leftColX, yRows[2], TileEntityPatternBuilder.Fields.OFFTARGZ);
-//    drawFieldAt(heightColX + 3, sizeY, TileEntityPatternBuilder.Fields.HEIGHT);
-//    int xOtherbox = leftColX + rightColX + 5;
-//    drawFieldAt(xOtherbox, yRows[0], TileEntityPatternBuilder.Fields.OFFSRCX);
-//    drawFieldAt(xOtherbox, yRows[1], TileEntityPatternBuilder.Fields.OFFSRCY);
-//    drawFieldAt(xOtherbox, yRows[2], TileEntityPatternBuilder.Fields.OFFSRCZ);
-//    super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-//  }
+  private void drawFieldAt(int x, int y, Fields f) {
+    this.drawFieldAt(x, y, f.ordinal());
+  }
+  @SideOnly(Side.CLIENT)
+  @Override
+  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+ //   redstoneBtn.setState(tile.getField(TileEntityPatternBuilder.Fields.REDSTONE.ordinal()));
+    //draw all text fields
+    drawFieldAt(sizeColX + 3, sizeY, Fields.LIMIT);
+    drawFieldAt(leftColX, yRows[0], Fields.RANGEX);
+    drawFieldAt(leftColX, yRows[1], Fields.RANGEY);
+    drawFieldAt(leftColX, yRows[2], Fields.RANGEZ);
+//    Fields.ENTITYTYPE
+//    Fields.GREATERTHANt
+    super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+  }
 //  @Override
 //  protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
 //    GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);

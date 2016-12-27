@@ -92,10 +92,9 @@ public class GuiPattern extends GuiBaseContainer {
         isUp, f);
     this.buttonList.add(btn);
   }
+
   private void drawFieldAt(int x, int y, TileEntityPatternBuilder.Fields f) {
-    String display = "" + this.tile.getField(f.ordinal());
-    x = (display.length() > 1) ? x - 3 : x;
-    this.fontRendererObj.drawString(display, x, y, 4210752);
+    this.drawFieldAt(x, y, f.ordinal());
   }
   @SideOnly(Side.CLIENT)
   @Override

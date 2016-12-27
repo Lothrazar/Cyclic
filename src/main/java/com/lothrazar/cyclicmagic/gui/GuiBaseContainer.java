@@ -25,6 +25,17 @@ public abstract class GuiBaseContainer extends GuiContainer {
   public ResourceLocation getBackground() {
     return Const.Res.TABLEDEFAULT;//can override
   }
+  /**
+   * ONLY CALL FROM drawGuiContainerForegroundLayer
+   * @param x
+   * @param y
+   * @param f
+   */
+  protected void drawFieldAt(int x, int y, int f ) {
+    String display = "" + this.tile.getField(f);
+    x = (display.length() > 1) ? x - 3 : x;
+    this.fontRendererObj.drawString(display, x, y, 4210752);
+  }
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
