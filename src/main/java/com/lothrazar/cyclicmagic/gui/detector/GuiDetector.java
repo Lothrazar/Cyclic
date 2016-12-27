@@ -1,21 +1,14 @@
 package com.lothrazar.cyclicmagic.gui.detector;
-import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityDetector;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPatternBuilder;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityDetector.EntityType;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityDetector.Fields;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
-import com.lothrazar.cyclicmagic.util.Const;
-import net.minecraft.client.gui.Gui;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiDetector extends GuiBaseContainer {
-  //  static final int texture_width = 176;
-  //  static final int texture_height = 166;
   static final int GUI_ROWS = 2;
   private TileEntityDetector tile;
   private int leftColX;
@@ -31,12 +24,8 @@ public class GuiDetector extends GuiBaseContainer {
   public String getTitle() {
     return "tile.entity_detector.name";
   }
-  //  @Override
-  //  public ResourceLocation getBackground() {
-  //    return Const.Res.TABLEDEFAULT;
-  //  }
   @Override
-  public void initGui() { //BUTTON TO SWAP SOURCE AND DEST
+  public void initGui() { 
     super.initGui();
     int id = 1;
     int vButtonSpacing = 12;
@@ -45,11 +34,10 @@ public class GuiDetector extends GuiBaseContainer {
     sizeColX = leftColX + 40;
     addPatternButtonAt(id++, sizeColX, sizeY - vButtonSpacing, true, Fields.LIMIT);
     addPatternButtonAt(id++, sizeColX, sizeY + vButtonSpacing, false, Fields.LIMIT);
-    //    heightColX = leftColX + 62;
-    //    addPatternButtonAt(id++, heightColX, sizeY - vButtonSpacing, true, Fields.HEIGHT);
-    //    addPatternButtonAt(id++, heightColX, sizeY + vButtonSpacing, false, Fields.HEIGHT);
-    this.greaterLessBtn = addPatternButtonAt(id++, sizeColX + 30, sizeY - vButtonSpacing, true, Fields.GREATERTHAN, 40, 20);
-    this.entityBtn = addPatternButtonAt(id++, sizeColX + 50, sizeY - vButtonSpacing, true, Fields.ENTITYTYPE, 40, 20);
+    int y = sizeY;
+    this.greaterLessBtn = addPatternButtonAt(id++, sizeColX + 50, y, true, Fields.GREATERTHAN, 40, 20);
+    y -= 28;
+    this.entityBtn = addPatternButtonAt(id++, sizeColX + 50, y, true, Fields.ENTITYTYPE, 40, 20);
     //    int vButtonSpacing = 12;
     leftColX = 176 - 148;
     sizeColX = leftColX + 40;
@@ -65,8 +53,6 @@ public class GuiDetector extends GuiBaseContainer {
     addPatternButtonAt(id++, leftColX + xOffset, yRows[2], true, Fields.RANGEZ);
     addPatternButtonAt(id++, leftColX - xOffset - 4, yRows[2], false, Fields.RANGEZ);
     //TODO: PREVIEW BUTTON
-    //TODO: toggle Entity Type button
-    //TODO: toggle GREATERTHAN button
   }
   private ButtonDetector addPatternButtonAt(int id, int x, int y, boolean isUp, Fields f) {
     return this.addPatternButtonAt(id, x, y, isUp, f, 15, 10);
@@ -85,22 +71,17 @@ public class GuiDetector extends GuiBaseContainer {
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    //   redstoneBtn.setState(tile.getField(TileEntityPatternBuilder.Fields.REDSTONE.ordinal()));
     //draw all text fields
     drawFieldAt(sizeColX + 3, sizeY, Fields.LIMIT);
     drawFieldAt(leftColX, yRows[0], Fields.RANGEX);
     drawFieldAt(leftColX, yRows[1], Fields.RANGEY);
     drawFieldAt(leftColX, yRows[2], Fields.RANGEZ);
-    
-   EntityType t = this.tile.getEntityType();
-    this.entityBtn.displayString = t.name() ;
-    
+    //update button text
+    EntityType t = this.tile.getEntityType();
+    this.entityBtn.displayString = UtilChat.lang("tile.entity_detector." + t.name().toLowerCase());
     int greater = this.tile.getField(Fields.GREATERTHAN);
-    
-    this.greaterLessBtn.displayString = (greater==1) ? ">" : "<";
-    
-    //    Fields.ENTITYTYPE
-    //    Fields.GREATERTHANt
+    String dir = (greater == 1) ? "greater" : "less";
+    this.greaterLessBtn.displayString = UtilChat.lang("tile.entity_detector." + dir);
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
   //  @Override

@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.List;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPatternBuilder.Fields;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
