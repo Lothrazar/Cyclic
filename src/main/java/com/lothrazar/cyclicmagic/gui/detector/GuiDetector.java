@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.gui.detector;
 import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityDetector;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPatternBuilder;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityDetector.Fields;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
@@ -34,58 +35,54 @@ public class GuiDetector extends GuiBaseContainer {
   @Override
   public void initGui() { //BUTTON TO SWAP SOURCE AND DEST
     super.initGui();
-//    int id = 1;
-    /////redstone button
-//    redstoneBtn = new GuiButtonMachineRedstone(id++,
-//        this.guiLeft + Const.padding,
-//        this.guiTop + Const.padding, this.tile.getPos());
-//    redstoneBtn.setTextureIndex(tile.getField(TileMachineHarvester.Fields.REDSTONE.ordinal()));
-//    this.buttonList.add(redstoneBtn);
+    int id = 1;
+
+
+    int vButtonSpacing = 12;
     sizeY = 46;//save now as reuse for textbox
+    leftColX = 176 - 148;
+    sizeColX = leftColX + 40;
+    addPatternButtonAt(id++, sizeColX, sizeY - vButtonSpacing, true, Fields.LIMIT);
+    addPatternButtonAt(id++, sizeColX, sizeY + vButtonSpacing, false, Fields.LIMIT);
+//    heightColX = leftColX + 62;
+//    addPatternButtonAt(id++, heightColX, sizeY - vButtonSpacing, true, Fields.HEIGHT);
+//    addPatternButtonAt(id++, heightColX, sizeY + vButtonSpacing, false, Fields.HEIGHT);
+    
+    
+    
+    
+    
 //    int vButtonSpacing = 12;
     leftColX = 176 - 148;
     sizeColX = leftColX + 40;
-//    addPatternButtonAt(id++, sizeColX, sizeY - vButtonSpacing, true, TileEntityPatternBuilder.Fields.SIZER);
-//    addPatternButtonAt(id++, sizeColX, sizeY + vButtonSpacing, false, TileEntityPatternBuilder.Fields.SIZER);
-//    heightColX = leftColX + 62;
-//    addPatternButtonAt(id++, heightColX, sizeY - vButtonSpacing, true, TileEntityPatternBuilder.Fields.HEIGHT);
-//    addPatternButtonAt(id++, heightColX, sizeY + vButtonSpacing, false, TileEntityPatternBuilder.Fields.HEIGHT);
-//    int xOffset = 18;
+    int xOffset = 18;
     int yOffset = 12;
     yRows[0] = 30 + yOffset;
-//    addPatternButtonAt(id++, leftColX + xOffset, yRows[0], true, TileEntityPatternBuilder.Fields.OFFTARGX);
-//    addPatternButtonAt(id++, leftColX - xOffset - 4, yRows[0], false, TileEntityPatternBuilder.Fields.OFFTARGX);
+    addPatternButtonAt(id++, leftColX + xOffset, yRows[0], true, Fields.RANGEX);
+    addPatternButtonAt(id++, leftColX - xOffset - 4, yRows[0], false, Fields.RANGEX);
     yRows[1] = yRows[0] + yOffset;
-//    addPatternButtonAt(id++, leftColX + xOffset, yRows[1], true, TileEntityPatternBuilder.Fields.OFFTARGY);
-//    addPatternButtonAt(id++, leftColX - xOffset - 4, yRows[1], false, TileEntityPatternBuilder.Fields.OFFTARGY);
+    addPatternButtonAt(id++, leftColX + xOffset, yRows[1], true, Fields.RANGEY);
+    addPatternButtonAt(id++, leftColX - xOffset - 4, yRows[1], false, Fields.RANGEY);
     yRows[2] = yRows[1] + yOffset;
-//    addPatternButtonAt(id++, leftColX + xOffset, yRows[2], true, TileEntityPatternBuilder.Fields.OFFTARGZ);
-//    addPatternButtonAt(id++, leftColX - xOffset - 4, yRows[2], false, TileEntityPatternBuilder.Fields.OFFTARGZ);
-//    rightColX = 108;
-//    addPatternButtonAt(id++, leftColX + xOffset + rightColX, yRows[0], true, TileEntityPatternBuilder.Fields.OFFSRCX);
-//    addPatternButtonAt(id++, leftColX - xOffset - 4 + rightColX, yRows[0], false, TileEntityPatternBuilder.Fields.OFFSRCX);
-//    addPatternButtonAt(id++, leftColX + xOffset + rightColX, yRows[1], true, TileEntityPatternBuilder.Fields.OFFSRCY);
-//    addPatternButtonAt(id++, leftColX - xOffset - 4 + rightColX, yRows[1], false, TileEntityPatternBuilder.Fields.OFFSRCY);
-//    addPatternButtonAt(id++, leftColX + xOffset + rightColX, yRows[2], true, TileEntityPatternBuilder.Fields.OFFSRCZ);
-//    addPatternButtonAt(id++, leftColX - xOffset - 4 + rightColX, yRows[2], false, TileEntityPatternBuilder.Fields.OFFSRCZ);
-//    //flip button in bottom center
-//    ButtonFlipRegions bt = new ButtonFlipRegions(id++,
-//        this.guiLeft + 176 / 2 - 10,
-//        this.guiTop + yRows[2], this.tile.getPos());
-//    this.buttonList.add(bt);
-//    // ButtonToggleRender
-//    ButtonToggleRender btn = new ButtonToggleRender(id++,
-//        this.guiLeft + 176 - 20 - Const.padding,
-//        this.guiTop + Const.padding, this.tile.getPos());
-//    this.buttonList.add(btn);
+    addPatternButtonAt(id++, leftColX + xOffset, yRows[2], true, Fields.RANGEZ);
+    addPatternButtonAt(id++, leftColX - xOffset - 4, yRows[2], false, Fields.RANGEZ);
+
+    
+    
+    
+
+  //TODO: PREVIEW BUTTON
+    //TODO: toggle Entity Type button
+    //TODO: toggle GREATERTHAN button
+    
   }
-//  private void addPatternButtonAt(int id, int x, int y, boolean isUp, TileEntityPatternBuilder.Fields f) {
-//    ButtonPattern btn = new ButtonPattern(tile.getPos(), id,
-//        this.guiLeft + x,
-//        this.guiTop + y,
-//        isUp, f);
-//    this.buttonList.add(btn);
-//  }
+  private void addPatternButtonAt(int id, int x, int y, boolean isUp, Fields f) {
+    ButtonDetector btn = new ButtonDetector(tile.getPos(), id,
+        this.guiLeft + x,
+        this.guiTop + y,
+        isUp, f);
+    this.buttonList.add(btn);
+  }
   private void drawFieldAt(int x, int y, Fields f) {
     this.drawFieldAt(x, y, f.ordinal());
   }
