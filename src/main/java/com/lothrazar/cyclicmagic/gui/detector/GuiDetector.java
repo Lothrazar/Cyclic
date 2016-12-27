@@ -13,7 +13,7 @@ public class GuiDetector extends GuiBaseContainer {
   private TileEntityDetector tile;
   private int leftColX;
   private int sizeY;
-  private int sizeColX;
+  private int limitColX;
   private int[] yRows = new int[3];
   private ButtonDetector greaterLessBtn;
   private ButtonDetector entityBtn;
@@ -29,18 +29,18 @@ public class GuiDetector extends GuiBaseContainer {
     super.initGui();
     int id = 1;
     int vButtonSpacing = 12;
-    sizeY = 46;//save now as reuse for textbox
+    sizeY = 58;//save now as reuse for textbox
     leftColX = 176 - 148;
-    sizeColX = leftColX + 40;
-    addPatternButtonAt(id++, sizeColX, sizeY - vButtonSpacing, true, Fields.LIMIT);
-    addPatternButtonAt(id++, sizeColX, sizeY + vButtonSpacing, false, Fields.LIMIT);
-    int y = sizeY;
-    this.greaterLessBtn = addPatternButtonAt(id++, sizeColX + 50, y, true, Fields.GREATERTHAN, 40, 20);
-    y -= 28;
-    this.entityBtn = addPatternButtonAt(id++, sizeColX + 50, y, true, Fields.ENTITYTYPE, 40, 20);
+    limitColX = leftColX + 108;
+    addPatternButtonAt(id++, limitColX, sizeY - vButtonSpacing, true, Fields.LIMIT);
+    addPatternButtonAt(id++, limitColX, sizeY + vButtonSpacing, false, Fields.LIMIT);
+    int x = leftColX+40 ;
+    int y = sizeY-5;
+    this.greaterLessBtn = addPatternButtonAt(id++, x , y, true, Fields.GREATERTHAN, 60, 20);
+ 
+    this.entityBtn = addPatternButtonAt(id++, x, 18, true, Fields.ENTITYTYPE, 40, 20);
     //    int vButtonSpacing = 12;
-    leftColX = 176 - 148;
-    sizeColX = leftColX + 40;
+    
     int xOffset = 18;
     int yOffset = 12;
     yRows[0] = 30 + yOffset;
@@ -72,7 +72,7 @@ public class GuiDetector extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     //draw all text fields
-    drawFieldAt(sizeColX + 3, sizeY, Fields.LIMIT);
+    drawFieldAt(limitColX + 3, sizeY, Fields.LIMIT);
     drawFieldAt(leftColX, yRows[0], Fields.RANGEX);
     drawFieldAt(leftColX, yRows[1], Fields.RANGEY);
     drawFieldAt(leftColX, yRows[2], Fields.RANGEZ);
