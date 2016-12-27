@@ -25,10 +25,13 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   private boolean enableBucketBlocks;
   private boolean enableShearingBlock;
   private boolean enableFan;
+  private boolean entityDetector;
   public void onInit() {
-    BlockDetector detector = new BlockDetector();
-    BlockRegistry.registerBlock(detector, "entity_detector");
-    GameRegistry.registerTileEntity(TileEntityDetector.class, Const.MODID + "entity_detector_te");
+    if (entityDetector) {
+      BlockDetector detector = new BlockDetector();
+      BlockRegistry.registerBlock(detector, "entity_detector");
+      GameRegistry.registerTileEntity(TileEntityDetector.class, Const.MODID + "entity_detector_te");
+    }
     if (enableFan) {
       BlockFan fan = new BlockFan();
       BlockRegistry.registerBlock(fan, "fan");
@@ -64,6 +67,7 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
+    entityDetector = config.getBoolean("EntityDetector", category, true, Const.ConfigCategory.contentDefaultText);
     enableFan = config.getBoolean("Fan", category, true, Const.ConfigCategory.contentDefaultText);
     enableShearingBlock = config.getBoolean("ShearingBlock", category, true, Const.ConfigCategory.contentDefaultText);
     enableBucketBlocks = config.getBoolean("BucketBlocks", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
