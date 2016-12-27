@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.gui.detector;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityDetector;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityDetector.CompareType;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityDetector.EntityType;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityDetector.Fields;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
@@ -37,7 +38,7 @@ public class GuiDetector extends GuiBaseContainer {
     int x = leftColX + 40;
     int y = sizeY - 5;
     this.greaterLessBtn = addPatternButtonAt(id++, x, y, true, Fields.GREATERTHAN, 60, 20);
-    this.entityBtn = addPatternButtonAt(id++, x, 18, true, Fields.ENTITYTYPE, 40, 20);
+    this.entityBtn = addPatternButtonAt(id++, x, 18, true, Fields.ENTITYTYPE, 60, 20);
     int xOffset = 18;
     int yOffset = 12;
     yRows[0] = 30 + yOffset;
@@ -77,7 +78,7 @@ public class GuiDetector extends GuiBaseContainer {
     EntityType t = this.tile.getEntityType();
     this.entityBtn.displayString = UtilChat.lang("tile.entity_detector." + t.name().toLowerCase());
     int greater = this.tile.getField(Fields.GREATERTHAN);
-    String dir = (greater == 1) ? "greater" : "less";
+    String dir = CompareType.values()[greater].name().toLowerCase();
     this.greaterLessBtn.displayString = UtilChat.lang("tile.entity_detector." + dir);
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }

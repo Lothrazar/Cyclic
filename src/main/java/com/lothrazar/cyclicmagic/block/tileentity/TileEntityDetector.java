@@ -16,8 +16,9 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
   private int rangeY = 5;
   private int rangeZ = 5;
   private int limitUntilRedstone = 5;
-  private int ifFoundGreaterThanLimit = 0;
+  //  private int ifFoundGreaterThanLimit = 0;
   private boolean isPoweredNow = false;
+  private CompareType compType = CompareType.GREATER;
   private EntityType entityType = EntityType.LIVING;
   private static final int MAX_RANGE = 16;
   public static enum Fields {
@@ -26,14 +27,28 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
   public static enum EntityType {
     LIVING, ITEM, EXP, PLAYER;
   }
+  public static enum CompareType {
+    LESS, GREATER, EQUAL;
+  }
   @Override
   public void update() {
     World world = this.getWorld();
     List<Entity> entityList = world.getEntitiesWithinAABB(getEntityClass(), new AxisAlignedBB(this.getPos(), this.getPos().add(1, 1, 1)).expand(rangeX, rangeY, rangeZ));
     int entitiesFound = (entityList == null) ? 0 : entityList.size();
-    //System.out.println("entitiesFound="+entitiesFound);
-    boolean trigger = (ifFoundGreaterThanLimit == 1) ? (entitiesFound > limitUntilRedstone)
-        : (entitiesFound < limitUntilRedstone);
+    boolean trigger = false;
+    switch (this.compType) {
+    case LESS:
+      trigger = (entitiesFound < limitUntilRedstone);
+      break;
+    case GREATER:
+      trigger = (entitiesFound > limitUntilRedstone);
+      break;
+    case EQUAL:
+      trigger = (entitiesFound == limitUntilRedstone);
+      break;
+    default:
+      break;
+    }
     //System.out.println("isPoweredNow="+isPoweredNow+"__trigger="+trigger);
     if (isPoweredNow != trigger) {
       isPoweredNow = trigger;
@@ -74,7 +89,7 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
     case ENTITYTYPE:
       return this.entityType.ordinal();
     case GREATERTHAN:
-      return this.ifFoundGreaterThanLimit;
+      return this.compType.ordinal();
     case LIMIT:
       return this.limitUntilRedstone;
     case RANGEX:
@@ -89,14 +104,6 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
     return 0;
   }
   public void setField(Fields f, int value) {
-    if (f == Fields.GREATERTHAN) {
-      if (value > 1) {
-        value = 0;
-      }
-      if (value < 0) {
-        value = 1;
-      }
-    }
     if (f == Fields.RANGEX || f == Fields.RANGEY || f == Fields.RANGEZ) {
       if (value > MAX_RANGE) {
         value = MAX_RANGE;
@@ -105,19 +112,23 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
         value = 1;
       }
     }
-    if (f == Fields.LIMIT) {
+    switch (f) {
+    case GREATERTHAN:
+      if (value >= CompareType.values().length) {
+        value = 0;
+      }
+      if (value < 0) {
+        value = CompareType.values().length - 1;
+      }
+      this.compType = CompareType.values()[value];
+      break;
+    case LIMIT:
       if (value > 999) {
         value = MAX_RANGE;
       }
       if (value < 1) {
         value = 1;
       }
-    }
-    switch (f) {
-    case GREATERTHAN:
-      this.ifFoundGreaterThanLimit = value;
-      break;
-    case LIMIT:
       this.limitUntilRedstone = value;
       break;
     case RANGEX:
@@ -151,7 +162,9 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
     this.rangeY = tagCompound.getInteger("oy");
     this.rangeZ = tagCompound.getInteger("oz");
     this.limitUntilRedstone = tagCompound.getInteger("limit");
-    this.ifFoundGreaterThanLimit = tagCompound.getInteger("compare");
+    int cType = tagCompound.getInteger("compare");
+    if (cType >= 0 && cType < CompareType.values().length)
+      this.compType = CompareType.values()[cType];
     int eType = tagCompound.getInteger("et");
     if (eType >= 0 && eType < EntityType.values().length)
       this.entityType = EntityType.values()[eType];
@@ -162,7 +175,7 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
     tagCompound.setInteger("oy", rangeY);
     tagCompound.setInteger("oz", rangeZ);
     tagCompound.setInteger("limit", limitUntilRedstone);
-    tagCompound.setInteger("compare", ifFoundGreaterThanLimit);
+    tagCompound.setInteger("compare", compType.ordinal());
     tagCompound.setInteger("et", entityType.ordinal());
     return super.writeToNBT(tagCompound);
   }
