@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.gui;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityDetector;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFishing;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPatternBuilder;
@@ -13,6 +14,8 @@ import com.lothrazar.cyclicmagic.gui.blockminer.ContainerBlockMiner;
 import com.lothrazar.cyclicmagic.gui.blockminer.GuiBlockMiner;
 import com.lothrazar.cyclicmagic.gui.builder.ContainerBuilder;
 import com.lothrazar.cyclicmagic.gui.builder.GuiBuilder;
+import com.lothrazar.cyclicmagic.gui.detector.ContainerDetector;
+import com.lothrazar.cyclicmagic.gui.detector.GuiDetector;
 import com.lothrazar.cyclicmagic.gui.fisher.ContainerFisher;
 import com.lothrazar.cyclicmagic.gui.fisher.GuiFisher;
 import com.lothrazar.cyclicmagic.gui.miner.ContainerMinerSmart;
@@ -69,6 +72,7 @@ public class ModGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_HARVESTER = 12;
   public static final int GUI_INDEX_BLOCKMINER = 13;
   public static final int GUI_INDEX_PATTERN = 14;
+  public static final int GUI_INDEX_DETECTOR = 15;
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
     TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
@@ -129,6 +133,9 @@ public class ModGuiHandler implements IGuiHandler {
     case GUI_INDEX_PATTERN:
       if (te != null && te instanceof TileEntityPatternBuilder) { return new ContainerPattern(player.inventory, (TileEntityPatternBuilder) te); }
       break;
+    case GUI_INDEX_DETECTOR:
+      if (te != null && te instanceof TileEntityDetector) { return new ContainerDetector(player.inventory, (TileEntityDetector) te); }
+      break;
     }
     return null;
   }
@@ -178,6 +185,9 @@ public class ModGuiHandler implements IGuiHandler {
         break;
       case GUI_INDEX_PATTERN:
         if (te != null && te instanceof TileEntityPatternBuilder) { return new GuiPattern(player.inventory, (TileEntityPatternBuilder) te); }
+        break;
+      case GUI_INDEX_DETECTOR:
+        if (te != null && te instanceof TileEntityDetector) { return new GuiDetector(player.inventory, (TileEntityDetector) te); }
         break;
       }
     }

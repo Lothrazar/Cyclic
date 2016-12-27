@@ -1,13 +1,10 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;// net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.text.ITextComponent;
 
-public class TileEntityMagnet extends TileEntity implements ITickable {
+public class TileEntityMagnet extends TileEntityBaseMachine implements ITickable {
   private int timer;
   private static final String NBT_TIMER = "Timer";
   public static int TIMER_FULL = 100;
@@ -29,22 +26,6 @@ public class TileEntityMagnet extends TileEntity implements ITickable {
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
     tagCompound.setInteger(NBT_TIMER, timer);
     return super.writeToNBT(tagCompound);
-  }
-  @Override
-  public SPacketUpdateTileEntity getUpdatePacket() {
-    // getDescriptionPacket()
-    // Gathers data into a packet (S35PacketUpdateTileEntity) that is to be
-    // sent to the client. Called on server only.
-    NBTTagCompound syncData = new NBTTagCompound();
-    this.writeToNBT(syncData);
-    return new SPacketUpdateTileEntity(this.pos, 1, syncData);
-  }
-  @Override
-  public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-    // Extracts data from a packet (S35PacketUpdateTileEntity) that was sent
-    // from the server. Called on client only.
-    this.readFromNBT(pkt.getNbtCompound());
-    super.onDataPacket(net, pkt);
   }
   public boolean isBurning() {
     return this.timer > 0 && this.timer < TIMER_FULL;

@@ -3,7 +3,8 @@
 		"0":"blocks/quartz_block_side",
 		"1":"blocks/cauldron_inner",
 		"2":"blocks/hardened_clay_stained_yellow",
-		"3":"blocks/quartz_block_lines"
+		"3":"blocks/quartz_block_lines",
+		"particle": "blocks/quartz_block_top"
     },
     "elements": [
         {

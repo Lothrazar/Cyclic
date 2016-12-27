@@ -5,8 +5,8 @@
     "1.9.4-recommended":  "1.2.0",
     "1.10-latest":  "1.1.0",
     "1.10-recommended": "1.1.0",
-    "1.10.2-latest":  "1.9.6",
-    "1.10.2-recommended": "1.9.6"
+    "1.10.2-latest":  "1.9.7",
+    "1.10.2-recommended": "1.9.7"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -88,5 +88,6 @@
   	,"1.9.4":"Fix crash caused by certain types of modded armor in the Uncrafting grinder (such as bronze armor from IC2).  Auto fisher will now refuse to fish if a non-fishing rod item ends up in that slot.  Vein size and spawn chances of Nether ore and End ore now in config; tweak or disable each individually.  "
   	,"1.9.5":"New Block: Pattern Replicator.  Add config for disabling Viscous potion.  Fix speed charm exploit bug.  Speed charm now has more durability, but takes damage a bit faster, and costs emerald blocks instead of emerald items to craft and repair.  Added new mob spawn config to allow pigmen to spawn naturally in Mesa biomes (off by default).  "
   	,"1.9.6":"Fix bug when hoppers or conduits are inserting items into Controlled Miner; it now safely inserts tools into the correct slots and ignores the rest without crashing.  "
+  	,"1.9.7":"New Block: Entity Detector"
   }
 }

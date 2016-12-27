@@ -1,25 +1,20 @@
 package com.lothrazar.cyclicmagic.block;
-import java.util.List;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.util.Const;
-import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilUncraft;
 import com.lothrazar.cyclicmagic.util.UtilUncraft.BlacklistType;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRecipe, IHasConfig {
   // http://www.minecraftforge.net/forum/index.php?topic=31953.0
@@ -28,18 +23,11 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);
     this.setTickRandomly(true);
+    this.setTooltip("tile.uncrafting_block.tooltip");
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileMachineUncrafter();
-  }
-  @Override
-  public boolean hasTileEntity() {
-    return true;
-  }
-  @Override
-  public boolean hasTileEntity(IBlockState state) {
-    return hasTileEntity();
   }
   @Override
   public void addRecipe() {
@@ -76,10 +64,5 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
     //    deflist = new String[] { "botania:manaTablet","projecte:pe_philosophers_stone" };//bot mana tablet
     //    blacklist = config.getStringList("BlacklistIfIngredient", category, deflist, "If something contains one of these items as output, uncrafting will be blocked.  For example, if you put 'minecraft:iron_ingot' here, you will not be able to uncraft pistons or iron swords or anything that uses iron at all.");
     //    UtilUncraft.setBlacklist(blacklist, BlacklistType.CONTAINS);
-  }
-  @SideOnly(Side.CLIENT)
-  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
-    String s = UtilChat.lang("tile.uncrafting_block.tooltip");
-    tooltip.add(s);
   }
 }

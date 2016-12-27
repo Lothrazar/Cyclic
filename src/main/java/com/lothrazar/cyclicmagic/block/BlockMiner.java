@@ -1,14 +1,11 @@
 package com.lothrazar.cyclicmagic.block;
-import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineBlockMiner;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
-import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -16,8 +13,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockMiner extends BlockBaseFacingInventory implements IHasRecipe {
   public static final PropertyDirection PROPERTYFACING = BlockBaseFacing.PROPERTYFACING;
@@ -29,7 +24,11 @@ public class BlockMiner extends BlockBaseFacingInventory implements IHasRecipe {
     super(Material.IRON, ModGuiHandler.GUI_INDEX_BLOCKMINER);
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);
-    minerType = t;
+    this.minerType = t;
+    if (this.minerType == MinerType.SINGLE)
+      this.setTooltip("tile.block_miner.tooltip");
+    else if (this.minerType == MinerType.TUNNEL)
+      this.setTooltip("tile.block_miner_tunnel.tooltip");
   }
   public MinerType getMinerType() {
     return minerType;
@@ -37,14 +36,6 @@ public class BlockMiner extends BlockBaseFacingInventory implements IHasRecipe {
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileMachineBlockMiner();
-  }
-  @Override
-  public boolean hasTileEntity() {
-    return true;
-  }
-  @Override
-  public boolean hasTileEntity(IBlockState state) {
-    return hasTileEntity();
   }
   @Override
   public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
@@ -79,12 +70,5 @@ public class BlockMiner extends BlockBaseFacingInventory implements IHasRecipe {
     default:
       break;
     }
-  }
-  @SideOnly(Side.CLIENT)
-  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
-    if (this.minerType == MinerType.SINGLE)
-      tooltip.add(UtilChat.lang("tile.block_miner.tooltip"));
-    else if (this.minerType == MinerType.TUNNEL)
-      tooltip.add(UtilChat.lang("tile.block_miner_tunnel.tooltip"));
   }
 }
