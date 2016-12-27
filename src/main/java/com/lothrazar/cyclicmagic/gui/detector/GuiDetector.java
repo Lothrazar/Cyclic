@@ -25,7 +25,7 @@ public class GuiDetector extends GuiBaseContainer {
     return "tile.entity_detector.name";
   }
   @Override
-  public void initGui() { 
+  public void initGui() {
     super.initGui();
     int id = 1;
     int vButtonSpacing = 12;
@@ -34,13 +34,10 @@ public class GuiDetector extends GuiBaseContainer {
     limitColX = leftColX + 108;
     addPatternButtonAt(id++, limitColX, sizeY - vButtonSpacing, true, Fields.LIMIT);
     addPatternButtonAt(id++, limitColX, sizeY + vButtonSpacing, false, Fields.LIMIT);
-    int x = leftColX+40 ;
-    int y = sizeY-5;
-    this.greaterLessBtn = addPatternButtonAt(id++, x , y, true, Fields.GREATERTHAN, 60, 20);
- 
+    int x = leftColX + 40;
+    int y = sizeY - 5;
+    this.greaterLessBtn = addPatternButtonAt(id++, x, y, true, Fields.GREATERTHAN, 60, 20);
     this.entityBtn = addPatternButtonAt(id++, x, 18, true, Fields.ENTITYTYPE, 40, 20);
-    //    int vButtonSpacing = 12;
-    
     int xOffset = 18;
     int yOffset = 12;
     yRows[0] = 30 + yOffset;
@@ -84,20 +81,4 @@ public class GuiDetector extends GuiBaseContainer {
     this.greaterLessBtn.displayString = UtilChat.lang("tile.entity_detector." + dir);
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
-  //  @Override
-  //  protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-  //    GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-  //    this.mc.getTextureManager().bindTexture(getBackground());
-  //    int thisX = (this.width - this.xSize) / 2;
-  //    int thisY = (this.height - this.ySize) / 2;
-  //    int u = 0, v = 0;
-  //    Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, texture_width, texture_height, texture_width, texture_height);
-  //    this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
-  //    int row = 0, col = 0;
-  //    for (int i = 0; i < tile.getSizeInventory(); i++) {
-  //      row = i / GUI_ROWS;// /3 will go 000, 111, 222
-  //      col = i % GUI_ROWS; // and %3 will go 012 012 012
-  //      Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerPattern.SLOTX_START - 1 + row * Const.SQ, this.guiTop + ContainerPattern.SLOTY_START - 1 + col * Const.SQ, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-  //    }
-  //  }
 }

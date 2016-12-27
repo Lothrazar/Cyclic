@@ -6,6 +6,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
@@ -104,7 +105,7 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
         value = 1;
       }
     }
-    if(f == Fields.LIMIT){
+    if (f == Fields.LIMIT) {
       if (value > 999) {
         value = MAX_RANGE;
       }
@@ -142,5 +143,27 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
   public EntityType getEntityType() {
     int type = this.getField(Fields.ENTITYTYPE);
     return EntityType.values()[type];
+  }
+  @Override
+  public void readFromNBT(NBTTagCompound tagCompound) {
+    super.readFromNBT(tagCompound);
+    this.rangeX = tagCompound.getInteger("ox");
+    this.rangeY = tagCompound.getInteger("oy");
+    this.rangeZ = tagCompound.getInteger("oz");
+    this.limitUntilRedstone = tagCompound.getInteger("limit");
+    this.ifFoundGreaterThanLimit = tagCompound.getInteger("compare");
+    int eType = tagCompound.getInteger("et");
+    if (eType >= 0 && eType < EntityType.values().length)
+      this.entityType = EntityType.values()[eType];
+  }
+  @Override
+  public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
+    tagCompound.setInteger("ox", rangeX);
+    tagCompound.setInteger("oy", rangeY);
+    tagCompound.setInteger("oz", rangeZ);
+    tagCompound.setInteger("limit", limitUntilRedstone);
+    tagCompound.setInteger("compare", ifFoundGreaterThanLimit);
+    tagCompound.setInteger("et", entityType.ordinal());
+    return super.writeToNBT(tagCompound);
   }
 }
