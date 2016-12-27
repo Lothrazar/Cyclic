@@ -78,4 +78,28 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
       this.setInventorySlotContents(low, second);
     }
   }
+  @Override
+  public int getSizeInventory() {
+    return 0;
+  }
+  @Override
+  public ItemStack getStackInSlot(int index) {
+    return null;
+  }
+  @Override
+  public ItemStack decrStackSize(int index, int count) {
+    return null;
+  }
+  @Override
+  public ItemStack removeStackFromSlot(int index) {
+    return null;
+  }
+  @Override
+  public void setInventorySlotContents(int index, ItemStack stack) {
+  }
+  @Override
+  public int[] getSlotsForFace(EnumFacing side) {
+    // TODO Auto-generated method stub
+    return new int[] {};
+  }
 }

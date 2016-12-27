@@ -11,6 +11,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class GuiBaseContainer extends GuiContainer {
+  private static final int texture_width = 176;
+  private static final int texture_height = 166;
   private TileEntityBaseMachineInvo tile;
   public GuiBaseContainer(Container inventorySlotsIn, TileEntityBaseMachineInvo tile) {
     super(inventorySlotsIn);
@@ -23,6 +25,17 @@ public abstract class GuiBaseContainer extends GuiContainer {
   public ResourceLocation getBackground() {
     return Const.Res.TABLEDEFAULT;//can override
   }
+  /**
+   * ONLY CALL FROM drawGuiContainerForegroundLayer
+   * @param x
+   * @param y
+   * @param f
+   */
+  protected void drawFieldAt(int x, int y, int f ) {
+    String display = "" + this.tile.getField(f);
+    x = (display.length() > 1) ? x - 3 : x;
+    this.fontRendererObj.drawString(display, x, y, 4210752);
+  }
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
@@ -32,8 +45,6 @@ public abstract class GuiBaseContainer extends GuiContainer {
       this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
     }
   }
-  private static final int texture_width = 176;
-  private static final int texture_height = 166;
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     //    super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);// abstract
