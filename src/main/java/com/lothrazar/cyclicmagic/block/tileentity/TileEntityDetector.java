@@ -19,6 +19,7 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
   private int ifFoundGreaterThanLimit = 0;
   private boolean isPoweredNow = false;
   private EntityType entityType = EntityType.LIVING;
+  private static final int MAX_RANGE = 16;
   public static enum Fields {
     GREATERTHAN, LIMIT, RANGEX, RANGEY, RANGEZ, ENTITYTYPE;
   }
@@ -88,21 +89,59 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
     return 0;
   }
   public void setField(Fields f, int value) {
+    if (f == Fields.GREATERTHAN) {
+      if (value > 1) {
+        value = 0;
+      }
+      if (value < 0) {
+        value = 1;
+      }
+    }
+    if (f == Fields.RANGEX || f == Fields.RANGEY || f == Fields.RANGEZ) {
+      if (value > MAX_RANGE) {
+        value = MAX_RANGE;
+      }
+      if (value < 1) {
+        value = 1;
+      }
+    }
+    if(f == Fields.LIMIT){
+      if (value > 999) {
+        value = MAX_RANGE;
+      }
+      if (value < 1) {
+        value = 1;
+      }
+    }
     switch (f) {
-    case ENTITYTYPE:
-      break;
     case GREATERTHAN:
+      this.ifFoundGreaterThanLimit = value;
       break;
     case LIMIT:
+      this.limitUntilRedstone = value;
       break;
     case RANGEX:
+      this.rangeX = value;
       break;
     case RANGEY:
+      this.rangeY = value;
       break;
     case RANGEZ:
+      this.rangeZ = value;
+      break;
+    case ENTITYTYPE:
+      if (value >= EntityType.values().length)
+        value = 0;
+      if (value < 0)
+        value = EntityType.values().length - 1;
+      this.entityType = EntityType.values()[value];
       break;
     default:
       break;
     }
+  }
+  public EntityType getEntityType() {
+    int type = this.getField(Fields.ENTITYTYPE);
+    return EntityType.values()[type];
   }
 }
