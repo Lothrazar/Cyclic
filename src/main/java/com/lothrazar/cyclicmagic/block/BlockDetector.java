@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.block;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityDetector;
+import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
@@ -11,6 +12,8 @@ import net.minecraft.world.World;
 public class BlockDetector extends BlockBaseHasTile {
   public BlockDetector() {
     super(Material.IRON);
+    this.setTooltip("tile.entity_detector.tooltip");
+    this.setGuiId(ModGuiHandler.GUI_INDEX_DETECTOR);
   }
   @Override
   public int getWeakPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
