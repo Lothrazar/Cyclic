@@ -1,6 +1,7 @@
 {
     "textures": {
-		"0":"cyclicmagic:blocks/block_shears"
+		"0":"cyclicmagic:blocks/block_shears",
+		"particle": "blocks/obsidian"
     },
     "elements": [
         {

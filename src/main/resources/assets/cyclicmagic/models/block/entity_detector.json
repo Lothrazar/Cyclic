@@ -3,7 +3,8 @@
      	"0":"blocks/redstone_block",
     	"1":"blocks/quartz_block_top",
 		"2":"blocks/coal_block",
-		"3":"blocks/diamond_block"
+		"3":"blocks/diamond_block",
+		"particle": "blocks/quartz_block_top"
     },
     "elements": [
         {

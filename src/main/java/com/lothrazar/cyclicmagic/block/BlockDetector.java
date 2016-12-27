@@ -16,7 +16,9 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockDetector extends BlockBaseHasTile implements IHasRecipe {
   public BlockDetector() {
-    super(Material.IRON);
+    super(Material.ROCK);
+    this.setHardness(3F);
+    this.setResistance(5F);
     this.setTooltip("tile.entity_detector.tooltip");
     this.setGuiId(ModGuiHandler.GUI_INDEX_DETECTOR);
     this.setTranslucent();
