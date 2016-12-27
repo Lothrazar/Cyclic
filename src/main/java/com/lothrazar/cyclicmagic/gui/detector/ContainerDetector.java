@@ -8,7 +8,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerDetector extends ContainerBaseMachine {
-  // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
   public static final int SLOTX_START = 8;
   public static final int SLOTY_START = 90;
   protected TileEntityDetector tileEntity;
@@ -20,15 +19,6 @@ public class ContainerDetector extends ContainerBaseMachine {
   private int tileEntityType;
   public ContainerDetector(InventoryPlayer inventoryPlayer, TileEntityDetector te) {
     tileEntity = te;
-    int s = 0;
-    int row = 0, col = 0;
-    //    for (int i = 0; i < tileEntity.getSizeInventory(); i++) { //so going from 0-9
-    //      row = i / GuiDetector.GUI_ROWS;// /3 will go 000, 111, 222
-    //      col = i % GuiDetector.GUI_ROWS; // and %3 will go 012 012 012
-    //      addSlotToContainer(new Slot(tileEntity, s, SLOTX_START + row * Const.SQ, SLOTY_START + col * Const.SQ));
-    //      s++;
-    //    }
-    // commonly used vanilla code that adds the player's inventory
     bindPlayerInventory(inventoryPlayer);
   }
   @Override

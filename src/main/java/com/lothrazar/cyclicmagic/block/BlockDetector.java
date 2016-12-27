@@ -14,6 +14,7 @@ public class BlockDetector extends BlockBaseHasTile {
     super(Material.IRON);
     this.setTooltip("tile.entity_detector.tooltip");
     this.setGuiId(ModGuiHandler.GUI_INDEX_DETECTOR);
+    this.setTranslucent();
   }
   @Override
   public int getWeakPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
