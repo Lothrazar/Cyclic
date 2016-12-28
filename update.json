@@ -89,6 +89,6 @@
   	,"1.9.5":"New Block: Pattern Replicator.  Add config for disabling Viscous potion.  Fix speed charm exploit bug.  Speed charm now has more durability, but takes damage a bit faster, and costs emerald blocks instead of emerald items to craft and repair.  Added new mob spawn config to allow pigmen to spawn naturally in Mesa biomes (off by default).  "
   	,"1.9.6":"Fix bug when hoppers or conduits are inserting items into Controlled Miner; it now safely inserts tools into the correct slots and ignores the rest without crashing.  "
   	,"1.9.7":"New Block: Entity Detector"
-  	,"1.9.8":"Fix block miners constantly playing equip sounds for fake player"
+  	,"1.9.8":"Fix block miners constantly playing equip sounds for fake player.  Fix Automated User in attack mode not calculating damage from enchantments or modded items such as (tinkers swords)"
   }
 }
