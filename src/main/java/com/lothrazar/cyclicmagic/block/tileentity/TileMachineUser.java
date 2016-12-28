@@ -3,13 +3,11 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeMap;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -111,16 +109,15 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
             for (EntityLivingBase ent : all) {
               fakePlayer.get().attackTargetEntityWithCurrentItem(ent);
               //THANKS TO FORUMS http://www.minecraftforge.net/forum/index.php?topic=43152.0
-
               IAttributeInstance damage = new AttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
               if (held != null)
                 for (AttributeModifier modifier : held.getAttributeModifiers(EntityEquipmentSlot.MAINHAND).get(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName()))
                   damage.applyModifier(modifier);
               float dmgVal = (float) damage.getAttributeValue();
               float f1 = EnchantmentHelper.getModifierForCreature(held, (ent).getCreatureAttribute());
-//              UtilChat.addChatMessage(this.getWorld(), "baseWeapon" + dmgVal);
-//              UtilChat.addChatMessage(this.getWorld(), "enchant" + f1);
-//        
+              //              UtilChat.addChatMessage(this.getWorld(), "baseWeapon" + dmgVal);
+              //              UtilChat.addChatMessage(this.getWorld(), "enchant" + f1);
+              //        
               ent.attackEntityFrom(DamageSource.causePlayerDamage(fakePlayer.get()), dmgVal + f1);
             }
           }

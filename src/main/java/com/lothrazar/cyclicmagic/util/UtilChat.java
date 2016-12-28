@@ -35,7 +35,7 @@ public class UtilChat {
     }
   }
   public static void addChatMessage(World worldObj, String s) {
-    addChatMessage(worldObj,new TextComponentTranslation(s));
+    addChatMessage(worldObj, new TextComponentTranslation(s));
   }
   public static List<String> splitIntoLine(String input, int maxCharInLine) {
     // https://stackoverflow.com/questions/7528045/large-string-split-into-lines-with-maximum-length-in-java

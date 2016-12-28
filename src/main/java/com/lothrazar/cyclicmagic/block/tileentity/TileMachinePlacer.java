@@ -8,7 +8,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 
-public class TileMachinePlacer extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable  {
+public class TileMachinePlacer extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
   private int timer;
   private static final int buildSpeed = 1;
   private int needsRedstone = 1;
