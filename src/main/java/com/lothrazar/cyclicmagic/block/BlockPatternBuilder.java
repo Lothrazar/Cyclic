@@ -23,12 +23,12 @@ public class BlockPatternBuilder extends BlockBaseHasTile implements IHasRecipe 
     this.setTickRandomly(true);
     this.setTranslucent();
     this.setTooltip("tile.builder_pattern.tooltip");
-    this.setGuiId( ModGuiHandler.GUI_INDEX_PATTERN);
+    this.setGuiId(ModGuiHandler.GUI_INDEX_PATTERN);
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileEntityPatternBuilder();//"tile.block_fishing.name"
-  } 
+  }
   public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
     TileEntity tileentity = worldIn.getTileEntity(pos);
     if (tileentity instanceof IInventory) {

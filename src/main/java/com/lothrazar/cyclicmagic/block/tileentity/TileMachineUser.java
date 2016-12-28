@@ -8,8 +8,11 @@ import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeMap;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -25,7 +28,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
 
-public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileRedstoneToggle , ITickable {
+public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
   // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
@@ -58,7 +61,6 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
   @Override
   public void update() {
     this.shiftAllUp();
-    int toolSlot = 0;
     if (!(this.onlyRunIfPowered() && this.isPowered() == false)) {
       this.spawnParticlesAbove();
     }
@@ -71,29 +73,8 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
           return;
         }
       }
-      if (uuid == null) {
-        uuid = UUID.randomUUID();
-        IBlockState state = world.getBlockState(this.pos);
-        world.notifyBlockUpdate(pos, state, state, 3);
-      }
-      ItemStack maybeTool = getStackInSlot(toolSlot);
-      if (maybeTool != null) {
-        //do we need to make it null
-        if (maybeTool.stackSize == 0) {
-          maybeTool = null;
-        }
-      }
-      fakePlayer.get().onUpdate();//trigger   ++this.ticksSinceLastSwing; among other things
-      if (maybeTool == null) {//null for any reason
-        fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, null);
-        inv[toolSlot] = null;
-      }
-      else {
-        //so its not null
-        // if (!maybeTool.equals(fakePlayer.get().getHeldItem(EnumHand.MAIN_HAND))) {
-        fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, maybeTool);
-        //}
-      }
+      verifyUuid(world);
+      ItemStack maybeTool = tryEquipItem();
       if (!(this.onlyRunIfPowered() && this.isPowered() == false)) {
         timer -= this.getSpeed();
         if (timer <= 0) {
@@ -109,9 +90,8 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
           int hRange = 2;
           int vRange = 1;
           //so in a radius 2 area starting one block away
-          BlockPos entityCenter = this.getPos().offset(this.getCurrentFacing(), hRange);
+          BlockPos entityCenter = this.getPos().offset(this.getCurrentFacing(), 1);
           if (rightClickIfZero == 0) {
-            // String tool = (maybeTool==null)?"empty":maybeTool.getUnlocalizedName();
             fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
             //this.getWorld().markChunkDirty(this.getPos(), this);
             this.getWorld().markChunkDirty(targetPos, this);
@@ -124,22 +104,21 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
           else {
             AxisAlignedBB range = UtilEntity.makeBoundingBox(entityCenter, 1, 1);
             List<EntityLivingBase> all = world.getEntitiesWithinAABB(EntityLivingBase.class, range);
+            ItemStack held = fakePlayer.get().getHeldItemMainhand();
+            fakePlayer.get().onGround = true;
             for (EntityLivingBase ent : all) {
-              float f = (float) fakePlayer.get().getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue();
               fakePlayer.get().attackTargetEntityWithCurrentItem(ent);
-              //above one works and does enchants but is buggy since fakeplayer seems to not work with the 
-              //attackcooldowns added (the new swordplay delay), is always weakest like 10%
-              //so now force it as full dmg to mimic actually working
-              float f1;
-              if (ent instanceof EntityLivingBase) {
-                f1 = EnchantmentHelper.getModifierForCreature(fakePlayer.get().getHeldItemMainhand(), ((EntityLivingBase) ent).getCreatureAttribute());
-              }
-              else {
-                f1 = EnchantmentHelper.getModifierForCreature(fakePlayer.get().getHeldItemMainhand(), EnumCreatureAttribute.UNDEFINED);
-              }
-              f *= 1.75F;
-              f = f + f1;//APPLY CREATURE/WEAPON/SHARPNESS COMBO
-              ent.attackEntityFrom(DamageSource.causePlayerDamage(fakePlayer.get()), f);
+              //THANKS TO FORUMS http://www.minecraftforge.net/forum/index.php?topic=43152.0
+              IAttributeInstance damage = new AttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
+              if (held != null)
+                for (AttributeModifier modifier : held.getAttributeModifiers(EntityEquipmentSlot.MAINHAND).get(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName()))
+                  damage.applyModifier(modifier);
+              float dmgVal = (float) damage.getAttributeValue();
+              float f1 = EnchantmentHelper.getModifierForCreature(held, (ent).getCreatureAttribute());
+              //              UtilChat.addChatMessage(this.getWorld(), "baseWeapon" + dmgVal);
+              //              UtilChat.addChatMessage(this.getWorld(), "enchant" + f1);
+              //        
+              ent.attackEntityFrom(DamageSource.causePlayerDamage(fakePlayer.get()), dmgVal + f1);
             }
           }
         }
@@ -147,6 +126,35 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
       else {
         timer = 1;//allows it to run on a pulse
       }
+    }
+  }
+  private ItemStack tryEquipItem() {
+    int toolSlot = 0;
+    ItemStack maybeTool = getStackInSlot(toolSlot);
+    if (maybeTool != null) {
+      //do we need to make it null
+      if (maybeTool.stackSize == 0) {
+        maybeTool = null;
+      }
+    }
+    fakePlayer.get().onUpdate();//trigger   ++this.ticksSinceLastSwing; among other things
+    if (maybeTool == null) {//null for any reason
+      fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, null);
+      inv[toolSlot] = null;
+    }
+    else {
+      //so its not null
+      if (!maybeTool.equals(fakePlayer.get().getHeldItem(EnumHand.MAIN_HAND))) {
+        fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, maybeTool);
+      }
+    }
+    return maybeTool;
+  }
+  private void verifyUuid(World world) {
+    if (uuid == null) {
+      uuid = UUID.randomUUID();
+      IBlockState state = world.getBlockState(this.pos);
+      world.notifyBlockUpdate(pos, state, state, 3);
     }
   }
   @Override

@@ -49,10 +49,10 @@ public class BlockFishing extends BlockBaseHasTile implements IHasRecipe {
     }
     else {
       return super.onBlockActivated(world, pos, state, player, hand, heldItem, side, hitX, hitY, hitZ);
-//      if (world.isRemote) { return true; }
-//      int x = pos.getX(), y = pos.getY(), z = pos.getZ();
-//      player.openGui(ModCyclic.instance, ModGuiHandler.GUI_INDEX_FISHER, world, x, y, z);
-//      return true;
+      //      if (world.isRemote) { return true; }
+      //      int x = pos.getX(), y = pos.getY(), z = pos.getZ();
+      //      player.openGui(ModCyclic.instance, ModGuiHandler.GUI_INDEX_FISHER, world, x, y, z);
+      //      return true;
     }
     return false;
   }

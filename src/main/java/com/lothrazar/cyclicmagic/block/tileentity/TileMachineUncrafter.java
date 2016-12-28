@@ -14,7 +14,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 
-public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable  {
+public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
   // http://www.minecraftforge.net/wiki/Containers_and_GUIs
   // http://greyminecraftcoder.blogspot.com.au/2015/01/tileentity.html
   // http://www.minecraftforge.net/forum/index.php?topic=28539.0

@@ -27,11 +27,12 @@ public abstract class GuiBaseContainer extends GuiContainer {
   }
   /**
    * ONLY CALL FROM drawGuiContainerForegroundLayer
+   * 
    * @param x
    * @param y
    * @param f
    */
-  protected void drawFieldAt(int x, int y, int f ) {
+  protected void drawFieldAt(int x, int y, int f) {
     String display = "" + this.tile.getField(f);
     x = (display.length() > 1) ? x - 3 : x;
     this.fontRendererObj.drawString(display, x, y, 4210752);

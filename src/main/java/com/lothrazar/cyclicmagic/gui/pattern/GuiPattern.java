@@ -92,7 +92,6 @@ public class GuiPattern extends GuiBaseContainer {
         isUp, f);
     this.buttonList.add(btn);
   }
-
   private void drawFieldAt(int x, int y, TileEntityPatternBuilder.Fields f) {
     this.drawFieldAt(x, y, f.ordinal());
   }

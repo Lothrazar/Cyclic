@@ -29,7 +29,7 @@ import net.minecraftforge.common.util.FakePlayer;
  * SEE TileMachineMiner
  * 
  */
-public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITickable  {
+public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITickable {
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
   // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
@@ -63,7 +63,6 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
   }
   @Override
   public void update() {
-    int toolSlot = inv.length - 1;
     if (!(this.onlyRunIfPowered() && this.isPowered() == false)) {
       this.spawnParticlesAbove();
     }
@@ -76,24 +75,8 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
           return;
         }
       }
-      if (uuid == null) {
-        uuid = UUID.randomUUID();
-        IBlockState state = world.getBlockState(this.pos);
-        world.notifyBlockUpdate(pos, state, state, 3);
-      }
-      ItemStack maybeTool = inv[toolSlot];
-      if (maybeTool == null) {
-        fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, null);
-      }
-      else {
-        if (maybeTool.stackSize == 0) {
-          inv[toolSlot] = null;
-        }
-        if (!maybeTool.equals(fakePlayer.get().getHeldItem(EnumHand.MAIN_HAND))) {
-          fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, maybeTool);
-        }
-        //else already equipped
-      }
+      verifyUuid(world);
+      tryEquipItem();
       if (targetPos == null) {
         targetPos = pos.offset(this.getCurrentFacing()); //not sure if this is needed
       }
@@ -131,6 +114,29 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
           world.sendBlockBreakProgress(uuid.hashCode(), targetPos, (int) (curBlockDamage * 10.0F) - 1);
         }
       }
+    }
+  }
+  private void tryEquipItem() {
+    int toolSlot = inv.length - 1;
+    ItemStack maybeTool = inv[toolSlot];
+    if (maybeTool == null) {
+      fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, null);
+    }
+    else {
+      if (maybeTool.stackSize == 0) {
+        inv[toolSlot] = null;
+      }
+      if (!maybeTool.equals(fakePlayer.get().getHeldItem(EnumHand.MAIN_HAND))) {
+        fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, maybeTool);
+      }
+      //else already equipped
+    }
+  }
+  private void verifyUuid(World world) {
+    if (uuid == null) {
+      uuid = UUID.randomUUID();
+      IBlockState state = world.getBlockState(this.pos);
+      world.notifyBlockUpdate(pos, state, state, 3);
     }
   }
   private boolean isTargetValid() {

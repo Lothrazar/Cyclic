@@ -12,7 +12,7 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 
-public class TileMachineHarvester extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle , ITickable {
+public class TileMachineHarvester extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITickable {
   private int timer;
   public static int TIMER_FULL = 80;
   private HarestCropsConfig conf;
