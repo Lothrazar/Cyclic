@@ -9,6 +9,7 @@ import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -80,7 +81,7 @@ import net.minecraftforge.common.util.FakePlayer;
  *         making a 3x3 version
  * 
  */
-public class TileMachineBlockMiner extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable  {
+public class TileMachineBlockMiner extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
   // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
@@ -100,23 +101,16 @@ public class TileMachineBlockMiner extends TileEntityBaseMachineInvo implements 
       this.spawnParticlesAbove();
     }
     World world = this.getWorld();
-    if (world.isRemote == false && world instanceof WorldServer && (WorldServer) world != null) {
+    if (world instanceof WorldServer) {
       if (fakePlayer == null) {
         fakePlayer = UtilFakePlayer.initFakePlayer((WorldServer) world);
         if (fakePlayer == null) {
           ModCyclic.logger.warn("Warning: Fake player failed to init ");
           return;
         }
-        equipItem();
       }
-      if (uuid == null) {
-        uuid = UUID.randomUUID();
-        IBlockState state = world.getBlockState(this.pos);
-        world.notifyBlockUpdate(pos, state, state, 3);
-      }
-      if (fakePlayer.get().getHeldItemMainhand() == null) {
-        equipItem();
-      }
+      tryEquipItem();
+      verifyUuid(world);
       BlockMiner.MinerType minerType = ((BlockMiner) world.getBlockState(pos).getBlock()).getMinerType();
       BlockPos start = pos.offset(this.getCurrentFacing());
       if (targetPos == null) {
@@ -158,12 +152,22 @@ public class TileMachineBlockMiner extends TileEntityBaseMachineInvo implements 
       }
     }
   }
-  private void equipItem() {
-    ItemStack unbreakingPickaxe = new ItemStack(Items.DIAMOND_PICKAXE, 1);
-    unbreakingPickaxe.addEnchantment(Enchantments.EFFICIENCY, 3);
-    unbreakingPickaxe.setTagCompound(new NBTTagCompound());
-    unbreakingPickaxe.getTagCompound().setBoolean("Unbreakable", true);
-    fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, unbreakingPickaxe);
+  private void verifyUuid(World world) {
+    if (uuid == null) {
+      uuid = UUID.randomUUID();
+      IBlockState state = world.getBlockState(this.pos);
+      world.notifyBlockUpdate(pos, state, state, 3);
+    }
+  }
+  private void tryEquipItem() {
+    //only equip if empty handed, dont spam
+    if (fakePlayer.get().getHeldItem(EnumHand.MAIN_HAND) == null) {
+      ItemStack unbreakingPickaxe = new ItemStack(Items.DIAMOND_PICKAXE, 1);
+      unbreakingPickaxe.addEnchantment(Enchantments.EFFICIENCY, 3);
+      unbreakingPickaxe.setTagCompound(new NBTTagCompound());
+      unbreakingPickaxe.getTagCompound().setBoolean("Unbreakable", true);
+      fakePlayer.get().setItemStackToSlot(EntityEquipmentSlot.MAINHAND, unbreakingPickaxe);
+    }
   }
   private void updateTargetPos(BlockPos start, MinerType minerType) {
     targetPos = start;//always restart here so we dont offset out of bounds
