@@ -118,8 +118,6 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
         held = entityPlayer.getHeldItemOffhand();
       }
       TileEntity container = worldObj.getTileEntity(pos);
-      // event.getAction() == PlayerInteractEvent.Action.LEFT_CLICK_BLOCK &&
-      // entityPlayer.isSneaking() &&
       if (held != null && held.getItem() == Items.SKULL && held.getItemDamage() == Const.skull_player && container != null && container instanceof TileEntitySign) {
         TileEntitySign sign = (TileEntitySign) container;
         String firstLine = sign.signText[0].getUnformattedText();
@@ -197,17 +195,11 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
     if (editableSigns) {
       if (pos == null) { return; }
       TileEntity tile = worldObj.getTileEntity(pos);
-      // test
       if (held == null && tile instanceof TileEntitySign) {
         TileEntitySign sign = (TileEntitySign) tile;
-        sign.setEditable(true);
-        //dont need reflection anymore... it used to be a private value but now we can use the set command
-        //      try{
-        //        ReflectionHelper.setPrivateValue(TileEntitySign.class, sign, true, "isEditable", "field_145916_j");
-        //      }
-        //      catch(Exception e){
-        //        
-        //      }
+        if (worldObj.isRemote == true) {//this method has    @SideOnly(Side.CLIENT) flag
+          sign.setEditable(true);
+        }
         sign.setPlayer(entityPlayer);
         entityPlayer.openEditSign(sign);
       }

@@ -28,7 +28,7 @@ public class UtilPlayer {
   public static int getFirstSlotWithBlock(EntityPlayer player) {
     int ret = -1;
     ItemStack stack;
-    for (int i = 9; i < 27; i++) {
+    for (int i = 9; i < 36; i++) {
       stack = player.inventory.getStackInSlot(i);
       if (stack != null &&
           stack.getItem() != null &&

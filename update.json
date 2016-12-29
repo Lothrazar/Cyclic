@@ -5,8 +5,8 @@
     "1.9.4-recommended":  "1.2.0",
     "1.10-latest":  "1.1.0",
     "1.10-recommended": "1.1.0",
-    "1.10.2-latest":  "1.9.8",
-    "1.10.2-recommended": "1.9.8"
+    "1.10.2-latest":  "1.9.9",
+    "1.10.2-recommended": "1.9.9"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -90,5 +90,6 @@
   	,"1.9.6":"Fix bug when hoppers or conduits are inserting items into Controlled Miner; it now safely inserts tools into the correct slots and ignores the rest without crashing.  "
   	,"1.9.7":"New Block: Entity Detector"
   	,"1.9.8":"Fix block miners constantly playing equip sounds for fake player.  Fix Automated User in attack mode not calculating damage from enchantments or modded items (such as tinkers swords)"
+ 	,"1.9.9":"Fix sign editing feature calling a client only function on servers (was causing log spam but not crashing or causing issues).  Fix inventory extension not saving when servers add prefixes to player names such as '[Owner]<'.  Config entry Build Scepter HUD replaced with Scepter HUD which now can be in all four corners.  Exchange scepters can now have their hud move to all four corners using the same Scepter HUD config.  Exchange scepters can now build out of the third row of the inventory (in addition to the other two).  Fix Harvester and Miner crashing when put on top of a hopper (even though they have no inventory slots).  Make sure each 'FakePlayer' from this mod uses a different UUID.  Fix model rendering glitch on Block Placer.  "
   }
 }

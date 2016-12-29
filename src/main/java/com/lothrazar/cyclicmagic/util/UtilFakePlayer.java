@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.util;
 import java.lang.ref.WeakReference;
 import java.util.UUID;
-import com.google.common.base.Charsets;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.network.EnumPacketDirection;
@@ -14,8 +13,9 @@ import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
 public class UtilFakePlayer {
-  public static final GameProfile breakerProfile = new GameProfile(UUID.nameUUIDFromBytes("CyclicFakePlayer".getBytes(Charsets.UTF_8)), "CyclicFakePlayer");
-  public static WeakReference<FakePlayer> initFakePlayer(WorldServer ws) {
+  public static WeakReference<FakePlayer> initFakePlayer(WorldServer ws,UUID uname) {
+     GameProfile breakerProfile = new GameProfile(uname, uname.toString());
+  
     WeakReference<FakePlayer> fakePlayer;
     try {
       fakePlayer = new WeakReference<FakePlayer>(FakePlayerFactory.get(ws, breakerProfile));
@@ -35,6 +35,8 @@ public class UtilFakePlayer {
       public void sendPacket(Packet packetIn) {
       }
     };
+    fakePlayer.get().setSilent(true);
+    System.out.println("SET SILENT TRUE");
     return fakePlayer;
   }
 }

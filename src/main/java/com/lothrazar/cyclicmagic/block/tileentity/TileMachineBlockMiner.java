@@ -102,15 +102,15 @@ public class TileMachineBlockMiner extends TileEntityBaseMachineInvo implements 
     }
     World world = this.getWorld();
     if (world instanceof WorldServer) {
+      verifyUuid(world);
       if (fakePlayer == null) {
-        fakePlayer = UtilFakePlayer.initFakePlayer((WorldServer) world);
+        fakePlayer = UtilFakePlayer.initFakePlayer((WorldServer) world,this.uuid);
         if (fakePlayer == null) {
           ModCyclic.logger.warn("Warning: Fake player failed to init ");
           return;
         }
       }
       tryEquipItem();
-      verifyUuid(world);
       BlockMiner.MinerType minerType = ((BlockMiner) world.getBlockState(pos).getBlock()).getMinerType();
       BlockPos start = pos.offset(this.getCurrentFacing());
       if (targetPos == null) {
@@ -162,7 +162,7 @@ public class TileMachineBlockMiner extends TileEntityBaseMachineInvo implements 
   private void tryEquipItem() {
     //only equip if empty handed, dont spam
     if (fakePlayer.get().getHeldItem(EnumHand.MAIN_HAND) == null) {
-      ItemStack unbreakingPickaxe = new ItemStack(Items.DIAMOND_PICKAXE, 1);
+   ItemStack unbreakingPickaxe = new ItemStack(Items.DIAMOND_PICKAXE, 1);
       unbreakingPickaxe.addEnchantment(Enchantments.EFFICIENCY, 3);
       unbreakingPickaxe.setTagCompound(new NBTTagCompound());
       unbreakingPickaxe.getTagCompound().setBoolean("Unbreakable", true);
@@ -284,7 +284,7 @@ public class TileMachineBlockMiner extends TileEntityBaseMachineInvo implements 
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
-    return null;
+    return  new int[]{};
   }
   @Override
   public int getField(int id) {

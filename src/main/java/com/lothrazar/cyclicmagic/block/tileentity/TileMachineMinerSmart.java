@@ -9,6 +9,7 @@ import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -68,14 +69,14 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
     }
     World world = getWorld();
     if (world instanceof WorldServer) {
+      verifyUuid(world);
       if (fakePlayer == null) {
-        fakePlayer = UtilFakePlayer.initFakePlayer((WorldServer) world);
+        fakePlayer = UtilFakePlayer.initFakePlayer((WorldServer) world, this.uuid);
         if (fakePlayer == null) {
           ModCyclic.logger.warn("Warning: Fake player failed to init ");
           return;
         }
       }
-      verifyUuid(world);
       tryEquipItem();
       if (targetPos == null) {
         targetPos = pos.offset(this.getCurrentFacing()); //not sure if this is needed
@@ -118,18 +119,16 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
   }
   private void tryEquipItem() {
     int toolSlot = inv.length - 1;
-    ItemStack maybeTool = inv[toolSlot];
-    if (maybeTool == null) {
+    if (inv[toolSlot] != null && inv[toolSlot].stackSize == 0) {
+      inv[toolSlot] = null;
+    }
+    if (inv[toolSlot] == null) {
       fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, null);
     }
     else {
-      if (maybeTool.stackSize == 0) {
-        inv[toolSlot] = null;
+      if (inv[toolSlot] != null && !inv[toolSlot].equals(fakePlayer.get().getHeldItem(EnumHand.MAIN_HAND))) {
+        fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, inv[toolSlot]);
       }
-      if (!maybeTool.equals(fakePlayer.get().getHeldItem(EnumHand.MAIN_HAND))) {
-        fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, maybeTool);
-      }
-      //else already equipped
     }
   }
   private void verifyUuid(World world) {

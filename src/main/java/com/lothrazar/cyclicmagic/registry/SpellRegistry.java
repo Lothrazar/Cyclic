@@ -11,7 +11,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
 public class SpellRegistry {
-  public static boolean renderOnLeft;
+//  public static boolean renderOnLeft;
   private static Map<Integer, ISpell> hashbook;
   public static boolean doParticles;
   public static class Spells {
