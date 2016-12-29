@@ -151,8 +151,13 @@ public class UtilPlayerInventoryFilestorage {
   }
   public static final String ext = "invo";
   public static final String extback = "backup";
+  public static final String regex = "[^a-zA-Z0-9_]";
   public static File getPlayerFile(String suffix, File playerDirectory, String playername) {
-    return new File(playerDirectory, "_" + playername + "." + suffix);
+    // some other mods/servers/plugins add things like "[Owner] > " prefix to player names
+    //which are invalid filename chars.   https://github.com/PrinceOfAmber/Cyclic/issues/188
+    //mojang username rules https://help.mojang.com/customer/en/portal/articles/928638-minecraft-usernames
+    String playernameFiltered = playername.replaceAll(regex, "");
+    return new File(playerDirectory, "_" + playernameFiltered + "." + suffix);
   }
   public static void syncItems(EntityPlayer player) {
     int size = InventoryPlayerExtended.ICOL * InventoryPlayerExtended.IROW;
