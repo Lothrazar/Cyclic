@@ -104,6 +104,7 @@ item.book_ender.tooltip=Saved Waypoints:
 item.charm_antidote.name=Antidote Charm
 item.charm_antidote.tooltip=Auto cure poison and wither
 item.carbon_paper.name=Carbon Paper
+item.carbon_paper.jei=JEI carbon paper text
 item.charm_boat.name=Sailor Charm
 item.charm_boat.tooltip=Increases boat speed while carrying
 item.charm_fire.name=Fire Charm
