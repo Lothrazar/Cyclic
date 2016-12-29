@@ -114,16 +114,12 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
     EntityPlayer player = Minecraft.getMinecraft().thePlayer;
     ItemStack held = player.getHeldItem(EnumHand.MAIN_HAND);
     if (held != null && held.getItem() == this) {
- 
       int slot = UtilPlayer.getFirstSlotWithBlock(player);
       if (slot >= 0) {
         ItemStack stack = player.inventory.getStackInSlot(slot);
- int leftOff = 0, rightOff = -18, topOff=0,bottOff=0;
-        int xmain = RenderLoc.locToX(ItemToolsModule.renderLocation,leftOff,rightOff);
-        int ymain = RenderLoc.locToY(ItemToolsModule.renderLocation,topOff,bottOff);
-          
-        
-        
+        int leftOff = 0, rightOff = -18, topOff = 0, bottOff = 0;
+        int xmain = RenderLoc.locToX(ItemToolsModule.renderLocation, leftOff, rightOff);
+        int ymain = RenderLoc.locToY(ItemToolsModule.renderLocation, topOff, bottOff);
         if (stack != null)
           ModCyclic.proxy.renderItemOnScreen(stack, xmain, ymain);
       }

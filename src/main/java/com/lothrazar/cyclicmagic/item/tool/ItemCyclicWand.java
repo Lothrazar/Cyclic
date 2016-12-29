@@ -1,6 +1,4 @@
 package com.lothrazar.cyclicmagic.item.tool;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.IHasConfig;
