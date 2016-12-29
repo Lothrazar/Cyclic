@@ -284,7 +284,7 @@ public class TileMachineBlockMiner extends TileEntityBaseMachineInvo implements 
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
-    return null;
+    return  new int[]{};
   }
   @Override
   public int getField(int id) {
