@@ -36,7 +36,6 @@ public class UtilFakePlayer {
       }
     };
     fakePlayer.get().setSilent(true);
-    System.out.println("SET SILENT TRUE");
     return fakePlayer;
   }
 }
