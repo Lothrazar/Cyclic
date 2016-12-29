@@ -1,9 +1,13 @@
 package com.lothrazar.cyclicmagic.item.tool;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
+import com.lothrazar.cyclicmagic.module.ItemToolsModule;
+import com.lothrazar.cyclicmagic.module.ItemToolsModule.RenderLoc;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.BaseSpellRange;
 import com.lothrazar.cyclicmagic.spell.ISpell;
@@ -183,7 +187,25 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.items;
-    SpellRegistry.renderOnLeft = config.getBoolean("Build Scepter HUD", category, true, "Cyclic Scepter: True for top left of the screen, false for top right");
+   config.getBoolean("Build Scepter HUD", category, true, "Deprecated; use Scepter HUD");
+    //TODO: no good place to put this eh
+    String renderLocation = config.getString("Scepter HUD", Const.ConfigCategory.items, RenderLoc.BOTTOMLEFT.toString().toLowerCase(), "Location of scepter Hud [topleft, topright, bottomleft, bottomright].  Used by both Exchange Scepters and Cyclic Build Scepter.  ");
+    //fff...yeah probs better way to do this, like a loop.
+    if (RenderLoc.TOPLEFT.name().toLowerCase().equals(renderLocation)) {
+      ItemToolsModule.renderLocation = RenderLoc.TOPLEFT;
+    }
+    else if (RenderLoc.TOPRIGHT.name().toLowerCase().equals(renderLocation)) {
+      ItemToolsModule.renderLocation = RenderLoc.TOPRIGHT;
+    }
+    else if (RenderLoc.BOTTOMLEFT.name().toLowerCase().equals(renderLocation)) {
+      ItemToolsModule.renderLocation = RenderLoc.BOTTOMLEFT;
+    }
+    else if (RenderLoc.BOTTOMRIGHT.name().toLowerCase().equals(renderLocation)) {
+      ItemToolsModule.renderLocation = RenderLoc.BOTTOMRIGHT;
+    }
+    else {
+      ItemToolsModule.renderLocation = RenderLoc.BOTTOMLEFT;
+    }
     SpellRegistry.doParticles = config.getBoolean("Build Scepter Particles", category, false, "Cyclic Scepter: Set to false to disable particles");
     category = Const.ConfigCategory.modpackMisc;
     BaseSpellRange.maxRange = config.getInt("Build Scepter Max Range", category, 64, 8, 128, "Cyclic Scepter: Maximum range for all spells");

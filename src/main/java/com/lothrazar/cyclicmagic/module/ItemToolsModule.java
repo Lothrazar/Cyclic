@@ -64,6 +64,7 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
   private boolean enableFreezer;
   private boolean enableFireKiller;
   public static ItemStorageBag storage_bag;//ref by ContainerStorage
+  public static RenderLoc renderLocation;
   @Override
   public void onInit() {
     if (enablewaterSpread) {
@@ -273,32 +274,58 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
     int itemSlot = ItemCyclicWand.BuildType.getSlot(heldWand);
     ItemStack current = InventoryWand.getFromSlot(heldWand, itemSlot);
     if (current != null) {
-      ModCyclic.proxy.renderItemOnScreen(current, SpellHud.xoffset - 1, SpellHud.ymain + SpellHud.spellSize * 2);
+      //THE ITEM INSIDE THE BUILDY WHEEL
+      int leftOff = 7, rightOff = -26, topOff=36,bottOff=-2;
+      int xmain = RenderLoc.locToX(ItemToolsModule.renderLocation,leftOff,rightOff);
+      int ymain = RenderLoc.locToY(ItemToolsModule.renderLocation,topOff,bottOff);
+      ModCyclic.proxy.renderItemOnScreen(current, xmain, ymain);
+      //      System.out.println(renderLocation.name() + " " + xmain + " " + ymain);
+      //      ModCyclic.proxy.renderItemOnScreen(current, RenderLoc.xoffset - 1, RenderLoc.ypadding + RenderLoc.spellSize * 2);
     }
-    //    RenderItem itemRender = Minecraft.getMinecraft().getRenderItem();
-    //    GlStateManager.color(1, 1, 1, 1);
-    //    RenderHelper.enableStandardItemLighting();
-    //    RenderHelper.enableGUIStandardItemLighting();
-    //    if (current != null) {
-    //      itemRender.renderItemAndEffectIntoGUI(current,
-    //          SpellHud.xoffset - 1, SpellHud.ymain + SpellHud.spellSize * 2);
-    //    }
-    //    RenderHelper.disableStandardItemLighting();
+  }
+  //TODO: refactor this
+  public static enum RenderLoc {
+    TOPLEFT, TOPRIGHT, BOTTOMLEFT, BOTTOMRIGHT;
+    private static final int yPadding = 6;
+    private static final int xPadding = 6;//was 30 if manabar is showing
+    private static final int spellSize = 16;
+    @SideOnly(Side.CLIENT)
+    public static int locToX(RenderLoc loc, int leftOffset, int rightOffset) {
+      ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft());
+      switch (loc) {
+      case BOTTOMLEFT:
+      case TOPLEFT:
+        return RenderLoc.xPadding + leftOffset;
+      case BOTTOMRIGHT:
+      case TOPRIGHT:
+        return res.getScaledWidth() - RenderLoc.xPadding + rightOffset;
+      }
+      return 0;
+    }
+    @SideOnly(Side.CLIENT)
+    public static int locToY(RenderLoc loc, int topOffset,int bottomOffset) {
+      ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft());
+      switch (ItemToolsModule.renderLocation) {
+      case BOTTOMLEFT:
+      case BOTTOMRIGHT:
+        return res.getScaledHeight() - RenderLoc.spellSize - RenderLoc.yPadding + bottomOffset;
+      case TOPLEFT:
+      case TOPRIGHT:
+        return RenderLoc.yPadding+topOffset;
+      default:
+        break;
+      }
+      return 0;
+    }
   }
   private class SpellHud {
-    private static final int xoffset = 14;//was 30 if manabar is showing
-    private static final int ymain = 6;
-    private static final int spellSize = 16;
+    private int ymain = RenderLoc.yPadding;
     private int xmain;
     @SideOnly(Side.CLIENT)
     public void drawSpellWheel(ItemStack wand) {
-      if (SpellRegistry.renderOnLeft) {
-        xmain = xoffset;
-      }
-      else {
-        ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft());
-        xmain = res.getScaledWidth() - xoffset;
-      }
+      int leftOff = 8, rightOff = -26, topOff=0,bottOff=-38;
+      xmain = RenderLoc.locToX(ItemToolsModule.renderLocation,leftOff,rightOff);
+      ymain = RenderLoc.locToY(ItemToolsModule.renderLocation,topOff,bottOff);
       EntityPlayer player = Minecraft.getMinecraft().thePlayer;
       ISpell spellCurrent = UtilSpellCaster.getPlayerCurrentISpell(player);
       //if theres only one spell, do not do the rest eh
@@ -308,15 +335,15 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
       drawPrevSpells(player, spellCurrent);
     }
     private void drawCurrentSpell(EntityPlayer player, ISpell spellCurrent) {
-      UtilTextureRender.drawTextureSquare(spellCurrent.getIconDisplay(), xmain, ymain, spellSize);
+      UtilTextureRender.drawTextureSquare(spellCurrent.getIconDisplay(), xmain, ymain, RenderLoc.spellSize);
     }
     private void drawPrevSpells(EntityPlayer player, ISpell spellCurrent) {
       ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
       ISpell prev = SpellRegistry.prev(wand, spellCurrent);
       if (prev != null) {
         int x = xmain + 9;
-        int y = ymain + spellSize;
-        int dim = spellSize / 2;
+        int y = ymain + RenderLoc.spellSize;
+        int dim = RenderLoc.spellSize / 2;
         UtilTextureRender.drawTextureSquare(prev.getIconDisplay(), x, y, dim);
         prev = SpellRegistry.prev(wand, prev);
         if (prev != null) {
@@ -346,8 +373,8 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
       ISpell next = SpellRegistry.next(wand, spellCurrent);
       if (next != null) {
         int x = xmain - 5;
-        int y = ymain + spellSize;
-        int dim = spellSize / 2;
+        int y = ymain + RenderLoc.spellSize;
+        int dim = RenderLoc.spellSize / 2;
         UtilTextureRender.drawTextureSquare(next.getIconDisplay(), x, y, dim);
         ISpell next2 = SpellRegistry.next(wand, next);
         if (next2 != null) {
