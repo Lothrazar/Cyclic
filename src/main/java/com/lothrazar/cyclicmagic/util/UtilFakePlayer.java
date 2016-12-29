@@ -1,15 +1,12 @@
 package com.lothrazar.cyclicmagic.util;
 import java.lang.ref.WeakReference;
 import java.util.UUID;
-import com.google.common.base.Charsets;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.mojang.authlib.GameProfile;
-import net.minecraft.entity.Entity;
 import net.minecraft.network.EnumPacketDirection;
 import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
