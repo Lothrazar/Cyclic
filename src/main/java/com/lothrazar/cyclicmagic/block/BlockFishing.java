@@ -21,7 +21,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockFishing extends BlockBaseHasTile implements IHasRecipe {
   public BlockFishing() {
-    super(Material.WOOD);
+    super(Material.ROCK);
     this.setHardness(3F);
     this.setResistance(5F);
     this.setSoundType(SoundType.WOOD);
