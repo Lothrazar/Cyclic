@@ -1,7 +1,5 @@
 package com.lothrazar.cyclicmagic.registry;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
@@ -13,8 +11,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemRegistry {
-  public static List< Item> itemsJei = new ArrayList< Item>();
-  
   public static Map<String, Item> itemMap = new HashMap<String, Item>();
   public static Item addItem(Item i, String key) {
     i.setUnlocalizedName(key);
@@ -22,7 +18,7 @@ public class ItemRegistry {
     return i;
   }
   public static void registerWithJeiDescription(Item item){
-    itemsJei.add(item);
+    JeiDescriptionRegistry.registerWithJeiDescription(item);
   }
   private static void registerItem(Item item, String name) {
     registerItem(item, name, false);// default is not hidden

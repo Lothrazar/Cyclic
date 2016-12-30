@@ -1,25 +1,20 @@
 package com.lothrazar.cyclicmagic.registry;
 import java.util.ArrayList;
-import java.util.List;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockBucketStorage;
+import com.lothrazar.cyclicmagic.block.BlockCropMagicBean;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockRegistry {
-  public static List< Block> itemsJei = new ArrayList< Block>();
   public static ArrayList<Block> blocks = new ArrayList<Block>();
   public static BlockBucketStorage block_storelava;//TODO: FIX THIS ENTIRE THING.. maybe even fliud registry eh
   public static BlockBucketStorage block_storewater;
   public static BlockBucketStorage block_storemilk;
   public static BlockBucketStorage block_storeempty;
-  //lots of helpers/overrides with defaults
-  public static void registerWithJeiDescription(Block b){
-    itemsJei.add(b);
-  }
   public static void registerBlock(Block b, String name) {
     registerBlock(b, name, false);
   }
@@ -30,7 +25,6 @@ public class BlockRegistry {
     registerBlock(b, ib, name, false);
   }
   public static void registerBlock(Block b, ItemBlock ib, String name, boolean isHidden) {
-    registerWithJeiDescription(b);//currently every block has a description
     b.setRegistryName(name);
     b.setUnlocalizedName(name);
     GameRegistry.register(b);
@@ -46,5 +40,8 @@ public class BlockRegistry {
       ConfigRegistry.register((IHasConfig) b);
     }
     blocks.add(b);
+    if (!(b instanceof BlockCropMagicBean)) { //TODO FIX dirty hack to skip sprout
+      JeiDescriptionRegistry.registerWithJeiDescription(b);
+    }
   }
 }

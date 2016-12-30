@@ -1,14 +1,10 @@
 package com.lothrazar.cyclicmagic;
 import com.lothrazar.cyclicmagic.gui.playerworkbench.ContainerPlayerExtWorkbench;
-import com.lothrazar.cyclicmagic.registry.BlockRegistry;
-import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.JeiDescriptionRegistry;
 import mezz.jei.api.BlankModPlugin;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
 
 @mezz.jei.api.JEIPlugin
 public class JEIPlugin extends BlankModPlugin {
@@ -27,13 +23,13 @@ public class JEIPlugin extends BlankModPlugin {
     //no documentation found but i learned it from this OS https://github.com/Darkhax-Minecraft/Dark-Utilities/blob/a6422519b069ea71ccf83fc8545cd595c03b947c/src/main/java/net/darkhax/darkutils/addons/jei/DarkUtilsJEIPlugin.java
     String lang;
     //itemsJei
-    for (Item item : ItemRegistry.itemsJei) {
-      lang = item.getUnlocalizedName() + ".jei";
-      registry.addDescription(new ItemStack(item, 1, OreDictionary.WILDCARD_VALUE), lang);
+    for (ItemStack s : JeiDescriptionRegistry.itemsJei) {
+      lang = s.getUnlocalizedName() + ".jei";
+      registry.addDescription(s, lang);
     }
-    for (Block item : BlockRegistry.itemsJei) {
-      lang = item.getUnlocalizedName() + ".jei";
-      registry.addDescription(new ItemStack(item, 1, OreDictionary.WILDCARD_VALUE), lang);
-    }
+//    for (Block item : BlockRegistry.itemsJei) {
+//      lang = item.getUnlocalizedName() + ".jei";
+//      registry.addDescription(new ItemStack(item, 1, OreDictionary.WILDCARD_VALUE), lang);
+//    }
   }
 }
