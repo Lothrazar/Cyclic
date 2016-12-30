@@ -84,6 +84,7 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
       ItemEnderBag sack_ender = new ItemEnderBag();
       ItemRegistry.addItem(sack_ender, "sack_ender");
       LootTableRegistry.registerLoot(sack_ender);
+      ItemRegistry.registerWithJeiDescription(sack_ender);
     }
     if (enableTorchLauncher) {
       ItemToolThrowTorch tool_torch_launcher = new ItemToolThrowTorch();
@@ -92,6 +93,7 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
     if (enableStirrups) {
       ItemToolStirrups tool_mount = new ItemToolStirrups();
       ItemRegistry.addItem(tool_mount, "tool_mount");
+      ItemRegistry.registerWithJeiDescription(tool_mount);
     }
     if (enableChestSack) {
       ItemChestSackEmpty chest_sack_empty = new ItemChestSackEmpty();
@@ -99,14 +101,17 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
       chest_sack.setHidden();
       chest_sack.setEmptySack(chest_sack_empty);
       chest_sack_empty.setFullSack(chest_sack);
+      ItemRegistry.registerWithJeiDescription(chest_sack);
       ItemRegistry.addItem(chest_sack, "chest_sack");
       ItemRegistry.addItem(chest_sack_empty, "chest_sack_empty");
+      ItemRegistry.registerWithJeiDescription(chest_sack_empty);
     }
     if (enableEnderBook) {
       ItemEnderBook book_ender = new ItemEnderBook();
       ItemRegistry.addItem(book_ender, "book_ender");
       LootTableRegistry.registerLoot(book_ender, ChestType.ENDCITY);
       LootTableRegistry.registerLoot(book_ender);
+      ItemRegistry.registerWithJeiDescription(book_ender);
     }
     if (storageBagEnabled) {
       storage_bag = new ItemStorageBag();
@@ -116,47 +121,57 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
       LootTableRegistry.registerLoot(storage_bag, ChestType.BONUS);
     }
     if (enableCarbonPaper) {
-      ItemRegistry.addItem(new ItemPaperCarbon(), "carbon_paper");
+      ItemPaperCarbon carbon_paper = new ItemPaperCarbon();
+      ItemRegistry.addItem(carbon_paper, "carbon_paper");
+      ItemRegistry.registerWithJeiDescription(carbon_paper);
     }
     if (enableProspector) {
       ItemToolProspector tool_prospector = new ItemToolProspector();
       ItemRegistry.addItem(tool_prospector, "tool_prospector");
       LootTableRegistry.registerLoot(tool_prospector);
+      ItemRegistry.registerWithJeiDescription(tool_prospector);
     }
     if (enableCavefinder) {
       ItemToolSpelunker tool_spelunker = new ItemToolSpelunker();
       ItemRegistry.addItem(tool_spelunker, "tool_spelunker");
+      ItemRegistry.registerWithJeiDescription(tool_spelunker);
     }
     if (enableSpawnInspect) {
       ItemToolSpawnInspect tool_spawn_inspect = new ItemToolSpawnInspect();
       ItemRegistry.addItem(tool_spawn_inspect, "tool_spawn_inspect");
+      ItemRegistry.registerWithJeiDescription(tool_spawn_inspect);
     }
     if (enablePearlReuse) {
       ItemToolPearlReuse ender_pearl_reuse = new ItemToolPearlReuse(ItemToolPearlReuse.OrbType.NORMAL);
       ItemRegistry.addItem(ender_pearl_reuse, "ender_pearl_reuse");
       LootTableRegistry.registerLoot(ender_pearl_reuse);
+      ItemRegistry.registerWithJeiDescription(ender_pearl_reuse);
     }
     if (enablePearlReuseMounted) {
       ItemToolPearlReuse ender_pearl_mounted = new ItemToolPearlReuse(ItemToolPearlReuse.OrbType.MOUNTED);
       ItemRegistry.addItem(ender_pearl_mounted, "ender_pearl_mounted");
       LootTableRegistry.registerLoot(ender_pearl_mounted);
       AchievementRegistry.registerItemAchievement(ender_pearl_mounted);
+      ItemRegistry.registerWithJeiDescription(ender_pearl_mounted);
     }
     if (enableHarvestWeeds) {
       ItemToolHarvest tool_harvest_weeds = new ItemToolHarvest(ItemToolHarvest.HarvestType.WEEDS);
       ItemRegistry.addItem(tool_harvest_weeds, "tool_harvest_weeds");
       LootTableRegistry.registerLoot(tool_harvest_weeds, ChestType.BONUS);
+      ItemRegistry.registerWithJeiDescription(tool_harvest_weeds);
     }
     if (enableToolHarvest) {
       ItemToolHarvest tool_harvest_crops = new ItemToolHarvest(ItemToolHarvest.HarvestType.CROPS);
       ItemRegistry.addItem(tool_harvest_crops, "tool_harvest_crops");
       LootTableRegistry.registerLoot(tool_harvest_crops);
       AchievementRegistry.registerItemAchievement(tool_harvest_crops);
+      ItemRegistry.registerWithJeiDescription(tool_harvest_crops);
     }
     if (enableHarvestLeaves) {
       ItemToolHarvest tool_harvest_leaves = new ItemToolHarvest(ItemToolHarvest.HarvestType.LEAVES);
       ItemRegistry.addItem(tool_harvest_leaves, "tool_harvest_leaves");
       LootTableRegistry.registerLoot(tool_harvest_leaves, ChestType.BONUS);
+      ItemRegistry.registerWithJeiDescription(tool_harvest_leaves);
     }
     if (enableToolPush) {
       ItemToolPush tool_push = new ItemToolPush();
@@ -164,6 +179,7 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
       ModCyclic.instance.events.register(tool_push);
       LootTableRegistry.registerLoot(tool_push);
       AchievementRegistry.registerItemAchievement(tool_push);
+      ItemRegistry.registerWithJeiDescription(tool_push);
     }
     if (enableSleepingMat) {
       ItemSleepingMat sleeping_mat = new ItemSleepingMat();
@@ -181,17 +197,20 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
       LootTableRegistry.registerLoot(cyclic_wand_build, ChestType.GENERIC, 1);
       AchievementRegistry.registerItemAchievement(cyclic_wand_build);
       ModCyclic.instance.setTabItemIfNull(cyclic_wand_build);
+      ItemRegistry.registerWithJeiDescription(cyclic_wand_build);
     }
     if (enableWarpHomeTool) {
       ItemToolWarp tool_warp_home = new ItemToolWarp(ItemToolWarp.WarpType.BED);
       ItemRegistry.addItem(tool_warp_home, "tool_warp_home");
       LootTableRegistry.registerLoot(tool_warp_home);
       AchievementRegistry.registerItemAchievement(tool_warp_home);
+      ItemRegistry.registerWithJeiDescription(tool_warp_home);
     }
     if (enableWarpSpawnTool) {
       ItemToolWarp tool_warp_spawn = new ItemToolWarp(ItemToolWarp.WarpType.SPAWN);
       ItemRegistry.addItem(tool_warp_spawn, "tool_warp_spawn");
       LootTableRegistry.registerLoot(tool_warp_spawn);
+      ItemRegistry.registerWithJeiDescription(tool_warp_spawn);
     }
     if (enableSwappers) {
       ItemToolSwap tool_swap = new ItemToolSwap(WandType.NORMAL);
@@ -200,11 +219,14 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
       ItemToolSwap tool_swap_match = new ItemToolSwap(WandType.MATCH);
       ItemRegistry.addItem(tool_swap_match, "tool_swap_match");
       ModCyclic.instance.events.register(tool_swap_match);
+      ItemRegistry.registerWithJeiDescription(tool_swap_match);
+      ItemRegistry.registerWithJeiDescription(tool_swap);
     }
     if (enableRando) {
       ItemToolRandomize tool_randomize = new ItemToolRandomize();
       ItemRegistry.addItem(tool_randomize, "tool_randomize");
       ModCyclic.instance.events.register(tool_randomize);
+      ItemRegistry.registerWithJeiDescription(tool_randomize);
     }
   }
   @Override
