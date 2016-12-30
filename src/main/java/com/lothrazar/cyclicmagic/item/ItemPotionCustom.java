@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.item;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
@@ -99,7 +100,8 @@ public class ItemPotionCustom extends ItemFood {
     String n;
     for (int i = 0; i < potions.size(); i++) {
       n = TextFormatting.BLUE + UtilChat.lang(potions.get(i).getName());
-      n += " (" + StringUtils.ticksToElapsedTime(potionDurations.get(i)) + ")";
+      String slvl = PotionEffectRegistry.getStrForLevel(potionAmplifiers.get(i));
+      n += " " + slvl + " (" + StringUtils.ticksToElapsedTime(potionDurations.get(i)) + ")";
       list.add(n);
     }
     if (this.tooltip != null) {

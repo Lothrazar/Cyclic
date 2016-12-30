@@ -30,4 +30,21 @@ public class PotionEffectRegistry {
     GameRegistry.register(effect, effect.getIcon());
     potionEffects.add(effect);
   }
+  public static String getStrForLevel(int lvl) {
+    //TODO: probs a better roman numeral way\
+    //not found in    PotionHelper.MixPredicate<T>
+    switch (lvl) {
+    case 0:
+      return "I";
+    case 1:
+      return "II";
+    case 2:
+      return "III";
+    case 3:
+      return "IV";
+    case 4:
+      return "V";
+    }
+    return "";
+  }
 }
