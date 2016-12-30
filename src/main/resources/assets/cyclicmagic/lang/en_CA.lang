@@ -255,6 +255,7 @@ item.sprout_seed.name=Magic Bean
 item.sprout_seed.jei=Spawns random treasure when harvested.  Loot table is entirely in the config file; defaults to a big list of vanilla items, including treasure, junk, and building blocks.  
 item.sprout_seed.tooltip=Grow to harvest random junk and treasure
 item.storage_bag.name=Sack of Storage
+item.storage_bag.jei=Holds a large number of items for you.  Also has an optional 'Hit Deposit' mode.  When this is enabled, it will auto deposit items into compatible containers when you hit them with the bag.  Merge mode means it will ignore empty slots, and only merge into existing item stacks.  Dump just does a regular deposit.  
 item.storage_bag.success=Items moved: 
 item.storage_bag.deposit=Dump
 item.storage_bag.merge=Merge

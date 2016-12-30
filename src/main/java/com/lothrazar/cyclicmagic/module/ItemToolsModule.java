@@ -119,6 +119,7 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
       ModCyclic.instance.events.register(storage_bag);
       LootTableRegistry.registerLoot(storage_bag);
       LootTableRegistry.registerLoot(storage_bag, ChestType.BONUS);
+      ItemRegistry.registerWithJeiDescription(storage_bag);
     }
     if (enableCarbonPaper) {
       ItemPaperCarbon carbon_paper = new ItemPaperCarbon();
