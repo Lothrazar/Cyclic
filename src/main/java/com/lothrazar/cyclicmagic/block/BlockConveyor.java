@@ -30,8 +30,11 @@ public class BlockConveyor extends BlockBasePressurePlate {
   protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1D, 0.03125D, 1D);
   private static final PropertyDirection PROPERTYFACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
   private final static float ANGLE = 1;
+  private static final float powerCorrection = 0.02F;
   private float power;
   private SoundEvent sound;
+  public static boolean doCorrections = true;
+  public static boolean keepEntityGrounded = true;
   public BlockConveyor(float p) {
     super(Material.CLAY, MapColor.GRASS);
     this.setSoundType(SoundType.SLIME);
@@ -65,9 +68,41 @@ public class BlockConveyor extends BlockBasePressurePlate {
   @Override
   public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
     EnumFacing face = getFacingFromState(state);
-    entity.onGround = true;//THIS is to avoid the entity ZOOMING when slightly off the ground
+    if (keepEntityGrounded) {
+      entity.onGround = true;//THIS is to avoid the entity ZOOMING when slightly off the ground
+    }
     //for example when you have these layering down stairs, and then they speed up when going down one block ledge
     UtilEntity.launchDirection(entity, ANGLE, power, face); //this.playClickOnSound(worldIn, pos);
+    if (doCorrections) {
+      if (face == EnumFacing.NORTH || face == EnumFacing.SOUTH) {
+        //then since +Z is south, and +X is east: so
+        double xDiff = (entity.getPosition().getX() + 0.5) - entity.posX;
+        if (Math.abs(xDiff) > 0.09) {//max is .5
+          if (xDiff < 0) {
+            //            System.out.println("WEST" + xDiff);
+            UtilEntity.launchDirection(entity, ANGLE, powerCorrection, EnumFacing.WEST);
+          }
+          else {
+            //            System.out.println("EAST" + xDiff);
+            UtilEntity.launchDirection(entity, ANGLE, powerCorrection, EnumFacing.EAST);
+          }
+        }
+      }
+      else if (face == EnumFacing.EAST || face == EnumFacing.WEST) {
+        //then since +Z is south, and +X is east: so
+        double diff = (entity.getPosition().getZ() + 0.5) - entity.posZ;
+        if (Math.abs(diff) > 0.09) {//max is .5
+          if (diff < 0) {
+            //            System.out.println("NORTH" + diff);
+            UtilEntity.launchDirection(entity, ANGLE, powerCorrection, EnumFacing.NORTH);
+          }
+          else {
+            //            System.out.println("SOUTH" + diff);
+            UtilEntity.launchDirection(entity, ANGLE, powerCorrection, EnumFacing.SOUTH);
+          }
+        }
+      }
+    }
   }
   //below is all for facing
   @Override
