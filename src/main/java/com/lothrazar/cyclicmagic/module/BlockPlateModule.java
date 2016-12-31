@@ -12,6 +12,7 @@ import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
@@ -54,9 +55,29 @@ public class BlockPlateModule extends BaseModule implements IHasConfig {
       AchievementRegistry.registerItemAchievement(Item.getItemFromBlock(plate_launch_large));
     }
     if (enableConveyor) {
-      BlockConveyor plate_push = new BlockConveyor(0.16F, SoundEvents.BLOCK_ANVIL_BREAK);
+      BlockConveyor plate_push = new BlockConveyor(0.16F);
       BlockRegistry.registerBlock(plate_push, "plate_push");
       AchievementRegistry.registerItemAchievement(Item.getItemFromBlock(plate_push));
+
+      GameRegistry.addRecipe(new ItemStack(plate_push, 8),
+          "sbs",
+          "bxb",
+          "sbs",
+          's', new ItemStack(Items.IRON_INGOT),
+          'x', new ItemStack(Blocks.SLIME_BLOCK),
+          'b', new ItemStack(Items.DYE, 1, EnumDyeColor.PURPLE.getDyeDamage()));
+      BlockConveyor plate_fast = new BlockConveyor(0.26F);
+      BlockRegistry.registerBlock(plate_fast, "plate_fast");
+      GameRegistry.addShapelessRecipe(new ItemStack(plate_fast), new ItemStack(plate_push),Items.REDSTONE);
+      BlockConveyor plate_push_slower = new BlockConveyor(0.12F);
+      BlockRegistry.registerBlock(plate_push_slower, "plate_push_slower");
+      GameRegistry.addShapelessRecipe(new ItemStack(plate_push_slower), new ItemStack(plate_push),
+          new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage()));
+
+      BlockConveyor plate_push_slowest = new BlockConveyor(0.06F);
+      BlockRegistry.registerBlock(plate_push_slowest, "plate_push_slowest");
+      GameRegistry.addShapelessRecipe(new ItemStack(plate_push_slowest), new ItemStack(plate_push),
+          new ItemStack(Items.DYE, 1, EnumDyeColor.LIGHT_BLUE.getDyeDamage()));
     }
   }
   @Override
