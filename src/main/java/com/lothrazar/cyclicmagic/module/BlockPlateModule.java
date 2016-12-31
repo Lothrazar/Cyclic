@@ -66,7 +66,7 @@ public class BlockPlateModule extends BaseModule implements IHasConfig {
           's', new ItemStack(Items.IRON_INGOT),
           'x', new ItemStack(Blocks.SLIME_BLOCK),
           'b', new ItemStack(Items.DYE, 1, EnumDyeColor.PURPLE.getDyeDamage()));
-      BlockConveyor plate_push_fast = new BlockConveyor(0.26F);
+      BlockConveyor plate_push_fast = new BlockConveyor(0.32F);
       BlockRegistry.registerBlock(plate_push_fast, "plate_push_fast");
       GameRegistry.addShapelessRecipe(new ItemStack(plate_push_fast), new ItemStack(plate_push),Items.REDSTONE);
       BlockConveyor plate_push_slow = new BlockConveyor(0.12F);

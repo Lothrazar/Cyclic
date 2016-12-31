@@ -42,13 +42,11 @@ public class BlockConveyor extends BlockBasePressurePlate {
   @Override
   protected void playClickOnSound(World worldIn, BlockPos pos) {
     worldIn.playSound((EntityPlayer) null, pos, this.sound, SoundCategory.BLOCKS, 0.3F, 0.5F);
-  }  
-
+  }
   @Override
-  public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
-  {
+  public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
     return AABB;
-}
+  }
   @Override
   protected void playClickOffSound(World worldIn, BlockPos pos) {
   }
@@ -105,13 +103,9 @@ public class BlockConveyor extends BlockBasePressurePlate {
   public BlockRenderLayer getBlockLayer() {
     return BlockRenderLayer.TRANSLUCENT;
   }
-  @Override
-  public boolean isOpaqueCube(IBlockState state) {
-    // http://greyminecraftcoder.blogspot.ca/2014/12/transparent-blocks-18.html
-    return false;
-  }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
-    tooltip.add(UtilChat.lang("tile.plate_push.tooltip"));
+    int speed = (int) (this.power * 100);
+    tooltip.add(UtilChat.lang("tile.plate_push.tooltip") + speed);
   }
 }
