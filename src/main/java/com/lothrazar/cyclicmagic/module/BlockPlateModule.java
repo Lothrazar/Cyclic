@@ -58,7 +58,6 @@ public class BlockPlateModule extends BaseModule implements IHasConfig {
       BlockConveyor plate_push = new BlockConveyor(0.16F);
       BlockRegistry.registerBlock(plate_push, "plate_push");
       AchievementRegistry.registerItemAchievement(Item.getItemFromBlock(plate_push));
-
       GameRegistry.addRecipe(new ItemStack(plate_push, 8),
           "sbs",
           "bxb",
@@ -68,13 +67,12 @@ public class BlockPlateModule extends BaseModule implements IHasConfig {
           'b', new ItemStack(Items.DYE, 1, EnumDyeColor.PURPLE.getDyeDamage()));
       BlockConveyor plate_push_fast = new BlockConveyor(0.32F);
       BlockRegistry.registerBlock(plate_push_fast, "plate_push_fast");
-      GameRegistry.addShapelessRecipe(new ItemStack(plate_push_fast), new ItemStack(plate_push),Items.REDSTONE);
-      BlockConveyor plate_push_slow = new BlockConveyor(0.12F);
+      GameRegistry.addShapelessRecipe(new ItemStack(plate_push_fast), new ItemStack(plate_push), Items.REDSTONE);
+      BlockConveyor plate_push_slow = new BlockConveyor(0.08F);
       BlockRegistry.registerBlock(plate_push_slow, "plate_push_slow");
       GameRegistry.addShapelessRecipe(new ItemStack(plate_push_slow), new ItemStack(plate_push),
           new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage()));
-
-      BlockConveyor plate_push_slowest = new BlockConveyor(0.06F);
+      BlockConveyor plate_push_slowest = new BlockConveyor(0.04F);
       BlockRegistry.registerBlock(plate_push_slowest, "plate_push_slowest");
       GameRegistry.addShapelessRecipe(new ItemStack(plate_push_slowest), new ItemStack(plate_push),
           new ItemStack(Items.DYE, 1, EnumDyeColor.LIGHT_BLUE.getDyeDamage()));
