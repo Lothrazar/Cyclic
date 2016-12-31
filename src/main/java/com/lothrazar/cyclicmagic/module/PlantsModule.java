@@ -22,7 +22,6 @@ public class PlantsModule extends BaseModule implements IHasConfig {
       LootTableRegistry.registerLoot(sprout_seed);
       sprout.setSeed(sprout_seed);
       AchievementRegistry.registerItemAchievement(sprout_seed);
-      
       JeiDescriptionRegistry.registerWithJeiDescription(sprout_seed);
     }
   }

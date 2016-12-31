@@ -41,7 +41,6 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
       BlockPatternBuilder builder_pattern = new BlockPatternBuilder();
       BlockRegistry.registerBlock(builder_pattern, "builder_pattern");
       GameRegistry.registerTileEntity(TileEntityPatternBuilder.class, "builder_pattern_te");
-     
     }
     if (enableBuilderBlock) {
       BlockStructureBuilder builder_block = new BlockStructureBuilder();

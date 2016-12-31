@@ -298,9 +298,9 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
     ItemStack current = InventoryWand.getFromSlot(heldWand, itemSlot);
     if (current != null) {
       //THE ITEM INSIDE THE BUILDY WHEEL
-      int leftOff = 7, rightOff = -26, topOff=36,bottOff=-2;
-      int xmain = RenderLoc.locToX(ItemToolsModule.renderLocation,leftOff,rightOff);
-      int ymain = RenderLoc.locToY(ItemToolsModule.renderLocation,topOff,bottOff);
+      int leftOff = 7, rightOff = -26, topOff = 36, bottOff = -2;
+      int xmain = RenderLoc.locToX(ItemToolsModule.renderLocation, leftOff, rightOff);
+      int ymain = RenderLoc.locToY(ItemToolsModule.renderLocation, topOff, bottOff);
       ModCyclic.proxy.renderItemOnScreen(current, xmain, ymain);
       //      System.out.println(renderLocation.name() + " " + xmain + " " + ymain);
       //      ModCyclic.proxy.renderItemOnScreen(current, RenderLoc.xoffset - 1, RenderLoc.ypadding + RenderLoc.spellSize * 2);
@@ -326,7 +326,7 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
       return 0;
     }
     @SideOnly(Side.CLIENT)
-    public static int locToY(RenderLoc loc, int topOffset,int bottomOffset) {
+    public static int locToY(RenderLoc loc, int topOffset, int bottomOffset) {
       ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft());
       switch (ItemToolsModule.renderLocation) {
       case BOTTOMLEFT:
@@ -334,7 +334,7 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
         return res.getScaledHeight() - RenderLoc.spellSize - RenderLoc.yPadding + bottomOffset;
       case TOPLEFT:
       case TOPRIGHT:
-        return RenderLoc.yPadding+topOffset;
+        return RenderLoc.yPadding + topOffset;
       default:
         break;
       }
@@ -346,9 +346,9 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
     private int xmain;
     @SideOnly(Side.CLIENT)
     public void drawSpellWheel(ItemStack wand) {
-      int leftOff = 8, rightOff = -26, topOff=0,bottOff=-38;
-      xmain = RenderLoc.locToX(ItemToolsModule.renderLocation,leftOff,rightOff);
-      ymain = RenderLoc.locToY(ItemToolsModule.renderLocation,topOff,bottOff);
+      int leftOff = 8, rightOff = -26, topOff = 0, bottOff = -38;
+      xmain = RenderLoc.locToX(ItemToolsModule.renderLocation, leftOff, rightOff);
+      ymain = RenderLoc.locToY(ItemToolsModule.renderLocation, topOff, bottOff);
       EntityPlayer player = Minecraft.getMinecraft().thePlayer;
       ISpell spellCurrent = UtilSpellCaster.getPlayerCurrentISpell(player);
       //if theres only one spell, do not do the rest eh

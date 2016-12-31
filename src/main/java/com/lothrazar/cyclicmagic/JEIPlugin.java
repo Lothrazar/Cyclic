@@ -27,9 +27,9 @@ public class JEIPlugin extends BlankModPlugin {
       lang = s.getUnlocalizedName() + ".jei";
       registry.addDescription(s, lang);
     }
-//    for (Block item : BlockRegistry.itemsJei) {
-//      lang = item.getUnlocalizedName() + ".jei";
-//      registry.addDescription(new ItemStack(item, 1, OreDictionary.WILDCARD_VALUE), lang);
-//    }
+    //    for (Block item : BlockRegistry.itemsJei) {
+    //      lang = item.getUnlocalizedName() + ".jei";
+    //      registry.addDescription(new ItemStack(item, 1, OreDictionary.WILDCARD_VALUE), lang);
+    //    }
   }
 }
