@@ -76,28 +76,30 @@ public class BlockConveyor extends BlockBasePressurePlate {
     if (doCorrections) {
       if (face == EnumFacing.NORTH || face == EnumFacing.SOUTH) {
         //then since +Z is south, and +X is east: so
-        double xDiff = (entity.getPosition().getX() + 0.5) - entity.posX;
+        double xDiff = (pos.getX() + 0.5) - entity.posX;
         if (Math.abs(xDiff) > 0.09) {//max is .5
           if (xDiff < 0) {
-            //            System.out.println("WEST" + xDiff);
+//                        System.out.println("WEST" + xDiff);
             UtilEntity.launchDirection(entity, ANGLE, powerCorrection, EnumFacing.WEST);
           }
           else {
-            //            System.out.println("EAST" + xDiff);
+//                        System.out.println("EAST" + xDiff);
             UtilEntity.launchDirection(entity, ANGLE, powerCorrection, EnumFacing.EAST);
           }
         }
       }
       else if (face == EnumFacing.EAST || face == EnumFacing.WEST) {
         //then since +Z is south, and +X is east: so
-        double diff = (entity.getPosition().getZ() + 0.5) - entity.posZ;
-        if (Math.abs(diff) > 0.09) {//max is .5
+        double diff = (pos.getZ() + 0.5) - entity.posZ;
+   
+        //??NOPE  &&  ((int) entity.posZ) == entity.getPosition().getZ()
+        if (Math.abs(diff) > 0.09 ) {//max is .5
           if (diff < 0) {
-            //            System.out.println("NORTH" + diff);
+//                        System.out.println("NORTH" + diff);
             UtilEntity.launchDirection(entity, ANGLE, powerCorrection, EnumFacing.NORTH);
           }
           else {
-            //            System.out.println("SOUTH" + diff);
+//                        System.out.println("SOUTH" + diff);
             UtilEntity.launchDirection(entity, ANGLE, powerCorrection, EnumFacing.SOUTH);
           }
         }
