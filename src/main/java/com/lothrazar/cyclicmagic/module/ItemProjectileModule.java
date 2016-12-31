@@ -41,6 +41,7 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       EntityProjectileRegistry.registerModEntity(EntityDungeonEye.class, "dungeonbolt", 1006);
       EntityDungeonEye.renderSnowball = ender_dungeon;
       LootTableRegistry.registerLoot(ender_dungeon);
+      ItemRegistry.registerWithJeiDescription(ender_dungeon);
       projectiles.add(ender_dungeon);
     }
     if (enderFishing) {
@@ -48,6 +49,7 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       ItemRegistry.addItem(ender_fishing, "ender_fishing");
       EntityProjectileRegistry.registerModEntity(EntityFishingBolt.class, "fishingbolt", 1004);
       EntityFishingBolt.renderSnowball = ender_fishing;
+      ItemRegistry.registerWithJeiDescription(ender_fishing);
       projectiles.add(ender_fishing);
     }
     if (enderWool) {
@@ -55,6 +57,7 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       ItemRegistry.addItem(ender_wool, "ender_wool");
       EntityProjectileRegistry.registerModEntity(EntityShearingBolt.class, "woolbolt", 1003);
       EntityShearingBolt.renderSnowball = ender_wool;
+      ItemRegistry.registerWithJeiDescription(ender_wool);
       projectiles.add(ender_wool);
     }
     if (enderTorch) {
@@ -62,6 +65,7 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       ItemRegistry.addItem(ender_torch, "ender_torch");
       EntityProjectileRegistry.registerModEntity(EntityTorchBolt.class, "torchbolt", 1002);
       EntityTorchBolt.renderSnowball = ender_torch;
+      ItemRegistry.registerWithJeiDescription(ender_torch);
       projectiles.add(ender_torch);
     }
     if (enderWater) {
@@ -69,6 +73,7 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       ItemRegistry.addItem(ender_water, "ender_water");
       EntityProjectileRegistry.registerModEntity(EntityWaterBolt.class, "waterbolt", 1000);
       EntityWaterBolt.renderSnowball = ender_water;
+      ItemRegistry.registerWithJeiDescription(ender_water);
       projectiles.add(ender_water);
     }
     if (enderSnow) {
@@ -76,6 +81,7 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       ItemRegistry.addItem(ender_snow, "ender_snow");
       EntityProjectileRegistry.registerModEntity(EntitySnowballBolt.class, "frostbolt", 1001);
       EntitySnowballBolt.renderSnowball = ender_snow;
+      ItemRegistry.registerWithJeiDescription(ender_snow);
       projectiles.add(ender_snow);
     }
     if (enderLightning) {
@@ -84,6 +90,7 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       EntityProjectileRegistry.registerModEntity(EntityLightningballBolt.class, "lightningbolt", 999);
       EntityLightningballBolt.renderSnowball = ender_lightning;
       LootTableRegistry.registerLoot(ender_lightning);
+      ItemRegistry.registerWithJeiDescription(ender_lightning);
       projectiles.add(ender_lightning);
     }
     if (enderBombsEnabled) {
