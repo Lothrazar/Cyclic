@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.block;
 import java.util.List;
-import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.block.BlockBasePressurePlate;
@@ -14,35 +13,42 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.EnumDyeColor;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.util.SoundEvent;
 
-public class BlockConveyor extends BlockBasePressurePlate implements IHasRecipe {
+public class BlockConveyor extends BlockBasePressurePlate {
+  protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1D, 0.03125D, 1D);
   private static final PropertyDirection PROPERTYFACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
   private final static float ANGLE = 1;
+  private static final float powerCorrection = 0.02F;
   private float power;
   private SoundEvent sound;
-  public BlockConveyor(float p, SoundEvent s) {
+  public static boolean doCorrections = true;
+  public static boolean keepEntityGrounded = true;
+  public BlockConveyor(float p) {
     super(Material.CLAY, MapColor.GRASS);
     this.setSoundType(SoundType.SLIME);
     power = p;
-    sound = s;
+    sound = SoundEvents.BLOCK_ANVIL_BREAK;
+    //fixing y rotation in blockstate json: http://www.minecraftforge.net/forum/index.php?topic=25937.0
   }
   @Override
   protected void playClickOnSound(World worldIn, BlockPos pos) {
     worldIn.playSound((EntityPlayer) null, pos, this.sound, SoundCategory.BLOCKS, 0.3F, 0.5F);
+  }
+  @Override
+  public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+    return AABB;
   }
   @Override
   protected void playClickOffSound(World worldIn, BlockPos pos) {
@@ -62,7 +68,42 @@ public class BlockConveyor extends BlockBasePressurePlate implements IHasRecipe 
   @Override
   public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
     EnumFacing face = getFacingFromState(state);
+    if (keepEntityGrounded) {
+      entity.onGround = true;//THIS is to avoid the entity ZOOMING when slightly off the ground
+    }
+    //for example when you have these layering down stairs, and then they speed up when going down one block ledge
     UtilEntity.launchDirection(entity, ANGLE, power, face); //this.playClickOnSound(worldIn, pos);
+    if (doCorrections) {
+      if (face == EnumFacing.NORTH || face == EnumFacing.SOUTH) {
+        //then since +Z is south, and +X is east: so
+        double xDiff = (pos.getX() + 0.5) - entity.posX;
+        if (Math.abs(xDiff) > 0.09) {//max is .5
+          if (xDiff < 0) {
+            //                        System.out.println("WEST" + xDiff);
+            UtilEntity.launchDirection(entity, ANGLE, powerCorrection, EnumFacing.WEST);
+          }
+          else {
+            //                        System.out.println("EAST" + xDiff);
+            UtilEntity.launchDirection(entity, ANGLE, powerCorrection, EnumFacing.EAST);
+          }
+        }
+      }
+      else if (face == EnumFacing.EAST || face == EnumFacing.WEST) {
+        //then since +Z is south, and +X is east: so
+        double diff = (pos.getZ() + 0.5) - entity.posZ;
+        //??NOPE  &&  ((int) entity.posZ) == entity.getPosition().getZ()
+        if (Math.abs(diff) > 0.09) {//max is .5
+          if (diff < 0) {
+            //                        System.out.println("NORTH" + diff);
+            UtilEntity.launchDirection(entity, ANGLE, powerCorrection, EnumFacing.NORTH);
+          }
+          else {
+            //                        System.out.println("SOUTH" + diff);
+            UtilEntity.launchDirection(entity, ANGLE, powerCorrection, EnumFacing.SOUTH);
+          }
+        }
+      }
+    }
   }
   //below is all for facing
   @Override
@@ -93,29 +134,14 @@ public class BlockConveyor extends BlockBasePressurePlate implements IHasRecipe 
     EnumFacing enumfacing = (placer == null) ? EnumFacing.NORTH : EnumFacing.fromAngle(placer.rotationYaw);
     return this.getDefaultState().withProperty(PROPERTYFACING, enumfacing);
   }
-  @Override
-  public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this, 8),
-        "sbs",
-        "bxb",
-        "sbs",
-        's', new ItemStack(Items.IRON_INGOT),
-        'x', new ItemStack(Blocks.SLIME_BLOCK),
-        'b', new ItemStack(Items.DYE, 1, EnumDyeColor.PURPLE.getDyeDamage()));
-  }
-  //for transparency
   @SideOnly(Side.CLIENT)
   @Override
   public BlockRenderLayer getBlockLayer() {
     return BlockRenderLayer.TRANSLUCENT;
   }
-  @Override
-  public boolean isOpaqueCube(IBlockState state) {
-    // http://greyminecraftcoder.blogspot.ca/2014/12/transparent-blocks-18.html
-    return false;
-  }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
-    tooltip.add(UtilChat.lang("tile.plate_push.tooltip"));
+    int speed = (int) (this.power * 100);
+    tooltip.add(UtilChat.lang("tile.plate_push.tooltip") + speed);
   }
 }

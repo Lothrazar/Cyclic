@@ -46,11 +46,17 @@ public class ItemConsumeablesModule extends BaseEventModule implements IHasConfi
       ModCyclic.instance.events.register(this);//for SubcribeEvent hooks
       LootTableRegistry.registerLoot(diamond_carrot);
       AchievementRegistry.registerItemAchievement(diamond_carrot);
+      ItemRegistry.registerWithJeiDescription(emerald_carrot);
+      ItemRegistry.registerWithJeiDescription(lapis_carrot);
+      ItemRegistry.registerWithJeiDescription(diamond_carrot);
+      ItemRegistry.registerWithJeiDescription(redstone_carrot);
+      ItemRegistry.registerWithJeiDescription(ender_carrot);
     }
     if (enableEmeraldApple) {
       ItemAppleEmerald apple_emerald = new ItemAppleEmerald();
       ItemRegistry.addItem(apple_emerald, "apple_emerald");
       LootTableRegistry.registerLoot(apple_emerald);
+      ItemRegistry.registerWithJeiDescription(apple_emerald);
     }
     if (enableHeartContainer) {
       ItemFoodHeart heart_food = new ItemFoodHeart();
@@ -59,18 +65,21 @@ public class ItemConsumeablesModule extends BaseEventModule implements IHasConfi
       LootTableRegistry.registerLoot(heart_food);
       LootTableRegistry.registerLoot(heart_food, ChestType.ENDCITY);
       AchievementRegistry.registerItemAchievement(heart_food);
+      ItemRegistry.registerWithJeiDescription(heart_food);
     }
     if (enableInventoryCrafting) {
       ItemFoodCrafting crafting_food = new ItemFoodCrafting();
       ItemRegistry.addItem(crafting_food, "crafting_food");
       LootTableRegistry.registerLoot(crafting_food);
       AchievementRegistry.registerItemAchievement(crafting_food);
+      ItemRegistry.registerWithJeiDescription(crafting_food);
     }
     if (enableInventoryUpgrade) {
       ItemFoodInventory inventory_food = new ItemFoodInventory();
       ItemRegistry.addItem(inventory_food, "inventory_food");
       LootTableRegistry.registerLoot(inventory_food);
       AchievementRegistry.registerItemAchievement(inventory_food);
+      ItemRegistry.registerWithJeiDescription(inventory_food);
     }
     if (enableCorruptedChorus) {
       ItemFoodCorruptedChorus corrupted_chorus = new ItemFoodCorruptedChorus();
@@ -79,6 +88,7 @@ public class ItemConsumeablesModule extends BaseEventModule implements IHasConfi
       LootTableRegistry.registerLoot(corrupted_chorus);
       LootTableRegistry.registerLoot(corrupted_chorus, ChestType.ENDCITY);
       AchievementRegistry.registerItemAchievement(corrupted_chorus);
+      ItemRegistry.registerWithJeiDescription(corrupted_chorus);
     }
   }
   @SubscribeEvent

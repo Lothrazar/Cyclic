@@ -4,6 +4,7 @@ import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockBucketStorage;
+import com.lothrazar.cyclicmagic.block.BlockCropMagicBean;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -14,7 +15,6 @@ public class BlockRegistry {
   public static BlockBucketStorage block_storewater;
   public static BlockBucketStorage block_storemilk;
   public static BlockBucketStorage block_storeempty;
-  //lots of helpers/overrides with defaults
   public static void registerBlock(Block b, String name) {
     registerBlock(b, name, false);
   }
@@ -40,5 +40,8 @@ public class BlockRegistry {
       ConfigRegistry.register((IHasConfig) b);
     }
     blocks.add(b);
+    if (!(b instanceof BlockCropMagicBean)) { //TODO FIX dirty hack to skip sprout
+      JeiDescriptionRegistry.registerWithJeiDescription(b);
+    }
   }
 }

@@ -17,6 +17,9 @@ public class ItemRegistry {
     itemMap.put(key, i);
     return i;
   }
+  public static void registerWithJeiDescription(Item item) {
+    JeiDescriptionRegistry.registerWithJeiDescription(item);
+  }
   private static void registerItem(Item item, String name) {
     registerItem(item, name, false);// default is not hidden
   }

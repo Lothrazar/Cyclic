@@ -197,7 +197,7 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
           //the destroy then set was causing exceptions, changed to setAir // https://github.com/PrinceOfAmber/Cyclic/issues/114
           Block block = replaced.getBlock();
           if (UtilPlaceBlocks.placeStateOverwrite(worldObj, player, curPos, newToPlace)) {
-//            UtilSound.playSoundPlaceBlock(worldObj, curPos, newToPlace.getBlock());//fffk doesnt work
+            //            UtilSound.playSoundPlaceBlock(worldObj, curPos, newToPlace.getBlock());//fffk doesnt work
             UtilPlayer.decrStackSize(player, slot);
             block.dropBlockAsItem(worldObj, curPos, replaced, 0);//zero is fortune level
           }

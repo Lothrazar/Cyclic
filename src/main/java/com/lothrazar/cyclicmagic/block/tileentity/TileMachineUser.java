@@ -68,7 +68,7 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
     if (world instanceof WorldServer) {
       verifyUuid(world);
       if (fakePlayer == null) {
-        fakePlayer = UtilFakePlayer.initFakePlayer((WorldServer) world,this.uuid);
+        fakePlayer = UtilFakePlayer.initFakePlayer((WorldServer) world, this.uuid);
         if (fakePlayer == null) {
           ModCyclic.logger.warn("Warning: Fake player failed to init ");
           return;

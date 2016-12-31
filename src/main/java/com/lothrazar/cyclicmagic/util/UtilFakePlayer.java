@@ -13,9 +13,8 @@ import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
 public class UtilFakePlayer {
-  public static WeakReference<FakePlayer> initFakePlayer(WorldServer ws,UUID uname) {
-     GameProfile breakerProfile = new GameProfile(uname, uname.toString());
-  
+  public static WeakReference<FakePlayer> initFakePlayer(WorldServer ws, UUID uname) {
+    GameProfile breakerProfile = new GameProfile(uname, uname.toString());
     WeakReference<FakePlayer> fakePlayer;
     try {
       fakePlayer = new WeakReference<FakePlayer>(FakePlayerFactory.get(ws, breakerProfile));
@@ -36,7 +35,6 @@ public class UtilFakePlayer {
       }
     };
     fakePlayer.get().setSilent(true);
-    System.out.println("SET SILENT TRUE");
     return fakePlayer;
   }
 }

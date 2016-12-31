@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockPatternBuilder extends BlockBaseHasTile implements IHasRecipe {
   public BlockPatternBuilder() {
-    super(Material.WOOD);
+    super(Material.IRON);
     this.setHardness(3F);
     this.setResistance(5F);
     this.setSoundType(SoundType.WOOD);
