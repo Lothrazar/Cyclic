@@ -98,6 +98,10 @@ public class ModCyclic {
    * 
    * ENCHANT or charm: swim speed  
    * 
+   * BIG TAB options for my invo buttons . save as player data, not config. 
+   * -> have a button in both alt guis off to side, hitting it toggles tab mode on and off.
+   * 
+   * SPEED UPGRADES for many cyclic machines: MAYBE make compatible with stuff from other mods like capacitors. and/or make my own.
    * 
    * multi use bucket: like a lava jug. fill it from a fluid in world or a tank,
    * but it has multiple bucket-units of liquid using it multiple times places
