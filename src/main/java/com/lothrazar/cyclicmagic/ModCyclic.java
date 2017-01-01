@@ -88,6 +88,17 @@ public class ModCyclic {
     }
   }
   /*
+   * REQUESTED FEATURES:
+   * 
+   * fan gui: change distance, change speed, change push/pull
+   * 
+   * customizeable launch and conveyor plates: new blocks, add in items similar to BucketBlocks to change power.
+   * 
+   * ENCHANT: protection from suffocation damage
+   * 
+   * ENCHANT or charm: swim speed  
+   * 
+   * 
    * multi use bucket: like a lava jug. fill it from a fluid in world or a tank,
    * but it has multiple bucket-units of liquid using it multiple times places
    * multiple liquid source blocks.
