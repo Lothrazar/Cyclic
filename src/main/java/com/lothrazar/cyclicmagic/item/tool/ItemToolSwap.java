@@ -17,7 +17,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumActionResult;
@@ -37,12 +36,13 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemToolSwap extends BaseTool implements IHasRecipe {
-  private static final int durability = 5000;
-  private static final int COOLDOWN = 10;
+  private static final int durability = 1000;
+  private static final int COOLDOWN = 30;
+  public static String[] swapBlacklist;
   private WandType wandType;
   public ItemToolSwap(WandType t) {
     super(durability);
-    wandType = t;
+    setWandType(t);
   }
   public enum WandType {
     NORMAL, MATCH;
@@ -110,9 +110,9 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
   @SideOnly(Side.CLIENT)
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public void onRender(RenderGameOverlayEvent.Post event) {
-    if (event.isCanceled() || event.getType() != ElementType.EXPERIENCE) { return; }
     EntityPlayer player = Minecraft.getMinecraft().thePlayer;
     ItemStack held = player.getHeldItem(EnumHand.MAIN_HAND);
+    if (event.isCanceled() || event.getType() != ElementType.EXPERIENCE) { return; }
     if (held != null && held.getItem() == this) {
       int slot = UtilPlayer.getFirstSlotWithBlock(player);
       if (slot >= 0) {
@@ -131,9 +131,10 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
     //so run it only on client, let packet run the server
     try {
       if (worldObj.isRemote) {
-        ModCyclic.network.sendToServer(new PacketSwapBlock(pos, side, ActionType.values()[ActionType.get(stack)], this.wandType));
+        ModCyclic.network.sendToServer(new PacketSwapBlock(pos, side, ActionType.values()[ActionType.get(stack)], this.getWandType()));
       }
-      this.onUse(stack, player, worldObj, hand);
+      player.swingArm(hand);
+      //      this.onUse(stack, player, worldObj, hand);
       player.getCooldownTracker().setCooldown(this, COOLDOWN);
     }
     catch (ConcurrentModificationException e) {
@@ -156,20 +157,26 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
   @Override
   public void addRecipe() {
     ItemStack ingredient = null;
-    switch (this.wandType) {
+    switch (this.getWandType()) {
     case MATCH:
       ingredient = new ItemStack(Items.EMERALD);
       break;
     case NORMAL:
-      ingredient = new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage());
+      ingredient = new ItemStack(Blocks.LAPIS_BLOCK);
       break;
     }
     GameRegistry.addRecipe(new ItemStack(this),
         " gi",
-        " ig",
-        "o  ",
-        'i', Items.IRON_INGOT,
+        "oig",
+        "oo ",
+        'i', Blocks.IRON_BLOCK,
         'g', ingredient,
         'o', Blocks.OBSIDIAN);
+  }
+  public WandType getWandType() {
+    return wandType;
+  }
+  public void setWandType(WandType wandType) {
+    this.wandType = wandType;
   }
 }
