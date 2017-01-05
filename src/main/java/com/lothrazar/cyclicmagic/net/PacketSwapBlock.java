@@ -16,6 +16,7 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumFacing;
@@ -176,7 +177,6 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
           }
           replaced = world.getBlockState(curPos);
           Block replacedBlock = replaced.getBlock();
-
           if (world.isAirBlock(curPos) || replaced == null) {
             continue;
           }
@@ -195,7 +195,6 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
           if (UtilItemStack.getBlockHardness(replaced, world, curPos) < 0) {
             continue;//since we know -1 is unbreakable
           }
-         
           newToPlace = UtilPlayer.getBlockstateFromSlot(player, slot);
           //wait, do they match? are they the same? do not replace myself
           if (UtilWorld.doBlockStatesMatch(replaced, newToPlace)) {
@@ -212,6 +211,18 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
             //            UtilSound.playSoundPlaceBlock(worldObj, curPos, newToPlace.getBlock());//fffk doesnt work
             UtilPlayer.decrStackSize(player, slot);
             replacedBlock.dropBlockAsItem(world, curPos, replaced, 0);//zero is fortune level
+            //damage once per block 
+            //TODO: CLEANUP?REFACTOR THIS
+            ItemStack held = player.getHeldItemMainhand();
+            if (held != null && held.getItem() instanceof ItemToolSwap) {
+              UtilItemStack.damageItem(player, held);
+            }
+            else {
+              held = player.getHeldItemOffhand();
+              if (held != null && held.getItem() instanceof ItemToolSwap) {
+                UtilItemStack.damageItem(player, held);
+              }
+            }
           }
         } // close off the for loop   
       }

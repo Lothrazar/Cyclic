@@ -17,7 +17,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumActionResult;
@@ -37,8 +36,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemToolSwap extends BaseTool implements IHasRecipe {
-  private static final int durability = 5000;
-  private static final int COOLDOWN = 10;
+  private static final int durability = 1000;
+  private static final int COOLDOWN = 30;
   public static String[] swapBlacklist;
   private WandType wandType;
   public ItemToolSwap(WandType t) {
@@ -134,7 +133,8 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
       if (worldObj.isRemote) {
         ModCyclic.network.sendToServer(new PacketSwapBlock(pos, side, ActionType.values()[ActionType.get(stack)], this.wandType));
       }
-      this.onUse(stack, player, worldObj, hand);
+      player.swingArm(hand);
+//      this.onUse(stack, player, worldObj, hand);
       player.getCooldownTracker().setCooldown(this, COOLDOWN);
     }
     catch (ConcurrentModificationException e) {
@@ -162,14 +162,14 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
       ingredient = new ItemStack(Items.EMERALD);
       break;
     case NORMAL:
-      ingredient = new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage());
+      ingredient = new ItemStack(Blocks.LAPIS_BLOCK);
       break;
     }
     GameRegistry.addRecipe(new ItemStack(this),
         " gi",
-        " ig",
-        "o  ",
-        'i', Items.IRON_INGOT,
+        "oig",
+        "oo ",
+        'i', Blocks.IRON_BLOCK,
         'g', ingredient,
         'o', Blocks.OBSIDIAN);
   }
