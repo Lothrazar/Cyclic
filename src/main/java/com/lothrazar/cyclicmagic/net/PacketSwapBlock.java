@@ -87,7 +87,7 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
   }
   private void handle(PacketSwapBlock message, MessageContext ctx) {
     EntityPlayer player = ctx.getServerHandler().playerEntity;
-    World worldObj = player.getEntityWorld();
+    World world = player.getEntityWorld();
     List<BlockPos> places = new ArrayList<BlockPos>();
     int xMin = message.pos.getX();
     int yMin = message.pos.getY();
@@ -150,7 +150,7 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
     IBlockState newToPlace;
     IBlockState matched = null;
     if (message.wandType == WandType.MATCH) {
-      matched = worldObj.getBlockState(message.pos);
+      matched = world.getBlockState(message.pos);
     }
     Map<BlockPos, Integer> processed = new HashMap<BlockPos, Integer>();
     // maybe dont randomly take blocks from inventory. maybe do a pick block.. or an inventory..i dont know
@@ -171,19 +171,32 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
           if (slot < 0) {
             continue;//you have no materials left
           }
-          if (worldObj.getTileEntity(curPos) != null) {
+          if (world.getTileEntity(curPos) != null) {
             continue;//ignore tile entities IE do not break chests / etc
           }
-          replaced = worldObj.getBlockState(curPos);
-          if (worldObj.isAirBlock(curPos) || replaced == null) {
-            //dont build in air
+          replaced = world.getBlockState(curPos);
+          Block replacedBlock = replaced.getBlock();
+
+          if (world.isAirBlock(curPos) || replaced == null) {
             continue;
           }
+          //TODO: CLEANUP/REFACTOR THIS
+          String itemName = UtilItemStack.getStringForBlock(replacedBlock);
+          boolean isInBlacklist = false;
+          for (String s : ItemToolSwap.swapBlacklist) {//dont use .contains on the list. must use .equals on string
+            if (s != null && s.equals(itemName)) {
+              isInBlacklist = true;
+              break;
+            }
+          }
+          if (isInBlacklist) {
+            continue;
+          }
+          if (UtilItemStack.getBlockHardness(replaced, world, curPos) < 0) {
+            continue;//since we know -1 is unbreakable
+          }
+         
           newToPlace = UtilPlayer.getBlockstateFromSlot(player, slot);
-          if (UtilItemStack.getPlayerRelativeBlockHardness(replaced.getBlock(), replaced, player, worldObj, curPos) < 0) {
-            //is unbreakable ie bedrock
-            continue;
-          }
           //wait, do they match? are they the same? do not replace myself
           if (UtilWorld.doBlockStatesMatch(replaced, newToPlace)) {
             continue;
@@ -195,11 +208,10 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
           }
           //break it and drop the whatever
           //the destroy then set was causing exceptions, changed to setAir // https://github.com/PrinceOfAmber/Cyclic/issues/114
-          Block block = replaced.getBlock();
-          if (UtilPlaceBlocks.placeStateOverwrite(worldObj, player, curPos, newToPlace)) {
+          if (UtilPlaceBlocks.placeStateOverwrite(world, player, curPos, newToPlace)) {
             //            UtilSound.playSoundPlaceBlock(worldObj, curPos, newToPlace.getBlock());//fffk doesnt work
             UtilPlayer.decrStackSize(player, slot);
-            block.dropBlockAsItem(worldObj, curPos, replaced, 0);//zero is fortune level
+            replacedBlock.dropBlockAsItem(world, curPos, replaced, 0);//zero is fortune level
           }
         } // close off the for loop   
       }

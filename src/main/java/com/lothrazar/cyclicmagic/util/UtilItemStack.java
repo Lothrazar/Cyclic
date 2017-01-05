@@ -81,6 +81,12 @@ public class UtilItemStack {
   public static float getPlayerRelativeBlockHardness(Block b, IBlockState state, EntityPlayer player, World worldIn, BlockPos pos) {
     return b.getPlayerRelativeBlockHardness(state, player, worldIn, pos);
   }
+  @SuppressWarnings("deprecation")
+  public static float getBlockHardness( IBlockState state,  World worldIn, BlockPos pos) {
+    //no way the forge hooks one has a stupid thing where <0 returns 0
+    return state.getBlock().getBlockHardness(state,  worldIn, pos);
+//    return b.getPlayerRelativeBlockHardness(state, player, worldIn, pos);
+  }
   public static EntityItem dropItemStackInWorld(World worldObj, BlockPos pos, Block block) {
     return dropItemStackInWorld(worldObj, pos, new ItemStack(block));
   }
@@ -102,5 +108,11 @@ public class UtilItemStack {
   }
   public static boolean isEmpty(ItemStack is) {
     return is == null || is.stackSize == 0;
+  }
+  public static String getStringForItem(Item item) {
+    return item.getRegistryName().getResourceDomain() + ":" + item.getRegistryName().getResourcePath();
+  }
+  public static String getStringForBlock(Block b) {
+    return b.getRegistryName().getResourceDomain() + ":" + b.getRegistryName().getResourcePath();
   }
 }

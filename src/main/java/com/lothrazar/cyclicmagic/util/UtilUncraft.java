@@ -47,19 +47,16 @@ public class UtilUncraft {
     if (drop == null || drop.getItem() == null) { return true; }
     return isItemInBlacklist(drop.getItem(), type);
   }
-  private static String getStringForItem(Item item) {
-    return item.getRegistryName().getResourceDomain() + ":" + item.getRegistryName().getResourcePath();
-  }
   private static boolean isItemInBlacklist(Item item, BlacklistType type) {
     String itemName;
     switch (type) {
     case INPUT:
-      itemName = getStringForItem(item);
+      itemName = UtilItemStack.getStringForItem(item);
       for (String s : blacklistInput) {//dont use .contains on the list. must use .equals on string
         if (s != null && s.equals(itemName)) { return true; }
       }
     case OUTPUT:
-      itemName = getStringForItem(item);
+      itemName = UtilItemStack.getStringForItem(item);
       for (String s : blacklistOutput) {//dont use .contains on the list. must use .equals on string
         if (s != null && s.equals(itemName)) { return true; }
       }

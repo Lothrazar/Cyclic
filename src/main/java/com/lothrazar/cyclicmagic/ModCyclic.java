@@ -94,6 +94,8 @@ public class ModCyclic {
    * 
    * customizeable launch and conveyor plates: new blocks, add in items similar to BucketBlocks to change power.
    * 
+   * maybe add this speed feature to the magnet too..?
+   * 
    * ENCHANT: protection from suffocation damage
    * 
    * ENCHANT or charm: swim speed  
