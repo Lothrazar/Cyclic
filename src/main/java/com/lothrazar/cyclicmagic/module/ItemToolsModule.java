@@ -85,6 +85,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
    * 
    * @param evt
    */
+  @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void renderOverlay(RenderWorldLastEvent evt) {
     Minecraft mc = Minecraft.getMinecraft();
