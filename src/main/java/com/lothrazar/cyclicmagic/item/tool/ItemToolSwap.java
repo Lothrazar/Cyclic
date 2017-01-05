@@ -42,7 +42,7 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
   private WandType wandType;
   public ItemToolSwap(WandType t) {
     super(durability);
-    wandType = t;
+    setWandType(t);
   }
   public enum WandType {
     NORMAL, MATCH;
@@ -110,9 +110,9 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
   @SideOnly(Side.CLIENT)
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public void onRender(RenderGameOverlayEvent.Post event) {
-    if (event.isCanceled() || event.getType() != ElementType.EXPERIENCE) { return; }
     EntityPlayer player = Minecraft.getMinecraft().thePlayer;
     ItemStack held = player.getHeldItem(EnumHand.MAIN_HAND);
+    if (event.isCanceled() || event.getType() != ElementType.EXPERIENCE) { return; }
     if (held != null && held.getItem() == this) {
       int slot = UtilPlayer.getFirstSlotWithBlock(player);
       if (slot >= 0) {
@@ -131,10 +131,10 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
     //so run it only on client, let packet run the server
     try {
       if (worldObj.isRemote) {
-        ModCyclic.network.sendToServer(new PacketSwapBlock(pos, side, ActionType.values()[ActionType.get(stack)], this.wandType));
+        ModCyclic.network.sendToServer(new PacketSwapBlock(pos, side, ActionType.values()[ActionType.get(stack)], this.getWandType()));
       }
       player.swingArm(hand);
-//      this.onUse(stack, player, worldObj, hand);
+      //      this.onUse(stack, player, worldObj, hand);
       player.getCooldownTracker().setCooldown(this, COOLDOWN);
     }
     catch (ConcurrentModificationException e) {
@@ -157,7 +157,7 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
   @Override
   public void addRecipe() {
     ItemStack ingredient = null;
-    switch (this.wandType) {
+    switch (this.getWandType()) {
     case MATCH:
       ingredient = new ItemStack(Items.EMERALD);
       break;
@@ -172,5 +172,11 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
         'i', Blocks.IRON_BLOCK,
         'g', ingredient,
         'o', Blocks.OBSIDIAN);
+  }
+  public WandType getWandType() {
+    return wandType;
+  }
+  public void setWandType(WandType wandType) {
+    this.wandType = wandType;
   }
 }

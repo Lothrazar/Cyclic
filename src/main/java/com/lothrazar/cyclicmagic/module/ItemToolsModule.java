@@ -1,8 +1,12 @@
 package com.lothrazar.cyclicmagic.module;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
 import com.lothrazar.cyclicmagic.item.tool.*;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.ActionType;
 import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.WandType;
 import com.lothrazar.cyclicmagic.item.ItemChestSack;
 import com.lothrazar.cyclicmagic.item.ItemChestSackEmpty;
@@ -12,6 +16,7 @@ import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
 import com.lothrazar.cyclicmagic.item.ItemStorageBag;
 import com.lothrazar.cyclicmagic.net.PacketSpellShiftLeft;
 import com.lothrazar.cyclicmagic.net.PacketSpellShiftRight;
+import com.lothrazar.cyclicmagic.net.PacketSwapBlock;
 import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
@@ -23,12 +28,20 @@ import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import com.lothrazar.cyclicmagic.util.UtilTextureRender;
+import com.lothrazar.cyclicmagic.util.UtilWorld;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -36,7 +49,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemToolsModule extends BaseModule implements IHasConfig {
+public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   private static SpellHud spellHud;
   private boolean enableSleepingMat;
   private boolean enableToolPush;
@@ -65,6 +78,40 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
   private boolean enableFireKiller;
   public static ItemStorageBag storage_bag;//ref by ContainerStorage
   public static RenderLoc renderLocation;
+  /**
+   * BIG thank you to this MIT licensed source code
+   * 
+   * https://github.com/romelo333/notenoughwands1.8.8/blob/2fee100fe9441828eb54dc7ec6a233c9b278e753/src/main/java/romelo333/notenoughwands/proxy/ClientProxy.java
+   * 
+   * @param evt
+   */
+  @SubscribeEvent
+  public void renderOverlay(RenderWorldLastEvent evt) {
+    Minecraft mc = Minecraft.getMinecraft();
+    EntityPlayerSP p = mc.thePlayer;
+    ItemStack heldItem = p.getHeldItemMainhand();
+    if (heldItem == null) { return; }
+    if (heldItem.getItem() instanceof ItemToolSwap) {
+      RayTraceResult mouseOver = Minecraft.getMinecraft().objectMouseOver;
+      if (mouseOver != null && mouseOver.getBlockPos() != null && mouseOver.sideHit != null) {
+        IBlockState state = p.worldObj.getBlockState(mouseOver.getBlockPos());
+        Block block = state.getBlock();
+        if (block != null && block.getMaterial(state) != Material.AIR) {
+          ItemToolSwap wandInstance = (ItemToolSwap) heldItem.getItem();
+          IBlockState matched = null;
+          if (wandInstance.getWandType() == WandType.MATCH) {
+            matched = p.getEntityWorld().getBlockState(mouseOver.getBlockPos());
+          }
+          List<BlockPos> places = PacketSwapBlock.getSelectedBlocks(p.getEntityWorld(), mouseOver.getBlockPos(),
+              ActionType.values()[ActionType.get(heldItem)], wandInstance.getWandType(),
+              mouseOver.sideHit, matched);
+          Set<BlockPos> coordinates = new HashSet<BlockPos>(places);
+          //            Set<BlockPos> coordinates = findSuitableBlocks(wand, player.worldObj, ,, block, meta);
+          UtilWorld.OutlineRenderer.renderOutlines(evt, p, coordinates, 75, 0, 130);
+        }
+      }
+    }
+  }
   @Override
   public void onInit() {
     if (enablewaterSpread) {
@@ -257,7 +304,7 @@ public class ItemToolsModule extends BaseModule implements IHasConfig {
     enableCarbonPaper = config.getBoolean("CarbonPaper", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableChestSack = config.getBoolean("ChestSack", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableStirrups = config.getBoolean("Stirrups", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    String[] deflist = new String[] { "minecraft:mob_spawner","minecraft:obsidian" };
+    String[] deflist = new String[] { "minecraft:mob_spawner", "minecraft:obsidian" };
     ItemToolSwap.swapBlacklist = config.getStringList("ExchangeSceptersBlacklist", Const.ConfigCategory.items, deflist, "Blocks that will not be broken by the exchange scepters.  It will also not break anything that is unbreakable (such as bedrock), regardless of if its in this list or not.  ");
   }
   @SideOnly(Side.CLIENT)

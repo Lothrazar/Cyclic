@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.ActionType;
 import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.WandType;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
@@ -89,62 +90,6 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
   private void handle(PacketSwapBlock message, MessageContext ctx) {
     EntityPlayer player = ctx.getServerHandler().playerEntity;
     World world = player.getEntityWorld();
-    List<BlockPos> places = new ArrayList<BlockPos>();
-    int xMin = message.pos.getX();
-    int yMin = message.pos.getY();
-    int zMin = message.pos.getZ();
-    int xMax = message.pos.getX();
-    int yMax = message.pos.getY();
-    int zMax = message.pos.getZ();
-    boolean isVertical = (message.side == EnumFacing.UP || message.side == EnumFacing.DOWN);
-    int offsetRadius = 0;
-    switch (message.actionType) {
-    case SINGLE:
-      places.add(message.pos);
-      offsetRadius = 0;
-      break;
-    case X3:
-      offsetRadius = 1;
-      break;
-    case X5:
-      offsetRadius = 2;
-      break;
-    case X7:
-      offsetRadius = 3;
-      break;
-    case X9:
-      offsetRadius = 4;
-      break;
-    default:
-      break;
-    }
-    if (offsetRadius > 0) {
-      if (isVertical) {
-        //then we just go in all horizontal directions
-        xMin -= offsetRadius;
-        xMax += offsetRadius;
-        zMin -= offsetRadius;
-        zMax += offsetRadius;
-      }
-      //we hit a horizontal side
-      else if (message.side == EnumFacing.EAST || message.side == EnumFacing.WEST) {
-        //          WEST(4, 5, 1, "west", EnumFacing.AxisDirection.NEGATIVE, EnumFacing.Axis.X, new Vec3i(-1, 0, 0)),
-        //          EAST(5, 4, 3, "east", EnumFacing.AxisDirection.POSITIVE, EnumFacing.Axis.X, new Vec3i(1, 0, 0));
-        //now we go in a vertical plane
-        zMin -= offsetRadius;
-        zMax += offsetRadius;
-        yMin -= offsetRadius;
-        yMax += offsetRadius;
-      }
-      else {
-        //axis hit was north/south, so we go in YZ
-        xMin -= offsetRadius;
-        xMax += offsetRadius;
-        yMin -= offsetRadius;
-        yMax += offsetRadius;
-      }
-      places = UtilWorld.getPositionsInRange(message.pos, xMin, xMax, yMin, yMax, zMin, zMax);
-    }
     //we already have center, now go around
     //      message.pos.offset(message.side.rotateAround(axis))
     IBlockState replaced;
@@ -153,6 +98,7 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
     if (message.wandType == WandType.MATCH) {
       matched = world.getBlockState(message.pos);
     }
+    List<BlockPos> places = getSelectedBlocks(world,message.pos, message.actionType, message.wandType, message.side, matched);
     Map<BlockPos, Integer> processed = new HashMap<BlockPos, Integer>();
     // maybe dont randomly take blocks from inventory. maybe do a pick block.. or an inventory..i dont know
     //seems ok, and also different enough to be fine
@@ -200,11 +146,6 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
           if (UtilWorld.doBlockStatesMatch(replaced, newToPlace)) {
             continue;
           }
-          if (message.wandType == WandType.MATCH && matched != null &&
-              !UtilWorld.doBlockStatesMatch(matched, replaced)) {
-            //we have saved the one we clicked on so only that gets replaced
-            continue;
-          }
           //break it and drop the whatever
           //the destroy then set was causing exceptions, changed to setAir // https://github.com/PrinceOfAmber/Cyclic/issues/114
           if (UtilPlaceBlocks.placeStateOverwrite(world, player, curPos, newToPlace)) {
@@ -233,5 +174,75 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
       ModCyclic.logger.warn(e.getMessage());// message is null??
       ModCyclic.logger.warn(e.getStackTrace().toString());
     }
+  }
+  public static List<BlockPos> getSelectedBlocks(World world, BlockPos pos, ActionType actionType, WandType wandType, EnumFacing side, IBlockState matched) {
+    List<BlockPos> places = new ArrayList<BlockPos>();
+    int xMin = pos.getX();
+    int yMin = pos.getY();
+    int zMin = pos.getZ();
+    int xMax = pos.getX();
+    int yMax = pos.getY();
+    int zMax = pos.getZ();
+    boolean isVertical = (side == EnumFacing.UP || side == EnumFacing.DOWN);
+    int offsetRadius = 0;
+    switch (actionType) {
+    case SINGLE:
+      places.add(pos);
+      offsetRadius = 0;
+      break;
+    case X3:
+      offsetRadius = 1;
+      break;
+    case X5:
+      offsetRadius = 2;
+      break;
+    case X7:
+      offsetRadius = 3;
+      break;
+    case X9:
+      offsetRadius = 4;
+      break;
+    default:
+      break;
+    }
+    if (offsetRadius > 0) {
+      if (isVertical) {
+        //then we just go in all horizontal directions
+        xMin -= offsetRadius;
+        xMax += offsetRadius;
+        zMin -= offsetRadius;
+        zMax += offsetRadius;
+      }
+      //we hit a horizontal side
+      else if (side == EnumFacing.EAST || side == EnumFacing.WEST) {
+        //          WEST(4, 5, 1, "west", EnumFacing.AxisDirection.NEGATIVE, EnumFacing.Axis.X, new Vec3i(-1, 0, 0)),
+        //          EAST(5, 4, 3, "east", EnumFacing.AxisDirection.POSITIVE, EnumFacing.Axis.X, new Vec3i(1, 0, 0));
+        //now we go in a vertical plane
+        zMin -= offsetRadius;
+        zMax += offsetRadius;
+        yMin -= offsetRadius;
+        yMax += offsetRadius;
+      }
+      else {
+        //axis hit was north/south, so we go in YZ
+        xMin -= offsetRadius;
+        xMax += offsetRadius;
+        yMin -= offsetRadius;
+        yMax += offsetRadius;
+      }
+      places = UtilWorld.getPositionsInRange(pos, xMin, xMax, yMin, yMax, zMin, zMax);
+    }
+    List<BlockPos> retPlaces = new ArrayList<BlockPos>();
+    
+    for (BlockPos p : places) {
+      if(world.isAirBlock(p)){continue;}
+      if (wandType == WandType.MATCH && matched != null &&
+          !UtilWorld.doBlockStatesMatch(matched, world.getBlockState(p))) {
+        //we have saved the one we clicked on so only that gets replaced
+        continue;
+      }
+      retPlaces.add(p);
+    }
+    return retPlaces;
   }
 }
