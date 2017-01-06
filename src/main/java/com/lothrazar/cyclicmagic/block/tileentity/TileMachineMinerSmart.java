@@ -61,6 +61,15 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
   public TileMachineMinerSmart() {
     inv = new ItemStack[INVENTORY_SIZE];
   }
+  private void verifyFakePlayer(WorldServer w) {
+    if (fakePlayer == null) {
+      fakePlayer = UtilFakePlayer.initFakePlayer(w, this.uuid);
+      if (fakePlayer == null) {
+        ModCyclic.logger.warn("Warning: Fake player failed to init ");
+        return;
+      }
+    }
+  }
   @Override
   public void update() {
     if (!(this.onlyRunIfPowered() && this.isPowered() == false)) {
@@ -69,49 +78,44 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
     World world = getWorld();
     if (world instanceof WorldServer) {
       verifyUuid(world);
-      if (fakePlayer == null) {
-        fakePlayer = UtilFakePlayer.initFakePlayer((WorldServer) world, this.uuid);
-        if (fakePlayer == null) {
-          ModCyclic.logger.warn("Warning: Fake player failed to init ");
-          return;
-        }
-      }
+      verifyFakePlayer((WorldServer) world);
       tryEquipItem();
       if (targetPos == null) {
         targetPos = pos.offset(this.getCurrentFacing()); //not sure if this is needed
       }
       if (!(this.onlyRunIfPowered() && this.isPowered() == false)) {
-        if (isCurrentlyMining == false) { //we can mine but are not currently
-          this.updateTargetPos();
-          if (isTargetValid()) { //we have a valid target
-            isCurrentlyMining = true;
-            curBlockDamage = 0;
-          }
-          else { // no valid target, back out
+        if (isCurrentlyMining == false) { //we can mine but are not currently. so try moving to a new position
+          updateTargetPos();
+        }
+        if (isTargetValid()) { //if target is valid, allow mining (no air, no blacklist, etc)
+          isCurrentlyMining = true;
+        }
+        else { // no valid target, back out
+          isCurrentlyMining = false;
+          updateTargetPos();
+          resetProgress(targetPos);
+        }
+        //}
+        //currentlyMining may have changed, and we are still turned on:
+        if (isCurrentlyMining) {
+          IBlockState targetState = world.getBlockState(targetPos);
+          curBlockDamage += UtilItemStack.getPlayerRelativeBlockHardness(targetState.getBlock(), targetState, fakePlayer.get(), world, targetPos);
+          if (curBlockDamage >= 1.0f) {
             isCurrentlyMining = false;
             resetProgress(targetPos);
+            if (fakePlayer.get() != null) {
+              fakePlayer.get().interactionManager.tryHarvestBlock(targetPos);
+            }
+          }
+          else {
+            world.sendBlockBreakProgress(uuid.hashCode(), targetPos, (int) (curBlockDamage * 10.0F) - 1);
           }
         }
-        // else    we can mine ANd we are already mining, dont change anything eh
       }
       else { // we do not have power
         if (isCurrentlyMining) {
           isCurrentlyMining = false;
           resetProgress(targetPos);
-        }
-      }
-      if (isCurrentlyMining) {
-        IBlockState targetState = world.getBlockState(targetPos);
-        curBlockDamage += UtilItemStack.getPlayerRelativeBlockHardness(targetState.getBlock(), targetState, fakePlayer.get(), world, targetPos);
-        if (curBlockDamage >= 1.0f) {
-          isCurrentlyMining = false;
-          resetProgress(targetPos);
-          if (fakePlayer.get() != null) {
-            fakePlayer.get().interactionManager.tryHarvestBlock(targetPos);
-          }
-        }
-        else {
-          world.sendBlockBreakProgress(uuid.hashCode(), targetPos, (int) (curBlockDamage * 10.0F) - 1);
         }
       }
     }
@@ -139,7 +143,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
   }
   private boolean isTargetValid() {
     World world = getWorld();
-    if (world.isAirBlock(targetPos) || world.getBlockState(targetPos) == null) { return true; }
+    if (world.isAirBlock(targetPos) || world.getBlockState(targetPos) == null) { return false; }
     IBlockState targetState = world.getBlockState(targetPos);
     Block target = targetState.getBlock();
     //else check blacklist
@@ -194,7 +198,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
     else if (randEW < 0) {
       targetPos = targetPos.offset(EnumFacing.WEST, -1 * randEW);
     }
-    return;
+    curBlockDamage = 0;
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
