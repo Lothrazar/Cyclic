@@ -122,6 +122,9 @@ public class UtilEntity {
    */
   public static void launch(Entity entity, float rotationPitch, float power) {
     float rotationYaw = entity.rotationYaw;
+    launch(entity,  rotationPitch, rotationYaw,power);
+  }
+  public static void launch(Entity entity, float rotationPitch, float rotationYaw, float power) {
     float mountPower = (float) (power - 0.5);
     double velX = (double) (-MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power);
     double velZ = (double) (MathHelper.cos(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power);

@@ -1,16 +1,7 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
-import java.util.List;
-import com.lothrazar.cyclicmagic.util.UtilHarvestCrops;
-import com.lothrazar.cyclicmagic.util.UtilParticle;
-import com.lothrazar.cyclicmagic.util.UtilShape;
-import com.lothrazar.cyclicmagic.util.UtilWorld;
-import com.lothrazar.cyclicmagic.util.UtilHarvestCrops.HarestCropsConfig;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.ITickable;
-import net.minecraft.util.math.BlockPos;
 
 /**
  * PLAN: gui to change power and vector.
@@ -21,12 +12,16 @@ import net.minecraft.util.math.BlockPos;
  *
  */
 public class TileVector extends TileEntityBaseMachineInvo {
-  private int angle = 45;
-  private int power = 13;
+  private static final int MAX_ANGLE = 90;
+  private static final int MAX_YAW = 360;
+  private static final int MAX_POWER = 50;
   private static final String NBT_ANGLE = "Timer";
   private static final String NBT_POWER = "redstone";
+  private int angle = 45;
+  private int power = 13;
+  private int yaw = 90;
   public static enum Fields {
-    ANGLE, POWER
+    ANGLE, POWER, YAW;
   }
   public TileVector() {
   }
@@ -42,11 +37,14 @@ public class TileVector extends TileEntityBaseMachineInvo {
     tagCompound.setInteger(NBT_ANGLE, angle);
     return super.writeToNBT(tagCompound);
   }
-  public float getActualPower(){
-    return power/10;
+  public float getActualPower() {
+    return power / 10;
   }
-  public int getAngle(){
+  public int getAngle() {
     return angle;
+  }
+  public int getYaw() {
+    return yaw;
   }
   @Override
   public int getField(int id) {
@@ -56,6 +54,8 @@ public class TileVector extends TileEntityBaseMachineInvo {
         return angle;
       case POWER:
         return power;
+      case YAW:
+        return yaw;
       default:
         break;
       }
@@ -66,10 +66,13 @@ public class TileVector extends TileEntityBaseMachineInvo {
     if (id >= 0 && id < this.getFieldCount())
       switch (Fields.values()[id]) {
       case ANGLE:
-        this.angle = value;
+        this.angle = Math.min(value, MAX_ANGLE);
         break;
       case POWER:
-        this.power = value;
+        this.power = Math.min(value, MAX_POWER);
+        break;
+      case YAW:
+        this.yaw = Math.min(value, MAX_YAW);
         break;
       }
   }
