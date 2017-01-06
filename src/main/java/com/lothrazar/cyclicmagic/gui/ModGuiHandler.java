@@ -10,6 +10,7 @@ import com.lothrazar.cyclicmagic.block.tileentity.TileMachineStructureBuilder;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachinePlacer;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUser;
+import com.lothrazar.cyclicmagic.block.tileentity.TileVector;
 import com.lothrazar.cyclicmagic.gui.blockminer.ContainerBlockMiner;
 import com.lothrazar.cyclicmagic.gui.blockminer.GuiBlockMiner;
 import com.lothrazar.cyclicmagic.gui.builder.ContainerBuilder;
@@ -40,6 +41,8 @@ import com.lothrazar.cyclicmagic.gui.uncrafting.ContainerUncrafting;
 import com.lothrazar.cyclicmagic.gui.uncrafting.GuiUncrafting;
 import com.lothrazar.cyclicmagic.gui.user.ContainerUser;
 import com.lothrazar.cyclicmagic.gui.user.GuiUser;
+import com.lothrazar.cyclicmagic.gui.vector.ContainerVector;
+import com.lothrazar.cyclicmagic.gui.vector.GuiVector;
 import com.lothrazar.cyclicmagic.gui.wand.ContainerWand;
 import com.lothrazar.cyclicmagic.gui.wand.GuiWandInventory;
 import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
@@ -73,6 +76,7 @@ public class ModGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_BLOCKMINER = 13;
   public static final int GUI_INDEX_PATTERN = 14;
   public static final int GUI_INDEX_DETECTOR = 15;
+  public static final int GUI_INDEX_VECTOR = 16;
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
     TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
@@ -136,6 +140,9 @@ public class ModGuiHandler implements IGuiHandler {
     case GUI_INDEX_DETECTOR:
       if (te != null && te instanceof TileEntityDetector) { return new ContainerDetector(player.inventory, (TileEntityDetector) te); }
       break;
+    case GUI_INDEX_VECTOR:
+      if (te != null && te instanceof TileVector) { return new ContainerVector(player.inventory, (TileVector) te); }
+      break;
     }
     return null;
   }
@@ -188,6 +195,9 @@ public class ModGuiHandler implements IGuiHandler {
         break;
       case GUI_INDEX_DETECTOR:
         if (te != null && te instanceof TileEntityDetector) { return new GuiDetector(player.inventory, (TileEntityDetector) te); }
+        break;
+      case GUI_INDEX_VECTOR:
+        if (te != null && te instanceof TileVector) { return new GuiVector(player.inventory, (TileVector) te); }
         break;
       }
     }

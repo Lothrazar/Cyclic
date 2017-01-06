@@ -25,9 +25,10 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe, IHasConfig {
   protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1D, 0.03125D, 1D);
   public BlockVectorPlate() {
-    super(Material.IRON);//, ModGuiHandler.GUI_INDEX_HARVESTER
+    super(Material.IRON);//, 
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);
+    this.setGuiId(ModGuiHandler.GUI_INDEX_VECTOR);
 //    this.setTickRandomly(true);
 //    this.setTooltip("tile.harvester_block.tooltip");
   }
