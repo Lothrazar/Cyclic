@@ -11,6 +11,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
+
 /**
  * PLAN: gui to change power and vector.
  * 
@@ -19,90 +20,42 @@ import net.minecraft.util.math.BlockPos;
  * @author Sam
  *
  */
-public class TileVector extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITickable {
-  private int timer;
-  public static int TIMER_FULL = 80;
-  private int needsRedstone = 1;
-  private static final String NBT_TIMER = "Timer";
-  private static final String NBT_REDST = "redstone";
-  private static final int MAX_SIZE = 7;//radius 7 translates to 15x15 area (center block + 7 each side)
-  private int size = MAX_SIZE;//default to the old fixed size, backwards compat
+public class TileVector extends TileEntityBaseMachineInvo {
+  private int angle = 45;
+  private int power = 13;
+  private static final String NBT_ANGLE = "Timer";
+  private static final String NBT_POWER = "redstone";
   public static enum Fields {
-    TIMER, REDSTONE, SIZE
+    ANGLE, POWER
   }
   public TileVector() {
-    this.timer = TIMER_FULL;
   }
-
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
-//    this.needsRedstone = tagCompound.getInteger(NBT_REDST);
-//    timer = tagCompound.getInteger(NBT_TIMER);
+    power = tagCompound.getInteger(NBT_POWER);
+    angle = tagCompound.getInteger(NBT_ANGLE);
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
-//    tagCompound.setInteger(NBT_TIMER, timer);
-//    tagCompound.setInteger(NBT_REDST, this.needsRedstone);
+    tagCompound.setInteger(NBT_POWER, power);
+    tagCompound.setInteger(NBT_ANGLE, angle);
     return super.writeToNBT(tagCompound);
   }
-  public boolean isBurning() {
-    return this.timer > 0 && this.timer < TIMER_FULL;
+  public float getActualPower(){
+    return power/10;
   }
-  @Override
-  public void update() {
-    if (this.onlyRunIfPowered() && this.isPowered() == false) {
-      // it works ONLY if its powered
-      this.markDirty();
-      return;
-    }
-    this.spawnParticlesAbove();
-    boolean trigger = false;
-    // center of the block
-    timer -= this.getSpeed();
-    if (timer <= 0) {
-      timer = TIMER_FULL;
-      trigger = true;
-    }
-    if (trigger) {
-//      BlockPos harvest = getHarvestPos();
-//      if (UtilHarvestCrops.harvestSingle(getWorld(), harvest, conf)) {
-//        UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, harvest);
-//        timer = TIMER_FULL;//harvest worked!
-//      }
-//      else {
-//        timer = 1;//harvest didnt work, try again really quick
-//      }
-    }
-    else {
-      this.spawnParticlesAbove();
-    }
-    this.markDirty();
-  }
-  public BlockPos getTargetCenter() {
-    //move center over that much, not including exact horizontal
-    return this.getPos().offset(this.getCurrentFacing(), this.size + 1);
-  }
-
-  public void displayPreview() {
-    List<BlockPos> allPos = UtilShape.squareHorizontalHollow(getTargetCenter(), this.size);
-    for (BlockPos pos : allPos) {
-      UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, pos);
-    }
-  }
-  private int getSpeed() {
-    return 1;
+  public int getAngle(){
+    return angle;
   }
   @Override
   public int getField(int id) {
     if (id >= 0 && id < this.getFieldCount())
       switch (Fields.values()[id]) {
-      case TIMER:
-        return timer;
-      case REDSTONE:
-        return this.needsRedstone;
-      case SIZE:
-        return this.size;
+      case ANGLE:
+        return angle;
+      case POWER:
+        return power;
       default:
         break;
       }
@@ -112,16 +65,11 @@ public class TileVector extends TileEntityBaseMachineInvo implements ITileRedsto
   public void setField(int id, int value) {
     if (id >= 0 && id < this.getFieldCount())
       switch (Fields.values()[id]) {
-      case TIMER:
-        this.timer = value;
+      case ANGLE:
+        this.angle = value;
         break;
-      case REDSTONE:
-        this.needsRedstone = value;
-        break;
-      case SIZE:
-        this.size = value;
-        break;
-      default:
+      case POWER:
+        this.power = value;
         break;
       }
   }
@@ -152,21 +100,15 @@ public class TileVector extends TileEntityBaseMachineInvo implements ITileRedsto
   public int[] getSlotsForFace(EnumFacing side) {
     return new int[] {};
   }
-  public void toggleSizeShape() {
-    this.size++;
-    if (this.size > MAX_SIZE) {
-      this.size = 0;
-    }
-  }
-  @Override
-  public void toggleNeedsRedstone() {
-    int val = this.needsRedstone + 1;
-    if (val > 1) {
-      val = 0;//hacky lazy way
-    }
-    this.setField(Fields.REDSTONE.ordinal(), val);
-  }
-  private boolean onlyRunIfPowered() {
-    return this.needsRedstone == 1;
-  }
+  //  @Override
+  //  public void toggleNeedsRedstone() {
+  //    int val = this.needsRedstone + 1;
+  //    if (val > 1) {
+  //      val = 0;//hacky lazy way
+  //    }
+  //    this.setField(Fields.REDSTONE.ordinal(), val);
+  //  }
+  //  private boolean onlyRunIfPowered() {
+  //    return this.needsRedstone == 1;
+  //  }
 }

@@ -50,9 +50,10 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe, IH
   }
   @Override
   public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
- float angle = 45;
- float power = 1.3F;
-    UtilEntity.launch(entity, angle,power);
+
+ TileVector tile = (TileVector)worldIn.getTileEntity(pos);
+ 
+    UtilEntity.launch(entity, tile.getAngle(),tile.getActualPower());
 //    this.playClickOnSound(worldIn, pos);
   }
   @Override
