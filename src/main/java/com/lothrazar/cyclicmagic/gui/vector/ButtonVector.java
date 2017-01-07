@@ -17,22 +17,23 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ButtonVector extends GuiButton implements ITooltipButton {
   private final BlockPos tilePos;
   private final List<String> tooltips = new ArrayList<String>();
-  private Fields type;
-  boolean goUp;
-  public ButtonVector(BlockPos current, int buttonId, int x, int y, boolean up, TileVector.Fields t, int w, int h) {
-    super(buttonId, x, y, w, h, "");
+  private int type;
+  private int value;
+  public ButtonVector(BlockPos current, int buttonId, int x, int y,int val, int t) {
+    super(buttonId, x, y, 20, 20, "");
     tilePos = current;
     type = t;
-    goUp = up;
-    String ud = "";
-    tooltips.add(UtilChat.lang("tile.entity_detector." + t.name().toLowerCase() + ud));
+    value=val;
+   // String ud = "";
+//    tooltips.add(UtilChat.lang("tile.plate_vector." + t.name().toLowerCase() + ud));
   }
   @SideOnly(Side.CLIENT)
   @Override
   public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
     boolean pressed = super.mousePressed(mc, mouseX, mouseY);
     if (pressed) {
-//      ModCyclic.network.sendToServer(new PacketTileVector(tilePos, goUp, type));
+      System.out.println("VAL SET "+value);
+     ModCyclic.network.sendToServer(new PacketTileVector(tilePos, value, type));
     }
     return pressed;
   }

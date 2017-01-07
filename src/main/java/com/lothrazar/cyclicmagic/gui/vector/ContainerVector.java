@@ -8,8 +8,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerVector extends ContainerBaseMachine {
-  public static final int SLOTX_START = 8;
-  public static final int SLOTY_START = 90;
+//  public static final int SLOTX_START = 8;
+//  public static final int SLOTY_START = 90;
   protected TileVector tileEntity;
   private int tileAngle;
   private int tilePower;
