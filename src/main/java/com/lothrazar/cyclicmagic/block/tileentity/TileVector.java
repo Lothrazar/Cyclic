@@ -40,6 +40,9 @@ public class TileVector extends TileEntityBaseMachineInvo {
   public float getActualPower() {
     return power / 10;
   }
+  public int getPower() {
+    return power;
+  }
   public int getAngle() {
     return angle;
   }
