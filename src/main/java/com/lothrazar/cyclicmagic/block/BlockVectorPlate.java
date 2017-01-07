@@ -48,6 +48,7 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe, IH
     entity.motionY = 0;
     entity.motionZ = 0;
     entity.fallDistance = 0;
+//    System.out.println("launch yaw"+tile.getYaw());
     UtilEntity.launch(entity, tile.getAngle(), tile.getYaw(), tile.getActualPower());
   }
   @Override

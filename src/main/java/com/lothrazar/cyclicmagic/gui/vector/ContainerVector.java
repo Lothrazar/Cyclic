@@ -13,6 +13,7 @@ public class ContainerVector extends ContainerBaseMachine {
   protected TileVector tileEntity;
   private int tileAngle;
   private int tilePower;
+  private int tileYaw;
   public ContainerVector(InventoryPlayer inventoryPlayer, TileVector te) {
     tileEntity = te;
     bindPlayerInventory(inventoryPlayer);
@@ -30,25 +31,14 @@ public class ContainerVector extends ContainerBaseMachine {
       if (this.tilePower != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
-//      idx = Fields.RANGEZ.ordinal();
-//      if (this.tileOZ != this.tileEntity.getField(idx)) {
-//        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-//      }
-//      idx = Fields.LIMIT.ordinal();
-//      if (this.tileLimit != this.tileEntity.getField(idx)) {
-//        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-//      }
-//      idx = Fields.ENTITYTYPE.ordinal();
-//      if (this.tileEntityType != this.tileEntity.getField(idx)) {
-//        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-//      }
-//      idx = Fields.GREATERTHAN.ordinal();
-//      if (this.tileGreaterThan != this.tileEntity.getField(idx)) {
-//        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-//      }
+      idx = Fields.YAW.ordinal();
+      if (this.tileYaw != this.tileEntity.getField(idx)) {
+        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
+      }
     }
     this.tileAngle = this.tileEntity.getField(Fields.ANGLE.ordinal());
     this.tilePower = this.tileEntity.getField(Fields.POWER.ordinal());
+    this.tileYaw = this.tileEntity.getField(Fields.YAW.ordinal());
   }
   @Override
   @SideOnly(Side.CLIENT)
