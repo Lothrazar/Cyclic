@@ -32,7 +32,7 @@ public class ButtonVector extends GuiButton implements ITooltipButton {
   public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
     boolean pressed = super.mousePressed(mc, mouseX, mouseY);
     if (pressed) {
-      ModCyclic.network.sendToServer(new PacketTileVector(tilePos, goUp, type));
+//      ModCyclic.network.sendToServer(new PacketTileVector(tilePos, goUp, type));
     }
     return pressed;
   }

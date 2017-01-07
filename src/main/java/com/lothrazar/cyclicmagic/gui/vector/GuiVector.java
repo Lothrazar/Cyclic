@@ -1,9 +1,11 @@
 package com.lothrazar.cyclicmagic.gui.vector;
 import java.io.IOException;
 import java.util.ArrayList;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.tileentity.TileVector;
 import com.lothrazar.cyclicmagic.block.tileentity.TileVector.Fields;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.net.PacketTileVector;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -38,10 +40,10 @@ public class GuiVector extends GuiBaseContainer {
     //    leftColX = 176 - 148;
     //    limitColX = leftColX + 108;
     int x = 20, y = 40;
-    txtAngle = addTextbox(id++, x, y,tile.getAngle() + "");
+    txtAngle = addTextbox(id++, x, y, tile.getAngle() + "");
     txtAngle.setFocused(true);//default
     x += 40;
-    txtPower = addTextbox(id++, x, y,tile.getPower() + "");
+    txtPower = addTextbox(id++, x, y, tile.getPower() + "");
     //    addPatternButtonAt(id++, limitColX, sizeY - vButtonSpacing, true, Fields.LIMIT);
     //    addPatternButtonAt(id++, limitColX, sizeY + vButtonSpacing, false, Fields.LIMIT);
     //    int x = leftColX + 40;
@@ -119,9 +121,26 @@ public class GuiVector extends GuiBaseContainer {
   protected void keyTyped(char par1, int par2) throws IOException {
     super.keyTyped(par1, par2);
     if (txtAngle != null && txtAngle.isFocused()) {
+      String oldval = txtAngle.getText();
       txtAngle.textboxKeyTyped(par1, par2);
-      System.out.println("TODO: save txtAngle" + txtAngle.getText());
-      // ModCyclic.network.sendToServer(new PacketTilePassword(txtPassword.getText(), ctr.tile.getPos()));
+      String newval = txtAngle.getText();
+   
+      
+      boolean yes = false;
+      try {
+        int val = Integer.parseInt(newval);
+        
+        if(val <= TileVector.MAX_ANGLE && val >= 0){
+          yes=true;
+          ModCyclic.network.sendToServer(new PacketTileVector(tile.getPos(), val, TileVector.Fields.ANGLE));
+        }
+      }
+      catch (NumberFormatException e) {
+
+      }
+      if(!yes && !newval.isEmpty()){//allow empty string in case user is in middle of deleting all and retyping
+        txtAngle.setText(oldval);//rollback
+      }
     }
     if (txtPower != null && txtPower.isFocused()) {
       txtPower.textboxKeyTyped(par1, par2);
@@ -140,6 +159,6 @@ public class GuiVector extends GuiBaseContainer {
         txt.setFocused(flag);
       }
     }
-  }
+  } 
   // ok end of textbox fixing stuff
 }

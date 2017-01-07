@@ -12,9 +12,9 @@ import net.minecraft.util.EnumFacing;
  *
  */
 public class TileVector extends TileEntityBaseMachineInvo {
-  private static final int MAX_ANGLE = 90;
-  private static final int MAX_YAW = 360;
-  private static final int MAX_POWER = 50;
+  public static final int MAX_ANGLE = 90;
+  public static final int MAX_YAW = 360;
+  public static final int MAX_POWER = 50;
   private static final String NBT_ANGLE = "Timer";
   private static final String NBT_POWER = "redstone";
   private int angle = 45;

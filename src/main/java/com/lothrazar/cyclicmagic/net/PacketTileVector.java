@@ -13,13 +13,13 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 public class PacketTileVector implements IMessage, IMessageHandler<PacketTileVector, IMessage> {
   private BlockPos pos;
   private Fields type;
-  private int direction;
+  private int value;
   public PacketTileVector() {
   }
-  public PacketTileVector(BlockPos p, boolean up, TileVector.Fields t) {
+  public PacketTileVector(BlockPos p, int val, TileVector.Fields t) {
     pos = p;
     type = t;
-    direction = (up) ? 1 : -1;
+    value = val;
   }
   @Override
   public void fromBytes(ByteBuf buf) {
@@ -29,7 +29,7 @@ public class PacketTileVector implements IMessage, IMessageHandler<PacketTileVec
     int z = tags.getInteger("z");
     pos = new BlockPos(x, y, z);
     type = Fields.values()[tags.getInteger("type")];
-    direction = tags.getInteger("d");
+    value = tags.getInteger("d");
   }
   @Override
   public void toBytes(ByteBuf buf) {
@@ -38,7 +38,7 @@ public class PacketTileVector implements IMessage, IMessageHandler<PacketTileVec
     tags.setInteger("y", pos.getY());
     tags.setInteger("z", pos.getZ());
     tags.setInteger("type", type.ordinal());
-    tags.setInteger("d", direction);
+    tags.setInteger("d", value);
     ByteBufUtils.writeTag(buf, tags);
   }
   @Override
@@ -46,7 +46,7 @@ public class PacketTileVector implements IMessage, IMessageHandler<PacketTileVec
     EntityPlayerMP player = ctx.getServerHandler().playerEntity;
     TileVector tile = (TileVector) player.getEntityWorld().getTileEntity(message.pos);
     if (tile != null) {
-//      tile.setField(message.type, tile.getField(message.type) + message.direction);
+      tile.setField(message.type.ordinal(), message.value);
     }
     return null;
   }
