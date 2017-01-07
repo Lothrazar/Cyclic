@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.net;
 import com.lothrazar.cyclicmagic.block.tileentity.TileVector;
-import com.lothrazar.cyclicmagic.block.tileentity.TileVector.Fields;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -47,14 +46,16 @@ public class PacketTileVector implements IMessage, IMessageHandler<PacketTileVec
     TileVector tile = (TileVector) player.getEntityWorld().getTileEntity(message.pos);
     if (tile != null) {
       tile.setField(message.tileFieldId, message.value);
-      tile.markDirty();
-      player.getEntityWorld().markChunkDirty(message.pos, tile);
-      //make sure text field updates
-      if (player.openContainer != null) {
-        System.out.println("!d!!rty ctainer");
-        player.openContainer.detectAndSendChanges();
+//      System.out.println("vpackt"+message.value);
+//      
+//      
+//      tile.markDirty();
+//      player.getEntityWorld().markChunkDirty(message.pos, tile);
+//      //make sure text field updates
+//      if (player.openContainer != null) {
+//        player.openContainer.detectAndSendChanges();
 //        player.sendAllWindowProperties(player.openContainer, tile);
-      }
+//      }
 //      player.inventory.markDirty();
     }
     return null;
