@@ -21,9 +21,7 @@ public class GuiVector extends GuiBaseContainer {
   private int[] yRows = new int[3];
   private ButtonVector greaterLessBtn;
   private ButtonVector entityBtn;
-  private GuiTextField txtAngle;
-  private ArrayList<GuiTextField> txtBoxes = new ArrayList<GuiTextField>();
-  private GuiTextField txtPower;
+  private ArrayList<GuiTextFieldInteger> txtBoxes = new ArrayList<GuiTextFieldInteger>();
   public GuiVector(InventoryPlayer inventoryPlayer, TileVector tileEntity) {
     super(new ContainerVector(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -40,10 +38,22 @@ public class GuiVector extends GuiBaseContainer {
     //    leftColX = 176 - 148;
     //    limitColX = leftColX + 108;
     int x = 20, y = 40;
-    txtAngle = addTextbox(id++, x, y, tile.getAngle() + "");
+    GuiTextFieldInteger  txtAngle = addTextbox(id++, x, y, tile.getAngle() + "",2);
     txtAngle.setFocused(true);//default
+    txtAngle.setMaxVal(TileVector.MAX_ANGLE);
+    txtAngle.setMinVal(0);
+    txtAngle.setTileFieldId(TileVector.Fields.ANGLE.ordinal());
     x += 40;
-    txtPower = addTextbox(id++, x, y, tile.getPower() + "");
+    GuiTextFieldInteger  txtPower = addTextbox(id++, x, y, tile.getPower() + "",2);
+    txtPower.setMaxVal(TileVector.MAX_POWER);
+    txtPower.setMinVal(0);
+    txtPower.setTileFieldId(TileVector.Fields.POWER.ordinal());
+System.out.println("tile.getYaw()"+tile.getYaw());
+    x += 40;
+    GuiTextFieldInteger  txtYaw = addTextbox(id++, x, y, tile.getYaw() + "",3);
+    txtYaw.setMaxVal(TileVector.MAX_YAW);
+    txtYaw.setMinVal(0);
+    txtYaw.setTileFieldId(TileVector.Fields.YAW.ordinal());
     //    addPatternButtonAt(id++, limitColX, sizeY - vButtonSpacing, true, Fields.LIMIT);
     //    addPatternButtonAt(id++, limitColX, sizeY + vButtonSpacing, false, Fields.LIMIT);
     //    int x = leftColX + 40;
@@ -63,22 +73,23 @@ public class GuiVector extends GuiBaseContainer {
     //    addPatternButtonAt(id++, leftColX - xOffset - 4, yRows[2], false, Fields.RANGEZ);
     //TODO: PREVIEW BUTTON
   }
-  private GuiTextField addTextbox(int id, int x, int y, String text) {
-    int width = 20, height = 20;
-    GuiTextField txt = new GuiTextField(id, this.fontRendererObj, x, y, width, height);
-    txt.setMaxStringLength(2);
+  private GuiTextFieldInteger addTextbox(int id, int x, int y, String text, int maxLen) {
+    int width = 10*maxLen, height = 20;
+    
+    GuiTextFieldInteger txt = new GuiTextFieldInteger(id, this.fontRendererObj, x, y, width, height);
+    txt.setMaxStringLength(maxLen);
     txt.setText(text);
     txtBoxes.add(txt);
     return txt;
   }
-  private ButtonVector addPatternButtonAt(int id, int x, int y, boolean isUp, Fields f, int w, int h) {
-    ButtonVector btn = new ButtonVector(tile.getPos(), id,
-        this.guiLeft + x,
-        this.guiTop + y,
-        isUp, f, w, h);
-    this.buttonList.add(btn);
-    return btn;
-  }
+  //  private ButtonVector addPatternButtonAt(int id, int x, int y, boolean isUp, Fields f, int w, int h) {
+  //    ButtonVector btn = new ButtonVector(tile.getPos(), id,
+  //        this.guiLeft + x,
+  //        this.guiTop + y,
+  //        isUp, f, w, h);
+  //    this.buttonList.add(btn);
+  //    return btn;
+  //  }
   //  private ButtonVector addPatternButtonAt(int id, int x, int y, boolean isUp, Fields f) {
   //    return this.addPatternButtonAt(id, x, y, isUp, f, 15, 10);
   //  }
@@ -118,35 +129,54 @@ public class GuiVector extends GuiBaseContainer {
     }
   }
   @Override
-  protected void keyTyped(char par1, int par2) throws IOException {
-    super.keyTyped(par1, par2);
-    if (txtAngle != null && txtAngle.isFocused()) {
-      String oldval = txtAngle.getText();
-      txtAngle.textboxKeyTyped(par1, par2);
-      String newval = txtAngle.getText();
-   
-      
+  protected void keyTyped(char pchar, int keyCode) throws IOException {
+    super.keyTyped(pchar, keyCode);
+    for (GuiTextFieldInteger txt : txtBoxes) {
+      String oldval = txt.getText();
+      txt.textboxKeyTyped(pchar, keyCode);
+      String newval = txt.getText();
       boolean yes = false;
       try {
         int val = Integer.parseInt(newval);
-        
-        if(val <= TileVector.MAX_ANGLE && val >= 0){
-          yes=true;
-          ModCyclic.network.sendToServer(new PacketTileVector(tile.getPos(), val, TileVector.Fields.ANGLE));
+        if (val <= txt.getMaxVal() && val >= txt.getMinVal()) {
+          yes = true;
+          ModCyclic.network.sendToServer(new PacketTileVector(tile.getPos(), val, txt.getTileFieldId()));
         }
       }
       catch (NumberFormatException e) {
-
       }
-      if(!yes && !newval.isEmpty()){//allow empty string in case user is in middle of deleting all and retyping
-        txtAngle.setText(oldval);//rollback
+      if (!yes && !newval.isEmpty()) {//allow empty string in case user is in middle of deleting all and retyping
+        txt.setText(oldval);//rollback
       }
     }
-    if (txtPower != null && txtPower.isFocused()) {
-      txtPower.textboxKeyTyped(par1, par2);
-      System.out.println("TODO: save txtPower" + txtPower.getText());
-      // ModCyclic.network.sendToServer(new PacketTilePassword(txtPassword.getText(), ctr.tile.getPos()));
-    }
+    
+    
+    
+//    if (txtAngle != null && txtAngle.isFocused()) {
+//      String oldval = txtAngle.getText();
+//      txtAngle.textboxKeyTyped(pchar, keyCode);
+//      String newval = txtAngle.getText();
+//      boolean yes = false;
+//      try {
+//        //textbox needs these property:
+//        //min value; max value, field integer... 
+//        int val = Integer.parseInt(newval);
+//        if (val <= txtAngle.getMaxVal() && val >= txtAngle.getMinVal()) {
+//          yes = true;
+//          ModCyclic.network.sendToServer(new PacketTileVector(tile.getPos(), val, txtAngle.getTileFieldId()));
+//        }
+//      }
+//      catch (NumberFormatException e) {
+//      }
+//      if (!yes && !newval.isEmpty()) {//allow empty string in case user is in middle of deleting all and retyping
+//        txtAngle.setText(oldval);//rollback
+//      }
+//    }
+//    if (txtPower != null && txtPower.isFocused()) {
+//      txtPower.textboxKeyTyped(pchar, keyCode);
+//      System.out.println("TODO: save txtPower" + txtPower.getText());
+//      // ModCyclic.network.sendToServer(new PacketTilePassword(txtPassword.getText(), ctr.tile.getPos()));
+//    }
   }
   @Override
   protected void mouseClicked(int mouseX, int mouseY, int btn) throws IOException {
@@ -159,6 +189,6 @@ public class GuiVector extends GuiBaseContainer {
         txt.setFocused(flag);
       }
     }
-  } 
+  }
   // ok end of textbox fixing stuff
 }

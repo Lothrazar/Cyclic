@@ -17,6 +17,7 @@ public class TileVector extends TileEntityBaseMachineInvo {
   public static final int MAX_POWER = 50;
   private static final String NBT_ANGLE = "Timer";
   private static final String NBT_POWER = "redstone";
+  private static final String NBT_YAW = "yaw";
   private int angle = 45;
   private int power = 13;
   private int yaw = 90;
@@ -30,11 +31,13 @@ public class TileVector extends TileEntityBaseMachineInvo {
     super.readFromNBT(tagCompound);
     power = tagCompound.getInteger(NBT_POWER);
     angle = tagCompound.getInteger(NBT_ANGLE);
+    yaw = tagCompound.getInteger(NBT_YAW);
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
     tagCompound.setInteger(NBT_POWER, power);
     tagCompound.setInteger(NBT_ANGLE, angle);
+    tagCompound.setInteger(NBT_YAW, yaw);
     return super.writeToNBT(tagCompound);
   }
   public float getActualPower() {
