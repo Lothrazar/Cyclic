@@ -145,6 +145,7 @@ public class UtilEntity {
       entity.motionY = 0;
       entity.fallDistance = 0;
       entity.addVelocity(velX, velY, velZ);
+
     }
   }
   public static AxisAlignedBB makeBoundingBox(BlockPos center, int ITEM_HRADIUS, int ITEM_VRADIUS) {
