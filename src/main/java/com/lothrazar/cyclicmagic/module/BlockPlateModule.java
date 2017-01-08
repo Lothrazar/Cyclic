@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockConveyor;
 import com.lothrazar.cyclicmagic.block.BlockLaunch;
 import com.lothrazar.cyclicmagic.block.BlockMagnet;
@@ -8,6 +9,7 @@ import com.lothrazar.cyclicmagic.block.BlockVectorPlate;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityMagnet;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityMagnetAnti;
 import com.lothrazar.cyclicmagic.block.tileentity.TileVector;
+import com.lothrazar.cyclicmagic.item.itemblock.ItemBlockVectorPlate;
 import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -30,9 +32,9 @@ public class BlockPlateModule extends BaseModule implements IHasConfig {
     
     //TODO: config
     BlockVectorPlate plate_vector = new BlockVectorPlate();
-    BlockRegistry.registerBlock(plate_vector, "plate_vector");
+    BlockRegistry.registerBlock(plate_vector,new ItemBlockVectorPlate(plate_vector), "plate_vector");
     GameRegistry.registerTileEntity(TileVector.class, "plate_vector_te");
-    
+    ModCyclic.instance.events.register(plate_vector);
     
     if (enableInterdict) {
       BlockMagnetAnti magnet_anti_block = new BlockMagnetAnti();

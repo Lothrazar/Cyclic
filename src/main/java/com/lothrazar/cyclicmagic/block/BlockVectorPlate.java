@@ -1,16 +1,21 @@
 package com.lothrazar.cyclicmagic.block;
+import java.util.Random;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.tileentity.TileVector;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -19,6 +24,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.event.world.BlockEvent.BreakEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe, IHasConfig {
   private static final double BHEIGHT = 0.03125D;
@@ -93,5 +100,40 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe, IH
   }
   public boolean isPassable(IBlockAccess worldIn, BlockPos pos) {
     return true;
+  }
+  //disable regular drops, make my own drop that saves nbt
+  @Override
+  public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+    return null;
+  }
+  @SubscribeEvent
+  public void onBreakEvent(BreakEvent event) {
+    if (event.getPlayer() != null && event.getPlayer().capabilities.isCreativeMode) { return; } // dont drop in creative https://github.com/PrinceOfAmber/Cyclic/issues/93
+    World world = event.getWorld();
+    BlockPos pos = event.getPos();
+    IBlockState state = event.getState();
+    TileEntity ent = world.getTileEntity(pos);
+    if (ent != null && ent instanceof TileVector) {
+      TileVector t = (TileVector) ent;
+      ItemStack stack = new ItemStack(state.getBlock());
+      UtilNBT.setItemStackNBTVal(stack, TileVector.NBT_ANGLE, t.getAngle());
+      UtilNBT.setItemStackNBTVal(stack, TileVector.NBT_POWER, t.getPower());
+      UtilNBT.setItemStackNBTVal(stack, TileVector.NBT_YAW, t.getYaw());
+      UtilItemStack.dropItemStackInWorld(world, pos, stack);
+    }
+  }
+  /**
+   * item stack data pushed into tile entity
+   */
+  @Override
+  public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+    if (stack.getTagCompound() != null) {
+      TileVector tile = (TileVector) worldIn.getTileEntity(pos);
+      if (tile != null) {
+        tile.setField(TileVector.Fields.ANGLE.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_ANGLE));
+        tile.setField(TileVector.Fields.POWER.ordinal(),UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_POWER));
+        tile.setField(TileVector.Fields.YAW.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_YAW));
+      }
+    }
   }
 }

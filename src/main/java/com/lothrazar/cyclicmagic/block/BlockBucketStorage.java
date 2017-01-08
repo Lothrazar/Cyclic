@@ -213,8 +213,7 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
   }
   @SubscribeEvent
   public void onBreakEvent(BreakEvent event) {
-    if (event.getPlayer() != null && event.getPlayer().capabilities.isCreativeMode) { return;// dont drop in creative https://github.com/PrinceOfAmber/Cyclic/issues/93
-    }
+    if (event.getPlayer() != null && event.getPlayer().capabilities.isCreativeMode) { return; } // dont drop in creative https://github.com/PrinceOfAmber/Cyclic/issues/93
     World world = event.getWorld();
     BlockPos pos = event.getPos();
     IBlockState state = event.getState();
