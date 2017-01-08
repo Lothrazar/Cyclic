@@ -5,8 +5,8 @@
     "1.9.4-recommended":  "1.2.0",
     "1.10-latest":  "1.1.0",
     "1.10-recommended": "1.1.0",
-    "1.10.2-latest":  "1.9.12",
-    "1.10.2-recommended": "1.9.12"
+    "1.10.2-latest":  "1.9.13",
+    "1.10.2-recommended": "1.9.13"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -94,5 +94,6 @@
  	,"1.9.10":"Potions from cyclic now show potion level in the tooltip: for example Health Boost potion now shows Health Boost V.  Add support for JEI Description tabs on most items.  Automatic Fishing Net and Pattern Replicator no longer burn as furnace fuel.  New Blocks: slime conveyors now come in four total variants: fast, normal, slow, slowest.   Slime conveyors: now take up full space of the block (like a carpet) instead of partial (like a pressure plate) so entities dont have inconsistent speed at edges of a block.  Slime conveyors now keep the entity 'grounded' so they dont get sudden bursts of speed when going down a block onto a conveyor on a lower level(as seen in xisumavoids video with the sheep. can be reverted to old behavior in config->SlimeConveyorKeepEntityGrounded).  Slime conveyors now have an autocorrect feature that keep moving entities in the center of the path (can be disabled in config->blocks->SlimeConveyorPullCenter)"
   	,"1.9.11":"Add block highlight overlay to Exchange scepters.  Fix Exchange scepter breaking blocks that are unbreakable.  Add blacklist to exchange scepter, default starts with only obsidian (modded blocks are supported).  Made some mild nerfs to both Exchange Scepters (reasoning: meant to be building & decorating, not be overpowered mining tools): Durability from 5000 to 1000 uses; takes damage per block replaced not per use (so a 3x3 area will take away 9 durability from item); cooldown from 10 ticks to 30 ticks; and upped recipe cost.  Fix slowfall potion from Wing charm getting stuck at 0:00.  Accepted a submission to update zh_CH.lang.  "
 	,"1.9.12":"Stop the Controlled Miner from mining with tools on air blocks; this stops it from constantly draining durability from Tinkers Construct tools.  "
+  	,"1.9.13":"New Block added: Aerial Faith Plate.  "
   }
 }

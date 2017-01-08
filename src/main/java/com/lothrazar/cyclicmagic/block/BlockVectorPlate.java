@@ -82,6 +82,7 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe {
       UtilSound.playSound(worldIn, pos, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.BLOCKS);
       float rotationPitch = tile.getAngle(), rotationYaw = tile.getYaw(), power = tile.getActualPower();
       UtilEntity.centerEntityHoriz(entity, pos);
+      if(worldIn.isRemote)
       UtilEntity.setVelocity(entity, rotationPitch, rotationYaw, power);
     }
   }
@@ -144,6 +145,13 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe {
     UtilNBT.setItemStackNBTVal(stack, TileVector.NBT_POWER, tile.getPower());
     UtilNBT.setItemStackNBTVal(stack, TileVector.NBT_YAW, tile.getYaw());
   }
+  private void saveStackDataTotile(ItemStack stack, TileVector tile) {
+    if (stack.hasTagCompound()) {
+      tile.setField(TileVector.Fields.ANGLE.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_ANGLE));
+      tile.setField(TileVector.Fields.POWER.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_POWER));
+      tile.setField(TileVector.Fields.YAW.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_YAW));
+    }
+  }
   /**
    * item stack data pushed into tile entity
    */
@@ -154,13 +162,6 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe {
       if (tile != null) {
         saveStackDataTotile(stack, tile);
       }
-    }
-  }
-  private void saveStackDataTotile(ItemStack stack, TileVector tile) {
-    if (stack.hasTagCompound()) {
-      tile.setField(TileVector.Fields.ANGLE.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_ANGLE));
-      tile.setField(TileVector.Fields.POWER.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_POWER));
-      tile.setField(TileVector.Fields.YAW.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_YAW));
     }
   }
   @SideOnly(Side.CLIENT)

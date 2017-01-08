@@ -16,6 +16,8 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class UtilEntity {
   private static final double ENTITY_PULL_DIST = 0.4;//closer than this and nothing happens
@@ -136,6 +138,7 @@ public class UtilEntity {
    * @param rotationYaw
    * @param power
    */
+  @SideOnly(Side.CLIENT)
   public static void setVelocity(Entity entity, float rotationPitch, float rotationYaw, float power) {
     entity.motionX = 0;
     entity.motionY = 0;
