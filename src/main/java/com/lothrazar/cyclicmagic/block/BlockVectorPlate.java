@@ -17,6 +17,7 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -26,6 +27,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe, IHasConfig {
   private static final double BHEIGHT = 0.03125D;
@@ -135,5 +138,10 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe, IH
         tile.setField(TileVector.Fields.YAW.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_YAW));
       }
     }
+  }
+  @SideOnly(Side.CLIENT)
+  @Override
+  public BlockRenderLayer getBlockLayer() {
+    return BlockRenderLayer.TRANSLUCENT;
   }
 }

@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.gui.vector;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.math.BlockPos;
 
@@ -12,7 +13,7 @@ public class ButtonVector extends GuiButton implements ITooltipButton {
   private int value;
   public ButtonVector(BlockPos current, int buttonId, int x, int y,int val, int t) {
     super(buttonId, x, y, 20, 20, "");
-    tooltips.add("tile.plate_vector.tooltip");
+    tooltips.add(UtilChat.lang("tile.plate_vector.tooltip.button"));
     setFieldId(t);
     setValue(val);
  }
