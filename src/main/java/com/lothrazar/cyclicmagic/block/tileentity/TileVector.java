@@ -15,12 +15,15 @@ public class TileVector extends TileEntityBaseMachineInvo {
   public static final int MAX_ANGLE = 90;
   public static final int MAX_YAW = 360;
   public static final int MAX_POWER = 64;
+  public static final int DEFAULT_ANGLE = 45;
+  public static final int DEFAULT_YAW = 90;
+  public static final int DEFAULT_POWER = 10;
   public static final String NBT_ANGLE = "vectorAngle";
   public static final String NBT_POWER = "vectorPower";
   public static final String NBT_YAW = "vectorYaw";
-  private int angle = 45;
-  private int power = 13;
-  private int yaw = 90;
+  private int angle = DEFAULT_ANGLE;
+  private int power = DEFAULT_POWER;
+  private int yaw = DEFAULT_YAW;
   public static enum Fields {
     ANGLE, POWER, YAW;
   }

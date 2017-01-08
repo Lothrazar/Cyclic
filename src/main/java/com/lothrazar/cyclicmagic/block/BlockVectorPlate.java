@@ -64,7 +64,6 @@ public class BlockVectorPlate extends BlockBaseHasTile {
     int yFloor = MathHelper.floor_double(entity.posY);
     double posWithinBlock = entity.posY - yFloor;
     ModCyclic.logger.info("posWithinBlock:" + posWithinBlock);
-    //dont launch if you are y 0.8 or 0.9 in block  , wait til u get lowwwww
     TileVector tile = (TileVector) worldIn.getTileEntity(pos);
     if (posWithinBlock <= COLLISION_HEIGHT && entity instanceof EntityLivingBase && tile != null) {//not within the entire block space, just when they land
       entity.fallDistance = 0;
@@ -72,8 +71,7 @@ public class BlockVectorPlate extends BlockBaseHasTile {
       UtilSound.playSound(worldIn, pos, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.BLOCKS);
       float rotationPitch = tile.getAngle(), rotationYaw = tile.getYaw(), power = tile.getActualPower();
       UtilEntity.centerEntityHoriz(entity, pos);
-//      if (worldIn.isRemote)
-        UtilEntity.setVelocity(entity, rotationPitch, rotationYaw, power);
+      UtilEntity.setVelocity(entity, rotationPitch, rotationYaw, power);
     }
   }
   @SubscribeEvent
@@ -142,16 +140,20 @@ public class BlockVectorPlate extends BlockBaseHasTile {
       tile.setField(TileVector.Fields.YAW.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_YAW));
     }
   }
+  public static void saveStackDefault(ItemStack stack) {
+    UtilNBT.setItemStackNBTVal(stack, TileVector.NBT_ANGLE, TileVector.DEFAULT_ANGLE);
+    UtilNBT.setItemStackNBTVal(stack, TileVector.NBT_POWER, TileVector.DEFAULT_POWER);
+    UtilNBT.setItemStackNBTVal(stack, TileVector.NBT_YAW, TileVector.DEFAULT_YAW);
+  }
   /**
    * item stack data pushed into tile entity
    */
   @Override
   public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-    if (stack.getTagCompound() != null) {
-      TileVector tile = (TileVector) worldIn.getTileEntity(pos);
-      if (tile != null) {
-        saveStackDataTotile(stack, tile);
-      }
+    stack.getItem().updateItemStackNBT(stack.getTagCompound());
+    TileVector tile = (TileVector) worldIn.getTileEntity(pos);
+    if (tile != null) {
+      saveStackDataTotile(stack, tile);
     }
   }
   @SideOnly(Side.CLIENT)
