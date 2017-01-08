@@ -12,7 +12,7 @@ public class ButtonVector extends GuiButton implements ITooltipButton {
   private int value;
   public ButtonVector(BlockPos current, int buttonId, int x, int y,int val, int t) {
     super(buttonId, x, y, 20, 20, "");
-
+    tooltips.add("tile.plate_vector.tooltip");
     setFieldId(t);
     setValue(val);
  }

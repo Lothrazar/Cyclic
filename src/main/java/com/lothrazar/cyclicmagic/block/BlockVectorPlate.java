@@ -11,12 +11,14 @@ import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
 public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe, IHasConfig {
-  protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1D, 0.03125D, 1D);
+  private static final double BHEIGHT = 0.03125D;
+  protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1D, BHEIGHT, 1D);
   public BlockVectorPlate() {
     super(Material.IRON);//, 
     this.setHardness(3.0F).setResistance(5.0F);
@@ -44,12 +46,15 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe, IH
   @Override
   public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
     TileVector tile = (TileVector) worldIn.getTileEntity(pos);
-    entity.motionX = 0;////stop motion first,s o if they re coming in from another conveyor . and stop their running/walking speed
-    entity.motionY = 0;
-    entity.motionZ = 0;
-    entity.fallDistance = 0;
-//    System.out.println("launch yaw"+tile.getYaw());
-    UtilEntity.launch(entity, tile.getAngle(), tile.getYaw(), tile.getActualPower());
+    int yFloor = MathHelper.floor_double(entity.posY);
+    double posWithinBlock = entity.posY - yFloor;
+    if (posWithinBlock <= BHEIGHT) {//not within the entire block space, just when they land
+      entity.motionX = 0;////stop motion first,s o if they re coming in from another conveyor . and stop their running/walking speed
+      entity.motionY = 0;
+      entity.motionZ = 0;
+      entity.fallDistance = 0;
+      UtilEntity.launch(entity, tile.getAngle(), tile.getYaw(), tile.getActualPower());
+    }
   }
   @Override
   public void syncConfig(Configuration config) {

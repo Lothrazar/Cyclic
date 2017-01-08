@@ -28,7 +28,7 @@ public class GuiVector extends GuiBaseContainer {
     super.initGui();
     int id = 1;
     //angle text box
-    int xAngle = 20;
+    int xAngle = 10;
     int yAngle = 40;
     GuiTextFieldInteger txtAngle = addTextbox(id++, xAngle, yAngle, tile.getAngle() + "", 2);
     txtAngle.setFocused(true);//default
@@ -63,8 +63,8 @@ public class GuiVector extends GuiBaseContainer {
     addButtonAt(id++, xYaw + btnYawSpacing + 10, yYaw + btnYawSpacing, (360 + EAST) / 2, Fields.YAW.ordinal()).displayString = "SE";
     addButtonAt(id++, xYaw - btnYawSpacing, yYaw + btnYawSpacing, (SOUTH + WEST) / 2, Fields.YAW.ordinal()).displayString = "SW";
     //angle buttons
-    addButtonAt(id++, xAngle, yAngle - btnYawSpacing, 90, Fields.ANGLE.ordinal());
-    addButtonAt(id++, xAngle, yAngle + btnYawSpacing, 0, Fields.ANGLE.ordinal());
+//    addButtonAt(id++, xAngle, yAngle - btnYawSpacing, 90, Fields.ANGLE.ordinal());
+//    addButtonAt(id++, xAngle, yAngle + btnYawSpacing, 0, Fields.ANGLE.ordinal());
   }
   @Override
   protected void actionPerformed(GuiButton button) throws IOException {
