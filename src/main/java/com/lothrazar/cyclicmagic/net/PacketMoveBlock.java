@@ -18,8 +18,7 @@ public class PacketMoveBlock implements IMessage, IMessageHandler<PacketMoveBloc
   private BlockPos pos;
   private ItemToolPush.ActionType type;
   private EnumFacing side;
-  public PacketMoveBlock() {
-  }
+  public PacketMoveBlock() {}
   public PacketMoveBlock(BlockPos mouseover, ItemToolPush.ActionType t, EnumFacing s) {
     pos = mouseover;
     type = t;

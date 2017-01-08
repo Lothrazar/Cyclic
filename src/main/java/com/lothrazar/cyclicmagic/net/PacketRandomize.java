@@ -21,8 +21,7 @@ public class PacketRandomize implements IMessage, IMessageHandler<PacketRandomiz
   private BlockPos pos;
   private ItemToolRandomize.ActionType actionType;
   private EnumFacing side;
-  public PacketRandomize() {
-  }
+  public PacketRandomize() {}
   public PacketRandomize(BlockPos mouseover, EnumFacing s, ItemToolRandomize.ActionType t) {
     pos = mouseover;
     actionType = t;

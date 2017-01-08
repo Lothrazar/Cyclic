@@ -11,8 +11,7 @@ import net.minecraftforge.fml.relauncher.Side;
 
 public class PacketSyncPlayerData implements IMessage, IMessageHandler<PacketSyncPlayerData, IMessage> {
   NBTTagCompound tags = new NBTTagCompound();
-  public PacketSyncPlayerData() {
-  }
+  public PacketSyncPlayerData() {}
   public PacketSyncPlayerData(NBTTagCompound ptags) {
     tags = ptags;
   }

@@ -62,9 +62,9 @@ public class TileMachinePlacer extends TileEntityBaseMachineInvo implements ITil
     if (id >= 0 && id < this.getFieldCount())
       switch (Fields.values()[id]) {
       case TIMER:
-        return timer;
+      return timer;
       case REDSTONE:
-        return this.needsRedstone;
+      return this.needsRedstone;
       }
     return -1;
   }
@@ -73,11 +73,11 @@ public class TileMachinePlacer extends TileEntityBaseMachineInvo implements ITil
     if (id >= 0 && id < this.getFieldCount())
       switch (Fields.values()[id]) {
       case TIMER:
-        this.timer = value;
-        break;
+      this.timer = value;
+      break;
       case REDSTONE:
-        this.needsRedstone = value;
-        break;
+      this.needsRedstone = value;
+      break;
       }
   }
   @Override

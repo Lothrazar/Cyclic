@@ -1,10 +1,8 @@
 package com.lothrazar.cyclicmagic.gui.vector;
-
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiTextField;
 
 public class GuiTextFieldInteger extends GuiTextField {
-
   public GuiTextFieldInteger(int id, FontRenderer fontrendererObj, int x, int y, int w, int h) {
     super(id, fontrendererObj, x, y, w, h);
   }

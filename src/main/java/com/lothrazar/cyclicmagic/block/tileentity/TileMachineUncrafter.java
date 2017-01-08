@@ -162,7 +162,7 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
     ArrayList<ItemStack> toDrop = UtilInventoryTransfer.dumpToIInventory(output, this, SLOT_UNCRAFTME + 1);
     if (toDrop != null)
       for (ItemStack s : toDrop) {
-        UtilItemStack.dropItemStackInWorld(this.getWorld(), this.getPos().up(), s);
+      UtilItemStack.dropItemStackInWorld(this.getWorld(), this.getPos().up(), s);
       }
   }
   @Override
@@ -189,16 +189,16 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
     if (id >= 0 && id < this.getFieldCount())
       switch (Fields.values()[id]) {
       case TIMER:
-        return timer;
+      return timer;
       case REDSTONE:
-        if (needsRedstone != 1 && needsRedstone != 0) {
-          needsRedstone = 0;
-        }
-        return this.needsRedstone;
+      if (needsRedstone != 1 && needsRedstone != 0) {
+      needsRedstone = 0;
+      }
+      return this.needsRedstone;
       //      case UNCRAFTRESULT:
       //        return this.uncraftResult ;
       default:
-        break;
+      break;
       }
     return -7;
   }
@@ -207,19 +207,19 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
     if (id >= 0 && id < this.getFieldCount())
       switch (Fields.values()[id]) {
       case TIMER:
-        this.timer = value;
-        break;
+      this.timer = value;
+      break;
       case REDSTONE:
-        if (value != 1 && value != 0) {
-          value = 0;
-        }
-        this.needsRedstone = value;
-        break;
+      if (value != 1 && value != 0) {
+      value = 0;
+      }
+      this.needsRedstone = value;
+      break;
       //      case UNCRAFTRESULT:
       //        this.uncraftResult = value;
       //        break;
       default:
-        break;
+      break;
       }
   }
   @Override

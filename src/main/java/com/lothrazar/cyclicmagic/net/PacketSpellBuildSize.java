@@ -11,8 +11,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketSpellBuildSize implements IMessage, IMessageHandler<PacketSpellBuildSize, IMessage> {
-  public PacketSpellBuildSize() {
-  }
+  public PacketSpellBuildSize() {}
   private int size;
   public PacketSpellBuildSize(int s) {
     size = s;

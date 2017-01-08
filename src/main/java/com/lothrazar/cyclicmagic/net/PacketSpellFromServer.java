@@ -19,8 +19,7 @@ public class PacketSpellFromServer implements IMessage, IMessageHandler<PacketSp
   private BlockPos posOffset;
   private @Nullable EnumFacing face;
   private int spellID;
-  public PacketSpellFromServer() {
-  }
+  public PacketSpellFromServer() {}
   public PacketSpellFromServer(BlockPos mouseover, BlockPos offset, @Nullable EnumFacing sideMouseover, int spellid) {
     pos = mouseover;
     posOffset = offset;

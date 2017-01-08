@@ -18,8 +18,7 @@ public class GuiPlayerExtended extends InventoryEffectRenderer {
     try {
       ((ContainerPlayerExtended) inventorySlots).inventory.blockEvents = false;
     }
-    catch (Exception e) {
-    }
+    catch (Exception e) {}
     this.updateActivePotionEffects();
   }
   @Override

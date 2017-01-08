@@ -12,6 +12,5 @@ public abstract class BaseSpellPlace extends BaseSpell {
     UtilSound.playSoundPlaceBlock(player, pos, block);
   }
   @Override
-  public void spawnParticle(World world, EntityPlayer player, BlockPos pos) {
-  }
+  public void spawnParticle(World world, EntityPlayer player, BlockPos pos) {}
 }

@@ -18,8 +18,7 @@ public class PacketParticleAtPosition implements IMessage, IMessageHandler<Packe
   private int z;
   private int particle;
   private int count;
-  public PacketParticleAtPosition() {
-  }
+  public PacketParticleAtPosition() {}
   public PacketParticleAtPosition(BlockPos p, int part, int c) {
     x = p.getX();
     y = p.getY();

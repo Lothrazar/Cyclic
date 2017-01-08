@@ -23,8 +23,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketStorageSack implements IMessage, IMessageHandler<PacketStorageSack, IMessage> {
   private BlockPos pos;
-  public PacketStorageSack() {
-  }
+  public PacketStorageSack() {}
   public PacketStorageSack(BlockPos mouseover) {
     pos = mouseover;
   }

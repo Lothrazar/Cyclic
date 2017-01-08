@@ -37,8 +37,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     return 0;
   }
   @Override
-  public void setField(int id, int value) {
-  }
+  public void setField(int id, int value) {}
   @Override
   public int getFieldCount() {
     return 0;
@@ -56,14 +55,11 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     return 64;
   }
   @Override
-  public void openInventory(EntityPlayer player) {
-  }
+  public void openInventory(EntityPlayer player) {}
   @Override
-  public void closeInventory(EntityPlayer player) {
-  }
+  public void closeInventory(EntityPlayer player) {}
   @Override
-  public void clear() {
-  }
+  public void clear() {}
   protected void shiftAllUp() {
     for (int i = 0; i < this.getSizeInventory() - 1; i++) {
       shiftPairUp(i, i + 1);
@@ -95,8 +91,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     return null;
   }
   @Override
-  public void setInventorySlotContents(int index, ItemStack stack) {
-  }
+  public void setInventorySlotContents(int index, ItemStack stack) {}
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
     // TODO Auto-generated method stub

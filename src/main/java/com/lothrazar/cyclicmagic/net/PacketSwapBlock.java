@@ -34,8 +34,7 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
   private ItemToolSwap.ActionType actionType;
   private ItemToolSwap.WandType wandType;
   private EnumFacing side;
-  public PacketSwapBlock() {
-  }
+  public PacketSwapBlock() {}
   public PacketSwapBlock(BlockPos mouseover, EnumFacing s, ItemToolSwap.ActionType t, ItemToolSwap.WandType w) {
     pos = mouseover;
     actionType = t;
@@ -98,7 +97,7 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
     if (message.wandType == WandType.MATCH) {
       matched = world.getBlockState(message.pos);
     }
-    List<BlockPos> places = getSelectedBlocks(world,message.pos, message.actionType, message.wandType, message.side, matched);
+    List<BlockPos> places = getSelectedBlocks(world, message.pos, message.actionType, message.wandType, message.side, matched);
     Map<BlockPos, Integer> processed = new HashMap<BlockPos, Integer>();
     // maybe dont randomly take blocks from inventory. maybe do a pick block.. or an inventory..i dont know
     //seems ok, and also different enough to be fine
@@ -233,9 +232,10 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
       places = UtilWorld.getPositionsInRange(pos, xMin, xMax, yMin, yMax, zMin, zMax);
     }
     List<BlockPos> retPlaces = new ArrayList<BlockPos>();
-    
     for (BlockPos p : places) {
-      if(world.isAirBlock(p)){continue;}
+      if (world.isAirBlock(p)) {
+        continue;
+      }
       if (wandType == WandType.MATCH && matched != null &&
           !UtilWorld.doBlockStatesMatch(matched, world.getBlockState(p))) {
         //we have saved the one we clicked on so only that gets replaced

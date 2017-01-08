@@ -71,11 +71,9 @@ public abstract class BaseCharm extends BaseItem implements baubles.api.IBauble 
     }
   }
   @Optional.Method(modid = "Baubles")
-  public void onEquipped(ItemStack arg0, EntityLivingBase arg1) {
-  }
+  public void onEquipped(ItemStack arg0, EntityLivingBase arg1) {}
   @Optional.Method(modid = "Baubles")
-  public void onUnequipped(ItemStack arg0, EntityLivingBase arg1) {
-  }
+  public void onUnequipped(ItemStack arg0, EntityLivingBase arg1) {}
   @Optional.Method(modid = "Baubles")
   public void onWornTick(ItemStack stack, EntityLivingBase arg1) {
     if (!this.canTick(stack)) { return; }

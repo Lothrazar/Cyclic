@@ -90,8 +90,7 @@ public class InventoryPlayerExtWorkbench extends InventoryCrafting {
     try {
       player.get().inventory.markDirty();
     }
-    catch (Exception e) {
-    }
+    catch (Exception e) {}
   }
   @Override
   public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer) {

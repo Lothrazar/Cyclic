@@ -7,8 +7,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketFakeWorkbench implements IMessage, IMessageHandler<PacketFakeWorkbench, IMessage> {
-  public PacketFakeWorkbench() {
-  }
+  public PacketFakeWorkbench() {}
   @Override
   public void fromBytes(ByteBuf buf) {
     //    tags = ByteBufUtils.readTag(buf);

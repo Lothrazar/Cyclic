@@ -12,8 +12,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketQuickStack implements IMessage, IMessageHandler<PacketQuickStack, IMessage> {
   NBTTagCompound tags = new NBTTagCompound();
-  public PacketQuickStack() {
-  }
+  public PacketQuickStack() {}
   public PacketQuickStack(NBTTagCompound ptags) {
     tags = ptags;
   }

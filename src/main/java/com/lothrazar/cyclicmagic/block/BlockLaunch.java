@@ -32,8 +32,7 @@ public class BlockLaunch extends BlockBasePressurePlate {
     worldIn.playSound((EntityPlayer) null, pos, this.sound, SoundCategory.BLOCKS, 0.3F, 0.5F);
   }
   @Override
-  protected void playClickOffSound(World worldIn, BlockPos pos) {
-  }
+  protected void playClickOffSound(World worldIn, BlockPos pos) {}
   @Override
   protected int computeRedstoneStrength(World worldIn, BlockPos pos) {
     return 0;

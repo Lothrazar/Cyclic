@@ -14,8 +14,7 @@ public class PacketTileDetector implements IMessage, IMessageHandler<PacketTileD
   private BlockPos pos;
   private Fields type;
   private int direction;
-  public PacketTileDetector() {
-  }
+  public PacketTileDetector() {}
   public PacketTileDetector(BlockPos p, boolean up, TileEntityDetector.Fields t) {
     pos = p;
     type = t;

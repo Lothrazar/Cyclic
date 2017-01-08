@@ -11,8 +11,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketTileBuildType implements IMessage, IMessageHandler<PacketTileBuildType, IMessage> {
   private BlockPos pos;
-  public PacketTileBuildType() {
-  }
+  public PacketTileBuildType() {}
   public PacketTileBuildType(BlockPos p) {
     pos = p;
   }

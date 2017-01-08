@@ -75,8 +75,7 @@ public class UtilUncraft {
     private ArrayList<ItemStack> drops;
     private ItemStack toUncraft;
     private int outsize;
-    public Uncrafter() {
-    }
+    public Uncrafter() {}
     /**
      * It works but we dont want to use it right now
      * 

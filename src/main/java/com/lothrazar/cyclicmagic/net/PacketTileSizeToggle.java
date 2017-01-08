@@ -16,8 +16,7 @@ public class PacketTileSizeToggle implements IMessage, IMessageHandler<PacketTil
   public static enum ActionType {
     SIZE, PREVIEW;
   }
-  public PacketTileSizeToggle() {
-  }
+  public PacketTileSizeToggle() {}
   public PacketTileSizeToggle(BlockPos p, ActionType t) {
     pos = p;
     type = t.ordinal();

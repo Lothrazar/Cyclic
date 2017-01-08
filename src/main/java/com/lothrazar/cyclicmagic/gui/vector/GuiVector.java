@@ -63,8 +63,8 @@ public class GuiVector extends GuiBaseContainer {
     addButtonAt(id++, xYaw + btnYawSpacing + 10, yYaw + btnYawSpacing, (360 + EAST) / 2, Fields.YAW.ordinal()).displayString = "SE";
     addButtonAt(id++, xYaw - btnYawSpacing, yYaw + btnYawSpacing, (SOUTH + WEST) / 2, Fields.YAW.ordinal()).displayString = "SW";
     //angle buttons
-//    addButtonAt(id++, xAngle, yAngle - btnYawSpacing, 90, Fields.ANGLE.ordinal());
-//    addButtonAt(id++, xAngle, yAngle + btnYawSpacing, 0, Fields.ANGLE.ordinal());
+    //    addButtonAt(id++, xAngle, yAngle - btnYawSpacing, 90, Fields.ANGLE.ordinal());
+    //    addButtonAt(id++, xAngle, yAngle + btnYawSpacing, 0, Fields.ANGLE.ordinal());
   }
   @Override
   protected void actionPerformed(GuiButton button) throws IOException {
@@ -132,8 +132,7 @@ public class GuiVector extends GuiBaseContainer {
           ModCyclic.network.sendToServer(new PacketTileVector(tile.getPos(), val, txt.getTileFieldId()));
         }
       }
-      catch (NumberFormatException e) {
-      }
+      catch (NumberFormatException e) {}
       if (!yes && !newval.isEmpty()) {//allow empty string in case user is in middle of deleting all and retyping
         txt.setText(oldval);//rollback to the last valid value. ex if they type 'abc' revert to valid 
       }

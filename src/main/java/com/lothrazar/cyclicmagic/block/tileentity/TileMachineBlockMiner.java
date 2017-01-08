@@ -280,8 +280,7 @@ public class TileMachineBlockMiner extends TileEntityBaseMachineInvo implements 
     return null;
   }
   @Override
-  public void setInventorySlotContents(int index, ItemStack stack) {
-  }
+  public void setInventorySlotContents(int index, ItemStack stack) {}
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
     return new int[] {};
@@ -291,7 +290,7 @@ public class TileMachineBlockMiner extends TileEntityBaseMachineInvo implements 
     if (id >= 0 && id < this.getFieldCount())
       switch (Fields.values()[id]) {
       case REDSTONE:
-        return this.needsRedstone;
+      return this.needsRedstone;
       }
     return -1;
   }
@@ -300,8 +299,8 @@ public class TileMachineBlockMiner extends TileEntityBaseMachineInvo implements 
     if (id >= 0 && id < this.getFieldCount())
       switch (Fields.values()[id]) {
       case REDSTONE:
-        this.needsRedstone = value;
-        break;
+      this.needsRedstone = value;
+      break;
       }
   }
   @Override

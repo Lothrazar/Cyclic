@@ -13,8 +13,7 @@ public class PacketTileMineHeight implements IMessage, IMessageHandler<PacketTil
   private BlockPos pos;
   private int value;
   private String type;
-  public PacketTileMineHeight() {
-  }
+  public PacketTileMineHeight() {}
   public PacketTileMineHeight(BlockPos p, int s, String spr) {
     pos = p;
     value = s;

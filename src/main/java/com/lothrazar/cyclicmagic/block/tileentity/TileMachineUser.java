@@ -112,7 +112,7 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
               IAttributeInstance damage = new AttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
               if (held != null)
                 for (AttributeModifier modifier : held.getAttributeModifiers(EntityEquipmentSlot.MAINHAND).get(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName()))
-                  damage.applyModifier(modifier);
+                damage.applyModifier(modifier);
               float dmgVal = (float) damage.getAttributeValue();
               float f1 = EnchantmentHelper.getModifierForCreature(held, (ent).getCreatureAttribute());
               //              UtilChat.addChatMessage(this.getWorld(), "baseWeapon" + dmgVal);

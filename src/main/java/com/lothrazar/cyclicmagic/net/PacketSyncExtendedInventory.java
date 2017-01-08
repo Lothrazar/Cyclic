@@ -18,8 +18,7 @@ public class PacketSyncExtendedInventory implements IMessage, IMessageHandler<Pa
   int slot;
   int playerId;
   ItemStack itemStack = null;
-  public PacketSyncExtendedInventory() {
-  }
+  public PacketSyncExtendedInventory() {}
   public PacketSyncExtendedInventory(EntityPlayer player, int slot) {
     this.slot = slot;
     this.itemStack = UtilPlayerInventoryFilestorage.getPlayerInventoryStack(player, slot);

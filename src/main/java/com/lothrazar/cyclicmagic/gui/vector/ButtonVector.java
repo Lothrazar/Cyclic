@@ -7,16 +7,15 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.math.BlockPos;
 
 public class ButtonVector extends GuiButton implements ITooltipButton {
-
   private final List<String> tooltips = new ArrayList<String>();
   private int fieldId;
   private int value;
-  public ButtonVector(BlockPos current, int buttonId, int x, int y,int val, int t) {
+  public ButtonVector(BlockPos current, int buttonId, int x, int y, int val, int t) {
     super(buttonId, x, y, 20, 20, "");
     tooltips.add(UtilChat.lang("tile.plate_vector.tooltip.button"));
     setFieldId(t);
     setValue(val);
- }
+  }
   @Override
   public List<String> getTooltips() {
     return tooltips;
