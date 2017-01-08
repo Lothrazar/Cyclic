@@ -5,6 +5,7 @@ import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.tileentity.TileVector;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -33,6 +34,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe, IHasConfig {
   private static final double BHEIGHT = 0.03125D;
   protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1D, BHEIGHT, 1D);
+  protected static final AxisAlignedBB COLLISION_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1D, 2 * BHEIGHT, 1D);
   public BlockVectorPlate() {
     super(Material.IRON);//, 
     this.setHardness(3.0F).setResistance(5.0F);
@@ -60,34 +62,37 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe, IH
   @Nullable
   @Override
   public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos) {
-    return AABB;
+    return COLLISION_AABB;
   }
   @Override
   public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
+    //    int yFloor = MathHelper.floor_double(entity.posY);
+    //    double posWithinBlock = entity.posY - yFloor;
+    //dont need this check, fix ed by collision bb ) posWithinBlock <= BHEIGHT && 
     TileVector tile = (TileVector) worldIn.getTileEntity(pos);
-    int yFloor = MathHelper.floor_double(entity.posY);
-    double posWithinBlock = entity.posY - yFloor;
-    if (posWithinBlock <= BHEIGHT) {//not within the entire block space, just when they land
-      entity.motionX = 0;
-      entity.motionY = 0;
-      entity.motionZ = 0;
-      UtilSound.playSound(worldIn, pos, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.BLOCKS);
+    if (entity instanceof EntityLivingBase && tile != null) {//not within the entire block space, just when they land
       entity.fallDistance = 0;
+      UtilSound.playSound(worldIn, pos, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.BLOCKS);
       float rotationPitch = tile.getAngle(), rotationYaw = tile.getYaw(), power = tile.getActualPower();
-      //      float LIMIT = 180F;
-      double velX = (double) (-MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power);
-      double velZ = (double) (MathHelper.cos(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power);
-      double velY = (double) (-MathHelper.sin((rotationPitch) / 180.0F * (float) Math.PI) * power);
-      // launch the player up and forward at minimum angle
-      //      // regardless of look vector
-      if (velY < 0) {
-        velY *= -1;// make it always up never down
-      }
-      //        System.out.println("launch eh" + tile.getAngle() + "," + tile.getYaw() + "," + tile.getActualPower());
-      //        System.out.println("!set velocity " + velX + "," + velY + "," + velZ);
-      //use set velocity instead of add. TODO maybe refactor back into utilentiyt.setMotion
-      // UtilEntity.launch(entity, tile.getAngle(), tile.getYaw(), tile.getActualPower());
-      entity.setVelocity(velX, velY, velZ);
+      UtilEntity.setVelocity(entity, rotationPitch, rotationYaw, power);
+      //      entity.motionX = 0;
+      //      entity.motionY = 0;
+      //      entity.motionZ = 0;
+      //      //      float LIMIT = 180F;
+      //      double velX = (double) (-MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power);
+      //      double velZ = (double) (MathHelper.cos(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power);
+      //      double velY = (double) (-MathHelper.sin((rotationPitch) / 180.0F * (float) Math.PI) * power);
+      //      // launch the player up and forward at minimum angle
+      //      //      // regardless of look vector
+      //      if (velY < 0) {
+      //        velY *= -1;// make it always up never down
+      //      }
+      ////      System.out.println("launch posWithinBlock" + posWithinBlock);
+      ////      System.out.println("launch eh" + tile.getAngle() + "," + tile.getYaw() + "," + tile.getActualPower());
+      ////      System.out.println("!set velocity " + velX + "," + velY + "," + velZ);
+      //      //use set velocity instead of add. TODO maybe refactor back into utilentiyt.setMotion
+      //      // 
+      //      entity.setVelocity(velX, velY, velZ);
     }
   }
   @Override
@@ -134,7 +139,7 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe, IH
       TileVector tile = (TileVector) worldIn.getTileEntity(pos);
       if (tile != null) {
         tile.setField(TileVector.Fields.ANGLE.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_ANGLE));
-        tile.setField(TileVector.Fields.POWER.ordinal(),UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_POWER));
+        tile.setField(TileVector.Fields.POWER.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_POWER));
         tile.setField(TileVector.Fields.YAW.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_YAW));
       }
     }

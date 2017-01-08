@@ -122,7 +122,29 @@ public class UtilEntity {
    */
   public static void launch(Entity entity, float rotationPitch, float power) {
     float rotationYaw = entity.rotationYaw;
-    launch(entity,  rotationPitch, rotationYaw,power);
+    launch(entity, rotationPitch, rotationYaw, power);
+  }
+  //      float LIMIT = 180F;
+  /**
+   * similar to launch, but ignores mount and uses setVelocity() instead of
+   * addVelocity()
+   * 
+   * @param entity
+   * @param rotationPitch
+   * @param rotationYaw
+   * @param power
+   */
+  public static void setVelocity(Entity entity, float rotationPitch, float rotationYaw, float power) {
+    entity.motionX = 0;
+    entity.motionY = 0;
+    entity.motionZ = 0;
+    double velX = (double) (-MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power);
+    double velZ = (double) (MathHelper.cos(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power);
+    double velY = (double) (-MathHelper.sin((rotationPitch) / 180.0F * (float) Math.PI) * power);
+    if (velY < 0) {
+      velY *= -1;// make it always up never down
+    }
+    entity.setVelocity(velX, velY, velZ);
   }
   public static void launch(Entity entity, float rotationPitch, float rotationYaw, float power) {
     float mountPower = (float) (power - 0.5);
@@ -145,7 +167,6 @@ public class UtilEntity {
       entity.motionY = 0;
       entity.fallDistance = 0;
       entity.addVelocity(velX, velY, velZ);
-
     }
   }
   public static AxisAlignedBB makeBoundingBox(BlockPos center, int ITEM_HRADIUS, int ITEM_VRADIUS) {
