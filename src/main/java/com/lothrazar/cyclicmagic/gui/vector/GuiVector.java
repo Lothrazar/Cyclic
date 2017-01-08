@@ -58,6 +58,10 @@ public class GuiVector extends GuiBaseContainer {
     addButtonAt(id++, xYaw + 5, yYaw - btnYawSpacing, NORTH, Fields.YAW.ordinal()).displayString = "N";
     addButtonAt(id++, xYaw + btnYawSpacing + 10, yYaw, EAST, Fields.YAW.ordinal()).displayString = "E";
     addButtonAt(id++, xYaw - btnYawSpacing, yYaw, WEST, Fields.YAW.ordinal()).displayString = "W";
+    addButtonAt(id++, xYaw + btnYawSpacing + 10, yYaw - btnYawSpacing, (NORTH + EAST) / 2, Fields.YAW.ordinal()).displayString = "NE";
+    addButtonAt(id++, xYaw - btnYawSpacing, yYaw - btnYawSpacing, (NORTH + WEST) / 2, Fields.YAW.ordinal()).displayString = "NW";
+    addButtonAt(id++, xYaw + btnYawSpacing + 10, yYaw + btnYawSpacing, (360 + EAST) / 2, Fields.YAW.ordinal()).displayString = "SE";
+    addButtonAt(id++, xYaw - btnYawSpacing, yYaw + btnYawSpacing, (SOUTH + WEST) / 2, Fields.YAW.ordinal()).displayString = "SW";
     //angle buttons
     addButtonAt(id++, xAngle, yAngle - btnYawSpacing, 90, Fields.ANGLE.ordinal());
     addButtonAt(id++, xAngle, yAngle + btnYawSpacing, 0, Fields.ANGLE.ordinal());
