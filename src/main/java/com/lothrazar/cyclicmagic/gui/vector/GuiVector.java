@@ -27,25 +27,23 @@ public class GuiVector extends GuiBaseContainer {
   public void initGui() {
     super.initGui();
     int id = 1;
-    int x = 20, y = 40;
     //angle text box
-    int xAngle = x;
-    int yAngle = y;
+    int xAngle = 20;
+    int yAngle = 40;
     GuiTextFieldInteger txtAngle = addTextbox(id++, xAngle, yAngle, tile.getAngle() + "", 2);
     txtAngle.setFocused(true);//default
     txtAngle.setMaxVal(TileVector.MAX_ANGLE);
     txtAngle.setMinVal(0);
     txtAngle.setTileFieldId(TileVector.Fields.ANGLE.ordinal());
     //then the power text box
-    x += 40;
+    int x = 60, y = 40;
     GuiTextFieldInteger txtPower = addTextbox(id++, x, y, tile.getPower() + "", 2);
     txtPower.setMaxVal(TileVector.MAX_POWER);
     txtPower.setMinVal(0);
     txtPower.setTileFieldId(TileVector.Fields.POWER.ordinal());
     // yaw text box
-    x += 40;
-    int xYaw = x;
-    int yYaw = y;
+    int xYaw = 110;
+    int yYaw = 40;
     GuiTextFieldInteger txtYaw = addTextbox(id++, xYaw, yYaw, tile.getYaw() + "", 3);
     txtYaw.setMaxVal(TileVector.MAX_YAW);
     txtYaw.setMinVal(0);
@@ -53,12 +51,12 @@ public class GuiVector extends GuiBaseContainer {
     //now the YAW buttons
     int SOUTH = 0;
     int NORTH = 180;
-    int EAST = 90;
-    int WEST = 270;
+    int EAST = 270;
+    int WEST = 90;
     int btnYawSpacing = 22;
-    addButtonAt(id++, xYaw, yYaw - btnYawSpacing, SOUTH, Fields.YAW.ordinal()).displayString = "S";
-    addButtonAt(id++, xYaw, yYaw + btnYawSpacing, NORTH, Fields.YAW.ordinal()).displayString = "N";
-    addButtonAt(id++, xYaw + btnYawSpacing, yYaw, EAST, Fields.YAW.ordinal()).displayString = "E";
+    addButtonAt(id++, xYaw + 5, yYaw + btnYawSpacing, SOUTH, Fields.YAW.ordinal()).displayString = "S";
+    addButtonAt(id++, xYaw + 5, yYaw - btnYawSpacing, NORTH, Fields.YAW.ordinal()).displayString = "N";
+    addButtonAt(id++, xYaw + btnYawSpacing + 10, yYaw, EAST, Fields.YAW.ordinal()).displayString = "E";
     addButtonAt(id++, xYaw - btnYawSpacing, yYaw, WEST, Fields.YAW.ordinal()).displayString = "W";
     //angle buttons
     addButtonAt(id++, xAngle, yAngle - btnYawSpacing, 90, Fields.ANGLE.ordinal());
@@ -66,6 +64,7 @@ public class GuiVector extends GuiBaseContainer {
   }
   @Override
   protected void actionPerformed(GuiButton button) throws IOException {
+    super.actionPerformed(button);
     if (button instanceof ButtonVector) {
       ButtonVector btn = (ButtonVector) button;
       for (GuiTextFieldInteger txt : txtBoxes) { //push value to the matching textbox
