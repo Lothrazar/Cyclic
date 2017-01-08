@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.block;
 import java.util.Random;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.tileentity.TileVector;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
@@ -35,7 +34,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe {
+public class BlockVectorPlate extends BlockBaseHasTile {
   private static final double BHEIGHT = 0.03125D;
   private static final double COLLISION_HEIGHT = 2 * BHEIGHT;
   protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1D, BHEIGHT, 1D);
@@ -50,15 +49,6 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe {
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileVector();
-  }
-  @Override
-  public void addRecipe() {
-    //    GameRegistry.addRecipe(new ItemStack(this), "rsr", "gbg", "ooo",
-    //        'o', Blocks.OBSIDIAN,
-    //        'g', Items.QUARTZ,
-    //        's', Blocks.DISPENSER,
-    //        'r', Items.EMERALD,
-    //        'b', Items.DIAMOND);
   }
   @Override
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {

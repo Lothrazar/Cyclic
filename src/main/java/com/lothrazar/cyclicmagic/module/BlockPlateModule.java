@@ -19,7 +19,6 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -28,14 +27,10 @@ public class BlockPlateModule extends BaseModule implements IHasConfig {
   private boolean launchPads;
   private boolean enableMagnet;
   private boolean enableInterdict;
+  private boolean vectorPlate;
   public void onInit() {
-    
-    //TODO: config
-    BlockVectorPlate plate_vector = new BlockVectorPlate();
-    BlockRegistry.registerBlock(plate_vector,new ItemBlockVectorPlate(plate_vector), "plate_vector");
-    GameRegistry.registerTileEntity(TileVector.class, "plate_vector_te");
-    ModCyclic.instance.events.register(plate_vector);
-    
+    BlockLaunch plate_launch_med = null;
+    BlockConveyor plate_push_fast = null;
     if (enableInterdict) {
       BlockMagnetAnti magnet_anti_block = new BlockMagnetAnti();
       BlockRegistry.registerBlock(magnet_anti_block, "magnet_anti_block");
@@ -49,7 +44,7 @@ public class BlockPlateModule extends BaseModule implements IHasConfig {
     if (launchPads) {
       BlockLaunch plate_launch_small = new BlockLaunch(0.8F, SoundEvents.BLOCK_SLIME_STEP);
       BlockRegistry.registerBlock(plate_launch_small, "plate_launch_small");
-      BlockLaunch plate_launch_med = new BlockLaunch(1.3F, SoundEvents.BLOCK_SLIME_FALL);
+      plate_launch_med = new BlockLaunch(1.3F, SoundEvents.BLOCK_SLIME_FALL);
       BlockRegistry.registerBlock(plate_launch_med, "plate_launch_med");
       BlockLaunch plate_launch_large = new BlockLaunch(1.8F, SoundEvents.BLOCK_SLIME_BREAK);
       BlockRegistry.registerBlock(plate_launch_large, "plate_launch_large");
@@ -77,7 +72,7 @@ public class BlockPlateModule extends BaseModule implements IHasConfig {
           's', new ItemStack(Items.IRON_INGOT),
           'x', new ItemStack(Blocks.SLIME_BLOCK),
           'b', new ItemStack(Items.DYE, 1, EnumDyeColor.PURPLE.getDyeDamage()));
-      BlockConveyor plate_push_fast = new BlockConveyor(0.32F);
+      plate_push_fast = new BlockConveyor(0.32F);
       BlockRegistry.registerBlock(plate_push_fast, "plate_push_fast");
       GameRegistry.addShapelessRecipe(new ItemStack(plate_push_fast), new ItemStack(plate_push), Items.REDSTONE);
       BlockConveyor plate_push_slow = new BlockConveyor(0.08F);
@@ -89,9 +84,26 @@ public class BlockPlateModule extends BaseModule implements IHasConfig {
       GameRegistry.addShapelessRecipe(new ItemStack(plate_push_slowest), new ItemStack(plate_push),
           new ItemStack(Items.DYE, 1, EnumDyeColor.LIGHT_BLUE.getDyeDamage()));
     }
+    if (vectorPlate) {
+      BlockVectorPlate plate_vector = new BlockVectorPlate();
+      BlockRegistry.registerBlock(plate_vector, new ItemBlockVectorPlate(plate_vector), "plate_vector");
+      GameRegistry.registerTileEntity(TileVector.class, "plate_vector_te");
+      ModCyclic.instance.events.register(plate_vector);
+      ItemStack top = (plate_launch_med == null) ? new ItemStack(Blocks.REDSTONE_LAMP) : new ItemStack(plate_launch_med);
+      ItemStack base = (plate_push_fast == null) ? new ItemStack(Blocks.EMERALD_BLOCK) : new ItemStack(plate_push_fast);
+      GameRegistry.addRecipe(new ItemStack(plate_vector, 6),
+          "ttt",
+          "idi",
+          "bbb",
+          'i', Items.IRON_INGOT,
+          'd', Items.DIAMOND,
+          'b', base,
+          't', top);
+    }
   }
   @Override
   public void syncConfig(Configuration config) {
+    vectorPlate = config.getBoolean("AerialFaithPlate", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableInterdict = config.getBoolean("InterdictionPlate", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableConveyor = config.getBoolean("SlimeConveyor", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableMagnet = config.getBoolean("MagnetBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
