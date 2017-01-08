@@ -29,6 +29,20 @@ public class UtilNBT {
     if (!tags.hasKey(prop)) { return 0; }
     return tags.getInteger(prop);
   }
+  /**
+   * empty string if null or empty, otherwise the value in string form for
+   * tooltips
+   * 
+   * @param held
+   * @param prop
+   * @return
+   */
+  public static String getItemStackDisplayInteger(ItemStack held, String prop) {
+    if (held == null) { return ""; }
+    NBTTagCompound tags = getItemStackNBT(held);
+    if (!tags.hasKey(prop)) { return ""; }
+    return tags.getInteger(prop) + "";
+  }
   public static NBTTagCompound getItemStackNBT(ItemStack held) {
     if (held.getTagCompound() == null) {
       held.setTagCompound(new NBTTagCompound());

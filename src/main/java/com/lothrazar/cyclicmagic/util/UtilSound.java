@@ -52,4 +52,7 @@ public class UtilSound {
   public static void playSound(EntityLivingBase villager, BlockPos position, SoundEvent sound) {
     villager.playSound(sound, VOLUME, PITCH);
   }
+  public static void playSound(EntityLivingBase villager,  SoundEvent sound) {
+    villager.playSound(sound, VOLUME, PITCH);
+  }
 }

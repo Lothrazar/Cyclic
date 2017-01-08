@@ -1,11 +1,15 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockConveyor;
 import com.lothrazar.cyclicmagic.block.BlockLaunch;
 import com.lothrazar.cyclicmagic.block.BlockMagnet;
 import com.lothrazar.cyclicmagic.block.BlockMagnetAnti;
+import com.lothrazar.cyclicmagic.block.BlockVectorPlate;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityMagnet;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityMagnetAnti;
+import com.lothrazar.cyclicmagic.block.tileentity.TileVector;
+import com.lothrazar.cyclicmagic.item.itemblock.ItemBlockVectorPlate;
 import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -15,6 +19,7 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -24,6 +29,13 @@ public class BlockPlateModule extends BaseModule implements IHasConfig {
   private boolean enableMagnet;
   private boolean enableInterdict;
   public void onInit() {
+    
+    //TODO: config
+    BlockVectorPlate plate_vector = new BlockVectorPlate();
+    BlockRegistry.registerBlock(plate_vector,new ItemBlockVectorPlate(plate_vector), "plate_vector");
+    GameRegistry.registerTileEntity(TileVector.class, "plate_vector_te");
+    ModCyclic.instance.events.register(plate_vector);
+    
     if (enableInterdict) {
       BlockMagnetAnti magnet_anti_block = new BlockMagnetAnti();
       BlockRegistry.registerBlock(magnet_anti_block, "magnet_anti_block");
