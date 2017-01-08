@@ -82,8 +82,8 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe {
       UtilSound.playSound(worldIn, pos, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.BLOCKS);
       float rotationPitch = tile.getAngle(), rotationYaw = tile.getYaw(), power = tile.getActualPower();
       UtilEntity.centerEntityHoriz(entity, pos);
-      if(worldIn.isRemote)
-      UtilEntity.setVelocity(entity, rotationPitch, rotationYaw, power);
+//      if (worldIn.isRemote)
+        UtilEntity.setVelocity(entity, rotationPitch, rotationYaw, power);
     }
   }
   @SubscribeEvent

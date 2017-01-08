@@ -39,7 +39,7 @@ public class GuiVector extends GuiBaseContainer {
     int x = 60, y = 40;
     GuiTextFieldInteger txtPower = addTextbox(id++, x, y, tile.getPower() + "", 2);
     txtPower.setMaxVal(TileVector.MAX_POWER);
-    txtPower.setMinVal(0);
+    txtPower.setMinVal(1);
     txtPower.setTileFieldId(TileVector.Fields.POWER.ordinal());
     // yaw text box
     int xYaw = 110;

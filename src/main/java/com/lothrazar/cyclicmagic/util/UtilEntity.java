@@ -129,16 +129,6 @@ public class UtilEntity {
   }
   static final float lowEnough = 0.001F;
   //      float LIMIT = 180F;
-  /**
-   * similar to launch, but ignores mount and uses setVelocity() instead of
-   * addVelocity()
-   * 
-   * @param entity
-   * @param rotationPitch
-   * @param rotationYaw
-   * @param power
-   */
-  @SideOnly(Side.CLIENT)
   public static void setVelocity(Entity entity, float rotationPitch, float rotationYaw, float power) {
     entity.motionX = 0;
     entity.motionY = 0;
@@ -154,7 +144,8 @@ public class UtilEntity {
     if (Math.abs(velZ) < lowEnough) velZ = 0;
     ModCyclic.logger.info("launch " + rotationPitch + "," + rotationYaw + "," + power);
     ModCyclic.logger.info("!setvelocity " + velX + "," + velY + "," + velZ);
-    entity.setVelocity(velX, velY, velZ);
+    //setting to zero first then using add, pretty much the same as set
+    entity.addVelocity(velX, velY, velZ);
   }
   public static void launch(Entity entity, float rotationPitch, float rotationYaw, float power) {
     float mountPower = (float) (power - 0.5);
