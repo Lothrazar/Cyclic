@@ -3,6 +3,7 @@ import java.util.Random;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.tileentity.TileVector;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
@@ -14,6 +15,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -23,6 +25,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
@@ -31,10 +34,11 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe, IHasConfig {
+public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe {
   private static final double BHEIGHT = 0.03125D;
+  private static final double COLLISION_HEIGHT = 2 * BHEIGHT;
   protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1D, BHEIGHT, 1D);
-  protected static final AxisAlignedBB COLLISION_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1D, 2 * BHEIGHT, 1D);
+  protected static final AxisAlignedBB COLLISION_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1D, COLLISION_HEIGHT, 1D);
   public BlockVectorPlate() {
     super(Material.IRON);//, 
     this.setHardness(3.0F).setResistance(5.0F);
@@ -66,14 +70,17 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe, IH
   }
   @Override
   public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
-    //    int yFloor = MathHelper.floor_double(entity.posY);
-    //    double posWithinBlock = entity.posY - yFloor;
-    //dont need this check, fix ed by collision bb ) posWithinBlock <= BHEIGHT && 
+    int yFloor = MathHelper.floor_double(entity.posY);
+    double posWithinBlock = entity.posY - yFloor;
+    ModCyclic.logger.info("posWithinBlock:" + posWithinBlock);
+    //dont launch if you are y 0.8 or 0.9 in block  , wait til u get lowwwww
     TileVector tile = (TileVector) worldIn.getTileEntity(pos);
-    if (entity instanceof EntityLivingBase && tile != null) {//not within the entire block space, just when they land
+    if (posWithinBlock <= COLLISION_HEIGHT && entity instanceof EntityLivingBase && tile != null) {//not within the entire block space, just when they land
       entity.fallDistance = 0;
+      entity.onGround = false;
       UtilSound.playSound(worldIn, pos, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.BLOCKS);
       float rotationPitch = tile.getAngle(), rotationYaw = tile.getYaw(), power = tile.getActualPower();
+      UtilEntity.centerEntityHoriz(entity, pos);
       UtilEntity.setVelocity(entity, rotationPitch, rotationYaw, power);
       //      entity.motionX = 0;
       //      entity.motionY = 0;
@@ -96,9 +103,12 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe, IH
     }
   }
   @Override
-  public void syncConfig(Configuration config) {
-    //    String category = Const.ConfigCategory.modpackMisc;
-    //    TileMachineHarvester.TIMER_FULL = config.getInt("HarvesterTime", category, 80, 10, 9999, "Number of ticks it takes to run one time, so lower is faster");
+  public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
+    ItemStack stack = super.getPickBlock(state, target, world, pos, player);
+    if (stack == null || !(world.getTileEntity(pos) instanceof TileVector)) { return null; }
+    TileVector tile = (TileVector) world.getTileEntity(pos);
+    saveTileDataToStack(stack, tile);
+    return stack;
   }
   public boolean isOpaqueCube(IBlockState state) {
     return false;
@@ -124,11 +134,14 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe, IH
     if (ent != null && ent instanceof TileVector) {
       TileVector t = (TileVector) ent;
       ItemStack stack = new ItemStack(state.getBlock());
-      UtilNBT.setItemStackNBTVal(stack, TileVector.NBT_ANGLE, t.getAngle());
-      UtilNBT.setItemStackNBTVal(stack, TileVector.NBT_POWER, t.getPower());
-      UtilNBT.setItemStackNBTVal(stack, TileVector.NBT_YAW, t.getYaw());
+      saveTileDataToStack(stack, t);
       UtilItemStack.dropItemStackInWorld(world, pos, stack);
     }
+  }
+  private void saveTileDataToStack(ItemStack stack, TileVector tile) {
+    UtilNBT.setItemStackNBTVal(stack, TileVector.NBT_ANGLE, tile.getAngle());
+    UtilNBT.setItemStackNBTVal(stack, TileVector.NBT_POWER, tile.getPower());
+    UtilNBT.setItemStackNBTVal(stack, TileVector.NBT_YAW, tile.getYaw());
   }
   /**
    * item stack data pushed into tile entity

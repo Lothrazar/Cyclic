@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.util;
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
@@ -124,6 +125,7 @@ public class UtilEntity {
     float rotationYaw = entity.rotationYaw;
     launch(entity, rotationPitch, rotationYaw, power);
   }
+  static final float lowEnough = 0.001F;
   //      float LIMIT = 180F;
   /**
    * similar to launch, but ignores mount and uses setVelocity() instead of
@@ -144,6 +146,11 @@ public class UtilEntity {
     if (velY < 0) {
       velY *= -1;// make it always up never down
     }
+    if (Math.abs(velX) < lowEnough) velX = 0;
+    if (Math.abs(velY) < lowEnough) velY = 0;
+    if (Math.abs(velZ) < lowEnough) velZ = 0;
+    ModCyclic.logger.info("launch " + rotationPitch + "," + rotationYaw + "," + power);
+    ModCyclic.logger.info("!setvelocity " + velX + "," + velY + "," + velZ);
     entity.setVelocity(velX, velY, velZ);
   }
   public static void launch(Entity entity, float rotationPitch, float rotationYaw, float power) {
@@ -263,5 +270,16 @@ public class UtilEntity {
     else {
       player.addPotionEffect(newp);
     }
+  }
+  /**
+   * Force horizontal centering, so move from 2.9, 6.2 => 2.5,6.5
+   * 
+   * @param entity
+   * @param pos
+   */
+  public static void centerEntityHoriz(Entity entity, BlockPos pos) {
+    float fixedX = pos.getX() + 0.5F;//((float) (MathHelper.floor_double(entity.posX) + MathHelper.ceiling_double_int(entity.posX))  )/ 2;
+    float fixedZ = pos.getZ() + 0.5F;//((float) (MathHelper.floor_double(entity.posX) + MathHelper.ceiling_double_int(entity.posX))  )/ 2;
+    entity.setPosition(fixedX, entity.posY, fixedZ);
   }
 }
