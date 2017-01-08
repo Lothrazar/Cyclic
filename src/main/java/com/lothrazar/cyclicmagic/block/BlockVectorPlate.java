@@ -1,15 +1,16 @@
 package com.lothrazar.cyclicmagic.block;
 import java.util.Random;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.tileentity.TileVector;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
+import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -28,7 +29,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -82,26 +83,25 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe {
       float rotationPitch = tile.getAngle(), rotationYaw = tile.getYaw(), power = tile.getActualPower();
       UtilEntity.centerEntityHoriz(entity, pos);
       UtilEntity.setVelocity(entity, rotationPitch, rotationYaw, power);
-      //      entity.motionX = 0;
-      //      entity.motionY = 0;
-      //      entity.motionZ = 0;
-      //      //      float LIMIT = 180F;
-      //      double velX = (double) (-MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power);
-      //      double velZ = (double) (MathHelper.cos(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power);
-      //      double velY = (double) (-MathHelper.sin((rotationPitch) / 180.0F * (float) Math.PI) * power);
-      //      // launch the player up and forward at minimum angle
-      //      //      // regardless of look vector
-      //      if (velY < 0) {
-      //        velY *= -1;// make it always up never down
-      //      }
-      ////      System.out.println("launch posWithinBlock" + posWithinBlock);
-      ////      System.out.println("launch eh" + tile.getAngle() + "," + tile.getYaw() + "," + tile.getActualPower());
-      ////      System.out.println("!set velocity " + velX + "," + velY + "," + velZ);
-      //      //use set velocity instead of add. TODO maybe refactor back into utilentiyt.setMotion
-      //      // 
-      //      entity.setVelocity(velX, velY, velZ);
     }
   }
+  @SubscribeEvent
+  public void onLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
+    BlockPos pos = event.getPos();
+    World world = event.getWorld();
+    EntityPlayer player = event.getEntityPlayer();
+    ItemStack stack = event.getItemStack();//    ItemStack stack = player.getHeldItem(event.getHand());
+    if (player.isSneaking() == false &&  world.getTileEntity(pos) instanceof TileVector 
+        && stack != null && Block.getBlockFromItem(stack.getItem()) instanceof BlockVectorPlate ) {
+      IBlockState iblockstate = world.getBlockState(pos);
+      Block block = iblockstate.getBlock();
+      TileVector tile = (TileVector) world.getTileEntity(pos);
+      ((BlockVectorPlate) block).saveStackDataTotile(stack, tile);
+      if (world.isRemote)
+        UtilChat.addChatMessage(player, "tile.plate_vector.copied");
+    }
+  }
+  
   @Override
   public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
     ItemStack stack = super.getPickBlock(state, target, world, pos, player);
@@ -151,11 +151,14 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe {
     if (stack.getTagCompound() != null) {
       TileVector tile = (TileVector) worldIn.getTileEntity(pos);
       if (tile != null) {
-        tile.setField(TileVector.Fields.ANGLE.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_ANGLE));
-        tile.setField(TileVector.Fields.POWER.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_POWER));
-        tile.setField(TileVector.Fields.YAW.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_YAW));
+        saveStackDataTotile(stack, tile);
       }
     }
+  }
+  private void saveStackDataTotile(ItemStack stack, TileVector tile) {
+    tile.setField(TileVector.Fields.ANGLE.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_ANGLE));
+    tile.setField(TileVector.Fields.POWER.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_POWER));
+    tile.setField(TileVector.Fields.YAW.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_YAW));
   }
   @SideOnly(Side.CLIENT)
   @Override
