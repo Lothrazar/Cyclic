@@ -91,17 +91,18 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe {
     World world = event.getWorld();
     EntityPlayer player = event.getEntityPlayer();
     ItemStack stack = event.getItemStack();//    ItemStack stack = player.getHeldItem(event.getHand());
-    if (player.isSneaking() == false &&  world.getTileEntity(pos) instanceof TileVector 
-        && stack != null && Block.getBlockFromItem(stack.getItem()) instanceof BlockVectorPlate ) {
+    if (player.isSneaking() == false && world.getTileEntity(pos) instanceof TileVector
+        && stack != null && Block.getBlockFromItem(stack.getItem()) instanceof BlockVectorPlate) {
       IBlockState iblockstate = world.getBlockState(pos);
       Block block = iblockstate.getBlock();
       TileVector tile = (TileVector) world.getTileEntity(pos);
-      ((BlockVectorPlate) block).saveStackDataTotile(stack, tile);
-      if (world.isRemote)
-        UtilChat.addChatMessage(player, "tile.plate_vector.copied");
+      if (stack.hasTagCompound()) {
+        ((BlockVectorPlate) block).saveStackDataTotile(stack, tile);
+        if (world.isRemote)
+          UtilChat.addChatMessage(player, "tile.plate_vector.copied");
+      }
     }
   }
-  
   @Override
   public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
     ItemStack stack = super.getPickBlock(state, target, world, pos, player);
@@ -156,9 +157,11 @@ public class BlockVectorPlate extends BlockBaseHasTile implements IHasRecipe {
     }
   }
   private void saveStackDataTotile(ItemStack stack, TileVector tile) {
-    tile.setField(TileVector.Fields.ANGLE.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_ANGLE));
-    tile.setField(TileVector.Fields.POWER.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_POWER));
-    tile.setField(TileVector.Fields.YAW.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_YAW));
+    if (stack.hasTagCompound()) {
+      tile.setField(TileVector.Fields.ANGLE.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_ANGLE));
+      tile.setField(TileVector.Fields.POWER.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_POWER));
+      tile.setField(TileVector.Fields.YAW.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_YAW));
+    }
   }
   @SideOnly(Side.CLIENT)
   @Override
