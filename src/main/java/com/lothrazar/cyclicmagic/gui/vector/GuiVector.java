@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.block.tileentity.TileVector;
 import com.lothrazar.cyclicmagic.block.tileentity.TileVector.Fields;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.net.PacketTileVector;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -13,8 +14,17 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiVector extends GuiBaseContainer {
-  static final int GUI_ROWS = 2;
+  private static final int SOUTH = 0;
+  private static final int NORTH = 180;
+  private static final int EAST = 270;
+  private static final int WEST = 90;
   private TileVector tile;
+  private int xAngle = 10;
+  private int yAngle = 38;
+  private int xPower = 60;
+  private int yPower = yAngle;
+  private int xYaw = 118;
+  private int yYaw = yAngle;
   private ArrayList<GuiTextFieldInteger> txtBoxes = new ArrayList<GuiTextFieldInteger>();
   public GuiVector(InventoryPlayer inventoryPlayer, TileVector tileEntity) {
     super(new ContainerVector(inventoryPlayer, tileEntity), tileEntity);
@@ -28,31 +38,22 @@ public class GuiVector extends GuiBaseContainer {
     super.initGui();
     int id = 1;
     //angle text box
-    int xAngle = 10;
-    int yAngle = 40;
     GuiTextFieldInteger txtAngle = addTextbox(id++, xAngle, yAngle, tile.getAngle() + "", 2);
     txtAngle.setFocused(true);//default
     txtAngle.setMaxVal(TileVector.MAX_ANGLE);
     txtAngle.setMinVal(0);
     txtAngle.setTileFieldId(TileVector.Fields.ANGLE.ordinal());
     //then the power text box
-    int x = 60, y = 40;
-    GuiTextFieldInteger txtPower = addTextbox(id++, x, y, tile.getPower() + "", 2);
+    GuiTextFieldInteger txtPower = addTextbox(id++, xPower, yPower, tile.getPower() + "", 2);
     txtPower.setMaxVal(TileVector.MAX_POWER);
     txtPower.setMinVal(1);
     txtPower.setTileFieldId(TileVector.Fields.POWER.ordinal());
     // yaw text box
-    int xYaw = 110;
-    int yYaw = 40;
     GuiTextFieldInteger txtYaw = addTextbox(id++, xYaw, yYaw, tile.getYaw() + "", 3);
     txtYaw.setMaxVal(TileVector.MAX_YAW);
     txtYaw.setMinVal(0);
     txtYaw.setTileFieldId(TileVector.Fields.YAW.ordinal());
     //now the YAW buttons
-    int SOUTH = 0;
-    int NORTH = 180;
-    int EAST = 270;
-    int WEST = 90;
     int btnYawSpacing = 22;
     addButtonAt(id++, xYaw + 5, yYaw + btnYawSpacing, SOUTH, Fields.YAW.ordinal()).displayString = "S";
     addButtonAt(id++, xYaw + 5, yYaw - btnYawSpacing, NORTH, Fields.YAW.ordinal()).displayString = "N";
@@ -102,12 +103,17 @@ public class GuiVector extends GuiBaseContainer {
         txt.drawTextBox();
       }
     }
+    renderString("tile.plate_vector.gui.power", xPower + 8, yPower - 12);
+    renderString("tile.plate_vector.gui.angle", xAngle + 8, yAngle - 12);
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
-  // http://www.minecraftforge.net/forum/index.php?topic=22378.0
-  // below is all the stuff that makes the text box NOT broken
+  private void renderString(String s, int x, int y) {
+    String str = UtilChat.lang(s);
+    int strWidth = this.fontRendererObj.getStringWidth(str);
+    this.fontRendererObj.drawString(str, x - strWidth / 2, y, 4210752);
+  }
   @Override
-  public void updateScreen() {
+  public void updateScreen() { // http://www.minecraftforge.net/forum/index.php?topic=22378.0
     super.updateScreen();
     for (GuiTextField txt : txtBoxes) {
       if (txt != null) {
