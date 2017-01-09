@@ -20,12 +20,13 @@ public class GuiVector extends GuiBaseContainer {
   private static final int WEST = 90;
   private TileVector tile;
   private int xAngle = 10;
-  private int yAngle = 38;
-  private int xPower = 60;
+  private int yAngle = 36;
+  private int xPower = 56;
   private int yPower = yAngle;
   private int xYaw = 118;
   private int yYaw = yAngle;
   private ArrayList<GuiTextFieldInteger> txtBoxes = new ArrayList<GuiTextFieldInteger>();
+  private ButtonVector soundBtn;
   public GuiVector(InventoryPlayer inventoryPlayer, TileVector tileEntity) {
     super(new ContainerVector(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -44,7 +45,7 @@ public class GuiVector extends GuiBaseContainer {
     txtAngle.setMinVal(0);
     txtAngle.setTileFieldId(TileVector.Fields.ANGLE.ordinal());
     //then the power text box
-    GuiTextFieldInteger txtPower = addTextbox(id++, xPower, yPower, tile.getPower() + "", 2);
+    GuiTextFieldInteger txtPower = addTextbox(id++, xPower, yPower, tile.getPower() + "", 3);
     txtPower.setMaxVal(TileVector.MAX_POWER);
     txtPower.setMinVal(1);
     txtPower.setTileFieldId(TileVector.Fields.POWER.ordinal());
@@ -63,18 +64,34 @@ public class GuiVector extends GuiBaseContainer {
     addButtonAt(id++, xYaw - btnYawSpacing, yYaw - btnYawSpacing, (NORTH + WEST) / 2, Fields.YAW.ordinal()).displayString = "NW";
     addButtonAt(id++, xYaw + btnYawSpacing + 10, yYaw + btnYawSpacing, (360 + EAST) / 2, Fields.YAW.ordinal()).displayString = "SE";
     addButtonAt(id++, xYaw - btnYawSpacing, yYaw + btnYawSpacing, (SOUTH + WEST) / 2, Fields.YAW.ordinal()).displayString = "SW";
+    soundBtn = addButtonAt(id++, xAngle-2, yAngle + 24, 0, Fields.SOUND.ordinal());
+    soundBtn.setWidth(34);
     //angle buttons
     //    addButtonAt(id++, xAngle, yAngle - btnYawSpacing, 90, Fields.ANGLE.ordinal());
     //    addButtonAt(id++, xAngle, yAngle + btnYawSpacing, 0, Fields.ANGLE.ordinal());
+  }
+  private ButtonVector addButtonAt(int id, int x, int y, int val, int f) {
+    ButtonVector btn = new ButtonVector(tile.getPos(), id,
+        this.guiLeft + x,
+        this.guiTop + y,
+        val, f);
+    this.buttonList.add(btn);
+    return btn;
   }
   @Override
   protected void actionPerformed(GuiButton button) throws IOException {
     super.actionPerformed(button);
     if (button instanceof ButtonVector) {
       ButtonVector btn = (ButtonVector) button;
-      for (GuiTextFieldInteger txt : txtBoxes) { //push value to the matching textbox
-        if (txt.getTileFieldId() == btn.getFieldId()) {
-          txt.setText(btn.getValue() + "");
+      if (btn.getFieldId() == Fields.SOUND.ordinal()) {//workaround so we can use the same button for sound as for others
+        int newVal = (this.tile.getField(Fields.SOUND.ordinal()) + 1) % 2;
+        ModCyclic.network.sendToServer(new PacketTileVector(tile.getPos(), newVal, Fields.SOUND.ordinal()));
+      }
+      else {
+        for (GuiTextFieldInteger txt : txtBoxes) { //push value to the matching textbox
+          if (txt.getTileFieldId() == btn.getFieldId()) {
+            txt.setText(btn.getValue() + "");
+          }
         }
       }
     }
@@ -87,14 +104,6 @@ public class GuiVector extends GuiBaseContainer {
     txtBoxes.add(txt);
     return txt;
   }
-  private ButtonVector addButtonAt(int id, int x, int y, int val, int f) {
-    ButtonVector btn = new ButtonVector(tile.getPos(), id,
-        this.guiLeft + x,
-        this.guiTop + y,
-        val, f);
-    this.buttonList.add(btn);
-    return btn;
-  }
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
@@ -103,7 +112,8 @@ public class GuiVector extends GuiBaseContainer {
         txt.drawTextBox();
       }
     }
-    renderString("tile.plate_vector.gui.power", xPower + 8, yPower - 12);
+    soundBtn.displayString = UtilChat.lang("tile.plate_vector.gui.sound" + tile.getField(Fields.SOUND.ordinal()));
+    renderString("tile.plate_vector.gui.power", xPower + 14, yPower - 12);
     renderString("tile.plate_vector.gui.angle", xAngle + 8, yAngle - 12);
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }

@@ -51,6 +51,10 @@ public class ItemBlockVectorPlate extends ItemBlock {
       nbt.setInteger(TileVector.NBT_YAW, TileVector.DEFAULT_YAW);
       altered = true;
     }
+    if (!nbt.hasKey(TileVector.NBT_SOUND)) {
+      nbt.setInteger(TileVector.NBT_SOUND, 1);
+      altered = true;
+    }
     return altered;
   }
 }

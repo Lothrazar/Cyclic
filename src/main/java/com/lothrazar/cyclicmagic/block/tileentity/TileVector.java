@@ -14,18 +14,20 @@ import net.minecraft.util.EnumFacing;
 public class TileVector extends TileEntityBaseMachineInvo {
   public static final int MAX_ANGLE = 90;
   public static final int MAX_YAW = 360;
-  public static final int MAX_POWER = 64;
+  public static final int MAX_POWER = 999;
   public static final int DEFAULT_ANGLE = 45;
   public static final int DEFAULT_YAW = 90;
-  public static final int DEFAULT_POWER = 10;
+  public static final int DEFAULT_POWER = 250;
   public static final String NBT_ANGLE = "vectorAngle";
   public static final String NBT_POWER = "vectorPower";
   public static final String NBT_YAW = "vectorYaw";
   private int angle = DEFAULT_ANGLE;
   private int power = DEFAULT_POWER;
   private int yaw = DEFAULT_YAW;
+  private int playSound = 1;
+  public static final String NBT_SOUND = "sound";
   public static enum Fields {
-    ANGLE, POWER, YAW;
+    ANGLE, POWER, YAW, SOUND;
   }
   public TileVector() {}
   @Override
@@ -34,16 +36,19 @@ public class TileVector extends TileEntityBaseMachineInvo {
     power = tagCompound.getInteger(NBT_POWER);
     angle = tagCompound.getInteger(NBT_ANGLE);
     yaw = tagCompound.getInteger(NBT_YAW);
+    playSound = tagCompound.getInteger(NBT_SOUND);
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
     tagCompound.setInteger(NBT_POWER, power);
     tagCompound.setInteger(NBT_ANGLE, angle);
     tagCompound.setInteger(NBT_YAW, yaw);
+    tagCompound.setInteger(NBT_SOUND, playSound);
     return super.writeToNBT(tagCompound);
   }
-  public float getActualPower() {
-    return (power + 10) / 10;
+  public float getActualPower() {//stored as integer. used as decimal from 0.01 and up
+    float actual = ((float) power) / 100F;
+    return actual;
   }
   public int getPower() {
     return power;
@@ -53,6 +58,9 @@ public class TileVector extends TileEntityBaseMachineInvo {
   }
   public int getYaw() {
     return yaw;
+  }
+  public boolean playSound() {
+    return this.playSound == 1;
   }
   @Override
   public int getField(int id) {
@@ -64,6 +72,8 @@ public class TileVector extends TileEntityBaseMachineInvo {
       return power;
       case YAW:
       return yaw;
+      case SOUND:
+      return playSound;
       default:
       break;
       }
@@ -83,6 +93,8 @@ public class TileVector extends TileEntityBaseMachineInvo {
       case YAW:
       this.yaw = Math.min(value, MAX_YAW);
       break;
+      case SOUND:
+      this.playSound = value;
       }
   }
   @Override

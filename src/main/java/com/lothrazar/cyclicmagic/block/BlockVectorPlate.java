@@ -3,6 +3,7 @@ import java.util.Random;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.tileentity.TileVector;
+import com.lothrazar.cyclicmagic.block.tileentity.TileVector.Fields;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -17,7 +18,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -69,9 +69,14 @@ public class BlockVectorPlate extends BlockBaseHasTile {
     if (posWithinBlock <= COLLISION_HEIGHT && entity instanceof EntityLivingBase && tile != null) {//not within the entire block space, just when they land
       entity.fallDistance = 0;
       entity.onGround = false;
-      UtilSound.playSound(worldIn, pos, SoundRegistry.bwoaaap, SoundCategory.BLOCKS);
+      if (tile.playSound()) {
+        UtilSound.playSound(worldIn, pos, SoundRegistry.bwoaaap, SoundCategory.BLOCKS);
+      }
       float rotationPitch = tile.getAngle(), rotationYaw = tile.getYaw(), power = tile.getActualPower();
-      UtilEntity.centerEntityHoriz(entity, pos);
+      if (power > 0.3 ) {
+        ModCyclic.logger.info("centerEntityHoriz:");
+        UtilEntity.centerEntityHoriz(entity, pos);
+      }
       UtilEntity.setVelocity(entity, rotationPitch, rotationYaw, power);
     }
   }
@@ -133,12 +138,14 @@ public class BlockVectorPlate extends BlockBaseHasTile {
     UtilNBT.setItemStackNBTVal(stack, TileVector.NBT_ANGLE, tile.getAngle());
     UtilNBT.setItemStackNBTVal(stack, TileVector.NBT_POWER, tile.getPower());
     UtilNBT.setItemStackNBTVal(stack, TileVector.NBT_YAW, tile.getYaw());
+    UtilNBT.setItemStackNBTVal(stack, TileVector.NBT_SOUND, tile.getField(Fields.SOUND.ordinal()));
   }
   private void saveStackDataTotile(ItemStack stack, TileVector tile) {
     if (stack.hasTagCompound()) {
       tile.setField(TileVector.Fields.ANGLE.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_ANGLE));
       tile.setField(TileVector.Fields.POWER.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_POWER));
       tile.setField(TileVector.Fields.YAW.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_YAW));
+      tile.setField(TileVector.Fields.SOUND.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_SOUND));
     }
   }
   public static void saveStackDefault(ItemStack stack) {
