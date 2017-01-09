@@ -31,6 +31,7 @@ public class GuiVector extends GuiBaseContainer {
   private ArrayList<GuiTextFieldInteger> txtBoxes = new ArrayList<GuiTextFieldInteger>();
   private ButtonVector soundBtn;
   private GuiButtonMachineRedstone redstoneBtn;
+  private GuiTextFieldInteger txtYaw;
   public GuiVector(InventoryPlayer inventoryPlayer, TileVector tileEntity) {
     super(new ContainerVector(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -48,7 +49,8 @@ public class GuiVector extends GuiBaseContainer {
     redstoneBtn = new GuiButtonMachineRedstone(0,
         this.guiLeft + 6,
         this.guiTop + 6, this.tile.getPos());
-    redstoneBtn.setTextureIndex(tile.getField(TileVector.Fields.REDSTONE.ordinal()));this.buttonList.add(redstoneBtn);
+    redstoneBtn.setTextureIndex(tile.getField(TileVector.Fields.REDSTONE.ordinal()));
+    this.buttonList.add(redstoneBtn);
     int id = 1;
     //angle text box
     GuiTextFieldInteger txtAngle = addTextbox(id++, xAngle, yAngle, tile.getAngle() + "", 2);
@@ -62,7 +64,7 @@ public class GuiVector extends GuiBaseContainer {
     txtPower.setMinVal(1);
     txtPower.setTileFieldId(TileVector.Fields.POWER.ordinal());
     // yaw text box
-    GuiTextFieldInteger txtYaw = addTextbox(id++, xYaw, yYaw, tile.getYaw() + "", 3);
+    txtYaw = addTextbox(id++, xYaw, yYaw, tile.getYaw() + "", 3);
     txtYaw.setMaxVal(TileVector.MAX_YAW);
     txtYaw.setMinVal(0);
     txtYaw.setTileFieldId(TileVector.Fields.YAW.ordinal());
@@ -122,6 +124,14 @@ public class GuiVector extends GuiBaseContainer {
     for (GuiTextField txt : txtBoxes) {
       if (txt != null) {
         txt.drawTextBox();
+      }
+    }
+    for (GuiButton btn : this.buttonList) {
+      if (btn instanceof ButtonVector) {
+        ButtonVector btnv = (ButtonVector) btn;
+        if (btnv.getFieldId() == Fields.YAW.ordinal()) {
+          btnv.enabled = !txtYaw.getText().equals(btnv.getValue() + "");//tile.getYaw();
+        }
       }
     }
     redstoneBtn.setState(tile.getField(TileVector.Fields.REDSTONE.ordinal()));
