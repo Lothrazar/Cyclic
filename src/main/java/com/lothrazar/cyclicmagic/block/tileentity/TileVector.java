@@ -11,7 +11,7 @@ import net.minecraft.util.EnumFacing;
  * @author Sam
  *
  */
-public class TileVector extends TileEntityBaseMachineInvo {
+public class TileVector extends TileEntityBaseMachineInvo implements ITileRedstoneToggle {
   public static final int MAX_ANGLE = 90;
   public static final int MAX_YAW = 360;
   public static final int MAX_POWER = 999;
@@ -21,13 +21,15 @@ public class TileVector extends TileEntityBaseMachineInvo {
   public static final String NBT_ANGLE = "vectorAngle";
   public static final String NBT_POWER = "vectorPower";
   public static final String NBT_YAW = "vectorYaw";
+  public static final String NBT_RED = "redst";
   private int angle = DEFAULT_ANGLE;
   private int power = DEFAULT_POWER;
   private int yaw = DEFAULT_YAW;
   private int playSound = 1;
+  private int needsRedstone = 0;
   public static final String NBT_SOUND = "sound";
   public static enum Fields {
-    ANGLE, POWER, YAW, SOUND;
+    ANGLE, POWER, YAW, SOUND, REDSTONE;
   }
   public TileVector() {}
   @Override
@@ -37,6 +39,7 @@ public class TileVector extends TileEntityBaseMachineInvo {
     angle = tagCompound.getInteger(NBT_ANGLE);
     yaw = tagCompound.getInteger(NBT_YAW);
     playSound = tagCompound.getInteger(NBT_SOUND);
+    needsRedstone = tagCompound.getInteger(NBT_RED);
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
@@ -44,6 +47,7 @@ public class TileVector extends TileEntityBaseMachineInvo {
     tagCompound.setInteger(NBT_ANGLE, angle);
     tagCompound.setInteger(NBT_YAW, yaw);
     tagCompound.setInteger(NBT_SOUND, playSound);
+    tagCompound.setInteger(NBT_RED, needsRedstone);
     return super.writeToNBT(tagCompound);
   }
   public float getActualPower() {//stored as integer. used as decimal from 0.01 and up
@@ -64,38 +68,43 @@ public class TileVector extends TileEntityBaseMachineInvo {
   }
   @Override
   public int getField(int id) {
-    if (id >= 0 && id < this.getFieldCount())
+    if (id >= 0 && id < this.getFieldCount()) {
       switch (Fields.values()[id]) {
-      case ANGLE:
-      return angle;
-      case POWER:
-      return power;
-      case YAW:
-      return yaw;
-      case SOUND:
-      return playSound;
-      default:
-      break;
+        case ANGLE:
+          return angle;
+        case POWER:
+          return power;
+        case YAW:
+          return yaw;
+        case SOUND:
+          return playSound;
+        case REDSTONE:
+          return needsRedstone;
       }
+    }
     return -1;
   }
   @Override
   public void setField(int id, int value) {
-    if (id >= 0 && id < this.getFieldCount())
+    if (id >= 0 && id < this.getFieldCount()) {
       switch (Fields.values()[id]) {
-      case ANGLE:
-      this.angle = Math.min(value, MAX_ANGLE);
-      break;
-      case POWER:
-      this.power = Math.min(value, MAX_POWER);
-      if (this.power <= 0) this.power = 1;
-      break;
-      case YAW:
-      this.yaw = Math.min(value, MAX_YAW);
-      break;
-      case SOUND:
-      this.playSound = value;
+        case ANGLE:
+          this.angle = Math.min(value, MAX_ANGLE);
+        break;
+        case POWER:
+          this.power = Math.min(value, MAX_POWER);
+          if (this.power <= 0) this.power = 1;
+        break;
+        case YAW:
+          this.yaw = Math.min(value, MAX_YAW);
+        break;
+        case SOUND:
+          this.playSound = value;
+        case REDSTONE:
+          this.needsRedstone = value;
+        break;
       }
+    }
   }
   @Override
   public int getFieldCount() {
@@ -123,15 +132,15 @@ public class TileVector extends TileEntityBaseMachineInvo {
   public int[] getSlotsForFace(EnumFacing side) {
     return new int[] {};
   }
-  //  @Override
-  //  public void toggleNeedsRedstone() {
-  //    int val = this.needsRedstone + 1;
-  //    if (val > 1) {
-  //      val = 0;//hacky lazy way
-  //    }
-  //    this.setField(Fields.REDSTONE.ordinal(), val);
-  //  }
-  //  private boolean onlyRunIfPowered() {
-  //    return this.needsRedstone == 1;
-  //  }
+  @Override
+  public void toggleNeedsRedstone() {
+    int val = this.needsRedstone + 1;
+    if (val > 1) {
+      val = 0;//hacky lazy way
+    }
+    this.setField(Fields.REDSTONE.ordinal(), val);
+  }
+  public boolean onlyRunIfPowered() {
+    return this.needsRedstone == 1;
+  }
 }

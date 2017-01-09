@@ -66,14 +66,16 @@ public class BlockVectorPlate extends BlockBaseHasTile {
     double posWithinBlock = entity.posY - yFloor;
     ModCyclic.logger.info("posWithinBlock:" + posWithinBlock);
     TileVector tile = (TileVector) worldIn.getTileEntity(pos);
-    if (posWithinBlock <= COLLISION_HEIGHT && entity instanceof EntityLivingBase && tile != null) {//not within the entire block space, just when they land
+    //either its getting power, OR setting says redstone is not needed
+    boolean powerOk = worldIn.isBlockPowered(pos) || (tile.getField(Fields.REDSTONE.ordinal()) == 0);
+    if (powerOk && posWithinBlock <= COLLISION_HEIGHT && entity instanceof EntityLivingBase && tile != null) {//not within the entire block space, just when they land
       entity.fallDistance = 0;
       entity.onGround = false;
       if (tile.playSound()) {
         UtilSound.playSound(worldIn, pos, SoundRegistry.bwoaaap, SoundCategory.BLOCKS);
       }
       float rotationPitch = tile.getAngle(), rotationYaw = tile.getYaw(), power = tile.getActualPower();
-      if (power > 0.3 ) {
+      if (power > 0.3) {
         ModCyclic.logger.info("centerEntityHoriz:");
         UtilEntity.centerEntityHoriz(entity, pos);
       }
@@ -139,6 +141,7 @@ public class BlockVectorPlate extends BlockBaseHasTile {
     UtilNBT.setItemStackNBTVal(stack, TileVector.NBT_POWER, tile.getPower());
     UtilNBT.setItemStackNBTVal(stack, TileVector.NBT_YAW, tile.getYaw());
     UtilNBT.setItemStackNBTVal(stack, TileVector.NBT_SOUND, tile.getField(Fields.SOUND.ordinal()));
+    UtilNBT.setItemStackNBTVal(stack, TileVector.NBT_RED, tile.getField(Fields.REDSTONE.ordinal()));
   }
   private void saveStackDataTotile(ItemStack stack, TileVector tile) {
     if (stack.hasTagCompound()) {
@@ -146,6 +149,7 @@ public class BlockVectorPlate extends BlockBaseHasTile {
       tile.setField(TileVector.Fields.POWER.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_POWER));
       tile.setField(TileVector.Fields.YAW.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_YAW));
       tile.setField(TileVector.Fields.SOUND.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_SOUND));
+      tile.setField(TileVector.Fields.REDSTONE.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_RED));
     }
   }
   public static void saveStackDefault(ItemStack stack) {

@@ -13,6 +13,7 @@ public class ContainerVector extends ContainerBaseMachine {
   private int tilePower;
   private int tileYaw;
   private int tileSound;
+  private int tileRedstone;
   public ContainerVector(InventoryPlayer inventoryPlayer, TileVector te) {
     tileEntity = te;
     bindPlayerInventory(inventoryPlayer);
@@ -38,11 +39,16 @@ public class ContainerVector extends ContainerBaseMachine {
       if (this.tileSound != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
+      idx = Fields.REDSTONE.ordinal();
+      if (this.tileRedstone != this.tileEntity.getField(idx)) {
+        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
+      }
     }
     this.tileAngle = this.tileEntity.getField(Fields.ANGLE.ordinal());
     this.tilePower = this.tileEntity.getField(Fields.POWER.ordinal());
     this.tileYaw = this.tileEntity.getField(Fields.YAW.ordinal());
     this.tileSound = this.tileEntity.getField(Fields.SOUND.ordinal());
+    this.tileRedstone = this.tileEntity.getField(Fields.REDSTONE.ordinal());
   }
   @Override
   @SideOnly(Side.CLIENT)

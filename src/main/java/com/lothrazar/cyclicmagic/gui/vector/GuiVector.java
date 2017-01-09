@@ -5,6 +5,7 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.tileentity.TileVector;
 import com.lothrazar.cyclicmagic.block.tileentity.TileVector.Fields;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
 import com.lothrazar.cyclicmagic.net.PacketTileVector;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.GuiButton;
@@ -27,6 +28,7 @@ public class GuiVector extends GuiBaseContainer {
   private int yYaw = yAngle;
   private ArrayList<GuiTextFieldInteger> txtBoxes = new ArrayList<GuiTextFieldInteger>();
   private ButtonVector soundBtn;
+  private GuiButtonMachineRedstone redstoneBtn;
   public GuiVector(InventoryPlayer inventoryPlayer, TileVector tileEntity) {
     super(new ContainerVector(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -37,6 +39,10 @@ public class GuiVector extends GuiBaseContainer {
   @Override
   public void initGui() {
     super.initGui();
+    redstoneBtn = new GuiButtonMachineRedstone(0,
+        this.guiLeft + 8,
+        this.guiTop + 8, this.tile.getPos());
+    redstoneBtn.setTextureIndex(tile.getField(TileVector.Fields.REDSTONE.ordinal()));this.buttonList.add(redstoneBtn);
     int id = 1;
     //angle text box
     GuiTextFieldInteger txtAngle = addTextbox(id++, xAngle, yAngle, tile.getAngle() + "", 2);
@@ -112,6 +118,7 @@ public class GuiVector extends GuiBaseContainer {
         txt.drawTextBox();
       }
     }
+    redstoneBtn.setState(tile.getField(TileVector.Fields.REDSTONE.ordinal()));
     soundBtn.displayString = UtilChat.lang("tile.plate_vector.gui.sound" + tile.getField(Fields.SOUND.ordinal()));
     renderString("tile.plate_vector.gui.power", xPower + 14, yPower - 12);
     renderString("tile.plate_vector.gui.angle", xAngle + 8, yAngle - 12);
