@@ -48,25 +48,25 @@ public class ItemToolPearlReuse extends BaseTool implements IHasRecipe {
   @Override
   public void addRecipe() {
     switch (orbType) {
-    case MOUNTED:
-      GameRegistry.addShapedRecipe(new ItemStack(this),
-          "ere",
-          "rsr",
-          "ere",
-          'e', new ItemStack(Items.ENDER_EYE),
-          'r', new ItemStack(Blocks.LAPIS_BLOCK),
-          's', new ItemStack(Blocks.EMERALD_BLOCK));
+      case MOUNTED:
+        GameRegistry.addShapedRecipe(new ItemStack(this),
+            "ere",
+            "rsr",
+            "ere",
+            'e', new ItemStack(Items.ENDER_EYE),
+            'r', new ItemStack(Blocks.LAPIS_BLOCK),
+            's', new ItemStack(Blocks.EMERALD_BLOCK));
       break;
-    case NORMAL:
-      GameRegistry.addShapedRecipe(new ItemStack(this),
-          "ere",
-          "rsr",
-          "ere",
-          'e', new ItemStack(Items.ENDER_EYE),
-          'r', new ItemStack(Blocks.REDSTONE_BLOCK),
-          's', new ItemStack(Blocks.EMERALD_BLOCK));
+      case NORMAL:
+        GameRegistry.addShapedRecipe(new ItemStack(this),
+            "ere",
+            "rsr",
+            "ere",
+            'e', new ItemStack(Items.ENDER_EYE),
+            'r', new ItemStack(Blocks.REDSTONE_BLOCK),
+            's', new ItemStack(Blocks.EMERALD_BLOCK));
       break;
-    default:
+      default:
       break;
     }
   }
@@ -77,13 +77,13 @@ public class ItemToolPearlReuse extends BaseTool implements IHasRecipe {
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
     switch (orbType) {
-    case MOUNTED:
-      tooltip.add(UtilChat.lang("item.ender_pearl_mounted.tooltip"));
+      case MOUNTED:
+        tooltip.add(UtilChat.lang("item.ender_pearl_mounted.tooltip"));
       break;
-    case NORMAL:
-      tooltip.add(UtilChat.lang("item.ender_pearl_reuse.tooltip"));
+      case NORMAL:
+        tooltip.add(UtilChat.lang("item.ender_pearl_reuse.tooltip"));
       break;
-    default:
+      default:
       break;
     }
   }

@@ -230,29 +230,29 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   }
   public int getField(Fields f) {
     switch (f) {
-    case OFFTARGX:
-      return this.offsetTargetX;
-    case OFFTARGY:
-      return this.offsetTargetY;
-    case OFFTARGZ:
-      return this.offsetTargetZ;
-    case SIZER:
-      return this.sizeRadius;
-    case OFFSRCX:
-      return this.offsetSourceX;
-    case OFFSRCY:
-      return this.offsetSourceY;
-    case OFFSRCZ:
-      return this.offsetSourceZ;
-    case HEIGHT:
-      return this.height;
-    case TIMER:
-      return this.timer;
-    case REDSTONE:
-      return this.needsRedstone;
-    case RENDERPARTICLES:
-      return this.renderParticles;
-    default:
+      case OFFTARGX:
+        return this.offsetTargetX;
+      case OFFTARGY:
+        return this.offsetTargetY;
+      case OFFTARGZ:
+        return this.offsetTargetZ;
+      case SIZER:
+        return this.sizeRadius;
+      case OFFSRCX:
+        return this.offsetSourceX;
+      case OFFSRCY:
+        return this.offsetSourceY;
+      case OFFSRCZ:
+        return this.offsetSourceZ;
+      case HEIGHT:
+        return this.height;
+      case TIMER:
+        return this.timer;
+      case REDSTONE:
+        return this.needsRedstone;
+      case RENDERPARTICLES:
+        return this.renderParticles;
+      default:
       break;
     }
     return 0;
@@ -264,40 +264,40 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       value = MAXIMUM;
     }
     switch (f) {
-    case OFFTARGX:
-      this.offsetTargetX = value;
+      case OFFTARGX:
+        this.offsetTargetX = value;
       break;
-    case OFFTARGY:
-      this.offsetTargetY = value;
+      case OFFTARGY:
+        this.offsetTargetY = value;
       break;
-    case OFFTARGZ:
-      this.offsetTargetZ = value;
+      case OFFTARGZ:
+        this.offsetTargetZ = value;
       break;
-    case SIZER:
-      this.sizeRadius = value;
+      case SIZER:
+        this.sizeRadius = value;
       break;
-    case OFFSRCX:
-      this.offsetSourceX = value;
+      case OFFSRCX:
+        this.offsetSourceX = value;
       break;
-    case OFFSRCY:
-      this.offsetSourceY = value;
+      case OFFSRCY:
+        this.offsetSourceY = value;
       break;
-    case OFFSRCZ:
-      this.offsetSourceZ = value;
+      case OFFSRCZ:
+        this.offsetSourceZ = value;
       break;
-    case HEIGHT:
-      this.height = value;
+      case HEIGHT:
+        this.height = value;
       break;
-    case TIMER:
-      this.timer = value;
+      case TIMER:
+        this.timer = value;
       break;
-    case REDSTONE:
-      this.needsRedstone = value;
+      case REDSTONE:
+        this.needsRedstone = value;
       break;
-    case RENDERPARTICLES:
-      this.renderParticles = value;
+      case RENDERPARTICLES:
+        this.renderParticles = value;
       break;
-    default:
+      default:
       break;
     }
   }

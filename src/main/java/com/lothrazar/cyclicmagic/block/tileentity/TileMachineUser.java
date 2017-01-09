@@ -246,42 +246,42 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
-    case SPEED:
-      return getSpeed();
-    case TIMER:
-      return getTimer();
-    case REDSTONE:
-      return this.needsRedstone;
-    default:
+      case SPEED:
+        return getSpeed();
+      case TIMER:
+        return getTimer();
+      case REDSTONE:
+        return this.needsRedstone;
+      default:
       break;
-    case LEFTRIGHT:
-      return this.rightClickIfZero;
+      case LEFTRIGHT:
+        return this.rightClickIfZero;
     }
     return 0;
   }
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
-    case SPEED:
-      if (value > maxHeight) {
-        value = maxHeight;
-      }
-      setSpeed(value);
+      case SPEED:
+        if (value > maxHeight) {
+          value = maxHeight;
+        }
+        setSpeed(value);
       break;
-    case TIMER:
-      timer = value;
-      if (timer > TIMER_FULL) {
-        timer = TIMER_FULL;
-      }
-      if (timer < 0) {
-        timer = 0;
-      }
+      case TIMER:
+        timer = value;
+        if (timer > TIMER_FULL) {
+          timer = TIMER_FULL;
+        }
+        if (timer < 0) {
+          timer = 0;
+        }
       break;
-    case REDSTONE:
-      this.needsRedstone = value;
+      case REDSTONE:
+        this.needsRedstone = value;
       break;
-    case LEFTRIGHT:
-      this.rightClickIfZero = value;
+      case LEFTRIGHT:
+        this.rightClickIfZero = value;
       break;
     }
   }

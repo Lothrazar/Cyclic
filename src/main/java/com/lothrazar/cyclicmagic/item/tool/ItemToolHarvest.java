@@ -30,23 +30,23 @@ public class ItemToolHarvest extends BaseTool implements IHasRecipe {
     harvestType = c;
     conf = new HarestCropsConfig();//by default all are set false
     switch (harvestType) {
-    case CROPS:
-      conf.doesPumpkinBlocks = true;
-      conf.doesMelonBlocks = true;
-      conf.doesCrops = true;
-      conf.doesCactus = true;
-      conf.doesReeds = true;
+      case CROPS:
+        conf.doesPumpkinBlocks = true;
+        conf.doesMelonBlocks = true;
+        conf.doesCrops = true;
+        conf.doesCactus = true;
+        conf.doesReeds = true;
       break;
-    case WEEDS:
-      conf.doesFlowers = true;
-      conf.doesMushroom = true;
-      conf.doesTallgrass = true;
-      conf.doesSapling = true;
+      case WEEDS:
+        conf.doesFlowers = true;
+        conf.doesMushroom = true;
+        conf.doesTallgrass = true;
+        conf.doesSapling = true;
       break;
-    case LEAVES:
-      conf.doesLeaves = true;
+      case LEAVES:
+        conf.doesLeaves = true;
       break;
-    default:
+      default:
       break;
     }
   }
@@ -67,48 +67,48 @@ public class ItemToolHarvest extends BaseTool implements IHasRecipe {
   @Override
   public void addRecipe() {
     switch (harvestType) {
-    case CROPS:
-      GameRegistry.addRecipe(new ItemStack(this),
-          " gs",
-          " bg",
-          "b  ",
-          'b', Items.BLAZE_ROD,
-          'g', Items.QUARTZ,
-          's', Items.STONE_HOE);
+      case CROPS:
+        GameRegistry.addRecipe(new ItemStack(this),
+            " gs",
+            " bg",
+            "b  ",
+            'b', Items.BLAZE_ROD,
+            'g', Items.QUARTZ,
+            's', Items.STONE_HOE);
       break;
-    case LEAVES:
-      GameRegistry.addRecipe(new ItemStack(this),
-          " gs",
-          " bg",
-          "b  ",
-          'b', Items.STICK,
-          'g', Items.STRING,
-          's', Items.STONE_AXE);
+      case LEAVES:
+        GameRegistry.addRecipe(new ItemStack(this),
+            " gs",
+            " bg",
+            "b  ",
+            'b', Items.STICK,
+            'g', Items.STRING,
+            's', Items.STONE_AXE);
       break;
-    case WEEDS:
-      GameRegistry.addRecipe(new ItemStack(this),
-          " gs",
-          " bg",
-          "b  ",
-          'b', Items.STICK,
-          'g', Items.STRING,
-          's', Items.STONE_HOE);
+      case WEEDS:
+        GameRegistry.addRecipe(new ItemStack(this),
+            " gs",
+            " bg",
+            "b  ",
+            'b', Items.STICK,
+            'g', Items.STRING,
+            's', Items.STONE_HOE);
       break;
-    default:
+      default:
       break;
     }
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltips, boolean advanced) {
     switch (harvestType) {
-    case CROPS:
-      tooltips.add(UtilChat.lang("item.tool_harvest_crops.tooltip"));
+      case CROPS:
+        tooltips.add(UtilChat.lang("item.tool_harvest_crops.tooltip"));
       break;
-    case LEAVES:
-      tooltips.add(UtilChat.lang("item.tool_harvest_leaves.tooltip"));
+      case LEAVES:
+        tooltips.add(UtilChat.lang("item.tool_harvest_leaves.tooltip"));
       break;
-    case WEEDS:
-      tooltips.add(UtilChat.lang("item.tool_harvest_weeds.tooltip"));
+      case WEEDS:
+        tooltips.add(UtilChat.lang("item.tool_harvest_weeds.tooltip"));
       break;
     }
   }

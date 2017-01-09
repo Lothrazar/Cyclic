@@ -185,23 +185,23 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
     boolean isVertical = (side == EnumFacing.UP || side == EnumFacing.DOWN);
     int offsetRadius = 0;
     switch (actionType) {
-    case SINGLE:
-      places.add(pos);
-      offsetRadius = 0;
+      case SINGLE:
+        places.add(pos);
+        offsetRadius = 0;
       break;
-    case X3:
-      offsetRadius = 1;
+      case X3:
+        offsetRadius = 1;
       break;
-    case X5:
-      offsetRadius = 2;
+      case X5:
+        offsetRadius = 2;
       break;
-    case X7:
-      offsetRadius = 3;
+      case X7:
+        offsetRadius = 3;
       break;
-    case X9:
-      offsetRadius = 4;
+      case X9:
+        offsetRadius = 4;
       break;
-    default:
+      default:
       break;
     }
     if (offsetRadius > 0) {

@@ -41,15 +41,15 @@ public class TileEntityFan extends TileEntityBaseMachine implements ITickable {
     BlockPos end = this.getCurrentFacingPos().offset(facing, rangeFixed).up();//.up()
     //without this hotfix, fan works only on the flatedge of the band, not the 1x1 area
     switch (facing.getAxis()) {
-    case X:
-      end = end.add(0, 0, 1);
+      case X:
+        end = end.add(0, 0, 1);
       break;
-    case Y:
+      case Y:
       break;
-    case Z:
-      end = end.add(1, 0, 0);
+      case Z:
+        end = end.add(1, 0, 0);
       break;
-    default:
+      default:
       break;
     }
     AxisAlignedBB region = new AxisAlignedBB(start, end);

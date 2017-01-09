@@ -34,16 +34,16 @@ public class PotionEffectRegistry {
     //TODO: probs a better roman numeral way\
     //not found in    PotionHelper.MixPredicate<T>
     switch (lvl) {
-    case 0:
-      return "I";
-    case 1:
-      return "II";
-    case 2:
-      return "III";
-    case 3:
-      return "IV";
-    case 4:
-      return "V";
+      case 0:
+        return "I";
+      case 1:
+        return "II";
+      case 2:
+        return "III";
+      case 3:
+        return "IV";
+      case 4:
+        return "V";
     }
     return "";
   }

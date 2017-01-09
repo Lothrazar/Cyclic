@@ -61,16 +61,16 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
     BuildType buildType = getBuildTypeEnum();
     // only rebuild shapes if they are different
     switch (buildType) {
-    case CIRCLE:
-      this.shape = UtilShape.circle(this.pos, this.getSize() * 2);
+      case CIRCLE:
+        this.shape = UtilShape.circle(this.pos, this.getSize() * 2);
       break;
-    case FACING:
-      this.shape = UtilShape.line(pos, this.getCurrentFacing(), this.getSize());
+      case FACING:
+        this.shape = UtilShape.line(pos, this.getCurrentFacing(), this.getSize());
       break;
-    case SQUARE:
-      this.shape = UtilShape.squareHorizontalHollow(this.pos, this.getSize());
+      case SQUARE:
+        this.shape = UtilShape.squareHorizontalHollow(this.pos, this.getSize());
       break;
-    default:
+      default:
       break;
     }
     if (this.buildHeight > 1) { //first layer is already done, add remaining

@@ -67,59 +67,59 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
     EnumFacing facing = null;
     EnumFacing playerFacing = p.getHorizontalFacing();
     switch (type) {
-    case DOWN:
-      facing = EnumFacing.DOWN;
-      break;
-    case UP:
-      facing = EnumFacing.UP;
-      break;
-    case LEFT:
-      switch (playerFacing) {
       case DOWN:
-        break;
-      case EAST:
-        facing = EnumFacing.NORTH;
-        break;
-      case NORTH:
-        facing = EnumFacing.WEST;
-        break;
-      case SOUTH:
-        facing = EnumFacing.EAST;
-        break;
+        facing = EnumFacing.DOWN;
+      break;
       case UP:
-        break;
-      case WEST:
-        facing = EnumFacing.SOUTH;
-        break;
+        facing = EnumFacing.UP;
+      break;
+      case LEFT:
+        switch (playerFacing) {
+          case DOWN:
+          break;
+          case EAST:
+            facing = EnumFacing.NORTH;
+          break;
+          case NORTH:
+            facing = EnumFacing.WEST;
+          break;
+          case SOUTH:
+            facing = EnumFacing.EAST;
+          break;
+          case UP:
+          break;
+          case WEST:
+            facing = EnumFacing.SOUTH;
+          break;
+          default:
+          break;
+        }
+      break;
+      case RIGHT:
+        switch (playerFacing) {
+          case DOWN:
+          break;
+          case EAST:
+            facing = EnumFacing.SOUTH;
+          break;
+          case NORTH:
+            facing = EnumFacing.EAST;
+          break;
+          case SOUTH:
+            facing = EnumFacing.WEST;
+          break;
+          case UP:
+          break;
+          case WEST:
+            facing = EnumFacing.NORTH;
+          break;
+          default:
+          break;
+        }
+      break;
+      case PLACE:
+      break;
       default:
-        break;
-      }
-      break;
-    case RIGHT:
-      switch (playerFacing) {
-      case DOWN:
-        break;
-      case EAST:
-        facing = EnumFacing.SOUTH;
-        break;
-      case NORTH:
-        facing = EnumFacing.EAST;
-        break;
-      case SOUTH:
-        facing = EnumFacing.WEST;
-        break;
-      case UP:
-        break;
-      case WEST:
-        facing = EnumFacing.NORTH;
-        break;
-      default:
-        break;
-      }
-      break;
-    case PLACE:
-      break;
-    default:
       break;
     }
     if (facing == null) {

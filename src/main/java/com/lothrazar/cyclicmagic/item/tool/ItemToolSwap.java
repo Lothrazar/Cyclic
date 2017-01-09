@@ -158,11 +158,11 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
   public void addRecipe() {
     ItemStack ingredient = null;
     switch (this.getWandType()) {
-    case MATCH:
-      ingredient = new ItemStack(Items.EMERALD);
+      case MATCH:
+        ingredient = new ItemStack(Items.EMERALD);
       break;
-    case NORMAL:
-      ingredient = new ItemStack(Blocks.LAPIS_BLOCK);
+      case NORMAL:
+        ingredient = new ItemStack(Blocks.LAPIS_BLOCK);
       break;
     }
     GameRegistry.addRecipe(new ItemStack(this),

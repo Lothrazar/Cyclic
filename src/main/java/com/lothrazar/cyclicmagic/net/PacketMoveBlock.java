@@ -70,17 +70,17 @@ public class PacketMoveBlock implements IMessage, IMessageHandler<PacketMoveBloc
       World worldObj = player.getEntityWorld();
       BlockPos resultPosition = null;
       switch (message.type) {
-      case PULL:
-        resultPosition = UtilPlaceBlocks.pullBlock(worldObj, player, message.pos, message.side);
+        case PULL:
+          resultPosition = UtilPlaceBlocks.pullBlock(worldObj, player, message.pos, message.side);
         break;
-      case PUSH:
-        resultPosition = UtilPlaceBlocks.pushBlock(worldObj, player, message.pos, message.side);
+        case PUSH:
+          resultPosition = UtilPlaceBlocks.pushBlock(worldObj, player, message.pos, message.side);
         break;
-      case ROTATE:
-        UtilPlaceBlocks.rotateBlockValidState(worldObj, player, message.pos, message.side);
-        resultPosition = pos;
+        case ROTATE:
+          UtilPlaceBlocks.rotateBlockValidState(worldObj, player, message.pos, message.side);
+          resultPosition = pos;
         break;
-      default:
+        default:
         break;
       }
     }

@@ -76,8 +76,8 @@ public class BlockVectorPlate extends BlockBaseHasTile {
       if (rotationPitch > 0) {
         UtilEntity.centerEntityHoriz(entity, pos);
       }
-//      entity.setPosition(entity.posX,  pos.getY() + 0.5F, entity.posZ);
-//      entity.onGround = false;
+      //      entity.setPosition(entity.posX,  pos.getY() + 0.5F, entity.posZ);
+      //      entity.onGround = false;
       UtilEntity.setVelocity(entity, rotationPitch, rotationYaw, power);
     }
   }

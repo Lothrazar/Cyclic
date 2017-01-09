@@ -45,29 +45,29 @@ public class BlockMiner extends BlockBaseFacingInventory implements IHasRecipe {
   @Override
   public void addRecipe() {
     switch (minerType) {
-    case SINGLE:
-      GameRegistry.addRecipe(new ItemStack(this),
-          "rsr",
-          "gbg",
-          "ooo",
-          'o', Blocks.MOSSY_COBBLESTONE,
-          'g', Items.IRON_PICKAXE, // new ItemStack(Items.DIAMOND_PICKAXE,1,OreDictionary.WILDCARD_VALUE),
-          's', Blocks.DISPENSER,
-          'r', Items.QUARTZ,
-          'b', Items.BLAZE_POWDER);
+      case SINGLE:
+        GameRegistry.addRecipe(new ItemStack(this),
+            "rsr",
+            "gbg",
+            "ooo",
+            'o', Blocks.MOSSY_COBBLESTONE,
+            'g', Items.IRON_PICKAXE, // new ItemStack(Items.DIAMOND_PICKAXE,1,OreDictionary.WILDCARD_VALUE),
+            's', Blocks.DISPENSER,
+            'r', Items.QUARTZ,
+            'b', Items.BLAZE_POWDER);
       break;
-    case TUNNEL:
-      GameRegistry.addRecipe(new ItemStack(this),
-          "rsr",
-          "gbg",
-          "ooo",
-          'o', Blocks.OBSIDIAN,
-          'g', Items.IRON_PICKAXE, // new ItemStack(Items.DIAMOND_PICKAXE,1,OreDictionary.WILDCARD_VALUE),
-          's', Blocks.DISPENSER,
-          'r', Items.QUARTZ,
-          'b', Blocks.MAGMA);// MAGMA BLOCK is field_189877_df in 1.10.2 apparently
+      case TUNNEL:
+        GameRegistry.addRecipe(new ItemStack(this),
+            "rsr",
+            "gbg",
+            "ooo",
+            'o', Blocks.OBSIDIAN,
+            'g', Items.IRON_PICKAXE, // new ItemStack(Items.DIAMOND_PICKAXE,1,OreDictionary.WILDCARD_VALUE),
+            's', Blocks.DISPENSER,
+            'r', Items.QUARTZ,
+            'b', Blocks.MAGMA);// MAGMA BLOCK is field_189877_df in 1.10.2 apparently
       break;
-    default:
+      default:
       break;
     }
   }

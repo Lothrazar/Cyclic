@@ -82,25 +82,25 @@ public class UtilEntity {
     double velZ = 0;
     double velY = 0;
     switch (facing) {
-    case EAST:
-      velX = Math.abs(power);
-      velZ = 0;
+      case EAST:
+        velX = Math.abs(power);
+        velZ = 0;
       break;
-    case WEST:
-      velX = -1 * Math.abs(power);
-      velZ = 0;
+      case WEST:
+        velX = -1 * Math.abs(power);
+        velZ = 0;
       break;
-    case NORTH:
-      velX = 0;
-      velZ = -1 * Math.abs(power);
+      case NORTH:
+        velX = 0;
+        velZ = -1 * Math.abs(power);
       break;
-    case SOUTH:
-      velX = 0;
-      velZ = Math.abs(power);
+      case SOUTH:
+        velX = 0;
+        velZ = Math.abs(power);
       break;
-    case UP:
-    case DOWN:
-    default:
+      case UP:
+      case DOWN:
+      default:
       break;
     }
     Entity ridingEntity = entity.getRidingEntity();
@@ -142,12 +142,12 @@ public class UtilEntity {
     if (Math.abs(velX) < lowEnough) velX = 0;
     if (Math.abs(velY) < lowEnough) velY = 0;
     if (Math.abs(velZ) < lowEnough) velZ = 0;
-//    if(entity.getEntityWorld().isRemote){
-//    ModCyclic.logger.info("(angle,yaw,power) = " + rotationPitch + "," + rotationYaw + "," + power);
-//    ModCyclic.logger.info("!setvelocity " + velX + "," + velY + "," + velZ);
-////    ModCyclic.logger.info("!onground " + entity.onGround);
-//    ModCyclic.logger.info("!posY " + entity.posY);
-//    }
+    //    if(entity.getEntityWorld().isRemote){
+    //    ModCyclic.logger.info("(angle,yaw,power) = " + rotationPitch + "," + rotationYaw + "," + power);
+    //    ModCyclic.logger.info("!setvelocity " + velX + "," + velY + "," + velZ);
+    ////    ModCyclic.logger.info("!onground " + entity.onGround);
+    //    ModCyclic.logger.info("!posY " + entity.posY);
+    //    }
     //setting to zero first then using add, pretty much the same as set
     entity.addVelocity(velX, velY, velZ);
   }

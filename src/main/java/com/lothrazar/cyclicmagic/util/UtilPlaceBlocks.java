@@ -214,27 +214,27 @@ public class UtilPlaceBlocks {
       //basically we want to toggle the "smooth" property on and off
       //but there is no property 'smooth' its just within the variant
       switch (variant) {
-      case ANDESITE:
-        placeState = clicked.withProperty(BlockStone.VARIANT, EnumType.ANDESITE_SMOOTH);
+        case ANDESITE:
+          placeState = clicked.withProperty(BlockStone.VARIANT, EnumType.ANDESITE_SMOOTH);
         break;
-      case ANDESITE_SMOOTH:
-        placeState = clicked.withProperty(BlockStone.VARIANT, EnumType.ANDESITE);
+        case ANDESITE_SMOOTH:
+          placeState = clicked.withProperty(BlockStone.VARIANT, EnumType.ANDESITE);
         break;
-      case DIORITE:
-        placeState = clicked.withProperty(BlockStone.VARIANT, EnumType.DIORITE_SMOOTH);
+        case DIORITE:
+          placeState = clicked.withProperty(BlockStone.VARIANT, EnumType.DIORITE_SMOOTH);
         break;
-      case DIORITE_SMOOTH:
-        placeState = clicked.withProperty(BlockStone.VARIANT, EnumType.DIORITE);
+        case DIORITE_SMOOTH:
+          placeState = clicked.withProperty(BlockStone.VARIANT, EnumType.DIORITE);
         break;
-      case GRANITE:
-        placeState = clicked.withProperty(BlockStone.VARIANT, EnumType.GRANITE_SMOOTH);
+        case GRANITE:
+          placeState = clicked.withProperty(BlockStone.VARIANT, EnumType.GRANITE_SMOOTH);
         break;
-      case GRANITE_SMOOTH:
-        placeState = clicked.withProperty(BlockStone.VARIANT, EnumType.GRANITE);
+        case GRANITE_SMOOTH:
+          placeState = clicked.withProperty(BlockStone.VARIANT, EnumType.GRANITE);
         break;
-      case STONE:
-        placeState = Blocks.STONEBRICK.getDefaultState();
-      default:
+        case STONE:
+          placeState = Blocks.STONEBRICK.getDefaultState();
+        default:
         break;
       }
     }

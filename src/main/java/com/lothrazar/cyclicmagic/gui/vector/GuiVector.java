@@ -82,9 +82,9 @@ public class GuiVector extends GuiBaseContainer {
     soundBtn = addButtonAt(id++, 134, 110, 0, Fields.SOUND.ordinal());
     soundBtn.setWidth(34);
     //angle buttons
-    addButtonAt(id++, xAngle, yAngle - btnYawSpacing, 90, Fields.ANGLE.ordinal()).displayString="^";
-    addButtonAt(id++, xAngle+24, yAngle - btnYawSpacing, 45, Fields.ANGLE.ordinal()).displayString="/";
-    addButtonAt(id++, xAngle+24, yAngle , 0, Fields.ANGLE.ordinal()).displayString="->";
+    addButtonAt(id++, xAngle, yAngle - btnYawSpacing, 90, Fields.ANGLE.ordinal()).displayString = "^";
+    addButtonAt(id++, xAngle + 24, yAngle - btnYawSpacing, 45, Fields.ANGLE.ordinal()).displayString = "/";
+    addButtonAt(id++, xAngle + 24, yAngle, 0, Fields.ANGLE.ordinal()).displayString = "->";
   }
   private ButtonVector addButtonAt(int id, int x, int y, int val, int f) {
     ButtonVector btn = new ButtonVector(tile.getPos(), id,
