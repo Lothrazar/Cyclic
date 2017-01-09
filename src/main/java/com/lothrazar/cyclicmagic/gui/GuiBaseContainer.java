@@ -20,7 +20,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
   }
   public GuiBaseContainer(Container inventorySlotsIn) {
     super(inventorySlotsIn);
-    this.tile = null;//wand 
+    this.tile = null;
   }
   public ResourceLocation getBackground() {
     return Const.Res.TABLEDEFAULT;//can override

@@ -16,7 +16,7 @@ public class ContainerVector extends ContainerBaseMachine {
   private int tileRedstone;
   public ContainerVector(InventoryPlayer inventoryPlayer, TileVector te) {
     tileEntity = te;
-    bindPlayerInventory(inventoryPlayer);
+    bindPlayerHotbar(inventoryPlayer);
   }
   @Override
   public void detectAndSendChanges() {

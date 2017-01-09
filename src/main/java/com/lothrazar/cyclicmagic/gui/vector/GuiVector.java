@@ -7,10 +7,12 @@ import com.lothrazar.cyclicmagic.block.tileentity.TileVector.Fields;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
 import com.lothrazar.cyclicmagic.net.PacketTileVector;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -20,12 +22,12 @@ public class GuiVector extends GuiBaseContainer {
   private static final int EAST = 270;
   private static final int WEST = 90;
   private TileVector tile;
-  private int xAngle = 10;
-  private int yAngle = 36;
-  private int xPower = 56;
-  private int yPower = yAngle;
-  private int xYaw = 118;
-  private int yYaw = yAngle;
+  private int xAngle = 14;
+  private int yAngle = 50;
+  private int xPower = 14;
+  private int yPower = 98;
+  private int xYaw = 116;
+  private int yYaw = 60;
   private ArrayList<GuiTextFieldInteger> txtBoxes = new ArrayList<GuiTextFieldInteger>();
   private ButtonVector soundBtn;
   private GuiButtonMachineRedstone redstoneBtn;
@@ -37,11 +39,15 @@ public class GuiVector extends GuiBaseContainer {
     return "tile.plate_vector.name";
   }
   @Override
+  public ResourceLocation getBackground() {
+    return Const.Res.TABLEPLAIN;
+  }
+  @Override
   public void initGui() {
     super.initGui();
     redstoneBtn = new GuiButtonMachineRedstone(0,
-        this.guiLeft + 8,
-        this.guiTop + 8, this.tile.getPos());
+        this.guiLeft + 6,
+        this.guiTop + 6, this.tile.getPos());
     redstoneBtn.setTextureIndex(tile.getField(TileVector.Fields.REDSTONE.ordinal()));this.buttonList.add(redstoneBtn);
     int id = 1;
     //angle text box
@@ -70,7 +76,7 @@ public class GuiVector extends GuiBaseContainer {
     addButtonAt(id++, xYaw - btnYawSpacing, yYaw - btnYawSpacing, (NORTH + WEST) / 2, Fields.YAW.ordinal()).displayString = "NW";
     addButtonAt(id++, xYaw + btnYawSpacing + 10, yYaw + btnYawSpacing, (360 + EAST) / 2, Fields.YAW.ordinal()).displayString = "SE";
     addButtonAt(id++, xYaw - btnYawSpacing, yYaw + btnYawSpacing, (SOUTH + WEST) / 2, Fields.YAW.ordinal()).displayString = "SW";
-    soundBtn = addButtonAt(id++, xAngle-2, yAngle + 24, 0, Fields.SOUND.ordinal());
+    soundBtn = addButtonAt(id++, 134, 110, 0, Fields.SOUND.ordinal());
     soundBtn.setWidth(34);
     //angle buttons
     //    addButtonAt(id++, xAngle, yAngle - btnYawSpacing, 90, Fields.ANGLE.ordinal());
