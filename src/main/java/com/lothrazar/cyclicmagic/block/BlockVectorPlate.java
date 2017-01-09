@@ -64,21 +64,20 @@ public class BlockVectorPlate extends BlockBaseHasTile {
   public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
     int yFloor = MathHelper.floor_double(entity.posY);
     double posWithinBlock = entity.posY - yFloor;
-    ModCyclic.logger.info("posWithinBlock:" + posWithinBlock);
     TileVector tile = (TileVector) worldIn.getTileEntity(pos);
+    entity.fallDistance = 0;
     //either its getting power, OR setting says redstone is not needed
     boolean powerOk = worldIn.isBlockPowered(pos) || (tile.getField(Fields.REDSTONE.ordinal()) == 0);
     if (powerOk && posWithinBlock <= COLLISION_HEIGHT && entity instanceof EntityLivingBase && tile != null) {//not within the entire block space, just when they land
-      entity.fallDistance = 0;
-      entity.onGround = false;
       if (tile.playSound()) {
         UtilSound.playSound(worldIn, pos, SoundRegistry.bwoaaap, SoundCategory.BLOCKS);
       }
       float rotationPitch = tile.getAngle(), rotationYaw = tile.getYaw(), power = tile.getActualPower();
-      if (rotationPitch>0) {
-        ModCyclic.logger.info("centerEntityHoriz:");
+      if (rotationPitch > 0) {
         UtilEntity.centerEntityHoriz(entity, pos);
       }
+//      entity.setPosition(entity.posX,  pos.getY() + 0.5F, entity.posZ);
+//      entity.onGround = false;
       UtilEntity.setVelocity(entity, rotationPitch, rotationYaw, power);
     }
   }

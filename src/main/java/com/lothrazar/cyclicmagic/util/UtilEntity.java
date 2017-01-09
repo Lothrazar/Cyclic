@@ -142,8 +142,12 @@ public class UtilEntity {
     if (Math.abs(velX) < lowEnough) velX = 0;
     if (Math.abs(velY) < lowEnough) velY = 0;
     if (Math.abs(velZ) < lowEnough) velZ = 0;
-    ModCyclic.logger.info("launch " + rotationPitch + "," + rotationYaw + "," + power);
-    ModCyclic.logger.info("!setvelocity " + velX + "," + velY + "," + velZ);
+//    if(entity.getEntityWorld().isRemote){
+//    ModCyclic.logger.info("(angle,yaw,power) = " + rotationPitch + "," + rotationYaw + "," + power);
+//    ModCyclic.logger.info("!setvelocity " + velX + "," + velY + "," + velZ);
+////    ModCyclic.logger.info("!onground " + entity.onGround);
+//    ModCyclic.logger.info("!posY " + entity.posY);
+//    }
     //setting to zero first then using add, pretty much the same as set
     entity.addVelocity(velX, velY, velZ);
   }

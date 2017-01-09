@@ -23,7 +23,7 @@ public class GuiVector extends GuiBaseContainer {
   private static final int WEST = 90;
   private TileVector tile;
   private int xAngle = 14;
-  private int yAngle = 50;
+  private int yAngle = 56;//aka pitch
   private int xPower = 14;
   private int yPower = 98;
   private int xYaw = 116;
@@ -142,7 +142,7 @@ public class GuiVector extends GuiBaseContainer {
     redstoneBtn.setState(tile.getField(TileVector.Fields.REDSTONE.ordinal()));
     soundBtn.displayString = UtilChat.lang("tile.plate_vector.gui.sound" + tile.getField(Fields.SOUND.ordinal()));
     renderString("tile.plate_vector.gui.power", xPower + 14, yPower + 26);
-    renderString("tile.plate_vector.gui.angle", xAngle + 8, yAngle + 26);
+    renderString("tile.plate_vector.gui.angle", xAngle + 18, yAngle + 26);
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
   private void renderString(String s, int x, int y) {
