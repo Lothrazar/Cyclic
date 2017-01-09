@@ -32,6 +32,7 @@ public class GuiVector extends GuiBaseContainer {
   private ButtonVector soundBtn;
   private GuiButtonMachineRedstone redstoneBtn;
   private GuiTextFieldInteger txtYaw;
+  private GuiTextFieldInteger txtAngle;
   public GuiVector(InventoryPlayer inventoryPlayer, TileVector tileEntity) {
     super(new ContainerVector(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -53,7 +54,7 @@ public class GuiVector extends GuiBaseContainer {
     this.buttonList.add(redstoneBtn);
     int id = 1;
     //angle text box
-    GuiTextFieldInteger txtAngle = addTextbox(id++, xAngle, yAngle, tile.getAngle() + "", 2);
+    txtAngle = addTextbox(id++, xAngle, yAngle, tile.getAngle() + "", 2);
     txtAngle.setFocused(true);//default
     txtAngle.setMaxVal(TileVector.MAX_ANGLE);
     txtAngle.setMinVal(0);
@@ -81,8 +82,9 @@ public class GuiVector extends GuiBaseContainer {
     soundBtn = addButtonAt(id++, 134, 110, 0, Fields.SOUND.ordinal());
     soundBtn.setWidth(34);
     //angle buttons
-    //    addButtonAt(id++, xAngle, yAngle - btnYawSpacing, 90, Fields.ANGLE.ordinal());
-    //    addButtonAt(id++, xAngle, yAngle + btnYawSpacing, 0, Fields.ANGLE.ordinal());
+    addButtonAt(id++, xAngle, yAngle - btnYawSpacing, 90, Fields.ANGLE.ordinal()).displayString="^";
+    addButtonAt(id++, xAngle+24, yAngle - btnYawSpacing, 45, Fields.ANGLE.ordinal()).displayString="/";
+    addButtonAt(id++, xAngle+24, yAngle , 0, Fields.ANGLE.ordinal()).displayString="->";
   }
   private ButtonVector addButtonAt(int id, int x, int y, int val, int f) {
     ButtonVector btn = new ButtonVector(tile.getPos(), id,
@@ -132,12 +134,15 @@ public class GuiVector extends GuiBaseContainer {
         if (btnv.getFieldId() == Fields.YAW.ordinal()) {
           btnv.enabled = !txtYaw.getText().equals(btnv.getValue() + "");//tile.getYaw();
         }
+        else if (btnv.getFieldId() == Fields.ANGLE.ordinal()) {
+          btnv.enabled = !txtAngle.getText().equals(btnv.getValue() + "");
+        }
       }
     }
     redstoneBtn.setState(tile.getField(TileVector.Fields.REDSTONE.ordinal()));
     soundBtn.displayString = UtilChat.lang("tile.plate_vector.gui.sound" + tile.getField(Fields.SOUND.ordinal()));
-    renderString("tile.plate_vector.gui.power", xPower + 14, yPower - 12);
-    renderString("tile.plate_vector.gui.angle", xAngle + 8, yAngle - 12);
+    renderString("tile.plate_vector.gui.power", xPower + 14, yPower + 26);
+    renderString("tile.plate_vector.gui.angle", xAngle + 8, yAngle + 26);
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
   private void renderString(String s, int x, int y) {
