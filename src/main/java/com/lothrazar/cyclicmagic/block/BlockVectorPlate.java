@@ -75,7 +75,7 @@ public class BlockVectorPlate extends BlockBaseHasTile {
         UtilSound.playSound(worldIn, pos, SoundRegistry.bwoaaap, SoundCategory.BLOCKS);
       }
       float rotationPitch = tile.getAngle(), rotationYaw = tile.getYaw(), power = tile.getActualPower();
-      if (power > 0.3) {
+      if (rotationPitch>0) {
         ModCyclic.logger.info("centerEntityHoriz:");
         UtilEntity.centerEntityHoriz(entity, pos);
       }

@@ -17,7 +17,7 @@ public class TileVector extends TileEntityBaseMachineInvo implements ITileRedsto
   public static final int MAX_POWER = 999;
   public static final int DEFAULT_ANGLE = 45;
   public static final int DEFAULT_YAW = 90;
-  public static final int DEFAULT_POWER = 250;
+  public static final int DEFAULT_POWER = 500;
   public static final String NBT_ANGLE = "vectorAngle";
   public static final String NBT_POWER = "vectorPower";
   public static final String NBT_YAW = "vectorYaw";
@@ -51,7 +51,9 @@ public class TileVector extends TileEntityBaseMachineInvo implements ITileRedsto
     return super.writeToNBT(tagCompound);
   }
   public float getActualPower() {//stored as integer. used as decimal from 0.01 and up
-    float actual = ((float) power) / 100F;
+    float actual = ((float) power) / 100F;//over 100 so that power 100 is = 1 and so on
+    //also divide by 3 bc 999 is overpowered. so maximum actual is 333
+    actual = Math.max(actual / 3F, 0.01F);//but not lower than 1. so 1-5 is the same, is fine
     return actual;
   }
   public int getPower() {
