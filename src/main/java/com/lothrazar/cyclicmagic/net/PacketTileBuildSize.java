@@ -13,8 +13,7 @@ public class PacketTileBuildSize implements IMessage, IMessageHandler<PacketTile
   private BlockPos pos;
   private int value;
   private String type;
-  public PacketTileBuildSize() {
-  }
+  public PacketTileBuildSize() {}
   public PacketTileBuildSize(BlockPos p, int s, String spr) {
     pos = p;
     value = s;

@@ -13,8 +13,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketRestockContainerToPlayer implements IMessage, IMessageHandler<PacketRestockContainerToPlayer, IMessage> {
   NBTTagCompound tags = new NBTTagCompound();
-  public PacketRestockContainerToPlayer() {
-  }
+  public PacketRestockContainerToPlayer() {}
   public PacketRestockContainerToPlayer(NBTTagCompound ptags) {
     tags = ptags;
   }

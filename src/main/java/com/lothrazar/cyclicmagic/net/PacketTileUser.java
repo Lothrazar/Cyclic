@@ -12,8 +12,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketTileUser implements IMessage, IMessageHandler<PacketTileUser, IMessage> {
   private BlockPos pos;
-  public PacketTileUser() {
-  }
+  public PacketTileUser() {}
   public PacketTileUser(BlockPos p) {
     pos = p;
   }

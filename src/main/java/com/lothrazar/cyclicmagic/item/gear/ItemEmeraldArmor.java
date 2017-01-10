@@ -14,25 +14,25 @@ public class ItemEmeraldArmor extends ItemArmor implements IHasRecipe {
   @Override
   public void addRecipe() {
     switch (this.armorType) {
-    case CHEST:
-      GameRegistry.addShapedRecipe(new ItemStack(this), "e e", "eee", "eee", 'e', new ItemStack(Items.EMERALD));
+      case CHEST:
+        GameRegistry.addShapedRecipe(new ItemStack(this), "e e", "eee", "eee", 'e', new ItemStack(Items.EMERALD));
       break;
-    case FEET:
-      GameRegistry.addShapedRecipe(new ItemStack(this), "e e", "e e", "   ", 'e', new ItemStack(Items.EMERALD));
-      GameRegistry.addShapedRecipe(new ItemStack(this), "   ", "e e", "e e", 'e', new ItemStack(Items.EMERALD));
+      case FEET:
+        GameRegistry.addShapedRecipe(new ItemStack(this), "e e", "e e", "   ", 'e', new ItemStack(Items.EMERALD));
+        GameRegistry.addShapedRecipe(new ItemStack(this), "   ", "e e", "e e", 'e', new ItemStack(Items.EMERALD));
       break;
-    case HEAD:
-      GameRegistry.addShapedRecipe(new ItemStack(this), "eee", "e e", "   ", 'e', new ItemStack(Items.EMERALD));
-      GameRegistry.addShapedRecipe(new ItemStack(this), "   ", "eee", "e e", 'e', new ItemStack(Items.EMERALD));
+      case HEAD:
+        GameRegistry.addShapedRecipe(new ItemStack(this), "eee", "e e", "   ", 'e', new ItemStack(Items.EMERALD));
+        GameRegistry.addShapedRecipe(new ItemStack(this), "   ", "eee", "e e", 'e', new ItemStack(Items.EMERALD));
       break;
-    case LEGS:
-      GameRegistry.addShapedRecipe(new ItemStack(this), "eee", "e e", "e e", 'e', new ItemStack(Items.EMERALD));
+      case LEGS:
+        GameRegistry.addShapedRecipe(new ItemStack(this), "eee", "e e", "e e", 'e', new ItemStack(Items.EMERALD));
       break;
-    case MAINHAND:
+      case MAINHAND:
       break;
-    case OFFHAND:
+      case OFFHAND:
       break;
-    default:
+      default:
       break;
     }
   }

@@ -13,8 +13,7 @@ public class PacketTilePatternBuilder implements IMessage, IMessageHandler<Packe
   private BlockPos pos;
   private TileEntityPatternBuilder.Fields type;
   private int direction;
-  public PacketTilePatternBuilder() {
-  }
+  public PacketTilePatternBuilder() {}
   public PacketTilePatternBuilder(BlockPos p, boolean up, TileEntityPatternBuilder.Fields t) {
     pos = p;
     type = t;

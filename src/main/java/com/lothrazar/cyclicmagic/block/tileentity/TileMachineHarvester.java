@@ -104,13 +104,13 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
     if (id >= 0 && id < this.getFieldCount())
       switch (Fields.values()[id]) {
       case TIMER:
-        return timer;
+      return timer;
       case REDSTONE:
-        return this.needsRedstone;
+      return this.needsRedstone;
       case SIZE:
-        return this.size;
+      return this.size;
       default:
-        break;
+      break;
       }
     return -1;
   }
@@ -119,16 +119,16 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
     if (id >= 0 && id < this.getFieldCount())
       switch (Fields.values()[id]) {
       case TIMER:
-        this.timer = value;
-        break;
+      this.timer = value;
+      break;
       case REDSTONE:
-        this.needsRedstone = value;
-        break;
+      this.needsRedstone = value;
+      break;
       case SIZE:
-        this.size = value;
-        break;
+      this.size = value;
+      break;
       default:
-        break;
+      break;
       }
   }
   @Override
@@ -152,8 +152,7 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
     return null;
   }
   @Override
-  public void setInventorySlotContents(int index, ItemStack stack) {
-  }
+  public void setInventorySlotContents(int index, ItemStack stack) {}
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
     return new int[] {};

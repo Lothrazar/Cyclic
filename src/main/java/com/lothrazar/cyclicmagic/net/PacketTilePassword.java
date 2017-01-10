@@ -16,8 +16,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 public class PacketTilePassword implements IMessage, IMessageHandler<PacketTilePassword, IMessage> {
   private BlockPos pos;
   private String password;
-  public PacketTilePassword() {
-  }
+  public PacketTilePassword() {}
   public PacketTilePassword(String pword, BlockPos p) {
     pos = p;
     password = pword;

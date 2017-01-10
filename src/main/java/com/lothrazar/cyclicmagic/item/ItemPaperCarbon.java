@@ -144,80 +144,80 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
   public static String noteToString(byte note) {
     String s = null;
     switch (note) {
-    case 0:
-      s = TextFormatting.YELLOW + "F#";
+      case 0:
+        s = TextFormatting.YELLOW + "F#";
       break;// yellow
-    case 1:
-      s = TextFormatting.YELLOW + "G";
+      case 1:
+        s = TextFormatting.YELLOW + "G";
       break;
-    case 2:
-      s = TextFormatting.YELLOW + "G#";
+      case 2:
+        s = TextFormatting.YELLOW + "G#";
       break;
-    case 3:
-      s = TextFormatting.YELLOW + "A";
+      case 3:
+        s = TextFormatting.YELLOW + "A";
       break;// or
-    case 4:
-      s = TextFormatting.YELLOW + "A#";
+      case 4:
+        s = TextFormatting.YELLOW + "A#";
       break;// or
-    case 5:
-      s = TextFormatting.RED + "B";
+      case 5:
+        s = TextFormatting.RED + "B";
       break;// red
-    case 6:
-      s = TextFormatting.RED + "C";
+      case 6:
+        s = TextFormatting.RED + "C";
       break;// red
-    case 7:
-      s = TextFormatting.DARK_RED + "C#";
+      case 7:
+        s = TextFormatting.DARK_RED + "C#";
       break;
-    case 8:
-      s = TextFormatting.DARK_RED + "D";
+      case 8:
+        s = TextFormatting.DARK_RED + "D";
       break;
-    case 9:
-      s = TextFormatting.LIGHT_PURPLE + "D#";
+      case 9:
+        s = TextFormatting.LIGHT_PURPLE + "D#";
       break;// pink
-    case 10:
-      s = TextFormatting.LIGHT_PURPLE + "E";
+      case 10:
+        s = TextFormatting.LIGHT_PURPLE + "E";
       break;
-    case 11:
-      s = TextFormatting.DARK_PURPLE + "F";
+      case 11:
+        s = TextFormatting.DARK_PURPLE + "F";
       break;// purp
-    case 12:
-      s = TextFormatting.DARK_PURPLE + "F#";
+      case 12:
+        s = TextFormatting.DARK_PURPLE + "F#";
       break;
-    case 13:
-      s = TextFormatting.DARK_PURPLE + "G";
+      case 13:
+        s = TextFormatting.DARK_PURPLE + "G";
       break;
-    case 14:
-      s = TextFormatting.DARK_BLUE + "G#";
+      case 14:
+        s = TextFormatting.DARK_BLUE + "G#";
       break;
-    case 15:
-      s = TextFormatting.DARK_BLUE + "A";
+      case 15:
+        s = TextFormatting.DARK_BLUE + "A";
       break;// blue
-    case 16:
-      s = TextFormatting.BLUE + "A#";
+      case 16:
+        s = TextFormatting.BLUE + "A#";
       break;
-    case 17:
-      s = TextFormatting.BLUE + "B";
+      case 17:
+        s = TextFormatting.BLUE + "B";
       break;
-    case 18:
-      s = TextFormatting.DARK_AQUA + "C";
+      case 18:
+        s = TextFormatting.DARK_AQUA + "C";
       break;// lt blue?
-    case 19:
-      s = TextFormatting.AQUA + "C#";
+      case 19:
+        s = TextFormatting.AQUA + "C#";
       break;
-    case 20:
-      s = TextFormatting.AQUA + "D";
+      case 20:
+        s = TextFormatting.AQUA + "D";
       break;// EnumChatFormatting.GREEN
-    case 21:
-      s = TextFormatting.GREEN + "D#";
+      case 21:
+        s = TextFormatting.GREEN + "D#";
       break;// there is no light green or dark green...
-    case 22:
-      s = TextFormatting.GREEN + "E";
+      case 22:
+        s = TextFormatting.GREEN + "E";
       break;
-    case 23:
-      s = TextFormatting.AQUA + "F";
+      case 23:
+        s = TextFormatting.AQUA + "F";
       break;
-    case 24:
-      s = TextFormatting.AQUA + "F#";
+      case 24:
+        s = TextFormatting.AQUA + "F#";
       break;// EnumChatFormatting.GREEN
     }
     return s;

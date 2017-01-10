@@ -12,8 +12,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketTileRedstoneToggle implements IMessage, IMessageHandler<PacketTileRedstoneToggle, IMessage> {
   private BlockPos pos;
-  public PacketTileRedstoneToggle() {
-  }
+  public PacketTileRedstoneToggle() {}
   public PacketTileRedstoneToggle(BlockPos p) {
     pos = p;
   }

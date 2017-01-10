@@ -54,21 +54,21 @@ public class ItemBlockScaffolding extends ItemBlock {
     // if not, go by dir
     if (doHoriz) {
       switch (direction) {
-      case Const.DIR_EAST:
-        pos = pos.east();
-        facing = EnumFacing.EAST;
+        case Const.DIR_EAST:
+          pos = pos.east();
+          facing = EnumFacing.EAST;
         break;
-      case Const.DIR_WEST:
-        pos = pos.west();// .offset(EnumFacing.WEST);
-        facing = EnumFacing.WEST;
+        case Const.DIR_WEST:
+          pos = pos.west();// .offset(EnumFacing.WEST);
+          facing = EnumFacing.WEST;
         break;
-      case Const.DIR_SOUTH:
-        pos = pos.south();
-        facing = EnumFacing.SOUTH;
+        case Const.DIR_SOUTH:
+          pos = pos.south();
+          facing = EnumFacing.SOUTH;
         break;
-      case Const.DIR_NORTH:
-        pos = pos.north();
-        facing = EnumFacing.NORTH;
+        case Const.DIR_NORTH:
+          pos = pos.north();
+          facing = EnumFacing.NORTH;
         break;
       }
     }

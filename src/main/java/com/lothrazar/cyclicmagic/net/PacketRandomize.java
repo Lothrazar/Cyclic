@@ -21,8 +21,7 @@ public class PacketRandomize implements IMessage, IMessageHandler<PacketRandomiz
   private BlockPos pos;
   private ItemToolRandomize.ActionType actionType;
   private EnumFacing side;
-  public PacketRandomize() {
-  }
+  public PacketRandomize() {}
   public PacketRandomize(BlockPos mouseover, EnumFacing s, ItemToolRandomize.ActionType t) {
     pos = mouseover;
     actionType = t;
@@ -65,19 +64,19 @@ public class PacketRandomize implements IMessage, IMessageHandler<PacketRandomiz
       boolean isVertical = (message.side == EnumFacing.UP || message.side == EnumFacing.DOWN);
       int offsetRadius = 0;
       switch (message.actionType) {
-      case X3:
-        offsetRadius = 1;
+        case X3:
+          offsetRadius = 1;
         break;
-      case X5:
-        offsetRadius = 2;
+        case X5:
+          offsetRadius = 2;
         break;
-      case X7:
-        offsetRadius = 3;
+        case X7:
+          offsetRadius = 3;
         break;
-      case X9:
-        offsetRadius = 4;
+        case X9:
+          offsetRadius = 4;
         break;
-      default:
+        default:
         break;
       }
       if (offsetRadius > 0) {

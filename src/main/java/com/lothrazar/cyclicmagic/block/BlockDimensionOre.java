@@ -63,17 +63,17 @@ public class BlockDimensionOre extends BlockOre {
       if (rand < this.spawnChance) {
         Entity e;
         switch (this.spawn) {
-        case ENDERMITE:
-          e = new EntityEndermite(world);
-          e.setPosition(pos.getX(), pos.getY(), pos.getZ());
+          case ENDERMITE:
+            e = new EntityEndermite(world);
+            e.setPosition(pos.getX(), pos.getY(), pos.getZ());
           break;
-        case SILVERFISH:
-          e = new EntitySilverfish(world);
-          //magma cube: setSlimeSize is private BOO
-          e.setPosition(pos.getX(), pos.getY(), pos.getZ());
+          case SILVERFISH:
+            e = new EntitySilverfish(world);
+            //magma cube: setSlimeSize is private BOO
+            e.setPosition(pos.getX(), pos.getY(), pos.getZ());
           break;
-        default:
-          e = null;
+          default:
+            e = null;
           break;
         }
         if (e != null) {

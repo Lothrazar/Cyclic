@@ -15,8 +15,7 @@ public class PacketTilePatternSwap implements IMessage, IMessageHandler<PacketTi
   public static enum SwapType {
     POSITION, RENDER;
   }
-  public PacketTilePatternSwap() {
-  }
+  public PacketTilePatternSwap() {}
   public PacketTilePatternSwap(BlockPos p, SwapType t) {
     pos = p;
     type = t.ordinal();

@@ -366,12 +366,12 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
     public static int locToX(RenderLoc loc, int leftOffset, int rightOffset) {
       ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft());
       switch (loc) {
-      case BOTTOMLEFT:
-      case TOPLEFT:
-        return RenderLoc.xPadding + leftOffset;
-      case BOTTOMRIGHT:
-      case TOPRIGHT:
-        return res.getScaledWidth() - RenderLoc.xPadding + rightOffset;
+        case BOTTOMLEFT:
+        case TOPLEFT:
+          return RenderLoc.xPadding + leftOffset;
+        case BOTTOMRIGHT:
+        case TOPRIGHT:
+          return res.getScaledWidth() - RenderLoc.xPadding + rightOffset;
       }
       return 0;
     }
@@ -379,13 +379,13 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
     public static int locToY(RenderLoc loc, int topOffset, int bottomOffset) {
       ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft());
       switch (ItemToolsModule.renderLocation) {
-      case BOTTOMLEFT:
-      case BOTTOMRIGHT:
-        return res.getScaledHeight() - RenderLoc.spellSize - RenderLoc.yPadding + bottomOffset;
-      case TOPLEFT:
-      case TOPRIGHT:
-        return RenderLoc.yPadding + topOffset;
-      default:
+        case BOTTOMLEFT:
+        case BOTTOMRIGHT:
+          return res.getScaledHeight() - RenderLoc.spellSize - RenderLoc.yPadding + bottomOffset;
+        case TOPLEFT:
+        case TOPRIGHT:
+          return RenderLoc.yPadding + topOffset;
+        default:
         break;
       }
       return 0;

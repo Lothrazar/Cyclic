@@ -9,8 +9,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketMovePlayerHotbar implements IMessage, IMessageHandler<PacketMovePlayerHotbar, IMessage> {
-  public PacketMovePlayerHotbar() {
-  }
+  public PacketMovePlayerHotbar() {}
   private boolean isDown;
   public PacketMovePlayerHotbar(boolean isdown) {
     isDown = isdown;

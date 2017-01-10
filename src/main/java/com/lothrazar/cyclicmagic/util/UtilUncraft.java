@@ -31,14 +31,14 @@ public class UtilUncraft {
     if (list == null || list.length == 0) { return; }
     for (String iname : list) {
       switch (type) {
-      case MODNAME:
-        blacklistMod.add(iname);
+        case MODNAME:
+          blacklistMod.add(iname);
         break;
-      case INPUT:
-        blacklistInput.add(iname);
+        case INPUT:
+          blacklistInput.add(iname);
         break;
-      case OUTPUT:
-        blacklistOutput.add(iname);
+        case OUTPUT:
+          blacklistOutput.add(iname);
         break;
       }
     }
@@ -50,23 +50,23 @@ public class UtilUncraft {
   private static boolean isItemInBlacklist(Item item, BlacklistType type) {
     String itemName;
     switch (type) {
-    case INPUT:
-      itemName = UtilItemStack.getStringForItem(item);
-      for (String s : blacklistInput) {//dont use .contains on the list. must use .equals on string
-        if (s != null && s.equals(itemName)) { return true; }
-      }
-    case OUTPUT:
-      itemName = UtilItemStack.getStringForItem(item);
-      for (String s : blacklistOutput) {//dont use .contains on the list. must use .equals on string
-        if (s != null && s.equals(itemName)) { return true; }
-      }
-    case MODNAME:
-      String modId = item.getRegistryName().getResourceDomain();// the minecraft part of minecraft:wool (without colon)
-      for (String s : blacklistMod) {//dont use .contains on the list. must use .equals on string
-        if (s != null && s.equals(modId)) { return true; }
-      }
+      case INPUT:
+        itemName = UtilItemStack.getStringForItem(item);
+        for (String s : blacklistInput) {//dont use .contains on the list. must use .equals on string
+          if (s != null && s.equals(itemName)) { return true; }
+        }
+      case OUTPUT:
+        itemName = UtilItemStack.getStringForItem(item);
+        for (String s : blacklistOutput) {//dont use .contains on the list. must use .equals on string
+          if (s != null && s.equals(itemName)) { return true; }
+        }
+      case MODNAME:
+        String modId = item.getRegistryName().getResourceDomain();// the minecraft part of minecraft:wool (without colon)
+        for (String s : blacklistMod) {//dont use .contains on the list. must use .equals on string
+          if (s != null && s.equals(modId)) { return true; }
+        }
       break;
-    default:
+      default:
       break;
     }
     return false;
@@ -75,8 +75,7 @@ public class UtilUncraft {
     private ArrayList<ItemStack> drops;
     private ItemStack toUncraft;
     private int outsize;
-    public Uncrafter() {
-    }
+    public Uncrafter() {}
     /**
      * It works but we dont want to use it right now
      * 

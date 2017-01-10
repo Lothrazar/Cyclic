@@ -48,93 +48,93 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
   public static void onHorseInteract(EntityHorse horse, EntityPlayer player, ItemStack held, ItemHorseUpgrade heldItem) {
     boolean success = false;
     switch (heldItem.upgradeType) {
-    case HEALTH:
-      float mh = (float) horse.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).getAttributeValue();
-      if (mh < 2 * HEARTS_MAX) { // 20 hearts == 40 health points
-        horse.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(mh + 2);
-        success = true;
-      }
-      break;
-    case JUMP:
-      if (ReflectionRegistry.horseJumpStrength != null) {
-        double jump = horse.getEntityAttribute(ReflectionRegistry.horseJumpStrength).getAttributeValue();// horse.getHorseJumpStrength()
-        double newjump = jump + JUMP_AMT;
-        if (UtilEntity.getJumpTranslated(newjump) < JUMP_MAX) {
-          horse.getEntityAttribute(ReflectionRegistry.horseJumpStrength).setBaseValue(newjump);
+      case HEALTH:
+        float mh = (float) horse.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).getAttributeValue();
+        if (mh < 2 * HEARTS_MAX) { // 20 hearts == 40 health points
+          horse.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(mh + 2);
           success = true;
         }
-      }
       break;
-    case SPEED:
-      double speed = horse.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue();
-      double newSpeed = speed + SPEED_AMT;
-      if (UtilEntity.getSpeedTranslated(newSpeed) < SPEED_MAX) {
-        horse.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(newSpeed);
-        success = true;
-      }
+      case JUMP:
+        if (ReflectionRegistry.horseJumpStrength != null) {
+          double jump = horse.getEntityAttribute(ReflectionRegistry.horseJumpStrength).getAttributeValue();// horse.getHorseJumpStrength()
+          double newjump = jump + JUMP_AMT;
+          if (UtilEntity.getJumpTranslated(newjump) < JUMP_MAX) {
+            horse.getEntityAttribute(ReflectionRegistry.horseJumpStrength).setBaseValue(newjump);
+            success = true;
+          }
+        }
       break;
-    case TYPE:
-      switch (horse.getType()) {
-      case HORSE:
-        horse.setType(HorseType.ZOMBIE);
+      case SPEED:
+        double speed = horse.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue();
+        double newSpeed = speed + SPEED_AMT;
+        if (UtilEntity.getSpeedTranslated(newSpeed) < SPEED_MAX) {
+          horse.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(newSpeed);
+          success = true;
+        }
+      break;
+      case TYPE:
+        switch (horse.getType()) {
+          case HORSE:
+            horse.setType(HorseType.ZOMBIE);
+            success = true;
+          break;
+          case ZOMBIE:
+            horse.setType(HorseType.SKELETON);
+            success = true;
+          break;
+          case SKELETON:
+            horse.setType(HorseType.HORSE);
+            success = true;
+          break;
+          case DONKEY:// donkey and mule ignored by design
+          break;
+          case MULE:
+          break;
+          default:
+          break;
+        }
+      break;
+      case VARIANT:
+        int var = horse.getHorseVariant();
+        int varReduced = 0;
+        int varNew = 0;
+        while (var - 256 > 0) {
+          varReduced += 256;// this could be done with modulo % arithmetic too,
+          // but meh
+          // doesnt matter either way
+          var -= 256;
+        } // invalid numbers make horse invisible, but this is somehow safe. and
+        // easier than
+        // doing bitwise ops
+        switch (var) {
+          case HorseMeta.variant_black:
+            varNew = HorseMeta.variant_brown;
+          break;
+          case HorseMeta.variant_brown:
+            varNew = HorseMeta.variant_brown_dark;
+          break;
+          case HorseMeta.variant_brown_dark:
+            varNew = HorseMeta.variant_chestnut;
+          break;
+          case HorseMeta.variant_chestnut:
+            varNew = HorseMeta.variant_creamy;
+          break;
+          case HorseMeta.variant_creamy:
+            varNew = HorseMeta.variant_gray;
+          break;
+          case HorseMeta.variant_gray:
+            varNew = HorseMeta.variant_white;
+          break;
+          case HorseMeta.variant_white:
+            varNew = HorseMeta.variant_black;
+          break;
+        }
+        varNew += varReduced;
+        horse.setHorseVariant(varNew);
         success = true;
-        break;
-      case ZOMBIE:
-        horse.setType(HorseType.SKELETON);
-        success = true;
-        break;
-      case SKELETON:
-        horse.setType(HorseType.HORSE);
-        success = true;
-        break;
-      case DONKEY:// donkey and mule ignored by design
-        break;
-      case MULE:
-        break;
+      break;
       default:
-        break;
-      }
-      break;
-    case VARIANT:
-      int var = horse.getHorseVariant();
-      int varReduced = 0;
-      int varNew = 0;
-      while (var - 256 > 0) {
-        varReduced += 256;// this could be done with modulo % arithmetic too,
-        // but meh
-        // doesnt matter either way
-        var -= 256;
-      } // invalid numbers make horse invisible, but this is somehow safe. and
-      // easier than
-      // doing bitwise ops
-      switch (var) {
-      case HorseMeta.variant_black:
-        varNew = HorseMeta.variant_brown;
-        break;
-      case HorseMeta.variant_brown:
-        varNew = HorseMeta.variant_brown_dark;
-        break;
-      case HorseMeta.variant_brown_dark:
-        varNew = HorseMeta.variant_chestnut;
-        break;
-      case HorseMeta.variant_chestnut:
-        varNew = HorseMeta.variant_creamy;
-        break;
-      case HorseMeta.variant_creamy:
-        varNew = HorseMeta.variant_gray;
-        break;
-      case HorseMeta.variant_gray:
-        varNew = HorseMeta.variant_white;
-        break;
-      case HorseMeta.variant_white:
-        varNew = HorseMeta.variant_black;
-        break;
-      }
-      varNew += varReduced;
-      horse.setHorseVariant(varNew);
-      success = true;
-      break;
-    default:
       break;
     }
     if (success) {

@@ -51,8 +51,7 @@ public class BlockConveyor extends BlockBasePressurePlate {
     return AABB;
   }
   @Override
-  protected void playClickOffSound(World worldIn, BlockPos pos) {
-  }
+  protected void playClickOffSound(World worldIn, BlockPos pos) {}
   @Override
   protected int computeRedstoneStrength(World worldIn, BlockPos pos) {
     return 0;

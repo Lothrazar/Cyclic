@@ -54,8 +54,4 @@ public abstract class BlockBaseHasTile extends BlockBase {
     }
     super.breakBlock(worldIn, pos, state);
   }
-  //  @Override
-  //  public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-  //    return state;
-  //  }
 }

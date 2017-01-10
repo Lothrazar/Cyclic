@@ -39,14 +39,14 @@ public class ItemToolWarp extends BaseTool implements IHasRecipe {
     }
     boolean success = false;
     switch (warpType) {
-    case BED:
-      success = UtilWorld.tryTpPlayerToBed(world, player);
+      case BED:
+        success = UtilWorld.tryTpPlayerToBed(world, player);
       break;
-    case SPAWN:
-      UtilEntity.teleportWallSafe(player, world, world.getSpawnPoint());
-      success = true;
+      case SPAWN:
+        UtilEntity.teleportWallSafe(player, world, world.getSpawnPoint());
+        success = true;
       break;
-    default:
+      default:
       break;
     }
     if (success) {
@@ -58,41 +58,41 @@ public class ItemToolWarp extends BaseTool implements IHasRecipe {
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
     switch (warpType) {
-    case BED:
-      tooltip.add(UtilChat.lang("item.tool_warp_home.tooltip"));
+      case BED:
+        tooltip.add(UtilChat.lang("item.tool_warp_home.tooltip"));
       break;
-    case SPAWN:
-      tooltip.add(UtilChat.lang("item.tool_warp_spawn.tooltip"));
+      case SPAWN:
+        tooltip.add(UtilChat.lang("item.tool_warp_spawn.tooltip"));
       break;
-    default:
+      default:
       break;
     }
   }
   @Override
   public void addRecipe() {
     switch (warpType) {
-    case BED:
-      //goes to your BED (which can be anywhere)
-      GameRegistry.addShapedRecipe(new ItemStack(this),
-          " ft",
-          "ggf",
-          "dg ",
-          't', new ItemStack(Items.GHAST_TEAR),
-          'f', new ItemStack(Items.FEATHER),
-          'g', new ItemStack(Items.GOLD_INGOT),
-          'd', new ItemStack(Items.ENDER_EYE));
+      case BED:
+        //goes to your BED (which can be anywhere)
+        GameRegistry.addShapedRecipe(new ItemStack(this),
+            " ft",
+            "ggf",
+            "dg ",
+            't', new ItemStack(Items.GHAST_TEAR),
+            'f', new ItemStack(Items.FEATHER),
+            'g', new ItemStack(Items.GOLD_INGOT),
+            'd', new ItemStack(Items.ENDER_EYE));
       break;
-    case SPAWN:
-      //this one needs diamond but is cheaper. goes to worldspawn
-      GameRegistry.addShapedRecipe(new ItemStack(this),
-          " ff",
-          "ggf",
-          "dg ",
-          'f', new ItemStack(Items.FEATHER),
-          'g', new ItemStack(Items.GOLD_NUGGET),
-          'd', new ItemStack(Items.DIAMOND));
+      case SPAWN:
+        //this one needs diamond but is cheaper. goes to worldspawn
+        GameRegistry.addShapedRecipe(new ItemStack(this),
+            " ff",
+            "ggf",
+            "dg ",
+            'f', new ItemStack(Items.FEATHER),
+            'g', new ItemStack(Items.GOLD_NUGGET),
+            'd', new ItemStack(Items.DIAMOND));
       break;
-    default:
+      default:
       break;
     }
   }

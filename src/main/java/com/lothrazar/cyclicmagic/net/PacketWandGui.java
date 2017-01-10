@@ -15,8 +15,7 @@ public class PacketWandGui implements IMessage, IMessageHandler<PacketWandGui, I
     BUILDTYPE, RESET
   }
   private WandAction type;
-  public PacketWandGui() {
-  }
+  public PacketWandGui() {}
   public PacketWandGui(WandAction t) {
     type = t;
   }

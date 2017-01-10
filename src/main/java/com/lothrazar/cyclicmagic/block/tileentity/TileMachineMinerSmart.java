@@ -312,28 +312,28 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
   @Override
   public int getField(int id) {
     switch (Fields.values()[id]) {
-    case HEIGHT:
-      return getHeight();
-    case REDSTONE:
-      return this.needsRedstone;
-    case SIZE:
-      return this.size;
+      case HEIGHT:
+        return getHeight();
+      case REDSTONE:
+        return this.needsRedstone;
+      case SIZE:
+        return this.size;
     }
     return 0;
   }
   @Override
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
-    case HEIGHT:
-      if (value > maxHeight) {
-        value = maxHeight;
-      }
-      setHeight(value);
-    case REDSTONE:
-      needsRedstone = value;
+      case HEIGHT:
+        if (value > maxHeight) {
+          value = maxHeight;
+        }
+        setHeight(value);
+      case REDSTONE:
+        needsRedstone = value;
       break;
-    case SIZE:
-      size = value;
+      case SIZE:
+        size = value;
       break;
     }
   }

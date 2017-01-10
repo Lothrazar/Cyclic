@@ -185,32 +185,32 @@ public class TileMachineBlockMiner extends TileEntityBaseMachineInvo implements 
     // 4 - 5
     // 6 7 8
     switch (rollDice) {
-    case 0:
-      targetPos = center;
+      case 0:
+        targetPos = center;
       break;
-    case 1:
-      targetPos = center.offset(EnumFacing.NORTH).offset(EnumFacing.WEST);
+      case 1:
+        targetPos = center.offset(EnumFacing.NORTH).offset(EnumFacing.WEST);
       break;
-    case 2:
-      targetPos = center.offset(EnumFacing.NORTH);
+      case 2:
+        targetPos = center.offset(EnumFacing.NORTH);
       break;
-    case 3:
-      targetPos = center.offset(EnumFacing.NORTH).offset(EnumFacing.EAST);
+      case 3:
+        targetPos = center.offset(EnumFacing.NORTH).offset(EnumFacing.EAST);
       break;
-    case 4:
-      targetPos = center.offset(EnumFacing.WEST);
+      case 4:
+        targetPos = center.offset(EnumFacing.WEST);
       break;
-    case 5:
-      targetPos = center.offset(EnumFacing.EAST);
+      case 5:
+        targetPos = center.offset(EnumFacing.EAST);
       break;
-    case 6:
-      targetPos = center.offset(EnumFacing.SOUTH).offset(EnumFacing.WEST);
+      case 6:
+        targetPos = center.offset(EnumFacing.SOUTH).offset(EnumFacing.WEST);
       break;
-    case 7:
-      targetPos = center.offset(EnumFacing.SOUTH);
+      case 7:
+        targetPos = center.offset(EnumFacing.SOUTH);
       break;
-    case 8:
-      targetPos = center.offset(EnumFacing.SOUTH).offset(EnumFacing.EAST);
+      case 8:
+        targetPos = center.offset(EnumFacing.SOUTH).offset(EnumFacing.EAST);
       break;
     }
     //now do the vertical
@@ -280,8 +280,7 @@ public class TileMachineBlockMiner extends TileEntityBaseMachineInvo implements 
     return null;
   }
   @Override
-  public void setInventorySlotContents(int index, ItemStack stack) {
-  }
+  public void setInventorySlotContents(int index, ItemStack stack) {}
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
     return new int[] {};
@@ -291,7 +290,7 @@ public class TileMachineBlockMiner extends TileEntityBaseMachineInvo implements 
     if (id >= 0 && id < this.getFieldCount())
       switch (Fields.values()[id]) {
       case REDSTONE:
-        return this.needsRedstone;
+      return this.needsRedstone;
       }
     return -1;
   }
@@ -300,8 +299,8 @@ public class TileMachineBlockMiner extends TileEntityBaseMachineInvo implements 
     if (id >= 0 && id < this.getFieldCount())
       switch (Fields.values()[id]) {
       case REDSTONE:
-        this.needsRedstone = value;
-        break;
+      this.needsRedstone = value;
+      break;
       }
   }
   @Override

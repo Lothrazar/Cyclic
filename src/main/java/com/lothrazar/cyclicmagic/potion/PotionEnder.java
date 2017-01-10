@@ -18,6 +18,5 @@ public class PotionEnder extends PotionBase {
     }
   }
   @Override
-  public void tick(EntityLivingBase entity) {
-  }
+  public void tick(EntityLivingBase entity) {}
 }

@@ -236,8 +236,7 @@ public class InventoryWand implements IInventory {
   }
   /******** required unmodified ****/
   @Override
-  public void openInventory(EntityPlayer player) {
-  }
+  public void openInventory(EntityPlayer player) {}
   @Override
   public void closeInventory(EntityPlayer player) {
     //called on gui close
@@ -252,13 +251,11 @@ public class InventoryWand implements IInventory {
     return 0;
   }
   @Override
-  public void setField(int id, int value) {
-  }
+  public void setField(int id, int value) {}
   @Override
   public int getFieldCount() {
     return 0;
   }
   @Override
-  public void clear() {
-  }
+  public void clear() {}
 }

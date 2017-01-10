@@ -8,6 +8,7 @@ public class Const {
     public static final ResourceLocation PROGRESS = new ResourceLocation(Const.MODID, folder + "progress.png");
     public static final ResourceLocation PROGRESSCTR = new ResourceLocation(Const.MODID, folder + "progress_ctr.png");
     public static final ResourceLocation TABLEDEFAULT = new ResourceLocation(Const.MODID, folder + "table.png");
+    public static final ResourceLocation TABLEPLAIN = new ResourceLocation(Const.MODID, folder + "table_plain.png");
   }
   public static final String MODID = "cyclicmagic";
   public static final String MODRES = Const.MODID + ":";

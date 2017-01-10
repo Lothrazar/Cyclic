@@ -12,8 +12,7 @@ import net.minecraftforge.fml.relauncher.Side;
 
 public class PacketSyncPlayerHealth implements IMessage, IMessageHandler<PacketSyncPlayerHealth, IMessage> {
   private int health;
-  public PacketSyncPlayerHealth() {
-  }
+  public PacketSyncPlayerHealth() {}
   public PacketSyncPlayerHealth(int h) {
     health = h;
   }

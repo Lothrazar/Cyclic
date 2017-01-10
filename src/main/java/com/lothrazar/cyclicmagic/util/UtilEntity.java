@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.util;
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
@@ -15,6 +16,8 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class UtilEntity {
   private static final double ENTITY_PULL_DIST = 0.4;//closer than this and nothing happens
@@ -79,25 +82,25 @@ public class UtilEntity {
     double velZ = 0;
     double velY = 0;
     switch (facing) {
-    case EAST:
-      velX = Math.abs(power);
-      velZ = 0;
+      case EAST:
+        velX = Math.abs(power);
+        velZ = 0;
       break;
-    case WEST:
-      velX = -1 * Math.abs(power);
-      velZ = 0;
+      case WEST:
+        velX = -1 * Math.abs(power);
+        velZ = 0;
       break;
-    case NORTH:
-      velX = 0;
-      velZ = -1 * Math.abs(power);
+      case NORTH:
+        velX = 0;
+        velZ = -1 * Math.abs(power);
       break;
-    case SOUTH:
-      velX = 0;
-      velZ = Math.abs(power);
+      case SOUTH:
+        velX = 0;
+        velZ = Math.abs(power);
       break;
-    case UP:
-    case DOWN:
-    default:
+      case UP:
+      case DOWN:
+      default:
       break;
     }
     Entity ridingEntity = entity.getRidingEntity();
@@ -122,6 +125,33 @@ public class UtilEntity {
    */
   public static void launch(Entity entity, float rotationPitch, float power) {
     float rotationYaw = entity.rotationYaw;
+    launch(entity, rotationPitch, rotationYaw, power);
+  }
+  static final float lowEnough = 0.001F;
+  //      float LIMIT = 180F;
+  public static void setVelocity(Entity entity, float rotationPitch, float rotationYaw, float power) {
+    entity.motionX = 0;
+    entity.motionY = 0;
+    entity.motionZ = 0;
+    double velX = (double) (-MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power);
+    double velZ = (double) (MathHelper.cos(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power);
+    double velY = (double) (-MathHelper.sin((rotationPitch) / 180.0F * (float) Math.PI) * power);
+    if (velY < 0) {
+      velY *= -1;// make it always up never down
+    }
+    if (Math.abs(velX) < lowEnough) velX = 0;
+    if (Math.abs(velY) < lowEnough) velY = 0;
+    if (Math.abs(velZ) < lowEnough) velZ = 0;
+    //    if(entity.getEntityWorld().isRemote){
+    //    ModCyclic.logger.info("(angle,yaw,power) = " + rotationPitch + "," + rotationYaw + "," + power);
+    //    ModCyclic.logger.info("!setvelocity " + velX + "," + velY + "," + velZ);
+    ////    ModCyclic.logger.info("!onground " + entity.onGround);
+    //    ModCyclic.logger.info("!posY " + entity.posY);
+    //    }
+    //setting to zero first then using add, pretty much the same as set
+    entity.addVelocity(velX, velY, velZ);
+  }
+  public static void launch(Entity entity, float rotationPitch, float rotationYaw, float power) {
     float mountPower = (float) (power - 0.5);
     double velX = (double) (-MathHelper.sin(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power);
     double velZ = (double) (MathHelper.cos(rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI) * power);
@@ -238,5 +268,16 @@ public class UtilEntity {
     else {
       player.addPotionEffect(newp);
     }
+  }
+  /**
+   * Force horizontal centering, so move from 2.9, 6.2 => 2.5,6.5
+   * 
+   * @param entity
+   * @param pos
+   */
+  public static void centerEntityHoriz(Entity entity, BlockPos pos) {
+    float fixedX = pos.getX() + 0.5F;//((float) (MathHelper.floor_double(entity.posX) + MathHelper.ceiling_double_int(entity.posX))  )/ 2;
+    float fixedZ = pos.getZ() + 0.5F;//((float) (MathHelper.floor_double(entity.posX) + MathHelper.ceiling_double_int(entity.posX))  )/ 2;
+    entity.setPosition(fixedX, entity.posY, fixedZ);
   }
 }

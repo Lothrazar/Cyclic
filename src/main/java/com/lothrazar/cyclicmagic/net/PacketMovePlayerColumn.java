@@ -9,8 +9,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketMovePlayerColumn implements IMessage, IMessageHandler<PacketMovePlayerColumn, IMessage> {
-  public PacketMovePlayerColumn() {
-  }
+  public PacketMovePlayerColumn() {}
   private int slot;
   private boolean isDown;
   public PacketMovePlayerColumn(int slotnum, boolean upordown) {

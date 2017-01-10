@@ -31,8 +31,7 @@ public class UtilFakePlayer {
     fakePlayer.get().connection = new NetHandlerPlayServer(FMLCommonHandler.instance().getMinecraftServerInstance(), new NetworkManager(EnumPacketDirection.SERVERBOUND), fakePlayer.get()) {
       @SuppressWarnings("rawtypes")
       @Override
-      public void sendPacket(Packet packetIn) {
-      }
+      public void sendPacket(Packet packetIn) {}
     };
     fakePlayer.get().setSilent(true);
     return fakePlayer;

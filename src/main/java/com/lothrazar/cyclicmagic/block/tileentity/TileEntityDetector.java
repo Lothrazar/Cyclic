@@ -37,16 +37,16 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
     int entitiesFound = (entityList == null) ? 0 : entityList.size();
     boolean trigger = false;
     switch (this.compType) {
-    case LESS:
-      trigger = (entitiesFound < limitUntilRedstone);
+      case LESS:
+        trigger = (entitiesFound < limitUntilRedstone);
       break;
-    case GREATER:
-      trigger = (entitiesFound > limitUntilRedstone);
+      case GREATER:
+        trigger = (entitiesFound > limitUntilRedstone);
       break;
-    case EQUAL:
-      trigger = (entitiesFound == limitUntilRedstone);
+      case EQUAL:
+        trigger = (entitiesFound == limitUntilRedstone);
       break;
-    default:
+      default:
       break;
     }
     //System.out.println("isPoweredNow="+isPoweredNow+"__trigger="+trigger);
@@ -59,15 +59,15 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
   }
   private Class<? extends Entity> getEntityClass() {
     switch (this.entityType) {
-    case EXP:
-      return EntityXPOrb.class;
-    case ITEM:
-      return EntityItem.class;
-    case LIVING:
-      return EntityLivingBase.class;
-    case PLAYER:
-      return EntityPlayer.class;
-    default:
+      case EXP:
+        return EntityXPOrb.class;
+      case ITEM:
+        return EntityItem.class;
+      case LIVING:
+        return EntityLivingBase.class;
+      case PLAYER:
+        return EntityPlayer.class;
+      default:
       break;
     }
     return null;
@@ -86,19 +86,19 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
   }
   public int getField(Fields f) {
     switch (f) {
-    case ENTITYTYPE:
-      return this.entityType.ordinal();
-    case GREATERTHAN:
-      return this.compType.ordinal();
-    case LIMIT:
-      return this.limitUntilRedstone;
-    case RANGEX:
-      return this.rangeX;
-    case RANGEY:
-      return this.rangeY;
-    case RANGEZ:
-      return this.rangeZ;
-    default:
+      case ENTITYTYPE:
+        return this.entityType.ordinal();
+      case GREATERTHAN:
+        return this.compType.ordinal();
+      case LIMIT:
+        return this.limitUntilRedstone;
+      case RANGEX:
+        return this.rangeX;
+      case RANGEY:
+        return this.rangeY;
+      case RANGEZ:
+        return this.rangeZ;
+      default:
       break;
     }
     return 0;
@@ -113,41 +113,41 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
       }
     }
     switch (f) {
-    case GREATERTHAN:
-      if (value >= CompareType.values().length) {
-        value = 0;
-      }
-      if (value < 0) {
-        value = CompareType.values().length - 1;
-      }
-      this.compType = CompareType.values()[value];
+      case GREATERTHAN:
+        if (value >= CompareType.values().length) {
+          value = 0;
+        }
+        if (value < 0) {
+          value = CompareType.values().length - 1;
+        }
+        this.compType = CompareType.values()[value];
       break;
-    case LIMIT:
-      if (value > 999) {
-        value = MAX_RANGE;
-      }
-      if (value < 1) {
-        value = 1;
-      }
-      this.limitUntilRedstone = value;
+      case LIMIT:
+        if (value > 999) {
+          value = MAX_RANGE;
+        }
+        if (value < 1) {
+          value = 1;
+        }
+        this.limitUntilRedstone = value;
       break;
-    case RANGEX:
-      this.rangeX = value;
+      case RANGEX:
+        this.rangeX = value;
       break;
-    case RANGEY:
-      this.rangeY = value;
+      case RANGEY:
+        this.rangeY = value;
       break;
-    case RANGEZ:
-      this.rangeZ = value;
+      case RANGEZ:
+        this.rangeZ = value;
       break;
-    case ENTITYTYPE:
-      if (value >= EntityType.values().length)
-        value = 0;
-      if (value < 0)
-        value = EntityType.values().length - 1;
-      this.entityType = EntityType.values()[value];
+      case ENTITYTYPE:
+        if (value >= EntityType.values().length)
+          value = 0;
+        if (value < 0)
+          value = EntityType.values().length - 1;
+        this.entityType = EntityType.values()[value];
       break;
-    default:
+      default:
       break;
     }
   }

@@ -61,16 +61,16 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
     BuildType buildType = getBuildTypeEnum();
     // only rebuild shapes if they are different
     switch (buildType) {
-    case CIRCLE:
-      this.shape = UtilShape.circle(this.pos, this.getSize() * 2);
+      case CIRCLE:
+        this.shape = UtilShape.circle(this.pos, this.getSize() * 2);
       break;
-    case FACING:
-      this.shape = UtilShape.line(pos, this.getCurrentFacing(), this.getSize());
+      case FACING:
+        this.shape = UtilShape.line(pos, this.getCurrentFacing(), this.getSize());
       break;
-    case SQUARE:
-      this.shape = UtilShape.squareHorizontalHollow(this.pos, this.getSize());
+      case SQUARE:
+        this.shape = UtilShape.squareHorizontalHollow(this.pos, this.getSize());
       break;
-    default:
+      default:
       break;
     }
     if (this.buildHeight > 1) { //first layer is already done, add remaining
@@ -120,17 +120,17 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
     if (id >= 0 && id < this.getFieldCount())
       switch (Fields.values()[id]) {
       case TIMER:
-        return timer;
+      return timer;
       case BUILDTYPE:
-        return this.buildType;
+      return this.buildType;
       case SPEED:
-        return this.buildSpeed;
+      return this.buildSpeed;
       case SIZE:
-        return this.buildSize;
+      return this.buildSize;
       case HEIGHT:
-        return this.buildHeight;
+      return this.buildHeight;
       case REDSTONE:
-        return this.needsRedstone;
+      return this.needsRedstone;
       }
     return -1;
   }
@@ -139,28 +139,28 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
     if (id >= 0 && id < this.getFieldCount())
       switch (Fields.values()[id]) {
       case TIMER:
-        this.timer = value;
-        break;
+      this.timer = value;
+      break;
       case BUILDTYPE:
-        this.buildType = value;
-        break;
+      this.buildType = value;
+      break;
       case SPEED:
-        this.buildSpeed = value;
-        break;
+      this.buildSpeed = value;
+      break;
       case SIZE:
-        this.buildSize = value;
-        break;
+      this.buildSize = value;
+      break;
       case HEIGHT:
-        if (value > maxHeight) {
-          value = maxHeight;
-        }
-        this.buildHeight = value;
-        break;
+      if (value > maxHeight) {
+      value = maxHeight;
+      }
+      this.buildHeight = value;
+      break;
       case REDSTONE:
-        this.needsRedstone = value;
-        break;
+      this.needsRedstone = value;
+      break;
       default:
-        break;
+      break;
       }
   }
   private boolean onlyRunIfPowered() {

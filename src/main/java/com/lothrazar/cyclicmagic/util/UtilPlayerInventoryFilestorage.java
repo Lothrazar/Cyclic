@@ -40,8 +40,7 @@ public class UtilPlayerInventoryFilestorage {
           if (fb.exists())
             fb.delete();
         }
-        catch (IOException e) {
-        }
+        catch (IOException e) {}
       }
     }
     loadPlayerInventory(event.getEntityPlayer(), playerFile, getPlayerFile(extback, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString()));
@@ -138,8 +137,7 @@ public class UtilPlayerInventoryFilestorage {
             try {
               file1.delete();
             }
-            catch (Exception e2) {
-            }
+            catch (Exception e2) {}
           }
         }
       }

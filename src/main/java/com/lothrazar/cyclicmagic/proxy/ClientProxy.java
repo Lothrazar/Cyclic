@@ -205,6 +205,4 @@ public class ClientProxy extends CommonProxy {
     itemRender.renderItemAndEffectIntoGUI(current, x, y);
     RenderHelper.disableStandardItemLighting();
   }
-
-
 }
