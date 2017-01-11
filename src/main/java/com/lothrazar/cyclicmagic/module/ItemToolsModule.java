@@ -76,6 +76,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   private boolean enablewaterSpread;
   private boolean enableFreezer;
   private boolean enableFireKiller;
+  private boolean enableBlockRot;
   public static ItemStorageBag storage_bag;//ref by ContainerStorage
   public static RenderLoc renderLocation;
   /**
@@ -115,9 +116,10 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   }
   @Override
   public void onInit() {
-    
-    ItemToolRotate tool_rotate = new ItemToolRotate();
-    ItemRegistry.addItem(tool_rotate, "tool_rotate");
+    if (enableBlockRot) {
+      ItemToolRotate tool_rotate = new ItemToolRotate();
+      ItemRegistry.addItem(tool_rotate, "tool_rotate");
+    }
     if (enablewaterSpread) {
       ItemToolWaterSpreader water_spreader = new ItemToolWaterSpreader();
       ItemRegistry.addItem(water_spreader, "water_spreader");
@@ -283,6 +285,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   }
   @Override
   public void syncConfig(Configuration config) {
+    enableBlockRot = config.getBoolean("BlockRotator", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablewaterSpread = config.getBoolean("WaterSpreader", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableFreezer = config.getBoolean("WaterFroster", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableFireKiller = config.getBoolean("WaterSplasher", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
