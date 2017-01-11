@@ -115,6 +115,9 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   }
   @Override
   public void onInit() {
+    
+    ItemToolRotate tool_rotate = new ItemToolRotate();
+    ItemRegistry.addItem(tool_rotate, "tool_rotate");
     if (enablewaterSpread) {
       ItemToolWaterSpreader water_spreader = new ItemToolWaterSpreader();
       ItemRegistry.addItem(water_spreader, "water_spreader");
@@ -223,7 +226,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
       ItemRegistry.registerWithJeiDescription(tool_harvest_leaves);
     }
     if (enableToolPush) {
-      ItemToolPush tool_push = new ItemToolPush();
+      ItemToolPiston tool_push = new ItemToolPiston();
       ItemRegistry.addItem(tool_push, "tool_push");
       ModCyclic.instance.events.register(tool_push);
       LootTableRegistry.registerLoot(tool_push);
