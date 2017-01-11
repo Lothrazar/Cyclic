@@ -38,6 +38,7 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
   private boolean enableLevit;
   private boolean enableHBoost;
   private boolean enableViscous;
+  private boolean enableSwimspeed;
   final static int SHORT = 60 + 30;
   final static int NORMAL = 60 * 3;
   final static int LONG = 60 * 8;
@@ -114,6 +115,22 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
           UPG_LENGTH,
           potion_waterwalk_long);
       JeiDescriptionRegistry.registerWithJeiDescription(potion_waterwalk);
+    }
+    if (enableSwimspeed) {
+      ItemPotionCustom potion_swimspeed = new ItemPotionCustom(false, PotionEffectRegistry.swimSpeedEffect, NORMAL, Potions.I);
+      ItemPotionCustom potion_swimspeed_long = new ItemPotionCustom(false, PotionEffectRegistry.swimSpeedEffect, LONG, Potions.I);
+      ItemRegistry.addItem(potion_swimspeed, "potion_swimspeed");
+      ItemRegistry.addItem(potion_swimspeed_long, "potion_swimspeed_long");
+      if (potion_viscous != null)
+        addBrewingRecipe(
+            potion_viscous,
+            Items.CARROT_ON_A_STICK,
+            potion_swimspeed);
+      addBrewingRecipe(
+          potion_swimspeed,
+          UPG_LENGTH,
+          potion_swimspeed_long);
+      JeiDescriptionRegistry.registerWithJeiDescription(potion_swimspeed);
     }
     if (enableSlowfall) {
       ItemPotionCustom potion_slowfall = new ItemPotionCustom(true, PotionEffectRegistry.slowfallEffect, NORMAL, Potions.I);
@@ -291,6 +308,7 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
     cancelPotionInventoryShift = config.getBoolean("Potion Inventory Shift", category, true,
         "When true, this blocks the potions moving the inventory over");
     category = Const.ConfigCategory.content;
+    enableSwimspeed = config.getBoolean("PotionSwimSpeed", category, true, Const.ConfigCategory.contentDefaultText);
     enableMagnet = config.getBoolean("PotionMagnet", category, true, Const.ConfigCategory.contentDefaultText);
     enableWaterwalk = config.getBoolean("PotionWaterwalk", category, true, Const.ConfigCategory.contentDefaultText);
     enableSlowfall = config.getBoolean("PotionSlowfall", category, true, Const.ConfigCategory.contentDefaultText);

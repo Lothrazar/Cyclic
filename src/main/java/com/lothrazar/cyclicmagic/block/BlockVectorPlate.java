@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.block;
 import java.util.Random;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.tileentity.TileVector;
 import com.lothrazar.cyclicmagic.block.tileentity.TileVector.Fields;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
@@ -45,7 +44,6 @@ public class BlockVectorPlate extends BlockBaseHasTile {
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);
     this.setGuiId(ModGuiHandler.GUI_INDEX_VECTOR);
-    //    this.setTooltip("tile.harvester_block.tooltip");
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
