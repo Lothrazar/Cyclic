@@ -4,21 +4,12 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class PotionWaterwalk extends PotionBase {
   public PotionWaterwalk(String name, boolean b, int potionColor) {
     super(name, b, potionColor);
   }
-  @SubscribeEvent
-  public void onEntityUpdate(LivingUpdateEvent event) {
-    EntityLivingBase entity = event.getEntityLiving();
-    if (entity == null) { return; }
-    if (entity.isPotionActive(this)) {
-      this.tick(entity);
-    }
-  }
+  @Override
   public void tick(EntityLivingBase entityLiving) {
     tickLiquidWalk(entityLiving, Blocks.WATER);
   }
@@ -33,7 +24,6 @@ public class PotionWaterwalk extends PotionBase {
       entityLiving.motionY = 0;// stop falling
       entityLiving.onGround = true; // act as if on solid ground
       entityLiving.setAIMoveSpeed(0.1F);// walking and not sprinting is this
-      // speed
     }
   }
 }

@@ -28,9 +28,9 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemToolPush extends BaseTool implements IHasRecipe {
+public class ItemToolPiston extends BaseTool implements IHasRecipe {
   private static final int durability = 5000;
-  public ItemToolPush() {
+  public ItemToolPiston() {
     super(durability);
   }
   public enum ActionType {
