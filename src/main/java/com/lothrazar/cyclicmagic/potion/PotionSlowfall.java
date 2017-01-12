@@ -1,22 +1,13 @@
 package com.lothrazar.cyclicmagic.potion;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class PotionSlowfall extends PotionBase {
   public static final float slowfallSpeed = 0.41F;
   public PotionSlowfall(String name, boolean b, int potionColor) {
     super(name, b, potionColor);
   }
-  @SubscribeEvent
-  public void onEntityUpdate(LivingUpdateEvent event) {
-    EntityLivingBase entity = event.getEntityLiving();
-    if (entity == null) { return; }
-    if (entity.isPotionActive(this)) {
-      this.tick(entity);
-    }
-  }
+  @Override
   public void tick(EntityLivingBase entityLiving) {
     if (entityLiving instanceof EntityPlayer) {
       EntityPlayer p = (EntityPlayer) entityLiving;

@@ -95,5 +95,6 @@
   	,"1.9.11":"Add block highlight overlay to Exchange scepters.  Fix Exchange scepter breaking blocks that are unbreakable.  Add blacklist to exchange scepter, default starts with only obsidian (modded blocks are supported).  Made some mild nerfs to both Exchange Scepters (reasoning: meant to be building & decorating, not be overpowered mining tools): Durability from 5000 to 1000 uses; takes damage per block replaced not per use (so a 3x3 area will take away 9 durability from item); cooldown from 10 ticks to 30 ticks; and upped recipe cost.  Fix slowfall potion from Wing charm getting stuck at 0:00.  Accepted a submission to update zh_CH.lang.  "
 	,"1.9.12":"Stop the Controlled Miner from mining with tools on air blocks; this stops it from constantly draining durability from Tinkers Construct tools.  "
   	,"1.9.13":"New Block added: Aerial Faith Plate.  "
+  	,"1.9.14":"Fixed Ender not working: It now correctly prevents ender pearl damage.  Ender Potion now also prevents ALL suffocation damage.  Added Swim Speed Potion.  Added Block Rotator (Similar to Piston Scepter but its cheaper and only one mode).  Added Air Charm: Lets you walk on air while sneaking."
   }
 }

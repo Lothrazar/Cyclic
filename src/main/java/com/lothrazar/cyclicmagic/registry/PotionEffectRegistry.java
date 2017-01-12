@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.registry;
 import java.util.ArrayList;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.potion.PotionBase;
 import com.lothrazar.cyclicmagic.potion.PotionEnder;
 import com.lothrazar.cyclicmagic.potion.PotionMagnet;
@@ -32,6 +33,7 @@ public class PotionEffectRegistry {
   public static void registerPotionEffect(PotionBase effect) {
     GameRegistry.register(effect, effect.getIcon());
     potionEffects.add(effect);
+    ModCyclic.instance.events.register(effect);
   }
   public static String getStrForLevel(int lvl) {
     //TODO: probs a better roman numeral way\
