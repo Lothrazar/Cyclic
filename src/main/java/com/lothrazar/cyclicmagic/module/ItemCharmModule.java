@@ -18,8 +18,14 @@ public class ItemCharmModule extends BaseModule implements IHasConfig {
   private boolean slowfallCharm;
   private boolean autoTorch;
   private boolean enableSpeed;
+  private boolean enableAir;
   @Override
   public void onInit() {
+    if (enableAir) {
+      ItemCharmAir charm_air = new ItemCharmAir();
+      ItemRegistry.addItem(charm_air, "charm_air");
+      ModCyclic.instance.events.register(charm_air);
+    }
     if (enableFire) {
       ItemCharmFire charm_fire = new ItemCharmFire();
       ItemRegistry.addItem(charm_fire, "charm_fire");
@@ -73,6 +79,7 @@ public class ItemCharmModule extends BaseModule implements IHasConfig {
   }
   @Override
   public void syncConfig(Configuration config) {
+    enableAir = config.getBoolean("AirCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableSpeed = config.getBoolean("SpeedCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     slowfallCharm = config.getBoolean("WingCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableFire = config.getBoolean("FireCharm", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

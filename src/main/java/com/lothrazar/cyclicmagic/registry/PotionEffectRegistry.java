@@ -1,10 +1,12 @@
 package com.lothrazar.cyclicmagic.registry;
 import java.util.ArrayList;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.potion.PotionBase;
 import com.lothrazar.cyclicmagic.potion.PotionEnder;
 import com.lothrazar.cyclicmagic.potion.PotionMagnet;
 import com.lothrazar.cyclicmagic.potion.PotionSlowfall;
 import com.lothrazar.cyclicmagic.potion.PotionSnow;
+import com.lothrazar.cyclicmagic.potion.PotionSwimSpeed;
 import com.lothrazar.cyclicmagic.potion.PotionWaterwalk;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -12,11 +14,12 @@ public class PotionEffectRegistry {
   public static enum PotionType {
     NORMAL, POWERED, LONG//, SPLASH, LINGER // todo: these last two
   }
-  public static final PotionBase slowfallEffect = new PotionSlowfall("slowfall", true, 0);;
-  public static final PotionBase magnetEffect = new PotionMagnet("magnet", true, 0);;
-  public static final PotionBase enderEffect = new PotionEnder("ender", true, 0);;
-  public static final PotionBase waterwalkEffect = new PotionWaterwalk("waterwalk", true, 0);;
-  public static final PotionBase snowEffect = new PotionSnow("snow", true, 0);;
+  public static final PotionBase slowfallEffect = new PotionSlowfall("slowfall", true, 0);
+  public static final PotionBase magnetEffect = new PotionMagnet("magnet", true, 0);
+  public static final PotionBase enderEffect = new PotionEnder("ender", true, 0);
+  public static final PotionBase waterwalkEffect = new PotionWaterwalk("waterwalk", true, 0);
+  public static final PotionBase snowEffect = new PotionSnow("snow", true, 0);
+  public static final PotionBase swimSpeedEffect = new PotionSwimSpeed("swimspeed", true, 0);
   public static ArrayList<PotionBase> potionEffects = new ArrayList<PotionBase>();
   public static void register() {
     //onInit
@@ -25,10 +28,12 @@ public class PotionEffectRegistry {
     PotionEffectRegistry.registerPotionEffect(waterwalkEffect);
     PotionEffectRegistry.registerPotionEffect(slowfallEffect);
     PotionEffectRegistry.registerPotionEffect(snowEffect);
+    PotionEffectRegistry.registerPotionEffect(swimSpeedEffect);
   }
   public static void registerPotionEffect(PotionBase effect) {
     GameRegistry.register(effect, effect.getIcon());
     potionEffects.add(effect);
+    ModCyclic.instance.events.register(effect);
   }
   public static String getStrForLevel(int lvl) {
     //TODO: probs a better roman numeral way\
