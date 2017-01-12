@@ -37,7 +37,7 @@ public class PotionEnder extends PotionBase {
       Entity target = event.getEntity();
       if (player.isPotionActive(this) && target instanceof EntityEnderman) {
         World world = player.getEntityWorld();
-        int randMore = world.rand.nextInt(5)+1;// range[1,5]
+        int randMore = world.rand.nextInt(5) + 1;// range[1,5]
         world.spawnEntityInWorld(new EntityXPOrb(world, target.posX, target.posY, target.posZ, randMore));
       }
     }
