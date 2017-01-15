@@ -75,7 +75,7 @@ public class WorldGenOcean implements IWorldGenerator {
     prop = config.get(category, "sandChance", 45, "Chances of a sand patch.", 0, 90);
     prop.setRequiresMcRestart(true);
     sandChance = prop.getInt();
-    prop = config.get(category, "clayChance", 50, "Approximate size of clay patch.", 0, 64);
+    prop = config.get(category, "claySize", 50, "Approximate size of clay patch.", 0, 64);
     prop.setRequiresMcRestart(true);
     clayNumBlocks = prop.getInt();
     prop = config.get(category, "dirtSize", 40, "Approximate size of dirt patch.", 0, 64);

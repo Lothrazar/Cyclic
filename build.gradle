@@ -14,7 +14,7 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "${mc_version}-1.9.14"
+version = "${mc_version}-1.9.15"
 group = "com.lothrazar.cyclicmagic" 
 archivesBaseName = "Cyclic"
 
