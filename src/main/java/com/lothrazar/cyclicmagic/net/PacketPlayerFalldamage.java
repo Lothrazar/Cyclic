@@ -21,8 +21,6 @@ public class PacketPlayerFalldamage implements IMessage, IMessageHandler<PacketP
   @Override
   public IMessage onMessage(PacketPlayerFalldamage message, MessageContext ctx) {
     EntityPlayer p = ctx.getServerHandler().playerEntity;
-    System.out.println("do climb; send falldistance to zero to server "+    p.fallDistance  );
-    
     p.fallDistance = 0;
     return null;
   }
