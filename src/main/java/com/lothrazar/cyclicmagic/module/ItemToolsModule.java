@@ -10,6 +10,7 @@ import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.ActionType;
 import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.WandType;
 import com.lothrazar.cyclicmagic.item.ItemChestSack;
 import com.lothrazar.cyclicmagic.item.ItemChestSackEmpty;
+import com.lothrazar.cyclicmagic.item.ItemClimbingGlove;
 import com.lothrazar.cyclicmagic.item.ItemEnderBag;
 import com.lothrazar.cyclicmagic.item.ItemEnderBook;
 import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
@@ -116,6 +117,9 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   }
   @Override
   public void onInit() {
+    ItemClimbingGlove glove_climb = new ItemClimbingGlove();
+    ItemRegistry.addItem(glove_climb, "glove_climb");
+ 
     if (enableBlockRot) {
       ItemToolRotate tool_rotate = new ItemToolRotate();
       ItemRegistry.addItem(tool_rotate, "tool_rotate");
