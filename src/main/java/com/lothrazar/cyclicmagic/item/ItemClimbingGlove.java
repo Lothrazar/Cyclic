@@ -8,6 +8,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -43,18 +44,18 @@ public class ItemClimbingGlove extends BaseItem implements IHasRecipe {
     if (worldIn.isRemote && //setting fall distance on clientside wont work
         entity instanceof EntityPlayer && entity.ticksExisted % TICKS_FALLDIST_SYNC == 0) {
       UtilSound.playSound(entity, SoundEvents.BLOCK_LADDER_STEP);
-      
       ModCyclic.network.sendToServer(new PacketPlayerFalldamage());
     }
   }
   @Override
   public void addRecipe() {
     GameRegistry.addRecipe(new ItemStack(this, 1),
-        "s  ",
-        "ls ",
-        "lls",
+        "ssl",
+        "skl",
+        "lli",
         's', Items.SLIME_BALL,
-        'L', Items.LEATHER);
- 
+        'i', Items.IRON_INGOT,
+        'k', new ItemStack(Items.DYE, 1, EnumDyeColor.BLACK.getDyeDamage()),
+        'l', Items.LEATHER);
   }
 }
