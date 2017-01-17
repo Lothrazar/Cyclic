@@ -10,6 +10,7 @@ import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.ActionType;
 import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.WandType;
 import com.lothrazar.cyclicmagic.item.ItemChestSack;
 import com.lothrazar.cyclicmagic.item.ItemChestSackEmpty;
+import com.lothrazar.cyclicmagic.item.ItemClimbingGlove;
 import com.lothrazar.cyclicmagic.item.ItemEnderBag;
 import com.lothrazar.cyclicmagic.item.ItemEnderBook;
 import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
@@ -77,6 +78,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   private boolean enableFreezer;
   private boolean enableFireKiller;
   private boolean enableBlockRot;
+  private boolean enableCGlove;
   public static ItemStorageBag storage_bag;//ref by ContainerStorage
   public static RenderLoc renderLocation;
   /**
@@ -116,6 +118,10 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   }
   @Override
   public void onInit() {
+    if (enableCGlove) {
+      ItemClimbingGlove glove_climb = new ItemClimbingGlove();
+      ItemRegistry.addItem(glove_climb, "glove_climb");
+    }
     if (enableBlockRot) {
       ItemToolRotate tool_rotate = new ItemToolRotate();
       ItemRegistry.addItem(tool_rotate, "tool_rotate");
@@ -285,6 +291,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   }
   @Override
   public void syncConfig(Configuration config) {
+    enableCGlove = config.getBoolean("ClimbingGlove", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableBlockRot = config.getBoolean("BlockRotator", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablewaterSpread = config.getBoolean("WaterSpreader", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableFreezer = config.getBoolean("WaterFroster", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

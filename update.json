@@ -5,8 +5,8 @@
     "1.9.4-recommended":  "1.2.0",
     "1.10-latest":  "1.1.0",
     "1.10-recommended": "1.1.0",
-    "1.10.2-latest":  "1.9.15",
-    "1.10.2-recommended": "1.9.15"
+    "1.10.2-latest":  "1.9.16",
+    "1.10.2-recommended": "1.9.16"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -97,5 +97,6 @@
   	,"1.9.13":"New Block added: Aerial Faith Plate.  "
   	,"1.9.14":"Added Swim Speed Potion.  Added Block Rotator (Similar to Piston Scepter but its cheaper and only one mode).  Added Air Charm: Lets you walk on air while sneaking.Fixed Ender Aura not working: It now correctly prevents ender pearl damage.  Ender Aura Potion now also prevents ALL suffocation damage.  Ender Aura Potion now makes Enderman drop more exp from the player kill (randomly 1-5 extra).  "
   	,"1.9.15":"Update zh_CN lang file.  Config fix: claySize was missing from ocean category"
+  	,"1.9.16":"New Item: Climbing Gloves.  "
   }
 }
