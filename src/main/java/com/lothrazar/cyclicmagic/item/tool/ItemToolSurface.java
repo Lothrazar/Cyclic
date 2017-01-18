@@ -19,7 +19,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemToolSurface extends BaseTool implements IHasRecipe {
   public ItemToolSurface() {
-    super(100);
+    super(32);
   }
   @Override
   public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
@@ -54,10 +54,12 @@ public class ItemToolSurface extends BaseTool implements IHasRecipe {
   @Override
   public void addRecipe() {
     GameRegistry.addRecipe(new ItemStack(this),
-        "  e",
-        " s ",
+        " de",
+        " gd",
         "s  ",
         'e', Items.ENDER_EYE,
+        'd', Items.DIAMOND,
+        'g', Items.GHAST_TEAR,
         's', Blocks.REDSTONE_LAMP);
   }
 }
