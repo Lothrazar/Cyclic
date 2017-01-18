@@ -41,6 +41,19 @@ public class UtilWorld {
   public static BlockPos convertIposToBlockpos(IPosition here) {
     return new BlockPos(here.getX(), here.getY(), here.getZ());
   }
+  public static BlockPos getFirstBlockAbove(World world, BlockPos pos) {
+    //similar to vanilla fn getTopSolidOrLiquidBlock
+    BlockPos posCurrent = null;
+    for (int y = pos.getY() + 1; y < Const.WORLDHEIGHT; y++) {
+      posCurrent = new BlockPos(pos.getX(), y, pos.getZ());
+      if(world.getBlockState(posCurrent).getBlock() == Blocks.AIR && 
+          world.getBlockState(posCurrent.up()).getBlock() == Blocks.AIR && 
+          world.getBlockState(posCurrent.down()).getBlock() != Blocks.AIR ){
+        return posCurrent;
+      }
+    }
+    return null;
+  }
   public static List<BlockPos> getPositionsInRange(BlockPos center, int xMin, int xMax, int yMin, int yMax, int zMin, int zMax) {
     List<BlockPos> found = new ArrayList<BlockPos>();
     for (int x = xMin; x <= xMax; x++)

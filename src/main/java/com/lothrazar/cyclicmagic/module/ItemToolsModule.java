@@ -79,6 +79,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   private boolean enableFireKiller;
   private boolean enableBlockRot;
   private boolean enableCGlove;
+  private boolean enableElevate;
   public static ItemStorageBag storage_bag;//ref by ContainerStorage
   public static RenderLoc renderLocation;
   /**
@@ -118,6 +119,10 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   }
   @Override
   public void onInit() {
+    if (enableElevate) {
+      ItemToolSurface tool_elevate = new ItemToolSurface();
+      ItemRegistry.addItem(tool_elevate, "tool_elevate");
+    }
     if (enableCGlove) {
       ItemClimbingGlove glove_climb = new ItemClimbingGlove();
       ItemRegistry.addItem(glove_climb, "glove_climb");
@@ -291,6 +296,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   }
   @Override
   public void syncConfig(Configuration config) {
+    enableElevate = config.getBoolean("RodElevation", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableCGlove = config.getBoolean("ClimbingGlove", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableBlockRot = config.getBoolean("BlockRotator", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablewaterSpread = config.getBoolean("WaterSpreader", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
