@@ -118,6 +118,8 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   }
   @Override
   public void onInit() {
+    ItemToolSurface tool_elevate = new ItemToolSurface();
+    ItemRegistry.addItem(tool_elevate, "tool_elevate");
     if (enableCGlove) {
       ItemClimbingGlove glove_climb = new ItemClimbingGlove();
       ItemRegistry.addItem(glove_climb, "glove_climb");
