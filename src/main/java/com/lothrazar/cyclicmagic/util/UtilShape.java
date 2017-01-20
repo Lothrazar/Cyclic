@@ -136,9 +136,9 @@ public class UtilShape {
     }
     return shape;
   }
-  public static List<BlockPos> stairway(BlockPos position, EnumFacing pfacing, int want, boolean isLookingUp) {
+  public static List<BlockPos> stairway(BlockPos posCurrent, EnumFacing pfacing, int want, boolean isLookingUp) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
-    BlockPos posCurrent = position.down().offset(pfacing);
+//    BlockPos posCurrent = position.down().offset(pfacing);
     boolean goVert = false;
     for (int i = 1; i < want + 1; i++) {
       if (goVert) {

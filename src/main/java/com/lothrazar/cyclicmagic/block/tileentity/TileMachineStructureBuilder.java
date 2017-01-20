@@ -47,11 +47,11 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
     TIMER, BUILDTYPE, SPEED, SIZE, HEIGHT, REDSTONE
   }
   public enum BuildType {
-    FACING, SQUARE, CIRCLE, SOLID;
+    FACING, SQUARE, CIRCLE, SOLID, STAIRWAY;
     public static BuildType getNextType(BuildType btype) {
       int type = btype.ordinal();
       type++;
-      if (type > SOLID.ordinal()) {
+      if (type > STAIRWAY.ordinal()) {
         type = FACING.ordinal();
       }
       return BuildType.values()[type];
@@ -62,26 +62,31 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
     // only rebuild shapes if they are different
     switch (buildType) {
       case CIRCLE:
-        this.shape = UtilShape.circle(this.pos, this.getSize() * 2);
+        this.shape = UtilShape.circle(this.getPos(), this.getSize() * 2);
       break;
       case FACING:
-        this.shape = UtilShape.line(pos, this.getCurrentFacing(), this.getSize());
+        this.shape = UtilShape.line(this.getPos(), this.getCurrentFacing(), this.getSize());
       break;
       case SQUARE:
-        this.shape = UtilShape.squareHorizontalHollow(this.pos, this.getSize());
+        this.shape = UtilShape.squareHorizontalHollow(this.getPos(), this.getSize());
       break;
       case SOLID:
         this.shape = UtilShape.squareHorizontalFull(this.getTargetCenter(), this.getSize());
-      break; 
+      break;
+      case STAIRWAY:
+        this.shape = UtilShape.stairway(this.getPos(), this.getCurrentFacing(), this.getSize()*2, true);
+      break;
       default:
       break;
     }
-    if (this.buildHeight > 1) { //first layer is already done, add remaining
+    //hotfix: no height for stairway
+    if (this.buildHeight > 1 && buildType != BuildType.STAIRWAY) { //first layer is already done, add remaining
       this.shape = UtilShape.repeatShapeByHeight(shape, buildHeight - 1);
     }
     this.shapeIndex = 0;
-    if (this.shape.size() > 0)
+    if (this.shape.size() > 0) {
       this.nextPos = this.shape.get(this.shapeIndex);
+    }
   }
   public BlockPos getTargetCenter() {
     //move center over that much, not including exact horizontal

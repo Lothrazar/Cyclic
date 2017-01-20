@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.gui.builder;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineStructureBuilder;
+import com.lothrazar.cyclicmagic.block.tileentity.TileMachineStructureBuilder.BuildType;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContanerProgress;
 import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
 import com.lothrazar.cyclicmagic.gui.GuiButtonSizePreview;
@@ -82,7 +83,9 @@ public class GuiBuilder extends GuiBaseContanerProgress {
       int x = (display.length() > 1) ? xSizeTextbox - 3 : xSizeTextbox;
       this.fontRendererObj.drawString(display, x, ySizeTxtbox + yOffset - 4, 4210752);
     }
-    if (this.tile.getHeight() > 0) {
+
+    boolean isStairway = (this.tile.getBuildTypeEnum() == BuildType.STAIRWAY);
+    if (this.tile.getHeight() > 0 && !isStairway) {
       String display = "" + this.tile.getHeight();
       //move it over if more than 1 digit
       int x = (display.length() > 1) ? xHeightTextbox - 3 : xHeightTextbox;
@@ -100,6 +103,11 @@ public class GuiBuilder extends GuiBaseContanerProgress {
     this.btnSizeUp.enabled = (this.tile.getSize() < TileMachineStructureBuilder.maxSize);
     this.btnHeightDown.enabled = (this.tile.getHeight() > 1);
     this.btnHeightUp.enabled = (this.tile.getHeight() < TileMachineStructureBuilder.maxHeight);
+    //a semi hack to hide btns
+    boolean isStairway = (this.tile.getBuildTypeEnum() == BuildType.STAIRWAY);
+    this.btnHeightDown.visible = !isStairway;
+    this.btnHeightUp.visible = !isStairway;
+    
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
