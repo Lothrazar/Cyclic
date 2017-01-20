@@ -92,15 +92,6 @@ public class ModCyclic {
    * 
    * fan gui: change distance, change speed, change push/pull
    * 
-   * customizeable launch and conveyor plates: new blocks, add in items similar
-   * to BucketBlocks to change power.
-   * 
-   * maybe add this speed feature to the magnet too..?
-   * 
-   * ENCHANT: protection from suffocation damage
-   * 
-   * ENCHANT or charm: swim speed
-   * 
    * BIG TAB options for my invo buttons . save as player data, not config. ->
    * have a button in both alt guis off to side, hitting it toggles tab mode on
    * and off.
@@ -112,13 +103,8 @@ public class ModCyclic {
    * but it has multiple bucket-units of liquid using it multiple times places
    * multiple liquid source blocks.
    * 
-   * FAN: works like a magnet but full block, pushes or pull sall entities
-   * horizontal (including player, items, anything)
-   * 
    * SENSORS: works like magnets but when it finds an entity it just outputs
    * redstone
-   * 
-   * ideas/plans/features
    * 
    * water fountain//particle maker: has gui. pick the particle you want
    * (vanilla only if we have to) and whenver its on it spawns particles above
@@ -128,18 +114,11 @@ public class ModCyclic {
    * 
    * obsidian maker : takes liquid and outputs blocks
    * 
-   * ice maker: freezes water blocks above and/or around it
-   * 
-   * item that extinquishes fire all around
-   * 
    * ubertorch? glowstone torch? lights up larger area maybe 32/64 blocks
-   * 
-   * block similar to magma block how it does damage, but only on redstone?
    * 
    * block that puts fire above on redstone signal?
    * 
-   * water redstone spawner? just like a dispenser with bucket, can place remove
-   * water
+   * water redstone spawner? just like a dispenser with bucket, can place remove water
    * 
    * item for my todo list command: simple notepad
    * 
@@ -169,6 +148,8 @@ public class ModCyclic {
    * auto break. climbable like a ladder
    * 
    * disenchanter-> only on books?
+   * 
+   * tool to create enchanted books but expensive. try to follow existing conventions EX quartz->sharpness
    * 
    * Add Splash and Lingering potions for all new effects enhancement
    * 
