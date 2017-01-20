@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.block;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
@@ -21,7 +22,16 @@ public abstract class BlockBaseFacing extends BlockBaseHasTile {
     return this.getDefaultState().withProperty(PROPERTYFACING, facing);
   }
   public EnumFacing getFacingFromState(IBlockState state) {
-    return state.getValue(PROPERTYFACING).getOpposite();
+    EnumFacing facing = EnumFacing.NORTH;//dont want to be null to break stuff
+    try { //this test should be enough, but add a trycatch for extra safety
+      if (state != null && state.getBlock() instanceof BlockBaseFacing) {// i wish there was a state.hasValue()
+        facing = state.getValue(PROPERTYFACING).getOpposite();
+      }
+    }
+    catch (Exception e) {
+      ModCyclic.logger.error("Could not get EnumFacing " + e.getLocalizedMessage());
+    }
+    return facing;
   }
   @Override
   public int getMetaFromState(IBlockState state) {
