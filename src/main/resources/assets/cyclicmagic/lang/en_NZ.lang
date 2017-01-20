@@ -32,6 +32,7 @@ achievement.item.cyclic_wand_build.desc=Craft or get Cyclic Scepter
 builder.toggle.name=Toggle
 buildertype.circle.name=Circle
 buildertype.facing.name=Facing
+buildertype.solid.name=Solid
 buildertype.square.name=Square
 buildertype.up.name=Up
 button.build.first.tooltip=Use blocks left to right as normal

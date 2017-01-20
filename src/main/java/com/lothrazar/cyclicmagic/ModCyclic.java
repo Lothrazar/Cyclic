@@ -103,9 +103,6 @@ public class ModCyclic {
    * but it has multiple bucket-units of liquid using it multiple times places
    * multiple liquid source blocks.
    * 
-   * SENSORS: works like magnets but when it finds an entity it just outputs
-   * redstone
-   * 
    * water fountain//particle maker: has gui. pick the particle you want
    * (vanilla only if we have to) and whenver its on it spawns particles above
    * or wherever

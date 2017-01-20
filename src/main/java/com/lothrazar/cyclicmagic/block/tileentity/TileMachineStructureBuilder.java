@@ -47,11 +47,11 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
     TIMER, BUILDTYPE, SPEED, SIZE, HEIGHT, REDSTONE
   }
   public enum BuildType {
-    FACING, SQUARE, CIRCLE;
+    FACING, SQUARE, CIRCLE, SOLID;
     public static BuildType getNextType(BuildType btype) {
       int type = btype.ordinal();
       type++;
-      if (type > CIRCLE.ordinal()) {
+      if (type > SOLID.ordinal()) {
         type = FACING.ordinal();
       }
       return BuildType.values()[type];
@@ -70,6 +70,9 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
       case SQUARE:
         this.shape = UtilShape.squareHorizontalHollow(this.pos, this.getSize());
       break;
+      case SOLID:
+        this.shape = UtilShape.squareHorizontalFull(this.getTargetCenter(), this.getSize());
+      break; 
       default:
       break;
     }
@@ -79,6 +82,10 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
     this.shapeIndex = 0;
     if (this.shape.size() > 0)
       this.nextPos = this.shape.get(this.shapeIndex);
+  }
+  public BlockPos getTargetCenter() {
+    //move center over that much, not including exact horizontal
+    return this.getPos().offset(this.getCurrentFacing(), this.getSize() + 1);
   }
   @Override
   public int getSizeInventory() {
