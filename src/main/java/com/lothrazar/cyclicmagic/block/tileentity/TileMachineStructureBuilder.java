@@ -31,7 +31,7 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
   public static int maxSize;
   public static int maxHeight = 10;
   private static final int maxSpeed = 1;
-  public static final int TIMER_FULL = 100;//one day i will add fuel AND/OR speed upgrades. till then make very slow
+  public static final int TIMER_FULL = 15;// 100;//one day i will add fuel AND/OR speed upgrades. till then make very slow
   private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
@@ -47,11 +47,11 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
     TIMER, BUILDTYPE, SPEED, SIZE, HEIGHT, REDSTONE
   }
   public enum BuildType {
-    FACING, SQUARE, CIRCLE, SOLID, STAIRWAY;
+    FACING, SQUARE, CIRCLE, SOLID, STAIRWAY, SPHERE;
     public static BuildType getNextType(BuildType btype) {
       int type = btype.ordinal();
       type++;
-      if (type > STAIRWAY.ordinal()) {
+      if (type > SPHERE.ordinal()) {
         type = FACING.ordinal();
       }
       return BuildType.values()[type];
@@ -76,11 +76,14 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
       case STAIRWAY:
         this.shape = UtilShape.stairway(this.getPos(), this.getCurrentFacing(), this.getSize()*2, true);
       break;
+      case SPHERE:
+        this.shape = UtilShape.sphere(this.getPos(), this.getSize()*2);
+      break;
       default:
       break;
     }
     //hotfix: no height for stairway
-    if (this.buildHeight > 1 && buildType != BuildType.STAIRWAY) { //first layer is already done, add remaining
+    if (this.buildHeight > 1 && buildType != BuildType.STAIRWAY&& buildType != BuildType.SPHERE) { //first layer is already done, add remaining
       this.shape = UtilShape.repeatShapeByHeight(shape, buildHeight - 1);
     }
     this.shapeIndex = 0;

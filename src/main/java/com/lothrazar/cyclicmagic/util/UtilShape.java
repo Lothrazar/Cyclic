@@ -138,7 +138,7 @@ public class UtilShape {
   }
   public static List<BlockPos> stairway(BlockPos posCurrent, EnumFacing pfacing, int want, boolean isLookingUp) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
-//    BlockPos posCurrent = position.down().offset(pfacing);
+    //    BlockPos posCurrent = position.down().offset(pfacing);
     boolean goVert = false;
     for (int i = 1; i < want + 1; i++) {
       if (goVert) {
@@ -160,6 +160,30 @@ public class UtilShape {
     int skip = 1;
     for (int i = 1; i < want + 1; i = i + skip) {
       shape.add(pos.offset(efacing, i));
+    }
+    return shape;
+  }
+  public static List<BlockPos> sphere(BlockPos pos, int radius) {
+    List<BlockPos> shape = new ArrayList<BlockPos>();
+    //http://www.minecraftforge.net/forum/index.php?topic=24403.0
+    int x = pos.getX(), y = pos.getY(), z = pos.getZ();
+    int squareDistance;
+    //wat  centre = radius / 2,
+    //    int x1, y1, z1;
+    int xCurr, yCurr, zCurr;
+    BlockPos posCur;
+    for (xCurr = x - radius; xCurr <= x + radius; xCurr++) {
+      for (yCurr = y - radius; yCurr <= y + radius; yCurr++) {
+        for (zCurr = z - radius; zCurr <= z + radius; zCurr++) {
+          squareDistance = (xCurr - x) * (xCurr - x) + (yCurr - y) * (yCurr - y) + (zCurr - z) * (zCurr - z);
+          if (squareDistance <= (radius * radius) + 1
+              && squareDistance >= (radius * radius) - 2) {//TODO::... the +1,-2 are kind of hacks just to get the outline
+            posCur = new BlockPos(xCurr, yCurr, zCurr);
+            //System.out.println("posCur"+posCur);
+            shape.add(posCur);
+          }
+        }
+      }
     }
     return shape;
   }
