@@ -16,7 +16,45 @@ public class UtilShape {
       }
     return newShape;
   }
-  public static List<BlockPos> circle(BlockPos pos, int diameter) {
+  //TODO: SHARE MORE CODE BTW CIRCLE horiz and vert
+
+  public static List<BlockPos> circleVertical(BlockPos pos, int diameter) {
+    int centerX = pos.getX();
+    int centerZ = pos.getY();
+    int w = (int) pos.getZ();
+    int radius = diameter / 2;
+    int y = radius;
+    int x = 0;
+    int d = 2 - (2 * radius);//dont use Diameter again, for integer roundoff
+    List<BlockPos> circleList = new ArrayList<BlockPos>();
+    do {
+      circleList.add(new BlockPos(centerX + x, centerZ + y, w));
+      circleList.add(new BlockPos(centerX + x, centerZ - y, w));
+      circleList.add(new BlockPos(centerX - x, centerZ + y, w));
+      circleList.add(new BlockPos(centerX - x, centerZ - y, w));
+      circleList.add(new BlockPos(centerX + y, centerZ + x, w));
+      circleList.add(new BlockPos(centerX + y, centerZ - x, w));
+      circleList.add(new BlockPos(centerX - y, centerZ + x, w));
+      circleList.add(new BlockPos(centerX - y, centerZ - x, w));
+      if (d < 0) {
+        d = d + (4 * x) + 6;
+      }
+      else {
+        d = d + 4 * (x - y) + 10;
+        y--;
+      }
+      x++;
+    }
+    while (x <= y);
+    Collections.sort(circleList, new Comparator<BlockPos>() {
+      @Override
+      public int compare(final BlockPos object1, final BlockPos object2) {
+        return (int) object1.getX() - object2.getX();
+      }
+    });
+    return circleList;
+  }
+  public static List<BlockPos> circleHorizontal(BlockPos pos, int diameter) {
     int centerX = pos.getX();
     int centerZ = pos.getZ();
     int height = (int) pos.getY();

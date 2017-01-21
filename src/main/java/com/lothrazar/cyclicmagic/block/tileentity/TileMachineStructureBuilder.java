@@ -64,7 +64,7 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
     // only rebuild shapes if they are different
     switch (buildType) {
       case CIRCLE:
-        shape = UtilShape.circle(this.getPos(), this.getSize() * 2);
+        shape = UtilShape.circleHorizontal(this.getPos(), this.getSize() * 2);
       break;
       case FACING:
         shape = UtilShape.line(this.getPos(), this.getCurrentFacing(), this.getSize());
@@ -79,7 +79,7 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
         shape = UtilShape.stairway(this.getPos(), this.getCurrentFacing(), this.getSize() * 2, true);
       break;
       case SPHERE:
-        shape = UtilShape.sphere(this.getPos(), this.getSize() * 2);
+        shape = UtilShape.sphere(this.getPos(), this.getSize());
       break;
     }
     if (buildType.hasHeight() && this.buildHeight > 1 ) { //first layer is already done, add remaining
@@ -424,13 +424,19 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
     TileMachineStructureBuilder.BuildType old = this.getBuildTypeEnum();
     TileMachineStructureBuilder.BuildType next = TileMachineStructureBuilder.BuildType.getNextType(old);
     this.setBuildType(next.ordinal());
-    this.rebuildShape();
   }
   @Override
   public void displayPreview() {
-    List<BlockPos> shape = this.rebuildShape();
+    List<BlockPos> shape;
+    if(this.buildType == BuildType.SPHERE.ordinal()){//spheres of bigger sizes just literally only render part then get cut off so
+     shape = UtilShape.circleHorizontal(this.getPos(), this.getSize() * 2) ;
+     shape.addAll(UtilShape.circleVertical(this.getPos(), this.getSize() * 2) );
+    }
+    else{
+      shape = this.rebuildShape();
+    }
     for (BlockPos pos : shape) {
-      UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, pos);
+      UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, pos,2);
     }
   }
 }
