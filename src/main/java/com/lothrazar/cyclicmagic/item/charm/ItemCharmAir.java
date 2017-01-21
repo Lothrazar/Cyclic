@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.item.charm;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.BaseCharm;
+import com.lothrazar.cyclicmagic.net.PacketPlayerFalldamage;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -10,6 +12,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class ItemCharmAir extends BaseCharm implements IHasRecipe {
+  private static final int TICKS_FALLDIST_SYNC = 22;//tick every so often
   private static final int durability = 512;
   public ItemCharmAir() {
     super(durability);
@@ -34,6 +37,10 @@ public class ItemCharmAir extends BaseCharm implements IHasRecipe {
       player.onGround = (player.motionX == 0 && player.motionZ == 0); //allow jump only if not walking
       if (player.getEntityWorld().rand.nextDouble() < 0.1) {
         super.damageCharm(player, stack);
+      }
+      if (world.isRemote && //setting fall distance on clientside wont work
+          player instanceof EntityPlayer && player.ticksExisted % TICKS_FALLDIST_SYNC == 0) {
+        ModCyclic.network.sendToServer(new PacketPlayerFalldamage());
       }
     }
   }

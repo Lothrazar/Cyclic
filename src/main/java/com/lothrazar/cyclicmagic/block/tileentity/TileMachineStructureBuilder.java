@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
-import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.util.UtilShape;
@@ -18,6 +17,18 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITickable {
+  final static int spotsSkippablePerTrigger = 50;
+  private static final int maxSpeed = 1;
+  public static final int TIMER_FULL = 10;// 100;//one day i will add fuel AND/OR speed upgrades. till then make very slow
+  private static final int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots
+  private static final String NBT_INV = "Inventory";
+  private static final String NBT_SLOT = "Slot";
+  private static final String NBT_TIMER = "Timer";
+  private static final String NBT_BUILDTYPE = "build";
+  private static final String NBT_SPEED = "speed";
+  private static final String NBT_SIZE = "size";
+  private static final String NBT_REDST = "redstone";
+  private static final String NBT_SHAPEINDEX = "shapeindex";
   private int timer;
   private int buildType;
   private int buildSpeed;
@@ -26,59 +37,59 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
   private int needsRedstone = 1;
   private ItemStack[] inv = new ItemStack[9];
   private int shapeIndex = 0;// current index of shape array
-  private List<BlockPos> shape = null;
-  private BlockPos nextPos;// location of next block to be placed
   public static int maxSize;
   public static int maxHeight = 10;
-  private static final int maxSpeed = 1;
-  public static final int TIMER_FULL = 100;//one day i will add fuel AND/OR speed upgrades. till then make very slow
-  private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots
-  private static final String NBT_INV = "Inventory";
-  private static final String NBT_SLOT = "Slot";
-  private static final String NBT_TIMER = "Timer";
-  private static final String NBT_NEXTPOS = "Pos";
-  private static final String NBT_BUILDTYPE = "build";
-  private static final String NBT_SHAPE = "shape";
-  private static final String NBT_SPEED = "speed";
-  private static final String NBT_SIZE = "size";
-  private static final String NBT_REDST = "redstone";
-  private static final String NBT_SHAPEINDEX = "shapeindex";
   public static enum Fields {
     TIMER, BUILDTYPE, SPEED, SIZE, HEIGHT, REDSTONE
   }
   public enum BuildType {
-    FACING, SQUARE, CIRCLE;
+    FACING, SQUARE, CIRCLE, SOLID, STAIRWAY, SPHERE;
     public static BuildType getNextType(BuildType btype) {
       int type = btype.ordinal();
       type++;
-      if (type > CIRCLE.ordinal()) {
+      if (type > SPHERE.ordinal()) {
         type = FACING.ordinal();
       }
       return BuildType.values()[type];
     }
+    public boolean hasHeight() {
+      if (this == STAIRWAY || this == SPHERE) 
+        return false;
+      return true;
+    }
   }
-  public void rebuildShape() {
+  public List<BlockPos> rebuildShape() {
     BuildType buildType = getBuildTypeEnum();
+    List<BlockPos> shape = new ArrayList<BlockPos>();
     // only rebuild shapes if they are different
     switch (buildType) {
       case CIRCLE:
-        this.shape = UtilShape.circle(this.pos, this.getSize() * 2);
+        shape = UtilShape.circleHorizontal(this.getPos(), this.getSize() * 2);
       break;
       case FACING:
-        this.shape = UtilShape.line(pos, this.getCurrentFacing(), this.getSize());
+        shape = UtilShape.line(this.getPos(), this.getCurrentFacing(), this.getSize());
       break;
       case SQUARE:
-        this.shape = UtilShape.squareHorizontalHollow(this.pos, this.getSize());
+        shape = UtilShape.squareHorizontalHollow(this.getPos(), this.getSize());
       break;
-      default:
+      case SOLID:
+        shape = UtilShape.squareHorizontalFull(this.getTargetCenter(), this.getSize());
+      break;
+      case STAIRWAY:
+        shape = UtilShape.stairway(this.getPos(), this.getCurrentFacing(), this.getSize() * 2, true);
+      break;
+      case SPHERE:
+        shape = UtilShape.sphere(this.getPos(), this.getSize());
       break;
     }
-    if (this.buildHeight > 1) { //first layer is already done, add remaining
-      this.shape = UtilShape.repeatShapeByHeight(shape, buildHeight - 1);
+    if (buildType.hasHeight() && this.buildHeight > 1 ) { //first layer is already done, add remaining
+      shape = UtilShape.repeatShapeByHeight(shape, buildHeight - 1);
     }
-    this.shapeIndex = 0;
-    if (this.shape.size() > 0)
-      this.nextPos = this.shape.get(this.shapeIndex);
+    return shape;
+  }
+  public BlockPos getTargetCenter() {
+    //move center over that much, not including exact horizontal
+    return this.getPos().offset(this.getCurrentFacing(), this.getSize() + 1);
   }
   @Override
   public int getSizeInventory() {
@@ -234,18 +245,19 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
     this.needsRedstone = tagCompound.getInteger(NBT_REDST);
     timer = tagCompound.getInteger(NBT_TIMER);
     shapeIndex = tagCompound.getInteger(NBT_SHAPEINDEX);
-    nextPos = UtilNBT.stringCSVToBlockPos(tagCompound.getString(NBT_NEXTPOS));// =
-    // tagCompound.getInteger(NBT_TIMER);
-    if (nextPos == null || (nextPos.getX() == 0 && nextPos.getY() == 0 && nextPos.getZ() == 0)) {
-      nextPos = this.pos;// fallback if it fails
-    }
-    this.shape = new ArrayList<BlockPos>();
-    NBTTagList sh = tagCompound.getTagList(NBT_SHAPE, 10);
-    for (int i = 0; i < sh.tagCount(); i++) {
-      NBTTagCompound tag = (NBTTagCompound) sh.getCompoundTagAt(i);
-      BlockPos pos = UtilNBT.stringCSVToBlockPos(tag.getString("shapepos"));
-      this.shape.add(pos);
-    }
+    //    
+    //    nextPos = UtilNBT.stringCSVToBlockPos(tagCompound.getString(NBT_NEXTPOS));// =
+    //    // tagCompound.getInteger(NBT_TIMER);
+    //    if (nextPos == null || (nextPos.getX() == 0 && nextPos.getY() == 0 && nextPos.getZ() == 0)) {
+    //      nextPos = this.pos;// fallback if it fails
+    //    }
+    /*
+     * this.shape = new ArrayList<BlockPos>(); NBTTagList sh =
+     * tagCompound.getTagList(NBT_SHAPE, 10); for (int i = 0; i < sh.tagCount();
+     * i++) { NBTTagCompound tag = (NBTTagCompound) sh.getCompoundTagAt(i);
+     * BlockPos pos = UtilNBT.stringCSVToBlockPos(tag.getString("shapepos"));
+     * this.shape.add(pos); }
+     */
     // for(BlockPos p : this.shape){
     //
     // NBTTagCompound tag = new NBTTagCompound();
@@ -270,20 +282,17 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
     tagCompound.setInteger(NBT_TIMER, timer);
     tagCompound.setInteger(NBT_REDST, this.needsRedstone);
     tagCompound.setInteger(NBT_SHAPEINDEX, this.shapeIndex);
-    if (nextPos == null || (nextPos.getX() == 0 && nextPos.getY() == 0 && nextPos.getZ() == 0)) {
-      nextPos = this.pos;// fallback if it fails
-    }
-    tagCompound.setString(NBT_NEXTPOS, UtilNBT.posToStringCSV(this.nextPos));
-    NBTTagList sh = new NBTTagList();
-    if (this.shape == null) {
-      this.shape = new ArrayList<BlockPos>();
-    }
-    for (BlockPos p : this.shape) {
-      NBTTagCompound tag = new NBTTagCompound();
-      tag.setString("shapepos", UtilNBT.posToStringCSV(p));
-      sh.appendTag(tag);
-    }
-    tagCompound.setTag(NBT_SHAPE, sh);
+    //    if (nextPos == null || (nextPos.getX() == 0 && nextPos.getY() == 0 && nextPos.getZ() == 0)) {
+    //      nextPos = this.pos;// fallback if it fails
+    //    }
+    //    tagCompound.setString(NBT_NEXTPOS, UtilNBT.posToStringCSV(this.nextPos));
+    /*
+     * NBTTagList sh = new NBTTagList(); if (this.shape == null) { this.shape =
+     * new ArrayList<BlockPos>(); } for (BlockPos p : this.shape) {
+     * NBTTagCompound tag = new NBTTagCompound(); tag.setString("shapepos",
+     * UtilNBT.posToStringCSV(p)); sh.appendTag(tag); }
+     * tagCompound.setTag(NBT_SHAPE, sh);
+     */
     NBTTagList itemList = new NBTTagList();
     for (int i = 0; i < inv.length; i++) {
       ItemStack stack = inv[i];
@@ -300,9 +309,6 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
     tagCompound.setInteger(NBT_SIZE, this.getSize());
     return super.writeToNBT(tagCompound);
   }
-  public BlockPos getNextPos() {
-    return this.nextPos;
-  }
   public boolean isBurning() {
     return this.timer > 0 && this.timer < TIMER_FULL;
   }
@@ -310,18 +316,22 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
   public void update() {
     shiftAllUp();
     boolean trigger = false;
-    if (nextPos == null || (nextPos.getX() == 0 && nextPos.getY() == 0 && nextPos.getZ() == 0)) {
-      nextPos = pos;// fallback if it fails
-    }
+    //
+    //    if (shape.size() > 0) {
+    //      BlockPos nextPos = shape.get(this.shapeIndex);
+    //    }
+    //    if (nextPos == null || (nextPos.getX() == 0 && nextPos.getY() == 0 && nextPos.getZ() == 0)) {
+    //      nextPos = pos;// fallback if it fails
+    //    }
     if (this.onlyRunIfPowered() && this.isPowered() == false) {
       // it works ONLY if its powered
       return;
     }
     this.spawnParticlesAbove();
     World world = getWorld();
-    if (!world.isRemote && nextPos != null && world.rand.nextDouble() < 0.1 && inv[0] != null) {
-      UtilParticle.spawnParticlePacket(EnumParticleTypes.DRAGON_BREATH, nextPos);
-    }
+    //    if (!world.isRemote && nextPos != null && world.rand.nextDouble() < 0.1 && inv[0] != null) {
+    //      UtilParticle.spawnParticlePacket(EnumParticleTypes.DRAGON_BREATH, nextPos);
+    //    }
     ItemStack stack = getStackInSlot(0);
     if (stack != null) {
       timer -= this.getSpeed();
@@ -329,49 +339,56 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
         timer = TIMER_FULL;
         trigger = true;
       }
-      else {
-        //timer is still moving, dont trigger. trigger stays false
-        //but while im here, check if this spot is even valid
-        if (world.isAirBlock(nextPos) == false) {
-          //but dont move instantly, slow it down to show some particles to show movement
-          if (world.rand.nextDouble() < 0.75) {
-            this.incrementPosition();
-          }
-        } //else its not air.. may or may not be valid so ignore
-      }
+      //      else {
+      //timer is still moving, dont trigger. trigger stays false
+      //but while im here, check if this spot is even valid
+      //        if (world.isAirBlock(nextPos) == false) {
+      //          //but dont move instantly, slow it down to show some particles to show movement
+      //          if (world.rand.nextDouble() < 0.75) {
+      //            this.incrementPosition();
+      //          }
+      //        } //else its not air.. may or may not be valid so ignore
+      //      }
     }
     if (trigger) {
       Block stuff = Block.getBlockFromItem(stack.getItem());
       if (stuff != null) {
+        List<BlockPos> shape = this.rebuildShape();
+        if (shape.size() == 0) { return; }
+        if (this.shapeIndex < 0 || this.shapeIndex >= shape.size()) {
+          this.shapeIndex = 0;
+        }
+        BlockPos nextPos = shape.get(this.shapeIndex);//start at current position and validate
+        for (int i = 0; i < spotsSkippablePerTrigger; i++) {
+          if (world.isAirBlock(nextPos)) { // check if this spot is even valid
+            break;//ok , target position is valid, we can build only into air
+          }
+          else {//cant build here. move up one
+            nextPos = shape.get(this.shapeIndex);
+            this.incrementPosition(shape);
+          } //but after inrementing once, we may not yet be valid so skip at most ten spots per tick
+        }
         IBlockState placeState = UtilItemStack.getStateFromMeta(stuff, stack.getMetadata());
         //ModMain.logger.info("try place " + this.nextPos + " type " + this.buildType + "_" + this.getBuildTypeEnum().name());
-        if (UtilPlaceBlocks.placeStateSafe(world, null, nextPos, placeState)) {
-          // UtilSound.playSoundPlaceBlock(world, nextPos, placeState.getBlock());
-          if (world.isRemote == false) {//consume item on server
-            this.decrStackSize(0, 1);
-          }
+        if (world.isRemote == false && world.isAirBlock(nextPos) && UtilPlaceBlocks.placeStateSafe(world, null, nextPos, placeState)) {
+          this.decrStackSize(0, 1);
         }
-        this.incrementPosition();// even if it didnt place; move along
       }
     }
   }
-  private void incrementPosition() {
-    if (this.nextPos == null) {
-      this.nextPos = this.pos;
-    }
-    if (this.getWorld() == null) { return; }
-    if (this.shape == null || this.shape.size() == 0) {
-      this.rebuildShape();
+  private void incrementPosition(List<BlockPos> shape) {
+    //    if (this.getWorld() == null) { return; }
+    if (shape == null || shape.size() == 0) {
+      return;
     }
     else {
       int c = shapeIndex + 1;
-      if (c < 0 || c >= this.shape.size()) {
+      if (c < 0 || c >= shape.size()) {
         c = 0;
       }
-      this.nextPos = this.shape.get(c);
       shapeIndex = c;
     }
-    this.markDirty();
+    //    this.markDirty();
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
@@ -407,15 +424,19 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
     TileMachineStructureBuilder.BuildType old = this.getBuildTypeEnum();
     TileMachineStructureBuilder.BuildType next = TileMachineStructureBuilder.BuildType.getNextType(old);
     this.setBuildType(next.ordinal());
-    this.rebuildShape();
   }
   @Override
   public void displayPreview() {
-    if (this.shape == null || this.shape.size() == 0) {
-      this.rebuildShape();
+    List<BlockPos> shape;
+    if(this.buildType == BuildType.SPHERE.ordinal()){//spheres of bigger sizes just literally only render part then get cut off so
+     shape = UtilShape.circleHorizontal(this.getPos(), this.getSize() * 2) ;
+     shape.addAll(UtilShape.circleVertical(this.getPos(), this.getSize() * 2) );
     }
-    for (BlockPos pos : this.shape) {
-      UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, pos);
+    else{
+      shape = this.rebuildShape();
+    }
+    for (BlockPos pos : shape) {
+      UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, pos,2);
     }
   }
 }

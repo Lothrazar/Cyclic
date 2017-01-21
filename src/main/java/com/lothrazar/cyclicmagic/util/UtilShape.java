@@ -16,7 +16,45 @@ public class UtilShape {
       }
     return newShape;
   }
-  public static List<BlockPos> circle(BlockPos pos, int diameter) {
+  //TODO: SHARE MORE CODE BTW CIRCLE horiz and vert
+
+  public static List<BlockPos> circleVertical(BlockPos pos, int diameter) {
+    int centerX = pos.getX();
+    int centerZ = pos.getY();
+    int w = (int) pos.getZ();
+    int radius = diameter / 2;
+    int y = radius;
+    int x = 0;
+    int d = 2 - (2 * radius);//dont use Diameter again, for integer roundoff
+    List<BlockPos> circleList = new ArrayList<BlockPos>();
+    do {
+      circleList.add(new BlockPos(centerX + x, centerZ + y, w));
+      circleList.add(new BlockPos(centerX + x, centerZ - y, w));
+      circleList.add(new BlockPos(centerX - x, centerZ + y, w));
+      circleList.add(new BlockPos(centerX - x, centerZ - y, w));
+      circleList.add(new BlockPos(centerX + y, centerZ + x, w));
+      circleList.add(new BlockPos(centerX + y, centerZ - x, w));
+      circleList.add(new BlockPos(centerX - y, centerZ + x, w));
+      circleList.add(new BlockPos(centerX - y, centerZ - x, w));
+      if (d < 0) {
+        d = d + (4 * x) + 6;
+      }
+      else {
+        d = d + 4 * (x - y) + 10;
+        y--;
+      }
+      x++;
+    }
+    while (x <= y);
+    Collections.sort(circleList, new Comparator<BlockPos>() {
+      @Override
+      public int compare(final BlockPos object1, final BlockPos object2) {
+        return (int) object1.getX() - object2.getX();
+      }
+    });
+    return circleList;
+  }
+  public static List<BlockPos> circleHorizontal(BlockPos pos, int diameter) {
     int centerX = pos.getX();
     int centerZ = pos.getZ();
     int height = (int) pos.getY();
@@ -136,9 +174,9 @@ public class UtilShape {
     }
     return shape;
   }
-  public static List<BlockPos> stairway(BlockPos position, EnumFacing pfacing, int want, boolean isLookingUp) {
+  public static List<BlockPos> stairway(BlockPos posCurrent, EnumFacing pfacing, int want, boolean isLookingUp) {
     List<BlockPos> shape = new ArrayList<BlockPos>();
-    BlockPos posCurrent = position.down().offset(pfacing);
+    //    BlockPos posCurrent = position.down().offset(pfacing);
     boolean goVert = false;
     for (int i = 1; i < want + 1; i++) {
       if (goVert) {
@@ -160,6 +198,26 @@ public class UtilShape {
     int skip = 1;
     for (int i = 1; i < want + 1; i = i + skip) {
       shape.add(pos.offset(efacing, i));
+    }
+    return shape;
+  }
+  public static List<BlockPos> sphere(BlockPos pos, int radius) {
+    List<BlockPos> shape = new ArrayList<BlockPos>();
+    //http://www.minecraftforge.net/forum/index.php?topic=24403.0
+    int x = pos.getX(), y = pos.getY(), z = pos.getZ();
+    int squareDistance;
+    int radiusInner = radius - 1;
+    int xCurr, yCurr, zCurr;
+    for (xCurr = x - radius; xCurr <= x + radius; xCurr++) {
+      for (yCurr = y - radius; yCurr <= y + radius; yCurr++) {
+        for (zCurr = z - radius; zCurr <= z + radius; zCurr++) {
+          squareDistance = (xCurr - x) * (xCurr - x) + (yCurr - y) * (yCurr - y) + (zCurr - z) * (zCurr - z);
+          if (squareDistance <= (radius * radius)
+              && squareDistance >= (radiusInner * radiusInner)) {//just to get the outline
+            shape.add(new BlockPos(xCurr, yCurr, zCurr));
+          }
+        }
+      }
     }
     return shape;
   }

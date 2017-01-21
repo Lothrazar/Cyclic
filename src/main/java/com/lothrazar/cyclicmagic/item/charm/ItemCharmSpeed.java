@@ -26,7 +26,6 @@ public class ItemCharmSpeed extends BaseCharm implements IHasRecipe {
   @Override
   public void onTick(ItemStack stack, EntityPlayer player) {
     if (!this.canTick(stack)) { return; }
-    
     UtilEntity.speedupEntityIfMoving(player);
     if (player.getEntityWorld().rand.nextDouble() < 0.1) {
       super.damageCharm(player, stack);
