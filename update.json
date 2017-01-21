@@ -99,5 +99,6 @@
   	,"1.9.15":"Update zh_CN lang file.  Config fix: claySize was missing from ocean category"
   	,"1.9.16":"New Item: Climbing Gloves - use any vertical surface as a ladder.  "
   	,"1.9.17":"New Item: Rod of Elevation.  Teleport yourself or any target entity to the nearest surface above.  "
+  	,"1.9.18":"Air Charm now helps prevent fall damage if you fall and then use it in midair.  Structure Builder now has new modes: Solid, Stairway, Sphere.  Fix an infrequent crash with Harvester when you break it while its still running and about to harvest.  "
   }
 }
