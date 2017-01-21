@@ -84,8 +84,7 @@ public class GuiBuilder extends GuiBaseContanerProgress {
       this.fontRendererObj.drawString(display, x, ySizeTxtbox + yOffset - 4, 4210752);
     }
 
-    boolean isStairway = (this.tile.getBuildTypeEnum() == BuildType.STAIRWAY);
-    if (this.tile.getHeight() > 0 && !isStairway) {
+    if (this.tile.getHeight() > 0 && this.tile.getBuildTypeEnum().hasHeight()) {
       String display = "" + this.tile.getHeight();
       //move it over if more than 1 digit
       int x = (display.length() > 1) ? xHeightTextbox - 3 : xHeightTextbox;
@@ -93,8 +92,6 @@ public class GuiBuilder extends GuiBaseContanerProgress {
     }
     int needsRed = tile.getField(TileMachineStructureBuilder.Fields.REDSTONE.ordinal());
     redstoneBtn.setState(needsRed);
-    //      redstoneBtn.setTextureIndex(needsRed);
-    //      redstoneBtn.setTooltips(Arrays.asList(UtilChat.lang("tile.redstone.button" + needsRed)));
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     updateDisabledButtons();
   }
@@ -104,9 +101,8 @@ public class GuiBuilder extends GuiBaseContanerProgress {
     this.btnHeightDown.enabled = (this.tile.getHeight() > 1);
     this.btnHeightUp.enabled = (this.tile.getHeight() < TileMachineStructureBuilder.maxHeight);
     //a semi hack to hide btns
-    boolean isStairway = (this.tile.getBuildTypeEnum() == BuildType.STAIRWAY);
-    this.btnHeightDown.visible = !isStairway;
-    this.btnHeightUp.visible = !isStairway;
+    this.btnHeightDown.visible = this.tile.getBuildTypeEnum().hasHeight();
+    this.btnHeightUp.visible = this.tile.getBuildTypeEnum().hasHeight();
     
   }
   @Override

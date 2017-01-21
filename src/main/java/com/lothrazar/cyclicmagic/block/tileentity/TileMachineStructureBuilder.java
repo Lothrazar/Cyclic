@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
-import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.util.UtilShape;
@@ -53,6 +52,11 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
       }
       return BuildType.values()[type];
     }
+    public boolean hasHeight() {
+      if (this == STAIRWAY || this == SPHERE) 
+        return false;
+      return true;
+    }
   }
   public List<BlockPos> rebuildShape() {
     BuildType buildType = getBuildTypeEnum();
@@ -78,8 +82,7 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
         shape = UtilShape.sphere(this.getPos(), this.getSize() * 2);
       break;
     }
-    //hotfix: no height for stairway
-    if (this.buildHeight > 1 && buildType != BuildType.STAIRWAY && buildType != BuildType.SPHERE) { //first layer is already done, add remaining
+    if (buildType.hasHeight() && this.buildHeight > 1 ) { //first layer is already done, add remaining
       shape = UtilShape.repeatShapeByHeight(shape, buildHeight - 1);
     }
     return shape;
