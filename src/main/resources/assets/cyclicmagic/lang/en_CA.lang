@@ -33,6 +33,7 @@ builder.toggle.name=Toggle
 buildertype.circle.name=Circle
 buildertype.facing.name=Facing
 buildertype.solid.name=Solid
+buildertype.sphere.name=Sphere
 buildertype.square.name=Square
 buildertype.stairway.name=Stairway
 buildertype.up.name=Up
