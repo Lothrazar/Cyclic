@@ -355,7 +355,7 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
         if (this.shapeIndex < 0 || this.shapeIndex >= shape.size()) {
           this.shapeIndex = 0;
         }
-        BlockPos nextPos = shape.get(this.shapeIndex);//now this is valid
+        BlockPos nextPos = shape.get(this.shapeIndex);//start at current position and validate
         for (int i = 0; i < spotsSkippablePerTrigger; i++) {
           if (world.isAirBlock(nextPos)) { // check if this spot is even valid
             break;//ok , target position is valid, we can build only into air
@@ -367,11 +367,8 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
         }
         IBlockState placeState = UtilItemStack.getStateFromMeta(stuff, stack.getMetadata());
         //ModMain.logger.info("try place " + this.nextPos + " type " + this.buildType + "_" + this.getBuildTypeEnum().name());
-        if (world.isRemote == false &&world.isAirBlock(nextPos)&& UtilPlaceBlocks.placeStateSafe(world, null, nextPos, placeState)) {
-          //          if (world.isRemote == false) {//consume item on server
+        if (world.isRemote == false && world.isAirBlock(nextPos) && UtilPlaceBlocks.placeStateSafe(world, null, nextPos, placeState)) {
           this.decrStackSize(0, 1);
-          //          }
-          this.incrementPosition(shape);// even if it didnt place; move along
         }
       }
     }
@@ -388,7 +385,7 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
       }
       shapeIndex = c;
     }
-//    this.markDirty();
+    //    this.markDirty();
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
