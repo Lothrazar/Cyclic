@@ -64,10 +64,10 @@ public class MountedTweaksModule extends BaseEventModule implements IHasConfig {
       World world = playerRider.getEntityWorld();
       int eid = playerRider.getEntityData().getInteger(KEY_MOUNTENTITY);
       if (eid >= 0) {
-        Entity e = world.getEntityByID(eid);
-        if (e != null && e instanceof EntityLivingBase) {//compat with riding ender pearl
+        Entity maybeHorse = world.getEntityByID(eid);
+        if (maybeHorse != null && maybeHorse.isDead == false) {
           //if we were dismounted from an ender pearl, get and consume this entity id, wiping it out for next time
-          if (playerRider.startRiding(e, true)) {
+          if (playerRider.startRiding(maybeHorse, true)) {
             playerRider.getEntityData().removeTag(KEY_MOUNTENTITY);//.setInteger(KEY_MOUNTENTITY, -1);
           }
         }
