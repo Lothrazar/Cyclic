@@ -8,8 +8,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.GuiIngameForge;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.event.entity.EntityMountEvent;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -57,21 +57,18 @@ public class MountedTweaksModule extends BaseEventModule implements IHasConfig {
         "Enderpearls work on a horse, bringing it with you");
   }
   @SubscribeEvent
-  public void onEntityMount(EntityMountEvent event) {
-    //has to always be on regardless of mountedPearl flag, in case it gets changed mid use.. this is just second half
-    Entity maybeHorse = event.getEntityBeingMounted();//can be null!!
-    Entity maybePlayer = event.getEntityMounting();
-    World world = event.getWorldObj();
-    if (maybeHorse != null && maybeHorse instanceof EntityLivingBase && event.isDismounting() && maybePlayer instanceof EntityPlayer && maybePlayer != null) {
-      EntityPlayer playerRider = (EntityPlayer) maybePlayer;
-      if (playerRider.getEntityData().hasKey(KEY_MOUNTENTITY)) {
-        int eid = playerRider.getEntityData().getInteger(KEY_MOUNTENTITY);
-        if (eid >= 0) {
-          Entity e = world.getEntityByID(eid);
-          if (e != null && e instanceof EntityLivingBase) {//compat with riding ender pearl
-            //if we were dismounted from an ender pearl, get and consume this entity id, wiping it out for next time
-            playerRider.startRiding(e, true);
-            playerRider.getEntityData().setInteger(KEY_MOUNTENTITY, -1);
+  public void onEntityUpdate(LivingUpdateEvent event) {
+    EntityLivingBase playerRider = event.getEntityLiving();
+    if (playerRider != null && playerRider instanceof EntityPlayer && playerRider.getEntityData().hasKey(KEY_MOUNTENTITY)
+        && playerRider.isRiding() == false) {
+      World world = playerRider.getEntityWorld();
+      int eid = playerRider.getEntityData().getInteger(KEY_MOUNTENTITY);
+      if (eid >= 0) {
+        Entity e = world.getEntityByID(eid);
+        if (e != null && e instanceof EntityLivingBase) {//compat with riding ender pearl
+          //if we were dismounted from an ender pearl, get and consume this entity id, wiping it out for next time
+          if (playerRider.startRiding(e, true)) {
+            playerRider.getEntityData().removeTag(KEY_MOUNTENTITY);//.setInteger(KEY_MOUNTENTITY, -1);
           }
         }
       }
@@ -83,10 +80,10 @@ public class MountedTweaksModule extends BaseEventModule implements IHasConfig {
       Entity rider = event.getEntity();
       if (rider != null && rider instanceof EntityPlayer && rider.getRidingEntity() != null) {
         EntityPlayer playerRider = (EntityPlayer) rider;
-        //Entity horse = playerRider.getRidingEntity();
+        Entity maybeHorse = playerRider.getRidingEntity();
         //take the players horse and set its position to the target
         event.getEntity().getRidingEntity().setPositionAndUpdate(event.getTargetX(), event.getTargetY(), event.getTargetZ());
-        playerRider.getEntityData().setInteger(KEY_MOUNTENTITY, event.getEntity().getRidingEntity().getEntityId());
+        playerRider.getEntityData().setInteger(KEY_MOUNTENTITY, maybeHorse.getEntityId());
       }
     }
   }
