@@ -5,8 +5,8 @@
     "1.9.4-recommended":  "1.2.0",
     "1.10-latest":  "1.1.0",
     "1.10-recommended": "1.1.0",
-    "1.10.2-latest":  "1.9.18",
-    "1.10.2-recommended": "1.9.18"
+    "1.10.2-latest":  "1.9.19",
+    "1.10.2-recommended": "1.9.19"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -100,5 +100,6 @@
   	,"1.9.16":"New Item: Climbing Gloves - use any vertical surface as a ladder.  "
   	,"1.9.17":"New Item: Rod of Elevation.  Teleport yourself or any target entity to the nearest surface above.  "
   	,"1.9.18":"Air Charm now helps prevent fall damage if you fall and then use it in midair.  Fix the Structure Builder sometimes placing ghost blocks.  Structure Builder now has new modes: Solid, Stairway, Sphere.  Fix an infrequent crash with Harvester when you break it while its still running and about to harvest.  "
+  	,"1.9.19":"Fix a crash caused by Cyclic when throwing an ender pearl while riding a mount (feature causing this is config>player>PearlsOnHorseback). "
   }
 }
