@@ -114,9 +114,12 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
   public boolean isBurning() {
     return this.timer > 0 && this.timer < TIMER_FULL;
   }
+  public boolean isRunning(){
+    return !(this.onlyRunIfPowered() && this.isPowered() == false);//TODO: hotfix/sharedcode/baseclas
+  }
   @Override
   public void update() {
-    if (this.onlyRunIfPowered() && this.isPowered() == false) {
+    if (this.isRunning()) {
       //it works ONLY if its powered
       return;
     }
