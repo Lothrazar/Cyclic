@@ -1,10 +1,12 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 import com.google.common.base.Function;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
@@ -36,7 +38,7 @@ public class UncrafterTESR extends TileEntitySpecialRenderer<TileMachineUncrafte
     // for rendering
     if (bakedModel == null) {
       try {
-        model = ModelLoaderRegistry.getModel(new ResourceLocation(Const.MODID, "block/uncrafting_block_west"));
+        model = ModelLoaderRegistry.getModel(new ResourceLocation(Const.MODID, "block/uncrafting_block_head"));
       }
       catch (Exception e) {
         throw new RuntimeException(e);
@@ -59,19 +61,27 @@ public class UncrafterTESR extends TileEntitySpecialRenderer<TileMachineUncrafte
     GlStateManager.translate(x, y, z);
     GlStateManager.disableRescaleNormal();
     // Render the rotating handles
-    renderHandles(te);
-    // Render our item
     renderItem(te);
+  renderHandles(te);
+    // Render our item
     GlStateManager.popMatrix();
     GlStateManager.popAttrib();
   }
   private void renderHandles(TileMachineUncrafter te) {
     GlStateManager.pushMatrix();
     //two translates: one to move the axis and one to center it on the block
-    GlStateManager.translate(.5, 0, .5);
+//    GlStateManager.translate(.5, 0, .5);
     long angle = (System.currentTimeMillis() / 10) % 360;
-    GlStateManager.rotate(angle, 0, 1, 0);
-    GlStateManager.translate(-.5, 0, -.5);
+//    GlStateManager.rotate(angle, 0, 1, 0);
+//    GlStateManager.translate(-.5, 0, -.5);
+//    
+//   GlStateManager.scale(2,angle/360,3);
+    //from 0 to -0.7
+    double currTenthOfSec = System.currentTimeMillis()/100;//move speed
+    double ratio = (currTenthOfSec % 8)/10.00;//this is dong modulo 0.8 since there are 8 locations to move over
+
+   GlStateManager.translate(0, 0, -1*ratio);
+    
     RenderHelper.disableStandardItemLighting();
     this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
     if (Minecraft.isAmbientOcclusionEnabled()) {
@@ -99,12 +109,23 @@ public class UncrafterTESR extends TileEntitySpecialRenderer<TileMachineUncrafte
     ItemStack stack = te.getStackInSlot(0);
     // System.out.println("renderItem"+stack);
     if (stack != null) {
-      RenderHelper.enableStandardItemLighting();
-      //            GlStateManager.enableLighting();
+//      RenderHelper.enableStandardItemLighting();//wwwwwhy this not work?
+//              GlStateManager.enableLighting();
       GlStateManager.pushMatrix();
+      
+      //start of rotate
+      GlStateManager.translate(.5, 0, .5);
+      long angle = (System.currentTimeMillis() / 10) % 360;
+      GlStateManager.rotate(angle, 0, 1, 0);
+      GlStateManager.translate(-.5, 0, -.5);
+      //end of rotate
+      
+      
       // Translate to the center of the block and .9 points higher
-      GlStateManager.translate(.5, 1.1, .5);
+      GlStateManager.translate(.5, 1, .5);
       GlStateManager.scale(.4f, .4f, .4f);
+//      GlStateManager.glLightModel(2899, RenderHelper.setColorBuffer(0.9F, 0.4F, 0.9F, 1.0F));
+//      RenderItem.renderInFrame = true;
       Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.NONE);
       GlStateManager.popMatrix();
     }
