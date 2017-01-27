@@ -1,13 +1,11 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
 import com.google.common.base.Function;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
@@ -16,7 +14,6 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -34,18 +31,23 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  *
  */
 @SideOnly(Side.CLIENT)
-public class CyclicBaseTESR<T extends TileEntityBaseMachineInvo> extends TileEntitySpecialRenderer<T> {
+public abstract class CyclicMachineBaseTESR<T extends TileEntityBaseMachineInvo> extends TileEntitySpecialRenderer<T> {
   private IModel model;
   private IBakedModel bakedModel;
   private String resource;
   protected int itemSlotAbove;
-  public CyclicBaseTESR(String res, int slot) {
+  public CyclicMachineBaseTESR(String res, int slot) {
     this.resource = res;
     this.itemSlotAbove = slot;
   }
+  /**
+   * override this in your main class to call other animation hooks
+   * 
+   * @param te
+   */
+  public abstract void render(TileEntityBaseMachineInvo te);
   protected IBakedModel getBakedModel() {
     // Since we cannot bake in preInit() we do lazy baking of the model as soon as we need it
-    // for rendering
     if (bakedModel == null) {
       try {
         model = ModelLoaderRegistry.getModel(new ResourceLocation(Const.MODID, resource));
@@ -63,28 +65,27 @@ public class CyclicBaseTESR<T extends TileEntityBaseMachineInvo> extends TileEnt
     }
     return bakedModel;
   }
-    @Override
-    public void renderTileEntityAt(TileEntityBaseMachineInvo te, double x, double y, double z, float partialTicks, int destroyStage) {
-      GlStateManager.pushAttrib();
-      GlStateManager.pushMatrix();
-      // Translate to the location of our tile entity
-      GlStateManager.translate(x, y, z);
-      GlStateManager.disableRescaleNormal();
-      // Render the rotating handles
-      if (te.isRunning()){
-        renderAnimation(te);
-
-        ItemStack stack = te.getStackInSlot(0);
-        if (stack != null)
-          renderItem(te, stack);
-      }
-      // Render our item
-      GlStateManager.popMatrix();
-      GlStateManager.popAttrib();
+  @Override
+  public void renderTileEntityAt(TileEntityBaseMachineInvo te, double x, double y, double z, float partialTicks, int destroyStage) {
+    GlStateManager.pushAttrib();
+    GlStateManager.pushMatrix();
+    // Translate to the location of our tile entity
+    GlStateManager.translate(x, y, z);
+    GlStateManager.disableRescaleNormal();
+    if (te.isRunning()) {
+      this.render(te);
     }
+    GlStateManager.popMatrix();
+    GlStateManager.popAttrib();
+  }
   protected void renderAnimation(TileEntityBaseMachineInvo te) {
     GlStateManager.pushMatrix();
-    //    long angle = (System.currentTimeMillis() / 10) % 360;
+    EnumFacing facing = te.getCurrentFacing();
+    if (facing == EnumFacing.NORTH || facing == EnumFacing.SOUTH) {
+      GlStateManager.rotate(90, 0, 1, 0);
+      GlStateManager.translate(-1, 0, 0);//fix position and such
+    }
+    ////do the sliding across animation
     double currTenthOfSec = System.currentTimeMillis() / 100;//move speed
     double ratio = (currTenthOfSec % 8) / 10.00;//this is dong modulo 0.8 since there are 8 locations to move over
     GlStateManager.translate(0, 0, -1 * ratio);

@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -10,8 +11,16 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  *
  */
 @SideOnly(Side.CLIENT)
-public class UncrafterTESR extends CyclicBaseTESR<TileMachineUncrafter> {
-  public UncrafterTESR(){
-    super("block/uncrafting_block_head",0);
+public class UncrafterTESR extends CyclicMachineBaseTESR<TileMachineUncrafter> {
+  public UncrafterTESR() {
+    super("block/uncrafting_block_head", 0);
+  }
+  @Override
+  public void render(TileEntityBaseMachineInvo te) {
+    renderAnimation(te);
+    ItemStack stack = te.getStackInSlot(this.itemSlotAbove);
+    if (stack != null) {
+      renderItem(te, stack);
+    }
   }
 }
