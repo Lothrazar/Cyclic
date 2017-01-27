@@ -35,7 +35,7 @@ public abstract class BaseMachineTesr<T extends TileEntityBaseMachineInvo> exten
   private IModel model;
   private IBakedModel bakedModel;
   private String resource;
-  protected int itemSlotAbove;
+  protected int itemSlotAbove = -1;
   public BaseMachineTesr(String res, int slot) {
     this.resource = res;
     this.itemSlotAbove = slot;
