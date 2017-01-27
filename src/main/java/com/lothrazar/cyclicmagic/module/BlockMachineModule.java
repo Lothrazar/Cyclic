@@ -36,7 +36,6 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
   private boolean enableMinerSmart;
   private boolean enableUser;
   private boolean enablePattern;
-  public static BlockUncrafting uncrafting_block;
   public void onInit() {
     if (enablePattern) {
       BlockPatternBuilder builder_pattern = new BlockPatternBuilder();
@@ -55,7 +54,7 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
       ConfigRegistry.register(harvester_block);
     }
     if (enableUncrafter) {
-       uncrafting_block = new BlockUncrafting();
+      BlockUncrafting uncrafting_block = new BlockUncrafting();
       BlockRegistry.registerBlock(uncrafting_block, "uncrafting_block");
       GameRegistry.registerTileEntity(TileMachineUncrafter.class, "uncrafting_block_te");
     }

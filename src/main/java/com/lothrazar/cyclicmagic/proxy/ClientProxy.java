@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.proxy;
 import org.lwjgl.input.Keyboard;
+import com.lothrazar.cyclicmagic.block.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityBlazeBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDungeonEye;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamite;
@@ -164,14 +165,14 @@ public class ClientProxy extends CommonProxy {
       item = Item.getItemFromBlock(b);
       name = Const.MODRES + b.getUnlocalizedName().replaceAll("tile.", "");
       mesher.register(item, 0, new ModelResourceLocation(name, "inventory"));
+      if(b instanceof IBlockHasTESR){
+        ((IBlockHasTESR)b).initModel();
+      }
     }
     for (String key : ItemRegistry.itemMap.keySet()) {
       item = ItemRegistry.itemMap.get(key);
       name = Const.MODRES + item.getUnlocalizedName().replaceAll("item.", "");
       mesher.register(item, 0, new ModelResourceLocation(name, "inventory"));
-    }
-    if(BlockMachineModule.uncrafting_block!=null){
-      BlockMachineModule.uncrafting_block.initModel();
     }
   }
   @SideOnly(Side.CLIENT)
