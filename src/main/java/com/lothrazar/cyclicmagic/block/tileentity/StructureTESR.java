@@ -11,9 +11,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  *
  */
 @SideOnly(Side.CLIENT)
-public class UncrafterTESR extends CyclicMachineBaseTESR<TileMachineUncrafter> {
-  public UncrafterTESR() {
-    super("tesr/uncrafting_slice", 0);
+public class StructureTESR extends CyclicMachineBaseTESR<TileMachineStructureBuilder> {
+  public StructureTESR() {
+    super("tesr/structure_slice", 0);
   }
   @Override
   public void render(TileEntityBaseMachineInvo te) {

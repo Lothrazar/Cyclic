@@ -1,9 +1,6 @@
 { 
   "parent": "block/cube_all",
-    "textures": {
-        "4": "blocks/diamond_block"
-    }
-	,"elements":[
+    "elements":[
 	
         {
             "from": [ 1.0, 14.0, 12.0 ], 
