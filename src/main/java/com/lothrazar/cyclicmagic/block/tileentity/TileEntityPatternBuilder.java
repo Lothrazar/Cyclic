@@ -69,7 +69,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     }
     return slot;
   }
-  private boolean onlyRunIfPowered() {
+  public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
   @Override
@@ -77,7 +77,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     if (this.renderParticles == 1) {
       this.renderBoundingBoxes();
     }
-    if (this.onlyRunIfPowered() && this.isPowered() == false) {
+    if (!isRunning()) {
       // it works ONLY if its powered
       return;
     }

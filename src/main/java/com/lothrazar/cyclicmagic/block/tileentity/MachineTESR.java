@@ -11,9 +11,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  *
  */
 @SideOnly(Side.CLIENT)
-public class StructureTESR extends CyclicMachineBaseTESR<TileMachineStructureBuilder> {
-  public StructureTESR() {
-    super("tesr/structure_slice", 0);
+public class MachineTESR extends BaseMachineTesr<TileEntityBaseMachineInvo> {
+  public MachineTESR(String res, int slot) {
+    super(res,slot);
   }
   @Override
   public void render(TileEntityBaseMachineInvo te) {

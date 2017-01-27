@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.block;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter;
-import com.lothrazar.cyclicmagic.block.tileentity.UncrafterTESR;
+import com.lothrazar.cyclicmagic.block.tileentity.MachineTESR;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilUncraft;
@@ -36,7 +36,7 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     // Bind our TESR to our tile entity
-    ClientRegistry.bindTileEntitySpecialRenderer(TileMachineUncrafter.class, new UncrafterTESR());
+    ClientRegistry.bindTileEntitySpecialRenderer(TileMachineUncrafter.class, new MachineTESR("tesr/uncrafting_slice", 0));
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {

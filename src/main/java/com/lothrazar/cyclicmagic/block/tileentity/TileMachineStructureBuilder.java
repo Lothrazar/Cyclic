@@ -174,7 +174,7 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
       break;
       }
   }
-  private boolean onlyRunIfPowered() {
+  public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
   public int getTimer() {
@@ -312,6 +312,10 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
   public boolean isBurning() {
     return this.timer > 0 && this.timer < TIMER_FULL;
   }
+
+  public boolean isRunning(){
+    return !this.onlyRunIfPowered() || this.isPowered();
+  }
   @Override
   public void update() {
     shiftAllUp();
@@ -323,8 +327,7 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
     //    if (nextPos == null || (nextPos.getX() == 0 && nextPos.getY() == 0 && nextPos.getZ() == 0)) {
     //      nextPos = pos;// fallback if it fails
     //    }
-    if (this.onlyRunIfPowered() && this.isPowered() == false) {
-      // it works ONLY if its powered
+    if (!isRunning()) {
       return;
     }
     this.spawnParticlesAbove();

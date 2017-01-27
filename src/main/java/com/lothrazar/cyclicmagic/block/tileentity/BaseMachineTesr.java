@@ -31,12 +31,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  *
  */
 @SideOnly(Side.CLIENT)
-public abstract class CyclicMachineBaseTESR<T extends TileEntityBaseMachineInvo> extends TileEntitySpecialRenderer<T> {
+public abstract class BaseMachineTesr<T extends TileEntityBaseMachineInvo> extends TileEntitySpecialRenderer<T> {
   private IModel model;
   private IBakedModel bakedModel;
   private String resource;
   protected int itemSlotAbove;
-  public CyclicMachineBaseTESR(String res, int slot) {
+  public BaseMachineTesr(String res, int slot) {
     this.resource = res;
     this.itemSlotAbove = slot;
   }

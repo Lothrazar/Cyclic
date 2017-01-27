@@ -72,7 +72,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
   }
   @Override
   public void update() {
-    if (!(this.onlyRunIfPowered() && this.isPowered() == false)) {
+    if (isRunning()) {
       this.spawnParticlesAbove();
     }
     World world = getWorld();
@@ -83,7 +83,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
       if (targetPos == null) {
         targetPos = pos.offset(this.getCurrentFacing()); //not sure if this is needed
       }
-      if (!(this.onlyRunIfPowered() && this.isPowered() == false)) {
+      if (isRunning()) {
         if (isCurrentlyMining == false) { //we can mine but are not currently. so try moving to a new position
           updateTargetPos();
         }
@@ -371,7 +371,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
     }
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
-  private boolean onlyRunIfPowered() {
+  public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
   @Override

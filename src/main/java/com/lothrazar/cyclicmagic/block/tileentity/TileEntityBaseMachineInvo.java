@@ -97,7 +97,4 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     // TODO Auto-generated method stub
     return new int[] {};
   }
-  public boolean isRunning(){
-    return true;//TODO: merge with the IRedstonetoggle somehow eh
-  }
 }

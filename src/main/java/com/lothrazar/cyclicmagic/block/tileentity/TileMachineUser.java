@@ -61,7 +61,7 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
   @Override
   public void update() {
     this.shiftAllUp();
-    if (!(this.onlyRunIfPowered() && this.isPowered() == false)) {
+    if (isRunning()) {
       this.spawnParticlesAbove();
     }
     World world = getWorld();
@@ -75,7 +75,7 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
         }
       }
       ItemStack maybeTool = tryEquipItem();
-      if (!(this.onlyRunIfPowered() && this.isPowered() == false)) {
+      if (isRunning()) {
         timer -= this.getSpeed();
         if (timer <= 0) {
           timer = 0;
@@ -323,7 +323,7 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
     int val = (this.rightClickIfZero == 1) ? 0 : 1;
     this.setField(Fields.LEFTRIGHT.ordinal(), val);
   }
-  private boolean onlyRunIfPowered() {
+  public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
 }
