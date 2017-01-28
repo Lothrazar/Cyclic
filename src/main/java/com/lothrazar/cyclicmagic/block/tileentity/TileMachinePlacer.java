@@ -132,7 +132,7 @@ public class TileMachinePlacer extends TileEntityBaseMachineInvo implements ITil
   public void update() {
     shiftAllUp();
     boolean trigger = false;
-    if (this.onlyRunIfPowered() && this.isPowered() == false) {
+    if (!isRunning()) {
       // it works ONLY if its powered
       markDirty();
       return;
@@ -192,7 +192,7 @@ public class TileMachinePlacer extends TileEntityBaseMachineInvo implements ITil
     }
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
-  private boolean onlyRunIfPowered() {
+  public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
 }

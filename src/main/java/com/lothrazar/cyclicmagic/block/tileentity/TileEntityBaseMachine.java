@@ -15,6 +15,12 @@ public abstract class TileEntityBaseMachine extends TileEntity {
   public boolean isPowered() {
     return this.getWorld().isBlockPowered(this.getPos());
   }
+  public boolean isRunning(){
+    return !this.onlyRunIfPowered() || this.isPowered();//TODO: hotfix/sharedcode/baseclas
+  }
+  public boolean onlyRunIfPowered() {
+    return false;//default is no, dont only run if powered, just go
+  }
   protected EnumFacing getCurrentFacing() {
     BlockBaseFacing b = ((BlockBaseFacing) this.getBlockType());
     EnumFacing facing;

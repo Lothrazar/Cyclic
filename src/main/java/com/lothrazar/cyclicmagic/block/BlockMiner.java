@@ -1,20 +1,28 @@
 package com.lothrazar.cyclicmagic.block;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.block.tileentity.MachineTESR;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineBlockMiner;
+import com.lothrazar.cyclicmagic.block.tileentity.TileMachineStructureBuilder;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockMiner extends BlockBaseFacingInventory implements IHasRecipe {
+public class BlockMiner extends BlockBaseFacingInventory implements IHasRecipe, IBlockHasTESR {
   public static final PropertyDirection PROPERTYFACING = BlockBaseFacing.PROPERTYFACING;
   public static enum MinerType {
     SINGLE, TUNNEL
@@ -36,6 +44,12 @@ public class BlockMiner extends BlockBaseFacingInventory implements IHasRecipe {
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileMachineBlockMiner();
+  }
+  @SideOnly(Side.CLIENT)
+  public void initModel() {
+    ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+    // Bind our TESR to our tile entity
+    ClientRegistry.bindTileEntitySpecialRenderer(TileMachineBlockMiner.class, new MachineTESR(this.getUnlocalizedName(), 0));
   }
   @Override
   public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {

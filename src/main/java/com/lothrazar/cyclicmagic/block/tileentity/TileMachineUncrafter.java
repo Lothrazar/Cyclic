@@ -113,10 +113,11 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
   }
   public boolean isBurning() {
     return this.timer > 0 && this.timer < TIMER_FULL;
-  }
+  } 
+  
   @Override
   public void update() {
-    if (this.onlyRunIfPowered() && this.isPowered() == false) {
+    if (!this.isRunning()) {
       //it works ONLY if its powered
       return;
     }
@@ -234,7 +235,7 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
     }
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
-  private boolean onlyRunIfPowered() {
+  public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
 }
