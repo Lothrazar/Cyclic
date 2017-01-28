@@ -10,6 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
@@ -63,13 +64,13 @@ public class ItemToolExtinguish extends BaseTool implements IHasRecipe {
   @Override
   public void addRecipe() {
     GameRegistry.addShapedRecipe(new ItemStack(this),
-        "wdw",
-        "iwi",
-        " o ",
-        'w', new ItemStack(Items.WATER_BUCKET),
-        'd', new ItemStack(Blocks.MAGMA), //magma block
-        'o', new ItemStack(Blocks.OBSIDIAN),
-        'i', new ItemStack(Blocks.ICE));
+         "mwm",
+         "rwr",
+         " i ",
+         'w', new ItemStack(Items.WATER_BUCKET),   
+         'm', new ItemStack(Blocks.MAGMA), //magma'm', new ItemStack(Blocks.MAGMA), 
+         'r', new ItemStack(Items.DYE,1,EnumDyeColor.RED.getDyeDamage()), 
+         'i', new ItemStack(Items.IRON_INGOT));
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {

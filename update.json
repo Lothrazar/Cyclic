@@ -101,6 +101,6 @@
   	,"1.9.17":"New Item: Rod of Elevation.  Teleport yourself or any target entity to the nearest surface above.  "
   	,"1.9.18":"Air Charm now helps prevent fall damage if you fall and then use it in midair.  Fix the Structure Builder sometimes placing ghost blocks.  Structure Builder now has new modes: Solid, Stairway, Sphere.  Fix an infrequent crash with Harvester when you break it while its still running and about to harvest.  "
   	,"1.9.19":"Fix a crash caused by Cyclic when throwing an ender pearl while riding a mount (feature causing this is config>player>PearlsOnHorseback). "
-  	,"1.10.0":"Machine animations.  Fire killer new name and texture. "
+  	,"1.10.0":"Machine animations.  Many items have new names, recipes, or textures.  "
   }
 }
