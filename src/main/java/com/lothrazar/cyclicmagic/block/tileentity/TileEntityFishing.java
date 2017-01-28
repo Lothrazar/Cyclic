@@ -32,7 +32,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   public static final int RODSLOT = 1;
   public static final int FISHSLOTS = 15;
   public static final int MINIMUM_WET_SIDES = 2;
-  public static final float SPEEDFACTOR = 0.00099F;//// bigger == faster
+  public static final float SPEEDFACTOR = 0.00089F;//// bigger == faster
   private int toolSlot = 0;
   public ArrayList<Block> waterBoth = new ArrayList<Block>();
   private ItemStack[] inv;
@@ -75,8 +75,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
    */
   public int countWaterFlowing() {
     int cov = 0;
-    List<BlockPos> areas = UtilShape.cubeFilled(this.getPos(), 1, 1);
-    System.out.println("size" + areas.size());
+    List<BlockPos> areas = this.getWaterArea();
     World world = this.getWorld();
     for (BlockPos adj : areas) {
       if (world.getBlockState(adj).getBlock() == Blocks.FLOWING_WATER)
@@ -84,9 +83,12 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     }
     return cov;
   }
+  private List<BlockPos> getWaterArea() {
+    return UtilShape.cubeFilled(this.getPos().down(2), 2, 2);
+  }
   public int countWater() {
     int cov = 0;
-    List<BlockPos> areas = UtilShape.cubeFilled(this.getPos(), 1, 1);
+    List<BlockPos> areas = getWaterArea();
     World world = this.getWorld();
     for (BlockPos adj : areas) {
       if (world.getBlockState(adj).getBlock() == Blocks.WATER)
@@ -144,13 +146,10 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
       }
     }
   }
-  public int getSpeedInt() {
-    return (int) (this.getSpeed() * 1000);
-  }
   public double getSpeed() {
     //flowing water is usually zero, unless water levels are constantly fluctuating then it spikes
-    int sides = this.countWaterFlowing() * 4   + this.countWater();// water in motion worth more so it varies a bit
-    int mult = (sides * sides) / 2;
+    int mult = this.countWaterFlowing() * 4   + this.countWater();// water in motion worth more so it varies a bit
+
     double randFact = 0;
     if (Math.random() > 0.9) {
       randFact = Math.random() / 10000;
