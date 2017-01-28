@@ -101,6 +101,6 @@
   	,"1.9.17":"New Item: Rod of Elevation.  Teleport yourself or any target entity to the nearest surface above.  "
   	,"1.9.18":"Air Charm now helps prevent fall damage if you fall and then use it in midair.  Fix the Structure Builder sometimes placing ghost blocks.  Structure Builder now has new modes: Solid, Stairway, Sphere.  Fix an infrequent crash with Harvester when you break it while its still running and about to harvest.  "
   	,"1.9.19":"Fix a crash caused by Cyclic when throwing an ender pearl while riding a mount (feature causing this is config>player>PearlsOnHorseback). "
-  	,"1.10.0":"Machines now have animations when running.  Many items have new names, recipes, or textures.  Auto fisher now requires any four of the six faces to be wet, but it can be any sides so automation is easier.  "
+  	,"1.10.0":"Machines now have animations when running.  Many items have new names, recipes, or textures.  Auto fisher now requires any four of the six faces to be wet, but it can be any sides so automation is easier.  Auto Fisher will no longer let enchanted fishing rods break, it drops them with 1 point left."
   }
 }

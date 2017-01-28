@@ -45,13 +45,6 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   //minimmum 3ish
   public boolean isValidPosition() { //make sure surrounded by water
     return this.countWetSides() >= MINIMUM_WET_SIDES;
-    //    World world = this.getWorld();
-    //    return waterBoth.contains(world.getBlockState(pos.down()).getBlock()) &&
-    //        waterBoth.contains(world.getBlockState(pos.down(2)).getBlock()) &&
-    //        waterBoth.contains(world.getBlockState(pos.north()).getBlock()) &&
-    //        waterBoth.contains(world.getBlockState(pos.east()).getBlock()) &&
-    //        waterBoth.contains(world.getBlockState(pos.west()).getBlock()) &&
-    //        waterBoth.contains(world.getBlockState(pos.south()).getBlock());
   }
   /**
    * how much surrounded by water. TODO: update text on tooltip
@@ -134,22 +127,23 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
           //else do nothing, leave it flat. mimics getting damaged and repaired right away
         }
         //loot phase
-        for (int i = RODSLOT; i <= FISHSLOTS; i++) {
-          if (itemstack != null && itemstack.stackSize != 0) {
-            itemstack = tryMergeStackIntoSlot(itemstack, i);
-          }
-        }
-        if (itemstack != null && itemstack.stackSize != 0) { //FULL
-          UtilItemStack.dropItemStackInWorld(world, this.pos.down(), itemstack);
-        }
-        //end of loot phase
+        this.tryAddToInventory(itemstack);
       }
+    }
+  }
+  private void tryAddToInventory(ItemStack itemstack){
+    for (int i = RODSLOT; i <= FISHSLOTS; i++) {
+      if (itemstack != null && itemstack.stackSize != 0) {
+        itemstack = tryMergeStackIntoSlot(itemstack, i);
+      }
+    }
+    if (itemstack != null && itemstack.stackSize != 0) { //FULL
+      UtilItemStack.dropItemStackInWorld(this.getWorld(), this.pos.down(), itemstack);
     }
   }
   public double getSpeed() {
     //flowing water is usually zero, unless water levels are constantly fluctuating then it spikes
-    int mult = this.countWaterFlowing() * 4   + this.countWater();// water in motion worth more so it varies a bit
-
+    int mult = this.countWaterFlowing() * 4 + this.countWater();// water in motion worth more so it varies a bit
     double randFact = 0;
     if (Math.random() > 0.9) {
       randFact = Math.random() / 10000;
@@ -162,9 +156,17 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     }
   }
   private void damageTool() {
-    if (inv[toolSlot] != null) {
-      inv[toolSlot].attemptDamageItem(1, getWorld().rand);//does respect unbreaking
-      if (inv[toolSlot].getItemDamage() >= inv[toolSlot].getMaxDamage()) {
+    ItemStack tool = inv[toolSlot];
+    if (tool != null) {
+      tool.attemptDamageItem(1, getWorld().rand);//does respect unbreaking
+      //IF enchanted and IF about to break, then spit it out
+      int damageRem = tool.getMaxDamage() - tool.getItemDamage();
+      if (damageRem == 1 && EnchantmentHelper.getEnchantments(tool).size() > 0) {
+        tryAddToInventory(tool);
+        inv[toolSlot] = null;
+      }
+      //otherwise we also make sure if its fullly damanged
+      if (tool.getItemDamage() >= tool.getMaxDamage()) {
         inv[toolSlot] = null;
       }
     }
