@@ -24,7 +24,7 @@ public class MachineTESR extends BaseMachineTesr<TileEntityBaseMachineInvo> {
     if (this.itemSlotAbove >= 0) {
       ItemStack stack = te.getStackInSlot(this.itemSlotAbove);
       if (stack != null) {
-        renderItem(te, stack);
+        renderItem(te, stack, 0.99f);
       }
     }
   }

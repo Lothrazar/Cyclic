@@ -1,9 +1,12 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
+import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Blocks;
@@ -15,6 +18,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.loot.LootContext;
@@ -25,9 +29,10 @@ import net.minecraft.world.storage.loot.LootTableManager;
 public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITickable {
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
-  public static float SPEED = 0.007F;//// bigger == faster
   public static final int RODSLOT = 1;
   public static final int FISHSLOTS = 15;
+  public static final int MINIMUM_WET_SIDES = 2;
+  public static final float SPEEDFACTOR = 0.00089F;//// bigger == faster
   private int toolSlot = 0;
   public ArrayList<Block> waterBoth = new ArrayList<Block>();
   private ItemStack[] inv;
@@ -36,14 +41,53 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     waterBoth.add(Blocks.FLOWING_WATER);
     waterBoth.add(Blocks.WATER);
   }
+  //new idea: speed depends on number of sides covered in water in the 6 sides
+  //minimmum 3ish
   public boolean isValidPosition() { //make sure surrounded by water
+    return this.countWetSides() >= MINIMUM_WET_SIDES;
+  }
+  /**
+   * how much surrounded by water. TODO: update text on tooltip
+   * 
+   * @return [0,6]
+   */
+  public int countWetSides() {
+    int cov = 0;
+    List<BlockPos> areas = Arrays.asList(pos.down(), pos.north(), pos.east(), pos.west(), pos.south(), pos.up());
     World world = this.getWorld();
-    return waterBoth.contains(world.getBlockState(pos.down()).getBlock()) &&
-        waterBoth.contains(world.getBlockState(pos.down(2)).getBlock()) &&
-        waterBoth.contains(world.getBlockState(pos.north()).getBlock()) &&
-        waterBoth.contains(world.getBlockState(pos.east()).getBlock()) &&
-        waterBoth.contains(world.getBlockState(pos.west()).getBlock()) &&
-        waterBoth.contains(world.getBlockState(pos.south()).getBlock());
+    for (BlockPos adj : areas) {
+      if (waterBoth.contains(world.getBlockState(adj).getBlock()))
+        cov++;
+    }
+    return cov;
+  }
+  /**
+   * [0,17]
+   * 
+   * @return
+   */
+  public int countWaterFlowing() {
+    int cov = 0;
+    List<BlockPos> areas = this.getWaterArea();
+    World world = this.getWorld();
+    for (BlockPos adj : areas) {
+      if (world.getBlockState(adj).getBlock() == Blocks.FLOWING_WATER)
+        cov++;
+    }
+    return cov;
+  }
+  private List<BlockPos> getWaterArea() {
+    return UtilShape.cubeFilled(this.getPos().down(2), 2, 2);
+  }
+  public int countWater() {
+    int cov = 0;
+    List<BlockPos> areas = getWaterArea();
+    World world = this.getWorld();
+    for (BlockPos adj : areas) {
+      if (world.getBlockState(adj).getBlock() == Blocks.WATER)
+        cov++;
+    }
+    return cov;
   }
   public boolean isEquipmentValid() {
     return inv[toolSlot] != null && inv[toolSlot].getItem() instanceof ItemFishingRod;
@@ -52,7 +96,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   public void update() {
     World world = this.getWorld();
     Random rand = world.rand;
-    if (rand.nextDouble() < SPEED &&
+    if (rand.nextDouble() < this.getSpeed() &&
         isValidPosition() && isEquipmentValid() &&
         world instanceof WorldServer && world != null &&
         world.getWorldTime() % Const.TICKS_PER_SEC == 0) {
@@ -83,17 +127,28 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
           //else do nothing, leave it flat. mimics getting damaged and repaired right away
         }
         //loot phase
-        for (int i = RODSLOT; i <= FISHSLOTS; i++) {
-          if (itemstack != null && itemstack.stackSize != 0) {
-            itemstack = tryMergeStackIntoSlot(itemstack, i);
-          }
-        }
-        if (itemstack != null && itemstack.stackSize != 0) { //FULL
-          UtilItemStack.dropItemStackInWorld(world, this.pos.down(), itemstack);
-        }
-        //end of loot phase
+        this.tryAddToInventory(itemstack);
       }
     }
+  }
+  private void tryAddToInventory(ItemStack itemstack){
+    for (int i = RODSLOT; i <= FISHSLOTS; i++) {
+      if (itemstack != null && itemstack.stackSize != 0) {
+        itemstack = tryMergeStackIntoSlot(itemstack, i);
+      }
+    }
+    if (itemstack != null && itemstack.stackSize != 0) { //FULL
+      UtilItemStack.dropItemStackInWorld(this.getWorld(), this.pos.down(), itemstack);
+    }
+  }
+  public double getSpeed() {
+    //flowing water is usually zero, unless water levels are constantly fluctuating then it spikes
+    int mult = this.countWaterFlowing() * 4 + this.countWater();// water in motion worth more so it varies a bit
+    double randFact = 0;
+    if (Math.random() > 0.9) {
+      randFact = Math.random() / 10000;
+    }
+    return mult * SPEEDFACTOR + randFact;//+ Math.random()/10;
   }
   private void attemptRepairTool() {
     if (inv[toolSlot] != null && inv[toolSlot].getItemDamage() > 0) {//if it has zero damage, its fully repaired already
@@ -101,9 +156,17 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     }
   }
   private void damageTool() {
-    if (inv[toolSlot] != null) {
-      inv[toolSlot].attemptDamageItem(1, getWorld().rand);//does respect unbreaking
-      if (inv[toolSlot].getItemDamage() >= inv[toolSlot].getMaxDamage()) {
+    ItemStack tool = inv[toolSlot];
+    if (tool != null) {
+      tool.attemptDamageItem(1, getWorld().rand);//does respect unbreaking
+      //IF enchanted and IF about to break, then spit it out
+      int damageRem = tool.getMaxDamage() - tool.getItemDamage();
+      if (damageRem == 1 && EnchantmentHelper.getEnchantments(tool).size() > 0) {
+        tryAddToInventory(tool);
+        inv[toolSlot] = null;
+      }
+      //otherwise we also make sure if its fullly damanged
+      if (tool.getItemDamage() >= tool.getMaxDamage()) {
         inv[toolSlot] = null;
       }
     }

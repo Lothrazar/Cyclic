@@ -34,11 +34,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public abstract class BaseMachineTesr<T extends TileEntityBaseMachineInvo> extends TileEntitySpecialRenderer<T> {
   private IModel model;
   private IBakedModel bakedModel;
-  private String resource;
+  private String resource = null;
   protected int itemSlotAbove = -1;
   public BaseMachineTesr(String res, int slot) {
     this.resource = res;
     this.itemSlotAbove = slot;
+  }
+  public BaseMachineTesr( int slot) {
+    this(null,slot);
   }
   /**
    * override this in your main class to call other animation hooks
@@ -48,7 +51,7 @@ public abstract class BaseMachineTesr<T extends TileEntityBaseMachineInvo> exten
   public abstract void render(TileEntityBaseMachineInvo te);
   protected IBakedModel getBakedModel() {
     // Since we cannot bake in preInit() we do lazy baking of the model as soon as we need it
-    if (bakedModel == null) {
+    if (bakedModel == null && resource != null) {
       try {
         model = ModelLoaderRegistry.getModel(new ResourceLocation(Const.MODID, resource));
       }
@@ -112,7 +115,7 @@ public abstract class BaseMachineTesr<T extends TileEntityBaseMachineInvo> exten
     RenderHelper.enableStandardItemLighting();
     GlStateManager.popMatrix();
   }
-  protected void renderItem(TileEntityBaseMachineInvo te, ItemStack stack) {
+  protected void renderItem(TileEntityBaseMachineInvo te, ItemStack stack, float itemHeight) {
     GlStateManager.pushMatrix();
     //start of rotate
     GlStateManager.translate(.5, 0, .5);
@@ -120,7 +123,7 @@ public abstract class BaseMachineTesr<T extends TileEntityBaseMachineInvo> exten
     GlStateManager.rotate(angle, 0, 1, 0);
     GlStateManager.translate(-.5, 0, -.5);
     //end of rotate
-    GlStateManager.translate(.5, 1, .5);//move to xy center and up to top level
+    GlStateManager.translate(.5, itemHeight, .5);//move to xy center and up to top level
     float scaleFactor = 0.4f;
     GlStateManager.scale(scaleFactor, scaleFactor, scaleFactor);//shrink down
     // Thank you for helping me understand lighting @storagedrawers  https://github.com/jaquadro/StorageDrawers/blob/40737fb2254d68020a30f80977c84fd50a9b0f26/src/com/jaquadro/minecraft/storagedrawers/client/renderer/TileEntityDrawersRenderer.java#L96
