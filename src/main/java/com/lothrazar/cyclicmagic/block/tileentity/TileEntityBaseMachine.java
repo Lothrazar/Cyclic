@@ -15,13 +15,14 @@ public abstract class TileEntityBaseMachine extends TileEntity {
   public boolean isPowered() {
     return this.getWorld().isBlockPowered(this.getPos());
   }
-  public boolean isRunning(){
+  public boolean isRunning() {
     return !this.onlyRunIfPowered() || this.isPowered();//TODO: hotfix/sharedcode/baseclas
   }
   public boolean onlyRunIfPowered() {
     return false;//default is no, dont only run if powered, just go
   }
   protected EnumFacing getCurrentFacing() {
+    if (!(this.getBlockType() instanceof BlockBaseFacing)) { return EnumFacing.UP; }
     BlockBaseFacing b = ((BlockBaseFacing) this.getBlockType());
     EnumFacing facing;
     if (b == null || this.getWorld().getBlockState(this.getPos()) == null || b.getFacingFromState(this.getWorld().getBlockState(this.getPos())) == null)
