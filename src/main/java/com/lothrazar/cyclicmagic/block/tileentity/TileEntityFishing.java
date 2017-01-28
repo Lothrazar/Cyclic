@@ -1,5 +1,7 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -15,6 +17,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.loot.LootContext;
@@ -25,9 +28,10 @@ import net.minecraft.world.storage.loot.LootTableManager;
 public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITickable {
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
-  public static float SPEED = 0.007F;//// bigger == faster
   public static final int RODSLOT = 1;
   public static final int FISHSLOTS = 15;
+  private static final int MINIMUM_WET_SIDES = 4;
+  public static final float SPEEDFACTOR = 0.001F;//// bigger == faster
   private int toolSlot = 0;
   public ArrayList<Block> waterBoth = new ArrayList<Block>();
   private ItemStack[] inv;
@@ -36,14 +40,32 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     waterBoth.add(Blocks.FLOWING_WATER);
     waterBoth.add(Blocks.WATER);
   }
+  //new idea: speed depends on number of sides covered in water in the 6 sides
+  //minimmum 3ish
   public boolean isValidPosition() { //make sure surrounded by water
+    return this.countSidesWater() >= MINIMUM_WET_SIDES;
+    //    World world = this.getWorld();
+    //    return waterBoth.contains(world.getBlockState(pos.down()).getBlock()) &&
+    //        waterBoth.contains(world.getBlockState(pos.down(2)).getBlock()) &&
+    //        waterBoth.contains(world.getBlockState(pos.north()).getBlock()) &&
+    //        waterBoth.contains(world.getBlockState(pos.east()).getBlock()) &&
+    //        waterBoth.contains(world.getBlockState(pos.west()).getBlock()) &&
+    //        waterBoth.contains(world.getBlockState(pos.south()).getBlock());
+  }
+  /**
+   * how much surrounded by water.
+   * TODO: update text on tooltip
+   * @return [0,6]
+   */
+  public int countSidesWater() {
+    int cov = 0;
+    List<BlockPos> areas = Arrays.asList(pos.down(), pos.north(), pos.east(), pos.west(), pos.south(), pos.up());
     World world = this.getWorld();
-    return waterBoth.contains(world.getBlockState(pos.down()).getBlock()) &&
-        waterBoth.contains(world.getBlockState(pos.down(2)).getBlock()) &&
-        waterBoth.contains(world.getBlockState(pos.north()).getBlock()) &&
-        waterBoth.contains(world.getBlockState(pos.east()).getBlock()) &&
-        waterBoth.contains(world.getBlockState(pos.west()).getBlock()) &&
-        waterBoth.contains(world.getBlockState(pos.south()).getBlock());
+    for (BlockPos adj : areas) {
+      if (waterBoth.contains(world.getBlockState(adj).getBlock()))
+        cov++;
+    }
+    return cov;
   }
   public boolean isEquipmentValid() {
     return inv[toolSlot] != null && inv[toolSlot].getItem() instanceof ItemFishingRod;
@@ -52,7 +74,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   public void update() {
     World world = this.getWorld();
     Random rand = world.rand;
-    if (rand.nextDouble() < SPEED &&
+    if (rand.nextDouble() < this.getSpeed() &&
         isValidPosition() && isEquipmentValid() &&
         world instanceof WorldServer && world != null &&
         world.getWorldTime() % Const.TICKS_PER_SEC == 0) {
@@ -94,6 +116,11 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
         //end of loot phase
       }
     }
+  }
+  private double getSpeed() {
+    int sides = this.countSidesWater() - MINIMUM_WET_SIDES + 1;//since 4 sides wet - 4 sides min is zero..
+    //so five sides wet gives 2*2*2*speed
+    return sides * sides * sides * SPEEDFACTOR;
   }
   private void attemptRepairTool() {
     if (inv[toolSlot] != null && inv[toolSlot].getItemDamage() > 0) {//if it has zero damage, its fully repaired already
