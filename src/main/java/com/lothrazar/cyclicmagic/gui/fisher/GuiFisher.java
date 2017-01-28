@@ -25,12 +25,12 @@ public class GuiFisher extends GuiBaseContainer {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     if (tile.isEquipmentValid() && tile.isValidPosition() == false) {
       String s = UtilChat.lang("tile.block_fishing.invalidpos.gui1");
-      int x = 12 + this.xSize / 3 - this.fontRendererObj.getStringWidth(s);
+      int x = 13 + this.xSize / 3 - this.fontRendererObj.getStringWidth(s);
       int y = 42;
       this.fontRendererObj.drawString(s, x, y, 4210752);
       y += 14;
       s = UtilChat.lang("tile.block_fishing.invalidpos.gui2");
-      s = s + tile.countSidesWater() + "/" + TileEntityFishing.MINIMUM_WET_SIDES;
+      s = s + TileEntityFishing.MINIMUM_WET_SIDES + "+";
       this.fontRendererObj.drawString(s, x, y, 4210752);
       y += 14;
       s = UtilChat.lang("tile.block_fishing.invalidpos.gui3");
@@ -41,6 +41,9 @@ public class GuiFisher extends GuiBaseContainer {
       int x = 4 + this.xSize / 3 - this.fontRendererObj.getStringWidth(s);
       int y = 50;
       this.fontRendererObj.drawString(s, x, y, 4210752);
+      y += 14;
+     
+      this.fontRendererObj.drawString("(" + String.format("%.2f", (tile.getSpeed())*100) + " Hz)", x, y, 4210752);
     }
   }
   @Override

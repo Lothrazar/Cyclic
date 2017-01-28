@@ -6,6 +6,7 @@ import java.util.Random;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
+import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Blocks;
@@ -18,6 +19,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.loot.LootContext;
@@ -30,8 +32,8 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   private static final String NBT_SLOT = "Slot";
   public static final int RODSLOT = 1;
   public static final int FISHSLOTS = 15;
-  public static final int MINIMUM_WET_SIDES = 4;
-  public static final float SPEEDFACTOR = 0.02F;//// bigger == faster
+  public static final int MINIMUM_WET_SIDES = 2;
+  public static final float SPEEDFACTOR = 0.00099F;//// bigger == faster
   private int toolSlot = 0;
   public ArrayList<Block> waterBoth = new ArrayList<Block>();
   private ItemStack[] inv;
@@ -43,7 +45,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   //new idea: speed depends on number of sides covered in water in the 6 sides
   //minimmum 3ish
   public boolean isValidPosition() { //make sure surrounded by water
-    return this.countSidesWater() >= MINIMUM_WET_SIDES;
+    return this.countWaterSides() >= MINIMUM_WET_SIDES;
     //    World world = this.getWorld();
     //    return waterBoth.contains(world.getBlockState(pos.down()).getBlock()) &&
     //        waterBoth.contains(world.getBlockState(pos.down(2)).getBlock()) &&
@@ -53,13 +55,28 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     //        waterBoth.contains(world.getBlockState(pos.south()).getBlock());
   }
   /**
-   * how much surrounded by water.
-   * TODO: update text on tooltip
+   * how much surrounded by water. TODO: update text on tooltip
+   * 
    * @return [0,6]
    */
-  public int countSidesWater() {
+  public int countWaterSides() {
     int cov = 0;
     List<BlockPos> areas = Arrays.asList(pos.down(), pos.north(), pos.east(), pos.west(), pos.south(), pos.up());
+    World world = this.getWorld();
+    for (BlockPos adj : areas) {
+      if (waterBoth.contains(world.getBlockState(adj).getBlock()))
+        cov++;
+    }
+    return cov;
+  }
+  /**
+   * [0,17]
+   * 
+   * @return
+   */
+  public int countWaterIndirect() {
+    int cov = 0;
+    List<BlockPos> areas = UtilShape.cubeFilled(this.getPos(), 1, 1);
     World world = this.getWorld();
     for (BlockPos adj : areas) {
       if (waterBoth.contains(world.getBlockState(adj).getBlock()))
@@ -117,12 +134,19 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
       }
     }
   }
-  private double getSpeed() {
-    int sides = this.countSidesWater() - MINIMUM_WET_SIDES + 1;//since 4 sides wet - 4 sides min is zero..
+  public int getSpeedInt() {
+    return (int) (this.getSpeed() * 1000);
+  }
+  public double getSpeed() {
+    int sides = this.countWaterIndirect();//since 4 sides wet - 4 sides min is zero..
+//    double pctOfWaterPossible = ((double)sides) / 17;//since 3x3x3-1
     //so five sides wet gives 2*2*2*speed
-    int mult = sides*sides*8 ;
-    
-    return mult * SPEEDFACTOR;
+    int mult = (sides * sides)/2;
+    double randFact=0;
+    if(Math.random()>0.9){
+      randFact = Math.random()/10000;
+    }
+    return mult * SPEEDFACTOR +randFact;//+ Math.random()/10;
   }
   private void attemptRepairTool() {
     if (inv[toolSlot] != null && inv[toolSlot].getItemDamage() > 0) {//if it has zero damage, its fully repaired already

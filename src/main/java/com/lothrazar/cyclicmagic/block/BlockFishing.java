@@ -3,7 +3,6 @@ import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.tileentity.FishingTESR;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFishing;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMinerSmart;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.SoundType;
@@ -27,7 +26,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockFishing extends BlockBaseHasTile implements IHasRecipe,IBlockHasTESR {
+public class BlockFishing extends BlockBaseHasTile implements IHasRecipe, IBlockHasTESR {
   public BlockFishing() {
     super(Material.ROCK);
     this.setHardness(3F);
