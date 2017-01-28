@@ -33,7 +33,7 @@ public class BlockStructureBuilder extends BlockBaseFacingInventory implements I
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     // Bind our TESR to our tile entity
-    ClientRegistry.bindTileEntitySpecialRenderer(TileMachineStructureBuilder.class, new MachineTESR("tesr/structure_slice", 0));
+    ClientRegistry.bindTileEntitySpecialRenderer(TileMachineStructureBuilder.class, new MachineTESR(this.getUnlocalizedName(), 0));
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
