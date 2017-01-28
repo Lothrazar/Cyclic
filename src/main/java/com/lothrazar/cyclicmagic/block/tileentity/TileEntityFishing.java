@@ -30,8 +30,8 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   private static final String NBT_SLOT = "Slot";
   public static final int RODSLOT = 1;
   public static final int FISHSLOTS = 15;
-  private static final int MINIMUM_WET_SIDES = 4;
-  public static final float SPEEDFACTOR = 0.001F;//// bigger == faster
+  public static final int MINIMUM_WET_SIDES = 4;
+  public static final float SPEEDFACTOR = 0.02F;//// bigger == faster
   private int toolSlot = 0;
   public ArrayList<Block> waterBoth = new ArrayList<Block>();
   private ItemStack[] inv;
@@ -120,7 +120,9 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   private double getSpeed() {
     int sides = this.countSidesWater() - MINIMUM_WET_SIDES + 1;//since 4 sides wet - 4 sides min is zero..
     //so five sides wet gives 2*2*2*speed
-    return sides * sides * sides * SPEEDFACTOR;
+    int mult = sides*sides*8 ;
+    
+    return mult * SPEEDFACTOR;
   }
   private void attemptRepairTool() {
     if (inv[toolSlot] != null && inv[toolSlot].getItemDamage() > 0) {//if it has zero damage, its fully repaired already

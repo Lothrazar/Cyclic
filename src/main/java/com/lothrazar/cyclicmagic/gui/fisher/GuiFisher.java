@@ -30,6 +30,7 @@ public class GuiFisher extends GuiBaseContainer {
       this.fontRendererObj.drawString(s, x, y, 4210752);
       y += 14;
       s = UtilChat.lang("tile.block_fishing.invalidpos.gui2");
+      s = s + tile.countSidesWater() + "/" + TileEntityFishing.MINIMUM_WET_SIDES;
       this.fontRendererObj.drawString(s, x, y, 4210752);
       y += 14;
       s = UtilChat.lang("tile.block_fishing.invalidpos.gui3");
