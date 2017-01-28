@@ -12,17 +12,20 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  */
 @SideOnly(Side.CLIENT)
 public class MachineTESR extends BaseMachineTesr<TileEntityBaseMachineInvo> {
-  public MachineTESR(String res, int slot) {
-    super(res,slot);
+  public MachineTESR(String block, int slot) {
+    super("tesr/" + block.replace("tile.", "").replace(".name", ""), slot);
+  }
+  public MachineTESR(String block) {
+    this(block, -1);
   }
   @Override
   public void render(TileEntityBaseMachineInvo te) {
     renderAnimation(te);
-    if(this.itemSlotAbove >= 0){
-    ItemStack stack = te.getStackInSlot(this.itemSlotAbove);
-    if (stack != null) {
-      renderItem(te, stack);
-    }
+    if (this.itemSlotAbove >= 0) {
+      ItemStack stack = te.getStackInSlot(this.itemSlotAbove);
+      if (stack != null) {
+        renderItem(te, stack);
+      }
     }
   }
 }

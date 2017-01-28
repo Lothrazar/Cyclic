@@ -36,7 +36,7 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     // Bind our TESR to our tile entity
-    ClientRegistry.bindTileEntitySpecialRenderer(TileMachineUncrafter.class, new MachineTESR("tesr/uncrafting_slice", 0));
+    ClientRegistry.bindTileEntitySpecialRenderer(TileMachineUncrafter.class, new MachineTESR(this.getUnlocalizedName(), 0));
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
