@@ -55,7 +55,7 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
   }
   @Override
   public void update() {
-    if (this.onlyRunIfPowered() && this.isPowered() == false) {
+    if (!isRunning()) {
       // it works ONLY if its powered
       this.markDirty();
       return;
@@ -171,7 +171,7 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
     }
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
-  private boolean onlyRunIfPowered() {
+  public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
   }
 }

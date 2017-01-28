@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.entity.projectile;
+import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.block.BlockSnow;
@@ -9,6 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
@@ -34,6 +36,9 @@ public class EntitySnowballBolt extends EntityThrowableDispensable {
       EntityLivingBase e = (EntityLivingBase) mop.entityHit;
       if (e.isBurning()) {
         e.extinguish();
+      }
+      else {
+        e.addPotionEffect(new PotionEffect(PotionEffectRegistry.snowEffect, 20 * 10));
       }
       float damage = 0;
       if (mop.entityHit instanceof EntityBlaze) {

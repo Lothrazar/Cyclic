@@ -1,7 +1,6 @@
 {
- 	"parent": "cyclicmagic:parent/wand_simple",
+    "parent": "builtin/generated",
     "textures": {
-        "0": "blocks/magma",
-        "2": "blocks/ice"
+        "layer0": "cyclicmagic:items/fire_killer"
     }
 }

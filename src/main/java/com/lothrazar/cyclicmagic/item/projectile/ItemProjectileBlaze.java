@@ -20,7 +20,7 @@ public class ItemProjectileBlaze extends BaseItemProjectile implements IHasRecip
   }
   @Override
   public void addRecipe() {
-    GameRegistry.addShapelessRecipe(new ItemStack(this, 16), new ItemStack(Items.ENDER_PEARL), new ItemStack(Items.BLAZE_POWDER), new ItemStack(Items.FLINT));
+    GameRegistry.addShapelessRecipe(new ItemStack(this, 16), new ItemStack(Items.FIRE_CHARGE), new ItemStack(Items.BLAZE_POWDER), new ItemStack(Items.FLINT));
   }
   @Override
   void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {

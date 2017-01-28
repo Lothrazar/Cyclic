@@ -1,0 +1,6 @@
+{ 
+ 	"parent": "cyclicmagic:tesr/machine_slice",
+    "textures": {
+        "4": "blocks/emerald_block"
+    }
+}
