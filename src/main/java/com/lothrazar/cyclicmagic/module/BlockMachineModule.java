@@ -19,9 +19,12 @@ import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMinerSmart;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachinePlacer;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUser;
+import com.lothrazar.cyclicmagic.item.ItemPasswordRemote;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.ConfigRegistry;
+import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
+import net.minecraft.init.Blocks;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -84,6 +87,9 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(password_block, "password_block");
       GameRegistry.registerTileEntity(TileEntityPassword.class, "password_block_te");
       ModCyclic.instance.events.register(password_block);
+      
+      ItemPasswordRemote password_remote = new ItemPasswordRemote(Blocks.LEVER);
+      ItemRegistry.addItem(password_remote,"password_remote");
     }
     if (enableUser) {
       BlockUser block_user = new BlockUser();
