@@ -122,10 +122,10 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   }
   @Override
   public void onInit() {
-if(enableLever){
-    ItemPasswordRemote password_remote = new ItemPasswordRemote();
-    ItemRegistry.addItem(password_remote,"password_remote");
-}
+    if (enableLever) {
+      ItemPasswordRemote password_remote = new ItemPasswordRemote();
+      ItemRegistry.addItem(password_remote, "password_remote");
+    }
     if (enableElevate) {
       ItemToolSurface tool_elevate = new ItemToolSurface();
       ItemRegistry.addItem(tool_elevate, "tool_elevate");
@@ -303,6 +303,7 @@ if(enableLever){
   }
   @Override
   public void syncConfig(Configuration config) {
+    enableLever = config.getBoolean("Remote Lever", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableElevate = config.getBoolean("RodElevation", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableCGlove = config.getBoolean("ClimbingGlove", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableBlockRot = config.getBoolean("BlockRotator", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
