@@ -20,7 +20,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockUser extends BlockBaseFacingInventory implements IHasRecipe,IBlockHasTESR {
+public class BlockUser extends BlockBaseFacingInventory implements IHasRecipe, IBlockHasTESR {
   public static final PropertyDirection PROPERTYFACING = BlockBaseFacing.PROPERTYFACING;
   public BlockUser() {
     super(Material.IRON, ModGuiHandler.GUI_INDEX_USER);

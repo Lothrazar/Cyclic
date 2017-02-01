@@ -20,7 +20,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockMinerSmart extends BlockBaseFacingInventory implements IHasRecipe,IBlockHasTESR {
+public class BlockMinerSmart extends BlockBaseFacingInventory implements IHasRecipe, IBlockHasTESR {
   public static final PropertyDirection PROPERTYFACING = BlockBaseFacing.PROPERTYFACING;
   public BlockMinerSmart() {
     super(Material.IRON, ModGuiHandler.GUI_INDEX_SMARTMINER);

@@ -82,7 +82,6 @@ public class GuiBuilder extends GuiBaseContanerProgress {
       int x = (display.length() > 1) ? xSizeTextbox - 3 : xSizeTextbox;
       this.fontRendererObj.drawString(display, x, ySizeTxtbox + yOffset - 4, 4210752);
     }
-
     if (this.tile.getHeight() > 0 && this.tile.getBuildTypeEnum().hasHeight()) {
       String display = "" + this.tile.getHeight();
       //move it over if more than 1 digit
@@ -102,7 +101,6 @@ public class GuiBuilder extends GuiBaseContanerProgress {
     //a semi hack to hide btns
     this.btnHeightDown.visible = this.tile.getBuildTypeEnum().hasHeight();
     this.btnHeightUp.visible = this.tile.getBuildTypeEnum().hasHeight();
-    
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {

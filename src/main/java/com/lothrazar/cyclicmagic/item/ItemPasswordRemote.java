@@ -52,7 +52,7 @@ public class ItemPasswordRemote extends BaseItem implements IHasRecipe {
       return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
     }
     IBlockState blockState = worldIn.getBlockState(pointer);
-    if (blockState == null || blockState.getBlock() != Blocks.LEVER) { 
+    if (blockState == null || blockState.getBlock() != Blocks.LEVER) {
       UtilChat.addChatMessage(playerIn, this.getUnlocalizedName() + ".invalid");
       return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
     }

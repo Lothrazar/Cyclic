@@ -22,7 +22,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockHarvester extends BlockBaseFacingInventory implements IHasRecipe, IHasConfig, IBlockHasTESR  {
+public class BlockHarvester extends BlockBaseFacingInventory implements IHasRecipe, IHasConfig, IBlockHasTESR {
   // dont use blockContainer !! http://www.minecraftforge.net/forum/index.php?topic=31953.0
   public BlockHarvester() {
     super(Material.IRON, ModGuiHandler.GUI_INDEX_HARVESTER);

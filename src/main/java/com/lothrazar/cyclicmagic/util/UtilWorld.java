@@ -46,11 +46,9 @@ public class UtilWorld {
     BlockPos posCurrent = null;
     for (int y = pos.getY() + 1; y < Const.WORLDHEIGHT; y++) {
       posCurrent = new BlockPos(pos.getX(), y, pos.getZ());
-      if(world.getBlockState(posCurrent).getBlock() == Blocks.AIR && 
-          world.getBlockState(posCurrent.up()).getBlock() == Blocks.AIR && 
-          world.getBlockState(posCurrent.down()).getBlock() != Blocks.AIR ){
-        return posCurrent;
-      }
+      if (world.getBlockState(posCurrent).getBlock() == Blocks.AIR &&
+          world.getBlockState(posCurrent.up()).getBlock() == Blocks.AIR &&
+          world.getBlockState(posCurrent.down()).getBlock() != Blocks.AIR) { return posCurrent; }
     }
     return null;
   }

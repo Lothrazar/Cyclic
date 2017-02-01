@@ -40,8 +40,8 @@ public abstract class BaseMachineTesr<T extends TileEntityBaseMachineInvo> exten
     this.resource = res;
     this.itemSlotAbove = slot;
   }
-  public BaseMachineTesr( int slot) {
-    this(null,slot);
+  public BaseMachineTesr(int slot) {
+    this(null, slot);
   }
   /**
    * override this in your main class to call other animation hooks

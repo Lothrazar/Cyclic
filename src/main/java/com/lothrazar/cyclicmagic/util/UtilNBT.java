@@ -23,7 +23,7 @@ public class UtilNBT {
   }
   public static BlockPos getItemStackBlockPos(ItemStack item) {
     if (item.getTagCompound() == null
-         || !item.getTagCompound().hasKey("xpos")) { return null; }
+        || !item.getTagCompound().hasKey("xpos")) { return null; }
     return new BlockPos(getItemStackNBTVal(item, "xpos"), getItemStackNBTVal(item, "ypos"), getItemStackNBTVal(item, "zpos"));
   }
   public static void setItemStackNBTVal(ItemStack item, String prop, int value) {

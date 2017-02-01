@@ -150,7 +150,6 @@ public class ClientProxy extends CommonProxy {
     return null;
   }
   private void registerModels() {
-    
     // with help from
     // http://www.minecraftforge.net/forum/index.php?topic=32492.0
     // https://github.com/TheOnlySilverClaw/Birdmod/blob/master/src/main/java/silverclaw/birds/client/ClientProxyBirds.java
@@ -164,8 +163,8 @@ public class ClientProxy extends CommonProxy {
       item = Item.getItemFromBlock(b);
       name = Const.MODRES + b.getUnlocalizedName().replaceAll("tile.", "");
       mesher.register(item, 0, new ModelResourceLocation(name, "inventory"));
-      if(b instanceof IBlockHasTESR){
-        ((IBlockHasTESR)b).initModel();
+      if (b instanceof IBlockHasTESR) {
+        ((IBlockHasTESR) b).initModel();
       }
     }
     for (String key : ItemRegistry.itemMap.keySet()) {

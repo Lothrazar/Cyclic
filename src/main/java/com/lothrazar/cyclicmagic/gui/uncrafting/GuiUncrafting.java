@@ -47,7 +47,6 @@ public class GuiUncrafting extends GuiBaseContanerProgress {
       ItemStack stack = this.tile.getStackInSlot(0);
       UtilUncraft.Uncrafter uncrafter = new UtilUncraft.Uncrafter();
       UncraftResultType result = uncrafter.process(stack);
-     
       UtilChat.addChatMessage(ModCyclic.proxy.getClientPlayer(), UtilChat.lang("tile.uncrafting." + result.name().toLowerCase())
           + uncrafter.getErrorString());
     }

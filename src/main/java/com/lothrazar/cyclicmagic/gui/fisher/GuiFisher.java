@@ -42,8 +42,7 @@ public class GuiFisher extends GuiBaseContainer {
       int y = 50;
       this.fontRendererObj.drawString(s, x, y, 4210752);
       y += 14;
-     
-      this.fontRendererObj.drawString("(" + String.format("%.2f", (tile.getSpeed())*100) + " Hz)", x, y, 4210752);
+      this.fontRendererObj.drawString("(" + String.format("%.2f", (tile.getSpeed()) * 100) + " Hz)", x, y, 4210752);
     }
   }
   @Override

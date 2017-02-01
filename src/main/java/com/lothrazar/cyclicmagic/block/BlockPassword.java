@@ -78,7 +78,6 @@ public class BlockPassword extends BlockBaseHasTile implements IHasRecipe {
         if (current.getMyPassword() != null && current.getMyPassword().length() > 0 && event.getMessage().equals(current.getMyPassword())) {
           IBlockState blockState = current.getWorld().getBlockState(current.getPos());
           boolean hasPowerHere = this.getStrongPower(blockState, current.getWorld(), current.getPos(), EnumFacing.UP) > 0;
-         
           updates.put(current.getPos(), !hasPowerHere);
         }
         //else password was wrong

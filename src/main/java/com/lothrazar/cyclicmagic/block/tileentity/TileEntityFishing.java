@@ -131,7 +131,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
       }
     }
   }
-  private void tryAddToInventory(ItemStack itemstack){
+  private void tryAddToInventory(ItemStack itemstack) {
     for (int i = RODSLOT; i <= FISHSLOTS; i++) {
       if (itemstack != null && itemstack.stackSize != 0) {
         itemstack = tryMergeStackIntoSlot(itemstack, i);

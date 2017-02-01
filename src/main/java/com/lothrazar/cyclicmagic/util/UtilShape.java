@@ -17,7 +17,6 @@ public class UtilShape {
     return newShape;
   }
   //TODO: SHARE MORE CODE BTW CIRCLE horiz and vert
-
   public static List<BlockPos> circleVertical(BlockPos pos, int diameter) {
     int centerX = pos.getX();
     int centerZ = pos.getY();

@@ -19,7 +19,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockPlacer extends BlockBaseFacingInventory implements IHasRecipe ,IBlockHasTESR {
+public class BlockPlacer extends BlockBaseFacingInventory implements IHasRecipe, IBlockHasTESR {
   public BlockPlacer() {
     super(Material.IRON, ModGuiHandler.GUI_INDEX_PLACER);
     this.setHardness(3.0F).setResistance(5.0F);
