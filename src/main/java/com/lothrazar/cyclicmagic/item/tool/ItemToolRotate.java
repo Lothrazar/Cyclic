@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.item.tool;
-import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.BaseTool;
@@ -16,8 +15,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemToolRotate extends BaseTool implements IHasRecipe {
   private static final int durability = 1024;
@@ -37,10 +34,6 @@ public class ItemToolRotate extends BaseTool implements IHasRecipe {
     }
     onUse(stack, player, worldObj, hand);
     return EnumActionResult.SUCCESS;
-  }
-  @SideOnly(Side.CLIENT)
-  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
-    tooltip.add("item.tool_rotate.tooltip");
   }
   @Override
   public void addRecipe() {

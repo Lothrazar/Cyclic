@@ -103,6 +103,6 @@
   	,"1.9.19":"Fix a crash caused by Cyclic when throwing an ender pearl while riding a mount (feature causing this is config>player>PearlsOnHorseback). "
   	,"1.10.0":"Machines now have animations when running.  A few items have new names, recipes, or textures.  Auto fisher now requires any four of the six faces to be wet, but it can be any sides so automation is easier.  Auto fisher now displays frequency in GUI, which is fishing speed based on nearby water.  Auto Fisher will no longer let enchanted fishing rods break, it drops them with 1 point left."
   	,"1.10.1":"Uncrafting grinder has two new error types for the ? button, one for if something is enchanted, and the other if the recipe type is unknown and not supported.  "
-	,"1.10.2":"New Item: Redstone Lever, bind this to a lever in the world and then operate it remotely. "
+	,"1.10.2":"New Item: Redstone Lever, bind this to a lever in the world and then operate it remotely.  Added a few missing tooltips on other items. "
   }
 }
