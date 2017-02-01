@@ -113,8 +113,7 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
   }
   public boolean isBurning() {
     return this.timer > 0 && this.timer < TIMER_FULL;
-  } 
-  
+  }
   @Override
   public void update() {
     if (!this.isRunning()) {

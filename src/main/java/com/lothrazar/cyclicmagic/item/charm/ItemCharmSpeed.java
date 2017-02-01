@@ -35,8 +35,4 @@ public class ItemCharmSpeed extends BaseCharm implements IHasRecipe {
   public void addRecipe() {
     super.addRecipeAndRepair(new ItemStack(Blocks.EMERALD_BLOCK));
   }
-  @Override
-  public String getTooltip() {
-    return "item.charm_speed.tooltip";
-  }
 }

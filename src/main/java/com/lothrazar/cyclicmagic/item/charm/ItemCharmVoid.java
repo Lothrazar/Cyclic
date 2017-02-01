@@ -34,10 +34,6 @@ public class ItemCharmVoid extends BaseCharm implements IHasRecipe {
     super.addRecipeAndRepair(Items.ENDER_EYE);
   }
   @Override
-  public String getTooltip() {
-    return "item.charm_void.tooltip";
-  }
-  @Override
   public void onTick(ItemStack stack, EntityPlayer living) {
     if (!this.canTick(stack)) { return; }
     World worldIn = living.getEntityWorld();

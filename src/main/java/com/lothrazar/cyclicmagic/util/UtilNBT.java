@@ -16,6 +16,16 @@ public class UtilNBT {
   public static String posToStringCSV(BlockPos position) {
     return position.getX() + "," + position.getY() + "," + position.getZ();
   }
+  public static void setItemStackBlockPos(ItemStack item, BlockPos pos) {
+    UtilNBT.setItemStackNBTVal(item, "xpos", pos.getX());
+    UtilNBT.setItemStackNBTVal(item, "ypos", pos.getY());
+    UtilNBT.setItemStackNBTVal(item, "zpos", pos.getZ());
+  }
+  public static BlockPos getItemStackBlockPos(ItemStack item) {
+    if (item.getTagCompound() == null
+        || !item.getTagCompound().hasKey("xpos")) { return null; }
+    return new BlockPos(getItemStackNBTVal(item, "xpos"), getItemStackNBTVal(item, "ypos"), getItemStackNBTVal(item, "zpos"));
+  }
   public static void setItemStackNBTVal(ItemStack item, String prop, int value) {
     if (item == null) { return; }
     if (item.getTagCompound() == null) {

@@ -64,13 +64,13 @@ public class ItemToolExtinguish extends BaseTool implements IHasRecipe {
   @Override
   public void addRecipe() {
     GameRegistry.addShapedRecipe(new ItemStack(this),
-         "mwm",
-         "rwr",
-         " i ",
-         'w', new ItemStack(Items.WATER_BUCKET),   
-         'm', new ItemStack(Blocks.MAGMA), //magma'm', new ItemStack(Blocks.MAGMA), 
-         'r', new ItemStack(Items.DYE,1,EnumDyeColor.RED.getDyeDamage()), 
-         'i', new ItemStack(Items.IRON_INGOT));
+        "mwm",
+        "rwr",
+        " i ",
+        'w', new ItemStack(Items.WATER_BUCKET),
+        'm', new ItemStack(Blocks.MAGMA), //magma'm', new ItemStack(Blocks.MAGMA), 
+        'r', new ItemStack(Items.DYE, 1, EnumDyeColor.RED.getDyeDamage()),
+        'i', new ItemStack(Items.IRON_INGOT));
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {

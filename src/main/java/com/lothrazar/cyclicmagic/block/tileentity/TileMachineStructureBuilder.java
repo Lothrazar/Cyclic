@@ -53,7 +53,7 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
       return BuildType.values()[type];
     }
     public boolean hasHeight() {
-      if (this == STAIRWAY || this == SPHERE) 
+      if (this == STAIRWAY || this == SPHERE)
         return false;
       return true;
     }
@@ -82,7 +82,7 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
         shape = UtilShape.sphere(this.getPos(), this.getSize());
       break;
     }
-    if (buildType.hasHeight() && this.buildHeight > 1 ) { //first layer is already done, add remaining
+    if (buildType.hasHeight() && this.buildHeight > 1) { //first layer is already done, add remaining
       shape = UtilShape.repeatShapeByHeight(shape, buildHeight - 1);
     }
     return shape;
@@ -312,8 +312,7 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
   public boolean isBurning() {
     return this.timer > 0 && this.timer < TIMER_FULL;
   }
-
-  public boolean isRunning(){
+  public boolean isRunning() {
     return !this.onlyRunIfPowered() || this.isPowered();
   }
   @Override
@@ -327,9 +326,7 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
     //    if (nextPos == null || (nextPos.getX() == 0 && nextPos.getY() == 0 && nextPos.getZ() == 0)) {
     //      nextPos = pos;// fallback if it fails
     //    }
-    if (!isRunning()) {
-      return;
-    }
+    if (!isRunning()) { return; }
     this.spawnParticlesAbove();
     World world = getWorld();
     //    if (!world.isRemote && nextPos != null && world.rand.nextDouble() < 0.1 && inv[0] != null) {
@@ -431,15 +428,15 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
   @Override
   public void displayPreview() {
     List<BlockPos> shape;
-    if(this.buildType == BuildType.SPHERE.ordinal()){//spheres of bigger sizes just literally only render part then get cut off so
-     shape = UtilShape.circleHorizontal(this.getPos(), this.getSize() * 2) ;
-     shape.addAll(UtilShape.circleVertical(this.getPos(), this.getSize() * 2) );
+    if (this.buildType == BuildType.SPHERE.ordinal()) {//spheres of bigger sizes just literally only render part then get cut off so
+      shape = UtilShape.circleHorizontal(this.getPos(), this.getSize() * 2);
+      shape.addAll(UtilShape.circleVertical(this.getPos(), this.getSize() * 2));
     }
-    else{
+    else {
       shape = this.rebuildShape();
     }
     for (BlockPos pos : shape) {
-      UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, pos,2);
+      UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, pos, 2);
     }
   }
 }

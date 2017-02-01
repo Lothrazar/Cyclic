@@ -20,10 +20,6 @@ public class ItemClimbingGlove extends BaseItem implements IHasRecipe {
   public ItemClimbingGlove() {
     this.setMaxStackSize(1);
   }
-  @Override
-  public String getTooltip() {
-    return this.getUnlocalizedName() + ".tooltip";
-  }
   /**
    * Called each tick as long the item is on a player inventory. Uses by maps to
    * check if is on a player hand and update it's contents.

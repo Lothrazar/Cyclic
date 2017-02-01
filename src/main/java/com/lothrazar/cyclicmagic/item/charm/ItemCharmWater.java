@@ -36,10 +36,6 @@ public class ItemCharmWater extends BaseCharm implements IHasRecipe {
     super.addRecipeAndRepair(new ItemStack(Items.FISH, 1, ItemFishFood.FishType.SALMON.getMetadata()));
   }
   @Override
-  public String getTooltip() {
-    return "item.charm_water.tooltip";
-  }
-  @Override
   public void onTick(ItemStack stack, EntityPlayer living) {
     if (!this.canTick(stack)) { return; }
     World worldIn = living.getEntityWorld();

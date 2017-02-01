@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.block;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.tileentity.MachineTESR;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMinerSmart;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineStructureBuilder;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -21,7 +20,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockMinerSmart extends BlockBaseFacingInventory implements IHasRecipe,IBlockHasTESR {
+public class BlockMinerSmart extends BlockBaseFacingInventory implements IHasRecipe, IBlockHasTESR {
   public static final PropertyDirection PROPERTYFACING = BlockBaseFacing.PROPERTYFACING;
   public BlockMinerSmart() {
     super(Material.IRON, ModGuiHandler.GUI_INDEX_SMARTMINER);

@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.block;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.tileentity.MachineTESR;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineHarvester;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUser;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import net.minecraft.block.SoundType;
@@ -21,7 +20,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockUser extends BlockBaseFacingInventory implements IHasRecipe,IBlockHasTESR {
+public class BlockUser extends BlockBaseFacingInventory implements IHasRecipe, IBlockHasTESR {
   public static final PropertyDirection PROPERTYFACING = BlockBaseFacing.PROPERTYFACING;
   public BlockUser() {
     super(Material.IRON, ModGuiHandler.GUI_INDEX_USER);

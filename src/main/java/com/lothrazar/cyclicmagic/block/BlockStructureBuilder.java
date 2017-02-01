@@ -19,7 +19,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockStructureBuilder extends BlockBaseFacingInventory implements IHasRecipe,IBlockHasTESR {
+public class BlockStructureBuilder extends BlockBaseFacingInventory implements IHasRecipe, IBlockHasTESR {
   // dont use blockContainer !!
   // http://www.minecraftforge.net/forum/index.php?topic=31953.0
   public BlockStructureBuilder() {

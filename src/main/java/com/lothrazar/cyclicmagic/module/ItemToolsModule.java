@@ -14,6 +14,7 @@ import com.lothrazar.cyclicmagic.item.ItemClimbingGlove;
 import com.lothrazar.cyclicmagic.item.ItemEnderBag;
 import com.lothrazar.cyclicmagic.item.ItemEnderBook;
 import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
+import com.lothrazar.cyclicmagic.item.ItemPasswordRemote;
 import com.lothrazar.cyclicmagic.item.ItemStorageBag;
 import com.lothrazar.cyclicmagic.net.PacketSpellShiftLeft;
 import com.lothrazar.cyclicmagic.net.PacketSpellShiftRight;
@@ -80,6 +81,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   private boolean enableBlockRot;
   private boolean enableCGlove;
   private boolean enableElevate;
+  private boolean enableLever;
   public static ItemStorageBag storage_bag;//ref by ContainerStorage
   public static RenderLoc renderLocation;
   /**
@@ -119,6 +121,10 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   }
   @Override
   public void onInit() {
+    if (enableLever) {
+      ItemPasswordRemote password_remote = new ItemPasswordRemote();
+      ItemRegistry.addItem(password_remote, "password_remote");
+    }
     if (enableElevate) {
       ItemToolSurface tool_elevate = new ItemToolSurface();
       ItemRegistry.addItem(tool_elevate, "tool_elevate");
@@ -296,6 +302,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   }
   @Override
   public void syncConfig(Configuration config) {
+    enableLever = config.getBoolean("Remote Lever", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableElevate = config.getBoolean("RodElevation", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableCGlove = config.getBoolean("ClimbingGlove", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableBlockRot = config.getBoolean("BlockRotator", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

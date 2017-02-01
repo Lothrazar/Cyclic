@@ -115,7 +115,8 @@ public class ModCyclic {
    * 
    * block that puts fire above on redstone signal?
    * 
-   * water redstone spawner? just like a dispenser with bucket, can place remove water
+   * water redstone spawner? just like a dispenser with bucket, can place remove
+   * water
    * 
    * item for my todo list command: simple notepad
    * 
@@ -146,7 +147,8 @@ public class ModCyclic {
    * 
    * disenchanter-> only on books?
    * 
-   * tool to create enchanted books but expensive. try to follow existing conventions EX quartz->sharpness
+   * tool to create enchanted books but expensive. try to follow existing
+   * conventions EX quartz->sharpness
    * 
    * Add Splash and Lingering potions for all new effects enhancement
    * 

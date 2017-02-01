@@ -45,10 +45,6 @@ public class ItemCharmAir extends BaseCharm implements IHasRecipe {
     }
   }
   @Override
-  public String getTooltip() {
-    return "item.charm_air.tooltip";
-  }
-  @Override
   public void addRecipe() {
     super.addRecipeAndRepair(Items.GLASS_BOTTLE);
   }

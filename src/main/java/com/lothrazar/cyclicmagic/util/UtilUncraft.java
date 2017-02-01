@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.util;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
