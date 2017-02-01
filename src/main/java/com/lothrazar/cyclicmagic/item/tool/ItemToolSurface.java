@@ -48,10 +48,6 @@ public class ItemToolSurface extends BaseTool implements IHasRecipe {
     return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
   }
   @Override
-  public String getTooltip() {
-    return this.getUnlocalizedName() + ".tooltip";
-  }
-  @Override
   public void addRecipe() {
     GameRegistry.addRecipe(new ItemStack(this),
         " de",

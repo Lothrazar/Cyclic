@@ -130,10 +130,6 @@ public class ItemAutoTorch extends BaseItem implements IHasRecipe {
         'c', Blocks.COAL_BLOCK,
         'i', Blocks.IRON_BARS);
   }
-  @Override
-  public String getTooltip() {
-    return "item.tool_auto_torch.tooltip";
-  }
   @SideOnly(Side.CLIENT)
   public boolean hasEffect(ItemStack stack) {
     return !ActionType.isOff(stack);

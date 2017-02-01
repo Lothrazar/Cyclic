@@ -33,8 +33,4 @@ public class ItemCharmAntidote extends BaseCharm implements IHasRecipe {
   public void addRecipe() {
     super.addRecipeAndRepair(Items.FERMENTED_SPIDER_EYE);
   }
-  @Override
-  public String getTooltip() {
-    return "item.charm_antidote.tooltip";
-  }
 }

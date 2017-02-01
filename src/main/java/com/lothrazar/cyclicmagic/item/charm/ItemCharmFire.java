@@ -46,8 +46,4 @@ public class ItemCharmFire extends BaseCharm implements IHasRecipe {
   public void addRecipe() {
     super.addRecipeAndRepair(Items.BLAZE_ROD);
   }
-  @Override
-  public String getTooltip() {
-    return "item.charm_fire.tooltip";
-  }
 }

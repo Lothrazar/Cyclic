@@ -47,8 +47,4 @@ public class ItemCharmSlowfall extends BaseCharm implements IHasRecipe {
   public void addRecipe() {
     super.addRecipeAndRepair(Items.RABBIT_FOOT);
   }
-  @Override
-  public String getTooltip() {
-    return "item.charm_wing.tooltip";
-  }
 }

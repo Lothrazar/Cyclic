@@ -22,10 +22,6 @@ public class ItemToolStirrups extends BaseTool implements IHasRecipe {
     return true;
   }
   @Override
-  public String getTooltip() {
-    return "item.tool_mount.tooltip";
-  }
-  @Override
   public void addRecipe() {
     GameRegistry.addRecipe(new ItemStack(this),
         " ls",

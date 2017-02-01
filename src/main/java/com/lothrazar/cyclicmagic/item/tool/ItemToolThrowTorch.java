@@ -36,10 +36,6 @@ public class ItemToolThrowTorch extends BaseTool implements IHasRecipe {
     return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
   }
   @Override
-  public String getTooltip() {
-    return "item.tool_torch_launcher.tooltip";
-  }
-  @Override
   public void addRecipe() {
     GameRegistry.addRecipe(new ItemStack(this),
         " gi",
