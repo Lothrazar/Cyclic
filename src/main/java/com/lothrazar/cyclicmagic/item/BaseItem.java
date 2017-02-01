@@ -16,7 +16,7 @@ public abstract class BaseItem extends Item {
     ItemRegistry.registerItem(this, name, this.hideFromCreativeTab);
   }
   public String getTooltip() {
-    return null;
+    return this.getUnlocalizedName() + ".tooltip";
   }
   @Override
   public void addInformation(ItemStack held, EntityPlayer player, List<String> list, boolean par4) {

@@ -14,6 +14,7 @@ import com.lothrazar.cyclicmagic.item.ItemClimbingGlove;
 import com.lothrazar.cyclicmagic.item.ItemEnderBag;
 import com.lothrazar.cyclicmagic.item.ItemEnderBook;
 import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
+import com.lothrazar.cyclicmagic.item.ItemPasswordRemote;
 import com.lothrazar.cyclicmagic.item.ItemStorageBag;
 import com.lothrazar.cyclicmagic.net.PacketSpellShiftLeft;
 import com.lothrazar.cyclicmagic.net.PacketSpellShiftRight;
@@ -37,6 +38,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -80,6 +82,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   private boolean enableBlockRot;
   private boolean enableCGlove;
   private boolean enableElevate;
+  private boolean enableLever;
   public static ItemStorageBag storage_bag;//ref by ContainerStorage
   public static RenderLoc renderLocation;
   /**
@@ -119,6 +122,10 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   }
   @Override
   public void onInit() {
+if(enableLever){
+    ItemPasswordRemote password_remote = new ItemPasswordRemote();
+    ItemRegistry.addItem(password_remote,"password_remote");
+}
     if (enableElevate) {
       ItemToolSurface tool_elevate = new ItemToolSurface();
       ItemRegistry.addItem(tool_elevate, "tool_elevate");
