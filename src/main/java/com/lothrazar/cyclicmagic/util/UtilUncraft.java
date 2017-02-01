@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.util;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
@@ -20,7 +21,7 @@ public class UtilUncraft {
     INPUT, OUTPUT, MODNAME;//, CONTAINS;
   }
   public static enum UncraftResultType {
-    BLACKLIST, NORECIPE, NOTENOUGHITEMS, SUCCESS, EMPTY;
+    BLACKLIST, NORECIPE, NOTENOUGHITEMS, SUCCESS, EMPTY, ENCHANTMATCH, UNKNOWN;
   }
   public static void resetBlacklists() {
     blacklistInput = new ArrayList<String>();
@@ -75,6 +76,7 @@ public class UtilUncraft {
     private ArrayList<ItemStack> drops;
     private ItemStack toUncraft;
     private int outsize;
+    private String errorString = "";
     public Uncrafter() {}
     /**
      * It works but we dont want to use it right now
@@ -123,10 +125,6 @@ public class UtilUncraft {
     private void tryAddTrop(ItemStack stackInput) {
       // this fn is null safe, it gets nulls all the time
       if (stackInput == null || stackInput.getItem() == null) { return; }
-      //    if(isRemovedSinceContainerItem(stackInput)){
-      //      ModMain.logger.info("Removed because it has a container item"+stackInput.getUnlocalizedName());
-      //      return;
-      //    }
       if (isItemInBlacklist(stackInput, BlacklistType.OUTPUT)) { return; }
       ItemStack stack = stackInput.copy();
       stack.stackSize = 1;
@@ -144,11 +142,7 @@ public class UtilUncraft {
       return r != null && r.getRecipeOutput() != null && doesRecipeInputMatch(r.getRecipeOutput());
     }
     private boolean doesRecipeInputMatch(ItemStack recipeOutput) {
-      boolean itemEqual = recipeOutput.isItemEqual(toUncraft);
-      if (itemEqual == false) { return false;//items dont match
-      }
-      boolean enchantingMatches = recipeOutput.isItemEnchanted() == toUncraft.isItemEnchanted();
-      return enchantingMatches;// either they are both ench, or both not ench
+      return recipeOutput.isItemEqual(toUncraft);
     }
     public UncraftResultType process(ItemStack stuff) {
       this.toUncraft = stuff;
@@ -166,6 +160,12 @@ public class UtilUncraft {
           continue;//be careful
         }
         if (doesRecipeMatch(next)) {
+          boolean enchantingMatches = next.getRecipeOutput().isItemEnchanted() == toUncraft.isItemEnchanted();
+          if (!enchantingMatches) {
+            //EnchantmentHelper.getEnchantments(tool).size() 
+            result = UncraftResultType.ENCHANTMATCH;// either they are both ench, or both not ench
+            continue;
+          }
           if (toUncraft.stackSize < next.getRecipeOutput().stackSize) {
             result = UncraftResultType.NOTENOUGHITEMS;//we found a matching recipe but we dont have enough to satisfy
             continue;//keep looking but save the result type
@@ -173,6 +173,7 @@ public class UtilUncraft {
           outsize = next.getRecipeOutput().stackSize;
           List<? extends Object> input = getRecipeInput(next);
           if (input == null) {
+            result = UncraftResultType.UNKNOWN;
             continue;
           } //getRecipeInput can be null
           for (Object maybeOres : input) {
@@ -183,15 +184,11 @@ public class UtilUncraft {
               tryAddOreDictionaryDrop(maybeOres);
             }
           }
+          result = UncraftResultType.SUCCESS;
           break;//since we are finished doing a recipe that matches, break the MAIN list
         }
       }
-      if (this.drops.size() > 0) {
-        return UncraftResultType.SUCCESS;
-      }
-      else {
-        return result;//either norecipe or notenough items
-      }
+      return result;
     }
     /**
      * could be a list of ItemStacks, or a list of Objects which are ore
@@ -217,8 +214,17 @@ public class UtilUncraft {
         ShapelessRecipes r = (ShapelessRecipes) next;
         return r.recipeItems;
       }
+      else {
+        this.setErrorString(" " + next.getClass().getName());
+      }
       //else it could be anything from a custom mod ex: solderer
       return null;
+    }
+    public String getErrorString() {
+      return errorString;
+    }
+    public void setErrorString(String errorString) {
+      this.errorString = errorString;
     }
   }
 }
