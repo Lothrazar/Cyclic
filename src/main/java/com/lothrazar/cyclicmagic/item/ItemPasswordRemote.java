@@ -37,29 +37,52 @@ public class ItemPasswordRemote extends BaseItem implements IHasRecipe {
   public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
     if (worldIn.getBlockState(pos).getBlock() instanceof BlockLever) {
       UtilNBT.setItemStackBlockPos(stack, pos);
-      if (worldIn.isRemote)
+      if (worldIn.isRemote){
         UtilChat.addChatMessage(playerIn, this.getUnlocalizedName() + ".saved");
+      }
       UtilSound.playSound(playerIn, SoundEvents.BLOCK_LEVER_CLICK);
+      return EnumActionResult.SUCCESS;
     }
-    return EnumActionResult.PASS;
+    else{
+      boolean success = false;
+      success = trigger(stack, worldIn, playerIn);
+      if (success)
+        return EnumActionResult.SUCCESS;
+      else
+        return EnumActionResult.FAIL;
+     
+    }
   }
   @Override
   public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World worldIn, EntityPlayer playerIn, EnumHand hand) {
+    boolean success = false;
+    success = trigger(stack, worldIn, playerIn);
+    if (success)
+      return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+    else
+      return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
+  }
+  private boolean trigger(ItemStack stack, World worldIn, EntityPlayer playerIn) {
     BlockPos pointer = UtilNBT.getItemStackBlockPos(stack);
     if (pointer == null) {
-      if (worldIn.isRemote)
+      if (worldIn.isRemote) {
         UtilChat.addChatMessage(playerIn, this.getUnlocalizedName() + ".invalid");
-      return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
+      }
+      return false;
     }
-    IBlockState blockState = worldIn.getBlockState(pointer);
-    if (blockState == null || blockState.getBlock() != Blocks.LEVER) {
-      UtilChat.addChatMessage(playerIn, this.getUnlocalizedName() + ".invalid");
-      return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
+    else {
+      IBlockState blockState = worldIn.getBlockState(pointer);
+      if (blockState == null || blockState.getBlock() != Blocks.LEVER) {
+        UtilChat.addChatMessage(playerIn, this.getUnlocalizedName() + ".invalid");
+        return false;
+      }
+      else {
+        boolean hasPowerHere = blockState.getValue(BlockLever.POWERED);//this.block.getStrongPower(blockState, worldIn, pointer, EnumFacing.UP) > 0;
+        worldIn.setBlockState(pointer, blockState.withProperty(BlockLever.POWERED, !hasPowerHere));
+        UtilSound.playSound(playerIn, SoundEvents.BLOCK_LEVER_CLICK);
+        return true;
+      }
     }
-    boolean hasPowerHere = blockState.getValue(BlockLever.POWERED);//this.block.getStrongPower(blockState, worldIn, pointer, EnumFacing.UP) > 0;
-    worldIn.setBlockState(pointer, blockState.withProperty(BlockLever.POWERED, !hasPowerHere));
-    UtilSound.playSound(playerIn, SoundEvents.BLOCK_LEVER_CLICK);
-    return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
   }
   @Override
   public void addRecipe() {
