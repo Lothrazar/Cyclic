@@ -23,14 +23,14 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class BlockScaffolding extends BlockBase implements IHasRecipe {
   public static final String name = "block_fragile";
   public BlockScaffolding() {
-    super(Material.WOOD);
+    super(Material.GLASS);
     this.setTickRandomly(true);
     this.setHardness(0F);
     this.setResistance(0F);
     this.setTranslucent();
     this.setTooltip("tile.block_fragile.tooltip");
     SoundEvent crackle = SoundRegistry.crackle;
-    this.setSoundType(new SoundType(1.0F, 1.0F, crackle, crackle, crackle, crackle, crackle));
+    this.setSoundType(new SoundType(0.4F, 1.0F, crackle, crackle, crackle, crackle, crackle));
   }
   @Override
   public void updateTick(World worldObj, BlockPos pos, IBlockState state, Random rand) {
