@@ -72,32 +72,15 @@ public class ItemBlockScaffolding extends ItemBlock {
         break;
       }
     }
-    this.onItemUse(stack, player, worldIn, pos, hand, facing, 0, 0, 0);
+    if(worldIn.isRemote == false)
+      return new ActionResult<ItemStack>(this.onItemUse(stack, player, worldIn, pos, hand, facing, 0, 0, 0), stack);
+
     return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
   }
-  @Override
-  public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-    //UtilSound.playSound(playerIn, ModMain.crackle,SoundCategory.PLAYERS);
-    return super.onItemUse(stack, playerIn, worldIn, pos, hand, facing, hitX, hitY, hitZ);
-    /*
-     * IBlockState iblockstate = worldIn.getBlockState(pos); Block block =
-     * iblockstate.getBlock();
-     * 
-     * if (!block.isReplaceable(worldIn, pos)) { pos = pos.offset(facing); }
-     * 
-     * if (stack.stackSize != 0 && playerIn.canPlayerEdit(pos, facing, stack) &&
-     * worldIn.canBlockBePlaced(this.block, pos, false, facing, (Entity)null,
-     * stack)) { int i = this.getMetadata(stack.getMetadata()); IBlockState
-     * iblockstate1 = this.block.onBlockPlaced(worldIn, pos, facing, hitX, hitY,
-     * hitZ, i, playerIn);
-     * 
-     * if (placeBlockAt(stack, playerIn, worldIn, pos, facing, hitX, hitY, hitZ,
-     * iblockstate1)) { SoundType soundtype = this.block.getStepSound();
-     * worldIn.playSound(playerIn, pos, soundtype.getPlaceSound(),
-     * SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F,
-     * soundtype.getPitch() * 0.8F); --stack.stackSize; }
-     * 
-     * return EnumActionResult.SUCCESS; } else { return EnumActionResult.FAIL; }
-     */
-  }
+//  @Override
+//  public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+//
+//    return super.onItemUse(stack, playerIn, worldIn, pos, hand, facing, hitX, hitY, hitZ);
+//
+//  }
 }
