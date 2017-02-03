@@ -28,7 +28,6 @@ public class BlockScaffolding extends BlockBase implements IHasRecipe {
     this.setHardness(0F);
     this.setResistance(0F);
     this.setTranslucent();
-    this.setTooltip("tile.block_fragile.tooltip");
     SoundEvent crackle = SoundRegistry.crackle;
     this.setSoundType(new SoundType(0.2F, 1.0F, crackle, crackle, crackle, crackle, crackle));
   }

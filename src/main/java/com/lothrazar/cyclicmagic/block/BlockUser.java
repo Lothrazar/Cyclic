@@ -26,7 +26,6 @@ public class BlockUser extends BlockBaseFacingInventory implements IHasRecipe, I
     super(Material.IRON, ModGuiHandler.GUI_INDEX_USER);
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);
-    this.setTooltip("tile.block_user.tooltip");
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {

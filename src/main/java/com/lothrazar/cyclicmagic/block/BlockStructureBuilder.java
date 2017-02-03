@@ -27,7 +27,6 @@ public class BlockStructureBuilder extends BlockBaseFacingInventory implements I
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);
     this.setTickRandomly(true);
-    this.setTooltip("tile.builder_block.tooltip");
   }
   @SideOnly(Side.CLIENT)
   public void initModel() {

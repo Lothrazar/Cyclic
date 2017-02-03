@@ -23,7 +23,6 @@ public class BlockFan extends BlockBaseFacing implements IHasRecipe {
     this.setSoundType(SoundType.WOOD);
     this.setTickRandomly(true);
     this.setTranslucent();
-    this.setTooltip("tile.fan.tooltip");
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {

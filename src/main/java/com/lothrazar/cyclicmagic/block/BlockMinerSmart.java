@@ -26,7 +26,6 @@ public class BlockMinerSmart extends BlockBaseFacingInventory implements IHasRec
     super(Material.IRON, ModGuiHandler.GUI_INDEX_SMARTMINER);
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);
-    this.setTooltip("tile.block_miner_smart.tooltip");
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {

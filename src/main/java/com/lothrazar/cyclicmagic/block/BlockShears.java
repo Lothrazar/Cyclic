@@ -23,8 +23,6 @@ public class BlockShears extends BlockBase implements IHasRecipe {
     super(Material.PISTON);
     this.setHardness(4.0F);
     this.setResistance(5.0F);
-    this.setTooltip("tile.block_shears.tooltip");
-    //    this.setTranslucent();
   }
   @Override
   public void addRecipe() {

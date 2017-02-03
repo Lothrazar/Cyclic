@@ -35,7 +35,6 @@ public class BlockFishing extends BlockBaseHasTile implements IHasRecipe, IBlock
     this.setTickRandomly(true);
     this.setGuiId(ModGuiHandler.GUI_INDEX_FISHER);
     this.setTranslucent();
-    this.setTooltip("tile.block_fishing.tooltip");// TODO: replace name with tooltip "tile.block_fishing.name"
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
