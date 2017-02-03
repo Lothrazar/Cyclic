@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.block.BlockFan;
 import com.lothrazar.cyclicmagic.block.BlockShears;
 import com.lothrazar.cyclicmagic.block.BlockFishing;
 import com.lothrazar.cyclicmagic.block.BlockScaffolding;
+import com.lothrazar.cyclicmagic.block.BlockScaffoldingFragile;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBucketStorage;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityDetector;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFan;
@@ -15,6 +16,7 @@ import com.lothrazar.cyclicmagic.item.itemblock.ItemBlockScaffolding;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -43,7 +45,11 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
     }
     if (fragileEnabled) {
       BlockScaffolding block_fragile = new BlockScaffolding();
-      BlockRegistry.registerBlock(block_fragile, new ItemBlockScaffolding(block_fragile), BlockScaffolding.name);
+      BlockRegistry.registerBlock(block_fragile, new ItemBlockScaffolding(block_fragile), "block_fragile");
+      BlockScaffoldingFragile block_fragile_weak = new BlockScaffoldingFragile();
+      BlockRegistry.registerBlock(block_fragile_weak, new ItemBlockScaffolding(block_fragile_weak), "block_fragile_weak");
+      GameRegistry.addShapelessRecipe(new ItemStack(block_fragile), new ItemStack(block_fragile_weak));
+      GameRegistry.addShapelessRecipe(new ItemStack(block_fragile_weak), new ItemStack(block_fragile));
     }
     if (fishingBlock) {
       BlockFishing block_fishing = new BlockFishing();

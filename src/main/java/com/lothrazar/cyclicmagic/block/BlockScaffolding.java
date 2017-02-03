@@ -20,8 +20,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
  * @author Lothrazar
  *
  */
-public class BlockScaffolding extends BlockBase implements IHasRecipe {
-  public static final String name = "block_fragile";
+public class BlockScaffolding extends BlockBase implements IHasRecipe { 
+  protected boolean dropBlock = true;
   public BlockScaffolding() {
     super(Material.GLASS);
     this.setTickRandomly(true);
@@ -30,11 +30,11 @@ public class BlockScaffolding extends BlockBase implements IHasRecipe {
     this.setTranslucent();
     this.setTooltip("tile.block_fragile.tooltip");
     SoundEvent crackle = SoundRegistry.crackle;
-    this.setSoundType(new SoundType(0.4F, 1.0F, crackle, crackle, crackle, crackle, crackle));
+    this.setSoundType(new SoundType(0.2F, 1.0F, crackle, crackle, crackle, crackle, crackle));
   }
   @Override
   public void updateTick(World worldObj, BlockPos pos, IBlockState state, Random rand) {
-    worldObj.destroyBlock(pos, true);
+    worldObj.destroyBlock(pos, dropBlock);
   }
   public int tickRate(World worldIn) {
     return 200;
