@@ -11,6 +11,6 @@ public class BlockScaffoldingFragile extends BlockScaffolding implements IHasRec
   }
   @Override
   public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this, 12), "sss", "   ", "s s", 's', new ItemStack(Items.STICK));
+    GameRegistry.addRecipe(new ItemStack(this, 16), "sss", "   ", "s s", 's', new ItemStack(Items.STICK));
   }
 }
