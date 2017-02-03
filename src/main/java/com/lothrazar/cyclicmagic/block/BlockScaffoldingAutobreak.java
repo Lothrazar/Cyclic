@@ -20,7 +20,7 @@ public class BlockScaffoldingAutobreak extends BlockScaffolding implements IHasR
   }
   @Override
   public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this, 12), "sss", "   ", "s s", 's', new ItemStack(Items.STICK));
+    GameRegistry.addShapelessRecipe(new ItemStack(this, 64), Blocks.DIRT, new ItemStack(Items.STICK));
   }
   /**
    * Called when a neighboring block was changed and marks that this state
@@ -55,8 +55,8 @@ public class BlockScaffoldingAutobreak extends BlockScaffolding implements IHasR
       //      }
     }
   }
-//  @Override
-//  public void onNeighborChange(IBlockAccess world, BlockPos pos, BlockPos neighbor) {
-//    System.out.println("onNeighborChange ");
-//  }
+  //  @Override
+  //  public void onNeighborChange(IBlockAccess world, BlockPos pos, BlockPos neighbor) {
+  //    System.out.println("onNeighborChange ");
+  //  }
 }

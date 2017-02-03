@@ -30,7 +30,7 @@ public class BlockScaffolding extends BlockBase implements IHasRecipe {
     this.setResistance(0F);
     this.setTranslucent();
     SoundEvent crackle = SoundRegistry.crackle;
-    this.setSoundType(new SoundType(0.2F, 1.0F, crackle, crackle, crackle, crackle, crackle));
+    this.setSoundType(new SoundType(0.1F, 1.0F, crackle, crackle, crackle, crackle, crackle));
   }
   @Override
   public void updateTick(World worldObj, BlockPos pos, IBlockState state, Random rand) {
