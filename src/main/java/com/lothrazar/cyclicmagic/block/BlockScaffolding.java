@@ -20,8 +20,9 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
  * @author Lothrazar
  *
  */
-public class BlockScaffolding extends BlockBase implements IHasRecipe { 
+public class BlockScaffolding extends BlockBase implements IHasRecipe {
   protected boolean dropBlock = true;
+  protected boolean doesAutobreak = true;
   public BlockScaffolding() {
     super(Material.GLASS);
     this.setTickRandomly(true);
@@ -33,7 +34,8 @@ public class BlockScaffolding extends BlockBase implements IHasRecipe {
   }
   @Override
   public void updateTick(World worldObj, BlockPos pos, IBlockState state, Random rand) {
-    worldObj.destroyBlock(pos, dropBlock);
+    if (doesAutobreak)
+      worldObj.destroyBlock(pos, dropBlock);
   }
   public int tickRate(World worldIn) {
     return 200;

@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.block.BlockFan;
 import com.lothrazar.cyclicmagic.block.BlockShears;
 import com.lothrazar.cyclicmagic.block.BlockFishing;
 import com.lothrazar.cyclicmagic.block.BlockScaffolding;
+import com.lothrazar.cyclicmagic.block.BlockScaffoldingAutobreak;
 import com.lothrazar.cyclicmagic.block.BlockScaffoldingFragile;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBucketStorage;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityDetector;
@@ -50,6 +51,8 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(block_fragile_weak, new ItemBlockScaffolding(block_fragile_weak), "block_fragile_weak");
       GameRegistry.addShapelessRecipe(new ItemStack(block_fragile), new ItemStack(block_fragile_weak));
       GameRegistry.addShapelessRecipe(new ItemStack(block_fragile_weak), new ItemStack(block_fragile));
+      BlockScaffoldingAutobreak block_fragile_auto = new BlockScaffoldingAutobreak();
+      BlockRegistry.registerBlock(block_fragile_auto, new ItemBlockScaffolding(block_fragile_auto), "block_fragile_auto");
     }
     if (fishingBlock) {
       BlockFishing block_fishing = new BlockFishing();
