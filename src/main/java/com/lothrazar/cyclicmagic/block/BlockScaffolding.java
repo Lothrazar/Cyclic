@@ -25,10 +25,10 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
  *
  */
 public class BlockScaffolding extends BlockBase implements IHasRecipe {
-  private static final double CLIMB_SPEED = 0.277D;//climbing glove is 0.288D
+  private static final double CLIMB_SPEED = 0.31D;//climbing glove is 0.288D
   private static final double OFFSET = 0.0125D;//shearing & cactus are  0.0625D;
   protected static final AxisAlignedBB AABB = new AxisAlignedBB(OFFSET, 0, OFFSET, 1 - OFFSET, 1, 1 - OFFSET);//required to make entity collied happen for ladder climbing
-  protected boolean dropBlock = true;
+  protected boolean dropBlock = true;//does it drop item on non-player break
   protected boolean doesAutobreak = true;
   public BlockScaffolding() {
     super(Material.GLASS);
@@ -49,8 +49,9 @@ public class BlockScaffolding extends BlockBase implements IHasRecipe {
   }
   @Override
   public void updateTick(World worldObj, BlockPos pos, IBlockState state, Random rand) {
-    if (doesAutobreak)
+    if (doesAutobreak && worldObj.rand.nextDouble() < 0.5){
       worldObj.destroyBlock(pos, dropBlock);
+    }
   }
   public int tickRate(World worldIn) {
     return 200;
