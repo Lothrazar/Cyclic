@@ -34,7 +34,6 @@ public class BlockPassword extends BlockBaseHasTile implements IHasRecipe {
     this.setResistance(4F);
     this.setSoundType(SoundType.STONE);
     this.setHarvestLevel("pickaxe", 0);
-    this.setTooltip("tile.password_block.tooltip");
     this.setGuiId(ModGuiHandler.GUI_INDEX_PASSWORD);
   }
   @Override

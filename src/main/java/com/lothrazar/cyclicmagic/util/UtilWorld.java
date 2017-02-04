@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import javax.annotation.Nullable;
 import org.lwjgl.opengl.GL11;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -20,6 +21,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -288,5 +290,19 @@ public class UtilWorld {
       buffer.pos(mx, my, mz + 1).color(r, g, b, a).endVertex();
       buffer.pos(mx, my + 1, mz + 1).color(r, g, b, a).endVertex();
     }
+  }
+  public static BlockPos nextAirInDirection(World world, BlockPos posIn, EnumFacing facing, int max, @Nullable Block blockMatch) {
+    BlockPos posToPlaceAt = new BlockPos(posIn);
+    BlockPos posLoop = new BlockPos(posIn);
+    for (int i = 0; i < max; i++) {
+      if (world.isAirBlock(posLoop)) {
+        posToPlaceAt = posLoop;
+        break;
+      }
+      else {
+        posLoop = posLoop.offset(facing);
+      }
+    }
+    return posToPlaceAt;
   }
 }

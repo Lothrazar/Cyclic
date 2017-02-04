@@ -30,7 +30,6 @@ public class BlockUncrafting extends BlockBaseFacingInventory implements IHasRec
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);
     this.setTickRandomly(true);
-    this.setTooltip("tile.uncrafting_block.tooltip");
   }
   @SideOnly(Side.CLIENT)
   public void initModel() {

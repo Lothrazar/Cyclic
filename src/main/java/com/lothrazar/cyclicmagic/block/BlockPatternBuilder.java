@@ -22,7 +22,6 @@ public class BlockPatternBuilder extends BlockBaseHasTile implements IHasRecipe 
     this.setSoundType(SoundType.WOOD);
     this.setTickRandomly(true);
     this.setTranslucent();
-    this.setTooltip("tile.builder_pattern.tooltip");
     this.setGuiId(ModGuiHandler.GUI_INDEX_PATTERN);
   }
   @Override
