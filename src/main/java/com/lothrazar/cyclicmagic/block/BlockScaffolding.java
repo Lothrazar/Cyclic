@@ -67,4 +67,5 @@ public class BlockScaffolding extends BlockBase implements IHasRecipe {
     if (!entityIn.isCollidedHorizontally) { return; }
     UtilEntity.tryMakeEntityClimb(worldIn, entity, CLIMB_SPEED);
   }
+
 }

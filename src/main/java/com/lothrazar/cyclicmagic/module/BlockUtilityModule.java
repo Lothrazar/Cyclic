@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.block.BlockFan;
 import com.lothrazar.cyclicmagic.block.BlockShears;
 import com.lothrazar.cyclicmagic.block.BlockFishing;
 import com.lothrazar.cyclicmagic.block.BlockScaffolding;
+import com.lothrazar.cyclicmagic.block.BlockScaffoldingReplace;
 import com.lothrazar.cyclicmagic.block.BlockScaffoldingResponsive;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBucketStorage;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityDetector;
@@ -52,10 +53,12 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
 //      GameRegistry.addShapelessRecipe(new ItemStack(block_fragile_weak), new ItemStack(block_fragile));
       BlockScaffoldingResponsive block_fragile_auto = new BlockScaffoldingResponsive();
       BlockRegistry.registerBlock(block_fragile_auto, new ItemBlockScaffolding(block_fragile_auto), "block_fragile_auto");
-      
-      
 
       MinecraftForge.EVENT_BUS.register(Item.getItemFromBlock(block_fragile_auto));
+      
+      BlockScaffoldingReplace block_fragile_build = new BlockScaffoldingReplace();
+      BlockRegistry.registerBlock(block_fragile_build, new ItemBlockScaffolding(block_fragile_build), "block_fragile_build");
+
     }
     if (fishingBlock) {
       BlockFishing block_fishing = new BlockFishing();
