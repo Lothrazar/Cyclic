@@ -16,6 +16,7 @@ import com.lothrazar.cyclicmagic.item.itemblock.ItemBlockScaffolding;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -51,6 +52,10 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
 //      GameRegistry.addShapelessRecipe(new ItemStack(block_fragile_weak), new ItemStack(block_fragile));
       BlockScaffoldingResponsive block_fragile_auto = new BlockScaffoldingResponsive();
       BlockRegistry.registerBlock(block_fragile_auto, new ItemBlockScaffolding(block_fragile_auto), "block_fragile_auto");
+      
+      
+
+      MinecraftForge.EVENT_BUS.register(Item.getItemFromBlock(block_fragile_auto));
     }
     if (fishingBlock) {
       BlockFishing block_fishing = new BlockFishing();
