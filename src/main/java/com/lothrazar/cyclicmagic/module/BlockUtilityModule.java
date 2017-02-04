@@ -1,11 +1,14 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockBucketStorage;
 import com.lothrazar.cyclicmagic.block.BlockDetector;
 import com.lothrazar.cyclicmagic.block.BlockFan;
 import com.lothrazar.cyclicmagic.block.BlockShears;
 import com.lothrazar.cyclicmagic.block.BlockFishing;
 import com.lothrazar.cyclicmagic.block.BlockScaffolding;
+import com.lothrazar.cyclicmagic.block.BlockScaffoldingReplace;
+import com.lothrazar.cyclicmagic.block.BlockScaffoldingResponsive;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBucketStorage;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityDetector;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFan;
@@ -15,7 +18,7 @@ import com.lothrazar.cyclicmagic.item.itemblock.ItemBlockScaffolding;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Items;
-import net.minecraftforge.common.MinecraftForge;
+import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -43,7 +46,14 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
     }
     if (fragileEnabled) {
       BlockScaffolding block_fragile = new BlockScaffolding();
-      BlockRegistry.registerBlock(block_fragile, new ItemBlockScaffolding(block_fragile), BlockScaffolding.name);
+      BlockRegistry.registerBlock(block_fragile, new ItemBlockScaffolding(block_fragile), "block_fragile");
+      ModCyclic.instance.events.register(Item.getItemFromBlock(block_fragile));
+      BlockScaffoldingResponsive block_fragile_auto = new BlockScaffoldingResponsive();
+      BlockRegistry.registerBlock(block_fragile_auto, new ItemBlockScaffolding(block_fragile_auto), "block_fragile_auto");
+      ModCyclic.instance.events.register(Item.getItemFromBlock(block_fragile_auto));
+      BlockScaffoldingReplace block_fragile_weak = new BlockScaffoldingReplace();
+      BlockRegistry.registerBlock(block_fragile_weak, new ItemBlockScaffolding(block_fragile_weak), "block_fragile_weak");
+      ModCyclic.instance.events.register(Item.getItemFromBlock(block_fragile_weak));
     }
     if (fishingBlock) {
       BlockFishing block_fishing = new BlockFishing();
@@ -61,7 +71,7 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(BlockRegistry.block_storeempty, new ItemBlockBucket(BlockRegistry.block_storeempty), "block_storeempty", false);
       BlockRegistry.block_storeempty.addRecipe();
       GameRegistry.registerTileEntity(TileEntityBucketStorage.class, "bucketstorage");
-      MinecraftForge.EVENT_BUS.register(BlockRegistry.block_storeempty);
+      ModCyclic.instance.events.register(BlockRegistry.block_storeempty);
     }
   }
   @Override

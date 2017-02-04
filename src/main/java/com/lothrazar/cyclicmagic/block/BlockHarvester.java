@@ -29,7 +29,6 @@ public class BlockHarvester extends BlockBaseFacingInventory implements IHasReci
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);
     this.setTickRandomly(true);
-    this.setTooltip("tile.harvester_block.tooltip");
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {

@@ -19,13 +19,12 @@ public abstract class BlockBase extends Block {
   protected void setTranslucent() {
     this.isTransp = true;
   }
-  protected void setTooltip(String t) {
-    this.myTooltip = t;
-  }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
-    if (myTooltip != null)
-      tooltip.add(UtilChat.lang(myTooltip));
+    if (myTooltip == null) {
+      myTooltip = this.getUnlocalizedName() + ".tooltip";
+    }
+    tooltip.add(UtilChat.lang(myTooltip));
   }
   @Override
   public boolean isOpaqueCube(IBlockState state) {

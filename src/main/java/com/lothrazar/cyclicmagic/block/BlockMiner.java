@@ -32,10 +32,6 @@ public class BlockMiner extends BlockBaseFacingInventory implements IHasRecipe, 
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);
     this.minerType = t;
-    if (this.minerType == MinerType.SINGLE)
-      this.setTooltip("tile.block_miner.tooltip");
-    else if (this.minerType == MinerType.TUNNEL)
-      this.setTooltip("tile.block_miner_tunnel.tooltip");
   }
   public MinerType getMinerType() {
     return minerType;
