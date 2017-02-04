@@ -9,8 +9,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BlockScaffoldingAutobreak extends BlockScaffolding implements IHasRecipe {
-  public BlockScaffoldingAutobreak() {
+public class BlockScaffoldingResponsive extends BlockScaffolding implements IHasRecipe {
+  public BlockScaffoldingResponsive() {
     super();
     this.dropBlock = false;
     this.doesAutobreak = false;
