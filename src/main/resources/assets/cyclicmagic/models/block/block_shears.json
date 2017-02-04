@@ -1,4 +1,5 @@
 {
+    "parent": "block/cube_all",
     "textures": {
 		"0":"cyclicmagic:blocks/block_shears",
 		"particle": "blocks/obsidian"
