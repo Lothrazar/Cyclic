@@ -21,8 +21,7 @@ public class ItemBlockScaffolding extends ItemBlock {
   }
   @Override
   public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World worldIn, EntityPlayer player, EnumHand hand) {
-    if (player.isSneaking()) { return new ActionResult<ItemStack>(EnumActionResult.PASS, stack); }//skip if sneaking
-   
+    if (player.isSneaking()) { return new ActionResult<ItemStack>(EnumActionResult.PASS, stack); } //skip if sneaking
     BlockPos pos = player.getPosition().up();// at eye level
     int direction = MathHelper.floor_double((double) ((player.rotationYaw * 4F) / 360F) + 0.5D) & 3;
     //imported from my scaffolding spell https://github.com/PrinceOfAmber/CyclicMagic/blob/37ebb722378cbf940aa9cfb4fa99ce0e80127533/src/main/java/com/lothrazar/cyclicmagic/spell/SpellScaffolding.java
@@ -93,16 +92,11 @@ public class ItemBlockScaffolding extends ItemBlock {
    */
   @SubscribeEvent
   public void onRightClickBlock(RightClickBlock event) {
-    if (event.getItemStack() != null && event.getItemStack().getItem() instanceof ItemBlockScaffolding && event.getEntityPlayer().isSneaking()) {
+    //instanceof ItemBlockScaffolding
+    if (event.getItemStack() != null && event.getItemStack().getItem() == this && event.getEntityPlayer().isSneaking()) {
       EnumFacing opp = event.getFace().getOpposite();
-      
-      
       BlockPos dest = UtilWorld.nextAirInDirection(event.getWorld(), event.getPos(), opp, 16, this.getBlock());
-      
-      
       this.onItemUse(event.getItemStack(), event.getEntityPlayer(), event.getWorld(), dest, event.getHand(), opp, 0, 0, 0);
-      
-      
       event.setCanceled(true);
     }
   }
