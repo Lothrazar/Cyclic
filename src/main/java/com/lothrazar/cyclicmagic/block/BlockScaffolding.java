@@ -1,15 +1,20 @@
 package com.lothrazar.cyclicmagic.block;
 import java.util.Random;
+import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -60,6 +65,24 @@ public class BlockScaffolding extends BlockBase implements IHasRecipe {
   public void addRecipe() {
     GameRegistry.addRecipe(new ItemStack(this, 16), "s s", " s ", "s s", 's', new ItemStack(Items.STICK));
   }
+  //doesnt work because it only fires when youre not sneaking. so yeah.
+//  @Override
+//  public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
+//  {
+//    System.out.println("onBlockActivated::"+hitX+"::"+hitY+"::"+hitZ);
+//    if(playerIn.isSneaking()){
+//      EnumFacing opposite = side.getOpposite();
+//      
+//     BlockPos opp = UtilWorld.nextAirInDirection(worldIn, pos, opposite, 16, this);
+//     
+//     if(opp != null && worldIn.isAirBlock(opp)==false){
+//       worldIn.setBlockState(opp, this.getDefaultState());
+//     }
+//      
+//    }
+//      return super.onBlockActivated(worldIn, pos, state, playerIn, hand, heldItem, side, hitX, hitY, hitZ);
+//  }
+  @Override
   public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
     if (!(entityIn instanceof EntityLivingBase)) { return; }
     EntityLivingBase entity = (EntityLivingBase) entityIn;

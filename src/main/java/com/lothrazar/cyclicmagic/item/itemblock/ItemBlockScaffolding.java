@@ -18,6 +18,7 @@ public class ItemBlockScaffolding extends ItemBlock {
   }
   @Override
   public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World worldIn, EntityPlayer player, EnumHand hand) {
+   
     BlockPos pos = player.getPosition().up();// at eye level
     int direction = MathHelper.floor_double((double) ((player.rotationYaw * 4F) / 360F) + 0.5D) & 3;
     //imported from my scaffolding spell https://github.com/PrinceOfAmber/CyclicMagic/blob/37ebb722378cbf940aa9cfb4fa99ce0e80127533/src/main/java/com/lothrazar/cyclicmagic/spell/SpellScaffolding.java
@@ -72,15 +73,9 @@ public class ItemBlockScaffolding extends ItemBlock {
         break;
       }
     }
-    if(worldIn.isRemote == false)
+    if(worldIn.isRemote == false && worldIn.isAirBlock(pos))
       return new ActionResult<ItemStack>(this.onItemUse(stack, player, worldIn, pos, hand, facing, 0, 0, 0), stack);
 
     return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
   }
-//  @Override
-//  public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-//
-//    return super.onItemUse(stack, playerIn, worldIn, pos, hand, facing, hitX, hitY, hitZ);
-//
-//  }
 }
