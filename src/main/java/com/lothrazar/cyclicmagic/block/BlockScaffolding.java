@@ -10,11 +10,14 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * imported from https://github.com/PrinceOfAmber/SamsPowerups/blob/
@@ -35,13 +38,22 @@ public class BlockScaffolding extends BlockBase implements IHasRecipe {
     this.setTickRandomly(true);
     this.setHardness(0F);
     this.setResistance(0F);
-    this.setTranslucent();
+//    this.setTranslucent();
     SoundEvent crackle = SoundRegistry.crackle;
     this.setSoundType(new SoundType(0.1F, 1.0F, crackle, crackle, crackle, crackle, crackle));
   }
   @Override
   public boolean isFullCube(IBlockState state) {
     return false;//required so that when climbing inside it stays invisible
+  }
+  @Override
+  public boolean isOpaqueCube(IBlockState state) {
+    return false; // http://greyminecraftcoder.blogspot.ca/2014/12/transparent-blocks-18.html
+  }
+  @SideOnly(Side.CLIENT)
+  public BlockRenderLayer getBlockLayer()
+  {
+      return BlockRenderLayer.CUTOUT;
   }
   @Override
   public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos) {
