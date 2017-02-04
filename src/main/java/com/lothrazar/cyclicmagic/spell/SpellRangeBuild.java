@@ -7,6 +7,7 @@ import com.lothrazar.cyclicmagic.net.PacketSpellFromServer;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
+import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -126,16 +127,17 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
       posToPlaceAt = posOffset;
     }
     else {
-      BlockPos posLoop = posMouseover;
-      for (int i = 0; i < max; i++) {
-        if (world.isAirBlock(posLoop)) {
-          posToPlaceAt = posLoop;
-          break;
-        }
-        else {
-          posLoop = posLoop.offset(facing);
-        }
-      }
+      posToPlaceAt = UtilWorld.nextAirInDirection(world,posMouseover,facing,max,null);
+//      BlockPos posLoop = posMouseover;
+//      for (int i = 0; i < max; i++) {
+//        if (world.isAirBlock(posLoop)) {
+//          posToPlaceAt = posLoop;
+//          break;
+//        }
+//        else {
+//          posLoop = posLoop.offset(facing);
+//        }
+//      }
     }
     //    if (UtilPlaceBlocks.placeStateSafe(world, p, posToPlaceAt, state)) {
     ItemStack cur = InventoryWand.getFromSlot(heldWand, itemSlot);

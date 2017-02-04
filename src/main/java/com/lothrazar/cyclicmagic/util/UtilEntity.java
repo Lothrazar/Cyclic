@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.util;
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.net.PacketPlayerFalldamage;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
@@ -8,6 +10,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -275,5 +278,20 @@ public class UtilEntity {
     float fixedX = pos.getX() + 0.5F;//((float) (MathHelper.floor_double(entity.posX) + MathHelper.ceiling_double_int(entity.posX))  )/ 2;
     float fixedZ = pos.getZ() + 0.5F;//((float) (MathHelper.floor_double(entity.posX) + MathHelper.ceiling_double_int(entity.posX))  )/ 2;
     entity.setPosition(fixedX, entity.posY, fixedZ);
+  }
+
+  private static final int TICKS_FALLDIST_SYNC = 22;//tick every so often
+  public static  void tryMakeEntityClimb(World worldIn, EntityLivingBase entity, double climbSpeed) {
+    if (entity.isSneaking()) {
+      entity.motionY = 0.0D;
+    }
+    else if (entity.moveForward > 0.0F && entity.motionY < climbSpeed) {
+      entity.motionY = climbSpeed;
+    }
+    if (worldIn.isRemote && //setting fall distance on clientside wont work
+        entity instanceof EntityPlayer && entity.ticksExisted % TICKS_FALLDIST_SYNC == 0) {
+      UtilSound.playSound(entity, SoundEvents.BLOCK_LADDER_STEP);
+      ModCyclic.network.sendToServer(new PacketPlayerFalldamage());
+    }
   }
 }

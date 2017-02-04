@@ -16,15 +16,14 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class BlockShears extends BlockBase implements IHasRecipe {
-  protected static final AxisAlignedBB CACTUS_AABB = new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 0.9375D, 0.9375D, 0.9375D);
+  private static final double OFFSET = 0.0625D;
+  protected static final AxisAlignedBB AABB = new AxisAlignedBB(OFFSET, 0.0D, OFFSET,1-OFFSET, 1-OFFSET,1-OFFSET);
   final static int FORTUNE = 10;// f yeah why not
   // https://github.com/PrinceOfAmber/SamsPowerups/blob/master/FarmingBlocks/src/main/java/com/lothrazar/samsfarmblocks/BlockShearWool.java
   public BlockShears() {
     super(Material.PISTON);
     this.setHardness(4.0F);
     this.setResistance(5.0F);
-    this.setTooltip("tile.block_shears.tooltip");
-    //    this.setTranslucent();
   }
   @Override
   public void addRecipe() {
@@ -48,7 +47,7 @@ public class BlockShears extends BlockBase implements IHasRecipe {
   }
   @Override
   public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos) {
-    return CACTUS_AABB;
+    return AABB;
   }
   @Override
   public boolean isOpaqueCube(IBlockState state) {

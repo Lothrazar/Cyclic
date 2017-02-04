@@ -25,11 +25,10 @@ public class BlockPlacer extends BlockBaseFacingInventory implements IHasRecipe,
     this.setHardness(3.0F).setResistance(5.0F);
     this.setSoundType(SoundType.METAL);
     this.setTickRandomly(true);
-    this.setTooltip("tile.placer_block.tooltip");
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
-    return new TileMachinePlacer();//"tile.placer_block.name"
+    return new TileMachinePlacer();
   }
   @SideOnly(Side.CLIENT)
   public void initModel() {

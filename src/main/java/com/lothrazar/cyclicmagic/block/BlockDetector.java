@@ -19,7 +19,6 @@ public class BlockDetector extends BlockBaseHasTile implements IHasRecipe {
     super(Material.ROCK);
     this.setHardness(3F);
     this.setResistance(5F);
-    this.setTooltip("tile.entity_detector.tooltip");
     this.setGuiId(ModGuiHandler.GUI_INDEX_DETECTOR);
     this.setTranslucent();
   }
