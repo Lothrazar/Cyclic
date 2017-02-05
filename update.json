@@ -5,8 +5,8 @@
     "1.9.4-recommended":  "1.2.0",
     "1.10-latest":  "1.1.0",
     "1.10-recommended": "1.1.0",
-    "1.10.2-latest":  "1.10.3",
-    "1.10.2-recommended": "1.10.3"
+    "1.10.2-latest":  "1.10.4",
+    "1.10.2-recommended": "1.10.4"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -105,5 +105,6 @@
   	,"1.10.1":"Uncrafting grinder has two new error types for the ? button, one for if something is enchanted, and the other if the recipe type is unknown and not supported.  "
 	,"1.10.2":"New Item: Redstone Lever, bind this to a lever in the world and then operate it remotely.  Added a few missing tooltips on other items. "
   	,"1.10.3":"Most item rendering rotation changed to match vanilla items (Thanks Frost2779).  Scaffolding block changes: renamed to Fragile Scaffolding, slowed down rate of decay, and recipe output increased.  New Block: Reactive Scaffolding that auto breaks when its neighbour breaks.  New Block: Replaceable Scaffolding: building on it replaces it instead of normal placement.  Reduced sound of scaffolding blocks.  Scaffolding blocks are climb-able like a ladder.  Scaffolding blocks can be built at long range: build while sneaking and it builds a block on the far opposite side, so you can easily build bridges or towers.  Fixed scaffolding transparency (it no longer kills grass).  "
+  	,"1.10.4":"Fix a mod compatibility / item duplication glitch with a block from cyclic and the Drill from Actually Additions.  "
   }
 }
