@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.net;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -32,7 +31,6 @@ public class PacketSyncPlayerFlying implements IMessage, IMessageHandler<PacketS
     if (ctx.side == Side.CLIENT) {
       EntityPlayer player = ModCyclic.proxy.getPlayerEntity(ctx);
       if (player != null) {
-        System.out.println("PacketSyncPlayerFlying");
         player.capabilities.allowFlying = message.flying;
         player.capabilities.isFlying =  message.flying;
       }

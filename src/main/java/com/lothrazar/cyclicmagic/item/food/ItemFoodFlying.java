@@ -1,9 +1,8 @@
 package com.lothrazar.cyclicmagic.item.food;
-import com.lothrazar.cyclicmagic.IHasConfig;
+import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.net.PacketSyncPlayerFlying;
-import com.lothrazar.cyclicmagic.net.PacketSyncPlayerHealth;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
@@ -16,18 +15,20 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemFoodFlying extends ItemFood implements IHasRecipe, IHasConfig {
+public class ItemFoodFlying extends ItemFood implements IHasRecipe {
   private static final String KEY_BOOLEAN = "cyclicflying_on";
   private static final String KEY_TIMER = "cyclicflying_timer";
+  private static final String KEY_POTION = "cyclicflying_potion";//more if you eat more
   public static final int FLY_SECONDS = 7;
-  public static final int POTION_SECONDS = 6;
+  public static final int POTION_SECONDS = 7;
   public ItemFoodFlying() {
-    super(2, false);
+    super(4, false);
     this.setAlwaysEdible();
   }
   @Override
@@ -36,6 +37,7 @@ public class ItemFoodFlying extends ItemFood implements IHasRecipe, IHasConfig {
     if (world.isRemote == false) {
       UtilNBT.incrementPlayerIntegerNBT(player, KEY_TIMER, FLY_SECONDS * Const.TICKS_PER_SEC);
       player.getEntityData().setBoolean(KEY_BOOLEAN, true);
+      UtilNBT.incrementPlayerIntegerNBT(player, KEY_POTION, POTION_SECONDS);
     }
   }
   @Override
@@ -45,24 +47,15 @@ public class ItemFoodFlying extends ItemFood implements IHasRecipe, IHasConfig {
         'l', Blocks.GLOWSTONE,
         'a', Items.CHORUS_FRUIT);
   }
-  @Override
-  public void syncConfig(Configuration config) {
-//    String category = Const.ConfigCategory.modpackMisc;
-    //    GHOST_SECONDS = config.getInt("CorruptedChorusSeconds", category, 5, 1, 60, "How long you can noclip after eating corrupted chorus");
-    //    POTION_SECONDS = config.getInt("CorruptedChorusPotions", category, 10, 1, 60, "How long the negative potion effects last after a corrupted chorus teleports you");
-  }
   private void setFlying(EntityPlayer player) {
+    player.fallDistance = 0.0F;
     player.capabilities.allowFlying = true;
     player.capabilities.isFlying = true;
   }
   private void setNonFlying(EntityPlayer player) {
-    System.out.println("setNonFlying"+player.getEntityWorld().isRemote);
-    player.fallDistance = 0.0F;
     player.capabilities.allowFlying = false;
     player.capabilities.isFlying = false;
-
-    if (player instanceof EntityPlayerMP) {
-      //force clientside hearts to visually update
+    if (player instanceof EntityPlayerMP) { //force clientside  to  update
       ModCyclic.network.sendTo(new PacketSyncPlayerFlying(false), (EntityPlayerMP) player);
     }
   }
@@ -70,7 +63,6 @@ public class ItemFoodFlying extends ItemFood implements IHasRecipe, IHasConfig {
   public void onPlayerUpdate(LivingUpdateEvent event) {
     if (event.getEntityLiving() instanceof EntityPlayer == false) { return; }
     EntityPlayer player = (EntityPlayer) event.getEntityLiving();
-    //    World world = player.getEntityWorld();
     if (player.getEntityData().getBoolean(KEY_BOOLEAN)) {
       int playerGhost = player.getEntityData().getInteger(KEY_TIMER);
       if (playerGhost > 0) {
@@ -79,17 +71,25 @@ public class ItemFoodFlying extends ItemFood implements IHasRecipe, IHasConfig {
           UtilChat.addChatMessage(player, "" + secs);
         }
         UtilNBT.incrementPlayerIntegerNBT(player, KEY_TIMER, -1);
-        System.out.println("update..."+player.getEntityWorld().isRemote);
         setFlying(player);
       }
-      else {
-        //times up!
+      else { //times up!
         player.getEntityData().setBoolean(KEY_BOOLEAN, false);
-        //then we can stay, but add nausea
-        player.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, Const.TICKS_PER_SEC * POTION_SECONDS));
-        player.addPotionEffect(new PotionEffect(MobEffects.HUNGER, Const.TICKS_PER_SEC * POTION_SECONDS));
+        int playerPot = player.getEntityData().getInteger(KEY_POTION);
+        player.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, Const.TICKS_PER_SEC * playerPot));
+        player.addPotionEffect(new PotionEffect(MobEffects.HUNGER, Const.TICKS_PER_SEC * playerPot));
+        player.getEntityData().setInteger(KEY_POTION, 0);
         setNonFlying(player);
       }
     }
+  }
+  @SideOnly(Side.CLIENT)
+  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltips, boolean advanced) {
+    tooltips.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
+  }
+  @Override
+  @SideOnly(Side.CLIENT)
+  public boolean hasEffect(ItemStack stack) {
+    return true;
   }
 }
