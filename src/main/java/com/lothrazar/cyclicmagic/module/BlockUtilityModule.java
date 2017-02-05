@@ -17,8 +17,10 @@ import com.lothrazar.cyclicmagic.item.itemblock.ItemBlockBucket;
 import com.lothrazar.cyclicmagic.item.itemblock.ItemBlockScaffolding;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -61,6 +63,7 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       GameRegistry.registerTileEntity(TileEntityFishing.class, Const.MODID + "block_fishing_te");
     }
     if (enableBucketBlocks) {
+      //TODO: refactor and support more recipes
       BlockRegistry.block_storewater = new BlockBucketStorage(Items.WATER_BUCKET);
       BlockRegistry.registerBlock(BlockRegistry.block_storewater, new ItemBlockBucket(BlockRegistry.block_storewater), "block_storewater", true);
       BlockRegistry.block_storemilk = new BlockBucketStorage(Items.MILK_BUCKET);
@@ -69,9 +72,12 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(BlockRegistry.block_storelava, new ItemBlockBucket(BlockRegistry.block_storelava), "block_storelava", true);
       BlockRegistry.block_storeempty = new BlockBucketStorage(null);
       BlockRegistry.registerBlock(BlockRegistry.block_storeempty, new ItemBlockBucket(BlockRegistry.block_storeempty), "block_storeempty", false);
-      BlockRegistry.block_storeempty.addRecipe();
       GameRegistry.registerTileEntity(TileEntityBucketStorage.class, "bucketstorage");
-      ModCyclic.instance.events.register(BlockRegistry.block_storeempty);
+      GameRegistry.addRecipe(new ItemStack(BlockRegistry.block_storeempty),
+          "i i",
+          " o ",
+          "i i",
+          'o', Blocks.OBSIDIAN, 'i', Items.IRON_INGOT);
     }
   }
   @Override

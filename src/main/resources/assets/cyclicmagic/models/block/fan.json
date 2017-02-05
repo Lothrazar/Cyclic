@@ -1,4 +1,5 @@
 {
+    "parent": "block/cube_all",
     "textures": {
 		"0":"blocks/quartz_block_side",
 		"1":"blocks/cauldron_inner",
