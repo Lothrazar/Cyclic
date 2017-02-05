@@ -1,4 +1,6 @@
 package com.lothrazar.cyclicmagic.block;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBucketStorage;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
@@ -27,9 +29,8 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.event.world.BlockEvent.BreakEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -89,12 +90,38 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
   }
   @Override
   public TileEntity createNewTileEntity(World worldIn, int meta) {
-    return new TileEntityBucketStorage(worldIn, meta);
+    return new TileEntityBucketStorage(meta);
+  }
+  //start of 'fixing getDrops to not have null tile entity', using pattern from forge BlockFlowerPot patch
+  @Override
+  public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
+    if (willHarvest) return true; //If it will harvest, delay deletion of the block until after getDrops
+    return super.removedByPlayer(state, world, pos, player, willHarvest);
   }
   @Override
-  public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-    return null;
+  public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te, ItemStack tool) {
+    super.harvestBlock(world, player, pos, state, te, tool);
+    world.setBlockToAir(pos);
   }
+  //end of 'fixing getDrops to not have null tile entity'
+  @Override
+  public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+    //?? TE null? http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/modification-development/2677315-solved-tileentity-returning-null
+    //http://www.minecraftforge.net/forum/index.php?/topic/38048-19-solved-blockgetdrops-and-tileentity/
+    List<ItemStack> ret = new ArrayList<ItemStack>();
+    Item item = Item.getItemFromBlock(this);//this.getItemDropped(state, rand, fortune);
+    TileEntity ent = world.getTileEntity(pos);
+    System.out.println("ent " + ent);
+    if (ent != null && ent instanceof TileEntityBucketStorage) {
+      TileEntityBucketStorage t = (TileEntityBucketStorage) ent;
+      ItemStack stack = new ItemStack(item);
+      UtilNBT.setItemStackNBTVal(stack, BlockBucketStorage.NBTBUCKETS, t.getBuckets());
+      ret.add(stack);
+      t.setBuckets(0);
+    }
+    return ret;
+  }
+  @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer entityPlayer, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
     if (hand != EnumHand.MAIN_HAND) { return false; }
     ItemStack held = entityPlayer.getHeldItem(EnumHand.MAIN_HAND);
@@ -103,11 +130,10 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
     if ((blockClicked instanceof BlockBucketStorage) == false) { return false; }
     BlockBucketStorage block = (BlockBucketStorage) blockClicked;
     TileEntityBucketStorage container = (TileEntityBucketStorage) world.getTileEntity(pos);
-    //    long timeSince = world.getTotalWorldTime() - container.getTimeLast();
-    //    if (timeSince < TileEntityBucketStorage.TIMEOUT) { return false; }
+
     if (block.bucketItem != null && block.bucketItem == this.bucketItem) {
       if (world.isRemote == false) {
-        // server only
+   
         if (container.getBuckets() > 0) {
           removeBucket(entityPlayer, world, container, block.bucketItem);
         }
@@ -199,10 +225,9 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
   private void removeBucket(EntityPlayer entityPlayer, World world, TileEntityBucketStorage storage, Item bucketItem) {
     storage.removeBucket();
     entityPlayer.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(bucketItem));
-    //    UtilItemStack.dropItemStackInWorld(world, entityPlayer.getPosition(), );
   }
   public void addRecipe() {
-    if (this == BlockRegistry.block_storeempty) {
+    if (this.bucketItem == null) {
       GameRegistry.addRecipe(new ItemStack(this),
           "i i",
           " o ",
@@ -210,20 +235,5 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
           'o', Blocks.OBSIDIAN, 'i', Items.IRON_INGOT);
     }
     // the filled ones are not crafted, only obtained when filled and then harvested
-  }
-  @SubscribeEvent
-  public void onBreakEvent(BreakEvent event) {
-    if (event.getPlayer() != null && event.getPlayer().capabilities.isCreativeMode) { return; } // dont drop in creative https://github.com/PrinceOfAmber/Cyclic/issues/93
-    World world = event.getWorld();
-    BlockPos pos = event.getPos();
-    IBlockState state = event.getState();
-    TileEntity ent = world.getTileEntity(pos);
-    if (ent != null && ent instanceof TileEntityBucketStorage) {
-      TileEntityBucketStorage t = (TileEntityBucketStorage) ent;
-      ItemStack stack = new ItemStack(state.getBlock());
-      UtilNBT.setItemStackNBTVal(stack, BlockBucketStorage.NBTBUCKETS, t.getBuckets());
-      UtilItemStack.dropItemStackInWorld(world, pos, stack);
-      t.setBuckets(0);
-    }
   }
 }

@@ -71,7 +71,7 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(BlockRegistry.block_storeempty, new ItemBlockBucket(BlockRegistry.block_storeempty), "block_storeempty", false);
       BlockRegistry.block_storeempty.addRecipe();
       GameRegistry.registerTileEntity(TileEntityBucketStorage.class, "bucketstorage");
-      ModCyclic.instance.events.register(BlockRegistry.block_storeempty);
+
     }
   }
   @Override

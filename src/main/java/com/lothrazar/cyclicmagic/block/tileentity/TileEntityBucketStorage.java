@@ -1,18 +1,14 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 
 public class TileEntityBucketStorage extends TileEntity {
   public static final String NBT_ID = "buckets";
-  //  public static final String NBT_TIME = "time";
-  //  public static final long TIMEOUT = 15;
   private int buckets = 0;
-  //  private long timeLastRemoved = 0;
   public TileEntityBucketStorage() {
     super();
   }
-  public TileEntityBucketStorage(World worldIn, int in) {
+  public TileEntityBucketStorage(int in) {
     super();
     buckets = in;
   }
