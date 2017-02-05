@@ -106,13 +106,13 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
     List<ItemStack> ret = new ArrayList<ItemStack>();
     Item item = Item.getItemFromBlock(this);//this.getItemDropped(state, rand, fortune);
     TileEntity ent = world.getTileEntity(pos);
+    ItemStack stack = new ItemStack(item);
     if (ent != null && ent instanceof TileEntityBucketStorage) {
       TileEntityBucketStorage t = (TileEntityBucketStorage) ent;
-      ItemStack stack = new ItemStack(item);
       UtilNBT.setItemStackNBTVal(stack, BlockBucketStorage.NBTBUCKETS, t.getBuckets());
-      ret.add(stack);
       t.setBuckets(0);
     }
+    ret.add(stack);
     return ret;
   }
   @Override
