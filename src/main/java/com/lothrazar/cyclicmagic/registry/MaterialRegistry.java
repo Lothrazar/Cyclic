@@ -7,4 +7,5 @@ public class MaterialRegistry {
   public static ToolMaterial sandstoneToolMaterial;
   public static ToolMaterial emeraldToolMaterial;
   public static ArmorMaterial emeraldArmorMaterial;
+  public static ArmorMaterial powerArmorMaterial;
 }

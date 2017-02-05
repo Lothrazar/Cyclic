@@ -47,5 +47,6 @@ public class ModuleRegistry {
     register(new ItemToolsModule());
     register(new VillagerCreateModule());
     register(new WorldGenModule());
+    register(new GearBootsModule());
   }
 }
