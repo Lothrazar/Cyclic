@@ -1,10 +1,8 @@
 package com.lothrazar.cyclicmagic.block;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBucketStorage;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
-import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -31,7 +29,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -68,15 +65,13 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
       container.setBuckets(b);
     }
   }
-  // http://www.minecraftforge.net/forum/index.php?topic=18754.0
   @SideOnly(Side.CLIENT)
   @Override
   public BlockRenderLayer getBlockLayer() {
-    return BlockRenderLayer.TRANSLUCENT;// ;// EnumWorldBlockLayer.CUTOUT;
+    return BlockRenderLayer.TRANSLUCENT; // http://www.minecraftforge.net/forum/index.php?topic=18754.0
   }
   @Override
-  public boolean isOpaqueCube(IBlockState state) {
-    // http://greyminecraftcoder.blogspot.ca/2014/12/transparent-blocks-18.html
+  public boolean isOpaqueCube(IBlockState state) { // http://greyminecraftcoder.blogspot.ca/2014/12/transparent-blocks-18.html
     return false;
   }
   @Override
@@ -111,7 +106,6 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
     List<ItemStack> ret = new ArrayList<ItemStack>();
     Item item = Item.getItemFromBlock(this);//this.getItemDropped(state, rand, fortune);
     TileEntity ent = world.getTileEntity(pos);
-    System.out.println("ent " + ent);
     if (ent != null && ent instanceof TileEntityBucketStorage) {
       TileEntityBucketStorage t = (TileEntityBucketStorage) ent;
       ItemStack stack = new ItemStack(item);
@@ -130,21 +124,17 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
     if ((blockClicked instanceof BlockBucketStorage) == false) { return false; }
     BlockBucketStorage block = (BlockBucketStorage) blockClicked;
     TileEntityBucketStorage container = (TileEntityBucketStorage) world.getTileEntity(pos);
-
     if (block.bucketItem != null && block.bucketItem == this.bucketItem) {
       if (world.isRemote == false) {
-   
         if (container.getBuckets() > 0) {
           removeBucket(entityPlayer, world, container, block.bucketItem);
         }
-        else {
-          // it is also empty
+        else { // it is also empty
           removeBucket(entityPlayer, world, container, block.bucketItem);
           world.setBlockState(pos, BlockRegistry.block_storeempty.getDefaultState());
         }
         world.updateComparatorOutputLevel(pos, blockClicked);
       }
-      // both sides
       UtilSound.playSound(world, pos, SoundEvents.BLOCK_PISTON_EXTEND, SoundCategory.BLOCKS);
       spawnMyParticle(world, block.bucketItem, pos);// .offset(face)
     }
@@ -152,7 +142,6 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
   }
   @Override
   public void onBlockClicked(World world, BlockPos pos, EntityPlayer entityPlayer) {
-    // only left click
     EnumHand hand = entityPlayer.getActiveHand();
     if (hand == null) {
       hand = EnumHand.MAIN_HAND;
@@ -168,7 +157,7 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
     TileEntityBucketStorage container = (TileEntityBucketStorage) world.getTileEntity(pos);
     if (entityPlayer.isSneaking() && world.isRemote == false) {
       int inside;
-      if (blockClicked == BlockRegistry.block_storeempty)
+      if (block.bucketItem == null)
         inside = 0;
       else
         inside = container.getBuckets() + 1;// yess its messed up?
@@ -177,7 +166,7 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
     }
     if (held == null) { return; }
     // before we add the bucket, wait and should we set the block first?
-    if (blockClicked == BlockRegistry.block_storeempty && block.bucketItem == null) {
+    if (block.bucketItem == null) {
       IBlockState state = null;
       if (held.getItem() == Items.LAVA_BUCKET) {
         state = BlockRegistry.block_storelava.getDefaultState();
@@ -195,9 +184,8 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
           entityPlayer.inventory.decrStackSize(entityPlayer.inventory.currentItem, 1);
           world.updateComparatorOutputLevel(pos, blockClicked);
         }
-        // both sides
         UtilSound.playSound(world, pos, SoundEvents.BLOCK_PISTON_EXTEND, SoundCategory.BLOCKS);
-        spawnMyParticle(world, held.getItem(), pos);// .offset(face)
+        spawnMyParticle(world, held.getItem(), pos);
       }
       return;
     }
@@ -207,9 +195,8 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
         entityPlayer.inventory.decrStackSize(entityPlayer.inventory.currentItem, 1);
         world.updateComparatorOutputLevel(pos, blockClicked);
       }
-      // both sides
       UtilSound.playSound(world, pos, SoundEvents.BLOCK_PISTON_EXTEND, SoundCategory.BLOCKS);
-      spawnMyParticle(world, block.bucketItem, pos);// .offset(face)
+      spawnMyParticle(world, block.bucketItem, pos);
       return;
     }
     super.onBlockClicked(world, pos, entityPlayer);
@@ -225,15 +212,5 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
   private void removeBucket(EntityPlayer entityPlayer, World world, TileEntityBucketStorage storage, Item bucketItem) {
     storage.removeBucket();
     entityPlayer.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(bucketItem));
-  }
-  public void addRecipe() {
-    if (this.bucketItem == null) {
-      GameRegistry.addRecipe(new ItemStack(this),
-          "i i",
-          " o ",
-          "i i",
-          'o', Blocks.OBSIDIAN, 'i', Items.IRON_INGOT);
-    }
-    // the filled ones are not crafted, only obtained when filled and then harvested
   }
 }
