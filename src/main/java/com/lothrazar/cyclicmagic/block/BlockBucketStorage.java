@@ -110,9 +110,9 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
     if (ent != null && ent instanceof TileEntityBucketStorage) {
       TileEntityBucketStorage t = (TileEntityBucketStorage) ent;
       UtilNBT.setItemStackNBTVal(stack, BlockBucketStorage.NBTBUCKETS, t.getBuckets());
+   
       t.setBuckets(0);
-    }
-    ret.add(stack);
+    }   ret.add(stack);
     return ret;
   }
   @Override

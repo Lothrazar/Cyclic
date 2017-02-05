@@ -1,5 +1,4 @@
 {
-    "parent": "item/generated",
     "textures": {
         "0": "blocks/iron_block",
         "1": "blocks/coal_block"
