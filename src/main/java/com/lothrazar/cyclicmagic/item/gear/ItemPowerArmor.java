@@ -3,10 +3,13 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -21,6 +24,7 @@ public class ItemPowerArmor extends ItemArmor {
   @SuppressWarnings("incomplete-switch")
   @Override
   public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack) {
+
     switch (this.armorType) {
       case CHEST:
         if (player.isSneaking() && player.moveForward > 0) {
@@ -37,6 +41,7 @@ public class ItemPowerArmor extends ItemArmor {
       break;
       case HEAD:
         setGlowing(player, true);
+        
       break;
       case LEGS:
         setStepHeight(player, true);
@@ -48,17 +53,17 @@ public class ItemPowerArmor extends ItemArmor {
     player.getEntityData().setBoolean(toggleStepFlag, on);
   }
   public static void checkIfLegsOff(EntityPlayer player) {
-    ItemStack inslot = player.inventory.armorInventory[EntityEquipmentSlot.LEGS.getIndex()];
+    Item itemInSlot = UtilPlayer.getItemArmorSlot(player,EntityEquipmentSlot.LEGS);
     if (player.getEntityData().getBoolean(ItemPowerArmor.toggleStepFlag) &&
-        (inslot == null || !(inslot.getItem() instanceof ItemPowerArmor))) {
+        (itemInSlot == null || !(itemInSlot instanceof ItemPowerArmor))) {
       //turn it off once, from the message
       setStepHeight(player, false);
     }
   }
   public static void checkIfHelmOff(EntityPlayer player) {
-    ItemStack chest = player.inventory.armorInventory[EntityEquipmentSlot.HEAD.getIndex()];
+    Item itemInSlot = UtilPlayer.getItemArmorSlot(player,EntityEquipmentSlot.HEAD);
     if (player.getEntityData().getBoolean(ItemPowerArmor.toggleFlag) &&
-        (chest == null || !(chest.getItem() instanceof ItemPowerArmor))) {
+        (itemInSlot == null || !(itemInSlot instanceof ItemPowerArmor))) {
       //turn it off once, from the message
       setGlowing(player, false);
     }
