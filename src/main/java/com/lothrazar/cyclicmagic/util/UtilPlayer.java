@@ -3,7 +3,9 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 
@@ -136,5 +138,10 @@ public class UtilPlayer {
     else {
       p.openContainer.detectAndSendChanges();
     }
+  }
+  public static Item getItemArmorSlot(EntityPlayer player, EntityEquipmentSlot slot) {
+    ItemStack inslot = player.inventory.armorInventory[slot.getIndex()];
+    Item item = (inslot == null) ? null : inslot.getItem();
+    return item;
   }
 }

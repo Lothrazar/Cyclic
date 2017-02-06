@@ -127,17 +127,17 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
       posToPlaceAt = posOffset;
     }
     else {
-      posToPlaceAt = UtilWorld.nextAirInDirection(world,posMouseover,facing,max,null);
-//      BlockPos posLoop = posMouseover;
-//      for (int i = 0; i < max; i++) {
-//        if (world.isAirBlock(posLoop)) {
-//          posToPlaceAt = posLoop;
-//          break;
-//        }
-//        else {
-//          posLoop = posLoop.offset(facing);
-//        }
-//      }
+      posToPlaceAt = UtilWorld.nextAirInDirection(world, posMouseover, facing, max, null);
+      //      BlockPos posLoop = posMouseover;
+      //      for (int i = 0; i < max; i++) {
+      //        if (world.isAirBlock(posLoop)) {
+      //          posToPlaceAt = posLoop;
+      //          break;
+      //        }
+      //        else {
+      //          posLoop = posLoop.offset(facing);
+      //        }
+      //      }
     }
     //    if (UtilPlaceBlocks.placeStateSafe(world, p, posToPlaceAt, state)) {
     ItemStack cur = InventoryWand.getFromSlot(heldWand, itemSlot);

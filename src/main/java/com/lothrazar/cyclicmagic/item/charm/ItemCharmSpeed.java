@@ -10,6 +10,7 @@ import net.minecraft.world.World;
 
 public class ItemCharmSpeed extends BaseCharm implements IHasRecipe {
   private static final int durability = 2000;
+  private static final float speedfactor = 0.08F;
   public ItemCharmSpeed() {
     super(durability);
   }
@@ -26,7 +27,7 @@ public class ItemCharmSpeed extends BaseCharm implements IHasRecipe {
   @Override
   public void onTick(ItemStack stack, EntityPlayer player) {
     if (!this.canTick(stack)) { return; }
-    UtilEntity.speedupEntityIfMoving(player);
+    UtilEntity.speedupEntityIfMoving(player, speedfactor);
     if (player.getEntityWorld().rand.nextDouble() < 0.1) {
       super.damageCharm(player, stack);
     }

@@ -200,20 +200,19 @@ public class UtilEntity {
     all.addAll(world.getEntitiesWithinAABB(EntityXPOrb.class, range));
     return all;
   }
-  public static void speedupEntityIfMoving(EntityLivingBase entity) {
+  public static void speedupEntityIfMoving(EntityLivingBase entity, float factor) {
     if (entity.moveForward > 0) {
       if (entity.getRidingEntity() != null && entity.getRidingEntity() instanceof EntityLivingBase) {
-        speedupEntity((EntityLivingBase) entity.getRidingEntity());
+        speedupEntity((EntityLivingBase) entity.getRidingEntity(), factor);
       }
       else {
-        speedupEntity(entity);
+        speedupEntity(entity, factor);
       }
     }
   }
-  public static void speedupEntity(EntityLivingBase entity) {
-    float reduce = 0.08F;
-    entity.motionX += net.minecraft.util.math.MathHelper.sin(-entity.rotationYaw * 0.017453292F) * reduce;
-    entity.motionZ += net.minecraft.util.math.MathHelper.cos(entity.rotationYaw * 0.017453292F) * reduce;
+  public static void speedupEntity(EntityLivingBase entity, float factor) {
+    entity.motionX += net.minecraft.util.math.MathHelper.sin(-entity.rotationYaw * 0.017453292F) * factor;
+    entity.motionZ += net.minecraft.util.math.MathHelper.cos(entity.rotationYaw * 0.017453292F) * factor;
   }
   public static int moveEntityLivingNonplayers(World world, double x, double y, double z, int ITEM_HRADIUS, int ITEM_VRADIUS, boolean towardsPos) {
     AxisAlignedBB range = UtilEntity.makeBoundingBox(x, y, z, ITEM_HRADIUS, ITEM_VRADIUS);
@@ -279,9 +278,8 @@ public class UtilEntity {
     float fixedZ = pos.getZ() + 0.5F;//((float) (MathHelper.floor_double(entity.posX) + MathHelper.ceiling_double_int(entity.posX))  )/ 2;
     entity.setPosition(fixedX, entity.posY, fixedZ);
   }
-
   private static final int TICKS_FALLDIST_SYNC = 22;//tick every so often
-  public static  void tryMakeEntityClimb(World worldIn, EntityLivingBase entity, double climbSpeed) {
+  public static void tryMakeEntityClimb(World worldIn, EntityLivingBase entity, double climbSpeed) {
     if (entity.isSneaking()) {
       entity.motionY = 0.0D;
     }

@@ -4,6 +4,7 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.food.ItemAppleEmerald;
 import com.lothrazar.cyclicmagic.item.food.ItemFoodCorruptedChorus;
 import com.lothrazar.cyclicmagic.item.food.ItemFoodCrafting;
+import com.lothrazar.cyclicmagic.item.food.ItemFoodFlying;
 import com.lothrazar.cyclicmagic.item.food.ItemFoodHeart;
 import com.lothrazar.cyclicmagic.item.food.ItemFoodInventory;
 import com.lothrazar.cyclicmagic.item.food.ItemHorseUpgrade;
@@ -90,6 +91,9 @@ public class ItemConsumeablesModule extends BaseEventModule implements IHasConfi
       AchievementRegistry.registerItemAchievement(corrupted_chorus);
       ItemRegistry.registerWithJeiDescription(corrupted_chorus);
     }
+    ItemFoodFlying glowing_chorus = new ItemFoodFlying();
+    ItemRegistry.addItem(glowing_chorus, "glowing_chorus");
+    ModCyclic.instance.events.register(glowing_chorus);
   }
   @SubscribeEvent
   public void onEntityInteractEvent(EntityInteract event) {

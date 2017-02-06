@@ -38,7 +38,7 @@ public class BlockScaffolding extends BlockBase implements IHasRecipe {
     this.setTickRandomly(true);
     this.setHardness(0F);
     this.setResistance(0F);
-//    this.setTranslucent();
+    //    this.setTranslucent();
     SoundEvent crackle = SoundRegistry.crackle;
     this.setSoundType(new SoundType(0.1F, 1.0F, crackle, crackle, crackle, crackle, crackle));
   }
@@ -51,9 +51,8 @@ public class BlockScaffolding extends BlockBase implements IHasRecipe {
     return false; // http://greyminecraftcoder.blogspot.ca/2014/12/transparent-blocks-18.html
   }
   @SideOnly(Side.CLIENT)
-  public BlockRenderLayer getBlockLayer()
-  {
-      return BlockRenderLayer.CUTOUT;
+  public BlockRenderLayer getBlockLayer() {
+    return BlockRenderLayer.CUTOUT;
   }
   @Override
   public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos) {
@@ -61,7 +60,7 @@ public class BlockScaffolding extends BlockBase implements IHasRecipe {
   }
   @Override
   public void updateTick(World worldObj, BlockPos pos, IBlockState state, Random rand) {
-    if (doesAutobreak && worldObj.rand.nextDouble() < 0.5){
+    if (doesAutobreak && worldObj.rand.nextDouble() < 0.5) {
       worldObj.destroyBlock(pos, dropBlock);
     }
   }
@@ -79,5 +78,4 @@ public class BlockScaffolding extends BlockBase implements IHasRecipe {
     if (!entityIn.isCollidedHorizontally) { return; }
     UtilEntity.tryMakeEntityClimb(worldIn, entity, CLIMB_SPEED);
   }
-
 }

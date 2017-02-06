@@ -30,8 +30,12 @@ public class TileEntityMagnet extends TileEntityBaseMachine implements ITickable
   public boolean isBurning() {
     return this.timer > 0 && this.timer < TIMER_FULL;
   }
+  public boolean isPowered() {
+    return this.getWorld().isBlockPowered(this.getPos());
+  }
   @Override
   public void update() {
+    if (this.isPowered()) { return; }
     boolean trigger = false;
     timer -= this.getSpeed();
     if (timer <= 0) {
