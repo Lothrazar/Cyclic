@@ -5,43 +5,39 @@ import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class GearBootsModule extends BaseEventModule implements IHasConfig {
-  private static final int maxDamageFactorLeather = 5;
-  private static final String materialName = "power";
+public class GearPurpleModule extends BaseEventModule implements IHasConfig {
+
+  private static final String MATERIALNAME = "power";
   private boolean enableWaterGear = true;
   private boolean enableLegs;
   @Override
   public void onInit() {
-    MaterialRegistry.powerArmorMaterial = EnumHelper.addArmorMaterial(materialName, Const.MODRES + materialName,
-        maxDamageFactorLeather, // affects DURABILITY 
+    ArmorMaterial mimicArmor = ArmorMaterial.IRON;
+    MaterialRegistry.powerArmorMaterial = EnumHelper.addArmorMaterial(MATERIALNAME, Const.MODRES + MATERIALNAME,
+        15, // affects DURABILITY . 15 is the same as iron
         new int[] {
-            ArmorMaterial.LEATHER.getDamageReductionAmount(EntityEquipmentSlot.FEET), ArmorMaterial.LEATHER.getDamageReductionAmount(EntityEquipmentSlot.LEGS), ArmorMaterial.LEATHER.getDamageReductionAmount(EntityEquipmentSlot.CHEST), ArmorMaterial.LEATHER.getDamageReductionAmount(EntityEquipmentSlot.HEAD)
+            mimicArmor.getDamageReductionAmount(EntityEquipmentSlot.FEET), 
+            mimicArmor.getDamageReductionAmount(EntityEquipmentSlot.LEGS), 
+            mimicArmor.getDamageReductionAmount(EntityEquipmentSlot.CHEST), 
+            mimicArmor.getDamageReductionAmount(EntityEquipmentSlot.HEAD)
         },
-        ArmorMaterial.LEATHER.getEnchantability(),
-        ArmorMaterial.LEATHER.getSoundEvent(),
-        ArmorMaterial.LEATHER.getToughness());
+        mimicArmor.getEnchantability(),
+        mimicArmor.getSoundEvent(),
+        mimicArmor.getToughness());
     MaterialRegistry.powerArmorMaterial.customCraftingMaterial = Items.LEATHER;
     if (enableWaterGear) {
       Item purple_boots = new ItemPowerArmor(MaterialRegistry.powerArmorMaterial, EntityEquipmentSlot.FEET);
       ItemRegistry.addItem(purple_boots, "purple_boots");
-      GameRegistry.addShapedRecipe(new ItemStack(purple_boots),
-          "   ", "p p", "o o",
-          'o', Blocks.OBSIDIAN,
-          'p', new ItemStack(Items.DYE, 1, EnumDyeColor.MAGENTA.getDyeDamage()));
-    }
+     }
     if (enableLegs) {
       Item purple_leggings = new ItemPowerArmor(MaterialRegistry.powerArmorMaterial, EntityEquipmentSlot.LEGS);
       ItemRegistry.addItem(purple_leggings, "purple_leggings");
