@@ -4,6 +4,7 @@ import com.lothrazar.cyclicmagic.item.gear.ItemPowerArmor;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -13,9 +14,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.EnumHelper;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class GearBootsModule extends BaseModule implements IHasConfig {
+public class GearBootsModule extends BaseEventModule implements IHasConfig {
   private static final int maxDamageFactorLeather = 5;
   private static final String materialName = "power";
   private boolean enableWaterGear = true;
@@ -43,10 +46,23 @@ public class GearBootsModule extends BaseModule implements IHasConfig {
       Item purple_leggings = new ItemPowerArmor(MaterialRegistry.powerArmorMaterial, EntityEquipmentSlot.LEGS);
       ItemRegistry.addItem(purple_leggings, "purple_leggings");
     }
+    Item purple_chestplate = new ItemPowerArmor(MaterialRegistry.powerArmorMaterial, EntityEquipmentSlot.CHEST);
+    ItemRegistry.addItem(purple_chestplate, "purple_chestplate");
+    Item purple_helmet = new ItemPowerArmor(MaterialRegistry.powerArmorMaterial, EntityEquipmentSlot.HEAD);
+    ItemRegistry.addItem(purple_helmet, "purple_helmet");
   }
   @Override
   public void syncConfig(Configuration config) {
     enableWaterGear = config.getBoolean("HermeticBoots", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableLegs = config.getBoolean("SilkweaveLeggings", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+  }
+  @SubscribeEvent
+  public void onEntityUpdate(LivingUpdateEvent event) {
+    if(event.getEntityLiving() instanceof EntityPlayer){
+      EntityPlayer player = (EntityPlayer)event.getEntityLiving() ;
+      ItemPowerArmor.checkIfHelmOff(player);
+      ItemPowerArmor.checkIfLegsOff(player);
+      //boots/chest not needed
+    }
   }
 }
