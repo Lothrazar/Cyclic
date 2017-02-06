@@ -8,11 +8,13 @@ import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -38,11 +40,15 @@ public class ItemPowerArmor extends ItemArmor implements IHasRecipe {
       break;
       case HEAD:
         setGlowing(player, true);
+        setNightVision(player);
       break;
       case LEGS:
         setStepHeight(player, true);
       break;
     }
+  }
+  private void setNightVision(EntityPlayer player) {
+    player.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 20 * Const.TICKS_PER_SEC, 0));
   }
   private void setSneakspeed(EntityPlayer player) {
     if (player.isSneaking() && player.moveForward > 0) {
