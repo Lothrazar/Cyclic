@@ -100,28 +100,28 @@ public class ItemPowerArmor extends ItemArmor implements IHasRecipe {
             "p p", "oio", "ooo",
             'i', new ItemStack(Items.CHAINMAIL_CHESTPLATE, 1, OreDictionary.WILDCARD_VALUE),
             'o', Blocks.OBSIDIAN,
-            'p', new ItemStack(Items.DYE, 1, EnumDyeColor.MAGENTA.getDyeDamage()));
+            'p', new ItemStack(Items.DYE, 1, EnumDyeColor.PURPLE.getDyeDamage()));
       break;
       case FEET:
         GameRegistry.addShapedRecipe(new ItemStack(this),
             "   ", "p p", "oio",
             'i', new ItemStack(Items.CHAINMAIL_BOOTS, 1, OreDictionary.WILDCARD_VALUE),
             'o', Blocks.OBSIDIAN,
-            'p', new ItemStack(Items.DYE, 1, EnumDyeColor.MAGENTA.getDyeDamage()));
+            'p', new ItemStack(Items.DYE, 1, EnumDyeColor.PURPLE.getDyeDamage()));
       break;
       case HEAD:
         GameRegistry.addShapedRecipe(new ItemStack(this),
             "oio", "p p", "   ",
             'i', new ItemStack(Items.CHAINMAIL_HELMET, 1, OreDictionary.WILDCARD_VALUE),
             'o', Blocks.OBSIDIAN,
-            'p', new ItemStack(Items.DYE, 1, EnumDyeColor.MAGENTA.getDyeDamage()));
+            'p', new ItemStack(Items.DYE, 1, EnumDyeColor.PURPLE.getDyeDamage()));
       break;
       case LEGS:
         GameRegistry.addShapedRecipe(new ItemStack(this),
-            "oio", "o o", "o o",
+            "oio", "p p", "o o",
             'i', new ItemStack(Items.CHAINMAIL_LEGGINGS, 1, OreDictionary.WILDCARD_VALUE),
             'o', Blocks.OBSIDIAN,
-            'p', new ItemStack(Items.DYE, 1, EnumDyeColor.MAGENTA.getDyeDamage()));
+            'p', new ItemStack(Items.DYE, 1, EnumDyeColor.PURPLE.getDyeDamage()));
       break;
     }
   }
