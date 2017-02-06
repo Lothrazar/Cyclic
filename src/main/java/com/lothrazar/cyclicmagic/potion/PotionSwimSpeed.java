@@ -10,7 +10,7 @@ public class PotionSwimSpeed extends PotionBase {
   @Override
   public void tick(EntityLivingBase entity) {
     if (entity.isInWater()) {
-      UtilEntity.speedupEntityIfMoving(entity,speedfactor);
+      UtilEntity.speedupEntityIfMoving(entity, speedfactor);
     }
   }
 }

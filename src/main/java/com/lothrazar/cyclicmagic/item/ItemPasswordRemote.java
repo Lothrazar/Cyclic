@@ -37,20 +37,19 @@ public class ItemPasswordRemote extends BaseItem implements IHasRecipe {
   public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
     if (worldIn.getBlockState(pos).getBlock() instanceof BlockLever) {
       UtilNBT.setItemStackBlockPos(stack, pos);
-      if (worldIn.isRemote){
+      if (worldIn.isRemote) {
         UtilChat.addChatMessage(playerIn, this.getUnlocalizedName() + ".saved");
       }
       UtilSound.playSound(playerIn, SoundEvents.BLOCK_LEVER_CLICK);
       return EnumActionResult.SUCCESS;
     }
-    else{
+    else {
       boolean success = false;
       success = trigger(stack, worldIn, playerIn);
       if (success)
         return EnumActionResult.SUCCESS;
       else
         return EnumActionResult.FAIL;
-     
     }
   }
   @Override

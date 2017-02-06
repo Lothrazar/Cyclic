@@ -139,7 +139,7 @@ public class UtilPlayer {
       p.openContainer.detectAndSendChanges();
     }
   }
-  public static Item getItemArmorSlot(EntityPlayer player,EntityEquipmentSlot slot) {
+  public static Item getItemArmorSlot(EntityPlayer player, EntityEquipmentSlot slot) {
     ItemStack inslot = player.inventory.armorInventory[slot.getIndex()];
     Item item = (inslot == null) ? null : inslot.getItem();
     return item;

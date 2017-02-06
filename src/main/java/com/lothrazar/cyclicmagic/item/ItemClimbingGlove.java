@@ -26,8 +26,7 @@ public class ItemClimbingGlove extends BaseItem implements IHasRecipe {
     if (!(entityIn instanceof EntityLivingBase)) { return; }
     EntityLivingBase entity = (EntityLivingBase) entityIn;
     if (!entityIn.isCollidedHorizontally) { return; }
-    
-    UtilEntity.tryMakeEntityClimb(worldIn, entity,CLIMB_SPEED);
+    UtilEntity.tryMakeEntityClimb(worldIn, entity, CLIMB_SPEED);
   }
   @Override
   public void addRecipe() {

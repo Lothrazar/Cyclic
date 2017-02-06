@@ -90,8 +90,9 @@ public class ModCyclic {
   /*
    * REQUESTED FEATURES:
    * 
-   * SOME sort of thing for stepHeight  //      player.stepHeight = 1.0F;
-   * careful on unequip.     //TODO:above doesnt get moved down to norm on unequip. save that idea for another item/charm/potion/enchant/something? 
+   * SOME sort of thing for stepHeight // player.stepHeight = 1.0F; careful on
+   * unequip. //TODO:above doesnt get moved down to norm on unequip. save that
+   * idea for another item/charm/potion/enchant/something?
    * 
    * fan gui: change distance, change speed, change push/pull
    * 

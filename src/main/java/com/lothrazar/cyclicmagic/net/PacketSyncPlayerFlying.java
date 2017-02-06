@@ -32,7 +32,7 @@ public class PacketSyncPlayerFlying implements IMessage, IMessageHandler<PacketS
       EntityPlayer player = ModCyclic.proxy.getPlayerEntity(ctx);
       if (player != null) {
         player.capabilities.allowFlying = message.flying;
-        player.capabilities.isFlying =  message.flying;
+        player.capabilities.isFlying = message.flying;
       }
     }
     return null;
