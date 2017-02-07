@@ -6,9 +6,11 @@ import com.lothrazar.cyclicmagic.net.PacketPlayerFalldamage;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
+import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.potion.PotionEffect;
@@ -291,5 +293,12 @@ public class UtilEntity {
       UtilSound.playSound(entity, SoundEvents.BLOCK_LADDER_STEP);
       ModCyclic.network.sendToServer(new PacketPlayerFalldamage());
     }
+  }
+  public static EntityVillager getVillager(World world, int x, int y, int z) {
+    List<EntityVillager> all = world.getEntitiesWithinAABB(EntityVillager.class, new AxisAlignedBB(new BlockPos(x, y, z)));
+    if (all.size() == 0)
+      return null;
+    else 
+      return all.get(0);
   }
 }

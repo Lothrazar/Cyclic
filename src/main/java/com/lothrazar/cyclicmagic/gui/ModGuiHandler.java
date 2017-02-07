@@ -43,14 +43,20 @@ import com.lothrazar.cyclicmagic.gui.user.ContainerUser;
 import com.lothrazar.cyclicmagic.gui.user.GuiUser;
 import com.lothrazar.cyclicmagic.gui.vector.ContainerVector;
 import com.lothrazar.cyclicmagic.gui.vector.GuiVector;
+import com.lothrazar.cyclicmagic.gui.villager.ContainerMerchantBetter;
+import com.lothrazar.cyclicmagic.gui.villager.GuiMerchantBetter;
 import com.lothrazar.cyclicmagic.gui.wand.ContainerWand;
 import com.lothrazar.cyclicmagic.gui.wand.GuiWandInventory;
 import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
 import com.lothrazar.cyclicmagic.gui.waypoints.GuiEnderBook;
 import com.lothrazar.cyclicmagic.item.ItemStorageBag;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
+import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.entity.IMerchant;
+import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
@@ -145,8 +151,13 @@ public class ModGuiHandler implements IGuiHandler {
         if (te != null && te instanceof TileVector) { return new ContainerVector(player.inventory, (TileVector) te); }
       break;
       case GUI_INDEX_VILLAGER:
-        
-        break;
+        EntityVillager v = UtilEntity.getVillager(world, x, y, z);
+        //http://www.minecraftforge.net/forum/topic/29593-18-solveddisplay-gui-when-interacting-with-an-entity/
+        if (v != null) {
+          v.setCustomer(player);
+          return new ContainerMerchantBetter(player.inventory, v, world);
+        }
+      break;
     }
     return null;
   }
@@ -204,7 +215,13 @@ public class ModGuiHandler implements IGuiHandler {
           if (te != null && te instanceof TileVector) { return new GuiVector(player.inventory, (TileVector) te); }
         break;
         case GUI_INDEX_VILLAGER:
-          break;
+          EntityVillager v = UtilEntity.getVillager(world, x, y, z);
+          //http://www.minecraftforge.net/forum/topic/29593-18-solveddisplay-gui-when-interacting-with-an-entity/
+          if (v != null) {
+            v.setCustomer(player);
+            return new GuiMerchantBetter(player.inventory, v, world);
+          }
+        break;
       }
     }
     return null;
