@@ -1,11 +1,8 @@
 package com.lothrazar.cyclicmagic.gui.villager;
 import java.io.IOException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import io.netty.buffer.Unpooled;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiMerchant;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
@@ -27,7 +24,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiMerchantBetter extends GuiContainer {
 
-  private static final Logger LOGGER = LogManager.getLogger();
   /** The GUI texture for the villager merchant GUI. */
   private static final ResourceLocation MERCHANT_GUI_TEXTURE = new ResourceLocation("textures/gui/container/villager.png");
   /** The current IMerchant instance in use for this specific merchant. */
@@ -41,11 +37,11 @@ public class GuiMerchantBetter extends GuiContainer {
   /** The chat component utilized by this GuiMerchant instance. */
   private final ITextComponent chatComponent;
 
-  public GuiMerchantBetter(InventoryPlayer p_i45500_1_, IMerchant p_i45500_2_, World worldIn)
+  public GuiMerchantBetter(InventoryPlayer ip, IMerchant merch, World worldIn)
   {
-      super(new ContainerMerchant(p_i45500_1_, p_i45500_2_, worldIn));
-      this.merchant = p_i45500_2_;
-      this.chatComponent = p_i45500_2_.getDisplayName();
+      super(new ContainerMerchant(ip, merch, worldIn));
+      this.merchant = merch;
+      this.chatComponent = merch.getDisplayName();
   }
 
   /**
@@ -174,8 +170,8 @@ public class GuiMerchantBetter extends GuiContainer {
       {
           int i = (this.width - this.xSize) / 2;
           int j = (this.height - this.ySize) / 2;
-          int k = this.selectedMerchantRecipe;
-          MerchantRecipe merchantrecipe = (MerchantRecipe)merchantrecipelist.get(k);
+       
+          MerchantRecipe merchantrecipe = (MerchantRecipe)merchantrecipelist.get(this.selectedMerchantRecipe);
           ItemStack itemstack = merchantrecipe.getItemToBuy();
           ItemStack itemstack1 = merchantrecipe.getSecondItemToBuy();
           ItemStack itemstack2 = merchantrecipe.getItemToSell();
