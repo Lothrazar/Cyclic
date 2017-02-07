@@ -16,6 +16,7 @@ import com.lothrazar.cyclicmagic.item.ItemEnderBook;
 import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
 import com.lothrazar.cyclicmagic.item.ItemPasswordRemote;
 import com.lothrazar.cyclicmagic.item.ItemStorageBag;
+import com.lothrazar.cyclicmagic.item.ItemTrader;
 import com.lothrazar.cyclicmagic.net.PacketSpellShiftLeft;
 import com.lothrazar.cyclicmagic.net.PacketSpellShiftRight;
 import com.lothrazar.cyclicmagic.net.PacketSwapBlock;
@@ -121,6 +122,9 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   }
   @Override
   public void onInit() {
+    ItemTrader tool_trade = new ItemTrader();
+    ItemRegistry.addItem(tool_trade, "tool_trade");
+    
     if (enableLever) {
       ItemPasswordRemote password_remote = new ItemPasswordRemote();
       ItemRegistry.addItem(password_remote, "password_remote");

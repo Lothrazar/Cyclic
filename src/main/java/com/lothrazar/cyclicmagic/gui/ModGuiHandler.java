@@ -77,6 +77,7 @@ public class ModGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_PATTERN = 14;
   public static final int GUI_INDEX_DETECTOR = 15;
   public static final int GUI_INDEX_VECTOR = 16;
+  public static final int GUI_INDEX_VILLAGER = 17;
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
     TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
@@ -143,6 +144,9 @@ public class ModGuiHandler implements IGuiHandler {
       case GUI_INDEX_VECTOR:
         if (te != null && te instanceof TileVector) { return new ContainerVector(player.inventory, (TileVector) te); }
       break;
+      case GUI_INDEX_VILLAGER:
+        
+        break;
     }
     return null;
   }
@@ -199,6 +203,8 @@ public class ModGuiHandler implements IGuiHandler {
         case GUI_INDEX_VECTOR:
           if (te != null && te instanceof TileVector) { return new GuiVector(player.inventory, (TileVector) te); }
         break;
+        case GUI_INDEX_VILLAGER:
+          break;
       }
     }
     return null;
