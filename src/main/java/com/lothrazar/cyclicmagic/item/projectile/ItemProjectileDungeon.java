@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.item.projectile;
-import java.util.List;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDungeonEye;
@@ -54,9 +53,5 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
   @SideOnly(Side.CLIENT)
   public boolean hasEffect(ItemStack stack) {
     return true;
-  }
-  @SideOnly(Side.CLIENT)
-  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
-    tooltip.add(UtilChat.lang("item.ender_dungeon.tooltip"));
   }
 }
