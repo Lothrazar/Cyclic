@@ -2,9 +2,9 @@ package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.food.ItemAppleEmerald;
-import com.lothrazar.cyclicmagic.item.food.ItemFoodCorruptedChorus;
+import com.lothrazar.cyclicmagic.item.food.ItemFoodChorusCorrupted;
 import com.lothrazar.cyclicmagic.item.food.ItemFoodCrafting;
-import com.lothrazar.cyclicmagic.item.food.ItemFoodFlying;
+import com.lothrazar.cyclicmagic.item.food.ItemFoodChorusGlowing;
 import com.lothrazar.cyclicmagic.item.food.ItemFoodHeart;
 import com.lothrazar.cyclicmagic.item.food.ItemFoodInventory;
 import com.lothrazar.cyclicmagic.item.food.ItemHorseUpgrade;
@@ -31,6 +31,7 @@ public class ItemConsumeablesModule extends BaseEventModule implements IHasConfi
   private boolean enableInventoryUpgrade;
   private boolean enableCorruptedChorus;
   private boolean enableHorseFoodUpgrades;
+  private boolean enableGlowingChorus;
   @Override
   public void onInit() {
     if (enableHorseFoodUpgrades) {
@@ -83,7 +84,7 @@ public class ItemConsumeablesModule extends BaseEventModule implements IHasConfi
       ItemRegistry.registerWithJeiDescription(inventory_food);
     }
     if (enableCorruptedChorus) {
-      ItemFoodCorruptedChorus corrupted_chorus = new ItemFoodCorruptedChorus();
+      ItemFoodChorusCorrupted corrupted_chorus = new ItemFoodChorusCorrupted();
       ItemRegistry.addItem(corrupted_chorus, "corrupted_chorus");
       ModCyclic.instance.events.register(corrupted_chorus);
       LootTableRegistry.registerLoot(corrupted_chorus);
@@ -91,9 +92,11 @@ public class ItemConsumeablesModule extends BaseEventModule implements IHasConfi
       AchievementRegistry.registerItemAchievement(corrupted_chorus);
       ItemRegistry.registerWithJeiDescription(corrupted_chorus);
     }
-    ItemFoodFlying glowing_chorus = new ItemFoodFlying();
-    ItemRegistry.addItem(glowing_chorus, "glowing_chorus");
-    ModCyclic.instance.events.register(glowing_chorus);
+    if (enableGlowingChorus) {
+      ItemFoodChorusGlowing glowing_chorus = new ItemFoodChorusGlowing();
+      ItemRegistry.addItem(glowing_chorus, "glowing_chorus");
+      ModCyclic.instance.events.register(glowing_chorus);
+    }
   }
   @SubscribeEvent
   public void onEntityInteractEvent(EntityInteract event) {
@@ -108,6 +111,7 @@ public class ItemConsumeablesModule extends BaseEventModule implements IHasConfi
   }
   @Override
   public void syncConfig(Configuration config) {
+    enableGlowingChorus = config.getBoolean("GlowingChorus(Food)", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableEmeraldApple = config.getBoolean("EmeraldApple", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableHeartContainer = config.getBoolean("HeartContainer(food)", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableInventoryCrafting = config.getBoolean("InventoryCrafting(Food)", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

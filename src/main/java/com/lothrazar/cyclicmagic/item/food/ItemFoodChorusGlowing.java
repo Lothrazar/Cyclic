@@ -8,7 +8,6 @@ import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemFood;
@@ -21,13 +20,13 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemFoodFlying extends ItemFood implements IHasRecipe {
+public class ItemFoodChorusGlowing extends ItemFood implements IHasRecipe {
   private static final String KEY_BOOLEAN = "cyclicflying_on";
   private static final String KEY_TIMER = "cyclicflying_timer";
   private static final String KEY_POTION = "cyclicflying_potion";//more if you eat more
-  public static final int FLY_SECONDS = 7;
-  public static final int POTION_SECONDS = 7;
-  public ItemFoodFlying() {
+  public static final int FLY_SECONDS = 10;
+  public static final int POTION_SECONDS = 10;
+  public ItemFoodChorusGlowing() {
     super(4, false);
     this.setAlwaysEdible();
   }
@@ -44,7 +43,7 @@ public class ItemFoodFlying extends ItemFood implements IHasRecipe {
   public void addRecipe() {
     GameRegistry.addRecipe(new ItemStack(this, 3),
         "lal", "lal", "lal",
-        'l', Blocks.GLOWSTONE,
+        'l', Items.GLOWSTONE_DUST,
         'a', Items.CHORUS_FRUIT);
   }
   private void setFlying(EntityPlayer player) {
@@ -76,7 +75,6 @@ public class ItemFoodFlying extends ItemFood implements IHasRecipe {
       else { //times up!
         player.getEntityData().setBoolean(KEY_BOOLEAN, false);
         int playerPot = player.getEntityData().getInteger(KEY_POTION);
-        player.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, Const.TICKS_PER_SEC * playerPot));
         player.addPotionEffect(new PotionEffect(MobEffects.HUNGER, Const.TICKS_PER_SEC * playerPot));
         player.getEntityData().setInteger(KEY_POTION, 0);
         setNonFlying(player);
