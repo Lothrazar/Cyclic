@@ -23,7 +23,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemFoodCorruptedChorus extends ItemFood implements IHasRecipe, IHasConfig {
+public class ItemFoodChorusCorrupted extends ItemFood implements IHasRecipe, IHasConfig {
   //revived from https://github.com/PrinceOfAmber/Cyclic/blob/d2f91d1f97b9cfba47786a30b427fbfdcd714212/src/main/java/com/lothrazar/cyclicmagic/spell/SpellGhost.java
   private static final String KEY_BOOLEAN = "ghost_on";
   private static final String KEY_TIMER = "ghost_timer";
@@ -32,7 +32,7 @@ public class ItemFoodCorruptedChorus extends ItemFood implements IHasRecipe, IHa
   public static int GHOST_SECONDS = 5;
   public static int POTION_SECONDS = 20;
   private static final int numFood = 2;
-  public ItemFoodCorruptedChorus() {
+  public ItemFoodChorusCorrupted() {
     super(numFood, false);
     this.setAlwaysEdible();
   }

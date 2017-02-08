@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.item.tool;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.BaseTool;
-import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
@@ -20,8 +19,6 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemToolWaterIce extends BaseTool implements IHasRecipe {
   private static final int DURABILITY = 256;
@@ -75,9 +72,5 @@ public class ItemToolWaterIce extends BaseTool implements IHasRecipe {
         'd', new ItemStack(Items.NETHERBRICK),
         'o', new ItemStack(Blocks.OBSIDIAN),
         'i', new ItemStack(Blocks.ICE));
-  }
-  @SideOnly(Side.CLIENT)
-  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
-    tooltip.add(UtilChat.lang("item.water_freezer.tooltip"));
   }
 }

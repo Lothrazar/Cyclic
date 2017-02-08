@@ -1,8 +1,6 @@
 package com.lothrazar.cyclicmagic.item.tool;
-import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.BaseTool;
-import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilHarvestCrops;
 import com.lothrazar.cyclicmagic.util.UtilHarvestCrops.HarestCropsConfig;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,8 +12,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemToolHarvest extends BaseTool implements IHasRecipe {
   private static final int range = 6;
@@ -95,20 +91,6 @@ public class ItemToolHarvest extends BaseTool implements IHasRecipe {
             's', Items.STONE_HOE);
       break;
       default:
-      break;
-    }
-  }
-  @SideOnly(Side.CLIENT)
-  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltips, boolean advanced) {
-    switch (harvestType) {
-      case CROPS:
-        tooltips.add(UtilChat.lang("item.tool_harvest_crops.tooltip"));
-      break;
-      case LEAVES:
-        tooltips.add(UtilChat.lang("item.tool_harvest_leaves.tooltip"));
-      break;
-      case WEEDS:
-        tooltips.add(UtilChat.lang("item.tool_harvest_weeds.tooltip"));
       break;
     }
   }

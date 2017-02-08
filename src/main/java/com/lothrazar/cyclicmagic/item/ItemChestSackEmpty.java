@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.item;
-import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.net.PacketStorageSack;
@@ -18,14 +17,11 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemChestSackEmpty extends BaseItem implements IHasRecipe {
   public static final String name = "chest_sack_empty";
   public ItemChestSackEmpty() {
     super();
-    this.setMaxStackSize(64);
     // imported from my old mod
     // https://github.com/PrinceOfAmber/SamsPowerups/blob/b02f6b4243993eb301f4aa2b39984838adf482c1/src/main/java/com/lothrazar/samscontent/item/ItemChestSack.java
   }
@@ -62,11 +58,6 @@ public class ItemChestSackEmpty extends BaseItem implements IHasRecipe {
         'l', new ItemStack(Items.LEATHER),
         'b', new ItemStack(Items.APPLE),
         's', new ItemStack(Items.STRING));
-  }
-  @SideOnly(Side.CLIENT)
-  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
-    String s = UtilChat.lang("item.chest_sack_empty.tooltip");
-    tooltip.add(s);
   }
   private Item fullSack;
   public void setFullSack(Item item) {

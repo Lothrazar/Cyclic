@@ -7,6 +7,7 @@ import java.util.Map;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.BlockStoneSlab;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -89,12 +90,21 @@ public class BlockPassword extends BlockBaseHasTile implements IHasRecipe {
     for (TileEntityPassword rm : toRemove) {
       TileEntityPassword.listeningBlocks.remove(rm);
     }
+    int wasFound = 0;
     for (Map.Entry<BlockPos, Boolean> entry : updates.entrySet()) {
       world.setBlockState(entry.getKey(), this.getDefaultState().withProperty(BlockPassword.POWERED, entry.getValue()));
+      wasFound++;
       //setting the block state seems to also run the constructor of the tile entity, which wipes out the data
       //so we need to do a manual reset here. but then its not in gui
       //nope not needed anymore, fix in tile entity
       //      ((TileEntityPassword)world.getTileEntity(entry.getKey())).setMyPassword(event.getMessage());
+    }
+    if (wasFound > 0) {
+      event.setCanceled(true);//If this event is canceled, the chat message is never distributed to all clients.
+      if (wasFound == 1)
+        UtilChat.addChatMessage(event.getPlayer(), UtilChat.lang(this.getUnlocalizedName() + ".triggered") + " : " + event.getMessage());
+      else
+        UtilChat.addChatMessage(event.getPlayer(), wasFound + " " + UtilChat.lang(this.getUnlocalizedName() + ".triggeredmany") + " : " + event.getMessage());
     }
   }
   @Override

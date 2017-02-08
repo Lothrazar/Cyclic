@@ -15,7 +15,7 @@ public abstract class BaseItem extends Item {
   public void register(String name) {
     ItemRegistry.registerItem(this, name, this.hideFromCreativeTab);
   }
-  private String getTooltip() {
+  protected String getTooltip() {
     return this.getUnlocalizedName() + ".tooltip";
   }
   @Override
