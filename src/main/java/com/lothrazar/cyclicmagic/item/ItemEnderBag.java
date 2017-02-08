@@ -23,7 +23,6 @@ public class ItemEnderBag extends BaseItem implements IHasRecipe {
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
     tooltip.add(UtilChat.lang("item.sack_ender.tooltip"));
-    super.addInformation(stack, playerIn, tooltip, advanced);
   }
   @Override
   public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World world, EntityPlayer player, EnumHand hand) {
