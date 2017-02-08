@@ -26,8 +26,6 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.ChunkProviderServer;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemToolSpawnInspect extends BaseTool implements IHasRecipe {
   private static final int DURABILITY = 2000;
@@ -136,10 +134,5 @@ public class ItemToolSpawnInspect extends BaseTool implements IHasRecipe {
       else
         return displayName;
     }
-  }
-  @SideOnly(Side.CLIENT)
-  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
-    String s = UtilChat.lang("item.tool_spawn_inspect.tooltip");
-    tooltip.add(s);
   }
 }

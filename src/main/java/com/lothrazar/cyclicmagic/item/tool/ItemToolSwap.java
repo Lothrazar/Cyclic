@@ -147,7 +147,7 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
     tooltip.add(TextFormatting.GREEN + UtilChat.lang(ActionType.getName(stack)));
-    tooltip.add(UtilChat.lang("item.tool_swap.tooltip"));
+    super.addInformation(stack, playerIn, tooltip, advanced);
   }
   @Override
   public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
