@@ -20,10 +20,10 @@ public class ContainerMerchantBetter extends Container {
   private final InventoryMerchant merchantInventory;
   /** Instance of World. */
   private final World theWorld;
-  public ContainerMerchantBetter(InventoryPlayer playerInventory, IMerchant merchant, World worldIn) {
+  public ContainerMerchantBetter(InventoryPlayer playerInventory, IMerchant merchant, InventoryMerchant im, World worldIn) {
     this.theMerchant = merchant;
     this.theWorld = worldIn;
-    this.merchantInventory = new InventoryMerchant(playerInventory.player, merchant);
+    this.merchantInventory = im;
     this.addSlotToContainer(new Slot(this.merchantInventory, 0, 36, 53));
     this.addSlotToContainer(new Slot(this.merchantInventory, 1, 62, 53));
     this.addSlotToContainer(new SlotMerchantResult(playerInventory.player, merchant, this.merchantInventory, 2, 120, 53));
@@ -35,6 +35,7 @@ public class ContainerMerchantBetter extends Container {
     for (int k = 0; k < 9; ++k) {
       this.addSlotToContainer(new Slot(playerInventory, k, 8 + k * 18, 142));
     }
+    this.detectAndSendChanges();
   }
   public InventoryMerchant getMerchantInventory() {
     return this.merchantInventory;
@@ -46,6 +47,7 @@ public class ContainerMerchantBetter extends Container {
    * Looks for changes made in the container, sends them to every listener.
    */
   public void detectAndSendChanges() {
+    merchantInventory.markDirty();
     super.detectAndSendChanges();
   }
   /**

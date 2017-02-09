@@ -13,6 +13,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ContainerMerchant;
+import net.minecraft.inventory.InventoryMerchant;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.client.CPacketCustomPayload;
@@ -41,10 +42,11 @@ public class GuiMerchantBetter extends GuiContainer {
   /** The chat component utilized by this GuiMerchant instance. */
   private final ITextComponent chatComponent;
   private List<MerchantJumpButton> merchButtons = new ArrayList<MerchantJumpButton>();
-  public GuiMerchantBetter(InventoryPlayer ip, IMerchant merch, World worldIn) {
+  public GuiMerchantBetter(InventoryPlayer ip, IMerchant merch,InventoryMerchant im, World worldIn) {
     super(new ContainerMerchant(ip, merch, worldIn));
     this.merchant = merch;
     this.chatComponent = merch.getDisplayName();
+    
   }
   /**
    * Adds the buttons (and other controls) to the screen in question. Called

@@ -57,6 +57,7 @@ import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.InventoryMerchant;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -153,7 +154,9 @@ public class ModGuiHandler implements IGuiHandler {
         //http://www.minecraftforge.net/forum/topic/29593-18-solveddisplay-gui-when-interacting-with-an-entity/
         if (v != null) {
           v.setCustomer(player);
-          return new ContainerMerchantBetter(player.inventory, v, world);
+          ContainerMerchantBetter c =  new ContainerMerchantBetter(player.inventory, v,new InventoryMerchant(player, v), world);
+          c.detectAndSendChanges();
+          return c;
         }
       break;
     }
@@ -217,7 +220,7 @@ public class ModGuiHandler implements IGuiHandler {
           //http://www.minecraftforge.net/forum/topic/29593-18-solveddisplay-gui-when-interacting-with-an-entity/
           if (v != null) {
             v.setCustomer(player);
-            return new GuiMerchantBetter(player.inventory, v, world);
+            return new GuiMerchantBetter(player.inventory, v,new InventoryMerchant(player, v), world);
           }
         break;
       }
