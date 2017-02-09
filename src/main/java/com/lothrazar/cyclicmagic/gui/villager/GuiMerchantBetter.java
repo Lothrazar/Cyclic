@@ -1,5 +1,8 @@
 package com.lothrazar.cyclicmagic.gui.villager;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import io.netty.buffer.Unpooled;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -37,6 +40,7 @@ public class GuiMerchantBetter extends GuiContainer {
   private int selectedMerchantRecipe;
   /** The chat component utilized by this GuiMerchant instance. */
   private final ITextComponent chatComponent;
+  private List<MerchantJumpButton> merchButtons = new ArrayList<MerchantJumpButton>();
   public GuiMerchantBetter(InventoryPlayer ip, IMerchant merch, World worldIn) {
     super(new ContainerMerchant(ip, merch, worldIn));
     this.merchant = merch;
@@ -47,8 +51,8 @@ public class GuiMerchantBetter extends GuiContainer {
    * when the GUI is displayed and when the window resizes, the buttonList is
    * cleared beforehand.
    */
+  int padding = 4;
   public void initGui() {
-    int padding = 4;
     super.initGui();
     int i = (this.width - this.xSize) / 2;
     int j = (this.height - this.ySize) / 2;
@@ -63,33 +67,47 @@ public class GuiMerchantBetter extends GuiContainer {
     this.nextButton.enabled = false;
     this.previousButton.enabled = false;
     btnId = 3;
-    x = i + padding-20;
-    y = j + padding + 40;
-    
-
     MerchantRecipeList merchantrecipelist = this.merchant.getRecipes(this.mc.thePlayer);
     int idx = 0;
-    for(MerchantRecipe r : merchantrecipelist){
-      
-      MerchantJumpButton slotBtn = (MerchantJumpButton)this.addButton(new MerchantJumpButton(btnId, x, y, 20, 20, idx));
-      y += 20;
+    int h = 20, w = 60;
+    x = i + padding - w - 2 * padding;
+    y = j + padding ;
+    for (MerchantRecipe r : merchantrecipelist) {
+      MerchantJumpButton slotBtn = (MerchantJumpButton) this.addButton(new MerchantJumpButton(btnId, x, y, w, h, idx));
+      y += h + padding;
+ 
       btnId++;
       idx++;
+      merchButtons.add(slotBtn);
     }
-    
   }
-  /**
-   * Draw the foreground layer for the GuiContainer (everything in front of the
-   * items)
-   */
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    String s = this.chatComponent.getUnformattedText() + "LUL";
+    String s = this.chatComponent.getUnformattedText();
     this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
     this.fontRendererObj.drawString(I18n.format("container.inventory", new Object[0]), 8, this.ySize - 96 + 2, 4210752);
+    int i = (this.width - this.xSize) / 2;
+    int j = (this.height - this.ySize) / 2;
+    MerchantRecipeList merchantrecipelist = this.merchant.getRecipes(this.mc.thePlayer);
+    int idx, x, y, spacing = 18, k;
+    MerchantRecipe r;
+    for (MerchantJumpButton btn : merchButtons) {
+      idx = btn.getRecipeIndex();
+      r = merchantrecipelist.get(idx);
+      k = 0;
+      x = btn.xPosition - i + k * spacing;
+      y = btn.yPosition - j + padding/2;
+
+      ModCyclic.proxy.renderItemOnScreen(r.getItemToBuy(), x, y);
+      k++;
+      if (r.getSecondItemToBuy() != null) {
+        x = btn.xPosition - i + k * spacing;
+        ModCyclic.proxy.renderItemOnScreen(r.getSecondItemToBuy(), x, y);
+      }
+      k++;
+      x = btn.xPosition - i + k * spacing;
+      ModCyclic.proxy.renderItemOnScreen(r.getItemToSell(), x, y);
+    }
   }
-  /**
-   * Called from the main game loop to update the screen.
-   */
   public void updateScreen() {
     super.updateScreen();
     MerchantRecipeList merchantrecipelist = this.merchant.getRecipes(this.mc.thePlayer);
@@ -98,12 +116,7 @@ public class GuiMerchantBetter extends GuiContainer {
       this.previousButton.enabled = this.selectedMerchantRecipe > 0;
     }
   }
-  /**
-   * Called by the controls from the buttonList when activated. (Mouse pressed
-   * for buttons)
-   */
   protected void actionPerformed(GuiButton button) throws IOException {
-    System.out.println("id " + button.id);
     boolean flag = false;
     MerchantRecipeList merchantrecipelist = this.merchant.getRecipes(this.mc.thePlayer);
     if (button == this.nextButton) {
@@ -120,8 +133,8 @@ public class GuiMerchantBetter extends GuiContainer {
       }
       flag = true;
     }
-    else if (button instanceof MerchantJumpButton){//if (button.id == 3) {
-      setRecipeIndex(((MerchantJumpButton)button).getRecipeIndex());
+    else if (button instanceof MerchantJumpButton) {//if (button.id == 3) {
+      setRecipeIndex(((MerchantJumpButton) button).getRecipeIndex());
     }
     if (flag) {
       setRecipeIndex(this.selectedMerchantRecipe);
@@ -145,7 +158,6 @@ public class GuiMerchantBetter extends GuiContainer {
     this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
     MerchantRecipeList merchantrecipelist = this.merchant.getRecipes(this.mc.thePlayer);
     if (merchantrecipelist != null && !merchantrecipelist.isEmpty()) {
-   
       if (this.selectedMerchantRecipe < 0 || this.selectedMerchantRecipe >= merchantrecipelist.size()) { return; }
       MerchantRecipe merchantrecipe = (MerchantRecipe) merchantrecipelist.get(this.selectedMerchantRecipe);
       if (merchantrecipe.isRecipeDisabled()) {
@@ -157,9 +169,6 @@ public class GuiMerchantBetter extends GuiContainer {
       }
     }
   }
-  /**
-   * Draws the screen and all the components in it.
-   */
   public void drawScreen(int mouseX, int mouseY, float partialTicks) {
     super.drawScreen(mouseX, mouseY, partialTicks);
     MerchantRecipeList merchantrecipelist = this.merchant.getRecipes(this.mc.thePlayer);
@@ -222,7 +231,6 @@ public class GuiMerchantBetter extends GuiContainer {
     public void setRecipeIndex(int recipeIndex) {
       this.recipeIndex = recipeIndex;
     }
-    
   }
   @SideOnly(Side.CLIENT)
   static class MerchantButton extends GuiButton {
