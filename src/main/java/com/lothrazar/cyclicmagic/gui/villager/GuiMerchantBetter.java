@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.IMerchant;
+import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ContainerMerchant;
 import net.minecraft.inventory.InventoryMerchant;
@@ -30,7 +31,7 @@ public class GuiMerchantBetter extends GuiContainer {
   /** The GUI texture for the villager merchant GUI. */
   private static final ResourceLocation MERCHANT_GUI_TEXTURE = new ResourceLocation("textures/gui/container/villager.png");
   /** The current IMerchant instance in use for this specific merchant. */
-  private final IMerchant merchant;
+  private final EntityVillager merchant;
   /** The button which proceeds to the next available merchant recipe. */
   private GuiMerchantBetter.MerchantButton nextButton;
   /** Returns to the previous Merchant recipe if one is applicable. */
@@ -42,7 +43,7 @@ public class GuiMerchantBetter extends GuiContainer {
   /** The chat component utilized by this GuiMerchant instance. */
   private final ITextComponent chatComponent;
   private List<MerchantJumpButton> merchButtons = new ArrayList<MerchantJumpButton>();
-  public GuiMerchantBetter(InventoryPlayer ip, IMerchant merch,InventoryMerchant im, World worldIn) {
+  public GuiMerchantBetter(InventoryPlayer ip, EntityVillager merch,InventoryMerchant im, World worldIn) {
     super(new ContainerMerchant(ip, merch, worldIn));
     this.merchant = merch;
     this.chatComponent = merch.getDisplayName();

@@ -44,5 +44,6 @@ public class PacketRegistry {
     network.registerMessage(PacketTileVector.class, PacketTileVector.class, packetID++, Side.SERVER);
     network.registerMessage(PacketPlayerFalldamage.class, PacketPlayerFalldamage.class, packetID++, Side.SERVER);
     network.registerMessage(PacketSyncPlayerFlying.class, PacketSyncPlayerFlying.class, packetID++, Side.CLIENT);
+    network.registerMessage(PacketSyncVillager.class, PacketSyncVillager.class, packetID++, Side.CLIENT);
   }
 }

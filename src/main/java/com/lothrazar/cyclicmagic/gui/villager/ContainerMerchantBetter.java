@@ -1,7 +1,11 @@
 package com.lothrazar.cyclicmagic.gui.villager;
 import javax.annotation.Nullable;
+import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.net.PacketSyncVillager;
 import net.minecraft.entity.IMerchant;
+import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
@@ -16,11 +20,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerMerchantBetter extends Container {
   /** Instance of Merchant. */
-  private final IMerchant theMerchant;
+  public final EntityVillager theMerchant;
   private final InventoryMerchant merchantInventory;
   /** Instance of World. */
   private final World theWorld;
-  public ContainerMerchantBetter(InventoryPlayer playerInventory, IMerchant merchant, InventoryMerchant im, World worldIn) {
+  public ContainerMerchantBetter(InventoryPlayer playerInventory, EntityVillager merchant, InventoryMerchant im, World worldIn) {
     this.theMerchant = merchant;
     this.theWorld = worldIn;
     this.merchantInventory = im;
@@ -34,6 +38,17 @@ public class ContainerMerchantBetter extends Container {
     }
     for (int k = 0; k < 9; ++k) {
       this.addSlotToContainer(new Slot(playerInventory, k, 8 + k * 18, 142));
+    }
+    
+    int career = this.theMerchant.serializeNBT().getInteger("Career");
+    ModCyclic.logger.info(career+" ? career");
+    if(playerInventory.player instanceof EntityPlayerMP){
+      ModCyclic.logger.info(career+" MP career");
+    ModCyclic.network.sendTo(new PacketSyncVillager(career), (EntityPlayerMP)playerInventory.player);
+    }
+    else{
+
+      ModCyclic.logger.info(career+" ?CLIENT career");
     }
     this.detectAndSendChanges();
   }
