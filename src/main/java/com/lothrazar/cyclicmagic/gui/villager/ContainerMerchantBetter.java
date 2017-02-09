@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.gui.villager;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.net.PacketSyncVillager;
-import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -20,14 +19,17 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerMerchantBetter extends Container {
   /** Instance of Merchant. */
-  public final EntityVillager theMerchant;
+  public final EntityVillager merchant;
   private final InventoryMerchant merchantInventory;
   /** Instance of World. */
   private final World theWorld;
+  public int syncCareer=-1;
+  EntityPlayer player;
   public ContainerMerchantBetter(InventoryPlayer playerInventory, EntityVillager merchant, InventoryMerchant im, World worldIn) {
-    this.theMerchant = merchant;
+    this.merchant = merchant;
     this.theWorld = worldIn;
     this.merchantInventory = im;
+    player=playerInventory.player;
     this.addSlotToContainer(new Slot(this.merchantInventory, 0, 36, 53));
     this.addSlotToContainer(new Slot(this.merchantInventory, 1, 62, 53));
     this.addSlotToContainer(new SlotMerchantResult(playerInventory.player, merchant, this.merchantInventory, 2, 120, 53));
@@ -40,23 +42,33 @@ public class ContainerMerchantBetter extends Container {
       this.addSlotToContainer(new Slot(playerInventory, k, 8 + k * 18, 142));
     }
     
-    int career = this.theMerchant.serializeNBT().getInteger("Career");
-    ModCyclic.logger.info(career+" ? career");
-    if(playerInventory.player instanceof EntityPlayerMP){
-      ModCyclic.logger.info(career+" MP career");
-    ModCyclic.network.sendTo(new PacketSyncVillager(career), (EntityPlayerMP)playerInventory.player);
-    }
-    else{
-
-      ModCyclic.logger.info(career+" ?CLIENT career");
-    }
+    int career = getCareer();
+    ModCyclic.logger.info(career+" CONSTRUCTOR career");
+//    if(playerInventory.player instanceof EntityPlayerMP){
+//      ModCyclic.logger.info(career+" MP career Good");
+//    ModCyclic.network.sendTo(new PacketSyncVillager(career), (EntityPlayerMP)playerInventory.player);
+//    }
+//    else{
+//
+//      ModCyclic.logger.info(career+" ?CLIENT career bad");
+//    }
     this.detectAndSendChanges();
+  }
+  private int getCareer() {
+    int career = this.merchant.serializeNBT().getInteger("Career");
+    return career;
+  }
+  public void setCareer(int c){
+    //hopefully only client side
+    this.merchant.serializeNBT().setInteger("Career",c);
   }
   public InventoryMerchant getMerchantInventory() {
     return this.merchantInventory;
   }
   public void addListener(IContainerListener listener) {
-    super.addListener(listener);
+    super.addListener(listener);  
+    listener.sendAllWindowProperties(this, this.merchantInventory);
+
   }
   /**
    * Looks for changes made in the container, sends them to every listener.
@@ -64,6 +76,23 @@ public class ContainerMerchantBetter extends Container {
   public void detectAndSendChanges() {
     merchantInventory.markDirty();
     super.detectAndSendChanges();
+    System.out.println("isRemote "+ this.theWorld.isRemote);//false ALWAYS fkn server eh
+    for (int i = 0; i < this.listeners.size(); ++i) {
+      IContainerListener icontainerlistener = (IContainerListener) this.listeners.get(i);
+
+      if (this.syncCareer != this.getCareer()) {
+        System.out.println("!!!!!!!!sendProgressBarUpdate"+ this.getCareer());
+        icontainerlistener.sendProgressBarUpdate(this, 0, this.getCareer());  
+        
+        if(player instanceof EntityPlayerMP)
+  ModCyclic.network.sendTo(new PacketSyncVillager( this.getCareer()), (EntityPlayerMP)player);
+     // 
+      }
+    }  
+
+    System.out.println("  this.syncCareer"+  this.syncCareer);
+//    this.syncCareer = this.getCareer();
+    
   }
   /**
    * Callback for when the crafting matrix is changed.
@@ -76,12 +105,18 @@ public class ContainerMerchantBetter extends Container {
     this.merchantInventory.setCurrentRecipeIndex(currentRecipeIndex);
   }
   @SideOnly(Side.CLIENT)
-  public void updateProgressBar(int id, int data) {}
+  public void updateProgressBar(int id, int data) {
+    System.out.println("update progressbar "+id+"::"+data);
+    this.syncCareer = data;
+
+    System.out.println("update progressbar so TODO: set that villager career ! ");
+    this.setCareer(data);
+  }
   /**
    * Determines whether supplied player can use this container
    */
   public boolean canInteractWith(EntityPlayer playerIn) {
-    return this.theMerchant.getCustomer() == playerIn;
+    return this.merchant.getCustomer() == playerIn;
   }
   /**
    * Take a stack from the specified inventory slot.
@@ -120,7 +155,7 @@ public class ContainerMerchantBetter extends Container {
    */
   public void onContainerClosed(EntityPlayer playerIn) {
     super.onContainerClosed(playerIn);
-    this.theMerchant.setCustomer((EntityPlayer) null);
+    this.merchant.setCustomer((EntityPlayer) null);
     super.onContainerClosed(playerIn);
     if (!this.theWorld.isRemote) {
       ItemStack itemstack = this.merchantInventory.removeStackFromSlot(0);

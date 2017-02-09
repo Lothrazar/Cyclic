@@ -19,13 +19,18 @@ public class ItemTrader extends BaseItem {
   }
   @Override
   public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
+
     World world = entity.getEntityWorld();
+    System.out.println("itemInteractionForEntity "+world.isRemote);
     if (entity instanceof EntityVillager) {
+      
+      if (!world.isRemote) {//!!!!
       EntityVillager villager = (EntityVillager) entity;
       player.openGui(ModCyclic.instance, ModGuiHandler.GUI_INDEX_VILLAGER, world,
           villager.getPosition().getX(),
           villager.getPosition().getY(),
           villager.getPosition().getZ());
+      }
     }
     else{
       int r = 5;
@@ -34,7 +39,6 @@ public class ItemTrader extends BaseItem {
       BlockPos end = center.add(r, r, r);
       List<EntityVillager> all = world.getEntitiesWithinAABB(EntityVillager.class, new AxisAlignedBB(start,end));
       
-      System.out.println("NV"+all.size());
       if(!all.isEmpty()){
         //make second gui that lists these, store entity id too. click on trade ->go to villager . maybe TP it to me even?
       }      

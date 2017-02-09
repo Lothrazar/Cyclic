@@ -1,8 +1,10 @@
 package com.lothrazar.cyclicmagic.gui.villager;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.util.Const;
 import io.netty.buffer.Unpooled;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -12,6 +14,7 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.passive.EntityVillager;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ContainerMerchant;
 import net.minecraft.inventory.InventoryMerchant;
@@ -39,6 +42,7 @@ public class GuiMerchantBetter extends GuiContainer {
   /**
    * The integer value corresponding to the currently selected merchant recipe.
    */
+  EntityPlayer player;
   private int selectedMerchantRecipe;
   /** The chat component utilized by this GuiMerchant instance. */
   private final ITextComponent chatComponent;
@@ -47,6 +51,7 @@ public class GuiMerchantBetter extends GuiContainer {
     super(new ContainerMerchant(ip, merch, worldIn));
     this.merchant = merch;
     this.chatComponent = merch.getDisplayName();
+    player=ip.player;
     
   }
   /**
@@ -111,7 +116,30 @@ public class GuiMerchantBetter extends GuiContainer {
       ModCyclic.proxy.renderItemOnScreen(r.getItemToSell(), x, y);
     }
   }
+  private int getCareer() {
+    int career = this.merchant.serializeNBT().getInteger("Career");
+    return career;
+  }
+  public void setCareer(int c) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException{
+    //hopefully only client side
+    Field f1 =     this.merchant.getClass().getDeclaredField("careerId");
+    f1.setAccessible(true);
+    f1.set(this.merchant, c);
+    this.merchant.serializeNBT().setInteger("Career",c);
+    
+  }
   public void updateScreen() {
+    int c = this.getCareer();
+    System.out.println(c+"updatescreen? carreer?");
+    int hacked =       player.getEntityData().getInteger(Const.MODID+"_VILLAGERHACK");
+    System.out.println(hacked+"  _VILLAGERHACK");
+    if(c != hacked){
+      try{
+      this.setCareer(hacked);
+      }catch (Exception e){
+        ModCyclic.logger.error("Error fixing villager career, forge mappings must have changed "+e.getLocalizedMessage());
+      }
+    }
     super.updateScreen();
     MerchantRecipeList merchantrecipelist = this.merchant.getRecipes(this.mc.thePlayer);
     if (merchantrecipelist != null) {

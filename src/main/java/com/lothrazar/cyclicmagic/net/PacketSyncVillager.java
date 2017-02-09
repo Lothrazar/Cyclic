@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.net;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.villager.ContainerMerchantBetter;
+import com.lothrazar.cyclicmagic.util.Const;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -33,10 +34,12 @@ public class PacketSyncVillager implements IMessage, IMessageHandler<PacketSyncV
     if (ctx.side == Side.CLIENT) {
       EntityPlayer player = ModCyclic.proxy.getPlayerEntity(ctx);
       System.out.println("PSV "+message.career);
+      player.getEntityData().setInteger(Const.MODID+"_VILLAGERHACK", message.career);
       if (player != null && player.openContainer instanceof ContainerMerchantBetter) {
         ContainerMerchantBetter c=(ContainerMerchantBetter)player.openContainer ;
   
         
+ c.setCareer(message.career);
         
       }
       else
