@@ -7,6 +7,7 @@ import com.lothrazar.cyclicmagic.net.PacketSyncVillager;
 import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilReflection;
+import io.netty.buffer.Unpooled;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -18,6 +19,9 @@ import net.minecraft.inventory.InventoryMerchant;
 import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotMerchantResult;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.play.server.SPacketCustomPayload;
+import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -122,8 +126,26 @@ public class ContainerMerchantBetter extends Container {
 
     if (player instanceof EntityPlayerMP 
         && player.openContainer instanceof ContainerMerchantBetter){
-    ModCyclic.network.sendTo(new PacketSyncVillager(this.getCareer()), (EntityPlayerMP) player);
+      EntityPlayerMP mp = (EntityPlayerMP)player;
+    ModCyclic.network.sendTo(new PacketSyncVillager(this.getCareer()), mp);
+    
+
+//    
+    MerchantRecipeList merchantrecipelist = this.merchant.getRecipes(player);
+
+    if (merchantrecipelist != null )
+    {
+    
+        PacketBuffer packetbuffer = new PacketBuffer(Unpooled.buffer());
+        packetbuffer.writeInt(mp.currentWindowId);
+        System.out.println("TRLIST TO CLINET");
+        merchantrecipelist.writeToBuf(packetbuffer);
+        mp.connection.sendPacket(new SPacketCustomPayload("MC|TrList", packetbuffer));
     }
+    
+    }
+    
+    
   /*
     //    System.out.println("isRemote "+ this.theWorld.isRemote);//false ALWAYS fkn server eh
     if (!this.theWorld.isRemote) {
