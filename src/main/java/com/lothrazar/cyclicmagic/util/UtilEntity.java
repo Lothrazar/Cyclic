@@ -294,11 +294,16 @@ public class UtilEntity {
       ModCyclic.network.sendToServer(new PacketPlayerFalldamage());
     }
   }
+  public static List<EntityVillager> getVillagers(World world, BlockPos p, int r) {
+    BlockPos start = p.add(-r, -r, -r);
+    BlockPos end = p.add(r, r, r);
+    return world.getEntitiesWithinAABB(EntityVillager.class, new AxisAlignedBB(start, end));
+  }
   public static EntityVillager getVillager(World world, int x, int y, int z) {
     List<EntityVillager> all = world.getEntitiesWithinAABB(EntityVillager.class, new AxisAlignedBB(new BlockPos(x, y, z)));
     if (all.size() == 0)
       return null;
-    else 
+    else
       return all.get(0);
   }
 }

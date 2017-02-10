@@ -140,6 +140,7 @@ public class GuiMerchantBetter extends GuiContainer {
         ModCyclic.logger.error("Error fixing villager career, forge mappings must have changed "+e.getLocalizedMessage());
       }
     }
+    System.out.println("XXX"+this.merchant.getProfessionForge().getCareer(hacked).getName());
     super.updateScreen();
     MerchantRecipeList merchantrecipelist = this.merchant.getRecipes(this.mc.thePlayer);
     if (merchantrecipelist != null) {

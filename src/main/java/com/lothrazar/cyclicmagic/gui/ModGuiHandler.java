@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.gui;
+import java.util.List;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityDetector;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFishing;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
@@ -57,6 +58,7 @@ import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.ContainerMerchant;
 import net.minecraft.inventory.InventoryMerchant;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -85,7 +87,8 @@ public class ModGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_VILLAGER = 17;
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-    TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
+    BlockPos p = new BlockPos(x, y, z);
+    TileEntity te = world.getTileEntity(p);
     switch (ID) {
       case GUI_INDEX_EXTENDED:
         return new ContainerPlayerExtended(player.inventory, new InventoryPlayerExtended(player), player);
@@ -150,13 +153,17 @@ public class ModGuiHandler implements IGuiHandler {
         if (te != null && te instanceof TileVector) { return new ContainerVector(player.inventory, (TileVector) te); }
       break;
       case GUI_INDEX_VILLAGER:
-        EntityVillager v = UtilEntity.getVillager(world, x, y, z);
+
         //http://www.minecraftforge.net/forum/topic/29593-18-solveddisplay-gui-when-interacting-with-an-entity/
-        if (v != null) {
+        List<EntityVillager> all =UtilEntity.getVillagers(world, p,5);
+        if (!all.isEmpty()) {
+          EntityVillager v = all.get(0);
           v.setCustomer(player);
           ContainerMerchantBetter c =  new ContainerMerchantBetter(player.inventory, v,new InventoryMerchant(player, v), world);
           c.detectAndSendChanges();
+          
           return c;
+//          return new ContainerMerchant(player.inventory, v, world);
         }
       break;
     }
@@ -164,8 +171,9 @@ public class ModGuiHandler implements IGuiHandler {
   }
   @Override
   public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+    BlockPos p = new BlockPos(x, y, z);
     if (world instanceof WorldClient) {
-      TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
+      TileEntity te = world.getTileEntity(p);
       switch (ID) {
         case GUI_INDEX_EXTENDED:
           return new GuiPlayerExtended(new ContainerPlayerExtended(player.inventory, new InventoryPlayerExtended(player), player));
@@ -216,10 +224,10 @@ public class ModGuiHandler implements IGuiHandler {
           if (te != null && te instanceof TileVector) { return new GuiVector(player.inventory, (TileVector) te); }
         break;
         case GUI_INDEX_VILLAGER:
-          EntityVillager v = UtilEntity.getVillager(world, x, y, z);
-          //http://www.minecraftforge.net/forum/topic/29593-18-solveddisplay-gui-when-interacting-with-an-entity/
-          if (v != null) {
-            v.setCustomer(player);
+          List<EntityVillager> all =UtilEntity.getVillagers(world, p,5);
+          if (!all.isEmpty()) {
+            EntityVillager v = all.get(0);
+//            v.setCustomer(player);
             return new GuiMerchantBetter(player.inventory, v,new InventoryMerchant(player, v), world);
           }
         break;

@@ -76,12 +76,12 @@ public class ContainerMerchantBetter extends Container {
   public void detectAndSendChanges() {
     merchantInventory.markDirty();
     super.detectAndSendChanges();
-    System.out.println("isRemote "+ this.theWorld.isRemote);//false ALWAYS fkn server eh
+//    System.out.println("isRemote "+ this.theWorld.isRemote);//false ALWAYS fkn server eh
     for (int i = 0; i < this.listeners.size(); ++i) {
       IContainerListener icontainerlistener = (IContainerListener) this.listeners.get(i);
 
       if (this.syncCareer != this.getCareer()) {
-        System.out.println("!!!!!!!!sendProgressBarUpdate"+ this.getCareer());
+        System.out.println(this.getCareer()+"!!!!!!!!sendProgressBarUpdate" );
         icontainerlistener.sendProgressBarUpdate(this, 0, this.getCareer());  
         
         if(player instanceof EntityPlayerMP)
@@ -90,7 +90,7 @@ public class ContainerMerchantBetter extends Container {
       }
     }  
 
-    System.out.println("  this.syncCareer"+  this.syncCareer);
+    System.out.println(this.syncCareer+"  this.syncCareer"  );
 //    this.syncCareer = this.getCareer();
     
   }
