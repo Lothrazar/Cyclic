@@ -159,9 +159,8 @@ public class ModGuiHandler implements IGuiHandler {
         if (!all.isEmpty()) {
           EntityVillager v = all.get(0);
           v.setCustomer(player);
-          ContainerMerchantBetter c =  new ContainerMerchantBetter(player.inventory, v,new InventoryMerchant(player, v), world);
+          ContainerMerchantBetter c =  new ContainerMerchantBetter(player.inventory, v,new InventoryMerchant(player, v), world,all);
           c.detectAndSendChanges();
-          
           return c;
 //          return new ContainerMerchant(player.inventory, v, world);
         }
@@ -228,7 +227,7 @@ public class ModGuiHandler implements IGuiHandler {
           if (!all.isEmpty()) {
             EntityVillager v = all.get(0);
 //            v.setCustomer(player);
-            return new GuiMerchantBetter(player.inventory, v,new InventoryMerchant(player, v), world);
+            return new GuiMerchantBetter(player.inventory, v,new InventoryMerchant(player, v), world,all);
           }
         break;
       }

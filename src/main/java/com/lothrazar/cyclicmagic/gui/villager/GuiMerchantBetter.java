@@ -16,7 +16,6 @@ import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ContainerMerchant;
 import net.minecraft.inventory.InventoryMerchant;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
@@ -34,7 +33,7 @@ public class GuiMerchantBetter extends GuiContainer {
   /** The GUI texture for the villager merchant GUI. */
   private static final ResourceLocation MERCHANT_GUI_TEXTURE = new ResourceLocation("textures/gui/container/villager.png");
   /** The current IMerchant instance in use for this specific merchant. */
-  private final EntityVillager merchant;
+//  private final EntityVillager merchant;
   /** The button which proceeds to the next available merchant recipe. */
   private GuiMerchantBetter.MerchantButton nextButton;
   /** Returns to the previous Merchant recipe if one is applicable. */
@@ -47,9 +46,9 @@ public class GuiMerchantBetter extends GuiContainer {
   /** The chat component utilized by this GuiMerchant instance. */
   private final ITextComponent chatComponent;
   private List<MerchantJumpButton> merchButtons = new ArrayList<MerchantJumpButton>();
-  public GuiMerchantBetter(InventoryPlayer ip, EntityVillager merch,InventoryMerchant im, World worldIn) {
-    super(new ContainerMerchant(ip, merch, worldIn));
-    this.merchant = merch;
+  public GuiMerchantBetter(InventoryPlayer ip, EntityVillager merch,InventoryMerchant im, World worldIn,List<EntityVillager> all) {
+    super(new ContainerMerchantBetter(ip, merch, im,worldIn,all));
+ 
     this.chatComponent = merch.getDisplayName();
     player=ip.player;
     
@@ -75,7 +74,8 @@ public class GuiMerchantBetter extends GuiContainer {
     this.nextButton.enabled = false;
     this.previousButton.enabled = false;
     btnId = 3;
-    MerchantRecipeList merchantrecipelist = this.merchant.getRecipes(this.mc.thePlayer);
+  IMerchant  merchant = this.getMerchant();
+    MerchantRecipeList merchantrecipelist = merchant.getRecipes(this.mc.thePlayer);
     int idx = 0;
     int h = 20, w = 60;
     x = i + padding - w - 2 * padding;
@@ -95,7 +95,8 @@ public class GuiMerchantBetter extends GuiContainer {
     this.fontRendererObj.drawString(I18n.format("container.inventory", new Object[0]), 8, this.ySize - 96 + 2, 4210752);
     int i = (this.width - this.xSize) / 2;
     int j = (this.height - this.ySize) / 2;
-    MerchantRecipeList merchantrecipelist = this.merchant.getRecipes(this.mc.thePlayer);
+    IMerchant  merchant = this.getMerchant();
+    MerchantRecipeList merchantrecipelist = merchant.getRecipes(this.mc.thePlayer);
     int idx, x, y, spacing = 18, k;
     MerchantRecipe r;
     for (MerchantJumpButton btn : merchButtons) {
@@ -117,15 +118,17 @@ public class GuiMerchantBetter extends GuiContainer {
     }
   }
   private int getCareer() {
-    int career = this.merchant.serializeNBT().getInteger("Career");
+    EntityVillager  merchant = this.getMerchant();
+    int career = merchant.serializeNBT().getInteger("Career");
     return career;
   }
   public void setCareer(int c) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException{
     //hopefully only client side
-    Field f1 =     this.merchant.getClass().getDeclaredField("careerId");
+    EntityVillager  merchant = this.getMerchant();
+    Field f1 =     merchant.getClass().getDeclaredField("careerId");
     f1.setAccessible(true);
-    f1.set(this.merchant, c);
-    this.merchant.serializeNBT().setInteger("Career",c);
+    f1.set(merchant, c);
+    merchant.serializeNBT().setInteger("Career",c);
     
   }
   public void updateScreen() {
@@ -140,9 +143,10 @@ public class GuiMerchantBetter extends GuiContainer {
         ModCyclic.logger.error("Error fixing villager career, forge mappings must have changed "+e.getLocalizedMessage());
       }
     }
-    System.out.println("XXX"+this.merchant.getProfessionForge().getCareer(hacked).getName());
+    EntityVillager  merchant = this.getMerchant();
+    System.out.println("XXX"+merchant.getProfessionForge().getCareer(hacked).getName());
     super.updateScreen();
-    MerchantRecipeList merchantrecipelist = this.merchant.getRecipes(this.mc.thePlayer);
+    MerchantRecipeList merchantrecipelist = merchant.getRecipes(this.mc.thePlayer);
     if (merchantrecipelist != null) {
       this.nextButton.enabled = this.selectedMerchantRecipe < merchantrecipelist.size() - 1;
       this.previousButton.enabled = this.selectedMerchantRecipe > 0;
@@ -150,7 +154,8 @@ public class GuiMerchantBetter extends GuiContainer {
   }
   protected void actionPerformed(GuiButton button) throws IOException {
     boolean flag = false;
-    MerchantRecipeList merchantrecipelist = this.merchant.getRecipes(this.mc.thePlayer);
+    EntityVillager  merchant = this.getMerchant();
+    MerchantRecipeList merchantrecipelist = merchant.getRecipes(this.mc.thePlayer);
     if (button == this.nextButton) {
       ++this.selectedMerchantRecipe;
       if (merchantrecipelist != null && this.selectedMerchantRecipe >= merchantrecipelist.size()) {
@@ -174,7 +179,7 @@ public class GuiMerchantBetter extends GuiContainer {
   }
   private void setRecipeIndex(int i) {
     this.selectedMerchantRecipe = i;
-    ((ContainerMerchant) this.inventorySlots).setCurrentRecipeIndex(this.selectedMerchantRecipe);
+    ((ContainerMerchantBetter) this.inventorySlots).setCurrentRecipeIndex(this.selectedMerchantRecipe);
     PacketBuffer packetbuffer = new PacketBuffer(Unpooled.buffer());
     packetbuffer.writeInt(this.selectedMerchantRecipe);
     this.mc.getConnection().sendPacket(new CPacketCustomPayload("MC|TrSel", packetbuffer));
@@ -188,7 +193,8 @@ public class GuiMerchantBetter extends GuiContainer {
     int i = (this.width - this.xSize) / 2;
     int j = (this.height - this.ySize) / 2;
     this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
-    MerchantRecipeList merchantrecipelist = this.merchant.getRecipes(this.mc.thePlayer);
+    EntityVillager  merchant = this.getMerchant();
+    MerchantRecipeList merchantrecipelist = merchant.getRecipes(this.mc.thePlayer);
     if (merchantrecipelist != null && !merchantrecipelist.isEmpty()) {
       if (this.selectedMerchantRecipe < 0 || this.selectedMerchantRecipe >= merchantrecipelist.size()) { return; }
       MerchantRecipe merchantrecipe = (MerchantRecipe) merchantrecipelist.get(this.selectedMerchantRecipe);
@@ -203,7 +209,8 @@ public class GuiMerchantBetter extends GuiContainer {
   }
   public void drawScreen(int mouseX, int mouseY, float partialTicks) {
     super.drawScreen(mouseX, mouseY, partialTicks);
-    MerchantRecipeList merchantrecipelist = this.merchant.getRecipes(this.mc.thePlayer);
+    EntityVillager  merchant = this.getMerchant();
+    MerchantRecipeList merchantrecipelist = merchant.getRecipes(this.mc.thePlayer);
     if (merchantrecipelist != null && !merchantrecipelist.isEmpty()) {
       int i = (this.width - this.xSize) / 2;
       int j = (this.height - this.ySize) / 2;
@@ -247,8 +254,8 @@ public class GuiMerchantBetter extends GuiContainer {
       RenderHelper.enableStandardItemLighting();
     }
   }
-  public IMerchant getMerchant() {
-    return this.merchant;
+  public EntityVillager getMerchant() {
+    return ((ContainerMerchantBetter)this.inventorySlots).merchant;
   }
   @SideOnly(Side.CLIENT)
   static class MerchantJumpButton extends GuiButton {

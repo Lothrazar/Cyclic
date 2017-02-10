@@ -1,7 +1,10 @@
 package com.lothrazar.cyclicmagic.gui.villager;
+import java.lang.reflect.Field;
+import java.util.List;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.net.PacketSyncVillager;
+import com.lothrazar.cyclicmagic.util.UtilReflection;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -23,13 +26,13 @@ public class ContainerMerchantBetter extends Container {
   private final InventoryMerchant merchantInventory;
   /** Instance of World. */
   private final World theWorld;
-  public int syncCareer=-1;
+  public int syncCareer = -1;
   EntityPlayer player;
-  public ContainerMerchantBetter(InventoryPlayer playerInventory, EntityVillager merchant, InventoryMerchant im, World worldIn) {
+  public ContainerMerchantBetter(InventoryPlayer playerInventory, EntityVillager merchant, InventoryMerchant im, World worldIn, List<EntityVillager> all) {
     this.merchant = merchant;
     this.theWorld = worldIn;
     this.merchantInventory = im;
-    player=playerInventory.player;
+    player = playerInventory.player;
     this.addSlotToContainer(new Slot(this.merchantInventory, 0, 36, 53));
     this.addSlotToContainer(new Slot(this.merchantInventory, 1, 62, 53));
     this.addSlotToContainer(new SlotMerchantResult(playerInventory.player, merchant, this.merchantInventory, 2, 120, 53));
@@ -41,34 +44,45 @@ public class ContainerMerchantBetter extends Container {
     for (int k = 0; k < 9; ++k) {
       this.addSlotToContainer(new Slot(playerInventory, k, 8 + k * 18, 142));
     }
-    
     int career = getCareer();
-    ModCyclic.logger.info(career+" CONSTRUCTOR career");
-//    if(playerInventory.player instanceof EntityPlayerMP){
-//      ModCyclic.logger.info(career+" MP career Good");
-//    ModCyclic.network.sendTo(new PacketSyncVillager(career), (EntityPlayerMP)playerInventory.player);
-//    }
-//    else{
-//
-//      ModCyclic.logger.info(career+" ?CLIENT career bad");
-//    }
+    ModCyclic.logger.info(career + " CONSTRUCTOR career");
+    //    player.openContainer=this;
     this.detectAndSendChanges();
   }
   private int getCareer() {
     int career = this.merchant.serializeNBT().getInteger("Career");
     return career;
   }
-  public void setCareer(int c){
+  public void setCareer(int c) {
     //hopefully only client side
-    this.merchant.serializeNBT().setInteger("Career",c);
+    int cOld = this.getCareer();
+    if(cOld == c){return;}
+    //http://export.mcpbot.bspk.rs/snapshot/1.10.2/ "snapshot_20161111"
+    Field fieldCareer = UtilReflection.getPrivateField("careerId", "field_175563_bv", merchant);
+    if (fieldCareer != null) {
+      try {
+        int BEFORE = fieldCareer.getInt(merchant);
+        System.out.println("BEFORE set: " + BEFORE);
+        fieldCareer.set(merchant, c);
+        int test = fieldCareer.getInt(merchant);
+        System.out.println("after set: " + test);
+      }
+      catch (Exception e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    }
+    else{
+
+      System.out.println("reflection fail");
+    }
   }
   public InventoryMerchant getMerchantInventory() {
     return this.merchantInventory;
   }
   public void addListener(IContainerListener listener) {
-    super.addListener(listener);  
+    super.addListener(listener);
     listener.sendAllWindowProperties(this, this.merchantInventory);
-
   }
   /**
    * Looks for changes made in the container, sends them to every listener.
@@ -76,23 +90,19 @@ public class ContainerMerchantBetter extends Container {
   public void detectAndSendChanges() {
     merchantInventory.markDirty();
     super.detectAndSendChanges();
-//    System.out.println("isRemote "+ this.theWorld.isRemote);//false ALWAYS fkn server eh
+    //    System.out.println("isRemote "+ this.theWorld.isRemote);//false ALWAYS fkn server eh
     for (int i = 0; i < this.listeners.size(); ++i) {
       IContainerListener icontainerlistener = (IContainerListener) this.listeners.get(i);
-
       if (this.syncCareer != this.getCareer()) {
-        System.out.println(this.getCareer()+"!!!!!!!!sendProgressBarUpdate" );
-        icontainerlistener.sendProgressBarUpdate(this, 0, this.getCareer());  
-        
-        if(player instanceof EntityPlayerMP)
-  ModCyclic.network.sendTo(new PacketSyncVillager( this.getCareer()), (EntityPlayerMP)player);
-     // 
+        System.out.println(this.getCareer() + "!!!!!!!!sendProgressBarUpdate");
+        icontainerlistener.sendProgressBarUpdate(this, 0, this.getCareer());
+        if (player instanceof EntityPlayerMP)
+          ModCyclic.network.sendTo(new PacketSyncVillager(this.getCareer()), (EntityPlayerMP) player);
+        // 
       }
-    }  
-
-    System.out.println(this.syncCareer+"  this.syncCareer"  );
-//    this.syncCareer = this.getCareer();
-    
+    }
+    System.out.println(this.syncCareer + "  this.syncCareer");
+    //    this.syncCareer = this.getCareer();
   }
   /**
    * Callback for when the crafting matrix is changed.
@@ -106,9 +116,8 @@ public class ContainerMerchantBetter extends Container {
   }
   @SideOnly(Side.CLIENT)
   public void updateProgressBar(int id, int data) {
-    System.out.println("update progressbar "+id+"::"+data);
+    System.out.println("update progressbar " + id + "::" + data);
     this.syncCareer = data;
-
     System.out.println("update progressbar so TODO: set that villager career ! ");
     this.setCareer(data);
   }

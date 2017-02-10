@@ -34,6 +34,7 @@ public class PacketSyncVillager implements IMessage, IMessageHandler<PacketSyncV
     if (ctx.side == Side.CLIENT) {
       EntityPlayer player = ModCyclic.proxy.getPlayerEntity(ctx);
       System.out.println("PSV "+message.career);
+      System.out.println("class "+ player.openContainer);
       player.getEntityData().setInteger(Const.MODID+"_VILLAGERHACK", message.career);
       if (player != null && player.openContainer instanceof ContainerMerchantBetter) {
         ContainerMerchantBetter c=(ContainerMerchantBetter)player.openContainer ;
@@ -41,12 +42,7 @@ public class PacketSyncVillager implements IMessage, IMessageHandler<PacketSyncV
         
  c.setCareer(message.career);
         
-      }
-      else
-      {
-
-        System.out.println("FFFF null "+ player.openContainer);
-      }
+      } 
     }
     return null;
   }
