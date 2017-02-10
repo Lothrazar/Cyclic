@@ -4,7 +4,9 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import io.netty.buffer.Unpooled;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -33,7 +35,8 @@ public class GuiMerchantBetter extends GuiContainer {
   /** The GUI texture for the villager merchant GUI. */
   private static final ResourceLocation MERCHANT_GUI_TEXTURE = new ResourceLocation("textures/gui/container/villager.png");
   /** The current IMerchant instance in use for this specific merchant. */
-//  private final EntityVillager merchant;
+
+  public final EntityVillager merchant;
   /** The button which proceeds to the next available merchant recipe. */
   private GuiMerchantBetter.MerchantButton nextButton;
   /** Returns to the previous Merchant recipe if one is applicable. */
@@ -48,9 +51,16 @@ public class GuiMerchantBetter extends GuiContainer {
   private List<MerchantJumpButton> merchButtons = new ArrayList<MerchantJumpButton>();
   public GuiMerchantBetter(InventoryPlayer ip, EntityVillager merch,InventoryMerchant im, World worldIn,List<EntityVillager> all) {
     super(new ContainerMerchantBetter(ip, merch, im,worldIn,all));
- 
+ merchant=merch;
     this.chatComponent = merch.getDisplayName();
     player=ip.player;
+    
+    
+    int career = UtilEntity.getVillagerCareer(merch);// getCareer();
+    String sc = (worldIn.isRemote) ? "client" : "Server";
+    ModCyclic.logger.info(career + " GUI CONSTRUCTOR  " + sc + "_" + 
+        UtilEntity.getCareerName(merchant) );
+   
     
   }
   /**
@@ -117,34 +127,14 @@ public class GuiMerchantBetter extends GuiContainer {
       ModCyclic.proxy.renderItemOnScreen(r.getItemToSell(), x, y);
     }
   }
-  private int getCareer() {
-    EntityVillager  merchant = this.getMerchant();
-    int career = merchant.serializeNBT().getInteger("Career");
-    return career;
-  }
-  public void setCareer(int c) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException{
-    //hopefully only client side
-    EntityVillager  merchant = this.getMerchant();
-    Field f1 =     merchant.getClass().getDeclaredField("careerId");
-    f1.setAccessible(true);
-    f1.set(merchant, c);
-    merchant.serializeNBT().setInteger("Career",c);
-    
+
+
+private int getCareer() {
+    return UtilEntity.getVillagerCareer(this.getMerchant());
   }
   public void updateScreen() {
-    int c = this.getCareer();
-    System.out.println(c+"updatescreen? carreer?");
-    int hacked =       player.getEntityData().getInteger(Const.MODID+"_VILLAGERHACK");
-    System.out.println(hacked+"  _VILLAGERHACK");
-    if(c != hacked){
-      try{
-      this.setCareer(hacked);
-      }catch (Exception e){
-        ModCyclic.logger.error("Error fixing villager career, forge mappings must have changed "+e.getLocalizedMessage());
-      }
-    }
+
     EntityVillager  merchant = this.getMerchant();
-    System.out.println("XXX"+merchant.getProfessionForge().getCareer(hacked).getName());
     super.updateScreen();
     MerchantRecipeList merchantrecipelist = merchant.getRecipes(this.mc.thePlayer);
     if (merchantrecipelist != null) {
@@ -255,7 +245,7 @@ public class GuiMerchantBetter extends GuiContainer {
     }
   }
   public EntityVillager getMerchant() {
-    return ((ContainerMerchantBetter)this.inventorySlots).merchant;
+    return merchant;//((ContainerMerchantBetter)this.inventorySlots).merchant;
   }
   @SideOnly(Side.CLIENT)
   static class MerchantJumpButton extends GuiButton {

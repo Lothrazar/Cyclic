@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.net.PacketPlayerFalldamage;
+import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
@@ -19,6 +20,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerCareer;
 
 public class UtilEntity {
   private static final double ENTITY_PULL_DIST = 0.4;//closer than this and nothing happens
@@ -305,5 +307,20 @@ public class UtilEntity {
       return null;
     else
       return all.get(0);
+  }
+  public static int getVillagerCareer(EntityVillager merchant) {
+    try {
+      return ReflectionRegistry.fieldCareer.getInt(merchant);
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+    return -1;
+  }
+//  public static VillagerCareer getCareerName(EntityVillager villager,int maybeC) {
+//    return villager.getProfessionForge().getCareer(maybeC);
+//  }
+  public static String getCareerName(EntityVillager merchant) {
+    return merchant.getDisplayName().getFormattedText();//getProfessionForge().getCareer(maybeC).getName();
   }
 }

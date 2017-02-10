@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.gui;
 import java.util.List;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityDetector;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFishing;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
@@ -159,8 +160,19 @@ public class ModGuiHandler implements IGuiHandler {
         if (!all.isEmpty()) {
           EntityVillager v = all.get(0);
           v.setCustomer(player);
+          
+          ModCyclic.logger.info("====CTR");
+          
+          int career = UtilEntity.getVillagerCareer(v);// getCareer();
+          String sc = (world.isRemote) ? "client" : "Server";
+          ModCyclic.logger.info(career + " GUI CONSTRUCTOR  " + sc + "_" + 
+              UtilEntity.getCareerName(v) );
+
+          ModCyclic.logger.info("====CTR");
+          
+          
           ContainerMerchantBetter c =  new ContainerMerchantBetter(player.inventory, v,new InventoryMerchant(player, v), world,all);
-          c.detectAndSendChanges();
+//          c.detectAndSendChanges();
           return c;
 //          return new ContainerMerchant(player.inventory, v, world);
         }
@@ -227,6 +239,18 @@ public class ModGuiHandler implements IGuiHandler {
           if (!all.isEmpty()) {
             EntityVillager v = all.get(0);
 //            v.setCustomer(player);
+            
+
+            ModCyclic.logger.info("====GUI");
+            
+            int career = UtilEntity.getVillagerCareer(v);// getCareer();
+            String sc = (world.isRemote) ? "client" : "Server";
+            ModCyclic.logger.info(career + " GUI CONSTRUCTOR  " + sc + "_" + 
+                UtilEntity.getCareerName(v) );
+
+            ModCyclic.logger.info("====GUI");
+            
+            
             return new GuiMerchantBetter(player.inventory, v,new InventoryMerchant(player, v), world,all);
           }
         break;
