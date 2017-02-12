@@ -33,7 +33,7 @@ public class ItemToolHammer extends ItemTool implements IHasRecipe {
   public ItemToolHammer(float attackDamageIn, float attackSpeedIn, Item.ToolMaterial materialIn, Set<Block> effectiveBlocksIn, Set<Material> mats) {
     super(attackDamageIn, attackSpeedIn, materialIn, effectiveBlocksIn);
     this.mats = mats;
-    this.setMaxDamage(1000);
+    this.setMaxDamage(9000);
   }
   @Override
   public Set<String> getToolClasses(ItemStack stack) {
