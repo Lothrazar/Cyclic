@@ -20,6 +20,9 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -37,12 +40,15 @@ public class ItemFoodHeart extends ItemFood implements IHasRecipe, IHasConfig {
     super(numFood, false);
     this.setAlwaysEdible();
   }
+  private boolean isPlayerMaxHearts(EntityPlayer player) {
+    return UtilEntity.getMaxHealth(player) / 2 >= maxHearts;
+  }
   @Override
   protected void onFoodEaten(ItemStack par1ItemStack, World world, EntityPlayer player) {
     IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(player);
-    if (UtilEntity.getMaxHealth(player) / 2 >= maxHearts) {
+    if (isPlayerMaxHearts(player)) {
       UtilSound.playSound(player, SoundRegistry.buzzp);
-      UtilItemStack.dropItemStackInWorld(world, player.getPosition(), this);
+//      UtilItemStack.dropItemStackInWorld(world, player.getPosition(), this);
       return;
     }
     //one heart is 2 health points (half heart = 1 health)
@@ -81,6 +87,12 @@ public class ItemFoodHeart extends ItemFood implements IHasRecipe, IHasConfig {
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
-    tooltip.add(UtilChat.lang("item.heart_food.tooltip"));
+    tooltip.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
+  }
+  public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
+  //this line is KEY to stop user from eating food at max health( which was causing the refund issue in https://github.com/PrinceOfAmber/Cyclic/issues/270 )
+    if (isPlayerMaxHearts(playerIn)) { return new ActionResult<ItemStack>(EnumActionResult.FAIL, itemStackIn); }
+    //otherwise continueto normal food process
+    return super.onItemRightClick(itemStackIn, worldIn, playerIn, hand);
   }
 }
