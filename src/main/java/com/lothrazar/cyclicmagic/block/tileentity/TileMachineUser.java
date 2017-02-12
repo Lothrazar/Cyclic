@@ -98,7 +98,13 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
             AxisAlignedBB range = UtilEntity.makeBoundingBox(entityCenter, hRange, vRange);
             List<EntityLivingBase> all = world.getEntitiesWithinAABB(EntityLivingBase.class, range);
             for (EntityLivingBase ent : all) {
-              fakePlayer.get().interact(ent, maybeTool, EnumHand.MAIN_HAND);
+              // on the line below: NullPointerException  at com.lothrazar.cyclicmagic.block.tileentity.TileMachineUser.func_73660_a(TileMachineUser.java:101)
+              if (world.isRemote == false &&
+                  ent != null && ent.isDead == false
+                  && fakePlayer != null && fakePlayer.get() != null) {
+                validateTool(); //recheck this at every step so we dont go negative
+                fakePlayer.get().interact(ent, maybeTool, EnumHand.MAIN_HAND);
+              }
             }
           }
           else {
@@ -115,9 +121,6 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
                 damage.applyModifier(modifier);
               float dmgVal = (float) damage.getAttributeValue();
               float f1 = EnchantmentHelper.getModifierForCreature(held, (ent).getCreatureAttribute());
-              //              UtilChat.addChatMessage(this.getWorld(), "baseWeapon" + dmgVal);
-              //              UtilChat.addChatMessage(this.getWorld(), "enchant" + f1);
-              //        
               ent.attackEntityFrom(DamageSource.causePlayerDamage(fakePlayer.get()), dmgVal + f1);
             }
           }
@@ -128,15 +131,27 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
       }
     }
   }
+  int toolSlot = 0;
+  /**
+   * detect if tool stack is empty or destroyed and reruns equip
+   */
+  private void validateTool() {
+    ItemStack maybeTool = getStackInSlot(toolSlot);
+    if (maybeTool != null && maybeTool.stackSize < 0) {
+      maybeTool = null;
+      fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, null);
+      inv[toolSlot] = null;
+    }
+  }
   private ItemStack tryEquipItem() {
-    int toolSlot = 0;
     ItemStack maybeTool = getStackInSlot(toolSlot);
     if (maybeTool != null) {
       //do we need to make it null
-      if (maybeTool.stackSize == 0) {
+      if (maybeTool.stackSize <= 0) {
         maybeTool = null;
       }
     }
+    fakePlayer.get().setPosition(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ());//seems to help interact() mob drops like milk
     fakePlayer.get().onUpdate();//trigger   ++this.ticksSinceLastSwing; among other things
     if (maybeTool == null) {//null for any reason
       fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, null);

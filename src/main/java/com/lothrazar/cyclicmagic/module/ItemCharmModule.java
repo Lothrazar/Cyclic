@@ -25,6 +25,7 @@ public class ItemCharmModule extends BaseModule implements IHasConfig {
       ItemCharmAir charm_air = new ItemCharmAir();
       ItemRegistry.addItem(charm_air, "charm_air");
       ModCyclic.instance.events.register(charm_air);
+      LootTableRegistry.registerLoot(charm_air);
     }
     if (enableFire) {
       ItemCharmFire charm_fire = new ItemCharmFire();

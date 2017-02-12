@@ -83,14 +83,10 @@ public class ItemChestSack extends BaseItem {
   }
   @Override
   public void addInformation(ItemStack itemStack, EntityPlayer player, List<String> list, boolean advanced) {
-    if (itemStack.getTagCompound() != null) {
-      try {
-        String blockname = itemStack.getTagCompound().getString(KEY_BLOCKNAME);
-        if (blockname != null && blockname.length() > 0)
-          list.add(UtilChat.lang(blockname));
-      }
-      catch (Exception e) {
-        //wont happen anymore
+    if (itemStack.getTagCompound() != null && itemStack.getTagCompound().hasKey(KEY_BLOCKNAME)) {
+      String blockname = itemStack.getTagCompound().getString(KEY_BLOCKNAME);
+      if (blockname != null && blockname.length() > 0) {
+        list.add(UtilChat.lang(blockname+".name"));
       }
     }
   }

@@ -225,6 +225,7 @@ item.horse_upgrade_variant.jei=Change the color of your horse.
 item.inventory_food.name=Inventory Upgrade
 item.inventory_food.tooltip=Eat to Upgrade your inventory
 item.inventory_food.jei=Eat this to unlock an inventory extension of size 3x8.  Open it with the button that appears, or the keybinding.   
+item.mattock.name=Mattock
 item.purple_helmet.name=Darksight Helm
 item.purple_helmet.tooltip=Glowing Night Vision
 item.purple_chestplate.name=Nokozan Chestplate

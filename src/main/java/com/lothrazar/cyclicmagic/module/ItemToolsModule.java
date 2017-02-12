@@ -121,6 +121,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   }
   @Override
   public void onInit() {
+   
     if (enableLever) {
       ItemPasswordRemote password_remote = new ItemPasswordRemote();
       ItemRegistry.addItem(password_remote, "password_remote");
@@ -128,10 +129,12 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
     if (enableElevate) {
       ItemToolSurface tool_elevate = new ItemToolSurface();
       ItemRegistry.addItem(tool_elevate, "tool_elevate");
+      LootTableRegistry.registerLoot(tool_elevate);
     }
     if (enableCGlove) {
       ItemClimbingGlove glove_climb = new ItemClimbingGlove();
       ItemRegistry.addItem(glove_climb, "glove_climb");
+      LootTableRegistry.registerLoot(glove_climb);
     }
     if (enableBlockRot) {
       ItemToolRotate tool_rotate = new ItemToolRotate();

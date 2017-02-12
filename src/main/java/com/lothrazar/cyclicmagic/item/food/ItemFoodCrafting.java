@@ -47,6 +47,6 @@ public class ItemFoodCrafting extends ItemFood implements IHasRecipe {
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltips, boolean advanced) {
-    tooltips.add(UtilChat.lang("item.crafting_food.tooltip"));
+    tooltips.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
   }
 }
