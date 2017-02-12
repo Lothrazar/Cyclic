@@ -27,10 +27,10 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class ItemToolHammer extends ItemTool implements IHasRecipe {
+public class ItemToolMattock extends ItemTool implements IHasRecipe {
   final static int RADIUS = 1;//radius 2 is 5x5 area square
   private Set<Material> mats;
-  public ItemToolHammer(float attackDamageIn, float attackSpeedIn, Item.ToolMaterial materialIn, Set<Block> effectiveBlocksIn, Set<Material> mats) {
+  public ItemToolMattock(float attackDamageIn, float attackSpeedIn, Item.ToolMaterial materialIn, Set<Block> effectiveBlocksIn, Set<Material> mats) {
     super(attackDamageIn, attackSpeedIn, materialIn, effectiveBlocksIn);
     this.mats = mats;
     this.setMaxDamage(9000);
