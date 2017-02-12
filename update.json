@@ -5,8 +5,8 @@
     "1.9.4-recommended":  "1.2.0",
     "1.10-latest":  "1.1.0",
     "1.10-recommended": "1.1.0",
-    "1.10.2-latest":  "1.10.6",
-    "1.10.2-recommended": "1.10.6"
+    "1.10.2-latest":  "1.10.7",
+    "1.10.2-recommended": "1.10.7"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -108,5 +108,6 @@
   	,"1.10.4":"Fix a mod compatibility / item duplication glitch with a block from cyclic and the Drill from Actually Additions.  A few more updates for block item-model rotation.  "
   	,"1.10.5":"Item Magnet now can be shut off by giving it redstone power.  New Items: Glowing Chorus Fruit; Darksight Helmet; Nokozan Chestplate; Leggings of Zakarum; Boots of Elitch.  "
   	,"1.10.6":"Password Detector: when this block is triggered from the password in chat, it blocks the message from going to all players and instead sends you a single message.  Add missing config entry for Glowing chorus fruit.  Glowing chorus no longer gives nausea, and takes glowstone dust to craft instead of blocks.  Glowing chorus now gives flying for 10 seconds, up from 7.  Corrected some tooltips.  "
+  	,"1.10.7":""
   }
 }
