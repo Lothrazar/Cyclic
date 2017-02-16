@@ -47,6 +47,7 @@ import com.lothrazar.cyclicmagic.gui.vector.ContainerVector;
 import com.lothrazar.cyclicmagic.gui.vector.GuiVector;
 import com.lothrazar.cyclicmagic.gui.villager.ContainerMerchantBetter;
 import com.lothrazar.cyclicmagic.gui.villager.GuiMerchantBetter;
+import com.lothrazar.cyclicmagic.gui.villager.InventoryMerchantBetter;
 import com.lothrazar.cyclicmagic.gui.wand.ContainerWand;
 import com.lothrazar.cyclicmagic.gui.wand.GuiWandInventory;
 import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
@@ -171,7 +172,7 @@ public class ModGuiHandler implements IGuiHandler {
           ModCyclic.logger.info("====CTR");
           
           
-          ContainerMerchantBetter c =  new ContainerMerchantBetter(player.inventory, v,new InventoryMerchant(player, v), world,all);
+          ContainerMerchantBetter c =  new ContainerMerchantBetter(player.inventory, v,new InventoryMerchantBetter(player, v), world,all);
 //          c.detectAndSendChanges();
           return c;
 //          return new ContainerMerchant(player.inventory, v, world);
@@ -251,7 +252,7 @@ public class ModGuiHandler implements IGuiHandler {
             ModCyclic.logger.info("====GUI");
             
             
-            return new GuiMerchantBetter(player.inventory, v,new InventoryMerchant(player, v), world,all);
+            return new GuiMerchantBetter(player.inventory, v,new InventoryMerchantBetter(player, v), world,all);
           }
         break;
       }

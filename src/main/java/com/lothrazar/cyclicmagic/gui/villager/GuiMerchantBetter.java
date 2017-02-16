@@ -46,7 +46,7 @@ public class GuiMerchantBetter extends GuiContainer {
   private int selectedMerchantRecipe;
   private final ITextComponent chatComponent;
   private List<MerchantJumpButton> merchButtons = new ArrayList<MerchantJumpButton>();
-  public GuiMerchantBetter(InventoryPlayer ip, EntityVillager merch, InventoryMerchant im, World worldIn, List<EntityVillager> all) {
+  public GuiMerchantBetter(InventoryPlayer ip, EntityVillager merch, InventoryMerchantBetter im, World worldIn, List<EntityVillager> all) {
     super(new ContainerMerchantBetter(ip, merch, im, worldIn, all));
     this.chatComponent = merch.getDisplayName();
     player = ip.player;

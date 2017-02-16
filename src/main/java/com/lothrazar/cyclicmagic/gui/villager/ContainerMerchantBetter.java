@@ -58,10 +58,10 @@ Nitwit  1
 public class ContainerMerchantBetter extends Container {
   public final EntityVillager merchant;
   private MerchantRecipeList trades;
-  private final InventoryMerchant merchantInventory;
+  private final InventoryMerchantBetter merchantInventory;
   private final World theWorld;
   EntityPlayer player;
-  public ContainerMerchantBetter(InventoryPlayer playerInventory, EntityVillager m, InventoryMerchant im, World worldIn, List<EntityVillager> all) {
+  public ContainerMerchantBetter(InventoryPlayer playerInventory, EntityVillager m, InventoryMerchantBetter im, World worldIn, List<EntityVillager> all) {
  
     this.merchant = m;
     this.theWorld = worldIn;
@@ -82,6 +82,7 @@ public class ContainerMerchantBetter extends Container {
     int career = UtilEntity.getVillagerCareer(merchant);// getCareer();
     String sc = (this.theWorld.isRemote) ? "client" : "Server";
     ModCyclic.logger.info(career + " CTR CONSTRUCTOR  " + sc + "_" + UtilEntity.getCareerName(merchant));
+ 
     this.detectAndSendChanges();
   }
   public void setCareer(int c) {
@@ -103,7 +104,7 @@ public class ContainerMerchantBetter extends Container {
       ModCyclic.logger.error("reflection fail");
     }
   }
-  public InventoryMerchant getMerchantInventory() {
+  public InventoryMerchantBetter getMerchantInventory() {
     return this.merchantInventory;
   }
   public void addListener(IContainerListener listener) {
@@ -192,7 +193,8 @@ public class ContainerMerchantBetter extends Container {
   }
   public void setTrades(MerchantRecipeList t) {
     this.trades = t;
-    this.merchant.setRecipes(t);
+    this.merchant.setRecipes(t); 
+    this.merchantInventory.setRecipes(t);
   }
   public MerchantRecipeList getTrades() {
     return trades;
