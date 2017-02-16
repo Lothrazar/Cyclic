@@ -32,71 +32,78 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class GuiMerchantBetter extends GuiContainer {
-  /** The GUI texture for the villager merchant GUI. */
-  private static final ResourceLocation MERCHANT_GUI_TEXTURE = new ResourceLocation("textures/gui/container/villager.png");
-  /** The current IMerchant instance in use for this specific merchant. */
 
-  public final EntityVillager merchant;
-  /** The button which proceeds to the next available merchant recipe. */
+  private static final ResourceLocation MERCHANT_GUI_TEXTURE = new ResourceLocation("textures/gui/container/villager.png");
+
   private GuiMerchantBetter.MerchantButton nextButton;
-  /** Returns to the previous Merchant recipe if one is applicable. */
   private GuiMerchantBetter.MerchantButton previousButton;
-  /**
-   * The integer value corresponding to the currently selected merchant recipe.
-   */
+
+  int padding = 4;
+  private int yLatestJump;
+  private int lastUnusedButtonId;
+  private int xJump;
   EntityPlayer player;
   private int selectedMerchantRecipe;
-  /** The chat component utilized by this GuiMerchant instance. */
   private final ITextComponent chatComponent;
   private List<MerchantJumpButton> merchButtons = new ArrayList<MerchantJumpButton>();
-  public GuiMerchantBetter(InventoryPlayer ip, EntityVillager merch,InventoryMerchant im, World worldIn,List<EntityVillager> all) {
-    super(new ContainerMerchantBetter(ip, merch, im,worldIn,all));
- merchant=merch;
+  public GuiMerchantBetter(InventoryPlayer ip, EntityVillager merch, InventoryMerchant im, World worldIn, List<EntityVillager> all) {
+    super(new ContainerMerchantBetter(ip, merch, im, worldIn, all));
     this.chatComponent = merch.getDisplayName();
-    player=ip.player;
-    
-    
+    player = ip.player;
     int career = UtilEntity.getVillagerCareer(merch);// getCareer();
     String sc = (worldIn.isRemote) ? "client" : "Server";
-    ModCyclic.logger.info(career + " GUI CONSTRUCTOR  " + sc + "_" + 
-        UtilEntity.getCareerName(merchant) );
-   
-    
+    ModCyclic.logger.info(career + " GUI CONSTRUCTOR  " + sc + "_" + UtilEntity.getCareerName(merch));
   }
-  /**
-   * Adds the buttons (and other controls) to the screen in question. Called
-   * when the GUI is displayed and when the window resizes, the buttonList is
-   * cleared beforehand.
-   */
-  int padding = 4;
+  private ContainerMerchantBetter getContainer() {
+    return (ContainerMerchantBetter) this.inventorySlots;
+  }
+
   public void initGui() {
     super.initGui();
-    int i = (this.width - this.xSize) / 2;
-    int j = (this.height - this.ySize) / 2;
+    int xMiddle = (this.width - this.xSize) / 2;
+    int yMiddle = (this.height - this.ySize) / 2;
     int btnId = 1;
-    int x = i + 158;
-    int y = j + padding;
+    int x = xMiddle + 158;
+    int y = yMiddle + padding;
     this.nextButton = (GuiMerchantBetter.MerchantButton) this.addButton(new GuiMerchantBetter.MerchantButton(btnId, x, y, true));
     btnId = 2;
-    x = i + padding;
-    y = j + padding;
+    x = xMiddle + padding;
+    y = yMiddle + padding;
     this.previousButton = (GuiMerchantBetter.MerchantButton) this.addButton(new GuiMerchantBetter.MerchantButton(btnId, x, y, false));
     this.nextButton.enabled = false;
     this.previousButton.enabled = false;
+    /////////////////////////////////////////////////////////////////
     btnId = 3;
-  IMerchant  merchant = this.getMerchant();
-    MerchantRecipeList merchantrecipelist = merchant.getRecipes(this.mc.thePlayer);
+    MerchantRecipeList merchantrecipelist = getContainer().getTrades();// merchant.getRecipes(this.mc.thePlayer);
     int idx = 0;
     int h = 20, w = 60;
-    x = i + padding - w - 2 * padding;
-    y = j + padding ;
+    this.xJump = xMiddle + padding - w - 2 * padding;
+    this.yLatestJump = yMiddle - 60;
     for (MerchantRecipe r : merchantrecipelist) {
-      MerchantJumpButton slotBtn = (MerchantJumpButton) this.addButton(new MerchantJumpButton(btnId, x, y, w, h, idx));
-      y += h + padding;
- 
+      this.yLatestJump += h + padding;
+      MerchantJumpButton slotBtn = (MerchantJumpButton) this.addButton(new MerchantJumpButton(btnId, this.xJump, this.yLatestJump, w, h, idx));
       btnId++;
       idx++;
       merchButtons.add(slotBtn);
+      this.lastUnusedButtonId = btnId;
+    }
+  }
+  private void validateMerchantButtons() {
+    MerchantRecipeList merchantrecipelist = getContainer().getTrades();
+    int s = merchantrecipelist.size();
+    for (int i = 0; i < s; i++) {
+      if (i >= merchButtons.size()) {
+        //        System.out.println("missing trade button " + i);
+//        MerchantRecipe r = merchantrecipelist.get(i);
+        //        System.out.println(r.toString());
+        int y = this.yLatestJump + 20 + padding;
+        int h = 20, w = 60;
+        this.yLatestJump = y;
+        MerchantJumpButton slotBtn = (MerchantJumpButton) this.addButton(new MerchantJumpButton(lastUnusedButtonId, this.xJump, y, w, h, i));
+        this.buttonList.add(slotBtn);
+        merchButtons.add(slotBtn);
+        lastUnusedButtonId++;
+      }
     }
   }
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
@@ -105,8 +112,8 @@ public class GuiMerchantBetter extends GuiContainer {
     this.fontRendererObj.drawString(I18n.format("container.inventory", new Object[0]), 8, this.ySize - 96 + 2, 4210752);
     int i = (this.width - this.xSize) / 2;
     int j = (this.height - this.ySize) / 2;
-    IMerchant  merchant = this.getMerchant();
-    MerchantRecipeList merchantrecipelist = merchant.getRecipes(this.mc.thePlayer);
+
+    MerchantRecipeList merchantrecipelist = getContainer().getTrades();//merchant.getRecipes(this.mc.thePlayer);
     int idx, x, y, spacing = 18, k;
     MerchantRecipe r;
     for (MerchantJumpButton btn : merchButtons) {
@@ -114,8 +121,7 @@ public class GuiMerchantBetter extends GuiContainer {
       r = merchantrecipelist.get(idx);
       k = 0;
       x = btn.xPosition - i + k * spacing;
-      y = btn.yPosition - j + padding/2;
-
+      y = btn.yPosition - j + padding / 2;
       ModCyclic.proxy.renderItemOnScreen(r.getItemToBuy(), x, y);
       k++;
       if (r.getSecondItemToBuy() != null) {
@@ -127,25 +133,18 @@ public class GuiMerchantBetter extends GuiContainer {
       ModCyclic.proxy.renderItemOnScreen(r.getItemToSell(), x, y);
     }
   }
-
-
-private int getCareer() {
-    return UtilEntity.getVillagerCareer(this.getMerchant());
-  }
   public void updateScreen() {
-
-    EntityVillager  merchant = this.getMerchant();
     super.updateScreen();
-    MerchantRecipeList merchantrecipelist = merchant.getRecipes(this.mc.thePlayer);
+    MerchantRecipeList merchantrecipelist = this.getContainer().getTrades();//merchant.getRecipes(this.mc.thePlayer);
     if (merchantrecipelist != null) {
       this.nextButton.enabled = this.selectedMerchantRecipe < merchantrecipelist.size() - 1;
       this.previousButton.enabled = this.selectedMerchantRecipe > 0;
     }
+    this.validateMerchantButtons();
   }
   protected void actionPerformed(GuiButton button) throws IOException {
     boolean flag = false;
-    EntityVillager  merchant = this.getMerchant();
-    MerchantRecipeList merchantrecipelist = merchant.getRecipes(this.mc.thePlayer);
+    MerchantRecipeList merchantrecipelist = getContainer().getTrades();//merchant.getRecipes(this.mc.thePlayer);
     if (button == this.nextButton) {
       ++this.selectedMerchantRecipe;
       if (merchantrecipelist != null && this.selectedMerchantRecipe >= merchantrecipelist.size()) {
@@ -183,8 +182,8 @@ private int getCareer() {
     int i = (this.width - this.xSize) / 2;
     int j = (this.height - this.ySize) / 2;
     this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
-    EntityVillager  merchant = this.getMerchant();
-    MerchantRecipeList merchantrecipelist = merchant.getRecipes(this.mc.thePlayer);
+    //    EntityVillager merchant = this.getMerchant();
+    MerchantRecipeList merchantrecipelist = getContainer().getTrades();//merchant.getRecipes(this.mc.thePlayer);
     if (merchantrecipelist != null && !merchantrecipelist.isEmpty()) {
       if (this.selectedMerchantRecipe < 0 || this.selectedMerchantRecipe >= merchantrecipelist.size()) { return; }
       MerchantRecipe merchantrecipe = (MerchantRecipe) merchantrecipelist.get(this.selectedMerchantRecipe);
@@ -199,8 +198,8 @@ private int getCareer() {
   }
   public void drawScreen(int mouseX, int mouseY, float partialTicks) {
     super.drawScreen(mouseX, mouseY, partialTicks);
-    EntityVillager  merchant = this.getMerchant();
-    MerchantRecipeList merchantrecipelist = merchant.getRecipes(this.mc.thePlayer);
+    //    EntityVillager merchant = this.getMerchant();
+    MerchantRecipeList merchantrecipelist = getContainer().getTrades();//merchant.getRecipes(this.mc.thePlayer);
     if (merchantrecipelist != null && !merchantrecipelist.isEmpty()) {
       int i = (this.width - this.xSize) / 2;
       int j = (this.height - this.ySize) / 2;
@@ -243,9 +242,6 @@ private int getCareer() {
       GlStateManager.enableDepth();
       RenderHelper.enableStandardItemLighting();
     }
-  }
-  public EntityVillager getMerchant() {
-    return merchant;//((ContainerMerchantBetter)this.inventorySlots).merchant;
   }
   @SideOnly(Side.CLIENT)
   static class MerchantJumpButton extends GuiButton {

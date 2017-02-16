@@ -3,9 +3,9 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.villager.ContainerMerchantBetter;
 import com.lothrazar.cyclicmagic.util.Const;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.village.MerchantRecipeList;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -14,35 +14,41 @@ import net.minecraftforge.fml.relauncher.Side;
 
 public class PacketSyncVillager implements IMessage, IMessageHandler<PacketSyncVillager, IMessage> {
   private int career;
+  private MerchantRecipeList trades;
   public PacketSyncVillager() {}
-  public PacketSyncVillager(int h) {
+  public PacketSyncVillager(int h, MerchantRecipeList merchantrecipelist) {
     career = h;
+    trades = merchantrecipelist;
   }
   @Override
   public void fromBytes(ByteBuf buf) {
     NBTTagCompound tags = ByteBufUtils.readTag(buf);
     career = tags.getInteger("h");
+    NBTTagCompound tradeTag = (NBTTagCompound) tags.getTag("trades");
+    trades = new MerchantRecipeList();
+    trades.readRecipiesFromTags(tradeTag);
   }
   @Override
   public void toBytes(ByteBuf buf) {
     NBTTagCompound tags = new NBTTagCompound();
     tags.setInteger("h", career);
+    NBTTagCompound tradeTag = trades.getRecipiesAsTags();
+    tags.setTag("trades", tradeTag);
     ByteBufUtils.writeTag(buf, tags);
   }
   @Override
   public IMessage onMessage(PacketSyncVillager message, MessageContext ctx) {
     if (ctx.side == Side.CLIENT) {
       EntityPlayer player = ModCyclic.proxy.getPlayerEntity(ctx);
-      System.out.println("PSV "+message.career);
-      System.out.println("class "+ player.openContainer);
-      player.getEntityData().setInteger(Const.MODID+"_VILLAGERHACK", message.career);
+      player.getEntityData().setInteger(Const.MODID + "_VILLAGERHACK", message.career);//TODO: validate/delete
       if (player != null && player.openContainer instanceof ContainerMerchantBetter) {
-        ContainerMerchantBetter c=(ContainerMerchantBetter)player.openContainer ;
-  
-        
- c.setCareer(message.career);
-        
-      } 
+//        ModCyclic.logger.info("PacketSyncVillager on client");//TODO: this spams every second, not sure why
+        ContainerMerchantBetter c = (ContainerMerchantBetter) player.openContainer;
+        c.setCareer(message.career);
+        if (message.trades != null) {
+          c.setTrades(message.trades);
+        }
+      }
     }
     return null;
   }
