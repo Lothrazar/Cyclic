@@ -3,7 +3,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.net.PacketSyncVillager;
+import com.lothrazar.cyclicmagic.net.PacketSyncVillagerToClient;
 import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilReflection;
@@ -70,7 +70,7 @@ public class ContainerMerchantBetter extends Container {
     trades = merchant.getRecipes(player);
     this.addSlotToContainer(new Slot(this.merchantInventory, 0, 36, 53));
     this.addSlotToContainer(new Slot(this.merchantInventory, 1, 62, 53));
-    this.addSlotToContainer(new SlotMerchantResult(playerInventory.player, merchant, this.merchantInventory, 2, 120, 53));
+    this.addSlotToContainer(new SlotMerchantResultFixed(playerInventory.player, merchant, this.merchantInventory, 2, 120, 53));
     for (int i = 0; i < 3; ++i) {
       for (int j = 0; j < 9; ++j) {
         this.addSlotToContainer(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
@@ -115,14 +115,14 @@ public class ContainerMerchantBetter extends Container {
    * Looks for changes made in the container, sends them to every listener.
    */
   public void detectAndSendChanges() {
-    merchantInventory.markDirty();
+    merchantInventory.markDirty(); 
     super.detectAndSendChanges();
     if (player instanceof EntityPlayerMP
         && player.openContainer instanceof ContainerMerchantBetter) {
       MerchantRecipeList merchantrecipelist = this.merchant.getRecipes(player);
       EntityPlayerMP mp = (EntityPlayerMP) player;
  
-      ModCyclic.network.sendTo(new PacketSyncVillager(this.getCareer(), merchantrecipelist), mp);
+      ModCyclic.network.sendTo(new PacketSyncVillagerToClient(this.getCareer(), merchantrecipelist), mp);
  
     }
   }
@@ -139,7 +139,7 @@ public class ContainerMerchantBetter extends Container {
     super.onCraftMatrixChanged(inventoryIn);
   }
   public void setCurrentRecipeIndex(int currentRecipeIndex) {
-   ModCyclic.logger.info(currentRecipeIndex+" setCurrentRecipeIndex:"+this.theWorld.isRemote);
+System.out.println(currentRecipeIndex+"[CTR] setCurrentRecipeIndex:"+this.theWorld.isRemote);
     this.merchantInventory.setCurrentRecipeIndex(currentRecipeIndex);
   }
   public boolean canInteractWith(EntityPlayer playerIn) {

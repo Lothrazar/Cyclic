@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.net.PacketSyncVillagerToServer;
 import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
@@ -93,9 +94,7 @@ public class GuiMerchantBetter extends GuiContainer {
     int s = merchantrecipelist.size();
     for (int i = 0; i < s; i++) {
       if (i >= merchButtons.size()) {
-        //        System.out.println("missing trade button " + i);
-//        MerchantRecipe r = merchantrecipelist.get(i);
-        //        System.out.println(r.toString());
+
         int y = this.yLatestJump + 20 + padding;
         int h = 20, w = 60;
         this.yLatestJump = y;
@@ -140,38 +139,40 @@ public class GuiMerchantBetter extends GuiContainer {
       this.nextButton.enabled = this.selectedMerchantRecipe < merchantrecipelist.size() - 1;
       this.previousButton.enabled = this.selectedMerchantRecipe > 0;
     }
+    getContainer().setCurrentRecipeIndex(this.selectedMerchantRecipe);
     this.validateMerchantButtons();
   }
   protected void actionPerformed(GuiButton button) throws IOException {
-    boolean flag = false;
+ 
     MerchantRecipeList merchantrecipelist = getContainer().getTrades();//merchant.getRecipes(this.mc.thePlayer);
     if (button == this.nextButton) {
       ++this.selectedMerchantRecipe;
       if (merchantrecipelist != null && this.selectedMerchantRecipe >= merchantrecipelist.size()) {
         this.selectedMerchantRecipe = merchantrecipelist.size() - 1;
       }
-      flag = true;
+      setRecipeIndex(this.selectedMerchantRecipe);
     }
     else if (button == this.previousButton) {
       --this.selectedMerchantRecipe;
       if (this.selectedMerchantRecipe < 0) {
         this.selectedMerchantRecipe = 0;
       }
-      flag = true;
+      setRecipeIndex(this.selectedMerchantRecipe);
     }
     else if (button instanceof MerchantJumpButton) {//if (button.id == 3) {
       setRecipeIndex(((MerchantJumpButton) button).getRecipeIndex());
     }
-    if (flag) {
-      setRecipeIndex(this.selectedMerchantRecipe);
-    }
+     
   }
+ 
   private void setRecipeIndex(int i) {
     this.selectedMerchantRecipe = i;
-    ((ContainerMerchantBetter) this.inventorySlots).setCurrentRecipeIndex(this.selectedMerchantRecipe);
-    PacketBuffer packetbuffer = new PacketBuffer(Unpooled.buffer());
-    packetbuffer.writeInt(this.selectedMerchantRecipe);
-    this.mc.getConnection().sendPacket(new CPacketCustomPayload("MC|TrSel", packetbuffer));
+    getContainer().setCurrentRecipeIndex(this.selectedMerchantRecipe);
+//    System.out.println("TODO: send to server current recipe index"+i);
+//    PacketBuffer packetbuffer = new PacketBuffer(Unpooled.buffer());
+//    packetbuffer.writeInt(this.selectedMerchantRecipe);
+//    this.mc.getConnection().sendPacket(new CPacketCustomPayload("MC|TrSel", packetbuffer));
+    ModCyclic.network.sendToServer(new PacketSyncVillagerToServer(this.selectedMerchantRecipe));
   }
   /**
    * Draws the background layer of this container (behind the items).

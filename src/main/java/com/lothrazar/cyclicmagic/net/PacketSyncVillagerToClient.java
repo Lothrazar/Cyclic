@@ -12,11 +12,11 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 
-public class PacketSyncVillager implements IMessage, IMessageHandler<PacketSyncVillager, IMessage> {
+public class PacketSyncVillagerToClient implements IMessage, IMessageHandler<PacketSyncVillagerToClient, IMessage> {
   private int career;
   private MerchantRecipeList trades;
-  public PacketSyncVillager() {}
-  public PacketSyncVillager(int h, MerchantRecipeList merchantrecipelist) {
+  public PacketSyncVillagerToClient() {}
+  public PacketSyncVillagerToClient(int h, MerchantRecipeList merchantrecipelist) {
     career = h;
     trades = merchantrecipelist;
   }
@@ -37,7 +37,7 @@ public class PacketSyncVillager implements IMessage, IMessageHandler<PacketSyncV
     ByteBufUtils.writeTag(buf, tags);
   }
   @Override
-  public IMessage onMessage(PacketSyncVillager message, MessageContext ctx) {
+  public IMessage onMessage(PacketSyncVillagerToClient message, MessageContext ctx) {
     if (ctx.side == Side.CLIENT) {
       EntityPlayer player = ModCyclic.proxy.getPlayerEntity(ctx);
       player.getEntityData().setInteger(Const.MODID + "_VILLAGERHACK", message.career);//TODO: validate/delete
