@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.gui;
 import java.util.List;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityDetector;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFishing;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
@@ -53,6 +52,7 @@ import com.lothrazar.cyclicmagic.gui.wand.GuiWandInventory;
 import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
 import com.lothrazar.cyclicmagic.gui.waypoints.GuiEnderBook;
 import com.lothrazar.cyclicmagic.item.ItemStorageBag;
+import com.lothrazar.cyclicmagic.item.ItemTrader;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
@@ -60,8 +60,6 @@ import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ContainerMerchant;
-import net.minecraft.inventory.InventoryMerchant;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -155,27 +153,14 @@ public class ModGuiHandler implements IGuiHandler {
         if (te != null && te instanceof TileVector) { return new ContainerVector(player.inventory, (TileVector) te); }
       break;
       case GUI_INDEX_VILLAGER:
-
         //http://www.minecraftforge.net/forum/topic/29593-18-solveddisplay-gui-when-interacting-with-an-entity/
-        List<EntityVillager> all =UtilEntity.getVillagers(world, p,5);
+        List<EntityVillager> all = UtilEntity.getVillagers(world, p, ItemTrader.radius);
         if (!all.isEmpty()) {
           EntityVillager v = all.get(0);
           v.setCustomer(player);
-          
-          ModCyclic.logger.info("====CTR");
-          
-          int career = UtilEntity.getVillagerCareer(v);// getCareer();
-          String sc = (world.isRemote) ? "client" : "Server";
-          ModCyclic.logger.info(career + " GUI CONSTRUCTOR  " + sc + "_" + 
-              UtilEntity.getCareerName(v) );
-
-          ModCyclic.logger.info("====CTR");
-          
-          
-          ContainerMerchantBetter c =  new ContainerMerchantBetter(player.inventory, v,new InventoryMerchantBetter(player, v), world,all);
-//          c.detectAndSendChanges();
+          ContainerMerchantBetter c = new ContainerMerchantBetter(player.inventory, v, new InventoryMerchantBetter(player, v), world, all);
+          //        return new ContainerMerchant(player.inventory, v, world);
           return c;
-//          return new ContainerMerchant(player.inventory, v, world);
         }
       break;
     }
@@ -236,23 +221,10 @@ public class ModGuiHandler implements IGuiHandler {
           if (te != null && te instanceof TileVector) { return new GuiVector(player.inventory, (TileVector) te); }
         break;
         case GUI_INDEX_VILLAGER:
-          List<EntityVillager> all =UtilEntity.getVillagers(world, p,5);
+          List<EntityVillager> all = UtilEntity.getVillagers(world, p, ItemTrader.radius);
           if (!all.isEmpty()) {
             EntityVillager v = all.get(0);
-//            v.setCustomer(player);
-            
-
-            ModCyclic.logger.info("====GUI");
-            
-            int career = UtilEntity.getVillagerCareer(v);// getCareer();
-            String sc = (world.isRemote) ? "client" : "Server";
-            ModCyclic.logger.info(career + " GUI CONSTRUCTOR  " + sc + "_" + 
-                UtilEntity.getCareerName(v) );
-
-            ModCyclic.logger.info("====GUI");
-            
-            
-            return new GuiMerchantBetter(player.inventory, v,new InventoryMerchantBetter(player, v), world,all);
+            return new GuiMerchantBetter(player.inventory, v, new InventoryMerchantBetter(player, v), world, all);
           }
         break;
       }

@@ -1,9 +1,6 @@
 package com.lothrazar.cyclicmagic.item;
-import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
-import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -13,7 +10,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class ItemTrader extends BaseItem {
-  int radius = 5;
+  public static final int radius = 1;
   public ItemTrader() {
     super();
     this.setMaxStackSize(1);

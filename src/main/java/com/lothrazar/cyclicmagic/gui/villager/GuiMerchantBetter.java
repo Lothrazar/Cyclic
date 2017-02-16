@@ -1,28 +1,20 @@
 package com.lothrazar.cyclicmagic.gui.villager;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.net.PacketSyncVillagerToServer;
-import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
-import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
-import io.netty.buffer.Unpooled;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.InventoryMerchant;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.network.play.client.CPacketCustomPayload;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.village.MerchantRecipe;
@@ -33,12 +25,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class GuiMerchantBetter extends GuiContainer {
-
   private static final ResourceLocation MERCHANT_GUI_TEXTURE = new ResourceLocation("textures/gui/container/villager.png");
-
   private GuiMerchantBetter.MerchantButton nextButton;
   private GuiMerchantBetter.MerchantButton previousButton;
-
   int padding = 4;
   private int yLatestJump;
   private int lastUnusedButtonId;
@@ -51,14 +40,10 @@ public class GuiMerchantBetter extends GuiContainer {
     super(new ContainerMerchantBetter(ip, merch, im, worldIn, all));
     this.chatComponent = merch.getDisplayName();
     player = ip.player;
-    int career = UtilEntity.getVillagerCareer(merch);// getCareer();
-    String sc = (worldIn.isRemote) ? "client" : "Server";
-    ModCyclic.logger.info(career + " GUI CONSTRUCTOR  " + sc + "_" + UtilEntity.getCareerName(merch));
   }
   private ContainerMerchantBetter getContainer() {
     return (ContainerMerchantBetter) this.inventorySlots;
   }
-
   public void initGui() {
     super.initGui();
     int xMiddle = (this.width - this.xSize) / 2;
@@ -94,7 +79,6 @@ public class GuiMerchantBetter extends GuiContainer {
     int s = merchantrecipelist.size();
     for (int i = 0; i < s; i++) {
       if (i >= merchButtons.size()) {
-
         int y = this.yLatestJump + 20 + padding;
         int h = 20, w = 60;
         this.yLatestJump = y;
@@ -111,7 +95,6 @@ public class GuiMerchantBetter extends GuiContainer {
     this.fontRendererObj.drawString(I18n.format("container.inventory", new Object[0]), 8, this.ySize - 96 + 2, 4210752);
     int i = (this.width - this.xSize) / 2;
     int j = (this.height - this.ySize) / 2;
-
     MerchantRecipeList merchantrecipelist = getContainer().getTrades();//merchant.getRecipes(this.mc.thePlayer);
     int idx, x, y, spacing = 18, k;
     MerchantRecipe r;
@@ -143,7 +126,6 @@ public class GuiMerchantBetter extends GuiContainer {
     this.validateMerchantButtons();
   }
   protected void actionPerformed(GuiButton button) throws IOException {
- 
     MerchantRecipeList merchantrecipelist = getContainer().getTrades();//merchant.getRecipes(this.mc.thePlayer);
     if (button == this.nextButton) {
       ++this.selectedMerchantRecipe;
@@ -162,21 +144,15 @@ public class GuiMerchantBetter extends GuiContainer {
     else if (button instanceof MerchantJumpButton) {//if (button.id == 3) {
       setRecipeIndex(((MerchantJumpButton) button).getRecipeIndex());
     }
-     
   }
- 
   private void setRecipeIndex(int i) {
     this.selectedMerchantRecipe = i;
     getContainer().setCurrentRecipeIndex(this.selectedMerchantRecipe);
-//    System.out.println("TODO: send to server current recipe index"+i);
-//    PacketBuffer packetbuffer = new PacketBuffer(Unpooled.buffer());
-//    packetbuffer.writeInt(this.selectedMerchantRecipe);
-//    this.mc.getConnection().sendPacket(new CPacketCustomPayload("MC|TrSel", packetbuffer));
+    //    PacketBuffer packetbuffer = new PacketBuffer(Unpooled.buffer());
+    //    packetbuffer.writeInt(this.selectedMerchantRecipe);
+    //    this.mc.getConnection().sendPacket(new CPacketCustomPayload("MC|TrSel", packetbuffer));
     ModCyclic.network.sendToServer(new PacketSyncVillagerToServer(this.selectedMerchantRecipe));
   }
-  /**
-   * Draws the background layer of this container (behind the items).
-   */
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
     this.mc.getTextureManager().bindTexture(MERCHANT_GUI_TEXTURE);
@@ -199,7 +175,6 @@ public class GuiMerchantBetter extends GuiContainer {
   }
   public void drawScreen(int mouseX, int mouseY, float partialTicks) {
     super.drawScreen(mouseX, mouseY, partialTicks);
-    //    EntityVillager merchant = this.getMerchant();
     MerchantRecipeList merchantrecipelist = getContainer().getTrades();//merchant.getRecipes(this.mc.thePlayer);
     if (merchantrecipelist != null && !merchantrecipelist.isEmpty()) {
       int i = (this.width - this.xSize) / 2;
@@ -265,11 +240,9 @@ public class GuiMerchantBetter extends GuiContainer {
       super(buttonID, x, y, 12, 19, "");
       this.forward = p_i1095_4_;
     }
-    /**
-     * Draws this button to the screen.
-     */
     public void drawButton(Minecraft mc, int mouseX, int mouseY) {
       if (this.visible) {
+        
         mc.getTextureManager().bindTexture(GuiMerchantBetter.MERCHANT_GUI_TEXTURE);
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         boolean flag = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;

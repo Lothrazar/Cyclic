@@ -40,9 +40,9 @@ public class PacketSyncVillagerToClient implements IMessage, IMessageHandler<Pac
   public IMessage onMessage(PacketSyncVillagerToClient message, MessageContext ctx) {
     if (ctx.side == Side.CLIENT) {
       EntityPlayer player = ModCyclic.proxy.getPlayerEntity(ctx);
-      player.getEntityData().setInteger(Const.MODID + "_VILLAGERHACK", message.career);//TODO: validate/delete
+      //      player.getEntityData().setInteger(Const.MODID + "_VILLAGERHACK", message.career);//TODO: validate/delete
       if (player != null && player.openContainer instanceof ContainerMerchantBetter) {
-//        ModCyclic.logger.info("PacketSyncVillager on client");//TODO: this spams every second, not sure why
+        //TODO: this spams every second, not sure why
         ContainerMerchantBetter c = (ContainerMerchantBetter) player.openContainer;
         c.setCareer(message.career);
         if (message.trades != null) {

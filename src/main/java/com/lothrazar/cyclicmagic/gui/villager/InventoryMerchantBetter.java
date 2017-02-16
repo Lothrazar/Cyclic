@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.gui.villager;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryMerchant;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ItemStackHelper;
@@ -121,17 +120,15 @@ public class InventoryMerchantBetter extends InventoryMerchant implements IInven
   }
   public void setRecipes(MerchantRecipeList t) {
     if (t.size() != trades.size()) {
-      ModCyclic.logger.info(t.size() + "[setRecipes] " + this.thePlayer.worldObj.isRemote);
+//      ModCyclic.logger.info(t.size() + "[setRecipes] " + this.thePlayer.worldObj.isRemote);
       trades = t;
     }
     //     this.theMerchant.setRecipes(t);
   }
   public MerchantRecipeList getRecipes() {
     return trades;
-    //return  this.theMerchant.getRecipes(this.thePlayer);
   }
   public void resetRecipeAndSlots() {
-    boolean remote = this.thePlayer.getEntityWorld().isRemote;
     this.currentRecipe = null;
     ItemStack itemstack = this.theInventory[0];
     ItemStack itemstack1 = this.theInventory[1];
@@ -148,13 +145,13 @@ public class InventoryMerchantBetter extends InventoryMerchant implements IInven
         MerchantRecipe merchantrecipe = merchantrecipelist.canRecipeBeUsed(itemstack, itemstack1, this.currentRecipeIndex);
         if (merchantrecipe != null && !merchantrecipe.isRecipeDisabled()) {
           this.currentRecipe = merchantrecipe;
-          ModCyclic.logger.info(this.currentRecipeIndex+" currentRecipe "+remote + this.currentRecipe.getItemToSell());
+//          ModCyclic.logger.info(this.currentRecipeIndex+" currentRecipe "+remote + this.currentRecipe.getItemToSell());
           this.setInventorySlotContents(2, merchantrecipe.getItemToSell().copy());
         }
         else if (itemstack1 != null) {
           merchantrecipe = merchantrecipelist.canRecipeBeUsed(itemstack1, itemstack, this.currentRecipeIndex);
           if (merchantrecipe != null && !merchantrecipe.isRecipeDisabled()) {
-            ModCyclic.logger.info(this.currentRecipeIndex+" currentRecipe "+remote + this.currentRecipe.getItemToSell());
+//            ModCyclic.logger.info(this.currentRecipeIndex+" currentRecipe "+remote + this.currentRecipe.getItemToSell());
             this.currentRecipe = merchantrecipe;
             this.setInventorySlotContents(2, merchantrecipe.getItemToSell().copy());
           }
@@ -174,7 +171,7 @@ public class InventoryMerchantBetter extends InventoryMerchant implements IInven
   }
   public void setCurrentRecipeIndex(int currentRecipeIndexIn) {
     this.currentRecipeIndex = currentRecipeIndexIn;
-    System.out.println(this.currentRecipeIndex+"[INV] setCurrentRecipeIndexx   "+this.thePlayer.getEntityWorld().isRemote);
+//    System.out.println(this.currentRecipeIndex+"[INV] setCurrentRecipeIndexx   "+this.thePlayer.getEntityWorld().isRemote);
     this.resetRecipeAndSlots();
   }
   public int getField(int id) {
