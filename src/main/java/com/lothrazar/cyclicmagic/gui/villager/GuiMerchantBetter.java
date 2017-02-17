@@ -29,6 +29,7 @@ public class GuiMerchantBetter extends GuiContainer {
   private GuiMerchantBetter.MerchantButton nextButton;
   private GuiMerchantBetter.MerchantButton previousButton;
   int padding = 4;
+  int btnRowCount = 9;
   private int yLatestJump;
   private int lastUnusedButtonId;
   private int xJump;
@@ -60,19 +61,12 @@ public class GuiMerchantBetter extends GuiContainer {
     this.previousButton.enabled = false;
     /////////////////////////////////////////////////////////////////
     btnId = 3;
-    MerchantRecipeList merchantrecipelist = getContainer().getTrades();// merchant.getRecipes(this.mc.thePlayer);
-    int idx = 0;
+    //    MerchantRecipeList merchantrecipelist = getContainer().getTrades();// merchant.getRecipes(this.mc.thePlayer);
+    //    int idx = 0;
     int h = 20, w = 60;
     this.xJump = xMiddle + padding - w - 2 * padding;
-    this.yLatestJump = yMiddle - 60;
-    for (MerchantRecipe r : merchantrecipelist) {
-      this.yLatestJump += h + padding;
-      MerchantJumpButton slotBtn = (MerchantJumpButton) this.addButton(new MerchantJumpButton(btnId, this.xJump, this.yLatestJump, w, h, idx, this));
-      btnId++;
-      idx++;
-      merchButtons.add(slotBtn);
-      this.lastUnusedButtonId = btnId;
-    }
+    this.yLatestJump = yMiddle - 30;
+    this.lastUnusedButtonId = btnId;
   }
   private int getMiddleY() {
     int yMiddle = (this.height - this.ySize) / 2;
@@ -85,11 +79,21 @@ public class GuiMerchantBetter extends GuiContainer {
   private void validateMerchantButtons() {
     MerchantRecipeList merchantrecipelist = getContainer().getTrades();
     int s = merchantrecipelist.size();
+    int h = 20, w = 60;
+    int rowSize = w + padding;
+    int rowHeight = h + padding;
+    int y = this.yLatestJump;
+    int currRow;
     for (int i = 0; i < s; i++) {
       if (i >= merchButtons.size()) {
-        int y = this.yLatestJump + 20 + padding;
-        int h = 20, w = 60;
-        this.yLatestJump = y;
+        currRow = i % btnRowCount;
+        //        System.out.println("i: " + i + "  rowNum: " + rowNum + " currRow " + currRow);
+        y = yLatestJump + currRow * rowHeight;
+        //row zero, do nothing else : move left and up
+        if (i > 0 && i % btnRowCount == 0) {
+          y = yLatestJump;
+          xJump = xJump - rowSize - padding/4;
+        }
         MerchantJumpButton slotBtn = (MerchantJumpButton) this.addButton(new MerchantJumpButton(lastUnusedButtonId, this.xJump, y, w, h, i, this));
         this.buttonList.add(slotBtn);
         merchButtons.add(slotBtn);
@@ -208,6 +212,8 @@ public class GuiMerchantBetter extends GuiContainer {
   }
   @SideOnly(Side.CLIENT)
   static class MerchantJumpButton extends GuiButton {
+    final static int rowCount = 4;
+    final static int spacing = 18;
     private int recipeIndex;
     private GuiMerchantBetter parent;
     public MerchantJumpButton(int buttonId, int x, int y, int widthIn, int heightIn, int r, GuiMerchantBetter p) {
@@ -222,11 +228,10 @@ public class GuiMerchantBetter extends GuiContainer {
       super.drawButton(mc, mouseX, mouseY);
       if (this.visible) {
         MerchantRecipeList merchantrecipelist = parent.getContainer().getTrades();
+        if (merchantrecipelist == null) { return; }
         MerchantRecipe r = merchantrecipelist.get(recipeIndex);
-        int rowNum = 0;//TODO: make more than one row/column. will be fn of recipeIndex
-        int rowSize = this.width + parent.padding;
-        int spacing = 18;
-        int x = this.xPosition + parent.padding + rowNum * rowSize;
+        if (r == null) { return; }
+        int x = this.xPosition + parent.padding;
         int y = this.yPosition + parent.padding / 2;
         ModCyclic.proxy.renderItemOnScreen(r.getItemToBuy(), x, y);
         x += spacing;

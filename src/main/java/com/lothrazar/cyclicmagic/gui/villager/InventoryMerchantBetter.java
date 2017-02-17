@@ -21,7 +21,6 @@ public class InventoryMerchantBetter extends InventoryMerchant implements IInven
   private MerchantRecipeList trades;
   public InventoryMerchantBetter(EntityPlayer thePlayerIn, IMerchant theMerchantIn) {
     super(thePlayerIn, theMerchantIn);
-    System.out.println(thePlayerIn.worldObj.isRemote + ":InventoryMerchantBetter");
     this.thePlayer = thePlayerIn;
     this.theMerchant = theMerchantIn;
     trades = this.theMerchant.getRecipes(this.thePlayer);
