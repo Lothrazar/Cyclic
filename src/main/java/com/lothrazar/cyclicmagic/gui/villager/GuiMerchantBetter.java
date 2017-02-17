@@ -46,8 +46,8 @@ public class GuiMerchantBetter extends GuiContainer {
   }
   public void initGui() {
     super.initGui();
-    int xMiddle = (this.width - this.xSize) / 2;
-    int yMiddle = (this.height - this.ySize) / 2;
+    int xMiddle = getMiddleX();
+    int yMiddle = getMiddleY();
     int btnId = 1;
     int x = xMiddle + 158;
     int y = yMiddle + padding;
@@ -67,12 +67,20 @@ public class GuiMerchantBetter extends GuiContainer {
     this.yLatestJump = yMiddle - 60;
     for (MerchantRecipe r : merchantrecipelist) {
       this.yLatestJump += h + padding;
-      MerchantJumpButton slotBtn = (MerchantJumpButton) this.addButton(new MerchantJumpButton(btnId, this.xJump, this.yLatestJump, w, h, idx));
+      MerchantJumpButton slotBtn = (MerchantJumpButton) this.addButton(new MerchantJumpButton(btnId, this.xJump, this.yLatestJump, w, h, idx, this));
       btnId++;
       idx++;
       merchButtons.add(slotBtn);
       this.lastUnusedButtonId = btnId;
     }
+  }
+  private int getMiddleY() {
+    int yMiddle = (this.height - this.ySize) / 2;
+    return yMiddle;
+  }
+  private int getMiddleX() {
+    int xMiddle = (this.width - this.xSize) / 2;
+    return xMiddle;
   }
   private void validateMerchantButtons() {
     MerchantRecipeList merchantrecipelist = getContainer().getTrades();
@@ -82,7 +90,7 @@ public class GuiMerchantBetter extends GuiContainer {
         int y = this.yLatestJump + 20 + padding;
         int h = 20, w = 60;
         this.yLatestJump = y;
-        MerchantJumpButton slotBtn = (MerchantJumpButton) this.addButton(new MerchantJumpButton(lastUnusedButtonId, this.xJump, y, w, h, i));
+        MerchantJumpButton slotBtn = (MerchantJumpButton) this.addButton(new MerchantJumpButton(lastUnusedButtonId, this.xJump, y, w, h, i, this));
         this.buttonList.add(slotBtn);
         merchButtons.add(slotBtn);
         lastUnusedButtonId++;
@@ -93,27 +101,6 @@ public class GuiMerchantBetter extends GuiContainer {
     String s = this.chatComponent.getUnformattedText();
     this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
     this.fontRendererObj.drawString(I18n.format("container.inventory", new Object[0]), 8, this.ySize - 96 + 2, 4210752);
-    int i = (this.width - this.xSize) / 2;
-    int j = (this.height - this.ySize) / 2;
-    MerchantRecipeList merchantrecipelist = getContainer().getTrades();//merchant.getRecipes(this.mc.thePlayer);
-    int idx, x, y, spacing = 18, k;
-    MerchantRecipe r;
-    for (MerchantJumpButton btn : merchButtons) {
-      idx = btn.getRecipeIndex();
-      r = merchantrecipelist.get(idx);
-      k = 0;
-      x = btn.xPosition - i + k * spacing;
-      y = btn.yPosition - j + padding / 2;
-      ModCyclic.proxy.renderItemOnScreen(r.getItemToBuy(), x, y);
-      k++;
-      if (r.getSecondItemToBuy() != null) {
-        x = btn.xPosition - i + k * spacing;
-        ModCyclic.proxy.renderItemOnScreen(r.getSecondItemToBuy(), x, y);
-      }
-      k++;
-      x = btn.xPosition - i + k * spacing;
-      ModCyclic.proxy.renderItemOnScreen(r.getItemToSell(), x, y);
-    }
   }
   public void updateScreen() {
     super.updateScreen();
@@ -156,8 +143,8 @@ public class GuiMerchantBetter extends GuiContainer {
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
     this.mc.getTextureManager().bindTexture(MERCHANT_GUI_TEXTURE);
-    int i = (this.width - this.xSize) / 2;
-    int j = (this.height - this.ySize) / 2;
+    int i = getMiddleX();
+    int j = getMiddleY();
     this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
     //    EntityVillager merchant = this.getMerchant();
     MerchantRecipeList merchantrecipelist = getContainer().getTrades();//merchant.getRecipes(this.mc.thePlayer);
@@ -177,8 +164,8 @@ public class GuiMerchantBetter extends GuiContainer {
     super.drawScreen(mouseX, mouseY, partialTicks);
     MerchantRecipeList merchantrecipelist = getContainer().getTrades();//merchant.getRecipes(this.mc.thePlayer);
     if (merchantrecipelist != null && !merchantrecipelist.isEmpty()) {
-      int i = (this.width - this.xSize) / 2;
-      int j = (this.height - this.ySize) / 2;
+      int i = getMiddleX();
+      int j = getMiddleY();
       //RENDER the selected recipe here //TODO: tooltips of jump buttons
       MerchantRecipe merchantrecipe = (MerchantRecipe) merchantrecipelist.get(this.selectedMerchantRecipe);
       ItemStack itemstack = merchantrecipe.getItemToBuy();
@@ -222,27 +209,44 @@ public class GuiMerchantBetter extends GuiContainer {
   @SideOnly(Side.CLIENT)
   static class MerchantJumpButton extends GuiButton {
     private int recipeIndex;
-    public MerchantJumpButton(int buttonId, int x, int y, int widthIn, int heightIn, int r) {
+    private GuiMerchantBetter parent;
+    public MerchantJumpButton(int buttonId, int x, int y, int widthIn, int heightIn, int r, GuiMerchantBetter p) {
       super(buttonId, x, y, widthIn, heightIn, "");
-      setRecipeIndex(r);
+      recipeIndex = r;
+      this.parent = p;
     }
     public int getRecipeIndex() {
       return recipeIndex;
     }
-    public void setRecipeIndex(int recipeIndex) {
-      this.recipeIndex = recipeIndex;
+    public void drawButton(Minecraft mc, int mouseX, int mouseY) {
+      super.drawButton(mc, mouseX, mouseY);
+      if (this.visible) {
+        MerchantRecipeList merchantrecipelist = parent.getContainer().getTrades();
+        MerchantRecipe r = merchantrecipelist.get(recipeIndex);
+        int rowNum = 0;//TODO: make more than one row/column. will be fn of recipeIndex
+        int rowSize = this.width + parent.padding;
+        int spacing = 18;
+        int x = this.xPosition + parent.padding + rowNum * rowSize;
+        int y = this.yPosition + parent.padding / 2;
+        ModCyclic.proxy.renderItemOnScreen(r.getItemToBuy(), x, y);
+        x += spacing;
+        if (r.getSecondItemToBuy() != null) {
+          ModCyclic.proxy.renderItemOnScreen(r.getSecondItemToBuy(), x, y);
+        }
+        x += spacing;
+        ModCyclic.proxy.renderItemOnScreen(r.getItemToSell(), x, y);
+      }
     }
   }
   @SideOnly(Side.CLIENT)
   static class MerchantButton extends GuiButton {
     private final boolean forward;
-    public MerchantButton(int buttonID, int x, int y, boolean p_i1095_4_) {
+    public MerchantButton(int buttonID, int x, int y, boolean f) {
       super(buttonID, x, y, 12, 19, "");
-      this.forward = p_i1095_4_;
+      this.forward = f;
     }
     public void drawButton(Minecraft mc, int mouseX, int mouseY) {
       if (this.visible) {
-        
         mc.getTextureManager().bindTexture(GuiMerchantBetter.MERCHANT_GUI_TEXTURE);
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         boolean flag = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
