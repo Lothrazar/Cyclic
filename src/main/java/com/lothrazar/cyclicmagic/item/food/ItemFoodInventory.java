@@ -51,7 +51,7 @@ public class ItemFoodInventory extends ItemFood implements IHasRecipe, IHasConfi
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltips, boolean advanced) {
-    tooltips.add(UtilChat.lang("item.inventory_food.tooltip"));
+    tooltips.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
   }
   @Override
   public void syncConfig(Configuration config) {
