@@ -17,14 +17,9 @@ public class ItemTrader extends BaseItem {
   }
   public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World world, EntityPlayer player, EnumHand hand) {
     BlockPos p = player.getPosition();
-    //    List<EntityVillager> all =UtilEntity.getVillagers(world, p,radius);
-    //    System.out.println(all.size());
-    //    if (!all.isEmpty()) {
-    if (world.isRemote == false)
+    if (world.isRemote == false) {
       player.openGui(ModCyclic.instance, ModGuiHandler.GUI_INDEX_VILLAGER, world, p.getX(), p.getY(), p.getZ());
-    //      return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);
-    //    }
-    //    }
+    }
     return new ActionResult<ItemStack>(EnumActionResult.PASS, itemStackIn);
   }
 }

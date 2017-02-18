@@ -19,6 +19,13 @@ import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.World;
 
 public class ContainerMerchantBetter extends Container {
+  final static int SLOT_OUTPUT = 2;
+  final static int SLOT_INPUT = 0;
+  final static int SLOT_INPUTX = 1;
+  final static int HOTBAR_START = 30;
+  final static int HOTBAR_END = 38;
+  final static int INV_START = 3;
+  final static int INV_END = 29;
   public final EntityVillager merchant;
   private MerchantRecipeList trades;
   private final InventoryMerchantBetter merchantInventory;
@@ -98,13 +105,6 @@ public class ContainerMerchantBetter extends Container {
   public boolean canInteractWith(EntityPlayer playerIn) {
     return this.merchant.getCustomer() == playerIn;
   }
-  final static int SLOT_OUTPUT = 2;
-  final static int SLOT_INPUT = 0;
-  final static int SLOT_INPUTX = 1;
-  final static int HOTBAR_START = 30;
-  final static int HOTBAR_END = 38;
-  final static int INV_START = 3;
-  final static int INV_END = 29;
   @Nullable
   public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
     ItemStack itemstack = null;
