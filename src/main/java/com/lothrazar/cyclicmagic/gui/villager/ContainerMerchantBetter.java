@@ -99,25 +99,38 @@ public class ContainerMerchantBetter extends Container {
   public boolean canInteractWith(EntityPlayer playerIn) {
     return this.merchant.getCustomer() == playerIn;
   }
+  /**
+   * [30,38] hotbar [3,29] invo 0,1 is input 2 trade output
+   */
+  final static int SLOT_OUTPUT = 2;
+  final static int SLOT_INPUT = 0;
+  final static int SLOT_INPUTX = 1;
+  final static int HOTBAR_START = 30;
+  final static int HOTBAR_END = 38;
+  final static int INV_START = 3;
+  final static int INV_END = 29;
   @Nullable
   public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
-    ModCyclic.logger.info(index + "  transferStackInSlot");
+//    ModCyclic.logger.info(index + "  transferStackInSlot");
+    //TODO: f index is in 3,38 range then push to 0,1
     ItemStack itemstack = null;
     Slot slot = (Slot) this.inventorySlots.get(index);
     if (slot != null && slot.getHasStack()) {
       ItemStack itemstack1 = slot.getStack();
       itemstack = itemstack1.copy();
-      if (index == 2) {
-        if (!this.mergeItemStack(itemstack1, 3, 39, true)) { return null; }
+      if (index == SLOT_OUTPUT) {
+        if (!this.mergeItemStack(itemstack1, INV_START, HOTBAR_END + 1, true)) { return null; }
         slot.onSlotChange(itemstack1, itemstack);
       }
-      else if (index != 0 && index != 1) {
-        if (index >= 3 && index < 30) {
-          if (!this.mergeItemStack(itemstack1, 30, 39, false)) { return null; }
+      else if (index != SLOT_INPUT && index != SLOT_INPUTX) {
+        if (index >= INV_START && index < HOTBAR_START) {
+          if (!this.mergeItemStack(itemstack1, HOTBAR_START, HOTBAR_END + 1, false)) { return null; }
         }
-        else if (index >= 30 && index < 39 && !this.mergeItemStack(itemstack1, 3, 30, false)) { return null; }
+        else if (index >= HOTBAR_START && index < HOTBAR_END + 1
+            && !this.mergeItemStack(itemstack1, INV_START, INV_END + 1, false)) { return null; }
       }
-      else if (!this.mergeItemStack(itemstack1, 3, 39, false)) { return null; }
+      else if (!this.mergeItemStack(itemstack1, INV_START, HOTBAR_END + 1, false)) { return null; }
+      //cleanup steps
       if (itemstack1.stackSize == 0) {
         slot.putStack((ItemStack) null);
       }
