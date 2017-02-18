@@ -159,7 +159,6 @@ public class ModGuiHandler implements IGuiHandler {
           EntityVillager v = all.get(0);
           v.setCustomer(player);
           ContainerMerchantBetter c = new ContainerMerchantBetter(player.inventory, v, new InventoryMerchantBetter(player, v), world, all);
-          //        return new ContainerMerchant(player.inventory, v, world);
           return c;
         }
       break;

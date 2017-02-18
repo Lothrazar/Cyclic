@@ -83,6 +83,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   private boolean enableCGlove;
   private boolean enableElevate;
   private boolean enableLever;
+  private boolean enableTrader;
   public static ItemStorageBag storage_bag;//ref by ContainerStorage
   public static RenderLoc renderLocation;
   /**
@@ -114,7 +115,6 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
               ActionType.values()[ActionType.get(heldItem)], wandInstance.getWandType(),
               mouseOver.sideHit, matched);
           Set<BlockPos> coordinates = new HashSet<BlockPos>(places);
-          //            Set<BlockPos> coordinates = findSuitableBlocks(wand, player.worldObj, ,, block, meta);
           UtilWorld.OutlineRenderer.renderOutlines(evt, p, coordinates, 75, 0, 130);
         }
       }
@@ -122,9 +122,10 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   }
   @Override
   public void onInit() {
-    ItemTrader tool_trade = new ItemTrader();
-    ItemRegistry.addItem(tool_trade, "tool_trade");
-    
+    if (enableTrader) {
+      ItemTrader tool_trade = new ItemTrader();
+      ItemRegistry.addItem(tool_trade, "tool_trade");
+    }
     if (enableLever) {
       ItemPasswordRemote password_remote = new ItemPasswordRemote();
       ItemRegistry.addItem(password_remote, "password_remote");
@@ -306,6 +307,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   }
   @Override
   public void syncConfig(Configuration config) {
+    enableTrader = config.getBoolean("Merchant Almanac", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableLever = config.getBoolean("Remote Lever", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableElevate = config.getBoolean("RodElevation", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableCGlove = config.getBoolean("ClimbingGlove", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

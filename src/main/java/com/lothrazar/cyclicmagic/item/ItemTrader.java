@@ -1,15 +1,19 @@
 package com.lothrazar.cyclicmagic.item;
+import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class ItemTrader extends BaseItem {
+public class ItemTrader extends BaseItem implements IHasRecipe {
   public static final int radius = 1;
   public ItemTrader() {
     super();
@@ -21,5 +25,16 @@ public class ItemTrader extends BaseItem {
       player.openGui(ModCyclic.instance, ModGuiHandler.GUI_INDEX_VILLAGER, world, p.getX(), p.getY(), p.getZ());
     }
     return new ActionResult<ItemStack>(EnumActionResult.PASS, itemStackIn);
+  }
+  @Override
+  public void addRecipe() {
+    GameRegistry.addShapedRecipe(new ItemStack(this), " e ", " b ", " q ",
+        'e', Items.EMERALD,
+        'b', Items.BOOK,
+        'q', Blocks.BROWN_MUSHROOM);
+    GameRegistry.addShapedRecipe(new ItemStack(this), " e ", " b ", " q ",
+        'e', Items.EMERALD,
+        'b', Items.BOOK,
+        'q', Blocks.RED_MUSHROOM);
   }
 }
