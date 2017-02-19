@@ -3,6 +3,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.ContainerBase;
+import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.net.PacketSyncVillagerToClient;
 import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
@@ -20,7 +21,7 @@ import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.World;
 
-public class ContainerMerchantBetter extends ContainerBase {
+public class ContainerMerchantBetter extends ContainerBaseMachine {
   final static int SLOT_OUTPUT = 2;
   final static int SLOT_INPUT = 0;
   final static int SLOT_INPUTX = 1;
@@ -34,6 +35,7 @@ public class ContainerMerchantBetter extends ContainerBase {
   private final World theWorld;
   EntityPlayer player;
   public ContainerMerchantBetter(InventoryPlayer playerInventory, EntityVillager m, InventoryMerchantBetter im, World worldIn, List<EntityVillager> all) {
+    this.playerOffsetY = 130;
     this.merchant = m;
     this.theWorld = worldIn;
     this.merchantInventory = im;
@@ -41,15 +43,16 @@ public class ContainerMerchantBetter extends ContainerBase {
     trades = merchant.getRecipes(player);
     this.addSlotToContainer(new Slot(this.merchantInventory, 0, 36, 53));
     this.addSlotToContainer(new Slot(this.merchantInventory, 1, 62, 53));
-    this.addSlotToContainer(new SlotMerchantResult(playerInventory.player, merchant, this.merchantInventory, 2, 120, 53));
-    for (int i = 0; i < 3; ++i) {
-      for (int j = 0; j < 9; ++j) {
-        this.addSlotToContainer(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
-      }
-    }
-    for (int k = 0; k < 9; ++k) {
-      this.addSlotToContainer(new Slot(playerInventory, k, 8 + k * 18, 142));
-    }
+    bindPlayerInventory(playerInventory);
+//    this.addSlotToContainer(new SlotMerchantResult(playerInventory.player, merchant, this.merchantInventory, 2, 120, 53));
+//    for (int i = 0; i < 3; ++i) {
+//      for (int j = 0; j < 9; ++j) {
+//        this.addSlotToContainer(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
+//      }
+//    }
+//    for (int k = 0; k < 9; ++k) {
+//      this.addSlotToContainer(new Slot(playerInventory, k, 8 + k * 18, 142));
+//    }
     this.detectAndSendChanges();
   }
   public void setCareer(int c) {
