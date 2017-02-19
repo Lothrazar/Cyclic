@@ -44,15 +44,6 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
     this.addSlotToContainer(new Slot(this.merchantInventory, 0, 36, 53));
     this.addSlotToContainer(new Slot(this.merchantInventory, 1, 62, 53));
     bindPlayerInventory(playerInventory);
-//    this.addSlotToContainer(new SlotMerchantResult(playerInventory.player, merchant, this.merchantInventory, 2, 120, 53));
-//    for (int i = 0; i < 3; ++i) {
-//      for (int j = 0; j < 9; ++j) {
-//        this.addSlotToContainer(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
-//      }
-//    }
-//    for (int k = 0; k < 9; ++k) {
-//      this.addSlotToContainer(new Slot(playerInventory, k, 8 + k * 18, 142));
-//    }
     this.detectAndSendChanges();
   }
   public void setCareer(int c) {
@@ -79,9 +70,7 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
     super.addListener(listener);
     listener.sendAllWindowProperties(this, this.merchantInventory);
   }
-  /**
-   * Looks for changes made in the container, sends them to every listener.
-   */
+
   public void detectAndSendChanges() {
     merchantInventory.markDirty();
     super.detectAndSendChanges();
@@ -95,9 +84,7 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
   private int getCareer() {
     return UtilEntity.getVillagerCareer(merchant);
   }
-  /**
-   * Callback for when the crafting matrix is changed.
-   */
+
   public void onCraftMatrixChanged(IInventory inventoryIn) {
     this.merchantInventory.resetRecipeAndSlots();
     super.onCraftMatrixChanged(inventoryIn);
@@ -205,7 +192,7 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
     }
     if (tradeSuccess) {
       ItemStack purchased = trade.getItemToSell().copy();
-      //if (player.inventory.addItemStackToInventory(purchased) == false) {
+    
       player.entityDropItem(purchased, 0);
       this.merchant.useRecipe(trade);
       player.addStat(StatList.TRADED_WITH_VILLAGER);

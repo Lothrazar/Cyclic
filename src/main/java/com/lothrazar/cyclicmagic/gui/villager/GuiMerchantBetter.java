@@ -5,20 +5,18 @@ import java.util.List;
 import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.gui.pattern.ContainerPattern;
-import com.lothrazar.cyclicmagic.net.PacketSyncVillagerToServer;
+import com.lothrazar.cyclicmagic.gui.ITooltipButton;
 import com.lothrazar.cyclicmagic.net.PacketVillagerTrade;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.village.MerchantRecipe;
@@ -29,15 +27,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class GuiMerchantBetter extends GuiBaseContainer {
-  private static final int btnIdAuto = 99;  
   static final int texture_width = 176;
   static final int texture_height = 212;
-  //212-176=36
+
   private static final ResourceLocation MERCHANT_GUI_TEXTURE = new ResourceLocation(Const.MODID, "textures/gui/villager.png");
   private static final ResourceLocation TRADE_REDX_TEXTURE = new ResourceLocation(Const.MODID, "textures/gui/tradex.png");
   public static final ResourceLocation GUI = new ResourceLocation(Const.MODID, Const.Res.folder + "pattern.png");
-  private GuiMerchantBetter.MerchantButton nextButton;
-  private GuiMerchantBetter.MerchantButton previousButton;
+
   int itemPadding = 4;
   int btnRowCount = 6;
   private int yLatestJump;
@@ -47,7 +43,7 @@ public class GuiMerchantBetter extends GuiBaseContainer {
   private int selectedMerchantRecipe;
   private final ITextComponent chatComponent;
   private List<MerchantJumpButton> merchButtons = new ArrayList<MerchantJumpButton>();
-//  private ButtonVillagerPurchase autoBuy;
+
   public GuiMerchantBetter(InventoryPlayer ip, EntityVillager merch, InventoryMerchantBetter im, World worldIn, List<EntityVillager> all) {
     super(new ContainerMerchantBetter(ip, merch, im, worldIn, all));
     this.chatComponent = merch.getDisplayName();
@@ -60,24 +56,10 @@ public class GuiMerchantBetter extends GuiBaseContainer {
   }
   public void initGui() {
     super.initGui();
-    int xMiddle = getMiddleX();
-    int yMiddle = getMiddleY();
-    int btnId = 1;
-    int x = xMiddle + 158;
-    int y = yMiddle + itemPadding;
-    this.nextButton = (GuiMerchantBetter.MerchantButton) this.addButton(new GuiMerchantBetter.MerchantButton(btnId, x, y, true));
-    btnId = 2;
-    x = xMiddle + itemPadding;
-    y = yMiddle + itemPadding;
-    this.previousButton = (GuiMerchantBetter.MerchantButton) this.addButton(new GuiMerchantBetter.MerchantButton(btnId, x, y, false));
-    this.nextButton.enabled = false;
-    this.previousButton.enabled = false;
-    btnId = 3;
-//    autoBuy = new ButtonVillagerPurchase(btnIdAuto, x + 1, y + 40);
-//    this.buttonList.add(autoBuy);
+//setup for the validate btns
     this.xJump = this.guiLeft +Const.padding;
-    this.yLatestJump = yMiddle+Const.padding;
-    this.lastUnusedButtonId = btnId;
+    this.yLatestJump = getMiddleY()+Const.padding;
+    this.lastUnusedButtonId = 1;
   }
   private void validateMerchantButtons() {
     MerchantRecipeList merchantrecipelist = getContainer().getTrades();
@@ -107,46 +89,46 @@ public class GuiMerchantBetter extends GuiBaseContainer {
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     String s = this.chatComponent.getUnformattedText();
     this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
-//    this.fontRendererObj.drawString(I18n.format("container.inventory", new Object[0]), 8, this.ySize - 96 + 2, 4210752);
   }
   public void updateScreen() {
     super.updateScreen();
     //update button enable/disable states, with lots of null checks
-    MerchantRecipeList merchantrecipelist = this.getContainer().getTrades();//merchant.getRecipes(this.mc.thePlayer);
-    if (merchantrecipelist != null) {
-      this.nextButton.enabled = this.selectedMerchantRecipe < merchantrecipelist.size() - 1;
-      this.previousButton.enabled = this.selectedMerchantRecipe > 0;
-      MerchantRecipe trade = merchantrecipelist.get(selectedMerchantRecipe);
-      if (trade != null) {
-//        autoBuy.enabled = !trade.isRecipeDisabled();
-      }
-      for (MerchantJumpButton btn : this.merchButtons) {
-//        btn.enabled = btn.getRecipeIndex() != this.selectedMerchantRecipe;
-      }
-    }
-    getContainer().setCurrentRecipeIndex(this.selectedMerchantRecipe);
+//    MerchantRecipeList merchantrecipelist = this.getContainer().getTrades();//merchant.getRecipes(this.mc.thePlayer);
+//    if (merchantrecipelist != null) {
+////      this.nextButton.enabled = this.selectedMerchantRecipe < merchantrecipelist.size() - 1;
+////      this.previousButton.enabled = this.selectedMerchantRecipe > 0;
+//      MerchantRecipe trade = merchantrecipelist.get(selectedMerchantRecipe);
+//      if (trade != null) {
+////        autoBuy.enabled = !trade.isRecipeDisabled();
+//      }
+//      for (MerchantJumpButton btn : this.merchButtons) {
+////        btn.enabled = btn.getRecipeIndex() != this.selectedMerchantRecipe;
+//      }
+//    }
+    getContainer().setCurrentRecipeIndex(this.selectedMerchantRecipe);//try to sync between both containers
     this.validateMerchantButtons();
   }
   protected void actionPerformed(GuiButton button) throws IOException {
-    MerchantRecipeList merchantrecipelist = getContainer().getTrades();
-    if (button == this.nextButton) {
-      ++this.selectedMerchantRecipe;
-      if (merchantrecipelist != null && this.selectedMerchantRecipe >= merchantrecipelist.size()) {
-        this.selectedMerchantRecipe = merchantrecipelist.size() - 1;
-      }
-      setRecipeIndex(this.selectedMerchantRecipe);
-    }
-    else if (button == this.previousButton) {
-      --this.selectedMerchantRecipe;
-      if (this.selectedMerchantRecipe < 0) {
-        this.selectedMerchantRecipe = 0;
-      }
-      setRecipeIndex(this.selectedMerchantRecipe);
-    }
-    else if (button.id == btnIdAuto) {
-      ModCyclic.network.sendToServer(new PacketVillagerTrade(this.selectedMerchantRecipe));
-    }
-    else if (button instanceof MerchantJumpButton) {
+//    MerchantRecipeList merchantrecipelist = getContainer().getTrades();
+//    if (button == this.nextButton) {
+//      ++this.selectedMerchantRecipe;
+//      if (merchantrecipelist != null && this.selectedMerchantRecipe >= merchantrecipelist.size()) {
+//        this.selectedMerchantRecipe = merchantrecipelist.size() - 1;
+//      }
+//      setRecipeIndex(this.selectedMerchantRecipe);
+//    }
+//    else if (button == this.previousButton) {
+//      --this.selectedMerchantRecipe;
+//      if (this.selectedMerchantRecipe < 0) {
+//        this.selectedMerchantRecipe = 0;
+//      }
+//      setRecipeIndex(this.selectedMerchantRecipe);
+//    }
+//    else if (button.id == btnIdAuto) {
+//      ModCyclic.network.sendToServer(new PacketVillagerTrade(this.selectedMerchantRecipe));
+//    }
+//    else 
+      if (button instanceof MerchantJumpButton) {
       setRecipeIndex(((MerchantJumpButton) button).getRecipeIndex());
     }
   }
@@ -214,7 +196,7 @@ public class GuiMerchantBetter extends GuiBaseContainer {
 //    }
   }
   @SideOnly(Side.CLIENT)
-  static class MerchantJumpButton extends GuiButton {
+  static class MerchantJumpButton extends GuiButton implements ITooltipButton{
     final static int rowCount = 4;
     final static int spacing = 18;
     private int recipeIndex;
@@ -257,32 +239,21 @@ public class GuiMerchantBetter extends GuiBaseContainer {
         }
       }
     }
-  }
-  @SideOnly(Side.CLIENT)
-  static class MerchantButton extends GuiButton {
-    private final boolean forward;
-    public MerchantButton(int buttonID, int x, int y, boolean f) {
-      super(buttonID, x, y, 12, 19, "");
-      this.forward = f;
-    }
-    public void drawButton(Minecraft mc, int mouseX, int mouseY) {
-      if (this.visible) {
-//        mc.getTextureManager().bindTexture(GuiMerchantBetter.MERCHANT_GUI_TEXTURE);
-//        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-//        boolean flag = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
-//        int i = 0;
-//        int j = 176;
-//        if (!this.enabled) {
-//          j += this.width * 2;
-//        }
-//        else if (flag) {
-//          j += this.width;
-//        }
-//        if (!this.forward) {
-//          i += this.height;
-//        }
-//        this.drawTexturedModalRect(this.xPosition, this.yPosition, j, i, this.width, this.height);
-      }
+    @Override
+    public List<String> getTooltips() {
+      List<String> tt = new ArrayList<String>();
+      MerchantRecipeList merchantrecipelist = parent.getContainer().getTrades();
+      if (merchantrecipelist == null) { return tt; }
+      MerchantRecipe r = merchantrecipelist.get(recipeIndex);
+      if (r == null) { return tt; }
+      
+      if(r.isRecipeDisabled()) 
+        tt.add(UtilChat.lang("merchant.deprecated"));
+      else
+        tt.add(UtilChat.lang("tile.tool_trade.button.tooltip"));
+      
+      return tt;
     }
   }
+ 
 }
