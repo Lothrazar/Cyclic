@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.net.PacketSyncVillagerToServer;
+import com.lothrazar.cyclicmagic.net.PacketVillagerTrade;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -25,6 +26,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class GuiMerchantBetter extends GuiContainer {
+  private static final int btnIdAuto = 99;
   private static final ResourceLocation MERCHANT_GUI_TEXTURE = new ResourceLocation("textures/gui/container/villager.png");
   private GuiMerchantBetter.MerchantButton nextButton;
   private GuiMerchantBetter.MerchantButton previousButton;
@@ -59,12 +61,10 @@ public class GuiMerchantBetter extends GuiContainer {
     this.previousButton = (GuiMerchantBetter.MerchantButton) this.addButton(new GuiMerchantBetter.MerchantButton(btnId, x, y, false));
     this.nextButton.enabled = false;
     this.previousButton.enabled = false;
-    /////////////////////////////////////////////////////////////////
     btnId = 3;
-    //    MerchantRecipeList merchantrecipelist = getContainer().getTrades();// merchant.getRecipes(this.mc.thePlayer);
-    //    int idx = 0;
-    int h = 20, w = 60;
-    this.xJump = xMiddle + padding - w - 2 * padding;
+    GuiButton autoBuy = new GuiButton(btnIdAuto, x, y+20,20,20 ,"");
+    this.buttonList.add(autoBuy);
+    this.xJump = xMiddle + padding - 60 - 2 * padding;
     this.yLatestJump = yMiddle - 30;
     this.lastUnusedButtonId = btnId;
   }
@@ -92,7 +92,7 @@ public class GuiMerchantBetter extends GuiContainer {
         //row zero, do nothing else : move left and up
         if (i > 0 && i % btnRowCount == 0) {
           y = yLatestJump;
-          xJump = xJump - rowSize - padding/4;
+          xJump = xJump - rowSize - padding / 4;
         }
         MerchantJumpButton slotBtn = (MerchantJumpButton) this.addButton(new MerchantJumpButton(lastUnusedButtonId, this.xJump, y, w, h, i, this));
         this.buttonList.add(slotBtn);
@@ -117,7 +117,7 @@ public class GuiMerchantBetter extends GuiContainer {
     this.validateMerchantButtons();
   }
   protected void actionPerformed(GuiButton button) throws IOException {
-    MerchantRecipeList merchantrecipelist = getContainer().getTrades();//merchant.getRecipes(this.mc.thePlayer);
+    MerchantRecipeList merchantrecipelist = getContainer().getTrades();
     if (button == this.nextButton) {
       ++this.selectedMerchantRecipe;
       if (merchantrecipelist != null && this.selectedMerchantRecipe >= merchantrecipelist.size()) {
@@ -132,16 +132,17 @@ public class GuiMerchantBetter extends GuiContainer {
       }
       setRecipeIndex(this.selectedMerchantRecipe);
     }
-    else if (button instanceof MerchantJumpButton) {//if (button.id == 3) {
+    else if (button.id == btnIdAuto) {
+
+      ModCyclic.network.sendToServer(new PacketVillagerTrade(this.selectedMerchantRecipe));
+    }
+    else if (button instanceof MerchantJumpButton) {
       setRecipeIndex(((MerchantJumpButton) button).getRecipeIndex());
     }
   }
   private void setRecipeIndex(int i) {
     this.selectedMerchantRecipe = i;
     getContainer().setCurrentRecipeIndex(this.selectedMerchantRecipe);
-    //    PacketBuffer packetbuffer = new PacketBuffer(Unpooled.buffer());
-    //    packetbuffer.writeInt(this.selectedMerchantRecipe);
-    //    this.mc.getConnection().sendPacket(new CPacketCustomPayload("MC|TrSel", packetbuffer));
     ModCyclic.network.sendToServer(new PacketSyncVillagerToServer(this.selectedMerchantRecipe));
   }
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {

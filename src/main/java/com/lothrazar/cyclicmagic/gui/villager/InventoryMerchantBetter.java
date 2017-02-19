@@ -38,10 +38,6 @@ public class InventoryMerchantBetter extends InventoryMerchant implements IInven
   public ItemStack getStackInSlot(int index) {
     return this.theInventory[index];
   }
-  /**
-   * Removes up to a specified number of items from an inventory slot and
-   * returns them in a new stack.
-   */
   @Nullable
   public ItemStack decrStackSize(int index, int count) {
     if (index == 2 && this.theInventory[index] != null) {
@@ -56,19 +52,11 @@ public class InventoryMerchantBetter extends InventoryMerchant implements IInven
       return itemstack;
     }
   }
-  /**
-   * if par1 slot has changed, does resetRecipeAndSlots need to be called?
-   */
   private boolean inventoryResetNeededOnSlotChange(int slotIn) {
     return slotIn == 0 || slotIn == 1;
   }
-  /**
-   * Removes a stack from the given slot and returns it.
-   */
   @Nullable
   public ItemStack removeStackFromSlot(int index) {
-    if (this.theInventory[index] != null)
-      System.out.println("removeStackFromSlot " + this.theInventory[index]);
     return ItemStackHelper.getAndRemove(this.theInventory, index);
   }
   public void setInventorySlotContents(int index, @Nullable ItemStack stack) {
@@ -80,9 +68,7 @@ public class InventoryMerchantBetter extends InventoryMerchant implements IInven
       this.resetRecipeAndSlots();
     }
   }
-  /**
-   * Get the name of this object. For players this returns their username
-   */
+
   public String getName() {
     return "mob.villager";
   }
@@ -95,34 +81,24 @@ public class InventoryMerchantBetter extends InventoryMerchant implements IInven
   public int getInventoryStackLimit() {
     return 64;
   }
-  /**
-   * Don't rename this method to canInteractWith due to conflicts with Container
-   */
+
   public boolean isUseableByPlayer(EntityPlayer player) {
     return this.theMerchant.getCustomer() == player;
   }
   public void openInventory(EntityPlayer player) {}
   public void closeInventory(EntityPlayer player) {}
-  /**
-   * Returns true if automation is allowed to insert the given stack (ignoring
-   * stack size) into the given slot. For guis use Slot.isItemValid
-   */
+
   public boolean isItemValidForSlot(int index, ItemStack stack) {
     return true;
   }
-  /**
-   * For tile entities, ensures the chunk containing the tile entity is saved to
-   * disk later - the game won't think it hasn't changed and skip it.
-   */
+
   public void markDirty() {
     this.resetRecipeAndSlots();
   }
   public void setRecipes(MerchantRecipeList t) {
     if (t.size() != trades.size()) {
-//      ModCyclic.logger.info(t.size() + "[setRecipes] " + this.thePlayer.worldObj.isRemote);
       trades = t;
     }
-    //     this.theMerchant.setRecipes(t);
   }
   public MerchantRecipeList getRecipes() {
     return trades;
@@ -144,13 +120,13 @@ public class InventoryMerchantBetter extends InventoryMerchant implements IInven
         MerchantRecipe merchantrecipe = merchantrecipelist.canRecipeBeUsed(itemstack, itemstack1, this.currentRecipeIndex);
         if (merchantrecipe != null && !merchantrecipe.isRecipeDisabled()) {
           this.currentRecipe = merchantrecipe;
-//          ModCyclic.logger.info(this.currentRecipeIndex+" currentRecipe "+remote + this.currentRecipe.getItemToSell());
+ 
           this.setInventorySlotContents(2, merchantrecipe.getItemToSell().copy());
         }
         else if (itemstack1 != null) {
           merchantrecipe = merchantrecipelist.canRecipeBeUsed(itemstack1, itemstack, this.currentRecipeIndex);
           if (merchantrecipe != null && !merchantrecipe.isRecipeDisabled()) {
-//            ModCyclic.logger.info(this.currentRecipeIndex+" currentRecipe "+remote + this.currentRecipe.getItemToSell());
+      
             this.currentRecipe = merchantrecipe;
             this.setInventorySlotContents(2, merchantrecipe.getItemToSell().copy());
           }
@@ -170,7 +146,7 @@ public class InventoryMerchantBetter extends InventoryMerchant implements IInven
   }
   public void setCurrentRecipeIndex(int currentRecipeIndexIn) {
     this.currentRecipeIndex = currentRecipeIndexIn;
-//    System.out.println(this.currentRecipeIndex+"[INV] setCurrentRecipeIndexx   "+this.thePlayer.getEntityWorld().isRemote);
+    //    System.out.println(this.currentRecipeIndex+"[INV] setCurrentRecipeIndexx   "+this.thePlayer.getEntityWorld().isRemote);
     this.resetRecipeAndSlots();
   }
   public int getField(int id) {

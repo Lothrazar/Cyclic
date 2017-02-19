@@ -5,16 +5,20 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.net.PacketSyncVillagerToClient;
 import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotMerchantResult;
 import net.minecraft.item.ItemStack;
+import net.minecraft.stats.StatList;
+import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.World;
 
@@ -116,8 +120,7 @@ public class ContainerMerchantBetter extends Container {
         if (!this.mergeItemStack(itemstack1, INV_START, HOTBAR_END + 1, true)) { return null; }
         slot.onSlotChange(itemstack1, itemstack);
       }
-      else if (index != SLOT_INPUT && index != SLOT_INPUTX) {  //so it must be a player slot
-
+      else if (index != SLOT_INPUT && index != SLOT_INPUTX) { //so it must be a player slot
         if (!this.mergeItemStack(itemstack1, SLOT_INPUT, SLOT_INPUTX + 1, false)) { return null; }
       }
       else {//so it is 0,1
@@ -157,5 +160,71 @@ public class ContainerMerchantBetter extends Container {
   }
   public MerchantRecipeList getTrades() {
     return trades;
+  }
+  //from slotmerchantresult
+  public void doTrade(EntityPlayer player, int selectedMerchantRecipe) {
+    MerchantRecipe trade = getTrades().get(selectedMerchantRecipe);
+    ItemStack itemToBuy = trade.getItemToBuy().copy();
+    ItemStack itemSecondBuy = (trade.getSecondItemToBuy() == null) ? null : trade.getSecondItemToBuy().copy();
+    ItemStack firstItem = null;
+    ItemStack secondItem = null;
+    ItemStack iStack = null;
+    boolean canTrade = false;
+    for (int i = INV_START; i <= HOTBAR_END; i++) {
+      iStack = player.inventory.getStackInSlot(i);
+      if (iStack == null) {
+        continue;
+      }
+      if (firstItem == null &&
+          iStack.getItem() == itemToBuy.getItem() && iStack.stackSize >= itemToBuy.stackSize) {
+        firstItem = iStack;
+      }
+      if (secondItem == null && itemSecondBuy != null) {
+        if (itemSecondBuy.getItem() == iStack.getItem() && iStack.stackSize >= itemSecondBuy.stackSize) {
+          //we found the second item woo!
+          secondItem = iStack;
+        }
+      }
+      canTrade = (firstItem != null && (itemSecondBuy == null || secondItem != null));
+      if (canTrade) {
+        break;
+      }
+      //are we done
+      //      secondValid = if (firstValid) firstItem =iStack;
+      //      if (secondValid && itemSecondBuy != null) secondItem = this.merchantInventory.getStackInSlot(i);
+      //      if (firstValid && secondValid) {
+      //        break;
+      //      }
+    }
+    boolean tradeSuccess = false;
+    if (canTrade) {
+      if (secondItem != null) {
+        firstItem.stackSize -= itemToBuy.stackSize;
+        secondItem.stackSize -= itemSecondBuy.stackSize;
+        tradeSuccess = true;
+      }
+      if (itemSecondBuy == null && secondItem == null) {
+        firstItem.stackSize -= itemToBuy.stackSize;
+        tradeSuccess = true;
+      }
+    }
+    if (tradeSuccess) {
+      if (firstItem.stackSize == 0) {
+//        System.out.println("1  nullified zero stack");
+        firstItem = null;
+      }
+      if (secondItem != null && secondItem.stackSize == 0) {
+//        System.out.println("2  nullified zero stack");
+        secondItem = null;
+      }
+      //DOOOOO i need to put first/second back in their place?? 
+      //      player.dropItem(trade.getItemToSell(), true);
+      player.entityDropItem(trade.getItemToSell().copy(), 0);
+      //      this.merchantInventory.setInventorySlotContents(foundSlot, stack);
+      this.merchant.useRecipe(getTrades().get(selectedMerchantRecipe));
+      player.addStat(StatList.TRADED_WITH_VILLAGER);
+      //      this.merchantInventory.setInventorySlotContents(0, itemstack);
+      //      this.merchantInventory.setInventorySlotContents(1, itemstack1);
+    }
   }
 }
