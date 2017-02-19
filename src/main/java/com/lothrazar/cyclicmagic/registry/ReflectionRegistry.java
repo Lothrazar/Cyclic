@@ -2,12 +2,20 @@ package com.lothrazar.cyclicmagic.registry;
 import java.lang.reflect.Field;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilReflection;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.passive.EntityHorse;
+import net.minecraft.entity.passive.EntityVillager;
 
 public class ReflectionRegistry {
+  public static Field fieldCareer;// = UtilReflection.getPrivateField("careerId", "field_175563_bv", merchant);
+  
   public static IAttribute horseJumpStrength = null;
   public static void register() {
+    
+    fieldCareer = UtilReflection.getPrivateField("careerId", "field_175563_bv", EntityVillager.class);
+    
+    
     // version 1.1.0
     // new item for speed
     // new item for jump

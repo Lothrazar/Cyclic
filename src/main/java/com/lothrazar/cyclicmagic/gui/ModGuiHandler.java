@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.gui;
+import java.util.List;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityDetector;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFishing;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
@@ -43,14 +44,20 @@ import com.lothrazar.cyclicmagic.gui.user.ContainerUser;
 import com.lothrazar.cyclicmagic.gui.user.GuiUser;
 import com.lothrazar.cyclicmagic.gui.vector.ContainerVector;
 import com.lothrazar.cyclicmagic.gui.vector.GuiVector;
+import com.lothrazar.cyclicmagic.gui.villager.ContainerMerchantBetter;
+import com.lothrazar.cyclicmagic.gui.villager.GuiMerchantBetter;
+import com.lothrazar.cyclicmagic.gui.villager.InventoryMerchantBetter;
 import com.lothrazar.cyclicmagic.gui.wand.ContainerWand;
 import com.lothrazar.cyclicmagic.gui.wand.GuiWandInventory;
 import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
 import com.lothrazar.cyclicmagic.gui.waypoints.GuiEnderBook;
 import com.lothrazar.cyclicmagic.item.ItemStorageBag;
+import com.lothrazar.cyclicmagic.item.ItemTrader;
+import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
@@ -77,9 +84,11 @@ public class ModGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_PATTERN = 14;
   public static final int GUI_INDEX_DETECTOR = 15;
   public static final int GUI_INDEX_VECTOR = 16;
+  public static final int GUI_INDEX_VILLAGER = 17;
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-    TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
+    BlockPos p = new BlockPos(x, y, z);
+    TileEntity te = world.getTileEntity(p);
     switch (ID) {
       case GUI_INDEX_EXTENDED:
         return new ContainerPlayerExtended(player.inventory, new InventoryPlayerExtended(player), player);
@@ -143,13 +152,24 @@ public class ModGuiHandler implements IGuiHandler {
       case GUI_INDEX_VECTOR:
         if (te != null && te instanceof TileVector) { return new ContainerVector(player.inventory, (TileVector) te); }
       break;
+      case GUI_INDEX_VILLAGER:
+        //http://www.minecraftforge.net/forum/topic/29593-18-solveddisplay-gui-when-interacting-with-an-entity/
+        List<EntityVillager> all = UtilEntity.getVillagers(world, p, ItemTrader.radius);
+        if (!all.isEmpty()) {
+          EntityVillager v = all.get(0);
+          v.setCustomer(player);
+          ContainerMerchantBetter c = new ContainerMerchantBetter(player.inventory, v, new InventoryMerchantBetter(player, v), world, all);
+          return c;
+        }
+      break;
     }
     return null;
   }
   @Override
   public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+    BlockPos p = new BlockPos(x, y, z);
     if (world instanceof WorldClient) {
-      TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
+      TileEntity te = world.getTileEntity(p);
       switch (ID) {
         case GUI_INDEX_EXTENDED:
           return new GuiPlayerExtended(new ContainerPlayerExtended(player.inventory, new InventoryPlayerExtended(player), player));
@@ -198,6 +218,13 @@ public class ModGuiHandler implements IGuiHandler {
         break;
         case GUI_INDEX_VECTOR:
           if (te != null && te instanceof TileVector) { return new GuiVector(player.inventory, (TileVector) te); }
+        break;
+        case GUI_INDEX_VILLAGER:
+          List<EntityVillager> all = UtilEntity.getVillagers(world, p, ItemTrader.radius);
+          if (!all.isEmpty()) {
+            EntityVillager v = all.get(0);
+            return new GuiMerchantBetter(player.inventory, v, new InventoryMerchantBetter(player, v), world, all);
+          }
         break;
       }
     }

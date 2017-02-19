@@ -1,4 +1,6 @@
 package com.lothrazar.cyclicmagic.proxy;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -37,4 +39,5 @@ public class CommonProxy {
     return null;
   }
   public void renderItemOnScreen(ItemStack current, int x, int y) {}
+  public void renderItemOnGui(ItemStack secondItemToBuy, RenderItem itemRender, FontRenderer fontRendererObj, int x, int y) {}
 }

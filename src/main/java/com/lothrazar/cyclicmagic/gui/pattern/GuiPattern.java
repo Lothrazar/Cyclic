@@ -115,8 +115,8 @@ public class GuiPattern extends GuiBaseContainer {
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
     this.mc.getTextureManager().bindTexture(getBackground());
-    int thisX = (this.width - this.xSize) / 2;
-    int thisY = (this.height - this.ySize) / 2;
+    int thisX = this.getMiddleX();
+    int thisY = this.getMiddleY();
     int u = 0, v = 0;
     Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, texture_width, texture_height, texture_width, texture_height);
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);

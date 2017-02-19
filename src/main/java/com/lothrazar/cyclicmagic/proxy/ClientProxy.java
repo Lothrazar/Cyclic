@@ -20,6 +20,7 @@ import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.ItemModelMesher;
 import net.minecraft.client.renderer.RenderHelper;
@@ -208,5 +209,13 @@ public class ClientProxy extends CommonProxy {
     RenderHelper.enableGUIStandardItemLighting();
     itemRender.renderItemAndEffectIntoGUI(current, x, y);
     RenderHelper.disableStandardItemLighting();
+  }
+  /**
+   * In a GUI we already have the context of the itemrender and font
+   */
+  public void renderItemOnGui(ItemStack stack, RenderItem itemRender, FontRenderer fontRendererObj, int x, int y) {
+    if (stack == null) { return; }
+    itemRender.renderItemAndEffectIntoGUI(stack, x, y);
+    itemRender.renderItemOverlays(fontRendererObj, stack, x, y);
   }
 }
