@@ -3,9 +3,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.net.PacketSyncVillagerToServer;
 import com.lothrazar.cyclicmagic.net.PacketVillagerTrade;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -25,7 +25,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiMerchantBetter extends GuiContainer {
+public class GuiMerchantBetter extends GuiBaseContainer {
   private static final int btnIdAuto = 99;
   private static final ResourceLocation MERCHANT_GUI_TEXTURE = new ResourceLocation("textures/gui/container/villager.png");
   private GuiMerchantBetter.MerchantButton nextButton;
@@ -63,7 +63,7 @@ public class GuiMerchantBetter extends GuiContainer {
     this.nextButton.enabled = false;
     this.previousButton.enabled = false;
     btnId = 3;
-    autoBuy = new GuiButton(btnIdAuto, x, y + 20, 20, 20, "");
+    autoBuy = new GuiButton(btnIdAuto, x+1, y + 40, 20, 20, "");
     this.buttonList.add(autoBuy);
     this.xJump = xMiddle + padding - 60 - 2 * padding;
     this.yLatestJump = yMiddle - 30;

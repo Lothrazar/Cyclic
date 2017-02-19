@@ -4,7 +4,7 @@ import org.apache.logging.log4j.Logger;
 
 public class ModLogger {
   private Logger logger;
-  public boolean sendInfo = true;// disable this for release
+  public boolean sendInfo = false;// disable this for release
   public ModLogger(Logger l) {
     logger = l;
   }

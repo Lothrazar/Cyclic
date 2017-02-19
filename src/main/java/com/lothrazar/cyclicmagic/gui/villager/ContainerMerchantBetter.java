@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.gui.villager;
 import java.util.List;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.gui.ContainerBase;
 import com.lothrazar.cyclicmagic.net.PacketSyncVillagerToClient;
 import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
@@ -20,7 +21,7 @@ import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.World;
 
-public class ContainerMerchantBetter extends Container {
+public class ContainerMerchantBetter extends ContainerBase {
   final static int SLOT_OUTPUT = 2;
   final static int SLOT_INPUT = 0;
   final static int SLOT_INPUTX = 1;
@@ -162,16 +163,13 @@ public class ContainerMerchantBetter extends Container {
   //from slotmerchantresult
   public void doTrade(EntityPlayer player, int selectedMerchantRecipe) {
     MerchantRecipe trade = getTrades().get(selectedMerchantRecipe);
-    if(trade.isRecipeDisabled()){
-      return;
-    }
+    if (trade.isRecipeDisabled()) { return; }
     ItemStack itemToBuy = trade.getItemToBuy().copy();
     ItemStack itemSecondBuy = (trade.getSecondItemToBuy() == null) ? null : trade.getSecondItemToBuy().copy();
     ItemStack firstItem = null;
     ItemStack secondItem = null;
-    int firstSlot=-1,secondSlot=-1;
+    int firstSlot = -1, secondSlot = -1;
     ItemStack iStack = null;
-    
     boolean canTrade = false;
     for (int i = INV_START; i <= HOTBAR_END; i++) {
       iStack = player.inventory.getStackInSlot(i);
@@ -181,13 +179,12 @@ public class ContainerMerchantBetter extends Container {
       if (firstItem == null &&
           iStack.getItem() == itemToBuy.getItem() && iStack.stackSize >= itemToBuy.stackSize) {
         firstItem = iStack;
-        firstSlot=i;
+        firstSlot = i;
       }
       if (secondItem == null && itemSecondBuy != null) {
         if (itemSecondBuy.getItem() == iStack.getItem() && iStack.stackSize >= itemSecondBuy.stackSize) {
-         
           secondItem = iStack;
-          secondSlot=i;
+          secondSlot = i;
         }
       }
       canTrade = (firstItem != null && (itemSecondBuy == null || secondItem != null));
@@ -208,17 +205,17 @@ public class ContainerMerchantBetter extends Container {
       }
     }
     if (tradeSuccess) {
-      player.entityDropItem(trade.getItemToSell().copy(), 0);
+      ItemStack purchased = trade.getItemToSell().copy();
+      //if (player.inventory.addItemStackToInventory(purchased) == false) {
+      player.entityDropItem(purchased, 0);
       this.merchant.useRecipe(trade);
       player.addStat(StatList.TRADED_WITH_VILLAGER);
       if (firstItem.stackSize == 0) {
-//      firstItem = null;
-      player.inventory.setInventorySlotContents(firstSlot, null);
-    }
-    if (secondItem != null && secondItem.stackSize == 0) {
-//      secondItem = null;
-      player.inventory.setInventorySlotContents(secondSlot, null);
-    }
+        player.inventory.setInventorySlotContents(firstSlot, null);
+      }
+      if (secondItem != null && secondItem.stackSize == 0) {
+        player.inventory.setInventorySlotContents(secondSlot, null);
+      }
     }
   }
 }
