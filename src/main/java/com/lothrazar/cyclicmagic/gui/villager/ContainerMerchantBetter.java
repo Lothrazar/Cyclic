@@ -169,7 +169,9 @@ public class ContainerMerchantBetter extends Container {
     ItemStack itemSecondBuy = (trade.getSecondItemToBuy() == null) ? null : trade.getSecondItemToBuy().copy();
     ItemStack firstItem = null;
     ItemStack secondItem = null;
+    int firstSlot=-1,secondSlot=-1;
     ItemStack iStack = null;
+    
     boolean canTrade = false;
     for (int i = INV_START; i <= HOTBAR_END; i++) {
       iStack = player.inventory.getStackInSlot(i);
@@ -179,11 +181,13 @@ public class ContainerMerchantBetter extends Container {
       if (firstItem == null &&
           iStack.getItem() == itemToBuy.getItem() && iStack.stackSize >= itemToBuy.stackSize) {
         firstItem = iStack;
+        firstSlot=i;
       }
       if (secondItem == null && itemSecondBuy != null) {
         if (itemSecondBuy.getItem() == iStack.getItem() && iStack.stackSize >= itemSecondBuy.stackSize) {
-          //we found the second item woo!
+         
           secondItem = iStack;
+          secondSlot=i;
         }
       }
       canTrade = (firstItem != null && (itemSecondBuy == null || secondItem != null));
@@ -204,17 +208,17 @@ public class ContainerMerchantBetter extends Container {
       }
     }
     if (tradeSuccess) {
-      if (firstItem.stackSize == 0) {
-        firstItem = null;
-      }
-      if (secondItem != null && secondItem.stackSize == 0) {
-        secondItem = null;
-      }
-      //DOOOOO i need to put first/second back in their place?? 
-      //      player.dropItem(trade.getItemToSell(), true);
       player.entityDropItem(trade.getItemToSell().copy(), 0);
       this.merchant.useRecipe(trade);
       player.addStat(StatList.TRADED_WITH_VILLAGER);
+      if (firstItem.stackSize == 0) {
+//      firstItem = null;
+      player.inventory.setInventorySlotContents(firstSlot, null);
+    }
+    if (secondItem != null && secondItem.stackSize == 0) {
+//      secondItem = null;
+      player.inventory.setInventorySlotContents(secondSlot, null);
+    }
     }
   }
 }
