@@ -167,7 +167,7 @@ public class ContainerMerchantBetter extends ContainerBase {
     int firstSlot = -1, secondSlot = -1;
     ItemStack iStack = null;
     boolean canTrade = false;
-    for (int i = INV_START; i <= HOTBAR_END; i++) {
+    for (int i = 0; i <= 3 * 9; i++) {
       iStack = player.inventory.getStackInSlot(i);
       if (iStack == null) {
         continue;
