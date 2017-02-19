@@ -29,11 +29,11 @@ public class GuiMerchantBetter extends GuiBaseContainer {
   static final int texture_width = 250;
   static final int texture_height = 212;
   public static final ResourceLocation GUI = new ResourceLocation(Const.MODID, Const.Res.folder + "villager.png");
-  int itemPadding = 0;
-  int btnRowCount = 6;
-  private int yLatestJump;
+
+  int btnColCount = 4;
+  private int yBtnStart;
   private int lastUnusedButtonId;
-  private int xJump;
+  private int xBtnStart;
   EntityPlayer player;
   private int selectedMerchantRecipe;
   private List<GuiButtonPurchase> merchButtons = new ArrayList<GuiButtonPurchase>();
@@ -49,29 +49,25 @@ public class GuiMerchantBetter extends GuiBaseContainer {
   public void initGui() {
     super.initGui();
     //setup for the validate btns
-    this.xJump = this.guiLeft;
-    this.yLatestJump = getMiddleY();
+    this.xBtnStart = this.guiLeft;
+    this.yBtnStart = getMiddleY();
     this.lastUnusedButtonId = 1;
   }
   private void validateMerchantButtons() {
     MerchantRecipeList merchantrecipelist = getContainer().getTrades();
     int s = merchantrecipelist.size();
-    int h = 20, w = 56;
-    int rowSize = w + itemPadding;
-    int rowHeight = h + itemPadding;
-    int y = this.yLatestJump;
+    int btnH = 20, btnW = 56;
+    int x = this.xBtnStart;
+    int y = this.yBtnStart;
     int currRow;
+    int currCol;
     for (int i = 0; i < s; i++) {
       if (i >= merchButtons.size()) {
-        currRow = i % btnRowCount;
-        //        System.out.println("i: " + i + "  rowNum: " + rowNum + " currRow " + currRow);
-        y = yLatestJump + currRow * rowHeight;
-        //row zero, do nothing else : move left and up
-        if (i > 0 && i % btnRowCount == 0) {
-          y = yLatestJump;
-          xJump = xJump + rowSize + itemPadding / 4;
-        }
-        GuiButtonPurchase slotBtn = (GuiButtonPurchase) this.addButton(new GuiButtonPurchase(lastUnusedButtonId, this.xJump, y, w, h, i, this));
+        currRow = i / btnColCount;
+        currCol = i % btnColCount;
+        x = this.xBtnStart + currCol * btnW;
+        y = this.yBtnStart + currRow * btnH;
+        GuiButtonPurchase slotBtn = (GuiButtonPurchase) this.addButton(new GuiButtonPurchase(lastUnusedButtonId, x, y, btnW, btnH, i, this));
         merchButtons.add(slotBtn);
         lastUnusedButtonId++;
       }
@@ -91,7 +87,6 @@ public class GuiMerchantBetter extends GuiBaseContainer {
   private void setAndTryPurchase(GuiButtonPurchase button) {
     this.selectedMerchantRecipe = button.getRecipeIndex();
     getContainer().setCurrentRecipeIndex(this.selectedMerchantRecipe);
-    System.out.println("PacketVillagerTrade purchase" + this.buttonList.size());
     ModCyclic.network.sendToServer(new PacketVillagerTrade(this.selectedMerchantRecipe));
   }
   @Override
