@@ -5,12 +5,10 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.net.PacketSyncVillagerToClient;
 import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
-import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
@@ -164,6 +162,9 @@ public class ContainerMerchantBetter extends Container {
   //from slotmerchantresult
   public void doTrade(EntityPlayer player, int selectedMerchantRecipe) {
     MerchantRecipe trade = getTrades().get(selectedMerchantRecipe);
+    if(trade.isRecipeDisabled()){
+      return;
+    }
     ItemStack itemToBuy = trade.getItemToBuy().copy();
     ItemStack itemSecondBuy = (trade.getSecondItemToBuy() == null) ? null : trade.getSecondItemToBuy().copy();
     ItemStack firstItem = null;
@@ -189,12 +190,6 @@ public class ContainerMerchantBetter extends Container {
       if (canTrade) {
         break;
       }
-      //are we done
-      //      secondValid = if (firstValid) firstItem =iStack;
-      //      if (secondValid && itemSecondBuy != null) secondItem = this.merchantInventory.getStackInSlot(i);
-      //      if (firstValid && secondValid) {
-      //        break;
-      //      }
     }
     boolean tradeSuccess = false;
     if (canTrade) {
@@ -210,21 +205,16 @@ public class ContainerMerchantBetter extends Container {
     }
     if (tradeSuccess) {
       if (firstItem.stackSize == 0) {
-//        System.out.println("1  nullified zero stack");
         firstItem = null;
       }
       if (secondItem != null && secondItem.stackSize == 0) {
-//        System.out.println("2  nullified zero stack");
         secondItem = null;
       }
       //DOOOOO i need to put first/second back in their place?? 
       //      player.dropItem(trade.getItemToSell(), true);
       player.entityDropItem(trade.getItemToSell().copy(), 0);
-      //      this.merchantInventory.setInventorySlotContents(foundSlot, stack);
-      this.merchant.useRecipe(getTrades().get(selectedMerchantRecipe));
+      this.merchant.useRecipe(trade);
       player.addStat(StatList.TRADED_WITH_VILLAGER);
-      //      this.merchantInventory.setInventorySlotContents(0, itemstack);
-      //      this.merchantInventory.setInventorySlotContents(1, itemstack1);
     }
   }
 }

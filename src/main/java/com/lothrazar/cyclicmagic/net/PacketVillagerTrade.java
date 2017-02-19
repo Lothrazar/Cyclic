@@ -2,9 +2,7 @@ package com.lothrazar.cyclicmagic.net;
 import com.lothrazar.cyclicmagic.gui.villager.ContainerMerchantBetter;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.village.MerchantRecipe;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -31,12 +29,10 @@ public class PacketVillagerTrade implements IMessage, IMessageHandler<PacketVill
   @Override
   public IMessage onMessage(PacketVillagerTrade message, MessageContext ctx) {
     if (ctx.side == Side.SERVER) {
-
-      EntityPlayer player = ctx.getServerHandler().playerEntity;// ModCyclic.proxy.getPlayerEntity(ctx);
+      EntityPlayer player = ctx.getServerHandler().playerEntity;
       if (player != null && player.openContainer instanceof ContainerMerchantBetter) {
         ContainerMerchantBetter c = (ContainerMerchantBetter) player.openContainer;
-System.out.println("TODO: forcetrade");
-c.doTrade(player,message.selectedMerchantRecipe);
+        c.doTrade(player, message.selectedMerchantRecipe);
       }
     }
     return null;

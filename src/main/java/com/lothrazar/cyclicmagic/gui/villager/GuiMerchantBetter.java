@@ -39,6 +39,7 @@ public class GuiMerchantBetter extends GuiContainer {
   private int selectedMerchantRecipe;
   private final ITextComponent chatComponent;
   private List<MerchantJumpButton> merchButtons = new ArrayList<MerchantJumpButton>();
+  private GuiButton autoBuy;
   public GuiMerchantBetter(InventoryPlayer ip, EntityVillager merch, InventoryMerchantBetter im, World worldIn, List<EntityVillager> all) {
     super(new ContainerMerchantBetter(ip, merch, im, worldIn, all));
     this.chatComponent = merch.getDisplayName();
@@ -62,7 +63,7 @@ public class GuiMerchantBetter extends GuiContainer {
     this.nextButton.enabled = false;
     this.previousButton.enabled = false;
     btnId = 3;
-    GuiButton autoBuy = new GuiButton(btnIdAuto, x, y+20,20,20 ,"");
+    autoBuy = new GuiButton(btnIdAuto, x, y + 20, 20, 20, "");
     this.buttonList.add(autoBuy);
     this.xJump = xMiddle + padding - 60 - 2 * padding;
     this.yLatestJump = yMiddle - 30;
@@ -108,10 +109,18 @@ public class GuiMerchantBetter extends GuiContainer {
   }
   public void updateScreen() {
     super.updateScreen();
+    //update button enable/disable states, with lots of null checks
     MerchantRecipeList merchantrecipelist = this.getContainer().getTrades();//merchant.getRecipes(this.mc.thePlayer);
     if (merchantrecipelist != null) {
       this.nextButton.enabled = this.selectedMerchantRecipe < merchantrecipelist.size() - 1;
       this.previousButton.enabled = this.selectedMerchantRecipe > 0;
+      MerchantRecipe trade = merchantrecipelist.get(selectedMerchantRecipe);
+      if (trade != null) {
+        autoBuy.enabled = !trade.isRecipeDisabled();
+      }
+      for (MerchantJumpButton btn : this.merchButtons) {
+        btn.enabled = btn.getRecipeIndex() != this.selectedMerchantRecipe;
+      }
     }
     getContainer().setCurrentRecipeIndex(this.selectedMerchantRecipe);
     this.validateMerchantButtons();
@@ -133,7 +142,6 @@ public class GuiMerchantBetter extends GuiContainer {
       setRecipeIndex(this.selectedMerchantRecipe);
     }
     else if (button.id == btnIdAuto) {
-
       ModCyclic.network.sendToServer(new PacketVillagerTrade(this.selectedMerchantRecipe));
     }
     else if (button instanceof MerchantJumpButton) {
