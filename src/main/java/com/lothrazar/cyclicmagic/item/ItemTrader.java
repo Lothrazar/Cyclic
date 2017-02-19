@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemTrader extends BaseItem implements IHasRecipe {
-  public static final int radius = 1;
+  public static final int radius = 5;
   public ItemTrader() {
     super();
     this.setMaxStackSize(1);

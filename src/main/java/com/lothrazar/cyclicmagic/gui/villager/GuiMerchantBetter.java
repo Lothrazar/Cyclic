@@ -29,16 +29,15 @@ public class GuiMerchantBetter extends GuiBaseContainer {
   static final int texture_width = 250;
   static final int texture_height = 212;
   public static final ResourceLocation GUI = new ResourceLocation(Const.MODID, Const.Res.folder + "villager.png");
-
-  int btnColCount = 4;
+  private int btnColCount = 4;
   private int yBtnStart;
   private int lastUnusedButtonId;
   private int xBtnStart;
   EntityPlayer player;
   private int selectedMerchantRecipe;
   private List<GuiButtonPurchase> merchButtons = new ArrayList<GuiButtonPurchase>();
-  public GuiMerchantBetter(InventoryPlayer ip, EntityVillager merch, InventoryMerchantBetter im, World worldIn, List<EntityVillager> all) {
-    super(new ContainerMerchantBetter(ip, merch, im, worldIn, all));
+  public GuiMerchantBetter(InventoryPlayer ip, EntityVillager merch, InventoryMerchantBetter im, World worldIn) {
+    super(new ContainerMerchantBetter(ip, merch, im, worldIn));
     player = ip.player;
     this.xSize = texture_width;
     this.ySize = texture_height;

@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.gui.villager;
-import java.util.List;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
@@ -20,9 +19,7 @@ import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.World;
 
 public class ContainerMerchantBetter extends ContainerBaseMachine {
-//  final static int SLOT_OUTPUT = 2;
-//  final static int SLOT_INPUT = 0;
-//  final static int SLOT_INPUTX = 1;
+
   final static int HOTBAR_START = 27;
   final static int HOTBAR_END = 35;
   final static int INV_START = 0;
@@ -30,13 +27,11 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
   public final EntityVillager merchant;
   private MerchantRecipeList trades;
   private final InventoryMerchantBetter merchantInventory;
-  private final World theWorld;
-  EntityPlayer player;
-  public ContainerMerchantBetter(InventoryPlayer playerInventory, EntityVillager m, InventoryMerchantBetter im, World worldIn, List<EntityVillager> all) {
+  private EntityPlayer player;
+  public ContainerMerchantBetter(InventoryPlayer playerInventory, EntityVillager m, InventoryMerchantBetter im, World worldIn) {
     this.playerOffsetX = 48;//for texture width 250, this becomes 48
     this.playerOffsetY = 130;
     this.merchant = m;
-    this.theWorld = worldIn;
     this.merchantInventory = im;
     player = playerInventory.player;
     trades = merchant.getRecipes(player);

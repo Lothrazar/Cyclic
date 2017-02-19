@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.gui;
-import java.util.List;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityDetector;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFishing;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
@@ -154,11 +153,10 @@ public class ModGuiHandler implements IGuiHandler {
       break;
       case GUI_INDEX_VILLAGER:
         //http://www.minecraftforge.net/forum/topic/29593-18-solveddisplay-gui-when-interacting-with-an-entity/
-        List<EntityVillager> all = UtilEntity.getVillagers(world, p, ItemTrader.radius);
-        if (!all.isEmpty()) {
-          EntityVillager v = all.get(0);
+        EntityVillager v = (EntityVillager) UtilEntity.getClosestEntity(world, player, UtilEntity.getVillagers(world, p, ItemTrader.radius));
+        if (v != null) {
           v.setCustomer(player);
-          ContainerMerchantBetter c = new ContainerMerchantBetter(player.inventory, v, new InventoryMerchantBetter(player, v), world, all);
+          ContainerMerchantBetter c = new ContainerMerchantBetter(player.inventory, v, new InventoryMerchantBetter(player, v), world);
           return c;
         }
       break;
@@ -220,11 +218,8 @@ public class ModGuiHandler implements IGuiHandler {
           if (te != null && te instanceof TileVector) { return new GuiVector(player.inventory, (TileVector) te); }
         break;
         case GUI_INDEX_VILLAGER:
-          List<EntityVillager> all = UtilEntity.getVillagers(world, p, ItemTrader.radius);
-          if (!all.isEmpty()) {
-            EntityVillager v = all.get(0);
-            return new GuiMerchantBetter(player.inventory, v, new InventoryMerchantBetter(player, v), world, all);
-          }
+          EntityVillager v = (EntityVillager) UtilEntity.getClosestEntity(world, player, UtilEntity.getVillagers(world, p, ItemTrader.radius));
+          if (v != null) { return new GuiMerchantBetter(player.inventory, v, new InventoryMerchantBetter(player, v), world); }
         break;
       }
     }
