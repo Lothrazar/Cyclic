@@ -6,7 +6,9 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.net.PacketSyncVillagerToServer;
 import com.lothrazar.cyclicmagic.net.PacketVillagerTrade;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
@@ -27,6 +29,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiMerchantBetter extends GuiBaseContainer {
   private static final int btnIdAuto = 99;
   private static final ResourceLocation MERCHANT_GUI_TEXTURE = new ResourceLocation("textures/gui/container/villager.png");
+  private static final ResourceLocation TRADE_REDX_TEXTURE = new ResourceLocation(Const.MODID, "textures/gui/tradex.png");
   private GuiMerchantBetter.MerchantButton nextButton;
   private GuiMerchantBetter.MerchantButton previousButton;
   int padding = 4;
@@ -167,7 +170,7 @@ public class GuiMerchantBetter extends GuiBaseContainer {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         GlStateManager.disableLighting();
         this.drawTexturedModalRect(this.guiLeft + 83, this.guiTop + 21, 212, 0, 28, 21);
-        this.drawTexturedModalRect(this.guiLeft + 83, this.guiTop + 51, 212, 0, 28, 21);
+        //        this.drawTexturedModalRect(this.guiLeft + 83, this.guiTop + 51, 212, 0, 28, 21);
       }
     }
   }
@@ -248,6 +251,17 @@ public class GuiMerchantBetter extends GuiBaseContainer {
         ModCyclic.proxy.renderItemOnGui(r.getItemToSell(), parent.itemRender, parent.fontRendererObj, x, y);
         GlStateManager.popMatrix();
         RenderHelper.enableGUIStandardItemLighting();//IMPORTANT: without this, any button with transparent item (glass) well have messed up shading
+        //TRADE_REDX_TEXTURE
+        if (r.isRecipeDisabled()) {
+          parent.mc.getTextureManager().bindTexture(TRADE_REDX_TEXTURE);
+          GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+          GlStateManager.disableLighting();
+          int sizeOfX = 30 / 2;//real physical texture is 30x30 pixels, and we just reduce it a touch
+          Gui.drawModalRectWithCustomSizedTexture(x - 18, y, 0, 0, sizeOfX, sizeOfX,
+              sizeOfX, sizeOfX);
+          //          this.drawTexturedModalRect(x,y, 0, 0, 30, 30);
+          //          this.drawTexturedModalRect(x,y, 212, 0, 28, 21);
+        }
       }
     }
   }
