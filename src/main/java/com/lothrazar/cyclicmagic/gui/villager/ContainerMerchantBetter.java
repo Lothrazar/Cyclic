@@ -10,7 +10,6 @@ import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
@@ -54,22 +53,20 @@ public class ContainerMerchantBetter extends ContainerBase {
     this.detectAndSendChanges();
   }
   public void setCareer(int c) {
-    //hopefully only client side
+    //should be get on server, and set on client (the desync fix)
     int cOld = this.getCareer();
     if (cOld == c) { return; }
     //http://export.mcpbot.bspk.rs/snapshot/1.10.2/ "snapshot_20161111"
     if (ReflectionRegistry.fieldCareer != null) {
       try {
-        //        int BEFORE = getCareer();
         ReflectionRegistry.fieldCareer.set(merchant, c);
-        //        int test = ReflectionRegistry.fieldCareer.getInt(merchant);
       }
       catch (Exception e) {
         e.printStackTrace();
       }
     }
     else {
-      ModCyclic.logger.error("reflection fail");
+      ModCyclic.logger.error("Cyclic reflection fail for Villager GUI - Set Career");
     }
   }
   public InventoryMerchantBetter getMerchantInventory() {
@@ -142,11 +139,11 @@ public class ContainerMerchantBetter extends ContainerBase {
     this.merchant.setCustomer((EntityPlayer) null);
     super.onContainerClosed(playerIn);
     if (!this.theWorld.isRemote) {
-      ItemStack itemstack = this.merchantInventory.removeStackFromSlot(0);
+      ItemStack itemstack = this.merchantInventory.removeStackFromSlot(SLOT_INPUT);
       if (itemstack != null) {
         playerIn.dropItem(itemstack, false);
       }
-      itemstack = this.merchantInventory.removeStackFromSlot(1);
+      itemstack = this.merchantInventory.removeStackFromSlot(SLOT_INPUTX);
       if (itemstack != null) {
         playerIn.dropItem(itemstack, false);
       }
@@ -160,7 +157,6 @@ public class ContainerMerchantBetter extends ContainerBase {
   public MerchantRecipeList getTrades() {
     return trades;
   }
-  //from slotmerchantresult
   public void doTrade(EntityPlayer player, int selectedMerchantRecipe) {
     MerchantRecipe trade = getTrades().get(selectedMerchantRecipe);
     if (trade.isRecipeDisabled()) { return; }

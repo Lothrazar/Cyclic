@@ -8,7 +8,6 @@ import com.lothrazar.cyclicmagic.net.PacketSyncVillagerToServer;
 import com.lothrazar.cyclicmagic.net.PacketVillagerTrade;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.resources.I18n;
@@ -39,7 +38,7 @@ public class GuiMerchantBetter extends GuiBaseContainer {
   private int selectedMerchantRecipe;
   private final ITextComponent chatComponent;
   private List<MerchantJumpButton> merchButtons = new ArrayList<MerchantJumpButton>();
-  private GuiButton autoBuy;
+  private ButtonVillagerPurchase autoBuy;
   public GuiMerchantBetter(InventoryPlayer ip, EntityVillager merch, InventoryMerchantBetter im, World worldIn, List<EntityVillager> all) {
     super(new ContainerMerchantBetter(ip, merch, im, worldIn, all));
     this.chatComponent = merch.getDisplayName();
@@ -63,7 +62,7 @@ public class GuiMerchantBetter extends GuiBaseContainer {
     this.nextButton.enabled = false;
     this.previousButton.enabled = false;
     btnId = 3;
-    autoBuy = new GuiButton(btnIdAuto, x+1, y + 40, 20, 20, "");
+    autoBuy = new ButtonVillagerPurchase(btnIdAuto, x+1, y + 40);
     this.buttonList.add(autoBuy);
     this.xJump = xMiddle + padding - 60 - 2 * padding;
     this.yLatestJump = yMiddle - 30;
@@ -159,8 +158,7 @@ public class GuiMerchantBetter extends GuiBaseContainer {
     int i = getMiddleX();
     int j = getMiddleY();
     this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
-    //    EntityVillager merchant = this.getMerchant();
-    MerchantRecipeList merchantrecipelist = getContainer().getTrades();//merchant.getRecipes(this.mc.thePlayer);
+    MerchantRecipeList merchantrecipelist = getContainer().getTrades();
     if (merchantrecipelist != null && !merchantrecipelist.isEmpty()) {
       if (this.selectedMerchantRecipe < 0 || this.selectedMerchantRecipe >= merchantrecipelist.size()) { return; }
       MerchantRecipe merchantrecipe = (MerchantRecipe) merchantrecipelist.get(this.selectedMerchantRecipe);
