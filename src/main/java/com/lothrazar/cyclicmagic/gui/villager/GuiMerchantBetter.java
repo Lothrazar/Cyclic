@@ -62,7 +62,7 @@ public class GuiMerchantBetter extends GuiBaseContainer {
     this.nextButton.enabled = false;
     this.previousButton.enabled = false;
     btnId = 3;
-    autoBuy = new ButtonVillagerPurchase(btnIdAuto, x+1, y + 40);
+    autoBuy = new ButtonVillagerPurchase(btnIdAuto, x + 1, y + 40);
     this.buttonList.add(autoBuy);
     this.xJump = xMiddle + padding - 60 - 2 * padding;
     this.yLatestJump = yMiddle - 30;
@@ -240,13 +240,14 @@ public class GuiMerchantBetter extends GuiBaseContainer {
         if (r == null) { return; }
         int x = this.xPosition + parent.padding;
         int y = this.yPosition + parent.padding / 2;
-        ModCyclic.proxy.renderItemOnScreen(r.getItemToBuy(), x, y);
+        GlStateManager.pushMatrix();
+        ModCyclic.proxy.renderItemOnGui(r.getItemToBuy(), parent.itemRender, parent.fontRendererObj, x, y);
         x += spacing;
-        if (r.getSecondItemToBuy() != null) {
-          ModCyclic.proxy.renderItemOnScreen(r.getSecondItemToBuy(), x, y);
-        }
+        ModCyclic.proxy.renderItemOnGui(r.getSecondItemToBuy(), parent.itemRender, parent.fontRendererObj, x, y);
         x += spacing;
-        ModCyclic.proxy.renderItemOnScreen(r.getItemToSell(), x, y);
+        ModCyclic.proxy.renderItemOnGui(r.getItemToSell(), parent.itemRender, parent.fontRendererObj, x, y);
+        GlStateManager.popMatrix();
+        RenderHelper.enableGUIStandardItemLighting();//IMPORTANT: without this, any button with transparent item (glass) well have messed up shading
       }
     }
   }
