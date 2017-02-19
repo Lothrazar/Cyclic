@@ -20,27 +20,27 @@ import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.World;
 
 public class ContainerMerchantBetter extends ContainerBaseMachine {
-  final static int SLOT_OUTPUT = 2;
-  final static int SLOT_INPUT = 0;
-  final static int SLOT_INPUTX = 1;
-  final static int HOTBAR_START = 30;
-  final static int HOTBAR_END = 38;
-  final static int INV_START = 3;
-  final static int INV_END = 29;
+//  final static int SLOT_OUTPUT = 2;
+//  final static int SLOT_INPUT = 0;
+//  final static int SLOT_INPUTX = 1;
+  final static int HOTBAR_START = 27;
+  final static int HOTBAR_END = 35;
+  final static int INV_START = 0;
+  final static int INV_END = 26;
   public final EntityVillager merchant;
   private MerchantRecipeList trades;
   private final InventoryMerchantBetter merchantInventory;
   private final World theWorld;
   EntityPlayer player;
   public ContainerMerchantBetter(InventoryPlayer playerInventory, EntityVillager m, InventoryMerchantBetter im, World worldIn, List<EntityVillager> all) {
+    this.playerOffsetX = 48;//for texture width 250, this becomes 48
     this.playerOffsetY = 130;
     this.merchant = m;
     this.theWorld = worldIn;
     this.merchantInventory = im;
     player = playerInventory.player;
     trades = merchant.getRecipes(player);
-    this.addSlotToContainer(new Slot(this.merchantInventory, 0, 36, 53));
-    this.addSlotToContainer(new Slot(this.merchantInventory, 1, 62, 53));
+
     bindPlayerInventory(playerInventory);
     this.detectAndSendChanges();
   }
@@ -97,16 +97,16 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
     if (slot != null && slot.getHasStack()) {
       ItemStack itemstack1 = slot.getStack();
       itemstack = itemstack1.copy();
-      if (index == SLOT_OUTPUT) {
-        if (!this.mergeItemStack(itemstack1, INV_START, HOTBAR_END + 1, true)) { return null; }
-        slot.onSlotChange(itemstack1, itemstack);
-      }
-      else if (index != SLOT_INPUT && index != SLOT_INPUTX) { //so it must be a player slot
-        if (!this.mergeItemStack(itemstack1, SLOT_INPUT, SLOT_INPUTX + 1, false)) { return null; }
-      }
-      else {//so it is 0,1
+//      if (index == SLOT_OUTPUT) {
+//        if (!this.mergeItemStack(itemstack1, INV_START, HOTBAR_END + 1, true)) { return null; }
+//        slot.onSlotChange(itemstack1, itemstack);
+//      }
+//      else if (index != SLOT_INPUT && index != SLOT_INPUTX) { //so it must be a player slot
+//        if (!this.mergeItemStack(itemstack1, SLOT_INPUT, SLOT_INPUTX + 1, false)) { return null; }
+//      }
+//      else {//so it is 0,1
         if (!this.mergeItemStack(itemstack1, INV_START, HOTBAR_END + 1, false)) { return null; }
-      }
+//      }
       //cleanup steps
       if (itemstack1.stackSize == 0) {
         slot.putStack((ItemStack) null);
@@ -123,16 +123,16 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
     super.onContainerClosed(playerIn);
     this.merchant.setCustomer((EntityPlayer) null);
     super.onContainerClosed(playerIn);
-    if (!this.theWorld.isRemote) {
-      ItemStack itemstack = this.merchantInventory.removeStackFromSlot(SLOT_INPUT);
-      if (itemstack != null) {
-        playerIn.dropItem(itemstack, false);
-      }
-      itemstack = this.merchantInventory.removeStackFromSlot(SLOT_INPUTX);
-      if (itemstack != null) {
-        playerIn.dropItem(itemstack, false);
-      }
-    }
+//    if (!this.theWorld.isRemote) {
+//      ItemStack itemstack = this.merchantInventory.removeStackFromSlot(SLOT_INPUT);
+//      if (itemstack != null) {
+//        playerIn.dropItem(itemstack, false);
+//      }
+//      itemstack = this.merchantInventory.removeStackFromSlot(SLOT_INPUTX);
+//      if (itemstack != null) {
+//        playerIn.dropItem(itemstack, false);
+//      }
+//    }
   }
   public void setTrades(MerchantRecipeList t) {
     this.trades = t;

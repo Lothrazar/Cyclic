@@ -18,7 +18,6 @@ import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.World;
@@ -27,21 +26,19 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class GuiMerchantBetter extends GuiBaseContainer {
-  static final int texture_width = 176;
+  static final int texture_width = 250;
   static final int texture_height = 212;
   public static final ResourceLocation GUI = new ResourceLocation(Const.MODID, Const.Res.folder + "villager.png");
-  int itemPadding = 4;
+  int itemPadding = 0;
   int btnRowCount = 6;
   private int yLatestJump;
   private int lastUnusedButtonId;
   private int xJump;
   EntityPlayer player;
   private int selectedMerchantRecipe;
-  private final ITextComponent chatComponent;
   private List<GuiButtonPurchase> merchButtons = new ArrayList<GuiButtonPurchase>();
   public GuiMerchantBetter(InventoryPlayer ip, EntityVillager merch, InventoryMerchantBetter im, World worldIn, List<EntityVillager> all) {
     super(new ContainerMerchantBetter(ip, merch, im, worldIn, all));
-    this.chatComponent = merch.getDisplayName();
     player = ip.player;
     this.xSize = texture_width;
     this.ySize = texture_height;
@@ -52,14 +49,14 @@ public class GuiMerchantBetter extends GuiBaseContainer {
   public void initGui() {
     super.initGui();
     //setup for the validate btns
-    this.xJump = this.guiLeft + Const.padding;
-    this.yLatestJump = getMiddleY() + Const.padding;
+    this.xJump = this.guiLeft;
+    this.yLatestJump = getMiddleY();
     this.lastUnusedButtonId = 1;
   }
   private void validateMerchantButtons() {
     MerchantRecipeList merchantrecipelist = getContainer().getTrades();
     int s = merchantrecipelist.size();
-    int h = 20, w = 60;
+    int h = 20, w = 56;
     int rowSize = w + itemPadding;
     int rowHeight = h + itemPadding;
     int y = this.yLatestJump;
@@ -75,16 +72,12 @@ public class GuiMerchantBetter extends GuiBaseContainer {
           xJump = xJump + rowSize + itemPadding / 4;
         }
         GuiButtonPurchase slotBtn = (GuiButtonPurchase) this.addButton(new GuiButtonPurchase(lastUnusedButtonId, this.xJump, y, w, h, i, this));
-        this.buttonList.add(slotBtn);
         merchButtons.add(slotBtn);
         lastUnusedButtonId++;
       }
     }
   }
-  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    String s = this.chatComponent.getUnformattedText();
-    this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
-  }
+  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {}
   public void updateScreen() {
     super.updateScreen();
     getContainer().setCurrentRecipeIndex(this.selectedMerchantRecipe);//try to sync between both containers
@@ -92,12 +85,13 @@ public class GuiMerchantBetter extends GuiBaseContainer {
   }
   protected void actionPerformed(GuiButton button) throws IOException {
     if (button instanceof GuiButtonPurchase) {
-      setAndTryPurchase(((GuiButtonPurchase) button).getRecipeIndex());
+      setAndTryPurchase(((GuiButtonPurchase) button));
     }
   }
-  private void setAndTryPurchase(int i) {
-    this.selectedMerchantRecipe = i;
+  private void setAndTryPurchase(GuiButtonPurchase button) {
+    this.selectedMerchantRecipe = button.getRecipeIndex();
     getContainer().setCurrentRecipeIndex(this.selectedMerchantRecipe);
+    System.out.println("PacketVillagerTrade purchase" + this.buttonList.size());
     ModCyclic.network.sendToServer(new PacketVillagerTrade(this.selectedMerchantRecipe));
   }
   @Override
@@ -134,8 +128,8 @@ public class GuiMerchantBetter extends GuiBaseContainer {
         if (merchantrecipelist == null) { return; }
         MerchantRecipe r = merchantrecipelist.get(recipeIndex);
         if (r == null) { return; }
-        int x = this.xPosition + parent.itemPadding;
-        int y = this.yPosition + parent.itemPadding / 2;
+        int x = this.xPosition + 2;
+        int y = this.yPosition + 1;
         GlStateManager.pushMatrix();
         ModCyclic.proxy.renderItemOnGui(r.getItemToBuy(), parent.itemRender, parent.fontRendererObj, x, y);
         x += spacing;
