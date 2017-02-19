@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.gui.villager;
 import java.util.List;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.gui.ContainerBase;
 import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.net.PacketSyncVillagerToClient;
 import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
@@ -14,7 +13,6 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
-import net.minecraft.inventory.SlotMerchantResult;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
 import net.minecraft.village.MerchantRecipe;
@@ -70,12 +68,10 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
     super.addListener(listener);
     listener.sendAllWindowProperties(this, this.merchantInventory);
   }
-
   public void detectAndSendChanges() {
     merchantInventory.markDirty();
     super.detectAndSendChanges();
-    if (player instanceof EntityPlayerMP
-        && player.openContainer instanceof ContainerMerchantBetter) {
+    if (player instanceof EntityPlayerMP && player.openContainer instanceof ContainerMerchantBetter) {
       MerchantRecipeList merchantrecipelist = this.merchant.getRecipes(player);
       EntityPlayerMP mp = (EntityPlayerMP) player;
       ModCyclic.network.sendTo(new PacketSyncVillagerToClient(this.getCareer(), merchantrecipelist), mp);
@@ -84,7 +80,6 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
   private int getCareer() {
     return UtilEntity.getVillagerCareer(merchant);
   }
-
   public void onCraftMatrixChanged(IInventory inventoryIn) {
     this.merchantInventory.resetRecipeAndSlots();
     super.onCraftMatrixChanged(inventoryIn);
@@ -192,7 +187,6 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
     }
     if (tradeSuccess) {
       ItemStack purchased = trade.getItemToSell().copy();
-    
       player.entityDropItem(purchased, 0);
       this.merchant.useRecipe(trade);
       player.addStat(StatList.TRADED_WITH_VILLAGER);
