@@ -133,11 +133,11 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   }
   private void tryAddToInventory(ItemStack itemstack) {
     for (int i = RODSLOT; i <= FISHSLOTS; i++) {
-      if (itemstack != null && itemstack.stackSize != 0) {
+      if (itemstack != null && itemstack.getMaxStackSize() != 0) {
         itemstack = tryMergeStackIntoSlot(itemstack, i);
       }
     }
-    if (itemstack != null && itemstack.stackSize != 0) { //FULL
+    if (itemstack != null && itemstack.getMaxStackSize() != 0) { //FULL
       UtilItemStack.dropItemStackInWorld(this.getWorld(), this.pos.down(), itemstack);
     }
   }
@@ -184,7 +184,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
       UtilItemStack.mergeItemsBetweenStacks(held, current);
     }
     if (success) {
-      if (held != null && held.stackSize == 0) {// so now we just fix if something is size zero
+      if (held != null && held.getMaxStackSize() == 0) {// so now we just fix if something is size zero
         held = null;
       }
       this.markDirty();
@@ -203,12 +203,12 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   public ItemStack decrStackSize(int index, int count) {
     ItemStack stack = getStackInSlot(index);
     if (stack != null) {
-      if (stack.stackSize <= count) {
+      if (stack.getMaxStackSize() <= count) {
         setInventorySlotContents(index, null);
       }
       else {
         stack = stack.splitStack(count);
-        if (stack.stackSize == 0) {
+        if (stack.getMaxStackSize() == 0) {
           setInventorySlotContents(index, null);
         }
       }
@@ -226,8 +226,8 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   @Override
   public void setInventorySlotContents(int index, ItemStack stack) {
     inv[index] = stack;
-    if (stack != null && stack.stackSize > getInventoryStackLimit()) {
-      stack.stackSize = getInventoryStackLimit();
+    if (stack != null && stack.getMaxStackSize() > getInventoryStackLimit()) {
+      stack.setCount(getInventoryStackLimit());
     }
   }
   @Override

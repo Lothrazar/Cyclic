@@ -28,10 +28,10 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
     return true;
   }
-  @Override
-  public boolean isUseableByPlayer(EntityPlayer player) {
-    return true;
-  }
+//  @Override
+//  public boolean isUseableByPlayer(EntityPlayer player) {
+//    return true;
+//  }
   @Override
   public int getField(int id) {
     return 0;
@@ -96,5 +96,13 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   public int[] getSlotsForFace(EnumFacing side) {
     // TODO Auto-generated method stub
     return new int[] {};
+  }
+  @Override
+  public boolean isEmpty() {
+    return false;
+  }
+  @Override
+  public boolean isUsableByPlayer(EntityPlayer player) {
+    return true;
   }
 }

@@ -14,6 +14,7 @@ import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -55,7 +56,7 @@ public class BlockScaffolding extends BlockBase implements IHasRecipe {
     return BlockRenderLayer.CUTOUT;
   }
   @Override
-  public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos) {
+  public AxisAlignedBB getBoundingBox(IBlockState blockState, IBlockAccess  worldIn, BlockPos pos) {
     return AABB;
   }
   @Override

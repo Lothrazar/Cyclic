@@ -27,9 +27,9 @@ public abstract class BlockBaseHasTile extends BlockBase {
     this.guiID = id;
   }
   @Override
-  public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+  public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     if (player.isSneaking()) { //|| world.isRemote
-      return super.onBlockActivated(world, pos, state, player, hand, heldItem, side, hitX, hitY, hitZ);
+      return super.onBlockActivated(world, pos, state, player, hand,  side, hitX, hitY, hitZ);
     }
     int x = pos.getX(), y = pos.getY(), z = pos.getZ();
     if (this.guiID > -1) {

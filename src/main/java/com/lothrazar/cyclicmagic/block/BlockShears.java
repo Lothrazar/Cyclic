@@ -10,6 +10,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IShearable;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -46,7 +47,7 @@ public class BlockShears extends BlockBase implements IHasRecipe {
     }
   }
   @Override
-  public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos) {
+  public AxisAlignedBB getBoundingBox(IBlockState blockState, IBlockAccess  worldIn, BlockPos pos) {
     return AABB;
   }
   @Override

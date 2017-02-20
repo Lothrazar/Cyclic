@@ -7,6 +7,7 @@ import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.config.Configuration;
@@ -37,8 +38,8 @@ public class ModCyclic {
   }
   public final static CreativeTabs TAB = new CreativeTabs(Const.MODID) {
     @Override
-    public Item getTabIconItem() {
-      return ModCyclic.instance.tabItem == null ? Items.DIAMOND : ModCyclic.instance.tabItem;
+    public ItemStack getTabIconItem() {
+      return ModCyclic.instance.tabItem == null ? new ItemStack(Items.DIAMOND) : new ItemStack(ModCyclic.instance.tabItem);
     }
   };
   @CapabilityInject(IPlayerExtendedProperties.class)
