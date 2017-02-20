@@ -5,6 +5,24 @@ import net.minecraft.block.Block;
 import net.minecraft.world.storage.loot.LootPool;
 
 public class UtilReflection {
+  public static Field getPrivateField(String name, String mapping,Class c){
+
+    try {
+
+      System.out.println("GET field of class "+c.getName());
+      for (Field f : c.getDeclaredFields()) {
+//field_175563_bv in my snapshot
+        if(f.getName().equals(name) ||f.getName().equals(mapping)){
+          f.setAccessible(true);
+          return f;
+        }
+      }
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
   /**
    * Return a property of obj that is of type T the first one found
    * 

@@ -46,13 +46,21 @@ public abstract class GuiBaseContainer extends GuiContainer {
       this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
     }
   }
+  public int getMiddleY() {
+    int yMiddle = (this.height - this.ySize) / 2;
+    return yMiddle;
+  }
+  public int getMiddleX() {
+    int xMiddle = (this.width - this.xSize) / 2;
+    return xMiddle;
+  }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     //    super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);// abstract
     GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
     this.mc.getTextureManager().bindTexture(getBackground());
-    int thisX = (this.width - this.xSize) / 2;
-    int thisY = (this.height - this.ySize) / 2;
+    int thisX = getMiddleX();
+    int thisY = getMiddleY();
     int u = 0, v = 0;
     Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, this.xSize, this.ySize, texture_width, texture_height);
   }
@@ -63,7 +71,8 @@ public abstract class GuiBaseContainer extends GuiContainer {
     for (int i = 0; i < buttonList.size(); i++) {
       if (buttonList.get(i).isMouseOver() && buttonList.get(i) instanceof ITooltipButton) {
         btn = (ITooltipButton) buttonList.get(i);
-        drawHoveringText(btn.getTooltips(), mouseX, mouseY, fontRendererObj);
+        if (btn.getTooltips() != null)
+          drawHoveringText(btn.getTooltips(), mouseX, mouseY, fontRendererObj);
         break;// cant hover on 2 at once
       }
     }
