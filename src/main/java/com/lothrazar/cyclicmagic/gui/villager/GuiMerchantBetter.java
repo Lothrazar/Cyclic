@@ -29,6 +29,7 @@ public class GuiMerchantBetter extends GuiBaseContainer {
   static final int texture_width = 250;
   static final int texture_height = 212;
   public static final ResourceLocation GUI = new ResourceLocation(Const.MODID, Const.Res.folder + "villager.png");
+  public static final ResourceLocation TRADE_REDX = new ResourceLocation(Const.MODID,  Const.Res.folder +"tradex.png");
   private int btnColCount = 4;
   private int yBtnStart;
   private int lastUnusedButtonId;
@@ -102,7 +103,6 @@ public class GuiMerchantBetter extends GuiBaseContainer {
    */
   @SideOnly(Side.CLIENT)
   static class GuiButtonPurchase extends GuiButton implements ITooltipButton {
-    private static final ResourceLocation TRADE_REDX_TEXTURE = new ResourceLocation(Const.MODID, "textures/gui/tradex.png");
     final static int rowCount = 4;
     final static int spacing = 18;
     private int recipeIndex;
@@ -133,11 +133,11 @@ public class GuiMerchantBetter extends GuiBaseContainer {
         GlStateManager.popMatrix();
         RenderHelper.enableGUIStandardItemLighting();//IMPORTANT: without this, any button with transparent item (glass) well have messed up shading
         if (r.isRecipeDisabled()) {
-          parent.mc.getTextureManager().bindTexture(TRADE_REDX_TEXTURE);
+          parent.mc.getTextureManager().bindTexture(TRADE_REDX);
           GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
           GlStateManager.disableLighting();
           int sizeOfX = 30 / 2;//real physical texture is 30x30 pixels, and we just reduce it a touch
-          Gui.drawModalRectWithCustomSizedTexture(x - 18, y, 0, 0, sizeOfX, sizeOfX,
+          Gui.drawModalRectWithCustomSizedTexture(x - 18, y + 1, 0, 0, sizeOfX, sizeOfX,
               sizeOfX, sizeOfX);
         }
       }
