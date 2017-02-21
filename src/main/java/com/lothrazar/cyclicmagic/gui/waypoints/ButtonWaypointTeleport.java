@@ -37,7 +37,7 @@ public class ButtonWaypointTeleport extends GuiButton implements ITooltipButton 
   public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
     boolean pressed = super.mousePressed(mc, mouseX, mouseY);
     if (pressed) {
-      EntityPlayer player = mc.thePlayer;
+      EntityPlayer player = mc.player;
       World world = player.getEntityWorld();
       UtilSound.playSound(player, player.getPosition(), SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT);
       // only spawn particles if they have enough xp

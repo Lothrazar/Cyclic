@@ -25,7 +25,7 @@ public class EventKeyInput {
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onKeyInput(InputEvent.KeyInputEvent event) {
-    EntityPlayerSP thePlayer = Minecraft.getMinecraft().thePlayer;
+    EntityPlayerSP thePlayer = Minecraft.getMinecraft().player;
     int slot = thePlayer.inventory.currentItem;
     if (ClientProxy.keyBarUp != null && ClientProxy.keyBarUp.isPressed()) {
       ModCyclic.network.sendToServer(new PacketMovePlayerHotbar(false));
@@ -64,6 +64,7 @@ public class EventKeyInput {
   @SubscribeEvent
   public void onGuiKeyboardEvent(GuiScreenEvent.KeyboardInputEvent.Pre event) {
     // only for player survival invo
+    EntityPlayerSP thePlayer = Minecraft.getMinecraft().player;
     if (event.getGui() instanceof GuiInventory) {
       if (ClientProxy.keyBarUp != null && isGuiKeyDown(ClientProxy.keyBarUp)) {
         ModCyclic.network.sendToServer(new PacketMovePlayerHotbar(true));
@@ -86,11 +87,11 @@ public class EventKeyInput {
       }
     }
     if (ClientProxy.keyExtraInvo != null && isGuiKeyDown(ClientProxy.keyExtraInvo) && event.getGui() instanceof GuiPlayerExtended) {
-      EntityPlayerSP thePlayer = Minecraft.getMinecraft().thePlayer;
+     
       thePlayer.closeScreen();
     }
     else if (ClientProxy.keyExtraCraftin != null && isGuiKeyDown(ClientProxy.keyExtraCraftin) && event.getGui() instanceof GuiPlayerExtWorkbench) {
-      EntityPlayerSP thePlayer = Minecraft.getMinecraft().thePlayer;
+     
       thePlayer.closeScreen();
     }
   }

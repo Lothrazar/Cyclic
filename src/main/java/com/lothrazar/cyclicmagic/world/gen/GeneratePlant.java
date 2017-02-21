@@ -26,7 +26,7 @@ public class GeneratePlant extends WorldGenerator {
       if (worldIn.isAirBlock(blockpos) && blockpos.getY() < 255) {//
         soil = worldIn.getBlockState(blockpos.down());
         if (soil.getBlock() == Blocks.GRASS || soil.getBlock() == Blocks.DIRT) {
-          worldIn.setBlockState(blockpos, this.crop.getStateFromMeta(MathHelper.getRandomIntegerInRange(rand, fullGrownMeta / 2 - 1, fullGrownMeta)), 2);
+          worldIn.setBlockState(blockpos, this.crop.getStateFromMeta(MathHelper.getInt(rand, fullGrownMeta / 2 - 1, fullGrownMeta)), 2);
           worldIn.setBlockState(blockpos.down(), Blocks.FARMLAND.getDefaultState(), 2);
         }
         //}

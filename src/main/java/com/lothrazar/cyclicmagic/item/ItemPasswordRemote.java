@@ -53,7 +53,8 @@ public class ItemPasswordRemote extends BaseItem implements IHasRecipe {
     }
   }
   @Override
-  public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World worldIn, EntityPlayer playerIn, EnumHand hand) {
+  public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
+    ItemStack stack = playerIn.getHeldItem(hand);
     boolean success = false;
     success = trigger(stack, worldIn, playerIn);
     if (success)

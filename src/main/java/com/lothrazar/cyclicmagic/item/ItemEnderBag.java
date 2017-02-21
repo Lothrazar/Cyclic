@@ -17,13 +17,13 @@ public class ItemEnderBag extends BaseItem implements IHasRecipe {
     this.setMaxStackSize(1);
   }
   @Override
-  public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World world, EntityPlayer player, EnumHand hand) {
+  public ActionResult<ItemStack> onItemRightClick( World world, EntityPlayer player, EnumHand hand) {
     player.displayGUIChest(player.getInventoryEnderChest());
     if (world.rand.nextDouble() > 0.5)
       UtilSound.playSound(player, SoundEvents.BLOCK_ENDERCHEST_OPEN);
     else
       UtilSound.playSound(player, SoundEvents.BLOCK_ENDERCHEST_CLOSE);
-    return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);
+    return super.onItemRightClick(world, player, hand);///return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);
   }
   @Override
   public void addRecipe() {

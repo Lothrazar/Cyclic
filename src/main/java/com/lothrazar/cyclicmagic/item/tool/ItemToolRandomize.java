@@ -94,8 +94,11 @@ public class ItemToolRandomize extends BaseTool implements IHasRecipe {
     }
   }
   @Override
-  public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-    if (player.getCooldownTracker().hasCooldown(stack.getItem())) { return super.onItemUse(stack, player, worldObj, pos, hand, side, hitX, hitY, hitZ); }
+  public EnumActionResult onItemUse( EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+ 
+    ItemStack stack = player.getHeldItem(hand);
+    
+    if (player.getCooldownTracker().hasCooldown(stack.getItem())) { return super.onItemUse( player, worldObj, pos, hand, side, hitX, hitY, hitZ); }
     //if we only run this on server, clients dont get the udpate
     //so run it only on client, let packet run the server
     if (worldObj.isRemote) {
@@ -103,7 +106,7 @@ public class ItemToolRandomize extends BaseTool implements IHasRecipe {
     }
     player.getCooldownTracker().setCooldown(this, cooldown);
     this.onUse(stack, player, worldObj, hand);
-    return super.onItemUse(stack, player, worldObj, pos, hand, side, hitX, hitY, hitZ);
+    return super.onItemUse( player, worldObj, pos, hand, side, hitX, hitY, hitZ);
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {

@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.List;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilShape;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -148,12 +149,12 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   public ItemStack decrStackSize(int index, int count) {
     ItemStack stack = getStackInSlot(index);
     if (stack != null) {
-      if (stack.stackSize <= count) {
+      if (stack.getCount() <= count) {
         setInventorySlotContents(index, null);
       }
       else {
         stack = stack.splitStack(count);
-        if (stack.stackSize == 0) {
+        if (stack.getCount() == 0) {
           setInventorySlotContents(index, null);
         }
       }
@@ -171,8 +172,8 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   @Override
   public void setInventorySlotContents(int index, ItemStack stack) {
     inv[index] = stack;
-    if (stack != null && stack.stackSize > getInventoryStackLimit()) {
-      stack.stackSize = getInventoryStackLimit();
+    if (stack != null && stack.getCount() > getInventoryStackLimit()) {
+      stack.setCount(getInventoryStackLimit());
     }
   }
   @Override
@@ -198,7 +199,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
       byte slot = tag.getByte(NBT_SLOT);
       if (slot >= 0 && slot < inv.length) {
-        inv[slot] = ItemStack.loadItemStackFromNBT(tag);
+        inv[slot] = UtilNBT.itemFromNBT(tag);
       }
     }
   }

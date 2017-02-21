@@ -61,7 +61,7 @@ public class InventoryMerchantBetter extends InventoryMerchant implements IInven
   }
   public void setInventorySlotContents(int index, @Nullable ItemStack stack) {
     this.theInventory[index] = stack;
-    if (stack != null && stack.stackSize > this.getInventoryStackLimit()) {
+    if (stack != null && stack.getCount() > this.getInventoryStackLimit()) {
       stack.stackSize = this.getInventoryStackLimit();
     }
     if (this.inventoryResetNeededOnSlotChange(index)) {

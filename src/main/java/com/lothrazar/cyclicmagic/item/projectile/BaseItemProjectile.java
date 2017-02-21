@@ -16,9 +16,10 @@ import net.minecraft.world.World;
 
 public abstract class BaseItemProjectile extends BaseItem {
   @Override
-  public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
-    onItemThrow(itemStackIn, worldIn, playerIn, hand);
-    return new ActionResult<ItemStack>(EnumActionResult.PASS, itemStackIn);
+  public ActionResult<ItemStack> onItemRightClick( World worldIn, EntityPlayer playerIn, EnumHand hand) {
+    ItemStack h = playerIn.getHeldItem(hand);
+    onItemThrow(h, worldIn, playerIn, hand);
+    return new ActionResult<ItemStack>(EnumActionResult.PASS, h);
   }
   abstract void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand);
   public abstract EntityThrowableDispensable getThrownEntity(World world, double x, double y, double z);//, double accelX, double accelY, double accelZ
@@ -30,7 +31,7 @@ public abstract class BaseItemProjectile extends BaseItem {
       // func_184538_a
       //zero pitch offset, meaning match the players existing. 1.0 at end ins inn
       thing.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, PITCHOFFSET, velocity, INACCURACY_DEFAULT);
-      world.spawnEntityInWorld(thing);
+      world.spawnEntity(thing);
     }
     player.swingArm(hand);
     BlockPos pos = player.getPosition();

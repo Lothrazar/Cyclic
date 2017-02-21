@@ -61,7 +61,7 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
           // public boolean onBlockActivated(World worldIn, BlockPos pos,
           // IBlockState state, EntityPlayer playerIn, EnumHand hand, ItemStack
           // heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
-          stuffBehind.getBlock().onBlockActivated(worldObj, posBehind, stuffBehind, entityPlayer, event.getHand(), held, event.getFace(), 0, 0, 0);
+          stuffBehind.getBlock().onBlockActivated(worldObj, posBehind, stuffBehind, entityPlayer, event.getHand(), event.getFace(), 0, 0, 0);
           // stop the normal item thing happening
           event.setUseItem(net.minecraftforge.fml.common.eventhandler.Event.Result.DENY);
         }
@@ -97,7 +97,7 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
         BlockPos posBehind = pos.offset(face.getOpposite()).down();
         IBlockState stuffBehind = worldObj.getBlockState(posBehind);
         if (stuffBehind != null && stuffBehind.getBlock() != null && worldObj.getTileEntity(posBehind) != null) {
-          stuffBehind.getBlock().onBlockActivated(worldObj, posBehind, stuffBehind, entityPlayer, event.getHand(), held, face, 0, 0, 0);
+          stuffBehind.getBlock().onBlockActivated(worldObj, posBehind, stuffBehind, entityPlayer, event.getHand(),  face, 0, 0, 0);
           event.setCanceled(true);
         }
       }
@@ -144,7 +144,7 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
           //move up faster without 'w'
           if (player.rotationPitch < LADDER_ROTATIONLIMIT) {
             //even bigger to counter gravity
-            player.moveEntity(0, LADDER_SPEED, 0);
+            player.addVelocity(0, LADDER_SPEED, 0);
           }
         }
       }

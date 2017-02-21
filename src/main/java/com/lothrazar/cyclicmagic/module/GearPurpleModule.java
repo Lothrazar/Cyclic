@@ -9,6 +9,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
@@ -44,7 +45,7 @@ public class GearPurpleModule extends BaseEventModule implements IHasConfig {
         mimicArmor.getEnchantability(),
         mimicArmor.getSoundEvent(),
         mimicArmor.getToughness());
-    MaterialRegistry.powerArmorMaterial.customCraftingMaterial = Item.getItemFromBlock(Blocks.OBSIDIAN);
+    MaterialRegistry.powerArmorMaterial.repairMaterial = new ItemStack(Blocks.OBSIDIAN);
   }
   @Override
   public void syncConfig(Configuration config) {

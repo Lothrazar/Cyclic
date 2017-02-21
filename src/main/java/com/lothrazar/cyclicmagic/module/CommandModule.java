@@ -114,7 +114,7 @@ public class CommandModule extends BaseModule implements IHasConfig {
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onRenderTextOverlay(RenderGameOverlayEvent.Text event) {
-    IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(Minecraft.getMinecraft().thePlayer);
+    IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(Minecraft.getMinecraft().player);
     if (props != null && props.getTODO() != null && props.getTODO().length() > 0) {
       event.getRight().add(props.getTODO());
     }

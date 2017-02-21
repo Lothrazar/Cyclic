@@ -25,8 +25,8 @@ public class ButtonTabToggleInventory extends GuiButton {// implements ITooltipB
         ModCyclic.network.sendToServer(new PacketOpenExtendedInventory());
       }
       else {//if (this.gui instanceof GuiPlayerExtended || this.gui instanceof GuiCrafting) {
-        this.gui.mc.displayGuiScreen(new GuiInventory(gui.mc.thePlayer));
-        ModCyclic.network.sendToServer(new PacketOpenNormalInventory(this.gui.mc.thePlayer));
+        this.gui.mc.displayGuiScreen(new GuiInventory(gui.mc.player));
+        ModCyclic.network.sendToServer(new PacketOpenNormalInventory(this.gui.mc.player));
       }
     }
     return pressed;

@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.gui.playerworkbench;
 import java.lang.ref.WeakReference;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
@@ -51,7 +52,7 @@ public class InventoryPlayerExtWorkbench extends InventoryCrafting {
     //    return super.decrStackSize(index, count);
     if (this.stackList[index] != null) {
       ItemStack itemstack;
-      if (this.stackList[index].stackSize <= count) {
+      if (this.stackList[index].getCount() <= count) {
         itemstack = this.stackList[index];
         this.stackList[index] = null;
         this.eventHandler.onCraftMatrixChanged(this);
@@ -59,7 +60,7 @@ public class InventoryPlayerExtWorkbench extends InventoryCrafting {
       }
       else {
         itemstack = this.stackList[index].splitStack(count);
-        if (this.stackList[index].stackSize == 0) {
+        if (this.stackList[index].getCount() == 0) {
           this.stackList[index] = null;
         }
         this.eventHandler.onCraftMatrixChanged(this);
@@ -93,7 +94,7 @@ public class InventoryPlayerExtWorkbench extends InventoryCrafting {
     catch (Exception e) {}
   }
   @Override
-  public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer) {
+  public boolean isUsableByPlayer(EntityPlayer par1EntityPlayer) {
     return true;
   }
   @Override
@@ -128,7 +129,7 @@ public class InventoryPlayerExtWorkbench extends InventoryCrafting {
     for (int i = 0; i < tagList.tagCount(); ++i) {
       NBTTagCompound nbttagcompound = (NBTTagCompound) tagList.getCompoundTagAt(i);
       int j = nbttagcompound.getByte("Slot") & 255;
-      ItemStack itemstack = ItemStack.loadItemStackFromNBT(nbttagcompound);
+      ItemStack itemstack = UtilNBT.itemFromNBT(nbttagcompound);
       if (itemstack != null) {
         this.stackList[j] = itemstack;
       }

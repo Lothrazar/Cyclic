@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.block.Block;
@@ -243,7 +244,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
       NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
       byte slot = tag.getByte(NBT_SLOT);
       if (slot >= 0 && slot < inv.length) {
-        inv[slot] = ItemStack.loadItemStackFromNBT(tag);
+        inv[slot] = UtilNBT.itemFromNBT(tag);
       }
     }
   }

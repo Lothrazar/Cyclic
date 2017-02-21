@@ -53,14 +53,14 @@ public class ContainerFakeWorkbench extends ContainerWorkbench {
         if (!mergeItemStack(var5, 10, 37, false)) { return null; }
       }
       else if (!mergeItemStack(var5, 10, 46, false)) { return null; }
-      if (var5.stackSize == 0) {
+      if (var5.getCount() == 0) {
         var4.putStack((ItemStack) null);
       }
       else {
         var4.onSlotChanged();
       }
-      if (var5.stackSize == var3.stackSize) { return null; }
-      var4.onPickupFromSlot(par1EntityPlayer, var5);
+      if (var5.getCount() == var3.getCount()) { return null; }
+      var4.onTake(par1EntityPlayer, var5);
     }
     return var3;
   }

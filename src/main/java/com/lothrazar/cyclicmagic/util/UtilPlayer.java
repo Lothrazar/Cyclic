@@ -115,7 +115,7 @@ public class UtilPlayer {
   }
   public static void decrStackSize(EntityPlayer entityPlayer, EnumHand hand) {
     if (entityPlayer.capabilities.isCreativeMode == false) {
-      entityPlayer.getHeldItem(hand).stackSize--;
+      entityPlayer.getHeldItem(hand).shrink(1);
     }
   }
   public static boolean hasValidOpenContainer(EntityPlayer p) {
@@ -140,7 +140,8 @@ public class UtilPlayer {
     }
   }
   public static Item getItemArmorSlot(EntityPlayer player, EntityEquipmentSlot slot) {
-    ItemStack inslot = player.inventory.armorInventory[slot.getIndex()];
+    ItemStack inslot = player.inventory.armorInventory.get(slot.getIndex());
+//    ItemStack inslot = player.inventory.armorInventory[slot.getIndex()];
     Item item = (inslot == null) ? null : inslot.getItem();
     return item;
   }

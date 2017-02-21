@@ -14,13 +14,13 @@ import net.minecraft.world.World;
 @SuppressWarnings("deprecation")
 public class UtilChat {
   public static void addChatMessage(EntityPlayer player, String text) {
-    player.addChatMessage(new TextComponentTranslation(lang(text)));
+    player.sendMessage(new TextComponentTranslation(lang(text)));
   }
   public static void addChatMessage(ICommandSender sender, String text) {
-    sender.addChatMessage(new TextComponentTranslation(lang(text)));
+    sender.sendMessage(new TextComponentTranslation(lang(text)));
   }
   public static void addChatMessage(EntityPlayer player, ITextComponent textComponentTranslation) {
-    player.addChatMessage(textComponentTranslation);
+    player.sendMessage(textComponentTranslation);
   }
   public static String blockPosToString(BlockPos pos) {
     return pos.getX() + ", " + pos.getY() + ", " + pos.getZ();
@@ -31,7 +31,7 @@ public class UtilChat {
   }
   public static void addChatMessage(World worldObj, ITextComponent textComponentTranslation) {
     if (worldObj.getMinecraftServer() != null) {
-      worldObj.getMinecraftServer().addChatMessage(textComponentTranslation);
+      worldObj.getMinecraftServer().sendMessage(textComponentTranslation);
     }
   }
   public static void addChatMessage(World worldObj, String s) {

@@ -19,7 +19,7 @@ public class UtilPlantable {
         if (canSustainPlant) {
           if (world.isAirBlock(posForPlant)) {
             world.setBlockState(posForPlant, crop);
-            stack.stackSize--;
+            stack.shrink(1);
             return stack;
           }
           else {

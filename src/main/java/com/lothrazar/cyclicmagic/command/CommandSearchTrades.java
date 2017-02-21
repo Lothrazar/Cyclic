@@ -21,15 +21,15 @@ public class CommandSearchTrades extends BaseCommand implements ICommand {
     super(name, op);
   }
   @Override
-  public String getCommandUsage(ICommandSender ic) {
-    return "/" + getCommandName() + " <item name> <qty>";
+  public String getUsage(ICommandSender ic) {
+    return "/" + getName() + " <item name> <qty>";
   }
   @Override
   public void execute(MinecraftServer server, ICommandSender ic, String[] args) {
     if (ic instanceof EntityPlayer == false) { return; }
     EntityPlayer p = (EntityPlayer) ic;
     if (args.length == 0) {
-      UtilChat.addChatMessage(p, getCommandUsage(ic));
+      UtilChat.addChatMessage(p, getUsage(ic));
       return;
     }
     String searching = args[0].toLowerCase();
@@ -84,19 +84,19 @@ public class CommandSearchTrades extends BaseCommand implements ICommand {
         // match to any of the three possible items
         // only match quantity if they enter one
         if (buy.getDisplayName().toLowerCase().contains(searching)) {
-          if (searchingQty < 0 || searchingQty == buy.stackSize)
+          if (searchingQty < 0 || searchingQty == buy.getCount())
             match = true;
         }
         if (buySecond != null && buySecond.getDisplayName().contains(searching)) {
-          if (searchingQty < 0 || searchingQty == buySecond.stackSize)
+          if (searchingQty < 0 || searchingQty == buySecond.getCount())
             match = true;
         }
         if (sell.getDisplayName().contains(searching)) {
-          if (searchingQty < 0 || searchingQty == sell.stackSize)
+          if (searchingQty < 0 || searchingQty == sell.getCount())
             match = true;
         }
         if (match) {
-          m = disabled + UtilChat.blockPosToString(v_entity.getPosition()) + " " + sell.stackSize + " " + sell.getDisplayName() + " :: " + buy.stackSize + " " + buy.getDisplayName();
+          m = disabled + UtilChat.blockPosToString(v_entity.getPosition()) + " " + sell.getCount() + " " + sell.getDisplayName() + " :: " + buy.getCount() + " " + buy.getDisplayName();
           messages.add(m);
           /*
            * ModCommands.spawnParticlePacketByID(((Entity)villagers.get(i)).

@@ -119,22 +119,22 @@ public class ContainerPlayerExtended extends ContainerBase {
       else if (hotbarStart <= iSlot && iSlot < hotbarEnd) {
         if (!this.mergeItemStack(copy, topStart, topEnd, false)) { return null; }
       }
-      if (copy.stackSize == 0) {
+      if (copy.getCount() == 0) {
         slot.putStack((ItemStack) null);
       }
       else {
         slot.onSlotChanged();
       }
-      if (copy.stackSize == itemstack.stackSize) { return null; }
-      slot.onPickupFromSlot(par1EntityPlayer, copy);
+      if (copy.getCount() == itemstack.getCount()) { return null; }
+      slot.onTake(par1EntityPlayer, copy);
     }
     return itemstack;
   }
-  @Override
-  public void putStacksInSlots(ItemStack[] s) {
-    inventory.blockEvents = true;
-    super.putStacksInSlots(s);
-  }
+//  @Override
+//  public void putStacksInSlots(ItemStack[] s) {
+//    inventory.blockEvents = true;
+//    super.putStacksInSlots(s);
+//  }
   protected boolean mergeItemStack(ItemStack par1ItemStack, int par2, int par3, boolean par4, Slot ss) {
     boolean flag1 = false;
     int k = par2;
@@ -144,22 +144,22 @@ public class ContainerPlayerExtended extends ContainerBase {
     Slot slot;
     ItemStack itemstack1;
     if (par1ItemStack.isStackable()) {
-      while (par1ItemStack.stackSize > 0 && (!par4 && k < par3 || par4 && k >= par2)) {
+      while (par1ItemStack.getCount() > 0 && (!par4 && k < par3 || par4 && k >= par2)) {
         slot = (Slot) this.inventorySlots.get(k);
         itemstack1 = slot.getStack();
         if (itemstack1 != null && itemstack1.getItem() == par1ItemStack.getItem() && (!par1ItemStack.getHasSubtypes() || par1ItemStack.getItemDamage() == itemstack1.getItemDamage()) && ItemStack.areItemStackTagsEqual(par1ItemStack, itemstack1)) {
-          int l = itemstack1.stackSize + par1ItemStack.stackSize;
+          int l = itemstack1.getCount() + par1ItemStack.getCount();
           if (l <= par1ItemStack.getMaxStackSize()) {
             // if (ss instanceof SlotBauble) unequipBauble(par1ItemStack);
-            par1ItemStack.stackSize = 0;
-            itemstack1.stackSize = l;
+            par1ItemStack.setCount(0);
+            itemstack1.setCount(l);
             slot.onSlotChanged();
             flag1 = true;
           }
-          else if (itemstack1.stackSize < par1ItemStack.getMaxStackSize()) {
+          else if (itemstack1.getCount() < par1ItemStack.getMaxStackSize()) {
             // if (ss instanceof SlotBauble) unequipBauble(par1ItemStack);
-            par1ItemStack.stackSize -= par1ItemStack.getMaxStackSize() - itemstack1.stackSize;
-            itemstack1.stackSize = par1ItemStack.getMaxStackSize();
+            par1ItemStack.setCount(par1ItemStack.getCount() - par1ItemStack.getMaxStackSize() - itemstack1.getCount());
+            itemstack1.setCount(par1ItemStack.getMaxStackSize());
             slot.onSlotChanged();
             flag1 = true;
           }
@@ -172,7 +172,7 @@ public class ContainerPlayerExtended extends ContainerBase {
         }
       }
     }
-    if (par1ItemStack.stackSize > 0) {
+    if (par1ItemStack.getCount()  > 0) {
       if (par4) {
         k = par3 - 1;
       }
@@ -186,7 +186,7 @@ public class ContainerPlayerExtended extends ContainerBase {
           // if (ss instanceof SlotBauble) unequipBauble(par1ItemStack);
           slot.putStack(par1ItemStack.copy());
           slot.onSlotChanged();
-          par1ItemStack.stackSize = 0;
+          par1ItemStack.setCount(0);
           flag1 = true;
           break;
         }

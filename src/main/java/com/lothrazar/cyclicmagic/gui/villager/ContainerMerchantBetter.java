@@ -103,14 +103,14 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
         if (!this.mergeItemStack(itemstack1, INV_START, HOTBAR_END + 1, false)) { return null; }
 //      }
       //cleanup steps
-      if (itemstack1.stackSize == 0) {
+      if (itemstack1.getCount() == 0) {
         slot.putStack((ItemStack) null);
       }
       else {
         slot.onSlotChanged();
       }
-      if (itemstack1.stackSize == itemstack.stackSize) { return null; }
-      slot.onPickupFromSlot(playerIn, itemstack1);
+      if (itemstack1.getCount() == itemstack.getCount()) { return null; }
+      slot.onTake(playerIn, itemstack1);
     }
     return itemstack;
   }
@@ -153,12 +153,12 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
         continue;
       }
       if (firstItem == null &&
-          iStack.getItem() == itemToBuy.getItem() && iStack.stackSize >= itemToBuy.stackSize) {
+          iStack.getItem() == itemToBuy.getItem() && iStack.getCount() >= itemToBuy.getCount()) {
         firstItem = iStack;
         firstSlot = i;
       }
       if (secondItem == null && itemSecondBuy != null) {
-        if (itemSecondBuy.getItem() == iStack.getItem() && iStack.stackSize >= itemSecondBuy.stackSize) {
+        if (itemSecondBuy.getItem() == iStack.getItem() && iStack.getCount() >= itemSecondBuy.getCount()) {
           secondItem = iStack;
           secondSlot = i;
         }
@@ -171,12 +171,15 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
     boolean tradeSuccess = false;
     if (canTrade) {
       if (secondItem != null) {
-        firstItem.stackSize -= itemToBuy.stackSize;
-        secondItem.stackSize -= itemSecondBuy.stackSize;
+//        firstItem.stackSize -= itemToBuy.stackSize;
+//        secondItem.stackSize -= itemSecondBuy.stackSize;
+        firstItem.shrink(itemToBuy.getCount());
+        secondItem.shrink(itemSecondBuy.getCount());
         tradeSuccess = true;
       }
       if (itemSecondBuy == null && secondItem == null) {
-        firstItem.stackSize -= itemToBuy.stackSize;
+//        firstItem.stackSize -= itemToBuy.stackSize;
+        firstItem.shrink(  itemToBuy.getCount());
         tradeSuccess = true;
       }
     }
@@ -185,10 +188,10 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
       player.entityDropItem(purchased, 0);
       this.merchant.useRecipe(trade);
       player.addStat(StatList.TRADED_WITH_VILLAGER);
-      if (firstItem.stackSize == 0) {
+      if (firstItem.getCount() == 0) {
         player.inventory.setInventorySlotContents(firstSlot, null);
       }
-      if (secondItem != null && secondItem.stackSize == 0) {
+      if (secondItem != null && secondItem.getCount() == 0) {
         player.inventory.setInventorySlotContents(secondSlot, null);
       }
     }

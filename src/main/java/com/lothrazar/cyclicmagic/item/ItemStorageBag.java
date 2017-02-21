@@ -148,13 +148,13 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
     return wand;
   }
   @Override
-  public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World world, EntityPlayer player, EnumHand hand) {
+  public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
     if (!world.isRemote) {
       BlockPos pos = player.getPosition();
       int x = pos.getX(), y = pos.getY(), z = pos.getZ();
       player.openGui(ModCyclic.instance, ModGuiHandler.GUI_INDEX_STORAGE, world, x, y, z);
     }
-    return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);
+    return super.onItemRightClick(world, player, hand);
   }
   public static ItemStack getPlayerBagIfHeld(EntityPlayer player) {
     ItemStack wand = player.getHeldItemMainhand();

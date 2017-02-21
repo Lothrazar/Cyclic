@@ -14,7 +14,7 @@ public class ButtonClose extends GuiButton {
   public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
     boolean pressed = super.mousePressed(mc, mouseX, mouseY);
     if (pressed) {
-      mc.thePlayer.closeScreen();
+      mc.player.closeScreen();
     }
     return pressed;
   }

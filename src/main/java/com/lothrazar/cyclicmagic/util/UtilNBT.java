@@ -86,7 +86,7 @@ public class UtilNBT {
     for (int i = 0; i < items.tagCount(); ++i) {
       // tagAt(int) has changed to getCompoundTagAt(int)
       NBTTagCompound item = items.getCompoundTagAt(i);
-      stack = ItemStack.loadItemStackFromNBT(item);
+      stack = UtilNBT.itemFromNBT(item);
       slot = item.getInteger("slot");
       // list.add(ItemStack.loadItemStackFromNBT(item));
       invo.setInventorySlotContents(slot, stack);
@@ -99,7 +99,7 @@ public class UtilNBT {
     for (int i = 0; i < invo.getSizeInventory(); i++) {
       // zeroes to avoid nulls, and signify nothing goes there
       chestItem = invo.getStackInSlot(i);
-      if (chestItem == null || chestItem.stackSize == 0) {
+      if (chestItem == null || chestItem.getCount() == 0) {
         continue;
       } // not an error; empty chest slot
       itemTag = chestItem.writeToNBT(new NBTTagCompound());
@@ -126,7 +126,7 @@ public class UtilNBT {
     for (int i = 0; i < items.tagCount(); ++i) {
       // tagAt(int) has changed to getCompoundTagAt(int)
       NBTTagCompound item = items.getCompoundTagAt(i);
-      list.add(ItemStack.loadItemStackFromNBT(item));
+      list.add(UtilNBT.itemFromNBT(item));
     }
     return list;
   }
@@ -165,5 +165,8 @@ public class UtilNBT {
     }
     skull.getTagCompound().setString(Const.SkullOwner, displayNameString);
     return skull;
+  }
+  public static ItemStack itemFromNBT(NBTTagCompound tag) {
+    return new ItemStack(tag);
   }
 }

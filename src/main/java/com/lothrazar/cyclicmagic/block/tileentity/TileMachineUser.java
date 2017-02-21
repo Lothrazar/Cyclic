@@ -5,6 +5,7 @@ import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -103,7 +104,7 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
                   ent != null && ent.isDead == false
                   && fakePlayer != null && fakePlayer.get() != null) {
                 validateTool(); //recheck this at every step so we dont go negative
-                fakePlayer.get().interact(ent, maybeTool, EnumHand.MAIN_HAND);
+                fakePlayer.get().interactOn(ent,  EnumHand.MAIN_HAND);
               }
             }
           }
@@ -117,7 +118,7 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
               //THANKS TO FORUMS http://www.minecraftforge.net/forum/index.php?topic=43152.0
               IAttributeInstance damage = new AttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
               if (held != null)
-                for (AttributeModifier modifier : held.getAttributeModifiers(EntityEquipmentSlot.MAINHAND).get(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName()))
+                for (AttributeModifier modifier : held.getAttributeModifiers(EntityEquipmentSlot.MAINHAND).get(SharedMonsterAttributes.ATTACK_DAMAGE.getName()))
                 damage.applyModifier(modifier);
               float dmgVal = (float) damage.getAttributeValue();
               float f1 = EnchantmentHelper.getModifierForCreature(held, (ent).getCreatureAttribute());
@@ -137,7 +138,7 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
    */
   private void validateTool() {
     ItemStack maybeTool = getStackInSlot(toolSlot);
-    if (maybeTool != null && maybeTool.stackSize < 0) {
+    if (maybeTool != null && maybeTool.getCount() < 0) {
       maybeTool = null;
       fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, null);
       inv[toolSlot] = null;
@@ -147,7 +148,7 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
     ItemStack maybeTool = getStackInSlot(toolSlot);
     if (maybeTool != null) {
       //do we need to make it null
-      if (maybeTool.stackSize <= 0) {
+      if (maybeTool.getCount() <= 0) {
         maybeTool = null;
       }
     }
@@ -211,7 +212,7 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
       NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
       byte slot = tag.getByte(NBT_SLOT);
       if (slot >= 0 && slot < inv.length) {
-        inv[slot] = ItemStack.loadItemStackFromNBT(tag);
+        inv[slot] = UtilNBT.itemFromNBT(tag);
       }
     }
   }
@@ -227,12 +228,12 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
   public ItemStack decrStackSize(int index, int count) {
     ItemStack stack = getStackInSlot(index);
     if (stack != null) {
-      if (stack.stackSize <= count) {
+      if (stack.getCount() <= count) {
         setInventorySlotContents(index, null);
       }
       else {
         stack = stack.splitStack(count);
-        if (stack.stackSize == 0) {
+        if (stack.getCount() == 0) {
           setInventorySlotContents(index, null);
         }
       }
@@ -250,8 +251,8 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
   @Override
   public void setInventorySlotContents(int index, ItemStack stack) {
     inv[index] = stack;
-    if (stack != null && stack.stackSize > getInventoryStackLimit()) {
-      stack.stackSize = getInventoryStackLimit();
+    if (stack != null && stack.getCount() > getInventoryStackLimit()) {
+      stack.setCount( getInventoryStackLimit());
     }
   }
   @Override

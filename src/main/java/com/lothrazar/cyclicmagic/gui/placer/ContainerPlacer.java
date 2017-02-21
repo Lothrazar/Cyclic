@@ -40,14 +40,14 @@ public class ContainerPlacer extends ContainerBaseMachine {
       // places it into the tileEntity is possible since its in the player
       // inventory
       else if (!this.mergeItemStack(stackInSlot, 0, tileEntity.getSizeInventory(), false)) { return null; }
-      if (stackInSlot.stackSize == 0) {
+      if (stackInSlot.getCount() == 0) {
         slotObject.putStack(null);
       }
       else {
         slotObject.onSlotChanged();
       }
-      if (stackInSlot.stackSize == stack.stackSize) { return null; }
-      slotObject.onPickupFromSlot(player, stackInSlot);
+      if (stackInSlot.getCount() == stack.getCount()) { return null; }
+      slotObject.onTake(player, stackInSlot);
     }
     return stack;
   }

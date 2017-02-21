@@ -92,20 +92,18 @@ public class UtilInventoryTransfer {
         if (UtilItemStack.canMerge(playerItem, chestItem)) {
           // same item, including damage (block state)
           chestMax = chestItem.getItem().getItemStackLimit(chestItem);
-          room = chestMax - chestItem.stackSize;
+          room = chestMax - chestItem.getCount();
           if (room <= 0) {
             continue;
           } // no room, check the next spot
           // so if i have 30 room, and 28 items, i deposit 28.
           // or if i have 30 room and 38 items, i deposit 30
-          toDeposit = Math.min(playerItem.stackSize, room);
-          chestItem.stackSize += toDeposit;
+          toDeposit = Math.min(playerItem.getCount(), room);
+          chestItem.grow(toDeposit);
           chest.setInventorySlotContents(islotChest, chestItem);
-          playerItem.stackSize -= toDeposit;
-          if (playerItem.stackSize <= 0) // because of calculations
-          // above, should
-          // not be below zero
-          {
+          playerItem.shrink(toDeposit);
+          if (playerItem.getCount() <= 0) {// because of calculations  above, should  not be below zero
+          
             // item stacks with zero count do not destroy
             // themselves, they show
             // up and have unexpected behavior in game so set to
@@ -145,12 +143,12 @@ public class UtilInventoryTransfer {
         } // empty inventory slot
         if (UtilItemStack.canMerge(playerItem, chestItem)) {
           invMax = playerItem.getItem().getItemStackLimit(playerItem);
-          room = invMax - playerItem.stackSize;
+          room = invMax - playerItem.getCount();
           if (room <= 0) {
             continue;
           } // no room, check the next spot
-          toDeposit = Math.min(chestItem.stackSize, room);
-          if (restockLeaveOne && chestItem.stackSize - toDeposit == 0) {
+          toDeposit = Math.min(chestItem.getCount(), room);
+          if (restockLeaveOne && chestItem.getCount() - toDeposit == 0) {
             // they decided in the config that leaving one behind is better
             toDeposit--;
             if (toDeposit == 0) {
@@ -158,12 +156,12 @@ public class UtilInventoryTransfer {
             } // dont do nothing
           }
           // add to player
-          playerItem.stackSize += toDeposit;
+          playerItem.grow(toDeposit);
           player.inventory.setInventorySlotContents(islotInv, playerItem);
           // remove from chest/invo
-          chestItem.stackSize -= toDeposit;
-          if (chestItem.stackSize <= 0) {
-            chest.setInventorySlotContents(islotChest, null);
+          chestItem.shrink(toDeposit);
+          if (chestItem.getCount() <= 0) {
+            chest.setInventorySlotContents(islotChest, ItemStack.EMPTY);
           }
           else {
             chest.setInventorySlotContents(islotChest, chestItem);
@@ -195,12 +193,12 @@ public class UtilInventoryTransfer {
           current = null;
         }
         else if (UtilItemStack.canMerge(chestStack, current)) {
-          int space = chestStack.getMaxStackSize() - chestStack.stackSize;
-          int toDeposit = Math.min(space, current.stackSize);
+          int space = chestStack.getMaxStackSize() - chestStack.getCount();
+          int toDeposit = Math.min(space, current.getCount());
           if (toDeposit > 0) {
-            current.stackSize -= toDeposit;
-            chestStack.stackSize += toDeposit;
-            if (current.stackSize == 0) {
+            current.shrink(toDeposit);
+            chestStack.grow(toDeposit);
+            if (current.getCount() == 0) {
               current = null;
             }
           }
@@ -221,7 +219,7 @@ public class UtilInventoryTransfer {
     int itemsMoved = 0;
     for (int islotStacks = 0; islotStacks < stacks.length; islotStacks++) {
       bagItem = stacks[islotStacks];
-      if (bagItem == null || bagItem.stackSize == 0) {
+      if (bagItem == null || bagItem.getCount() == 0) {
         continue;
       }
       // System.out.println(bagItem.stackSize + "_" + bagItem.getDisplayName());
@@ -232,7 +230,7 @@ public class UtilInventoryTransfer {
           //then yeah we are allowed to use the empty space
           if (chest.isItemValidForSlot(islotStacks, bagItem)) {
             // System.out.println("dump at " + islotChest);
-            itemsMoved += bagItem.stackSize;
+            itemsMoved += bagItem.getCount();
             chest.setInventorySlotContents(islotChest, bagItem);
             stacks[islotStacks] = null;
             bagItem = null;
@@ -248,25 +246,25 @@ public class UtilInventoryTransfer {
           continue;//go to next chest item
         }
         //ok so chestItem is not nulll
-        if (bagItem == null || bagItem.stackSize == 0) {
+        if (UtilItemStack.isEmpty(bagItem)) {
           break;//stop lookin in the chest, get a new bag item
         }
         bagItem = stacks[islotStacks];
         if (UtilItemStack.canMerge(bagItem, chestItem)) {
           chestMax = chestItem.getItem().getItemStackLimit(chestItem);
-          room = chestMax - chestItem.stackSize;
+          room = chestMax - chestItem.getCount();
           if (room <= 0) {
             continue;//no room on this chest slot, so move to next slot
           } // no room, check the next spot
           //System.out.println("merge at " + islotChest);
           // so if i have 30 room, and 28 items, i deposit 28.
           // or if i have 30 room and 38 items, i deposit 30
-          toDeposit = Math.min(bagItem.stackSize, room);
-          chestItem.stackSize += toDeposit;
+          toDeposit = Math.min(bagItem.getCount(), room);
+          chestItem.grow(toDeposit);
           chest.setInventorySlotContents(islotChest, chestItem);
-          bagItem.stackSize -= toDeposit;
+          bagItem.shrink(toDeposit);
           itemsMoved += toDeposit;
-          if (bagItem.stackSize <= 0) {
+          if (bagItem.getCount() <= 0) {
             // item stacks with zero count do not destroy
             // themselves, they show
             // up and have unexpected behavior in game so set to
@@ -278,7 +276,7 @@ public class UtilInventoryTransfer {
             stacks[islotStacks] = bagItem;
           }
         } // end if items match
-        if (bagItem == null || bagItem.stackSize == 0) {
+        if (UtilItemStack.isEmpty(bagItem)) {
           break;//stop lookin in the chest, get a new bag item
         }
       } // close loop on player inventory items

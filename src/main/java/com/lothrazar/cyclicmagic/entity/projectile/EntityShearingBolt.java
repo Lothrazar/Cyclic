@@ -42,7 +42,7 @@ public class EntityShearingBolt extends EntityThrowableDispensable {
             sheep.setSheared(true);
             int i = 1 + world.rand.nextInt(3);
             if (MobDropChangesModule.sheepShearBuffed) {
-              i += MathHelper.getRandomIntegerInRange(world.rand, 1, 6);
+              i += MathHelper.getInt(world.rand, 1, 6);
             }
             for (int j = 0; j < i; ++j) {
               EntityItem entityitem = sheep.entityDropItem(new ItemStack(Blocks.WOOL, 1, sheep.getFleeceColor().getMetadata()), 1.0F);

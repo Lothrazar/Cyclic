@@ -24,7 +24,7 @@ public class EntityLightningballBolt extends EntityThrowableDispensable {
     // (World worldIn, double x, double y, double z, boolean effectOnlyIn)
     World world = getEntityWorld();
     EntityLightningBolt ball = new EntityLightningBolt(world, this.getPosition().getX(), this.getPosition().getY(), this.getPosition().getZ(), false);
-    world.spawnEntityInWorld(ball);
+    world.spawnEntity(ball);
     this.setDead();
   }
 }

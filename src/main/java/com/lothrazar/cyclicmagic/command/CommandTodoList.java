@@ -20,8 +20,8 @@ public class CommandTodoList extends BaseCommand implements ICommand {
   //private static final String	NBT_KEY			= Const.MODID + "_todo";
   public static boolean PERSIST_DEATH;
   @Override
-  public String getCommandUsage(ICommandSender s) {
-    return "/" + getCommandName() + " <" + MODE_GET + "|" + MODE_SET + "|" + MODE_ADD + "|" + MODE_REMOVE + "> <text>";
+  public String getUsage(ICommandSender s) {
+    return "/" + getName() + " <" + MODE_GET + "|" + MODE_SET + "|" + MODE_ADD + "|" + MODE_REMOVE + "> <text>";
   }
   @Override
   public void execute(MinecraftServer server, ICommandSender icommandsender, String[] args) {
@@ -32,7 +32,7 @@ public class CommandTodoList extends BaseCommand implements ICommand {
     if (args == null || args.length == 0 || args[0] == null || args[0].isEmpty()) {
       // player.addChatMessage(new
       // ChatComponentTranslation(getCommandUsage(icommandsender)));
-      UtilChat.addChatMessage(player, getCommandUsage(icommandsender));
+      UtilChat.addChatMessage(player, getUsage(icommandsender));
       return;
     }
     String message = "";

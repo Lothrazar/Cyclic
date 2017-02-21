@@ -40,8 +40,8 @@ public class UtilFurnace {
     if (success) {
       //  ModMain.logger.info("success!!!");
       if (worldObj.isRemote == false) {
-        if (held != null && held.stackSize == 0) {// so now we just fix if something is size zero
-          held = null;
+        if (held != null && held.getCount() == 0) {// so now we just fix if something is size zero
+          held = ItemStack.EMPTY;
         }
         entityPlayer.inventory.setInventorySlotContents(playerSlot, held);
         entityPlayer.inventory.markDirty();

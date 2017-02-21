@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilUncraft;
 import com.lothrazar.cyclicmagic.util.UtilUncraft.UncraftResultType;
@@ -58,12 +59,12 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
   public ItemStack decrStackSize(int index, int count) {
     ItemStack stack = getStackInSlot(index);
     if (stack != null) {
-      if (stack.stackSize <= count) {
+      if (stack.getCount() <= count) {
         setInventorySlotContents(index, null);
       }
       else {
         stack = stack.splitStack(count);
-        if (stack.stackSize == 0) {
+        if (stack.getCount() == 0) {
           setInventorySlotContents(index, null);
         }
       }
@@ -73,8 +74,8 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
   @Override
   public void setInventorySlotContents(int index, ItemStack stack) {
     inv[index] = stack;
-    if (stack != null && stack.stackSize > getInventoryStackLimit()) {
-      stack.stackSize = getInventoryStackLimit();
+    if (stack != null && stack.getCount() > getInventoryStackLimit()) {
+      stack.setCount( getInventoryStackLimit());
     }
   }
   @Override
@@ -87,7 +88,7 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
       NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
       byte slot = tag.getByte(NBT_SLOT);
       if (slot >= 0 && slot < inv.length) {
-        inv[slot] = ItemStack.loadItemStackFromNBT(tag);
+        inv[slot] = UtilNBT.itemFromNBT(tag);
       }
     }
   }
@@ -144,7 +145,7 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
           toDrop.add(stack);
           setOutputItems(toDrop);
           if (this.getWorld().isRemote == false) {
-            this.decrStackSize(0, stack.stackSize);
+            this.decrStackSize(0, stack.getCount());
           }
           UtilSound.playSound(this.getWorld(), this.getPos(), SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.BLOCKS);
         }

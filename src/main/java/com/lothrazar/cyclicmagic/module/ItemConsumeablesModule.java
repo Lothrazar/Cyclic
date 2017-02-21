@@ -103,7 +103,7 @@ public class ItemConsumeablesModule extends BaseEventModule implements IHasConfi
     if (event.getEntity() instanceof EntityPlayer == false) { return; }
     EntityPlayer entityPlayer = (EntityPlayer) event.getEntity();
     ItemStack held = entityPlayer.getHeldItemMainhand();
-    if (held != null && held.getItem() instanceof ItemHorseUpgrade && held.stackSize > 0
+    if (held != null && held.getItem() instanceof ItemHorseUpgrade && held.getCount() > 0
         && event.getTarget() instanceof EntityHorse) {
       ItemHorseUpgrade.onHorseInteract((EntityHorse) event.getTarget(), entityPlayer, held, (ItemHorseUpgrade) held.getItem());
       event.setCanceled(true);// stop the GUI inventory opening && horse mounting

@@ -72,7 +72,7 @@ public class PacketStorageSack implements IMessage, IMessageHandler<PacketStorag
             hand = EnumHand.OFF_HAND;
             held = player.getHeldItem(hand);
           }
-          if (held != null && held.stackSize > 0) { //https://github.com/PrinceOfAmber/Cyclic/issues/181
+          if (held != null && held.getCount() > 0) { //https://github.com/PrinceOfAmber/Cyclic/issues/181
             if (held.getItem() instanceof ItemChestSackEmpty) {
               Item chest_sack = ((ItemChestSackEmpty) held.getItem()).getFullSack();
               if (chest_sack != null) {
@@ -80,11 +80,11 @@ public class PacketStorageSack implements IMessage, IMessageHandler<PacketStorag
                 drop.setTagCompound(itemData);
                 UtilItemStack.dropItemStackInWorld(world, player.getPosition(), drop);
                 UtilPlaceBlocks.destroyBlock(world, position);
-                if (player.capabilities.isCreativeMode == false && held.stackSize > 0) {
-                  held.stackSize--;
-                  if (held.stackSize == 0) {
-                    held = null;
-                    player.setHeldItem(hand, null);
+                if (player.capabilities.isCreativeMode == false && held.getCount() > 0) {
+                  held.shrink(1);
+                  if (held.getCount() == 0) {
+                    held = ItemStack.EMPTY;
+                    player.setHeldItem(hand, ItemStack.EMPTY);
                   }
                 }
               }

@@ -26,7 +26,7 @@ public class PotionEnder extends PotionBase {
   }
   @SubscribeEvent
   public void onHurt(LivingHurtEvent event) {
-    if (event.getEntityLiving().isPotionActive(this) && event.getSource() == DamageSource.inWall) {
+    if (event.getEntityLiving().isPotionActive(this) && event.getSource() == DamageSource.IN_WALL) {
       event.setAmount(0);
     }
   }
@@ -38,7 +38,7 @@ public class PotionEnder extends PotionBase {
       if (player.isPotionActive(this) && target instanceof EntityEnderman) {
         World world = player.getEntityWorld();
         int randMore = world.rand.nextInt(5) + 1;// range[1,5]
-        world.spawnEntityInWorld(new EntityXPOrb(world, target.posX, target.posY, target.posZ, randMore));
+        world.spawnEntity(new EntityXPOrb(world, target.posX, target.posY, target.posZ, randMore));
       }
     }
   }

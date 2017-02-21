@@ -59,7 +59,7 @@ public class ContainerStorage extends ContainerBase {
   }
   @Override
   public boolean canInteractWith(EntityPlayer playerIn) {
-    return inventory.isUseableByPlayer(playerIn);
+    return true;//inventory.isUseableByPlayer(playerIn);
   }
   @Override
   public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int index) {
@@ -102,17 +102,17 @@ public class ContainerStorage extends ContainerBase {
           }
         }
       }
-      if (itemstack1.stackSize == 0) {
+      if (itemstack1.getCount() == 0) {
         slot.putStack((ItemStack) null);
       }
       else {
         slot.onSlotChanged();
       }
-      if (itemstack1.stackSize == itemstack.stackSize) {
+      if (itemstack1.getCount() == itemstack.getCount()) {
         inventory.markDirty();
         return null;
       }
-      slot.onPickupFromSlot(par1EntityPlayer, itemstack1);
+      slot.onTake(par1EntityPlayer, itemstack1);
     }
     inventory.markDirty();
     return itemstack;

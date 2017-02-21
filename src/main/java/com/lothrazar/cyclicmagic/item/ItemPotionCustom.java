@@ -68,9 +68,10 @@ public class ItemPotionCustom extends ItemFood {
     return EnumAction.DRINK;
   }
   @Override
-  public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
+  public ActionResult<ItemStack> onItemRightClick(  World worldIn, EntityPlayer playerIn, EnumHand hand) {
+    
     playerIn.setActiveHand(hand);
-    return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);
+    return super.onItemRightClick(worldIn, playerIn, hand);
   }
   @Override
   public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving) {
@@ -82,8 +83,8 @@ public class ItemPotionCustom extends ItemFood {
       this.onFoodEaten(stack, worldIn, entityplayer);
       entityplayer.addStat(StatList.getObjectUseStats(this));
       if (entityplayer == null || !entityplayer.capabilities.isCreativeMode) {
-        stack.stackSize--;
-        if (stack.stackSize <= 0) { return new ItemStack(Items.GLASS_BOTTLE); }
+        stack.shrink(1);
+        if (stack.getCount() <= 0) { return new ItemStack(Items.GLASS_BOTTLE); }
         if (entityplayer != null) {
           entityplayer.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE));
         }

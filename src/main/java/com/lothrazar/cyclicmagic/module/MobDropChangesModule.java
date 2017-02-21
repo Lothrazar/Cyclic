@@ -44,7 +44,7 @@ public class MobDropChangesModule extends BaseEventModule implements IHasConfig 
       if (event.getHand() != null && p.getHeldItem(event.getHand()) != null &&
           p.getHeldItem(event.getHand()).getItem() == Items.SHEARS) {
         int meta = s.getFleeceColor().getMetadata();
-        int rand = MathHelper.getRandomIntegerInRange(event.getWorld().rand, 1, 6);
+        int rand = MathHelper.getInt(event.getWorld().rand, 1, 6);
         UtilItemStack.dropItemStackInWorld(event.getWorld(), event.getPos(), new ItemStack(Blocks.WOOL, rand, meta));
       }
     }
@@ -78,16 +78,16 @@ public class MobDropChangesModule extends BaseEventModule implements IHasConfig 
       }
     }
     if (extraLeather && entity instanceof EntityCow) {
-      int rand = MathHelper.getRandomIntegerInRange(world.rand, 1, 8);
+      int rand = MathHelper.getInt(world.rand, 1, 8);
       UtilItemStack.dropItemStackInWorld(world, pos, new ItemStack(Items.LEATHER, rand));
     }
     if (bonusPork && entity instanceof EntityPig) {
-      int rand = MathHelper.getRandomIntegerInRange(world.rand, 1, 8);
+      int rand = MathHelper.getInt(world.rand, 1, 8);
       UtilItemStack.dropItemStackInWorld(world, pos, new ItemStack(Items.PORKCHOP, rand));
     }
     if (bonusGolemIron && entity instanceof EntityIronGolem) {
       //vanilla drops 3-5 ingots
-      int rand = MathHelper.getRandomIntegerInRange(world.rand, 1, 18);
+      int rand = MathHelper.getInt(world.rand, 1, 18);
       UtilItemStack.dropItemStackInWorld(world, pos, new ItemStack(Items.IRON_INGOT, rand));
       if (world.rand.nextDouble() < 0.10) {
         //10% chance for extra iron block

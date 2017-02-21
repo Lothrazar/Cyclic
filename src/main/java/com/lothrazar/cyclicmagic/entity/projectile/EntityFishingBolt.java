@@ -39,14 +39,14 @@ public class EntityFishingBolt extends EntityThrowableDispensable {
       UtilParticle.spawnParticle(this.getEntityWorld(), EnumParticleTypes.WATER_BUBBLE, pos);
       EntityItem ei = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), getRandomFish());
       if (world.isRemote == false) {
-        world.spawnEntityInWorld(ei);
+        world.spawnEntity(ei);
       }
       UtilSound.playSound(world, pos, SoundEvents.ENTITY_PLAYER_SPLASH, SoundCategory.BLOCKS);
       this.setDead();
     }
     else {
       if (world.isRemote == false) {
-        world.spawnEntityInWorld(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(renderSnowball)));
+        world.spawnEntity(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(renderSnowball)));
         this.setDead();
       }
     }

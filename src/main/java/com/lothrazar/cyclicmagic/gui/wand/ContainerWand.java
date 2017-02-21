@@ -46,7 +46,7 @@ public class ContainerWand extends ContainerBase {
   }
   @Override
   public boolean canInteractWith(EntityPlayer playerIn) {
-    return inventory.isUseableByPlayer(playerIn);
+    return inventory.isUsableByPlayer(playerIn);
   }
   public static final int INV_START = InventoryWand.INV_SIZE, INV_END = INV_START + 26, HOTBAR_START = INV_END + 1, HOTBAR_END = HOTBAR_START + 8;
   @Override
@@ -90,17 +90,17 @@ public class ContainerWand extends ContainerBase {
           }
         }
       }
-      if (itemstack1.stackSize == 0) {
+      if (itemstack1.getCount() == 0) {
         slot.putStack((ItemStack) null);
       }
       else {
         slot.onSlotChanged();
       }
-      if (itemstack1.stackSize == itemstack.stackSize) {
+      if (itemstack1.getCount() == itemstack.getCount()) {
         inventory.markDirty();
         return null;
       }
-      slot.onPickupFromSlot(par1EntityPlayer, itemstack1);
+      slot.onTake(par1EntityPlayer, itemstack1);
     }
     inventory.markDirty();
     return itemstack;

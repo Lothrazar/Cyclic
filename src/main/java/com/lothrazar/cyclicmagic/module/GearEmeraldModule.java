@@ -47,7 +47,7 @@ public class GearEmeraldModule extends BaseModule implements IHasConfig {
         ArmorMaterial.GOLD.getEnchantability(),
         ArmorMaterial.DIAMOND.getSoundEvent(),
         ArmorMaterial.DIAMOND.getToughness());//was  / 2
-    MaterialRegistry.emeraldArmorMaterial.customCraftingMaterial = Items.EMERALD;
+    MaterialRegistry.emeraldArmorMaterial.repairMaterial  = new ItemStack(Items.EMERALD);
     //max uses is durability ex The number of uses this material allows.
     //as of 1.9.4 :  (wood = 59, stone = 131, iron = 250, diamond = 1561, gold = 32)
     MaterialRegistry.emeraldToolMaterial = EnumHelper.addToolMaterial(emeraldName,
@@ -56,7 +56,7 @@ public class GearEmeraldModule extends BaseModule implements IHasConfig {
         ToolMaterial.DIAMOND.getEfficiencyOnProperMaterial(),
         ToolMaterial.DIAMOND.getDamageVsEntity(), //was  - 0.25F
         ToolMaterial.GOLD.getEnchantability());
-    MaterialRegistry.emeraldToolMaterial.setRepairItem(new ItemStack(MaterialRegistry.emeraldArmorMaterial.customCraftingMaterial));
+    MaterialRegistry.emeraldToolMaterial.setRepairItem(MaterialRegistry.emeraldArmorMaterial.repairMaterial);
   }
   @Override
   public void onInit() {

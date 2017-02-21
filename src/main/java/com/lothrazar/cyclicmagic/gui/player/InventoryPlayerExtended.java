@@ -4,6 +4,7 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.net.PacketSyncExtendedInventory;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -76,7 +77,7 @@ public class InventoryPlayerExtended implements IInventory {
   public ItemStack decrStackSize(int par1, int par2) {
     if (this.stackList[par1] != null) {
       ItemStack itemstack;
-      if (this.stackList[par1].stackSize <= par2) {
+      if (this.stackList[par1].getCount()  <= par2) {
         itemstack = this.stackList[par1];
         this.stackList[par1] = null;
         if (eventHandler != null)
@@ -86,7 +87,7 @@ public class InventoryPlayerExtended implements IInventory {
       }
       else {
         itemstack = this.stackList[par1].splitStack(par2);
-        if (this.stackList[par1].stackSize == 0) {
+        if (this.stackList[par1].getCount()  == 0) {
           this.stackList[par1] = null;
         }
         if (eventHandler != null)
@@ -119,8 +120,9 @@ public class InventoryPlayerExtended implements IInventory {
     }
     catch (Exception e) {}
   }
+
   @Override
-  public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer) {
+  public boolean isUsableByPlayer(EntityPlayer par1EntityPlayer) {
     return true;
   }
   @Override
@@ -173,7 +175,7 @@ public class InventoryPlayerExtended implements IInventory {
     for (int i = 0; i < tagList.tagCount(); ++i) {
       NBTTagCompound nbttagcompound = (NBTTagCompound) tagList.getCompoundTagAt(i);
       int j = nbttagcompound.getByte("Slot") & 255;
-      ItemStack itemstack = ItemStack.loadItemStackFromNBT(nbttagcompound);
+      ItemStack itemstack = UtilNBT.itemFromNBT(nbttagcompound);
       if (itemstack != null) {
         this.stackList[j] = itemstack;
       }
@@ -205,5 +207,9 @@ public class InventoryPlayerExtended implements IInventory {
     catch (Exception e) {
       e.printStackTrace();
     }
+  }
+  @Override
+  public boolean isEmpty() {
+    return false;
   }
 }

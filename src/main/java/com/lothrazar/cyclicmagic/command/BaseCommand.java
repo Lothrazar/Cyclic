@@ -30,29 +30,29 @@ public class BaseCommand implements ICommand {
     //    aliases.add(name.toUpperCase());
   }
   @Override
-  public List<String> getCommandAliases() {
+  public List<String> getAliases() {
     return this.aliases;
   }
   @Override
-  public String getCommandName() {
+  public String getName() {
     return name;
   }
   @Override
   public int compareTo(ICommand arg) {
-    return this.getCommandName().compareTo(arg.getCommandName());
+    return this.getName().compareTo(arg.getName());
   }
   @Override
-  public String getCommandUsage(ICommandSender sender) {
-    return "/" + this.getCommandName();
+  public String getUsage(ICommandSender sender) {
+    return "/" + this.getName();
   }
   @Override
   public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
-    return (requiresOP) ? sender.canCommandSenderUseCommand(OP, this.getCommandName()) : true;
+    return (requiresOP) ? sender.canUseCommand(OP, this.getName()) : true;
   }
   @Override
-  public List<String> getTabCompletionOptions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos pos) {
+  public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos pos) {
     if (usernameIndex < 0) { return Collections.<String> emptyList(); }
-    return args.length == usernameIndex + 1 ? CommandBase.getListOfStringsMatchingLastWord(args, server.getAllUsernames()) : Collections.<String> emptyList();
+    return args.length == usernameIndex + 1 ? CommandBase.getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames()) : Collections.<String> emptyList();
   }
   @Override
   public boolean isUsernameIndex(String[] args, int index) {

@@ -139,7 +139,7 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
     }
     if (success) {
       if (player.capabilities.isCreativeMode == false) {
-        held.stackSize--;
+        held.shrink(1);
       }
       UtilParticle.spawnParticle(horse.getEntityWorld(), EnumParticleTypes.SMOKE_LARGE, horse.getPosition());
       UtilSound.playSound(player, horse.getPosition(), SoundEvents.ENTITY_HORSE_EAT, SoundCategory.NEUTRAL);
