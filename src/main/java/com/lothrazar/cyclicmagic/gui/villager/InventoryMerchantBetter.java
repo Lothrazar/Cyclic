@@ -6,6 +6,7 @@ import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -14,7 +15,7 @@ import net.minecraft.village.MerchantRecipeList;
 
 public class InventoryMerchantBetter extends InventoryMerchant implements IInventory {
   private final IMerchant theMerchant;
-  private final ItemStack[] theInventory = new ItemStack[3];
+  private final NonNullList<ItemStack> theInventory = NonNullList.withSize(3, ItemStack.EMPTY);
   private final EntityPlayer thePlayer;
   private MerchantRecipe currentRecipe;
   private int currentRecipeIndex;
@@ -29,19 +30,19 @@ public class InventoryMerchantBetter extends InventoryMerchant implements IInven
    * Returns the number of slots in the inventory.
    */
   public int getSizeInventory() {
-    return this.theInventory.length;
+    return this.theInventory.size();
   }
   /**
    * Returns the stack in the given slot.
    */
   @Nullable
   public ItemStack getStackInSlot(int index) {
-    return this.theInventory[index];
+    return this.theInventory.get(index);
   }
   @Nullable
   public ItemStack decrStackSize(int index, int count) {
-    if (index == 2 && this.theInventory[index] != null) {
-      return ItemStackHelper.getAndSplit(this.theInventory, index, this.theInventory[index].stackSize);
+    if (index == 2 && this.getStackInSlot(index) != null) {
+      return ItemStackHelper.getAndSplit(this.theInventory, index, this.getStackInSlot(index).getCount());
     }
     else {
       ItemStack itemstack = ItemStackHelper.getAndSplit(this.theInventory, index, count);
@@ -59,10 +60,10 @@ public class InventoryMerchantBetter extends InventoryMerchant implements IInven
     return ItemStackHelper.getAndRemove(this.theInventory, index);
   }
   public void setInventorySlotContents(int index, @Nullable ItemStack stack) {
-    this.theInventory[index] = stack;
-    if (stack != null && stack.getCount() > this.getInventoryStackLimit()) {
-      stack.stackSize = this.getInventoryStackLimit();
-    }
+    this.theInventory.set(index, stack);
+//    if (stack != null && stack.getCount() > this.getInventoryStackLimit()) {
+//      stack = this.getInventoryStackLimit();
+//    }
     if (this.inventoryResetNeededOnSlotChange(index)) {
       this.resetRecipeAndSlots();
     }
@@ -104,8 +105,8 @@ public class InventoryMerchantBetter extends InventoryMerchant implements IInven
   }
   public void resetRecipeAndSlots() {
     this.currentRecipe = null;
-    ItemStack itemstack = this.theInventory[0];
-    ItemStack itemstack1 = this.theInventory[1];
+    ItemStack itemstack = this.theInventory.get(0);
+    ItemStack itemstack1 = this.theInventory.get(1);
     if (itemstack == null) {
       itemstack = itemstack1;
       itemstack1 = null;
@@ -156,8 +157,8 @@ public class InventoryMerchantBetter extends InventoryMerchant implements IInven
     return 0;
   }
   public void clear() {
-    for (int i = 0; i < this.theInventory.length; ++i) {
-      this.theInventory[i] = null;
+    for (int i = 0; i < this.theInventory.size(); ++i) {
+      this.theInventory.set(i, ItemStack.EMPTY);
     }
   }
 }

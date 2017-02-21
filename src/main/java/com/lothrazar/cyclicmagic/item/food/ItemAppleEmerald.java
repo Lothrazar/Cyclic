@@ -1,6 +1,9 @@
 package com.lothrazar.cyclicmagic.item.food;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
@@ -42,20 +45,51 @@ public class ItemAppleEmerald extends ItemFood implements IHasRecipe {
     if (entity instanceof EntityZombie) {
       EntityZombie zombie = ((EntityZombie) entity);
       //this is what we WANT to do, but the method is protected. we have to fake it by faking the interact event
-      // ((EntityZombie)entity).startConversion(1200);
-      if (zombie.isVillager()) {
-        UtilEntity.addOrMergePotionEffect(entity, new PotionEffect(MobEffects.WEAKNESS, 10, 0));
-        if (zombie.processInteract(player, hand, new ItemStack(Items.GOLDEN_APPLE))) {
-          itemstack.stackSize--;
-          if (itemstack.stackSize == 0) {
-            itemstack = null;
-          }
-        }
-        //UtilInventory.decrStackSize(player, currentItem);
-        return true;
+
+      Method method;
+      try {
+        method = zombie.getClass().getDeclaredMethod("startConverting");
+        method.setAccessible(true);
+        method.invoke(zombie,1200);
       }
+      catch (NoSuchMethodException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+      catch (SecurityException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+      catch (IllegalAccessException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+      catch (IllegalArgumentException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+      catch (InvocationTargetException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+       
+      //ok so, we CANT use processInteract anymore, since we cant pass item stack
+      //so without a fake player. yeah. NEEDS compilation for testing
+      return true;
+//      if (zombie.isVillager()) {
+//        UtilEntity.addOrMergePotionEffect(entity, new PotionEffect(MobEffects.WEAKNESS, 10, 0));
+//        if (zombie.processInteract(player, hand, new ItemStack(Items.GOLDEN_APPLE))) {
+//          itemstack.setCount(itemstack.getCount()-1);
+//          if (itemstack.getCount() == 0) {
+//            itemstack = null;
+//          }
+//        }
+//        //UtilInventory.decrStackSize(player, currentItem);
+//        return true;
+//      }
     }
-    else if (entity instanceof EntityVillager) {
+    else 
+    if (entity instanceof EntityVillager) {
       EntityVillager villager = ((EntityVillager) entity);
       int count = 0;
       for (MerchantRecipe merchantrecipe : villager.getRecipes(player)) {
@@ -67,18 +101,60 @@ public class ItemAppleEmerald extends ItemFood implements IHasRecipe {
       }
       if (count > 0) {
         UtilChat.addChatMessage(player, UtilChat.lang("item.apple_emerald.merchant") + count);
-        itemstack.stackSize--;
-        if (itemstack.stackSize == 0) {
+        itemstack.setCount(itemstack.getCount()-1);//.stackSize--;
+        if (itemstack.getCount() == 0) {
           itemstack = null;
         }
-        //				 else{
-        //					 UtilSound.playSound(player, villager.getPosition(), SoundEvents.ENTITY_ZOMBIE_VILLAGER_CURE);
-        //				 }
+        //         else{
+        //           UtilSound.playSound(player, villager.getPosition(), SoundEvents.ENTITY_ZOMBIE_VILLAGER_CURE);
+        //         }
       }
       return true;
     }
     return super.itemInteractionForEntity(itemstack, player, entity, hand);
   }
+//  @Override
+//  public boolean itemInteractionForEntity(ItemStack itemstack, EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
+//    if (entity instanceof EntityZombie) {
+//      EntityZombie zombie = ((EntityZombie) entity);
+//      //this is what we WANT to do, but the method is protected. we have to fake it by faking the interact event
+//      // ((EntityZombie)entity).startConversion(1200);
+//      if (zombie.isVillager()) {
+//        UtilEntity.addOrMergePotionEffect(entity, new PotionEffect(MobEffects.WEAKNESS, 10, 0));
+//        if (zombie.processInteract(player, hand, new ItemStack(Items.GOLDEN_APPLE))) {
+//          itemstack.stackSize--;
+//          if (itemstack.stackSize == 0) {
+//            itemstack = null;
+//          }
+//        }
+//        //UtilInventory.decrStackSize(player, currentItem);
+//        return true;
+//      }
+//    }
+//    else if (entity instanceof EntityVillager) {
+//      EntityVillager villager = ((EntityVillager) entity);
+//      int count = 0;
+//      for (MerchantRecipe merchantrecipe : villager.getRecipes(player)) {
+//        if (merchantrecipe.isRecipeDisabled()) {
+//          //vanilla code as of 1.9.4 odes this (2d6+2) 
+//          merchantrecipe.increaseMaxTradeUses(villager.getEntityWorld().rand.nextInt(6) + villager.getEntityWorld().rand.nextInt(6) + 2);
+//          count++;
+//        }
+//      }
+//      if (count > 0) {
+//        UtilChat.addChatMessage(player, UtilChat.lang("item.apple_emerald.merchant") + count);
+//        itemstack.stackSize--;
+//        if (itemstack.stackSize == 0) {
+//          itemstack = null;
+//        }
+//        //				 else{
+//        //					 UtilSound.playSound(player, villager.getPosition(), SoundEvents.ENTITY_ZOMBIE_VILLAGER_CURE);
+//        //				 }
+//      }
+//      return true;
+//    }
+//    return super.itemInteractionForEntity(itemstack, player, entity, hand);
+//  }
   public void addInformation(ItemStack held, EntityPlayer player, List<String> list, boolean par4) {
     list.add(UtilChat.lang("item.apple_emerald.text"));
   }

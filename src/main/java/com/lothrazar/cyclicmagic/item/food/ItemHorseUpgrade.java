@@ -10,7 +10,7 @@ import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityHorse;
-import net.minecraft.entity.passive.HorseType;
+//import net.minecraft.entity.passive.HorseType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
@@ -74,26 +74,27 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
         }
       break;
       case TYPE:
-        switch (horse.getType()) {
-          case HORSE:
-            horse.setType(HorseType.ZOMBIE);
-            success = true;
-          break;
-          case ZOMBIE:
-            horse.setType(HorseType.SKELETON);
-            success = true;
-          break;
-          case SKELETON:
-            horse.setType(HorseType.HORSE);
-            success = true;
-          break;
-          case DONKEY:// donkey and mule ignored by design
-          break;
-          case MULE:
-          break;
-          default:
-          break;
-        }
+        
+//        switch (horse.getType()) {
+//          case HORSE:
+//            horse.setType(HorseType.ZOMBIE);
+//            success = true;
+//          break;
+//          case ZOMBIE:
+//            horse.setType(HorseType.SKELETON);
+//            success = true;
+//          break;
+//          case SKELETON:
+//            horse.setType(HorseType.HORSE);
+//            success = true;
+//          break;
+//          case DONKEY:// donkey and mule ignored by design
+//          break;
+//          case MULE:
+//          break;
+//          default:
+//          break;
+//        }
       break;
       case VARIANT:
         int var = horse.getHorseVariant();
