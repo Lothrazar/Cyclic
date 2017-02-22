@@ -87,7 +87,7 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
   }
   @Nullable
   public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
-    ItemStack itemstack = null;
+    ItemStack itemstack =  ItemStack.EMPTY;
     Slot slot = (Slot) this.inventorySlots.get(index);
     if (slot != null && slot.getHasStack()) {
       ItemStack itemstack1 = slot.getStack();
@@ -100,16 +100,16 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
 //        if (!this.mergeItemStack(itemstack1, SLOT_INPUT, SLOT_INPUTX + 1, false)) { return null; }
 //      }
 //      else {//so it is 0,1
-        if (!this.mergeItemStack(itemstack1, INV_START, HOTBAR_END + 1, false)) { return null; }
+        if (!this.mergeItemStack(itemstack1, INV_START, HOTBAR_END + 1, false)) { return  ItemStack.EMPTY; }
 //      }
       //cleanup steps
       if (itemstack1.getCount() == 0) {
-        slot.putStack((ItemStack) null);
+        slot.putStack((ItemStack)  ItemStack.EMPTY);
       }
       else {
         slot.onSlotChanged();
       }
-      if (itemstack1.getCount() == itemstack.getCount()) { return null; }
+      if (itemstack1.getCount() == itemstack.getCount()) { return  ItemStack.EMPTY; }
       slot.onTake(playerIn, itemstack1);
     }
     return itemstack;

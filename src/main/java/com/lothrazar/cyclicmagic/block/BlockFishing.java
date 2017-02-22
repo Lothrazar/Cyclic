@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.block;
-import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.tileentity.FishingTESR;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFishing;

@@ -12,7 +12,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
 public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITickable {
-  public TileEntityDetector(int invoSize) {
+  public TileEntityDetector() {
     super(0);
   }
   private int rangeX = 5;

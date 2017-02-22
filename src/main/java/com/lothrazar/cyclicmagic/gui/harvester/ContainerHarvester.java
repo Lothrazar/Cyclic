@@ -1,10 +1,8 @@
 package com.lothrazar.cyclicmagic.gui.harvester;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineHarvester;
 import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -21,10 +19,7 @@ public class ContainerHarvester extends ContainerBaseMachine {
     tileEntity = te;
     bindPlayerInventory(inventoryPlayer);
   }
-  @Override
-  public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
-    return null;
-  }
+
   @Override
   public void detectAndSendChanges() {
     super.detectAndSendChanges();
