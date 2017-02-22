@@ -20,6 +20,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -108,7 +109,7 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
         }
         else {
           if (world.isRemote == false) {
-            ItemStack[] inv = InventoryStorage.readFromNBT(held);
+            NonNullList<ItemStack> inv = InventoryStorage.readFromNBT(held);
             BagDepositReturn ret = null;
             if (depositType == StorageActionType.DEPOSIT.ordinal()) {
               ret = UtilInventoryTransfer.dumpFromListToIInventory(world, (IInventory) tile, inv, false);

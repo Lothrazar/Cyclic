@@ -3,16 +3,17 @@ import java.util.ArrayList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 
 public class UtilInventoryTransfer {
   public static class BagDepositReturn {
-    public BagDepositReturn(int m, ItemStack[] s) {
+    public BagDepositReturn(int m,  NonNullList<ItemStack>  s) {
       moved = m;
       stacks = s;
     }
     public int moved;
-    public ItemStack[] stacks;
+    public  NonNullList<ItemStack>  stacks;
   }
   //TODO: this whole class is a big mess, lots of code repetition; needs work.
   public static void dumpFromPlayerToIInventory(World world, IInventory inventory, EntityPlayer player) {
@@ -210,15 +211,15 @@ public class UtilInventoryTransfer {
     }
     return remaining;
   }
-  public static BagDepositReturn dumpFromListToIInventory(World world, IInventory chest, ItemStack[] stacks, boolean onlyMatchingItems) {
+  public static BagDepositReturn dumpFromListToIInventory(World world, IInventory chest, NonNullList<ItemStack> stacks, boolean onlyMatchingItems) {
     ItemStack chestItem;
     ItemStack bagItem;
     int room;
     int toDeposit;
     int chestMax;
     int itemsMoved = 0;
-    for (int islotStacks = 0; islotStacks < stacks.length; islotStacks++) {
-      bagItem = stacks[islotStacks];
+    for (int islotStacks = 0; islotStacks < stacks.size(); islotStacks++) {
+      bagItem = stacks.get(islotStacks);
       if (bagItem == null || bagItem.getCount() == 0) {
         continue;
       }
@@ -232,7 +233,7 @@ public class UtilInventoryTransfer {
             // System.out.println("dump at " + islotChest);
             itemsMoved += bagItem.getCount();
             chest.setInventorySlotContents(islotChest, bagItem);
-            stacks[islotStacks] = null;
+            stacks.set(islotStacks, ItemStack.EMPTY);
             bagItem = null;
             break;//move to next bag item, we're done here
           }
@@ -249,7 +250,7 @@ public class UtilInventoryTransfer {
         if (UtilItemStack.isEmpty(bagItem)) {
           break;//stop lookin in the chest, get a new bag item
         }
-        bagItem = stacks[islotStacks];
+        bagItem = stacks.get(islotStacks);
         if (UtilItemStack.canMerge(bagItem, chestItem)) {
           chestMax = chestItem.getItem().getItemStackLimit(chestItem);
           room = chestMax - chestItem.getCount();
@@ -269,11 +270,12 @@ public class UtilInventoryTransfer {
             // themselves, they show
             // up and have unexpected behavior in game so set to
             // empty
-            stacks[islotStacks] = null;
+            stacks.set(islotStacks, ItemStack.EMPTY);
           }
           else {
             // set to new quantity
-            stacks[islotStacks] = bagItem;
+            stacks.set(islotStacks, bagItem);
+//            stacks[islotStacks] = bagItem;
           }
         } // end if items match
         if (UtilItemStack.isEmpty(bagItem)) {

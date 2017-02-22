@@ -1,25 +1,29 @@
 package com.lothrazar.cyclicmagic.gui.storage;
+import com.lothrazar.cyclicmagic.gui.InventoryBase;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.util.Constants;
 
-public class InventoryStorage implements IInventory {
+public class InventoryStorage extends InventoryBase implements IInventory {
   public static final int INV_SIZE = 66; //6*11
-  private ItemStack[] inventory = new ItemStack[INV_SIZE];
+//  private ItemStack[] inv = new ItemStack[INV_SIZE];
   private final ItemStack internalWand;
   private EntityPlayer thePlayer;
+  public InventoryStorage(EntityPlayer player, ItemStack wand) {
+    super(INV_SIZE);
+    internalWand = wand;
+    inv= readFromNBT(internalWand);
+ 
+    thePlayer = player;
+  }
   public EntityPlayer getPlayer() {
     return thePlayer;
-  }
-  public InventoryStorage(EntityPlayer player, ItemStack wand) {
-    internalWand = wand;
-    inventory = readFromNBT(internalWand);
-    thePlayer = player;
   }
   @Override
   public String getName() {
@@ -39,7 +43,7 @@ public class InventoryStorage implements IInventory {
   }
   @Override
   public ItemStack getStackInSlot(int index) {
-    return inventory[index];
+    return inv.get(index);
   }
   @Override
   public ItemStack decrStackSize(int slot, int amount) {
@@ -67,8 +71,9 @@ public class InventoryStorage implements IInventory {
   }
   @Override
   public void setInventorySlotContents(int slot, ItemStack stack) {
-    inventory[slot] = stack;
-    if (stack != null && stack.getCount() > getInventoryStackLimit()) {
+    if(stack==null){stack=ItemStack.EMPTY;}
+    inv.set(slot, stack);
+    if (!stack.isEmpty() && stack.getCount() > getInventoryStackLimit()) {
       stack.setCount(getInventoryStackLimit());
     }
     markDirty();
@@ -80,17 +85,17 @@ public class InventoryStorage implements IInventory {
   @Override
   public void markDirty() {
     for (int i = 0; i < getSizeInventory(); ++i) {
-      if (getStackInSlot(i) != null && getStackInSlot(i).getCount() == 0) {
-        inventory[i] = null;
+      if (getStackInSlot(i) != ItemStack.EMPTY && getStackInSlot(i).getCount() == 0) {
+        inv.set(i,  ItemStack.EMPTY);
       }
     }
     // set any empty item stacks (red zeroes) to empty
     for (int i = 0; i < thePlayer.inventory.getSizeInventory(); i++) {
-      if (thePlayer.inventory.getStackInSlot(i) != null && thePlayer.inventory.getStackInSlot(i).getCount() == 0) {
-        thePlayer.inventory.setInventorySlotContents(i, null);
+      if (thePlayer.inventory.getStackInSlot(i) != ItemStack.EMPTY && thePlayer.inventory.getStackInSlot(i).getCount() == 0) {
+        thePlayer.inventory.setInventorySlotContents(i, ItemStack.EMPTY);
       }
     }
-    writeToNBT(internalWand, inventory);
+    writeToNBT(internalWand, inv);
   }
   @Override
   public boolean isUsableByPlayer(EntityPlayer player) {
@@ -102,40 +107,39 @@ public class InventoryStorage implements IInventory {
   }
   /************** public static ******************/
   public static int countNonEmpty(ItemStack stack) {
-    ItemStack[] inv = readFromNBT(stack);
+    NonNullList<ItemStack> inv = readFromNBT(stack);
     int count = 0;
-    for (int i = 0; i < inv.length; ++i) {
-      if (inv[i] != null) {
+    for (int i = 0; i < inv.size(); ++i) {
+      if (!inv.get(i).isEmpty()) {
         count++;
       }
     }
     return count;
   }
-  public static ItemStack[] readFromNBT(ItemStack stack) {
-    ItemStack[] inv = new ItemStack[INV_SIZE];
-    if (stack == null) { return inv; }
+  public static NonNullList<ItemStack> readFromNBT(ItemStack stack) {
+    NonNullList<ItemStack> inv = NonNullList.withSize(INV_SIZE, ItemStack.EMPTY); 
+    if (stack == ItemStack.EMPTY) { return inv; }
     NBTTagList items = UtilNBT.getItemStackNBT(stack).getTagList("ItemInventory", Constants.NBT.TAG_COMPOUND);
     for (int i = 0; i < items.tagCount(); ++i) {
       // 1.7.2+ change to items.getCompoundTagAt(i)
       NBTTagCompound item = (NBTTagCompound) items.getCompoundTagAt(i);
       int slot = item.getInteger("Slot");
       if (slot >= 0 && slot < INV_SIZE) {
-        inv[slot] = UtilNBT.itemFromNBT(item);
+        inv.set(slot, UtilNBT.itemFromNBT(item));
       }
     }
     return inv;
-  }
-  public static void writeToNBT(ItemStack item, ItemStack[] theInventory) {
+  }  public static void writeToNBT(ItemStack item, NonNullList<ItemStack>  theInventory) {
     NBTTagCompound tagcompound = UtilNBT.getItemStackNBT(item);
     // Create a new NBT Tag List to store itemstacks as NBT Tags
     NBTTagList items = new NBTTagList();
     ItemStack stack;
-    for (int i = 0; i < theInventory.length; ++i) {
-      stack = theInventory[i];
-      if (stack != null && stack.getCount() == 0) {
-        stack = null;
+    for (int i = 0; i < theInventory.size(); ++i) {
+      stack = theInventory.get(i);
+      if (stack != ItemStack.EMPTY && stack.getCount() == 0) {
+        stack = ItemStack.EMPTY;
       }
-      if (stack != null) {
+      if (stack != ItemStack.EMPTY) {
         // Make a new NBT Tag Compound to write the itemstack and slot
         // index to
         NBTTagCompound itemTags = new NBTTagCompound();
@@ -150,39 +154,18 @@ public class InventoryStorage implements IInventory {
     // Add the TagList to the ItemStack's Tag Compound with the name
     // "ItemInventory"
     tagcompound.setTag("ItemInventory", items);
-  }
-  public static void decrementSlot(ItemStack stack, int itemSlot) {
-    ItemStack[] invv = InventoryStorage.readFromNBT(stack);
-    invv[itemSlot].shrink(1);
-    if (invv[itemSlot].getCount() == 0) {
-      invv[itemSlot] = null;
+  } public static void decrementSlot(ItemStack stack, int itemSlot) {
+    NonNullList<ItemStack>  invv = InventoryStorage.readFromNBT(stack);
+    invv.get(itemSlot).shrink(1);
+//    invv[itemSlot].setCount(invv[itemSlot].getCount()-1);
+//    invv[itemSlot].stackSize--;
+    if ( invv.get(itemSlot).getCount() == 0) {
+      invv.set(itemSlot,  ItemStack.EMPTY);
     }
     InventoryStorage.writeToNBT(stack, invv);
   }
   public static ItemStack getFromSlot(ItemStack stack, int i) {
-    if (i < 0 || i >= InventoryStorage.INV_SIZE) { return null; }
-    return InventoryStorage.readFromNBT(stack)[i];
-  }
-  /******** required unmodified ****/
-  @Override
-  public void openInventory(EntityPlayer player) {}
-  @Override
-  public void closeInventory(EntityPlayer player) {}
-  @Override
-  public int getField(int id) {
-    return 0;
-  }
-  @Override
-  public void setField(int id, int value) {}
-  @Override
-  public int getFieldCount() {
-    return 0;
-  }
-  @Override
-  public void clear() {}
-  @Override
-  public boolean isEmpty() {
-    // TODO Auto-generated method stub
-    return false;
+    if (i < 0 || i >= InventoryStorage.INV_SIZE) { return ItemStack.EMPTY; }
+    return InventoryStorage.readFromNBT(stack).get(i);
   }
 }
