@@ -27,17 +27,17 @@ public class UtilInventoryTransfer {
     // max stack size
     for (int islotInvo = start; islotInvo < inventory.getSizeInventory(); islotInvo++) {
       chestEmptySlot = inventory.getStackInSlot(islotInvo);
-      if (chestEmptySlot != null) {
+      if (chestEmptySlot != ItemStack.EMPTY) {
         continue;
       } // slot not empty, skip over it
       for (int islotPlayer = Const.HOTBAR_SIZE; islotPlayer < getInvoEnd(player); islotPlayer++) {
         playerItem = player.inventory.getStackInSlot(islotPlayer);
-        if (playerItem == null) {
+        if (playerItem == ItemStack.EMPTY) {
           continue;
         } // empty inventory slot
         //ModMain.logger.info("try dep :"+islotPlayer + "_"+playerItem.getUnlocalizedName());
         inventory.setInventorySlotContents(islotInvo, playerItem);
-        player.inventory.setInventorySlotContents(islotPlayer, null);
+        player.inventory.setInventorySlotContents(islotPlayer, ItemStack.EMPTY);
         break;
       } // close loop on player inventory items
     } // close loop on chest items
@@ -49,17 +49,17 @@ public class UtilInventoryTransfer {
     int start = 0; // dont start at zero every time
     for (int islotPlayer = Const.HOTBAR_SIZE; islotPlayer < getInvoEnd(player); islotPlayer++) {
       playerEmptySlot = player.inventory.getStackInSlot(islotPlayer);
-      if (playerEmptySlot != null) {
+      if (playerEmptySlot != ItemStack.EMPTY) {
         continue;
       } // slot not empty, skip over it
       // ok we found an empty player slot
       for (int islotInvo = start; islotInvo < inventory.getSizeInventory(); islotInvo++) {
         chestItem = inventory.getStackInSlot(islotInvo);
-        if (chestItem == null) {
+        if (chestItem == ItemStack.EMPTY) {
           continue;
         } // empty inventory slot
         player.inventory.setInventorySlotContents(islotPlayer, chestItem);
-        inventory.setInventorySlotContents(islotInvo, null);
+        inventory.setInventorySlotContents(islotInvo, ItemStack.EMPTY);
         start = islotInvo + 1;
         break;
       } // close loop on player inventory items
@@ -82,12 +82,12 @@ public class UtilInventoryTransfer {
     // max stack size
     for (int islotChest = START_CHEST; islotChest < END_CHEST; islotChest++) {
       chestItem = chest.getStackInSlot(islotChest);
-      if (chestItem == null) {
+      if (chestItem == ItemStack.EMPTY) {
         continue;
       } // empty chest slot
       for (int islotInv = Const.HOTBAR_SIZE; islotInv < getInvoEnd(player); islotInv++) {
         playerItem = player.inventory.getStackInSlot(islotInv);
-        if (playerItem == null) {
+        if (playerItem == ItemStack.EMPTY) {
           continue;
         } // empty inventory slot
         if (UtilItemStack.canMerge(playerItem, chestItem)) {
@@ -109,7 +109,7 @@ public class UtilInventoryTransfer {
             // themselves, they show
             // up and have unexpected behavior in game so set to
             // empty
-            player.inventory.setInventorySlotContents(islotInv, null);
+            player.inventory.setInventorySlotContents(islotInv, ItemStack.EMPTY);
           }
           else {
             // set to new quantity
@@ -134,12 +134,12 @@ public class UtilInventoryTransfer {
     // max stack size
     for (int islotChest = START_CHEST; islotChest < END_CHEST; islotChest++) {
       chestItem = chest.getStackInSlot(islotChest);
-      if (chestItem == null) {
+      if (chestItem == ItemStack.EMPTY) {
         continue;
       } // empty chest slot
       for (int islotInv = Const.HOTBAR_SIZE; islotInv < getInvoEnd(player); islotInv++) {
         playerItem = player.inventory.getStackInSlot(islotInv);
-        if (playerItem == null) {
+        if (playerItem == ItemStack.EMPTY) {
           continue;
         } // empty inventory slot
         if (UtilItemStack.canMerge(playerItem, chestItem)) {
@@ -180,18 +180,18 @@ public class UtilInventoryTransfer {
     ArrayList<ItemStack> remaining = new ArrayList<ItemStack>();
     ItemStack chestStack;
     for (ItemStack current : stacks) {
-      if (current == null) {
+      if (current == ItemStack.EMPTY) {
         continue;
       }
       for (int i = startingSlot; i < inventory.getSizeInventory(); i++) {
-        if (current == null) {
+        if (current == ItemStack.EMPTY) {
           continue;
         }
         chestStack = inventory.getStackInSlot(i);
-        if (chestStack == null) {
+        if (chestStack == ItemStack.EMPTY) {
           inventory.setInventorySlotContents(i, current);
           // and dont add current ot remainder at all ! sweet!
-          current = null;
+          current = ItemStack.EMPTY;
         }
         else if (UtilItemStack.canMerge(chestStack, current)) {
           int space = chestStack.getMaxStackSize() - chestStack.getCount();
@@ -200,12 +200,12 @@ public class UtilInventoryTransfer {
             current.shrink(toDeposit);
             chestStack.grow(toDeposit);
             if (current.getCount() == 0) {
-              current = null;
+              current = ItemStack.EMPTY;
             }
           }
         }
       } // finished current pass over inventory
-      if (current != null) {
+      if (current != ItemStack.EMPTY) {
         remaining.add(current);
       }
     }
@@ -220,21 +220,21 @@ public class UtilInventoryTransfer {
     int itemsMoved = 0;
     for (int islotStacks = 0; islotStacks < stacks.size(); islotStacks++) {
       bagItem = stacks.get(islotStacks);
-      if (bagItem == null || bagItem.getCount() == 0) {
+      if (bagItem == ItemStack.EMPTY || bagItem.getCount() == 0) {
         continue;
       }
       // System.out.println(bagItem.stackSize + "_" + bagItem.getDisplayName());
       for (int islotChest = 0; islotChest < chest.getSizeInventory(); islotChest++) {
         chestItem = chest.getStackInSlot(islotChest);
         //we have a space in the inventory thats empty. are we allowed
-        if (chestItem == null && onlyMatchingItems == false) {
+        if (chestItem == ItemStack.EMPTY && onlyMatchingItems == false) {
           //then yeah we are allowed to use the empty space
           if (chest.isItemValidForSlot(islotStacks, bagItem)) {
             // System.out.println("dump at " + islotChest);
             itemsMoved += bagItem.getCount();
             chest.setInventorySlotContents(islotChest, bagItem);
             stacks.set(islotStacks, ItemStack.EMPTY);
-            bagItem = null;
+            bagItem = ItemStack.EMPTY;
             break;//move to next bag item, we're done here
           }
           else {
@@ -242,7 +242,7 @@ public class UtilInventoryTransfer {
             continue;
           }
         }
-        if (chestItem == null) {
+        if (chestItem == ItemStack.EMPTY) {
           //chest item is null, and were trying to merge (check is probably redundant here)
           continue;//go to next chest item
         }

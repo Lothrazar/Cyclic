@@ -20,7 +20,7 @@ public class UtilItemStack {
    * @return
    */
   public static boolean canMerge(ItemStack chestItem, ItemStack bagItem) {
-    if (chestItem == null || bagItem == null) { return false; }
+    if (chestItem == ItemStack.EMPTY || bagItem == ItemStack.EMPTY) { return false; }
     return (bagItem.getItem().equals(chestItem.getItem())
         && bagItem.getItemDamage() == chestItem.getItemDamage()
         && ItemStack.areItemStackTagsEqual(bagItem, chestItem));
