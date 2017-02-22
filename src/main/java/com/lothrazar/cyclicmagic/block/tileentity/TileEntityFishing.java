@@ -36,9 +36,8 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   public static final float SPEEDFACTOR = 0.00089F;//// bigger == faster
   private int toolSlot = 0;
   public ArrayList<Block> waterBoth = new ArrayList<Block>();
-  private ItemStack[] inv;
   public TileEntityFishing() {
-    inv = new ItemStack[RODSLOT + FISHSLOTS];
+    super(RODSLOT + FISHSLOTS);
     waterBoth.add(Blocks.FLOWING_WATER);
     waterBoth.add(Blocks.WATER);
   }
@@ -91,7 +90,8 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     return cov;
   }
   public boolean isEquipmentValid() {
-    return inv[toolSlot] != null && inv[toolSlot].getItem() instanceof ItemFishingRod;
+    ItemStack equip = this.getStackInSlot(toolSlot);
+    return equip != ItemStack.EMPTY && equip.getItem() instanceof ItemFishingRod;
   }
   @Override
   public void update() {
@@ -102,7 +102,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
         world instanceof WorldServer && world != null &&
         world.getWorldTime() % Const.TICKS_PER_SEC == 0) {
       LootContext.Builder lootcontext$builder = new LootContext.Builder((WorldServer) world);
-      int luck = EnchantmentHelper.getEnchantmentLevel(Enchantments.LUCK_OF_THE_SEA, this.inv[toolSlot]);
+      int luck = EnchantmentHelper.getEnchantmentLevel(Enchantments.LUCK_OF_THE_SEA, this.getStackInSlot(toolSlot));
       lootcontext$builder.withLuck((float) luck);
       //      java.lang.NullPointerException: Ticking block entity    at com.lothrazar.cyclicmagic.block.tileentity.TileEntityFishing.func_73660_a(TileEntityFishing.java:58)
       LootTableManager loot = world.getLootTableManager();
@@ -114,7 +114,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
       for (ItemStack itemstack : table.generateLootForPools(rand, context)) {
         UtilParticle.spawnParticle(world, EnumParticleTypes.WATER_WAKE, pos.up());
         //damage phase.
-        int mending = EnchantmentHelper.getEnchantmentLevel(Enchantments.MENDING, this.inv[toolSlot]);
+        int mending = EnchantmentHelper.getEnchantmentLevel(Enchantments.MENDING, this.getStackInSlot(toolSlot));
         if (mending == 0) {
           damageTool();
         }
@@ -152,23 +152,23 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     return mult * SPEEDFACTOR + randFact;//+ Math.random()/10;
   }
   private void attemptRepairTool() {
-    if (inv[toolSlot] != null && inv[toolSlot].getItemDamage() > 0) {//if it has zero damage, its fully repaired already
-      inv[toolSlot].setItemDamage(inv[toolSlot].getItemDamage() - 1);//repair by one point
+    ItemStack equip = this.getStackInSlot(toolSlot);
+    if (equip != ItemStack.EMPTY && equip.getItemDamage() > 0) {//if it has zero damage, its fully repaired already
+      equip.setItemDamage(equip.getItemDamage() - 1);//repair by one point
     }
   }
   private void damageTool() {
-    ItemStack tool = inv[toolSlot];
-    if (tool != null) {
-      tool.attemptDamageItem(1, getWorld().rand);//does respect unbreaking
+    ItemStack equip = this.getStackInSlot(toolSlot);
+    if (equip != null) {
+      equip.attemptDamageItem(1, getWorld().rand);//does respect unbreaking
       //IF enchanted and IF about to break, then spit it out
-      int damageRem = tool.getMaxDamage() - tool.getItemDamage();
-      if (damageRem == 1 && EnchantmentHelper.getEnchantments(tool).size() > 0) {
-        tryAddToInventory(tool);
-        inv[toolSlot] = null;
-      }
-      //otherwise we also make sure if its fullly damanged
-      if (tool.getItemDamage() >= tool.getMaxDamage()) {
-        inv[toolSlot] = null;
+      int damageRem = equip.getMaxDamage() - equip.getItemDamage();
+      if (damageRem == 1 && EnchantmentHelper.getEnchantments(equip).size() > 0) {
+        tryAddToInventory(equip);
+        this.setInventorySlotContents(toolSlot, ItemStack.EMPTY);
+      } //otherwise we also make sure if its fullly damanged
+      if (equip.getItemDamage() >= equip.getMaxDamage()) {
+        this.setInventorySlotContents(toolSlot, ItemStack.EMPTY);
       }
     }
   }
@@ -193,45 +193,6 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     return held;
   }
   @Override
-  public int getSizeInventory() {
-    return inv.length;
-  }
-  @Override
-  public ItemStack getStackInSlot(int index) {
-    return inv[index];
-  }
-  @Override
-  public ItemStack decrStackSize(int index, int count) {
-    ItemStack stack = getStackInSlot(index);
-    if (stack != null) {
-      if (stack.getMaxStackSize() <= count) {
-        setInventorySlotContents(index, null);
-      }
-      else {
-        stack = stack.splitStack(count);
-        if (stack.getMaxStackSize() == 0) {
-          setInventorySlotContents(index, null);
-        }
-      }
-    }
-    return stack;
-  }
-  @Override
-  public ItemStack removeStackFromSlot(int index) {
-    ItemStack stack = getStackInSlot(index);
-    if (stack != null) {
-      setInventorySlotContents(index, null);
-    }
-    return stack;
-  }
-  @Override
-  public void setInventorySlotContents(int index, ItemStack stack) {
-    inv[index] = stack;
-    if (stack != null && stack.getMaxStackSize() > getInventoryStackLimit()) {
-      stack.setCount(getInventoryStackLimit());
-    }
-  }
-  @Override
   public int[] getSlotsForFace(EnumFacing side) {
     if (side == EnumFacing.UP) { return new int[] { 0 }; }
     return new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };//for outputting stuff
@@ -243,24 +204,9 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     for (int i = 0; i < tagList.tagCount(); i++) {
       NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
       byte slot = tag.getByte(NBT_SLOT);
-      if (slot >= 0 && slot < inv.length) {
-        inv[slot] = UtilNBT.itemFromNBT(tag);
+      if (slot >= 0 && slot < inv.size()) {
+        inv.set(i,  UtilNBT.itemFromNBT(tag));
       }
     }
-  }
-  @Override
-  public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
-    NBTTagList itemList = new NBTTagList();
-    for (int i = 0; i < inv.length; i++) {
-      ItemStack stack = inv[i];
-      if (stack != null) {
-        NBTTagCompound tag = new NBTTagCompound();
-        tag.setByte(NBT_SLOT, (byte) i);
-        stack.writeToNBT(tag);
-        itemList.appendTag(tag);
-      }
-    }
-    tagCompound.setTag(NBT_INV, itemList);
-    return super.writeToNBT(tagCompound);
   }
 }

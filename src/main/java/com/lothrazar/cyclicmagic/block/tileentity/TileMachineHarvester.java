@@ -5,7 +5,6 @@ import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilShape;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import com.lothrazar.cyclicmagic.util.UtilHarvestCrops.HarestCropsConfig;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
@@ -25,6 +24,7 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
     TIMER, REDSTONE, SIZE
   }
   public TileMachineHarvester() {
+    super(0);
     this.timer = TIMER_FULL;
     conf = new HarestCropsConfig();
     conf.doesCrops = true;
@@ -135,24 +135,6 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
   public int getFieldCount() {
     return Fields.values().length;
   }
-  @Override
-  public int getSizeInventory() {
-    return 0;
-  }
-  @Override
-  public ItemStack getStackInSlot(int index) {
-    return null;
-  }
-  @Override
-  public ItemStack decrStackSize(int index, int count) {
-    return null;
-  }
-  @Override
-  public ItemStack removeStackFromSlot(int index) {
-    return null;
-  }
-  @Override
-  public void setInventorySlotContents(int index, ItemStack stack) {}
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
     return new int[] {};

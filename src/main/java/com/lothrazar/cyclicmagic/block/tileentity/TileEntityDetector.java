@@ -12,11 +12,13 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
 public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITickable {
+  public TileEntityDetector(int invoSize) {
+    super(0);
+  }
   private int rangeX = 5;
   private int rangeY = 5;
   private int rangeZ = 5;
   private int limitUntilRedstone = 5;
-  //  private int ifFoundGreaterThanLimit = 0;
   private boolean isPoweredNow = false;
   private CompareType compType = CompareType.GREATER;
   private EntityType entityType = EntityType.LIVING;

@@ -58,7 +58,7 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
       ItemRegistry.addItem(potion_viscous, "potion_viscous");
       AchievementRegistry.registerItemAchievement(potion_viscous);
       addBrewingRecipe(
-          awkward,
+          new ItemStack(Items.POTIONITEM),//   awkward,
           new ItemStack(Items.DYE, 1, EnumDyeColor.BROWN.getDyeDamage()),
           new ItemStack(potion_viscous));
       JeiDescriptionRegistry.registerWithJeiDescription(potion_viscous);

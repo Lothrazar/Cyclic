@@ -1,7 +1,5 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
 
 /**
  * PLAN: gui to change power and vector.
@@ -25,13 +23,15 @@ public class TileVector extends TileEntityBaseMachineInvo implements ITileRedsto
   private int angle = DEFAULT_ANGLE;
   private int power = DEFAULT_POWER;
   private int yaw = DEFAULT_YAW;
+  public static final String NBT_SOUND = "sound";
   private int playSound = 1;
   private int needsRedstone = 0;
-  public static final String NBT_SOUND = "sound";
   public static enum Fields {
     ANGLE, POWER, YAW, SOUND, REDSTONE;
   }
-  public TileVector() {}
+  public TileVector() {
+    super(0);
+  }
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
@@ -111,28 +111,6 @@ public class TileVector extends TileEntityBaseMachineInvo implements ITileRedsto
   @Override
   public int getFieldCount() {
     return Fields.values().length;
-  }
-  @Override
-  public int getSizeInventory() {
-    return 0;
-  }
-  @Override
-  public ItemStack getStackInSlot(int index) {
-    return null;
-  }
-  @Override
-  public ItemStack decrStackSize(int index, int count) {
-    return null;
-  }
-  @Override
-  public ItemStack removeStackFromSlot(int index) {
-    return null;
-  }
-  @Override
-  public void setInventorySlotContents(int index, ItemStack stack) {}
-  @Override
-  public int[] getSlotsForFace(EnumFacing side) {
-    return new int[] {};
   }
   @Override
   public void toggleNeedsRedstone() {

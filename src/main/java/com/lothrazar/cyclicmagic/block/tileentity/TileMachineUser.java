@@ -5,7 +5,6 @@ import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
-import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -16,7 +15,6 @@ import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.DamageSource;
@@ -33,29 +31,27 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
   // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
-  public static int maxHeight = 10;
-  public static int TIMER_FULL = 80;
-  private ItemStack[] inv;
-  private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots for all faces
-  final int RADIUS = 4;//center plus 4 in each direction = 9x9
   private static final String NBTPLAYERID = "uuid";
-  private static final String NBT_INV = "Inventory";
-  private static final String NBT_SLOT = "Slot";
   private static final String NBT_TIMER = "Timer";
   private static final String NBT_REDST = "redstone";
   private static final String NBT_SPEED = "h";//WTF why did i name it this
   private static final String NBT_LR = "lr";
+  public static int maxHeight = 10;
+  public static int TIMER_FULL = 80;
+  private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots for all faces
+  final int RADIUS = 4;//center plus 4 in each direction = 9x9
   private int speed = 1;
   private int rightClickIfZero = 0;
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
   private int timer;
-  private int needsRedstone = 1;
+  private int needsRedstone = 1;  
+  int toolSlot = 0;
   public static enum Fields {
     TIMER, SPEED, REDSTONE, LEFTRIGHT
   }
   public TileMachineUser() {
-    inv = new ItemStack[9];
+    super(9);
     timer = TIMER_FULL;
     speed = 1;
   }
@@ -75,7 +71,8 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
           return;
         }
       }
-      ItemStack maybeTool = tryEquipItem();
+//      ItemStack maybeTool =
+      tryEquipItem();
       if (isRunning()) {
         timer -= this.getSpeed();
         if (timer <= 0) {
@@ -132,31 +129,32 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
       }
     }
   }
-  int toolSlot = 0;
+
   /**
    * detect if tool stack is empty or destroyed and reruns equip
    */
   private void validateTool() {
     ItemStack maybeTool = getStackInSlot(toolSlot);
-    if (maybeTool != null && maybeTool.getCount() < 0) {
-      maybeTool = null;
-      fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, null);
-      inv[toolSlot] = null;
+    if (maybeTool != ItemStack.EMPTY && maybeTool.getCount() < 0) {
+      maybeTool = ItemStack.EMPTY;
+      fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
+      inv.set(toolSlot, ItemStack.EMPTY);
     }
   }
   private ItemStack tryEquipItem() {
     ItemStack maybeTool = getStackInSlot(toolSlot);
-    if (maybeTool != null) {
+    if (maybeTool != ItemStack.EMPTY) {
       //do we need to make it null
       if (maybeTool.getCount() <= 0) {
-        maybeTool = null;
+        maybeTool = ItemStack.EMPTY;
       }
     }
     fakePlayer.get().setPosition(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ());//seems to help interact() mob drops like milk
     fakePlayer.get().onUpdate();//trigger   ++this.ticksSinceLastSwing; among other things
-    if (maybeTool == null) {//null for any reason
-      fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, null);
-      inv[toolSlot] = null;
+    if (maybeTool == ItemStack.EMPTY) {//null for any reason
+      fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
+
+      inv.set(toolSlot, ItemStack.EMPTY);
     }
     else {
       //so its not null
@@ -182,18 +180,6 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
     tagCompound.setInteger(NBT_REDST, this.needsRedstone);
     tagCompound.setInteger(NBT_SPEED, speed);
     tagCompound.setInteger(NBT_LR, rightClickIfZero);
-    //invo stuff
-    NBTTagList itemList = new NBTTagList();
-    for (int i = 0; i < inv.length; i++) {
-      ItemStack stack = inv[i];
-      if (stack != null) {
-        NBTTagCompound tag = new NBTTagCompound();
-        tag.setByte(NBT_SLOT, (byte) i);
-        stack.writeToNBT(tag);
-        itemList.appendTag(tag);
-      }
-    }
-    tagCompound.setTag(NBT_INV, itemList);
     return super.writeToNBT(tagCompound);
   }
   @Override
@@ -206,55 +192,10 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
     this.needsRedstone = tagCompound.getInteger(NBT_REDST);
     rightClickIfZero = tagCompound.getInteger(NBT_LR);
     speed = tagCompound.getInteger(NBT_SPEED);
-    //invo stuff
-    NBTTagList tagList = tagCompound.getTagList(NBT_INV, 10);
-    for (int i = 0; i < tagList.tagCount(); i++) {
-      NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
-      byte slot = tag.getByte(NBT_SLOT);
-      if (slot >= 0 && slot < inv.length) {
-        inv[slot] = UtilNBT.itemFromNBT(tag);
-      }
-    }
-  }
-  @Override
-  public int getSizeInventory() {
-    return inv.length;
-  }
-  @Override
-  public ItemStack getStackInSlot(int index) {
-    return inv[index];
-  }
-  @Override
-  public ItemStack decrStackSize(int index, int count) {
-    ItemStack stack = getStackInSlot(index);
-    if (stack != null) {
-      if (stack.getCount() <= count) {
-        setInventorySlotContents(index, null);
-      }
-      else {
-        stack = stack.splitStack(count);
-        if (stack.getCount() == 0) {
-          setInventorySlotContents(index, null);
-        }
-      }
-    }
-    return stack;
-  }
-  @Override
-  public ItemStack removeStackFromSlot(int index) {
-    ItemStack stack = getStackInSlot(index);
-    if (stack != null) {
-      setInventorySlotContents(index, null);
-    }
-    return stack;
-  }
-  @Override
-  public void setInventorySlotContents(int index, ItemStack stack) {
-    inv[index] = stack;
-    if (stack != null && stack.getCount() > getInventoryStackLimit()) {
-      stack.setCount( getInventoryStackLimit());
-    }
-  }
+    
+  } 
+
+  
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
     return hopperInput;
@@ -307,15 +248,7 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
   public void setSpeed(int val) {
     this.speed = val;
   }
-  @Override
-  public boolean receiveClientEvent(int id, int value) {
-    if (id >= 0 && id < this.getFieldCount()) {
-      this.setField(id, value);
-      return true;
-    }
-    else
-      return super.receiveClientEvent(id, value);
-  }
+
   @Override
   public int getFieldCount() {
     return Fields.values().length;
