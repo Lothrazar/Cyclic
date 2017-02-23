@@ -5,8 +5,8 @@
     "1.9.4-recommended":  "1.2.0",
     "1.10-latest":  "1.1.0",
     "1.10-recommended": "1.1.0",
-    "1.10.2-latest":  "1.10.10",
-    "1.10.2-recommended": "1.10.10"
+    "1.10.2-latest":  "1.10.11",
+    "1.10.2-recommended": "1.10.11"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -112,5 +112,6 @@
 	,"1.10.8":"New item: Merchant Almanac - This opens an improved trading interface for the nearest villager.  "
   	,"1.10.9":"Remove some logging messages that were spamming the logs."
   	,"1.10.10":"Merchants Almanac: The button tooltips now list out all enchantments if the items being sold (books/armor/anything)"
+  	,"1.10.11":"Fix broken texture in Pattern Builder"
   }
 }
