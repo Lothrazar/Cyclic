@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -54,7 +55,7 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
-    tooltip.add(this.getTooltip() + getLocationsCount(stack));
+    tooltip.add(UtilChat.lang(getTooltip()) + getLocationsCount(stack));
   }
   public static int getLargestSlot(ItemStack itemStack) {
     return UtilNBT.getItemStackNBT(itemStack).getInteger(KEY_LARGEST);
