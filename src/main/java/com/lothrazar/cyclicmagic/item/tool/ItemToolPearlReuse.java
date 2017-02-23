@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
@@ -52,8 +53,8 @@ public class ItemToolPearlReuse extends BaseTool implements IHasRecipe {
             "rsr",
             "ere",
             'e', new ItemStack(Items.ENDER_EYE),
-            'r', new ItemStack(Blocks.LAPIS_BLOCK),
-            's', new ItemStack(Blocks.EMERALD_BLOCK));
+            'r', new ItemStack(Items.DYE,1,EnumDyeColor.BLUE.getDyeDamage()),
+            's', new ItemStack(Blocks.IRON_BLOCK));
       break;
       case NORMAL:
         GameRegistry.addShapedRecipe(new ItemStack(this),
@@ -61,8 +62,8 @@ public class ItemToolPearlReuse extends BaseTool implements IHasRecipe {
             "rsr",
             "ere",
             'e', new ItemStack(Items.ENDER_EYE),
-            'r', new ItemStack(Blocks.REDSTONE_BLOCK),
-            's', new ItemStack(Blocks.EMERALD_BLOCK));
+            'r', Items.REDSTONE,
+            's', new ItemStack(Blocks.IRON_BLOCK));
       break;
       default:
       break;
