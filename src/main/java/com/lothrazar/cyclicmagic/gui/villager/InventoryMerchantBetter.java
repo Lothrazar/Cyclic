@@ -41,7 +41,6 @@ public class InventoryMerchantBetter extends InventoryMerchant implements IInven
   @Nullable
   public ItemStack decrStackSize(int index, int count) {
     if (index == 2 && this.theInventory[index] != null) {
-      System.out.println("decrStackSize " + this.theInventory[index]);
       return ItemStackHelper.getAndSplit(this.theInventory, index, this.theInventory[index].stackSize);
     }
     else {
