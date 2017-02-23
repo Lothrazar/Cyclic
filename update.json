@@ -112,6 +112,6 @@
 	,"1.10.8":"New item: Merchant Almanac - This opens an improved trading interface for the nearest villager.  "
   	,"1.10.9":"Remove some logging messages that were spamming the logs."
   	,"1.10.10":"Merchants Almanac: The button tooltips now list out all enchantments if the items being sold (books/armor/anything)"
-  	,"1.10.11":"Fix broken texture in Pattern Builder.  Fix error in Ender Book tooltip.  "
+  	,"1.10.11":"Fix broken texture in Pattern Builder.  Fix error in Ender Book tooltip.  The buttons to open your extended inventory & 3x3 crafting table now will show the letter of the key you have bound to open it; defaulting to the old 'I' 'C' as before if the keys are unbound.  "
   }
 }
