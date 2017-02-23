@@ -27,7 +27,6 @@ public class ItemFoodInventory extends ItemFood implements IHasRecipe, IHasConfi
   private static final int numFood = 10;
   public ItemFoodInventory() {
     super(numFood, false);
-    this.setMaxStackSize(1);
     this.setAlwaysEdible();
   }
   @Override
