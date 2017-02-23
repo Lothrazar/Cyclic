@@ -16,12 +16,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITickable {
-
   final static int spotsSkippablePerTrigger = 50;
   private static final int maxSpeed = 1;
   public static final int TIMER_FULL = 10;// 100;//one day i will add fuel AND/OR speed upgrades. till then make very slow
   private static final int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots
- 
   private static final String NBT_TIMER = "Timer";
   private static final String NBT_BUILDTYPE = "build";
   private static final String NBT_SPEED = "speed";
@@ -92,7 +90,6 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
     //move center over that much, not including exact horizontal
     return this.getPos().offset(this.getCurrentFacing(), this.getSize() + 1);
   }
-
   @Override
   public boolean isItemValidForSlot(int index, ItemStack stack) {
     return Block.getBlockFromItem(stack.getItem()) != null;
@@ -203,7 +200,6 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
   public int getFieldCount() {
     return Fields.values().length;
   }
-
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
@@ -234,7 +230,6 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
   public void update() {
     shiftAllUp();
     boolean trigger = false;
-
     if (!isRunning()) { return; }
     this.spawnParticlesAbove();
     World world = getWorld();
@@ -242,13 +237,12 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
     //      UtilParticle.spawnParticlePacket(EnumParticleTypes.DRAGON_BREATH, nextPos);
     //    }
     ItemStack stack = getStackInSlot(0);
-    if (stack != null) {
+    if (stack != ItemStack.EMPTY) {
       timer -= this.getSpeed();
       if (timer <= 0) {
         timer = TIMER_FULL;
         trigger = true;
       }
-      
     }
     if (trigger) {
       Block stuff = Block.getBlockFromItem(stack.getItem());
@@ -293,8 +287,6 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
   public int[] getSlotsForFace(EnumFacing side) {
     return hopperInput;
   }
-
-
   @Override
   public void toggleNeedsRedstone() {
     int val = this.needsRedstone + 1;

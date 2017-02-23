@@ -79,9 +79,9 @@ public class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements 
   protected void shiftPairUp(int low, int high) {
     ItemStack main = getStackInSlot(low);
     ItemStack second = getStackInSlot(high);
-    if (main == null && second != null) { // if the one below this is not
+    if (main == ItemStack.EMPTY && second != ItemStack.EMPTY) { // if the one below this is not
       // empty, move it up
-      this.setInventorySlotContents(high, null);
+      this.setInventorySlotContents(high, ItemStack.EMPTY);
       this.setInventorySlotContents(low, second);
     }
   }
@@ -96,14 +96,14 @@ public class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements 
   @Override
   public ItemStack decrStackSize(int index, int count) {
     ItemStack stack = getStackInSlot(index);
-    if (stack != null) {
+    if (stack != ItemStack.EMPTY) {
       if (stack.getMaxStackSize() <= count) {
-        setInventorySlotContents(index, null);
+        setInventorySlotContents(index, ItemStack.EMPTY);
       }
       else {
         stack = stack.splitStack(count);
         if (stack.getMaxStackSize() == 0) {
-          setInventorySlotContents(index, null);
+          setInventorySlotContents(index, ItemStack.EMPTY);
         }
       }
     }
@@ -117,7 +117,10 @@ public class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements 
   }
   @Override
   public void setInventorySlotContents(int index, ItemStack stack) {
-    if (stack != null && stack.getMaxStackSize() > getInventoryStackLimit()) {
+    if (stack == null) {
+      stack = ItemStack.EMPTY;
+    }
+    if (stack != ItemStack.EMPTY && stack.getMaxStackSize() > getInventoryStackLimit()) {
       stack.setCount(getInventoryStackLimit());
     }
     inv.set(index, stack);
@@ -158,7 +161,7 @@ public class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements 
     NBTTagList itemList = new NBTTagList();
     for (int i = 0; i < inv.size(); i++) {
       ItemStack stack = inv.get(i);
-      if (stack != null) {
+      if (stack != ItemStack.EMPTY) {
         NBTTagCompound tag = new NBTTagCompound();
         tag.setByte(NBT_SLOT, (byte) i);
         stack.writeToNBT(tag);
@@ -166,14 +169,14 @@ public class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements 
       }
     }
     compound.setTag(NBT_INV, itemList);
-  }  
+  }
   @Override
   public boolean receiveClientEvent(int id, int value) {
     if (id >= 0 && id < this.getFieldCount()) {
       this.setField(id, value);
       return true;
     }
-    else{
+    else {
       return super.receiveClientEvent(id, value);
     }
   }

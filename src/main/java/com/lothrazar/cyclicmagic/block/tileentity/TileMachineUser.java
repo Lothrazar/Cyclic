@@ -45,7 +45,7 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
   private int timer;
-  private int needsRedstone = 1;  
+  private int needsRedstone = 1;
   int toolSlot = 0;
   public static enum Fields {
     TIMER, SPEED, REDSTONE, LEFTRIGHT
@@ -71,7 +71,7 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
           return;
         }
       }
-//      ItemStack maybeTool =
+      //      ItemStack maybeTool =
       tryEquipItem();
       if (isRunning()) {
         timer -= this.getSpeed();
@@ -101,7 +101,7 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
                   ent != null && ent.isDead == false
                   && fakePlayer != null && fakePlayer.get() != null) {
                 validateTool(); //recheck this at every step so we dont go negative
-                fakePlayer.get().interactOn(ent,  EnumHand.MAIN_HAND);
+                fakePlayer.get().interactOn(ent, EnumHand.MAIN_HAND);
               }
             }
           }
@@ -114,9 +114,11 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
               fakePlayer.get().attackTargetEntityWithCurrentItem(ent);
               //THANKS TO FORUMS http://www.minecraftforge.net/forum/index.php?topic=43152.0
               IAttributeInstance damage = new AttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-              if (held != null)
-                for (AttributeModifier modifier : held.getAttributeModifiers(EntityEquipmentSlot.MAINHAND).get(SharedMonsterAttributes.ATTACK_DAMAGE.getName()))
-                damage.applyModifier(modifier);
+              if (held != ItemStack.EMPTY) {
+                for (AttributeModifier modifier : held.getAttributeModifiers(EntityEquipmentSlot.MAINHAND).get(SharedMonsterAttributes.ATTACK_DAMAGE.getName())) {
+                  damage.applyModifier(modifier);
+                }
+              }
               float dmgVal = (float) damage.getAttributeValue();
               float f1 = EnchantmentHelper.getModifierForCreature(held, (ent).getCreatureAttribute());
               ent.attackEntityFrom(DamageSource.causePlayerDamage(fakePlayer.get()), dmgVal + f1);
@@ -129,7 +131,6 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
       }
     }
   }
-
   /**
    * detect if tool stack is empty or destroyed and reruns equip
    */
@@ -153,7 +154,6 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
     fakePlayer.get().onUpdate();//trigger   ++this.ticksSinceLastSwing; among other things
     if (maybeTool == ItemStack.EMPTY) {//null for any reason
       fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
-
       inv.set(toolSlot, ItemStack.EMPTY);
     }
     else {
@@ -192,10 +192,7 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
     this.needsRedstone = tagCompound.getInteger(NBT_REDST);
     rightClickIfZero = tagCompound.getInteger(NBT_LR);
     speed = tagCompound.getInteger(NBT_SPEED);
-    
-  } 
-
-  
+  }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
     return hopperInput;
@@ -248,7 +245,6 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
   public void setSpeed(int val) {
     this.speed = val;
   }
-
   @Override
   public int getFieldCount() {
     return Fields.values().length;

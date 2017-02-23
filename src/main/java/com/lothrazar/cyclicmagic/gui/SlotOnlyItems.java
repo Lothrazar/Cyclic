@@ -14,9 +14,9 @@ public class SlotOnlyItems extends Slot {
   }
   @Override
   public void onSlotChanged() {
-    if (this.getHasStack() && this.getStack().getCount() == 0) {
-      this.putStack((ItemStack) null);
-    }
-    super.onSlotChanged();
+//    if (this.getHasStack() && this.getStack().getCount() == 0) {
+//      this.putStack(ItemStack.EMPTY);
+//    }
+//    super.onSlotChanged();
   }
 }
