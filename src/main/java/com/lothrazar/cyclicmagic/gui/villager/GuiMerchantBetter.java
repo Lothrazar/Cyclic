@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.gui.villager;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
@@ -14,9 +15,12 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
@@ -29,7 +33,7 @@ public class GuiMerchantBetter extends GuiBaseContainer {
   static final int texture_width = 250;
   static final int texture_height = 212;
   public static final ResourceLocation GUI = new ResourceLocation(Const.MODID, Const.Res.folder + "villager.png");
-  public static final ResourceLocation TRADE_REDX = new ResourceLocation(Const.MODID,  Const.Res.folder +"tradex.png");
+  public static final ResourceLocation TRADE_REDX = new ResourceLocation(Const.MODID, Const.Res.folder + "tradex.png");
   private int btnColCount = 4;
   private int yBtnStart;
   private int lastUnusedButtonId;
@@ -149,10 +153,20 @@ public class GuiMerchantBetter extends GuiBaseContainer {
       if (merchantrecipelist == null) { return tt; }
       MerchantRecipe r = merchantrecipelist.get(recipeIndex);
       if (r == null) { return tt; }
-      if (r.isRecipeDisabled())
+      if (r.isRecipeDisabled()) {
         tt.add(UtilChat.lang("merchant.deprecated"));
-      else
+      }
+      else {
         tt.add(UtilChat.lang("tile.tool_trade.button.tooltip"));
+      }
+      if (r.getItemToSell() != null) {// && r.getItemToSell().getItem() == Items.ENCHANTED_BOOK
+        Map<Enchantment, Integer> map = EnchantmentHelper.getEnchantments(r.getItemToSell());
+        if (map != null) {
+          for (Map.Entry<Enchantment, Integer> entry : map.entrySet()) {
+            tt.add(entry.getKey().getTranslatedName(entry.getValue()));
+          }
+        }
+      }
       return tt;
     }
   }
