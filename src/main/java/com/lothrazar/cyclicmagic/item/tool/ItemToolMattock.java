@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.Set;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -118,6 +119,10 @@ public class ItemToolMattock extends ItemTool implements IHasRecipe {
       }
     }
     return super.onBlockStartBreak(stack, posHit, player);
+  }
+  @Override
+  public void addInformation(ItemStack held, EntityPlayer player, List<String> list, boolean par4) {
+    list.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
   }
   @Override
   public void addRecipe() {

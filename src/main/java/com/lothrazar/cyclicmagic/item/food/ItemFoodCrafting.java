@@ -23,7 +23,6 @@ public class ItemFoodCrafting extends ItemFood implements IHasRecipe {
   private static final int numFood = 10;
   public ItemFoodCrafting() {
     super(numFood, false);
-    this.setMaxStackSize(1);
     this.setAlwaysEdible();
   }
   @Override
