@@ -33,7 +33,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   public static final int RODSLOT = 1;
   public static final int FISHSLOTS = 15;
   public static final int MINIMUM_WET_SIDES = 2;
-  public static final float SPEEDFACTOR = 0.00089F;//// bigger == faster
+  public static final float SPEEDFACTOR = 0.00089F;//0.00089F;//// bigger == faster
   private int toolSlot = 0;
   public ArrayList<Block> waterBoth = new ArrayList<Block>();
   public TileEntityFishing() {
@@ -134,11 +134,11 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   }
   private void tryAddToInventory(ItemStack itemstack) {
     for (int i = RODSLOT; i <= FISHSLOTS; i++) {
-      if (itemstack != null && itemstack.getMaxStackSize() != 0) {
+      if (itemstack != ItemStack.EMPTY && itemstack.getMaxStackSize() != 0) {
         itemstack = tryMergeStackIntoSlot(itemstack, i);
       }
     }
-    if (itemstack != null && itemstack.getMaxStackSize() != 0) { //FULL
+    if (itemstack != ItemStack.EMPTY && itemstack.getMaxStackSize() != 0) { //FULL
       UtilItemStack.dropItemStackInWorld(this.getWorld(), this.pos.down(), itemstack);
     }
   }
@@ -159,7 +159,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   }
   private void damageTool() {
     ItemStack equip = this.getStackInSlot(toolSlot);
-    if (equip != null) {
+    if (equip != ItemStack.EMPTY) {
       equip.attemptDamageItem(1, getWorld().rand);//does respect unbreaking
       //IF enchanted and IF about to break, then spit it out
       int damageRem = equip.getMaxDamage() - equip.getItemDamage();
@@ -175,9 +175,9 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
   private ItemStack tryMergeStackIntoSlot(ItemStack held, int furnaceSlot) {
     ItemStack current = this.getStackInSlot(furnaceSlot);
     boolean success = false;
-    if (current == null) {
+    if (current.isEmpty()) {
       this.setInventorySlotContents(furnaceSlot, held);
-      held = null;
+      held = ItemStack.EMPTY;
       success = true;
     }
     else if (held.isItemEqual(current)) {
@@ -185,8 +185,8 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
       UtilItemStack.mergeItemsBetweenStacks(held, current);
     }
     if (success) {
-      if (held != null && held.getMaxStackSize() == 0) {// so now we just fix if something is size zero
-        held = null;
+      if (held != ItemStack.EMPTY && held.getMaxStackSize() == 0) {// so now we just fix if something is size zero
+        held = ItemStack.EMPTY;
       }
       this.markDirty();
     }
