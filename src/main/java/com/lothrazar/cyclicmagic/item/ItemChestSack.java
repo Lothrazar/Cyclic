@@ -42,7 +42,7 @@ public class ItemChestSack extends BaseItem {
     if (worldIn.isAirBlock(offset) == false) { return EnumActionResult.FAIL; }
     ItemStack stack = playerIn.getHeldItem(hand);
     if (createAndFillChest(playerIn, stack, offset)) {
-      playerIn.setHeldItem(hand, null);
+      playerIn.setHeldItem(hand, ItemStack.EMPTY);
       UtilSound.playSound(playerIn, pos, SoundRegistry.thunk);
       if (playerIn.capabilities.isCreativeMode == false && emptySack != null) {//its never really null tho
         UtilItemStack.dropItemStackInWorld(worldIn, playerIn.getPosition(), emptySack);
