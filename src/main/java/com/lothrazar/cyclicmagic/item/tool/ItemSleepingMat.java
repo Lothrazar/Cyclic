@@ -77,14 +77,16 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig 
         player.motionX = player.motionZ = player.motionY = 0;
         world.updateAllPlayersSleepingFlag();
 
-        world.setBlockState(player.getPosition(), Blocks.BED.getDefaultState());
-//        SPacketUseBed sleepPacket = new SPacketUseBed(player, player.getPosition());
-//        mp.getServerWorld().getEntityTracker().sendToTracking(player, sleepPacket);
-//        mp.connection.sendPacket(sleepPacket);
+//        world.setBlockState(player.getPosition(), Blocks.BED.getDefaultState());
+        SPacketUseBed sleepPacket = new SPacketUseBed(player, player.getPosition());
+        mp.getServerWorld().getEntityTracker().sendToTracking(player, sleepPacket);
+        mp.connection.sendPacket(sleepPacket);
         
+        player.bedLocation = player.getPosition();
 
         System.out.println("end");
         
+        UtilChat.addChatMessage(player, this.getUnlocalizedName() + ".trying");
         //as with 1.10.2, we do not set   player.bedLocation = on purpose
         return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
       }
@@ -111,15 +113,18 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig 
   }
   @SubscribeEvent
   public void onBedCheck(SleepingLocationCheckEvent evt) {
-      final IPlayerExtendedProperties sleep = evt.getEntityPlayer().getCapability(ModCyclic.CAPABILITYSTORAGE, null);
+    EntityPlayer p = evt.getEntityPlayer();
+      final IPlayerExtendedProperties sleep = p.getCapability(ModCyclic.CAPABILITYSTORAGE, null);
     if (sleep != null && sleep.isSleeping()) {
       System.out.println("onBedCheck  ALLOW");
+      
+
+      p.bedLocation = p.getPosition();
       evt.setResult(Result.ALLOW);
     }
   }
   @SubscribeEvent
   public void handleSleepInBed(PlayerSleepInBedEvent event) {
-    System.out.println("handleSleepInBed");
     final IPlayerExtendedProperties sleep = event.getEntityPlayer().getCapability(ModCyclic.CAPABILITYSTORAGE, null);
     if (sleep != null && sleep.isSleeping()) {
       System.out.println("handleSleepInBed  OK");
@@ -137,13 +142,13 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig 
       BlockPos pos = p.getPosition();
       sleep.setSleeping(false);
       
-      
-      if(
-          world.getBlockState(pos).getBlock() == Blocks.BED){
-
-        System.out.println("onWakeUpDESTRY");
-        world.setBlockToAir(pos); 
-      }
+//      
+//      if(
+//          world.getBlockState(pos).getBlock() == Blocks.BED){
+//
+//        System.out.println("onWakeUpDESTRY");
+//        world.setBlockToAir(pos); 
+//      }
       
     }
   }
