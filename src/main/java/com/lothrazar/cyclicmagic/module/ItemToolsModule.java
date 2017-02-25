@@ -348,7 +348,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
     EntityPlayer player = Minecraft.getMinecraft().player;
     if (!player.isSneaking() || event.getDwheel() == 0) { return; }
     ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
-    if (wand == null) { return; }
+    if (wand == ItemStack.EMPTY) { return; }
     //if theres only one spell, do nothing
     if (SpellRegistry.getSpellbook(wand) == null || SpellRegistry.getSpellbook(wand).size() <= 1) { return; }
     if (event.getDwheel() < 0) {
@@ -367,7 +367,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   public void onRenderTextOverlay(RenderGameOverlayEvent.Text event) {
     ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(Minecraft.getMinecraft().player);
     // special new case: no hud for this type
-    if (wand != null) {
+    if (wand != ItemStack.EMPTY) {
       spellHud.drawSpellWheel(wand);
     }
   }
@@ -377,10 +377,10 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
     if (event.isCanceled() || event.getType() != ElementType.EXPERIENCE) { return; }
     EntityPlayer effectivePlayer = Minecraft.getMinecraft().player;
     ItemStack heldWand = UtilSpellCaster.getPlayerWandIfHeld(effectivePlayer);
-    if (heldWand == null) { return; }
+    if (heldWand == ItemStack.EMPTY) { return; }
     int itemSlot = ItemCyclicWand.BuildType.getSlot(heldWand);
     ItemStack current = InventoryWand.getFromSlot(heldWand, itemSlot);
-    if (current != null) {
+    if (current != ItemStack.EMPTY) {
       //THE ITEM INSIDE THE BUILDY WHEEL
       int leftOff = 7, rightOff = -26, topOff = 36, bottOff = -2;
       int xmain = RenderLoc.locToX(ItemToolsModule.renderLocation, leftOff, rightOff);
@@ -434,9 +434,9 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
       xmain = RenderLoc.locToX(ItemToolsModule.renderLocation, leftOff, rightOff);
       ymain = RenderLoc.locToY(ItemToolsModule.renderLocation, topOff, bottOff);
       EntityPlayer player = Minecraft.getMinecraft().player;
+      if (SpellRegistry.getSpellbook(wand) == null || SpellRegistry.getSpellbook(wand).size() <= 1) { return; }
       ISpell spellCurrent = UtilSpellCaster.getPlayerCurrentISpell(player);
       //if theres only one spell, do not do the rest eh
-      if (SpellRegistry.getSpellbook(wand) == null || SpellRegistry.getSpellbook(wand).size() <= 1) { return; }
       drawCurrentSpell(player, spellCurrent);
       drawNextSpells(player, spellCurrent);
       drawPrevSpells(player, spellCurrent);

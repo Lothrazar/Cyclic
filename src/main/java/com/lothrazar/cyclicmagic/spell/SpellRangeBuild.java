@@ -5,12 +5,14 @@ import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
 import com.lothrazar.cyclicmagic.item.tool.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.net.PacketSpellFromServer;
 import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
@@ -38,7 +40,7 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
         ModCyclic.network.sendToServer(new PacketSpellFromServer(mouseover, offset, sideMouseover, this.getID()));
       }
       ItemStack heldWand = UtilSpellCaster.getPlayerWandIfHeld(p);
-      if (heldWand != null) {
+      if (heldWand != ItemStack.EMPTY) {
         int itemSlot = ItemCyclicWand.BuildType.getSlot(heldWand);
         IBlockState state = InventoryWand.getToPlaceFromSlot(heldWand, itemSlot);
         if (state != null && state.getBlock() != null && offset != null) {
@@ -51,9 +53,10 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
   public void castFromServer(BlockPos posMouseover, BlockPos posOffset, @Nullable EnumFacing sideMouseover, EntityPlayer p) {
     World world = p.getEntityWorld();
     ItemStack heldWand = UtilSpellCaster.getPlayerWandIfHeld(p);
-    if (heldWand == null) { return; }
+    if (heldWand == ItemStack.EMPTY) { return; }
     int itemSlot = ItemCyclicWand.BuildType.getSlot(heldWand);
     IBlockState state = InventoryWand.getToPlaceFromSlot(heldWand, itemSlot);
+
     if (state == null || state.getBlock() == null) {
       //one last chance to update slot, in case something happened
       ItemCyclicWand.BuildType.setNextSlot(heldWand);
@@ -141,14 +144,18 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
     }
     //    if (UtilPlaceBlocks.placeStateSafe(world, p, posToPlaceAt, state)) {
     ItemStack cur = InventoryWand.getFromSlot(heldWand, itemSlot);
+  
     if (sideMouseover == null) {
       sideMouseover = p.getHorizontalFacing();
     }
-    if (posToPlaceAt != null && cur.onItemUse(p, world, posToPlaceAt, p.getActiveHand(), sideMouseover, 0.5F, 0.5F, 0.5F) == EnumActionResult.SUCCESS) {
+    //onitemuse is decrementing stack size of player.hand, which is the wand! bad MC
+    // && cur.onItemUse(p, world, posToPlaceAt, p.getActiveHand(), sideMouseover, 0.5F, 0.5F, 0.5F) == EnumActionResult.SUCCESS
+    if (posToPlaceAt != null && UtilPlaceBlocks.placeStateSafe(world, p, posToPlaceAt, state)) {
       if (p.capabilities.isCreativeMode == false) {
         InventoryWand.decrementSlot(heldWand, itemSlot);
       }
       ItemCyclicWand.BuildType.setNextSlot(heldWand);
+
       // yes im spawning particles on the server side, but the
       // util handles that
       this.spawnParticle(world, p, posMouseover);

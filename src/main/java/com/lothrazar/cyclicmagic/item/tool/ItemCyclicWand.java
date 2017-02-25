@@ -92,8 +92,8 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
     // so this only happens IF either onItemUse did not fire at all, or it
     // fired and casting failed
     boolean success = UtilSpellCaster.tryCastCurrent(worldIn, playerIn, null, null, itemStackIn, hand);
-    return success ? new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn)
-        : new ActionResult<ItemStack>(EnumActionResult.FAIL, itemStackIn);
+//    return success ? new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn)
+    return new ActionResult<ItemStack>(EnumActionResult.FAIL, itemStackIn);
   }
   @Override
   public int getMaxItemUseDuration(ItemStack stack) {
@@ -135,7 +135,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
       }
     }
     public static int get(ItemStack wand) {
-      if (wand == null) { return 0; }
+      if (wand == ItemStack.EMPTY) { return 0; }
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       return tags.getInteger(NBT);
     }
@@ -149,7 +149,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
       tags.setInteger(NBT, type);
       wand.setTagCompound(tags);
       int slot = getSlot(wand);
-      if (InventoryWand.getFromSlot(wand, slot) == null || InventoryWand.getToPlaceFromSlot(wand, slot) == null) {
+      if (InventoryWand.getFromSlot(wand, slot) == ItemStack.EMPTY || InventoryWand.getToPlaceFromSlot(wand, slot) == null) {
         //try to move away from empty slot
         setNextSlot(wand);
       }
