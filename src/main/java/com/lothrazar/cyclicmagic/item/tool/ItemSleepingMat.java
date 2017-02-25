@@ -3,6 +3,8 @@ import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.BaseTool;
+import com.lothrazar.cyclicmagic.net.PacketSleepClient;
+import com.lothrazar.cyclicmagic.net.PacketSyncPlayerFlying;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -76,18 +78,18 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig 
         ObfuscationReflectionHelper.setPrivateValue(EntityPlayer.class, player, 0, "sleepTimer", "field_71076_b");
         player.motionX = player.motionZ = player.motionY = 0;
         world.updateAllPlayersSleepingFlag();
-
+        player.bedLocation = player.getPosition();
 //        world.setBlockState(player.getPosition(), Blocks.BED.getDefaultState());
         SPacketUseBed sleepPacket = new SPacketUseBed(player, player.getPosition());
         mp.getServerWorld().getEntityTracker().sendToTracking(player, sleepPacket);
         mp.connection.sendPacket(sleepPacket);
-        
-        player.bedLocation = player.getPosition();
+         
 
         System.out.println("end");
         
         UtilChat.addChatMessage(player, this.getUnlocalizedName() + ".trying");
         //as with 1.10.2, we do not set   player.bedLocation = on purpose
+        ModCyclic.network.sendTo(new PacketSleepClient( player.bedLocation ),  mp);
         return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
       }
       else {
