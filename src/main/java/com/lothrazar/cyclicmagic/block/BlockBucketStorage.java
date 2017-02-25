@@ -120,7 +120,7 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer entityPlayer, EnumHand hand,  EnumFacing side, float hitX, float hitY, float hitZ) {
     if (hand != EnumHand.MAIN_HAND) { return false; }
     ItemStack held = entityPlayer.getHeldItem(hand);
-    if (held != null) { return false; }
+    if (held != ItemStack.EMPTY) { return false; }
     Block blockClicked = state.getBlock();
     if ((blockClicked instanceof BlockBucketStorage) == false) { return false; }
     BlockBucketStorage block = (BlockBucketStorage) blockClicked;
@@ -165,7 +165,7 @@ public class BlockBucketStorage extends BlockBase implements ITileEntityProvider
       UtilChat.addChatMessage(entityPlayer, new TextComponentTranslation(inside + ""));
       return;// no sounds just tell us how much
     }
-    if (held == null) { return; }
+    if (held.isEmpty()) { return; }
     // before we add the bucket, wait and should we set the block first?
     if (block.bucketItem == null) {
       IBlockState state = null;
