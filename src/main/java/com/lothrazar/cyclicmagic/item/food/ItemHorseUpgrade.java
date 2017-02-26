@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.item.food;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.BaseItem;
 import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
 import com.lothrazar.cyclicmagic.util.Const.HorseMeta;
@@ -63,6 +64,9 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
             horse.getEntityAttribute(ReflectionRegistry.horseJumpStrength).setBaseValue(newjump);
             success = true;
           }
+        }
+        else{
+          ModCyclic.logger.warn("Failed to set horse jump strength, reflection failed on JUMP_STRENGTH");
         }
       break;
       case SPEED:
