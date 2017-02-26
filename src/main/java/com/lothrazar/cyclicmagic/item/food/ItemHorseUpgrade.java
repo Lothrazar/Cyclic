@@ -10,7 +10,9 @@ import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.passive.AbstractHorse;
 import net.minecraft.entity.passive.EntityHorse;
+import net.minecraft.entity.passive.EntityWolf;
 //import net.minecraft.entity.passive.HorseType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -46,7 +48,7 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
   public void addRecipe() {
     GameRegistry.addShapelessRecipe(new ItemStack(this), Items.CARROT, recipeItem);
   }
-  public static void onHorseInteract(EntityHorse horse, EntityPlayer player, ItemStack held, ItemHorseUpgrade heldItem) {
+  public static void onHorseInteract(AbstractHorse horse, EntityPlayer player, ItemStack held, ItemHorseUpgrade heldItem) {
     boolean success = false;
     switch (heldItem.upgradeType) {
       case HEALTH:
@@ -78,7 +80,8 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
         }
       break;
       case TYPE:
-        
+       // EntityDonkey, EntityHorse, EntitySkeletonHorse,  EntityZombieHorse 
+     
 //        switch (horse.getType()) {
 //          case HORSE:
 //            horse.setType(HorseType.ZOMBIE);

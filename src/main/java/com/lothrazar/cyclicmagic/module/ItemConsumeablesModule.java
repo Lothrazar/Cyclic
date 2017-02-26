@@ -14,6 +14,7 @@ import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
 import com.lothrazar.cyclicmagic.util.Const;
+import net.minecraft.entity.passive.AbstractHorse;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -105,8 +106,8 @@ public class ItemConsumeablesModule extends BaseEventModule implements IHasConfi
     EntityPlayer entityPlayer = (EntityPlayer) event.getEntity();
     ItemStack held = entityPlayer.getHeldItemMainhand();
     if (held != null && held.getItem() instanceof ItemHorseUpgrade && held.getCount() > 0
-        && event.getTarget() instanceof EntityHorse) {
-      ItemHorseUpgrade.onHorseInteract((EntityHorse) event.getTarget(), entityPlayer, held, (ItemHorseUpgrade) held.getItem());
+        && event.getTarget() instanceof AbstractHorse) {
+      ItemHorseUpgrade.onHorseInteract((AbstractHorse) event.getTarget(), entityPlayer, held, (ItemHorseUpgrade) held.getItem());
       event.setCanceled(true);// stop the GUI inventory opening && horse mounting
     }
   }
