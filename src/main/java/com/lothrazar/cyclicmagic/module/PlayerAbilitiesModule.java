@@ -14,6 +14,7 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemTool;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
@@ -38,7 +39,7 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
   private boolean nameVillagerTag;
   private boolean passThroughClick;
   private boolean armorStandSwap;
-  private static boolean stardewFurnace; // inspired by stardew valley
+  private boolean stardewFurnace; // inspired by stardew valley
   @SubscribeEvent
   public void onInteract(PlayerInteractEvent.RightClickBlock event) {
     if (passThroughClick) {
@@ -97,7 +98,7 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
         BlockPos posBehind = pos.offset(face.getOpposite()).down();
         IBlockState stuffBehind = worldObj.getBlockState(posBehind);
         if (stuffBehind != null && stuffBehind.getBlock() != null && worldObj.getTileEntity(posBehind) != null) {
-          stuffBehind.getBlock().onBlockActivated(worldObj, posBehind, stuffBehind, entityPlayer, event.getHand(),  face, 0, 0, 0);
+          stuffBehind.getBlock().onBlockActivated(worldObj, posBehind, stuffBehind, entityPlayer, event.getHand(), face, 0, 0, 0);
           event.setCanceled(true);
         }
       }
@@ -173,12 +174,13 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
       TileEntity tile = worldObj.getTileEntity(pos);
       if (tile instanceof TileEntityFurnace) {
         TileEntityFurnace furnace = (TileEntityFurnace) tile;
-        if (held == null) {
+        if (held.isEmpty()) {
           UtilFurnace.extractFurnaceOutput(furnace, entityPlayer);
         }
         else {
           //holding a non null stack for sure
-          if (UtilFurnace.canBeSmelted(held)) {
+          //ALSO tools are smeltable now in new 1.11, but we skip that eh
+          if (UtilFurnace.canBeSmelted(held) && (held.getItem() instanceof ItemTool) == false) {
             UtilFurnace.tryMergeStackIntoSlot(furnace, entityPlayer, playerSlot, UtilFurnace.SLOT_INPUT);
           }
           else if (UtilFurnace.isFuel(held)) {
@@ -188,14 +190,14 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
       }
     }
     if (easyEnderChest) {
-      if (held != null && held.getItem() == Item.getItemFromBlock(Blocks.ENDER_CHEST)) {
+      if (held != ItemStack.EMPTY && held.getItem() == Item.getItemFromBlock(Blocks.ENDER_CHEST)) {
         entityPlayer.displayGUIChest(entityPlayer.getInventoryEnderChest());
       }
     }
     if (editableSigns) {
       if (pos == null) { return; }
       TileEntity tile = worldObj.getTileEntity(pos);
-      if (held == null && tile instanceof TileEntitySign) {
+      if (held == ItemStack.EMPTY && tile instanceof TileEntitySign) {
         TileEntitySign sign = (TileEntitySign) tile;
         if (worldObj.isRemote == true) {//this method has    @SideOnly(Side.CLIENT) flag
           sign.setEditable(true);
