@@ -59,6 +59,7 @@ public class ItemConsumeablesModule extends BaseEventModule implements IHasConfi
       ItemRegistry.addItem(apple_emerald, "apple_emerald");
       LootTableRegistry.registerLoot(apple_emerald);
       ItemRegistry.registerWithJeiDescription(apple_emerald);
+      ModCyclic.instance.events.register(apple_emerald);
     }
     if (enableHeartContainer) {
       ItemFoodHeart heart_food = new ItemFoodHeart();
