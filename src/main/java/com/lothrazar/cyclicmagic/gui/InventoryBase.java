@@ -31,14 +31,14 @@ public class InventoryBase {
   }
   public ItemStack decrStackSize(int index, int count) {
     ItemStack stack = getStackInSlot(index);
-    if (stack != null) {
+    if (stack != ItemStack.EMPTY) {
       if (stack.getMaxStackSize() <= count) {
-        setInventorySlotContents(index, null);
+        setInventorySlotContents(index, ItemStack.EMPTY);
       }
       else {
         stack = stack.splitStack(count);
         if (stack.getMaxStackSize() == 0) {
-          setInventorySlotContents(index, null);
+          setInventorySlotContents(index, ItemStack.EMPTY);
         }
       }
     }

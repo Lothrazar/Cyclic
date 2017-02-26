@@ -15,7 +15,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 
 public class InventoryPlayerExtended extends InventoryBase implements IInventory {
@@ -25,7 +24,7 @@ public class InventoryPlayerExtended extends InventoryBase implements IInventory
   public static final int IROW = 4;
   public static final int ICOL = 8;
   public InventoryPlayerExtended(EntityPlayer player) {
-    super(IROW * ICOL);
+    super(IROW * ICOL+20);//...why is it 20??
     this.player = new WeakReference<EntityPlayer>(player);
   }
   public Container getEventHandler() {
@@ -132,7 +131,7 @@ public class InventoryPlayerExtended extends InventoryBase implements IInventory
     NBTTagList tagList = new NBTTagList();
     NBTTagCompound invSlot;
     for (int i = 0; i < this.inv.size(); ++i) {
-      if (this.inv.get(i) != null) {
+      if (this.inv.get(i) != ItemStack.EMPTY) {
         invSlot = new NBTTagCompound();
         invSlot.setByte("Slot", (byte) i);
         this.inv.get(i).writeToNBT(invSlot);
@@ -151,7 +150,7 @@ public class InventoryPlayerExtended extends InventoryBase implements IInventory
       NBTTagCompound nbttagcompound = (NBTTagCompound) tagList.getCompoundTagAt(i);
       int j = nbttagcompound.getByte("Slot") & 255;
       ItemStack itemstack = UtilNBT.itemFromNBT(nbttagcompound);
-      if (itemstack != null) {
+      if (itemstack != ItemStack.EMPTY) {
         this.inv.set(j, itemstack);
       }
     }

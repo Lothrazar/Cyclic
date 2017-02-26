@@ -41,7 +41,7 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
         }
         @Override
         public boolean isItemValid(ItemStack stack) {
-          if (stack == null) {
+          if (stack == ItemStack.EMPTY) {
             return false;
           }
           else {
@@ -107,7 +107,7 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
         playerIn.dropItem(itemstack, false);
       }
     }
-    this.craftResult.setInventorySlotContents(0, (ItemStack) null);
+    this.craftResult.setInventorySlotContents(0, ItemStack.EMPTY);
   }
   @Override
   public ItemStack transferStackInSlot(EntityPlayer entityPlayer, int slotIndex) {
