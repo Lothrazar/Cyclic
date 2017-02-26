@@ -7,8 +7,8 @@
     "1.10-recommended": "1.1.0",
     "1.10.2-latest":  "1.10.11",
     "1.10.2-recommended": "1.10.11",
-    "1.11.2-latest": "1.1.1",
-    "1.11.2-recommended": "1.1.1"
+    "1.11.2-latest": "1.1.2",
+    "1.11.2-recommended": "1.1.2"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -120,5 +120,6 @@
 	"1.0.0":"Beta release; on par with 1.10.2-1.9.15  Removed: LightningSkeletonMutate, LightningZombieMutate, Block Miner Advanced.  Changed Features: Emerald Carrot no longer changes normal horses to zombie or skeleton; instead its used to tame existing Zombie and Skeleton horses.  Sleeping Mat works half the time but has a few issues, its a work in progress right now.  Several items have changed textures, recipes, and names.  "
   	,"1.1.0":"Ports all features from 1.10.2-1.10.11.  A few recipe changes were rolled back to match 1.10.2, trying in general to keep versions in parity.  WARNING: some ids/names were messed up in 1.0.0 and but fixed in this version, so forge will give you some warnings.  "
   	,"1.1.1":"Fix furnaces not breakable by tools.  "
+  	,"1.1.2":"Fix extended player crafting and inventory screens crashing (the screens from the inventory cakes)"
   }
 }
