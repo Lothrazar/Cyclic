@@ -104,7 +104,7 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
 //      }
       //cleanup steps
       if (itemstack1.getCount() == 0) {
-        slot.putStack((ItemStack)  ItemStack.EMPTY);
+        slot.putStack(  ItemStack.EMPTY);
       }
       else {
         slot.onSlotChanged();
@@ -141,43 +141,47 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
     MerchantRecipe trade = getTrades().get(selectedMerchantRecipe);
     if (trade.isRecipeDisabled()) { return; }
     ItemStack itemToBuy = trade.getItemToBuy().copy();
-    ItemStack itemSecondBuy = (trade.getSecondItemToBuy() == null) ? null : trade.getSecondItemToBuy().copy();
-    ItemStack firstItem = null;
-    ItemStack secondItem = null;
+    ItemStack itemSecondBuy = (trade.getSecondItemToBuy() == ItemStack.EMPTY) ? ItemStack.EMPTY : trade.getSecondItemToBuy().copy();
+    ItemStack firstItem = ItemStack.EMPTY;
+    ItemStack secondItem = ItemStack.EMPTY;
     int firstSlot = -1, secondSlot = -1;
-    ItemStack iStack = null;
+    ItemStack iStack = ItemStack.EMPTY;
     boolean canTrade = false;
     for (int i = 0; i <= 3 * 9; i++) {
       iStack = player.inventory.getStackInSlot(i);
-      if (iStack == null) {
+      if (iStack == ItemStack.EMPTY) {
         continue;
       }
-      if (firstItem == null &&
+      if (firstItem == ItemStack.EMPTY &&
           iStack.getItem() == itemToBuy.getItem() && iStack.getCount() >= itemToBuy.getCount()) {
         firstItem = iStack;
         firstSlot = i;
       }
-      if (secondItem == null && itemSecondBuy != null) {
+      if (secondItem == ItemStack.EMPTY && itemSecondBuy != ItemStack.EMPTY) {
         if (itemSecondBuy.getItem() == iStack.getItem() && iStack.getCount() >= itemSecondBuy.getCount()) {
           secondItem = iStack;
           secondSlot = i;
         }
       }
-      canTrade = (firstItem != null && (itemSecondBuy == null || secondItem != null));
+      canTrade = (firstItem != ItemStack.EMPTY && (itemSecondBuy == ItemStack.EMPTY || secondItem != ItemStack.EMPTY));
       if (canTrade) {
         break;
       }
     }
+    System.out.println("F"+firstSlot+"_"+firstItem);
+    System.out.println("S"+secondSlot+"_"+secondItem);
+    System.out.println("canTrade"+canTrade);
+    System.out.println("secondItem.isEmpty() "  +  secondItem.isEmpty());
     boolean tradeSuccess = false;
     if (canTrade) {
-      if (secondItem != null) {
+      if (!secondItem.isEmpty()) {
 //        firstItem.stackSize -= itemToBuy.stackSize;
 //        secondItem.stackSize -= itemSecondBuy.stackSize;
         firstItem.shrink(itemToBuy.getCount());
         secondItem.shrink(itemSecondBuy.getCount());
         tradeSuccess = true;
       }
-      if (itemSecondBuy == null && secondItem == null) {
+      if (itemSecondBuy.isEmpty() && secondItem.isEmpty()) {
 //        firstItem.stackSize -= itemToBuy.stackSize;
         firstItem.shrink(  itemToBuy.getCount());
         tradeSuccess = true;
@@ -189,10 +193,10 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
       this.merchant.useRecipe(trade);
       player.addStat(StatList.TRADED_WITH_VILLAGER);
       if (firstItem.getCount() == 0) {
-        player.inventory.setInventorySlotContents(firstSlot, null);
+        player.inventory.setInventorySlotContents(firstSlot, ItemStack.EMPTY);
       }
-      if (secondItem != null && secondItem.getCount() == 0) {
-        player.inventory.setInventorySlotContents(secondSlot, null);
+      if (!secondItem.isEmpty() && secondItem.getCount() == 0) {
+        player.inventory.setInventorySlotContents(secondSlot, ItemStack.EMPTY);
       }
     }
   }

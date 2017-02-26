@@ -104,12 +104,12 @@ public class InventoryMerchantBetter extends InventoryMerchant implements IInven
     this.currentRecipe = null;
     ItemStack itemstack = this.inv.get(0);
     ItemStack itemstack1 = this.inv.get(1);
-    if (itemstack == null) {
+    if (itemstack == ItemStack.EMPTY) {
       itemstack = itemstack1;
-      itemstack1 = null;
+      itemstack1 = ItemStack.EMPTY;
     }
-    if (itemstack == null) {
-      this.setInventorySlotContents(2, (ItemStack) null);
+    if (itemstack == ItemStack.EMPTY) {
+      this.setInventorySlotContents(2,  ItemStack.EMPTY);
     }
     else {
       MerchantRecipeList merchantrecipelist = this.getRecipes();
@@ -119,18 +119,18 @@ public class InventoryMerchantBetter extends InventoryMerchant implements IInven
           this.currentRecipe = merchantrecipe;
           this.setInventorySlotContents(2, merchantrecipe.getItemToSell().copy());
         }
-        else if (itemstack1 != null) {
+        else if (itemstack1 != ItemStack.EMPTY) {
           merchantrecipe = merchantrecipelist.canRecipeBeUsed(itemstack1, itemstack, this.currentRecipeIndex);
           if (merchantrecipe != null && !merchantrecipe.isRecipeDisabled()) {
             this.currentRecipe = merchantrecipe;
             this.setInventorySlotContents(2, merchantrecipe.getItemToSell().copy());
           }
           else {
-            this.setInventorySlotContents(2, (ItemStack) null);
+            this.setInventorySlotContents(2, ItemStack.EMPTY);
           }
         }
         else {
-          this.setInventorySlotContents(2, (ItemStack) null);
+          this.setInventorySlotContents(2, ItemStack.EMPTY);
         }
       }
     }
