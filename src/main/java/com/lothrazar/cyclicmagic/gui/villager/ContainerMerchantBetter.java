@@ -3,7 +3,6 @@ import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.net.PacketSyncVillagerToClient;
-import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -40,21 +39,7 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
     this.detectAndSendChanges();
   }
   public void setCareer(int c) {
-    //should be get on server, and set on client (the desync fix)
-    int cOld = this.getCareer();
-    if (cOld == c) { return; }
-    //http://export.mcpbot.bspk.rs/snapshot/1.10.2/ "snapshot_20161111"
-    if (ReflectionRegistry.fieldCareer != null) {
-      try {
-        ReflectionRegistry.fieldCareer.set(merchant, c);
-      }
-      catch (Exception e) {
-        e.printStackTrace();
-      }
-    }
-    else {
-      ModCyclic.logger.error("Cyclic reflection fail for Villager GUI - Set Career");
-    }
+    UtilEntity.setVillagerCareer(merchant, c);
   }
   public InventoryMerchantBetter getMerchantInventory() {
     return this.merchantInventory;

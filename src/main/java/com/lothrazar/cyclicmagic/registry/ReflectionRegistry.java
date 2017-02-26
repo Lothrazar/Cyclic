@@ -8,12 +8,12 @@ import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.passive.EntityVillager;
 
 public class ReflectionRegistry {
-  public static Field fieldCareer;// = UtilReflection.getPrivateField("careerId", "field_175563_bv", merchant);
+//  public static Field fieldCareer;// = UtilReflection.getPrivateField("careerId", "field_175563_bv", merchant);
   
   public static IAttribute horseJumpStrength = null;
   public static void register() {
     
-    fieldCareer = UtilReflection.getPrivateField("careerId", "field_175563_bv", EntityVillager.class);
+//    fieldCareer = UtilReflection.getPrivateField("careerId", "field_175563_bv", EntityVillager.class);
     
     
     // version 1.1.0
