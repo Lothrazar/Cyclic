@@ -3,9 +3,11 @@ import java.io.IOException;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
 import com.lothrazar.cyclicmagic.net.PacketTilePassword;
+import com.lothrazar.cyclicmagic.net.PacketTilePassword.PacketType;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -17,6 +19,8 @@ public class GuiPassword extends GuiContainer {
   private static final ResourceLocation table = new ResourceLocation(Const.MODID, "textures/gui/password.png");
   private GuiTextField txtPassword;
   private ContainerPassword ctr;
+  private ButtonPassword buttonActiveType;
+  private ButtonPassword buttonUserPerm;
   public GuiPassword(TileEntityPassword tileEntity) {
     super(new ContainerPassword(tileEntity));
     ctr = (ContainerPassword) this.inventorySlots;
@@ -40,6 +44,14 @@ public class GuiPassword extends GuiContainer {
     txtPassword.setMaxStringLength(40);
     txtPassword.setText(ctr.tile.getMyPassword());
     txtPassword.setFocused(true);
+    int id = 1, x = 50, y = 50;
+    buttonActiveType=new ButtonPassword(id, x, y, PacketType.ACTIVETYPE);
+    this.addButton(buttonActiveType);
+    id++;
+//    x += 20;
+    y += 20;
+    buttonUserPerm=new ButtonPassword(id, x, y, PacketType.USERSALLOWED);
+    this.addButton(buttonUserPerm);
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
@@ -52,6 +64,24 @@ public class GuiPassword extends GuiContainer {
     int u = 0, v = 0;
     Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, this.xSize, this.ySize, texture_width, texture_height);
   }
+  @SuppressWarnings("incomplete-switch")
+  @Override
+  protected void actionPerformed(GuiButton button) throws IOException {
+    if (button instanceof ButtonPassword) {
+      ButtonPassword btn = (ButtonPassword) button;
+      int tData = -1;
+      switch (btn.type) {
+        case ACTIVETYPE:
+          tData = ctr.tile.getType().ordinal();
+        break;
+        case USERSALLOWED:
+          tData = ctr.tile.getUserPerm().ordinal();
+        break;
+      }
+      if (tData >= 0)
+        ModCyclic.network.sendToServer(new PacketTilePassword(btn.type, tData, "", ctr.tile.getPos()));
+    }
+  }
   // http://www.minecraftforge.net/forum/index.php?topic=22378.0
   // below is all the stuff that makes the text box NOT broken
   @Override
@@ -60,13 +90,15 @@ public class GuiPassword extends GuiContainer {
     if (txtPassword != null) {
       txtPassword.updateCursorCounter();
     }
+    this.buttonActiveType.displayString = ctr.tile.getType().name();
+    this.buttonUserPerm.displayString = ctr.tile.getUserPerm().name();
   }
   @Override
   protected void keyTyped(char par1, int par2) throws IOException {
     super.keyTyped(par1, par2);
     if (txtPassword != null && txtPassword.isFocused()) {
       txtPassword.textboxKeyTyped(par1, par2);
-      ModCyclic.network.sendToServer(new PacketTilePassword(txtPassword.getText(), ctr.tile.getPos()));
+      ModCyclic.network.sendToServer(new PacketTilePassword(PacketType.PASSTEXT, -1, txtPassword.getText(), ctr.tile.getPos()));
     }
   }
   @Override
