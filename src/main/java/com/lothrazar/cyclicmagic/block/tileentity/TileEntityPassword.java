@@ -1,11 +1,18 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclicmagic.block.BlockPassword;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineStructureBuilder.Fields;
+import com.lothrazar.cyclicmagic.util.Const;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
-public class TileEntityPassword extends TileEntityBaseMachineInvo {
+public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITickable {
   private static final String NBT_ATYPE = "type";
   private static final String NBT_USERP = "up";
   private static final String NBT_PASSWORD = "myPass";
@@ -24,6 +31,7 @@ public class TileEntityPassword extends TileEntityBaseMachineInvo {
   private UsersAllowed userPerm;
   private String myPassword = "";
   private String userHash = "";
+  private int powerTimeout = 0;
   public TileEntityPassword() {
     setType(ActiveType.TOGGLE);
     setUserPerm(UsersAllowed.ALL);//defaults to same behavior it had before these were added
@@ -99,17 +107,43 @@ public class TileEntityPassword extends TileEntityBaseMachineInvo {
   public void toggleActiveType() {
     int t = getType().ordinal();
     t++;
-    if(t >= ActiveType.values().length){
-      t=0;
+    if (t >= ActiveType.values().length) {
+      t = 0;
     }
     setType(ActiveType.values()[t]);
   }
   public void toggleUserType() {
     int t = getUserPerm().ordinal();
     t++;
-    if(t >= UsersAllowed.values().length){
-      t=0;
+    if (t >= UsersAllowed.values().length) {
+      t = 0;
     }
     setUserPerm(UsersAllowed.values()[t]);
+  }
+  public void onCorrectPassword(World world) {
+    Block me = this.getBlockType();
+    IBlockState blockState = world.getBlockState(this.getPos());
+    switch (this.type) {
+      case PULSE:
+        world.setBlockState(this.getPos(), me.getDefaultState().withProperty(BlockPassword.POWERED, true));
+        this.powerTimeout = Const.TICKS_PER_SEC / 2;
+      break;
+      case TOGGLE:
+        boolean hasPowerHere = me.getStrongPower(blockState, world, this.getPos(), EnumFacing.UP) > 0;
+        world.setBlockState(this.getPos(), me.getDefaultState().withProperty(BlockPassword.POWERED, !hasPowerHere));
+      break;
+      default:
+      break;
+    }
+  }
+  @Override
+  public void update() {
+    if (this.powerTimeout > 0) {
+      this.powerTimeout--;
+      if (this.powerTimeout == 0) {
+        World world = this.getWorld();
+        world.setBlockState(this.getPos(), this.getBlockType().getDefaultState().withProperty(BlockPassword.POWERED, false));
+      }
+    }
   }
 }

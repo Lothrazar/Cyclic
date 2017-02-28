@@ -21,16 +21,18 @@ public class GuiPassword extends GuiContainer {
   private ContainerPassword ctr;
   private ButtonPassword buttonActiveType;
   private ButtonPassword buttonUserPerm;
+  private String namePref;
   public GuiPassword(TileEntityPassword tileEntity) {
     super(new ContainerPassword(tileEntity));
     ctr = (ContainerPassword) this.inventorySlots;
     this.ySize = 79;//texture size in pixels
+    namePref = tileEntity.getBlockType().getUnlocalizedName() + ".";
   }
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-    String s = UtilChat.lang("tile.password_block.name");
+    String s = UtilChat.lang(namePref + ".name");
     this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
     if (txtPassword != null) {
       txtPassword.drawTextBox();
@@ -45,12 +47,12 @@ public class GuiPassword extends GuiContainer {
     txtPassword.setText(ctr.tile.getMyPassword());
     txtPassword.setFocused(true);
     int id = 1, x = 50, y = 50;
-    buttonActiveType=new ButtonPassword(id, x, y, PacketType.ACTIVETYPE);
+    buttonActiveType = new ButtonPassword(id, x, y, PacketType.ACTIVETYPE);
     this.addButton(buttonActiveType);
     id++;
-//    x += 20;
+    //    x += 20;
     y += 20;
-    buttonUserPerm=new ButtonPassword(id, x, y, PacketType.USERSALLOWED);
+    buttonUserPerm = new ButtonPassword(id, x, y, PacketType.USERSALLOWED);
     this.addButton(buttonUserPerm);
   }
   @Override
@@ -90,8 +92,8 @@ public class GuiPassword extends GuiContainer {
     if (txtPassword != null) {
       txtPassword.updateCursorCounter();
     }
-    this.buttonActiveType.displayString = ctr.tile.getType().name();
-    this.buttonUserPerm.displayString = ctr.tile.getUserPerm().name();
+    this.buttonActiveType.displayString = namePref + "active." + ctr.tile.getType().name().toLowerCase();
+    this.buttonUserPerm.displayString = namePref + "userp." + ctr.tile.getUserPerm().name().toLowerCase();
   }
   @Override
   protected void keyTyped(char par1, int par2) throws IOException {

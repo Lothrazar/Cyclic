@@ -69,18 +69,18 @@ public class BlockPassword extends BlockBaseHasTile implements IHasRecipe {
     World world = event.getPlayer().getEntityWorld();
     //for each loop hits a // oops : java.util.ConcurrentModificationException, so we need iterator
     Iterator<TileEntityPassword> iterator = TileEntityPassword.listeningBlocks.iterator();
-    Map<BlockPos, Boolean> updates = new HashMap<BlockPos, Boolean>();
+    //    Map<BlockPos, Boolean> updates = new HashMap<BlockPos, Boolean>();
     List<TileEntityPassword> toRemove = new ArrayList<TileEntityPassword>();
     //TileEntityPassword current;
+    int wasFound = 0;
     while (iterator.hasNext()) {
       TileEntityPassword current = iterator.next();
       if (current.isInvalid() == false) {
         if (current.getMyPassword() != null && current.getMyPassword().length() > 0 && event.getMessage().equals(current.getMyPassword())) {
-          IBlockState blockState = current.getWorld().getBlockState(current.getPos());
-          boolean hasPowerHere = this.getStrongPower(blockState, current.getWorld(), current.getPos(), EnumFacing.UP) > 0;
-          updates.put(current.getPos(), !hasPowerHere);
-        }
-        //else password was wrong
+          current.onCorrectPassword(world);
+          wasFound++;
+          //          updates.put(current.getPos(), !hasPowerHere);
+        } //else password was wrong
       }
       else {
         toRemove.add(current);///is invalid
@@ -89,15 +89,6 @@ public class BlockPassword extends BlockBaseHasTile implements IHasRecipe {
     //even with iterator we were getting ConcurrentModificationException on the iterator.next() line
     for (TileEntityPassword rm : toRemove) {
       TileEntityPassword.listeningBlocks.remove(rm);
-    }
-    int wasFound = 0;
-    for (Map.Entry<BlockPos, Boolean> entry : updates.entrySet()) {
-      world.setBlockState(entry.getKey(), this.getDefaultState().withProperty(BlockPassword.POWERED, entry.getValue()));
-      wasFound++;
-      //setting the block state seems to also run the constructor of the tile entity, which wipes out the data
-      //so we need to do a manual reset here. but then its not in gui
-      //nope not needed anymore, fix in tile entity
-      //      ((TileEntityPassword)world.getTileEntity(entry.getKey())).setMyPassword(event.getMessage());
     }
     if (wasFound > 0) {
       event.setCanceled(true);//If this event is canceled, the chat message is never distributed to all clients.
