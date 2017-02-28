@@ -5,8 +5,8 @@ import net.minecraft.client.gui.GuiButton;
 public class ButtonPassword extends GuiButton {
   public PacketType type;
 
-  public ButtonPassword(int buttonId, int x, int y, PacketType activetype) {
-    super(buttonId, x, y, 40, 20, "");
+  public ButtonPassword( PacketType activetype, int x, int y) {
+    super(activetype.ordinal(), x, y, 40, 20, "");
     this.type = activetype;
   }
 }

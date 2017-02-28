@@ -14,25 +14,22 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketTilePassword implements IMessage, IMessageHandler<PacketTilePassword, IMessage> {
-
   public static enum PacketType {
-    PASSTEXT,ACTIVETYPE, USERSALLOWED;
-  }private BlockPos pos;
+    PASSTEXT, ACTIVETYPE, USERSALLOWED, USERCLAIM;
+  }
+  private BlockPos pos;
   private String password;
   private PacketType type = null;
-  int typeData;
   public PacketTilePassword() {}
-  public PacketTilePassword(PacketType t,int td,String pword, BlockPos p) {
+  public PacketTilePassword(PacketType t, String pword, BlockPos p) {
     pos = p;
     password = pword;
     type = t;
-    typeData=td;
   }
   @Override
   public void fromBytes(ByteBuf buf) {
     NBTTagCompound tags = ByteBufUtils.readTag(buf);
     type = PacketType.values()[tags.getInteger("t")];
-    typeData = tags.getInteger("typeData");
     int x = tags.getInteger("x");
     int y = tags.getInteger("y");
     int z = tags.getInteger("z");
@@ -41,11 +38,10 @@ public class PacketTilePassword implements IMessage, IMessageHandler<PacketTileP
   }
   @Override
   public void toBytes(ByteBuf buf) {
-    if(type == null){
+    if (type == null) {
       type = PacketType.PASSTEXT;//legacy safety
     }
     NBTTagCompound tags = new NBTTagCompound();
-    tags.setInteger("typeData", typeData);
     tags.setInteger("x", pos.getX());
     tags.setInteger("y", pos.getY());
     tags.setInteger("z", pos.getZ());
@@ -55,12 +51,12 @@ public class PacketTilePassword implements IMessage, IMessageHandler<PacketTileP
   }
   @Override
   public IMessage onMessage(PacketTilePassword message, MessageContext ctx) {
-   
     PacketTilePassword.checkThreadAndEnqueue(message, ctx);
     return null;
   }
   private static void checkThreadAndEnqueue(final PacketTilePassword message, final MessageContext ctx) {
-    if(message.type == null){
+
+    if (message.type == null) {
       message.type = PacketType.PASSTEXT;//legacy safety
     }
     //copied in from my PacketSyncPlayerData
@@ -72,17 +68,19 @@ public class PacketTilePassword implements IMessage, IMessageHandler<PacketTileP
         World world = player.getEntityWorld();
         TileEntityPassword tile = (TileEntityPassword) world.getTileEntity(message.pos);
         if (tile != null) {
-          switch(message.type){
+          switch (message.type) {
             case ACTIVETYPE:
               tile.toggleActiveType();
-              break;
+            break;
             case PASSTEXT:
               tile.setMyPassword(message.password);
-              break;
+            break;
             case USERSALLOWED:
               tile.toggleUserType();
-              break;
-            
+            break;
+            case USERCLAIM:
+              tile.toggleClaimedHash(player);
+            break;
           }
           tile.markDirty();
           player.getEntityWorld().markChunkDirty(message.pos, tile);

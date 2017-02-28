@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.block.tileentity.TileMachineStructureBuilder.Fi
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -16,7 +17,8 @@ public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITi
   private static final String NBT_ATYPE = "type";
   private static final String NBT_USERP = "up";
   private static final String NBT_PASSWORD = "myPass";
-  private static final String NBT_U = "uhash";
+  private static final String NBT_UHASH = "uhash";
+  private static final String NBT_UNAME = "uname";
   public static enum ActiveType {
     TOGGLE, PULSE;
   }
@@ -31,6 +33,7 @@ public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITi
   private UsersAllowed userPerm;
   private String myPassword = "";
   private String userHash = "";
+  public String userName = "";
   private int powerTimeout = 0;
   public TileEntityPassword() {
     setType(ActiveType.TOGGLE);
@@ -48,7 +51,8 @@ public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITi
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
     tags.setString(NBT_PASSWORD, getMyPassword());
-    tags.setString(NBT_U, userHash);
+    tags.setString(NBT_UHASH, userHash);
+    tags.setString(NBT_UNAME, userName);
     tags.setInteger(NBT_USERP, getUserPerm().ordinal());
     tags.setInteger(NBT_ATYPE, getType().ordinal());
     return super.writeToNBT(tags);
@@ -56,7 +60,8 @@ public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITi
   @Override
   public void readFromNBT(NBTTagCompound tags) {
     myPassword = tags.getString(NBT_PASSWORD);
-    userHash = tags.getString(NBT_U);
+    userHash = tags.getString(NBT_UHASH);
+    userName = tags.getString(NBT_UNAME);
     setType(ActiveType.values()[tags.getInteger(NBT_ATYPE)]);
     setUserPerm(UsersAllowed.values()[tags.getInteger(NBT_USERP)]);
     super.readFromNBT(tags);
@@ -144,6 +149,22 @@ public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITi
         World world = this.getWorld();
         world.setBlockState(this.getPos(), this.getBlockType().getDefaultState().withProperty(BlockPassword.POWERED, false));
       }
+    }
+  }
+  public boolean isClaimedBySomeone() {
+    return this.userHash != null && !this.userHash.isEmpty();
+  }
+  public String getClaimedHash(){
+    return userHash;
+  }
+  public void toggleClaimedHash(EntityPlayerMP player) {
+    if (isClaimedBySomeone()) {
+      this.userHash = "";
+      this.userName = "";
+    }
+    else {
+      this.userHash = player.getUniqueID().toString();
+      this.userName = player.getDisplayNameString();
     }
   }
 }

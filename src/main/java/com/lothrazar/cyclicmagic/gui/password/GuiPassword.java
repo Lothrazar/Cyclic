@@ -22,6 +22,7 @@ public class GuiPassword extends GuiContainer {
   private ButtonPassword buttonActiveType;
   private ButtonPassword buttonUserPerm;
   private String namePref;
+  private ButtonPassword buttonUserClaim;
   public GuiPassword(TileEntityPassword tileEntity) {
     super(new ContainerPassword(tileEntity));
     ctr = (ContainerPassword) this.inventorySlots;
@@ -32,11 +33,25 @@ public class GuiPassword extends GuiContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-    String s = UtilChat.lang(namePref + ".name");
+    String s = UtilChat.lang(namePref + "name");
     this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
     if (txtPassword != null) {
       txtPassword.drawTextBox();
     }
+    s = ctr.tile.userName;
+    if (s != null && !s.isEmpty()){
+      this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 12, 4210752);
+      this.buttonUserClaim.displayString = namePref + "unclaim";
+    }
+    else{
+
+      this.buttonUserClaim.displayString = namePref + "claim";
+    }
+    
+System.out.println(ctr.tile.getClaimedHash());
+    this.buttonActiveType.displayString = namePref + "active." + ctr.tile.getType().name().toLowerCase();
+    this.buttonUserPerm.displayString = namePref + "userp." + ctr.tile.getUserPerm().name().toLowerCase();
+
   }
   @Override
   public void initGui() {
@@ -46,14 +61,15 @@ public class GuiPassword extends GuiContainer {
     txtPassword.setMaxStringLength(40);
     txtPassword.setText(ctr.tile.getMyPassword());
     txtPassword.setFocused(true);
-    int id = 1, x = 50, y = 50;
-    buttonActiveType = new ButtonPassword(id, x, y, PacketType.ACTIVETYPE);
+    int x = 50, y = 50;
+    buttonActiveType = new ButtonPassword(PacketType.ACTIVETYPE, x, y);
     this.addButton(buttonActiveType);
-    id++;
-    //    x += 20;
     y += 20;
-    buttonUserPerm = new ButtonPassword(id, x, y, PacketType.USERSALLOWED);
+    buttonUserPerm = new ButtonPassword(PacketType.USERSALLOWED, x, y);
     this.addButton(buttonUserPerm);
+    y += 20;
+    buttonUserClaim = new ButtonPassword(PacketType.USERCLAIM, x, y);
+    this.addButton(buttonUserClaim);
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
@@ -66,22 +82,11 @@ public class GuiPassword extends GuiContainer {
     int u = 0, v = 0;
     Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, this.xSize, this.ySize, texture_width, texture_height);
   }
-  @SuppressWarnings("incomplete-switch")
   @Override
   protected void actionPerformed(GuiButton button) throws IOException {
     if (button instanceof ButtonPassword) {
       ButtonPassword btn = (ButtonPassword) button;
-      int tData = -1;
-      switch (btn.type) {
-        case ACTIVETYPE:
-          tData = ctr.tile.getType().ordinal();
-        break;
-        case USERSALLOWED:
-          tData = ctr.tile.getUserPerm().ordinal();
-        break;
-      }
-      if (tData >= 0)
-        ModCyclic.network.sendToServer(new PacketTilePassword(btn.type, tData, "", ctr.tile.getPos()));
+      ModCyclic.network.sendToServer(new PacketTilePassword(btn.type, "", ctr.tile.getPos()));
     }
   }
   // http://www.minecraftforge.net/forum/index.php?topic=22378.0
@@ -92,15 +97,13 @@ public class GuiPassword extends GuiContainer {
     if (txtPassword != null) {
       txtPassword.updateCursorCounter();
     }
-    this.buttonActiveType.displayString = namePref + "active." + ctr.tile.getType().name().toLowerCase();
-    this.buttonUserPerm.displayString = namePref + "userp." + ctr.tile.getUserPerm().name().toLowerCase();
   }
   @Override
   protected void keyTyped(char par1, int par2) throws IOException {
     super.keyTyped(par1, par2);
     if (txtPassword != null && txtPassword.isFocused()) {
       txtPassword.textboxKeyTyped(par1, par2);
-      ModCyclic.network.sendToServer(new PacketTilePassword(PacketType.PASSTEXT, -1, txtPassword.getText(), ctr.tile.getPos()));
+      ModCyclic.network.sendToServer(new PacketTilePassword(PacketType.PASSTEXT, txtPassword.getText(), ctr.tile.getPos()));
     }
   }
   @Override
