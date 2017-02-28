@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.gui.password;
 import java.io.IOException;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
+import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.net.PacketTilePassword;
 import com.lothrazar.cyclicmagic.net.PacketTilePassword.PacketType;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -15,7 +16,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GuiPassword extends GuiContainer {
+public class GuiPassword extends GuiBaseContainer {
   private static final ResourceLocation table = new ResourceLocation(Const.MODID, "textures/gui/password.png");
   private GuiTextField txtPassword;
   private ContainerPassword ctr;
@@ -29,6 +30,27 @@ public class GuiPassword extends GuiContainer {
     this.ySize = 79;//texture size in pixels
     namePref = tileEntity.getBlockType().getUnlocalizedName() + ".";
   }
+  @Override
+  public void initGui() {
+    super.initGui();
+    int width = 127, height = 20;
+    int x = (xSize / 2 - width / 2), y = 26 + (height / 2);
+    txtPassword = new GuiTextField(0, this.fontRendererObj, x, y, width, height);
+    txtPassword.setMaxStringLength(40);
+    txtPassword.setText(ctr.tile.getMyPassword());
+    txtPassword.setFocused(true);
+    x = 50;
+    y = 50;
+    buttonActiveType = new ButtonPassword(PacketType.ACTIVETYPE, x, y);
+    this.addButton(buttonActiveType);
+    y += 20;
+    buttonUserPerm = new ButtonPassword(PacketType.USERSALLOWED, x, y);
+    this.addButton(buttonUserPerm);
+    y += 20;
+    buttonUserClaim = new ButtonPassword(PacketType.USERCLAIM, x, y);
+    this.addButton(buttonUserClaim);
+    updateVisibility();
+  }
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
@@ -41,37 +63,18 @@ public class GuiPassword extends GuiContainer {
     }
     if (ctr.tile.isClaimedBySomeone()) {
       s = ctr.tile.userName;
-      y = 12;
+      y = 18;
       this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, y, 4210752);
-      y = 16;
+      y = 22;
       s = ctr.tile.getClaimedHash();
       this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, y, 4210752);
-      this.buttonUserClaim.displayString = namePref + "unclaim";
+      this.buttonUserClaim.displayString = UtilChat.lang(namePref + this.buttonUserClaim.type.name().toLowerCase() + ".unclaim");
     }
     else {
-      this.buttonUserClaim.displayString = namePref + "claim";
+      this.buttonUserClaim.displayString = UtilChat.lang(namePref + "userclaim.claim");
     }
-    this.buttonActiveType.displayString = namePref + "active." + ctr.tile.getType().name().toLowerCase();
-    this.buttonUserPerm.displayString = namePref + "userp." + ctr.tile.getUserPerm().name().toLowerCase();
-  }
-  @Override
-  public void initGui() {
-    super.initGui();
-    int width = 120, height = 20;
-    txtPassword = new GuiTextField(0, this.fontRendererObj, (xSize / 2 - width / 2), 20 + (height / 2), 127, height);
-    txtPassword.setMaxStringLength(40);
-    txtPassword.setText(ctr.tile.getMyPassword());
-    txtPassword.setFocused(true);
-    int x = 50, y = 50;
-    buttonActiveType = new ButtonPassword(PacketType.ACTIVETYPE, x, y);
-    this.addButton(buttonActiveType);
-    y += 20;
-    buttonUserPerm = new ButtonPassword(PacketType.USERSALLOWED, x, y);
-    this.addButton(buttonUserPerm);
-    y += 20;
-    buttonUserClaim = new ButtonPassword(PacketType.USERCLAIM, x, y);
-    this.addButton(buttonUserClaim);
-    updateVisibility();
+    this.buttonActiveType.displayString = UtilChat.lang(namePref + buttonActiveType.type.name().toLowerCase() + "." + ctr.tile.getType().name().toLowerCase());
+    this.buttonUserPerm.displayString = UtilChat.lang(namePref + buttonUserPerm.type.name().toLowerCase() + "." + ctr.tile.getUserPerm().name().toLowerCase());
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
