@@ -1,12 +1,10 @@
 package com.lothrazar.cyclicmagic.block;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword.UsersAllowed;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.BlockStoneSlab;
@@ -78,14 +76,20 @@ public class BlockPassword extends BlockBaseHasTile implements IHasRecipe {
       TileEntityPassword current = iterator.next();
       if (current.isInvalid() == false) {
         if (current.getMyPassword() != null && current.getMyPassword().length() > 0 && event.getMessage().equals(current.getMyPassword())) {
-          boolean isAllowed = !current.isClaimedBySomeone() ||  current.isClaimedBy(event.getPlayer());//nobody || me
+          boolean isAllowed;
+          if (current.getUserPerm() == UsersAllowed.ALL) {//user said everyones allowed
+            isAllowed = true;
+          }
+          else {//it has no claimed user.. OR it is claimed
+            isAllowed = !current.isClaimedBySomeone() || current.isClaimedBy(event.getPlayer());//nobody || me
+          }
           if (isAllowed) {
             current.onCorrectPassword(world);
             wasFound++;
           }
-//          else {
-//            UtilChat.addChatMessage(event.getPlayer(), UtilChat.lang(this.getUnlocalizedName() + ".notallowed"));
-//          }
+          //          else {
+          //            UtilChat.addChatMessage(event.getPlayer(), UtilChat.lang(this.getUnlocalizedName() + ".notallowed"));
+          //          }
         } //else password was wrong
       }
       else {

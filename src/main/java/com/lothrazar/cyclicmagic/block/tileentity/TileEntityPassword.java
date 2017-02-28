@@ -14,6 +14,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
+@SuppressWarnings("unused")
 public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITickable {
   private static final String NBT_ATYPE = "type";
   private static final String NBT_USERP = "up";
