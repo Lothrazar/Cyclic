@@ -34,24 +34,25 @@ public class GuiPassword extends GuiContainer {
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     String s = UtilChat.lang(namePref + "name");
+    int y = 6;
     this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
     if (txtPassword != null) {
       txtPassword.drawTextBox();
     }
-    s = ctr.tile.userName;
-    if (s != null && !s.isEmpty()){
-      this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 12, 4210752);
+    if (ctr.tile.isClaimedBySomeone()) {
+      s = ctr.tile.userName;
+      y = 12;
+      this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, y, 4210752);
+      y = 16;
+      s = ctr.tile.getClaimedHash();
+      this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, y, 4210752);
       this.buttonUserClaim.displayString = namePref + "unclaim";
     }
-    else{
-
+    else {
       this.buttonUserClaim.displayString = namePref + "claim";
     }
-    
-System.out.println(ctr.tile.getClaimedHash());
     this.buttonActiveType.displayString = namePref + "active." + ctr.tile.getType().name().toLowerCase();
     this.buttonUserPerm.displayString = namePref + "userp." + ctr.tile.getUserPerm().name().toLowerCase();
-
   }
   @Override
   public void initGui() {
@@ -70,6 +71,7 @@ System.out.println(ctr.tile.getClaimedHash());
     y += 20;
     buttonUserClaim = new ButtonPassword(PacketType.USERCLAIM, x, y);
     this.addButton(buttonUserClaim);
+    updateVisibility();
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
@@ -96,7 +98,19 @@ System.out.println(ctr.tile.getClaimedHash());
     super.updateScreen();
     if (txtPassword != null) {
       txtPassword.updateCursorCounter();
+      updateVisibility();
     }
+  }
+  private void updateVisibility() {
+    boolean visible = !(ctr.tile.isClaimedBySomeone() && !ctr.tile.isClaimedBy(ModCyclic.proxy.getClientPlayer()));
+    // System.out.println("SOMEONE?"+ctr.tile.isClaimedBySomeone()+":"+ctr.tile.getClaimedHash());
+    if (txtPassword != null) {
+      txtPassword.setVisible(visible);
+      txtPassword.setEnabled(visible);
+    }
+    buttonActiveType.visible = visible;
+    buttonUserPerm.visible = visible;
+    buttonUserClaim.visible = visible;
   }
   @Override
   protected void keyTyped(char par1, int par2) throws IOException {

@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.block.tileentity.TileMachineStructureBuilder.Fi
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -150,6 +151,9 @@ public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITi
         world.setBlockState(this.getPos(), this.getBlockType().getDefaultState().withProperty(BlockPassword.POWERED, false));
       }
     }
+  }
+  public boolean isClaimedBy(EntityPlayer p) {
+    return p.getUniqueID().toString().equals(this.userHash);
   }
   public boolean isClaimedBySomeone() {
     return this.userHash != null && !this.userHash.isEmpty();
