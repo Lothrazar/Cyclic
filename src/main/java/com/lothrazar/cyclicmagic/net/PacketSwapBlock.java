@@ -20,7 +20,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -147,9 +149,24 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
           }
           //break it and drop the whatever
           //the destroy then set was causing exceptions, changed to setAir // https://github.com/PrinceOfAmber/Cyclic/issues/114
-          if (UtilPlaceBlocks.placeStateOverwrite(world, player, curPos, newToPlace)) {
+          ItemStack cur = player.inventory.getStackInSlot(slot);
+          if (cur == null || cur.stackSize <= 0) {
+            continue;
+          }
+          world.setBlockToAir(curPos);
+          boolean success = false;
+          if (cur.onItemUse(player, world, curPos, EnumHand.MAIN_HAND, message.side, 0.5F, 0.5F, 0.5F) == EnumActionResult.SUCCESS) {
+            //then it owrked i guess eh
+            success = true;
+          }
+          else {//do it the standard way
+            success = UtilPlaceBlocks.placeStateSafe(world, player, curPos, newToPlace);
+            if (success) {
+              UtilPlayer.decrStackSize(player, slot);
+            }
+          }
+          if (success) {//same old success method
             //            UtilSound.playSoundPlaceBlock(worldObj, curPos, newToPlace.getBlock());//fffk doesnt work
-            UtilPlayer.decrStackSize(player, slot);
             replacedBlock.dropBlockAsItem(world, curPos, replaced, 0);//zero is fortune level
             //damage once per block 
             //TODO: CLEANUP?REFACTOR THIS

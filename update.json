@@ -113,6 +113,6 @@
   	,"1.10.9":"Remove some logging messages that were spamming the logs."
   	,"1.10.10":"Merchants Almanac: The button tooltips now list out all enchantments if the items being sold (books/armor/anything)"
   	,"1.10.11":"Fix broken texture in Pattern Builder.  Fix error in Ender Book tooltip.  The buttons to open your extended inventory & 3x3 crafting table now will show the letter of the key you have bound to open it; defaulting to the old 'I' 'C' as before if the keys are unbound.  The Inventory Crafting and Inventory Upgrade cakes now stack to 64, up from 1.  Mattock now has a tooltip.  Reduced recipe cost of Ender Orbs.  "
-  	,"1.10.12":"Patch Automated User to try and avoid crashes when interacting with mobs from Minecraft Comes Alive mod.  New Features in Password Trigger: You can change it to pulse mode, and you can claim the block so nobody else can use or set the password.  "
+  	,"1.10.12":"Patch Automated User to try and avoid crashes when interacting with mobs from Minecraft Comes Alive mod.  New Features in Password Trigger: You can change it to pulse mode, and you can claim the block so nobody else can use or set the password.  Exchange scepters now attempt to correctly set block rotation on placement.  Exchange scepter mod compatibility fix with Painted Slabs from Ender IO.  "
   }
 }
