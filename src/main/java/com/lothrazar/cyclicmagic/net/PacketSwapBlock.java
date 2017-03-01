@@ -158,6 +158,9 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
           if (cur.onItemUse(player, world, curPos, EnumHand.MAIN_HAND, message.side, 0.5F, 0.5F, 0.5F) == EnumActionResult.SUCCESS) {
             //then it owrked i guess eh
             success = true;
+            if(cur.stackSize==0){//double check hack for those red zeroes that always seem to come back
+              player.inventory.setInventorySlotContents(slot, null);
+            }
           }
           else {//do it the standard way
             success = UtilPlaceBlocks.placeStateSafe(world, player, curPos, newToPlace);
