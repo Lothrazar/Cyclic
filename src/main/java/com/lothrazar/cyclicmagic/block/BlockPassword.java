@@ -68,7 +68,6 @@ public class BlockPassword extends BlockBaseHasTile implements IHasRecipe {
     World world = event.getPlayer().getEntityWorld();
     //for each loop hits a // oops : java.util.ConcurrentModificationException, so we need iterator
     Iterator<TileEntityPassword> iterator = TileEntityPassword.listeningBlocks.iterator();
-    //    Map<BlockPos, Boolean> updates = new HashMap<BlockPos, Boolean>();
     List<TileEntityPassword> toRemove = new ArrayList<TileEntityPassword>();
     //TileEntityPassword current;
     int wasFound = 0;

@@ -24,7 +24,7 @@ public class GuiPassword extends GuiBaseContainer {
   private String namePref;
   private ButtonPassword buttonUserClaim;
   public GuiPassword(TileEntityPassword tileEntity) {
-    super(new ContainerPassword(tileEntity));
+    super(new ContainerPassword(tileEntity), tileEntity);
     ctr = (ContainerPassword) this.inventorySlots;
     this.ySize = 79;//texture size in pixels
     namePref = tileEntity.getBlockType().getUnlocalizedName() + ".";
@@ -42,10 +42,10 @@ public class GuiPassword extends GuiBaseContainer {
     y = 50;
     buttonActiveType = new ButtonPassword(PacketType.ACTIVETYPE, x, y);
     this.addButton(buttonActiveType);
-    y += 20;
+    y += height + 4;
     buttonUserPerm = new ButtonPassword(PacketType.USERSALLOWED, x, y);
     this.addButton(buttonUserPerm);
-    y += 20;
+    y += height + 4;
     buttonUserClaim = new ButtonPassword(PacketType.USERCLAIM, x, y);
     this.addButton(buttonUserClaim);
     updateVisibility();
@@ -54,19 +54,27 @@ public class GuiPassword extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-    String s = UtilChat.lang(namePref + "name");
+    String s;// = UtilChat.lang(namePref + "name");
     int y = 6;
-    this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
+    int xCenter = this.xSize / 2;
+    //    this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
     if (txtPassword != null) {
       txtPassword.drawTextBox();
     }
     if (ctr.tile.isClaimedBySomeone()) {
-      s = ctr.tile.userName;
-      y = 18;
-      this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, y, 4210752);
-      y = 22;
-      s = ctr.tile.getClaimedHash();
-      this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, y, 4210752);
+      if (ctr.tile.isClaimedBy(ModCyclic.proxy.getClientPlayer())) {
+        s = UtilChat.lang(namePref + "userclaim.ismine");
+        y = 18;
+        this.drawString(s, xCenter - this.fontRendererObj.getStringWidth(s) / 2, y);
+      }
+      else {
+        s = UtilChat.lang(namePref + "userclaim.isclaimed");
+        y = 18;
+        this.drawString(s, xCenter - this.fontRendererObj.getStringWidth(s) / 2, y);
+        y = 32;
+        s = ctr.tile.userName;//ctr.tile.getClaimedHash();
+        this.drawString(s, xCenter - this.fontRendererObj.getStringWidth(s) / 2, y);
+      }
       this.buttonUserClaim.displayString = UtilChat.lang(namePref + this.buttonUserClaim.type.name().toLowerCase() + ".unclaim");
     }
     else {
