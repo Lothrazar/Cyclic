@@ -38,16 +38,16 @@ public class GuiPassword extends GuiBaseContainer {
     txtPassword.setMaxStringLength(40);
     txtPassword.setText(ctr.tile.getMyPassword());
     txtPassword.setFocused(true);
-    x = 50;
-    y = 50;
+    x = this.guiLeft - 82;
+    y = this.guiTop;
     buttonActiveType = new ButtonPassword(PacketType.ACTIVETYPE, x, y);
     this.addButton(buttonActiveType);
     y += height + 4;
-    buttonUserPerm = new ButtonPassword(PacketType.USERSALLOWED, x, y);
-    this.addButton(buttonUserPerm);
-    y += height + 4;
     buttonUserClaim = new ButtonPassword(PacketType.USERCLAIM, x, y);
     this.addButton(buttonUserClaim);
+    y += height + 4;
+    buttonUserPerm = new ButtonPassword(PacketType.USERSALLOWED, x, y);
+    this.addButton(buttonUserPerm);
     updateVisibility();
   }
   @SideOnly(Side.CLIENT)
@@ -112,15 +112,15 @@ public class GuiPassword extends GuiBaseContainer {
     }
   }
   private void updateVisibility() {
-    boolean visible = !(ctr.tile.isClaimedBySomeone() && !ctr.tile.isClaimedBy(ModCyclic.proxy.getClientPlayer()));
-    // System.out.println("SOMEONE?"+ctr.tile.isClaimedBySomeone()+":"+ctr.tile.getClaimedHash());
+    boolean isMine = ctr.tile.isClaimedBy(ModCyclic.proxy.getClientPlayer());
+    boolean visible = !ctr.tile.isClaimedBySomeone() || isMine;
     if (txtPassword != null) {
       txtPassword.setVisible(visible);
       txtPassword.setEnabled(visible);
     }
     buttonActiveType.visible = visible;
-    buttonUserPerm.visible = visible;
     buttonUserClaim.visible = visible;
+    buttonUserPerm.visible = isMine;
   }
   @Override
   protected void keyTyped(char par1, int par2) throws IOException {
