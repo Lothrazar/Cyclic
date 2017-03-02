@@ -11,6 +11,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class GuiBaseContainer extends GuiContainer {
+  public int FONTCOLOR = 4210752;
   private static final int texture_width = 176;
   private static final int texture_height = 166;
   private TileEntityBaseMachineInvo tile;
@@ -43,8 +44,11 @@ public abstract class GuiBaseContainer extends GuiContainer {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     if (tile != null) {
       String s = UtilChat.lang(tile.getName());
-      this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
+      this.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6);
     }
+  }
+  public void drawString(String s, int x, int y){
+    this.fontRendererObj.drawString(s,x, y, FONTCOLOR);
   }
   public int getMiddleY() {
     int yMiddle = (this.height - this.ySize) / 2;

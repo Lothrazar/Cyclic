@@ -42,9 +42,8 @@ public class EntityTorchBolt extends EntityThrowableDispensable {
         world.getBlockState(offset) == null ||
         world.getBlockState(offset).getBlock() == null ||
         world.getBlockState(offset).getBlock().isReplaceable(world, offset);
-    if (isValidLocation && isValidBlockstate && isSideSolid) {
-      world.setBlockState(offset,
-          Blocks.TORCH.getDefaultState().withProperty(BlockTorch.FACING, sideHit));
+    if (isValidLocation && isValidBlockstate && isSideSolid && world.isRemote == false) {
+      world.setBlockState(offset, Blocks.TORCH.getDefaultState().withProperty(BlockTorch.FACING, sideHit));
     }
     else {
       UtilItemStack.dropItemStackInWorld(world, this.getPosition(), renderSnowball);

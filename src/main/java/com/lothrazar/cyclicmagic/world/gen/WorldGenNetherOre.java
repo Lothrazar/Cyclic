@@ -20,19 +20,31 @@ public class WorldGenNetherOre implements IWorldGenerator {
   private WorldGenerator genEmerald;
   private WorldGenerator genLapis;
   private WorldGenerator genDiamond;
+  private WorldGenMinable genIron;
+  private WorldGenMinable genRedstone;
   public static class Configs {
     public static int blockCountCoal = 8;
     public static int blockCountDiamond = 8;
     public static int blockCountEmerald = 8;
     public static int blockCountLapis = 8;
     public static int blockCountGold = 8;
+    public static int blockCountIron = 12;
     public static int spawnChanceCoal = 25;
     public static int spawnChanceDiamond = 6;
     public static int spawnChanceEmerald = 5;
     public static int spawnChanceGold = 45;
     public static int spawnChanceLapis = 10;
+    public static int spawnChanceIron = 10;
+    public static int spawnChanceRedstone = 20;
+    public static int blockCountRedstone = 8;
   }
   public WorldGenNetherOre() {
+    if (Configs.blockCountRedstone > 0)
+      this.genRedstone = new WorldGenMinable(WorldGenModule.nether_redstone_ore.getDefaultState(), Configs.blockCountRedstone, BlockMatcher.forBlock(Blocks.NETHERRACK));
+    
+    
+    if (Configs.blockCountIron > 0)
+      this.genIron = new WorldGenMinable(WorldGenModule.nether_iron_ore.getDefaultState(), Configs.blockCountIron, BlockMatcher.forBlock(Blocks.NETHERRACK));
     if (Configs.blockCountGold > 0)
       this.genGold = new WorldGenMinable(WorldGenModule.nether_gold_ore.getDefaultState(), Configs.blockCountGold, BlockMatcher.forBlock(Blocks.NETHERRACK));
     if (Configs.blockCountCoal > 0)
@@ -47,6 +59,10 @@ public class WorldGenNetherOre implements IWorldGenerator {
   @Override
   public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
     if (world.provider.getDimension() == Const.Dimension.nether) {
+      if (this.genRedstone != null && Configs.spawnChanceRedstone > 0)
+        this.run(this.genRedstone, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, Configs.spawnChanceRedstone, MIN_HEIGHT, MAX_HEIGHT);
+    
+      
       if (this.genGold != null && Configs.spawnChanceGold > 0)
         this.run(this.genGold, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, Configs.spawnChanceGold, MIN_HEIGHT, MAX_HEIGHT);
       if (this.genCoal != null && Configs.spawnChanceCoal > 0)
@@ -57,6 +73,8 @@ public class WorldGenNetherOre implements IWorldGenerator {
         this.run(this.genLapis, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, Configs.spawnChanceLapis, MIN_HEIGHT, MAX_HEIGHT);
       if (this.genDiamond != null && Configs.spawnChanceDiamond > 0)
         this.run(this.genDiamond, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, Configs.spawnChanceDiamond, MIN_HEIGHT, MAX_HEIGHT);
+      if (this.genIron != null && Configs.spawnChanceIron > 0)
+        this.run(this.genIron, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, Configs.spawnChanceIron, MIN_HEIGHT, MAX_HEIGHT);
     }
   }
   private void run(WorldGenerator generator, World world, Random rand, int chunk_X, int chunk_Z, int chancesToSpawn, int minHeight, int maxHeight) {

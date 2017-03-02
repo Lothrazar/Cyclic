@@ -79,52 +79,59 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
           timer = 0;
         }
         if (timer == 0) {
-          timer = TIMER_FULL;
-          //act on block
-          BlockPos targetPos = this.getCurrentFacingPos();//pos.offset(this.getCurrentFacing()); //not sure if this is needed
-          if (world.isAirBlock(targetPos)) {
-            targetPos = targetPos.down();
-          }
-          int hRange = 2;
-          int vRange = 1;
-          //so in a radius 2 area starting one block away
-          BlockPos entityCenter = this.getPos().offset(this.getCurrentFacing(), 1);
-          if (rightClickIfZero == 0) {
-            fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
-            //this.getWorld().markChunkDirty(this.getPos(), this);
-            this.getWorld().markChunkDirty(targetPos, this);
-            AxisAlignedBB range = UtilEntity.makeBoundingBox(entityCenter, hRange, vRange);
-            List<EntityLivingBase> all = world.getEntitiesWithinAABB(EntityLivingBase.class, range);
-            for (EntityLivingBase ent : all) {
-              // on the line below: NullPointerException  at com.lothrazar.cyclicmagic.block.tileentity.TileMachineUser.func_73660_a(TileMachineUser.java:101)
-              if (world.isRemote == false &&
-                  ent != null && ent.isDead == false
-                  && fakePlayer != null && fakePlayer.get() != null) {
-                validateTool(); //recheck this at every step so we dont go negative
-                fakePlayer.get().interactOn(ent, EnumHand.MAIN_HAND);
-              }
+          try {
+            timer = TIMER_FULL;
+            //act on block
+            BlockPos targetPos = this.getCurrentFacingPos();//pos.offset(this.getCurrentFacing()); //not sure if this is needed
+            if (world.isAirBlock(targetPos)) {
+              targetPos = targetPos.down();
             }
-          }
-          else {
-            AxisAlignedBB range = UtilEntity.makeBoundingBox(entityCenter, 1, 1);
-            List<EntityLivingBase> all = world.getEntitiesWithinAABB(EntityLivingBase.class, range);
-            ItemStack held = fakePlayer.get().getHeldItemMainhand();
-            fakePlayer.get().onGround = true;
-            for (EntityLivingBase ent : all) {
-              fakePlayer.get().attackTargetEntityWithCurrentItem(ent);
-              //THANKS TO FORUMS http://www.minecraftforge.net/forum/index.php?topic=43152.0
-              IAttributeInstance damage = new AttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-              if (held != ItemStack.EMPTY) {
-                for (AttributeModifier modifier : held.getAttributeModifiers(EntityEquipmentSlot.MAINHAND).get(SharedMonsterAttributes.ATTACK_DAMAGE.getName())) {
-                  damage.applyModifier(modifier);
+            int hRange = 2;
+            int vRange = 1;
+            //so in a radius 2 area starting one block away
+            BlockPos entityCenter = this.getPos().offset(this.getCurrentFacing(), 1);
+            if (rightClickIfZero == 0) {
+              fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
+              //this.getWorld().markChunkDirty(this.getPos(), this);
+              this.getWorld().markChunkDirty(targetPos, this);
+              AxisAlignedBB range = UtilEntity.makeBoundingBox(entityCenter, hRange, vRange);
+              List<EntityLivingBase> all = world.getEntitiesWithinAABB(EntityLivingBase.class, range);
+              for (EntityLivingBase ent : all) {
+                // on the line below: NullPointerException  at com.lothrazar.cyclicmagic.block.tileentity.TileMachineUser.func_73660_a(TileMachineUser.java:101)
+                if (world.isRemote == false &&
+                    ent != null && ent.isDead == false
+                    && fakePlayer != null && fakePlayer.get() != null) {
+                  validateTool(); //recheck this at every step so we dont go negative
+                  fakePlayer.get().interactOn(ent, EnumHand.MAIN_HAND);
                 }
               }
-              float dmgVal = (float) damage.getAttributeValue();
-              float f1 = EnchantmentHelper.getModifierForCreature(held, (ent).getCreatureAttribute());
-              ent.attackEntityFrom(DamageSource.causePlayerDamage(fakePlayer.get()), dmgVal + f1);
+            }
+            else {
+              AxisAlignedBB range = UtilEntity.makeBoundingBox(entityCenter, 1, 1);
+              List<EntityLivingBase> all = world.getEntitiesWithinAABB(EntityLivingBase.class, range);
+              ItemStack held = fakePlayer.get().getHeldItemMainhand();
+              fakePlayer.get().onGround = true;
+              for (EntityLivingBase ent : all) {
+                fakePlayer.get().attackTargetEntityWithCurrentItem(ent);
+                //THANKS TO FORUMS http://www.minecraftforge.net/forum/index.php?topic=43152.0
+                IAttributeInstance damage = new AttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
+                if (held != ItemStack.EMPTY) {
+                  for (AttributeModifier modifier : held.getAttributeModifiers(EntityEquipmentSlot.MAINHAND).get(SharedMonsterAttributes.ATTACK_DAMAGE.getName())) {
+                    damage.applyModifier(modifier);
+                  }
+                }
+                float dmgVal = (float) damage.getAttributeValue();
+                float f1 = EnchantmentHelper.getModifierForCreature(held, (ent).getCreatureAttribute());
+                ent.attackEntityFrom(DamageSource.causePlayerDamage(fakePlayer.get()), dmgVal + f1);
+              }
             }
           }
-        }
+          catch (Exception e) {
+            ModCyclic.logger.error("Automated User Error");
+            ModCyclic.logger.error(e.getLocalizedMessage());
+            e.printStackTrace();
+          }
+        } //timer == 0 block
       }
       else {
         timer = 1;//allows it to run on a pulse
