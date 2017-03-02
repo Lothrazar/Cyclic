@@ -34,6 +34,8 @@ public class WorldGenEndOre implements IWorldGenerator {
     public static int spawnChanceLapis = 15;
     public static int spawnChanceRedstone = 18;
     public static int spawnChanceIron = 10;
+    public static int spawnChanceGold = 20;
+    public static int blockCountGold = 8;
   }
   public WorldGenEndOre() {
     if (Configs.blockCountIron > 0)

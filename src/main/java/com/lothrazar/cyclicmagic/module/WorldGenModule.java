@@ -45,14 +45,16 @@ public class WorldGenModule extends BaseEventModule implements IHasConfig {
   public static BlockDimensionOre nether_coal_ore;
   public static BlockDimensionOre nether_lapis_ore;
   public static BlockDimensionOre nether_emerald_ore;
+  public static BlockDimensionOre nether_diamond_ore;
+  public static BlockDimensionOre nether_iron_ore;
   public static BlockDimensionOre end_redstone_ore;
   public static BlockDimensionOre end_coal_ore;
   public static BlockDimensionOre end_lapis_ore;
-  public static BlockDimensionOre end_emerald_ore;
-  public static BlockDimensionOre nether_diamond_ore;
-  public static BlockDimensionOre end_diamond_ore;
-  public static BlockDimensionOre nether_iron_ore;
   public static BlockDimensionOre end_iron_ore;
+  public static BlockDimensionOre end_emerald_ore;
+  public static BlockDimensionOre end_diamond_ore;
+  public static BlockDimensionOre end_gold_ore;
+  public static BlockDimensionOre nether_redstone_ore;
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.worldGen;
@@ -90,12 +92,14 @@ public class WorldGenModule extends BaseEventModule implements IHasConfig {
     WorldGenNetherOre.Configs.blockCountIron = config.getInt("blockCountIron", category, 8, 0, 32, blockCountDesc);
     WorldGenNetherOre.Configs.blockCountGold = config.getInt("blockCountGold", category, 8, 0, 32, blockCountDesc);
     WorldGenNetherOre.Configs.blockCountLapis = config.getInt("blockCountLapis", category, 8, 0, 32, blockCountDesc);
+    WorldGenNetherOre.Configs.blockCountRedstone = config.getInt("blockCountRedstone", category, 8, 0, 32, blockCountDesc);
     WorldGenNetherOre.Configs.spawnChanceCoal = config.getInt("spawnChanceCoal", category, 25, 0, 100, spawnChanceDesc);
     WorldGenNetherOre.Configs.spawnChanceDiamond = config.getInt("spawnChanceDiamond", category, 6, 0, 100, spawnChanceDesc);
     WorldGenNetherOre.Configs.spawnChanceEmerald = config.getInt("spawnChanceEmerald", category, 5, 0, 100, spawnChanceDesc);
     WorldGenNetherOre.Configs.spawnChanceGold = config.getInt("spawnChanceGold", category, 45, 0, 100, spawnChanceDesc);
     WorldGenNetherOre.Configs.spawnChanceLapis = config.getInt("spawnChanceLapis", category, 10, 0, 100, spawnChanceDesc);
     WorldGenNetherOre.Configs.spawnChanceIron = config.getInt("spawnChanceIron", category, 10, 0, 100, spawnChanceDesc);
+    WorldGenNetherOre.Configs.spawnChanceRedstone = config.getInt("spawnChanceRedstone", category, 10, 0, 100, spawnChanceDesc);
     category = Const.ConfigCategory.worldGen + ".endorecustom";
     WorldGenEndOre.Configs.blockCountCoal = config.getInt("blockCountCoal", category, 8, 0, 32, blockCountDesc);
     WorldGenEndOre.Configs.blockCountDiamond = config.getInt("blockCountDiamond", category, 8, 0, 32, blockCountDesc);
@@ -103,12 +107,14 @@ public class WorldGenModule extends BaseEventModule implements IHasConfig {
     WorldGenEndOre.Configs.blockCountRedstone = config.getInt("blockCountRedstone", category, 8, 0, 32, blockCountDesc);
     WorldGenEndOre.Configs.blockCountLapis = config.getInt("blockCountLapis", category, 8, 0, 32, blockCountDesc);
     WorldGenEndOre.Configs.blockCountIron = config.getInt("blockCountIron", category, 8, 0, 32, blockCountDesc);
+    WorldGenEndOre.Configs.blockCountGold = config.getInt("blockCountGold", category, 8, 0, 32, blockCountDesc);
     WorldGenEndOre.Configs.spawnChanceCoal = config.getInt("spawnChanceCoal", category, 20, 0, 100, spawnChanceDesc);
     WorldGenEndOre.Configs.spawnChanceDiamond = config.getInt("spawnChanceDiamond", category, 10, 0, 100, spawnChanceDesc);
     WorldGenEndOre.Configs.spawnChanceEmerald = config.getInt("spawnChanceEmerald", category, 10, 0, 100, spawnChanceDesc);
     WorldGenEndOre.Configs.spawnChanceRedstone = config.getInt("spawnChanceRedstone", category, 18, 0, 100, spawnChanceDesc);
     WorldGenEndOre.Configs.spawnChanceLapis = config.getInt("spawnChanceLapis", category, 15, 0, 100, spawnChanceDesc);
     WorldGenEndOre.Configs.spawnChanceIron = config.getInt("spawnChanceIron", category, 15, 0, 100, spawnChanceDesc);
+    WorldGenEndOre.Configs.spawnChanceGold = config.getInt("spawnChanceGold", category, 15, 0, 100, spawnChanceDesc);
   }
   @Override
   public void onInit() {
@@ -182,17 +188,21 @@ public class WorldGenModule extends BaseEventModule implements IHasConfig {
     int goldHarvest = emeraldHarvest;
     int redstoneHarvest = emeraldHarvest;
 
+    nether_redstone_ore = new BlockDimensionOre(Items.REDSTONE);
+    nether_redstone_ore.setPickaxeHarvestLevel(ironHarvest).setSpawnType(SpawnType.SILVERFISH, 2);
+    BlockRegistry.registerBlock(nether_redstone_ore, "nether_redstone_ore");
+    nether_redstone_ore.registerSmeltingOutput(Items.REDSTONE);
     
     nether_iron_ore = new BlockDimensionOre(Items.IRON_INGOT);
     nether_iron_ore.setPickaxeHarvestLevel(ironHarvest).setSpawnType(SpawnType.SILVERFISH, 2);
     BlockRegistry.registerBlock(nether_iron_ore, "nether_iron_ore");
+    nether_iron_ore.registerSmeltingOutput(Items.IRON_INGOT);
     
     nether_gold_ore = new BlockDimensionOre(Items.GOLD_NUGGET,0,4);
     nether_gold_ore.setPickaxeHarvestLevel(goldHarvest).setSpawnType(SpawnType.SILVERFISH, 1);
     BlockRegistry.registerBlock(nether_gold_ore, "nether_gold_ore");
-    
-    
     nether_gold_ore.registerSmeltingOutput(Items.GOLD_INGOT);
+    
     nether_coal_ore = new BlockDimensionOre(Items.COAL);
     nether_coal_ore.setPickaxeHarvestLevel(coalHarvest).setSpawnType(SpawnType.SILVERFISH, 1);
     BlockRegistry.registerBlock(nether_coal_ore, "nether_coal_ore");
@@ -231,11 +241,16 @@ public class WorldGenModule extends BaseEventModule implements IHasConfig {
     BlockRegistry.registerBlock(end_diamond_ore, "end_diamond_ore");
     end_diamond_ore.registerSmeltingOutput(Items.DIAMOND);
     
-    
+
+    end_gold_ore = new BlockDimensionOre(Items.GOLD_INGOT);
+    end_gold_ore.setPickaxeHarvestLevel(goldHarvest).setSpawnType(SpawnType.ENDERMITE, 2);
+    BlockRegistry.registerBlock(end_gold_ore, "end_gold_ore");
+    end_gold_ore.registerSmeltingOutput(Items.GOLD_INGOT);
     
 
     end_iron_ore = new BlockDimensionOre(Items.IRON_INGOT);
     end_iron_ore.setPickaxeHarvestLevel(ironHarvest).setSpawnType(SpawnType.ENDERMITE, 2);
     BlockRegistry.registerBlock(end_iron_ore, "end_iron_ore");
+    end_iron_ore.registerSmeltingOutput(Items.IRON_INGOT);
   }
 }
