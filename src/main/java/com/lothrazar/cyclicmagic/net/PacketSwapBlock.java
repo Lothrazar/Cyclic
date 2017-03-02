@@ -150,7 +150,7 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
           //break it and drop the whatever
           //the destroy then set was causing exceptions, changed to setAir // https://github.com/PrinceOfAmber/Cyclic/issues/114
           ItemStack cur = player.inventory.getStackInSlot(slot);
-          if (cur == null || cur.stackSize <= 0) {
+          if (cur == null || cur.getCount() <= 0) {
             continue;
           }
           world.setBlockToAir(curPos);
@@ -158,7 +158,7 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
           if (cur.onItemUse(player, world, curPos, EnumHand.MAIN_HAND, message.side, 0.5F, 0.5F, 0.5F) == EnumActionResult.SUCCESS) {
             //then it owrked i guess eh
             success = true;
-            if(cur.stackSize==0){//double check hack for those red zeroes that always seem to come back
+            if (cur.getCount() == 0) {//double check hack for those red zeroes that always seem to come back
               player.inventory.setInventorySlotContents(slot, null);
             }
           }
