@@ -123,10 +123,12 @@ public class GuiPassword extends GuiBaseContainer {
     buttonUserPerm.visible = isMine;
   }
   @Override
-  protected void keyTyped(char par1, int par2) throws IOException {
-    super.keyTyped(par1, par2);
+  protected void keyTyped(char typedChar, int keyCode) throws IOException {
+    if (this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode) == false) {
+      super.keyTyped(typedChar, keyCode);
+    }
     if (txtPassword != null && txtPassword.isFocused()) {
-      txtPassword.textboxKeyTyped(par1, par2);
+      txtPassword.textboxKeyTyped(typedChar, keyCode);
       ModCyclic.network.sendToServer(new PacketTilePassword(PacketType.PASSTEXT, txtPassword.getText(), ctr.tile.getPos()));
     }
   }
