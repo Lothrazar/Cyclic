@@ -49,18 +49,18 @@ public class BlockVectorPlate extends BlockBaseHasTile {
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileVector();
   }
-  @Override
-  public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-    return AABB;
-  }
+//  @Override
+//  public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+//    return AABB;
+//  }
   @Nullable
   @Override
-  public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos) {
+  public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess  worldIn, BlockPos pos) {
     return COLLISION_AABB;
   }
   @Override
   public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
-    int yFloor = MathHelper.floor_double(entity.posY);
+    int yFloor = MathHelper.floor(entity.posY);
     double posWithinBlock = entity.posY - yFloor;
     TileVector tile = (TileVector) worldIn.getTileEntity(pos);
     entity.fallDistance = 0;

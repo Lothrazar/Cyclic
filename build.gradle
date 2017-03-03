@@ -1,12 +1,7 @@
-
-// For those who want the bleeding edge
 buildscript {
     repositories {
         jcenter()
-        maven {
-            name = "forge"
-            url = "http://files.minecraftforge.net/maven"
-        }
+        maven { url = "http://files.minecraftforge.net/maven" }
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
@@ -23,7 +18,7 @@ archivesBaseName = "Cyclic"
 
 minecraft {
     version = "${mc_version}-${forge_version}"
-    mappings = "snapshot_20161111"
+    mappings = "snapshot_20161220"
     runDir = "run"
     makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
     useDepAts = true

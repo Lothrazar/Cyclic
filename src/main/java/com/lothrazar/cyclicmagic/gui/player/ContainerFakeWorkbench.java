@@ -24,7 +24,7 @@ public class ContainerFakeWorkbench extends ContainerWorkbench {
     if (!world.isRemote) {
       for (int var2 = 0; var2 < 9; ++var2) {
         ItemStack var3 = craftMatrix.getStackInSlot(var2);
-        if (var3 != null) {
+        if (var3 != ItemStack.EMPTY) {
           par1EntityPlayer.dropItem(var3, true);
           //	par1EntityPlayer.dropPlayerItemWithRandomChoice(var3, true);
         }
@@ -37,30 +37,30 @@ public class ContainerFakeWorkbench extends ContainerWorkbench {
   }
   @Override
   public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2) {
-    ItemStack var3 = null;
+    ItemStack var3 = ItemStack.EMPTY;
     Slot var4 = (Slot) inventorySlots.get(par2);
     if (var4 != null && var4.getHasStack()) {
       ItemStack var5 = var4.getStack();
       var3 = var5.copy();
       if (par2 == 0) {
-        if (!mergeItemStack(var5, 10, 46, true)) { return null; }
+        if (!mergeItemStack(var5, 10, 46, true)) { return ItemStack.EMPTY; }
         var4.onSlotChange(var5, var3);
       }
       else if (par2 >= 10 && par2 < 37) {
-        if (!mergeItemStack(var5, 37, 46, false)) { return null; }
+        if (!mergeItemStack(var5, 37, 46, false)) { return ItemStack.EMPTY; }
       }
       else if (par2 >= 37 && par2 < 46) {
-        if (!mergeItemStack(var5, 10, 37, false)) { return null; }
+        if (!mergeItemStack(var5, 10, 37, false)) { return ItemStack.EMPTY; }
       }
-      else if (!mergeItemStack(var5, 10, 46, false)) { return null; }
-      if (var5.stackSize == 0) {
+      else if (!mergeItemStack(var5, 10, 46, false)) { return ItemStack.EMPTY; }
+      if (var5.getCount() == 0) {
         var4.putStack((ItemStack) null);
       }
       else {
         var4.onSlotChanged();
       }
-      if (var5.stackSize == var3.stackSize) { return null; }
-      var4.onPickupFromSlot(par1EntityPlayer, var5);
+      if (var5.getCount() == var3.getCount()) { return ItemStack.EMPTY; }
+      var4.onTake(par1EntityPlayer, var5);
     }
     return var3;
   }

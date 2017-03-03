@@ -6,6 +6,7 @@ import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -14,7 +15,7 @@ import net.minecraft.village.MerchantRecipeList;
 
 public class InventoryMerchantBetter extends InventoryMerchant implements IInventory {
   private final IMerchant theMerchant;
-  private final ItemStack[] theInventory = new ItemStack[3];
+  private final NonNullList<ItemStack> inv = NonNullList.withSize(3, ItemStack.EMPTY);
   private final EntityPlayer thePlayer;
   private MerchantRecipe currentRecipe;
   private int currentRecipeIndex;
@@ -29,26 +30,26 @@ public class InventoryMerchantBetter extends InventoryMerchant implements IInven
    * Returns the number of slots in the inventory.
    */
   public int getSizeInventory() {
-    return this.theInventory.length;
+    return this.inv.size();
   }
   /**
    * Returns the stack in the given slot.
    */
   @Nullable
   public ItemStack getStackInSlot(int index) {
-    return this.theInventory[index];
+    return this.inv.get(index);
   }
-  @Nullable
   public ItemStack decrStackSize(int index, int count) {
-    if (index == 2 && this.theInventory[index] != null) {
-      return ItemStackHelper.getAndSplit(this.theInventory, index, this.theInventory[index].stackSize);
+    ItemStack itemstack = (ItemStack) this.inv.get(index);
+    if (index == 2 && !itemstack.isEmpty()) {
+      return ItemStackHelper.getAndSplit(this.inv, index, itemstack.getCount());
     }
     else {
-      ItemStack itemstack = ItemStackHelper.getAndSplit(this.theInventory, index, count);
-      if (itemstack != null && this.inventoryResetNeededOnSlotChange(index)) {
+      ItemStack itemstack1 = ItemStackHelper.getAndSplit(this.inv, index, count);
+      if (!itemstack1.isEmpty() && this.inventoryResetNeededOnSlotChange(index)) {
         this.resetRecipeAndSlots();
       }
-      return itemstack;
+      return itemstack1;
     }
   }
   private boolean inventoryResetNeededOnSlotChange(int slotIn) {
@@ -56,18 +57,18 @@ public class InventoryMerchantBetter extends InventoryMerchant implements IInven
   }
   @Nullable
   public ItemStack removeStackFromSlot(int index) {
-    return ItemStackHelper.getAndRemove(this.theInventory, index);
+    return ItemStackHelper.getAndRemove(this.inv, index);
   }
   public void setInventorySlotContents(int index, @Nullable ItemStack stack) {
-    this.theInventory[index] = stack;
-    if (stack != null && stack.stackSize > this.getInventoryStackLimit()) {
-      stack.stackSize = this.getInventoryStackLimit();
-    }
+    if (index > inv.size()) { return; }
+    this.inv.set(index, stack);
+    //    if (stack != null && stack.getCount() > this.getInventoryStackLimit()) {
+    //      stack = this.getInventoryStackLimit();
+    //    }
     if (this.inventoryResetNeededOnSlotChange(index)) {
       this.resetRecipeAndSlots();
     }
   }
-
   public String getName() {
     return "mob.villager";
   }
@@ -80,17 +81,14 @@ public class InventoryMerchantBetter extends InventoryMerchant implements IInven
   public int getInventoryStackLimit() {
     return 64;
   }
-
   public boolean isUseableByPlayer(EntityPlayer player) {
     return this.theMerchant.getCustomer() == player;
   }
   public void openInventory(EntityPlayer player) {}
   public void closeInventory(EntityPlayer player) {}
-
   public boolean isItemValidForSlot(int index, ItemStack stack) {
     return true;
   }
-
   public void markDirty() {
     this.resetRecipeAndSlots();
   }
@@ -104,14 +102,14 @@ public class InventoryMerchantBetter extends InventoryMerchant implements IInven
   }
   public void resetRecipeAndSlots() {
     this.currentRecipe = null;
-    ItemStack itemstack = this.theInventory[0];
-    ItemStack itemstack1 = this.theInventory[1];
-    if (itemstack == null) {
+    ItemStack itemstack = this.inv.get(0);
+    ItemStack itemstack1 = this.inv.get(1);
+    if (itemstack == ItemStack.EMPTY) {
       itemstack = itemstack1;
-      itemstack1 = null;
+      itemstack1 = ItemStack.EMPTY;
     }
-    if (itemstack == null) {
-      this.setInventorySlotContents(2, (ItemStack) null);
+    if (itemstack == ItemStack.EMPTY) {
+      this.setInventorySlotContents(2,  ItemStack.EMPTY);
     }
     else {
       MerchantRecipeList merchantrecipelist = this.getRecipes();
@@ -119,22 +117,20 @@ public class InventoryMerchantBetter extends InventoryMerchant implements IInven
         MerchantRecipe merchantrecipe = merchantrecipelist.canRecipeBeUsed(itemstack, itemstack1, this.currentRecipeIndex);
         if (merchantrecipe != null && !merchantrecipe.isRecipeDisabled()) {
           this.currentRecipe = merchantrecipe;
- 
           this.setInventorySlotContents(2, merchantrecipe.getItemToSell().copy());
         }
-        else if (itemstack1 != null) {
+        else if (itemstack1 != ItemStack.EMPTY) {
           merchantrecipe = merchantrecipelist.canRecipeBeUsed(itemstack1, itemstack, this.currentRecipeIndex);
           if (merchantrecipe != null && !merchantrecipe.isRecipeDisabled()) {
-      
             this.currentRecipe = merchantrecipe;
             this.setInventorySlotContents(2, merchantrecipe.getItemToSell().copy());
           }
           else {
-            this.setInventorySlotContents(2, (ItemStack) null);
+            this.setInventorySlotContents(2, ItemStack.EMPTY);
           }
         }
         else {
-          this.setInventorySlotContents(2, (ItemStack) null);
+          this.setInventorySlotContents(2, ItemStack.EMPTY);
         }
       }
     }
@@ -156,8 +152,8 @@ public class InventoryMerchantBetter extends InventoryMerchant implements IInven
     return 0;
   }
   public void clear() {
-    for (int i = 0; i < this.theInventory.length; ++i) {
-      this.theInventory[i] = null;
+    for (int i = 0; i < this.inv.size(); ++i) {
+      this.inv.set(i, ItemStack.EMPTY);
     }
   }
 }

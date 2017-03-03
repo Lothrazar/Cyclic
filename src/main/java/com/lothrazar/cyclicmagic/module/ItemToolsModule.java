@@ -97,13 +97,13 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   @SubscribeEvent
   public void renderOverlay(RenderWorldLastEvent evt) {
     Minecraft mc = Minecraft.getMinecraft();
-    EntityPlayerSP p = mc.thePlayer;
+    EntityPlayerSP p = mc.player;
     ItemStack heldItem = p.getHeldItemMainhand();
     if (heldItem == null) { return; }
     if (heldItem.getItem() instanceof ItemToolSwap) {
       RayTraceResult mouseOver = Minecraft.getMinecraft().objectMouseOver;
       if (mouseOver != null && mouseOver.getBlockPos() != null && mouseOver.sideHit != null) {
-        IBlockState state = p.worldObj.getBlockState(mouseOver.getBlockPos());
+        IBlockState state = p.world.getBlockState(mouseOver.getBlockPos());
         Block block = state.getBlock();
         if (block != null && block.getMaterial(state) != Material.AIR) {
           ItemToolSwap wandInstance = (ItemToolSwap) heldItem.getItem();
@@ -345,10 +345,10 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onMouseInput(MouseEvent event) {
-    EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+    EntityPlayer player = Minecraft.getMinecraft().player;
     if (!player.isSneaking() || event.getDwheel() == 0) { return; }
     ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
-    if (wand == null) { return; }
+    if (wand == ItemStack.EMPTY) { return; }
     //if theres only one spell, do nothing
     if (SpellRegistry.getSpellbook(wand) == null || SpellRegistry.getSpellbook(wand).size() <= 1) { return; }
     if (event.getDwheel() < 0) {
@@ -365,9 +365,9 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onRenderTextOverlay(RenderGameOverlayEvent.Text event) {
-    ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(Minecraft.getMinecraft().thePlayer);
+    ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(Minecraft.getMinecraft().player);
     // special new case: no hud for this type
-    if (wand != null) {
+    if (wand != ItemStack.EMPTY) {
       spellHud.drawSpellWheel(wand);
     }
   }
@@ -375,12 +375,12 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public void onRender(RenderGameOverlayEvent.Post event) {
     if (event.isCanceled() || event.getType() != ElementType.EXPERIENCE) { return; }
-    EntityPlayer effectivePlayer = Minecraft.getMinecraft().thePlayer;
+    EntityPlayer effectivePlayer = Minecraft.getMinecraft().player;
     ItemStack heldWand = UtilSpellCaster.getPlayerWandIfHeld(effectivePlayer);
-    if (heldWand == null) { return; }
+    if (heldWand == ItemStack.EMPTY) { return; }
     int itemSlot = ItemCyclicWand.BuildType.getSlot(heldWand);
     ItemStack current = InventoryWand.getFromSlot(heldWand, itemSlot);
-    if (current != null) {
+    if (current != ItemStack.EMPTY) {
       //THE ITEM INSIDE THE BUILDY WHEEL
       int leftOff = 7, rightOff = -26, topOff = 36, bottOff = -2;
       int xmain = RenderLoc.locToX(ItemToolsModule.renderLocation, leftOff, rightOff);
@@ -433,10 +433,10 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
       int leftOff = 8, rightOff = -26, topOff = 0, bottOff = -38;
       xmain = RenderLoc.locToX(ItemToolsModule.renderLocation, leftOff, rightOff);
       ymain = RenderLoc.locToY(ItemToolsModule.renderLocation, topOff, bottOff);
-      EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+      EntityPlayer player = Minecraft.getMinecraft().player;
+      if (SpellRegistry.getSpellbook(wand) == null || SpellRegistry.getSpellbook(wand).size() <= 1) { return; }
       ISpell spellCurrent = UtilSpellCaster.getPlayerCurrentISpell(player);
       //if theres only one spell, do not do the rest eh
-      if (SpellRegistry.getSpellbook(wand) == null || SpellRegistry.getSpellbook(wand).size() <= 1) { return; }
       drawCurrentSpell(player, spellCurrent);
       drawNextSpells(player, spellCurrent);
       drawPrevSpells(player, spellCurrent);

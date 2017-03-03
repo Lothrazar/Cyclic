@@ -41,17 +41,17 @@ public class ContainerWand extends ContainerBase {
     ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
     // this will prevent the player from interacting with the item that
     // opened the inventory:
-    if (slot >= 0 && getSlot(slot) != null && getSlot(slot).getStack() == wand) { return null; }
+    if (slot >= 0 && getSlot(slot) != null && getSlot(slot).getStack() == wand) { return ItemStack.EMPTY; }
     return super.slotClick(slot, dragType, clickTypeIn, player);
   }
   @Override
   public boolean canInteractWith(EntityPlayer playerIn) {
-    return inventory.isUseableByPlayer(playerIn);
+    return inventory.isUsableByPlayer(playerIn);
   }
   public static final int INV_START = InventoryWand.INV_SIZE, INV_END = INV_START + 26, HOTBAR_START = INV_END + 1, HOTBAR_END = HOTBAR_START + 8;
   @Override
   public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int index) {
-    ItemStack itemstack = null;
+    ItemStack itemstack = ItemStack.EMPTY;
     Slot slot = (Slot) this.inventorySlots.get(index);
     if (slot != null && slot.getHasStack()) {
       ItemStack itemstack1 = slot.getStack();
@@ -61,7 +61,7 @@ public class ContainerWand extends ContainerBase {
         // try to place in player inventory / action bar
         if (!this.mergeItemStack(itemstack1, INV_START, HOTBAR_END + 1, true)) {
           inventory.markDirty();
-          return null;
+          return ItemStack.EMPTY;
         }
         slot.onSlotChange(itemstack1, itemstack);
       }
@@ -72,35 +72,35 @@ public class ContainerWand extends ContainerBase {
           // place in custom inventory
           if (!this.mergeItemStack(itemstack1, 0, INV_START, false)) {
             inventory.markDirty();
-            return null;
+            return ItemStack.EMPTY;
           }
         }
         if (index >= INV_START && index < HOTBAR_START) {
           // place in action bar
           if (!this.mergeItemStack(itemstack1, HOTBAR_START, HOTBAR_END + 1, false)) {
             inventory.markDirty();
-            return null;
+            return ItemStack.EMPTY;
           }
         }
         // item in action bar - place in player inventory
         else if (index >= HOTBAR_START && index < HOTBAR_END + 1) {
           if (!this.mergeItemStack(itemstack1, INV_START, INV_END + 1, false)) {
             inventory.markDirty();
-            return null;
+            return ItemStack.EMPTY;
           }
         }
       }
-      if (itemstack1.stackSize == 0) {
-        slot.putStack((ItemStack) null);
+      if (itemstack1.getCount() == 0) {
+        slot.putStack(ItemStack.EMPTY);
       }
       else {
         slot.onSlotChanged();
       }
-      if (itemstack1.stackSize == itemstack.stackSize) {
+      if (itemstack1.getCount() == itemstack.getCount()) {
         inventory.markDirty();
-        return null;
+        return ItemStack.EMPTY;
       }
-      slot.onPickupFromSlot(par1EntityPlayer, itemstack1);
+      slot.onTake(par1EntityPlayer, itemstack1);
     }
     inventory.markDirty();
     return itemstack;

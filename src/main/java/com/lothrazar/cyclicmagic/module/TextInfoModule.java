@@ -53,7 +53,7 @@ public class TextInfoModule extends BaseEventModule implements IHasConfig {
   @SubscribeEvent
   @SideOnly(Side.CLIENT)
   public void onTextOverlay(RenderGameOverlayEvent.Text event) {
-    EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+    EntityPlayerSP player = Minecraft.getMinecraft().player;
     if (Minecraft.getMinecraft().gameSettings.showDebugInfo == false) { return; } //if f3 is not pressed
     if (spawnDistanceEnabled && player.dimension == Const.Dimension.overworld) {
       addSpawnInfo(event);
@@ -63,7 +63,7 @@ public class TextInfoModule extends BaseEventModule implements IHasConfig {
     }
   }
   private void addHorseInfo(RenderGameOverlayEvent.Text event) {
-    EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+    EntityPlayerSP player = Minecraft.getMinecraft().player;
     if (player.getRidingEntity() != null && player.getRidingEntity() instanceof EntityHorse) {
       EntityHorse horse = (EntityHorse) player.getRidingEntity();
       double speed = UtilEntity.getSpeedTranslated(horse.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue());
@@ -77,7 +77,7 @@ public class TextInfoModule extends BaseEventModule implements IHasConfig {
     }
   }
   private void addSpawnInfo(RenderGameOverlayEvent.Text event) {
-    EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
+    EntityPlayerSP player = Minecraft.getMinecraft().player;
     /*
      * The spawn chunks usually consist of an area of 16×16 chunks centered as
      * close as possible to the world spawn point. Entities are only active if

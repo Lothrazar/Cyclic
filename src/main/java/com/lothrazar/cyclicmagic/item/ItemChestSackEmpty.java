@@ -26,8 +26,9 @@ public class ItemChestSackEmpty extends BaseItem implements IHasRecipe {
     // https://github.com/PrinceOfAmber/SamsPowerups/blob/b02f6b4243993eb301f4aa2b39984838adf482c1/src/main/java/com/lothrazar/samscontent/item/ItemChestSack.java
   }
   @Override
-  public EnumActionResult onItemUse(ItemStack stack, EntityPlayer entityPlayer, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+  public EnumActionResult onItemUse( EntityPlayer entityPlayer, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     if (pos == null) { return EnumActionResult.FAIL; }
+//    ItemStack stack = entityPlayer.getHeldItem(hand);
     TileEntity tile = world.getTileEntity(pos);
     IBlockState state = world.getBlockState(pos);
     if (state == null || tile == null) {//so it works on EXU2 machines  || tile instanceof IInventory == false

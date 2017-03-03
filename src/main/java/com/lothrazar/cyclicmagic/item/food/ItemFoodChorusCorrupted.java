@@ -88,7 +88,7 @@ public class ItemFoodChorusCorrupted extends ItemFood implements IHasRecipe, IHa
           // if the player changed dimension while a ghost, thats not
           // allowed. dont tp them back
           player.setGameType(GameType.SURVIVAL);
-          player.attackEntityFrom(DamageSource.magic, 50);
+          player.attackEntityFrom(DamageSource.MAGIC, 50);
         }
         else {
           // : teleport back to source

@@ -19,6 +19,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -110,7 +111,7 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
   @SideOnly(Side.CLIENT)
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public void onRender(RenderGameOverlayEvent.Post event) {
-    EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+    EntityPlayer player = Minecraft.getMinecraft().player;
     ItemStack held = player.getHeldItem(EnumHand.MAIN_HAND);
     if (event.isCanceled() || event.getType() != ElementType.EXPERIENCE) { return; }
     if (held != null && held.getItem() == this) {
@@ -126,7 +127,8 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
     }
   }
   @Override
-  public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+  public EnumActionResult onItemUse( EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    ItemStack stack = player.getHeldItem(hand);
     //if we only run this on server, clients dont get the udpate
     //so run it only on client, let packet run the server
     try {
@@ -134,7 +136,7 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
         ModCyclic.network.sendToServer(new PacketSwapBlock(pos, side, ActionType.values()[ActionType.get(stack)], this.getWandType()));
       }
       player.swingArm(hand);
-      //      this.onUse(stack, player, worldObj, hand);
+  
       player.getCooldownTracker().setCooldown(this, COOLDOWN);
     }
     catch (ConcurrentModificationException e) {
@@ -142,7 +144,12 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
       ModCyclic.logger.warn(e.getMessage());// message is null??
       ModCyclic.logger.warn(e.getStackTrace().toString());
     }
-    return super.onItemUse(stack, player, worldObj, pos, hand, side, hitX, hitY, hitZ);// EnumActionResult.PASS;
+    return  EnumActionResult.FAIL;//super.onItemUse( player, worldObj, pos, hand, side, hitX, hitY, hitZ);// EnumActionResult.PASS;
+  }
+  @Override
+  public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
+
+    return new ActionResult<ItemStack>(EnumActionResult.FAIL,    playerIn.getHeldItem(hand));
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {

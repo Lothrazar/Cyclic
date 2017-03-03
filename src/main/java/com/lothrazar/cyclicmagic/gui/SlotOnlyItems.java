@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.gui;
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -10,13 +11,14 @@ public class SlotOnlyItems extends Slot {
   }
   @Override
   public boolean isItemValid(ItemStack itemstack) {
-    return Block.getBlockFromItem(itemstack.getItem()) == null; // no items only blocks
+    return Block.getBlockFromItem(itemstack.getItem()) == null
+        || Block.getBlockFromItem(itemstack.getItem()) == Blocks.AIR; // no items only blocks
   }
   @Override
   public void onSlotChanged() {
-    if (this.getHasStack() && this.getStack().stackSize == 0) {
-      this.putStack((ItemStack) null);
-    }
-    super.onSlotChanged();
+    //    if (this.getHasStack() && this.getStack().getCount() == 0) {
+    //      this.putStack(ItemStack.EMPTY);
+    //    }
+    //    super.onSlotChanged();
   }
 }

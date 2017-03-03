@@ -47,7 +47,9 @@ public class ItemToolHarvest extends BaseTool implements IHasRecipe {
     }
   }
   @Override
-  public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+  public EnumActionResult onItemUse( EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    ItemStack stack = player.getHeldItem(hand);
+    
     BlockPos offset = pos;
     if (side != null) {
       offset = pos.offset(side);
@@ -58,7 +60,7 @@ public class ItemToolHarvest extends BaseTool implements IHasRecipe {
     UtilHarvestCrops.harvestArea(worldObj, offset.up(), range - 2, conf);
     UtilHarvestCrops.harvestArea(worldObj, offset.up().up(), range - 2, conf);
     super.onUse(stack, player, worldObj, hand);
-    return super.onItemUse(stack, player, worldObj, offset, hand, side, hitX, hitY, hitZ);
+    return super.onItemUse( player, worldObj, offset, hand, side, hitX, hitY, hitZ);
   }
   @Override
   public void addRecipe() {

@@ -41,7 +41,7 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
         }
         @Override
         public boolean isItemValid(ItemStack stack) {
-          if (stack == null) {
+          if (stack == ItemStack.EMPTY) {
             return false;
           }
           else {
@@ -102,16 +102,16 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
     //size of 9, but it starts after the five equip slots
     for (int i = 0; i < 9; ++i) {
       ItemStack itemstack = this.craftMatrix.removeStackFromSlot(i);
-      if (itemstack != null) {
+      if (itemstack != ItemStack.EMPTY) {
         //System.out.println("DROP "+i);
         playerIn.dropItem(itemstack, false);
       }
     }
-    this.craftResult.setInventorySlotContents(0, (ItemStack) null);
+    this.craftResult.setInventorySlotContents(0, ItemStack.EMPTY);
   }
   @Override
   public ItemStack transferStackInSlot(EntityPlayer entityPlayer, int slotIndex) {
-    ItemStack itemStack = null;
+    ItemStack itemStack = ItemStack.EMPTY;
     Slot fromSlot = (Slot) this.inventorySlots.get(slotIndex);
     //ystem.out.println("  transferStackInSlot" + slotIndex);
     //shield is slot 5 now
@@ -120,32 +120,32 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
       ItemStack itemStack1 = fromSlot.getStack();
       itemStack = itemStack1.copy();
       if (slotIndex == craftOutpt) {
-        if (!this.mergeItemStack(itemStack1, playerStart, playerEnd + 1, false)) { return null; }
+        if (!this.mergeItemStack(itemStack1, playerStart, playerEnd + 1, false)) { return ItemStack.EMPTY; }
         fromSlot.onSlotChange(itemStack1, itemStack);
       }
       else if (slotIndex >= craftStart && slotIndex <= craftEnd) {
         if (!this.mergeItemStack(itemStack1, playerStart, playerEnd + 1, false)) {
           fromSlot.onSlotChanged();
-          return null;
+          return ItemStack.EMPTY;
         }
       }
       else if (slotIndex >= armorStart && slotIndex <= armorEnd) {
         if (!this.mergeItemStack(itemStack1, playerStart, playerEnd + 1, false)) {
           fromSlot.onSlotChanged();
-          return null;
+          return ItemStack.EMPTY;
         }
       }
       else if (slotIndex >= playerStart && slotIndex <= playerEnd) {
-        if (!this.mergeItemStack(itemStack1, craftStart, craftEnd + 1, false)) { return null; }
+        if (!this.mergeItemStack(itemStack1, craftStart, craftEnd + 1, false)) { return ItemStack.EMPTY; }
       }
-      if (itemStack1.stackSize == 0) {
-        fromSlot.putStack((ItemStack) null);
+      if (itemStack1.getCount() == 0) {
+        fromSlot.putStack(ItemStack.EMPTY);
       }
       else {
         fromSlot.onSlotChanged();
       }
-      if (itemStack.stackSize == itemStack1.stackSize) { return null; }
-      fromSlot.onPickupFromSlot(this.thePlayer, itemStack1);
+      if (itemStack.getCount() == itemStack1.getCount()) { return ItemStack.EMPTY; }
+      fromSlot.onTake(this.thePlayer, itemStack1);
     }
     return itemStack;
   }

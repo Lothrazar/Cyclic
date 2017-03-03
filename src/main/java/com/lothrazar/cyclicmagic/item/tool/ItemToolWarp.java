@@ -32,10 +32,12 @@ public class ItemToolWarp extends BaseTool implements IHasRecipe {
     return true;
   }
   @Override
-  public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World world, EntityPlayer player, EnumHand hand) {
+  public ActionResult<ItemStack> onItemRightClick( World world, EntityPlayer player, EnumHand hand) {
+      ItemStack stack = player.getHeldItem(hand);
+  
     if (player.dimension != 0) {
       UtilChat.addChatMessage(player, "command.worldhome.dim");
-      return new ActionResult<ItemStack>(EnumActionResult.FAIL, itemStackIn);
+      return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
     }
     boolean success = false;
     switch (warpType) {
@@ -50,10 +52,10 @@ public class ItemToolWarp extends BaseTool implements IHasRecipe {
       break;
     }
     if (success) {
-      super.onUse(itemStackIn, player, world, hand);
+      super.onUse(stack, player, world, hand);
       player.getCooldownTracker().setCooldown(this, cooldown);
     }
-    return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);
+    return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {

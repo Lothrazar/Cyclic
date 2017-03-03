@@ -28,8 +28,10 @@ public class ItemToolProspector extends BaseTool implements IHasRecipe, IHasConf
     super(DURABILITY);
   }
   @Override
-  public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-    if (side == null || pos == null) { return super.onItemUse(stack, player, worldObj, pos, hand, side, hitX, hitY, hitZ); }
+  public EnumActionResult onItemUse( EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+
+    ItemStack stack = player.getHeldItem(hand);
+    if (side == null || pos == null) { return super.onItemUse( player, worldObj, pos, hand, side, hitX, hitY, hitZ); }
     Map<String, Integer> mapList = new HashMap<String, Integer>();
     String name;
     if (!worldObj.isRemote) {
@@ -58,7 +60,7 @@ public class ItemToolProspector extends BaseTool implements IHasRecipe, IHasConf
       UtilChat.addChatMessage(player, UtilChat.lang("tool_prospector.found") + entry.getKey() + " " + entry.getValue());
     }
     super.onUse(stack, player, worldObj, hand);
-    return super.onItemUse(stack, player, worldObj, pos, hand, side, hitX, hitY, hitZ);
+    return super.onItemUse( player, worldObj, pos, hand, side, hitX, hitY, hitZ);
   }
   @Override
   public void addRecipe() {

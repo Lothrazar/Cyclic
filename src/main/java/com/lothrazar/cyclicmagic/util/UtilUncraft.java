@@ -126,7 +126,7 @@ public class UtilUncraft {
       if (stackInput == null || stackInput.getItem() == null) { return; }
       if (isItemInBlacklist(stackInput, BlacklistType.OUTPUT)) { return; }
       ItemStack stack = stackInput.copy();
-      stack.stackSize = 1;
+      stack.setCount(1);
       if (stack.getItemDamage() == 32767) {
         if (dictionaryFreedom) {
           stack.setItemDamage(0);// do not make invalid quartz
@@ -165,11 +165,11 @@ public class UtilUncraft {
             result = UncraftResultType.ENCHANTMATCH;// either they are both ench, or both not ench
             continue;
           }
-          if (toUncraft.stackSize < next.getRecipeOutput().stackSize) {
+          if (toUncraft.getCount() < next.getRecipeOutput().getCount()) {
             result = UncraftResultType.NOTENOUGHITEMS;//we found a matching recipe but we dont have enough to satisfy
             continue;//keep looking but save the result type
           }
-          outsize = next.getRecipeOutput().stackSize;
+          outsize = next.getRecipeOutput().getCount();
           List<? extends Object> input = getRecipeInput(next);
           if (input == null) {
             result = UncraftResultType.UNKNOWN;

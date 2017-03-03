@@ -31,7 +31,7 @@ public class EntityDungeonEye extends EntityThrowableDispensable {
   public void onUpdate() {
     super.onUpdate();
     if (!this.getEntityWorld().isRemote) {
-      float mHoriz = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
+      float mHoriz = MathHelper.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
       double distX = this.targetX - this.posX;
       double distY = this.targetY - this.posY;
       double distZ = this.targetZ - this.posZ;

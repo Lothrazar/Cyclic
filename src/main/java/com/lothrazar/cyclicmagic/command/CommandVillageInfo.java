@@ -40,7 +40,7 @@ public class CommandVillageInfo extends BaseCommand implements ICommand {
       }
       dX = pos.getX() - closest.getCenter().getX();
       dZ = pos.getZ() - closest.getCenter().getZ();
-      int dist = MathHelper.floor_double(Math.sqrt(dX * dX + dZ * dZ));
+      int dist = MathHelper.floor(Math.sqrt(dX * dX + dZ * dZ));
       UtilChat.addChatMessage(sender, UtilChat.lang("command.villageinfo.center") + String.format("%d", dist));
     }
   }

@@ -16,8 +16,8 @@ public class CommandHearts extends BaseCommand implements ICommand {
     this.setUsernameIndex(0);
   }
   @Override
-  public String getCommandUsage(ICommandSender sender) {
-    return "/" + getCommandName() + " <player> <hearts>";
+  public String getUsage(ICommandSender sender) {
+    return "/" + getName() + " <player> <hearts>";
   }
   @Override
   public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
@@ -26,19 +26,19 @@ public class CommandHearts extends BaseCommand implements ICommand {
     try {
       ptarget = super.getPlayerByUsername(server, args[0]);
       if (ptarget == null) {
-        UtilChat.addChatMessage(sender, getCommandUsage(sender));
+        UtilChat.addChatMessage(sender, getUsage(sender));
         return;
       }
     }
     catch (Exception e) {
-      UtilChat.addChatMessage(sender, getCommandUsage(sender));
+      UtilChat.addChatMessage(sender, getUsage(sender));
       return;
     }
     try {
       hearts = Integer.parseInt(args[1]);
     }
     catch (Exception e) {
-      UtilChat.addChatMessage(sender, getCommandUsage(sender));
+      UtilChat.addChatMessage(sender, getUsage(sender));
       return;
     }
     if (hearts < 1) {

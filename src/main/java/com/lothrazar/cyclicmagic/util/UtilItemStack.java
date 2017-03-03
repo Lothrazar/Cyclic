@@ -20,23 +20,25 @@ public class UtilItemStack {
    * @return
    */
   public static boolean canMerge(ItemStack chestItem, ItemStack bagItem) {
-    if (chestItem == null || bagItem == null) { return false; }
+    if (chestItem == ItemStack.EMPTY || bagItem == ItemStack.EMPTY) { return false; }
     return (bagItem.getItem().equals(chestItem.getItem())
         && bagItem.getItemDamage() == chestItem.getItemDamage()
         && ItemStack.areItemStackTagsEqual(bagItem, chestItem));
   }
   public static int mergeItemsBetweenStacks(ItemStack takeFrom, ItemStack moveTo) {
-    int room = moveTo.getMaxStackSize() - moveTo.stackSize;
+    int room = moveTo.getMaxStackSize() - moveTo.getCount();
     int moveover = 0;
     if (room > 0) {
-      moveover = Math.min(takeFrom.stackSize, room);
-      moveTo.stackSize += moveover;
-      takeFrom.stackSize -= moveover;
+      moveover = Math.min(takeFrom.getCount(), room);
+//      moveTo.stackSize += moveover;
+//      takeFrom.stackSize -= moveover;
+      moveTo.grow(moveover);
+      takeFrom.shrink(moveover);
     }
     return moveover;
   }
   public static int getMaxDmgFraction(Item tool, int d) {
-    return tool.getMaxDamage() - (int) MathHelper.floor_double(tool.getMaxDamage() / d);
+    return tool.getMaxDamage() - (int) MathHelper.floor(tool.getMaxDamage() / d);
   }
   public static void damageItem(EntityLivingBase p, ItemStack s) {
     if (p instanceof EntityPlayer) {
@@ -97,7 +99,7 @@ public class UtilItemStack {
     EntityItem entityItem = new EntityItem(worldObj, pos.getX(), pos.getY(), pos.getZ(), stack);
     if (worldObj.isRemote == false) {
       // do not spawn a second 'ghost' one onclient side
-      worldObj.spawnEntityInWorld(entityItem);
+      worldObj.spawnEntity(entityItem);
     }
     return entityItem;
   }
@@ -107,7 +109,8 @@ public class UtilItemStack {
     }
   }
   public static boolean isEmpty(ItemStack is) {
-    return is == null || is.stackSize == 0;
+    
+    return is == null ||is.isEmpty()|| is == ItemStack.EMPTY;
   }
   public static String getStringForItem(Item item) {
     return item.getRegistryName().getResourceDomain() + ":" + item.getRegistryName().getResourcePath();

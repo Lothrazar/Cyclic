@@ -8,7 +8,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
@@ -18,9 +17,10 @@ import net.minecraft.world.World;
 public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
   private static final EnumParticleTypes PARTICLE_TARGET = EnumParticleTypes.CLOUD;
   private static final EnumParticleTypes PARTICLE_SRC = EnumParticleTypes.DRAGON_BREATH;
+  private final static int MAXIMUM = 32;
   private static final String NBT_REDST = "redstone";
-  private static final String NBT_INV = "Inventory";
-  private static final String NBT_SLOT = "Slot";
+  private static final int TIMER_FULL = 20;
+  private static final int TIMER_SKIP = 1;
   private int height = 5;
   private int offsetTargetX = -4;
   private int offsetTargetY = 0;
@@ -32,14 +32,11 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   private int timer = 1;
   private int needsRedstone = 1;
   private int renderParticles = 1;
-  private static final int TIMER_FULL = 20;
-  private static final int TIMER_SKIP = 1;
-  private ItemStack[] inv;
   public static enum Fields {
     OFFTARGX, OFFTARGY, OFFTARGZ, SIZER, OFFSRCX, OFFSRCY, OFFSRCZ, HEIGHT, TIMER, REDSTONE, RENDERPARTICLES;
   }
   public TileEntityPatternBuilder() {
-    inv = new ItemStack[18];
+    super(18);
   }
   @Override
   public int getFieldCount() {
@@ -127,7 +124,6 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
         UtilParticle.spawnParticleNarrow(this.getWorld(), PARTICLE_TARGET, p);
       }
     }
-    //src
     BlockPos centerSrc = this.getPos().add(offsetSourceX, offsetSourceY, offsetSourceZ);
     List<BlockPos> shapeSrc = UtilShape.cubeFrame(centerSrc, this.sizeRadius, this.height);
     if (this.getWorld().rand.nextDouble() < 0.1) {
@@ -137,96 +133,39 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     }
   }
   @Override
-  public int getSizeInventory() {
-    return inv.length;
-  }
-  @Override
-  public ItemStack getStackInSlot(int index) {
-    return inv[index];
-  }
-  @Override
-  public ItemStack decrStackSize(int index, int count) {
-    ItemStack stack = getStackInSlot(index);
-    if (stack != null) {
-      if (stack.stackSize <= count) {
-        setInventorySlotContents(index, null);
-      }
-      else {
-        stack = stack.splitStack(count);
-        if (stack.stackSize == 0) {
-          setInventorySlotContents(index, null);
-        }
-      }
-    }
-    return stack;
-  }
-  @Override
-  public ItemStack removeStackFromSlot(int index) {
-    ItemStack stack = getStackInSlot(index);
-    if (stack != null) {
-      setInventorySlotContents(index, null);
-    }
-    return stack;
-  }
-  @Override
-  public void setInventorySlotContents(int index, ItemStack stack) {
-    inv[index] = stack;
-    if (stack != null && stack.stackSize > getInventoryStackLimit()) {
-      stack.stackSize = getInventoryStackLimit();
-    }
-  }
-  @Override
   public int[] getSlotsForFace(EnumFacing side) {
     return new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 };
   }
   @Override
-  public void readFromNBT(NBTTagCompound tagCompound) {
-    super.readFromNBT(tagCompound);
-    this.offsetTargetX = tagCompound.getInteger("ox");
-    this.offsetTargetY = tagCompound.getInteger("oy");
-    this.offsetTargetZ = tagCompound.getInteger("oz");
-    this.offsetSourceX = tagCompound.getInteger("sx");
-    this.offsetSourceY = tagCompound.getInteger("sy");
-    this.offsetSourceZ = tagCompound.getInteger("sz");
-    this.sizeRadius = tagCompound.getInteger("r");
-    this.height = tagCompound.getInteger("height");
-    this.timer = tagCompound.getInteger("timer");
-    this.renderParticles = tagCompound.getInteger("render");
-    this.needsRedstone = tagCompound.getInteger(NBT_REDST);
-    NBTTagList tagList = tagCompound.getTagList(NBT_INV, 10);
-    for (int i = 0; i < tagList.tagCount(); i++) {
-      NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
-      byte slot = tag.getByte(NBT_SLOT);
-      if (slot >= 0 && slot < inv.length) {
-        inv[slot] = ItemStack.loadItemStackFromNBT(tag);
-      }
-    }
+  public void readFromNBT(NBTTagCompound compound) {
+    super.readFromNBT(compound);
+    this.offsetTargetX = compound.getInteger("ox");
+    this.offsetTargetY = compound.getInteger("oy");
+    this.offsetTargetZ = compound.getInteger("oz");
+    this.offsetSourceX = compound.getInteger("sx");
+    this.offsetSourceY = compound.getInteger("sy");
+    this.offsetSourceZ = compound.getInteger("sz");
+    this.sizeRadius = compound.getInteger("r");
+    this.height = compound.getInteger("height");
+    this.timer = compound.getInteger("timer");
+    this.renderParticles = compound.getInteger("render");
+    this.needsRedstone = compound.getInteger(NBT_REDST);
   }
   @Override
-  public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
-    tagCompound.setInteger("ox", offsetTargetX);
-    tagCompound.setInteger("oy", offsetTargetY);
-    tagCompound.setInteger("oz", offsetTargetZ);
-    tagCompound.setInteger("sx", offsetSourceX);
-    tagCompound.setInteger("sy", offsetSourceY);
-    tagCompound.setInteger("sz", offsetSourceZ);
-    tagCompound.setInteger("r", sizeRadius);
-    tagCompound.setInteger("height", height);
-    tagCompound.setInteger("timer", timer);
-    tagCompound.setInteger("render", renderParticles);
-    tagCompound.setInteger(NBT_REDST, this.needsRedstone);
-    NBTTagList itemList = new NBTTagList();
-    for (int i = 0; i < inv.length; i++) {
-      ItemStack stack = inv[i];
-      if (stack != null) {
-        NBTTagCompound tag = new NBTTagCompound();
-        tag.setByte(NBT_SLOT, (byte) i);
-        stack.writeToNBT(tag);
-        itemList.appendTag(tag);
-      }
-    }
-    tagCompound.setTag(NBT_INV, itemList);
-    return super.writeToNBT(tagCompound);
+  public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+    compound.setInteger("ox", offsetTargetX);
+    compound.setInteger("oy", offsetTargetY);
+    compound.setInteger("oz", offsetTargetZ);
+    compound.setInteger("sx", offsetSourceX);
+    compound.setInteger("sy", offsetSourceY);
+    compound.setInteger("sz", offsetSourceZ);
+    compound.setInteger("r", sizeRadius);
+    compound.setInteger("height", height);
+    compound.setInteger("timer", timer);
+    compound.setInteger("render", renderParticles);
+    compound.setInteger(NBT_REDST, this.needsRedstone);
+   
+    return super.writeToNBT(compound);
   }
   public int getField(Fields f) {
     switch (f) {
@@ -257,7 +196,6 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     }
     return 0;
   }
-  private final static int MAXIMUM = 32;
   public void setField(Fields f, int value) {
     //max applies to all fields
     if (value > MAXIMUM) {

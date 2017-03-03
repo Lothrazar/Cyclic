@@ -91,7 +91,7 @@ public class ContainerPlayerExtended extends ContainerBase {
    */
   @Override
   public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int iSlot) {
-    ItemStack itemstack = null;
+    ItemStack itemstack = ItemStack.EMPTY;
     Slot slot = (Slot) this.inventorySlots.get(iSlot);
     int playerStart = 36, playerEnd = 63, topStart = 4, topEnd = 36, hotbarStart = 63, hotbarEnd = 72, armorStart = 0, armorEnd = 4;
     //36 to 62 is lower
@@ -104,37 +104,37 @@ public class ContainerPlayerExtended extends ContainerBase {
         //int armorSlot = 8 - armor.armorType.getIndex();
         //if (!this.mergeItemStack(copy, armorSlot, armorSlot + 1, false)) { return null; }
         if (armorStart <= iSlot && iSlot < armorEnd) {
-          if (!this.mergeItemStack(copy, playerStart, playerEnd, false)) { return null; }
+          if (!this.mergeItemStack(copy, playerStart, playerEnd, false)) { return ItemStack.EMPTY; }
         }
         else {
-          if (!this.mergeItemStack(copy, 0, 4, false)) { return null; }
+          if (!this.mergeItemStack(copy, 0, 4, false)) { return ItemStack.EMPTY; }
         }
       }
       else if (playerStart <= iSlot && iSlot < playerEnd) {
-        if (!this.mergeItemStack(copy, topStart, topEnd, false)) { return null; }
+        if (!this.mergeItemStack(copy, topStart, topEnd, false)) { return ItemStack.EMPTY; }
       }
       else if (topStart <= iSlot && iSlot < topEnd) {
-        if (!this.mergeItemStack(copy, playerStart, playerEnd, false)) { return null; }
+        if (!this.mergeItemStack(copy, playerStart, playerEnd, false)) { return ItemStack.EMPTY; }
       }
       else if (hotbarStart <= iSlot && iSlot < hotbarEnd) {
-        if (!this.mergeItemStack(copy, topStart, topEnd, false)) { return null; }
+        if (!this.mergeItemStack(copy, topStart, topEnd, false)) { return ItemStack.EMPTY; }
       }
-      if (copy.stackSize == 0) {
-        slot.putStack((ItemStack) null);
+      if (copy.getCount() == 0) {
+        slot.putStack(ItemStack.EMPTY);
       }
       else {
         slot.onSlotChanged();
       }
-      if (copy.stackSize == itemstack.stackSize) { return null; }
-      slot.onPickupFromSlot(par1EntityPlayer, copy);
+      if (copy.getCount() == itemstack.getCount()) { return ItemStack.EMPTY; }
+      slot.onTake(par1EntityPlayer, copy);
     }
     return itemstack;
   }
-  @Override
-  public void putStacksInSlots(ItemStack[] s) {
-    inventory.blockEvents = true;
-    super.putStacksInSlots(s);
-  }
+  //  @Override
+  //  public void putStacksInSlots(ItemStack[] s) {
+  //    inventory.blockEvents = true;
+  //    super.putStacksInSlots(s);
+  //  }
   protected boolean mergeItemStack(ItemStack par1ItemStack, int par2, int par3, boolean par4, Slot ss) {
     boolean flag1 = false;
     int k = par2;
@@ -144,22 +144,22 @@ public class ContainerPlayerExtended extends ContainerBase {
     Slot slot;
     ItemStack itemstack1;
     if (par1ItemStack.isStackable()) {
-      while (par1ItemStack.stackSize > 0 && (!par4 && k < par3 || par4 && k >= par2)) {
+      while (par1ItemStack.getCount() > 0 && (!par4 && k < par3 || par4 && k >= par2)) {
         slot = (Slot) this.inventorySlots.get(k);
         itemstack1 = slot.getStack();
-        if (itemstack1 != null && itemstack1.getItem() == par1ItemStack.getItem() && (!par1ItemStack.getHasSubtypes() || par1ItemStack.getItemDamage() == itemstack1.getItemDamage()) && ItemStack.areItemStackTagsEqual(par1ItemStack, itemstack1)) {
-          int l = itemstack1.stackSize + par1ItemStack.stackSize;
+        if (itemstack1 != ItemStack.EMPTY && itemstack1.getItem() == par1ItemStack.getItem() && (!par1ItemStack.getHasSubtypes() || par1ItemStack.getItemDamage() == itemstack1.getItemDamage()) && ItemStack.areItemStackTagsEqual(par1ItemStack, itemstack1)) {
+          int l = itemstack1.getCount() + par1ItemStack.getCount();
           if (l <= par1ItemStack.getMaxStackSize()) {
             // if (ss instanceof SlotBauble) unequipBauble(par1ItemStack);
-            par1ItemStack.stackSize = 0;
-            itemstack1.stackSize = l;
+            par1ItemStack.setCount(0);
+            itemstack1.setCount(l);
             slot.onSlotChanged();
             flag1 = true;
           }
-          else if (itemstack1.stackSize < par1ItemStack.getMaxStackSize()) {
+          else if (itemstack1.getCount() < par1ItemStack.getMaxStackSize()) {
             // if (ss instanceof SlotBauble) unequipBauble(par1ItemStack);
-            par1ItemStack.stackSize -= par1ItemStack.getMaxStackSize() - itemstack1.stackSize;
-            itemstack1.stackSize = par1ItemStack.getMaxStackSize();
+            par1ItemStack.setCount(par1ItemStack.getCount() - par1ItemStack.getMaxStackSize() - itemstack1.getCount());
+            itemstack1.setCount(par1ItemStack.getMaxStackSize());
             slot.onSlotChanged();
             flag1 = true;
           }
@@ -172,7 +172,7 @@ public class ContainerPlayerExtended extends ContainerBase {
         }
       }
     }
-    if (par1ItemStack.stackSize > 0) {
+    if (par1ItemStack.getCount() > 0) {
       if (par4) {
         k = par3 - 1;
       }
@@ -182,11 +182,11 @@ public class ContainerPlayerExtended extends ContainerBase {
       while (!par4 && k < par3 || par4 && k >= par2) {
         slot = (Slot) this.inventorySlots.get(k);
         itemstack1 = slot.getStack();
-        if (itemstack1 == null) {
+        if (itemstack1 == null || itemstack1.isEmpty()) {
           // if (ss instanceof SlotBauble) unequipBauble(par1ItemStack);
           slot.putStack(par1ItemStack.copy());
           slot.onSlotChanged();
-          par1ItemStack.stackSize = 0;
+          par1ItemStack.setCount(0);
           flag1 = true;
           break;
         }
@@ -200,9 +200,4 @@ public class ContainerPlayerExtended extends ContainerBase {
     }
     return flag1;
   }
-  /*
-   * @Override public boolean canMergeSlot(ItemStack par1ItemStack, Slot
-   * par2Slot) { return par2Slot.inventory != this.craftResult &&
-   * super.canMergeSlot(par1ItemStack, par2Slot); }
-   */
 }

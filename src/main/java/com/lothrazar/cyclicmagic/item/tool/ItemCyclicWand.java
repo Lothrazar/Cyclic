@@ -77,8 +77,9 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
     return EnumRarity.UNCOMMON;
   }
   @Override
-  public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos,
+  public EnumActionResult onItemUse( EntityPlayer playerIn, World worldIn, BlockPos pos,
       EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    ItemStack stack = playerIn.getHeldItem(hand);
     // If onItemUse returns false onItemRightClick will be called.
     // http://www.minecraftforge.net/forum/index.php?topic=31966.0
     // so if this casts and succeeds, the right click is cancelled
@@ -86,12 +87,13 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
     return success ? EnumActionResult.SUCCESS : EnumActionResult.FAIL;
   }
   @Override
-  public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
+  public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
+    ItemStack itemStackIn = playerIn.getHeldItem(hand);
     // so this only happens IF either onItemUse did not fire at all, or it
     // fired and casting failed
     boolean success = UtilSpellCaster.tryCastCurrent(worldIn, playerIn, null, null, itemStackIn, hand);
-    return success ? new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn)
-        : new ActionResult<ItemStack>(EnumActionResult.FAIL, itemStackIn);
+//    return success ? new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn)
+    return new ActionResult<ItemStack>(EnumActionResult.FAIL, itemStackIn);
   }
   @Override
   public int getMaxItemUseDuration(ItemStack stack) {
@@ -133,7 +135,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
       }
     }
     public static int get(ItemStack wand) {
-      if (wand == null) { return 0; }
+      if (wand == ItemStack.EMPTY) { return 0; }
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       return tags.getInteger(NBT);
     }
@@ -147,7 +149,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
       tags.setInteger(NBT, type);
       wand.setTagCompound(tags);
       int slot = getSlot(wand);
-      if (InventoryWand.getFromSlot(wand, slot) == null || InventoryWand.getToPlaceFromSlot(wand, slot) == null) {
+      if (InventoryWand.getFromSlot(wand, slot) == ItemStack.EMPTY || InventoryWand.getToPlaceFromSlot(wand, slot) == null) {
         //try to move away from empty slot
         setNextSlot(wand);
       }

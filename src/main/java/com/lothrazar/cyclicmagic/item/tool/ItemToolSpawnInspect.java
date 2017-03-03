@@ -34,12 +34,14 @@ public class ItemToolSpawnInspect extends BaseTool implements IHasRecipe {
     super(DURABILITY);
   }
   @Override
-  public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World worldObj, BlockPos posIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+  public EnumActionResult onItemUse( EntityPlayer player, World worldObj, BlockPos posIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    ItemStack stack = player.getHeldItem(hand);
+    
     if (side == null || posIn == null || side != EnumFacing.UP) {
       if (!worldObj.isRemote) {
         UtilChat.addChatMessage(player, "item.tool_spawn_inspect.up");
       }
-      return super.onItemUse(stack, player, worldObj, posIn, hand, side, hitX, hitY, hitZ);
+      return super.onItemUse( player, worldObj, posIn, hand, side, hitX, hitY, hitZ);
     }
     boolean showOdds = player.isSneaking();
     if (!worldObj.isRemote) {
@@ -82,7 +84,7 @@ public class ItemToolSpawnInspect extends BaseTool implements IHasRecipe {
     }
     player.getCooldownTracker().setCooldown(this, COOLDOWN);
     super.onUse(stack, player, worldObj, hand);
-    return super.onItemUse(stack, player, worldObj, posIn, hand, side, hitX, hitY, hitZ);
+    return super.onItemUse( player, worldObj, posIn, hand, side, hitX, hitY, hitZ);
   }
   @Override
   public void addRecipe() {

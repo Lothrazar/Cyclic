@@ -65,7 +65,7 @@ public class EnchantLaunch extends Enchantment {
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onKeyInput(KeyInputEvent event) {
-    EntityPlayer p = Minecraft.getMinecraft().thePlayer;
+    EntityPlayer p = Minecraft.getMinecraft().player;
     ItemStack feet = p.getItemStackFromSlot(EntityEquipmentSlot.FEET);
     if (feet == null) { return; }
     if (FMLClientHandler.instance().getClient().gameSettings.keyBindJump.isPressed()

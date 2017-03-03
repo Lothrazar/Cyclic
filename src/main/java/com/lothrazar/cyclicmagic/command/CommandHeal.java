@@ -13,8 +13,8 @@ public class CommandHeal extends BaseCommand {
     this.setUsernameIndex(0);
   }
   @Override
-  public String getCommandUsage(ICommandSender sender) {
-    return "/" + getCommandName() + " <player>";
+  public String getUsage(ICommandSender sender) {
+    return "/" + getName() + " <player>";
   }
   @Override
   public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
@@ -26,14 +26,13 @@ public class CommandHeal extends BaseCommand {
     try {
       ptarget = super.getPlayerByUsername(server, args[0]);
       if (ptarget == null) {
-        UtilChat.addChatMessage(sender, getCommandUsage(sender));
+        UtilChat.addChatMessage(sender, getUsage(sender));
         return;
       }
       ptarget.setHealth(ptarget.getMaxHealth());
     }
     catch (Exception e) {
-      UtilChat.addChatMessage(sender, getCommandUsage(sender));
-      return;
+      UtilChat.addChatMessage(sender, getUsage(sender));
     }
   }
 }

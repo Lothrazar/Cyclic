@@ -12,11 +12,13 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
 public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITickable {
+  public TileEntityDetector() {
+    super(0);
+  }
   private int rangeX = 5;
   private int rangeY = 5;
   private int rangeZ = 5;
   private int limitUntilRedstone = 5;
-  //  private int ifFoundGreaterThanLimit = 0;
   private boolean isPoweredNow = false;
   private CompareType compType = CompareType.GREATER;
   private EntityType entityType = EntityType.LIVING;
@@ -54,7 +56,7 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
       isPoweredNow = trigger;
       IBlockState state = world.getBlockState(this.getPos());
       world.notifyBlockUpdate(this.getPos(), state, state, 3);
-      world.notifyNeighborsOfStateChange(this.getPos(), this.blockType);
+      world.notifyNeighborsOfStateChange(this.getPos(), this.blockType, true);//bool is new in 1111
     }
   }
   private Class<? extends Entity> getEntityClass() {

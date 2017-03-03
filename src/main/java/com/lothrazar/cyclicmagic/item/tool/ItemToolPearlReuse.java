@@ -29,13 +29,16 @@ public class ItemToolPearlReuse extends BaseTool implements IHasRecipe {
     orbType = o;
   }
   @Override
-  public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
+  public ActionResult<ItemStack> onItemRightClick( World worldIn, EntityPlayer playerIn, EnumHand hand) {
+    
+    ItemStack itemStackIn = playerIn.getHeldItem(hand);
+    
     worldIn.playSound((EntityPlayer) null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_ENDERPEARL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
     playerIn.getCooldownTracker().setCooldown(this, cooldown);
     if (!worldIn.isRemote) {
       EntityEnderPearl entityenderpearl = new EntityEnderPearl(worldIn, playerIn); //func_184538_a
       entityenderpearl.setHeadingFromThrower(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
-      worldIn.spawnEntityInWorld(entityenderpearl);
+      worldIn.spawnEntity(entityenderpearl);
       if (orbType == OrbType.MOUNTED) {
         playerIn.dismountRidingEntity();
         playerIn.startRiding(entityenderpearl);

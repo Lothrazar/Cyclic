@@ -38,6 +38,7 @@ public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITi
   public String userName = "";
   private int powerTimeout = 0;
   public TileEntityPassword() {
+    super(0);
     setType(ActiveType.TOGGLE);
     setUserPerm(UsersAllowed.ALL);//defaults to same behavior it had before these were added
     //it does save to server. on world save and reload, it DOes save. problem is, 

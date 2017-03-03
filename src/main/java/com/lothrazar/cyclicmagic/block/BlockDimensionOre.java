@@ -77,7 +77,7 @@ public class BlockDimensionOre extends BlockOre {
           break;
         }
         if (e != null) {
-          world.spawnEntityInWorld(e);
+          world.spawnEntity(e);
         }
       }
     }
@@ -100,7 +100,7 @@ public class BlockDimensionOre extends BlockOre {
   @Override
   public int getExpDrop(IBlockState state, net.minecraft.world.IBlockAccess world, BlockPos pos, int fortune) {
     Random rand = world instanceof World ? ((World) world).rand : new Random();
-    return MathHelper.getRandomIntegerInRange(rand, 2, 5);
+    return MathHelper.getInt(rand, 2, 5);
   }
   @Override
   public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {

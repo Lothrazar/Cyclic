@@ -24,11 +24,12 @@ public class ItemToolThrowTorch extends BaseTool implements IHasRecipe {
     super(256);
   }
   @Override
-  public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
+  public ActionResult<ItemStack> onItemRightClick( World world, EntityPlayer player, EnumHand hand) {
+    ItemStack stack = player.getHeldItem(hand);
     if (world.isRemote == false) {
       EntityTorchBolt thing = new EntityTorchBolt(world, player);
       thing.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, PITCHOFFSET, VELOCITY_DEFAULT, INACCURACY_DEFAULT);
-      world.spawnEntityInWorld(thing);
+      world.spawnEntity(thing);
     }
     UtilSound.playSound(player, player.getPosition(), SoundEvents.ENTITY_EGG_THROW, SoundCategory.PLAYERS);
     player.getCooldownTracker().setCooldown(this, COOLDOWN);

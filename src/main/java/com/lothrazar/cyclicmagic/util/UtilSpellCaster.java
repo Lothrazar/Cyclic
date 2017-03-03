@@ -12,21 +12,21 @@ import net.minecraft.world.World;
 public class UtilSpellCaster {
   public static ItemStack getPlayerWandIfHeld(EntityPlayer player) {
     ItemStack wand = player.getHeldItemMainhand();
-    if (wand != null && wand.getItem() instanceof ItemCyclicWand) { return wand; }
+    if (wand != ItemStack.EMPTY && wand.getItem() instanceof ItemCyclicWand) { return wand; }
     wand = player.getHeldItemOffhand();
-    if (wand != null && wand.getItem() instanceof ItemCyclicWand) { return wand; }
-    return null;
+    if (wand != ItemStack.EMPTY && wand.getItem() instanceof ItemCyclicWand) { return wand; }
+    return ItemStack.EMPTY;
   }
   public static boolean spellsEnabled(EntityPlayer player) {
     // current requirement is only a wand
-    return UtilSpellCaster.getPlayerWandIfHeld(player) != null;
+    return UtilSpellCaster.getPlayerWandIfHeld(player) != ItemStack.EMPTY;
   }
   public static boolean tryCastCurrent(World world, EntityPlayer player, BlockPos pos, EnumFacing side, ItemStack wand, EnumHand hand) {
     return tryCast(getPlayerCurrentISpell(player), world, player, pos, side, wand, hand);
   }
   public static boolean tryCast(ISpell spell, World world, EntityPlayer player, BlockPos pos, EnumFacing side, ItemStack wand, EnumHand hand) {
     //ItemStack wand = getPlayerWandIfHeld(player);
-    if (wand == null) { return false; }
+    if (wand == ItemStack.EMPTY) { return false; }
     //		if (ItemCyclicWand.Timer.isBlockedBySpellTimer(wand)) { return false; }
     if (spell.canPlayerCast(world, player, pos)) {
       if (spell.cast(world, player, wand, pos, side)) {

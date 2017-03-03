@@ -126,12 +126,12 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
     GameRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this));
   }
   @Override
-  public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer entityPlayer,
-      EnumHand hand) {
+  public ActionResult<ItemStack> onItemRightClick( World world, EntityPlayer entityPlayer,     EnumHand hand) {
+      ItemStack stack = entityPlayer.getHeldItem(hand);
     if (stack == null || stack.getItem() == null) { return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack); }
     //Minecraft.getMinecraft().displayGuiScreen(new GuiEnderBook(entityPlayer, stack));
     entityPlayer.openGui(ModCyclic.instance, ModGuiHandler.GUI_INDEX_WAYPOINT, world, 0, 0, 0);
-    return super.onItemRightClick(stack, world, entityPlayer, hand);
+    return super.onItemRightClick( world, entityPlayer, hand);
   }
   public static class BookLocation {
     public double X;

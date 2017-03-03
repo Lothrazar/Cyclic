@@ -22,7 +22,8 @@ public class ItemToolRotate extends BaseTool implements IHasRecipe {
     super(durability);
   }
   @Override
-  public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+  public EnumActionResult onItemUse(EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    ItemStack stack = player.getHeldItem(hand);
     //    UtilPlaceBlocks.rotateBlockValidState(worldObj, player, pos, side);
     if (worldObj.isRemote) {
       ModCyclic.network.sendToServer(new PacketMoveBlock(pos, ItemToolPiston.ActionType.ROTATE, side));

@@ -61,11 +61,11 @@ public class ClientProxy extends CommonProxy {
   }
   @Override
   public World getClientWorld() {
-    return FMLClientHandler.instance().getClient().theWorld;
+    return FMLClientHandler.instance().getClient().world;
   }
   @Override
   public EntityPlayer getClientPlayer() {
-    return Minecraft.getMinecraft().thePlayer;
+    return Minecraft.getMinecraft().player;
   }
   private void registerKeys() {
     if (KeyInventoryShiftModule.enableInvoKeys) {

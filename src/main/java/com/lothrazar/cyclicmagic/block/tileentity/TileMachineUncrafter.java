@@ -9,7 +9,6 @@ import com.lothrazar.cyclicmagic.util.UtilUncraft.UncraftResultType;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
@@ -21,25 +20,21 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
   // http://bedrockminer.jimdo.com/modding-tutorials/advanced-modding/tile-entities/
   // http://www.minecraftforge.net/wiki/Tile_Entity_Synchronization
   // http://www.minecraftforge.net/forum/index.php?topic=18871.0
-  public static int TIMER_FULL;
-  private ItemStack[] inv;
-  private int timer;
-  private int needsRedstone = 1;
-  private int[] hopperInput = { 0 };
-  private int[] hopperOutput;
-  //  private int uncraftResult = UtilUncraft.UncraftResultType.EMPTY.ordinal();
-  private static final String NBT_INV = "Inventory";
-  private static final String NBT_SLOT = "Slot";
   private static final String NBT_TIMER = "Timer";
   private static final String NBT_REDST = "redstone";
   public static final int SLOT_UNCRAFTME = 0;
   public static final int SLOT_ROWS = 3;
   public static final int SLOT_COLS = 7;
+  public static int TIMER_FULL;
+  private int timer;
+  private int needsRedstone = 1;
+  private int[] hopperInput = { 0 };
+  private int[] hopperOutput;
   public static enum Fields {
     TIMER, REDSTONE;//, UNCRAFTRESULT;
   }
   public TileMachineUncrafter() {
-    inv = new ItemStack[SLOT_ROWS * SLOT_COLS + 1];
+    super(SLOT_ROWS * SLOT_COLS + 1);
     timer = TIMER_FULL;
     hopperOutput = new int[SLOT_ROWS * SLOT_COLS];
     for (int i = 1; i <= SLOT_ROWS * SLOT_COLS; i++) {
@@ -47,65 +42,15 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
     }
   }
   @Override
-  public int getSizeInventory() {
-    return inv.length;
-  }
-  @Override
-  public ItemStack getStackInSlot(int index) {
-    return inv[index];
-  }
-  @Override
-  public ItemStack decrStackSize(int index, int count) {
-    ItemStack stack = getStackInSlot(index);
-    if (stack != null) {
-      if (stack.stackSize <= count) {
-        setInventorySlotContents(index, null);
-      }
-      else {
-        stack = stack.splitStack(count);
-        if (stack.stackSize == 0) {
-          setInventorySlotContents(index, null);
-        }
-      }
-    }
-    return stack;
-  }
-  @Override
-  public void setInventorySlotContents(int index, ItemStack stack) {
-    inv[index] = stack;
-    if (stack != null && stack.stackSize > getInventoryStackLimit()) {
-      stack.stackSize = getInventoryStackLimit();
-    }
-  }
-  @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
     this.needsRedstone = tagCompound.getInteger(NBT_REDST);
     timer = tagCompound.getInteger(NBT_TIMER);
-    NBTTagList tagList = tagCompound.getTagList(NBT_INV, 10);
-    for (int i = 0; i < tagList.tagCount(); i++) {
-      NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
-      byte slot = tag.getByte(NBT_SLOT);
-      if (slot >= 0 && slot < inv.length) {
-        inv[slot] = ItemStack.loadItemStackFromNBT(tag);
-      }
-    }
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
     tagCompound.setInteger(NBT_TIMER, timer);
     tagCompound.setInteger(NBT_REDST, this.needsRedstone);
-    NBTTagList itemList = new NBTTagList();
-    for (int i = 0; i < inv.length; i++) {
-      ItemStack stack = inv[i];
-      if (stack != null) {
-        NBTTagCompound tag = new NBTTagCompound();
-        tag.setByte(NBT_SLOT, (byte) i);
-        stack.writeToNBT(tag);
-        itemList.appendTag(tag);
-      }
-    }
-    tagCompound.setTag(NBT_INV, itemList);
     return super.writeToNBT(tagCompound);
   }
   public int getTimer() {
@@ -144,7 +89,7 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
           toDrop.add(stack);
           setOutputItems(toDrop);
           if (this.getWorld().isRemote == false) {
-            this.decrStackSize(0, stack.stackSize);
+            this.decrStackSize(0, stack.getCount());
           }
           UtilSound.playSound(this.getWorld(), this.getPos(), SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.BLOCKS);
         }
@@ -175,14 +120,6 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
   @Override
   public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
     return this.isItemValidForSlot(index, itemStackIn);
-  }
-  @Override
-  public ItemStack removeStackFromSlot(int index) {
-    ItemStack stack = getStackInSlot(index);
-    if (stack != null) {
-      setInventorySlotContents(index, null);
-    }
-    return stack;
   }
   @Override
   public int getField(int id) {

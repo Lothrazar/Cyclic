@@ -12,7 +12,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
@@ -33,13 +32,6 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
   // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
-  public static int maxHeight = 10;
-  private boolean isCurrentlyMining;
-  private float curBlockDamage;
-  private BlockPos targetPos = null;
-  private ItemStack[] inv;
-  private static final String NBT_INV = "Inventory";
-  private static final String NBT_SLOT = "Slot";
   private static final String NBT_REDST = "redstone";
   private static final String NBTMINING = "mining";
   private static final String NBTDAMAGE = "curBlockDamage";
@@ -50,6 +42,10 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
   private static final int MAX_SIZE = 7;//7 means 15x15
   private static final int INVENTORY_SIZE = 5;
   private static final int TOOLSLOT_INDEX = INVENTORY_SIZE - 1;
+  public static int maxHeight = 10;
+  private boolean isCurrentlyMining;
+  private float curBlockDamage;
+  private BlockPos targetPos = null;
   private int size = 4;//center plus 4 in each direction = 9x9
   private int needsRedstone = 1;
   int height = 6;
@@ -59,7 +55,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
     HEIGHT, REDSTONE, SIZE
   }
   public TileMachineMinerSmart() {
-    inv = new ItemStack[INVENTORY_SIZE];
+    super(INVENTORY_SIZE);
   }
   private void verifyFakePlayer(WorldServer w) {
     if (fakePlayer == null) {
@@ -121,17 +117,15 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
     }
   }
   private void tryEquipItem() {
-    int toolSlot = inv.length - 1;
-    if (inv[toolSlot] != null && inv[toolSlot].stackSize == 0) {
-      inv[toolSlot] = null;
+    ItemStack equip = this.getStackInSlot(TOOLSLOT_INDEX);
+    if (equip.getCount() == 0) {
+      this.setInventorySlotContents(TOOLSLOT_INDEX, ItemStack.EMPTY);
     }
-    if (inv[toolSlot] == null) {
-      fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, null);
+    if (equip == ItemStack.EMPTY) {
+      fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
     }
-    else {
-      if (inv[toolSlot] != null && !inv[toolSlot].equals(fakePlayer.get().getHeldItem(EnumHand.MAIN_HAND))) {
-        fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, inv[toolSlot]);
-      }
+    else if (!equip.equals(fakePlayer.get().getHeldItem(EnumHand.MAIN_HAND))) {
+      fakePlayer.get().setHeldItem(EnumHand.MAIN_HAND, equip);
     }
   }
   private void verifyUuid(World world) {
@@ -148,11 +142,11 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
     Block target = targetState.getBlock();
     //else check blacklist
     ItemStack item;
-    for (int i = 0; i < inv.length - 1; i++) {//minus 1 because of TOOL
-      if (inv[i] == null) {
-        continue;
-      }
-      item = inv[i];
+    for (int i = 0; i < inv.size() - 1; i++) {//minus 1 because of TOOL
+      //      if (inv[i == null) {
+      //        continue;
+      //      }
+      item = this.getStackInSlot(i);
       if (item.getItem() == Item.getItemFromBlock(target)) { return false; }
     }
     return true;
@@ -213,18 +207,6 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
     tagCompound.setFloat(NBTDAMAGE, curBlockDamage);
     tagCompound.setInteger(NBTHEIGHT, height);
     tagCompound.setInteger(NBT_SIZE, size);
-    //invo stuff
-    NBTTagList itemList = new NBTTagList();
-    for (int i = 0; i < inv.length; i++) {
-      ItemStack stack = inv[i];
-      if (stack != null) {
-        NBTTagCompound tag = new NBTTagCompound();
-        tag.setByte(NBT_SLOT, (byte) i);
-        stack.writeToNBT(tag);
-        itemList.appendTag(tag);
-      }
-    }
-    tagCompound.setTag(NBT_INV, itemList);
     return super.writeToNBT(tagCompound);
   }
   @Override
@@ -244,15 +226,6 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
     isCurrentlyMining = tagCompound.getBoolean(NBTMINING);
     curBlockDamage = tagCompound.getFloat(NBTDAMAGE);
     height = tagCompound.getInteger(NBTHEIGHT);
-    //invo stuff
-    NBTTagList tagList = tagCompound.getTagList(NBT_INV, 10);
-    for (int i = 0; i < tagList.tagCount(); i++) {
-      NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
-      byte slot = tag.getByte(NBT_SLOT);
-      if (slot >= 0 && slot < inv.length) {
-        inv[slot] = ItemStack.loadItemStackFromNBT(tag);
-      }
-    }
   }
   public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
     if (isCurrentlyMining && uuid != null) {
@@ -264,45 +237,6 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
       //BlockPos targetPos = pos.offset(state.getValue(BlockMiner.PROPERTYFACING));
       getWorld().sendBlockBreakProgress(uuid.hashCode(), targetPos, -1);
       curBlockDamage = 0;
-    }
-  }
-  @Override
-  public int getSizeInventory() {
-    return inv.length;
-  }
-  @Override
-  public ItemStack getStackInSlot(int index) {
-    return inv[index];
-  }
-  @Override
-  public ItemStack decrStackSize(int index, int count) {
-    ItemStack stack = getStackInSlot(index);
-    if (stack != null) {
-      if (stack.stackSize <= count) {
-        setInventorySlotContents(index, null);
-      }
-      else {
-        stack = stack.splitStack(count);
-        if (stack.stackSize == 0) {
-          setInventorySlotContents(index, null);
-        }
-      }
-    }
-    return stack;
-  }
-  @Override
-  public ItemStack removeStackFromSlot(int index) {
-    ItemStack stack = getStackInSlot(index);
-    if (stack != null) {
-      setInventorySlotContents(index, null);
-    }
-    return stack;
-  }
-  @Override
-  public void setInventorySlotContents(int index, ItemStack stack) {
-    inv[index] = stack;
-    if (stack != null && stack.stackSize > getInventoryStackLimit()) {
-      stack.stackSize = getInventoryStackLimit();
     }
   }
   @Override
@@ -349,8 +283,9 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
       this.setField(id, value);
       return true;
     }
-    else
+    else {
       return super.receiveClientEvent(id, value);
+    }
   }
   @Override
   public int getFieldCount() {

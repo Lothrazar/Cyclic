@@ -59,11 +59,11 @@ public class ContainerStorage extends ContainerBase {
   }
   @Override
   public boolean canInteractWith(EntityPlayer playerIn) {
-    return inventory.isUseableByPlayer(playerIn);
+    return true;//inventory.isUseableByPlayer(playerIn);
   }
   @Override
   public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int index) {
-    ItemStack itemstack = null;
+    ItemStack itemstack = ItemStack.EMPTY;
     Slot slot = (Slot) this.inventorySlots.get(index);
     if (slot != null && slot.getHasStack()) {
       ItemStack itemstack1 = slot.getStack();
@@ -73,7 +73,7 @@ public class ContainerStorage extends ContainerBase {
         // try to place in player inventory / action bar
         if (!this.mergeItemStack(itemstack1, INV_START, HOTBAR_END + 1, true)) {
           inventory.markDirty();
-          return null;
+          return  ItemStack.EMPTY;
         }
         slot.onSlotChange(itemstack1, itemstack);
       }
@@ -84,35 +84,35 @@ public class ContainerStorage extends ContainerBase {
           // place in custom inventory
           if (!this.mergeItemStack(itemstack1, 0, INV_START, false)) {
             inventory.markDirty();
-            return null;
+            return  ItemStack.EMPTY;
           }
         }
         if (index >= INV_START && index < HOTBAR_START) {
           // place in action bar
           if (!this.mergeItemStack(itemstack1, HOTBAR_START, HOTBAR_END + 1, false)) {
             inventory.markDirty();
-            return null;
+            return  ItemStack.EMPTY;
           }
         }
         // item in action bar - place in player inventory
         else if (index >= HOTBAR_START && index < HOTBAR_END + 1) {
           if (!this.mergeItemStack(itemstack1, INV_START, INV_END + 1, false)) {
             inventory.markDirty();
-            return null;
+            return  ItemStack.EMPTY;
           }
         }
       }
-      if (itemstack1.stackSize == 0) {
-        slot.putStack((ItemStack) null);
+      if (itemstack1.getCount() == 0) {
+        slot.putStack( ItemStack.EMPTY);
       }
       else {
         slot.onSlotChanged();
       }
-      if (itemstack1.stackSize == itemstack.stackSize) {
+      if (itemstack1.getCount() == itemstack.getCount()) {
         inventory.markDirty();
-        return null;
+        return  ItemStack.EMPTY;
       }
-      slot.onPickupFromSlot(par1EntityPlayer, itemstack1);
+      slot.onTake(par1EntityPlayer, itemstack1);
     }
     inventory.markDirty();
     return itemstack;

@@ -45,15 +45,15 @@ public class GuiPlayerExtWorkbench extends InventoryEffectRenderer {
     int j = this.guiTop;
     this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
     //COPIED FROM GuiInventory
-    GuiInventory.drawEntityOnScreen(i + 51, j + 75, 30, (float) (i + 51) - this.oldMouseX, (float) (j + 75 - 50) - this.oldMouseY, this.mc.thePlayer);
+    GuiInventory.drawEntityOnScreen(i + 51, j + 75, 30, (float) (i + 51) - this.oldMouseX, (float) (j + 75 - 50) - this.oldMouseY, this.mc.player);
   }
   @Override
   protected void actionPerformed(GuiButton button) {
     if (button.id == 0) {
-      this.mc.displayGuiScreen(new GuiAchievements(this, this.mc.thePlayer.getStatFileWriter()));
+      this.mc.displayGuiScreen(new GuiAchievements(this, this.mc.player.getStatFileWriter()));
     }
     if (button.id == 1) {
-      this.mc.displayGuiScreen(new GuiStats(this, this.mc.thePlayer.getStatFileWriter()));
+      this.mc.displayGuiScreen(new GuiStats(this, this.mc.player.getStatFileWriter()));
     }
   }
 }

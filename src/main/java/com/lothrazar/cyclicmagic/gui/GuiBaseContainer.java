@@ -75,8 +75,9 @@ public abstract class GuiBaseContainer extends GuiContainer {
     for (int i = 0; i < buttonList.size(); i++) {
       if (buttonList.get(i).isMouseOver() && buttonList.get(i) instanceof ITooltipButton) {
         btn = (ITooltipButton) buttonList.get(i);
-        if (btn.getTooltips() != null)
+        if (btn.getTooltips() != null){
           drawHoveringText(btn.getTooltips(), mouseX, mouseY, fontRendererObj);
+        }
         break;// cant hover on 2 at once
       }
     }

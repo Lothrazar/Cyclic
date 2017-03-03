@@ -77,7 +77,7 @@ public abstract class BaseCharm extends BaseItem implements baubles.api.IBauble 
   @Optional.Method(modid = "Baubles")
   public void onWornTick(ItemStack stack, EntityLivingBase arg1) {
     if (!this.canTick(stack)) { return; }
-    if (arg1 instanceof EntityPlayer && stack != null && stack.stackSize > 0) {
+    if (arg1 instanceof EntityPlayer && stack != null && stack.getCount() > 0) {
       this.onTick(stack, (EntityPlayer) arg1);
     }
   }

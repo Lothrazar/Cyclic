@@ -71,8 +71,8 @@ public class UtilWorld {
     int xMax = x + hRadius;
     int zMin = z - hRadius;
     int zMax = z + hRadius;
-    int posX = MathHelper.getRandomIntegerInRange(rand, xMin, xMax);
-    int posZ = MathHelper.getRandomIntegerInRange(rand, zMin, zMax);
+    int posX = MathHelper.getInt(rand, xMin, xMax);
+    int posZ = MathHelper.getInt(rand, zMin, zMax);
     return new BlockPos(posX, here.getY(), posZ);
   }
   public static boolean tryTpPlayerToBed(World world, EntityPlayer player) {
@@ -138,7 +138,7 @@ public class UtilWorld {
       // find any overlap: so if x ==y , or if x substring of y, or y substring
       // of x
       if (search.equals(invItemName) || search.contains(invItemName) || invItemName.contains(search)) {
-        foundQty += invItem.stackSize;
+        foundQty += invItem.getCount();
       }
     } // end loop on current tile entity
     return foundQty;

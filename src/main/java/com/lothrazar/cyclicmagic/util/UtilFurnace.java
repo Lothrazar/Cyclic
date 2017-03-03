@@ -20,12 +20,12 @@ public class UtilFurnace {
     // ModMain.logger.info("held!!!:" + held.getUnlocalizedName());
     boolean success = false;
     World worldObj = entityPlayer.getEntityWorld();
-    if (current == null) {
+    if (current == ItemStack.EMPTY) {
       // just done
       // ModMain.logger.info("slot is empty");
       if (worldObj.isRemote == false) {
         furnace.setInventorySlotContents(furnaceSlot, held.copy());
-        held = null;
+        held = ItemStack.EMPTY;
       }
       success = true;
     }
@@ -40,8 +40,8 @@ public class UtilFurnace {
     if (success) {
       //  ModMain.logger.info("success!!!");
       if (worldObj.isRemote == false) {
-        if (held != null && held.stackSize == 0) {// so now we just fix if something is size zero
-          held = null;
+        if (held != ItemStack.EMPTY && held.getCount() == 0) {// so now we just fix if something is size zero
+          held = ItemStack.EMPTY;
         }
         entityPlayer.inventory.setInventorySlotContents(playerSlot, held);
         entityPlayer.inventory.markDirty();
@@ -52,7 +52,7 @@ public class UtilFurnace {
   public static void extractFurnaceOutput(TileEntityFurnace furnace, EntityPlayer player) {
     // ModMain.logger.info("extractFurnaceOutput");
     ItemStack current = furnace.removeStackFromSlot(SLOT_OUTPUT);
-    if (current != null) {
+    if (current != ItemStack.EMPTY) {
       BlockPos pos = player.getPosition();
       if (player.getEntityWorld().isRemote == false) {
         player.dropItemAndGetStack(new EntityItem(player.getEntityWorld(), pos.getX(), pos.getY(), pos.getZ(), current));
@@ -64,7 +64,7 @@ public class UtilFurnace {
   public static boolean canBeSmelted(ItemStack input) {
     // we literally get the smelt recipe instance to test if it has one
     ItemStack itemstack = FurnaceRecipes.instance().getSmeltingResult(input);
-    return (itemstack != null);
+    return (itemstack != ItemStack.EMPTY);
   }
   public static boolean isFuel(ItemStack input) {
     // how long does it burn for? zero means it isnt fuel

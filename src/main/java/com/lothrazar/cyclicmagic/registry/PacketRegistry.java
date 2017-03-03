@@ -47,6 +47,7 @@ public class PacketRegistry {
     network.registerMessage(PacketSyncVillagerToClient.class, PacketSyncVillagerToClient.class, packetID++, Side.CLIENT);
     network.registerMessage(PacketSyncVillagerToServer.class, PacketSyncVillagerToServer.class, packetID++, Side.SERVER);
     network.registerMessage(PacketVillagerTrade.class, PacketVillagerTrade.class, packetID++, Side.SERVER);
+    network.registerMessage(PacketSleepClient.class, PacketSleepClient.class, packetID++, Side.CLIENT);
     
   }
 }

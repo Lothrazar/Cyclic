@@ -13,8 +13,8 @@ public class CommandPing extends BaseCommand implements ICommand {
     super(name, op);
   }
   @Override
-  public String getCommandUsage(ICommandSender sender) {
-    return "/" + getCommandName() + " <nether>";
+  public String getUsage(ICommandSender sender) {
+    return "/" + getName() + " <nether>";
   }
   @Override
   public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {

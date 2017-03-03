@@ -1,14 +1,17 @@
 package com.lothrazar.cyclicmagic.gui.playerworkbench;
 import java.lang.ref.WeakReference;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.NonNullList;
 
 public class InventoryPlayerExtWorkbench extends InventoryCrafting {
-  public ItemStack[] stackList;
+
+  protected NonNullList<ItemStack> inv;
   private ContainerPlayerExtWorkbench eventHandler;
   public WeakReference<EntityPlayer> player;
   public static final int IROW = 3;
@@ -16,31 +19,26 @@ public class InventoryPlayerExtWorkbench extends InventoryCrafting {
   public InventoryPlayerExtWorkbench(ContainerPlayerExtWorkbench containerPlayerExtWorkbench, EntityPlayer player) {
     super(containerPlayerExtWorkbench, 3, 3);
     this.eventHandler = containerPlayerExtWorkbench;
-    this.stackList = new ItemStack[IROW * ICOL + 5];//5 armor + 3x3
+    inv = NonNullList.withSize(IROW * ICOL + 5, ItemStack.EMPTY);//5 armor + 3x3
     this.player = new WeakReference<EntityPlayer>(player);
   }
   @Override
   public int getSizeInventory() {
-    return this.stackList.length;
+    return this.inv.size();
   }
   @Override
   public ItemStack getStackInSlot(int s) {
-    return s >= this.getSizeInventory() ? null : this.stackList[s];
+    return s >= this.getSizeInventory() ? null : this.inv.get(s);
   }
   /**
    * When some containers are closed they call this on each slot, then drop
    * whatever it returns as an EntityItem - like when you close a workbench GUI.
    */
   @Override
-  public ItemStack removeStackFromSlot(int s) {
-    if (this.stackList[s] != null) {
-      ItemStack itemstack = this.stackList[s];
-      this.stackList[s] = null;
-      return itemstack;
-    }
-    else {
-      return null;
-    }
+  public ItemStack removeStackFromSlot(int index) {
+    ItemStack stack = getStackInSlot(index);
+    setInventorySlotContents(index, ItemStack.EMPTY);
+    return stack;
   }
   /**
    * Removes from an inventory slot (first arg) up to a specified number (second
@@ -48,27 +46,43 @@ public class InventoryPlayerExtWorkbench extends InventoryCrafting {
    */
   @Override
   public ItemStack decrStackSize(int index, int count) {
-    //    return super.decrStackSize(index, count);
-    if (this.stackList[index] != null) {
-      ItemStack itemstack;
-      if (this.stackList[index].stackSize <= count) {
-        itemstack = this.stackList[index];
-        this.stackList[index] = null;
-        this.eventHandler.onCraftMatrixChanged(this);
-        return itemstack;
+
+    ItemStack stack = getStackInSlot(index);
+    if (stack != null) {
+      if (stack.getMaxStackSize() <= count) {
+        setInventorySlotContents(index, null);
       }
       else {
-        itemstack = this.stackList[index].splitStack(count);
-        if (this.stackList[index].stackSize == 0) {
-          this.stackList[index] = null;
+        stack = stack.splitStack(count);
+        if (stack.getMaxStackSize() == 0) {
+          setInventorySlotContents(index, null);
         }
-        this.eventHandler.onCraftMatrixChanged(this);
-        return itemstack;
       }
     }
-    else {
-      return null;
-    }
+    this.eventHandler.onCraftMatrixChanged(this);
+    return stack;
+    
+    
+//    if (this.inv[index] != null) {
+//      ItemStack itemstack;
+//      if (this.inv[index].getCount() <= count) {
+//        itemstack = this.inv[index];
+//        this.inv[index] = null;
+//        this.eventHandler.onCraftMatrixChanged(this);
+//        return itemstack;
+//      }
+//      else {
+//        itemstack = this.inv[index].splitStack(count);
+//        if (this.inv[index].getCount() == 0) {
+//          this.inv[index] = null;
+//        }
+//        this.eventHandler.onCraftMatrixChanged(this);
+//        return itemstack;
+//      }
+//    }
+//    else {
+//      return null;
+//    }
   }
   /**
    * Sets the given item stack to the specified slot in the inventory (can be
@@ -76,8 +90,8 @@ public class InventoryPlayerExtWorkbench extends InventoryCrafting {
    */
   @Override
   public void setInventorySlotContents(int idx, ItemStack stack) {
-    if (idx >= this.stackList.length) { return; }
-    this.stackList[idx] = stack;
+    if (idx >= this.inv.size()) { return; }
+    inv.set(idx, stack);
     this.eventHandler.onCraftMatrixChanged(this);
   }
   @Override
@@ -93,13 +107,13 @@ public class InventoryPlayerExtWorkbench extends InventoryCrafting {
     catch (Exception e) {}
   }
   @Override
-  public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer) {
+  public boolean isUsableByPlayer(EntityPlayer par1EntityPlayer) {
     return true;
   }
   @Override
   public void clear() {
-    for (int i = 0; i < stackList.length; i++) {
-      stackList[i] = null;
+    for (int i = 0; i < inv.size(); i++) {
+      inv.set(i, ItemStack.EMPTY);
     }
   }
   public void saveNBT(EntityPlayer player) {
@@ -109,11 +123,11 @@ public class InventoryPlayerExtWorkbench extends InventoryCrafting {
   public void saveNBT(NBTTagCompound tags) {
     NBTTagList tagList = new NBTTagList();
     NBTTagCompound invSlot;
-    for (int i = 0; i < this.stackList.length; ++i) {
-      if (this.stackList[i] != null) {
+    for (int i = 0; i < this.inv.size(); ++i) {
+      if (this.inv.get(i) != ItemStack.EMPTY) {
         invSlot = new NBTTagCompound();
         invSlot.setByte("Slot", (byte) i);
-        this.stackList[i].writeToNBT(invSlot);
+        this.inv.get(i).writeToNBT(invSlot);
         tagList.appendTag(invSlot);
       }
     }
@@ -128,9 +142,9 @@ public class InventoryPlayerExtWorkbench extends InventoryCrafting {
     for (int i = 0; i < tagList.tagCount(); ++i) {
       NBTTagCompound nbttagcompound = (NBTTagCompound) tagList.getCompoundTagAt(i);
       int j = nbttagcompound.getByte("Slot") & 255;
-      ItemStack itemstack = ItemStack.loadItemStackFromNBT(nbttagcompound);
+      ItemStack itemstack = UtilNBT.itemFromNBT(nbttagcompound);
       if (itemstack != null) {
-        this.stackList[j] = itemstack;
+        this.inv.set(j, itemstack);
       }
     }
   }

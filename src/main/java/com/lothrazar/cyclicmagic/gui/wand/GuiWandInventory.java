@@ -54,7 +54,7 @@ public class GuiWandInventory extends GuiBaseContainer {
     for (Slot s : this.container.inventorySlots) {
       if (active == s.getSlotIndex()) {
         Minecraft.getMinecraft().renderEngine.bindTexture(SLOT_CURRENT);
-        this.drawTexturedModalRect(guiLeft + s.xDisplayPosition, guiTop + s.yDisplayPosition, 0, 0, 16, 16);
+        this.drawTexturedModalRect(guiLeft + s.xPos, guiTop + s.yPos, 0, 0, 16, 16);
         break;
       }
     }

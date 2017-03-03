@@ -83,7 +83,7 @@ public class Location {
     return showName + Math.round(X) + ", " + Math.round(Y) + ", " + Math.round(Z);
   }
   public String toDisplayNoCoords() {
-    return name + " (y = " + MathHelper.floor_double(Y) + ")";
+    return name + " (y = " + MathHelper.floor(Y) + ")";
   }
   public BlockPos toBlockPos() {
     return new BlockPos(X, Y, Z);

@@ -150,16 +150,20 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
           //break it and drop the whatever
           //the destroy then set was causing exceptions, changed to setAir // https://github.com/PrinceOfAmber/Cyclic/issues/114
           ItemStack cur = player.inventory.getStackInSlot(slot);
-          if (cur == null || cur.stackSize <= 0) {
+          if (cur == ItemStack.EMPTY || cur.getCount() <= 0) {
             continue;
           }
           world.setBlockToAir(curPos);
           boolean success = false;
-          if (cur.onItemUse(player, world, curPos, EnumHand.MAIN_HAND, message.side, 0.5F, 0.5F, 0.5F) == EnumActionResult.SUCCESS) {
+          boolean ENABLEFANCY = false;//TODO: fix this. doing this makes player set HELD ITEM which is the tool/scepter to NULL. WTF
+          ItemStack backup = player.getHeldItem(EnumHand.MAIN_HAND);
+          if (ENABLEFANCY && cur.onItemUse(player, world, curPos, EnumHand.MAIN_HAND, message.side, 0.5F, 0.5F, 0.5F) == EnumActionResult.SUCCESS) {
             //then it owrked i guess eh
+         
+            player.setHeldItem(EnumHand.MAIN_HAND,backup);
             success = true;
-            if(cur.stackSize==0){//double check hack for those red zeroes that always seem to come back
-              player.inventory.setInventorySlotContents(slot, null);
+            if (cur.getCount() == 0) {//double check hack for those red zeroes that always seem to come back
+              player.inventory.setInventorySlotContents(slot, ItemStack.EMPTY);
             }
           }
           else {//do it the standard way
@@ -174,12 +178,12 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
             //damage once per block 
             //TODO: CLEANUP?REFACTOR THIS
             ItemStack held = player.getHeldItemMainhand();
-            if (held != null && held.getItem() instanceof ItemToolSwap) {
+            if (held != ItemStack.EMPTY && held.getItem() instanceof ItemToolSwap) {
               UtilItemStack.damageItem(player, held);
             }
             else {
               held = player.getHeldItemOffhand();
-              if (held != null && held.getItem() instanceof ItemToolSwap) {
+              if (held !=  ItemStack.EMPTY && held.getItem() instanceof ItemToolSwap) {
                 UtilItemStack.damageItem(player, held);
               }
             }
