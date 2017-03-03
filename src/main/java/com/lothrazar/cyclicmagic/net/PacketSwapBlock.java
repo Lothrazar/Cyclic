@@ -155,8 +155,12 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
           }
           world.setBlockToAir(curPos);
           boolean success = false;
-          if (cur.onItemUse(player, world, curPos, EnumHand.MAIN_HAND, message.side, 0.5F, 0.5F, 0.5F) == EnumActionResult.SUCCESS) {
+          boolean ENABLEFANCY = false;//TODO: fix this. doing this makes player set HELD ITEM which is the tool/scepter to NULL. WTF
+          ItemStack backup = player.getHeldItem(EnumHand.MAIN_HAND);
+          if (ENABLEFANCY && cur.onItemUse(player, world, curPos, EnumHand.MAIN_HAND, message.side, 0.5F, 0.5F, 0.5F) == EnumActionResult.SUCCESS) {
             //then it owrked i guess eh
+         
+            player.setHeldItem(EnumHand.MAIN_HAND,backup);
             success = true;
             if (cur.getCount() == 0) {//double check hack for those red zeroes that always seem to come back
               player.inventory.setInventorySlotContents(slot, ItemStack.EMPTY);
