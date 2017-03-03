@@ -150,7 +150,7 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
           //break it and drop the whatever
           //the destroy then set was causing exceptions, changed to setAir // https://github.com/PrinceOfAmber/Cyclic/issues/114
           ItemStack cur = player.inventory.getStackInSlot(slot);
-          if (cur == null || cur.getCount() <= 0) {
+          if (cur == ItemStack.EMPTY || cur.getCount() <= 0) {
             continue;
           }
           world.setBlockToAir(curPos);
@@ -159,7 +159,7 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
             //then it owrked i guess eh
             success = true;
             if (cur.getCount() == 0) {//double check hack for those red zeroes that always seem to come back
-              player.inventory.setInventorySlotContents(slot, null);
+              player.inventory.setInventorySlotContents(slot, ItemStack.EMPTY);
             }
           }
           else {//do it the standard way
@@ -174,12 +174,12 @@ public class PacketSwapBlock implements IMessage, IMessageHandler<PacketSwapBloc
             //damage once per block 
             //TODO: CLEANUP?REFACTOR THIS
             ItemStack held = player.getHeldItemMainhand();
-            if (held != null && held.getItem() instanceof ItemToolSwap) {
+            if (held != ItemStack.EMPTY && held.getItem() instanceof ItemToolSwap) {
               UtilItemStack.damageItem(player, held);
             }
             else {
               held = player.getHeldItemOffhand();
-              if (held != null && held.getItem() instanceof ItemToolSwap) {
+              if (held !=  ItemStack.EMPTY && held.getItem() instanceof ItemToolSwap) {
                 UtilItemStack.damageItem(player, held);
               }
             }
