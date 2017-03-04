@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.List;
+import com.lothrazar.cyclicmagic.block.tileentity.TileMachineHarvester.Fields;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import net.minecraft.entity.Entity;
@@ -10,31 +11,40 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
-public class TileEntityFan extends TileEntityBaseMachine implements ITickable {
-  private static final int MAX_RANGE = 16;
-  private static final float SPEED = 0.13F;
+public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
+  //  private static final int MAX_RANGE = 16;
   private static final int TIMER_FULL = 80;
   private static final String NBT_TIMER = "Timer";
+  private static final String NBT_REDST = "redstone";
+  private static final String NBT_PART = "particles";
+  private static final String NBT_PUSH = "pushpull";
+  //  private static final float SPEED = 0.13F;
   private int timer;
+  private int needsRedstone = 1;
+  private int pushIfZero = 0;//else pull. 0 as default
+  private int particlesIfZero = 0;// 0 as default
+  private int speedBase = 13;//divide by 100 for real speed. bigger=faster
+  private int range = 16;
   @Override
   public void update() {
-    if (this.isPowered()) {
-      EnumFacing facing = getCurrentFacing();
-      int rangeFixed = getCurrentRange(); //can go up to max range unless hits a solid
-      // System.out.println("rangeFixed"+rangeFixed);
-      if (this.timer == 0) {
-        this.timer = TIMER_FULL;
-        //rm this its ugly, keep in case i add a custom particle
+    if (this.isRunning() == false) {
+      this.timer = 0;
+      return;
+    }
+    EnumFacing facing = getCurrentFacing();
+    int rangeFixed = getCurrentRange(); //can go up to max range unless hits a solid
+    // System.out.println("rangeFixed"+rangeFixed);
+    if (this.timer == 0) {
+      this.timer = TIMER_FULL;
+      //rm this its ugly, keep in case i add a custom particle
+      if (particlesIfZero == 0) {
         doParticles(rangeFixed);
       }
-      else {
-        this.timer--;
-      }
-      pushEntities(facing, rangeFixed);//int pushed = 
     }
     else {
-      this.timer = 0;
+      this.timer--;
     }
+    pushEntities(facing, rangeFixed);//int pushed = 
   }
   private int pushEntities(EnumFacing facing, int rangeFixed) {
     BlockPos start = this.getPos();
@@ -58,8 +68,13 @@ public class TileEntityFan extends TileEntityBaseMachine implements ITickable {
     double x = this.getPos().getX() + 0.5;
     double y = this.getPos().getY() + 0.7;
     double z = this.getPos().getZ() + 0.5;
-    UtilEntity.pullEntityList(x, y, z, false, nonPlayer, SPEED, SPEED);
+    float SPEED = this.getSpeedCalc();
+    boolean pushIfFalse = (pushIfZero != 0);
+    UtilEntity.pullEntityList(x, y, z, pushIfFalse, nonPlayer, SPEED, SPEED);
     return nonPlayer.size();
+  }
+  private float getSpeedCalc() {
+    return ((float) speedBase) / 100F;
   }
   private void doParticles(int rangeFixed) {
     EnumFacing facing = getCurrentFacing();
@@ -70,7 +85,7 @@ public class TileEntityFan extends TileEntityBaseMachine implements ITickable {
   private int getCurrentRange() {
     EnumFacing facing = getCurrentFacing();
     BlockPos tester;
-    for (int i = 1; i <= MAX_RANGE; i++) {//if we start at fan, we hit MYSELF (the fan)
+    for (int i = 1; i <= this.getRange(); i++) {//if we start at fan, we hit MYSELF (the fan)
       tester = this.getPos().offset(facing, i);
       if (canBlowThrough(tester) == false) {
         //cant pass thru
@@ -78,20 +93,40 @@ public class TileEntityFan extends TileEntityBaseMachine implements ITickable {
         return i;
       }
     }
-    return MAX_RANGE;
+    return getRange();
+  }
+  private int getRange() {
+    return this.range;
   }
   private boolean canBlowThrough(BlockPos tester) {
     //passes through air, and anything NOT a full block
     return this.getWorld().isAirBlock(tester) || !this.getWorld().getBlockState(tester).isFullBlock();
   }
   @Override
-  public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
-    tagCompound.setInteger(NBT_TIMER, timer);
-    return super.writeToNBT(tagCompound);
+  public NBTTagCompound writeToNBT(NBTTagCompound tags) {
+    tags.setInteger(NBT_TIMER, timer);
+    tags.setInteger(NBT_REDST, this.needsRedstone);
+    tags.setInteger(NBT_PART, this.particlesIfZero);
+    tags.setInteger(NBT_PUSH, this.pushIfZero);
+    return super.writeToNBT(tags);
   }
   @Override
-  public void readFromNBT(NBTTagCompound tagCompound) {
-    super.readFromNBT(tagCompound);
-    timer = tagCompound.getInteger(NBT_TIMER);
+  public void readFromNBT(NBTTagCompound tags) {
+    super.readFromNBT(tags);
+    timer = tags.getInteger(NBT_TIMER);
+    needsRedstone = tags.getInteger(NBT_REDST);
+    this.particlesIfZero = tags.getInteger(NBT_PART);
+    this.pushIfZero = tags.getInteger(NBT_PUSH);
+  }
+  @Override
+  public void toggleNeedsRedstone() {
+    int val = this.needsRedstone + 1;
+    if (val > 1) {
+      val = 0;//hacky lazy way
+    }
+    this.setField(Fields.REDSTONE.ordinal(), val);
+  }
+  public boolean onlyRunIfPowered() {
+    return this.needsRedstone == 1;
   }
 }
