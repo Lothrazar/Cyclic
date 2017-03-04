@@ -18,6 +18,9 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
   private static final String NBT_REDST = "redstone";
   private static final String NBT_PART = "particles";
   private static final String NBT_PUSH = "pushpull";
+  public static enum Fields {
+    TIMER, REDSTONE, PARTICLES, PUSHPULL;
+  }
   //  private static final float SPEED = 0.13F;
   private int timer;
   private int needsRedstone = 1;
@@ -128,5 +131,44 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
   }
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
+  }
+  @Override
+  public int getFieldCount() {
+    return Fields.values().length;
+  }
+  @Override
+  public int getField(int id) {
+    if (id >= 0 && id < this.getFieldCount()) {
+      switch (Fields.values()[id]) {
+        case TIMER:
+          return timer;
+        case REDSTONE:
+          return this.needsRedstone;
+        case PARTICLES:
+          return this.particlesIfZero;
+        case PUSHPULL:
+          return this.pushIfZero;
+      }
+    }
+    return -1;
+  }
+  @Override
+  public void setField(int id, int value) {
+    if (id >= 0 && id < this.getFieldCount()) {
+      switch (Fields.values()[id]) {
+        case TIMER:
+          this.timer = value;
+        break;
+        case REDSTONE:
+          this.needsRedstone = value;
+        break;
+        case PARTICLES:
+          this.particlesIfZero = value;
+        break;
+        case PUSHPULL:
+          this.pushIfZero = value;
+        break;
+      }
+    }
   }
 }
