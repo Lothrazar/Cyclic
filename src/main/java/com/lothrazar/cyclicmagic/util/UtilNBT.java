@@ -14,6 +14,9 @@ import net.minecraft.util.math.BlockPos;
 
 public class UtilNBT {
   public static String posToStringCSV(BlockPos position) {
+    if(position == null){
+      return "";
+    }
     return position.getX() + "," + position.getY() + "," + position.getZ();
   }
   public static void setItemStackBlockPos(ItemStack item, BlockPos pos) {
