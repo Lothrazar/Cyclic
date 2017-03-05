@@ -24,8 +24,8 @@ public class ButtonFan extends GuiButton implements ITooltipButton {
     tilePos = current;
     type = strType;
     size=val;
-  String ud = (size>0) ? "up" : "down";  
-    tooltips.add(TextFormatting.GRAY + UtilChat.lang("button.fan." + type + "." + ud));
+//  String ud = (size>0) ? "up" : "down";  
+    tooltips.add(TextFormatting.GRAY + UtilChat.lang("button.fan." + type.name().toLowerCase() + ".tooltip"));
   }
   public TileEntityFan.Fields getField(){
     return type;
