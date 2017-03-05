@@ -1,19 +1,10 @@
 package com.lothrazar.cyclicmagic.net;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import com.lothrazar.cyclicmagic.ICanToggleOnOff;
-import com.lothrazar.cyclicmagic.item.tool.ItemToolRandomize;
-import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
-import com.lothrazar.cyclicmagic.util.UtilWorld;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -40,13 +31,15 @@ public class PacketItemToggle implements IMessage, IMessageHandler<PacketItemTog
   public IMessage onMessage(PacketItemToggle message, MessageContext ctx) {
     if (ctx.side.isServer()) {
       EntityPlayer player = ctx.getServerHandler().playerEntity;
-
-      //      System.out.println("message.slot "+message.slot);
-      if (player.openContainer != null
-          && player.openContainer.getSlot(message.slot) != null
-          &&
-          player.openContainer.getSlot(message.slot).getStack() != null) {
-        ItemStack maybeCharm = player.openContainer.getSlot(message.slot).getStack();
+      if (player.openContainer == null) { return null; }
+      int scount = player.openContainer.inventorySlots.size();
+      //this is an edge case but it DID happen: put charmin your hotbar and then open a creative inventory tab. avoid index OOB
+      if (message.slot >= scount) { return null; }
+      
+      Slot slotObj = player.openContainer.getSlot(message.slot);
+      if (slotObj != null
+          && slotObj.getStack() != null) {
+        ItemStack maybeCharm = slotObj.getStack();
         if (maybeCharm.getItem() instanceof ICanToggleOnOff) {
           //example: is a charm or something
           ICanToggleOnOff c = (ICanToggleOnOff) maybeCharm.getItem();

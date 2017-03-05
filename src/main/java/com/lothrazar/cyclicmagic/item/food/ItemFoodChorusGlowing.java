@@ -62,7 +62,7 @@ public class ItemFoodChorusGlowing extends ItemFood implements IHasRecipe {
   public void onPlayerUpdate(LivingUpdateEvent event) {
     if (event.getEntityLiving() instanceof EntityPlayer == false) { return; }
     EntityPlayer player = (EntityPlayer) event.getEntityLiving();
-    if (player.getEntityData().getBoolean(KEY_BOOLEAN)) {
+    if (player.getEntityData().getBoolean(KEY_BOOLEAN)) { //unlike corrupted chorus, we are fine with losing this data on death, it just stops flight
       int playerGhost = player.getEntityData().getInteger(KEY_TIMER);
       if (playerGhost > 0) {
         if (playerGhost % Const.TICKS_PER_SEC == 0) {
