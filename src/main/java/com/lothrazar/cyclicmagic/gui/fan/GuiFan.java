@@ -1,9 +1,8 @@
 package com.lothrazar.cyclicmagic.gui.fan;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFan;
+import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMinerSmart;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
-import com.lothrazar.cyclicmagic.gui.GuiButtonSizePreview;
-import com.lothrazar.cyclicmagic.net.PacketTileSizeToggle;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
@@ -15,7 +14,13 @@ public class GuiFan extends GuiBaseContainer {
   private TileEntityFan tile;
   boolean debugLabels = false;
   private GuiButtonMachineRedstone redstoneBtn;
-//  private GuiButtonSizePreview btnSize;
+  private ButtonFan btnHeightDown;
+  private ButtonFan btnHeightUp;
+  private int xHeightTextbox = 176 - 26;
+  private int yHeightTxtbox = 38;
+  private ButtonFan btnTogglePrt;
+  private ButtonFan btnTogglePush;
+  
   public GuiFan(InventoryPlayer inventoryPlayer, TileEntityFan tileEntity) {
     super(new ContainerFan(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -23,23 +28,41 @@ public class GuiFan extends GuiBaseContainer {
   @Override
   public void initGui() {
     super.initGui();
-    int btnId = 0;
-    redstoneBtn = new GuiButtonMachineRedstone(btnId++,
+    int id = 0;
+    redstoneBtn = new GuiButtonMachineRedstone(id++,
         this.guiLeft + Const.padding,
         this.guiTop + Const.padding, this.tile.getPos());
     redstoneBtn.setTextureIndex(tile.getField(TileEntityFan.Fields.REDSTONE.ordinal()));
     this.buttonList.add(redstoneBtn);
-    int y = this.guiTop + Const.padding * 2 + 20;
-//    btnSize = new GuiButtonSizePreview(btnId++,
-//        this.guiLeft + Const.padding,
-//        y, "", this.tile.getPos(),
-//        PacketTileSizeToggle.ActionType.SIZE);
-//    this.buttonList.add(btnSize);
-//    GuiButtonSizePreview btnPreview = new GuiButtonSizePreview(btnId++,
-//        this.guiLeft + Const.padding * 2 + 40,
-//        y, UtilChat.lang("button.harvester.preview"), this.tile.getPos(),
-//        PacketTileSizeToggle.ActionType.PREVIEW);
-//    this.buttonList.add(btnPreview);
+    
+    int w = 15, h = 10;
+
+    int yOffset = 18;
+    int x = this.guiLeft + xHeightTextbox;
+    int y = this.guiTop + yHeightTxtbox + yOffset;
+    btnHeightDown = new ButtonFan(tile.getPos(), id++,x,y,w,h, -1,TileEntityFan.Fields.RANGE);
+    this.buttonList.add(btnHeightDown);
+    y = this.guiTop + yHeightTxtbox - yOffset;
+    btnHeightUp = new ButtonFan(tile.getPos(), id++,x,y, w,h,+1, TileEntityFan.Fields.RANGE);
+    this.buttonList.add(btnHeightUp);
+    w = 50;
+    h = 20;
+    
+    
+    x = this.guiLeft + 50;
+    y = this.guiTop + 20;
+    
+    btnTogglePrt = new ButtonFan(tile.getPos(), id++,x,y, w,h,+1, TileEntityFan.Fields.PARTICLES);
+    this.buttonList.add(btnTogglePrt);
+    
+
+//    x = this.guiLeft + 28;
+    y = this.guiTop + 48;
+    
+    btnTogglePush = new ButtonFan(tile.getPos(), id++,x,y, w,h,+1, TileEntityFan.Fields.PUSHPULL);
+    this.buttonList.add(btnTogglePush);
+    
+    
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
@@ -54,19 +77,19 @@ public class GuiFan extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     redstoneBtn.setState(tile.getField(TileEntityFan.Fields.REDSTONE.ordinal()));
+    
+    btnTogglePrt.updateDisplayStringWith(tile);
+    btnTogglePush.updateDisplayStringWith(tile);
+ 
+    
+    String display = "" + this.tile.getRange();
+  
+    int  x = (display.length() > 1) ? xHeightTextbox + 2 : xHeightTextbox + 3;
+ 
+    this.drawString(display, x, yHeightTxtbox);
+    
+    
 //    btnSize.displayString = UtilChat.lang("button.harvester.size" + tile.getField(TileMachineHarvester.Fields.SIZE.ordinal()));
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
-//  public int getProgressX() {
-//    return this.guiLeft + 10;
-//  }
-//  public int getProgressY() {
-//    return this.guiTop + 9 + 3 * Const.SQ + 5;
-//  }
-//  public int getProgressCurrent() {
-//    return tile.getField(TileEntityFan.Fields.TIMER.ordinal());
-//  }
-//  public int getProgressMax() {
-//    return TileEntityFan.TIMER_FULL;
-//  }
 }

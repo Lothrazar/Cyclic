@@ -18,8 +18,10 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
   private static final String NBT_REDST = "redstone";
   private static final String NBT_PART = "particles";
   private static final String NBT_PUSH = "pushpull";
+  private static final String NBT_RANGE = "range";
+  private static final int MAX_RANGE = 32;
   public static enum Fields {
-    TIMER, REDSTONE, PARTICLES, PUSHPULL;
+    TIMER, REDSTONE, PARTICLES, PUSHPULL, RANGE;
   }
   //  private static final float SPEED = 0.13F;
   private int timer;
@@ -98,8 +100,11 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     }
     return getRange();
   }
-  private int getRange() {
+  public int getRange() {
     return this.range;
+  }
+  private void setRange(int value){
+    this.range = Math.min(value, MAX_RANGE);
   }
   private boolean canBlowThrough(BlockPos tester) {
     //passes through air, and anything NOT a full block
@@ -111,6 +116,7 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     tags.setInteger(NBT_REDST, this.needsRedstone);
     tags.setInteger(NBT_PART, this.particlesIfZero);
     tags.setInteger(NBT_PUSH, this.pushIfZero);
+    tags.setInteger(NBT_RANGE, this.range);
     return super.writeToNBT(tags);
   }
   @Override
@@ -120,14 +126,18 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     needsRedstone = tags.getInteger(NBT_REDST);
     this.particlesIfZero = tags.getInteger(NBT_PART);
     this.pushIfZero = tags.getInteger(NBT_PUSH);
+    this.range = tags.getInteger(NBT_RANGE);
   }
   @Override
   public void toggleNeedsRedstone() {
     int val = this.needsRedstone + 1;
-    if (val > 1) {
-      val = 0;//hacky lazy way
-    }
-    this.setField(Fields.REDSTONE.ordinal(), val);
+    this.setField(Fields.REDSTONE.ordinal(), val % 2);
+  }
+  private void setShowParticles(int value) {
+    this.particlesIfZero = value % 2;
+  }
+  private void setPushPull(int value) {
+    this.pushIfZero = value % 2;
   }
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
@@ -148,6 +158,8 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
           return this.particlesIfZero;
         case PUSHPULL:
           return this.pushIfZero;
+        case RANGE:
+          return this.range;
       }
     }
     return -1;
@@ -163,10 +175,13 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
           this.needsRedstone = value;
         break;
         case PARTICLES:
-          this.particlesIfZero = value;
+          this.setShowParticles(value);
         break;
         case PUSHPULL:
-          this.pushIfZero = value;
+          this.setPushPull(value);
+        break;
+        case RANGE:
+          this.setRange(value);
         break;
       }
     }
