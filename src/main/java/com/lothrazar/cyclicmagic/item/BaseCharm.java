@@ -16,7 +16,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
-@Optional.Interface(iface = "baubles.api.IBauble", modid = "Baubles", striprefs = true)
+@Optional.Interface(iface = "baubles.api.IBauble", modid = "baubles", striprefs = true)
 public abstract class BaseCharm extends BaseItem implements baubles.api.IBauble, ICanToggleOnOff {
   private final static String NBT_STATUS = "onoff";
   public BaseCharm(int durability) {
@@ -65,15 +65,15 @@ public abstract class BaseCharm extends BaseItem implements baubles.api.IBauble,
    * @param arg1
    */
   public abstract void onTick(ItemStack arg0, EntityPlayer arg1);
-  @Optional.Method(modid = "Baubles")
+  @Optional.Method(modid = "baubles")
   public boolean canEquip(ItemStack arg0, EntityLivingBase arg1) {
     return true;
   }
-  @Optional.Method(modid = "Baubles")
+  @Optional.Method(modid = "baubles")
   public boolean canUnequip(ItemStack arg0, EntityLivingBase arg1) {
     return true;
   }
-  @Optional.Method(modid = "Baubles")
+  @Optional.Method(modid = "baubles")
   public baubles.api.BaubleType getBaubleType(ItemStack arg0) {
     try {
       if (baubles.api.BaubleType.values().length >= 4) { //length is 4 if trinket exists
@@ -87,11 +87,11 @@ public abstract class BaseCharm extends BaseItem implements baubles.api.IBauble,
       return baubles.api.BaubleType.RING;
     }
   }
-  @Optional.Method(modid = "Baubles")
+  @Optional.Method(modid = "baubles")
   public void onEquipped(ItemStack arg0, EntityLivingBase arg1) {}
-  @Optional.Method(modid = "Baubles")
+  @Optional.Method(modid = "baubles")
   public void onUnequipped(ItemStack arg0, EntityLivingBase arg1) {}
-  @Optional.Method(modid = "Baubles")
+  @Optional.Method(modid = "baubles")
   public void onWornTick(ItemStack stack, EntityLivingBase arg1) {
     if (!this.canTick(stack)) { return; }
     if (arg1 instanceof EntityPlayer && stack != null && stack.getCount() > 0) {
