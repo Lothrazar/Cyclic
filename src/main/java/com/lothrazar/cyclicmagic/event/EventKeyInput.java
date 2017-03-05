@@ -13,6 +13,7 @@ import com.lothrazar.cyclicmagic.proxy.ClientProxy;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import net.minecraft.client.Minecraft;
@@ -20,6 +21,7 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -121,6 +123,7 @@ public class EventKeyInput {
         if (maybeCharm.getItem() instanceof ICanToggleOnOff) {
           //example: is a charm or something
           ModCyclic.network.sendToServer(new PacketItemToggle(slot));
+          UtilSound.playSound( Minecraft.getMinecraft().thePlayer, SoundEvents.UI_BUTTON_CLICK);
           event.setCanceled(true);
         }
       }
