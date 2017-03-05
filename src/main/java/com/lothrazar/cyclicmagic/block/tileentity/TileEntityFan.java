@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.List;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineHarvester.Fields;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import net.minecraft.entity.Entity;
@@ -12,8 +11,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
 public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
-  //  private static final int MAX_RANGE = 16;
-  private static final int TIMER_FULL = 80;
+  private static final int TIMER_FULL = 30;
   private static final String NBT_TIMER = "Timer";
   private static final String NBT_REDST = "redstone";
   private static final String NBT_PART = "particles";
@@ -23,7 +21,6 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
   public static enum Fields {
     TIMER, REDSTONE, PARTICLES, PUSHPULL, RANGE;
   }
-  //  private static final float SPEED = 0.13F;
   private int timer;
   private int needsRedstone = 1;
   private int pushIfZero = 0;//else pull. 0 as default
@@ -103,7 +100,7 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
   public int getRange() {
     return this.range;
   }
-  private void setRange(int value){
+  private void setRange(int value) {
     this.range = Math.min(value, MAX_RANGE);
   }
   private boolean canBlowThrough(BlockPos tester) {

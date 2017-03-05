@@ -1,10 +1,8 @@
 package com.lothrazar.cyclicmagic.gui.fan;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFan;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMinerSmart;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
 import com.lothrazar.cyclicmagic.util.Const;
-import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
@@ -16,11 +14,10 @@ public class GuiFan extends GuiBaseContainer {
   private GuiButtonMachineRedstone redstoneBtn;
   private ButtonFan btnHeightDown;
   private ButtonFan btnHeightUp;
-  private int xHeightTextbox = 176 - 26;
+  private int xHeightTextbox = 176 - 25;
   private int yHeightTxtbox = 38;
   private ButtonFan btnTogglePrt;
   private ButtonFan btnTogglePush;
-  
   public GuiFan(InventoryPlayer inventoryPlayer, TileEntityFan tileEntity) {
     super(new ContainerFan(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -34,35 +31,24 @@ public class GuiFan extends GuiBaseContainer {
         this.guiTop + Const.padding, this.tile.getPos());
     redstoneBtn.setTextureIndex(tile.getField(TileEntityFan.Fields.REDSTONE.ordinal()));
     this.buttonList.add(redstoneBtn);
-    
     int w = 15, h = 10;
-
     int yOffset = 18;
     int x = this.guiLeft + xHeightTextbox;
     int y = this.guiTop + yHeightTxtbox + yOffset;
-    btnHeightDown = new ButtonFan(tile.getPos(), id++,x,y,w,h, -1,TileEntityFan.Fields.RANGE);
+    btnHeightDown = new ButtonFan(tile.getPos(), id++, x, y, w, h, -1, TileEntityFan.Fields.RANGE);
     this.buttonList.add(btnHeightDown);
     y = this.guiTop + yHeightTxtbox - yOffset;
-    btnHeightUp = new ButtonFan(tile.getPos(), id++,x,y, w,h,+1, TileEntityFan.Fields.RANGE);
+    btnHeightUp = new ButtonFan(tile.getPos(), id++, x, y, w, h, +1, TileEntityFan.Fields.RANGE);
     this.buttonList.add(btnHeightUp);
-    w = 50;
+    w = 70;
     h = 20;
-    
-    
     x = this.guiLeft + 50;
     y = this.guiTop + 20;
-    
-    btnTogglePrt = new ButtonFan(tile.getPos(), id++,x,y, w,h,+1, TileEntityFan.Fields.PARTICLES);
+    btnTogglePrt = new ButtonFan(tile.getPos(), id++, x, y, w, h, +1, TileEntityFan.Fields.PARTICLES);
     this.buttonList.add(btnTogglePrt);
-    
-
-//    x = this.guiLeft + 28;
     y = this.guiTop + 48;
-    
-    btnTogglePush = new ButtonFan(tile.getPos(), id++,x,y, w,h,+1, TileEntityFan.Fields.PUSHPULL);
+    btnTogglePush = new ButtonFan(tile.getPos(), id++, x, y, w, h, +1, TileEntityFan.Fields.PUSHPULL);
     this.buttonList.add(btnTogglePush);
-    
-    
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
@@ -77,19 +63,12 @@ public class GuiFan extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     redstoneBtn.setState(tile.getField(TileEntityFan.Fields.REDSTONE.ordinal()));
-    
     btnTogglePrt.updateDisplayStringWith(tile);
     btnTogglePush.updateDisplayStringWith(tile);
- 
-    
     String display = "" + this.tile.getRange();
-  
-    int  x = (display.length() > 1) ? xHeightTextbox + 2 : xHeightTextbox + 3;
- 
+    int x = (display.length() > 1) ? xHeightTextbox + 2 : xHeightTextbox + 3;
     this.drawString(display, x, yHeightTxtbox);
-    
-    
-//    btnSize.displayString = UtilChat.lang("button.harvester.size" + tile.getField(TileMachineHarvester.Fields.SIZE.ordinal()));
+    //    btnSize.displayString = UtilChat.lang("button.harvester.size" + tile.getField(TileMachineHarvester.Fields.SIZE.ordinal()));
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
 }
