@@ -22,7 +22,7 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
   private static final int MAX_SIZE = 7;//radius 7 translates to 15x15 area (center block + 7 each side)
   private int size = MAX_SIZE;//default to the old fixed size, backwards compat
   public static enum Fields {
-    TIMER, REDSTONE, SIZE
+    TIMER, REDSTONE, SIZE;
   }
   public TileMachineHarvester() {
     this.timer = TIMER_FULL;
@@ -101,35 +101,37 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
   }
   @Override
   public int getField(int id) {
-    if (id >= 0 && id < this.getFieldCount())
+    if (id >= 0 && id < this.getFieldCount()) {
       switch (Fields.values()[id]) {
-      case TIMER:
-      return timer;
-      case REDSTONE:
-      return this.needsRedstone;
-      case SIZE:
-      return this.size;
-      default:
-      break;
+        case TIMER:
+          return timer;
+        case REDSTONE:
+          return this.needsRedstone;
+        case SIZE:
+          return this.size;
+        default:
+        break;
       }
+    }
     return -1;
   }
   @Override
   public void setField(int id, int value) {
-    if (id >= 0 && id < this.getFieldCount())
+    if (id >= 0 && id < this.getFieldCount()) {
       switch (Fields.values()[id]) {
-      case TIMER:
-      this.timer = value;
-      break;
-      case REDSTONE:
-      this.needsRedstone = value;
-      break;
-      case SIZE:
-      this.size = value;
-      break;
-      default:
-      break;
+        case TIMER:
+          this.timer = value;
+        break;
+        case REDSTONE:
+          this.needsRedstone = value;
+        break;
+        case SIZE:
+          this.size = value;
+        break;
+        default:
+        break;
       }
+    }
   }
   @Override
   public int getFieldCount() {

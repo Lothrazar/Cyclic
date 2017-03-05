@@ -75,7 +75,6 @@ public class GuiMinerSmart extends GuiBaseContainer {
     btnSize.displayString = UtilChat.lang("button.harvester.size" + tile.getField(TileMachineMinerSmart.Fields.SIZE.ordinal()));
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     String s = UtilChat.lang("tile.block_miner_smart.blacklist");
-    //      int x = this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, y = 18;
     int x = ContainerMinerSmart.SLOTX_START - 2, y = 30;
     this.fontRendererObj.drawString(s, x, y, 4210752);
     x = ContainerMinerSmart.SLOTEQUIP_X - 3;
