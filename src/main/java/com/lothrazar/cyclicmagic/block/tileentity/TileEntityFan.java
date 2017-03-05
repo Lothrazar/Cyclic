@@ -11,6 +11,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
 public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
+  private static final int MIN_RANGE = 1;
   private static final int TIMER_FULL = 30;
   private static final String NBT_TIMER = "Timer";
   private static final String NBT_REDST = "redstone";
@@ -87,12 +88,10 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
   private int getCurrentRange() {
     EnumFacing facing = getCurrentFacing();
     BlockPos tester;
-    for (int i = 1; i <= this.getRange(); i++) {//if we start at fan, we hit MYSELF (the fan)
+    for (int i = MIN_RANGE; i <= this.getRange(); i++) {//if we start at fan, we hit MYSELF (the fan)
       tester = this.getPos().offset(facing, i);
       if (canBlowThrough(tester) == false) {
-        //cant pass thru
-        //System.out.println("Cant pass thru"+tester.toString() +this.getWorld().getBlockState(tester).getBlock().toString());
-        return i;
+        return i; //cant pass thru
       }
     }
     return getRange();
@@ -102,6 +101,9 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
   }
   private void setRange(int value) {
     this.range = Math.min(value, MAX_RANGE);
+    if (range < MIN_RANGE) {
+      range = MIN_RANGE;
+    }
   }
   private boolean canBlowThrough(BlockPos tester) {
     //passes through air, and anything NOT a full block
