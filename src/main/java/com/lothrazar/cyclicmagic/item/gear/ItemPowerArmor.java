@@ -1,9 +1,11 @@
 package com.lothrazar.cyclicmagic.item.gear;
 import java.util.List;
+import com.lothrazar.cyclicmagic.ICanToggleOnOff;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -14,6 +16,7 @@ import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -22,28 +25,33 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
 @SuppressWarnings("incomplete-switch")
-public class ItemPowerArmor extends ItemArmor implements IHasRecipe {
+public class ItemPowerArmor extends ItemArmor implements IHasRecipe, ICanToggleOnOff {
   private static final float SNEAKSPEED = 0.077F;
   public static final String NBT_GLOW = Const.MODID + "_glow";
   public static final String NBT_STEP = Const.MODID + "_step";
+  private final static String NBT_STATUS = "onoff";
   public ItemPowerArmor(ArmorMaterial material, EntityEquipmentSlot armorType) {
     super(material, 0, armorType);
   }
   @Override
   public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack) {
+    boolean isTurnedOn = this.isOn(itemStack);
     switch (this.armorType) {
       case CHEST:
-        setSneakspeed(player);
+        if (isTurnedOn)
+          setSneakspeed(player);
       break;
       case FEET:
-        setLiquidWalk(world, player);
+        if (isTurnedOn)
+          setLiquidWalk(world, player);
       break;
       case HEAD:
-        setGlowing(player, true);
-        setNightVision(player);
+        setGlowing(player, isTurnedOn);
+        if(isTurnedOn)
+          setNightVision(player);
       break;
       case LEGS:
-        setStepHeight(player, true);
+        setStepHeight(player, isTurnedOn);
       break;
     }
   }
@@ -91,6 +99,8 @@ public class ItemPowerArmor extends ItemArmor implements IHasRecipe {
   @Override
   public void addInformation(ItemStack held, EntityPlayer player, List<String> list, boolean par4) {
     list.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
+    String onoff = this.isOn(held) ? "on" : "off";
+    list.add(UtilChat.lang("item.cantoggle.tooltip.info") + UtilChat.lang("item.cantoggle.tooltip." + onoff));
   }
   @Override
   public void addRecipe() {
@@ -124,5 +134,16 @@ public class ItemPowerArmor extends ItemArmor implements IHasRecipe {
             'p', new ItemStack(Items.DYE, 1, EnumDyeColor.PURPLE.getDyeDamage()));
       break;
     }
+  }
+  public void toggleOnOff(ItemStack held) {
+    NBTTagCompound tags = UtilNBT.getItemStackNBT(held);
+    int vnew = isOn(held) ? 0 : 1;
+    tags.setInteger(NBT_STATUS, vnew);
+  }
+  public boolean isOn(ItemStack held) {
+    NBTTagCompound tags = UtilNBT.getItemStackNBT(held);
+    if (tags.hasKey(NBT_STATUS) == false) { return true;//default for newlycrafted//legacy items
+    }
+    return tags.getInteger(NBT_STATUS) == 1;
   }
 }

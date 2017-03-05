@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.block;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFan;
+import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -14,10 +15,10 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class BlockFan extends BlockBaseFacing implements IHasRecipe {
+public class BlockFan extends BlockBaseFacingInventory implements IHasRecipe {
   //block rotation in json http://www.minecraftforge.net/forum/index.php?topic=32753.0
   public BlockFan() {
-    super(Material.ROCK);
+    super(Material.ROCK,ModGuiHandler.GUI_INDEX_FAN);
     this.setHardness(3F);
     this.setResistance(5F);
     this.setSoundType(SoundType.WOOD);

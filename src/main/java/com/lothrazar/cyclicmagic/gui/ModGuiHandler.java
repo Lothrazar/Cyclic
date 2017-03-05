@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.gui;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityDetector;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFan;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFishing;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPatternBuilder;
@@ -17,6 +18,8 @@ import com.lothrazar.cyclicmagic.gui.builder.ContainerBuilder;
 import com.lothrazar.cyclicmagic.gui.builder.GuiBuilder;
 import com.lothrazar.cyclicmagic.gui.detector.ContainerDetector;
 import com.lothrazar.cyclicmagic.gui.detector.GuiDetector;
+import com.lothrazar.cyclicmagic.gui.fan.ContainerFan;
+import com.lothrazar.cyclicmagic.gui.fan.GuiFan;
 import com.lothrazar.cyclicmagic.gui.fisher.ContainerFisher;
 import com.lothrazar.cyclicmagic.gui.fisher.GuiFisher;
 import com.lothrazar.cyclicmagic.gui.miner.ContainerMinerSmart;
@@ -84,6 +87,7 @@ public class ModGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_DETECTOR = 15;
   public static final int GUI_INDEX_VECTOR = 16;
   public static final int GUI_INDEX_VILLAGER = 17;
+  public static final int GUI_INDEX_FAN = 18;
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
     BlockPos p = new BlockPos(x, y, z);
@@ -160,6 +164,9 @@ public class ModGuiHandler implements IGuiHandler {
           return c;
         }
       break;
+      case GUI_INDEX_FAN:
+        if (te != null && te instanceof TileEntityFan) { return new ContainerFan(player.inventory, (TileEntityFan) te); }
+      break;
     }
     return null;
   }
@@ -220,6 +227,9 @@ public class ModGuiHandler implements IGuiHandler {
         case GUI_INDEX_VILLAGER:
           EntityVillager v = (EntityVillager) UtilEntity.getClosestEntity(world, player, UtilEntity.getVillagers(world, p, ItemTrader.radius));
           if (v != null) { return new GuiMerchantBetter(player.inventory, v, new InventoryMerchantBetter(player, v), world); }
+        break;
+        case GUI_INDEX_FAN:
+          if (te != null && te instanceof TileEntityFan) { return new GuiFan(player.inventory, (TileEntityFan) te); }
         break;
       }
     }
