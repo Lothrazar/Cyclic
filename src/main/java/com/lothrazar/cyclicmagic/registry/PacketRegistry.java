@@ -49,6 +49,8 @@ public class PacketRegistry {
     network.registerMessage(PacketVillagerTrade.class, PacketVillagerTrade.class, packetID++, Side.SERVER);
 
     network.registerMessage(PacketTileFan.class, PacketTileFan.class, packetID++, Side.SERVER);
-       
+    network.registerMessage(PacketItemToggle.class, PacketItemToggle.class, packetID++, Side.SERVER);
+    
+    
   }
 }

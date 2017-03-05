@@ -1,21 +1,28 @@
 package com.lothrazar.cyclicmagic.event;
+import com.lothrazar.cyclicmagic.ICanToggleOnOff;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.player.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.gui.playerworkbench.GuiPlayerExtWorkbench;
+import com.lothrazar.cyclicmagic.item.BaseCharm;
 import com.lothrazar.cyclicmagic.net.PacketMovePlayerHotbar;
 import com.lothrazar.cyclicmagic.net.PacketOpenExtendedInventory;
 import com.lothrazar.cyclicmagic.net.PacketFakeWorkbench;
+import com.lothrazar.cyclicmagic.net.PacketItemToggle;
 import com.lothrazar.cyclicmagic.net.PacketMovePlayerColumn;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.util.Const;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.GuiScreenEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -92,6 +99,31 @@ public class EventKeyInput {
     else if (ClientProxy.keyExtraCraftin != null && isGuiKeyDown(ClientProxy.keyExtraCraftin) && event.getGui() instanceof GuiPlayerExtWorkbench) {
       EntityPlayerSP thePlayer = Minecraft.getMinecraft().thePlayer;
       thePlayer.closeScreen();
+    }
+  }
+  @SideOnly(Side.CLIENT)
+  @SubscribeEvent(priority = EventPriority.HIGH)
+  public void onMouseEvent(GuiScreenEvent.MouseInputEvent.Pre event) {
+    if (event.getGui() == null || !(event.getGui() instanceof GuiContainer)) { return; }
+    GuiContainer gui = (GuiContainer) event.getGui();
+    //    EntityPlayerSP player = Minecraft.getMinecraft().player;
+    boolean rightClickDown = false;
+    try {
+      rightClickDown = Mouse.isButtonDown(1);
+    }
+    catch (Exception e) {//array oob?
+      rightClickDown = Mouse.isButtonDown(0);//rare to have a one button mouse. but not impossible i guess.
+    }
+    if (rightClickDown && gui.getSlotUnderMouse() != null) {
+      int slot = gui.getSlotUnderMouse().slotNumber;
+      if (gui.inventorySlots.getSlot(slot) != null && gui.inventorySlots.getSlot(slot).getStack() != null) {
+        ItemStack maybeCharm = gui.inventorySlots.getSlot(slot).getStack();
+        if (maybeCharm.getItem() instanceof ICanToggleOnOff) {
+          //example: is a charm or something
+          ModCyclic.network.sendToServer(new PacketItemToggle(slot));
+          event.setCanceled(true);
+        }
+      }
     }
   }
   @SideOnly(Side.CLIENT)
