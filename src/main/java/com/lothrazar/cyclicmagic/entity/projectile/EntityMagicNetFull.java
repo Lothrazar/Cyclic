@@ -33,14 +33,19 @@ public class EntityMagicNetFull extends EntityThrowableDispensable {
   protected void onImpact(RayTraceResult mop) {
     if (this.isDead) { return; }
     if(captured == null || captured.hasTagCompound() == false){
-      System.out.println("ERROR null captured");
+//      System.out.println("ERROR null captured");
+      //client desync maybe
       return;
     }
 
     Entity spawnEntity = EntityList.createEntityFromNBT(captured.getTagCompound(), this.getEntityWorld());
     if (spawnEntity != null) {
+
+//      System.out.println("!!!!!!!!spawnEntityInWorld");
+      
+      
+      
       spawnEntity.readFromNBT(captured.getTagCompound());
- 
       spawnEntity.setLocationAndAngles(this.posX, this.posY + 1.1F, this.posZ, this.rotationYaw, 0.0F);
       this.getEntityWorld().spawnEntityInWorld(spawnEntity);
 //todo; could drop an empty one i guess

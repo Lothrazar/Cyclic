@@ -26,10 +26,10 @@ public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasRe
   void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
     if(held.getTagCompound() != null && held.getTagCompound().hasKey("id")){
 
-      this.doThrow(world, player, hand, new EntityMagicNetFull(world, player,held));
+      this.doThrow(world, player, hand, new EntityMagicNetFull(world, player,held.copy()));
       held.getTagCompound().removeTag("id");
       held.setTagCompound(null);
-      held = null;
+//      held = null;
     }
     else{
 
