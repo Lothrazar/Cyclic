@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic;
+package com.lothrazar.cyclicmagic.world;
 
 import java.util.List;
 import java.util.Map;
@@ -129,7 +129,7 @@ public class ExplosionBlockSafe extends Explosion {
           }
       }
 
-      //this.affectedBlockPositions.addAll(set);//ONLY THIS line is different. dont affect blocks
+      this.affectedBlockPositions.addAll(set);//ONLY THIS line is different. dont affect blocks
       float f3 = this.explosionSize * 2.0F;
       int k1 = MathHelper.floor_double(this.explosionX - (double)f3 - 1.0D);
       int l1 = MathHelper.floor_double(this.explosionX + (double)f3 + 1.0D);
@@ -163,7 +163,9 @@ public class ExplosionBlockSafe extends Explosion {
                       d9 = d9 / d13;
                       double d14 = (double)this.world.getBlockDensity(vec3d, entity.getEntityBoundingBox());
                       double d10 = (1.0D - d12) * d14;
+                      if(entity instanceof EntityPlayer == false){//special: do not harm players at all
                       entity.attackEntityFrom(DamageSource.causeExplosionDamage(this), (float)((int)((d10 * d10 + d10) / 2.0D * 7.0D * (double)f3 + 1.0D)));
+                      }
                       double d11 = d10;
 
                       if (entity instanceof EntityLivingBase)
@@ -233,29 +235,29 @@ public class ExplosionBlockSafe extends Explosion {
                   this.world.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, (d0 + this.explosionX) / 2.0D, (d1 + this.explosionY) / 2.0D, (d2 + this.explosionZ) / 2.0D, d3, d4, d5, new int[0]);
                   this.world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0, d1, d2, d3, d4, d5, new int[0]);
               }
-
-              if (iblockstate.getMaterial() != Material.AIR)
-              {
-                  if (block.canDropFromExplosion(this))
-                  {
-                      block.dropBlockAsItemWithChance(this.world, blockpos, this.world.getBlockState(blockpos), 1.0F / this.explosionSize, 0);
-                  }
-
-                  block.onBlockExploded(this.world, blockpos, this);
-              }
+//block safe means: no fire or block destruction
+//              if (iblockstate.getMaterial() != Material.AIR)
+//              {
+//                  if (block.canDropFromExplosion(this))
+//                  {
+//                      block.dropBlockAsItemWithChance(this.world, blockpos, this.world.getBlockState(blockpos), 1.0F / this.explosionSize, 0);
+//                  }
+//
+//                  block.onBlockExploded(this.world, blockpos, this);
+//              }
           }
       }
 
-      if (this.isFlaming)
-      {
-          for (BlockPos blockpos1 : this.affectedBlockPositions)
-          {
-              if (this.world.getBlockState(blockpos1).getMaterial() == Material.AIR && this.world.getBlockState(blockpos1.down()).isFullBlock() && this.explosionRNG.nextInt(3) == 0)
-              {
-                  this.world.setBlockState(blockpos1, Blocks.FIRE.getDefaultState());
-              }
-          }
-      }
+//      if (this.isFlaming)
+//      {
+//          for (BlockPos blockpos1 : this.affectedBlockPositions)
+//          {
+//              if (this.world.getBlockState(blockpos1).getMaterial() == Material.AIR && this.world.getBlockState(blockpos1.down()).isFullBlock() && this.explosionRNG.nextInt(3) == 0)
+//              {
+//                  this.world.setBlockState(blockpos1, Blocks.FIRE.getDefaultState());
+//              }
+//          }
+//      }
   }
 
 

@@ -4,6 +4,7 @@ import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.dispenser.BehaviorProjectileThrowable;
 import com.lothrazar.cyclicmagic.entity.projectile.*;
 import com.lothrazar.cyclicmagic.item.projectile.*;
+import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileTNT.ExplosionType;
 import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
@@ -93,13 +94,27 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       ItemRegistry.registerWithJeiDescription(ender_lightning);
       projectiles.add(ender_lightning);
     }
+
+    ItemProjectileTNT dynamite_safe = new ItemProjectileTNT(6,ExplosionType.BLOCKSAFE);
+    ItemRegistry.addItem(dynamite_safe, "dynamite_safe");
+    EntityProjectileRegistry.registerModEntity(EntityDynamiteBlockSafe.class, "tntblocksafebolt", 1009);
+    EntityDynamiteBlockSafe.renderSnowball = dynamite_safe;
+    projectiles.add(dynamite_safe);
+
+    ItemProjectileTNT dynamite_mining = new ItemProjectileTNT(6,ExplosionType.MINING);
+    ItemRegistry.addItem(dynamite_mining, "dynamite_mining");
+    EntityProjectileRegistry.registerModEntity(EntityDynamiteMining.class, "tntminingbolt", 1010);
+    EntityDynamiteMining.renderSnowball = dynamite_mining;
+    projectiles.add(dynamite_mining);
+    
+    
     if (enderBombsEnabled) {
-      ItemProjectileTNT ender_tnt_1 = new ItemProjectileTNT(1);
-      ItemProjectileTNT ender_tnt_2 = new ItemProjectileTNT(2);
-      ItemProjectileTNT ender_tnt_3 = new ItemProjectileTNT(3);
-      ItemProjectileTNT ender_tnt_4 = new ItemProjectileTNT(4);
-      ItemProjectileTNT ender_tnt_5 = new ItemProjectileTNT(5);
-      ItemProjectileTNT ender_tnt_6 = new ItemProjectileTNT(6);
+      ItemProjectileTNT ender_tnt_1 = new ItemProjectileTNT(1,ExplosionType.NORMAL);
+      ItemProjectileTNT ender_tnt_2 = new ItemProjectileTNT(2,ExplosionType.NORMAL);
+      ItemProjectileTNT ender_tnt_3 = new ItemProjectileTNT(3,ExplosionType.NORMAL);
+      ItemProjectileTNT ender_tnt_4 = new ItemProjectileTNT(4,ExplosionType.NORMAL);
+      ItemProjectileTNT ender_tnt_5 = new ItemProjectileTNT(5,ExplosionType.NORMAL);
+      ItemProjectileTNT ender_tnt_6 = new ItemProjectileTNT(6,ExplosionType.NORMAL);
       ItemRegistry.addItem(ender_tnt_1, "ender_tnt_1");
       ItemRegistry.addItem(ender_tnt_2, "ender_tnt_2");
       ItemRegistry.addItem(ender_tnt_3, "ender_tnt_3");
