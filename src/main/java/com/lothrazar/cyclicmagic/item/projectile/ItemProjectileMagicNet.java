@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.item.projectile;
+import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetFull;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetEmpty;
@@ -10,6 +11,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasRecipe {
@@ -18,21 +21,35 @@ public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasRe
   }
   @Override
   public void addRecipe() {
-//    GameRegistry.addShapelessRecipe(new ItemStack(this, 1), new ItemStack(Blocks.TALLGRASS, 1, OreDictionary.WILDCARD_VALUE), new ItemStack(Blocks.TORCH));
-//    GameRegistry.addShapelessRecipe(new ItemStack(this, 1), new ItemStack(Blocks.LEAVES, 1, OreDictionary.WILDCARD_VALUE), new ItemStack(Blocks.TORCH));
-//    GameRegistry.addShapelessRecipe(new ItemStack(this, 1), new ItemStack(Blocks.LEAVES2, 1, OreDictionary.WILDCARD_VALUE), new ItemStack(Blocks.TORCH));
+    //    GameRegistry.addShapelessRecipe(new ItemStack(this, 1), new ItemStack(Blocks.TALLGRASS, 1, OreDictionary.WILDCARD_VALUE), new ItemStack(Blocks.TORCH));
+    //    GameRegistry.addShapelessRecipe(new ItemStack(this, 1), new ItemStack(Blocks.LEAVES, 1, OreDictionary.WILDCARD_VALUE), new ItemStack(Blocks.TORCH));
+    //    GameRegistry.addShapelessRecipe(new ItemStack(this, 1), new ItemStack(Blocks.LEAVES2, 1, OreDictionary.WILDCARD_VALUE), new ItemStack(Blocks.TORCH));
+  }
+  public boolean hasEntity(ItemStack held) {
+    return held.getTagCompound() != null && held.getTagCompound().hasKey("id");
+  }
+  @SideOnly(Side.CLIENT)
+  public boolean hasEffect(ItemStack stack) {
+    return hasEntity(stack);
+  } 
+  @SideOnly(Side.CLIENT)
+  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
+  {
+    if(hasEffect(stack)){
+      tooltip.add( stack.getTagCompound().getString("id"));
+//      if(stack.getTagCompound().hasKey("tooltip"))
+//        tooltip.add( stack.getTagCompound().getString("tooltip"));
+    }
   }
   @Override
   void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
-    if(held.getTagCompound() != null && held.getTagCompound().hasKey("id")){
-
-      this.doThrow(world, player, hand, new EntityMagicNetFull(world, player,held.copy()));
+    if (hasEntity(held)) {
+      this.doThrow(world, player, hand, new EntityMagicNetFull(world, player, held.copy()));
       held.getTagCompound().removeTag("id");
       held.setTagCompound(null);
-//      held = null;
+      //      held = null;
     }
-    else{
-
+    else {
       this.doThrow(world, player, hand, new EntityMagicNetEmpty(world, player));
     }
   }
