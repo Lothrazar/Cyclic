@@ -27,6 +27,8 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
   private boolean enderLightning;
   private boolean enderBombsEnabled;
   ArrayList<BaseItemProjectile> projectiles = new ArrayList<BaseItemProjectile>();
+  private boolean dynamiteSafe;
+  private boolean dynamiteMining;
   @Override
   public void onInit() {
     if (enableEnderBlaze) {
@@ -94,27 +96,38 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       ItemRegistry.registerWithJeiDescription(ender_lightning);
       projectiles.add(ender_lightning);
     }
-
-    ItemProjectileTNT dynamite_safe = new ItemProjectileTNT(6,ExplosionType.BLOCKSAFE);
-    ItemRegistry.addItem(dynamite_safe, "dynamite_safe");
-    EntityProjectileRegistry.registerModEntity(EntityDynamiteBlockSafe.class, "tntblocksafebolt", 1009);
-    EntityDynamiteBlockSafe.renderSnowball = dynamite_safe;
-    projectiles.add(dynamite_safe);
-
-    ItemProjectileTNT dynamite_mining = new ItemProjectileTNT(6,ExplosionType.MINING);
-    ItemRegistry.addItem(dynamite_mining, "dynamite_mining");
-    EntityProjectileRegistry.registerModEntity(EntityDynamiteMining.class, "tntminingbolt", 1010);
-    EntityDynamiteMining.renderSnowball = dynamite_mining;
-    projectiles.add(dynamite_mining);
-    
-    
+    if (dynamiteSafe) {
+      ItemProjectileTNT dynamite_safe = new ItemProjectileTNT(6, ExplosionType.BLOCKSAFE);
+      ItemRegistry.addItem(dynamite_safe, "dynamite_safe");
+      EntityProjectileRegistry.registerModEntity(EntityDynamiteBlockSafe.class, "tntblocksafebolt", 1009);
+      EntityDynamiteBlockSafe.renderSnowball = dynamite_safe;
+      projectiles.add(dynamite_safe);
+      GameRegistry.addShapelessRecipe(new ItemStack(dynamite_safe, 6),  
+          new ItemStack(Items.GUNPOWDER), new ItemStack(Items.SUGAR),new ItemStack(Items.GUNPOWDER), 
+          new ItemStack(Items.PAPER),  new ItemStack(Items.CLAY_BALL), new ItemStack(Blocks.BROWN_MUSHROOM),
+          new ItemStack(Items.FEATHER),  new ItemStack(Items.WHEAT_SEEDS), new ItemStack(Blocks.COBBLESTONE)
+          );
+    }
+    if (dynamiteMining) {
+      ItemProjectileTNT dynamite_mining = new ItemProjectileTNT(6, ExplosionType.MINING);
+      ItemRegistry.addItem(dynamite_mining, "dynamite_mining");
+      EntityProjectileRegistry.registerModEntity(EntityDynamiteMining.class, "tntminingbolt", 1010);
+      EntityDynamiteMining.renderSnowball = dynamite_mining;
+      projectiles.add(dynamite_mining);
+      GameRegistry.addShapelessRecipe(new ItemStack(dynamite_mining, 6),  
+          new ItemStack(Items.GUNPOWDER), new ItemStack(Items.IRON_INGOT),
+          new ItemStack(Items.GUNPOWDER), new ItemStack(Items.PAPER), 
+          new ItemStack(Items.CLAY_BALL), new ItemStack(Blocks.RED_MUSHROOM),
+          new ItemStack(Items.FEATHER),  new ItemStack(Items.WHEAT_SEEDS), new ItemStack(Items.NETHERBRICK)
+          );
+    }
     if (enderBombsEnabled) {
-      ItemProjectileTNT ender_tnt_1 = new ItemProjectileTNT(1,ExplosionType.NORMAL);
-      ItemProjectileTNT ender_tnt_2 = new ItemProjectileTNT(2,ExplosionType.NORMAL);
-      ItemProjectileTNT ender_tnt_3 = new ItemProjectileTNT(3,ExplosionType.NORMAL);
-      ItemProjectileTNT ender_tnt_4 = new ItemProjectileTNT(4,ExplosionType.NORMAL);
-      ItemProjectileTNT ender_tnt_5 = new ItemProjectileTNT(5,ExplosionType.NORMAL);
-      ItemProjectileTNT ender_tnt_6 = new ItemProjectileTNT(6,ExplosionType.NORMAL);
+      ItemProjectileTNT ender_tnt_1 = new ItemProjectileTNT(1, ExplosionType.NORMAL);
+      ItemProjectileTNT ender_tnt_2 = new ItemProjectileTNT(2, ExplosionType.NORMAL);
+      ItemProjectileTNT ender_tnt_3 = new ItemProjectileTNT(3, ExplosionType.NORMAL);
+      ItemProjectileTNT ender_tnt_4 = new ItemProjectileTNT(4, ExplosionType.NORMAL);
+      ItemProjectileTNT ender_tnt_5 = new ItemProjectileTNT(5, ExplosionType.NORMAL);
+      ItemProjectileTNT ender_tnt_6 = new ItemProjectileTNT(6, ExplosionType.NORMAL);
       ItemRegistry.addItem(ender_tnt_1, "ender_tnt_1");
       ItemRegistry.addItem(ender_tnt_2, "ender_tnt_2");
       ItemRegistry.addItem(ender_tnt_3, "ender_tnt_3");
@@ -154,6 +167,8 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
   }
   @Override
   public void syncConfig(Configuration config) {
+    dynamiteSafe = config.getBoolean("DynamiteSafe", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    dynamiteMining = config.getBoolean("DynamiteMining", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableEnderBlaze = config.getBoolean("EnderBlaze", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableEnderDungeonFinder = config.getBoolean("EnderDungeonFinder", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enderFishing = config.getBoolean("EnderFishing", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
