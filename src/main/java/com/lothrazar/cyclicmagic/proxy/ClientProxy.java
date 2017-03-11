@@ -9,6 +9,8 @@ import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamiteMining;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityFishingBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityHarvestBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityLightningballBolt;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetEmpty;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetFull;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityShearingBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntitySnowballBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityTorchBolt;
@@ -106,6 +108,8 @@ public class ClientProxy extends CommonProxy {
     RenderingRegistry.registerEntityRenderingHandler(EntityBlazeBolt.class, new RenderSnowball(rm, EntityBlazeBolt.renderSnowball, ri));
     RenderingRegistry.registerEntityRenderingHandler(EntityDynamiteMining.class, new RenderSnowball(rm, EntityDynamiteMining.renderSnowball, ri));
     RenderingRegistry.registerEntityRenderingHandler(EntityDynamiteBlockSafe.class, new RenderSnowball(rm, EntityDynamiteBlockSafe.renderSnowball, ri));
+    RenderingRegistry.registerEntityRenderingHandler(EntityMagicNetFull.class, new RenderSnowball(rm, EntityMagicNetFull.renderSnowball, ri));
+    RenderingRegistry.registerEntityRenderingHandler(EntityMagicNetEmpty.class, new RenderSnowball(rm, EntityMagicNetEmpty.renderSnowball, ri));
   }
   @SideOnly(Side.CLIENT)
   @Override
