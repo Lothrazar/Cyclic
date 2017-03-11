@@ -4,6 +4,8 @@ import com.lothrazar.cyclicmagic.block.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityBlazeBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDungeonEye;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamite;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamiteBlockSafe;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamiteMining;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityFishingBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityHarvestBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityLightningballBolt;
@@ -102,6 +104,8 @@ public class ClientProxy extends CommonProxy {
     RenderingRegistry.registerEntityRenderingHandler(EntityDungeonEye.class, new RenderSnowball(rm, EntityDungeonEye.renderSnowball, ri));
     RenderingRegistry.registerEntityRenderingHandler(EntityDynamite.class, new RenderSnowball(rm, EntityDynamite.renderSnowball, ri));
     RenderingRegistry.registerEntityRenderingHandler(EntityBlazeBolt.class, new RenderSnowball(rm, EntityBlazeBolt.renderSnowball, ri));
+    RenderingRegistry.registerEntityRenderingHandler(EntityDynamiteMining.class, new RenderSnowball(rm, EntityDynamiteMining.renderSnowball, ri));
+    RenderingRegistry.registerEntityRenderingHandler(EntityDynamiteBlockSafe.class, new RenderSnowball(rm, EntityDynamiteBlockSafe.renderSnowball, ri));
   }
   @SideOnly(Side.CLIENT)
   @Override
