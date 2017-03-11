@@ -1,0 +1,70 @@
+package com.lothrazar.cyclicmagic.item.projectile;
+import java.util.List;
+import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetFull;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetEmpty;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityTorchBolt;
+import com.lothrazar.cyclicmagic.util.UtilChat;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.oredict.OreDictionary;
+
+public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasRecipe {
+  public static final String NBT_ENTITYID = "id";
+  public EntityThrowableDispensable getThrownEntity(World world, double x, double y, double z) {
+    return new EntityTorchBolt(world, x, y, z);
+  }
+  @Override
+  public void addRecipe() {
+   GameRegistry.addRecipe(new ItemStack(this, 1),
+       "lal",
+       "qiq",
+       "lal",
+       'i',Items.IRON_INGOT,
+       'a',new ItemStack(Blocks.TALLGRASS, 1, OreDictionary.WILDCARD_VALUE) ,
+       'l',new ItemStack(Items.DYE,1,EnumDyeColor.CYAN.getDyeDamage()),
+       'q',new ItemStack(Items.SNOWBALL)
+//       ,Items.BEETROOT
+//       ,Items.LEATHER
+//       ,Items.LEAD
+       );
+  }
+  public boolean hasEntity(ItemStack held) {
+    return held.getTagCompound() != null && held.getTagCompound().hasKey(NBT_ENTITYID);
+  }
+  @SideOnly(Side.CLIENT)
+  public boolean hasEffect(ItemStack stack) {
+    return hasEntity(stack);
+  } 
+  @SideOnly(Side.CLIENT)
+  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
+  {
+    if(hasEffect(stack)){
+      tooltip.add( stack.getTagCompound().getString(NBT_ENTITYID));
+    }
+    else{
+      tooltip.add(UtilChat.lang(this.getUnlocalizedName()+".tooltip"));
+    }
+  }
+  @Override
+  void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
+    if (hasEntity(held)) {
+      this.doThrow(world, player, hand, new EntityMagicNetFull(world, player, held.copy()));
+      held.getTagCompound().removeTag(NBT_ENTITYID);
+      held.setTagCompound(null);
+      //      held = null;
+    }
+    else {
+      this.doThrow(world, player, hand, new EntityMagicNetEmpty(world, player));
+    }
+  }
+}

@@ -29,6 +29,7 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
   ArrayList<BaseItemProjectile> projectiles = new ArrayList<BaseItemProjectile>();
   private boolean dynamiteSafe;
   private boolean dynamiteMining;
+  private boolean magicNet;
   @Override
   public void onInit() {
     if (enableEnderBlaze) {
@@ -102,11 +103,19 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       EntityProjectileRegistry.registerModEntity(EntityDynamiteBlockSafe.class, "tntblocksafebolt", 1009);
       EntityDynamiteBlockSafe.renderSnowball = dynamite_safe;
       projectiles.add(dynamite_safe);
-      GameRegistry.addShapelessRecipe(new ItemStack(dynamite_safe, 6),  
-          new ItemStack(Items.GUNPOWDER), new ItemStack(Items.SUGAR),new ItemStack(Items.GUNPOWDER), 
-          new ItemStack(Items.PAPER),  new ItemStack(Items.CLAY_BALL), new ItemStack(Blocks.BROWN_MUSHROOM),
-          new ItemStack(Items.FEATHER),  new ItemStack(Items.WHEAT_SEEDS), new ItemStack(Blocks.COBBLESTONE)
-          );
+      GameRegistry.addShapelessRecipe(new ItemStack(dynamite_safe, 6),
+          new ItemStack(Items.GUNPOWDER), new ItemStack(Items.SUGAR), new ItemStack(Items.GUNPOWDER),
+          new ItemStack(Items.PAPER), new ItemStack(Items.CLAY_BALL), new ItemStack(Blocks.BROWN_MUSHROOM),
+          new ItemStack(Items.FEATHER), new ItemStack(Items.WHEAT_SEEDS), new ItemStack(Blocks.COBBLESTONE));
+    }
+    if (magicNet) {
+      ItemProjectileMagicNet magic_net = new ItemProjectileMagicNet();
+      ItemRegistry.addItem(magic_net, "magic_net");
+      EntityMagicNetEmpty.renderSnowball = magic_net;
+      EntityMagicNetFull.renderSnowball = magic_net;
+      EntityProjectileRegistry.registerModEntity(EntityMagicNetFull.class, "magicnetfull", 1011);
+      EntityProjectileRegistry.registerModEntity(EntityMagicNetEmpty.class, "magicnetempty", 1012);
+      projectiles.add(magic_net);
     }
     if (dynamiteMining) {
       ItemProjectileTNT dynamite_mining = new ItemProjectileTNT(6, ExplosionType.MINING);
@@ -114,12 +123,11 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       EntityProjectileRegistry.registerModEntity(EntityDynamiteMining.class, "tntminingbolt", 1010);
       EntityDynamiteMining.renderSnowball = dynamite_mining;
       projectiles.add(dynamite_mining);
-      GameRegistry.addShapelessRecipe(new ItemStack(dynamite_mining, 6),  
+      GameRegistry.addShapelessRecipe(new ItemStack(dynamite_mining, 6),
           new ItemStack(Items.GUNPOWDER), new ItemStack(Items.IRON_INGOT),
-          new ItemStack(Items.GUNPOWDER), new ItemStack(Items.PAPER), 
+          new ItemStack(Items.GUNPOWDER), new ItemStack(Items.PAPER),
           new ItemStack(Items.CLAY_BALL), new ItemStack(Blocks.RED_MUSHROOM),
-          new ItemStack(Items.FEATHER),  new ItemStack(Items.WHEAT_SEEDS), new ItemStack(Items.NETHERBRICK)
-          );
+          new ItemStack(Items.FEATHER), new ItemStack(Items.WHEAT_SEEDS), new ItemStack(Items.NETHERBRICK));
     }
     if (enderBombsEnabled) {
       ItemProjectileTNT ender_tnt_1 = new ItemProjectileTNT(1, ExplosionType.NORMAL);
@@ -167,6 +175,7 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
   }
   @Override
   public void syncConfig(Configuration config) {
+    magicNet = config.getBoolean("MonsterBall", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     dynamiteSafe = config.getBoolean("DynamiteSafe", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     dynamiteMining = config.getBoolean("DynamiteMining", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableEnderBlaze = config.getBoolean("EnderBlaze", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
