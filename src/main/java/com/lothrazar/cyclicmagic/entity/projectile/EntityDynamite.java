@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.entity.projectile;
+import com.lothrazar.cyclicmagic.ExplosionBlockSafe;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.RayTraceResult;
@@ -27,9 +28,25 @@ public class EntityDynamite extends EntityThrowableDispensable {
     super(worldIn, x, y, z);
     this.explosionLevel = strength;
   }
+//  @Override
+//  protected void onImpact(RayTraceResult mop) {
+//    this.getEntityWorld().createExplosion(this, this.posX, this.posY + (double) (this.height / 2.0F), this.posZ, explosionLevel, true);
+//    this.setDead();
+//  }qweqqq
   @Override
   protected void onImpact(RayTraceResult mop) {
-    this.getEntityWorld().createExplosion(this, this.posX, this.posY + (double) (this.height / 2.0F), this.posZ, explosionLevel, true);
+    
+    //ConcussiveExplosion.customConcussiveExplosion(this, playerThrower, posX, posY, posZ, 4.0F, false);
+    //this.getEntityWorld().createExplosion(this, this.posX, this.posY + (double) (this.height / 2.0F), this.posZ, explosionLevel, true);
+    ExplosionBlockSafe var11 = new ExplosionBlockSafe(this.getEntityWorld(), this.getThrower(),  posX, posY, posZ, explosionLevel, false, true);
+    var11.doExplosionA();
+    var11.doExplosionB(false);
+
+    //PacketHandler.networkWrapper.sendToAllAround(new PacketFXConcussiveExplosion(size, explosionX, explosionY, explosionZ), new NetworkRegistry.TargetPoint(entity.dimension, entity.posX, entity.posY, entity.posZ, 96.0D));
+
+//    this.getEntityWorld().createExplosion(this, this.posX, this.posY + (double) (this.height / 2.0F), this.posZ, explosionLevel, true);
+//  this.setDead();
+    
     this.setDead();
   }
 }
