@@ -1,4 +1,6 @@
 package com.lothrazar.cyclicmagic.entity.projectile;
+import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
@@ -33,7 +35,9 @@ public class EntityMagicNetFull extends EntityThrowableDispensable {
       spawnEntity.readFromNBT(captured.getTagCompound());
       spawnEntity.setLocationAndAngles(this.posX, this.posY + 1.1F, this.posZ, this.rotationYaw, 0.0F);
       this.getEntityWorld().spawnEntityInWorld(spawnEntity);
-      //todo; could drop an empty one ? nah. consumed on use
+      if(spawnEntity instanceof EntityLivingBase)
+        UtilSound.playSound((EntityLivingBase)spawnEntity, SoundRegistry.byeaa);
+     //todo; could drop an empty one ? nah. consumed on use
     }
     this.setDead();
   }
