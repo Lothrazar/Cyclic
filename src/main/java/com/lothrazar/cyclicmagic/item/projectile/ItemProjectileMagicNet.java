@@ -5,6 +5,7 @@ import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetFull;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetEmpty;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityTorchBolt;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -39,6 +40,9 @@ public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasRe
       tooltip.add( stack.getTagCompound().getString("id"));
 //      if(stack.getTagCompound().hasKey("tooltip"))
 //        tooltip.add( stack.getTagCompound().getString("tooltip"));
+    }
+    else{
+      tooltip.add(UtilChat.lang(this.getUnlocalizedName()+".tooltip"));
     }
   }
   @Override

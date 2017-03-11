@@ -108,13 +108,13 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
           new ItemStack(Items.FEATHER),  new ItemStack(Items.WHEAT_SEEDS), new ItemStack(Blocks.COBBLESTONE)
           );
     }
+    
     ItemProjectileMagicNet magic_net = new ItemProjectileMagicNet();
     ItemRegistry.addItem(magic_net, "magic_net");
     EntityMagicNetEmpty.renderSnowball = magic_net;
     EntityMagicNetFull.renderSnowball = magic_net;
     EntityProjectileRegistry.registerModEntity(EntityMagicNetFull.class, "magicnetfull", 1011);
     EntityProjectileRegistry.registerModEntity(EntityMagicNetEmpty.class, "magicnetempty", 1012);
-    
     projectiles.add(magic_net);
     
     
