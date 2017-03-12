@@ -10,10 +10,12 @@ import com.lothrazar.cyclicmagic.block.BlockPatternBuilder;
 import com.lothrazar.cyclicmagic.block.BlockPlacer;
 import com.lothrazar.cyclicmagic.block.BlockUncrafting;
 import com.lothrazar.cyclicmagic.block.BlockUser;
+import com.lothrazar.cyclicmagic.block.BlockXpPylon;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineStructureBuilder;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineHarvester;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPatternBuilder;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityXpPylon;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineBlockMiner;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMinerSmart;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachinePlacer;
@@ -37,6 +39,9 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
   private boolean enableUser;
   private boolean enablePattern;
   public void onInit() {
+    BlockXpPylon exp_pylon = new BlockXpPylon();
+    BlockRegistry.registerBlock(exp_pylon, "exp_pylon");
+    GameRegistry.registerTileEntity(TileEntityXpPylon.class, "exp_pylon_te");
     if (enablePattern) {
       BlockPatternBuilder builder_pattern = new BlockPatternBuilder();
       BlockRegistry.registerBlock(builder_pattern, "builder_pattern");

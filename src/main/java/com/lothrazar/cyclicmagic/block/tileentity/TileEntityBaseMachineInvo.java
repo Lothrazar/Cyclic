@@ -8,6 +8,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.text.ITextComponent;
 
 public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements IInventory, ISidedInventory {
+  public static final String NBT_INV = "Inventory";
+  public static final String NBT_SLOT = "Slot";
   @Override
   public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
     return this.isItemValidForSlot(index, itemStackIn);
