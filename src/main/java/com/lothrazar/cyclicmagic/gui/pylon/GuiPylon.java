@@ -41,7 +41,7 @@ public class GuiPylon extends GuiBaseContanerProgress {
     int y = this.guiTop + Const.padding * 2 + 20;
     btnPreview = new GuiButton(btnId++,
         this.guiLeft + Const.padding,
-        y, 40, 20, "");
+        y, 48, 20, "");
     this.buttonList.add(btnPreview);
   }
   @Override

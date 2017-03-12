@@ -13,7 +13,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
   private static final int XP_PER_SPEWORB = 10;
   private static final int XP_PER_BOTTLE = 15;
-  public static final int TIMER_FULL = 15;
+  public static final int TIMER_FULL = 18;
   public static final int MAX_EXP_HELD = 1000;
   public static final int SLOT_INPUT = 0;
   public static final int SLOT_OUTPUT = 1;
@@ -21,19 +21,19 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   private static final String NBT_REDST = "redstone";
   private static final String NBT_EXP = "particles";
   private static final String NBT_MODE = "pushpull";
+  private final static int RANGE = 2;
   private static final int[] SLOTS_EXTRACT = new int[] { SLOT_OUTPUT };
   private static final int[] SLOTS_INSERT = new int[] { SLOT_INPUT };
   public static enum Fields {
     TIMER, EXP, MODE, REDSTONE;//MIGHT remove redstone eh
   }
   public static enum Mode {
-    COLLECT, SPEW, BOTTLE;
+    COLLECT, SPEW;
   }
   private int timer = 0;
   private int needsRedstone = 1;
   private int mode = 0;//else pull. 0 as default
   private int currentExp = 0;// 0 as default
-  private int range = 2;
   private ItemStack[] inv;
   public TileEntityXpPylon() {
     inv = new ItemStack[2];
@@ -41,43 +41,50 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   @Override
   public void update() {
     if (this.mode == Mode.COLLECT.ordinal()) {
-      List<EntityXPOrb> orbs = getWorld().getEntitiesWithinAABB(EntityXPOrb.class, new AxisAlignedBB(this.getPos().up()).expandXyz(range));
-      if (orbs == null) { return; }
-      //no timer just EAT
-      for (EntityXPOrb orb : orbs) {
-        if (orb.isDead == false && this.tryIncrExp(orb.getXpValue())) {
-          //          System.out.println("ET " + orb.getEntityId());
-          this.getWorld().removeEntity(orb);//calls     orb.setDead(); for me
-        }
-        else {//is full
+      updateCollection();
+      updateBottle();
+    }
+    else if (this.mode == Mode.SPEW.ordinal()) {
+      updateSpew();
+    }
+  }
+  private void updateSpew() {
+    this.timer--;
+    if (this.timer <= 0) {
+      this.timer = TIMER_FULL;
+      int amtToSpew = Math.min(XP_PER_SPEWORB, this.currentExp); //to catch 1 or 2 remainder left
+      if (amtToSpew > 0 && tryDecrExp(amtToSpew)) {
+        if (this.getWorld().isRemote == false) {
+          EntityXPOrb orb = new EntityXPOrb(this.getWorld());
+          orb.setPositionAndUpdate(this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5);
+          orb.xpValue = amtToSpew;
+          this.getWorld().spawnEntityInWorld(orb);
           spewOrb(orb);
         }
       }
     }
-    else if (this.mode == Mode.SPEW.ordinal()) {
-      //this is where timer gets used
-      this.timer--;
-      if (this.timer <= 0) {
-        this.timer = TIMER_FULL;
-        int amtToSpew = Math.min(XP_PER_SPEWORB, this.currentExp); //to catch 1 or 2 remainder left
-        if (tryDecrExp(amtToSpew)) {
-          if (this.getWorld().isRemote == false) {
-            EntityXPOrb orb = new EntityXPOrb(this.getWorld());
-            orb.setPositionAndUpdate(this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5);
-            orb.xpValue = amtToSpew;
-            this.getWorld().spawnEntityInWorld(orb);
-            spewOrb(orb);
-          }
-        }
+  }
+  private void updateBottle() {
+    this.timer--;
+    if (this.timer <= 0) {
+      this.timer = TIMER_FULL;
+      if (outputSlotHasRoom() && inputSlotHasSome() && tryDecrExp(XP_PER_BOTTLE)) {
+        outputSlotIncrement();
+        inputSlotDecrement();
       }
     }
-    else if (this.mode == Mode.BOTTLE.ordinal()) {
-      this.timer--;
-      if (this.timer <= 0) {
-        this.timer = TIMER_FULL;
-        if (outputSlotHasRoom() && inputSlotHasSome() && tryDecrExp(XP_PER_BOTTLE)) {
-          outputSlotIncrement();
-          inputSlotDecrement();
+  }
+  private void updateCollection() {
+    List<EntityXPOrb> orbs = getWorld().getEntitiesWithinAABB(EntityXPOrb.class, new AxisAlignedBB(this.getPos().up()).expandXyz(RANGE));
+    if (orbs != null) {
+      //no timer just EAT
+      for (EntityXPOrb orb : orbs) {
+        if (orb.isDead == false && this.tryIncrExp(orb.getXpValue())) {
+          //          System.out.println("ET " + orb.getEntityId());
+          getWorld().removeEntity(orb);//calls     orb.setDead(); for me
+        }
+        else {//is full
+          spewOrb(orb);
         }
       }
     }
