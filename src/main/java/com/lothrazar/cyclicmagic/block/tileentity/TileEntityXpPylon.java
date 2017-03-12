@@ -7,7 +7,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 
 public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
   private static final int XP_PER_SPEWORB = 10;
-  public static final int TIMER_FULL = 90;
+  public static final int TIMER_FULL = 15;
   public static final int MAX_EXP_HELD = 1000;
   private static final String NBT_TIMER = "Timer";
   private static final String NBT_REDST = "redstone";
@@ -19,11 +19,10 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   public static enum Mode {
     PULL, SPEW;//pull in from world, or spew into world... actually pull is still on if its spewing right now but eh
   }
-  private int timer;
+  private int timer = 0;
   private int needsRedstone = 1;
   private int mode = 0;//else pull. 0 as default
   private int currentExp = 0;// 0 as default
-  //  private int speedBase = 13;//divide by 100 for real speed. bigger=faster
   private int range = 2;
   @Override
   public void update() {
@@ -33,7 +32,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
       //no timer just EAT
       for (EntityXPOrb orb : orbs) {
         if (orb.isDead == false && this.tryIncrExp(orb.getXpValue())) {
-          System.out.println("ET " + orb.getEntityId());
+          //          System.out.println("ET " + orb.getEntityId());
           this.getWorld().removeEntity(orb);//calls     orb.setDead(); for me
         }
         else {//is full
@@ -46,13 +45,15 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
       this.timer--;
       if (this.timer <= 0) {
         this.timer = TIMER_FULL;
-        if (tryDecrExp(XP_PER_SPEWORB)) {
-          System.out.println("TRY SPEW" + this.currentExp);
-          EntityXPOrb orb = new EntityXPOrb(this.getWorld());
-          orb.setPositionAndUpdate(this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5);
-          orb.xpValue = XP_PER_SPEWORB;
-          this.getWorld().spawnEntityInWorld(orb);
-          spewOrb(orb);
+        int amtToSpew = Math.min(XP_PER_SPEWORB, this.currentExp); //to catch 1 or 2 remainder left
+        if (tryDecrExp(amtToSpew)) {
+          if (this.getWorld().isRemote == false) {
+            EntityXPOrb orb = new EntityXPOrb(this.getWorld());
+            orb.setPositionAndUpdate(this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5);
+            orb.xpValue = amtToSpew;
+            this.getWorld().spawnEntityInWorld(orb);
+            spewOrb(orb);
+          }
         }
       }
     }
@@ -68,7 +69,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     return true;
   }
   private void spewOrb(EntityXPOrb orb) {
-    orb.addVelocity(Math.random() / 100, 0.009, Math.random() / 100);
+    orb.addVelocity(Math.random() / 1000, 0.01, Math.random() / 1000);
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
