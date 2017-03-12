@@ -1,14 +1,18 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.List;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.entity.item.EntityXPOrb;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 
 public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
   private static final int XP_PER_SPEWORB = 10;
+  private static final int XP_PER_BOTTLE = 15;
   public static final int TIMER_FULL = 15;
   public static final int MAX_EXP_HELD = 1000;
   public static final int SLOT_INPUT = 0;
@@ -17,24 +21,26 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   private static final String NBT_REDST = "redstone";
   private static final String NBT_EXP = "particles";
   private static final String NBT_MODE = "pushpull";
+  private static final int[] SLOTS_EXTRACT = new int[] { SLOT_OUTPUT };
+  private static final int[] SLOTS_INSERT = new int[] { SLOT_INPUT };
   public static enum Fields {
     TIMER, EXP, MODE, REDSTONE;//MIGHT remove redstone eh
   }
   public static enum Mode {
-    PULL, SPEW, BOTTLE;
-}
+    COLLECT, SPEW, BOTTLE;
+  }
   private int timer = 0;
   private int needsRedstone = 1;
   private int mode = 0;//else pull. 0 as default
   private int currentExp = 0;// 0 as default
   private int range = 2;
   private ItemStack[] inv;
-  public TileEntityXpPylon(){
+  public TileEntityXpPylon() {
     inv = new ItemStack[2];
   }
   @Override
   public void update() {
-    if (this.mode == Mode.PULL.ordinal()) {
+    if (this.mode == Mode.COLLECT.ordinal()) {
       List<EntityXPOrb> orbs = getWorld().getEntitiesWithinAABB(EntityXPOrb.class, new AxisAlignedBB(this.getPos().up()).expandXyz(range));
       if (orbs == null) { return; }
       //no timer just EAT
@@ -66,7 +72,49 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
       }
     }
     else if (this.mode == Mode.BOTTLE.ordinal()) {
-      
+      this.timer--;
+      if (this.timer <= 0) {
+        this.timer = TIMER_FULL;
+        if (outputSlotHasRoom() && inputSlotHasSome() && tryDecrExp(XP_PER_BOTTLE)) {
+          outputSlotIncrement();
+          inputSlotDecrement();
+        }
+      }
+    }
+  }
+  private void outputSlotIncrement() {
+    ItemStack fullOnes = this.getStackInSlot(SLOT_OUTPUT);
+    if (UtilItemStack.isEmpty(fullOnes)) {
+      fullOnes = new ItemStack(Items.EXPERIENCE_BOTTLE);
+    }
+    else {
+      fullOnes.stackSize++;
+    }
+    this.setInventorySlotContents(SLOT_OUTPUT, fullOnes);
+  }
+  private boolean outputSlotHasRoom() {
+    ItemStack fullOnes = this.getStackInSlot(SLOT_OUTPUT);
+    return UtilItemStack.isEmpty(fullOnes) || (fullOnes.stackSize < 64);
+  }
+  private boolean inputSlotHasSome() {
+    ItemStack emptyOnes = this.getStackInSlot(SLOT_INPUT);
+    return !UtilItemStack.isEmpty(emptyOnes) && (emptyOnes.stackSize > 0);
+  }
+  private void inputSlotDecrement() {
+    ItemStack fullOnes = this.getStackInSlot(SLOT_INPUT);
+    fullOnes.stackSize--;
+    if (fullOnes.stackSize == 0) {
+      fullOnes = null;
+    }
+    this.setInventorySlotContents(SLOT_INPUT, fullOnes);
+  }
+  @Override
+  public int[] getSlotsForFace(EnumFacing side) {
+    if (side == EnumFacing.DOWN) {
+      return SLOTS_EXTRACT;
+    }
+    else {
+      return SLOTS_INSERT;
     }
   }
   private boolean tryDecrExp(int xpValue) {
@@ -88,7 +136,6 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     tags.setInteger(NBT_REDST, this.needsRedstone);
     tags.setInteger(NBT_EXP, this.currentExp);
     tags.setInteger(NBT_MODE, this.mode);
-    
     NBTTagList itemList = new NBTTagList();
     for (int i = 0; i < inv.length; i++) {
       ItemStack stack = inv[i];
@@ -100,8 +147,6 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
       }
     }
     tags.setTag(NBT_INV, itemList);
-    
-    
     return super.writeToNBT(tags);
   }
   @Override
@@ -111,7 +156,6 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     needsRedstone = tags.getInteger(NBT_REDST);
     currentExp = tags.getInteger(NBT_EXP);
     mode = tags.getInteger(NBT_MODE);
-    
     NBTTagList tagList = tags.getTagList(NBT_INV, 10);
     for (int i = 0; i < tagList.tagCount(); i++) {
       NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
@@ -177,9 +221,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
       }
     }
   }
-  
   //COPY PASTA invo stuff. this got refactored in 1.11
-
   @Override
   public int getSizeInventory() {
     return inv.length;
