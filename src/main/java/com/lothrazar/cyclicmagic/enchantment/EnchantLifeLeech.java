@@ -1,13 +1,9 @@
 package com.lothrazar.cyclicmagic.enchantment;
-import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
@@ -27,7 +23,6 @@ public class EnchantLifeLeech extends EnchantBase {
     if (event.getSource().getSourceOfDamage() instanceof EntityPlayer && event.getEntity() instanceof EntityLivingBase) {
       EntityPlayer attacker = (EntityPlayer) event.getSource().getSourceOfDamage();
       EntityLivingBase target = (EntityLivingBase) event.getEntity();
-
       int level = getCurrentLevelTool(attacker);
       if (level > 0) {
         // we -1  since potion level 1 is  II
@@ -48,9 +43,8 @@ public class EnchantLifeLeech extends EnchantBase {
   @SubscribeEvent
   public void onAttackEntity(AttackEntityEvent event) {
     if (event.getTarget() instanceof EntityLivingBase == false) { return; }
-//    EntityLivingBase target = (EntityLivingBase) event.getTarget();
+    //    EntityLivingBase target = (EntityLivingBase) event.getTarget();
     EntityPlayer attacker = event.getEntityPlayer();
-
     int level = getCurrentLevelTool(attacker);
     if (level > 0 && attacker.getHealth() < attacker.getMaxHealth()) {
       UtilParticle.spawnParticle(attacker.getEntityWorld(), EnumParticleTypes.HEART, attacker.getPosition().up(2));
