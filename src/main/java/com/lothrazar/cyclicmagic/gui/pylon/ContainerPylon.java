@@ -14,7 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerPylon extends ContainerBaseMachine {
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
-  public static final int SLOTX_START = 68;
+  public static final int SLOTX_START = 82;
   public static final int SLOTY = 38;
   protected TileEntityXpPylon tileEntity;
   private int tileRedstone;
@@ -22,11 +22,10 @@ public class ContainerPylon extends ContainerBaseMachine {
   private int tileXp;
   private int tileMODE;
   public ContainerPylon(InventoryPlayer inventoryPlayer, TileEntityXpPylon te) {
-    tileEntity = te;  
+    tileEntity = te;
     for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
       Item filt = (i == 0) ? Items.GLASS_BOTTLE : Items.EXPERIENCE_BOTTLE;
-      
-      addSlotToContainer(new SlotItemRestricted(tileEntity, i, SLOTX_START + i * Const.SQ*2, SLOTY, filt));
+      addSlotToContainer(new SlotItemRestricted(tileEntity, i, SLOTX_START + i * Const.SQ * 2, SLOTY, filt));
     }
     bindPlayerInventory(inventoryPlayer);
   }

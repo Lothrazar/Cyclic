@@ -7,6 +7,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -22,7 +23,6 @@ public class BlockXpPylon extends BlockBaseFacingInventory implements IHasRecipe
     this.setHardness(3F);
     this.setResistance(5F);
     this.setSoundType(SoundType.GLASS);
-//    this.setTickRandomly(true);
     this.setTranslucent();
   }
   @Override
@@ -36,12 +36,13 @@ public class BlockXpPylon extends BlockBaseFacingInventory implements IHasRecipe
   @Override
   public void addRecipe() {
     GameRegistry.addRecipe(new ItemStack(this),
-        " h ",
+        "vhv",
         "grg",
         "sis",
+        'v', Blocks.VINE,
         'h', Blocks.HOPPER,
         'i', Items.GOLD_INGOT,
-        'g', Blocks.GLASS,
+        'g', new ItemStack(Blocks.STAINED_GLASS, 1, EnumDyeColor.LIME.getDyeDamage()),
         'r', Items.FIRE_CHARGE,
         's', Items.NETHERBRICK);
   }

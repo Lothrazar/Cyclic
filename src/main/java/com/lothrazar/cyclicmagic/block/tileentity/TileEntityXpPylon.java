@@ -12,7 +12,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 
 public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
   private static final int XP_PER_SPEWORB = 10;
-  private static final int XP_PER_BOTTLE = 15;
+  private static final int XP_PER_BOTTLE = 11; // On impact with any non-liquid block it will drop experience orbs worth 3–11 experience points. 
   public static final int TIMER_FULL = 18;
   public static final int MAX_EXP_HELD = 1000;
   public static final int SLOT_INPUT = 0;

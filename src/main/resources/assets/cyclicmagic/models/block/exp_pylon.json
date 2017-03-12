@@ -1,6 +1,6 @@
 {
     "textures": {
-        "0": "blocks/slime"
+        "0": "cyclicmagic:blocks/pylon"
     },
     "elements": [
         {
