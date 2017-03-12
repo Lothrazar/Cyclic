@@ -25,6 +25,8 @@ public class EnchantAutoSmelt extends EnchantBase {
   }
   @SubscribeEvent()
   public void onHarvestDrops(HarvestDropsEvent event) {
+    int level = getCurrentLevelTool(event.getHarvester());
+    if (level <= 0) { return; }
     if (event.isSilkTouching()) { return; } //it should be incompabile but check anyway ya
     List<ItemStack> drops = event.getDrops();
     List<ItemStack> dropsCopy = new ArrayList<ItemStack>();

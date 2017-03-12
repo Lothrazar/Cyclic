@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.enchantment.EnchantLaunch;
 import com.lothrazar.cyclicmagic.enchantment.EnchantLifeLeech;
 import com.lothrazar.cyclicmagic.enchantment.EnchantMagnet;
 import com.lothrazar.cyclicmagic.enchantment.EnchantVenom;
+import com.lothrazar.cyclicmagic.enchantment.EnchantXpBoost;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.util.ResourceLocation;
@@ -17,11 +18,14 @@ public class EnchantModule extends BaseModule implements IHasConfig {
   public static EnchantVenom venom;
   public static EnchantLifeLeech lifeleech;
   public static EnchantAutoSmelt autosmelt;
-  public static int launchid;
-  public static int magnetid;
-  public static int venomid;
-  public static int lifeleechid;
-  public static int autosmeltid;
+  public static EnchantXpBoost xpboost;
+  private static int launchid;
+  private static int magnetid;
+  private static int venomid;
+  private static int lifeleechid;
+  private static int autosmeltid;
+  private static int xpboostid;
+  private static boolean enablexpboost;
   private static boolean enableLaunch;
   private static boolean enableMagnet;
   private static boolean enableVenom;
@@ -29,6 +33,11 @@ public class EnchantModule extends BaseModule implements IHasConfig {
   private boolean enableautosmelt;
   @Override
   public void onInit() {
+    if (enablexpboost) {
+      xpboost = new EnchantXpBoost();
+      Enchantment.REGISTRY.register(xpboostid, new ResourceLocation(xpboost.getName()), xpboost);
+      ModCyclic.instance.events.register(EnchantModule.xpboost);
+    }
     if (enableautosmelt) {
       autosmelt = new EnchantAutoSmelt();
       Enchantment.REGISTRY.register(autosmeltid, new ResourceLocation(autosmelt.getName()), autosmelt);
@@ -57,6 +66,7 @@ public class EnchantModule extends BaseModule implements IHasConfig {
   }
   @Override
   public void syncConfig(Configuration c) {
+    enablexpboost = c.getBoolean("EnchantExpBoost", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableautosmelt = c.getBoolean("EnchantAutoSmelt", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableLaunch = c.getBoolean("EnchantLaunch", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableMagnet = c.getBoolean("EnchantMagnet", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

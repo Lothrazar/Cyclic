@@ -98,6 +98,7 @@ debug.horsespeed=Horse Speed:
 debug.spawn.chunks=Within Spawn Chunk
 debug.spawn.distance=From Spawn: 
 enchantment.autosmelt=Auto-Smelt
+enchantment.expboost=Experience Boost
 enchantment.launch=Launch
 enchantment.lifeleech=Life Leech
 enchantment.magnet=Magnet
