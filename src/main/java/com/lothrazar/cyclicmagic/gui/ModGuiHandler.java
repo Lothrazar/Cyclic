@@ -88,6 +88,7 @@ public class ModGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_VECTOR = 16;
   public static final int GUI_INDEX_VILLAGER = 17;
   public static final int GUI_INDEX_FAN = 18;
+  public static final int GUI_INDEX_XP = 19;
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
     BlockPos p = new BlockPos(x, y, z);
