@@ -4,6 +4,7 @@ import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFan;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFishing;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPatternBuilder;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityXpPylon;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineHarvester;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineBlockMiner;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMinerSmart;
@@ -37,6 +38,8 @@ import com.lothrazar.cyclicmagic.gui.player.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.gui.player.InventoryPlayerExtended;
 import com.lothrazar.cyclicmagic.gui.playerworkbench.ContainerPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.gui.playerworkbench.GuiPlayerExtWorkbench;
+import com.lothrazar.cyclicmagic.gui.pylon.ContainerPylon;
+import com.lothrazar.cyclicmagic.gui.pylon.GuiPylon;
 import com.lothrazar.cyclicmagic.gui.storage.ContainerStorage;
 import com.lothrazar.cyclicmagic.gui.storage.GuiStorage;
 import com.lothrazar.cyclicmagic.gui.storage.InventoryStorage;
@@ -168,6 +171,9 @@ public class ModGuiHandler implements IGuiHandler {
       case GUI_INDEX_FAN:
         if (te != null && te instanceof TileEntityFan) { return new ContainerFan(player.inventory, (TileEntityFan) te); }
       break;
+      case GUI_INDEX_XP:
+        if (te instanceof TileEntityXpPylon) { return new ContainerPylon(player.inventory, (TileEntityXpPylon) te); }
+      break;
     }
     return null;
   }
@@ -231,6 +237,10 @@ public class ModGuiHandler implements IGuiHandler {
         break;
         case GUI_INDEX_FAN:
           if (te != null && te instanceof TileEntityFan) { return new GuiFan(player.inventory, (TileEntityFan) te); }
+        break;
+
+        case GUI_INDEX_XP:
+          if (te instanceof TileEntityXpPylon) { return new GuiPylon(player.inventory, (TileEntityXpPylon) te); }
         break;
       }
     }

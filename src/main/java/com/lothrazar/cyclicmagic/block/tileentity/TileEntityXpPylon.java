@@ -13,13 +13,13 @@ import net.minecraft.util.math.BlockPos;
 
 public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
 //  private static final int MIN_RANGE = 1;
-  private static final int TIMER_FULL = 30;
+  public static final int TIMER_FULL = 30;
   private static final String NBT_TIMER = "Timer";
   private static final String NBT_REDST = "redstone";
   private static final String NBT_EXP = "particles";
   private static final String NBT_MODE = "pushpull";
   private static final String NBT_RANGE = "range";
-  private static final int MAX_EXP_HELD = 50;
+  public static final int MAX_EXP_HELD = 50;
 //  private static final int MAX_RANGE = 32;
   public static enum Fields {
     TIMER, REDSTONE, EXP, MODE;
