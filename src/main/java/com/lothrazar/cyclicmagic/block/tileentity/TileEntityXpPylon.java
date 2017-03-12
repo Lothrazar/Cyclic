@@ -1,71 +1,81 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.List;
-import com.lothrazar.cyclicmagic.util.UtilEntity;
-import com.lothrazar.cyclicmagic.util.UtilParticle;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
 
 public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
-//  private static final int MIN_RANGE = 1;
-  public static final int TIMER_FULL = 30;
+  private static final int XP_PER_SPEWORB = 10;
+  public static final int TIMER_FULL = 90;
+  public static final int MAX_EXP_HELD = 1000;
   private static final String NBT_TIMER = "Timer";
   private static final String NBT_REDST = "redstone";
   private static final String NBT_EXP = "particles";
   private static final String NBT_MODE = "pushpull";
-  private static final String NBT_RANGE = "range";
-  public static final int MAX_EXP_HELD = 50;
-//  private static final int MAX_RANGE = 32;
   public static enum Fields {
-    TIMER, REDSTONE, EXP, MODE;
+    TIMER, EXP, MODE, REDSTONE;//MIGHT remove redstone eh
   }
-  public static enum Mode{
-    PULL, SPEW;//pull in from world, or spew into world
+  public static enum Mode {
+    PULL, SPEW;//pull in from world, or spew into world... actually pull is still on if its spewing right now but eh
   }
   private int timer;
   private int needsRedstone = 1;
-  private int pushIfZero = 0;//else pull. 0 as default
+  private int mode = 0;//else pull. 0 as default
   private int currentExp = 0;// 0 as default
-//  private int speedBase = 13;//divide by 100 for real speed. bigger=faster
+  //  private int speedBase = 13;//divide by 100 for real speed. bigger=faster
   private int range = 2;
   @Override
   public void update() {
-//    if (this.isRunning() == false) {
-//      this.timer = 0;
-//      return;
-//    }
-//    this.timer--;
-    List<EntityXPOrb> orbs = getWorld().getEntitiesWithinAABB(EntityXPOrb.class, new AxisAlignedBB(this.getPos().up()).expandXyz(range));
-    if(orbs == null ){return;    }
-    //TODO: timer?
-    for (EntityXPOrb orb : orbs) {
-      if(orb.getXpValue() + this.currentExp <= MAX_EXP_HELD){
-        this.currentExp += orb.getXpValue();
-//        System.out.println(this.currentExp);
-        this.getWorld().removeEntity(orb);
-        
-        
+    if (this.mode == Mode.PULL.ordinal()) {
+      List<EntityXPOrb> orbs = getWorld().getEntitiesWithinAABB(EntityXPOrb.class, new AxisAlignedBB(this.getPos().up()).expandXyz(range));
+      if (orbs == null) { return; }
+      //no timer just EAT
+      for (EntityXPOrb orb : orbs) {
+        if (orb.isDead == false && this.tryIncrExp(orb.getXpValue())) {
+          System.out.println("ET " + orb.getEntityId());
+          this.getWorld().removeEntity(orb);//calls     orb.setDead(); for me
+        }
+        else {//is full
+          spewOrb(orb);
+        }
       }
-      else{//is full
-//        System.out.println("launch");
-        orb.addVelocity(Math.random()/100, 0.09, Math.random()/100);
+    }
+    if (this.mode == Mode.SPEW.ordinal()) {
+      //this is where timer gets used
+      this.timer--;
+      if (this.timer <= 0) {
+        this.timer = TIMER_FULL;
+        if (tryDecrExp(XP_PER_SPEWORB)) {
+          System.out.println("TRY SPEW" + this.currentExp);
+          EntityXPOrb orb = new EntityXPOrb(this.getWorld());
+          orb.setPositionAndUpdate(this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5);
+          orb.xpValue = XP_PER_SPEWORB;
+          this.getWorld().spawnEntityInWorld(orb);
+          spewOrb(orb);
+        }
       }
     }
   }
-  
-
+  private boolean tryDecrExp(int xpValue) {
+    if (this.currentExp - xpValue < 0) { return false; }
+    this.currentExp -= xpValue;
+    return true;
+  }
+  private boolean tryIncrExp(int xpValue) {
+    if (this.currentExp + xpValue > MAX_EXP_HELD) { return false; }
+    this.currentExp += xpValue;
+    return true;
+  }
+  private void spewOrb(EntityXPOrb orb) {
+    orb.addVelocity(Math.random() / 100, 0.009, Math.random() / 100);
+  }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tags) {
     tags.setInteger(NBT_TIMER, timer);
     tags.setInteger(NBT_REDST, this.needsRedstone);
     tags.setInteger(NBT_EXP, this.currentExp);
-    tags.setInteger(NBT_MODE, this.pushIfZero);
-    tags.setInteger(NBT_RANGE, this.range);
+    tags.setInteger(NBT_MODE, this.mode);
     return super.writeToNBT(tags);
   }
   @Override
@@ -73,9 +83,8 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     super.readFromNBT(tags);
     timer = tags.getInteger(NBT_TIMER);
     needsRedstone = tags.getInteger(NBT_REDST);
-    this.currentExp = tags.getInteger(NBT_EXP);
-    this.pushIfZero = tags.getInteger(NBT_MODE);
-    this.range = tags.getInteger(NBT_RANGE);
+    currentExp = tags.getInteger(NBT_EXP);
+    mode = tags.getInteger(NBT_MODE);
   }
   @Override
   public void toggleNeedsRedstone() {
@@ -83,10 +92,13 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     this.setField(Fields.REDSTONE.ordinal(), val % 2);
   }
   private void setExp(int value) {
-    this.currentExp = value;
+    currentExp = value;
   }
   private void setMode(int value) {
-    this.pushIfZero = value % 2;
+    if (value > Mode.values().length) {
+      value = 0;
+    }
+    mode = value;
   }
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
@@ -106,9 +118,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
         case EXP:
           return this.currentExp;
         case MODE:
-          return this.pushIfZero;
-//        case RANGE:
-//          return this.range;
+          return this.mode;
       }
     }
     return -1;
@@ -129,9 +139,6 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
         case MODE:
           this.setMode(value);
         break;
-//        case RANGE:
-//          this.setRange(value);
-//        break;
       }
     }
   }

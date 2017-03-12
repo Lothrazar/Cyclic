@@ -18,11 +18,11 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class BlockXpPylon extends BlockBaseFacingInventory implements IHasRecipe {
   //block rotation in json http://www.minecraftforge.net/forum/index.php?topic=32753.0
   public BlockXpPylon() {
-    super(Material.ROCK,ModGuiHandler.GUI_INDEX_XP);
+    super(Material.ROCK, ModGuiHandler.GUI_INDEX_XP);
     this.setHardness(3F);
     this.setResistance(5F);
-    this.setSoundType(SoundType.WOOD);
-    this.setTickRandomly(true);
+    this.setSoundType(SoundType.GLASS);
+//    this.setTickRandomly(true);
     this.setTranslucent();
   }
   @Override
@@ -35,12 +35,14 @@ public class BlockXpPylon extends BlockBaseFacingInventory implements IHasRecipe
   }
   @Override
   public void addRecipe() {
-//    GameRegistry.addRecipe(new ItemStack(this),
-//        " i ",
-//        "iri",
-//        "sis",
-//        'i', Items.IRON_INGOT,
-//        'r', Items.REPEATER,
-//        's', Blocks.STONE);
+    GameRegistry.addRecipe(new ItemStack(this),
+        " h ",
+        "grg",
+        "sis",
+        'h', Blocks.HOPPER,
+        'i', Items.GOLD_INGOT,
+        'g', Blocks.GLASS,
+        'r', Items.FIRE_CHARGE,
+        's', Items.NETHERBRICK);
   }
 }

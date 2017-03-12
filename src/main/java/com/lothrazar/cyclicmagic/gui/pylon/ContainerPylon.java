@@ -16,7 +16,8 @@ public class ContainerPylon extends ContainerBaseMachine {
   protected TileEntityXpPylon tileEntity;
   private int tileRedstone;
   private int tileTimer;
-  private int tileSize;
+  private int tileXp;
+  private int tileMODE;
   public ContainerPylon(InventoryPlayer inventoryPlayer, TileEntityXpPylon te) {
     tileEntity = te;
     bindPlayerInventory(inventoryPlayer);
@@ -28,24 +29,29 @@ public class ContainerPylon extends ContainerBaseMachine {
   @Override
   public void detectAndSendChanges() {
     super.detectAndSendChanges();
-//    for (int i = 0; i < this.listeners.size(); ++i) {
-//      IContainerListener icontainerlistener = (IContainerListener) this.listeners.get(i);
-//      int idx = TileMachineHarvester.Fields.TIMER.ordinal();
-//      if (this.tileTimer != this.tileEntity.getField(idx)) {
-//        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-//      }
-//      idx = TileMachineHarvester.Fields.REDSTONE.ordinal();
-//      if (this.tileRedstone != this.tileEntity.getField(idx)) {
-//        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-//      }
-//      idx = TileMachineHarvester.Fields.SIZE.ordinal();
-//      if (this.tileSize != this.tileEntity.getField(idx)) {
-//        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-//      }
-//    }
-//    this.tileTimer = this.tileEntity.getField(TileMachineHarvester.Fields.TIMER.ordinal());
-//    this.tileRedstone = this.tileEntity.getField(TileMachineHarvester.Fields.REDSTONE.ordinal());
-//    this.tileSize = this.tileEntity.getField(TileMachineHarvester.Fields.SIZE.ordinal());
+    for (int i = 0; i < this.listeners.size(); ++i) {
+      IContainerListener icontainerlistener = (IContainerListener) this.listeners.get(i);
+      int idx = TileEntityXpPylon.Fields.TIMER.ordinal();
+      if (this.tileTimer != this.tileEntity.getField(idx)) {
+        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
+      }
+      idx = TileEntityXpPylon.Fields.REDSTONE.ordinal();
+      if (this.tileRedstone != this.tileEntity.getField(idx)) {
+        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
+      }
+      idx = TileEntityXpPylon.Fields.EXP.ordinal();
+      if (this.tileXp != this.tileEntity.getField(idx)) {
+        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
+      }
+      idx = TileEntityXpPylon.Fields.MODE.ordinal();
+      if (this.tileMODE != this.tileEntity.getField(idx)) {
+        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
+      }
+    }
+    this.tileTimer = this.tileEntity.getField(TileEntityXpPylon.Fields.TIMER.ordinal());
+    this.tileRedstone = this.tileEntity.getField(TileEntityXpPylon.Fields.REDSTONE.ordinal());
+    this.tileXp = this.tileEntity.getField(TileEntityXpPylon.Fields.EXP.ordinal());
+    this.tileMODE = this.tileEntity.getField(TileEntityXpPylon.Fields.MODE.ordinal());
   }
   @Override
   @SideOnly(Side.CLIENT)
