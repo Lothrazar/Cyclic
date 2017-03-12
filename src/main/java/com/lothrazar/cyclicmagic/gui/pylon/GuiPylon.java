@@ -62,7 +62,7 @@ public class GuiPylon extends GuiBaseContanerProgress {
   @Override
   protected void actionPerformed(GuiButton button) {
     if (button.id == btnPreview.id) {
-      ModCyclic.network.sendToServer(new PacketTilePylon(tile.getPos(), tile.getField(TileEntityXpPylon.Fields.MODE.ordinal())+1, TileEntityXpPylon.Fields.MODE));
+      ModCyclic.network.sendToServer(new PacketTilePylon(tile.getPos(), 1, TileEntityXpPylon.Fields.MODE));
     }
   }
   @SideOnly(Side.CLIENT)

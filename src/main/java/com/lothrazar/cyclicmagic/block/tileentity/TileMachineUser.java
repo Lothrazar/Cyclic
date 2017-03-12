@@ -38,8 +38,6 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
   private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots for all faces
   final int RADIUS = 4;//center plus 4 in each direction = 9x9
   private static final String NBTPLAYERID = "uuid";
-  private static final String NBT_INV = "Inventory";
-  private static final String NBT_SLOT = "Slot";
   private static final String NBT_TIMER = "Timer";
   private static final String NBT_REDST = "redstone";
   private static final String NBT_SPEED = "h";//WTF why did i name it this

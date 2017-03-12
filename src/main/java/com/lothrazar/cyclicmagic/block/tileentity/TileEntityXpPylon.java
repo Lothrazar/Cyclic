@@ -1,7 +1,9 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.List;
 import net.minecraft.entity.item.EntityXPOrb;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 
@@ -9,6 +11,8 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   private static final int XP_PER_SPEWORB = 10;
   public static final int TIMER_FULL = 15;
   public static final int MAX_EXP_HELD = 1000;
+  public static final int SLOT_INPUT = 0;
+  public static final int SLOT_OUTPUT = 1;
   private static final String NBT_TIMER = "Timer";
   private static final String NBT_REDST = "redstone";
   private static final String NBT_EXP = "particles";
@@ -17,13 +21,17 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     TIMER, EXP, MODE, REDSTONE;//MIGHT remove redstone eh
   }
   public static enum Mode {
-    PULL, SPEW;//pull in from world, or spew into world... actually pull is still on if its spewing right now but eh
-  }
+    PULL, SPEW, BOTTLE;
+}
   private int timer = 0;
   private int needsRedstone = 1;
   private int mode = 0;//else pull. 0 as default
   private int currentExp = 0;// 0 as default
   private int range = 2;
+  private ItemStack[] inv;
+  public TileEntityXpPylon(){
+    inv = new ItemStack[2];
+  }
   @Override
   public void update() {
     if (this.mode == Mode.PULL.ordinal()) {
@@ -40,7 +48,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
         }
       }
     }
-    if (this.mode == Mode.SPEW.ordinal()) {
+    else if (this.mode == Mode.SPEW.ordinal()) {
       //this is where timer gets used
       this.timer--;
       if (this.timer <= 0) {
@@ -56,6 +64,9 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
           }
         }
       }
+    }
+    else if (this.mode == Mode.BOTTLE.ordinal()) {
+      
     }
   }
   private boolean tryDecrExp(int xpValue) {
@@ -77,6 +88,20 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     tags.setInteger(NBT_REDST, this.needsRedstone);
     tags.setInteger(NBT_EXP, this.currentExp);
     tags.setInteger(NBT_MODE, this.mode);
+    
+    NBTTagList itemList = new NBTTagList();
+    for (int i = 0; i < inv.length; i++) {
+      ItemStack stack = inv[i];
+      if (stack != null) {
+        NBTTagCompound tag = new NBTTagCompound();
+        tag.setByte(NBT_SLOT, (byte) i);
+        stack.writeToNBT(tag);
+        itemList.appendTag(tag);
+      }
+    }
+    tags.setTag(NBT_INV, itemList);
+    
+    
     return super.writeToNBT(tags);
   }
   @Override
@@ -86,6 +111,15 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     needsRedstone = tags.getInteger(NBT_REDST);
     currentExp = tags.getInteger(NBT_EXP);
     mode = tags.getInteger(NBT_MODE);
+    
+    NBTTagList tagList = tags.getTagList(NBT_INV, 10);
+    for (int i = 0; i < tagList.tagCount(); i++) {
+      NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
+      byte slot = tag.getByte(NBT_SLOT);
+      if (slot >= 0 && slot < inv.length) {
+        inv[slot] = ItemStack.loadItemStackFromNBT(tag);
+      }
+    }
   }
   @Override
   public void toggleNeedsRedstone() {
@@ -96,7 +130,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     currentExp = value;
   }
   private void setMode(int value) {
-    if (value > Mode.values().length) {
+    if (value >= Mode.values().length) {
       value = 0;
     }
     mode = value;
@@ -141,6 +175,48 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
           this.setMode(value);
         break;
       }
+    }
+  }
+  
+  //COPY PASTA invo stuff. this got refactored in 1.11
+
+  @Override
+  public int getSizeInventory() {
+    return inv.length;
+  }
+  @Override
+  public ItemStack getStackInSlot(int index) {
+    return inv[index];
+  }
+  @Override
+  public ItemStack decrStackSize(int index, int count) {
+    ItemStack stack = getStackInSlot(index);
+    if (stack != null) {
+      if (stack.stackSize <= count) {
+        setInventorySlotContents(index, null);
+      }
+      else {
+        stack = stack.splitStack(count);
+        if (stack.stackSize == 0) {
+          setInventorySlotContents(index, null);
+        }
+      }
+    }
+    return stack;
+  }
+  @Override
+  public ItemStack removeStackFromSlot(int index) {
+    ItemStack stack = getStackInSlot(index);
+    if (stack != null) {
+      setInventorySlotContents(index, null);
+    }
+    return stack;
+  }
+  @Override
+  public void setInventorySlotContents(int index, ItemStack stack) {
+    inv[index] = stack;
+    if (stack != null && stack.stackSize > getInventoryStackLimit()) {
+      stack.stackSize = getInventoryStackLimit();
     }
   }
 }
