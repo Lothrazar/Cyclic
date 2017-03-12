@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.enchantment.EnchantAutoSmelt;
 import com.lothrazar.cyclicmagic.enchantment.EnchantLaunch;
 import com.lothrazar.cyclicmagic.enchantment.EnchantLifeLeech;
 import com.lothrazar.cyclicmagic.enchantment.EnchantMagnet;
@@ -15,16 +16,24 @@ public class EnchantModule extends BaseModule implements IHasConfig {
   public static EnchantMagnet magnet;
   public static EnchantVenom venom;
   public static EnchantLifeLeech lifeleech;
+  public static EnchantAutoSmelt autosmelt;
   public static int launchid;
   public static int magnetid;
   public static int venomid;
   public static int lifeleechid;
+  public static int autosmeltid;
   private static boolean enableLaunch;
   private static boolean enableMagnet;
   private static boolean enableVenom;
   private static boolean enableLifeleech;
+  private boolean enableautosmelt;
   @Override
   public void onInit() {
+    if (enableautosmelt) {
+      autosmelt = new EnchantAutoSmelt();
+      Enchantment.REGISTRY.register(autosmeltid, new ResourceLocation(autosmelt.getName()), autosmelt);
+      ModCyclic.instance.events.register(EnchantModule.autosmelt);
+    }
     if (enableLaunch) {
       launch = new EnchantLaunch();
       Enchantment.REGISTRY.register(launchid, new ResourceLocation(launch.getName()), launch);
@@ -48,6 +57,7 @@ public class EnchantModule extends BaseModule implements IHasConfig {
   }
   @Override
   public void syncConfig(Configuration c) {
+    enableautosmelt = c.getBoolean("EnchantAutoSmelt", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableLaunch = c.getBoolean("EnchantLaunch", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableMagnet = c.getBoolean("EnchantMagnet", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableVenom = c.getBoolean("EnchantVenom", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
@@ -60,5 +70,7 @@ public class EnchantModule extends BaseModule implements IHasConfig {
         88, 71, 999, "Id of the venom enchantment.  Change this if you get id conflicts with other mods.");
     lifeleechid = c.getInt("enchant.lifeleech.id", Const.ConfigCategory.modpackMisc,
         89, 71, 999, "Id of the lifeleech enchantment.  Change this if you get id conflicts with other mods.");
+    autosmeltid = c.getInt("enchant.autosmelt.id", Const.ConfigCategory.modpackMisc,
+        90, 71, 999, "Id of the autosmelt enchantment.  Change this if you get id conflicts with other mods.");
   }
 }

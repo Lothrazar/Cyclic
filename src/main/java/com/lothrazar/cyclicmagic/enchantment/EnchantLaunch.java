@@ -23,7 +23,7 @@ import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EnchantLaunch extends Enchantment {
+public class EnchantLaunch extends EnchantBase {
   private static final float power = 1.05F;
   private static final int rotationPitch = 75;
   private static final int cooldown = 40;

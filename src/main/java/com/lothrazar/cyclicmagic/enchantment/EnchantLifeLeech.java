@@ -13,8 +13,7 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EnchantLifeLeech extends Enchantment {
-  final int durationTicksPerLevel = 3 * Const.TICKS_PER_SEC;//3 seconds
+public class EnchantLifeLeech extends EnchantBase {
   public EnchantLifeLeech() {
     super(Rarity.COMMON, EnumEnchantmentType.WEAPON, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND });
     this.setName("lifeleech");
@@ -28,16 +27,8 @@ public class EnchantLifeLeech extends Enchantment {
     if (event.getSource().getSourceOfDamage() instanceof EntityPlayer && event.getEntity() instanceof EntityLivingBase) {
       EntityPlayer attacker = (EntityPlayer) event.getSource().getSourceOfDamage();
       EntityLivingBase target = (EntityLivingBase) event.getEntity();
-      ItemStack main = attacker.getHeldItemMainhand();
-      ItemStack off = attacker.getHeldItemOffhand();
-      int mainLevel = -1, offLevel = -1;
-      if (main != null && EnchantmentHelper.getEnchantments(main).containsKey(this)) {
-        mainLevel = EnchantmentHelper.getEnchantments(main).get(this);
-      }
-      if (off != null && EnchantmentHelper.getEnchantments(off).containsKey(this)) {
-        offLevel = EnchantmentHelper.getEnchantments(off).get(this);
-      }
-      int level = Math.max(mainLevel, offLevel);
+
+      int level = getCurrentLevelTool(attacker);
       if (level > 0) {
         // we -1  since potion level 1 is  II
         //so that means enchantment I giving poison I means this
@@ -57,18 +48,10 @@ public class EnchantLifeLeech extends Enchantment {
   @SubscribeEvent
   public void onAttackEntity(AttackEntityEvent event) {
     if (event.getTarget() instanceof EntityLivingBase == false) { return; }
-    EntityLivingBase target = (EntityLivingBase) event.getTarget();
+//    EntityLivingBase target = (EntityLivingBase) event.getTarget();
     EntityPlayer attacker = event.getEntityPlayer();
-    ItemStack main = attacker.getHeldItemMainhand();
-    ItemStack off = attacker.getHeldItemOffhand();
-    int mainLevel = -1, offLevel = -1;
-    if (main != null && EnchantmentHelper.getEnchantments(main).containsKey(this)) {
-      mainLevel = EnchantmentHelper.getEnchantments(main).get(this);
-    }
-    if (off != null && EnchantmentHelper.getEnchantments(off).containsKey(this)) {
-      offLevel = EnchantmentHelper.getEnchantments(off).get(this);
-    }
-    int level = Math.max(mainLevel, offLevel);
+
+    int level = getCurrentLevelTool(attacker);
     if (level > 0 && attacker.getHealth() < attacker.getMaxHealth()) {
       UtilParticle.spawnParticle(attacker.getEntityWorld(), EnumParticleTypes.HEART, attacker.getPosition().up(2));
       attacker.heal(level);
