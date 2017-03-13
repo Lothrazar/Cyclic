@@ -45,8 +45,13 @@ public class PacketTileMineHeight implements IMessage, IMessageHandler<PacketTil
     TileMachineMinerSmart tile = (TileMachineMinerSmart) player.getEntityWorld().getTileEntity(message.pos);
     if (tile != null) {
       //currently the ONLY type
-      if (message.type.equals("height"))
+      if (message.type.equals(TileMachineMinerSmart.Fields.HEIGHT.name().toLowerCase())){
         tile.setHeight(tile.getHeight() + message.value);
+      }
+      else if (message.type.equals(TileMachineMinerSmart.Fields.LISTTYPE.name().toLowerCase())){
+
+        tile.toggleListType();
+      }
       tile.markDirty();
       if (player.openContainer != null) {
         player.openContainer.detectAndSendChanges();

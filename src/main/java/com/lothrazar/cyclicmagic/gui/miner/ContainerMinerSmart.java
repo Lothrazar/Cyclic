@@ -22,6 +22,7 @@ public class ContainerMinerSmart extends ContainerBaseMachine {
   private int tileHeight;
   private int tileRedstone;
   private int tileSize;
+  private int tileblacklist;
   public ContainerMinerSmart(InventoryPlayer inventoryPlayer, TileMachineMinerSmart te) {
     tileEntity = te;
     for (int i = 0; i < tileEntity.getSizeInventory() - 1; i++) {
@@ -74,10 +75,15 @@ public class ContainerMinerSmart extends ContainerBaseMachine {
       if (this.tileSize != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
+      idx = TileMachineMinerSmart.Fields.LISTTYPE.ordinal();
+      if (this.tileblacklist != this.tileEntity.getField(idx)) {
+        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
+      }
     }
     this.tileHeight = this.tileEntity.getField(TileMachineMinerSmart.Fields.HEIGHT.ordinal());
     this.tileRedstone = this.tileEntity.getField(TileMachineMinerSmart.Fields.REDSTONE.ordinal());
     this.tileSize = this.tileEntity.getField(TileMachineMinerSmart.Fields.SIZE.ordinal());
+    this.tileblacklist = this.tileEntity.getField(TileMachineMinerSmart.Fields.LISTTYPE.ordinal());
   }
   @Override
   @SideOnly(Side.CLIENT)
