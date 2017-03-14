@@ -1,0 +1,9 @@
+{
+    "variants": {
+        "normal": { "model": "cyclicmagic:exp_pylon" },
+        "facing=north": { "model": "cyclicmagic:exp_pylon"},
+        "facing=east": { "model":  "cyclicmagic:exp_pylon"},
+        "facing=south": { "model": "cyclicmagic:exp_pylon"},
+        "facing=west": { "model":  "cyclicmagic:exp_pylon" }
+    }
+}

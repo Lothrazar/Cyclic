@@ -21,8 +21,7 @@ public class GeneratePlant extends WorldGenerator {
     IBlockState soil;
     try {
       // for (int i = 0; i < 10; ++i) {//3 is fine, 10 is crash? yet World gen pumpkin can handle 64?
-      blockpos = pos.add(rand.nextInt(8) - rand.nextInt(8), rand.nextInt(4) - rand.nextInt(4),
-          rand.nextInt(8) - rand.nextInt(8));
+      blockpos = pos.add(rand.nextInt(8) - rand.nextInt(8), rand.nextInt(4) - rand.nextInt(4), rand.nextInt(8) - rand.nextInt(8));
       if (worldIn.isAirBlock(blockpos) && blockpos.getY() < 255) {//
         soil = worldIn.getBlockState(blockpos.down());
         if (soil.getBlock() == Blocks.GRASS || soil.getBlock() == Blocks.DIRT) {
