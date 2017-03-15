@@ -24,7 +24,7 @@ public class ItemProjectileWool extends BaseItemProjectile implements IHasRecipe
   }
   @Override
   public void addRecipe() {
-    GameRegistry.addShapelessRecipe(new ItemStack(this, 32), new ItemStack(Items.ENDER_PEARL), new ItemStack(Blocks.WOOL), new ItemStack(Items.SHEARS));
+    GameRegistry.addShapelessRecipe(new ItemStack(this, 32), new ItemStack(Blocks.MOSSY_COBBLESTONE), new ItemStack(Blocks.WOOL), new ItemStack(Items.SHEARS));
   }
   @Override
   void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {

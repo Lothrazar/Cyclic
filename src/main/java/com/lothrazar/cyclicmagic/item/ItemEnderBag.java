@@ -26,24 +26,24 @@ public class ItemEnderBag extends BaseItem implements IHasRecipe {
   }
   @Override
   public void addRecipe() {
+//    GameRegistry.addRecipe(new ItemStack(this),
+//        "l l",
+//        "lel",
+//        "lsl",
+//        'l', Items.LEATHER,
+//        's', Blocks.OBSIDIAN,
+//        'e', Items.ENDER_PEARL);
+//    GameRegistry.addRecipe(new ItemStack(this),
+//        "l l",
+//        "lel",
+//        "lsl",
+//        'l', Items.LEATHER,
+//        's', Blocks.OBSIDIAN,
+//        'e', Items.ENDER_EYE);
     GameRegistry.addRecipe(new ItemStack(this),
-        "l l",
-        "lel",
+        " l ",
         "lsl",
-        'l', Items.LEATHER,
-        's', Blocks.OBSIDIAN,
-        'e', Items.ENDER_PEARL);
-    GameRegistry.addRecipe(new ItemStack(this),
-        "l l",
-        "lel",
-        "lsl",
-        'l', Items.LEATHER,
-        's', Blocks.OBSIDIAN,
-        'e', Items.ENDER_EYE);
-    GameRegistry.addRecipe(new ItemStack(this),
-        "   ",
-        "lsl",
-        "   ",
+        " l ",
         'l', Items.LEATHER,
         's', Blocks.ENDER_CHEST);
   }

@@ -42,7 +42,7 @@ public class BlockXpPylon extends BlockBaseFacingInventory implements IHasRecipe
         'v', Blocks.VINE,
         'h', Blocks.HOPPER,
         'i', Items.GOLD_INGOT,
-        'g', new ItemStack(Blocks.STAINED_GLASS, 1, EnumDyeColor.LIME.getDyeDamage()),
+        'g', new ItemStack(Blocks.STAINED_GLASS, 1, EnumDyeColor.LIME.getMetadata()),
         'r', Items.FIRE_CHARGE,
         's', Items.NETHERBRICK);
   }
