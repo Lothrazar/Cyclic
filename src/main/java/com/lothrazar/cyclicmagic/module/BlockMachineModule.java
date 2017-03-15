@@ -38,9 +38,12 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
   private boolean enableMinerSmart;
   private boolean enableUser;
   private boolean enablePattern;
+  private boolean expPylon;
   public void onInit() {
-    BlockXpPylon exp_pylon = new BlockXpPylon();
-    BlockRegistry.registerBlock(exp_pylon, "exp_pylon");
+    if (expPylon) {
+      BlockXpPylon exp_pylon = new BlockXpPylon();
+      BlockRegistry.registerBlock(exp_pylon, "exp_pylon");
+    }
     GameRegistry.registerTileEntity(TileEntityXpPylon.class, "exp_pylon_te");
     if (enablePattern) {
       BlockPatternBuilder builder_pattern = new BlockPatternBuilder();
@@ -98,6 +101,7 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
   }
   @Override
   public void syncConfig(Configuration config) {
+    expPylon = config.getBoolean("ExperiencePylon", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablePattern = config.getBoolean("PatternReplicator", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableUser = config.getBoolean("AutomatedUser", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablePassword = config.getBoolean("PasswordTrigger", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.event;
 import java.util.ArrayList;
-import java.util.List;
 import com.lothrazar.cyclicmagic.gui.player.ButtonTabToggleCrafting;
 import com.lothrazar.cyclicmagic.gui.player.ButtonTabToggleInventory;
 import com.lothrazar.cyclicmagic.gui.player.GuiPlayerExtended;

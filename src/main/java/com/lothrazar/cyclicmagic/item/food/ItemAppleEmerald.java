@@ -29,7 +29,6 @@ public class ItemAppleEmerald extends ItemFood implements IHasRecipe {
   private static final int CONVTIME = 1200;
   public ItemAppleEmerald() {
     super(2, false);
-    this.setAlwaysEdible();
   }
   @Override
   public void addRecipe() {
@@ -54,15 +53,14 @@ public class ItemAppleEmerald extends ItemFood implements IHasRecipe {
     }
     catch (Exception e) {}
   }
-    @SubscribeEvent
+  @SubscribeEvent
   public void onEntityInteractEvent(EntityInteract event) {
     if (event.getEntity() instanceof EntityPlayer == false) { return; }
     EntityPlayer player = (EntityPlayer) event.getEntity();
-    ItemStack held = player.getHeldItemMainhand();
-    if (held != null && held.getItem() instanceof ItemAppleEmerald && held.getCount() > 0
-        && event.getTarget() instanceof EntityVillager) {
- 
-      ItemStack itemstack = event.getItemStack();
+    //    ItemStack held = player.getHeldItemMainhand();
+    ItemStack itemstack = event.getItemStack();
+    if (itemstack != null && itemstack.getItem() instanceof ItemAppleEmerald && itemstack.getCount() > 0) {
+      if (event.getTarget() instanceof EntityVillager) {
         EntityVillager villager = ((EntityVillager) event.getTarget());
         int count = 0;
         for (MerchantRecipe merchantrecipe : villager.getRecipes(player)) {
@@ -76,25 +74,22 @@ public class ItemAppleEmerald extends ItemFood implements IHasRecipe {
           UtilChat.addChatMessage(player, UtilChat.lang("item.apple_emerald.merchant") + count);
           itemstack.shrink(1);
           if (itemstack.getCount() == 0) {
-            itemstack = null;
+            itemstack = ItemStack.EMPTY;
           }
         }
-
-      event.setCanceled(true);// stop the GUI inventory opening && horse mounting
+        event.setCanceled(true);// stop the GUI inventory opening && horse mounting
+      }
     }
-  } 
+  }
   @Override
   public boolean itemInteractionForEntity(ItemStack itemstack, EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
-
     if (entity instanceof EntityZombieVillager) {
       EntityZombieVillager zombie = ((EntityZombieVillager) entity);
       //this is what we WANT to do, but the method is protected. we have to fake it by faking the interact event
-//      zombie.startConverting(1200);
- 
-        startConverting(zombie, CONVTIME);
+      //      zombie.startConverting(1200);
+      startConverting(zombie, CONVTIME);
       return true;
     }
-  
     return super.itemInteractionForEntity(itemstack, player, entity, hand);
   }
   public void addInformation(ItemStack held, EntityPlayer player, List<String> list, boolean par4) {
