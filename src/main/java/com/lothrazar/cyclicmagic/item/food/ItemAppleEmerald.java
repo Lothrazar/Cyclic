@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.item.food;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.item.BaseItem;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
@@ -25,11 +26,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemAppleEmerald extends ItemFood implements IHasRecipe {
+public class ItemAppleEmerald extends BaseItem implements IHasRecipe {
   private static final int CONVTIME = 1200;
-  public ItemAppleEmerald() {
-    super(2, false);
-  }
   @Override
   public void addRecipe() {
     GameRegistry.addShapelessRecipe(new ItemStack(this),
@@ -91,15 +89,5 @@ public class ItemAppleEmerald extends ItemFood implements IHasRecipe {
       return true;
     }
     return super.itemInteractionForEntity(itemstack, player, entity, hand);
-  }
-  public void addInformation(ItemStack held, EntityPlayer player, List<String> list, boolean par4) {
-    list.add(UtilChat.lang("item.apple_emerald.text"));
-  }
-  @Override
-  protected void onFoodEaten(ItemStack par1ItemStack, World world, EntityPlayer player) {
-    UtilEntity.addOrMergePotionEffect(player, new PotionEffect(
-        MobEffects.SATURATION,
-        20 * Const.TICKS_PER_SEC,
-        Const.Potions.I));
   }
 }
