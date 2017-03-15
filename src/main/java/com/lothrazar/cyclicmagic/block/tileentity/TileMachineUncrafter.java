@@ -67,7 +67,7 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
     }
     //else: its powered, OR it doesnt need power so its ok
     ItemStack stack = getStackInSlot(SLOT_UNCRAFTME);
-    if (stack == null) { return; }
+    if (stack == ItemStack.EMPTY) { return; }
     this.spawnParticlesAbove();// its processing
     timer--;
     if (timer <= 0) {
