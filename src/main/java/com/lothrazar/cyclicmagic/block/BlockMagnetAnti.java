@@ -9,6 +9,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -55,7 +56,7 @@ public class BlockMagnetAnti extends BlockBaseHasTile implements IHasRecipe {
         "sbs",
         "bxb",
         "sbs",
-        's', new ItemStack(Blocks.DIAMOND_BLOCK),
+        's', new ItemStack(Items.DIAMOND),
         'b', new ItemStack(Blocks.NETHER_WART_BLOCK), //netherwart block
         'x', new ItemStack(Blocks.BEACON));
   }

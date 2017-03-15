@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.food.ItemAppleEmerald;
+import com.lothrazar.cyclicmagic.item.food.ItemAppleLapis;
 import com.lothrazar.cyclicmagic.item.food.ItemFoodChorusCorrupted;
 import com.lothrazar.cyclicmagic.item.food.ItemFoodCrafting;
 import com.lothrazar.cyclicmagic.item.food.ItemFoodChorusGlowing;
@@ -15,7 +16,6 @@ import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.passive.AbstractHorse;
-import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
@@ -33,6 +33,7 @@ public class ItemConsumeablesModule extends BaseEventModule implements IHasConfi
   private boolean enableCorruptedChorus;
   private boolean enableHorseFoodUpgrades;
   private boolean enableGlowingChorus;
+  private boolean enableLapisApple;
   @Override
   public void onInit() {
     if (enableHorseFoodUpgrades) {
@@ -54,6 +55,11 @@ public class ItemConsumeablesModule extends BaseEventModule implements IHasConfi
       ItemRegistry.registerWithJeiDescription(diamond_carrot);
       ItemRegistry.registerWithJeiDescription(redstone_carrot);
       ItemRegistry.registerWithJeiDescription(ender_carrot);
+    }
+    if (enableLapisApple) {
+      ItemAppleLapis apple_lapis = new ItemAppleLapis();
+      ItemRegistry.addItem(apple_lapis, "apple_lapis");
+      ModCyclic.instance.events.register(apple_lapis);
     }
     if (enableEmeraldApple) {
       ItemAppleEmerald apple_emerald = new ItemAppleEmerald();
@@ -113,6 +119,8 @@ public class ItemConsumeablesModule extends BaseEventModule implements IHasConfi
   }
   @Override
   public void syncConfig(Configuration config) {
+    enableLapisApple = config.getBoolean("LapisApple", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    
     enableGlowingChorus = config.getBoolean("GlowingChorus(Food)", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableEmeraldApple = config.getBoolean("EmeraldApple", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableHeartContainer = config.getBoolean("HeartContainer(food)", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

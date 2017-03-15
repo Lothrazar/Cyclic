@@ -39,6 +39,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
   private static final String NBTTARGET = "target";
   private static final String NBTHEIGHT = "h";
   private static final String NBT_SIZE = "size";
+  private static final String NBT_LIST = "blacklistIfZero";
   private static final int MAX_SIZE = 7;//7 means 15x15
   private static final int INVENTORY_SIZE = 5;
   private static final int TOOLSLOT_INDEX = INVENTORY_SIZE - 1;
@@ -48,11 +49,12 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
   private BlockPos targetPos = null;
   private int size = 4;//center plus 4 in each direction = 9x9
   private int needsRedstone = 1;
-  int height = 6;
+  private int height = 6;
+  private int blacklistIfZero = 0;
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
   public static enum Fields {
-    HEIGHT, REDSTONE, SIZE
+    HEIGHT, REDSTONE, SIZE, LISTTYPE;
   }
   public TileMachineMinerSmart() {
     super(INVENTORY_SIZE);
@@ -91,11 +93,12 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
           updateTargetPos();
           resetProgress(targetPos);
         }
-        //}
         //currentlyMining may have changed, and we are still turned on:
         if (isCurrentlyMining) {
           IBlockState targetState = world.getBlockState(targetPos);
           curBlockDamage += UtilItemStack.getPlayerRelativeBlockHardness(targetState.getBlock(), targetState, fakePlayer.get(), world, targetPos);
+//ModCyclic.logger.info("curBlockDamage"+curBlockDamage);
+//ModCyclic.logger.info("targetState"+targetState);
           if (curBlockDamage >= 1.0f) {
             isCurrentlyMining = false;
             resetProgress(targetPos);
@@ -142,14 +145,27 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
     Block target = targetState.getBlock();
     //else check blacklist
     ItemStack item;
-    for (int i = 0; i < inv.size() - 1; i++) {//minus 1 because of TOOL
-      //      if (inv[i == null) {
-      //        continue;
-      //      }
-      item = this.getStackInSlot(i);
-      if (item.getItem() == Item.getItemFromBlock(target)) { return false; }
+    if (this.blacklistIfZero == 0) {
+      for (int i = 0; i < this.getSizeInventory() - 1; i++) {//minus 1 because of TOOL
+        if (inv.get(i) == ItemStack.EMPTY) {
+          continue;
+        }
+        item = inv.get(i);
+        if (item.getItem() == Item.getItemFromBlock(target)) { return false; }
+      }
+      return true;//blacklist means default trie
     }
-    return true;
+    else {//check it as a WHITELIST
+      for (int i = 0; i < this.getSizeInventory() - 1; i++) {//minus 1 because of TOOL
+        if (inv.get(i) == ItemStack.EMPTY) {
+          continue;
+        }
+        item = inv.get(i);
+        //its a whitelist, so if its found in the list, its good to go right away
+        if (item.getItem() == Item.getItemFromBlock(target)) { return true; }
+      }
+      return false;//check as blacklist
+    }
   }
   public BlockPos getTargetCenter() {
     //move center over that much, not including exact horizontal
@@ -207,6 +223,23 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
     tagCompound.setFloat(NBTDAMAGE, curBlockDamage);
     tagCompound.setInteger(NBTHEIGHT, height);
     tagCompound.setInteger(NBT_SIZE, size);
+    tagCompound.setInteger(NBT_LIST, this.blacklistIfZero);
+    //<<<<<<< HEAD
+    //=======
+    //   
+    //    //invo stuff
+    //    NBTTagList itemList = new NBTTagList();
+    //    for (int i = 0; i < inv.length; i++) {
+    //      ItemStack stack = inv[i];
+    //      if (stack != null) {
+    //        NBTTagCompound tag = new NBTTagCompound();
+    //        tag.setByte(NBT_SLOT, (byte) i);
+    //        stack.writeToNBT(tag);
+    //        itemList.appendTag(tag);
+    //      }
+    //    }
+    //    tagCompound.setTag(NBT_INV, itemList);
+    //>>>>>>> 7a4c7b0e8136047828c44111eddd82fd4a4bcf71
     return super.writeToNBT(tagCompound);
   }
   @Override
@@ -226,6 +259,19 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
     isCurrentlyMining = tagCompound.getBoolean(NBTMINING);
     curBlockDamage = tagCompound.getFloat(NBTDAMAGE);
     height = tagCompound.getInteger(NBTHEIGHT);
+    blacklistIfZero = tagCompound.getInteger(NBT_LIST);
+    //<<<<<<< HEAD
+    //=======
+    //    //invo stuff
+    //    NBTTagList tagList = tagCompound.getTagList(NBT_INV, 10);
+    //    for (int i = 0; i < tagList.tagCount(); i++) {
+    //      NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
+    //      byte slot = tag.getByte(NBT_SLOT);
+    //      if (slot >= 0 && slot < inv.length) {
+    //        inv[slot] = ItemStack.loadItemStackFromNBT(tag);
+    //      }
+    //    }
+    //>>>>>>> 7a4c7b0e8136047828c44111eddd82fd4a4bcf71
   }
   public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
     if (isCurrentlyMining && uuid != null) {
@@ -252,6 +298,10 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
         return this.needsRedstone;
       case SIZE:
         return this.size;
+      case LISTTYPE:
+        return blacklistIfZero;
+      default:
+      break;
     }
     return 0;
   }
@@ -269,7 +319,15 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
       case SIZE:
         size = value;
       break;
+      case LISTTYPE:
+        blacklistIfZero = value % 2;
+      break;
+      default:
+      break;
     }
+  }
+  public void toggleListType() {
+    blacklistIfZero = (blacklistIfZero + 1) % 2;
   }
   public int getHeight() {
     return this.height;//this.getField(Fields.HEIGHT.ordinal());

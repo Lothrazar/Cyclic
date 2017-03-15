@@ -16,7 +16,8 @@ public class ItemProjectileSnow extends BaseItemProjectile implements IHasRecipe
   }
   @Override
   public void addRecipe() {
-    GameRegistry.addShapelessRecipe(new ItemStack(this, 32), new ItemStack(Items.ENDER_PEARL), new ItemStack(Blocks.ICE), new ItemStack(Items.SNOWBALL));
+    GameRegistry.addShapelessRecipe(new ItemStack(this, 32),
+        new ItemStack(Blocks.MOSSY_COBBLESTONE), new ItemStack(Blocks.ICE), new ItemStack(Items.SNOWBALL));
   }
   @Override
   void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {

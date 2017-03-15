@@ -18,18 +18,18 @@ public class SoundRegistry {
   public static SoundEvent pow;
   public static SoundEvent thunk;
   public static void register() {
-    basey = registerSound("basey");
-    bip = registerSound("bip");
-    buzzp = registerSound("buzzp");
-    bwewe = registerSound("bwewe");
-    bwoaaap = registerSound("bwoaaap");
-    byeaa = registerSound("byeaa");
-    crackle = registerSound("crackle");
-    dcoin = registerSound("dcoin");
-    fill = registerSound("fill");
-    pew = registerSound("pew");
-    pow = registerSound("pow");
-    thunk = registerSound("thunk");
+    basey = registerSound("basey");//used by storage bag deposit
+    bip = registerSound("bip");//cyclic wand GUI rotation
+    buzzp = registerSound("buzzp");//carbon paper & invo food & heart-eat-fail
+    bwewe = registerSound("bwewe"); //invo food success
+    bwoaaap = registerSound("bwoaaap");//vector plate & launch enchant
+    byeaa = registerSound("byeaa");//magic net on release&spawn
+    crackle = registerSound("crackle");//scaffolding
+    dcoin = registerSound("dcoin");//tool toggles: auto torch, piston, randomize, exchange scepters
+    fill = registerSound("fill");//heart food success
+    pew = registerSound("pew");//magic net on catch (previously was base spell thrown)
+    pow = registerSound("pow");//UNUSED
+    thunk = registerSound("thunk");//ChestSack 
   }
   private static SoundEvent registerSound(String name) {
     //thanks for the help: https://github.com/Choonster/TestMod3/tree/162914a163c7fcb6bdd992917fcbc699584e40de/src/main/java/com/choonster/testmod3

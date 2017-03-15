@@ -67,9 +67,9 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
     }
     //else: its powered, OR it doesnt need power so its ok
     ItemStack stack = getStackInSlot(SLOT_UNCRAFTME);
-    if (stack == null) { return; }
+    if (stack.isEmpty()) { return; }
     this.spawnParticlesAbove();// its processing
-    timer--;
+    this.decrTimer();
     if (timer <= 0) {
       timer = TIMER_FULL; //reset the timer and do the thing
       UtilUncraft.Uncrafter uncrafter = new UtilUncraft.Uncrafter();
@@ -103,6 +103,11 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
       }
     } //end of timer go
   }
+  private void decrTimer() {
+    if(this.getWorld().isRemote == false){
+      timer--;
+    }
+  }
   private void setOutputItems(ArrayList<ItemStack> output) {
     ArrayList<ItemStack> toDrop = UtilInventoryTransfer.dumpToIInventory(output, this, SLOT_UNCRAFTME + 1);
     if (toDrop != null)
@@ -123,41 +128,43 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
   }
   @Override
   public int getField(int id) {
-    if (id >= 0 && id < this.getFieldCount())
+    if (id >= 0 && id < this.getFieldCount()) {
       switch (Fields.values()[id]) {
-      case TIMER:
-      return timer;
-      case REDSTONE:
-      if (needsRedstone != 1 && needsRedstone != 0) {
-      needsRedstone = 0;
+        case TIMER:
+          return timer;
+        case REDSTONE:
+          if (needsRedstone != 1 && needsRedstone != 0) {
+            needsRedstone = 0;
+          }
+          return this.needsRedstone;
+        //      case UNCRAFTRESULT:
+        //        return this.uncraftResult ;
+        default:
+        break;
       }
-      return this.needsRedstone;
-      //      case UNCRAFTRESULT:
-      //        return this.uncraftResult ;
-      default:
-      break;
-      }
+    }
     return -7;
   }
   @Override
   public void setField(int id, int value) {
-    if (id >= 0 && id < this.getFieldCount())
+    if (id >= 0 && id < this.getFieldCount()) {
       switch (Fields.values()[id]) {
-      case TIMER:
-      this.timer = value;
-      break;
-      case REDSTONE:
-      if (value != 1 && value != 0) {
-      value = 0;
+        case TIMER:
+          this.timer = value;
+        break;
+        case REDSTONE:
+          if (value != 1 && value != 0) {
+            value = 0;
+          }
+          this.needsRedstone = value;
+        break;
+        //      case UNCRAFTRESULT:
+        //        this.uncraftResult = value;
+        //        break;
+        default:
+        break;
       }
-      this.needsRedstone = value;
-      break;
-      //      case UNCRAFTRESULT:
-      //        this.uncraftResult = value;
-      //        break;
-      default:
-      break;
-      }
+    }
   }
   @Override
   public int getFieldCount() {

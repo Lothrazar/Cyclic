@@ -1,15 +1,19 @@
 package com.lothrazar.cyclicmagic.entity.projectile;
+
+import com.lothrazar.cyclicmagic.ExplosionBlockSafe;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
+@SuppressWarnings("unused")
 public class EntityDynamite extends EntityThrowableDispensable {
-  public static Item renderSnowball;
   public static final float EX_CREEPER = 1;
   public static final float EX_CHARGEDCREEPER = 2;
   public static final float EX_TNT = 4;
   public static final float EX_ENDCRYSTAL = 6;
+  public static Item renderSnowball;
   private float explosionLevel;
   public EntityDynamite(World worldIn) {
     super(worldIn);

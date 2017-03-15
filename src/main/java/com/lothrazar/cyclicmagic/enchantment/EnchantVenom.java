@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.enchantment;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.EntityLivingBase;
@@ -13,7 +12,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EnchantVenom extends Enchantment {
+public class EnchantVenom extends EnchantBase {
   final int durationTicksPerLevel = 3 * Const.TICKS_PER_SEC;//3 seconds
   public EnchantVenom() {
     super(Rarity.COMMON, EnumEnchantmentType.WEAPON, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND });
