@@ -21,6 +21,10 @@ public class ItemCharmModule extends BaseModule implements IHasConfig {
   private boolean enableAir;
   @Override
   public void onInit() {
+
+    ItemCharmReach charm_reach = new ItemCharmReach();
+    ItemRegistry.addItem(charm_reach, "charm_reach");
+     
     if (enableAir) {
       ItemCharmAir charm_air = new ItemCharmAir();
       ItemRegistry.addItem(charm_air, "charm_air");
