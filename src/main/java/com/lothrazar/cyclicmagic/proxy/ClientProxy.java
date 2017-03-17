@@ -244,7 +244,7 @@ public class ClientProxy extends CommonProxy {
     super.setPlayerReach(player, currentReach);
     Minecraft mc = Minecraft.getMinecraft();
     try{
-    if (!(mc.playerController instanceof ReachPlayerController)) {
+    if (player == mc.player && !(mc.playerController instanceof ReachPlayerController)) {
    
       GameType type = ReflectionHelper.getPrivateValue(PlayerControllerMP.class, mc.playerController, CURRENT_GAME_TYPE);
       NetHandlerPlayClient netHandler = ReflectionHelper.getPrivateValue(PlayerControllerMP.class, mc.playerController, NET_CLIENT_HANDLER);
@@ -264,7 +264,8 @@ public class ClientProxy extends CommonProxy {
     }
   }
   /**
-   * From the open source project: from github.com/vazkii/Botania.
+   * From the open source project:/github.com/UniversalLP/VanillaAutomation
+   * who in turn got it from  from github.com/vazkii/Botania.
    */
   @SideOnly(Side.CLIENT)
   public class ReachPlayerController extends PlayerControllerMP {

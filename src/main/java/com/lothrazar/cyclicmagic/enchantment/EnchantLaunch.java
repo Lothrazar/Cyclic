@@ -52,7 +52,7 @@ public class EnchantLaunch extends EnchantBase {
     if (event.getEntity() instanceof EntityPlayer) {
       EntityPlayer p = (EntityPlayer) event.getEntity();
       ItemStack feet = p.getItemStackFromSlot(EntityEquipmentSlot.FEET);
-      if (feet == null) { return; }
+      if (feet.isEmpty()) { return; }
       //if you are on the ground (or not airborne, should be same thing
       if ((p.isAirBorne == false || p.onGround) &&
           UtilNBT.getItemStackNBTVal(feet, NBT_USES) > 0) {
@@ -66,7 +66,7 @@ public class EnchantLaunch extends EnchantBase {
   public void onKeyInput(KeyInputEvent event) {
     EntityPlayer p = Minecraft.getMinecraft().player;
     ItemStack feet = p.getItemStackFromSlot(EntityEquipmentSlot.FEET);
-    if (feet == null) { return; }
+    if (feet.isEmpty()) { return; }
     if (FMLClientHandler.instance().getClient().gameSettings.keyBindJump.isPressed()
         && p.posY < p.lastTickPosY && p.isAirBorne && p.isInWater() == false) {
       //JUMP IS pressed and you are moving down
@@ -82,7 +82,7 @@ public class EnchantLaunch extends EnchantBase {
       uses++;
       if (uses >= level) { // level is maxuses
         //now block useage for a while
-        if (feet != null) {
+        if (!feet.isEmpty()) {
           p.getCooldownTracker().setCooldown(feet.getItem(), cooldown);
         }
         uses = 0;

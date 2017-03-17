@@ -5,6 +5,7 @@ import com.lothrazar.cyclicmagic.enchantment.EnchantAutoSmelt;
 import com.lothrazar.cyclicmagic.enchantment.EnchantLaunch;
 import com.lothrazar.cyclicmagic.enchantment.EnchantLifeLeech;
 import com.lothrazar.cyclicmagic.enchantment.EnchantMagnet;
+import com.lothrazar.cyclicmagic.enchantment.EnchantReach;
 import com.lothrazar.cyclicmagic.enchantment.EnchantVenom;
 import com.lothrazar.cyclicmagic.enchantment.EnchantXpBoost;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -19,6 +20,8 @@ public class EnchantModule extends BaseModule implements IHasConfig {
   public static EnchantLifeLeech lifeleech;
   public static EnchantAutoSmelt autosmelt;
   public static EnchantXpBoost xpboost;
+  public static EnchantReach reach;
+  private static int reachid;
   private static int launchid;
   private static int magnetid;
   private static int venomid;
@@ -31,8 +34,15 @@ public class EnchantModule extends BaseModule implements IHasConfig {
   private static boolean enableVenom;
   private static boolean enableLifeleech;
   private boolean enableautosmelt;
+  private boolean enablereach;
   @Override
   public void onInit() {
+    if (enablereach) {
+      reach = new EnchantReach();
+      Enchantment.REGISTRY.register(reachid, new ResourceLocation(reach.getName()), reach);
+      ModCyclic.instance.events.register(EnchantModule.reach);
+      
+    }
     if (enablexpboost) {
       xpboost = new EnchantXpBoost();
       Enchantment.REGISTRY.register(xpboostid, new ResourceLocation(xpboost.getName()), xpboost);
@@ -66,6 +76,7 @@ public class EnchantModule extends BaseModule implements IHasConfig {
   }
   @Override
   public void syncConfig(Configuration c) {
+    enablereach = c.getBoolean("EnchantReach", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablexpboost = c.getBoolean("EnchantExpBoost", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableautosmelt = c.getBoolean("EnchantAutoSmelt", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableLaunch = c.getBoolean("EnchantLaunch", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
@@ -82,5 +93,9 @@ public class EnchantModule extends BaseModule implements IHasConfig {
         89, 71, 999, "Id of the lifeleech enchantment.  Change this if you get id conflicts with other mods.");
     autosmeltid = c.getInt("enchant.autosmelt.id", Const.ConfigCategory.modpackMisc,
         90, 71, 999, "Id of the autosmelt enchantment.  Change this if you get id conflicts with other mods.");
+    xpboostid = c.getInt("enchant.xpboostid.id", Const.ConfigCategory.modpackMisc,
+        91, 71, 999, "Id of the xpboost enchantment.  Change this if you get id conflicts with other mods.");
+    reachid = c.getInt("enchant.reach.id", Const.ConfigCategory.modpackMisc,
+        92, 71, 999, "Id of the reach enchantment.  Change this if you get id conflicts with other mods.");
   }
 }
