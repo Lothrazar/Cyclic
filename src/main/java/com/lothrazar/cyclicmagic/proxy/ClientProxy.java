@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.proxy;
 import org.lwjgl.input.Keyboard;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityBlazeBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDungeonEye;
@@ -25,6 +26,8 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.multiplayer.PlayerControllerMP;
+import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.ItemModelMesher;
 import net.minecraft.client.renderer.RenderHelper;
@@ -41,11 +44,13 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IThreadListener;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.GameType;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -225,5 +230,58 @@ public class ClientProxy extends CommonProxy {
     if (stack == null) { return; }
     itemRender.renderItemAndEffectIntoGUI(stack, x, y);
     itemRender.renderItemOverlays(fontRendererObj, stack, x, y);
+  }
+  public static final String[] NET_CLIENT_HANDLER = new String[] { "connection", "field_78774_b" };//was field_78774_b
+  public static final String[] CURRENT_GAME_TYPE = new String[] { "currentGameType", "field_78779_k"};//was field_78779_k
+  /**
+   * INSPIRED by universallp
+   * 
+   * This function was is part of VanillaAutomation which is licenced under the
+   * MOZILLA PUBLIC LICENCE 2.0 - mozilla.org/en-US/MPL/2.0/
+   * github.com/UniversalLP/VanillaAutomation
+   */
+  public void setPlayerReach(EntityPlayer player, int currentReach) {
+    super.setPlayerReach(player, currentReach);
+    Minecraft mc = Minecraft.getMinecraft();
+    try{
+    if (player == mc.player && !(mc.playerController instanceof ReachPlayerController)) {
+   
+      GameType type = ReflectionHelper.getPrivateValue(PlayerControllerMP.class, mc.playerController, CURRENT_GAME_TYPE);
+      NetHandlerPlayClient netHandler = ReflectionHelper.getPrivateValue(PlayerControllerMP.class, mc.playerController, NET_CLIENT_HANDLER);
+      ReachPlayerController controller = new ReachPlayerController(mc, netHandler);
+      boolean isFlying = player.capabilities.isFlying;
+      boolean allowFlying = player.capabilities.allowFlying;
+      controller.setGameType(type);
+      player.capabilities.isFlying = isFlying;
+      player.capabilities.allowFlying = allowFlying;
+      mc.playerController = controller;
+    }
+    ((ReachPlayerController) mc.playerController).setReachDistance(currentReach);
+    }
+    catch(Exception e){
+      //sometimes it crashes just AS the world is loading, but then it works after everythings set up
+      ModCyclic.logger.error("Error setting reach ");
+    }
+  }
+  /**
+   * From the open source project:/github.com/UniversalLP/VanillaAutomation
+   * who in turn got it from  from github.com/vazkii/Botania.
+   */
+  @SideOnly(Side.CLIENT)
+  public class ReachPlayerController extends PlayerControllerMP {
+    //in vanilla code, it has a getBlockReachDistance but there is no variable to reflect over
+    //instead it just returns 5 or 4.5 hardcoded. thanks mojang...
+    private float distance = 0F;
+    public ReachPlayerController(Minecraft mcIn, NetHandlerPlayClient netHandler) {
+      super(mcIn, netHandler);
+      
+    }
+    @Override
+    public float getBlockReachDistance() {
+      return distance;
+    }
+    public void setReachDistance(float f) {
+      distance = f;
+    }
   }
 }

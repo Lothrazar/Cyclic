@@ -7,8 +7,8 @@
     "1.10-recommended": "1.1.0",
     "1.10.2-latest":  "1.10.15",
     "1.10.2-recommended": "1.10.15",
-    "1.11.2-latest": "1.2.0",
-    "1.11.2-recommended": "1.2.0"
+    "1.11.2-latest": "1.2.1",
+    "1.11.2-recommended": "1.2.1"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -128,6 +128,6 @@
   	,"1.1.3":"[port of 1.10.13]  Fix broken texture in Pattern Builder.  Fix error in Ender Book tooltip.  The buttons to open your extended inventory & 3x3 crafting table now will show the letter of the key you have bound to open it; defaulting to the old 'I' 'C' as before if the keys are unbound.  The Inventory Crafting and Inventory Upgrade cakes now stack to 64, up from 1.  Mattock now has a tooltip.  Reduced recipe cost of Ender Orbs.  Patch Automated User to try and avoid crashes when interacting with mobs from Minecraft Comes Alive mod.  New Features in Password Trigger: You can change it to pulse mode, and you can claim the block so nobody else can use or set the password.  Exchange scepters now attempt to correctly set block rotation on placement.  Fix Ender Torch and Torch Launcher from double placing torches with a single shot.  zh_CH.lang updated.  Fix the Password Trigger GUI closing when typing 'e' (or whatever key is bound to open inventory).  Blocks and World generation added:  Nether Iron, End Iron, Nether Redstone, End Gold (by request); controlled in config the same way as the rest of the world gen.  "
 	,"1.1.4":"Bugfix to make sure chorus data persists through death.  Fan has GUI to control range and direction.  Charms can now be turned off by right clicking them on the inventory.  Purple power armor can now be turned off by right clicking.  Fix Baubles API compatibility with the charms.  "
 	,"1.2.0":"Re-balanced some recipes (avoid exploits & more access to early game low power content without ender pearls).  New Content: Safe Dynamite, Mining Dynamite, Monster Ball, Experience Pylon.  Life Leech enchant now also restores a half heart with any damage dealt (it still restores some hunger and life on kill).  Life Leech enchant now displays heart particles above your head when it heals you.  Added new enchantments: Auto-Smelt and Experience Boost.  Controlled Miner now has a toggle button to switch between a whitelist and blacklist.  Added Lapis Apple that can tame undead horses.  Fix a mod conflict causing uncrafting grinder to spew items.  Make sure Controlled Miner can harvest soft blocks like Sugar Cane.  Emerald apple no longer edible by players.  Fix rare crash event when rendering inventory buttons. Stop uncrafting grinder from continuing to run even with an empty itemslot.  "
- 
+ 	,"1.2.1":"Fix enchantment id of Experience Boost enchantment being zero, and not being in the config file.  Added Block Reach enchantment: put it on your chestplate to increase player reach from 5 to 16.  "
   }
 }
