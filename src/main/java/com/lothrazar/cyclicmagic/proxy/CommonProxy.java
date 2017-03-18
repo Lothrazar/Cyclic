@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.proxy;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -40,4 +41,9 @@ public class CommonProxy {
   }
   public void renderItemOnScreen(ItemStack current, int x, int y) {}
   public void renderItemOnGui(ItemStack secondItemToBuy, RenderItem itemRender, FontRenderer fontRendererObj, int x, int y) {}
+  public void setPlayerReach(EntityPlayer player, int currentReach) {
+    if (player instanceof EntityPlayerMP){
+      ((EntityPlayerMP) player).interactionManager.setBlockReachDistance(currentReach);
+    }
+  }
 }

@@ -103,6 +103,7 @@ enchantment.autosmelt=Auto-Smelt
 enchantment.expboost=Experience Boost
 enchantment.launch=Launch
 enchantment.lifeleech=Life Leech
+enchantment.reach=Block Reach
 enchantment.magnet=Magnet
 enchantment.venom=Venom
 entity.Villager.druid=Druid
