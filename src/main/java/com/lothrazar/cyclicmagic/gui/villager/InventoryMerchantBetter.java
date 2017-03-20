@@ -109,7 +109,7 @@ public class InventoryMerchantBetter extends InventoryMerchant implements IInven
       itemstack1 = ItemStack.EMPTY;
     }
     if (itemstack == ItemStack.EMPTY) {
-      this.setInventorySlotContents(2,  ItemStack.EMPTY);
+      this.setInventorySlotContents(2, ItemStack.EMPTY);
     }
     else {
       MerchantRecipeList merchantrecipelist = this.getRecipes();

@@ -54,11 +54,11 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
     //CORE/BASE POTION
     if (enableViscous) {
       potion_viscous = new ItemPotionCustom(false);
-      ItemStack awkward = BrewingRecipeRegistry.getOutput(new ItemStack(Items.POTIONITEM), new ItemStack(Items.NETHER_WART));
+      //      ItemStack awkward = BrewingRecipeRegistry.getOutput(new ItemStack(Items.POTIONITEM), new ItemStack(Items.NETHER_WART));
       ItemRegistry.addItem(potion_viscous, "potion_viscous");
       AchievementRegistry.registerItemAchievement(potion_viscous);
       addBrewingRecipe(
-          new ItemStack(Items.POTIONITEM),//   awkward,
+          new ItemStack(Items.POTIONITEM), //   awkward,
           new ItemStack(Items.DYE, 1, EnumDyeColor.BROWN.getDyeDamage()),
           new ItemStack(potion_viscous));
       JeiDescriptionRegistry.registerWithJeiDescription(potion_viscous);
@@ -235,7 +235,6 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
       LootTableRegistry.registerLoot(potion_haste);
       LootTableRegistry.registerLoot(potion_haste_strong);
       //https://github.com/MinecraftForge/MinecraftForge/blob/f08f3c11053d414b57d03192dd72fcbfaef100f7/src/test/java/net/minecraftforge/test/BrewingRecipeRegistryTest.java
-       
     }
     if (enableLuck) {
       ItemPotionCustom potion_luck = new ItemPotionCustom(true, MobEffects.LUCK, NORMAL);

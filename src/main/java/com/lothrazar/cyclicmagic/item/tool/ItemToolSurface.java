@@ -35,9 +35,8 @@ public class ItemToolSurface extends BaseTool implements IHasRecipe {
     return false;
   }
   @Override
-  public ActionResult<ItemStack> onItemRightClick( World world, EntityPlayer player, EnumHand hand) {
+  public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
     ItemStack stack = player.getHeldItem(hand);
-    
     BlockPos dest = UtilWorld.getFirstBlockAbove(world, player.getPosition());
     if (dest != null) {
       UtilSound.playSound(player, SoundEvents.ITEM_CHORUS_FRUIT_TELEPORT);

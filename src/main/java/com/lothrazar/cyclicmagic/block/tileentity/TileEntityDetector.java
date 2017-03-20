@@ -51,7 +51,6 @@ public class TileEntityDetector extends TileEntityBaseMachineInvo implements ITi
       default:
       break;
     }
- 
     if (isPoweredNow != trigger) {
       isPoweredNow = trigger;
       IBlockState state = world.getBlockState(this.getPos());

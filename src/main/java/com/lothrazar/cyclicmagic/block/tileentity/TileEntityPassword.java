@@ -160,7 +160,7 @@ public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITi
   public boolean isClaimedBySomeone() {
     return this.userHash != null && !this.userHash.isEmpty();
   }
-  public String getClaimedHash(){
+  public String getClaimedHash() {
     return userHash;
   }
   public void toggleClaimedHash(EntityPlayerMP player) {

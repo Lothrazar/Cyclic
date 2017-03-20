@@ -97,7 +97,6 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
         if (isCurrentlyMining) {
           IBlockState targetState = world.getBlockState(targetPos);
           curBlockDamage += UtilItemStack.getPlayerRelativeBlockHardness(targetState.getBlock(), targetState, fakePlayer.get(), world, targetPos);
-     
           if (curBlockDamage >= 1.0f) {
             isCurrentlyMining = false;
             resetProgress(targetPos);

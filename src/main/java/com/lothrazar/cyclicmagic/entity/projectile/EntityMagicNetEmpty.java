@@ -31,14 +31,13 @@ public class EntityMagicNetEmpty extends EntityThrowableDispensable {
       NBTTagCompound entity = new NBTTagCompound();
       mop.entityHit.writeToNBT(entity);
       //id is the special magic tag thats used by EntityList to respawn it. see EntityList.createEntityFromNBT
-
-      entity.setString(ItemProjectileMagicNet.NBT_ENTITYID, EntityList.getKey(mop.entityHit.getClass()).toString());      // was getEntityStringFromClass
+      entity.setString(ItemProjectileMagicNet.NBT_ENTITYID, EntityList.getKey(mop.entityHit.getClass()).toString()); // was getEntityStringFromClass
       entity.setString("tooltip", mop.entityHit.getName());
       captured.setTagCompound(entity);
       mop.entityHit.setDead();
       UtilItemStack.dropItemStackInWorld(this.getEntityWorld(), this.getPosition(), captured);
-      UtilSound.playSound((EntityLivingBase)mop.entityHit, SoundRegistry.pew);
-//      UtilSound.playSound((EntityLivingBase)mop.entityHit, SoundRegistry.pow);
+      UtilSound.playSound((EntityLivingBase) mop.entityHit, SoundRegistry.pew);
+      //      UtilSound.playSound((EntityLivingBase)mop.entityHit, SoundRegistry.pow);
     }
     else {
       UtilItemStack.dropItemStackInWorld(this.getEntityWorld(), this.getPosition(), renderSnowball);

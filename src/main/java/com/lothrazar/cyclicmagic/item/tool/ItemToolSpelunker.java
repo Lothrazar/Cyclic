@@ -25,10 +25,9 @@ public class ItemToolSpelunker extends BaseTool implements IHasRecipe, IHasConfi
     super(DURABILITY);
   }
   @Override
-  public EnumActionResult onItemUse( EntityPlayer player, World worldObj, BlockPos posIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+  public EnumActionResult onItemUse(EntityPlayer player, World worldObj, BlockPos posIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     ItemStack stack = player.getHeldItem(hand);
-    
-    if (side == null || posIn == null) { return super.onItemUse( player, worldObj, posIn, hand, side, hitX, hitY, hitZ); }
+    if (side == null || posIn == null) { return super.onItemUse(player, worldObj, posIn, hand, side, hitX, hitY, hitZ); }
     //    boolean showOdds = player.isSneaking();
     boolean found = false;
     if (!worldObj.isRemote) {
@@ -61,7 +60,7 @@ public class ItemToolSpelunker extends BaseTool implements IHasRecipe, IHasConfi
     }
     player.getCooldownTracker().setCooldown(this, COOLDOWN);
     super.onUse(stack, player, worldObj, hand);
-    return super.onItemUse( player, worldObj, posIn, hand, side, hitX, hitY, hitZ);
+    return super.onItemUse(player, worldObj, posIn, hand, side, hitX, hitY, hitZ);
   }
   @Override
   public void addRecipe() {

@@ -46,7 +46,7 @@ public class BlockFishing extends BlockBaseHasTile implements IHasRecipe, IBlock
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFishing.class, new FishingTESR(0));
   }
   @Override
-  public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand,  EnumFacing side, float hitX, float hitY, float hitZ) {
+  public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     if (player.isSneaking()) {
       TileEntityFishing tile = (TileEntityFishing) world.getTileEntity(pos);
       if (world.isRemote && tile != null) {
@@ -59,7 +59,7 @@ public class BlockFishing extends BlockBaseHasTile implements IHasRecipe, IBlock
       }
     }
     else {
-      return super.onBlockActivated(world, pos, state, player, hand,  side, hitX, hitY, hitZ);
+      return super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
       //      if (world.isRemote) { return true; }
       //      int x = pos.getX(), y = pos.getY(), z = pos.getZ();
       //      player.openGui(ModCyclic.instance, ModGuiHandler.GUI_INDEX_FISHER, world, x, y, z);

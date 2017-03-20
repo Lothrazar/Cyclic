@@ -32,7 +32,6 @@ public class PacketVillagerTrade implements IMessage, IMessageHandler<PacketVill
       EntityPlayer player = ctx.getServerHandler().playerEntity;
       if (player != null && player.openContainer instanceof ContainerMerchantBetter) {
         ContainerMerchantBetter c = (ContainerMerchantBetter) player.openContainer;
-       
         c.setCurrentRecipeIndex(message.selectedMerchantRecipe); //TODO: well this duplicates packetsyncvilltoserv..so..
         c.doTrade(player, message.selectedMerchantRecipe);
       }

@@ -164,7 +164,6 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     compound.setInteger("timer", timer);
     compound.setInteger("render", renderParticles);
     compound.setInteger(NBT_REDST, this.needsRedstone);
-   
     return super.writeToNBT(compound);
   }
   public int getField(Fields f) {

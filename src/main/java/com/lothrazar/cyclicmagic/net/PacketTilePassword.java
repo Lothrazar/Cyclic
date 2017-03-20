@@ -55,7 +55,6 @@ public class PacketTilePassword implements IMessage, IMessageHandler<PacketTileP
     return null;
   }
   private static void checkThreadAndEnqueue(final PacketTilePassword message, final MessageContext ctx) {
-
     if (message.type == null) {
       message.type = PacketType.PASSTEXT;//legacy safety
     }

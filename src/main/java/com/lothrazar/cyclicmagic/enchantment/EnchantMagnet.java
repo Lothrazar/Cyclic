@@ -22,7 +22,6 @@ public class EnchantMagnet extends EnchantBase {
   public void onEntityUpdate(LivingUpdateEvent event) {
     EntityLivingBase entity = event.getEntityLiving();
     //Ticking
-
     int level = getCurrentLevelTool(entity);
     if (level > 0) {
       UtilEntity.moveEntityItemsInRegion(entity.getEntityWorld(), entity.getPosition(), ITEM_HRADIUS + HRADIUS_PER_LEVEL * level, ITEM_VRADIUS);

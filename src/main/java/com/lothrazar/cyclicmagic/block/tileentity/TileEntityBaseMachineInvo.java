@@ -19,11 +19,11 @@ public class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements 
     super();
     inv = NonNullList.withSize(invoSize, ItemStack.EMPTY);
   }
-//=======
-//public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements IInventory, ISidedInventory {
-//  public static final String NBT_INV = "Inventory";
-//  public static final String NBT_SLOT = "Slot";
-//>>>>>>> 7a4c7b0e8136047828c44111eddd82fd4a4bcf71
+  //=======
+  //public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements IInventory, ISidedInventory {
+  //  public static final String NBT_INV = "Inventory";
+  //  public static final String NBT_SLOT = "Slot";
+  //>>>>>>> 7a4c7b0e8136047828c44111eddd82fd4a4bcf71
   @Override
   public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
     return this.isItemValidForSlot(index, itemStackIn);

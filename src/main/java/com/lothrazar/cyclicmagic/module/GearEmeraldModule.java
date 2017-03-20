@@ -26,7 +26,6 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.EnumHelper;
 
 public class GearEmeraldModule extends BaseModule implements IHasConfig {
-
   // thanks for help:
   // http://bedrockminer.jimdo.com/modding-tutorials/basic-modding-1-7/custom-tools-swords/
   private static final int maxDamageFactorDiamond = 33;
@@ -47,7 +46,7 @@ public class GearEmeraldModule extends BaseModule implements IHasConfig {
         ArmorMaterial.GOLD.getEnchantability(),
         ArmorMaterial.DIAMOND.getSoundEvent(),
         ArmorMaterial.DIAMOND.getToughness());//was  / 2
-    MaterialRegistry.emeraldArmorMaterial.repairMaterial  = new ItemStack(Items.EMERALD);
+    MaterialRegistry.emeraldArmorMaterial.repairMaterial = new ItemStack(Items.EMERALD);
     //max uses is durability ex The number of uses this material allows.
     //as of 1.9.4 :  (wood = 59, stone = 131, iron = 250, diamond = 1561, gold = 32)
     MaterialRegistry.emeraldToolMaterial = EnumHelper.addToolMaterial(emeraldName,
@@ -97,7 +96,6 @@ public class GearEmeraldModule extends BaseModule implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     enableMattock = config.getBoolean("Mattock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    
     enableEmeraldGear = config.getBoolean("Emerald Gear", Const.ConfigCategory.content, true, "Emerald armor and tools that are slightly weaker than diamond. " + Const.ConfigCategory.contentDefaultText);
   }
 }

@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.entity.projectile;
-import com.lothrazar.cyclicmagic.world.ExplosionMining;
+import com.lothrazar.cyclicmagic.explosion.ExplosionMining;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.RayTraceResult;

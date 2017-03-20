@@ -47,7 +47,7 @@ public class BlockShears extends BlockBase implements IHasRecipe {
     }
   }
   @Override
-  public AxisAlignedBB getBoundingBox(IBlockState blockState, IBlockAccess  worldIn, BlockPos pos) {
+  public AxisAlignedBB getBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
     return AABB;
   }
   @Override

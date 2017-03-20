@@ -127,7 +127,7 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
     }
   }
   @Override
-  public EnumActionResult onItemUse( EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+  public EnumActionResult onItemUse(EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     ItemStack stack = player.getHeldItem(hand);
     //if we only run this on server, clients dont get the udpate
     //so run it only on client, let packet run the server
@@ -136,7 +136,6 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
         ModCyclic.network.sendToServer(new PacketSwapBlock(pos, side, ActionType.values()[ActionType.get(stack)], this.getWandType()));
       }
       player.swingArm(hand);
-  
       player.getCooldownTracker().setCooldown(this, COOLDOWN);
     }
     catch (ConcurrentModificationException e) {
@@ -144,12 +143,11 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
       ModCyclic.logger.error(e.getMessage());// message is null??
       ModCyclic.logger.error(e.getStackTrace().toString());
     }
-    return  EnumActionResult.FAIL;//super.onItemUse( player, worldObj, pos, hand, side, hitX, hitY, hitZ);// EnumActionResult.PASS;
+    return EnumActionResult.FAIL;//super.onItemUse( player, worldObj, pos, hand, side, hitX, hitY, hitZ);// EnumActionResult.PASS;
   }
   @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
-
-    return new ActionResult<ItemStack>(EnumActionResult.FAIL,    playerIn.getHeldItem(hand));
+    return new ActionResult<ItemStack>(EnumActionResult.FAIL, playerIn.getHeldItem(hand));
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {

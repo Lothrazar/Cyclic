@@ -78,7 +78,7 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
     return EnumRarity.UNCOMMON;
   }
   @Override
-  public EnumActionResult onItemUse( EntityPlayer playerIn, World worldIn, BlockPos pos,
+  public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos,
       EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     ItemStack stack = playerIn.getHeldItem(hand);
     // If onItemUse returns false onItemRightClick will be called.
@@ -92,8 +92,9 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
     ItemStack itemStackIn = playerIn.getHeldItem(hand);
     // so this only happens IF either onItemUse did not fire at all, or it
     // fired and casting failed
-    boolean success = UtilSpellCaster.tryCastCurrent(worldIn, playerIn, null, null, itemStackIn, hand);
-//    return success ? new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn)
+    //    boolean success = 
+    UtilSpellCaster.tryCastCurrent(worldIn, playerIn, null, null, itemStackIn, hand);
+    //    return success ? new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn)
     return new ActionResult<ItemStack>(EnumActionResult.FAIL, itemStackIn);
   }
   @Override

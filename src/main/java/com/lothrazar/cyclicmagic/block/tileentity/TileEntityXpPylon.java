@@ -33,7 +33,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   private int needsRedstone = 1;
   private int mode = 0;//else pull. 0 as default
   private int currentExp = 0;// 0 as default
-//  private ItemStack[] inv;
+  //  private ItemStack[] inv;
   public TileEntityXpPylon() {
     super(2);
   }
@@ -79,7 +79,6 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
       //no timer just EAT
       for (EntityXPOrb orb : orbs) {
         if (orb.isDead == false && this.tryIncrExp(orb.getXpValue())) {
-       
           getWorld().removeEntity(orb);//calls     orb.setDead(); for me
         }
         else {//is full
@@ -142,17 +141,17 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     tags.setInteger(NBT_REDST, this.needsRedstone);
     tags.setInteger(NBT_EXP, this.currentExp);
     tags.setInteger(NBT_MODE, this.mode);
-//    NBTTagList itemList = new NBTTagList();
-//    for (int i = 0; i < inv.length; i++) {
-//      ItemStack stack = inv[i];
-//      if (stack != null) {
-//        NBTTagCompound tag = new NBTTagCompound();
-//        tag.setByte(NBT_SLOT, (byte) i);
-//        stack.writeToNBT(tag);
-//        itemList.appendTag(tag);
-//      }
-//    }
-//    tags.setTag(NBT_INV, itemList);
+    //    NBTTagList itemList = new NBTTagList();
+    //    for (int i = 0; i < inv.length; i++) {
+    //      ItemStack stack = inv[i];
+    //      if (stack != null) {
+    //        NBTTagCompound tag = new NBTTagCompound();
+    //        tag.setByte(NBT_SLOT, (byte) i);
+    //        stack.writeToNBT(tag);
+    //        itemList.appendTag(tag);
+    //      }
+    //    }
+    //    tags.setTag(NBT_INV, itemList);
     return super.writeToNBT(tags);
   }
   @Override
@@ -162,14 +161,14 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     needsRedstone = tags.getInteger(NBT_REDST);
     currentExp = tags.getInteger(NBT_EXP);
     mode = tags.getInteger(NBT_MODE);
-//    NBTTagList tagList = tags.getTagList(NBT_INV, 10);
-//    for (int i = 0; i < tagList.tagCount(); i++) {
-//      NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
-//      byte slot = tag.getByte(NBT_SLOT);
-//      if (slot >= 0 && slot < inv.length) {
-//        inv[slot] = ItemStack.loadItemStackFromNBT(tag);
-//      }
-//    }
+    //    NBTTagList tagList = tags.getTagList(NBT_INV, 10);
+    //    for (int i = 0; i < tagList.tagCount(); i++) {
+    //      NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
+    //      byte slot = tag.getByte(NBT_SLOT);
+    //      if (slot >= 0 && slot < inv.length) {
+    //        inv[slot] = ItemStack.loadItemStackFromNBT(tag);
+    //      }
+    //    }
   }
   @Override
   public void toggleNeedsRedstone() {
@@ -227,44 +226,44 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
       }
     }
   }
-//  //COPY PASTA invo stuff. this got refactored in 1.11
-//  @Override
-//  public int getSizeInventory() {
-//    return inv.length;
-//  }
-//  @Override
-//  public ItemStack getStackInSlot(int index) {
-//    return inv[index];
-//  }
-//  @Override
-//  public ItemStack decrStackSize(int index, int count) {
-//    ItemStack stack = getStackInSlot(index);
-//    if (stack != null) {
-//      if (stack.stackSize <= count) {
-//        setInventorySlotContents(index, null);
-//      }
-//      else {
-//        stack = stack.splitStack(count);
-//        if (stack.stackSize == 0) {
-//          setInventorySlotContents(index, null);
-//        }
-//      }
-//    }
-//    return stack;
-//  }
-//  @Override
-//  public ItemStack removeStackFromSlot(int index) {
-//    ItemStack stack = getStackInSlot(index);
-//    if (stack != null) {
-//      setInventorySlotContents(index, null);
-//    }
-//    return stack;
-//  }
-//  @Override
-//  public void setInventorySlotContents(int index, ItemStack stack) {
-//    inv[index] = stack;
-//    if (stack != null && stack.stackSize > getInventoryStackLimit()) {
-//      stack.stackSize = getInventoryStackLimit();
-//    }
-//  }
+  //  //COPY PASTA invo stuff. this got refactored in 1.11
+  //  @Override
+  //  public int getSizeInventory() {
+  //    return inv.length;
+  //  }
+  //  @Override
+  //  public ItemStack getStackInSlot(int index) {
+  //    return inv[index];
+  //  }
+  //  @Override
+  //  public ItemStack decrStackSize(int index, int count) {
+  //    ItemStack stack = getStackInSlot(index);
+  //    if (stack != null) {
+  //      if (stack.stackSize <= count) {
+  //        setInventorySlotContents(index, null);
+  //      }
+  //      else {
+  //        stack = stack.splitStack(count);
+  //        if (stack.stackSize == 0) {
+  //          setInventorySlotContents(index, null);
+  //        }
+  //      }
+  //    }
+  //    return stack;
+  //  }
+  //  @Override
+  //  public ItemStack removeStackFromSlot(int index) {
+  //    ItemStack stack = getStackInSlot(index);
+  //    if (stack != null) {
+  //      setInventorySlotContents(index, null);
+  //    }
+  //    return stack;
+  //  }
+  //  @Override
+  //  public void setInventorySlotContents(int index, ItemStack stack) {
+  //    inv[index] = stack;
+  //    if (stack != null && stack.stackSize > getInventoryStackLimit()) {
+  //      stack.stackSize = getInventoryStackLimit();
+  //    }
+  //  }
 }

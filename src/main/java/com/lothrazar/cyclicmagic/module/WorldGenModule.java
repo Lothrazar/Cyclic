@@ -187,22 +187,18 @@ public class WorldGenModule extends BaseEventModule implements IHasConfig {
     int diamondHarvest = emeraldHarvest;
     int goldHarvest = emeraldHarvest;
     int redstoneHarvest = emeraldHarvest;
-
     nether_redstone_ore = new BlockDimensionOre(Items.REDSTONE);
     nether_redstone_ore.setPickaxeHarvestLevel(ironHarvest).setSpawnType(SpawnType.SILVERFISH, 2);
     BlockRegistry.registerBlock(nether_redstone_ore, "nether_redstone_ore");
     nether_redstone_ore.registerSmeltingOutput(Items.REDSTONE);
-    
     nether_iron_ore = new BlockDimensionOre(Items.IRON_INGOT);
     nether_iron_ore.setPickaxeHarvestLevel(ironHarvest).setSpawnType(SpawnType.SILVERFISH, 2);
     BlockRegistry.registerBlock(nether_iron_ore, "nether_iron_ore");
     nether_iron_ore.registerSmeltingOutput(Items.IRON_INGOT);
-    
-    nether_gold_ore = new BlockDimensionOre(Items.GOLD_NUGGET,0,4);
+    nether_gold_ore = new BlockDimensionOre(Items.GOLD_NUGGET, 0, 4);
     nether_gold_ore.setPickaxeHarvestLevel(goldHarvest).setSpawnType(SpawnType.SILVERFISH, 1);
     BlockRegistry.registerBlock(nether_gold_ore, "nether_gold_ore");
     nether_gold_ore.registerSmeltingOutput(Items.GOLD_INGOT);
-    
     nether_coal_ore = new BlockDimensionOre(Items.COAL);
     nether_coal_ore.setPickaxeHarvestLevel(coalHarvest).setSpawnType(SpawnType.SILVERFISH, 1);
     BlockRegistry.registerBlock(nether_coal_ore, "nether_coal_ore");
@@ -240,14 +236,10 @@ public class WorldGenModule extends BaseEventModule implements IHasConfig {
     end_diamond_ore.setPickaxeHarvestLevel(diamondHarvest).setSpawnType(SpawnType.ENDERMITE, 8);
     BlockRegistry.registerBlock(end_diamond_ore, "end_diamond_ore");
     end_diamond_ore.registerSmeltingOutput(Items.DIAMOND);
-    
-
     end_gold_ore = new BlockDimensionOre(Items.GOLD_INGOT);
     end_gold_ore.setPickaxeHarvestLevel(goldHarvest).setSpawnType(SpawnType.ENDERMITE, 2);
     BlockRegistry.registerBlock(end_gold_ore, "end_gold_ore");
     end_gold_ore.registerSmeltingOutput(Items.GOLD_INGOT);
-    
-
     end_iron_ore = new BlockDimensionOre(Items.IRON_INGOT);
     end_iron_ore.setPickaxeHarvestLevel(ironHarvest).setSpawnType(SpawnType.ENDERMITE, 2);
     BlockRegistry.registerBlock(end_iron_ore, "end_iron_ore");

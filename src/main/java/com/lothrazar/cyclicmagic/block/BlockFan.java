@@ -18,7 +18,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class BlockFan extends BlockBaseFacingInventory implements IHasRecipe {
   //block rotation in json http://www.minecraftforge.net/forum/index.php?topic=32753.0
   public BlockFan() {
-    super(Material.ROCK,ModGuiHandler.GUI_INDEX_FAN);
+    super(Material.ROCK, ModGuiHandler.GUI_INDEX_FAN);
     this.setHardness(3F);
     this.setResistance(5F);
     this.setSoundType(SoundType.WOOD);

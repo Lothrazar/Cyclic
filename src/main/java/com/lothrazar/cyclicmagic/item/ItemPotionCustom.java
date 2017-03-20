@@ -67,8 +67,7 @@ public class ItemPotionCustom extends ItemFood {
     return EnumAction.DRINK;
   }
   @Override
-  public ActionResult<ItemStack> onItemRightClick(  World worldIn, EntityPlayer playerIn, EnumHand hand) {
-    
+  public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
     playerIn.setActiveHand(hand);
     return super.onItemRightClick(worldIn, playerIn, hand);
   }

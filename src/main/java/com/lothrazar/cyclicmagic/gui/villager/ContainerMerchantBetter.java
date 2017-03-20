@@ -18,7 +18,6 @@ import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.World;
 
 public class ContainerMerchantBetter extends ContainerBaseMachine {
-
   final static int HOTBAR_START = 27;
   final static int HOTBAR_END = 35;
   final static int INV_START = 0;
@@ -34,7 +33,6 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
     this.merchantInventory = im;
     player = playerInventory.player;
     trades = merchant.getRecipes(player);
-
     bindPlayerInventory(playerInventory);
     this.detectAndSendChanges();
   }
@@ -72,29 +70,29 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
   }
   @Nullable
   public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
-    ItemStack itemstack =  ItemStack.EMPTY;
+    ItemStack itemstack = ItemStack.EMPTY;
     Slot slot = (Slot) this.inventorySlots.get(index);
     if (slot != null && slot.getHasStack()) {
       ItemStack itemstack1 = slot.getStack();
       itemstack = itemstack1.copy();
-//      if (index == SLOT_OUTPUT) {
-//        if (!this.mergeItemStack(itemstack1, INV_START, HOTBAR_END + 1, true)) { return null; }
-//        slot.onSlotChange(itemstack1, itemstack);
-//      }
-//      else if (index != SLOT_INPUT && index != SLOT_INPUTX) { //so it must be a player slot
-//        if (!this.mergeItemStack(itemstack1, SLOT_INPUT, SLOT_INPUTX + 1, false)) { return null; }
-//      }
-//      else {//so it is 0,1
-        if (!this.mergeItemStack(itemstack1, INV_START, HOTBAR_END + 1, false)) { return  ItemStack.EMPTY; }
-//      }
+      //      if (index == SLOT_OUTPUT) {
+      //        if (!this.mergeItemStack(itemstack1, INV_START, HOTBAR_END + 1, true)) { return null; }
+      //        slot.onSlotChange(itemstack1, itemstack);
+      //      }
+      //      else if (index != SLOT_INPUT && index != SLOT_INPUTX) { //so it must be a player slot
+      //        if (!this.mergeItemStack(itemstack1, SLOT_INPUT, SLOT_INPUTX + 1, false)) { return null; }
+      //      }
+      //      else {//so it is 0,1
+      if (!this.mergeItemStack(itemstack1, INV_START, HOTBAR_END + 1, false)) { return ItemStack.EMPTY; }
+      //      }
       //cleanup steps
       if (itemstack1.getCount() == 0) {
-        slot.putStack(  ItemStack.EMPTY);
+        slot.putStack(ItemStack.EMPTY);
       }
       else {
         slot.onSlotChanged();
       }
-      if (itemstack1.getCount() == itemstack.getCount()) { return  ItemStack.EMPTY; }
+      if (itemstack1.getCount() == itemstack.getCount()) { return ItemStack.EMPTY; }
       slot.onTake(playerIn, itemstack1);
     }
     return itemstack;
@@ -143,19 +141,18 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
         break;
       }
     }
- 
     boolean tradeSuccess = false;
     if (canTrade) {
       if (!secondItem.isEmpty()) {
-//        firstItem.stackSize -= itemToBuy.stackSize;
-//        secondItem.stackSize -= itemSecondBuy.stackSize;
+        //        firstItem.stackSize -= itemToBuy.stackSize;
+        //        secondItem.stackSize -= itemSecondBuy.stackSize;
         firstItem.shrink(itemToBuy.getCount());
         secondItem.shrink(itemSecondBuy.getCount());
         tradeSuccess = true;
       }
       if (itemSecondBuy.isEmpty() && secondItem.isEmpty()) {
-//        firstItem.stackSize -= itemToBuy.stackSize;
-        firstItem.shrink(  itemToBuy.getCount());
+        //        firstItem.stackSize -= itemToBuy.stackSize;
+        firstItem.shrink(itemToBuy.getCount());
         tradeSuccess = true;
       }
     }

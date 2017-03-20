@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 
 public abstract class BaseItemProjectile extends BaseItem {
   @Override
-  public ActionResult<ItemStack> onItemRightClick( World worldIn, EntityPlayer playerIn, EnumHand hand) {
+  public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
     ItemStack h = playerIn.getHeldItem(hand);
     onItemThrow(h, worldIn, playerIn, hand);
     return new ActionResult<ItemStack>(EnumActionResult.PASS, h);

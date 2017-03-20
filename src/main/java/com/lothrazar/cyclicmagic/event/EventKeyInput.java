@@ -95,11 +95,9 @@ public class EventKeyInput {
       }
     }
     if (ClientProxy.keyExtraInvo != null && isGuiKeyDown(ClientProxy.keyExtraInvo) && event.getGui() instanceof GuiPlayerExtended) {
-     
       thePlayer.closeScreen();
     }
     else if (ClientProxy.keyExtraCraftin != null && isGuiKeyDown(ClientProxy.keyExtraCraftin) && event.getGui() instanceof GuiPlayerExtWorkbench) {
-     
       thePlayer.closeScreen();
     }
   }

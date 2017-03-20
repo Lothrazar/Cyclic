@@ -238,7 +238,6 @@ public class ModGuiHandler implements IGuiHandler {
         case GUI_INDEX_FAN:
           if (te != null && te instanceof TileEntityFan) { return new GuiFan(player.inventory, (TileEntityFan) te); }
         break;
-
         case GUI_INDEX_XP:
           if (te instanceof TileEntityXpPylon) { return new GuiPylon(player.inventory, (TileEntityXpPylon) te); }
         break;

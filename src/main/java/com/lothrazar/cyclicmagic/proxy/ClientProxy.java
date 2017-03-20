@@ -232,7 +232,7 @@ public class ClientProxy extends CommonProxy {
     itemRender.renderItemOverlays(fontRendererObj, stack, x, y);
   }
   public static final String[] NET_CLIENT_HANDLER = new String[] { "connection", "field_78774_b" };//was field_78774_b
-  public static final String[] CURRENT_GAME_TYPE = new String[] { "currentGameType", "field_78779_k"};//was field_78779_k
+  public static final String[] CURRENT_GAME_TYPE = new String[] { "currentGameType", "field_78779_k" };//was field_78779_k
   /**
    * INSPIRED by universallp
    * 
@@ -243,29 +243,28 @@ public class ClientProxy extends CommonProxy {
   public void setPlayerReach(EntityPlayer player, int currentReach) {
     super.setPlayerReach(player, currentReach);
     Minecraft mc = Minecraft.getMinecraft();
-    try{
-    if (player == mc.player && !(mc.playerController instanceof ReachPlayerController)) {
-   
-      GameType type = ReflectionHelper.getPrivateValue(PlayerControllerMP.class, mc.playerController, CURRENT_GAME_TYPE);
-      NetHandlerPlayClient netHandler = ReflectionHelper.getPrivateValue(PlayerControllerMP.class, mc.playerController, NET_CLIENT_HANDLER);
-      ReachPlayerController controller = new ReachPlayerController(mc, netHandler);
-      boolean isFlying = player.capabilities.isFlying;
-      boolean allowFlying = player.capabilities.allowFlying;
-      controller.setGameType(type);
-      player.capabilities.isFlying = isFlying;
-      player.capabilities.allowFlying = allowFlying;
-      mc.playerController = controller;
+    try {
+      if (player == mc.player && !(mc.playerController instanceof ReachPlayerController)) {
+        GameType type = ReflectionHelper.getPrivateValue(PlayerControllerMP.class, mc.playerController, CURRENT_GAME_TYPE);
+        NetHandlerPlayClient netHandler = ReflectionHelper.getPrivateValue(PlayerControllerMP.class, mc.playerController, NET_CLIENT_HANDLER);
+        ReachPlayerController controller = new ReachPlayerController(mc, netHandler);
+        boolean isFlying = player.capabilities.isFlying;
+        boolean allowFlying = player.capabilities.allowFlying;
+        controller.setGameType(type);
+        player.capabilities.isFlying = isFlying;
+        player.capabilities.allowFlying = allowFlying;
+        mc.playerController = controller;
+      }
+      ((ReachPlayerController) mc.playerController).setReachDistance(currentReach);
     }
-    ((ReachPlayerController) mc.playerController).setReachDistance(currentReach);
-    }
-    catch(Exception e){
+    catch (Exception e) {
       //sometimes it crashes just AS the world is loading, but then it works after everythings set up
       ModCyclic.logger.error("Error setting reach ");
     }
   }
   /**
-   * From the open source project:/github.com/UniversalLP/VanillaAutomation
-   * who in turn got it from  from github.com/vazkii/Botania.
+   * From the open source project:/github.com/UniversalLP/VanillaAutomation who
+   * in turn got it from from github.com/vazkii/Botania.
    */
   @SideOnly(Side.CLIENT)
   public class ReachPlayerController extends PlayerControllerMP {
@@ -274,7 +273,6 @@ public class ClientProxy extends CommonProxy {
     private float distance = 0F;
     public ReachPlayerController(Minecraft mcIn, NetHandlerPlayClient netHandler) {
       super(mcIn, netHandler);
-      
     }
     @Override
     public float getBlockReachDistance() {

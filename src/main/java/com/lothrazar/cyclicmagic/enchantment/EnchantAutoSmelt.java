@@ -25,7 +25,7 @@ public class EnchantAutoSmelt extends EnchantBase {
   }
   @SubscribeEvent()
   public void onHarvestDrops(HarvestDropsEvent event) {
-    if(event.getHarvester() == null){return;}
+    if (event.getHarvester() == null) { return; }
     int level = getCurrentLevelTool(event.getHarvester());
     if (level <= 0) { return; }
     if (event.isSilkTouching()) { return; } //it should be incompabile but check anyway ya

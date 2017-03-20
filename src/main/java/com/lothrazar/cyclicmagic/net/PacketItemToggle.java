@@ -35,7 +35,6 @@ public class PacketItemToggle implements IMessage, IMessageHandler<PacketItemTog
       int scount = player.openContainer.inventorySlots.size();
       //this is an edge case but it DID happen: put charmin your hotbar and then open a creative inventory tab. avoid index OOB
       if (message.slot >= scount) { return null; }
-      
       Slot slotObj = player.openContainer.getSlot(message.slot);
       if (slotObj != null
           && slotObj.getStack() != ItemStack.EMPTY) {

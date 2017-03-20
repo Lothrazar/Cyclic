@@ -41,7 +41,6 @@ public class EnchantModule extends BaseModule implements IHasConfig {
       reach = new EnchantReach();
       Enchantment.REGISTRY.register(reachid, new ResourceLocation(reach.getName()), reach);
       ModCyclic.instance.events.register(EnchantModule.reach);
-      
     }
     if (enablexpboost) {
       xpboost = new EnchantXpBoost();

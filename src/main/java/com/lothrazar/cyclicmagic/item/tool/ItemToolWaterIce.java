@@ -28,23 +28,20 @@ public class ItemToolWaterIce extends BaseTool implements IHasRecipe {
     super(DURABILITY);
   }
   @Override
-  public EnumActionResult onItemUse( EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+  public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     ItemStack stack = player.getHeldItem(hand);
-    
-    
-    if (pos == null) { return super.onItemUse( player, world, pos, hand, side, hitX, hitY, hitZ); }
+    if (pos == null) { return super.onItemUse(player, world, pos, hand, side, hitX, hitY, hitZ); }
     if (side != null) {
       pos = pos.offset(side);
     }
     if (spreadWaterFromCenter(world, pos.offset(side))) {
       super.onUse(stack, player, world, hand);
     }
-    return super.onItemUse( player, world, pos, hand, side, hitX, hitY, hitZ);
+    return super.onItemUse(player, world, pos, hand, side, hitX, hitY, hitZ);
   }
   @Override
-  public ActionResult<ItemStack> onItemRightClick( World world, EntityPlayer player, EnumHand hand) {
+  public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
     ItemStack stack = player.getHeldItem(hand);
-    
     if (spreadWaterFromCenter(world, player.getPosition().offset(player.getHorizontalFacing()))) {
       super.onUse(stack, player, world, hand); //player.getCooldownTracker().setCooldown(this, COOLDOWN);
     }

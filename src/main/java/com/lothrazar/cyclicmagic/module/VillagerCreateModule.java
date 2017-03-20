@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.module;
 import java.util.Random;
 import com.lothrazar.cyclicmagic.IHasConfig;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockSand;

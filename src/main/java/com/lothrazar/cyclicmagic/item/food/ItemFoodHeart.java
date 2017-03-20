@@ -47,7 +47,7 @@ public class ItemFoodHeart extends ItemFood implements IHasRecipe, IHasConfig {
     IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(player);
     if (isPlayerMaxHearts(player)) {
       UtilSound.playSound(player, SoundRegistry.buzzp);
-//      UtilItemStack.dropItemStackInWorld(world, player.getPosition(), this);
+      //      UtilItemStack.dropItemStackInWorld(world, player.getPosition(), this);
       return;
     }
     //one heart is 2 health points (half heart = 1 health)
@@ -88,12 +88,11 @@ public class ItemFoodHeart extends ItemFood implements IHasRecipe, IHasConfig {
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
     tooltip.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
   }
-  public ActionResult<ItemStack> onItemRightClick( World worldIn, EntityPlayer playerIn, EnumHand hand) {
+  public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
     ItemStack itemStackIn = playerIn.getHeldItem(hand);
-    
-  //this line is KEY to stop user from eating food at max health( which was causing the refund issue in https://github.com/PrinceOfAmber/Cyclic/issues/270 )
+    //this line is KEY to stop user from eating food at max health( which was causing the refund issue in https://github.com/PrinceOfAmber/Cyclic/issues/270 )
     if (isPlayerMaxHearts(playerIn)) { return new ActionResult<ItemStack>(EnumActionResult.FAIL, itemStackIn); }
     //otherwise continueto normal food process
-    return super.onItemRightClick( worldIn, playerIn, hand);
+    return super.onItemRightClick(worldIn, playerIn, hand);
   }
 }

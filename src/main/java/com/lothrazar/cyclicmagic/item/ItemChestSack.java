@@ -37,7 +37,7 @@ public class ItemChestSack extends BaseItem {
    * Called when a Block is right-clicked with this Item
    */
   @Override
-  public EnumActionResult onItemUse( EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+  public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     BlockPos offset = pos.offset(side);
     if (worldIn.isAirBlock(offset) == false) { return EnumActionResult.FAIL; }
     ItemStack stack = playerIn.getHeldItem(hand);
@@ -54,8 +54,8 @@ public class ItemChestSack extends BaseItem {
     NBTTagCompound itemData = UtilNBT.getItemStackNBT(heldChestSack);
     Block block = Block.getBlockById(itemData.getInteger(KEY_BLOCKID));
     if (block == null) {
-//      heldChestSack.stackSize = 0;
-      heldChestSack =ItemStack.EMPTY;
+      //      heldChestSack.stackSize = 0;
+      heldChestSack = ItemStack.EMPTY;
       UtilChat.addChatMessage(entityPlayer, "Invalid block id " + itemData.getInteger(KEY_BLOCKID));
       return false;
     }
@@ -79,8 +79,8 @@ public class ItemChestSack extends BaseItem {
       tile.markDirty();
       world.markChunkDirty(pos, tile);
     }
-//    heldChestSack.stackSize = 0;
-    heldChestSack =ItemStack.EMPTY;
+    //    heldChestSack.stackSize = 0;
+    heldChestSack = ItemStack.EMPTY;
     heldChestSack.setTagCompound(null);
     return true;
   }
@@ -89,7 +89,7 @@ public class ItemChestSack extends BaseItem {
     if (itemStack.getTagCompound() != null && itemStack.getTagCompound().hasKey(KEY_BLOCKNAME)) {
       String blockname = itemStack.getTagCompound().getString(KEY_BLOCKNAME);
       if (blockname != null && blockname.length() > 0) {
-        list.add(UtilChat.lang(blockname+".name"));
+        list.add(UtilChat.lang(blockname + ".name"));
       }
     }
   }

@@ -28,7 +28,7 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
   private int particlesIfZero = 0;// 0 as default
   private int speedBase = 13;//divide by 100 for real speed. bigger=faster
   private int range = 16;
-  public TileEntityFan(){
+  public TileEntityFan() {
     super(0);
   }
   @Override
@@ -39,7 +39,6 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     }
     EnumFacing facing = getCurrentFacing();
     int rangeFixed = getCurrentRange(); //can go up to max range unless hits a solid
- 
     if (this.timer == 0) {
       this.timer = TIMER_FULL;
       //rm this its ugly, keep in case i add a custom particle
@@ -93,8 +92,7 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     BlockPos tester;
     for (int i = MIN_RANGE; i <= this.getRange(); i++) {//if we start at fan, we hit MYSELF (the fan)
       tester = this.getPos().offset(facing, i);
-      if (canBlowThrough(tester) == false) {
-        return i; //cant pass thru
+      if (canBlowThrough(tester) == false) { return i; //cant pass thru
       }
     }
     return getRange();

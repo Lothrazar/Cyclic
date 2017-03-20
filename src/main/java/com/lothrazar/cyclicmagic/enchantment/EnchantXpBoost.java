@@ -24,8 +24,7 @@ public class EnchantXpBoost extends EnchantBase {
   }
   @SubscribeEvent
   public void onEntityKill(LivingDeathEvent event) {
-
-    if(event.getSource() == null){return;}
+    if (event.getSource() == null) { return; }
     if (event.getSource().getSourceOfDamage() instanceof EntityPlayer && event.getEntity() instanceof EntityLivingBase) {
       EntityPlayer attacker = (EntityPlayer) event.getSource().getSourceOfDamage();
       int level = getCurrentLevelTool(attacker);
@@ -40,7 +39,7 @@ public class EnchantXpBoost extends EnchantBase {
   public void onBreakEvent(BreakEvent event) {
     World world = event.getWorld();
     EntityPlayer player = event.getPlayer();
-    if(player == null){return;}
+    if (player == null) { return; }
     BlockPos pos = event.getPos();
     int level = this.getCurrentLevelTool(player);
     if (level <= 0) { return; }

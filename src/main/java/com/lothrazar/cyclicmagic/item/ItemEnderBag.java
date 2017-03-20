@@ -16,7 +16,7 @@ public class ItemEnderBag extends BaseItem implements IHasRecipe {
     this.setMaxStackSize(1);
   }
   @Override
-  public ActionResult<ItemStack> onItemRightClick( World world, EntityPlayer player, EnumHand hand) {
+  public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
     player.displayGUIChest(player.getInventoryEnderChest());
     if (world.rand.nextDouble() > 0.5)
       UtilSound.playSound(player, SoundEvents.BLOCK_ENDERCHEST_OPEN);
@@ -26,20 +26,20 @@ public class ItemEnderBag extends BaseItem implements IHasRecipe {
   }
   @Override
   public void addRecipe() {
-//    GameRegistry.addRecipe(new ItemStack(this),
-//        "l l",
-//        "lel",
-//        "lsl",
-//        'l', Items.LEATHER,
-//        's', Blocks.OBSIDIAN,
-//        'e', Items.ENDER_PEARL);
-//    GameRegistry.addRecipe(new ItemStack(this),
-//        "l l",
-//        "lel",
-//        "lsl",
-//        'l', Items.LEATHER,
-//        's', Blocks.OBSIDIAN,
-//        'e', Items.ENDER_EYE);
+    //    GameRegistry.addRecipe(new ItemStack(this),
+    //        "l l",
+    //        "lel",
+    //        "lsl",
+    //        'l', Items.LEATHER,
+    //        's', Blocks.OBSIDIAN,
+    //        'e', Items.ENDER_PEARL);
+    //    GameRegistry.addRecipe(new ItemStack(this),
+    //        "l l",
+    //        "lel",
+    //        "lsl",
+    //        'l', Items.LEATHER,
+    //        's', Blocks.OBSIDIAN,
+    //        'e', Items.ENDER_EYE);
     GameRegistry.addRecipe(new ItemStack(this),
         " l ",
         "lsl",

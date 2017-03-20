@@ -47,16 +47,12 @@ public class PacketRegistry {
     network.registerMessage(PacketSyncVillagerToClient.class, PacketSyncVillagerToClient.class, packetID++, Side.CLIENT);
     network.registerMessage(PacketSyncVillagerToServer.class, PacketSyncVillagerToServer.class, packetID++, Side.SERVER);
     network.registerMessage(PacketVillagerTrade.class, PacketVillagerTrade.class, packetID++, Side.SERVER);
- 
     network.registerMessage(PacketSleepClient.class, PacketSleepClient.class, packetID++, Side.CLIENT);
     network.registerMessage(PacketTileFan.class, PacketTileFan.class, packetID++, Side.SERVER);
     network.registerMessage(PacketItemToggle.class, PacketItemToggle.class, packetID++, Side.SERVER);
-    
-
-     
-//    network.registerMessage(PacketTileFan.class, PacketTileFan.class, packetID++, Side.SERVER);
-//    network.registerMessage(PacketItemToggle.class, PacketItemToggle.class, packetID++, Side.SERVER);
+    //    network.registerMessage(PacketTileFan.class, PacketTileFan.class, packetID++, Side.SERVER);
+    //    network.registerMessage(PacketItemToggle.class, PacketItemToggle.class, packetID++, Side.SERVER);
     network.registerMessage(PacketTilePylon.class, PacketTilePylon.class, packetID++, Side.SERVER);
-//>>>>>>> 7a4c7b0e8136047828c44111eddd82fd4a4bcf71
+    //>>>>>>> 7a4c7b0e8136047828c44111eddd82fd4a4bcf71
   }
 }

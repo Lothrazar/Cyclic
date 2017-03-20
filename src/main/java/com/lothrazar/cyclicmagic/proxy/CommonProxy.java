@@ -42,7 +42,7 @@ public class CommonProxy {
   public void renderItemOnScreen(ItemStack current, int x, int y) {}
   public void renderItemOnGui(ItemStack secondItemToBuy, RenderItem itemRender, FontRenderer fontRendererObj, int x, int y) {}
   public void setPlayerReach(EntityPlayer player, int currentReach) {
-    if (player instanceof EntityPlayerMP){
+    if (player instanceof EntityPlayerMP) {
       ((EntityPlayerMP) player).interactionManager.setBlockReachDistance(currentReach);
     }
   }

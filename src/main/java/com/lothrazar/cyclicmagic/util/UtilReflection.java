@@ -5,12 +5,11 @@ import net.minecraft.block.Block;
 import net.minecraft.world.storage.loot.LootPool;
 
 public class UtilReflection {
-  public static Field getPrivateField(String name, String mapping,Class c){
-
+  public static Field getPrivateField(String name, String mapping, Class c) {
     try {
       for (Field f : c.getDeclaredFields()) {
-//field_175563_bv in my snapshot
-        if(f.getName().equals(name) ||f.getName().equals(mapping)){
+        //field_175563_bv in my snapshot
+        if (f.getName().equals(name) || f.getName().equals(mapping)) {
           f.setAccessible(true);
           return f;
         }

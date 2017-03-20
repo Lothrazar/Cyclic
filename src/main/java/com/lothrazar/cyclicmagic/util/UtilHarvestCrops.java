@@ -1,9 +1,7 @@
 package com.lothrazar.cyclicmagic.util;
 import java.util.Iterator;
 import java.util.List;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockBush;
 import net.minecraft.block.BlockCocoa;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockFlower;
@@ -84,7 +82,6 @@ public class UtilHarvestCrops {
     Block blockCheck = blockState.getBlock();
     if (blockCheck == null) { return false; }
     String blockClassString = blockCheck.getClass().getName();//TODO: config file eventually but hotfix for now
-   
     IBlockState bsAbove = world.getBlockState(posCurrent.up());
     IBlockState bsBelow = world.getBlockState(posCurrent.down());
     if (blockCheck instanceof BlockNetherWart) {
@@ -155,10 +152,9 @@ public class UtilHarvestCrops {
     //cant do BlockBush, too generic, too many things use.  
     else if (blockCheck == Blocks.RED_FLOWER || blockCheck == Blocks.YELLOW_FLOWER
         || blockCheck instanceof BlockFlower
-        || blockClassString.equals("shadows.plants.block.PlantBase") 
+        || blockClassString.equals("shadows.plants.block.PlantBase")
         || blockClassString.equals("shadows.plants.block.internal.cosmetic.BlockHarvestable")
-        || blockClassString.equals("shadows.plants.block.internal.cosmetic.BlockMetaBush") 
-        ){//== Blocks.RED_FLOWER || blockCheck == Blocks.YELLOW_FLOWER) {
+        || blockClassString.equals("shadows.plants.block.internal.cosmetic.BlockMetaBush")) {//== Blocks.RED_FLOWER || blockCheck == Blocks.YELLOW_FLOWER) {
       if (conf.doesFlowers) {
         doBreak = true;
       }
@@ -194,7 +190,7 @@ public class UtilHarvestCrops {
         }
       }
     }
-//    else  ModCyclic.logger.info("!"+blockClassString);
+    //    else  ModCyclic.logger.info("!"+blockClassString);
     // no , for now is fine, do not do blocks
     if (doBreak) {
       // get the Actual drops

@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.net;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.villager.ContainerMerchantBetter;
-import com.lothrazar.cyclicmagic.util.Const;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;

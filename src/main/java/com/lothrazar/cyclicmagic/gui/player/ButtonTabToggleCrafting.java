@@ -20,7 +20,7 @@ public class ButtonTabToggleCrafting extends GuiButton {
         ClientProxy.keyExtraCraftin.getDisplayName().equals("NONE") == false) {
       this.displayString = ClientProxy.keyExtraCraftin.getDisplayName();
     }
-    else{
+    else {
       this.displayString = "C";//the legacy one. in case someone is just running with the key unbound
     }
   }
