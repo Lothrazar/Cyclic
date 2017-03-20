@@ -97,8 +97,7 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
         if (isCurrentlyMining) {
           IBlockState targetState = world.getBlockState(targetPos);
           curBlockDamage += UtilItemStack.getPlayerRelativeBlockHardness(targetState.getBlock(), targetState, fakePlayer.get(), world, targetPos);
-//ModCyclic.logger.info("curBlockDamage"+curBlockDamage);
-//ModCyclic.logger.info("targetState"+targetState);
+     
           if (curBlockDamage >= 1.0f) {
             isCurrentlyMining = false;
             resetProgress(targetPos);
@@ -144,26 +143,44 @@ public class TileMachineMinerSmart extends TileEntityBaseMachineInvo implements 
     IBlockState targetState = world.getBlockState(targetPos);
     Block target = targetState.getBlock();
     //else check blacklist
-    ItemStack item;
+    ItemStack itemStack;
+    int listSize = this.getSizeInventory() - 1;
     if (this.blacklistIfZero == 0) {
-      for (int i = 0; i < this.getSizeInventory() - 1; i++) {//minus 1 because of TOOL
+      for (int i = 0; i < listSize; i++) {//minus 1 because of TOOL
         if (inv.get(i) == ItemStack.EMPTY) {
           continue;
         }
-        item = inv.get(i);
-        if (item.getItem() == Item.getItemFromBlock(target)) { return false; }
+        itemStack = inv.get(i);
+        if (itemStack.getItem() == Item.getItemFromBlock(target)) { return false; }
       }
       return true;//blacklist means default trie
     }
     else {//check it as a WHITELIST
-      for (int i = 0; i < this.getSizeInventory() - 1; i++) {//minus 1 because of TOOL
+      int countEmpty = 0;
+      for (int i = 0; i < listSize; i++) {//minus 1 because of TOOL
         if (inv.get(i) == ItemStack.EMPTY) {
+          countEmpty++;
           continue;
         }
-        item = inv.get(i);
+        itemStack = inv.get(i);
         //its a whitelist, so if its found in the list, its good to go right away
-        if (item.getItem() == Item.getItemFromBlock(target)) { return true; }
+        //        ModCyclic.logger.info("checkingWhitelist... ? "+itemStack);
+        //        ModCyclic.logger.info(" Block.getBlockFromItem(item.getItem())... ? "+ Block.getBlockFromItem(itemStack.getItem()));
+        //        ModCyclic.logger.info("Item.REGISTRY... vs "+Item.REGISTRY.getNameForObject(itemStack.getItem()).toString()  );
+        //        ModCyclic.logger.info("Block.REGISTRY... ?? "+Block.REGISTRY.getNameForObject(target).toString());
+        //        ModCyclic.logger.info("WL NAMES... ? "+itemStack.getUnlocalizedName()+"__"+target.getUnlocalizedName());
+        if (itemStack.getItem() == Item.getItemFromBlock(target)
+            || Block.getBlockFromItem(itemStack.getItem()) == target
+            || Item.REGISTRY.getNameForObject(itemStack.getItem()).toString().equals(Block.REGISTRY.getNameForObject(target).toString())) {
+          //also compare registry names (for SPECIAL itemblocks like reeds)
+          //so for reeds, the getBlockFromItem is returning Blocks.AIR
+          //BUT the registry name for both the block and the item is "minecraft:reeds",, in other words, identical.
+          //and linked through the ItemBlockSpecial() class
+          return true;
+        }
       }
+      //wait, if whitelist is empty then it doesnt matter
+      if (listSize == countEmpty) { return true; }
       return false;//check as blacklist
     }
   }
