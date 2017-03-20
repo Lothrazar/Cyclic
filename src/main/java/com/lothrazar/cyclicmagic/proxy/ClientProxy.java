@@ -259,7 +259,8 @@ public class ClientProxy extends CommonProxy {
     }
     catch (Exception e) {
       //sometimes it crashes just AS the world is loading, but then it works after everythings set up
-      ModCyclic.logger.error("Error setting reach ");
+      //does not affect functionality, its working before the player can ever make use of this.
+      ModCyclic.logger.info("Error setting reach : "+e);
     }
   }
   /**
