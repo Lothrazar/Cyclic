@@ -57,8 +57,7 @@ public class UtilPlayerInventoryFilestorage {
     return playerItems.get(player.getDisplayNameString());
   }
   public static ItemStack getPlayerInventoryStack(EntityPlayer player, int slot) {
-
-      return getPlayerInventory(player).getStackInSlot(slot);
+    return getPlayerInventory(player).getStackInSlot(slot);
   }
   public static void setPlayerInventoryStack(EntityPlayer player, int slot, ItemStack itemStack) {
     //    UtilPlayerInventoryFilestorage.getPlayerInventory(player).setInventorySlotContents(slot, itemStack);
@@ -83,7 +82,7 @@ public class UtilPlayerInventoryFilestorage {
           }
         }
         if (file1 == null || !file1.exists() || data == null || data.hasNoTags()) {
-          ModCyclic.logger.warn("Data not found for " + player.getDisplayNameString() + ". Trying to load backup data.");
+          ModCyclic.logger.error("Data not found for " + player.getDisplayNameString() + ". Trying to load backup data.");
           if (file2 != null && file2.exists()) {
             try {
               FileInputStream fileinputstream = new FileInputStream(file2);

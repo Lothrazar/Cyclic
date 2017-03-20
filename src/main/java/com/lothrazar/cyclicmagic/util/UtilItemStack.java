@@ -30,8 +30,8 @@ public class UtilItemStack {
     int moveover = 0;
     if (room > 0) {
       moveover = Math.min(takeFrom.getCount(), room);
-//      moveTo.stackSize += moveover;
-//      takeFrom.stackSize -= moveover;
+      //      moveTo.stackSize += moveover;
+      //      takeFrom.stackSize -= moveover;
       moveTo.grow(moveover);
       takeFrom.shrink(moveover);
     }
@@ -109,8 +109,7 @@ public class UtilItemStack {
     }
   }
   public static boolean isEmpty(ItemStack is) {
-    
-    return is == null ||is.isEmpty()|| is == ItemStack.EMPTY;
+    return is == null || is.isEmpty() || is == ItemStack.EMPTY;
   }
   public static String getStringForItem(Item item) {
     return item.getRegistryName().getResourceDomain() + ":" + item.getRegistryName().getResourcePath();

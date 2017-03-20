@@ -102,7 +102,7 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
   //onItemUse
   //	public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand)
   @Override
-  public EnumActionResult onItemUseFirst( EntityPlayer entityPlayer, World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, EnumHand hand) {
+  public EnumActionResult onItemUseFirst(EntityPlayer entityPlayer, World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, EnumHand hand) {
     TileEntity container = world.getTileEntity(pos);
     boolean isValid = false;
     boolean consumeItem = false;

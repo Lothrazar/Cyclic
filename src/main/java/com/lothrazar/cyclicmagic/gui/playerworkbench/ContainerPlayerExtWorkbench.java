@@ -103,7 +103,6 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
     for (int i = 0; i < 9; ++i) {
       ItemStack itemstack = this.craftMatrix.removeStackFromSlot(i);
       if (itemstack != ItemStack.EMPTY) {
-        //System.out.println("DROP "+i);
         playerIn.dropItem(itemstack, false);
       }
     }
@@ -113,7 +112,6 @@ public class ContainerPlayerExtWorkbench extends ContainerBase {
   public ItemStack transferStackInSlot(EntityPlayer entityPlayer, int slotIndex) {
     ItemStack itemStack = ItemStack.EMPTY;
     Slot fromSlot = (Slot) this.inventorySlots.get(slotIndex);
-    //ystem.out.println("  transferStackInSlot" + slotIndex);
     //shield is slot 5 now
     int craftOutpt = 0, playerStart = 15, playerEnd = 50, craftStart = 6, craftEnd = 14, armorStart = 1, armorEnd = 5;
     if (fromSlot != null && fromSlot.getHasStack()) {

@@ -35,28 +35,19 @@ public class GuiFan extends GuiBaseContainer {
     int yOffset = 14;
     int x = this.guiLeft + xHeightTextbox;
     int y = this.guiTop + yHeightTxtbox + yOffset;
-    
-    
     btnHeightDown = new ButtonFan(tile.getPos(), id++, x, y, w, h, -1, TileEntityFan.Fields.RANGE);
-    btnHeightDown.displayString="-1";
+    btnHeightDown.displayString = "-1";
     this.buttonList.add(btnHeightDown);
-    
-
-    ButtonFan   btnHeightDown5 = new ButtonFan(tile.getPos(), id++, x, y+h+1, w, h, -5, TileEntityFan.Fields.RANGE);
-    btnHeightDown5.displayString="-5";
+    ButtonFan btnHeightDown5 = new ButtonFan(tile.getPos(), id++, x, y + h + 1, w, h, -5, TileEntityFan.Fields.RANGE);
+    btnHeightDown5.displayString = "-5";
     this.buttonList.add(btnHeightDown5);
-    
-    
     y = this.guiTop + yHeightTxtbox - yOffset;
     btnHeightUp = new ButtonFan(tile.getPos(), id++, x, y, w, h, +1, TileEntityFan.Fields.RANGE);
-    btnHeightUp.displayString="+1";
+    btnHeightUp.displayString = "+1";
     this.buttonList.add(btnHeightUp);
-    
-
-    ButtonFan btnHeightUp5 = new ButtonFan(tile.getPos(), id++, x, y-h-1, w, h, +5, TileEntityFan.Fields.RANGE);
-    btnHeightUp5.displayString="+5";
+    ButtonFan btnHeightUp5 = new ButtonFan(tile.getPos(), id++, x, y - h - 1, w, h, +5, TileEntityFan.Fields.RANGE);
+    btnHeightUp5.displayString = "+5";
     this.buttonList.add(btnHeightUp5);
-    
     w = 70;
     h = 20;
     x = this.guiLeft + 50;

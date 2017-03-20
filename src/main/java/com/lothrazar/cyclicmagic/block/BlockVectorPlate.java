@@ -49,13 +49,13 @@ public class BlockVectorPlate extends BlockBaseHasTile {
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
     return new TileVector();
   }
-//  @Override
-//  public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-//    return AABB;
-//  }
+  //  @Override
+  //  public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+  //    return AABB;
+  //  }
   @Nullable
   @Override
-  public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess  worldIn, BlockPos pos) {
+  public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
     return COLLISION_AABB;
   }
   @Override

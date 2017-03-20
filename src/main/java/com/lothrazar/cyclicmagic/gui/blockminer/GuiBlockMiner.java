@@ -18,7 +18,6 @@ public class GuiBlockMiner extends GuiBaseContainer {
     super(new ContainerBlockMiner(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
   }
- 
   @Override
   public void initGui() {
     super.initGui();

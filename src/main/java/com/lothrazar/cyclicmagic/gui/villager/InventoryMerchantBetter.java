@@ -109,7 +109,7 @@ public class InventoryMerchantBetter extends InventoryMerchant implements IInven
       itemstack1 = ItemStack.EMPTY;
     }
     if (itemstack == ItemStack.EMPTY) {
-      this.setInventorySlotContents(2,  ItemStack.EMPTY);
+      this.setInventorySlotContents(2, ItemStack.EMPTY);
     }
     else {
       MerchantRecipeList merchantrecipelist = this.getRecipes();
@@ -141,7 +141,6 @@ public class InventoryMerchantBetter extends InventoryMerchant implements IInven
   }
   public void setCurrentRecipeIndex(int currentRecipeIndexIn) {
     this.currentRecipeIndex = currentRecipeIndexIn;
-    //    System.out.println(this.currentRecipeIndex+"[INV] setCurrentRecipeIndexx   "+this.thePlayer.getEntityWorld().isRemote);
     this.resetRecipeAndSlots();
   }
   public int getField(int id) {

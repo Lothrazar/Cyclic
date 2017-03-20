@@ -48,7 +48,7 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
       World worldObj = event.getWorld();
       if (pos == null) { return; }
       if (entityPlayer.isSneaking()) { return; }
-      ItemStack held = event.getItemStack();// entityPlayer.getHeldItem(event.getHand());
+      //      ItemStack held = event.getItemStack();// entityPlayer.getHeldItem(event.getHand());
       IBlockState state = event.getWorld().getBlockState(pos);
       //removed  && entityPlayer.isSneaking() == false
       if (state != null && (state.getBlock() == Blocks.WALL_SIGN || state.getBlock() == Blocks.WALL_BANNER)) {
@@ -86,7 +86,7 @@ public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig
     }
     if (passThroughClick) {
       EntityPlayer entityPlayer = event.getEntityPlayer();
-      ItemStack held = entityPlayer.getHeldItem(event.getHand());
+      //      ItemStack held = entityPlayer.getHeldItem(event.getHand());
       Entity target = event.getTarget();
       World worldObj = event.getWorld();
       //dont do this if player is sneaking, let them use the item frame

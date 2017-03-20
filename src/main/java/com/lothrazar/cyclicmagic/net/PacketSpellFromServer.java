@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.net;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.spell.ISpellFromServer;
@@ -66,9 +65,9 @@ public class PacketSpellFromServer implements IMessage, IMessageHandler<PacketSp
       if (spell != null && spell instanceof ISpellFromServer) {
         ((ISpellFromServer) spell).castFromServer(message.pos, message.posOffset, message.face, p);
       }
-      else {
-        ModCyclic.logger.warn("WARNING: Message from server: spell not found" + message.spellID);
-      }
+      //      else {
+      //        ModCyclic.logger.error("WARNING: Message from server: spell not found" + message.spellID);
+      //      }
     }
     return null;
   }

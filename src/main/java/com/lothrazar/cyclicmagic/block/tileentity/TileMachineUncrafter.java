@@ -104,7 +104,7 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
     } //end of timer go
   }
   private void decrTimer() {
-    if(this.getWorld().isRemote == false){
+    if (this.getWorld().isRemote == false) {
       timer--;
     }
   }

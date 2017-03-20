@@ -10,7 +10,6 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.NonNullList;
 
 public class InventoryPlayerExtWorkbench extends InventoryCrafting {
-
   protected NonNullList<ItemStack> inv;
   private ContainerPlayerExtWorkbench eventHandler;
   public WeakReference<EntityPlayer> player;
@@ -46,7 +45,6 @@ public class InventoryPlayerExtWorkbench extends InventoryCrafting {
    */
   @Override
   public ItemStack decrStackSize(int index, int count) {
-
     ItemStack stack = getStackInSlot(index);
     if (stack != null) {
       if (stack.getMaxStackSize() <= count) {
@@ -61,28 +59,26 @@ public class InventoryPlayerExtWorkbench extends InventoryCrafting {
     }
     this.eventHandler.onCraftMatrixChanged(this);
     return stack;
-    
-    
-//    if (this.inv[index] != null) {
-//      ItemStack itemstack;
-//      if (this.inv[index].getCount() <= count) {
-//        itemstack = this.inv[index];
-//        this.inv[index] = null;
-//        this.eventHandler.onCraftMatrixChanged(this);
-//        return itemstack;
-//      }
-//      else {
-//        itemstack = this.inv[index].splitStack(count);
-//        if (this.inv[index].getCount() == 0) {
-//          this.inv[index] = null;
-//        }
-//        this.eventHandler.onCraftMatrixChanged(this);
-//        return itemstack;
-//      }
-//    }
-//    else {
-//      return null;
-//    }
+    //    if (this.inv[index] != null) {
+    //      ItemStack itemstack;
+    //      if (this.inv[index].getCount() <= count) {
+    //        itemstack = this.inv[index];
+    //        this.inv[index] = null;
+    //        this.eventHandler.onCraftMatrixChanged(this);
+    //        return itemstack;
+    //      }
+    //      else {
+    //        itemstack = this.inv[index].splitStack(count);
+    //        if (this.inv[index].getCount() == 0) {
+    //          this.inv[index] = null;
+    //        }
+    //        this.eventHandler.onCraftMatrixChanged(this);
+    //        return itemstack;
+    //      }
+    //    }
+    //    else {
+    //      return null;
+    //    }
   }
   /**
    * Sets the given item stack to the specified slot in the inventory (can be

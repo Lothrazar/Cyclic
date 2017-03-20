@@ -12,9 +12,7 @@ import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -56,7 +54,6 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
     if (heldWand == ItemStack.EMPTY) { return; }
     int itemSlot = ItemCyclicWand.BuildType.getSlot(heldWand);
     IBlockState state = InventoryWand.getToPlaceFromSlot(heldWand, itemSlot);
-
     if (state == null || state.getBlock() == null) {
       //one last chance to update slot, in case something happened
       ItemCyclicWand.BuildType.setNextSlot(heldWand);
@@ -143,8 +140,7 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
       //      }
     }
     //    if (UtilPlaceBlocks.placeStateSafe(world, p, posToPlaceAt, state)) {
-    ItemStack cur = InventoryWand.getFromSlot(heldWand, itemSlot);
-  
+    //    ItemStack cur = InventoryWand.getFromSlot(heldWand, itemSlot);
     if (sideMouseover == null) {
       sideMouseover = p.getHorizontalFacing();
     }
@@ -155,7 +151,6 @@ public class SpellRangeBuild extends BaseSpellRange implements ISpellFromServer 
         InventoryWand.decrementSlot(heldWand, itemSlot);
       }
       ItemCyclicWand.BuildType.setNextSlot(heldWand);
-
       // yes im spawning particles on the server side, but the
       // util handles that
       this.spawnParticle(world, p, posMouseover);

@@ -141,7 +141,7 @@ public class UtilPlayer {
   }
   public static Item getItemArmorSlot(EntityPlayer player, EntityEquipmentSlot slot) {
     ItemStack inslot = player.inventory.armorInventory.get(slot.getIndex());
-//    ItemStack inslot = player.inventory.armorInventory[slot.getIndex()];
+    //    ItemStack inslot = player.inventory.armorInventory[slot.getIndex()];
     Item item = (inslot == ItemStack.EMPTY) ? null : inslot.getItem();
     return item;
   }

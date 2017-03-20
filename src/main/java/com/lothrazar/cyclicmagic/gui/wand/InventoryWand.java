@@ -101,18 +101,18 @@ public class InventoryWand extends InventoryBase implements IInventory {
     }
     writeToNBT(internalWand, inv);
   }
-//  @Override
-//  public boolean isUseableByPlayer(EntityPlayer player) {
-//    return UtilSpellCaster.getPlayerWandIfHeld(player) != null;
-//  }
+  //  @Override
+  //  public boolean isUseableByPlayer(EntityPlayer player) {
+  //    return UtilSpellCaster.getPlayerWandIfHeld(player) != null;
+  //  }
   @Override
   public boolean isItemValidForSlot(int index, ItemStack stack) {
     // only placeable blocks, not any old item
     return !(stack.getItem() instanceof ItemCyclicWand) && Block.getBlockFromItem(stack.getItem()) != Blocks.AIR;
   }
   /************** public static ******************/
-  public static  NonNullList<ItemStack>  readFromNBT(ItemStack stack) {
-    NonNullList<ItemStack> inv = NonNullList.withSize(INV_SIZE,ItemStack.EMPTY);
+  public static NonNullList<ItemStack> readFromNBT(ItemStack stack) {
+    NonNullList<ItemStack> inv = NonNullList.withSize(INV_SIZE, ItemStack.EMPTY);
     if (stack.isEmpty() || (stack.getItem() instanceof ItemCyclicWand) == false) { return inv; }
     if (!stack.hasTagCompound()) {
       stack.setTagCompound(new NBTTagCompound());
@@ -123,12 +123,12 @@ public class InventoryWand extends InventoryBase implements IInventory {
       NBTTagCompound item = (NBTTagCompound) items.getCompoundTagAt(i);
       int slot = item.getInteger("Slot");
       if (slot >= 0 && slot < INV_SIZE) {
-        inv.set(slot,  UtilNBT.itemFromNBT(item));
+        inv.set(slot, UtilNBT.itemFromNBT(item));
       }
     }
     return inv;
   }
-  public static void writeToNBT(ItemStack wandStack,  NonNullList<ItemStack>  theInventory) {
+  public static void writeToNBT(ItemStack wandStack, NonNullList<ItemStack> theInventory) {
     NBTTagCompound tagcompound = wandStack.getTagCompound();
     // Create a new NBT Tag List to store itemstacks as NBT Tags
     NBTTagList items = new NBTTagList();
@@ -156,12 +156,12 @@ public class InventoryWand extends InventoryBase implements IInventory {
   }
   public static void decrementSlot(ItemStack wand, int itemSlot) {
     NonNullList<ItemStack> invv = InventoryWand.readFromNBT(wand);
-//    invv[itemSlot].stackSize--;
+    //    invv[itemSlot].stackSize--;
     invv.get(itemSlot).shrink(1);
-//    invv[itemSlot].setCount(invv[itemSlot].getCount()-1);
-//    if (invv[itemSlot].getCount() == 0) {
-//      invv[itemSlot] = ItemStack.EMPTY;
-//    }
+    //    invv[itemSlot].setCount(invv[itemSlot].getCount()-1);
+    //    if (invv[itemSlot].getCount() == 0) {
+    //      invv[itemSlot] = ItemStack.EMPTY;
+    //    }
     InventoryWand.writeToNBT(wand, invv);
   }
   public static ItemStack getFromSlot(ItemStack wand, int i) {

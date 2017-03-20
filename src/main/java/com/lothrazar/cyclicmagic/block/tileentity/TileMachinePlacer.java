@@ -8,22 +8,19 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 
 public class TileMachinePlacer extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
-
   private static final int buildSpeed = 1;
   public static final int TIMER_FULL = 75;//one day i will add fuel AND/OR speed upgrades. till then make very slow
-
   private static final String NBT_TIMER = "Timer";
   private static final String NBT_REDST = "redstone";
   public static enum Fields {
     TIMER, REDSTONE
-  }  
+  }
   private int timer;
   private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots
   private int needsRedstone = 1;
   public TileMachinePlacer() {
     super(9);
   }
-  
   @Override
   public boolean isItemValidForSlot(int index, ItemStack stack) {
     return Block.getBlockFromItem(stack.getItem()) != null;
@@ -58,13 +55,11 @@ public class TileMachinePlacer extends TileEntityBaseMachineInvo implements ITil
   public int getTimer() {
     return this.getField(Fields.TIMER.ordinal());
   }
- 
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
     this.needsRedstone = tagCompound.getInteger(NBT_REDST);
     timer = tagCompound.getInteger(NBT_TIMER);
-    
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
@@ -114,14 +109,13 @@ public class TileMachinePlacer extends TileEntityBaseMachineInvo implements ITil
   public int[] getSlotsForFace(EnumFacing side) {
     return hopperInput;
   }
-
   @Override
   public boolean receiveClientEvent(int id, int value) {
     if (id >= 0 && id < this.getFieldCount()) {
       this.setField(id, value);
       return true;
     }
-    else{
+    else {
       return super.receiveClientEvent(id, value);
     }
   }

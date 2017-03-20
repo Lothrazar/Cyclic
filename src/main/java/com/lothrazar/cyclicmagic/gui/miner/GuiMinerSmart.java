@@ -48,20 +48,20 @@ public class GuiMinerSmart extends GuiBaseContainer {
     this.buttonList.add(btnHeightUp);
     int x = this.guiLeft + 32;
     int y = this.guiTop + Const.padding * 2 + 4;
-    btnWhitelist = new ButtonMinerHeight(tile.getPos(), id++, 
-        x,y, true, TileMachineMinerSmart.Fields.LISTTYPE);
+    btnWhitelist = new ButtonMinerHeight(tile.getPos(), id++,
+        x, y, true, TileMachineMinerSmart.Fields.LISTTYPE);
     btnWhitelist.width = 46;
     btnWhitelist.height = 20;
     this.buttonList.add(btnWhitelist);
     x = this.guiLeft + Const.padding;
     y = this.guiTop + Const.padding * 2 + 44;
     btnSize = new GuiButtonSizePreview(id++,
-        x,y, "", this.tile.getPos(),
+        x, y, "", this.tile.getPos(),
         PacketTileSizeToggle.ActionType.SIZE);
     this.buttonList.add(btnSize);
-    x =  this.guiLeft + Const.padding * 2 + 40;
+    x = this.guiLeft + Const.padding * 2 + 40;
     GuiButtonSizePreview btnPreview = new GuiButtonSizePreview(id++,
-        x,y, UtilChat.lang("button.harvester.preview"), this.tile.getPos(),
+        x, y, UtilChat.lang("button.harvester.preview"), this.tile.getPos(),
         PacketTileSizeToggle.ActionType.PREVIEW);
     this.buttonList.add(btnPreview);
   }
@@ -87,7 +87,7 @@ public class GuiMinerSmart extends GuiBaseContainer {
     btnWhitelist.displayString = UtilChat.lang("button.miner.whitelist." + tile.getField(Fields.LISTTYPE.ordinal()));
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     //    String s = UtilChat.lang("tile.block_miner_smart.blacklist");
-//    int x = ContainerMinerSmart.SLOTX_START - 2, 
+    //    int x = ContainerMinerSmart.SLOTX_START - 2, 
     //    this.fontRendererObj.drawString(s, x, y, 4210752);
     int x = ContainerMinerSmart.SLOTEQUIP_X - 3;
     int y = 30;

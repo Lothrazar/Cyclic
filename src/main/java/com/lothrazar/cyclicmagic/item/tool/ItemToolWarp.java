@@ -32,9 +32,8 @@ public class ItemToolWarp extends BaseTool implements IHasRecipe {
     return true;
   }
   @Override
-  public ActionResult<ItemStack> onItemRightClick( World world, EntityPlayer player, EnumHand hand) {
-      ItemStack stack = player.getHeldItem(hand);
-  
+  public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    ItemStack stack = player.getHeldItem(hand);
     if (player.dimension != 0) {
       UtilChat.addChatMessage(player, "command.worldhome.dim");
       return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);

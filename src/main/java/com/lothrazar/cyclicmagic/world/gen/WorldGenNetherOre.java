@@ -41,8 +41,6 @@ public class WorldGenNetherOre implements IWorldGenerator {
   public WorldGenNetherOre() {
     if (Configs.blockCountRedstone > 0)
       this.genRedstone = new WorldGenMinable(WorldGenModule.nether_redstone_ore.getDefaultState(), Configs.blockCountRedstone, BlockMatcher.forBlock(Blocks.NETHERRACK));
-    
-    
     if (Configs.blockCountIron > 0)
       this.genIron = new WorldGenMinable(WorldGenModule.nether_iron_ore.getDefaultState(), Configs.blockCountIron, BlockMatcher.forBlock(Blocks.NETHERRACK));
     if (Configs.blockCountGold > 0)
@@ -61,8 +59,6 @@ public class WorldGenNetherOre implements IWorldGenerator {
     if (world.provider.getDimension() == Const.Dimension.nether) {
       if (this.genRedstone != null && Configs.spawnChanceRedstone > 0)
         this.run(this.genRedstone, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, Configs.spawnChanceRedstone, MIN_HEIGHT, MAX_HEIGHT);
-    
-      
       if (this.genGold != null && Configs.spawnChanceGold > 0)
         this.run(this.genGold, world, random, chunkX * Const.CHUNK_SIZE, chunkZ * Const.CHUNK_SIZE, Configs.spawnChanceGold, MIN_HEIGHT, MAX_HEIGHT);
       if (this.genCoal != null && Configs.spawnChanceCoal > 0)

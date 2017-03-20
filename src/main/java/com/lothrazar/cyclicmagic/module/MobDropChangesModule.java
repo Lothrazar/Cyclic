@@ -27,9 +27,9 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class MobDropChangesModule extends BaseEventModule implements IHasConfig {
-//  private static final int chanceZombieVillagerEmerald = 25;
+  //  private static final int chanceZombieVillagerEmerald = 25;
   public static boolean sheepShearBuffed;//used by entity shearing bolt also
-//  private boolean zombieVillagerEmeralds;
+  //  private boolean zombieVillagerEmeralds;
   private boolean extraLeather;
   private boolean bonusPork;
   private boolean bonusGolemIron;
@@ -71,12 +71,12 @@ public class MobDropChangesModule extends BaseEventModule implements IHasConfig 
         UtilItemStack.dropItemStackInWorld(world, mob.getPosition(), bs.getBlock());
       }
     }
-//    if (entity instanceof EntityZombie && zombieVillagerEmeralds) {
-//      EntityZombie z = (EntityZombie) entity;
-//      if (z.isVillager() && chanceZombieVillagerEmerald > 0 && world.rand.nextInt(100) <= chanceZombieVillagerEmerald) {
-//        drops.add(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Items.EMERALD)));
-//      }
-//    }
+    //    if (entity instanceof EntityZombie && zombieVillagerEmeralds) {
+    //      EntityZombie z = (EntityZombie) entity;
+    //      if (z.isVillager() && chanceZombieVillagerEmerald > 0 && world.rand.nextInt(100) <= chanceZombieVillagerEmerald) {
+    //        drops.add(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Items.EMERALD)));
+    //      }
+    //    }
     if (extraLeather && entity instanceof EntityCow) {
       int rand = MathHelper.getInt(world.rand, 1, 8);
       UtilItemStack.dropItemStackInWorld(world, pos, new ItemStack(Items.LEATHER, rand));
@@ -120,8 +120,8 @@ public class MobDropChangesModule extends BaseEventModule implements IHasConfig 
         "Zombies no longer drops carrots, potatoes, or iron ingots");
     sheepShearBuffed = config.getBoolean("Sheep Shear Bonus", category, true,
         "Shearing sheep randomly adds bonus wool");
-//    zombieVillagerEmeralds = config.getBoolean("Zombie Villager Emerald", category, true,
-//        "Zombie villagers have a " + chanceZombieVillagerEmerald + "% chance to drop an emerald");
+    //    zombieVillagerEmeralds = config.getBoolean("Zombie Villager Emerald", category, true,
+    //        "Zombie villagers have a " + chanceZombieVillagerEmerald + "% chance to drop an emerald");
     extraLeather = config.getBoolean("Leather Bonus", category, true,
         "Leather drops from cows randomly increased");
     bonusPork = config.getBoolean("Pork Bonus", category, true,

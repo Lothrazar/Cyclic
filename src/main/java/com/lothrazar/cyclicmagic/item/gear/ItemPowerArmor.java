@@ -47,7 +47,7 @@ public class ItemPowerArmor extends ItemArmor implements IHasRecipe, ICanToggleO
       break;
       case HEAD:
         setGlowing(player, isTurnedOn);
-        if(isTurnedOn)
+        if (isTurnedOn)
           setNightVision(player);
       break;
       case LEGS:

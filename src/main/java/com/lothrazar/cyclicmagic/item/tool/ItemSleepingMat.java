@@ -133,15 +133,6 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig 
     final IPlayerExtendedProperties sleep = p.getCapability(ModCyclic.CAPABILITYSTORAGE, null);
     if (sleep != null && sleep.isSleeping()) {
       sleep.setSleeping(false);
-//      World world = p.getEntityWorld();
-//      BlockPos pos = p.getPosition();
-      //      
-      //      if(
-      //          world.getBlockState(pos).getBlock() == Blocks.BED){
-      //
-      //        System.out.println("onWakeUpDESTRY");
-      //        world.setBlockToAir(pos); 
-      //      }
     }
   }
   @Override

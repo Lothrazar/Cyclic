@@ -29,10 +29,8 @@ public class ItemToolPearlReuse extends BaseTool implements IHasRecipe {
     orbType = o;
   }
   @Override
-  public ActionResult<ItemStack> onItemRightClick( World worldIn, EntityPlayer playerIn, EnumHand hand) {
-    
+  public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
     ItemStack itemStackIn = playerIn.getHeldItem(hand);
-    
     worldIn.playSound((EntityPlayer) null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_ENDERPEARL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
     playerIn.getCooldownTracker().setCooldown(this, cooldown);
     if (!worldIn.isRemote) {
@@ -56,7 +54,7 @@ public class ItemToolPearlReuse extends BaseTool implements IHasRecipe {
             "rsr",
             "ere",
             'e', new ItemStack(Items.ENDER_EYE),
-            'r', new ItemStack(Items.DYE,1,EnumDyeColor.BLUE.getDyeDamage()),
+            'r', new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage()),
             's', new ItemStack(Blocks.IRON_BLOCK));
       break;
       case NORMAL:

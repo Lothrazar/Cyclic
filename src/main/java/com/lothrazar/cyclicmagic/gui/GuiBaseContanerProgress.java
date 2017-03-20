@@ -15,7 +15,7 @@ public abstract class GuiBaseContanerProgress extends GuiBaseContainer {
   public abstract int getProgressMax();
   private static final int progressWidth = 156;
   private static final int progressH = 7;
-  public ResourceLocation getProgressAsset(){
+  public ResourceLocation getProgressAsset() {
     return Const.Res.PROGRESS;
   }
   @Override

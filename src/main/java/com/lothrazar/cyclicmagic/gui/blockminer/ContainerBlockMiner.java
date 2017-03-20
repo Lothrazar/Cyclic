@@ -1,10 +1,8 @@
 package com.lothrazar.cyclicmagic.gui.blockminer;
 import com.lothrazar.cyclicmagic.block.tileentity.TileMachineBlockMiner;
 import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -17,7 +15,6 @@ public class ContainerBlockMiner extends ContainerBaseMachine {
   private int tileRedstone;
   public ContainerBlockMiner(InventoryPlayer inventoryPlayer, TileMachineBlockMiner te) {
     tileEntity = te;
-   
     bindPlayerInventory(inventoryPlayer);
   }
   @Override

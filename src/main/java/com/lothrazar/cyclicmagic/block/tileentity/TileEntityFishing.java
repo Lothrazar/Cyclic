@@ -205,7 +205,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
       NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
       byte slot = tag.getByte(NBT_SLOT);
       if (slot >= 0 && slot < inv.size()) {
-        inv.set(i,  UtilNBT.itemFromNBT(tag));
+        inv.set(i, UtilNBT.itemFromNBT(tag));
       }
     }
   }

@@ -8,12 +8,12 @@ import net.minecraft.world.World;
 
 public class UtilInventoryTransfer {
   public static class BagDepositReturn {
-    public BagDepositReturn(int m,  NonNullList<ItemStack>  s) {
+    public BagDepositReturn(int m, NonNullList<ItemStack> s) {
       moved = m;
       stacks = s;
     }
     public int moved;
-    public  NonNullList<ItemStack>  stacks;
+    public NonNullList<ItemStack> stacks;
   }
   //TODO: this whole class is a big mess, lots of code repetition; needs work.
   public static void dumpFromPlayerToIInventory(World world, IInventory inventory, EntityPlayer player) {
@@ -104,7 +104,6 @@ public class UtilInventoryTransfer {
           chest.setInventorySlotContents(islotChest, chestItem);
           playerItem.shrink(toDeposit);
           if (playerItem.getCount() <= 0) {// because of calculations  above, should  not be below zero
-          
             // item stacks with zero count do not destroy
             // themselves, they show
             // up and have unexpected behavior in game so set to
@@ -223,14 +222,12 @@ public class UtilInventoryTransfer {
       if (bagItem == ItemStack.EMPTY || bagItem.getCount() == 0) {
         continue;
       }
-      // System.out.println(bagItem.stackSize + "_" + bagItem.getDisplayName());
       for (int islotChest = 0; islotChest < chest.getSizeInventory(); islotChest++) {
         chestItem = chest.getStackInSlot(islotChest);
         //we have a space in the inventory thats empty. are we allowed
         if (chestItem == ItemStack.EMPTY && onlyMatchingItems == false) {
           //then yeah we are allowed to use the empty space
           if (chest.isItemValidForSlot(islotStacks, bagItem)) {
-            // System.out.println("dump at " + islotChest);
             itemsMoved += bagItem.getCount();
             chest.setInventorySlotContents(islotChest, bagItem);
             stacks.set(islotStacks, ItemStack.EMPTY);
@@ -257,7 +254,6 @@ public class UtilInventoryTransfer {
           if (room <= 0) {
             continue;//no room on this chest slot, so move to next slot
           } // no room, check the next spot
-          //System.out.println("merge at " + islotChest);
           // so if i have 30 room, and 28 items, i deposit 28.
           // or if i have 30 room and 38 items, i deposit 30
           toDeposit = Math.min(bagItem.getCount(), room);
@@ -275,7 +271,7 @@ public class UtilInventoryTransfer {
           else {
             // set to new quantity
             stacks.set(islotStacks, bagItem);
-//            stacks[islotStacks] = bagItem;
+            //            stacks[islotStacks] = bagItem;
           }
         } // end if items match
         if (UtilItemStack.isEmpty(bagItem)) {

@@ -94,10 +94,8 @@ public class ItemToolPiston extends BaseTool implements IHasRecipe {
     }
   }
   @Override
-  public EnumActionResult onItemUse( EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-
+  public EnumActionResult onItemUse(EntityPlayer player, World worldObj, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
     ItemStack stack = player.getHeldItem(hand);
-    
     //if we only run this on server, clients dont get the udpate
     //so run it only on client, let packet run the server
     if (worldObj.isRemote) {

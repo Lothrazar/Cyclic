@@ -24,11 +24,11 @@ public class ItemMagicBean extends ItemSeeds implements IHasRecipe {
     soilBlockID = soil;
   }
   @Override
-  public EnumActionResult onItemUse( EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+  public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
     IBlockState state = worldIn.getBlockState(pos);
     //without this override, it gets planted on grass just like flowers. since we dont fit an EnumPlantType def
     if (state != null && state.getBlock() == this.soilBlockID) {
-      return super.onItemUse( playerIn, worldIn, pos, hand, facing, hitX, hitY, hitZ);
+      return super.onItemUse(playerIn, worldIn, pos, hand, facing, hitX, hitY, hitZ);
     }
     else {
       return EnumActionResult.FAIL;

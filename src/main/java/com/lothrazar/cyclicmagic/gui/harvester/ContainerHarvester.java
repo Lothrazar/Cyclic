@@ -19,7 +19,6 @@ public class ContainerHarvester extends ContainerBaseMachine {
     tileEntity = te;
     bindPlayerInventory(inventoryPlayer);
   }
-
   @Override
   public void detectAndSendChanges() {
     super.detectAndSendChanges();

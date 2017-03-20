@@ -12,14 +12,13 @@ import net.minecraftforge.common.util.Constants;
 
 public class InventoryStorage extends InventoryBase implements IInventory {
   public static final int INV_SIZE = 66; //6*11
-//  private ItemStack[] inv = new ItemStack[INV_SIZE];
+  //  private ItemStack[] inv = new ItemStack[INV_SIZE];
   private final ItemStack internalWand;
   private EntityPlayer thePlayer;
   public InventoryStorage(EntityPlayer player, ItemStack wand) {
     super(INV_SIZE);
     internalWand = wand;
-    inv= readFromNBT(internalWand);
- 
+    inv = readFromNBT(internalWand);
     thePlayer = player;
   }
   public EntityPlayer getPlayer() {
@@ -71,7 +70,9 @@ public class InventoryStorage extends InventoryBase implements IInventory {
   }
   @Override
   public void setInventorySlotContents(int slot, ItemStack stack) {
-    if(stack==null){stack=ItemStack.EMPTY;}
+    if (stack == null) {
+      stack = ItemStack.EMPTY;
+    }
     inv.set(slot, stack);
     if (!stack.isEmpty() && stack.getCount() > getInventoryStackLimit()) {
       stack.setCount(getInventoryStackLimit());
@@ -86,7 +87,7 @@ public class InventoryStorage extends InventoryBase implements IInventory {
   public void markDirty() {
     for (int i = 0; i < getSizeInventory(); ++i) {
       if (getStackInSlot(i) != ItemStack.EMPTY && getStackInSlot(i).getCount() == 0) {
-        inv.set(i,  ItemStack.EMPTY);
+        inv.set(i, ItemStack.EMPTY);
       }
     }
     // set any empty item stacks (red zeroes) to empty
@@ -117,7 +118,7 @@ public class InventoryStorage extends InventoryBase implements IInventory {
     return count;
   }
   public static NonNullList<ItemStack> readFromNBT(ItemStack stack) {
-    NonNullList<ItemStack> inv = NonNullList.withSize(INV_SIZE, ItemStack.EMPTY); 
+    NonNullList<ItemStack> inv = NonNullList.withSize(INV_SIZE, ItemStack.EMPTY);
     if (stack == ItemStack.EMPTY) { return inv; }
     NBTTagList items = UtilNBT.getItemStackNBT(stack).getTagList("ItemInventory", Constants.NBT.TAG_COMPOUND);
     for (int i = 0; i < items.tagCount(); ++i) {
@@ -129,7 +130,8 @@ public class InventoryStorage extends InventoryBase implements IInventory {
       }
     }
     return inv;
-  }  public static void writeToNBT(ItemStack item, NonNullList<ItemStack>  theInventory) {
+  }
+  public static void writeToNBT(ItemStack item, NonNullList<ItemStack> theInventory) {
     NBTTagCompound tagcompound = UtilNBT.getItemStackNBT(item);
     // Create a new NBT Tag List to store itemstacks as NBT Tags
     NBTTagList items = new NBTTagList();
@@ -154,13 +156,14 @@ public class InventoryStorage extends InventoryBase implements IInventory {
     // Add the TagList to the ItemStack's Tag Compound with the name
     // "ItemInventory"
     tagcompound.setTag("ItemInventory", items);
-  } public static void decrementSlot(ItemStack stack, int itemSlot) {
-    NonNullList<ItemStack>  invv = InventoryStorage.readFromNBT(stack);
+  }
+  public static void decrementSlot(ItemStack stack, int itemSlot) {
+    NonNullList<ItemStack> invv = InventoryStorage.readFromNBT(stack);
     invv.get(itemSlot).shrink(1);
-//    invv[itemSlot].setCount(invv[itemSlot].getCount()-1);
-//    invv[itemSlot].stackSize--;
-    if ( invv.get(itemSlot).getCount() == 0) {
-      invv.set(itemSlot,  ItemStack.EMPTY);
+    //    invv[itemSlot].setCount(invv[itemSlot].getCount()-1);
+    //    invv[itemSlot].stackSize--;
+    if (invv.get(itemSlot).getCount() == 0) {
+      invv.set(itemSlot, ItemStack.EMPTY);
     }
     InventoryStorage.writeToNBT(stack, invv);
   }

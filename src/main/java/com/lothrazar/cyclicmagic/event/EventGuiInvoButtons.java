@@ -38,7 +38,7 @@ public class EventGuiInvoButtons {
       final IPlayerExtendedProperties data = CapabilityRegistry.getPlayerProperties(player);
       showInvToggle = data.hasInventoryExtended();// && !(gui instanceof GuiPlayerExtWorkbench);
       showCraftToggle = data.hasInventoryCrafting();// && !(gui instanceof GuiPlayerExtended);
-      if(event.getButtonList() == null){
+      if (event.getButtonList() == null) {
         event.setButtonList(new ArrayList<GuiButton>());
       }
       if (showInvToggle) {

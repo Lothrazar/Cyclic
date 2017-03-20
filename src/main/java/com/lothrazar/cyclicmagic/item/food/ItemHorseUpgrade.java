@@ -51,7 +51,7 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
     GameRegistry.addShapelessRecipe(new ItemStack(this), Items.CARROT, recipeItem);
   }
   public static void onHorseInteract(AbstractHorse ahorse, EntityPlayer player, ItemStack held, ItemHorseUpgrade heldItem) {
-    if(ahorse.isDead){return;}
+    if (ahorse.isDead) { return; }
     if (player.getCooldownTracker().hasCooldown(held.getItem())) { return; }
     World world = player.getEntityWorld();
     boolean success = false;
@@ -73,7 +73,7 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
           }
         }
         else {
-          ModCyclic.logger.warn("Failed to set horse jump strength, reflection failed on JUMP_STRENGTH");
+          ModCyclic.logger.error("Failed to set horse jump strength, reflection failed on JUMP_STRENGTH");
         }
       break;
       case SPEED:

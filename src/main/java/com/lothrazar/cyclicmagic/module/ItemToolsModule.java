@@ -386,7 +386,6 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
       int xmain = RenderLoc.locToX(ItemToolsModule.renderLocation, leftOff, rightOff);
       int ymain = RenderLoc.locToY(ItemToolsModule.renderLocation, topOff, bottOff);
       ModCyclic.proxy.renderItemOnScreen(current, xmain, ymain);
-      //      System.out.println(renderLocation.name() + " " + xmain + " " + ymain);
       //      ModCyclic.proxy.renderItemOnScreen(current, RenderLoc.xoffset - 1, RenderLoc.ypadding + RenderLoc.spellSize * 2);
     }
   }

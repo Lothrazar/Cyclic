@@ -25,18 +25,18 @@ public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasRe
   }
   @Override
   public void addRecipe() {
-   GameRegistry.addRecipe(new ItemStack(this, 1),
-       "lal",
-       "qiq",
-       "lal",
-       'i',Items.IRON_INGOT,
-       'a',new ItemStack(Blocks.TALLGRASS, 1, OreDictionary.WILDCARD_VALUE) ,
-       'l',new ItemStack(Items.DYE,1,EnumDyeColor.CYAN.getDyeDamage()),
-       'q',new ItemStack(Items.SNOWBALL)
-//       ,Items.BEETROOT
-//       ,Items.LEATHER
-//       ,Items.LEAD
-       );
+    GameRegistry.addRecipe(new ItemStack(this, 1),
+        "lal",
+        "qiq",
+        "lal",
+        'i', Items.IRON_INGOT,
+        'a', new ItemStack(Blocks.TALLGRASS, 1, OreDictionary.WILDCARD_VALUE),
+        'l', new ItemStack(Items.DYE, 1, EnumDyeColor.CYAN.getDyeDamage()),
+        'q', new ItemStack(Items.SNOWBALL)
+    //       ,Items.BEETROOT
+    //       ,Items.LEATHER
+    //       ,Items.LEAD
+    );
   }
   public boolean hasEntity(ItemStack held) {
     return held.getTagCompound() != null && held.getTagCompound().hasKey(NBT_ENTITYID);
@@ -44,15 +44,14 @@ public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasRe
   @SideOnly(Side.CLIENT)
   public boolean hasEffect(ItemStack stack) {
     return hasEntity(stack);
-  } 
+  }
   @SideOnly(Side.CLIENT)
-  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
-  {
-    if(hasEffect(stack)){
-      tooltip.add( stack.getTagCompound().getString(NBT_ENTITYID));
+  public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+    if (hasEffect(stack)) {
+      tooltip.add(stack.getTagCompound().getString(NBT_ENTITYID));
     }
-    else{
-      tooltip.add(UtilChat.lang(this.getUnlocalizedName()+".tooltip"));
+    else {
+      tooltip.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
     }
   }
   @Override

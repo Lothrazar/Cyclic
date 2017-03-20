@@ -100,14 +100,14 @@ public class InventoryPlayerExtended extends InventoryBase implements IInventory
   public ItemStack getStackInSlot(int s) {
     //somehow here we are getting java.lang.AbstractMethodError: com.lothrazar.cyclicmagic.gui.player.InventoryPlayerExtended.func_70301_a(I)Lnet/minecraft/item/ItemStack;
     //which translates to getStackInSlot() that returns ItemStack
-//    ModCyclic.logger.info("stack " + s);
-//    ModCyclic.logger.info("player?  " + this.player);
-//    if (this.player != null && this.player.get() != null) {
-//      ModCyclic.logger.info("isRemote    " + this.player.get().getEntityWorld().isRemote);
-//    }
-//    ModCyclic.logger.info("this " + this);
-//    ModCyclic.logger.info("this.inv " + this.inv);
-//    ModCyclic.logger.info("this.inv.size " + this.inv.size());
+    //    ModCyclic.logger.info("stack " + s);
+    //    ModCyclic.logger.info("player?  " + this.player);
+    //    if (this.player != null && this.player.get() != null) {
+    //      ModCyclic.logger.info("isRemote    " + this.player.get().getEntityWorld().isRemote);
+    //    }
+    //    ModCyclic.logger.info("this " + this);
+    //    ModCyclic.logger.info("this.inv " + this.inv);
+    //    ModCyclic.logger.info("this.inv.size " + this.inv.size());
     try {
       return s >= this.getSizeInventory() ? ItemStack.EMPTY : this.inv.get(s);
     }

@@ -1,13 +1,10 @@
 package com.lothrazar.cyclicmagic.net;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.gui.villager.ContainerMerchantBetter;
 import com.lothrazar.cyclicmagic.item.tool.ItemSleepingMat;
-import com.lothrazar.cyclicmagic.util.Const;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.village.MerchantRecipeList;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -43,8 +40,7 @@ public class PacketSleepClient implements IMessage, IMessageHandler<PacketSleepC
       //when i force a sleep on serverside (ItemSleepingMat) then i need to make sure clientside bedLocation is non null
       //otherwise vanilla MC code gets NPE thrown
       player.bedLocation = message.pos;
-      
-      ItemSleepingMat.setRenderOffsetForSleep(player,  player.getHorizontalFacing());
+      ItemSleepingMat.setRenderOffsetForSleep(player, player.getHorizontalFacing());
     }
     return null;
   }

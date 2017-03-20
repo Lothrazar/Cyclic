@@ -63,8 +63,8 @@ public class BlockMiner extends BlockBaseFacingInventory implements IHasRecipe, 
             'g', Items.IRON_PICKAXE, // new ItemStack(Items.DIAMOND_PICKAXE,1,OreDictionary.WILDCARD_VALUE),
             's', Blocks.DISPENSER,
             'r', Items.BONE
-//            'b', Items.BLAZE_POWDER
-            );
+        //            'b', Items.BLAZE_POWDER
+        );
       break;
       case TUNNEL:
         GameRegistry.addRecipe(new ItemStack(this),
