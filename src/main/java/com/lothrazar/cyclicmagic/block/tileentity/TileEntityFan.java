@@ -39,7 +39,7 @@ public class TileEntityFan extends TileEntityBaseMachineInvo implements ITickabl
     }
     EnumFacing facing = getCurrentFacing();
     int rangeFixed = getCurrentRange(); //can go up to max range unless hits a solid
-    // System.out.println("rangeFixed"+rangeFixed);
+ 
     if (this.timer == 0) {
       this.timer = TIMER_FULL;
       //rm this its ugly, keep in case i add a custom particle

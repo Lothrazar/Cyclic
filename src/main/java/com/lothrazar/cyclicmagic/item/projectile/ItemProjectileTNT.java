@@ -20,9 +20,8 @@ public class ItemProjectileTNT extends BaseItemProjectile {
     this.type = t;
   }
   public EntityThrowableDispensable getThrownEntity(World world, double x, double y, double z) {
-    System.out.println("getThrownEntity "+type.name());
     switch (type) {
-      case NORMAL :
+      case NORMAL:
         return new EntityDynamite(world, this.strength, x, y, z);
       case MINING:
         return new EntityDynamiteMining(world, this.strength, x, y, z);
@@ -33,10 +32,9 @@ public class ItemProjectileTNT extends BaseItemProjectile {
   }
   @Override
   void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
-    System.out.println("onItemThrow "+type.name());
     EntityThrowableDispensable d = null;
     switch (type) {
-      case NORMAL :
+      case NORMAL:
         d = new EntityDynamite(world, player, this.strength);
       break;
       case MINING:

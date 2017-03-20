@@ -103,16 +103,6 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
     super.onContainerClosed(playerIn);
     this.merchant.setCustomer((EntityPlayer) null);
     super.onContainerClosed(playerIn);
-//    if (!this.theWorld.isRemote) {
-//      ItemStack itemstack = this.merchantInventory.removeStackFromSlot(SLOT_INPUT);
-//      if (itemstack != null) {
-//        playerIn.dropItem(itemstack, false);
-//      }
-//      itemstack = this.merchantInventory.removeStackFromSlot(SLOT_INPUTX);
-//      if (itemstack != null) {
-//        playerIn.dropItem(itemstack, false);
-//      }
-//    }
   }
   public void setTrades(MerchantRecipeList t) {
     this.trades = t;
@@ -153,10 +143,7 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
         break;
       }
     }
-    System.out.println("F"+firstSlot+"_"+firstItem);
-    System.out.println("S"+secondSlot+"_"+secondItem);
-    System.out.println("canTrade"+canTrade);
-    System.out.println("secondItem.isEmpty() "  +  secondItem.isEmpty());
+ 
     boolean tradeSuccess = false;
     if (canTrade) {
       if (!secondItem.isEmpty()) {

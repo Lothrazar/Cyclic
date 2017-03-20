@@ -235,16 +235,7 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
       LootTableRegistry.registerLoot(potion_haste);
       LootTableRegistry.registerLoot(potion_haste_strong);
       //https://github.com/MinecraftForge/MinecraftForge/blob/f08f3c11053d414b57d03192dd72fcbfaef100f7/src/test/java/net/minecraftforge/test/BrewingRecipeRegistryTest.java
-      //addBrewingRecipe(new ItemStack(Items.DIAMOND_SWORD), new ItemStack(Items.REDSTONE), new ItemStack(Items.DIAMOND_HOE));
-      //      
-      //      BrewingRecipeRegistry.addRecipe(new ItemStack(Items.DIAMOND_SWORD), new ItemStack(Items.REDSTONE), new ItemStack(Items.DIAMOND_HOE));
-      //      ItemStack output0 = BrewingRecipeRegistry.getOutput(new ItemStack(Items.DIAMOND_SWORD), new ItemStack(Items.REDSTONE));
-      //      if(output0.getItem() == Items.DIAMOND_HOE)
-      //        System.out.println("Recipe succefully registered and working: HOE");
-      //      else
-      //        System.out.println("Recipe FAILED : output0 =  "+output0.getUnlocalizedName());
-      //          
-      //      
+       
     }
     if (enableLuck) {
       ItemPotionCustom potion_luck = new ItemPotionCustom(true, MobEffects.LUCK, NORMAL);

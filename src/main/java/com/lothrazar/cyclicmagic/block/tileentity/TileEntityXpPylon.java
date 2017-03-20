@@ -79,7 +79,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
       //no timer just EAT
       for (EntityXPOrb orb : orbs) {
         if (orb.isDead == false && this.tryIncrExp(orb.getXpValue())) {
-          //          System.out.println("ET " + orb.getEntityId());
+       
           getWorld().removeEntity(orb);//calls     orb.setDead(); for me
         }
         else {//is full

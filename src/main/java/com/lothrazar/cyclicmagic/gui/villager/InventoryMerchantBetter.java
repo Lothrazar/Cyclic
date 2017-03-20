@@ -141,7 +141,6 @@ public class InventoryMerchantBetter extends InventoryMerchant implements IInven
   }
   public void setCurrentRecipeIndex(int currentRecipeIndexIn) {
     this.currentRecipeIndex = currentRecipeIndexIn;
-    //    System.out.println(this.currentRecipeIndex+"[INV] setCurrentRecipeIndexx   "+this.thePlayer.getEntityWorld().isRemote);
     this.resetRecipeAndSlots();
   }
   public int getField(int id) {

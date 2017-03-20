@@ -223,14 +223,14 @@ public class UtilInventoryTransfer {
       if (bagItem == ItemStack.EMPTY || bagItem.getCount() == 0) {
         continue;
       }
-      // System.out.println(bagItem.stackSize + "_" + bagItem.getDisplayName());
+  
       for (int islotChest = 0; islotChest < chest.getSizeInventory(); islotChest++) {
         chestItem = chest.getStackInSlot(islotChest);
         //we have a space in the inventory thats empty. are we allowed
         if (chestItem == ItemStack.EMPTY && onlyMatchingItems == false) {
           //then yeah we are allowed to use the empty space
           if (chest.isItemValidForSlot(islotStacks, bagItem)) {
-            // System.out.println("dump at " + islotChest);
+     
             itemsMoved += bagItem.getCount();
             chest.setInventorySlotContents(islotChest, bagItem);
             stacks.set(islotStacks, ItemStack.EMPTY);
@@ -257,7 +257,7 @@ public class UtilInventoryTransfer {
           if (room <= 0) {
             continue;//no room on this chest slot, so move to next slot
           } // no room, check the next spot
-          //System.out.println("merge at " + islotChest);
+   
           // so if i have 30 room, and 28 items, i deposit 28.
           // or if i have 30 room and 38 items, i deposit 30
           toDeposit = Math.min(bagItem.getCount(), room);
