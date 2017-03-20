@@ -163,9 +163,6 @@ public class VillagerCreateModule extends BaseModule implements IHasConfig {
       recipeList.add(new MerchantRecipe(itemstack, itemstack1));
     }
     @Override
-    public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random) {
-       
-       ModCyclic.logger.info("addMerchantRecipe: they made me add this, is it needed/working?");
-    }
+    public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random) {}
   }
 }

@@ -73,7 +73,7 @@ public class UtilNBT {
         p = new BlockPos(Integer.parseInt(spl[0]), Integer.parseInt(spl[1]), Integer.parseInt(spl[2]));
     }
     catch (java.lang.ClassCastException e) {
-      ModCyclic.logger.info("exc: bad string: " + csv);
+//      ModCyclic.logger.info("exc: bad string: " + csv);
     }
     return p;
   }

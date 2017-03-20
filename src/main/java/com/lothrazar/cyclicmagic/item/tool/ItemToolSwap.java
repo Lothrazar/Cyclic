@@ -140,9 +140,9 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
       player.getCooldownTracker().setCooldown(this, COOLDOWN);
     }
     catch (ConcurrentModificationException e) {
-      ModCyclic.logger.warn("ConcurrentModificationException");
-      ModCyclic.logger.warn(e.getMessage());// message is null??
-      ModCyclic.logger.warn(e.getStackTrace().toString());
+      ModCyclic.logger.error("ConcurrentModificationException");
+      ModCyclic.logger.error(e.getMessage());// message is null??
+      ModCyclic.logger.error(e.getStackTrace().toString());
     }
     return  EnumActionResult.FAIL;//super.onItemUse( player, worldObj, pos, hand, side, hitX, hitY, hitZ);// EnumActionResult.PASS;
   }

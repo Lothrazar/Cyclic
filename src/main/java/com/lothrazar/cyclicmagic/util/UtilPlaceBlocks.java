@@ -79,9 +79,9 @@ public class UtilPlaceBlocks {
       world.markChunkDirty(placePos, null);
     }
     catch (ConcurrentModificationException e) {
-      ModCyclic.logger.warn("ConcurrentModificationException");
-      ModCyclic.logger.warn(e.getMessage());// message is null??
-      ModCyclic.logger.warn(e.getStackTrace().toString());
+      ModCyclic.logger.error("ConcurrentModificationException");
+      ModCyclic.logger.error(e.getMessage());// message is null??
+      ModCyclic.logger.error(e.getStackTrace().toString());
       success = false;
     }
     return success;

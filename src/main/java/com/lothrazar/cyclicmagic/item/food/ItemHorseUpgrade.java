@@ -73,7 +73,7 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
           }
         }
         else {
-          ModCyclic.logger.warn("Failed to set horse jump strength, reflection failed on JUMP_STRENGTH");
+          ModCyclic.logger.error("Failed to set horse jump strength, reflection failed on JUMP_STRENGTH");
         }
       break;
       case SPEED:

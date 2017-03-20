@@ -83,7 +83,7 @@ public class UtilPlayerInventoryFilestorage {
           }
         }
         if (file1 == null || !file1.exists() || data == null || data.hasNoTags()) {
-          ModCyclic.logger.warn("Data not found for " + player.getDisplayNameString() + ". Trying to load backup data.");
+          ModCyclic.logger.error("Data not found for " + player.getDisplayNameString() + ". Trying to load backup data.");
           if (file2 != null && file2.exists()) {
             try {
               FileInputStream fileinputstream = new FileInputStream(file2);

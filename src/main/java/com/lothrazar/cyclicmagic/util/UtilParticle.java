@@ -53,7 +53,7 @@ public class UtilParticle {
   }
   public static void spawnParticle(World world, EnumParticleTypes sparkle, BlockPos pos) {
     if (pos == null) {
-      ModCyclic.logger.warn("Particle at position null");
+//      ModCyclic.logger.warn("Particle at position null");
       return;
     }
     spawnParticle(world, sparkle, pos.getX(), pos.getY(), pos.getZ());
