@@ -13,10 +13,12 @@ import com.lothrazar.cyclicmagic.util.Const.Potions;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
+import net.minecraft.init.PotionTypes;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionUtils;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.common.config.Configuration;
@@ -58,7 +60,7 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
       ItemRegistry.addItem(potion_viscous, "potion_viscous");
       AchievementRegistry.registerItemAchievement(potion_viscous);
       addBrewingRecipe(
-          new ItemStack(Items.POTIONITEM), //   awkward,
+          PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.AWKWARD), //   awkward,
           new ItemStack(Items.DYE, 1, EnumDyeColor.BROWN.getDyeDamage()),
           new ItemStack(potion_viscous));
       JeiDescriptionRegistry.registerWithJeiDescription(potion_viscous);
