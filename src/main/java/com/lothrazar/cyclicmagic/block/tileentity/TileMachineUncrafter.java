@@ -110,10 +110,11 @@ public class TileMachineUncrafter extends TileEntityBaseMachineInvo implements I
   }
   private void setOutputItems(ArrayList<ItemStack> output) {
     ArrayList<ItemStack> toDrop = UtilInventoryTransfer.dumpToIInventory(output, this, SLOT_UNCRAFTME + 1);
-    if (toDrop != null)
+    if (!toDrop.isEmpty()) {
       for (ItemStack s : toDrop) {
-      UtilItemStack.dropItemStackInWorld(this.getWorld(), this.getPos().up(), s);
+        UtilItemStack.dropItemStackInWorld(this.getWorld(), this.getPos().up(), s);
       }
+    }
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {

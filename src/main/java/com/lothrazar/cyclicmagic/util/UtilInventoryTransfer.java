@@ -179,15 +179,12 @@ public class UtilInventoryTransfer {
     ArrayList<ItemStack> remaining = new ArrayList<ItemStack>();
     ItemStack chestStack;
     for (ItemStack current : stacks) {
-      if (current == ItemStack.EMPTY) {
-        continue;
-      }
       for (int i = startingSlot; i < inventory.getSizeInventory(); i++) {
-        if (current == ItemStack.EMPTY) {
+        if (current.isEmpty()) {
           continue;
         }
         chestStack = inventory.getStackInSlot(i);
-        if (chestStack == ItemStack.EMPTY) {
+        if (chestStack.isEmpty()) {
           inventory.setInventorySlotContents(i, current);
           // and dont add current ot remainder at all ! sweet!
           current = ItemStack.EMPTY;
