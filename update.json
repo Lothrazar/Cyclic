@@ -7,8 +7,8 @@
     "1.10-recommended": "1.1.0",
     "1.10.2-latest":  "1.10.15",
     "1.10.2-recommended": "1.10.15",
-    "1.11.2-latest": "1.2.3,
-    "1.11.2-recommended": "1.2.3"
+    "1.11.2-latest": "1.2.4",
+    "1.11.2-recommended": "1.2.4"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -131,5 +131,6 @@
  	,"1.2.1":"Fix enchantment id of Experience Boost enchantment being zero, and not being in the config file.  Added Block Reach enchantment: put it on your chestplate to increase player reach from 5 to 16.  "
   	,"1.2.2":"Removed leftover debug statements from log files.  Fix Controlled Miner whitelist recognizing certain plants such as reeds.  Brush Scythe now harvests 1-tall flowers from the Plants mod by Shadows_Of_Fire.  Fix Remote Lever not triggering block neighbour updates when lever is indirectly powering something.  "
   	,"1.2.3":"Fix uncrafting grinder spitting items on the ground even when inventory is not full.  Update JEI compatibility with potions from cyclic.  Viscous potion now requires an awkward potion instead of just a water bottle.  Automatic Fishing Net is now compatible with fishing rods from the Aquaculture mod."
+  	,"1.2.4":"Fix the game crashing when you open sack of storage and then click on the sack that was just opened. "
   }
 }

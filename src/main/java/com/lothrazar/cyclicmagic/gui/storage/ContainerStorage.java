@@ -54,7 +54,7 @@ public class ContainerStorage extends ContainerBase {
     ItemStack wand = UtilPlayer.getPlayerItemIfHeld(player);
     // this will prevent the player from interacting with the item that
     // opened the inventory:
-    if (slot >= 0 && getSlot(slot) != null && getSlot(slot).getStack() == wand) { return null; }
+    if (slot >= 0 && getSlot(slot) != null && getSlot(slot).getStack() == wand) { return ItemStack.EMPTY; }
     return super.slotClick(slot, dragType, clickTypeIn, player);
   }
   @Override
