@@ -39,12 +39,12 @@ public class ItemToolProspector extends BaseTool implements IHasRecipe, IHasConf
       BlockPos current = pos;
       IBlockState at = worldObj.getBlockState(current);
       Block blockAt = at.getBlock();
+      ItemStack s;
       for (int i = 0; i < range; i++) {
         if (at != null && at.getBlock() != null) {
           
 //          name = blockAt.getUnlocalizedName();
-          int m = blockAt.getMetaFromState(at);
-          ItemStack s = new ItemStack(Item.getItemFromBlock(blockAt),1,m);
+          s = new ItemStack(Item.getItemFromBlock(blockAt),1,blockAt.getMetaFromState(at));
           name = s.getDisplayName();
           if (name == "tile.air.name" || at.getBlock() == Blocks.AIR) {
 //            name = "Air";//workaround for no lang entry
