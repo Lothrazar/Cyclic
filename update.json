@@ -117,6 +117,6 @@
   	,"1.10.13":"Fix the Password Trigger GUI closing when typing 'e' (or whatever key is bound to open inventory).  Blocks and World generation added:  Nether Iron, End Iron, Nether Redstone, End Gold (by request); controlled in config the same way as the rest of the world gen.  "
 	,"1.10.14":"Bugfix to make sure chorus data persists through death.  Fan has GUI to control range and direction.  Charms can now be turned off by right clicking them on the inventory.  Purple power armor can now be turned off by right clicking.  "
 	,"1.10.15":"New Content: Safe Dynamite, Mining Dynamite, Monster Ball, Experience Pylon.  Life Leech enchant now also restores a half heart with any damage dealt (it still restores some hunger and life on kill).  Life Leech enchant now displays heart particles above your head when it heals you.  Added new enchantments: Auto-Smelt and Experience Boost.  Controlled Miner now has a toggle button to switch between a whitelist and blacklist.  "
-  	,"1.10.16":""
+  	,"1.10.16":"Removed debug messages cluttering log files.  Fixed prospector getting the correct language file names from ores with metadata (such as from immersive engineering).  Prospector now has more config settings for modpacks; either a whitelist or a blacklist of things to look for.  "
   }
 }
