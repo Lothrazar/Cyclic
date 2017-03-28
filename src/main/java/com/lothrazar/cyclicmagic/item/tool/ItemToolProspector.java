@@ -6,11 +6,13 @@ import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.BaseTool;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
@@ -36,11 +38,17 @@ public class ItemToolProspector extends BaseTool implements IHasRecipe, IHasConf
       EnumFacing direction = side.getOpposite();
       BlockPos current = pos;
       IBlockState at = worldObj.getBlockState(current);
+      Block blockAt = at.getBlock();
       for (int i = 0; i < range; i++) {
         if (at != null && at.getBlock() != null) {
-          name = at.getBlock().getLocalizedName();
-          if (name == "tile.air.name") {
-            name = "Air";//workaround for no lang entry
+          
+//          name = blockAt.getUnlocalizedName();
+          int m = blockAt.getMetaFromState(at);
+          ItemStack s = new ItemStack(Item.getItemFromBlock(blockAt),1,m);
+          name = s.getDisplayName();
+          if (name == "tile.air.name" || at.getBlock() == Blocks.AIR) {
+//            name = "Air";//workaround for no lang entry
+            
           }
           if (mapList.containsKey(name)) {
             mapList.put(name, mapList.get(name) + 1);
