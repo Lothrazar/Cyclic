@@ -133,6 +133,6 @@
   	,"1.2.2":"Removed leftover debug statements from log files.  Fix Controlled Miner whitelist recognizing certain plants such as reeds.  Brush Scythe now harvests 1-tall flowers from the Plants mod by Shadows_Of_Fire.  Fix Remote Lever not triggering block neighbour updates when lever is indirectly powering something.  "
   	,"1.2.3":"Fix uncrafting grinder spitting items on the ground even when inventory is not full.  Update JEI compatibility with potions from cyclic.  Viscous potion now requires an awkward potion instead of just a water bottle.  Automatic Fishing Net is now compatible with fishing rods from the Aquaculture mod."
   	,"1.2.4":"Fix the game crashing when you open sack of storage and then click on the sack that was just opened. "
-	,"1.2.5":"Fixed prospector getting the correct language file names from ores with metadata (such as from immersive engineering).  Prospector now has more config settings for modpacks; either a whitelist or a blacklist of things to look for.  "
+	,"1.2.5":"Fix the Merchant Almanac crashing when used on new villagers or when new trades are learned.  Fixed prospector getting the correct language file names from ores with metadata (such as from immersive engineering).  Prospector now has more config settings for modpacks; either a whitelist or a blacklist of things to look for.  "
   }
 }
