@@ -16,7 +16,7 @@ public class ButtonTabToggleCrafting extends GuiButton {
   public ButtonTabToggleCrafting(GuiScreen g, int x, int y) {
     super(256, x, y, 15, 10, "");
     gui = g;
-    if (ClientProxy.keyExtraCraftin != null & ClientProxy.keyExtraCraftin.getDisplayName() != null &&
+    if (ClientProxy.keyExtraCraftin != null && ClientProxy.keyExtraCraftin.getDisplayName() != null &&
         ClientProxy.keyExtraCraftin.getDisplayName().equals("NONE") == false) {
       this.displayString = ClientProxy.keyExtraCraftin.getDisplayName();
     }
