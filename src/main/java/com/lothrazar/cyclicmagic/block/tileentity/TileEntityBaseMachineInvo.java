@@ -96,6 +96,9 @@ public class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements 
   }
   @Override
   public ItemStack getStackInSlot(int index) {
+    if(index < 0 || index >= getSizeInventory()){
+      return ItemStack.EMPTY;
+    }
     return inv.get(index);
   }
   @Override
