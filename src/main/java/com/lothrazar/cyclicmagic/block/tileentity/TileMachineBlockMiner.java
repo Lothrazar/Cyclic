@@ -164,7 +164,7 @@ public class TileMachineBlockMiner extends TileEntityBaseMachineInvo implements 
   }
   private void tryEquipItem() {
     //only equip if empty handed, dont spam
-    if (fakePlayer.get().getHeldItem(EnumHand.MAIN_HAND) == null) {
+    if (fakePlayer.get().getHeldItem(EnumHand.MAIN_HAND).isEmpty()) {
       ItemStack unbreakingPickaxe = new ItemStack(Items.DIAMOND_PICKAXE, 1);
       unbreakingPickaxe.addEnchantment(Enchantments.EFFICIENCY, 3);
       unbreakingPickaxe.setTagCompound(new NBTTagCompound());
@@ -265,22 +265,6 @@ public class TileMachineBlockMiner extends TileEntityBaseMachineInvo implements 
       getWorld().sendBlockBreakProgress(uuid.hashCode(), targetPos, -1);
       curBlockDamage = 0;
     }
-  }
-  @Override
-  public int getSizeInventory() {
-    return 0;
-  }
-  @Override
-  public ItemStack getStackInSlot(int index) {
-    return null;
-  }
-  @Override
-  public ItemStack decrStackSize(int index, int count) {
-    return null;
-  }
-  @Override
-  public ItemStack removeStackFromSlot(int index) {
-    return null;
   }
   @Override
   public void setInventorySlotContents(int index, ItemStack stack) {}
