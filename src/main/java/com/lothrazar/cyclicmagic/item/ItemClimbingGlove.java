@@ -12,17 +12,10 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class ItemClimbingGlove extends BaseCharm implements IHasRecipe {
   private static final double CLIMB_SPEED = 0.288D;
   public ItemClimbingGlove() {
-    super(5000);
+    super(6000);
   }
-  /**
-   * Called each tick as long the item is on a player inventory. Uses by maps to
-   * check if is on a player hand and update it's contents.
-   */
   @Override
   public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-    //    super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
-    //    if (itemSlot > ITEMSLOT_OFFHANDMAX) { return; }
-    //    if (!(entityIn instanceof EntityLivingBase)) { return; }
     if (entityIn instanceof EntityPlayer) {
       onTick(stack, (EntityPlayer) entityIn);
     }
@@ -44,9 +37,6 @@ public class ItemClimbingGlove extends BaseCharm implements IHasRecipe {
     if (player.isCollidedHorizontally) {
       World world = player.getEntityWorld();
       UtilEntity.tryMakeEntityClimb(world, player, CLIMB_SPEED);
-      if (world.rand.nextDouble() < 0.01) {
-        super.damageCharm(player, stack);
-      }
     }
   }
 }
