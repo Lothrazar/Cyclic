@@ -233,7 +233,6 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
     if (!isRunning()) { return; }
     this.spawnParticlesAbove();
     World world = getWorld();
-
     ItemStack stack = getStackInSlot(0);
     if (stack != ItemStack.EMPTY) {
       timer -= this.getSpeed();
@@ -253,18 +252,19 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
         BlockPos nextPos = shape.get(this.shapeIndex);//start at current position and validate
         for (int i = 0; i < spotsSkippablePerTrigger; i++) {
           //true means bounding box is null in the check. entit falling sand uses true
-          if (world.isAirBlock(nextPos) && world.mayPlace(stuff, nextPos, true, EnumFacing.UP, null)) { // check if this spot is even valid
+          if (world.isAirBlock(nextPos) &&
+              stuff.canPlaceBlockAt(world, nextPos) &&
+              world.mayPlace(stuff, nextPos, true, EnumFacing.UP, null)) { // check if this spot is even valid
+            IBlockState placeState = UtilItemStack.getStateFromMeta(stuff, stack.getMetadata());
+            if (world.isRemote == false && world.isAirBlock(nextPos) && UtilPlaceBlocks.placeStateSafe(world, null, nextPos, placeState)) {
+              this.decrStackSize(0, 1);
+            }
             break;//ok , target position is valid, we can build only into air
           }
           else {//cant build here. move up one
             nextPos = shape.get(this.shapeIndex);
             this.incrementPosition(shape);
           } //but after inrementing once, we may not yet be valid so skip at most ten spots per tick
-        }
-        IBlockState placeState = UtilItemStack.getStateFromMeta(stuff, stack.getMetadata());
-        //ModMain.logger.info("try place " + this.nextPos + " type " + this.buildType + "_" + this.getBuildTypeEnum().name());
-        if (world.isRemote == false && world.isAirBlock(nextPos) && UtilPlaceBlocks.placeStateSafe(world, null, nextPos, placeState)) {
-          this.decrStackSize(0, 1);
         }
       }
     }
