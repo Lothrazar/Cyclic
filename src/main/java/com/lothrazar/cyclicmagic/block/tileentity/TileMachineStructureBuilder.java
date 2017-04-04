@@ -233,9 +233,7 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
     if (!isRunning()) { return; }
     this.spawnParticlesAbove();
     World world = getWorld();
-    //    if (!world.isRemote && nextPos != null && world.rand.nextDouble() < 0.1 && inv[0] != null) {
-    //      UtilParticle.spawnParticlePacket(EnumParticleTypes.DRAGON_BREATH, nextPos);
-    //    }
+
     ItemStack stack = getStackInSlot(0);
     if (stack != ItemStack.EMPTY) {
       timer -= this.getSpeed();
@@ -254,7 +252,8 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
         }
         BlockPos nextPos = shape.get(this.shapeIndex);//start at current position and validate
         for (int i = 0; i < spotsSkippablePerTrigger; i++) {
-          if (world.isAirBlock(nextPos)) { // check if this spot is even valid
+          //true means bounding box is null in the check. entit falling sand uses true
+          if (world.isAirBlock(nextPos) && world.mayPlace(stuff, nextPos, true, EnumFacing.UP, null)) { // check if this spot is even valid
             break;//ok , target position is valid, we can build only into air
           }
           else {//cant build here. move up one
