@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
@@ -360,18 +361,22 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
         }
         BlockPos nextPos = shape.get(this.shapeIndex);//start at current position and validate
         for (int i = 0; i < spotsSkippablePerTrigger; i++) {
-          if (world.isAirBlock(nextPos)) { // check if this spot is even valid
-            break;//ok , target position is valid, we can build only into air
+          
+          if (world.isAirBlock(nextPos) && 
+              stuff.canPlaceBlockAt(world, nextPos) && 
+              world.canBlockBePlaced(stuff, nextPos, false, EnumFacing.UP, null, stack)) { // check if this spot is even valid
+
+            IBlockState placeState = UtilItemStack.getStateFromMeta(stuff, stack.getMetadata());
+            //ModMain.logger.info("try place " + this.nextPos + " type " + this.buildType + "_" + this.getBuildTypeEnum().name());
+            if (world.isRemote == false && world.isAirBlock(nextPos) && UtilPlaceBlocks.placeStateSafe(world, null, nextPos, placeState)) {
+              this.decrStackSize(0, 1);
+            }
+            break;
           }
           else {//cant build here. move up one
             nextPos = shape.get(this.shapeIndex);
             this.incrementPosition(shape);
           } //but after inrementing once, we may not yet be valid so skip at most ten spots per tick
-        }
-        IBlockState placeState = UtilItemStack.getStateFromMeta(stuff, stack.getMetadata());
-        //ModMain.logger.info("try place " + this.nextPos + " type " + this.buildType + "_" + this.getBuildTypeEnum().name());
-        if (world.isRemote == false && world.isAirBlock(nextPos) && UtilPlaceBlocks.placeStateSafe(world, null, nextPos, placeState)) {
-          this.decrStackSize(0, 1);
         }
       }
     }
