@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.item.gear;
 import java.util.List;
-import com.lothrazar.cyclicmagic.ICanToggleOnOff;
+import com.lothrazar.cyclicmagic.IHasClickToggle;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -25,7 +25,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
 @SuppressWarnings("incomplete-switch")
-public class ItemPowerArmor extends ItemArmor implements IHasRecipe, ICanToggleOnOff {
+public class ItemPowerArmor extends ItemArmor implements IHasRecipe, IHasClickToggle {
   private static final float SNEAKSPEED = 0.077F;
   public static final String NBT_GLOW = Const.MODID + "_glow";
   public static final String NBT_STEP = Const.MODID + "_step";
@@ -135,7 +135,7 @@ public class ItemPowerArmor extends ItemArmor implements IHasRecipe, ICanToggleO
       break;
     }
   }
-  public void toggleOnOff(ItemStack held) {
+  public void toggle(EntityPlayer player, ItemStack held) {
     NBTTagCompound tags = UtilNBT.getItemStackNBT(held);
     int vnew = isOn(held) ? 0 : 1;
     tags.setInteger(NBT_STATUS, vnew);
