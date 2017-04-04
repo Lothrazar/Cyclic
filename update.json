@@ -7,8 +7,8 @@
     "1.10-recommended": "1.1.0",
     "1.10.2-latest":  "1.10.17",
     "1.10.2-recommended": "1.10.17",
-    "1.11.2-latest": "1.2.6",
-    "1.11.2-recommended": "1.2.6"
+    "1.11.2-latest": "1.2.7",
+    "1.11.2-recommended": "1.2.7"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -136,5 +136,6 @@
   	,"1.2.4":"Fix the game crashing when you open sack of storage and then click on the sack that was just opened. "
 	,"1.2.5":"Fix the Merchant Almanac crashing when used on new villagers or when new trades are learned.  Fixed prospector getting the correct language file names from ores with metadata (such as from immersive engineering).  Prospector now has more config settings for modpacks; either a whitelist or a blacklist of things to look for.  "
   	,"1.2.6":"Fix a game crash that happened if you eat two inventory upgrades and have the keybinding disabled to open the screen.  Fix game crash in the Block Miner"
- }
+  	,"1.2.7":"Climbing Glove changes: Can toggle on or off with right-click the same as charms; no longer needs to be on your hotbar; now can be equipped in a baubles slot.  "
+  }
 }
