@@ -1,9 +1,11 @@
 package com.lothrazar.cyclicmagic.item.tool;
 import java.util.List;
+import com.lothrazar.cyclicmagic.IHasClickToggle;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.BaseTool;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -16,7 +18,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemToolWarp extends BaseTool implements IHasRecipe {
+public class ItemToolWarp extends BaseTool implements IHasRecipe, IHasClickToggle {
   private static final int cooldown = 600;//ticks not seconds
   private static final int durability = 16;
   public static enum WarpType {
@@ -32,11 +34,15 @@ public class ItemToolWarp extends BaseTool implements IHasRecipe {
     return true;
   }
   @Override
-  public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
-    ItemStack stack = player.getHeldItem(hand);
+  public void toggle(EntityPlayer player, ItemStack held) {
+    tryActivate(player, held);
+  }
+  private boolean tryActivate(EntityPlayer player, ItemStack held) {
+    if (player.getCooldownTracker().hasCooldown(this)) { return false; }
+    World world = player.getEntityWorld();
     if (player.dimension != 0) {
       UtilChat.addChatMessage(player, "command.worldhome.dim");
-      return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
+      return false;
     }
     boolean success = false;
     switch (warpType) {
@@ -51,10 +57,20 @@ public class ItemToolWarp extends BaseTool implements IHasRecipe {
       break;
     }
     if (success) {
-      super.onUse(stack, player, world, hand);
+      UtilItemStack.damageItem(player, held);
       player.getCooldownTracker().setCooldown(this, cooldown);
     }
-    return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+    return success;
+  }
+  @Override
+  public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    ItemStack stack = player.getHeldItem(hand);
+    if (tryActivate(player, stack)) {
+      super.onUse(stack, player, world, hand);
+      //      player.getCooldownTracker().setCooldown(this, cooldown);
+      return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+    }
+    return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
@@ -96,5 +112,9 @@ public class ItemToolWarp extends BaseTool implements IHasRecipe {
       default:
       break;
     }
+  }
+  @Override
+  public boolean isOn(ItemStack held) {
+    return true;
   }
 }

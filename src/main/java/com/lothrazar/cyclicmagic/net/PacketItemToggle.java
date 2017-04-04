@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.net;
-import com.lothrazar.cyclicmagic.ICanToggleOnOff;
+import com.lothrazar.cyclicmagic.IHasClickToggle;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
@@ -39,10 +39,10 @@ public class PacketItemToggle implements IMessage, IMessageHandler<PacketItemTog
       if (slotObj != null
           && slotObj.getStack() != ItemStack.EMPTY) {
         ItemStack maybeCharm = slotObj.getStack();
-        if (maybeCharm.getItem() instanceof ICanToggleOnOff) {
+        if (maybeCharm.getItem() instanceof IHasClickToggle) {
           //example: is a charm or something
-          ICanToggleOnOff c = (ICanToggleOnOff) maybeCharm.getItem();
-          c.toggleOnOff(maybeCharm);
+          IHasClickToggle c = (IHasClickToggle) maybeCharm.getItem();
+          c.toggle(player, maybeCharm);
         }
       }
     }

@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.event;
-import com.lothrazar.cyclicmagic.ICanToggleOnOff;
+import com.lothrazar.cyclicmagic.IHasClickToggle;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.player.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.gui.playerworkbench.GuiPlayerExtWorkbench;
@@ -118,7 +118,7 @@ public class EventKeyInput {
       int slot = gui.getSlotUnderMouse().slotNumber;
       if (gui.inventorySlots.getSlot(slot) != null && gui.inventorySlots.getSlot(slot).getStack() != ItemStack.EMPTY) {
         ItemStack maybeCharm = gui.inventorySlots.getSlot(slot).getStack();
-        if (maybeCharm.getItem() instanceof ICanToggleOnOff) {
+        if (maybeCharm.getItem() instanceof IHasClickToggle) {
           //example: is a charm or something
           ModCyclic.network.sendToServer(new PacketItemToggle(slot));
           UtilSound.playSound(Minecraft.getMinecraft().player, SoundEvents.UI_BUTTON_CLICK);

@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.item;
 import java.util.List;
-import com.lothrazar.cyclicmagic.ICanToggleOnOff;
+import com.lothrazar.cyclicmagic.IHasClickToggle;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
@@ -17,13 +17,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 @Optional.Interface(iface = "baubles.api.IBauble", modid = "baubles", striprefs = true)
-public abstract class BaseCharm extends BaseItem implements baubles.api.IBauble, ICanToggleOnOff {
+public abstract class BaseCharm extends BaseItem implements baubles.api.IBauble, IHasClickToggle {
   private final static String NBT_STATUS = "onoff";
   public BaseCharm(int durability) {
     this.setMaxStackSize(1);
     this.setMaxDamage(durability);
   }
-  public void toggleOnOff(ItemStack held) {
+  public void toggle(EntityPlayer player, ItemStack held) {
     NBTTagCompound tags = UtilNBT.getItemStackNBT(held);
     int vnew = isOn(held) ? 0 : 1;
     tags.setInteger(NBT_STATUS, vnew);
