@@ -89,9 +89,9 @@ public class ItemAutoTorch extends BaseItem implements IHasRecipe {
           && world.isAirBlock(pos)) { // dont overwrite liquids 
         if (UtilPlaceBlocks.placeStateSafe(world, living, pos, Blocks.TORCH.getDefaultState())) {
           UtilItemStack.damageItem(living, stack);
-          if (stack == null || stack.getItemDamage() == stack.getMaxDamage()) {
-            stack = null;
-            living.inventory.setInventorySlotContents(itemSlot, null);
+          if (stack.isEmpty() || stack.getItemDamage() == stack.getMaxDamage()) {
+            stack = ItemStack.EMPTY;
+            living.inventory.setInventorySlotContents(itemSlot, stack);
             UtilSound.playSound(living, living.getPosition(), SoundEvents.ENTITY_ITEM_BREAK, living.getSoundCategory());
           }
           living.getCooldownTracker().setCooldown(this, cooldown);
