@@ -85,6 +85,7 @@ public class ItemAutoTorch extends BaseItem implements IHasRecipe {
       if (living.getCooldownTracker().hasCooldown(stack.getItem())) { return; } //cancel if on cooldown
       BlockPos pos = living.getPosition();
       if (world.getLight(pos, true) < lightLimit
+          && living.isSpectator() == false
           && world.isSideSolid(pos.down(), EnumFacing.UP)
           && world.isAirBlock(pos)) { // dont overwrite liquids 
         if (UtilPlaceBlocks.placeStateSafe(world, living, pos, Blocks.TORCH.getDefaultState())) {
