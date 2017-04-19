@@ -122,6 +122,7 @@
   	,"1.10.16":"Removed debug messages cluttering log files.  Fixed prospector getting the correct language file names from ores with metadata (such as from immersive engineering).  Prospector now has more config settings for modpacks; either a whitelist or a blacklist of things to look for.  "
  	,"1.10.17":"Fix a game crash that happened if you eat two inventory upgrades and have the keybinding disabled to open the screen.  "
   	,"1.10.18":"Structure builder will now check if placement is valid before building (avoids saplings placed on non-solid blocks for example)"
+	,"1.10.19":"Fix harvester resetting its size property when chunk reloads.  Fix Mattock tooltip.  Add nether star and some progressive automation items to the uncrafting grinder default blacklist.  Removed nether star from default Magic Bean loot table (existing config files unchanged and you could still add it back).  Auto torch will no longer place in spectator mode.   "
   },
   "1.11.2":{
 	"1.0.0":"Beta release; on par with 1.10.2-1.9.15  Removed: LightningSkeletonMutate, LightningZombieMutate, Block Miner Advanced.  Changed Features: Emerald Carrot no longer changes normal horses to zombie or skeleton; instead its used to tame existing Zombie and Skeleton horses.  Sleeping Mat works half the time but has a few issues, its a work in progress right now.  Several items have changed textures, recipes, and names.  "
