@@ -251,6 +251,7 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
         }
         BlockPos nextPos = shape.get(this.shapeIndex);//start at current position and validate
         for (int i = 0; i < spotsSkippablePerTrigger; i++) {
+ 
           //true means bounding box is null in the check. entit falling sand uses true
           if (world.isAirBlock(nextPos) &&
               stuff.canPlaceBlockAt(world, nextPos) &&
@@ -260,6 +261,7 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
               this.decrStackSize(0, 1);
             }
             break;//ok , target position is valid, we can build only into air
+ 
           }
           else {//cant build here. move up one
             nextPos = shape.get(this.shapeIndex);

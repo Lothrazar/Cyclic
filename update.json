@@ -5,10 +5,15 @@
     "1.9.4-recommended":  "1.2.0",
     "1.10-latest":  "1.1.0",
     "1.10-recommended": "1.1.0",
+<<<<<<< HEAD
     "1.10.2-latest":  "1.10.18",
     "1.10.2-recommended": "1.10.18",
     "1.11.2-latest": "1.2.8",
     "1.11.2-recommended": "1.2.8"
+=======
+    "1.10.2-latest":  "1.10.17",
+    "1.10.2-recommended": "1.10.17"
+>>>>>>> be5ec0ac7ae49eabda2d0f71b9993b07a9c13188
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -140,5 +145,6 @@
   	,"1.2.6":"Fix a game crash that happened if you eat two inventory upgrades and have the keybinding disabled to open the screen.  Fix game crash in the Block Miner"
   	,"1.2.7":"Climbing Glove changes: Can toggle on or off with right-click the same as charms; no longer needs to be on your hotbar; now can be equipped in a baubles slot.  You can now activate ender wings with a right click on them while inventory is open.  Structure builder will now check if placement is valid before building (avoids saplings placed on non-solid blocks for example)"
   	,"1.2.8":"Fix auto-torch crashing game when running out of durability.  "
+	,"1.2.9":"Fix harvester resetting its size property when chunk reloads.  Fix Mattock tooltip.  Add nether star and some progressive automation items to the uncrafting grinder default blacklist.  Removed nether star from default Magic Bean loot table (existing config files unchanged and you could still add it back).  Auto torch will no longer place in spectator mode.   "
   }
 }

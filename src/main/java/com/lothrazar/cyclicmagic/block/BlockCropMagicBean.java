@@ -41,7 +41,7 @@ public class BlockCropMagicBean extends BlockCrops implements IHasConfig {
         //treasure
         Items.REDSTONE, Items.GUNPOWDER, Items.GLOWSTONE_DUST, Items.DIAMOND, Items.EMERALD,
         Items.COAL, Items.GOLD_NUGGET, Items.IRON_INGOT, Items.GOLD_INGOT,
-        Items.NETHER_STAR, Items.QUARTZ, Items.LEAD, Items.NAME_TAG,
+        Items.QUARTZ, Items.LEAD, Items.NAME_TAG,
         //mob drops
         Items.ENDER_PEARL, Items.ENDER_EYE, Items.SLIME_BALL,
         Items.BLAZE_POWDER, Items.BLAZE_ROD, Items.LEATHER,
