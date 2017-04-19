@@ -18,6 +18,7 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
   private int needsRedstone = 1;
   private static final String NBT_TIMER = "Timer";
   private static final String NBT_REDST = "redstone";
+  private static final String NBT_SIZE = "size";
   private static final int MAX_SIZE = 7;//radius 7 translates to 15x15 area (center block + 7 each side)
   private int size = MAX_SIZE;//default to the old fixed size, backwards compat
   public static enum Fields {
@@ -43,11 +44,13 @@ public class TileMachineHarvester extends TileEntityBaseMachineInvo implements I
     super.readFromNBT(tagCompound);
     this.needsRedstone = tagCompound.getInteger(NBT_REDST);
     timer = tagCompound.getInteger(NBT_TIMER);
+    size = tagCompound.getInteger(NBT_SIZE);
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
     tagCompound.setInteger(NBT_TIMER, timer);
     tagCompound.setInteger(NBT_REDST, this.needsRedstone);
+    tagCompound.setInteger(NBT_SIZE, size);
     return super.writeToNBT(tagCompound);
   }
   public boolean isBurning() {

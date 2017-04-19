@@ -54,7 +54,7 @@ public class ContainerFakeWorkbench extends ContainerWorkbench {
       }
       else if (!mergeItemStack(var5, 10, 46, false)) { return ItemStack.EMPTY; }
       if (var5.getCount() == 0) {
-        var4.putStack((ItemStack) null);
+        var4.putStack(ItemStack.EMPTY);
       }
       else {
         var4.onSlotChanged();

@@ -48,37 +48,17 @@ public class InventoryPlayerExtWorkbench extends InventoryCrafting {
     ItemStack stack = getStackInSlot(index);
     if (stack != null) {
       if (stack.getMaxStackSize() <= count) {
-        setInventorySlotContents(index, null);
+        setInventorySlotContents(index, ItemStack.EMPTY);
       }
       else {
         stack = stack.splitStack(count);
         if (stack.getMaxStackSize() == 0) {
-          setInventorySlotContents(index, null);
+          setInventorySlotContents(index, ItemStack.EMPTY);
         }
       }
     }
     this.eventHandler.onCraftMatrixChanged(this);
     return stack;
-    //    if (this.inv[index] != null) {
-    //      ItemStack itemstack;
-    //      if (this.inv[index].getCount() <= count) {
-    //        itemstack = this.inv[index];
-    //        this.inv[index] = null;
-    //        this.eventHandler.onCraftMatrixChanged(this);
-    //        return itemstack;
-    //      }
-    //      else {
-    //        itemstack = this.inv[index].splitStack(count);
-    //        if (this.inv[index].getCount() == 0) {
-    //          this.inv[index] = null;
-    //        }
-    //        this.eventHandler.onCraftMatrixChanged(this);
-    //        return itemstack;
-    //      }
-    //    }
-    //    else {
-    //      return null;
-    //    }
   }
   /**
    * Sets the given item stack to the specified slot in the inventory (can be
@@ -87,6 +67,7 @@ public class InventoryPlayerExtWorkbench extends InventoryCrafting {
   @Override
   public void setInventorySlotContents(int idx, ItemStack stack) {
     if (idx >= this.inv.size()) { return; }
+    if(stack == null){ stack = ItemStack.EMPTY; }
     inv.set(idx, stack);
     this.eventHandler.onCraftMatrixChanged(this);
   }
