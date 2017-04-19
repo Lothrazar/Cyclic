@@ -5,15 +5,10 @@
     "1.9.4-recommended":  "1.2.0",
     "1.10-latest":  "1.1.0",
     "1.10-recommended": "1.1.0",
-<<<<<<< HEAD
-    "1.10.2-latest":  "1.10.18",
-    "1.10.2-recommended": "1.10.18",
-    "1.11.2-latest": "1.2.8",
-    "1.11.2-recommended": "1.2.8"
-=======
-    "1.10.2-latest":  "1.10.17",
-    "1.10.2-recommended": "1.10.17"
->>>>>>> be5ec0ac7ae49eabda2d0f71b9993b07a9c13188
+    "1.10.2-latest":  "1.10.19",
+    "1.10.2-recommended": "1.10.19",
+    "1.11.2-latest": "1.2.9",
+    "1.11.2-recommended": "1.2.9"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
