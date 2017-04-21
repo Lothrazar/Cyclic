@@ -42,7 +42,9 @@ public class MobDropChangesModule extends BaseEventModule implements IHasConfig 
       EntityPlayer p = event.getEntityPlayer();
       EntitySheep s = (EntitySheep) event.getTarget();
       if (event.getHand() != null && p.getHeldItem(event.getHand()) != null &&
-          p.getHeldItem(event.getHand()).getItem() == Items.SHEARS) {
+          p.getHeldItem(event.getHand()).getItem() == Items.SHEARS 
+           &&   s.getSheared() == false
+          ) {//getSheared() returns true if a sheeps wool has been sheared
         int meta = s.getFleeceColor().getMetadata();
         int rand = MathHelper.getInt(event.getWorld().rand, 1, 6);
         UtilItemStack.dropItemStackInWorld(event.getWorld(), event.getPos(), new ItemStack(Blocks.WOOL, rand, meta));
