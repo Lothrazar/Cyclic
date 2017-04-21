@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.gui;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityDetector;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityDisenchanter;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFan;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFishing;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
@@ -19,6 +20,8 @@ import com.lothrazar.cyclicmagic.gui.builder.ContainerBuilder;
 import com.lothrazar.cyclicmagic.gui.builder.GuiBuilder;
 import com.lothrazar.cyclicmagic.gui.detector.ContainerDetector;
 import com.lothrazar.cyclicmagic.gui.detector.GuiDetector;
+import com.lothrazar.cyclicmagic.gui.disenchanter.ContainerDisenchanter;
+import com.lothrazar.cyclicmagic.gui.disenchanter.GuiDisenchanter;
 import com.lothrazar.cyclicmagic.gui.fan.ContainerFan;
 import com.lothrazar.cyclicmagic.gui.fan.GuiFan;
 import com.lothrazar.cyclicmagic.gui.fisher.ContainerFisher;
@@ -92,6 +95,7 @@ public class ModGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_VILLAGER = 17;
   public static final int GUI_INDEX_FAN = 18;
   public static final int GUI_INDEX_XP = 19;
+  public static final int GUI_INDEX_DISENCH = 20;
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
     BlockPos p = new BlockPos(x, y, z);
@@ -174,6 +178,9 @@ public class ModGuiHandler implements IGuiHandler {
       case GUI_INDEX_XP:
         if (te instanceof TileEntityXpPylon) { return new ContainerPylon(player.inventory, (TileEntityXpPylon) te); }
       break;
+      case GUI_INDEX_DISENCH:
+        if (te instanceof TileEntityDisenchanter) { return new ContainerDisenchanter(player.inventory, (TileEntityDisenchanter) te); }
+      break;
     }
     return null;
   }
@@ -240,6 +247,9 @@ public class ModGuiHandler implements IGuiHandler {
         break;
         case GUI_INDEX_XP:
           if (te instanceof TileEntityXpPylon) { return new GuiPylon(player.inventory, (TileEntityXpPylon) te); }
+        break;
+        case GUI_INDEX_DISENCH:
+          if (te instanceof TileEntityDisenchanter) { return new GuiDisenchanter(player.inventory, (TileEntityDisenchanter) te); }
         break;
       }
     }
