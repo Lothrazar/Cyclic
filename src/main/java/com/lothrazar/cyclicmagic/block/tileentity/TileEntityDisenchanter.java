@@ -27,7 +27,7 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
   private int needsRedstone = 1;
   private int timer = TIMER_FULL;
   public TileEntityDisenchanter() {
-    super(5);
+    super(5 + 9);//5 for main array, 9 for output
   }
   @Override
   public void update() {

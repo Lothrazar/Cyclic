@@ -2,6 +2,8 @@ package com.lothrazar.cyclicmagic.gui.disenchanter;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityDisenchanter;
 import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.SlotItemRestricted;
+import com.lothrazar.cyclicmagic.gui.SlotOnlyEnchanted;
+import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
@@ -31,7 +33,7 @@ public class ContainerDisenchanter extends ContainerBaseMachine {
     this.playerOffsetY = 130;
     tileEntity = te;
     Item itemFiltered = null;
-    int x = 0, y = 0, ystart = 26, spacing = 36;
+    int x = 0, y = 0, ystart = 20, spacing = 26;
     for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
       switch (i) {
         case TileEntityDisenchanter.SLOT_BOOK://center center
@@ -55,13 +57,21 @@ public class ContainerDisenchanter extends ContainerBaseMachine {
           y = ystart + spacing;
         break;
         case TileEntityDisenchanter.SLOT_INPUT://top center
+          itemFiltered = Items.ENCHANTED_BOOK;//not reallyjust the book
           x = GuiDisenchanter.WIDTH / 2;
           y = ystart;
-          itemFiltered = null;
         break;
+        default:
+          itemFiltered = null;
+          x = Const.padding + (i - 5) * Const.SQ;
+          y = ystart + 3 * spacing - 1;
+          break;
       }
       if (itemFiltered == null) {
         addSlotToContainer(new Slot(tileEntity, i, x, y));
+      }
+      else if(itemFiltered == Items.ENCHANTED_BOOK){
+        addSlotToContainer(new SlotOnlyEnchanted(tileEntity, i, x, y));
       }
       else {
         addSlotToContainer(new SlotItemRestricted(tileEntity, i, x, y, itemFiltered));

@@ -52,7 +52,7 @@ public class GuiDisenchanter extends GuiBaseContanerProgress {
 //    int thisY = this.getMiddleY();
 //    Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, WIDTH, HEIGHT,WIDTH, HEIGHT);
     
-    int x = 0, y = 0, ystart = 26, spacing = 36;
+    int x = 0, y = 0, ystart = 20, spacing = 26;
     for (int i = 0; i < tile.getSizeInventory(); i++) {
       switch (i) {
         case TileEntityDisenchanter.SLOT_BOOK://center center
@@ -80,6 +80,12 @@ public class GuiDisenchanter extends GuiBaseContanerProgress {
           x = GuiDisenchanter.WIDTH / 2;
           y = ystart;
         break;
+        default:
+          this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
+
+          x = Const.padding + (i - 5) * Const.SQ;
+          y = ystart + 3 * spacing - 1;
+          break;
       }
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft - 1 + x, this.guiTop - 1 + y, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
