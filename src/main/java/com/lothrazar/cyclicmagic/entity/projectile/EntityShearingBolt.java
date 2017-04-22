@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.entity.projectile;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.module.MobDropChangesModule;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.EntityLivingBase;
@@ -12,7 +11,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
