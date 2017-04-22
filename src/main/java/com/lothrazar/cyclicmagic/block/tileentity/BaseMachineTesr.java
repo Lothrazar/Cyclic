@@ -116,6 +116,7 @@ public abstract class BaseMachineTesr<T extends TileEntityBaseMachineInvo> exten
     GlStateManager.popMatrix();
   }
   protected void renderItem(TileEntityBaseMachineInvo te, ItemStack stack, float itemHeight) {
+    if (stack == null || stack.isEmpty()) { return; }
     GlStateManager.pushMatrix();
     //start of rotate
     GlStateManager.translate(.5, 0, .5);

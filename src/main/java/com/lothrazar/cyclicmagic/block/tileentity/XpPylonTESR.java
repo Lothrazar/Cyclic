@@ -1,0 +1,24 @@
+package com.lothrazar.cyclicmagic.block.tileentity;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+/**
+ * Thanks to this tutorial
+ * http://modwiki.temporal-reality.com/mw/index.php/Render_Block_TESR_/_OBJ-1.9
+ * 
+ * @author Sam
+ *
+ */
+@SideOnly(Side.CLIENT)
+public class XpPylonTESR extends BaseMachineTesr<TileEntityXpPylon> {
+  private int lowerSlot;
+  public XpPylonTESR(int slot, int ls) {
+    super(slot);
+    lowerSlot = ls;
+  }
+  @Override
+  public void render(TileEntityBaseMachineInvo te) {
+    renderItem(te, te.getStackInSlot(this.itemSlotAbove), 0.5F + 0.4F);
+    renderItem(te, te.getStackInSlot(this.lowerSlot), 0.5F - 0.2F);
+  }
+}
