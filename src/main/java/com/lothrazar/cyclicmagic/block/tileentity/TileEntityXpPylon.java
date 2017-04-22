@@ -13,7 +13,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   private static final int XP_PER_SPEWORB = 10;
   private static final int XP_PER_BOTTLE = 11; // On impact with any non-liquid block it will drop experience orbs worth 3–11 experience points. 
   public static final int TIMER_FULL = 18;
-  public static final int MAX_EXP_HELD = 1000;
+  public static final int MAX_EXP_HELD = 20000;
   public static final int SLOT_INPUT = 0;
   public static final int SLOT_OUTPUT = 1;
   private static final String NBT_TIMER = "Timer";
@@ -21,7 +21,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
   private static final String NBT_SPRAY = "spray";
   private static final String NBT_BOTTLE = "bottle";
   private static final String NBT_EXP = "particles";
-  private final static int RANGE = 2;
+  public final static int RADIUS = 5;
   private static final int[] SLOTS_EXTRACT = new int[] { SLOT_OUTPUT };
   private static final int[] SLOTS_INSERT = new int[] { SLOT_INPUT };
   public static enum Fields {
@@ -74,7 +74,7 @@ public class TileEntityXpPylon extends TileEntityBaseMachineInvo implements ITic
     }
   }
   private void updateCollection() {
-    List<EntityXPOrb> orbs = getWorld().getEntitiesWithinAABB(EntityXPOrb.class, new AxisAlignedBB(this.getPos().up()).expandXyz(RANGE));
+    List<EntityXPOrb> orbs = getWorld().getEntitiesWithinAABB(EntityXPOrb.class, new AxisAlignedBB(this.getPos().up()).expandXyz(RADIUS));
     if (orbs != null) {
       //no timer just EAT
       for (EntityXPOrb orb : orbs) {

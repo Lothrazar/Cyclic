@@ -1,8 +1,10 @@
 package com.lothrazar.cyclicmagic.gui.pylon;
+import java.util.Arrays;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityXpPylon;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContanerProgress;
 import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
+import com.lothrazar.cyclicmagic.gui.ITooltipButton;
 import com.lothrazar.cyclicmagic.net.PacketTilePylon;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -18,6 +20,7 @@ public class GuiPylon extends GuiBaseContanerProgress {
   public static final ResourceLocation PROGEXP = new ResourceLocation(Const.MODID, "textures/gui/progress_exp.png");
   public static final ResourceLocation SLOT_BOTTLE = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_bottle.png");
   public static final ResourceLocation SLOT_EBOTTLE = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_ebottle.png");
+  private static final int DEPOSIT_AMT = 10;
   private TileEntityXpPylon tile;
   boolean debugLabels = false;
   private GuiButton btnCollect;
@@ -42,7 +45,7 @@ public class GuiPylon extends GuiBaseContanerProgress {
     btnCollect = new GuiButton(btnId++,
         x, y, w, h, "");
     this.buttonList.add(btnCollect);
-    y += h + Const.padding/2;
+    y += h + Const.padding / 2;
     btnSpray = new GuiButton(btnId++,
         x, y, w, h, "");
     this.buttonList.add(btnSpray);
@@ -51,9 +54,9 @@ public class GuiPylon extends GuiBaseContanerProgress {
     btnBottle = new GuiButton(btnId++,
         x, y, w, h, "");
     this.buttonList.add(btnBottle);
-    y += h + Const.padding/2;
+    y += h + Const.padding / 2;
     btnDeposit = new GuiButton(btnId++,
-        x, y, w, h, UtilChat.lang("button.pylon.deposit"));
+        x, y, w, h, UtilChat.lang("button.pylon.deposit") + DEPOSIT_AMT);
     this.buttonList.add(btnDeposit);
   }
   @Override
@@ -69,7 +72,32 @@ public class GuiPylon extends GuiBaseContanerProgress {
     }
     else if (button.id == btnDeposit.id) {
       //fake: collect really means deposit
-      ModCyclic.network.sendToServer(new PacketTilePylon(tile.getPos(), 25, TileEntityXpPylon.Fields.EXP));
+      ModCyclic.network.sendToServer(new PacketTilePylon(tile.getPos(), DEPOSIT_AMT, TileEntityXpPylon.Fields.EXP));
+    }
+  }
+  @Override
+  public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+    super.drawScreen(mouseX, mouseY, partialTicks);
+    GuiButton button;
+    String tt = "";
+    for (int i = 0; i < buttonList.size(); i++) {
+      if (buttonList.get(i).isMouseOver()) {
+        button = buttonList.get(i);
+        if (button.id == btnCollect.id) {
+          tt = "button.pylon.collect.tooltip" + TileEntityXpPylon.RADIUS;
+        }
+        else if (button.id == btnSpray.id) {
+          tt = "button.pylon.spray.tooltip";
+        }
+        else if (button.id == btnBottle.id) {
+          tt = "button.pylon.bottle.tooltip";
+        }
+        else if (button.id == btnDeposit.id) {
+          tt = "button.pylon.deposit.tooltip";
+        }
+        this.drawHoveringText(Arrays.asList(UtilChat.lang(tt)), mouseX, mouseY, fontRendererObj);
+        break;// cant hover on 2 at once
+      }
     }
   }
   @Override
@@ -82,15 +110,14 @@ public class GuiPylon extends GuiBaseContanerProgress {
         this.mc.getTextureManager().bindTexture(SLOT_BOTTLE);
       else
         this.mc.getTextureManager().bindTexture(SLOT_EBOTTLE);
-      Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerPylon.SLOTX - 1, this.guiTop + ContainerPylon.SLOTY - 1 + k * (8+Const.SQ), u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+      Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerPylon.SLOTX - 1, this.guiTop + ContainerPylon.SLOTY - 1 + k * (8 + Const.SQ), u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
   }
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-
     btnCollect.displayString = UtilChat.lang("button.pylon.collect" + tile.getField(TileEntityXpPylon.Fields.COLLECT.ordinal()));
     btnSpray.displayString = UtilChat.lang("button.pylon.spray" + tile.getField(TileEntityXpPylon.Fields.SPRAY.ordinal()));
-    btnBottle.displayString = UtilChat.lang("button.pylon.bottle" + tile.getField(TileEntityXpPylon.Fields.BOTTLE.ordinal())); 
+    btnBottle.displayString = UtilChat.lang("button.pylon.bottle" + tile.getField(TileEntityXpPylon.Fields.BOTTLE.ordinal()));
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
   public int getProgressX() {
