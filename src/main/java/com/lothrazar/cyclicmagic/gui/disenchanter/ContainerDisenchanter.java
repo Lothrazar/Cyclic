@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.gui.disenchanter;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityDisenchanter;
 import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.SlotItemRestricted;
-import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;

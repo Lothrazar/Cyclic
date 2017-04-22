@@ -1,14 +1,11 @@
 package com.lothrazar.cyclicmagic.gui.disenchanter;
-import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityDisenchanter;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityDisenchanter.Fields;
-import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContanerProgress;
 import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -16,6 +13,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiDisenchanter extends GuiBaseContanerProgress {
   public static final int WIDTH = 176;
   public static final int HEIGHT = 212;
+  public static final ResourceLocation SLOT_GLOWSTONE = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_glowstone.png");
+  public static final ResourceLocation SLOT_EBOTTLE = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_ebottle.png");
+  public static final ResourceLocation SLOT_BOOK = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_book.png");
+  
+  
+  public static final ResourceLocation SLOT_REDST = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_redstone.png");
+  
   public static final ResourceLocation GUI = new ResourceLocation(Const.MODID, "textures/gui/pattern.png");
   private TileEntityDisenchanter tile;
   private GuiButtonMachineRedstone redstoneBtn;
@@ -48,27 +52,31 @@ public class GuiDisenchanter extends GuiBaseContanerProgress {
 //    int thisY = this.getMiddleY();
 //    Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, WIDTH, HEIGHT,WIDTH, HEIGHT);
     
-    this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     int x = 0, y = 0, ystart = 26, spacing = 36;
     for (int i = 0; i < tile.getSizeInventory(); i++) {
       switch (i) {
         case TileEntityDisenchanter.SLOT_BOOK://center center
+          this.mc.getTextureManager().bindTexture(SLOT_BOOK);
           x = GuiDisenchanter.WIDTH / 2;
           y = ystart + spacing;
         break;
         case TileEntityDisenchanter.SLOT_GLOWSTONE://left mid
+          this.mc.getTextureManager().bindTexture(SLOT_GLOWSTONE);
           x = GuiDisenchanter.WIDTH / 4;
           y = ystart + spacing;
         break;
         case TileEntityDisenchanter.SLOT_BOTTLE://bottom center
+          this.mc.getTextureManager().bindTexture(SLOT_EBOTTLE);
           x = GuiDisenchanter.WIDTH / 2;
           y = ystart + 2 * spacing;
         break;
         case TileEntityDisenchanter.SLOT_REDSTONE:// right mid
+          this.mc.getTextureManager().bindTexture(SLOT_REDST);
           x = GuiDisenchanter.WIDTH - GuiDisenchanter.WIDTH / 4;
           y = ystart + spacing;
         break;
         case TileEntityDisenchanter.SLOT_INPUT://top center
+          this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
           x = GuiDisenchanter.WIDTH / 2;
           y = ystart;
         break;

@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -52,21 +53,22 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
       outEnchants.put(keyMoved, entry.getValue());
       break;
     }
-    if (outEnchants.size() == 0 || keyMoved == null) { return;//weird none were found. so anyweay dont pay cost
-    }
+    if (outEnchants.size() == 0 || keyMoved == null) { return;  }//weird none were found. so anyweay dont pay cost
+  
     enchants.remove(keyMoved);
-    EnchantmentHelper.setEnchantments(outEnchants, eBook);
-    EnchantmentHelper.setEnchantments(enchants, input);
-    //special case, we dont want an ench book with nothin
-    if (input.getItem() == Items.ENCHANTED_BOOK) {
+    EnchantmentHelper.setEnchantments(outEnchants, eBook);//add to book
+    dropStack(eBook); // drop the new enchanted book
+    //special case if input was book, we dont want an ench book with nothin on it
+    if (input.getItem() == Items.ENCHANTED_BOOK && enchants.size() == 0) {
       dropStack(new ItemStack(Items.BOOK));
     }
     else {
+      //was a normal item, so ok to set its ench list to empty
+      EnchantmentHelper.setEnchantments(enchants, input);//set as removed
       dropStack(input);
     }
     //currently it always drops after one enchant is removed
     this.setInventorySlotContents(SLOT_INPUT, ItemStack.EMPTY);
-    dropStack(eBook); // drop the new enchanted book
     //pay cost
     this.decrStackSize(SLOT_GLOWSTONE);
     this.decrStackSize(SLOT_REDSTONE);
@@ -76,7 +78,8 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
   }
   private void dropStack(ItemStack stack) {
     //TODO: spew above/below configurable
-    UtilItemStack.dropItemStackInWorld(world, this.pos.up(), stack);
+    EntityItem ei = UtilItemStack.dropItemStackInWorld(world, this.pos.up(), stack);
+    ei.addVelocity(0, 1, 0);
   }
   private boolean isInputValid() {
     return this.getStackInSlot(SLOT_BOOK).getItem() == Items.BOOK
@@ -88,10 +91,10 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
     if (side == EnumFacing.UP) {
-      return new int[] { 0 };
+      return new int[] { SLOT_INPUT };
     }
-    else if (side == EnumFacing.DOWN) { return new int[] { 2 }; }
-    return new int[] { 1 };//for outputting stuff
+//    else if (side == EnumFacing.DOWN) { return new int[] { SLOT_OUTPUT }; }
+    return new int[] { SLOT_BOTTLE, SLOT_REDSTONE, SLOT_GLOWSTONE, SLOT_BOOK };//for outputting stuff
   }
   @Override
   public void toggleNeedsRedstone() {
