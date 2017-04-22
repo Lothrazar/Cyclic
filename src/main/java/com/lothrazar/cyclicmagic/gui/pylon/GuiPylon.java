@@ -23,6 +23,7 @@ public class GuiPylon extends GuiBaseContanerProgress {
   private GuiButton btnCollect;
   private GuiButton btnSpray;
   private GuiButton btnBottle;
+  private GuiButton btnDeposit;
   public GuiPylon(InventoryPlayer inventoryPlayer, TileEntityXpPylon tileEntity) {
     super(new ContainerPylon(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -50,6 +51,10 @@ public class GuiPylon extends GuiBaseContanerProgress {
     btnBottle = new GuiButton(btnId++,
         x, y, w, h, "");
     this.buttonList.add(btnBottle);
+    y += h + Const.padding/2;
+    btnDeposit = new GuiButton(btnId++,
+        x, y, w, h, UtilChat.lang("button.pylon.deposit"));
+    this.buttonList.add(btnDeposit);
   }
   @Override
   protected void actionPerformed(GuiButton button) {
@@ -61,6 +66,10 @@ public class GuiPylon extends GuiBaseContanerProgress {
     }
     else if (button.id == btnBottle.id) {
       ModCyclic.network.sendToServer(new PacketTilePylon(tile.getPos(), 1, TileEntityXpPylon.Fields.BOTTLE));
+    }
+    else if (button.id == btnDeposit.id) {
+      //fake: collect really means deposit
+      ModCyclic.network.sendToServer(new PacketTilePylon(tile.getPos(), 25, TileEntityXpPylon.Fields.EXP));
     }
   }
   @Override
