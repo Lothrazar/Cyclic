@@ -15,35 +15,57 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerDisenchanter extends ContainerBaseMachine {
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
-  public static final int SLOTX_START = 8;
-  public static final int SLOTY = 42;
+  public static final int SLOTX_INPUT = 0;
+  public static final int SLOTX_BOTTLE = 1;
+  public static final int SLOTX_REDSTONE = 2;
+  public static final int SLOTX_GLOWSTONE = 3;
+  public static final int SLOTX_BOOK = 4;
+  public static final int SLOTY_INPUT = 0;
+  public static final int SLOTY_BOTTLE = 1;
+  public static final int SLOTY_REDSTONE = 2;
+  public static final int SLOTY_GLOWSTONE = 3;
+  public static final int SLOTY_BOOK = 4;
   protected TileEntityDisenchanter tileEntity;
   private int timer;
   private int redstone;
   public ContainerDisenchanter(InventoryPlayer inventoryPlayer, TileEntityDisenchanter te) {
+    this.playerOffsetY = 130;
     tileEntity = te;
     Item itemFiltered = null;
+    int x = 0, y = 0, ystart = 26, spacing = 36;
     for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
-      itemFiltered = null;
-      switch(i){
-        case TileEntityDisenchanter.SLOT_BOOK:
+      switch (i) {
+        case TileEntityDisenchanter.SLOT_BOOK://center center
           itemFiltered = Items.BOOK;
-          break;
-        case TileEntityDisenchanter.SLOT_GLOWSTONE:
+          x = GuiDisenchanter.WIDTH / 2;
+          y = ystart + spacing;
+        break;
+        case TileEntityDisenchanter.SLOT_GLOWSTONE://left mid
           itemFiltered = Items.GLOWSTONE_DUST;
-          break;
-        case TileEntityDisenchanter.SLOT_BOTTLE:
+          x = GuiDisenchanter.WIDTH / 4;
+          y = ystart + spacing;
+        break;
+        case TileEntityDisenchanter.SLOT_BOTTLE://bottom center
           itemFiltered = Items.EXPERIENCE_BOTTLE;
-          break;
-        case TileEntityDisenchanter.SLOT_REDSTONE:
+          x = GuiDisenchanter.WIDTH / 2;
+          y = ystart + 2 * spacing;
+        break;
+        case TileEntityDisenchanter.SLOT_REDSTONE:// right mid
           itemFiltered = Items.REDSTONE;
-          break;
+          x = GuiDisenchanter.WIDTH - GuiDisenchanter.WIDTH / 4;
+          y = ystart + spacing;
+        break;
+        case TileEntityDisenchanter.SLOT_INPUT://top center
+          x = GuiDisenchanter.WIDTH / 2;
+          y = ystart;
+          itemFiltered = null;
+        break;
       }
-      if(itemFiltered == null){
-        addSlotToContainer(new Slot(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY));
+      if (itemFiltered == null) {
+        addSlotToContainer(new Slot(tileEntity, i, x, y));
       }
-      else{
-        addSlotToContainer(new SlotItemRestricted(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY,itemFiltered));
+      else {
+        addSlotToContainer(new SlotItemRestricted(tileEntity, i, x, y, itemFiltered));
       }
     }
     // commonly used vanilla code that adds the player's inventory
@@ -80,7 +102,7 @@ public class ContainerDisenchanter extends ContainerBaseMachine {
     super.detectAndSendChanges();
     for (int i = 0; i < this.listeners.size(); ++i) {
       IContainerListener icontainerlistener = (IContainerListener) this.listeners.get(i);
-      int  idx = TileEntityDisenchanter.Fields.TIMER.ordinal();
+      int idx = TileEntityDisenchanter.Fields.TIMER.ordinal();
       if (this.timer != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
@@ -88,9 +110,8 @@ public class ContainerDisenchanter extends ContainerBaseMachine {
       if (this.redstone != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
-      
     }
-    this.tileEntity.getField(TileEntityDisenchanter.Fields.REDSTONE.ordinal());
+    this.redstone = this.tileEntity.getField(TileEntityDisenchanter.Fields.REDSTONE.ordinal());
     this.timer = this.tileEntity.getField(TileEntityDisenchanter.Fields.TIMER.ordinal());
   }
   @Override

@@ -23,9 +23,6 @@ public class GuiUncrafting extends GuiBaseContanerProgress {
     super(new ContainerUncrafting(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
   }
-  public String getTitle() {
-    return "tile.uncrafting_block.name";
-  }
   @Override
   public void initGui() {
     super.initGui();

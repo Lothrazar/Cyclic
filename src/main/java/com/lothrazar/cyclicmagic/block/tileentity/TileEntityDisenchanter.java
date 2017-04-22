@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.Map;
 import com.google.common.collect.Maps;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.enchantment.Enchantment;
@@ -23,7 +24,7 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
   public static final int SLOT_GLOWSTONE = 3;
   public static final int SLOT_BOOK = 4;
   private int needsRedstone = 1;
-  private int timer;
+  private int timer = TIMER_FULL;
   public TileEntityDisenchanter() {
     super(5);
   }
@@ -33,8 +34,10 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
     if (!isInputValid()) { return; }
     this.spawnParticlesAbove();
     //odo; stop here depending on item state?
+    ModCyclic.logger.info("!"+timer);
+    System.out.println(""+timer);
     timer -= 1;
-    if (timer > 0) { return; }
+    if (timer > 0) { return; }//timer zero so go
     timer = TIMER_FULL;
     //now go my pretty!
     //the good stuff goes here  
@@ -49,20 +52,26 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
       outEnchants.put(keyMoved, entry.getValue());
       break;
     }
-    if(outEnchants.size() == 0 || keyMoved == null){
-      return;//weird none were found. so anyweay dont pay cost
+    if (outEnchants.size() == 0 || keyMoved == null) { return;//weird none were found. so anyweay dont pay cost
     }
     enchants.remove(keyMoved);
     EnchantmentHelper.setEnchantments(outEnchants, eBook);
     EnchantmentHelper.setEnchantments(enchants, input);
+    //special case, we dont want an ench book with nothin
+    if (input.getItem() == Items.ENCHANTED_BOOK) {
+      dropStack(new ItemStack(Items.BOOK));
+    }
+    else {
+      dropStack(input);
+    }
+    //currently it always drops after one enchant is removed
+    this.setInventorySlotContents(SLOT_INPUT, ItemStack.EMPTY);
+    dropStack(eBook); // drop the new enchanted book
+    //pay cost
     this.decrStackSize(SLOT_GLOWSTONE);
     this.decrStackSize(SLOT_REDSTONE);
     this.decrStackSize(SLOT_BOTTLE);
     this.decrStackSize(SLOT_BOOK);
-    dropStack(eBook); // drop the new enchanted book
-    //currently it always drops after one enchant is removed
-    dropStack(this.getStackInSlot(SLOT_INPUT));
-    this.setInventorySlotContents(SLOT_INPUT, ItemStack.EMPTY);
     UtilSound.playSound(world, pos, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS);
   }
   private void dropStack(ItemStack stack) {
@@ -73,7 +82,7 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
     return this.getStackInSlot(SLOT_BOOK).getItem() == Items.BOOK
         && this.getStackInSlot(SLOT_REDSTONE).getItem() == Items.REDSTONE
         && this.getStackInSlot(SLOT_GLOWSTONE).getItem() == Items.GLOWSTONE_DUST
-        && this.getStackInSlot(SLOT_BOTTLE).getItem() == Items.GUNPOWDER
+        && this.getStackInSlot(SLOT_BOTTLE).getItem() == Items.EXPERIENCE_BOTTLE
         && this.getStackInSlot(SLOT_INPUT).isEmpty() == false;
   }
   @Override
