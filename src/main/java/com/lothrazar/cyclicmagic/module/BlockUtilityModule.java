@@ -3,6 +3,7 @@ import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockBucketStorage;
 import com.lothrazar.cyclicmagic.block.BlockDetector;
+import com.lothrazar.cyclicmagic.block.BlockDisenchanter;
 import com.lothrazar.cyclicmagic.block.BlockFan;
 import com.lothrazar.cyclicmagic.block.BlockShears;
 import com.lothrazar.cyclicmagic.block.BlockFishing;
@@ -11,6 +12,7 @@ import com.lothrazar.cyclicmagic.block.BlockScaffoldingReplace;
 import com.lothrazar.cyclicmagic.block.BlockScaffoldingResponsive;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBucketStorage;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityDetector;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityDisenchanter;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFan;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFishing;
 import com.lothrazar.cyclicmagic.item.itemblock.ItemBlockBucket;
@@ -31,6 +33,7 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   private boolean enableShearingBlock;
   private boolean enableFan;
   private boolean entityDetector;
+  private boolean disenchanter;
   public void onInit() {
     if (entityDetector) {
       BlockDetector detector = new BlockDetector();
@@ -62,6 +65,11 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(block_fishing, "block_fishing");
       GameRegistry.registerTileEntity(TileEntityFishing.class, Const.MODID + "block_fishing_te");
     }
+    if (disenchanter) {
+      BlockDisenchanter block_disenchanter = new BlockDisenchanter();
+      BlockRegistry.registerBlock(block_disenchanter, "block_disenchanter");
+      GameRegistry.registerTileEntity(TileEntityDisenchanter.class, Const.MODID + "block_disenchanter_te");
+    }
     if (enableBucketBlocks) {
       //TODO: refactor and support more recipes
       BlockRegistry.block_storewater = new BlockBucketStorage(Items.WATER_BUCKET);
@@ -83,6 +91,7 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
+    disenchanter = config.getBoolean("UnchantPylon", category, true, Const.ConfigCategory.contentDefaultText);
     entityDetector = config.getBoolean("EntityDetector", category, true, Const.ConfigCategory.contentDefaultText);
     enableFan = config.getBoolean("Fan", category, true, Const.ConfigCategory.contentDefaultText);
     enableShearingBlock = config.getBoolean("ShearingBlock", category, true, Const.ConfigCategory.contentDefaultText);

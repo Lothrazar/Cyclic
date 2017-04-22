@@ -96,10 +96,11 @@ public class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements 
   }
   @Override
   public ItemStack getStackInSlot(int index) {
-    if(index < 0 || index >= getSizeInventory()){
-      return ItemStack.EMPTY;
-    }
+    if (index < 0 || index >= getSizeInventory()) { return ItemStack.EMPTY; }
     return inv.get(index);
+  }
+  public ItemStack decrStackSize(int index) {
+    return this.decrStackSize(index, 1);
   }
   @Override
   public ItemStack decrStackSize(int index, int count) {

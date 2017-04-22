@@ -96,51 +96,53 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
   }
   @Override
   public int getField(int id) {
-    if (id >= 0 && id < this.getFieldCount())
+    if (id >= 0 && id < this.getFieldCount()) {
       switch (Fields.values()[id]) {
-      case TIMER:
-      return timer;
-      case BUILDTYPE:
-      return this.buildType;
-      case SPEED:
-      return this.buildSpeed;
-      case SIZE:
-      return this.buildSize;
-      case HEIGHT:
-      return this.buildHeight;
-      case REDSTONE:
-      return this.needsRedstone;
+        case TIMER:
+          return timer;
+        case BUILDTYPE:
+          return this.buildType;
+        case SPEED:
+          return this.buildSpeed;
+        case SIZE:
+          return this.buildSize;
+        case HEIGHT:
+          return this.buildHeight;
+        case REDSTONE:
+          return this.needsRedstone;
       }
+    }
     return -1;
   }
   @Override
   public void setField(int id, int value) {
-    if (id >= 0 && id < this.getFieldCount())
+    if (id >= 0 && id < this.getFieldCount()) {
       switch (Fields.values()[id]) {
-      case TIMER:
-      this.timer = value;
-      break;
-      case BUILDTYPE:
-      this.buildType = value;
-      break;
-      case SPEED:
-      this.buildSpeed = value;
-      break;
-      case SIZE:
-      this.buildSize = value;
-      break;
-      case HEIGHT:
-      if (value > maxHeight) {
-      value = maxHeight;
+        case TIMER:
+          this.timer = value;
+        break;
+        case BUILDTYPE:
+          this.buildType = value;
+        break;
+        case SPEED:
+          this.buildSpeed = value;
+        break;
+        case SIZE:
+          this.buildSize = value;
+        break;
+        case HEIGHT:
+          if (value > maxHeight) {
+            value = maxHeight;
+          }
+          this.buildHeight = value;
+        break;
+        case REDSTONE:
+          this.needsRedstone = value;
+        break;
+        default:
+        break;
       }
-      this.buildHeight = value;
-      break;
-      case REDSTONE:
-      this.needsRedstone = value;
-      break;
-      default:
-      break;
-      }
+    }
   }
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
@@ -223,9 +225,9 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
   public boolean isBurning() {
     return this.timer > 0 && this.timer < TIMER_FULL;
   }
-  public boolean isRunning() {
-    return !this.onlyRunIfPowered() || this.isPowered();
-  }
+//  public boolean isRunning() {
+//    return !this.onlyRunIfPowered() || this.isPowered();
+//  }
   @Override
   public void update() {
     shiftAllUp();
@@ -251,7 +253,6 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
         }
         BlockPos nextPos = shape.get(this.shapeIndex);//start at current position and validate
         for (int i = 0; i < spotsSkippablePerTrigger; i++) {
- 
           //true means bounding box is null in the check. entit falling sand uses true
           if (world.isAirBlock(nextPos) &&
               stuff.canPlaceBlockAt(world, nextPos) &&
@@ -261,7 +262,6 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
               this.decrStackSize(0, 1);
             }
             break;//ok , target position is valid, we can build only into air
- 
           }
           else {//cant build here. move up one
             nextPos = shape.get(this.shapeIndex);

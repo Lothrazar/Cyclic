@@ -1,0 +1,9 @@
+{
+    "variants": {
+        "normal": { "model": "cyclicmagic:block_disenchanter" },
+        "facing=north": { "model": "cyclicmagic:block_disenchanter"},
+        "facing=east": { "model":  "cyclicmagic:block_disenchanter"},
+        "facing=south": { "model": "cyclicmagic:block_disenchanter"},
+        "facing=west": { "model":  "cyclicmagic:block_disenchanter" }
+    }
+}

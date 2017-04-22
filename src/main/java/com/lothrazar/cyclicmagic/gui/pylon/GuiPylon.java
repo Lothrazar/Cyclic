@@ -16,7 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiPylon extends GuiBaseContanerProgress {
   public static final ResourceLocation PROGEXP = new ResourceLocation(Const.MODID, "textures/gui/progress_exp.png");
-  public static final ResourceLocation SLOT = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_bottle.png");
+  public static final ResourceLocation SLOT_BOTTLE = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_bottle.png");
   private TileEntityXpPylon tile;
   boolean debugLabels = false;
   private GuiButtonMachineRedstone redstoneBtn;
@@ -54,7 +54,7 @@ public class GuiPylon extends GuiBaseContanerProgress {
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0;
-    this.mc.getTextureManager().bindTexture(SLOT);
+    this.mc.getTextureManager().bindTexture(SLOT_BOTTLE);
     for (int k = 0; k < this.tile.getSizeInventory(); k++) { // x had - 3 ??
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerPylon.SLOTX_START - 1 + k * 2 * Const.SQ, this.guiTop + ContainerPylon.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }

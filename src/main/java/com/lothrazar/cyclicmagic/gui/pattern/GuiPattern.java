@@ -13,8 +13,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiPattern extends GuiBaseContainer {
   public static final ResourceLocation GUI = new ResourceLocation(Const.MODID, Const.Res.folder + "pattern.png");
-  static final int texture_width = 176;
-  static final int texture_height = 212;
+  static final int WIDTH = 176;
+  static final int HEIGHT = 212;
   static final int GUI_ROWS = 2;
   private TileEntityPatternBuilder tile;
   private int leftColX;
@@ -27,12 +27,12 @@ public class GuiPattern extends GuiBaseContainer {
   public GuiPattern(InventoryPlayer inventoryPlayer, TileEntityPatternBuilder tileEntity) {
     super(new ContainerPattern(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
-    this.xSize = texture_width;
-    this.ySize = texture_height;
+    this.xSize = WIDTH;
+    this.ySize = HEIGHT;
   }
-  public String getTitle() {
-    return "tile.builder_pattern.name";
-  }
+//  public String getTitle() {
+//    return "tile.builder_pattern.name";
+//  }
   @Override
   public ResourceLocation getBackground() {
     return GUI;
@@ -118,7 +118,7 @@ public class GuiPattern extends GuiBaseContainer {
     int thisX = this.getMiddleX();
     int thisY = this.getMiddleY();
     int u = 0, v = 0;
-    Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, texture_width, texture_height, texture_width, texture_height);
+    Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, WIDTH, HEIGHT, WIDTH, HEIGHT);
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     int row = 0, col = 0;
     for (int i = 0; i < tile.getSizeInventory(); i++) {
