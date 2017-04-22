@@ -65,12 +65,12 @@ public class ContainerDisenchanter extends ContainerBaseMachine {
           itemFiltered = null;
           x = Const.padding + (i - 5) * Const.SQ;
           y = ystart + 3 * spacing - 1;
-          break;
+        break;
       }
       if (itemFiltered == null) {
         addSlotToContainer(new Slot(tileEntity, i, x, y));
       }
-      else if(itemFiltered == Items.ENCHANTED_BOOK){
+      else if (itemFiltered == Items.ENCHANTED_BOOK) {
         addSlotToContainer(new SlotOnlyEnchanted(tileEntity, i, x, y));
       }
       else {

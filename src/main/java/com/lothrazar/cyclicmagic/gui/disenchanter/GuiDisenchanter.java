@@ -16,10 +16,7 @@ public class GuiDisenchanter extends GuiBaseContanerProgress {
   public static final ResourceLocation SLOT_GLOWSTONE = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_glowstone.png");
   public static final ResourceLocation SLOT_EBOTTLE = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_ebottle.png");
   public static final ResourceLocation SLOT_BOOK = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_book.png");
-  
-  
   public static final ResourceLocation SLOT_REDST = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_redstone.png");
-  
   public static final ResourceLocation GUI = new ResourceLocation(Const.MODID, "textures/gui/pattern.png");
   private TileEntityDisenchanter tile;
   private GuiButtonMachineRedstone redstoneBtn;
@@ -37,21 +34,11 @@ public class GuiDisenchanter extends GuiBaseContanerProgress {
         this.guiTop + 8, this.tile.getPos());
     redstoneBtn.setTextureIndex(tile.getField(Fields.REDSTONE.ordinal()));
     this.buttonList.add(redstoneBtn);
-    //    actionBtn = new ButtonUserAction(1,
-    //        this.guiLeft + 8 + 50,
-    //        this.guiTop + 8 + 8, this.tile.getPos());
-    //    this.buttonList.add(actionBtn);
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
-     int u = 0, v = 0;
-//    GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-//    this.mc.getTextureManager().bindTexture(getBackground());
-//    int thisX = this.getMiddleX();
-//    int thisY = this.getMiddleY();
-//    Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, WIDTH, HEIGHT,WIDTH, HEIGHT);
-    
+    super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
+    int u = 0, v = 0;
     int x = 0, y = 0, ystart = 20, spacing = 26;
     for (int i = 0; i < tile.getSizeInventory(); i++) {
       switch (i) {
@@ -82,10 +69,9 @@ public class GuiDisenchanter extends GuiBaseContanerProgress {
         break;
         default:
           this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
-
           x = Const.padding + (i - 5) * Const.SQ;
           y = ystart + 3 * spacing - 1;
-          break;
+        break;
       }
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft - 1 + x, this.guiTop - 1 + y, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
@@ -104,7 +90,7 @@ public class GuiDisenchanter extends GuiBaseContanerProgress {
     return this.guiLeft + Const.padding + 2;
   }
   public int getProgressY() {
-    return this.guiTop + 6 * Const.SQ + 10 ;
+    return this.guiTop + 6 * Const.SQ + 10;
   }
   public int getProgressCurrent() {
     return tile.getField(Fields.TIMER.ordinal());

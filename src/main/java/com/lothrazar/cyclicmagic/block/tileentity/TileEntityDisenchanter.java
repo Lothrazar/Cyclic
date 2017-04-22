@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.Map;
 import com.google.common.collect.Maps;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.enchantment.Enchantment;
@@ -34,14 +33,10 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
     if (!isRunning()) { return; }
     if (!isInputValid()) { return; }
     this.spawnParticlesAbove();
-    //odo; stop here depending on item state?
-    ModCyclic.logger.info("!"+timer);
-    System.out.println(""+timer);
     timer -= 1;
-    if (timer > 0) { return; }//timer zero so go
+    if (timer > 0) { return; } //timer zero so go
     timer = TIMER_FULL;
     //now go my pretty!
-    //the good stuff goes here  
     ItemStack input = this.getStackInSlot(SLOT_INPUT);
     ItemStack eBook = new ItemStack(Items.ENCHANTED_BOOK);
     Map<Enchantment, Integer> outEnchants = Maps.<Enchantment, Integer> newLinkedHashMap();
@@ -53,8 +48,7 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
       outEnchants.put(keyMoved, entry.getValue());
       break;
     }
-    if (outEnchants.size() == 0 || keyMoved == null) { return;  }//weird none were found. so anyweay dont pay cost
-  
+    if (outEnchants.size() == 0 || keyMoved == null) { return; } //weird none were found. so anyweay dont pay cost
     enchants.remove(keyMoved);
     EnchantmentHelper.setEnchantments(outEnchants, eBook);//add to book
     dropStack(eBook); // drop the new enchanted book
@@ -77,7 +71,13 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
     UtilSound.playSound(world, pos, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS);
   }
   private void dropStack(ItemStack stack) {
-    //TODO: spew above/below configurable
+    for (int i = SLOT_BOOK + 1; i < this.getSizeInventory(); i++) {
+      if (this.getStackInSlot(i).isEmpty()) {
+        this.setInventorySlotContents(i, stack);
+        return;
+      }
+    }
+    //well i guess it was full since we didnt return
     EntityItem ei = UtilItemStack.dropItemStackInWorld(world, this.pos.up(), stack);
     ei.addVelocity(0, 1, 0);
   }
@@ -90,11 +90,22 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
-    if (side == EnumFacing.UP) {
-      return new int[] { SLOT_INPUT };
+    switch (side) {
+      case DOWN:
+        return new int[] { 5, 6, 7, 8, 9, 10, 11, 12, 13 };//9 slotsfor outputting stuff
+      case UP:
+        return new int[] { SLOT_INPUT };//input enchanted items
+      case EAST:
+        return new int[] { SLOT_BOTTLE };
+      case NORTH:
+        return new int[] { SLOT_REDSTONE };
+      case SOUTH:
+        return new int[] { SLOT_GLOWSTONE };
+      case WEST:
+        return new int[] { SLOT_BOOK };
+      default:
+        return new int[] {};
     }
-//    else if (side == EnumFacing.DOWN) { return new int[] { SLOT_OUTPUT }; }
-    return new int[] { SLOT_BOTTLE, SLOT_REDSTONE, SLOT_GLOWSTONE, SLOT_BOOK };//for outputting stuff
   }
   @Override
   public void toggleNeedsRedstone() {
