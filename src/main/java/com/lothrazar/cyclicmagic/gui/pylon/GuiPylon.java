@@ -41,11 +41,12 @@ public class GuiPylon extends GuiBaseContanerProgress {
     btnCollect = new GuiButton(btnId++,
         x, y, w, h, "");
     this.buttonList.add(btnCollect);
-    y += h;
+    y += h + Const.padding/2;
     btnSpray = new GuiButton(btnId++,
         x, y, w, h, "");
     this.buttonList.add(btnSpray);
-    y += h;
+    x += w + Const.padding;
+    y = this.guiTop + Const.padding * 2;
     btnBottle = new GuiButton(btnId++,
         x, y, w, h, "");
     this.buttonList.add(btnBottle);
