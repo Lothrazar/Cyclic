@@ -91,7 +91,7 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
-    disenchanter = config.getBoolean("Disenchanter", category, true, Const.ConfigCategory.contentDefaultText);
+    disenchanter = config.getBoolean("UnchantPylon", category, true, Const.ConfigCategory.contentDefaultText);
     entityDetector = config.getBoolean("EntityDetector", category, true, Const.ConfigCategory.contentDefaultText);
     enableFan = config.getBoolean("Fan", category, true, Const.ConfigCategory.contentDefaultText);
     enableShearingBlock = config.getBoolean("ShearingBlock", category, true, Const.ConfigCategory.contentDefaultText);

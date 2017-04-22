@@ -1,37 +1,24 @@
 package com.lothrazar.cyclicmagic.block;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.block.tileentity.FishingTESR;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityDisenchanter;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
-import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockDisenchanter extends BlockBaseHasTile implements IHasRecipe {
   public BlockDisenchanter() {
     super(Material.ROCK);
     this.setHardness(3F);
     this.setResistance(5F);
-    this.setSoundType(SoundType.WOOD);
+    this.setSoundType(SoundType.METAL);
     this.setTickRandomly(true);
     this.setGuiId(ModGuiHandler.GUI_INDEX_DISENCH);
     this.setTranslucent();
@@ -53,7 +40,7 @@ public class BlockDisenchanter extends BlockBaseHasTile implements IHasRecipe {
         "vhv",
         "grg",
         "sis",
-        'v', Blocks.VINE,
+        'v', Items.EXPERIENCE_BOTTLE,
         'h', Blocks.HOPPER,
         'i', Items.DIAMOND,
         'g', new ItemStack(Blocks.STAINED_GLASS, 1, EnumDyeColor.PURPLE.getMetadata()),
