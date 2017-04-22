@@ -1,12 +1,15 @@
 package com.lothrazar.cyclicmagic.gui.disenchanter;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityDisenchanter;
 import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
+import com.lothrazar.cyclicmagic.gui.SlotItemRestricted;
 import com.lothrazar.cyclicmagic.gui.SlotOnlyItems;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -20,8 +23,29 @@ public class ContainerDisenchanter extends ContainerBaseMachine {
   private int redstone;
   public ContainerDisenchanter(InventoryPlayer inventoryPlayer, TileEntityDisenchanter te) {
     tileEntity = te;
+    Item itemFiltered = null;
     for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
-      addSlotToContainer(new SlotOnlyItems(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY));
+      itemFiltered = null;
+      switch(i){
+        case TileEntityDisenchanter.SLOT_BOOK:
+          itemFiltered = Items.BOOK;
+          break;
+        case TileEntityDisenchanter.SLOT_GLOWSTONE:
+          itemFiltered = Items.GLOWSTONE_DUST;
+          break;
+        case TileEntityDisenchanter.SLOT_GPOWDER:
+          itemFiltered = Items.GUNPOWDER;
+          break;
+        case TileEntityDisenchanter.SLOT_REDSTONE:
+          itemFiltered = Items.REDSTONE;
+          break;
+      }
+      if(itemFiltered == null){
+        addSlotToContainer(new Slot(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY));
+      }
+      else{
+        addSlotToContainer(new SlotItemRestricted(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY,itemFiltered));
+      }
     }
     // commonly used vanilla code that adds the player's inventory
     bindPlayerInventory(inventoryPlayer);
