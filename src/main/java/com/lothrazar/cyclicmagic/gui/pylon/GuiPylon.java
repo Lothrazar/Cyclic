@@ -72,12 +72,12 @@ public class GuiPylon extends GuiBaseContanerProgress {
         this.mc.getTextureManager().bindTexture(SLOT_BOTTLE);
       else
         this.mc.getTextureManager().bindTexture(SLOT_EBOTTLE);
-      Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerPylon.SLOTX_START - 1 + k * 2 * Const.SQ, this.guiTop + ContainerPylon.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+      Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerPylon.SLOTX - 1, this.guiTop + ContainerPylon.SLOTY - 1 + k * (8+Const.SQ), u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
   }
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    //    redstoneBtn.setState(tile.getField(TileEntityXpPylon.Fields.REDSTONE.ordinal()));
+
     btnCollect.displayString = UtilChat.lang("button.pylon.collect" + tile.getField(TileEntityXpPylon.Fields.COLLECT.ordinal()));
     btnSpray.displayString = UtilChat.lang("button.pylon.spray" + tile.getField(TileEntityXpPylon.Fields.SPRAY.ordinal()));
     btnBottle.displayString = UtilChat.lang("button.pylon.bottle" + tile.getField(TileEntityXpPylon.Fields.BOTTLE.ordinal())); 
