@@ -7,11 +7,12 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.text.ITextComponent;
 
 public class TileEntityMagnetAnti extends TileEntityBaseMachine implements ITickable {
-  private int timer;
   private static final String NBT_TIMER = "Timer";
-  public final static int TIMER_FULL = 20;
+  public final static int TIMER_FULL = 10;
   public final static int ITEM_VRADIUS = 3;
   public final static int ITEM_HRADIUS = 32;
+  private final static float SPEED = 1.4F;//was 0.9
+  private int timer;
   public TileEntityMagnetAnti() {
     this.timer = TIMER_FULL;
   }
@@ -35,18 +36,18 @@ public class TileEntityMagnetAnti extends TileEntityBaseMachine implements ITick
   @Override
   public void update() {
     boolean trigger = false;
-    timer -= this.getSpeed();
+    timer--;
     if (timer <= 0) {
       timer = TIMER_FULL;
       trigger = true;
     }
     // center of the block
     double x = this.getPos().getX() + 0.5;
-    double y = this.getPos().getY() + 0.7;
+    double y = this.getPos().getY();
     double z = this.getPos().getZ() + 0.5;
     if (trigger) {
-      UtilEntity.moveEntityLivingNonplayers(this.getWorld(), x, y, z, ITEM_HRADIUS, ITEM_VRADIUS, false);
-      timer = TIMER_FULL;//harvest worked!
+      UtilEntity.moveEntityLivingNonplayers(this.getWorld(), x, y, z, ITEM_HRADIUS, ITEM_VRADIUS, false, SPEED);
+      timer = TIMER_FULL;
       spawnParticles();
     }
   }
@@ -60,8 +61,5 @@ public class TileEntityMagnetAnti extends TileEntityBaseMachine implements ITick
       UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, x, y + 2, z);
       UtilParticle.spawnParticle(this.getWorld(), EnumParticleTypes.CRIT_MAGIC, x, y + 3, z);
     }
-  }
-  private int getSpeed() {
-    return 1;
   }
 }

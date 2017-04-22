@@ -216,10 +216,10 @@ public class UtilEntity {
     entity.motionX += net.minecraft.util.math.MathHelper.sin(-entity.rotationYaw * 0.017453292F) * factor;
     entity.motionZ += net.minecraft.util.math.MathHelper.cos(entity.rotationYaw * 0.017453292F) * factor;
   }
-  public static int moveEntityLivingNonplayers(World world, double x, double y, double z, int ITEM_HRADIUS, int ITEM_VRADIUS, boolean towardsPos) {
+  public static int moveEntityLivingNonplayers(World world, double x, double y, double z, int ITEM_HRADIUS, int ITEM_VRADIUS, boolean towardsPos,float speed) {
     AxisAlignedBB range = UtilEntity.makeBoundingBox(x, y, z, ITEM_HRADIUS, ITEM_VRADIUS);
     List<EntityLivingBase> nonPlayer = getLivingHostile(world, range);
-    return pullEntityList(x, y, z, towardsPos, nonPlayer);
+    return pullEntityList(x, y, z, towardsPos, nonPlayer,speed,speed);
   }
   public static List<EntityLivingBase> getLivingHostile(World world, AxisAlignedBB range) {
     List<EntityLivingBase> all = world.getEntitiesWithinAABB(EntityLivingBase.class, range);
