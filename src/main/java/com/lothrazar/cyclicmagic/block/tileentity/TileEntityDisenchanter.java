@@ -1,5 +1,9 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
+import java.util.Map;
+import com.google.common.collect.Maps;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -12,7 +16,7 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
   }
   public static final int TIMER_FULL = 100;
   public static final int SLOT_INPUT = 0;
-  public static final int SLOT_GPOWDER = 1;
+  public static final int SLOT_BOTTLE = 1;
   public static final int SLOT_REDSTONE = 2;
   public static final int SLOT_GLOWSTONE = 3;
   public static final int SLOT_BOOK = 4;
@@ -30,33 +34,44 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
     timer -= 1;
     if (timer > 0) { return; }
     timer = TIMER_FULL;
-    World world = this.getWorld();
     //now go my pretty!
+    //the good stuff goes here  
+    ItemStack input = this.getStackInSlot(SLOT_INPUT);
+    ItemStack eBook = new ItemStack(Items.ENCHANTED_BOOK);
+    Map<Enchantment, Integer> outEnchants = Maps.<Enchantment, Integer> newLinkedHashMap();
+    Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(input);
+    //since its a map, there is no concept of 'get(0)', its unordered. so just do one
+    Enchantment keyMoved = null;
+    for (Map.Entry<Enchantment, Integer> entry : enchants.entrySet()) {
+      keyMoved = entry.getKey();
+      outEnchants.put(keyMoved, entry.getValue());
+      break;
+    }
+    if(outEnchants.size() == 0 || keyMoved == null){
+      return;//weird none were found. so anyweay dont pay cost
+    }
+    enchants.remove(keyMoved);
+    EnchantmentHelper.setEnchantments(outEnchants, eBook);
+    EnchantmentHelper.setEnchantments(enchants, input);
     
     this.decrStackSize(SLOT_GLOWSTONE);
     this.decrStackSize(SLOT_REDSTONE);
-    this.decrStackSize(SLOT_GPOWDER);
+    this.decrStackSize(SLOT_BOTTLE);
     this.decrStackSize(SLOT_BOOK);
-    //the good stuff goes here  
-    //TODO  ench movving
-    
-    
-    
-    // only drop input IF it has zero chants left eh
-    UtilItemStack.dropItemStackInWorld(world, this.pos, this.getStackInSlot(SLOT_INPUT));
+    dropStack(eBook); // drop the new enchanted book
+    //currently it always drops after one enchant is removed
+    dropStack(this.getStackInSlot(SLOT_INPUT));
     this.setInventorySlotContents(SLOT_INPUT, ItemStack.EMPTY);
-    
-    //TODO: drop the new enchanted book
-    
-    //always drop book, one single enchant per book
-//    UtilItemStack.dropItemStackInWorld(world, this.pos, .....);
-    
+  }
+  private void dropStack(ItemStack stack) {
+    //TODO: spew above/below configurable
+    UtilItemStack.dropItemStackInWorld(world, this.pos.up(), stack);
   }
   private boolean isInputValid() {
     return this.getStackInSlot(SLOT_BOOK).getItem() == Items.BOOK
         && this.getStackInSlot(SLOT_REDSTONE).getItem() == Items.REDSTONE
         && this.getStackInSlot(SLOT_GLOWSTONE).getItem() == Items.GLOWSTONE_DUST
-        && this.getStackInSlot(SLOT_GPOWDER).getItem() == Items.GUNPOWDER
+        && this.getStackInSlot(SLOT_BOTTLE).getItem() == Items.GUNPOWDER
         && this.getStackInSlot(SLOT_INPUT).isEmpty() == false;
   }
   @Override

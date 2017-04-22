@@ -33,8 +33,8 @@ public class ContainerDisenchanter extends ContainerBaseMachine {
         case TileEntityDisenchanter.SLOT_GLOWSTONE:
           itemFiltered = Items.GLOWSTONE_DUST;
           break;
-        case TileEntityDisenchanter.SLOT_GPOWDER:
-          itemFiltered = Items.GUNPOWDER;
+        case TileEntityDisenchanter.SLOT_BOTTLE:
+          itemFiltered = Items.EXPERIENCE_BOTTLE;
           break;
         case TileEntityDisenchanter.SLOT_REDSTONE:
           itemFiltered = Items.REDSTONE;
