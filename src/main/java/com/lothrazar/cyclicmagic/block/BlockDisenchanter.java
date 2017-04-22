@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemStack;
@@ -48,13 +49,16 @@ public class BlockDisenchanter extends BlockBaseHasTile implements IHasRecipe {
 
   @Override
   public void addRecipe() {
-//    GameRegistry.addRecipe(new ItemStack(this),
-//        "pwp",
-//        "wfw",
-//        "pwp",
-//        'w', Blocks.WEB,
-//        'f', new ItemStack(Items.FISH, 1, ItemFishFood.FishType.PUFFERFISH.getMetadata()),
-//        'p', Blocks.TRAPPED_CHEST);
+    GameRegistry.addRecipe(new ItemStack(this),
+        "vhv",
+        "grg",
+        "sis",
+        'v', Blocks.VINE,
+        'h', Blocks.HOPPER,
+        'i', Items.DIAMOND,
+        'g', new ItemStack(Blocks.STAINED_GLASS, 1, EnumDyeColor.PURPLE.getMetadata()),
+        'r', Items.FIRE_CHARGE,
+        's', Items.NETHERBRICK);
    
   }
 }

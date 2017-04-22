@@ -2,13 +2,15 @@ package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.Map;
 import com.google.common.collect.Maps;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraft.world.World;
+import net.minecraft.util.SoundCategory;
 
 public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
   public static enum Fields {
@@ -53,7 +55,6 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
     enchants.remove(keyMoved);
     EnchantmentHelper.setEnchantments(outEnchants, eBook);
     EnchantmentHelper.setEnchantments(enchants, input);
-    
     this.decrStackSize(SLOT_GLOWSTONE);
     this.decrStackSize(SLOT_REDSTONE);
     this.decrStackSize(SLOT_BOTTLE);
@@ -62,6 +63,7 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
     //currently it always drops after one enchant is removed
     dropStack(this.getStackInSlot(SLOT_INPUT));
     this.setInventorySlotContents(SLOT_INPUT, ItemStack.EMPTY);
+    UtilSound.playSound(world, pos, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS);
   }
   private void dropStack(ItemStack stack) {
     //TODO: spew above/below configurable
