@@ -20,8 +20,9 @@ public class GuiPylon extends GuiBaseContanerProgress {
   public static final ResourceLocation SLOT_EBOTTLE = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_ebottle.png");
   private TileEntityXpPylon tile;
   boolean debugLabels = false;
-  private GuiButtonMachineRedstone redstoneBtn;
-  private GuiButton btnPreview;
+  private GuiButton btnCollect;
+  private GuiButton btnSpray;
+  private GuiButton btnBottle;
   public GuiPylon(InventoryPlayer inventoryPlayer, TileEntityXpPylon tileEntity) {
     super(new ContainerPylon(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -34,22 +35,31 @@ public class GuiPylon extends GuiBaseContanerProgress {
   public void initGui() {
     super.initGui();
     int btnId = 0;
-    redstoneBtn = new GuiButtonMachineRedstone(btnId++,
-        this.guiLeft + Const.padding,
-        this.guiTop + Const.padding, this.tile.getPos());
-    redstoneBtn.setTextureIndex(tile.getField(TileEntityXpPylon.Fields.REDSTONE.ordinal()));
-    redstoneBtn.visible = false;
-    this.buttonList.add(redstoneBtn);
-    int y = this.guiTop + Const.padding * 2 + 20;
-    btnPreview = new GuiButton(btnId++,
-        this.guiLeft + Const.padding,
-        y, 48, 20, "");
-    this.buttonList.add(btnPreview);
+    int w = 58, h = 20;
+    int x = this.guiLeft + Const.padding;
+    int y = this.guiTop + Const.padding * 2;
+    btnCollect = new GuiButton(btnId++,
+        x, y, w, h, "");
+    this.buttonList.add(btnCollect);
+    y += h;
+    btnSpray = new GuiButton(btnId++,
+        x, y, w, h, "");
+    this.buttonList.add(btnSpray);
+    y += h;
+    btnBottle = new GuiButton(btnId++,
+        x, y, w, h, "");
+    this.buttonList.add(btnBottle);
   }
   @Override
   protected void actionPerformed(GuiButton button) {
-    if (button.id == btnPreview.id) {
-      ModCyclic.network.sendToServer(new PacketTilePylon(tile.getPos(), 1, TileEntityXpPylon.Fields.MODE));
+    if (button.id == btnCollect.id) {
+      ModCyclic.network.sendToServer(new PacketTilePylon(tile.getPos(), 1, TileEntityXpPylon.Fields.COLLECT));
+    }
+    else if (button.id == btnSpray.id) {
+      ModCyclic.network.sendToServer(new PacketTilePylon(tile.getPos(), 1, TileEntityXpPylon.Fields.SPRAY));
+    }
+    else if (button.id == btnBottle.id) {
+      ModCyclic.network.sendToServer(new PacketTilePylon(tile.getPos(), 1, TileEntityXpPylon.Fields.BOTTLE));
     }
   }
   @Override
@@ -57,7 +67,7 @@ public class GuiPylon extends GuiBaseContanerProgress {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(SLOT_BOTTLE);
-    for (int k = 0; k < this.tile.getSizeInventory(); k++) {  
+    for (int k = 0; k < this.tile.getSizeInventory(); k++) {
       if (k == 0)
         this.mc.getTextureManager().bindTexture(SLOT_BOTTLE);
       else
@@ -67,8 +77,10 @@ public class GuiPylon extends GuiBaseContanerProgress {
   }
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    redstoneBtn.setState(tile.getField(TileEntityXpPylon.Fields.REDSTONE.ordinal()));
-    btnPreview.displayString = UtilChat.lang("button.pylon.mode" + tile.getField(TileEntityXpPylon.Fields.MODE.ordinal()));
+    //    redstoneBtn.setState(tile.getField(TileEntityXpPylon.Fields.REDSTONE.ordinal()));
+    btnCollect.displayString = UtilChat.lang("button.pylon.collect" + tile.getField(TileEntityXpPylon.Fields.COLLECT.ordinal()));
+    btnSpray.displayString = UtilChat.lang("button.pylon.spray" + tile.getField(TileEntityXpPylon.Fields.SPRAY.ordinal()));
+    btnBottle.displayString = UtilChat.lang("button.pylon.bottle" + tile.getField(TileEntityXpPylon.Fields.BOTTLE.ordinal())); 
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
   public int getProgressX() {
