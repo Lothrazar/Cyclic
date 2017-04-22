@@ -15,18 +15,19 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerPylon extends ContainerBaseMachine {
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
-  public static final int SLOTX_START = 82;
-  public static final int SLOTY = 38;
+  public static final int SLOTX = 150;
+  public static final int SLOTY = 18;
   protected TileEntityXpPylon tileEntity;
-  private int tileRedstone;
+  private int bottle;
   private int tileTimer;
   private int tileXp;
-  private int tileMODE;
+  private int spray;
+  private int collect;
   public ContainerPylon(InventoryPlayer inventoryPlayer, TileEntityXpPylon te) {
     tileEntity = te;
     for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
       Item filt = (i == 0) ? Items.GLASS_BOTTLE : Items.EXPERIENCE_BOTTLE;
-      addSlotToContainer(new SlotItemRestricted(tileEntity, i, SLOTX_START + i * Const.SQ * 2, SLOTY, filt));
+      addSlotToContainer(new SlotItemRestricted(tileEntity, i, SLOTX, SLOTY + i * (8+Const.SQ), filt));
     }
     bindPlayerInventory(inventoryPlayer);
   }
@@ -65,23 +66,28 @@ public class ContainerPylon extends ContainerBaseMachine {
       if (this.tileTimer != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
-      idx = TileEntityXpPylon.Fields.REDSTONE.ordinal();
-      if (this.tileRedstone != this.tileEntity.getField(idx)) {
+      idx = TileEntityXpPylon.Fields.BOTTLE.ordinal();
+      if (this.bottle != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
       idx = TileEntityXpPylon.Fields.EXP.ordinal();
       if (this.tileXp != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
-      idx = TileEntityXpPylon.Fields.MODE.ordinal();
-      if (this.tileMODE != this.tileEntity.getField(idx)) {
+      idx = TileEntityXpPylon.Fields.SPRAY.ordinal();
+      if (this.spray != this.tileEntity.getField(idx)) {
+        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
+      }
+      idx = TileEntityXpPylon.Fields.COLLECT.ordinal();
+      if (this.collect != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
     }
     this.tileTimer = this.tileEntity.getField(TileEntityXpPylon.Fields.TIMER.ordinal());
-    this.tileRedstone = this.tileEntity.getField(TileEntityXpPylon.Fields.REDSTONE.ordinal());
+    this.bottle = this.tileEntity.getField(TileEntityXpPylon.Fields.BOTTLE.ordinal());
     this.tileXp = this.tileEntity.getField(TileEntityXpPylon.Fields.EXP.ordinal());
-    this.tileMODE = this.tileEntity.getField(TileEntityXpPylon.Fields.MODE.ordinal());
+    this.spray = this.tileEntity.getField(TileEntityXpPylon.Fields.SPRAY.ordinal());
+    this.collect = this.tileEntity.getField(TileEntityXpPylon.Fields.COLLECT.ordinal());
   }
   @Override
   @SideOnly(Side.CLIENT)
