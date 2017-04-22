@@ -17,6 +17,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiPylon extends GuiBaseContanerProgress {
   public static final ResourceLocation PROGEXP = new ResourceLocation(Const.MODID, "textures/gui/progress_exp.png");
   public static final ResourceLocation SLOT_BOTTLE = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_bottle.png");
+  public static final ResourceLocation SLOT_EBOTTLE = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_ebottle.png");
   private TileEntityXpPylon tile;
   boolean debugLabels = false;
   private GuiButtonMachineRedstone redstoneBtn;
@@ -37,6 +38,7 @@ public class GuiPylon extends GuiBaseContanerProgress {
         this.guiLeft + Const.padding,
         this.guiTop + Const.padding, this.tile.getPos());
     redstoneBtn.setTextureIndex(tile.getField(TileEntityXpPylon.Fields.REDSTONE.ordinal()));
+    redstoneBtn.visible = false;
     this.buttonList.add(redstoneBtn);
     int y = this.guiTop + Const.padding * 2 + 20;
     btnPreview = new GuiButton(btnId++,
@@ -55,7 +57,11 @@ public class GuiPylon extends GuiBaseContanerProgress {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(SLOT_BOTTLE);
-    for (int k = 0; k < this.tile.getSizeInventory(); k++) { // x had - 3 ??
+    for (int k = 0; k < this.tile.getSizeInventory(); k++) {  
+      if (k == 0)
+        this.mc.getTextureManager().bindTexture(SLOT_BOTTLE);
+      else
+        this.mc.getTextureManager().bindTexture(SLOT_EBOTTLE);
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerPylon.SLOTX_START - 1 + k * 2 * Const.SQ, this.guiTop + ContainerPylon.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
   }

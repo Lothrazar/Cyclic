@@ -95,7 +95,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     if (equip.isEmpty()) { return false; }
     if (equip.getItem() instanceof ItemFishingRod) { return true; }
     String itemsClass = equip.getItem().getClass().getName();
-//    ModCyclic.logger.info(itemsClass);
+
     String aquaBase = "com.teammetallurgy.aquaculture.items.";
     if (itemsClass.equals(aquaBase + "ItemAquacultureWoodenFishingRod")
         || itemsClass.equals(aquaBase + "ItemAquacultureFishingRod")
@@ -180,26 +180,6 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
         this.setInventorySlotContents(toolSlot, ItemStack.EMPTY);
       }
     }
-  }
-  private ItemStack tryMergeStackIntoSlot(ItemStack held, int furnaceSlot) {
-    ItemStack current = this.getStackInSlot(furnaceSlot);
-    boolean success = false;
-    if (current.isEmpty()) {
-      this.setInventorySlotContents(furnaceSlot, held);
-      held = ItemStack.EMPTY;
-      success = true;
-    }
-    else if (held.isItemEqual(current)) {
-      success = true;
-      UtilItemStack.mergeItemsBetweenStacks(held, current);
-    }
-    if (success) {
-      if (held != ItemStack.EMPTY && held.getMaxStackSize() == 0) {// so now we just fix if something is size zero
-        held = ItemStack.EMPTY;
-      }
-      this.markDirty();
-    }
-    return held;
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {

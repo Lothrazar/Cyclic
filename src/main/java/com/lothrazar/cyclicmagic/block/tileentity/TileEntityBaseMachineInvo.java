@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -188,5 +189,26 @@ public class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements 
     else {
       return super.receiveClientEvent(id, value);
     }
+  }
+  public ItemStack tryMergeStackIntoSlot(ItemStack held, int furnaceSlot) {
+ 
+    ItemStack current = this.getStackInSlot(furnaceSlot);
+    boolean success = false;
+    if (current.isEmpty()) {
+      this.setInventorySlotContents(furnaceSlot, held);
+      held = ItemStack.EMPTY;
+      success = true;
+    }
+    else if (held.isItemEqual(current)) {
+      success = true;
+      UtilItemStack.mergeItemsBetweenStacks(held, current);
+    }
+    if (success) {
+      if (held != ItemStack.EMPTY && held.getMaxStackSize() == 0) {// so now we just fix if something is size zero
+        held = ItemStack.EMPTY;
+      }
+      this.markDirty();
+    }
+    return held;
   }
 }

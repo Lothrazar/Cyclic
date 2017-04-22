@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IContainerListener;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
@@ -31,7 +32,29 @@ public class ContainerPylon extends ContainerBaseMachine {
   }
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
-    return null;
+    ItemStack stack = ItemStack.EMPTY;
+    Slot slotObject = (Slot) inventorySlots.get(slot);
+    // null checks and checks if the item can be stacked (maxStackSize > 1)
+    if (slotObject != null && slotObject.getHasStack()) {
+      ItemStack stackInSlot = slotObject.getStack();
+      stack = stackInSlot.copy();
+      // merges the item into player inventory since its in the tileEntity
+      if (slot < tileEntity.getSizeInventory()) {
+        if (!this.mergeItemStack(stackInSlot, tileEntity.getSizeInventory(), 36 + tileEntity.getSizeInventory(), true)) { return ItemStack.EMPTY; }
+      }
+      // places it into the tileEntity is possible since its in the player
+      // inventory
+      else if (!this.mergeItemStack(stackInSlot, 0, tileEntity.getSizeInventory(), false)) { return ItemStack.EMPTY; }
+      if (stackInSlot.getCount() == 0) {
+        slotObject.putStack(ItemStack.EMPTY);
+      }
+      else {
+        slotObject.onSlotChanged();
+      }
+      if (stackInSlot.getCount() == stack.getCount()) { return ItemStack.EMPTY; }
+      slotObject.onTake(player, stackInSlot);
+    }
+    return stack;
   }
   @Override
   public void detectAndSendChanges() {
