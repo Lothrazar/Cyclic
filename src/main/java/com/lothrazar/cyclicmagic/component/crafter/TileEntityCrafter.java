@@ -1,89 +1,72 @@
 package com.lothrazar.cyclicmagic.component.crafter;
-import java.lang.ref.WeakReference;
 import java.util.List;
-import java.util.UUID;
 import javax.annotation.Nonnull;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.tileentity.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.component.miner.BlockMiner.MinerType;
-import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
-import com.lothrazar.cyclicmagic.util.UtilItemStack;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Enchantments;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
-import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.items.IItemHandler;
- 
+
 public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
-  public TileEntityCrafter() {
-    super(0);
-  }
-  IRecipe recipe;
+  public static final int TIMER_FULL = 100;
+  public static final int SIZE_INPUT = 4 * 2;
+  public static final int SIZE_OUTPUT = 4 * 2;
+  public static final int SIZE_GRID = 3 * 3;
+  private Container fakeContainer;
+  private IRecipe recipe;
   private int needsRedstone = 1;
+  private int timer = 1;
+  private InventoryCrafting crafter;
+  public TileEntityCrafter() {
+    super(SIZE_INPUT + SIZE_GRID + SIZE_OUTPUT);//left and right side both have a 4x2 tall rectangle. then 3x3 crafting 
+    fakeContainer = new Container() {
+      public boolean canInteractWith(@Nonnull final EntityPlayer playerIn) {
+        return false;
+      }
+    };
+    crafter = new InventoryCrafting(fakeContainer, 3, 3);
+  }
   public static enum Fields {
-    REDSTONE
+    REDSTONE, TIMER;
   }
   @Override
   public void update() {
     if (isRunning()) {
       this.spawnParticlesAbove();
     }
-
+    timer = TIMER_FULL;
     //TODO: first see i we have mats in inventory, 
     //and need some way to set recipe from GUI
     setRecipeInput();
-    
     IRecipe r = getRecipe();
     //does it match
-    if(r!=null&& r.matches(crafter, world)){
-// pay the cost  
-      final ItemStack craftingResult = recipe.getCraftingResult((InventoryCrafting)this.crafter);
-      
+    if (timer == 0 && r != null && r.matches(crafter, world)) {
+      // pay the cost  
+      final ItemStack craftingResult = recipe.getCraftingResult((InventoryCrafting) this.crafter);
       //confirmed this test does actually et the outut: 4x planks 
-      System.out.println("OUT"+craftingResult);
+      System.out.println("OUT" + craftingResult);
     }
   }
- Container DUMMY_CONTAINER = new Container() {
-    public boolean canInteractWith(@Nonnull final EntityPlayer playerIn) {
-        return false;
-    }
-};
-  InventoryCrafting crafter = new InventoryCrafting(DUMMY_CONTAINER,3,3);
   private IRecipe getRecipe() {
-    if (this.recipe != null) {
-        return this.recipe;
-    }
- 
-    final List<IRecipe> recipes = (List<IRecipe>)CraftingManager.getInstance().getRecipeList();
+    if (this.recipe != null) { return this.recipe; }
+    final List<IRecipe> recipes = (List<IRecipe>) CraftingManager.getInstance().getRecipeList();
     for (final IRecipe recipe : recipes) {
-        try {
-            if (recipe.getRecipeSize() <= 9 && recipe.matches((InventoryCrafting)this.crafter, this.world)) {
-                return this.recipe = recipe;
-            }
-            continue;
-        }
-        catch (Exception err) {
-            throw new RuntimeException("Caught exception while querying recipe " , err);
-        }
+      try {
+        if (recipe.getRecipeSize() <= 9 && recipe.matches((InventoryCrafting) this.crafter, this.world)) { return this.recipe = recipe; }
+        continue;
+      }
+      catch (Exception err) {
+        throw new RuntimeException("Caught exception while querying recipe ", err);
+      }
     }
     return this.recipe;
-}
+  }
   private void setRecipeInput() {
     this.crafter.setInventorySlotContents(0, new ItemStack(Blocks.LOG));
   }

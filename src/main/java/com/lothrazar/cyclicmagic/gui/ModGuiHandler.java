@@ -8,6 +8,9 @@ import com.lothrazar.cyclicmagic.component.builder.TileEntityStructureBuilder;
 import com.lothrazar.cyclicmagic.component.controlledminer.ContainerMinerSmart;
 import com.lothrazar.cyclicmagic.component.controlledminer.GuiMinerSmart;
 import com.lothrazar.cyclicmagic.component.controlledminer.TileEntityControlledMiner;
+import com.lothrazar.cyclicmagic.component.crafter.ContainerCrafter;
+import com.lothrazar.cyclicmagic.component.crafter.GuiCrafter;
+import com.lothrazar.cyclicmagic.component.crafter.TileEntityCrafter;
 import com.lothrazar.cyclicmagic.component.cyclicwand.ContainerWand;
 import com.lothrazar.cyclicmagic.component.cyclicwand.GuiWandInventory;
 import com.lothrazar.cyclicmagic.component.cyclicwand.InventoryWand;
@@ -64,6 +67,7 @@ import com.lothrazar.cyclicmagic.component.vector.TileEntityVector;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -96,6 +100,7 @@ public class ModGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_FAN = 18;
   public static final int GUI_INDEX_XP = 19;
   public static final int GUI_INDEX_DISENCH = 20;
+  public static final int GUI_INDEX_CRAFTER = 21;
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
     BlockPos p = new BlockPos(x, y, z);
@@ -181,6 +186,10 @@ public class ModGuiHandler implements IGuiHandler {
       case GUI_INDEX_DISENCH:
         if (te instanceof TileEntityDisenchanter) { return new ContainerDisenchanter(player.inventory, (TileEntityDisenchanter) te); }
       break;
+      case GUI_INDEX_CRAFTER:
+        if (te instanceof TileEntityCrafter) { return new ContainerCrafter(player.inventory, (TileEntityCrafter) te); }
+        
+        break;
     }
     return null;
   }
@@ -251,6 +260,10 @@ public class ModGuiHandler implements IGuiHandler {
         case GUI_INDEX_DISENCH:
           if (te instanceof TileEntityDisenchanter) { return new GuiDisenchanter(player.inventory, (TileEntityDisenchanter) te); }
         break;
+        case GUI_INDEX_CRAFTER:
+          if (te instanceof TileEntityCrafter) { return new GuiCrafter(player.inventory, (TileEntityCrafter) te); }
+          
+          break;
       }
     }
     return null;
