@@ -9,6 +9,8 @@ import com.lothrazar.cyclicmagic.block.BlockScaffoldingResponsive;
 import com.lothrazar.cyclicmagic.component.bucketstorage.BlockBucketStorage;
 import com.lothrazar.cyclicmagic.component.bucketstorage.ItemBlockBucket;
 import com.lothrazar.cyclicmagic.component.bucketstorage.TileEntityBucketStorage;
+import com.lothrazar.cyclicmagic.component.crafter.BlockCrafter;
+import com.lothrazar.cyclicmagic.component.crafter.TileEntityCrafter;
 import com.lothrazar.cyclicmagic.component.disenchanter.BlockDisenchanter;
 import com.lothrazar.cyclicmagic.component.disenchanter.TileEntityDisenchanter;
 import com.lothrazar.cyclicmagic.component.entitydetector.BlockDetector;
@@ -35,6 +37,11 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   private boolean entityDetector;
   private boolean disenchanter;
   public void onInit() {
+    BlockCrafter auto_crafter = new BlockCrafter();
+
+    BlockRegistry.registerBlock(auto_crafter, "auto_crafter");
+    GameRegistry.registerTileEntity(TileEntityCrafter.class, Const.MODID + "auto_crafter_te");
+    
     if (entityDetector) {
       BlockDetector detector = new BlockDetector();
       BlockRegistry.registerBlock(detector, "entity_detector");
