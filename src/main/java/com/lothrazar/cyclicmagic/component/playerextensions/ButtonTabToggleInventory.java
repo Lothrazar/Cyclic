@@ -1,7 +1,5 @@
 package com.lothrazar.cyclicmagic.component.playerextensions;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.net.PacketOpenExtendedInventory;
-import com.lothrazar.cyclicmagic.net.PacketOpenNormalInventory;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
