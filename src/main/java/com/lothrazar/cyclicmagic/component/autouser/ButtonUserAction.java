@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.component.autouser;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.net.PacketTileUser;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.math.BlockPos;

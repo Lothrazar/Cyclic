@@ -7,7 +7,6 @@ import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
-import com.lothrazar.cyclicmagic.net.PacketVillagerTrade;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.Minecraft;

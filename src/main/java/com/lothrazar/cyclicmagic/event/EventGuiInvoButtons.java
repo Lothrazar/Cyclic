@@ -1,9 +1,9 @@
 package com.lothrazar.cyclicmagic.event;
 import java.util.ArrayList;
-import com.lothrazar.cyclicmagic.gui.player.ButtonTabToggleCrafting;
-import com.lothrazar.cyclicmagic.gui.player.ButtonTabToggleInventory;
-import com.lothrazar.cyclicmagic.gui.player.GuiPlayerExtWorkbench;
-import com.lothrazar.cyclicmagic.gui.player.GuiPlayerExtended;
+import com.lothrazar.cyclicmagic.component.playerextensions.ButtonTabToggleCrafting;
+import com.lothrazar.cyclicmagic.component.playerextensions.ButtonTabToggleInventory;
+import com.lothrazar.cyclicmagic.component.playerextensions.GuiPlayerExtWorkbench;
+import com.lothrazar.cyclicmagic.component.playerextensions.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import net.minecraft.client.Minecraft;

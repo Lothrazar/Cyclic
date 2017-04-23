@@ -4,7 +4,6 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.entitydetector.TileEntityDetector.Fields;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
-import com.lothrazar.cyclicmagic.net.PacketTileDetector;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;

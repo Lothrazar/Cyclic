@@ -1,8 +1,8 @@
 package com.lothrazar.cyclicmagic.event;
 import com.lothrazar.cyclicmagic.IHasClickToggle;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.gui.player.GuiPlayerExtWorkbench;
-import com.lothrazar.cyclicmagic.gui.player.GuiPlayerExtended;
+import com.lothrazar.cyclicmagic.component.playerextensions.GuiPlayerExtWorkbench;
+import com.lothrazar.cyclicmagic.component.playerextensions.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.net.PacketMovePlayerHotbar;
 import com.lothrazar.cyclicmagic.net.PacketOpenExtendedInventory;
 import com.lothrazar.cyclicmagic.net.PacketFakeWorkbench;

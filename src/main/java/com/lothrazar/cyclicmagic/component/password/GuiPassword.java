@@ -1,9 +1,8 @@
 package com.lothrazar.cyclicmagic.component.password;
 import java.io.IOException;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.component.password.PacketTilePassword.PacketType;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.net.PacketTilePassword;
-import com.lothrazar.cyclicmagic.net.PacketTilePassword.PacketType;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
