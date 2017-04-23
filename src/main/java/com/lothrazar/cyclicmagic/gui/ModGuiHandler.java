@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.gui;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBlockMiner;
 import com.lothrazar.cyclicmagic.component.autouser.ContainerUser;
 import com.lothrazar.cyclicmagic.component.autouser.GuiUser;
 import com.lothrazar.cyclicmagic.component.autouser.TileEntityUser;
@@ -9,6 +8,9 @@ import com.lothrazar.cyclicmagic.component.builder.TileEntityStructureBuilder;
 import com.lothrazar.cyclicmagic.component.controlledminer.ContainerMinerSmart;
 import com.lothrazar.cyclicmagic.component.controlledminer.GuiMinerSmart;
 import com.lothrazar.cyclicmagic.component.controlledminer.TileEntityControlledMiner;
+import com.lothrazar.cyclicmagic.component.cyclicwand.ContainerWand;
+import com.lothrazar.cyclicmagic.component.cyclicwand.GuiWandInventory;
+import com.lothrazar.cyclicmagic.component.cyclicwand.InventoryWand;
 import com.lothrazar.cyclicmagic.component.disenchanter.ContainerDisenchanter;
 import com.lothrazar.cyclicmagic.component.disenchanter.GuiDisenchanter;
 import com.lothrazar.cyclicmagic.component.disenchanter.TileEntityDisenchanter;
@@ -24,6 +26,13 @@ import com.lothrazar.cyclicmagic.component.fisher.TileEntityFishing;
 import com.lothrazar.cyclicmagic.component.harvester.ContainerHarvester;
 import com.lothrazar.cyclicmagic.component.harvester.GuiHarvester;
 import com.lothrazar.cyclicmagic.component.harvester.TileEntityHarvester;
+import com.lothrazar.cyclicmagic.component.merchant.ContainerMerchantBetter;
+import com.lothrazar.cyclicmagic.component.merchant.GuiMerchantBetter;
+import com.lothrazar.cyclicmagic.component.merchant.InventoryMerchantBetter;
+import com.lothrazar.cyclicmagic.component.merchant.ItemMerchantAlmanac;
+import com.lothrazar.cyclicmagic.component.miner.ContainerBlockMiner;
+import com.lothrazar.cyclicmagic.component.miner.GuiBlockMiner;
+import com.lothrazar.cyclicmagic.component.miner.TileEntityBlockMiner;
 import com.lothrazar.cyclicmagic.component.password.ContainerPassword;
 import com.lothrazar.cyclicmagic.component.password.GuiPassword;
 import com.lothrazar.cyclicmagic.component.password.TileEntityPassword;
@@ -36,31 +45,22 @@ import com.lothrazar.cyclicmagic.component.placer.TileEntityPlacer;
 import com.lothrazar.cyclicmagic.component.pylonexp.ContainerPylon;
 import com.lothrazar.cyclicmagic.component.pylonexp.GuiPylon;
 import com.lothrazar.cyclicmagic.component.pylonexp.TileEntityXpPylon;
+import com.lothrazar.cyclicmagic.component.storagesack.ContainerStorage;
+import com.lothrazar.cyclicmagic.component.storagesack.GuiStorage;
+import com.lothrazar.cyclicmagic.component.storagesack.InventoryStorage;
+import com.lothrazar.cyclicmagic.component.storagesack.ItemStorageBag;
 import com.lothrazar.cyclicmagic.component.uncrafter.ContainerUncrafting;
 import com.lothrazar.cyclicmagic.component.uncrafter.GuiUncrafting;
 import com.lothrazar.cyclicmagic.component.uncrafter.TileEntityUncrafter;
 import com.lothrazar.cyclicmagic.component.vector.ContainerVector;
 import com.lothrazar.cyclicmagic.component.vector.GuiVector;
 import com.lothrazar.cyclicmagic.component.vector.TileEntityVector;
-import com.lothrazar.cyclicmagic.gui.blockminer.ContainerBlockMiner;
-import com.lothrazar.cyclicmagic.gui.blockminer.GuiBlockMiner;
+import com.lothrazar.cyclicmagic.gui.player.ContainerPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.gui.player.ContainerPlayerExtended;
+import com.lothrazar.cyclicmagic.gui.player.GuiPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.gui.player.GuiPlayerExtended;
 import com.lothrazar.cyclicmagic.gui.player.InventoryPlayerExtended;
-import com.lothrazar.cyclicmagic.gui.playerworkbench.ContainerPlayerExtWorkbench;
-import com.lothrazar.cyclicmagic.gui.playerworkbench.GuiPlayerExtWorkbench;
-import com.lothrazar.cyclicmagic.gui.storage.ContainerStorage;
-import com.lothrazar.cyclicmagic.gui.storage.GuiStorage;
-import com.lothrazar.cyclicmagic.gui.storage.InventoryStorage;
-import com.lothrazar.cyclicmagic.gui.villager.ContainerMerchantBetter;
-import com.lothrazar.cyclicmagic.gui.villager.GuiMerchantBetter;
-import com.lothrazar.cyclicmagic.gui.villager.InventoryMerchantBetter;
-import com.lothrazar.cyclicmagic.gui.wand.ContainerWand;
-import com.lothrazar.cyclicmagic.gui.wand.GuiWandInventory;
-import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
 import com.lothrazar.cyclicmagic.gui.waypoints.GuiEnderBook;
-import com.lothrazar.cyclicmagic.item.ItemStorageBag;
-import com.lothrazar.cyclicmagic.item.ItemTrader;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
@@ -165,7 +165,7 @@ public class ModGuiHandler implements IGuiHandler {
       break;
       case GUI_INDEX_VILLAGER:
         //http://www.minecraftforge.net/forum/topic/29593-18-solveddisplay-gui-when-interacting-with-an-entity/
-        EntityVillager v = (EntityVillager) UtilEntity.getClosestEntity(world, player, UtilEntity.getVillagers(world, p, ItemTrader.radius));
+        EntityVillager v = (EntityVillager) UtilEntity.getClosestEntity(world, player, UtilEntity.getVillagers(world, p, ItemMerchantAlmanac.radius));
         if (v != null) {
           v.setCustomer(player);
           ContainerMerchantBetter c = new ContainerMerchantBetter(player.inventory, v, new InventoryMerchantBetter(player, v), world);
@@ -239,7 +239,7 @@ public class ModGuiHandler implements IGuiHandler {
           if (te != null && te instanceof TileEntityVector) { return new GuiVector(player.inventory, (TileEntityVector) te); }
         break;
         case GUI_INDEX_VILLAGER:
-          EntityVillager v = (EntityVillager) UtilEntity.getClosestEntity(world, player, UtilEntity.getVillagers(world, p, ItemTrader.radius));
+          EntityVillager v = (EntityVillager) UtilEntity.getClosestEntity(world, player, UtilEntity.getVillagers(world, p, ItemMerchantAlmanac.radius));
           if (v != null) { return new GuiMerchantBetter(player.inventory, v, new InventoryMerchantBetter(player, v), world); }
         break;
         case GUI_INDEX_FAN:

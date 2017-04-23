@@ -4,7 +4,10 @@ import java.util.List;
 import java.util.Set;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
+import com.lothrazar.cyclicmagic.component.cyclicwand.InventoryWand;
+import com.lothrazar.cyclicmagic.component.cyclicwand.ItemCyclicWand;
+import com.lothrazar.cyclicmagic.component.merchant.ItemMerchantAlmanac;
+import com.lothrazar.cyclicmagic.component.storagesack.ItemStorageBag;
 import com.lothrazar.cyclicmagic.item.tool.*;
 import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.ActionType;
 import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.WandType;
@@ -15,8 +18,6 @@ import com.lothrazar.cyclicmagic.item.ItemEnderBag;
 import com.lothrazar.cyclicmagic.item.ItemEnderBook;
 import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
 import com.lothrazar.cyclicmagic.item.ItemPasswordRemote;
-import com.lothrazar.cyclicmagic.item.ItemStorageBag;
-import com.lothrazar.cyclicmagic.item.ItemTrader;
 import com.lothrazar.cyclicmagic.net.PacketSpellShiftLeft;
 import com.lothrazar.cyclicmagic.net.PacketSpellShiftRight;
 import com.lothrazar.cyclicmagic.net.PacketSwapBlock;
@@ -123,7 +124,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   @Override
   public void onInit() {
     if (enableTrader) {
-      ItemTrader tool_trade = new ItemTrader();
+      ItemMerchantAlmanac tool_trade = new ItemMerchantAlmanac();
       ItemRegistry.addItem(tool_trade, "tool_trade");
     }
     if (enableLever) {

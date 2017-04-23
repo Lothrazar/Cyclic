@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.gui.player;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.gui.playerworkbench.GuiPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.net.PacketOpenExtendedInventory;
 import com.lothrazar.cyclicmagic.net.PacketOpenNormalInventory;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;

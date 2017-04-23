@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.util;
-import com.lothrazar.cyclicmagic.item.tool.ItemCyclicWand;
+import com.lothrazar.cyclicmagic.component.cyclicwand.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import net.minecraft.entity.player.EntityPlayer;

@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic;
-import com.lothrazar.cyclicmagic.gui.playerworkbench.ContainerPlayerExtWorkbench;
+import com.lothrazar.cyclicmagic.gui.player.ContainerPlayerExtWorkbench;
 import com.lothrazar.cyclicmagic.registry.JeiDescriptionRegistry;
 import mezz.jei.api.BlankModPlugin;
 import mezz.jei.api.IModRegistry;

@@ -1,8 +1,8 @@
 package com.lothrazar.cyclicmagic.spell;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
-import com.lothrazar.cyclicmagic.item.tool.ItemCyclicWand;
+import com.lothrazar.cyclicmagic.component.cyclicwand.InventoryWand;
+import com.lothrazar.cyclicmagic.component.cyclicwand.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.net.PacketSpellFromServer;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;

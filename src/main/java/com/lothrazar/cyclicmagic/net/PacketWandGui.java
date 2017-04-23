@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.net;
-import com.lothrazar.cyclicmagic.item.tool.ItemCyclicWand;
+import com.lothrazar.cyclicmagic.component.cyclicwand.ItemCyclicWand;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
