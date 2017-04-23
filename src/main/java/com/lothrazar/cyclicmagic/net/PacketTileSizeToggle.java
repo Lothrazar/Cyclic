@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketTileSizeToggle implements IMessage, IMessageHandler<PacketTileSizeToggle, IMessage> {
+  //this is used by multiple because of interface ITileSizeToggle
   private BlockPos pos;
   private int type;
   public static enum ActionType {

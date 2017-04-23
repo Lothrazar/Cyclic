@@ -1,66 +1,66 @@
 package com.lothrazar.cyclicmagic.gui;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityDetector;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityDisenchanter;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFan;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFishing;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPatternBuilder;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityXpPylon;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineHarvester;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineBlockMiner;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMinerSmart;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineStructureBuilder;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachinePlacer;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUser;
-import com.lothrazar.cyclicmagic.block.tileentity.TileVector;
-import com.lothrazar.cyclicmagic.gui.blockminer.ContainerBlockMiner;
-import com.lothrazar.cyclicmagic.gui.blockminer.GuiBlockMiner;
-import com.lothrazar.cyclicmagic.gui.builder.ContainerBuilder;
-import com.lothrazar.cyclicmagic.gui.builder.GuiBuilder;
-import com.lothrazar.cyclicmagic.gui.detector.ContainerDetector;
-import com.lothrazar.cyclicmagic.gui.detector.GuiDetector;
-import com.lothrazar.cyclicmagic.gui.disenchanter.ContainerDisenchanter;
-import com.lothrazar.cyclicmagic.gui.disenchanter.GuiDisenchanter;
-import com.lothrazar.cyclicmagic.gui.fan.ContainerFan;
-import com.lothrazar.cyclicmagic.gui.fan.GuiFan;
-import com.lothrazar.cyclicmagic.gui.fisher.ContainerFisher;
-import com.lothrazar.cyclicmagic.gui.fisher.GuiFisher;
-import com.lothrazar.cyclicmagic.gui.miner.ContainerMinerSmart;
-import com.lothrazar.cyclicmagic.gui.miner.GuiMinerSmart;
-import com.lothrazar.cyclicmagic.gui.password.ContainerPassword;
-import com.lothrazar.cyclicmagic.gui.password.GuiPassword;
-import com.lothrazar.cyclicmagic.gui.pattern.ContainerPattern;
-import com.lothrazar.cyclicmagic.gui.pattern.GuiPattern;
-import com.lothrazar.cyclicmagic.gui.harvester.ContainerHarvester;
-import com.lothrazar.cyclicmagic.gui.harvester.GuiHarvester;
-import com.lothrazar.cyclicmagic.gui.placer.ContainerPlacer;
-import com.lothrazar.cyclicmagic.gui.placer.GuiPlacer;
-import com.lothrazar.cyclicmagic.gui.player.ContainerPlayerExtended;
-import com.lothrazar.cyclicmagic.gui.player.GuiPlayerExtended;
-import com.lothrazar.cyclicmagic.gui.player.InventoryPlayerExtended;
-import com.lothrazar.cyclicmagic.gui.playerworkbench.ContainerPlayerExtWorkbench;
-import com.lothrazar.cyclicmagic.gui.playerworkbench.GuiPlayerExtWorkbench;
-import com.lothrazar.cyclicmagic.gui.pylon.ContainerPylon;
-import com.lothrazar.cyclicmagic.gui.pylon.GuiPylon;
-import com.lothrazar.cyclicmagic.gui.storage.ContainerStorage;
-import com.lothrazar.cyclicmagic.gui.storage.GuiStorage;
-import com.lothrazar.cyclicmagic.gui.storage.InventoryStorage;
-import com.lothrazar.cyclicmagic.gui.uncrafting.ContainerUncrafting;
-import com.lothrazar.cyclicmagic.gui.uncrafting.GuiUncrafting;
-import com.lothrazar.cyclicmagic.gui.user.ContainerUser;
-import com.lothrazar.cyclicmagic.gui.user.GuiUser;
-import com.lothrazar.cyclicmagic.gui.vector.ContainerVector;
-import com.lothrazar.cyclicmagic.gui.vector.GuiVector;
-import com.lothrazar.cyclicmagic.gui.villager.ContainerMerchantBetter;
-import com.lothrazar.cyclicmagic.gui.villager.GuiMerchantBetter;
-import com.lothrazar.cyclicmagic.gui.villager.InventoryMerchantBetter;
-import com.lothrazar.cyclicmagic.gui.wand.ContainerWand;
-import com.lothrazar.cyclicmagic.gui.wand.GuiWandInventory;
-import com.lothrazar.cyclicmagic.gui.wand.InventoryWand;
-import com.lothrazar.cyclicmagic.gui.waypoints.GuiEnderBook;
-import com.lothrazar.cyclicmagic.item.ItemStorageBag;
-import com.lothrazar.cyclicmagic.item.ItemTrader;
+import com.lothrazar.cyclicmagic.component.autouser.ContainerUser;
+import com.lothrazar.cyclicmagic.component.autouser.GuiUser;
+import com.lothrazar.cyclicmagic.component.autouser.TileEntityUser;
+import com.lothrazar.cyclicmagic.component.builder.ContainerBuilder;
+import com.lothrazar.cyclicmagic.component.builder.GuiBuilder;
+import com.lothrazar.cyclicmagic.component.builder.TileEntityStructureBuilder;
+import com.lothrazar.cyclicmagic.component.controlledminer.ContainerMinerSmart;
+import com.lothrazar.cyclicmagic.component.controlledminer.GuiMinerSmart;
+import com.lothrazar.cyclicmagic.component.controlledminer.TileEntityControlledMiner;
+import com.lothrazar.cyclicmagic.component.cyclicwand.ContainerWand;
+import com.lothrazar.cyclicmagic.component.cyclicwand.GuiWandInventory;
+import com.lothrazar.cyclicmagic.component.cyclicwand.InventoryWand;
+import com.lothrazar.cyclicmagic.component.disenchanter.ContainerDisenchanter;
+import com.lothrazar.cyclicmagic.component.disenchanter.GuiDisenchanter;
+import com.lothrazar.cyclicmagic.component.disenchanter.TileEntityDisenchanter;
+import com.lothrazar.cyclicmagic.component.enderbook.GuiEnderBook;
+import com.lothrazar.cyclicmagic.component.entitydetector.ContainerDetector;
+import com.lothrazar.cyclicmagic.component.entitydetector.GuiDetector;
+import com.lothrazar.cyclicmagic.component.entitydetector.TileEntityDetector;
+import com.lothrazar.cyclicmagic.component.fan.ContainerFan;
+import com.lothrazar.cyclicmagic.component.fan.GuiFan;
+import com.lothrazar.cyclicmagic.component.fan.TileEntityFan;
+import com.lothrazar.cyclicmagic.component.fisher.ContainerFisher;
+import com.lothrazar.cyclicmagic.component.fisher.GuiFisher;
+import com.lothrazar.cyclicmagic.component.fisher.TileEntityFishing;
+import com.lothrazar.cyclicmagic.component.harvester.ContainerHarvester;
+import com.lothrazar.cyclicmagic.component.harvester.GuiHarvester;
+import com.lothrazar.cyclicmagic.component.harvester.TileEntityHarvester;
+import com.lothrazar.cyclicmagic.component.merchant.ContainerMerchantBetter;
+import com.lothrazar.cyclicmagic.component.merchant.GuiMerchantBetter;
+import com.lothrazar.cyclicmagic.component.merchant.InventoryMerchantBetter;
+import com.lothrazar.cyclicmagic.component.merchant.ItemMerchantAlmanac;
+import com.lothrazar.cyclicmagic.component.miner.ContainerBlockMiner;
+import com.lothrazar.cyclicmagic.component.miner.GuiBlockMiner;
+import com.lothrazar.cyclicmagic.component.miner.TileEntityBlockMiner;
+import com.lothrazar.cyclicmagic.component.password.ContainerPassword;
+import com.lothrazar.cyclicmagic.component.password.GuiPassword;
+import com.lothrazar.cyclicmagic.component.password.TileEntityPassword;
+import com.lothrazar.cyclicmagic.component.pattern.ContainerPattern;
+import com.lothrazar.cyclicmagic.component.pattern.GuiPattern;
+import com.lothrazar.cyclicmagic.component.pattern.TileEntityPatternBuilder;
+import com.lothrazar.cyclicmagic.component.placer.ContainerPlacer;
+import com.lothrazar.cyclicmagic.component.placer.GuiPlacer;
+import com.lothrazar.cyclicmagic.component.placer.TileEntityPlacer;
+import com.lothrazar.cyclicmagic.component.playerextensions.ContainerPlayerExtWorkbench;
+import com.lothrazar.cyclicmagic.component.playerextensions.ContainerPlayerExtended;
+import com.lothrazar.cyclicmagic.component.playerextensions.GuiPlayerExtWorkbench;
+import com.lothrazar.cyclicmagic.component.playerextensions.GuiPlayerExtended;
+import com.lothrazar.cyclicmagic.component.playerextensions.InventoryPlayerExtended;
+import com.lothrazar.cyclicmagic.component.pylonexp.ContainerPylon;
+import com.lothrazar.cyclicmagic.component.pylonexp.GuiPylon;
+import com.lothrazar.cyclicmagic.component.pylonexp.TileEntityXpPylon;
+import com.lothrazar.cyclicmagic.component.storagesack.ContainerStorage;
+import com.lothrazar.cyclicmagic.component.storagesack.GuiStorage;
+import com.lothrazar.cyclicmagic.component.storagesack.InventoryStorage;
+import com.lothrazar.cyclicmagic.component.storagesack.ItemStorageBag;
+import com.lothrazar.cyclicmagic.component.uncrafter.ContainerUncrafting;
+import com.lothrazar.cyclicmagic.component.uncrafter.GuiUncrafting;
+import com.lothrazar.cyclicmagic.component.uncrafter.TileEntityUncrafter;
+import com.lothrazar.cyclicmagic.component.vector.ContainerVector;
+import com.lothrazar.cyclicmagic.component.vector.GuiVector;
+import com.lothrazar.cyclicmagic.component.vector.TileEntityVector;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
@@ -109,13 +109,13 @@ public class ModGuiHandler implements IGuiHandler {
         ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
         return new ContainerWand(player, player.inventory, new InventoryWand(player, wand));
       case GUI_INDEX_UNCRAFTING:
-        if (te != null && te instanceof TileMachineUncrafter) { return new ContainerUncrafting(player.inventory, (TileMachineUncrafter) te); }
+        if (te != null && te instanceof TileEntityUncrafter) { return new ContainerUncrafting(player.inventory, (TileEntityUncrafter) te); }
       break;
       case GUI_INDEX_HARVESTER:
-        if (te != null && te instanceof TileMachineHarvester) { return new ContainerHarvester(player.inventory, (TileMachineHarvester) te); }
+        if (te != null && te instanceof TileEntityHarvester) { return new ContainerHarvester(player.inventory, (TileEntityHarvester) te); }
       break;
       case GUI_INDEX_BLOCKMINER:
-        if (te != null && te instanceof TileMachineBlockMiner) { return new ContainerBlockMiner(player.inventory, (TileMachineBlockMiner) te); }
+        if (te != null && te instanceof TileEntityBlockMiner) { return new ContainerBlockMiner(player.inventory, (TileEntityBlockMiner) te); }
       break;
       case GUI_INDEX_STORAGE:
         ItemStack s = ItemStorageBag.getPlayerItemIfHeld(player);
@@ -123,15 +123,15 @@ public class ModGuiHandler implements IGuiHandler {
       case GUI_INDEX_WAYPOINT:
         return null;
       case GUI_INDEX_BUILDER:
-        if (te != null && te instanceof TileMachineStructureBuilder) {
-          Container c = new ContainerBuilder(player.inventory, (TileMachineStructureBuilder) te);
+        if (te != null && te instanceof TileEntityStructureBuilder) {
+          Container c = new ContainerBuilder(player.inventory, (TileEntityStructureBuilder) te);
           c.detectAndSendChanges();
           return c;
         }
       break;
       case GUI_INDEX_PLACER:
-        if (te != null && te instanceof TileMachinePlacer) {
-          Container c = new ContainerPlacer(player.inventory, (TileMachinePlacer) te);
+        if (te != null && te instanceof TileEntityPlacer) {
+          Container c = new ContainerPlacer(player.inventory, (TileEntityPlacer) te);
           c.detectAndSendChanges();
           return c;
         }
@@ -143,8 +143,8 @@ public class ModGuiHandler implements IGuiHandler {
         }
       break;
       case GUI_INDEX_SMARTMINER:
-        if (te != null && te instanceof TileMachineMinerSmart) {
-          Container c = new ContainerMinerSmart(player.inventory, (TileMachineMinerSmart) te);
+        if (te != null && te instanceof TileEntityControlledMiner) {
+          Container c = new ContainerMinerSmart(player.inventory, (TileEntityControlledMiner) te);
           return c;
         }
       break;
@@ -152,7 +152,7 @@ public class ModGuiHandler implements IGuiHandler {
         if (te != null && te instanceof TileEntityFishing) { return new ContainerFisher(player.inventory, (TileEntityFishing) te); }
       break;
       case GUI_INDEX_USER:
-        if (te != null && te instanceof TileMachineUser) { return new ContainerUser(player.inventory, (TileMachineUser) te); }
+        if (te != null && te instanceof TileEntityUser) { return new ContainerUser(player.inventory, (TileEntityUser) te); }
       break;
       case GUI_INDEX_PATTERN:
         if (te != null && te instanceof TileEntityPatternBuilder) { return new ContainerPattern(player.inventory, (TileEntityPatternBuilder) te); }
@@ -161,11 +161,11 @@ public class ModGuiHandler implements IGuiHandler {
         if (te != null && te instanceof TileEntityDetector) { return new ContainerDetector(player.inventory, (TileEntityDetector) te); }
       break;
       case GUI_INDEX_VECTOR:
-        if (te != null && te instanceof TileVector) { return new ContainerVector(player.inventory, (TileVector) te); }
+        if (te != null && te instanceof TileEntityVector) { return new ContainerVector(player.inventory, (TileEntityVector) te); }
       break;
       case GUI_INDEX_VILLAGER:
         //http://www.minecraftforge.net/forum/topic/29593-18-solveddisplay-gui-when-interacting-with-an-entity/
-        EntityVillager v = (EntityVillager) UtilEntity.getClosestEntity(world, player, UtilEntity.getVillagers(world, p, ItemTrader.radius));
+        EntityVillager v = (EntityVillager) UtilEntity.getClosestEntity(world, player, UtilEntity.getVillagers(world, p, ItemMerchantAlmanac.radius));
         if (v != null) {
           v.setCustomer(player);
           ContainerMerchantBetter c = new ContainerMerchantBetter(player.inventory, v, new InventoryMerchantBetter(player, v), world);
@@ -198,13 +198,13 @@ public class ModGuiHandler implements IGuiHandler {
           ItemStack wand = UtilSpellCaster.getPlayerWandIfHeld(player);
           return new GuiWandInventory(new ContainerWand(player, player.inventory, new InventoryWand(player, wand)), wand);
         case GUI_INDEX_UNCRAFTING:
-          if (te instanceof TileMachineUncrafter) { return new GuiUncrafting(player.inventory, (TileMachineUncrafter) te); }
+          if (te instanceof TileEntityUncrafter) { return new GuiUncrafting(player.inventory, (TileEntityUncrafter) te); }
         break;
         case GUI_INDEX_HARVESTER:
-          if (te instanceof TileMachineHarvester) { return new GuiHarvester(player.inventory, (TileMachineHarvester) te); }
+          if (te instanceof TileEntityHarvester) { return new GuiHarvester(player.inventory, (TileEntityHarvester) te); }
         break;
         case GUI_INDEX_BLOCKMINER:
-          if (te instanceof TileMachineBlockMiner) { return new GuiBlockMiner(player.inventory, (TileMachineBlockMiner) te); }
+          if (te instanceof TileEntityBlockMiner) { return new GuiBlockMiner(player.inventory, (TileEntityBlockMiner) te); }
         break;
         case GUI_INDEX_STORAGE:
           ItemStack s = ItemStorageBag.getPlayerItemIfHeld(player);
@@ -212,22 +212,22 @@ public class ModGuiHandler implements IGuiHandler {
         case GUI_INDEX_WAYPOINT:
           return new GuiEnderBook(player, UtilPlayer.getPlayerItemIfHeld(player));
         case GUI_INDEX_BUILDER:
-          if (te != null && te instanceof TileMachineStructureBuilder) { return new GuiBuilder(player.inventory, (TileMachineStructureBuilder) te); }
+          if (te != null && te instanceof TileEntityStructureBuilder) { return new GuiBuilder(player.inventory, (TileEntityStructureBuilder) te); }
         break;
         case GUI_INDEX_PLACER:
-          if (te != null && te instanceof TileMachinePlacer) { return new GuiPlacer(player.inventory, (TileMachinePlacer) te); }
+          if (te != null && te instanceof TileEntityPlacer) { return new GuiPlacer(player.inventory, (TileEntityPlacer) te); }
         break;
         case GUI_INDEX_PASSWORD:
           if (te != null && te instanceof TileEntityPassword) { return new GuiPassword((TileEntityPassword) te); }
         break;
         case GUI_INDEX_SMARTMINER:
-          if (te != null && te instanceof TileMachineMinerSmart) { return new GuiMinerSmart(player.inventory, (TileMachineMinerSmart) te); }
+          if (te != null && te instanceof TileEntityControlledMiner) { return new GuiMinerSmart(player.inventory, (TileEntityControlledMiner) te); }
         break;
         case GUI_INDEX_FISHER:
           if (te != null && te instanceof TileEntityFishing) { return new GuiFisher(player.inventory, (TileEntityFishing) te); }
         break;
         case GUI_INDEX_USER:
-          if (te != null && te instanceof TileMachineUser) { return new GuiUser(player.inventory, (TileMachineUser) te); }
+          if (te != null && te instanceof TileEntityUser) { return new GuiUser(player.inventory, (TileEntityUser) te); }
         break;
         case GUI_INDEX_PATTERN:
           if (te != null && te instanceof TileEntityPatternBuilder) { return new GuiPattern(player.inventory, (TileEntityPatternBuilder) te); }
@@ -236,10 +236,10 @@ public class ModGuiHandler implements IGuiHandler {
           if (te != null && te instanceof TileEntityDetector) { return new GuiDetector(player.inventory, (TileEntityDetector) te); }
         break;
         case GUI_INDEX_VECTOR:
-          if (te != null && te instanceof TileVector) { return new GuiVector(player.inventory, (TileVector) te); }
+          if (te != null && te instanceof TileEntityVector) { return new GuiVector(player.inventory, (TileEntityVector) te); }
         break;
         case GUI_INDEX_VILLAGER:
-          EntityVillager v = (EntityVillager) UtilEntity.getClosestEntity(world, player, UtilEntity.getVillagers(world, p, ItemTrader.radius));
+          EntityVillager v = (EntityVillager) UtilEntity.getClosestEntity(world, player, UtilEntity.getVillagers(world, p, ItemMerchantAlmanac.radius));
           if (v != null) { return new GuiMerchantBetter(player.inventory, v, new InventoryMerchantBetter(player, v), world); }
         break;
         case GUI_INDEX_FAN:
