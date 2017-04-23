@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.gui.pattern;
 import org.lwjgl.opengl.GL11;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPatternBuilder;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineHarvester;
+import com.lothrazar.cyclicmagic.component.harvester.TileEntityHarvester;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -45,7 +45,7 @@ public class GuiPattern extends GuiBaseContainer {
     redstoneBtn = new GuiButtonMachineRedstone(id++,
         this.guiLeft + Const.padding,
         this.guiTop + Const.padding, this.tile.getPos());
-    redstoneBtn.setTextureIndex(tile.getField(TileMachineHarvester.Fields.REDSTONE.ordinal()));
+    redstoneBtn.setTextureIndex(tile.getField(TileEntityHarvester.Fields.REDSTONE.ordinal()));
     this.buttonList.add(redstoneBtn);
     sizeY = 46;//save now as reuse for textbox
     int vButtonSpacing = 12;

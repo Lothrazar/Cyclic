@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.gui.blockminer;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineBlockMiner;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBlockMiner;
 import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
@@ -11,9 +11,9 @@ public class ContainerBlockMiner extends ContainerBaseMachine {
   public static final int SLOTX_START = 8;
   public static final int SLOTY = 40;
   public static final int SQ = 18;
-  protected TileMachineBlockMiner tileEntity;
+  protected TileEntityBlockMiner tileEntity;
   private int tileRedstone;
-  public ContainerBlockMiner(InventoryPlayer inventoryPlayer, TileMachineBlockMiner te) {
+  public ContainerBlockMiner(InventoryPlayer inventoryPlayer, TileEntityBlockMiner te) {
     tileEntity = te;
     bindPlayerInventory(inventoryPlayer);
   }
@@ -22,12 +22,12 @@ public class ContainerBlockMiner extends ContainerBaseMachine {
     super.detectAndSendChanges();
     for (int i = 0; i < this.listeners.size(); ++i) {
       IContainerListener icontainerlistener = (IContainerListener) this.listeners.get(i);
-      int idx = TileMachineBlockMiner.Fields.REDSTONE.ordinal();
+      int idx = TileEntityBlockMiner.Fields.REDSTONE.ordinal();
       if (this.tileRedstone != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
     }
-    this.tileRedstone = this.tileEntity.getField(TileMachineBlockMiner.Fields.REDSTONE.ordinal());
+    this.tileRedstone = this.tileEntity.getField(TileEntityBlockMiner.Fields.REDSTONE.ordinal());
   }
   @Override
   @SideOnly(Side.CLIENT)

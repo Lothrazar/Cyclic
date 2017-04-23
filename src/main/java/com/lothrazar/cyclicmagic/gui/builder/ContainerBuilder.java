@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.gui.builder;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineStructureBuilder;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityStructureBuilder;
+import com.lothrazar.cyclicmagic.component.uncrafter.TileEntityUncrafter;
 import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.SlotOnlyBlocks;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,14 +19,14 @@ public class ContainerBuilder extends ContainerBaseMachine {
   public static final int SLOTX_START = 8;
   public static final int SLOTY = 52;
   public static final int SQ = 18;
-  protected TileMachineStructureBuilder tileEntity;
+  protected TileEntityStructureBuilder tileEntity;
   private int tileBuild;
   private int tileTimer;
   private int tileSpeed;
   private int tileSize;
   private int tileHeight;
   private int tileRedstone;
-  public ContainerBuilder(InventoryPlayer inventoryPlayer, TileMachineStructureBuilder te) {
+  public ContainerBuilder(InventoryPlayer inventoryPlayer, TileEntityStructureBuilder te) {
     tileEntity = te;
     for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
       addSlotToContainer(new SlotOnlyBlocks(tileEntity, i, SLOTX_START + i * SQ, SLOTY));
@@ -65,37 +65,37 @@ public class ContainerBuilder extends ContainerBaseMachine {
     super.detectAndSendChanges();
     for (int i = 0; i < this.listeners.size(); ++i) {
       IContainerListener icontainerlistener = (IContainerListener) this.listeners.get(i);
-      int idx = TileMachineStructureBuilder.Fields.TIMER.ordinal();
+      int idx = TileEntityStructureBuilder.Fields.TIMER.ordinal();
       if (this.tileTimer != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
-      idx = TileMachineStructureBuilder.Fields.BUILDTYPE.ordinal();
+      idx = TileEntityStructureBuilder.Fields.BUILDTYPE.ordinal();
       if (this.tileBuild != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
-      idx = TileMachineStructureBuilder.Fields.SIZE.ordinal();
+      idx = TileEntityStructureBuilder.Fields.SIZE.ordinal();
       if (this.tileSize != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
-      idx = TileMachineStructureBuilder.Fields.SPEED.ordinal();
+      idx = TileEntityStructureBuilder.Fields.SPEED.ordinal();
       if (this.tileSpeed != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
-      idx = TileMachineStructureBuilder.Fields.HEIGHT.ordinal();
+      idx = TileEntityStructureBuilder.Fields.HEIGHT.ordinal();
       if (this.tileHeight != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
-      idx = TileMachineStructureBuilder.Fields.REDSTONE.ordinal();
+      idx = TileEntityStructureBuilder.Fields.REDSTONE.ordinal();
       if (this.tileRedstone != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
     }
-    this.tileTimer = this.tileEntity.getField(TileMachineStructureBuilder.Fields.TIMER.ordinal());
-    this.tileBuild = this.tileEntity.getField(TileMachineStructureBuilder.Fields.BUILDTYPE.ordinal());
-    this.tileSize = this.tileEntity.getField(TileMachineStructureBuilder.Fields.SIZE.ordinal());
-    this.tileSpeed = this.tileEntity.getField(TileMachineStructureBuilder.Fields.SPEED.ordinal());
-    this.tileHeight = this.tileEntity.getField(TileMachineStructureBuilder.Fields.HEIGHT.ordinal());
-    this.tileRedstone = this.tileEntity.getField(TileMachineStructureBuilder.Fields.REDSTONE.ordinal());
+    this.tileTimer = this.tileEntity.getField(TileEntityStructureBuilder.Fields.TIMER.ordinal());
+    this.tileBuild = this.tileEntity.getField(TileEntityStructureBuilder.Fields.BUILDTYPE.ordinal());
+    this.tileSize = this.tileEntity.getField(TileEntityStructureBuilder.Fields.SIZE.ordinal());
+    this.tileSpeed = this.tileEntity.getField(TileEntityStructureBuilder.Fields.SPEED.ordinal());
+    this.tileHeight = this.tileEntity.getField(TileEntityStructureBuilder.Fields.HEIGHT.ordinal());
+    this.tileRedstone = this.tileEntity.getField(TileEntityStructureBuilder.Fields.REDSTONE.ordinal());
   }
   @Override
   @SideOnly(Side.CLIENT)

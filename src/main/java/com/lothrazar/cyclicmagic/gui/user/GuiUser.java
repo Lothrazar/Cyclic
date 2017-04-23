@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.gui.user;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUser;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUser.Fields;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityUser;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityUser.Fields;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContanerProgress;
 import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
 import com.lothrazar.cyclicmagic.gui.user.ContainerUser;
@@ -12,10 +12,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiUser extends GuiBaseContanerProgress {
-  private TileMachineUser tile;
+  private TileEntityUser tile;
   private GuiButtonMachineRedstone redstoneBtn;
   private ButtonUserAction actionBtn;
-  public GuiUser(InventoryPlayer inventoryPlayer, TileMachineUser tileEntity) {
+  public GuiUser(InventoryPlayer inventoryPlayer, TileEntityUser tileEntity) {
     super(new ContainerUser(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
   }
@@ -61,6 +61,6 @@ public class GuiUser extends GuiBaseContanerProgress {
     return tile.getField(Fields.TIMER.ordinal());
   }
   public int getProgressMax() {
-    return TileMachineUser.TIMER_FULL;
+    return TileEntityUser.TIMER_FULL;
   }
 }

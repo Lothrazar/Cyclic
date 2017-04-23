@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.gui.miner;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMinerSmart;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityControlledMiner;
 import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.SlotSingleStack;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -18,12 +18,12 @@ public class ContainerMinerSmart extends ContainerBaseMachine {
   public static final int SLOTID_EQUIP = 4;
   public static final int SLOTEQUIP_X = SLOTX_START + (SLOTID_EQUIP + 2) * Const.SQ - 10;
   public static final int SLOTEQUIP_Y = SLOTY;
-  protected TileMachineMinerSmart tileEntity;
+  protected TileEntityControlledMiner tileEntity;
   private int tileHeight;
   private int tileRedstone;
   private int tileSize;
   private int tileblacklist;
-  public ContainerMinerSmart(InventoryPlayer inventoryPlayer, TileMachineMinerSmart te) {
+  public ContainerMinerSmart(InventoryPlayer inventoryPlayer, TileEntityControlledMiner te) {
     tileEntity = te;
     for (int i = 0; i < tileEntity.getSizeInventory() - 1; i++) {
       addSlotToContainer(new SlotSingleStack(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY));
@@ -63,27 +63,27 @@ public class ContainerMinerSmart extends ContainerBaseMachine {
     super.detectAndSendChanges();
     for (int i = 0; i < this.listeners.size(); ++i) {
       IContainerListener icontainerlistener = (IContainerListener) this.listeners.get(i);
-      int idx = TileMachineMinerSmart.Fields.HEIGHT.ordinal();
+      int idx = TileEntityControlledMiner.Fields.HEIGHT.ordinal();
       if (this.tileHeight != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
-      idx = TileMachineMinerSmart.Fields.REDSTONE.ordinal();
+      idx = TileEntityControlledMiner.Fields.REDSTONE.ordinal();
       if (this.tileRedstone != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
-      idx = TileMachineMinerSmart.Fields.SIZE.ordinal();
+      idx = TileEntityControlledMiner.Fields.SIZE.ordinal();
       if (this.tileSize != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
-      idx = TileMachineMinerSmart.Fields.LISTTYPE.ordinal();
+      idx = TileEntityControlledMiner.Fields.LISTTYPE.ordinal();
       if (this.tileblacklist != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
     }
-    this.tileHeight = this.tileEntity.getField(TileMachineMinerSmart.Fields.HEIGHT.ordinal());
-    this.tileRedstone = this.tileEntity.getField(TileMachineMinerSmart.Fields.REDSTONE.ordinal());
-    this.tileSize = this.tileEntity.getField(TileMachineMinerSmart.Fields.SIZE.ordinal());
-    this.tileblacklist = this.tileEntity.getField(TileMachineMinerSmart.Fields.LISTTYPE.ordinal());
+    this.tileHeight = this.tileEntity.getField(TileEntityControlledMiner.Fields.HEIGHT.ordinal());
+    this.tileRedstone = this.tileEntity.getField(TileEntityControlledMiner.Fields.REDSTONE.ordinal());
+    this.tileSize = this.tileEntity.getField(TileEntityControlledMiner.Fields.SIZE.ordinal());
+    this.tileblacklist = this.tileEntity.getField(TileEntityControlledMiner.Fields.LISTTYPE.ordinal());
   }
   @Override
   @SideOnly(Side.CLIENT)

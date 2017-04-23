@@ -2,8 +2,8 @@ package com.lothrazar.cyclicmagic.gui.vector;
 import java.io.IOException;
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.block.tileentity.TileVector;
-import com.lothrazar.cyclicmagic.block.tileentity.TileVector.Fields;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityVector;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityVector.Fields;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
 import com.lothrazar.cyclicmagic.net.PacketTileVector;
@@ -21,7 +21,7 @@ public class GuiVector extends GuiBaseContainer {
   private static final int NORTH = 180;
   private static final int EAST = 270;
   private static final int WEST = 90;
-  private TileVector tile;
+  private TileEntityVector tile;
   private int xAngle = 14;
   private int yAngle = 56;//aka pitch
   private int xPower = 14;
@@ -33,7 +33,7 @@ public class GuiVector extends GuiBaseContainer {
   private GuiButtonMachineRedstone redstoneBtn;
   private GuiTextFieldInteger txtYaw;
   private GuiTextFieldInteger txtAngle;
-  public GuiVector(InventoryPlayer inventoryPlayer, TileVector tileEntity) {
+  public GuiVector(InventoryPlayer inventoryPlayer, TileEntityVector tileEntity) {
     super(new ContainerVector(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
   }
@@ -50,25 +50,25 @@ public class GuiVector extends GuiBaseContainer {
     redstoneBtn = new GuiButtonMachineRedstone(0,
         this.guiLeft + 6,
         this.guiTop + 6, this.tile.getPos());
-    redstoneBtn.setTextureIndex(tile.getField(TileVector.Fields.REDSTONE.ordinal()));
+    redstoneBtn.setTextureIndex(tile.getField(TileEntityVector.Fields.REDSTONE.ordinal()));
     this.buttonList.add(redstoneBtn);
     int id = 1;
     //angle text box
     txtAngle = addTextbox(id++, xAngle, yAngle, tile.getAngle() + "", 2);
     txtAngle.setFocused(true);//default
-    txtAngle.setMaxVal(TileVector.MAX_ANGLE);
+    txtAngle.setMaxVal(TileEntityVector.MAX_ANGLE);
     txtAngle.setMinVal(0);
-    txtAngle.setTileFieldId(TileVector.Fields.ANGLE.ordinal());
+    txtAngle.setTileFieldId(TileEntityVector.Fields.ANGLE.ordinal());
     //then the power text box
     GuiTextFieldInteger txtPower = addTextbox(id++, xPower, yPower, tile.getPower() + "", 3);
-    txtPower.setMaxVal(TileVector.MAX_POWER);
+    txtPower.setMaxVal(TileEntityVector.MAX_POWER);
     txtPower.setMinVal(1);
-    txtPower.setTileFieldId(TileVector.Fields.POWER.ordinal());
+    txtPower.setTileFieldId(TileEntityVector.Fields.POWER.ordinal());
     // yaw text box
     txtYaw = addTextbox(id++, xYaw, yYaw, tile.getYaw() + "", 3);
-    txtYaw.setMaxVal(TileVector.MAX_YAW);
+    txtYaw.setMaxVal(TileEntityVector.MAX_YAW);
     txtYaw.setMinVal(0);
-    txtYaw.setTileFieldId(TileVector.Fields.YAW.ordinal());
+    txtYaw.setTileFieldId(TileEntityVector.Fields.YAW.ordinal());
     //now the YAW buttons
     int btnYawSpacing = 22;
     addButtonAt(id++, xYaw + 5, yYaw + btnYawSpacing, SOUTH, Fields.YAW.ordinal()).displayString = "S";
@@ -139,7 +139,7 @@ public class GuiVector extends GuiBaseContainer {
         }
       }
     }
-    redstoneBtn.setState(tile.getField(TileVector.Fields.REDSTONE.ordinal()));
+    redstoneBtn.setState(tile.getField(TileEntityVector.Fields.REDSTONE.ordinal()));
     soundBtn.displayString = UtilChat.lang("tile.plate_vector.gui.sound" + tile.getField(Fields.SOUND.ordinal()));
     renderString("tile.plate_vector.gui.power", xPower + 14, yPower + 26);
     renderString("tile.plate_vector.gui.angle", xAngle + 18, yAngle + 26);

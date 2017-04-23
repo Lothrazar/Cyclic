@@ -2,25 +2,25 @@ package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockStructureBuilder;
-import com.lothrazar.cyclicmagic.block.BlockHarvester;
 import com.lothrazar.cyclicmagic.block.BlockMiner;
 import com.lothrazar.cyclicmagic.block.BlockMinerSmart;
-import com.lothrazar.cyclicmagic.block.BlockPassword;
 import com.lothrazar.cyclicmagic.block.BlockPatternBuilder;
 import com.lothrazar.cyclicmagic.block.BlockPlacer;
-import com.lothrazar.cyclicmagic.block.BlockUncrafting;
 import com.lothrazar.cyclicmagic.block.BlockUser;
 import com.lothrazar.cyclicmagic.block.BlockXpPylon;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineStructureBuilder;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineHarvester;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityStructureBuilder;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPatternBuilder;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityXpPylon;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineBlockMiner;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMinerSmart;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachinePlacer;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUncrafter;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUser;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBlockMiner;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityControlledMiner;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPlacer;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityUser;
+import com.lothrazar.cyclicmagic.component.harvester.BlockHarvester;
+import com.lothrazar.cyclicmagic.component.harvester.TileEntityHarvester;
+import com.lothrazar.cyclicmagic.component.password.BlockPassword;
+import com.lothrazar.cyclicmagic.component.password.TileEntityPassword;
+import com.lothrazar.cyclicmagic.component.uncrafter.BlockUncrafting;
+import com.lothrazar.cyclicmagic.component.uncrafter.TileEntityUncrafter;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.ConfigRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -53,18 +53,18 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
     if (enableBuilderBlock) {
       BlockStructureBuilder builder_block = new BlockStructureBuilder();
       BlockRegistry.registerBlock(builder_block, "builder_block");
-      GameRegistry.registerTileEntity(TileMachineStructureBuilder.class, "builder_te");
+      GameRegistry.registerTileEntity(TileEntityStructureBuilder.class, "builder_te");
     }
     if (enableHarvester) {
       BlockHarvester harvester_block = new BlockHarvester();
       BlockRegistry.registerBlock(harvester_block, "harvester_block");
-      GameRegistry.registerTileEntity(TileMachineHarvester.class, "harveseter_te");
+      GameRegistry.registerTileEntity(TileEntityHarvester.class, "harveseter_te");
       ConfigRegistry.register(harvester_block);
     }
     if (enableUncrafter) {
       BlockUncrafting uncrafting_block = new BlockUncrafting();
       BlockRegistry.registerBlock(uncrafting_block, "uncrafting_block");
-      GameRegistry.registerTileEntity(TileMachineUncrafter.class, "uncrafting_block_te");
+      GameRegistry.registerTileEntity(TileEntityUncrafter.class, "uncrafting_block_te");
     }
     if (enableMiner) {
       BlockMiner miner_block = new BlockMiner(BlockMiner.MinerType.SINGLE);
@@ -75,17 +75,17 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(block_miner_tunnel, "block_miner_tunnel");
     }
     if (enableMiner || enableMinerEnhanced) {
-      GameRegistry.registerTileEntity(TileMachineBlockMiner.class, "miner_te");
+      GameRegistry.registerTileEntity(TileEntityBlockMiner.class, "miner_te");
     }
     if (enableMinerSmart) {
       BlockMinerSmart block_miner_smart = new BlockMinerSmart();
       BlockRegistry.registerBlock(block_miner_smart, "block_miner_smart");
-      GameRegistry.registerTileEntity(TileMachineMinerSmart.class, Const.MODID + "miner_smart_te");
+      GameRegistry.registerTileEntity(TileEntityControlledMiner.class, Const.MODID + "miner_smart_te");
     }
     if (enablePlacer) {
       BlockPlacer placer_block = new BlockPlacer();
       BlockRegistry.registerBlock(placer_block, "placer_block");
-      GameRegistry.registerTileEntity(TileMachinePlacer.class, "placer_block_te");
+      GameRegistry.registerTileEntity(TileEntityPlacer.class, "placer_block_te");
     }
     if (enablePassword) {
       BlockPassword password_block = new BlockPassword();
@@ -96,7 +96,7 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
     if (enableUser) {
       BlockUser block_user = new BlockUser();
       BlockRegistry.registerBlock(block_user, "block_user");
-      GameRegistry.registerTileEntity(TileMachineUser.class, Const.MODID + "block_user_te");
+      GameRegistry.registerTileEntity(TileEntityUser.class, Const.MODID + "block_user_te");
     }
   }
   @Override
@@ -109,11 +109,11 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
     enableMiner = config.getBoolean("MinerBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText + ".  This is the one that mines a single block");
     enableMinerEnhanced = config.getBoolean("MinerBlockAdvanced", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText + ".  This is the one that mines a 3x3x3 area");
     enableBuilderBlock = config.getBoolean("BuilderBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    TileMachineStructureBuilder.maxSize = config.getInt("builder.maxRange", Const.ConfigCategory.modpackMisc, 64, 3, 64, "Maximum range of the builder block that you can increase it to in the GUI");
-    TileMachineStructureBuilder.maxHeight = config.getInt("builder.maxHeight", Const.ConfigCategory.modpackMisc, 64, 3, 64, "Maximum height of the builder block that you can increase it to in the GUI");
+    TileEntityStructureBuilder.maxSize = config.getInt("builder.maxRange", Const.ConfigCategory.modpackMisc, 64, 3, 64, "Maximum range of the builder block that you can increase it to in the GUI");
+    TileEntityStructureBuilder.maxHeight = config.getInt("builder.maxHeight", Const.ConfigCategory.modpackMisc, 64, 3, 64, "Maximum height of the builder block that you can increase it to in the GUI");
     enableHarvester = config.getBoolean("HarvesterBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableUncrafter = config.getBoolean("UncraftingGrinder", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableMinerSmart = config.getBoolean("ControlledMiner", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    TileMachineMinerSmart.maxHeight = config.getInt("ControlledMiner.maxHeight", Const.ConfigCategory.modpackMisc, 32, 3, 128, "Maximum height of the controlled miner block that you can increase it to in the GUI");
+    TileEntityControlledMiner.maxHeight = config.getInt("ControlledMiner.maxHeight", Const.ConfigCategory.modpackMisc, 32, 3, 128, "Maximum height of the controlled miner block that you can increase it to in the GUI");
   }
 }

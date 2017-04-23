@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.gui.placer;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachinePlacer;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPlacer;
 import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.SlotOnlyBlocks;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,10 +15,10 @@ public class ContainerPlacer extends ContainerBaseMachine {
   public static final int SLOTX_START = 8;
   public static final int SLOTY = 40;
   public static final int SQ = 18;
-  protected TileMachinePlacer tileEntity;
+  protected TileEntityPlacer tileEntity;
   private int tileRedstone;
   private int tileTimer;
-  public ContainerPlacer(InventoryPlayer inventoryPlayer, TileMachinePlacer te) {
+  public ContainerPlacer(InventoryPlayer inventoryPlayer, TileEntityPlacer te) {
     tileEntity = te;
     for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
       addSlotToContainer(new SlotOnlyBlocks(tileEntity, i, SLOTX_START + i * SQ, SLOTY));
@@ -56,17 +56,17 @@ public class ContainerPlacer extends ContainerBaseMachine {
     super.detectAndSendChanges();
     for (int i = 0; i < this.listeners.size(); ++i) {
       IContainerListener icontainerlistener = (IContainerListener) this.listeners.get(i);
-      int idx = TileMachinePlacer.Fields.TIMER.ordinal();
+      int idx = TileEntityPlacer.Fields.TIMER.ordinal();
       if (this.tileTimer != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
-      idx = TileMachinePlacer.Fields.REDSTONE.ordinal();
+      idx = TileEntityPlacer.Fields.REDSTONE.ordinal();
       if (this.tileRedstone != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
     }
-    this.tileTimer = this.tileEntity.getField(TileMachinePlacer.Fields.TIMER.ordinal());
-    this.tileRedstone = this.tileEntity.getField(TileMachinePlacer.Fields.REDSTONE.ordinal());
+    this.tileTimer = this.tileEntity.getField(TileEntityPlacer.Fields.TIMER.ordinal());
+    this.tileRedstone = this.tileEntity.getField(TileEntityPlacer.Fields.REDSTONE.ordinal());
   }
   @Override
   @SideOnly(Side.CLIENT)

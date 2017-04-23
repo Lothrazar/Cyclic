@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.net;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineStructureBuilder;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityStructureBuilder;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -42,7 +42,7 @@ public class PacketTileBuildSize implements IMessage, IMessageHandler<PacketTile
   @Override
   public IMessage onMessage(PacketTileBuildSize message, MessageContext ctx) {
     EntityPlayerMP player = ctx.getServerHandler().playerEntity;
-    TileMachineStructureBuilder tile = (TileMachineStructureBuilder) player.getEntityWorld().getTileEntity(message.pos);
+    TileEntityStructureBuilder tile = (TileEntityStructureBuilder) player.getEntityWorld().getTileEntity(message.pos);
     if (tile != null) {
       if (message.type.equals("size"))
         tile.setSize(tile.getSize() + message.value);

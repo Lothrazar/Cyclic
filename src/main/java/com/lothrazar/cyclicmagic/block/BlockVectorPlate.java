@@ -1,8 +1,8 @@
 package com.lothrazar.cyclicmagic.block;
 import java.util.Random;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclicmagic.block.tileentity.TileVector;
-import com.lothrazar.cyclicmagic.block.tileentity.TileVector.Fields;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityVector;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityVector.Fields;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -47,7 +47,7 @@ public class BlockVectorPlate extends BlockBaseHasTile {
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
-    return new TileVector();
+    return new TileEntityVector();
   }
   //  @Override
   //  public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
@@ -62,7 +62,7 @@ public class BlockVectorPlate extends BlockBaseHasTile {
   public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
     int yFloor = MathHelper.floor(entity.posY);
     double posWithinBlock = entity.posY - yFloor;
-    TileVector tile = (TileVector) worldIn.getTileEntity(pos);
+    TileEntityVector tile = (TileEntityVector) worldIn.getTileEntity(pos);
     entity.fallDistance = 0;
     //either its getting power, OR setting says redstone is not needed
     boolean powerOk = worldIn.isBlockPowered(pos) || (tile.getField(Fields.REDSTONE.ordinal()) == 0);
@@ -85,11 +85,11 @@ public class BlockVectorPlate extends BlockBaseHasTile {
     World world = event.getWorld();
     EntityPlayer player = event.getEntityPlayer();
     ItemStack stack = event.getItemStack();//    ItemStack stack = player.getHeldItem(event.getHand());
-    if (player.isSneaking() == false && world.getTileEntity(pos) instanceof TileVector
+    if (player.isSneaking() == false && world.getTileEntity(pos) instanceof TileEntityVector
         && stack != null && Block.getBlockFromItem(stack.getItem()) instanceof BlockVectorPlate) {
       IBlockState iblockstate = world.getBlockState(pos);
       Block block = iblockstate.getBlock();
-      TileVector tile = (TileVector) world.getTileEntity(pos);
+      TileEntityVector tile = (TileEntityVector) world.getTileEntity(pos);
       if (stack.hasTagCompound()) {
         ((BlockVectorPlate) block).saveStackDataTotile(stack, tile);
         if (world.isRemote)
@@ -100,8 +100,8 @@ public class BlockVectorPlate extends BlockBaseHasTile {
   @Override
   public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
     ItemStack stack = super.getPickBlock(state, target, world, pos, player);
-    if (stack == null || !(world.getTileEntity(pos) instanceof TileVector)) { return null; }
-    TileVector tile = (TileVector) world.getTileEntity(pos);
+    if (stack == null || !(world.getTileEntity(pos) instanceof TileEntityVector)) { return null; }
+    TileEntityVector tile = (TileEntityVector) world.getTileEntity(pos);
     saveTileDataToStack(stack, tile);
     return stack;
   }
@@ -126,33 +126,33 @@ public class BlockVectorPlate extends BlockBaseHasTile {
     BlockPos pos = event.getPos();
     IBlockState state = event.getState();
     TileEntity ent = world.getTileEntity(pos);
-    if (ent != null && ent instanceof TileVector) {
-      TileVector t = (TileVector) ent;
+    if (ent != null && ent instanceof TileEntityVector) {
+      TileEntityVector t = (TileEntityVector) ent;
       ItemStack stack = new ItemStack(state.getBlock());
       saveTileDataToStack(stack, t);
       UtilItemStack.dropItemStackInWorld(world, pos, stack);
     }
   }
-  private void saveTileDataToStack(ItemStack stack, TileVector tile) {
-    UtilNBT.setItemStackNBTVal(stack, TileVector.NBT_ANGLE, tile.getAngle());
-    UtilNBT.setItemStackNBTVal(stack, TileVector.NBT_POWER, tile.getPower());
-    UtilNBT.setItemStackNBTVal(stack, TileVector.NBT_YAW, tile.getYaw());
-    UtilNBT.setItemStackNBTVal(stack, TileVector.NBT_SOUND, tile.getField(Fields.SOUND.ordinal()));
-    UtilNBT.setItemStackNBTVal(stack, TileVector.NBT_RED, tile.getField(Fields.REDSTONE.ordinal()));
+  private void saveTileDataToStack(ItemStack stack, TileEntityVector tile) {
+    UtilNBT.setItemStackNBTVal(stack, TileEntityVector.NBT_ANGLE, tile.getAngle());
+    UtilNBT.setItemStackNBTVal(stack, TileEntityVector.NBT_POWER, tile.getPower());
+    UtilNBT.setItemStackNBTVal(stack, TileEntityVector.NBT_YAW, tile.getYaw());
+    UtilNBT.setItemStackNBTVal(stack, TileEntityVector.NBT_SOUND, tile.getField(Fields.SOUND.ordinal()));
+    UtilNBT.setItemStackNBTVal(stack, TileEntityVector.NBT_RED, tile.getField(Fields.REDSTONE.ordinal()));
   }
-  private void saveStackDataTotile(ItemStack stack, TileVector tile) {
+  private void saveStackDataTotile(ItemStack stack, TileEntityVector tile) {
     if (stack.hasTagCompound()) {
-      tile.setField(TileVector.Fields.ANGLE.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_ANGLE));
-      tile.setField(TileVector.Fields.POWER.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_POWER));
-      tile.setField(TileVector.Fields.YAW.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_YAW));
-      tile.setField(TileVector.Fields.SOUND.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_SOUND));
-      tile.setField(TileVector.Fields.REDSTONE.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileVector.NBT_RED));
+      tile.setField(TileEntityVector.Fields.ANGLE.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileEntityVector.NBT_ANGLE));
+      tile.setField(TileEntityVector.Fields.POWER.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileEntityVector.NBT_POWER));
+      tile.setField(TileEntityVector.Fields.YAW.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileEntityVector.NBT_YAW));
+      tile.setField(TileEntityVector.Fields.SOUND.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileEntityVector.NBT_SOUND));
+      tile.setField(TileEntityVector.Fields.REDSTONE.ordinal(), UtilNBT.getItemStackNBTVal(stack, TileEntityVector.NBT_RED));
     }
   }
   public static void saveStackDefault(ItemStack stack) {
-    UtilNBT.setItemStackNBTVal(stack, TileVector.NBT_ANGLE, TileVector.DEFAULT_ANGLE);
-    UtilNBT.setItemStackNBTVal(stack, TileVector.NBT_POWER, TileVector.DEFAULT_POWER);
-    UtilNBT.setItemStackNBTVal(stack, TileVector.NBT_YAW, TileVector.DEFAULT_YAW);
+    UtilNBT.setItemStackNBTVal(stack, TileEntityVector.NBT_ANGLE, TileEntityVector.DEFAULT_ANGLE);
+    UtilNBT.setItemStackNBTVal(stack, TileEntityVector.NBT_POWER, TileEntityVector.DEFAULT_POWER);
+    UtilNBT.setItemStackNBTVal(stack, TileEntityVector.NBT_YAW, TileEntityVector.DEFAULT_YAW);
   }
   /**
    * item stack data pushed into tile entity
@@ -160,7 +160,7 @@ public class BlockVectorPlate extends BlockBaseHasTile {
   @Override
   public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
     stack.getItem().updateItemStackNBT(stack.getTagCompound());
-    TileVector tile = (TileVector) worldIn.getTileEntity(pos);
+    TileEntityVector tile = (TileEntityVector) worldIn.getTileEntity(pos);
     if (tile != null) {
       saveStackDataTotile(stack, tile);
     }

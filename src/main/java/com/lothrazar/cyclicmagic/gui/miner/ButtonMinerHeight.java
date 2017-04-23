@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.gui.miner;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMinerSmart;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityControlledMiner;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
 import com.lothrazar.cyclicmagic.net.PacketTileMineHeight;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -18,7 +18,7 @@ public class ButtonMinerHeight extends GuiButton implements ITooltipButton {
   private final List<String> tooltips = new ArrayList<String>();
   boolean goUp;
   private String stype;//TODO: should be field ordinal/int not string but meh
-  public ButtonMinerHeight(BlockPos current, int buttonId, int x, int y, boolean up, TileMachineMinerSmart.Fields list) {
+  public ButtonMinerHeight(BlockPos current, int buttonId, int x, int y, boolean up, TileEntityControlledMiner.Fields list) {
     super(buttonId, x, y, 15, 10, "");
     tilePos = current;
     goUp = up;

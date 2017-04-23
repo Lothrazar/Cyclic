@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.block;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineStructureBuilder;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityStructureBuilder;
 import com.lothrazar.cyclicmagic.block.tileentity.MachineTESR;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import net.minecraft.block.SoundType;
@@ -32,11 +32,11 @@ public class BlockStructureBuilder extends BlockBaseFacingInventory implements I
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     // Bind our TESR to our tile entity
-    ClientRegistry.bindTileEntitySpecialRenderer(TileMachineStructureBuilder.class, new MachineTESR(this.getUnlocalizedName(), 0));
+    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityStructureBuilder.class, new MachineTESR(this.getUnlocalizedName(), 0));
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
-    return new TileMachineStructureBuilder();//"tile.builder_block.name"
+    return new TileEntityStructureBuilder();//"tile.builder_block.name"
   }
   @Override
   public void addRecipe() {

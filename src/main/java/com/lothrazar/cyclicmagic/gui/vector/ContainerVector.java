@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.gui.vector;
-import com.lothrazar.cyclicmagic.block.tileentity.TileVector;
-import com.lothrazar.cyclicmagic.block.tileentity.TileVector.Fields;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityVector;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityVector.Fields;
 import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
@@ -8,13 +8,13 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerVector extends ContainerBaseMachine {
-  protected TileVector tileEntity;
+  protected TileEntityVector tileEntity;
   private int tileAngle;
   private int tilePower;
   private int tileYaw;
   private int tileSound;
   private int tileRedstone;
-  public ContainerVector(InventoryPlayer inventoryPlayer, TileVector te) {
+  public ContainerVector(InventoryPlayer inventoryPlayer, TileEntityVector te) {
     tileEntity = te;
     bindPlayerHotbar(inventoryPlayer);
   }

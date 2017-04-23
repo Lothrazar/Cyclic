@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.block;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.tileentity.MachineTESR;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMinerSmart;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityControlledMiner;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -29,13 +29,13 @@ public class BlockMinerSmart extends BlockBaseFacingInventory implements IHasRec
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
-    return new TileMachineMinerSmart();//"tile.block_miner_smart.name"
+    return new TileEntityControlledMiner();//"tile.block_miner_smart.name"
   }
   @SideOnly(Side.CLIENT)
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     // Bind our TESR to our tile entity
-    ClientRegistry.bindTileEntitySpecialRenderer(TileMachineMinerSmart.class, new MachineTESR(this.getUnlocalizedName(), 4));
+    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityControlledMiner.class, new MachineTESR(this.getUnlocalizedName(), 4));
   }
   @Override
   public void addRecipe() {

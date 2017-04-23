@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.gui.user;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUser;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityUser;
 import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.SlotOnlyItems;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -15,12 +15,12 @@ public class ContainerUser extends ContainerBaseMachine {
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
   public static final int SLOTX_START = 8;
   public static final int SLOTY = 42;
-  protected TileMachineUser tileEntity;
+  protected TileEntityUser tileEntity;
   private int tileSpeed;
   private int timer;
   private int redstone;
   private int leftright;
-  public ContainerUser(InventoryPlayer inventoryPlayer, TileMachineUser te) {
+  public ContainerUser(InventoryPlayer inventoryPlayer, TileEntityUser te) {
     tileEntity = te;
     for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
       addSlotToContainer(new SlotOnlyItems(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY));
@@ -59,27 +59,27 @@ public class ContainerUser extends ContainerBaseMachine {
     super.detectAndSendChanges();
     for (int i = 0; i < this.listeners.size(); ++i) {
       IContainerListener icontainerlistener = (IContainerListener) this.listeners.get(i);
-      int idx = TileMachineUser.Fields.SPEED.ordinal();
+      int idx = TileEntityUser.Fields.SPEED.ordinal();
       if (this.tileSpeed != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
-      idx = TileMachineUser.Fields.TIMER.ordinal();
+      idx = TileEntityUser.Fields.TIMER.ordinal();
       if (this.timer != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
-      idx = TileMachineUser.Fields.REDSTONE.ordinal();
+      idx = TileEntityUser.Fields.REDSTONE.ordinal();
       if (this.redstone != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
-      idx = TileMachineUser.Fields.LEFTRIGHT.ordinal();
+      idx = TileEntityUser.Fields.LEFTRIGHT.ordinal();
       if (this.leftright != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
     }
-    this.tileSpeed = this.tileEntity.getField(TileMachineUser.Fields.SPEED.ordinal());
-    this.timer = this.tileEntity.getField(TileMachineUser.Fields.TIMER.ordinal());
-    this.redstone = this.tileEntity.getField(TileMachineUser.Fields.REDSTONE.ordinal());
-    this.leftright = this.tileEntity.getField(TileMachineUser.Fields.LEFTRIGHT.ordinal());
+    this.tileSpeed = this.tileEntity.getField(TileEntityUser.Fields.SPEED.ordinal());
+    this.timer = this.tileEntity.getField(TileEntityUser.Fields.TIMER.ordinal());
+    this.redstone = this.tileEntity.getField(TileEntityUser.Fields.REDSTONE.ordinal());
+    this.leftright = this.tileEntity.getField(TileEntityUser.Fields.LEFTRIGHT.ordinal());
   }
   @Override
   @SideOnly(Side.CLIENT)

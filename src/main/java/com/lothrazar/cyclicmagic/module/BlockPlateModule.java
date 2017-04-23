@@ -8,7 +8,7 @@ import com.lothrazar.cyclicmagic.block.BlockMagnetAnti;
 import com.lothrazar.cyclicmagic.block.BlockVectorPlate;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityMagnet;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityMagnetAnti;
-import com.lothrazar.cyclicmagic.block.tileentity.TileVector;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityVector;
 import com.lothrazar.cyclicmagic.item.itemblock.ItemBlockVectorPlate;
 import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
@@ -87,7 +87,7 @@ public class BlockPlateModule extends BaseModule implements IHasConfig {
     if (vectorPlate) {
       BlockVectorPlate plate_vector = new BlockVectorPlate();
       BlockRegistry.registerBlock(plate_vector, new ItemBlockVectorPlate(plate_vector), "plate_vector");
-      GameRegistry.registerTileEntity(TileVector.class, "plate_vector_te");
+      GameRegistry.registerTileEntity(TileEntityVector.class, "plate_vector_te");
       ModCyclic.instance.events.register(plate_vector);
       ItemStack top = (plate_launch_med == null) ? new ItemStack(Blocks.REDSTONE_LAMP) : new ItemStack(plate_launch_med);
       ItemStack base = (plate_push_fast == null) ? new ItemStack(Blocks.EMERALD_BLOCK) : new ItemStack(plate_push_fast);

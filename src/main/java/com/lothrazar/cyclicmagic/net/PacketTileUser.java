@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.net;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineUser;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityUser;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -36,8 +36,8 @@ public class PacketTileUser implements IMessage, IMessageHandler<PacketTileUser,
   public IMessage onMessage(PacketTileUser message, MessageContext ctx) {
     EntityPlayerMP player = ctx.getServerHandler().playerEntity;
     TileEntity tile = player.getEntityWorld().getTileEntity(message.pos);
-    if (tile != null && tile instanceof TileMachineUser) {
-      TileMachineUser te = ((TileMachineUser) tile);
+    if (tile != null && tile instanceof TileEntityUser) {
+      TileEntityUser te = ((TileEntityUser) tile);
       te.toggleLeftRight();
     }
     return null;

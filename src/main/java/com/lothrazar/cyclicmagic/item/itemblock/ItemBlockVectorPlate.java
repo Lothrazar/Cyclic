@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.item.itemblock;
 import java.util.List;
-import com.lothrazar.cyclicmagic.block.tileentity.TileVector;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityVector;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.block.Block;
@@ -20,13 +20,13 @@ public class ItemBlockVectorPlate extends ItemBlock {
   @Override
   public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
     stack.getItem().updateItemStackNBT(stack.getTagCompound());
-    String d = UtilNBT.getItemStackDisplayInteger(stack, TileVector.NBT_ANGLE);
+    String d = UtilNBT.getItemStackDisplayInteger(stack, TileEntityVector.NBT_ANGLE);
     if (d.length() > 0)
       tooltip.add(UtilChat.lang("tile.plate_vector.tooltip.angle") + d);
-    d = UtilNBT.getItemStackDisplayInteger(stack, TileVector.NBT_POWER);
+    d = UtilNBT.getItemStackDisplayInteger(stack, TileEntityVector.NBT_POWER);
     if (d.length() > 0)
       tooltip.add(UtilChat.lang("tile.plate_vector.tooltip.power") + d);
-    d = UtilNBT.getItemStackDisplayInteger(stack, TileVector.NBT_YAW);
+    d = UtilNBT.getItemStackDisplayInteger(stack, TileEntityVector.NBT_YAW);
     if (d.length() > 0)
       tooltip.add(UtilChat.lang("tile.plate_vector.tooltip.yaw") + d);
   }
@@ -39,20 +39,20 @@ public class ItemBlockVectorPlate extends ItemBlock {
     if (nbt == null) {
       nbt = new NBTTagCompound();
     }
-    if (!nbt.hasKey(TileVector.NBT_ANGLE)) {
-      nbt.setInteger(TileVector.NBT_ANGLE, TileVector.DEFAULT_ANGLE);
+    if (!nbt.hasKey(TileEntityVector.NBT_ANGLE)) {
+      nbt.setInteger(TileEntityVector.NBT_ANGLE, TileEntityVector.DEFAULT_ANGLE);
       altered = true;
     }
-    if (!nbt.hasKey(TileVector.NBT_POWER)) {
-      nbt.setInteger(TileVector.NBT_POWER, TileVector.DEFAULT_POWER);
+    if (!nbt.hasKey(TileEntityVector.NBT_POWER)) {
+      nbt.setInteger(TileEntityVector.NBT_POWER, TileEntityVector.DEFAULT_POWER);
       altered = true;
     }
-    if (!nbt.hasKey(TileVector.NBT_YAW)) {
-      nbt.setInteger(TileVector.NBT_YAW, TileVector.DEFAULT_YAW);
+    if (!nbt.hasKey(TileEntityVector.NBT_YAW)) {
+      nbt.setInteger(TileEntityVector.NBT_YAW, TileEntityVector.DEFAULT_YAW);
       altered = true;
     }
-    if (!nbt.hasKey(TileVector.NBT_SOUND)) {
-      nbt.setInteger(TileVector.NBT_SOUND, 1);
+    if (!nbt.hasKey(TileEntityVector.NBT_SOUND)) {
+      nbt.setInteger(TileEntityVector.NBT_SOUND, 1);
       altered = true;
     }
     return altered;

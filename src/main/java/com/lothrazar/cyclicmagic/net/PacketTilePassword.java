@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.net;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityPassword;
+import com.lothrazar.cyclicmagic.component.password.TileEntityPassword;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayerMP;

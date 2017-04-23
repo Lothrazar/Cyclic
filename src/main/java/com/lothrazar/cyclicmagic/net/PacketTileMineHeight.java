@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.net;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineMinerSmart;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityControlledMiner;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -42,13 +42,13 @@ public class PacketTileMineHeight implements IMessage, IMessageHandler<PacketTil
   @Override
   public IMessage onMessage(PacketTileMineHeight message, MessageContext ctx) {
     EntityPlayerMP player = ctx.getServerHandler().playerEntity;
-    TileMachineMinerSmart tile = (TileMachineMinerSmart) player.getEntityWorld().getTileEntity(message.pos);
+    TileEntityControlledMiner tile = (TileEntityControlledMiner) player.getEntityWorld().getTileEntity(message.pos);
     if (tile != null) {
       //currently the ONLY type
-      if (message.type.equals(TileMachineMinerSmart.Fields.HEIGHT.name().toLowerCase())) {
+      if (message.type.equals(TileEntityControlledMiner.Fields.HEIGHT.name().toLowerCase())) {
         tile.setHeight(tile.getHeight() + message.value);
       }
-      else if (message.type.equals(TileMachineMinerSmart.Fields.LISTTYPE.name().toLowerCase())) {
+      else if (message.type.equals(TileEntityControlledMiner.Fields.LISTTYPE.name().toLowerCase())) {
         tile.toggleListType();
       }
       tile.markDirty();

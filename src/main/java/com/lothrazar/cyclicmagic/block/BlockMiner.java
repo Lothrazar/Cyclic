@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.block;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.tileentity.MachineTESR;
-import com.lothrazar.cyclicmagic.block.tileentity.TileMachineBlockMiner;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBlockMiner;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -38,17 +38,17 @@ public class BlockMiner extends BlockBaseFacingInventory implements IHasRecipe, 
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
-    return new TileMachineBlockMiner();
+    return new TileEntityBlockMiner();
   }
   @SideOnly(Side.CLIENT)
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     // Bind our TESR to our tile entity
-    ClientRegistry.bindTileEntitySpecialRenderer(TileMachineBlockMiner.class, new MachineTESR(this.getUnlocalizedName(), 0));
+    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBlockMiner.class, new MachineTESR(this.getUnlocalizedName(), 0));
   }
   @Override
   public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-    ((TileMachineBlockMiner) worldIn.getTileEntity(pos)).breakBlock(worldIn, pos, state);
+    ((TileEntityBlockMiner) worldIn.getTileEntity(pos)).breakBlock(worldIn, pos, state);
     super.breakBlock(worldIn, pos, state);
   }
   @Override

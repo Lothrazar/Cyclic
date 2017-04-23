@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.net;
-import com.lothrazar.cyclicmagic.block.tileentity.TileVector;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityVector;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -42,7 +42,7 @@ public class PacketTileVector implements IMessage, IMessageHandler<PacketTileVec
   @Override
   public IMessage onMessage(PacketTileVector message, MessageContext ctx) {
     EntityPlayerMP player = ctx.getServerHandler().playerEntity;
-    TileVector tile = (TileVector) player.getEntityWorld().getTileEntity(message.pos);
+    TileEntityVector tile = (TileEntityVector) player.getEntityWorld().getTileEntity(message.pos);
     if (tile != null) {
       tile.setField(message.tileFieldId, message.value);
     }
