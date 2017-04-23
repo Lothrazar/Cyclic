@@ -95,7 +95,6 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     if (equip.isEmpty()) { return false; }
     if (equip.getItem() instanceof ItemFishingRod) { return true; }
     String itemsClass = equip.getItem().getClass().getName();
-
     String aquaBase = "com.teammetallurgy.aquaculture.items.";
     if (itemsClass.equals(aquaBase + "ItemAquacultureWoodenFishingRod")
         || itemsClass.equals(aquaBase + "ItemAquacultureFishingRod")

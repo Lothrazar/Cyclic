@@ -18,7 +18,7 @@ public class XpPylonTESR extends BaseMachineTesr<TileEntityXpPylon> {
   }
   @Override
   public void render(TileEntityBaseMachineInvo te) {
-    renderItem(te, te.getStackInSlot(this.itemSlotAbove), 0,0.5F,1);
-    renderItem(te, te.getStackInSlot(this.lowerSlot), 1,0.5F, 0);
+    renderItem(te, te.getStackInSlot(this.itemSlotAbove), 0, 0.5F, 1);
+    renderItem(te, te.getStackInSlot(this.lowerSlot), 1, 0.5F, 0);
   }
 }

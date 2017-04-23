@@ -49,18 +49,17 @@ public class PacketTilePylon implements IMessage, IMessageHandler<PacketTilePylo
     if (tile != null) {
       int prev = tile.getField(message.type.ordinal());
       if (message.type.ordinal() == Fields.EXP.ordinal()) { //actually this is a deposit from the player
-     
         if (prev + message.value <= TileEntityXpPylon.MAX_EXP_HELD) {//is it full
           if (UtilExperience.drainExp(player, message.value)) {//does player have enough
             //then deposit that much into it if drain worked
             tile.setField(message.type.ordinal(), prev + message.value);
           }
-          else{
+          else {
             //chat not enouh
             UtilChat.addChatMessage(player, "tile.exp_pylon.notenough");
           }
         }
-        else{
+        else {
           //chat full
           UtilChat.addChatMessage(player, "tile.exp_pylon.full");
         }

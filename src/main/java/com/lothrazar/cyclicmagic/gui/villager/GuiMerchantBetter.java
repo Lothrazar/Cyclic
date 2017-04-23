@@ -123,7 +123,7 @@ public class GuiMerchantBetter extends GuiBaseContainer {
       if (this.visible) {
         MerchantRecipeList merchantrecipelist = parent.getContainer().getTrades();
         if (merchantrecipelist == null) { return; }
-        if(recipeIndex >= merchantrecipelist.size()){
+        if (recipeIndex >= merchantrecipelist.size()) {
           //in 1.11.2 the draw cycles happen before the recipe list is finished syncing from server, so we get index OOB errors
           //just keep it hidden if we have and index for a recipe that is valid but not in the current list.  
           // see https://github.com/PrinceOfAmber/Cyclic/issues/324

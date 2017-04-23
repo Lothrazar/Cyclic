@@ -40,7 +40,6 @@ public class MobDropChangesModule extends BaseEventModule implements IHasConfig 
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.mobs;
     config.addCustomCategoryComment(category, "Changes to vanilla mobs");
- 
     nameTagDeath = config.getBoolean("Name Tag Death", category, true,
         "When an entity dies that is named with a tag, it drops the nametag");
     endermanDrop = config.getBoolean("Enderman Block", category, true,

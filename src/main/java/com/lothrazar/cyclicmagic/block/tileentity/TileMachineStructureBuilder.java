@@ -225,9 +225,9 @@ public class TileMachineStructureBuilder extends TileEntityBaseMachineInvo imple
   public boolean isBurning() {
     return this.timer > 0 && this.timer < TIMER_FULL;
   }
-//  public boolean isRunning() {
-//    return !this.onlyRunIfPowered() || this.isPowered();
-//  }
+  //  public boolean isRunning() {
+  //    return !this.onlyRunIfPowered() || this.isPowered();
+  //  }
   @Override
   public void update() {
     shiftAllUp();

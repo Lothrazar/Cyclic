@@ -191,7 +191,6 @@ public class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements 
     }
   }
   public ItemStack tryMergeStackIntoSlot(ItemStack held, int furnaceSlot) {
- 
     ItemStack current = this.getStackInSlot(furnaceSlot);
     boolean success = false;
     if (current.isEmpty()) {

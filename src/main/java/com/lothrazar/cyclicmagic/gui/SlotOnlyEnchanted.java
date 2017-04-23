@@ -12,5 +12,4 @@ public class SlotOnlyEnchanted extends Slot {
   public boolean isItemValid(ItemStack itemstack) {
     return EnchantmentHelper.getEnchantments(itemstack).size() > 0;
   }
- 
 }

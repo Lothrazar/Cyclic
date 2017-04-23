@@ -114,13 +114,11 @@ public class GuiPylon extends GuiBaseContanerProgress {
   }
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     btnCollect.displayString = UtilChat.lang("button.pylon.collect" + tile.getField(TileEntityXpPylon.Fields.COLLECT.ordinal()));
     btnSpray.displayString = UtilChat.lang("button.pylon.spray" + tile.getField(TileEntityXpPylon.Fields.SPRAY.ordinal()));
     btnBottle.displayString = UtilChat.lang("button.pylon.bottle" + tile.getField(TileEntityXpPylon.Fields.BOTTLE.ordinal()));
-   
-    this.drawString(this.tile.getField(Fields.EXP.ordinal())+" / "+TileEntityXpPylon.MAX_EXP_HELD, this.xSize / 3, 62);
+    this.drawString(this.tile.getField(Fields.EXP.ordinal()) + " / " + TileEntityXpPylon.MAX_EXP_HELD, this.xSize / 3, 62);
   }
   public int getProgressX() {
     return this.guiLeft + 10;

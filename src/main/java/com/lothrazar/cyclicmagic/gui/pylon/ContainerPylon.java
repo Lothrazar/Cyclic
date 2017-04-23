@@ -27,7 +27,7 @@ public class ContainerPylon extends ContainerBaseMachine {
     tileEntity = te;
     for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
       Item filt = (i == 0) ? Items.GLASS_BOTTLE : Items.EXPERIENCE_BOTTLE;
-      addSlotToContainer(new SlotItemRestricted(tileEntity, i, SLOTX, SLOTY + i * (8+Const.SQ), filt));
+      addSlotToContainer(new SlotItemRestricted(tileEntity, i, SLOTX, SLOTY + i * (8 + Const.SQ), filt));
     }
     bindPlayerInventory(inventoryPlayer);
   }
