@@ -22,7 +22,6 @@ public class GuiPlacer extends GuiBaseContanerProgress {
     redstoneBtn = new GuiButtonMachineRedstone(0,
         this.guiLeft + 8,
         this.guiTop + 8, this.tile.getPos());
-    redstoneBtn.setTextureIndex(tile.getField(TileEntityPlacer.Fields.REDSTONE.ordinal()));
     this.buttonList.add(redstoneBtn);
   }
   @Override

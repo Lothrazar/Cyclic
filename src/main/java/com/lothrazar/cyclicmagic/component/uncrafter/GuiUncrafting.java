@@ -28,7 +28,6 @@ public class GuiUncrafting extends GuiBaseContanerProgress {
     redstoneBtn = new GuiButtonMachineRedstone(0,
         this.guiLeft + Const.padding,
         this.guiTop + Const.padding, this.tile.getPos());
-    redstoneBtn.setTextureIndex(tile.getField(Fields.REDSTONE.ordinal()));
     this.buttonList.add(redstoneBtn);
     //int buttonId, int x, int y, String buttonText)
     GuiButton helpBtn = new GuiButton(1,

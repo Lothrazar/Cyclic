@@ -31,7 +31,6 @@ public class GuiDisenchanter extends GuiBaseContanerProgress {
     redstoneBtn = new GuiButtonMachineRedstone(0,
         this.guiLeft + 8,
         this.guiTop + 8, this.tile.getPos());
-    redstoneBtn.setTextureIndex(tile.getField(Fields.REDSTONE.ordinal()));
     this.buttonList.add(redstoneBtn);
   }
   @Override

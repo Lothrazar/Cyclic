@@ -12,7 +12,7 @@ public class GuiButtonTexture extends GuiButtonTooltip {
     super(buttonId, x, y, 16, 20, "");
     icon = new ResourceLocation(Const.MODID, texture);
   }
-  public void setTextureIndex(int i) {
+  protected void setTextureIndex(int i) {
     textureIndex = i;
   }
   @Override

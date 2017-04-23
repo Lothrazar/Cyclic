@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.component.crafter;
 import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.SlotOutputOnly;
+import com.lothrazar.cyclicmagic.gui.SlotSingleStack;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -19,9 +20,9 @@ public class ContainerCrafter extends ContainerBaseMachine {
   private int tileTimer;
   public ContainerCrafter(InventoryPlayer inventoryPlayer, TileEntityCrafter te) {
     tileEntity = te;
-    //    addSlotToContainer(new Slot(tileEntity, TileEntityCrafter.SLOT_UNCRAFTME, SLOTX_START, SLOTY));
     int slot = 0;
-    int xPrefix = Const.padding, yPrefix = 16, rows = 4, cols = 2;
+    //inpt on left
+    int xPrefix = Const.padding, yPrefix = 16, rows = 3, cols = 2;
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
         addSlotToContainer(new Slot(tileEntity, slot,
@@ -30,21 +31,25 @@ public class ContainerCrafter extends ContainerBaseMachine {
         slot++;
       }
     }
-    xPrefix = 128;
-    for (int i = 0; i < rows; i++) {
-      for (int j = 0; j < cols; j++) {
-        addSlotToContainer(new Slot(tileEntity, slot,
-            xPrefix + j * Const.SQ,
-            yPrefix + i * Const.SQ));
-        slot++;
-      }
-    }
+    //crafting in the middle
     rows = cols = 3;
     xPrefix = 58;
-    yPrefix = 20;
+//    yPrefix = 20;
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
-        addSlotToContainer(new Slot(tileEntity, slot,
+        addSlotToContainer(new SlotSingleStack(tileEntity, slot,
+            xPrefix + j * Const.SQ,
+            yPrefix + i * Const.SQ));
+        slot++;
+      }
+    }
+    //output on right
+    xPrefix = 128;
+    rows = 3;
+    cols = 2;
+    for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < cols; j++) {
+        addSlotToContainer(new SlotOutputOnly(tileEntity, slot,
             xPrefix + j * Const.SQ,
             yPrefix + i * Const.SQ));
         slot++;

@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.util;
 import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -174,7 +175,7 @@ public class UtilInventoryTransfer {
   private static int getInvoEnd(EntityPlayer p) {
     return p.inventory.getSizeInventory() - Const.ARMOR_SIZE - 1;//now that we have shield slot, need the offset 1, otherwise boots get included
   }
-  public static ArrayList<ItemStack> dumpToIInventory(ArrayList<ItemStack> stacks, IInventory inventory, int startingSlot) {
+  public static ArrayList<ItemStack> dumpToIInventory(List<ItemStack> stacks, IInventory inventory, int startingSlot) {
     //and return the remainder after dumping
     ArrayList<ItemStack> remaining = new ArrayList<ItemStack>();
     ItemStack chestStack;
