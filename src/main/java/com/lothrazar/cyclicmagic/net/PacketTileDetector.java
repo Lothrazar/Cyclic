@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.net;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityDetector;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityDetector.Fields;
+import com.lothrazar.cyclicmagic.component.entitydetector.TileEntityDetector;
+import com.lothrazar.cyclicmagic.component.entitydetector.TileEntityDetector.Fields;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;

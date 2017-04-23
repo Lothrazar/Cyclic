@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.item.itemblock;
 import java.util.List;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityVector;
+import com.lothrazar.cyclicmagic.component.vector.TileEntityVector;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.block.Block;

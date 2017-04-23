@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.component.password;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityStructureBuilder.Fields;
+import com.lothrazar.cyclicmagic.component.builder.TileEntityStructureBuilder.Fields;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;

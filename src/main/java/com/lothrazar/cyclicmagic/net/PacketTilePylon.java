@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.net;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityXpPylon;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityXpPylon.Fields;
+import com.lothrazar.cyclicmagic.component.pylonexp.TileEntityXpPylon;
+import com.lothrazar.cyclicmagic.component.pylonexp.TileEntityXpPylon.Fields;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilExperience;
 import io.netty.buffer.ByteBuf;
