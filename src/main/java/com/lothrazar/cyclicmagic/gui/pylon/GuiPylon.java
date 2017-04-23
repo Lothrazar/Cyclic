@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.gui.pylon;
 import java.util.Arrays;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityXpPylon;
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityXpPylon.Fields;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContanerProgress;
 import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
@@ -115,16 +116,19 @@ public class GuiPylon extends GuiBaseContanerProgress {
   }
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+
+    super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     btnCollect.displayString = UtilChat.lang("button.pylon.collect" + tile.getField(TileEntityXpPylon.Fields.COLLECT.ordinal()));
     btnSpray.displayString = UtilChat.lang("button.pylon.spray" + tile.getField(TileEntityXpPylon.Fields.SPRAY.ordinal()));
     btnBottle.displayString = UtilChat.lang("button.pylon.bottle" + tile.getField(TileEntityXpPylon.Fields.BOTTLE.ordinal()));
-    super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+   
+    this.drawString(this.tile.getField(Fields.EXP.ordinal())+" / "+TileEntityXpPylon.MAX_EXP_HELD, this.xSize / 3, 62);
   }
   public int getProgressX() {
     return this.guiLeft + 10;
   }
   public int getProgressY() {
-    return this.guiTop + 9 + 3 * Const.SQ + 5;
+    return this.guiTop + 9 + 3 * Const.SQ + 8;
   }
   public int getProgressCurrent() {
     return tile.getField(TileEntityXpPylon.Fields.EXP.ordinal());
