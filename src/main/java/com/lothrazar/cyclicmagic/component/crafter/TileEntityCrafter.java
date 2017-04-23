@@ -20,16 +20,19 @@ import net.minecraft.util.ITickable;
 
 public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
   public static final int TIMER_FULL = 10;
-  public static final int SIZE_INPUT = 3 * 2;
+
+  public static final int ROWS = 5;
+  public static final int COLS = 2;
+  public static final int SIZE_INPUT = ROWS*COLS; 
   public static final int SIZE_GRID = 3 * 3;
-  public static final int SIZE_OUTPUT = 3 * 2;
+  public static final int SIZE_OUTPUT = ROWS*COLS;
   private Container fakeContainer;
   private IRecipe recipe;
   private int needsRedstone = 1;
   private int timer = 1;
   private InventoryCrafting crafter;
   public TileEntityCrafter() {
-    super(SIZE_INPUT + SIZE_GRID + SIZE_OUTPUT);//left and right side both have a 4x2 tall rectangle. then 3x3 crafting 
+    super(SIZE_INPUT + SIZE_GRID + SIZE_OUTPUT);//left and right side both have a tall rectangle. then 3x3 crafting 
     fakeContainer = new Container() {
       public boolean canInteractWith(@Nonnull final EntityPlayer playerIn) {
         return false;

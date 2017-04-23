@@ -4,22 +4,28 @@ import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiCrafter extends GuiBaseContanerProgress {
+  public static final ResourceLocation GUI = new ResourceLocation(Const.MODID, "textures/gui/pattern.png");
+  public static final int WIDTH = 176;
+  public static final int HEIGHT = 212;
   private TileEntityCrafter tile;
   private GuiButtonMachineRedstone redstoneBtn;
   public GuiCrafter(InventoryPlayer inventoryPlayer, TileEntityCrafter tileEntity) {
     super(new ContainerCrafter(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
+    this.xSize = WIDTH;
+    this.ySize = HEIGHT;
   }
   @Override
   public void initGui() {
     super.initGui();
     redstoneBtn = new GuiButtonMachineRedstone(0,
-        this.guiLeft + Const.padding,
-        this.guiTop + Const.padding, this.tile.getPos());
+        this.guiLeft + Const.padding/2,
+        this.guiTop + Const.padding/2, this.tile.getPos());
     this.buttonList.add(redstoneBtn);
   }
  
@@ -29,7 +35,9 @@ public class GuiCrafter extends GuiBaseContanerProgress {
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     //input
-    int xPrefix = Const.padding, yPrefix = 16, rows = 3, cols = 2;
+    int xPrefix = Const.padding, yPrefix = 27;
+    int    rows = TileEntityCrafter.ROWS;
+    int  cols = TileEntityCrafter.COLS;
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
         Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + xPrefix - 1 + j * Const.SQ,
@@ -39,7 +47,7 @@ public class GuiCrafter extends GuiBaseContanerProgress {
     //grid
     rows = cols = 3;
     xPrefix = 58;
-//    yPrefix = 20;
+    yPrefix = 40;
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
         Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + xPrefix - 1 + j * Const.SQ,
@@ -48,7 +56,9 @@ public class GuiCrafter extends GuiBaseContanerProgress {
     }
     //output
     xPrefix = 128;
-    rows = 3; cols = 2;
+    yPrefix =27;
+    rows = TileEntityCrafter.ROWS;
+    cols = TileEntityCrafter.COLS;
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
         Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + xPrefix - 1 + j * Const.SQ,
@@ -66,12 +76,15 @@ public class GuiCrafter extends GuiBaseContanerProgress {
     return this.guiLeft + Const.padding + 2;
   }
   public int getProgressY() {
-    return this.guiTop + 3 * Const.SQ + 2 * Const.padding + 2;
+    return this.guiTop + 6 * Const.SQ + 10;
   }
   public int getProgressCurrent() {
     return tile.getField(TileEntityCrafter.Fields.TIMER.ordinal());
   }
   public int getProgressMax() {
     return TileEntityCrafter.TIMER_FULL;
+  }
+  public ResourceLocation getBackground() {
+    return GUI;
   }
 }

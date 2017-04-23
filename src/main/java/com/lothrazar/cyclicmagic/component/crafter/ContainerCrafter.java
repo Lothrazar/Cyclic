@@ -20,9 +20,12 @@ public class ContainerCrafter extends ContainerBaseMachine {
   private int tileTimer;
   public ContainerCrafter(InventoryPlayer inventoryPlayer, TileEntityCrafter te) {
     tileEntity = te;
+    this.playerOffsetY = 130;
     int slot = 0;
     //inpt on left
-    int xPrefix = Const.padding, yPrefix = 16, rows = 3, cols = 2;
+    int xPrefix = Const.padding, yPrefix =27;
+        int    rows = TileEntityCrafter.ROWS;
+    int  cols = TileEntityCrafter.COLS;
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
         addSlotToContainer(new Slot(tileEntity, slot,
@@ -34,7 +37,7 @@ public class ContainerCrafter extends ContainerBaseMachine {
     //crafting in the middle
     rows = cols = 3;
     xPrefix = 58;
-//    yPrefix = 20;
+    yPrefix = 40;
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
         addSlotToContainer(new SlotSingleStack(tileEntity, slot,
@@ -45,8 +48,9 @@ public class ContainerCrafter extends ContainerBaseMachine {
     }
     //output on right
     xPrefix = 128;
-    rows = 3;
-    cols = 2;
+    yPrefix =27;
+    rows = TileEntityCrafter.ROWS;
+    cols = TileEntityCrafter.COLS;
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
         addSlotToContainer(new SlotOutputOnly(tileEntity, slot,

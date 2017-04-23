@@ -29,8 +29,8 @@ public class ContainerDisenchanter extends ContainerBaseMachine {
   private int timer;
   private int redstone;
   public ContainerDisenchanter(InventoryPlayer inventoryPlayer, TileEntityDisenchanter te) {
-    this.playerOffsetY = 130;
     tileEntity = te;
+    this.playerOffsetY = 130;
     Item itemFiltered = null;
     int x = 0, y = 0, ystart = 20, spacing = 26;
     for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
