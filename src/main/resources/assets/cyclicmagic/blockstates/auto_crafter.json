@@ -1,0 +1,9 @@
+{
+    "variants": {
+        "normal": { "model": "cyclicmagic:auto_crafter" },
+        "facing=north": { "model": "cyclicmagic:auto_crafter"},
+        "facing=east": { "model":  "cyclicmagic:auto_crafter"},
+        "facing=south": { "model": "cyclicmagic:auto_crafter"},
+        "facing=west": { "model":  "cyclicmagic:auto_crafter" }
+    }
+}

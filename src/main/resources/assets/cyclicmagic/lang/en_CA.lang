@@ -452,6 +452,7 @@ spell.rotate.name=Rotation
 spell.spawnegg.info=Move animals using a respawn egg
 spell.spawnegg.name=Respawn Egg
 teleport.dimension=Cannot cross dimensions
+tile.auto_crafter.name=Auto Crafter
 tile.builder_pattern.name=Pattern Replicator
 tile.builder_pattern.jei=The target is bounded by white particles and the source is bounded by purple.  When turned on, it reads the structure in the source area and tries to rebuild it in the target using the materials in the inventory.  Customize the size in the GUI.  Every cycle it picks a random spot in the area to try and build.  
 tile.builder_pattern.flip=Flip Regions (purple is source, white is target)

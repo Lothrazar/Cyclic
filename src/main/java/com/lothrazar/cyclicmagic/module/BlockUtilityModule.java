@@ -36,12 +36,13 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   private boolean enableFan;
   private boolean entityDetector;
   private boolean disenchanter;
+  private boolean autoCrafter;
   public void onInit() {
-    BlockCrafter auto_crafter = new BlockCrafter();
-
-    BlockRegistry.registerBlock(auto_crafter, "auto_crafter");
-    GameRegistry.registerTileEntity(TileEntityCrafter.class, Const.MODID + "auto_crafter_te");
-    
+    if (autoCrafter) {
+      BlockCrafter auto_crafter = new BlockCrafter();
+      BlockRegistry.registerBlock(auto_crafter, "auto_crafter");
+      GameRegistry.registerTileEntity(TileEntityCrafter.class, Const.MODID + "auto_crafter_te");
+    }
     if (entityDetector) {
       BlockDetector detector = new BlockDetector();
       BlockRegistry.registerBlock(detector, "entity_detector");
@@ -98,6 +99,7 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
+    autoCrafter = config.getBoolean("AutoCrafter", category, true, Const.ConfigCategory.contentDefaultText);
     disenchanter = config.getBoolean("UnchantPylon", category, true, Const.ConfigCategory.contentDefaultText);
     entityDetector = config.getBoolean("EntityDetector", category, true, Const.ConfigCategory.contentDefaultText);
     enableFan = config.getBoolean("Fan", category, true, Const.ConfigCategory.contentDefaultText);

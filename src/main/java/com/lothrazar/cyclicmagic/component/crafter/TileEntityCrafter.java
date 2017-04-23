@@ -1,7 +1,9 @@
 package com.lothrazar.cyclicmagic.component.crafter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.Nonnull;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.tileentity.ITileRedstoneToggle;
@@ -20,12 +22,11 @@ import net.minecraft.util.ITickable;
 
 public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
   public static final int TIMER_FULL = 10;
-
   public static final int ROWS = 5;
   public static final int COLS = 2;
-  public static final int SIZE_INPUT = ROWS*COLS; 
+  public static final int SIZE_INPUT = ROWS * COLS;
   public static final int SIZE_GRID = 3 * 3;
-  public static final int SIZE_OUTPUT = ROWS*COLS;
+  public static final int SIZE_OUTPUT = ROWS * COLS;
   private Container fakeContainer;
   private IRecipe recipe;
   private int needsRedstone = 1;
@@ -51,25 +52,26 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     if (timer < 0) {
       timer = 0;
     }
-    //TODO: first see i we have mats in inventory, 
-    //and need some way to set recipe from GUI
-    setRecipeInput();
+    setRecipeInput();//make sure the 3x3 inventory is linked o the crater
     findRecipe();
     //does it match
-    if (timer == 0 && recipe != null && recipe.matches(crafter, world) &&
-        tryPayCost()) {
-      timer = TIMER_FULL;
-      // pay the cost  
-      final ItemStack craftingResult = recipe.getCraftingResult(this.crafter);
-      //confirmed this test does actually et the outut: 4x planks 
-      sendOutput(craftingResult);
+    if (timer == 0) {
+      findRecipe();
+      if (recipe != null && tryPayCost()) {
+        // pay the cost  
+        final ItemStack craftingResult = recipe.getCraftingResult(this.crafter);
+        //confirmed this test does actually et the outut: 4x planks 
+        sendOutput(craftingResult);
+        timer = TIMER_FULL;
+      }
     }
   }
   private boolean tryPayCost() {
     ItemStack fromRecipe;
     ItemStack fromInput;
     boolean thisPaid = false;
-    List<Integer> slotsToPay = new ArrayList<Integer>();//can have dupes
+    //map is <slotNumber, amtToPay>
+    Map<Integer, Integer> slotsToPay = new HashMap<Integer, Integer>();//can have dupes
     for (int i = 0; i < this.crafter.getSizeInventory(); i++) {
       //for ever i val, we must pay the cost
       thisPaid = false;
@@ -81,26 +83,31 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       for (int j = 0; j < SIZE_INPUT; j++) {
         fromInput = this.getStackInSlot(j);
         if (fromRecipe.isItemEqual(fromInput)) {
-          //          fromInput.shrink(1);
-          slotsToPay.add(j);
+          //now set the key 'j' slot to need one more extra item
+          if (!slotsToPay.containsKey(j)) {
+            slotsToPay.put(j, 0);
+          }
+          slotsToPay.put(j, slotsToPay.get(j) + 1);
           thisPaid = true;
           break;//break only the j loop
         }
       }
       if (thisPaid == false) {
-     //   ModCyclic.logger.info(" failed cost at  = " + i);
+        ModCyclic.logger.info(" failed cost at  = " + i);
         return false;
       }
     }
     //ot thru all and all have got it
-    for (int k : slotsToPay) {
-      this.getStackInSlot(k).shrink(1);
+    for (Map.Entry<Integer, Integer> entry : slotsToPay.entrySet()){
+      ModCyclic.logger.info(" PAY cost at  = " + entry);
+      //TODO: what if there isnt enough
+      this.getStackInSlot(entry.getKey()).shrink(entry.getValue());
     }
     return true;
   }
   private void sendOutput(ItemStack craftingResult) {
     //bit o a hack since util method assmes takes a list, and we have only one, so just wrap it eh
-    ArrayList<ItemStack> toDrop = UtilInventoryTransfer.dumpToIInventory(Arrays.asList(craftingResult), this, SIZE_INPUT+SIZE_GRID);
+    ArrayList<ItemStack> toDrop = UtilInventoryTransfer.dumpToIInventory(Arrays.asList(craftingResult), this, SIZE_INPUT + SIZE_GRID);
     //if something is given back, it didnt fit so we have to spew
     if (!toDrop.isEmpty()) {
       for (ItemStack s : toDrop) {
@@ -109,7 +116,11 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     }
   }
   private void findRecipe() {
-    if (this.recipe != null) { return; } //already found
+    if (this.recipe != null && recipe.matches(crafter, world)) {
+      //recipe exists and it matches whats currently in the gui so stop now
+      return;
+    }
+    recipe = null;//doesnt match
     final List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
     for (final IRecipe rec : recipes) {
       try {
