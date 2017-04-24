@@ -24,11 +24,10 @@ public class GuiCrafter extends GuiBaseContanerProgress {
   public void initGui() {
     super.initGui();
     redstoneBtn = new GuiButtonMachineRedstone(0,
-        this.guiLeft + Const.padding/2,
-        this.guiTop + Const.padding/2, this.tile.getPos());
+        this.guiLeft + Const.padding / 2,
+        this.guiTop + Const.padding / 2, this.tile.getPos());
     this.buttonList.add(redstoneBtn);
   }
- 
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
@@ -36,8 +35,8 @@ public class GuiCrafter extends GuiBaseContanerProgress {
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     //input
     int xPrefix = Const.padding, yPrefix = 27;
-    int    rows = TileEntityCrafter.ROWS;
-    int  cols = TileEntityCrafter.COLS;
+    int rows = TileEntityCrafter.ROWS;
+    int cols = TileEntityCrafter.COLS;
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
         Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + xPrefix - 1 + j * Const.SQ,
@@ -46,7 +45,7 @@ public class GuiCrafter extends GuiBaseContanerProgress {
     }
     //grid
     rows = cols = 3;
-    xPrefix = 58;
+    xPrefix = (WIDTH / 2 - (Const.SQ * 3) / 2);//calculate exact center
     yPrefix = 40;
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
@@ -55,8 +54,8 @@ public class GuiCrafter extends GuiBaseContanerProgress {
       }
     }
     //output
-    xPrefix = 128;
-    yPrefix =27;
+    xPrefix = 134;
+    yPrefix = 27;
     rows = TileEntityCrafter.ROWS;
     cols = TileEntityCrafter.COLS;
     for (int i = 0; i < rows; i++) {

@@ -21,7 +21,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 
 public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
-  public static final int TIMER_FULL = 10;
+  public static final int TIMER_FULL = 40;
   public static final int ROWS = 5;
   public static final int COLS = 2;
   public static final int SIZE_INPUT = ROWS * COLS;
@@ -87,20 +87,31 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
           if (!slotsToPay.containsKey(j)) {
             slotsToPay.put(j, 0);
           }
-          slotsToPay.put(j, slotsToPay.get(j) + 1);
-          thisPaid = true;
-          break;//break only the j loop
+          //if what we are going to be pulling from this slot not more than what it contains
+          if (slotsToPay.get(j) + 1 <= fromInput.getCount()) {
+//            ModCyclic.logger.info(" founnd slot  = " + j + " so will drain " + (slotsToPay.get(j) + 1));
+            slotsToPay.put(j, slotsToPay.get(j) + 1);
+            thisPaid = true;
+            break;//break only the j loop
+          }
         }
       }
-      if (thisPaid == false) {
-        ModCyclic.logger.info(" failed cost at  = " + i);
+      if (thisPaid == false) {//required input not even fond
         return false;
       }
     }
-    //ot thru all and all have got it
-    for (Map.Entry<Integer, Integer> entry : slotsToPay.entrySet()){
-      ModCyclic.logger.info(" PAY cost at  = " + entry);
-      //TODO: what if there isnt enough
+    //TODO: in retroscpect this 2econd pass might be redndant since we already validated in above loop. but keeping it doesnt hurt
+    //we need to do 2 passes. one pass to make sure we haven enough and another to cost
+    //otherwise we could start spending and halfway thru run out and we would havce to rollback ransacions
+    //and couldnt have done it above because of the slot spread
+    //EX: stairs need 6 wood planks. This could be 6 all from one stack, or split over a few
+    for (Map.Entry<Integer, Integer> entry : slotsToPay.entrySet()) {
+      // if there isnt enough, in any one of these spots, stop now
+      if (entry.getValue() > this.getStackInSlot(entry.getKey()).getCount()) { return false; }
+    }
+    for (Map.Entry<Integer, Integer> entry : slotsToPay.entrySet()) {
+//      ModCyclic.logger.info(" PAY cost at  = " + entry);
+      //now we know there is enough everywhere. we validated
       this.getStackInSlot(entry.getKey()).shrink(entry.getValue());
     }
     return true;
