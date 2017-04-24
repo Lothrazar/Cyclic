@@ -5,13 +5,7 @@ import com.lothrazar.cyclicmagic.block.BlockDimensionOre;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre.SpawnType;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
-import com.lothrazar.cyclicmagic.world.gen.WorldGenEmeraldHeight;
-import com.lothrazar.cyclicmagic.world.gen.WorldGenEndOre;
-import com.lothrazar.cyclicmagic.world.gen.WorldGenGoldRiver;
-import com.lothrazar.cyclicmagic.world.gen.WorldGenNetherOre;
-import com.lothrazar.cyclicmagic.world.gen.WorldGenOcean;
-import com.lothrazar.cyclicmagic.world.gen.WorldGenOreSingleton;
-import com.lothrazar.cyclicmagic.world.gen.WorldGenPlantBiome;
+import com.lothrazar.cyclicmagic.world.gen.*;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
@@ -33,7 +27,6 @@ public class WorldGenModule extends BaseEventModule implements IHasConfig {
   private final static int spawnsPotatoes = 10;
   final static int weightOre = 0;
   final static int weightPlants = 2;
-  public static boolean oceanEnabled;
   public static boolean netherOreEnabled;
   public static boolean endOreEnabled;
   public static boolean oreSpawns = true;
@@ -59,9 +52,7 @@ public class WorldGenModule extends BaseEventModule implements IHasConfig {
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.worldGen;
     config.setCategoryComment(category, "Control any blocks that get generated in new chunks & new worlds");
-    Property prop = config.get(category, "Classic Oceans", true, "Generate clay, sand, and dirt in the ocean instead of only gravel (like the old days)");
-    prop.setRequiresWorldRestart(true);
-    oceanEnabled = prop.getBoolean();
+    Property prop;
     prop = config.get(category, "Nether Ore", true, "Generate ore in netherrack (lapis, emerald, gold, coal, diamond).  The gold gives nuggets when mined");
     prop.setRequiresMcRestart(true);
     netherOreEnabled = prop.getBoolean();
@@ -82,7 +73,6 @@ public class WorldGenModule extends BaseEventModule implements IHasConfig {
     prop = config.get(category, "Biome Crops", true, "Crops spawn randomly with nature.  Carrots in extreme hills, wheat in plains, beetroot in forests, potatoes in taiga.");
     prop.setRequiresMcRestart(true);
     biomeCrops = prop.getBoolean();
-    WorldGenOcean.syncConfig(config);
     category = Const.ConfigCategory.worldGen + ".netherorecustom";
     String blockCountDesc = "Approximate ore vein size.  Zero means no spawns.";
     String spawnChanceDesc = "Chance of a vein to spawn.  Zero means no spawns.";
@@ -118,9 +108,6 @@ public class WorldGenModule extends BaseEventModule implements IHasConfig {
   }
   @Override
   public void onInit() {
-    if (oceanEnabled) {
-      GameRegistry.registerWorldGenerator(new WorldGenOcean(), weightOre);
-    }
     if (netherOreEnabled || endOreEnabled) {
       registerDimensionOres();
     }
@@ -191,7 +178,7 @@ public class WorldGenModule extends BaseEventModule implements IHasConfig {
     nether_redstone_ore.setPickaxeHarvestLevel(ironHarvest).setSpawnType(SpawnType.SILVERFISH, 2);
     BlockRegistry.registerBlock(nether_redstone_ore, "nether_redstone_ore");
     nether_redstone_ore.registerSmeltingOutput(Items.REDSTONE);
-    nether_iron_ore = new BlockDimensionOre(Items.IRON_INGOT);
+    nether_iron_ore = new BlockDimensionOre(Items.field_191525_da, 0, 12);//iron nugget
     nether_iron_ore.setPickaxeHarvestLevel(ironHarvest).setSpawnType(SpawnType.SILVERFISH, 2);
     BlockRegistry.registerBlock(nether_iron_ore, "nether_iron_ore");
     nether_iron_ore.registerSmeltingOutput(Items.IRON_INGOT);
@@ -240,7 +227,7 @@ public class WorldGenModule extends BaseEventModule implements IHasConfig {
     end_gold_ore.setPickaxeHarvestLevel(goldHarvest).setSpawnType(SpawnType.ENDERMITE, 2);
     BlockRegistry.registerBlock(end_gold_ore, "end_gold_ore");
     end_gold_ore.registerSmeltingOutput(Items.GOLD_INGOT);
-    end_iron_ore = new BlockDimensionOre(Items.IRON_INGOT);
+    end_iron_ore = new BlockDimensionOre(Items.field_191525_da, 0, 16);//iron nugget
     end_iron_ore.setPickaxeHarvestLevel(ironHarvest).setSpawnType(SpawnType.ENDERMITE, 2);
     BlockRegistry.registerBlock(end_iron_ore, "end_iron_ore");
     end_iron_ore.registerSmeltingOutput(Items.IRON_INGOT);

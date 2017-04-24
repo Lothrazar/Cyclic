@@ -113,8 +113,7 @@ public class UtilItemStack {
   }
   public static String getStringForItemStack(ItemStack itemStack) {
     Item item = itemStack.getItem();
-    
-    return item.getRegistryName().getResourceDomain() + ":" + item.getRegistryName().getResourcePath()+"/"+itemStack.getMetadata();
+    return item.getRegistryName().getResourceDomain() + ":" + item.getRegistryName().getResourcePath() + "/" + itemStack.getMetadata();
   }
   public static String getStringForItem(Item item) {
     return item.getRegistryName().getResourceDomain() + ":" + item.getRegistryName().getResourcePath();

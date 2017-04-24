@@ -1,20 +1,24 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.block.BlockBucketStorage;
-import com.lothrazar.cyclicmagic.block.BlockDetector;
-import com.lothrazar.cyclicmagic.block.BlockFan;
 import com.lothrazar.cyclicmagic.block.BlockShears;
-import com.lothrazar.cyclicmagic.block.BlockFishing;
+import com.lothrazar.cyclicmagic.block.ItemBlockScaffolding;
 import com.lothrazar.cyclicmagic.block.BlockScaffolding;
 import com.lothrazar.cyclicmagic.block.BlockScaffoldingReplace;
 import com.lothrazar.cyclicmagic.block.BlockScaffoldingResponsive;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBucketStorage;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityDetector;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFan;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityFishing;
-import com.lothrazar.cyclicmagic.item.itemblock.ItemBlockBucket;
-import com.lothrazar.cyclicmagic.item.itemblock.ItemBlockScaffolding;
+import com.lothrazar.cyclicmagic.component.bucketstorage.BlockBucketStorage;
+import com.lothrazar.cyclicmagic.component.bucketstorage.ItemBlockBucket;
+import com.lothrazar.cyclicmagic.component.bucketstorage.TileEntityBucketStorage;
+import com.lothrazar.cyclicmagic.component.crafter.BlockCrafter;
+import com.lothrazar.cyclicmagic.component.crafter.TileEntityCrafter;
+import com.lothrazar.cyclicmagic.component.disenchanter.BlockDisenchanter;
+import com.lothrazar.cyclicmagic.component.disenchanter.TileEntityDisenchanter;
+import com.lothrazar.cyclicmagic.component.entitydetector.BlockDetector;
+import com.lothrazar.cyclicmagic.component.entitydetector.TileEntityDetector;
+import com.lothrazar.cyclicmagic.component.fan.BlockFan;
+import com.lothrazar.cyclicmagic.component.fan.TileEntityFan;
+import com.lothrazar.cyclicmagic.component.fisher.BlockFishing;
+import com.lothrazar.cyclicmagic.component.fisher.TileEntityFishing;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Blocks;
@@ -31,7 +35,14 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   private boolean enableShearingBlock;
   private boolean enableFan;
   private boolean entityDetector;
+  private boolean disenchanter;
+  private boolean autoCrafter;
   public void onInit() {
+    if (autoCrafter) {
+      BlockCrafter auto_crafter = new BlockCrafter();
+      BlockRegistry.registerBlock(auto_crafter, "auto_crafter");
+      GameRegistry.registerTileEntity(TileEntityCrafter.class, Const.MODID + "auto_crafter_te");
+    }
     if (entityDetector) {
       BlockDetector detector = new BlockDetector();
       BlockRegistry.registerBlock(detector, "entity_detector");
@@ -62,6 +73,11 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(block_fishing, "block_fishing");
       GameRegistry.registerTileEntity(TileEntityFishing.class, Const.MODID + "block_fishing_te");
     }
+    if (disenchanter) {
+      BlockDisenchanter block_disenchanter = new BlockDisenchanter();
+      BlockRegistry.registerBlock(block_disenchanter, "block_disenchanter");
+      GameRegistry.registerTileEntity(TileEntityDisenchanter.class, Const.MODID + "block_disenchanter_te");
+    }
     if (enableBucketBlocks) {
       //TODO: refactor and support more recipes
       BlockRegistry.block_storewater = new BlockBucketStorage(Items.WATER_BUCKET);
@@ -83,6 +99,8 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
+    autoCrafter = config.getBoolean("AutoCrafter", category, true, Const.ConfigCategory.contentDefaultText);
+    disenchanter = config.getBoolean("UnchantPylon", category, true, Const.ConfigCategory.contentDefaultText);
     entityDetector = config.getBoolean("EntityDetector", category, true, Const.ConfigCategory.contentDefaultText);
     enableFan = config.getBoolean("Fan", category, true, Const.ConfigCategory.contentDefaultText);
     enableShearingBlock = config.getBoolean("ShearingBlock", category, true, Const.ConfigCategory.contentDefaultText);

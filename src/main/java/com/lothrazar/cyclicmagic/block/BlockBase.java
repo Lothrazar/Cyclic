@@ -17,6 +17,7 @@ public abstract class BlockBase extends Block {
   protected boolean isTransp = false;
   protected String myTooltip = null;
   protected void setTranslucent() {
+    this.translucent = true;
     this.isTransp = true;
   }
   @SideOnly(Side.CLIENT)

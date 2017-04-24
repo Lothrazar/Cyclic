@@ -12,8 +12,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class GuiBaseContainer extends GuiContainer {
   public int FONTCOLOR = 4210752;
-  private static final int texture_width = 176;
-  private static final int texture_height = 166;
+  public static final int WIDTH = 176;
+  public static final int HEIGHT = 166;
   private TileEntityBaseMachineInvo tile;
   public GuiBaseContainer(Container inventorySlotsIn, TileEntityBaseMachineInvo tile) {
     super(inventorySlotsIn);
@@ -66,7 +66,8 @@ public abstract class GuiBaseContainer extends GuiContainer {
     int thisX = getMiddleX();
     int thisY = getMiddleY();
     int u = 0, v = 0;
-    Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, this.xSize, this.ySize, texture_width, texture_height);
+    Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, this.xSize, this.ySize, this.xSize, this.ySize);
+    // Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, this.xSize, this.ySize, WIDTH, HEIGHT);
   }
   @Override
   public void drawScreen(int mouseX, int mouseY, float partialTicks) {

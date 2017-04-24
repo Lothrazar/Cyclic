@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -13,7 +14,9 @@ import net.minecraft.util.text.ITextComponent;
 
 public class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements IInventory, ISidedInventory {
   private static final String NBT_INV = "Inventory";
-  private static final String NBT_SLOT = "Slot";
+  private static final String NBT_SLOT = "Slot";  
+  public static final String NBT_TIMER = "Timer";
+  public static final String NBT_REDST = "redstone";
   protected NonNullList<ItemStack> inv;
   public TileEntityBaseMachineInvo(int invoSize) {
     super();
@@ -96,10 +99,11 @@ public class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements 
   }
   @Override
   public ItemStack getStackInSlot(int index) {
-    if(index < 0 || index >= getSizeInventory()){
-      return ItemStack.EMPTY;
-    }
+    if (index < 0 || index >= getSizeInventory()) { return ItemStack.EMPTY; }
     return inv.get(index);
+  }
+  public ItemStack decrStackSize(int index) {
+    return this.decrStackSize(index, 1);
   }
   @Override
   public ItemStack decrStackSize(int index, int count) {
@@ -187,5 +191,25 @@ public class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements 
     else {
       return super.receiveClientEvent(id, value);
     }
+  }
+  public ItemStack tryMergeStackIntoSlot(ItemStack held, int furnaceSlot) {
+    ItemStack current = this.getStackInSlot(furnaceSlot);
+    boolean success = false;
+    if (current.isEmpty()) {
+      this.setInventorySlotContents(furnaceSlot, held);
+      held = ItemStack.EMPTY;
+      success = true;
+    }
+    else if (held.isItemEqual(current)) {
+      success = true;
+      UtilItemStack.mergeItemsBetweenStacks(held, current);
+    }
+    if (success) {
+      if (held != ItemStack.EMPTY && held.getMaxStackSize() == 0) {// so now we just fix if something is size zero
+        held = ItemStack.EMPTY;
+      }
+      this.markDirty();
+    }
+    return held;
   }
 }

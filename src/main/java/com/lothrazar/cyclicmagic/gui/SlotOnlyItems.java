@@ -14,11 +14,4 @@ public class SlotOnlyItems extends Slot {
     return Block.getBlockFromItem(itemstack.getItem()) == null
         || Block.getBlockFromItem(itemstack.getItem()) == Blocks.AIR; // no items only blocks
   }
-  @Override
-  public void onSlotChanged() {
-    //    if (this.getHasStack() && this.getStack().getCount() == 0) {
-    //      this.putStack(ItemStack.EMPTY);
-    //    }
-    //    super.onSlotChanged();
-  }
 }

@@ -1,13 +1,13 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.component.playerextensions.ItemFoodCrafting;
+import com.lothrazar.cyclicmagic.component.playerextensions.ItemFoodInventory;
 import com.lothrazar.cyclicmagic.item.food.ItemAppleEmerald;
 import com.lothrazar.cyclicmagic.item.food.ItemAppleLapis;
 import com.lothrazar.cyclicmagic.item.food.ItemFoodChorusCorrupted;
-import com.lothrazar.cyclicmagic.item.food.ItemFoodCrafting;
 import com.lothrazar.cyclicmagic.item.food.ItemFoodChorusGlowing;
 import com.lothrazar.cyclicmagic.item.food.ItemFoodHeart;
-import com.lothrazar.cyclicmagic.item.food.ItemFoodInventory;
 import com.lothrazar.cyclicmagic.item.food.ItemHorseUpgrade;
 import com.lothrazar.cyclicmagic.item.food.ItemHorseUpgrade.HorseUpgradeType;
 import com.lothrazar.cyclicmagic.registry.AchievementRegistry;

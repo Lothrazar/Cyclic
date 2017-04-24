@@ -56,27 +56,21 @@ public class BlockDimensionOre extends BlockOre {
     GameRegistry.addSmelting(this, out, 1);
   }
   public void trySpawnTriggeredEntity(World world, BlockPos pos) {
-    if (WorldGenModule.oreSpawns == false) { return;//config has disabled spawning no matter what
-    }
+    if (WorldGenModule.oreSpawns == false) { return; } //config has disabled spawning no matter what
     if (this.spawn != null) {
       int rand = world.rand.nextInt(100);
       if (rand < this.spawnChance) {
-        Entity e;
+        Entity e = null;
         switch (this.spawn) {
           case ENDERMITE:
             e = new EntityEndermite(world);
-            e.setPosition(pos.getX(), pos.getY(), pos.getZ());
           break;
           case SILVERFISH:
             e = new EntitySilverfish(world);
-            //magma cube: setSlimeSize is private BOO
-            e.setPosition(pos.getX(), pos.getY(), pos.getZ());
-          break;
-          default:
-            e = null;
           break;
         }
         if (e != null) {
+          e.setPosition(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
           world.spawnEntity(e);
         }
       }

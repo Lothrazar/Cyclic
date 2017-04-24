@@ -43,6 +43,9 @@ public abstract class BaseMachineTesr<T extends TileEntityBaseMachineInvo> exten
   public BaseMachineTesr(int slot) {
     this(null, slot);
   }
+  public BaseMachineTesr() {
+    this(null, -1);
+  }
   /**
    * override this in your main class to call other animation hooks
    * 
@@ -116,6 +119,10 @@ public abstract class BaseMachineTesr<T extends TileEntityBaseMachineInvo> exten
     GlStateManager.popMatrix();
   }
   protected void renderItem(TileEntityBaseMachineInvo te, ItemStack stack, float itemHeight) {
+    this.renderItem(te, stack, 0.5F, itemHeight, 0.5F);
+  }
+  protected void renderItem(TileEntityBaseMachineInvo te, ItemStack stack, float x, float itemHeight, float y) {
+    if (stack == null || stack.isEmpty()) { return; }
     GlStateManager.pushMatrix();
     //start of rotate
     GlStateManager.translate(.5, 0, .5);
@@ -123,7 +130,7 @@ public abstract class BaseMachineTesr<T extends TileEntityBaseMachineInvo> exten
     GlStateManager.rotate(angle, 0, 1, 0);
     GlStateManager.translate(-.5, 0, -.5);
     //end of rotate
-    GlStateManager.translate(.5, itemHeight, .5);//move to xy center and up to top level
+    GlStateManager.translate(x, itemHeight, y);//move to xy center and up to top level
     float scaleFactor = 0.4f;
     GlStateManager.scale(scaleFactor, scaleFactor, scaleFactor);//shrink down
     // Thank you for helping me understand lighting @storagedrawers  https://github.com/jaquadro/StorageDrawers/blob/40737fb2254d68020a30f80977c84fd50a9b0f26/src/com/jaquadro/minecraft/storagedrawers/client/renderer/TileEntityDrawersRenderer.java#L96

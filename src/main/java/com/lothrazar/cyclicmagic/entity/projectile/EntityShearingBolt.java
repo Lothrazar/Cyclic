@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.entity.projectile;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.module.MobDropChangesModule;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.EntityLivingBase;
@@ -12,7 +11,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
@@ -40,10 +38,7 @@ public class EntityShearingBolt extends EntityThrowableDispensable {
             (sheep.isChild() == false || (EntityShearingBolt.doesShearChild == true && sheep.isChild() == true))) {
           if (world.isRemote == false) {
             sheep.setSheared(true);
-            int i = 1 + world.rand.nextInt(3);
-            if (MobDropChangesModule.sheepShearBuffed) {
-              i += MathHelper.getInt(world.rand, 1, 6);
-            }
+            int i = 2 + world.rand.nextInt(6);
             for (int j = 0; j < i; ++j) {
               EntityItem entityitem = sheep.entityDropItem(new ItemStack(Blocks.WOOL, 1, sheep.getFleeceColor().getMetadata()), 1.0F);
               entityitem.motionY += (double) (world.rand.nextFloat() * 0.05F);

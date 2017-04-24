@@ -1,11 +1,11 @@
 package com.lothrazar.cyclicmagic.event;
 import com.lothrazar.cyclicmagic.IHasClickToggle;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.gui.player.GuiPlayerExtended;
-import com.lothrazar.cyclicmagic.gui.playerworkbench.GuiPlayerExtWorkbench;
+import com.lothrazar.cyclicmagic.component.playerextensions.GuiPlayerExtWorkbench;
+import com.lothrazar.cyclicmagic.component.playerextensions.GuiPlayerExtended;
+import com.lothrazar.cyclicmagic.component.playerextensions.PacketOpenFakeWorkbench;
+import com.lothrazar.cyclicmagic.component.playerextensions.PacketOpenExtendedInventory;
 import com.lothrazar.cyclicmagic.net.PacketMovePlayerHotbar;
-import com.lothrazar.cyclicmagic.net.PacketOpenExtendedInventory;
-import com.lothrazar.cyclicmagic.net.PacketFakeWorkbench;
 import com.lothrazar.cyclicmagic.net.PacketItemToggle;
 import com.lothrazar.cyclicmagic.net.PacketMovePlayerColumn;
 import com.lothrazar.cyclicmagic.proxy.ClientProxy;
@@ -64,7 +64,7 @@ public class EventKeyInput {
         Minecraft.getMinecraft().displayGuiScreen(new GuiInventory(thePlayer));
       }
       else {
-        ModCyclic.network.sendToServer(new PacketFakeWorkbench());
+        ModCyclic.network.sendToServer(new PacketOpenFakeWorkbench());
       }
     }
   }
