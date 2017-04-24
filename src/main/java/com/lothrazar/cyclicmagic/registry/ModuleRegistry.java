@@ -37,7 +37,6 @@ public class ModuleRegistry {
     register(new LootTableModule());
     register(new PlantsModule());
     register(new MobDropChangesModule());
-    register(new MobSpawnModule());
     register(new MountedTweaksModule());
     register(new ItemProjectileModule());
     register(new RecipeChangerModule());
