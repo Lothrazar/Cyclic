@@ -44,7 +44,6 @@ public class GuiPattern extends GuiBaseContainer {
     redstoneBtn = new GuiButtonMachineRedstone(id++,
         this.guiLeft + Const.padding,
         this.guiTop + Const.padding, this.tile.getPos());
-    redstoneBtn.setTextureIndex(tile.getField(TileEntityHarvester.Fields.REDSTONE.ordinal()));
     this.buttonList.add(redstoneBtn);
     sizeY = 46;//save now as reuse for textbox
     int vButtonSpacing = 12;

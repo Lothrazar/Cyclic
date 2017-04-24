@@ -48,7 +48,6 @@ public class GuiVector extends GuiBaseContainer {
     redstoneBtn = new GuiButtonMachineRedstone(0,
         this.guiLeft + 6,
         this.guiTop + 6, this.tile.getPos());
-    redstoneBtn.setTextureIndex(tile.getField(TileEntityVector.Fields.REDSTONE.ordinal()));
     this.buttonList.add(redstoneBtn);
     int id = 1;
     //angle text box

@@ -26,7 +26,6 @@ public class GuiHarvester extends GuiBaseContanerProgress {
     redstoneBtn = new GuiButtonMachineRedstone(btnId++,
         this.guiLeft + Const.padding,
         this.guiTop + Const.padding, this.tile.getPos());
-    redstoneBtn.setTextureIndex(tile.getField(TileEntityHarvester.Fields.REDSTONE.ordinal()));
     this.buttonList.add(redstoneBtn);
     int y = this.guiTop + Const.padding * 2 + 20;
     btnSize = new GuiButtonSizePreview(btnId++,

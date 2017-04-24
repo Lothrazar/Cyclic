@@ -28,7 +28,6 @@ public class GuiFan extends GuiBaseContainer {
     redstoneBtn = new GuiButtonMachineRedstone(id++,
         this.guiLeft + Const.padding,
         this.guiTop + Const.padding, this.tile.getPos());
-    redstoneBtn.setTextureIndex(tile.getField(TileEntityFan.Fields.REDSTONE.ordinal()));
     this.buttonList.add(redstoneBtn);
     int w = 15, h = 10;
     int yOffset = 14;

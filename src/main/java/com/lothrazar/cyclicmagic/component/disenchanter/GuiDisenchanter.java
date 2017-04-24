@@ -31,7 +31,6 @@ public class GuiDisenchanter extends GuiBaseContanerProgress {
     redstoneBtn = new GuiButtonMachineRedstone(0,
         this.guiLeft + 8,
         this.guiTop + 8, this.tile.getPos());
-    redstoneBtn.setTextureIndex(tile.getField(Fields.REDSTONE.ordinal()));
     this.buttonList.add(redstoneBtn);
   }
   @Override
@@ -76,13 +75,12 @@ public class GuiDisenchanter extends GuiBaseContanerProgress {
     }
   }
   public ResourceLocation getBackground() {
-    return GUI;//can override
+    return GUI;
   }
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     redstoneBtn.setState(tile.getField(Fields.REDSTONE.ordinal()));
-    //    actionBtn.displayString = UtilChat.lang("tile.block_user.action" + tile.getField(Fields.LEFTRIGHT.ordinal()));
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
   public int getProgressX() {

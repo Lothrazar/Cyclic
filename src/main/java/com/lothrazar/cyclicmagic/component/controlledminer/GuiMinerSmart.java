@@ -34,7 +34,6 @@ public class GuiMinerSmart extends GuiBaseContainer {
     redstoneBtn = new GuiButtonMachineRedstone(0,
         this.guiLeft + 8,
         this.guiTop + 8, this.tile.getPos());
-    redstoneBtn.setTextureIndex(tile.getField(TileEntityControlledMiner.Fields.REDSTONE.ordinal()));
     this.buttonList.add(redstoneBtn);
     //first the main top left type button
     int id = 2;
