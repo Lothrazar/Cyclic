@@ -29,7 +29,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
   private Container fakeContainer;
   private IRecipe recipe;
   private int needsRedstone = 1;
-  private int timer = 1;
+  private int timer = TIMER_FULL;
   private InventoryCrafting crafter;
   public TileEntityCrafter() {
     super(SIZE_INPUT + SIZE_GRID + SIZE_OUTPUT);//left and right side both have a tall rectangle. then 3x3 crafting 
