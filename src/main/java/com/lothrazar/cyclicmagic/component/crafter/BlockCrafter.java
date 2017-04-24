@@ -9,6 +9,7 @@ import net.minecraft.world.World;
 public class BlockCrafter extends BlockBaseFacingInventory {
   public BlockCrafter() {
     super(Material.WOOD, ModGuiHandler.GUI_INDEX_CRAFTER);
+    this.setTranslucent();
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {
