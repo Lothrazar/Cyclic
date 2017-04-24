@@ -5,18 +5,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Nonnull;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.tileentity.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 
@@ -24,9 +23,9 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
   public static final int TIMER_FULL = 40;
   public static final int ROWS = 5;
   public static final int COLS = 2;
-  public static final int SIZE_INPUT = ROWS * COLS;
-  public static final int SIZE_GRID = 3 * 3;
-  public static final int SIZE_OUTPUT = ROWS * COLS;
+  public static final int SIZE_INPUT = ROWS * COLS;//10
+  public static final int SIZE_GRID = 3 * 3;//19
+  public static final int SIZE_OUTPUT = ROWS * COLS;//20 to 30
   private Container fakeContainer;
   private IRecipe recipe;
   private int needsRedstone = 1;
@@ -89,7 +88,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
           }
           //if what we are going to be pulling from this slot not more than what it contains
           if (slotsToPay.get(j) + 1 <= fromInput.getCount()) {
-//            ModCyclic.logger.info(" founnd slot  = " + j + " so will drain " + (slotsToPay.get(j) + 1));
+            //            ModCyclic.logger.info(" founnd slot  = " + j + " so will drain " + (slotsToPay.get(j) + 1));
             slotsToPay.put(j, slotsToPay.get(j) + 1);
             thisPaid = true;
             break;//break only the j loop
@@ -110,7 +109,7 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       if (entry.getValue() > this.getStackInSlot(entry.getKey()).getCount()) { return false; }
     }
     for (Map.Entry<Integer, Integer> entry : slotsToPay.entrySet()) {
-//      ModCyclic.logger.info(" PAY cost at  = " + entry);
+      //      ModCyclic.logger.info(" PAY cost at  = " + entry);
       //now we know there is enough everywhere. we validated
       this.getStackInSlot(entry.getKey()).shrink(entry.getValue());
     }
@@ -155,7 +154,12 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
-    return new int[] {};
+    switch (side) {
+      case DOWN:
+        return new int[] { 19, 20, 21, 22, 23, 24, 25, 26, 27, 28 };
+      default://UP side and also all others
+        return new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    }
   }
   @Override
   public int getField(int id) {
@@ -188,5 +192,17 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
   }
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
+  }
+  @Override
+  public void readFromNBT(NBTTagCompound tagCompound) {
+    super.readFromNBT(tagCompound);
+    needsRedstone = tagCompound.getInteger(NBT_REDST);
+    timer = tagCompound.getInteger(NBT_TIMER);
+  }
+  @Override
+  public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
+    tagCompound.setInteger(NBT_TIMER, timer);
+    tagCompound.setInteger(NBT_REDST, needsRedstone);
+    return super.writeToNBT(tagCompound);
   }
 }

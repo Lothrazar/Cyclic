@@ -14,7 +14,9 @@ import net.minecraft.util.text.ITextComponent;
 
 public class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements IInventory, ISidedInventory {
   private static final String NBT_INV = "Inventory";
-  private static final String NBT_SLOT = "Slot";
+  private static final String NBT_SLOT = "Slot";  
+  public static final String NBT_TIMER = "Timer";
+  public static final String NBT_REDST = "redstone";
   protected NonNullList<ItemStack> inv;
   public TileEntityBaseMachineInvo(int invoSize) {
     super();

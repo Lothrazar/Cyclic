@@ -22,8 +22,6 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
   // http://bedrockminer.jimdo.com/modding-tutorials/advanced-modding/tile-entities/
   // http://www.minecraftforge.net/wiki/Tile_Entity_Synchronization
   // http://www.minecraftforge.net/forum/index.php?topic=18871.0
-  private static final String NBT_TIMER = "Timer";
-  private static final String NBT_REDST = "redstone";
   public static final int SLOT_UNCRAFTME = 0;
   public static final int SLOT_ROWS = 3;
   public static final int SLOT_COLS = 7;
