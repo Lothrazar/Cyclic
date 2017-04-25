@@ -1,12 +1,14 @@
 package com.lothrazar.cyclicmagic.registry;
 import java.util.HashMap;
 import java.util.Map;
+import com.lothrazar.cyclicmagic.CyclicGuideBook;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.BaseItem;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.item.Item;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -43,7 +45,9 @@ public class ItemRegistry {
         ConfigRegistry.register((IHasConfig) item);
       }
       if (item instanceof IHasRecipe) {
-        ((IHasRecipe) item).addRecipe();
+        IRecipe recipe = ((IHasRecipe) item).addRecipe();
+        
+        CyclicGuideBook.addPageItem(item, recipe);
       }
     }
   }

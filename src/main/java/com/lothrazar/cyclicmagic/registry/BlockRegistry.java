@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.registry;
 import java.util.ArrayList;
+import com.lothrazar.cyclicmagic.CyclicGuideBook;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -7,6 +8,7 @@ import com.lothrazar.cyclicmagic.block.BlockCropMagicBean;
 import com.lothrazar.cyclicmagic.component.bucketstorage.BlockBucketStorage;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockRegistry {
@@ -34,7 +36,10 @@ public class BlockRegistry {
       b.setCreativeTab(ModCyclic.TAB);
     }
     if (b instanceof IHasRecipe) {
-      ((IHasRecipe) b).addRecipe();
+      IRecipe recipe = ((IHasRecipe) b).addRecipe();
+      
+
+      CyclicGuideBook.addPageBlock(b, recipe);
     }
     if (b instanceof IHasConfig) {
       ConfigRegistry.register((IHasConfig) b);

@@ -20,6 +20,7 @@ import amerifrance.guideapi.page.PageText;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
@@ -55,18 +56,21 @@ public class CyclicGuideBook implements IGuideBook {
       }
     }
   }
-  public static void addPageItem(String pageTitle, ItemStack icon, String above, IRecipe recipe) {
-    CyclicGuideBook.addPage(Cateories.ITEM, pageTitle, icon, above, recipe);
+  public static void addPageItem(Item item, IRecipe recipe) {
+    String pageTitle = item.getUnlocalizedName().replace("name", "guide");
+    String above = item.getUnlocalizedName().replace("name", "guide.above");
+    CyclicGuideBook.addPage(Cateories.ITEM, pageTitle, new ItemStack(item), above, recipe);
   }
   public static void addPageBlock(Block block, IRecipe recipe) {
     String pageTitle = block.getUnlocalizedName().replace("name", "guide");
-    String above = block.getUnlocalizedName().replace("name", "above");
+    String above = block.getUnlocalizedName().replace("name", "guide.above");
     CyclicGuideBook.addPage(Cateories.BLOCK, pageTitle, new ItemStack(block), above, recipe);
   }
   private static void addPage(Cateories cat, String pageTitle, ItemStack icon, String above, IRecipe recipe) {
     List<IPage> pages = new ArrayList<IPage>();
     pages.add(new PageText(above));//just text on the screen
-    pages.add(new PageIRecipe(recipe));
+    if (recipe != null)
+      pages.add(new PageIRecipe(recipe));
     cat.addPage(pages, pageTitle, icon);
   }
   @Override

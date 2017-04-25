@@ -18,7 +18,8 @@ public class BlockScaffoldingResponsive extends BlockScaffolding implements IHas
   }
   @Override
   public IRecipe addRecipe() {
-    return GameRegistry.addShapedRecipe(new ItemStack(this, 64), Blocks.DIRT, new ItemStack(Items.STICK));
+     GameRegistry.addShapelessRecipe(new ItemStack(this, 64), Blocks.DIRT, new ItemStack(Items.STICK));
+    return null;
   }
   @SuppressWarnings("deprecation")
   @Override
