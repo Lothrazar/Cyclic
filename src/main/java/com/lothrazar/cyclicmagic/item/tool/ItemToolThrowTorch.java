@@ -8,6 +8,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -37,7 +38,7 @@ public class ItemToolThrowTorch extends BaseTool implements IHasRecipe {
     return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
   }
   @Override
-  public void addRecipe() {
+  public IRecipe addRecipe() {
     GameRegistry.addRecipe(new ItemStack(this),
         " gi",
         " ig",
@@ -45,5 +46,6 @@ public class ItemToolThrowTorch extends BaseTool implements IHasRecipe {
         'i', Items.IRON_INGOT,
         'g', Items.GOLD_INGOT,
         'o', Blocks.OBSIDIAN);
+    return null;
   }
 }

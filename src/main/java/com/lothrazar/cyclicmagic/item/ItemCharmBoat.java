@@ -5,6 +5,7 @@ import net.minecraft.entity.item.EntityBoat;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 
 public class ItemCharmBoat extends BaseCharm implements IHasRecipe {
@@ -38,7 +39,7 @@ public class ItemCharmBoat extends BaseCharm implements IHasRecipe {
     }
   }
   @Override
-  public void addRecipe() {
-    super.addRecipeAndRepair(Items.ARMOR_STAND);
+  public IRecipe addRecipe() {
+    return super.addRecipeAndRepair(Items.ARMOR_STAND);
   }
 }

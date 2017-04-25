@@ -12,6 +12,7 @@ import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
@@ -42,11 +43,12 @@ public class ItemFoodChorusCorrupted extends ItemFood implements IHasRecipe, IHa
     tooltips.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
   }
   @Override
-  public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this, 3),
+  public IRecipe addRecipe() {
+    return GameRegistry.addShapedRecipe(new ItemStack(this, 3),
         "lal", "lal", "lal",
         'l', Items.FERMENTED_SPIDER_EYE,
         'a', Items.CHORUS_FRUIT);
+    
   }
   @Override
   public void syncConfig(Configuration config) {

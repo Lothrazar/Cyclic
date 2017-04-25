@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.util.UtilHarvestCrops.HarestCropsConfig;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -62,7 +63,7 @@ public class ItemToolHarvest extends BaseTool implements IHasRecipe {
     return super.onItemUse(player, worldObj, offset, hand, side, hitX, hitY, hitZ);
   }
   @Override
-  public void addRecipe() {
+  public IRecipe addRecipe() {
     switch (harvestType) {
       case CROPS:
         GameRegistry.addRecipe(new ItemStack(this),
@@ -94,5 +95,6 @@ public class ItemToolHarvest extends BaseTool implements IHasRecipe {
       default:
       break;
     }
+    return null;
   }
 }

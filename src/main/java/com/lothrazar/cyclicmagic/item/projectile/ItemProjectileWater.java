@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -15,8 +16,9 @@ public class ItemProjectileWater extends BaseItemProjectile implements IHasRecip
     return new EntityWaterBolt(world, x, y, z);
   }
   @Override
-  public void addRecipe() {
+  public IRecipe addRecipe() {
     GameRegistry.addShapelessRecipe(new ItemStack(this, 8), new ItemStack(Items.WATER_BUCKET), Blocks.ICE, new ItemStack(Items.PAPER), new ItemStack(Items.STRING));
+    return null;
   }
   @Override
   void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {

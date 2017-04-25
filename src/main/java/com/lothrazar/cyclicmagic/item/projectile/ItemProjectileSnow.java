@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -15,9 +16,10 @@ public class ItemProjectileSnow extends BaseItemProjectile implements IHasRecipe
     return new EntitySnowballBolt(world, x, y, z);
   }
   @Override
-  public void addRecipe() {
+  public IRecipe addRecipe() {
     GameRegistry.addShapelessRecipe(new ItemStack(this, 32),
         new ItemStack(Blocks.MOSSY_COBBLESTONE), new ItemStack(Blocks.ICE), new ItemStack(Items.SNOWBALL));
+    return null;
   }
   @Override
   void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {

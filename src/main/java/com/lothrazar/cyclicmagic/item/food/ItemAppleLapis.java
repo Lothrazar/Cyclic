@@ -8,16 +8,18 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemAppleLapis extends BaseItem implements IHasRecipe {
   @Override
-  public void addRecipe() {
+  public IRecipe addRecipe() {
     GameRegistry.addShapelessRecipe(new ItemStack(this),
         Items.APPLE,
         Blocks.LAPIS_BLOCK);
+    return null;
   }
   @SubscribeEvent
   public void onEntityInteractEvent(EntityInteract event) {

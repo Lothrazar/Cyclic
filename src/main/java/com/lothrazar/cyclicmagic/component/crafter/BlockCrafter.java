@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.component.crafter;
+import com.lothrazar.cyclicmagic.CyclicGuideBook;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.BlockBaseFacingInventory;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
@@ -8,6 +9,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -22,8 +24,8 @@ public class BlockCrafter extends BlockBaseFacingInventory implements IHasRecipe
     return new TileEntityCrafter();
   }
   @Override
-  public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this),
+  public IRecipe addRecipe() {
+    IRecipe recipe = GameRegistry.addShapedRecipe(new ItemStack(this),
         "pcp",
         "y x",
         "pkp",
@@ -32,5 +34,10 @@ public class BlockCrafter extends BlockBaseFacingInventory implements IHasRecipe
         'y', new ItemStack(Blocks.PISTON),
         'c', new ItemStack(Blocks.CRAFTING_TABLE),
         'p', new ItemStack(Items.DYE, 1, EnumDyeColor.PURPLE.getDyeDamage()));
+  
+    
+    CyclicGuideBook.addPageBlock(this,  recipe);
+    
+    return recipe;
   }
 }

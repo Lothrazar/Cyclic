@@ -11,6 +11,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -24,8 +25,8 @@ public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasRe
     return new EntityTorchBolt(world, x, y, z);
   }
   @Override
-  public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this, 1),
+  public IRecipe addRecipe() {
+    return GameRegistry.addShapedRecipe(new ItemStack(this, 1),
         "lal",
         "qiq",
         "lal",
@@ -36,7 +37,7 @@ public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasRe
     //       ,Items.BEETROOT
     //       ,Items.LEATHER
     //       ,Items.LEAD
-    );
+    ); 
   }
   public boolean hasEntity(ItemStack held) {
     return held.getTagCompound() != null && held.getTagCompound().hasKey(NBT_ENTITYID);

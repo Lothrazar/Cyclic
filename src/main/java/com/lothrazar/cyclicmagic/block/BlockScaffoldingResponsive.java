@@ -5,6 +5,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -16,8 +17,8 @@ public class BlockScaffoldingResponsive extends BlockScaffolding implements IHas
     this.doesAutobreak = false;
   }
   @Override
-  public void addRecipe() {
-    GameRegistry.addShapelessRecipe(new ItemStack(this, 64), Blocks.DIRT, new ItemStack(Items.STICK));
+  public IRecipe addRecipe() {
+    return GameRegistry.addShapedRecipe(new ItemStack(this, 64), Blocks.DIRT, new ItemStack(Items.STICK));
   }
   @SuppressWarnings("deprecation")
   @Override

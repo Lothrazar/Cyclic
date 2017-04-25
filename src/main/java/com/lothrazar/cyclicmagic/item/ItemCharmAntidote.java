@@ -5,6 +5,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 
 public class ItemCharmAntidote extends BaseCharm implements IHasRecipe {
@@ -29,7 +30,7 @@ public class ItemCharmAntidote extends BaseCharm implements IHasRecipe {
     }
   }
   @Override
-  public void addRecipe() {
-    super.addRecipeAndRepair(Items.FERMENTED_SPIDER_EYE);
+  public IRecipe addRecipe() {
+    return super.addRecipeAndRepair(Items.FERMENTED_SPIDER_EYE);
   }
 }

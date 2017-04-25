@@ -18,6 +18,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
@@ -160,7 +161,7 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
     super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
   }
   @Override
-  public void addRecipe() {
+  public IRecipe addRecipe() {
     ItemStack ingredient = null;
     switch (this.getWandType()) {
       case MATCH:
@@ -170,7 +171,7 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
         ingredient = new ItemStack(Blocks.LAPIS_BLOCK);
       break;
     }
-    GameRegistry.addRecipe(new ItemStack(this),
+    return GameRegistry.addShapedRecipe(new ItemStack(this),
         " gi",
         "oig",
         "oo ",

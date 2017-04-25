@@ -12,6 +12,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
@@ -40,8 +41,8 @@ public class BlockStructureBuilder extends BlockBaseFacingInventory implements I
     return new TileEntityStructureBuilder();//"tile.builder_block.name"
   }
   @Override
-  public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this), "rsr", "gbg", "ooo",
+  public IRecipe addRecipe() {
+    return GameRegistry.addShapedRecipe(new ItemStack(this), "rsr", "gbg", "ooo",
         'o', Blocks.OBSIDIAN,
         'g', Items.GHAST_TEAR,
         's', Blocks.DISPENSER,

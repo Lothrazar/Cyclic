@@ -6,6 +6,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
@@ -25,22 +26,8 @@ public class ItemEnderBag extends BaseItem implements IHasRecipe {
     return super.onItemRightClick(world, player, hand);///return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);
   }
   @Override
-  public void addRecipe() {
-    //    GameRegistry.addRecipe(new ItemStack(this),
-    //        "l l",
-    //        "lel",
-    //        "lsl",
-    //        'l', Items.LEATHER,
-    //        's', Blocks.OBSIDIAN,
-    //        'e', Items.ENDER_PEARL);
-    //    GameRegistry.addRecipe(new ItemStack(this),
-    //        "l l",
-    //        "lel",
-    //        "lsl",
-    //        'l', Items.LEATHER,
-    //        's', Blocks.OBSIDIAN,
-    //        'e', Items.ENDER_EYE);
-    GameRegistry.addRecipe(new ItemStack(this),
+  public IRecipe addRecipe() {
+    return GameRegistry.addShapedRecipe(new ItemStack(this),
         " l ",
         "lsl",
         " l ",

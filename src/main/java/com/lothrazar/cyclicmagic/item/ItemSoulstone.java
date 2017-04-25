@@ -9,6 +9,7 @@ import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -52,7 +53,7 @@ public class ItemSoulstone extends BaseItem implements IHasRecipe {
     }
   }
   @Override
-  public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this), " a ", "bsc", " d ", 's', Items.NETHER_STAR, 'a', Items.GOLDEN_APPLE, 'b', Items.POISONOUS_POTATO, 'c', Blocks.PURPUR_BLOCK, 'd', Items.EMERALD);
+  public IRecipe addRecipe() {
+    return GameRegistry.addShapedRecipe(new ItemStack(this), " a ", "bsc", " d ", 's', Items.NETHER_STAR, 'a', Items.GOLDEN_APPLE, 'b', Items.POISONOUS_POTATO, 'c', Blocks.PURPUR_BLOCK, 'd', Items.EMERALD);
   }
 }

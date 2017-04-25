@@ -10,6 +10,7 @@ import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumHand;
@@ -24,10 +25,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemAppleEmerald extends BaseItem implements IHasRecipe {
   private static final int CONVTIME = 1200;
   @Override
-  public void addRecipe() {
-    GameRegistry.addShapelessRecipe(new ItemStack(this),
+  public IRecipe addRecipe() {
+        GameRegistry.addShapelessRecipe(new ItemStack(this),
         Items.EMERALD,
         Items.GOLDEN_APPLE);
+    return null;
   }
   @Override
   @SideOnly(Side.CLIENT)

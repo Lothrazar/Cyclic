@@ -17,6 +17,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -118,13 +119,14 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
     }
     return true;
   }
-  public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this), "ene", "ebe", "eee",
+  public IRecipe addRecipe() {
+    GameRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this));
+    return GameRegistry.addShapedRecipe(new ItemStack(this), "ene", "ebe", "eee",
         'e', Items.ENDER_PEARL,
         'b', Items.BOOK,
         'n', Blocks.EMERALD_BLOCK);
     // if you want to clean out the book and start over
-    GameRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this));
+  
   }
   @Override
   public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer entityPlayer, EnumHand hand) {

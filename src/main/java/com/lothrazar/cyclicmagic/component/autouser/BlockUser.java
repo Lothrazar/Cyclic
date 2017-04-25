@@ -14,6 +14,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
@@ -40,11 +41,11 @@ public class BlockUser extends BlockBaseFacingInventory implements IHasRecipe, I
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityUser.class, new MachineTESR(this.getUnlocalizedName()));
   }
   @Override
-  public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this), "rsr", " b ", "ooo",
+  public IRecipe addRecipe() {
+    return GameRegistry.addShapedRecipe(new ItemStack(this), "rsr", " b ", "ooo",
         'o', Blocks.OBSIDIAN,
         's', Blocks.DISPENSER,
         'r', Items.GOLD_INGOT,
-        'b', Blocks.MAGMA);// MAGMA BLOCK is field_189877_df in 1.10.2 apparently
+        'b', Blocks.MAGMA);
   }
 }

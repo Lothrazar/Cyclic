@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -29,12 +30,12 @@ public class ItemMerchantAlmanac extends BaseItem implements IHasRecipe {
     return new ActionResult<ItemStack>(EnumActionResult.PASS, player.getHeldItem(hand));
   }
   @Override
-  public void addRecipe() {
+  public IRecipe addRecipe() {
     GameRegistry.addShapedRecipe(new ItemStack(this), " e ", " b ", " q ",
         'e', Items.EMERALD,
         'b', Items.BOOK,
         'q', Blocks.BROWN_MUSHROOM);
-    GameRegistry.addShapedRecipe(new ItemStack(this), " e ", " b ", " q ",
+    return GameRegistry.addShapedRecipe(new ItemStack(this), " e ", " b ", " q ",
         'e', Items.EMERALD,
         'b', Items.BOOK,
         'q', Blocks.RED_MUSHROOM);

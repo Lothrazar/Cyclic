@@ -16,6 +16,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
 import net.minecraft.network.play.server.SPacketBlockChange;
 import net.minecraft.tileentity.TileEntity;
@@ -125,18 +126,19 @@ public class ItemToolMattock extends ItemTool implements IHasRecipe {
     list.add(UtilChat.lang(this.getUnlocalizedName() + ".tooltip"));
   }
   @Override
-  public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this),
+  public IRecipe addRecipe() {
+    GameRegistry.addShapedRecipe(new ItemStack(this),
         "ede", "oso", " s ",
         'e', Items.EMERALD,
         'o', Blocks.OBSIDIAN,
         'd', Items.DIAMOND,
         's', Items.BONE);
-    GameRegistry.addRecipe(new ItemStack(this),
+    GameRegistry.addShapedRecipe(new ItemStack(this),
         "ede", "oso", " s ",
         'e', Blocks.QUARTZ_BLOCK,
         'o', Blocks.OBSIDIAN,
         'd', Blocks.DIAMOND_BLOCK,
         's', Items.BONE);
+    return null;
   }
 }
