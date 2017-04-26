@@ -13,8 +13,8 @@ public abstract class EnchantBase extends Enchantment {
   protected EnchantBase(String name,Rarity rarityIn, EnumEnchantmentType typeIn, EntityEquipmentSlot[] slots) {
     super(rarityIn, typeIn, slots);
     this.setName(name);
-    String b = "guide." + CategoryType.ENCHANT.text() + "." + this.name;
-    CyclicGuideBook.addPage(CategoryType.ENCHANT, b + ".title", new ItemStack(Items.ENCHANTED_BOOK), b + ".text", null);
+    String b = CategoryType.ENCHANT.text() + "." + this.name;
+    CyclicGuideBook.addPage(CategoryType.ENCHANT, b, new ItemStack(Items.ENCHANTED_BOOK), b + ".guide", null);
   }
   protected int getCurrentLevelTool(EntityLivingBase player) {
     if (player == null) { return -1; }

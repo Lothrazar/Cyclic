@@ -71,13 +71,14 @@ public class CyclicGuideBook implements IGuideBook {
     }
   }
   public static void addPageItem(Item item, IRecipe recipe, CategoryType cat) {
-    String pageTitle = item.getUnlocalizedName() + ".guide";
-    String above = item.getUnlocalizedName() + ".guide.text";
+  
+    String pageTitle = item.getUnlocalizedName() + ".name";
+    String above = item.getUnlocalizedName() + ".guide";
     CyclicGuideBook.addPage(cat, pageTitle, new ItemStack(item), above, recipe);
   }
   public static void addPageBlock(Block block, IRecipe recipe, CategoryType cat) {
-    String pageTitle = block.getUnlocalizedName() + ".guide";
-    String above = block.getUnlocalizedName() + ".guide.text";
+    String pageTitle = block.getUnlocalizedName() + ".name";
+    String above = block.getUnlocalizedName() + ".guide";
     CyclicGuideBook.addPage(cat, pageTitle, new ItemStack(block), above, recipe);
   }
   public static void addPage(CategoryType cat, String pageTitle, ItemStack icon, String above, @Nullable IRecipe recipe) {
