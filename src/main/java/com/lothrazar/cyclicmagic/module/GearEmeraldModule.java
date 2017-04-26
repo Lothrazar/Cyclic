@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.module;
 import java.util.Set;
 import com.google.common.collect.Sets;
 import com.lothrazar.cyclicmagic.IHasConfig;
+import com.lothrazar.cyclicmagic.CyclicGuideBook.CategoryType;
 import com.lothrazar.cyclicmagic.item.gear.ItemEmeraldArmor;
 import com.lothrazar.cyclicmagic.item.gear.ItemEmeraldAxe;
 import com.lothrazar.cyclicmagic.item.gear.ItemEmeraldHoe;
@@ -62,29 +63,26 @@ public class GearEmeraldModule extends BaseModule implements IHasConfig {
     this.registerEmeraldMaterial();
     if (enableEmeraldGear) {
       Item emerald_head = new ItemEmeraldArmor(EntityEquipmentSlot.HEAD);
-      ItemRegistry.addItem(emerald_head, "emerald_helmet");
+      ItemRegistry.addItem(emerald_head, "emerald_helmet",CategoryType.GEAR);
       Item emerald_chest = new ItemEmeraldArmor(EntityEquipmentSlot.CHEST);
-      ItemRegistry.addItem(emerald_chest, "emerald_chestplate");
+      ItemRegistry.addItem(emerald_chest, "emerald_chestplate",CategoryType.GEAR);
       Item emerald_legs = new ItemEmeraldArmor(EntityEquipmentSlot.LEGS);
-      ItemRegistry.addItem(emerald_legs, "emerald_leggings");
+      ItemRegistry.addItem(emerald_legs, "emerald_leggings",CategoryType.GEAR);
       Item emerald_boots = new ItemEmeraldArmor(EntityEquipmentSlot.FEET);
-      ItemRegistry.addItem(emerald_boots, "emerald_boots");
+      ItemRegistry.addItem(emerald_boots, "emerald_boots",CategoryType.GEAR);
       Item emerald_sword = new ItemEmeraldSword();
-      ItemRegistry.addItem(emerald_sword, ItemEmeraldSword.name);
+      ItemRegistry.addItem(emerald_sword, "emerald_sword",CategoryType.GEAR);
       Item emerald_pickaxe = new ItemEmeraldPickaxe();
-      ItemRegistry.addItem(emerald_pickaxe, ItemEmeraldPickaxe.name);
+      ItemRegistry.addItem(emerald_pickaxe,  "emerald_pickaxe",CategoryType.GEAR);
       Item emerald_axe = new ItemEmeraldAxe();
-      ItemRegistry.addItem(emerald_axe, ItemEmeraldAxe.name);
+      ItemRegistry.addItem(emerald_axe, "emerald_axe",CategoryType.GEAR);
       Item emerald_shovel = new ItemEmeraldSpade();
-      ItemRegistry.addItem(emerald_shovel, ItemEmeraldSpade.name);
+      ItemRegistry.addItem(emerald_shovel,  "emerald_spade",CategoryType.GEAR);
       Item emerald_hoe = new ItemEmeraldHoe();
-      ItemRegistry.addItem(emerald_hoe, ItemEmeraldHoe.name);
+      ItemRegistry.addItem(emerald_hoe, "emerald_hoe",CategoryType.GEAR);
       LootTableRegistry.registerLoot(emerald_pickaxe);
       LootTableRegistry.registerLoot(emerald_sword);
-      LootTableRegistry.registerLoot(emerald_boots);
       LootTableRegistry.registerLoot(emerald_chest);
-      LootTableRegistry.registerLoot(emerald_head);
-      LootTableRegistry.registerLoot(emerald_legs);
     }
     if (enableMattock) {
       final Set<Block> blocks = Sets.newHashSet(Blocks.ACTIVATOR_RAIL, Blocks.COAL_ORE, Blocks.COBBLESTONE, Blocks.DETECTOR_RAIL, Blocks.DIAMOND_BLOCK, Blocks.DIAMOND_ORE, Blocks.DOUBLE_STONE_SLAB, Blocks.GOLDEN_RAIL, Blocks.GOLD_BLOCK, Blocks.GOLD_ORE, Blocks.ICE, Blocks.IRON_BLOCK, Blocks.IRON_ORE, Blocks.LAPIS_BLOCK, Blocks.LAPIS_ORE, Blocks.LIT_REDSTONE_ORE, Blocks.MOSSY_COBBLESTONE, Blocks.NETHERRACK, Blocks.PACKED_ICE, Blocks.RAIL, Blocks.REDSTONE_ORE, Blocks.SANDSTONE, Blocks.RED_SANDSTONE, Blocks.STONE, Blocks.STONE_SLAB, Blocks.STONE_BUTTON, Blocks.STONE_PRESSURE_PLATE, Blocks.CLAY, Blocks.DIRT, Blocks.FARMLAND, Blocks.GRASS, Blocks.GRAVEL, Blocks.MYCELIUM, Blocks.SAND, Blocks.SNOW, Blocks.SNOW_LAYER, Blocks.SOUL_SAND, Blocks.GRASS_PATH);

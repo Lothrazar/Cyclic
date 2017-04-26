@@ -8,7 +8,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemEmeraldPickaxe extends ItemPickaxe implements IHasRecipe {
-  public static final String name = "emerald_pickaxe";
+   
   public ItemEmeraldPickaxe() {
     super(MaterialRegistry.emeraldToolMaterial);
   }

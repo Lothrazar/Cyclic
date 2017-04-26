@@ -1,6 +1,10 @@
 package com.lothrazar.cyclicmagic.registry;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.CyclicGuideBook;
+import com.lothrazar.cyclicmagic.CyclicGuideBook.CategoryType;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -18,33 +22,31 @@ public class BlockRegistry {
   public static BlockBucketStorage block_storemilk;
   public static BlockBucketStorage block_storeempty;
   public static void registerBlock(Block b, String name) {
-    registerBlock(b, name, false);
+    registerBlock(b, new ItemBlock(b), name, null);
   }
-  public static void registerBlock(Block b, String name, boolean isHidden) {
-    registerBlock(b, new ItemBlock(b), name, isHidden);
+  public static void registerBlock(Block b, String name, @Nullable CategoryType cat) {
+    registerBlock(b, new ItemBlock(b), name,cat);
   }
-  public static void registerBlock(Block b, ItemBlock ib, String name) {
-    registerBlock(b, ib, name, false);
-  }
-  public static void registerBlock(Block b, ItemBlock ib, String name, boolean isHidden) {
+ 
+  public static void registerBlock(Block b, ItemBlock ib, String name, @Nullable CategoryType inGuidebook) {
     b.setRegistryName(name);
     b.setUnlocalizedName(name);
     GameRegistry.register(b);
     ib.setRegistryName(b.getRegistryName());
     GameRegistry.register(ib);
-    if (isHidden == false) {
-      b.setCreativeTab(ModCyclic.TAB);
-    }
-    if (b instanceof IHasRecipe) {
-      IRecipe recipe = ((IHasRecipe) b).addRecipe();
-      
-
-      CyclicGuideBook.addPageBlock(b, recipe);
-    }
+    b.setCreativeTab(ModCyclic.TAB);
+    blocks.add(b);
+    IRecipe recipe = null;
     if (b instanceof IHasConfig) {
       ConfigRegistry.register((IHasConfig) b);
     }
-    blocks.add(b);
+    if (b instanceof IHasRecipe) {
+      recipe = ((IHasRecipe) b).addRecipe();
+    }
+    if (inGuidebook != null) {
+      CyclicGuideBook.addPageBlock(b, recipe, inGuidebook);
+    }else
+
     if (!(b instanceof BlockCropMagicBean)) { //TODO FIX dirty hack to skip sprout
       JeiDescriptionRegistry.registerWithJeiDescription(b);
     }

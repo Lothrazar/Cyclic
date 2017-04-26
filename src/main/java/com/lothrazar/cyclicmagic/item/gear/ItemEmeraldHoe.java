@@ -8,7 +8,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemEmeraldHoe extends ItemHoe implements IHasRecipe {
-  public static final String name = "emerald_hoe";
+  
   public ItemEmeraldHoe() {
     super(MaterialRegistry.emeraldToolMaterial);
   }

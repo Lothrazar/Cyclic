@@ -9,7 +9,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemSandstoneAxe extends ItemAxe implements IHasRecipe {
-  public static final String name = "sandstone_axe";
+ 
   public ItemSandstoneAxe() {
     // protected ItemAxe(Item.ToolMaterial material, int damage, int speed)
     super(MaterialRegistry.sandstoneToolMaterial, 6, -3.2F);

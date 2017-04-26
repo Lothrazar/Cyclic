@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.CyclicGuideBook.CategoryType;
 import com.lothrazar.cyclicmagic.block.BlockShears;
 import com.lothrazar.cyclicmagic.block.ItemBlockScaffolding;
 import com.lothrazar.cyclicmagic.block.BlockScaffolding;
@@ -40,54 +41,54 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   public void onInit() {
     if (autoCrafter) {
       BlockCrafter auto_crafter = new BlockCrafter();
-      BlockRegistry.registerBlock(auto_crafter, "auto_crafter");
+      BlockRegistry.registerBlock(auto_crafter, "auto_crafter",CategoryType.BLOCK);
       GameRegistry.registerTileEntity(TileEntityCrafter.class, Const.MODID + "auto_crafter_te");
     }
     if (entityDetector) {
       BlockDetector detector = new BlockDetector();
-      BlockRegistry.registerBlock(detector, "entity_detector");
+      BlockRegistry.registerBlock(detector, "entity_detector",CategoryType.BLOCK);
       GameRegistry.registerTileEntity(TileEntityDetector.class, Const.MODID + "entity_detector_te");
     }
     if (enableFan) {
       BlockFan fan = new BlockFan();
-      BlockRegistry.registerBlock(fan, "fan");
+      BlockRegistry.registerBlock(fan, "fan",CategoryType.BLOCK);
       GameRegistry.registerTileEntity(TileEntityFan.class, Const.MODID + "fan_te");
     }
     if (enableShearingBlock) {
       BlockShears block_shears = new BlockShears();
-      BlockRegistry.registerBlock(block_shears, "block_shears");
+      BlockRegistry.registerBlock(block_shears, "block_shears",CategoryType.BLOCK);
     }
     if (fragileEnabled) {
       BlockScaffolding block_fragile = new BlockScaffolding();
-      BlockRegistry.registerBlock(block_fragile, new ItemBlockScaffolding(block_fragile), "block_fragile");
+      BlockRegistry.registerBlock(block_fragile, new ItemBlockScaffolding(block_fragile), "block_fragile",CategoryType.BLOCK);
       ModCyclic.instance.events.register(Item.getItemFromBlock(block_fragile));
       BlockScaffoldingResponsive block_fragile_auto = new BlockScaffoldingResponsive();
-      BlockRegistry.registerBlock(block_fragile_auto, new ItemBlockScaffolding(block_fragile_auto), "block_fragile_auto");
+      BlockRegistry.registerBlock(block_fragile_auto, new ItemBlockScaffolding(block_fragile_auto), "block_fragile_auto",CategoryType.BLOCK);
       ModCyclic.instance.events.register(Item.getItemFromBlock(block_fragile_auto));
       BlockScaffoldingReplace block_fragile_weak = new BlockScaffoldingReplace();
-      BlockRegistry.registerBlock(block_fragile_weak, new ItemBlockScaffolding(block_fragile_weak), "block_fragile_weak");
+      BlockRegistry.registerBlock(block_fragile_weak, new ItemBlockScaffolding(block_fragile_weak), "block_fragile_weak",CategoryType.BLOCK);
       ModCyclic.instance.events.register(Item.getItemFromBlock(block_fragile_weak));
     }
     if (fishingBlock) {
       BlockFishing block_fishing = new BlockFishing();
-      BlockRegistry.registerBlock(block_fishing, "block_fishing");
+      BlockRegistry.registerBlock(block_fishing, "block_fishing",CategoryType.BLOCK);
       GameRegistry.registerTileEntity(TileEntityFishing.class, Const.MODID + "block_fishing_te");
     }
     if (disenchanter) {
       BlockDisenchanter block_disenchanter = new BlockDisenchanter();
-      BlockRegistry.registerBlock(block_disenchanter, "block_disenchanter");
+      BlockRegistry.registerBlock(block_disenchanter, "block_disenchanter",CategoryType.BLOCK);
       GameRegistry.registerTileEntity(TileEntityDisenchanter.class, Const.MODID + "block_disenchanter_te");
     }
     if (enableBucketBlocks) {
       //TODO: refactor and support more recipes
       BlockRegistry.block_storewater = new BlockBucketStorage(Items.WATER_BUCKET);
-      BlockRegistry.registerBlock(BlockRegistry.block_storewater, new ItemBlockBucket(BlockRegistry.block_storewater), "block_storewater", true);
+      BlockRegistry.registerBlock(BlockRegistry.block_storewater, new ItemBlockBucket(BlockRegistry.block_storewater), "block_storewater", CategoryType.BLOCK);
       BlockRegistry.block_storemilk = new BlockBucketStorage(Items.MILK_BUCKET);
-      BlockRegistry.registerBlock(BlockRegistry.block_storemilk, new ItemBlockBucket(BlockRegistry.block_storemilk), "block_storemilk", true);
+      BlockRegistry.registerBlock(BlockRegistry.block_storemilk, new ItemBlockBucket(BlockRegistry.block_storemilk), "block_storemilk", CategoryType.BLOCK);
       BlockRegistry.block_storelava = new BlockBucketStorage(Items.LAVA_BUCKET);
-      BlockRegistry.registerBlock(BlockRegistry.block_storelava, new ItemBlockBucket(BlockRegistry.block_storelava), "block_storelava", true);
+      BlockRegistry.registerBlock(BlockRegistry.block_storelava, new ItemBlockBucket(BlockRegistry.block_storelava), "block_storelava", CategoryType.BLOCK);
       BlockRegistry.block_storeempty = new BlockBucketStorage(null);
-      BlockRegistry.registerBlock(BlockRegistry.block_storeempty, new ItemBlockBucket(BlockRegistry.block_storeempty), "block_storeempty", false);
+      BlockRegistry.registerBlock(BlockRegistry.block_storeempty, new ItemBlockBucket(BlockRegistry.block_storeempty), "block_storeempty", CategoryType.BLOCK);
       GameRegistry.registerTileEntity(TileEntityBucketStorage.class, "bucketstorage");
       GameRegistry.addRecipe(new ItemStack(BlockRegistry.block_storeempty),
           "i i",

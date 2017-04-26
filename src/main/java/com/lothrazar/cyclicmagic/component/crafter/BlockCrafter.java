@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.component.crafter;
-import com.lothrazar.cyclicmagic.CyclicGuideBook;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.BlockBaseFacingInventory;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
@@ -34,10 +33,7 @@ public class BlockCrafter extends BlockBaseFacingInventory implements IHasRecipe
         'y', new ItemStack(Blocks.PISTON),
         'c', new ItemStack(Blocks.CRAFTING_TABLE),
         'p', new ItemStack(Items.DYE, 1, EnumDyeColor.PURPLE.getDyeDamage()));
-  
-    
-    CyclicGuideBook.addPageBlock(this,  recipe);
-    
+   
     return recipe;
   }
 }

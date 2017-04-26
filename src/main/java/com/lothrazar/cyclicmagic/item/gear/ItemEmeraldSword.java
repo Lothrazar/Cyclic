@@ -8,7 +8,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemEmeraldSword extends ItemSword implements IHasRecipe {
-  public static final String name = "emerald_sword";
+ 
   public ItemEmeraldSword() {
     super(MaterialRegistry.emeraldToolMaterial);
   }

@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
+import com.lothrazar.cyclicmagic.CyclicGuideBook.CategoryType;
 import com.lothrazar.cyclicmagic.item.gear.ItemSandstoneAxe;
 import com.lothrazar.cyclicmagic.item.gear.ItemSandstoneHoe;
 import com.lothrazar.cyclicmagic.item.gear.ItemSandstonePickaxe;
@@ -32,13 +33,13 @@ public class GearSandstoneModule extends BaseModule implements IHasConfig {
     if (enableSandstoneTools) {
       this.registerMaterials();
       Item sandstone_pickaxe = new ItemSandstonePickaxe();
-      ItemRegistry.addItem(sandstone_pickaxe, ItemSandstonePickaxe.name);
+      ItemRegistry.addItem(sandstone_pickaxe, "sandstone_pickaxe",CategoryType.GEAR);
       Item sandstone_axe = new ItemSandstoneAxe();
-      ItemRegistry.addItem(sandstone_axe, ItemSandstoneAxe.name);
+      ItemRegistry.addItem(sandstone_axe, "sandstone_axe",CategoryType.GEAR);
       Item sandstone_spade = new ItemSandstoneSpade();
-      ItemRegistry.addItem(sandstone_spade, ItemSandstoneSpade.name);
+      ItemRegistry.addItem(sandstone_spade, "sandstone_spade",CategoryType.GEAR);
       Item sandstone_hoe = new ItemSandstoneHoe();
-      ItemRegistry.addItem(sandstone_hoe, ItemSandstoneHoe.name);
+      ItemRegistry.addItem(sandstone_hoe, "sandstone_hoe",CategoryType.GEAR);
       LootTableRegistry.registerLoot(sandstone_pickaxe, ChestType.BONUS);
       LootTableRegistry.registerLoot(sandstone_axe, ChestType.BONUS);
       LootTableRegistry.registerLoot(sandstone_spade, ChestType.BONUS);

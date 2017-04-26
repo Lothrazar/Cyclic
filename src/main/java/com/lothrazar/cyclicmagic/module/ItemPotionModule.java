@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.module;
+import com.lothrazar.cyclicmagic.CyclicGuideBook.CategoryType;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.ItemPotionCustom;
@@ -57,7 +58,7 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
     if (enableViscous) {
       potion_viscous = new ItemPotionCustom(false);
       //      ItemStack awkward = BrewingRecipeRegistry.getOutput(new ItemStack(Items.POTIONITEM), new ItemStack(Items.NETHER_WART));
-      ItemRegistry.addItem(potion_viscous, "potion_viscous");
+      ItemRegistry.addItem(potion_viscous, "potion_viscous",CategoryType.POTION);
       AchievementRegistry.registerItemAchievement(potion_viscous);
       addBrewingRecipe(
           PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.AWKWARD), //   awkward,
@@ -67,9 +68,9 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
     }
     if (enableEnder) {
       ItemPotionCustom potion_ender = new ItemPotionCustom(true, PotionEffectRegistry.enderEffect, NORMAL, Potions.I, "item.potion_ender.tooltip");
-      ItemRegistry.addItem(potion_ender, "potion_ender");
+      ItemRegistry.addItem(potion_ender, "potion_ender",CategoryType.POTION);
       ItemPotionCustom potion_ender_long = new ItemPotionCustom(true, PotionEffectRegistry.enderEffect, LONG, Potions.I, "item.potion_ender.tooltip");
-      ItemRegistry.addItem(potion_ender_long, "potion_ender_long");
+      ItemRegistry.addItem(potion_ender_long, "potion_ender_long",CategoryType.POTION);
       if (potion_viscous != null)
         addBrewingRecipe(
             potion_viscous,
@@ -84,8 +85,8 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
     if (enableMagnet) {
       ItemPotionCustom potion_magnet = new ItemPotionCustom(false, PotionEffectRegistry.magnetEffect, NORMAL, Potions.I);
       ItemPotionCustom potion_magnet_long = new ItemPotionCustom(false, PotionEffectRegistry.magnetEffect, LONG, Potions.I);
-      ItemRegistry.addItem(potion_magnet, "potion_magnet");
-      ItemRegistry.addItem(potion_magnet_long, "potion_magnet_long");
+      ItemRegistry.addItem(potion_magnet, "potion_magnet",CategoryType.POTION);
+      ItemRegistry.addItem(potion_magnet_long, "potion_magnet_long",CategoryType.POTION);
       if (potion_viscous != null)
         addBrewingRecipe(
             new ItemStack(potion_viscous),
@@ -100,8 +101,8 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
     if (enableWaterwalk) {
       ItemPotionCustom potion_waterwalk = new ItemPotionCustom(false, PotionEffectRegistry.waterwalkEffect, NORMAL, Potions.I);
       ItemPotionCustom potion_waterwalk_long = new ItemPotionCustom(false, PotionEffectRegistry.waterwalkEffect, LONG, Potions.I);
-      ItemRegistry.addItem(potion_waterwalk, "potion_waterwalk");
-      ItemRegistry.addItem(potion_waterwalk_long, "potion_waterwalk_long");
+      ItemRegistry.addItem(potion_waterwalk, "potion_waterwalk",CategoryType.POTION);
+      ItemRegistry.addItem(potion_waterwalk_long, "potion_waterwalk_long",CategoryType.POTION);
       if (potion_viscous != null)
         addBrewingRecipe(
             potion_viscous,
@@ -121,8 +122,8 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
     if (enableSwimspeed) {
       ItemPotionCustom potion_swimspeed = new ItemPotionCustom(false, PotionEffectRegistry.swimSpeedEffect, NORMAL, Potions.I);
       ItemPotionCustom potion_swimspeed_long = new ItemPotionCustom(false, PotionEffectRegistry.swimSpeedEffect, LONG, Potions.I);
-      ItemRegistry.addItem(potion_swimspeed, "potion_swimspeed");
-      ItemRegistry.addItem(potion_swimspeed_long, "potion_swimspeed_long");
+      ItemRegistry.addItem(potion_swimspeed, "potion_swimspeed",CategoryType.POTION);
+      ItemRegistry.addItem(potion_swimspeed_long, "potion_swimspeed_long",CategoryType.POTION);
       if (potion_viscous != null)
         addBrewingRecipe(
             potion_viscous,
@@ -137,8 +138,8 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
     if (enableSlowfall) {
       ItemPotionCustom potion_slowfall = new ItemPotionCustom(true, PotionEffectRegistry.slowfallEffect, NORMAL, Potions.I);
       ItemPotionCustom potion_slowfall_long = new ItemPotionCustom(true, PotionEffectRegistry.slowfallEffect, LONG, Potions.I);
-      ItemRegistry.addItem(potion_slowfall, "potion_slowfall");
-      ItemRegistry.addItem(potion_slowfall_long, "potion_slowfall_long");
+      ItemRegistry.addItem(potion_slowfall, "potion_slowfall",CategoryType.POTION);
+      ItemRegistry.addItem(potion_slowfall_long, "potion_slowfall_long",CategoryType.POTION);
       if (potion_viscous != null)
         addBrewingRecipe(
             new ItemStack(potion_viscous),
@@ -157,14 +158,14 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
     }
     if (enableSnow) {
       ItemPotionCustom potion_snow = new ItemPotionCustom(true, PotionEffectRegistry.snowEffect, NORMAL, Potions.I, "item.potion_snow.tooltip");
-      ItemRegistry.addItem(potion_snow, "potion_snow");
+      ItemRegistry.addItem(potion_snow, "potion_snow",CategoryType.POTION);
       if (potion_viscous != null)
         addBrewingRecipe(
             new ItemStack(potion_viscous),
             new ItemStack(Blocks.ICE),
             new ItemStack(potion_snow));
       ItemPotionCustom potion_snow_long = new ItemPotionCustom(true, PotionEffectRegistry.snowEffect, LONG, Potions.I, "item.potion_snow.tooltip");
-      ItemRegistry.addItem(potion_snow_long, "potion_snow_long");
+      ItemRegistry.addItem(potion_snow_long, "potion_snow_long",CategoryType.POTION);
       addBrewingRecipe(
           new ItemStack(potion_snow),
           new ItemStack(UPG_LENGTH),
@@ -176,8 +177,8 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
     if (enableHBoost) {
       ItemPotionCustom potion_boost = new ItemPotionCustom(true, MobEffects.HEALTH_BOOST, NORMAL, Const.Potions.V);
       ItemPotionCustom potion_boost_long = new ItemPotionCustom(true, MobEffects.HEALTH_BOOST, LONG, Const.Potions.V);
-      ItemRegistry.addItem(potion_boost, "potion_boost");
-      ItemRegistry.addItem(potion_boost_long, "potion_boost_long");
+      ItemRegistry.addItem(potion_boost, "potion_boost",CategoryType.POTION);
+      ItemRegistry.addItem(potion_boost_long, "potion_boost_long",CategoryType.POTION);
       if (potion_viscous != null)
         addBrewingRecipe(
             potion_viscous,
@@ -195,9 +196,9 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
       ItemPotionCustom potion_resistance = new ItemPotionCustom(true, MobEffects.RESISTANCE, NORMAL);
       ItemPotionCustom potion_resistance_strong = new ItemPotionCustom(true, MobEffects.RESISTANCE, SHORT, Const.Potions.II);
       ItemPotionCustom potion_resistance_long = new ItemPotionCustom(true, MobEffects.RESISTANCE, LONG);
-      ItemRegistry.addItem(potion_resistance, "potion_resistance");
-      ItemRegistry.addItem(potion_resistance_long, "potion_resistance_long");
-      ItemRegistry.addItem(potion_resistance_strong, "potion_resistance_strong");
+      ItemRegistry.addItem(potion_resistance, "potion_resistance",CategoryType.POTION);
+      ItemRegistry.addItem(potion_resistance_long, "potion_resistance_long",CategoryType.POTION);
+      ItemRegistry.addItem(potion_resistance_strong, "potion_resistance_strong",CategoryType.POTION);
       if (potion_viscous != null)
         addBrewingRecipe(
             potion_viscous,
@@ -218,9 +219,9 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
       ItemPotionCustom potion_haste = new ItemPotionCustom(false, MobEffects.HASTE, 60 * 3);
       ItemPotionCustom potion_haste_strong = new ItemPotionCustom(false, MobEffects.HASTE, 90, Const.Potions.II);
       ItemPotionCustom potion_haste_long = new ItemPotionCustom(false, MobEffects.HASTE, LONG);
-      ItemRegistry.addItem(potion_haste, "potion_haste");
-      ItemRegistry.addItem(potion_haste_long, "potion_haste_long");
-      ItemRegistry.addItem(potion_haste_strong, "potion_haste_strong");
+      ItemRegistry.addItem(potion_haste, "potion_haste",CategoryType.POTION);
+      ItemRegistry.addItem(potion_haste_long, "potion_haste_long",CategoryType.POTION);
+      ItemRegistry.addItem(potion_haste_strong, "potion_haste_strong",CategoryType.POTION);
       if (potion_viscous != null)
         addBrewingRecipe(
             new ItemStack(potion_viscous),
@@ -241,8 +242,8 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
     if (enableLuck) {
       ItemPotionCustom potion_luck = new ItemPotionCustom(true, MobEffects.LUCK, NORMAL);
       ItemPotionCustom potion_luck_long = new ItemPotionCustom(true, MobEffects.LUCK, LONG);
-      ItemRegistry.addItem(potion_luck, "potion_luck");
-      ItemRegistry.addItem(potion_luck_long, "potion_luck_long");
+      ItemRegistry.addItem(potion_luck, "potion_luck",CategoryType.POTION);
+      ItemRegistry.addItem(potion_luck_long, "potion_luck_long",CategoryType.POTION);
       if (potion_viscous != null)
         addBrewingRecipe(
             new ItemStack(potion_viscous),
@@ -256,8 +257,8 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
     if (enableLevit) {
       ItemPotionCustom potion_levitation = new ItemPotionCustom(true, MobEffects.LEVITATION, NORMAL);
       ItemPotionCustom potion_levitation_long = new ItemPotionCustom(true, MobEffects.LEVITATION, LONG);
-      ItemRegistry.addItem(potion_levitation, "potion_levitation");
-      ItemRegistry.addItem(potion_levitation_long, "potion_levitation_long");
+      ItemRegistry.addItem(potion_levitation, "potion_levitation",CategoryType.POTION);
+      ItemRegistry.addItem(potion_levitation_long, "potion_levitation_long",CategoryType.POTION);
       if (potion_viscous != null)
         addBrewingRecipe(
             new ItemStack(potion_viscous),

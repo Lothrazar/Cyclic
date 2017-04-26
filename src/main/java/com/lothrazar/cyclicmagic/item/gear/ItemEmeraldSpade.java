@@ -8,7 +8,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemEmeraldSpade extends ItemSpade implements IHasRecipe {
-  public static final String name = "emerald_spade";
+   
   public ItemEmeraldSpade() {
     super(MaterialRegistry.emeraldToolMaterial);
   }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import amerifrance.guideapi.api.GuideAPI;
@@ -26,7 +27,6 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.ShapedOreRecipe;
 
 @Optional.Interface(iface = "amerifrance.guideapi.api.GuideAPI", modid = "guideapi", striprefs = true)
 @GuideBook
@@ -36,58 +36,62 @@ public class CyclicGuideBook implements IGuideBook {
   public static List<CategoryAbstract> categories = new ArrayList<CategoryAbstract>();
   public static Map<ResourceLocation, EntryAbstract> entriesBlocks = new HashMap<ResourceLocation, EntryAbstract>();
   public static Map<ResourceLocation, EntryAbstract> entriesItems = new HashMap<ResourceLocation, EntryAbstract>();
-  public enum Cateories {
-    BLOCK, ITEM, WORLD;
+  public static Map<ResourceLocation, EntryAbstract> entriesGear = new HashMap<ResourceLocation, EntryAbstract>();
+  public static Map<ResourceLocation, EntryAbstract> entriesPotion = new HashMap<ResourceLocation, EntryAbstract>();
+  public static Map<ResourceLocation, EntryAbstract> entriesWorld = new HashMap<ResourceLocation, EntryAbstract>();
+  public enum CategoryType {
+    BLOCK, ITEM, WORLD, GEAR, POTION;
     public String text() {
       return name().toLowerCase();
     }
     public void addPage(List<IPage> page, String pageTitle, ItemStack icon) {
       switch (this) {
         case BLOCK:
-          entriesBlocks.put(new ResourceLocation(Const.MODID, section.nextCategory()), new EntryItemStack(page, pageTitle, icon));
+          entriesBlocks.put(new ResourceLocation(Const.MODID, pageTitle), new EntryItemStack(page, pageTitle, icon));
         break;
         case ITEM:
-          entriesItems.put(new ResourceLocation(Const.MODID, section.nextCategory()), new EntryItemStack(page, pageTitle, icon));
+          entriesItems.put(new ResourceLocation(Const.MODID,pageTitle), new EntryItemStack(page, pageTitle, icon));
+        break;
+        case GEAR:
+          entriesGear.put(new ResourceLocation(Const.MODID, pageTitle), new EntryItemStack(page, pageTitle, icon));
+        break;
+        case POTION:
+          entriesPotion.put(new ResourceLocation(Const.MODID, pageTitle), new EntryItemStack(page, pageTitle, icon));
         break;
         case WORLD:
+          entriesWorld.put(new ResourceLocation(Const.MODID, section.nextCategory()), new EntryItemStack(page, pageTitle, icon));
         break;
         default:
         break;
       }
     }
   }
-  public static void addPageItem(Item item, IRecipe recipe) {
+  public static void addPageItem(Item item, IRecipe recipe, CategoryType cat) {
     String pageTitle = item.getUnlocalizedName().replace("name", "guide");
     String above = item.getUnlocalizedName().replace("name", "guide.above");
-    CyclicGuideBook.addPage(Cateories.ITEM, pageTitle, new ItemStack(item), above, recipe);
+    CyclicGuideBook.addPage(cat, pageTitle, new ItemStack(item), above, recipe);
   }
-  public static void addPageBlock(Block block, IRecipe recipe) {
-    String pageTitle = block.getUnlocalizedName().replace("name", "guide");
-    String above = block.getUnlocalizedName().replace("name", "guide.above");
-    CyclicGuideBook.addPage(Cateories.BLOCK, pageTitle, new ItemStack(block), above, recipe);
+  public static void addPageBlock(Block block, IRecipe recipe, CategoryType cat) {
+    String pageTitle = block.getUnlocalizedName()+ ".guide";
+    String above = block.getUnlocalizedName()+ "guide.above";
+    CyclicGuideBook.addPage(cat, pageTitle, new ItemStack(block), above, recipe);
   }
-  private static void addPage(Cateories cat, String pageTitle, ItemStack icon, String above, IRecipe recipe) {
+  private static void addPage(CategoryType cat, String pageTitle, ItemStack icon, String above, @Nullable IRecipe recipe) {
     List<IPage> pages = new ArrayList<IPage>();
+    ModCyclic.logger.info("PAGE TEXT ADDED "+above);
     pages.add(new PageText(above));//just text on the screen
-    if (recipe != null)
+    if (recipe != null) {
       pages.add(new PageIRecipe(recipe));
+    }
     cat.addPage(pages, pageTitle, icon);
   }
   @Override
   public Book buildBook() {
-    //    //    String firstCategory = section.nextCategory();
-    //    List<IPage> pages = new ArrayList<IPage>();
-    //    pages.add(new PageText(section.nextPage()));//just text on the screen
-    //    pages.add(new PageIRecipe(new ShapedOreRecipe(Blocks.DIRT, " s", "sp", " d", 's', "stickWood", 'p', "paper", 'd', "dye")));
-    //    //this puts a link on the main page each time
-    //    entriesBlocks.put(new ResourceLocation(Const.MODID, section.toString()), new EntryItemStack(pages, section.toString(), new ItemStack(Items.DIAMOND)));
-    //    pages = new ArrayList<IPage>();
-    //    pages.add(new PageText(section.nextPage()));//just text on the screen
-    //    pages.add(new PageIRecipe(new ShapedOreRecipe(Blocks.GRASS, " s", "sp", " d", 's', "stickWood", 'p', "paper", 'd', "dye")));
-    //this puts a link on the main page each time
-    //    entriesBlocks.put(new ResourceLocation(Const.MODID, section.toString()), new EntryItemStack(pages, section.nextPage(), new ItemStack(Items.EMERALD)));
-    categories.add(new CategoryItemStack(entriesBlocks, "guide.category." + Cateories.BLOCK.text(), new ItemStack(Blocks.ENDER_CHEST)));
-    categories.add(new CategoryItemStack(entriesItems, "guide.category." + Cateories.ITEM.text(), new ItemStack(Items.STICK)));
+    categories.add(new CategoryItemStack(entriesBlocks, "guide.category." + CategoryType.BLOCK.text(), new ItemStack(Blocks.ENDER_CHEST)));
+    categories.add(new CategoryItemStack(entriesItems, "guide.category." + CategoryType.ITEM.text(), new ItemStack(Items.STICK)));
+    categories.add(new CategoryItemStack(entriesGear, "guide.category." + CategoryType.GEAR.text(), new ItemStack(Items.DIAMOND_SWORD)));
+    categories.add(new CategoryItemStack(entriesPotion, "guide.category." + CategoryType.POTION.text(), new ItemStack(Items.POTIONITEM)));
+    categories.add(new CategoryItemStack(entriesWorld, "guide.category." + CategoryType.WORLD.text(), new ItemStack(Blocks.TALLGRASS)));
     createBook();
     return book;
   }

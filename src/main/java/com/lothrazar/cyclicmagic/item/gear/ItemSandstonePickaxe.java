@@ -9,7 +9,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemSandstonePickaxe extends ItemPickaxe implements IHasRecipe {
-  public static final String name = "sandstone_pickaxe";
+  
   public ItemSandstonePickaxe() {
     super(MaterialRegistry.sandstoneToolMaterial);
   }
