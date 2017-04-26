@@ -28,8 +28,8 @@ public class EnchantLaunch extends EnchantBase {
   private static final int cooldown = 40;
   private static final String NBT_USES = "launchuses";
   public EnchantLaunch() {
-    super(Rarity.COMMON, EnumEnchantmentType.ARMOR_FEET, new EntityEquipmentSlot[] { EntityEquipmentSlot.FEET });
-    this.setName("launch");
+    super("launch",Rarity.COMMON, EnumEnchantmentType.ARMOR_FEET, new EntityEquipmentSlot[] { EntityEquipmentSlot.FEET });
+    
   }
   @Override
   public int getMaxLevel() {

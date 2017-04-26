@@ -28,7 +28,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-@Optional.Interface(iface = "amerifrance.guideapi.api.GuideAPI", modid = "guideapi", striprefs = true)
+//@Optional.Interface(iface = "amerifrance.guideapi.api.GuideAPI", modid = "guideapi", striprefs = true)
 @GuideBook
 public class CyclicGuideBook implements IGuideBook {
   public static Book book;
@@ -39,8 +39,9 @@ public class CyclicGuideBook implements IGuideBook {
   public static Map<ResourceLocation, EntryAbstract> entriesGear = new HashMap<ResourceLocation, EntryAbstract>();
   public static Map<ResourceLocation, EntryAbstract> entriesPotion = new HashMap<ResourceLocation, EntryAbstract>();
   public static Map<ResourceLocation, EntryAbstract> entriesWorld = new HashMap<ResourceLocation, EntryAbstract>();
+  public static Map<ResourceLocation, EntryAbstract> entriesEnchants = new HashMap<ResourceLocation, EntryAbstract>();
   public enum CategoryType {
-    BLOCK, ITEM, WORLD, GEAR, POTION;
+    BLOCK, ITEM, WORLD, GEAR, POTION, ENCHANT;
     public String text() {
       return name().toLowerCase();
     }
@@ -50,7 +51,7 @@ public class CyclicGuideBook implements IGuideBook {
           entriesBlocks.put(new ResourceLocation(Const.MODID, pageTitle), new EntryItemStack(page, pageTitle, icon));
         break;
         case ITEM:
-          entriesItems.put(new ResourceLocation(Const.MODID,pageTitle), new EntryItemStack(page, pageTitle, icon));
+          entriesItems.put(new ResourceLocation(Const.MODID, pageTitle), new EntryItemStack(page, pageTitle, icon));
         break;
         case GEAR:
           entriesGear.put(new ResourceLocation(Const.MODID, pageTitle), new EntryItemStack(page, pageTitle, icon));
@@ -61,24 +62,26 @@ public class CyclicGuideBook implements IGuideBook {
         case WORLD:
           entriesWorld.put(new ResourceLocation(Const.MODID, section.nextCategory()), new EntryItemStack(page, pageTitle, icon));
         break;
+        case ENCHANT:
+          entriesEnchants.put(new ResourceLocation(Const.MODID, section.nextCategory()), new EntryItemStack(page, pageTitle, icon));
+        break;
         default:
         break;
       }
     }
   }
   public static void addPageItem(Item item, IRecipe recipe, CategoryType cat) {
-    String pageTitle = item.getUnlocalizedName().replace("name", "guide");
-    String above = item.getUnlocalizedName().replace("name", "guide.above");
+    String pageTitle = item.getUnlocalizedName() + ".guide";
+    String above = item.getUnlocalizedName() + ".guide.text";
     CyclicGuideBook.addPage(cat, pageTitle, new ItemStack(item), above, recipe);
   }
   public static void addPageBlock(Block block, IRecipe recipe, CategoryType cat) {
-    String pageTitle = block.getUnlocalizedName()+ ".guide";
-    String above = block.getUnlocalizedName()+ "guide.above";
+    String pageTitle = block.getUnlocalizedName() + ".guide";
+    String above = block.getUnlocalizedName() + ".guide.text";
     CyclicGuideBook.addPage(cat, pageTitle, new ItemStack(block), above, recipe);
   }
-  private static void addPage(CategoryType cat, String pageTitle, ItemStack icon, String above, @Nullable IRecipe recipe) {
+  public static void addPage(CategoryType cat, String pageTitle, ItemStack icon, String above, @Nullable IRecipe recipe) {
     List<IPage> pages = new ArrayList<IPage>();
-    ModCyclic.logger.info("PAGE TEXT ADDED "+above);
     pages.add(new PageText(above));//just text on the screen
     if (recipe != null) {
       pages.add(new PageIRecipe(recipe));
@@ -92,6 +95,9 @@ public class CyclicGuideBook implements IGuideBook {
     categories.add(new CategoryItemStack(entriesGear, "guide.category." + CategoryType.GEAR.text(), new ItemStack(Items.DIAMOND_SWORD)));
     categories.add(new CategoryItemStack(entriesPotion, "guide.category." + CategoryType.POTION.text(), new ItemStack(Items.POTIONITEM)));
     categories.add(new CategoryItemStack(entriesWorld, "guide.category." + CategoryType.WORLD.text(), new ItemStack(Blocks.TALLGRASS)));
+
+    categories.add(new CategoryItemStack(entriesEnchants, "guide.category." + CategoryType.ENCHANT.text(), new ItemStack(Items.ENCHANTED_BOOK)));
+    
     createBook();
     return book;
   }

@@ -15,8 +15,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class EnchantXpBoost extends EnchantBase {
   private static final int XP_PER_LVL = 4;
   public EnchantXpBoost() {
-    super(Rarity.VERY_RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND });
-    this.setName("expboost");
+    super("expboost",Rarity.VERY_RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND });
+    
   }
   @Override
   public int getMaxLevel() {

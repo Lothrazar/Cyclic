@@ -15,8 +15,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class EnchantVenom extends EnchantBase {
   final int durationTicksPerLevel = 3 * Const.TICKS_PER_SEC;//3 seconds
   public EnchantVenom() {
-    super(Rarity.COMMON, EnumEnchantmentType.WEAPON, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND });
-    this.setName("venom");
+    super("venom",Rarity.COMMON, EnumEnchantmentType.WEAPON, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND });
+    
   }
   @Override
   public int getMaxLevel() {

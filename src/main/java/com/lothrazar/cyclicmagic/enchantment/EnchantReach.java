@@ -15,8 +15,7 @@ public class EnchantReach extends EnchantBase {
   private static final int REACH_VANILLA = 5;
   private static final int REACH_BOOST = 16;
   public EnchantReach() {
-    super(Rarity.VERY_RARE, EnumEnchantmentType.ARMOR_CHEST, new EntityEquipmentSlot[] { EntityEquipmentSlot.CHEST });
-    this.setName("reach");
+    super("reach", Rarity.VERY_RARE, EnumEnchantmentType.ARMOR_CHEST, new EntityEquipmentSlot[] { EntityEquipmentSlot.CHEST });
   }
   @Override
   public int getMaxLevel() {

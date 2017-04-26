@@ -670,3 +670,15 @@ tooltip.burntime=Burn Time:
 unlocks.crafting=Unlocked Inventory Crafting
 unlocks.extended=Unlocked Extended Inventory
 wand.inventory.empty=Scepter Inventory is Empty
+
+item.guide.name=Cyclic Guide Book
+guide.title=Cyclic Guide
+guide.welcome=Cyclic
+guide.category.block=Blocks
+guide.category.item=Items
+guide.category.gear=Gear
+guide.category.potion=Potions
+guide.category.enchant=Enchantments
+guide.category.world=World Generation
+
+
