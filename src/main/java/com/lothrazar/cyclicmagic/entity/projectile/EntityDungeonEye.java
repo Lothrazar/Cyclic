@@ -8,6 +8,9 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
 public class EntityDungeonEye extends EntityThrowableDispensable {
+  private static final double DISTLIMIT = 0.8;
+  private static final double VERT = 0.014999999664723873D;
+  private static final double HORIZ = 0.0025D;
   public static Item renderSnowball;
   private double targetX;
   private double targetY;
@@ -29,30 +32,38 @@ public class EntityDungeonEye extends EntityThrowableDispensable {
   }
   @Override
   public void onUpdate() {
-    super.onUpdate();
-    if (!this.getEntityWorld().isRemote) {
-      float mHoriz = MathHelper.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
-      double distX = this.targetX - this.posX;
-      double distY = this.targetY - this.posY;
-      double distZ = this.targetZ - this.posZ;
-      float distLine = (float) Math.sqrt(distX * distX + distZ * distZ);
-      float f2 = (float) Math.atan2(distZ, distX);
-      double d2 = (double) mHoriz + (double) (distLine - mHoriz) * 0.0025D;
+    if (!this.world.isRemote) {
+      this.lastTickPosX = this.posX;
+      this.lastTickPosY = this.posY;
+      this.lastTickPosZ = this.posZ;
+      //      super.onUpdate();
+      this.posX += this.motionX;
+      this.posY += this.motionY;
+      this.posZ += this.motionZ;
+      float f = MathHelper.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
+      double distX = Math.abs(this.targetX - this.posX);
+      double distY = Math.abs(this.targetY - this.posY);
+      double distZ = Math.abs(this.targetZ - this.posZ);
+      float distance = (float) Math.sqrt(distX * distX + distZ * distZ);
+      float distLine = (float) Math.sqrt(distX * distX + distZ * distZ + distY * distY);
+      float atan = (float) MathHelper.atan2(this.targetZ - this.posZ, this.targetX - this.posX);
+      double horizFactor = (double) f + (double) (distance - f) * HORIZ;
       if (distLine < 1.0F) {
-        d2 *= 0.8D;
-        // this.motionY *= 0.8D;//disabling gravity
+        horizFactor *= 0.8D;
+        this.motionY *= 0.8D;
+        //        this.onImpact(mop);
+        this.setDead();
       }
-      else if (distLine > 30) { //if its far far away, slightly increase HSPEED
-        //test increasing hspeed
-        d2 *= 1.3;
+      this.motionX = Math.cos((double) atan) * horizFactor;
+      this.motionZ = Math.sin((double) atan) * horizFactor;
+      this.motionY = (14 * distY) / distLine * VERT;
+      if (distX < DISTLIMIT && distZ < DISTLIMIT) {//if we are right in line, stop swaggerin
+        motionX = 0;
+        motionZ = 0;
+        if (distY < DISTLIMIT) {
+          motionY = 0;
+        }
       }
-      //so overall its kind of asymptotic-ish to the right angle going out from the player, then vertical to the spawner
-      this.motionX = Math.cos((double) f2) * d2;
-      this.motionZ = Math.sin((double) f2) * d2;
-      // the vertical speed gets faster, the closer you are to it horizontally
-      double vanillaFactor = 0.014999999664723873D;// using a const pulled from
-      // vanilla endereye
-      this.motionY = (14 * distY) / distLine * vanillaFactor;
       if (this.posY < this.targetY) {
         // make sure motion is going up
         if (this.motionY < 0) {
@@ -65,13 +76,58 @@ public class EntityDungeonEye extends EntityThrowableDispensable {
           this.motionY *= -1;
         }
       }
+      //      if (this.posY < this.targetY) {
+      //        //we are below the target
+      //        this.motionY += (1.0D - this.motionY) * vertFactor;
+      //        if(motionY<0){
+      //          motionY*=-1;
+      //        }
+      //      }
+      //      else {
+      //        this.motionY = (-1.0D - this.motionY) * vertFactor;
+      //      
+      //      } 
+      double speedHReduction = 1;
+      double speedVReduction = 1;
+      if (this.ticksExisted < 20) {
+
+        speedHReduction = 3;
+        speedVReduction = 16;
+      }
+      if (this.ticksExisted < 40) {
+        speedHReduction = 2;
+        speedVReduction = 12;
+      }
+      else if (this.ticksExisted < 100) {
+        speedHReduction = 1.5;
+        speedVReduction = 6;
+      }
+      else if (this.ticksExisted < 150) {
+        speedHReduction = 1.3;
+        speedVReduction = 3;
+      }
+      else if (this.ticksExisted < 500) {
+        speedHReduction = 1.3;
+        speedVReduction = 1.1;
+      }
+      //else no reduction
+      this.motionX /= speedHReduction;
+      this.motionY /= speedVReduction;
+      this.motionZ /= speedHReduction;
+//      System.out.println(ticksExisted + "  speedHReduction " + speedHReduction);
     }
+    if (this.ticksExisted > 9999) {
+      this.setDead();
+    }
+    if (this.motionX==0 && this.motionY==0 && this.motionZ==0) {
+      this.setDead();
+    }
+    int particleCount = (this.ticksExisted < 100) ? 30 : 14;
     float f3 = 0.25F;
     for (int i = 0; i < particleCount; ++i) {
       this.getEntityWorld().spawnParticle(EnumParticleTypes.PORTAL, this.posX - this.motionX * (double) f3 + this.rand.nextDouble() * 0.6D - 0.3D, this.posY - this.motionY * (double) f3 - 0.5D, this.posZ - this.motionZ * (double) f3 + this.rand.nextDouble() * 0.6D - 0.3D, this.motionX, this.motionY, this.motionZ, new int[0]);
     }
   }
-  private final static int particleCount = 22;
   @Override
   protected void onImpact(RayTraceResult mop) {
     this.setDead();// does not pass through walls or entities

@@ -38,6 +38,7 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
   void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
     BlockPos blockpos = UtilWorld.findClosestBlock(player, Blocks.MOB_SPAWNER, DUNGEONRADIUS);
     if (blockpos != null) {
+//      UtilChat.addChatMessage(player, ""+blockpos);
       EntityDungeonEye entityendereye = new EntityDungeonEye(world, player);
       doThrow(world, player, hand, entityendereye, 0.5F);
       entityendereye.moveTowards(blockpos);
@@ -46,7 +47,7 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
       // not found, so play different sound
       UtilSound.playSound(player, player.getPosition(), SoundEvents.BLOCK_FIRE_EXTINGUISH);
       if (world.isRemote) {
-        UtilChat.addChatMessage(player, "item.ender_dungeon.notfound");
+        UtilChat.addChatMessage(player, UtilChat.lang("item.ender_dungeon.notfound" )+" "+ DUNGEONRADIUS);
       }
     }
   }
