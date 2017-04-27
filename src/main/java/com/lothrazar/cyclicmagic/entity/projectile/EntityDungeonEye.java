@@ -51,7 +51,6 @@ public class EntityDungeonEye extends EntityThrowableDispensable {
       if (distLine < 1.0F) {
         horizFactor *= 0.8D;
         this.motionY *= 0.8D;
-        //        this.onImpact(mop);
         this.setDead();
       }
       this.motionX = Math.cos((double) atan) * horizFactor;
@@ -76,21 +75,9 @@ public class EntityDungeonEye extends EntityThrowableDispensable {
           this.motionY *= -1;
         }
       }
-      //      if (this.posY < this.targetY) {
-      //        //we are below the target
-      //        this.motionY += (1.0D - this.motionY) * vertFactor;
-      //        if(motionY<0){
-      //          motionY*=-1;
-      //        }
-      //      }
-      //      else {
-      //        this.motionY = (-1.0D - this.motionY) * vertFactor;
-      //      
-      //      } 
       double speedHReduction = 1;
       double speedVReduction = 1;
       if (this.ticksExisted < 20) {
-
         speedHReduction = 3;
         speedVReduction = 16;
       }
@@ -114,12 +101,12 @@ public class EntityDungeonEye extends EntityThrowableDispensable {
       this.motionX /= speedHReduction;
       this.motionY /= speedVReduction;
       this.motionZ /= speedHReduction;
-//      System.out.println(ticksExisted + "  speedHReduction " + speedHReduction);
+      //      System.out.println(ticksExisted + "  speedHReduction " + speedHReduction);
     }
     if (this.ticksExisted > 9999) {
       this.setDead();
     }
-    if (this.motionX==0 && this.motionY==0 && this.motionZ==0) {
+    if (this.motionX == 0 && this.motionY == 0 && this.motionZ == 0) {
       this.setDead();
     }
     int particleCount = (this.ticksExisted < 100) ? 30 : 14;
