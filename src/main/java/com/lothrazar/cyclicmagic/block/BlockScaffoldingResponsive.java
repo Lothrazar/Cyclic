@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.block;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -18,8 +19,8 @@ public class BlockScaffoldingResponsive extends BlockScaffolding implements IHas
   }
   @Override
   public IRecipe addRecipe() {
-     GameRegistry.addShapelessRecipe(new ItemStack(this, 64), Blocks.DIRT, new ItemStack(Items.STICK));
-    return null;
+    return  RecipeRegistry.addShapelessRecipe(new ItemStack(this, 64), Blocks.DIRT, new ItemStack(Items.STICK));
+  
   }
   @SuppressWarnings("deprecation")
   @Override

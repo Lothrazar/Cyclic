@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.item;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
@@ -226,8 +227,8 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    GameRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this));
-    return GameRegistry.addShapedRecipe(new ItemStack(this, 8), "ppp", "pcp", "ppp", 'c', new ItemStack(Items.COAL, 1, 1), // charcoal
+    RecipeRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this));
+    return  RecipeRegistry.addShapedRecipe(new ItemStack(this, 8), "ppp", "pcp", "ppp", 'c', new ItemStack(Items.COAL, 1, 1), // charcoal
         'p', Items.PAPER);
     //also let you clean off the paper , make one with no NBT
   }

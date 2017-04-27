@@ -3,6 +3,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockChest;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -11,8 +12,9 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class RecipeRegistry {
   /**
-   * wrapper for Forge addShapeless recipe, except the difference is
-   * this returns it after registering it
+   * wrapper for Forge addShapeless recipe, except the difference is this
+   * returns it after registering it
+   * 
    * @param stack
    * @param recipeComponents
    * @return
@@ -37,11 +39,15 @@ public class RecipeRegistry {
   }
   /**
    * thin wrapper for addShapedRecipe
+   * 
    * @param output
    * @param params
    * @return
    */
   public static IRecipe addShapedRecipe(@Nonnull ItemStack output, Object... params) {
     return GameRegistry.addShapedRecipe(output, params);
+  }
+  public static IRecipe addRecipe(@Nonnull ItemStack output, Object... params) {
+    return addShapedRecipe(output, params);
   }
 }

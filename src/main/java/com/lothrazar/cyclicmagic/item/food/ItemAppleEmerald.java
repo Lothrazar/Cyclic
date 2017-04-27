@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.item.food;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.BaseItem;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityZombieVillager;
@@ -26,10 +27,10 @@ public class ItemAppleEmerald extends BaseItem implements IHasRecipe {
   private static final int CONVTIME = 1200;
   @Override
   public IRecipe addRecipe() {
-        GameRegistry.addShapelessRecipe(new ItemStack(this),
+    return  RecipeRegistry.addShapelessRecipe(new ItemStack(this),
         Items.EMERALD,
         Items.GOLDEN_APPLE);
-    return null;
+   
   }
   @Override
   @SideOnly(Side.CLIENT)

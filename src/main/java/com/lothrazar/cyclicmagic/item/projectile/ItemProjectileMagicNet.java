@@ -5,6 +5,7 @@ import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetFull;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetEmpty;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityTorchBolt;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -26,7 +27,7 @@ public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasRe
   }
   @Override
   public IRecipe addRecipe() {
-    return GameRegistry.addShapedRecipe(new ItemStack(this, 1),
+    return  RecipeRegistry.addShapedRecipe(new ItemStack(this, 1),
         "lal",
         "qiq",
         "lal",
@@ -34,9 +35,7 @@ public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasRe
         'a', new ItemStack(Blocks.TALLGRASS, 1, OreDictionary.WILDCARD_VALUE),
         'l', new ItemStack(Items.DYE, 1, EnumDyeColor.CYAN.getDyeDamage()),
         'q', new ItemStack(Items.SNOWBALL)
-    //       ,Items.BEETROOT
-    //       ,Items.LEATHER
-    //       ,Items.LEAD
+ 
     ); 
   }
   public boolean hasEntity(ItemStack held) {

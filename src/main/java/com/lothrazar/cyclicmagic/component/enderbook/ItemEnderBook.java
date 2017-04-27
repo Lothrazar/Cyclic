@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.item.BaseItem;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
@@ -120,8 +121,8 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
     return true;
   }
   public IRecipe addRecipe() {
-    GameRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this));
-    return GameRegistry.addShapedRecipe(new ItemStack(this), "ene", "ebe", "eee",
+    RecipeRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this));
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this), "ene", "ebe", "eee",
         'e', Items.ENDER_PEARL,
         'b', Items.BOOK,
         'n', Blocks.EMERALD_BLOCK);

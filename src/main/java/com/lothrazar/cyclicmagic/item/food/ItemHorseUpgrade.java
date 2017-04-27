@@ -3,6 +3,7 @@ import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.BaseItem;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
 import com.lothrazar.cyclicmagic.util.Const.HorseMeta;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -49,8 +50,8 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
     tooltip.add(UtilChat.lang(carrot.getUnlocalizedName(stack) + ".effect"));
   }
   public IRecipe addRecipe() {
-    GameRegistry.addShapelessRecipe(new ItemStack(this), Items.CARROT, recipeItem);
-    return null;
+    return  RecipeRegistry.addShapelessRecipe(new ItemStack(this), Items.CARROT, recipeItem);
+     
   }
   public static void onHorseInteract(AbstractHorse ahorse, EntityPlayer player, ItemStack held, ItemHorseUpgrade heldItem) {
     if (ahorse.isDead) { return; }

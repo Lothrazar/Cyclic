@@ -13,6 +13,7 @@ import com.lothrazar.cyclicmagic.component.vector.ItemBlockVectorPlate;
 import com.lothrazar.cyclicmagic.component.vector.TileEntityVector;
 import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -49,15 +50,15 @@ public class BlockPlateModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(plate_launch_med, "plate_launch_med",CategoryType.BLOCK);
       BlockLaunch plate_launch_large = new BlockLaunch(1.8F, SoundEvents.BLOCK_SLIME_BREAK);
       BlockRegistry.registerBlock(plate_launch_large, "plate_launch_large",CategoryType.BLOCK);
-      GameRegistry.addRecipe(new ItemStack(plate_launch_small, 6),
+      RecipeRegistry.addShapedRecipe(new ItemStack(plate_launch_small, 6),
           "sss", "ggg", "iii",
           's', Blocks.SLIME_BLOCK,
           'g', Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE,
           'i', Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE);
-      GameRegistry.addShapelessRecipe(new ItemStack(plate_launch_med),
+      RecipeRegistry.addShapelessRecipe(new ItemStack(plate_launch_med),
           new ItemStack(plate_launch_small),
           new ItemStack(Items.QUARTZ));
-      GameRegistry.addShapelessRecipe(new ItemStack(plate_launch_large),
+      RecipeRegistry.addShapelessRecipe(new ItemStack(plate_launch_large),
           new ItemStack(plate_launch_med),
           new ItemStack(Blocks.END_STONE));
       AchievementRegistry.registerItemAchievement(Item.getItemFromBlock(plate_launch_large));
@@ -66,7 +67,7 @@ public class BlockPlateModule extends BaseModule implements IHasConfig {
       BlockConveyor plate_push = new BlockConveyor(0.16F);
       BlockRegistry.registerBlock(plate_push, "plate_push",CategoryType.BLOCK);
       AchievementRegistry.registerItemAchievement(Item.getItemFromBlock(plate_push));
-      GameRegistry.addRecipe(new ItemStack(plate_push, 8),
+     RecipeRegistry.addShapedRecipe(new ItemStack(plate_push, 8),
           "sbs",
           "bxb",
           "sbs",
@@ -75,14 +76,14 @@ public class BlockPlateModule extends BaseModule implements IHasConfig {
           'b', new ItemStack(Items.DYE, 1, EnumDyeColor.PURPLE.getDyeDamage()));
       plate_push_fast = new BlockConveyor(0.32F);
       BlockRegistry.registerBlock(plate_push_fast, "plate_push_fast",CategoryType.BLOCK);
-      GameRegistry.addShapelessRecipe(new ItemStack(plate_push_fast), new ItemStack(plate_push), Items.REDSTONE);
+      RecipeRegistry.addShapelessRecipe(new ItemStack(plate_push_fast), new ItemStack(plate_push), Items.REDSTONE);
       BlockConveyor plate_push_slow = new BlockConveyor(0.08F);
       BlockRegistry.registerBlock(plate_push_slow, "plate_push_slow",CategoryType.BLOCK);
-      GameRegistry.addShapelessRecipe(new ItemStack(plate_push_slow), new ItemStack(plate_push),
+      RecipeRegistry.addShapelessRecipe(new ItemStack(plate_push_slow), new ItemStack(plate_push),
           new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage()));
       BlockConveyor plate_push_slowest = new BlockConveyor(0.04F);
       BlockRegistry.registerBlock(plate_push_slowest, "plate_push_slowest",CategoryType.BLOCK);
-      GameRegistry.addShapelessRecipe(new ItemStack(plate_push_slowest), new ItemStack(plate_push),
+      RecipeRegistry.addShapelessRecipe(new ItemStack(plate_push_slowest), new ItemStack(plate_push),
           new ItemStack(Items.DYE, 1, EnumDyeColor.LIGHT_BLUE.getDyeDamage()));
     }
     if (vectorPlate) {
@@ -92,7 +93,7 @@ public class BlockPlateModule extends BaseModule implements IHasConfig {
       ModCyclic.instance.events.register(plate_vector);
       ItemStack top = (plate_launch_med == null) ? new ItemStack(Blocks.REDSTONE_LAMP) : new ItemStack(plate_launch_med);
       ItemStack base = (plate_push_fast == null) ? new ItemStack(Blocks.EMERALD_BLOCK) : new ItemStack(plate_push_fast);
-      GameRegistry.addRecipe(new ItemStack(plate_vector, 6),
+      RecipeRegistry.addShapedRecipe(new ItemStack(plate_vector, 6),
           "ttt",
           "idi",
           "bbb",

@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.block;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -31,6 +32,6 @@ public class BlockScaffoldingReplace extends BlockScaffolding implements IHasRec
   }
   @Override
   public IRecipe addRecipe() {
-    return GameRegistry.addShapedRecipe(new ItemStack(this, 16), "s s", "s s", "s s", 's', new ItemStack(Items.STICK));
+    return  RecipeRegistry.addShapedRecipe(new ItemStack(this, 16), "s s", "s s", "s s", 's', new ItemStack(Items.STICK));
   }
 }

@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.item;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -110,10 +111,10 @@ public class ItemPasswordRemote extends BaseItem implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    GameRegistry.addShapelessRecipe(new ItemStack(this),
+    return  RecipeRegistry.addShapelessRecipe(new ItemStack(this),
         new ItemStack(Blocks.STONE_SLAB, 1, BlockStoneSlab.EnumType.STONE.getMetadata()),
         Blocks.STONE_BUTTON,
         Blocks.LEVER);
-    return null;
+  
   }
 }

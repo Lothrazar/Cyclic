@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.item.projectile;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityLightningballBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -16,11 +17,11 @@ public class ItemProjectileLightning extends BaseItemProjectile implements IHasR
   }
   @Override
   public IRecipe addRecipe() {
-    GameRegistry.addShapelessRecipe(new ItemStack(this, 4),
+    return  RecipeRegistry.addShapelessRecipe(new ItemStack(this, 4),
         new ItemStack(Items.ENDER_PEARL),
         new ItemStack(Items.QUARTZ),
         new ItemStack(Items.GHAST_TEAR));
-    return null;
+ 
   }
   @Override
   void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {

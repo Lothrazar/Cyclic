@@ -3,6 +3,7 @@ import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityShearingBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -25,8 +26,8 @@ public class ItemProjectileWool extends BaseItemProjectile implements IHasRecipe
   }
   @Override
   public IRecipe addRecipe() {
-    GameRegistry.addShapelessRecipe(new ItemStack(this, 32), new ItemStack(Blocks.MOSSY_COBBLESTONE), new ItemStack(Blocks.WOOL), new ItemStack(Items.SHEARS));
-    return null;
+    return  RecipeRegistry.addShapelessRecipe(new ItemStack(this, 32), new ItemStack(Blocks.MOSSY_COBBLESTONE), new ItemStack(Blocks.WOOL), new ItemStack(Items.SHEARS));
+ 
   }
   @Override
   void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {

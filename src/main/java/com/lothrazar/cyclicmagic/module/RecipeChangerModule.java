@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilRecipe;
@@ -8,7 +9,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class RecipeChangerModule extends BaseModule implements IHasConfig {
@@ -103,68 +103,68 @@ public class RecipeChangerModule extends BaseModule implements IHasConfig {
     // https://github.com/PrinceOfAmber/SamsPowerups/blob/master/Recipes/src/main/java/com/lothrazar/samsrecipes/RecipeRegistry.java
   }
   private void netherwartBlockReverse() {
-    GameRegistry.addShapelessRecipe(new ItemStack(Items.NETHER_WART, 9),
+    RecipeRegistry.addShapelessRecipe(new ItemStack(Items.NETHER_WART, 9),
         new ItemStack(Blocks.NETHER_WART_BLOCK)); // nether_wart_block
   }
   private void glowstoneBlockToDust() {
-    GameRegistry.addShapelessRecipe(new ItemStack(Items.GLOWSTONE_DUST, 4),
+    RecipeRegistry.addShapelessRecipe(new ItemStack(Items.GLOWSTONE_DUST, 4),
         new ItemStack(Blocks.GLOWSTONE));
   }
   private void snowBlocksBalls() {
-    GameRegistry.addShapelessRecipe(new ItemStack(Items.SNOWBALL, 4),
+    RecipeRegistry.addShapelessRecipe(new ItemStack(Items.SNOWBALL, 4),
         new ItemStack(Blocks.SNOW));
   }
   private void quartzBlocksItem() {
-    GameRegistry.addShapelessRecipe(new ItemStack(Items.QUARTZ, 4),
+    RecipeRegistry.addShapelessRecipe(new ItemStack(Items.QUARTZ, 4),
         new ItemStack(Blocks.QUARTZ_BLOCK));
   }
   private void melonToSlice() {
-    GameRegistry.addShapelessRecipe(new ItemStack(Items.MELON, 9),
+    RecipeRegistry.addShapelessRecipe(new ItemStack(Items.MELON, 9),
         new ItemStack(Blocks.MELON_BLOCK));
   }
   private void elytraRepair() {
-    GameRegistry.addShapelessRecipe(new ItemStack(Items.ELYTRA, 1, UtilItemStack.getMaxDmgFraction(Items.ELYTRA, 10)),
+    RecipeRegistry.addShapelessRecipe(new ItemStack(Items.ELYTRA, 1, UtilItemStack.getMaxDmgFraction(Items.ELYTRA, 10)),
         new ItemStack(Items.SKULL, 1, Const.skull_wither),
         new ItemStack(Items.ELYTRA, 1, OreDictionary.WILDCARD_VALUE));
   }
   private void notchApple() {
     // https://www.reddit.com/r/minecraftsuggestions/comments/4d20g5/bring_back_the_notch_apple_crafting_recipe/
-    GameRegistry.addRecipe(new ItemStack(Items.GOLDEN_APPLE, 1, 1), "ggg", "gag", "ggg", 'g', new ItemStack(Blocks.GOLD_BLOCK), 'a', new ItemStack(Items.APPLE));
+    RecipeRegistry.addRecipe(new ItemStack(Items.GOLDEN_APPLE, 1, 1), "ggg", "gag", "ggg", 'g', new ItemStack(Blocks.GOLD_BLOCK), 'a', new ItemStack(Items.APPLE));
   }
   private void playerSkull() {
-    GameRegistry.addShapelessRecipe(new ItemStack(Items.SKULL, 4, Const.skull_player),
+    RecipeRegistry.addShapelessRecipe(new ItemStack(Items.SKULL, 4, Const.skull_player),
         new ItemStack(Items.SKULL, 1, Const.skull_wither),
         new ItemStack(Items.SKULL, 1, Const.skull_skeleton),
         new ItemStack(Items.SKULL, 1, Const.skull_zombie),
         new ItemStack(Items.SKULL, 1, Const.skull_creeper));
   }
   private void mushroomBlocks() {
-    GameRegistry.addRecipe(new ItemStack(Blocks.RED_MUSHROOM_BLOCK),
+    RecipeRegistry.addRecipe(new ItemStack(Blocks.RED_MUSHROOM_BLOCK),
         "mm", "mm", 'm', Blocks.RED_MUSHROOM);
-    GameRegistry.addRecipe(new ItemStack(Blocks.BROWN_MUSHROOM_BLOCK),
+    RecipeRegistry.addRecipe(new ItemStack(Blocks.BROWN_MUSHROOM_BLOCK),
         "mm", "mm", 'm', Blocks.BROWN_MUSHROOM);
   }
   private void repeaterSimple() {
-    GameRegistry.addRecipe(new ItemStack(Items.REPEATER),
+    RecipeRegistry.addRecipe(new ItemStack(Items.REPEATER),
         "r r", "srs", "ttt",
         't', new ItemStack(Blocks.STONE, 1, BlockStone.EnumType.STONE.ordinal()), 's', new ItemStack(Items.STICK), 'r', new ItemStack(Items.REDSTONE));
   }
   private void minecartsSimple() {
     // normally you would need the minecart created in a different step. this is
     // faster
-    GameRegistry.addRecipe(new ItemStack(Items.CHEST_MINECART), "   ", "ici", "iii", 'i', Items.IRON_INGOT, 'c', Blocks.CHEST);
-    GameRegistry.addRecipe(new ItemStack(Items.TNT_MINECART), "   ", "ici", "iii", 'i', Items.IRON_INGOT, 'c', Blocks.TNT);
-    GameRegistry.addRecipe(new ItemStack(Items.HOPPER_MINECART), "   ", "ici", "iii", 'i', Items.IRON_INGOT, 'c', Blocks.HOPPER);
-    GameRegistry.addRecipe(new ItemStack(Items.FURNACE_MINECART), "   ", "ici", "iii", 'i', Items.IRON_INGOT, 'c', Blocks.FURNACE);
+    RecipeRegistry.addRecipe(new ItemStack(Items.CHEST_MINECART), "   ", "ici", "iii", 'i', Items.IRON_INGOT, 'c', Blocks.CHEST);
+    RecipeRegistry.addRecipe(new ItemStack(Items.TNT_MINECART), "   ", "ici", "iii", 'i', Items.IRON_INGOT, 'c', Blocks.TNT);
+    RecipeRegistry.addRecipe(new ItemStack(Items.HOPPER_MINECART), "   ", "ici", "iii", 'i', Items.IRON_INGOT, 'c', Blocks.HOPPER);
+    RecipeRegistry.addRecipe(new ItemStack(Items.FURNACE_MINECART), "   ", "ici", "iii", 'i', Items.IRON_INGOT, 'c', Blocks.FURNACE);
   }
   private void simpleDispenser() {
-    GameRegistry.addRecipe(new ItemStack(Blocks.DISPENSER),
+    RecipeRegistry.addRecipe(new ItemStack(Blocks.DISPENSER),
         "ccc", "csc", "crc",
         'c', Blocks.COBBLESTONE, 's', Items.STRING, 'r', Items.REDSTONE);
   }
   private void furnaceNeedsCoal() {
     UtilRecipe.removeRecipe(Blocks.FURNACE);
-    GameRegistry.addRecipe(new ItemStack(Blocks.FURNACE), "bbb", "bcb", "bbb", 'b', Blocks.COBBLESTONE, 'c', Items.COAL);
+    RecipeRegistry.addRecipe(new ItemStack(Blocks.FURNACE), "bbb", "bcb", "bbb", 'b', Blocks.COBBLESTONE, 'c', Items.COAL);
   }
   private void smoothstoneRequired() {
     UtilRecipe.removeRecipe(Items.STONE_PICKAXE);
@@ -172,36 +172,36 @@ public class RecipeChangerModule extends BaseModule implements IHasConfig {
     //        new ItemStack(Items.STONE_PICKAXE, 1, UtilItem.getMaxDmgFraction(Items.STONE_PICKAXE, 4)),
     //        "sss", " t ", " t ", 's', Blocks.COBBLESTONE, 't', Items.STICK);
     //    GameRegistry.addRecipe(new ItemStack(Items.STONE_PICKAXE, 1, UtilItem.getMaxDmgFraction(Items.STONE_PICKAXE, 4)), "sss", " t ", " t ", 's', Blocks.COBBLESTONE, 't', Items.STICK);
-    GameRegistry.addRecipe(new ItemStack(Items.STONE_PICKAXE),
+    RecipeRegistry.addRecipe(new ItemStack(Items.STONE_PICKAXE),
         "sss", " t ", " t ",
         's', new ItemStack(Blocks.STONE, 1, BlockStone.EnumType.STONE.ordinal()),
         't', Items.STICK);
     UtilRecipe.removeRecipe(Items.STONE_SWORD);
     //    GameRegistry.addRecipe(new ItemStack(Items.STONE_SWORD, 1, UtilItem.getMaxDmgFraction(Items.STONE_SWORD, 4)), " s ", " s ", " t ", 's', Blocks.COBBLESTONE, 't', Items.STICK);
-    GameRegistry.addRecipe(new ItemStack(Items.STONE_SWORD), " s ", " s ", " t ",
+    RecipeRegistry.addRecipe(new ItemStack(Items.STONE_SWORD), " s ", " s ", " t ",
         's', new ItemStack(Blocks.STONE, 1, BlockStone.EnumType.STONE.ordinal()),
         't', Items.STICK);
     UtilRecipe.removeRecipe(Items.STONE_AXE);
     //    GameRegistry.addRecipe(new ItemStack(Items.STONE_AXE, 1, UtilItem.getMaxDmgFraction(Items.STONE_AXE, 4)), "ss ", "st ", " t ", 's', Blocks.COBBLESTONE, 't', Items.STICK);
     //    GameRegistry.addRecipe(new ItemStack(Items.STONE_AXE, 1, UtilItem.getMaxDmgFraction(Items.STONE_AXE, 4)), " ss", " ts", " t ", 's', Blocks.COBBLESTONE, 't', Items.STICK);
-    GameRegistry.addRecipe(new ItemStack(Items.STONE_AXE), "ss ", "st ", " t ",
+    RecipeRegistry.addRecipe(new ItemStack(Items.STONE_AXE), "ss ", "st ", " t ",
         's', new ItemStack(Blocks.STONE, 1, BlockStone.EnumType.STONE.ordinal()),
         't', Items.STICK);
-    GameRegistry.addRecipe(new ItemStack(Items.STONE_AXE), " ss", " ts", " t ",
+    RecipeRegistry.addRecipe(new ItemStack(Items.STONE_AXE), " ss", " ts", " t ",
         's', new ItemStack(Blocks.STONE, 1, BlockStone.EnumType.STONE.ordinal()),
         't', Items.STICK);
     UtilRecipe.removeRecipe(Items.STONE_HOE);
     //    GameRegistry.addRecipe(new ItemStack(Items.STONE_HOE, 1, UtilItem.getMaxDmgFraction(Items.STONE_HOE, 4)), "ss ", " t ", " t ", 's', Blocks.COBBLESTONE, 't', Items.STICK);
     //    GameRegistry.addRecipe(new ItemStack(Items.STONE_HOE, 1, UtilItem.getMaxDmgFraction(Items.STONE_HOE, 4)), " ss", " t ", " t ", 's', Blocks.COBBLESTONE, 't', Items.STICK);
-    GameRegistry.addRecipe(new ItemStack(Items.STONE_HOE), "ss ", " t ", " t ",
+    RecipeRegistry.addRecipe(new ItemStack(Items.STONE_HOE), "ss ", " t ", " t ",
         's', new ItemStack(Blocks.STONE, 1, BlockStone.EnumType.STONE.ordinal()),
         't', Items.STICK);
-    GameRegistry.addRecipe(new ItemStack(Items.STONE_HOE), " ss", " t ", " t ",
+    RecipeRegistry.addRecipe(new ItemStack(Items.STONE_HOE), " ss", " t ", " t ",
         's', new ItemStack(Blocks.STONE, 1, BlockStone.EnumType.STONE.ordinal()),
         't', Items.STICK);
     UtilRecipe.removeRecipe(Items.STONE_SHOVEL);
     //    GameRegistry.addRecipe(new ItemStack(Items.STONE_SHOVEL, 1, UtilItem.getMaxDmgFraction(Items.STONE_SHOVEL, 4)), " s ", " t ", " t ", 's', Blocks.COBBLESTONE, 't', Items.STICK);
-    GameRegistry.addRecipe(new ItemStack(Items.STONE_SHOVEL), " s ", " t ", " t ",
+    RecipeRegistry.addRecipe(new ItemStack(Items.STONE_SHOVEL), " s ", " t ", " t ",
         's', new ItemStack(Blocks.STONE, 1, BlockStone.EnumType.STONE.ordinal()),
         't', Items.STICK);
     //    GameRegistry.addRecipe(new ItemStack(Items.IRON_CHESTPLATE, 1, UtilItem.getMaxDmgFraction(Items.IRON_CHESTPLATE, 2)), 
