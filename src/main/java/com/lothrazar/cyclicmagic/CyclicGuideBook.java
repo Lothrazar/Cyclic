@@ -74,6 +74,7 @@ public class CyclicGuideBook implements IGuideBook {
   
     String pageTitle = item.getUnlocalizedName() + ".name";
     String above = item.getUnlocalizedName() + ".guide";
+ 
     CyclicGuideBook.addPage(cat, pageTitle, new ItemStack(item), above, recipe);
   }
   public static void addPageBlock(Block block, IRecipe recipe, CategoryType cat) {
@@ -82,6 +83,8 @@ public class CyclicGuideBook implements IGuideBook {
     CyclicGuideBook.addPage(cat, pageTitle, new ItemStack(block), above, recipe);
   }
   public static void addPage(CategoryType cat, String pageTitle, ItemStack icon, String above, @Nullable IRecipe recipe) {
+     
+    ModCyclic.logger.info(above+"=");
     List<IPage> pages = new ArrayList<IPage>();
     pages.add(new PageText(above));//just text on the screen
     if (recipe != null) {
