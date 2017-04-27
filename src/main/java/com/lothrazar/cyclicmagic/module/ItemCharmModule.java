@@ -27,7 +27,7 @@ public class ItemCharmModule extends BaseModule implements IHasConfig {
   private boolean enableSpeed;
   private boolean enableAir;
   @Override
-  public void onInit() {
+  public void onPreInit() {
     if (enableAir) {
       ItemCharmAir charm_air = new ItemCharmAir();
       ItemRegistry.addItem(charm_air, "charm_air");

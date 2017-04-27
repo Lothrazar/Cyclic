@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.module;
-import com.lothrazar.cyclicmagic.CyclicGuideBook.CategoryType;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.autouser.BlockUser;
@@ -24,6 +23,7 @@ import com.lothrazar.cyclicmagic.component.uncrafter.BlockUncrafting;
 import com.lothrazar.cyclicmagic.component.uncrafter.TileEntityUncrafter;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.ConfigRegistry;
+import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -40,63 +40,63 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
   private boolean enableUser;
   private boolean enablePattern;
   private boolean expPylon;
-  public void onInit() {
+  public void onPreInit(){// onInit() {
     if (expPylon) {
       BlockXpPylon exp_pylon = new BlockXpPylon();
-      BlockRegistry.registerBlock(exp_pylon, "exp_pylon",CategoryType.BLOCK);
+      BlockRegistry.registerBlock(exp_pylon, "exp_pylon",GuideCategory.BLOCK);
     }
     GameRegistry.registerTileEntity(TileEntityXpPylon.class, "exp_pylon_te");
     if (enablePattern) {
       BlockPatternBuilder builder_pattern = new BlockPatternBuilder();
-      BlockRegistry.registerBlock(builder_pattern, "builder_pattern",CategoryType.BLOCK);
+      BlockRegistry.registerBlock(builder_pattern, "builder_pattern",GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileEntityPatternBuilder.class, "builder_pattern_te");
     }
     if (enableBuilderBlock) {
       BlockStructureBuilder builder_block = new BlockStructureBuilder();
-      BlockRegistry.registerBlock(builder_block, "builder_block",CategoryType.BLOCK);
+      BlockRegistry.registerBlock(builder_block, "builder_block",GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileEntityStructureBuilder.class, "builder_te");
     }
     if (enableHarvester) {
       BlockHarvester harvester_block = new BlockHarvester();
-      BlockRegistry.registerBlock(harvester_block, "harvester_block",CategoryType.BLOCK);
+      BlockRegistry.registerBlock(harvester_block, "harvester_block",GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileEntityHarvester.class, "harveseter_te");
       ConfigRegistry.register(harvester_block);
     }
     if (enableUncrafter) {
       BlockUncrafting uncrafting_block = new BlockUncrafting();
-      BlockRegistry.registerBlock(uncrafting_block, "uncrafting_block",CategoryType.BLOCK);
+      BlockRegistry.registerBlock(uncrafting_block, "uncrafting_block",GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileEntityUncrafter.class, "uncrafting_block_te");
     }
     if (enableMiner) {
       BlockMiner miner_block = new BlockMiner(BlockMiner.MinerType.SINGLE);
-      BlockRegistry.registerBlock(miner_block, "block_miner",CategoryType.BLOCK);
+      BlockRegistry.registerBlock(miner_block, "block_miner",GuideCategory.BLOCK);
     }
     if (enableMinerEnhanced) {
       BlockMiner block_miner_tunnel = new BlockMiner(BlockMiner.MinerType.TUNNEL);
-      BlockRegistry.registerBlock(block_miner_tunnel, "block_miner_tunnel",CategoryType.BLOCK);
+      BlockRegistry.registerBlock(block_miner_tunnel, "block_miner_tunnel",GuideCategory.BLOCK);
     }
     if (enableMiner || enableMinerEnhanced) {
       GameRegistry.registerTileEntity(TileEntityBlockMiner.class, "miner_te");
     }
     if (enableMinerSmart) {
       BlockMinerSmart block_miner_smart = new BlockMinerSmart();
-      BlockRegistry.registerBlock(block_miner_smart, "block_miner_smart",CategoryType.BLOCK);
+      BlockRegistry.registerBlock(block_miner_smart, "block_miner_smart",GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileEntityControlledMiner.class, Const.MODID + "miner_smart_te");
     }
     if (enablePlacer) {
       BlockPlacer placer_block = new BlockPlacer();
-      BlockRegistry.registerBlock(placer_block, "placer_block",CategoryType.BLOCK);
+      BlockRegistry.registerBlock(placer_block, "placer_block",GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileEntityPlacer.class, "placer_block_te");
     }
     if (enablePassword) {
       BlockPassword password_block = new BlockPassword();
-      BlockRegistry.registerBlock(password_block, "password_block",CategoryType.BLOCK);
+      BlockRegistry.registerBlock(password_block, "password_block",GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileEntityPassword.class, "password_block_te");
       ModCyclic.instance.events.register(password_block);
     }
     if (enableUser) {
       BlockUser block_user = new BlockUser();
-      BlockRegistry.registerBlock(block_user, "block_user",CategoryType.BLOCK);
+      BlockRegistry.registerBlock(block_user, "block_user",GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileEntityUser.class, Const.MODID + "block_user_te");
     }
   }

@@ -1,5 +1,8 @@
 package com.lothrazar.cyclicmagic.enchantment;
+import com.lothrazar.cyclicmagic.CyclicGuideBook;
 import com.lothrazar.cyclicmagic.ModCyclic;
+import com.lothrazar.cyclicmagic.registry.GuideRegistry;
+import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,6 +19,7 @@ public class EnchantReach extends EnchantBase {
   private static final int REACH_BOOST = 16;
   public EnchantReach() {
     super("reach", Rarity.VERY_RARE, EnumEnchantmentType.ARMOR_CHEST, new EntityEquipmentSlot[] { EntityEquipmentSlot.CHEST });
+
   }
   @Override
   public int getMaxLevel() {

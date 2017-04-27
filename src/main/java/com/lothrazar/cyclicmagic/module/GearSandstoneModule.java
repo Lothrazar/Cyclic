@@ -1,10 +1,10 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
-import com.lothrazar.cyclicmagic.CyclicGuideBook.CategoryType;
 import com.lothrazar.cyclicmagic.item.gear.ItemSandstoneAxe;
 import com.lothrazar.cyclicmagic.item.gear.ItemSandstoneHoe;
 import com.lothrazar.cyclicmagic.item.gear.ItemSandstonePickaxe;
 import com.lothrazar.cyclicmagic.item.gear.ItemSandstoneSpade;
+import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
@@ -29,17 +29,17 @@ public class GearSandstoneModule extends BaseModule implements IHasConfig {
     MaterialRegistry.sandstoneToolMaterial.setRepairItem(new ItemStack(Blocks.SANDSTONE));
   }
   @Override
-  public void onInit() {
+  public void onPreInit() {
     if (enableSandstoneTools) {
       this.registerMaterials();
       Item sandstone_pickaxe = new ItemSandstonePickaxe();
-      ItemRegistry.addItem(sandstone_pickaxe, "sandstone_pickaxe",CategoryType.GEAR);
+      ItemRegistry.addItem(sandstone_pickaxe, "sandstone_pickaxe",GuideCategory.GEAR);
       Item sandstone_axe = new ItemSandstoneAxe();
-      ItemRegistry.addItem(sandstone_axe, "sandstone_axe",CategoryType.GEAR);
+      ItemRegistry.addItem(sandstone_axe, "sandstone_axe",GuideCategory.GEAR);
       Item sandstone_spade = new ItemSandstoneSpade();
-      ItemRegistry.addItem(sandstone_spade, "sandstone_spade",CategoryType.GEAR);
+      ItemRegistry.addItem(sandstone_spade, "sandstone_spade",GuideCategory.GEAR);
       Item sandstone_hoe = new ItemSandstoneHoe();
-      ItemRegistry.addItem(sandstone_hoe, "sandstone_hoe",CategoryType.GEAR);
+      ItemRegistry.addItem(sandstone_hoe, "sandstone_hoe",GuideCategory.GEAR);
       LootTableRegistry.registerLoot(sandstone_pickaxe, ChestType.BONUS);
       LootTableRegistry.registerLoot(sandstone_axe, ChestType.BONUS);
       LootTableRegistry.registerLoot(sandstone_spade, ChestType.BONUS);

@@ -35,7 +35,7 @@ public class ItemConsumeablesModule extends BaseEventModule implements IHasConfi
   private boolean enableGlowingChorus;
   private boolean enableLapisApple;
   @Override
-  public void onInit() {
+  public void onPreInit() {
     if (enableHorseFoodUpgrades) {
       Item emerald_carrot = new ItemHorseUpgrade(HorseUpgradeType.TYPE, new ItemStack(Items.EMERALD));
       Item lapis_carrot = new ItemHorseUpgrade(HorseUpgradeType.VARIANT, new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage()));

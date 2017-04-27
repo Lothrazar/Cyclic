@@ -32,7 +32,7 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
   private boolean dynamiteMining;
   private boolean magicNet;
   @Override
-  public void onInit() {
+  public void onPreInit() {
     if (enableEnderBlaze) {
       ItemProjectileBlaze ender_blaze = new ItemProjectileBlaze();
       ItemRegistry.addItem(ender_blaze, "ender_blaze");

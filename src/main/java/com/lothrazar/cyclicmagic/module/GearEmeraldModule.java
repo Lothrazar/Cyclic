@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.module;
 import java.util.Set;
 import com.google.common.collect.Sets;
 import com.lothrazar.cyclicmagic.IHasConfig;
-import com.lothrazar.cyclicmagic.CyclicGuideBook.CategoryType;
 import com.lothrazar.cyclicmagic.item.gear.ItemEmeraldArmor;
 import com.lothrazar.cyclicmagic.item.gear.ItemEmeraldAxe;
 import com.lothrazar.cyclicmagic.item.gear.ItemEmeraldHoe;
@@ -10,6 +9,7 @@ import com.lothrazar.cyclicmagic.item.gear.ItemEmeraldPickaxe;
 import com.lothrazar.cyclicmagic.item.gear.ItemEmeraldSpade;
 import com.lothrazar.cyclicmagic.item.gear.ItemEmeraldSword;
 import com.lothrazar.cyclicmagic.item.tool.ItemToolMattock;
+import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
@@ -59,27 +59,27 @@ public class GearEmeraldModule extends BaseModule implements IHasConfig {
     MaterialRegistry.emeraldToolMaterial.setRepairItem(MaterialRegistry.emeraldArmorMaterial.repairMaterial);
   }
   @Override
-  public void onInit() {
+  public void onPreInit() {
     this.registerEmeraldMaterial();
     if (enableEmeraldGear) {
       Item emerald_head = new ItemEmeraldArmor(EntityEquipmentSlot.HEAD);
-      ItemRegistry.addItem(emerald_head, "emerald_helmet",CategoryType.GEAR);
+      ItemRegistry.addItem(emerald_head, "emerald_helmet",GuideCategory.GEAR);
       Item emerald_chest = new ItemEmeraldArmor(EntityEquipmentSlot.CHEST);
-      ItemRegistry.addItem(emerald_chest, "emerald_chestplate",CategoryType.GEAR);
+      ItemRegistry.addItem(emerald_chest, "emerald_chestplate",GuideCategory.GEAR);
       Item emerald_legs = new ItemEmeraldArmor(EntityEquipmentSlot.LEGS);
-      ItemRegistry.addItem(emerald_legs, "emerald_leggings",CategoryType.GEAR);
+      ItemRegistry.addItem(emerald_legs, "emerald_leggings",GuideCategory.GEAR);
       Item emerald_boots = new ItemEmeraldArmor(EntityEquipmentSlot.FEET);
-      ItemRegistry.addItem(emerald_boots, "emerald_boots",CategoryType.GEAR);
+      ItemRegistry.addItem(emerald_boots, "emerald_boots",GuideCategory.GEAR);
       Item emerald_sword = new ItemEmeraldSword();
-      ItemRegistry.addItem(emerald_sword, "emerald_sword",CategoryType.GEAR);
+      ItemRegistry.addItem(emerald_sword, "emerald_sword",GuideCategory.GEAR);
       Item emerald_pickaxe = new ItemEmeraldPickaxe();
-      ItemRegistry.addItem(emerald_pickaxe,  "emerald_pickaxe",CategoryType.GEAR);
+      ItemRegistry.addItem(emerald_pickaxe,  "emerald_pickaxe",GuideCategory.GEAR);
       Item emerald_axe = new ItemEmeraldAxe();
-      ItemRegistry.addItem(emerald_axe, "emerald_axe",CategoryType.GEAR);
+      ItemRegistry.addItem(emerald_axe, "emerald_axe",GuideCategory.GEAR);
       Item emerald_shovel = new ItemEmeraldSpade();
-      ItemRegistry.addItem(emerald_shovel,  "emerald_spade",CategoryType.GEAR);
+      ItemRegistry.addItem(emerald_shovel,  "emerald_spade",GuideCategory.GEAR);
       Item emerald_hoe = new ItemEmeraldHoe();
-      ItemRegistry.addItem(emerald_hoe, "emerald_hoe",CategoryType.GEAR);
+      ItemRegistry.addItem(emerald_hoe, "emerald_hoe",GuideCategory.GEAR);
       LootTableRegistry.registerLoot(emerald_pickaxe);
       LootTableRegistry.registerLoot(emerald_sword);
       LootTableRegistry.registerLoot(emerald_chest);

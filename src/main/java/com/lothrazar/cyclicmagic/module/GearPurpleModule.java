@@ -19,7 +19,7 @@ public class GearPurpleModule extends BaseEventModule implements IHasConfig {
   private static final String MATERIALNAME = "power";
   private boolean enableWaterGear;
   @Override
-  public void onInit() {
+  public void onPreInit() {
     registerMaterial();
     if (enableWaterGear) {
       Item purple_boots = new ItemPowerArmor(MaterialRegistry.powerArmorMaterial, EntityEquipmentSlot.FEET);

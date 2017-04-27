@@ -73,7 +73,7 @@ public class ModCyclic {
     for (ICyclicModule module : ModuleRegistry.modules) {
       module.onInit();
     }
-    ItemRegistry.register();//now that modules have added their content (items), we can register them
+//    ItemRegistry.register();//now that modules have added their content (items), we can register them
     proxy.register();
     NetworkRegistry.INSTANCE.registerGuiHandler(this, new ModGuiHandler());
     ConfigRegistry.syncAllConfig(); //fixes things , stuff was added to items and content that has config

@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.enchantment;
 import com.lothrazar.cyclicmagic.CyclicGuideBook;
-import com.lothrazar.cyclicmagic.CyclicGuideBook.CategoryType;
+import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
@@ -13,8 +13,8 @@ public abstract class EnchantBase extends Enchantment {
   protected EnchantBase(String name,Rarity rarityIn, EnumEnchantmentType typeIn, EntityEquipmentSlot[] slots) {
     super(rarityIn, typeIn, slots);
     this.setName(name);
-    String b = CategoryType.ENCHANT.text() + "." + this.name;
-    CyclicGuideBook.addPage(CategoryType.ENCHANT, b, new ItemStack(Items.ENCHANTED_BOOK), b + ".guide", null);
+
+    GuideRegistry.register(this);
   }
   protected int getCurrentLevelTool(EntityLivingBase player) {
     if (player == null) { return -1; }
