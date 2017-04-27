@@ -8,6 +8,7 @@ import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileTNT.ExplosionType
 import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.init.Blocks;
@@ -103,7 +104,7 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       EntityProjectileRegistry.registerModEntity(EntityDynamiteBlockSafe.class, "tntblocksafebolt", 1009);
       EntityDynamiteBlockSafe.renderSnowball = dynamite_safe;
       projectiles.add(dynamite_safe);
-      GameRegistry.addShapelessRecipe(new ItemStack(dynamite_safe, 6),
+      RecipeRegistry.addShapelessRecipe(new ItemStack(dynamite_safe, 6),
           new ItemStack(Items.GUNPOWDER), new ItemStack(Items.SUGAR), new ItemStack(Items.GUNPOWDER),
           new ItemStack(Items.PAPER), new ItemStack(Items.CLAY_BALL), new ItemStack(Blocks.BROWN_MUSHROOM),
           new ItemStack(Items.FEATHER), new ItemStack(Items.WHEAT_SEEDS), new ItemStack(Blocks.COBBLESTONE));
@@ -123,7 +124,7 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       EntityProjectileRegistry.registerModEntity(EntityDynamiteMining.class, "tntminingbolt", 1010);
       EntityDynamiteMining.renderSnowball = dynamite_mining;
       projectiles.add(dynamite_mining);
-      GameRegistry.addShapelessRecipe(new ItemStack(dynamite_mining, 6),
+      RecipeRegistry.addShapelessRecipe(new ItemStack(dynamite_mining, 6),
           new ItemStack(Items.GUNPOWDER), new ItemStack(Items.IRON_INGOT),
           new ItemStack(Items.GUNPOWDER), new ItemStack(Items.PAPER),
           new ItemStack(Items.CLAY_BALL), new ItemStack(Blocks.RED_MUSHROOM),
@@ -151,19 +152,19 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       projectiles.add(ender_tnt_5);
       projectiles.add(ender_tnt_6);
       //first the basic recipes
-      GameRegistry.addShapelessRecipe(new ItemStack(ender_tnt_1, 12), new ItemStack(Blocks.TNT), new ItemStack(Items.PAPER), new ItemStack(Items.CLAY_BALL), new ItemStack(Items.ENDER_PEARL));
-      GameRegistry.addShapelessRecipe(new ItemStack(ender_tnt_2), new ItemStack(ender_tnt_1), new ItemStack(ender_tnt_1), new ItemStack(Items.CLAY_BALL));
-      GameRegistry.addShapelessRecipe(new ItemStack(ender_tnt_3), new ItemStack(ender_tnt_2), new ItemStack(ender_tnt_2), new ItemStack(Items.CLAY_BALL));
-      GameRegistry.addShapelessRecipe(new ItemStack(ender_tnt_4), new ItemStack(ender_tnt_3), new ItemStack(ender_tnt_3), new ItemStack(Items.CLAY_BALL));
-      GameRegistry.addShapelessRecipe(new ItemStack(ender_tnt_5), new ItemStack(ender_tnt_4), new ItemStack(ender_tnt_4), new ItemStack(Items.CLAY_BALL));
-      GameRegistry.addShapelessRecipe(new ItemStack(ender_tnt_6), new ItemStack(ender_tnt_5), new ItemStack(ender_tnt_5), new ItemStack(Items.CLAY_BALL));
+      RecipeRegistry.addShapelessRecipe(new ItemStack(ender_tnt_1, 12), new ItemStack(Blocks.TNT), new ItemStack(Items.PAPER), new ItemStack(Items.CLAY_BALL), new ItemStack(Items.ENDER_PEARL));
+      RecipeRegistry.addShapelessRecipe(new ItemStack(ender_tnt_2), new ItemStack(ender_tnt_1), new ItemStack(ender_tnt_1), new ItemStack(Items.CLAY_BALL));
+      RecipeRegistry.addShapelessRecipe(new ItemStack(ender_tnt_3), new ItemStack(ender_tnt_2), new ItemStack(ender_tnt_2), new ItemStack(Items.CLAY_BALL));
+      RecipeRegistry.addShapelessRecipe(new ItemStack(ender_tnt_4), new ItemStack(ender_tnt_3), new ItemStack(ender_tnt_3), new ItemStack(Items.CLAY_BALL));
+      RecipeRegistry.addShapelessRecipe(new ItemStack(ender_tnt_5), new ItemStack(ender_tnt_4), new ItemStack(ender_tnt_4), new ItemStack(Items.CLAY_BALL));
+      RecipeRegistry.addShapelessRecipe(new ItemStack(ender_tnt_6), new ItemStack(ender_tnt_5), new ItemStack(ender_tnt_5), new ItemStack(Items.CLAY_BALL));
       //default recipes are added already insice the IRecipe
-      GameRegistry.addShapelessRecipe(new ItemStack(ender_tnt_3), new ItemStack(ender_tnt_1), new ItemStack(ender_tnt_1), new ItemStack(ender_tnt_1), new ItemStack(ender_tnt_1), new ItemStack(Items.CLAY_BALL));
+      RecipeRegistry.addShapelessRecipe(new ItemStack(ender_tnt_3), new ItemStack(ender_tnt_1), new ItemStack(ender_tnt_1), new ItemStack(ender_tnt_1), new ItemStack(ender_tnt_1), new ItemStack(Items.CLAY_BALL));
       //two 3s is four 2s
-      GameRegistry.addShapelessRecipe(new ItemStack(ender_tnt_4), new ItemStack(ender_tnt_2), new ItemStack(ender_tnt_2), new ItemStack(ender_tnt_2), new ItemStack(ender_tnt_2), new ItemStack(Items.CLAY_BALL));
+      RecipeRegistry.addShapelessRecipe(new ItemStack(ender_tnt_4), new ItemStack(ender_tnt_2), new ItemStack(ender_tnt_2), new ItemStack(ender_tnt_2), new ItemStack(ender_tnt_2), new ItemStack(Items.CLAY_BALL));
       //four 3s is two 4s is one 5
-      GameRegistry.addShapelessRecipe(new ItemStack(ender_tnt_5), new ItemStack(ender_tnt_3), new ItemStack(ender_tnt_3), new ItemStack(ender_tnt_3), new ItemStack(ender_tnt_3), new ItemStack(Items.CLAY_BALL));
-      GameRegistry.addShapelessRecipe(new ItemStack(ender_tnt_6), new ItemStack(ender_tnt_4), new ItemStack(ender_tnt_4), new ItemStack(ender_tnt_4), new ItemStack(ender_tnt_4), new ItemStack(Items.CLAY_BALL));
+      RecipeRegistry.addShapelessRecipe(new ItemStack(ender_tnt_5), new ItemStack(ender_tnt_3), new ItemStack(ender_tnt_3), new ItemStack(ender_tnt_3), new ItemStack(ender_tnt_3), new ItemStack(Items.CLAY_BALL));
+      RecipeRegistry.addShapelessRecipe(new ItemStack(ender_tnt_6), new ItemStack(ender_tnt_4), new ItemStack(ender_tnt_4), new ItemStack(ender_tnt_4), new ItemStack(ender_tnt_4), new ItemStack(Items.CLAY_BALL));
       LootTableRegistry.registerLoot(ender_tnt_6);
     }
   }
