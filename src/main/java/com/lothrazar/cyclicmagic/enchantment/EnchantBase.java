@@ -1,11 +1,9 @@
 package com.lothrazar.cyclicmagic.enchantment;
-import com.lothrazar.cyclicmagic.CyclicGuideBook;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 
@@ -14,7 +12,6 @@ public abstract class EnchantBase extends Enchantment {
     super(rarityIn, typeIn, slots);
     this.setName(name);
 
-    GuideRegistry.register(this);
   }
   protected int getCurrentLevelTool(EntityLivingBase player) {
     if (player == null) { return -1; }

@@ -3,9 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclicmagic.CyclicGuideBook;
-//import com.lothrazar.cyclicmagic.CyclicGuideBook.CategoryType;
-import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.Items;
@@ -22,15 +20,16 @@ public class GuideRegistry {
       return name().toLowerCase();
     }
   }
-  public static void register(Enchantment ench) {
-    GuideRegistry.register(GuideCategory.ENCHANT, new ItemStack(Items.ENCHANTED_BOOK), ench.getName(), ench.getName() + SUFFIX, null, null);
+  public static void register(Enchantment ench, @Nonnull List<String> args) {
+    args.add(ench.getRarity().name().toLowerCase().replace("_"," "));
+    GuideRegistry.register(GuideCategory.ENCHANT, new ItemStack(Items.ENCHANTED_BOOK), ench.getName(), ench.getName() + SUFFIX, null, args);
   }
-  public static void register(GuideCategory cat, Block block, IRecipe recipe, @Nullable int[] args) {
+  public static void register(GuideCategory cat, Block block, IRecipe recipe, @Nullable  List<String>  args) {
     String pageTitle = block.getUnlocalizedName() + ".name";
     String text = block.getUnlocalizedName() + SUFFIX;
     register(cat, new ItemStack(block), pageTitle, text, recipe, args);
   }
-  public static void register(GuideCategory cat, Item item, IRecipe recipe, @Nullable int[] args) {
+  public static void register(GuideCategory cat, Item item, IRecipe recipe, @Nullable List<String>  args) {
     String pageTitle = item.getUnlocalizedName() + ".name";
     String above = item.getUnlocalizedName() + SUFFIX;
     register(cat, new ItemStack(item), pageTitle, above, recipe, args);
@@ -39,13 +38,16 @@ public class GuideRegistry {
     register(cat, icon, title, text, null, null);
   }
   //the main one. others are helper/wrappers
-  public static void register(GuideCategory cat, ItemStack icon, String title, String text, @Nullable IRecipe recipe, @Nullable int[] args) {
+  public static void register(GuideCategory cat, ItemStack icon, String title, String text, @Nullable IRecipe recipe, @Nullable List<String>  args) {
+    
     //layer of seperation between guidebook api. 1 for optional include and 2 in case i ever need to split it out and 3 for easy registering
-    if (args != null && args.length > 0) {
-      for (int i = 0; i < args.length; i++) {
+    if (args != null && args.size() > 0) {
+      text = UtilChat.lang(text);
+      for (int i = 0; i < args.size(); i++) {
         //in the lang file we have something like "Rarity is $1, similar to $2 "
         //so the text is translatable but we swap out values like this
-        text = text.replace("$" + i, args[1] + "");
+        System.out.println(text+" -> "+i+" convert to "+args.get(i));
+        text = text.replace("$" + i, args.get(i));
       }
     }
     items.add(new GuideItem(cat, icon, title, text, recipe));
@@ -64,8 +66,8 @@ public class GuideRegistry {
     public GuideItem(@Nonnull GuideCategory cat, @Nonnull ItemStack icon, @Nonnull String title, @Nonnull String text, @Nullable IRecipe recipe) {
       this.cat = cat;
       this.icon = icon;
-      this.title = title;
-      this.text = text;
+      this.title = UtilChat.lang(title);
+      this.text = UtilChat.lang(text);
       this.recipe = recipe;
     }
   }

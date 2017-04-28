@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.enchantment;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.init.Enchantments;
@@ -13,7 +15,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class EnchantAutoSmelt extends EnchantBase {
   public EnchantAutoSmelt() {
     super("autosmelt",Rarity.RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND });
-    
+
+    GuideRegistry.register(this,new ArrayList<String>(  ));
   }
   @Override
   public int getMaxLevel() {

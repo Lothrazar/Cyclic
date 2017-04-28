@@ -108,10 +108,13 @@ public class WorldGenModule extends BaseEventModule implements IHasConfig {
     WorldGenEndOre.Configs.spawnChanceGold = config.getInt("spawnChanceGold", category, 12, 0, 100, spawnChanceDesc);
   }
   @Override
-  public void onInit() {
+  public void onPreInit() {
     if (netherOreEnabled || endOreEnabled) {
       registerDimensionOres();
     }
+  }
+  @Override
+  public void onInit(){
     if (netherOreEnabled) {
       GameRegistry.registerWorldGenerator(new WorldGenNetherOre(), weightOre);
     }

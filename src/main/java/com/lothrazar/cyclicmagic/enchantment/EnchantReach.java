@@ -1,8 +1,8 @@
 package com.lothrazar.cyclicmagic.enchantment;
-import com.lothrazar.cyclicmagic.CyclicGuideBook;
+import java.util.ArrayList;
+import java.util.Arrays;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
-import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,9 +17,11 @@ public class EnchantReach extends EnchantBase {
   private static final String NBT_REACH_ON = "reachon";
   private static final int REACH_VANILLA = 5;
   private static final int REACH_BOOST = 16;
+  private static final Rarity RARITY   = Rarity.VERY_RARE;
   public EnchantReach() {
-    super("reach", Rarity.VERY_RARE, EnumEnchantmentType.ARMOR_CHEST, new EntityEquipmentSlot[] { EntityEquipmentSlot.CHEST });
-
+    super("reach", RARITY, EnumEnchantmentType.ARMOR_CHEST, new EntityEquipmentSlot[] { EntityEquipmentSlot.CHEST });
+     
+    GuideRegistry.register(this,new ArrayList<String>(Arrays.asList(REACH_BOOST+"")));
   }
   @Override
   public int getMaxLevel() {

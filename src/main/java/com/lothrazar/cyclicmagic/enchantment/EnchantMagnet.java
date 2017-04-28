@@ -1,4 +1,7 @@
 package com.lothrazar.cyclicmagic.enchantment;
+import java.util.ArrayList;
+import java.util.Arrays;
+import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.EntityLivingBase;
@@ -12,7 +15,8 @@ public class EnchantMagnet extends EnchantBase {
   private static final int ITEM_VRADIUS = 4;
   public EnchantMagnet() {
     super("magnet",Rarity.COMMON, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND });
-    
+
+    GuideRegistry.register(this,new ArrayList<String>( Arrays.asList(HRADIUS_PER_LEVEL+"")));
   }
   @Override
   public int getMaxLevel() {

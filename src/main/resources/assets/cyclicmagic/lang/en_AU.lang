@@ -682,13 +682,13 @@ guide.category.enchant=Enchantments
 guide.category.world=World Generation
 
 
-enchant.reach.guide=
-enchant.expboost.guide=
-enchant.autosmelt.guide=
-enchant.launch.guide=
-enchant.magnet.guide=
-enchant.venom.guide=Inflicts the poison status effect on the target.  Rarity is $1, similar to $2 
-enchant.lifeleech.guide=
+enchantment.reach.guide=Increases your building and mining reach to $0.  Rarity is $0
+enchantment.expboost.guide=Increases experience drops per kill by $0 per level.  Rarity is $1
+enchantment.autosmelt.guide=Smelts whatever you harvest with this tool.  Rarity is $0
+enchantment.launch.guide=Gives you the power of multi jump (double jump) when enchanted on boots.  One extra jump per level, after that a cooldown of $0 ticks.  Rarity is $1
+enchantment.magnet.guide=Makes you magnetic for item stacks on the ground with radius of $0.  Rarity is $1
+enchantment.venom.guide=Inflicts the poison status effect on the target for $0 ticks per enchantment level.  Rarity is $1
+enchantment.lifeleech.guide=Leeches life points from your target on attack, and even more on kill.  Rarity is $0
 tile.sprout.guide=
 tile.nether_redstone_ore.guide=
 tile.nether_iron_ore.guide=
