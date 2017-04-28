@@ -41,17 +41,17 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   public void onPreInit() {
     if (autoCrafter) {
       BlockCrafter auto_crafter = new BlockCrafter();
-      BlockRegistry.registerBlock(auto_crafter, "auto_crafter",GuideCategory.BLOCK);
+      BlockRegistry.registerBlock(auto_crafter, "auto_crafter",GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityCrafter.class, Const.MODID + "auto_crafter_te");
     }
     if (entityDetector) {
       BlockDetector detector = new BlockDetector();
-      BlockRegistry.registerBlock(detector, "entity_detector",GuideCategory.BLOCK);
+      BlockRegistry.registerBlock(detector, "entity_detector",GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityDetector.class, Const.MODID + "entity_detector_te");
     }
     if (enableFan) {
       BlockFan fan = new BlockFan();
-      BlockRegistry.registerBlock(fan, "fan",GuideCategory.BLOCK);
+      BlockRegistry.registerBlock(fan, "fan",GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityFan.class, Const.MODID + "fan_te");
     }
     if (enableShearingBlock) {
@@ -76,7 +76,7 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
     }
     if (disenchanter) {
       BlockDisenchanter block_disenchanter = new BlockDisenchanter();
-      BlockRegistry.registerBlock(block_disenchanter, "block_disenchanter",GuideCategory.BLOCK);
+      BlockRegistry.registerBlock(block_disenchanter, "block_disenchanter",GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityDisenchanter.class, Const.MODID + "block_disenchanter_te");
     }
     if (enableBucketBlocks) {

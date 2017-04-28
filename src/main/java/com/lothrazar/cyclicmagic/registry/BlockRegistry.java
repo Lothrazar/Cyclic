@@ -1,7 +1,5 @@
 package com.lothrazar.cyclicmagic.registry;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
@@ -20,9 +18,9 @@ public class BlockRegistry {
   public static BlockBucketStorage block_storewater;
   public static BlockBucketStorage block_storemilk;
   public static BlockBucketStorage block_storeempty;
-  public static void registerBlock(Block b, String name) {
-    registerBlock(b, new ItemBlock(b), name, null);
-  }
+//  public static void registerBlock(Block b, String name) {
+//    registerBlock(b, new ItemBlock(b), name, null);
+//  }
   public static void registerBlock(Block b, String name, @Nullable GuideCategory cat) {
     registerBlock(b, new ItemBlock(b), name,cat);
   }

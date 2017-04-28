@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemRegistry {
   public static Map<String, Item> itemMap = new HashMap<String, Item>();
-  public static Item addItem(Item item, String key, GuideCategory cat) {
+  public static void addItem(Item item, String key, GuideCategory cat) {
     item.setUnlocalizedName(key);
     itemMap.put(key, item);
     
@@ -31,13 +31,10 @@ public class ItemRegistry {
     if (cat != null) {
       GuideRegistry.register(cat,item, recipe,null);
     }
-//    if (inGuidebook != null) {
-//      inGuidebookMap.put(item, inGuidebook);
-//    }
-    return item;
+  
   }
-  public static Item addItem(Item item, String key) {
-    return addItem(item, key, GuideCategory.ITEM);//defaults to in guide book with its own standalone page
+  public static void addItem(Item item, String key) {
+      addItem(item, key, GuideCategory.ITEM);//defaults to in guide book with its own standalone page
   }
   public static void registerWithJeiDescription(Item item) {
     JeiDescriptionRegistry.registerWithJeiDescription(item);

@@ -27,6 +27,7 @@ import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
+import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -145,7 +146,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
     }
     if (enableCGlove) {
       ItemClimbingGlove glove_climb = new ItemClimbingGlove();
-      ItemRegistry.addItem(glove_climb, "glove_climb");
+      ItemRegistry.addItem(glove_climb, "glove_climb",GuideCategory.ITEMBAUBLES);
       LootTableRegistry.registerLoot(glove_climb);
     }
     if (enableBlockRot) {

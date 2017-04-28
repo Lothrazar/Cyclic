@@ -675,12 +675,15 @@ item.guide.name=Cyclic Guide Book
 guide.title=Cyclic Guide
 guide.welcome=Cyclic
 guide.category.block=Blocks
+guide.category.blockmachine=Machines
 guide.category.item=Items
 guide.category.gear=Gear
 guide.category.potion=Potions
 guide.category.enchant=Enchantments
 guide.category.world=World Generation
-
+guide.category.itemthrow=Projectiles
+guide.category.itembaubles=Passive Baubles
+guide.category.blockplate=Plate Blocks
 
 enchantment.reach.guide=Increases your building and mining reach to $0.  Rarity is $0
 enchantment.expboost.guide=Increases experience drops per kill by $0 per level.  Rarity is $1
@@ -689,6 +692,7 @@ enchantment.launch.guide=Gives you the power of multi jump (double jump) when en
 enchantment.magnet.guide=Makes you magnetic for item stacks on the ground with radius of $0.  Rarity is $1
 enchantment.venom.guide=Inflicts the poison status effect on the target for $0 ticks per enchantment level.  Rarity is $1
 enchantment.lifeleech.guide=Leeches life points from your target on attack, and even more on kill.  Rarity is $0
+
 tile.sprout.guide=
 tile.nether_redstone_ore.guide=
 tile.nether_iron_ore.guide=

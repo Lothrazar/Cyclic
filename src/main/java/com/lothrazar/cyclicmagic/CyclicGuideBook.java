@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideItem;
@@ -22,10 +21,8 @@ import amerifrance.guideapi.category.CategoryItemStack;
 import amerifrance.guideapi.entry.EntryItemStack;
 import amerifrance.guideapi.page.PageIRecipe;
 import amerifrance.guideapi.page.PageText;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -33,16 +30,19 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 @Optional.Interface(iface = "amerifrance.guideapi.api.GuideAPI", modid = "guideapi", striprefs = true)
 @GuideBook
 public class CyclicGuideBook implements IGuideBook {
-  public static Book book;
-  private static Section section = new Section();
-  public static List<CategoryAbstract> categories = new ArrayList<CategoryAbstract>();
-  public static Map<ResourceLocation, EntryAbstract> entriesBlocks = new HashMap<ResourceLocation, EntryAbstract>();
-  public static Map<ResourceLocation, EntryAbstract> entriesItems = new HashMap<ResourceLocation, EntryAbstract>();
-  public static Map<ResourceLocation, EntryAbstract> entriesGear = new HashMap<ResourceLocation, EntryAbstract>();
-  public static Map<ResourceLocation, EntryAbstract> entriesPotion = new HashMap<ResourceLocation, EntryAbstract>();
-  public static Map<ResourceLocation, EntryAbstract> entriesWorld = new HashMap<ResourceLocation, EntryAbstract>();
-  public static Map<ResourceLocation, EntryAbstract> entriesEnchants = new HashMap<ResourceLocation, EntryAbstract>();
-  public static void addEntry(GuideCategory cat, List<IPage> page, String pageTitle, ItemStack icon) {
+  private static Book book;
+  private List<CategoryAbstract> categories = new ArrayList<CategoryAbstract>();
+  private Map<ResourceLocation, EntryAbstract> entriesBlocks = new HashMap<ResourceLocation, EntryAbstract>();
+  private Map<ResourceLocation, EntryAbstract> entriesItems = new HashMap<ResourceLocation, EntryAbstract>();
+  private Map<ResourceLocation, EntryAbstract> entriesGear = new HashMap<ResourceLocation, EntryAbstract>();
+  private Map<ResourceLocation, EntryAbstract> entriesPotion = new HashMap<ResourceLocation, EntryAbstract>();
+  private Map<ResourceLocation, EntryAbstract> entriesWorld = new HashMap<ResourceLocation, EntryAbstract>();
+  private Map<ResourceLocation, EntryAbstract> entriesEnchants = new HashMap<ResourceLocation, EntryAbstract>();
+  private Map<ResourceLocation, EntryAbstract> entriesBlockMachine = new HashMap<ResourceLocation, EntryAbstract>();
+  private Map<ResourceLocation, EntryAbstract> entriesBlockPlate = new HashMap<ResourceLocation, EntryAbstract>();
+  private Map<ResourceLocation, EntryAbstract> entriesItemBaubles = new HashMap<ResourceLocation, EntryAbstract>();
+  private Map<ResourceLocation, EntryAbstract> entriesItemThrow = new HashMap<ResourceLocation, EntryAbstract>();
+  private void addEntry(GuideCategory cat, List<IPage> page, String pageTitle, ItemStack icon) {
     switch (cat) {
       case BLOCK:
         entriesBlocks.put(new ResourceLocation(Const.MODID, pageTitle), new EntryItemStack(page, pageTitle, icon));
@@ -57,10 +57,22 @@ public class CyclicGuideBook implements IGuideBook {
         entriesPotion.put(new ResourceLocation(Const.MODID, pageTitle), new EntryItemStack(page, pageTitle, icon));
       break;
       case WORLD:
-        entriesWorld.put(new ResourceLocation(Const.MODID, section.nextCategory()), new EntryItemStack(page, pageTitle, icon));
+        entriesWorld.put(new ResourceLocation(Const.MODID, pageTitle), new EntryItemStack(page, pageTitle, icon));
       break;
       case ENCHANT:
-        entriesEnchants.put(new ResourceLocation(Const.MODID, section.nextCategory()), new EntryItemStack(page, pageTitle, icon));
+        entriesEnchants.put(new ResourceLocation(Const.MODID, pageTitle), new EntryItemStack(page, pageTitle, icon));
+      break;
+      case BLOCKMACHINE:
+        entriesBlockMachine.put(new ResourceLocation(Const.MODID, pageTitle), new EntryItemStack(page, pageTitle, icon));
+      break;
+      case BLOCKPLATE:
+        entriesBlockPlate.put(new ResourceLocation(Const.MODID, pageTitle), new EntryItemStack(page, pageTitle, icon));
+      break;
+      case ITEMBAUBLES:
+        entriesItemBaubles.put(new ResourceLocation(Const.MODID, pageTitle), new EntryItemStack(page, pageTitle, icon));
+      break;
+      case ITEMTHROW:
+        entriesItemThrow.put(new ResourceLocation(Const.MODID, pageTitle), new EntryItemStack(page, pageTitle, icon));
       break;
       default:
       break;
@@ -84,16 +96,26 @@ public class CyclicGuideBook implements IGuideBook {
   @Override
   public Book buildBook() {
     buildPages();
-    categories.add(new CategoryItemStack(entriesBlocks, "guide.category." + GuideCategory.BLOCK.text(), new ItemStack(Blocks.ENDER_CHEST)));
-    categories.add(new CategoryItemStack(entriesItems, "guide.category." + GuideCategory.ITEM.text(), new ItemStack(Items.STICK)));
-    categories.add(new CategoryItemStack(entriesGear, "guide.category." + GuideCategory.GEAR.text(), new ItemStack(Items.DIAMOND_SWORD)));
-    categories.add(new CategoryItemStack(entriesPotion, "guide.category." + GuideCategory.POTION.text(), new ItemStack(Items.POTIONITEM)));
-    categories.add(new CategoryItemStack(entriesWorld, "guide.category." + GuideCategory.WORLD.text(), new ItemStack(Blocks.TALLGRASS)));
-    categories.add(new CategoryItemStack(entriesEnchants, "guide.category." + GuideCategory.ENCHANT.text(), new ItemStack(Items.ENCHANTED_BOOK)));
-    createBook();
+    buildCategories();
+    buildBookItem();
     return book;
   }
-  private void createBook() {
+  private void buildCategories() {
+    addCategory(entriesBlocks, GuideCategory.BLOCK);
+    addCategory(entriesBlockMachine, GuideCategory.BLOCKMACHINE);
+    addCategory(entriesItems, GuideCategory.ITEM);
+    addCategory(entriesGear, GuideCategory.GEAR);
+    addCategory(entriesPotion, GuideCategory.POTION);
+    addCategory(entriesEnchants, GuideCategory.ENCHANT);
+    addCategory(entriesWorld, GuideCategory.WORLD);
+    addCategory(entriesBlockPlate, GuideCategory.BLOCKPLATE);
+    addCategory(entriesItemBaubles, GuideCategory.ITEMBAUBLES);
+    addCategory(entriesItemThrow, GuideCategory.ITEMTHROW);
+  }
+  private void addCategory(Map<ResourceLocation, EntryAbstract> entriesBlockPlate, GuideCategory cat) {
+    categories.add(new CategoryItemStack(entriesBlockPlate, cat.text(), cat.icon()));
+  }
+  private void buildBookItem() {
     book = new Book();
     book.setTitle("guide.title");
     book.setDisplayName(UtilChat.lang("item.guide.name"));
@@ -111,32 +133,5 @@ public class CyclicGuideBook implements IGuideBook {
   @Override
   public void handlePost(ItemStack bookStack) {
     GameRegistry.addShapelessRecipe(bookStack, Items.BOOK, Items.STICK, Items.COAL, Items.APPLE);
-  }
-  static class Section {
-    private int category = 0;
-    private int page = 0;
-    private int item = 0;
-    public Section() {}
-    public String toString() {
-      return category + "." + page + "." + item;
-    }
-    public String nextItem() {
-      item++;
-      return lang("guide.item." + toString());
-    }
-    public String nextPage() {
-      page++;
-      item = 0;
-      return lang("guide.page." + toString());
-    }
-    public String nextCategory() {
-      category++;
-      page = 0;
-      item = 0;
-      return lang("guide.category." + toString());
-    }
-    private String lang(String s) {
-      return UtilChat.lang(s);//for ease of typing. and in case we need extra metadata here
-    }
   }
 }
