@@ -8,6 +8,7 @@ import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideItem;
+import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuidePage;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import amerifrance.guideapi.api.GuideAPI;
@@ -21,10 +22,8 @@ import amerifrance.guideapi.category.CategoryItemStack;
 import amerifrance.guideapi.entry.EntryItemStack;
 import amerifrance.guideapi.page.PageIRecipe;
 import amerifrance.guideapi.page.PageText;
-import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
@@ -43,7 +42,6 @@ public class CyclicGuideBook implements IGuideBook {
   public static Map<ResourceLocation, EntryAbstract> entriesPotion = new HashMap<ResourceLocation, EntryAbstract>();
   public static Map<ResourceLocation, EntryAbstract> entriesWorld = new HashMap<ResourceLocation, EntryAbstract>();
   public static Map<ResourceLocation, EntryAbstract> entriesEnchants = new HashMap<ResourceLocation, EntryAbstract>();
-
   public static void addEntry(GuideCategory cat, List<IPage> page, String pageTitle, ItemStack icon) {
     switch (cat) {
       case BLOCK:
@@ -68,22 +66,24 @@ public class CyclicGuideBook implements IGuideBook {
       break;
     }
   }
-  //  }
-  public static void addPage(GuideCategory cat,  ItemStack icon,String pageTitle, String above, @Nullable IRecipe recipe) {
-    ModCyclic.logger.info(above + "=");
-    List<IPage> pages = new ArrayList<IPage>();
-    pages.add(new PageText(above));//just text on the screen
-    if (recipe != null) {
-      pages.add(new PageIRecipe(recipe));
+  private void buildPages() {
+    List<GuideItem> items = GuideRegistry.getItems();
+    for (GuideItem item : items) {
+      List<IPage> pages = new ArrayList<IPage>();
+      for (GuidePage p : item.pages) {
+        if (p.text != null) {
+          pages.add(new PageText(p.text));//just text on the screen
+        }
+        if (p.recipe != null) {
+          pages.add(new PageIRecipe(p.recipe));
+        }
+      }
+      addEntry(item.cat, pages, item.title, item.icon);
     }
-    addEntry(cat, pages, pageTitle, icon);
   }
   @Override
   public Book buildBook() {
-    List<GuideItem> items = GuideRegistry.getItems();
-    for(GuideItem item : items){
-      addPage(item.cat, item.icon,item.title,item.text,item.recipe);
-    }
+    buildPages();
     categories.add(new CategoryItemStack(entriesBlocks, "guide.category." + GuideCategory.BLOCK.text(), new ItemStack(Blocks.ENDER_CHEST)));
     categories.add(new CategoryItemStack(entriesItems, "guide.category." + GuideCategory.ITEM.text(), new ItemStack(Items.STICK)));
     categories.add(new CategoryItemStack(entriesGear, "guide.category." + GuideCategory.GEAR.text(), new ItemStack(Items.DIAMOND_SWORD)));
