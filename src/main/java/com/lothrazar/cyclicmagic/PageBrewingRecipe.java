@@ -45,13 +45,13 @@ public class PageBrewingRecipe extends Page {
   public void draw(Book book, CategoryAbstract category, EntryAbstract entry, int guiLeft, int guiTop, int mouseX, int mouseY, GuiBase guiBase, FontRenderer fontRendererObj) {
     Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(Const.MODID, "textures/recipe_elements.png"));
 //    guiBase.drawTexturedModalRect(guiLeft + 42, guiTop + 53, 0, 65, 105, 65);
-    guiBase.drawTexturedModalRect(guiLeft + 42, guiTop + 53, 0, 132, 1112, 112);
+    guiBase.drawTexturedModalRect(guiLeft + 42, guiTop + 28, 0, 116, 130, 130);
     List<String> badTip = new ArrayList<String>();
     badTip.add(TextHelper.localizeEffect("text.brewing.error"));
-    guiBase.drawCenteredString(fontRendererObj, TextHelper.localizeEffect("text.brewing.smelting"), guiLeft + guiBase.xSize / 2, guiTop + 12, 0);
-    int xmiddle =  guiLeft + guiBase.xSize / 2 - 8;
+    guiBase.drawCenteredString(fontRendererObj, TextHelper.localizeEffect("text.brewing.brew"), guiLeft + guiBase.xSize / 2, guiTop + 12, 0);
+    int xmiddle =  guiLeft + guiBase.xSize / 2 - 6;
     int x = xmiddle;//since item stack is approx 16 wide
-    int y = guiTop + 40;
+    int y = guiTop + 32;
     //start input
     GuiHelper.drawItemStack(ingredient, x, y);
     
@@ -59,13 +59,13 @@ public class PageBrewingRecipe extends Page {
     if (GuiHelper.isMouseBetween(mouseX, mouseY, x, y, 15, 15))
       tooltip = GuiHelper.getTooltip(ingredient);
     //the three bottles
-    int hSpacing = 26;
-    y += 40;
+    int hSpacing = 38;
+    y += 70;
     GuiHelper.drawItemStack(input, x, y);
     if (GuiHelper.isMouseBetween(mouseX, mouseY, x, y, 15, 15))
       tooltip = GuiHelper.getTooltip(input);
     x -= hSpacing;
-    y -= 10;
+    y -= 20;
     GuiHelper.drawItemStack(input, x, y);
     if (GuiHelper.isMouseBetween(mouseX, mouseY, x, y, 15, 15))
       tooltip = GuiHelper.getTooltip(input);
@@ -76,7 +76,7 @@ public class PageBrewingRecipe extends Page {
     
     //start output
     x = xmiddle;
-    y += 40;
+    y += 52;
     GuiHelper.drawItemStack(output, x, y);
     if (GuiHelper.isMouseBetween(mouseX, mouseY, x, y, 15, 15))
       tooltip = output.getItem() == Item.getItemFromBlock(Blocks.BARRIER) ? badTip : GuiHelper.getTooltip(output);

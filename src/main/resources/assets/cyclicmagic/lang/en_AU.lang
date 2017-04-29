@@ -671,6 +671,10 @@ unlocks.crafting=Unlocked Inventory Crafting
 unlocks.extended=Unlocked Extended Inventory
 wand.inventory.empty=Scepter Inventory is Empty
 
+
+text.brewing.brew=Potion Brewing
+text.brewing.error=Brewing Error
+
 item.guide.name=Cyclic Guide Book
 guide.title=Cyclic Guide
 guide.welcome=Cyclic
