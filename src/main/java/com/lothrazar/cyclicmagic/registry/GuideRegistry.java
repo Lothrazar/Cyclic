@@ -11,6 +11,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.common.brewing.BrewingRecipe;
 
 public class GuideRegistry {
   private static List<GuideItem> items = new ArrayList<GuideItem>();
@@ -56,7 +57,10 @@ public class GuideRegistry {
     String text = block.getUnlocalizedName() + SUFFIX;
     return register(cat, new ItemStack(block), pageTitle, text, recipe, args);
   }
-  public static GuideItem register(GuideCategory cat, Item item, IRecipe recipe, @Nullable List<String> args) {
+  public static GuideItem register(GuideCategory cat, Item item) {
+    return register(cat,item,null,null);
+  }
+  public static GuideItem register(GuideCategory cat, Item item, @Nullable  IRecipe recipe, @Nullable List<String> args) {
     String pageTitle = item.getUnlocalizedName() + ".name";
     String above = item.getUnlocalizedName() + SUFFIX;
     return register(cat, new ItemStack(item), pageTitle, above, recipe, args);
@@ -78,17 +82,34 @@ public class GuideRegistry {
     items.add(itempage);
     return itempage;
   }
+  /**
+   * to create an empty line item without any pages
+   * 
+   * @param cat
+   * @param icon
+   * @param title
+   * @return
+   */
+  public static GuideItem register(GuideCategory cat, ItemStack icon, String title) {
+    GuideItem itempage = new GuideItem(cat, icon, title, null, null);
+    items.add(itempage);
+    return itempage;
+  }
   public static List<GuideItem> getItems() {
     return items;
   }
   public static class GuidePage {
     public String text = null;
     public IRecipe recipe = null;
+    public BrewingRecipe brewRecipe = null;
     public GuidePage(String t) {
       text = t;
     }
     public GuidePage(IRecipe t) {
       recipe = t;
+    }
+    public GuidePage(BrewingRecipe t) {
+      brewRecipe = t;
     }
   }
   public static class GuideItem {
@@ -106,6 +127,9 @@ public class GuideRegistry {
         this.pages.add(new GuidePage(recipe));
     }
     public void addRecipePage(IRecipe t) {
+      this.pages.add(new GuidePage(t));
+    }
+    public void addRecipePage(BrewingRecipe t) {
       this.pages.add(new GuidePage(t));
     }
     public void addTextPage(String t) {

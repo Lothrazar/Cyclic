@@ -25,6 +25,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.potion.PotionUtils;
 import net.minecraftforge.client.event.GuiScreenEvent;
+import net.minecraftforge.common.brewing.BrewingRecipe;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -64,26 +65,22 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
     if (enableViscous) {
       potion_viscous = new ItemPotionCustom(false);
       //      ItemStack awkward = BrewingRecipeRegistry.getOutput(new ItemStack(Items.POTIONITEM), new ItemStack(Items.NETHER_WART));
-      ItemRegistry.addItem(potion_viscous, "potion_viscous");
+      ItemRegistry.addItem(potion_viscous, "potion_viscous", null);
+      GuideItem guide = GuideRegistry.register(GuideCategory.POTION, potion_viscous);
       AchievementRegistry.registerItemAchievement(potion_viscous);
-      addBrewingRecipe(
+      guide.addRecipePage(  addBrewingRecipe(
           PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.AWKWARD), //   awkward,
           new ItemStack(Items.DYE, 1, EnumDyeColor.BROWN.getDyeDamage()),
-          new ItemStack(potion_viscous));
+          new ItemStack(potion_viscous)));
       JeiDescriptionRegistry.registerWithJeiDescription(potion_viscous);
+      guide.addTextPage("item.potion_viscous.guide");
     }
     if (enableEnder) {
-      
       ItemPotionCustom potion_ender = new ItemPotionCustom(true, PotionEffectRegistry.enderEffect, NORMAL, Potions.I, "item.potion_ender.tooltip");
-  ItemRegistry.addItem(potion_ender, "potion_ender");
-  
-  
-      GuideItem page = GuideRegistry.register(GuideCategory.POTION,potion_ender, null,null);
-      
+      ItemRegistry.addItem(potion_ender, "potion_ender");
+      GuideItem page = GuideRegistry.register(GuideCategory.POTION, potion_ender);
       ItemPotionCustom potion_ender_long = new ItemPotionCustom(true, PotionEffectRegistry.enderEffect, LONG, Potions.I, "item.potion_ender.tooltip");
-       ItemRegistry.addItem(potion_ender_long, "potion_ender_long");
-       
-      
+      ItemRegistry.addItem(potion_ender_long, "potion_ender_long");
       if (potion_viscous != null)
         addBrewingRecipe(
             potion_viscous,
@@ -93,6 +90,7 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
           potion_ender,
           UPG_LENGTH,
           potion_ender_long);
+      page.addTextPage("item.potion_ender_long.guide");
       JeiDescriptionRegistry.registerWithJeiDescription(potion_ender);
     }
     if (enableMagnet) {
@@ -291,17 +289,21 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
         new ItemStack(ingredient),
         new ItemStack(output));
   }
-  private static void addBrewingRecipe(ItemStack input, ItemStack ingredient, ItemStack output) {
-    BrewingRecipeRegistry.addRecipe(
+  private static BrewingRecipe addBrewingRecipe(ItemStack input, ItemStack ingredient, ItemStack output) {
+    BrewingRecipe recipe = new BrewingRecipe(
         input,
         ingredient,
         output);
-    ItemStack output0 = BrewingRecipeRegistry.getOutput(input, ingredient);
-    if (output0.getItem() == output.getItem())
-      ModCyclic.logger.info("Brewing Recipe succefully registered and working: " + output.getUnlocalizedName());
-    else {
-      ModCyclic.logger.error("Brewing Recipe FAILED to register" + output.getUnlocalizedName());
+    BrewingRecipeRegistry.addRecipe(recipe);
+    if (ModCyclic.logger.sendInfo) {//OMG UNIT TESTING WAAT
+      ItemStack output0 = BrewingRecipeRegistry.getOutput(input, ingredient);
+      if (output0.getItem() == output.getItem())
+        ModCyclic.logger.info("Brewing Recipe succefully registered and working: " + output.getUnlocalizedName());
+      else {
+        ModCyclic.logger.error("Brewing Recipe FAILED to register" + output.getUnlocalizedName());
+      }
     }
+    return recipe;
   }
   @SideOnly(Side.CLIENT)
   @SubscribeEvent

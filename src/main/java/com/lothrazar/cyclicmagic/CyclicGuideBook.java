@@ -89,6 +89,9 @@ public class CyclicGuideBook implements IGuideBook {
         if (p.recipe != null) {
           pages.add(new PageIRecipe(p.recipe));
         }
+        if (p.brewRecipe != null) {
+          pages.add(new PageBrewingRecipe(p.brewRecipe));
+        }
       }
       addEntry(item.cat, pages, item.title, item.icon);
     }
