@@ -7,6 +7,7 @@ import com.lothrazar.cyclicmagic.block.tileentity.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -20,6 +21,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ITickable;
@@ -41,7 +43,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   public static int maxHeight = 10;
   public static int TIMER_FULL = 80;
   private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots for all faces
-  final int RADIUS = 4;//center plus 4 in each direction = 9x9
+//  final int RADIUS = 4;//center plus 4 in each direction = 9x9
   private int speed = 1;
   private int rightClickIfZero = 0;
   private WeakReference<FakePlayer> fakePlayer;
@@ -98,13 +100,20 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
               this.getWorld().markChunkDirty(targetPos, this);
               AxisAlignedBB range = UtilEntity.makeBoundingBox(entityCenter, hRange, vRange);
               List<EntityLivingBase> all = world.getEntitiesWithinAABB(EntityLivingBase.class, range);
+              
               for (EntityLivingBase ent : all) {
                 // on the line below: NullPointerException  at com.lothrazar.cyclicmagic.block.tileentity.TileMachineUser.func_73660_a(TileMachineUser.java:101)
                 if (world.isRemote == false &&
                     ent != null && ent.isDead == false
                     && fakePlayer != null && fakePlayer.get() != null) {
+                  
                   validateTool(); //recheck this at every step so we dont go negative
-                  fakePlayer.get().interactOn(ent, EnumHand.MAIN_HAND);
+                  if(EnumActionResult.FAIL != fakePlayer.get().interactOn(ent, EnumHand.MAIN_HAND)){
+          
+                    this.tryDumpFakePlayerInvo();
+                    break;//dont do every entity in teh whole batch
+                  }
+                
                 }
               }
             }
@@ -139,6 +148,15 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         timer = 1;//allows it to run on a pulse
       }
     }
+  }
+  private void tryDumpFakePlayerInvo() {
+    for(ItemStack s : fakePlayer.get().inventory.mainInventory){
+      if(!s.isEmpty() && !s.equals(fakePlayer.get().getHeldItemMainhand())){
+        UtilItemStack.dropItemStackInWorld(world, pos, s.copy());
+        s.setCount(0);
+      }
+    }
+    
   }
   /**
    * detect if tool stack is empty or destroyed and reruns equip
