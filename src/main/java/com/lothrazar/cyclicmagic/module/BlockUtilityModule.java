@@ -66,7 +66,6 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       ModCyclic.instance.events.register(Item.getItemFromBlock(block_fragile_auto));
       BlockScaffoldingReplace block_fragile_weak = new BlockScaffoldingReplace();
       BlockRegistry.registerBlock(block_fragile_weak, new ItemBlockScaffolding(block_fragile_weak), "block_fragile_weak");
-      block_fragile_weak.doesAutobreak = false;
       ModCyclic.instance.events.register(Item.getItemFromBlock(block_fragile_weak));
     }
     if (fishingBlock) {

@@ -33,7 +33,7 @@ public class BlockScaffolding extends BlockBase implements IHasRecipe {
   private static final double OFFSET = 0.0125D;//shearing & cactus are  0.0625D;
   protected static final AxisAlignedBB AABB = new AxisAlignedBB(OFFSET, 0, OFFSET, 1 - OFFSET, 1, 1 - OFFSET);//required to make entity collied happen for ladder climbing
   protected boolean dropBlock = true;//does it drop item on non-player break
-  public boolean doesAutobreak = true;
+  private boolean doesAutobreak = true;
   public BlockScaffolding(boolean autoBreak) {
     super(Material.GLASS);
     doesAutobreak = autoBreak;
