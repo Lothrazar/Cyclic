@@ -144,7 +144,7 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
   private void tryDumpFakePlayerInvo() {
     for (ItemStack s : fakePlayer.get().inventory.mainInventory) {
       if (s != null && !s.equals(fakePlayer.get().getHeldItemMainhand())) {
-        UtilItemStack.dropItemStackInWorld(this.worldObj, pos, s.copy());
+        UtilItemStack.dropItemStackInWorld(this.worldObj, getCurrentFacingPos(), s.copy());
         s.stackSize = 0;
         s = null;
       }
