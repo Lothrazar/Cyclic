@@ -15,6 +15,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeMap;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -152,7 +153,10 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private void tryDumpFakePlayerInvo() {
     for(ItemStack s : fakePlayer.get().inventory.mainInventory){
       if(!s.isEmpty() && !s.equals(fakePlayer.get().getHeldItemMainhand())){
-        UtilItemStack.dropItemStackInWorld(world, pos, s.copy());
+        EntityItem entityItem =   UtilItemStack.dropItemStackInWorld(world, getCurrentFacingPos(), s.copy());
+        if(entityItem != null){
+          entityItem.setVelocity(0, 0, 0);
+        }
         s.setCount(0);
       }
     }

@@ -99,7 +99,9 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     String aquaBase = "com.teammetallurgy.aquaculture.items.";
     if (itemsClass.equals(aquaBase + "ItemAquacultureWoodenFishingRod")
         || itemsClass.equals(aquaBase + "ItemAquacultureFishingRod")
-        || itemsClass.equals(aquaBase + "ItemAdminAquacultureFishingRod")) { return true; }
+        || itemsClass.equals(aquaBase + "ItemAdminAquacultureFishingRod")
+        || itemsClass.equals(aquaBase + "ItemAdminFishingRod")
+        ) { return true; }
     return false;
   }
   @Override
