@@ -20,12 +20,15 @@ import com.lothrazar.cyclicmagic.component.fan.TileEntityFan;
 import com.lothrazar.cyclicmagic.component.fisher.BlockFishing;
 import com.lothrazar.cyclicmagic.component.fisher.TileEntityFishing;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
+import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
+import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideItem;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -82,19 +85,23 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
     if (enableBucketBlocks) {
       //TODO: refactor and support more recipes
       BlockRegistry.block_storewater = new BlockBucketStorage(Items.WATER_BUCKET);
-      BlockRegistry.registerBlock(BlockRegistry.block_storewater, new ItemBlockBucket(BlockRegistry.block_storewater), "block_storewater", GuideCategory.BLOCK);
+      BlockRegistry.registerBlock(BlockRegistry.block_storewater, new ItemBlockBucket(BlockRegistry.block_storewater), "block_storewater", null);
       BlockRegistry.block_storemilk = new BlockBucketStorage(Items.MILK_BUCKET);
-      BlockRegistry.registerBlock(BlockRegistry.block_storemilk, new ItemBlockBucket(BlockRegistry.block_storemilk), "block_storemilk", GuideCategory.BLOCK);
+      BlockRegistry.registerBlock(BlockRegistry.block_storemilk, new ItemBlockBucket(BlockRegistry.block_storemilk), "block_storemilk", null);
       BlockRegistry.block_storelava = new BlockBucketStorage(Items.LAVA_BUCKET);
-      BlockRegistry.registerBlock(BlockRegistry.block_storelava, new ItemBlockBucket(BlockRegistry.block_storelava), "block_storelava", GuideCategory.BLOCK);
+      BlockRegistry.registerBlock(BlockRegistry.block_storelava, new ItemBlockBucket(BlockRegistry.block_storelava), "block_storelava",null);
       BlockRegistry.block_storeempty = new BlockBucketStorage(null);
-      BlockRegistry.registerBlock(BlockRegistry.block_storeempty, new ItemBlockBucket(BlockRegistry.block_storeempty), "block_storeempty", GuideCategory.BLOCK);
+      BlockRegistry.registerBlock(BlockRegistry.block_storeempty, new ItemBlockBucket(BlockRegistry.block_storeempty), "block_storeempty", null);
       GameRegistry.registerTileEntity(TileEntityBucketStorage.class, "bucketstorage");
-      GameRegistry.addRecipe(new ItemStack(BlockRegistry.block_storeempty),
+     IRecipe recipe =  GameRegistry.addShapedRecipe(new ItemStack(BlockRegistry.block_storeempty),
           "i i",
           " o ",
           "i i",
           'o', Blocks.OBSIDIAN, 'i', Items.IRON_INGOT);
+      
+     GuideRegistry.register(GuideCategory.BLOCK,    BlockRegistry.block_storeempty , recipe,null);
+ 
+      
     }
   }
   @Override

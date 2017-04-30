@@ -672,9 +672,6 @@ unlocks.extended=Unlocked Extended Inventory
 wand.inventory.empty=Scepter Inventory is Empty
 
 
-text.brewing.brew=Potion Brewing
-text.brewing.error=Brewing Error
-
 item.guide.name=Cyclic Guide Book
 guide.title=Cyclic Guide
 guide.welcome=Cyclic
@@ -830,7 +827,7 @@ item.charm_antidote.guide=
 tile.exp_pylon.guide=
 tile.builder_pattern.guide=
 tile.builder_block.guide=
-tile.harvester_block.guide=
+tile.harvester_block.guide=Point this at your field of crops and it will gently harvest everything, replanting seeds as it goes.  The harvested crops just land where they are, so you can use other means to collect them (magnet, fan).  Redstone controlled, and the harvested area can be changed.  
 tile.uncrafting_block.guide=
 tile.block_miner.guide=
 tile.block_miner_tunnel.guide=
@@ -851,12 +848,12 @@ tile.plate_vector.guide=
 tile.auto_crafter.guide=
 tile.entity_detector.guide=
 tile.fan.guide=
-tile.block_shears.guide=
-tile.block_fragile.guide=
-tile.block_fragile_auto.guide=
-tile.block_fragile_weak.guide=
-tile.block_fishing.guide=
-tile.block_disenchanter.guide=
+tile.block_shears.guide=This is a block with shears attached to all sides.  It will shear anyone that collides with it.  Put it in a sheep pen with hoppers around it to automate your wool collection.
+tile.block_fragile.guide=Climb this like a ladder, and sneak to build on the opposite side.  Fragile Scaffolding breaks over time all by itself.  Useful for when you are pillaring up, or scaffolding around a building, but you want it to just be temporary.  Now you dont have to go back and take down some dirt pillar later on.
+tile.block_fragile_auto.guide=Climb this like a ladder, and sneak to build on the opposite side.  Responsive scaffolding is really easy to break all at once.  After using this to build your roof or to pillar up, breaking one block will also break everything connected to it. 
+tile.block_fragile_weak.guide=Climb this like a ladder, and sneak to build on the opposite side.  Replaceable scaffolding is just that, you can replace it with a block.  
+tile.block_fishing.guide=Place down surrounded by water.  Fishes faster more sides are covered in water, minimum 4 of 6.  Then give it a fishing rod and it fishes for you.  It uses whatever is in the fishing loot table, so it works with regular fish, treasure, junk, and modded items that were added.  The frequency indicates how often it will attempt to fish.  You can increase this number by surrounding it with more still or flowing water, so you can use pipes and hoppers to automate fishing even further, but the frequency will be slightly lower.
+tile.block_disenchanter.guide=This will strip off enchantments one by one, with a cost.  Feed in your enchantments in the top and books into the middle.  It will consume one of each ingredient for each enchantment removed, and put each one on a book.  There is no way to pick which enchantment is removed, so if it removes the wrong one you just have to keep removing, and then re-add the ones you want back on the normal way (anvil).  Can be automated with pipes/hoppers and controlled with redstone.  
 tile.block_storewater.guide=
 tile.block_storemilk.guide=
 tile.block_storelava.guide=
