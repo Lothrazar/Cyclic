@@ -5,6 +5,7 @@ import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -19,6 +20,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ITickable;
@@ -102,7 +104,10 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
                     ent != null && ent.isDead == false
                     && fakePlayer != null && fakePlayer.get() != null) {
                   validateTool(); //recheck this at every step so we dont go negative
-                  fakePlayer.get().interact(ent, maybeTool, EnumHand.MAIN_HAND);
+                  if (fakePlayer.get().interact(ent, maybeTool, EnumHand.MAIN_HAND) != EnumActionResult.FAIL) {
+                    tryDumpFakePlayerInvo();
+                    break;
+                  }
                 }
               }
             }
@@ -133,6 +138,15 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
       }
       else {
         timer = 1;//allows it to run on a pulse
+      }
+    }
+  }
+  private void tryDumpFakePlayerInvo() {
+    for (ItemStack s : fakePlayer.get().inventory.mainInventory) {
+      if (s != null && !s.equals(fakePlayer.get().getHeldItemMainhand())) {
+        UtilItemStack.dropItemStackInWorld(this.worldObj, pos, s.copy());
+        s.stackSize = 0;
+        s = null;
       }
     }
   }

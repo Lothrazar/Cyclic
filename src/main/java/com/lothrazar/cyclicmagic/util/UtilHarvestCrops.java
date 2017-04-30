@@ -72,6 +72,7 @@ public class UtilHarvestCrops {
     return countHarvested;
   }
   public static boolean harvestSingle(World world, BlockPos posCurrent, HarestCropsConfig conf) {
+    if (posCurrent == null) { return false; }
     boolean doBreakAbove = false;
     boolean doBreakBelow = false;
     boolean doBreak = false;
@@ -213,8 +214,8 @@ public class UtilHarvestCrops {
         }
         //now we can upgrade this to also drop in front wooo!
         for (ItemStack drop : drops) {
-          UtilItemStack.dropItemStackInWorld(world, posCurrent, drop);
-          //           dropItem(drop, world, blockPos);
+          if (drop != null)
+            UtilItemStack.dropItemStackInWorld(world, posCurrent, drop);
         }
       }
       else {

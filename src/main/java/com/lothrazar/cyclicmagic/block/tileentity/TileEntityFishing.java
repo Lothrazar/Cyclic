@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
@@ -90,7 +91,21 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     return cov;
   }
   public boolean isEquipmentValid() {
-    return inv[toolSlot] != null && inv[toolSlot].getItem() instanceof ItemFishingRod;
+    ItemStack equip = this.getStackInSlot(toolSlot);
+    if(equip == null){
+      return false;
+    }    
+    String itemsClass = equip.getItem().getClass().getName();
+    
+    if (equip.getItem() instanceof ItemFishingRod) { return true; }
+    String aquaBase = "com.teammetallurgy.aquaculture.items.";
+    if (itemsClass.equals(aquaBase + "ItemAquacultureWoodenFishingRod")
+        || itemsClass.equals(aquaBase + "ItemAquacultureFishingRod")
+        || itemsClass.equals(aquaBase + "ItemAdminAquacultureFishingRod")
+        || itemsClass.equals(aquaBase + "ItemAdminFishingRod")
+          ) { return true; }
+    
+    return false;
   }
   @Override
   public void update() {

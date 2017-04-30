@@ -20,7 +20,7 @@ public class ContainerFisher extends ContainerBaseMachine {
   public ContainerFisher(InventoryPlayer inventoryPlayer, TileEntityFishing te) {
     tileEntity = te;
     for (int i = 0; i < TileEntityFishing.RODSLOT; i++) {
-      addSlotToContainer(new SlotItemRestricted(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY, Items.FISHING_ROD));
+      addSlotToContainer(new Slot(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY));
     }
     int s = TileEntityFishing.RODSLOT;
     int row = 0, col = 0;
