@@ -57,7 +57,7 @@ public class GuiPylon extends GuiBaseContanerProgress {
         x, y, w/2, h, UtilChat.lang("button.exp_pylon.deposit") );
     this.buttonList.add(btnDeposit);
     btnDepositAll = new GuiButton(btnId++,
-        x+w/2, y, w/2, h, UtilChat.lang("button.exp_pylon.depositall") );
+        x+w/2+1, y, w/2, h, UtilChat.lang("button.exp_pylon.depositall") );
     this.buttonList.add(btnDepositAll);
   }
   @Override
