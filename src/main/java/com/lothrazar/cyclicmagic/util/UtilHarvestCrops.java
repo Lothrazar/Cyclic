@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.util;
 import java.util.Iterator;
 import java.util.List;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCocoa;
 import net.minecraft.block.BlockDoublePlant;
@@ -207,17 +208,27 @@ public class UtilHarvestCrops {
         world.destroyBlock(posCurrent, false);//false == no drops. literally just for the sound
         world.setBlockState(posCurrent, stateReplant);// new way
         //whateveer it drops if it wasnt full grown, yeah thats the seed
-        final Item seedItem = blockCheck.getItemDropped(blockCheck.getDefaultState(), world.rand, 0);
-        if (drops.size() > 1 && seedItem != null) {
-          //  if it dropped more than one ( seed and a thing)
-          for (Iterator<ItemStack> iterator = drops.iterator(); iterator.hasNext();) {
-            final ItemStack drop = iterator.next();
-            if (drop.getItem() == seedItem) { // Remove exactly one seed (consume for replanting
-              iterator.remove();
-              //ModMain.logger.info("yay remove seed "+drop.getDisplayName());
-              break;
+        //but we cant fix runtime exception since its from somebody elses mod
+        // com.polipo.exp.BlockExpPlant.func_180660_a(BlockExpPlant.java:237)
+        // https://mods.curse.com/mc-mods/minecraft/230553-giacomos-experience-seedling
+        try {
+          Item seedItem = blockCheck.getItemDropped(blockCheck.getDefaultState(), world.rand, 0);//RuntimeException at this line
+          if (drops.size() > 1 && seedItem != null) {
+            //  if it dropped more than one ( seed and a thing)
+            for (Iterator<ItemStack> iterator = drops.iterator(); iterator.hasNext();) {
+              final ItemStack drop = iterator.next();
+              if (drop.getItem() == seedItem) { // Remove exactly one seed (consume for replanting
+                iterator.remove();
+                //ModMain.logger.info("yay remove seed "+drop.getDisplayName());
+                break;
+              }
             }
           }
+        }
+        catch (Exception e) {
+          ModCyclic.logger.error("Crop could not be harvested by Cyclic, contact both mod authors");
+          ModCyclic.logger.error(e.getMessage());
+          e.printStackTrace();
         }
         //now we can upgrade this to also drop in front wooo!
         for (ItemStack drop : drops) {

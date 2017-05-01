@@ -9,6 +9,7 @@ import javax.annotation.Nullable;
 import org.lwjgl.opengl.GL11;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -217,6 +218,20 @@ public class UtilWorld {
     return world.isAirBlock(pos) || world.getBlockState(pos).getBlock().getUnlocalizedName().equalsIgnoreCase("tile.water") || (world.getBlockState(pos) != null
         && waterBoth.contains(world.getBlockState(pos).getBlock()));
   }
+  public static BlockPos nextAirInDirection(World world, BlockPos posIn, EnumFacing facing, int max, @Nullable Block blockMatch) {
+    BlockPos posToPlaceAt = new BlockPos(posIn);
+    BlockPos posLoop = new BlockPos(posIn);
+    for (int i = 0; i < max; i++) {
+      if (world.isAirBlock(posLoop)) {
+        posToPlaceAt = posLoop;
+        break;
+      }
+      else {
+        posLoop = posLoop.offset(facing);
+      }
+    }
+    return posToPlaceAt;
+  }
   /**
    * Everything in this inner class is From a mod that has MIT license owned by
    * romelo333 and maintained by McJty
@@ -291,18 +306,90 @@ public class UtilWorld {
       buffer.pos(mx, my + 1, mz + 1).color(r, g, b, a).endVertex();
     }
   }
-  public static BlockPos nextAirInDirection(World world, BlockPos posIn, EnumFacing facing, int max, @Nullable Block blockMatch) {
-    BlockPos posToPlaceAt = new BlockPos(posIn);
-    BlockPos posLoop = new BlockPos(posIn);
-    for (int i = 0; i < max; i++) {
-      if (world.isAirBlock(posLoop)) {
-        posToPlaceAt = posLoop;
-        break;
+  /**
+   * Functions from this inner class are not authored by me (Sam Bassett aka Lothrazar) they are from BuildersGuides by
+   * 
+   * @author Ipsis
+   * 
+   *         All credit goes to author for this
+   * 
+   *         Source code: https://github.com/Ipsis/BuildersGuides Source License
+   *         https://github.com/Ipsis/BuildersGuides/blob/master/COPYING.LESSER
+   * 
+   *         I used and modified two functions from this library
+   *         https://github.com/Ipsis/BuildersGuides/blob/master/src/main/java/ipsis/buildersguides/util/RenderUtils.java
+   * 
+   * 
+   */
+  public static class RenderShadow {
+    public static void renderBlockList(List<BlockPos> blockPosList, BlockPos center, double relX, double relY, double relZ, float red, float green, float blue) {
+      GlStateManager.pushAttrib();
+      GlStateManager.pushMatrix();
+      // translate to center or te
+      GlStateManager.translate(relX + 0.5F, relY + 0.5F, relZ + 0.5F);
+      GlStateManager.disableLighting(); // so colors are correct
+      GlStateManager.disableTexture2D(); // no texturing needed
+      GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+      GlStateManager.enableBlend();
+      float alpha = 0.5F;
+      GlStateManager.color(red, green, blue, alpha);
+      if (Minecraft.isAmbientOcclusionEnabled())
+        GlStateManager.shadeModel(GL11.GL_SMOOTH);
+      else
+        GlStateManager.shadeModel(GL11.GL_FLAT);
+      for (BlockPos p : blockPosList) {
+        GlStateManager.pushMatrix();
+        GlStateManager.translate(
+            (center.getX() - p.getX()) * -1.0F,
+            (center.getY() - p.getY()) * -1.0F,
+            (center.getZ() - p.getZ()) * -1.0F);
+        shadedCube(0.4F);
+        GlStateManager.popMatrix();
       }
-      else {
-        posLoop = posLoop.offset(facing);
-      }
+      GlStateManager.disableBlend();
+      GlStateManager.enableTexture2D();
+      GlStateManager.enableLighting();
+      GlStateManager.popMatrix();
+      GlStateManager.popAttrib();
     }
-    return posToPlaceAt;
+    private static void shadedCube(float scale) {
+      float size = 1.0F * scale;
+      Tessellator tessellator = Tessellator.getInstance();
+      VertexBuffer worldRenderer = tessellator.getBuffer();
+      // Front - anticlockwise vertices
+      // Back - clockwise vertices
+      worldRenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
+      // xy anti-clockwise - front
+      worldRenderer.pos(-size, -size, size).endVertex();
+      worldRenderer.pos(size, -size, size).endVertex();
+      worldRenderer.pos(size, size, size).endVertex();
+      worldRenderer.pos(-size, size, size).endVertex();
+      // xy clockwise - back
+      worldRenderer.pos(-size, -size, -size).endVertex();
+      worldRenderer.pos(-size, size, -size).endVertex();
+      worldRenderer.pos(size, size, -size).endVertex();
+      worldRenderer.pos(size, -size, -size).endVertex();
+      // anti-clockwise - left
+      worldRenderer.pos(-size, -size, -size).endVertex();
+      worldRenderer.pos(-size, -size, size).endVertex();
+      worldRenderer.pos(-size, size, size).endVertex();
+      worldRenderer.pos(-size, size, -size).endVertex();
+      // clockwise - right
+      worldRenderer.pos(size, -size, -size).endVertex();
+      worldRenderer.pos(size, size, -size).endVertex();
+      worldRenderer.pos(size, size, size).endVertex();
+      worldRenderer.pos(size, -size, size).endVertex();
+      // anticlockwise - top
+      worldRenderer.pos(-size, size, -size).endVertex();
+      worldRenderer.pos(-size, size, size).endVertex();
+      worldRenderer.pos(size, size, size).endVertex();
+      worldRenderer.pos(size, size, -size).endVertex();
+      // clockwise - bottom
+      worldRenderer.pos(-size, -size, -size).endVertex();
+      worldRenderer.pos(size, -size, -size).endVertex();
+      worldRenderer.pos(size, -size, size).endVertex();
+      worldRenderer.pos(-size, -size, size).endVertex();
+      tessellator.draw();
+    }
   }
 }
