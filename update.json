@@ -124,7 +124,7 @@
   	,"1.10.18":"Structure builder will now check if placement is valid before building (avoids saplings placed on non-solid blocks for example)"
 	,"1.10.19":"Fix harvester resetting its size property when chunk reloads.  Fix Mattock tooltip.  Add nether star and some progressive automation items to the uncrafting grinder default blacklist.  Removed nether star from default Magic Bean loot table (existing config files unchanged and you could still add it back).  Auto torch will no longer place in spectator mode.   "
 	,"1.10.20":"Fix sheep exploit.  "
-	,"1.10.21":"Auto Fisher now compatible with aquaculture, basemetal, modernmetal fishing rods.  Automatic User now correctly drops output items, such as milk buckets. Fix harvester sometimes crashing when used on agricraft crop sticks. "
+	,"1.10.21":"Auto Fisher now compatible with aquaculture, basemetal, modernmetal fishing rods.  Automatic User now correctly drops output items, such as milk buckets. Fix harvester sometimes crashing when used on agricraft crop sticks or Pixelmon apricorns. "
   },
   "1.11.2":{
 	"1.0.0":"Beta release; on par with 1.10.2-1.9.15  Removed: LightningSkeletonMutate, LightningZombieMutate, Block Miner Advanced.  Changed Features: Emerald Carrot no longer changes normal horses to zombie or skeleton; instead its used to tame existing Zombie and Skeleton horses.  Sleeping Mat works half the time but has a few issues, its a work in progress right now.  Several items have changed textures, recipes, and names.  "
