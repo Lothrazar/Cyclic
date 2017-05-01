@@ -34,9 +34,10 @@ public class BlockDisenchanter extends BlockBaseFacingInventory implements IHasR
     return new TileEntityDisenchanter();
   }
   @SideOnly(Side.CLIENT)
+  @Override
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
-    // Bind our TESR to our tile entity
+    
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDisenchanter.class, new DisenchantPylonTESR());
   }
   @Override

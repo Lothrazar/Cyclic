@@ -17,8 +17,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
-  private static final EnumParticleTypes PARTICLE_TARGET = EnumParticleTypes.CLOUD;
-  private static final EnumParticleTypes PARTICLE_SRC = EnumParticleTypes.DRAGON_BREATH;
   private final static int MAXIMUM = 32;
   private static final String NBT_REDST = "redstone";
   private static final int TIMER_FULL = 20;
@@ -73,11 +71,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   }
   @Override
   public void update() {
-    if (this.renderParticles == 1) {
-      this.renderBoundingBoxes();
-    }
-    if (!isRunning()) {
-      // it works ONLY if its powered
+    if (!isRunning()) { // it works ONLY if its powered
       return;
     }
     timer -= 1;
@@ -117,22 +111,15 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       }
     }
   }
-  private void renderBoundingBoxes() {
-    //targ
-    BlockPos centerTarget = this.getPos().add(offsetTargetX, offsetTargetY, offsetTargetZ);
-    List<BlockPos> shapeTarget = UtilShape.cubeFrame(centerTarget, this.sizeRadius, this.height);
-    if (this.getWorld().rand.nextDouble() < 0.1) {
-      for (BlockPos p : shapeTarget) {
-        UtilParticle.spawnParticleNarrow(this.getWorld(), PARTICLE_TARGET, p);
-      }
-    }
+  public List<BlockPos> getSourceShape() {
     BlockPos centerSrc = this.getPos().add(offsetSourceX, offsetSourceY, offsetSourceZ);
     List<BlockPos> shapeSrc = UtilShape.cubeFrame(centerSrc, this.sizeRadius, this.height);
-    if (this.getWorld().rand.nextDouble() < 0.1) {
-      for (BlockPos p : shapeSrc) {
-        UtilParticle.spawnParticleNarrow(this.getWorld(), PARTICLE_SRC, p);
-      }
-    }
+    return shapeSrc;
+  }
+  public List<BlockPos> getTargetShape() {
+    BlockPos centerTarget = this.getPos().add(offsetTargetX, offsetTargetY, offsetTargetZ);
+    List<BlockPos> shapeTarget = UtilShape.cubeFrame(centerTarget, this.sizeRadius, this.height);
+    return shapeTarget;
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
@@ -258,7 +245,6 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     this.offsetTargetX = srcX;
     this.offsetTargetY = srcY;
     this.offsetTargetZ = srcZ;
-    this.renderBoundingBoxes();
   }
   @Override
   public void toggleNeedsRedstone() {
@@ -274,5 +260,8 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
       val = 0;//hacky lazy way
     }
     this.setField(Fields.RENDERPARTICLES.ordinal(), val);
+  }
+  public boolean renderOn() { // sed by TESR
+    return renderParticles == 1;
   }
 }
