@@ -66,7 +66,7 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
       }
     }
     public static int get(ItemStack wand) {
-      if (wand == null) { return 0; }
+      if (wand.isEmpty()) { return 0; }
       NBTTagCompound tags = UtilNBT.getItemStackNBT(wand);
       return tags.getInteger(NBT);
     }
@@ -94,7 +94,7 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
   public void onHit(PlayerInteractEvent.LeftClickBlock event) {
     EntityPlayer player = event.getEntityPlayer();
     ItemStack held = player.getHeldItem(event.getHand());
-    if (held != null && held.getItem() == this) {
+    if (!held.isEmpty() && held.getItem() == this) {
       if (ActionType.getTimeout(held) > 0) {
         //without a timeout, this fires every tick. so you 'hit once' and get this happening 6 times
         return;
@@ -114,14 +114,14 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
     EntityPlayer player = Minecraft.getMinecraft().player;
     ItemStack held = player.getHeldItem(EnumHand.MAIN_HAND);
     if (event.isCanceled() || event.getType() != ElementType.EXPERIENCE) { return; }
-    if (held != null && held.getItem() == this) {
+    if (!held.isEmpty() && held.getItem() == this) {
       int slot = UtilPlayer.getFirstSlotWithBlock(player);
       if (slot >= 0) {
         ItemStack stack = player.inventory.getStackInSlot(slot);
         int leftOff = 0, rightOff = -18, topOff = 0, bottOff = 0;
         int xmain = RenderLoc.locToX(ItemToolsModule.renderLocation, leftOff, rightOff);
         int ymain = RenderLoc.locToY(ItemToolsModule.renderLocation, topOff, bottOff);
-        if (stack != null)
+        if (!stack.isEmpty())
           ModCyclic.proxy.renderItemOnScreen(stack, xmain, ymain);
       }
     }
@@ -161,7 +161,7 @@ public class ItemToolSwap extends BaseTool implements IHasRecipe {
   }
   @Override
   public void addRecipe() {
-    ItemStack ingredient = null;
+    ItemStack ingredient = ItemStack.EMPTY;
     switch (this.getWandType()) {
       case MATCH:
         ingredient = new ItemStack(Items.EMERALD);

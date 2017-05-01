@@ -5,10 +5,10 @@
     "1.9.4-recommended":  "1.2.0",
     "1.10-latest":  "1.1.0",
     "1.10-recommended": "1.1.0",
-    "1.10.2-latest":  "1.10.20",
-    "1.10.2-recommended": "1.10.20",
-    "1.11.2-latest": "1.3.1",
-    "1.11.2-recommended": "1.3.1"
+    "1.10.2-latest":  "1.10.21",
+    "1.10.2-recommended": "1.10.21",
+    "1.11.2-latest": "1.3.2",
+    "1.11.2-recommended": "1.3.2"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -124,6 +124,7 @@
   	,"1.10.18":"Structure builder will now check if placement is valid before building (avoids saplings placed on non-solid blocks for example)"
 	,"1.10.19":"Fix harvester resetting its size property when chunk reloads.  Fix Mattock tooltip.  Add nether star and some progressive automation items to the uncrafting grinder default blacklist.  Removed nether star from default Magic Bean loot table (existing config files unchanged and you could still add it back).  Auto torch will no longer place in spectator mode.   "
 	,"1.10.20":"Fix sheep exploit.  "
+	,"1.10.21":"Auto Fisher now compatible with aquaculture, basemetal, modernmetal fishing rods.  Automatic User now correctly drops output items, such as milk buckets. Fix harvester sometimes crashing when used on agricraft crop sticks. "
   },
   "1.11.2":{
 	"1.0.0":"Beta release; on par with 1.10.2-1.9.15  Removed: LightningSkeletonMutate, LightningZombieMutate, Block Miner Advanced.  Changed Features: Emerald Carrot no longer changes normal horses to zombie or skeleton; instead its used to tame existing Zombie and Skeleton horses.  Sleeping Mat works half the time but has a few issues, its a work in progress right now.  Several items have changed textures, recipes, and names.  "
@@ -144,5 +145,6 @@
 	,"1.2.9":"Fix harvester resetting its size property when chunk reloads.  Fix Mattock tooltip.  Add nether star and some progressive automation items to the uncrafting grinder default blacklist.  Removed nether star from default Magic Bean loot table (existing config files unchanged and you could still add it back).  Auto torch will no longer place in spectator mode.  Fix the inventory crafting 3x3 crafting grid sometimes crashing when dragging itemstacks while the MouseTweaks mod is installed  "
  	,"1.3.0":"New item: Soulstone.  New Block: Unchant Pylon - used to remove enchantments from anything.  New Block: Auto Crafter.  Fixed a crash when shift-clicking items in Experience Pylon.  Experience Pylon collection radius increased to 5, up from 2; storage capacity increased to 20,000 from 1000.  Experience Pylon now has the ability to deposit XP straight from the player, as well as new buttons to toggle each function.  Nether Iron Ore and End Iron Ore now drop iron nuggets instead of ingots.  Ender Shears gives double wool drops.  Removed various loot table configs, mob drop changes, worldgen, since this is better done with vanilla JSON loot tables, or other mods such as InControl and Ocean Floor (List of all config file entries removed: PolarBearLoot, BatsLeather, ElderGuardianDiamonds, EndermiteEyeCrystal, ShulkerLoot, SilverfishIron, StraySkeletonPackedIce, Zombie Drops Nerfed, Sheep Shear Bonus, Leather Bonus, Pork Bonus, Iron Bonus, Classic Oceans).  Similarly, removed Mob Spawning module and 'Mob Spawns' config cateory.  Interdiction plate buffed to counteract fast mounted mobs and Rough Mobs: fires every half second up from each second, and speed increased from 1.4 from 0.9.  "
   	,"1.3.1":"Dungeonfinder flight path has been overhauled: Speed much slower at the start and gradually speeding up so you can actually follow it.  It still flies mostly horizontal at first and goes vertical later.  Auto Crafter JEI support added.  Auto Crafter is faster, firing every 20 ticks instead of 40.   "
+	,"1.3.2":"Automatic User now correctly drops output items, such as milk buckets.  Fragile Torches feature config entry defaults to false now.  Replaceable scaffolding fixed (now it actually gets replaced with your held block).  Exchange scepters will no longer try to place non-block items and set air.  "
   }
 }

@@ -25,11 +25,9 @@ public class FragileTorchesModule extends BaseEventModule implements IHasConfig 
         float oddsWillBreak = 0.01F;
         boolean playerCancelled = false;
         if (living instanceof EntityPlayer) {
-          // EntityPlayer p = (EntityPlayer) living;
-          // just dont let players break them. only other mobs.
-          // if(p.isSneaking()){
+  
           playerCancelled = true;// torches are safe from breaking
-          // }
+          
         }
         if (playerCancelled == false // if its a player, then the player is not
             // sneaking
@@ -43,7 +41,7 @@ public class FragileTorchesModule extends BaseEventModule implements IHasConfig 
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.blocks;
     config.addCustomCategoryComment(category, "Tweaks to new and existing blocks");
-    fragileTorches = config.getBoolean("Fragile Torches", category, true,
+    fragileTorches = config.getBoolean("Fragile Torches", category, false,
         "Torches can get knocked over when passed through by living entities");
   }
 }

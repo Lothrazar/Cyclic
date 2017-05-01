@@ -58,7 +58,7 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(block_shears, "block_shears");
     }
     if (fragileEnabled) {
-      BlockScaffolding block_fragile = new BlockScaffolding();
+      BlockScaffolding block_fragile = new BlockScaffolding(true);
       BlockRegistry.registerBlock(block_fragile, new ItemBlockScaffolding(block_fragile), "block_fragile");
       ModCyclic.instance.events.register(Item.getItemFromBlock(block_fragile));
       BlockScaffoldingResponsive block_fragile_auto = new BlockScaffoldingResponsive();

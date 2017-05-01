@@ -11,9 +11,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockScaffoldingResponsive extends BlockScaffolding implements IHasRecipe {
   public BlockScaffoldingResponsive() {
-    super();
+    super(false);
     this.dropBlock = false;
-    this.doesAutobreak = false;
   }
   @Override
   public void addRecipe() {
@@ -24,9 +23,7 @@ public class BlockScaffoldingResponsive extends BlockScaffolding implements IHas
   public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
     super.neighborChanged(state, worldIn, pos, blockIn, fromPos);
     if (blockIn == this) {
-      //      if (dropBlock) {
-      //        this.dropBlockAsItem(worldIn, pos, state, 0);
-      //      }
+  
       worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 3);
     }
   }
