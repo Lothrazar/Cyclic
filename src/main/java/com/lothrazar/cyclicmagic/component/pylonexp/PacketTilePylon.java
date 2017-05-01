@@ -45,25 +45,33 @@ public class PacketTilePylon implements IMessage, IMessageHandler<PacketTilePylo
     EntityPlayerMP player = ctx.getServerHandler().playerEntity;
     TileEntityXpPylon tile = (TileEntityXpPylon) player.getEntityWorld().getTileEntity(message.pos);
     if (tile != null) {
-      int prev = tile.getField(message.type.ordinal());
+      int pylonHas = tile.getField(message.type.ordinal());
+      int pylonSpace = TileEntityXpPylon.MAX_EXP_HELD - pylonHas;
       if (message.type.ordinal() == TileEntityXpPylon.Fields.EXP.ordinal()) { //actually this is a deposit from the player
-        if (prev + message.value <= TileEntityXpPylon.MAX_EXP_HELD) {//is it full
-          if (UtilExperience.drainExp(player, message.value)) {//does player have enough
+        int playerHas = (int) Math.floor(UtilExperience.getExpTotal(player));
+        int toDeposit;
+        if (message.value == -1) {
+          //deposit all
+          toDeposit = Math.min(playerHas, pylonSpace);
+        }
+        else {//try deposit specified amt
+          toDeposit = Math.min(message.value, pylonSpace);
+        }
+        if (pylonHas + toDeposit <= TileEntityXpPylon.MAX_EXP_HELD) {//is it full
+          if (UtilExperience.drainExp(player, toDeposit)) {//does player have enough
             //then deposit that much into it if drain worked
-            tile.setField(message.type.ordinal(), prev + message.value);
+            tile.setField(message.type.ordinal(), pylonHas + toDeposit);
           }
-          else {
-            //chat not enouh
+          else { //  not enouh
             UtilChat.addChatMessage(player, "tile.exp_pylon.notenough");
           }
         }
-        else {
-          //chat full
+        else { //  full
           UtilChat.addChatMessage(player, "tile.exp_pylon.full");
         }
       }
       else {//normal field toggle/value will be + or 1 something so increment by that
-        tile.setField(message.type.ordinal(), prev + message.value);
+        tile.setField(message.type.ordinal(), pylonHas + message.value);
       }
       tile.markDirty();
       if (player.openContainer != null) {
