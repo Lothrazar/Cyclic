@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.registry;
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.potion.PotionBase;
+import com.lothrazar.cyclicmagic.potion.PotionBounce;
 import com.lothrazar.cyclicmagic.potion.PotionEnder;
 import com.lothrazar.cyclicmagic.potion.PotionMagnet;
 import com.lothrazar.cyclicmagic.potion.PotionSlowfall;
@@ -20,15 +21,16 @@ public class PotionEffectRegistry {
   public static final PotionBase waterwalkEffect = new PotionWaterwalk("waterwalk", true, 0);
   public static final PotionBase snowEffect = new PotionSnow("snow", true, 0);
   public static final PotionBase swimSpeedEffect = new PotionSwimSpeed("swimspeed", true, 0);
+  public static final PotionBase bounceEffect = new PotionBounce("bounce", true, 0);
   public static ArrayList<PotionBase> potionEffects = new ArrayList<PotionBase>();
   public static void register() {
-    //onInit
     PotionEffectRegistry.registerPotionEffect(magnetEffect);
     PotionEffectRegistry.registerPotionEffect(enderEffect);
     PotionEffectRegistry.registerPotionEffect(waterwalkEffect);
     PotionEffectRegistry.registerPotionEffect(slowfallEffect);
     PotionEffectRegistry.registerPotionEffect(snowEffect);
     PotionEffectRegistry.registerPotionEffect(swimSpeedEffect);
+    PotionEffectRegistry.registerPotionEffect(bounceEffect);
   }
   public static void registerPotionEffect(PotionBase effect) {
     GameRegistry.register(effect, effect.getIcon());
