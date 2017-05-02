@@ -125,6 +125,8 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   }
   @Override
   public void onInit() {
+    ItemToolLaunch launcher = new ItemToolLaunch(0);
+    ItemRegistry.addItem(launcher, "launcher");
     if (enableSoulstone) {
       ItemSoulstone soulstone = new ItemSoulstone();
       ItemRegistry.addItem(soulstone, "soulstone");
