@@ -127,9 +127,9 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   @Override
   public void onInit() {
     if (enablePlayerLauncher) {
-      ItemToolLaunch launcher = new ItemToolLaunch(0);
-      ItemRegistry.addItem(launcher, "launcher");
-      ModCyclic.instance.events.register(launcher);
+      ItemToolLaunch tool_launcher = new ItemToolLaunch();
+      ItemRegistry.addItem(tool_launcher, "tool_launcher");
+      ModCyclic.instance.events.register(tool_launcher);
     }
     if (enableSoulstone) {
       ItemSoulstone soulstone = new ItemSoulstone();

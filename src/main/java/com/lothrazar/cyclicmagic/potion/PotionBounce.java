@@ -1,9 +1,10 @@
 package com.lothrazar.cyclicmagic.potion;
-import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -30,6 +31,7 @@ public class PotionBounce extends PotionBase {
       }
       else {
         UtilSound.playSound(player, player.getPosition(), SoundEvents.BLOCK_SLIME_FALL, SoundCategory.PLAYERS, UtilSound.VOLUME / event.getDistance());
+        UtilParticle.spawnParticle(player.world, EnumParticleTypes.SLIME, player.getPosition());
         event.setDistance(0);// fall distance
         player.motionY *= -PERCENT_HEIGHT_BOUNCED;
         player.isAirBorne = true;
