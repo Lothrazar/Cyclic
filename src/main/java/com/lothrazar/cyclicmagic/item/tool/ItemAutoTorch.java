@@ -77,6 +77,7 @@ public class ItemAutoTorch extends BaseItem implements IHasRecipe {
       return type == OFF.ordinal();
     }
   }
+  @Override
   public void onUpdate(ItemStack stack, World world, Entity entityIn, int itemSlot, boolean isSelected) {
     ActionType.tickTimeout(stack);
     if (ActionType.isOff(stack)) { return; }
