@@ -1,38 +1,34 @@
 package com.lothrazar.cyclicmagic.item.tool;
 import com.lothrazar.cyclicmagic.item.BaseTool;
-import com.lothrazar.cyclicmagic.item.tool.ItemAutoTorch.ActionType;
+import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
+import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
-import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ItemToolLaunch extends BaseTool {
-  private static final float POWER_UPSCALE = 3.88F;
-  private static final float MAX_POWER = 6.5F;
+  private static final int POTION_TIME = 10 * Const.TICKS_PER_SEC;
+  private static final float POWER_UPSCALE = 5.88F;
+  private static final float MAX_POWER = 7.5F;
   private static final float VERTICAL_FACTOR = 2.88F;
   private static final int TICKS_USING = 53000;
-
   public enum ActionType {
     FORWARD, REVERSE;
     private final static String NBT = "ActionType";
@@ -87,7 +83,7 @@ public class ItemToolLaunch extends BaseTool {
   }
   @Override
   public void onPlayerStoppedUsing(ItemStack stack, World world, EntityLivingBase entity, int chargeTimer) {
-    if (entity.onGround == false) { return; }
+//    if (entity.onGround == false) { return; }
     if (entity instanceof EntityPlayer == false) { return; }
     EntityPlayer player = (EntityPlayer) entity;
     int charge = this.getMaxItemUseDuration(stack) - chargeTimer;
@@ -99,6 +95,8 @@ public class ItemToolLaunch extends BaseTool {
     player.addVelocity(vec.xCoord * power,
         vec.yCoord * power / VERTICAL_FACTOR,
         vec.zCoord * power);
+    player.addPotionEffect(new PotionEffect(PotionEffectRegistry.bounceEffect, POTION_TIME, 0));
+    UtilSound.playSound(player, player.getPosition(), SoundRegistry.bwoaaap, SoundCategory.PLAYERS, UtilSound.VOLUME / 8);
     super.onUse(stack, player, world, EnumHand.MAIN_HAND);
   }
   @Override

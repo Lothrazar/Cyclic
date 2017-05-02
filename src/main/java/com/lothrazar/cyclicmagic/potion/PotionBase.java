@@ -38,5 +38,5 @@ public abstract class PotionBase extends Potion {
   public void setIcon(ResourceLocation icon) {
     this.icon = icon;
   }
-  public abstract void tick(EntityLivingBase entity);
+  public void tick(EntityLivingBase entity) {};
 }
