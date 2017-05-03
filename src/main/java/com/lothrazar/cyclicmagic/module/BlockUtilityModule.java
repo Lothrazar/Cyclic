@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockShears;
+import com.lothrazar.cyclicmagic.block.BlockSoundSuppress;
 import com.lothrazar.cyclicmagic.block.ItemBlockScaffolding;
 import com.lothrazar.cyclicmagic.block.BlockScaffolding;
 import com.lothrazar.cyclicmagic.block.BlockScaffoldingReplace;
@@ -38,6 +39,9 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   private boolean disenchanter;
   private boolean autoCrafter;
   public void onInit() {
+    BlockSoundSuppress soundproofing = new BlockSoundSuppress();
+    BlockRegistry.registerBlock(soundproofing, "soundproofing");
+    ModCyclic.instance.events.register(soundproofing);
     if (autoCrafter) {
       BlockCrafter auto_crafter = new BlockCrafter();
       BlockRegistry.registerBlock(auto_crafter, "auto_crafter");
