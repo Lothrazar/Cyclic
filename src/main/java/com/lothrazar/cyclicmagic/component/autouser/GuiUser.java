@@ -29,22 +29,26 @@ public class GuiUser extends GuiBaseContanerProgress {
     super.initGui();
     int btnId = 0;
     redstoneBtn = new GuiButtonMachineRedstone(btnId++,
-        this.guiLeft + 8,
-        this.guiTop + 8, this.tile.getPos());
+        this.guiLeft + Const.PAD,
+        this.guiTop + Const.PAD, this.tile.getPos());
     this.buttonList.add(redstoneBtn);
+    
+    int x = this.guiLeft + Const.PAD + 20;
+    int y = this.guiTop + Const.PAD * 2;
     actionBtn = new ButtonUserAction(btnId++,
-        this.guiLeft + 8 + 50,
-        this.guiTop + 8 + 8, this.tile.getPos());
+        x,
+        y, this.tile.getPos());
     this.buttonList.add(actionBtn);
-
-    int y = this.guiTop + Const.padding * 2 + 20;
+    x += actionBtn.width + Const.PAD/2;
+//    int y = this.guiTop + Const.PAD * 2 + 20;
     btnSize = new GuiButtonSizePreview(btnId++,
-        this.guiLeft + Const.padding,
+        x,
         y, "", this.tile.getPos(),
         PacketTileSizeToggle.ActionType.SIZE);
     this.buttonList.add(btnSize);
+    x += btnSize.width + Const.PAD/2;
     GuiButtonSizePreview btnPreview = new GuiButtonSizePreview(btnId++,
-        this.guiLeft + Const.padding * 2 + 40,
+        x,
         y, UtilChat.lang("button.harvester.preview"), this.tile.getPos(),
         PacketTileSizeToggle.ActionType.PREVIEW);
     this.buttonList.add(btnPreview);
@@ -64,7 +68,6 @@ public class GuiUser extends GuiBaseContanerProgress {
     redstoneBtn.setState(tile.getField(Fields.REDSTONE.ordinal()));
     actionBtn.displayString = UtilChat.lang("tile.block_user.action" + tile.getField(Fields.LEFTRIGHT.ordinal()));
     btnSize.displayString = UtilChat.lang("button.harvester.size" + tile.getField(Fields.SIZE.ordinal()));
-    
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
   public int getProgressX() {

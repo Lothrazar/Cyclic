@@ -42,8 +42,8 @@ public class GuiPattern extends GuiBaseContainer {
     int id = 1;
     /////redstone button
     redstoneBtn = new GuiButtonMachineRedstone(id++,
-        this.guiLeft + Const.padding,
-        this.guiTop + Const.padding, this.tile.getPos());
+        this.guiLeft + Const.PAD,
+        this.guiTop + Const.PAD, this.tile.getPos());
     this.buttonList.add(redstoneBtn);
     sizeY = 46;//save now as reuse for textbox
     int vButtonSpacing = 12;
@@ -79,8 +79,8 @@ public class GuiPattern extends GuiBaseContainer {
     this.buttonList.add(bt);
     // ButtonToggleRender
     ButtonToggleRender btn = new ButtonToggleRender(id++,
-        this.guiLeft + 176 - 20 - Const.padding,
-        this.guiTop + Const.padding, this.tile.getPos());
+        this.guiLeft + 176 - 20 - Const.PAD,
+        this.guiTop + Const.PAD, this.tile.getPos());
     this.buttonList.add(btn);
   }
   private void addPatternButtonAt(int id, int x, int y, boolean isUp, TileEntityPatternBuilder.Fields f) {

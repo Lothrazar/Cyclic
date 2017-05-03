@@ -24,17 +24,17 @@ public class GuiHarvester extends GuiBaseContanerProgress {
     super.initGui();
     int btnId = 0;
     redstoneBtn = new GuiButtonMachineRedstone(btnId++,
-        this.guiLeft + Const.padding,
-        this.guiTop + Const.padding, this.tile.getPos());
+        this.guiLeft + Const.PAD,
+        this.guiTop + Const.PAD, this.tile.getPos());
     this.buttonList.add(redstoneBtn);
-    int y = this.guiTop + Const.padding * 2 + 20;
+    int y = this.guiTop + Const.PAD * 2 + 20;
     btnSize = new GuiButtonSizePreview(btnId++,
-        this.guiLeft + Const.padding,
+        this.guiLeft + Const.PAD,
         y, "", this.tile.getPos(),
         PacketTileSizeToggle.ActionType.SIZE);
     this.buttonList.add(btnSize);
     GuiButtonSizePreview btnPreview = new GuiButtonSizePreview(btnId++,
-        this.guiLeft + Const.padding * 2 + 40,
+        this.guiLeft + Const.PAD * 2 + 40,
         y, UtilChat.lang("button.harvester.preview"), this.tile.getPos(),
         PacketTileSizeToggle.ActionType.PREVIEW);
     this.buttonList.add(btnPreview);

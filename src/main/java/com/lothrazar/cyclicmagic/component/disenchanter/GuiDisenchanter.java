@@ -67,7 +67,7 @@ public class GuiDisenchanter extends GuiBaseContanerProgress {
         break;
         default:
           this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
-          x = Const.padding + (i - 5) * Const.SQ;
+          x = Const.PAD + (i - 5) * Const.SQ;
           y = ystart + 3 * spacing - 1;
         break;
       }
@@ -84,7 +84,7 @@ public class GuiDisenchanter extends GuiBaseContanerProgress {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
   public int getProgressX() {
-    return this.guiLeft + Const.padding + 2;
+    return this.guiLeft + Const.PAD + 2;
   }
   public int getProgressY() {
     return this.guiTop + 6 * Const.SQ + 10;

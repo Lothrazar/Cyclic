@@ -23,7 +23,7 @@ public class ContainerCrafter extends ContainerBaseMachine {
     this.playerOffsetY = 130;
     int slot = 0;
     //inpt on left
-    int xPrefix = Const.padding, yPrefix = 27;
+    int xPrefix = Const.PAD, yPrefix = 27;
     int rows = TileEntityCrafter.ROWS;
     int cols = TileEntityCrafter.COLS;
     for (int i = 0; i < rows; i++) {
