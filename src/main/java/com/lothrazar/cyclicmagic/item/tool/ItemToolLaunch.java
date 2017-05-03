@@ -33,8 +33,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemToolLaunch extends BaseTool implements IHasRecipe {
   private static final int COOLDOWN = 20;
   private static final int POTION_TIME = 10 * Const.TICKS_PER_SEC;
-  private static final float POWER_UPSCALE = 5.88F;
-  private static final float MAX_POWER = 7.5F;
+  private static final float POWER_UPSCALE = 5.18F;
+  private static final float MAX_POWER = 6.7F;
   private static final float VERTICAL_FACTOR = 2.88F;
   private static final int TICKS_USING = 53000;
   public enum ActionType {
@@ -104,7 +104,7 @@ public class ItemToolLaunch extends BaseTool implements IHasRecipe {
     player.addVelocity(vec.xCoord * power,
         vec.yCoord * power / VERTICAL_FACTOR,
         vec.zCoord * power);
-    player.addPotionEffect(new PotionEffect(PotionEffectRegistry.bounceEffect, POTION_TIME, 0));
+    player.addPotionEffect(new PotionEffect(PotionEffectRegistry.BOUNCE, POTION_TIME, 0));
     UtilSound.playSound(player, player.getPosition(), SoundRegistry.bwoaaap, SoundCategory.PLAYERS, 0.1F);
     player.getCooldownTracker().setCooldown(stack.getItem(), COOLDOWN);
     super.onUse(stack, player, world, EnumHand.MAIN_HAND);

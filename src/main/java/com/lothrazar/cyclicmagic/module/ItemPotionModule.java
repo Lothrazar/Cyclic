@@ -67,9 +67,9 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
       JeiDescriptionRegistry.registerWithJeiDescription(potion_viscous);
     }
     if (enableEnder) {
-      ItemPotionCustom potion_ender = new ItemPotionCustom(true, PotionEffectRegistry.enderEffect, NORMAL, Potions.I, "item.potion_ender.tooltip");
+      ItemPotionCustom potion_ender = new ItemPotionCustom(true, PotionEffectRegistry.ENDER, NORMAL, Potions.I, "item.potion_ender.tooltip");
       ItemRegistry.addItem(potion_ender, "potion_ender");
-      ItemPotionCustom potion_ender_long = new ItemPotionCustom(true, PotionEffectRegistry.enderEffect, LONG, Potions.I, "item.potion_ender.tooltip");
+      ItemPotionCustom potion_ender_long = new ItemPotionCustom(true, PotionEffectRegistry.ENDER, LONG, Potions.I, "item.potion_ender.tooltip");
       ItemRegistry.addItem(potion_ender_long, "potion_ender_long");
       if (potion_viscous != null)
         addBrewingRecipe(
@@ -83,8 +83,8 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
       JeiDescriptionRegistry.registerWithJeiDescription(potion_ender);
     }
     if (enableMagnet) {
-      ItemPotionCustom potion_magnet = new ItemPotionCustom(false, PotionEffectRegistry.magnetEffect, NORMAL, Potions.I);
-      ItemPotionCustom potion_magnet_long = new ItemPotionCustom(false, PotionEffectRegistry.magnetEffect, LONG, Potions.I);
+      ItemPotionCustom potion_magnet = new ItemPotionCustom(false, PotionEffectRegistry.MAGNET, NORMAL, Potions.I);
+      ItemPotionCustom potion_magnet_long = new ItemPotionCustom(false, PotionEffectRegistry.MAGNET, LONG, Potions.I);
       ItemRegistry.addItem(potion_magnet, "potion_magnet");
       ItemRegistry.addItem(potion_magnet_long, "potion_magnet_long");
       if (potion_viscous != null)
@@ -99,8 +99,8 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
       JeiDescriptionRegistry.registerWithJeiDescription(potion_magnet);
     }
     if (enableWaterwalk) {
-      ItemPotionCustom potion_waterwalk = new ItemPotionCustom(false, PotionEffectRegistry.waterwalkEffect, NORMAL, Potions.I);
-      ItemPotionCustom potion_waterwalk_long = new ItemPotionCustom(false, PotionEffectRegistry.waterwalkEffect, LONG, Potions.I);
+      ItemPotionCustom potion_waterwalk = new ItemPotionCustom(false, PotionEffectRegistry.WATERWALK, NORMAL, Potions.I);
+      ItemPotionCustom potion_waterwalk_long = new ItemPotionCustom(false, PotionEffectRegistry.WATERWALK, LONG, Potions.I);
       ItemRegistry.addItem(potion_waterwalk, "potion_waterwalk");
       ItemRegistry.addItem(potion_waterwalk_long, "potion_waterwalk_long");
       if (potion_viscous != null)
@@ -120,8 +120,8 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
       JeiDescriptionRegistry.registerWithJeiDescription(potion_waterwalk);
     }
     if (enableSwimspeed) {
-      ItemPotionCustom potion_swimspeed = new ItemPotionCustom(false, PotionEffectRegistry.swimSpeedEffect, NORMAL, Potions.I);
-      ItemPotionCustom potion_swimspeed_long = new ItemPotionCustom(false, PotionEffectRegistry.swimSpeedEffect, LONG, Potions.I);
+      ItemPotionCustom potion_swimspeed = new ItemPotionCustom(false, PotionEffectRegistry.SWIMSPEED, NORMAL, Potions.I);
+      ItemPotionCustom potion_swimspeed_long = new ItemPotionCustom(false, PotionEffectRegistry.SWIMSPEED, LONG, Potions.I);
       ItemRegistry.addItem(potion_swimspeed, "potion_swimspeed");
       ItemRegistry.addItem(potion_swimspeed_long, "potion_swimspeed_long");
       if (potion_viscous != null)
@@ -136,8 +136,8 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
       JeiDescriptionRegistry.registerWithJeiDescription(potion_swimspeed);
     }
     if (enableSlowfall) {
-      ItemPotionCustom potion_slowfall = new ItemPotionCustom(true, PotionEffectRegistry.slowfallEffect, NORMAL, Potions.I);
-      ItemPotionCustom potion_slowfall_long = new ItemPotionCustom(true, PotionEffectRegistry.slowfallEffect, LONG, Potions.I);
+      ItemPotionCustom potion_slowfall = new ItemPotionCustom(true, PotionEffectRegistry.SLOWFALL, NORMAL, Potions.I);
+      ItemPotionCustom potion_slowfall_long = new ItemPotionCustom(true, PotionEffectRegistry.SLOWFALL, LONG, Potions.I);
       ItemRegistry.addItem(potion_slowfall, "potion_slowfall");
       ItemRegistry.addItem(potion_slowfall_long, "potion_slowfall_long");
       if (potion_viscous != null)
@@ -157,14 +157,14 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
       JeiDescriptionRegistry.registerWithJeiDescription(potion_slowfall);
     }
     if (enableSnow) {
-      ItemPotionCustom potion_snow = new ItemPotionCustom(true, PotionEffectRegistry.snowEffect, NORMAL, Potions.I, "item.potion_snow.tooltip");
+      ItemPotionCustom potion_snow = new ItemPotionCustom(true, PotionEffectRegistry.SNOW, NORMAL, Potions.I, "item.potion_snow.tooltip");
       ItemRegistry.addItem(potion_snow, "potion_snow");
       if (potion_viscous != null)
         addBrewingRecipe(
             new ItemStack(potion_viscous),
             new ItemStack(Blocks.ICE),
             new ItemStack(potion_snow));
-      ItemPotionCustom potion_snow_long = new ItemPotionCustom(true, PotionEffectRegistry.snowEffect, LONG, Potions.I, "item.potion_snow.tooltip");
+      ItemPotionCustom potion_snow_long = new ItemPotionCustom(true, PotionEffectRegistry.SNOW, LONG, Potions.I, "item.potion_snow.tooltip");
       ItemRegistry.addItem(potion_snow_long, "potion_snow_long");
       addBrewingRecipe(
           new ItemStack(potion_snow),
@@ -272,8 +272,8 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
       LootTableRegistry.registerLoot(potion_levitation_long, ChestType.ENDCITY);
     }
     if (enableBounce) {
-      ItemPotionCustom potion_bounce = new ItemPotionCustom(false, PotionEffectRegistry.bounceEffect, NORMAL);
-      ItemPotionCustom potion_bounce_long = new ItemPotionCustom(false, PotionEffectRegistry.bounceEffect, LONG);
+      ItemPotionCustom potion_bounce = new ItemPotionCustom(false, PotionEffectRegistry.BOUNCE, NORMAL);
+      ItemPotionCustom potion_bounce_long = new ItemPotionCustom(false, PotionEffectRegistry.BOUNCE, LONG);
       ItemRegistry.addItem(potion_bounce, "potion_bounce");
       ItemRegistry.addItem(potion_bounce_long, "potion_bounce_long");
       if (potion_viscous != null)

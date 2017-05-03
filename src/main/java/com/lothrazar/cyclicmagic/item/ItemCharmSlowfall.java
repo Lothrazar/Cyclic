@@ -18,7 +18,7 @@ public class ItemCharmSlowfall extends BaseCharm implements IHasRecipe {
   private final static int seconds = 30;
   private final static int fallDistanceLimit = 6;
   private final static int durability = 64;
-  private final static Potion potion = PotionEffectRegistry.slowfallEffect;
+  private final static Potion potion = PotionEffectRegistry.SLOWFALL;
   public ItemCharmSlowfall() {
     super(durability);
   }

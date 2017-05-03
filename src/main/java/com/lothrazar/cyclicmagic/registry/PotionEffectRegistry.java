@@ -15,22 +15,22 @@ public class PotionEffectRegistry {
   public static enum PotionType {
     NORMAL, POWERED, LONG//, SPLASH, LINGER // todo: these last two
   }
-  public static final PotionBase slowfallEffect = new PotionSlowfall("slowfall", true, 0);
-  public static final PotionBase magnetEffect = new PotionMagnet("magnet", true, 0);
-  public static final PotionBase enderEffect = new PotionEnder("ender", true, 0);
-  public static final PotionBase waterwalkEffect = new PotionWaterwalk("waterwalk", true, 0);
-  public static final PotionBase snowEffect = new PotionSnow("snow", true, 0);
-  public static final PotionBase swimSpeedEffect = new PotionSwimSpeed("swimspeed", true, 0);
-  public static final PotionBase bounceEffect = new PotionBounce("bounce", true, 0);
+  public static final PotionBase SLOWFALL = new PotionSlowfall("slowfall", true, 0);
+  public static final PotionBase MAGNET = new PotionMagnet("magnet", true, 0);
+  public static final PotionBase ENDER = new PotionEnder("ender", true, 0);
+  public static final PotionBase WATERWALK = new PotionWaterwalk("waterwalk", true, 0);
+  public static final PotionBase SNOW = new PotionSnow("snow", true, 0);
+  public static final PotionBase SWIMSPEED = new PotionSwimSpeed("swimspeed", true, 0);
+  public static final PotionBase BOUNCE = new PotionBounce("bounce", true, 0);
   public static ArrayList<PotionBase> potionEffects = new ArrayList<PotionBase>();
   public static void register() {
-    PotionEffectRegistry.registerPotionEffect(magnetEffect);
-    PotionEffectRegistry.registerPotionEffect(enderEffect);
-    PotionEffectRegistry.registerPotionEffect(waterwalkEffect);
-    PotionEffectRegistry.registerPotionEffect(slowfallEffect);
-    PotionEffectRegistry.registerPotionEffect(snowEffect);
-    PotionEffectRegistry.registerPotionEffect(swimSpeedEffect);
-    PotionEffectRegistry.registerPotionEffect(bounceEffect);
+    PotionEffectRegistry.registerPotionEffect(MAGNET);
+    PotionEffectRegistry.registerPotionEffect(ENDER);
+    PotionEffectRegistry.registerPotionEffect(WATERWALK);
+    PotionEffectRegistry.registerPotionEffect(SLOWFALL);
+    PotionEffectRegistry.registerPotionEffect(SNOW);
+    PotionEffectRegistry.registerPotionEffect(SWIMSPEED);
+    PotionEffectRegistry.registerPotionEffect(BOUNCE);
   }
   public static void registerPotionEffect(PotionBase effect) {
     GameRegistry.register(effect, effect.getIcon());
