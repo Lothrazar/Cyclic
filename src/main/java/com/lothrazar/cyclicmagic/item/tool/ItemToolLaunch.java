@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.item.tool;
 import java.util.List;
+import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.BaseTool;
 import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
@@ -10,6 +11,7 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
@@ -24,10 +26,11 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemToolLaunch extends BaseTool  {
+public class ItemToolLaunch extends BaseTool implements IHasRecipe {
   private static final int COOLDOWN = 20;
   private static final int POTION_TIME = 10 * Const.TICKS_PER_SEC;
   private static final float POWER_UPSCALE = 5.88F;
@@ -139,5 +142,16 @@ public class ItemToolLaunch extends BaseTool  {
   @Override
   public EnumAction getItemUseAction(ItemStack stack) {
     return EnumAction.BOW;//make it use cooldown
+  }
+  @Override
+  public void addRecipe() {
+    GameRegistry.addShapedRecipe(new ItemStack(this),
+        "rsq",
+        " rs",
+        "t r",
+        't', Items.STRING,
+        'r', Items.GLOWSTONE_DUST,
+        's', Items.SLIME_BALL,
+        'q', Items.QUARTZ);
   }
 }

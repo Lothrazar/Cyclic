@@ -7,8 +7,8 @@
     "1.10-recommended": "1.1.0",
     "1.10.2-latest":  "1.10.21",
     "1.10.2-recommended": "1.10.21",
-    "1.11.2-latest": "1.3.4",
-    "1.11.2-recommended": "1.3.4"
+    "1.11.2-latest": "1.3.5",
+    "1.11.2-recommended": "1.3.5"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -148,5 +148,6 @@
 	,"1.3.2":"Automatic User now correctly drops output items, such as milk buckets.  Fragile Torches feature config entry defaults to false now.  Replaceable scaffolding fixed (now it actually gets replaced with your held block).  Exchange scepters will no longer try to place non-block items and set air.  "
 	,"1.3.3":"Prevent a crash getting drops out of Giacomos experience seedling mod when using Garden Scythe.  Pattern Replicator now renders its bounding boxes using translucent shadow-cubes instead of particles (looks cleaner and less lag clientside).  Experience pylon now has a Deposit All button.  "
 	,"1.3.4":"New Item: Player Launcher.  Structure Builder now renders a preview of what its about to build.  "
+ 	,"1.3.5":"Player Launcher: added recipe.  Added brewable Bounce potions."
   }
 }

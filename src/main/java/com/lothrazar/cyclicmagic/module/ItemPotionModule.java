@@ -41,6 +41,7 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
   private boolean enableHBoost;
   private boolean enableViscous;
   private boolean enableSwimspeed;
+  private boolean enableBounce;
   final static int SHORT = 60 + 30;
   final static int NORMAL = 60 * 3;
   final static int LONG = 60 * 8;
@@ -246,7 +247,7 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
       if (potion_viscous != null)
         addBrewingRecipe(
             new ItemStack(potion_viscous),
-            new ItemStack(Items.SLIME_BALL),
+            new ItemStack(Items.DYE, 1, EnumDyeColor.GREEN.getDyeDamage()),
             new ItemStack(potion_luck));
       addBrewingRecipe(
           potion_luck,
@@ -269,6 +270,21 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
           new ItemStack(potion_levitation_long));
       LootTableRegistry.registerLoot(potion_levitation, ChestType.ENDCITY);
       LootTableRegistry.registerLoot(potion_levitation_long, ChestType.ENDCITY);
+    }
+    if (enableBounce) {
+      ItemPotionCustom potion_bounce = new ItemPotionCustom(false, PotionEffectRegistry.bounceEffect, NORMAL);
+      ItemPotionCustom potion_bounce_long = new ItemPotionCustom(false, PotionEffectRegistry.bounceEffect, LONG);
+      ItemRegistry.addItem(potion_bounce, "potion_bounce");
+      ItemRegistry.addItem(potion_bounce_long, "potion_bounce_long");
+      if (potion_viscous != null)
+        addBrewingRecipe(
+            new ItemStack(potion_viscous),
+            new ItemStack(Items.SLIME_BALL),
+            new ItemStack(potion_bounce));
+      addBrewingRecipe(
+          new ItemStack(potion_bounce),
+          new ItemStack(UPG_LENGTH),
+          new ItemStack(potion_bounce_long));
     }
   }
   private static void addBrewingRecipe(Item input, Item ingredient, Item output) {
@@ -300,6 +316,7 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
     cancelPotionInventoryShift = config.getBoolean("Potion Inventory Shift", category, true,
         "When true, this blocks the potions moving the inventory over");
     category = Const.ConfigCategory.content;
+    enableBounce = config.getBoolean("PotionBounce", category, true, Const.ConfigCategory.contentDefaultText);
     enableSwimspeed = config.getBoolean("PotionSwimSpeed", category, true, Const.ConfigCategory.contentDefaultText);
     enableMagnet = config.getBoolean("PotionMagnet", category, true, Const.ConfigCategory.contentDefaultText);
     enableWaterwalk = config.getBoolean("PotionWaterwalk", category, true, Const.ConfigCategory.contentDefaultText);

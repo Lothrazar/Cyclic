@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.component.builder;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.BlockBaseFacingInventory;
 import com.lothrazar.cyclicmagic.block.IBlockHasTESR;
-import com.lothrazar.cyclicmagic.block.tileentity.MachineTESR;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
