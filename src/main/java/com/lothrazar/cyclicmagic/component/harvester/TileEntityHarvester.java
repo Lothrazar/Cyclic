@@ -21,7 +21,6 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
   private int needsRedstone = 1;
   private static final String NBT_TIMER = "Timer";
   private static final String NBT_REDST = "redstone";
-  private static final String NBT_SIZE = "size";
   private static final int MAX_SIZE = 7;//radius 7 translates to 15x15 area (center block + 7 each side)
   private int size = MAX_SIZE;//default to the old fixed size, backwards compat
   public static enum Fields {
@@ -75,7 +74,7 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
       trigger = true;
     }
     if (trigger) {
-      BlockPos harvest = getHarvestPos();
+      BlockPos harvest = getTargetPos();
       if (UtilHarvestCrops.harvestSingle(getWorld(), harvest, conf)) {
         UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, harvest);
         timer = TIMER_FULL;//harvest worked!
@@ -93,9 +92,10 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
     //move center over that much, not including exact horizontal
     return this.getPos().offset(this.getCurrentFacing(), this.size + 1);
   }
-  private BlockPos getHarvestPos() {
+  private BlockPos getTargetPos() {
     return UtilWorld.getRandomPos(getWorld().rand, getTargetCenter(), this.size);
   }
+  @Override
   public void displayPreview() {
     List<BlockPos> allPos = UtilShape.squareHorizontalHollow(getTargetCenter(), this.size);
     for (BlockPos pos : allPos) {

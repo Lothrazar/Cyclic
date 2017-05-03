@@ -9,7 +9,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiBlockMiner extends GuiBaseContainer {
-  static final int padding = 8;
   private TileEntityBlockMiner tile;
   boolean debugLabels = false;
   private GuiButtonMachineRedstone redstoneBtn;

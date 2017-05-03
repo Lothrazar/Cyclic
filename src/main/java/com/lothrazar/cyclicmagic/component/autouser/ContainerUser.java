@@ -19,6 +19,7 @@ public class ContainerUser extends ContainerBaseMachine {
   private int timer;
   private int redstone;
   private int leftright;
+  private int tileSize;
   public ContainerUser(InventoryPlayer inventoryPlayer, TileEntityUser te) {
     tileEntity = te;
     for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
@@ -74,11 +75,16 @@ public class ContainerUser extends ContainerBaseMachine {
       if (this.leftright != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
+      idx = TileEntityUser.Fields.SIZE.ordinal();
+      if (this.tileSize != this.tileEntity.getField(idx)) {
+        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
+      }
     }
     this.tileSpeed = this.tileEntity.getField(TileEntityUser.Fields.SPEED.ordinal());
     this.timer = this.tileEntity.getField(TileEntityUser.Fields.TIMER.ordinal());
     this.redstone = this.tileEntity.getField(TileEntityUser.Fields.REDSTONE.ordinal());
     this.leftright = this.tileEntity.getField(TileEntityUser.Fields.LEFTRIGHT.ordinal());
+    this.tileSize = this.tileEntity.getField(TileEntityUser.Fields.SIZE.ordinal());
   }
   @Override
   @SideOnly(Side.CLIENT)

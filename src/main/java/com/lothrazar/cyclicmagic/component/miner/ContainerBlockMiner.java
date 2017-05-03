@@ -1,7 +1,9 @@
 package com.lothrazar.cyclicmagic.component.miner;
 import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -37,5 +39,9 @@ public class ContainerBlockMiner extends ContainerBaseMachine {
   public void addListener(IContainerListener listener) {
     super.addListener(listener);
     listener.sendAllWindowProperties(this, this.tileEntity);
+  }
+  @Override
+  public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
+    return ItemStack.EMPTY;
   }
 }
