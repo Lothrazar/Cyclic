@@ -51,17 +51,19 @@ public class PotionBounce extends PotionBase {
   @SubscribeEvent
   public void rebounceTick(TickEvent.PlayerTickEvent event) {
     //catch a rebounce that was postponed from last tick
-    EntityPlayer player = event.player;
-    if (player.isElytraFlying() || event.phase != TickEvent.Phase.END) { return; }
-    float motionY = ((float) player.getEntityData().getInteger(NBT_MOTIONY)) / 100f;
-    if (player.getEntityData().getInteger(NBT_TICK) == player.ticksExisted && motionY > 0) {
-      player.getEntityData().setInteger(NBT_TICK, -1);
-      player.motionY = motionY;
+    if (event.player.isPotionActive(this)) {
+      EntityPlayer player = event.player;
+      if (player.isElytraFlying() || event.phase != TickEvent.Phase.END) { return; }
+      float motionY = ((float) player.getEntityData().getInteger(NBT_MOTIONY)) / 100f;
+      if (player.getEntityData().getInteger(NBT_TICK) == player.ticksExisted && motionY > 0) {
+        player.getEntityData().setInteger(NBT_TICK, -1);
+        player.motionY = motionY;
+      }
     }
   }
   @Override
   public void tick(EntityLivingBase entity) {
-    if (entity.onGround == false) {//preserve momentum, otherwise it will be like regular falling/gravity
+    if (entity.onGround == false && entity.isPotionActive(this)) {//preserve momentum, otherwise it will be like regular falling/gravity
       //yes this works if drank potion and not just from launcher but is ok
       entity.motionX = entity.motionX / VERTICAL_MOMENTUM_FACTOR;
       entity.motionZ = entity.motionZ / VERTICAL_MOMENTUM_FACTOR;
