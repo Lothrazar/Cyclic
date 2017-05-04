@@ -45,19 +45,19 @@ public class GuiMinerSmart extends GuiBaseContainer {
         this.guiTop + yHeightTxtbox - yOffset, true, TileEntityControlledMiner.Fields.HEIGHT);
     this.buttonList.add(btnHeightUp);
     int x = this.guiLeft + 32;
-    int y = this.guiTop + Const.padding * 2 + 4;
+    int y = this.guiTop + Const.PAD * 2 + 4;
     btnWhitelist = new ButtonMinerHeight(tile.getPos(), id++,
         x, y, true, TileEntityControlledMiner.Fields.LISTTYPE);
     btnWhitelist.width = 46;
     btnWhitelist.height = 20;
     this.buttonList.add(btnWhitelist);
-    x = this.guiLeft + Const.padding;
-    y = this.guiTop + Const.padding * 2 + 44;
+    x = this.guiLeft + Const.PAD;
+    y = this.guiTop + Const.PAD * 2 + 44;
     btnSize = new GuiButtonSizePreview(id++,
         x, y, "", this.tile.getPos(),
         PacketTileSizeToggle.ActionType.SIZE);
     this.buttonList.add(btnSize);
-    x = this.guiLeft + Const.padding * 2 + 40;
+    x = this.guiLeft + Const.PAD * 2 + 40;
     GuiButtonSizePreview btnPreview = new GuiButtonSizePreview(id++,
         x, y, UtilChat.lang("button.harvester.preview"), this.tile.getPos(),
         PacketTileSizeToggle.ActionType.PREVIEW);

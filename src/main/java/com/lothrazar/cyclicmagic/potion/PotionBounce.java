@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class PotionBounce extends PotionBase {
+  private static final double VERTICAL_MOMENTUM_FACTOR = 0.917;
   private static final float DAMAGE_REDUCTION = 0.1f;
   private static final int MIN_HEIGHT_START_BOUNCE = 3;
   private static final double PERCENT_HEIGHT_BOUNCED = 0.95;
@@ -23,7 +24,7 @@ public class PotionBounce extends PotionBase {
   public void onFall(LivingFallEvent event) {
     EntityLivingBase entity = event.getEntityLiving();
     if (entity == null || entity instanceof EntityPlayer == false || entity.isSneaking()) { return; }
-    EntityPlayer player = (EntityPlayer)entity;
+    EntityPlayer player = (EntityPlayer) entity;
     if (event.getDistance() >= MIN_HEIGHT_START_BOUNCE) {
       event.setDamageMultiplier(0);
       if (entity.getEntityWorld().isRemote == false) {
@@ -57,4 +58,12 @@ public class PotionBounce extends PotionBase {
       player.motionY = motionY;
     }
   }
+  @Override
+  public void tick(EntityLivingBase entity) {
+    if (entity.onGround == false) {//preserve momentum, otherwise it will be like regular falling/gravity
+      //yes this works if drank potion and not just from launcher but is ok
+      entity.motionX = entity.motionX / VERTICAL_MOMENTUM_FACTOR;
+      entity.motionZ = entity.motionZ / VERTICAL_MOMENTUM_FACTOR;
+    }
+  };
 }

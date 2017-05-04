@@ -38,7 +38,7 @@ public class EntitySnowballBolt extends EntityThrowableDispensable {
         e.extinguish();
       }
       else {
-        e.addPotionEffect(new PotionEffect(PotionEffectRegistry.snowEffect, 20 * 10));
+        e.addPotionEffect(new PotionEffect(PotionEffectRegistry.SNOW, 20 * 10));
       }
       float damage = 0;
       if (mop.entityHit instanceof EntityBlaze) {

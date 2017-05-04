@@ -62,7 +62,7 @@ public class ContainerDisenchanter extends ContainerBaseMachine {
         break;
         default:
           itemFiltered = null;
-          x = Const.padding + (i - 5) * Const.SQ;
+          x = Const.PAD + (i - 5) * Const.SQ;
           y = ystart + 3 * spacing - 1;
         break;
       }

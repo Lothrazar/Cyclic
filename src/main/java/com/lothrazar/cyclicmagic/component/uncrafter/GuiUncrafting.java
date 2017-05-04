@@ -26,13 +26,13 @@ public class GuiUncrafting extends GuiBaseContanerProgress {
   public void initGui() {
     super.initGui();
     redstoneBtn = new GuiButtonMachineRedstone(0,
-        this.guiLeft + Const.padding,
-        this.guiTop + Const.padding, this.tile.getPos());
+        this.guiLeft + Const.PAD,
+        this.guiTop + Const.PAD, this.tile.getPos());
     this.buttonList.add(redstoneBtn);
     //int buttonId, int x, int y, String buttonText)
     GuiButton helpBtn = new GuiButton(1,
-        this.guiLeft + Const.SQ + Const.padding + 2,
-        this.guiTop + 4 * Const.padding + 6, 12, 20, "?");
+        this.guiLeft + Const.SQ + Const.PAD + 2,
+        this.guiTop + 4 * Const.PAD + 6, 12, 20, "?");
     this.buttonList.add(helpBtn);
   }
   @SideOnly(Side.CLIENT)
@@ -53,8 +53,8 @@ public class GuiUncrafting extends GuiBaseContanerProgress {
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     //first draw the zero slot
     Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerUncrafting.SLOTX_START - 1, this.guiTop + ContainerUncrafting.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-    int xPrefix = 2 * Const.SQ + Const.padding;
-    int yPrefix = 2 * Const.padding;
+    int xPrefix = 2 * Const.SQ + Const.PAD;
+    int yPrefix = 2 * Const.PAD;
     for (int i = 0; i < TileEntityUncrafter.SLOT_ROWS; i++) {
       for (int j = 0; j < TileEntityUncrafter.SLOT_COLS; j++) {
         Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + xPrefix - 1 + j * Const.SQ, this.guiTop + yPrefix - 1 + i * Const.SQ, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
@@ -68,10 +68,10 @@ public class GuiUncrafting extends GuiBaseContanerProgress {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
   public int getProgressX() {
-    return this.guiLeft + Const.padding + 2;
+    return this.guiLeft + Const.PAD + 2;
   }
   public int getProgressY() {
-    return this.guiTop + 3 * Const.SQ + 2 * Const.padding + 2;
+    return this.guiTop + 3 * Const.SQ + 2 * Const.PAD + 2;
   }
   public int getProgressCurrent() {
     return tile.getTimer();

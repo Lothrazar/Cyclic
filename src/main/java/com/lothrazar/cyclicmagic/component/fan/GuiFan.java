@@ -26,8 +26,8 @@ public class GuiFan extends GuiBaseContainer {
     super.initGui();
     int id = 0;
     redstoneBtn = new GuiButtonMachineRedstone(id++,
-        this.guiLeft + Const.padding,
-        this.guiTop + Const.padding, this.tile.getPos());
+        this.guiLeft + Const.PAD,
+        this.guiTop + Const.PAD, this.tile.getPos());
     this.buttonList.add(redstoneBtn);
     int w = 15, h = 10;
     int yOffset = 14;

@@ -3,6 +3,8 @@ import com.lothrazar.cyclicmagic.component.autouser.ContainerUser;
 import com.lothrazar.cyclicmagic.component.autouser.TileEntityUser.Fields;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContanerProgress;
 import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
+import com.lothrazar.cyclicmagic.gui.GuiButtonSizePreview;
+import com.lothrazar.cyclicmagic.net.PacketTileSizeToggle;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
@@ -14,6 +16,7 @@ public class GuiUser extends GuiBaseContanerProgress {
   private TileEntityUser tile;
   private GuiButtonMachineRedstone redstoneBtn;
   private ButtonUserAction actionBtn;
+  private GuiButtonSizePreview btnSize;
   public GuiUser(InventoryPlayer inventoryPlayer, TileEntityUser tileEntity) {
     super(new ContainerUser(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -24,14 +27,31 @@ public class GuiUser extends GuiBaseContanerProgress {
   @Override
   public void initGui() {
     super.initGui();
-    redstoneBtn = new GuiButtonMachineRedstone(0,
-        this.guiLeft + 8,
-        this.guiTop + 8, this.tile.getPos());
+    int btnId = 0;
+    redstoneBtn = new GuiButtonMachineRedstone(btnId++,
+        this.guiLeft + Const.PAD,
+        this.guiTop + Const.PAD, this.tile.getPos());
     this.buttonList.add(redstoneBtn);
-    actionBtn = new ButtonUserAction(1,
-        this.guiLeft + 8 + 50,
-        this.guiTop + 8 + 8, this.tile.getPos());
+    
+    int x = this.guiLeft + Const.PAD + 20;
+    int y = this.guiTop + Const.PAD * 2;
+    actionBtn = new ButtonUserAction(btnId++,
+        x,
+        y, this.tile.getPos());
     this.buttonList.add(actionBtn);
+    x += actionBtn.width + Const.PAD/2;
+//    int y = this.guiTop + Const.PAD * 2 + 20;
+    btnSize = new GuiButtonSizePreview(btnId++,
+        x,
+        y, "", this.tile.getPos(),
+        PacketTileSizeToggle.ActionType.SIZE);
+    this.buttonList.add(btnSize);
+    x += btnSize.width + Const.PAD/2;
+    GuiButtonSizePreview btnPreview = new GuiButtonSizePreview(btnId++,
+        x,
+        y, UtilChat.lang("button.harvester.preview"), this.tile.getPos(),
+        PacketTileSizeToggle.ActionType.PREVIEW);
+    this.buttonList.add(btnPreview);
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
@@ -47,6 +67,7 @@ public class GuiUser extends GuiBaseContanerProgress {
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     redstoneBtn.setState(tile.getField(Fields.REDSTONE.ordinal()));
     actionBtn.displayString = UtilChat.lang("tile.block_user.action" + tile.getField(Fields.LEFTRIGHT.ordinal()));
+    btnSize.displayString = UtilChat.lang("button.harvester.size" + tile.getField(Fields.SIZE.ordinal()));
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
   public int getProgressX() {
