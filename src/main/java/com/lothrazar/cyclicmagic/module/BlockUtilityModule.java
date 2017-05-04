@@ -45,7 +45,7 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   public void onInit() {
     if (workbench) {
       BlockWorkbench workbench = new BlockWorkbench();
-      BlockRegistry.registerBlock(workbench, "workbench");
+      BlockRegistry.registerBlock(workbench, "block_workbench");
       GameRegistry.registerTileEntity(TileEntityWorkbench.class, Const.MODID + "workbench_te");
     }
     if (soundproofing) {

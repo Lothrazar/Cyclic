@@ -5,15 +5,15 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCraftResult;
-import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.world.World;
+
 /**
- * FOR @runwyld
- * https://www.twitch.tv/runwyld
+ * FOR @runwyld https://www.twitch.tv/runwyld
+ * 
  * @author Sam Lothrazar
  *
  */
@@ -22,12 +22,11 @@ public class ContainerWorkBench extends ContainerBaseMachine {
   public static final int SLOTX_START = 8;
   public static final int SLOTY = 40;
   protected TileEntityWorkbench tileEntity;
-  private InventoryWorkbench craftMatrix ;
+  private InventoryWorkbench craftMatrix;
   private IInventory craftResult = new InventoryCraftResult();
   private World world;
   public ContainerWorkBench(InventoryPlayer inventoryPlayer, TileEntityWorkbench te) {
- 
-    craftMatrix =   new InventoryWorkbench(this,te );
+    craftMatrix = new InventoryWorkbench(this, te);
     this.world = inventoryPlayer.player.world;
     tileEntity = te;
     this.addSlotToContainer(new SlotCrafting(inventoryPlayer.player, this.craftMatrix, this.craftResult, 0, 124, 35));
@@ -38,7 +37,7 @@ public class ContainerWorkBench extends ContainerBaseMachine {
     int cols = TileEntityWorkbench.COLS;
     //crafting in the middle
     rows = cols = 3;
-    xPrefix =  (GuiWorkbench.WIDTH / 2 - (Const.SQ * 3) / 2);//(GuiWorkbench.WIDTH / 2 - (Const.SQ * 3) / 2);
+    xPrefix = (GuiWorkbench.WIDTH / 2 - (Const.SQ * 3) / 2);//(GuiWorkbench.WIDTH / 2 - (Const.SQ * 3) / 2);
     yPrefix = 20;
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
@@ -52,14 +51,6 @@ public class ContainerWorkBench extends ContainerBaseMachine {
     bindPlayerInventory(inventoryPlayer);
     this.onCraftMatrixChanged(this.craftMatrix);
   }
-  
-
-//  @Override
-//  public void setInventorySlotContents(int index, ItemStack stack) {
-//    this.te.setInventorySlotContents(index, stack);
-//    this.eventHandler.onCraftMatrixChanged(this);
-//  }
-  
   @Override
   public void onCraftMatrixChanged(IInventory inventoryIn) {
     this.craftResult.setInventorySlotContents(0, CraftingManager.getInstance().findMatchingRecipe(this.craftMatrix, this.world));

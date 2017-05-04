@@ -5,10 +5,10 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 
 public class GuiWorkbench extends GuiBaseContainer {
-  private TileEntityWorkbench tile;
+  //  private TileEntityWorkbench tile;
   public GuiWorkbench(InventoryPlayer inventoryPlayer, TileEntityWorkbench tileEntity) {
     super(new ContainerWorkBench(inventoryPlayer, tileEntity), tileEntity);
-    tile = tileEntity;
+    //    tile = tileEntity;
   }
   @Override
   public void initGui() {
@@ -19,7 +19,6 @@ public class GuiWorkbench extends GuiBaseContainer {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
-    //input
     int xPrefix = Const.PAD, yPrefix = 27;
     int rows = TileEntityWorkbench.ROWS;
     int cols = TileEntityWorkbench.COLS;
