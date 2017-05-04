@@ -25,7 +25,7 @@ public abstract class BlockBase extends Block {
     if (myTooltip == null) {
       myTooltip = this.getUnlocalizedName() + ".tooltip";
     }
-    tooltip.add(UtilChat.lang(myTooltip));
+    tooltip.add((myTooltip));
   }
   @Override
   public boolean isOpaqueCube(IBlockState state) {

@@ -38,10 +38,13 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   private boolean entityDetector;
   private boolean disenchanter;
   private boolean autoCrafter;
+  private boolean soundproofing;
   public void onInit() {
-    BlockSoundSuppress soundproofing = new BlockSoundSuppress();
-    BlockRegistry.registerBlock(soundproofing, "soundproofing");
-    ModCyclic.instance.events.register(soundproofing);
+    if (soundproofing) {
+      BlockSoundSuppress block_soundproofing = new BlockSoundSuppress();
+      BlockRegistry.registerBlock(block_soundproofing, "block_soundproofing");
+      ModCyclic.instance.events.register(block_soundproofing);
+    }
     if (autoCrafter) {
       BlockCrafter auto_crafter = new BlockCrafter();
       BlockRegistry.registerBlock(auto_crafter, "auto_crafter");
@@ -103,6 +106,7 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
+    soundproofing = config.getBoolean("Soundproofing", category, true, Const.ConfigCategory.contentDefaultText);
     autoCrafter = config.getBoolean("AutoCrafter", category, true, Const.ConfigCategory.contentDefaultText);
     disenchanter = config.getBoolean("UnchantPylon", category, true, Const.ConfigCategory.contentDefaultText);
     entityDetector = config.getBoolean("EntityDetector", category, true, Const.ConfigCategory.contentDefaultText);
