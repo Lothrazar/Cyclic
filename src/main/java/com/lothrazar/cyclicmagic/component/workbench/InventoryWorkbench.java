@@ -22,6 +22,32 @@ public class InventoryWorkbench extends InventoryCrafting {
   public ItemStack getStackInSlot(int index) {
     return this.tileEntity.getStackInSlot(index);
   }
+  /**
+   * just like vanilla
+   */
+  @Override
+  public ItemStack decrStackSize(int index, int count) {
+    if (!this.getStackInSlot(index).isEmpty()) {
+      ItemStack itemstack;
+      if (this.getStackInSlot(index).getCount() <= count) {
+        itemstack = this.getStackInSlot(index);
+        this.setInventorySlotContents(index, ItemStack.EMPTY);
+        this.container.onCraftMatrixChanged(this);
+        return itemstack;
+      }
+      else {
+        itemstack = this.getStackInSlot(index).splitStack(count);
+        if (this.getStackInSlot(index).getCount() == 0) {
+          this.setInventorySlotContents(index, ItemStack.EMPTY);
+        }
+        this.container.onCraftMatrixChanged(this);
+        return itemstack;
+      }
+    }
+    else {
+      return ItemStack.EMPTY;
+    }
+  }
   @Override
   public void setInventorySlotContents(int index, ItemStack stack) {
     this.tileEntity.setInventorySlotContents(index, stack);
