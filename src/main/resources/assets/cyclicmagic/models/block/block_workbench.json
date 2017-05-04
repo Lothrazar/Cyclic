@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+    "textures": {
+        "particle": "blocks/stone",
+        "down": "blocks/stone",
+        "up":   "cyclicmagic:blocks/block_workbench_top",
+        "north":"cyclicmagic:blocks/block_workbench_front",
+        "east": "cyclicmagic:blocks/block_workbench_side",
+        "south":"cyclicmagic:blocks/block_workbench_front",
+        "west": "cyclicmagic:blocks/block_workbench_side"
+    }
+}
