@@ -20,6 +20,8 @@ import com.lothrazar.cyclicmagic.component.fan.BlockFan;
 import com.lothrazar.cyclicmagic.component.fan.TileEntityFan;
 import com.lothrazar.cyclicmagic.component.fisher.BlockFishing;
 import com.lothrazar.cyclicmagic.component.fisher.TileEntityFishing;
+import com.lothrazar.cyclicmagic.component.workbench.BlockWorkbench;
+import com.lothrazar.cyclicmagic.component.workbench.TileEntityWorkbench;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Blocks;
@@ -39,7 +41,13 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   private boolean disenchanter;
   private boolean autoCrafter;
   private boolean soundproofing;
+  private boolean workbench;
   public void onInit() {
+    if (workbench) {
+      BlockWorkbench workbench = new BlockWorkbench();
+      BlockRegistry.registerBlock(workbench, "block_workbench");
+      GameRegistry.registerTileEntity(TileEntityWorkbench.class, Const.MODID + "workbench_te");
+    }
     if (soundproofing) {
       BlockSoundSuppress block_soundproofing = new BlockSoundSuppress();
       BlockRegistry.registerBlock(block_soundproofing, "block_soundproofing");
@@ -106,6 +114,7 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
+    workbench = config.getBoolean("Workbench", category, true, Const.ConfigCategory.contentDefaultText);
     soundproofing = config.getBoolean("Soundproofing", category, true, Const.ConfigCategory.contentDefaultText);
     autoCrafter = config.getBoolean("AutoCrafter", category, true, Const.ConfigCategory.contentDefaultText);
     disenchanter = config.getBoolean("UnchantPylon", category, true, Const.ConfigCategory.contentDefaultText);
