@@ -23,7 +23,8 @@ public class PotionBounce extends PotionBase {
   @SubscribeEvent
   public void onFall(LivingFallEvent event) {
     EntityLivingBase entity = event.getEntityLiving();
-    if (entity == null || entity instanceof EntityPlayer == false || entity.isSneaking()) { return; }
+    if (entity == null || entity instanceof EntityPlayer == false || entity.isSneaking()
+        || entity.isPotionActive(this) == false) { return; }
     EntityPlayer player = (EntityPlayer) entity;
     if (event.getDistance() >= MIN_HEIGHT_START_BOUNCE) {
       event.setDamageMultiplier(0);
