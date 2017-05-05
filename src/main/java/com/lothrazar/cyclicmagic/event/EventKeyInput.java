@@ -118,15 +118,21 @@ public class EventKeyInput {
       rightClickDown = Mouse.isButtonDown(0);//rare to have a one button mouse. but not impossible i guess.
     }
     if (rightClickDown && gui.getSlotUnderMouse() != null) {
-      int slot = gui.getSlotUnderMouse().slotNumber;
-      if (gui.inventorySlots.getSlot(slot) != null && gui.inventorySlots.getSlot(slot).getStack() != null) {
-        ItemStack maybeCharm = gui.inventorySlots.getSlot(slot).getStack();
-        if (maybeCharm.getItem() instanceof ICanToggleOnOff) {
-          //example: is a charm or something
-          ModCyclic.network.sendToServer(new PacketItemToggle(slot));
-          UtilSound.playSound( Minecraft.getMinecraft().thePlayer, SoundEvents.UI_BUTTON_CLICK);
-          event.setCanceled(true);
+      try {
+        int slot = gui.getSlotUnderMouse().slotNumber;
+        if (slot < gui.inventorySlots.inventorySlots.size() && gui.inventorySlots.getSlot(slot) != null && gui.inventorySlots.getSlot(slot).getStack() != null) {
+          ItemStack maybeCharm = gui.inventorySlots.getSlot(slot).getStack();
+          if (maybeCharm.getItem() instanceof ICanToggleOnOff) {
+            //example: is a charm or something
+            ModCyclic.network.sendToServer(new PacketItemToggle(slot));
+            UtilSound.playSound(Minecraft.getMinecraft().thePlayer, SoundEvents.UI_BUTTON_CLICK);
+            event.setCanceled(true);
+          }
         }
+      }
+      catch (Exception e) {
+        //the slot < size() should catch this but just in case
+        ModCyclic.logger.info("Invalid slot number ");
       }
     }
   }
