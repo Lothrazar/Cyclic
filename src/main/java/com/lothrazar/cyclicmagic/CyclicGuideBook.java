@@ -19,6 +19,7 @@ import amerifrance.guideapi.api.impl.abstraction.CategoryAbstract;
 import amerifrance.guideapi.api.impl.abstraction.EntryAbstract;
 import amerifrance.guideapi.category.CategoryItemStack;
 import amerifrance.guideapi.entry.EntryItemStack;
+import amerifrance.guideapi.page.PageBrewingRecipe;
 import amerifrance.guideapi.page.PageIRecipe;
 import amerifrance.guideapi.page.PageText;
 import net.minecraft.init.Items;
