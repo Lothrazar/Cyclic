@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.BlockShears;
+import com.lothrazar.cyclicmagic.block.BlockSoundSuppress;
 import com.lothrazar.cyclicmagic.block.ItemBlockScaffolding;
 import com.lothrazar.cyclicmagic.block.BlockScaffolding;
 import com.lothrazar.cyclicmagic.block.BlockScaffoldingReplace;
@@ -19,6 +20,8 @@ import com.lothrazar.cyclicmagic.component.fan.BlockFan;
 import com.lothrazar.cyclicmagic.component.fan.TileEntityFan;
 import com.lothrazar.cyclicmagic.component.fisher.BlockFishing;
 import com.lothrazar.cyclicmagic.component.fisher.TileEntityFishing;
+import com.lothrazar.cyclicmagic.component.workbench.BlockWorkbench;
+import com.lothrazar.cyclicmagic.component.workbench.TileEntityWorkbench;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
@@ -41,7 +44,19 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   private boolean entityDetector;
   private boolean disenchanter;
   private boolean autoCrafter;
+  private boolean soundproofing;
+  private boolean workbench;
   public void onPreInit() {
+    if (workbench) {
+      BlockWorkbench workbench = new BlockWorkbench();
+      BlockRegistry.registerBlock(workbench, "block_workbench",GuideCategory.BLOCK);
+      GameRegistry.registerTileEntity(TileEntityWorkbench.class, Const.MODID + "workbench_te");
+    }
+    if (soundproofing) {
+      BlockSoundSuppress block_soundproofing = new BlockSoundSuppress();
+      BlockRegistry.registerBlock(block_soundproofing, "block_soundproofing",GuideCategory.BLOCK);
+      ModCyclic.instance.events.register(block_soundproofing);
+    }
     if (autoCrafter) {
       BlockCrafter auto_crafter = new BlockCrafter();
       BlockRegistry.registerBlock(auto_crafter, "auto_crafter",GuideCategory.BLOCKMACHINE);
@@ -62,8 +77,13 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       BlockRegistry.registerBlock(block_shears, "block_shears",GuideCategory.BLOCK);
     }
     if (fragileEnabled) {
-      BlockScaffolding block_fragile = new BlockScaffolding();
+//<<<<<<< HEAD
+      BlockScaffolding block_fragile = new BlockScaffolding(true);
       BlockRegistry.registerBlock(block_fragile, new ItemBlockScaffolding(block_fragile), "block_fragile",GuideCategory.BLOCK);
+//=======
+//      BlockScaffolding block_fragile = new BlockScaffolding(true);
+//      BlockRegistry.registerBlock(block_fragile, new ItemBlockScaffolding(block_fragile), "block_fragile");
+//>>>>>>> bbeb49c0fa1ca7b0defc4c391c93d873df9406e6
       ModCyclic.instance.events.register(Item.getItemFromBlock(block_fragile));
       BlockScaffoldingResponsive block_fragile_auto = new BlockScaffoldingResponsive();
       BlockRegistry.registerBlock(block_fragile_auto, new ItemBlockScaffolding(block_fragile_auto), "block_fragile_auto",GuideCategory.BLOCK);
@@ -107,6 +127,8 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.content;
+    workbench = config.getBoolean("Workbench", category, true, Const.ConfigCategory.contentDefaultText);
+    soundproofing = config.getBoolean("Soundproofing", category, true, Const.ConfigCategory.contentDefaultText);
     autoCrafter = config.getBoolean("AutoCrafter", category, true, Const.ConfigCategory.contentDefaultText);
     disenchanter = config.getBoolean("UnchantPylon", category, true, Const.ConfigCategory.contentDefaultText);
     entityDetector = config.getBoolean("EntityDetector", category, true, Const.ConfigCategory.contentDefaultText);

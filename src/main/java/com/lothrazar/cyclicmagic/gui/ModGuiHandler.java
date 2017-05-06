@@ -64,10 +64,12 @@ import com.lothrazar.cyclicmagic.component.uncrafter.TileEntityUncrafter;
 import com.lothrazar.cyclicmagic.component.vector.ContainerVector;
 import com.lothrazar.cyclicmagic.component.vector.GuiVector;
 import com.lothrazar.cyclicmagic.component.vector.TileEntityVector;
+import com.lothrazar.cyclicmagic.component.workbench.ContainerWorkBench;
+import com.lothrazar.cyclicmagic.component.workbench.GuiWorkbench;
+import com.lothrazar.cyclicmagic.component.workbench.TileEntityWorkbench;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
 import com.lothrazar.cyclicmagic.util.UtilSpellCaster;
-import net.minecraft.block.material.MapColor;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -101,6 +103,7 @@ public class ModGuiHandler implements IGuiHandler {
   public static final int GUI_INDEX_XP = 19;
   public static final int GUI_INDEX_DISENCH = 20;
   public static final int GUI_INDEX_CRAFTER = 21;
+  public static final int GUI_INDEX_WORKBENCH = 22;
   @Override
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
     BlockPos p = new BlockPos(x, y, z);
@@ -188,8 +191,10 @@ public class ModGuiHandler implements IGuiHandler {
       break;
       case GUI_INDEX_CRAFTER:
         if (te instanceof TileEntityCrafter) { return new ContainerCrafter(player.inventory, (TileEntityCrafter) te); }
-        
-        break;
+      break;
+      case GUI_INDEX_WORKBENCH:
+        if (te instanceof TileEntityWorkbench) { return new ContainerWorkBench(player.inventory, (TileEntityWorkbench) te); }
+      break;
     }
     return null;
   }
@@ -262,8 +267,10 @@ public class ModGuiHandler implements IGuiHandler {
         break;
         case GUI_INDEX_CRAFTER:
           if (te instanceof TileEntityCrafter) { return new GuiCrafter(player.inventory, (TileEntityCrafter) te); }
-          
-          break;
+        break;
+        case GUI_INDEX_WORKBENCH:
+          if (te instanceof TileEntityWorkbench) { return new GuiWorkbench(player.inventory, (TileEntityWorkbench) te); }
+        break;
       }
     }
     return null;

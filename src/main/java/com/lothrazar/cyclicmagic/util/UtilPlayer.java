@@ -3,6 +3,7 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
@@ -34,7 +35,7 @@ public class UtilPlayer {
       stack = player.inventory.getStackInSlot(i);
       if (stack != ItemStack.EMPTY &&
           stack.getItem() != null &&
-          Block.getBlockFromItem(stack.getItem()) != null) { return i; }
+          Block.getBlockFromItem(stack.getItem()) != Blocks.AIR) { return i; }
     }
     return ret;
   }

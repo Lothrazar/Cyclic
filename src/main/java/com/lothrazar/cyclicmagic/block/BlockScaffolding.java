@@ -35,13 +35,13 @@ public class BlockScaffolding extends BlockBase implements IHasRecipe {
   private static final double OFFSET = 0.0125D;//shearing & cactus are  0.0625D;
   protected static final AxisAlignedBB AABB = new AxisAlignedBB(OFFSET, 0, OFFSET, 1 - OFFSET, 1, 1 - OFFSET);//required to make entity collied happen for ladder climbing
   protected boolean dropBlock = true;//does it drop item on non-player break
-  protected boolean doesAutobreak = true;
-  public BlockScaffolding() {
+  private boolean doesAutobreak = true;
+  public BlockScaffolding(boolean autoBreak) {
     super(Material.GLASS);
+    doesAutobreak = autoBreak;
     this.setTickRandomly(true);
     this.setHardness(0F);
     this.setResistance(0F);
-    //    this.setTranslucent();
     SoundEvent crackle = SoundRegistry.crackle;
     this.setSoundType(new SoundType(0.1F, 1.0F, crackle, crackle, crackle, crackle, crackle));
   }

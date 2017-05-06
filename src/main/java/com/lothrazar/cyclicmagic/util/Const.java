@@ -85,7 +85,7 @@ public class Const {
   //this or lower
   public static final int LIGHT_MOBSPAWN = 7;
   public static final int LIGHT_MOBSPAWN_BLAZE = 11;
-  public static final int padding = 8;
+  public static final int PAD = 8;
   public static class HorseMeta {
     public static final int variant_white = 0;
     public static final int variant_creamy = 1;

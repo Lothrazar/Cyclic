@@ -24,8 +24,8 @@ public class GuiCrafter extends GuiBaseContanerProgress {
   public void initGui() {
     super.initGui();
     redstoneBtn = new GuiButtonMachineRedstone(0,
-        this.guiLeft + Const.padding / 2,
-        this.guiTop + Const.padding / 2, this.tile.getPos());
+        this.guiLeft + Const.PAD / 2,
+        this.guiTop + Const.PAD / 2, this.tile.getPos());
     this.buttonList.add(redstoneBtn);
   }
   @Override
@@ -34,7 +34,7 @@ public class GuiCrafter extends GuiBaseContanerProgress {
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     //input
-    int xPrefix = Const.padding, yPrefix = 27;
+    int xPrefix = Const.PAD, yPrefix = 27;
     int rows = TileEntityCrafter.ROWS;
     int cols = TileEntityCrafter.COLS;
     for (int i = 0; i < rows; i++) {
@@ -72,7 +72,7 @@ public class GuiCrafter extends GuiBaseContanerProgress {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
   public int getProgressX() {
-    return this.guiLeft + Const.padding + 2;
+    return this.guiLeft + Const.PAD + 2;
   }
   public int getProgressY() {
     return this.guiTop + 6 * Const.SQ + 10;

@@ -17,6 +17,7 @@ public class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements 
   private static final String NBT_SLOT = "Slot";  
   public static final String NBT_TIMER = "Timer";
   public static final String NBT_REDST = "redstone";
+  protected static final String NBT_SIZE = "size";
   protected NonNullList<ItemStack> inv;
   public TileEntityBaseMachineInvo(int invoSize) {
     super();

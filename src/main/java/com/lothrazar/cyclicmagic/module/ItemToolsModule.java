@@ -88,6 +88,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   private boolean enableLever;
   private boolean enableTrader;
   private boolean enableSoulstone;
+  private boolean enablePlayerLauncher;
   public static ItemStorageBag storage_bag;//ref by ContainerStorage
   public static RenderLoc renderLocation;
   /**
@@ -126,6 +127,11 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   }
   @Override
   public void onPreInit() {
+    if (enablePlayerLauncher) {
+      ItemToolLaunch tool_launcher = new ItemToolLaunch();
+      ItemRegistry.addItem(tool_launcher, "tool_launcher");
+      ModCyclic.instance.events.register(tool_launcher);
+    }
     if (enableSoulstone) {
       ItemSoulstone soulstone = new ItemSoulstone();
       ItemRegistry.addItem(soulstone, "soulstone");
@@ -318,6 +324,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   }
   @Override
   public void syncConfig(Configuration config) {
+    enablePlayerLauncher = config.getBoolean("PlayerLauncher", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableSoulstone = config.getBoolean("Soulstone", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableTrader = config.getBoolean("Merchant Almanac", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableLever = config.getBoolean("Remote Lever", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);

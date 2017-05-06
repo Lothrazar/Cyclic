@@ -21,7 +21,7 @@ public class ContainerUncrafting extends ContainerBaseMachine {
     tileEntity = te;
     addSlotToContainer(new Slot(tileEntity, TileEntityUncrafter.SLOT_UNCRAFTME, SLOTX_START, SLOTY));
     int slot = 1;
-    int xPrefix = 2 * Const.SQ + Const.padding;
+    int xPrefix = 2 * Const.SQ + Const.PAD;
     int yPrefix = 16;
     for (int i = 0; i < TileEntityUncrafter.SLOT_ROWS; i++) {
       for (int j = 0; j < TileEntityUncrafter.SLOT_COLS; j++) {

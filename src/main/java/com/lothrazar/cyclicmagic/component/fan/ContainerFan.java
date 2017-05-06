@@ -23,7 +23,7 @@ public class ContainerFan extends ContainerBaseMachine {
   }
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
-    return null;
+    return ItemStack.EMPTY;
   }
   @Override
   public void detectAndSendChanges() {

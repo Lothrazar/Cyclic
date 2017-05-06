@@ -4,9 +4,14 @@ import java.util.List;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.tileentity.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.block.tileentity.ITileSizeToggle;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
+import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import com.lothrazar.cyclicmagic.util.UtilParticle;
+import com.lothrazar.cyclicmagic.util.UtilShape;
+import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -14,14 +19,17 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeMap;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -29,7 +37,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
 
-public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
+public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITickable {
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
   // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
@@ -38,10 +46,11 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private static final String NBT_REDST = "redstone";
   private static final String NBT_SPEED = "h";//WTF why did i name it this
   private static final String NBT_LR = "lr";
+  private static final int MAX_SIZE = 4;//9x9 area 
   public static int maxHeight = 10;
   public static int TIMER_FULL = 80;
   private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots for all faces
-  final int RADIUS = 4;//center plus 4 in each direction = 9x9
+  //  final int RADIUS = 4;//center plus 4 in each direction = 9x9
   private int speed = 1;
   private int rightClickIfZero = 0;
   private WeakReference<FakePlayer> fakePlayer;
@@ -49,8 +58,9 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private int timer;
   private int needsRedstone = 1;
   int toolSlot = 0;
+  private int size;
   public static enum Fields {
-    TIMER, SPEED, REDSTONE, LEFTRIGHT
+    TIMER, SPEED, REDSTONE, LEFTRIGHT, SIZE;
   }
   public TileEntityUser() {
     super(9);
@@ -63,7 +73,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     if (isRunning()) {
       this.spawnParticlesAbove();
     }
-    World world = getWorld();
     if (world instanceof WorldServer) {
       verifyUuid(world);
       if (fakePlayer == null) {
@@ -73,7 +82,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
           return;
         }
       }
-      //      ItemStack maybeTool =
       tryEquipItem();
       if (isRunning()) {
         timer -= this.getSpeed();
@@ -83,50 +91,11 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         if (timer == 0) {
           try {
             timer = TIMER_FULL;
-            //act on block
-            BlockPos targetPos = this.getCurrentFacingPos();//pos.offset(this.getCurrentFacing()); //not sure if this is needed
-            if (world.isAirBlock(targetPos)) {
-              targetPos = targetPos.down();
+            BlockPos targetPos = this.getTargetPos();//this.getCurrentFacingPos();/
+            if (rightClickIfZero == 0) {//right click entities and blocks
+              this.rightClickBlock(targetPos);
             }
-            int hRange = 2;
-            int vRange = 1;
-            //so in a radius 2 area starting one block away
-            BlockPos entityCenter = this.getPos().offset(this.getCurrentFacing(), 1);
-            if (rightClickIfZero == 0) {
-              fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
-              //this.getWorld().markChunkDirty(this.getPos(), this);
-              this.getWorld().markChunkDirty(targetPos, this);
-              AxisAlignedBB range = UtilEntity.makeBoundingBox(entityCenter, hRange, vRange);
-              List<EntityLivingBase> all = world.getEntitiesWithinAABB(EntityLivingBase.class, range);
-              for (EntityLivingBase ent : all) {
-                // on the line below: NullPointerException  at com.lothrazar.cyclicmagic.block.tileentity.TileMachineUser.func_73660_a(TileMachineUser.java:101)
-                if (world.isRemote == false &&
-                    ent != null && ent.isDead == false
-                    && fakePlayer != null && fakePlayer.get() != null) {
-                  validateTool(); //recheck this at every step so we dont go negative
-                  fakePlayer.get().interactOn(ent, EnumHand.MAIN_HAND);
-                }
-              }
-            }
-            else {
-              AxisAlignedBB range = UtilEntity.makeBoundingBox(entityCenter, 1, 1);
-              List<EntityLivingBase> all = world.getEntitiesWithinAABB(EntityLivingBase.class, range);
-              ItemStack held = fakePlayer.get().getHeldItemMainhand();
-              fakePlayer.get().onGround = true;
-              for (EntityLivingBase ent : all) {
-                fakePlayer.get().attackTargetEntityWithCurrentItem(ent);
-                //THANKS TO FORUMS http://www.minecraftforge.net/forum/index.php?topic=43152.0
-                IAttributeInstance damage = new AttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-                if (held != ItemStack.EMPTY) {
-                  for (AttributeModifier modifier : held.getAttributeModifiers(EntityEquipmentSlot.MAINHAND).get(SharedMonsterAttributes.ATTACK_DAMAGE.getName())) {
-                    damage.applyModifier(modifier);
-                  }
-                }
-                float dmgVal = (float) damage.getAttributeValue();
-                float f1 = EnchantmentHelper.getModifierForCreature(held, (ent).getCreatureAttribute());
-                ent.attackEntityFrom(DamageSource.causePlayerDamage(fakePlayer.get()), dmgVal + f1);
-              }
-            }
+            interactEntities(targetPos);
           }
           catch (Exception e) {
             ModCyclic.logger.error("Automated User Error");
@@ -137,6 +106,62 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       }
       else {
         timer = 1;//allows it to run on a pulse
+      }
+    }
+  }
+  private void interactEntities(BlockPos targetPos) {
+    BlockPos entityCenter = this.getPos().offset(this.getCurrentFacing(), 1);
+    int vRange = 1;
+    AxisAlignedBB entityRange = UtilEntity.makeBoundingBox(entityCenter, size + 1, vRange);
+    List<EntityLivingBase> all = world.getEntitiesWithinAABB(EntityLivingBase.class, entityRange);
+    if (rightClickIfZero == 0) {//right click entities and blocks
+      //              this.rightClickBlock(targetPos);
+      //this.getWorld().markChunkDirty(this.getPos(), this);
+      this.getWorld().markChunkDirty(targetPos, this);
+      for (EntityLivingBase ent : all) {
+        // on the line below: NullPointerException  at com.lothrazar.cyclicmagic.block.tileentity.TileMachineUser.func_73660_a(TileMachineUser.java:101)
+        if (world.isRemote == false &&
+            ent != null && ent.isDead == false
+            && fakePlayer != null && fakePlayer.get() != null) {
+          validateTool(); //recheck this at every step so we dont go negative
+          if (EnumActionResult.FAIL != fakePlayer.get().interactOn(ent, EnumHand.MAIN_HAND)) {
+            this.tryDumpFakePlayerInvo();
+            break;//dont do every entity in teh whole batch
+          }
+        }
+      }
+    }
+    else { // left click entities and blocks
+      //              AxisAlignedBB range = UtilEntity.makeBoundingBox(entityCenter, 1, 1);
+      //              List<EntityLivingBase> all = world.getEntitiesWithinAABB(EntityLivingBase.class, range);
+      ItemStack held = fakePlayer.get().getHeldItemMainhand();
+      fakePlayer.get().onGround = true;
+      for (EntityLivingBase ent : all) {
+        fakePlayer.get().attackTargetEntityWithCurrentItem(ent);
+        //THANKS TO FORUMS http://www.minecraftforge.net/forum/index.php?topic=43152.0
+        IAttributeInstance damage = new AttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
+        if (!held.isEmpty()) {
+          for (AttributeModifier modifier : held.getAttributeModifiers(EntityEquipmentSlot.MAINHAND).get(SharedMonsterAttributes.ATTACK_DAMAGE.getName())) {
+            damage.applyModifier(modifier);
+          }
+        }
+        float dmgVal = (float) damage.getAttributeValue();
+        float f1 = EnchantmentHelper.getModifierForCreature(held, (ent).getCreatureAttribute());
+        ent.attackEntityFrom(DamageSource.causePlayerDamage(fakePlayer.get()), dmgVal + f1);
+      }
+    }
+  }
+  private void rightClickBlock(BlockPos targetPos) {
+    fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
+  }
+  private void tryDumpFakePlayerInvo() {
+    for (ItemStack s : fakePlayer.get().inventory.mainInventory) {
+      if (!s.isEmpty() && !s.equals(fakePlayer.get().getHeldItemMainhand())) {
+        EntityItem entityItem = UtilItemStack.dropItemStackInWorld(world, getCurrentFacingPos(), s.copy());
+        if (entityItem != null) {
+          entityItem.setVelocity(0, 0, 0);
+        }
+        s.setCount(0);
       }
     }
   }
@@ -186,9 +211,10 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     if (uuid != null) {
       tagCompound.setString(NBTPLAYERID, uuid.toString());
     }
-    tagCompound.setInteger(NBT_REDST, this.needsRedstone);
+    tagCompound.setInteger(NBT_REDST, needsRedstone);
     tagCompound.setInteger(NBT_SPEED, speed);
     tagCompound.setInteger(NBT_LR, rightClickIfZero);
+    tagCompound.setInteger(NBT_SIZE, size);
     return super.writeToNBT(tagCompound);
   }
   @Override
@@ -198,9 +224,10 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     if (tagCompound.hasKey(NBTPLAYERID)) {
       uuid = UUID.fromString(tagCompound.getString(NBTPLAYERID));
     }
-    this.needsRedstone = tagCompound.getInteger(NBT_REDST);
+    needsRedstone = tagCompound.getInteger(NBT_REDST);
     rightClickIfZero = tagCompound.getInteger(NBT_LR);
     speed = tagCompound.getInteger(NBT_SPEED);
+    size = tagCompound.getInteger(NBT_SIZE);
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
@@ -215,8 +242,8 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         return getTimer();
       case REDSTONE:
         return this.needsRedstone;
-      default:
-      break;
+      case SIZE:
+        return this.size;
       case LEFTRIGHT:
         return this.rightClickIfZero;
     }
@@ -245,6 +272,9 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       break;
       case LEFTRIGHT:
         this.rightClickIfZero = value;
+      break;
+      case SIZE:
+        this.size = value;
       break;
     }
   }
@@ -279,5 +309,30 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
+  }
+  @Override
+  public void toggleSizeShape() {
+    this.size++;
+    if (this.size > MAX_SIZE) {
+      this.size = 0;
+    }
+  }
+  private BlockPos getTargetPos() {
+    BlockPos targetPos = UtilWorld.getRandomPos(getWorld().rand, getTargetCenter(), this.size);
+    if (world.isAirBlock(targetPos)) {
+      targetPos = targetPos.down();
+    }
+    return targetPos;
+  }
+  public BlockPos getTargetCenter() {
+    //move center over that much, not including exact horizontal
+    return this.getPos().offset(this.getCurrentFacing(), this.size + 1);
+  }
+  @Override
+  public void displayPreview() {
+    List<BlockPos> allPos = UtilShape.squareHorizontalHollow(getTargetCenter(), this.size);
+    for (BlockPos pos : allPos) {
+      UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, pos);
+    }
   }
 }

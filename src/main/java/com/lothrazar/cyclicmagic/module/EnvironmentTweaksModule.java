@@ -17,8 +17,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class EnvironmentTweaksModule extends BaseEventModule implements IHasConfig {
   private boolean saplingDespawnGrow;
   private boolean spawnersUnbreakable;
-  //  private boolean skelLightning;
-  //  private boolean zombLightning;
+ 
   @Override
   public void onInit() {
     updateHardness();
@@ -52,34 +51,9 @@ public class EnvironmentTweaksModule extends BaseEventModule implements IHasConf
           world.setBlockState(entityItem.getPosition(), Blocks.BROWN_MUSHROOM.getDefaultState());
       }
     }
-  }
-  //  @SuppressWarnings("deprecation")
-  //  @SubscribeEvent
-  //  public void onEntityStruckByLightning(EntityStruckByLightningEvent event) {
-  //    if (skelLightning && event.getEntity() instanceof EntitySkeleton &&
-  //        event.getLightning() != null) {
-  //      EntitySkeleton skel = (EntitySkeleton) event.getEntity();
-  //      if (skel.getSkeletonType() == SkeletonType.NORMAL) {
-  //        SkeletonType newType = skel.getEntityWorld().rand.nextDouble() > 0.5 ? SkeletonType.WITHER : SkeletonType.STRAY;
-  //        skel.setSkeletonType(newType);
-  //        skel.heal(skel.getMaxHealth());
-  //      }
-  //    }
-  //    if (zombLightning && event.getEntity() instanceof EntityZombie &&
-  //        event.getLightning() != null) {
-  //      EntityZombie zomb = (EntityZombie) event.getEntity();
-  //      //it says  //Do not use, Replacement TBD
-  //      //but , if there is no replacement, why is it deprecated? makes no sense i say!
-  //      if (zomb.getZombieType() == ZombieType.NORMAL) {
-  //        zomb.setZombieType(ZombieType.HUSK);
-  //        zomb.heal(zomb.getMaxHealth());
-  //      }
-  //    }
-  //  }
+  } 
   @Override
   public void syncConfig(Configuration config) {
-    //    skelLightning = config.getBoolean("LightningSkeletonMutate", Const.ConfigCategory.mobs, true, "Skeletons turn into either a Stray or a Wither Skeleton when hit by lightning");
-    //    zombLightning = config.getBoolean("LightningZombieMutate", Const.ConfigCategory.mobs, true, "Zombies turn into a Husk when hit by lightning");
     String category = Const.ConfigCategory.blocks;
     saplingDespawnGrow = config.getBoolean("Plant Despawning Saplings", category, true, "Plant saplings (and mushrooms) if they despawn on grass/dirt");
     spawnersUnbreakable = config.getBoolean("Spawners Unbreakable", category, false, "Make mob spawners unbreakable");
