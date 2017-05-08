@@ -725,7 +725,7 @@ tile.end_iron_ore.guide=
 item.horse_upgrade_variant.guide=
 item.tool_harvest_weeds.guide=Slice down large areas of tall grass and flowers.  
 item.tool_spawn_inspect.guide=Tells you exactly which mobs can spawn on the targeted block.  Natural spawns only, ignores mob spawner blocks.  Useful for making slime, witch, and wither skeleton farms.
-item.tool_warp_home.guide=
+
 
 
 item.sleeping_mat.guide=
@@ -756,8 +756,8 @@ item.password_remote.guide=Remote redstone that is password based.  Give it a pa
 item.chest_sack_empty.guide=A simple chest transporter.  Works on any tile entity to pick it up and gently place down with all contents/data intact.  
 item.ender_dungeon.guide=This flies towards the nearest mob spawner (which is usually in a dungeon or mineshaft), similar to how the Ender Eye flies to the stronghold portal.  It flies quite slowly at first, then gradually speeds up, and when it gets close enough it then starts moving more vertically.  However this does have a maximum range, so nothing will happen if you are too far away.  Maximum range is $0 blocks in any direction.
 item.tool_randomize.guide=This will mixup the blocks in the nearby area, to help you vary the texture of your wall or pathway.  Use the attack (Left-Click) to change size.  It affects a flat area along the face of whatever you hit.  Tile entities are ignored (chests and so on).  
-item.book_ender.guide=A magical book that stores your current location as a waypoint.  Teleport to the waypoint at a later at the cost of $0 experience/distance (configurable).  Cannot cross dimensions.  
-item.tool_harvest_crops.guide=This will harvest & replant an area of radius $0 around where you use it; similar to the Harvester machine except it works all at once.  
+item.book_ender.guide=A magical book that stores your current location as a waypoint.  Teleport to the waypoint at a later at the cost of experience, based on distance (configurable).  Cannot cross dimensions, but it can store locations in any dimension.  
+item.tool_harvest_crops.guide=This will harvest & replant an area around where you use it; similar to the Harvester machine except it works all at once.  
 item.horse_upgrade_type.guide=Use on a horse to kill and replace it with a new type (living, zombie, skeleton).  
 item.carbon_paper.guide=Use this to copy data from a sign or noteblock.  Then you can paste it any time later.  
 item.charm_void.guide=Works in your inventory or in a Baubles slot.  This charm saves you from the void; it detects if you have fallen down below $0 and teleports you way up into the sky instead. 
@@ -813,7 +813,8 @@ item.ender_fishing.guide=A projectile that catches a (vanilla) fish wherever it 
 item.heart_food.guide=A permanent health upgrade.  Craftable or found in chests.  
 item.ender_snow.guide=Better than your regular snowball.  When it lands, it keeps stacking snow layers up.  
 item.sprout_seed.guide=Grow a magical plant that gives a random junk or treasure when harvested.  
-item.tool_warp_spawn.guide=Warps you back home at cost of durability.  
+item.tool_warp_home.guide=Warps you back home at cost of durability.  Your home is your respawn point, the same one set by your bed.  Will not work if no home spawn is set.  
+item.tool_warp_spawn.guide=Warps you to world spawn at the cost of durability. 
 item.potion_magnet.guide=Makes you magnetic for items and experience.
 item.magic_net.guide=Capture any living creature (non-player) in this magical ball, and release it later.  Ball breaks after releasing the mob.  
 item.charm_air.guide=Use this to walk on air.

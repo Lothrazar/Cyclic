@@ -189,12 +189,11 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
     }
     if (enableChestSack) {
       ItemChestSackEmpty chest_sack_empty = new ItemChestSackEmpty();
-      ItemChestSack chest_sack = new ItemChestSack();
-//      chest_sack.setHidden();
+      ItemChestSack chest_sack = new ItemChestSack(); 
       chest_sack.setEmptySack(chest_sack_empty);
       chest_sack_empty.setFullSack(chest_sack);
       ItemRegistry.registerWithJeiDescription(chest_sack);
-      ItemRegistry.register(chest_sack, "chest_sack");
+      ItemRegistry.register(chest_sack, "chest_sack",null);
       ItemRegistry.register(chest_sack_empty, "chest_sack_empty");
       ItemRegistry.registerWithJeiDescription(chest_sack_empty);
     }
