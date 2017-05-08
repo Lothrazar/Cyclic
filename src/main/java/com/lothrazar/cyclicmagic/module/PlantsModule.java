@@ -18,7 +18,7 @@ public class PlantsModule extends BaseModule implements IHasConfig {
   public void onPreInit() {
     if (enableBeans) {
       BlockCropMagicBean sprout = new BlockCropMagicBean();
-      BlockRegistry.registerBlock(sprout, "sprout", GuideCategory.BLOCK);
+      BlockRegistry.registerBlock(sprout, "sprout", null);
       ItemMagicBean sprout_seed = new ItemMagicBean(sprout, Blocks.FARMLAND);
       ItemRegistry.addItem(sprout_seed, "sprout_seed");
       LootTableRegistry.registerLoot(sprout_seed);
