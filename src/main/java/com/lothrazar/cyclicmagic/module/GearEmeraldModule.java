@@ -63,23 +63,23 @@ public class GearEmeraldModule extends BaseModule implements IHasConfig {
     this.registerEmeraldMaterial();
     if (enableEmeraldGear) {
       Item emerald_head = new ItemEmeraldArmor(EntityEquipmentSlot.HEAD);
-      ItemRegistry.addItem(emerald_head, "emerald_helmet",GuideCategory.GEAR);
+      ItemRegistry.register(emerald_head, "emerald_helmet",GuideCategory.GEAR);
       Item emerald_chest = new ItemEmeraldArmor(EntityEquipmentSlot.CHEST);
-      ItemRegistry.addItem(emerald_chest, "emerald_chestplate",GuideCategory.GEAR);
+      ItemRegistry.register(emerald_chest, "emerald_chestplate",GuideCategory.GEAR);
       Item emerald_legs = new ItemEmeraldArmor(EntityEquipmentSlot.LEGS);
-      ItemRegistry.addItem(emerald_legs, "emerald_leggings",GuideCategory.GEAR);
+      ItemRegistry.register(emerald_legs, "emerald_leggings",GuideCategory.GEAR);
       Item emerald_boots = new ItemEmeraldArmor(EntityEquipmentSlot.FEET);
-      ItemRegistry.addItem(emerald_boots, "emerald_boots",GuideCategory.GEAR);
+      ItemRegistry.register(emerald_boots, "emerald_boots",GuideCategory.GEAR);
       Item emerald_sword = new ItemEmeraldSword();
-      ItemRegistry.addItem(emerald_sword, "emerald_sword",GuideCategory.GEAR);
+      ItemRegistry.register(emerald_sword, "emerald_sword",GuideCategory.GEAR);
       Item emerald_pickaxe = new ItemEmeraldPickaxe();
-      ItemRegistry.addItem(emerald_pickaxe,  "emerald_pickaxe",GuideCategory.GEAR);
+      ItemRegistry.register(emerald_pickaxe,  "emerald_pickaxe",GuideCategory.GEAR);
       Item emerald_axe = new ItemEmeraldAxe();
-      ItemRegistry.addItem(emerald_axe, "emerald_axe",GuideCategory.GEAR);
+      ItemRegistry.register(emerald_axe, "emerald_axe",GuideCategory.GEAR);
       Item emerald_shovel = new ItemEmeraldSpade();
-      ItemRegistry.addItem(emerald_shovel,  "emerald_spade",GuideCategory.GEAR);
+      ItemRegistry.register(emerald_shovel,  "emerald_spade",GuideCategory.GEAR);
       Item emerald_hoe = new ItemEmeraldHoe();
-      ItemRegistry.addItem(emerald_hoe, "emerald_hoe",GuideCategory.GEAR);
+      ItemRegistry.register(emerald_hoe, "emerald_hoe",GuideCategory.GEAR);
       LootTableRegistry.registerLoot(emerald_pickaxe);
       LootTableRegistry.registerLoot(emerald_sword);
       LootTableRegistry.registerLoot(emerald_chest);
@@ -88,7 +88,7 @@ public class GearEmeraldModule extends BaseModule implements IHasConfig {
       final Set<Block> blocks = Sets.newHashSet(Blocks.ACTIVATOR_RAIL, Blocks.COAL_ORE, Blocks.COBBLESTONE, Blocks.DETECTOR_RAIL, Blocks.DIAMOND_BLOCK, Blocks.DIAMOND_ORE, Blocks.DOUBLE_STONE_SLAB, Blocks.GOLDEN_RAIL, Blocks.GOLD_BLOCK, Blocks.GOLD_ORE, Blocks.ICE, Blocks.IRON_BLOCK, Blocks.IRON_ORE, Blocks.LAPIS_BLOCK, Blocks.LAPIS_ORE, Blocks.LIT_REDSTONE_ORE, Blocks.MOSSY_COBBLESTONE, Blocks.NETHERRACK, Blocks.PACKED_ICE, Blocks.RAIL, Blocks.REDSTONE_ORE, Blocks.SANDSTONE, Blocks.RED_SANDSTONE, Blocks.STONE, Blocks.STONE_SLAB, Blocks.STONE_BUTTON, Blocks.STONE_PRESSURE_PLATE, Blocks.CLAY, Blocks.DIRT, Blocks.FARMLAND, Blocks.GRASS, Blocks.GRAVEL, Blocks.MYCELIUM, Blocks.SAND, Blocks.SNOW, Blocks.SNOW_LAYER, Blocks.SOUL_SAND, Blocks.GRASS_PATH);
       final Set<Material> materials = Sets.newHashSet(Material.ANVIL, Material.GLASS, Material.ICE, Material.IRON, Material.PACKED_ICE, Material.PISTON, Material.ROCK, Material.GRASS, Material.GROUND, Material.SAND, Material.SNOW, Material.CRAFTED_SNOW, Material.CLAY);
       ItemToolMattock mattock = new ItemToolMattock(2, -1, MaterialRegistry.emeraldToolMaterial, blocks, materials);
-      ItemRegistry.addItem(mattock, "mattock");
+      ItemRegistry.register(mattock, "mattock");
     }
   }
   @Override

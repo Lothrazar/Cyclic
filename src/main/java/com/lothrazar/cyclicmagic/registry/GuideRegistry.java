@@ -58,9 +58,9 @@ public class GuideRegistry {
     return register(cat, new ItemStack(block), pageTitle, text, recipe, args);
   }
   public static GuideItem register(GuideCategory cat, Item item) {
-    return register(cat,item,null,null);
+    return register(cat, item, null, null);
   }
-  public static GuideItem register(GuideCategory cat, Item item, @Nullable  IRecipe recipe, @Nullable List<String> args) {
+  public static GuideItem register(GuideCategory cat, Item item, @Nullable IRecipe recipe, @Nullable List<String> args) {
     String pageTitle = item.getUnlocalizedName() + ".name";
     String above = item.getUnlocalizedName() + SUFFIX;
     return register(cat, new ItemStack(item), pageTitle, above, recipe, args);
@@ -123,13 +123,16 @@ public class GuideRegistry {
       this.title = UtilChat.lang(title);
       //default is a text page followed by recipe. more added later
       this.pages.add(new GuidePage(UtilChat.lang(text)));
-      if (recipe != null)
+      if (recipe != null) {
         this.pages.add(new GuidePage(recipe));
+      }
     }
     public void addRecipePage(IRecipe t) {
+      if (t == null) { return; }
       this.pages.add(new GuidePage(t));
     }
     public void addRecipePage(BrewingRecipe t) {
+      if (t == null) { return; }
       this.pages.add(new GuidePage(t));
     }
     public void addTextPage(String t) {

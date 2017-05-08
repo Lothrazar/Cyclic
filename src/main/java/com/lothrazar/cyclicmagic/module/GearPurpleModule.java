@@ -23,13 +23,13 @@ public class GearPurpleModule extends BaseEventModule implements IHasConfig {
     registerMaterial();
     if (enableWaterGear) {
       Item purple_boots = new ItemPowerArmor(MaterialRegistry.powerArmorMaterial, EntityEquipmentSlot.FEET);
-      ItemRegistry.addItem(purple_boots, "purple_boots");
+      ItemRegistry.register(purple_boots, "purple_boots");
       Item purple_leggings = new ItemPowerArmor(MaterialRegistry.powerArmorMaterial, EntityEquipmentSlot.LEGS);
-      ItemRegistry.addItem(purple_leggings, "purple_leggings");
+      ItemRegistry.register(purple_leggings, "purple_leggings");
       Item purple_chestplate = new ItemPowerArmor(MaterialRegistry.powerArmorMaterial, EntityEquipmentSlot.CHEST);
-      ItemRegistry.addItem(purple_chestplate, "purple_chestplate");
+      ItemRegistry.register(purple_chestplate, "purple_chestplate");
       Item purple_helmet = new ItemPowerArmor(MaterialRegistry.powerArmorMaterial, EntityEquipmentSlot.HEAD);
-      ItemRegistry.addItem(purple_helmet, "purple_helmet");
+      ItemRegistry.register(purple_helmet, "purple_helmet");
     }
   }
   private void registerMaterial() {

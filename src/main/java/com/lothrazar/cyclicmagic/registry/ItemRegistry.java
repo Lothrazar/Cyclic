@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.registry;
 import java.util.HashMap;
-import java.util.Map; 
+import java.util.Map;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -13,11 +13,9 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemRegistry {
   public static Map<String, Item> itemMap = new HashMap<String, Item>();
-  public static void addItem(Item item, String key, GuideCategory cat) {
+  public static void register(Item item, String key, GuideCategory cat) {
     item.setUnlocalizedName(key);
     itemMap.put(key, item);
-    
-
     item = ItemRegistry.itemMap.get(key);
     GameRegistry.register(item, new ResourceLocation(Const.MODID, key));
     item.setCreativeTab(ModCyclic.TAB);
@@ -29,15 +27,13 @@ public class ItemRegistry {
       recipe = ((IHasRecipe) item).addRecipe();
     }
     if (cat != null) {
-      GuideRegistry.register(cat,item, recipe,null);
+      GuideRegistry.register(cat, item, recipe, null);
     }
-  
   }
-  public static void addItem(Item item, String key) {
-      addItem(item, key, GuideCategory.ITEM);//defaults to in guide book with its own standalone page
+  public static void register(Item item, String key) {
+    register(item, key, GuideCategory.ITEM);//defaults to in guide book with its own standalone page
   }
   public static void registerWithJeiDescription(Item item) {
     JeiDescriptionRegistry.registerWithJeiDescription(item);
   }
- 
 }

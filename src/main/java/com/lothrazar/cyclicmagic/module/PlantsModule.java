@@ -20,7 +20,7 @@ public class PlantsModule extends BaseModule implements IHasConfig {
       BlockCropMagicBean sprout = new BlockCropMagicBean();
       BlockRegistry.registerBlock(sprout, "sprout", null);
       ItemMagicBean sprout_seed = new ItemMagicBean(sprout, Blocks.FARMLAND);
-      ItemRegistry.addItem(sprout_seed, "sprout_seed");
+      ItemRegistry.register(sprout_seed, "sprout_seed");
       LootTableRegistry.registerLoot(sprout_seed);
       sprout.setSeed(sprout_seed);
       AchievementRegistry.registerItemAchievement(sprout_seed);
