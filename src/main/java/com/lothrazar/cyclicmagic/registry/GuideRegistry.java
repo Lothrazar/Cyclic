@@ -52,7 +52,12 @@ public class GuideRegistry {
     args.add(ench.getRarity().name().toLowerCase().replace("_", " "));
     return register(GuideCategory.ENCHANT, new ItemStack(Items.ENCHANTED_BOOK), ench.getName(), ench.getName() + SUFFIX, null, args);
   }
-  public static GuideItem register(GuideCategory cat, Block block, IRecipe recipe, @Nullable List<String> args) {
+  public static GuideItem register(GuideCategory cat, Block block) {
+//    String pageTitle = block.getUnlocalizedName() + ".name";
+//    String text = block.getUnlocalizedName() + SUFFIX;
+    return register(cat, block,  null, null);
+  }
+  public static GuideItem register(GuideCategory cat, Block block,  @Nullable IRecipe recipe, @Nullable List<String> args) {
     String pageTitle = block.getUnlocalizedName() + ".name";
     String text = block.getUnlocalizedName() + SUFFIX;
     return register(cat, new ItemStack(block), pageTitle, text, recipe, args);
@@ -65,10 +70,11 @@ public class GuideRegistry {
     String above = item.getUnlocalizedName() + SUFFIX;
     return register(cat, new ItemStack(item), pageTitle, above, recipe, args);
   }
+ 
   public static GuideItem register(GuideCategory cat, ItemStack icon, String title, String text) {
     return register(cat, icon, title, text, null, null);
   }
-  public static GuideItem register(GuideCategory cat, ItemStack icon, String title, String text, @Nullable IRecipe recipes, @Nullable List<String> args) {
+  public static GuideItem register(GuideCategory cat, @Nonnull ItemStack icon, String title, String text, @Nullable IRecipe recipes, @Nullable List<String> args) {
     //layer of seperation between guidebook api. 1 for optional include and 2 in case i ever need to split it out and 3 for easy registering
     if (args != null && args.size() > 0) {
       text = UtilChat.lang(text);
