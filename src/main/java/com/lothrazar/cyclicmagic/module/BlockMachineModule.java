@@ -33,7 +33,6 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
   private boolean enableBuilderBlock;
   private boolean enableHarvester;
   private boolean enableMiner;
-  private boolean enableMinerEnhanced;
   private boolean enablePlacer;
   private boolean enablePassword;
   private boolean enableMinerSmart;
@@ -70,14 +69,8 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
     if (enableMiner) {
       BlockMiner miner_block = new BlockMiner(BlockMiner.MinerType.SINGLE);
       BlockRegistry.registerBlock(miner_block, "block_miner",GuideCategory.BLOCKMACHINE);
-    }
-    if (enableMinerEnhanced) {
-      BlockMiner block_miner_tunnel = new BlockMiner(BlockMiner.MinerType.TUNNEL);
-      BlockRegistry.registerBlock(block_miner_tunnel, "block_miner_tunnel",GuideCategory.BLOCKMACHINE);
-    }
-    if (enableMiner || enableMinerEnhanced) {
       GameRegistry.registerTileEntity(TileEntityBlockMiner.class, "miner_te");
-    }
+    } 
     if (enableMinerSmart) {
       BlockMinerSmart block_miner_smart = new BlockMinerSmart();
       BlockRegistry.registerBlock(block_miner_smart, "block_miner_smart",GuideCategory.BLOCKMACHINE);
@@ -107,8 +100,8 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
     enableUser = config.getBoolean("AutomatedUser", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablePassword = config.getBoolean("PasswordTrigger", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablePlacer = config.getBoolean("BlockPlacer", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    enableMiner = config.getBoolean("MinerBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText + ".  This is the one that mines a single block");
-    enableMinerEnhanced = config.getBoolean("MinerBlockAdvanced", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText + ".  This is the one that mines a 3x3x3 area");
+    enableMiner = config.getBoolean("MinerBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+ //   enableMinerEnhanced = config.getBoolean("MinerBlockAdvanced", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText + ".  This is the one that mines a 3x3x3 area");
     enableBuilderBlock = config.getBoolean("BuilderBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     TileEntityStructureBuilder.maxSize = config.getInt("builder.maxRange", Const.ConfigCategory.modpackMisc, 64, 3, 64, "Maximum range of the builder block that you can increase it to in the GUI");
     TileEntityStructureBuilder.maxHeight = config.getInt("builder.maxHeight", Const.ConfigCategory.modpackMisc, 64, 3, 64, "Maximum height of the builder block that you can increase it to in the GUI");

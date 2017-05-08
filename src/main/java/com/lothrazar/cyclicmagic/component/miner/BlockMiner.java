@@ -27,7 +27,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockMiner extends BlockBaseFacingInventory implements IHasRecipe, IBlockHasTESR {
   public static final PropertyDirection PROPERTYFACING = BlockBaseFacing.PROPERTYFACING;
   public static enum MinerType {
-    SINGLE, TUNNEL
+    SINGLE
   }
   private MinerType minerType;
   public BlockMiner(MinerType t) {
@@ -56,8 +56,7 @@ public class BlockMiner extends BlockBaseFacingInventory implements IHasRecipe, 
   }
   @Override
   public IRecipe addRecipe() {
-    switch (minerType) {
-      case SINGLE:
+ 
         return     GameRegistry.addShapedRecipe(new ItemStack(this),
             "rsr",
             " g ",
@@ -69,20 +68,6 @@ public class BlockMiner extends BlockBaseFacingInventory implements IHasRecipe, 
         //            'b', Items.BLAZE_POWDER
         );
    
-      case TUNNEL:
-        return  GameRegistry.addShapedRecipe(new ItemStack(this),
-            "rsr",
-            "gbg",
-            "ooo",
-            'o', Blocks.OBSIDIAN,
-            'g', Items.IRON_PICKAXE, // new ItemStack(Items.DIAMOND_PICKAXE,1,OreDictionary.WILDCARD_VALUE),
-            's', Blocks.DISPENSER,
-            'r', Items.QUARTZ,
-            'b', Blocks.MAGMA);// MAGMA BLOCK is field_189877_df in 1.10.2 apparently
-      
-      default:
-      break;
-    }
-    return null;
+     
   }
 }
