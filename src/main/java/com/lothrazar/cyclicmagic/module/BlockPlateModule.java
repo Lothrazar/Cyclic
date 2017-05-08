@@ -96,19 +96,20 @@ public class BlockPlateModule extends BaseModule implements IHasConfig {
     }
     if (vectorPlate) {
       BlockVectorPlate plate_vector = new BlockVectorPlate();
-      BlockRegistry.registerBlock(plate_vector, new ItemBlockVectorPlate(plate_vector), "plate_vector", GuideCategory.BLOCKPLATE);
+      BlockRegistry.registerBlock(plate_vector, new ItemBlockVectorPlate(plate_vector), "plate_vector", null);
+      GuideItem page = GuideRegistry.register(GuideCategory.BLOCKPLATE, plate_vector);
       GameRegistry.registerTileEntity(TileEntityVector.class, "plate_vector_te");
       ModCyclic.instance.events.register(plate_vector);
       ItemStack top = (plate_launch_med == null) ? new ItemStack(Blocks.REDSTONE_LAMP) : new ItemStack(plate_launch_med);
       ItemStack base = (plate_push_fast == null) ? new ItemStack(Blocks.EMERALD_BLOCK) : new ItemStack(plate_push_fast);
-      RecipeRegistry.addShapedRecipe(new ItemStack(plate_vector, 6),
+      page.addRecipePage(    RecipeRegistry.addShapedRecipe(new ItemStack(plate_vector, 6),
           "ttt",
           "idi",
           "bbb",
           'i', Items.IRON_INGOT,
           'd', Items.DIAMOND,
           'b', base,
-          't', top);
+          't', top));
     }
   }
   @Override
