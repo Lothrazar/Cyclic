@@ -18,7 +18,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemProjectileModule extends BaseModule implements IHasConfig {
   private boolean enableEnderBlaze;
@@ -104,13 +103,14 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
     if (dynamiteSafe) {
       ItemProjectileTNT dynamite_safe = new ItemProjectileTNT(6, ExplosionType.BLOCKSAFE);
       ItemRegistry.register(dynamite_safe, "dynamite_safe", GuideCategory.ITEMTHROW);
+      GuideItem page = GuideRegistry.register(GuideCategory.ITEMTHROW, dynamite_safe);
       EntityProjectileRegistry.registerModEntity(EntityDynamiteBlockSafe.class, "tntblocksafebolt", 1009);
       EntityDynamiteBlockSafe.renderSnowball = dynamite_safe;
       projectiles.add(dynamite_safe);
-      RecipeRegistry.addShapelessRecipe(new ItemStack(dynamite_safe, 6),
+      page.addRecipePage(   RecipeRegistry.addShapelessRecipe(new ItemStack(dynamite_safe, 6),
           new ItemStack(Items.GUNPOWDER), new ItemStack(Items.SUGAR), new ItemStack(Items.GUNPOWDER),
           new ItemStack(Items.PAPER), new ItemStack(Items.CLAY_BALL), new ItemStack(Blocks.BROWN_MUSHROOM),
-          new ItemStack(Items.FEATHER), new ItemStack(Items.WHEAT_SEEDS), new ItemStack(Blocks.COBBLESTONE));
+          new ItemStack(Items.FEATHER), new ItemStack(Items.WHEAT_SEEDS), new ItemStack(Blocks.COBBLESTONE)));
     }
     if (magicNet) {
       ItemProjectileMagicNet magic_net = new ItemProjectileMagicNet();
@@ -124,14 +124,15 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
     if (dynamiteMining) {
       ItemProjectileTNT dynamite_mining = new ItemProjectileTNT(6, ExplosionType.MINING);
       ItemRegistry.register(dynamite_mining, "dynamite_mining", GuideCategory.ITEMTHROW);
+      GuideItem page = GuideRegistry.register(GuideCategory.ITEMTHROW, dynamite_mining);
       EntityProjectileRegistry.registerModEntity(EntityDynamiteMining.class, "tntminingbolt", 1010);
       EntityDynamiteMining.renderSnowball = dynamite_mining;
       projectiles.add(dynamite_mining);
-      RecipeRegistry.addShapelessRecipe(new ItemStack(dynamite_mining, 6),
+      page.addRecipePage(    RecipeRegistry.addShapelessRecipe(new ItemStack(dynamite_mining, 6),
           new ItemStack(Items.GUNPOWDER), new ItemStack(Items.IRON_INGOT),
           new ItemStack(Items.GUNPOWDER), new ItemStack(Items.PAPER),
           new ItemStack(Items.CLAY_BALL), new ItemStack(Blocks.RED_MUSHROOM),
-          new ItemStack(Items.FEATHER), new ItemStack(Items.WHEAT_SEEDS), new ItemStack(Items.NETHERBRICK));
+          new ItemStack(Items.FEATHER), new ItemStack(Items.WHEAT_SEEDS), new ItemStack(Items.NETHERBRICK)));
     }
     if (enderBombsEnabled) {
       ItemProjectileTNT ender_tnt_1 = new ItemProjectileTNT(1, ExplosionType.NORMAL);
