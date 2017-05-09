@@ -5,6 +5,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -22,8 +23,8 @@ public class ItemToolStirrups extends BaseTool implements IHasRecipe {
     return true;
   }
   @Override
-  public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this),
+  public IRecipe addRecipe() {
+    return GameRegistry.addShapedRecipe(new ItemStack(this),
         " ls",
         " sl",
         "ii ",

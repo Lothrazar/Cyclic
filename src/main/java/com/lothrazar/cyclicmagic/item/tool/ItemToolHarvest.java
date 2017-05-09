@@ -6,6 +6,7 @@ import com.lothrazar.cyclicmagic.util.UtilHarvestCrops.HarestCropsConfig;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -62,37 +63,35 @@ public class ItemToolHarvest extends BaseTool implements IHasRecipe {
     return super.onItemUse(player, worldObj, offset, hand, side, hitX, hitY, hitZ);
   }
   @Override
-  public void addRecipe() {
+  public IRecipe addRecipe() {
     switch (harvestType) {
       case CROPS:
-        GameRegistry.addRecipe(new ItemStack(this),
+        return GameRegistry.addShapedRecipe(new ItemStack(this),
             " gs",
             " bg",
             "b  ",
             'b', Items.BLAZE_ROD,
             'g', Items.QUARTZ,
             's', Items.STONE_HOE);
-      break;
       case LEAVES:
-        GameRegistry.addRecipe(new ItemStack(this),
+        return GameRegistry.addShapedRecipe(new ItemStack(this),
             " gs",
             " bg",
             "b  ",
             'b', Items.STICK,
             'g', Items.STRING,
             's', Items.STONE_AXE);
-      break;
       case WEEDS:
-        GameRegistry.addRecipe(new ItemStack(this),
+        return GameRegistry.addShapedRecipe(new ItemStack(this),
             " gs",
             " bg",
             "b  ",
             'b', Items.STICK,
             'g', Items.STRING,
             's', Items.STONE_HOE);
-      break;
       default:
       break;
     }
+    return null;
   }
 }

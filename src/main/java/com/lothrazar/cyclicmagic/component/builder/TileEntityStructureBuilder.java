@@ -5,7 +5,6 @@ import com.lothrazar.cyclicmagic.block.tileentity.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.block.tileentity.ITileSizeToggle;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
-import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import com.lothrazar.cyclicmagic.util.UtilShape;
 import net.minecraft.block.Block;
@@ -13,7 +12,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -36,10 +34,11 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
   private int buildHeight = 3;
   private int needsRedstone = 1;
   private int shapeIndex = 0;// current index of shape array
+  private int renderParticles = 1;
   public static int maxSize;
   public static int maxHeight = 10;
   public static enum Fields {
-    TIMER, BUILDTYPE, SPEED, SIZE, HEIGHT, REDSTONE
+    TIMER, BUILDTYPE, SPEED, SIZE, HEIGHT, REDSTONE, RENDERPARTICLES;
   }
   public enum BuildType {
     FACING, SQUARE, CIRCLE, SOLID, STAIRWAY, SPHERE;
@@ -113,6 +112,8 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
           return this.buildHeight;
         case REDSTONE:
           return this.needsRedstone;
+        case RENDERPARTICLES:
+          return this.renderParticles;
       }
     }
     return -1;
@@ -142,7 +143,8 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
         case REDSTONE:
           this.needsRedstone = value;
         break;
-        default:
+        case RENDERPARTICLES:
+          this.renderParticles = value;
         break;
       }
     }
@@ -214,6 +216,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     this.buildType = tagCompound.getInteger(NBT_BUILDTYPE);
     this.buildSpeed = tagCompound.getInteger(NBT_SPEED);
     this.buildSize = tagCompound.getInteger(NBT_SIZE);
+    this.renderParticles = tagCompound.getInteger("render");
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
@@ -223,14 +226,12 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     tagCompound.setInteger(NBT_BUILDTYPE, this.getBuildType());
     tagCompound.setInteger(NBT_SPEED, this.getSpeed());
     tagCompound.setInteger(NBT_SIZE, this.getSize());
+    tagCompound.setInteger("render", renderParticles);
     return super.writeToNBT(tagCompound);
   }
   public boolean isBurning() {
     return this.timer > 0 && this.timer < TIMER_FULL;
   }
-  //  public boolean isRunning() {
-  //    return !this.onlyRunIfPowered() || this.isPowered();
-  //  }
   @Override
   public void update() {
     shiftAllUp();
@@ -307,16 +308,10 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
   }
   @Override
   public void displayPreview() {
-    List<BlockPos> shape;
-    if (this.buildType == BuildType.SPHERE.ordinal()) {//spheres of bigger sizes just literally only render part then get cut off so
-      shape = UtilShape.circleHorizontal(this.getPos(), this.getSize() * 2);
-      shape.addAll(UtilShape.circleVertical(this.getPos(), this.getSize() * 2));
-    }
-    else {
-      shape = this.rebuildShape();
-    }
-    for (BlockPos pos : shape) {
-      UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, pos, 2);
-    }
+    int val = (this.renderParticles + 1) % 2;
+    this.setField(Fields.RENDERPARTICLES.ordinal(), val);
+  }
+  public boolean renderOn() { // sed by TESR
+    return renderParticles == 1;
   }
 }

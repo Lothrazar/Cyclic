@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -100,8 +99,7 @@ public class TileEntityFishing extends TileEntityBaseMachineInvo implements ITic
     if (itemsClass.equals(aquaBase + "ItemAquacultureWoodenFishingRod")
         || itemsClass.equals(aquaBase + "ItemAquacultureFishingRod")
         || itemsClass.equals(aquaBase + "ItemAdminAquacultureFishingRod")
-        || itemsClass.equals(aquaBase + "ItemAdminFishingRod")
-        ) { return true; }
+        || itemsClass.equals(aquaBase + "ItemAdminFishingRod")) { return true; }
     return false;
   }
   @Override

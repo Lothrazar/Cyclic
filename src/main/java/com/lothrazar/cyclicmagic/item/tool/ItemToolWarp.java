@@ -10,6 +10,7 @@ import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -86,11 +87,11 @@ public class ItemToolWarp extends BaseTool implements IHasRecipe, IHasClickToggl
     }
   }
   @Override
-  public void addRecipe() {
+  public IRecipe addRecipe() {
     switch (warpType) {
       case BED:
         //goes to your BED (which can be anywhere)
-        GameRegistry.addShapedRecipe(new ItemStack(this),
+        return GameRegistry.addShapedRecipe(new ItemStack(this),
             " ft",
             "ggf",
             "dg ",
@@ -98,19 +99,17 @@ public class ItemToolWarp extends BaseTool implements IHasRecipe, IHasClickToggl
             'f', new ItemStack(Items.FEATHER),
             'g', new ItemStack(Items.GOLD_INGOT),
             'd', new ItemStack(Items.ENDER_EYE));
-      break;
       case SPAWN:
         //this one needs diamond but is cheaper. goes to worldspawn
-        GameRegistry.addShapedRecipe(new ItemStack(this),
+        return GameRegistry.addShapedRecipe(new ItemStack(this),
             " ff",
             "ggf",
             "dg ",
             'f', new ItemStack(Items.FEATHER),
             'g', new ItemStack(Items.GOLD_NUGGET),
             'd', new ItemStack(Items.DIAMOND));
-      break;
       default:
-      break;
+        return null;
     }
   }
   @Override

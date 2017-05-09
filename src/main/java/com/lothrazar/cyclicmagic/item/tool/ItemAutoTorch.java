@@ -13,6 +13,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
@@ -124,8 +125,8 @@ public class ItemAutoTorch extends BaseItem implements IHasRecipe {
     super.addInformation(stack, playerIn, tooltip, advanced);
   }
   @Override
-  public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this),
+  public IRecipe addRecipe() {
+    return GameRegistry.addShapedRecipe(new ItemStack(this),
         "cic",
         " i ",
         "cic",

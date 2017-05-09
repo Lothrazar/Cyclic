@@ -14,6 +14,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -68,15 +69,15 @@ public class BlockFishing extends BlockBaseHasTile implements IHasRecipe, IBlock
     return false;
   }
   @Override
-  public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this),
+  public IRecipe addRecipe() {
+    GameRegistry.addShapedRecipe(new ItemStack(this),
         "pwp",
         "wfw",
         "pwp",
         'w', Blocks.WEB,
         'f', new ItemStack(Items.FISH, 1, ItemFishFood.FishType.PUFFERFISH.getMetadata()),
         'p', Blocks.TRAPPED_CHEST);
-    GameRegistry.addRecipe(new ItemStack(this),
+    return GameRegistry.addShapedRecipe(new ItemStack(this),
         "pwp",
         "wfw",
         "pwp",

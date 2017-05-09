@@ -36,7 +36,7 @@ public class EnchantModule extends BaseModule implements IHasConfig {
   private boolean enableautosmelt;
   private boolean enablereach;
   @Override
-  public void onInit() {
+  public void onPreInit() {
     if (enablereach) {
       reach = new EnchantReach();
       Enchantment.REGISTRY.register(reachid, new ResourceLocation(reach.getName()), reach);

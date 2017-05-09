@@ -1,8 +1,17 @@
 package com.lothrazar.cyclicmagic;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import com.lothrazar.cyclicmagic.proxy.CommonProxy;
-import com.lothrazar.cyclicmagic.registry.*;
+import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
+import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
+import com.lothrazar.cyclicmagic.registry.ConfigRegistry;
+import com.lothrazar.cyclicmagic.registry.EventRegistry;
+import com.lothrazar.cyclicmagic.registry.ModuleRegistry;
+import com.lothrazar.cyclicmagic.registry.PacketRegistry;
+import com.lothrazar.cyclicmagic.registry.PermissionRegistry;
+import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
+import com.lothrazar.cyclicmagic.registry.ReflectionRegistry;
+import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
@@ -22,7 +31,7 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
-@Mod(modid = Const.MODID, useMetadata = true, dependencies = "after:jei;after:baubles", canBeDeactivated = false, updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json", acceptableRemoteVersions = "*", guiFactory = "com.lothrazar." + Const.MODID + ".gui.IngameConfigFactory")
+@Mod(modid = Const.MODID, useMetadata = true, dependencies = "before:guideapi;after:jei;after:baubles", canBeDeactivated = false, updateJSON = "https://raw.githubusercontent.com/PrinceOfAmber/CyclicMagic/master/update.json", acceptableRemoteVersions = "*", acceptedMinecraftVersions = "[1.11.2,)", guiFactory = "com.lothrazar." + Const.MODID + ".gui.IngameConfigFactory")
 public class ModCyclic {
   @Instance(value = Const.MODID)
   public static ModCyclic instance;
@@ -68,7 +77,6 @@ public class ModCyclic {
     for (ICyclicModule module : ModuleRegistry.modules) {
       module.onInit();
     }
-    ItemRegistry.register();//now that modules have added their content (items), we can register them
     proxy.register();
     NetworkRegistry.INSTANCE.registerGuiHandler(this, new ModGuiHandler());
     ConfigRegistry.syncAllConfig(); //fixes things , stuff was added to items and content that has config
@@ -93,37 +101,9 @@ public class ModCyclic {
    * 
    * https://github.com/PrinceOfAmber/Cyclic/milestones
    * 
-   * SOME sort of thing for stepHeight // player.stepHeight = 1.0F; careful on
-   * unequip. //TODO:above doesnt get moved down to norm on unequip. save that
-   * idea for another item/charm/potion/enchant/something?
+   * BUGS:
    * 
-   * BIG TAB options for my invo buttons . save as player data, not config. ->
-   * have a button in both alt guis off to side, hitting it toggles tab mode on
-   * and off.
-   * 
-   * water fountain//particle maker: has gui. pick the particle you want
-   * (vanilla only if we have to) and whenver its on it spawns particles above
-   * or wherever
-   * 
-   * DISABLE the forward vector component of launch enchat, if we are standing
-   * still (if no current horiz)
-   * 
-   * revive my old idea of the flint tool to chop wood, and the idea to disable
-   * punching trees?
-   * 
-   * tool to create enchanted books but expensive. try to follow existing
-   * conventions EX quartz->sharpness
-   * 
-   * CYCLICSCEPTER: - ? toggle to tell how many times to rotate an item after
-   * placing (ex: stairs to be put upside down)
-   * 
-   * Block placers and structure builder: add same rotator
-   * 
-   * Block placers and structure builder: import the existing random/pattern
-   * feature from cyclic wand
-   * 
-   * piston wand - ROTATE: STAIRS: allow switch from top to bottom
-   * 
+   * https://github.com/PrinceOfAmber/Cyclic/issues
    * 
    */
 }

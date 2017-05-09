@@ -11,9 +11,6 @@ import com.lothrazar.cyclicmagic.component.cyclicwand.PacketSpellShiftRight;
 import com.lothrazar.cyclicmagic.component.enderbook.ItemEnderBook;
 import com.lothrazar.cyclicmagic.component.merchant.ItemMerchantAlmanac;
 import com.lothrazar.cyclicmagic.component.storagesack.ItemStorageBag;
-import com.lothrazar.cyclicmagic.item.tool.*;
-import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.ActionType;
-import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.WandType;
 import com.lothrazar.cyclicmagic.item.ItemChestSack;
 import com.lothrazar.cyclicmagic.item.ItemChestSackEmpty;
 import com.lothrazar.cyclicmagic.item.ItemClimbingGlove;
@@ -21,13 +18,34 @@ import com.lothrazar.cyclicmagic.item.ItemEnderBag;
 import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
 import com.lothrazar.cyclicmagic.item.ItemPasswordRemote;
 import com.lothrazar.cyclicmagic.item.ItemSoulstone;
+import com.lothrazar.cyclicmagic.item.tool.ItemSleepingMat;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolExtinguish;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolHarvest;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolLaunch;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolPearlReuse;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolPiston;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolProspector;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolRandomize;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolRotate;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolSpawnInspect;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolSpelunker;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolStirrups;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolSurface;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.ActionType;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.WandType;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolThrowTorch;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolWarp;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolWaterIce;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolWaterSpreader;
 import com.lothrazar.cyclicmagic.net.PacketSwapBlock;
 import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
+import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
-import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -46,8 +64,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
+import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -125,149 +143,146 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
     }
   }
   @Override
-  public void onInit() {
+  public void onPreInit() {
     if (enablePlayerLauncher) {
       ItemToolLaunch tool_launcher = new ItemToolLaunch();
-      ItemRegistry.addItem(tool_launcher, "tool_launcher");
+      ItemRegistry.register(tool_launcher, "tool_launcher");
       ModCyclic.instance.events.register(tool_launcher);
     }
     if (enableSoulstone) {
       ItemSoulstone soulstone = new ItemSoulstone();
-      ItemRegistry.addItem(soulstone, "soulstone");
+      ItemRegistry.register(soulstone, "soulstone");
       ModCyclic.instance.events.register(soulstone);
     }
     if (enableTrader) {
       ItemMerchantAlmanac tool_trade = new ItemMerchantAlmanac();
-      ItemRegistry.addItem(tool_trade, "tool_trade");
+      ItemRegistry.register(tool_trade, "tool_trade");
     }
     if (enableLever) {
       ItemPasswordRemote password_remote = new ItemPasswordRemote();
-      ItemRegistry.addItem(password_remote, "password_remote");
+      ItemRegistry.register(password_remote, "password_remote");
     }
     if (enableElevate) {
       ItemToolSurface tool_elevate = new ItemToolSurface();
-      ItemRegistry.addItem(tool_elevate, "tool_elevate");
+      ItemRegistry.register(tool_elevate, "tool_elevate");
       LootTableRegistry.registerLoot(tool_elevate);
     }
     if (enableCGlove) {
       ItemClimbingGlove glove_climb = new ItemClimbingGlove();
-      ItemRegistry.addItem(glove_climb, "glove_climb");
+      ItemRegistry.register(glove_climb, "glove_climb", GuideCategory.ITEMBAUBLES);
       LootTableRegistry.registerLoot(glove_climb);
     }
     if (enableBlockRot) {
       ItemToolRotate tool_rotate = new ItemToolRotate();
-      ItemRegistry.addItem(tool_rotate, "tool_rotate");
+      ItemRegistry.register(tool_rotate, "tool_rotate");
     }
     if (enablewaterSpread) {
       ItemToolWaterSpreader water_spreader = new ItemToolWaterSpreader();
-      ItemRegistry.addItem(water_spreader, "water_spreader");
-      LootTableRegistry.registerLoot(water_spreader);
+      ItemRegistry.register(water_spreader, "water_spreader");
     }
     if (enableFreezer) {
       ItemToolWaterIce water_freezer = new ItemToolWaterIce();
-      ItemRegistry.addItem(water_freezer, "water_freezer");
+      ItemRegistry.register(water_freezer, "water_freezer");
     }
     if (enableFireKiller) {
       ItemToolExtinguish fire_killer = new ItemToolExtinguish();
-      ItemRegistry.addItem(fire_killer, "fire_killer");
+      ItemRegistry.register(fire_killer, "fire_killer");
     }
     if (enderSack) {
       ItemEnderBag sack_ender = new ItemEnderBag();
-      ItemRegistry.addItem(sack_ender, "sack_ender");
+      ItemRegistry.register(sack_ender, "sack_ender");
       LootTableRegistry.registerLoot(sack_ender);
       ItemRegistry.registerWithJeiDescription(sack_ender);
     }
     if (enableTorchLauncher) {
       ItemToolThrowTorch tool_torch_launcher = new ItemToolThrowTorch();
-      ItemRegistry.addItem(tool_torch_launcher, "tool_torch_launcher");
+      ItemRegistry.register(tool_torch_launcher, "tool_torch_launcher");
     }
     if (enableStirrups) {
       ItemToolStirrups tool_mount = new ItemToolStirrups();
-      ItemRegistry.addItem(tool_mount, "tool_mount");
+      ItemRegistry.register(tool_mount, "tool_mount");
       ItemRegistry.registerWithJeiDescription(tool_mount);
     }
     if (enableChestSack) {
       ItemChestSackEmpty chest_sack_empty = new ItemChestSackEmpty();
       ItemChestSack chest_sack = new ItemChestSack();
-      chest_sack.setHidden();
       chest_sack.setEmptySack(chest_sack_empty);
       chest_sack_empty.setFullSack(chest_sack);
       ItemRegistry.registerWithJeiDescription(chest_sack);
-      ItemRegistry.addItem(chest_sack, "chest_sack");
-      ItemRegistry.addItem(chest_sack_empty, "chest_sack_empty");
+      ItemRegistry.register(chest_sack, "chest_sack", null);
+      ItemRegistry.register(chest_sack_empty, "chest_sack_empty");
       ItemRegistry.registerWithJeiDescription(chest_sack_empty);
     }
     if (enableEnderBook) {
       ItemEnderBook book_ender = new ItemEnderBook();
-      ItemRegistry.addItem(book_ender, "book_ender");
-      LootTableRegistry.registerLoot(book_ender, ChestType.ENDCITY);
+      ItemRegistry.register(book_ender, "book_ender");
+      LootTableRegistry.registerLoot(book_ender);
       LootTableRegistry.registerLoot(book_ender);
       ItemRegistry.registerWithJeiDescription(book_ender);
     }
     if (storageBagEnabled) {
       storage_bag = new ItemStorageBag();
-      ItemRegistry.addItem(storage_bag, "storage_bag");
+      ItemRegistry.register(storage_bag, "storage_bag");
       ModCyclic.instance.events.register(storage_bag);
-      LootTableRegistry.registerLoot(storage_bag);
       LootTableRegistry.registerLoot(storage_bag, ChestType.BONUS);
       ItemRegistry.registerWithJeiDescription(storage_bag);
     }
     if (enableCarbonPaper) {
       ItemPaperCarbon carbon_paper = new ItemPaperCarbon();
-      ItemRegistry.addItem(carbon_paper, "carbon_paper");
+      ItemRegistry.register(carbon_paper, "carbon_paper");
       ItemRegistry.registerWithJeiDescription(carbon_paper);
     }
     if (enableProspector) {
       ItemToolProspector tool_prospector = new ItemToolProspector();
-      ItemRegistry.addItem(tool_prospector, "tool_prospector");
+      ItemRegistry.register(tool_prospector, "tool_prospector");
       LootTableRegistry.registerLoot(tool_prospector);
       ItemRegistry.registerWithJeiDescription(tool_prospector);
     }
     if (enableCavefinder) {
       ItemToolSpelunker tool_spelunker = new ItemToolSpelunker();
-      ItemRegistry.addItem(tool_spelunker, "tool_spelunker");
+      ItemRegistry.register(tool_spelunker, "tool_spelunker");
       ItemRegistry.registerWithJeiDescription(tool_spelunker);
     }
     if (enableSpawnInspect) {
       ItemToolSpawnInspect tool_spawn_inspect = new ItemToolSpawnInspect();
-      ItemRegistry.addItem(tool_spawn_inspect, "tool_spawn_inspect");
+      ItemRegistry.register(tool_spawn_inspect, "tool_spawn_inspect");
       ItemRegistry.registerWithJeiDescription(tool_spawn_inspect);
     }
     if (enablePearlReuse) {
       ItemToolPearlReuse ender_pearl_reuse = new ItemToolPearlReuse(ItemToolPearlReuse.OrbType.NORMAL);
-      ItemRegistry.addItem(ender_pearl_reuse, "ender_pearl_reuse");
+      ItemRegistry.register(ender_pearl_reuse, "ender_pearl_reuse");
       LootTableRegistry.registerLoot(ender_pearl_reuse);
       ItemRegistry.registerWithJeiDescription(ender_pearl_reuse);
     }
     if (enablePearlReuseMounted) {
       ItemToolPearlReuse ender_pearl_mounted = new ItemToolPearlReuse(ItemToolPearlReuse.OrbType.MOUNTED);
-      ItemRegistry.addItem(ender_pearl_mounted, "ender_pearl_mounted");
+      ItemRegistry.register(ender_pearl_mounted, "ender_pearl_mounted");
       LootTableRegistry.registerLoot(ender_pearl_mounted);
       AchievementRegistry.registerItemAchievement(ender_pearl_mounted);
       ItemRegistry.registerWithJeiDescription(ender_pearl_mounted);
     }
     if (enableHarvestWeeds) {
       ItemToolHarvest tool_harvest_weeds = new ItemToolHarvest(ItemToolHarvest.HarvestType.WEEDS);
-      ItemRegistry.addItem(tool_harvest_weeds, "tool_harvest_weeds");
+      ItemRegistry.register(tool_harvest_weeds, "tool_harvest_weeds");
       LootTableRegistry.registerLoot(tool_harvest_weeds, ChestType.BONUS);
       ItemRegistry.registerWithJeiDescription(tool_harvest_weeds);
     }
     if (enableToolHarvest) {
       ItemToolHarvest tool_harvest_crops = new ItemToolHarvest(ItemToolHarvest.HarvestType.CROPS);
-      ItemRegistry.addItem(tool_harvest_crops, "tool_harvest_crops");
+      ItemRegistry.register(tool_harvest_crops, "tool_harvest_crops");
       LootTableRegistry.registerLoot(tool_harvest_crops);
       AchievementRegistry.registerItemAchievement(tool_harvest_crops);
       ItemRegistry.registerWithJeiDescription(tool_harvest_crops);
     }
     if (enableHarvestLeaves) {
       ItemToolHarvest tool_harvest_leaves = new ItemToolHarvest(ItemToolHarvest.HarvestType.LEAVES);
-      ItemRegistry.addItem(tool_harvest_leaves, "tool_harvest_leaves");
+      ItemRegistry.register(tool_harvest_leaves, "tool_harvest_leaves");
       LootTableRegistry.registerLoot(tool_harvest_leaves, ChestType.BONUS);
       ItemRegistry.registerWithJeiDescription(tool_harvest_leaves);
     }
     if (enableToolPush) {
       ItemToolPiston tool_push = new ItemToolPiston();
-      ItemRegistry.addItem(tool_push, "tool_push");
+      ItemRegistry.register(tool_push, "tool_push");
       ModCyclic.instance.events.register(tool_push);
       LootTableRegistry.registerLoot(tool_push);
       AchievementRegistry.registerItemAchievement(tool_push);
@@ -275,13 +290,13 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
     }
     if (enableSleepingMat) {
       ItemSleepingMat sleeping_mat = new ItemSleepingMat();
-      ItemRegistry.addItem(sleeping_mat, "sleeping_mat");
+      ItemRegistry.register(sleeping_mat, "sleeping_mat");
       ModCyclic.instance.events.register(sleeping_mat);
       LootTableRegistry.registerLoot(sleeping_mat, ChestType.BONUS);
     }
     if (enableCyclicWand) {
       ItemCyclicWand cyclic_wand_build = new ItemCyclicWand();
-      ItemRegistry.addItem(cyclic_wand_build, "cyclic_wand_build");
+      ItemRegistry.register(cyclic_wand_build, "cyclic_wand_build");
       SpellRegistry.register(cyclic_wand_build);
       spellHud = new SpellHud();
       ModCyclic.instance.events.register(this);
@@ -293,30 +308,30 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
     }
     if (enableWarpHomeTool) {
       ItemToolWarp tool_warp_home = new ItemToolWarp(ItemToolWarp.WarpType.BED);
-      ItemRegistry.addItem(tool_warp_home, "tool_warp_home");
+      ItemRegistry.register(tool_warp_home, "tool_warp_home");
       LootTableRegistry.registerLoot(tool_warp_home);
       AchievementRegistry.registerItemAchievement(tool_warp_home);
       ItemRegistry.registerWithJeiDescription(tool_warp_home);
     }
     if (enableWarpSpawnTool) {
       ItemToolWarp tool_warp_spawn = new ItemToolWarp(ItemToolWarp.WarpType.SPAWN);
-      ItemRegistry.addItem(tool_warp_spawn, "tool_warp_spawn");
+      ItemRegistry.register(tool_warp_spawn, "tool_warp_spawn");
       LootTableRegistry.registerLoot(tool_warp_spawn);
       ItemRegistry.registerWithJeiDescription(tool_warp_spawn);
     }
     if (enableSwappers) {
       ItemToolSwap tool_swap = new ItemToolSwap(WandType.NORMAL);
-      ItemRegistry.addItem(tool_swap, "tool_swap");
+      ItemRegistry.register(tool_swap, "tool_swap");
       ModCyclic.instance.events.register(tool_swap);
       ItemToolSwap tool_swap_match = new ItemToolSwap(WandType.MATCH);
-      ItemRegistry.addItem(tool_swap_match, "tool_swap_match");
+      ItemRegistry.register(tool_swap_match, "tool_swap_match");
       ModCyclic.instance.events.register(tool_swap_match);
       ItemRegistry.registerWithJeiDescription(tool_swap_match);
       ItemRegistry.registerWithJeiDescription(tool_swap);
     }
     if (enableRando) {
       ItemToolRandomize tool_randomize = new ItemToolRandomize();
-      ItemRegistry.addItem(tool_randomize, "tool_randomize");
+      ItemRegistry.register(tool_randomize, "tool_randomize");
       ModCyclic.instance.events.register(tool_randomize);
       ItemRegistry.registerWithJeiDescription(tool_randomize);
     }

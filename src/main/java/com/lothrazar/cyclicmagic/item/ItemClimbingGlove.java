@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -21,8 +22,8 @@ public class ItemClimbingGlove extends BaseCharm implements IHasRecipe {
     }
   }
   @Override
-  public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this, 1),
+  public IRecipe addRecipe() {
+    return GameRegistry.addShapedRecipe(new ItemStack(this, 1),
         "ssl",
         "skl",
         "lli",

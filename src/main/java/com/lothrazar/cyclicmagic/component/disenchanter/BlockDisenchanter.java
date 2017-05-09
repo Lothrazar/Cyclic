@@ -12,6 +12,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
@@ -37,12 +38,11 @@ public class BlockDisenchanter extends BlockBaseFacingInventory implements IHasR
   @Override
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
-    
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDisenchanter.class, new DisenchantPylonTESR());
   }
   @Override
-  public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this),
+  public IRecipe addRecipe() {
+    return GameRegistry.addShapedRecipe(new ItemStack(this),
         "vhv",
         "grg",
         "sis",

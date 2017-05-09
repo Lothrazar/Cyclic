@@ -17,7 +17,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class EnvironmentTweaksModule extends BaseEventModule implements IHasConfig {
   private boolean saplingDespawnGrow;
   private boolean spawnersUnbreakable;
- 
   @Override
   public void onInit() {
     updateHardness();
@@ -37,7 +36,7 @@ public class EnvironmentTweaksModule extends BaseEventModule implements IHasConf
       Entity entity = event.getEntity();
       ItemStack is = entityItem.getEntityItem();
       World world = entity.getEntityWorld();
-      if (is == null) { return; } // has not happened in the wild, yet
+      if (is.isEmpty()) { return; } // has not happened in the wild, yet
       Block blockhere = entity.getEntityWorld().getBlockState(entityItem.getPosition()).getBlock();
       Block blockdown = entity.getEntityWorld().getBlockState(entityItem.getPosition().down()).getBlock();
       if (blockhere == Blocks.AIR && blockdown == Blocks.DIRT || blockdown == Blocks.GRASS) {
@@ -51,11 +50,11 @@ public class EnvironmentTweaksModule extends BaseEventModule implements IHasConf
           world.setBlockState(entityItem.getPosition(), Blocks.BROWN_MUSHROOM.getDefaultState());
       }
     }
-  } 
+  }
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.blocks;
-    saplingDespawnGrow = config.getBoolean("Plant Despawning Saplings", category, true, "Plant saplings (and mushrooms) if they despawn on grass/dirt");
+    saplingDespawnGrow = config.getBoolean("Plant Despawning Saplings", category, false, "Plant saplings (and mushrooms) if they despawn on grass/dirt");
     spawnersUnbreakable = config.getBoolean("Spawners Unbreakable", category, false, "Make mob spawners unbreakable");
     updateHardness();
   }

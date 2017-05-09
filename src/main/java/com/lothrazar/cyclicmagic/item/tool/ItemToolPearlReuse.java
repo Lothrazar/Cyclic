@@ -8,6 +8,7 @@ import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -46,7 +47,7 @@ public class ItemToolPearlReuse extends BaseTool implements IHasRecipe {
     return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);
   }
   @Override
-  public void addRecipe() {
+  public IRecipe addRecipe() {
     switch (orbType) {
       case MOUNTED:
         GameRegistry.addShapedRecipe(new ItemStack(this),
@@ -69,6 +70,7 @@ public class ItemToolPearlReuse extends BaseTool implements IHasRecipe {
       default:
       break;
     }
+    return null;
   }
   @SideOnly(Side.CLIENT)
   public boolean hasEffect(ItemStack stack) {

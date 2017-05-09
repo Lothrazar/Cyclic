@@ -1,13 +1,13 @@
 package com.lothrazar.cyclicmagic.util;
+import java.util.Arrays;
+import java.util.List;
+import java.util.StringTokenizer;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.translation.I18n;
-import java.util.Arrays;
-import java.util.List;
-import java.util.StringTokenizer;
 //import net.minecraft.client.resources.I18n;
 import net.minecraft.world.World;
 

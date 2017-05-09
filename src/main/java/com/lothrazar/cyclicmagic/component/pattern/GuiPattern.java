@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.component.pattern;
 import org.lwjgl.opengl.GL11;
-import com.lothrazar.cyclicmagic.component.harvester.TileEntityHarvester;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
 import com.lothrazar.cyclicmagic.util.Const;

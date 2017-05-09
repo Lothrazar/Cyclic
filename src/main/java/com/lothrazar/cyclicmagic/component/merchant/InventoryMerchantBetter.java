@@ -1,9 +1,9 @@
 package com.lothrazar.cyclicmagic.component.merchant;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.InventoryMerchant;
 import javax.annotation.Nullable;
 import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryMerchant;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;

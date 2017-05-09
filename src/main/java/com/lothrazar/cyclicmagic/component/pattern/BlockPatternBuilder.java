@@ -2,8 +2,6 @@ package com.lothrazar.cyclicmagic.component.pattern;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.block.IBlockHasTESR;
-import com.lothrazar.cyclicmagic.component.disenchanter.DisenchantPylonTESR;
-import com.lothrazar.cyclicmagic.component.disenchanter.TileEntityDisenchanter;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -14,6 +12,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -46,8 +45,8 @@ public class BlockPatternBuilder extends BlockBaseHasTile implements IHasRecipe,
     super.breakBlock(worldIn, pos, state);
   }
   @Override
-  public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this),
+  public IRecipe addRecipe() {
+    return GameRegistry.addShapedRecipe(new ItemStack(this),
         "rbr",
         "did",
         "rmr",
@@ -61,7 +60,6 @@ public class BlockPatternBuilder extends BlockBaseHasTile implements IHasRecipe,
   @Override
   public void initModel() {
     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
-    
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPatternBuilder.class, new PatternBuilderTESR());
   }
 }

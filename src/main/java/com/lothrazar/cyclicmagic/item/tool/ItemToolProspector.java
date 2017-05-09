@@ -15,6 +15,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -100,8 +101,8 @@ public class ItemToolProspector extends BaseTool implements IHasRecipe, IHasConf
     return yesShowIt;
   }
   @Override
-  public void addRecipe() {
-    GameRegistry.addShapedRecipe(new ItemStack(this),
+  public IRecipe addRecipe() {
+    return GameRegistry.addShapedRecipe(new ItemStack(this),
         " sg",
         " bs",
         "b  ",

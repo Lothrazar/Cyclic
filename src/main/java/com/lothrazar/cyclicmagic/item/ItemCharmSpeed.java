@@ -5,6 +5,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 
 public class ItemCharmSpeed extends BaseCharm implements IHasRecipe {
@@ -32,7 +33,7 @@ public class ItemCharmSpeed extends BaseCharm implements IHasRecipe {
     }
   }
   @Override
-  public void addRecipe() {
-    super.addRecipeAndRepair(new ItemStack(Blocks.EMERALD_BLOCK));
+  public IRecipe addRecipe() {
+    return super.addRecipeAndRepair(new ItemStack(Blocks.EMERALD_BLOCK));
   }
 }

@@ -248,17 +248,11 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
   }
   @Override
   public void toggleNeedsRedstone() {
-    int val = this.needsRedstone + 1;
-    if (val > 1) {
-      val = 0;//hacky lazy way
-    }
+    int val = (this.needsRedstone + 1) % 2;
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
   public void swapShowRender() {
-    int val = this.renderParticles + 1;
-    if (val > 1) {
-      val = 0;//hacky lazy way
-    }
+    int val = (this.renderParticles + 1) % 2;
     this.setField(Fields.RENDERPARTICLES.ordinal(), val);
   }
   public boolean renderOn() { // sed by TESR

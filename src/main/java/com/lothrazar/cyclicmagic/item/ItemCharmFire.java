@@ -9,6 +9,7 @@ import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
@@ -42,7 +43,7 @@ public class ItemCharmFire extends BaseCharm implements IHasRecipe {
     }
   }
   @Override
-  public void addRecipe() {
-    super.addRecipeAndRepair(Items.BLAZE_ROD);
+  public IRecipe addRecipe() {
+    return super.addRecipeAndRepair(Items.BLAZE_ROD);
   }
 }

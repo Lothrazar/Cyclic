@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.item.food;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.BaseItem;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityZombieVillager;
@@ -10,6 +11,7 @@ import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumHand;
@@ -17,15 +19,14 @@ import net.minecraft.village.MerchantRecipe;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemAppleEmerald extends BaseItem implements IHasRecipe {
   private static final int CONVTIME = 1200;
   @Override
-  public void addRecipe() {
-    GameRegistry.addShapelessRecipe(new ItemStack(this),
+  public IRecipe addRecipe() {
+    return RecipeRegistry.addShapelessRecipe(new ItemStack(this),
         Items.EMERALD,
         Items.GOLDEN_APPLE);
   }

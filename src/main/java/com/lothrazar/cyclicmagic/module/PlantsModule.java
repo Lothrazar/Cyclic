@@ -13,12 +13,13 @@ import net.minecraftforge.common.config.Configuration;
 
 public class PlantsModule extends BaseModule implements IHasConfig {
   private boolean enableBeans;
-  public void onInit() {
+  @Override
+  public void onPreInit() {
     if (enableBeans) {
       BlockCropMagicBean sprout = new BlockCropMagicBean();
-      BlockRegistry.registerBlock(sprout, "sprout", true);
+      BlockRegistry.registerBlock(sprout, "sprout", null);
       ItemMagicBean sprout_seed = new ItemMagicBean(sprout, Blocks.FARMLAND);
-      ItemRegistry.addItem(sprout_seed, "sprout_seed");
+      ItemRegistry.register(sprout_seed, "sprout_seed");
       LootTableRegistry.registerLoot(sprout_seed);
       sprout.setSeed(sprout_seed);
       AchievementRegistry.registerItemAchievement(sprout_seed);

@@ -13,6 +13,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
@@ -117,7 +118,7 @@ public class ItemToolRandomize extends BaseTool implements IHasRecipe {
     super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
   }
   @Override
-  public void addRecipe() {
+  public IRecipe addRecipe() {
     GameRegistry.addRecipe(new ItemStack(this),
         " gi",
         " ig",
@@ -125,5 +126,6 @@ public class ItemToolRandomize extends BaseTool implements IHasRecipe {
         'i', Items.IRON_INGOT,
         'g', Items.REDSTONE,
         'o', Blocks.OBSIDIAN);
+    return null;
   }
 }

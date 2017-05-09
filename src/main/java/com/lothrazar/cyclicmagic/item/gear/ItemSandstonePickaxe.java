@@ -5,10 +5,10 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemSandstonePickaxe extends ItemPickaxe implements IHasRecipe {
-  public static final String name = "sandstone_pickaxe";
   public ItemSandstonePickaxe() {
     super(MaterialRegistry.sandstoneToolMaterial);
   }
@@ -18,7 +18,7 @@ public class ItemSandstonePickaxe extends ItemPickaxe implements IHasRecipe {
     return super.getIsRepairable(toRepair, repair);
   }
   @Override
-  public void addRecipe() {
-    GameRegistry.addShapedRecipe(new ItemStack(this), "eee", " s ", " s ", 'e', new ItemStack(Blocks.SANDSTONE), 's', new ItemStack(Items.STICK));
+  public IRecipe addRecipe() {
+    return GameRegistry.addShapedRecipe(new ItemStack(this), "eee", " s ", " s ", 'e', new ItemStack(Blocks.SANDSTONE), 's', new ItemStack(Items.STICK));
   }
 }

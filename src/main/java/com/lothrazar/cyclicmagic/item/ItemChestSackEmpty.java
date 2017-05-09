@@ -10,6 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
@@ -44,7 +45,7 @@ public class ItemChestSackEmpty extends BaseItem implements IHasRecipe {
     return EnumActionResult.SUCCESS;
   }
   @Override
-  public void addRecipe() {
+  public IRecipe addRecipe() {
     GameRegistry.addShapedRecipe(new ItemStack(this),
         " s ",
         "lbl",
@@ -52,7 +53,7 @@ public class ItemChestSackEmpty extends BaseItem implements IHasRecipe {
         'l', new ItemStack(Items.LEATHER),
         'b', new ItemStack(Items.SLIME_BALL),
         's', new ItemStack(Items.STRING));
-    GameRegistry.addShapedRecipe(new ItemStack(this),
+    return GameRegistry.addShapedRecipe(new ItemStack(this),
         " s ",
         "lbl",
         "lll",

@@ -10,6 +10,7 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
@@ -31,8 +32,8 @@ public class ItemCharmWater extends BaseCharm implements IHasRecipe {
     }
   }
   @Override
-  public void addRecipe() {
-    super.addRecipeAndRepair(new ItemStack(Items.FISH, 1, ItemFishFood.FishType.SALMON.getMetadata()));
+  public IRecipe addRecipe() {
+    return super.addRecipeAndRepair(new ItemStack(Items.FISH, 1, ItemFishFood.FishType.SALMON.getMetadata()));
   }
   @Override
   public void onTick(ItemStack stack, EntityPlayer living) {

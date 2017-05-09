@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.item.gear.ItemPowerArmor;
+import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -19,17 +20,17 @@ public class GearPurpleModule extends BaseEventModule implements IHasConfig {
   private static final String MATERIALNAME = "power";
   private boolean enableWaterGear;
   @Override
-  public void onInit() {
+  public void onPreInit() {
     registerMaterial();
     if (enableWaterGear) {
       Item purple_boots = new ItemPowerArmor(MaterialRegistry.powerArmorMaterial, EntityEquipmentSlot.FEET);
-      ItemRegistry.addItem(purple_boots, "purple_boots");
+      ItemRegistry.register(purple_boots, "purple_boots", GuideCategory.GEAR);
       Item purple_leggings = new ItemPowerArmor(MaterialRegistry.powerArmorMaterial, EntityEquipmentSlot.LEGS);
-      ItemRegistry.addItem(purple_leggings, "purple_leggings");
+      ItemRegistry.register(purple_leggings, "purple_leggings", GuideCategory.GEAR);
       Item purple_chestplate = new ItemPowerArmor(MaterialRegistry.powerArmorMaterial, EntityEquipmentSlot.CHEST);
-      ItemRegistry.addItem(purple_chestplate, "purple_chestplate");
+      ItemRegistry.register(purple_chestplate, "purple_chestplate", GuideCategory.GEAR);
       Item purple_helmet = new ItemPowerArmor(MaterialRegistry.powerArmorMaterial, EntityEquipmentSlot.HEAD);
-      ItemRegistry.addItem(purple_helmet, "purple_helmet");
+      ItemRegistry.register(purple_helmet, "purple_helmet", GuideCategory.GEAR);
     }
   }
   private void registerMaterial() {

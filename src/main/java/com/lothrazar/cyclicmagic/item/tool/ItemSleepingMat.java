@@ -16,6 +16,7 @@ import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.network.play.server.SPacketUseBed;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ActionResult;
@@ -28,9 +29,9 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.event.entity.player.SleepingLocationCheckEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig {
@@ -141,9 +142,10 @@ public class ItemSleepingMat extends BaseTool implements IHasRecipe, IHasConfig 
     seconds = config.getInt("SleepingMatPotion", Const.ConfigCategory.modpackMisc, 20, 0, 600, "Seconds of potion effect caused by using the sleeping mat");
   }
   @Override
-  public void addRecipe() {
+  public IRecipe addRecipe() {
     GameRegistry.addShapelessRecipe(new ItemStack(this),
         new ItemStack(Blocks.WOOL, 1, EnumDyeColor.RED.getMetadata()),
         Items.LEATHER);
+    return null;
   }
 }

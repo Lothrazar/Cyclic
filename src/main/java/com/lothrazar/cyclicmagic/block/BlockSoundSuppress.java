@@ -13,6 +13,7 @@ import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
@@ -113,8 +114,8 @@ public class BlockSoundSuppress extends BlockBase implements IHasRecipe {
     }
   }
   @Override
-  public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this, 8),
+  public IRecipe addRecipe() {
+    return GameRegistry.addShapedRecipe(new ItemStack(this, 8),
         " s ",
         "sos",
         " s ",

@@ -9,6 +9,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -44,11 +45,12 @@ public abstract class BaseCharm extends BaseItem implements baubles.api.IBauble,
   public void damageCharm(EntityPlayer living, ItemStack stack) {
     UtilItemStack.damageItem(living, stack);
   }
-  public void addRecipeAndRepair(Item craftItem) {
-    this.addRecipeAndRepair(new ItemStack(craftItem));
+  public IRecipe addRecipeAndRepair(Item craftItem) {
+    return this.addRecipeAndRepair(new ItemStack(craftItem));
   }
-  public void addRecipeAndRepair(ItemStack craftItem) {
-    GameRegistry.addRecipe(new ItemStack(this),
+  public IRecipe addRecipeAndRepair(ItemStack craftItem) {
+    GameRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this, 1, OreDictionary.WILDCARD_VALUE), craftItem);
+    return GameRegistry.addShapedRecipe(new ItemStack(this),
         "r x",
         "id ",
         "iir",
@@ -56,7 +58,6 @@ public abstract class BaseCharm extends BaseItem implements baubles.api.IBauble,
         'd', Items.DIAMOND,
         'r', Items.NETHER_WART,
         'i', Items.IRON_INGOT);
-    GameRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this, 1, OreDictionary.WILDCARD_VALUE), craftItem);
   }
   /**
    * Fires while in inventory OR while in bauble slot

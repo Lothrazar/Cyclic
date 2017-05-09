@@ -7,8 +7,9 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 
 public abstract class EnchantBase extends Enchantment {
-  protected EnchantBase(Rarity rarityIn, EnumEnchantmentType typeIn, EntityEquipmentSlot[] slots) {
+  protected EnchantBase(String name, Rarity rarityIn, EnumEnchantmentType typeIn, EntityEquipmentSlot[] slots) {
     super(rarityIn, typeIn, slots);
+    this.setName(name);
   }
   protected int getCurrentLevelTool(EntityLivingBase player) {
     if (player == null) { return -1; }
