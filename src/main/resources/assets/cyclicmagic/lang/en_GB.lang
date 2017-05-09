@@ -684,7 +684,6 @@ unlocks.crafting=Unlocked Inventory Crafting
 unlocks.extended=Unlocked Extended Inventory
 wand.inventory.empty=Scepter Inventory is Empty
 
-
 item.guide.name=Cyclic Guide Book
 guide.title=Cyclic Guide
 guide.welcome=Cyclic
@@ -707,16 +706,13 @@ enchantment.magnet.guide=Makes you magnetic for item stacks on the ground with r
 enchantment.venom.guide=Inflicts the poison status effect on the target for $0 ticks per enchantment level.  Rarity is $1
 enchantment.lifeleech.guide=Leeches life points from your target on attack, and even more on kill.  Rarity is $0
 
-
 world.netherore.title=End Ore
 world.netherore.guide=These ores spawn all over the nether, the details can be changed in config.  Iron and gold ores drop nuggets.
 world.endore.title=Nether Ore
-world.endore.guide==These ores spawn all over the end, the details can be changed in config.  Iron and gold ores drop nuggets.
+world.endore.guide=These ores spawn all over the end, the details can be changed in config.  Iron and gold ores drop nuggets.
 
 item.tool_harvest_weeds.guide=Slice down large areas of tall grass and flowers.  
 item.tool_spawn_inspect.guide=Tells you exactly which mobs can spawn on the targeted block.  Natural spawns only, ignores mob spawner blocks.  Useful for making slime, witch, and wither skeleton farms.
-
-
 
 item.sleeping_mat.guide=Use this to make yourself start sleeping right where you stand.  Potion results can be toggled in config. 
 
@@ -747,7 +743,7 @@ item.tool_randomize.guide=This will mixup the blocks in the nearby area, to help
 item.book_ender.guide=A magical book that stores your current location as a waypoint.  Teleport to the waypoint at a later at the cost of experience, based on distance (configurable).  Cannot cross dimensions, but it can store locations in any dimension.  
 item.tool_harvest_crops.guide=This will harvest & replant an area around where you use it; similar to the Harvester machine except it works all at once.  
 item.horse_upgrade_type.guide=Use on a horse to kill and replace it with a new type (living, zombie, skeleton).  
-item.horse_upgrade_variant.guide=
+item.horse_upgrade_variant.guide=Feed this to your horse and it will change color.  Stays within the rules for vanilla Minecraft horse spawning.
 item.carbon_paper.guide=Use this to copy data from a sign or noteblock.  Then you can paste it any time later.  
 item.charm_void.guide=Works in your inventory or in a Baubles slot.  This charm saves you from the void; it detects if you have fallen down below $0 and teleports you way up into the sky instead. 
 item.tool_elevate.guide=Teleporter that works only vertically, and only if it can find an empty space with a surface above.  Works on yourself, or target another entity.  
@@ -759,16 +755,13 @@ item.purple_boots.guide=These boots let you walk on any liquid as if it was soli
 item.crafting_food.guide=Unlock a permanent 3x3 crafting table inside your inventory.  Once unlocked, you can open it with a keybinding or with a button in your inventory.  
 item.tool_auto_torch.guide=Whenever this detects darkness at your feet, it places a torch there and drains some durability.  
 item.tool_trade.guide=Use near a villager for an advanced trading menu.  Has convenience buttons that perform one trade with each click.  Fully respects all villager trading rules, mechanics, locks, and unlocks.
-
 item.mattock.guide=3x3 mining that treats dirt and stone type blocks equally.
 item.glowing_chorus.guide=A balanced way to get the power of flight.  
 item.corrupted_chorus.guide=Eat this to phase through walls for a few seconds.  It teleports you back to the starting point if you would end up in a wall.  Otherwise you stay at the end with a few negative effects.  
 item.ender_tnt_1.guide=Throw these to make explosions.  There are six different levels of power.  These are standard normal explosions with no special properties.  
 item.dynamite_mining.guide=This creates a powerful explosion that does not hurt players or mobs.  It does break blocks, but unlike regular explosions no blocks are lost, so it acts like mining.    
-
 item.dynamite_safe.guide=This creates a powerful explosion that does not destroy blocks or hurt players.  
 item.apple_emerald.guide=Resets all expired trades on a villager - trades that have a red X on them.  Or cures a zombie villager.  
-
 item.horse_upgrade_speed.guide=Increase the speed of your horse by feeding it a few of these.
 item.tool_mount.guide=Mount any entity that is not normally mountable.  
 item.sandstonegear.title=Sandstone Gear
