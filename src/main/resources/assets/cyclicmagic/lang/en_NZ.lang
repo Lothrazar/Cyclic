@@ -707,20 +707,12 @@ enchantment.magnet.guide=Makes you magnetic for item stacks on the ground with r
 enchantment.venom.guide=Inflicts the poison status effect on the target for $0 ticks per enchantment level.  Rarity is $1
 enchantment.lifeleech.guide=Leeches life points from your target on attack, and even more on kill.  Rarity is $0
 
-tile.nether_redstone_ore.guide= Spawns at any height.
-tile.nether_iron_ore.guide=Drops iron nuggets.  Spawns at any height.
-tile.nether_gold_ore.guide=Drops gold nuggets.  Spawns at any height.
-tile.nether_coal_ore.guide= Spawns at any height.
-tile.nether_lapis_ore.guide= Spawns at any height.
-tile.nether_emerald_ore.guide=Spawns at any height.
-tile.nether_diamond_ore.guide=Spawns at any height.
-tile.end_redstone_ore.guide=Spawns at any height.
-tile.end_coal_ore.guide=Spawns at any height.
-tile.end_lapis_ore.guide=Spawns at any height.
-tile.end_emerald_ore.guide=Drops iron nuggets.  Spawns at any height.
-tile.end_diamond_ore.guide=Spawns at any height.
-tile.end_gold_ore.guide=Drops gold nuggets.  Spawns at any height.
-tile.end_iron_ore.guide=Drops iron nuggets.  Spawns at any height.
+
+world.netherore.title=End Ore
+world.netherore.guide=These ores spawn all over the nether, the details can be changed in config.  Iron and gold ores drop nuggets.
+world.endore.title=Nether Ore
+world.endore.guide==These ores spawn all over the end, the details can be changed in config.  Iron and gold ores drop nuggets.
+
 item.tool_harvest_weeds.guide=Slice down large areas of tall grass and flowers.  
 item.tool_spawn_inspect.guide=Tells you exactly which mobs can spawn on the targeted block.  Natural spawns only, ignores mob spawner blocks.  Useful for making slime, witch, and wither skeleton farms.
 
