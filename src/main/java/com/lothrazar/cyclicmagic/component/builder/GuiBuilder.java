@@ -47,6 +47,7 @@ public class GuiBuilder extends GuiBaseContanerProgress {
         this.guiLeft + Const.PAD * 2 + 46,
         y, UtilChat.lang("button.harvester.preview"), this.tile.getPos(),
         PacketTileSizeToggle.ActionType.PREVIEW);
+    btnPreview.setTooltip(UtilChat.lang("tile.builder_pattern.togglerender"));
     this.buttonList.add(btnPreview);
     width = 15;
     //size buttons

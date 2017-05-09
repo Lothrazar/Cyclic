@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.component.builder;
 import com.lothrazar.cyclicmagic.block.tileentity.MachineTESR;
-import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo; 
+import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 
 public class StructureBuilderTESR extends MachineTESR {
@@ -12,8 +12,8 @@ public class StructureBuilderTESR extends MachineTESR {
     super.renderTileEntityAt(te, x, y, z, partialTicks, destroyStage);
     if (te instanceof TileEntityStructureBuilder == false) { return; }
     TileEntityStructureBuilder tile = ((TileEntityStructureBuilder) te);
-//    if (tile.renderOn()) {
+    if (tile.renderOn()) {
       UtilWorld.RenderShadow.renderBlockList(tile.rebuildShape(), te.getPos(), x, y, z, 0.7F, 0F, 1F);
-//    }
+    }
   }
 }

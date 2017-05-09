@@ -15,4 +15,9 @@ public abstract class GuiButtonTooltip extends GuiButton implements ITooltipButt
   public void setTooltips(List<String> t) {
     tooltip = t;
   }
+  public void setTooltip(final String t) {
+    List<String> remake = new ArrayList<String>();
+    remake.add(t);
+    tooltip = remake;
+  }
 }

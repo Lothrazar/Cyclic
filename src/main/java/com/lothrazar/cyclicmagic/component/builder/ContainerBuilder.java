@@ -25,6 +25,7 @@ public class ContainerBuilder extends ContainerBaseMachine {
   private int tileSize;
   private int tileHeight;
   private int tileRedstone;
+  private int tileToggle;
   public ContainerBuilder(InventoryPlayer inventoryPlayer, TileEntityStructureBuilder te) {
     tileEntity = te;
     for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
@@ -88,6 +89,10 @@ public class ContainerBuilder extends ContainerBaseMachine {
       if (this.tileRedstone != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
+      idx = TileEntityStructureBuilder.Fields.RENDERPARTICLES.ordinal();
+      if (this.tileToggle != this.tileEntity.getField(idx)) {
+        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
+      }
     }
     this.tileTimer = this.tileEntity.getField(TileEntityStructureBuilder.Fields.TIMER.ordinal());
     this.tileBuild = this.tileEntity.getField(TileEntityStructureBuilder.Fields.BUILDTYPE.ordinal());
@@ -95,6 +100,7 @@ public class ContainerBuilder extends ContainerBaseMachine {
     this.tileSpeed = this.tileEntity.getField(TileEntityStructureBuilder.Fields.SPEED.ordinal());
     this.tileHeight = this.tileEntity.getField(TileEntityStructureBuilder.Fields.HEIGHT.ordinal());
     this.tileRedstone = this.tileEntity.getField(TileEntityStructureBuilder.Fields.REDSTONE.ordinal());
+    this.tileToggle = this.tileEntity.getField(TileEntityStructureBuilder.Fields.RENDERPARTICLES.ordinal());
   }
   @Override
   @SideOnly(Side.CLIENT)
