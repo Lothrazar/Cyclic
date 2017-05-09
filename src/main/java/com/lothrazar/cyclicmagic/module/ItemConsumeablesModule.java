@@ -48,7 +48,6 @@ public class ItemConsumeablesModule extends BaseEventModule implements IHasConfi
       ItemRegistry.register(redstone_carrot, "horse_upgrade_speed");
       ItemRegistry.register(ender_carrot, "horse_upgrade_jump");
       ModCyclic.instance.events.register(this);//for SubcribeEvent hooks
-      LootTableRegistry.registerLoot(diamond_carrot);
       AchievementRegistry.registerItemAchievement(diamond_carrot);
       ItemRegistry.registerWithJeiDescription(emerald_carrot);
       ItemRegistry.registerWithJeiDescription(lapis_carrot);
@@ -74,6 +73,7 @@ public class ItemConsumeablesModule extends BaseEventModule implements IHasConfi
       ModCyclic.instance.events.register(heart_food);
       LootTableRegistry.registerLoot(heart_food);
       LootTableRegistry.registerLoot(heart_food, ChestType.ENDCITY);
+      LootTableRegistry.registerLoot(heart_food, ChestType.IGLOO);
       AchievementRegistry.registerItemAchievement(heart_food);
       ItemRegistry.registerWithJeiDescription(heart_food);
     }

@@ -179,7 +179,6 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
     if (enablewaterSpread) {
       ItemToolWaterSpreader water_spreader = new ItemToolWaterSpreader();
       ItemRegistry.register(water_spreader, "water_spreader");
-      LootTableRegistry.registerLoot(water_spreader);
     }
     if (enableFreezer) {
       ItemToolWaterIce water_freezer = new ItemToolWaterIce();
@@ -217,7 +216,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
     if (enableEnderBook) {
       ItemEnderBook book_ender = new ItemEnderBook();
       ItemRegistry.register(book_ender, "book_ender");
-      LootTableRegistry.registerLoot(book_ender, ChestType.ENDCITY);
+      LootTableRegistry.registerLoot(book_ender);
       LootTableRegistry.registerLoot(book_ender);
       ItemRegistry.registerWithJeiDescription(book_ender);
     }
@@ -225,7 +224,6 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
       storage_bag = new ItemStorageBag();
       ItemRegistry.register(storage_bag, "storage_bag");
       ModCyclic.instance.events.register(storage_bag);
-      LootTableRegistry.registerLoot(storage_bag);
       LootTableRegistry.registerLoot(storage_bag, ChestType.BONUS);
       ItemRegistry.registerWithJeiDescription(storage_bag);
     }

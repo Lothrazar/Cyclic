@@ -44,7 +44,6 @@ public class ItemCharmModule extends BaseModule implements IHasConfig {
     if (enableSea) {
       ItemCharmBoat charm_boat = new ItemCharmBoat();
       ItemRegistry.register(charm_boat, "charm_boat", GuideCategory.ITEMBAUBLES);
-      LootTableRegistry.registerLoot(charm_boat);
       ItemRegistry.registerWithJeiDescription(charm_boat);
     }
     if (enableVoid) {
@@ -56,7 +55,6 @@ public class ItemCharmModule extends BaseModule implements IHasConfig {
     if (enableWater) {
       ItemCharmWater charm_water = new ItemCharmWater();
       ItemRegistry.register(charm_water, "charm_water", GuideCategory.ITEMBAUBLES);
-      LootTableRegistry.registerLoot(charm_water);
       ItemRegistry.registerWithJeiDescription(charm_water);
     }
     if (antidoteCharm) {
@@ -82,7 +80,6 @@ public class ItemCharmModule extends BaseModule implements IHasConfig {
     if (enableSpeed) {
       ItemCharmSpeed charm_speed = new ItemCharmSpeed();
       ItemRegistry.register(charm_speed, "charm_speed", GuideCategory.ITEMBAUBLES);
-      LootTableRegistry.registerLoot(charm_speed);
       ItemRegistry.registerWithJeiDescription(charm_speed);
     }
   }

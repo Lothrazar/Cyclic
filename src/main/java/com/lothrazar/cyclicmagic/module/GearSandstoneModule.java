@@ -44,7 +44,6 @@ public class GearSandstoneModule extends BaseModule implements IHasConfig {
       LootTableRegistry.registerLoot(sandstone_pickaxe, ChestType.BONUS);
       LootTableRegistry.registerLoot(sandstone_axe, ChestType.BONUS);
       LootTableRegistry.registerLoot(sandstone_spade, ChestType.BONUS);
-      LootTableRegistry.registerLoot(sandstone_hoe, ChestType.BONUS);
       GuideRegistry.register(GuideCategory.GEAR, new ItemStack(sandstone_axe), "item.sandstonegear.title", "item.sandstonegear.guide");
     }
   }

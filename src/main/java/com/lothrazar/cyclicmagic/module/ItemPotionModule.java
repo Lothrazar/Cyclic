@@ -191,7 +191,6 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
           potion_boost,
           UPG_LENGTH,
           potion_boost_long));
-      LootTableRegistry.registerLoot(potion_boost);
       LootTableRegistry.registerLoot(potion_boost_long);
       JeiDescriptionRegistry.registerWithJeiDescription(potion_boost);
     }
