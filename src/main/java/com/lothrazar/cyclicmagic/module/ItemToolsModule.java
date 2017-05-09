@@ -11,9 +11,6 @@ import com.lothrazar.cyclicmagic.component.cyclicwand.PacketSpellShiftRight;
 import com.lothrazar.cyclicmagic.component.enderbook.ItemEnderBook;
 import com.lothrazar.cyclicmagic.component.merchant.ItemMerchantAlmanac;
 import com.lothrazar.cyclicmagic.component.storagesack.ItemStorageBag;
-import com.lothrazar.cyclicmagic.item.tool.*;
-import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.ActionType;
-import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.WandType;
 import com.lothrazar.cyclicmagic.item.ItemChestSack;
 import com.lothrazar.cyclicmagic.item.ItemChestSackEmpty;
 import com.lothrazar.cyclicmagic.item.ItemClimbingGlove;
@@ -21,14 +18,34 @@ import com.lothrazar.cyclicmagic.item.ItemEnderBag;
 import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
 import com.lothrazar.cyclicmagic.item.ItemPasswordRemote;
 import com.lothrazar.cyclicmagic.item.ItemSoulstone;
+import com.lothrazar.cyclicmagic.item.tool.ItemSleepingMat;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolExtinguish;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolHarvest;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolLaunch;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolPearlReuse;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolPiston;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolProspector;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolRandomize;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolRotate;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolSpawnInspect;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolSpelunker;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolStirrups;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolSurface;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.ActionType;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolSwap.WandType;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolThrowTorch;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolWarp;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolWaterIce;
+import com.lothrazar.cyclicmagic.item.tool.ItemToolWaterSpreader;
 import com.lothrazar.cyclicmagic.net.PacketSwapBlock;
 import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
+import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
+import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.registry.SpellRegistry;
-import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
-import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
 import com.lothrazar.cyclicmagic.spell.ISpell;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -47,8 +64,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
+import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -152,7 +169,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
     }
     if (enableCGlove) {
       ItemClimbingGlove glove_climb = new ItemClimbingGlove();
-      ItemRegistry.register(glove_climb, "glove_climb",GuideCategory.ITEMBAUBLES);
+      ItemRegistry.register(glove_climb, "glove_climb", GuideCategory.ITEMBAUBLES);
       LootTableRegistry.registerLoot(glove_climb);
     }
     if (enableBlockRot) {
@@ -189,11 +206,11 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
     }
     if (enableChestSack) {
       ItemChestSackEmpty chest_sack_empty = new ItemChestSackEmpty();
-      ItemChestSack chest_sack = new ItemChestSack(); 
+      ItemChestSack chest_sack = new ItemChestSack();
       chest_sack.setEmptySack(chest_sack_empty);
       chest_sack_empty.setFullSack(chest_sack);
       ItemRegistry.registerWithJeiDescription(chest_sack);
-      ItemRegistry.register(chest_sack, "chest_sack",null);
+      ItemRegistry.register(chest_sack, "chest_sack", null);
       ItemRegistry.register(chest_sack_empty, "chest_sack_empty");
       ItemRegistry.registerWithJeiDescription(chest_sack_empty);
     }

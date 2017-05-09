@@ -52,7 +52,6 @@ public class PacketTileSizeToggle implements IMessage, IMessageHandler<PacketTil
       else if (message.type == ActionType.PREVIEW.ordinal()) {
         te.displayPreview();
       }
-      
     }
     return null;
   }

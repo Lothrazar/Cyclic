@@ -9,7 +9,6 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemSandstoneSpade extends ItemSpade implements IHasRecipe {
- 
   public ItemSandstoneSpade() {
     super(MaterialRegistry.sandstoneToolMaterial);
   }

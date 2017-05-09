@@ -4,7 +4,6 @@ import com.lothrazar.cyclicmagic.block.BlockCropMagicBean;
 import com.lothrazar.cyclicmagic.item.ItemMagicBean;
 import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
-import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.JeiDescriptionRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;

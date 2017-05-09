@@ -18,13 +18,12 @@ public class BlockRegistry {
   public static BlockBucketStorage block_storewater;
   public static BlockBucketStorage block_storemilk;
   public static BlockBucketStorage block_storeempty;
-//  public static void registerBlock(Block b, String name) {
-//    registerBlock(b, new ItemBlock(b), name, null);
-//  }
+  //  public static void registerBlock(Block b, String name) {
+  //    registerBlock(b, new ItemBlock(b), name, null);
+  //  }
   public static void registerBlock(Block b, String name, @Nullable GuideCategory cat) {
-    registerBlock(b, new ItemBlock(b), name,cat);
+    registerBlock(b, new ItemBlock(b), name, cat);
   }
- 
   public static void registerBlock(Block b, ItemBlock ib, String name, @Nullable GuideCategory cat) {
     b.setRegistryName(name);
     b.setUnlocalizedName(name);
@@ -41,10 +40,8 @@ public class BlockRegistry {
       recipe = ((IHasRecipe) b).addRecipe();
     }
     if (cat != null) {
-      GuideRegistry.register(cat,b, recipe,null);
-      
+      GuideRegistry.register(cat, b, recipe, null);
     }
-
     if (!(b instanceof BlockCropMagicBean)) { //TODO FIX dirty hack to skip sprout
       JeiDescriptionRegistry.registerWithJeiDescription(b);
     }

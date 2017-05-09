@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.component.vector;
 import java.util.Random;
 import javax.annotation.Nullable;
-import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.BlockBaseHasTile;
 import com.lothrazar.cyclicmagic.component.vector.TileEntityVector.Fields;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
@@ -35,7 +34,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockVectorPlate extends BlockBaseHasTile  {
+public class BlockVectorPlate extends BlockBaseHasTile {
   private static final double BHEIGHT = 0.03125D;
   private static final double COLLISION_HEIGHT = 2 * BHEIGHT;
   protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1D, BHEIGHT, 1D);

@@ -66,32 +66,29 @@ public class ItemToolHarvest extends BaseTool implements IHasRecipe {
   public IRecipe addRecipe() {
     switch (harvestType) {
       case CROPS:
-    return    GameRegistry.addShapedRecipe(new ItemStack(this),
+        return GameRegistry.addShapedRecipe(new ItemStack(this),
             " gs",
             " bg",
             "b  ",
             'b', Items.BLAZE_ROD,
             'g', Items.QUARTZ,
             's', Items.STONE_HOE);
-     
       case LEAVES:
-        return   GameRegistry.addShapedRecipe(new ItemStack(this),
+        return GameRegistry.addShapedRecipe(new ItemStack(this),
             " gs",
             " bg",
             "b  ",
             'b', Items.STICK,
             'g', Items.STRING,
             's', Items.STONE_AXE);
-      
       case WEEDS:
-        return    GameRegistry.addShapedRecipe(new ItemStack(this),
+        return GameRegistry.addShapedRecipe(new ItemStack(this),
             " gs",
             " bg",
             "b  ",
             'b', Items.STICK,
             'g', Items.STRING,
             's', Items.STONE_HOE);
-     
       default:
       break;
     }

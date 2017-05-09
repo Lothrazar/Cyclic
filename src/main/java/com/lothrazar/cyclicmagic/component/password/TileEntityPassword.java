@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.component.password;
 import java.util.ArrayList;
 import java.util.List;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.component.builder.TileEntityStructureBuilder.Fields;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -14,7 +13,6 @@ import net.minecraft.util.ITickable;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
-@SuppressWarnings("unused")
 public class TileEntityPassword extends TileEntityBaseMachineInvo implements ITickable {
   private static final String NBT_ATYPE = "type";
   private static final String NBT_USERP = "up";

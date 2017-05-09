@@ -1,8 +1,8 @@
 package com.lothrazar.cyclicmagic.item.projectile;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetFull;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetEmpty;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetFull;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityTorchBolt;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
@@ -26,16 +26,14 @@ public class ItemProjectileMagicNet extends BaseItemProjectile implements IHasRe
   }
   @Override
   public IRecipe addRecipe() {
-    return  RecipeRegistry.addShapedRecipe(new ItemStack(this, 1),
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this, 1),
         "lal",
         "qiq",
         "lal",
         'i', Items.IRON_INGOT,
         'a', new ItemStack(Blocks.TALLGRASS, 1, OreDictionary.WILDCARD_VALUE),
         'l', new ItemStack(Items.DYE, 1, EnumDyeColor.CYAN.getDyeDamage()),
-        'q', new ItemStack(Items.SNOWBALL)
- 
-    ); 
+        'q', new ItemStack(Items.SNOWBALL));
   }
   public boolean hasEntity(ItemStack held) {
     return held.getTagCompound() != null && held.getTagCompound().hasKey(NBT_ENTITYID);

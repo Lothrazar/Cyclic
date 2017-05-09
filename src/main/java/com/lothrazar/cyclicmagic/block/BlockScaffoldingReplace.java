@@ -12,7 +12,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockScaffoldingReplace extends BlockScaffolding implements IHasRecipe {
   public BlockScaffoldingReplace() {
@@ -34,6 +33,6 @@ public class BlockScaffoldingReplace extends BlockScaffolding implements IHasRec
   }
   @Override
   public IRecipe addRecipe() {
-    return  RecipeRegistry.addShapedRecipe(new ItemStack(this, 16), "s s", "s s", "s s", 's', new ItemStack(Items.STICK));
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this, 16), "s s", "s s", "s s", 's', new ItemStack(Items.STICK));
   }
 }

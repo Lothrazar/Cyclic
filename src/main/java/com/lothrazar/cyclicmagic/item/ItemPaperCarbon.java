@@ -22,7 +22,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
   public static final String name = "carbon_paper";
@@ -228,7 +227,7 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
   @Override
   public IRecipe addRecipe() {
     RecipeRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this));
-    return  RecipeRegistry.addShapedRecipe(new ItemStack(this, 8), "ppp", "pcp", "ppp", 'c', new ItemStack(Items.COAL, 1, 1), // charcoal
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this, 8), "ppp", "pcp", "ppp", 'c', new ItemStack(Items.COAL, 1, 1), // charcoal
         'p', Items.PAPER);
     //also let you clean off the paper , make one with no NBT
   }

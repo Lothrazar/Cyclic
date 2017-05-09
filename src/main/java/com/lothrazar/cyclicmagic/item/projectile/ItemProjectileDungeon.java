@@ -6,8 +6,8 @@ import com.lothrazar.cyclicmagic.entity.projectile.EntityThrowableDispensable;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
-import com.lothrazar.cyclicmagic.util.UtilWorld;
 import com.lothrazar.cyclicmagic.util.UtilSound;
+import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -33,14 +33,12 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
   }
   @Override
   public IRecipe addRecipe() {
-    return  RecipeRegistry.addShapelessRecipe(new ItemStack(this, 8), new ItemStack(Items.ENDER_PEARL), new ItemStack(Blocks.MOSSY_COBBLESTONE), new ItemStack(Items.NETHER_WART));// Blocks.iron_bars
-    
+    return RecipeRegistry.addShapelessRecipe(new ItemStack(this, 8), new ItemStack(Items.ENDER_PEARL), new ItemStack(Blocks.MOSSY_COBBLESTONE), new ItemStack(Items.NETHER_WART));// Blocks.iron_bars
   }
   @Override
   void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {
     BlockPos blockpos = UtilWorld.findClosestBlock(player, Blocks.MOB_SPAWNER, DUNGEONRADIUS);
     if (blockpos != null) {
- 
       EntityDungeonEye entityendereye = new EntityDungeonEye(world, player);
       doThrow(world, player, hand, entityendereye, 0.5F);
       entityendereye.moveTowards(blockpos);
@@ -49,7 +47,7 @@ public class ItemProjectileDungeon extends BaseItemProjectile implements IHasRec
       // not found, so play different sound
       UtilSound.playSound(player, player.getPosition(), SoundEvents.BLOCK_FIRE_EXTINGUISH);
       if (world.isRemote) {
-        UtilChat.addChatMessage(player, UtilChat.lang("item.ender_dungeon.notfound" )+" "+ DUNGEONRADIUS);
+        UtilChat.addChatMessage(player, UtilChat.lang("item.ender_dungeon.notfound") + " " + DUNGEONRADIUS);
       }
     }
   }

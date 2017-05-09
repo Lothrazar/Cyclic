@@ -14,9 +14,8 @@ public class EnchantMagnet extends EnchantBase {
   private static final int HRADIUS_PER_LEVEL = 4;
   private static final int ITEM_VRADIUS = 4;
   public EnchantMagnet() {
-    super("magnet",Rarity.COMMON, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND });
-
-    GuideRegistry.register(this,new ArrayList<String>( Arrays.asList(HRADIUS_PER_LEVEL+"")));
+    super("magnet", Rarity.COMMON, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND });
+    GuideRegistry.register(this, new ArrayList<String>(Arrays.asList(HRADIUS_PER_LEVEL + "")));
   }
   @Override
   public int getMaxLevel() {

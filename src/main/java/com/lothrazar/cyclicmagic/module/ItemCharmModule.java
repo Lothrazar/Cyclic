@@ -11,9 +11,9 @@ import com.lothrazar.cyclicmagic.item.ItemCharmVoid;
 import com.lothrazar.cyclicmagic.item.ItemCharmWater;
 import com.lothrazar.cyclicmagic.item.tool.ItemAutoTorch;
 import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
+import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
-import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraftforge.common.config.Configuration;
 
@@ -31,57 +31,57 @@ public class ItemCharmModule extends BaseModule implements IHasConfig {
   public void onPreInit() {
     if (enableAir) {
       ItemCharmAir charm_air = new ItemCharmAir();
-      ItemRegistry.register(charm_air, "charm_air",GuideCategory.ITEMBAUBLES);
+      ItemRegistry.register(charm_air, "charm_air", GuideCategory.ITEMBAUBLES);
       ModCyclic.instance.events.register(charm_air);
       LootTableRegistry.registerLoot(charm_air);
     }
     if (enableFire) {
       ItemCharmFire charm_fire = new ItemCharmFire();
-      ItemRegistry.register(charm_fire, "charm_fire",GuideCategory.ITEMBAUBLES);
+      ItemRegistry.register(charm_fire, "charm_fire", GuideCategory.ITEMBAUBLES);
       LootTableRegistry.registerLoot(charm_fire);
       ItemRegistry.registerWithJeiDescription(charm_fire);
     }
     if (enableSea) {
       ItemCharmBoat charm_boat = new ItemCharmBoat();
-      ItemRegistry.register(charm_boat, "charm_boat",GuideCategory.ITEMBAUBLES);
+      ItemRegistry.register(charm_boat, "charm_boat", GuideCategory.ITEMBAUBLES);
       LootTableRegistry.registerLoot(charm_boat);
       ItemRegistry.registerWithJeiDescription(charm_boat);
     }
     if (enableVoid) {
       ItemCharmVoid charm_void = new ItemCharmVoid();
-      ItemRegistry.register(charm_void, "charm_void",GuideCategory.ITEMBAUBLES);
+      ItemRegistry.register(charm_void, "charm_void", GuideCategory.ITEMBAUBLES);
       LootTableRegistry.registerLoot(charm_void);
       ItemRegistry.registerWithJeiDescription(charm_void);
     }
     if (enableWater) {
       ItemCharmWater charm_water = new ItemCharmWater();
-      ItemRegistry.register(charm_water, "charm_water",GuideCategory.ITEMBAUBLES);
+      ItemRegistry.register(charm_water, "charm_water", GuideCategory.ITEMBAUBLES);
       LootTableRegistry.registerLoot(charm_water);
       ItemRegistry.registerWithJeiDescription(charm_water);
     }
     if (antidoteCharm) {
       ItemCharmAntidote charm_antidote = new ItemCharmAntidote();
-      ItemRegistry.register(charm_antidote, "charm_antidote",GuideCategory.ITEMBAUBLES);
+      ItemRegistry.register(charm_antidote, "charm_antidote", GuideCategory.ITEMBAUBLES);
       LootTableRegistry.registerLoot(charm_antidote);
       ItemRegistry.registerWithJeiDescription(charm_antidote);
     }
     if (slowfallCharm) {
       ItemCharmSlowfall charm_wing = new ItemCharmSlowfall();
-      ItemRegistry.register(charm_wing, "charm_wing",GuideCategory.ITEMBAUBLES);
+      ItemRegistry.register(charm_wing, "charm_wing", GuideCategory.ITEMBAUBLES);
       AchievementRegistry.registerItemAchievement(charm_wing);
       LootTableRegistry.registerLoot(charm_wing);
       ItemRegistry.registerWithJeiDescription(charm_wing);
     }
     if (autoTorch) {
       ItemAutoTorch tool_auto_torch = new ItemAutoTorch();
-      ItemRegistry.register(tool_auto_torch, "tool_auto_torch",GuideCategory.ITEMBAUBLES);
+      ItemRegistry.register(tool_auto_torch, "tool_auto_torch", GuideCategory.ITEMBAUBLES);
       ModCyclic.instance.events.register(tool_auto_torch);
       LootTableRegistry.registerLoot(tool_auto_torch);
       ItemRegistry.registerWithJeiDescription(tool_auto_torch);
     }
     if (enableSpeed) {
       ItemCharmSpeed charm_speed = new ItemCharmSpeed();
-      ItemRegistry.register(charm_speed, "charm_speed",GuideCategory.ITEMBAUBLES);
+      ItemRegistry.register(charm_speed, "charm_speed", GuideCategory.ITEMBAUBLES);
       LootTableRegistry.registerLoot(charm_speed);
       ItemRegistry.registerWithJeiDescription(charm_speed);
     }

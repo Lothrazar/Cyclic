@@ -1,9 +1,9 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.item.gear.ItemPowerArmor;
+import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.MaterialRegistry;
-import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;

@@ -56,18 +56,15 @@ public class BlockMiner extends BlockBaseFacingInventory implements IHasRecipe, 
   }
   @Override
   public IRecipe addRecipe() {
- 
-        return     GameRegistry.addShapedRecipe(new ItemStack(this),
-            "rsr",
-            " g ",
-            "ooo",
-            'o', Blocks.MOSSY_COBBLESTONE,
-            'g', Items.IRON_PICKAXE, // new ItemStack(Items.DIAMOND_PICKAXE,1,OreDictionary.WILDCARD_VALUE),
-            's', Blocks.DISPENSER,
-            'r', Items.BONE
-        //            'b', Items.BLAZE_POWDER
-        );
-   
-     
+    return GameRegistry.addShapedRecipe(new ItemStack(this),
+        "rsr",
+        " g ",
+        "ooo",
+        'o', Blocks.MOSSY_COBBLESTONE,
+        'g', Items.IRON_PICKAXE, // new ItemStack(Items.DIAMOND_PICKAXE,1,OreDictionary.WILDCARD_VALUE),
+        's', Blocks.DISPENSER,
+        'r', Items.BONE
+    //            'b', Items.BLAZE_POWDER
+    );
   }
 }

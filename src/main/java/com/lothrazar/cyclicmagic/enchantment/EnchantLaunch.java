@@ -31,9 +31,8 @@ public class EnchantLaunch extends EnchantBase {
   private static final int cooldown = 40;
   private static final String NBT_USES = "launchuses";
   public EnchantLaunch() {
-    super("launch",Rarity.COMMON, EnumEnchantmentType.ARMOR_FEET, new EntityEquipmentSlot[] { EntityEquipmentSlot.FEET });
-
-    GuideRegistry.register(this,new ArrayList<String>(Arrays.asList(cooldown+"")));
+    super("launch", Rarity.COMMON, EnumEnchantmentType.ARMOR_FEET, new EntityEquipmentSlot[] { EntityEquipmentSlot.FEET });
+    GuideRegistry.register(this, new ArrayList<String>(Arrays.asList(cooldown + "")));
   }
   @Override
   public int getMaxLevel() {

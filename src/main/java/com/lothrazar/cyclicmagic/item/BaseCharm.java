@@ -46,11 +46,11 @@ public abstract class BaseCharm extends BaseItem implements baubles.api.IBauble,
     UtilItemStack.damageItem(living, stack);
   }
   public IRecipe addRecipeAndRepair(Item craftItem) {
-   return this.addRecipeAndRepair(new ItemStack(craftItem));
+    return this.addRecipeAndRepair(new ItemStack(craftItem));
   }
   public IRecipe addRecipeAndRepair(ItemStack craftItem) {
     GameRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this, 1, OreDictionary.WILDCARD_VALUE), craftItem);
-  return  GameRegistry.addShapedRecipe(new ItemStack(this),
+    return GameRegistry.addShapedRecipe(new ItemStack(this),
         "r x",
         "id ",
         "iir",

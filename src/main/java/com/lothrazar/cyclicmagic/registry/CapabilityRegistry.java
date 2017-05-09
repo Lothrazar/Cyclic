@@ -9,8 +9,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
+import net.minecraftforge.common.capabilities.CapabilityManager;
 
 public class CapabilityRegistry {
   public static void register() {

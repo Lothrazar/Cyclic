@@ -232,7 +232,6 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
   public boolean isBurning() {
     return this.timer > 0 && this.timer < TIMER_FULL;
   }
- 
   @Override
   public void update() {
     shiftAllUp();
@@ -309,10 +308,9 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
   }
   @Override
   public void displayPreview() {
-    int val = (this.renderParticles + 1)%2;
-    
+    int val = (this.renderParticles + 1) % 2;
     this.setField(Fields.RENDERPARTICLES.ordinal(), val);
- }
+  }
   public boolean renderOn() { // sed by TESR
     return renderParticles == 1;
   }

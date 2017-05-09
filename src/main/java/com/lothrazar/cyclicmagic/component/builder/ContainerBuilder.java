@@ -1,18 +1,14 @@
 package com.lothrazar.cyclicmagic.component.builder;
-import com.lothrazar.cyclicmagic.component.uncrafter.TileEntityUncrafter;
 import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.SlotOnlyBlocks;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@SuppressWarnings("unused")
 public class ContainerBuilder extends ContainerBaseMachine {
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
   public static final int SLOTX_START = 8;

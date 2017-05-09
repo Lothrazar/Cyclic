@@ -20,7 +20,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -111,10 +110,9 @@ public class ItemPasswordRemote extends BaseItem implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    return  RecipeRegistry.addShapelessRecipe(new ItemStack(this),
+    return RecipeRegistry.addShapelessRecipe(new ItemStack(this),
         new ItemStack(Blocks.STONE_SLAB, 1, BlockStoneSlab.EnumType.STONE.getMetadata()),
         Blocks.STONE_BUTTON,
         Blocks.LEVER);
-  
   }
 }

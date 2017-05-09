@@ -123,13 +123,12 @@ public class ItemToolPiston extends BaseTool implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    return   GameRegistry.addShapedRecipe(new ItemStack(this),
+    return GameRegistry.addShapedRecipe(new ItemStack(this),
         " gp",
         " bg",
         "b  ",
         'b', Items.BLAZE_ROD,
         'g', Items.QUARTZ,
         'p', Blocks.STICKY_PISTON);
-     
   }
 }

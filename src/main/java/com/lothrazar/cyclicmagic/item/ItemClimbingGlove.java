@@ -31,7 +31,6 @@ public class ItemClimbingGlove extends BaseCharm implements IHasRecipe {
         'i', Items.IRON_INGOT,
         'k', new ItemStack(Items.DYE, 1, EnumDyeColor.BLACK.getDyeDamage()),
         'l', Items.LEATHER);
-    
   }
   @Override
   public void onTick(ItemStack stack, EntityPlayer player) {

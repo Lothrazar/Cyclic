@@ -10,8 +10,8 @@ import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideItem;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.JeiDescriptionRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
-import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry.ChestType;
+import com.lothrazar.cyclicmagic.registry.PotionEffectRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.Potions;
 import net.minecraft.init.Blocks;
@@ -73,10 +73,10 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
     }
     if (enableEnder) {
       ItemPotionCustom potion_ender = new ItemPotionCustom(true, PotionEffectRegistry.ENDER, NORMAL, Potions.I, "item.potion_ender.tooltip");
-      ItemRegistry.register(potion_ender, "potion_ender",null);
+      ItemRegistry.register(potion_ender, "potion_ender", null);
       GuideItem page = GuideRegistry.register(GuideCategory.POTION, potion_ender);
       ItemPotionCustom potion_ender_long = new ItemPotionCustom(true, PotionEffectRegistry.ENDER, LONG, Potions.I, "item.potion_ender.tooltip");
-      ItemRegistry.register(potion_ender_long, "potion_ender_long",null);
+      ItemRegistry.register(potion_ender_long, "potion_ender_long", null);
       page.addRecipePage(addBrewingRecipe(
           potion_viscous,
           Items.ENDER_PEARL,
@@ -89,10 +89,10 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
     }
     if (enableMagnet) {
       ItemPotionCustom potion_magnet = new ItemPotionCustom(false, PotionEffectRegistry.MAGNET, NORMAL, Potions.I);
-      ItemRegistry.register(potion_magnet, "potion_magnet",null);
+      ItemRegistry.register(potion_magnet, "potion_magnet", null);
       GuideItem page = GuideRegistry.register(GuideCategory.POTION, potion_magnet);
       ItemPotionCustom potion_magnet_long = new ItemPotionCustom(false, PotionEffectRegistry.MAGNET, LONG, Potions.I);
-      ItemRegistry.register(potion_magnet_long, "potion_magnet_long",null);
+      ItemRegistry.register(potion_magnet_long, "potion_magnet_long", null);
       page.addRecipePage(addBrewingRecipe(
           new ItemStack(potion_viscous),
           new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage()),
@@ -105,10 +105,10 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
     }
     if (enableWaterwalk) {
       ItemPotionCustom potion_waterwalk = new ItemPotionCustom(false, PotionEffectRegistry.WATERWALK, NORMAL, Potions.I);
-      ItemRegistry.register(potion_waterwalk, "potion_waterwalk",null);
+      ItemRegistry.register(potion_waterwalk, "potion_waterwalk", null);
       GuideItem page = GuideRegistry.register(GuideCategory.POTION, potion_waterwalk);
       ItemPotionCustom potion_waterwalk_long = new ItemPotionCustom(false, PotionEffectRegistry.WATERWALK, LONG, Potions.I);
-      ItemRegistry.register(potion_waterwalk_long, "potion_waterwalk_long",null);
+      ItemRegistry.register(potion_waterwalk_long, "potion_waterwalk_long", null);
       page.addRecipePage(addBrewingRecipe(
           potion_viscous,
           Items.PRISMARINE_SHARD,
@@ -125,10 +125,10 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
     }
     if (enableSwimspeed) {
       ItemPotionCustom potion_swimspeed = new ItemPotionCustom(false, PotionEffectRegistry.SWIMSPEED, NORMAL, Potions.I);
-      ItemRegistry.register(potion_swimspeed, "potion_swimspeed",null);
+      ItemRegistry.register(potion_swimspeed, "potion_swimspeed", null);
       GuideItem page = GuideRegistry.register(GuideCategory.POTION, potion_swimspeed);
       ItemPotionCustom potion_swimspeed_long = new ItemPotionCustom(false, PotionEffectRegistry.SWIMSPEED, LONG, Potions.I);
-      ItemRegistry.register(potion_swimspeed_long, "potion_swimspeed_long",null);
+      ItemRegistry.register(potion_swimspeed_long, "potion_swimspeed_long", null);
       page.addRecipePage(addBrewingRecipe(
           potion_viscous,
           Items.CARROT_ON_A_STICK,
@@ -141,10 +141,10 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
     }
     if (enableSlowfall) {
       ItemPotionCustom potion_slowfall = new ItemPotionCustom(true, PotionEffectRegistry.SLOWFALL, NORMAL, Potions.I);
-      ItemRegistry.register(potion_slowfall, "potion_slowfall",null);
+      ItemRegistry.register(potion_slowfall, "potion_slowfall", null);
       GuideItem page = GuideRegistry.register(GuideCategory.POTION, potion_slowfall);
       ItemPotionCustom potion_slowfall_long = new ItemPotionCustom(true, PotionEffectRegistry.SLOWFALL, LONG, Potions.I);
-      ItemRegistry.register(potion_slowfall_long, "potion_slowfall_long",null);
+      ItemRegistry.register(potion_slowfall_long, "potion_slowfall_long", null);
       page.addRecipePage(addBrewingRecipe(
           new ItemStack(potion_viscous),
           new ItemStack(Items.FISH, 1, ItemFishFood.FishType.CLOWNFISH.getMetadata()),
@@ -161,14 +161,14 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
     }
     if (enableSnow) {
       ItemPotionCustom potion_snow = new ItemPotionCustom(true, PotionEffectRegistry.SNOW, NORMAL, Potions.I, "item.potion_snow.tooltip");
-      ItemRegistry.register(potion_snow, "potion_snow",null);
+      ItemRegistry.register(potion_snow, "potion_snow", null);
       GuideItem page = GuideRegistry.register(GuideCategory.POTION, potion_snow);
       page.addRecipePage(addBrewingRecipe(
           new ItemStack(potion_viscous),
           new ItemStack(Blocks.ICE),
           new ItemStack(potion_snow)));
       ItemPotionCustom potion_snow_long = new ItemPotionCustom(true, PotionEffectRegistry.SNOW, LONG, Potions.I, "item.potion_snow.tooltip");
-      ItemRegistry.register(potion_snow_long, "potion_snow_long",null);
+      ItemRegistry.register(potion_snow_long, "potion_snow_long", null);
       page.addRecipePage(addBrewingRecipe(
           new ItemStack(potion_snow),
           new ItemStack(UPG_LENGTH),
@@ -179,10 +179,10 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
     }
     if (enableHBoost) {
       ItemPotionCustom potion_boost = new ItemPotionCustom(true, MobEffects.HEALTH_BOOST, NORMAL, Const.Potions.V);
-      ItemRegistry.register(potion_boost, "potion_boost",null);
+      ItemRegistry.register(potion_boost, "potion_boost", null);
       GuideItem page = GuideRegistry.register(GuideCategory.POTION, potion_boost);
       ItemPotionCustom potion_boost_long = new ItemPotionCustom(true, MobEffects.HEALTH_BOOST, LONG, Const.Potions.V);
-      ItemRegistry.register(potion_boost_long, "potion_boost_long",null);
+      ItemRegistry.register(potion_boost_long, "potion_boost_long", null);
       page.addRecipePage(addBrewingRecipe(
           potion_viscous,
           Items.GOLDEN_APPLE,
@@ -197,12 +197,12 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
     }
     if (enableResist) {
       ItemPotionCustom potion_resistance = new ItemPotionCustom(true, MobEffects.RESISTANCE, NORMAL);
-      ItemRegistry.register(potion_resistance, "potion_resistance",null);
+      ItemRegistry.register(potion_resistance, "potion_resistance", null);
       GuideItem page = GuideRegistry.register(GuideCategory.POTION, potion_resistance);
       ItemPotionCustom potion_resistance_strong = new ItemPotionCustom(true, MobEffects.RESISTANCE, SHORT, Const.Potions.II);
-      ItemRegistry.register(potion_resistance_strong, "potion_resistance_strong",null);
+      ItemRegistry.register(potion_resistance_strong, "potion_resistance_strong", null);
       ItemPotionCustom potion_resistance_long = new ItemPotionCustom(true, MobEffects.RESISTANCE, LONG);
-      ItemRegistry.register(potion_resistance_long, "potion_resistance_long",null);
+      ItemRegistry.register(potion_resistance_long, "potion_resistance_long", null);
       page.addRecipePage(addBrewingRecipe(
           potion_viscous,
           Items.DIAMOND,
@@ -220,12 +220,12 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
     }
     if (enableHaste) {
       ItemPotionCustom potion_haste = new ItemPotionCustom(false, MobEffects.HASTE, 60 * 3);
-      ItemRegistry.register(potion_haste, "potion_haste",null);
+      ItemRegistry.register(potion_haste, "potion_haste", null);
       GuideItem page = GuideRegistry.register(GuideCategory.POTION, potion_haste);
       ItemPotionCustom potion_haste_strong = new ItemPotionCustom(false, MobEffects.HASTE, 90, Const.Potions.II);
-      ItemRegistry.register(potion_haste_strong, "potion_haste_strong",null);
+      ItemRegistry.register(potion_haste_strong, "potion_haste_strong", null);
       ItemPotionCustom potion_haste_long = new ItemPotionCustom(false, MobEffects.HASTE, LONG);
-      ItemRegistry.register(potion_haste_long, "potion_haste_long",null);
+      ItemRegistry.register(potion_haste_long, "potion_haste_long", null);
       page.addRecipePage(addBrewingRecipe(
           new ItemStack(potion_viscous),
           new ItemStack(Items.EMERALD),
@@ -244,10 +244,10 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
     }
     if (enableLuck) {
       ItemPotionCustom potion_luck = new ItemPotionCustom(true, MobEffects.LUCK, NORMAL);
-      ItemRegistry.register(potion_luck, "potion_luck",null);
+      ItemRegistry.register(potion_luck, "potion_luck", null);
       GuideItem page = GuideRegistry.register(GuideCategory.POTION, potion_luck);
       ItemPotionCustom potion_luck_long = new ItemPotionCustom(true, MobEffects.LUCK, LONG);
-      ItemRegistry.register(potion_luck_long, "potion_luck_long",null);
+      ItemRegistry.register(potion_luck_long, "potion_luck_long", null);
       page.addRecipePage(addBrewingRecipe(
           new ItemStack(potion_viscous),
           new ItemStack(Items.DYE, 1, EnumDyeColor.GREEN.getDyeDamage()),
@@ -259,10 +259,10 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
     }
     if (enableLevit) {
       ItemPotionCustom potion_levitation = new ItemPotionCustom(true, MobEffects.LEVITATION, NORMAL);
-      ItemRegistry.register(potion_levitation, "potion_levitation",null);
+      ItemRegistry.register(potion_levitation, "potion_levitation", null);
       GuideItem page = GuideRegistry.register(GuideCategory.POTION, potion_levitation);
       ItemPotionCustom potion_levitation_long = new ItemPotionCustom(true, MobEffects.LEVITATION, LONG);
-      ItemRegistry.register(potion_levitation_long, "potion_levitation_long",null);
+      ItemRegistry.register(potion_levitation_long, "potion_levitation_long", null);
       page.addRecipePage(addBrewingRecipe(
           new ItemStack(potion_viscous),
           new ItemStack(Items.CHORUS_FRUIT),
@@ -276,10 +276,10 @@ public class ItemPotionModule extends BaseEventModule implements IHasConfig {
     }
     if (enableBounce) {
       ItemPotionCustom potion_bounce = new ItemPotionCustom(false, PotionEffectRegistry.BOUNCE, NORMAL);
-      ItemRegistry.register(potion_bounce, "potion_bounce",null);
+      ItemRegistry.register(potion_bounce, "potion_bounce", null);
       GuideItem page = GuideRegistry.register(GuideCategory.POTION, potion_bounce);
       ItemPotionCustom potion_bounce_long = new ItemPotionCustom(false, PotionEffectRegistry.BOUNCE, LONG);
-      ItemRegistry.register(potion_bounce_long, "potion_bounce_long",null);
+      ItemRegistry.register(potion_bounce_long, "potion_bounce_long", null);
       page.addRecipePage(addBrewingRecipe(
           new ItemStack(potion_viscous),
           new ItemStack(Items.SLIME_BALL),

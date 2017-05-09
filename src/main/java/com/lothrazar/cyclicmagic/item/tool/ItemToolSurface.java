@@ -58,6 +58,5 @@ public class ItemToolSurface extends BaseTool implements IHasRecipe {
         'd', Items.DIAMOND,
         'g', Items.GHAST_TEAR,
         's', Blocks.REDSTONE_LAMP);
-    
   }
 }

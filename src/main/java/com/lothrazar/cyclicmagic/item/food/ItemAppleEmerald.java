@@ -26,10 +26,9 @@ public class ItemAppleEmerald extends BaseItem implements IHasRecipe {
   private static final int CONVTIME = 1200;
   @Override
   public IRecipe addRecipe() {
-    return  RecipeRegistry.addShapelessRecipe(new ItemStack(this),
+    return RecipeRegistry.addShapelessRecipe(new ItemStack(this),
         Items.EMERALD,
         Items.GOLDEN_APPLE);
-   
   }
   @Override
   @SideOnly(Side.CLIENT)

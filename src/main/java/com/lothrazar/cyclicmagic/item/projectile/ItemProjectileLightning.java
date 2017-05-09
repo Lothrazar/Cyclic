@@ -16,11 +16,10 @@ public class ItemProjectileLightning extends BaseItemProjectile implements IHasR
   }
   @Override
   public IRecipe addRecipe() {
-    return  RecipeRegistry.addShapelessRecipe(new ItemStack(this, 4),
+    return RecipeRegistry.addShapelessRecipe(new ItemStack(this, 4),
         new ItemStack(Items.ENDER_PEARL),
         new ItemStack(Items.QUARTZ),
         new ItemStack(Items.GHAST_TEAR));
- 
   }
   @Override
   void onItemThrow(ItemStack held, World world, EntityPlayer player, EnumHand hand) {

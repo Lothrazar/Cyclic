@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.enchantment;
 import java.util.ArrayList;
-import java.util.Arrays;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import net.minecraft.enchantment.EnumEnchantmentType;
@@ -14,9 +13,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantLifeLeech extends EnchantBase {
   public EnchantLifeLeech() {
-    super("lifeleech",Rarity.COMMON, EnumEnchantmentType.WEAPON, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND });
-
-    GuideRegistry.register(this,new ArrayList<String>( ));
+    super("lifeleech", Rarity.COMMON, EnumEnchantmentType.WEAPON, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND });
+    GuideRegistry.register(this, new ArrayList<String>());
   }
   @Override
   public int getMaxLevel() {

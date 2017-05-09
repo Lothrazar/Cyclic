@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.component.autouser;
-import com.lothrazar.cyclicmagic.component.autouser.ContainerUser;
 import com.lothrazar.cyclicmagic.component.autouser.TileEntityUser.Fields;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContanerProgress;
 import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
@@ -32,21 +31,20 @@ public class GuiUser extends GuiBaseContanerProgress {
         this.guiLeft + Const.PAD,
         this.guiTop + Const.PAD, this.tile.getPos());
     this.buttonList.add(redstoneBtn);
-    
     int x = this.guiLeft + Const.PAD + 20;
     int y = this.guiTop + Const.PAD * 2;
     actionBtn = new ButtonUserAction(btnId++,
         x,
         y, this.tile.getPos());
     this.buttonList.add(actionBtn);
-    x += actionBtn.width + Const.PAD/2;
-//    int y = this.guiTop + Const.PAD * 2 + 20;
+    x += actionBtn.width + Const.PAD / 2;
+    //    int y = this.guiTop + Const.PAD * 2 + 20;
     btnSize = new GuiButtonSizePreview(btnId++,
         x,
         y, "", this.tile.getPos(),
         PacketTileSizeToggle.ActionType.SIZE);
     this.buttonList.add(btnSize);
-    x += btnSize.width + Const.PAD/2;
+    x += btnSize.width + Const.PAD / 2;
     GuiButtonSizePreview btnPreview = new GuiButtonSizePreview(btnId++,
         x,
         y, UtilChat.lang("button.harvester.preview"), this.tile.getPos(),

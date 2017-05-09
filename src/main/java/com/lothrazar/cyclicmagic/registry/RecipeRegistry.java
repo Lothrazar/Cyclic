@@ -3,7 +3,6 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockChest;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;

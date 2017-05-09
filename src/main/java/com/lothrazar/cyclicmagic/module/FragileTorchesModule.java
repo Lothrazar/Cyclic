@@ -25,9 +25,7 @@ public class FragileTorchesModule extends BaseEventModule implements IHasConfig 
         float oddsWillBreak = 0.01F;
         boolean playerCancelled = false;
         if (living instanceof EntityPlayer) {
-  
           playerCancelled = true;// torches are safe from breaking
-          
         }
         if (playerCancelled == false // if its a player, then the player is not
             // sneaking

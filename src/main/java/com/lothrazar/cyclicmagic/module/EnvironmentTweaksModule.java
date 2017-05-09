@@ -17,7 +17,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class EnvironmentTweaksModule extends BaseEventModule implements IHasConfig {
   private boolean saplingDespawnGrow;
   private boolean spawnersUnbreakable;
- 
   @Override
   public void onInit() {
     updateHardness();
@@ -51,7 +50,7 @@ public class EnvironmentTweaksModule extends BaseEventModule implements IHasConf
           world.setBlockState(entityItem.getPosition(), Blocks.BROWN_MUSHROOM.getDefaultState());
       }
     }
-  } 
+  }
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.blocks;

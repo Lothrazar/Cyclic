@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.component.controlledminer;
-import com.lothrazar.cyclicmagic.component.controlledminer.ButtonMinerHeight;
 import com.lothrazar.cyclicmagic.component.controlledminer.TileEntityControlledMiner.Fields;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;

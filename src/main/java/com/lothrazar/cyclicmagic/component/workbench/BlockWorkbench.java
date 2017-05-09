@@ -15,7 +15,7 @@ public class BlockWorkbench extends BlockBaseHasTile implements IHasRecipe {
   public BlockWorkbench() {
     super(Material.IRON);
     this.setTranslucent();
-    this.setGuiId(ModGuiHandler.GUI_INDEX_WORKBENCH); 
+    this.setGuiId(ModGuiHandler.GUI_INDEX_WORKBENCH);
   }
   @Override
   public TileEntity createTileEntity(World worldIn, IBlockState state) {

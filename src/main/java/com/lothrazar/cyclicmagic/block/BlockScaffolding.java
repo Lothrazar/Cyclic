@@ -18,7 +18,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -72,7 +71,7 @@ public class BlockScaffolding extends BlockBase implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    return  RecipeRegistry.addShapedRecipe(new ItemStack(this, 16), "s s", " s ", "s s", 's', new ItemStack(Items.STICK));
+    return RecipeRegistry.addShapedRecipe(new ItemStack(this, 16), "s s", " s ", "s s", 's', new ItemStack(Items.STICK));
   }
   @Override
   public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {

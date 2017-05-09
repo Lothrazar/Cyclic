@@ -1,12 +1,12 @@
 package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.block.BlockShears;
-import com.lothrazar.cyclicmagic.block.BlockSoundSuppress;
-import com.lothrazar.cyclicmagic.block.ItemBlockScaffolding;
 import com.lothrazar.cyclicmagic.block.BlockScaffolding;
 import com.lothrazar.cyclicmagic.block.BlockScaffoldingReplace;
 import com.lothrazar.cyclicmagic.block.BlockScaffoldingResponsive;
+import com.lothrazar.cyclicmagic.block.BlockShears;
+import com.lothrazar.cyclicmagic.block.BlockSoundSuppress;
+import com.lothrazar.cyclicmagic.block.ItemBlockScaffolding;
 import com.lothrazar.cyclicmagic.component.bucketstorage.BlockBucketStorage;
 import com.lothrazar.cyclicmagic.component.bucketstorage.ItemBlockBucket;
 import com.lothrazar.cyclicmagic.component.bucketstorage.TileEntityBucketStorage;
@@ -25,7 +25,6 @@ import com.lothrazar.cyclicmagic.component.workbench.TileEntityWorkbench;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
-import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideItem;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -49,57 +48,57 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
   public void onPreInit() {
     if (workbench) {
       BlockWorkbench workbench = new BlockWorkbench();
-      BlockRegistry.registerBlock(workbench, "block_workbench",GuideCategory.BLOCK);
+      BlockRegistry.registerBlock(workbench, "block_workbench", GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileEntityWorkbench.class, Const.MODID + "workbench_te");
     }
     if (soundproofing) {
       BlockSoundSuppress block_soundproofing = new BlockSoundSuppress();
-      BlockRegistry.registerBlock(block_soundproofing, "block_soundproofing",GuideCategory.BLOCK);
+      BlockRegistry.registerBlock(block_soundproofing, "block_soundproofing", GuideCategory.BLOCK);
       ModCyclic.instance.events.register(block_soundproofing);
     }
     if (autoCrafter) {
       BlockCrafter auto_crafter = new BlockCrafter();
-      BlockRegistry.registerBlock(auto_crafter, "auto_crafter",GuideCategory.BLOCKMACHINE);
+      BlockRegistry.registerBlock(auto_crafter, "auto_crafter", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityCrafter.class, Const.MODID + "auto_crafter_te");
     }
     if (entityDetector) {
       BlockDetector detector = new BlockDetector();
-      BlockRegistry.registerBlock(detector, "entity_detector",GuideCategory.BLOCKMACHINE);
+      BlockRegistry.registerBlock(detector, "entity_detector", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityDetector.class, Const.MODID + "entity_detector_te");
     }
     if (enableFan) {
       BlockFan fan = new BlockFan();
-      BlockRegistry.registerBlock(fan, "fan",GuideCategory.BLOCKMACHINE);
+      BlockRegistry.registerBlock(fan, "fan", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityFan.class, Const.MODID + "fan_te");
     }
     if (enableShearingBlock) {
       BlockShears block_shears = new BlockShears();
-      BlockRegistry.registerBlock(block_shears, "block_shears",GuideCategory.BLOCK);
+      BlockRegistry.registerBlock(block_shears, "block_shears", GuideCategory.BLOCK);
     }
     if (fragileEnabled) {
-//<<<<<<< HEAD
+      //<<<<<<< HEAD
       BlockScaffolding block_fragile = new BlockScaffolding(true);
-      BlockRegistry.registerBlock(block_fragile, new ItemBlockScaffolding(block_fragile), "block_fragile",GuideCategory.BLOCK);
-//=======
-//      BlockScaffolding block_fragile = new BlockScaffolding(true);
-//      BlockRegistry.registerBlock(block_fragile, new ItemBlockScaffolding(block_fragile), "block_fragile");
-//>>>>>>> bbeb49c0fa1ca7b0defc4c391c93d873df9406e6
+      BlockRegistry.registerBlock(block_fragile, new ItemBlockScaffolding(block_fragile), "block_fragile", GuideCategory.BLOCK);
+      //=======
+      //      BlockScaffolding block_fragile = new BlockScaffolding(true);
+      //      BlockRegistry.registerBlock(block_fragile, new ItemBlockScaffolding(block_fragile), "block_fragile");
+      //>>>>>>> bbeb49c0fa1ca7b0defc4c391c93d873df9406e6
       ModCyclic.instance.events.register(Item.getItemFromBlock(block_fragile));
       BlockScaffoldingResponsive block_fragile_auto = new BlockScaffoldingResponsive();
-      BlockRegistry.registerBlock(block_fragile_auto, new ItemBlockScaffolding(block_fragile_auto), "block_fragile_auto",GuideCategory.BLOCK);
+      BlockRegistry.registerBlock(block_fragile_auto, new ItemBlockScaffolding(block_fragile_auto), "block_fragile_auto", GuideCategory.BLOCK);
       ModCyclic.instance.events.register(Item.getItemFromBlock(block_fragile_auto));
       BlockScaffoldingReplace block_fragile_weak = new BlockScaffoldingReplace();
-      BlockRegistry.registerBlock(block_fragile_weak, new ItemBlockScaffolding(block_fragile_weak), "block_fragile_weak",GuideCategory.BLOCK);
+      BlockRegistry.registerBlock(block_fragile_weak, new ItemBlockScaffolding(block_fragile_weak), "block_fragile_weak", GuideCategory.BLOCK);
       ModCyclic.instance.events.register(Item.getItemFromBlock(block_fragile_weak));
     }
     if (fishingBlock) {
       BlockFishing block_fishing = new BlockFishing();
-      BlockRegistry.registerBlock(block_fishing, "block_fishing",GuideCategory.BLOCK);
+      BlockRegistry.registerBlock(block_fishing, "block_fishing", GuideCategory.BLOCK);
       GameRegistry.registerTileEntity(TileEntityFishing.class, Const.MODID + "block_fishing_te");
     }
     if (disenchanter) {
       BlockDisenchanter block_disenchanter = new BlockDisenchanter();
-      BlockRegistry.registerBlock(block_disenchanter, "block_disenchanter",GuideCategory.BLOCKMACHINE);
+      BlockRegistry.registerBlock(block_disenchanter, "block_disenchanter", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityDisenchanter.class, Const.MODID + "block_disenchanter_te");
     }
     if (enableBucketBlocks) {
@@ -109,19 +108,16 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
       BlockRegistry.block_storemilk = new BlockBucketStorage(Items.MILK_BUCKET);
       BlockRegistry.registerBlock(BlockRegistry.block_storemilk, new ItemBlockBucket(BlockRegistry.block_storemilk), "block_storemilk", null);
       BlockRegistry.block_storelava = new BlockBucketStorage(Items.LAVA_BUCKET);
-      BlockRegistry.registerBlock(BlockRegistry.block_storelava, new ItemBlockBucket(BlockRegistry.block_storelava), "block_storelava",null);
+      BlockRegistry.registerBlock(BlockRegistry.block_storelava, new ItemBlockBucket(BlockRegistry.block_storelava), "block_storelava", null);
       BlockRegistry.block_storeempty = new BlockBucketStorage(null);
       BlockRegistry.registerBlock(BlockRegistry.block_storeempty, new ItemBlockBucket(BlockRegistry.block_storeempty), "block_storeempty", null);
       GameRegistry.registerTileEntity(TileEntityBucketStorage.class, "bucketstorage");
-     IRecipe recipe =  GameRegistry.addShapedRecipe(new ItemStack(BlockRegistry.block_storeempty),
+      IRecipe recipe = GameRegistry.addShapedRecipe(new ItemStack(BlockRegistry.block_storeempty),
           "i i",
           " o ",
           "i i",
           'o', Blocks.OBSIDIAN, 'i', Items.IRON_INGOT);
-      
-     GuideRegistry.register(GuideCategory.BLOCK,    BlockRegistry.block_storeempty , recipe,null);
- 
-      
+      GuideRegistry.register(GuideCategory.BLOCK, BlockRegistry.block_storeempty, recipe, null);
     }
   }
   @Override

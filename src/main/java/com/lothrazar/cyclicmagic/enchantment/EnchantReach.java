@@ -17,11 +17,10 @@ public class EnchantReach extends EnchantBase {
   private static final String NBT_REACH_ON = "reachon";
   private static final int REACH_VANILLA = 5;
   private static final int REACH_BOOST = 16;
-  private static final Rarity RARITY   = Rarity.VERY_RARE;
+  private static final Rarity RARITY = Rarity.VERY_RARE;
   public EnchantReach() {
     super("reach", RARITY, EnumEnchantmentType.ARMOR_CHEST, new EntityEquipmentSlot[] { EntityEquipmentSlot.CHEST });
-     
-    GuideRegistry.register(this,new ArrayList<String>(Arrays.asList(REACH_BOOST+"")));
+    GuideRegistry.register(this, new ArrayList<String>(Arrays.asList(REACH_BOOST + "")));
   }
   @Override
   public int getMaxLevel() {

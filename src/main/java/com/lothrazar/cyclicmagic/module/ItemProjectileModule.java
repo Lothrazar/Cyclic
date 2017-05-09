@@ -2,16 +2,38 @@ package com.lothrazar.cyclicmagic.module;
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.dispenser.BehaviorProjectileThrowable;
-import com.lothrazar.cyclicmagic.entity.projectile.*;
-import com.lothrazar.cyclicmagic.item.projectile.*;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityBlazeBolt;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityDungeonEye;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamite;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamiteBlockSafe;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamiteMining;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityFishingBolt;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityLightningballBolt;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetEmpty;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityMagicNetFull;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityShearingBolt;
+import com.lothrazar.cyclicmagic.entity.projectile.EntitySnowballBolt;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityTorchBolt;
+import com.lothrazar.cyclicmagic.entity.projectile.EntityWaterBolt;
+import com.lothrazar.cyclicmagic.item.projectile.BaseItemProjectile;
+import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileBlaze;
+import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileDungeon;
+import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileFishing;
+import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileLightning;
+import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileMagicNet;
+import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileSnow;
+import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileTNT;
 import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileTNT.ExplosionType;
+import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileTorch;
+import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileWater;
+import com.lothrazar.cyclicmagic.item.projectile.ItemProjectileWool;
 import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry;
+import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
+import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideItem;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
-import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
-import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideItem;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.init.Blocks;
@@ -107,7 +129,7 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       EntityProjectileRegistry.registerModEntity(EntityDynamiteBlockSafe.class, "tntblocksafebolt", 1009);
       EntityDynamiteBlockSafe.renderSnowball = dynamite_safe;
       projectiles.add(dynamite_safe);
-      page.addRecipePage(   RecipeRegistry.addShapelessRecipe(new ItemStack(dynamite_safe, 6),
+      page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(dynamite_safe, 6),
           new ItemStack(Items.GUNPOWDER), new ItemStack(Items.SUGAR), new ItemStack(Items.GUNPOWDER),
           new ItemStack(Items.PAPER), new ItemStack(Items.CLAY_BALL), new ItemStack(Blocks.BROWN_MUSHROOM),
           new ItemStack(Items.FEATHER), new ItemStack(Items.WHEAT_SEEDS), new ItemStack(Blocks.COBBLESTONE)));
@@ -128,7 +150,7 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       EntityProjectileRegistry.registerModEntity(EntityDynamiteMining.class, "tntminingbolt", 1010);
       EntityDynamiteMining.renderSnowball = dynamite_mining;
       projectiles.add(dynamite_mining);
-      page.addRecipePage(    RecipeRegistry.addShapelessRecipe(new ItemStack(dynamite_mining, 6),
+      page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(dynamite_mining, 6),
           new ItemStack(Items.GUNPOWDER), new ItemStack(Items.IRON_INGOT),
           new ItemStack(Items.GUNPOWDER), new ItemStack(Items.PAPER),
           new ItemStack(Items.CLAY_BALL), new ItemStack(Blocks.RED_MUSHROOM),
@@ -141,7 +163,7 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
       ItemProjectileTNT ender_tnt_4 = new ItemProjectileTNT(4, ExplosionType.NORMAL);
       ItemProjectileTNT ender_tnt_5 = new ItemProjectileTNT(5, ExplosionType.NORMAL);
       ItemProjectileTNT ender_tnt_6 = new ItemProjectileTNT(6, ExplosionType.NORMAL);
-      ItemRegistry.register(ender_tnt_1, "ender_tnt_1", null );
+      ItemRegistry.register(ender_tnt_1, "ender_tnt_1", null);
       ItemRegistry.register(ender_tnt_2, "ender_tnt_2", null);
       ItemRegistry.register(ender_tnt_3, "ender_tnt_3", null);
       ItemRegistry.register(ender_tnt_4, "ender_tnt_4", null);

@@ -2,9 +2,9 @@ package com.lothrazar.cyclicmagic.component.playerextensions;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
+import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
-import com.lothrazar.cyclicmagic.registry.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -17,7 +17,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -44,8 +43,7 @@ public class ItemFoodCrafting extends ItemFood implements IHasRecipe {
   }
   @Override
   public IRecipe addRecipe() {
-    return  RecipeRegistry.addShapelessRecipe(new ItemStack(this), Blocks.CRAFTING_TABLE, Items.PUMPKIN_PIE, Items.CAKE, Items.COOKIE, new ItemStack(Items.FISH, 1, ItemFishFood.FishType.SALMON.getMetadata()), Items.POISONOUS_POTATO, Items.DIAMOND, Items.EMERALD, Items.QUARTZ);
-  
+    return RecipeRegistry.addShapelessRecipe(new ItemStack(this), Blocks.CRAFTING_TABLE, Items.PUMPKIN_PIE, Items.CAKE, Items.COOKIE, new ItemStack(Items.FISH, 1, ItemFishFood.FishType.SALMON.getMetadata()), Items.POISONOUS_POTATO, Items.DIAMOND, Items.EMERALD, Items.QUARTZ);
   }
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltips, boolean advanced) {

@@ -46,12 +46,10 @@ public class BlockPlateModule extends BaseModule implements IHasConfig {
       GameRegistry.registerTileEntity(TileEntityMagnet.class, "magnet_block_te");
     }
     if (launchPads) {
-
       //med
       plate_launch_med = new BlockLaunch(1.3F, SoundEvents.BLOCK_SLIME_FALL);
       BlockRegistry.registerBlock(plate_launch_med, "plate_launch_med", null);
       GuideItem page = GuideRegistry.register(GuideCategory.BLOCKPLATE, plate_launch_med);
-      
       BlockLaunch plate_launch_small = new BlockLaunch(0.8F, SoundEvents.BLOCK_SLIME_STEP);
       BlockRegistry.registerBlock(plate_launch_small, "plate_launch_small", null);
       page.addRecipePage(RecipeRegistry.addShapedRecipe(new ItemStack(plate_launch_small, 6),
@@ -83,14 +81,14 @@ public class BlockPlateModule extends BaseModule implements IHasConfig {
           'x', new ItemStack(Blocks.SLIME_BLOCK),
           'b', new ItemStack(Items.DYE, 1, EnumDyeColor.PURPLE.getDyeDamage())));
       plate_push_fast = new BlockConveyor(0.32F);
-      BlockRegistry.registerBlock(plate_push_fast, "plate_push_fast",  null);
+      BlockRegistry.registerBlock(plate_push_fast, "plate_push_fast", null);
       page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(plate_push_fast), new ItemStack(plate_push), Items.REDSTONE));
       BlockConveyor plate_push_slow = new BlockConveyor(0.08F);
-      BlockRegistry.registerBlock(plate_push_slow, "plate_push_slow",  null);
+      BlockRegistry.registerBlock(plate_push_slow, "plate_push_slow", null);
       page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(plate_push_slow), new ItemStack(plate_push),
           new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage())));
       BlockConveyor plate_push_slowest = new BlockConveyor(0.04F);
-      BlockRegistry.registerBlock(plate_push_slowest, "plate_push_slowest",  null);
+      BlockRegistry.registerBlock(plate_push_slowest, "plate_push_slowest", null);
       page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(plate_push_slowest), new ItemStack(plate_push),
           new ItemStack(Items.DYE, 1, EnumDyeColor.LIGHT_BLUE.getDyeDamage())));
     }
@@ -102,7 +100,7 @@ public class BlockPlateModule extends BaseModule implements IHasConfig {
       ModCyclic.instance.events.register(plate_vector);
       ItemStack top = (plate_launch_med == null) ? new ItemStack(Blocks.REDSTONE_LAMP) : new ItemStack(plate_launch_med);
       ItemStack base = (plate_push_fast == null) ? new ItemStack(Blocks.EMERALD_BLOCK) : new ItemStack(plate_push_fast);
-      page.addRecipePage(    RecipeRegistry.addShapedRecipe(new ItemStack(plate_vector, 6),
+      page.addRecipePage(RecipeRegistry.addShapedRecipe(new ItemStack(plate_vector, 6),
           "ttt",
           "idi",
           "bbb",

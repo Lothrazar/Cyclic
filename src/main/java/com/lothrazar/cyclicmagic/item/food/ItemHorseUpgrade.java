@@ -49,8 +49,7 @@ public class ItemHorseUpgrade extends BaseItem implements IHasRecipe {
     tooltip.add(UtilChat.lang(carrot.getUnlocalizedName(stack) + ".effect"));
   }
   public IRecipe addRecipe() {
-    return  RecipeRegistry.addShapelessRecipe(new ItemStack(this), Items.CARROT, recipeItem);
-     
+    return RecipeRegistry.addShapelessRecipe(new ItemStack(this), Items.CARROT, recipeItem);
   }
   public static void onHorseInteract(AbstractHorse ahorse, EntityPlayer player, ItemStack held, ItemHorseUpgrade heldItem) {
     if (ahorse.isDead) { return; }

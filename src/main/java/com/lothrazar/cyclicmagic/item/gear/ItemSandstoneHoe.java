@@ -9,7 +9,6 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemSandstoneHoe extends ItemHoe implements IHasRecipe {
- 
   public ItemSandstoneHoe() {
     super(MaterialRegistry.sandstoneToolMaterial);
   }

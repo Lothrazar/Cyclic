@@ -10,8 +10,8 @@ import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
-import com.lothrazar.cyclicmagic.util.UtilWorld;
 import com.lothrazar.cyclicmagic.util.UtilSound;
+import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
@@ -25,7 +25,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -127,7 +126,6 @@ public class ItemEnderBook extends BaseItem implements IHasRecipe, IHasConfig {
         'b', Items.BOOK,
         'n', Blocks.EMERALD_BLOCK);
     // if you want to clean out the book and start over
-  
   }
   @Override
   public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer entityPlayer, EnumHand hand) {

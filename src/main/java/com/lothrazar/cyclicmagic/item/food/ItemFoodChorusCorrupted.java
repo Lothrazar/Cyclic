@@ -48,7 +48,6 @@ public class ItemFoodChorusCorrupted extends ItemFood implements IHasRecipe, IHa
         "lal", "lal", "lal",
         'l', Items.FERMENTED_SPIDER_EYE,
         'a', Items.CHORUS_FRUIT);
-    
   }
   @Override
   public void syncConfig(Configuration config) {

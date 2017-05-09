@@ -42,7 +42,7 @@ public class BlockMinerSmart extends BlockBaseFacingInventory implements IHasRec
   }
   @Override
   public IRecipe addRecipe() {
-   return GameRegistry.addShapedRecipe(new ItemStack(this),
+    return GameRegistry.addShapedRecipe(new ItemStack(this),
         "rsr",
         "gbx",
         "ooo",
