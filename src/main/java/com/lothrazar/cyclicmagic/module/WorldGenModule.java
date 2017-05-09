@@ -61,10 +61,10 @@ public class WorldGenModule extends BaseEventModule implements IHasConfig {
     String category = Const.ConfigCategory.worldGen;
     config.setCategoryComment(category, "Control any blocks that get generated in new chunks & new worlds");
     Property prop;
-    prop = config.get(category, "Nether Ore", true, "Generate ore in netherrack (lapis, emerald, gold, coal, diamond).  The gold gives nuggets when mined");
+    prop = config.get(category, "Nether Ore", true, "Generate ore in the nether.");
     prop.setRequiresMcRestart(true);
     netherOreEnabled = prop.getBoolean();
-    prop = config.get(category, "End Ore", true, "Generate ore in the end (lapis, emerald, redstone, coal, diamond)");
+    prop = config.get(category, "End Ore", true, "Generate ore in the end.");
     prop.setRequiresMcRestart(true);
     endOreEnabled = prop.getBoolean();
     prop = config.get(category, "Infested Ores", true, "These dimension ores (nether and end) have a chance to spawn endermites or silverfish");
@@ -92,7 +92,7 @@ public class WorldGenModule extends BaseEventModule implements IHasConfig {
     WorldGenNetherOre.Configs.blockCountLapis = config.getInt("blockCountLapis", category, 8, 0, 32, blockCountDesc);
     WorldGenNetherOre.Configs.blockCountRedstone = config.getInt("blockCountRedstone", category, 8, 0, 32, blockCountDesc);
     WorldGenNetherOre.Configs.spawnChanceCoal = config.getInt("spawnChanceCoal", category, 25, 0, 100, spawnChanceDesc);
-    WorldGenNetherOre.Configs.spawnChanceDiamond = config.getInt("spawnChanceDiamond", category, 6, 0, 100, spawnChanceDesc);
+    WorldGenNetherOre.Configs.spawnChanceDiamond = config.getInt("spawnChanceDiamond", category, 2, 0, 100, spawnChanceDesc);
     WorldGenNetherOre.Configs.spawnChanceEmerald = config.getInt("spawnChanceEmerald", category, 5, 0, 100, spawnChanceDesc);
     WorldGenNetherOre.Configs.spawnChanceGold = config.getInt("spawnChanceGold", category, 45, 0, 100, spawnChanceDesc);
     WorldGenNetherOre.Configs.spawnChanceLapis = config.getInt("spawnChanceLapis", category, 10, 0, 100, spawnChanceDesc);
@@ -107,7 +107,7 @@ public class WorldGenModule extends BaseEventModule implements IHasConfig {
     WorldGenEndOre.Configs.blockCountIron = config.getInt("blockCountIron", category, 8, 0, 32, blockCountDesc);
     WorldGenEndOre.Configs.blockCountGold = config.getInt("blockCountGold", category, 8, 0, 32, blockCountDesc);
     WorldGenEndOre.Configs.spawnChanceCoal = config.getInt("spawnChanceCoal", category, 20, 0, 100, spawnChanceDesc);
-    WorldGenEndOre.Configs.spawnChanceDiamond = config.getInt("spawnChanceDiamond", category, 10, 0, 100, spawnChanceDesc);
+    WorldGenEndOre.Configs.spawnChanceDiamond = config.getInt("spawnChanceDiamond", category, 4, 0, 100, spawnChanceDesc);
     WorldGenEndOre.Configs.spawnChanceEmerald = config.getInt("spawnChanceEmerald", category, 10, 0, 100, spawnChanceDesc);
     WorldGenEndOre.Configs.spawnChanceRedstone = config.getInt("spawnChanceRedstone", category, 18, 0, 100, spawnChanceDesc);
     WorldGenEndOre.Configs.spawnChanceLapis = config.getInt("spawnChanceLapis", category, 15, 0, 100, spawnChanceDesc);
