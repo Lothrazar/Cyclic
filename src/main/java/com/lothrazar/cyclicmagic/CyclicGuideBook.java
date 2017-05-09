@@ -22,6 +22,7 @@ import amerifrance.guideapi.entry.EntryItemStack;
 import amerifrance.guideapi.page.PageBrewingRecipe;
 import amerifrance.guideapi.page.PageIRecipe;
 import amerifrance.guideapi.page.PageText;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -136,6 +137,6 @@ public class CyclicGuideBook implements IGuideBook {
   }
   @Override
   public void handlePost(ItemStack bookStack) {
-    GameRegistry.addShapelessRecipe(bookStack, Items.BOOK, Items.STICK, Items.COAL, Items.APPLE);
+    GameRegistry.addShapelessRecipe(bookStack, Items.BOOK, Items.STICK, Items.COAL, Blocks.COBBLESTONE, Blocks.WOODEN_BUTTON);
   }
 }
