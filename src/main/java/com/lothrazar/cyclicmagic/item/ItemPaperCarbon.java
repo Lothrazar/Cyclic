@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.item;
 import java.util.List;
 import com.lothrazar.cyclicmagic.IHasRecipe;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilPlayer;
@@ -8,6 +9,7 @@ import com.lothrazar.cyclicmagic.util.UtilSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityNote;
@@ -224,10 +226,10 @@ public class ItemPaperCarbon extends BaseItem implements IHasRecipe {
     return s;
   }
   @Override
-  public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this, 8), "ppp", "pcp", "ppp", 'c', new ItemStack(Items.COAL, 1, 1), // charcoal
+  public IRecipe addRecipe() {
+    RecipeRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this));
+    return  RecipeRegistry.addShapedRecipe(new ItemStack(this, 8), "ppp", "pcp", "ppp", 'c', new ItemStack(Items.COAL, 1, 1), // charcoal
         'p', Items.PAPER);
     //also let you clean off the paper , make one with no NBT
-    GameRegistry.addShapelessRecipe(new ItemStack(this), new ItemStack(this));
   }
 }

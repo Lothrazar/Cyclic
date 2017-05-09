@@ -15,6 +15,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ActionResult;
@@ -144,8 +145,8 @@ public class ItemToolLaunch extends BaseTool implements IHasRecipe {
     return EnumAction.BOW;//make it use cooldown
   }
   @Override
-  public void addRecipe() {
-    GameRegistry.addShapedRecipe(new ItemStack(this),
+  public IRecipe addRecipe() {
+    return GameRegistry.addShapedRecipe(new ItemStack(this),
         "rsq",
         " rs",
         "t r",

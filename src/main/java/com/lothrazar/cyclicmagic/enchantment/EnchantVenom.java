@@ -1,4 +1,7 @@
 package com.lothrazar.cyclicmagic.enchantment;
+import java.util.ArrayList;
+import java.util.Arrays;
+import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -15,8 +18,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class EnchantVenom extends EnchantBase {
   final int durationTicksPerLevel = 3 * Const.TICKS_PER_SEC;//3 seconds
   public EnchantVenom() {
-    super(Rarity.COMMON, EnumEnchantmentType.WEAPON, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND });
-    this.setName("venom");
+    super("venom",Rarity.COMMON, EnumEnchantmentType.WEAPON, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND });
+
+    GuideRegistry.register(this,new ArrayList<String>(Arrays.asList(durationTicksPerLevel+"")));
   }
   @Override
   public int getMaxLevel() {

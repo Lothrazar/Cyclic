@@ -15,6 +15,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
@@ -164,8 +165,8 @@ public class ItemStorageBag extends BaseItem implements IHasRecipe {
     return null;
   }
   @Override
-  public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this), "lsl", "ldl", "lrl",
+  public IRecipe addRecipe() {
+    return GameRegistry.addShapedRecipe(new ItemStack(this), "lsl", "ldl", "lrl",
         'l', Items.LEATHER,
         's', Items.STRING,
         'r', Items.REDSTONE,

@@ -12,6 +12,7 @@ import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
@@ -40,8 +41,8 @@ public class ItemFoodChorusGlowing extends ItemFood implements IHasRecipe {
     }
   }
   @Override
-  public void addRecipe() {
-    GameRegistry.addRecipe(new ItemStack(this, 3),
+  public IRecipe addRecipe() {
+    return GameRegistry.addShapedRecipe(new ItemStack(this, 3),
         "lal", "lal", "lal",
         'l', Items.GLOWSTONE_DUST,
         'a', Items.CHORUS_FRUIT);

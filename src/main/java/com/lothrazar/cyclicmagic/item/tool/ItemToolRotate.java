@@ -9,6 +9,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -37,7 +38,7 @@ public class ItemToolRotate extends BaseTool implements IHasRecipe {
     return EnumActionResult.SUCCESS;
   }
   @Override
-  public void addRecipe() {
+  public IRecipe addRecipe() {
     GameRegistry.addRecipe(new ItemStack(this),
         " gp",
         " bg",
@@ -45,5 +46,6 @@ public class ItemToolRotate extends BaseTool implements IHasRecipe {
         'b', Items.STICK,
         'g', Blocks.STONE_SLAB,
         'p', Blocks.STONE_BRICK_STAIRS);
+    return null;
   }
 }

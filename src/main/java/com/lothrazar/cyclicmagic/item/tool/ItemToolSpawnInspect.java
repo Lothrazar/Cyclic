@@ -15,6 +15,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -86,8 +87,8 @@ public class ItemToolSpawnInspect extends BaseTool implements IHasRecipe {
     return super.onItemUse(player, worldObj, posIn, hand, side, hitX, hitY, hitZ);
   }
   @Override
-  public void addRecipe() {
-    GameRegistry.addShapedRecipe(new ItemStack(this),
+  public IRecipe addRecipe() {
+    return GameRegistry.addShapedRecipe(new ItemStack(this),
         " sg",
         " bs",
         "b  ",

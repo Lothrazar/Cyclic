@@ -9,6 +9,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
@@ -59,8 +60,8 @@ public class ItemToolWaterSpreader extends BaseTool implements IHasRecipe {
     return success;
   }
   @Override
-  public void addRecipe() {
-    GameRegistry.addShapedRecipe(new ItemStack(this),
+  public IRecipe addRecipe() {
+    return GameRegistry.addShapedRecipe(new ItemStack(this),
         "wdw",
         "iwi",
         " o ",

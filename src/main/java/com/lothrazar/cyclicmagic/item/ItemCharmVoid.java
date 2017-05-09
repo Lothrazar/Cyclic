@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -29,8 +30,8 @@ public class ItemCharmVoid extends BaseCharm implements IHasRecipe {
     }
   }
   @Override
-  public void addRecipe() {
-    super.addRecipeAndRepair(Items.ENDER_EYE);
+  public IRecipe addRecipe() {
+    return super.addRecipeAndRepair(Items.ENDER_EYE);
   }
   @Override
   public void onTick(ItemStack stack, EntityPlayer living) {

@@ -1,4 +1,7 @@
 package com.lothrazar.cyclicmagic.enchantment;
+import java.util.ArrayList;
+import java.util.Arrays;
+import com.lothrazar.cyclicmagic.registry.GuideRegistry;
 import com.lothrazar.cyclicmagic.registry.SoundRegistry;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -28,8 +31,9 @@ public class EnchantLaunch extends EnchantBase {
   private static final int cooldown = 40;
   private static final String NBT_USES = "launchuses";
   public EnchantLaunch() {
-    super(Rarity.COMMON, EnumEnchantmentType.ARMOR_FEET, new EntityEquipmentSlot[] { EntityEquipmentSlot.FEET });
-    this.setName("launch");
+    super("launch",Rarity.COMMON, EnumEnchantmentType.ARMOR_FEET, new EntityEquipmentSlot[] { EntityEquipmentSlot.FEET });
+
+    GuideRegistry.register(this,new ArrayList<String>(Arrays.asList(cooldown+"")));
   }
   @Override
   public int getMaxLevel() {

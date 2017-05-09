@@ -12,6 +12,10 @@ import com.lothrazar.cyclicmagic.component.vector.ItemBlockVectorPlate;
 import com.lothrazar.cyclicmagic.component.vector.TileEntityVector;
 import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
+import com.lothrazar.cyclicmagic.registry.GuideRegistry;
+import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
+import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideItem;
+import com.lothrazar.cyclicmagic.registry.RecipeRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -28,77 +32,84 @@ public class BlockPlateModule extends BaseModule implements IHasConfig {
   private boolean enableMagnet;
   private boolean enableInterdict;
   private boolean vectorPlate;
-  public void onInit() {
+  public void onPreInit() {
     BlockLaunch plate_launch_med = null;
     BlockConveyor plate_push_fast = null;
     if (enableInterdict) {
       BlockMagnetAnti magnet_anti_block = new BlockMagnetAnti();
-      BlockRegistry.registerBlock(magnet_anti_block, "magnet_anti_block");
+      BlockRegistry.registerBlock(magnet_anti_block, "magnet_anti_block", GuideCategory.BLOCKPLATE);
       GameRegistry.registerTileEntity(TileEntityMagnetAnti.class, "magnet_anti_block_te");
     }
     if (enableMagnet) {
       BlockMagnet magnet_block = new BlockMagnet();
-      BlockRegistry.registerBlock(magnet_block, "magnet_block");
+      BlockRegistry.registerBlock(magnet_block, "magnet_block", GuideCategory.BLOCKPLATE);
       GameRegistry.registerTileEntity(TileEntityMagnet.class, "magnet_block_te");
     }
     if (launchPads) {
-      BlockLaunch plate_launch_small = new BlockLaunch(0.8F, SoundEvents.BLOCK_SLIME_STEP);
-      BlockRegistry.registerBlock(plate_launch_small, "plate_launch_small");
+
+      //med
       plate_launch_med = new BlockLaunch(1.3F, SoundEvents.BLOCK_SLIME_FALL);
-      BlockRegistry.registerBlock(plate_launch_med, "plate_launch_med");
-      BlockLaunch plate_launch_large = new BlockLaunch(1.8F, SoundEvents.BLOCK_SLIME_BREAK);
-      BlockRegistry.registerBlock(plate_launch_large, "plate_launch_large");
-      GameRegistry.addRecipe(new ItemStack(plate_launch_small, 6),
+      BlockRegistry.registerBlock(plate_launch_med, "plate_launch_med", null);
+      GuideItem page = GuideRegistry.register(GuideCategory.BLOCKPLATE, plate_launch_med);
+      
+      BlockLaunch plate_launch_small = new BlockLaunch(0.8F, SoundEvents.BLOCK_SLIME_STEP);
+      BlockRegistry.registerBlock(plate_launch_small, "plate_launch_small", null);
+      page.addRecipePage(RecipeRegistry.addShapedRecipe(new ItemStack(plate_launch_small, 6),
           "sss", "ggg", "iii",
           's', Blocks.SLIME_BLOCK,
           'g', Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE,
-          'i', Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE);
-      GameRegistry.addShapelessRecipe(new ItemStack(plate_launch_med),
+          'i', Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE));
+      page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(plate_launch_med),
           new ItemStack(plate_launch_small),
-          new ItemStack(Items.QUARTZ));
-      GameRegistry.addShapelessRecipe(new ItemStack(plate_launch_large),
+          new ItemStack(Items.QUARTZ)));
+      //large
+      BlockLaunch plate_launch_large = new BlockLaunch(1.8F, SoundEvents.BLOCK_SLIME_BREAK);
+      BlockRegistry.registerBlock(plate_launch_large, "plate_launch_large", null);
+      page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(plate_launch_large),
           new ItemStack(plate_launch_med),
-          new ItemStack(Blocks.END_STONE));
+          new ItemStack(Blocks.END_STONE)));
       AchievementRegistry.registerItemAchievement(Item.getItemFromBlock(plate_launch_large));
     }
     if (enableConveyor) {
       BlockConveyor plate_push = new BlockConveyor(0.16F);
-      BlockRegistry.registerBlock(plate_push, "plate_push");
+      BlockRegistry.registerBlock(plate_push, "plate_push", null);
+      GuideItem page = GuideRegistry.register(GuideCategory.BLOCKPLATE, plate_push);
       AchievementRegistry.registerItemAchievement(Item.getItemFromBlock(plate_push));
-      GameRegistry.addRecipe(new ItemStack(plate_push, 8),
+      page.addRecipePage(RecipeRegistry.addShapedRecipe(new ItemStack(plate_push, 8),
           "sbs",
           "bxb",
           "sbs",
           's', new ItemStack(Items.IRON_INGOT),
           'x', new ItemStack(Blocks.SLIME_BLOCK),
-          'b', new ItemStack(Items.DYE, 1, EnumDyeColor.PURPLE.getDyeDamage()));
+          'b', new ItemStack(Items.DYE, 1, EnumDyeColor.PURPLE.getDyeDamage())));
       plate_push_fast = new BlockConveyor(0.32F);
-      BlockRegistry.registerBlock(plate_push_fast, "plate_push_fast");
-      GameRegistry.addShapelessRecipe(new ItemStack(plate_push_fast), new ItemStack(plate_push), Items.REDSTONE);
+      BlockRegistry.registerBlock(plate_push_fast, "plate_push_fast",  null);
+      page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(plate_push_fast), new ItemStack(plate_push), Items.REDSTONE));
       BlockConveyor plate_push_slow = new BlockConveyor(0.08F);
-      BlockRegistry.registerBlock(plate_push_slow, "plate_push_slow");
-      GameRegistry.addShapelessRecipe(new ItemStack(plate_push_slow), new ItemStack(plate_push),
-          new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage()));
+      BlockRegistry.registerBlock(plate_push_slow, "plate_push_slow",  null);
+      page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(plate_push_slow), new ItemStack(plate_push),
+          new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage())));
       BlockConveyor plate_push_slowest = new BlockConveyor(0.04F);
-      BlockRegistry.registerBlock(plate_push_slowest, "plate_push_slowest");
-      GameRegistry.addShapelessRecipe(new ItemStack(plate_push_slowest), new ItemStack(plate_push),
-          new ItemStack(Items.DYE, 1, EnumDyeColor.LIGHT_BLUE.getDyeDamage()));
+      BlockRegistry.registerBlock(plate_push_slowest, "plate_push_slowest",  null);
+      page.addRecipePage(RecipeRegistry.addShapelessRecipe(new ItemStack(plate_push_slowest), new ItemStack(plate_push),
+          new ItemStack(Items.DYE, 1, EnumDyeColor.LIGHT_BLUE.getDyeDamage())));
     }
     if (vectorPlate) {
       BlockVectorPlate plate_vector = new BlockVectorPlate();
-      BlockRegistry.registerBlock(plate_vector, new ItemBlockVectorPlate(plate_vector), "plate_vector");
+      BlockRegistry.registerBlock(plate_vector, new ItemBlockVectorPlate(plate_vector), "plate_vector", null);
+      GuideItem page = GuideRegistry.register(GuideCategory.BLOCKPLATE, plate_vector);
       GameRegistry.registerTileEntity(TileEntityVector.class, "plate_vector_te");
       ModCyclic.instance.events.register(plate_vector);
       ItemStack top = (plate_launch_med == null) ? new ItemStack(Blocks.REDSTONE_LAMP) : new ItemStack(plate_launch_med);
       ItemStack base = (plate_push_fast == null) ? new ItemStack(Blocks.EMERALD_BLOCK) : new ItemStack(plate_push_fast);
-      GameRegistry.addRecipe(new ItemStack(plate_vector, 6),
+      page.addRecipePage(    RecipeRegistry.addShapedRecipe(new ItemStack(plate_vector, 6),
           "ttt",
           "idi",
           "bbb",
           'i', Items.IRON_INGOT,
           'd', Items.DIAMOND,
           'b', base,
-          't', top);
+          't', top));
     }
   }
   @Override
