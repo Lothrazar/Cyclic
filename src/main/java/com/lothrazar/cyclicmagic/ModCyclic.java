@@ -98,37 +98,9 @@ public class ModCyclic {
    * 
    * https://github.com/PrinceOfAmber/Cyclic/milestones
    * 
-   * SOME sort of thing for stepHeight // player.stepHeight = 1.0F; careful on
-   * unequip. //TODO:above doesnt get moved down to norm on unequip. save that
-   * idea for another item/charm/potion/enchant/something?
+   * BUGS:
    * 
-   * BIG TAB options for my invo buttons . save as player data, not config. ->
-   * have a button in both alt guis off to side, hitting it toggles tab mode on
-   * and off.
+   * https://github.com/PrinceOfAmber/Cyclic/issues
    * 
-   * water fountain//particle maker: has gui. pick the particle you want
-   * (vanilla only if we have to) and whenver its on it spawns particles above
-   * or wherever
-   * 
-   * DISABLE the forward vector component of launch enchat, if we are standing
-   * still (if no current horiz)
-   * 
-   * revive my old idea of the flint tool to chop wood, and the idea to disable
-   * punching trees?
-   * 
-   * tool to create enchanted books but expensive. try to follow existing
-   * conventions EX quartz->sharpness
-   * 
-   * CYCLICSCEPTER: - ? toggle to tell how many times to rotate an item after
-   * placing (ex: stairs to be put upside down)
-   * 
-   * Block placers and structure builder: add same rotator
-   * 
-   * Block placers and structure builder: import the existing random/pattern
-   * feature from cyclic wand
-   * 
-   * piston wand - ROTATE: STAIRS: allow switch from top to bottom
-   * 
-   * 
-   */
+   */ 
 }
