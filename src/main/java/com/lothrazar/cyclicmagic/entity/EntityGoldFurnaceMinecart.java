@@ -3,10 +3,13 @@ import net.minecraft.entity.item.EntityMinecartFurnace;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
-public class EntityRedstoneMinecart extends EntityMinecartFurnace {
-  public EntityRedstoneMinecart(World worldIn) {
+public class EntityGoldFurnaceMinecart extends EntityMinecartFurnace {
+  public EntityGoldFurnaceMinecart(World worldIn) {
     super(worldIn);
-    this.setDisplayTile(Blocks.REDSTONE_BLOCK.getDefaultState());
+    this.setDisplayTile(this.getDefaultDisplayTile());
+  }
+  public EntityGoldFurnaceMinecart(World worldIn, double x, double y, double z) {
+    super(worldIn, x, y, z);
   }
   /**
    * Get's the maximum speed for a minecart vanilla is 0.4D default
@@ -31,6 +34,7 @@ public class EntityRedstoneMinecart extends EntityMinecartFurnace {
   }
   @Override
   protected void applyDrag() {
+    this.setDisplayTile(this.getDefaultDisplayTile());
     if (this.isMinecartPowered() == false) {//is powered means fuel (from coal) is > 0
       super.applyDrag();//only apply drag if fuel rns out, else momentum goes forever without fuel = no makey sensey
     }

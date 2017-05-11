@@ -1,23 +1,37 @@
 package com.lothrazar.cyclicmagic.entity;
+import net.minecraft.block.Block;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.item.EntityMinecartEmpty;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class EntityGoldMinecart extends EntityMinecartEmpty {
+public class EntityCarryMinecart extends EntityMinecartEmpty {
   private static final double DRAG_RIDDEN = 0.95D;//vanilla reduces this 0.75
   public static Item dropItem = Items.MINECART;//override with gold minecart on registry, this is here just for nonnull
-  public EntityGoldMinecart(World worldIn) {
+  public EntityCarryMinecart(World worldIn) {
     super(worldIn);
+    this.setCartItem(new ItemStack(Blocks.COBBLESTONE));
   }
-  public EntityGoldMinecart(World worldIn, double x, double y, double z) {
+  public EntityCarryMinecart(World worldIn, double x, double y, double z) {
     super(worldIn, x, y, z);
   }
+  private ItemStack display;
+  public ItemStack getCartItem(){
+   return display;
+  }
+  public void setCartItem(ItemStack s){
+    if(Block.getBlockFromItem(s.getItem()) == Blocks.AIR){return;}
+    
+    display = s;
+  }
+
   /**
    * Get's the maximum speed for a minecart vanilla is 0.4D default
    */
@@ -73,5 +87,10 @@ public class EntityGoldMinecart extends EntityMinecartEmpty {
       }
       this.entityDropItem(itemstack, 0.0F);
     }
+  }
+  
+  @Override
+  protected void writeEntityToNBT(NBTTagCompound compound){
+    super.writeEntityToNBT(compound);
   }
 }

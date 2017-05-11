@@ -12,11 +12,13 @@ import com.lothrazar.cyclicmagic.component.enderbook.ItemEnderBook;
 import com.lothrazar.cyclicmagic.component.merchant.ItemMerchantAlmanac;
 import com.lothrazar.cyclicmagic.component.storagesack.ItemStorageBag;
 import com.lothrazar.cyclicmagic.entity.EntityGoldMinecart;
-import com.lothrazar.cyclicmagic.entity.EntityRedstoneMinecart;
+import com.lothrazar.cyclicmagic.entity.EntityCarryMinecart;
+import com.lothrazar.cyclicmagic.entity.EntityGoldFurnaceMinecart;
 import com.lothrazar.cyclicmagic.item.ItemChestSack;
 import com.lothrazar.cyclicmagic.item.ItemChestSackEmpty;
 import com.lothrazar.cyclicmagic.item.ItemClimbingGlove;
 import com.lothrazar.cyclicmagic.item.ItemEnderBag;
+import com.lothrazar.cyclicmagic.item.ItemGoldFurnaceMinecart;
 import com.lothrazar.cyclicmagic.item.ItemGoldMinecart;
 import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
 import com.lothrazar.cyclicmagic.item.ItemPasswordRemote;
@@ -154,8 +156,16 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
       ItemRegistry.register(gold_minecart, "gold_minecart");
       EntityGoldMinecart.dropItem = gold_minecart;
       EntityProjectileRegistry.registerModEntity(EntityGoldMinecart.class, "goldminecart", 1100);
+      
+      ItemGoldFurnaceMinecart gold_furnace_minecart = new ItemGoldFurnaceMinecart();
+      ItemRegistry.register(gold_furnace_minecart, "gold_furnace_minecart");
+      EntityGoldMinecart.dropItem = gold_furnace_minecart;
+      
+      EntityProjectileRegistry.registerModEntity(EntityGoldFurnaceMinecart.class, "goldfurnaceminecart", 1101);
+      EntityProjectileRegistry.registerModEntity(EntityCarryMinecart.class, "carryminecart", 1102);
+      
+      //ONE THAT CAN HOLD ANY ITEM
     }
-    EntityProjectileRegistry.registerModEntity(EntityRedstoneMinecart.class, "redstoneminecart", 1101);
     if (enablePlayerLauncher) {
       ItemToolLaunch tool_launcher = new ItemToolLaunch();
       ItemRegistry.register(tool_launcher, "tool_launcher");
