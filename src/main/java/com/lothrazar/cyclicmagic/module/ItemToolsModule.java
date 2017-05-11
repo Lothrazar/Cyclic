@@ -11,10 +11,13 @@ import com.lothrazar.cyclicmagic.component.cyclicwand.PacketSpellShiftRight;
 import com.lothrazar.cyclicmagic.component.enderbook.ItemEnderBook;
 import com.lothrazar.cyclicmagic.component.merchant.ItemMerchantAlmanac;
 import com.lothrazar.cyclicmagic.component.storagesack.ItemStorageBag;
+import com.lothrazar.cyclicmagic.entity.EntityGoldMinecart;
+import com.lothrazar.cyclicmagic.entity.EntityRedstoneMinecart;
 import com.lothrazar.cyclicmagic.item.ItemChestSack;
 import com.lothrazar.cyclicmagic.item.ItemChestSackEmpty;
 import com.lothrazar.cyclicmagic.item.ItemClimbingGlove;
 import com.lothrazar.cyclicmagic.item.ItemEnderBag;
+import com.lothrazar.cyclicmagic.item.ItemGoldMinecart;
 import com.lothrazar.cyclicmagic.item.ItemPaperCarbon;
 import com.lothrazar.cyclicmagic.item.ItemPasswordRemote;
 import com.lothrazar.cyclicmagic.item.ItemSoulstone;
@@ -40,6 +43,7 @@ import com.lothrazar.cyclicmagic.item.tool.ItemToolWaterIce;
 import com.lothrazar.cyclicmagic.item.tool.ItemToolWaterSpreader;
 import com.lothrazar.cyclicmagic.net.PacketSwapBlock;
 import com.lothrazar.cyclicmagic.registry.AchievementRegistry;
+import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.LootTableRegistry;
@@ -106,6 +110,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   private boolean enableTrader;
   private boolean enableSoulstone;
   private boolean enablePlayerLauncher;
+  private boolean goldMinecart;
   public static ItemStorageBag storage_bag;//ref by ContainerStorage
   public static RenderLoc renderLocation;
   /**
@@ -144,6 +149,13 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   }
   @Override
   public void onPreInit() {
+    if (goldMinecart) {
+      ItemGoldMinecart gold_minecart = new ItemGoldMinecart();
+      ItemRegistry.register(gold_minecart, "gold_minecart");
+      EntityGoldMinecart.dropItem = gold_minecart;
+      EntityProjectileRegistry.registerModEntity(EntityGoldMinecart.class, "goldminecart", 1100);
+    }
+    EntityProjectileRegistry.registerModEntity(EntityRedstoneMinecart.class, "redstoneminecart", 1101);
     if (enablePlayerLauncher) {
       ItemToolLaunch tool_launcher = new ItemToolLaunch();
       ItemRegistry.register(tool_launcher, "tool_launcher");
@@ -338,6 +350,7 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
   }
   @Override
   public void syncConfig(Configuration config) {
+    goldMinecart = config.getBoolean("GoldMinecart", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enablePlayerLauncher = config.getBoolean("PlayerLauncher", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableSoulstone = config.getBoolean("Soulstone", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     enableTrader = config.getBoolean("Merchant Almanac", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
