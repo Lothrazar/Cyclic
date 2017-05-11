@@ -1,5 +1,7 @@
 package com.lothrazar.cyclicmagic.module;
 import java.util.ArrayList;
+import com.lothrazar.cyclicmagic.entity.EntityGoldMinecart;
+import com.lothrazar.cyclicmagic.entity.EntityRedstoneMinecart;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.dispenser.BehaviorProjectileThrowable;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityBlazeBolt;
@@ -57,6 +59,10 @@ public class ItemProjectileModule extends BaseModule implements IHasConfig {
   private boolean magicNet;
   @Override
   public void onPreInit() {
+    
+    
+    EntityProjectileRegistry.registerModEntity(EntityGoldMinecart.class, "goldminecart", 1100);
+    EntityProjectileRegistry.registerModEntity(EntityRedstoneMinecart.class, "redstoneminecart", 1101);
     if (enableEnderBlaze) {
       ItemProjectileBlaze ender_blaze = new ItemProjectileBlaze();
       ItemRegistry.register(ender_blaze, "ender_blaze", GuideCategory.ITEMTHROW);
