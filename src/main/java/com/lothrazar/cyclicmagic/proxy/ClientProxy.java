@@ -2,6 +2,10 @@ package com.lothrazar.cyclicmagic.proxy;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.IBlockHasTESR;
+import com.lothrazar.cyclicmagic.entity.EntityGoldFurnaceMinecart;
+import com.lothrazar.cyclicmagic.entity.EntityGoldMinecart;
+import com.lothrazar.cyclicmagic.entity.EntityStoneMinecart;
+import com.lothrazar.cyclicmagic.entity.RenderCyclicMinecart;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityBlazeBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDungeonEye;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamite;
@@ -42,6 +46,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IThreadListener;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.GameType;
@@ -63,10 +68,14 @@ public class ClientProxy extends CommonProxy {
   public static KeyBinding keyExtraCraftin;
   static final String keyCategoryInventory = "key.categories.inventorycontrol";
   @Override
-  public void register() {
+  public void preInit() {
+    //in 1.11 we need entities in preinit apparently..??http://www.minecraftforge.net/forum/topic/53954-1112-solved-renderingregistryregisterentityrenderinghandler-not-registering/
+    registerEntities();
+  }
+  @Override
+  public void init() {
     registerModels();
     registerKeys();
-    registerEntities();
   }
   @Override
   public World getClientWorld() {
@@ -96,11 +105,12 @@ public class ClientProxy extends CommonProxy {
   private void registerEntities() {
     RenderManager rm = Minecraft.getMinecraft().getRenderManager();
     RenderItem ri = Minecraft.getMinecraft().getRenderItem();
-    // works similar to vanilla which is like
-    // Minecraft.getMinecraft().getRenderManager().entityRenderMap.put(EntitySoulstoneBolt.class,
-    // new RenderSnowball(Minecraft.getMinecraft().getRenderManager(),
-    // ItemRegistry.soulstone,
-    // Minecraft.getMinecraft().getRenderItem()));
+    //minecarts
+    //http://wiki.mcjty.eu/modding/index.php/Mobs-1.9
+    RenderingRegistry.registerEntityRenderingHandler(EntityGoldMinecart.class, RenderCyclicMinecart.FACTORY_GOLD);
+    RenderingRegistry.registerEntityRenderingHandler(EntityGoldFurnaceMinecart.class, RenderCyclicMinecart.FACTORY_GOLD_FURNACE);
+    RenderingRegistry.registerEntityRenderingHandler(EntityStoneMinecart.class, RenderCyclicMinecart.FACTORY_STONE_FURNACE);
+    //the projectiles too
     RenderingRegistry.registerEntityRenderingHandler(EntityLightningballBolt.class, new RenderSnowball(rm, EntityLightningballBolt.renderSnowball, ri));
     RenderingRegistry.registerEntityRenderingHandler(EntityHarvestBolt.class, new RenderSnowball(rm, EntityHarvestBolt.renderSnowball, ri));
     RenderingRegistry.registerEntityRenderingHandler(EntityWaterBolt.class, new RenderSnowball(rm, EntityWaterBolt.renderSnowball, ri));
