@@ -5,6 +5,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -120,5 +121,23 @@ public class UtilItemStack {
   }
   public static String getStringForBlock(Block b) {
     return b.getRegistryName().getResourceDomain() + ":" + b.getRegistryName().getResourcePath();
+  }
+  public static void dropBlockState(World world, BlockPos position, IBlockState current) {
+    if (world.isRemote == false && current.getBlock() != Blocks.AIR) {
+      dropItemStackInWorld(world, position, getSilkTouchDrop(current));
+    }
+  }
+  public static IBlockState getStateFromStack(ItemStack stack) {
+    Block stuff = Block.getBlockFromItem(stack.getItem());
+    return UtilItemStack.getStateFromMeta(stuff, stack.getMetadata());
+  }
+  //stupid Block class has this not public
+  public static ItemStack getSilkTouchDrop(IBlockState state) {
+    Item item = Item.getItemFromBlock(state.getBlock());
+    int i = 0;
+    if (item.getHasSubtypes()) {
+      i = state.getBlock().getMetaFromState(state);
+    }
+    return new ItemStack(item, 1, i);
   }
 }

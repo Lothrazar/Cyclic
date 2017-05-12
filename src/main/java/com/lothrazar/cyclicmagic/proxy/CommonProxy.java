@@ -13,7 +13,8 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class CommonProxy {
   //https://github.com/coolAlias/Tutorial-Demo/blob/e8fa9c94949e0b1659dc0a711674074f8752d80e/src/main/java/tutorial/CommonProxy.java
-  public void register() {}
+  public void init() {}
+  public void preInit(){}
   public World getClientWorld() {
     return null;
   }
