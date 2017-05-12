@@ -1,9 +1,13 @@
 package com.lothrazar.cyclicmagic.item;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.entity.EntityGoldFurnaceMinecart;
+import com.lothrazar.cyclicmagic.entity.EntityCarryMinecart;
+import com.lothrazar.cyclicmagic.entity.EntityGoldMinecart;
 import net.minecraft.block.BlockRailBase;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.item.EntityMinecart;
+import net.minecraft.entity.item.EntityMinecartEmpty;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -14,11 +18,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class ItemGoldFurnaceMinecart extends BaseItem implements IHasRecipe {
-  public ItemGoldFurnaceMinecart() {
+public class ItemCarryMinecart extends BaseItem implements IHasRecipe {
+  public ItemCarryMinecart() {
     super();
     this.maxStackSize = 1;
-    
   }
   public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
     IBlockState iblockstate = worldIn.getBlockState(pos);
@@ -33,23 +36,25 @@ public class ItemGoldFurnaceMinecart extends BaseItem implements IHasRecipe {
         if (blockrailbase$enumraildirection.isAscending()) {
           d0 = 0.5D;
         }
-        EntityGoldFurnaceMinecart entityminecart = new EntityGoldFurnaceMinecart(worldIn, (double) pos.getX() + 0.5D, (double) pos.getY() + 0.0625D + d0, (double) pos.getZ() + 0.5D);
+        EntityCarryMinecart entityminecart = new EntityCarryMinecart(worldIn, (double) pos.getX() + 0.5D, (double) pos.getY() + 0.0625D + d0, (double) pos.getZ() + 0.5D);
         if (itemstack.hasDisplayName()) {
           entityminecart.setCustomNameTag(itemstack.getDisplayName());
         }
+        entityminecart.setDisplayTile(Blocks.COBBLESTONE.getDefaultState());
         worldIn.spawnEntity(entityminecart);
       }
       itemstack.shrink(1);
       return EnumActionResult.SUCCESS;
     }
-  }  @Override
+  }
+  @Override
   public IRecipe addRecipe() {
     return    GameRegistry.addShapedRecipe(new ItemStack(this),
         "   ",
         "gmg",
         "ggg",
-        'g',Items.GOLD_INGOT,
-        'm',Items.FURNACE_MINECART);
+        'g',Blocks.COBBLESTONE,
+        'm',Items.MINECART);
      
   }
 }

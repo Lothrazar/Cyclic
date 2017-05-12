@@ -14,6 +14,7 @@ import com.lothrazar.cyclicmagic.component.storagesack.ItemStorageBag;
 import com.lothrazar.cyclicmagic.entity.EntityGoldMinecart;
 import com.lothrazar.cyclicmagic.entity.EntityCarryMinecart;
 import com.lothrazar.cyclicmagic.entity.EntityGoldFurnaceMinecart;
+import com.lothrazar.cyclicmagic.item.ItemCarryMinecart;
 import com.lothrazar.cyclicmagic.item.ItemChestSack;
 import com.lothrazar.cyclicmagic.item.ItemChestSackEmpty;
 import com.lothrazar.cyclicmagic.item.ItemClimbingGlove;
@@ -163,9 +164,26 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
       
       EntityProjectileRegistry.registerModEntity(EntityGoldFurnaceMinecart.class, "goldfurnaceminecart", 1101);
       
+      //if i have a mob on a LEAD< i can put it in a minecart with thehit
       
+      //maybe 2 passengers..?? idk
+      
+      //connect together??
+      
+      //DISPENSERR minecart
+      
+      //??FLUID CART?
+      
+      //TURRET CART:? shoots arrows
 
       //ONE THAT CAN HOLD ANY ITEM
+      
+      
+      
+      ItemCarryMinecart carry_minecart = new ItemCarryMinecart();
+      ItemRegistry.register(carry_minecart, "carry_minecart");
+      EntityCarryMinecart.dropItem = carry_minecart;
+      
       EntityProjectileRegistry.registerModEntity(EntityCarryMinecart.class, "carryminecart", 1102);
       
     }
