@@ -18,16 +18,17 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderGoldMinecart<T extends EntityMinecart> extends RenderMinecart<T>{
+public class RenderCyclicMinecart<T extends EntityMinecart> extends RenderMinecart<T>{
 
 //we might not have NEEDED to clone entire class, really its just texture swap eh
-  public RenderGoldMinecart(RenderManager renderManagerIn)
+  public RenderCyclicMinecart(RenderManager renderManagerIn, ResourceLocation t)
   {
       super(renderManagerIn);
+      MINECART_TEXTURES = t;
       this.shadowSize = 0.5F;
   }
 
-  private static final ResourceLocation MINECART_TEXTURES = new ResourceLocation(Const.MODID,"textures/entity/gold_minecart.png");
+  private  ResourceLocation MINECART_TEXTURES ;//= new ResourceLocation(Const.MODID,"textures/entity/gold_minecart.png");
    
   protected ModelBase modelMinecart = new ModelMinecart();
 
@@ -54,7 +55,7 @@ public class RenderGoldMinecart<T extends EntityMinecart> extends RenderMinecart
 
       if (vec3d != null)
       {
-          Vec3d vec3d1 = entity.getPosOffset(d0, d1, d2, 0.30000001192092896D);
+          Vec3d vec3d1 = entity.getPosOffset(d0, d1, d2, d3);
           Vec3d vec3d2 = entity.getPosOffset(d0, d1, d2, -0.30000001192092896D);
 
           if (vec3d1 == null)

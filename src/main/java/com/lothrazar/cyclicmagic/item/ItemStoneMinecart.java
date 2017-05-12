@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.item;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.entity.EntityCarryMinecart;
+import com.lothrazar.cyclicmagic.entity.EntityStoneMinecart;
 import net.minecraft.block.BlockRailBase;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -33,7 +33,7 @@ public class ItemStoneMinecart extends BaseItem implements IHasRecipe {
         if (blockrailbase$enumraildirection.isAscending()) {
           d0 = 0.5D;
         }
-        EntityCarryMinecart entityminecart = new EntityCarryMinecart(worldIn, (double) pos.getX() + 0.5D, (double) pos.getY() + 0.0625D + d0, (double) pos.getZ() + 0.5D);
+        EntityStoneMinecart entityminecart = new EntityStoneMinecart(worldIn, (double) pos.getX() + 0.5D, (double) pos.getY() + 0.0625D + d0, (double) pos.getZ() + 0.5D);
         if (itemstack.hasDisplayName()) {
           entityminecart.setCustomNameTag(itemstack.getDisplayName());
         }

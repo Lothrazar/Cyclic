@@ -66,4 +66,8 @@ public class EntityGoldFurnaceMinecart extends EntityMinecartFurnace {
       this.entityDropItem(itemstack, 0.0F);
     }
   }
+  @Override
+  public ItemStack getCartItem() {
+    return new ItemStack(dropItem);
+  }
 }

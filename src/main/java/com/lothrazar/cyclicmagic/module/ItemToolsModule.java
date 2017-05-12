@@ -12,7 +12,7 @@ import com.lothrazar.cyclicmagic.component.enderbook.ItemEnderBook;
 import com.lothrazar.cyclicmagic.component.merchant.ItemMerchantAlmanac;
 import com.lothrazar.cyclicmagic.component.storagesack.ItemStorageBag;
 import com.lothrazar.cyclicmagic.entity.EntityGoldMinecart;
-import com.lothrazar.cyclicmagic.entity.EntityCarryMinecart;
+import com.lothrazar.cyclicmagic.entity.EntityStoneMinecart;
 import com.lothrazar.cyclicmagic.entity.EntityGoldFurnaceMinecart;
 import com.lothrazar.cyclicmagic.item.ItemStoneMinecart;
 import com.lothrazar.cyclicmagic.item.ItemChestSack;
@@ -182,9 +182,9 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
       
       ItemStoneMinecart stone_minecart = new ItemStoneMinecart();
       ItemRegistry.register(stone_minecart, "stone_minecart");
-      EntityCarryMinecart.dropItem = stone_minecart;
+      EntityStoneMinecart.dropItem = stone_minecart;
       
-      EntityProjectileRegistry.registerModEntity(EntityCarryMinecart.class, "stoneminecart", 1102);
+      EntityProjectileRegistry.registerModEntity(EntityStoneMinecart.class, "stoneminecart", 1102);
       
     }
     if (enablePlayerLauncher) {

@@ -74,4 +74,8 @@ public class EntityGoldMinecart extends EntityMinecartEmpty {
       this.entityDropItem(itemstack, 0.0F);
     }
   }
+  @Override
+  public ItemStack getCartItem() {
+    return new ItemStack(dropItem);
+  }
 }

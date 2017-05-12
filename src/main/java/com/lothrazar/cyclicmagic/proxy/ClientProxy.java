@@ -4,7 +4,8 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.entity.EntityGoldFurnaceMinecart;
 import com.lothrazar.cyclicmagic.entity.EntityGoldMinecart;
-import com.lothrazar.cyclicmagic.entity.RenderGoldMinecart;
+import com.lothrazar.cyclicmagic.entity.EntityStoneMinecart;
+import com.lothrazar.cyclicmagic.entity.RenderCyclicMinecart;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityBlazeBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDungeonEye;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityDynamite;
@@ -37,7 +38,6 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.entity.RenderMinecart;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
@@ -46,6 +46,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IThreadListener;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.GameType;
@@ -100,16 +101,12 @@ public class ClientProxy extends CommonProxy {
   private void registerEntities() {
     RenderManager rm = Minecraft.getMinecraft().getRenderManager();
     RenderItem ri = Minecraft.getMinecraft().getRenderItem();
-    // works similar to vanilla which is like
-    // Minecraft.getMinecraft().getRenderManager().entityRenderMap.put(EntitySoulstoneBolt.class,
-    // new RenderSnowball(Minecraft.getMinecraft().getRenderManager(),
-    // ItemRegistry.soulstone,
-    // Minecraft.getMinecraft().getRenderItem()));
-
-    RenderingRegistry.registerEntityRenderingHandler(EntityGoldMinecart.class,new RenderGoldMinecart(rm));
-    RenderingRegistry.registerEntityRenderingHandler(EntityGoldFurnaceMinecart.class,new RenderGoldMinecart(rm));
-    
-    
+    //minecarts
+    ResourceLocation gold = new ResourceLocation(Const.MODID, "textures/entity/gold_minecart.png");
+    RenderingRegistry.registerEntityRenderingHandler(EntityGoldMinecart.class, new RenderCyclicMinecart(rm, gold));
+    RenderingRegistry.registerEntityRenderingHandler(EntityGoldFurnaceMinecart.class, new RenderCyclicMinecart(rm, gold));
+    RenderingRegistry.registerEntityRenderingHandler(EntityStoneMinecart.class, new RenderCyclicMinecart(rm,  new ResourceLocation(Const.MODID, "textures/entity/stone_minecart.png")));
+    //the projectiles too
     RenderingRegistry.registerEntityRenderingHandler(EntityLightningballBolt.class, new RenderSnowball(rm, EntityLightningballBolt.renderSnowball, ri));
     RenderingRegistry.registerEntityRenderingHandler(EntityHarvestBolt.class, new RenderSnowball(rm, EntityHarvestBolt.renderSnowball, ri));
     RenderingRegistry.registerEntityRenderingHandler(EntityWaterBolt.class, new RenderSnowball(rm, EntityWaterBolt.renderSnowball, ri));
@@ -173,8 +170,6 @@ public class ClientProxy extends CommonProxy {
     return null;
   }
   private void registerModels() {
-    
-   
     // with help from
     // http://www.minecraftforge.net/forum/index.php?topic=32492.0
     // https://github.com/TheOnlySilverClaw/Birdmod/blob/master/src/main/java/silverclaw/birds/client/ClientProxyBirds.java

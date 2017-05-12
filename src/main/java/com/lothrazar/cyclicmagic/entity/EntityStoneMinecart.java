@@ -11,13 +11,13 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
-public class EntityCarryMinecart extends EntityMinecartFurnace {
+public class EntityStoneMinecart extends EntityMinecartFurnace {
   public static Item dropItem = Items.MINECART;//override with gold minecart on registry, this is here just for nonnull
-  public EntityCarryMinecart(World worldIn) {
+  public EntityStoneMinecart(World worldIn) {
     super(worldIn);
     this.setCartBlock(Blocks.COBBLESTONE.getDefaultState());
   }
-  public EntityCarryMinecart(World worldIn, double x, double y, double z) {
+  public EntityStoneMinecart(World worldIn, double x, double y, double z) {
     super(worldIn, x, y, z);
   }
   private void setCartBlock(IBlockState b) {
@@ -53,9 +53,9 @@ public class EntityCarryMinecart extends EntityMinecartFurnace {
     }
     return true;
   }
-  //  
-  //  @Override
-  //  protected void writeEntityToNBT(NBTTagCompound compound){
-  //    super.writeEntityToNBT(compound);
-  //  }
+
+  @Override
+  public ItemStack getCartItem() {
+    return new ItemStack(dropItem);
+  }
 }
