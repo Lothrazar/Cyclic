@@ -108,7 +108,7 @@ public class RenderCyclicMinecart<T extends EntityMinecart> extends RenderMineca
       GlStateManager.pushMatrix();
       this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
       float f4 = 0.75F;
-      GlStateManager.scale(0.75F, 0.75F, 0.75F);
+      GlStateManager.scale(f4,f4,f4);
       GlStateManager.translate(-0.5F, (float) (j - 8) / 16.0F, 0.5F);
       this.renderCartContents(entity, partialTicks, iblockstate);
       GlStateManager.popMatrix();

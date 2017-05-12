@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.entity;
 import com.lothrazar.cyclicmagic.item.ItemGoldFurnaceMinecart;
 import net.minecraft.entity.item.EntityMinecartFurnace;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
