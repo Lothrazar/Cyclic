@@ -68,10 +68,14 @@ public class ClientProxy extends CommonProxy {
   public static KeyBinding keyExtraCraftin;
   static final String keyCategoryInventory = "key.categories.inventorycontrol";
   @Override
-  public void register() {
+  public void preInit() {
+    //in 1.11 we need entities in preinit apparently..??http://www.minecraftforge.net/forum/topic/53954-1112-solved-renderingregistryregisterentityrenderinghandler-not-registering/
+    registerEntities();
+  }
+  @Override
+  public void init() {
     registerModels();
     registerKeys();
-    registerEntities();
   }
   @Override
   public World getClientWorld() {
@@ -102,10 +106,10 @@ public class ClientProxy extends CommonProxy {
     RenderManager rm = Minecraft.getMinecraft().getRenderManager();
     RenderItem ri = Minecraft.getMinecraft().getRenderItem();
     //minecarts
-    ResourceLocation gold = new ResourceLocation(Const.MODID, "textures/entity/gold_minecart.png");
-    RenderingRegistry.registerEntityRenderingHandler(EntityGoldMinecart.class, new RenderCyclicMinecart(rm, gold));
-    RenderingRegistry.registerEntityRenderingHandler(EntityGoldFurnaceMinecart.class, new RenderCyclicMinecart(rm, gold));
-    RenderingRegistry.registerEntityRenderingHandler(EntityStoneMinecart.class, new RenderCyclicMinecart(rm,  new ResourceLocation(Const.MODID, "textures/entity/stone_minecart.png")));
+    //http://wiki.mcjty.eu/modding/index.php/Mobs-1.9
+    RenderingRegistry.registerEntityRenderingHandler(EntityGoldMinecart.class, RenderCyclicMinecart.FACTORY_GOLD);
+    RenderingRegistry.registerEntityRenderingHandler(EntityGoldFurnaceMinecart.class, RenderCyclicMinecart.FACTORY_GOLD_FURNACE);
+    RenderingRegistry.registerEntityRenderingHandler(EntityStoneMinecart.class, RenderCyclicMinecart.FACTORY_STONE_FURNACE);
     //the projectiles too
     RenderingRegistry.registerEntityRenderingHandler(EntityLightningballBolt.class, new RenderSnowball(rm, EntityLightningballBolt.renderSnowball, ri));
     RenderingRegistry.registerEntityRenderingHandler(EntityHarvestBolt.class, new RenderSnowball(rm, EntityHarvestBolt.renderSnowball, ri));
