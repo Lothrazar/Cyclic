@@ -17,11 +17,11 @@ import amerifrance.guideapi.api.IPage;
 import amerifrance.guideapi.api.impl.Book;
 import amerifrance.guideapi.api.impl.abstraction.CategoryAbstract;
 import amerifrance.guideapi.api.impl.abstraction.EntryAbstract;
+import amerifrance.guideapi.api.util.PageHelper;
 import amerifrance.guideapi.category.CategoryItemStack;
 import amerifrance.guideapi.entry.EntryItemStack;
 import amerifrance.guideapi.page.PageBrewingRecipe;
 import amerifrance.guideapi.page.PageIRecipe;
-import amerifrance.guideapi.page.PageText;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -32,6 +32,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 @Optional.Interface(iface = "amerifrance.guideapi.api.GuideAPI", modid = "guideapi", striprefs = true)
 @GuideBook
 public class CyclicGuideBook implements IGuideBook {
+  private static final int MAX_PAGE_LENGTH = 314;
   private static Book book;
   private List<CategoryAbstract> categories = new ArrayList<CategoryAbstract>();
   private Map<ResourceLocation, EntryAbstract> entriesBlocks = new HashMap<ResourceLocation, EntryAbstract>();
@@ -86,7 +87,10 @@ public class CyclicGuideBook implements IGuideBook {
       List<IPage> pages = new ArrayList<IPage>();
       for (GuidePage p : item.pages) {
         if (p.text != null) {
-          pages.add(new PageText(p.text));//just text on the screen
+          //          pages.add(new PageText(p.text)); 
+          for (IPage textPage : PageHelper.pagesForLongText(p.text, MAX_PAGE_LENGTH)) {
+            pages.add(textPage);
+          }
         }
         if (p.recipe != null) {
           pages.add(new PageIRecipe(p.recipe));

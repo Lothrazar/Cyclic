@@ -118,7 +118,6 @@ public class GuideRegistry {
     }
   }
   public static class GuideItem {
-    private static final int MAX_PAGE_LENGTH = 308;
     public GuideCategory cat;
     public ItemStack icon;
     public String title;
@@ -127,17 +126,8 @@ public class GuideRegistry {
       this.cat = cat;
       this.icon = icon;
       this.title = UtilChat.lang(title);
-      //default is a text page followed by recipe. more added later
-      if (text != null && UtilChat.lang(text) != null) {
-        if (UtilChat.lang(text).length() <= MAX_PAGE_LENGTH) {
-          this.pages.add(new GuidePage(UtilChat.lang(text)));
-        }
-        else {
-          String[] mpages = UtilChat.splitIntoLine(UtilChat.lang(text), MAX_PAGE_LENGTH);
-          for (String s : mpages) {
-            this.pages.add(new GuidePage(s));
-          }
-        }
+      if (text != null) {
+        this.pages.add(new GuidePage(UtilChat.lang(text)));
       }
       if (recipe != null) {
         this.pages.add(new GuidePage(recipe));
