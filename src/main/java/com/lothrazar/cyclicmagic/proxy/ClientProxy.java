@@ -20,6 +20,7 @@ import com.lothrazar.cyclicmagic.entity.projectile.EntityShearingBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntitySnowballBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityTorchBolt;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityWaterBolt;
+import com.lothrazar.cyclicmagic.entity.projectile.RenderProjectile;
 import com.lothrazar.cyclicmagic.module.KeyInventoryShiftModule;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
 import com.lothrazar.cyclicmagic.registry.CapabilityRegistry;
@@ -111,20 +112,20 @@ public class ClientProxy extends CommonProxy {
     RenderingRegistry.registerEntityRenderingHandler(EntityGoldFurnaceMinecart.class, RenderCyclicMinecart.FACTORY_GOLD_FURNACE);
     RenderingRegistry.registerEntityRenderingHandler(EntityStoneMinecart.class, RenderCyclicMinecart.FACTORY_STONE_FURNACE);
     //the projectiles too
-    RenderingRegistry.registerEntityRenderingHandler(EntityLightningballBolt.class, new RenderSnowball(rm, EntityLightningballBolt.renderSnowball, ri));
-    RenderingRegistry.registerEntityRenderingHandler(EntityHarvestBolt.class, new RenderSnowball(rm, EntityHarvestBolt.renderSnowball, ri));
-    RenderingRegistry.registerEntityRenderingHandler(EntityWaterBolt.class, new RenderSnowball(rm, EntityWaterBolt.renderSnowball, ri));
-    RenderingRegistry.registerEntityRenderingHandler(EntitySnowballBolt.class, new RenderSnowball(rm, EntitySnowballBolt.renderSnowball, ri));
-    RenderingRegistry.registerEntityRenderingHandler(EntityTorchBolt.class, new RenderSnowball(rm, EntityTorchBolt.renderSnowball, ri));
-    RenderingRegistry.registerEntityRenderingHandler(EntityFishingBolt.class, new RenderSnowball(rm, EntityFishingBolt.renderSnowball, ri));
-    RenderingRegistry.registerEntityRenderingHandler(EntityShearingBolt.class, new RenderSnowball(rm, EntityShearingBolt.renderSnowball, ri));
-    RenderingRegistry.registerEntityRenderingHandler(EntityDungeonEye.class, new RenderSnowball(rm, EntityDungeonEye.renderSnowball, ri));
-    RenderingRegistry.registerEntityRenderingHandler(EntityDynamite.class, new RenderSnowball(rm, EntityDynamite.renderSnowball, ri));
-    RenderingRegistry.registerEntityRenderingHandler(EntityBlazeBolt.class, new RenderSnowball(rm, EntityBlazeBolt.renderSnowball, ri));
-    RenderingRegistry.registerEntityRenderingHandler(EntityDynamiteMining.class, new RenderSnowball(rm, EntityDynamiteMining.renderSnowball, ri));
-    RenderingRegistry.registerEntityRenderingHandler(EntityDynamiteBlockSafe.class, new RenderSnowball(rm, EntityDynamiteBlockSafe.renderSnowball, ri));
-    RenderingRegistry.registerEntityRenderingHandler(EntityMagicNetFull.class, new RenderSnowball(rm, EntityMagicNetFull.renderSnowball, ri));
-    RenderingRegistry.registerEntityRenderingHandler(EntityMagicNetEmpty.class, new RenderSnowball(rm, EntityMagicNetEmpty.renderSnowball, ri));
+    RenderingRegistry.registerEntityRenderingHandler(EntityLightningballBolt.class, RenderProjectile.FACTORY_LIGHTNING);
+    RenderingRegistry.registerEntityRenderingHandler(EntityHarvestBolt.class, new RenderProjectile(rm, EntityHarvestBolt.renderSnowball, ri));
+    RenderingRegistry.registerEntityRenderingHandler(EntityWaterBolt.class, new RenderProjectile(rm, EntityWaterBolt.renderSnowball, ri));
+    RenderingRegistry.registerEntityRenderingHandler(EntitySnowballBolt.class, new RenderProjectile(rm, EntitySnowballBolt.renderSnowball, ri));
+    RenderingRegistry.registerEntityRenderingHandler(EntityTorchBolt.class, new RenderProjectile(rm, EntityTorchBolt.renderSnowball, ri));
+    RenderingRegistry.registerEntityRenderingHandler(EntityFishingBolt.class, new RenderProjectile(rm, EntityFishingBolt.renderSnowball, ri));
+    RenderingRegistry.registerEntityRenderingHandler(EntityShearingBolt.class, new RenderProjectile(rm, EntityShearingBolt.renderSnowball, ri));
+    RenderingRegistry.registerEntityRenderingHandler(EntityDungeonEye.class, new RenderProjectile(rm, EntityDungeonEye.renderSnowball, ri));
+    RenderingRegistry.registerEntityRenderingHandler(EntityDynamite.class, new RenderProjectile(rm, EntityDynamite.renderSnowball, ri));
+    RenderingRegistry.registerEntityRenderingHandler(EntityBlazeBolt.class, new RenderProjectile(rm, EntityBlazeBolt.renderSnowball, ri));
+    RenderingRegistry.registerEntityRenderingHandler(EntityDynamiteMining.class, new RenderProjectile(rm, EntityDynamiteMining.renderSnowball, ri));
+    RenderingRegistry.registerEntityRenderingHandler(EntityDynamiteBlockSafe.class, new RenderProjectile(rm, EntityDynamiteBlockSafe.renderSnowball, ri));
+    RenderingRegistry.registerEntityRenderingHandler(EntityMagicNetFull.class, new RenderProjectile(rm, EntityMagicNetFull.renderSnowball, ri));
+    RenderingRegistry.registerEntityRenderingHandler(EntityMagicNetEmpty.class, new RenderProjectile(rm, EntityMagicNetEmpty.renderSnowball, ri));
   }
   @SideOnly(Side.CLIENT)
   @Override
