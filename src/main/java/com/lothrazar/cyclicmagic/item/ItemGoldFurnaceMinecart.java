@@ -1,19 +1,23 @@
 package com.lothrazar.cyclicmagic.item;
 import com.lothrazar.cyclicmagic.entity.EntityGoldMinecart;
+import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.entity.EntityGoldFurnaceMinecart;
 import net.minecraft.block.BlockRailBase;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.item.EntityMinecartEmpty;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class ItemGoldFurnaceMinecart extends BaseItem {
+public class ItemGoldFurnaceMinecart extends BaseItem implements IHasRecipe {
   public ItemGoldFurnaceMinecart() {
     super();
     this.maxStackSize = 1;
@@ -41,5 +45,14 @@ public class ItemGoldFurnaceMinecart extends BaseItem {
       itemstack.shrink(1);
       return EnumActionResult.SUCCESS;
     }
+  }  @Override
+  public IRecipe addRecipe() {
+    return    GameRegistry.addShapedRecipe(new ItemStack(this),
+        "   ",
+        "gmg",
+        "ggg",
+        'g',Items.GOLD_INGOT,
+        'm',Items.FURNACE_MINECART);
+     
   }
 }

@@ -159,12 +159,15 @@ public class ItemToolsModule extends BaseEventModule implements IHasConfig {
       
       ItemGoldFurnaceMinecart gold_furnace_minecart = new ItemGoldFurnaceMinecart();
       ItemRegistry.register(gold_furnace_minecart, "gold_furnace_minecart");
-      EntityGoldMinecart.dropItem = gold_furnace_minecart;
+      EntityGoldFurnaceMinecart.dropItem = gold_furnace_minecart;
       
       EntityProjectileRegistry.registerModEntity(EntityGoldFurnaceMinecart.class, "goldfurnaceminecart", 1101);
+      
+      
+
+      //ONE THAT CAN HOLD ANY ITEM
       EntityProjectileRegistry.registerModEntity(EntityCarryMinecart.class, "carryminecart", 1102);
       
-      //ONE THAT CAN HOLD ANY ITEM
     }
     if (enablePlayerLauncher) {
       ItemToolLaunch tool_launcher = new ItemToolLaunch();

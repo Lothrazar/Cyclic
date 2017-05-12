@@ -1,9 +1,13 @@
 package com.lothrazar.cyclicmagic.entity;
+import com.lothrazar.cyclicmagic.item.ItemGoldFurnaceMinecart;
 import net.minecraft.entity.item.EntityMinecartFurnace;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
 public class EntityGoldFurnaceMinecart extends EntityMinecartFurnace {
+  public static ItemGoldFurnaceMinecart dropItem;
   public EntityGoldFurnaceMinecart(World worldIn) {
     super(worldIn);
     this.setDisplayTile(this.getDefaultDisplayTile());
@@ -51,4 +55,15 @@ public class EntityGoldFurnaceMinecart extends EntityMinecartFurnace {
       }
     }
   } 
+  @Override
+  public void killMinecart(DamageSource source) {
+    this.setDead();
+    if (this.world.getGameRules().getBoolean("doEntityDrops")) {
+      ItemStack itemstack = new ItemStack(dropItem);
+      if (this.hasCustomName()) {
+        itemstack.setStackDisplayName(this.getCustomNameTag());
+      }
+      this.entityDropItem(itemstack, 0.0F);
+    }
+  }
 }

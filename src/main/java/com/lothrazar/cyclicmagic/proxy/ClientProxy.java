@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.proxy;
 import org.lwjgl.input.Keyboard;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.IBlockHasTESR;
+import com.lothrazar.cyclicmagic.entity.EntityGoldFurnaceMinecart;
 import com.lothrazar.cyclicmagic.entity.EntityGoldMinecart;
 import com.lothrazar.cyclicmagic.entity.RenderGoldMinecart;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityBlazeBolt;
@@ -106,6 +107,7 @@ public class ClientProxy extends CommonProxy {
     // Minecraft.getMinecraft().getRenderItem()));
 
     RenderingRegistry.registerEntityRenderingHandler(EntityGoldMinecart.class,new RenderGoldMinecart(rm));
+    RenderingRegistry.registerEntityRenderingHandler(EntityGoldFurnaceMinecart.class,new RenderGoldMinecart(rm));
     
     
     RenderingRegistry.registerEntityRenderingHandler(EntityLightningballBolt.class, new RenderSnowball(rm, EntityLightningballBolt.renderSnowball, ri));
