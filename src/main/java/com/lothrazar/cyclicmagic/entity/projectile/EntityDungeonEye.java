@@ -116,7 +116,7 @@ public class EntityDungeonEye extends EntityThrowableDispensable {
     }
   }
   @Override
-  protected void onImpact(RayTraceResult mop) {
+  protected void processImpact(RayTraceResult mop) {
     this.setDead();// does not pass through walls or entities
   }
 }

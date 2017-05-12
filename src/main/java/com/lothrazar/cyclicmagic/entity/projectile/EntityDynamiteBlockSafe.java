@@ -25,7 +25,7 @@ public class EntityDynamiteBlockSafe extends EntityThrowableDispensable {
     this.explosionLevel = strength;
   }
   @Override
-  protected void onImpact(RayTraceResult mop) {
+  protected void processImpact(RayTraceResult mop) {
     ExplosionBlockSafe explosion = new ExplosionBlockSafe(this.getEntityWorld(), this.getThrower(), posX, posY, posZ, explosionLevel, false, true);
     explosion.doExplosionA();
     explosion.doExplosionB(false);

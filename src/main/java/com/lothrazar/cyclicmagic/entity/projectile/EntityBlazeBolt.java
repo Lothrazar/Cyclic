@@ -27,7 +27,7 @@ public class EntityBlazeBolt extends EntityThrowableDispensable {
     super(worldIn, x, y, z);
   }
   @Override
-  protected void onImpact(RayTraceResult mop) {
+  protected void processImpact(RayTraceResult mop) {
     if (mop.entityHit != null) {
       // do the snowball damage, which should be none. put out the fire
       if (damageEntityOnHit) {
