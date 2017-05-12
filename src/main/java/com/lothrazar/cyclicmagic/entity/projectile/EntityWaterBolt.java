@@ -24,7 +24,7 @@ public class EntityWaterBolt extends EntityThrowableDispensable {
   }
   public static final int nether = -1;
   @Override
-  protected void onImpact(RayTraceResult mop) {
+  protected void processImpact(RayTraceResult mop) {
     if (mop.entityHit != null) {
       if (mop.entityHit instanceof EntityLivingBase) {
         EntityLivingBase e = (EntityLivingBase) mop.entityHit;

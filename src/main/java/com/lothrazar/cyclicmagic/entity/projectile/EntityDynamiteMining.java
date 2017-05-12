@@ -25,7 +25,7 @@ public class EntityDynamiteMining extends EntityThrowableDispensable {
     this.explosionLevel = strength;
   }
   @Override
-  protected void onImpact(RayTraceResult mop) {
+  protected void processImpact(RayTraceResult mop) {
     ExplosionMining explosion = new ExplosionMining(this.getEntityWorld(), this.getThrower(), posX, posY, posZ, explosionLevel, false, true);
     explosion.doExplosionA();
     explosion.doExplosionB(false);

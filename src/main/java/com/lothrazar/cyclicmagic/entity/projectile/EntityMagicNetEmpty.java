@@ -24,8 +24,7 @@ public class EntityMagicNetEmpty extends EntityThrowableDispensable {
     super(worldIn, x, y, z);
   }
   @Override
-  protected void onImpact(RayTraceResult mop) {
-    if (this.isDead) { return; }
+  protected void processImpact(RayTraceResult mop) {
     if (mop.entityHit != null && mop.entityHit instanceof EntityLivingBase && (mop.entityHit instanceof EntityPlayer) == false) {
       ItemStack captured = new ItemStack(renderSnowball);
       NBTTagCompound entity = new NBTTagCompound();

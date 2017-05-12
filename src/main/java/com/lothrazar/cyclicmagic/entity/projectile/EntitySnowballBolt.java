@@ -30,7 +30,7 @@ public class EntitySnowballBolt extends EntityThrowableDispensable {
     super(worldIn, x, y, z);
   }
   @Override
-  protected void onImpact(RayTraceResult mop) {
+  protected void processImpact(RayTraceResult mop) {
     World world = getEntityWorld();
     if (mop.entityHit != null && mop.entityHit instanceof EntityLivingBase) {
       EntityLivingBase e = (EntityLivingBase) mop.entityHit;

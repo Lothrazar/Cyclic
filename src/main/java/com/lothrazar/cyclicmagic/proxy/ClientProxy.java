@@ -102,7 +102,6 @@ public class ClientProxy extends CommonProxy {
       ClientRegistry.registerKeyBinding(ClientProxy.keyExtraCraftin);
     }
   }
-  @SuppressWarnings({ "unchecked", "rawtypes", "deprecation" })
   private void registerEntities() {
     RenderManager rm = Minecraft.getMinecraft().getRenderManager();
     RenderItem ri = Minecraft.getMinecraft().getRenderItem();
@@ -113,19 +112,19 @@ public class ClientProxy extends CommonProxy {
     RenderingRegistry.registerEntityRenderingHandler(EntityStoneMinecart.class, RenderCyclicMinecart.FACTORY_STONE_FURNACE);
     //the projectiles too
     RenderingRegistry.registerEntityRenderingHandler(EntityLightningballBolt.class, RenderProjectile.FACTORY_LIGHTNING);
-    RenderingRegistry.registerEntityRenderingHandler(EntityHarvestBolt.class, new RenderProjectile(rm, EntityHarvestBolt.renderSnowball, ri));
-    RenderingRegistry.registerEntityRenderingHandler(EntityWaterBolt.class, new RenderProjectile(rm, EntityWaterBolt.renderSnowball, ri));
-    RenderingRegistry.registerEntityRenderingHandler(EntitySnowballBolt.class, new RenderProjectile(rm, EntitySnowballBolt.renderSnowball, ri));
-    RenderingRegistry.registerEntityRenderingHandler(EntityTorchBolt.class, new RenderProjectile(rm, EntityTorchBolt.renderSnowball, ri));
-    RenderingRegistry.registerEntityRenderingHandler(EntityFishingBolt.class, new RenderProjectile(rm, EntityFishingBolt.renderSnowball, ri));
-    RenderingRegistry.registerEntityRenderingHandler(EntityShearingBolt.class, new RenderProjectile(rm, EntityShearingBolt.renderSnowball, ri));
-    RenderingRegistry.registerEntityRenderingHandler(EntityDungeonEye.class, new RenderProjectile(rm, EntityDungeonEye.renderSnowball, ri));
-    RenderingRegistry.registerEntityRenderingHandler(EntityDynamite.class, new RenderProjectile(rm, EntityDynamite.renderSnowball, ri));
-    RenderingRegistry.registerEntityRenderingHandler(EntityBlazeBolt.class, new RenderProjectile(rm, EntityBlazeBolt.renderSnowball, ri));
-    RenderingRegistry.registerEntityRenderingHandler(EntityDynamiteMining.class, new RenderProjectile(rm, EntityDynamiteMining.renderSnowball, ri));
-    RenderingRegistry.registerEntityRenderingHandler(EntityDynamiteBlockSafe.class, new RenderProjectile(rm, EntityDynamiteBlockSafe.renderSnowball, ri));
-    RenderingRegistry.registerEntityRenderingHandler(EntityMagicNetFull.class, new RenderProjectile(rm, EntityMagicNetFull.renderSnowball, ri));
-    RenderingRegistry.registerEntityRenderingHandler(EntityMagicNetEmpty.class, new RenderProjectile(rm, EntityMagicNetEmpty.renderSnowball, ri));
+    RenderingRegistry.registerEntityRenderingHandler(EntityHarvestBolt.class,RenderProjectile.FACTORY_HARVEST );
+    RenderingRegistry.registerEntityRenderingHandler(EntityWaterBolt.class, RenderProjectile.FACTORY_WATER);
+    RenderingRegistry.registerEntityRenderingHandler(EntitySnowballBolt.class, RenderProjectile.FACTORY_SNOW);
+    RenderingRegistry.registerEntityRenderingHandler(EntityTorchBolt.class, RenderProjectile.FACTORY_TORCH);
+    RenderingRegistry.registerEntityRenderingHandler(EntityFishingBolt.class, RenderProjectile.FACTORY_FISH);
+    RenderingRegistry.registerEntityRenderingHandler(EntityShearingBolt.class, RenderProjectile.FACTORY_SHEAR);
+    RenderingRegistry.registerEntityRenderingHandler(EntityDungeonEye.class, RenderProjectile.FACTORY_DUNG);
+    RenderingRegistry.registerEntityRenderingHandler(EntityDynamite.class, RenderProjectile.FACTORY_DYN);
+    RenderingRegistry.registerEntityRenderingHandler(EntityBlazeBolt.class, RenderProjectile.FACTORY_FIRE);
+    RenderingRegistry.registerEntityRenderingHandler(EntityDynamiteMining.class, RenderProjectile.FACTORY_DYNMINING);
+    RenderingRegistry.registerEntityRenderingHandler(EntityDynamiteBlockSafe.class, RenderProjectile.FACTORY_DYNSAVE);
+    RenderingRegistry.registerEntityRenderingHandler(EntityMagicNetFull.class, RenderProjectile.FACTORY_BALL);
+    RenderingRegistry.registerEntityRenderingHandler(EntityMagicNetEmpty.class, RenderProjectile.FACTORY_BALLEMPTY);
   }
   @SideOnly(Side.CLIENT)
   @Override
