@@ -1,11 +1,8 @@
 package com.lothrazar.cyclicmagic.item;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.entity.EntityCarryMinecart;
-import com.lothrazar.cyclicmagic.entity.EntityGoldMinecart;
 import net.minecraft.block.BlockRailBase;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.item.EntityMinecart;
-import net.minecraft.entity.item.EntityMinecartEmpty;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -18,10 +15,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class ItemCarryMinecart extends BaseItem implements IHasRecipe {
-  public ItemCarryMinecart() {
+public class ItemStoneMinecart extends BaseItem implements IHasRecipe {
+  public ItemStoneMinecart() {
     super();
-    this.maxStackSize = 1;
+    this.maxStackSize = 16;
   }
   public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
     IBlockState iblockstate = worldIn.getBlockState(pos);

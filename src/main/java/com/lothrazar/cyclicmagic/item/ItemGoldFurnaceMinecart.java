@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class ItemGoldFurnaceMinecart extends BaseItem implements IHasRecipe {
   public ItemGoldFurnaceMinecart() {
     super();
-    this.maxStackSize = 1;
+    this.maxStackSize = 16;
     
   }
   public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {

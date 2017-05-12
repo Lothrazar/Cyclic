@@ -3,8 +3,6 @@ import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.entity.EntityGoldMinecart;
 import net.minecraft.block.BlockRailBase;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.item.EntityMinecart;
-import net.minecraft.entity.item.EntityMinecartEmpty;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -19,7 +17,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class ItemGoldMinecart extends BaseItem implements IHasRecipe {
   public ItemGoldMinecart() {
     super();
-    this.maxStackSize = 1;
+    this.maxStackSize = 16;
   }
   public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
     IBlockState iblockstate = worldIn.getBlockState(pos);
