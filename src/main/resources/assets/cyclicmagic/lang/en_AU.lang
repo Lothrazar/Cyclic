@@ -704,7 +704,7 @@ guide.category.itemthrow=Projectiles
 guide.category.itembaubles=Passive Items
 guide.category.blockplate=Plate Blocks
 
-enchantment.reach.guide=Increases your building and mining reach to $0.  Rarity is $0
+enchantment.reach.guide=Increases your building and mining reach to $0.  Rarity is $1
 enchantment.expboost.guide=Increases experience drops per kill by $0 per level.  Rarity is $1
 enchantment.autosmelt.guide=Smelts whatever you harvest with this tool.  Rarity is $0
 enchantment.launch.guide=Gives you the power of multi jump (double jump) when enchanted on boots.  One extra jump per level, after that a cooldown of $0 ticks.  Rarity is $1
