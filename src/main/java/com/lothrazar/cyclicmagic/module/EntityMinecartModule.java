@@ -19,6 +19,7 @@ public class EntityMinecartModule extends BaseModule implements IHasConfig {
   private boolean stoneMinecart;
   private boolean chestMinecart;
   private boolean dropperMinecart;
+  private boolean dispenserMinecart;
   @Override
   public void onPreInit() {
     if (goldMinecart) {
@@ -37,16 +38,15 @@ public class EntityMinecartModule extends BaseModule implements IHasConfig {
       EntityStoneMinecart.dropItem = stone_minecart;
       EntityProjectileRegistry.registerModEntity(EntityStoneMinecart.class, "stoneminecart", 1102);
     }
-    if(chestMinecart){
-
+    if (chestMinecart) {
       EntityProjectileRegistry.registerModEntity(EntityGoldMinecartChest.class, "goldchestminecart", 1103);
     }
-    if(dropperMinecart){
-
+    if (dropperMinecart) {
       EntityProjectileRegistry.registerModEntity(EntityGoldMinecartDropper.class, "golddropperminecart", 1104);
     }
-    
-    EntityProjectileRegistry.registerModEntity(EntityGoldMinecartDispenser.class, "golddispenserminecart", 1105);
+    if (dispenserMinecart) {
+      EntityProjectileRegistry.registerModEntity(EntityGoldMinecartDispenser.class, "golddispenserminecart", 1105);
+    }
     //if i have a mob on a LEAD< i can put it in a minecart with thehit
     //maybe 2 passengers..?? idk
     //connect together??
@@ -57,6 +57,10 @@ public class EntityMinecartModule extends BaseModule implements IHasConfig {
   }
   @Override
   public void syncConfig(Configuration config) {
+    chestMinecart = config.getBoolean("GoldChestMinecart", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    dropperMinecart = config.getBoolean("GoldDropperMinecart", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    dispenserMinecart = config.getBoolean("GoldDispenserMinecart", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    //    goldMinecart = config.getBoolean("GoldMinecart", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     goldMinecart = config.getBoolean("GoldMinecart", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     stoneMinecart = config.getBoolean("StoneMinecart", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
