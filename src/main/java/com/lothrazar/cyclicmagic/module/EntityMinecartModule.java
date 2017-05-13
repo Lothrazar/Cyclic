@@ -2,6 +2,9 @@ package com.lothrazar.cyclicmagic.module;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.entity.EntityGoldFurnaceMinecart;
 import com.lothrazar.cyclicmagic.entity.EntityGoldMinecart;
+import com.lothrazar.cyclicmagic.entity.EntityGoldMinecartChest;
+import com.lothrazar.cyclicmagic.entity.EntityGoldMinecartDispenser;
+import com.lothrazar.cyclicmagic.entity.EntityGoldMinecartDropper;
 import com.lothrazar.cyclicmagic.entity.EntityStoneMinecart;
 import com.lothrazar.cyclicmagic.item.ItemGoldFurnaceMinecart;
 import com.lothrazar.cyclicmagic.item.ItemGoldMinecart;
@@ -32,6 +35,9 @@ public class EntityMinecartModule extends BaseModule implements IHasConfig {
       EntityStoneMinecart.dropItem = stone_minecart;
       EntityProjectileRegistry.registerModEntity(EntityStoneMinecart.class, "stoneminecart", 1102);
     }
+    EntityProjectileRegistry.registerModEntity(EntityGoldMinecartChest.class, "goldchestminecart", 1103);
+    EntityProjectileRegistry.registerModEntity(EntityGoldMinecartDropper.class, "golddispenserminecart", 1104);
+    EntityProjectileRegistry.registerModEntity(EntityGoldMinecartDispenser.class, "golddropperminecart", 1104);
     //if i have a mob on a LEAD< i can put it in a minecart with thehit
     //maybe 2 passengers..?? idk
     //connect together??
