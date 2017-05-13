@@ -36,8 +36,8 @@ public class EntityMinecartModule extends BaseModule implements IHasConfig {
       EntityProjectileRegistry.registerModEntity(EntityStoneMinecart.class, "stoneminecart", 1102);
     }
     EntityProjectileRegistry.registerModEntity(EntityGoldMinecartChest.class, "goldchestminecart", 1103);
-    EntityProjectileRegistry.registerModEntity(EntityGoldMinecartDropper.class, "golddispenserminecart", 1104);
-    EntityProjectileRegistry.registerModEntity(EntityGoldMinecartDispenser.class, "golddropperminecart", 1104);
+    EntityProjectileRegistry.registerModEntity(EntityGoldMinecartDispenser.class, "golddispenserminecart", 1104);
+    EntityProjectileRegistry.registerModEntity(EntityGoldMinecartDropper.class, "golddropperminecart", 1104);
     //if i have a mob on a LEAD< i can put it in a minecart with thehit
     //maybe 2 passengers..?? idk
     //connect together??
