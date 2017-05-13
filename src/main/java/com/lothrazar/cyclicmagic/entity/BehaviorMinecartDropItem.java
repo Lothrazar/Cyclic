@@ -30,7 +30,6 @@ public class BehaviorMinecartDropItem implements IBehaviorDispenseItem {
   }
 
   public EnumFacing getFacing(IBlockState state) {
-    System.out.println("SOURCE"+state);
     if(state.getBlock() == Blocks.ACTIVATOR_RAIL){
     EnumRailDirection dir=  state.getValue(BlockRailPowered.SHAPE);
     switch(dir){

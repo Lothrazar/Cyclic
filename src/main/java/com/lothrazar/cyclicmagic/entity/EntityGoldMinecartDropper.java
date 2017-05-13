@@ -10,10 +10,14 @@ import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ContainerDispenser;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class EntityGoldMinecartDropper extends EntityMinecartChest {
+  private static final int TIME_BTW_DROPS = 20;
+  private int timeSinceDropped = 0;
+  BehaviorMinecartDropItem drop = new BehaviorMinecartDropItem();
   public EntityGoldMinecartDropper(World worldIn) {
     super(worldIn);
   }
@@ -35,31 +39,39 @@ public class EntityGoldMinecartDropper extends EntityMinecartChest {
     this.addLoot(playerIn);
     return new ContainerDispenser(playerInventory, this);
   }
-  BehaviorMinecartDropItem drop = new BehaviorMinecartDropItem();
+  @Override
+  protected void writeEntityToNBT(NBTTagCompound compound) {
+    compound.setInteger("tdr", timeSinceDropped);
+    super.writeEntityToNBT(compound);
+  }
+  @Override
+  protected void readEntityFromNBT(NBTTagCompound compound) {
+    timeSinceDropped = compound.getInteger("tdr");
+    super.readEntityFromNBT(compound);
+  }
   @Override
   public void onActivatorRailPass(int x, int y, int z, boolean receivingPower) {
-//    System.out.println("receivingPower"+receivingPower);
+    //    System.out.println("receivingPower"+receivingPower);
     if (receivingPower) {
-  
       //      this.minecartContainerItems.get(p_get_1_) 
       this.dispense(this.world, new BlockPos(x, y, z));
     }
   }
-  
-
   protected void dispense(World worldIn, BlockPos pos) {
- 
+    if (this.timeSinceDropped > 0) {
+      this.timeSinceDropped--;
+      return;
+    }
     BlockSourceImpl source = new BlockSourceImpl(worldIn, pos);
- 
     int i = this.getDispenseSlot(world.rand);
     if (i < 0) {
       worldIn.playEvent(1001, pos, 0);
     }
     else {
-      ItemStack itemstack = this.getStackInSlot(i); 
+      ItemStack itemstack = this.getStackInSlot(i);
       this.setInventorySlotContents(i, this.drop.dispense(source, itemstack));
+      this.timeSinceDropped = TIME_BTW_DROPS;
     }
- 
   }
   /**
    * from TileEntityDispenser
