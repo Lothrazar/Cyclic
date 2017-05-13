@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.entity;
 import java.util.Random;
 import net.minecraft.block.BlockSourceImpl;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.dispenser.IBehaviorDispenseItem;
 import net.minecraft.entity.item.EntityMinecartChest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
