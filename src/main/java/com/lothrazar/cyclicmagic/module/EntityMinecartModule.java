@@ -17,6 +17,8 @@ import net.minecraftforge.common.config.Configuration;
 public class EntityMinecartModule extends BaseModule implements IHasConfig {
   private boolean goldMinecart;
   private boolean stoneMinecart;
+  private boolean chestMinecart;
+  private boolean dropperMinecart;
   @Override
   public void onPreInit() {
     if (goldMinecart) {
@@ -35,9 +37,16 @@ public class EntityMinecartModule extends BaseModule implements IHasConfig {
       EntityStoneMinecart.dropItem = stone_minecart;
       EntityProjectileRegistry.registerModEntity(EntityStoneMinecart.class, "stoneminecart", 1102);
     }
-    EntityProjectileRegistry.registerModEntity(EntityGoldMinecartChest.class, "goldchestminecart", 1103);
-    EntityProjectileRegistry.registerModEntity(EntityGoldMinecartDispenser.class, "golddispenserminecart", 1104);
-    EntityProjectileRegistry.registerModEntity(EntityGoldMinecartDropper.class, "golddropperminecart", 1104);
+    if(chestMinecart){
+
+      EntityProjectileRegistry.registerModEntity(EntityGoldMinecartChest.class, "goldchestminecart", 1103);
+    }
+    if(dropperMinecart){
+
+      EntityProjectileRegistry.registerModEntity(EntityGoldMinecartDropper.class, "golddropperminecart", 1104);
+    }
+    
+    EntityProjectileRegistry.registerModEntity(EntityGoldMinecartDispenser.class, "golddispenserminecart", 1105);
     //if i have a mob on a LEAD< i can put it in a minecart with thehit
     //maybe 2 passengers..?? idk
     //connect together??

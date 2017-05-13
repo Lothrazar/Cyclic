@@ -51,7 +51,6 @@ public class EntityGoldMinecartDropper extends EntityMinecartChest {
   }
   @Override
   public void onActivatorRailPass(int x, int y, int z, boolean receivingPower) {
-    //    System.out.println("receivingPower"+receivingPower);
     if (receivingPower) {
       //      this.minecartContainerItems.get(p_get_1_) 
       this.dispense(this.world, new BlockPos(x, y, z));
