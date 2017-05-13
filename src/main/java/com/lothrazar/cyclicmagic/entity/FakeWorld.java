@@ -1,6 +1,8 @@
 package com.lothrazar.cyclicmagic.entity;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -11,6 +13,7 @@ import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.List;
+import javax.annotation.Nonnull;
 import com.lothrazar.cyclicmagic.ModCyclic;
 
 /**
@@ -18,11 +21,12 @@ import com.lothrazar.cyclicmagic.ModCyclic;
  *         https://github.com/BrassGoggledCoders/MoarCarts/blob/9c841d7b9345b6231a929e0b3c3f9746c3d020b1/src/main/java/xyz/brassgoggledcoders/moarcarts/entities/EntityMinecartBase.java
  *         Which is a repo using MIT License
  *         https://github.com/BrassGoggledCoders/MoarCarts/blob/9c841d7b9345b6231a929e0b3c3f9746c3d020b1/LICENSE
- * after this I also made my own changes
- * alternate version i also used for reference
- * https://github.com/BrassGoggledCoders/OpenTransport/blob/cc2208684ddf1b3db13863722a484f9f41c255f4/src/main/java/xyz/brassgoggledcoders/opentransport/api/wrappers/world/WorldWrapper.java
+ *         after this I also made my own changes alternate version i also used
+ *         for reference
+ *         https://github.com/BrassGoggledCoders/OpenTransport/blob/cc2208684ddf1b3db13863722a484f9f41c255f4/src/main/java/xyz/brassgoggledcoders/opentransport/api/wrappers/world/WorldWrapper.java
  */
 public class FakeWorld extends World {
+  private BlockPos originPos = new BlockPos(0, 0, 0);
   private EntityGoldMinecartDispenser entityMinecartBase;
   public FakeWorld(EntityGoldMinecartDispenser entityMinecartBase) {
     this(entityMinecartBase.world, entityMinecartBase);
@@ -37,12 +41,12 @@ public class FakeWorld extends World {
     return chunkProvider;
   }
   @Override
-  public boolean spawnEntity(Entity entityIn) {
-//    ModCyclic.logger.info("spawnEntity fakeworld " + entityIn);
-//    ModCyclic.logger.info("spawnEntity fakeworld " + entityIn.getPosition());
-    entityIn.posY++;//dirty hack to fix selfcollission.... TOOD: better wah is horizontal offset, put it in FRONT of the thing
-    
-    return this.getCartWorld().spawnEntity(entityIn);
+  public boolean spawnEntity(Entity entity) {
+    entity.posX = this.getPosX();
+    entity.posY = this.getPosY()+2;
+    entity.posZ = this.getPosZ();
+    entity.forceSpawn = true;
+    return this.getCartWorld().spawnEntity(entity);
   }
   @Override
   @SideOnly(Side.CLIENT)
@@ -51,11 +55,28 @@ public class FakeWorld extends World {
   }
   @Override
   public Entity getEntityByID(int id) {
-    return this.getEntityMinecartBase().world.getEntityByID(id);
+    return this.getCartWorld().getEntityByID(id);
+  }
+  @Override
+  public void addBlockEvent(@Nonnull BlockPos pos, Block blockIn, int eventID, int eventParam) {
+    this.entityMinecartBase.getDisplayTile().onBlockEventReceived(this, pos, eventID, eventParam);
   }
   @Override
   public IBlockState getBlockState(BlockPos blockPos) {
-    return this.getEntityMinecartBase().getDisplayTile();
+    if (blockPos.equals(originPos) || blockPos.getY() < 0 || 
+        blockPos.equals(this.getEntityMinecartBase().getPosition())) {
+      return this.getEntityMinecartBase().getDisplayTile();
+      }
+    System.out.println("blockPosblockPos?"+blockPos);
+    System.out.println("FFF?"+this.getEntityMinecartBase().getPosition());
+    return Blocks.AIR.getDefaultState();
+  }
+  @Override
+  public TileEntity getTileEntity(@Nonnull BlockPos blockPos) {
+    if (blockPos.equals(originPos)) {
+      return null;//TODO? this.getBlockWrapper().getTileEntity();
+  }
+  return null;
   }
   @Override
   public <T extends Entity> List<T> getEntitiesWithinAABB(Class<? extends T> entityClass, AxisAlignedBB axisAlignedBB) {
@@ -77,6 +98,15 @@ public class FakeWorld extends World {
   }
   public void setEntityMinecartBase(EntityGoldMinecartDispenser entityMinecartBase) {
     this.entityMinecartBase = entityMinecartBase;
+  }
+  public double getPosX() {
+    return this.getEntityMinecartBase().posX;
+  }
+  public double getPosY() {
+    return this.getEntityMinecartBase().posY;
+  }
+  public double getPosZ() {
+    return this.getEntityMinecartBase().posZ;
   }
   public World getCartWorld() {
     return this.getEntityMinecartBase().world;
