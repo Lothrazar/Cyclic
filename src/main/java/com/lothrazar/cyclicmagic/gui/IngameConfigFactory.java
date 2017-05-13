@@ -17,7 +17,6 @@ public class IngameConfigFactory implements IModGuiFactory {
   }
   // remove in 1.11 - this was never fully implemented and will be removed
   //but i cant remove it NOW, the interface requires it here. but its safe to ignore this warning
-  @SuppressWarnings("deprecation")
   @Override
   public RuntimeOptionGuiHandler getHandlerFor(RuntimeOptionCategoryElement element) {
     return null;

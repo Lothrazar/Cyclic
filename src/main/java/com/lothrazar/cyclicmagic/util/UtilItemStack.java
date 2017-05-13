@@ -66,7 +66,6 @@ public class UtilItemStack {
    * @param meta
    * @return
    */
-  @SuppressWarnings("deprecation")
   public static IBlockState getStateFromMeta(Block b, int meta) {
     return b.getStateFromMeta(meta);
   }
