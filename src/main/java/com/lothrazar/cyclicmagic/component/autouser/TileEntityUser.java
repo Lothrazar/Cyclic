@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.component.autouser;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -12,14 +13,18 @@ import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilShape;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeMap;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.item.EntityMinecart;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -113,12 +118,13 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     BlockPos entityCenter = this.getPos().offset(this.getCurrentFacing(), 1);
     int vRange = 1;
     AxisAlignedBB entityRange = UtilEntity.makeBoundingBox(entityCenter, size + 1, vRange);
-    List<EntityLivingBase> all = world.getEntitiesWithinAABB(EntityLivingBase.class, entityRange);
+    List<? extends Entity> living = world.getEntitiesWithinAABB(EntityLivingBase.class, entityRange);
+    List<? extends Entity> carts = world.getEntitiesWithinAABB(EntityMinecart.class, entityRange);
+    List<Entity> all = new ArrayList<Entity>(living);
+    all.addAll(carts);//works since  they share a base class but no overlap
     if (rightClickIfZero == 0) {//right click entities and blocks
-      //              this.rightClickBlock(targetPos);
-      //this.getWorld().markChunkDirty(this.getPos(), this);
       this.getWorld().markChunkDirty(targetPos, this);
-      for (EntityLivingBase ent : all) {
+      for (Entity ent : all) {//both living and minecarts
         // on the line below: NullPointerException  at com.lothrazar.cyclicmagic.block.tileentity.TileMachineUser.func_73660_a(TileMachineUser.java:101)
         if (world.isRemote == false &&
             ent != null && ent.isDead == false
@@ -131,12 +137,14 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         }
       }
     }
-    else { // left click entities and blocks
-      //              AxisAlignedBB range = UtilEntity.makeBoundingBox(entityCenter, 1, 1);
-      //              List<EntityLivingBase> all = world.getEntitiesWithinAABB(EntityLivingBase.class, range);
+    else { // left click entities and blocks 
       ItemStack held = fakePlayer.get().getHeldItemMainhand();
       fakePlayer.get().onGround = true;
-      for (EntityLivingBase ent : all) {
+      for (Entity e : living) {// only living, not minecarts
+        EntityLivingBase ent = (EntityLivingBase) e;
+        if (e == null) {
+          continue;
+        } //wont happen eh
         fakePlayer.get().attackTargetEntityWithCurrentItem(ent);
         //THANKS TO FORUMS http://www.minecraftforge.net/forum/index.php?topic=43152.0
         IAttributeInstance damage = new AttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
@@ -152,6 +160,8 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     }
   }
   private void rightClickBlock(BlockPos targetPos) {
+    if (Block.getBlockFromItem(fakePlayer.get().getHeldItemMainhand().getItem()) != Blocks.AIR) { return; }
+    //dont ever place a block. they want to use it on an entity
     fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
   }
   private void tryDumpFakePlayerInvo() {

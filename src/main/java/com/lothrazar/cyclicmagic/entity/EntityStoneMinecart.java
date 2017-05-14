@@ -9,6 +9,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class EntityStoneMinecart extends EntityMinecartFurnace {
@@ -31,18 +32,6 @@ public class EntityStoneMinecart extends EntityMinecartFurnace {
     }
   }
   @Override
-  public void killMinecart(DamageSource source) {
-    this.setDead();
-    if (this.world.getGameRules().getBoolean("doEntityDrops")) {
-      dropCartBlock();
-      ItemStack itemstack = new ItemStack(dropItem);
-      if (this.hasCustomName()) {
-        itemstack.setStackDisplayName(this.getCustomNameTag());
-      }
-      this.entityDropItem(itemstack, 0.0F);
-    }
-  }
-  @Override
   public boolean processInitialInteract(EntityPlayer player, EnumHand hand) {
     if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.event.entity.minecart.MinecartInteractEvent(this, player, hand))) return true;
     ItemStack held = player.getHeldItem(hand);
@@ -54,6 +43,24 @@ public class EntityStoneMinecart extends EntityMinecartFurnace {
     return true;
   }
 
+  @Override
+  public void onActivatorRailPass(int x, int y, int z, boolean receivingPower) {
+    if (receivingPower) {
+      this.setCartBlock(Blocks.AIR.getDefaultState());
+    }
+  }
+  @Override
+  public void killMinecart(DamageSource source) {
+    this.setDead();
+    if (this.world.getGameRules().getBoolean("doEntityDrops")) {
+      dropCartBlock();
+      ItemStack itemstack = getCartItem();
+      if (this.hasCustomName()) {
+        itemstack.setStackDisplayName(this.getCustomNameTag());
+      }
+      this.entityDropItem(itemstack, 0.0F);
+    }
+  }
   @Override
   public ItemStack getCartItem() {
     return new ItemStack(dropItem);

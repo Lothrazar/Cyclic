@@ -23,7 +23,7 @@ public class ContainerUser extends ContainerBaseMachine {
   public ContainerUser(InventoryPlayer inventoryPlayer, TileEntityUser te) {
     tileEntity = te;
     for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
-      addSlotToContainer(new SlotOnlyItems(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY));
+      addSlotToContainer(new Slot(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY));
     }
     // commonly used vanilla code that adds the player's inventory
     bindPlayerInventory(inventoryPlayer);

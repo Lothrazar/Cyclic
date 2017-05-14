@@ -3,25 +3,19 @@ import java.util.Random;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.block.BlockRailBase;
-import net.minecraft.block.BlockRailPowered;
 import net.minecraft.block.BlockSourceImpl;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.dispenser.IBehaviorDispenseItem;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityMinecartChest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ContainerDispenser;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class EntityGoldMinecartDispenser extends EntityMinecartChest {

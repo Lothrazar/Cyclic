@@ -41,6 +41,13 @@ public class RenderCyclicMinecart<T extends EntityMinecart> extends RenderMineca
       return new RenderCyclicMinecart<EntityStoneMinecart>(rm,new ResourceLocation(Const.MODID, "textures/entity/stone_minecart.png"));
     }
   }
+  public static final FactoryTurret FACTORY_TURRET = new FactoryTurret();
+  public static class FactoryTurret implements IRenderFactory<EntityMinecartTurret> {
+    @Override
+    public Render<? super EntityMinecartTurret> createRenderFor(RenderManager rm) {
+      return new RenderCyclicMinecart<EntityMinecartTurret>(rm,new ResourceLocation(Const.MODID, "textures/entity/gold_minecart.png"));
+    }
+  }
   //we might not have NEEDED to clone entire class, really its just texture swap eh
   //BUT inside the stupid factory we odnt know wha to pass it so now im forced to do thsi
   public RenderCyclicMinecart(RenderManager renderManagerIn,ResourceLocation t) {
