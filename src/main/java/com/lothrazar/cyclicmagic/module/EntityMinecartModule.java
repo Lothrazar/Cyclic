@@ -7,6 +7,7 @@ import com.lothrazar.cyclicmagic.entity.EntityGoldMinecartDispenser;
 import com.lothrazar.cyclicmagic.entity.EntityGoldMinecartDropper;
 import com.lothrazar.cyclicmagic.entity.EntityMinecartTurret;
 import com.lothrazar.cyclicmagic.entity.EntityStoneMinecart;
+import com.lothrazar.cyclicmagic.item.minecart.ItemDropperMinecart;
 import com.lothrazar.cyclicmagic.item.minecart.ItemGoldFurnaceMinecart;
 import com.lothrazar.cyclicmagic.item.minecart.ItemGoldMinecart;
 import com.lothrazar.cyclicmagic.item.minecart.ItemStoneMinecart;
@@ -45,12 +46,15 @@ public class EntityMinecartModule extends BaseModule implements IHasConfig {
       EntityProjectileRegistry.registerModEntity(EntityGoldMinecartChest.class, "goldchestminecart", 1103);
     }
     if (dropperMinecart) {
-      //BROKEN:
-      //it spawns entity in the world. so like an arrow, it flies to the arget but then magically teleports back o teh  cart position
-      //stop for now
+      ItemDropperMinecart dropper_minecart = new ItemDropperMinecart();
+      ItemRegistry.register(dropper_minecart, "dropper_minecart");
+      EntityGoldMinecartDropper.dropItem = dropper_minecart;
       EntityProjectileRegistry.registerModEntity(EntityGoldMinecartDropper.class, "golddropperminecart", 1104);
     }
     if (dispenserMinecart) {
+      //BROKEN:
+      //it spawns entity in the world. so like an arrow, it flies to the arget but then magically teleports back o teh  cart position
+      //stop for now
       EntityProjectileRegistry.registerModEntity(EntityGoldMinecartDispenser.class, "golddispenserminecart", 1105);
     }
     if (turretMinecart) {
@@ -70,8 +74,8 @@ public class EntityMinecartModule extends BaseModule implements IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     chestMinecart = false;// config.getBoolean("GoldChestMinecart", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    dropperMinecart = false;//config.getBoolean("GoldDropperMinecart", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     dispenserMinecart = false;//config.getBoolean("GoldDispenserMinecart", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
+    dropperMinecart = config.getBoolean("GoldDropperMinecart", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     turretMinecart = config.getBoolean("GoldTurretMinecart", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     goldMinecart = config.getBoolean("GoldMinecart", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     stoneMinecart = config.getBoolean("StoneMinecart", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
