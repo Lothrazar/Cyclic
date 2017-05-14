@@ -4,6 +4,7 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.entity.EntityGoldFurnaceMinecart;
 import com.lothrazar.cyclicmagic.entity.EntityGoldMinecart;
+import com.lothrazar.cyclicmagic.entity.EntityMinecartTurret;
 import com.lothrazar.cyclicmagic.entity.EntityStoneMinecart;
 import com.lothrazar.cyclicmagic.entity.RenderCyclicMinecart;
 import com.lothrazar.cyclicmagic.entity.projectile.EntityBlazeBolt;
@@ -105,6 +106,9 @@ public class ClientProxy extends CommonProxy {
     RenderingRegistry.registerEntityRenderingHandler(EntityGoldMinecart.class, RenderCyclicMinecart.FACTORY_GOLD);
     RenderingRegistry.registerEntityRenderingHandler(EntityGoldFurnaceMinecart.class, RenderCyclicMinecart.FACTORY_GOLD_FURNACE);
     RenderingRegistry.registerEntityRenderingHandler(EntityStoneMinecart.class, RenderCyclicMinecart.FACTORY_STONE_FURNACE);
+    RenderingRegistry.registerEntityRenderingHandler(EntityMinecartTurret.class, RenderCyclicMinecart.FACTORY_TURRET);
+    
+    
     //the projectiles too
     RenderingRegistry.registerEntityRenderingHandler(EntityLightningballBolt.class, RenderProjectile.FACTORY_LIGHTNING);
     RenderingRegistry.registerEntityRenderingHandler(EntityHarvestBolt.class,RenderProjectile.FACTORY_HARVEST );

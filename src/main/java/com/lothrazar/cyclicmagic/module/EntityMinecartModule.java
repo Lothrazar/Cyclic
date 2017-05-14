@@ -7,10 +7,10 @@ import com.lothrazar.cyclicmagic.entity.EntityGoldMinecartDispenser;
 import com.lothrazar.cyclicmagic.entity.EntityGoldMinecartDropper;
 import com.lothrazar.cyclicmagic.entity.EntityMinecartTurret;
 import com.lothrazar.cyclicmagic.entity.EntityStoneMinecart;
-import com.lothrazar.cyclicmagic.item.ItemGoldFurnaceMinecart;
-import com.lothrazar.cyclicmagic.item.ItemGoldMinecart;
-import com.lothrazar.cyclicmagic.item.ItemStoneMinecart;
-import com.lothrazar.cyclicmagic.item.ItemTurretMinecart;
+import com.lothrazar.cyclicmagic.item.minecart.ItemGoldFurnaceMinecart;
+import com.lothrazar.cyclicmagic.item.minecart.ItemGoldMinecart;
+import com.lothrazar.cyclicmagic.item.minecart.ItemStoneMinecart;
+import com.lothrazar.cyclicmagic.item.minecart.ItemTurretMinecart;
 import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -53,15 +53,11 @@ public class EntityMinecartModule extends BaseModule implements IHasConfig {
     if (dispenserMinecart) {
       EntityProjectileRegistry.registerModEntity(EntityGoldMinecartDispenser.class, "golddispenserminecart", 1105);
     }
-    if(turretMinecart){
-
+    if (turretMinecart) {
       ItemTurretMinecart turret_minecart = new ItemTurretMinecart();
       ItemRegistry.register(turret_minecart, "turret_minecart");
       EntityMinecartTurret.dropItem = turret_minecart;
-      
-    EntityProjectileRegistry.registerModEntity(EntityMinecartTurret.class, "turretminecart", 1106);
-    
-    
+      EntityProjectileRegistry.registerModEntity(EntityMinecartTurret.class, "turretminecart", 1106);
     }
     //if i have a mob on a LEAD< i can put it in a minecart with thehit
     //maybe 2 passengers..?? idk
