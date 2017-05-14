@@ -40,6 +40,7 @@ public class BlockConveyor extends BlockBasePressurePlate {
     this.setSoundType(SoundType.SLIME);
     power = p;
     sound = SoundEvents.BLOCK_ANVIL_BREAK;
+    this.setHardness(2.0F).setResistance(2.0F);
     //fixing y rotation in blockstate json: http://www.minecraftforge.net/forum/index.php?topic=25937.0
   }
   @Override

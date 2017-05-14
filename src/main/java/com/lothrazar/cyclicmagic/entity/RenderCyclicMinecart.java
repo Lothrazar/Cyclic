@@ -23,27 +23,34 @@ public class RenderCyclicMinecart<T extends EntityMinecart> extends RenderMineca
   public static final FactoryGold FACTORY_GOLD = new FactoryGold();
   public static class FactoryGold implements IRenderFactory<EntityGoldMinecart> {
     @Override
-    public Render<? super EntityGoldMinecart> createRenderFor(RenderManager manager) {
-      return new RenderCyclicMinecart<EntityGoldMinecart>(manager,new ResourceLocation(Const.MODID, "textures/entity/gold_minecart.png"));
+    public Render<? super EntityGoldMinecart> createRenderFor(RenderManager rm) {
+      return new RenderCyclicMinecart<EntityGoldMinecart>(rm, new ResourceLocation(Const.MODID, "textures/entity/gold_minecart.png"));
     }
   }
   public static final FactoryGoldFurnace FACTORY_GOLD_FURNACE = new FactoryGoldFurnace();
   public static class FactoryGoldFurnace implements IRenderFactory<EntityGoldFurnaceMinecart> {
     @Override
-    public Render<? super EntityGoldFurnaceMinecart> createRenderFor(RenderManager manager) {
-      return new RenderCyclicMinecart<EntityGoldFurnaceMinecart>(manager,new ResourceLocation(Const.MODID, "textures/entity/gold_minecart.png"));
+    public Render<? super EntityGoldFurnaceMinecart> createRenderFor(RenderManager rm) {
+      return new RenderCyclicMinecart<EntityGoldFurnaceMinecart>(rm, new ResourceLocation(Const.MODID, "textures/entity/gold_minecart.png"));
     }
   }
   public static final FactoryStoneFurnace FACTORY_STONE_FURNACE = new FactoryStoneFurnace();
   public static class FactoryStoneFurnace implements IRenderFactory<EntityStoneMinecart> {
     @Override
-    public Render<? super EntityStoneMinecart> createRenderFor(RenderManager manager) {
-      return new RenderCyclicMinecart<EntityStoneMinecart>(manager,new ResourceLocation(Const.MODID, "textures/entity/stone_minecart.png"));
+    public Render<? super EntityStoneMinecart> createRenderFor(RenderManager rm) {
+      return new RenderCyclicMinecart<EntityStoneMinecart>(rm, new ResourceLocation(Const.MODID, "textures/entity/stone_minecart.png"));
+    }
+  }
+  public static final FactoryTurret FACTORY_TURRET = new FactoryTurret();
+  public static class FactoryTurret implements IRenderFactory<EntityMinecartTurret> {
+    @Override
+    public Render<? super EntityMinecartTurret> createRenderFor(RenderManager rm) {
+      return new RenderCyclicMinecart<EntityMinecartTurret>(rm, new ResourceLocation(Const.MODID, "textures/entity/gold_minecart.png"));
     }
   }
   //we might not have NEEDED to clone entire class, really its just texture swap eh
   //BUT inside the stupid factory we odnt know wha to pass it so now im forced to do thsi
-  public RenderCyclicMinecart(RenderManager renderManagerIn,ResourceLocation t) {
+  public RenderCyclicMinecart(RenderManager renderManagerIn, ResourceLocation t) {
     super(renderManagerIn);
     this.shadowSize = 0.5F;
     texture = t;
@@ -108,7 +115,7 @@ public class RenderCyclicMinecart<T extends EntityMinecart> extends RenderMineca
       GlStateManager.pushMatrix();
       this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
       float f4 = 0.75F;
-      GlStateManager.scale(0.75F, 0.75F, 0.75F);
+      GlStateManager.scale(f4, f4, f4);
       GlStateManager.translate(-0.5F, (float) (j - 8) / 16.0F, 0.5F);
       this.renderCartContents(entity, partialTicks, iblockstate);
       GlStateManager.popMatrix();

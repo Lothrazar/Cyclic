@@ -1,15 +1,17 @@
 package com.lothrazar.cyclicmagic.entity;
 import net.minecraft.entity.MoverType;
-import net.minecraft.entity.item.EntityMinecartEmpty;
+import net.minecraft.entity.item.EntityMinecart;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class EntityGoldMinecart extends EntityMinecartEmpty {
+public class EntityGoldMinecart extends EntityMinecart {
   private static final double DRAG_RIDDEN = 0.95D;//vanilla reduces this 0.75
   public static Item dropItem = Items.MINECART;//override with gold minecart on registry, this is here just for nonnull
   public EntityGoldMinecart(World worldIn) {
@@ -77,5 +79,40 @@ public class EntityGoldMinecart extends EntityMinecartEmpty {
   @Override
   public ItemStack getCartItem() {
     return new ItemStack(dropItem);
+  }
+  /**
+   * Called every tick the minecart is on an activator rail.
+   */
+  public void onActivatorRailPass(int x, int y, int z, boolean receivingPower) {
+    if (receivingPower) {
+      if (this.isBeingRidden()) {
+        this.removePassengers();
+      }
+      if (this.getRollingAmplitude() == 0) {
+        this.setRollingDirection(-this.getRollingDirection());
+        this.setRollingAmplitude(10);
+        this.setDamage(50.0F);
+        this.setBeenAttacked();
+      }
+    }
+  }
+  public boolean processInitialInteract(EntityPlayer player, EnumHand hand) {
+    if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.event.entity.minecart.MinecartInteractEvent(this, player, hand))) return true;
+    if (player.isSneaking()) {
+      return false;
+    }
+    else if (this.isBeingRidden()) {
+      return true;
+    }
+    else {
+      if (!this.world.isRemote) {
+        player.startRiding(this);
+      }
+      return true;
+    }
+  }
+  @Override
+  public Type getType() {
+    return null;//EntityMinecart.Type.RIDEABLE;
   }
 }

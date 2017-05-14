@@ -189,7 +189,6 @@ public class ItemCyclicWand extends Item implements IHasRecipe, IHasConfig {
   @Override
   public void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.items;
-    config.getBoolean("Build Scepter HUD", category, true, "Deprecated; use Scepter HUD");
     //TODO: no good place to put this eh
     String renderLocation = config.getString("Scepter HUD", Const.ConfigCategory.items, RenderLoc.BOTTOMLEFT.toString().toLowerCase(), "Location of scepter Hud [topleft, topright, bottomleft, bottomright].  Used by both Exchange Scepters and Cyclic Build Scepter.  ");
     //fff...yeah probs better way to do this, like a loop.

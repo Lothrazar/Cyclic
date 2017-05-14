@@ -133,6 +133,5 @@ public class BlockUtilityModule extends BaseModule implements IHasConfig {
     enableBucketBlocks = config.getBoolean("BucketBlocks", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     fragileEnabled = config.getBoolean("ScaffoldingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     fishingBlock = config.getBoolean("FishingBlock", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
-    config.getFloat("AutoFisherSpeed", Const.ConfigCategory.modpackMisc, 0.07F, 0.01F, 0.99F, "[This config is deprecated.  Speed now depends on how much water is nearby].  Speed of the Auto fisher, bigger is faster.  0.07 is 7% chance.");
   }
 }

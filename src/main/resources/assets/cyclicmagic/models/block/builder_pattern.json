@@ -1,6 +1,7 @@
 {
     "parent": "block/cube_all",
     "textures": {
+		"particle":"blocks/redstone_block",
     	"0":"blocks/redstone_block",
     	"1":"blocks/stone",
 		"2":"blocks/magma",

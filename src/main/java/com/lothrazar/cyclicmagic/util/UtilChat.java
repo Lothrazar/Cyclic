@@ -1,6 +1,4 @@
 package com.lothrazar.cyclicmagic.util;
-import java.util.Arrays;
-import java.util.List;
 import java.util.StringTokenizer;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,7 +9,6 @@ import net.minecraft.util.text.translation.I18n;
 //import net.minecraft.client.resources.I18n;
 import net.minecraft.world.World;
 
-@SuppressWarnings("deprecation")
 public class UtilChat {
   public static void addChatMessage(EntityPlayer player, String text) {
     player.sendMessage(new TextComponentTranslation(lang(text)));
@@ -37,7 +34,7 @@ public class UtilChat {
   public static void addChatMessage(World worldObj, String s) {
     addChatMessage(worldObj, new TextComponentTranslation(s));
   }
-  public static List<String> splitIntoLine(String input, int maxCharInLine) {
+  public static String[] splitIntoLine(String input, int maxCharInLine) {
     // https://stackoverflow.com/questions/7528045/large-string-split-into-lines-with-maximum-length-in-java
     // better than spell.getInfo().split("(?<=\\G.{25})")
     StringTokenizer tok = new StringTokenizer(input, " ");
@@ -59,7 +56,7 @@ public class UtilChat {
     }
     // output.split();
     // return output.toString();
-    return Arrays.asList(output.toString().split("\n"));
+    return output.toString().split("\n");
   }
   public static String getDirectionsString(ICommandSender player, BlockPos pos) {
     //https://github.com/LothrazarMinecraftMods/MinecraftSearchCommands/blob/master/src/main/java/com/lothrazar/searchcommands/command/CommandSearchItem.java

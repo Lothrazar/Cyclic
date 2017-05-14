@@ -21,7 +21,7 @@ public class EntityHarvestBolt extends EntityThrowableDispensable {
     super(worldIn, x, y, z);
   }
   @Override
-  protected void onImpact(RayTraceResult mop) {
+  protected void processImpact(RayTraceResult mop) {
     if (this.getThrower() != null && mop.sideHit != null) {
       BlockPos offset = mop.getBlockPos().offset(mop.sideHit);
       HarestCropsConfig conf = new HarestCropsConfig();

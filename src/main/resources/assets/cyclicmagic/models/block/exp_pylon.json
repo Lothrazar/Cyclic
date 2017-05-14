@@ -1,7 +1,7 @@
 {
-	 "parent": "block/cube",
-	 "particle":"blocks/emerald_block",
+	"parent": "block/cube",
     "textures": {
+	 "particle":"blocks/emerald_block",
         "0": "cyclicmagic:blocks/pylon"
     },
     "elements": [

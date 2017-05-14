@@ -27,7 +27,7 @@ public class EntityShearingBolt extends EntityThrowableDispensable {
     super(worldIn, x, y, z);
   }
   @Override
-  protected void onImpact(RayTraceResult mop) {
+  protected void processImpact(RayTraceResult mop) {
     World world = getEntityWorld();
     if (mop.entityHit != null && mop.entityHit instanceof EntitySheep) {
       try {

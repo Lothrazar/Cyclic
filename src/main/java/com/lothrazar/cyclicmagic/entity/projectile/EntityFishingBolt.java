@@ -31,7 +31,7 @@ public class EntityFishingBolt extends EntityThrowableDispensable {
   static final double clownfishChance = 2 + salmonChance; // so between 85 and
   // 87
   @Override
-  protected void onImpact(RayTraceResult mop) {
+  protected void processImpact(RayTraceResult mop) {
     BlockPos pos = mop.getBlockPos();
     if (pos == null) { return; }
     World world = getEntityWorld();
