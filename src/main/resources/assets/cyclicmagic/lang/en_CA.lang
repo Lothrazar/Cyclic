@@ -841,3 +841,13 @@ tile.block_fishing.guide=Place down surrounded by water.  Fishes faster more sid
 tile.block_disenchanter.guide=This will strip off enchantments one by one, with a cost.  Feed in your enchantments in the top and books into the middle.  It will consume one of each ingredient for each enchantment removed, and put each one on a book.  There is no way to pick which enchantment is removed, so if it removes the wrong one you just have to keep removing, and then re-add the ones you want back on the normal way (anvil).  Can be automated with pipes/hoppers and controlled with redstone.  
 tile.block_storeempty.guide=This is not a tank.  It is a fake tank that instead stores the full bucket along with the liquid.  Meant for the low tech player to transport large numbers of buckets.  
 
+
+guide.category.transport=Transport
+item.dropper_minecart.guide=Its inventory is the same as a Dropper.  Use an activator rail to make it drop one of its items.
+item.turret_minecart.guide=This has no inventory.  When it hits a powered activator rail, it shoots out a slowness-tipped arrow in both directions.  These arrows cannot be picked up by survival players.  If it stops moving on a powered activator rail, it will fire repeatedly.
+item.gold_minecart.guide=This is just a faster version of the regular minecart.
+item.gold_furnace_minecart.guide=The plain Furnace Minecarts in the game are unusable; they lose speed quite fast, especially on corners, so the fuel cannot even overpowere the drag/friction.  This Gold furnace minecart has much less drag while it has fuel, so it wont stop after two corners.
+item.stone_minecart.guide=Think of this as a single-slot chest.  The Stone Minecart can carry any block.  Just use another block or an empty hand to swap blocks in an out (also works with Automated User).  Powered activator rail will pop the block out as well.
+
+item.tool_launcher.guide=Aim and then charge this up like a bow and then release it to get launched into the air.  It has two modes, forward and reverse, that you can toggle with attack (left-click).  Forward means you need to aim up into the air, and you fly the exact direction and angle that you look.  Reverse means you have to aim down at the ground and you get launched backwards.  Using this gives you the "bouncy" potion effect, which makes anything you land on bounce you up like a slime block.  
+

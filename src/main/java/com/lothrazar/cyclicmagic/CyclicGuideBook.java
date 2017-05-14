@@ -45,6 +45,8 @@ public class CyclicGuideBook implements IGuideBook {
   private Map<ResourceLocation, EntryAbstract> entriesBlockPlate = new HashMap<ResourceLocation, EntryAbstract>();
   private Map<ResourceLocation, EntryAbstract> entriesItemBaubles = new HashMap<ResourceLocation, EntryAbstract>();
   private Map<ResourceLocation, EntryAbstract> entriesItemThrow = new HashMap<ResourceLocation, EntryAbstract>();
+  private Map<ResourceLocation, EntryAbstract> entriesTransport = new HashMap<ResourceLocation, EntryAbstract>();
+  
   private void addEntry(GuideCategory cat, List<IPage> page, String pageTitle, ItemStack icon) {
     switch (cat) {
       case BLOCK:
@@ -76,6 +78,9 @@ public class CyclicGuideBook implements IGuideBook {
       break;
       case ITEMTHROW:
         entriesItemThrow.put(new ResourceLocation(Const.MODID, pageTitle), new EntryItemStack(page, pageTitle, icon));
+      break;
+      case TRANSPORT:
+        entriesTransport.put(new ResourceLocation(Const.MODID, pageTitle), new EntryItemStack(page, pageTitle, icon));
       break;
       default:
       break;
@@ -120,6 +125,7 @@ public class CyclicGuideBook implements IGuideBook {
     addCategory(entriesBlockPlate, GuideCategory.BLOCKPLATE);
     addCategory(entriesItemBaubles, GuideCategory.ITEMBAUBLES);
     addCategory(entriesItemThrow, GuideCategory.ITEMTHROW);
+    addCategory(entriesTransport, GuideCategory.TRANSPORT);
   }
   private void addCategory(Map<ResourceLocation, EntryAbstract> entriesBlockPlate, GuideCategory cat) {
     categories.add(new CategoryItemStack(entriesBlockPlate, cat.text(), cat.icon()));

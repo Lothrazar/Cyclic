@@ -14,6 +14,7 @@ import com.lothrazar.cyclicmagic.item.minecart.ItemStoneMinecart;
 import com.lothrazar.cyclicmagic.item.minecart.ItemTurretMinecart;
 import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
+import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraftforge.common.config.Configuration;
 
@@ -28,17 +29,17 @@ public class EntityMinecartModule extends BaseModule implements IHasConfig {
   public void onPreInit() {
     if (goldMinecart) {
       ItemGoldMinecart gold_minecart = new ItemGoldMinecart();
-      ItemRegistry.register(gold_minecart, "gold_minecart");
+      ItemRegistry.register(gold_minecart, "gold_minecart",GuideCategory.TRANSPORT);
       EntityGoldMinecart.dropItem = gold_minecart;
       EntityProjectileRegistry.registerModEntity(EntityGoldMinecart.class, "goldminecart", 1100);
       ItemGoldFurnaceMinecart gold_furnace_minecart = new ItemGoldFurnaceMinecart();
-      ItemRegistry.register(gold_furnace_minecart, "gold_furnace_minecart");
+      ItemRegistry.register(gold_furnace_minecart, "gold_furnace_minecart",GuideCategory.TRANSPORT);
       EntityGoldFurnaceMinecart.dropItem = gold_furnace_minecart;
       EntityProjectileRegistry.registerModEntity(EntityGoldFurnaceMinecart.class, "goldfurnaceminecart", 1101);
     }
     if (stoneMinecart) {
       ItemStoneMinecart stone_minecart = new ItemStoneMinecart();
-      ItemRegistry.register(stone_minecart, "stone_minecart");
+      ItemRegistry.register(stone_minecart, "stone_minecart",GuideCategory.TRANSPORT);
       EntityStoneMinecart.dropItem = stone_minecart;
       EntityProjectileRegistry.registerModEntity(EntityStoneMinecart.class, "stoneminecart", 1102);
     }
@@ -47,7 +48,7 @@ public class EntityMinecartModule extends BaseModule implements IHasConfig {
     }
     if (dropperMinecart) {
       ItemDropperMinecart dropper_minecart = new ItemDropperMinecart();
-      ItemRegistry.register(dropper_minecart, "dropper_minecart");
+      ItemRegistry.register(dropper_minecart, "dropper_minecart",GuideCategory.TRANSPORT);
       EntityMinecartDropper.dropItem = dropper_minecart;
       EntityProjectileRegistry.registerModEntity(EntityMinecartDropper.class, "golddropperminecart", 1104);
     }
@@ -59,7 +60,7 @@ public class EntityMinecartModule extends BaseModule implements IHasConfig {
     }
     if (turretMinecart) {
       ItemTurretMinecart turret_minecart = new ItemTurretMinecart();
-      ItemRegistry.register(turret_minecart, "turret_minecart");
+      ItemRegistry.register(turret_minecart, "turret_minecart",GuideCategory.TRANSPORT);
       EntityMinecartTurret.dropItem = turret_minecart;
       EntityProjectileRegistry.registerModEntity(EntityMinecartTurret.class, "turretminecart", 1106);
     }
