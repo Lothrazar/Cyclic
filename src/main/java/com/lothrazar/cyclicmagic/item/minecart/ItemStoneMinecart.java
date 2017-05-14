@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.item.minecart;
-
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.entity.EntityStoneMinecart;
 import com.lothrazar.cyclicmagic.item.BaseItemMinecart;

@@ -9,7 +9,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class EntityStoneMinecart extends EntityMinecartFurnace {
@@ -42,7 +41,6 @@ public class EntityStoneMinecart extends EntityMinecartFurnace {
     }
     return true;
   }
-
   @Override
   public void onActivatorRailPass(int x, int y, int z, boolean receivingPower) {
     if (receivingPower) {

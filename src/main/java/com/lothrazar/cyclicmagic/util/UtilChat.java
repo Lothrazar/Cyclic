@@ -94,5 +94,4 @@ public class UtilChat {
       yStr = Math.abs(yDist) + " down ";
     return xStr + yStr + zStr;
   }
-  
 }

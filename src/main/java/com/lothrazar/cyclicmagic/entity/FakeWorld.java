@@ -1,4 +1,6 @@
 package com.lothrazar.cyclicmagic.entity;
+import java.util.List;
+import javax.annotation.Nonnull;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -12,9 +14,6 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import java.util.List;
-import javax.annotation.Nonnull;
-import com.lothrazar.cyclicmagic.ModCyclic;
 
 /**
  * @author SkySom Not me. From
@@ -43,7 +42,7 @@ public class FakeWorld extends World {
   @Override
   public boolean spawnEntity(Entity entity) {
     entity.posX = this.getPosX();
-    entity.posY = this.getPosY()+2;
+    entity.posY = this.getPosY() + 2;
     entity.posZ = this.getPosZ();
     entity.forceSpawn = true;
     return this.getCartWorld().spawnEntity(entity);
@@ -63,20 +62,17 @@ public class FakeWorld extends World {
   }
   @Override
   public IBlockState getBlockState(BlockPos blockPos) {
-    if (blockPos.equals(originPos) || blockPos.getY() < 0 || 
-        blockPos.equals(this.getEntityMinecartBase().getPosition())) {
-      return this.getEntityMinecartBase().getDisplayTile();
-      }
-    System.out.println("blockPosblockPos?"+blockPos);
-    System.out.println("FFF?"+this.getEntityMinecartBase().getPosition());
+    if (blockPos.equals(originPos) || blockPos.getY() < 0 ||
+        blockPos.equals(this.getEntityMinecartBase().getPosition())) { return this.getEntityMinecartBase().getDisplayTile(); }
+    System.out.println("blockPosblockPos?" + blockPos);
+    System.out.println("FFF?" + this.getEntityMinecartBase().getPosition());
     return Blocks.AIR.getDefaultState();
   }
   @Override
   public TileEntity getTileEntity(@Nonnull BlockPos blockPos) {
-    if (blockPos.equals(originPos)) {
-      return null;//TODO? this.getBlockWrapper().getTileEntity();
-  }
-  return null;
+    if (blockPos.equals(originPos)) { return null;//TODO? this.getBlockWrapper().getTileEntity();
+    }
+    return null;
   }
   @Override
   public <T extends Entity> List<T> getEntitiesWithinAABB(Class<? extends T> entityClass, AxisAlignedBB axisAlignedBB) {

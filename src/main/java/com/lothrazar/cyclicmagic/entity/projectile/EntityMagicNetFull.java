@@ -25,7 +25,6 @@ public class EntityMagicNetFull extends EntityThrowableDispensable {
   }
   @Override
   protected void processImpact(RayTraceResult mop) {
- 
     if (captured == null || captured.hasTagCompound() == false) {
       //client desync maybe
       return;

@@ -12,20 +12,18 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class ItemGoldMinecart extends BaseItemMinecart implements IHasRecipe {
   public ItemGoldMinecart() {
     super();
-  } 
+  }
   @Override
   public IRecipe addRecipe() {
-    return    GameRegistry.addShapedRecipe(new ItemStack(this),
+    return GameRegistry.addShapedRecipe(new ItemStack(this),
         "   ",
         "gmg",
         "ggg",
-        'g',Items.GOLD_INGOT,
-        'm',Items.MINECART);
-     
+        'g', Items.GOLD_INGOT,
+        'm', Items.MINECART);
   }
   @Override
   public EntityMinecart summonMinecart(World world) {
-    return  new EntityGoldMinecart(world);
- 
+    return new EntityGoldMinecart(world);
   }
 }

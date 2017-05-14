@@ -6,8 +6,7 @@ public class EntityGoldMinecartChest extends EntityMinecartChest {
   public EntityGoldMinecartChest(World worldIn) {
     super(worldIn);
   }
-  public EntityGoldMinecartChest(World worldIn, double x, double y, double z)
-  {
-      super(worldIn, x, y, z);
+  public EntityGoldMinecartChest(World worldIn, double x, double y, double z) {
+    super(worldIn, x, y, z);
   }
 }

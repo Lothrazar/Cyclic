@@ -53,7 +53,7 @@ public class EntityGoldFurnaceMinecart extends EntityMinecartFurnace {
         this.motionZ += this.pushZ;
       }
     }
-  } 
+  }
   @Override
   public void killMinecart(DamageSource source) {
     this.setDead();

@@ -23,7 +23,6 @@ public class EntityTorchBolt extends EntityThrowableDispensable {
   }
   @Override
   protected void processImpact(RayTraceResult mop) {
- 
     if (mop.entityHit != null) {
       //zero damage means just knockback
       mop.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 0);

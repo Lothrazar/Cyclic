@@ -25,7 +25,6 @@ public class EntityGoldMinecartDispenser extends EntityMinecartChest {
   public EntityGoldMinecartDispenser(World worldIn) {
     super(worldIn);
     fakeWorld = new FakeWorld(worldIn, this);
-    
     this.setDisplayTile(getDefaultDisplayTile());
   }
   public EntityGoldMinecartDispenser(World worldIn, double x, double y, double z) {
@@ -42,8 +41,8 @@ public class EntityGoldMinecartDispenser extends EntityMinecartChest {
   @Override
   public IBlockState getDisplayTile() {
     IBlockState s = super.getDisplayTile();
-//    ModCyclic.logger.info("getDisplayTile " + s);
-//    ModCyclic.logger.info("getDisplayTile facing " + s.getValue(BlockDispenser.FACING));
+    //    ModCyclic.logger.info("getDisplayTile " + s);
+    //    ModCyclic.logger.info("getDisplayTile facing " + s.getValue(BlockDispenser.FACING));
     return s;
   }
   @Override
@@ -94,29 +93,29 @@ public class EntityGoldMinecartDispenser extends EntityMinecartChest {
       ItemStack itemstack = this.getStackInSlot(i);
       IBehaviorDispenseItem ibehaviordispenseitem = this.getBehavior(itemstack);
       //    ModCyclic.logger.info("BEHAVIOR "+ibehaviordispenseitem);
-      try{
-      ItemStack result = ibehaviordispenseitem.dispense(source, itemstack);
-      this.setInventorySlotContents(i, result);
-      this.timeSinceDropped = TIME_BTW_DROPS;
+      try {
+        ItemStack result = ibehaviordispenseitem.dispense(source, itemstack);
+        this.setInventorySlotContents(i, result);
+        this.timeSinceDropped = TIME_BTW_DROPS;
       }
-      catch(Exception e){
+      catch (Exception e) {
         ModCyclic.logger.error(e.getMessage());
       }
     }
   }
-//  @Override
-//  public boolean attackEntityFrom(DamageSource source, float amount) {
-//    if (source.getEntity() == this || source.getEntity() instanceof EntityArrow) {
-//      amount = 0;
-//      return false;
-//    }
-//    return true;
-//  }
-//  @Override
-//  public AxisAlignedBB getCollisionBox(Entity entityIn) {
-//    if (entityIn instanceof EntityArrow) { return new AxisAlignedBB(this.getPosition(), this.getPosition()); }
-//    return super.getCollisionBox(entityIn);
-//  }
+  //  @Override
+  //  public boolean attackEntityFrom(DamageSource source, float amount) {
+  //    if (source.getEntity() == this || source.getEntity() instanceof EntityArrow) {
+  //      amount = 0;
+  //      return false;
+  //    }
+  //    return true;
+  //  }
+  //  @Override
+  //  public AxisAlignedBB getCollisionBox(Entity entityIn) {
+  //    if (entityIn instanceof EntityArrow) { return new AxisAlignedBB(this.getPosition(), this.getPosition()); }
+  //    return super.getCollisionBox(entityIn);
+  //  }
   /**
    * from TileEntityDispenser
    * 
@@ -146,8 +145,8 @@ public class EntityGoldMinecartDispenser extends EntityMinecartChest {
   @Override
   protected void moveAlongTrack(BlockPos pos, IBlockState state) {
     BlockRailBase blockrailbase = (BlockRailBase) state.getBlock();
-    if(blockrailbase != Blocks.ACTIVATOR_RAIL){
-      this.timeSinceDropped=0;
+    if (blockrailbase != Blocks.ACTIVATOR_RAIL) {
+      this.timeSinceDropped = 0;
     }
     //force DISPENSER to face sime direction as my movemene
     //      double slopeAdjustment = getSlopeAdjustment();
@@ -167,21 +166,18 @@ public class EntityGoldMinecartDispenser extends EntityMinecartChest {
         fac = EnumFacing.SOUTH;
       case EAST_WEST:
         fac = (this.motionX > 0) ? EnumFacing.SOUTH : EnumFacing.NORTH;
-//        fac = (this.motionX < 0) ? EnumFacing.WEST : EnumFacing.EAST;
-        break;
-      
+      //        fac = (this.motionX < 0) ? EnumFacing.WEST : EnumFacing.EAST;
+      break;
       case NORTH_SOUTH:
-//        fac = (this.motionZ > 0) ? EnumFacing.SOUTH : EnumFacing.NORTH;
+        //        fac = (this.motionZ > 0) ? EnumFacing.SOUTH : EnumFacing.NORTH;
         fac = (this.motionZ < 0) ? EnumFacing.WEST : EnumFacing.EAST;
-        break;
-  
+      break;
       default:
-        break;
+      break;
     }
-
     super.moveAlongTrack(pos, state);
-    if (fac != null){
-//      ModCyclic.logger.info(raildirection+" setDisplayTile  "+fac);
+    if (fac != null) {
+      //      ModCyclic.logger.info(raildirection+" setDisplayTile  "+fac);
       this.setDisplayTile(getDefaultDisplayTile().withProperty(BlockDispenser.FACING, fac));
     }
   }

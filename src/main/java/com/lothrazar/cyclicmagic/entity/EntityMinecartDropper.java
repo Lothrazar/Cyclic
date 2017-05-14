@@ -72,7 +72,6 @@ public class EntityMinecartDropper extends EntityMinecartChest {
     else {
       ItemStack itemstack = this.getStackInSlot(i);
       this.setInventorySlotContents(i, this.drop.dispense(source, itemstack));
-
     }
   }
   @Override
