@@ -13,6 +13,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public abstract class BlockBase extends Block {
   public BlockBase(Material materialIn) {
     super(materialIn);
+    this.setHardness(2.0F).setResistance(2.0F);//of course can/will be overwritten in most cases, but at least have a nonzero default
   }
   protected boolean isTransp = false;
   protected String myTooltip = null;

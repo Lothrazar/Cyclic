@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockWorkbench extends BlockBaseHasTile implements IHasRecipe {
   public BlockWorkbench() {
-    super(Material.IRON);
+    super(Material.ROCK);
     this.setTranslucent();
     this.setGuiId(ModGuiHandler.GUI_INDEX_WORKBENCH);
   }

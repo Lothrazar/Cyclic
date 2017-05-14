@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockCrafter extends BlockBaseFacingInventory implements IHasRecipe {
   public BlockCrafter() {
-    super(Material.IRON, ModGuiHandler.GUI_INDEX_CRAFTER);
+    super(Material.ROCK, ModGuiHandler.GUI_INDEX_CRAFTER);
     this.setTranslucent();
   }
   @Override

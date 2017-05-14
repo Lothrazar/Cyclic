@@ -26,6 +26,7 @@ public class BlockLaunch extends BlockBasePressurePlate {
     this.setSoundType(SoundType.SLIME);
     power = p;
     sound = s;
+    this.setHardness(2.0F).setResistance(2.0F);
   }
   @Override
   protected void playClickOnSound(World worldIn, BlockPos pos) {
