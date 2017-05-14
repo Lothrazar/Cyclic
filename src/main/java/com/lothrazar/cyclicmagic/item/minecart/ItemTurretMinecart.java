@@ -20,10 +20,10 @@ public class ItemTurretMinecart extends BaseItemMinecart implements IHasRecipe {
         "bdb",
         "gmg",
         "ggg",
-        'd', Items.DIAMOND,
-        'b', Blocks.BONE_BLOCK,
-        'g', Blocks.GOLD_BLOCK,
-        'm', Items.MINECART);
+        'd', Blocks.BONE_BLOCK,
+        'b', Items.BOW,
+        'g', Items.GOLD_INGOT,
+        'm', Blocks.OBSERVER);
   }
   @Override
   public EntityMinecart summonMinecart(World world) {

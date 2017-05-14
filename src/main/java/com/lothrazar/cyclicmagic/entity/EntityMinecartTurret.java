@@ -6,9 +6,13 @@ import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityTippedArrow;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.PotionType;
+import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -17,7 +21,7 @@ import net.minecraft.world.World;
 public class EntityMinecartTurret extends EntityGoldMinecart {
   private static final float YAW = 0.1F;
   private static final float VELOCITY = 1.1F;
-  private static final float INACCRACY = 6.0F;
+  private static final float INACCRACY = 2.0F;
   private static final int TIME_BTW_DROPS = 40;
   public static Item dropItem = Items.MINECART;//override with gold minecart on registry, this is here just for nonnull
   private int timeSinceDropped = 0;
@@ -70,7 +74,7 @@ public class EntityMinecartTurret extends EntityGoldMinecart {
   public void shootThisDirection(EnumFacing enumfacing) {
     BlockPos position = this.getPosition().up().offset(enumfacing, 2);
     EntityTippedArrow entitytippedarrow = new EntityTippedArrow(world, position.getX(), position.getY(), position.getZ());
-    entitytippedarrow.setPotionEffect(new ItemStack(Items.ARROW));
+    entitytippedarrow.setPotionEffect(PotionUtils.addPotionToItemStack(new ItemStack(Items.TIPPED_ARROW), PotionType.getPotionTypeForName("slowness")));
     entitytippedarrow.pickupStatus = EntityArrow.PickupStatus.CREATIVE_ONLY;
     entitytippedarrow.setThrowableHeading((double) enumfacing.getFrontOffsetX(), YAW, (double) enumfacing.getFrontOffsetZ(), VELOCITY, INACCRACY);
     world.spawnEntity(entitytippedarrow);
@@ -99,10 +103,8 @@ public class EntityMinecartTurret extends EntityGoldMinecart {
         fac = EnumFacing.SOUTH;
       case EAST_WEST:
         fac = (this.motionX > 0) ? EnumFacing.SOUTH : EnumFacing.NORTH;
-      //        fac = (this.motionX < 0) ? EnumFacing.WEST : EnumFacing.EAST;
       break;
       case NORTH_SOUTH:
-        //        fac = (this.motionZ > 0) ? EnumFacing.SOUTH : EnumFacing.NORTH;
         fac = (this.motionZ < 0) ? EnumFacing.WEST : EnumFacing.EAST;
       break;
       default:
@@ -110,7 +112,6 @@ public class EntityMinecartTurret extends EntityGoldMinecart {
     }
     super.moveAlongTrack(pos, state);
     if (fac != null) {
-      //      ModCyclic.logger.info(raildirection+" setDisplayTile  "+fac);
       this.setDisplayTile(getDefaultDisplayTile().withProperty(BlockObserver.FACING, fac));
     }
   }

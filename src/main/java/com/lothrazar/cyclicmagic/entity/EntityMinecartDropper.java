@@ -16,15 +16,15 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class EntityGoldMinecartDropper extends EntityMinecartChest {
+public class EntityMinecartDropper extends EntityMinecartChest {
   private static final int TIME_BTW_DROPS = 20;
   private int timeSinceDropped = 0;
   public static Item dropItem = Items.MINECART;//override with gold minecart on registry, this is here just for nonnull
   BehaviorMinecartDropItem drop = new BehaviorMinecartDropItem();
-  public EntityGoldMinecartDropper(World worldIn) {
+  public EntityMinecartDropper(World worldIn) {
     super(worldIn);
   }
-  public EntityGoldMinecartDropper(World worldIn, double x, double y, double z) {
+  public EntityMinecartDropper(World worldIn, double x, double y, double z) {
     super(worldIn, x, y, z);
   }
   public int getSizeInventory() {

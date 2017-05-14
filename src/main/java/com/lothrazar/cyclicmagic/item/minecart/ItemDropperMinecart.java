@@ -1,9 +1,10 @@
 package com.lothrazar.cyclicmagic.item.minecart;
 import com.lothrazar.cyclicmagic.IHasRecipe;
-import com.lothrazar.cyclicmagic.entity.EntityGoldMinecartDropper;
+import com.lothrazar.cyclicmagic.entity.EntityMinecartDropper;
 import com.lothrazar.cyclicmagic.item.BaseItemMinecart;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
@@ -16,14 +17,14 @@ public class ItemDropperMinecart extends BaseItemMinecart implements IHasRecipe 
   @Override
   public IRecipe addRecipe() {
     return GameRegistry.addShapedRecipe(new ItemStack(this),
+        " d ",
+        " m ",
         "   ",
-        "gmg",
-        "ggg",
-        'g', Blocks.GOLD_BLOCK,
-        'm', Blocks.DROPPER);
+        'm', Items.MINECART,
+        'd', Blocks.DROPPER);
   }
   @Override
   public EntityMinecart summonMinecart(World world) {
-    return new EntityGoldMinecartDropper(world);
+    return new EntityMinecartDropper(world);
   }
 }

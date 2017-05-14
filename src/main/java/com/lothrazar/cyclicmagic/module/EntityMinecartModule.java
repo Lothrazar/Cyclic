@@ -4,7 +4,7 @@ import com.lothrazar.cyclicmagic.entity.EntityGoldFurnaceMinecart;
 import com.lothrazar.cyclicmagic.entity.EntityGoldMinecart;
 import com.lothrazar.cyclicmagic.entity.EntityGoldMinecartChest;
 import com.lothrazar.cyclicmagic.entity.EntityGoldMinecartDispenser;
-import com.lothrazar.cyclicmagic.entity.EntityGoldMinecartDropper;
+import com.lothrazar.cyclicmagic.entity.EntityMinecartDropper;
 import com.lothrazar.cyclicmagic.entity.EntityMinecartTurret;
 import com.lothrazar.cyclicmagic.entity.EntityStoneMinecart;
 import com.lothrazar.cyclicmagic.item.minecart.ItemDropperMinecart;
@@ -48,8 +48,8 @@ public class EntityMinecartModule extends BaseModule implements IHasConfig {
     if (dropperMinecart) {
       ItemDropperMinecart dropper_minecart = new ItemDropperMinecart();
       ItemRegistry.register(dropper_minecart, "dropper_minecart");
-      EntityGoldMinecartDropper.dropItem = dropper_minecart;
-      EntityProjectileRegistry.registerModEntity(EntityGoldMinecartDropper.class, "golddropperminecart", 1104);
+      EntityMinecartDropper.dropItem = dropper_minecart;
+      EntityProjectileRegistry.registerModEntity(EntityMinecartDropper.class, "golddropperminecart", 1104);
     }
     if (dispenserMinecart) {
       //BROKEN:
