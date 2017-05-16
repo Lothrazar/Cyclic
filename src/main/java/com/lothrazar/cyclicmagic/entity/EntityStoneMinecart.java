@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.entity;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityMinecartFurnace;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;

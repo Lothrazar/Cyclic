@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.entity;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.player.EntityPlayer;
@@ -47,7 +46,7 @@ public class EntityGoldMinecart extends EntityMinecart {
    */
   @Override
   public float getMaxCartSpeedOnRail() {
-    return super.getMaxCartSpeedOnRail() + 0.1f;
+    return super.getMaxCartSpeedOnRail() + 0.1f;//super is 1.2
   }
   /**
    * Moved to allow overrides. This code handles minecart movement and speed
@@ -84,6 +83,7 @@ public class EntityGoldMinecart extends EntityMinecart {
   /**
    * Called every tick the minecart is on an activator rail.
    */
+  @Override
   public void onActivatorRailPass(int x, int y, int z, boolean receivingPower) {
     if (receivingPower) {
       if (this.isBeingRidden()) {
@@ -97,6 +97,7 @@ public class EntityGoldMinecart extends EntityMinecart {
       }
     }
   }
+  @Override
   public boolean processInitialInteract(EntityPlayer player, EnumHand hand) {
     if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.event.entity.minecart.MinecartInteractEvent(this, player, hand))) return true;
     if (player.isSneaking()) {
