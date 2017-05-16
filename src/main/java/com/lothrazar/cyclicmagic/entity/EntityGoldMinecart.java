@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.entity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.player.EntityPlayer;
@@ -113,6 +114,6 @@ public class EntityGoldMinecart extends EntityMinecart {
   }
   @Override
   public Type getType() {
-    return null;//EntityMinecart.Type.RIDEABLE;
+    return EntityMinecart.Type.RIDEABLE;
   }
 }
