@@ -16,7 +16,7 @@ import com.lothrazar.cyclicmagic.registry.EntityProjectileRegistry;
 import com.lothrazar.cyclicmagic.registry.ItemRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.util.Const;
-import net.minecraftforge.common.config.Configuration; 
+import net.minecraftforge.common.config.Configuration;
 
 public class EntityMinecartModule extends BaseEventModule implements IHasConfig {
   private boolean goldMinecart;
@@ -81,10 +81,9 @@ public class EntityMinecartModule extends BaseEventModule implements IHasConfig 
     goldMinecart = config.getBoolean("GoldMinecart", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
     stoneMinecart = config.getBoolean("StoneMinecart", Const.ConfigCategory.content, true, Const.ConfigCategory.contentDefaultText);
   }
-//  @SubscribeEvent
-//  public void onMinecartCollision(MinecartCollisionEvent event) {
-//     import net.minecraftforge.event.entity.minecart.MinecartCollisionEvent;
-//    System.out.println("MinecartCollisionEvent");//this never fires. literally never. wtf?
-
-//  }
+  //  @SubscribeEvent
+  //  public void onMinecartCollision(MinecartCollisionEvent event) {
+  //     import net.minecraftforge.event.entity.minecart.MinecartCollisionEvent;
+  //    System.out.println("MinecartCollisionEvent");//this never fires. literally never. wtf?
+  //  }
 }

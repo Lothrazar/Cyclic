@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.module;
-import java.util.Arrays;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre;
 import com.lothrazar.cyclicmagic.block.BlockDimensionOre.SpawnType;
@@ -13,8 +12,6 @@ import com.lothrazar.cyclicmagic.world.gen.WorldGenEndOre;
 import com.lothrazar.cyclicmagic.world.gen.WorldGenGoldRiver;
 import com.lothrazar.cyclicmagic.world.gen.WorldGenNetherOre;
 import com.lothrazar.cyclicmagic.world.gen.WorldGenOreSingleton;
-import net.minecraft.block.BlockCrops;
-import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;

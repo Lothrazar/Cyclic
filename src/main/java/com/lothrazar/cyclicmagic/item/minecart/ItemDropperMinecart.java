@@ -29,6 +29,6 @@ public class ItemDropperMinecart extends BaseItemMinecart implements IHasRecipe 
   }
   @Override
   public EntityMinecart summonMinecart(World world, double x, double y, double z) {
-    return new EntityMinecartDropper(world,x,y,z);
+    return new EntityMinecartDropper(world, x, y, z);
   }
 }

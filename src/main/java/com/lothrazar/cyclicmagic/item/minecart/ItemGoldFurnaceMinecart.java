@@ -28,6 +28,6 @@ public class ItemGoldFurnaceMinecart extends BaseItemMinecart implements IHasRec
   }
   @Override
   public EntityMinecart summonMinecart(World world, double x, double y, double z) {
-    return new EntityGoldFurnaceMinecart(world ,x,y,z);
+    return new EntityGoldFurnaceMinecart(world, x, y, z);
   }
 }

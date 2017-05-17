@@ -62,5 +62,5 @@ public class EntityStoneMinecart extends EntityMinecartFurnace {
   @Override
   public ItemStack getCartItem() {
     return new ItemStack(dropItem);
-  }  
+  }
 }
