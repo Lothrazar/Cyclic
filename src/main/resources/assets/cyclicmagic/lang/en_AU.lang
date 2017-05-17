@@ -125,6 +125,7 @@ entity.cyclicmagic.goldfurnaceminecart.name=Gold Furnace Minecart
 entity.cyclicmagic.stoneminecart.name=Gold Minecart
 entity.cyclicmagic.turretminecart.name=Turret Minecart
 entity.cyclicmagic.golddropperminecart.name=Dropper Minecart
+minecart.fuel=Fuel: 
 gui.chatexp=Not enough experience
 gui.enderbook.go=Go
 gui.enderbook.new=New

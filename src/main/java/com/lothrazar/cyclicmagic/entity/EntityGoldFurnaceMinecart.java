@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.entity;
+import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.item.minecart.ItemGoldFurnaceMinecart;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.BlockFurnace;
@@ -56,8 +57,8 @@ public class EntityGoldFurnaceMinecart extends EntityMinecart {
       this.pushZ = 0.0D;
     }
     else {//key addition. if fuel is non zero, dont let me stop!!!
-      this.pushX = this.getMaximumSpeed() / 4;
-      this.pushZ = this.getMaximumSpeed() / 4;
+      this.pushX = this.getMaximumSpeed();
+      this.pushZ = this.getMaximumSpeed();
     }
     this.setMinecartPowered(this.fuel > 0);
     if (this.fuel > 0 && this.rand.nextInt(4) == 0) {
@@ -83,22 +84,6 @@ public class EntityGoldFurnaceMinecart extends EntityMinecart {
   public float getMaxCartSpeedOnRail() {
     return super.getMaxCartSpeedOnRail() + 0.1f;//super is 1.2
   }
-  //  @Override
-  //  public void moveMinecartOnRail(BlockPos pos) {
-  //    double mX = this.motionX;
-  //    double mZ = this.motionZ;
-  //    System.out.println("!move eh "+mX+"__"+mZ+"  fuel?=="+this.isPoweredCart());
-  //    if(this.isPoweredCart() && Math.abs(this.motionX)< 0.1 && Math.abs(this.motionZ) < 0.1 ){
-  //
-  //      System.out.println(" WTF TOO SLOW " );
-  //    }
-  //    double max = this.getMaxSpeed();
-  //    mX = MathHelper.clamp(mX, -max, max);
-  //    mZ = MathHelper.clamp(mZ, -max, max);
-  //    //is powered means  this.setMinecartPowered(this.fuel > 0);
-  //    
-  //    this.move(MoverType.SELF, mX, 0.0D, mZ);
-  //  }
   @Override
   public void killMinecart(DamageSource source) {
     this.setDead();
@@ -118,26 +103,31 @@ public class EntityGoldFurnaceMinecart extends EntityMinecart {
   protected void moveAlongTrack(BlockPos pos, IBlockState state) {
     super.moveAlongTrack(pos, state);
     double d0 = this.pushX * this.pushX + this.pushZ * this.pushZ;
-
-//TODO:  STILL this sometimes stops randomly at a 90 DEG ANGLE WHEN pushing
-    
-    
-    if(this.fuel>0&& this.motionX * this.motionX < 0.01 &&  this.motionZ * this.motionZ< 0.01 
+    //TODO:  STILL this sometimes stops randomly at a 90 DEG ANGLE WHEN pushing
+    if (this.fuel > 0 && this.motionX * this.motionX < 0.001 && this.motionZ * this.motionZ < 0.001
     //          && this.motionX> 1.0E-4D  && this.motionX>1.0E-4D
-              ){
-    
-           this.motionX = this.motionX*2;
-             this.motionZ = this.motionZ*2;
-            //if that didnt owrk
-             if(this.motionX == 0 &&this.posX - this.prevPosX!=0){
-               this.motionX = this.posX - this.prevPosX;
-               System.out.println("motionX hax"+this.motionX);
-             }
-             if(this.motionZ == 0 && this.posZ - this.prevPosZ!=0){
-               this.motionZ = this.posZ - this.prevPosZ;
-               System.out.println("motionZ hax"+this.motionZ);
-             }
-          }
+    ) {
+     ModCyclic.logger.info(" fueled with motion zero?");
+      this.motionX = this.motionX * 2;
+      this.motionZ = this.motionZ * 2;
+      //if that didnt owrk
+      if (this.motionX == 0 && this.posX - this.prevPosX != 0) {
+        this.motionX = (this.posX - this.prevPosX) * 8;
+       ModCyclic.logger.info("motionX hax" + this.motionX);
+        this.pushX = (this.posX - this.prevPosX) * (this.posX - this.prevPosX);
+        if (pushZ == 0) {
+          pushZ = 0.5;
+        }
+      }
+      if (this.motionZ == 0 && this.posZ - this.prevPosZ != 0) {
+        this.motionZ = (this.posZ - this.prevPosZ) * 8;
+        this.pushZ = (this.posZ - this.prevPosZ) * (this.posZ - this.prevPosZ);
+       ModCyclic.logger.info("motionZ hax" + this.motionZ);
+        if (pushX == 0) {
+          pushX = 0.5;
+        }
+      }
+    }
     //      
     if (d0 > 1.0E-4D) {
       d0 = (double) MathHelper.sqrt(d0);
@@ -149,24 +139,12 @@ public class EntityGoldFurnaceMinecart extends EntityMinecart {
       }
       else {
         double d1 = d0 * this.getMaximumSpeed();
-//        double d1 = d0 / this.getMaximumSpeed();
+        //        double d1 = d0 / this.getMaximumSpeed();
         this.pushX *= d1;
         this.pushZ *= d1;
       }
     }
   }
-  /*
-   * @Override protected void applyDrag() {
-   * this.setDisplayTile(this.getDefaultDisplayTile()); if
-   * (this.isMinecartPowered() == false) {//is powered means fuel (from coal) is
-   * > 0 super.applyDrag();//only apply drag if fuel rns out, else momentum goes
-   * forever without fuel = no makey sensey } else { //copy the vanilla
-   * minecraft furnace drag but push it down to almostnill double d0 =
-   * this.pushX * this.pushX + this.pushZ * this.pushZ; double drag =
-   * 0.999999900190734863D;//vanilla is like 0.98000 ish if (d0 > 1.0E-4D) {
-   * this.motionX *= drag; this.motionY *= 0.0D; this.motionZ *= drag;
-   * this.motionX += this.pushX; this.motionZ += this.pushZ; } } }
-   */
   protected void applyDrag() {
     if (this.fuel > 0) { return; }
     double d0 = this.pushX * this.pushX + this.pushZ * this.pushZ;
@@ -197,9 +175,9 @@ public class EntityGoldFurnaceMinecart extends EntityMinecart {
       }
       this.fuel += 3600;
     }
-    UtilChat.addChatMessage(player, UtilChat.lang("minecart.fuel") + this.fuel);
-    //      this.pushX = this.posX - player.posX;
-    //      this.pushZ = this.posZ - player.posZ;
+    if (player.world.isRemote) {
+      UtilChat.addChatMessage(player, UtilChat.lang("minecart.fuel") + this.fuel);
+    }
     return true;
   }
   /**
@@ -239,9 +217,9 @@ public class EntityGoldFurnaceMinecart extends EntityMinecart {
         entityIn instanceof EntityMinecart &&
         (this.motionX != motionXprev || this.motionZ != motionZprev)) {
       //well i am the engine, i should not get stopped in my tracks just because theres two shits in front
-     System.out.println("undo bwahaha");
-      this.motionX = motionXprev;
-      this.motionZ = motionZprev;
+      ModCyclic.logger.info("undo bwahaha" + motionXprev + "_" + motionZprev);
+      this.motionX = motionXprev * 8;
+      this.motionZ = motionZprev * 8;
     }
   }
 }
