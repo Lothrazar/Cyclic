@@ -13,7 +13,6 @@ import com.lothrazar.cyclicmagic.world.gen.WorldGenEndOre;
 import com.lothrazar.cyclicmagic.world.gen.WorldGenGoldRiver;
 import com.lothrazar.cyclicmagic.world.gen.WorldGenNetherOre;
 import com.lothrazar.cyclicmagic.world.gen.WorldGenOreSingleton;
-import com.lothrazar.cyclicmagic.world.gen.WorldGenPlantBiome;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
@@ -29,10 +28,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class WorldGenModule extends BaseEventModule implements IHasConfig {
-  private final static int spawnsCarrot = 15;
-  private final static int spawnsWheat = 8;
-  private final static int spawnsBeetroot = 18;
-  private final static int spawnsPotatoes = 10;
   final static int weightOre = 0;
   final static int weightPlants = 2;
   public static boolean netherOreEnabled;
@@ -41,7 +36,6 @@ public class WorldGenModule extends BaseEventModule implements IHasConfig {
   private static boolean emeraldHeight = true;
   private static boolean goldRiver;
   private static boolean oreSingletons;
-  private static boolean biomeCrops;
   public static BlockDimensionOre nether_gold_ore;
   public static BlockDimensionOre nether_coal_ore;
   public static BlockDimensionOre nether_lapis_ore;
@@ -78,9 +72,6 @@ public class WorldGenModule extends BaseEventModule implements IHasConfig {
     prop = config.get(category, "Ore Singletons", true, "Vanilla ores of all kinds can rarely spawn at all world heights, but only in veins of size one.  Great for amplified terrain.");
     prop.setRequiresMcRestart(true);
     oreSingletons = prop.getBoolean();
-    prop = config.get(category, "Biome Crops", true, "Crops spawn randomly with nature.  Carrots in extreme hills, wheat in plains, beetroot in forests, potatoes in taiga.");
-    prop.setRequiresMcRestart(true);
-    biomeCrops = prop.getBoolean();
     category = Const.ConfigCategory.worldGen + ".netherorecustom";
     String blockCountDesc = "Approximate ore vein size.  Zero means no spawns.";
     String spawnChanceDesc = "Chance of a vein to spawn.  Zero means no spawns.";
@@ -140,12 +131,6 @@ public class WorldGenModule extends BaseEventModule implements IHasConfig {
       GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.LAPIS_ORE, 34), weightOre);
       GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.REDSTONE_ORE, 16), weightOre);
       GameRegistry.registerWorldGenerator(new WorldGenOreSingleton(Blocks.DIAMOND_ORE, 16), weightOre);
-    }
-    if (biomeCrops) {
-      GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops) Blocks.CARROTS, Arrays.asList(Biomes.EXTREME_HILLS), spawnsCarrot), weightPlants);
-      GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops) Blocks.WHEAT, Arrays.asList(Biomes.PLAINS), spawnsWheat), weightPlants);
-      GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops) Blocks.BEETROOTS, Arrays.asList(Biomes.FOREST, Biomes.BIRCH_FOREST), spawnsBeetroot), weightPlants);
-      GameRegistry.registerWorldGenerator(new WorldGenPlantBiome((BlockCrops) Blocks.POTATOES, Arrays.asList(Biomes.TAIGA), spawnsPotatoes), weightPlants);
     }
   }
   @SubscribeEvent
