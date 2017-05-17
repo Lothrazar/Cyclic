@@ -17,7 +17,7 @@ public class GuideRegistry {
   private static List<GuideItem> items = new ArrayList<GuideItem>();
   private static final String SUFFIX = ".guide";
   public enum GuideCategory {
-    BLOCK, ITEM, WORLD, GEAR, POTION, ENCHANT, BLOCKMACHINE, BLOCKPLATE, ITEMBAUBLES, ITEMTHROW,TRANSPORT;
+    BLOCK, ITEM, WORLD, GEAR, POTION, ENCHANT, BLOCKMACHINE, BLOCKPLATE, ITEMBAUBLES, ITEMTHROW, TRANSPORT;
     public String text() {
       return "guide.category." + name().toLowerCase();
     }

@@ -46,7 +46,6 @@ public class CyclicGuideBook implements IGuideBook {
   private Map<ResourceLocation, EntryAbstract> entriesItemBaubles = new HashMap<ResourceLocation, EntryAbstract>();
   private Map<ResourceLocation, EntryAbstract> entriesItemThrow = new HashMap<ResourceLocation, EntryAbstract>();
   private Map<ResourceLocation, EntryAbstract> entriesTransport = new HashMap<ResourceLocation, EntryAbstract>();
-  
   private void addEntry(GuideCategory cat, List<IPage> page, String pageTitle, ItemStack icon) {
     switch (cat) {
       case BLOCK:

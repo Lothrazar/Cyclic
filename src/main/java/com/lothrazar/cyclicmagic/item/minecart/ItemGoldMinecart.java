@@ -26,4 +26,8 @@ public class ItemGoldMinecart extends BaseItemMinecart implements IHasRecipe {
   public EntityMinecart summonMinecart(World world) {
     return new EntityGoldMinecart(world);
   }
+  @Override
+  public EntityMinecart summonMinecart(World world, double x, double y, double z) {
+    return new EntityGoldMinecart(world, x, y, z);
+  }
 }

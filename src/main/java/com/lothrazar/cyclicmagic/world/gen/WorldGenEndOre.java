@@ -15,13 +15,13 @@ import net.minecraftforge.fml.common.IWorldGenerator;
 public class WorldGenEndOre implements IWorldGenerator {
   private static final int MIN_HEIGHT = 5;
   private static final int MAX_HEIGHT = 128;
-  private WorldGenerator genRedstone;
-  private WorldGenerator genCoal;
-  private WorldGenerator genEmerald;
-  private WorldGenerator genLapis;
-  private WorldGenerator genDiamond;
+  private WorldGenMinable genRedstone;
+  private WorldGenMinable genCoal;
+  private WorldGenMinable genEmerald;
+  private WorldGenMinable genLapis;
+  private WorldGenMinable genDiamond;
   private WorldGenMinable genIron;
-  private WorldGenerator genGold;
+  private WorldGenMinable genGold;
   public static class Configs {
     public static int blockCountCoal = 8;
     public static int blockCountDiamond = 8;

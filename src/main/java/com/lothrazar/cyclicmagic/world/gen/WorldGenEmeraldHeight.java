@@ -14,7 +14,7 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
 
 public class WorldGenEmeraldHeight implements IWorldGenerator {
-  private WorldGenerator genEmerald;
+  private WorldGenMinable genEmerald;
   public WorldGenEmeraldHeight() {
     //http://minecraft.gamepedia.com/Ore#Availability
     // http://minecraft.gamepedia.com/Customized#Ore_settings

@@ -29,4 +29,8 @@ public class ItemTurretMinecart extends BaseItemMinecart implements IHasRecipe {
   public EntityMinecart summonMinecart(World world) {
     return new EntityMinecartTurret(world);
   }
+  @Override
+  public EntityMinecart summonMinecart(World world, double x, double y, double z) {
+    return new EntityMinecartTurret(world, x, y, z);
+  }
 }
