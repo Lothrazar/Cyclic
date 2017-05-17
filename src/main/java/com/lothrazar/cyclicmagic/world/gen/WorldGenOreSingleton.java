@@ -13,7 +13,7 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
 
 public class WorldGenOreSingleton implements IWorldGenerator {
-  private WorldGenerator gen;
+  private WorldGenMinable gen;
   private Block blockOre;
   private int minHeight = 0;
   public WorldGenOreSingleton(Block ore, int mh) {

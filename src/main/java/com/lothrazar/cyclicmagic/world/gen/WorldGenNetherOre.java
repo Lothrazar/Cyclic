@@ -15,11 +15,11 @@ import net.minecraftforge.fml.common.IWorldGenerator;
 public class WorldGenNetherOre implements IWorldGenerator {
   private static final int MIN_HEIGHT = 5;
   private static final int MAX_HEIGHT = 128;
-  private WorldGenerator genGold;
-  private WorldGenerator genCoal;
-  private WorldGenerator genEmerald;
-  private WorldGenerator genLapis;
-  private WorldGenerator genDiamond;
+  private WorldGenMinable genGold;
+  private WorldGenMinable genCoal;
+  private WorldGenMinable genEmerald;
+  private WorldGenMinable genLapis;
+  private WorldGenMinable genDiamond;
   private WorldGenMinable genIron;
   private WorldGenMinable genRedstone;
   public static class Configs {
