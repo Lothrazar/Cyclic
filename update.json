@@ -7,8 +7,8 @@
     "1.10-recommended": "1.1.0",
     "1.10.2-latest":  "1.10.22",
     "1.10.2-recommended": "1.10.22",
-    "1.11.2-latest": "1.4.2",
-    "1.11.2-recommended": "1.4.2"
+    "1.11.2-latest": "1.4.4",
+    "1.11.2-recommended": "1.4.4"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -154,5 +154,6 @@
 	,"1.4.1":"Added Gold Minecart, Gold Furnace Minecart, Stone Minecart.  "
 	,"1.4.2":"Added Turrent Minecart and Dropper Minecart.  Automated User can now interact with minecarts (previously was only living entities).  Updated projectile rendering which stop them sometimes hitting the throwing player clienside and becoming invisible, and this fixes the dynamite playing explosion sounds on throw instead of on impact.  Fixed Guidebook pages going off screen, and a few typos.  Fixed the breaking particles of several blocks (so they arent the broken black/purple).  Fixed block hardness of the Auto Crafter, Workbench, Soundproofing, and the plates (so they are no longer instant-break).  New Guidebook category: Transport.  "
 	,"1.4.3":"Cyclic minecarts now work out of dispensers.  Fix Gold Minecart not picking up entities on collision.  Re-wrote Gold Furnace Minecart collision and movement logic, now gets stuck less and slow down less pushing other carts.  Gold furnace minecart does not auto move when you give it fuel, and it tells you current fuel total.  Removed 'world generation / Biome Crops' config & feature, as it was possibly causing world generation lag, in addition to being fairly bare bones, not fully configurable, and kind of boring... other mods do it better."
- }
+  	,"1.4.4":"Fix missing texture in Workbench and fix JEI crafting support."
+  }
 }

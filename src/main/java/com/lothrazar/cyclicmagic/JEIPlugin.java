@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic;
 import com.lothrazar.cyclicmagic.component.crafter.ContainerCrafter;
 import com.lothrazar.cyclicmagic.component.playerextensions.ContainerPlayerExtWorkbench;
+import com.lothrazar.cyclicmagic.component.workbench.ContainerWorkBench;
 import com.lothrazar.cyclicmagic.registry.JeiDescriptionRegistry;
 import mezz.jei.api.BlankModPlugin;
 import mezz.jei.api.IModRegistry;
@@ -33,9 +34,17 @@ public class JEIPlugin extends BlankModPlugin {
     //      registry.addDescription(new ItemStack(item, 1, OreDictionary.WILDCARD_VALUE), lang);
     //    }
     registry.getRecipeTransferRegistry().addRecipeTransferHandler(ContainerCrafter.class, VanillaRecipeCategoryUid.CRAFTING,
-        10, // @param recipeSlotStart    the first slot for recipe inputs // skip over the 1 output and the 5 armor slots
+        10, // @param recipeSlotStart    the first slot for recipe inputs // skip over the 10 INPUT
         9, // @param recipeSlotCount    the number of slots for recipe inputs //3x3
         29, //@param inventorySlotStart the first slot of the available inventory (usually player inventory) =9+6
+        4 * 9);//@param inventorySlotCount the number of slots of the available inventory //top right including hotbar =4*9
+    
+    
+
+    registry.getRecipeTransferRegistry().addRecipeTransferHandler(ContainerWorkBench.class, VanillaRecipeCategoryUid.CRAFTING,
+        1, // @param recipeSlotStart    the first slot for recipe inputs // skip over the 1 output and the 5 armor slots
+        9, // @param recipeSlotCount    the number of slots for recipe inputs //3x3
+        10, //@param inventorySlotStart the first slot of the available inventory (usually player inventory) =9
         4 * 9);//@param inventorySlotCount the number of slots of the available inventory //top right including hotbar =4*9
   }
 }
