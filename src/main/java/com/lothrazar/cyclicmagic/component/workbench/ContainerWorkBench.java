@@ -29,7 +29,7 @@ public class ContainerWorkBench extends ContainerBaseMachine {
     craftMatrix = new InventoryWorkbench(this, te);
     this.world = inventoryPlayer.player.world;
     tileEntity = te;
-    this.addSlotToContainer(new SlotCrafting(inventoryPlayer.player, this.craftMatrix, this.craftResult, 0, 124, 35));
+    this.addSlotToContainer(new SlotCrafting(inventoryPlayer.player, this.craftMatrix, this.craftResult, 0, 136, 35));
     int slot = 0;
     //inpt on left
     int xPrefix = Const.PAD, yPrefix = 27;
