@@ -83,4 +83,10 @@ public class GuiUser extends GuiBaseContanerProgress {
   public int getProgressMax() {
     return TileEntityUser.TIMER_FULL;
   }
+  public boolean usesFuel() {
+    return true;
+  }
+  public int getFuel() {
+    return tile.getField(Fields.FUEL.ordinal());
+  }
 }
