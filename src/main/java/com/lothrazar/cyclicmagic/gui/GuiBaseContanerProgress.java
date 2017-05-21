@@ -6,6 +6,8 @@ import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
 
 public abstract class GuiBaseContanerProgress extends GuiBaseContainer {
+  private static final int progressWidth = 156;
+  private static final int progressH = 7;
   public GuiBaseContanerProgress(Container inventorySlotsIn, TileEntityBaseMachineInvo tile) {
     super(inventorySlotsIn, tile);
   }
@@ -13,8 +15,6 @@ public abstract class GuiBaseContanerProgress extends GuiBaseContainer {
   public abstract int getProgressY();
   public abstract int getProgressCurrent();
   public abstract int getProgressMax();
-  private static final int progressWidth = 156;
-  private static final int progressH = 7;
   public ResourceLocation getProgressAsset() {
     return Const.Res.PROGRESS;
   }

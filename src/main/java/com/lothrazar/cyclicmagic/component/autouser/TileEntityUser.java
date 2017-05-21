@@ -30,7 +30,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
@@ -65,7 +64,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private int needsRedstone = 1;
   int toolSlot = 0;
   private int size;
-  private int furnaceBurnTime;
   public static enum Fields {
     TIMER, SPEED, REDSTONE, LEFTRIGHT, SIZE;
   }
@@ -73,26 +71,21 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     super(9);
     timer = TIMER_FULL;
     speed = 1;
+    this.usesFuel = true;
+    this.fuelSlot = this.getSizeInventory() - 1;
   }
   @Override
   public void update() {
-//    this.shiftAllUp();
-    
-    if (isRunning() && this.isBurning())
-    {
-        --this.furnaceBurnTime;
-        ModCyclic.logger.info("decr "+this.furnaceBurnTime);
+    //    this.shiftAllUp();
+    if (isRunning() && this.isBurning()) {
+      this.consumeFuel();
+      ModCyclic.logger.info("decr " + this.furnaceBurnTime);
     }
-    if(isRunning() && !this.isBurning() &&   !this.world.isRemote ){
+    if (isRunning() && !this.isBurning() && !this.world.isRemote) {
+      this.consumeNewFuel();
 
-      ItemStack itemstack = this.getStackInSlot(8);
-     if( TileEntityFurnace.isItemFuel(itemstack)){
-        this.furnaceBurnTime = TileEntityFurnace.getItemBurnTime(itemstack);
-        ModCyclic.logger.info("new fuel "+this.furnaceBurnTime);
-        itemstack.shrink(1);
-      }
+      ModCyclic.logger.info("new fuel " + this.furnaceBurnTime);
     }
-    
     if (isRunning() && this.isBurning()) {
       this.spawnParticlesAbove();
     }
@@ -131,11 +124,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         timer = 1;//allows it to run on a pulse
       }
     }
-  }
-
-  private boolean isBurning()
-  {
-      return this.furnaceBurnTime > 0;
   }
   private void interactEntities(BlockPos targetPos) {
     BlockPos entityCenter = this.getPos().offset(this.getCurrentFacing(), 1);
