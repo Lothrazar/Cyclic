@@ -135,7 +135,9 @@ public class UtilUncraft {
           return;
         }
       }
-      drops.add(stack);
+      if (stack.isEmpty() == false) {
+        drops.add(stack);
+      }
     }
     private boolean doesRecipeMatch(IRecipe r) {
       return r != null && r.getRecipeOutput() != null && doesRecipeInputMatch(r.getRecipeOutput());
