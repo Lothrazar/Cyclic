@@ -18,10 +18,7 @@ public class ContainerMinerSmart extends ContainerBaseMachine {
   public static final int SLOTEQUIP_X = SLOTX_START + (SLOTID_EQUIP + 2) * Const.SQ - 10;
   public static final int SLOTEQUIP_Y = SLOTY;
   protected TileEntityControlledMiner tileEntity;
-  private int tileHeight;
-  private int tileRedstone;
-  private int tileSize;
-  private int tileblacklist;
+
   public ContainerMinerSmart(InventoryPlayer inventoryPlayer, TileEntityControlledMiner te) {
     tileEntity = te;
     this.setTile(te);
@@ -57,33 +54,6 @@ public class ContainerMinerSmart extends ContainerBaseMachine {
       slotObject.onTake(player, stackInSlot);
     }
     return stack;
-  }
-  @Override
-  public void detectAndSendChanges() {
-    super.detectAndSendChanges();
-    for (int i = 0; i < this.listeners.size(); ++i) {
-      IContainerListener icontainerlistener = (IContainerListener) this.listeners.get(i);
-      int idx = TileEntityControlledMiner.Fields.HEIGHT.ordinal();
-      if (this.tileHeight != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-      }
-      idx = TileEntityControlledMiner.Fields.REDSTONE.ordinal();
-      if (this.tileRedstone != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-      }
-      idx = TileEntityControlledMiner.Fields.SIZE.ordinal();
-      if (this.tileSize != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-      }
-      idx = TileEntityControlledMiner.Fields.LISTTYPE.ordinal();
-      if (this.tileblacklist != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-      }
-    }
-    this.tileHeight = this.tileEntity.getField(TileEntityControlledMiner.Fields.HEIGHT.ordinal());
-    this.tileRedstone = this.tileEntity.getField(TileEntityControlledMiner.Fields.REDSTONE.ordinal());
-    this.tileSize = this.tileEntity.getField(TileEntityControlledMiner.Fields.SIZE.ordinal());
-    this.tileblacklist = this.tileEntity.getField(TileEntityControlledMiner.Fields.LISTTYPE.ordinal());
   }
   @Override
   @SideOnly(Side.CLIENT)

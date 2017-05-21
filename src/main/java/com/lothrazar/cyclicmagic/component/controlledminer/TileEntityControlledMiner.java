@@ -62,6 +62,10 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
   public TileEntityControlledMiner() {
     super(INVENTORY_SIZE);
   }
+  @Override
+  public int[] getFieldOrdinals() {
+    return super.getFieldArray(Fields.values().length);
+  }
   private void verifyFakePlayer(WorldServer w) {
     if (fakePlayer == null) {
       fakePlayer = UtilFakePlayer.initFakePlayer(w, this.uuid);
