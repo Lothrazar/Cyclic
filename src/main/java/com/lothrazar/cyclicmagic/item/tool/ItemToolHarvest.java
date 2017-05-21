@@ -2,7 +2,7 @@ package com.lothrazar.cyclicmagic.item.tool;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.item.BaseTool;
 import com.lothrazar.cyclicmagic.util.UtilHarvestCrops;
-import com.lothrazar.cyclicmagic.util.UtilHarvestCrops.HarestCropsConfig;
+import com.lothrazar.cyclicmagic.util.UtilHarvestCrops.HarvestSetting;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class ItemToolHarvest extends BaseTool implements IHasRecipe {
   private static final int range = 6;
   private static final int durability = 1000;
-  private HarestCropsConfig conf;
+  private HarvestSetting conf;
   public enum HarvestType {
     WEEDS, LEAVES, CROPS;
   }
@@ -25,7 +25,7 @@ public class ItemToolHarvest extends BaseTool implements IHasRecipe {
   public ItemToolHarvest(HarvestType c) {
     super(durability);
     harvestType = c;
-    conf = new HarestCropsConfig();//by default all are set false
+    conf = new HarvestSetting();//by default all are set false
     switch (harvestType) {
       case CROPS:
         conf.doesPumpkinBlocks = true;
