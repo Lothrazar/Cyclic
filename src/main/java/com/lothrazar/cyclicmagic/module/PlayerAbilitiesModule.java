@@ -31,7 +31,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class PlayerAbilitiesModule extends BaseEventModule implements IHasConfig {
   private static final int LADDER_ROTATIONLIMIT = -78;
-  private static final double LADDER_SPEED = 0.60;
+  private static final double LADDER_SPEED = 0.10;
   private boolean signSkullName;
   private boolean easyEnderChest;
   private boolean fastLadderClimb;

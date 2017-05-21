@@ -19,9 +19,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 
 public class UtilHarvestCrops {
-  public static class HarestCropsConfig {
+  public static class HarvestSetting {
     public boolean doesStem = false;
     public boolean doesSapling = false;
     public boolean doesMushroom = false;
@@ -49,7 +50,8 @@ public class UtilHarvestCrops {
       return s;
     }
   }
-  public static int harvestArea(World world, BlockPos pos, int hRadius, HarestCropsConfig conf) {
+  private static String[] blacklist;
+  public static int harvestArea(World world, BlockPos pos, int hRadius, HarvestSetting conf) {
     int x = pos.getX();
     int eventy = pos.getY();
     int z = pos.getZ();
@@ -73,7 +75,8 @@ public class UtilHarvestCrops {
     } // end of the outer loop
     return countHarvested;
   }
-  public static boolean harvestSingle(World world, BlockPos posCurrent, HarestCropsConfig conf) {
+  public static boolean harvestSingle(World world, BlockPos posCurrent, HarvestSetting conf) {
+
     boolean doBreakAbove = false;
     boolean doBreakBelow = false;
     boolean doBreak = false;
@@ -82,6 +85,9 @@ public class UtilHarvestCrops {
     if (blockState == null) { return false; }
     Block blockCheck = blockState.getBlock();
     if (blockCheck == null) { return false; }
+    Item seedItem = blockCheck.getItemDropped(blockCheck.getDefaultState(), world.rand, 0);//RuntimeException at this line
+
+    if (isItemInBlacklist(seedItem)) { return false; }
     String blockClassString = blockCheck.getClass().getName();//TODO: config file eventually but hotfix for now
     IBlockState bsAbove = world.getBlockState(posCurrent.up());
     IBlockState bsBelow = world.getBlockState(posCurrent.down());
@@ -212,7 +218,7 @@ public class UtilHarvestCrops {
         // com.polipo.exp.BlockExpPlant.func_180660_a(BlockExpPlant.java:237)
         // https://mods.curse.com/mc-mods/minecraft/230553-giacomos-experience-seedling
         try {
-          Item seedItem = blockCheck.getItemDropped(blockCheck.getDefaultState(), world.rand, 0);//RuntimeException at this line
+          
           if (drops.size() > 1 && seedItem != null) {
             //  if it dropped more than one ( seed and a thing)
             for (Iterator<ItemStack> iterator = drops.iterator(); iterator.hasNext();) {
@@ -243,5 +249,23 @@ public class UtilHarvestCrops {
       return true;
     }
     return false;
+  }
+  private static boolean isItemInBlacklist(Item seedItem) {   
+    String itemName = UtilItemStack.getStringForItem(seedItem);
+    for (String s : blacklist) {//dont use .contains on the list. must use .equals on string
+
+      if (s != null && s.equals(itemName)) {  
+      return true; }
+    }
+    return false;
+  }
+  public static void syncConfig(Configuration config) {
+    String category = Const.ConfigCategory.modpackMisc;
+ 
+    String[] deflist = new String[] {
+        "terraqueous:pergola"
+    };
+    blacklist = config.getStringList("HarvesterBlacklist", category, deflist, "Crops & bushes that are blocked from harvesting (Garden Scythe and Harvester).  Put an item that gets dropped to blacklist the harvest.  For example, add the item minecraft:potato to stop those from working");
+    
   }
 }
