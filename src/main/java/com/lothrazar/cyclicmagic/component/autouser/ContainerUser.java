@@ -14,12 +14,6 @@ public class ContainerUser extends ContainerBaseMachine {
   public static final int SLOTX_START = 8;
   public static final int SLOTY = 42;
   protected TileEntityUser tileEntity;
-  private int tileSpeed;
-  private int timer;
-  private int redstone;
-  private int leftright;
-  private int tileSize;
-  private int tileFuel;
   public ContainerUser(InventoryPlayer inventoryPlayer, TileEntityUser te) {
     tileEntity = te;
     this.setTile(te);
@@ -58,39 +52,6 @@ public class ContainerUser extends ContainerBaseMachine {
   @Override
   public void detectAndSendChanges() {
     super.detectAndSendChanges();
-//    for (int i = 0; i < this.listeners.size(); ++i) {
-//      IContainerListener icontainerlistener = (IContainerListener) this.listeners.get(i);
-//      int fieldId = TileEntityUser.Fields.SPEED.ordinal();
-//      if (this.tileSpeed != this.tileEntity.getField(fieldId)) {
-//        icontainerlistener.sendProgressBarUpdate(this, fieldId, this.tileEntity.getField(fieldId));
-//      }
-//      fieldId = TileEntityUser.Fields.TIMER.ordinal();
-//      if (this.timer != this.tileEntity.getField(fieldId)) {
-//        icontainerlistener.sendProgressBarUpdate(this, fieldId, this.tileEntity.getField(fieldId));
-//      }
-//      fieldId = TileEntityUser.Fields.REDSTONE.ordinal();
-//      if (this.redstone != this.tileEntity.getField(fieldId)) {
-//        icontainerlistener.sendProgressBarUpdate(this, fieldId, this.tileEntity.getField(fieldId));
-//      }
-//      fieldId = TileEntityUser.Fields.LEFTRIGHT.ordinal();
-//      if (this.leftright != this.tileEntity.getField(fieldId)) {
-//        icontainerlistener.sendProgressBarUpdate(this, fieldId, this.tileEntity.getField(fieldId));
-//      }
-//      fieldId = TileEntityUser.Fields.SIZE.ordinal();
-//      if (this.tileSize != this.tileEntity.getField(fieldId)) {
-//        icontainerlistener.sendProgressBarUpdate(this, fieldId, this.tileEntity.getField(fieldId));
-//      }
-//      fieldId = TileEntityUser.Fields.FUEL.ordinal();//TODO: shared fn in base class somehow!
-//      if (this.tileFuel != this.tileEntity.getField(fieldId)) {
-//        icontainerlistener.sendProgressBarUpdate(this, fieldId, this.tileEntity.getField(fieldId));
-//      }
-//    }
-//    this.tileSpeed = this.tileEntity.getField(TileEntityUser.Fields.SPEED.ordinal());
-//    this.timer = this.tileEntity.getField(TileEntityUser.Fields.TIMER.ordinal());
-//    this.redstone = this.tileEntity.getField(TileEntityUser.Fields.REDSTONE.ordinal());
-//    this.leftright = this.tileEntity.getField(TileEntityUser.Fields.LEFTRIGHT.ordinal());
-//    this.tileSize = this.tileEntity.getField(TileEntityUser.Fields.SIZE.ordinal());
-//    this.tileFuel = this.tileEntity.getField(TileEntityUser.Fields.FUEL.ordinal());
   }
   @Override
   @SideOnly(Side.CLIENT)

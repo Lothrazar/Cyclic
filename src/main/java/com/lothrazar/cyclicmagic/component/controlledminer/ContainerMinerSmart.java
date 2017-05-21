@@ -24,6 +24,7 @@ public class ContainerMinerSmart extends ContainerBaseMachine {
   private int tileblacklist;
   public ContainerMinerSmart(InventoryPlayer inventoryPlayer, TileEntityControlledMiner te) {
     tileEntity = te;
+    this.setTile(te);
     for (int i = 0; i < tileEntity.getSizeInventory() - 1; i++) {
       addSlotToContainer(new SlotSingleStack(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY));
     }

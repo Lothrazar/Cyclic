@@ -24,7 +24,7 @@ public class ContainerBaseMachine extends ContainerBase {
     }
     bindPlayerHotbar(inventoryPlayer);
   }
-  protected void setTile(TileEntityBaseMachineInvo tile){
+  protected void setTile(TileEntityBaseMachineInvo tile) {
     this.te = tile;
     this.tileMap = new int[te.getFieldOrdinals().length];
   }
@@ -33,41 +33,27 @@ public class ContainerBaseMachine extends ContainerBase {
       addSlotToContainer(new Slot(inventoryPlayer, i, playerOffsetX + i * Const.SQ, playerOffsetY + Const.PAD / 2 + 3 * Const.SQ));
     }
   }
-  
-  
- protected void syncFields(){
-   int fieldId;
-   for (int i = 0; i < this.listeners.size(); ++i) {
-     IContainerListener icontainerlistener = this.listeners.get(i);
-     
-     
-   
-     
-     for(int j = 0; j < te.getFieldOrdinals().length; j++){
-       fieldId= te.getFieldOrdinals()[j];
-      // fieldId = TileEntityUser.Fields.FUEL.ordinal();//TODO: shared fn in base class somehow!
-       if (this.tileMap[j] != this.te.getField(fieldId)) {
-         icontainerlistener.sendProgressBarUpdate(this, fieldId, this.te.getField(fieldId));
-       }
-     }
-   }
-   
-
-   for(int j = 0; j < te.getFieldOrdinals().length; j++){
-
-     fieldId= te.getFieldOrdinals()[j];
-     this.tileMap[j] = this.te.getField(fieldId);
-   }
-   
- }
-  
-
+  protected void syncFields() {
+    int fieldId;
+    for (int i = 0; i < this.listeners.size(); ++i) {
+      IContainerListener icontainerlistener = this.listeners.get(i);
+      for (int j = 0; j < te.getFieldOrdinals().length; j++) {
+        fieldId = te.getFieldOrdinals()[j];
+        if (this.tileMap[j] != this.te.getField(fieldId)) {
+          icontainerlistener.sendProgressBarUpdate(this, fieldId, this.te.getField(fieldId));
+        }
+      }
+    }
+    for (int j = 0; j < te.getFieldOrdinals().length; j++) {
+      fieldId = te.getFieldOrdinals()[j];
+      this.tileMap[j] = this.te.getField(fieldId);
+    }
+  }
   @Override
   public void detectAndSendChanges() {
     this.syncFields();
     super.detectAndSendChanges();
   }
-  
   @Override
   public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
     return ItemStack.EMPTY;

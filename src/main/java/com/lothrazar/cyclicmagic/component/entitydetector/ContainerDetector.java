@@ -18,6 +18,7 @@ public class ContainerDetector extends ContainerBaseMachine {
   private int tileEntityType;
   public ContainerDetector(InventoryPlayer inventoryPlayer, TileEntityDetector te) {
     tileEntity = te;
+    this.setTile(te);
     bindPlayerInventory(inventoryPlayer);
   }
   @Override

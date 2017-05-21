@@ -73,7 +73,9 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
   public  int[] getFieldOrdinals(){
     return new int[]{0,1,2,3,4,5};
+    //    return IntStream.rangeClosed(1, Fields.values().length).toArray();
   }
+
   @Override
   public void update() {
     //    this.shiftAllUp();

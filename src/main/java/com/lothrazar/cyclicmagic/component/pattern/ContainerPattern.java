@@ -27,6 +27,7 @@ public class ContainerPattern extends ContainerBaseMachine {
   public ContainerPattern(InventoryPlayer inventoryPlayer, TileEntityPatternBuilder te) {
     this.playerOffsetY = 130;
     tileEntity = te;
+    this.setTile(te);
     int s = 0;
     int row = 0, col = 0;
     for (int i = 0; i < tileEntity.getSizeInventory(); i++) { //so going from 0-9

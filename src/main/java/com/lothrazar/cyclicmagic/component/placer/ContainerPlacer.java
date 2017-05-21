@@ -19,6 +19,7 @@ public class ContainerPlacer extends ContainerBaseMachine {
   private int tileTimer;
   public ContainerPlacer(InventoryPlayer inventoryPlayer, TileEntityPlacer te) {
     tileEntity = te;
+    this.setTile(te);
     for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
       addSlotToContainer(new SlotOnlyBlocks(tileEntity, i, SLOTX_START + i * SQ, SLOTY));
     }

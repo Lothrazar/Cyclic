@@ -15,6 +15,8 @@ public class ContainerBlockMiner extends ContainerBaseMachine {
   protected TileEntityBlockMiner tileEntity;
   private int tileRedstone;
   public ContainerBlockMiner(InventoryPlayer inventoryPlayer, TileEntityBlockMiner te) {
+
+    this.setTile(te);
     tileEntity = te;
     bindPlayerInventory(inventoryPlayer);
   }

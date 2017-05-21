@@ -20,6 +20,7 @@ public class ContainerCrafter extends ContainerBaseMachine {
   private int tileTimer;
   public ContainerCrafter(InventoryPlayer inventoryPlayer, TileEntityCrafter te) {
     tileEntity = te;
+    this.setTile(te);
     this.playerOffsetY = 130;
     int slot = 0;
     //inpt on left
