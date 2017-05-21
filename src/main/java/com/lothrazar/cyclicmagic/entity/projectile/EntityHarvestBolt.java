@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.entity.projectile;
 import com.lothrazar.cyclicmagic.util.UtilHarvestCrops;
-import com.lothrazar.cyclicmagic.util.UtilHarvestCrops.HarestCropsConfig;
+import com.lothrazar.cyclicmagic.util.UtilHarvestCrops.HarvestSetting;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
@@ -24,7 +24,7 @@ public class EntityHarvestBolt extends EntityThrowableDispensable {
   protected void processImpact(RayTraceResult mop) {
     if (this.getThrower() != null && mop.sideHit != null) {
       BlockPos offset = mop.getBlockPos().offset(mop.sideHit);
-      HarestCropsConfig conf = new HarestCropsConfig();
+      HarvestSetting conf = new HarvestSetting();
       // it harvests a horizontal slice each time
       World world = getEntityWorld();
       UtilHarvestCrops.harvestArea(world, mop.getBlockPos(), range_main, conf);

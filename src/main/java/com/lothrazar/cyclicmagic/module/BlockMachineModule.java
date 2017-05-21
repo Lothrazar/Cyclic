@@ -22,7 +22,6 @@ import com.lothrazar.cyclicmagic.component.pylonexp.TileEntityXpPylon;
 import com.lothrazar.cyclicmagic.component.uncrafter.BlockUncrafting;
 import com.lothrazar.cyclicmagic.component.uncrafter.TileEntityUncrafter;
 import com.lothrazar.cyclicmagic.registry.BlockRegistry;
-import com.lothrazar.cyclicmagic.registry.ConfigRegistry;
 import com.lothrazar.cyclicmagic.registry.GuideRegistry.GuideCategory;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraftforge.common.config.Configuration;
@@ -43,8 +42,8 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
     if (expPylon) {
       BlockXpPylon exp_pylon = new BlockXpPylon();
       BlockRegistry.registerBlock(exp_pylon, "exp_pylon", GuideCategory.BLOCKMACHINE);
+      GameRegistry.registerTileEntity(TileEntityXpPylon.class, "exp_pylon_te");
     }
-    GameRegistry.registerTileEntity(TileEntityXpPylon.class, "exp_pylon_te");
     if (enablePattern) {
       BlockPatternBuilder builder_pattern = new BlockPatternBuilder();
       BlockRegistry.registerBlock(builder_pattern, "builder_pattern", GuideCategory.BLOCKMACHINE);
@@ -59,7 +58,6 @@ public class BlockMachineModule extends BaseModule implements IHasConfig {
       BlockHarvester harvester_block = new BlockHarvester();
       BlockRegistry.registerBlock(harvester_block, "harvester_block", GuideCategory.BLOCKMACHINE);
       GameRegistry.registerTileEntity(TileEntityHarvester.class, "harveseter_te");
-      ConfigRegistry.register(harvester_block);
     }
     if (enableUncrafter) {
       BlockUncrafting uncrafting_block = new BlockUncrafting();

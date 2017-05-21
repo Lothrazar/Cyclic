@@ -75,7 +75,7 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
       UtilUncraft.Uncrafter uncrafter = new UtilUncraft.Uncrafter();
       boolean success = false;
       try {
-        success = uncrafter.process(stack) == UncraftResultType.SUCCESS;
+        success = (uncrafter.process(stack) == UncraftResultType.SUCCESS);
         if (success) {
           if (this.getWorld().isRemote == false) { // drop the items
             ArrayList<ItemStack> uncrafterOutput = uncrafter.getDrops();
@@ -86,7 +86,7 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
         }
         else {//success = false, so try to dump to inventory first
           ArrayList<ItemStack> toDrop = new ArrayList<ItemStack>();
-          toDrop.add(stack);
+          toDrop.add(stack.copy());
           setOutputItems(toDrop);
           if (this.getWorld().isRemote == false) {
             this.decrStackSize(0, stack.getCount());

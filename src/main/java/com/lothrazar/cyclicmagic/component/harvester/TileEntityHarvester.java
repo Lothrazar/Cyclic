@@ -4,7 +4,7 @@ import com.lothrazar.cyclicmagic.block.tileentity.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.block.tileentity.ITileSizeToggle;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.util.UtilHarvestCrops;
-import com.lothrazar.cyclicmagic.util.UtilHarvestCrops.HarestCropsConfig;
+import com.lothrazar.cyclicmagic.util.UtilHarvestCrops.HarvestSetting;
 import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilShape;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
@@ -17,7 +17,7 @@ import net.minecraft.util.math.BlockPos;
 public class TileEntityHarvester extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITickable {
   private int timer;
   public static int TIMER_FULL = 80;
-  private HarestCropsConfig conf;
+  private HarvestSetting conf;
   private int needsRedstone = 1;
   private static final String NBT_TIMER = "Timer";
   private static final String NBT_REDST = "redstone";
@@ -29,16 +29,16 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
   public TileEntityHarvester() {
     super(0);
     this.timer = TIMER_FULL;
-    conf = new HarestCropsConfig();
+    conf = new HarvestSetting();
     conf.doesCrops = true;
     conf.doesMushroom = true;
     conf.doesPumpkinBlocks = true;
     conf.doesMelonBlocks = true;
   }
-  public void setHarvestConf(HarestCropsConfig c) {
+  public void setHarvestConf(HarvestSetting c) {
     conf = c;
   }
-  public HarestCropsConfig getHarvestConf() {
+  public HarvestSetting getHarvestConf() {
     return conf;
   }
   @Override
