@@ -30,6 +30,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
@@ -64,6 +65,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private int needsRedstone = 1;
   int toolSlot = 0;
   private int size;
+  private int furnaceBurnTime;
   public static enum Fields {
     TIMER, SPEED, REDSTONE, LEFTRIGHT, SIZE;
   }
@@ -74,8 +76,24 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
   @Override
   public void update() {
-    this.shiftAllUp();
-    if (isRunning()) {
+//    this.shiftAllUp();
+    
+    if (isRunning() && this.isBurning())
+    {
+        --this.furnaceBurnTime;
+        ModCyclic.logger.info("decr "+this.furnaceBurnTime);
+    }
+    if(isRunning() && !this.isBurning() &&   !this.world.isRemote ){
+
+      ItemStack itemstack = this.getStackInSlot(8);
+     if( TileEntityFurnace.isItemFuel(itemstack)){
+        this.furnaceBurnTime = TileEntityFurnace.getItemBurnTime(itemstack);
+        ModCyclic.logger.info("new fuel "+this.furnaceBurnTime);
+        itemstack.shrink(1);
+      }
+    }
+    
+    if (isRunning() && this.isBurning()) {
       this.spawnParticlesAbove();
     }
     if (world instanceof WorldServer) {
@@ -88,7 +106,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         }
       }
       tryEquipItem();
-      if (isRunning()) {
+      if (isRunning() && this.isBurning()) {
         timer -= this.getSpeed();
         if (timer <= 0) {
           timer = 0;
@@ -113,6 +131,11 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         timer = 1;//allows it to run on a pulse
       }
     }
+  }
+
+  private boolean isBurning()
+  {
+      return this.furnaceBurnTime > 0;
   }
   private void interactEntities(BlockPos targetPos) {
     BlockPos entityCenter = this.getPos().offset(this.getCurrentFacing(), 1);
