@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.gui;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.component.autouser.TileEntityUser;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
