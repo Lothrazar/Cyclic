@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
+import java.util.stream.IntStream;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
@@ -40,7 +41,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     this.furnaceBurnTime = f;
   }
   protected void consumeFuel() {
-    if (this.usesFuel && this.furnaceBurnTime > 0) {
+    if (this.usesFuel && this.furnaceBurnTime > 0 && !this.world.isRemote) {
       this.furnaceBurnTime--;
     }
   }
@@ -51,6 +52,9 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
       this.furnaceBurnTime = TileEntityFurnace.getItemBurnTime(itemstack);
       itemstack.shrink(1);
     }
+  }
+  public  int[] getFieldArray(int length){
+     return IntStream.rangeClosed(0, length-1).toArray();
   }
   private boolean isItemFuel(ItemStack itemstack) {
     return TileEntityFurnace.isItemFuel(itemstack);//TODO: wont be furnace eventually

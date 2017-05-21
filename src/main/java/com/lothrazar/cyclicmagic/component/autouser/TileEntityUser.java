@@ -46,7 +46,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
   // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
-
   private static final String NBT_SPEED = "h";//WTF why did i name it this
   private static final String NBT_LR = "lr";
   private static final int MAX_SIZE = 4;//9x9 area 
@@ -69,13 +68,11 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     super(9);
     timer = TIMER_FULL;
     speed = 1;
-    this.setFuelSlot( this.getSizeInventory() - 1);
+    this.setFuelSlot(this.getSizeInventory() - 1);
   }
-  public  int[] getFieldOrdinals(){
-    return new int[]{0,1,2,3,4,5};
-    //    return IntStream.rangeClosed(1, Fields.values().length).toArray();
+  public int[] getFieldOrdinals() {
+    return super.getFieldArray(Fields.values().length);
   }
-
   @Override
   public void update() {
     //    this.shiftAllUp();
@@ -85,7 +82,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     }
     if (isRunning() && !this.isBurning() && !this.world.isRemote) {
       this.consumeNewFuel();
-
       ModCyclic.logger.info("new fuel " + this.furnaceBurnTime);
     }
     if (isRunning() && this.isBurning()) {
@@ -274,7 +270,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       case FUEL:
         return this.getFuelCurrent();
       default:
-        break;
+      break;
     }
     return 0;
   }
@@ -307,9 +303,9 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       break;
       case FUEL:
         this.setFuelCurrent(value);
-        break;
+      break;
       default:
-        break;
+      break;
     }
   }
   public int getSpeed() {
