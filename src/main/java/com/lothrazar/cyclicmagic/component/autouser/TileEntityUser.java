@@ -71,6 +71,9 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     speed = 1;
     this.setFuelSlot( this.getSizeInventory() - 1);
   }
+  public  int[] getFieldOrdinals(){
+    return new int[]{0,1,2,3,4,5};
+  }
   @Override
   public void update() {
     //    this.shiftAllUp();

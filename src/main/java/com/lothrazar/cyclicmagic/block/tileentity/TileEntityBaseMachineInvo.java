@@ -13,7 +13,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 
-public class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements IInventory, ISidedInventory {
+public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements IInventory, ISidedInventory {
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
   public static final String NBT_TIMER = "Timer";
@@ -244,5 +244,8 @@ public class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements 
       this.markDirty();
     }
     return held;
+  }
+  public  int[] getFieldOrdinals(){
+    return new int[0];
   }
 }
