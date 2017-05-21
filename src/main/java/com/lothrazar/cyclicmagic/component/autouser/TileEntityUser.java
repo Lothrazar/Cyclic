@@ -71,8 +71,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     super(9);
     timer = TIMER_FULL;
     speed = 1;
-    this.usesFuel = true;
-    this.fuelSlot = this.getSizeInventory() - 1;
+    this.setFuelSlot( this.getSizeInventory() - 1);
   }
   @Override
   public void update() {

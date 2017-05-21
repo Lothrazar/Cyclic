@@ -27,6 +27,10 @@ public class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements 
     super();
     inv = NonNullList.withSize(invoSize, ItemStack.EMPTY);
   }
+  protected void setFuelSlot(int slot){
+    this.usesFuel = true;
+    this.fuelSlot = slot;
+  }
   protected void consumeFuel() {
     if (this.usesFuel && this.furnaceBurnTime > 0) {
       this.furnaceBurnTime--;
