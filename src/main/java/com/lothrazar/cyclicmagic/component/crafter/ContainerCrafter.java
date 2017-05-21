@@ -16,8 +16,6 @@ public class ContainerCrafter extends ContainerBaseMachine {
   public static final int SLOTX_START = 8;
   public static final int SLOTY = 40;
   protected TileEntityCrafter tileEntity;
-  private int tileRedstone;
-  private int tileTimer;
   public ContainerCrafter(InventoryPlayer inventoryPlayer, TileEntityCrafter te) {
     tileEntity = te;
     this.setTile(te);
@@ -88,23 +86,6 @@ public class ContainerCrafter extends ContainerBaseMachine {
       slotObject.onTake(player, stackInSlot);
     }
     return stack;
-  }
-  @Override
-  public void detectAndSendChanges() {
-    super.detectAndSendChanges();
-    for (int i = 0; i < this.listeners.size(); ++i) {
-      IContainerListener icontainerlistener = (IContainerListener) this.listeners.get(i);
-      int idx = TileEntityCrafter.Fields.TIMER.ordinal();
-      if (this.tileTimer != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-      }
-      idx = TileEntityCrafter.Fields.REDSTONE.ordinal();
-      if (this.tileRedstone != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-      }
-    }
-    this.tileTimer = this.tileEntity.getField(TileEntityCrafter.Fields.TIMER.ordinal());
-    this.tileRedstone = this.tileEntity.getField(TileEntityCrafter.Fields.REDSTONE.ordinal());
   }
   @Override
   @SideOnly(Side.CLIENT)

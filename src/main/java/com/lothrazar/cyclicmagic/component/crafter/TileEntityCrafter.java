@@ -44,6 +44,10 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
     REDSTONE, TIMER;
   }
   @Override
+  public int[] getFieldOrdinals() {
+    return super.getFieldArray(Fields.values().length);
+  }
+  @Override
   public void update() {
     if (!isRunning()) { return; }
     this.spawnParticlesAbove();
