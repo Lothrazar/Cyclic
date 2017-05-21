@@ -11,35 +11,11 @@ public class ContainerHarvester extends ContainerBaseMachine {
   public static final int SLOTY = 40;
   public static final int SQ = 18;
   protected TileEntityHarvester tileEntity;
-  private int tileRedstone;
-  private int tileTimer;
-  private int tileSize;
+
   public ContainerHarvester(InventoryPlayer inventoryPlayer, TileEntityHarvester te) {
     tileEntity = te;
     this.setTile(te);
     bindPlayerInventory(inventoryPlayer);
-  }
-  @Override
-  public void detectAndSendChanges() {
-    super.detectAndSendChanges();
-    for (int i = 0; i < this.listeners.size(); ++i) {
-      IContainerListener icontainerlistener = (IContainerListener) this.listeners.get(i);
-      int idx = TileEntityHarvester.Fields.TIMER.ordinal();
-      if (this.tileTimer != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-      }
-      idx = TileEntityHarvester.Fields.REDSTONE.ordinal();
-      if (this.tileRedstone != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-      }
-      idx = TileEntityHarvester.Fields.SIZE.ordinal();
-      if (this.tileSize != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-      }
-    }
-    this.tileTimer = this.tileEntity.getField(TileEntityHarvester.Fields.TIMER.ordinal());
-    this.tileRedstone = this.tileEntity.getField(TileEntityHarvester.Fields.REDSTONE.ordinal());
-    this.tileSize = this.tileEntity.getField(TileEntityHarvester.Fields.SIZE.ordinal());
   }
   @Override
   @SideOnly(Side.CLIENT)
