@@ -18,7 +18,9 @@ public class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements 
   private static final String NBT_SLOT = "Slot";
   public static final String NBT_TIMER = "Timer";
   public static final String NBT_REDST = "redstone";
-  protected static final String NBT_SIZE = "size";
+  public static final String NBT_SIZE = "size";
+  public static final String NBT_FUEL = "fuel";
+  public static final String NBTPLAYERID = "uuid";
   protected NonNullList<ItemStack> inv;
   protected boolean usesFuel = false;
   protected int fuelSlot = -1;
@@ -30,6 +32,12 @@ public class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements 
   protected void setFuelSlot(int slot){
     this.usesFuel = true;
     this.fuelSlot = slot;
+  }
+  protected int getFuelCurrent(){
+    return this.furnaceBurnTime;
+  }
+  protected void setFuelCurrent(int f){
+    this.furnaceBurnTime = f;
   }
   protected void consumeFuel() {
     if (this.usesFuel && this.furnaceBurnTime > 0) {

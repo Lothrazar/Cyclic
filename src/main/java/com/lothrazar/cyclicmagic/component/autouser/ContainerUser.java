@@ -19,8 +19,10 @@ public class ContainerUser extends ContainerBaseMachine {
   private int redstone;
   private int leftright;
   private int tileSize;
+  private int tileFuel;
   public ContainerUser(InventoryPlayer inventoryPlayer, TileEntityUser te) {
     tileEntity = te;
+    this.setTile(te);
     for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
       addSlotToContainer(new Slot(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY));
     }
@@ -78,12 +80,17 @@ public class ContainerUser extends ContainerBaseMachine {
       if (this.tileSize != this.tileEntity.getField(idx)) {
         icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
       }
+      idx = TileEntityUser.Fields.FUEL.ordinal();//TODO: shared fn in base class somehow!
+      if (this.tileFuel != this.tileEntity.getField(idx)) {
+        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
+      }
     }
     this.tileSpeed = this.tileEntity.getField(TileEntityUser.Fields.SPEED.ordinal());
     this.timer = this.tileEntity.getField(TileEntityUser.Fields.TIMER.ordinal());
     this.redstone = this.tileEntity.getField(TileEntityUser.Fields.REDSTONE.ordinal());
     this.leftright = this.tileEntity.getField(TileEntityUser.Fields.LEFTRIGHT.ordinal());
     this.tileSize = this.tileEntity.getField(TileEntityUser.Fields.SIZE.ordinal());
+    this.tileFuel = this.tileEntity.getField(TileEntityUser.Fields.FUEL.ordinal());
   }
   @Override
   @SideOnly(Side.CLIENT)
