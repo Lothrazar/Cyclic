@@ -2,8 +2,8 @@ package com.lothrazar.cyclicmagic.component.uncrafter;
 import java.io.IOException;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.uncrafter.TileEntityUncrafter.Fields;
-import com.lothrazar.cyclicmagic.gui.GuiBaseContanerProgress;
-import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
+import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilUncraft;
@@ -15,12 +15,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GuiUncrafting extends GuiBaseContanerProgress {
+public class GuiUncrafting extends GuiBaseContainer {
   private TileEntityUncrafter tile;
   public GuiUncrafting(InventoryPlayer inventoryPlayer, TileEntityUncrafter tileEntity) {
     super(new ContainerUncrafting(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
     this.fieldRedstoneBtn=Fields.REDSTONE.ordinal();
+    this.progressBar = new ProgressBar(this, 10,3 * Const.SQ + 2 * Const.PAD + 2, TileEntityUncrafter.Fields.TIMER.ordinal(), TileEntityUncrafter.TIMER_FULL);
+    
   }
   @Override
   public void initGui() {
@@ -56,21 +58,5 @@ public class GuiUncrafting extends GuiBaseContanerProgress {
       }
     }
   }
-  @SideOnly(Side.CLIENT)
-  @Override
-  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-  }
-  public int getProgressX() {
-    return this.guiLeft + Const.PAD + 2;
-  }
-  public int getProgressY() {
-    return this.guiTop + 3 * Const.SQ + 2 * Const.PAD + 2;
-  }
-  public int getProgressCurrent() {
-    return tile.getTimer();
-  }
-  public int getProgressMax() {
-    return TileEntityUncrafter.TIMER_FULL;
-  }
+ 
 }

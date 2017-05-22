@@ -9,6 +9,7 @@ public class ProgressBar {
   public int yOffset;
   public int fieldId;
   public int maxValue;
+  public ResourceLocation asset = Const.Res.PROGRESS;
   private GuiBaseContainer parent;
   public ProgressBar(GuiBaseContainer p, int x, int y, int f, int max) {
     parent = p;
@@ -25,6 +26,6 @@ public class ProgressBar {
     return Const.Res.PROGRESSCTR;
   }
   public ResourceLocation getProgressAsset() {
-    return Const.Res.PROGRESS;
+    return asset;
   }
 }

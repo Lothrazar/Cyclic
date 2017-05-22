@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.component.harvester;
-import com.lothrazar.cyclicmagic.gui.GuiBaseContanerProgress;
-import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
+import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.GuiButtonSizePreview;
+import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.net.PacketTileSizeToggle;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -10,14 +10,15 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GuiHarvester extends GuiBaseContanerProgress {
+public class GuiHarvester extends GuiBaseContainer {
   private TileEntityHarvester tile;
   boolean debugLabels = false;
   private GuiButtonSizePreview btnSize;
   public GuiHarvester(InventoryPlayer inventoryPlayer, TileEntityHarvester tileEntity) {
     super(new ContainerHarvester(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
-    this.fieldRedstoneBtn=TileEntityHarvester.Fields.REDSTONE.ordinal();
+    this.fieldRedstoneBtn = TileEntityHarvester.Fields.REDSTONE.ordinal();
+    this.progressBar = new ProgressBar(this, 10, 14 + 3 * Const.SQ, TileEntityHarvester.Fields.TIMER.ordinal(), TileEntityHarvester.TIMER_FULL);
   }
   @Override
   public void initGui() {
@@ -46,20 +47,8 @@ public class GuiHarvester extends GuiBaseContanerProgress {
   }
   @SideOnly(Side.CLIENT)
   @Override
-  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) { 
+  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     btnSize.displayString = UtilChat.lang("button.harvester.size" + tile.getField(TileEntityHarvester.Fields.SIZE.ordinal()));
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-  }
-  public int getProgressX() {
-    return this.guiLeft + 10;
-  }
-  public int getProgressY() {
-    return this.guiTop + 9 + 3 * Const.SQ + 5;
-  }
-  public int getProgressCurrent() {
-    return tile.getField(TileEntityHarvester.Fields.TIMER.ordinal());
-  }
-  public int getProgressMax() {
-    return TileEntityHarvester.TIMER_FULL;
   }
 }
