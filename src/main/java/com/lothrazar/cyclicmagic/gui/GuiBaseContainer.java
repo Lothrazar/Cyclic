@@ -14,7 +14,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
   public int FONTCOLOR = 4210752;
   public static final int WIDTH = 176;
   public static final int HEIGHT = 166;
-  private TileEntityBaseMachineInvo tile;
+  protected TileEntityBaseMachineInvo tile;
   public GuiBaseContainer(Container inventorySlotsIn, TileEntityBaseMachineInvo tile) {
     super(inventorySlotsIn);
     this.tile = tile;

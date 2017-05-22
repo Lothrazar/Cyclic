@@ -68,7 +68,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     super(9);
     timer = TIMER_FULL;
     speed = 1;
-    this.setFuelSlot(this.getSizeInventory() - 1);
+    //this.setFuelSlot(this.getSizeInventory() - 1);
   }
   @Override
   public int[] getFieldOrdinals() {
@@ -76,7 +76,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
   @Override
   public void update() {
-    //    this.shiftAllUp();
+    this.shiftAllUp();
     if (isRunning() && this.isBurning()) {
       this.consumeFuel();
       ModCyclic.logger.info("decr " + this.furnaceBurnTime);

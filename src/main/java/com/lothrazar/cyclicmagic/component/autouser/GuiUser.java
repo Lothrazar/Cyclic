@@ -67,7 +67,7 @@ public class GuiUser extends GuiBaseContanerProgress {
     actionBtn.displayString = UtilChat.lang("tile.block_user.action" + tile.getField(Fields.LEFTRIGHT.ordinal()));
     btnSize.displayString = UtilChat.lang("button.harvester.size" + tile.getField(Fields.SIZE.ordinal()));
    
-    this.drawFieldAt(1,1,Fields.FUEL.ordinal());
+//    this.drawFieldAt(1,1,Fields.FUEL.ordinal());
     
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
@@ -82,11 +82,5 @@ public class GuiUser extends GuiBaseContanerProgress {
   }
   public int getProgressMax() {
     return TileEntityUser.TIMER_FULL;
-  }
-  public boolean usesFuel() {
-    return true;
-  }
-  public int getFuel() {
-    return tile.getField(Fields.FUEL.ordinal());
   }
 }

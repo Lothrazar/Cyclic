@@ -17,9 +17,7 @@ public abstract class GuiBaseContanerProgress extends GuiBaseContainer {
   public abstract int getProgressY();
   public abstract int getProgressCurrent();
   public abstract int getProgressMax();
-  public boolean usesFuel() {
-    return false;
-  }
+ 
   public int getFuel() {
     return 0;
   }
@@ -33,9 +31,9 @@ public abstract class GuiBaseContanerProgress extends GuiBaseContainer {
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     drawProgressBar();//TODO: should we just pass TILE into this class from subs?
-    if (usesFuel()) {
-      drawFuelBar();
-    }
+//    if (usesFuel()) {
+//      drawFuelBar();
+//    }
   }
   public void drawFuelBar() {
     int u = 0, v = 0;
