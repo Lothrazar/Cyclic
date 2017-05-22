@@ -7,16 +7,15 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.inventory.Container;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class GuiBaseContainer extends GuiContainer {
-  public int FONTCOLOR = 4210752;
-//  public static final int WIDTH = 176;
-//  public static final int HEIGHT = 166;
+  public final static int FONTCOLOR = 4210752;
   protected TileEntityBaseMachineInvo tile;
   protected Const.ScreenSize screenSize = ScreenSize.STANDARD;
+  protected int fieldRedstoneBtn = -1;
+  private GuiButtonMachineRedstone redstoneBtn = null;
   public GuiBaseContainer(Container inventorySlotsIn, TileEntityBaseMachineInvo tile) {
     super(inventorySlotsIn);
     this.tile = tile;
@@ -24,6 +23,16 @@ public abstract class GuiBaseContainer extends GuiContainer {
   public GuiBaseContainer(Container inventorySlotsIn) {
     super(inventorySlotsIn);
     this.tile = null;
+  }
+  @Override
+  public void initGui() {
+    super.initGui();
+    if (this.fieldRedstoneBtn >= 0) {
+      redstoneBtn = new GuiButtonMachineRedstone(1,
+          this.guiLeft + Const.PAD,
+          this.guiTop + Const.PAD, this.tile.getPos());
+      this.buttonList.add(redstoneBtn);
+    }
   }
   /**
    * ONLY CALL FROM drawGuiContainerForegroundLayer
@@ -41,6 +50,9 @@ public abstract class GuiBaseContainer extends GuiContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+    if (redstoneBtn != null) {
+      redstoneBtn.setState(tile.getField(this.fieldRedstoneBtn));
+    }
     if (tile != null) {
       String s = UtilChat.lang(tile.getName());
       this.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6);
@@ -65,8 +77,8 @@ public abstract class GuiBaseContainer extends GuiContainer {
     int thisX = getMiddleX();
     int thisY = getMiddleY();
     int u = 0, v = 0;
-    Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, 
-        screenSize.width(), screenSize.height(), 
+    Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v,
+        screenSize.width(), screenSize.height(),
         screenSize.width(), screenSize.height());
     // Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, this.xSize, this.ySize, WIDTH, HEIGHT);
   }

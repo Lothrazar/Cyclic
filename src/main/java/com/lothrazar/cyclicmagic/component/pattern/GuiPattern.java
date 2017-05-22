@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.component.pattern;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.client.gui.Gui;
@@ -17,7 +16,6 @@ public class GuiPattern extends GuiBaseContainer {
   private int[] yRows = new int[3];
   private int rightColX;
   private int sizeY;
-  private GuiButtonMachineRedstone redstoneBtn;
   private int sizeColX;
   private int heightColX;
   public GuiPattern(InventoryPlayer inventoryPlayer, TileEntityPatternBuilder tileEntity) {
@@ -27,16 +25,13 @@ public class GuiPattern extends GuiBaseContainer {
     screenSize = ScreenSize.LARGE;
     this.xSize = screenSize.width();
     this.ySize = screenSize.height();
+    this.fieldRedstoneBtn = TileEntityPatternBuilder.Fields.REDSTONE.ordinal();
   }
   @Override
-  public void initGui() { //BUTTON TO SWAP SOURCE AND DEST
+  public void initGui() { 
     super.initGui();
-    int id = 1;
+    int id = 2;
     /////redstone button
-    redstoneBtn = new GuiButtonMachineRedstone(id++,
-        this.guiLeft + Const.PAD,
-        this.guiTop + Const.PAD, this.tile.getPos());
-    this.buttonList.add(redstoneBtn);
     sizeY = 46;//save now as reuse for textbox
     int vButtonSpacing = 12;
     leftColX = 176 - 148;
@@ -88,7 +83,6 @@ public class GuiPattern extends GuiBaseContainer {
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    redstoneBtn.setState(tile.getField(TileEntityPatternBuilder.Fields.REDSTONE.ordinal()));
     //draw all text fields
     drawFieldAt(sizeColX + 3, sizeY, TileEntityPatternBuilder.Fields.SIZER);
     drawFieldAt(leftColX, yRows[0], TileEntityPatternBuilder.Fields.OFFTARGX);
