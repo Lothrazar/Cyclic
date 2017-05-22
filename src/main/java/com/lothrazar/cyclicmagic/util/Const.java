@@ -13,9 +13,9 @@ public class Const {
     public static final ResourceLocation TABLEPLAIN = new ResourceLocation(Const.MODID, folder + "table_plain.png");
     public static final ResourceLocation TABLELARGE = new ResourceLocation(Const.MODID, folder + "pattern.png");
     public static final ResourceLocation VILLAGER = new ResourceLocation(Const.MODID, Const.Res.folder + "villager.png");
- }
+  }
   public static enum ScreenSize {
-    STANDARD, STANDARDPLAIN, LARGEWIDE,LARGE;
+    STANDARD, STANDARDPLAIN, LARGEWIDE, LARGE;
     public int width() {
       switch (this) {
         case STANDARD:
@@ -31,7 +31,7 @@ public class Const {
       switch (this) {
         case STANDARD:
         case STANDARDPLAIN:
-          return  166;
+          return 166;
         case LARGE:
         case LARGEWIDE:
           return 212;
@@ -70,7 +70,6 @@ public class Const {
           return Res.TABLELARGE;
         case LARGEWIDE:
           return Res.VILLAGER;
-          
       }
       return null;
     }

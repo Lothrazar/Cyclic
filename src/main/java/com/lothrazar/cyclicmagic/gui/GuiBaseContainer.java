@@ -16,6 +16,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
   protected Const.ScreenSize screenSize = ScreenSize.STANDARD;
   protected int fieldRedstoneBtn = -1;
   private GuiButtonMachineRedstone redstoneBtn = null;
+  
   public GuiBaseContainer(Container inventorySlotsIn, TileEntityBaseMachineInvo tile) {
     super(inventorySlotsIn);
     this.tile = tile;
@@ -94,6 +95,11 @@ public abstract class GuiBaseContainer extends GuiContainer {
         }
         break;// cant hover on 2 at once
       }
+    }
+  }
+  public static class ProgressBar{
+    public ProgressBar(){
+      
     }
   }
 }
