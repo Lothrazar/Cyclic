@@ -25,7 +25,7 @@ public class GuiUser extends GuiBaseContainer {
     this.xSize = screenSize.width();
     this.ySize = screenSize.height();
     this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
-    this.progressBar = new ProgressBar(this,10, 9 + 3 * Const.SQ + 5,Fields.TIMER.ordinal(),TileEntityUser.TIMER_FULL);
+    this.progressBar = new ProgressBar(this,10, 14 + 3 * Const.SQ  ,Fields.TIMER.ordinal(),TileEntityUser.TIMER_FULL);
   }
   @Override
   public void initGui() {
