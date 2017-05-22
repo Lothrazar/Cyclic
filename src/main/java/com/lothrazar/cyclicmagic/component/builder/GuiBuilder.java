@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.component.builder;
-import com.lothrazar.cyclicmagic.gui.GuiBaseContanerProgress;
-import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
+import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.GuiButtonSizePreview;
 import com.lothrazar.cyclicmagic.net.PacketTileSizeToggle;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -10,7 +9,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GuiBuilder extends GuiBaseContanerProgress {
+public class GuiBuilder extends GuiBaseContainer {
   private TileEntityStructureBuilder tile;
   private ButtonBuilderType btn;
   private ButtonBuildSize btnSizeUp;
@@ -26,6 +25,7 @@ public class GuiBuilder extends GuiBaseContanerProgress {
     super(new ContainerBuilder(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
     this.fieldRedstoneBtn = TileEntityStructureBuilder.Fields.REDSTONE.ordinal();
+    this.progressBar = new ProgressBar(this, 10, 9 + 3 * Const.SQ + 10, TileEntityStructureBuilder.Fields.TIMER.ordinal(), TileEntityStructureBuilder.TIMER_FULL);
   }
   @Override
   public void initGui() {
@@ -102,17 +102,5 @@ public class GuiBuilder extends GuiBaseContanerProgress {
     for (int k = 0; k < this.tile.getSizeInventory(); k++) { // x had - 3 ??
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerBuilder.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerBuilder.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
-  }
-  public int getProgressX() {
-    return this.guiLeft + 10;
-  }
-  public int getProgressY() {
-    return this.guiTop + 9 + 3 * Const.SQ + 10;
-  }
-  public int getProgressCurrent() {
-    return tile.getTimer();
-  }
-  public int getProgressMax() {
-    return TileEntityStructureBuilder.TIMER_FULL;
   }
 }

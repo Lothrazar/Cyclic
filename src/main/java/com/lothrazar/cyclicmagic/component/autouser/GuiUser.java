@@ -70,16 +70,4 @@ public class GuiUser extends GuiBaseContainer {
     
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
-//  public int getProgressX() {
-//    return this.guiLeft + 10;
-//  }
-//  public int getProgressY() {
-//    return this.guiTop + 9 + 3 * Const.SQ + 5;
-//  }
-//  public int getProgressCurrent() {
-//    return tile.getField(Fields.TIMER.ordinal());
-//  }
-//  public int getProgressMax() {
-//    return TileEntityUser.TIMER_FULL;
-//  }
 }
