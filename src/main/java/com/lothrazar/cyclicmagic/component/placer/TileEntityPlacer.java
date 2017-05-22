@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.component.placer;
 import com.lothrazar.cyclicmagic.block.tileentity.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
+import com.lothrazar.cyclicmagic.component.autouser.TileEntityUser.Fields;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
 import net.minecraft.block.Block;
@@ -22,6 +23,10 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
   private int needsRedstone = 1;
   public TileEntityPlacer() {
     super(9);
+  }
+  @Override
+  public int[] getFieldOrdinals() {
+    return super.getFieldArray(Fields.values().length);
   }
   @Override
   public boolean isItemValidForSlot(int index, ItemStack stack) {
