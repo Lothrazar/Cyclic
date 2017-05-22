@@ -17,11 +17,6 @@ public class ContainerPylon extends ContainerBaseMachine {
   public static final int SLOTX = 150;
   public static final int SLOTY = 18;
   protected TileEntityXpPylon tileEntity;
-  private int bottle;
-  private int tileTimer;
-  private int tileXp;
-  private int spray;
-  private int collect;
   public ContainerPylon(InventoryPlayer inventoryPlayer, TileEntityXpPylon te) {
     tileEntity = te;
     this.setTile(te);
@@ -56,38 +51,6 @@ public class ContainerPylon extends ContainerBaseMachine {
       slotObject.onTake(player, stackInSlot);
     }
     return stack;
-  }
-  @Override
-  public void detectAndSendChanges() {
-    super.detectAndSendChanges();
-    for (int i = 0; i < this.listeners.size(); ++i) {
-      IContainerListener icontainerlistener = (IContainerListener) this.listeners.get(i);
-      int idx = TileEntityXpPylon.Fields.TIMER.ordinal();
-      if (this.tileTimer != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-      }
-      idx = TileEntityXpPylon.Fields.BOTTLE.ordinal();
-      if (this.bottle != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-      }
-      idx = TileEntityXpPylon.Fields.EXP.ordinal();
-      if (this.tileXp != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-      }
-      idx = TileEntityXpPylon.Fields.SPRAY.ordinal();
-      if (this.spray != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-      }
-      idx = TileEntityXpPylon.Fields.COLLECT.ordinal();
-      if (this.collect != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-      }
-    }
-    this.tileTimer = this.tileEntity.getField(TileEntityXpPylon.Fields.TIMER.ordinal());
-    this.bottle = this.tileEntity.getField(TileEntityXpPylon.Fields.BOTTLE.ordinal());
-    this.tileXp = this.tileEntity.getField(TileEntityXpPylon.Fields.EXP.ordinal());
-    this.spray = this.tileEntity.getField(TileEntityXpPylon.Fields.SPRAY.ordinal());
-    this.collect = this.tileEntity.getField(TileEntityXpPylon.Fields.COLLECT.ordinal());
   }
   @Override
   @SideOnly(Side.CLIENT)
