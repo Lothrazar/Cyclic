@@ -1,7 +1,6 @@
 package com.lothrazar.cyclicmagic.component.controlledminer;
 import com.lothrazar.cyclicmagic.component.controlledminer.TileEntityControlledMiner.Fields;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
 import com.lothrazar.cyclicmagic.gui.GuiButtonSizePreview;
 import com.lothrazar.cyclicmagic.net.PacketTileSizeToggle;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -22,11 +21,11 @@ public class GuiMinerSmart extends GuiBaseContainer {
   public GuiMinerSmart(InventoryPlayer inventoryPlayer, TileEntityControlledMiner tileEntity) {
     super(new ContainerMinerSmart(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
-    this.fieldRedstoneBtn=TileEntityControlledMiner.Fields.REDSTONE.ordinal();
+    this.fieldRedstoneBtn = TileEntityControlledMiner.Fields.REDSTONE.ordinal();
   }
-//  public String getTitle() {
-//    return "tile.block_miner_smart.name";
-//  }
+  //  public String getTitle() {
+  //    return "tile.block_miner_smart.name";
+  //  }
   @Override
   public void initGui() {
     super.initGui();
@@ -74,7 +73,7 @@ public class GuiMinerSmart extends GuiBaseContainer {
   }
   @SideOnly(Side.CLIENT)
   @Override
-  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) { 
+  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     btnSize.displayString = UtilChat.lang("button.harvester.size" + tile.getField(TileEntityControlledMiner.Fields.SIZE.ordinal()));
     btnWhitelist.displayString = UtilChat.lang("button.miner.whitelist." + tile.getField(Fields.LISTTYPE.ordinal()));
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);

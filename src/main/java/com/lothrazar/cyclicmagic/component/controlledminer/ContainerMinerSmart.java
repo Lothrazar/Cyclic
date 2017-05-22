@@ -18,7 +18,6 @@ public class ContainerMinerSmart extends ContainerBaseMachine {
   public static final int SLOTEQUIP_X = SLOTX_START + (SLOTID_EQUIP + 2) * Const.SQ - 10;
   public static final int SLOTEQUIP_Y = SLOTY;
   protected TileEntityControlledMiner tileEntity;
-
   public ContainerMinerSmart(InventoryPlayer inventoryPlayer, TileEntityControlledMiner te) {
     tileEntity = te;
     this.setTile(te);

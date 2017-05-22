@@ -5,7 +5,6 @@ import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.block.BlockFurnace;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.MoverType;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.item.EntityMinecartFurnace;
 import net.minecraft.entity.player.EntityPlayer;

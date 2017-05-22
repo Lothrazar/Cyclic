@@ -20,9 +20,8 @@ public class GuiUncrafting extends GuiBaseContainer {
   public GuiUncrafting(InventoryPlayer inventoryPlayer, TileEntityUncrafter tileEntity) {
     super(new ContainerUncrafting(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
-    this.fieldRedstoneBtn=Fields.REDSTONE.ordinal();
-    this.progressBar = new ProgressBar(this, 10,3 * Const.SQ + 2 * Const.PAD + 2, TileEntityUncrafter.Fields.TIMER.ordinal(), TileEntityUncrafter.TIMER_FULL);
-    
+    this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
+    this.progressBar = new ProgressBar(this, 10, 3 * Const.SQ + 2 * Const.PAD + 2, TileEntityUncrafter.Fields.TIMER.ordinal(), TileEntityUncrafter.TIMER_FULL);
   }
   @Override
   public void initGui() {
@@ -58,5 +57,4 @@ public class GuiUncrafting extends GuiBaseContainer {
       }
     }
   }
- 
 }

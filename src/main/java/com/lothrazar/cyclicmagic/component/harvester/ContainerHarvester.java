@@ -11,7 +11,6 @@ public class ContainerHarvester extends ContainerBaseMachine {
   public static final int SLOTY = 40;
   public static final int SQ = 18;
   protected TileEntityHarvester tileEntity;
-
   public ContainerHarvester(InventoryPlayer inventoryPlayer, TileEntityHarvester te) {
     tileEntity = te;
     this.setTile(te);

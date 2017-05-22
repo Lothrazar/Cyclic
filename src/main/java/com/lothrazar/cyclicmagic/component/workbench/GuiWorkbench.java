@@ -20,7 +20,7 @@ public class GuiWorkbench extends GuiBaseContainer {
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + 136 - 1,
-        this.guiTop +   35 - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+        this.guiTop + 35 - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     int xPrefix = Const.PAD, yPrefix = 27;
     int rows = TileEntityWorkbench.ROWS;
     int cols = TileEntityWorkbench.COLS;

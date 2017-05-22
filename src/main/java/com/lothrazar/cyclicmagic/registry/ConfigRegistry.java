@@ -2,7 +2,6 @@ package com.lothrazar.cyclicmagic.registry;
 import java.util.ArrayList;
 import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.util.UtilHarvestCrops;
-import com.lothrazar.cyclicmagic.util.UtilUncraft;
 import net.minecraftforge.common.config.Configuration;
 
 public class ConfigRegistry {
@@ -23,7 +22,6 @@ public class ConfigRegistry {
     for (IHasConfig conf : ConfigRegistry.configHandlers) {
       conf.syncConfig(config);
     }
-
     //NOT only used by harvester machine, also scythe. so 
     //PRETTTY much a hack puting this here. but we cant put i in one item since both use it
     UtilHarvestCrops.syncConfig(config);

@@ -30,14 +30,14 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     super();
     inv = NonNullList.withSize(invoSize, ItemStack.EMPTY);
   }
-  protected void setFuelSlot(int slot){
+  protected void setFuelSlot(int slot) {
     this.usesFuel = true;
     this.fuelSlot = slot;
   }
-  protected int getFuelCurrent(){
+  protected int getFuelCurrent() {
     return this.furnaceBurnTime;
   }
-  protected void setFuelCurrent(int f){
+  protected void setFuelCurrent(int f) {
     this.furnaceBurnTime = f;
   }
   protected void consumeFuel() {
@@ -53,8 +53,8 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
       itemstack.shrink(1);
     }
   }
-  public  int[] getFieldArray(int length){
-     return IntStream.rangeClosed(0, length-1).toArray();
+  public int[] getFieldArray(int length) {
+    return IntStream.rangeClosed(0, length - 1).toArray();
   }
   private boolean isItemFuel(ItemStack itemstack) {
     return TileEntityFurnace.isItemFuel(itemstack);//TODO: wont be furnace eventually
@@ -249,7 +249,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     }
     return held;
   }
-  public  int[] getFieldOrdinals(){
+  public int[] getFieldOrdinals() {
     return new int[0];
   }
 }

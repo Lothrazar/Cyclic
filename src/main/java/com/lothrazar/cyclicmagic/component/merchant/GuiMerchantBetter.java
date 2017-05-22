@@ -8,8 +8,8 @@ import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.ITooltipButton;
 import com.lothrazar.cyclicmagic.util.Const;
-import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
@@ -29,8 +29,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class GuiMerchantBetter extends GuiBaseContainer {
-//  static final int texture_width = 250;
-//  static final int texture_height = 212;
+  //  static final int texture_width = 250;
+  //  static final int texture_height = 212;
   public static final ResourceLocation TRADE_REDX = new ResourceLocation(Const.MODID, Const.Res.folder + "tradex.png");
   private int btnColCount = 4;
   private int yBtnStart;
@@ -99,8 +99,8 @@ public class GuiMerchantBetter extends GuiBaseContainer {
     int thisX = this.getMiddleX();
     int thisY = this.getMiddleY();
     int u = 0, v = 0;
-    Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, 
-        screenSize.width(), screenSize.height(),  
+    Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v,
+        screenSize.width(), screenSize.height(),
         screenSize.width(), screenSize.height());
   }
   /**

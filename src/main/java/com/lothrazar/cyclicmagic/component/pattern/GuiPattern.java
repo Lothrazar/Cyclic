@@ -8,8 +8,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiPattern extends GuiBaseContainer {
-//  static final int WIDTH = 176;
-//  static final int HEIGHT = 212;
+  //  static final int WIDTH = 176;
+  //  static final int HEIGHT = 212;
   static final int GUI_ROWS = 2;
   private TileEntityPatternBuilder tile;
   private int leftColX;
@@ -21,14 +21,13 @@ public class GuiPattern extends GuiBaseContainer {
   public GuiPattern(InventoryPlayer inventoryPlayer, TileEntityPatternBuilder tileEntity) {
     super(new ContainerPattern(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
- 
     screenSize = ScreenSize.LARGE;
     this.xSize = screenSize.width();
     this.ySize = screenSize.height();
     this.fieldRedstoneBtn = TileEntityPatternBuilder.Fields.REDSTONE.ordinal();
   }
   @Override
-  public void initGui() { 
+  public void initGui() {
     super.initGui();
     int id = 2;
     /////redstone button
@@ -66,7 +65,7 @@ public class GuiPattern extends GuiBaseContainer {
     this.buttonList.add(bt);
     // ButtonToggleRender
     ButtonToggleRender btn = new ButtonToggleRender(id++,
-        this.guiLeft +  screenSize.width() - 20 - Const.PAD,
+        this.guiLeft + screenSize.width() - 20 - Const.PAD,
         this.guiTop + Const.PAD, this.tile.getPos());
     this.buttonList.add(btn);
   }
@@ -98,13 +97,12 @@ public class GuiPattern extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
-    
     //GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-//    this.mc.getTextureManager().bindTexture(getBackground());
-//    int thisX = this.getMiddleX();
-//    int thisY = this.getMiddleY();
+    //    this.mc.getTextureManager().bindTexture(getBackground());
+    //    int thisX = this.getMiddleX();
+    //    int thisY = this.getMiddleY();
     int u = 0, v = 0;
-//    Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, WIDTH, HEIGHT, WIDTH, HEIGHT);
+    //    Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, WIDTH, HEIGHT, WIDTH, HEIGHT);
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
     int row = 0, col = 0;
     for (int i = 0; i < tile.getSizeInventory(); i++) {

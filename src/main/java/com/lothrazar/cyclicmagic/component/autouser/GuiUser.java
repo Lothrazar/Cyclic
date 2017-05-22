@@ -5,8 +5,8 @@ import com.lothrazar.cyclicmagic.gui.GuiButtonSizePreview;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.net.PacketTileSizeToggle;
 import com.lothrazar.cyclicmagic.util.Const;
-import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
+import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.fml.relauncher.Side;
@@ -18,12 +18,12 @@ public class GuiUser extends GuiBaseContainer {
   private GuiButtonSizePreview btnSize;
   public GuiUser(InventoryPlayer inventoryPlayer, TileEntityUser tileEntity) {
     super(new ContainerUser(inventoryPlayer, tileEntity), tileEntity);
-    tile = tileEntity; 
+    tile = tileEntity;
     screenSize = ScreenSize.STANDARD;
     this.xSize = screenSize.width();
     this.ySize = screenSize.height();
     this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
-    this.progressBar = new ProgressBar(this,10, 14 + 3 * Const.SQ  ,Fields.TIMER.ordinal(),TileEntityUser.TIMER_FULL);
+    this.progressBar = new ProgressBar(this, 10, 14 + 3 * Const.SQ, Fields.TIMER.ordinal(), TileEntityUser.TIMER_FULL);
   }
   @Override
   public void initGui() {
@@ -63,9 +63,7 @@ public class GuiUser extends GuiBaseContainer {
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     actionBtn.displayString = UtilChat.lang("tile.block_user.action" + tile.getField(Fields.LEFTRIGHT.ordinal()));
     btnSize.displayString = UtilChat.lang("button.harvester.size" + tile.getField(Fields.SIZE.ordinal()));
-   
-//    this.drawFieldAt(1,1,Fields.FUEL.ordinal());
-    
+    //    this.drawFieldAt(1,1,Fields.FUEL.ordinal());
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
 }

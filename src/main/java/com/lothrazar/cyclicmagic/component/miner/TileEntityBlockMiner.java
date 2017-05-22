@@ -4,7 +4,6 @@ import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.block.tileentity.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
-import com.lothrazar.cyclicmagic.component.autouser.TileEntityUser.Fields;
 import com.lothrazar.cyclicmagic.component.miner.BlockMiner.MinerType;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;

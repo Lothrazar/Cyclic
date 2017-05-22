@@ -9,20 +9,17 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiCrafter extends GuiBaseContainer {
-
   public GuiCrafter(InventoryPlayer inventoryPlayer, TileEntityCrafter tileEntity) {
     super(new ContainerCrafter(inventoryPlayer, tileEntity), tileEntity);
-
     screenSize = ScreenSize.LARGE;
     this.xSize = screenSize.width();
     this.ySize = screenSize.height();
     this.fieldRedstoneBtn = TileEntityCrafter.Fields.REDSTONE.ordinal();
-    this.progressBar = new ProgressBar(this,10, 6 * Const.SQ + 10,TileEntityCrafter.Fields.TIMER.ordinal(),TileEntityCrafter.TIMER_FULL);
-
+    this.progressBar = new ProgressBar(this, 10, 6 * Const.SQ + 10, TileEntityCrafter.Fields.TIMER.ordinal(), TileEntityCrafter.TIMER_FULL);
   }
   @Override
   public void initGui() {
-    super.initGui(); 
+    super.initGui();
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
@@ -63,7 +60,7 @@ public class GuiCrafter extends GuiBaseContainer {
   }
   @SideOnly(Side.CLIENT)
   @Override
-  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) { 
+  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
 }

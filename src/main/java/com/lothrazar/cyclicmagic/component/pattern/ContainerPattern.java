@@ -15,7 +15,6 @@ public class ContainerPattern extends ContainerBaseMachine {
   public static final int SLOTX_START = 8;
   public static final int SLOTY_START = 90;
   protected TileEntityPatternBuilder tileEntity;
-
   public ContainerPattern(InventoryPlayer inventoryPlayer, TileEntityPatternBuilder te) {
     screenSize = ScreenSize.LARGE;
     tileEntity = te;

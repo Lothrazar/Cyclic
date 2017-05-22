@@ -27,11 +27,10 @@ public class ContainerDisenchanter extends ContainerBaseMachine {
   public static final int SLOTY_GLOWSTONE = 3;
   public static final int SLOTY_BOOK = 4;
   protected TileEntityDisenchanter tileEntity;
-
   public ContainerDisenchanter(InventoryPlayer inventoryPlayer, TileEntityDisenchanter te) {
     tileEntity = te;
     this.setTile(te);
-this.screenSize = ScreenSize.LARGE;
+    this.screenSize = ScreenSize.LARGE;
     Item itemFiltered = null;
     int x = 0, y = 0, ystart = 20, spacing = 26;
     for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
@@ -48,7 +47,7 @@ this.screenSize = ScreenSize.LARGE;
         break;
         case TileEntityDisenchanter.SLOT_BOTTLE://bottom center
           itemFiltered = Items.EXPERIENCE_BOTTLE;
-          x =screenSize.width() / 2;
+          x = screenSize.width() / 2;
           y = ystart + 2 * spacing;
         break;
         case TileEntityDisenchanter.SLOT_REDSTONE:// right mid

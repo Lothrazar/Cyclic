@@ -14,7 +14,6 @@ public class ContainerBlockMiner extends ContainerBaseMachine {
   public static final int SQ = 18;
   protected TileEntityBlockMiner tileEntity;
   public ContainerBlockMiner(InventoryPlayer inventoryPlayer, TileEntityBlockMiner te) {
-
     this.setTile(te);
     tileEntity = te;
     bindPlayerInventory(inventoryPlayer);

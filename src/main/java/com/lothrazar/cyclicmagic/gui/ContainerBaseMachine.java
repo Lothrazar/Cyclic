@@ -12,8 +12,7 @@ public class ContainerBaseMachine extends ContainerBase {
   private int[] tileMap;
   private TileEntityBaseMachineInvo te;
   protected Const.ScreenSize screenSize = ScreenSize.STANDARD;
-  public ContainerBaseMachine(){
-  }
+  public ContainerBaseMachine() {}
   protected void bindPlayerInventory(InventoryPlayer inventoryPlayer) {
     for (int i = 0; i < 3; i++) {
       for (int j = 0; j < 9; j++) {
@@ -31,9 +30,7 @@ public class ContainerBaseMachine extends ContainerBase {
   }
   protected void bindPlayerHotbar(InventoryPlayer inventoryPlayer) {
     for (int i = 0; i < 9; i++) {
-      addSlotToContainer(new Slot(inventoryPlayer, i
-          , screenSize.playerOffsetX() + i * Const.SQ
-          , screenSize.playerOffsetY() + Const.PAD / 2 + 3 * Const.SQ));
+      addSlotToContainer(new Slot(inventoryPlayer, i, screenSize.playerOffsetX() + i * Const.SQ, screenSize.playerOffsetY() + Const.PAD / 2 + 3 * Const.SQ));
     }
   }
   protected void syncFields() {

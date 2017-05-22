@@ -79,11 +79,11 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     this.shiftAllUp();
     if (isRunning() && this.isBurning()) {
       this.consumeFuel();
-     // ModCyclic.logger.info("decr " + this.furnaceBurnTime);
+      // ModCyclic.logger.info("decr " + this.furnaceBurnTime);
     }
     if (isRunning() && !this.isBurning() && !this.world.isRemote) {
       this.consumeNewFuel();
-     // ModCyclic.logger.info("new fuel " + this.furnaceBurnTime);
+      // ModCyclic.logger.info("new fuel " + this.furnaceBurnTime);
     }
     if (isRunning() && this.isBurning()) {
       this.spawnParticlesAbove();

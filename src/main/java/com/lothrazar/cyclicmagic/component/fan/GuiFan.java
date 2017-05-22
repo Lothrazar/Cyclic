@@ -1,6 +1,5 @@
 package com.lothrazar.cyclicmagic.component.fan;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
 import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -19,7 +18,7 @@ public class GuiFan extends GuiBaseContainer {
   public GuiFan(InventoryPlayer inventoryPlayer, TileEntityFan tileEntity) {
     super(new ContainerFan(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
-    this.fieldRedstoneBtn=TileEntityFan.Fields.REDSTONE.ordinal();
+    this.fieldRedstoneBtn = TileEntityFan.Fields.REDSTONE.ordinal();
   }
   @Override
   public void initGui() {
@@ -63,7 +62,7 @@ public class GuiFan extends GuiBaseContainer {
   }
   @SideOnly(Side.CLIENT)
   @Override
-  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) { 
+  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     btnTogglePrt.updateDisplayStringWith(tile);
     btnTogglePush.updateDisplayStringWith(tile);
     String display = "" + this.tile.getRange();
