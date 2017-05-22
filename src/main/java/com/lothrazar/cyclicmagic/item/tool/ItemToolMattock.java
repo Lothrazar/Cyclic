@@ -42,7 +42,9 @@ public class ItemToolMattock extends ItemTool implements IHasRecipe {
   }
   @Override
   public boolean canHarvestBlock(IBlockState state) {
+    
     Block block = state.getBlock();//    super.canHarvestBlock(blockIn)
+
     return block == Blocks.OBSIDIAN ? this.toolMaterial.getHarvestLevel() == 3 : (block != Blocks.DIAMOND_BLOCK && block != Blocks.DIAMOND_ORE ? (block != Blocks.EMERALD_ORE && block != Blocks.EMERALD_BLOCK ? (block != Blocks.GOLD_BLOCK && block != Blocks.GOLD_ORE ? (block != Blocks.IRON_BLOCK && block != Blocks.IRON_ORE ? (block != Blocks.LAPIS_BLOCK && block != Blocks.LAPIS_ORE ? (block != Blocks.REDSTONE_ORE && block != Blocks.LIT_REDSTONE_ORE ? (state.getMaterial() == Material.ROCK ? true : (state.getMaterial() == Material.IRON ? true : state.getMaterial() == Material.ANVIL)) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 1) : this.toolMaterial.getHarvestLevel() >= 1) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 2);
   }
   @Override
@@ -86,8 +88,13 @@ public class ItemToolMattock extends ItemTool implements IHasRecipe {
       if (!mats.contains(bsCurrent.getMaterial())) {
         continue;
       }
+
       Block blockCurrent = bsCurrent.getBlock();
-      if (!ForgeHooks.canHarvestBlock(blockCurrent, player, world, posCurrent)) {
+      if (!ForgeHooks.canHarvestBlock(blockCurrent, player, world, posCurrent)
+//          || !canHarvestBlock(bsCurrent)
+          || bsCurrent.getBlock().canEntityDestroy(bsCurrent, world, posCurrent, player) == false
+      ||     bsCurrent.getBlock().getBlockHardness(bsCurrent,  world, posCurrent)<0
+          ) {
         continue;
       }
       //then we destroy
