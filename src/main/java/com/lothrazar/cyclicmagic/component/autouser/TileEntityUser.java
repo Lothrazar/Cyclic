@@ -46,9 +46,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
   // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
-  private static final String NBTPLAYERID = "uuid";
-  private static final String NBT_TIMER = "Timer";
-  private static final String NBT_REDST = "redstone";
   private static final String NBT_SPEED = "h";//WTF why did i name it this
   private static final String NBT_LR = "lr";
   private static final int MAX_SIZE = 4;//9x9 area 
@@ -65,17 +62,30 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   int toolSlot = 0;
   private int size;
   public static enum Fields {
-    TIMER, SPEED, REDSTONE, LEFTRIGHT, SIZE;
+    TIMER, SPEED, REDSTONE, LEFTRIGHT, SIZE, FUEL;
   }
   public TileEntityUser() {
     super(9);
     timer = TIMER_FULL;
     speed = 1;
+    //this.setFuelSlot(this.getSizeInventory() - 1);
+  }
+  @Override
+  public int[] getFieldOrdinals() {
+    return super.getFieldArray(Fields.values().length);
   }
   @Override
   public void update() {
     this.shiftAllUp();
-    if (isRunning()) {
+    if (isRunning() && this.isBurning()) {
+      this.consumeFuel();
+     // ModCyclic.logger.info("decr " + this.furnaceBurnTime);
+    }
+    if (isRunning() && !this.isBurning() && !this.world.isRemote) {
+      this.consumeNewFuel();
+     // ModCyclic.logger.info("new fuel " + this.furnaceBurnTime);
+    }
+    if (isRunning() && this.isBurning()) {
       this.spawnParticlesAbove();
     }
     if (world instanceof WorldServer) {
@@ -88,7 +98,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         }
       }
       tryEquipItem();
-      if (isRunning()) {
+      if (isRunning() && this.isBurning()) {
         timer -= this.getSpeed();
         if (timer <= 0) {
           timer = 0;
@@ -225,6 +235,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     tagCompound.setInteger(NBT_SPEED, speed);
     tagCompound.setInteger(NBT_LR, rightClickIfZero);
     tagCompound.setInteger(NBT_SIZE, size);
+    tagCompound.setInteger(NBT_FUEL, getFuelCurrent());
     return super.writeToNBT(tagCompound);
   }
   @Override
@@ -238,6 +249,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     rightClickIfZero = tagCompound.getInteger(NBT_LR);
     speed = tagCompound.getInteger(NBT_SPEED);
     size = tagCompound.getInteger(NBT_SIZE);
+    this.setFuelCurrent(tagCompound.getInteger(NBT_FUEL));
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
@@ -256,6 +268,10 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         return this.size;
       case LEFTRIGHT:
         return this.rightClickIfZero;
+      case FUEL:
+        return this.getFuelCurrent();
+      default:
+      break;
     }
     return 0;
   }
@@ -285,6 +301,11 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       break;
       case SIZE:
         this.size = value;
+      break;
+      case FUEL:
+        this.setFuelCurrent(value);
+      break;
+      default:
       break;
     }
   }

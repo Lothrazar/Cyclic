@@ -28,6 +28,7 @@ public class ContainerWorkBench extends ContainerBaseMachine {
   public ContainerWorkBench(InventoryPlayer inventoryPlayer, TileEntityWorkbench te) {
     craftMatrix = new InventoryWorkbench(this, te);
     this.world = inventoryPlayer.player.world;
+    this.setTile(te);
     tileEntity = te;
     this.addSlotToContainer(new SlotCrafting(inventoryPlayer.player, this.craftMatrix, this.craftResult, 0, 136, 35));
     int slot = 0;

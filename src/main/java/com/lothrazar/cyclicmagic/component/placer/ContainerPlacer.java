@@ -15,10 +15,9 @@ public class ContainerPlacer extends ContainerBaseMachine {
   public static final int SLOTY = 40;
   public static final int SQ = 18;
   protected TileEntityPlacer tileEntity;
-  private int tileRedstone;
-  private int tileTimer;
   public ContainerPlacer(InventoryPlayer inventoryPlayer, TileEntityPlacer te) {
     tileEntity = te;
+    this.setTile(te);
     for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
       addSlotToContainer(new SlotOnlyBlocks(tileEntity, i, SLOTX_START + i * SQ, SLOTY));
     }
@@ -49,23 +48,6 @@ public class ContainerPlacer extends ContainerBaseMachine {
       slotObject.onTake(player, stackInSlot);
     }
     return stack;
-  }
-  @Override
-  public void detectAndSendChanges() {
-    super.detectAndSendChanges();
-    for (int i = 0; i < this.listeners.size(); ++i) {
-      IContainerListener icontainerlistener = (IContainerListener) this.listeners.get(i);
-      int idx = TileEntityPlacer.Fields.TIMER.ordinal();
-      if (this.tileTimer != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-      }
-      idx = TileEntityPlacer.Fields.REDSTONE.ordinal();
-      if (this.tileRedstone != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-      }
-    }
-    this.tileTimer = this.tileEntity.getField(TileEntityPlacer.Fields.TIMER.ordinal());
-    this.tileRedstone = this.tileEntity.getField(TileEntityPlacer.Fields.REDSTONE.ordinal());
   }
   @Override
   @SideOnly(Side.CLIENT)

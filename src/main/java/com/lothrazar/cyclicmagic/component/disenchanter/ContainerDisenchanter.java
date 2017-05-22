@@ -26,10 +26,10 @@ public class ContainerDisenchanter extends ContainerBaseMachine {
   public static final int SLOTY_GLOWSTONE = 3;
   public static final int SLOTY_BOOK = 4;
   protected TileEntityDisenchanter tileEntity;
-  private int timer;
-  private int redstone;
+
   public ContainerDisenchanter(InventoryPlayer inventoryPlayer, TileEntityDisenchanter te) {
     tileEntity = te;
+    this.setTile(te);
     this.playerOffsetY = 130;
     Item itemFiltered = null;
     int x = 0, y = 0, ystart = 20, spacing = 26;
@@ -104,23 +104,6 @@ public class ContainerDisenchanter extends ContainerBaseMachine {
       slotObject.onTake(player, stackInSlot);
     }
     return stack;
-  }
-  @Override
-  public void detectAndSendChanges() {
-    super.detectAndSendChanges();
-    for (int i = 0; i < this.listeners.size(); ++i) {
-      IContainerListener icontainerlistener = (IContainerListener) this.listeners.get(i);
-      int idx = TileEntityDisenchanter.Fields.TIMER.ordinal();
-      if (this.timer != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-      }
-      idx = TileEntityDisenchanter.Fields.REDSTONE.ordinal();
-      if (this.redstone != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-      }
-    }
-    this.redstone = this.tileEntity.getField(TileEntityDisenchanter.Fields.REDSTONE.ordinal());
-    this.timer = this.tileEntity.getField(TileEntityDisenchanter.Fields.TIMER.ordinal());
   }
   @Override
   @SideOnly(Side.CLIENT)

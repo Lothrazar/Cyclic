@@ -35,6 +35,10 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
     conf.doesPumpkinBlocks = true;
     conf.doesMelonBlocks = true;
   }
+  @Override
+  public int[] getFieldOrdinals() {
+    return super.getFieldArray(Fields.values().length);
+  }
   public void setHarvestConf(HarvestSetting c) {
     conf = c;
   }

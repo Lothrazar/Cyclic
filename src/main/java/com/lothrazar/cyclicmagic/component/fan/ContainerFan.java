@@ -19,6 +19,7 @@ public class ContainerFan extends ContainerBaseMachine {
   private int tilePush;
   public ContainerFan(InventoryPlayer inventoryPlayer, TileEntityFan te) {
     tileEntity = te;
+    this.setTile(te);
     bindPlayerInventory(inventoryPlayer);
   }
   @Override

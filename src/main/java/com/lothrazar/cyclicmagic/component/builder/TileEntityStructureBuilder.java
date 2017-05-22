@@ -59,6 +59,10 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
   public TileEntityStructureBuilder() {
     super(9);
   }
+  @Override
+  public int[] getFieldOrdinals() {
+    return super.getFieldArray(Fields.values().length);
+  }
   public List<BlockPos> rebuildShape() {
     BuildType buildType = getBuildTypeEnum();
     List<BlockPos> shape = new ArrayList<BlockPos>();

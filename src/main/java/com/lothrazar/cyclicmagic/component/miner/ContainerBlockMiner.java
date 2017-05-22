@@ -13,22 +13,11 @@ public class ContainerBlockMiner extends ContainerBaseMachine {
   public static final int SLOTY = 40;
   public static final int SQ = 18;
   protected TileEntityBlockMiner tileEntity;
-  private int tileRedstone;
   public ContainerBlockMiner(InventoryPlayer inventoryPlayer, TileEntityBlockMiner te) {
+
+    this.setTile(te);
     tileEntity = te;
     bindPlayerInventory(inventoryPlayer);
-  }
-  @Override
-  public void detectAndSendChanges() {
-    super.detectAndSendChanges();
-    for (int i = 0; i < this.listeners.size(); ++i) {
-      IContainerListener icontainerlistener = (IContainerListener) this.listeners.get(i);
-      int idx = TileEntityBlockMiner.Fields.REDSTONE.ordinal();
-      if (this.tileRedstone != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-      }
-    }
-    this.tileRedstone = this.tileEntity.getField(TileEntityBlockMiner.Fields.REDSTONE.ordinal());
   }
   @Override
   @SideOnly(Side.CLIENT)

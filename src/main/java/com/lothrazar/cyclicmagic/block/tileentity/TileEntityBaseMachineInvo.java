@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
+import java.util.stream.IntStream;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
@@ -8,26 +9,61 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 
-public class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements IInventory, ISidedInventory {
+public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements IInventory, ISidedInventory {
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
   public static final String NBT_TIMER = "Timer";
   public static final String NBT_REDST = "redstone";
-  protected static final String NBT_SIZE = "size";
+  public static final String NBT_SIZE = "size";
+  public static final String NBT_FUEL = "fuel";
+  public static final String NBTPLAYERID = "uuid";
   protected NonNullList<ItemStack> inv;
+  protected boolean usesFuel = false;
+  protected int fuelSlot = -1;
+  protected int furnaceBurnTime;
   public TileEntityBaseMachineInvo(int invoSize) {
     super();
     inv = NonNullList.withSize(invoSize, ItemStack.EMPTY);
   }
-  //=======
-  //public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements IInventory, ISidedInventory {
-  //  public static final String NBT_INV = "Inventory";
-  //  public static final String NBT_SLOT = "Slot";
-  //>>>>>>> 7a4c7b0e8136047828c44111eddd82fd4a4bcf71
+  protected void setFuelSlot(int slot){
+    this.usesFuel = true;
+    this.fuelSlot = slot;
+  }
+  protected int getFuelCurrent(){
+    return this.furnaceBurnTime;
+  }
+  protected void setFuelCurrent(int f){
+    this.furnaceBurnTime = f;
+  }
+  protected void consumeFuel() {
+    if (this.usesFuel && this.furnaceBurnTime > 0 && !this.world.isRemote) {
+      this.furnaceBurnTime--;
+    }
+  }
+  protected void consumeNewFuel() {
+    if (this.usesFuel == false || this.fuelSlot < 0) { return; }
+    ItemStack itemstack = this.getStackInSlot(this.fuelSlot);
+    if (this.isItemFuel(itemstack)) {
+      this.furnaceBurnTime = TileEntityFurnace.getItemBurnTime(itemstack);
+      itemstack.shrink(1);
+    }
+  }
+  public  int[] getFieldArray(int length){
+     return IntStream.rangeClosed(0, length-1).toArray();
+  }
+  private boolean isItemFuel(ItemStack itemstack) {
+    return TileEntityFurnace.isItemFuel(itemstack);//TODO: wont be furnace eventually
+  }
+  protected boolean isBurning() {
+    if (this.usesFuel)
+      return this.furnaceBurnTime > 0;
+    else return true;//always burning, doesnt take fuel
+  }
   @Override
   public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
     return this.isItemValidForSlot(index, itemStackIn);
@@ -212,5 +248,8 @@ public class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements 
       this.markDirty();
     }
     return held;
+  }
+  public  int[] getFieldOrdinals(){
+    return new int[0];
   }
 }

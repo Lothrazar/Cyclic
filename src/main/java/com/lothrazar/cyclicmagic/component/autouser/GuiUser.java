@@ -18,7 +18,7 @@ public class GuiUser extends GuiBaseContanerProgress {
   private GuiButtonSizePreview btnSize;
   public GuiUser(InventoryPlayer inventoryPlayer, TileEntityUser tileEntity) {
     super(new ContainerUser(inventoryPlayer, tileEntity), tileEntity);
-    tile = tileEntity;
+    tile = tileEntity; 
   }
   public String getTitle() {
     return "tile.block_user.name";
@@ -66,6 +66,9 @@ public class GuiUser extends GuiBaseContanerProgress {
     redstoneBtn.setState(tile.getField(Fields.REDSTONE.ordinal()));
     actionBtn.displayString = UtilChat.lang("tile.block_user.action" + tile.getField(Fields.LEFTRIGHT.ordinal()));
     btnSize.displayString = UtilChat.lang("button.harvester.size" + tile.getField(Fields.SIZE.ordinal()));
+   
+//    this.drawFieldAt(1,1,Fields.FUEL.ordinal());
+    
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
   public int getProgressX() {

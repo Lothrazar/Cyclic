@@ -19,6 +19,7 @@ public class ContainerUncrafting extends ContainerBaseMachine {
   private int tileTimer;
   public ContainerUncrafting(InventoryPlayer inventoryPlayer, TileEntityUncrafter te) {
     tileEntity = te;
+    this.setTile(te);
     addSlotToContainer(new Slot(tileEntity, TileEntityUncrafter.SLOT_UNCRAFTME, SLOTX_START, SLOTY));
     int slot = 1;
     int xPrefix = 2 * Const.SQ + Const.PAD;

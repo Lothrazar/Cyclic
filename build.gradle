@@ -13,8 +13,8 @@ version = "${mc_version}-${mod_version}"
 group = "com.lothrazar.cyclicmagic" 
 archivesBaseName = "Cyclic"
 
-//srcCompat = JavaVersion.VERSION_1_8
-//targetCompat = JavaVersion.VERSION_1_8
+srcCompat = JavaVersion.VERSION_1_8
+targetCompat = JavaVersion.VERSION_1_8
 
 minecraft {
     version = "${mc_version}-${forge_version}"

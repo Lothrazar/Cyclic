@@ -14,13 +14,9 @@ public class ContainerUser extends ContainerBaseMachine {
   public static final int SLOTX_START = 8;
   public static final int SLOTY = 42;
   protected TileEntityUser tileEntity;
-  private int tileSpeed;
-  private int timer;
-  private int redstone;
-  private int leftright;
-  private int tileSize;
   public ContainerUser(InventoryPlayer inventoryPlayer, TileEntityUser te) {
     tileEntity = te;
+    this.setTile(te);
     for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
       addSlotToContainer(new Slot(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY));
     }
@@ -56,34 +52,6 @@ public class ContainerUser extends ContainerBaseMachine {
   @Override
   public void detectAndSendChanges() {
     super.detectAndSendChanges();
-    for (int i = 0; i < this.listeners.size(); ++i) {
-      IContainerListener icontainerlistener = (IContainerListener) this.listeners.get(i);
-      int idx = TileEntityUser.Fields.SPEED.ordinal();
-      if (this.tileSpeed != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-      }
-      idx = TileEntityUser.Fields.TIMER.ordinal();
-      if (this.timer != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-      }
-      idx = TileEntityUser.Fields.REDSTONE.ordinal();
-      if (this.redstone != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-      }
-      idx = TileEntityUser.Fields.LEFTRIGHT.ordinal();
-      if (this.leftright != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-      }
-      idx = TileEntityUser.Fields.SIZE.ordinal();
-      if (this.tileSize != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-      }
-    }
-    this.tileSpeed = this.tileEntity.getField(TileEntityUser.Fields.SPEED.ordinal());
-    this.timer = this.tileEntity.getField(TileEntityUser.Fields.TIMER.ordinal());
-    this.redstone = this.tileEntity.getField(TileEntityUser.Fields.REDSTONE.ordinal());
-    this.leftright = this.tileEntity.getField(TileEntityUser.Fields.LEFTRIGHT.ordinal());
-    this.tileSize = this.tileEntity.getField(TileEntityUser.Fields.SIZE.ordinal());
   }
   @Override
   @SideOnly(Side.CLIENT)

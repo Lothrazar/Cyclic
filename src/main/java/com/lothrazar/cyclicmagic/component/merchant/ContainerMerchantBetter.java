@@ -26,6 +26,7 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
   private final InventoryMerchantBetter merchantInventory;
   private EntityPlayer player;
   public ContainerMerchantBetter(InventoryPlayer playerInventory, EntityVillager m, InventoryMerchantBetter im, World worldIn) {
+ 
     this.playerOffsetX = 48;//for texture width 250, this becomes 48
     this.playerOffsetY = 130;
     this.merchant = m;

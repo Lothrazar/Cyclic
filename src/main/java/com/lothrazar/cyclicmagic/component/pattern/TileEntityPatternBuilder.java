@@ -39,6 +39,10 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     super(18);
   }
   @Override
+  public int[] getFieldOrdinals() {
+    return super.getFieldArray(Fields.values().length);
+  }
+  @Override
   public int getFieldCount() {
     return Fields.values().length;
   }

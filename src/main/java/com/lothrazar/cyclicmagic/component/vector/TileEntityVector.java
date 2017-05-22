@@ -35,6 +35,10 @@ public class TileEntityVector extends TileEntityBaseMachineInvo implements ITile
     super(0);
   }
   @Override
+  public int[] getFieldOrdinals() {
+    return super.getFieldArray(Fields.values().length);
+  }
+  @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
     power = tagCompound.getInteger(NBT_POWER);
