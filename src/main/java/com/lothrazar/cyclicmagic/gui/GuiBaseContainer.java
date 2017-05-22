@@ -7,6 +7,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.inventory.Container;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -16,7 +17,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
   protected Const.ScreenSize screenSize = ScreenSize.STANDARD;
   protected int fieldRedstoneBtn = -1;
   private GuiButtonMachineRedstone redstoneBtn = null;
-  
+  public ProgressBar progressBar = null;
   public GuiBaseContainer(Container inventorySlotsIn, TileEntityBaseMachineInvo tile) {
     super(inventorySlotsIn);
     this.tile = tile;
@@ -30,8 +31,8 @@ public abstract class GuiBaseContainer extends GuiContainer {
     super.initGui();
     if (this.fieldRedstoneBtn >= 0) {
       redstoneBtn = new GuiButtonMachineRedstone(1,
-          this.guiLeft + Const.PAD/2,
-          this.guiTop + Const.PAD/2, this.tile.getPos());
+          this.guiLeft + Const.PAD / 2,
+          this.guiTop + Const.PAD / 2, this.tile.getPos());
       this.buttonList.add(redstoneBtn);
     }
   }
@@ -82,6 +83,9 @@ public abstract class GuiBaseContainer extends GuiContainer {
         screenSize.width(), screenSize.height(),
         screenSize.width(), screenSize.height());
     // Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, this.xSize, this.ySize, WIDTH, HEIGHT);
+    if (this.progressBar != null) {
+      drawProgressBar();
+    }
   }
   @Override
   public void drawScreen(int mouseX, int mouseY, float partialTicks) {
@@ -97,9 +101,49 @@ public abstract class GuiBaseContainer extends GuiContainer {
       }
     }
   }
-  public static class ProgressBar{
-    public ProgressBar(){
-      
+  public void drawProgressBar() {
+    int u = 0, v = 0;
+    this.mc.getTextureManager().bindTexture(progressBar.getProgressCtrAsset());
+    Gui.drawModalRectWithCustomSizedTexture(
+        this.guiLeft + progressBar.xOffset,
+        this.guiTop + progressBar.yOffset, u, v,
+        (int) ProgressBar.WIDTH, ProgressBar.HEIGHT,
+        ProgressBar.WIDTH, ProgressBar.HEIGHT);
+    if (progressBar.getProgressCurrent() > 0) {
+      this.mc.getTextureManager().bindTexture(progressBar.getProgressAsset());
+      float percent = ((float) progressBar.getProgressCurrent()) / ((float) progressBar.maxValue);
+      Gui.drawModalRectWithCustomSizedTexture(
+          this.guiLeft + progressBar.xOffset,
+          this.guiTop + progressBar.yOffset,
+          u, v,
+          (int) (ProgressBar.WIDTH * percent),
+          ProgressBar.HEIGHT, ProgressBar.WIDTH, ProgressBar.HEIGHT);
+    }
+  }
+  public static class ProgressBar {
+    public static final int WIDTH = 156;
+    public static final int HEIGHT = 7;
+    public int xOffset;
+    public int yOffset;
+    public int fieldId;
+    public int maxValue;
+    private GuiBaseContainer parent;
+    public ProgressBar(GuiBaseContainer p, int x, int y, int f, int max) {
+      parent = p;
+      this.xOffset = x;
+      this.yOffset = y;
+      this.fieldId = f;
+      this.maxValue = max;
+    }
+    public int getProgressCurrent() {
+      //parent and tile should never be null, just dont ever add a progress bar without a TE
+      return parent.tile.getField(fieldId);
+    }
+    public ResourceLocation getProgressCtrAsset() {
+      return Const.Res.PROGRESSCTR;
+    }
+    public ResourceLocation getProgressAsset() {
+      return Const.Res.PROGRESS;
     }
   }
 }

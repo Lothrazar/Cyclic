@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.component.autouser;
 import com.lothrazar.cyclicmagic.component.autouser.TileEntityUser.Fields;
+import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContanerProgress;
 import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
 import com.lothrazar.cyclicmagic.gui.GuiButtonSizePreview;
@@ -13,7 +14,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GuiUser extends GuiBaseContanerProgress {
+public class GuiUser extends GuiBaseContainer {
   private TileEntityUser tile;
   private ButtonUserAction actionBtn;
   private GuiButtonSizePreview btnSize;
@@ -24,6 +25,7 @@ public class GuiUser extends GuiBaseContanerProgress {
     this.xSize = screenSize.width();
     this.ySize = screenSize.height();
     this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
+    this.progressBar = new ProgressBar(this,10, 9 + 3 * Const.SQ + 5,Fields.TIMER.ordinal(),TileEntityUser.TIMER_FULL);
   }
   @Override
   public void initGui() {
@@ -68,16 +70,16 @@ public class GuiUser extends GuiBaseContanerProgress {
     
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
-  public int getProgressX() {
-    return this.guiLeft + 10;
-  }
-  public int getProgressY() {
-    return this.guiTop + 9 + 3 * Const.SQ + 5;
-  }
-  public int getProgressCurrent() {
-    return tile.getField(Fields.TIMER.ordinal());
-  }
-  public int getProgressMax() {
-    return TileEntityUser.TIMER_FULL;
-  }
+//  public int getProgressX() {
+//    return this.guiLeft + 10;
+//  }
+//  public int getProgressY() {
+//    return this.guiTop + 9 + 3 * Const.SQ + 5;
+//  }
+//  public int getProgressCurrent() {
+//    return tile.getField(Fields.TIMER.ordinal());
+//  }
+//  public int getProgressMax() {
+//    return TileEntityUser.TIMER_FULL;
+//  }
 }
