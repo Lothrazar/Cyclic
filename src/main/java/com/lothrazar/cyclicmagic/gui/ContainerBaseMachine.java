@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.gui;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
@@ -8,16 +9,17 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
 public class ContainerBaseMachine extends ContainerBase {
-  public int playerOffsetX = 8;
-  public int playerOffsetY = 84;
-  private TileEntityBaseMachineInvo te;
   private int[] tileMap;
+  private TileEntityBaseMachineInvo te;
+  protected Const.ScreenSize screenSize = ScreenSize.STANDARD;
+  public ContainerBaseMachine(){
+  }
   protected void bindPlayerInventory(InventoryPlayer inventoryPlayer) {
     for (int i = 0; i < 3; i++) {
       for (int j = 0; j < 9; j++) {
         addSlotToContainer(new Slot(inventoryPlayer, j + i * 9 + 9,
-            playerOffsetX + j * Const.SQ, /// X
-            playerOffsetY + i * Const.SQ// Y
+            screenSize.playerOffsetX() + j * Const.SQ, /// X
+            screenSize.playerOffsetY() + i * Const.SQ// Y
         ));
       }
     }
@@ -29,7 +31,9 @@ public class ContainerBaseMachine extends ContainerBase {
   }
   protected void bindPlayerHotbar(InventoryPlayer inventoryPlayer) {
     for (int i = 0; i < 9; i++) {
-      addSlotToContainer(new Slot(inventoryPlayer, i, playerOffsetX + i * Const.SQ, playerOffsetY + Const.PAD / 2 + 3 * Const.SQ));
+      addSlotToContainer(new Slot(inventoryPlayer, i
+          , screenSize.playerOffsetX() + i * Const.SQ
+          , screenSize.playerOffsetY() + Const.PAD / 2 + 3 * Const.SQ));
     }
   }
   protected void syncFields() {

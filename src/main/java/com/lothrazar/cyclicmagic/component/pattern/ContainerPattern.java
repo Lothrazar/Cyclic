@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.component.pattern;
 import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
@@ -16,7 +17,7 @@ public class ContainerPattern extends ContainerBaseMachine {
   protected TileEntityPatternBuilder tileEntity;
 
   public ContainerPattern(InventoryPlayer inventoryPlayer, TileEntityPatternBuilder te) {
-    this.playerOffsetY = 130;
+    screenSize = ScreenSize.LARGE;
     tileEntity = te;
     this.setTile(te);
     int s = 0;

@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.component.crafter;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContanerProgress;
 import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -9,7 +10,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiCrafter extends GuiBaseContanerProgress {
-  public static final ResourceLocation GUI = new ResourceLocation(Const.MODID, "textures/gui/pattern.png");
   public static final int WIDTH = 176;
   public static final int HEIGHT = 212;
   private TileEntityCrafter tile;
@@ -19,6 +19,7 @@ public class GuiCrafter extends GuiBaseContanerProgress {
     tile = tileEntity;
     this.xSize = WIDTH;
     this.ySize = HEIGHT;
+    screenSize = ScreenSize.LARGE;
   }
   @Override
   public void initGui() {
@@ -82,8 +83,5 @@ public class GuiCrafter extends GuiBaseContanerProgress {
   }
   public int getProgressMax() {
     return TileEntityCrafter.TIMER_FULL;
-  }
-  public ResourceLocation getBackground() {
-    return GUI;
   }
 }

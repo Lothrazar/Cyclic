@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.component.autouser;
 import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
@@ -16,6 +17,7 @@ public class ContainerUser extends ContainerBaseMachine {
   protected TileEntityUser tileEntity;
   public ContainerUser(InventoryPlayer inventoryPlayer, TileEntityUser te) {
     tileEntity = te;
+    screenSize = ScreenSize.STANDARD;
     this.setTile(te);
     for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
       addSlotToContainer(new Slot(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY));

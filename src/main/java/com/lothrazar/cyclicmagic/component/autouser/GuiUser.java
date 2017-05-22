@@ -6,8 +6,10 @@ import com.lothrazar.cyclicmagic.gui.GuiButtonSizePreview;
 import com.lothrazar.cyclicmagic.net.PacketTileSizeToggle;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -16,12 +18,14 @@ public class GuiUser extends GuiBaseContanerProgress {
   private GuiButtonMachineRedstone redstoneBtn;
   private ButtonUserAction actionBtn;
   private GuiButtonSizePreview btnSize;
+//  static final int WIDTH = 176;
+//  static final int HEIGHT = 212;
   public GuiUser(InventoryPlayer inventoryPlayer, TileEntityUser tileEntity) {
     super(new ContainerUser(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity; 
-  }
-  public String getTitle() {
-    return "tile.block_user.name";
+    screenSize = ScreenSize.STANDARD;
+    this.xSize = screenSize.width();
+    this.ySize = screenSize.height();
   }
   @Override
   public void initGui() {

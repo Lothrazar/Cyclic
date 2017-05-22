@@ -3,6 +3,7 @@ import com.lothrazar.cyclicmagic.component.disenchanter.TileEntityDisenchanter.F
 import com.lothrazar.cyclicmagic.gui.GuiBaseContanerProgress;
 import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -16,7 +17,7 @@ public class GuiDisenchanter extends GuiBaseContanerProgress {
   public static final ResourceLocation SLOT_EBOTTLE = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_ebottle.png");
   public static final ResourceLocation SLOT_BOOK = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_book.png");
   public static final ResourceLocation SLOT_REDST = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_redstone.png");
-  public static final ResourceLocation GUI = new ResourceLocation(Const.MODID, "textures/gui/pattern.png");
+  
   private TileEntityDisenchanter tile;
   private GuiButtonMachineRedstone redstoneBtn;
   public GuiDisenchanter(InventoryPlayer inventoryPlayer, TileEntityDisenchanter tileEntity) {
@@ -24,6 +25,7 @@ public class GuiDisenchanter extends GuiBaseContanerProgress {
     tile = tileEntity;
     this.xSize = WIDTH;
     this.ySize = HEIGHT;
+    this.screenSize = ScreenSize.LARGE;
   }
   @Override
   public void initGui() {
@@ -73,9 +75,6 @@ public class GuiDisenchanter extends GuiBaseContanerProgress {
       }
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft - 1 + x, this.guiTop - 1 + y, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
-  }
-  public ResourceLocation getBackground() {
-    return GUI;
   }
   @SideOnly(Side.CLIENT)
   @Override

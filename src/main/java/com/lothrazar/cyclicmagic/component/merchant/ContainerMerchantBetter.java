@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.component.merchant;
 import javax.annotation.Nullable;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
+import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,9 +27,7 @@ public class ContainerMerchantBetter extends ContainerBaseMachine {
   private final InventoryMerchantBetter merchantInventory;
   private EntityPlayer player;
   public ContainerMerchantBetter(InventoryPlayer playerInventory, EntityVillager m, InventoryMerchantBetter im, World worldIn) {
- 
-    this.playerOffsetX = 48;//for texture width 250, this becomes 48
-    this.playerOffsetY = 130;
+   this.screenSize = ScreenSize.LARGEWIDE;
     this.merchant = m;
     this.merchantInventory = im;
     player = playerInventory.player;

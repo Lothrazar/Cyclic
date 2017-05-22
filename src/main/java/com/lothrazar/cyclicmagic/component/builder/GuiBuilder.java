@@ -11,7 +11,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiBuilder extends GuiBaseContanerProgress {
-  static final int padding = 8;
+
   private TileEntityStructureBuilder tile;
   private ButtonBuilderType btn;
   private ButtonBuildSize btnSizeUp;
@@ -22,7 +22,7 @@ public class GuiBuilder extends GuiBaseContanerProgress {
   private int ySizeTxtbox;
   private int xHeightTextbox;
   private int yHeightTxtbox;
-  private int yOffset = 10 + padding;
+  private int yOffset = 10 + Const.PAD;
   private GuiButtonMachineRedstone redstoneBtn;
   public GuiBuilder(InventoryPlayer inventoryPlayer, TileEntityStructureBuilder tileEntity) {
     super(new ContainerBuilder(inventoryPlayer, tileEntity), tileEntity);
@@ -40,7 +40,7 @@ public class GuiBuilder extends GuiBaseContanerProgress {
     int id = 2;
     int y = this.guiTop + yOffset + 12;
     btn = new ButtonBuilderType(tile.getPos(), id++,
-        this.guiLeft + padding,
+        this.guiLeft + Const.PAD,
         y, width);
     this.buttonList.add(btn);
     GuiButtonSizePreview btnPreview = new GuiButtonSizePreview(id++,

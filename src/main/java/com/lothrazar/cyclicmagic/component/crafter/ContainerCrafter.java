@@ -3,6 +3,7 @@ import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.SlotOutputOnly;
 import com.lothrazar.cyclicmagic.gui.SlotSingleStack;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
@@ -19,7 +20,7 @@ public class ContainerCrafter extends ContainerBaseMachine {
   public ContainerCrafter(InventoryPlayer inventoryPlayer, TileEntityCrafter te) {
     tileEntity = te;
     this.setTile(te);
-    this.playerOffsetY = 130;
+    screenSize = ScreenSize.LARGE;
     int slot = 0;
     //inpt on left
     int xPrefix = Const.PAD, yPrefix = 27;

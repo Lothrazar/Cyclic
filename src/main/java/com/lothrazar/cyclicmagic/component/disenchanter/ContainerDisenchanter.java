@@ -3,6 +3,7 @@ import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.SlotItemRestricted;
 import com.lothrazar.cyclicmagic.gui.SlotOnlyEnchanted;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
@@ -30,7 +31,7 @@ public class ContainerDisenchanter extends ContainerBaseMachine {
   public ContainerDisenchanter(InventoryPlayer inventoryPlayer, TileEntityDisenchanter te) {
     tileEntity = te;
     this.setTile(te);
-    this.playerOffsetY = 130;
+this.screenSize = ScreenSize.LARGE;
     Item itemFiltered = null;
     int x = 0, y = 0, ystart = 20, spacing = 26;
     for (int i = 0; i < tileEntity.getSizeInventory(); i++) {

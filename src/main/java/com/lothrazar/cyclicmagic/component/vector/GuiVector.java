@@ -7,6 +7,7 @@ import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
+import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -34,14 +35,11 @@ public class GuiVector extends GuiBaseContainer {
   public GuiVector(InventoryPlayer inventoryPlayer, TileEntityVector tileEntity) {
     super(new ContainerVector(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
+    screenSize = ScreenSize.STANDARDPLAIN;
   }
-  public String getTitle() {
-    return "tile.plate_vector.name";
-  }
-  @Override
-  public ResourceLocation getBackground() {
-    return Const.Res.TABLEPLAIN;
-  }
+//  public String getTitle() {
+//    return "tile.plate_vector.name";
+//  }
   @Override
   public void initGui() {
     super.initGui();
