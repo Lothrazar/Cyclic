@@ -31,6 +31,10 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
     super(5 + 9);//5 for main array, 9 for output
   }
   @Override
+  public int[] getFieldOrdinals() {
+    return super.getFieldArray(Fields.values().length);
+  }
+  @Override
   public void update() {
     if (!isRunning()) { return; }
     if (!isInputValid()) { return; }
