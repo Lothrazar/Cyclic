@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.component.vector;
-import com.lothrazar.cyclicmagic.block.tileentity.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
 import net.minecraft.nbt.NBTTagCompound;
 

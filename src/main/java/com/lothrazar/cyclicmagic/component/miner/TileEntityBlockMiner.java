@@ -1,8 +1,8 @@
 package com.lothrazar.cyclicmagic.component.miner;
 import java.lang.ref.WeakReference;
 import java.util.UUID;
+import com.lothrazar.cyclicmagic.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.block.tileentity.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.component.miner.BlockMiner.MinerType;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;

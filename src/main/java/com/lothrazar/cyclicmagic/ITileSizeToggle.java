@@ -1,4 +1,4 @@
-package com.lothrazar.cyclicmagic.block.tileentity;
+package com.lothrazar.cyclicmagic;
 public interface ITileSizeToggle {
   public void toggleSizeShape();
   public void displayPreview();
