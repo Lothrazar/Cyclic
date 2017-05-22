@@ -88,7 +88,9 @@ public class ItemToolMattock extends ItemTool implements IHasRecipe {
         continue;
       }
       Block blockCurrent = bsCurrent.getBlock();
-      if (!ForgeHooks.canHarvestBlock(blockCurrent, player, world, posCurrent)) {
+      if (!ForgeHooks.canHarvestBlock(blockCurrent, player, world, posCurrent) 
+          || bsCurrent.getBlock().canEntityDestroy(bsCurrent, world, posCurrent, player) == false
+          ||     bsCurrent.getBlock().getBlockHardness(bsCurrent,  world, posCurrent)<0) {
         continue;
       }
       //then we destroy

@@ -5,10 +5,10 @@
     "1.9.4-recommended":  "1.2.0",
     "1.10-latest":  "1.1.0",
     "1.10-recommended": "1.1.0",
-    "1.10.2-latest":  "1.10.22",
-    "1.10.2-recommended": "1.10.22",
-    "1.11.2-latest": "1.4.5",
-    "1.11.2-recommended": "1.4.5"
+    "1.10.2-latest":  "1.10.23",
+    "1.10.2-recommended": "1.10.23",
+    "1.11.2-latest": "1.4.6",
+    "1.11.2-recommended": "1.4.6"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -125,6 +125,8 @@
 	,"1.10.19":"Fix harvester resetting its size property when chunk reloads.  Fix Mattock tooltip.  Add nether star and some progressive automation items to the uncrafting grinder default blacklist.  Removed nether star from default Magic Bean loot table (existing config files unchanged and you could still add it back).  Auto torch will no longer place in spectator mode.   "
 	,"1.10.20":"Fix sheep exploit.  "
 	,"1.10.21":"Auto Fisher now compatible with aquaculture, basemetal, modernmetal fishing rods.  Automatic User now correctly drops output items, such as milk buckets. Fix harvester sometimes crashing when used on agricraft crop sticks or Pixelmon apricorns. "
+	,"1.10.22":"Fix a client side crash when the mod thinks you are trying to right click an item to turn a bauble off"
+	,"1.10.23":"Mattock tool now checks block hardness (in all 9 locations) to avoid breaking unbreakable blocks; also it calls block.canEntityDestroy(..) for better cross-mod compatibility."
   },
   "1.11.2":{
 	"1.0.0":"Beta release; on par with 1.10.2-1.9.15  Removed: LightningSkeletonMutate, LightningZombieMutate, Block Miner Advanced.  Changed Features: Emerald Carrot no longer changes normal horses to zombie or skeleton; instead its used to tame existing Zombie and Skeleton horses.  Sleeping Mat works half the time but has a few issues, its a work in progress right now.  Several items have changed textures, recipes, and names.  "
@@ -156,5 +158,6 @@
 	,"1.4.3":"Cyclic minecarts now work out of dispensers.  Fix Gold Minecart not picking up entities on collision.  Re-wrote Gold Furnace Minecart collision and movement logic, now gets stuck less and slow down less pushing other carts.  Gold furnace minecart does not auto move when you give it fuel, and it tells you current fuel total.  Removed 'world generation / Biome Crops' config & feature, as it was possibly causing world generation lag, in addition to being fairly bare bones, not fully configurable, and kind of boring... other mods do it better."
   	,"1.4.4":"Fix missing texture in Workbench and fix JEI crafting support."
 	,"1.4.5":"Reduced speed of Player->Faster Ladder option by a factor of six to prevent launching you if the ladder is really tall.  Fixed an item loss bug in Uncrafting Grinder if it was working on a valid recipe with less items than required at the end of a stack.  Add HarvesterBlacklist in config file, by default it contains 'terraqueous:pergola' so harvester and garden scythe can be blocked from harvesting blocks that are coded to be food/bushes, but are not intended to be.  	"
+ 	,"1.4.6":"Mattock tool now checks block hardness (in all 9 locations) to avoid breaking unbreakable blocks; also it calls block.canEntityDestroy(..) for better cross-mod compatibility."
   }
 }
