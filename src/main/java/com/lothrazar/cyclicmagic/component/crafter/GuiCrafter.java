@@ -1,23 +1,24 @@
 package com.lothrazar.cyclicmagic.component.crafter;
-import com.lothrazar.cyclicmagic.gui.GuiBaseContanerProgress;
-import com.lothrazar.cyclicmagic.gui.GuiButtonMachineRedstone;
+import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GuiCrafter extends GuiBaseContanerProgress {
-  private TileEntityCrafter tile; 
+public class GuiCrafter extends GuiBaseContainer {
+
   public GuiCrafter(InventoryPlayer inventoryPlayer, TileEntityCrafter tileEntity) {
     super(new ContainerCrafter(inventoryPlayer, tileEntity), tileEntity);
-    tile = tileEntity;
+
     screenSize = ScreenSize.LARGE;
     this.xSize = screenSize.width();
     this.ySize = screenSize.height();
     this.fieldRedstoneBtn = TileEntityCrafter.Fields.REDSTONE.ordinal();
+    this.progressBar = new ProgressBar(this,10, 6 * Const.SQ + 10,TileEntityCrafter.Fields.TIMER.ordinal(),TileEntityCrafter.TIMER_FULL);
+
   }
   @Override
   public void initGui() {
@@ -64,17 +65,5 @@ public class GuiCrafter extends GuiBaseContanerProgress {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) { 
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-  }
-  public int getProgressX() {
-    return this.guiLeft + Const.PAD + 2;
-  }
-  public int getProgressY() {
-    return this.guiTop + 6 * Const.SQ + 10;
-  }
-  public int getProgressCurrent() {
-    return tile.getField(TileEntityCrafter.Fields.TIMER.ordinal());
-  }
-  public int getProgressMax() {
-    return TileEntityCrafter.TIMER_FULL;
   }
 }
