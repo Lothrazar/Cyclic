@@ -13,20 +13,16 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiHarvester extends GuiBaseContanerProgress {
   private TileEntityHarvester tile;
   boolean debugLabels = false;
-  private GuiButtonMachineRedstone redstoneBtn;
   private GuiButtonSizePreview btnSize;
   public GuiHarvester(InventoryPlayer inventoryPlayer, TileEntityHarvester tileEntity) {
     super(new ContainerHarvester(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
+    this.fieldRedstoneBtn=TileEntityHarvester.Fields.REDSTONE.ordinal();
   }
   @Override
   public void initGui() {
     super.initGui();
-    int btnId = 0;
-    redstoneBtn = new GuiButtonMachineRedstone(btnId++,
-        this.guiLeft + Const.PAD,
-        this.guiTop + Const.PAD, this.tile.getPos());
-    this.buttonList.add(redstoneBtn);
+    int btnId = 2;
     int y = this.guiTop + Const.PAD * 2 + 20;
     btnSize = new GuiButtonSizePreview(btnId++,
         this.guiLeft + Const.PAD,
@@ -50,8 +46,7 @@ public class GuiHarvester extends GuiBaseContanerProgress {
   }
   @SideOnly(Side.CLIENT)
   @Override
-  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    redstoneBtn.setState(tile.getField(TileEntityHarvester.Fields.REDSTONE.ordinal()));
+  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) { 
     btnSize.displayString = UtilChat.lang("button.harvester.size" + tile.getField(TileEntityHarvester.Fields.SIZE.ordinal()));
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }

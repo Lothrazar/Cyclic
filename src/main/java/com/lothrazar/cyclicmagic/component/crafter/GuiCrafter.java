@@ -10,24 +10,18 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiCrafter extends GuiBaseContanerProgress {
-  public static final int WIDTH = 176;
-  public static final int HEIGHT = 212;
-  private TileEntityCrafter tile;
-  private GuiButtonMachineRedstone redstoneBtn;
+  private TileEntityCrafter tile; 
   public GuiCrafter(InventoryPlayer inventoryPlayer, TileEntityCrafter tileEntity) {
     super(new ContainerCrafter(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
-    this.xSize = WIDTH;
-    this.ySize = HEIGHT;
     screenSize = ScreenSize.LARGE;
+    this.xSize = screenSize.width();
+    this.ySize = screenSize.height();
+    this.fieldRedstoneBtn = TileEntityCrafter.Fields.REDSTONE.ordinal();
   }
   @Override
   public void initGui() {
-    super.initGui();
-    redstoneBtn = new GuiButtonMachineRedstone(0,
-        this.guiLeft + Const.PAD / 2,
-        this.guiTop + Const.PAD / 2, this.tile.getPos());
-    this.buttonList.add(redstoneBtn);
+    super.initGui(); 
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
@@ -46,7 +40,7 @@ public class GuiCrafter extends GuiBaseContanerProgress {
     }
     //grid
     rows = cols = 3;
-    xPrefix = (WIDTH / 2 - (Const.SQ * 3) / 2);//calculate exact center
+    xPrefix = (screenSize.width() / 2 - (Const.SQ * 3) / 2);//calculate exact center
     yPrefix = 40;
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
@@ -68,8 +62,7 @@ public class GuiCrafter extends GuiBaseContanerProgress {
   }
   @SideOnly(Side.CLIENT)
   @Override
-  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    redstoneBtn.setState(tile.getField(TileEntityCrafter.Fields.REDSTONE.ordinal()));
+  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) { 
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
   public int getProgressX() {

@@ -15,26 +15,20 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiUser extends GuiBaseContanerProgress {
   private TileEntityUser tile;
-  private GuiButtonMachineRedstone redstoneBtn;
   private ButtonUserAction actionBtn;
   private GuiButtonSizePreview btnSize;
-//  static final int WIDTH = 176;
-//  static final int HEIGHT = 212;
   public GuiUser(InventoryPlayer inventoryPlayer, TileEntityUser tileEntity) {
     super(new ContainerUser(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity; 
     screenSize = ScreenSize.STANDARD;
     this.xSize = screenSize.width();
     this.ySize = screenSize.height();
+    this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
   }
   @Override
   public void initGui() {
     super.initGui();
-    int btnId = 0;
-    redstoneBtn = new GuiButtonMachineRedstone(btnId++,
-        this.guiLeft + Const.PAD,
-        this.guiTop + Const.PAD, this.tile.getPos());
-    this.buttonList.add(redstoneBtn);
+    int btnId = 2;
     int x = this.guiLeft + Const.PAD + 20;
     int y = this.guiTop + Const.PAD * 2;
     actionBtn = new ButtonUserAction(btnId++,
@@ -67,7 +61,6 @@ public class GuiUser extends GuiBaseContanerProgress {
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    redstoneBtn.setState(tile.getField(Fields.REDSTONE.ordinal()));
     actionBtn.displayString = UtilChat.lang("tile.block_user.action" + tile.getField(Fields.LEFTRIGHT.ordinal()));
     btnSize.displayString = UtilChat.lang("button.harvester.size" + tile.getField(Fields.SIZE.ordinal()));
    

@@ -11,19 +11,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiBlockMiner extends GuiBaseContainer {
   private TileEntityBlockMiner tile;
   boolean debugLabels = false;
-  private GuiButtonMachineRedstone redstoneBtn;
   public GuiBlockMiner(InventoryPlayer inventoryPlayer, TileEntityBlockMiner tileEntity) {
     super(new ContainerBlockMiner(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
+    this.fieldRedstoneBtn=TileEntityBlockMiner.Fields.REDSTONE.ordinal();
   }
-  @Override
-  public void initGui() {
-    super.initGui();
-    redstoneBtn = new GuiButtonMachineRedstone(0,
-        this.guiLeft + 8,
-        this.guiTop + 8, this.tile.getPos());
-    this.buttonList.add(redstoneBtn);
-  }
+//  @Override
+//  public void initGui() {
+//    super.initGui();
+//  }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
@@ -33,11 +29,9 @@ public class GuiBlockMiner extends GuiBaseContainer {
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerHarvester.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerHarvester.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
   }
-  @SideOnly(Side.CLIENT)
-  @Override
-  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    int needsRed = tile.getField(TileEntityBlockMiner.Fields.REDSTONE.ordinal());
-    redstoneBtn.setState(needsRed);
-    super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-  }
+//  @SideOnly(Side.CLIENT)
+//  @Override
+//  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) { 
+//    super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+//  }
 }

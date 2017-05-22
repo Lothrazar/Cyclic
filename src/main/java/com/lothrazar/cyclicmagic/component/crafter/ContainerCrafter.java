@@ -36,7 +36,7 @@ public class ContainerCrafter extends ContainerBaseMachine {
     }
     //crafting in the middle
     rows = cols = 3;
-    xPrefix = (GuiCrafter.WIDTH / 2 - (Const.SQ * 3) / 2);
+    xPrefix = (screenSize.width() / 2 - (Const.SQ * 3) / 2);
     yPrefix = 40;
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {

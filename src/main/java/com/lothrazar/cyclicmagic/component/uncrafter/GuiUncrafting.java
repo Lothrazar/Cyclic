@@ -17,20 +17,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiUncrafting extends GuiBaseContanerProgress {
   private TileEntityUncrafter tile;
-  private GuiButtonMachineRedstone redstoneBtn;
   public GuiUncrafting(InventoryPlayer inventoryPlayer, TileEntityUncrafter tileEntity) {
     super(new ContainerUncrafting(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
+    this.fieldRedstoneBtn=Fields.REDSTONE.ordinal();
   }
   @Override
   public void initGui() {
     super.initGui();
-    redstoneBtn = new GuiButtonMachineRedstone(0,
-        this.guiLeft + Const.PAD,
-        this.guiTop + Const.PAD, this.tile.getPos());
-    this.buttonList.add(redstoneBtn);
-    //int buttonId, int x, int y, String buttonText)
-    GuiButton helpBtn = new GuiButton(1,
+    GuiButton helpBtn = new GuiButton(2,
         this.guiLeft + Const.SQ + Const.PAD + 2,
         this.guiTop + 4 * Const.PAD + 6, 12, 20, "?");
     this.buttonList.add(helpBtn);
@@ -38,7 +33,7 @@ public class GuiUncrafting extends GuiBaseContanerProgress {
   @SideOnly(Side.CLIENT)
   @Override
   protected void actionPerformed(GuiButton button) throws IOException {
-    if (button.id == 1) {
+    if (button.id == 2) {
       ItemStack stack = this.tile.getStackInSlot(0);
       UtilUncraft.Uncrafter uncrafter = new UtilUncraft.Uncrafter();
       UncraftResultType result = uncrafter.process(stack);
@@ -64,7 +59,6 @@ public class GuiUncrafting extends GuiBaseContanerProgress {
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    redstoneBtn.setState(tile.getField(Fields.REDSTONE.ordinal()));
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
   public int getProgressX() {

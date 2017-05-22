@@ -17,23 +17,19 @@ public class GuiMinerSmart extends GuiBaseContainer {
   private int yHeightTxtbox = 38;
   private ButtonMinerHeight btnHeightDown;
   private ButtonMinerHeight btnHeightUp;
-  private GuiButtonMachineRedstone redstoneBtn;
   private GuiButtonSizePreview btnSize;
   private ButtonMinerHeight btnWhitelist;
   public GuiMinerSmart(InventoryPlayer inventoryPlayer, TileEntityControlledMiner tileEntity) {
     super(new ContainerMinerSmart(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
+    this.fieldRedstoneBtn=TileEntityControlledMiner.Fields.REDSTONE.ordinal();
   }
-  public String getTitle() {
-    return "tile.block_miner_smart.name";
-  }
+//  public String getTitle() {
+//    return "tile.block_miner_smart.name";
+//  }
   @Override
   public void initGui() {
     super.initGui();
-    redstoneBtn = new GuiButtonMachineRedstone(0,
-        this.guiLeft + 8,
-        this.guiTop + 8, this.tile.getPos());
-    this.buttonList.add(redstoneBtn);
     //first the main top left type button
     int id = 2;
     int yOffset = 18;
@@ -78,8 +74,7 @@ public class GuiMinerSmart extends GuiBaseContainer {
   }
   @SideOnly(Side.CLIENT)
   @Override
-  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    redstoneBtn.setState(tile.getField(TileEntityControlledMiner.Fields.REDSTONE.ordinal()));
+  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) { 
     btnSize.displayString = UtilChat.lang("button.harvester.size" + tile.getField(TileEntityControlledMiner.Fields.SIZE.ordinal()));
     btnWhitelist.displayString = UtilChat.lang("button.miner.whitelist." + tile.getField(Fields.LISTTYPE.ordinal()));
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);

@@ -38,27 +38,27 @@ this.screenSize = ScreenSize.LARGE;
       switch (i) {
         case TileEntityDisenchanter.SLOT_BOOK://center center
           itemFiltered = Items.BOOK;
-          x = GuiDisenchanter.WIDTH / 2;
+          x = screenSize.width() / 2;
           y = ystart + spacing;
         break;
         case TileEntityDisenchanter.SLOT_GLOWSTONE://left mid
           itemFiltered = Items.GLOWSTONE_DUST;
-          x = GuiDisenchanter.WIDTH / 4;
+          x = screenSize.width() / 4;
           y = ystart + spacing;
         break;
         case TileEntityDisenchanter.SLOT_BOTTLE://bottom center
           itemFiltered = Items.EXPERIENCE_BOTTLE;
-          x = GuiDisenchanter.WIDTH / 2;
+          x =screenSize.width() / 2;
           y = ystart + 2 * spacing;
         break;
         case TileEntityDisenchanter.SLOT_REDSTONE:// right mid
           itemFiltered = Items.REDSTONE;
-          x = GuiDisenchanter.WIDTH - GuiDisenchanter.WIDTH / 4;
+          x = screenSize.width() - screenSize.width() / 4;
           y = ystart + spacing;
         break;
         case TileEntityDisenchanter.SLOT_INPUT://top center
           itemFiltered = Items.ENCHANTED_BOOK;//not reallyjust the book
-          x = GuiDisenchanter.WIDTH / 2;
+          x = screenSize.width() / 2;
           y = ystart;
         break;
         default:

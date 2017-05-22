@@ -29,8 +29,8 @@ public abstract class GuiBaseContainer extends GuiContainer {
     super.initGui();
     if (this.fieldRedstoneBtn >= 0) {
       redstoneBtn = new GuiButtonMachineRedstone(1,
-          this.guiLeft + Const.PAD,
-          this.guiTop + Const.PAD, this.tile.getPos());
+          this.guiLeft + Const.PAD/2,
+          this.guiTop + Const.PAD/2, this.tile.getPos());
       this.buttonList.add(redstoneBtn);
     }
   }

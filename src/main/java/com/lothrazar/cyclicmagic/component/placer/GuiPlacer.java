@@ -11,18 +11,10 @@ public class GuiPlacer extends GuiBaseContanerProgress {
   static final int padding = 8;
   private TileEntityPlacer tile;
   boolean debugLabels = false;
-  private GuiButtonMachineRedstone redstoneBtn;
   public GuiPlacer(InventoryPlayer inventoryPlayer, TileEntityPlacer tileEntity) {
     super(new ContainerPlacer(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
-  }
-  @Override
-  public void initGui() {
-    super.initGui();
-    redstoneBtn = new GuiButtonMachineRedstone(0,
-        this.guiLeft + 8,
-        this.guiTop + 8, this.tile.getPos());
-    this.buttonList.add(redstoneBtn);
+    this.fieldRedstoneBtn=TileEntityPlacer.Fields.REDSTONE.ordinal();
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
@@ -36,8 +28,6 @@ public class GuiPlacer extends GuiBaseContanerProgress {
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    int needsRed = tile.getField(TileEntityPlacer.Fields.REDSTONE.ordinal());
-    redstoneBtn.setState(needsRed);
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
   public int getProgressX() {

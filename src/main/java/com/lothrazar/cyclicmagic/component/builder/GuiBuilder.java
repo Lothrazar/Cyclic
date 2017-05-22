@@ -11,7 +11,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiBuilder extends GuiBaseContanerProgress {
-
   private TileEntityStructureBuilder tile;
   private ButtonBuilderType btn;
   private ButtonBuildSize btnSizeUp;
@@ -23,18 +22,14 @@ public class GuiBuilder extends GuiBaseContanerProgress {
   private int xHeightTextbox;
   private int yHeightTxtbox;
   private int yOffset = 10 + Const.PAD;
-  private GuiButtonMachineRedstone redstoneBtn;
   public GuiBuilder(InventoryPlayer inventoryPlayer, TileEntityStructureBuilder tileEntity) {
     super(new ContainerBuilder(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
+    this.fieldRedstoneBtn = TileEntityStructureBuilder.Fields.REDSTONE.ordinal();
   }
   @Override
   public void initGui() {
     super.initGui();
-    redstoneBtn = new GuiButtonMachineRedstone(0,
-        this.guiLeft + 8,
-        this.guiTop + 8, this.tile.getPos());
-    this.buttonList.add(redstoneBtn);
     //first the main top left type button
     int width = 50;
     int id = 2;
@@ -87,8 +82,6 @@ public class GuiBuilder extends GuiBaseContanerProgress {
       int x = (display.length() > 1) ? xHeightTextbox - 3 : xHeightTextbox;
       this.fontRendererObj.drawString(display, x, yHeightTxtbox + yOffset - 4, 4210752);
     }
-    int needsRed = tile.getField(TileEntityStructureBuilder.Fields.REDSTONE.ordinal());
-    redstoneBtn.setState(needsRed);
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     updateDisabledButtons();
   }
