@@ -7,8 +7,8 @@
     "1.10-recommended": "1.1.0",
     "1.10.2-latest":  "1.10.23",
     "1.10.2-recommended": "1.10.23",
-    "1.11.2-latest": "1.4.6",
-    "1.11.2-recommended": "1.4.6"
+    "1.11.2-latest": "1.4.7",
+    "1.11.2-recommended": "1.4.7"
   },
   "1.9.4":{
   	"1.0.0":"Launch " 	
@@ -159,5 +159,6 @@
   	,"1.4.4":"Fix missing texture in Workbench and fix JEI crafting support."
 	,"1.4.5":"Reduced speed of Player->Faster Ladder option by a factor of six to prevent launching you if the ladder is really tall.  Fixed an item loss bug in Uncrafting Grinder if it was working on a valid recipe with less items than required at the end of a stack.  Add HarvesterBlacklist in config file, by default it contains 'terraqueous:pergola' so harvester and garden scythe can be blocked from harvesting blocks that are coded to be food/bushes, but are not intended to be.  	"
  	,"1.4.6":"Mattock tool now checks block hardness (in all 9 locations) to avoid breaking unbreakable blocks; also it calls block.canEntityDestroy(..) for better cross-mod compatibility."
+  	,"1.4.7":"Fix crashed caused by using scythe on certain leaves (caused by the config blacklist added in v1.4.5)"
   }
 }
