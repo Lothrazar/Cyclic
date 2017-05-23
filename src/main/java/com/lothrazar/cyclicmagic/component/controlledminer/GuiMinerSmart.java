@@ -1,7 +1,8 @@
 package com.lothrazar.cyclicmagic.component.controlledminer;
 import com.lothrazar.cyclicmagic.component.controlledminer.TileEntityControlledMiner.Fields;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.gui.GuiButtonSizePreview;
+import com.lothrazar.cyclicmagic.gui.GuiButtonTogglePreview;
+import com.lothrazar.cyclicmagic.gui.GuiButtonToggleSize;
 import com.lothrazar.cyclicmagic.net.PacketTileSizeToggle;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -16,8 +17,9 @@ public class GuiMinerSmart extends GuiBaseContainer {
   private int yHeightTxtbox = 38;
   private ButtonMinerHeight btnHeightDown;
   private ButtonMinerHeight btnHeightUp;
-  private GuiButtonSizePreview btnSize;
+  private GuiButtonToggleSize btnSize;
   private ButtonMinerHeight btnWhitelist;
+  private GuiButtonTogglePreview btnPreview;
   public GuiMinerSmart(InventoryPlayer inventoryPlayer, TileEntityControlledMiner tileEntity) {
     super(new ContainerMinerSmart(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -47,14 +49,12 @@ public class GuiMinerSmart extends GuiBaseContainer {
     this.buttonList.add(btnWhitelist);
     x = this.guiLeft + Const.PAD;
     y = this.guiTop + Const.PAD * 2 + 44;
-    btnSize = new GuiButtonSizePreview(id++,
-        x, y, "", this.tile.getPos(),
-        PacketTileSizeToggle.ActionType.SIZE);
+    btnSize = new GuiButtonToggleSize(id++,
+        x, y, this.tile.getPos());
     this.buttonList.add(btnSize);
     x = this.guiLeft + Const.PAD * 2 + 40;
-    GuiButtonSizePreview btnPreview = new GuiButtonSizePreview(id++,
-        x, y, UtilChat.lang("button.harvester.preview"), this.tile.getPos(),
-        PacketTileSizeToggle.ActionType.PREVIEW);
+     btnPreview = new GuiButtonTogglePreview(id++,
+        x, y,  this.tile.getPos());//UtilChat.lang("button.harvester.preview"),
     this.buttonList.add(btnPreview);
   }
   private void updateDisabledButtons() {

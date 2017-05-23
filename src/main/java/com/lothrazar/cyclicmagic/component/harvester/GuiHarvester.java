@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.component.harvester;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.gui.GuiButtonSizePreview;
+import com.lothrazar.cyclicmagic.gui.GuiButtonTogglePreview;
+import com.lothrazar.cyclicmagic.gui.GuiButtonToggleSize;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.net.PacketTileSizeToggle;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -13,7 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiHarvester extends GuiBaseContainer {
   private TileEntityHarvester tile;
   boolean debugLabels = false;
-  private GuiButtonSizePreview btnSize;
+  private GuiButtonToggleSize btnSize;
   public GuiHarvester(InventoryPlayer inventoryPlayer, TileEntityHarvester tileEntity) {
     super(new ContainerHarvester(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -25,15 +26,13 @@ public class GuiHarvester extends GuiBaseContainer {
     super.initGui();
     int btnId = 2;
     int y = this.guiTop + Const.PAD * 2 + 20;
-    btnSize = new GuiButtonSizePreview(btnId++,
+    btnSize = new GuiButtonToggleSize(btnId++,
         this.guiLeft + Const.PAD,
-        y, "", this.tile.getPos(),
-        PacketTileSizeToggle.ActionType.SIZE);
+        y,  this.tile.getPos());
     this.buttonList.add(btnSize);
-    GuiButtonSizePreview btnPreview = new GuiButtonSizePreview(btnId++,
+    GuiButtonTogglePreview btnPreview = new GuiButtonTogglePreview(btnId++,
         this.guiLeft + Const.PAD * 2 + 40,
-        y, UtilChat.lang("button.harvester.preview"), this.tile.getPos(),
-        PacketTileSizeToggle.ActionType.PREVIEW);
+        y,  this.tile.getPos());//UtilChat.lang("button.harvester.preview"),
     this.buttonList.add(btnPreview);
   }
   @Override

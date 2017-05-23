@@ -16,7 +16,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
   protected TileEntityBaseMachineInvo tile;
   protected Const.ScreenSize screenSize = ScreenSize.STANDARD;
   protected int fieldRedstoneBtn = -1;
-  private GuiButtonMachineRedstone redstoneBtn = null;
+  private GuiButtonToggleRedstone redstoneBtn = null;
   public ProgressBar progressBar = null;
   public GuiBaseContainer(Container inventorySlotsIn, TileEntityBaseMachineInvo tile) {
     super(inventorySlotsIn);
@@ -30,7 +30,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
   public void initGui() {
     super.initGui();
     if (this.fieldRedstoneBtn >= 0) {
-      redstoneBtn = new GuiButtonMachineRedstone(1,
+      redstoneBtn = new GuiButtonToggleRedstone(1,
           this.guiLeft + Const.PAD / 2,
           this.guiTop + Const.PAD / 2, this.tile.getPos());
       this.buttonList.add(redstoneBtn);

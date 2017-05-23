@@ -1,6 +1,6 @@
 package com.lothrazar.cyclicmagic.component.builder;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.gui.GuiButtonSizePreview;
+import com.lothrazar.cyclicmagic.gui.GuiButtonTogglePreview;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.net.PacketTileSizeToggle;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -39,10 +39,9 @@ public class GuiBuilder extends GuiBaseContainer {
         this.guiLeft + Const.PAD,
         y, width);
     this.buttonList.add(btn);
-    GuiButtonSizePreview btnPreview = new GuiButtonSizePreview(id++,
+    GuiButtonTogglePreview btnPreview = new GuiButtonTogglePreview(id++,
         this.guiLeft + Const.PAD * 2 + 46,
-        y, UtilChat.lang("button.harvester.preview"), this.tile.getPos(),
-        PacketTileSizeToggle.ActionType.PREVIEW);
+        y,  this.tile.getPos());//UtilChat.lang("button.harvester.preview"),
     btnPreview.setTooltip(UtilChat.lang("tile.builder_pattern.togglerender"));
     this.buttonList.add(btnPreview);
     width = 15;

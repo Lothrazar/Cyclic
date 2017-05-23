@@ -1,7 +1,8 @@
 package com.lothrazar.cyclicmagic.component.autouser;
 import com.lothrazar.cyclicmagic.component.autouser.TileEntityUser.Fields;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.gui.GuiButtonSizePreview;
+import com.lothrazar.cyclicmagic.gui.GuiButtonTogglePreview;
+import com.lothrazar.cyclicmagic.gui.GuiButtonToggleSize;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.net.PacketTileSizeToggle;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -15,7 +16,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiUser extends GuiBaseContainer {
   private TileEntityUser tile;
   private ButtonUserAction actionBtn;
-  private GuiButtonSizePreview btnSize;
+  private GuiButtonToggleSize btnSize;
+  private GuiButtonTogglePreview btnPreview;
   public GuiUser(InventoryPlayer inventoryPlayer, TileEntityUser tileEntity) {
     super(new ContainerUser(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
@@ -37,16 +39,15 @@ public class GuiUser extends GuiBaseContainer {
     this.buttonList.add(actionBtn);
     x += actionBtn.width + Const.PAD / 2;
     //    int y = this.guiTop + Const.PAD * 2 + 20;
-    btnSize = new GuiButtonSizePreview(btnId++,
+    btnSize = new GuiButtonToggleSize(btnId++,
         x,
-        y, "", this.tile.getPos(),
-        PacketTileSizeToggle.ActionType.SIZE);
+        y,this.tile.getPos());
     this.buttonList.add(btnSize);
     x += btnSize.width + Const.PAD / 2;
-    GuiButtonSizePreview btnPreview = new GuiButtonSizePreview(btnId++,
+    btnPreview = new GuiButtonTogglePreview(btnId++,
         x,
-        y, UtilChat.lang("button.harvester.preview"), this.tile.getPos(),
-        PacketTileSizeToggle.ActionType.PREVIEW);
+        y,  this.tile.getPos());
+    //UtilChat.lang("button.harvester.preview"),
     this.buttonList.add(btnPreview);
   }
   @Override
