@@ -1,7 +1,9 @@
 package com.lothrazar.cyclicmagic.component.controlledminer;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import com.lothrazar.cyclicmagic.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.ITileSizeToggle;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -31,7 +33,7 @@ import net.minecraftforge.common.util.FakePlayer;
  * SEE TileMachineMiner
  * 
  */
-public class TileEntityControlledMiner extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITickable {
+public class TileEntityControlledMiner extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle,ITilePreviewToggle, ITickable {
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
   // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
@@ -54,10 +56,11 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
   private int needsRedstone = 1;
   private int height = 6;
   private int blacklistIfZero = 0;
+  private int renderParticles = 0;
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
   public static enum Fields {
-    HEIGHT, REDSTONE, SIZE, LISTTYPE;
+    HEIGHT, REDSTONE, SIZE, LISTTYPE,RENDERPARTICLES;
   }
   public TileEntityControlledMiner() {
     super(INVENTORY_SIZE);
@@ -247,22 +250,8 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
     tagCompound.setInteger(NBTHEIGHT, height);
     tagCompound.setInteger(NBT_SIZE, size);
     tagCompound.setInteger(NBT_LIST, this.blacklistIfZero);
-    //<<<<<<< HEAD
-    //=======
-    //   
-    //    //invo stuff
-    //    NBTTagList itemList = new NBTTagList();
-    //    for (int i = 0; i < inv.length; i++) {
-    //      ItemStack stack = inv[i];
-    //      if (stack != null) {
-    //        NBTTagCompound tag = new NBTTagCompound();
-    //        tag.setByte(NBT_SLOT, (byte) i);
-    //        stack.writeToNBT(tag);
-    //        itemList.appendTag(tag);
-    //      }
-    //    }
-    //    tagCompound.setTag(NBT_INV, itemList);
-    //>>>>>>> 7a4c7b0e8136047828c44111eddd82fd4a4bcf71
+
+    tagCompound.setInteger(NBT_RENDER, renderParticles);
     return super.writeToNBT(tagCompound);
   }
   @Override
@@ -283,18 +272,8 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
     curBlockDamage = tagCompound.getFloat(NBTDAMAGE);
     height = tagCompound.getInteger(NBTHEIGHT);
     blacklistIfZero = tagCompound.getInteger(NBT_LIST);
-    //<<<<<<< HEAD
-    //=======
-    //    //invo stuff
-    //    NBTTagList tagList = tagCompound.getTagList(NBT_INV, 10);
-    //    for (int i = 0; i < tagList.tagCount(); i++) {
-    //      NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
-    //      byte slot = tag.getByte(NBT_SLOT);
-    //      if (slot >= 0 && slot < inv.length) {
-    //        inv[slot] = ItemStack.loadItemStackFromNBT(tag);
-    //      }
-    //    }
-    //>>>>>>> 7a4c7b0e8136047828c44111eddd82fd4a4bcf71
+
+    this.renderParticles = tagCompound.getInteger(NBT_RENDER);
   }
   public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
     if (isCurrentlyMining && uuid != null) {
@@ -323,6 +302,8 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
         return this.size;
       case LISTTYPE:
         return blacklistIfZero;
+      case RENDERPARTICLES:
+        return this.renderParticles;
       default:
       break;
     }
@@ -344,6 +325,9 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
       break;
       case LISTTYPE:
         blacklistIfZero = value % 2;
+      break;
+      case RENDERPARTICLES:
+        this.renderParticles = value % 2;
       break;
       default:
       break;
@@ -399,11 +383,16 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
   }
   @Override
   public void togglePreview() {
+    this.renderParticles = (renderParticles+1)%2;
+
+  }
+  @Override
+  public List<BlockPos> getShape() {
+    List<BlockPos> allPos=new    ArrayList<BlockPos>();
     for (int i = 0; i < this.getHeight(); i++) {
-      List<BlockPos> allPos = UtilShape.squareHorizontalHollow(getTargetCenter().up(i), size);
-      for (BlockPos pos : allPos) {
-        UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, pos);
-      }
+      allPos.addAll( UtilShape.squareHorizontalHollow(getTargetCenter().up(i), size)   );
+
     }
+    return allPos;
   }
 }

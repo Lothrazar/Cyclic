@@ -3,6 +3,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import com.lothrazar.cyclicmagic.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.ITileSizeToggle;
 import com.lothrazar.cyclicmagic.ModCyclic;
@@ -34,7 +35,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -42,7 +42,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
 
-public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITickable {
+public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITilePreviewToggle, ITickable {
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
   // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
@@ -59,7 +59,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private UUID uuid;
   private int timer;
   private int needsRedstone = 1;
-  private int renderParticles = 1;
+  private int renderParticles = 0;
   private int toolSlot = 0;
   private int size;
   public static enum Fields {
@@ -310,7 +310,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         this.setFuelCurrent(value);
       break;
       case RENDERPARTICLES:
-        this.renderParticles = value;
+        this.renderParticles = value % 2;
       break;
       default:
       break;
@@ -368,11 +368,16 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
   @Override
   public void togglePreview() {
-    this.renderParticles = (renderParticles+1)%2;
-//    
-//    List<BlockPos> allPos = UtilShape.squareHorizontalHollow(getTargetCenter(), this.size);
-//    for (BlockPos pos : allPos) {
-//      UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, pos);
-//    }
+    this.renderParticles = (renderParticles + 1) % 2;
+    //    
+    //    List<BlockPos> allPos = UtilShape.squareHorizontalHollow(getTargetCenter(), this.size);
+    //    for (BlockPos pos : allPos) {
+    //      UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, pos);
+    //    }
+  }
+  @Override
+  public List<BlockPos> getShape() {
+    return UtilShape.squareHorizontalHollow(getTargetCenter(), this.size);
+ 
   }
 }

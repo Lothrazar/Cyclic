@@ -19,6 +19,7 @@ public class GuiHarvester extends GuiBaseContainer {
     super(new ContainerHarvester(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
     this.fieldRedstoneBtn = TileEntityHarvester.Fields.REDSTONE.ordinal();
+  this.fieldPreviewBtn=TileEntityHarvester.Fields.RENDERPARTICLES.ordinal();
     this.progressBar = new ProgressBar(this, 10, 14 + 3 * Const.SQ, TileEntityHarvester.Fields.TIMER.ordinal(), TileEntityHarvester.TIMER_FULL);
   }
   @Override
@@ -30,10 +31,7 @@ public class GuiHarvester extends GuiBaseContainer {
         this.guiLeft + Const.PAD,
         y,  this.tile.getPos());
     this.buttonList.add(btnSize);
-    GuiButtonTogglePreview btnPreview = new GuiButtonTogglePreview(btnId++,
-        this.guiLeft + Const.PAD * 2 + 40,
-        y,  this.tile.getPos());//UtilChat.lang("button.harvester.preview"),
-    this.buttonList.add(btnPreview);
+ 
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {

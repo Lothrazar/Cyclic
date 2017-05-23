@@ -14,7 +14,7 @@ public class StructureBuilderTESR extends MachineTESR {
     if (te instanceof TileEntityStructureBuilder == false) { return; }
     TileEntityStructureBuilder tile = ((TileEntityStructureBuilder) te);
     if (tile.getField(Fields.RENDERPARTICLES.ordinal())==1) {
-      UtilWorld.RenderShadow.renderBlockList(tile.rebuildShape(), te.getPos(), x, y, z, 0.7F, 0F, 1F);
+      UtilWorld.RenderShadow.renderBlockList(tile.getShape(), te.getPos(), x, y, z, 0.7F, 0F, 1F);
     }
   }
 }

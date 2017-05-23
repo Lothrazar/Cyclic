@@ -47,7 +47,7 @@ public class PacketTileBuildSize implements IMessage, IMessageHandler<PacketTile
         tile.setSize(tile.getSize() + message.value);
       else if (message.type.equals("height"))
         tile.setHeight(tile.getHeight() + message.value);
-      tile.rebuildShape();
+      tile.getShape();
       tile.markDirty();
       if (player.openContainer != null) {
         player.openContainer.detectAndSendChanges();

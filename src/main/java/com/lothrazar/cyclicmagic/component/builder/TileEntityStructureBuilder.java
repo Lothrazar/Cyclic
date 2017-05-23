@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.component.builder;
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclicmagic.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.ITileSizeToggle;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
@@ -16,7 +17,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITickable {
+public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITilePreviewToggle,ITickable {
 
   private static final  int spotsSkippablePerTrigger = 50;
   private static final int maxSpeed = 1;
@@ -61,7 +62,8 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
   public int[] getFieldOrdinals() {
     return super.getFieldArray(Fields.values().length);
   }
-  public List<BlockPos> rebuildShape() {
+  @Override
+  public List<BlockPos> getShape() {
     BuildType buildType = getBuildTypeEnum();
     List<BlockPos> shape = new ArrayList<BlockPos>();
     // only rebuild shapes if they are different
@@ -252,7 +254,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     if (trigger) {
       Block stuff = Block.getBlockFromItem(stack.getItem());
       if (stuff != null) {
-        List<BlockPos> shape = this.rebuildShape();
+        List<BlockPos> shape = this.getShape();
         if (shape.size() == 0) { return; }
         if (this.shapeIndex < 0 || this.shapeIndex >= shape.size()) {
           this.shapeIndex = 0;
@@ -313,8 +315,5 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     int val = (this.renderParticles + 1) % 2;
     this.setField(Fields.RENDERPARTICLES.ordinal(), val);
   }
-//  @Override
-//  public boolean isPreviewOn() {
-//    return this.renderParticles==1;
-//  }
+ 
 }

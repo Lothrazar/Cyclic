@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.component.harvester;
 import java.util.List;
+import com.lothrazar.cyclicmagic.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.ITileSizeToggle;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
@@ -14,17 +15,17 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 
-public class TileEntityHarvester extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITickable {
+public class TileEntityHarvester extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle,ITilePreviewToggle, ITickable {
+  private static final int MAX_SIZE = 7;//radius 7 translates to 15x15 area (center block + 7 each side)
+  private int size = MAX_SIZE;//default to the old fixed size, backwards compat
+ 
   private int timer;
   public static int TIMER_FULL = 80;
   private HarvestSetting conf;
   private int needsRedstone = 1;
-  private static final String NBT_TIMER = "Timer";
-  private static final String NBT_REDST = "redstone";
-  private static final int MAX_SIZE = 7;//radius 7 translates to 15x15 area (center block + 7 each side)
-  private int size = MAX_SIZE;//default to the old fixed size, backwards compat
+  private int renderParticles = 0;
   public static enum Fields {
-    TIMER, REDSTONE, SIZE;
+    TIMER, REDSTONE, SIZE,RENDERPARTICLES;
   }
   public TileEntityHarvester() {
     super(0);
@@ -51,12 +52,14 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
     this.needsRedstone = tagCompound.getInteger(NBT_REDST);
     timer = tagCompound.getInteger(NBT_TIMER);
     size = tagCompound.getInteger(NBT_SIZE);
+    this.renderParticles = tagCompound.getInteger(NBT_RENDER);
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
     tagCompound.setInteger(NBT_TIMER, timer);
     tagCompound.setInteger(NBT_REDST, this.needsRedstone);
     tagCompound.setInteger(NBT_SIZE, size);
+    tagCompound.setInteger(NBT_RENDER, renderParticles);
     return super.writeToNBT(tagCompound);
   }
   public boolean isBurning() {
@@ -99,19 +102,12 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
   private BlockPos getTargetPos() {
     return UtilWorld.getRandomPos(getWorld().rand, getTargetCenter(), this.size);
   }
-  @Override
-  public void togglePreview() {
-    List<BlockPos> allPos = UtilShape.squareHorizontalHollow(getTargetCenter(), this.size);
-    for (BlockPos pos : allPos) {
-      UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, pos);
-    }
-  }
   private int getSpeed() {
     return 1;
   }
   @Override
   public int getField(int id) {
-    if (id >= 0 && id < this.getFieldCount()) {
+
       switch (Fields.values()[id]) {
         case TIMER:
           return timer;
@@ -119,10 +115,12 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
           return this.needsRedstone;
         case SIZE:
           return this.size;
+        case RENDERPARTICLES:
+          return this.renderParticles;
         default:
         break;
       }
-    }
+
     return -1;
   }
   @Override
@@ -137,6 +135,9 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
         break;
         case SIZE:
           this.size = value;
+        break;
+        case RENDERPARTICLES:
+          this.renderParticles = value % 2;
         break;
         default:
         break;
@@ -167,5 +168,17 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
   }
   public boolean onlyRunIfPowered() {
     return this.needsRedstone == 1;
+  }
+  @Override
+  public void togglePreview() {
+    this.renderParticles = (renderParticles+1)%2;
+//    List<BlockPos> allPos = UtilShape.squareHorizontalHollow(getTargetCenter(), this.size);
+//    for (BlockPos pos : allPos) {
+//      UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, pos);
+//    }
+  }
+  @Override
+  public List<BlockPos> getShape() {
+    return  UtilShape.squareHorizontalHollow(getTargetCenter(), this.size);
   }
 }

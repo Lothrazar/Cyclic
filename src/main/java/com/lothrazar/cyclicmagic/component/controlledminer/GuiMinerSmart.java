@@ -18,16 +18,14 @@ public class GuiMinerSmart extends GuiBaseContainer {
   private ButtonMinerHeight btnHeightDown;
   private ButtonMinerHeight btnHeightUp;
   private GuiButtonToggleSize btnSize;
-  private ButtonMinerHeight btnWhitelist;
-  private GuiButtonTogglePreview btnPreview;
+  private ButtonMinerHeight btnWhitelist; 
   public GuiMinerSmart(InventoryPlayer inventoryPlayer, TileEntityControlledMiner tileEntity) {
     super(new ContainerMinerSmart(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
     this.fieldRedstoneBtn = TileEntityControlledMiner.Fields.REDSTONE.ordinal();
+ this.fieldPreviewBtn = TileEntityControlledMiner.Fields.RENDERPARTICLES.ordinal();
   }
-  //  public String getTitle() {
-  //    return "tile.block_miner_smart.name";
-  //  }
+
   @Override
   public void initGui() {
     super.initGui();
@@ -52,10 +50,7 @@ public class GuiMinerSmart extends GuiBaseContainer {
     btnSize = new GuiButtonToggleSize(id++,
         x, y, this.tile.getPos());
     this.buttonList.add(btnSize);
-    x = this.guiLeft + Const.PAD * 2 + 40;
-     btnPreview = new GuiButtonTogglePreview(id++,
-        x, y,  this.tile.getPos());//UtilChat.lang("button.harvester.preview"),
-    this.buttonList.add(btnPreview);
+ 
   }
   private void updateDisabledButtons() {
     this.btnHeightDown.enabled = (this.tile.getHeight() > 1);

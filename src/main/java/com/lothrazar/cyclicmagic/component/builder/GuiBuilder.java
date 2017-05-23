@@ -27,6 +27,7 @@ public class GuiBuilder extends GuiBaseContainer {
     tile = tileEntity;
     this.fieldRedstoneBtn = TileEntityStructureBuilder.Fields.REDSTONE.ordinal();
     this.progressBar = new ProgressBar(this, 10, 9 + 3 * Const.SQ + 10, TileEntityStructureBuilder.Fields.TIMER.ordinal(), TileEntityStructureBuilder.TIMER_FULL);
+    this.fieldPreviewBtn = TileEntityStructureBuilder.Fields.RENDERPARTICLES.ordinal();
   }
   @Override
   public void initGui() {
@@ -39,11 +40,7 @@ public class GuiBuilder extends GuiBaseContainer {
         this.guiLeft + Const.PAD,
         y, width);
     this.buttonList.add(btn);
-    GuiButtonTogglePreview btnPreview = new GuiButtonTogglePreview(id++,
-        this.guiLeft + Const.PAD * 2 + 46,
-        y,  this.tile.getPos());//UtilChat.lang("button.harvester.preview"),
-    btnPreview.setTooltip(UtilChat.lang("tile.builder_pattern.togglerender"));
-    this.buttonList.add(btnPreview);
+
     width = 15;
     //size buttons
     xSizeTextbox = 176 - 24;
