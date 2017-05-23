@@ -315,5 +315,9 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     int val = (this.renderParticles + 1) % 2;
     this.setField(Fields.RENDERPARTICLES.ordinal(), val);
   }
- 
+
+  @Override
+  public boolean isPreviewVisible() {
+    return this.getField(Fields.RENDERPARTICLES.ordinal())==1;
+  }
 }

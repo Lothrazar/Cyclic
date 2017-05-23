@@ -380,4 +380,8 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     return UtilShape.squareHorizontalHollow(getTargetCenter(), this.size);
  
   }
+  @Override
+  public boolean isPreviewVisible() {
+    return this.getField(Fields.RENDERPARTICLES.ordinal())==1;
+  }
 }
