@@ -26,10 +26,10 @@ public class GuiHarvester extends GuiBaseContainer {
   public void initGui() {
     super.initGui();
     int btnId = 2;
-    int y = this.guiTop + Const.PAD * 2 + 20;
+ 
     btnSize = new GuiButtonToggleSize(btnId++,
-        this.guiLeft + Const.PAD,
-        y,  this.tile.getPos());
+        this.guiLeft + Const.PAD+22,
+        this.guiTop + Const.PAD * 3+2  ,  this.tile.getPos());
     this.buttonList.add(btnSize);
  
   }

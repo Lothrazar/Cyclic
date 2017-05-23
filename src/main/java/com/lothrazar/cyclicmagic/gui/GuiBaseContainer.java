@@ -39,7 +39,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
           x,
           y, this.tile.getPos());
       this.buttonList.add(redstoneBtn);
-      y += Const.PAD + redstoneBtn.width;
+      y += Const.PAD/2 + redstoneBtn.width;
     }
     if (this.fieldPreviewBtn > 0) {
       btnPreview = new GuiButtonTogglePreview(2,

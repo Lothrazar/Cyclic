@@ -2,6 +2,7 @@ package com.lothrazar.cyclicmagic.component.controlledminer;
 import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.SlotSingleStack;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
@@ -12,14 +13,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerMinerSmart extends ContainerBaseMachine {
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
-  public static final int SLOTX_START = 10;
-  public static final int SLOTY = 42;
+  public static final int SLOTX_START = Const.PAD;
+  public static final int SLOTY = 88;
   public static final int SLOTID_EQUIP = 4;
-  public static final int SLOTEQUIP_X = SLOTX_START + (SLOTID_EQUIP + 2) * Const.SQ - 10;
+  public static final int SLOTEQUIP_X = SLOTX_START + (SLOTID_EQUIP + 2) * Const.SQ ;
   public static final int SLOTEQUIP_Y = SLOTY;
   protected TileEntityControlledMiner tileEntity;
   public ContainerMinerSmart(InventoryPlayer inventoryPlayer, TileEntityControlledMiner te) {
     tileEntity = te;
+    this.screenSize=ScreenSize.LARGE;
     this.setTile(te);
     for (int i = 0; i < tileEntity.getSizeInventory() - 1; i++) {
       addSlotToContainer(new SlotSingleStack(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY));

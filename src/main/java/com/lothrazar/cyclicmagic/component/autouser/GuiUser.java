@@ -1,10 +1,8 @@
 package com.lothrazar.cyclicmagic.component.autouser;
 import com.lothrazar.cyclicmagic.component.autouser.TileEntityUser.Fields;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.gui.GuiButtonTogglePreview;
 import com.lothrazar.cyclicmagic.gui.GuiButtonToggleSize;
 import com.lothrazar.cyclicmagic.gui.ProgressBar;
-import com.lothrazar.cyclicmagic.net.PacketTileSizeToggle;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -20,29 +18,32 @@ public class GuiUser extends GuiBaseContainer {
   public GuiUser(InventoryPlayer inventoryPlayer, TileEntityUser tileEntity) {
     super(new ContainerUser(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
-    screenSize = ScreenSize.STANDARD;
+    this.screenSize=ScreenSize.STANDARD;
     this.xSize = screenSize.width();
     this.ySize = screenSize.height();
     this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
-    this.progressBar = new ProgressBar(this, 10, 14 + 3 * Const.SQ, Fields.TIMER.ordinal(), TileEntityUser.TIMER_FULL);
     this.fieldPreviewBtn = Fields.RENDERPARTICLES.ordinal();
+    this.progressBar = new ProgressBar(this, 10, 4 * Const.SQ, Fields.TIMER.ordinal(), TileEntityUser.TIMER_FULL);
+    
   }
   @Override
   public void initGui() {
     super.initGui();
     int btnId = 3;
-    int x = this.guiLeft + Const.PAD + 20;
-    int y = this.guiTop + Const.PAD * 2;
-    actionBtn = new ButtonUserAction(btnId++,
-        x,
-        y, this.tile.getPos());
-    this.buttonList.add(actionBtn);
-    x += actionBtn.width + Const.PAD / 2;
-    //    int y = this.guiTop + Const.PAD * 2 + 20;
+    
+
     btnSize = new GuiButtonToggleSize(btnId++,
-        x,
-        y, this.tile.getPos());
+        this.guiLeft +24 + Const.PAD ,
+        this.guiTop + Const.PAD +18, this.tile.getPos());
     this.buttonList.add(btnSize);
+    
+    
+ 
+    actionBtn = new ButtonUserAction(btnId++,
+        this.guiLeft + screenSize.width()-Const.PAD - 40,
+      this.guiTop + Const.PAD/2 +18, this.tile.getPos());
+    this.buttonList.add(actionBtn);
+ 
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {

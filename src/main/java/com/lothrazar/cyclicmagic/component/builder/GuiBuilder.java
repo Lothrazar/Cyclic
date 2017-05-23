@@ -35,12 +35,11 @@ public class GuiBuilder extends GuiBaseContainer {
     //first the main top left type button
     int width = 50;
     int id = 2;
-    int y = this.guiTop + yOffset + 12;
+    int y = this.guiTop + yOffset + Const.PAD;
     btn = new ButtonBuilderType(tile.getPos(), id++,
-        this.guiLeft + Const.PAD,
+        this.guiLeft + Const.PAD + 20,
         y, width);
     this.buttonList.add(btn);
-
     width = 15;
     //size buttons
     xSizeTextbox = 176 - 24;
