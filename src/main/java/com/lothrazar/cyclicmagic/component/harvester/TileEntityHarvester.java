@@ -100,7 +100,7 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
     return UtilWorld.getRandomPos(getWorld().rand, getTargetCenter(), this.size);
   }
   @Override
-  public void displayPreview() {
+  public void togglePreview() {
     List<BlockPos> allPos = UtilShape.squareHorizontalHollow(getTargetCenter(), this.size);
     for (BlockPos pos : allPos) {
       UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, pos);

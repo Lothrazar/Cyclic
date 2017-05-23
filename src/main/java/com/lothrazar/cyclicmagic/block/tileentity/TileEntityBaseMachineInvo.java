@@ -22,6 +22,8 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   public static final String NBT_SIZE = "size";
   public static final String NBT_FUEL = "fuel";
   public static final String NBTPLAYERID = "uuid";
+  public static final String NBT_SPEED = "speed";
+  public static final String NBT_RENDER = "render";
   protected NonNullList<ItemStack> inv;
   protected boolean usesFuel = false;
   protected int fuelSlot = -1;

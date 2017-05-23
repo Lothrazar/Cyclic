@@ -17,15 +17,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITileSizeToggle, ITickable {
-  final static int spotsSkippablePerTrigger = 50;
+
+  private static final  int spotsSkippablePerTrigger = 50;
   private static final int maxSpeed = 1;
   public static final int TIMER_FULL = 10;// 100;//one day i will add fuel AND/OR speed upgrades. till then make very slow
   private static final int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots
-  private static final String NBT_TIMER = "Timer";
+
   private static final String NBT_BUILDTYPE = "build";
-  private static final String NBT_SPEED = "speed";
-  private static final String NBT_SIZE = "size";
-  private static final String NBT_REDST = "redstone";
   private static final String NBT_SHAPEINDEX = "shapeindex";
   private int timer;
   private int buildType;
@@ -220,7 +218,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     this.buildType = tagCompound.getInteger(NBT_BUILDTYPE);
     this.buildSpeed = tagCompound.getInteger(NBT_SPEED);
     this.buildSize = tagCompound.getInteger(NBT_SIZE);
-    this.renderParticles = tagCompound.getInteger("render");
+    this.renderParticles = tagCompound.getInteger(NBT_RENDER);
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
@@ -230,7 +228,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     tagCompound.setInteger(NBT_BUILDTYPE, this.getBuildType());
     tagCompound.setInteger(NBT_SPEED, this.getSpeed());
     tagCompound.setInteger(NBT_SIZE, this.getSize());
-    tagCompound.setInteger("render", renderParticles);
+    tagCompound.setInteger(NBT_RENDER, renderParticles);
     return super.writeToNBT(tagCompound);
   }
   public boolean isBurning() {
@@ -311,11 +309,12 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     this.setBuildType(next.ordinal());
   }
   @Override
-  public void displayPreview() {
+  public void togglePreview() {
     int val = (this.renderParticles + 1) % 2;
     this.setField(Fields.RENDERPARTICLES.ordinal(), val);
   }
-  public boolean renderOn() { // sed by TESR
-    return renderParticles == 1;
-  }
+//  @Override
+//  public boolean isPreviewOn() {
+//    return this.renderParticles==1;
+//  }
 }

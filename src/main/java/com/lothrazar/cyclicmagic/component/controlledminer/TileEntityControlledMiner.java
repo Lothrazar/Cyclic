@@ -398,7 +398,7 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
     }
   }
   @Override
-  public void displayPreview() {
+  public void togglePreview() {
     for (int i = 0; i < this.getHeight(); i++) {
       List<BlockPos> allPos = UtilShape.squareHorizontalHollow(getTargetCenter().up(i), size);
       for (BlockPos pos : allPos) {

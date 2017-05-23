@@ -1,4 +1,5 @@
 package com.lothrazar.cyclicmagic.gui;
+import com.lothrazar.cyclicmagic.ITileSizeToggle;
 import com.lothrazar.cyclicmagic.ITooltipButton;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -16,8 +17,10 @@ public abstract class GuiBaseContainer extends GuiContainer {
   protected TileEntityBaseMachineInvo tile;
   protected Const.ScreenSize screenSize = ScreenSize.STANDARD;
   protected int fieldRedstoneBtn = -1;
-  private GuiButtonToggleRedstone redstoneBtn = null;
+  protected int fieldPreviewBtn = -1;
   public ProgressBar progressBar = null;
+  private GuiButtonToggleRedstone redstoneBtn = null;
+  private GuiButtonTogglePreview btnPreview;
   public GuiBaseContainer(Container inventorySlotsIn, TileEntityBaseMachineInvo tile) {
     super(inventorySlotsIn);
     this.tile = tile;
@@ -29,11 +32,20 @@ public abstract class GuiBaseContainer extends GuiContainer {
   @Override
   public void initGui() {
     super.initGui();
+    int x = this.guiLeft + Const.PAD / 2;
+    int y = this.guiTop + Const.PAD / 2;
     if (this.fieldRedstoneBtn >= 0) {
       redstoneBtn = new GuiButtonToggleRedstone(1,
-          this.guiLeft + Const.PAD / 2,
-          this.guiTop + Const.PAD / 2, this.tile.getPos());
+          x,
+          y, this.tile.getPos());
       this.buttonList.add(redstoneBtn);
+      y += Const.PAD + redstoneBtn.width;
+    }
+    if (this.fieldPreviewBtn > 0) {
+      btnPreview = new GuiButtonTogglePreview(2,
+          x,
+          y, this.tile.getPos());
+      this.buttonList.add(btnPreview);
     }
   }
   /**
@@ -54,6 +66,14 @@ public abstract class GuiBaseContainer extends GuiContainer {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     if (redstoneBtn != null) {
       redstoneBtn.setState(tile.getField(this.fieldRedstoneBtn));
+    }
+    if (btnPreview != null ) {
+      if (tile.getField(this.fieldPreviewBtn)==1) {
+        btnPreview.setStateOn();
+      }
+      else {
+        btnPreview.setStateOff();
+      }
     }
     if (tile != null) {
       String s = UtilChat.lang(tile.getName());

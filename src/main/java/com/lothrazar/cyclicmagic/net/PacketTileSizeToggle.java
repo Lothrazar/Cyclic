@@ -50,7 +50,7 @@ public class PacketTileSizeToggle implements IMessage, IMessageHandler<PacketTil
         te.toggleSizeShape();
       }
       else if (message.type == ActionType.PREVIEW.ordinal()) {
-        te.displayPreview();
+        te.togglePreview();
       }
     }
     return null;

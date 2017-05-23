@@ -259,7 +259,7 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     int val = (this.renderParticles + 1) % 2;
     this.setField(Fields.RENDERPARTICLES.ordinal(), val);
   }
-  public boolean renderOn() { // sed by TESR
+  public boolean isPreviewOn() { // sed by TESR
     return renderParticles == 1;
   }
 }

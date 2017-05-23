@@ -59,16 +59,16 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private UUID uuid;
   private int timer;
   private int needsRedstone = 1;
-  int toolSlot = 0;
+  private int renderParticles = 1;
+  private int toolSlot = 0;
   private int size;
   public static enum Fields {
-    TIMER, SPEED, REDSTONE, LEFTRIGHT, SIZE, FUEL;
+    TIMER, SPEED, REDSTONE, LEFTRIGHT, SIZE, FUEL, RENDERPARTICLES;
   }
   public TileEntityUser() {
     super(9);
     timer = TIMER_FULL;
     speed = 1;
-    //this.setFuelSlot(this.getSizeInventory() - 1);
   }
   @Override
   public int[] getFieldOrdinals() {
@@ -236,6 +236,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     tagCompound.setInteger(NBT_LR, rightClickIfZero);
     tagCompound.setInteger(NBT_SIZE, size);
     tagCompound.setInteger(NBT_FUEL, getFuelCurrent());
+    tagCompound.setInteger(NBT_RENDER, renderParticles);
     return super.writeToNBT(tagCompound);
   }
   @Override
@@ -249,6 +250,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     rightClickIfZero = tagCompound.getInteger(NBT_LR);
     speed = tagCompound.getInteger(NBT_SPEED);
     size = tagCompound.getInteger(NBT_SIZE);
+    this.renderParticles = tagCompound.getInteger(NBT_RENDER);
     this.setFuelCurrent(tagCompound.getInteger(NBT_FUEL));
   }
   @Override
@@ -270,6 +272,8 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         return this.rightClickIfZero;
       case FUEL:
         return this.getFuelCurrent();
+      case RENDERPARTICLES:
+        return this.renderParticles;
       default:
       break;
     }
@@ -304,6 +308,9 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       break;
       case FUEL:
         this.setFuelCurrent(value);
+      break;
+      case RENDERPARTICLES:
+        this.renderParticles = value;
       break;
       default:
       break;
@@ -360,10 +367,12 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     return this.getPos().offset(this.getCurrentFacing(), this.size + 1);
   }
   @Override
-  public void displayPreview() {
-    List<BlockPos> allPos = UtilShape.squareHorizontalHollow(getTargetCenter(), this.size);
-    for (BlockPos pos : allPos) {
-      UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, pos);
-    }
+  public void togglePreview() {
+    this.renderParticles = (renderParticles+1)%2;
+//    
+//    List<BlockPos> allPos = UtilShape.squareHorizontalHollow(getTargetCenter(), this.size);
+//    for (BlockPos pos : allPos) {
+//      UtilParticle.spawnParticle(getWorld(), EnumParticleTypes.DRAGON_BREATH, pos);
+//    }
   }
 }
