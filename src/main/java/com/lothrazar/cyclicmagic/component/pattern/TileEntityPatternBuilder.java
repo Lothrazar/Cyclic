@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.component.pattern;
 import java.util.List;
+import com.lothrazar.cyclicmagic.ITilePreviewToggle;
 import com.lothrazar.cyclicmagic.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -16,7 +17,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implements ITickable, ITileRedstoneToggle {
+public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implements ITickable, ITilePreviewToggle, ITileRedstoneToggle {
   private final static int MAXIMUM = 32;
   private static final String NBT_REDST = "redstone";
   private static final int TIMER_FULL = 20;
@@ -255,11 +256,18 @@ public class TileEntityPatternBuilder extends TileEntityBaseMachineInvo implemen
     int val = (this.needsRedstone + 1) % 2;
     this.setField(Fields.REDSTONE.ordinal(), val);
   }
-  public void swapShowRender() {
+  @Override
+  public void togglePreview() {
+
     int val = (this.renderParticles + 1) % 2;
     this.setField(Fields.RENDERPARTICLES.ordinal(), val);
   }
-  public boolean isPreviewOn() { // sed by TESR
+  @Override
+  public boolean isPreviewVisible() {
     return renderParticles == 1;
+  }
+  @Override
+  public List<BlockPos> getShape() {
+    return getTargetShape();//special case for this block, not used here
   }
 }

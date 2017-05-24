@@ -17,7 +17,7 @@ public class PatternBuilderTESR extends BaseMachineTesr<TileEntityPatternBuilder
     super.renderTileEntityAt(te, x, y, z, partialTicks, destroyStage);
     if (te instanceof TileEntityPatternBuilder == false) { return; }
     TileEntityPatternBuilder tile = ((TileEntityPatternBuilder) te);
-    if (tile.isPreviewOn()) {
+    if (tile.isPreviewVisible()) {
       UtilWorld.RenderShadow.renderBlockList(tile.getSourceShape(), te.getPos(), x, y, z, 0.7F, 0F, 1F);
       UtilWorld.RenderShadow.renderBlockList(tile.getTargetShape(), te.getPos(), x, y, z, 1F, 1F, 1F);
     }
