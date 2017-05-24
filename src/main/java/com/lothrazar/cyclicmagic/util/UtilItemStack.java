@@ -116,7 +116,9 @@ public class UtilItemStack {
     return item.getRegistryName().getResourceDomain() + ":" + item.getRegistryName().getResourcePath() + "/" + itemStack.getMetadata();
   }
   public static String getStringForItem(Item item) {
+
     if (item == null || item.getRegistryName() == null) { return ""; }
+
     return item.getRegistryName().getResourceDomain() + ":" + item.getRegistryName().getResourcePath();
   }
   public static String getStringForBlock(Block b) {
