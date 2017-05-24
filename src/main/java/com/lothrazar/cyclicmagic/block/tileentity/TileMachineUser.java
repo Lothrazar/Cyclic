@@ -27,6 +27,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
@@ -37,6 +38,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
@@ -101,11 +104,34 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
             if (rightClickIfZero == 0) {
               if (maybeTool != null &&
                   maybeTool.getItem() instanceof ItemBucket) {
-                ItemStack r = UtilFluid.dispenseStack(world, targetPos, maybeTool, this.getCurrentFacing());
-         
-                if (r != null) {//non null meaning success, and r is the NEW full or empty bucket
-                  maybeTool.stackSize--;
-                  UtilItemStack.dropItemStackInWorld(this.worldObj, getCurrentFacingPos(), r);
+                TileEntity tank = world.getTileEntity(targetPos);
+
+                
+                IFluidHandler f = UtilFluid.getFluidHandler(tank, this.getCurrentFacing().getOpposite());
+                if( f != null){
+                  int sizeBefore = maybeTool.stackSize;
+                  boolean success=FluidUtil.interactWithFluidHandler(maybeTool,f, fakePlayer.get());
+                  int AFTER = maybeTool.stackSize;
+       
+                  if(success){
+
+                      if(sizeBefore == AFTER){//if it turned one empty into one full, then force the drop else it happens anyway
+                        UtilItemStack.dropItemStackInWorld(this.worldObj, getCurrentFacingPos(), maybeTool.splitStack(1));
+                      }
+//                    //
+//                    maybeTool.stackSize--;
+                    this.tryDumpFakePlayerInvo();
+                  }
+                }
+                else{
+
+                  
+                  ItemStack r = UtilFluid.dispenseStack(world, targetPos, maybeTool, this.getCurrentFacing());
+           
+                  if (r != null) {//non null meaning success, and r is the NEW full or empty bucket
+                    maybeTool.stackSize--;
+                    UtilItemStack.dropItemStackInWorld(this.worldObj, getCurrentFacingPos(), r);
+                  }
                 }
               }
               else {//non bucket

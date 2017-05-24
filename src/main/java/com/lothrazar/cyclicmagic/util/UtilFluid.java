@@ -3,6 +3,7 @@ import net.minecraft.block.BlockDispenser;
 import net.minecraft.block.BlockSourceImpl;
 import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityDispenser;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -10,6 +11,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class UtilFluid {
@@ -51,4 +53,8 @@ public class UtilFluid {
     }
     return dispensedStack;
   }
+  
+  public static IFluidHandler getFluidHandler(TileEntity tile, EnumFacing side) {
+    return (tile != null && tile.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side)) ? tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side) : null;
+}
 }

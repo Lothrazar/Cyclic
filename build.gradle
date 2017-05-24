@@ -33,6 +33,10 @@ repositories {
     maven {
         url "http://dvs1.progwml6.com/files/maven"
     }
+    maven{
+    name "tterrag"
+		url "http://maven.tterrag.com"
+	}
 }
 
 dependencies {
@@ -42,6 +46,9 @@ dependencies {
   runtime "mezz.jei:jei_${mc_version}:${jei_version}"
 
   //compile files("lib/Baubles-${mc_version}-${baubles_version}.jar")
+  
+  deobfCompile group: 'com.enderio.core', name: 'EnderCore', version:   "${mc_version}-0.4.1.41-beta" 
+	deobfCompile group: 'com.enderio', name: 'EnderIO', version:   "${mc_version}-3.0.1.74_beta"  
 }
 
 processResources {
