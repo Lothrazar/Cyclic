@@ -5,8 +5,8 @@
     "1.9.4-recommended":  "1.2.0",
     "1.10-latest":  "1.1.0",
     "1.10-recommended": "1.1.0",
-    "1.10.2-latest":  "1.10.23",
-    "1.10.2-recommended": "1.10.23",
+    "1.10.2-latest":  "1.10.24",
+    "1.10.2-recommended": "1.10.24",
     "1.11.2-latest": "1.4.7",
     "1.11.2-recommended": "1.4.7"
   },
@@ -127,6 +127,7 @@
 	,"1.10.21":"Auto Fisher now compatible with aquaculture, basemetal, modernmetal fishing rods.  Automatic User now correctly drops output items, such as milk buckets. Fix harvester sometimes crashing when used on agricraft crop sticks or Pixelmon apricorns. "
 	,"1.10.22":"Fix a client side crash when the mod thinks you are trying to right click an item to turn a bauble off"
 	,"1.10.23":"Mattock tool now checks block hardness (in all 9 locations) to avoid breaking unbreakable blocks; also it calls block.canEntityDestroy(..) for better cross-mod compatibility."
+	,"1.10.24":"Automated User now correctly uses empty and full buckets with liquids placed in the world.  Added Automated User integration with tile entities that use the forge Fluid Capability system (for example, it can now use full & empty buckets with the Fluid Tank & Reservoir from Ender IO)"
   },
   "1.11.2":{
 	"1.0.0":"Beta release; on par with 1.10.2-1.9.15  Removed: LightningSkeletonMutate, LightningZombieMutate, Block Miner Advanced.  Changed Features: Emerald Carrot no longer changes normal horses to zombie or skeleton; instead its used to tame existing Zombie and Skeleton horses.  Sleeping Mat works half the time but has a few issues, its a work in progress right now.  Several items have changed textures, recipes, and names.  "
