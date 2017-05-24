@@ -5,15 +5,23 @@ import java.util.UUID;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
+import com.lothrazar.cyclicmagic.util.UtilFluid;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
+import net.minecraft.block.BlockDispenser;
+import net.minecraft.block.BlockSourceImpl;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
+import net.minecraft.dispenser.IPosition;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeMap;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -85,28 +93,42 @@ public class TileMachineUser extends TileEntityBaseMachineInvo implements ITileR
             timer = TIMER_FULL;
             //act on block
             BlockPos targetPos = this.getCurrentFacingPos();//pos.offset(this.getCurrentFacing()); //not sure if this is needed
-            if (world.isAirBlock(targetPos)) {
-              targetPos = targetPos.down();
-            }
+          
             int hRange = 2;
             int vRange = 1;
             //so in a radius 2 area starting one block away
             BlockPos entityCenter = this.getPos().offset(this.getCurrentFacing(), 1);
             if (rightClickIfZero == 0) {
-              fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, fakePlayer.get().getHeldItemMainhand(), EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
-              //this.getWorld().markChunkDirty(this.getPos(), this);
-              this.getWorld().markChunkDirty(targetPos, this);
-              AxisAlignedBB range = UtilEntity.makeBoundingBox(entityCenter, hRange, vRange);
-              List<EntityLivingBase> all = world.getEntitiesWithinAABB(EntityLivingBase.class, range);
-              for (EntityLivingBase ent : all) {
-                // on the line below: NullPointerException  at com.lothrazar.cyclicmagic.block.tileentity.TileMachineUser.func_73660_a(TileMachineUser.java:101)
-                if (world.isRemote == false &&
-                    ent != null && ent.isDead == false
-                    && fakePlayer != null && fakePlayer.get() != null) {
-                  validateTool(); //recheck this at every step so we dont go negative
-                  if (fakePlayer.get().interact(ent, maybeTool, EnumHand.MAIN_HAND) != EnumActionResult.FAIL) {
-                    tryDumpFakePlayerInvo();
-                    break;
+              if (maybeTool != null &&
+                  maybeTool.getItem() instanceof ItemBucket) {
+                ItemStack r = UtilFluid.dispenseStack(world, targetPos, maybeTool, this.getCurrentFacing());
+         
+                if (r != null) {//non null meaning success, and r is the NEW full or empty bucket
+                  maybeTool.stackSize--;
+                  UtilItemStack.dropItemStackInWorld(this.worldObj, getCurrentFacingPos(), r);
+                }
+              }
+              else {//non bucket
+                if (world.isAirBlock(targetPos)) {
+                  targetPos = targetPos.down();
+                }
+                //  EnumActionResult res =
+               fakePlayer.get().interactionManager.processRightClickBlock(fakePlayer.get(), world, maybeTool, EnumHand.MAIN_HAND, targetPos, EnumFacing.UP, .5F, .5F, .5F);
+                tryDumpFakePlayerInvo();
+                //this.getWorld().markChunkDirty(this.getPos(), this);
+                this.getWorld().markChunkDirty(targetPos, this);
+                AxisAlignedBB range = UtilEntity.makeBoundingBox(entityCenter, hRange, vRange);
+                List<EntityLivingBase> all = world.getEntitiesWithinAABB(EntityLivingBase.class, range);
+                for (EntityLivingBase ent : all) {
+                  // on the line below: NullPointerException  at com.lothrazar.cyclicmagic.block.tileentity.TileMachineUser.func_73660_a(TileMachineUser.java:101)
+                  if (world.isRemote == false &&
+                      ent != null && ent.isDead == false
+                      && fakePlayer != null && fakePlayer.get() != null) {
+                    validateTool(); //recheck this at every step so we dont go negative
+                    if (fakePlayer.get().interact(ent, maybeTool, EnumHand.MAIN_HAND) != EnumActionResult.FAIL) {
+                      tryDumpFakePlayerInvo();
+                      break;
+                    }
                   }
                 }
               }
