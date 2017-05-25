@@ -233,7 +233,7 @@ public class TileEntityStructureBuilder extends TileEntityBaseMachineInvo implem
     tagCompound.setInteger(NBT_RENDER, renderParticles);
     return super.writeToNBT(tagCompound);
   }
-  public boolean isBurning() {
+  public boolean isFuelBurning() {
     return this.timer > 0 && this.timer < TIMER_FULL;
   }
   @Override

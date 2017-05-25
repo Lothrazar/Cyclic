@@ -63,7 +63,7 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
     tagCompound.setInteger(NBT_RENDER, renderParticles);
     return super.writeToNBT(tagCompound);
   }
-  public boolean isBurning() {
+  public boolean isFuelBurning() {
     return this.timer > 0 && this.timer < TIMER_FULL;
   }
   @Override
@@ -102,9 +102,6 @@ public class TileEntityHarvester extends TileEntityBaseMachineInvo implements IT
   }
   private BlockPos getTargetPos() {
     return UtilWorld.getRandomPos(getWorld().rand, getTargetCenter(), this.size);
-  }
-  private int getSpeed() {
-    return 1;
   }
   @Override
   public int getField(int id) {

@@ -1,5 +1,6 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
 import java.util.stream.IntStream;
+import com.lothrazar.cyclicmagic.ITileFuel;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilNBT;
@@ -14,7 +15,9 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 
-public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements IInventory, ISidedInventory {
+public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine implements IInventory, ISidedInventory, ITileFuel {
+  private static final int MAX_SPEED = 10;
+  private static final int FUEL_FACTOR = 2;
   private static final String NBT_INV = "Inventory";
   private static final String NBT_SLOT = "Slot";
   public static final String NBT_TIMER = "Timer";
@@ -24,35 +27,47 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   public static final String NBTPLAYERID = "uuid";
   public static final String NBT_SPEED = "speed";
   public static final String NBT_RENDER = "render";
+  public static final String NBT_FUELMAX = "maxFuel";
   protected NonNullList<ItemStack> inv;
-  protected boolean usesFuel = false;
-  protected int fuelSlot = -1;
-  protected int furnaceBurnTime;
+  private int maxFuel;
+  private int fuelSlot = -1;
+  private int currentFuel;
+  private int speed = 1;
+  private boolean usesFuel = false;
   public TileEntityBaseMachineInvo(int invoSize) {
     super();
     inv = NonNullList.withSize(invoSize, ItemStack.EMPTY);
+    this.fuelSlot = -1;
   }
   protected void setFuelSlot(int slot) {
-    this.usesFuel = true;
+    usesFuel = true;
     this.fuelSlot = slot;
   }
-  protected int getFuelCurrent() {
-    return this.furnaceBurnTime;
+  public int getFuelCurrent() {
+    return this.currentFuel;
+  }
+  public double getFuelPercent() {
+    if(this.maxFuel == 0){
+      return 0;//clearly
+    }
+    return this.currentFuel / maxFuel;
   }
   protected void setFuelCurrent(int f) {
-    this.furnaceBurnTime = f;
+    this.currentFuel = f;
   }
-  protected void consumeFuel() {
-    if (this.usesFuel && this.furnaceBurnTime > 0 && !this.world.isRemote) {
-      this.furnaceBurnTime--;
-    }
-  }
-  protected void consumeNewFuel() {
-    if (this.usesFuel == false || this.fuelSlot < 0) { return; }
-    ItemStack itemstack = this.getStackInSlot(this.fuelSlot);
-    if (this.isItemFuel(itemstack)) {
-      this.furnaceBurnTime = TileEntityFurnace.getItemBurnTime(itemstack);
-      itemstack.shrink(1);
+  public void consumeFuel() {
+    if (usesFuel && !this.world.isRemote) {
+      if (this.currentFuel > 0) {
+        this.currentFuel--;
+      }
+      else {
+        ItemStack itemstack = this.getStackInSlot(this.fuelSlot);
+        if (this.isItemFuel(itemstack)) {
+          this.currentFuel = FUEL_FACTOR * TileEntityFurnace.getItemBurnTime(itemstack);
+          this.maxFuel = this.currentFuel;//100% full
+          itemstack.shrink(1);
+        }
+      }
     }
   }
   public int[] getFieldArray(int length) {
@@ -61,10 +76,22 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   private boolean isItemFuel(ItemStack itemstack) {
     return TileEntityFurnace.isItemFuel(itemstack);//TODO: wont be furnace eventually
   }
-  protected boolean isBurning() {
-    if (this.usesFuel)
-      return this.furnaceBurnTime > 0;
-    else return true;//always burning, doesnt take fuel
+  @Override
+  public boolean isRunning() {
+    if (usesFuel) {
+      //it DOES need fuel
+      if (super.isRunning()) {
+        this.consumeFuel();
+        //so its rnning if redstone is on AND fuel nonempty
+        return super.isRunning() && (this.currentFuel > 0);
+      }
+      else {
+        return false;
+      }
+    }
+    else {
+      return super.isRunning();
+    }
   }
   @Override
   public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
@@ -191,6 +218,9 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   @Override
   public void readFromNBT(NBTTagCompound compound) {
     this.readInvoFromNBT(compound);
+    speed = compound.getInteger(NBT_SPEED);
+    this.maxFuel = compound.getInteger(NBT_FUELMAX);
+    this.setFuelCurrent(compound.getInteger(NBT_FUEL));
     super.readFromNBT(compound);
   }
   private void readInvoFromNBT(NBTTagCompound tagCompound) {
@@ -206,6 +236,9 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     this.writeInvoToNBT(compound);
+    compound.setInteger(NBT_SPEED, speed);
+    compound.setInteger(NBT_FUEL, getFuelCurrent());
+    compound.setInteger(NBT_FUELMAX, this.maxFuel);
     return super.writeToNBT(compound);
   }
   private void writeInvoToNBT(NBTTagCompound compound) {
@@ -253,5 +286,20 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   }
   public int[] getFieldOrdinals() {
     return new int[0];
+  }
+  public int getSpeed() {
+    return this.speed;
+  }
+  public void setSpeed(int value) {
+    if (value < 0) {
+      value = 0;
+    }
+    speed = Math.min(value, MAX_SPEED);
+  }
+  public void incrementSpeed() {
+    this.setSpeed(this.getSpeed() - 1);
+  }
+  public void decrementSpeed() {
+    this.setSpeed(this.getSpeed() + 1);
   }
 }

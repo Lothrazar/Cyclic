@@ -11,7 +11,6 @@ import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.util.UtilEntity;
 import com.lothrazar.cyclicmagic.util.UtilFakePlayer;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
-import com.lothrazar.cyclicmagic.util.UtilParticle;
 import com.lothrazar.cyclicmagic.util.UtilShape;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.block.Block;
@@ -46,14 +45,12 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   //vazkii wanted simple block breaker and block placer. already have the BlockBuilder for placing :D
   //of course this isnt standalone and hes probably found some other mod by now but doing it anyway https://twitter.com/Vazkii/status/767569090483552256
   // fake player idea ??? https://gitlab.prok.pw/Mirrors/minecraftforge/commit/f6ca556a380440ededce567f719d7a3301676ed0
-  private static final String NBT_SPEED = "h";//WTF why did i name it this
   private static final String NBT_LR = "lr";
   private static final int MAX_SIZE = 4;//9x9 area 
   public static int maxHeight = 10;
   public static int TIMER_FULL = 80;
   private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots for all faces
   //  final int RADIUS = 4;//center plus 4 in each direction = 9x9
-  private int speed = 1;
   private int rightClickIfZero = 0;
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
@@ -68,7 +65,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   public TileEntityUser() {
     super(9);
     timer = TIMER_FULL;
-    speed = 1;
+    this.setFuelSlot(8);
   }
   @Override
   public int[] getFieldOrdinals() {
@@ -76,16 +73,8 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
   @Override
   public void update() {
-    this.shiftAllUp();
-    if (isRunning() && this.isBurning()) {
-      this.consumeFuel();
-      // ModCyclic.logger.info("decr " + this.furnaceBurnTime);
-    }
-    if (isRunning() && !this.isBurning() && !this.world.isRemote) {
-      this.consumeNewFuel();
-      // ModCyclic.logger.info("new fuel " + this.furnaceBurnTime);
-    }
-    if (isRunning() && this.isBurning()) {
+   // this.shiftAllUp();
+    if (isRunning()) {
       this.spawnParticlesAbove();
     }
     if (world instanceof WorldServer) {
@@ -98,7 +87,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         }
       }
       tryEquipItem();
-      if (isRunning() && this.isBurning()) {
+      if (isRunning()) {
         timer -= this.getSpeed();
         if (timer <= 0) {
           timer = 0;
@@ -232,10 +221,8 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       tagCompound.setString(NBTPLAYERID, uuid.toString());
     }
     tagCompound.setInteger(NBT_REDST, needsRedstone);
-    tagCompound.setInteger(NBT_SPEED, speed);
     tagCompound.setInteger(NBT_LR, rightClickIfZero);
     tagCompound.setInteger(NBT_SIZE, size);
-    tagCompound.setInteger(NBT_FUEL, getFuelCurrent());
     tagCompound.setInteger(NBT_RENDER, renderParticles);
     return super.writeToNBT(tagCompound);
   }
@@ -248,10 +235,8 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     }
     needsRedstone = tagCompound.getInteger(NBT_REDST);
     rightClickIfZero = tagCompound.getInteger(NBT_LR);
-    speed = tagCompound.getInteger(NBT_SPEED);
     size = tagCompound.getInteger(NBT_SIZE);
     this.renderParticles = tagCompound.getInteger(NBT_RENDER);
-    this.setFuelCurrent(tagCompound.getInteger(NBT_FUEL));
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
@@ -283,19 +268,13 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   public void setField(int id, int value) {
     switch (Fields.values()[id]) {
       case SPEED:
-        if (value > maxHeight) {
-          value = maxHeight;
-        }
-        setSpeed(value);
+        this.setSpeed(value);
       break;
       case TIMER:
-        timer = value;
-        if (timer > TIMER_FULL) {
-          timer = TIMER_FULL;
+        if (value < 0) {
+          value = 0;
         }
-        if (timer < 0) {
-          timer = 0;
-        }
+        timer = Math.min(value, TIMER_FULL);
       break;
       case REDSTONE:
         this.needsRedstone = value;
@@ -315,12 +294,6 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       default:
       break;
     }
-  }
-  public int getSpeed() {
-    return this.speed;//this.getField(Fields.HEIGHT.ordinal());
-  }
-  public void setSpeed(int val) {
-    this.speed = val;
   }
   @Override
   public int getFieldCount() {
@@ -378,10 +351,9 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   @Override
   public List<BlockPos> getShape() {
     return UtilShape.squareHorizontalHollow(getTargetCenter(), this.size);
- 
   }
   @Override
   public boolean isPreviewVisible() {
-    return this.getField(Fields.RENDERPARTICLES.ordinal())==1;
+    return this.getField(Fields.RENDERPARTICLES.ordinal()) == 1;
   }
 }

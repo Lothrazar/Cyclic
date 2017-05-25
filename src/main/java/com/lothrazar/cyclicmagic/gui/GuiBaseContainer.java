@@ -1,5 +1,4 @@
 package com.lothrazar.cyclicmagic.gui;
-import com.lothrazar.cyclicmagic.ITileSizeToggle;
 import com.lothrazar.cyclicmagic.ITooltipButton;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.util.Const;
@@ -18,6 +17,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
   protected Const.ScreenSize screenSize = ScreenSize.STANDARD;
   protected int fieldRedstoneBtn = -1;
   protected int fieldPreviewBtn = -1;
+  protected int fieldFuel = -1;
   public ProgressBar progressBar = null;
   private GuiButtonToggleRedstone redstoneBtn = null;
   private GuiButtonTogglePreview btnPreview;
@@ -39,7 +39,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
           x,
           y, this.tile.getPos());
       this.buttonList.add(redstoneBtn);
-      y += Const.PAD/2 + redstoneBtn.width;
+      y += Const.PAD / 2 + redstoneBtn.width;
     }
     if (this.fieldPreviewBtn > 0) {
       btnPreview = new GuiButtonTogglePreview(2,
@@ -58,17 +58,21 @@ public abstract class GuiBaseContainer extends GuiContainer {
   protected void drawFieldAt(int x, int y, int f) {
     String display = "" + this.tile.getField(f);
     x = (display.length() > 1) ? x - 3 : x;
-    this.fontRendererObj.drawString(display, x, y, 4210752);
+    this.drawString(display, x, y);
   }
   @SideOnly(Side.CLIENT)
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+    if (this.fieldFuel > -1) {
+      this.drawFieldAt(1, 1, fieldFuel);
+      this.drawString(tile.getFuelPercent()+"%",1, 44);
+    }
     if (redstoneBtn != null) {
       redstoneBtn.setState(tile.getField(this.fieldRedstoneBtn));
     }
-    if (btnPreview != null ) {
-      if (tile.getField(this.fieldPreviewBtn)==1) {
+    if (btnPreview != null) {
+      if (tile.getField(this.fieldPreviewBtn) == 1) {
         btnPreview.setStateOn();
       }
       else {

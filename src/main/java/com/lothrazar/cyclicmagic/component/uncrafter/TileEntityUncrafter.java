@@ -56,7 +56,7 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
   public int getTimer() {
     return timer;
   }
-  public boolean isBurning() {
+  public boolean isFuelBurning() {
     return this.timer > 0 && this.timer < TIMER_FULL;
   }
   @Override

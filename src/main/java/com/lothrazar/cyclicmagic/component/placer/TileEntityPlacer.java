@@ -73,7 +73,7 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
     tagCompound.setInteger(NBT_TIMER, timer);
     return super.writeToNBT(tagCompound);
   }
-  public boolean isBurning() {
+  public boolean isFuelBurning() {
     return this.timer > 0 && this.timer < TIMER_FULL;
   }
   @Override

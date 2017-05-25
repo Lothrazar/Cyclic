@@ -18,32 +18,26 @@ public class GuiUser extends GuiBaseContainer {
   public GuiUser(InventoryPlayer inventoryPlayer, TileEntityUser tileEntity) {
     super(new ContainerUser(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
-    this.screenSize=ScreenSize.STANDARD;
+    this.screenSize = ScreenSize.STANDARD;
     this.xSize = screenSize.width();
     this.ySize = screenSize.height();
     this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
     this.fieldPreviewBtn = Fields.RENDERPARTICLES.ordinal();
     this.progressBar = new ProgressBar(this, 10, 4 * Const.SQ, Fields.TIMER.ordinal(), TileEntityUser.TIMER_FULL);
-    
+    this.fieldFuel = Fields.FUEL.ordinal();
   }
   @Override
   public void initGui() {
     super.initGui();
     int btnId = 3;
-    
-
     btnSize = new GuiButtonToggleSize(btnId++,
-        this.guiLeft +24 + Const.PAD ,
-        this.guiTop + Const.PAD +18, this.tile.getPos());
+        this.guiLeft + 24 + Const.PAD,
+        this.guiTop + Const.PAD + 18, this.tile.getPos());
     this.buttonList.add(btnSize);
-    
-    
- 
     actionBtn = new ButtonUserAction(btnId++,
-        this.guiLeft + screenSize.width()-Const.PAD - 40,
-      this.guiTop + Const.PAD/2 +18, this.tile.getPos());
+        this.guiLeft + screenSize.width() - Const.PAD - 40,
+        this.guiTop + Const.PAD / 2 + 18, this.tile.getPos());
     this.buttonList.add(actionBtn);
- 
   }
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
@@ -59,7 +53,6 @@ public class GuiUser extends GuiBaseContainer {
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     actionBtn.displayString = UtilChat.lang("tile.block_user.action" + tile.getField(Fields.LEFTRIGHT.ordinal()));
     btnSize.displayString = UtilChat.lang("button.harvester.size" + tile.getField(Fields.SIZE.ordinal()));
-    //    this.drawFieldAt(1,1,Fields.FUEL.ordinal());
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
   }
 }
