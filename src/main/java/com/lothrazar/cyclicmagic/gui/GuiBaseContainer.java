@@ -18,6 +18,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
   protected int fieldRedstoneBtn = -1;
   protected int fieldPreviewBtn = -1;
   protected int fieldFuel = -1;
+  protected int fieldMaxFuel = -1;
   public ProgressBar progressBar = null;
   private GuiButtonToggleRedstone redstoneBtn = null;
   private GuiButtonTogglePreview btnPreview;
@@ -28,6 +29,10 @@ public abstract class GuiBaseContainer extends GuiContainer {
   public GuiBaseContainer(Container inventorySlotsIn) {
     super(inventorySlotsIn);
     this.tile = null;
+  }
+  protected void setFieldFuel(int ordinal) {
+    this.fieldFuel = ordinal;
+    this.fieldMaxFuel = ordinal + 1;
   }
   @Override
   public void initGui() {
@@ -65,8 +70,11 @@ public abstract class GuiBaseContainer extends GuiContainer {
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     if (this.fieldFuel > -1) {
-      this.drawFieldAt(1, 1, fieldFuel);
-      this.drawString(tile.getFuelPercent()+"%",1, 44);
+     // double pctOneDecimal = getPercentFormatted();
+     // this.drawString(pctOneDecimal + "%", this.xSize-30, 6);
+
+      this.drawString(tile.getPercentFormatted() + "%", this.xSize-30, 6);
+      
     }
     if (redstoneBtn != null) {
       redstoneBtn.setState(tile.getField(this.fieldRedstoneBtn));

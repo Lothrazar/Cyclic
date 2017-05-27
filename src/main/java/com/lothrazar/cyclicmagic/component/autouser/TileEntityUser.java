@@ -60,7 +60,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private int toolSlot = 0;
   private int size;
   public static enum Fields {
-    TIMER, SPEED, REDSTONE, LEFTRIGHT, SIZE, FUEL, RENDERPARTICLES;
+    TIMER, SPEED, REDSTONE, LEFTRIGHT, SIZE, RENDERPARTICLES, FUEL, FUELMAX;
   }
   public TileEntityUser() {
     super(9);
@@ -73,7 +73,7 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
   @Override
   public void update() {
-   // this.shiftAllUp();
+    // this.shiftAllUp();
     if (isRunning()) {
       this.spawnParticlesAbove();
     }
@@ -257,6 +257,8 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
         return this.rightClickIfZero;
       case FUEL:
         return this.getFuelCurrent();
+      case FUELMAX:
+        return this.getFuelMax();
       case RENDERPARTICLES:
         return this.renderParticles;
       default:
@@ -287,6 +289,9 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
       break;
       case FUEL:
         this.setFuelCurrent(value);
+      break;
+      case FUELMAX:
+        this.setFuelMax(value);
       break;
       case RENDERPARTICLES:
         this.renderParticles = value % 2;

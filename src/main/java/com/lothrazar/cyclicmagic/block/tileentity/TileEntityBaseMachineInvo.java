@@ -29,7 +29,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   public static final String NBT_RENDER = "render";
   public static final String NBT_FUELMAX = "maxFuel";
   protected NonNullList<ItemStack> inv;
-  private int maxFuel;
+  private int currentMaxFuel;
   private int fuelSlot = -1;
   private int currentFuel;
   private int speed = 1;
@@ -43,17 +43,25 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     usesFuel = true;
     this.fuelSlot = slot;
   }
+  public int getFuelMax() {
+    return this.currentMaxFuel;
+  }
+  protected void setFuelMax(int f) {
+    this.currentMaxFuel = f;
+  }
   public int getFuelCurrent() {
     return this.currentFuel;
   }
-  public double getFuelPercent() {
-    if(this.maxFuel == 0){
-      return 0;//clearly
-    }
-    return this.currentFuel / maxFuel;
-  }
   protected void setFuelCurrent(int f) {
     this.currentFuel = f;
+  }
+  public double getPercentFormatted() {
+    if( this.currentMaxFuel == 0){
+      return 0.0;
+    }
+    double percent = ((float) this.currentFuel / (float) this.currentMaxFuel);
+    double pctOneDecimal = Math.floor(percent * 1000) / 10;
+    return pctOneDecimal;
   }
   public void consumeFuel() {
     if (usesFuel && !this.world.isRemote) {
@@ -64,7 +72,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
         ItemStack itemstack = this.getStackInSlot(this.fuelSlot);
         if (this.isItemFuel(itemstack)) {
           this.currentFuel = FUEL_FACTOR * TileEntityFurnace.getItemBurnTime(itemstack);
-          this.maxFuel = this.currentFuel;//100% full
+          this.currentMaxFuel = this.currentFuel;//100% full
           itemstack.shrink(1);
         }
       }
@@ -219,7 +227,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
   public void readFromNBT(NBTTagCompound compound) {
     this.readInvoFromNBT(compound);
     speed = compound.getInteger(NBT_SPEED);
-    this.maxFuel = compound.getInteger(NBT_FUELMAX);
+    this.currentMaxFuel = compound.getInteger(NBT_FUELMAX);
     this.setFuelCurrent(compound.getInteger(NBT_FUEL));
     super.readFromNBT(compound);
   }
@@ -238,7 +246,7 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     this.writeInvoToNBT(compound);
     compound.setInteger(NBT_SPEED, speed);
     compound.setInteger(NBT_FUEL, getFuelCurrent());
-    compound.setInteger(NBT_FUELMAX, this.maxFuel);
+    compound.setInteger(NBT_FUELMAX, this.currentMaxFuel);
     return super.writeToNBT(compound);
   }
   private void writeInvoToNBT(NBTTagCompound compound) {

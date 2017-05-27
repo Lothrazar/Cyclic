@@ -17,6 +17,7 @@ public class GuiUser extends GuiBaseContainer {
   private GuiButtonToggleSize btnSize;
   public GuiUser(InventoryPlayer inventoryPlayer, TileEntityUser tileEntity) {
     super(new ContainerUser(inventoryPlayer, tileEntity), tileEntity);
+
     tile = tileEntity;
     this.screenSize = ScreenSize.STANDARD;
     this.xSize = screenSize.width();
@@ -24,7 +25,7 @@ public class GuiUser extends GuiBaseContainer {
     this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
     this.fieldPreviewBtn = Fields.RENDERPARTICLES.ordinal();
     this.progressBar = new ProgressBar(this, 10, 4 * Const.SQ, Fields.TIMER.ordinal(), TileEntityUser.TIMER_FULL);
-    this.fieldFuel = Fields.FUEL.ordinal();
+    this.setFieldFuel(Fields.FUEL.ordinal());
   }
   @Override
   public void initGui() {
