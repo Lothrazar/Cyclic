@@ -70,12 +70,17 @@ public abstract class GuiBaseContainer extends GuiContainer {
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
     if (this.fieldFuel > -1) {
-     // double pctOneDecimal = getPercentFormatted();
-     // this.drawString(pctOneDecimal + "%", this.xSize-30, 6);
-
-      this.drawString(tile.getPercentFormatted() + "%", this.xSize-30, 6);
+      // double pctOneDecimal = getPercentFormatted();
+      // this.drawString(pctOneDecimal + "%", this.xSize-30, 6);
+      if (tile.getPercentFormatted() > 0) {
+        this.drawString(tile.getPercentFormatted() + "%", this.xSize - 30, 28);
+      }
+      
       
     }
+    
+    
+    
     if (redstoneBtn != null) {
       redstoneBtn.setState(tile.getField(this.fieldRedstoneBtn));
     }

@@ -8,10 +8,12 @@ import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiUser extends GuiBaseContainer {
+  public static final ResourceLocation SLOT_COAL = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_coal.png");
   private TileEntityUser tile;
   private ButtonUserAction actionBtn;
   private GuiButtonToggleSize btnSize;
@@ -45,14 +47,11 @@ public class GuiUser extends GuiBaseContainer {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
-    for (int k = 0; k < tile.getSizeInventory()-1; k++) {
+    for (int k = 0; k < tile.getSizeInventory() - 1; k++) {
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerUser.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerUser.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
-    
-    
-    
-    Gui.drawModalRectWithCustomSizedTexture(this.guiLeft +ContainerUser.SLOTX_FUEL-1, this.guiTop +ContainerUser.SLOTY_FUEL-1 , u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
-    
+    this.mc.getTextureManager().bindTexture(SLOT_COAL);
+    Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerUser.SLOTX_FUEL - 1, this.guiTop + ContainerUser.SLOTY_FUEL - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
   }
   @SideOnly(Side.CLIENT)
   @Override

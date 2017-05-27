@@ -91,7 +91,8 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
       if (super.isRunning()) {
         this.consumeFuel();
         //so its rnning if redstone is on AND fuel nonempty
-        return super.isRunning() && (this.currentFuel > 0);
+        //NEW PLAN: if it has no fuel. still let it run just nerf the speed super low
+        return super.isRunning();// && (this.currentFuel > 0);
       }
       else {
         return false;
@@ -296,7 +297,18 @@ public abstract class TileEntityBaseMachineInvo extends TileEntityBaseMachine im
     return new int[0];
   }
   public int getSpeed() {
-    return this.speed;
+    if(this.usesFuel == false){
+      return this.speed;
+    }
+    else{
+
+      if(this.currentFuel == 0){
+        return 1;
+      }
+      else{
+        return 5;
+      }
+    }
   }
   public void setSpeed(int value) {
     if (value < 0) {

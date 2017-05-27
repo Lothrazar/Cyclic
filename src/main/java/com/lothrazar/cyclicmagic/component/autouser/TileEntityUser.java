@@ -48,8 +48,9 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   private static final String NBT_LR = "lr";
   private static final int MAX_SIZE = 4;//9x9 area 
   public static int maxHeight = 10;
-  public static int TIMER_FULL = 80;
+  public static int TIMER_FULL = 120;
   private int[] hopperInput = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };// all slots for all faces
+  private int[] hopperInputFuel = { 9 };// all slots for all faces
   //  final int RADIUS = 4;//center plus 4 in each direction = 9x9
   private int rightClickIfZero = 0;
   private WeakReference<FakePlayer> fakePlayer;
@@ -240,6 +241,8 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   }
   @Override
   public int[] getSlotsForFace(EnumFacing side) {
+    if(side == EnumFacing.UP)
+      return hopperInputFuel;
     return hopperInput;
   }
   @Override
