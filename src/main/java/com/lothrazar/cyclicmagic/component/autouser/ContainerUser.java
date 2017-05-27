@@ -11,17 +11,20 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ContainerUser extends ContainerBaseMachine {
+  public static final int SLOTX_FUEL = 8 *Const.SQ +Const.PAD;
+  public static final int SLOTY_FUEL = 2*Const.PAD +4;
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
   public static final int SLOTX_START = 8;
-  public static final int SLOTY = 50;
+  public static final int SLOTY = 94;
   protected TileEntityUser tileEntity;
   public ContainerUser(InventoryPlayer inventoryPlayer, TileEntityUser te) {
     tileEntity = te;
-    this.screenSize=ScreenSize.STANDARD;
+    this.screenSize=ScreenSize.LARGE;
     this.setTile(te);
-    for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
+    for (int i = 0; i < tileEntity.getSizeInventory()-1; i++) {
       addSlotToContainer(new Slot(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY));
     }
+    addSlotToContainer(new Slot(tileEntity, tileEntity.getSizeInventory()-1, SLOTX_FUEL, SLOTY_FUEL));
     // commonly used vanilla code that adds the player's inventory
     bindPlayerInventory(inventoryPlayer);
   }

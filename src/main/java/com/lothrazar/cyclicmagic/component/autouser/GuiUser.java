@@ -17,14 +17,13 @@ public class GuiUser extends GuiBaseContainer {
   private GuiButtonToggleSize btnSize;
   public GuiUser(InventoryPlayer inventoryPlayer, TileEntityUser tileEntity) {
     super(new ContainerUser(inventoryPlayer, tileEntity), tileEntity);
-
     tile = tileEntity;
-    this.screenSize = ScreenSize.STANDARD;
+    this.screenSize = ScreenSize.LARGE;
     this.xSize = screenSize.width();
     this.ySize = screenSize.height();
     this.fieldRedstoneBtn = Fields.REDSTONE.ordinal();
     this.fieldPreviewBtn = Fields.RENDERPARTICLES.ordinal();
-    this.progressBar = new ProgressBar(this, 10, 4 * Const.SQ, Fields.TIMER.ordinal(), TileEntityUser.TIMER_FULL);
+    this.progressBar = new ProgressBar(this, 10, ContainerUser.SLOTY + 22, Fields.TIMER.ordinal(), TileEntityUser.TIMER_FULL);
     this.setFieldFuel(Fields.FUEL.ordinal());
   }
   @Override
@@ -36,8 +35,9 @@ public class GuiUser extends GuiBaseContainer {
         this.guiTop + Const.PAD + 18, this.tile.getPos());
     this.buttonList.add(btnSize);
     actionBtn = new ButtonUserAction(btnId++,
-        this.guiLeft + screenSize.width() - Const.PAD - 40,
-        this.guiTop + Const.PAD / 2 + 18, this.tile.getPos());
+        this.guiLeft + 24 + Const.PAD,
+        this.guiTop + Const.PAD * 6, this.tile.getPos());
+    actionBtn.width = 44;
     this.buttonList.add(actionBtn);
   }
   @Override
@@ -45,9 +45,14 @@ public class GuiUser extends GuiBaseContainer {
     super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     int u = 0, v = 0;
     this.mc.getTextureManager().bindTexture(Const.Res.SLOT);
-    for (int k = 0; k < tile.getSizeInventory(); k++) {
+    for (int k = 0; k < tile.getSizeInventory()-1; k++) {
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerUser.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerUser.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
+    
+    
+    
+    Gui.drawModalRectWithCustomSizedTexture(this.guiLeft +ContainerUser.SLOTX_FUEL-1, this.guiTop +ContainerUser.SLOTY_FUEL-1 , u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    
   }
   @SideOnly(Side.CLIENT)
   @Override

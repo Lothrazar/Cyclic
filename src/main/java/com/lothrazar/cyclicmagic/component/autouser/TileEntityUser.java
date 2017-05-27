@@ -63,9 +63,9 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
     TIMER, SPEED, REDSTONE, LEFTRIGHT, SIZE, RENDERPARTICLES, FUEL, FUELMAX;
   }
   public TileEntityUser() {
-    super(9);
+    super(10);
     timer = TIMER_FULL;
-    this.setFuelSlot(8);
+    this.setFuelSlot(9);
   }
   @Override
   public int[] getFieldOrdinals() {
