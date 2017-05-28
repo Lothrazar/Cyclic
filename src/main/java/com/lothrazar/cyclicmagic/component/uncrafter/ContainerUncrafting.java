@@ -11,19 +11,18 @@ import net.minecraft.inventory.SlotFurnaceFuel;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
 /**
  * This was my first GUI, be gentle
+ * 
  * @author Sam
  *
  */
 public class ContainerUncrafting extends ContainerBaseMachine {
   public static final int SLOTX_INPUT = 8;
-  public static final int SLOTY_INPUT = 68; 
-  private int tileRedstone;
-  private int tileTimer;
+  public static final int SLOTY_INPUT = 68;
   public ContainerUncrafting(InventoryPlayer inventoryPlayer, TileEntityUncrafter te) {
- 
-    this.screenSize=ScreenSize.LARGE;
+    this.screenSize = ScreenSize.LARGE;
     this.setTile(te);
     addSlotToContainer(new Slot(tile, TileEntityUncrafter.SLOT_UNCRAFTME, SLOTX_INPUT, SLOTY_INPUT));
     int slot = 1;
@@ -31,15 +30,12 @@ public class ContainerUncrafting extends ContainerBaseMachine {
     for (int i = 0; i < TileEntityUncrafter.SLOT_ROWS; i++) {
       for (int j = 0; j < TileEntityUncrafter.SLOT_COLS; j++) {
         addSlotToContainer(new SlotOutputOnly(tile, slot,
-            xPrefix + j * Const.SQ, 
-             SLOTY_INPUT+ (i-1) * Const.SQ 
-        ));
+            xPrefix + j * Const.SQ,
+            SLOTY_INPUT + (i - 1) * Const.SQ));
         slot++;
       }
     }
-    
     addSlotToContainer(new SlotFurnaceFuel(tile, tile.getSizeInventory() - 1, SLOTX_FUEL, SLOTY_FUEL));
-    
     // commonly used vanilla code that adds the player's inventory
     bindPlayerInventory(inventoryPlayer);
   }
@@ -68,23 +64,6 @@ public class ContainerUncrafting extends ContainerBaseMachine {
       slotObject.onTake(player, stackInSlot);
     }
     return stack;
-  }
-  @Override
-  public void detectAndSendChanges() {
-    super.detectAndSendChanges();
-    for (int i = 0; i < this.listeners.size(); ++i) {
-      IContainerListener icontainerlistener = (IContainerListener) this.listeners.get(i);
-      int idx = TileEntityUncrafter.Fields.TIMER.ordinal();
-      if (this.tileTimer != this.tile.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tile.getField(idx));
-      }
-      idx = TileEntityUncrafter.Fields.REDSTONE.ordinal();
-      if (this.tileRedstone != this.tile.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tile.getField(idx));
-      }
-    }
-    this.tileTimer = this.tile.getField(TileEntityUncrafter.Fields.TIMER.ordinal());
-    this.tileRedstone = this.tile.getField(TileEntityUncrafter.Fields.REDSTONE.ordinal());
   }
   @Override
   @SideOnly(Side.CLIENT)

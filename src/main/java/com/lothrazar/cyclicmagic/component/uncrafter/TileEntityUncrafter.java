@@ -42,14 +42,16 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
     this.setFuelSlot(SLOT_ROWS * SLOT_COLS + 1);
   }
   @Override
+  public int[] getFieldOrdinals() {
+    return super.getFieldArray(Fields.values().length);
+  }
+  @Override
   public void readFromNBT(NBTTagCompound tagCompound) {
     super.readFromNBT(tagCompound);
     this.needsRedstone = tagCompound.getInteger(NBT_REDST);
-    timer = tagCompound.getInteger(NBT_TIMER);
   }
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
-    tagCompound.setInteger(NBT_TIMER, timer);
     tagCompound.setInteger(NBT_REDST, this.needsRedstone);
     return super.writeToNBT(tagCompound);
   }
@@ -60,6 +62,7 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
     ItemStack stack = getStackInSlot(SLOT_UNCRAFTME);
     if (stack.isEmpty()) { return; }
     this.spawnParticlesAbove();// its processing
+    this.updateFuelIsBurning();
     if (this.updateTimerIsZero()) {
       timer = TIMER_FULL; //reset the timer and do the thing
       UtilUncraft.Uncrafter uncrafter = new UtilUncraft.Uncrafter();
@@ -124,8 +127,7 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
         return this.getFuelCurrent();
       case FUELMAX:
         return this.getFuelMax();
-      default:
-      break;
+   
     }
     return -7;
   }
@@ -146,6 +148,7 @@ public class TileEntityUncrafter extends TileEntityBaseMachineInvo implements IT
       break;
       case FUELMAX:
         this.setFuelMax(value);
+      break;
     }
   }
   @Override
