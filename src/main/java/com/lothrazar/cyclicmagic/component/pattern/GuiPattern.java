@@ -63,6 +63,7 @@ public class GuiPattern extends GuiBaseContainer {
     ButtonFlipRegions bt = new ButtonFlipRegions(id++,
         this.guiLeft + screenSize.width() / 2 - 10,
         this.guiTop + yRows[2], this.tile.getPos());
+    bt.displayString="<->";
     this.buttonList.add(bt);
     // ButtonToggleRender
     //    ButtonToggleRender btn = new ButtonToggleRender(id++,
@@ -75,6 +76,7 @@ public class GuiPattern extends GuiBaseContainer {
         this.guiLeft + x,
         this.guiTop + y,
         isUp, f);
+    btn.displayString = (isUp) ? "+":"-";
     this.buttonList.add(btn);
   }
   private void drawFieldAt(int x, int y, TileEntityPatternBuilder.Fields f) {
