@@ -1,7 +1,11 @@
 package com.lothrazar.cyclicmagic.component.controlledminer;
+import com.lothrazar.cyclicmagic.component.autouser.ContainerUser;
+import com.lothrazar.cyclicmagic.component.autouser.TileEntityUser;
 import com.lothrazar.cyclicmagic.component.controlledminer.TileEntityControlledMiner.Fields;
+import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
 import com.lothrazar.cyclicmagic.gui.GuiButtonToggleSize;
+import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;
@@ -12,8 +16,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GuiMinerSmart extends GuiBaseContainer {
   private TileEntityControlledMiner tile;
-  private int xHeightTextbox = 150;
-  private int yHeightTxtbox = ContainerMinerSmart.SLOTY;
+  private int xHeightTextbox = 100;
+  private int yHeightTxtbox = 38;
   private ButtonMinerHeight btnHeightDown;
   private ButtonMinerHeight btnHeightUp;
   private GuiButtonToggleSize btnSize;
@@ -24,13 +28,16 @@ public class GuiMinerSmart extends GuiBaseContainer {
     tile = tileEntity;
     this.fieldRedstoneBtn = TileEntityControlledMiner.Fields.REDSTONE.ordinal();
     this.fieldPreviewBtn = TileEntityControlledMiner.Fields.RENDERPARTICLES.ordinal();
+    this.progressBar = new ProgressBar(this, 10, ContainerMinerSmart.SLOTY + 22, TileEntityControlledMiner.Fields.TIMER.ordinal(), TileEntityControlledMiner.TIMER_FULL);
+    
+    this.setFieldFuel(TileEntityControlledMiner.Fields.FUEL.ordinal());
   }
   @Override
   public void initGui() {
     super.initGui();
     //first the main top left type button
     int id = 2;
-    int yOffset = 18;
+    int yOffset = 16;
     btnHeightDown = new ButtonMinerHeight(tile.getPos(), id++, this.guiLeft + xHeightTextbox,
         this.guiTop + yHeightTxtbox + yOffset, false, TileEntityControlledMiner.Fields.HEIGHT);
     this.buttonList.add(btnHeightDown);
@@ -63,6 +70,8 @@ public class GuiMinerSmart extends GuiBaseContainer {
       Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerMinerSmart.SLOTX_START - 1 + k * Const.SQ, this.guiTop + ContainerMinerSmart.SLOTY - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
     }
     Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerMinerSmart.SLOTEQUIP_X - 1, this.guiTop + ContainerMinerSmart.SLOTEQUIP_Y - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
+    this.mc.getTextureManager().bindTexture(Const.Res.SLOT_COAL);
+    Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + ContainerBaseMachine.SLOTX_FUEL - 1, this.guiTop + ContainerBaseMachine.SLOTY_FUEL - 1, u, v, Const.SQ, Const.SQ, Const.SQ, Const.SQ);
   }
   @SideOnly(Side.CLIENT)
   @Override
@@ -76,11 +85,11 @@ public class GuiMinerSmart extends GuiBaseContainer {
     int x = ContainerMinerSmart.SLOTEQUIP_X - 3;
     int y = ContainerMinerSmart.SLOTEQUIP_Y - 14;
     String s = UtilChat.lang("tile.block_miner_smart.tool");
-    this.fontRendererObj.drawString(s, x, y, 4210752);
+    this.drawString(s, x, y);
     String display = "" + this.tile.getHeight();
     //move it over if more than 1 digit
     x = (display.length() > 1) ? xHeightTextbox + 2 : xHeightTextbox + 3;
-    this.fontRendererObj.drawString(display, x, yHeightTxtbox, 4210752);
+    this.drawString(display, x, yHeightTxtbox);
     updateDisabledButtons();
   }
 }

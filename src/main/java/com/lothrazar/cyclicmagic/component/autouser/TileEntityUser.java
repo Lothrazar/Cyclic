@@ -75,11 +75,10 @@ public class TileEntityUser extends TileEntityBaseMachineInvo implements ITileRe
   public void update() {
     if (!isRunning()) { return; }
     this.shiftAllUp(1);
+    this.spawnParticlesAbove();
     this.updateFuelIsBurning();
     boolean triggered = this.updateTimerIsZero();
-    if (triggered) {
-      this.spawnParticlesAbove();
-    }
+    
     if (world instanceof WorldServer) {
       verifyUuid(world);
       if (fakePlayer == null) {

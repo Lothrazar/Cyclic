@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.SlotFurnaceFuel;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -14,20 +15,20 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ContainerMinerSmart extends ContainerBaseMachine {
   // tutorial used: http://www.minecraftforge.net/wiki/Containers_and_GUIs
   public static final int SLOTX_START = Const.PAD;
-  public static final int SLOTY = 88;
-  public static final int SLOTID_EQUIP = 4;
+  public static final int SLOTY = 92;
+  public static final int SLOTID_EQUIP = TileEntityControlledMiner.TOOLSLOT_INDEX;
   public static final int SLOTEQUIP_X = SLOTX_START + (SLOTID_EQUIP + 2) * Const.SQ;
   public static final int SLOTEQUIP_Y = SLOTY;
-  protected TileEntityControlledMiner tileEntity;
   public ContainerMinerSmart(InventoryPlayer inventoryPlayer, TileEntityControlledMiner te) {
-    tileEntity = te;
+    tile = te;
     this.screenSize = ScreenSize.LARGE;
     this.setTile(te);
-    for (int i = 0; i < tileEntity.getSizeInventory() - 1; i++) {
-      addSlotToContainer(new SlotSingleStack(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY));
+    for (int i = 0; i < SLOTID_EQUIP; i++) {
+      addSlotToContainer(new SlotSingleStack(tile, i, SLOTX_START + i * Const.SQ, SLOTY));
     }
-    addSlotToContainer(new SlotSingleStack(tileEntity, SLOTID_EQUIP, SLOTEQUIP_X, SLOTEQUIP_Y));
-    // commonly used vanilla code that adds the player's inventory
+    addSlotToContainer(new SlotSingleStack(tile, SLOTID_EQUIP, SLOTEQUIP_X, SLOTEQUIP_Y));
+    addSlotToContainer(new SlotFurnaceFuel(tile, 5, SLOTX_FUEL, SLOTY_FUEL));
+    
     bindPlayerInventory(inventoryPlayer);
   }
   @Override
@@ -39,12 +40,12 @@ public class ContainerMinerSmart extends ContainerBaseMachine {
       ItemStack stackInSlot = slotObject.getStack();
       stack = stackInSlot.copy();
       // merges the item into player inventory since its in the tileEntity
-      if (slot < tileEntity.getSizeInventory()) {
-        if (!this.mergeItemStack(stackInSlot, tileEntity.getSizeInventory(), 36 + tileEntity.getSizeInventory(), true)) { return ItemStack.EMPTY; }
+      if (slot < tile.getSizeInventory()) {
+        if (!this.mergeItemStack(stackInSlot, tile.getSizeInventory(), 36 + tile.getSizeInventory(), true)) { return ItemStack.EMPTY; }
       }
       // places it into the tileEntity is possible since its in the player
       // inventory
-      else if (!this.mergeItemStack(stackInSlot, 0, tileEntity.getSizeInventory(), false)) { return ItemStack.EMPTY; }
+      else if (!this.mergeItemStack(stackInSlot, 0, tile.getSizeInventory(), false)) { return ItemStack.EMPTY; }
       if (stackInSlot.getCount() == 0) {
         slotObject.putStack(ItemStack.EMPTY);
       }
@@ -59,11 +60,11 @@ public class ContainerMinerSmart extends ContainerBaseMachine {
   @Override
   @SideOnly(Side.CLIENT)
   public void updateProgressBar(int id, int data) {
-    this.tileEntity.setField(id, data);
+    this.tile.setField(id, data);
   }
   @Override
   public void addListener(IContainerListener listener) {
     super.addListener(listener);
-    listener.sendAllWindowProperties(this, this.tileEntity);
+    listener.sendAllWindowProperties(this, this.tile);
   }
 }

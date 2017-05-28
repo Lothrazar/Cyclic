@@ -44,8 +44,9 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
   private static final String NBT_SIZE = "size";
   private static final String NBT_LIST = "blacklistIfZero";
   private static final int MAX_SIZE = 7;//7 means 15x15
-  private static final int INVENTORY_SIZE = 5;
-  private static final int TOOLSLOT_INDEX = INVENTORY_SIZE - 1;
+  private static final int INVENTORY_SIZE = 6;
+  public static final int TOOLSLOT_INDEX = 4;
+  public final static int TIMER_FULL = 200;
   public static int maxHeight = 10;
   private boolean isCurrentlyMining;
   private float curBlockDamage;
@@ -58,10 +59,11 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
   private WeakReference<FakePlayer> fakePlayer;
   private UUID uuid;
   public static enum Fields {
-    HEIGHT, REDSTONE, SIZE, LISTTYPE, RENDERPARTICLES;
+    HEIGHT, REDSTONE, SIZE, LISTTYPE, RENDERPARTICLES, TIMER, FUEL, FUELMAX;
   }
   public TileEntityControlledMiner() {
     super(INVENTORY_SIZE);
+    this.setFuelSlot(5);
   }
   @Override
   public int[] getFieldOrdinals() {
@@ -72,7 +74,6 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
       fakePlayer = UtilFakePlayer.initFakePlayer(w, this.uuid);
       if (fakePlayer == null) {
         ModCyclic.logger.error("Fake player failed to init ");
-        return;
       }
     }
   }
@@ -81,7 +82,6 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
     if (isRunning()) {
       this.spawnParticlesAbove();
     }
-    World world = getWorld();
     if (world instanceof WorldServer) {
       verifyUuid(world);
       verifyFakePlayer((WorldServer) world);
@@ -90,30 +90,10 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
         targetPos = pos.offset(this.getCurrentFacing()); //not sure if this is needed
       }
       if (isRunning()) {
-        if (isCurrentlyMining == false) { //we can mine but are not currently. so try moving to a new position
-          updateTargetPos();
-        }
-        if (isTargetValid()) { //if target is valid, allow mining (no air, no blacklist, etc)
-          isCurrentlyMining = true;
-        }
-        else { // no valid target, back out
-          isCurrentlyMining = false;
-          updateTargetPos();
-          resetProgress(targetPos);
-        }
-        //currentlyMining may have changed, and we are still turned on:
-        if (isCurrentlyMining) {
-          IBlockState targetState = world.getBlockState(targetPos);
-          curBlockDamage += UtilItemStack.getPlayerRelativeBlockHardness(targetState.getBlock(), targetState, fakePlayer.get(), world, targetPos);
-          if (curBlockDamage >= 1.0f) {
-            isCurrentlyMining = false;
-            resetProgress(targetPos);
-            if (fakePlayer.get() != null) {
-              fakePlayer.get().interactionManager.tryHarvestBlock(targetPos);
-            }
-          }
-          else {
-            world.sendBlockBreakProgress(uuid.hashCode(), targetPos, (int) (curBlockDamage * 10.0F) - 1);
+        this.updateFuelIsBurning();
+        if (this.updateTimerIsZero()) {
+          if (updateMiningProgress()) {
+            this.timer = TIMER_FULL;
           }
         }
       }
@@ -124,6 +104,36 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
         }
       }
     }
+  }
+  /**
+   * return true if block is harvested/broken
+   */
+  private boolean updateMiningProgress() {
+    if (isCurrentlyMining == false) { //we can mine but are not currently. so try moving to a new position
+      updateTargetPos();
+    }
+    if (isTargetValid()) { //if target is valid, allow mining (no air, no blacklist, etc)
+      isCurrentlyMining = true;
+    }
+    else { // no valid target, back out
+      isCurrentlyMining = false;
+      updateTargetPos();
+      resetProgress(targetPos);
+    }
+    //currentlyMining may have changed, and we are still turned on:
+    if (isCurrentlyMining) {
+      IBlockState targetState = world.getBlockState(targetPos);
+      curBlockDamage += UtilItemStack.getPlayerRelativeBlockHardness(targetState.getBlock(), targetState, fakePlayer.get(), world, targetPos);
+      if (curBlockDamage >= 1.0f) {
+        isCurrentlyMining = false;
+        resetProgress(targetPos);
+        if (fakePlayer.get() != null) { return fakePlayer.get().interactionManager.tryHarvestBlock(targetPos); }
+      }
+      else {
+        world.sendBlockBreakProgress(uuid.hashCode(), targetPos, (int) (curBlockDamage * 10.0F) - 1);
+      }
+    }
+    return false;
   }
   private void tryEquipItem() {
     ItemStack equip = this.getStackInSlot(TOOLSLOT_INDEX);
@@ -300,6 +310,12 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
         return blacklistIfZero;
       case RENDERPARTICLES:
         return this.renderParticles;
+      case FUEL:
+        return this.getFuelCurrent();
+      case FUELMAX:
+        return this.getFuelMax();
+      case TIMER:
+        return this.timer;
       default:
       break;
     }
@@ -325,6 +341,14 @@ public class TileEntityControlledMiner extends TileEntityBaseMachineInvo impleme
       case RENDERPARTICLES:
         this.renderParticles = value % 2;
       break;
+      case FUEL:
+        this.setFuelCurrent(value);
+      break;
+      case FUELMAX:
+        this.setFuelMax(value);
+      break;
+      case TIMER:
+        this.timer = value;
       default:
       break;
     }

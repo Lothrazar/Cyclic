@@ -22,7 +22,7 @@ public class ContainerUser extends ContainerBaseMachine {
       addSlotToContainer(new Slot(tile, i, SLOTX_START + i * Const.SQ, SLOTY));
     }
     addSlotToContainer(new SlotFurnaceFuel(tile, tile.getSizeInventory() - 1, SLOTX_FUEL, SLOTY_FUEL));
-    // commonly used vanilla code that adds the player's inventory
+ 
     bindPlayerInventory(inventoryPlayer);
   }
   @Override

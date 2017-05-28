@@ -59,6 +59,7 @@ button.build.random=Random
 button.build.rotate.tooltip=Use blocks one by one in a pattern
 button.build.rotate=Pattern
 button.builder.meta=Change structure type
+button.listtype=Toggle the ignore list type
 button.close=Close
 button.fan.particles0=Particles
 button.fan.particles1=No Particles
