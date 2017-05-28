@@ -76,7 +76,6 @@ public class UtilHarvestCrops {
     return countHarvested;
   }
   public static boolean harvestSingle(World world, BlockPos posCurrent, HarvestSetting conf) {
-
     boolean doBreakAbove = false;
     boolean doBreakBelow = false;
     boolean doBreak = false;
@@ -86,7 +85,6 @@ public class UtilHarvestCrops {
     Block blockCheck = blockState.getBlock();
     if (blockCheck == null) { return false; }
     Item seedItem = blockCheck.getItemDropped(blockCheck.getDefaultState(), world.rand, 0);//RuntimeException at this line
-
     if (isItemInBlacklist(seedItem)) { return false; }
     String blockClassString = blockCheck.getClass().getName();//TODO: config file eventually but hotfix for now
     IBlockState bsAbove = world.getBlockState(posCurrent.up());
@@ -218,7 +216,6 @@ public class UtilHarvestCrops {
         // com.polipo.exp.BlockExpPlant.func_180660_a(BlockExpPlant.java:237)
         // https://mods.curse.com/mc-mods/minecraft/230553-giacomos-experience-seedling
         try {
-          
           if (drops.size() > 1 && seedItem != null) {
             //  if it dropped more than one ( seed and a thing)
             for (Iterator<ItemStack> iterator = drops.iterator(); iterator.hasNext();) {
@@ -250,22 +247,18 @@ public class UtilHarvestCrops {
     }
     return false;
   }
-  private static boolean isItemInBlacklist(Item seedItem) {   
+  private static boolean isItemInBlacklist(Item seedItem) {
     String itemName = UtilItemStack.getStringForItem(seedItem);
     for (String s : blacklist) {//dont use .contains on the list. must use .equals on string
-
-      if (s != null && s.equals(itemName)) {  
-      return true; }
+      if (s != null && s.equals(itemName)) { return true; }
     }
     return false;
   }
   public static void syncConfig(Configuration config) {
     String category = Const.ConfigCategory.modpackMisc;
- 
     String[] deflist = new String[] {
         "terraqueous:pergola"
     };
     blacklist = config.getStringList("HarvesterBlacklist", category, deflist, "Crops & bushes that are blocked from harvesting (Garden Scythe and Harvester).  Put an item that gets dropped to blacklist the harvest.  For example, add the item minecraft:potato to stop those from working");
-    
   }
 }

@@ -1,6 +1,7 @@
 package com.lothrazar.cyclicmagic.gui;
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclicmagic.ITooltipButton;
 import net.minecraft.client.gui.GuiButton;
 
 public abstract class GuiButtonTooltip extends GuiButton implements ITooltipButton {

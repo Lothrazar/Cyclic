@@ -1,8 +1,8 @@
 package com.lothrazar.cyclicmagic.component.password;
 import java.util.ArrayList;
 import java.util.List;
+import com.lothrazar.cyclicmagic.ITooltipButton;
 import com.lothrazar.cyclicmagic.component.password.PacketTilePassword.PacketType;
-import com.lothrazar.cyclicmagic.gui.ITooltipButton;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.GuiButton;
 

@@ -3,10 +3,12 @@ import com.lothrazar.cyclicmagic.gui.ContainerBaseMachine;
 import com.lothrazar.cyclicmagic.gui.SlotOutputOnly;
 import com.lothrazar.cyclicmagic.gui.SlotSingleStack;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.SlotFurnaceFuel;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -16,11 +18,10 @@ public class ContainerCrafter extends ContainerBaseMachine {
   public static final int SLOTX_START = 8;
   public static final int SLOTY = 40;
   protected TileEntityCrafter tileEntity;
-  private int tileRedstone;
-  private int tileTimer;
   public ContainerCrafter(InventoryPlayer inventoryPlayer, TileEntityCrafter te) {
     tileEntity = te;
-    this.playerOffsetY = 130;
+    this.setTile(te);
+    screenSize = ScreenSize.LARGE;
     int slot = 0;
     //inpt on left
     int xPrefix = Const.PAD, yPrefix = 27;
@@ -36,7 +37,7 @@ public class ContainerCrafter extends ContainerBaseMachine {
     }
     //crafting in the middle
     rows = cols = 3;
-    xPrefix = (GuiCrafter.WIDTH / 2 - (Const.SQ * 3) / 2);
+    xPrefix = (screenSize.width() / 2 - (Const.SQ * 3) / 2);
     yPrefix = 40;
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
@@ -59,6 +60,8 @@ public class ContainerCrafter extends ContainerBaseMachine {
         slot++;
       }
     }
+    addSlotToContainer(new SlotFurnaceFuel(tile, tile.getSizeInventory() - 1, SLOTX_FUEL, SLOTY_FUEL));
+    
     // commonly used vanilla code that adds the player's inventory
     bindPlayerInventory(inventoryPlayer);
   }
@@ -87,23 +90,6 @@ public class ContainerCrafter extends ContainerBaseMachine {
       slotObject.onTake(player, stackInSlot);
     }
     return stack;
-  }
-  @Override
-  public void detectAndSendChanges() {
-    super.detectAndSendChanges();
-    for (int i = 0; i < this.listeners.size(); ++i) {
-      IContainerListener icontainerlistener = (IContainerListener) this.listeners.get(i);
-      int idx = TileEntityCrafter.Fields.TIMER.ordinal();
-      if (this.tileTimer != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-      }
-      idx = TileEntityCrafter.Fields.REDSTONE.ordinal();
-      if (this.tileRedstone != this.tileEntity.getField(idx)) {
-        icontainerlistener.sendProgressBarUpdate(this, idx, this.tileEntity.getField(idx));
-      }
-    }
-    this.tileTimer = this.tileEntity.getField(TileEntityCrafter.Fields.TIMER.ordinal());
-    this.tileRedstone = this.tileEntity.getField(TileEntityCrafter.Fields.REDSTONE.ordinal());
   }
   @Override
   @SideOnly(Side.CLIENT)

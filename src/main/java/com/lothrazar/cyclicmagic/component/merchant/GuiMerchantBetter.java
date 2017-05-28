@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.lwjgl.opengl.GL11;
+import com.lothrazar.cyclicmagic.ITooltipButton;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
-import com.lothrazar.cyclicmagic.gui.ITooltipButton;
 import com.lothrazar.cyclicmagic.util.Const;
+import com.lothrazar.cyclicmagic.util.Const.ScreenSize;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -28,9 +29,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class GuiMerchantBetter extends GuiBaseContainer {
-  static final int texture_width = 250;
-  static final int texture_height = 212;
-  public static final ResourceLocation GUI = new ResourceLocation(Const.MODID, Const.Res.folder + "villager.png");
+  //  static final int texture_width = 250;
+  //  static final int texture_height = 212;
   public static final ResourceLocation TRADE_REDX = new ResourceLocation(Const.MODID, Const.Res.folder + "tradex.png");
   private int btnColCount = 4;
   private int yBtnStart;
@@ -42,8 +42,9 @@ public class GuiMerchantBetter extends GuiBaseContainer {
   public GuiMerchantBetter(InventoryPlayer ip, EntityVillager merch, InventoryMerchantBetter im, World worldIn) {
     super(new ContainerMerchantBetter(ip, merch, im, worldIn));
     player = ip.player;
-    this.xSize = texture_width;
-    this.ySize = texture_height;
+    this.screenSize = ScreenSize.LARGEWIDE;
+    this.xSize = screenSize.width();
+    this.ySize = screenSize.height();
   }
   public ContainerMerchantBetter getContainer() {
     return (ContainerMerchantBetter) this.inventorySlots;
@@ -94,11 +95,13 @@ public class GuiMerchantBetter extends GuiBaseContainer {
   @Override
   protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-    this.mc.getTextureManager().bindTexture(GUI);
+    this.mc.getTextureManager().bindTexture(screenSize.texture());
     int thisX = this.getMiddleX();
     int thisY = this.getMiddleY();
     int u = 0, v = 0;
-    Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v, texture_width, texture_height, texture_width, texture_height);
+    Gui.drawModalRectWithCustomSizedTexture(thisX, thisY, u, v,
+        screenSize.width(), screenSize.height(),
+        screenSize.width(), screenSize.height());
   }
   /**
    * this HAS to be a nested class, because the Gui itemRender is not public

@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.component.placer;
-import com.lothrazar.cyclicmagic.block.tileentity.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilPlaceBlocks;
@@ -22,6 +22,10 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
   private int needsRedstone = 1;
   public TileEntityPlacer() {
     super(9);
+  }
+  @Override
+  public int[] getFieldOrdinals() {
+    return super.getFieldArray(Fields.values().length);
   }
   @Override
   public boolean isItemValidForSlot(int index, ItemStack stack) {
@@ -69,7 +73,7 @@ public class TileEntityPlacer extends TileEntityBaseMachineInvo implements ITile
     tagCompound.setInteger(NBT_TIMER, timer);
     return super.writeToNBT(tagCompound);
   }
-  public boolean isBurning() {
+  public boolean isFuelBurning() {
     return this.timer > 0 && this.timer < TIMER_FULL;
   }
   @Override

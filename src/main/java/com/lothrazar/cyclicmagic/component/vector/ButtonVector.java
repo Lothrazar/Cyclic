@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.component.vector;
 import java.util.ArrayList;
 import java.util.List;
-import com.lothrazar.cyclicmagic.gui.ITooltipButton;
+import com.lothrazar.cyclicmagic.ITooltipButton;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.math.BlockPos;

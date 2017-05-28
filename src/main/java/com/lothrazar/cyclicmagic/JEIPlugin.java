@@ -38,9 +38,6 @@ public class JEIPlugin extends BlankModPlugin {
         9, // @param recipeSlotCount    the number of slots for recipe inputs //3x3
         29, //@param inventorySlotStart the first slot of the available inventory (usually player inventory) =9+6
         4 * 9);//@param inventorySlotCount the number of slots of the available inventory //top right including hotbar =4*9
-    
-    
-
     registry.getRecipeTransferRegistry().addRecipeTransferHandler(ContainerWorkBench.class, VanillaRecipeCategoryUid.CRAFTING,
         1, // @param recipeSlotStart    the first slot for recipe inputs // skip over the 1 output and the 5 armor slots
         9, // @param recipeSlotCount    the number of slots for recipe inputs //3x3

@@ -1,8 +1,8 @@
 package com.lothrazar.cyclicmagic.component.pylonexp;
 import java.util.Arrays;
 import com.lothrazar.cyclicmagic.ModCyclic;
-import com.lothrazar.cyclicmagic.component.pylonexp.TileEntityXpPylon.Fields;
-import com.lothrazar.cyclicmagic.gui.GuiBaseContanerProgress;
+import com.lothrazar.cyclicmagic.gui.GuiBaseContainer;
+import com.lothrazar.cyclicmagic.gui.ProgressBar;
 import com.lothrazar.cyclicmagic.util.Const;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import net.minecraft.client.gui.Gui;
@@ -13,7 +13,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiPylon extends GuiBaseContanerProgress {
+public class GuiPylon extends GuiBaseContainer {
   public static final ResourceLocation PROGEXP = new ResourceLocation(Const.MODID, "textures/gui/progress_exp.png");
   public static final ResourceLocation SLOT_BOTTLE = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_bottle.png");
   public static final ResourceLocation SLOT_EBOTTLE = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot_ebottle.png");
@@ -28,10 +28,8 @@ public class GuiPylon extends GuiBaseContanerProgress {
   public GuiPylon(InventoryPlayer inventoryPlayer, TileEntityXpPylon tileEntity) {
     super(new ContainerPylon(inventoryPlayer, tileEntity), tileEntity);
     tile = tileEntity;
-  }
-  @Override
-  public ResourceLocation getProgressAsset() {
-    return PROGEXP;
+    this.progressBar = new ProgressBar(this, 10, 17 + 3 * Const.SQ, TileEntityXpPylon.Fields.EXP.ordinal(), TileEntityXpPylon.MAX_EXP_HELD);
+    this.progressBar.asset = PROGEXP;
   }
   @Override
   public void initGui() {
@@ -127,18 +125,6 @@ public class GuiPylon extends GuiBaseContanerProgress {
     btnCollect.displayString = UtilChat.lang("button.exp_pylon.collect" + tile.getField(TileEntityXpPylon.Fields.COLLECT.ordinal()));
     btnSpray.displayString = UtilChat.lang("button.exp_pylon.spray" + tile.getField(TileEntityXpPylon.Fields.SPRAY.ordinal()));
     btnBottle.displayString = UtilChat.lang("button.exp_pylon.bottle" + tile.getField(TileEntityXpPylon.Fields.BOTTLE.ordinal()));
-    this.drawString(this.tile.getField(Fields.EXP.ordinal()) + " / " + TileEntityXpPylon.MAX_EXP_HELD, this.xSize / 3, 62);
-  }
-  public int getProgressX() {
-    return this.guiLeft + 10;
-  }
-  public int getProgressY() {
-    return this.guiTop + 9 + 3 * Const.SQ + 8;
-  }
-  public int getProgressCurrent() {
-    return tile.getField(TileEntityXpPylon.Fields.EXP.ordinal());
-  }
-  public int getProgressMax() {
-    return TileEntityXpPylon.MAX_EXP_HELD;
+    this.drawString(this.tile.getField(TileEntityXpPylon.Fields.EXP.ordinal()) + " / " + TileEntityXpPylon.MAX_EXP_HELD, this.xSize / 3, 62);
   }
 }

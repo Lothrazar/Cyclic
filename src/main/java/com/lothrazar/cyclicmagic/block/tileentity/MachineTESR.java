@@ -1,4 +1,6 @@
 package com.lothrazar.cyclicmagic.block.tileentity;
+import com.lothrazar.cyclicmagic.ITilePreviewToggle;
+import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -17,6 +19,16 @@ public class MachineTESR extends BaseMachineTesr<TileEntityBaseMachineInvo> {
   }
   public MachineTESR(String block) {
     this(block, -1);
+  }
+  @Override
+  public void renderTileEntityAt(TileEntityBaseMachineInvo te, double x, double y, double z, float partialTicks, int destroyStage) {
+    super.renderTileEntityAt(te, x, y, z, partialTicks, destroyStage);
+    if (te instanceof ITilePreviewToggle) {
+      ITilePreviewToggle tilePreview = (ITilePreviewToggle) te;
+      if (tilePreview.isPreviewVisible()) {
+        UtilWorld.RenderShadow.renderBlockList(tilePreview.getShape(), te.getPos(), x, y, z, 0.7F, 0F, 1F);
+      }
+    }
   }
   @Override
   public void render(TileEntityBaseMachineInvo te) {

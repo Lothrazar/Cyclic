@@ -1,9 +1,9 @@
 package com.lothrazar.cyclicmagic.component.enderbook;
 import java.io.IOException;
 import java.util.ArrayList;
+import com.lothrazar.cyclicmagic.ITooltipButton;
 import com.lothrazar.cyclicmagic.ModCyclic;
 import com.lothrazar.cyclicmagic.component.enderbook.ItemEnderBook.BookLocation;
-import com.lothrazar.cyclicmagic.gui.ITooltipButton;
 import com.lothrazar.cyclicmagic.util.UtilChat;
 import com.lothrazar.cyclicmagic.util.UtilWorld;
 import net.minecraft.client.gui.GuiButton;

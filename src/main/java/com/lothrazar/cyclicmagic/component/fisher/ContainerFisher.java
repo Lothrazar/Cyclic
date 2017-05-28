@@ -16,6 +16,7 @@ public class ContainerFisher extends ContainerBaseMachine {
   protected TileEntityFishing tileEntity;
   public ContainerFisher(InventoryPlayer inventoryPlayer, TileEntityFishing te) {
     tileEntity = te;
+    this.setTile(te);
     for (int i = 0; i < TileEntityFishing.RODSLOT; i++) {
       addSlotToContainer(new Slot(tileEntity, i, SLOTX_START + i * Const.SQ, SLOTY));
     }

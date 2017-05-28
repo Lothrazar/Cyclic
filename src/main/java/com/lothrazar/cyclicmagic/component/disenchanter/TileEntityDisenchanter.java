@@ -1,7 +1,7 @@
 package com.lothrazar.cyclicmagic.component.disenchanter;
 import java.util.Map;
 import com.google.common.collect.Maps;
-import com.lothrazar.cyclicmagic.block.tileentity.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
 import com.lothrazar.cyclicmagic.util.UtilSound;
@@ -29,6 +29,10 @@ public class TileEntityDisenchanter extends TileEntityBaseMachineInvo implements
   private int timer = TIMER_FULL;
   public TileEntityDisenchanter() {
     super(5 + 9);//5 for main array, 9 for output
+  }
+  @Override
+  public int[] getFieldOrdinals() {
+    return super.getFieldArray(Fields.values().length);
   }
   @Override
   public void update() {

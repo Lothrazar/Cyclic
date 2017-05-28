@@ -1,11 +1,9 @@
 package com.lothrazar.cyclicmagic.component.harvester;
-import com.lothrazar.cyclicmagic.IHasConfig;
 import com.lothrazar.cyclicmagic.IHasRecipe;
 import com.lothrazar.cyclicmagic.block.BlockBaseFacingInventory;
 import com.lothrazar.cyclicmagic.block.IBlockHasTESR;
 import com.lothrazar.cyclicmagic.block.tileentity.MachineTESR;
 import com.lothrazar.cyclicmagic.gui.ModGuiHandler;
-import com.lothrazar.cyclicmagic.util.Const;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -18,13 +16,12 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockHarvester extends BlockBaseFacingInventory implements IHasRecipe, IHasConfig, IBlockHasTESR {
+public class BlockHarvester extends BlockBaseFacingInventory implements IHasRecipe, IBlockHasTESR {
   // dont use blockContainer !! http://www.minecraftforge.net/forum/index.php?topic=31953.0
   public BlockHarvester() {
     super(Material.IRON, ModGuiHandler.GUI_INDEX_HARVESTER);
@@ -44,11 +41,6 @@ public class BlockHarvester extends BlockBaseFacingInventory implements IHasReci
         's', Blocks.DISPENSER,
         'r', Items.EMERALD,
         'b', Items.DIAMOND);
-  }
-  @Override
-  public void syncConfig(Configuration config) {
-    String category = Const.ConfigCategory.modpackMisc;
-    TileEntityHarvester.TIMER_FULL = config.getInt("HarvesterTime", category, 80, 10, 9999, "Number of ticks it takes to run one time, so lower is faster");
   }
   @SideOnly(Side.CLIENT)
   public void initModel() {

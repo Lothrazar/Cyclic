@@ -1,5 +1,5 @@
 package com.lothrazar.cyclicmagic.component.vector;
-import com.lothrazar.cyclicmagic.block.tileentity.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -33,6 +33,10 @@ public class TileEntityVector extends TileEntityBaseMachineInvo implements ITile
   }
   public TileEntityVector() {
     super(0);
+  }
+  @Override
+  public int[] getFieldOrdinals() {
+    return super.getFieldArray(Fields.values().length);
   }
   @Override
   public void readFromNBT(NBTTagCompound tagCompound) {

@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Nonnull;
-import com.lothrazar.cyclicmagic.block.tileentity.ITileRedstoneToggle;
+import com.lothrazar.cyclicmagic.ITileRedstoneToggle;
 import com.lothrazar.cyclicmagic.block.tileentity.TileEntityBaseMachineInvo;
 import com.lothrazar.cyclicmagic.util.UtilInventoryTransfer;
 import com.lothrazar.cyclicmagic.util.UtilItemStack;
@@ -20,7 +20,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 
 public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITileRedstoneToggle, ITickable {
-  public static final int TIMER_FULL = 20;
+  public static final int TIMER_FULL = 80;
   public static final int ROWS = 5;
   public static final int COLS = 2;
   public static final int SIZE_INPUT = ROWS * COLS;//10
@@ -29,32 +29,32 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
   private Container fakeContainer;
   private IRecipe recipe;
   private int needsRedstone = 1;
-  private int timer = TIMER_FULL;
   private InventoryCrafting crafter;
   public TileEntityCrafter() {
-    super(SIZE_INPUT + SIZE_GRID + SIZE_OUTPUT);//left and right side both have a tall rectangle. then 3x3 crafting 
+    super(SIZE_INPUT + SIZE_GRID + SIZE_OUTPUT + 1);//+1 for fuel..left and right side both have a tall rectangle. then 3x3 crafting 
     fakeContainer = new Container() {
       public boolean canInteractWith(@Nonnull final EntityPlayer playerIn) {
         return false;
       }
     };
     crafter = new InventoryCrafting(fakeContainer, 3, 3);
+    this.setFuelSlot(this.getSizeInventory() - 1);
   }
   public static enum Fields {
-    REDSTONE, TIMER;
+    REDSTONE, TIMER, FUEL, FUELMAX;
+  }
+  @Override
+  public int[] getFieldOrdinals() {
+    return super.getFieldArray(Fields.values().length);
   }
   @Override
   public void update() {
     if (!isRunning()) { return; }
     this.spawnParticlesAbove();
-    timer--;
-    if (timer < 0) {
-      timer = 0;
-    }
     setRecipeInput();//make sure the 3x3 inventory is linked o the crater
-    findRecipe();
-    //does it match
-    if (timer == 0) {
+    findRecipe(); //does it match
+    this.updateFuelIsBurning();
+    if (this.updateTimerIsZero()) {
       findRecipe();
       if (recipe != null && tryPayCost()) {
         // pay the cost  
@@ -168,6 +168,12 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
         return this.needsRedstone;
       case TIMER:
         return this.timer;
+      case FUEL:
+        return this.getFuelCurrent();
+      case FUELMAX:
+        return this.getFuelMax();
+      default:
+      break;
     }
     return -1;
   }
@@ -179,6 +185,14 @@ public class TileEntityCrafter extends TileEntityBaseMachineInvo implements ITil
       break;
       case TIMER:
         this.timer = value;
+      break;
+      case FUEL:
+        this.setFuelCurrent(value);
+      break;
+      case FUELMAX:
+        this.setFuelMax(value);
+      break;
+      default:
       break;
     }
   }
